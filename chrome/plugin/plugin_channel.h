@@ -15,8 +15,11 @@
 // process.  On the renderer side there's a corresponding PluginChannelHost.
 class PluginChannel : public PluginChannelBase {
  public:
-  static PluginChannel* GetPluginChannel(
-      int process_id, MessageLoop* ipc_message_loop);
+  // Get a new PluginChannel object for the current process.
+  // POSIX only: If |channel_fd| > 0, use that file descriptor for the
+  // channel socket.
+  static PluginChannel* GetPluginChannel(int process_id,
+                                         MessageLoop* ipc_message_loop);
 
   ~PluginChannel();
 
@@ -25,6 +28,18 @@ class PluginChannel : public PluginChannelBase {
 
   base::ProcessHandle renderer_handle() const { return renderer_handle_; }
   int GenerateRouteID();
+
+#if defined(OS_POSIX)
+  // When first created, the PluginChannel gets assigned the file descriptor
+  // for the renderer.
+  // After the first time we pass it through the IPC, we don't need it anymore,
+  // and we close it. At that time, we reset renderer_fd_ to -1.
+  int DisownRendererFd() {
+    int value = renderer_fd_;
+    renderer_fd_ = -1;
+    return value;
+  }
+#endif
 
   bool in_send() { return in_send_ != 0; }
 
@@ -37,6 +52,9 @@ class PluginChannel : public PluginChannelBase {
   virtual void OnChannelError();
 
   virtual void CleanUp();
+
+  // Overrides PluginChannelBase::Init.
+  virtual bool Init(MessageLoop* ipc_message_loop, bool create_pipe_now);
 
  private:
   // Called on the plugin thread
@@ -54,6 +72,12 @@ class PluginChannel : public PluginChannelBase {
 
   // Handle to the renderer process who is on the other side of the channel.
   base::ProcessHandle renderer_handle_;
+
+#if defined(OS_POSIX)
+  // FD for the renderer end of the pipe. It is stored until we send it over
+  // IPC after which it is cleared. It will be closed by the IPC mechanism.
+  int renderer_fd_;
+#endif
 
   int in_send_;  // Tracks if we're in a Send call.
   bool log_messages_;  // True if we should log sent and received messages.

@@ -1,7 +1,7 @@
 vars = {
   "webkit_trunk":
     "http://svn.webkit.org/repository/webkit/trunk",
-  "webkit_revision": "44922",
+  "webkit_revision": "45352",
 }
 
 
@@ -9,14 +9,17 @@ deps = {
   "src/breakpad/src":
     "http://google-breakpad.googlecode.com/svn/trunk/src@346",
 
+  "src/build/util/support":
+    "/trunk/deps/support@18977",
+
   "src/googleurl":
-    "http://google-url.googlecode.com/svn/trunk@106",
+    "http://google-url.googlecode.com/svn/trunk@107",
 
   "src/sdch/open-vcdiff":
     "http://open-vcdiff.googlecode.com/svn/trunk@26",
 
   "src/testing/gtest":
-    "http://googletest.googlecode.com/svn/trunk@243",
+    "http://googletest.googlecode.com/svn/trunk@267",
 
   "src/third_party/WebKit":
     "/trunk/deps/third_party/WebKit@15773",
@@ -26,13 +29,13 @@ deps = {
 
   # TODO(mark): Remove once this has moved into depot_tools.
   "src/tools/gyp":
-    "http://gyp.googlecode.com/svn/trunk@525",
+    "http://gyp.googlecode.com/svn/trunk@528",
 
   "src/v8":
-    "http://v8.googlecode.com/svn/trunk@2220",
+    "http://v8.googlecode.com/svn/trunk@2291",
 
   "src/third_party/skia":
-    "http://skia.googlecode.com/svn/trunk@224",
+    "http://skia.googlecode.com/svn/trunk@239",
 
   "src/webkit/data/layout_tests/LayoutTests":
     Var("webkit_trunk") + "/LayoutTests@" + Var("webkit_revision"),
@@ -48,11 +51,20 @@ deps = {
 
   "src/third_party/tcmalloc/tcmalloc":
     "http://google-perftools.googlecode.com/svn/trunk@74",
+
+  "src/tools/page_cycler/acid3":
+      "/trunk/deps/page_cycler/acid3@19546",
     
   # TODO(jianli): Remove this once we do not need to run worker's layout tests
   # in ui test.
   "src/chrome/test/data/workers/LayoutTests/fast/workers":
     Var("webkit_trunk") + "/LayoutTests/fast/workers@" + Var("webkit_revision"),
+  "src/chrome/test/data/workers/LayoutTests/http/tests/resources":
+    Var("webkit_trunk") + "/LayoutTests/http/tests/resources@" + Var("webkit_revision"),
+  "src/chrome/test/data/workers/LayoutTests/http/tests/workers":
+    Var("webkit_trunk") + "/LayoutTests/http/tests/workers@" + Var("webkit_revision"),
+  "src/chrome/test/data/workers/LayoutTests/http/tests/xmlhttprequest":
+    Var("webkit_trunk") + "/LayoutTests/http/tests/xmlhttprequest@" + Var("webkit_revision"),
 }
 
 
@@ -62,7 +74,7 @@ deps_os = {
       "/trunk/deps/third_party/cygwin@11984",
 
     "src/third_party/python_24":
-      "/trunk/deps/third_party/python_24@7444",
+      "/trunk/deps/third_party/python_24@19441",
   },
   "mac": {
     "src/third_party/GTM":

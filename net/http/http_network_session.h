@@ -5,11 +5,12 @@
 #ifndef NET_HTTP_HTTP_NETWORK_SESSION_H_
 #define NET_HTTP_HTTP_NETWORK_SESSION_H_
 
+#include "base/logging.h"
 #include "base/ref_counted.h"
 #include "net/base/ssl_client_auth_cache.h"
 #include "net/base/ssl_config_service.h"
-#include "net/base/tcp_client_socket_pool.h"
 #include "net/http/http_auth_cache.h"
+#include "net/socket/tcp_client_socket_pool.h"
 
 namespace net {
 
@@ -43,6 +44,8 @@ class HttpNetworkSession : public base::RefCounted<HttpNetworkSession> {
   static void set_max_sockets_per_group(int socket_count);
 
  private:
+  FRIEND_TEST(HttpNetworkTransactionTest, GroupNameForProxyConnections);
+
   // Default to allow up to 6 connections per host. Experiment and tuning may
   // try other values (greater than 0).  Too large may cause many problems, such
   // as home routers blocking the connections!?!?
@@ -51,7 +54,7 @@ class HttpNetworkSession : public base::RefCounted<HttpNetworkSession> {
   HttpAuthCache auth_cache_;
   SSLClientAuthCache ssl_client_auth_cache_;
   scoped_refptr<ClientSocketPool> connection_pool_;
-  HostResolver* host_resolver_;
+  scoped_refptr<HostResolver> host_resolver_;
   ProxyService* proxy_service_;
 #if defined(OS_WIN)
   // TODO(port): Port the SSLConfigService class to Linux and Mac OS X.

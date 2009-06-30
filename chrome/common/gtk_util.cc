@@ -4,10 +4,12 @@
 
 #include "chrome/common/gtk_util.h"
 
-#include <cstdarg>
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
 
+#include <cstdarg>
+
+#include "app/l10n_util.h"
 #include "base/linux_util.h"
 #include "base/logging.h"
 #include "third_party/skia/include/core/SkBitmap.h"
@@ -120,7 +122,15 @@ void ForceFontSizePixels(GtkWidget* widget, double size_pixels) {
 gfx::Point GetWidgetScreenPosition(GtkWidget* widget) {
   int x = 0, y = 0;
 
-  GtkWidget* parent = widget;
+  if (GTK_IS_WINDOW(widget)) {
+    gdk_window_get_origin(widget->window, &x, &y);
+    return gfx::Point(x, y);
+  } else {
+    x = widget->allocation.x;
+    y = widget->allocation.y;
+  }
+
+  GtkWidget* parent = gtk_widget_get_parent(widget);
   while (parent) {
     if (GTK_IS_WINDOW(parent)) {
       int window_x, window_y;
@@ -131,8 +141,11 @@ gfx::Point GetWidgetScreenPosition(GtkWidget* widget) {
       return gfx::Point(x, y);
     }
 
-    x += parent->allocation.x;
-    y += parent->allocation.y;
+    if (!GTK_WIDGET_NO_WINDOW(parent)) {
+      x += parent->allocation.x;
+      y += parent->allocation.y;
+    }
+
     parent = gtk_widget_get_parent(parent);
   }
 
@@ -216,13 +229,24 @@ bool IsScreenComposited() {
   return gdk_screen_is_composited(screen) == TRUE;
 }
 
-void EnumerateChildWindows(EnumerateWindowsDelegate* delegate) {
+void EnumerateTopLevelWindows(x11_util::EnumerateWindowsDelegate* delegate) {
   GdkScreen* screen = gdk_screen_get_default();
   GList* stack = gdk_screen_get_window_stack(screen);
-  DCHECK(stack);
+  if (!stack) {
+    // Window Manager doesn't support _NET_CLIENT_LIST_STACKING, so fall back
+    // to old school enumeration of all X windows.  Some WMs parent 'top-level'
+    // windows in unnamed actual top-level windows (ion WM), so extend the
+    // search depth to all children of top-level windows.
+    const int kMaxSearchDepth = 1;
+    x11_util::EnumerateAllWindows(delegate, kMaxSearchDepth);
+    return;
+  }
 
   for (GList* iter = g_list_last(stack); iter; iter = iter->prev) {
     GdkWindow* window = static_cast<GdkWindow*>(iter->data);
+    if (!gdk_window_is_visible(window))
+      continue;
+
     XID xid = GDK_WINDOW_XID(window);
     if (delegate->ShouldStopIterating(xid))
       break;
@@ -239,6 +263,31 @@ void SetButtonTriggersNavigation(GtkWidget* button) {
                    G_CALLBACK(OnMouseButtonPressed), NULL);
   g_signal_connect(G_OBJECT(button), "button-release-event",
                    G_CALLBACK(OnMouseButtonReleased), NULL);
+}
+
+int MirroredLeftPointForRect(GtkWidget* widget, const gfx::Rect& bounds) {
+  if (l10n_util::GetTextDirection() != l10n_util::RIGHT_TO_LEFT) {
+    return bounds.x();
+  }
+  return widget->allocation.width - bounds.x() - bounds.width();
+}
+
+bool WidgetContainsCursor(GtkWidget* widget) {
+  gint x = 0;
+  gint y = 0;
+  gtk_widget_get_pointer(widget, &x, &y);
+
+  // To quote the gtk docs:
+  //
+  //   Widget coordinates are a bit odd; for historical reasons, they are
+  //   defined as widget->window coordinates for widgets that are not
+  //   GTK_NO_WINDOW widgets, and are relative to widget->allocation.x,
+  //   widget->allocation.y for widgets that are GTK_NO_WINDOW widgets.
+  //
+  // So the base is always (0,0).
+  gfx::Rect widget_allocation(0, 0, widget->allocation.width,
+                              widget->allocation.height);
+  return widget_allocation.Contains(x, y);
 }
 
 }  // namespace gtk_util

@@ -20,6 +20,7 @@
 // #include "webkit/default_plugin/plugin_impl.h"
 #include "webkit/glue/glue_util.h"
 #include "webkit/glue/webplugin.h"
+#include "webkit/glue/plugins/gtk_plugin_container.h"
 #include "webkit/glue/plugins/plugin_constants_win.h"
 #include "webkit/glue/plugins/plugin_instance.h"
 #include "webkit/glue/plugins/plugin_lib.h"
@@ -37,7 +38,7 @@ using WebKit::WebMouseEvent;
 WebPluginDelegate* WebPluginDelegate::Create(
     const FilePath& filename,
     const std::string& mime_type,
-    gfx::NativeView containing_view) {
+    gfx::PluginWindowHandle containing_view) {
   scoped_refptr<NPAPI::PluginLib> plugin =
       NPAPI::PluginLib::CreatePluginLib(filename);
   if (plugin.get() == NULL)
@@ -53,7 +54,7 @@ WebPluginDelegate* WebPluginDelegate::Create(
 }
 
 WebPluginDelegateImpl::WebPluginDelegateImpl(
-    gfx::NativeView containing_view,
+    gfx::PluginWindowHandle containing_view,
     NPAPI::PluginInstance *instance)
     :
       windowed_handle_(0),
@@ -251,63 +252,6 @@ void WebPluginDelegateImpl::WindowedUpdateGeometry(
   }
 }
 
-namespace {
-
-// This is just a GtkSocket, with size_request overridden, so that we always
-// control the size of the widget.
-class GtkFixedSocket {
- public:
-  // Create a new instance of our GTK widget object.
-  static GtkWidget* CreateNewWidget() {
-    return GTK_WIDGET(g_object_new(GetType(), NULL));
-  }
-
- private:
-  // Create and register our custom container type with GTK.
-  static GType GetType() {
-    static GType type = 0;  // We only want to register our type once.
-    if (!type) {
-      static const GTypeInfo info = {
-        sizeof(GtkSocketClass),
-        NULL, NULL,
-        static_cast<GClassInitFunc>(&ClassInit),
-        NULL, NULL,
-        sizeof(GtkSocket),  // We are identical to a GtkSocket.
-        0, NULL,
-      };
-      type = g_type_register_static(GTK_TYPE_SOCKET,
-                                    "GtkFixedSocket",
-                                    &info,
-                                    static_cast<GTypeFlags>(0));
-    }
-    return type;
-  }
-
-  // Implementation of the class initializer.
-  static void ClassInit(gpointer klass, gpointer class_data_unusued) {
-    GtkWidgetClass* widget_class = reinterpret_cast<GtkWidgetClass*>(klass);
-    widget_class->size_request = &HandleSizeRequest;
-  }
-
-  // Report our allocation size during size requisition.  This means we control
-  // the size, from calling gtk_widget_size_allocate in WindowedReposition().
-  static void HandleSizeRequest(GtkWidget* widget,
-                                GtkRequisition* requisition) {
-    requisition->width = widget->allocation.width;
-    requisition->height = widget->allocation.height;
-  }
-
-  DISALLOW_IMPLICIT_CONSTRUCTORS(GtkFixedSocket);
-};
-
-gboolean PlugRemovedCallback(GtkSocket* socket) {
-  // This is called when the other side of the socket goes away.
-  // We return TRUE to indicate that we don't want to destroy our side.
-  return TRUE;
-}
-
-}  // namespace
-
 bool WebPluginDelegateImpl::WindowedCreatePlugin() {
   DCHECK(!windowed_handle_);
 
@@ -319,69 +263,41 @@ bool WebPluginDelegateImpl::WindowedCreatePlugin() {
     return false;
   }
 
-  windowed_handle_ = GtkFixedSocket::CreateNewWidget();
-  g_signal_connect(GTK_SOCKET(windowed_handle_), "plug-removed",
-                   G_CALLBACK(PlugRemovedCallback), NULL);
-  gtk_container_add(GTK_CONTAINER(parent_), windowed_handle_);
-  // TODO(evanm): connect to signals on the socket, like when the other side
-  // goes away.
-
-  gtk_widget_show(windowed_handle_);
-  gtk_widget_realize(windowed_handle_);
-
-  window_.window = GINT_TO_POINTER(
-      gtk_socket_get_id(GTK_SOCKET(windowed_handle_)));
+  window_.window = reinterpret_cast<void*>(parent_);
+  // The remainder of the code expects windowed_handle_ to exist for
+  // windowed mode, despite not actually ever reaching through
+  // windowed_handle_.  It is still used as a token to represent "this
+  // plugin" in messages to the browser.
+  windowed_handle_ = parent_;
 
   if (!window_.ws_info)
     window_.ws_info = new NPSetWindowCallbackStruct;
   NPSetWindowCallbackStruct* extra =
       static_cast<NPSetWindowCallbackStruct*>(window_.ws_info);
-  extra->display = GDK_WINDOW_XDISPLAY(windowed_handle_->window);
-  GdkVisual* visual = gdk_drawable_get_visual(windowed_handle_->window);
-  extra->visual = GDK_VISUAL_XVISUAL(visual);
-  extra->depth = visual->depth;
-  extra->colormap = GDK_COLORMAP_XCOLORMAP(gdk_drawable_get_colormap(windowed_handle_->window));
+  extra->display = GDK_DISPLAY();
+  extra->visual = DefaultVisual(GDK_DISPLAY(), 0);
+  extra->depth = DefaultDepth(GDK_DISPLAY(), 0);
+  extra->colormap = DefaultColormap(GDK_DISPLAY(), 0);
 
   return true;
 }
 
 void WebPluginDelegateImpl::WindowedDestroyWindow() {
-  if (windowed_handle_ != NULL) {
-    gtk_widget_destroy(windowed_handle_);
-    windowed_handle_ = NULL;
+  if (windowed_handle_) {
+    plugin_->WillDestroyWindow(windowed_handle_);
+
+    windowed_handle_ = 0;
   }
 }
 
 bool WebPluginDelegateImpl::WindowedReposition(
     const gfx::Rect& window_rect,
     const gfx::Rect& clip_rect) {
-  if (!windowed_handle_) {
-    NOTREACHED();
+  if (window_rect == window_rect_ && clip_rect == clip_rect_)
     return false;
-  }
-
-  if (window_rect_ == window_rect && clip_rect_ == clip_rect)
-    return false;
-
-
-  if (window_rect.size() != window_rect_.size()) {
-    // Clipping is handled by WebPlugin.
-    GtkAllocation allocation = { window_rect.x(), window_rect.y(),
-                                 window_rect.width(), window_rect.height() };
-    // TODO(deanm): we probably want to match Windows here, where x and y is
-    // fixed at 0, and we're just sizing the window.
-    // Tell our parent GtkFixed container where to place the widget.
-    gtk_fixed_move(
-        GTK_FIXED(parent_), windowed_handle_, window_rect.x(), window_rect.y());
-    gtk_widget_size_allocate(windowed_handle_, &allocation);
-  }
 
   window_rect_ = window_rect;
   clip_rect_ = clip_rect;
-
-  // TODO(deanm): Is this really needed?
-  // Ensure that the entire window gets repainted.
-  gtk_widget_queue_draw(windowed_handle_);
 
   return true;
 }

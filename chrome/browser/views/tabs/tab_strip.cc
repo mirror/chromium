@@ -617,7 +617,7 @@ void TabStrip::PaintChildren(gfx::Canvas* canvas) {
     // Make sure unselected tabs are somewhat transparent.
     SkPaint paint;
     paint.setColor(SkColorSetARGB(200, 255, 255, 255));
-    paint.setPorterDuffXfermode(SkPorterDuff::kDstIn_Mode);
+    paint.setXfermodeMode(SkXfermode::kDstIn_Mode);
     paint.setStyle(SkPaint::kFill_Style);
     canvas->FillRectInt(
         0, 0, width(),
@@ -1191,6 +1191,12 @@ void TabStrip::GetDesiredTabWidths(int tab_count,
 }
 
 void TabStrip::ResizeLayoutTabs() {
+  // We've been called back after the TabStrip has been emptied out (probably
+  // just prior to the window being destroyed). We need to do nothing here or
+  // else GetTabAt below will crash.
+  if (GetTabCount() == 0)
+    return;
+
   resize_layout_factory_.RevokeAll();
 
   // It is critically important that this is unhooked here, otherwise we will

@@ -92,6 +92,14 @@ int GetDirectoryWriteAgeInHours(const wchar_t* path) {
   return (now_time - dir_time);
 }
 
+// Launches again this same process with a single switch --|flag|. Does not
+// wait for the process to terminate.
+bool RelaunchSetup(const std::wstring& flag) {
+  CommandLine cmd_line(CommandLine::ForCurrentProcess()->program());
+  cmd_line.AppendSwitch(flag);
+  return base::LaunchApp(cmd_line, false, false, NULL);
+}
+
 }  // namespace
 
 bool GoogleChromeDistribution::BuildUninstallMetricsString(
@@ -312,6 +320,15 @@ std::wstring GoogleChromeDistribution::GetDistributionData(RegKey* key) {
     result.append(L"&");
   }
 
+  std::wstring client_value;
+  if (client_state_key.ReadValue(google_update::kRegClientField,
+                                 &client_value)) {
+    result.append(google_update::kRegClientField);
+    result.append(L"=");
+    result.append(client_value);
+    result.append(L"&");
+  }
+
   std::wstring ap_value;
   // If we fail to read the ap key, send up "&ap=" anyway to indicate
   // that this was probably a stable channel release.
@@ -422,14 +439,28 @@ void GoogleChromeDistribution::LaunchUserExperiment(
     int dir_age_hours = GetDirectoryWriteAgeInHours(user_data_dir.c_str());
     if (dir_age_hours < kNinetyDays)
       return;
+    // At this point the user qualifies for the experiment, however we need to
+    // tag a control group, which is at random 50% of the population.
+    if (::GetTickCount() & 0x1) {
+      // We tag the user, but it wont participate in the experiment.
+      GoogleUpdateSettings::SetClient(kToastExpQualifyGroup);
+      LOG(INFO) << "User is toast experiment control group";
+      return;
+    }
   }
-  // User qualifies for the experiment. Launch chrome with --try-chrome. Before
-  // that we need to change the client so we can track the progress.
+  LOG(INFO) << "User drafted for toast experiment";
   if (!GoogleUpdateSettings::SetClient(kToastExpBaseGroup))
     return;
+  // The experiment needs to be performed in a different process because
+  // google_update expects the upgrade process to be quick and nimble.
+  RelaunchSetup(installer_util::switches::kInactiveUserToast);
+}
+
+void GoogleChromeDistribution::InactiveUserToastExperiment() {
+  // User qualifies for the experiment. Launch chrome with --try-chrome. Before
+  // that we need to change the client so we can track the progress.
   int32 exit_code = 0;
-  std::wstring option(L"--");
-  option.append(switches::kTryChromeAgain);
+  std::wstring option(std::wstring(L" --") + switches::kTryChromeAgain);
   if (!installer::LaunchChromeAndWaitForResult(false, option, &exit_code))
     return;
   // The chrome process has exited, figure out what happened.
@@ -450,11 +481,9 @@ void GoogleChromeDistribution::LaunchUserExperiment(
   GoogleUpdateSettings::SetClient(outcome);
   if (outcome != kToastExpUninstallGroup)
     return;
-  // The user wants to uninstall. This is a best effort operation. While this
-  // seems it could be a race (after all we are in the upgrade process) in
-  // practice the user will be faced with a dialog which gives us plenty of
-  // time to exit.
+  // The user wants to uninstall. This is a best effort operation. Note that
+  // we waited for chrome to exit so the uninstall would not detect chrome
+  // running.
   base::LaunchApp(InstallUtil::GetChromeUninstallCmd(false),
                   false, false, NULL);
 }
-

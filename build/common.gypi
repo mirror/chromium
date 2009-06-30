@@ -26,6 +26,16 @@
     # Override branding to select the desired branding flavor.
     'branding%': 'Chromium',
 
+    # Override buildtype to select the desired build flavor.
+    # Dev - everyday build for development/testing
+    # Official - release build (generally implies additional processing)
+    # TODO(mmoss) Once 'buildtype' is fully supported (e.g. Windows gyp
+    # conversion is done), some of the things which are now controlled by
+    # 'branding', such as symbol generation, will need to be refactored based
+    # on 'buildtype' (i.e. we don't care about saving symbols for non-Official
+    # builds).
+    'buildtype%': 'Dev',
+
     # Set to 1 to enable code coverage.  In addition to build changes
     # (e.g. extra CFLAGS), also creates a new target in the src/chrome
     # project file called "coverage".
@@ -66,7 +76,7 @@
     'toolkit_views%': 0,
 
     'linux2%': 0,
-    
+
     'chrome_personalization%': 0,
   },
   'target_defaults': {
@@ -448,7 +458,7 @@
           'CERT_CHAIN_PARA_HAS_EXTRA_FIELDS',
           'WIN32_LEAN_AND_MEAN',
           '_SECURE_ATL',
-          '_HAS_TR1=1',
+          '_HAS_TR1=0',
         ],
         'include_dirs': [
           '<(DEPTH)/third_party/platformsdk_win2008_6_1/files/Include',
@@ -470,11 +480,11 @@
           'VCLibrarianTool': {
             'AdditionalOptions': '/ignore:4221',
             'AdditionalLibraryDirectories':
-              '<(DEPTH)/third_party/platformsdk_win2008_6_1/files/Lib',
+              ['<(DEPTH)/third_party/platformsdk_win2008_6_1/files/Lib'],
           },
           'VCLinkerTool': {
             'AdditionalOptions':
-              '/safeseh /dynamicbase /ignore:4199 /ignore:4221 /nxcompat',
+              '/safeseh:NO /dynamicbase:NO /ignore:4199 /ignore:4221 /nxcompat',
             'AdditionalDependencies': [
               'wininet.lib',
               'version.lib',
@@ -485,7 +495,7 @@
               'dbghelp.lib',
             ],
             'AdditionalLibraryDirectories':
-              '<(DEPTH)/third_party/platformsdk_win2008_6_1/files/Lib',
+              ['<(DEPTH)/third_party/platformsdk_win2008_6_1/files/Lib'],
             'DelayLoadDLLs': [
               'dbghelp.dll',
               'dwmapi.dll',
@@ -526,6 +536,14 @@
       'includes': [
         'external_code.gypi',
       ],
+    }, {
+      'target_defaults': {
+        # In Chromium code, we define __STDC_FORMAT_MACROS in order to get the
+        # C99 macros on Mac and Linux.
+        'defines': [
+          '__STDC_FORMAT_MACROS',
+        ],
+      },
     }],
   ],
   'scons_settings': {

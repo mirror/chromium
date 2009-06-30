@@ -43,7 +43,6 @@
 
 class AudioMessageFilter;
 class DictionaryValue;
-class DebugMessageHandler;
 class DevToolsAgent;
 class DevToolsClient;
 class FilePath;
@@ -169,8 +168,6 @@ class RenderView : public RenderWidget,
                                    unsigned int line_no,
                                    const std::wstring& source_id);
 
-  virtual void DebuggerOutput(const std::wstring& out);
-
   virtual void DidStartLoading(WebView* webview);
   virtual void DidStopLoading(WebView* webview);
   virtual void DidCreateDataSource(WebFrame* frame, WebKit::WebDataSource* ds);
@@ -217,6 +214,7 @@ class RenderView : public RenderWidget,
   virtual void DidCompleteClientRedirect(WebView* webview,
                                          WebFrame* frame,
                                          const GURL& source);
+  virtual void WillCloseFrame(WebView* webview, WebFrame* frame);
   virtual void WillSubmitForm(WebView* webview, WebFrame* frame,
                               const WebKit::WebForm& form);
   virtual void WillSendRequest(WebView* webview,
@@ -225,6 +223,8 @@ class RenderView : public RenderWidget,
 
   virtual void WindowObjectCleared(WebFrame* webframe);
   virtual void DocumentElementAvailable(WebFrame* webframe);
+  virtual void DidCreateScriptContext(WebFrame* webframe);
+  virtual void DidDestroyScriptContext(WebFrame* webframe);
 
   virtual WindowOpenDisposition DispositionForNavigationAction(
       WebView* webview,
@@ -307,7 +307,6 @@ class RenderView : public RenderWidget,
   virtual std::wstring GetAutoCorrectWord(const std::wstring& word);
   virtual void SetInputMethodState(bool enabled);
   virtual void ScriptedPrint(WebFrame* frame);
-  virtual void WebInspectorOpened(int num_resources);
   virtual void UserMetricsRecordAction(const std::wstring& action);
   virtual void DnsPrefetch(const std::vector<std::string>& host_names);
 
@@ -349,10 +348,6 @@ class RenderView : public RenderWidget,
   void InsertCSS(const std::wstring& frame_xpath,
                  const std::string& css);
 
-  // Called when the Javascript debugger is no longer attached.
-  // This is called from within the renderer, not via an IPC message.
-  void OnDebugDetach();
-
   int delay_seconds_for_form_state_sync() const {
     return delay_seconds_for_form_state_sync_;
   }
@@ -380,6 +375,9 @@ class RenderView : public RenderWidget,
   // RenderWidget override.
   virtual void OnResize(const gfx::Size& new_size,
                         const gfx::Rect& resizer_rect);
+
+  // RenderWidget override
+  virtual void DidPaint();
 
  private:
   // For unit tests.
@@ -438,7 +436,7 @@ class RenderView : public RenderWidget,
 
   // Creates a thumbnail of |frame|'s contents resized to (|w|, |h|)
   // and puts that in |thumbnail|. Thumbnail metadata goes in |score|.
-  bool CaptureThumbnail(WebFrame* frame, int w, int h,
+  bool CaptureThumbnail(WebView* view, int w, int h,
                         SkBitmap* thumbnail,
                         ThumbnailScore* score);
 
@@ -481,8 +479,7 @@ class RenderView : public RenderWidget,
   void OnDelete();
   void OnSelectAll();
   void OnCopyImageAt(int x, int y);
-  void OnInspectElement(int x, int y);
-  void OnShowJavaScriptConsole();
+  void OnExecuteEditCommand(const std::string& name, const std::string& value);
   void OnSetupDevToolsClient();
   void OnCancelDownload(int32 download_id);
   void OnFind(int request_id, const string16&, const WebKit::WebFindOptions&);
@@ -523,8 +520,6 @@ class RenderView : public RenderWidget,
   void OnAddMessageToConsole(const string16& frame_xpath,
                              const string16& message,
                              const WebKit::WebConsoleMessage::Level&);
-  void OnDebugAttach();
-
   void OnReservePageIDRange(int size_of_range);
 
   void OnDragSourceEndedOrMoved(const gfx::Point& client_point,
@@ -613,6 +608,8 @@ class RenderView : public RenderWidget,
 
   // Scan the given frame for password forms and send them up to the browser.
   void SendPasswordForms(WebFrame* frame);
+
+  void Print(WebFrame* frame, bool script_initiated);
 
   // Bitwise-ORed set of extra bindings that have been enabled.  See
   // BindingsPolicy for details.
@@ -714,8 +711,6 @@ class RenderView : public RenderWidget,
   // equivalent constrained window).  The renderer and any plugin processes
   // check this to know if they should pump messages/tasks then.
   scoped_ptr<base::WaitableEvent> modal_dialog_event_;
-
-  scoped_refptr<DebugMessageHandler> debug_message_handler_;
 
   // Provides access to this renderer from the remote Inspector UI.
   scoped_ptr<DevToolsAgent> devtools_agent_;

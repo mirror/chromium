@@ -29,10 +29,10 @@ class LoadTimesExtensionWrapper : public v8::Extension {
   // navigationType: A string describing what user action initiated the load
   LoadTimesExtensionWrapper() :
     v8::Extension(kLoadTimesExtensionName,
-      "var chromium;"
-      "if (!chromium)"
-      "  chromium = {};"
-      "chromium.GetLoadTimes = function() {"
+      "var chrome;"
+      "if (!chrome)"
+      "  chrome = {};"
+      "chrome.GetLoadTimes = function() {"
       "  native function GetLoadTimes();"
       "  return GetLoadTimes();"
       "}") {}
@@ -67,9 +67,9 @@ class LoadTimesExtensionWrapper : public v8::Extension {
     WebFrame* frame = WebFrame::RetrieveFrameForEnteredContext();
     if (frame) {
       WebDataSource* data_source = frame->GetDataSource();
-      NavigationState* navigation_state =
-          NavigationState::FromDataSource(data_source);
       if (data_source) {
+        NavigationState* navigation_state =
+            NavigationState::FromDataSource(data_source);
         v8::Local<v8::Object> load_times = v8::Object::New();
         load_times->Set(
             v8::String::New("requestTime"),
@@ -78,6 +78,9 @@ class LoadTimesExtensionWrapper : public v8::Extension {
             v8::String::New("startLoadTime"),
             v8::Number::New(navigation_state->start_load_time().ToDoubleT()));
         load_times->Set(
+            v8::String::New("commitLoadTime"),
+            v8::Number::New(navigation_state->commit_load_time().ToDoubleT()));
+        load_times->Set(
             v8::String::New("finishDocumentLoadTime"),
             v8::Number::New(
                 navigation_state->finish_document_load_time().ToDoubleT()));
@@ -85,11 +88,12 @@ class LoadTimesExtensionWrapper : public v8::Extension {
             v8::String::New("finishLoadTime"),
             v8::Number::New(navigation_state->finish_load_time().ToDoubleT()));
         load_times->Set(
-            v8::String::New("firstLayoutTime"),
-            v8::Number::New(navigation_state->first_layout_time().ToDoubleT()));
+            v8::String::New("firstPaintTime"),
+            v8::Number::New(navigation_state->first_paint_time().ToDoubleT()));
         load_times->Set(
             v8::String::New("navigationType"),
             v8::String::New(GetNavigationType(data_source->navigationType())));
+
         return load_times;
       }
     }

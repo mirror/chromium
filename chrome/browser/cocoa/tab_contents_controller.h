@@ -7,8 +7,6 @@
 
 #include <Cocoa/Cocoa.h>
 
-@class GrowBoxView;
-
 class TabContents;
 class TabContentsCommandObserver;
 class TabStripModel;
@@ -22,16 +20,12 @@ class TabStripModel;
   TabContents* contents_;  // weak
 
   IBOutlet NSBox* contentsBox_;
-  IBOutlet GrowBoxView* growBox_;
 }
 
 // Create the contents of a tab represented by |contents| and loaded from the
 // nib given by |name|.
 - (id)initWithNibName:(NSString*)name
              contents:(TabContents*)contents;
-
-// Take this view (toolbar and web contents) full screen
-- (IBAction)fullScreen:(id)sender;
 
 // Called when the tab contents is about to be put into the view hierarchy as
 // the selected tab. Handles things such as ensuring the toolbar is correctly
@@ -42,10 +36,6 @@ class TabStripModel;
 // notification from the model isn't specific). |updatedContents| could reflect
 // an entirely new tab contents object.
 - (void)tabDidChange:(TabContents*)updatedContents;
-
-// Return the rect, in WebKit coordinates (flipped), of the window's grow box
-// in the coordinate system of the content area of this tab.
-- (NSRect)growBoxRect;
 
 @end
 

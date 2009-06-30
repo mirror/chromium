@@ -1,8 +1,8 @@
 vars = {
   "chromium_trunk":
     "http://src.chromium.org/svn/trunk",
-  "nixysa_rev": "21",
-  "o3d_code_rev": "77",
+  "nixysa_rev": "25",
+  "o3d_code_rev": "85",
 }
 
 deps = {
@@ -49,7 +49,7 @@ deps = {
     "http://o3d.googlecode.com/svn/trunk/googleclient/third_party/scons@" + Var("o3d_code_rev"),
 
   "o3d/third_party/skia":
-    "http://o3d.googlecode.com/svn/trunk/googleclient/third_party/skia@" + Var("o3d_code_rev"),
+    "http://o3d.googlecode.com/svn/trunk/googleclient/third_party/skia/files@" + Var("o3d_code_rev"),
 
   "o3d/third_party/vectormath":
     "http://o3d.googlecode.com/svn/trunk/googleclient/third_party/vectormath@" + Var("o3d_code_rev"),
@@ -64,7 +64,7 @@ deps = {
     "http://o3d.googlecode.com/svn/trunk/googleclient/third_party/zlib@" + Var("o3d_code_rev"),
 
   "o3d/third_party/v8":
-    "http://v8.googlecode.com/svn/trunk@2213",
+    "http://v8.googlecode.com/svn/trunk@2255",
 
   # NACL has to be in this weird directory because it looks for
   # googleclient two levels above it.

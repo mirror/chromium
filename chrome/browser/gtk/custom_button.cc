@@ -4,6 +4,7 @@
 
 #include "chrome/browser/gtk/custom_button.h"
 
+#include "app/l10n_util.h"
 #include "app/resource_bundle.h"
 #include "base/basictypes.h"
 
@@ -17,13 +18,15 @@ CustomDrawButtonBase::CustomDrawButtonBase(
     : paint_override_(-1) {
   // Load the button images from the resource bundle.
   ResourceBundle& rb = ResourceBundle::GetSharedInstance();
-  pixbufs_[GTK_STATE_NORMAL] = normal_id ? rb.GetPixbufNamed(normal_id) : NULL;
-  pixbufs_[GTK_STATE_ACTIVE] = active_id ? rb.GetPixbufNamed(active_id) : NULL;
+  pixbufs_[GTK_STATE_NORMAL] =
+      normal_id ? rb.GetRTLEnabledPixbufNamed(normal_id) : NULL;
+  pixbufs_[GTK_STATE_ACTIVE] =
+      active_id ? rb.GetRTLEnabledPixbufNamed(active_id) : NULL;
   pixbufs_[GTK_STATE_PRELIGHT] =
-      highlight_id ? rb.GetPixbufNamed(highlight_id) : NULL;
+      highlight_id ? rb.GetRTLEnabledPixbufNamed(highlight_id) : NULL;
   pixbufs_[GTK_STATE_SELECTED] = NULL;
   pixbufs_[GTK_STATE_INSENSITIVE] =
-      depressed_id ? rb.GetPixbufNamed(depressed_id) : NULL;
+      depressed_id ? rb.GetRTLEnabledPixbufNamed(depressed_id) : NULL;
 }
 
 CustomDrawButtonBase::~CustomDrawButtonBase() {
@@ -40,12 +43,19 @@ gboolean CustomDrawButtonBase::OnExpose(GtkWidget* widget, GdkEventExpose* e) {
   if (!pixbuf)
     return FALSE;
 
-  gdk_draw_pixbuf(widget->window,
-                  widget->style->fg_gc[GTK_WIDGET_STATE(widget)],
-                  pixbuf,
-                  0, 0,
-                  widget->allocation.x, widget->allocation.y, -1, -1,
-                  GDK_RGB_DITHER_NONE, 0, 0);
+  cairo_t* cairo_context = gdk_cairo_create(GDK_DRAWABLE(widget->window));
+  cairo_translate(cairo_context, widget->allocation.x, widget->allocation.y);
+
+  // The widget might be larger than the pixbuf. Paint the pixbuf flush with the
+  // start of the widget (left for LTR, right for RTL).
+  int pixbuf_width = gdk_pixbuf_get_width(pixbuf);
+  int widget_width = widget->allocation.width;
+  int x = gtk_widget_get_direction(widget) == GTK_TEXT_DIR_RTL ?
+      widget_width - pixbuf_width : 0;
+
+  gdk_cairo_set_source_pixbuf(cairo_context, pixbuf, x, 0);
+  cairo_paint(cairo_context);
+  cairo_destroy(cairo_context);
 
   return TRUE;
 }

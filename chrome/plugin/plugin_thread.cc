@@ -102,16 +102,24 @@ void PluginThread::CleanUp() {
   lazy_tls.Pointer()->Set(NULL);
 }
 
-void PluginThread::OnCreateChannel(int process_id, bool off_the_record) {
-  std::string channel_name;
+void PluginThread::OnCreateChannel(
+    int process_id,
+    bool off_the_record) {
   scoped_refptr<PluginChannel> channel =
       PluginChannel::GetPluginChannel(process_id, owner_loop());
+  IPC::ChannelHandle channel_handle;
   if (channel.get()) {
-    channel_name = channel->channel_name();
+    channel_handle.name = channel->channel_name();
+#if defined(OS_POSIX)
+    // On POSIX, pass the renderer-side FD. Also mark it as auto-close so that
+    // it gets closed after it has been sent.
+    int renderer_fd = channel->DisownRendererFd();
+    channel_handle.socket = base::FileDescriptor(renderer_fd, true);
+#endif
     channel->set_off_the_record(off_the_record);
   }
 
-  Send(new PluginProcessHostMsg_ChannelCreated(channel_name));
+  Send(new PluginProcessHostMsg_ChannelCreated(channel_handle));
 }
 
 void PluginThread::OnPluginMessage(const std::vector<unsigned char> &data) {

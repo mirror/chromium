@@ -8,7 +8,16 @@
 #include "base/string_util.h"
 #include "net/base/net_errors.h"
 #include "net/disk_cache/disk_cache.h"
+#include "net/http/http_response_headers.h"
 #include "net/http/http_util.h"
+
+namespace {
+
+// The headers that we have to process.
+const char kLengthHeader[] = "Content-Length";
+const char kRangeHeader[] = "Content-Range";
+
+}
 
 namespace net {
 
@@ -24,19 +33,18 @@ bool PartialData::Init(const std::string& headers,
     return false;
 
   extra_headers_ = new_headers;
+  resource_size_ = 0;
 
-  // TODO(rvargas): Handle requests without explicit start or end.
-  DCHECK(byte_range_.HasFirstBytePosition());
   current_range_start_ = byte_range_.first_byte_position();
   return true;
 }
 
 void PartialData::RestoreHeaders(std::string* headers) const {
-  DCHECK(current_range_start_ >= 0);
+  DCHECK(current_range_start_ >= 0 || byte_range_.IsSuffixByteRange());
+  int64 end = byte_range_.IsSuffixByteRange() ?
+              byte_range_.suffix_length() : byte_range_.last_byte_position();
 
-  // TODO(rvargas): Handle requests without explicit start or end.
-  AddRangeHeader(current_range_start_, byte_range_.last_byte_position(),
-                 headers);
+  AddRangeHeader(current_range_start_, end, headers);
 }
 
 int PartialData::PrepareCacheValidation(disk_cache::Entry* entry,
@@ -92,6 +100,77 @@ bool PartialData::IsLastRange() const {
   return final_range_;
 }
 
+bool PartialData::UpdateFromStoredHeaders(const HttpResponseHeaders* headers) {
+  std::string length_value;
+  resource_size_ = 0;
+  if (!headers->GetNormalizedHeader(kLengthHeader, &length_value))
+    return false;  // We must have stored the resource length.
+
+  if (!StringToInt64(length_value, &resource_size_))
+    return false;
+
+  if (resource_size_ && !byte_range_.ComputeBounds(resource_size_))
+    return false;
+
+  if (current_range_start_ < 0)
+    current_range_start_ = byte_range_.first_byte_position();
+
+  return current_range_start_ >= 0;
+}
+
+bool PartialData::ResponseHeadersOK(const HttpResponseHeaders* headers) {
+  int64 start, end, total_length;
+  if (!headers->GetContentRange(&start, &end, &total_length))
+    return false;
+  if (total_length <= 0)
+    return false;
+
+  if (!resource_size_) {
+    // First response. Update our values with the ones provided by the server.
+    resource_size_ = total_length;
+    if (!byte_range_.HasFirstBytePosition()) {
+      byte_range_.set_first_byte_position(start);
+      current_range_start_ = start;
+    }
+    if (!byte_range_.HasLastBytePosition())
+      byte_range_.set_last_byte_position(end);
+  } else if (resource_size_ != total_length) {
+    return false;
+  }
+
+  if (start != current_range_start_)
+    return false;
+
+  if (end > byte_range_.last_byte_position())
+    return false;
+
+  return true;
+}
+
+// We are making multiple requests to complete the range requested by the user.
+// Just assume that everything is fine and say that we are returning what was
+// requested.
+void PartialData::FixResponseHeaders(HttpResponseHeaders* headers) {
+  headers->RemoveHeader(kLengthHeader);
+  headers->RemoveHeader(kRangeHeader);
+
+  DCHECK(byte_range_.HasFirstBytePosition());
+  DCHECK(byte_range_.HasLastBytePosition());
+  headers->AddHeader(StringPrintf("%s: bytes %lld-%lld/%lld", kRangeHeader,
+                                  byte_range_.first_byte_position(),
+                                  byte_range_.last_byte_position(),
+                                  resource_size_));
+
+  int64 range_len = byte_range_.last_byte_position() -
+                    byte_range_.first_byte_position() + 1;
+  headers->AddHeader(StringPrintf("%s: %lld", kLengthHeader, range_len));
+}
+
+void PartialData::FixContentLength(HttpResponseHeaders* headers) {
+  headers->RemoveHeader(kLengthHeader);
+  headers->AddHeader(StringPrintf("%s: %lld", kLengthHeader, resource_size_));
+}
+
 int PartialData::CacheRead(disk_cache::Entry* entry, IOBuffer* data,
                            int data_len, CompletionCallback* callback) {
   int read_len = std::min(data_len, cached_min_len_);
@@ -124,7 +203,15 @@ void PartialData::OnNetworkReadCompleted(int result) {
 
 // Static.
 void PartialData::AddRangeHeader(int64 start, int64 end, std::string* headers) {
-  headers->append(StringPrintf("Range: bytes=%lld-%lld\r\n", start, end));
+  DCHECK(start >= 0 || end >= 0);
+  std::string my_start, my_end;
+  if (start >= 0)
+    my_start = Int64ToString(start);
+  if (end >= 0)
+    my_end = Int64ToString(end);
+
+  headers->append(StringPrintf("Range: bytes=%s-%s\r\n", my_start.c_str(),
+                               my_end.c_str()));
 }
 
 

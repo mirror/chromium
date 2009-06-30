@@ -13,6 +13,8 @@
 #include "chrome/browser/profile.h"
 #include "chrome/browser/theme_resources_util.h"
 #include "chrome/common/extensions/extension.h"
+#include "chrome/common/notification_service.h"
+#include "chrome/common/notification_type.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "grit/app_resources.h"
@@ -136,14 +138,6 @@ BrowserThemeProvider::BrowserThemeProvider()
 
 BrowserThemeProvider::~BrowserThemeProvider() {
   FreeImages();
-#if defined(OS_LINUX)
-  // Free GdkPixbufs.
-  for (GdkPixbufMap::iterator i = gdk_pixbufs_.begin();
-       i != gdk_pixbufs_.end(); i++) {
-    g_object_unref(i->second);
-  }
-  gdk_pixbufs_.clear();
-#endif
 }
 
 void BrowserThemeProvider::Init(Profile* profile) {
@@ -311,10 +305,8 @@ void BrowserThemeProvider::UseDefaultTheme() {
   UserMetrics::RecordAction(L"Themes_Reset", profile_);
 }
 
-SkBitmap* BrowserThemeProvider::LoadThemeBitmap(int id) {
-  DCHECK(CalledOnValidThread());
-  // Attempt to find the image in our theme bundle.
-  std::vector<unsigned char> raw_data, png_data;
+bool BrowserThemeProvider::ReadThemeFileData(
+    int id, std::vector<unsigned char>* raw_data) {
   if (images_.count(id)) {
     // First check to see if we have a registered theme extension and whether
     // it can handle this resource.
@@ -330,35 +322,43 @@ SkBitmap* BrowserThemeProvider::LoadThemeBitmap(int id) {
         int64 avail = file.Available();
         if (avail > 0 && avail < INT_MAX) {
           size_t size = static_cast<size_t>(avail);
-          raw_data.resize(size);
-          char* data = reinterpret_cast<char*>(&(raw_data.front()));
-          if (file.ReadUntilComplete(data, size) == avail) {
-            // Decode the PNG.
-            int image_width = 0;
-            int image_height = 0;
-
-            if (!PNGDecoder::Decode(&raw_data.front(), raw_data.size(),
-                PNGDecoder::FORMAT_BGRA, &png_data,
-                &image_width, &image_height)) {
-              NOTREACHED() << "Unable to decode theme image resource " << id;
-              return NULL;
-            }
-
-            return PNGDecoder::CreateSkBitmapFromBGRAFormat(png_data,
-                                                            image_width,
-                                                            image_height);
-          }
+          raw_data->resize(size);
+          char* data = reinterpret_cast<char*>(&(raw_data->front()));
+          if (file.ReadUntilComplete(data, size) == avail)
+            return true;
         }
-      } else {
-        // TODO(glen): File no-longer exists, we're out of date. We should
-        // clear the theme (or maybe just the pref that points to this
-        // image).
-        return NULL;
       }
     }
   }
 
-  return NULL;
+  return false;
+}
+
+SkBitmap* BrowserThemeProvider::LoadThemeBitmap(int id) {
+  DCHECK(CalledOnValidThread());
+  // Attempt to find the image in our theme bundle.
+  std::vector<unsigned char> raw_data, png_data;
+  if (ReadThemeFileData(id, &raw_data)) {
+    // Decode the PNG.
+    int image_width = 0;
+    int image_height = 0;
+
+    if (!PNGDecoder::Decode(&raw_data.front(), raw_data.size(),
+        PNGDecoder::FORMAT_BGRA, &png_data,
+        &image_width, &image_height)) {
+      NOTREACHED() << "Unable to decode theme image resource " << id;
+      return NULL;
+    }
+
+    return PNGDecoder::CreateSkBitmapFromBGRAFormat(png_data,
+                                                    image_width,
+                                                    image_height);
+  } else {
+    // TODO(glen): File no-longer exists, we're out of date. We should
+    // clear the theme (or maybe just the pref that points to this
+    // image).
+    return NULL;
+  }
 }
 
 skia::HSL BrowserThemeProvider::GetTint(int id) {
@@ -700,10 +700,10 @@ void BrowserThemeProvider::SaveDisplayPropertyData() {
 
 void BrowserThemeProvider::NotifyThemeChanged() {
   // Redraw!
-  for (BrowserList::const_iterator browser = BrowserList::begin();
-      browser != BrowserList::end(); ++browser) {
-    (*browser)->window()->UserChangedTheme();
-  }
+  NotificationService* service = NotificationService::current();
+  service->Notify(NotificationType::BROWSER_THEME_CHANGED,
+                  NotificationService::AllSources(),
+                  NotificationService::NoDetails());
 }
 
 void BrowserThemeProvider::LoadThemePrefs() {
@@ -732,6 +732,7 @@ SkColor BrowserThemeProvider::FindColor(const char* id,
 }
 
 void BrowserThemeProvider::FreeImages() {
+  FreePlatformImages();
   for (std::vector<SkBitmap*>::iterator i = generated_images_.begin();
        i != generated_images_.end(); i++) {
     delete *i;
@@ -739,3 +740,9 @@ void BrowserThemeProvider::FreeImages() {
   generated_images_.clear();
   image_cache_.clear();
 }
+
+#if defined(OS_WIN)
+void BrowserThemeProvider::FreePlatformImages() {
+  // Windows has no platform image cache to clear.
+}
+#endif

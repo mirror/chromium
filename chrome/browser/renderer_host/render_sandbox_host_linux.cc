@@ -15,17 +15,37 @@
 #include "base/logging.h"
 #include "base/message_loop.h"
 #include "base/pickle.h"
+#include "base/string_util.h"
 #include "base/unix_domain_socket_posix.h"
+#include "chrome/common/sandbox_methods_linux.h"
+#include "webkit/api/public/gtk/WebFontInfo.h"
+#include "webkit/api/public/WebData.h"
+#include "webkit/api/public/WebKit.h"
+#include "webkit/api/public/WebKitClient.h"
 
 #include "SkFontHost_fontconfig_direct.h"
 #include "SkFontHost_fontconfig_ipc.h"
+
+using WebKit::WebClipboard;
+using WebKit::WebData;
+using WebKit::WebFontInfo;
+using WebKit::WebKitClient;
+using WebKit::WebMimeRegistry;
+using WebKit::WebPluginInfo;
+using WebKit::WebPluginListBuilder;
+using WebKit::WebSandboxSupport;
+using WebKit::WebString;
+using WebKit::WebThemeEngine;
+using WebKit::WebUChar;
+using WebKit::WebURL;
+using WebKit::WebURLLoader;
 
 // http://code.google.com/p/chromium/wiki/LinuxSandboxIPC
 
 // BEWARE: code in this file run across *processes* (not just threads).
 
 // This code runs in a child process
-class SandboxIPCProcess {
+class SandboxIPCProcess : public WebKitClient {
  public:
   // lifeline_fd: this is the read end of a pipe which the browser process
   //   holds the other end of. If the browser process dies, it's descriptors are
@@ -37,6 +57,8 @@ class SandboxIPCProcess {
       : lifeline_fd_(lifeline_fd),
         browser_socket_(browser_socket),
         font_config_(new FontConfigDirect()) {
+    WebKit::initialize(this);
+
     base::InjectiveMultimap multimap;
     multimap.push_back(base::InjectionArc(0, lifeline_fd, false));
     multimap.push_back(base::InjectionArc(0, browser_socket, false));
@@ -76,6 +98,46 @@ class SandboxIPCProcess {
     }
   }
 
+  // ---------------------------------------------------------------------------
+  // WebKitClient impl...
+
+  virtual WebClipboard* clipboard() { return NULL; }
+  virtual WebMimeRegistry* mimeRegistry() { return NULL; }
+  virtual WebSandboxSupport* sandboxSupport() { return NULL; }
+  virtual WebThemeEngine* themeEngine() { return NULL; }
+
+  virtual unsigned long long visitedLinkHash(const char*, size_t) { return 0; }
+  virtual bool isLinkVisited(unsigned long long) { return false; }
+
+  virtual void setCookies(const WebURL&, const WebURL&, const WebString&) { }
+  virtual WebString cookies(const WebURL&, const WebURL&) { return WebString(); }
+
+  virtual void prefetchHostName(const WebString&) { }
+
+  virtual WebURLLoader* createURLLoader() { return NULL; }
+
+  virtual void getPluginList(bool refresh, WebPluginListBuilder*) { }
+
+  virtual void decrementStatsCounter(const char*) { }
+  virtual void incrementStatsCounter(const char*) { }
+
+  virtual void traceEventBegin(const char* name, void*, const char*) { }
+  virtual void traceEventEnd(const char* name, void*, const char*) { }
+
+  virtual WebData loadResource(const char*) { return WebData(); }
+
+  virtual void suddenTerminationChanged(bool) { }
+
+  virtual WebString defaultLocale() { return WebString(); }
+
+  virtual double currentTime() { return 0; }
+
+  virtual void setSharedTimerFiredFunction(void (*)()) { }
+  virtual void setSharedTimerFireTime(double) { }
+  virtual void stopSharedTimer() { }
+
+  virtual void callOnMainThread(void (*)()) { }
+
  private:
   // ---------------------------------------------------------------------------
   // Requests from the renderer...
@@ -101,6 +163,8 @@ class SandboxIPCProcess {
       HandleFontMatchRequest(fd, pickle, iter, fds);
     } else if (kind == FontConfigIPC::METHOD_OPEN) {
       HandleFontOpenRequest(fd, pickle, iter, fds);
+    } else if (kind == LinuxSandbox::METHOD_GET_FONT_FAMILY_FOR_CHARS) {
+      HandleGetFontFamilyForChars(fd, pickle, iter, fds);
     }
 
   error:
@@ -133,8 +197,8 @@ class SandboxIPCProcess {
     unsigned result_fileid;
 
     const bool r = font_config_->Match(
-        &result_family, &result_fileid, fileid_valid, fileid, family, is_bold,
-        is_italic);
+        &result_family, &result_fileid, fileid_valid, fileid, family, &is_bold,
+        &is_italic);
 
     Pickle reply;
     if (!r) {
@@ -143,6 +207,8 @@ class SandboxIPCProcess {
       reply.WriteBool(true);
       reply.WriteUInt32(result_fileid);
       reply.WriteString(result_family);
+      reply.WriteBool(is_bold);
+      reply.WriteBool(is_italic);
     }
     SendRendererReply(fds, reply, -1);
   }
@@ -162,6 +228,43 @@ class SandboxIPCProcess {
     }
 
     SendRendererReply(fds, reply, result_fd);
+  }
+
+  void HandleGetFontFamilyForChars(int fd, Pickle& pickle, void* iter,
+                                   std::vector<int>& fds) {
+    // The other side of this call is
+    // chrome/renderer/renderer_sandbox_support_linux.cc
+
+    int num_chars;
+    if (!pickle.ReadInt(&iter, &num_chars))
+      return;
+
+    // We don't want a corrupt renderer asking too much of us, it might
+    // overflow later in the code.
+    static const int kMaxChars = 4096;
+    if (num_chars < 1 || num_chars > kMaxChars) {
+      LOG(WARNING) << "HandleGetFontFamilyForChars: too many chars: "
+                   << num_chars;
+      return;
+    }
+
+    scoped_array<WebUChar> chars(new WebUChar[num_chars]);
+
+    for (int i = 0; i < num_chars; ++i) {
+      uint32_t c;
+      if (!pickle.ReadUInt32(&iter, &c)) {
+        return;
+      }
+
+      chars[i] = c;
+    }
+
+    const WebString family = WebFontInfo::familyForChars(chars.get(), num_chars);
+    const std::string family_utf8 = UTF16ToUTF8(family);
+
+    Pickle reply;
+    reply.WriteString(family_utf8);
+    SendRendererReply(fds, reply, -1);
   }
 
   void SendRendererReply(const std::vector<int>& fds, const Pickle& reply,

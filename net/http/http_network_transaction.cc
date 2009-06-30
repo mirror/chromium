@@ -10,14 +10,12 @@
 #include "base/string_util.h"
 #include "base/trace_event.h"
 #include "build/build_config.h"
-#include "net/base/client_socket_factory.h"
 #include "net/base/connection_type_histograms.h"
 #include "net/base/io_buffer.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
 #include "net/base/net_util.h"
 #include "net/base/ssl_cert_request_info.h"
-#include "net/base/ssl_client_socket.h"
 #include "net/base/upload_data_stream.h"
 #include "net/http/http_auth.h"
 #include "net/http/http_auth_handler.h"
@@ -27,6 +25,9 @@
 #include "net/http/http_request_info.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_util.h"
+#include "net/socket/client_socket_factory.h"
+#include "net/socket/socks_client_socket.h"
+#include "net/socket/ssl_client_socket.h"
 
 using base::Time;
 
@@ -139,8 +140,7 @@ HttpNetworkTransaction::HttpNetworkTransaction(HttpNetworkSession* session,
       connection_(session->connection_pool()),
       reused_socket_(false),
       using_ssl_(false),
-      using_proxy_(false),
-      using_tunnel_(false),
+      proxy_mode_(kDirectConnection),
       establishing_tunnel_(false),
       reading_body_from_socket_(false),
       request_headers_(new RequestHeaders()),
@@ -397,8 +397,8 @@ uint64 HttpNetworkTransaction::GetUploadProgress() const {
 }
 
 HttpNetworkTransaction::~HttpNetworkTransaction() {
-  // If we still have an open socket, then make sure to disconnect it so we
-  // don't try to reuse it later on.
+  // If we still have an open socket, then make sure to disconnect it so it
+  // won't call us back and we don't try to reuse it later on.
   if (connection_.is_initialized())
     connection_.socket()->Disconnect();
 
@@ -447,6 +447,15 @@ int HttpNetworkTransaction::DoLoop(int result) {
       case STATE_INIT_CONNECTION_COMPLETE:
         rv = DoInitConnectionComplete(rv);
         TRACE_EVENT_END("http.init_conn", request_, request_->url.spec());
+        break;
+      case STATE_SOCKS_CONNECT:
+        DCHECK_EQ(OK, rv);
+        TRACE_EVENT_BEGIN("http.socks_connect", request_, request_->url.spec());
+        rv = DoSOCKSConnect();
+        break;
+      case STATE_SOCKS_CONNECT_COMPLETE:
+        rv = DoSOCKSConnectComplete(rv);
+        TRACE_EVENT_END("http.socks_connect", request_, request_->url.spec());
         break;
       case STATE_SSL_CONNECT:
         DCHECK_EQ(OK, rv);
@@ -531,11 +540,10 @@ int HttpNetworkTransaction::DoResolveProxy() {
 int HttpNetworkTransaction::DoResolveProxyComplete(int result) {
   next_state_ = STATE_INIT_CONNECTION;
 
-  // Since we only support HTTP proxies or DIRECT connections, remove
-  // any other type of proxy from the list (i.e. SOCKS).
-  // Supporting SOCKS is issue http://crbug.com/469.
+  // Remove unsupported proxies (like SOCKS5) from the list.
   proxy_info_.RemoveProxiesWithoutScheme(
-      ProxyServer::SCHEME_DIRECT | ProxyServer::SCHEME_HTTP);
+      ProxyServer::SCHEME_DIRECT | ProxyServer::SCHEME_HTTP |
+      ProxyServer::SCHEME_SOCKS4);
 
   pac_request_ = NULL;
 
@@ -552,15 +560,22 @@ int HttpNetworkTransaction::DoInitConnection() {
   next_state_ = STATE_INIT_CONNECTION_COMPLETE;
 
   using_ssl_ = request_->url.SchemeIs("https");
-  using_proxy_ = !proxy_info_.is_direct() && !using_ssl_;
-  using_tunnel_ = !proxy_info_.is_direct() && using_ssl_;
+
+  if (proxy_info_.is_direct())
+    proxy_mode_ = kDirectConnection;
+  else if (proxy_info_.proxy_server().is_socks())
+    proxy_mode_ = kSOCKSProxy;
+  else if (using_ssl_)
+    proxy_mode_ = kHTTPProxyUsingTunnel;
+  else
+    proxy_mode_ = kHTTPProxy;
 
   // Build the string used to uniquely identify connections of this type.
   // Determine the host and port to connect to.
   std::string connection_group;
   std::string host;
   int port;
-  if (using_proxy_ || using_tunnel_) {
+  if (proxy_mode_ != kDirectConnection) {
     ProxyServer proxy_server = proxy_info_.proxy_server();
     connection_group = "proxy/" + proxy_server.ToURI() + "/";
     host = proxy_server.HostNoBrackets();
@@ -569,7 +584,12 @@ int HttpNetworkTransaction::DoInitConnection() {
     host = request_->url.HostNoBrackets();
     port = request_->url.EffectiveIntPort();
   }
-  if (!using_proxy_)
+
+  // For a connection via HTTP proxy not using CONNECT, the connection
+  // is to the proxy server only. For all other cases
+  // (direct, HTTP proxy CONNECT, SOCKS), the connection is upto the
+  // url endpoint. Hence we append the url data into the connection_group.
+  if (proxy_mode_ != kHTTPProxy)
     connection_group.append(request_->url.GetOrigin().spec());
 
   DCHECK(!connection_group.empty());
@@ -608,11 +628,13 @@ int HttpNetworkTransaction::DoInitConnectionComplete(int result) {
     // Now we have a TCP connected socket.  Perform other connection setup as
     // needed.
     LogTCPConnectedMetrics();
-    if (using_ssl_ && !using_tunnel_) {
+    if (proxy_mode_ == kSOCKSProxy)
+      next_state_ = STATE_SOCKS_CONNECT;
+    else if (using_ssl_ && proxy_mode_ == kDirectConnection) {
       next_state_ = STATE_SSL_CONNECT;
     } else {
       next_state_ = STATE_WRITE_HEADERS;
-      if (using_tunnel_)
+      if (proxy_mode_ == kHTTPProxyUsingTunnel)
         establishing_tunnel_ = true;
     }
   }
@@ -620,8 +642,42 @@ int HttpNetworkTransaction::DoInitConnectionComplete(int result) {
   return OK;
 }
 
+int HttpNetworkTransaction::DoSOCKSConnect() {
+  DCHECK_EQ(kSOCKSProxy, proxy_mode_);
+
+  next_state_ = STATE_SOCKS_CONNECT_COMPLETE;
+
+  // Add a SOCKS connection on top of our existing transport socket.
+  ClientSocket* s = connection_.release_socket();
+  HostResolver::RequestInfo req_info(request_->url.HostNoBrackets(),
+                                     request_->url.EffectiveIntPort());
+  req_info.set_referrer(request_->referrer);
+
+  s = new SOCKSClientSocket(s, req_info, session_->host_resolver());
+  connection_.set_socket(s);
+  return connection_.socket()->Connect(&io_callback_);
+}
+
+int HttpNetworkTransaction::DoSOCKSConnectComplete(int result) {
+  DCHECK_EQ(kSOCKSProxy, proxy_mode_);
+
+  if (result == OK) {
+    if (using_ssl_) {
+      next_state_ = STATE_SSL_CONNECT;
+    } else {
+      next_state_ = STATE_WRITE_HEADERS;
+    }
+  } else {
+    result = ReconsiderProxyAfterError(result);
+  }
+  return result;
+}
+
 int HttpNetworkTransaction::DoSSLConnect() {
   next_state_ = STATE_SSL_CONNECT_COMPLETE;
+
+  if (request_->load_flags & LOAD_VERIFY_EV_CERT)
+    ssl_config_.verify_ev_cert = true;
 
   // Add a SSL socket on top of our existing transport socket.
   ClientSocket* s = connection_.release_socket();
@@ -678,7 +734,8 @@ int HttpNetworkTransaction::DoWriteHeaders() {
       if (request_->upload_data)
         request_body_stream_.reset(new UploadDataStream(request_->upload_data));
       BuildRequestHeaders(request_, authorization_headers,
-                          request_body_stream_.get(), using_proxy_,
+                          request_body_stream_.get(),
+                          proxy_mode_ == kHTTPProxy,
                           &request_headers_->headers_);
     }
   }
@@ -864,8 +921,9 @@ int HttpNetworkTransaction::DoReadHeadersComplete(int result) {
 
 int HttpNetworkTransaction::DoReadBody() {
   DCHECK(read_buf_);
-  DCHECK(read_buf_len_ > 0);
+  DCHECK_GT(read_buf_len_, 0);
   DCHECK(connection_.is_initialized());
+  DCHECK(!header_buf_->headers() || header_buf_body_offset_ >= 0);
 
   next_state_ = STATE_READ_BODY_COMPLETE;
 
@@ -1089,6 +1147,8 @@ void HttpNetworkTransaction::LogBlockedTunnelResponse(
 }
 
 int HttpNetworkTransaction::DidReadResponseHeaders() {
+  DCHECK_GE(header_buf_body_offset_, 0);
+
   scoped_refptr<HttpResponseHeaders> headers;
   if (has_found_status_line_start()) {
     headers = new HttpResponseHeaders(
@@ -1124,7 +1184,7 @@ int HttpNetworkTransaction::DidReadResponseHeaders() {
         request_headers_->headers_.clear();
         request_headers_bytes_sent_ = 0;
         header_buf_len_ = 0;
-        header_buf_body_offset_ = 0;
+        header_buf_body_offset_ = -1;
         establishing_tunnel_ = false;
         return OK;
 
@@ -1290,9 +1350,7 @@ int HttpNetworkTransaction::HandleCertificateRequest(int error) {
     const std::vector<scoped_refptr<X509Certificate> >& client_certs =
         response_.cert_request_info->client_certs;
     for (size_t i = 0; i < client_certs.size(); ++i) {
-      if (memcmp(&client_cert->fingerprint(),
-                 &client_certs[i]->fingerprint(),
-                 sizeof(X509Certificate::Fingerprint)) == 0) {
+      if (client_cert->fingerprint().Equals(client_certs[i]->fingerprint())) {
         ssl_config_.client_cert = client_cert;
         ssl_config_.send_client_cert = true;
         next_state_ = STATE_INIT_CONNECTION;
@@ -1443,7 +1501,7 @@ int HttpNetworkTransaction::ReconsiderProxyAfterError(int error) {
 }
 
 bool HttpNetworkTransaction::ShouldApplyProxyAuth() const {
-  return using_proxy_ || establishing_tunnel_;
+  return (proxy_mode_ == kHTTPProxy) || establishing_tunnel_;
 }
 
 bool HttpNetworkTransaction::ShouldApplyServerAuth() const {

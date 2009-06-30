@@ -24,6 +24,7 @@
 namespace net {
 class ForceTLSState;
 }
+class Blacklist;
 class BookmarkModel;
 class BrowserThemeProvider;
 class ChromeURLRequestContext;
@@ -47,6 +48,7 @@ class URLRequestContext;
 class UserScriptMaster;
 class VisitedLinkMaster;
 class WebDataService;
+class WebKitContext;
 
 class Profile {
  public:
@@ -210,6 +212,9 @@ class Profile {
   // is only used for a separate cookie store currently.
   virtual URLRequestContext* GetRequestContextForExtensions() = 0;
 
+  // Returns the Privacy Blaclist for this profile.
+  virtual Blacklist* GetBlacklist() = 0;
+
   // Returns the session service for this profile. This may return NULL. If
   // this profile supports a session service (it isn't off the record), and
   // the session service hasn't yet been created, this forces creation of
@@ -269,6 +274,9 @@ class Profile {
   // BE USED ON THE I/O THREAD! This pointer is retrieved from the profile and
   // sent to the I/O thread where it is actually used.
   virtual SpellChecker* GetSpellChecker() = 0;
+
+  // Returns the WebKitContext assigned to this profile.
+  virtual WebKitContext* GetWebKitContext() = 0;
 
   // Marks the profile as cleanly shutdown.
   //
@@ -339,6 +347,7 @@ class ProfileImpl : public Profile,
   virtual URLRequestContext* GetRequestContext();
   virtual URLRequestContext* GetRequestContextForMedia();
   virtual URLRequestContext* GetRequestContextForExtensions();
+  virtual Blacklist* GetBlacklist();
   virtual SessionService* GetSessionService();
   virtual void ShutdownSessionService();
   virtual bool HasSessionService() const;
@@ -354,6 +363,7 @@ class ProfileImpl : public Profile,
   virtual void ResetTabRestoreService();
   virtual void ReinitializeSpellChecker();
   virtual SpellChecker* GetSpellChecker();
+  virtual WebKitContext* GetWebKitContext();
   virtual void MarkAsCleanShutdown();
   virtual void InitExtensions();
   virtual void InitWebResources();
@@ -416,12 +426,15 @@ class ProfileImpl : public Profile,
 
   ChromeURLRequestContext* extensions_request_context_;
 
+  Blacklist* blacklist_;
+
   scoped_refptr<DownloadManager> download_manager_;
   scoped_refptr<HistoryService> history_service_;
   scoped_refptr<WebDataService> web_data_service_;
   scoped_refptr<PasswordStore> password_store_;
   scoped_refptr<SessionService> session_service_;
   scoped_refptr<BrowserThemeProvider> theme_provider_;
+  scoped_refptr<WebKitContext> webkit_context_;
   bool history_service_created_;
   bool created_web_data_service_;
   bool created_password_store_;

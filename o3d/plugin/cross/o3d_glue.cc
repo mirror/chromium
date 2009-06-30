@@ -130,6 +130,7 @@ PluginObject::PluginObject(NPP npp)
       mac_cgl_context_(0),
       last_mac_event_time_(0),
       wants_redraw_(false),
+      time_to_hide_overlay_(0.0),
 #endif
 #ifdef OS_LINUX
       display_(NULL),
@@ -137,9 +138,11 @@ PluginObject::PluginObject(NPP npp)
       xt_widget_(NULL),
       xt_app_context_(NULL),
       xt_interval_(0),
+      last_click_time_(0),
+      gtk_container_(NULL),
+      timeout_id_(0),
       draw_(true),
       in_plugin_(false),
-      last_click_time_(0),
 #endif
       np_v8_bridge_(&service_locator_, npp),
       stream_manager_(new StreamManager(npp)),
@@ -152,6 +155,10 @@ PluginObject::PluginObject(NPP npp)
 
 #ifdef OS_MACOSX
   memset(last_buffer_rect_, 0, sizeof(last_buffer_rect_));
+#endif
+
+#ifdef OS_LINUX
+  memset(got_double_click_, 0, sizeof(got_double_click_));
 #endif
 
   // create an O3D object

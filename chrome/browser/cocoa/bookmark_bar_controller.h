@@ -16,6 +16,7 @@ class BookmarkModel;
 class BookmarkNode;
 @class BookmarkBarView;
 class Profile;
+class PrefService;
 
 // The interface for an object which can open URLs for a bookmark.
 @protocol BookmarkURLOpener
@@ -30,12 +31,18 @@ class Profile;
  @private
   BookmarkModel* bookmarkModel_;  // weak; part of the profile owned by the
                                   // top-level Browser object.
+  PrefService* preferences_;      // (ditto)
 
-  // Currently these two are always the same, but they mean slightly
-  // different things.  contentAreaHasOffset_ is an implementation
-  // detail of bookmark bar visibility.
+  // Currently these two are always the same when not in fullscreen
+  // mode, but they mean slightly different things.
+  // contentAreaHasOffset_ is an implementation detail of bookmark bar
+  // show state.
   BOOL contentViewHasOffset_;
-  BOOL barIsVisible_;
+  BOOL barShouldBeShown_;
+
+  // If the bar is disabled, we hide it and ignore show/hide commands.
+  // Set when using fullscreen mode.
+  BOOL barIsEnabled_;
 
   // The view of the bookmark bar itself.
   // Not made into a scoped_nsobject since I may move it into a nib.
@@ -70,6 +77,11 @@ class Profile;
 // Toggle the state of the bookmark bar.
 - (void)toggleBookmarkBar;
 
+// Turn on or off the bookmark bar and prevent or reallow its
+// appearance.  On disable, toggle off if shown.  On enable, show only
+// if needed.  For fullscreen mode.
+- (void)setBookmarkBarEnabled:(BOOL)enabled;
+
 @end
 
 // Redirects from BookmarkBarBridge, the C++ object which glues us to
@@ -78,16 +90,16 @@ class Profile;
 - (void)loaded:(BookmarkModel*)model;
 - (void)beingDeleted:(BookmarkModel*)model;
 - (void)nodeMoved:(BookmarkModel*)model
-        oldParent:(BookmarkNode*)oldParent oldIndex:(int)oldIndex
-        newParent:(BookmarkNode*)newParent newIndex:(int)newIndex;
+        oldParent:(const BookmarkNode*)oldParent oldIndex:(int)oldIndex
+        newParent:(const BookmarkNode*)newParent newIndex:(int)newIndex;
 - (void)nodeAdded:(BookmarkModel*)model
-           parent:(BookmarkNode*)oldParent index:(int)index;
+           parent:(const BookmarkNode*)oldParent index:(int)index;
 - (void)nodeChanged:(BookmarkModel*)model
-               node:(BookmarkNode*)node;
+               node:(const BookmarkNode*)node;
 - (void)nodeFavIconLoaded:(BookmarkModel*)model
-                     node:(BookmarkNode*)node;
+                     node:(const BookmarkNode*)node;
 - (void)nodeChildrenReordered:(BookmarkModel*)model
-                         node:(BookmarkNode*)node;
+                         node:(const BookmarkNode*)node;
 @end
 
 

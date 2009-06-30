@@ -147,6 +147,9 @@ class TestingProfile : public Profile {
   virtual URLRequestContext* GetRequestContextForExtensions() {
     return NULL;
   }
+  virtual Blacklist* GetBlacklist() {
+    return NULL;
+  }
   void set_session_service(SessionService* session_service) {
     session_service_ = session_service;
   }
@@ -199,6 +202,12 @@ class TestingProfile : public Profile {
   virtual void ReinitializeSpellChecker() {
   }
   virtual SpellChecker* GetSpellChecker() {
+    return NULL;
+  }
+  virtual WebKitContext* GetWebKitContext() {
+    return NULL;
+  }
+  virtual WebKitContext* GetOffTheRecordWebKitContext() {
     return NULL;
   }
   virtual void MarkAsCleanShutdown() {

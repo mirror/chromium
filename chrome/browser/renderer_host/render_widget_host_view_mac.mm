@@ -7,6 +7,7 @@
 #include "base/histogram.h"
 #include "base/sys_string_conversions.h"
 #include "chrome/browser/browser_trial.h"
+#import "chrome/browser/cocoa/rwhvm_editcommand_helper.h"
 #include "chrome/browser/renderer_host/backing_store.h"
 #include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/renderer_host/render_widget_host.h"
@@ -106,6 +107,11 @@ void RenderWidgetHostViewMac::WasHidden() {
   // ignore them so we don't re-allocate the backing store.  We will paint
   // everything again when we become selected again.
   is_hidden_ = true;
+
+  // We can't have tooltips floating around after the tools they're tipping
+  // about are hidden, can we?
+  tooltip_.reset(NULL);
+  tooltip_text_.clear();
 
   // If we have a renderer, then inform it that we are being hidden so it can
   // reduce its resource utilization.
@@ -362,6 +368,9 @@ void RenderWidgetHostViewMac::ShutdownHost() {
 - (id)initWithRenderWidgetHostViewMac:(RenderWidgetHostViewMac*)r {
   self = [super initWithFrame:NSZeroRect];
   if (self != nil) {
+    editCommand_helper_.reset(new RWHVMEditCommandHelper);
+    editCommand_helper_->AddEditingSelectorsToClass([self class]);
+
     renderWidgetHostView_ = r;
     canBeKeyView_ = YES;
     closeOnDeactivate_ = NO;
@@ -409,7 +418,7 @@ void RenderWidgetHostViewMac::ShutdownHost() {
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
-  DCHECK(renderWidgetHostView_->render_widget_host_->process()->channel());
+  DCHECK(renderWidgetHostView_->render_widget_host_->process()->HasConnection());
   DCHECK(!renderWidgetHostView_->about_to_validate_and_paint_);
 
   renderWidgetHostView_->invalid_rect_ = dirtyRect;
@@ -441,21 +450,44 @@ void RenderWidgetHostViewMac::ShutdownHost() {
 
     // Fill the remaining portion of the damaged_rect with white
     if (damaged_rect.right() > bitmap_rect.right()) {
-      NSRect r;
-      r.origin.x = std::max(bitmap_rect.right(), damaged_rect.x());
-      r.origin.y = std::min(bitmap_rect.bottom(), damaged_rect.bottom());
-      r.size.width = damaged_rect.right() - r.origin.x;
-      r.size.height = damaged_rect.y() - r.origin.y;
+      int x = std::max(bitmap_rect.right(), damaged_rect.x());
+      int y = std::min(bitmap_rect.bottom(), damaged_rect.bottom());
+      int width = damaged_rect.right() - x;
+      int height = damaged_rect.y() - y;
+
+      // Extra fun to get around the fact that gfx::Rects can't have
+      // negative sizes.
+      if (width < 0) {
+        x += width;
+        width = -width;
+      }
+      if (height < 0) {
+        y += height;
+        height = -height;
+      }
+
+      NSRect r = [self RectToNSRect:gfx::Rect(x, y, width, height)];
       [[NSColor whiteColor] set];
       NSRectFill(r);
     }
     if (damaged_rect.bottom() > bitmap_rect.bottom()) {
-      NSRect r;
-      r.origin.x = damaged_rect.x();
-      r.origin.y = damaged_rect.bottom();
-      r.size.width = damaged_rect.right() - r.origin.x;
-      r.size.height = std::max(bitmap_rect.bottom(), damaged_rect.y()) -
-          r.origin.y;
+      int x = damaged_rect.x();
+      int y = damaged_rect.bottom();
+      int width = damaged_rect.right() - x;
+      int height = std::max(bitmap_rect.bottom(), damaged_rect.y()) - y;
+
+      // Extra fun to get around the fact that gfx::Rects can't have
+      // negative sizes.
+      if (width < 0) {
+        x += width;
+        width = -width;
+      }
+      if (height < 0) {
+        y += height;
+        height = -height;
+      }
+
+      NSRect r = [self RectToNSRect:gfx::Rect(x, y, width, height)];
       [[NSColor whiteColor] set];
       NSRectFill(r);
     }
@@ -509,4 +541,15 @@ void RenderWidgetHostViewMac::ShutdownHost() {
   return YES;
 }
 
+- (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)item {
+  SEL action = [item action];
+
+  return editCommand_helper_->IsMenuItemEnabled(action, self);
+}
+
+- (RenderWidgetHostViewMac*)renderWidgetHostViewMac {
+  return renderWidgetHostView_;
+}
+
 @end
+

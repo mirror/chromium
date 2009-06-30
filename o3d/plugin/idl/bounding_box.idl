@@ -74,13 +74,14 @@ class BoundingBox {
     Multiplies the bounding box by the given matrix returning a new bounding
     box.
     \param matrix The matrix to multiply by.
-    \returns The new bounding box.
+    \return The new bounding box.
   %]
   [const, userglue] BoundingBox Mul(Vectormath::Aos::Matrix4 matrix);
 
   %[
     Adds a bounding box to this bounding box returning a bounding box that
     encompases both.
+    \param box BoundingBox to add to this BoundingBox.
     \return The new bounding box.
   %]
   [const, userglue] BoundingBox Add(BoundingBox box);
@@ -143,7 +144,7 @@ class BoundingBox {
         O3D_ERROR(service_locator)
             << "BoundingBox: expected 2 values, got " << values.size();
       } else {
-        for (int i = 0; i < values.size(); ++i) {
+        for (std::vector<float>::size_type i = 0; i < values.size(); ++i) {
           if (values[i].size() != 3) {
             o3d::ServiceLocator* service_locator =
                 static_cast<glue::_o3d::PluginObject*>(

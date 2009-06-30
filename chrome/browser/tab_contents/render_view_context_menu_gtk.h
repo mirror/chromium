@@ -23,8 +23,7 @@ class RenderViewContextMenuGtk : public RenderViewContextMenu,
  public:
   RenderViewContextMenuGtk(TabContents* web_contents,
                            const ContextMenuParams& params,
-                           uint32_t triggering_event_time,
-                           RenderWidgetHostView* rwhv);
+                           uint32_t triggering_event_time);
 
   ~RenderViewContextMenuGtk();
 
@@ -42,16 +41,16 @@ class RenderViewContextMenuGtk : public RenderViewContextMenu,
   // RenderViewContextMenu implementation --------------------------------------
   virtual void DoInit();
   virtual void AppendMenuItem(int id);
-  virtual void AppendMenuItem(int id, const std::wstring& label);
-  virtual void AppendRadioMenuItem(int id, const std::wstring& label);
-  virtual void AppendCheckboxMenuItem(int id, const std::wstring& label);
+  virtual void AppendMenuItem(int id, const string16& label);
+  virtual void AppendRadioMenuItem(int id, const string16& label);
+  virtual void AppendCheckboxMenuItem(int id, const string16& label);
   virtual void AppendSeparator();
-  virtual void StartSubMenu(int id, const std::wstring& label);
+  virtual void StartSubMenu(int id, const string16& label);
   virtual void FinishSubMenu();
   virtual void DidWriteURLToClipboard(const std::string& url);
 
  private:
-  void AppendItem(int id, const std::wstring& label, MenuItemType type);
+  void AppendItem(int id, const string16& label, MenuItemType type);
   static void DoneMakingMenu(std::vector<MenuCreateMaterial>* menu);
 
   scoped_ptr<MenuGtk> gtk_menu_;
@@ -60,7 +59,6 @@ class RenderViewContextMenuGtk : public RenderViewContextMenu,
   std::vector<MenuCreateMaterial> submenu_;
   bool making_submenu_;
   uint32_t triggering_event_time_;
-  RenderWidgetHostView* host_view_;
 };
 
 #endif  // CHROME_BROWSER_TAB_CONTENTS_RENDER_VIEW_CONTEXT_MENU_GTK_H_

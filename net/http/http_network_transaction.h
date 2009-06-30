@@ -11,8 +11,6 @@
 #include "base/scoped_ptr.h"
 #include "base/time.h"
 #include "net/base/address_list.h"
-#include "net/base/client_socket_handle.h"
-#include "net/base/client_socket_pool.h"
 #include "net/base/host_resolver.h"
 #include "net/base/io_buffer.h"
 #include "net/base/load_flags.h"
@@ -23,6 +21,8 @@
 #include "net/http/http_response_info.h"
 #include "net/http/http_transaction.h"
 #include "net/proxy/proxy_service.h"
+#include "net/socket/client_socket_handle.h"
+#include "net/socket/client_socket_pool.h"
 #include "testing/gtest/include/gtest/gtest_prod.h"
 
 namespace net {
@@ -99,6 +99,8 @@ class HttpNetworkTransaction : public HttpTransaction {
     STATE_RESOLVE_PROXY_COMPLETE,
     STATE_INIT_CONNECTION,
     STATE_INIT_CONNECTION_COMPLETE,
+    STATE_SOCKS_CONNECT,
+    STATE_SOCKS_CONNECT_COMPLETE,
     STATE_SSL_CONNECT,
     STATE_SSL_CONNECT_COMPLETE,
     STATE_WRITE_HEADERS,
@@ -112,6 +114,13 @@ class HttpNetworkTransaction : public HttpTransaction {
     STATE_DRAIN_BODY_FOR_AUTH_RESTART,
     STATE_DRAIN_BODY_FOR_AUTH_RESTART_COMPLETE,
     STATE_NONE
+  };
+
+  enum ProxyMode {
+    kDirectConnection,  // If using a direct connection
+    kHTTPProxy,  // If using a proxy for HTTP (not HTTPS)
+    kHTTPProxyUsingTunnel,  // If using a tunnel for HTTPS
+    kSOCKSProxy,  // If using a SOCKS proxy
   };
 
   void DoCallback(int result);
@@ -128,6 +137,8 @@ class HttpNetworkTransaction : public HttpTransaction {
   int DoResolveProxyComplete(int result);
   int DoInitConnection();
   int DoInitConnectionComplete(int result);
+  int DoSOCKSConnect();
+  int DoSOCKSConnectComplete(int result);
   int DoSSLConnect();
   int DoSSLConnectComplete(int result);
   int DoWriteHeaders();
@@ -303,8 +314,7 @@ class HttpNetworkTransaction : public HttpTransaction {
   bool reused_socket_;
 
   bool using_ssl_;     // True if handling a HTTPS request
-  bool using_proxy_;   // True if using a proxy for HTTP (not HTTPS)
-  bool using_tunnel_;  // True if using a tunnel for HTTPS
+  ProxyMode proxy_mode_;
 
   // True while establishing a tunnel.  This allows the HTTP CONNECT
   // request/response to reuse the STATE_WRITE_HEADERS,
@@ -336,10 +346,11 @@ class HttpNetworkTransaction : public HttpTransaction {
   size_t request_headers_bytes_sent_;
   scoped_ptr<UploadDataStream> request_body_stream_;
 
-  // The read buffer may be larger than it is full.  The 'capacity' indicates
-  // the allocation size of the buffer, and the 'len' indicates how much data
-  // is in the buffer already.  The 'body offset' indicates the offset of the
-  // start of the response body within the read buffer.
+  // The read buffer |header_buf_| may be larger than it is full.  The
+  // 'capacity' indicates the allocation size of the buffer, and the 'len'
+  // indicates how much data is in the buffer already.  The 'body offset'
+  // indicates the offset of the start of the response body within the read
+  // buffer.
   scoped_refptr<ResponseHeaders> header_buf_;
   int header_buf_capacity_;
   int header_buf_len_;

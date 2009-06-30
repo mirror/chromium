@@ -77,7 +77,7 @@ class WebFrameImpl : public WebFrame, public base::RefCounted<WebFrameImpl> {
 
   // WebFrame
   virtual void LoadRequest(const WebKit::WebURLRequest& request);
-  virtual void LoadHistoryState(const std::string& history_state);
+  virtual void LoadHistoryItem(const WebKit::WebHistoryItem& item);
   virtual void LoadHTMLString(const std::string& html_text,
                               const GURL& base_url);
   virtual void LoadAlternateHTMLString(const WebKit::WebURLRequest& request,
@@ -93,9 +93,8 @@ class WebFrameImpl : public WebFrame, public base::RefCounted<WebFrameImpl> {
   virtual void ExecuteScriptInNewContext(
       const WebKit::WebScriptSource* sources, int num_sources);
   virtual bool InsertCSSStyles(const std::string& css);
-  virtual bool GetPreviousHistoryState(std::string* history_state) const;
-  virtual bool GetCurrentHistoryState(std::string* history_state) const;
-  virtual bool HasCurrentHistoryState() const;
+  virtual WebKit::WebHistoryItem GetPreviousHistoryItem() const;
+  virtual WebKit::WebHistoryItem GetCurrentHistoryItem() const;
   virtual GURL GetURL() const;
   virtual GURL GetFavIconURL() const;
   virtual GURL GetOSDDURL() const;
@@ -110,8 +109,6 @@ class WebFrameImpl : public WebFrame, public base::RefCounted<WebFrameImpl> {
   virtual WebView* GetView() const;
   virtual void GetForms(std::vector<WebKit::WebForm>* forms) const;
   virtual std::string GetSecurityOrigin() const;
-  virtual bool CaptureImage(scoped_ptr<skia::BitmapPlatformDevice>* image,
-                            bool scroll_to_zero);
 
   // This method calls createRuntimeObject (in KJS::Bindings::Instance), which
   // increments the refcount of the NPObject passed in.
@@ -121,6 +118,12 @@ class WebFrameImpl : public WebFrame, public base::RefCounted<WebFrameImpl> {
   virtual void GrantUniversalAccess();
 
   virtual NPObject* GetWindowNPObject();
+
+#if USE(V8)
+  // Returns the V8 context for this frame, or an empty handle if there is
+  // none.
+  virtual v8::Local<v8::Context> GetScriptContext();
+#endif
 
   virtual void GetContentAsPlainText(int max_chars, std::wstring* text) const;
   virtual bool Find(
@@ -166,9 +169,9 @@ class WebFrameImpl : public WebFrame, public base::RefCounted<WebFrameImpl> {
 
   virtual WebTextInput* GetTextInput();
 
-  virtual bool ExecuteCoreCommandByName(const std::string& name,
+  virtual bool ExecuteEditCommandByName(const std::string& name,
                                         const std::string& value);
-  virtual bool IsCoreCommandEnabled(const std::string& name);
+  virtual bool IsEditCommandEnabled(const std::string& name);
 
   virtual void AddMessageToConsole(const WebKit::WebConsoleMessage&);
 
@@ -181,12 +184,6 @@ class WebFrameImpl : public WebFrame, public base::RefCounted<WebFrameImpl> {
   virtual float GetPrintPageShrink(int page);
   virtual float PrintPage(int page, skia::PlatformCanvas* canvas);
   virtual void EndPrint();
-
-  virtual void SelectAppCacheWithoutManifest();
-  virtual void SelectAppCacheWithManifest(const GURL& manifest_url);
-  virtual WebAppCacheContext* GetAppCacheContext() const {
-    return app_cache_context_.get();
-  }
 
   PassRefPtr<WebCore::Frame> CreateChildFrame(
       const WebCore::FrameLoadRequest&,
@@ -401,9 +398,6 @@ class WebFrameImpl : public WebFrame, public base::RefCounted<WebFrameImpl> {
   // Valid between calls to BeginPrint() and EndPrint(). Containts the print
   // information. Is used by PrintPage().
   scoped_ptr<ChromePrintContext> print_context_;
-
-  // The app cache context for this frame.
-  scoped_ptr<WebAppCacheContext> app_cache_context_;
 
   // The input fields that are interested in edit events and their associated
   // listeners.

@@ -26,34 +26,6 @@ const FilePath::CharType kExtensionSeparator = FILE_PATH_LITERAL('.');
 
 namespace file_util {
 
-void PathComponents(const FilePath& path,
-                    std::vector<FilePath::StringType>* components) {
-  DCHECK(components);
-  if (!components)
-    return;
-
-  FilePath::StringType path_str = path.value();
-  FilePath::StringType::size_type start = 0;
-  FilePath::StringType::size_type end =
-      path_str.find_first_of(FilePath::kSeparators);
-
-  // If the path starts with a separator, add it to components.
-  if (end == start) {
-    components->push_back(FilePath::StringType(path_str, 0, 1));
-    start = end + 1;
-    end = path_str.find_first_of(FilePath::kSeparators, start);
-  }
-  while (end != FilePath::StringType::npos) {
-    FilePath::StringType component =
-        FilePath::StringType(path_str, start, end - start);
-    components->push_back(component);
-    start = end + 1;
-    end = path_str.find_first_of(FilePath::kSeparators, start);
-  }
-
-  components->push_back(FilePath::StringType(path_str, start));
-}
-
 bool EndsWithSeparator(const FilePath& path) {
   FilePath::StringType value = path.value();
   if (value.empty())
@@ -157,18 +129,57 @@ bool ContentsEqual(const FilePath& filename1, const FilePath& filename2) {
     file1.read(buffer1, BUFFER_SIZE);
     file2.read(buffer2, BUFFER_SIZE);
 
-    if ((file1.eof() && !file2.eof()) ||
-        (!file1.eof() && file2.eof()) ||
+    if ((file1.eof() != file2.eof()) ||
         (file1.gcount() != file2.gcount()) ||
         (memcmp(buffer1, buffer2, file1.gcount()))) {
       file1.close();
       file2.close();
       return false;
     }
-  } while (!file1.eof() && !file2.eof());
+  } while (!file1.eof() || !file2.eof());
 
   file1.close();
   file2.close();
+  return true;
+}
+
+bool TextContentsEqual(const FilePath& filename1, const FilePath& filename2) {
+  std::ifstream file1(filename1.value().c_str(), std::ios::in);
+  std::ifstream file2(filename2.value().c_str(), std::ios::in);
+
+  // Even if both files aren't openable (and thus, in some sense, "equal"),
+  // any unusable file yields a result of "false".
+  if (!file1.is_open() || !file2.is_open())
+    return false;
+
+  do {
+    std::string line1, line2;
+    getline(file1, line1);
+    getline(file2, line2);
+
+    // Check for mismatched EOF states, or any error state.
+    if ((file1.eof() != file2.eof()) ||
+        file1.bad() || file2.bad()) {
+      return false;
+    }
+
+    // Trim all '\r' and '\n' characters from the end of the line.
+    std::string::size_type end1 = line1.find_last_not_of("\r\n");
+    if (end1 == std::string::npos)
+      line1.clear();
+    else if (end1 + 1 < line1.length())
+      line1.erase(end1 + 1);
+
+    std::string::size_type end2 = line2.find_last_not_of("\r\n");
+    if (end2 == std::string::npos)
+      line2.clear();
+    else if (end2 + 1 < line2.length())
+      line2.erase(end2 + 1);
+
+    if (line1 != line2)
+      return false;
+  } while (!file1.eof() || !file2.eof());
+
   return true;
 }
 

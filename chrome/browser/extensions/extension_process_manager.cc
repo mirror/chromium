@@ -8,7 +8,7 @@
 #include "chrome/browser/extensions/extension_host.h"
 #include "chrome/browser/extensions/extensions_service.h"
 #include "chrome/browser/profile.h"
-#include "chrome/browser/tab_contents/site_instance.h"
+#include "chrome/browser/renderer_host/site_instance.h"
 #include "chrome/common/extensions/extension.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/notification_type.h"
@@ -25,19 +25,20 @@ static void CreateBackgroundHosts(
 
 ExtensionProcessManager::ExtensionProcessManager(Profile* profile)
     : browsing_instance_(new BrowsingInstance(profile)) {
+  registrar_.Add(this, NotificationType::EXTENSIONS_READY,
+                 NotificationService::AllSources());
   registrar_.Add(this, NotificationType::EXTENSIONS_LOADED,
                  NotificationService::AllSources());
   registrar_.Add(this, NotificationType::EXTENSION_UNLOADED,
                  NotificationService::AllSources());
-
-  if (profile->GetExtensionsService())
-    CreateBackgroundHosts(this, profile->GetExtensionsService()->extensions());
+  registrar_.Add(this, NotificationType::EXTENSION_HOST_DESTROYED,
+                 Source<Profile>(profile));
 }
 
 ExtensionProcessManager::~ExtensionProcessManager() {
   // Copy all_hosts_ to avoid iterator invalidation issues.
-  ExtensionHostSet to_delete(all_hosts_.begin(),
-                             all_hosts_.end());
+  ExtensionHostSet to_delete(background_hosts_.begin(),
+                             background_hosts_.end());
   ExtensionHostSet::iterator iter;
   for (iter = to_delete.begin(); iter != to_delete.end(); ++iter)
     delete *iter;
@@ -49,7 +50,7 @@ ExtensionHost* ExtensionProcessManager::CreateView(Extension* extension,
   DCHECK(extension);
   DCHECK(browser);
   ExtensionHost* host =
-      new ExtensionHost(extension, GetSiteInstanceForURL(url), url, this);
+      new ExtensionHost(extension, GetSiteInstanceForURL(url), url);
   host->CreateView(browser);
   OnExtensionHostCreated(host, false);
   return host;
@@ -71,7 +72,7 @@ ExtensionHost* ExtensionProcessManager::CreateView(const GURL& url,
 ExtensionHost* ExtensionProcessManager::CreateBackgroundHost(
     Extension* extension, const GURL& url) {
   ExtensionHost* host =
-      new ExtensionHost(extension, GetSiteInstanceForURL(url), url, this);
+      new ExtensionHost(extension, GetSiteInstanceForURL(url), url);
   host->CreateRenderView(NULL);  // create a RenderViewHost with no view
   OnExtensionHostCreated(host, true);
   return host;
@@ -85,9 +86,17 @@ void ExtensionProcessManager::Observe(NotificationType type,
                                       const NotificationSource& source,
                                       const NotificationDetails& details) {
   switch (type.value) {
+    case NotificationType::EXTENSIONS_READY:
+      CreateBackgroundHosts(this,
+          Source<ExtensionsService>(source).ptr()->extensions());
+      break;
+
     case NotificationType::EXTENSIONS_LOADED: {
-      const ExtensionList* extensions = Details<ExtensionList>(details).ptr();
-      CreateBackgroundHosts(this, extensions);
+      ExtensionsService* service = Source<ExtensionsService>(source).ptr();
+      if (service->is_ready()) {
+        const ExtensionList* extensions = Details<ExtensionList>(details).ptr();
+        CreateBackgroundHosts(this, extensions);
+      }
       break;
     }
 
@@ -106,32 +115,16 @@ void ExtensionProcessManager::Observe(NotificationType type,
       break;
     }
 
+    case NotificationType::EXTENSION_HOST_DESTROYED: {
+      ExtensionHost* host = Details<ExtensionHost>(details).ptr();
+      all_hosts_.erase(host);
+      background_hosts_.erase(host);
+      break;
+    }
+
     default:
       NOTREACHED();
   }
-}
-
-void ExtensionProcessManager::OnExtensionHostDestroyed(ExtensionHost* host) {
-  all_hosts_.erase(host);
-  background_hosts_.erase(host);
-  NotificationService::current()->Notify(
-      NotificationType::EXTENSION_HOST_DESTROYED,
-      Source<ExtensionProcessManager>(this),
-      Details<ExtensionHost>(host));
-}
-
-void ExtensionProcessManager::OnExtensionProcessCrashed(ExtensionHost* host) {
-  NotificationService::current()->Notify(
-      NotificationType::EXTENSION_PROCESS_CRASHED,
-      Source<ExtensionProcessManager>(this),
-      Details<ExtensionHost>(host));
-}
-
-void ExtensionProcessManager::OnExtensionProcessRestored(ExtensionHost* host) {
-  NotificationService::current()->Notify(
-      NotificationType::EXTENSION_PROCESS_RESTORED,
-      Source<ExtensionProcessManager>(this),
-      Details<ExtensionHost>(host));
 }
 
 void ExtensionProcessManager::OnExtensionHostCreated(ExtensionHost* host,

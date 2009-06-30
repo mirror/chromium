@@ -49,24 +49,30 @@ class BackingStore {
   RenderWidgetHost* render_widget_host() const { return render_widget_host_; }
   const gfx::Size& size() { return size_; }
 
+  // The number of bytes that this backing store consumes.  This should roughly
+  // be size_.GetArea() * bytes per pixel.
+  size_t MemorySize();
+
 #if defined(OS_WIN)
   HDC hdc() { return hdc_; }
 
   // Returns true if we should convert to the monitor profile when painting.
   static bool ColorManagementEnabled();
-
 #elif defined(OS_MACOSX)
   skia::PlatformCanvas* canvas() { return &canvas_; }
-
 #elif defined(OS_LINUX)
+  Display* display() const { return display_; }
+  XID root_window() const { return root_window_; };
+
   // Copy from the server-side backing store to the target window
   //   display: the display of the backing store and target window
   //   damage: the area to copy
   //   target: the X id of the target window
   void ShowRect(const gfx::Rect& damage, XID target);
 
-  // Paints the server-side backing store data to a SkBitmap.
-  SkBitmap* PaintRectToBitmap(const gfx::Rect& rect);
+  // Paints the server-side backing store data to a SkBitmap. On failure, the
+  // return bitmap will be isNull().
+  SkBitmap PaintRectToBitmap(const gfx::Rect& rect);
 #endif
 
   // Paints the bitmap from the renderer onto the backing store.
@@ -91,7 +97,6 @@ class BackingStore {
   gfx::Size size_;
 
 #if defined(OS_WIN)
-
   // The backing store dc.
   HDC hdc_;
   // Handle to the backing store dib.
@@ -110,13 +115,15 @@ class BackingStore {
 
   // This is the connection to the X server where this backing store will be
   // displayed.
-  Display *const display_;
+  Display* const display_;
   // If this is true, then |connection_| is good for MIT-SHM (X shared memory).
   const bool use_shared_memory_;
   // If this is true, then we can use Xrender to composite our pixmaps.
   const bool use_render_;
   // If |use_render_| is false, this is the number of bits-per-pixel for |depth|
   int pixmap_bpp_;
+  // if |use_render_| is false, we need the Visual to get the RGB masks.
+  void* const visual_;
   // This is the depth of the target window.
   const int visual_depth_;
   // The parent window (probably a GtkDrawingArea) for this backing store.

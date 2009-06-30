@@ -5,9 +5,11 @@
 #include "chrome/browser/views/tabs/tab_overview_message_listener.h"
 
 #include "chrome/browser/browser.h"
+#include "chrome/browser/browser_list.h"
 #include "chrome/browser/gtk/browser_window_gtk.h"
-#include "chrome/common/x11_util.h"
+#include "chrome/browser/views/new_browser_window_widget.h"
 #include "chrome/browser/views/tabs/tab_overview_controller.h"
+#include "chrome/common/x11_util.h"
 
 // static
 TabOverviewMessageListener* TabOverviewMessageListener::instance() {
@@ -50,24 +52,36 @@ void TabOverviewMessageListener::ProcessMessage(
                 BrowserWindowGtk::GetBrowserWindowForXID(
                     x11_util::GetX11WindowFromGdkWindow(window)));
         if (browser_window)
-          ShowOverview(browser_window->browser());
+          ShowOverview(browser_window->browser(), message.param(1));
         else
           HideOverview();
       }
       break;
     }
+
+    case TabOverviewTypes::Message::CHROME_NOTIFY_LAYOUT_MODE: {
+      if (message.param(0) == 0) {
+        new_browser_window_.reset(NULL);
+      } else if (BrowserList::size() > 0) {
+        Browser* browser = *BrowserList::begin();
+        new_browser_window_.reset(
+            new NewBrowserWindowWidget(browser->profile()));
+      }
+      break;
+    }
+
     default:
       break;
   }
 }
 
-void TabOverviewMessageListener::ShowOverview(Browser* browser) {
+void TabOverviewMessageListener::ShowOverview(Browser* browser,
+                                              int horizontal_center) {
   if (!controller_.get()) {
     controller_.reset(new TabOverviewController(
                           browser->window()->GetNormalBounds().origin()));
   }
-  // TODO: get x-coordinate when available.
-  controller_->SetBrowser(browser, -1);
+  controller_->SetBrowser(browser, horizontal_center);
   controller_->Show();
 }
 

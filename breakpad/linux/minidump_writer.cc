@@ -46,11 +46,13 @@
 #include "breakpad/linux/minidump_writer.h"
 #include "client/minidump_file_writer-inl.h"
 
-#include <unistd.h>
-#include <fcntl.h>
 #include <errno.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <unistd.h>
 #include <sys/ucontext.h>
 #include <sys/user.h>
+#include <sys/utsname.h>
 
 #include "client/minidump_file_writer.h"
 #include "google_breakpad/common/minidump_format.h"
@@ -598,12 +600,8 @@ class MinidumpWriter {
     dirent->stream_type = MD_SYSTEM_INFO_STREAM;
     dirent->location = si.location();
 
-    si.get()->processor_architecture =
-#if defined(__i386)
-        MD_CPU_ARCHITECTURE_X86;
-#elif defined(__x86_64)
-        MD_CPU_ARCHITECTURE_AMD64;
-#endif
+    WriteCPUInformation(si.get());
+    WriteOSInformation(si.get());
 
     return true;
   }
@@ -625,6 +623,119 @@ class MinidumpWriter {
     dirent->stream_type = 0;
     dirent->location.data_size = 0;
     dirent->location.rva = 0;
+  }
+
+  bool WriteCPUInformation(MDRawSystemInfo* sys_info) {
+    char vendor_id[sizeof(sys_info->cpu.x86_cpu_info.vendor_id) + 1] = {0};
+    static const char vendor_id_name[] = "vendor_id";
+    static const size_t vendor_id_name_length = sizeof(vendor_id_name) - 1;
+
+    struct CpuInfoEntry {
+      const char* info_name;
+      int value;
+      bool found;
+    } cpu_info_table[] = {
+      { "processor", -1, false },
+      { "model", 0, false },
+      { "stepping",  0, false },
+      { "cpuid level", 0, false },
+    };
+
+    // processor_architecture should always be set, do this first
+    sys_info->processor_architecture =
+#if defined(__i386)
+        MD_CPU_ARCHITECTURE_X86;
+#elif defined(__x86_64)
+        MD_CPU_ARCHITECTURE_AMD64;
+#else
+#error "Unknown CPU arch"
+#endif
+
+    static const char proc_cpu_path[] = "/proc/cpuinfo";
+    FILE* fp = fopen(proc_cpu_path, "r");
+    if (!fp)
+      return false;
+
+    {
+      char line[128];
+      while (fgets(line, sizeof(line), fp)) {
+        for (size_t i = 0;
+             i < sizeof(cpu_info_table) / sizeof(cpu_info_table[0]);
+             i++) {
+          CpuInfoEntry* entry = &cpu_info_table[i];
+          if (entry->found)
+            continue;
+          if (!strncmp(line, entry->info_name, strlen(entry->info_name))) {
+            char* value = strchr(line, ':');
+            if (!value)
+              continue;
+
+            // the above strncmp only matches the prefix, it might be the wrong
+            // line. i.e. we matched "model name" instead of "model".
+            // check and make sure there is only spaces between the prefix and
+            // the colon.
+            char* space_ptr = line + strlen(entry->info_name);
+            for (; space_ptr < value; space_ptr++) {
+              if (!isspace(*space_ptr)) {
+                break;
+              }
+            }
+            if (space_ptr != value)
+              continue;
+
+            sscanf(++value, " %d", &(entry->value));
+            entry->found = true;
+          }
+        }
+
+        // special case for vendor_id
+        if (!strncmp(line, vendor_id_name, vendor_id_name_length)) {
+          char* value = strchr(line, ':');
+          if (!value)
+            continue;
+
+          // skip ':" and all the spaces that follows
+          do {
+            value++;
+          } while (isspace(*value));
+
+          if (*value) {
+            size_t length = strlen(value);
+            if (length == 0)
+              continue;
+            // we don't want the trailing newline
+            if (value[length - 1] == '\n')
+              length--;
+            // ensure we have space for the value
+            if (length < sizeof(vendor_id))
+              strncpy(vendor_id, value, length);
+          }
+        }
+      }
+      fclose(fp);
+    }
+
+    // make sure we got everything we wanted
+    for (size_t i = 0;
+         i < sizeof(cpu_info_table) / sizeof(cpu_info_table[0]);
+         i++) {
+      if (!cpu_info_table[i].found) {
+        return false;
+      }
+    }
+    // /proc/cpuinfo contains cpu id, change it into number by adding one.
+    cpu_info_table[0].value++;
+
+    sys_info->number_of_processors = cpu_info_table[0].value;
+    sys_info->processor_level      = cpu_info_table[3].value;
+    sys_info->processor_revision   = cpu_info_table[1].value << 8 |
+                                     cpu_info_table[2].value;
+
+    if (vendor_id[0] != '\0') {
+      memcpy(sys_info->cpu.x86_cpu_info.vendor_id, vendor_id,
+             sizeof(sys_info->cpu.x86_cpu_info.vendor_id));
+    }
+    return true;
   }
 
   bool WriteFile(MDLocationDescriptor* result, const char* filename) {
@@ -659,6 +770,52 @@ class MinidumpWriter {
       return false;
     memory.Copy(data, done);
     *result = memory.location();
+    return true;
+  }
+
+  bool WriteOSInformation(MDRawSystemInfo* sys_info) {
+    sys_info->platform_id = MD_OS_LINUX;
+
+    struct utsname uts;
+    if (uname(&uts))
+      return false;
+
+    static const size_t buf_len = 512;
+    char buf[buf_len] = {0};
+    size_t space_left = buf_len - 1;
+    const char* info_table[] = {
+      uts.sysname,
+      uts.release,
+      uts.version,
+      uts.machine,
+      NULL
+    };
+    bool first_item = true;
+    for (const char** cur_info = info_table; *cur_info; cur_info++) {
+      static const char* separator = " ";
+      size_t separator_len = strlen(separator);
+      size_t info_len = strlen(*cur_info);
+      if (info_len == 0)
+        continue;
+
+      if (space_left < info_len + (first_item ? 0 : separator_len))
+        break;
+
+      if (!first_item) {
+        strcat(buf, separator);
+        space_left -= separator_len;
+      }
+
+      first_item = false;
+      strcat(buf, *cur_info);
+      space_left -= info_len;
+    }
+
+    MDLocationDescriptor location;
+    if (!minidump_writer_.WriteString(buf, 0, &location))
+      return false;
+    sys_info->csd_version_rva = location.rva;
+
     return true;
   }
 

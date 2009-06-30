@@ -63,7 +63,7 @@ extern "C" {
   NPError OSCALL NP_GetEntryPoints(NPPluginFuncs *pluginFuncs) {
     HANDLE_CRASHES;
     pluginFuncs->version = 11;
-    pluginFuncs->size = sizeof(pluginFuncs);
+    pluginFuncs->size = sizeof(*pluginFuncs);
     pluginFuncs->newp = NPP_New;
     pluginFuncs->destroy = NPP_Destroy;
     pluginFuncs->setwindow = NPP_SetWindow;
@@ -146,9 +146,12 @@ extern "C" {
         *v = obj;
         break;
       }
-      default:
-        return NP_GetValue(instance, variable, value);
-        break;
+      default: {
+        NPError ret = PlatformNPPGetValue(instance, variable, value);
+        if (ret == NPERR_INVALID_PARAM)
+          ret = NP_GetValue(instance, variable, value);
+        return ret;
+      }
     }
     return NPERR_NO_ERROR;
   }

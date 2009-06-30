@@ -7,6 +7,7 @@
 #include "base/command_line.h"
 #include "base/string_util.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/privacy_blacklist/blacklist.h"
 #include "chrome/browser/chrome_thread.h"
 #include "chrome/browser/extensions/extensions_service.h"
 #include "chrome/browser/extensions/user_script_master.h"
@@ -23,6 +24,7 @@
 #include "net/http/http_network_layer.h"
 #include "net/http/http_util.h"
 #include "net/proxy/proxy_service.h"
+#include "net/url_request/url_request.h"
 #include "webkit/glue/webkit_glue.h"
 
 net::ProxyConfig* CreateProxyConfig(const CommandLine& command_line) {
@@ -106,7 +108,7 @@ static net::ProxyService* CreateProxyService(URLRequestContext* context,
 // static
 ChromeURLRequestContext* ChromeURLRequestContext::CreateOriginal(
     Profile* profile, const FilePath& cookie_store_path,
-    const FilePath& disk_cache_path) {
+    const FilePath& disk_cache_path, int cache_size) {
   DCHECK(!profile->IsOffTheRecord());
   ChromeURLRequestContext* context = new ChromeURLRequestContext(profile);
 
@@ -119,7 +121,7 @@ ChromeURLRequestContext* ChromeURLRequestContext::CreateOriginal(
   net::HttpCache* cache =
       new net::HttpCache(context->host_resolver_,
                          context->proxy_service_,
-                         disk_cache_path.ToWStringHack(), 0);
+                         disk_cache_path.ToWStringHack(), cache_size);
 
   const CommandLine& command_line = *CommandLine::ForCurrentProcess();
   bool record_mode = chrome::kRecordModeEnabled &&
@@ -159,9 +161,10 @@ ChromeURLRequestContext* ChromeURLRequestContext::CreateOriginal(
 
 // static
 ChromeURLRequestContext* ChromeURLRequestContext::CreateOriginalForMedia(
-    Profile* profile, const FilePath& disk_cache_path) {
+    Profile* profile, const FilePath& disk_cache_path, int cache_size) {
   DCHECK(!profile->IsOffTheRecord());
-  return CreateRequestContextForMedia(profile, disk_cache_path, false);
+  return CreateRequestContextForMedia(profile, disk_cache_path, cache_size,
+                                      false);
 }
 
 // static
@@ -221,7 +224,8 @@ ChromeURLRequestContext::CreateOffTheRecordForExtensions(Profile* profile) {
 
 // static
 ChromeURLRequestContext* ChromeURLRequestContext::CreateRequestContextForMedia(
-    Profile* profile, const FilePath& disk_cache_path, bool off_the_record) {
+    Profile* profile, const FilePath& disk_cache_path, int cache_size,
+    bool off_the_record) {
   URLRequestContext* original_context =
       profile->GetOriginalProfile()->GetRequestContext();
   ChromeURLRequestContext* context = new ChromeURLRequestContext(profile);
@@ -246,13 +250,13 @@ ChromeURLRequestContext* ChromeURLRequestContext::CreateRequestContextForMedia(
     net::HttpNetworkLayer* original_network_layer =
         static_cast<net::HttpNetworkLayer*>(original_cache->network_layer());
     cache = new net::HttpCache(original_network_layer->GetSession(),
-                               disk_cache_path.ToWStringHack(), 0);
+                               disk_cache_path.ToWStringHack(), cache_size);
   } else {
     // If original HttpCache doesn't exist, simply construct one with a whole
     // new set of network stack.
     cache = new net::HttpCache(original_context->host_resolver(),
                                original_context->proxy_service(),
-                               disk_cache_path.ToWStringHack(), 0);
+                               disk_cache_path.ToWStringHack(), cache_size);
   }
 
   cache->set_type(net::MEDIA_CACHE);
@@ -286,6 +290,8 @@ ChromeURLRequestContext::ChromeURLRequestContext(Profile* profile)
 
   cookie_policy_.SetType(net::CookiePolicy::FromInt(
       prefs_->GetInteger(prefs::kCookieBehavior)));
+
+  blacklist_ = profile->GetBlacklist();
 
   force_tls_state_ = profile->GetForceTLSState();
 
@@ -380,6 +386,37 @@ const std::string& ChromeURLRequestContext::GetUserAgent(
   return webkit_glue::GetUserAgent(url);
 }
 
+bool ChromeURLRequestContext::interceptCookie(const URLRequest* request,
+                                              std::string* cookie) {
+  const URLRequest::UserData* d =
+      request->GetUserData((void*)&Blacklist::kRequestDataKey);
+  if (d) {
+    const Blacklist::Entry* entry =
+        static_cast<const Blacklist::RequestData*>(d)->entry();
+    if (entry->attributes() & Blacklist::kDontStoreCookies) {
+      cookie->clear();
+      return false;
+    }
+    if (entry->attributes() & Blacklist::kDontPersistCookies) {
+      *cookie = Blacklist::StripCookieExpiry(*cookie);
+    }
+  }
+  return true;
+}
+
+bool ChromeURLRequestContext::allowSendingCookies(const URLRequest* request)
+    const {
+  const URLRequest::UserData* d =
+      request->GetUserData((void*)&Blacklist::kRequestDataKey);
+  if (d) {
+    const Blacklist::Entry* entry =
+      static_cast<const Blacklist::RequestData*>(d)->entry();
+    if (entry->attributes() & Blacklist::kDontSendCookies)
+      return false;
+  }
+  return true;
+}
+
 void ChromeURLRequestContext::OnAcceptLanguageChange(
     std::string accept_language) {
   DCHECK(MessageLoop::current() ==
@@ -427,7 +464,4 @@ ChromeURLRequestContext::~ChromeURLRequestContext() {
   // it is owned by the original URLRequestContext.
   if (!is_off_the_record_ && !is_media_)
     delete proxy_service_;
-
-  // Do not delete host_resolver_; it will be freed by FreeGlobalHostResolver()
-  // during the teardown of DNS prefetching.
 }

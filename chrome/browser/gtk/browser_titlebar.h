@@ -14,7 +14,6 @@
 
 #include "base/scoped_ptr.h"
 #include "chrome/browser/gtk/menu_gtk.h"
-#include "chrome/browser/gtk/nine_box.h"
 
 class BrowserWindowGtk;
 class CustomDrawButton;
@@ -34,6 +33,11 @@ class BrowserTitlebar : public MenuGtk::Delegate {
   // tall titlebar and the min/max/close buttons.
   void UpdateCustomFrame(bool use_custom_frame);
 
+  // On Windows, right clicking in the titlebar background brings up the system
+  // menu.  There's no such thing on linux, so we just show the menu items we
+  // add to the menu.
+  void ShowContextMenu();
+
  private:
   // Build the titlebar, the space above the tab
   // strip, and (maybe) the min, max, close buttons.  |container| is the gtk
@@ -46,15 +50,8 @@ class BrowserTitlebar : public MenuGtk::Delegate {
                                         int image_hot, GtkWidget* box,
                                         int tooltip);
 
-  // Callback for when the titlebar (include the background of the tab strip)
-  // needs to be redrawn.
-  static gboolean OnExpose(GtkWidget* widget, GdkEventExpose* e,
-                           BrowserTitlebar* window);
-
-  // Callback for when the titlebar (include the background of the tab strip)
-  // needs to be redrawn.
-  static gboolean OnMouseButtonPress(GtkWidget* widget, GdkEventButton* e,
-                                     BrowserTitlebar* window);
+  // Update the titlebar spacing based on the custom frame and maximized state.
+  void UpdateTitlebarAlignment();
 
   // Callback for changes to window state.  This includes
   // maximizing/restoring/minimizing the window.
@@ -67,10 +64,6 @@ class BrowserTitlebar : public MenuGtk::Delegate {
 
   // -- Context Menu -----------------------------------------------------------
 
-  // On Windows, right clicking in the titlebar background brings up the system
-  // menu.  There's no such thing on linux, so we just show the menu items we
-  // add to the menu.
-  void ShowContextMenu();
   // MenuGtk::Delegate implementation:
   virtual bool IsCommandEnabled(int command_id) const;
   virtual bool IsItemChecked(int command_id) const;
@@ -89,15 +82,20 @@ class BrowserTitlebar : public MenuGtk::Delegate {
   // manager decorations, we draw this taller.
   GtkWidget* titlebar_alignment_;
 
+  // Whether we are using a custom frame.
+  bool using_custom_frame_;
+
+  // The normal width of the close button (the width it appears to the user)
+  // which is determined by the width of the bitmap we use to paint it. Its
+  // actual clickable width may differ if we are showing a custom frame and the
+  // window is maximized.
+  int close_button_default_width_;
+
   // Maximize and restore widgets in the titlebar.
   scoped_ptr<CustomDrawButton> minimize_button_;
   scoped_ptr<CustomDrawButton> maximize_button_;
   scoped_ptr<CustomDrawButton> restore_button_;
   scoped_ptr<CustomDrawButton> close_button_;
-
-  // The background of the title bar and tab strip.
-  scoped_ptr<NineBox> titlebar_background_;
-  scoped_ptr<NineBox> titlebar_background_otr_;
 
   // The context menu.
   scoped_ptr<MenuGtk> context_menu_;

@@ -23,7 +23,6 @@
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/download/download_manager.h"
-#include "chrome/browser/extensions/extension_shelf.h"
 #include "chrome/browser/find_bar.h"
 #include "chrome/browser/find_bar_controller.h"
 #include "chrome/browser/profile.h"
@@ -33,6 +32,7 @@
 #include "chrome/browser/views/browser_dialogs.h"
 #include "chrome/browser/views/chrome_views_delegate.h"
 #include "chrome/browser/views/download_shelf_view.h"
+#include "chrome/browser/views/extensions/extension_shelf.h"
 #include "chrome/browser/views/frame/browser_frame.h"
 #include "chrome/browser/views/fullscreen_exit_bubble.h"
 #include "chrome/browser/views/infobars/infobar_container.h"
@@ -809,12 +809,22 @@ void BrowserView::DisableInactiveFrame() {
   frame_->GetWindow()->DisableInactiveRendering();
 }
 
+void BrowserView::ConfirmAddSearchProvider(const TemplateURL* template_url,
+                                           Profile* profile) {
+  browser::EditSearchEngine(GetWindow()->GetNativeWindow(), template_url, NULL,
+                            profile);
+}
+
 void BrowserView::ToggleBookmarkBar() {
   bookmark_utils::ToggleWhenVisible(browser_->profile());
 }
 
 void BrowserView::ShowAboutChromeDialog() {
   browser::ShowAboutChromeView(GetWidget(), browser_->profile());
+}
+
+void BrowserView::ShowTaskManager() {
+  browser::ShowTaskManager();
 }
 
 void BrowserView::ShowBookmarkManager() {
@@ -1402,11 +1412,8 @@ void BrowserView::Init() {
 
   status_bubble_.reset(new StatusBubbleViews(GetWidget()));
 
-  if (CommandLine::ForCurrentProcess()->HasSwitch(
-      switches::kEnableExtensions)) {
-    extension_shelf_ = new ExtensionShelf(browser_.get());
-    AddChildView(extension_shelf_);
-  }
+  extension_shelf_ = new ExtensionShelf(browser_.get());
+  AddChildView(extension_shelf_);
 
 #if defined(OS_WIN)
   InitSystemMenu();

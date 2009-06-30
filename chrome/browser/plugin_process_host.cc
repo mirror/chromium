@@ -40,6 +40,7 @@
 #include "chrome/common/logging_chrome.h"
 #include "chrome/common/plugin_messages.h"
 #include "chrome/common/render_messages.h"
+#include "chrome/common/ipc_channel_handle.h"
 #include "net/base/cookie_monster.h"
 #include "net/base/file_stream.h"
 #include "net/base/io_buffer.h"
@@ -51,6 +52,10 @@
 #include "app/win_util.h"
 #include "chrome/browser/sandbox_policy.h"
 #include "sandbox/src/sandbox.h"
+#endif
+
+#if defined(OS_POSIX)
+#include "chrome/common/ipc_channel_posix.h"
 #endif
 
 static const char kDefaultPluginFinderURL[] =
@@ -291,10 +296,6 @@ PluginProcessHost::PluginProcessHost()
 }
 
 PluginProcessHost::~PluginProcessHost() {
-  // Cancel all requests for plugin process.
-  PluginService::GetInstance()->resource_dispatcher_host()->
-      CancelRequestsForProcess(GetProcessId());
-
 #if defined(OS_WIN)
   // We erase HWNDs from the plugin_parent_windows_set_ when we receive a
   // notification that the window is being destroyed. If we don't receive this
@@ -454,7 +455,7 @@ void PluginProcessHost::OnChannelConnected(int32 peer_pid) {
 void PluginProcessHost::OnChannelError() {
   for (size_t i = 0; i < pending_requests_.size(); ++i) {
     ReplyToRenderer(pending_requests_[i].renderer_message_filter_.get(),
-                    std::string(),
+                    IPC::ChannelHandle(),
                     FilePath(),
                     pending_requests_[i].reply_msg);
   }
@@ -468,6 +469,9 @@ void PluginProcessHost::OpenChannelToPlugin(
     IPC::Message* reply_msg) {
   InstanceCreated();
   if (opening_channel()) {
+    // The channel is already in the process of being opened.  Put
+    // this "open channel" request into a queue of requests that will
+    // be run once the channel is open.
     pending_requests_.push_back(
         ChannelRequest(renderer_message_filter, mime_type, reply_msg));
     return;
@@ -506,7 +510,8 @@ void PluginProcessHost::OnResolveProxyCompleted(IPC::Message* reply_msg,
 
 void PluginProcessHost::ReplyToRenderer(
     ResourceMessageFilter* renderer_message_filter,
-    const std::string& channel, const FilePath& plugin_path,
+    const IPC::ChannelHandle& channel,
+    const FilePath& plugin_path,
     IPC::Message* reply_msg) {
   ViewHostMsg_OpenChannelToPlugin::WriteReplyParams(reply_msg, channel,
                                                     plugin_path);
@@ -535,16 +540,19 @@ void PluginProcessHost::RequestPluginChannel(
     sent_requests_.push(ChannelRequest(
         renderer_message_filter, mime_type, reply_msg));
   } else {
-    ReplyToRenderer(renderer_message_filter, std::string(), FilePath(),
+    ReplyToRenderer(renderer_message_filter, IPC::ChannelHandle(), FilePath(),
                     reply_msg);
   }
 }
 
-void PluginProcessHost::OnChannelCreated(const std::string& channel_name) {
-  ReplyToRenderer(sent_requests_.front().renderer_message_filter_.get(),
-                  channel_name,
+void PluginProcessHost::OnChannelCreated(
+    const IPC::ChannelHandle& channel_handle) {
+  const ChannelRequest& request = sent_requests_.front();
+
+  ReplyToRenderer(request.renderer_message_filter_.get(),
+                  channel_handle,
                   info_.path,
-                  sent_requests_.front().reply_msg);
+                  request.reply_msg);
   sent_requests_.pop();
 }
 

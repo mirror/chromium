@@ -6,12 +6,12 @@
 
 #include "base/compiler_specific.h"
 #include "base/string_util.h"
-#include "net/base/client_socket.h"
-#include "net/base/client_socket_factory.h"
 #include "net/base/connection_type_histograms.h"
 #include "net/base/net_errors.h"
 #include "net/ftp/ftp_network_session.h"
 #include "net/ftp/ftp_request_info.h"
+#include "net/socket/client_socket.h"
+#include "net/socket/client_socket_factory.h"
 
 // TODO(ibrar): Try to avoid sscanf.
 #if !defined(COMPILER_MSVC)
@@ -63,6 +63,9 @@ int FtpNetworkTransaction::Start(const FtpRequestInfo* request_info,
 }
 
 int FtpNetworkTransaction::Stop(int error) {
+  if (command_sent_ == COMMAND_QUIT)
+    return error;
+
   next_state_ = STATE_CTRL_WRITE_QUIT;
   last_error_ = error;
   return OK;
@@ -236,6 +239,7 @@ int FtpNetworkTransaction::DoLoop(int result) {
         rv = DoCtrlConnectComplete(rv);
         break;
       case STATE_CTRL_READ:
+        DCHECK(rv == OK);
         rv = DoCtrlRead();
         break;
       case STATE_CTRL_READ_COMPLETE:
@@ -278,19 +282,24 @@ int FtpNetworkTransaction::DoLoop(int result) {
         rv = DoCtrlWriteSIZE();
         break;
       case STATE_CTRL_WRITE_CWD:
+        DCHECK(rv == OK);
         rv = DoCtrlWriteCWD();
         break;
       case STATE_CTRL_WRITE_LIST:
+        DCHECK(rv == OK);
         rv = DoCtrlWriteLIST();
         break;
       case STATE_CTRL_WRITE_MDTM:
+        DCHECK(rv == OK);
         rv = DoCtrlWriteMDTM();
         break;
       case STATE_CTRL_WRITE_QUIT:
+        DCHECK(rv == OK);
         rv = DoCtrlWriteQUIT();
         break;
 
       case STATE_DATA_RESOLVE_HOST:
+        DCHECK(rv == OK);
         rv = DoDataResolveHost();
         break;
       case STATE_DATA_RESOLVE_HOST_COMPLETE:
@@ -304,6 +313,7 @@ int FtpNetworkTransaction::DoLoop(int result) {
         rv = DoDataConnectComplete(rv);
         break;
       case STATE_DATA_READ:
+        DCHECK(rv == OK);
         rv = DoDataRead();
         break;
       case STATE_DATA_READ_COMPLETE:
@@ -359,7 +369,8 @@ int FtpNetworkTransaction::DoCtrlConnect() {
 }
 
 int FtpNetworkTransaction::DoCtrlConnectComplete(int result) {
-  next_state_ = STATE_CTRL_READ;
+  if (result == OK)
+    next_state_ = STATE_CTRL_READ;
   return result;
 }
 

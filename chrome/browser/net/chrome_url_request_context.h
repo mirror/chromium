@@ -30,13 +30,13 @@ class ChromeURLRequestContext : public URLRequestContext,
   // expected to get called on the UI thread.
   static ChromeURLRequestContext* CreateOriginal(
       Profile* profile, const FilePath& cookie_store_path,
-      const FilePath& disk_cache_path);
+      const FilePath& disk_cache_path, int cache_size);
 
   // Create an instance for an original profile for media. This is expected to
   // get called on UI thread. This method takes a profile and reuses the
   // 'original' URLRequestContext for common files.
   static ChromeURLRequestContext* CreateOriginalForMedia(Profile *profile,
-      const FilePath& disk_cache_path);
+      const FilePath& disk_cache_path, int cache_size);
 
   // Create an instance for an original profile for extensions. This is expected
   // to get called on UI thread.
@@ -65,7 +65,11 @@ class ChromeURLRequestContext : public URLRequestContext,
 
   virtual const std::string& GetUserAgent(const GURL& url) const;
 
- private:
+  virtual bool interceptCookie(const URLRequest* request, std::string* cookie);
+
+  virtual bool allowSendingCookies(const URLRequest* request) const;
+
+private:
   // Private constructor, use the static factory methods instead. This is
   // expected to be called on the UI thread.
   ChromeURLRequestContext(Profile* profile);
@@ -74,7 +78,7 @@ class ChromeURLRequestContext : public URLRequestContext,
   // context. This helper method is called from CreateOriginalForMedia and
   // CreateOffTheRecordForMedia.
   static ChromeURLRequestContext* CreateRequestContextForMedia(Profile* profile,
-      const FilePath& disk_cache_path, bool off_the_record);
+      const FilePath& disk_cache_path, int cache_size, bool off_the_record);
 
   // NotificationObserver implementation.
   virtual void Observe(NotificationType type,

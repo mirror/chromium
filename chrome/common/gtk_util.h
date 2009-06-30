@@ -88,23 +88,21 @@ std::string ConvertAcceleratorsFromWindowsStyle(const std::string& label);
 // Returns true if the screen is composited, false otherwise.
 bool IsScreenComposited();
 
-// Implementers of this interface receive a notification for every top-level
-// gdk window of the current display.
-class EnumerateWindowsDelegate {
- public:
-  // |xid| is the X Window ID of the enumerated window.  Return true to stop
-  // further iteration.
-  virtual bool ShouldStopIterating(XID xid) = 0;
-};
-
 // Enumerates the top-level gdk windows of the current display.
-void EnumerateChildWindows(EnumerateWindowsDelegate* delegate);
+void EnumerateTopLevelWindows(x11_util::EnumerateWindowsDelegate* delegate);
 
 // Set that a button causes a page navigation. In particular, it will accept
 // middle clicks. Warning: only call this *after* you have connected your
 // own handlers for button-press and button-release events, or you will not get
 // those events.
 void SetButtonTriggersNavigation(GtkWidget* button);
+
+// Returns the mirrored x value for |bounds| if the layout is RTL; otherwise,
+// the original value is returned unchanged.
+int MirroredLeftPointForRect(GtkWidget* widget, const gfx::Rect& bounds);
+
+// Returns true if the pointer is currently inside the widget.
+bool WidgetContainsCursor(GtkWidget* widget);
 
 }  // namespace gtk_util
 

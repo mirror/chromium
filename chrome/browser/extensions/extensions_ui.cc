@@ -62,9 +62,12 @@ void ExtensionsUIHTMLSource::StartDataRequest(const std::string& path,
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-ExtensionsDOMHandler::ExtensionsDOMHandler(DOMUI* dom_ui,
-                                           ExtensionsService* extension_service)
-    : DOMMessageHandler(dom_ui), extensions_service_(extension_service) {
+ExtensionsDOMHandler::ExtensionsDOMHandler(
+    ExtensionsService* extension_service) 
+    : extensions_service_(extension_service) {
+ }
+
+void ExtensionsDOMHandler::RegisterMessages() {
   dom_ui_->RegisterMessageCallback("requestExtensionsData",
       NewCallback(this, &ExtensionsDOMHandler::HandleRequestExtensionsData));
   dom_ui_->RegisterMessageCallback("inspect",
@@ -118,7 +121,7 @@ void ExtensionsDOMHandler::HandleInspectMessage(const Value* value) {
     return;
   }
 
-  g_browser_process->devtools_manager()->OpenDevToolsWindow(host);
+  DevToolsManager::GetInstance()->OpenDevToolsWindow(host);
 }
 
 void ExtensionsDOMHandler::HandleUninstallMessage(const Value* value) {
@@ -127,7 +130,7 @@ void ExtensionsDOMHandler::HandleUninstallMessage(const Value* value) {
   CHECK(list->GetSize() == 1);
   std::string extension_id;
   CHECK(list->GetString(0, &extension_id));
-  extensions_service_->UninstallExtension(extension_id);
+  extensions_service_->UninstallExtension(extension_id, false);
 }
 
 static void CreateScriptFileDetailValue(
@@ -257,17 +260,13 @@ ExtensionsDOMHandler::~ExtensionsDOMHandler() {
 
 // ExtensionsDOMHandler, public: -----------------------------------------------
 
-void ExtensionsDOMHandler::Init() {
-}
-
 ExtensionsUI::ExtensionsUI(TabContents* contents) : DOMUI(contents) {
   ExtensionsService *exstension_service =
       GetProfile()->GetOriginalProfile()->GetExtensionsService();
 
-  ExtensionsDOMHandler* handler = new ExtensionsDOMHandler(this,
-      exstension_service);
+  ExtensionsDOMHandler* handler = new ExtensionsDOMHandler(exstension_service);
   AddMessageHandler(handler);
-  handler->Init();
+  handler->Attach(this);
 
   ExtensionsUIHTMLSource* html_source = new ExtensionsUIHTMLSource();
 

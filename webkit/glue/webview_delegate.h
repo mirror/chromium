@@ -28,6 +28,7 @@
 
 #include <vector>
 
+#include "base/gfx/native_widget_types.h"
 #include "webkit/api/public/WebNavigationType.h"
 #include "webkit/glue/context_menu.h"
 #include "webkit/glue/webwidget_delegate.h"
@@ -132,6 +133,10 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
     return NULL;
   }
 
+  // Called when a windowed plugin is closing.
+  // Lets the view delegate shut down anything it is using to wrap the plugin.
+  virtual void WillDestroyPluginWindow(gfx::PluginWindowHandle handle) { }
+
   // This method is called when the renderer creates a worker object.
   virtual WebKit::WebWorker* CreateWebWorker(WebKit::WebWorkerClient* client) {
     return NULL;
@@ -208,6 +213,16 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
   // created. This is called before anything else is parsed or executed for the
   // document.
   virtual void DocumentElementAvailable(WebFrame* webframe) {
+  }
+
+  // Notifies that a new script context has been created for this frame.
+  // This is similar to WindowObjectCleared but only called once per frame
+  // context.
+  virtual void DidCreateScriptContext(WebFrame* webframe) {
+  }
+
+  // Notifies that this frame's script context has been destroyed.
+  virtual void DidDestroyScriptContext(WebFrame* webframe) {
   }
 
   // PolicyDelegate ----------------------------------------------------------
@@ -351,11 +366,6 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
   // not necessarily all subresources (images, stylesheets). So, this is called
   // before DidFinishLoadForFrame.
   virtual void DidFinishDocumentLoadForFrame(WebView* webview, WebFrame* frame) {
-  }
-
-  // Called after layout runs for the first time after a new document is loaded
-  // into a frame.  All resources have not necessarily finished loading.
-  virtual void DidFirstLayout(WebView* webview, WebFrame* frame) {
   }
 
   // This method is called when we load a resource from an in-memory cache.
@@ -799,8 +809,6 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
   // Asks the user to print the page or a specific frame. Called in response to
   // a window.print() call.
   virtual void ScriptedPrint(WebFrame* frame) { }
-
-  virtual void WebInspectorOpened(int num_resources) { }
 
   // Called when an item was added to the history
   virtual void DidAddHistoryItem() { }

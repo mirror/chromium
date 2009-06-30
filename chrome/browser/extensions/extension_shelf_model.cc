@@ -17,8 +17,6 @@
 ExtensionShelfModel::ExtensionShelfModel(Browser* browser)
     : browser_(browser), ready_(false) {
   // Watch extensions loaded and unloaded notifications.
-  registrar_.Add(this, NotificationType::EXTENSION_INSTALLED,
-                 NotificationService::AllSources());
   registrar_.Add(this, NotificationType::EXTENSION_UNLOADED,
                  NotificationService::AllSources());
   registrar_.Add(this, NotificationType::EXTENSIONS_LOADED,
@@ -110,12 +108,6 @@ void ExtensionShelfModel::Observe(NotificationType type,
                                   const NotificationSource& source,
                                   const NotificationDetails& details) {
   switch (type.value) {
-    case NotificationType::EXTENSION_INSTALLED:
-      if (ready_) {
-        AddExtension(Details<Extension>(details).ptr());
-        UpdatePrefs();
-      }
-      break;
     case NotificationType::EXTENSIONS_LOADED:
       if (ready_)
         AddExtensions(Details<ExtensionList>(details).ptr());
@@ -124,8 +116,10 @@ void ExtensionShelfModel::Observe(NotificationType type,
       RemoveExtension(Details<Extension>(details).ptr());
       break;
     case NotificationType::EXTENSIONS_READY:
-      AddExtensions(browser_->profile()->GetExtensionsService()->extensions());
-      SortToolstrips();
+      if (browser_->profile()->GetExtensionsService()) {
+        AddExtensions(browser_->profile()->GetExtensionsService()->extensions());
+        SortToolstrips();
+      }
       ready_ = true;
       break;
     case NotificationType::EXTENSION_SHELF_MODEL_CHANGED:

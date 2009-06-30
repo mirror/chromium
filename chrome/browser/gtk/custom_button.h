@@ -13,8 +13,6 @@
 #include "base/scoped_ptr.h"
 #include "chrome/common/owned_widget_gtk.h"
 
-class NineBox;
-
 // These classes implement two kinds of custom-drawn buttons.  They're
 // used on the toolbar and the bookmarks bar.
 
@@ -69,6 +67,7 @@ class CustomDrawButton {
   }
 
   int width() const { return widget_->allocation.width; }
+  int height() const { return widget_->allocation.height; }
 
   // Set the state to draw. We will paint the widget as if it were in this
   // state.

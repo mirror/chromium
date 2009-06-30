@@ -8,6 +8,7 @@
 #include "base/file_util.h"
 #include "base/histogram.h"
 #include "base/message_loop.h"
+#include "base/rand_util.h"
 #include "base/string_util.h"
 #include "base/sys_info.h"
 #include "base/timer.h"
@@ -139,13 +140,28 @@ bool DelayedCacheCleanup(const std::wstring& full_path) {
 // Sets |current_group| for the current experiment. Returns false if the files
 // should be discarded.
 bool InitExperiment(int* current_group) {
-  if (*current_group <= 2) {
-    // Not taking part of this experiment.
-    *current_group = 5;
-  } else if (*current_group < 5) {
+  if (*current_group == 3 || *current_group == 4) {
     // Discard current cache for groups 3 and 4.
     return false;
   }
+
+  if (*current_group <= 5) {
+    // Re-load the two groups.
+    int option = base::RandInt(0, 9);
+
+    if (option > 1) {
+      // 80% will be out of the experiment.
+      *current_group = 9;
+    } else {
+      *current_group = option + 6;
+    }
+  }
+
+  // The current groups should be:
+  // 6 control. (~10%)
+  // 7 new eviction, upgraded data. (~10%)
+  // 8 new eviction, from new files.
+  // 9 out. (~80%)
 
   UMA_HISTOGRAM_CACHE_ERROR("DiskCache.Experiment", *current_group);
 
@@ -253,7 +269,7 @@ bool BackendImpl::Init() {
   if (!InitExperiment(&data_->header.experiment))
     return false;
 
-  if (data_->header.experiment > 6)
+  if (data_->header.experiment > 6 && data_->header.experiment < 9)
     new_eviction_ = true;
 
   if (!CheckIndex()) {
@@ -345,7 +361,7 @@ bool BackendImpl::OpenEntry(const std::string& key, Entry** entry) {
   DCHECK(entry);
   *entry = cache_entry;
 
-  CACHE_UMA(AGE_MS, "OpenTime", 0, start);
+  CACHE_UMA(AGE_MS, "OpenTime", GetSizeGroup(), start);
   stats_.OnEvent(Stats::OPEN_HIT);
   return true;
 }
@@ -423,7 +439,7 @@ bool BackendImpl::CreateEntry(const std::string& key, Entry** entry) {
 
   cache_entry.swap(reinterpret_cast<EntryImpl**>(entry));
 
-  CACHE_UMA(AGE_MS, "CreateTime", 0, start);
+  CACHE_UMA(AGE_MS, "CreateTime", GetSizeGroup(), start);
   stats_.OnEvent(Stats::CREATE_HIT);
   Trace("create entry hit ");
   return true;
@@ -565,6 +581,10 @@ bool BackendImpl::SetMaxSize(int max_bytes) {
   // Zero size means use the default.
   if (!max_bytes)
     return true;
+
+  // Avoid a DCHECK later on.
+  if (max_bytes >= kint32max - kint32max / 10)
+    max_bytes = kint32max - kint32max / 10 - 1;
 
   user_flags_ |= kMaxSize;
   max_size_ = max_bytes;
@@ -732,6 +752,17 @@ std::string BackendImpl::HistogramName(const char* name, int experiment) {
   if (!experiment)
     return StringPrintf("DiskCache.%d.%s", cache_type_, name);
   return StringPrintf("DiskCache.%d.%s_%d", cache_type_, name, experiment);
+}
+
+int BackendImpl::GetSizeGroup() {
+  if (disabled_)
+    return 0;
+
+  // We want to report times grouped by the current cache size (50 MB groups).
+  int group = data_->header.num_bytes / (50 * 1024 * 1024);
+  if (group > 6)
+    group = 6;  // Limit the number of groups, just in case.
+  return group;
 }
 
 // We want to remove biases from some histograms so we only send data once per

@@ -9,6 +9,7 @@
 
 #include "base/message_loop.h"
 #include "chrome/browser/renderer_host/test_render_view_host.h"
+#include "chrome/test/test_browser_window.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 class Browser;
@@ -50,9 +51,21 @@ class BrowserWithTestWindowTest : public testing::Test {
   TestRenderViewHost* TestRenderViewHostForTab(TabContents* tab_contents);
 
  protected:
+
+  TestBrowserWindow* window() const { return window_.get(); }
+  void set_window(TestBrowserWindow* window) {
+    window_.reset(window);
+  }
+
   Browser* browser() const { return browser_.get(); }
+  void set_browser(Browser* browser) {
+    browser_.reset(browser);
+  }
 
   TestingProfile* profile() const { return profile_.get(); }
+  void set_profile(TestingProfile* profile) {
+    profile_.reset(profile);
+  }
 
   // Adds a tab to |browser| with the given URL and commits the load.
   // This is a convenience function. The new tab will be added at index 0.

@@ -10,8 +10,7 @@
 class TabOverviewGrid;
 
 // TabOverviewContainer contains TabOverviewGrid. TabOverviewContainer provides
-// padding around the grid as well as maintaining a shape on the containing
-// widget.
+// padding around the grid.
 class TabOverviewContainer : public views::View {
  public:
   TabOverviewContainer();
@@ -21,20 +20,21 @@ class TabOverviewContainer : public views::View {
   // adjusting for our borders.
   void SetMaxSize(const gfx::Size& max_size);
 
-  // Updates the shape on the containing widget. |horizontal_center| gives the
-  // center of the window the parent window we're contained in is centered
-  // over.
-  void UpdateWidgetShape(int horizontal_center, int width, int height);
-
   // View overrides.
   virtual gfx::Size GetPreferredSize();
   virtual void Layout();
   virtual void Paint(gfx::Canvas* canvas);
-  virtual void DidChangeBounds(const gfx::Rect& previous,
-                               const gfx::Rect& current);
+
+  // Sets the location of the arrow, along the x-axis.
+  //
+  // WARNING: this is the coordinate system of the parent, NOT this view.
+  void set_arrow_center(int x) { arrow_center_ = x; }
 
  private:
   TabOverviewGrid* GetTabOverviewGrid();
+
+  // See set_arrow_center for details.
+  int arrow_center_;
 
   DISALLOW_COPY_AND_ASSIGN(TabOverviewContainer);
 };

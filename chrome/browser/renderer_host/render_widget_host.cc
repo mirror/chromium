@@ -87,7 +87,7 @@ gfx::NativeViewId RenderWidgetHost::GetNativeViewId() {
 }
 
 void RenderWidgetHost::Init() {
-  DCHECK(process_->channel());
+  DCHECK(process_->HasConnection());
 
   renderer_initialized_ = true;
 
@@ -97,7 +97,7 @@ void RenderWidgetHost::Init() {
 }
 
 void RenderWidgetHost::Shutdown() {
-  if (process_->channel()) {
+  if (process_->HasConnection()) {
     // Tell the renderer object to close.
     process_->ReportExpectingClose(routing_id_);
     bool rv = Send(new ViewMsg_Close(routing_id_));
@@ -180,7 +180,7 @@ void RenderWidgetHost::WasRestored() {
 }
 
 void RenderWidgetHost::WasResized() {
-  if (resize_ack_pending_ || !process_->channel() || !view_ ||
+  if (resize_ack_pending_ || !process_->HasConnection() || !view_ ||
       !renderer_initialized_) {
     return;
   }
@@ -351,7 +351,7 @@ void RenderWidgetHost::ForwardKeyboardEvent(
   // will mess up our key queue.
   if (WebInputEvent::isKeyboardEventType(key_event.type)) {
     // Don't add this key to the queue if we have no way to send the message...
-    if (!process_->channel())
+    if (!process_->HasConnection())
       return;
 
     // Put all WebKeyboardEvent objects in a queue since we can't trust the
@@ -367,7 +367,7 @@ void RenderWidgetHost::ForwardKeyboardEvent(
 
 void RenderWidgetHost::ForwardInputEvent(const WebInputEvent& input_event,
                                          int event_size) {
-  if (!process_->channel())
+  if (!process_->HasConnection())
     return;
 
   IPC::Message* message = new ViewMsg_HandleInputEvent(routing_id_);
@@ -380,6 +380,13 @@ void RenderWidgetHost::ForwardInputEvent(const WebInputEvent& input_event,
   next_mouse_move_.reset();
 
   StartHangMonitorTimeout(TimeDelta::FromMilliseconds(kHungRendererDelayMs));
+}
+
+void RenderWidgetHost::ForwardEditCommand(const std::string& name,
+      const std::string& value) {
+  // We don't need an implementation of this function here since the
+  // only place we use this is for the case of dropdown menus and other
+  // edge cases for which edit commands don't make sense.
 }
 
 void RenderWidgetHost::RendererExited() {
@@ -422,6 +429,28 @@ void RenderWidgetHost::NotifyTextDirection() {
     text_direction_updated_ = false;
     text_direction_canceled_ = false;
   }
+}
+
+void RenderWidgetHost::ImeSetInputMode(bool activate) {
+  Send(new ViewMsg_ImeSetInputMode(routing_id(), activate));
+}
+
+void RenderWidgetHost::ImeSetComposition(const std::wstring& ime_string,
+                                         int cursor_position,
+                                         int target_start,
+                                         int target_end) {
+  Send(new ViewMsg_ImeSetComposition(routing_id(), 0, cursor_position,
+                                     target_start, target_end, ime_string));
+}
+
+void RenderWidgetHost::ImeConfirmComposition(const std::wstring& ime_string) {
+  Send(new ViewMsg_ImeSetComposition(routing_id(), 1, -1, -1, -1, ime_string));
+}
+
+void RenderWidgetHost::ImeCancelComposition() {
+  std::wstring empty_string;
+  Send(new ViewMsg_ImeSetComposition(routing_id(), -1, -1, -1, -1,
+                                     empty_string));
 }
 
 gfx::Rect RenderWidgetHost::GetRootWindowResizerRect() const {

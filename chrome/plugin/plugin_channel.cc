@@ -7,10 +7,15 @@
 #include "base/command_line.h"
 #include "base/process_util.h"
 #include "base/string_util.h"
+#include "build/build_config.h"
 #include "chrome/common/child_process.h"
 #include "chrome/common/plugin_messages.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/plugin/plugin_thread.h"
+
+#if defined(OS_POSIX)
+#include "chrome/common/ipc_channel_posix.h"
+#endif
 
 PluginChannel* PluginChannel::GetPluginChannel(
     int process_id, MessageLoop* ipc_message_loop) {
@@ -26,8 +31,13 @@ PluginChannel* PluginChannel::GetPluginChannel(
       false));
 }
 
-PluginChannel::PluginChannel() : renderer_handle_(0), in_send_(0),
-                                 off_the_record_(false) {
+PluginChannel::PluginChannel()
+    : renderer_handle_(0),
+#if defined(OS_POSIX)
+      renderer_fd_(-1),
+#endif
+      in_send_(0),
+      off_the_record_(false) {
   SendUnblockingOnlyDuringDispatch();
   ChildProcess::current()->AddRefProcess();
   const CommandLine* command_line = CommandLine::ForCurrentProcess();
@@ -37,6 +47,12 @@ PluginChannel::PluginChannel() : renderer_handle_(0), in_send_(0),
 PluginChannel::~PluginChannel() {
   if (renderer_handle_)
     base::CloseProcessHandle(renderer_handle_);
+#if defined(OS_POSIX)
+  // If we still have the FD, close it.
+  if (renderer_fd_ != -1) {
+    close(renderer_fd_);
+  }
+#endif
   ChildProcess::current()->ReleaseProcess();
 }
 
@@ -131,4 +147,17 @@ void PluginChannel::CleanUp() {
   scoped_refptr<PluginChannel> me(this);
 
   plugin_stubs_.clear();
+}
+
+bool PluginChannel::Init(MessageLoop* ipc_message_loop, bool create_pipe_now) {
+#if defined(OS_POSIX)
+  // This gets called when the PluginChannel is initially created. At this
+  // point, create the socketpair and assign the plugin side FD to the channel
+  // name. Keep the renderer side FD as a member variable in the PluginChannel
+  // to be able to transmit it through IPC.
+  int plugin_fd;
+  IPC::SocketPair(&plugin_fd, &renderer_fd_);
+  IPC::AddChannelSocket(channel_name(), plugin_fd);
+#endif
+  return PluginChannelBase::Init(ipc_message_loop, create_pipe_now);
 }

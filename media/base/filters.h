@@ -27,8 +27,8 @@
 #include <string>
 
 #include "base/logging.h"
+#include "base/message_loop.h"
 #include "base/ref_counted.h"
-#include "base/task.h"
 #include "base/time.h"
 #include "media/base/media_format.h"
 
@@ -56,16 +56,26 @@ enum FilterType {
 
 class MediaFilter : public base::RefCountedThreadSafe<MediaFilter> {
  public:
-  MediaFilter() : host_(NULL) {}
+  MediaFilter() : host_(NULL), message_loop_(NULL) {}
 
   // Sets the protected member |host_|. This is the first method called by
   // the FilterHost after a filter is created.  The host holds a strong
-  // reference to the filter.  The refernce held by the host is guaranteed
+  // reference to the filter.  The reference held by the host is guaranteed
   // to be released before the host object is destroyed by the pipeline.
   virtual void SetFilterHost(FilterHost* host) {
-    DCHECK(NULL == host_);
-    DCHECK(NULL != host);
+    DCHECK(host);
+    DCHECK(!host_);
     host_ = host;
+  }
+
+  // Sets the protected member |message_loop_|, which is used by filters for
+  // processing asynchronous tasks and maintaining synchronized access to
+  // internal data members.  The message loop should be running and exceed the
+  // lifetime of the filter.
+  virtual void SetMessageLoop(MessageLoop* message_loop) {
+    DCHECK(message_loop);
+    DCHECK(!message_loop_);
+    message_loop_ = message_loop;
   }
 
   // The pipeline is being stopped either as a result of an error or because
@@ -76,14 +86,18 @@ class MediaFilter : public base::RefCountedThreadSafe<MediaFilter> {
   // method if they need to respond to this call.
   virtual void SetPlaybackRate(float playback_rate) {}
 
-  // The pipeline is being seeked to the specified time.  Filters may implement
+  // The pipeline is seeking to the specified time.  Filters may implement
   // this method if they need to respond to this call.
   virtual void Seek(base::TimeDelta time) {}
 
  protected:
-  FilterHost* host_;
+  // Only allow scoped_refptr<> to delete filters.
   friend class base::RefCountedThreadSafe<MediaFilter>;
   virtual ~MediaFilter() {}
+
+  // TODO(scherkus): make these private with public/protected accessors.
+  FilterHost* host_;
+  MessageLoop* message_loop_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MediaFilter);
@@ -160,6 +174,8 @@ class DemuxerStream : public base::RefCountedThreadSafe<DemuxerStream> {
 
   // Schedules a read.  When the |read_callback| is called, the downstream
   // filter takes ownership of the buffer by AddRef()'ing the buffer.
+  //
+  // TODO(scherkus): switch Read() callback to scoped_refptr<>.
   virtual void Read(Callback1<Buffer*>::Type* read_callback) = 0;
 
   // Given a class that supports the |Interface| and a related static method
@@ -204,6 +220,8 @@ class VideoDecoder : public MediaFilter {
   virtual const MediaFormat& media_format() = 0;
 
   // Schedules a read.  Decoder takes ownership of the callback.
+  //
+  // TODO(scherkus): switch Read() callback to scoped_refptr<>.
   virtual void Read(Callback1<VideoFrame*>::Type* read_callback) = 0;
 };
 
@@ -225,6 +243,8 @@ class AudioDecoder : public MediaFilter {
   virtual const MediaFormat& media_format() = 0;
 
   // Schedules a read.  Decoder takes ownership of the callback.
+  //
+  // TODO(scherkus): switch Read() callback to scoped_refptr<>.
   virtual void Read(Callback1<Buffer*>::Type* read_callbasck) = 0;
 };
 

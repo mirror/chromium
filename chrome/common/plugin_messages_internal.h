@@ -3,8 +3,13 @@
 // found in the LICENSE file.
 
 #include "base/shared_memory.h"
+#include "build/build_config.h"
 #include "chrome/common/ipc_message_macros.h"
 #include "webkit/glue/webcursor.h"
+
+#if defined(OS_POSIX)
+#include "base/file_descriptor_posix.h"
+#endif
 
 //-----------------------------------------------------------------------------
 // PluginProcess messages
@@ -42,7 +47,7 @@ IPC_END_MESSAGES(PluginProcess)
 IPC_BEGIN_MESSAGES(PluginProcessHost)
   // Response to a PluginProcessMsg_CreateChannel message.
   IPC_MESSAGE_CONTROL1(PluginProcessHostMsg_ChannelCreated,
-                       std::string /* channel_name */)
+                       IPC::ChannelHandle /* channel_handle */)
 
   IPC_SYNC_MESSAGE_CONTROL0_1(PluginProcessHostMsg_GetPluginFinderUrl,
                               std::string /* plugin finder URL */)

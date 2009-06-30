@@ -47,6 +47,7 @@
 #include "plugin/cross/plugin_logging.h"
 #include "plugin/cross/out_of_memory.h"
 #include "statsreport/metrics.h"
+#include "third_party/v8/include/v8.h"
 #include "breakpad/win/bluescreen_detector.h"
 
 using glue::_o3d::PluginObject;
@@ -83,9 +84,6 @@ static int HandleKeyboardEvent(PluginObject *obj,
     case WM_KEYDOWN:
     case WM_SYSKEYDOWN:
       type = Event::TYPE_KEYDOWN;
-      if (wParam == VK_ESCAPE) {
-        obj->CancelFullscreenDisplay();
-      }
       break;
     case WM_KEYUP:
     case WM_SYSKEYUP:
@@ -129,16 +127,23 @@ static int HandleKeyboardEvent(PluginObject *obj,
   }
 
   int modifier_state = 0;
-  if (keyboard_state[VK_CONTROL] < 0) {
+  if (keyboard_state[VK_CONTROL] & 0x80) {
     modifier_state |= Event::MODIFIER_CTRL;
   }
-  if (keyboard_state[VK_SHIFT] < 0) {
+  if (keyboard_state[VK_SHIFT] & 0x80) {
     modifier_state |= Event::MODIFIER_SHIFT;
   }
-  if (keyboard_state[VK_MENU] < 0) {
+  if (keyboard_state[VK_MENU] & 0x80) {
     modifier_state |= Event::MODIFIER_ALT;
   }
   event.set_modifier_state(modifier_state);
+
+  if (event.type() == Event::TYPE_KEYDOWN &&
+      (wParam == VK_ESCAPE ||
+      (wParam == VK_F4 && (modifier_state & Event::MODIFIER_ALT)))) {
+    obj->CancelFullscreenDisplay();
+  }
+
   obj->client()->AddEventToQueue(event);
   return 0;
 }
@@ -442,7 +447,7 @@ static LRESULT HandleDragAndDrop(PluginObject *obj, WPARAM wParam) {
   path_to_use = path.get();
 #endif
 
-  for (int i = 0; i < num_chars; ++i) {
+  for (UINT i = 0; i < num_chars; ++i) {
     if (path_to_use[i] == '\\') {
       path_to_use[i] = '/';
     }
@@ -635,7 +640,26 @@ WindowProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam) {
   return 0;
 }
 
+NPError PlatformNPPGetValue(NPP instance, NPPVariable variable, void *value) {
+  return NPERR_INVALID_PARAM;
+}
+
 extern "C" {
+  BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID reserved) {
+    if (reason == DLL_PROCESS_DETACH) {
+       // Teardown V8 when the plugin dll is unloaded.
+       // NOTE: NP_Shutdown would have been a good place for this code but
+       //       unfortunately it looks like it gets called even when the dll
+       //       isn't really unloaded.  This is a problem since after calling
+       //       V8::Dispose(), V8 cannot be initialized again.
+       bool v8_disposed = v8::V8::Dispose();
+       if (!v8_disposed)
+         DLOG(ERROR) << "Failed to release V8 resources.";
+       return true;
+    }
+    return true;
+  }
+  
   NPError InitializePlugin() {
     if (!o3d::SetupOutOfMemoryHandler())
       return NPERR_MODULE_LOAD_FAILED_ERROR;
@@ -841,7 +865,6 @@ extern "C" {
   // PluginObject, which mainly lives in cross/o3d_glue.h+cc.
   bool PluginObject::RequestFullscreenDisplay() {
     bool success = false;
-#ifndef NDEBUG  // TODO: Remove after user-prompt feature goes in.
     DCHECK(GetPluginHWnd());
     if (!fullscreen_ && renderer_ && fullscreen_region_valid_) {
       DCHECK(renderer_->fullscreen() == fullscreen_);
@@ -871,12 +894,10 @@ extern "C" {
         LOG(ERROR) << "Failed to create fullscreen window.";
       }
     }
-#endif
     return success;
   }
 
   void PluginObject::CancelFullscreenDisplay() {
-#ifndef NDEBUG  // TODO: Remove after user-prompt feature goes in.
     DCHECK(GetPluginHWnd());
     if (fullscreen_) {
       DCHECK(renderer());
@@ -894,7 +915,6 @@ extern "C" {
       ::SetTimer(GetHWnd(), 0, 10, NULL);
       fullscreen_ = false;
     }
-#endif
   }
 
   NPError NPP_SetWindow(NPP instance, NPWindow *window) {

@@ -29,13 +29,19 @@ const char kStandardSchemeSeparator[] = "://";
 
 const char kAboutBlankURL[] = "about:blank";
 const char kAboutCacheURL[] = "about:cache";
+const char kAboutCrashURL[] = "about:crash";
+const char kAboutHangURL[] = "about:hang";
 const char kAboutMemoryURL[] = "about:memory";
+const char kAboutShorthangURL[] = "about:shorthang";
+
+// Use an obfuscated URL to make this nondiscoverable, we only want this
+// to be used for testing.
+const char kAboutBrowserCrash[] = "about:inducebrowsercrashforrealz";
 
 const char kChromeUIDevToolsURL[] = "chrome://devtools/";
 const char kChromeUIDownloadsURL[] = "chrome://downloads/";
 const char kChromeUIExtensionsURL[] = "chrome://extensions/";
 const char kChromeUIHistoryURL[] = "chrome://history/";
-const char kChromeUIInspectorURL[] = "chrome://inspector/";
 const char kChromeUIIPCURL[] = "chrome://about/ipc";
 const char kChromeUINetworkURL[] = "chrome://about/network";
 const char kChromeUINewTabURL[] = "chrome://newtab";

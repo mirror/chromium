@@ -27,12 +27,12 @@
 #include "net/base/net_errors.h"
 #include "net/base/net_module.h"
 #include "net/base/net_util.h"
-#include "net/base/ssl_test_util.h"
 #include "net/disk_cache/disk_cache.h"
 #include "net/http/http_cache.h"
 #include "net/http/http_network_layer.h"
 #include "net/http/http_response_headers.h"
 #include "net/proxy/proxy_service.h"
+#include "net/socket/ssl_test_util.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_test_job.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -59,7 +59,6 @@ class URLRequestHttpCacheContext : public URLRequestContext {
     delete cookie_store_;
     delete http_transaction_factory_;
     delete proxy_service_;
-    delete host_resolver_;
   }
 };
 
@@ -831,7 +830,8 @@ TEST_F(URLRequestTest, ResponseHeadersTest) {
   EXPECT_EQ("a, b", header);
 }
 
-TEST_F(URLRequestTest, BZip2ContentTest) {
+// TODO(jar): 14801 Remove BZIP code completely.
+TEST_F(URLRequestTest, DISABLED_BZip2ContentTest) {
   scoped_refptr<HTTPTestServer> server =
       HTTPTestServer::CreateServer(L"net/data/filter_unittests", NULL);
   ASSERT_TRUE(NULL != server.get());
@@ -857,7 +857,8 @@ TEST_F(URLRequestTest, BZip2ContentTest) {
   EXPECT_EQ(got_content, got_bz2_content);
 }
 
-TEST_F(URLRequestTest, BZip2ContentTest_IncrementalHeader) {
+// TODO(jar): 14801 Remove BZIP code completely.
+TEST_F(URLRequestTest, DISABLED_BZip2ContentTest_IncrementalHeader) {
   scoped_refptr<HTTPTestServer> server =
       HTTPTestServer::CreateServer(L"net/data/filter_unittests", NULL);
   ASSERT_TRUE(NULL != server.get());
@@ -1237,8 +1238,7 @@ TEST_F(URLRequestTest, Post302RedirectGet) {
     "Accept-Language: en-US,en\r\n"
     "Accept-Charset: ISO-8859-1,*,utf-8\r\n"
     "Content-Length: 10\r\n"
-    "Origin: http://localhost:1337/"
-  );
+    "Origin: http://localhost:1337/");
   req.Start();
   MessageLoop::current()->Run();
 
@@ -1275,7 +1275,8 @@ TEST_F(URLRequestTest, Post307RedirectPost) {
 // Custom URLRequestJobs for use with interceptor tests
 class RestartTestJob : public URLRequestTestJob {
  public:
-  RestartTestJob(URLRequest* request) : URLRequestTestJob(request, true) {}
+  explicit RestartTestJob(URLRequest* request)
+    : URLRequestTestJob(request, true) {}
  protected:
   virtual void StartAsync() {
     this->NotifyRestartRequired();
@@ -1284,7 +1285,8 @@ class RestartTestJob : public URLRequestTestJob {
 
 class CancelTestJob : public URLRequestTestJob {
  public:
-  CancelTestJob(URLRequest* request) : URLRequestTestJob(request, true) {}
+  explicit CancelTestJob(URLRequest* request)
+    : URLRequestTestJob(request, true) {}
  protected:
   virtual void StartAsync() {
     request_->Cancel();
@@ -1293,7 +1295,7 @@ class CancelTestJob : public URLRequestTestJob {
 
 class CancelThenRestartTestJob : public URLRequestTestJob {
  public:
-  CancelThenRestartTestJob(URLRequest* request)
+  explicit CancelThenRestartTestJob(URLRequest* request)
       : URLRequestTestJob(request, true) {
   }
  protected:

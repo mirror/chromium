@@ -47,10 +47,28 @@ class DownloadItemSorter : public std::binary_function<DownloadItem*,
 
 } // namespace
 
-DownloadsDOMHandler::DownloadsDOMHandler(DOMUI* dom_ui, DownloadManager* dlm)
-    : DOMMessageHandler(dom_ui),
-      search_text_(),
+DownloadsDOMHandler::DownloadsDOMHandler(DownloadManager* dlm)
+    : search_text_(),
       download_manager_(dlm) {
+  // Create our fileicon data source.
+  g_browser_process->io_thread()->message_loop()->PostTask(FROM_HERE,
+      NewRunnableMethod(&chrome_url_data_manager,
+                        &ChromeURLDataManager::AddDataSource,
+                        new FileIconSource()));
+}
+
+DownloadsDOMHandler::~DownloadsDOMHandler() {
+  ClearDownloadItems();
+  download_manager_->RemoveObserver(this);
+}
+
+// DownloadsDOMHandler, public: -----------------------------------------------
+
+void DownloadsDOMHandler::Init() {
+  download_manager_->AddObserver(this);
+}
+
+void DownloadsDOMHandler::RegisterMessages() {
   dom_ui_->RegisterMessageCallback("getDownloads",
       NewCallback(this, &DownloadsDOMHandler::HandleGetDownloads));
   dom_ui_->RegisterMessageCallback("openFile",
@@ -73,24 +91,6 @@ DownloadsDOMHandler::DownloadsDOMHandler(DOMUI* dom_ui, DownloadManager* dlm)
       NewCallback(this, &DownloadsDOMHandler::HandleCancel));
   dom_ui_->RegisterMessageCallback("clearAll",
       NewCallback(this, &DownloadsDOMHandler::HandleClearAll));
-
-
-  // Create our fileicon data source.
-  g_browser_process->io_thread()->message_loop()->PostTask(FROM_HERE,
-      NewRunnableMethod(&chrome_url_data_manager,
-                        &ChromeURLDataManager::AddDataSource,
-                        new FileIconSource()));
-}
-
-DownloadsDOMHandler::~DownloadsDOMHandler() {
-  ClearDownloadItems();
-  download_manager_->RemoveObserver(this);
-}
-
-// DownloadsDOMHandler, public: -----------------------------------------------
-
-void DownloadsDOMHandler::Init() {
-  download_manager_->AddObserver(this);
 }
 
 void DownloadsDOMHandler::OnDownloadUpdated(DownloadItem* download) {
@@ -232,7 +232,11 @@ DictionaryValue* DownloadsDOMHandler::CreateDownloadItemValue(
     base::TimeFormatShortDate(download->start_time()));
   file_value->SetInteger(L"id", id);
   file_value->SetString(L"file_path", download->full_path().ToWStringHack());
-  file_value->SetString(L"file_name", download->GetFileName().ToWStringHack());
+  // Keep file names as LTR.
+  std::wstring file_name = download->GetFileName().ToWStringHack();
+  if (l10n_util::GetTextDirection() == l10n_util::RIGHT_TO_LEFT)
+    l10n_util::WrapStringWithLTRFormatting(&file_name);
+  file_value->SetString(L"file_name", file_name);
   file_value->SetString(L"url", download->url().spec());
 
   if (download->state() == DownloadItem::IN_PROGRESS) {

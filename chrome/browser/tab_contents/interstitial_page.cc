@@ -11,6 +11,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/dom_operation_notification_details.h"
 #include "chrome/browser/renderer_host/render_widget_host_view.h"
+#include "chrome/browser/renderer_host/resource_dispatcher_host.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
@@ -393,12 +394,17 @@ void InterstitialPage::DidNavigate(
   render_view_host_->view()->Show();
   tab_->set_interstitial_page(this);
 
-  // If the page has focus, focus the interstitial.
-  if (tab_->render_view_host()->view()->HasFocus())
-    Focus();
+  RenderWidgetHostView* rwh_view = tab_->render_view_host()->view();
 
-  // Hide the original RVH since we're showing the interstitial instead.
-  tab_->render_view_host()->view()->Hide();
+  // The RenderViewHost may already have crashed before we even get here.
+  if (rwh_view) {
+    // If the page has focus, focus the interstitial.
+    if (rwh_view->HasFocus())
+      Focus();
+
+    // Hide the original RVH since we're showing the interstitial instead.
+    rwh_view->Hide();
+  }
 
   // Notify the tab we are not loading so the throbber is stopped. It also
   // causes a NOTIFY_LOAD_STOP notification, that the AutomationProvider (used

@@ -24,8 +24,8 @@
 #include "net/base/host_resolver.h"
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
-#include "net/base/ssl_test_util.h"
 #include "net/http/http_network_layer.h"
+#include "net/socket/ssl_test_util.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_context.h"
 #include "net/proxy/proxy_service.h"
@@ -51,10 +51,7 @@ class TestURLRequestContext : public URLRequestContext {
   }
 
   explicit TestURLRequestContext(const std::string& proxy) {
-    // TODO(eroman): we turn off host caching to see if synchronous
-    // host resolving interacts poorly with client socket pool. [experiment]
-    // http://crbug.com/13952
-    host_resolver_ = new net::HostResolver(0, 0);
+    host_resolver_ = new net::HostResolver;
     net::ProxyConfig proxy_config;
     proxy_config.proxy_rules.ParseFromString(proxy);
     proxy_service_ = net::ProxyService::CreateFixed(proxy_config);
@@ -66,7 +63,6 @@ class TestURLRequestContext : public URLRequestContext {
   virtual ~TestURLRequestContext() {
     delete http_transaction_factory_;
     delete proxy_service_;
-    delete host_resolver_;
   }
 };
 

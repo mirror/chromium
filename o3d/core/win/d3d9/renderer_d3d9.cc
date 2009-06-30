@@ -54,6 +54,7 @@
 #include "core/win/d3d9/primitive_d3d9.h"
 #include "core/win/d3d9/render_surface_d3d9.h"
 #include "core/win/d3d9/sampler_d3d9.h"
+#include "core/win/d3d9/software_renderer_d3d9.h"
 #include "core/win/d3d9/stream_bank_d3d9.h"
 #include "core/win/d3d9/texture_d3d9.h"
 #include "core/win/d3d9/utils_d3d9.h"
@@ -297,7 +298,7 @@ bool CheckDeviceCaps(LPDIRECT3D9 d3d, Features* features) {
           << " for depth/stencil buffers.";
       return false;
     }
-  }  
+  }
 
   return true;
 }
@@ -329,11 +330,11 @@ Renderer::InitStatus CreateDirect3D(Direct3DCreate9_Ptr d3d_create_function,
 // For certain GPU drivers we need to force anti-aliasing off to avoid a
 // a huge performance hit when certain types of windows are used on the same
 // desktop as O3D. This function returns true if O3D is running on one
-// of these GPUs/Drivers.  
+// of these GPUs/Drivers.
 bool ForceAntiAliasingOff(LPDIRECT3D9* d3d) {
   D3DADAPTER_IDENTIFIER9 identifier;
   HRESULT hr = (*d3d)->GetAdapterIdentifier(D3DADAPTER_DEFAULT, 0, &identifier);
-  
+
   unsigned int vendor_id = identifier.VendorId;
   unsigned int device_id = identifier.DeviceId;
   unsigned int product = HIWORD(identifier.DriverVersion.HighPart);
@@ -345,14 +346,46 @@ bool ForceAntiAliasingOff(LPDIRECT3D9* d3d) {
   if (vendor_id == 4098 &&   // ATI
       product == 6 &&
       version == 14 &&
-      subversion == 10 && 
+      subversion == 10 &&
       build <= 6800) {
     return true;
-  } 
+  }
 
   return false;
 }
 
+namespace {
+// Returns whether the ForceSoftwareRenderer value of the Software\Google\o3d
+// key is non-zero.
+bool IsForceSoftwareRendererEnabled() {
+  HKEY key;
+  if (FAILED(RegOpenKeyEx(HKEY_CURRENT_USER,
+                          TEXT("Software\\Google\\o3d"),
+                          0,
+                          KEY_READ,
+                          &key))) {
+    return false;
+  }
+  
+  bool enabled = false;
+  DWORD type;
+  DWORD value;
+  DWORD size = sizeof(value);
+  if (SUCCEEDED(RegQueryValueEx(key,
+                                TEXT("ForceSoftwareRenderer"),
+                                NULL,
+                                &type,
+                                reinterpret_cast<LPBYTE>(&value),
+                                &size))) {
+    if (type == REG_DWORD && size == sizeof(value) && value) {
+      enabled = true;
+    }
+  }
+  RegCloseKey(key);
+
+  return enabled;
+}
+}
 
 // Helper function that gets the D3D Interface, checks the available
 // multisampling modes and selects the most advanced one available to create
@@ -368,9 +401,17 @@ Renderer::InitStatus InitializeD3D9Context(
     int* out_width,
     int* out_height) {
 
-  // Try the hardware renderer first.
-  Renderer::InitStatus status_hardware = CreateDirect3D(
-      Direct3DCreate9, d3d, features);
+  // Check registry to see if the developer has opted to force the software
+  // renderer.
+  Renderer::InitStatus status_hardware;
+  if (IsForceSoftwareRendererEnabled()) {
+    // Simulate GPU not up to spec.
+    status_hardware = Renderer::GPU_NOT_UP_TO_SPEC;
+  } else {
+    // Create a hardware device.
+    status_hardware = CreateDirect3D(Direct3DCreate9, d3d, features);
+  }
+  
   if (status_hardware != Renderer::SUCCESS) {
     Renderer::InitStatus status_software = CreateDirect3D(
         Direct3DCreate9Software, d3d, features);
@@ -387,6 +428,8 @@ Renderer::InitStatus InitializeD3D9Context(
       }
       return status_hardware;
     }
+
+    SetupSoftwareRenderer(*d3d);
   }
 
   D3DDISPLAYMODE d3ddm;
@@ -394,7 +437,7 @@ Renderer::InitStatus InitializeD3D9Context(
     return Renderer::GPU_NOT_UP_TO_SPEC;
 
   // NOTE: make sure the backbuffer matches this format, as it is
-  // currently currently assumed to be 32-bit 8X8R8G8B
+  // currently assumed to be 32-bit 8X8R8G8B
 
   ZeroMemory(d3d_present_parameters, sizeof(*d3d_present_parameters));
   d3d_present_parameters->Windowed               = !fullscreen;
@@ -982,12 +1025,12 @@ Renderer::InitStatus RendererD3D9::InitPlatformSpecific(
       D3DXCreateFont(d3d_device_,
                      27 /* font_height */,
                      0 /* font width--0 appears to be "don't care" */,
-                     FW_DONTCARE,
+                     FW_BOLD,
                      1 /* MIP levels */,
                      FALSE,
                      DEFAULT_CHARSET,
-                     OUT_DEFAULT_PRECIS,
-                     DEFAULT_QUALITY,
+                     OUT_TT_PRECIS,
+                     PROOF_QUALITY,
                      DEFAULT_PITCH | FF_DONTCARE /* pitch and font family */,
                      L"Arial",
                      &fullscreen_message_font_)) {
@@ -1416,43 +1459,61 @@ bool RendererD3D9::BeginDraw() {
   }
 }
 
-void RendererD3D9::ShowFullscreenMessage() {
+void RendererD3D9::ShowFullscreenMessage(float elapsed_time,
+    float display_duration) {
   RECT rect;
-  const float curve_radius = 16.0f;
-  const float curve_radius_squared = curve_radius * curve_radius;
-  const float line_height = 80.0f;
-  const float line_base_height = line_height - 2.0f * curve_radius;
-  const float line_base_height_offset = line_base_height / 2.0f;
-  const float midline_height = height() / 2.0f;
-  const float midline_width = width() / 2.0f;
+  const float line_thickness = 60.0f;
+  const float line_height = line_thickness - 1;  // Prevent a gap at the top.
+  const float line_width = 340.0f;
   const D3DXCOLOR background_color(0.0f, 0.0f, 0.0f, 0.5f);
-  SetRect(&rect, 0, 0, width(), height());
-  // Drawing the message before the background puts it on top.
-  HR(fullscreen_message_font_->DrawText(NULL,
-      L"Press ESC to exit full screen mode.", -1, &rect,
-      DT_CENTER | DT_VCENTER, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f)));
+  const float curve_radius = 9.0f;
+  const float curve_radius_squared = curve_radius * curve_radius;
+  const float line_base_thickness = line_thickness - curve_radius;
+  const float line_base_height = line_height - curve_radius;
+  const float line_x = width() - line_width;
+
+  float y_offset = 0;
+  const float animation_length = 0.25f;
+  if (elapsed_time < animation_length) {
+    y_offset = (elapsed_time / animation_length - 1) * line_height;
+  } else if (display_duration - elapsed_time < animation_length) {
+    y_offset = ((display_duration - elapsed_time) / animation_length - 1) *
+        line_height;
+  }
+
+  SetRect(&rect, static_cast<int>(line_x), static_cast<int>(y_offset),
+      width(), static_cast<int>(y_offset + line_height));
+
   D3DXVECTOR2 line_vertices[2];
-  HR(fullscreen_message_line_->SetWidth(line_base_height));
-  line_vertices[0].x = midline_width - 400.0f - curve_radius;
-  line_vertices[0].y = midline_height;
-  line_vertices[1].x = midline_width + 400.0f + curve_radius;
-  line_vertices[1].y = midline_height;
+  HR(fullscreen_message_line_->SetWidth(line_base_thickness));
+  line_vertices[0].x = line_x;
+  line_vertices[0].y = y_offset + line_base_height / 2;
+  line_vertices[1].x = static_cast<float>(width());
+  line_vertices[1].y = y_offset + line_base_height / 2;
   HR(fullscreen_message_line_->Draw(line_vertices, 2, background_color));
+
   HR(fullscreen_message_line_->SetWidth(1));
   HR(fullscreen_message_line_->Begin());
-  for (int i = 0; i <= curve_radius; ++i) {
-    const float dx = sqrt(curve_radius_squared - i * i);
-    const float dy = i + line_base_height_offset;
-    line_vertices[0].x = midline_width - 400.0f - dx;
-    line_vertices[0].y = midline_height + dy;
-    line_vertices[1].x = midline_width + 400.0f + dx;
-    line_vertices[1].y = midline_height + dy;
-    HR(fullscreen_message_line_->Draw(line_vertices, 2, background_color));
-    line_vertices[0].y = midline_height - dy;
-    line_vertices[1].y = midline_height - dy;
+  for (int i = 0; i < curve_radius; ++i) {
+    const float x = line_x + curve_radius - sqrt(curve_radius_squared - i * i);
+    const float y = y_offset + i + line_base_height;
+    line_vertices[0].x = x;
+    line_vertices[0].y = y;
+    line_vertices[1].x = static_cast<float>(width());
+    line_vertices[1].y = y;
     HR(fullscreen_message_line_->Draw(line_vertices, 2, background_color));
   }
   HR(fullscreen_message_line_->End());
+
+  DWORD z_enable;  // Back up this setting and restore it afterward.
+  d3d_device_->GetRenderState(D3DRS_ZENABLE, &z_enable);
+  d3d_device_->SetRenderState(D3DRS_ZENABLE, FALSE);
+
+  HR(fullscreen_message_font_->DrawText(NULL,
+      L"Press ESC to exit fullscreen", -1, &rect,
+      DT_CENTER | DT_VCENTER, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f)));
+
+  d3d_device_->SetRenderState(D3DRS_ZENABLE, z_enable);
 }
 
 // Notifies DX9 that rendering of the frame is complete and swaps the buffers.
@@ -1460,10 +1521,13 @@ void RendererD3D9::EndDraw() {
   if (have_device_) {
     if (showing_fullscreen_message_) {
       // Message should display for 3 seconds after transition to fullscreen.
-      if (fullscreen_message_timer_.GetElapsedTimeWithoutClearing() > 3.0f) {
+      float elapsed_time =
+          fullscreen_message_timer_.GetElapsedTimeWithoutClearing();
+      const float display_duration = 3.5f;
+      if (elapsed_time > display_duration) {
         showing_fullscreen_message_ = false;
       } else {
-        ShowFullscreenMessage();
+        ShowFullscreenMessage(elapsed_time, display_duration);
       }
     }
     HR(d3d_device_->EndScene());

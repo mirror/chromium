@@ -31,6 +31,7 @@
 #include "config.h"
 #include "WebURLRequest.h"
 
+#include "WebHTTPBody.h"
 #include "WebHTTPHeaderVisitor.h"
 #include "WebURL.h"
 #include "WebURLRequestPrivate.h"
@@ -147,16 +148,14 @@ void WebURLRequest::visitHTTPHeaderFields(WebHTTPHeaderVisitor* visitor) const
         visitor->visitHeader(String(it->first), it->second);
 }
 
-const WebHTTPBody& WebURLRequest::httpBody() const
+WebHTTPBody WebURLRequest::httpBody() const
 {
-    m_private->m_httpBody.rebind(m_private->m_resourceRequest->httpBody());
-    return m_private->m_httpBody;
+    return WebHTTPBody(m_private->m_resourceRequest->httpBody());
 }
 
 void WebURLRequest::setHTTPBody(const WebHTTPBody& httpBody)
 {
     m_private->m_resourceRequest->setHTTPBody(httpBody);
-    m_private->m_httpBody.rebind(0); // Free memory of the old body
 }
 
 bool WebURLRequest::reportUploadProgress() const

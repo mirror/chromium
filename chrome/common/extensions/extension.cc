@@ -12,6 +12,7 @@
 #include "base/string_util.h"
 #include "base/third_party/nss/blapi.h"
 #include "base/third_party/nss/sha256.h"
+#include "chrome/common/chrome_constants.h"
 #include "chrome/common/extensions/extension_error_reporter.h"
 #include "chrome/common/extensions/extension_error_utils.h"
 #include "chrome/common/extensions/user_script.h"
@@ -196,6 +197,13 @@ Extension::~Extension() {
 
 const std::string Extension::VersionString() const {
   return version_->GetString();
+}
+
+// static
+bool Extension::IsExtension(const FilePath& file_name) {
+  return file_name.MatchesExtension(
+      FilePath::StringType(FILE_PATH_LITERAL(".")) +
+      chrome::kExtensionFileExtension);
 }
 
 // static
@@ -489,11 +497,8 @@ FilePath Extension::GetResourcePath(const FilePath& extension_path,
     return FilePath();
 
   // Double-check that the path we ended up with is actually inside the
-  // extension root. We can do this with a simple prefix match because:
-  // a) We control the prefix on both sides, and they should match.
-  // b) GURL normalizes things like "../" and "//" before it gets to us.
-  if (ret_val.value().find(extension_path.value() +
-                           FilePath::kSeparators[0]) != 0)
+  // extension root.
+  if (!extension_path.IsParent(ret_val))
     return FilePath();
 
   return ret_val;

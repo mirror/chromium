@@ -204,6 +204,92 @@ TestSuite.prototype.testEnableResourcesTab = function(controller) {
 };
 
 
+/**
+ * Test that profiler works.
+ */
+TestSuite.prototype.testProfilerTab = function(controller) {
+  var panel = WebInspector.panels.profiles;
+  WebInspector.panels.elements.hide();
+  panel.show();
+
+  var oldAddProfile = WebInspector.addProfile;
+  WebInspector.addProfile = function(profile) {
+    WebInspector.addProfile = oldAddProfile;
+    oldAddProfile.call(this, profile);
+
+    panel.showProfile(profile);
+    var node = panel.visibleView.profileDataGridTree.children[0];
+    // Iterate over displayed functions and search for a function
+    // that is called 'fib' or 'eternal_fib'. If found, it will mean
+    // that we actually have profiled page's code.
+    while (node) {
+      if (node.functionName.indexOf("fib") != -1) {
+        controller.reportOk();
+      }
+      node = node.traverseNextNode(true, null, true);
+    }
+
+    controller.reportFailure();
+  };
+
+  InspectorController.startProfiling();
+  window.setTimeout('InspectorController.stopProfiling();', 1000);
+  controller.takeControl();
+};
+
+
+/**
+ * Tests that scripts tab can be open and populated with inspected scripts.
+ */
+TestSuite.prototype.testShowScriptsTab = function(controller) {
+  var parsedDebuggerTestPageHtml = false;
+  var parsedDebuggerTestJs = false;
+
+  // Intercept parsedScriptSource calls to check that all expected scripts are
+  // added to the debugger.
+  var self = this;
+  var originalParsedScriptSource = WebInspector.parsedScriptSource;
+  WebInspector.parsedScriptSource = function(sourceID, sourceURL, source,
+      startingLine) {
+    if (sourceURL.search(/debugger_test_page.html$/) != -1) {
+      if (parsedDebuggerTestPageHtml) {
+        controller.reportFailure('Unexpected parse event: ' + sourceURL);
+        return;
+      }
+      parsedDebuggerTestPageHtml = true;
+    } else if (sourceURL.search(/debugger_test.js$/) != -1) {
+      if (parsedDebuggerTestJs) {
+        controller.reportFailure('Unexpected parse event: ' + sourceURL);
+        return;
+      }
+      parsedDebuggerTestJs = true;
+    } else {
+      controller.reportFailure('Unexpected script URL: ' + sourceURL);
+    }
+    originalParsedScriptSource.apply(this, arguments);
+
+    if (!WebInspector.panels.scripts.visibleView) {
+      controller.reportFailure('No visible script view: ' + sourceURL);
+      return;
+    }
+
+    if (parsedDebuggerTestJs && parsedDebuggerTestPageHtml) {
+       controller.reportOk();
+    }
+  };
+
+  // Open Scripts panel.
+  var toolbar = document.getElementById('toolbar');
+  var scriptsButton = toolbar.getElementsByClassName('scripts')[0];
+  scriptsButton.click();
+
+  this.assertEquals(WebInspector.panels.scripts, WebInspector.currentPanel);
+
+  // Wait until all scripts are added to the debugger.
+  controller.takeControl();
+};
+
+
 var uiTests = new TestSuite();
 
 

@@ -5,6 +5,7 @@
 #import "chrome/browser/cocoa/tab_strip_controller.h"
 
 #include "app/l10n_util.h"
+#include "base/mac_util.h"
 #include "base/sys_string_conversions.h"
 #include "chrome/app/chrome_dll_resource.h"
 #include "chrome/browser/browser.h"
@@ -17,10 +18,13 @@
 #import "chrome/browser/cocoa/tab_strip_model_observer_bridge.h"
 #import "chrome/browser/cocoa/tab_view.h"
 #import "chrome/browser/cocoa/throbber_view.h"
+#include "chrome/browser/tab_contents/navigation_controller.h"
+#include "chrome/browser/tab_contents/navigation_entry.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/browser/tab_contents/tab_contents_view.h"
 #include "chrome/browser/tabs/tab_strip_model.h"
 #include "grit/generated_resources.h"
+#include "skia/ext/skia_utils_mac.h"
 
 NSString* const kTabStripNumberOfTabsChanged = @"kTabStripNumberOfTabsChanged";
 
@@ -223,11 +227,11 @@ NSString* const kTabStripNumberOfTabsChanged = @"kTabStripNumberOfTabsChanged";
       //tabFrame.size.height += 10.0 * placeholderStretchiness_;
       [[[tab view] animator] setFrame:tabFrame];
       [NSAnimationContext endGrouping];
-      
+
       // Store the frame by identifier to aviod redundant calls to animator.
       NSValue *identifier = [NSValue valueWithPointer:[tab view]];
       [targetFrames_ setObject:[NSValue valueWithRect:tabFrame]
-                        forKey:identifier];  
+                        forKey:identifier];
       continue;
     } else {
       // If our left edge is to the left of the placeholder's left, but our mid
@@ -246,7 +250,7 @@ NSString* const kTabStripNumberOfTabsChanged = @"kTabStripNumberOfTabsChanged";
 
       id frameTarget = visible ? [[tab view] animator] : [tab view];
       tabFrame.size.width = [tab selected] ? kMaxTabWidth : baseTabWidth;
-      
+
       // Check the frame by identifier to avoid redundant calls to animator.
       NSValue *identifier = [NSValue valueWithPointer:[tab view]];
       NSValue *oldTargetValue = [targetFrames_ objectForKey:identifier];
@@ -254,7 +258,7 @@ NSString* const kTabStripNumberOfTabsChanged = @"kTabStripNumberOfTabsChanged";
           !NSEqualRects([oldTargetValue rectValue], tabFrame)) {
         [frameTarget setFrame:tabFrame];
         [targetFrames_ setObject:[NSValue valueWithRect:tabFrame]
-                          forKey:identifier];        
+                          forKey:identifier];
       }
       enclosingRect = NSUnionRect(tabFrame, enclosingRect);
     }
@@ -265,16 +269,16 @@ NSString* const kTabStripNumberOfTabsChanged = @"kTabStripNumberOfTabsChanged";
     }
     i++;
   }
-  
+
   NSRect newTabNewFrame = [newTabButton_ frame];
   newTabNewFrame.origin =
       NSMakePoint(MIN(availableWidth, offset + kNewTabButtonOffset), 0);
   newTabNewFrame.origin.x = MAX(newTabNewFrame.origin.x,
                                 NSMaxX(placeholderFrame_));
-  if (i > 0 && [newTabButton_ isHidden]) {  
+  if (i > 0 && [newTabButton_ isHidden]) {
     [[newTabButton_ animator] setHidden:NO];
   }
-  
+
   if (!NSEqualRects(newTabTargetFrame_, newTabNewFrame)) {
     [newTabButton_ setFrame:newTabNewFrame];
     newTabTargetFrame_ = newTabNewFrame;
@@ -341,7 +345,7 @@ NSString* const kTabStripNumberOfTabsChanged = @"kTabStripNumberOfTabsChanged";
   if (!inForeground) {
     [self layoutTabs];
   }
-  
+
   // Send a broadcast that the number of tabs have changed.
   [[NSNotificationCenter defaultCenter]
       postNotificationName:kTabStripNumberOfTabsChanged
@@ -375,14 +379,18 @@ NSString* const kTabStripNumberOfTabsChanged = @"kTabStripNumberOfTabsChanged";
   // size than surrounding tabs if the user has many.
   [self layoutTabs];
 
-  if (oldContents)
+  if (oldContents) {
     oldContents->view()->StoreFocus();
+    oldContents->WasHidden();
+  }
 
   // Swap in the contents for the new tab
   [self swapInTabAtIndex:index];
 
-  if (newContents)
+  if (newContents) {
+    newContents->DidBecomeSelected();
     newContents->view()->RestoreFocus();
+  }
 }
 
 // Called when a notification is received from the model that the given tab
@@ -416,13 +424,31 @@ NSString* const kTabStripNumberOfTabsChanged = @"kTabStripNumberOfTabsChanged";
 
 // A helper routine for creating an NSImageView to hold the fav icon for
 // |contents|.
-// TODO(pinkerton): fill in with code to use the real favicon, not the default
-// for all cases.
 - (NSImageView*)favIconImageViewForContents:(TabContents*)contents {
   NSRect iconFrame = NSMakeRect(0, 0, 16, 16);
   NSImageView* view = [[[NSImageView alloc] initWithFrame:iconFrame]
                           autorelease];
-  [view setImage:[NSImage imageNamed:@"nav"]];
+
+  NSImage* image = nil;
+
+  NavigationEntry* navEntry = contents->controller().GetLastCommittedEntry();
+  if (navEntry != NULL) {
+    NavigationEntry::FaviconStatus favIcon = navEntry->favicon();
+    const SkBitmap& bitmap = favIcon.bitmap();
+    if (favIcon.is_valid() && !bitmap.isNull())
+      image = gfx::SkBitmapToNSImage(bitmap);
+  }
+
+  // Either we don't have a valid favicon or there was some issue converting it
+  // from an SkBitmap. Either way, just show the default.
+  if (!image) {
+    NSBundle* bundle = mac_util::MainAppBundle();
+    image = [[NSImage alloc] initByReferencingFile:
+             [bundle pathForResource:@"nav" ofType:@"pdf"]];
+    [image autorelease];
+  }
+
+  [view setImage:image];
   return view;
 }
 
@@ -440,30 +466,38 @@ NSString* const kTabStripNumberOfTabsChanged = @"kTabStripNumberOfTabsChanged";
   // load, so we need to make sure we're not creating the throbber view over and
   // over.
   if (contents) {
-    static NSImage* throbberImage = [[NSImage imageNamed:@"throbber"] retain];
     static NSImage* throbberWaitingImage =
         [[NSImage imageNamed:@"throbber_waiting"] retain];
+    static NSImage* throbberLoadingImage =
+        [[NSImage imageNamed:@"throbber"] retain];
 
     TabController* tabController = [tabArray_ objectAtIndex:index];
-    NSImage* image = nil;
-    if (contents->waiting_for_response() && ![tabController waiting]) {
-      image = throbberWaitingImage;
-      [tabController setWaiting:YES];
-    } else if (contents->is_loading() && ![tabController loading]) {
-      image = throbberImage;
-      [tabController setLoading:YES];
+
+    TabLoadingState oldState = [tabController loadingState];
+
+    TabLoadingState newState = kTabDone;
+    NSImage* throbberImage = nil;
+    if (contents->waiting_for_response()) {
+      newState = kTabWaiting;
+      throbberImage = throbberWaitingImage;
+    } else if (contents->is_loading()) {
+      newState = kTabLoading;
+      throbberImage = throbberLoadingImage;
     }
-    if (image) {
-      NSRect frame = NSMakeRect(0, 0, 16, 16);
-      ThrobberView* throbber =
-          [[[ThrobberView alloc] initWithFrame:frame image:image] autorelease];
-      [tabController setIconView:throbber];
-    }
-    else if (!contents->is_loading()) {
-      // Set everything back to normal, we're done loading.
-      [tabController setIconView:[self favIconImageViewForContents:contents]];
-      [tabController setWaiting:NO];
-      [tabController setLoading:NO];
+
+    if (oldState != newState) {
+      NSView* iconView = nil;
+      if (newState == kTabDone) {
+        iconView = [self favIconImageViewForContents:contents];
+      } else {
+        NSRect frame = NSMakeRect(0, 0, 16, 16);
+        iconView =
+            [[[ThrobberView alloc] initWithFrame:frame
+                                           image:throbberImage] autorelease];
+      }
+
+      [tabController setLoadingState:newState];
+      [tabController setIconView:iconView];
     }
   }
 
@@ -493,7 +527,7 @@ NSString* const kTabStripNumberOfTabsChanged = @"kTabStripNumberOfTabsChanged";
   NSView *view = [self selectedTabView];
   NSValue *identifier = [NSValue valueWithPointer:view];
   [targetFrames_ setObject:[NSValue valueWithRect:frame]
-                    forKey:identifier];  
+                    forKey:identifier];
   [view setFrame:frame];
 }
 
@@ -543,23 +577,6 @@ NSString* const kTabStripNumberOfTabsChanged = @"kTabStripNumberOfTabsChanged";
   // Insert it into this tab strip. We want it in the foreground and to not
   // inherit the current tab's group.
   tabModel_->InsertTabContentsAt(index, contents, true, false);
-}
-
-// Return the rect, in WebKit coordinates (flipped), of the window's grow box
-// in the coordinate system of the content area of the currently selected tab.
-- (NSRect)selectedTabGrowBoxRect {
-  int selectedIndex = tabModel_->selected_index();
-  if (selectedIndex == TabStripModel::kNoTab) {
-    // When the window is initially being constructed, there may be no currently
-    // selected tab, so pick the first one. If there aren't any, just bail with
-    // an empty rect.
-    selectedIndex = 0;
-  }
-  TabContentsController* selectedController =
-      [tabContentsArray_ objectAtIndex:selectedIndex];
-  if (!selectedController)
-    return NSZeroRect;
-  return [selectedController growBoxRect];
 }
 
 @end

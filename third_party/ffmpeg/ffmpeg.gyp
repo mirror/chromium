@@ -26,6 +26,9 @@
       },
       'target_name': 'ffmpeg',
       'msvs_guid': 'D7A94F58-576A-45D9-A45F-EB87C63ABBB0',
+      'dependencies': [
+        'ffmpeg_binaries',
+      ],
       'sources': [
         'include/libavcodec/avcodec.h',
         'include/libavcodec/opt.h',
@@ -69,9 +72,6 @@
               'intermediate_dir': '<(INTERMEDIATE_DIR)',
             },
             'type': 'none',
-            'dependencies': [
-              'ffmpeg_binaries',
-            ],
             'sources!': [
               '<(extra_header)',
             ],
@@ -92,7 +92,7 @@
                     'avcodec-52.dll',
                     'avformat-52.dll',
                     'avutil-50.dll',
-		  ],
+                  ],
                 },
               },
             },
@@ -131,6 +131,9 @@
               '../..',  # The chromium 'src' directory.
             ],
             'direct_dependent_settings': {
+              'defines': [
+                '__STDC_CONSTANT_MACROS',  # FFmpeg uses INT64_C.
+              ],
               'include_dirs': [
                 '<(output_root)',
                 '../..',  # The chromium 'src' directory.
@@ -172,28 +175,67 @@
       'msvs_guid': '4E4070E1-EFD9-4EF1-8634-3960956F6F10',
       'conditions': [
         ['OS=="win"', {
-          'sources': [
-            'binaries/avcodec-52.dll',
-            'binaries/avformat-52.dll',
-            'binaries/avutil-50.dll',
-            'binaries/pthreadGC2.dll',
-          ],
+          'variables': {
+            'source_files': [
+              'binaries/avcodec-52.dll',
+              'binaries/avformat-52.dll',
+              'binaries/avutil-50.dll',
+              'binaries/pthreadGC2.dll',
+            ],
+            'output_files': [
+              '<(PRODUCT_DIR)/avcodec-52.dll',
+              '<(PRODUCT_DIR)/avformat-52.dll',
+              '<(PRODUCT_DIR)/avutil-50.dll',
+              '<(PRODUCT_DIR)/pthreadGC2.dll',
+            ],
+          },
           'dependencies': ['../../build/win/system.gyp:cygwin'],
-          'rules': [
-            {
-              'rule_name': 'copy_binaries',
-              'extension': 'dll',
-              'inputs': [
-                'copy_binaries.sh',
-              ],
-              'outputs': [
-                '<(PRODUCT_DIR)/<(RULE_INPUT_NAME)',
-              ],
-              'action': ['./copy_binaries.sh', '"<@(RULE_INPUT_PATH)"', '"<@(PRODUCT_DIR)/<@(RULE_INPUT_NAME)"'],
-              'message': 'Copying binaries...',
-            },
-          ],
+        }], ['OS=="linux"', {
+          'variables': {
+            'source_files': [
+              'binaries/libavcodec.so.52',
+              'binaries/libavformat.so.52',
+              'binaries/libavutil.so.50',
+            ],
+            'output_files': [
+              '<(PRODUCT_DIR)/libavcodec.so.52',
+              '<(PRODUCT_DIR)/libavformat.so.52',
+              '<(PRODUCT_DIR)/libavutil.so.50',
+            ],
+          },
+        }], ['OS=="mac"', {
+          'variables': {
+            'source_files': [
+              'binaries/libavcodec.52.dylib',
+              'binaries/libavformat.52.dylib',
+              'binaries/libavutil.50.dylib',
+            ],
+            'output_files': [
+              '<(PRODUCT_DIR)/libavcodec.52.dylib',
+              '<(PRODUCT_DIR)/libavformat.52.dylib',
+              '<(PRODUCT_DIR)/libavutil.50.dylib',
+            ],
+          },
         }],
+      ],
+      'sources': [
+      ],
+      'actions': [
+        {
+          'action_name': 'copy_binaries',
+          'inputs': [
+            'copy_binaries.sh',
+          ],
+          'outputs': [
+            '<@(output_files)',
+          ],
+          'action': [
+            './copy_binaries.sh',
+            '<@(source_files)',
+            '<(PRODUCT_DIR)/'
+          ],
+          'message': 'Copying FFmpeg binaries...',
+        },
       ],
     },
   ],

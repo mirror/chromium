@@ -18,7 +18,6 @@
 #include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/browser_window.h"
 #include "chrome/browser/character_encoding.h"
-#include "chrome/browser/debugger/debugger_host.h"
 #include "chrome/browser/debugger/devtools_manager.h"
 #include "chrome/browser/download/download_item_model.h"
 #include "chrome/browser/download/download_manager.h"
@@ -31,6 +30,7 @@
 #include "chrome/browser/net/url_fixer_upper.h"
 #include "chrome/browser/options_window.h"
 #include "chrome/browser/profile.h"
+#include "chrome/browser/renderer_host/site_instance.h"
 #include "chrome/browser/sessions/session_service.h"
 #include "chrome/browser/sessions/session_types.h"
 #include "chrome/browser/sessions/tab_restore_service.h"
@@ -38,7 +38,6 @@
 #include "chrome/browser/tab_contents/interstitial_page.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
-#include "chrome/browser/tab_contents/site_instance.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/browser/tab_contents/tab_contents_view.h"
 #include "chrome/browser/window_sizer.h"
@@ -74,7 +73,6 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_url_handler.h"
 #include "chrome/browser/cert_store.h"
-#include "chrome/browser/debugger/debugger_window.h"
 #include "chrome/browser/download/save_package.h"
 #include "chrome/browser/ssl/ssl_error_info.h"
 #include "chrome/browser/task_manager.h"
@@ -191,6 +189,8 @@ Browser::Browser(Type type, Profile* profile)
   registrar_.Add(this, NotificationType::SSL_VISIBLE_STATE_CHANGED,
                  NotificationService::AllSources());
   registrar_.Add(this, NotificationType::EXTENSION_UNLOADED,
+                 NotificationService::AllSources());
+  registrar_.Add(this, NotificationType::BROWSER_THEME_CHANGED,
                  NotificationService::AllSources());
 
   InitCommandState();
@@ -1075,40 +1075,15 @@ void Browser::OpenCreateShortcutsDialog() {
 #endif
 }
 
-void Browser::OpenDebuggerWindow() {
-#if defined(OS_WIN)
-#ifndef CHROME_DEBUGGER_DISABLED
-  UserMetrics::RecordAction(L"Debugger", profile_);
-  // Only one debugger instance can exist at a time right now.
-  // TODO(erikkay): need an alert, dialog, something
-  // or better yet, fix the one instance limitation
-  DebuggerHost* host = DebuggerWindow::GetAnyExistingDebugger();
-  if (host) {
-    host->ShowWindow();
-    return;
-  }
-  debugger_window_ = new DebuggerWindow();
-  debugger_window_->Show(GetSelectedTabContents());
-#endif  // CHROME_DEBUGGER_DISABLED
-#else
-  NOTIMPLEMENTED();
-#endif  // defined(OS_WIN)
-}
-
 void Browser::OpenJavaScriptConsole() {
   UserMetrics::RecordAction(L"ShowJSConsole", profile_);
-  GetSelectedTabContents()->render_view_host()->
-      ShowJavaScriptConsole();
+  DevToolsManager::GetInstance()->OpenDevToolsWindow(
+      GetSelectedTabContents()->render_view_host());
 }
 
 void Browser::OpenTaskManager() {
   UserMetrics::RecordAction(L"TaskManager", profile_);
-// TODO(port)
-#if defined(OS_WIN)
-  TaskManager::Open();
-#else
-  NOTIMPLEMENTED();
-#endif
+  window_->ShowTaskManager();
 }
 
 void Browser::OpenSelectProfileDialog() {
@@ -1185,26 +1160,6 @@ void Browser::OpenHelpTab() {
   GURL help_url(WideToASCII(l10n_util::GetString(IDS_HELP_CONTENT_URL)));
   AddTabWithURL(help_url, GURL(), PageTransition::AUTO_BOOKMARK, true, -1,
                 false, NULL);
-}
-
-void Browser::OnStartDownload(DownloadItem* download) {
-  if (!window())
-    return;
-
-  // GetDownloadShelf creates the download shelf if it was not yet created.
-  window()->GetDownloadShelf()->AddDownload(new DownloadItemModel(download));
-
-// TODO(port): port for mac.
-#if defined(OS_WIN) || defined(OS_LINUX)
-  // Don't show the animation for "Save file" downloads.
-  if (download->total_bytes() > 0) {
-    TabContents* current_tab = GetSelectedTabContents();
-    // We make this check for the case of minimized windows, unit tests, etc.
-    if (platform_util::IsVisible(current_tab->GetNativeView()) &&
-        Animation::ShouldRenderRichAnimation())
-      DownloadStartedAnimation::Show(current_tab);
-  }
-#endif
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1383,7 +1338,6 @@ void Browser::ExecuteCommandWithDisposition(
     // Show various bits of UI
     case IDC_OPEN_FILE:             OpenFile();                    break;
     case IDC_CREATE_SHORTCUTS:      OpenCreateShortcutsDialog();   break;
-    case IDC_DEBUGGER:              OpenDebuggerWindow();          break;
     case IDC_JS_CONSOLE:            OpenJavaScriptConsole();       break;
     case IDC_TASK_MANAGER:          OpenTaskManager();             break;
     case IDC_SELECT_PROFILE:        OpenSelectProfileDialog();     break;
@@ -1962,6 +1916,31 @@ int Browser::GetExtraRenderViewHeight() const {
   return window_->GetExtraRenderViewHeight();
 }
 
+void Browser::OnStartDownload(DownloadItem* download) {
+  if (!window())
+    return;
+
+  // GetDownloadShelf creates the download shelf if it was not yet created.
+  window()->GetDownloadShelf()->AddDownload(new DownloadItemModel(download));
+
+// TODO(port): port for mac.
+#if defined(OS_WIN) || defined(OS_LINUX)
+  // Don't show the animation for "Save file" downloads.
+  if (download->total_bytes() > 0) {
+    TabContents* current_tab = GetSelectedTabContents();
+    // We make this check for the case of minimized windows, unit tests, etc.
+    if (platform_util::IsVisible(current_tab->GetNativeView()) &&
+        Animation::ShouldRenderRichAnimation())
+      DownloadStartedAnimation::Show(current_tab);
+  }
+#endif
+}
+
+void Browser::ConfirmAddSearchProvider(const TemplateURL* template_url,
+                                       Profile* profile) {
+  window()->ConfirmAddSearchProvider(template_url, profile);
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Browser, SelectFileDialog::Listener implementation:
 
@@ -2015,6 +1994,10 @@ void Browser::Observe(NotificationType type,
       }
       break;
     }
+
+    case NotificationType::BROWSER_THEME_CHANGED:
+      window()->UserChangedTheme();
+      break;
 
     default:
       NOTREACHED() << "Got a notification we didn't register for.";
@@ -2115,14 +2098,6 @@ void Browser::InitCommandState() {
   // Show various bits of UI
   command_updater_.UpdateCommandEnabled(IDC_OPEN_FILE, true);
   command_updater_.UpdateCommandEnabled(IDC_CREATE_SHORTCUTS, false);
-#if defined(OS_WIN)
-  // Command line debugger conflicts with the new oop one.
-  bool in_proc_devtools = CommandLine::ForCurrentProcess()->HasSwitch(
-      switches::kDisableOutOfProcessDevTools);
-  command_updater_.UpdateCommandEnabled(IDC_DEBUGGER,
-      // The debugger doesn't work in single process mode.
-      in_proc_devtools && !RenderProcessHost::run_renderer_in_process());
-#endif
   command_updater_.UpdateCommandEnabled(IDC_JS_CONSOLE, true);
   command_updater_.UpdateCommandEnabled(IDC_TASK_MANAGER, true);
   command_updater_.UpdateCommandEnabled(IDC_SELECT_PROFILE, true);

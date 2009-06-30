@@ -4,7 +4,6 @@
 
 #include "base/command_line.h"
 #include "chrome/browser/browser.h"
-#include "chrome/browser/browser_process.h"
 #include "chrome/browser/debugger/devtools_client_host.h"
 #include "chrome/browser/debugger/devtools_manager.h"
 #include "chrome/browser/debugger/devtools_window.h"
@@ -43,6 +42,8 @@ class BrowserClosedObserver : public NotificationObserver {
 const int kActionDelayMs = 500;
 
 const wchar_t kSimplePage[] = L"files/devtools/simple_page.html";
+const wchar_t kJsPage[] = L"files/devtools/js_page.html";
+const wchar_t kDebuggerTestPage[] = L"files/devtools/debugger_test_page.html";
 
 class DevToolsSanityTest : public InProcessBrowserTest {
  public:
@@ -52,8 +53,8 @@ class DevToolsSanityTest : public InProcessBrowserTest {
   }
 
  protected:
-  void RunTest(const std::string& test_name) {
-    OpenDevToolsWindow();
+  void RunTest(const std::string& test_name, const std::wstring& test_page) {
+    OpenDevToolsWindow(test_page);
     std::string result;
     ASSERT_TRUE(
         ui_test_utils::ExecuteJavaScriptAndExtractString(
@@ -65,14 +66,14 @@ class DevToolsSanityTest : public InProcessBrowserTest {
     CloseDevToolsWindow();
   }
 
-  void OpenDevToolsWindow() {
+  void OpenDevToolsWindow(const std::wstring& test_page) {
     HTTPTestServer* server = StartHTTPServer();
-    GURL url = server->TestServerPageW(kSimplePage);
+    GURL url = server->TestServerPageW(test_page);
     ui_test_utils::NavigateToURL(browser(), url);
 
     TabContents* tab = browser()->GetTabContentsAt(0);
     inspected_rvh_ = tab->render_view_host();
-    DevToolsManager* devtools_manager = g_browser_process->devtools_manager();
+    DevToolsManager* devtools_manager = DevToolsManager::GetInstance();
     devtools_manager->OpenDevToolsWindow(inspected_rvh_);
 
     DevToolsClientHost* client_host =
@@ -84,7 +85,7 @@ class DevToolsSanityTest : public InProcessBrowserTest {
   }
 
   void CloseDevToolsWindow() {
-    DevToolsManager* devtools_manager = g_browser_process->devtools_manager();
+    DevToolsManager* devtools_manager = DevToolsManager::GetInstance();
     devtools_manager->UnregisterDevToolsClientHostFor(inspected_rvh_);
     BrowserClosedObserver close_observer(window_->browser());
   }
@@ -96,22 +97,32 @@ class DevToolsSanityTest : public InProcessBrowserTest {
 
 // WebInspector opens.
 IN_PROC_BROWSER_TEST_F(DevToolsSanityTest, TestHostIsPresent) {
-  RunTest("testHostIsPresent");
+  RunTest("testHostIsPresent", kSimplePage);
 }
 
 // Tests elements panel basics.
 IN_PROC_BROWSER_TEST_F(DevToolsSanityTest, TestElementsTreeRoot) {
-  RunTest("testElementsTreeRoot");
+  RunTest("testElementsTreeRoot", kSimplePage);
 }
 
 // Tests main resource load.
 IN_PROC_BROWSER_TEST_F(DevToolsSanityTest, TestMainResource) {
-  RunTest("testMainResource");
+  RunTest("testMainResource", kSimplePage);
 }
 
 // Tests resources panel enabling.
 IN_PROC_BROWSER_TEST_F(DevToolsSanityTest, TestEnableResourcesTab) {
-  RunTest("testEnableResourcesTab");
+  RunTest("testEnableResourcesTab", kSimplePage);
+}
+
+// Tests profiler panel.
+IN_PROC_BROWSER_TEST_F(DevToolsSanityTest, TestProfilerTab) {
+  RunTest("testProfilerTab", kJsPage);
+}
+
+// Tests scripta panel enabling.
+IN_PROC_BROWSER_TEST_F(DevToolsSanityTest, TestEnableScriptsTab) {
+  RunTest("testEnableScriptsTab", kDebuggerTestPage);
 }
 
 }  // namespace

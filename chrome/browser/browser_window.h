@@ -12,11 +12,13 @@ class BrowserWindowTesting;
 class DownloadShelf;
 class FindBar;
 class GURL;
-class LocationBar;
 class HtmlDialogUIDelegate;
+class LocationBar;
+class Profile;
 class StatusBubble;
 class TabContents;
 class TabContentsContainer;
+class TemplateURL;
 
 namespace gfx {
 class Rect;
@@ -129,11 +131,19 @@ class BrowserWindow {
   // provided here since the functionality is Windows-specific.
   virtual void DisableInactiveFrame() {}
 
+  // Shows a confirmation dialog box for adding a search engine described by
+  // |template_url|.
+  virtual void ConfirmAddSearchProvider(const TemplateURL* template_url,
+                                        Profile* profile) = 0;
+
   // Shows or hides the bookmark bar depending on its current visibility.
   virtual void ToggleBookmarkBar() = 0;
 
   // Shows the About Chrome dialog box.
   virtual void ShowAboutChromeDialog() = 0;
+
+  // Shows the Task manager.
+  virtual void ShowTaskManager() = 0;
 
   // Shows the Bookmark Manager window.
   virtual void ShowBookmarkManager() = 0;

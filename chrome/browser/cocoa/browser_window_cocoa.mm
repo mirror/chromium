@@ -123,17 +123,22 @@ bool BrowserWindowCocoa::IsMaximized() const {
 }
 
 void BrowserWindowCocoa::SetFullscreen(bool fullscreen) {
-  NOTIMPLEMENTED();
+  [controller_ setFullscreen:fullscreen];
 }
 
 bool BrowserWindowCocoa::IsFullscreen() const {
-  NOTIMPLEMENTED();
-  return false;
+  return !![controller_ isFullscreen];
 }
 
 gfx::Rect BrowserWindowCocoa::GetRootWindowResizerRect() const {
   NSRect tabRect = [controller_ selectedTabGrowBoxRect];
   return gfx::Rect(NSRectToCGRect(tabRect));
+}
+
+void BrowserWindowCocoa::ConfirmAddSearchProvider(
+    const TemplateURL* template_url,
+    Profile* profile) {
+  NOTIMPLEMENTED();
 }
 
 LocationBar* BrowserWindowCocoa::GetLocationBar() const {
@@ -176,6 +181,10 @@ void BrowserWindowCocoa::AddFindBar(
 }
 
 void BrowserWindowCocoa::ShowAboutChromeDialog() {
+  NOTIMPLEMENTED();
+}
+
+void BrowserWindowCocoa::ShowTaskManager() {
   NOTIMPLEMENTED();
 }
 

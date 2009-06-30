@@ -52,6 +52,8 @@
 #include "plugin/cross/plugin_metrics.h"
 #include "plugin/cross/out_of_memory.h"
 #include "plugin/mac/plugin_mac.h"
+#include "plugin/mac/graphics_utils_mac.h"
+
 
 o3d::PluginLogging* g_logger = NULL;
 bool g_logging_initialized = false;
@@ -590,6 +592,10 @@ bool HandleMacEvent(EventRecord* the_event, NPP instance) {
       break;
   }
   return handled;
+}
+
+NPError PlatformNPPGetValue(NPP instance, NPPVariable variable, void *value) {
+  return NPERR_INVALID_PARAM;
 }
 
 extern "C" {

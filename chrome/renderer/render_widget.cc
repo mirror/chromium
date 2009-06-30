@@ -247,6 +247,9 @@ void RenderWidget::OnPaintRectAck() {
     current_paint_buf_ = NULL;
   }
 
+  // Notify subclasses
+  DidPaint();
+
   // Continue painting if necessary...
   DoDeferredPaint();
 }
@@ -328,7 +331,7 @@ void RenderWidget::PaintRect(const gfx::Rect& rect,
                                                     SkShader::kRepeat_TileMode,
                                                     SkShader::kRepeat_TileMode);
     paint.setShader(shader)->unref();
-    paint.setPorterDuffXfermode(SkPorterDuff::kSrcOver_Mode);
+    paint.setXfermodeMode(SkXfermode::kSrcOver_Mode);
     canvas->drawPaint(paint);
   }
 

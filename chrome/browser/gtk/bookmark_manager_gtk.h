@@ -11,8 +11,8 @@
 #include "app/table_model_observer.h"
 #include "base/ref_counted.h"
 #include "base/task.h"
-#include "chrome/browser/bookmarks/bookmark_context_menu.h"
 #include "chrome/browser/bookmarks/bookmark_model.h"
+#include "chrome/browser/gtk/bookmark_context_menu.h"
 #include "chrome/browser/shell_dialogs.h"
 
 class BookmarkModel;
@@ -28,7 +28,7 @@ class BookmarkManagerGtk : public BookmarkModelObserver,
   Profile* profile() { return profile_; }
 
   // Show the node in the tree.
-  void SelectInTree(BookmarkNode* node, bool expand);
+  void SelectInTree(const BookmarkNode* node, bool expand);
 
   // Shows the bookmark manager. Only one bookmark manager exists.
   static void Show(Profile* profile);
@@ -39,26 +39,26 @@ class BookmarkManagerGtk : public BookmarkModelObserver,
   virtual void Loaded(BookmarkModel* model);
   virtual void BookmarkModelBeingDeleted(BookmarkModel* model);
   virtual void BookmarkNodeMoved(BookmarkModel* model,
-                                 BookmarkNode* old_parent,
+                                 const BookmarkNode* old_parent,
                                  int old_index,
-                                 BookmarkNode* new_parent,
+                                 const BookmarkNode* new_parent,
                                  int new_index);
   virtual void BookmarkNodeAdded(BookmarkModel* model,
-                                 BookmarkNode* parent,
+                                 const BookmarkNode* parent,
                                  int index);
   virtual void BookmarkNodeRemoved(BookmarkModel* model,
-                                   BookmarkNode* parent,
+                                   const BookmarkNode* parent,
                                    int index);
   virtual void BookmarkNodeRemoved(BookmarkModel* model,
-                                   BookmarkNode* parent,
+                                   const BookmarkNode* parent,
                                    int old_index,
-                                   BookmarkNode* node);
+                                   const BookmarkNode* node);
   virtual void BookmarkNodeChanged(BookmarkModel* model,
-                                   BookmarkNode* node);
+                                   const BookmarkNode* node);
   virtual void BookmarkNodeChildrenReordered(BookmarkModel* model,
-                                             BookmarkNode* node);
+                                             const BookmarkNode* node);
   virtual void BookmarkNodeFavIconLoaded(BookmarkModel* model,
-                                         BookmarkNode* node);
+                                         const BookmarkNode* node);
 
   // TableModelObserver implementation.
   virtual void OnModelChanged();
@@ -76,6 +76,9 @@ class BookmarkManagerGtk : public BookmarkModelObserver,
   void InitWidgets();
   GtkWidget* MakeLeftPane();
   GtkWidget* MakeRightPane();
+  // If |left|, then make the organize menu refer to that which is selected in
+  // the left pane, otherwise use the right pane selection.
+  void ResetOrganizeMenu(bool left);
 
   // Pack the data from the bookmark model into the stores. This does not
   // create the stores, which is done in Make{Left,Right}Pane().
@@ -90,16 +93,16 @@ class BookmarkManagerGtk : public BookmarkModelObserver,
 
   // Get the node from |model| at |iter|. If the item is not a node, return
   // NULL.
-  BookmarkNode* GetNodeAt(GtkTreeModel* model, GtkTreeIter* iter);
+  const BookmarkNode* GetNodeAt(GtkTreeModel* model, GtkTreeIter* iter);
 
   // Get the node that is selected in the left tree view.
-  BookmarkNode* GetFolder();
+  const BookmarkNode* GetFolder();
 
   // Get the ID of the selected row.
   int GetSelectedRowID();
 
   // Get the nodes that are selected in the right tree view.
-  std::vector<BookmarkNode*> GetRightSelection();
+  std::vector<const BookmarkNode*> GetRightSelection();
 
   // Set the fields for a row.
   void SetRightSideColumnValues(int row, GtkTreeIter* iter);
@@ -176,6 +179,21 @@ class BookmarkManagerGtk : public BookmarkModelObserver,
       GtkTreePath* path, GtkTreeViewColumn* column,
       BookmarkManagerGtk* bookmark_manager);
 
+  static void OnRightTreeViewFocusIn(GtkTreeView* tree_view,
+      GdkEventFocus* event, BookmarkManagerGtk* bookmark_manager);
+
+  static void OnLeftTreeViewFocusIn(GtkTreeView* tree_view,
+      GdkEventFocus* event, BookmarkManagerGtk* bookmark_manager);
+
+  static gboolean OnRightTreeViewButtonPress(GtkWidget* tree_view,
+      GdkEventButton* event, BookmarkManagerGtk* bookmark_manager);
+
+  static gboolean OnRightTreeViewMotion(GtkWidget* tree_view,
+      GdkEventMotion* event, BookmarkManagerGtk* bookmark_manager);
+
+  static gboolean OnTreeViewButtonRelease(GtkWidget* tree_view,
+      GdkEventButton* button, BookmarkManagerGtk* bookmark_manager);
+
   // Tools menu item callbacks.
   static void OnImportItemActivated(GtkMenuItem* menuitem,
                                     BookmarkManagerGtk* bookmark_manager);
@@ -202,12 +220,22 @@ class BookmarkManagerGtk : public BookmarkModelObserver,
   GtkTreeViewColumn* path_column_;
   scoped_ptr<BookmarkTableModel> right_tree_model_;
 
+  // The Organize menu item.
+  GtkWidget* organize_;
+  // The submenu the item pops up.
   scoped_ptr<BookmarkContextMenu> organize_menu_;
+  // Whether the menu refers to the left selection.
+  bool organize_is_for_left_;
 
   // Factory used for delaying search.
   ScopedRunnableMethodFactory<BookmarkManagerGtk> search_factory_;
 
   scoped_refptr<SelectFileDialog> select_file_dialog_;
+
+  // These two variables used for the workaround for http://crbug.com/15240.
+  // The last mouse down we got. Only valid while |delaying_mousedown| is true.
+  GdkEventButton mousedown_event_;
+  bool delaying_mousedown_;
 };
 
 #endif  // CHROME_BROWSER_GTK_BOOKMARK_MANAGER_GTK_H_

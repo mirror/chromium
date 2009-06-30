@@ -18,6 +18,7 @@
 #include "base/field_trial.h"
 #include "base/gfx/png_encoder.h"
 #include "base/gfx/native_widget_types.h"
+#include "base/process_util.h"
 #include "base/string_piece.h"
 #include "base/string_util.h"
 #include "build/build_config.h"
@@ -32,9 +33,9 @@
 #include "chrome/common/url_constants.h"
 #include "chrome/renderer/about_handler.h"
 #include "chrome/renderer/audio_message_filter.h"
-#include "chrome/renderer/debug_message_handler.h"
 #include "chrome/renderer/devtools_agent.h"
 #include "chrome/renderer/devtools_client.h"
+#include "chrome/renderer/extensions/event_bindings.h"
 #include "chrome/renderer/extensions/extension_process_bindings.h"
 #include "chrome/renderer/localized_error.h"
 #include "chrome/renderer/media/audio_renderer_impl.h"
@@ -57,6 +58,7 @@
 #include "webkit/api/public/WebDataSource.h"
 #include "webkit/api/public/WebDragData.h"
 #include "webkit/api/public/WebForm.h"
+#include "webkit/api/public/WebHistoryItem.h"
 #include "webkit/api/public/WebPoint.h"
 #include "webkit/api/public/WebRect.h"
 #include "webkit/api/public/WebScriptSource.h"
@@ -67,9 +69,11 @@
 #include "webkit/api/public/WebURLResponse.h"
 #include "webkit/api/public/WebVector.h"
 #include "webkit/default_plugin/default_plugin_shared.h"
+#include "webkit/glue/glue_serialize.h"
 #include "webkit/glue/dom_operations.h"
 #include "webkit/glue/dom_serializer.h"
 #include "webkit/glue/image_decoder.h"
+#include "webkit/glue/media/simple_data_source.h"
 #include "webkit/glue/password_form.h"
 #include "webkit/glue/plugins/plugin_list.h"
 #include "webkit/glue/searchable_form_data.h"
@@ -100,9 +104,11 @@ using WebKit::WebConsoleMessage;
 using WebKit::WebDataSource;
 using WebKit::WebDragData;
 using WebKit::WebForm;
+using WebKit::WebHistoryItem;
 using WebKit::WebNavigationType;
 using WebKit::WebRect;
 using WebKit::WebScriptSource;
+using WebKit::WebSize;
 using WebKit::WebString;
 using WebKit::WebURL;
 using WebKit::WebURLError;
@@ -199,7 +205,6 @@ RenderView::~RenderView() {
     it = plugin_delegates_.erase(it);
   }
 
-  render_thread_->RemoveFilter(debug_message_handler_);
   render_thread_->RemoveFilter(audio_message_filter_);
 }
 
@@ -279,12 +284,7 @@ void RenderView::Init(gfx::NativeViewId parent_hwnd,
 
   OnSetRendererPrefs(renderer_prefs);
 
-  const CommandLine& command_line = *CommandLine::ForCurrentProcess();
-
-  bool dev_tools_enabled = !command_line.HasSwitch(
-      switches::kDisableOutOfProcessDevTools);
-  if (dev_tools_enabled)
-    devtools_agent_.reset(new DevToolsAgent(routing_id, this));
+  devtools_agent_.reset(new DevToolsAgent(routing_id, this));
 
   webwidget_ = WebView::Create(this, webkit_prefs);
 
@@ -315,11 +315,9 @@ void RenderView::Init(gfx::NativeViewId parent_hwnd,
   host_window_ = parent_hwnd;
   modal_dialog_event_.reset(modal_dialog_event);
 
+  const CommandLine& command_line = *CommandLine::ForCurrentProcess();
   if (command_line.HasSwitch(switches::kDomAutomationController))
     enabled_bindings_ |= BindingsPolicy::DOM_AUTOMATION;
-
-  debug_message_handler_ = new DebugMessageHandler(this);
-  render_thread_->AddFilter(debug_message_handler_);
 
   audio_message_filter_ = new AudioMessageFilter(routing_id_);
   render_thread_->AddFilter(audio_message_filter_);
@@ -354,19 +352,16 @@ void RenderView::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ViewMsg_Delete, OnDelete)
     IPC_MESSAGE_HANDLER(ViewMsg_SelectAll, OnSelectAll)
     IPC_MESSAGE_HANDLER(ViewMsg_CopyImageAt, OnCopyImageAt)
+    IPC_MESSAGE_HANDLER(ViewMsg_ExecuteEditCommand, OnExecuteEditCommand)
     IPC_MESSAGE_HANDLER(ViewMsg_Find, OnFind)
     IPC_MESSAGE_HANDLER(ViewMsg_Zoom, OnZoom)
     IPC_MESSAGE_HANDLER(ViewMsg_InsertText, OnInsertText)
     IPC_MESSAGE_HANDLER(ViewMsg_SetPageEncoding, OnSetPageEncoding)
-    IPC_MESSAGE_HANDLER(ViewMsg_InspectElement, OnInspectElement)
-    IPC_MESSAGE_HANDLER(ViewMsg_ShowJavaScriptConsole, OnShowJavaScriptConsole)
     IPC_MESSAGE_HANDLER(ViewMsg_SetupDevToolsClient, OnSetupDevToolsClient)
     IPC_MESSAGE_HANDLER(ViewMsg_DownloadImage, OnDownloadImage)
     IPC_MESSAGE_HANDLER(ViewMsg_ScriptEvalRequest, OnScriptEvalRequest)
     IPC_MESSAGE_HANDLER(ViewMsg_CSSInsertRequest, OnCSSInsertRequest)
     IPC_MESSAGE_HANDLER(ViewMsg_AddMessageToConsole, OnAddMessageToConsole)
-    IPC_MESSAGE_HANDLER(ViewMsg_DebugAttach, OnDebugAttach)
-    IPC_MESSAGE_HANDLER(ViewMsg_DebugDetach, OnDebugDetach)
     IPC_MESSAGE_HANDLER(ViewMsg_ReservePageIDRange, OnReservePageIDRange)
     IPC_MESSAGE_HANDLER(ViewMsg_UploadFile, OnUploadFileRequest)
     IPC_MESSAGE_HANDLER(ViewMsg_FormFill, OnFormFill)
@@ -439,7 +434,7 @@ void RenderView::SendThumbnail() {
 
   ThumbnailScore score;
   SkBitmap thumbnail;
-  if (!CaptureThumbnail(main_frame, kThumbnailWidth, kThumbnailHeight,
+  if (!CaptureThumbnail(webview(), kThumbnailWidth, kThumbnailHeight,
                         &thumbnail, &score))
     return;
 
@@ -449,10 +444,8 @@ void RenderView::SendThumbnail() {
 
 void RenderView::OnPrintPages() {
   DCHECK(webview());
-  if (webview()) {
-    // The renderer own the control flow as if it was a window.print() call.
-    ScriptedPrint(webview()->GetMainFrame());
-  }
+  if (webview())
+    Print(webview()->GetMainFrame(), false);
 }
 
 void RenderView::OnPrintingDone(int document_cookie, bool success) {
@@ -547,7 +540,7 @@ void RenderView::CaptureText(WebFrame* frame, std::wstring* contents) {
   }
 }
 
-bool RenderView::CaptureThumbnail(WebFrame* frame,
+bool RenderView::CaptureThumbnail(WebView* view,
                                   int w,
                                   int h,
                                   SkBitmap* thumbnail,
@@ -556,11 +549,18 @@ bool RenderView::CaptureThumbnail(WebFrame* frame,
   double begin = time_util::GetHighResolutionTimeNow();
 #endif
 
-  scoped_ptr<skia::BitmapPlatformDevice> device;
-  if (!frame->CaptureImage(&device, true))
-    return false;
+  view->Layout();
+  const WebSize& size = view->GetSize();
 
-  const SkBitmap& src_bmp = device->accessBitmap(false);
+  skia::PlatformCanvas canvas;
+  if (!canvas.initialize(size.width, size.height, true))
+    return false;
+  view->Paint(&canvas, WebRect(0, 0, size.width, size.height));
+
+  skia::BitmapPlatformDevice& device =
+      static_cast<skia::BitmapPlatformDevice&>(canvas.getTopPlatformDevice());
+
+  const SkBitmap& src_bmp = device.accessBitmap(false);
 
   SkRect dest_rect;
   dest_rect.set(0, 0, SkIntToScalar(w), SkIntToScalar(h));
@@ -593,10 +593,10 @@ bool RenderView::CaptureThumbnail(WebFrame* frame,
     }
   }
 
-  score->at_top = (frame->ScrollOffset().height == 0);
+  score->at_top = (view->GetMainFrame()->ScrollOffset().height == 0);
 
   SkBitmap subset;
-  device->accessBitmap(false).extractSubset(&subset, src_rect);
+  device.accessBitmap(false).extractSubset(&subset, src_rect);
 
   // Resample the subset that we want to get it the right size.
   *thumbnail = skia::ImageOperations::Resize(
@@ -633,7 +633,7 @@ void RenderView::OnNavigate(const ViewMsg_Navigate_Params& params) {
   bool is_reload = params.reload;
 
   WebFrame* main_frame = webview()->GetMainFrame();
-  if (is_reload && !main_frame->HasCurrentHistoryState()) {
+  if (is_reload && main_frame->GetCurrentHistoryItem().isNull()) {
     // We cannot reload if we do not have any history state.  This happens, for
     // example, when recovering from a crash.  Our workaround here is a bit of
     // a hack since it means that reload after a crashed tab does not cause an
@@ -656,7 +656,8 @@ void RenderView::OnNavigate(const ViewMsg_Navigate_Params& params) {
   if (!is_reload && !params.state.empty()) {
     // We must know the page ID of the page we are navigating back to.
     DCHECK_NE(params.page_id, -1);
-    main_frame->LoadHistoryState(params.state);
+    main_frame->LoadHistoryItem(
+        webkit_glue::HistoryItemFromString(params.state));
   } else {
     // Navigate to the given URL.
     WebURLRequest request(params.url);
@@ -717,12 +718,12 @@ void RenderView::OnCopyImageAt(int x, int y) {
   webview()->CopyImageAt(x, y);
 }
 
-void RenderView::OnInspectElement(int x, int y) {
-  webview()->InspectElement(x, y);
-}
+void RenderView::OnExecuteEditCommand(const std::string& name,
+    const std::string& value) {
+  if (!webview() || !webview()->GetFocusedFrame())
+    return;
 
-void RenderView::OnShowJavaScriptConsole() {
-  webview()->ShowJavaScriptConsole();
+  webview()->GetFocusedFrame()->ExecuteEditCommandByName(name, value);
 }
 
 void RenderView::OnSetupDevToolsClient() {
@@ -996,10 +997,13 @@ void RenderView::UpdateSessionHistory(WebFrame* frame) {
   if (page_id_ == -1)
     return;
 
-  std::string state;
-  if (!webview()->GetMainFrame()->GetPreviousHistoryState(&state))
+  const WebHistoryItem& item =
+      webview()->GetMainFrame()->GetPreviousHistoryItem();
+  if (item.isNull())
     return;
-  Send(new ViewHostMsg_UpdateState(routing_id_, page_id_, state));
+
+  Send(new ViewHostMsg_UpdateState(
+      routing_id_, page_id_, webkit_glue::HistoryItemToString(item)));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1065,6 +1069,32 @@ void RenderView::DidCreateDataSource(WebFrame* frame, WebDataSource* ds) {
     ds->setExtraData(pending_navigation_state_.release());
   } else {
     ds->setExtraData(NavigationState::CreateContentInitiated());
+  }
+}
+
+void RenderView::DidPaint() {
+  WebFrame* main_frame = webview()->GetMainFrame();
+
+  if (main_frame->GetProvisionalDataSource()) {
+    // If we have a provisional frame we are between the start
+    // and commit stages of loading...ignore this paint.
+    return;
+  }
+
+  WebDataSource* ds = main_frame->GetDataSource();
+  NavigationState* navigation_state = NavigationState::FromDataSource(ds);
+  // TODO(darin): It should not be possible for navigation_state to
+  // be null here! But the UI test DownloadTest.IncognitoDownload
+  // can cause it to happen.
+  if (navigation_state) {
+    Time now = Time::Now();
+    if (navigation_state->first_paint_time().is_null()) {
+      navigation_state->set_first_paint_time(now);
+    }
+    if (navigation_state->first_paint_after_load_time().is_null() &&
+        !navigation_state->finish_load_time().is_null()) {
+      navigation_state->set_first_paint_after_load_time(now);
+    }
   }
 }
 
@@ -1158,6 +1188,9 @@ void RenderView::DidFailProvisionalLoadWithError(WebView* webview,
   if (error.reason == net::ERR_ABORTED)
     return;
 
+  // Make sure we never show errors in view source mode.
+  frame->SetInViewSourceMode(false);
+
   // If this is a failed back/forward/reload navigation, then we need to do a
   // 'replace' load.  This is necessary to avoid messing up session history.
   // Otherwise, we do a normal load, which simulates a 'go' navigation as far
@@ -1231,6 +1264,7 @@ void RenderView::DidCommitLoadForFrame(WebView *webview, WebFrame* frame,
   NavigationState* navigation_state =
       NavigationState::FromDataSource(frame->GetDataSource());
 
+  navigation_state->set_commit_load_time(Time::Now());
   if (is_new_navigation) {
     // When we perform a new navigation, we need to update the previous session
     // history entry with state for the page we are leaving.
@@ -1290,20 +1324,31 @@ void RenderView::DidReceiveTitle(WebView* webview,
 }
 
 void RenderView::DidFinishLoadForFrame(WebView* webview, WebFrame* frame) {
-  if (webview->GetMainFrame() == frame) {
-    const GURL& url = frame->GetURL();
-    if (url.SchemeIs("http") || url.SchemeIs("https"))
-      DumpLoadHistograms();
-  }
+  WebDataSource* ds = frame->GetDataSource();
+  NavigationState* navigation_state = NavigationState::FromDataSource(ds);
+  // TODO(darin): It should not be possible for navigation_state to be null 
+  // here!
+  if (navigation_state)
+    navigation_state->set_finish_load_time(Time::Now());
 }
 
 void RenderView::DidFailLoadWithError(WebView* webview,
                                       const WebURLError& error,
                                       WebFrame* frame) {
+  // Currently this function is empty. When you implement something here and it
+  // will display any error messages in HTML, please make sure to call
+  // frame->SetInViewSourceMode(false) not to show them in view source mode.
 }
 
 void RenderView::DidFinishDocumentLoadForFrame(WebView* webview,
                                                WebFrame* frame) {
+  WebDataSource* ds = frame->GetDataSource();
+  NavigationState* navigation_state = NavigationState::FromDataSource(ds);
+  // TODO(darin): It should not be possible for navigation_state to be null 
+  // here!
+  if (navigation_state)
+    navigation_state->set_finish_document_load_time(Time::Now());
+
   Send(new ViewHostMsg_DocumentLoadedInFrame(routing_id_));
 
   // The document has now been fully loaded.  Scan for password forms to be
@@ -1346,6 +1391,14 @@ void RenderView::DidCompleteClientRedirect(WebView* webview,
                                            const GURL& source) {
   if (webview->GetMainFrame() == frame)
     completed_client_redirect_src_ = source;
+}
+
+void RenderView::WillCloseFrame(WebView* webview, WebFrame* frame) {
+  if (!frame->GetParent()) {
+    const GURL& url = frame->GetURL();
+    if (url.SchemeIs("http") || url.SchemeIs("https"))
+      DumpLoadHistograms();
+  }
 }
 
 void RenderView::WillSubmitForm(WebView* webview, WebFrame* frame,
@@ -1414,6 +1467,14 @@ void RenderView::DocumentElementAvailable(WebFrame* frame) {
   if (RenderThread::current())  // Will be NULL during unit tests.
     RenderThread::current()->user_script_slave()->InjectScripts(
         frame, UserScript::DOCUMENT_START);
+}
+
+void RenderView::DidCreateScriptContext(WebFrame* webframe) {
+  EventBindings::HandleContextCreated(webframe);
+}
+
+void RenderView::DidDestroyScriptContext(WebFrame* webframe) {
+  EventBindings::HandleContextDestroyed(webframe);
 }
 
 WindowOpenDisposition RenderView::DispositionForNavigationAction(
@@ -1655,10 +1716,6 @@ void RenderView::AddSearchProvider(const std::string& url) {
                         false);  // not autodetected
 }
 
-void RenderView::DebuggerOutput(const std::wstring& out) {
-  Send(new ViewHostMsg_DebuggerOutput(routing_id_, out));
-}
-
 WebView* RenderView::CreateWebView(WebView* webview,
                                    bool user_gesture,
                                    const GURL& creator_url) {
@@ -1750,8 +1807,6 @@ WebPluginDelegate* RenderView::CreatePluginDelegate(
   if (!proxy)
     return NULL;
 
-  // We hold onto the proxy so we can poke it when we are painting.  See our
-  // DidPaint implementation below.
   plugin_delegates_.push_back(proxy);
 
   return proxy;
@@ -1773,11 +1828,26 @@ WebKit::WebMediaPlayer* RenderView::CreateWebMediaPlayer(
     factory->AddFactory(
         AudioRendererImpl::CreateFactory(audio_message_filter()));
   }
+
+  // TODO(hclam): obtain the following parameters from |client|.
+  webkit_glue::MediaResourceLoaderBridgeFactory* bridge_factory =
+      new webkit_glue::MediaResourceLoaderBridgeFactory(
+          GURL::EmptyGURL(),  // referrer
+          "null",             // frame origin
+          "null",             // main_frame_origin
+          base::GetCurrentProcId(),
+          WebAppCacheContext::kNoAppCacheContextId,
+          routing_id());
+
   if (!cmd_line->HasSwitch(switches::kSimpleDataSource)) {
     // Add the chrome specific media data source.
     factory->AddFactory(
         BufferedDataSource::CreateFactory(MessageLoop::current(),
-                                          routing_id()));
+                                          bridge_factory));
+  } else {
+    factory->AddFactory(
+        webkit_glue::SimpleDataSource::CreateFactory(MessageLoop::current(),
+                                                     bridge_factory));
   }
   return new webkit_glue::WebMediaPlayerImpl(client, factory);
 }
@@ -1884,10 +1954,13 @@ void RenderView::SyncNavigationState() {
   if (!webview())
     return;
 
-  std::string state;
-  if (!webview()->GetMainFrame()->GetCurrentHistoryState(&state))
+  const WebHistoryItem& item =
+      webview()->GetMainFrame()->GetCurrentHistoryItem();
+  if (item.isNull())
     return;
-  Send(new ViewHostMsg_UpdateState(routing_id_, page_id_, state));
+
+  Send(new ViewHostMsg_UpdateState(
+      routing_id_, page_id_, webkit_glue::HistoryItemToString(item)));
 }
 
 void RenderView::ShowContextMenu(WebView* webview,
@@ -2227,14 +2300,7 @@ void RenderView::SetInputMethodState(bool enabled) {
 }
 
 void RenderView::ScriptedPrint(WebFrame* frame) {
-  if (print_helper_.get() == NULL) {
-    print_helper_.reset(new PrintWebViewHelper(this));
-  }
-  print_helper_->SyncPrint(frame);
-}
-
-void RenderView::WebInspectorOpened(int num_resources) {
-  Send(new ViewHostMsg_InspectElement_Reply(routing_id_, num_resources));
+  Print(frame, true);
 }
 
 void RenderView::UserMetricsRecordAction(const std::wstring& action) {
@@ -2319,6 +2385,8 @@ void RenderView::DidChangeSelection(bool is_empty_selection) {
     Send(new ViewHostMsg_SelectionChanged(routing_id_,
          this_selection));
     last_selection_ = this_selection;
+  } else {
+    last_selection_.clear();
   }
 #endif
 }
@@ -2389,26 +2457,6 @@ void RenderView::OnAddMessageToConsole(
   if (web_frame)
     web_frame->AddMessageToConsole(WebConsoleMessage(level, message));
 }
-
-#if defined(OS_WIN)
-void RenderView::OnDebugAttach() {
-  Send(new ViewHostMsg_DidDebugAttach(routing_id_));
-  // Tell the plugin host to stop accepting messages in order to avoid
-  // hangs while the renderer is paused.
-  // TODO(1243929): It might be an improvement to add more plumbing to do this
-  // when the renderer is actually paused vs. just the debugger being attached.
-  PluginChannelHost::SetListening(false);
-}
-
-void RenderView::OnDebugDetach() {
-  // Tell the plugin host to start accepting plugin messages again.
-  PluginChannelHost::SetListening(true);
-}
-#else  // defined(OS_WIN)
-// TODO(port): plugins not yet supported
-void RenderView::OnDebugAttach() { NOTIMPLEMENTED(); }
-void RenderView::OnDebugDetach() { NOTIMPLEMENTED(); }
-#endif
 
 void RenderView::OnAllowBindings(int enabled_bindings_flags) {
   enabled_bindings_ |= enabled_bindings_flags;
@@ -2657,8 +2705,15 @@ void RenderView::OnClosePage(int new_render_process_host_id,
   // to close that can run onunload is also useful for fixing
   // http://b/issue?id=753080.
   WebFrame* main_frame = webview()->GetMainFrame();
-  if (main_frame)
+  if (main_frame) {
+    const GURL& url = main_frame->GetURL();
+    // TODO(davemoore) this code should be removed once WillCloseFrame() gets
+    // called when a page is destroyed. DumpLoadHistograms() is safe to call
+    // multiple times for the same frame, but it will simplify things.
+    if (url.SchemeIs("http") || url.SchemeIs("https"))
+      DumpLoadHistograms();
     main_frame->ClosePage();
+  }
 
   Send(new ViewHostMsg_ClosePage_ACK(routing_id_,
                                      new_render_process_host_id,
@@ -2775,67 +2830,96 @@ void RenderView::OnExtensionResponse(int request_id,
 
 // Dump all load time histograms.
 //
-// There are 7 histograms measuring various times.
+// There are 13 histograms measuring various times.
 // The time points we keep are
 //    request: time document was requested by user
 //    start: time load of document started
-//    finishDoc: main document loaded, before onload()
+//    commit: time load of document started
+//    finish_document: main document loaded, before onload()
 //    finish: after onload() and all resources are loaded
-//    firstLayout: first layout performed
+//    first_paint: first paint performed
+//    first_paint_after_load: first paint performed after load is finished
+//    begin: request if it was user requested, start otherwise
+//
 // The times that we histogram are
-//    requestToStart,
-//    startToFinishDoc,
-//    finishDocToFinish,
-//    startToFinish,
-//    requestToFinish,
-//    requestToFirstLayout
-//    startToFirstLayout
+//    request->start,
+//    start->commit,
+//    commit->finish_document,
+//    finish_document->finish,
+//    begin->commit,
+//    begin->finishDoc,
+//    begin->finish,
+//    begin->first_paint,
+//    begin->first_paint_after_load
+//    commit->finishDoc,
+//    commit->first_paint,
+//    commit->first_paint_after_load,
+//    finish->first_paint_after_load,
 //
 // It's possible for the request time not to be set, if a client
 // redirect had been done (the user never requested the page)
 // Also, it's possible to load a page without ever laying it out
-// so firstLayout can be 0.
+// so first_paint and first_paint_after_load can be 0.
 void RenderView::DumpLoadHistograms() const {
   WebFrame* main_frame = webview()->GetMainFrame();
   NavigationState* navigation_state =
       NavigationState::FromDataSource(main_frame->GetDataSource());
+  Time finish = navigation_state->finish_load_time();
 
-  Time request_time = navigation_state->request_time();
-  Time start_load_time = navigation_state->start_load_time();
-  Time finish_document_load_time =
-      navigation_state->finish_document_load_time();
-  Time finish_load_time = navigation_state->finish_load_time();
-  Time first_layout_time = navigation_state->first_layout_time();
+  // If we've already dumped or we haven't finished loading, do nothing.
+  if (navigation_state->load_histograms_recorded() || finish.is_null())
+    return;
 
-  TimeDelta request_to_start = start_load_time - request_time;
-  TimeDelta start_to_finish_doc = finish_document_load_time - start_load_time;
-  TimeDelta finish_doc_to_finish =
-      finish_load_time - finish_document_load_time;
-  TimeDelta start_to_finish = finish_load_time - start_load_time;
-  TimeDelta request_to_finish = finish_load_time - request_time;
-  TimeDelta request_to_first_layout = first_layout_time - request_time;
-  TimeDelta start_to_first_layout = first_layout_time - start_load_time;
+  Time request = navigation_state->request_time();
+  Time start = navigation_state->start_load_time();
+  Time commit = navigation_state->commit_load_time();
+  Time finish_doc = navigation_state->finish_document_load_time();
+  Time first_paint = navigation_state->first_paint_time();
+  Time first_paint_after_load =
+      navigation_state->first_paint_after_load_time();
 
-  // Client side redirects will have no request time
-  if (request_time.ToInternalValue() != 0) {
-    UMA_HISTOGRAM_MEDIUM_TIMES("Renderer2.RequestToStart", request_to_start);
-    UMA_HISTOGRAM_CUSTOM_TIMES(
-        FieldTrial::MakeName("Renderer2.RequestToFinish_2", "DnsImpact").data(),
-        request_to_finish, TimeDelta::FromMilliseconds(10),
-        TimeDelta::FromMinutes(10), 100);
-    if (request_to_first_layout.ToInternalValue() >= 0) {
-      UMA_HISTOGRAM_MEDIUM_TIMES("Renderer2.RequestToFirstLayout",
-          request_to_first_layout);
-    }
+  Time begin;
+  // Client side redirects will have no request time.
+  if (request.is_null()) {
+    begin = start;
+  } else {
+    begin = request;
+    UMA_HISTOGRAM_MEDIUM_TIMES("Renderer4.RequestToStart", start - request);
   }
-  UMA_HISTOGRAM_MEDIUM_TIMES("Renderer2.StartToFinishDoc", start_to_finish_doc);
-  UMA_HISTOGRAM_MEDIUM_TIMES("Renderer2.FinishDocToFinish",
-                             finish_doc_to_finish);
-  UMA_HISTOGRAM_MEDIUM_TIMES("Renderer2.StartToFinish", start_to_finish);
-  if (start_to_first_layout.ToInternalValue() >= 0) {
-    UMA_HISTOGRAM_MEDIUM_TIMES("Renderer2.StartToFirstLayout",
-                               start_to_first_layout);
+  UMA_HISTOGRAM_MEDIUM_TIMES("Renderer4.StartToCommit", commit - start);
+  UMA_HISTOGRAM_MEDIUM_TIMES(
+      "Renderer4.CommitToFinishDoc", finish_doc - commit);
+  UMA_HISTOGRAM_MEDIUM_TIMES(
+      "Renderer4.FinishDocToFinish", finish - finish_doc);
+
+  UMA_HISTOGRAM_MEDIUM_TIMES("Renderer4.BeginToCommit", commit - begin);
+  UMA_HISTOGRAM_MEDIUM_TIMES("Renderer4.BeginToFinishDoc", finish_doc - begin);
+  UMA_HISTOGRAM_CUSTOM_TIMES(
+      FieldTrial::MakeName("Renderer4.BeginToFinish", "DnsImpact").data(),
+      finish - begin, TimeDelta::FromMilliseconds(10),
+      TimeDelta::FromMinutes(10), 100);
+
+  UMA_HISTOGRAM_MEDIUM_TIMES("Renderer4.CommitToFinish", finish - commit);
+
+  if (!first_paint.is_null()) {
+    UMA_HISTOGRAM_MEDIUM_TIMES(
+        "Renderer4.BeginToFirstPaint", first_paint - begin);
+    UMA_HISTOGRAM_MEDIUM_TIMES(
+        "Renderer4.CommitToFirstPaint", first_paint - commit);
   }
+
+  if (!first_paint_after_load.is_null()) {
+    UMA_HISTOGRAM_MEDIUM_TIMES(
+        "Renderer4.BeginToFirstPaintAfterLoad", first_paint_after_load - begin);
+    UMA_HISTOGRAM_MEDIUM_TIMES(
+        "Renderer4.CommitToFirstPaintAfterLoad",
+        first_paint_after_load - commit);
+    UMA_HISTOGRAM_MEDIUM_TIMES(
+        "Renderer4.FinishToFirstPaintAfterLoad",
+        first_paint_after_load - finish);
+  }
+
+  navigation_state->set_load_histograms_recorded(true);
 }
 
 void RenderView::FocusAccessibilityObject(
@@ -2879,4 +2963,12 @@ void RenderView::SendPasswordForms(WebFrame* frame) {
 
   if (!password_forms.empty())
     Send(new ViewHostMsg_PasswordFormsSeen(routing_id_, password_forms));
+}
+
+void RenderView::Print(WebFrame* frame, bool script_initiated) {
+  DCHECK(frame);
+  if (print_helper_.get() == NULL) {
+    print_helper_.reset(new PrintWebViewHelper(this));
+  }
+  print_helper_->Print(frame, script_initiated);
 }

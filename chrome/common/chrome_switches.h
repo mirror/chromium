@@ -43,6 +43,8 @@ extern const wchar_t kTestSandbox[];
 extern const wchar_t kUserDataDir[];
 extern const wchar_t kPluginDataDir[];
 extern const wchar_t kDiskCacheDir[];
+extern const wchar_t kDiskCacheSize[];
+extern const wchar_t kMediaCacheSize[];
 extern const wchar_t kEnableUserDataDirProfiles[];
 extern const wchar_t kParentProfile[];
 extern const wchar_t kApp[];
@@ -90,8 +92,6 @@ extern const wchar_t kPrint[];
 extern const wchar_t kDnsLogDetails[];
 extern const wchar_t kDnsPrefetchDisable[];
 
-extern const wchar_t kAutoSSLClientAuth[];
-
 extern const wchar_t kAllowAllActiveX[];
 
 extern const wchar_t kDisableDevTools[];
@@ -136,8 +136,6 @@ extern const wchar_t kGearsPluginPathOverride[];
 
 extern const wchar_t kEnableFastback[];
 
-extern const wchar_t kJavaScriptDebuggerPath[];
-
 extern const wchar_t kDisableP13n[];
 
 extern const wchar_t kSdchFilter[];
@@ -159,13 +157,13 @@ extern const wchar_t kTestName[];
 
 extern const wchar_t kRendererCmdPrefix[];
 
+extern const wchar_t kUtilityCmdPrefix[];
+
 extern const wchar_t kNewFtp[];
 
 extern const wchar_t kIPCUseFIFO[];
 
-extern const wchar_t kDisableOutOfProcessDevTools[];
-
-extern const wchar_t kEnableWebWorkers[];
+extern const wchar_t kEnableNativeWebWorkers[];
 extern const wchar_t kWebWorkerProcessPerCore[];
 extern const wchar_t kWebWorkerShareProcesses[];
 
@@ -190,6 +188,8 @@ extern const wchar_t kEnableBenchmarking[];
 
 extern const wchar_t kNoDefaultBrowserCheck[];
 
+extern const wchar_t kPrivacyBlacklist[];
+
 extern const wchar_t kZygoteCmdPrefix[];
 
 extern const wchar_t kThumbnailStore[];
@@ -199,6 +199,8 @@ extern const wchar_t kTryChromeAgain[];
 extern const wchar_t kFileDescriptorLimit[];
 
 extern const wchar_t kEnableMonitorProfile[];
+
+extern const wchar_t kEnableXSSAuditor[];
 
 }  // namespace switches
 

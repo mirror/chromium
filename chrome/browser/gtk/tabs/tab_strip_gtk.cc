@@ -4,22 +4,31 @@
 
 #include "chrome/browser/gtk/tabs/tab_strip_gtk.h"
 
+#include <algorithm>
+
 #include "app/gfx/canvas_paint.h"
 #include "app/l10n_util.h"
 #include "app/resource_bundle.h"
 #include "app/slide_animation.h"
 #include "base/gfx/gtk_util.h"
 #include "base/gfx/point.h"
-#include "chrome/browser/browser.h"
 #include "chrome/browser/browser_theme_provider.h"
 #include "chrome/browser/gtk/custom_button.h"
-#include "chrome/browser/gtk/dnd_registry.h"
+#include "chrome/browser/gtk/gtk_dnd_util.h"
 #include "chrome/browser/gtk/tabs/dragged_tab_controller_gtk.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/common/gtk_util.h"
 #include "grit/app_resources.h"
 #include "grit/theme_resources.h"
+
+#if defined(LINUX2)
+#include "chrome/browser/browser.h"
+#include "chrome/browser/browser_list.h"
+#include "chrome/browser/gtk/browser_window_gtk.h"
+#include "chrome/browser/views/tabs/tab_overview_types.h"
+#include "chrome/common/x11_util.h"
+#endif
 
 namespace {
 
@@ -29,7 +38,11 @@ const int kReorderAnimationDurationMs = 166;
 const int kAnimateToBoundsDurationMs = 150;
 
 const int kNewTabButtonHOffset = -5;
+#if defined(LINUX2)
+const int kNewTabButtonVOffset = 0;
+#else
 const int kNewTabButtonVOffset = 5;
+#endif
 
 // The delay between when the mouse leaves the tabstrip and the resize animation
 // is started.
@@ -63,20 +76,6 @@ gfx::Rect GetInitialWidgetBounds(GtkWidget* widget) {
   gtk_widget_size_request(widget, &request);
   return gfx::Rect(0, 0, request.width, request.height);
 }
-
-// Mime types for DnD. Used to synchronize across applications.
-const char kTargetString[] = "STRING";
-const char kTargetTextPlain[] = "text/plain";
-const char kTargetTextUriList[] = "text/uri-list";
-
-// Table of the mime types that we accept with their options.
-const GtkTargetEntry kTargetTable[] = {
-  { const_cast<gchar*>(kTargetString), 0, dnd::X_CHROME_STRING },
-  { const_cast<gchar*>(kTargetTextPlain), 0, dnd::X_CHROME_TEXT_PLAIN },
-  { const_cast<gchar*>(kTargetTextUriList), 0, dnd::X_CHROME_TEXT_URI_LIST }
-};
-
-const int kTargetTableSize = G_N_ELEMENTS(kTargetTable);
 
 }  // namespace
 
@@ -475,9 +474,13 @@ void TabStripGtk::Init() {
                               TabGtk::GetMinimumUnselectedSize().height());
   gtk_widget_set_app_paintable(tabstrip_.get(), TRUE);
   gtk_drag_dest_set(tabstrip_.get(), GTK_DEST_DEFAULT_ALL,
-                    kTargetTable, kTargetTableSize,
+                    NULL, 0,
                     static_cast<GdkDragAction>(
                         GDK_ACTION_COPY | GDK_ACTION_MOVE | GDK_ACTION_LINK));
+  GtkDndUtil::SetDestTargetListFromCodeMask(tabstrip_.get(),
+                                            GtkDndUtil::X_CHROME_TEXT_URI_LIST |
+                                            GtkDndUtil::X_CHROME_TEXT_PLAIN);
+
   g_signal_connect(G_OBJECT(tabstrip_.get()), "expose-event",
                    G_CALLBACK(OnExpose), this);
   g_signal_connect(G_OBJECT(tabstrip_.get()), "size-allocate",
@@ -486,6 +489,10 @@ void TabStripGtk::Init() {
                    G_CALLBACK(OnDragMotion), this);
   g_signal_connect(G_OBJECT(tabstrip_.get()), "drag-drop",
                    G_CALLBACK(OnDragDrop), this);
+  g_signal_connect(G_OBJECT(tabstrip_.get()), "drag-leave",
+                   G_CALLBACK(OnDragLeave), this);
+  g_signal_connect(G_OBJECT(tabstrip_.get()), "drag-failed",
+                   G_CALLBACK(OnDragFailed), this);
   g_signal_connect(G_OBJECT(tabstrip_.get()), "drag-data-received",
                    G_CALLBACK(OnDragDataReceived), this);
 
@@ -615,7 +622,8 @@ gfx::Rect TabStripGtk::GetIdealBounds(int index) {
 
 gfx::Point TabStripGtk::GetTabStripOriginForWidget(GtkWidget* target) {
   int x, y;
-  if (!gtk_widget_translate_coordinates(widget(), target, 0, 0, &x, &y)) {
+  if (!gtk_widget_translate_coordinates(widget(), target,
+      -widget()->allocation.x, 0, &x, &y)) {
     // If the tab strip isn't showing, give the coordinates relative to the
     // toplevel instead.
     gtk_widget_translate_coordinates(
@@ -959,23 +967,24 @@ void TabStripGtk::GenerateIdealBounds() {
 
 void TabStripGtk::LayoutNewTabButton(double last_tab_right,
                                      double unselected_width) {
-#if defined(LINUX2)
-  gtk_fixed_move(GTK_FIXED(tabstrip_.get()), newtab_button_->widget(), 0,
-                 kNewTabButtonVOffset);
-#else
+  gfx::Rect bounds(0, kNewTabButtonVOffset,
+                   newtab_button_->width(), newtab_button_->height());
+#if !defined(LINUX2)
   int delta = abs(Round(unselected_width) - TabGtk::GetStandardSize().width());
   if (delta > 1 && !resize_layout_scheduled_) {
     // We're shrinking tabs, so we need to anchor the New Tab button to the
     // right edge of the TabStrip's bounds, rather than the right edge of the
     // right-most Tab, otherwise it'll bounce when animating.
-    gtk_fixed_move(GTK_FIXED(tabstrip_.get()), newtab_button_->widget(),
-        bounds_.width() - newtab_button_->width(), kNewTabButtonVOffset);
+    bounds.set_x(bounds_.width() - newtab_button_->width());
   } else {
-    gtk_fixed_move(GTK_FIXED(tabstrip_.get()), newtab_button_->widget(),
-        Round(last_tab_right - kTabHOffset) + kNewTabButtonHOffset,
-        kNewTabButtonVOffset);
+    bounds.set_x(Round(last_tab_right - kTabHOffset) + kNewTabButtonHOffset);
   }
+
+  bounds.set_x(gtk_util::MirroredLeftPointForRect(tabstrip_.get(), bounds));
 #endif
+
+  gtk_fixed_move(GTK_FIXED(tabstrip_.get()), newtab_button_->widget(),
+                 bounds.x(), bounds.y());
 }
 
 void TabStripGtk::GetDesiredTabWidths(int tab_count,
@@ -1112,7 +1121,7 @@ void TabStripGtk::RemoveMessageLoopObserver() {
 gfx::Rect TabStripGtk::GetDropBounds(int drop_index,
                                      bool drop_before,
                                      bool* is_beneath) {
-  DCHECK(drop_index != -1);
+  DCHECK_NE(drop_index, -1);
   int center_x;
   if (drop_index < GetTabCount()) {
     TabGtk* tab = GetTabAt(drop_index);
@@ -1167,9 +1176,12 @@ void TabStripGtk::UpdateDropIndex(GdkDragContext* context, gint x, gint y) {
 void TabStripGtk::SetDropIndex(int index, bool drop_before) {
   if (index == -1) {
     if (drop_info_.get())
-      drop_info_.reset(NULL);
+      gtk_widget_hide(drop_info_->container);
     return;
   }
+
+  if (drop_info_.get() && !GTK_WIDGET_VISIBLE(drop_info_->container))
+    gtk_widget_show(drop_info_->container);
 
   if (drop_info_.get() && drop_info_->drop_index == index &&
       drop_info_->drop_before == drop_before) {
@@ -1507,20 +1519,30 @@ gboolean TabStripGtk::OnDragDrop(GtkWidget* widget, GdkDragContext* context,
   if (!tabstrip->drop_info_.get())
     return FALSE;
 
-  GtkTargetList* list = gtk_target_list_new(kTargetTable, kTargetTableSize);
-  DCHECK(list);
+  GdkAtom target = gtk_drag_dest_find_target(widget, context, NULL);
+  if (target != GDK_NONE)
+    gtk_drag_finish(context, FALSE, FALSE, time);
+  else
+    gtk_drag_get_data(widget, context, target, time);
 
-  GList* target = context->targets;
-  for (; target != NULL; target = target->next) {
-    guint info;
-    GdkAtom target_atom = GDK_POINTER_TO_ATOM(target->data);
-    if (gtk_target_list_find(list, target_atom, &info)) {
-      gtk_drag_get_data(widget, context, target_atom, time);
-    }
-  }
-
-  g_free(list);
   return TRUE;
+}
+
+// static
+gboolean TabStripGtk::OnDragLeave(GtkWidget* widget, GdkDragContext* context,
+                                  guint time, TabStripGtk* tabstrip) {
+  // Hide the drop indicator.
+  tabstrip->SetDropIndex(-1, false);
+  return FALSE;
+}
+
+// static
+gboolean TabStripGtk::OnDragFailed(GtkWidget* widget, GdkDragContext* context,
+                                   GtkDragResult result,
+                                   TabStripGtk* tabstrip) {
+  // Hide the drop indicator.
+  tabstrip->SetDropIndex(-1, false);
+  return FALSE;
 }
 
 // static
@@ -1531,7 +1553,7 @@ gboolean TabStripGtk::OnDragDataReceived(GtkWidget* widget,
                                          guint info, guint time,
                                          TabStripGtk* tabstrip) {
   // TODO(jhawkins): Parse URI lists.
-  if (info == dnd::X_CHROME_STRING || info == dnd::X_CHROME_TEXT_PLAIN) {
+  if (info == GtkDndUtil::X_CHROME_TEXT_PLAIN) {
     tabstrip->CompleteDrop(data->data);
     gtk_drag_finish(context, TRUE, TRUE, time);
   }
@@ -1545,14 +1567,20 @@ void TabStripGtk::OnNewTabClicked(GtkWidget* widget, TabStripGtk* tabstrip) {
 }
 
 void TabStripGtk::SetTabBounds(TabGtk* tab, const gfx::Rect& bounds) {
-  tab->SetBounds(bounds);
+  gfx::Rect bds = bounds;
+  bds.set_x(gtk_util::MirroredLeftPointForRect(tabstrip_.get(), bounds));
+  tab->SetBounds(bds);
   gtk_fixed_move(GTK_FIXED(tabstrip_.get()), tab->widget(),
-      bounds.x(), bounds.y());
+                 bds.x(), bds.y());
 }
 
 CustomDrawButton* TabStripGtk::MakeNewTabButton() {
+#if defined(LINUX2)
+  CustomDrawButton* button = new CustomDrawButton(IDR_NEWTAB_BUTTON2, 0, 0, 0);
+#else
   CustomDrawButton* button = new CustomDrawButton(IDR_NEWTAB_BUTTON,
       IDR_NEWTAB_BUTTON_P, IDR_NEWTAB_BUTTON_H, 0);
+#endif
 
   g_signal_connect(G_OBJECT(button->widget()), "clicked",
                    G_CALLBACK(OnNewTabClicked), this);
@@ -1578,6 +1606,14 @@ CustomDrawButton* TabStripGtk::MakeTabOverviewButton() {
 // static
 void TabStripGtk::OnTabOverviewButtonClicked(GtkWidget* widget,
                                              TabStripGtk* tabstrip) {
-  // TODO(sky): implement me.
+  Browser* browser = BrowserList::GetLastActive();
+  DCHECK(browser);  // In order for the user to click on the tab there should
+                    // be an active browser.
+  TabOverviewTypes::Message message;
+  message.set_type(TabOverviewTypes::Message::WM_SWITCH_TO_OVERVIEW_MODE);
+  GtkWidget* browser_widget = GTK_WIDGET(
+      static_cast<BrowserWindowGtk*>(browser->window())->GetNativeHandle());
+  message.set_param(0, x11_util::GetX11WindowFromGtkWidget(browser_widget));
+  TabOverviewTypes::instance()->SendMessage(message);
 }
 #endif

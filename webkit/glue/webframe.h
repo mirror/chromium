@@ -11,9 +11,9 @@
 #include "base/string16.h"
 #include "skia/ext/bitmap_platform_device.h"
 #include "skia/ext/platform_canvas.h"
+#include "webkit/api/public/WebCommon.h"
 
 class GURL;
-class WebAppCacheContext;
 class WebView;
 class WebTextInput;
 struct NPObject;
@@ -21,6 +21,7 @@ struct NPObject;
 namespace WebKit {
 class WebDataSource;
 class WebForm;
+class WebHistoryItem;
 class WebURLRequest;
 struct WebConsoleMessage;
 struct WebFindOptions;
@@ -29,6 +30,13 @@ struct WebScriptSource;
 struct WebSize;
 struct WebURLError;
 }
+
+#if WEBKIT_USING_V8
+namespace v8 {
+  template <class T> class Local;
+  class Context;
+}
+#endif
 
 // Every frame in a web page is represented by one WebFrame, including the
 // outermost frame.
@@ -69,12 +77,18 @@ class WebFrame {
 
   virtual NPObject* GetWindowNPObject() = 0;
 
+#if WEBKIT_USING_V8
+  // Returns the V8 context for this frame, or an empty handle if there is
+  // none.
+  virtual v8::Local<v8::Context> GetScriptContext() = 0;
+#endif
+
   // Loads the given WebURLRequest.
   virtual void LoadRequest(const WebKit::WebURLRequest& request) = 0;
 
-  // Loads the given history state.  This corresponds to a back/forward
+  // Loads the given WebHistoryItem.  This corresponds to a back/forward
   // navigation.
-  virtual void LoadHistoryState(const std::string& history_state) = 0;
+  virtual void LoadHistoryItem(const WebKit::WebHistoryItem& item) = 0;
 
   // This method is short-hand for calling LoadAlternateHTMLString with a dummy
   // request for the given base_url.
@@ -124,26 +138,22 @@ class WebFrame {
   // Inserts the given CSS styles at the beginning of the document.
   virtual bool InsertCSSStyles(const std::string& css) = 0;
 
-  // Returns a string representing the state of the previous page load for
-  // later use when loading. The previous page is the page that was loaded
-  // before DidCommitLoadForFrame was received.
+  // Returns the WebHistoryItem representing the state of the previous page
+  // load for later use when loading. The previous page is the page that was
+  // loaded before DidCommitLoadForFrame was received.
   //
-  // Returns false if there is no valid state to return (for example, there is
-  // no previous item). Returns true if the previous item's state was retrieved,
-  // even if that state may be empty.
-  virtual bool GetPreviousHistoryState(std::string* history_state) const = 0;
+  // Returns a null item if there is no valid state to return (for example,
+  // there is no previous item). Returns true if the previous item's state was
+  // retrieved, even if that state may be empty.
+  virtual WebKit::WebHistoryItem GetPreviousHistoryItem() const = 0;
 
-  // Returns a string representing the state of the current page load for later
-  // use when loading as well as the url and title of the page.
+  // Returns the WebHistoryItem representing the state of the current page load
+  // for later use when loading.
   //
-  // Returns false if there is no valid state to return (for example, there is
-  // no previous item). Returns true if the current item's state was retrieved,
-  // even if that state may be empty.
-  virtual bool GetCurrentHistoryState(std::string* history_state) const = 0;
-
-  // Returns true if there is a current history item.  A newly created WebFrame
-  // lacks a history item.  Otherwise, this will always be true.
-  virtual bool HasCurrentHistoryState() const = 0;
+  // Returns a null item if there is no valid state to return (for example,
+  // there is no previous item). Returns true if the current item's state was
+  // retrieved, even if that state may be empty.
+  virtual WebKit::WebHistoryItem GetCurrentHistoryItem() const = 0;
 
   // Returns the current URL of the frame, or an empty GURL if there is no
   // URL to retrieve (for example, the frame may never have had any content).
@@ -335,21 +345,6 @@ class WebFrame {
   // Returns the full HTML of the page.
   virtual std::string GetFullPageHtml() = 0;
 
-  // Paints the contents of this web view in a bitmapped image. This image
-  // will not have plugins drawn. Devices are cheap to copy because the data is
-  // internally refcounted so we allocate and return a new copy
-  //
-  // Set scroll_to_zero to force all frames to be scrolled to 0,0 before
-  // being painted into the image. This will not send DOM events because it
-  // just draws the contents at a different place, but it does mean the
-  // scrollbars in the resulting image will appear to be wrong (they'll be
-  // painted as if the content was scrolled).
-  //
-  // Returns false on failure. CaptureImage can fail if 'image' argument
-  // is not valid or due to failure to allocate a canvas.
-  virtual bool CaptureImage(scoped_ptr<skia::BitmapPlatformDevice>* image,
-                            bool scroll_to_zero) = 0;
-
   // This function sets a flag within WebKit to instruct it to render the page
   // as View-Source (showing the HTML source for the page).
   virtual void SetInViewSourceMode(bool enable) = 0;
@@ -368,13 +363,13 @@ class WebFrame {
   // superset of those accepted by javascript:document.execCommand().
   // This method is exposed in order to implement
   // javascript:layoutTestController.execCommand()
-  virtual bool ExecuteCoreCommandByName(const std::string& name,
+  virtual bool ExecuteEditCommandByName(const std::string& name,
                                         const std::string& value) = 0;
 
   // Checks whether a webkit editor command is currently enabled. This
   // method is exposed in order to implement
   // javascript:layoutTestController.isCommandEnabled()
-  virtual bool IsCoreCommandEnabled(const std::string& name) = 0;
+  virtual bool IsEditCommandEnabled(const std::string& name) = 0;
 
   // Adds a message to the frame's console.
   virtual void AddMessageToConsole(const WebKit::WebConsoleMessage&) = 0;
@@ -411,14 +406,6 @@ class WebFrame {
 
   // Reformats the web frame for screen display.
   virtual void EndPrint() = 0;
-
-  // Initiates app cache selection for the context with the resource currently
-  // committed in the webframe.
-  virtual void SelectAppCacheWithoutManifest() = 0;
-  virtual void SelectAppCacheWithManifest(const GURL& manifest_url) = 0;
-
-  // Returns a pointer to the WebAppCacheContext for this frame.
-  virtual WebAppCacheContext* GetAppCacheContext() const = 0;
 
   // Only for test_shell
   virtual int PendingFrameUnloadEventCount() const = 0;

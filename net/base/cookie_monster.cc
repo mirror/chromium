@@ -47,6 +47,7 @@
 #include <algorithm>
 
 #include "base/basictypes.h"
+#include "base/format_macros.h"
 #include "base/logging.h"
 #include "base/scoped_ptr.h"
 #include "base/string_tokenizer.h"
@@ -285,7 +286,8 @@ static bool GetCookieDomainKey(const GURL& url,
   // domain=.my.domain.com -- for compatibility we do the same here.  Firefox
   // also treats domain=.....my.domain.com like domain=.my.domain.com, but
   // neither IE nor Safari do this, and we don't either.
-  std::string cookie_domain(net::CanonicalizeHost(pc.Domain(), NULL));
+  url_canon::CanonHostInfo ignored;
+  std::string cookie_domain(net::CanonicalizeHost(pc.Domain(), &ignored));
   if (cookie_domain.empty())
     return false;
   if (cookie_domain[0] != '.')
@@ -350,12 +352,12 @@ static Time CanonExpiration(const CookieMonster::ParsedCookie& pc,
   // First, try the Max-Age attribute.
   uint64 max_age = 0;
   if (pc.HasMaxAge() &&
-#if defined(COMPILER_MSVC)
-      sscanf_s(pc.MaxAge().c_str(), " %I64u", &max_age) == 1) {
-
+#ifdef COMPILER_MSVC
+      sscanf_s(
 #else
-      sscanf(pc.MaxAge().c_str(), " %llu", &max_age) == 1) {
+      sscanf(
 #endif
+             pc.MaxAge().c_str(), " %" PRIu64, &max_age) == 1) {
     return current + TimeDelta::FromSeconds(max_age);
   }
 

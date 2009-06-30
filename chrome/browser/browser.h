@@ -353,7 +353,6 @@ class Browser : public TabStripModelDelegate,
   // Show various bits of UI
   void OpenFile();
   void OpenCreateShortcutsDialog();
-  void OpenDebuggerWindow();
   void OpenJavaScriptConsole();
   void OpenTaskManager();
   void OpenSelectProfileDialog();
@@ -373,7 +372,6 @@ class Browser : public TabStripModelDelegate,
   void OpenAboutChromeDialog();
   void OpenHelpTab();
 
-  virtual void OnStartDownload(DownloadItem* download);
   virtual void UpdateDownloadShelfVisibility(bool visible);
 
   /////////////////////////////////////////////////////////////////////////////
@@ -471,29 +469,28 @@ class Browser : public TabStripModelDelegate,
   virtual bool IsPopup(TabContents* source);
   virtual void ToolbarSizeChanged(TabContents* source, bool is_animating);
   virtual void URLStarredChanged(TabContents* source, bool starred);
-
-  // A mouse event occurred; motion==true is mouse movement, motion==false
-  // is the mouse leaving the view.
-  virtual void ContentsMouseEvent(TabContents* source, bool motion);
   virtual void UpdateTargetURL(TabContents* source, const GURL& url);
-
+  virtual void ContentsMouseEvent(TabContents* source, bool motion);
   virtual void ContentsZoomChange(bool zoom_in);
   virtual void TabContentsFocused(TabContents* tab_content);
   virtual bool IsApplication() const;
   virtual void ConvertContentsToApplication(TabContents* source);
   virtual bool ShouldDisplayURLField();
-  virtual void BeforeUnloadFired(TabContents* source,
-                                 bool proceed,
-                                 bool* proceed_to_fire_unload);
   virtual gfx::Rect GetRootWindowResizerRect() const;
   virtual void ShowHtmlDialog(HtmlDialogUIDelegate* delegate,
                               gfx::NativeWindow parent_window);
+  virtual void BeforeUnloadFired(TabContents* source,
+                                 bool proceed,
+                                 bool* proceed_to_fire_unload);
   virtual void SetFocusToLocationBar();
   virtual void RenderWidgetShowing();
-  virtual ExtensionFunctionDispatcher *CreateExtensionFunctionDispatcher(
+  virtual ExtensionFunctionDispatcher* CreateExtensionFunctionDispatcher(
       RenderViewHost* render_view_host,
       const std::string& extension_id);
   virtual int GetExtraRenderViewHeight() const;
+  virtual void OnStartDownload(DownloadItem* download);
+  virtual void ConfirmAddSearchProvider(const TemplateURL* template_url,
+                                        Profile* profile);
 
   // Overridden from SelectFileDialog::Listener:
   virtual void FileSelected(const FilePath& path, int index, void* params);
@@ -753,9 +750,6 @@ class Browser : public TabStripModelDelegate,
   // The Find Bar. This may be NULL if there is no Find Bar, and if it is
   // non-NULL, it may or may not be visible.
   scoped_ptr<FindBarController> find_bar_controller_;
-
-  // Debugger Window, created lazily
-  scoped_refptr<DebuggerWindow> debugger_window_;
 
   // Dialog box used for opening and saving files.
   scoped_refptr<SelectFileDialog> select_file_dialog_;

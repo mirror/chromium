@@ -11,6 +11,7 @@
 #include "chrome/renderer/render_view.h"
 #include "grit/generated_resources.h"
 #include "printing/units.h"
+#include "webkit/api/public/WebConsoleMessage.h"
 #include "webkit/api/public/WebScreenInfo.h"
 #include "webkit/api/public/WebSize.h"
 #include "webkit/api/public/WebURL.h"
@@ -22,7 +23,14 @@
 #include "skia/ext/vector_canvas.h"
 #endif
 
+using WebKit::WebConsoleMessage;
+using WebKit::WebString;
+using WebKit::WebURLRequest;
+
 namespace {
+
+const int kMinSecondsToIgnoreJavascriptInitiatedPrint = 2;
+const int kMaxSecondsToIgnoreJavascriptInitiatedPrint = 2 * 60;  // 2 Minutes.
 
 // Class that calls the Begin and End print functions on the frame and changes
 // the size of the view temporarily to support full page printing..
@@ -86,16 +94,38 @@ class PrepareFrameAndViewForPrint {
 
 }  // namespace
 
-void PrintWebViewHelper::SyncPrint(WebFrame* frame) {
+void PrintWebViewHelper::Print(WebFrame* frame, bool script_initiated) {
 #if defined(OS_WIN)
 
   // If still not finished with earlier print request simply ignore.
   if (IsPrinting())
     return;
 
+  // Check if there is script repeatedly trying to print and ignore it if too
+  // frequent.  We use exponential wait time so for a page that calls print() in
+  // a loop the user will need to cancel the print dialog after 2 seconds, 4
+  // seconds, 8, ... up to the maximum of 2 minutes.
+  // This gives the user time to navigate from the page.
+  if (script_initiated && (user_cancelled_scripted_print_count_ > 0)) {
+    base::TimeDelta diff = base::Time::Now() - last_cancelled_script_print_;
+    int min_wait_seconds = std::min(
+        kMinSecondsToIgnoreJavascriptInitiatedPrint <<
+            (user_cancelled_scripted_print_count_ - 1),
+        kMaxSecondsToIgnoreJavascriptInitiatedPrint);
+    if (diff.InSeconds() < min_wait_seconds) {
+      WebString message(WebString::fromUTF8(
+          "Ignoring too frequent calls to print()."));
+      frame->AddMessageToConsole(WebConsoleMessage(
+          WebConsoleMessage::LevelWarning,
+          message));
+      return;
+    }
+  }
+
   // Retrieve the default print settings to calculate the expected number of
   // pages.
   ViewMsg_Print_Params default_settings;
+  bool user_cancelled_print = false;
 
   IPC::SyncMessage* msg =
       new ViewHostMsg_GetDefaultPrintSettings(routing_id(), &default_settings);
@@ -105,7 +135,8 @@ void PrintWebViewHelper::SyncPrint(WebFrame* frame) {
     // can safely assume there are no printer drivers configured. So we safely
     // terminate.
     if (default_settings.IsEmpty()) {
-      RunJavaScriptAlert(frame,
+      // TODO: Create an async alert (http://crbug.com/14918).
+      render_view_->RunJavaScriptAlert(frame,
           l10n_util::GetString(IDS_DEFAULT_PRINTER_NOT_FOUND_WARNING_TITLE));
       return;
     }
@@ -147,22 +178,30 @@ void PrintWebViewHelper::SyncPrint(WebFrame* frame) {
             // TODO: Always copy before printing.
             PrintPages(print_settings, frame);
           }
+
+          // Reset cancel counter on first successful print.
+          user_cancelled_scripted_print_count_ = 0;
           return;  // All went well.
         } else {
-          // The user cancelled.
+          user_cancelled_print = true;
         }
       } else {
         // Send() failed.
         NOTREACHED();
       }
     } else {
-      // The user cancelled.
+      // Failed to get default settings.
+      NOTREACHED();
     }
   } else {
     // Send() failed.
     NOTREACHED();
   }
-  DidFinishPrinting(false);
+  if (script_initiated && user_cancelled_print) {
+    ++user_cancelled_scripted_print_count_;
+    last_cancelled_script_print_ = base::Time::Now();
+  }
+  DidFinishPrinting(user_cancelled_print);
 #else  // defined(OS_WIN)
   // TODO(port): print not implemented
   NOTIMPLEMENTED();
@@ -170,15 +209,22 @@ void PrintWebViewHelper::SyncPrint(WebFrame* frame) {
 }
 
 void PrintWebViewHelper::DidFinishPrinting(bool success) {
+  if (!success) {
+    WebView* web_view = print_web_view_.get();
+    if (!web_view)
+      web_view = render_view_->webview();
+
+    // TODO: Create an async alert (http://crbug.com/14918).
+    render_view_->RunJavaScriptAlert(web_view->GetMainFrame(),
+        l10n_util::GetString(IDS_PRINT_SPOOL_FAILED_ERROR_TEXT));
+  }
+
   if (print_web_view_.get()) {
     print_web_view_->Close();
     print_web_view_.release();  // Close deletes object.
     print_pages_params_.reset();
   }
 
-  if (!success) {
-    // TODO(sverrir): http://crbug.com/6833 Show some kind of notification.
-  }
 }
 
 bool PrintWebViewHelper::CopyAndPrint(const ViewMsg_PrintPages_Params& params,
@@ -201,7 +247,7 @@ bool PrintWebViewHelper::CopyAndPrint(const ViewMsg_PrintPages_Params& params,
 
   // When loading is done this will call DidStopLoading that will do the
   // actual printing.
-  print_web_view_->GetMainFrame()->LoadRequest(WebKit::WebURLRequest(url));
+  print_web_view_->GetMainFrame()->LoadRequest(WebURLRequest(url));
 
   return true;
 }

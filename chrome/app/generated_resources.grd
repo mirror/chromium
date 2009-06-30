@@ -2413,6 +2413,9 @@ each locale. -->
       <message name="IDS_DEFAULT_PRINTER_NOT_FOUND_WARNING_TITLE" desc="Title of the warning dialog when no when no printer is available">
         No printer found, Please install a printer.
       </message>
+      <message name="IDS_PRINT_SPOOL_FAILED_ERROR_TEXT" desc="Text in a messagebox when printing fails because of printer issues.">
+        Something went wrong when trying to print.  Please check your printer and try again.
+      </message>
 
       <!-- Tabs -->
       <message name="IDS_TAB_LOADING_TITLE" desc="The text to be displayed in the title of a tab before a title is discovered.">
@@ -2814,6 +2817,15 @@ each locale. -->
       </message>
       <message name="IDS_MIXED_CONTENT_LOG_MESSAGE" desc="The text displayed in the log message of a page that contains insecure content.">
         The page at <ph name="SECURE_PAGE_URL">$1<ex>https://www.google.com/</ex></ph> contains insecure content from <ph name="INSECURE_RESOURCE_URL">$2<ex>http://www.google.com/</ex></ph>.
+      </message>
+
+      <!-- SSL client authentication certificate selection dialog -->
+      <message name="IDS_CLIENT_CERT_DIALOG_TITLE" desc="The title of the dialog that prompts for a certificate when doing SSL client authentication.">
+        Select a certificate
+      </message>
+
+      <message name="IDS_CLIENT_CERT_DIALOG_TEXT" desc="The text in the dialog that prompts for a certificate when doing SSL client authentication.">
+        Select a certificate to authenticate yourself to <ph name="HOST_NAME">$1<ex>www.google.com</ex></ph>
       </message>
 
       <!-- Advanced Font/Language settings -->
@@ -3414,7 +3426,7 @@ each locale. -->
       </message>
       <message name="IDS_NEW_TAB_RECENTLY_CLOSED_WINDOW_MULTIPLE"
                desc="Title of recently closed windows in the recently closed section of the new tab page when the window has more than one tab. The % is replaced by the number of tabs">
-        % Tabs
+        <ph name="TAB_COUNT">%s<ex>3</ex></ph> Tabs
       </message>
       <message name="IDS_NEW_TAB_ATTRIBUTION_INTRO"
                desc="Leading sentence above a custom logo that the theme artist has provided">
@@ -3423,6 +3435,74 @@ each locale. -->
       <message name="IDS_NEW_TAB_WEB_RESOURCE_CACHE"
                desc="Title of block that holds tips, suggestions, and other new information gathered from web resources in the new tab page.">
         Recommendations
+      </message>
+      <message name="IDS_NEW_TAB_RECENT_ACTIVITIES"
+               desc="Heading text for the section containing recent activities. Recent activies includes closed windows and tabs as well as downloads.">
+        Recent activities
+      </message>
+      <message name="IDS_NEW_TAB_DOWNLOADS"
+               desc="The header text of the recent downloads section.">
+        Downloads
+      </message>
+      <message name="IDS_NEW_TAB_VIEW_FULL_HISTORY"
+               desc="The text of the link that takes the user to the history page. This is shown under recent activities.">
+        View full history
+      </message>
+      <message name="IDS_NEW_TAB_VIEW_ALL_DOWNLOADS"
+               desc="The text of the link that takes the user to the downloads page. This is shown under recent activities.">
+        View all downloads
+      </message>
+      <message name="IDS_NEW_TAB_SHOW_THUMBNAILS"
+               desc="Menu item text used to show the thumbnail grid for the most visited pages.">
+        Show thumbnails
+      </message>
+      <message name="IDS_NEW_TAB_HIDE_THUMBNAILS"
+               desc="Menu item text used to hide the thumbnail grid for the most visited pages.">
+        Hide thumbnails
+      </message>
+      <message name="IDS_NEW_TAB_SHOW_LIST"
+               desc="Menu item text used to show the list of the most visited pages.">
+        Show list
+      </message>
+      <message name="IDS_NEW_TAB_HIDE_LIST"
+               desc="Menu item text used to hide the list of the most visited pages.">
+        Hide list
+      </message>
+      <message name="IDS_NEW_TAB_SHOW_RECENT"
+               desc="Menu item text used to show recent activities.">
+        Show recent activities
+      </message>
+      <message name="IDS_NEW_TAB_HIDE_RECENT"
+               desc="Menu item text used to hide recent activities.">
+        Hide recent activities
+      </message>
+      <message name="IDS_NEW_TAB_SHOW_TIPS"
+               desc="Menu item text used to show tips.">
+        Show recommendations
+      </message>
+      <message name="IDS_NEW_TAB_HIDE_TIPS"
+               desc="Menu item text used to hide tips.">
+        Hide recommendations
+      </message>
+      <message name="IDS_NEW_TAB_THUMBNAIL_REMOVED_NOTIFICATION"
+               desc="Notification text shown when a thumbnail has been removed from the most visited section.">
+        The thumbnail for &#x201C;<ph name="THUMBNAIL_TITLE">%s</ph>&#x201D; will no longer appear.
+      </message>
+      <message name="IDS_NEW_TAB_UNDO_THUMBNAIL_REMOVE"
+         desc="Action link text to undo removing a thumbnail from the most visited section.">
+        Undo
+      </message>
+      <message name="IDS_NEW_TAB_REMOVE_THUMBNAIL_TOOLTIP"
+         desc="Tooltip text for the button that removes/blacklists the thumbnail. Once removed the thumbnail will not show up on the new tab page again.">
+        Remove
+      </message>
+      <message name="IDS_NEW_TAB_PIN_THUMBNAIL_TOOLTIP"
+         desc="Tooltip text for the button that pins the thumbnail. Once pinned the thumbnail will always be shown on the new tab page and it will alwyas be shown in the same position.">
+        Pin
+      </message>
+      <message name="IDS_NEW_TAB_UNPIN_THUMBNAIL_TOOLTIP"
+         desc="Tooltip text for the button that unpins the thumbnail. Once unpinned the thumbnail might not be displayed on the new tab page any more.">
+        Unpin
       </message>
 
       <!-- SafeBrowsing -->

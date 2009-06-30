@@ -48,8 +48,11 @@ class TestBrowserWindow : public BrowserWindow {
   virtual void FocusToolbar() {}
   virtual bool IsBookmarkBarVisible() const { return false; }
   virtual gfx::Rect GetRootWindowResizerRect() const { return gfx::Rect(); }
+  virtual void ConfirmAddSearchProvider(const TemplateURL* template_url,
+                                        Profile* profile) {}
   virtual void ToggleBookmarkBar() {}
   virtual void ShowAboutChromeDialog() {}
+  virtual void ShowTaskManager() {}
   virtual void ShowBookmarkManager() {}
   virtual void ShowBookmarkBubble(const GURL& url, bool already_bookmarked) {}
   virtual bool IsDownloadShelfVisible() const { return false; }

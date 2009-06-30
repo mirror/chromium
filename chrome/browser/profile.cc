@@ -19,8 +19,10 @@
 #include "chrome/browser/extensions/extensions_service.h"
 #include "chrome/browser/extensions/user_script_master.h"
 #include "chrome/browser/history/history.h"
+#include "chrome/browser/in_process_webkit/webkit_context.h"
 #include "chrome/browser/net/chrome_url_request_context.h"
 #include "chrome/browser/password_manager/password_store_default.h"
+#include "chrome/browser/privacy_blacklist/blacklist.h"
 #include "chrome/browser/profile_manager.h"
 #include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/search_engines/template_url_fetcher.h"
@@ -46,8 +48,48 @@
 using base::Time;
 using base::TimeDelta;
 
+namespace {
+
 // Delay, in milliseconds, before we explicitly create the SessionService.
 static const int kCreateSessionServiceDelayMS = 500;
+
+enum ContextType {
+  kNormalContext,
+  kMediaContext
+};
+
+// Gets the cache parameters from the command line. |type| is the type of
+// request context that we need, |cache_path| will be set to the user provided
+// path, or will not be touched if there is not an argument. |max_size| will
+// be the user provided value or zero by default.
+void GetCacheParameters(ContextType type, FilePath* cache_path,
+                        int* max_size) {
+  DCHECK(cache_path);
+  DCHECK(max_size);
+
+  // Override the cache location if specified by the user.
+  std::wstring user_path(CommandLine::ForCurrentProcess()->GetSwitchValue(
+                             switches::kDiskCacheDir));
+
+  if (!user_path.empty()) {
+    *cache_path = FilePath::FromWStringHack(user_path);
+  }
+
+  const wchar_t* arg = kNormalContext == type ? switches::kDiskCacheSize :
+                                                switches::kMediaCacheSize;
+  std::string value =
+      WideToASCII(CommandLine::ForCurrentProcess()->GetSwitchValue(arg));
+
+  // By default we let the cache determine the right size.
+  *max_size = 0;
+  if (!StringToInt(value, max_size)) {
+    *max_size = 0;
+  } else if (max_size < 0) {
+    *max_size = 0;
+  }
+}
+
+}  // namespace
 
 // A pointer to the request context for the default profile.  See comments on
 // Profile::GetDefaultRequestContext.
@@ -273,6 +315,10 @@ class OffTheRecordProfileImpl : public Profile,
     return extensions_request_context_;
   }
 
+  virtual Blacklist* GetBlacklist() {
+    return GetOriginalProfile()->GetBlacklist();
+  }
+
   virtual SessionService* GetSessionService() {
     // Don't save any sessions when off the record.
     return NULL;
@@ -342,6 +388,13 @@ class OffTheRecordProfileImpl : public Profile,
     return profile_->GetSpellChecker();
   }
 
+  virtual WebKitContext* GetWebKitContext() {
+  if (!webkit_context_.get())
+    webkit_context_ = new WebKitContext(GetPath(), true);
+  DCHECK(webkit_context_.get());
+  return webkit_context_.get();
+}
+
   virtual ThumbnailStore* GetThumbnailStore() {
     return NULL;
   }
@@ -392,8 +445,10 @@ class OffTheRecordProfileImpl : public Profile,
   // The download manager that only stores downloaded items in memory.
   scoped_refptr<DownloadManager> download_manager_;
 
-  // The download manager that only stores downloaded items in memory.
   scoped_refptr<BrowserThemeProvider> theme_provider_;
+
+  // Use a special WebKit context for OTR browsing.
+  scoped_refptr<WebKitContext> webkit_context_;
 
   // We don't want SSLHostState from the OTR profile to leak back to the main
   // profile because then the main profile would learn some of the host names
@@ -414,6 +469,7 @@ ProfileImpl::ProfileImpl(const FilePath& path)
       request_context_(NULL),
       media_request_context_(NULL),
       extensions_request_context_(NULL),
+      blacklist_(NULL),
       history_service_created_(false),
       created_web_data_service_(false),
       created_password_store_(false),
@@ -439,6 +495,18 @@ ProfileImpl::ProfileImpl(const FilePath& path)
   if (!CommandLine::ForCurrentProcess()->HasSwitch(switches::kDisableP13n))
     personalization_.reset(Personalization::CreateProfilePersonalization(this));
 #endif
+
+  if (CommandLine::ForCurrentProcess()->
+      HasSwitch(switches::kPrivacyBlacklist)) {
+    std::wstring option = CommandLine::ForCurrentProcess()->GetSwitchValue(
+        switches::kPrivacyBlacklist);
+#if defined(OS_POSIX)
+    FilePath path(WideToUTF8(option));
+#else
+    FilePath path(option);
+#endif
+    blacklist_ = new Blacklist(path);
+  }
 
 #if defined(OS_LINUX)
   // TODO(port): Remove ifdef when the Linux splash page is not needed.
@@ -478,7 +546,11 @@ void ProfileImpl::InitExtensions() {
       g_browser_process->file_thread()->message_loop(),
       script_dir);
   extensions_service_ = new ExtensionsService(
-      this, MessageLoop::current(),
+      this,
+      CommandLine::ForCurrentProcess(),
+      GetPrefs(),
+      GetPath().AppendASCII(ExtensionsService::kInstallDirectoryName),
+      MessageLoop::current(),
       g_browser_process->file_thread()->message_loop());
 
   extensions_service_->Init();
@@ -549,6 +621,10 @@ ProfileImpl::~ProfileImpl() {
   CleanupRequestContext(media_request_context_);
   CleanupRequestContext(extensions_request_context_);
 
+  // When the request contexts are gone, the blacklist wont be needed anymore.
+  delete blacklist_;
+  blacklist_ = 0;
+
   // HistoryService may call into the BookmarkModel, as such we need to
   // delete HistoryService before the BookmarkModel. The destructor for
   // HistoryService will join with HistoryService's backend thread so that
@@ -591,7 +667,7 @@ static void BroadcastNewHistoryTable(base::SharedMemory* table_memory) {
   // send to all RenderProcessHosts
   for (RenderProcessHost::iterator i = RenderProcessHost::begin();
        i != RenderProcessHost::end(); i++) {
-    if (!i->second->channel())
+    if (!i->second->HasConnection())
       continue;
 
     base::SharedMemoryHandle new_table;
@@ -603,7 +679,7 @@ static void BroadcastNewHistoryTable(base::SharedMemory* table_memory) {
 
     table_memory->ShareToProcess(process, &new_table);
     IPC::Message* msg = new ViewMsg_VisitedLink_NewTable(new_table);
-    i->second->channel()->Send(msg);
+    i->second->Send(msg);
   }
 }
 
@@ -681,18 +757,12 @@ URLRequestContext* ProfileImpl::GetRequestContext() {
     FilePath cookie_path = GetPath();
     cookie_path = cookie_path.Append(chrome::kCookieFilename);
     FilePath cache_path = GetPath();
-
-    // Override the cache location if specified by the user.
-    const std::wstring user_cache_dir(
-        CommandLine::ForCurrentProcess()->GetSwitchValue(
-            switches::kDiskCacheDir));
-    if (!user_cache_dir.empty()) {
-      cache_path = FilePath::FromWStringHack(user_cache_dir);
-    }
+    int max_size;
+    GetCacheParameters(kNormalContext, &cache_path, &max_size);
 
     cache_path = cache_path.Append(chrome::kCacheDirname);
     request_context_ = ChromeURLRequestContext::CreateOriginal(
-        this, cookie_path, cache_path);
+        this, cookie_path, cache_path, max_size);
     request_context_->AddRef();
 
     // The first request context is always a normal (non-OTR) request context.
@@ -714,18 +784,12 @@ URLRequestContext* ProfileImpl::GetRequestContext() {
 URLRequestContext* ProfileImpl::GetRequestContextForMedia() {
   if (!media_request_context_) {
     FilePath cache_path = GetPath();
-
-    // Override the cache location if specified by the user.
-    const std::wstring user_cache_dir(
-        CommandLine::ForCurrentProcess()->GetSwitchValue(
-            switches::kDiskCacheDir));
-    if (!user_cache_dir.empty()) {
-      cache_path = FilePath::FromWStringHack(user_cache_dir);
-    }
+    int max_size;
+    GetCacheParameters(kMediaContext, &cache_path, &max_size);
 
     cache_path = cache_path.Append(chrome::kMediaCacheDirname);
     media_request_context_ = ChromeURLRequestContext::CreateOriginalForMedia(
-        this, cache_path);
+        this, cache_path, max_size);
     media_request_context_->AddRef();
 
     DCHECK(media_request_context_->cookie_store());
@@ -747,6 +811,10 @@ URLRequestContext* ProfileImpl::GetRequestContextForExtensions() {
   }
 
   return extensions_request_context_;
+}
+
+Blacklist* ProfileImpl::GetBlacklist() {
+  return blacklist_;
 }
 
 HistoryService* ProfileImpl::GetHistoryService(ServiceAccessType sat) {
@@ -940,7 +1008,7 @@ TabRestoreService* ProfileImpl::GetTabRestoreService() {
 ThumbnailStore* ProfileImpl::GetThumbnailStore() {
   if (!thumbnail_store_.get()) {
     thumbnail_store_ = new ThumbnailStore;
-    thumbnail_store_->Init(GetPath().AppendASCII("thumbnailstore\\"));
+    thumbnail_store_->Init(GetPath().AppendASCII("thumbnailstore"), this);
   }
   return thumbnail_store_.get();
 }
@@ -1037,6 +1105,13 @@ SpellChecker* ProfileImpl::GetSpellChecker() {
   }
 
   return spellchecker_;
+}
+
+WebKitContext* ProfileImpl::GetWebKitContext() {
+  if (!webkit_context_.get())
+    webkit_context_ = new WebKitContext(path_, false);
+  DCHECK(webkit_context_.get());
+  return webkit_context_.get();
 }
 
 void ProfileImpl::MarkAsCleanShutdown() {

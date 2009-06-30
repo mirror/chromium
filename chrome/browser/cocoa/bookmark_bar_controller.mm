@@ -10,17 +10,15 @@
 #import "chrome/browser/cocoa/bookmark_bar_controller.h"
 #import "chrome/browser/cocoa/bookmark_bar_view.h"
 #import "chrome/browser/cocoa/bookmark_button_cell.h"
-#import "chrome/browser/cocoa/cocoa_utils.h"
 #include "chrome/browser/profile.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
-
-using namespace CocoaUtils;
+#include "skia/ext/skia_utils_mac.h"
 
 @interface BookmarkBarController(Private)
-- (void)applyContentAreaOffset:(BOOL)apply;
+- (void)applyContentAreaOffset:(BOOL)apply immediately:(BOOL)immediately;
 - (void)positionBar;
-- (void)showBookmarkBar:(BOOL)enable;
+- (void)showBookmarkBar:(BOOL)enable immediately:(BOOL)immediately;
 @end
 
 namespace {
@@ -40,13 +38,16 @@ const CGFloat kBookmarkHorizontalPadding = 8.0;
     bookmarkModel_ = profile->GetBookmarkModel();
     contentView_ = content;
     delegate_ = delegate;
+    // Be sure to enable the bar before trying to show it...
+    barIsEnabled_ = YES;
     // Create and initialize the view's position. Show it if appropriate.
     // TODO(jrg): put it in a nib if necessary.
     NSRect frame = NSMakeRect(0, 0, 0, 30);
     bookmarkBarView_ = [[BookmarkBarView alloc] initWithFrame:frame];
     [self positionBar];
-    if (profile->GetPrefs()->GetBoolean(prefs::kShowBookmarkBar))
-      [self showBookmarkBar:YES];
+    preferences_ = profile->GetPrefs();
+    if (preferences_->GetBoolean(prefs::kShowBookmarkBar))
+      [self showBookmarkBar:YES immediately:NO];
     [[[contentView_ window] contentView] addSubview:bookmarkBarView_];
   }
   // Don't pass ourself along until our init is done.
@@ -66,7 +67,7 @@ const CGFloat kBookmarkHorizontalPadding = 8.0;
 - (void)positionBar {
   // Hide or show bar based on initial visibility and set the resize flags.
   [bookmarkBarView_ setAutoresizingMask:NSViewWidthSizable | NSViewMinYMargin];
-  [bookmarkBarView_ setHidden:!barIsVisible_];
+  [bookmarkBarView_ setHidden:!barShouldBeShown_];
 
   // Set the bar's height to zero and position it at the top of the
   // content area, within the window's content view (as opposed to the
@@ -88,16 +89,21 @@ const CGFloat kBookmarkHorizontalPadding = 8.0;
   [bookmarkBarView_ setFrame:barFrame];
 }
 
-// Show or hide the bar based on the value of |enable|. Handles animating the
-// resize of the content view.
-- (void)showBookmarkBar:(BOOL)enable {
-  contentViewHasOffset_ = enable;
-  [bookmarkBarView_ setHidden:enable ? NO : YES];
-  [self applyContentAreaOffset:enable];
-
-  barIsVisible_ = enable;
-  if (enable) {
-    [self loaded:bookmarkModel_];
+// Show or hide the bar based on the value of |show|. Handles
+// animating the resize of the content view.  if |immediately| is YES,
+// make changes immediately instead of using an animator.  If the bar
+// is disabled, do absolutely nothing.  The routine which enables the
+// bar will show it if relevant using other mechanisms (the pref) to
+// determine desired state.
+- (void)showBookmarkBar:(BOOL)show immediately:(BOOL)immediately {
+  if (barIsEnabled_) {
+    contentViewHasOffset_ = show;
+    [bookmarkBarView_ setHidden:show ? NO : YES];
+    [self applyContentAreaOffset:show immediately:immediately];
+    barShouldBeShown_ = show;
+    if (show) {
+      [self loaded:bookmarkModel_];
+    }
   }
 }
 
@@ -105,7 +111,7 @@ const CGFloat kBookmarkHorizontalPadding = 8.0;
 // bookmark bar.  If apply==YES, always make room (the contentView_ is
 // "full size").  If apply==NO we are trying to undo an offset.  If no
 // offset there is nothing to undo.
-- (void)applyContentAreaOffset:(BOOL)apply {
+- (void)applyContentAreaOffset:(BOOL)apply immediately:(BOOL)immediately {
   if (bookmarkBarView_ == nil) {
     // We're too early, but awakeFromNib will call me again.
     return;
@@ -121,20 +127,41 @@ const CGFloat kBookmarkHorizontalPadding = 8.0;
   else
     frame.size.height += kBookmarkBarHeight;
 
-  [[contentView_ animator] setFrame:frame];
+  if (immediately) {
+    [contentView_ setFrame:frame];
+    [contentView_ setNeedsDisplay:YES];
+  } else {
+    [[contentView_ animator] setFrame:frame];
+  }
+
   [bookmarkBarView_ setNeedsDisplay:YES];
   [contentView_ setNeedsDisplay:YES];
 }
 
 - (BOOL)isBookmarkBarVisible {
-  return barIsVisible_;
+  return barShouldBeShown_;
 }
 
 // We don't change a preference; we only change visibility.
 // Preference changing (global state) is handled in
 // BrowserWindowCocoa::ToggleBookmarkBar().
 - (void)toggleBookmarkBar {
-  [self showBookmarkBar:!barIsVisible_];
+  [self showBookmarkBar:!barShouldBeShown_ immediately:NO];
+}
+
+- (void)setBookmarkBarEnabled:(BOOL)enabled {
+  if (enabled) {
+    // Enabling the bar; set enabled then show if needed.
+    barIsEnabled_ = YES;
+    if (preferences_->GetBoolean(prefs::kShowBookmarkBar))
+      [self showBookmarkBar:YES immediately:YES];
+  } else {
+    // Disabling the bar; hide if visible.
+    if ([self isBookmarkBarVisible]) {
+      [self showBookmarkBar:NO immediately:YES];
+    }
+    barIsEnabled_ = NO;
+  }
 }
 
 // Delete all items from the bookmark bar.
@@ -145,15 +172,14 @@ const CGFloat kBookmarkHorizontalPadding = 8.0;
 // TODO(jrg): add an openBookmarkInBackground() for ctrl-click which
 // has a different disposition.
 - (void)openBookmark:(id)sender {
-  BookmarkNode* node = static_cast<BookmarkNode*>([[[sender cell]
-                                                     representedObject]
-                                                    pointerValue]);
+  const BookmarkNode* node = static_cast<const BookmarkNode*>(
+      [[[sender cell]representedObject]pointerValue]);
   DCHECK(node);
   [delegate_ openBookmarkURL:node->GetURL() disposition:CURRENT_TAB];
 }
 
 // Return an autoreleased NSCell suitable for a bookmark button.
-- (NSCell *)cellForBookmarkNode:(BookmarkNode*)node frame:(NSRect)frame {
+- (NSCell *)cellForBookmarkNode:(const BookmarkNode*)node frame:(NSRect)frame {
   NSString* title = base::SysWideToNSString(node->GetTitle());
   NSButtonCell *cell = [[[BookmarkButtonCell alloc] initTextCell:nil]
                          autorelease];
@@ -167,7 +193,7 @@ const CGFloat kBookmarkHorizontalPadding = 8.0;
   // (and their icons) are loaded on the IO thread to speed launch.
   const SkBitmap& favicon = bookmarkModel_->GetFavIcon(node);
   if (!favicon.isNull()) {
-    NSImage* image = SkBitmapToNSImage(favicon);
+    NSImage* image = gfx::SkBitmapToNSImage(favicon);
     if (image) {
       [cell setImage:image];
       [cell setImagePosition:NSImageLeft];
@@ -214,9 +240,9 @@ const CGFloat kBookmarkHorizontalPadding = 8.0;
 // TODO(jrg): write a "build bar" so there is a nice spot for things
 // like the contextual menu which is invoked when not over a
 // bookmark.  On Safari that menu has a "new folder" option.
-- (void)addNodesToBar:(BookmarkNode*)node {
+- (void)addNodesToBar:(const BookmarkNode*)node {
   for (int i = 0; i < node->GetChildCount(); i++) {
-    BookmarkNode* child = node->GetChild(i);
+    const BookmarkNode* child = node->GetChild(i);
 
     NSRect frame = [self frameForBookmarkAtIndex:i];
     NSButton* button = [[[NSButton alloc] initWithFrame:frame]
@@ -253,11 +279,11 @@ const CGFloat kBookmarkHorizontalPadding = 8.0;
 // TODO(jrg): for now this is brute force.
 - (void)loaded:(BookmarkModel*)model {
   DCHECK(model == bookmarkModel_);
-  // Do nothing if not visible or too early
-  if ((barIsVisible_ == NO) || !model->IsLoaded())
+  // Do nothing if not active or too early
+  if ((barShouldBeShown_ == NO) || !model->IsLoaded())
     return;
   // Else brute force nuke and build.
-  BookmarkNode* node = model->GetBookmarkBarNode();
+  const BookmarkNode* node = model->GetBookmarkBarNode();
   [self clearBookmarkBar];
   [self addNodesToBar:node];
 }
@@ -268,34 +294,34 @@ const CGFloat kBookmarkHorizontalPadding = 8.0;
 
 // TODO(jrg): for now this is brute force.
 - (void)nodeMoved:(BookmarkModel*)model
-        oldParent:(BookmarkNode*)oldParent oldIndex:(int)oldIndex
-        newParent:(BookmarkNode*)newParent newIndex:(int)newIndex {
+        oldParent:(const BookmarkNode*)oldParent oldIndex:(int)oldIndex
+        newParent:(const BookmarkNode*)newParent newIndex:(int)newIndex {
   [self loaded:model];
 }
 
 // TODO(jrg): for now this is brute force.
 - (void)nodeAdded:(BookmarkModel*)model
-           parent:(BookmarkNode*)oldParent index:(int)index {
+           parent:(const BookmarkNode*)oldParent index:(int)index {
   [self loaded:model];
 }
 
 // TODO(jrg): for now this is brute force.
 - (void)nodeChanged:(BookmarkModel*)model
-               node:(BookmarkNode*)node {
+               node:(const BookmarkNode*)node {
   [self loaded:model];
 }
 
 // TODO(jrg): linear searching is bad.
 // Need a BookmarkNode-->NSCell mapping.
 - (void)nodeFavIconLoaded:(BookmarkModel*)model
-                     node:(BookmarkNode*)node {
+                     node:(const BookmarkNode*)node {
   NSArray* views = [bookmarkBarView_ subviews];
   for (NSButton* button in views) {
     NSButtonCell* cell = [button cell];
     void* pointer = [[cell representedObject] pointerValue];
-    BookmarkNode* cellnode = static_cast<BookmarkNode*>(pointer);
+    const BookmarkNode* cellnode = static_cast<const BookmarkNode*>(pointer);
     if (cellnode == node) {
-      NSImage* image = SkBitmapToNSImage(bookmarkModel_->GetFavIcon(node));
+      NSImage* image = gfx::SkBitmapToNSImage(bookmarkModel_->GetFavIcon(node));
       if (image) {
         [cell setImage:image];
         [cell setImagePosition:NSImageLeft];
@@ -307,7 +333,7 @@ const CGFloat kBookmarkHorizontalPadding = 8.0;
 
 // TODO(jrg): for now this is brute force.
 - (void)nodeChildrenReordered:(BookmarkModel*)model
-                         node:(BookmarkNode*)node {
+                         node:(const BookmarkNode*)node {
   [self loaded:model];
 }
 

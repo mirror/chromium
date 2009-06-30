@@ -80,7 +80,7 @@ class ImportObserverImpl : public ImportObserver {
     BookmarkModel* model = profile_->GetBookmarkModel();
     int other_count = model->other_node()->GetChildCount();
     if (other_count == initial_other_count_ + 1) {
-      BookmarkNode* imported_node =
+      const BookmarkNode* imported_node =
           model->other_node()->GetChild(initial_other_count_);
       manager->SelectInTree(imported_node);
       manager->ExpandAll(imported_node);
@@ -145,7 +145,7 @@ void ShowBookmarkManagerView(Profile* profile) {
 
 // BookmarkManager -------------------------------------------------------------
 
-void BookmarkManager::SelectInTree(Profile* profile, BookmarkNode* node) {
+void BookmarkManager::SelectInTree(Profile* profile, const BookmarkNode* node) {
   if (manager && manager->profile() == profile)
     manager->SelectInTree(node);
 }
@@ -182,7 +182,8 @@ BookmarkManagerView::BookmarkManagerView(Profile* profile)
       this, true);
   tools_menu_button->SetID(kToolsMenuButtonID);
 
-  split_view_ = new views::SingleSplitView(tree_view_, table_view_);
+  split_view_ = new views::SingleSplitView(tree_view_, table_view_,
+      views::SingleSplitView::HORIZONTAL_SPLIT);
   split_view_->set_background(
       views::Background::CreateSolidBackground(kBackgroundColorBottom));
 
@@ -275,11 +276,11 @@ BookmarkManagerView* BookmarkManagerView::current() {
   return manager;
 }
 
-void BookmarkManagerView::SelectInTree(BookmarkNode* node) {
+void BookmarkManagerView::SelectInTree(const BookmarkNode* node) {
   if (!node)
     return;
 
-  BookmarkNode* parent = node->is_url() ? node->GetParent() : node;
+  const BookmarkNode* parent = node->is_url() ? node->GetParent() : node;
   FolderNode* folder_node = tree_model_->GetFolderNodeForBookmarkNode(parent);
   if (!folder_node) {
     NOTREACHED();
@@ -297,8 +298,8 @@ void BookmarkManagerView::SelectInTree(BookmarkNode* node) {
   }
 }
 
-void BookmarkManagerView::ExpandAll(BookmarkNode* node) {
-  BookmarkNode* parent = node->is_url() ? node->GetParent() : node;
+void BookmarkManagerView::ExpandAll(const BookmarkNode* node) {
+  const BookmarkNode* parent = node->is_url() ? node->GetParent() : node;
   FolderNode* folder_node = tree_model_->GetFolderNodeForBookmarkNode(parent);
   if (!folder_node) {
     NOTREACHED();
@@ -307,12 +308,12 @@ void BookmarkManagerView::ExpandAll(BookmarkNode* node) {
   tree_view_->ExpandAll(folder_node);
 }
 
-BookmarkNode* BookmarkManagerView::GetSelectedFolder() {
+const BookmarkNode* BookmarkManagerView::GetSelectedFolder() {
   return tree_view_->GetSelectedBookmarkNode();
 }
 
-std::vector<BookmarkNode*> BookmarkManagerView::GetSelectedTableNodes() {
-  std::vector<BookmarkNode*> nodes;
+std::vector<const BookmarkNode*> BookmarkManagerView::GetSelectedTableNodes() {
+  std::vector<const BookmarkNode*> nodes;
   for (views::TableView::iterator i = table_view_->SelectionBegin();
        i != table_view_->SelectionEnd(); ++i) {
     nodes.push_back(table_model_->GetNodeForRow(*i));
@@ -324,7 +325,7 @@ std::vector<BookmarkNode*> BookmarkManagerView::GetSelectedTableNodes() {
 }
 
 void BookmarkManagerView::PaintBackground(gfx::Canvas* canvas) {
-  canvas->drawColor(kBackgroundColorBottom, SkPorterDuff::kSrc_Mode);
+  canvas->drawColor(kBackgroundColorBottom, SkXfermode::kSrc_Mode);
 
   SkPaint paint;
   paint.setShader(skia::CreateGradientShader(0, kBackgroundGradientHeight,
@@ -349,7 +350,7 @@ std::wstring BookmarkManagerView::GetWindowName() const {
 
 void BookmarkManagerView::WindowClosing() {
   g_browser_process->local_state()->SetInteger(
-      prefs::kBookmarkManagerSplitLocation, split_view_->divider_x());
+      prefs::kBookmarkManagerSplitLocation, split_view_->divider_offset());
 }
 
 bool BookmarkManagerView::AcceleratorPressed(
@@ -361,7 +362,7 @@ bool BookmarkManagerView::AcceleratorPressed(
 }
 
 void BookmarkManagerView::OnDoubleClick() {
-  std::vector<BookmarkNode*> nodes = GetSelectedTableNodes();
+  std::vector<const BookmarkNode*> nodes = GetSelectedTableNodes();
   if (nodes.empty())
     return;
   if (nodes.size() == 1 && nodes[0]->is_folder()) {
@@ -377,7 +378,7 @@ void BookmarkManagerView::OnDoubleClick() {
 }
 
 void BookmarkManagerView::OnMiddleClick() {
-  std::vector<BookmarkNode*> nodes = GetSelectedTableNodes();
+  std::vector<const BookmarkNode*> nodes = GetSelectedTableNodes();
   if (nodes.empty())
     return;
   if (nodes.size() == 1 && nodes[0]->is_folder()) {
@@ -390,7 +391,7 @@ void BookmarkManagerView::OnMiddleClick() {
 }
 
 void BookmarkManagerView::OnTableViewDelete(views::TableView* table) {
-  std::vector<BookmarkNode*> nodes = GetSelectedTableNodes();
+  std::vector<const BookmarkNode*> nodes = GetSelectedTableNodes();
   if (nodes.empty())
     return;
   for (size_t i = 0; i < nodes.size(); ++i) {
@@ -402,7 +403,7 @@ void BookmarkManagerView::OnTableViewDelete(views::TableView* table) {
 void BookmarkManagerView::OnKeyDown(unsigned short virtual_keycode) {
   switch (virtual_keycode) {
     case VK_RETURN: {
-      std::vector<BookmarkNode*> selected_nodes = GetSelectedTableNodes();
+      std::vector<const BookmarkNode*> selected_nodes = GetSelectedTableNodes();
       if (selected_nodes.size() == 1 && selected_nodes[0]->is_folder()) {
         SelectInTree(selected_nodes[0]);
       } else {
@@ -414,7 +415,7 @@ void BookmarkManagerView::OnKeyDown(unsigned short virtual_keycode) {
     }
 
     case VK_BACK: {
-      BookmarkNode* selected_folder = GetSelectedFolder();
+      const BookmarkNode* selected_folder = GetSelectedFolder();
       if (selected_folder != NULL &&
           selected_folder->GetParent() != GetBookmarkModel()->root_node()) {
         SelectInTree(selected_folder->GetParent());
@@ -433,7 +434,7 @@ void BookmarkManagerView::OnTreeViewSelectionChanged(
   TreeModelNode* node = tree_view_->GetSelectedNode();
 
   BookmarkTableModel* new_table_model = NULL;
-  BookmarkNode* table_parent_node = NULL;
+  const BookmarkNode* table_parent_node = NULL;
   bool is_search = false;
 
   if (node) {
@@ -469,11 +470,11 @@ void BookmarkManagerView::OnTreeViewSelectionChanged(
 void BookmarkManagerView::OnTreeViewKeyDown(unsigned short virtual_keycode) {
   switch (virtual_keycode) {
     case VK_DELETE: {
-      BookmarkNode* node = GetSelectedFolder();
+      const BookmarkNode* node = GetSelectedFolder();
       if (!node || node->GetParent() == GetBookmarkModel()->root_node())
         return;
 
-      BookmarkNode* parent = node->GetParent();
+      const BookmarkNode* parent = node->GetParent();
       GetBookmarkModel()->Remove(parent, parent->IndexOfChild(node));
       break;
     }
@@ -515,8 +516,8 @@ void BookmarkManagerView::ShowContextMenu(views::View* source,
   DCHECK(source == table_view_ || source == tree_view_);
   bool is_table = (source == table_view_);
   ShowMenu(GetWidget()->GetNativeView(), x, y,
-           is_table ? BookmarkContextMenu::BOOKMARK_MANAGER_TABLE :
-                      BookmarkContextMenu::BOOKMARK_MANAGER_TREE);
+           is_table ? BookmarkContextMenuController::BOOKMARK_MANAGER_TABLE :
+                      BookmarkContextMenuController::BOOKMARK_MANAGER_TREE);
 }
 
 void BookmarkManagerView::RunMenu(views::View* source,
@@ -533,7 +534,7 @@ void BookmarkManagerView::RunMenu(views::View* source,
                                       (-source->width() + 5);
   if (source->GetID() == kOrganizeMenuButtonID) {
     ShowMenu(hwnd, menu_x, pt.y() + 2,
-             BookmarkContextMenu::BOOKMARK_MANAGER_ORGANIZE_MENU);
+             BookmarkContextMenuController::BOOKMARK_MANAGER_ORGANIZE_MENU);
   } else if (source->GetID() == kToolsMenuButtonID) {
     ShowToolsMenu(hwnd, menu_x, pt.y() + 2);
   } else {
@@ -598,7 +599,7 @@ BookmarkTableModel* BookmarkManagerView::CreateSearchTableModel() {
 }
 
 void BookmarkManagerView::SetTableModel(BookmarkTableModel* new_table_model,
-                                        BookmarkNode* parent_node,
+                                        const BookmarkNode* parent_node,
                                         bool is_search) {
   // Be sure and reset the model on the view before updating table_model_.
   // Otherwise the view will attempt to use the deleted model when we set the
@@ -644,7 +645,7 @@ void BookmarkManagerView::PrepareForShow() {
   // Make sure the user can see both the tree/table.
   split_x = std::min(split_view_->width() - min_split_size,
                      std::max(min_split_size, split_x));
-  split_view_->set_divider_x(split_x);
+  split_view_->set_divider_offset(split_x);
   if (!GetBookmarkModel()->IsLoaded()) {
     search_tf_->SetReadOnly(true);
     return;
@@ -655,7 +656,7 @@ void BookmarkManagerView::PrepareForShow() {
 
 void BookmarkManagerView::LoadedImpl() {
   BookmarkModel* bookmark_model = GetBookmarkModel();
-  BookmarkNode* bookmark_bar_node = bookmark_model->GetBookmarkBarNode();
+  const BookmarkNode* bookmark_bar_node = bookmark_model->GetBookmarkBarNode();
   table_model_.reset(
       BookmarkTableModel::CreateBookmarkTableModelForFolder(bookmark_model,
                                                             bookmark_bar_node));
@@ -685,43 +686,44 @@ void BookmarkManagerView::ShowMenu(
     HWND host,
     int x,
     int y,
-    BookmarkContextMenu::ConfigurationType config) {
+    BookmarkContextMenuController::ConfigurationType config) {
   if (!GetBookmarkModel()->IsLoaded())
     return;
 
-  if (config == BookmarkContextMenu::BOOKMARK_MANAGER_TABLE ||
-      (config == BookmarkContextMenu::BOOKMARK_MANAGER_ORGANIZE_MENU &&
+  if (config == BookmarkContextMenuController::BOOKMARK_MANAGER_TABLE ||
+      (config == BookmarkContextMenuController::BOOKMARK_MANAGER_ORGANIZE_MENU &&
        table_view_->HasFocus())) {
-    std::vector<BookmarkNode*> nodes = GetSelectedTableNodes();
-    BookmarkNode* parent = GetSelectedFolder();
+    std::vector<const BookmarkNode*> nodes = GetSelectedTableNodes();
+    const BookmarkNode* parent = GetSelectedFolder();
     if (!parent) {
-      if (config == BookmarkContextMenu::BOOKMARK_MANAGER_TABLE)
-        config = BookmarkContextMenu::BOOKMARK_MANAGER_TABLE_OTHER;
-      else
-        config = BookmarkContextMenu::BOOKMARK_MANAGER_ORGANIZE_MENU_OTHER;
+      if (config == BookmarkContextMenuController::BOOKMARK_MANAGER_TABLE) {
+        config = BookmarkContextMenuController::BOOKMARK_MANAGER_TABLE_OTHER;
+      } else {
+        config =
+            BookmarkContextMenuController::BOOKMARK_MANAGER_ORGANIZE_MENU_OTHER;
+      }
     }
-    BookmarkContextMenu menu(host, profile_, NULL, NULL, parent, nodes,
-                             config);
-    menu.RunMenuAt(x, y);
+    BookmarkContextMenu menu(host, profile_, NULL, parent, nodes, config);
+    menu.RunMenuAt(gfx::Point(x, y));
   } else {
-    BookmarkNode* node = GetSelectedFolder();
-    std::vector<BookmarkNode*> nodes;
+    const BookmarkNode* node = GetSelectedFolder();
+    std::vector<const BookmarkNode*> nodes;
     if (node)
       nodes.push_back(node);
-    BookmarkContextMenu menu(GetWidget()->GetNativeView(), profile_, NULL, NULL,
+    BookmarkContextMenu menu(GetWidget()->GetNativeView(), profile_, NULL,
                              node, nodes, config);
-    menu.RunMenuAt(x, y);
+    menu.RunMenuAt(gfx::Point(x, y));
   }
 }
 
 void BookmarkManagerView::OnCutCopyPaste(CutCopyPasteType type,
                                          bool from_table) {
   if (type == CUT || type == COPY) {
-    std::vector<BookmarkNode*> nodes;
+    std::vector<const BookmarkNode*> nodes;
     if (from_table) {
       nodes = GetSelectedTableNodes();
     } else {
-      BookmarkNode* node = GetSelectedFolder();
+      const BookmarkNode* node = GetSelectedFolder();
       if (!node || node->GetParent() == GetBookmarkModel()->root_node())
         return;
       nodes.push_back(node);

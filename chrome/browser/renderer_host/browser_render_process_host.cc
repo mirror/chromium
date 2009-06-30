@@ -30,6 +30,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/child_process_security_policy.h"
 #include "chrome/browser/extensions/extension_message_service.h"
+#include "chrome/browser/extensions/extensions_service.h"
 #include "chrome/browser/extensions/user_script_master.h"
 #include "chrome/browser/history/history.h"
 #include "chrome/browser/plugin_service.h"
@@ -54,6 +55,7 @@
 #if defined(OS_LINUX)
 #include "chrome/browser/zygote_host_linux.h"
 #include "chrome/browser/renderer_host/render_crash_handler_host_linux.h"
+#include "chrome/browser/renderer_host/render_sandbox_host_linux.h"
 #endif
 
 using WebKit::WebCache;
@@ -271,14 +273,12 @@ bool BrowserRenderProcessHost::Init() {
     switches::kEnableDCHECK,
     switches::kSilentDumpOnDCHECK,
     switches::kUseLowFragHeapCrt,
-    switches::kEnableWebWorkers,
     switches::kEnableStatsTable,
-    switches::kEnableExtensions,
-    switches::kDisableOutOfProcessDevTools,
     switches::kAutoSpellCorrect,
     switches::kDisableAudio,
     switches::kSimpleDataSource,
     switches::kEnableBenchmarking,
+    switches::kIsolatedWorld,
   };
 
   for (size_t i = 0; i < arraysize(switch_names); ++i) {
@@ -288,9 +288,28 @@ bool BrowserRenderProcessHost::Init() {
     }
   }
 
+  // Tell the renderer to enable extensions if there are any extensions loaded.
+  //
+  // NOTE: This is subtly different than just passing along whether
+  // --enable-extenisons is present in the browser process. For example, there
+  // is also an extensions.enabled preference, and there may be various special
+  // cases about whether to allow extensions to load.
+  //
+  // This introduces a race condition where the first renderer never gets
+  // extensions enabled, so we also set the flag if extensions_enabled(). This
+  // isn't perfect though, because of the special cases above.
+  //
+  // TODO(aa): We need to get rid of the need to pass this flag at all. It is
+  // only used in one place in the renderer.
+  if (profile()->GetExtensionsService()) {
+    if (profile()->GetExtensionsService()->extensions()->size() > 0 ||
+        profile()->GetExtensionsService()->extensions_enabled())
+      cmd_line.AppendSwitch(switches::kEnableExtensions);
+  }
+
   // Pass on the browser locale.
-  const std::wstring locale = g_browser_process->GetApplicationLocale();
-  cmd_line.AppendSwitchWithValue(switches::kLang, locale);
+  const std::string locale = g_browser_process->GetApplicationLocale();
+  cmd_line.AppendSwitchWithValue(switches::kLang, ASCIIToWide(locale));
 
   // If we run a FieldTrial that we want to pass to the renderer, this is where
   // the SINGULAR trial name and value should be specified.  Note that only one
@@ -373,6 +392,9 @@ bool BrowserRenderProcessHost::Init() {
         fds_to_map.push_back(std::make_pair(crash_signal_fd,
                                             kCrashDumpSignal + 3));
       }
+      const int sandbox_fd =
+          Singleton<RenderSandboxHostLinux>()->GetRendererSocket();
+      fds_to_map.push_back(std::make_pair(sandbox_fd, kSandboxIPCChannel + 3));
 #endif
       base::LaunchApp(cmd_line.argv(), fds_to_map, false, &process);
       zygote_child_ = false;
@@ -556,6 +578,15 @@ bool BrowserRenderProcessHost::FastShutdownIfPossible() {
   // means that UMA won't treat this as a renderer crash.
   process_.Terminate(ResultCodes::NORMAL_EXIT);
   return true;
+}
+
+bool BrowserRenderProcessHost::SendWithTimeout(IPC::Message* msg,
+                                               int timeout_ms) {
+  if (!channel_.get()) {
+    delete msg;
+    return false;
+  }
+  return channel_->SendWithTimeout(msg, timeout_ms);
 }
 
 // This is a platform specific function for mapping a transport DIB given its id

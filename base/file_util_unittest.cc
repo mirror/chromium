@@ -629,6 +629,56 @@ TEST_F(ReadOnlyFileUtilTest, ContentsEqual) {
   EXPECT_FALSE(file_util::ContentsEqual(binary_file, binary_file_diff));
 }
 
+TEST_F(ReadOnlyFileUtilTest, TextContentsEqual) {
+  FilePath data_dir;
+  ASSERT_TRUE(PathService::Get(base::DIR_SOURCE_ROOT, &data_dir));
+  data_dir = data_dir.Append(FILE_PATH_LITERAL("base"))
+                     .Append(FILE_PATH_LITERAL("data"))
+                     .Append(FILE_PATH_LITERAL("file_util_unittest"));
+  ASSERT_TRUE(file_util::PathExists(data_dir));
+
+  FilePath original_file =
+      data_dir.Append(FILE_PATH_LITERAL("original.txt"));
+  FilePath same_file =
+      data_dir.Append(FILE_PATH_LITERAL("same.txt"));
+  FilePath crlf_file =
+      data_dir.Append(FILE_PATH_LITERAL("crlf.txt"));
+  FilePath shortened_file =
+      data_dir.Append(FILE_PATH_LITERAL("shortened.txt"));
+  FilePath different_file =
+      data_dir.Append(FILE_PATH_LITERAL("different.txt"));
+  FilePath different_first_file =
+      data_dir.Append(FILE_PATH_LITERAL("different_first.txt"));
+  FilePath different_last_file =
+      data_dir.Append(FILE_PATH_LITERAL("different_last.txt"));
+  FilePath first1_file =
+      data_dir.Append(FILE_PATH_LITERAL("first1.txt"));
+  FilePath first2_file =
+      data_dir.Append(FILE_PATH_LITERAL("first2.txt"));
+  FilePath empty1_file =
+      data_dir.Append(FILE_PATH_LITERAL("empty1.txt"));
+  FilePath empty2_file =
+      data_dir.Append(FILE_PATH_LITERAL("empty2.txt"));
+  FilePath blank_line_file =
+      data_dir.Append(FILE_PATH_LITERAL("blank_line.txt"));
+  FilePath blank_line_crlf_file =
+      data_dir.Append(FILE_PATH_LITERAL("blank_line_crlf.txt"));
+
+  EXPECT_TRUE(file_util::TextContentsEqual(original_file, same_file));
+  EXPECT_TRUE(file_util::TextContentsEqual(original_file, crlf_file));
+  EXPECT_FALSE(file_util::TextContentsEqual(original_file, shortened_file));
+  EXPECT_FALSE(file_util::TextContentsEqual(original_file, different_file));
+  EXPECT_FALSE(file_util::TextContentsEqual(original_file,
+                                            different_first_file));
+  EXPECT_FALSE(file_util::TextContentsEqual(original_file,
+                                            different_last_file));
+  EXPECT_FALSE(file_util::TextContentsEqual(first1_file, first2_file));
+  EXPECT_TRUE(file_util::TextContentsEqual(empty1_file, empty2_file));
+  EXPECT_FALSE(file_util::TextContentsEqual(original_file, empty1_file));
+  EXPECT_TRUE(file_util::TextContentsEqual(blank_line_file,
+                                           blank_line_crlf_file));
+}
+
 // We don't need equivalent functionality outside of Windows.
 #if defined(OS_WIN)
 TEST_F(FileUtilTest, ResolveShortcutTest) {
@@ -839,11 +889,9 @@ static const struct goodbad_pair {
 #if defined(OS_WIN)
   {L"bad*file\\name.jpg", L"bad-file-name.jpg"},
   {L"\t  bad*file\\name/.jpg ", L"bad-file-name-.jpg"},
-  {L"bad\uFFFFfile\U0010FFFEname.jpg ", L"bad-file-name.jpg"},
 #elif defined(OS_POSIX)
   {L"bad*file?name.jpg", L"bad-file-name.jpg"},
   {L"\t  bad*file?name/.jpg ", L"bad-file-name-.jpg"},
-  {L"bad\uFFFFfile-name.jpg ", L"bad-file-name.jpg"},
 #endif
   {L"this_file_name is okay!.mp3", L"this_file_name is okay!.mp3"},
   {L"\u4E00\uAC00.mp3", L"\u4E00\uAC00.mp3"},
@@ -851,6 +899,9 @@ static const struct goodbad_pair {
   {L"\U00010330\U00010331.mp3", L"\U00010330\U00010331.mp3"},
   // Unassigned codepoints are ok.
   {L"\u0378\U00040001.mp3", L"\u0378\U00040001.mp3"},
+  // Non-characters are not allowed.
+  {L"bad\uFFFFfile\U0010FFFEname.jpg ", L"bad-file-name.jpg"},
+  {L"bad\uFDD0file\uFDEFname.jpg ", L"bad-file-name.jpg"},
 };
 
 TEST_F(FileUtilTest, ReplaceIllegalCharactersTest) {
@@ -1035,10 +1086,12 @@ TEST_F(FileUtilTest, FileEnumeratorOrderTest) {
   EXPECT_TRUE(file_util::CreateDirectory(dirC));
   EXPECT_TRUE(file_util::CreateDirectory(dirD));
 
-  // Files and directories are enumerated in the lexicographical order,
-  // ignoring case and whether they are files or directories.
+  // On Windows, files and directories are enumerated in the lexicographical
+  // order, ignoring case and whether they are files or directories. On posix,
+  // we order directories before files.
   file_util::FileEnumerator enumerator(test_dir_, false, FILES_AND_DIRECTORIES);
   FilePath cur_file = enumerator.Next();
+#if defined(OS_WIN)
   EXPECT_EQ(fileA.value(), cur_file.value());
   cur_file = enumerator.Next();
   EXPECT_EQ(fileB.value(), cur_file.value());
@@ -1051,58 +1104,22 @@ TEST_F(FileUtilTest, FileEnumeratorOrderTest) {
   cur_file = enumerator.Next();
   EXPECT_EQ(fileF.value(), cur_file.value());
   cur_file = enumerator.Next();
+#elif defined(OS_POSIX)
+  EXPECT_EQ(dirC.value(), cur_file.value());
+  cur_file = enumerator.Next();
+  EXPECT_EQ(dirD.value(), cur_file.value());
+  cur_file = enumerator.Next();
+  EXPECT_EQ(dirE.value(), cur_file.value());
+  cur_file = enumerator.Next();
+  EXPECT_EQ(fileA.value(), cur_file.value());
+  cur_file = enumerator.Next();
+  EXPECT_EQ(fileB.value(), cur_file.value());
+  cur_file = enumerator.Next();
+  EXPECT_EQ(fileF.value(), cur_file.value());
+  cur_file = enumerator.Next();
+#endif
+
   EXPECT_EQ(FILE_PATH_LITERAL(""), cur_file.value());
-}
-
-void PathComponents(const std::wstring& path,
-                    std::vector<std::wstring>* components) {
-  DCHECK(components != NULL);
-  if (components == NULL)
-    return;
-  std::wstring::size_type start = 0;
-  std::wstring::size_type end = path.find('/', start);
-
-  // Special case the "/" or "\" directory.  On Windows with a drive letter,
-  // this code path won't hit, but the right thing should still happen.
-  // "E:\foo" will turn into "E:","foo".
-  if (end == start) {
-    components->push_back(std::wstring(path, 0, 1));
-    start = end + 1;
-    end = path.find('/', start);
-  }
-  while (end != std::wstring::npos) {
-    std::wstring component = std::wstring(path, start, end - start);
-    components->push_back(component);
-    start = end + 1;
-    end = path.find('/', start);
-  }
-  std::wstring component = std::wstring(path, start);
-  components->push_back(component);
-}
-
-static const struct PathComponentsCase {
-  const FilePath::CharType* path;
-  const FilePath::CharType* result;
-} kPathComponents[] = {
-  {FILE_PATH_LITERAL("/foo/bar/baz/"), FILE_PATH_LITERAL("/|foo|bar|baz|")},
-  {FILE_PATH_LITERAL("/foo/bar/baz"), FILE_PATH_LITERAL("/|foo|bar|baz")},
-  {FILE_PATH_LITERAL("e:/foo"), FILE_PATH_LITERAL("e:|foo")},
-};
-
-TEST_F(FileUtilTest, PathComponentsTest) {
-  for (size_t i = 0; i < arraysize(kPathComponents); ++i) {
-    FilePath path(kPathComponents[i].path);
-    std::vector<FilePath::StringType> comps;
-    file_util::PathComponents(path, &comps);
-
-    FilePath::StringType result;
-    for (size_t j = 0; j < comps.size(); ++j) {
-      result.append(comps[j]);
-      if (j < comps.size() - 1)
-        result.append(FILE_PATH_LITERAL("|"), 1);
-    }
-    EXPECT_EQ(kPathComponents[i].result, result);
-  }
 }
 
 TEST_F(FileUtilTest, Contains) {

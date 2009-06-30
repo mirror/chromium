@@ -28,6 +28,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_window.h"
 #include "chrome/browser/dom_operation_notification_details.h"
+#include "chrome/browser/debugger/devtools_manager.h"
 #include "chrome/browser/download/download_manager.h"
 #include "chrome/browser/download/download_shelf.h"
 #include "chrome/browser/extensions/extension_message_service.h"
@@ -700,30 +701,6 @@ class DomOperationNotificationObserver : public NotificationObserver {
   AutomationProvider* automation_;
 };
 
-class DomInspectorNotificationObserver : public NotificationObserver {
- public:
-  explicit DomInspectorNotificationObserver(AutomationProvider* automation)
-      : automation_(automation) {
-    registrar_.Add(this, NotificationType::DOM_INSPECT_ELEMENT_RESPONSE,
-                   NotificationService::AllSources());
-  }
-
-  ~DomInspectorNotificationObserver() {
-  }
-
-  virtual void Observe(NotificationType type, const NotificationSource& source,
-      const NotificationDetails& details) {
-    if (NotificationType::DOM_INSPECT_ELEMENT_RESPONSE == type) {
-      Details<int> dom_inspect_details(details);
-      automation_->ReceivedInspectElementResponse(*(dom_inspect_details.ptr()));
-    }
-  }
-
- private:
-  NotificationRegistrar registrar_;
-  AutomationProvider* automation_;
-};
-
 #if defined(OS_WIN)
 // TODO(port): Enable when printing is ported.
 class DocumentPrintedNotificationObserver : public NotificationObserver {
@@ -814,7 +791,6 @@ AutomationProvider::AutomationProvider(Profile* profile)
       new AutomationAutocompleteEditTracker(this));
   new_tab_ui_load_observer_.reset(new NewTabUILoadObserver(this));
   dom_operation_observer_.reset(new DomOperationNotificationObserver(this));
-  dom_inspector_observer_.reset(new DomInspectorNotificationObserver(this));
 }
 
 AutomationProvider::~AutomationProvider() {
@@ -1339,7 +1315,7 @@ void AutomationProvider::GetActiveTabIndex(int handle, int* active_tab_index) {
 
 void AutomationProvider::GetBrowserLocale(string16* locale) {
   DCHECK(g_browser_process);
-  *locale = WideToUTF16(g_browser_process->GetApplicationLocale());
+  *locale = ASCIIToUTF16(g_browser_process->GetApplicationLocale());
 }
 
 void AutomationProvider::GetBrowserWindowCount(int* window_count) {
@@ -2097,7 +2073,8 @@ void AutomationProvider::HandleInspectElementRequest(
     DCHECK(reply_message_ == NULL);
     reply_message_ = reply_message;
 
-    tab_contents->render_view_host()->InspectElementAt(x, y);
+    DevToolsManager::GetInstance()->InspectElement(
+        tab_contents->render_view_host(), x, y);
   } else {
     AutomationMsg_InspectElement::WriteReplyParams(reply_message, -1);
     Send(reply_message);

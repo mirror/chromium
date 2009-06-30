@@ -36,6 +36,7 @@
 #include "chrome/browser/tab_contents/infobar_delegate.h"
 #include "chrome/browser/tab_contents/interstitial_page.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
+#include "chrome/browser/tab_contents/provisional_load_details.h"
 #include "chrome/browser/tab_contents/tab_contents_delegate.h"
 #include "chrome/browser/tab_contents/tab_contents_view.h"
 #include "chrome/browser/tab_contents/thumbnail_generator.h"
@@ -163,6 +164,17 @@ BOOL CALLBACK InvalidateWindow(HWND hwnd, LPARAM lparam) {
   return TRUE;
 }
 #endif
+
+void MakeNavigateParams(const NavigationEntry& entry, bool reload,
+                        ViewMsg_Navigate_Params* params) {
+  params->page_id = entry.page_id();
+  params->url = entry.url();
+  params->referrer = entry.referrer();
+  params->transition = entry.transition_type();
+  params->state = entry.content_state();
+  params->reload = reload;
+  params->request_time = base::Time::Now();
+}
 
 }  // namespace
 
@@ -644,7 +656,7 @@ bool TabContents::NavigateToPendingEntry(bool reload) {
     return false;  // Unable to create the desired render view host.
 
   // Tell DevTools agent that it is attached prior to the navigation.
-  DevToolsManager* devtools_manager = g_browser_process->devtools_manager();
+  DevToolsManager* devtools_manager = DevToolsManager::GetInstance();
   if (devtools_manager) {  // NULL in unit tests.
     devtools_manager->OnNavigatingToPendingEntry(
         render_view_host(),
@@ -656,7 +668,9 @@ bool TabContents::NavigateToPendingEntry(bool reload) {
   current_load_start_ = base::TimeTicks::Now();
 
   // Navigate in the desired RenderViewHost.
-  dest_render_view_host->NavigateToEntry(entry, reload);
+  ViewMsg_Navigate_Params navigate_params;
+  MakeNavigateParams(entry, reload, &navigate_params);
+  dest_render_view_host->Navigate(navigate_params);
 
   if (entry.page_id() == -1) {
     // HACK!!  This code suppresses javascript: URLs from being added to
@@ -816,6 +830,9 @@ bool TabContents::FocusLocationBarByDefault() {
   DOMUI* dom_ui = GetDOMUIForCurrentState();
   if (dom_ui)
     return dom_ui->focus_location_bar_by_default();
+  NavigationEntry* entry = controller_.GetActiveEntry();
+  if (entry && entry->url() == GURL("about:blank"))
+    return true;
   return false;
 }
 
@@ -896,13 +913,6 @@ void TabContents::OnStartDownload(DownloadItem* download) {
 
   if (tab_contents && tab_contents->delegate())
     tab_contents->delegate()->OnStartDownload(download);
-
-  // Update the URL display.
-  // If the download is caused by typing in a downloadable URL, e.g.,
-  // http://example.com/somefile.zip, into the omnibox, the previous URL
-  // will reappear.
-  if (delegate())
-    delegate()->NavigationStateChanged(this, TabContents::INVALIDATE_URL);
 }
 
 void TabContents::WillClose(ConstrainedWindow* window) {
@@ -1782,8 +1792,11 @@ void TabContents::DidFailProvisionalLoadWithError(
     // pending entry if the URLs match, otherwise the user initiated a navigate
     // before the page loaded so that the discard would discard the wrong entry.
     NavigationEntry* pending_entry = controller_.pending_entry();
-    if (pending_entry && pending_entry->url() == url)
+    if (pending_entry && pending_entry->url() == url) {
       controller_.DiscardNonCommittedEntries();
+      // Update the URL display.
+      NotifyNavigationStateChanged(TabContents::INVALIDATE_URL);
+    }
 
     render_manager_.RendererAbortedProvisionalLoad(render_view_host);
   }
@@ -2029,21 +2042,12 @@ void TabContents::PageHasOSDD(RenderViewHost* render_view_host,
 
   // Download the OpenSearch description document. If this is successful a
   // new keyword will be created when done.
-  gfx::NativeWindow ancestor = view_->GetTopLevelNativeWindow();
   profile()->GetTemplateURLFetcher()->ScheduleDownload(
       keyword,
       url,
       base_entry->favicon().url(),
-      ancestor,
+      this,
       autodetected);
-}
-
-void TabContents::InspectElementReply(int num_resources) {
-  // We have received reply from inspect element request. Notify the
-  // automation provider in case we need to notify automation client.
-  NotificationService::current()->Notify(
-      NotificationType::DOM_INSPECT_ELEMENT_RESPONSE, Source<TabContents>(this),
-      Details<int>(&num_resources));
 }
 
 void TabContents::DidGetPrintedPagesCount(int cookie, int number_pages) {

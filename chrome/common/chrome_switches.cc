@@ -124,6 +124,12 @@ const wchar_t kPluginDataDir[]                 = L"plugin-data-dir";
 // UserDatadir.
 const wchar_t kDiskCacheDir[]                  = L"disk-cache-dir";
 
+// Forces the maximum disk space to be used by the disk cache, in bytes.
+const wchar_t kDiskCacheSize[]                  = L"disk-cache-size";
+
+// Forces the maximum disk space to be used by the media cache, in bytes.
+const wchar_t kMediaCacheSize[]                  = L"media-cache-size";
+
 // Whether the multiple profiles feature based on the user-data-dir flag is
 // enabled or not.
 const wchar_t kEnableUserDataDirProfiles[]     = L"enable-udd-profiles";
@@ -263,14 +269,6 @@ const wchar_t kWinHttpProxyResolver[]          = L"winhttp-proxy-resolver";
 extern const wchar_t kDnsLogDetails[]          = L"dns-log-details";
 extern const wchar_t kDnsPrefetchDisable[]     = L"dns-prefetch-disable";
 
-// A temporary switch before we implement the client certificate selection UI.
-// When an SSL server requests client authentication, select a client
-// certificate automatically.
-// WARNING: This switch has privacy issues because it reveals the user's
-// identity to any server that requests a client certificate without the
-// user's consent.
-extern const wchar_t kAutoSSLClientAuth[]      = L"auto-ssl-client-auth";
-
 // Enables support to debug printing subsystem.
 const wchar_t kDebugPrint[]                    = L"debug-print";
 
@@ -379,9 +377,6 @@ const wchar_t kGearsPluginPathOverride[]       = L"gears-plugin-path";
 // Enable the fastback page cache.
 const wchar_t kEnableFastback[]                = L"enable-fastback";
 
-// Allow loading of the javascript debugger UI from the filesystem.
-const wchar_t kJavaScriptDebuggerPath[]        = L"javascript-debugger-path";
-
 const wchar_t kDisableP13n[]                   = L"disable-p13n";
 
 // Enable support for SDCH filtering (dictionary based expansion of content).
@@ -427,8 +422,13 @@ const wchar_t kEnableRendererAccessibility[] = L"enable-renderer-accessibility";
 const wchar_t kTestName[]                      = L"test-name";
 
 // On POSIX only: the contents of this flag are prepended to the renderer
-// command line. (Useful values might be "valgrind" or "gdb --args")
+// command line. Useful values might be "valgrind" or "xterm -e gdb --args".
 const wchar_t kRendererCmdPrefix[]             = L"renderer-cmd-prefix";
+
+// On POSIX only: the contents of this flag are prepended to the utility
+// process command line. Useful values might be "valgrind" or "xterm -e gdb
+// --args".
+const wchar_t kUtilityCmdPrefix[]             = L"utility-cmd-prefix";
 
 // Temparary option for new ftp implemetation.
 const wchar_t kNewFtp[]                        = L"new-ftp";
@@ -437,12 +437,8 @@ const wchar_t kNewFtp[]                        = L"new-ftp";
 // can connect to a channel, provided it knows its name. For debugging purposes.
 const wchar_t kIPCUseFIFO[]                    = L"ipc-use-fifo";
 
-// If this flag is set open old 'in process' WebInspector window instead of
-// new 'out of process' dev tool window.
-const wchar_t kDisableOutOfProcessDevTools[]    = L"disable-oop-devtools";
-
-// Enable HTML5 Worker support
-const wchar_t kEnableWebWorkers[]              = L"enable-web-workers";
+// Enable Native Web Worker support
+const wchar_t kEnableNativeWebWorkers[]        = L"enable-native-web-workers";
 
 // Causes the worker process allocation to use as many processes as cores.
 const wchar_t kWebWorkerProcessPerCore[]       = L"web-worker-process-per-core";
@@ -502,6 +498,10 @@ const wchar_t kWebResources[]                 = L"enable-web-resources";
 // to avoid having the default browser info-bar displayed.
 const wchar_t kNoDefaultBrowserCheck[]         = L"no-default-browser-check";
 
+// Enables the Privacy Blacklist with the specified data file.
+// The file contains data from all imported blacklists.
+const wchar_t kPrivacyBlacklist[] = L"privacy-blacklist";
+
 // Enables the benchmarking extensions.
 const wchar_t kEnableBenchmarking[]      = L"enable-benchmarking";
 
@@ -525,5 +525,9 @@ const wchar_t kFileDescriptorLimit[]           = L"file-descriptor-limit";
 // This does NOT enable color management for images. The source is still assumed
 // to be sRGB.
 const wchar_t kEnableMonitorProfile[] = L"enable-monitor-profile";
+
+// Enable WebKit's XSSAuditor to mitigate reflective XSS.  The XSSAuditor is
+// still experimental.
+const wchar_t kEnableXSSAuditor[] = L"enable-xss-auditor";
 
 }  // namespace switches

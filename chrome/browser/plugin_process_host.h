@@ -18,6 +18,7 @@
 #include "chrome/browser/net/resolve_proxy_msg_helper.h"
 #include "chrome/browser/renderer_host/resource_message_filter.h"
 #include "chrome/common/child_process_host.h"
+#include "chrome/common/ipc_channel_handle.h"
 #include "webkit/glue/webplugininfo.h"
 
 class URLRequestContext;
@@ -65,7 +66,7 @@ class PluginProcessHost : public ChildProcessHost,
   // Sends the reply to an open channel request to the renderer with the given
   // channel name.
   static void ReplyToRenderer(ResourceMessageFilter* renderer_message_filter,
-                              const std::string& channel,
+                              const IPC::ChannelHandle& channel,
                               const FilePath& plugin_path,
                               IPC::Message* reply_msg);
 
@@ -96,7 +97,7 @@ class PluginProcessHost : public ChildProcessHost,
                             const std::string& mime_type,
                             IPC::Message* reply_msg);
   // Message handlers.
-  void OnChannelCreated(const std::string& channel_name);
+  void OnChannelCreated(const IPC::ChannelHandle& channel_handle);
   void OnGetPluginFinderUrl(std::string* plugin_finder_url);
   void OnGetCookies(uint32 request_context, const GURL& url,
                     std::string* cookies);

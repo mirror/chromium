@@ -388,7 +388,7 @@ WebPluginImpl::WebPluginImpl(WebCore::HTMLPlugInElement* element,
 WebPluginImpl::~WebPluginImpl() {
 }
 
-void WebPluginImpl::SetWindow(gfx::NativeView window) {
+void WebPluginImpl::SetWindow(gfx::PluginWindowHandle window) {
   if (window) {
     DCHECK(!windowless_);  // Make sure not called twice.
     window_ = window;
@@ -396,6 +396,15 @@ void WebPluginImpl::SetWindow(gfx::NativeView window) {
     DCHECK(!window_);  // Make sure not called twice.
     windowless_ = true;
   }
+}
+
+void WebPluginImpl::WillDestroyWindow(gfx::PluginWindowHandle window) {
+  WebCore::Frame* frame = element_->document()->frame();
+  WebFrameImpl* webframe = WebFrameImpl::FromFrame(frame);
+  WebViewImpl* webview = webframe->GetWebViewImpl();
+  if (!webview->delegate())
+    return;
+  webview->delegate()->WillDestroyPluginWindow(window);
 }
 
 bool WebPluginImpl::CompleteURL(const std::string& url_in,

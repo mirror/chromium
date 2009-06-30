@@ -19,7 +19,6 @@
 #include "chrome/browser/memory_details.h"
 #include "chrome/browser/options_window.h"
 #include "chrome/browser/rlz/rlz.h"
-#include "chrome/browser/search_engines/edit_keyword_controller_base.h"
 #include "chrome/browser/shell_integration.h"
 #include "chrome/browser/tab_contents/infobar_delegate.h"
 #include "chrome/common/process_watcher.h"
@@ -290,16 +289,6 @@ void DragDownload(const DownloadItem* download, SkBitmap* icon) {
 }  // namespace download_util
 #endif
 
-#if defined(OS_MACOSX)
-void HungRendererDialog::HideForTabContents(TabContents*) {
-  NOTIMPLEMENTED();
-}
-
-void HungRendererDialog::ShowForTabContents(TabContents*) {
-  NOTIMPLEMENTED();
-}
-#endif
-
 #if !defined(TOOLKIT_VIEWS)
 void BrowserList::AllBrowsersClosed() {
   // TODO(port): Close any dependent windows if necessary when the last browser
@@ -313,13 +302,6 @@ void BrowserList::AllBrowsersClosed() {
 void ShowOptionsWindow(OptionsPage page,
                        OptionsGroup highlight_group,
                        Profile* profile) {
-  NOTIMPLEMENTED();
-}
-
-void EditKeywordControllerBase::Create(gfx::NativeWindow parent_window,
-                                       const TemplateURL* template_url,
-                                       Delegate* delegate,
-                                       Profile* profile) {
   NOTIMPLEMENTED();
 }
 #endif

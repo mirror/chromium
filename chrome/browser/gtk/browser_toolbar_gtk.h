@@ -47,6 +47,11 @@ class BrowserToolbarGtk : public CommandUpdater::CommandObserver,
   void Show();
   void Hide();
 
+  // Getter for the containing widget.
+  GtkWidget* widget() {
+    return toolbar_;
+  }
+
   virtual LocationBar* GetLocationBar() const;
 
   GoButtonGtk* GetGoButton() { return go_.get(); }
@@ -97,10 +102,8 @@ class BrowserToolbarGtk : public CommandUpdater::CommandObserver,
       const std::string& localized_tooltip,
       OwnedWidgetGtk* owner);
 
-  // Adds a keyboard accelerator which triggers a button (e.g., ctrl+r is now
-  // equivalent to a reload click).
-  void AddAcceleratorToButton(
-      GtkWidget*, unsigned int accelerator, unsigned int accelerator_mod);
+  // Connect signals for dragging a url onto the home button.
+  void SetUpDragForHomeButton();
 
   // Gtk callback for the "expose-event" signal.
   static gboolean OnToolbarExpose(GtkWidget* widget, GdkEventExpose* e,
@@ -117,6 +120,14 @@ class BrowserToolbarGtk : public CommandUpdater::CommandObserver,
   static gboolean OnMenuButtonPressEvent(GtkWidget* button,
                                          GdkEventButton* event,
                                          BrowserToolbarGtk* toolbar);
+
+  // Used for drags onto home button.
+  static void OnDragDataReceived(GtkWidget* widget,
+                                 GdkDragContext* drag_context,
+                                 gint x, gint y,
+                                 GtkSelectionData* data,
+                                 guint info, guint time,
+                                 BrowserToolbarGtk* toolbar);
 
   // Initialize the background NineBox.
   void InitNineBox();
@@ -137,7 +148,7 @@ class BrowserToolbarGtk : public CommandUpdater::CommandObserver,
   // All the buttons in the toolbar.
   scoped_ptr<BackForwardButtonGtk> back_, forward_;
   scoped_ptr<CustomDrawButton> reload_;
-  scoped_ptr<CustomDrawButton> home_;  // May be NULL.
+  scoped_ptr<CustomDrawButton> home_;
   scoped_ptr<ToolbarStarToggleGtk> star_;
   scoped_ptr<GoButtonGtk> go_;
   OwnedWidgetGtk page_menu_button_, app_menu_button_;

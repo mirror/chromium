@@ -6,6 +6,7 @@
 
 #include "app/gfx/favicon_size.h"
 #include "base/string_util.h"
+#include "skia/ext/image_operations.h"
 #include "views/border.h"
 #include "views/controls/image_view.h"
 #include "views/controls/label.h"
@@ -24,7 +25,7 @@ static const int kThumbnailWidth = 220;
 // Padding between favicon/title and thumbnail.
 static const int kVerticalPadding = 10;
 
-TabOverviewCell::TabOverviewCell() {
+TabOverviewCell::TabOverviewCell() : configured_thumbnail_(false) {
   title_label_ = new views::Label();
   title_label_->SetHorizontalAlignment(views::Label::ALIGN_LEFT);
 
@@ -64,7 +65,11 @@ TabOverviewCell::TabOverviewCell() {
 }
 
 void TabOverviewCell::SetThumbnail(const SkBitmap& thumbnail) {
-  thumbnail_view_->SetImage(thumbnail);
+  // Do mipmapped-based resampling to get closer to the correct size. The
+  // input bitmap isn't guaranteed to have any specific resolution.
+  thumbnail_view_->SetImage(skia::ImageOperations::DownsampleByTwoUntilSize(
+      thumbnail, kThumbnailWidth, kThumbnailHeight));
+  configured_thumbnail_ = true;
 }
 
 void TabOverviewCell::SetTitle(const string16& title) {

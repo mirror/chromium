@@ -26,8 +26,9 @@
 #include <vector>
 
 #include "base/basictypes.h"
-#include "base/scoped_ptr.h"
 #include "base/file_path.h"
+#include "base/scoped_ptr.h"
+#include "base/string16.h"
 
 namespace base {
 class Time;
@@ -37,10 +38,6 @@ namespace file_util {
 
 //-----------------------------------------------------------------------------
 // Functions that operate purely on a path string w/o touching the filesystem:
-
-// Returns a vector of all of the components of the provided path.
-void PathComponents(const FilePath& path,
-                    std::vector<FilePath::StringType>* components);
 
 // Returns true if the given path ends with a path separator character.
 bool EndsWithSeparator(const FilePath& path);
@@ -116,6 +113,10 @@ void ReplaceExtension(FilePath* file_name,
 //   file_name == "bad:file*name?.txt", changed to: "bad-file-name-.txt" when
 //   'replace_char' is '-'.
 void ReplaceIllegalCharacters(std::wstring* file_name, int replace_char);
+
+// Returns true if file_name does not have any illegal character. The input
+// param has the same restriction as that for ReplaceIllegalCharacters.
+bool IsFilenameLegal(const string16& file_name);
 
 //-----------------------------------------------------------------------------
 // Functions that involve filesystem access or modification:
@@ -210,6 +211,10 @@ bool ContentsEqual(const FilePath& filename1,
 // Deprecated temporary compatibility function.
 bool ContentsEqual(const std::wstring& filename1,
                    const std::wstring& filename2);
+
+// Returns true if the contents of the two text files given are equal, false
+// otherwise.  This routine treats "\r\n" and "\n" as equivalent.
+bool TextContentsEqual(const FilePath& filename1, const FilePath& filename2);
 
 // Read the file at |path| into |contents|, returning true on success.
 // Useful for unit tests.

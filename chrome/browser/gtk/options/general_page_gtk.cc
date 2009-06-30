@@ -5,11 +5,10 @@
 #include "chrome/browser/gtk/options/general_page_gtk.h"
 
 #include "app/l10n_util.h"
-#include "app/resource_bundle.h"
-#include "base/gfx/gtk_util.h"
-#include "base/gfx/png_decoder.h"
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_list.h"
+#include "chrome/browser/gtk/keyword_editor_view.h"
+#include "chrome/browser/gtk/list_store_favicon_loader.h"
 #include "chrome/browser/gtk/options/options_layout_gtk.h"
 #include "chrome/browser/gtk/options/url_picker_dialog_gtk.h"
 #include "chrome/browser/net/url_fixer_upper.h"
@@ -21,7 +20,6 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/common/url_constants.h"
-#include "grit/app_resources.h"
 #include "grit/chromium_strings.h"
 #include "grit/generated_resources.h"
 
@@ -61,7 +59,7 @@ GeneralPageGtk::GeneralPageGtk(Profile* profile)
       template_url_model_(NULL),
       default_search_initializing_(true),
       initializing_(true)  {
-  OptionsLayoutBuilderGtk options_builder(4);
+  OptionsLayoutBuilderGtk options_builder;
   options_builder.AddOptionGroup(
       l10n_util::GetStringUTF8(IDS_OPTIONS_STARTUP_GROUP_NAME),
       InitStartupGroup(), true);
@@ -198,9 +196,6 @@ GtkWidget* GeneralPageGtk::InitStartupGroup() {
                                                gtk_util::kControlSpacing);
   gtk_box_pack_start(GTK_BOX(vbox), url_list_container, TRUE, TRUE, 0);
 
-  ResourceBundle& rb = ResourceBundle::GetSharedInstance();
-  default_favicon_ = rb.GetPixbufNamed(IDR_DEFAULT_FAVICON);
-
   GtkWidget* scroll_window = gtk_scrolled_window_new(NULL, NULL);
   gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll_window),
                                  GTK_POLICY_AUTOMATIC,
@@ -234,6 +229,11 @@ GtkWidget* GeneralPageGtk::InitStartupGroup() {
                               GTK_SELECTION_MULTIPLE);
   g_signal_connect(G_OBJECT(startup_custom_pages_selection_), "changed",
                    G_CALLBACK(OnStartupPagesSelectionChanged), this);
+  favicon_loader_.reset(new ListStoreFavIconLoader(startup_custom_pages_model_,
+                                                   COL_FAVICON,
+                                                   COL_FAVICON_HANDLE,
+                                                   profile(),
+                                                   &fav_icon_consumer_));
 
   GtkWidget* url_list_buttons = gtk_vbox_new(FALSE, gtk_util::kControlSpacing);
   gtk_box_pack_end(GTK_BOX(url_list_container), url_list_buttons,
@@ -325,10 +325,11 @@ GtkWidget* GeneralPageGtk::InitDefaultSearchGroup() {
   }
   OnTemplateURLModelChanged();
 
-  // TODO(mattm): hook this up
   default_search_manage_engines_button_ = gtk_button_new_with_label(
       l10n_util::GetStringUTF8(
           IDS_OPTIONS_DEFAULTSEARCH_MANAGE_ENGINES_LINK).c_str());
+  g_signal_connect(G_OBJECT(default_search_manage_engines_button_), "clicked",
+                   G_CALLBACK(OnDefaultSearchManageEnginesClicked), this);
   gtk_box_pack_end(GTK_BOX(hbox), default_search_manage_engines_button_,
                    FALSE, FALSE, 0);
 
@@ -468,6 +469,12 @@ void GeneralPageGtk::OnDefaultSearchEngineChanged(
 }
 
 // static
+void GeneralPageGtk::OnDefaultSearchManageEnginesClicked(
+    GtkButton* button, GeneralPageGtk* general_page) {
+  KeywordEditorView::Show(general_page->profile());
+}
+
+// static
 void GeneralPageGtk::OnBrowserUseAsDefaultClicked(
     GtkButton* button,
     GeneralPageGtk* general_page) {
@@ -507,70 +514,10 @@ void GeneralPageGtk::PopulateCustomUrlList(const std::vector<GURL>& urls) {
 }
 
 void GeneralPageGtk::PopulateCustomUrlRow(const GURL& url, GtkTreeIter* iter) {
-  HistoryService* history =
-      profile()->GetHistoryService(Profile::EXPLICIT_ACCESS);
-  HistoryService::Handle handle(0);
-  if (history) {
-    handle = history->GetFavIconForURL(
-        url, &fav_icon_consumer_,
-        NewCallback(this, &GeneralPageGtk::OnGotFavIcon));
-  }
+  favicon_loader_->LoadFaviconForRow(url, iter);
   gtk_list_store_set(startup_custom_pages_model_, iter,
-                     COL_FAVICON_HANDLE, handle,
-                     COL_FAVICON, default_favicon_,
                      COL_URL, url.spec().c_str(),
                      -1);
-}
-
-bool GeneralPageGtk::GetRowByFavIconHandle(HistoryService::Handle handle,
-                                           GtkTreeIter* result_iter) {
-  GtkTreeIter iter;
-  gboolean valid = gtk_tree_model_get_iter_first(
-      GTK_TREE_MODEL(startup_custom_pages_model_), &iter);
-  while (valid) {
-    gint row_handle;
-    gtk_tree_model_get(GTK_TREE_MODEL(startup_custom_pages_model_), &iter,
-                       COL_FAVICON_HANDLE, &row_handle,
-                       -1);
-    if (row_handle == handle) {
-      *result_iter = iter;
-      return true;
-    }
-    valid = gtk_tree_model_iter_next(
-        GTK_TREE_MODEL(startup_custom_pages_model_), &iter);
-  }
-  return false;
-}
-
-void GeneralPageGtk::OnGotFavIcon(HistoryService::Handle handle,
-                                  bool know_fav_icon,
-                                  scoped_refptr<RefCountedBytes> image_data,
-                                  bool is_expired,
-                                  GURL icon_url) {
-  GtkTreeIter iter;
-  if (!GetRowByFavIconHandle(handle, &iter))
-    return;
-  gtk_list_store_set(startup_custom_pages_model_, &iter,
-                     COL_FAVICON_HANDLE, 0,
-                     -1);
-  if (know_fav_icon && image_data.get() && !image_data->data.empty()) {
-    int width, height;
-    std::vector<unsigned char> decoded_data;
-    if (PNGDecoder::Decode(&image_data->data.front(), image_data->data.size(),
-                           PNGDecoder::FORMAT_BGRA, &decoded_data, &width,
-                           &height)) {
-      SkBitmap icon;
-      icon.setConfig(SkBitmap::kARGB_8888_Config, width, height);
-      icon.allocPixels();
-      memcpy(icon.getPixels(), &decoded_data.front(),
-             width * height * 4);
-      GdkPixbuf* pixbuf = gfx::GdkPixbufFromSkBitmap(&icon);
-      gtk_list_store_set(startup_custom_pages_model_, &iter,
-                         COL_FAVICON, pixbuf,
-                         -1);
-      g_object_unref(pixbuf);
-    }
-  }
 }
 
 void GeneralPageGtk::SetCustomUrlListFromCurrentPages() {

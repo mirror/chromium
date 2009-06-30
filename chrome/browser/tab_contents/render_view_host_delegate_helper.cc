@@ -12,7 +12,7 @@
 #include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/renderer_host/render_widget_host.h"
 #include "chrome/browser/renderer_host/render_widget_host_view.h"
-#include "chrome/browser/tab_contents/site_instance.h"
+#include "chrome/browser/renderer_host/site_instance.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/browser/tab_contents/tab_contents_view.h"
 #include "chrome/common/chrome_switches.h"
@@ -62,7 +62,7 @@ TabContents* RenderViewHostDelegateViewHelper::GetCreatedWindow(int route_id) {
   pending_contents_.erase(route_id);
 
   if (!new_tab_contents->render_view_host()->view() ||
-      !new_tab_contents->process()->channel()) {
+      !new_tab_contents->process()->HasConnection()) {
     // The view has gone away or the renderer crashed. Nothing to do.
     return NULL;
   }
@@ -85,7 +85,7 @@ RenderWidgetHostView* RenderViewHostDelegateViewHelper::GetCreatedWidget(
   pending_widget_views_.erase(route_id);
 
   RenderWidgetHost* widget_host = widget_host_view->GetRenderWidgetHost();
-  if (!widget_host->process()->channel()) {
+  if (!widget_host->process()->HasConnection()) {
     // The view has gone away or the renderer crashed. Nothing to do.
     return NULL;
   }
@@ -168,6 +168,8 @@ WebPreferences RenderViewHostDelegateHelper::GetWebkitPrefs(
         command_line.HasSwitch(switches::kEnableFastback);
     web_prefs.remote_fonts_enabled =
         command_line.HasSwitch(switches::kEnableRemoteFonts);
+    web_prefs.xss_auditor_enabled =
+        command_line.HasSwitch(switches::kEnableXSSAuditor);
   }
 
   web_prefs.uses_universal_detector =

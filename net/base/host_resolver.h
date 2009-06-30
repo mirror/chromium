@@ -57,7 +57,7 @@ class HostMapper;
 // Thread safety: This class is not threadsafe, and must only be called
 // from one thread!
 //
-class HostResolver {
+class HostResolver : public base::RefCounted<HostResolver> {
  public:
   // The parameters for doing a Resolve(). |hostname| and |port| are required,
   // the rest are optional (and have reasonable defaults).
@@ -162,6 +162,9 @@ class HostResolver {
   // Unregisters an observer previously added by AddObserver().
   void RemoveObserver(Observer* observer);
 
+  // TODO(eroman): temp hack for http://crbug.com/15513
+  void Shutdown();
+
  private:
   class Job;
   typedef std::vector<Request*> RequestsList;
@@ -210,6 +213,9 @@ class HostResolver {
   // Observers are the only consumers of this ID number.
   int next_request_id_;
 
+  // TODO(eroman): temp hack for http://crbug.com/15513
+  bool shutdown_;
+
   DISALLOW_COPY_AND_ASSIGN(HostResolver);
 };
 
@@ -236,7 +242,7 @@ class SingleRequestHostResolver {
   void OnResolveCompletion(int result);
 
   // The actual host resolver that will handle the request.
-  HostResolver* resolver_;
+  scoped_refptr<HostResolver> resolver_;
 
   // The current request (if any).
   HostResolver::Request* cur_request_;

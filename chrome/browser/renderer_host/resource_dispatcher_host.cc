@@ -21,7 +21,9 @@
 #include "chrome/browser/download/download_request_manager.h"
 #include "chrome/browser/download/save_file_manager.h"
 #include "chrome/browser/external_protocol_handler.h"
+#include "chrome/browser/in_process_webkit/webkit_thread.h"
 #include "chrome/browser/plugin_service.h"
+#include "chrome/browser/privacy_blacklist/blacklist.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/renderer_host/async_resource_handler.h"
 #include "chrome/browser/renderer_host/buffered_resource_handler.h"
@@ -32,6 +34,7 @@
 #include "chrome/browser/renderer_host/safe_browsing_resource_handler.h"
 #include "chrome/browser/renderer_host/save_file_resource_handler.h"
 #include "chrome/browser/renderer_host/sync_resource_handler.h"
+#include "chrome/browser/ssl/ssl_client_auth_handler.h"
 #include "chrome/browser/tab_contents/tab_util.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/common/chrome_switches.h"
@@ -44,6 +47,7 @@
 #include "net/base/net_errors.h"
 #include "net/base/ssl_cert_request_info.h"
 #include "net/url_request/url_request.h"
+#include "net/url_request/url_request_context.h"
 #include "webkit/glue/webappcachecontext.h"
 
 // TODO(port): Move these includes to the above section when porting is done.
@@ -153,6 +157,7 @@ ResourceDispatcherHost::ResourceDispatcherHost(MessageLoop* io_loop)
       ALLOW_THIS_IN_INITIALIZER_LIST(
           save_file_manager_(new SaveFileManager(ui_loop_, io_loop, this))),
       safe_browsing_(new SafeBrowsingService),
+      webkit_thread_(new WebKitThread),
       request_id_(-1),
       plugin_service_(PluginService::GetInstance()),
       ALLOW_THIS_IN_INITIALIZER_LIST(method_runner_(this)),
@@ -301,6 +306,14 @@ void ResourceDispatcherHost::BeginRequest(
     return;
   }
 
+  // Note that context can still be NULL here when running unit tests.
+  const Blacklist::Entry* entry = context && context->blacklist() ?
+      context->blacklist()->findMatch(request_data.url) : NULL;
+  if (entry && entry->IsBlocked(request_data.url)) {
+    // TODO(idanan): Send a ResourceResponse to replace the blocked resource.
+    return;
+  }
+
   // Ensure the Chrome plugins are loaded, as they may intercept network
   // requests.  Does nothing if they are already loaded.
   // TODO(mpcomplete): This takes 200 ms!  Investigate parallelizing this by
@@ -328,11 +341,22 @@ void ResourceDispatcherHost::BeginRequest(
 
   // Construct the request.
   URLRequest* request = new URLRequest(request_data.url, this);
+  if (entry && entry->attributes()) {
+    request->SetUserData((void*)&Blacklist::kRequestDataKey,
+                         new Blacklist::RequestData(entry));
+  }
   request->set_method(request_data.method);
   request->set_first_party_for_cookies(request_data.first_party_for_cookies);
-  request->set_referrer(request_data.referrer.spec());
+
+  if (!entry || !(entry->attributes() & Blacklist::kDontSendReferrer))
+    request->set_referrer(request_data.referrer.spec());
+
   request->SetExtraRequestHeaders(request_data.headers);
+
   int load_flags = request_data.load_flags;
+  // EV certificate verification could be expensive.  We don't want to spend
+  // time performing EV certificate verification on all resources because
+  // EV status is irrelevant to sub-frames and sub-resources.
   if (request_data.resource_type == ResourceType::MAIN_FRAME)
     load_flags |= net::LOAD_VERIFY_EV_CERT;
   request->set_load_flags(load_flags);
@@ -624,6 +648,10 @@ void ResourceDispatcherHost::CancelRequest(int process_id,
       info->login_handler->OnRequestCancelled();
       info->login_handler = NULL;
     }
+    if (info->ssl_client_auth_handler) {
+      info->ssl_client_auth_handler->OnRequestCancelled();
+      info->ssl_client_auth_handler = NULL;
+    }
     if (!i->second->is_pending() && allow_delete) {
       // No io is pending, canceling the request won't notify us of anything,
       // so we explicitly remove it.
@@ -858,12 +886,18 @@ void ResourceDispatcherHost::OnCertificateRequested(
       net::SSLCertRequestInfo* cert_request_info) {
   DCHECK(request);
 
-  bool select_first_cert = CommandLine::ForCurrentProcess()->HasSwitch(
-      switches::kAutoSSLClientAuth);
-  net::X509Certificate* cert =
-      select_first_cert && !cert_request_info->client_certs.empty() ?
-      cert_request_info->client_certs[0] : NULL;
-  request->ContinueWithCertificate(cert);
+  if (cert_request_info->client_certs.empty()) {
+    // No need to query the user if there are no certs to choose from.
+    request->ContinueWithCertificate(NULL);
+    return;
+  }
+
+  ExtraRequestInfo* info = ExtraInfoForRequest(request);
+  DCHECK(!info->ssl_client_auth_handler) <<
+      "OnCertificateRequested called with ssl_client_auth_handler pending";
+  info->ssl_client_auth_handler =
+      new SSLClientAuthHandler(request, cert_request_info, io_loop_, ui_loop_);
+  info->ssl_client_auth_handler->SelectCertificate();
 }
 
 void ResourceDispatcherHost::OnSSLCertificateError(
@@ -927,19 +961,9 @@ bool ResourceDispatcherHost::CompleteResponseStarted(URLRequest* request) {
         CertStore::GetSharedInstance()->StoreCert(
             request->ssl_info().cert,
             info->process_id);
-    int cert_status = request->ssl_info().cert_status;
-    // EV certificate verification could be expensive.  We don't want to spend
-    // time performing EV certificate verification on all resources because
-    // EV status is irrelevant to sub-frames and sub-resources.  So we call
-    // IsEV here rather than in the network layer because the network layer
-    // doesn't know the resource type.
-    if (info->resource_type == ResourceType::MAIN_FRAME &&
-        request->ssl_info().cert->IsEV(cert_status))
-      cert_status |= net::CERT_STATUS_IS_EV;
-
     response->response_head.security_info =
         SSLManager::SerializeSecurityInfo(cert_id,
-                                          cert_status,
+                                          request->ssl_info().cert_status,
                                           request->ssl_info().security_bits);
   } else {
     // We should not have any SSL state.

@@ -3,12 +3,32 @@
 // found in the LICENSE file.
 
 #include "base/scoped_ptr.h"
+#include "base/stl_util-inl.h"
 #include "base/string_util.h"
 #include "base/time.h"
 #include "media/base/filter_host.h"
 #include "media/filters/ffmpeg_common.h"
 #include "media/filters/ffmpeg_demuxer.h"
 #include "media/filters/ffmpeg_glue.h"
+
+namespace {
+
+// Helper function to deep copy an AVPacket's data, size and timestamps.
+// Returns NULL if a packet could not be cloned (i.e., out of memory).
+AVPacket* ClonePacket(AVPacket* packet) {
+  scoped_ptr<AVPacket> clone(new AVPacket());
+  if (!clone.get() || av_new_packet(clone.get(), packet->size) < 0) {
+    return NULL;
+  }
+  DCHECK_EQ(clone->size, packet->size);
+  clone->dts = packet->dts;
+  clone->pts = packet->pts;
+  clone->duration = packet->duration;
+  memcpy(clone->data, packet->data, clone->size);
+  return clone.release();
+}
+
+}  // namespace
 
 namespace media {
 
@@ -51,7 +71,8 @@ FFmpegDemuxerStream::FFmpegDemuxerStream(FFmpegDemuxer* demuxer,
                                          AVStream* stream)
     : demuxer_(demuxer),
       stream_(stream),
-      discontinuous_(false) {
+      discontinuous_(false),
+      stopped_(false) {
   DCHECK(demuxer_);
 
   // Determine our media format.
@@ -74,11 +95,9 @@ FFmpegDemuxerStream::FFmpegDemuxerStream(FFmpegDemuxer* demuxer,
 }
 
 FFmpegDemuxerStream::~FFmpegDemuxerStream() {
-  // Since |buffer_queue_| uses scoped_refptr everything will get released.
-  while (!read_queue_.empty()) {
-    delete read_queue_.front();
-    read_queue_.pop_front();
-  }
+  DCHECK(stopped_);
+  DCHECK(read_queue_.empty());
+  DCHECK(buffer_queue_.empty());
 }
 
 void* FFmpegDemuxerStream::QueryInterface(const char* id) {
@@ -91,27 +110,44 @@ void* FFmpegDemuxerStream::QueryInterface(const char* id) {
 }
 
 bool FFmpegDemuxerStream::HasPendingReads() {
-  AutoLock auto_lock(lock_);
+  DCHECK_EQ(PlatformThread::CurrentId(), demuxer_->thread_id_);
+  DCHECK(!stopped_ || read_queue_.empty())
+      << "Read queue should have been emptied if demuxing stream is stopped";
   return !read_queue_.empty();
 }
 
 base::TimeDelta FFmpegDemuxerStream::EnqueuePacket(AVPacket* packet) {
+  DCHECK_EQ(PlatformThread::CurrentId(), demuxer_->thread_id_);
   base::TimeDelta timestamp = ConvertTimestamp(packet->pts);
   base::TimeDelta duration = ConvertTimestamp(packet->duration);
-  Buffer* buffer = new AVPacketBuffer(packet, timestamp, duration);
-  DCHECK(buffer);
-  {
-    AutoLock auto_lock(lock_);
-    buffer_queue_.push_back(buffer);
+  if (stopped_) {
+    NOTREACHED() << "Attempted to enqueue packet on a stopped stream";
+    return timestamp;
   }
-  FulfillPendingReads();
+
+  // Enqueue the callback and attempt to satisfy a read immediately.
+  scoped_refptr<Buffer> buffer =
+      new AVPacketBuffer(packet, timestamp, duration);
+  if (!buffer) {
+    NOTREACHED() << "Unable to allocate AVPacketBuffer";
+    return timestamp;
+  }
+  buffer_queue_.push_back(buffer);
+  FulfillPendingRead();
   return timestamp;
 }
 
 void FFmpegDemuxerStream::FlushBuffers() {
-  AutoLock auto_lock(lock_);
+  DCHECK_EQ(PlatformThread::CurrentId(), demuxer_->thread_id_);
   buffer_queue_.clear();
   discontinuous_ = true;
+}
+
+void FFmpegDemuxerStream::Stop() {
+  DCHECK_EQ(PlatformThread::CurrentId(), demuxer_->thread_id_);
+  buffer_queue_.clear();
+  STLDeleteElements(&read_queue_);
+  stopped_ = true;
 }
 
 const MediaFormat& FFmpegDemuxerStream::media_format() {
@@ -120,40 +156,53 @@ const MediaFormat& FFmpegDemuxerStream::media_format() {
 
 void FFmpegDemuxerStream::Read(Callback1<Buffer*>::Type* read_callback) {
   DCHECK(read_callback);
-  {
-    AutoLock auto_lock(lock_);
-    read_queue_.push_back(read_callback);
+  demuxer_->message_loop_->PostTask(FROM_HERE,
+      NewRunnableMethod(this, &FFmpegDemuxerStream::ReadTask, read_callback));
+}
+
+void FFmpegDemuxerStream::ReadTask(Callback1<Buffer*>::Type* read_callback) {
+  DCHECK_EQ(PlatformThread::CurrentId(), demuxer_->thread_id_);
+
+  // Don't accept any additional reads if we've been told to stop.
+  //
+  // TODO(scherkus): it would be cleaner if we replied with an error message.
+  if (stopped_) {
+    delete read_callback;
+    return;
   }
-  if (FulfillPendingReads()) {
+
+  // Enqueue the callback and attempt to satisfy it immediately.
+  read_queue_.push_back(read_callback);
+  FulfillPendingRead();
+
+  // There are still pending reads, demux some more.
+  if (HasPendingReads()) {
     demuxer_->PostDemuxTask();
   }
 }
 
-bool FFmpegDemuxerStream::FulfillPendingReads() {
-  bool pending_reads = false;
-  while (true) {
-    scoped_refptr<Buffer> buffer;
-    scoped_ptr<Callback1<Buffer*>::Type> read_callback;
-    {
-      AutoLock auto_lock(lock_);
-      pending_reads = !read_queue_.empty();
-      if (buffer_queue_.empty() || read_queue_.empty()) {
-        break;
-      }
-      buffer = buffer_queue_.front();
-      read_callback.reset(read_queue_.front());
-      buffer_queue_.pop_front();
-      read_queue_.pop_front();
-
-      // Handle discontinuities due to FlushBuffers() being called.
-      if (discontinuous_) {
-        buffer->SetDiscontinuous(true);
-        discontinuous_ = false;
-      }
-    }
-    read_callback->Run(buffer);
+void FFmpegDemuxerStream::FulfillPendingRead() {
+  DCHECK_EQ(PlatformThread::CurrentId(), demuxer_->thread_id_);
+  if (buffer_queue_.empty() || read_queue_.empty()) {
+    return;
   }
-  return pending_reads;
+
+  // Dequeue a buffer and pending read pair.
+  scoped_refptr<Buffer> buffer = buffer_queue_.front();
+  scoped_ptr<Callback1<Buffer*>::Type> read_callback(read_queue_.front());
+  buffer_queue_.pop_front();
+  read_queue_.pop_front();
+
+  // Handle discontinuities due to FlushBuffers() being called.
+  //
+  // TODO(scherkus): get rid of |discontinuous_| and use buffer flags.
+  if (discontinuous_) {
+    buffer->SetDiscontinuous(true);
+    discontinuous_ = false;
+  }
+
+  // Execute the callback.
+  read_callback->Run(buffer);
 }
 
 base::TimeDelta FFmpegDemuxerStream::ConvertTimestamp(int64 timestamp) {
@@ -162,16 +211,14 @@ base::TimeDelta FFmpegDemuxerStream::ConvertTimestamp(int64 timestamp) {
   return base::TimeDelta::FromMicroseconds(microseconds);
 }
 
-
 //
 // FFmpegDemuxer
 //
 FFmpegDemuxer::FFmpegDemuxer()
-    : thread_("DemuxerThread") {
+    : thread_id_(NULL) {
 }
 
 FFmpegDemuxer::~FFmpegDemuxer() {
-  DCHECK(!thread_.IsRunning());
   DCHECK(!format_context_.get());
   // TODO(scherkus): I believe we need to use av_close_input_file() here
   // instead of scoped_ptr_malloc calling av_free().
@@ -181,13 +228,14 @@ FFmpegDemuxer::~FFmpegDemuxer() {
 }
 
 void FFmpegDemuxer::PostDemuxTask() {
-  thread_.message_loop()->PostTask(FROM_HERE,
+  message_loop_->PostTask(FROM_HERE,
       NewRunnableMethod(this, &FFmpegDemuxer::DemuxTask));
 }
 
 void FFmpegDemuxer::Stop() {
-  thread_.Stop();
-  format_context_.reset();
+  // Post a task to notify the streams to stop as well.
+  message_loop_->PostTask(FROM_HERE,
+      NewRunnableMethod(this, &FFmpegDemuxer::StopTask));
 }
 
 void FFmpegDemuxer::Seek(base::TimeDelta time) {
@@ -195,18 +243,12 @@ void FFmpegDemuxer::Seek(base::TimeDelta time) {
   // operation is completed and filters behind the demuxer is good to issue
   // more reads, but we are posting a task here, which makes the seek operation
   // asynchronous, should change how seek works to make it fully asynchronous.
-  thread_.message_loop()->PostTask(FROM_HERE,
+  message_loop_->PostTask(FROM_HERE,
       NewRunnableMethod(this, &FFmpegDemuxer::SeekTask, time));
 }
 
 bool FFmpegDemuxer::Initialize(DataSource* data_source) {
-  // Start our internal demuxing thread.
-  if (!thread_.Start()) {
-    host_->Error(DEMUXER_ERROR_COULD_NOT_CREATE_THREAD);
-    return false;
-  }
-
-  thread_.message_loop()->PostTask(FROM_HERE,
+  message_loop_->PostTask(FROM_HERE,
       NewRunnableMethod(this, &FFmpegDemuxer::InititalizeTask, data_source));
   return true;
 }
@@ -230,6 +272,10 @@ void FFmpegDemuxer::InititalizeTask(DataSource* data_source) {
   // FFmpegGlue.
   //
   // Refer to media/filters/ffmpeg_glue.h for details.
+
+  // Grab the thread id for debugging.
+  DCHECK(!thread_id_);
+  thread_id_ = PlatformThread::CurrentId();
 
   // Add our data source and get our unique key.
   std::string key = FFmpegGlue::get()->AddDataSource(data_source);
@@ -290,6 +336,8 @@ void FFmpegDemuxer::InititalizeTask(DataSource* data_source) {
 }
 
 void FFmpegDemuxer::SeekTask(base::TimeDelta time) {
+  DCHECK_EQ(PlatformThread::CurrentId(), thread_id_);
+
   // Tell streams to flush buffers due to seeking.
   StreamVector::iterator iter;
   for (iter = streams_.begin(); iter != streams_.end(); ++iter) {
@@ -310,6 +358,8 @@ void FFmpegDemuxer::SeekTask(base::TimeDelta time) {
 }
 
 void FFmpegDemuxer::DemuxTask() {
+  DCHECK_EQ(PlatformThread::CurrentId(), thread_id_);
+
   // Make sure we have work to do before demuxing.
   if (!StreamsHavePendingReads()) {
     return;
@@ -364,7 +414,19 @@ void FFmpegDemuxer::DemuxTask() {
   }
 }
 
+void FFmpegDemuxer::StopTask() {
+  DCHECK_EQ(PlatformThread::CurrentId(), thread_id_);
+  StreamVector::iterator iter;
+  for (iter = streams_.begin(); iter != streams_.end(); ++iter) {
+    (*iter)->Stop();
+  }
+
+  // Free our AVFormatContext.
+  format_context_.reset();
+}
+
 bool FFmpegDemuxer::StreamsHavePendingReads() {
+  DCHECK_EQ(PlatformThread::CurrentId(), thread_id_);
   StreamVector::iterator iter;
   for (iter = streams_.begin(); iter != streams_.end(); ++iter) {
     if ((*iter)->HasPendingReads()) {
@@ -375,25 +437,13 @@ bool FFmpegDemuxer::StreamsHavePendingReads() {
 }
 
 void FFmpegDemuxer::StreamHasEnded() {
+  DCHECK_EQ(PlatformThread::CurrentId(), thread_id_);
   StreamVector::iterator iter;
   for (iter = streams_.begin(); iter != streams_.end(); ++iter) {
     AVPacket* packet = new AVPacket();
     memset(packet, 0, sizeof(*packet));
     (*iter)->EnqueuePacket(packet);
   }
-}
-
-AVPacket* FFmpegDemuxer::ClonePacket(AVPacket* packet) {
-  scoped_ptr<AVPacket> clone(new AVPacket());
-  if (!clone.get() || av_new_packet(clone.get(), packet->size) < 0) {
-    return NULL;
-  }
-  DCHECK_EQ(clone->size, packet->size);
-  clone->dts = packet->dts;
-  clone->pts = packet->pts;
-  clone->duration = packet->duration;
-  memcpy(clone->data, packet->data, clone->size);
-  return clone.release();
 }
 
 }  // namespace media

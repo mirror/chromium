@@ -8,15 +8,12 @@
 #include <vector>
 
 #include "app/resource_bundle.h"
-#include "base/command_line.h"
 #include "base/gfx/native_widget_types.h"
 #include "base/string_util.h"
 #include "base/time.h"
 #include "base/waitable_event.h"
-#include "chrome/browser/browser_process.h"
 #include "chrome/browser/child_process_security_policy.h"
 #include "chrome/browser/cross_site_request_manager.h"
-#include "chrome/browser/debugger/debugger_wrapper.h"
 #include "chrome/browser/debugger/devtools_manager.h"
 #include "chrome/browser/extensions/extension_message_service.h"
 #include "chrome/browser/metrics/user_metrics.h"
@@ -25,15 +22,12 @@
 #include "chrome/browser/renderer_host/render_view_host_delegate.h"
 #include "chrome/browser/renderer_host/render_widget_host.h"
 #include "chrome/browser/renderer_host/render_widget_host_view.h"
-#include "chrome/browser/tab_contents/navigation_entry.h"
-#include "chrome/browser/tab_contents/site_instance.h"
-#include "chrome/browser/tab_contents/tab_contents.h"
+#include "chrome/browser/renderer_host/site_instance.h"
 #include "chrome/common/bindings_policy.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/notification_type.h"
 #include "chrome/common/render_messages.h"
 #include "chrome/common/result_codes.h"
-#include "chrome/common/chrome_switches.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/thumbnail_score.h"
 #include "chrome/common/url_constants.h"
@@ -104,7 +98,6 @@ RenderViewHost::RenderViewHost(SiteInstance* instance,
       instance_(instance),
       delegate_(delegate),
       waiting_for_drag_context_response_(false),
-      debugger_attached_(false),
       enabled_bindings_(0),
       pending_request_id_(0),
       modal_dialog_count_(0),
@@ -123,7 +116,9 @@ RenderViewHost::RenderViewHost(SiteInstance* instance,
 }
 
 RenderViewHost::~RenderViewHost() {
-  OnDebugDisconnect();
+  DevToolsManager* devtools_manager = DevToolsManager::GetInstance();
+  if (devtools_manager)  // NULL in tests
+    devtools_manager->UnregisterDevToolsClientHostFor(this);
 
   // Be sure to clean up any leftover state from cross-site requests.
   Singleton<CrossSiteRequestManager>()->SetHasPendingCrossSiteRequest(
@@ -144,7 +139,7 @@ bool RenderViewHost::CreateRenderView() {
   // ignored, so this is safe.
   if (!process()->Init())
     return false;
-  DCHECK(process()->channel());
+  DCHECK(process()->HasConnection());
   DCHECK(process()->profile());
 
   if (BindingsPolicy::is_dom_ui_enabled(enabled_bindings_)) {
@@ -202,7 +197,7 @@ bool RenderViewHost::CreateRenderView() {
 }
 
 bool RenderViewHost::IsRenderViewLive() const {
-  return process()->channel() && renderer_initialized_;
+  return process()->HasConnection() && renderer_initialized_;
 }
 
 void RenderViewHost::SetRendererPrefs(
@@ -210,32 +205,12 @@ void RenderViewHost::SetRendererPrefs(
   Send(new ViewMsg_SetRendererPrefs(routing_id(), renderer_prefs));
 }
 
-void RenderViewHost::NavigateToEntry(const NavigationEntry& entry,
-                                     bool is_reload) {
-  ViewMsg_Navigate_Params params;
-  MakeNavigateParams(entry, is_reload, &params);
-
+void RenderViewHost::Navigate(const ViewMsg_Navigate_Params& params) {
   ChildProcessSecurityPolicy::GetInstance()->GrantRequestURL(
       process()->pid(), params.url);
 
-  DoNavigate(entry.url(), new ViewMsg_Navigate(routing_id(), params));
-}
+  ViewMsg_Navigate* nav_message = new ViewMsg_Navigate(routing_id(), params);
 
-void RenderViewHost::NavigateToURL(const GURL& url) {
-  ViewMsg_Navigate_Params params;
-  params.page_id = -1;
-  params.url = url;
-  params.transition = PageTransition::LINK;
-  params.reload = false;
-
-  ChildProcessSecurityPolicy::GetInstance()->GrantRequestURL(
-      process()->pid(), params.url);
-
-  DoNavigate(url, new ViewMsg_Navigate(routing_id(), params));
-}
-
-void RenderViewHost::DoNavigate(const GURL& url,
-                                ViewMsg_Navigate* nav_message) {
   // Only send the message if we aren't suspended at the start of a cross-site
   // request.
   if (navigations_suspended_) {
@@ -259,9 +234,18 @@ void RenderViewHost::DoNavigate(const GURL& url,
     //
     // WebKit doesn't send throb notifications for JavaScript URLs, so we
     // don't want to either.
-    if (!url.SchemeIs(chrome::kJavaScriptScheme))
+    if (!params.url.SchemeIs(chrome::kJavaScriptScheme))
       delegate_->DidStartLoading(this);
   }
+}
+
+void RenderViewHost::NavigateToURL(const GURL& url) {
+  ViewMsg_Navigate_Params params;
+  params.page_id = -1;
+  params.url = url;
+  params.transition = PageTransition::LINK;
+  params.reload = false;
+  Navigate(params);
 }
 
 void RenderViewHost::LoadAlternateHTMLString(const std::string& html_text,
@@ -467,27 +451,6 @@ void RenderViewHost::AddMessageToConsole(
       routing_id(), frame_xpath, message, level));
 }
 
-void RenderViewHost::DebugCommand(const std::wstring& cmd) {
-  Send(new ViewMsg_DebugCommand(routing_id(), cmd));
-}
-
-void RenderViewHost::DebugAttach() {
-  if (!debugger_attached_)
-    Send(new ViewMsg_DebugAttach(routing_id()));
-}
-
-void RenderViewHost::DebugDetach() {
-  if (debugger_attached_) {
-    Send(new ViewMsg_DebugDetach(routing_id()));
-    debugger_attached_ = false;
-  }
-}
-
-void RenderViewHost::DebugBreak(bool force) {
-  if (debugger_attached_)
-    Send(new ViewMsg_DebugBreak(routing_id(), force));
-}
-
 void RenderViewHost::Undo() {
   Send(new ViewMsg_Undo(routing_id()));
 }
@@ -585,30 +548,6 @@ void RenderViewHost::CopyImageAt(int x, int y) {
   Send(new ViewMsg_CopyImageAt(routing_id(), x, y));
 }
 
-void RenderViewHost::InspectElementAt(int x, int y) {
-  if (!CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kDisableOutOfProcessDevTools)) {
-    DevToolsManager* manager = g_browser_process->devtools_manager();
-    manager->InspectElement(this, x, y);
-  } else {
-    ChildProcessSecurityPolicy::GetInstance()->
-        GrantInspectElement(process()->pid());
-    Send(new ViewMsg_InspectElement(routing_id(), x, y));
-  }
-}
-
-void RenderViewHost::ShowJavaScriptConsole() {
-  if (!CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kDisableOutOfProcessDevTools)) {
-    DevToolsManager* manager = g_browser_process->devtools_manager();
-    manager->OpenDevToolsWindow(this);
-  } else {
-    ChildProcessSecurityPolicy::GetInstance()->
-        GrantInspectElement(process()->pid());
-    Send(new ViewMsg_ShowJavaScriptConsole(routing_id()));
-  }
-}
-
 void RenderViewHost::DragSourceEndedAt(
     int client_x, int client_y, int screen_x, int screen_y) {
   Send(new ViewMsg_DragSourceEndedOrMoved(
@@ -655,19 +594,6 @@ void RenderViewHost::SetDOMUIProperty(const std::string& name,
                                       const std::string& value) {
   DCHECK(BindingsPolicy::is_dom_ui_enabled(enabled_bindings_));
   Send(new ViewMsg_SetDOMUIProperty(routing_id(), name, value));
-}
-
-// static
-void RenderViewHost::MakeNavigateParams(const NavigationEntry& entry,
-                                        bool reload,
-                                        ViewMsg_Navigate_Params* params) {
-  params->page_id = entry.page_id();
-  params->url = entry.url();
-  params->referrer = entry.referrer();
-  params->transition = entry.transition_type();
-  params->state = entry.content_state();
-  params->reload = reload;
-  params->request_time = base::Time::Now();
 }
 
 void RenderViewHost::GotFocus() {
@@ -798,15 +724,11 @@ void RenderViewHost::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(ViewHostMsg_UpdateDragCursor, OnUpdateDragCursor)
     IPC_MESSAGE_HANDLER(ViewHostMsg_TakeFocus, OnTakeFocus)
     IPC_MESSAGE_HANDLER(ViewHostMsg_PageHasOSDD, OnMsgPageHasOSDD)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_InspectElement_Reply,
-                        OnMsgInspectElementReply)
     IPC_MESSAGE_FORWARD(ViewHostMsg_DidGetPrintedPagesCount,
                         delegate_,
                         RenderViewHostDelegate::DidGetPrintedPagesCount)
     IPC_MESSAGE_HANDLER(ViewHostMsg_DidPrintPage, DidPrintPage)
     IPC_MESSAGE_HANDLER(ViewHostMsg_AddMessageToConsole, OnAddMessageToConsole)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_DebuggerOutput, OnDebuggerOutput);
-    IPC_MESSAGE_HANDLER(ViewHostMsg_DidDebugAttach, DidDebugAttach);
     IPC_MESSAGE_HANDLER(ViewHostMsg_ForwardToDevToolsAgent,
                         OnForwardToDevToolsAgent);
     IPC_MESSAGE_HANDLER(ViewHostMsg_ForwardToDevToolsClient,
@@ -923,7 +845,6 @@ void RenderViewHost::OnMsgRenderViewGone() {
   RendererExited();
 
   delegate_->RenderViewGone(this);
-  OnDebugDisconnect();
 }
 
 // Called when the renderer navigates.  For every frame loaded, we'll get this
@@ -1262,10 +1183,6 @@ void RenderViewHost::OnMsgPageHasOSDD(int32 page_id, const GURL& doc_url,
   delegate_->PageHasOSDD(this, page_id, doc_url, autodetected);
 }
 
-void RenderViewHost::OnMsgInspectElementReply(int num_resources) {
-  delegate_->InspectElementReply(num_resources);
-}
-
 void RenderViewHost::DidPrintPage(
     const ViewHostMsg_DidPrintPage_Params& params) {
   delegate_->DidPrintPage(params);
@@ -1277,29 +1194,14 @@ void RenderViewHost::OnAddMessageToConsole(const std::wstring& message,
   std::wstring msg = StringPrintf(L"\"%ls,\" source: %ls (%d)", message.c_str(),
                                   source_id.c_str(), line_no);
   logging::LogMessage("CONSOLE", 0).stream() << msg;
-  if (debugger_attached_)
-    g_browser_process->debugger_wrapper()->DebugMessage(msg);
-}
-
-void RenderViewHost::OnDebuggerOutput(const std::wstring& output) {
-  if (debugger_attached_)
-    g_browser_process->debugger_wrapper()->DebugMessage(output);
-}
-
-void RenderViewHost::DidDebugAttach() {
-  if (!debugger_attached_) {
-    debugger_attached_ = true;
-    g_browser_process->debugger_wrapper()->OnDebugAttach();
-  }
 }
 
 void RenderViewHost::OnForwardToDevToolsAgent(const IPC::Message& message) {
-  g_browser_process->devtools_manager()->ForwardToDevToolsAgent(this, message);
+  DevToolsManager::GetInstance()->ForwardToDevToolsAgent(this, message);
 }
 
 void RenderViewHost::OnForwardToDevToolsClient(const IPC::Message& message) {
-  g_browser_process->devtools_manager()->ForwardToDevToolsClient(this,
-                                                                 message);
+  DevToolsManager::GetInstance()->ForwardToDevToolsClient(this, message);
 }
 
 void RenderViewHost::OnUserMetricsRecordAction(const std::wstring& action) {
@@ -1407,11 +1309,7 @@ void RenderViewHost::WindowMoveOrResizeStarted() {
 }
 
 void RenderViewHost::NotifyRendererUnresponsive() {
-  // If the debugger is attached, we're going to be unresponsive anytime it's
-  // stopped at a breakpoint.
-  if (!debugger_attached_) {
-    delegate_->RendererUnresponsive(this, is_waiting_for_unload_ack_);
-  }
+  delegate_->RendererUnresponsive(this, is_waiting_for_unload_ack_);
 }
 
 void RenderViewHost::NotifyRendererResponsive() {
@@ -1445,14 +1343,12 @@ void RenderViewHost::ForwardMouseEvent(
   }
 }
 
-void RenderViewHost::OnDebugDisconnect() {
-  if (debugger_attached_) {
-    debugger_attached_ = false;
-    g_browser_process->debugger_wrapper()->OnDebugDisconnect();
-  }
-  DevToolsManager* devtools_manager = g_browser_process->devtools_manager();
-  if (devtools_manager)  // NULL in tests
-    devtools_manager->UnregisterDevToolsClientHostFor(this);
+void RenderViewHost::ForwardEditCommand(const std::string& name,
+                                        const std::string& value) {
+  IPC::Message* message = new ViewMsg_ExecuteEditCommand(routing_id(),
+                                                         name,
+                                                         value);
+  Send(message);
 }
 
 void RenderViewHost::ForwardMessageFromExternalHost(const std::string& message,

@@ -60,6 +60,19 @@ bool IsWindowVisible(XID window);
 // Returns the bounds of |window|.
 bool GetWindowRect(XID window, gfx::Rect* rect);
 
+// Implementers of this interface receive a notification for every X window of
+// the main display.
+class EnumerateWindowsDelegate {
+ public:
+  // |xid| is the X Window ID of the enumerated window.  Return true to stop
+  // further iteration.
+  virtual bool ShouldStopIterating(XID xid) = 0;
+};
+
+// Enumerates all windows in the current display.  Will recurse into child
+// windows up to a depth of |max_depth|.
+bool EnumerateAllWindows(EnumerateWindowsDelegate* delegate, int max_depth);
+
 // Return a handle to a server side pixmap. |shared_memory_key| is a SysV
 // IPC key. The shared memory region must contain 32-bit pixels.
 XID AttachSharedMemory(Display* display, int shared_memory_support);

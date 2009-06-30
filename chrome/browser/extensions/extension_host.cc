@@ -9,20 +9,19 @@
 #include "base/string_util.h"
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_list.h"
-#include "chrome/browser/browser_process.h"
 #include "chrome/browser/debugger/devtools_manager.h"
 #include "chrome/browser/extensions/extension_message_service.h"
-#include "chrome/browser/extensions/extension_process_manager.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/renderer_host/render_view_host.h"
 #include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/renderer_host/render_widget_host.h"
 #include "chrome/browser/renderer_host/render_widget_host_view.h"
+#include "chrome/browser/renderer_host/site_instance.h"
 #include "chrome/browser/tab_contents/infobar_delegate.h"
-#include "chrome/browser/tab_contents/site_instance.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/browser/tab_contents/tab_contents_view.h"
 #include "chrome/common/extensions/extension.h"
+#include "chrome/common/notification_service.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 
@@ -78,9 +77,9 @@ class CrashedExtensionInfobarDelegate : public ConfirmInfoBarDelegate {
 }  // namespace
 
 ExtensionHost::ExtensionHost(Extension* extension, SiteInstance* site_instance,
-                             const GURL& url, ExtensionProcessManager* manager)
+                             const GURL& url)
     : extension_(extension),
-      manager_(manager),
+      profile_(site_instance->browsing_instance()->profile()),
       did_stop_loading_(false),
       url_(url) {
   render_view_host_ = new RenderViewHost(
@@ -89,8 +88,10 @@ ExtensionHost::ExtensionHost(Extension* extension, SiteInstance* site_instance,
 }
 
 ExtensionHost::~ExtensionHost() {
-  if (manager_)  // To allow passing NULL in tests.
-    manager_->OnExtensionHostDestroyed(this);
+  NotificationService::current()->Notify(
+      NotificationType::EXTENSION_HOST_DESTROYED,
+      Source<Profile>(profile_),
+      Details<ExtensionHost>(this));
   render_view_host_->Shutdown();  // deletes render_view_host
 }
 
@@ -129,8 +130,12 @@ void ExtensionHost::RecoverCrashedExtension() {
 #if defined(TOOLKIT_VIEWS)
   view_->RecoverCrashedExtension();
 #endif
-  if (IsRenderViewLive())
-    manager_->OnExtensionProcessRestored(this);
+  if (IsRenderViewLive()) {
+    NotificationService::current()->Notify(
+        NotificationType::EXTENSION_PROCESS_RESTORED,
+        Source<Profile>(profile_),
+        Details<ExtensionHost>(this));
+  }
 }
 
 void ExtensionHost::UpdatePreferredWidth(int pref_width) {
@@ -148,7 +153,10 @@ void ExtensionHost::RenderViewGone(RenderViewHost* render_view_host) {
     current_tab->AddInfoBar(
         new CrashedExtensionInfobarDelegate(current_tab, this));
   }
-  manager_->OnExtensionProcessCrashed(this);
+  NotificationService::current()->Notify(
+      NotificationType::EXTENSION_PROCESS_CRASHED,
+      Source<Profile>(profile_),
+      Details<ExtensionHost>(this));
 }
 
 WebPreferences ExtensionHost::GetWebkitPrefs() {
@@ -248,7 +256,7 @@ void ExtensionHost::ShowCreatedWidget(int route_id,
 
 void ExtensionHost::ShowContextMenu(const ContextMenuParams& params) {
   // TODO(erikkay) - This is a temporary hack.  Show a menu here instead.
-  g_browser_process->devtools_manager()->OpenDevToolsWindow(render_view_host());
+  DevToolsManager::GetInstance()->OpenDevToolsWindow(render_view_host());
 }
 
 void ExtensionHost::StartDragging(const WebDropData& drop_data) {

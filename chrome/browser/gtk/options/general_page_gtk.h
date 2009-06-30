@@ -10,13 +10,14 @@
 #include <string>
 #include <vector>
 
-#include "chrome/browser/history/history.h"
+#include "chrome/browser/cancelable_request.h"
 #include "chrome/browser/options_page_base.h"
 #include "chrome/browser/search_engines/template_url_model.h"
 #include "chrome/common/pref_member.h"
 #include "googleurl/src/gurl.h"
 
 class Profile;
+class ListStoreFavIconLoader;
 
 class GeneralPageGtk : public OptionsPageBase,
                        public TemplateURLModelObserver {
@@ -47,16 +48,6 @@ class GeneralPageGtk : public OptionsPageBase,
 
   // Fill a single row in the startup_custom_pages_model_
   void PopulateCustomUrlRow(const GURL& url, GtkTreeIter *iter);
-
-  // Find a row from the GetFavIconForURL handle.  Returns true if the row was
-  // found.
-  bool GetRowByFavIconHandle(HistoryService::Handle handle,
-                             GtkTreeIter* result_iter);
-
-  // Callback from HistoryService:::GetFavIconForURL
-  void OnGotFavIcon(HistoryService::Handle handle, bool know_fav_icon,
-                    scoped_refptr<RefCountedBytes> image_data, bool is_expired,
-                    GURL icon_url);
 
   // Set the custom url list using the pages currently open
   void SetCustomUrlListFromCurrentPages();
@@ -123,6 +114,10 @@ class GeneralPageGtk : public OptionsPageBase,
   static void OnDefaultSearchEngineChanged(GtkComboBox* combo_box,
                                            GeneralPageGtk* general_page);
 
+  // Callback for manage search engines button
+  static void OnDefaultSearchManageEnginesClicked(GtkButton* button,
+                                                  GeneralPageGtk* general_page);
+
   // Callback for use as default browser button
   static void OnBrowserUseAsDefaultClicked(GtkButton* button,
                                            GeneralPageGtk* general_page);
@@ -177,9 +172,8 @@ class GeneralPageGtk : public OptionsPageBase,
   // Used in loading favicons.
   CancelableRequestConsumer fav_icon_consumer_;
 
-  // Default icon to show when one can't be found for the URL.  This is owned by
-  // the ResourceBundle and we do not need to free it.
-  GdkPixbuf* default_favicon_;
+  // Helper to load the favicon pixbufs into the |startup_custom_pages_model_|.
+  scoped_ptr<ListStoreFavIconLoader> favicon_loader_;
 
   DISALLOW_COPY_AND_ASSIGN(GeneralPageGtk);
 };

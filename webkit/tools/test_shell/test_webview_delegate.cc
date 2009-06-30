@@ -14,17 +14,23 @@
 #include "base/gfx/point.h"
 #include "base/gfx/native_widget_types.h"
 #include "base/message_loop.h"
+#include "base/process_util.h"
 #include "base/string_util.h"
 #include "base/trace_event.h"
 #include "net/base/net_errors.h"
 #include "webkit/api/public/WebDataSource.h"
 #include "webkit/api/public/WebDragData.h"
+#include "webkit/api/public/WebHistoryItem.h"
 #include "webkit/api/public/WebKit.h"
 #include "webkit/api/public/WebScreenInfo.h"
 #include "webkit/api/public/WebString.h"
 #include "webkit/api/public/WebURL.h"
 #include "webkit/api/public/WebURLError.h"
 #include "webkit/api/public/WebURLRequest.h"
+#include "webkit/glue/glue_serialize.h"
+#include "webkit/glue/media/media_resource_loader_bridge_factory.h"
+#include "webkit/glue/media/simple_data_source.h"
+#include "webkit/glue/webappcachecontext.h"
 #include "webkit/glue/webdropdata.h"
 #include "webkit/glue/webframe.h"
 #include "webkit/glue/webpreferences.h"
@@ -46,6 +52,7 @@
 
 using WebKit::WebDataSource;
 using WebKit::WebDragData;
+using WebKit::WebHistoryItem;
 using WebKit::WebNavigationType;
 using WebKit::WebRect;
 using WebKit::WebScreenInfo;
@@ -124,8 +131,22 @@ WebWidget* TestWebViewDelegate::CreatePopupWidget(WebView* webview,
 
 WebKit::WebMediaPlayer* TestWebViewDelegate::CreateWebMediaPlayer(
     WebKit::WebMediaPlayerClient* client) {
-  return new webkit_glue::WebMediaPlayerImpl(
-      client, new media::FilterFactoryCollection());
+  scoped_refptr<media::FilterFactoryCollection> factory =
+      new media::FilterFactoryCollection();
+
+  // TODO(hclam): this is the same piece of code as in RenderView, maybe they
+  // should be grouped together.
+  webkit_glue::MediaResourceLoaderBridgeFactory* bridge_factory =
+      new webkit_glue::MediaResourceLoaderBridgeFactory(
+          GURL::EmptyGURL(),  // referrer
+          "null",             // frame origin
+          "null",             // main_frame_origin
+          base::GetCurrentProcId(),
+          WebAppCacheContext::kNoAppCacheContextId,
+          0);
+  factory->AddFactory(webkit_glue::SimpleDataSource::CreateFactory(
+      MessageLoop::current(), bridge_factory));
+  return new webkit_glue::WebMediaPlayerImpl(client, factory);
 }
 
 WebWorker* TestWebViewDelegate::CreateWebWorker(WebWorkerClient* client) {
@@ -327,6 +348,9 @@ void TestWebViewDelegate::DidFailProvisionalLoadWithError(
       StringPrintf("Error %d when loading url %s", error.reason,
       request.url().spec().data());
   request.setURL(GURL("testshell-error:"));
+
+  // Make sure we never show errors in view source mode.
+  frame->SetInViewSourceMode(false);
 
   frame->LoadAlternateHTMLString(
       request, error_text, error.unreachableURL, replace);
@@ -871,9 +895,9 @@ void TestWebViewDelegate::UpdateURL(WebFrame* frame) {
     entry->SetURL(request.url());
   }
 
-  std::string state;
-  if (frame->GetCurrentHistoryState(&state))
-    entry->SetContentState(state);
+  const WebHistoryItem& history_item = frame->GetCurrentHistoryItem();
+  if (!history_item.isNull())
+    entry->SetContentState(webkit_glue::HistoryItemToString(history_item));
 
   shell_->navigation_controller()->DidNavigateToEntry(entry.release());
 
@@ -892,10 +916,12 @@ void TestWebViewDelegate::UpdateSessionHistory(WebFrame* frame) {
   if (!entry)
     return;
 
-  std::string state;
-  if (!shell_->webView()->GetMainFrame()->GetPreviousHistoryState(&state))
+  const WebHistoryItem& history_item =
+      shell_->webView()->GetMainFrame()->GetPreviousHistoryItem();
+  if (history_item.isNull())
     return;
-  entry->SetContentState(state);
+
+  entry->SetContentState(webkit_glue::HistoryItemToString(history_item));
 }
 
 std::wstring TestWebViewDelegate::GetFrameDescription(WebFrame* webframe) {

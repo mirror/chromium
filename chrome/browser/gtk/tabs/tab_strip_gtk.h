@@ -74,9 +74,13 @@ class TabStripGtk : public TabStripModelObserver,
   // Retrieve the ideal bounds for the Tab at the specified index.
   gfx::Rect GetIdealBounds(int index);
 
-  // Return the origin of the tab strip in coordinates relative to the GdkWindow
-  // of |widget|. Used to help other widgets draw their background relative to
-  // the tabstrip.
+  // Return the origin of the tab strip in coordinates relative to where we
+  // start drawing the background theme image. This is the x coordinate of
+  // the origin of the GdkWindow of widget(), but the y coordinate of the origin
+  // of widget() itself.
+  // Used to help other widgets draw their background relative to the tabstrip.
+  // Should only be called after both the tabstrip and |widget| have been
+  // allocated.
   gfx::Point GetTabStripOriginForWidget(GtkWidget* widget);
 
  protected:
@@ -195,6 +199,15 @@ class TabStripGtk : public TabStripModelObserver,
   static gboolean OnDragDrop(GtkWidget* widget, GdkDragContext* context,
                              gint x, gint y, guint time,
                              TabStripGtk* tabstrip);
+
+  // drag-leave handler that is signaled when the mouse leaves the tabstrip
+  // during a drag.
+  static gboolean OnDragLeave(GtkWidget* widget, GdkDragContext* context,
+                              guint time, TabStripGtk* tabstrip);
+
+  // drag-failed handler that is signaled when the drag fails or is canceled.
+  static gboolean OnDragFailed(GtkWidget* widget, GdkDragContext* context,
+                               GtkDragResult result, TabStripGtk* tabstrip);
 
   // drag-data-received handler that receives the data assocated with the drag.
   static gboolean OnDragDataReceived(GtkWidget* widget, GdkDragContext* context,

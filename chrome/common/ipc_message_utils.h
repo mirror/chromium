@@ -10,12 +10,14 @@
 #include <map>
 
 #include "base/file_path.h"
-#include "base/string_util.h"
+#include "base/format_macros.h"
 #include "base/string16.h"
+#include "base/string_util.h"
 #include "base/tuple.h"
 #if defined(OS_POSIX)
 #include "chrome/common/file_descriptor_set_posix.h"
 #endif
+#include "chrome/common/ipc_channel_handle.h"
 #include "chrome/common/ipc_sync_message.h"
 #include "chrome/common/thumbnail_score.h"
 #include "chrome/common/transport_dib.h"
@@ -175,6 +177,27 @@ struct ParamTraits<long> {
   }
 };
 
+#if defined(OS_LINUX)
+// unsigned long is used for serializing X window ids.
+template <>
+struct ParamTraits<unsigned long> {
+  typedef unsigned long param_type;
+  static void Write(Message* m, const param_type& p) {
+    m->WriteLong(p);
+  }
+  static bool Read(const Message* m, void** iter, param_type* r) {
+    long read_output;
+    if (!m->ReadLong(iter, &read_output))
+      return false;
+    *r = static_cast<unsigned long>(read_output);
+    return true;
+  }
+  static void Log(const param_type& p, std::wstring* l) {
+    l->append(StringPrintf(L"%ul", p));
+  }
+};
+#endif
+
 template <>
 struct ParamTraits<size_t> {
   typedef size_t param_type;
@@ -217,7 +240,7 @@ struct ParamTraits<int64> {
     return m->ReadInt64(iter, r);
   }
   static void Log(const param_type& p, std::wstring* l) {
-    l->append(StringPrintf(L"%I64d", p));
+    l->append(StringPrintf(L"%" WidePRId64, p));
   }
 };
 
@@ -231,7 +254,7 @@ struct ParamTraits<uint64> {
     return m->ReadInt64(iter, reinterpret_cast<int64*>(r));
   }
   static void Log(const param_type& p, std::wstring* l) {
-    l->append(StringPrintf(L"%I64u", p));
+    l->append(StringPrintf(L"%" WidePRId64, p));
   }
 };
 
@@ -725,6 +748,34 @@ struct ParamTraits<base::FileDescriptor> {
   }
 };
 #endif // defined(OS_POSIX)
+
+// A ChannelHandle is basically a platform-inspecific wrapper around the
+// fact that IPC endpoints are handled specially on POSIX.  See above comments
+// on FileDescriptor for more background.
+template<>
+struct ParamTraits<IPC::ChannelHandle> {
+  typedef ChannelHandle param_type;
+  static void Write(Message* m, const param_type& p) {
+    WriteParam(m, p.name);
+#if defined(OS_POSIX)
+    WriteParam(m, p.socket);
+#endif
+  }
+  static bool Read(const Message* m, void** iter, param_type* r) {
+    return ReadParam(m, iter, &r->name)
+#if defined(OS_POSIX)
+        && ReadParam(m, iter, &r->socket)
+#endif
+        ;
+  }
+  static void Log(const param_type& p, std::wstring* l) {
+    l->append(StringPrintf(L"ChannelHandle(%s", p.name.c_str()));
+#if defined(OS_POSIX)
+    ParamTraits<base::FileDescriptor>::Log(p.socket, l);
+#endif
+    l->append(L")");
+  }
+};
 
 template<>
 struct ParamTraits<ThumbnailScore> {

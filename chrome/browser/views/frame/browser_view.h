@@ -213,8 +213,11 @@ class BrowserView : public BrowserWindow,
   virtual bool IsBookmarkBarVisible() const;
   virtual gfx::Rect GetRootWindowResizerRect() const;
   virtual void DisableInactiveFrame();
+  virtual void ConfirmAddSearchProvider(const TemplateURL* template_url,
+                                      Profile* profile);
   virtual void ToggleBookmarkBar();
   virtual void ShowAboutChromeDialog();
+  virtual void ShowTaskManager();
   virtual void ShowBookmarkManager();
   virtual void ShowBookmarkBubble(const GURL& url, bool already_bookmarked);
   virtual void SetDownloadShelfVisible(bool visible);

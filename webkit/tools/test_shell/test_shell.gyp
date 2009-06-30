@@ -243,6 +243,7 @@
         }],
         ['OS=="mac"', {
           'product_name': 'TestShell',
+          'dependencies': ['layout_test_helper'],
           'variables': {
             'repack_path': '../../../tools/data_pack/repack.py',
           },
@@ -460,12 +461,14 @@
         '../../glue/dom_serializer_unittest.cc',
         '../../glue/glue_serialize_unittest.cc',
         '../../glue/iframe_redirect_unittest.cc',
+        '../../glue/media/media_resource_loader_bridge_factory_unittest.cc',
         '../../glue/mimetype_unittest.cc',
         '../../glue/multipart_response_delegate_unittest.cc',
         '../../glue/password_autocomplete_listener_unittest.cc',
         '../../glue/regular_expression_unittest.cc',
         '../../glue/resource_fetcher_unittest.cc',
         '../../glue/unittest_test_server.h',
+        '../../glue/webcursor_unittest.cc',
         '../../glue/webframe_unittest.cc',
         '../../glue/webplugin_impl_unittest.cc',
         '../webcore_unit_tests/BMPImageDecoder_unittest.cpp',
@@ -521,7 +524,10 @@
             '../webcore_unit_tests/XBMImageDecoder_unittest.cpp',
             'image_decoder_unittest.cc',
             'image_decoder_unittest.h',
-          ]
+          ],
+          'sources': [
+            '../../../skia/ext/skia_utils_mac_unittest.mm',
+          ],
         }],
         ['OS=="win"', {
           'msvs_disabled_warnings': [ 4800 ],
@@ -608,6 +614,24 @@
           ],
         },
       ],
+    }],
+    ['OS=="mac"', {
+      'targets': [
+        {
+          # Helper application that manages the color sync profile on mac
+          # for the test shells run by the layout tests.
+          'target_name': 'layout_test_helper',
+          'type': 'executable',
+          'sources': [
+            'mac/layout_test_helper.mm',
+          ],
+          'link_settings': {
+            'libraries': [
+              '$(SDKROOT)/System/Library/Frameworks/AppKit.framework',
+            ],
+          },
+        },
+      ]
     }],
   ],
 }

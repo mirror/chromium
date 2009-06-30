@@ -19,7 +19,6 @@
 #include "webkit/glue/password_form_dom_manager.h"
 #include "webkit/glue/window_open_disposition.h"
 
-class NavigationEntry;
 class RenderViewHostDelegate;
 class SiteInstance;
 class SkBitmap;
@@ -97,17 +96,26 @@ class RenderViewHost : public RenderWidgetHost {
     return extension_function_dispatcher_.get();
   }
 
-  // Set up the RenderView child process.
+  // Set up the RenderView child process. Virtual because it is overridden by
+  // TestRenderViewHost.
   virtual bool CreateRenderView();
-  // Returns true if the RenderView is active and has not crashed.
+
+  // Returns true if the RenderView is active and has not crashed. Virtual
+  // because it is overridden by TestRenderViewHost.
   virtual bool IsRenderViewLive() const;
 
-  virtual void SetRendererPrefs(const RendererPreferences& renderer_prefs);
+  void SetRendererPrefs(const RendererPreferences& renderer_prefs);
 
-  // Load the specified entry, optionally reloading.
-  virtual void NavigateToEntry(const NavigationEntry& entry, bool is_reload);
+  // Sends the given navigation message. Use this rather than sending it
+  // yourself since this does the internal bookkeeping described below. This
+  // function takes ownership of the provided message pointer.
+  //
+  // If a cross-site request is in progress, we may be suspended while waiting
+  // for the onbeforeunload handler, so this function might buffer the message
+  // rather than sending it.
+  void Navigate(const ViewMsg_Navigate_Params& message);
 
-  // Load the specified URL.
+  // Load the specified URL, this is a shortcut for Navigate().
   void NavigateToURL(const GURL& url);
 
   // Loads the specified html (must be UTF8) in the main frame.  If
@@ -117,10 +125,10 @@ class RenderViewHost : public RenderWidgetHost {
   // string if no secure connection state should be simulated.
   // Note that if |new_navigation| is false, |display_url| and |security_info|
   // are not used.
-  virtual void LoadAlternateHTMLString(const std::string& html_text,
-                                       bool new_navigation,
-                                       const GURL& display_url,
-                                       const std::string& security_info);
+  void LoadAlternateHTMLString(const std::string& html_text,
+                               bool new_navigation,
+                               const GURL& display_url,
+                               const std::string& security_info);
 
   // Returns whether navigation messages are currently suspended for this
   // RenderViewHost.  Only true during a cross-site navigation, while waiting
@@ -140,7 +148,7 @@ class RenderViewHost : public RenderWidgetHost {
 
   // Causes the renderer to invoke the onbeforeunload event handler.  The
   // result will be returned via ViewMsg_ShouldClose.
-  virtual void FirePageBeforeUnload();
+  void FirePageBeforeUnload();
 
   // Close the page after the page has responded that it can be closed via
   // ViewMsg_ShouldClose. This is where the page itself is closed. The
@@ -159,8 +167,7 @@ class RenderViewHost : public RenderWidgetHost {
   // ResourceDispatcherHost when it is finished. |new_render_process_host_id|
   // and |new_request_id| will help the ResourceDispatcherHost identify which
   // response is associated with this event.
-  virtual void ClosePage(int new_render_process_host_id,
-                         int new_request_id);
+  void ClosePage(int new_render_process_host_id, int new_request_id);
 
   // Sets whether this RenderViewHost has an outstanding cross-site request,
   // for which another renderer will need to run an onunload event handler.
@@ -244,20 +251,6 @@ class RenderViewHost : public RenderWidgetHost {
                            const string16& message,
                            const WebKit::WebConsoleMessage::Level&);
 
-  // Send command to the debugger
-  void DebugCommand(const std::wstring& cmd);
-
-  // Attach to the V8 instance for debugging
-  void DebugAttach();
-
-  // Detach from the V8 instance for debugging
-  void DebugDetach();
-
-  // Cause the V8 debugger to trigger a debug break. If the force flag is set
-  // force a debug break even if no JS code is running (this actually causes a
-  // simple JS script to be executed).
-  void DebugBreak(bool force);
-
   // Edit operations.
   void Undo();
   void Redo();
@@ -299,12 +292,6 @@ class RenderViewHost : public RenderWidgetHost {
   // Copies the image at the specified point.
   void CopyImageAt(int x, int y);
 
-  // Inspects the element at the specified point using the Web Inspector.
-  void InspectElementAt(int x, int y);
-
-  // Show the JavaScript console.
-  void ShowJavaScriptConsole();
-
   // Notifies the renderer that a drop occurred. This is necessary because the
   // render may be the one that started the drag.
   void DragSourceEndedAt(
@@ -343,11 +330,6 @@ class RenderViewHost : public RenderWidgetHost {
   // Sets a property with the given name and value on the DOM UI binding object.
   // Must call AllowDOMUIBindings() on this renderer first.
   void SetDOMUIProperty(const std::string& name, const std::string& value);
-
-  // Fill in a ViewMsg_Navigate_Params struct from a NavigationEntry.
-  static void MakeNavigateParams(const NavigationEntry& entry,
-                                 bool reload,
-                                 ViewMsg_Navigate_Params* params);
 
   // Tells the renderer view to focus the first (last if reverse is true) node.
   void SetInitialFocus(bool reverse);
@@ -424,6 +406,8 @@ class RenderViewHost : public RenderWidgetHost {
   virtual void GotFocus();
   virtual bool CanBlur() const;
   virtual void ForwardMouseEvent(const WebKit::WebMouseEvent& mouse_event);
+  virtual void ForwardEditCommand(const std::string& name,
+                                  const std::string& value);
   virtual gfx::Rect GetRootWindowResizerRect() const;
 
   // Creates a new RenderView with the given route id.
@@ -527,14 +511,10 @@ class RenderViewHost : public RenderWidgetHost {
   void OnUpdateDragCursor(bool is_drop_target);
   void OnTakeFocus(bool reverse);
   void OnMsgPageHasOSDD(int32 page_id, const GURL& doc_url, bool autodetected);
-  void OnMsgInspectElementReply(int num_resources);
   void DidPrintPage(const ViewHostMsg_DidPrintPage_Params& params);
-  void OnDebugMessage(const std::string& message);
   void OnAddMessageToConsole(const std::wstring& message,
                              int32 line_no,
                              const std::wstring& source_id);
-  void OnDebuggerOutput(const std::wstring& output);
-  void DidDebugAttach();
   void OnUpdateInspectorSettings(const std::wstring& raw_settings);
   void OnForwardToDevToolsAgent(const IPC::Message& message);
   void OnForwardToDevToolsClient(const IPC::Message& message);
@@ -567,20 +547,10 @@ class RenderViewHost : public RenderWidgetHost {
   void OnAccessibilityFocusChange(int acc_obj_id);
   void OnCSSInserted();
 
-  // Helper function to send a navigation message.  If a cross-site request is
-  // in progress, we may be suspended while waiting for the onbeforeunload
-  // handler, so this function might buffer the message rather than sending it.
-  //
-  // The URL parameter should match the one in the message. It's provided so
-  // that we don't have to decode the message to check it.
-  void DoNavigate(const GURL& url, ViewMsg_Navigate* nav_message);
-
  private:
   friend class TestRenderViewHost;
 
   void UpdateBackForwardListCount();
-
-  void OnDebugDisconnect();
 
   // The SiteInstance associated with this RenderViewHost.  All pages drawn
   // in this RenderViewHost are part of this SiteInstance.  Should not change
@@ -593,9 +563,6 @@ class RenderViewHost : public RenderWidgetHost {
   // true if we are currently waiting for a response for drag context
   // information.
   bool waiting_for_drag_context_response_;
-
-  // is the debugger attached to us or not
-  bool debugger_attached_;
 
   // A bitwise OR of bindings types that have been enabled for this RenderView.
   // See BindingsPolicy for details.

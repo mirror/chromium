@@ -16,6 +16,9 @@
 
 namespace {
 
+// Delay, in ms, during dragging before we bring a window to front.
+const int kBringToFrontDelay = 750;
+
 // Used to determine how far a tab must obscure another tab in order to swap
 // their indexes.
 const int kHorizontalMoveThreshold = 16;  // pixels
@@ -58,6 +61,8 @@ void DraggedTabControllerGtk::CaptureDragInfo(const gfx::Point& mouse_offset) {
 void DraggedTabControllerGtk::Drag() {
   if (!source_tab_)
     return;
+
+  bring_to_front_timer_.Stop();
 
   // Before we get to dragging anywhere, ensure that we consider ourselves
   // attached to the source tabstrip.
@@ -233,7 +238,11 @@ void DraggedTabControllerGtk::ContinueDragging() {
       Attach(target_tabstrip, screen_point);
   }
 
-  // TODO(jhawkins): Start the bring_to_front timer.
+  if (!target_tabstrip) {
+    bring_to_front_timer_.Start(
+        base::TimeDelta::FromMilliseconds(kBringToFrontDelay), this,
+        &DraggedTabControllerGtk::BringWindowUnderMouseToFront);
+  }
 
   MoveTab(screen_point);
 }
@@ -380,8 +389,6 @@ void DraggedTabControllerGtk::Attach(TabStripGtk* attached_tabstrip,
 }
 
 void DraggedTabControllerGtk::Detach() {
-  if (attached_tabstrip_->GetTabCount() <= 1) return;
-
   // Update the Model.
   TabStripModel* attached_model = attached_tabstrip_->model();
   int index = attached_model->GetIndexOfTabContents(dragged_contents_);
@@ -393,7 +400,9 @@ void DraggedTabControllerGtk::Detach() {
     attached_tabstrip->SchedulePaint();
   }
 
-  // TODO(jhawkins): Hide the window if we're removing the last tab.
+  // If we've removed the last tab from the tabstrip, hide the frame now.
+  if (attached_model->empty())
+    HideFrame();
 
   // Update the dragged tab. This NULL check is necessary apparently in some
   // conditions during automation where the view_ is destroyed inside a
@@ -520,6 +529,8 @@ bool DraggedTabControllerGtk::EndDragImpl(EndDragType type) {
   if (!dragged_tab_.get())
     return true;
 
+  bring_to_front_timer_.Stop();
+
   // WARNING: this may be invoked multiple times. In particular, if deletion
   // occurs after a delay (as it does when the tab is released in the original
   // tab strip) and the navigation controller/tab contents is deleted before
@@ -559,6 +570,7 @@ bool DraggedTabControllerGtk::EndDragImpl(EndDragType type) {
 }
 
 void DraggedTabControllerGtk::RevertDrag() {
+  // TODO(jhawkins): Restore the window frame.
   // We save this here because code below will modify |attached_tabstrip_|.
   if (attached_tabstrip_) {
     int index = attached_tabstrip_->model()->GetIndexOfTabContents(
@@ -617,6 +629,7 @@ bool DraggedTabControllerGtk::CompleteDrag() {
         source_tabstrip_->model()->delegate()->CreateNewStripWithContents(
             dragged_contents_, window_bounds, dock_info_);
     new_browser->window()->Show();
+    CleanUpHiddenFrame();
   }
 
   return destroy_immediately;
@@ -661,6 +674,19 @@ gfx::Rect DraggedTabControllerGtk::GetTabScreenBounds(TabGtk* tab) {
   return gfx::Rect(x, y, widget->allocation.width, widget->allocation.height);
 }
 
+void DraggedTabControllerGtk::HideFrame() {
+  GtkWidget* tabstrip = source_tabstrip_->widget();
+  GtkWindow* window = platform_util::GetTopLevel(tabstrip);
+  gtk_widget_hide(GTK_WIDGET(window));
+}
+
+void DraggedTabControllerGtk::CleanUpHiddenFrame() {
+  // If the model we started dragging from is now empty, we must ask the
+  // delegate to close the frame.
+  if (source_tabstrip_->model()->empty())
+    source_tabstrip_->model()->delegate()->CloseFrameAfterDragSession();
+}
+
 void DraggedTabControllerGtk::CleanUpSourceTab() {
   // If we were attached to the source tabstrip, source tab will be in use
   // as the tab. If we were detached or attached to another tabstrip, we can
@@ -684,6 +710,23 @@ void DraggedTabControllerGtk::OnAnimateToBoundsComplete() {
     }
   }
 
+  CleanUpHiddenFrame();
+
   if (!in_destructor_)
     source_tabstrip_->DestroyDragController();
+}
+
+void DraggedTabControllerGtk::BringWindowUnderMouseToFront() {
+  // If we're going to dock to another window, bring it to the front.
+  gfx::NativeWindow window = dock_info_.window();
+  if (!window) {
+    gfx::NativeView dragged_tab = dragged_tab_->widget();
+    dock_windows_.insert(dragged_tab);
+    window = DockInfo::GetLocalProcessWindowAtPoint(GetCursorScreenPoint(),
+                                                    dock_windows_);
+    dock_windows_.erase(dragged_tab);
+  }
+
+  if (window)
+    gtk_window_present(GTK_WINDOW(window));
 }

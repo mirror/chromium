@@ -131,7 +131,9 @@ MSVC_POP_WARNING();
 
 #undef LOG
 
+#include "base/base_switches.h"
 #include "base/basictypes.h"
+#include "base/command_line.h"
 #include "base/gfx/rect.h"
 #include "base/logging.h"
 #include "base/message_loop.h"
@@ -143,6 +145,7 @@ MSVC_POP_WARNING();
 #include "webkit/api/public/WebConsoleMessage.h"
 #include "webkit/api/public/WebFindOptions.h"
 #include "webkit/api/public/WebForm.h"
+#include "webkit/api/public/WebHistoryItem.h"
 #include "webkit/api/public/WebRect.h"
 #include "webkit/api/public/WebScriptSource.h"
 #include "webkit/api/public/WebSize.h"
@@ -150,9 +153,7 @@ MSVC_POP_WARNING();
 #include "webkit/glue/chrome_client_impl.h"
 #include "webkit/glue/dom_operations.h"
 #include "webkit/glue/dom_operations_private.h"
-#include "webkit/glue/glue_serialize.h"
 #include "webkit/glue/glue_util.h"
-#include "webkit/glue/webappcachecontext.h"
 #include "webkit/glue/webdatasource_impl.h"
 #include "webkit/glue/webframe_impl.h"
 #include "webkit/glue/webtextinput_impl.h"
@@ -205,6 +206,7 @@ using WebCore::XPathResult;
 using WebKit::WebConsoleMessage;
 using WebKit::WebDataSource;
 using WebKit::WebFindOptions;
+using WebKit::WebHistoryItem;
 using WebKit::WebForm;
 using WebKit::WebRect;
 using WebKit::WebScriptSource;
@@ -380,8 +382,7 @@ WebFrameImpl::WebFrameImpl()
     total_matchcount_(-1),
     frames_scoping_count_(-1),
     scoping_complete_(false),
-    next_invalidate_after_(0),
-    app_cache_context_(WebAppCacheContext::Create()) {
+    next_invalidate_after_(0) {
   StatsCounter(kWebFrameActiveCount).Increment();
   live_object_count_++;
 }
@@ -408,18 +409,15 @@ void WebFrameImpl::InitMainFrame(WebViewImpl* webview_impl) {
   // We must call init() after frame_ is assigned because it is referenced
   // during init().
   frame_->init();
-
-  // Inform the  browser process of this top-level frame
-  app_cache_context_->Initialize(WebAppCacheContext::MAIN_FRAME, NULL);
 }
 
 void WebFrameImpl::LoadRequest(const WebURLRequest& request) {
   InternalLoadRequest(request, SubstituteData(), false);
 }
 
-void WebFrameImpl::LoadHistoryState(const std::string& history_state) {
+void WebFrameImpl::LoadHistoryItem(const WebHistoryItem& item) {
   RefPtr<HistoryItem> history_item =
-      webkit_glue::HistoryItemFromString(history_state);
+      webkit_glue::WebHistoryItemToHistoryItem(item);
   DCHECK(history_item.get());
 
   StopLoading();  // make sure existing activity stops
@@ -564,35 +562,20 @@ int WebFrameImpl::GetContentsPreferredWidth() const {
   }
 }
 
-bool WebFrameImpl::GetPreviousHistoryState(std::string* history_state) const {
+WebHistoryItem WebFrameImpl::GetPreviousHistoryItem() const {
   // We use the previous item here because documentState (filled-out forms)
   // only get saved to history when it becomes the previous item.  The caller
-  // is expected to query the history state after a navigation occurs, after
+  // is expected to query the history item after a navigation occurs, after
   // the desired history item has become the previous entry.
-  RefPtr<HistoryItem> item = GetWebViewImpl()->GetPreviousHistoryItem();
-  if (!item)
-    return false;
-
-  static StatsCounterTimer history_timer("GetHistoryTimer");
-  StatsScope<StatsCounterTimer> history_scope(history_timer);
-
-  webkit_glue::HistoryItemToString(item, history_state);
-  return true;
+  return webkit_glue::HistoryItemToWebHistoryItem(
+      GetWebViewImpl()->GetPreviousHistoryItem());
 }
 
-bool WebFrameImpl::GetCurrentHistoryState(std::string* state) const {
+WebHistoryItem WebFrameImpl::GetCurrentHistoryItem() const {
   frame_->loader()->saveDocumentAndScrollState();
 
-  RefPtr<HistoryItem> item = frame_->page()->backForwardList()->currentItem();
-  if (!item)
-    return false;
-
-  webkit_glue::HistoryItemToString(item, state);
-  return true;
-}
-
-bool WebFrameImpl::HasCurrentHistoryState() const {
-  return frame_->page()->backForwardList()->currentItem() != NULL;
+  return webkit_glue::HistoryItemToWebHistoryItem(
+      frame_->page()->backForwardList()->currentItem());
 }
 
 void WebFrameImpl::LoadDocumentData(const KURL& base_url,
@@ -835,6 +818,17 @@ NPObject* WebFrameImpl::GetWindowNPObject() {
 
   return frame_->script()->windowScriptNPObject();
 }
+
+#if USE(V8)
+  // Returns the V8 context for this frame, or an empty handle if there is
+  // none.
+v8::Local<v8::Context> WebFrameImpl::GetScriptContext() {
+  if (!frame_)
+    return v8::Local<v8::Context>();
+
+  return frame_->script()->proxy()->context();
+}
+#endif
 
 void WebFrameImpl::InvalidateArea(AreaToInvalidate area) {
   ASSERT(frame() && frame()->view());
@@ -1555,41 +1549,6 @@ void WebFrameImpl::Paint(skia::PlatformCanvas* canvas, const WebRect& rect) {
   }
 }
 
-bool WebFrameImpl::CaptureImage(scoped_ptr<skia::BitmapPlatformDevice>* image,
-                                bool scroll_to_zero) {
-  if (!image) {
-    NOTREACHED();
-    return false;
-  }
-
-  // Must layout before painting.
-  Layout();
-
-  skia::PlatformCanvas canvas;
-  if (!canvas.initialize(frameview()->width(), frameview()->height(), true))
-    return false;
-
-#if defined(OS_WIN) || defined(OS_LINUX)
-  PlatformContextSkia context(&canvas);
-  GraphicsContext gc(reinterpret_cast<PlatformGraphicsContext*>(&context));
-#elif defined(OS_MACOSX)
-  CGContextRef context = canvas.beginPlatformPaint();
-  GraphicsContext gc(context);
-  WebCore::LocalCurrentGraphicsContext localContext(&gc);
-#endif
-  frameview()->paint(&gc, IntRect(0, 0, frameview()->width(),
-                                  frameview()->height()));
-#if defined(OS_MACOSX)
-  canvas.endPlatformPaint();
-#endif
-
-  skia::BitmapPlatformDevice& device =
-      static_cast<skia::BitmapPlatformDevice&>(canvas.getTopPlatformDevice());
-
-  image->reset(new skia::BitmapPlatformDevice(device));
-  return true;
-}
-
 bool WebFrameImpl::IsLoading() {
   // I'm assuming this does what we want.
   return frame_->loader()->isLoading();
@@ -1622,9 +1581,6 @@ void WebFrameImpl::DidReceiveData(DocumentLoader* loader,
 }
 
 void WebFrameImpl::DidFail(const ResourceError& error, bool was_provisional) {
-  // Make sure we never show errors in view source mode.
-  SetInViewSourceMode(false);
-
   WebViewImpl* web_view = GetWebViewImpl();
   WebViewDelegate* delegate = web_view->delegate();
   if (delegate) {
@@ -1695,7 +1651,10 @@ void WebFrameImpl::ExecuteScriptInNewContext(
         sources_in[i].startLine));
   }
 
-  frame_->script()->evaluateInNewContext(sources);
+  if (CommandLine::ForCurrentProcess()->HasSwitch(switches::kIsolatedWorld))
+    frame_->script()->evaluateInNewWorld(sources);
+  else
+    frame_->script()->evaluateInNewContext(sources);
 }
 
 std::wstring WebFrameImpl::GetName() {
@@ -1746,10 +1705,6 @@ PassRefPtr<Frame> WebFrameImpl::CreateChildFrame(
   if (!child_frame->tree()->parent())
     return NULL;
 
-  // Inform the  browser process of this child frame
-  webframe->app_cache_context_->Initialize(WebAppCacheContext::CHILD_FRAME,
-                                           app_cache_context_.get());
-
   frame_->loader()->loadURLIntoChildFrame(
       request.resourceRequest().url(),
       request.resourceRequest().httpReferrer(),
@@ -1764,14 +1719,14 @@ PassRefPtr<Frame> WebFrameImpl::CreateChildFrame(
   return child_frame.release();
 }
 
-bool WebFrameImpl::ExecuteCoreCommandByName(const std::string& name,
+bool WebFrameImpl::ExecuteEditCommandByName(const std::string& name,
                                             const std::string& value) {
   ASSERT(frame());
   return frame()->editor()->command(webkit_glue::StdStringToString(name))
       .execute(webkit_glue::StdStringToString(value));
 }
 
-bool WebFrameImpl::IsCoreCommandEnabled(const std::string& name) {
+bool WebFrameImpl::IsEditCommandEnabled(const std::string& name) {
   ASSERT(frame());
   return frame()->editor()->command(webkit_glue::StdStringToString(name))
       .isEnabled();
@@ -1867,32 +1822,6 @@ float WebFrameImpl::PrintPage(int page, skia::PlatformCanvas* canvas) {
 #endif
 
   return print_context_->spoolPage(spool, page);
-}
-
-void WebFrameImpl::SelectAppCacheWithoutManifest() {
-  WebDataSource* ds = GetDataSource();
-  DCHECK(ds);
-  if (ds->hasUnreachableURL()) {
-    app_cache_context_->SelectAppCacheWithoutManifest(
-                             ds->unreachableURL(),
-                             WebAppCacheContext::kNoAppCacheId);
-  } else {
-    const WebURLResponse& response = ds->response();
-    app_cache_context_->SelectAppCacheWithoutManifest(
-                             GetURL(),
-                             response.appCacheID());
-  }
-}
-
-void WebFrameImpl::SelectAppCacheWithManifest(const GURL &manifest_url) {
-  WebDataSource* ds = GetDataSource();
-  DCHECK(ds);
-  DCHECK(!ds->hasUnreachableURL());
-  const WebURLResponse& response = ds->response();
-  app_cache_context_->SelectAppCacheWithManifest(
-                           GetURL(),
-                           response.appCacheID(),
-                           manifest_url);
 }
 
 void WebFrameImpl::EndPrint() {

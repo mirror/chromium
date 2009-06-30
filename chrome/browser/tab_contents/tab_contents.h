@@ -23,11 +23,11 @@
 #include "chrome/browser/find_notification_details.h"
 #include "chrome/browser/shell_dialogs.h"
 #include "chrome/browser/renderer_host/render_view_host_delegate.h"
+#include "chrome/browser/renderer_host/render_view_host_manager.h"
 #include "chrome/browser/tab_contents/constrained_window.h"
 #include "chrome/browser/tab_contents/infobar_delegate.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
 #include "chrome/browser/tab_contents/page_navigator.h"
-#include "chrome/browser/tab_contents/render_view_host_manager.h"
 #include "chrome/common/gears_api.h"
 #include "chrome/common/navigation_types.h"
 #include "chrome/common/notification_registrar.h"
@@ -165,6 +165,11 @@ class TabContents : public PageNavigator,
   }
   RenderViewHost* render_view_host() const {
     return render_manager_.current_host();
+  }
+  // Returns the currently active RenderWidgetHostView. This may change over
+  // time and can be NULL (during setup and teardown).
+  RenderWidgetHostView* render_widget_host_view() const {
+    return render_manager_.current_view();
   }
 
   // The TabContentsView will never change and is guaranteed non-NULL.
@@ -601,10 +606,6 @@ class TabContents : public PageNavigator,
   // TODO(brettw) TestTabContents shouldn't exist!
   friend class TestTabContents;
 
-  RenderWidgetHostView* render_widget_host_view() const {
-    return render_manager_.current_view();
-  }
-
   // Changes the IsLoading state and notifies delegate as needed
   // |details| is used to provide details on the load that just finished
   // (but can be null if not applicable). Can be overridden.
@@ -816,7 +817,6 @@ class TabContents : public PageNavigator,
                                    const std::wstring& value);
   virtual void PageHasOSDD(RenderViewHost* render_view_host,
                            int32 page_id, const GURL& url, bool autodetected);
-  virtual void InspectElementReply(int num_resources);
   virtual void DidGetPrintedPagesCount(int cookie, int number_pages);
   virtual void DidPrintPage(const ViewHostMsg_DidPrintPage_Params& params);
   virtual GURL GetAlternateErrorPageURL() const;

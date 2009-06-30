@@ -238,7 +238,8 @@ IN_PROC_BROWSER_TEST_F(BrowserFocusTest, TabsRememberFocus) {
 }
 
 // Background window does not steal focus.
-IN_PROC_BROWSER_TEST_F(BrowserFocusTest, BackgroundBrowserDontStealFocus) {
+// TODO(brettw) bug 15265 enable this test when it's fixed.
+IN_PROC_BROWSER_TEST_F(BrowserFocusTest, DISABLED_BackgroundBrowserDontStealFocus) {
   HTTPTestServer* server = StartHTTPServer();
 
   // First we navigate to our test page.
@@ -608,7 +609,8 @@ IN_PROC_BROWSER_TEST_F(BrowserFocusTest, FindFocusTest) {
 
 // Makes sure the focus is in the right location when opening the different
 // types of tabs.
-IN_PROC_BROWSER_TEST_F(BrowserFocusTest, TabInitialFocus) {
+// TODO(brettw) bug 15265 enable this test when it's fixed.
+IN_PROC_BROWSER_TEST_F(BrowserFocusTest, DISABLED_TabInitialFocus) {
   HWND hwnd = reinterpret_cast<HWND>(browser()->window()->GetNativeHandle());
   BrowserView* browser_view = BrowserView::GetBrowserViewForNativeWindow(hwnd);
   ASSERT_TRUE(browser_view);
@@ -629,5 +631,11 @@ IN_PROC_BROWSER_TEST_F(BrowserFocusTest, TabInitialFocus) {
   // Open the download tab, focus should be on the tab contents.
   browser()->ShowDownloadsTab();
   EXPECT_EQ(browser_view->GetTabContentsContainerView(),
+            focus_manager->GetFocusedView());
+
+  // Open about:blank, focus should be on the location bar.
+  browser()->AddTabWithURL(GURL("about:blank"), GURL(), PageTransition::LINK,
+                           true, -1, false, NULL);
+  EXPECT_EQ(browser_view->GetLocationBarView(),
             focus_manager->GetFocusedView());
 }

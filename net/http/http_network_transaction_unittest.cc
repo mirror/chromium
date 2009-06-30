@@ -5,11 +5,8 @@
 #include <math.h>  // ceil
 
 #include "base/compiler_specific.h"
-#include "net/base/client_socket_factory.h"
 #include "net/base/completion_callback.h"
 #include "net/base/host_resolver_unittest.h"
-#include "net/base/socket_test_util.h"
-#include "net/base/ssl_client_socket.h"
 #include "net/base/ssl_info.h"
 #include "net/base/test_completion_callback.h"
 #include "net/base/upload_data.h"
@@ -18,6 +15,9 @@
 #include "net/http/http_network_transaction.h"
 #include "net/http/http_transaction_unittest.h"
 #include "net/proxy/proxy_config_service_fixed.h"
+#include "net/socket/client_socket_factory.h"
+#include "net/socket/socket_test_util.h"
+#include "net/socket/ssl_client_socket.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
 
@@ -35,13 +35,14 @@ ProxyService* CreateNullProxyService() {
 class SessionDependencies {
  public:
   // Default set of dependencies -- "null" proxy service.
-  SessionDependencies() : proxy_service(CreateNullProxyService()) {}
+  SessionDependencies() : host_resolver(new HostResolver),
+      proxy_service(CreateNullProxyService()) {}
 
   // Custom proxy service dependency.
   explicit SessionDependencies(ProxyService* proxy_service)
-      : proxy_service(proxy_service) {}
+      : host_resolver(new HostResolver), proxy_service(proxy_service) {}
 
-  HostResolver host_resolver;
+  scoped_refptr<HostResolver> host_resolver;
   scoped_ptr<ProxyService> proxy_service;
   MockClientSocketFactory socket_factory;
 };
@@ -54,7 +55,7 @@ ProxyService* CreateFixedProxyService(const std::string& proxy) {
 
 
 HttpNetworkSession* CreateSession(SessionDependencies* session_deps) {
-  return new HttpNetworkSession(&session_deps->host_resolver,
+  return new HttpNetworkSession(session_deps->host_resolver,
                                 session_deps->proxy_service.get(),
                                 &session_deps->socket_factory);
 }
@@ -163,6 +164,45 @@ void MockGenerateRandom2(uint8* output, size_t n) {
 std::string MockGetHostName() {
   return "WTC-WIN7";
 }
+
+class CaptureGroupNameSocketPool : public ClientSocketPool {
+ public:
+  CaptureGroupNameSocketPool() {
+  }
+  virtual int RequestSocket(const std::string& group_name,
+                            const HostResolver::RequestInfo& resolve_info,
+                            int priority,
+                            ClientSocketHandle* handle,
+                            CompletionCallback* callback) {
+    last_group_name_ = group_name;
+    return ERR_IO_PENDING;
+  }
+
+  const std::string last_group_name_received() const {
+    return last_group_name_;
+  }
+
+  virtual void CancelRequest(const std::string& group_name,
+                             const ClientSocketHandle* handle) { }
+  virtual void ReleaseSocket(const std::string& group_name,
+                             ClientSocket* socket) {}
+  virtual void CloseIdleSockets() {}
+  virtual HostResolver* GetHostResolver() const {
+    return NULL;
+  }
+  virtual int IdleSocketCount() const {
+    return 0;
+  }
+  virtual int IdleSocketCountInGroup(const std::string& group_name) const {
+    return 0;
+  }
+  virtual LoadState GetLoadState(const std::string& group_name,
+                                 const ClientSocketHandle* handle) const {
+    return LOAD_STATE_IDLE;
+  }
+ protected:
+  std::string last_group_name_;
+};
 
 //-----------------------------------------------------------------------------
 
@@ -3006,6 +3046,186 @@ TEST_F(HttpNetworkTransactionTest, BuildRequest_ExtraHeaders) {
   EXPECT_EQ(OK, rv);
 }
 
+TEST_F(HttpNetworkTransactionTest, SOCKS4_HTTP_GET) {
+  SessionDependencies session_deps;
+  session_deps.proxy_service.reset(CreateFixedProxyService(
+      "socks4://myproxy:1080"));
+
+  scoped_ptr<HttpTransaction> trans(
+      new HttpNetworkTransaction(
+          CreateSession(&session_deps),
+          &session_deps.socket_factory));
+
+  HttpRequestInfo request;
+  request.method = "GET";
+  request.url = GURL("http://www.google.com/");
+  request.load_flags = 0;
+
+  char write_buffer[] = { 0x04, 0x01, 0x00, 0x50, 127, 0, 0, 1, 0 };
+  char read_buffer[] = { 0x00, 0x5A, 0x00, 0x00, 0, 0, 0, 0 };
+
+  MockWrite data_writes[] = {
+    MockWrite(true, write_buffer, 9),
+    MockWrite("GET / HTTP/1.1\r\n"
+              "Host: www.google.com\r\n"
+              "Connection: keep-alive\r\n\r\n")
+  };
+
+  MockRead data_reads[] = {
+    MockWrite(true, read_buffer, 8),
+    MockRead("HTTP/1.0 200 OK\r\n"),
+    MockRead("Content-Type: text/html; charset=iso-8859-1\r\n\r\n"),
+    MockRead("Payload"),
+    MockRead(false, OK)
+  };
+
+  StaticMockSocket data(data_reads, data_writes);
+  session_deps.socket_factory.AddMockSocket(&data);
+
+  TestCompletionCallback callback;
+
+  int rv = trans->Start(&request, &callback);
+  EXPECT_EQ(ERR_IO_PENDING, rv);
+
+  rv = callback.WaitForResult();
+  EXPECT_EQ(OK, rv);
+
+  const HttpResponseInfo* response = trans->GetResponseInfo();
+  EXPECT_FALSE(response == NULL);
+
+  std::string response_text;
+  rv = ReadTransaction(trans.get(), &response_text);
+  EXPECT_EQ(OK, rv);
+  EXPECT_EQ("Payload", response_text);
+}
+
+TEST_F(HttpNetworkTransactionTest, SOCKS4_SSL_GET) {
+  SessionDependencies session_deps;
+  session_deps.proxy_service.reset(CreateFixedProxyService(
+      "socks4://myproxy:1080"));
+
+  scoped_ptr<HttpTransaction> trans(
+      new HttpNetworkTransaction(
+          CreateSession(&session_deps),
+          &session_deps.socket_factory));
+
+  HttpRequestInfo request;
+  request.method = "GET";
+  request.url = GURL("https://www.google.com/");
+  request.load_flags = 0;
+
+  unsigned char write_buffer[] = { 0x04, 0x01, 0x01, 0xBB, 127, 0, 0, 1, 0 };
+  unsigned char read_buffer[] = { 0x00, 0x5A, 0x00, 0x00, 0, 0, 0, 0 };
+
+  MockWrite data_writes[] = {
+    MockWrite(true, reinterpret_cast<char*>(write_buffer), 9),
+    MockWrite("GET / HTTP/1.1\r\n"
+              "Host: www.google.com\r\n"
+              "Connection: keep-alive\r\n\r\n")
+  };
+
+  MockRead data_reads[] = {
+    MockWrite(true, reinterpret_cast<char*>(read_buffer), 8),
+    MockRead("HTTP/1.0 200 OK\r\n"),
+    MockRead("Content-Type: text/html; charset=iso-8859-1\r\n\r\n"),
+    MockRead("Payload"),
+    MockRead(false, OK)
+  };
+
+  StaticMockSocket data(data_reads, data_writes);
+  session_deps.socket_factory.AddMockSocket(&data);
+
+  MockSSLSocket ssl(true, OK);
+  session_deps.socket_factory.AddMockSSLSocket(&ssl);
+
+  TestCompletionCallback callback;
+
+  int rv = trans->Start(&request, &callback);
+  EXPECT_EQ(ERR_IO_PENDING, rv);
+
+  rv = callback.WaitForResult();
+  EXPECT_EQ(OK, rv);
+
+  const HttpResponseInfo* response = trans->GetResponseInfo();
+  EXPECT_FALSE(response == NULL);
+
+  std::string response_text;
+  rv = ReadTransaction(trans.get(), &response_text);
+  EXPECT_EQ(OK, rv);
+  EXPECT_EQ("Payload", response_text);
+}
+
+// Tests that for connection endpoints the group names are correctly set.
+TEST_F(HttpNetworkTransactionTest, GroupNameForProxyConnections) {
+  const struct {
+    const std::string proxy_server;
+    const std::string url;
+    const std::string expected_group_name;
+  } tests[] = {
+    {
+      "",  // no proxy (direct)
+      "http://www.google.com/direct",
+      "http://www.google.com/",
+    },
+    {
+      "http_proxy",
+      "http://www.google.com/http_proxy_normal",
+      "proxy/http_proxy:80/",
+    },
+    {
+      "socks4://socks_proxy:1080",
+      "http://www.google.com/socks4_direct",
+      "proxy/socks4://socks_proxy:1080/http://www.google.com/",
+    },
+
+    // SSL Tests
+    {
+      "",
+      "https://www.google.com/direct_ssl",
+      "https://www.google.com/",
+    },
+    {
+      "http_proxy",
+      "https://www.google.com/http_connect_ssl",
+      "proxy/http_proxy:80/https://www.google.com/",
+    },
+    {
+      "socks4://socks_proxy:1080",
+      "https://www.google.com/socks4_ssl",
+      "proxy/socks4://socks_proxy:1080/https://www.google.com/",
+    },
+  };
+
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(tests); ++i) {
+    SessionDependencies session_deps;
+    session_deps.proxy_service.reset(CreateFixedProxyService(
+        tests[i].proxy_server));
+
+    scoped_refptr<CaptureGroupNameSocketPool> conn_pool(
+        new CaptureGroupNameSocketPool());
+
+    scoped_refptr<HttpNetworkSession> session(CreateSession(&session_deps));
+    session->connection_pool_ = conn_pool.get();
+
+    scoped_ptr<HttpTransaction> trans(
+        new HttpNetworkTransaction(
+            session.get(),
+            &session_deps.socket_factory));
+
+    HttpRequestInfo request;
+    request.method = "GET";
+    request.url = GURL(tests[i].url);
+    request.load_flags = 0;
+
+    TestCompletionCallback callback;
+
+    // We do not complete this request, the dtor will clean the transaction up.
+    EXPECT_EQ(ERR_IO_PENDING, trans->Start(&request, &callback));
+    EXPECT_EQ(tests[i].expected_group_name,
+              conn_pool->last_group_name_received());
+  }
+}
+
 TEST_F(HttpNetworkTransactionTest, ReconsiderProxyAfterFailedConnection) {
   scoped_refptr<RuleBasedHostMapper> host_mapper(new RuleBasedHostMapper());
   ScopedHostMapper scoped_host_mapper(host_mapper.get());
@@ -3083,7 +3303,7 @@ TEST_F(HttpNetworkTransactionTest, ResolveMadeWithReferrer) {
       CreateSession(&session_deps), &session_deps.socket_factory));
 
   // Attach an observer to watch the host resolutions being made.
-  session_deps.host_resolver.AddObserver(&resolution_observer);
+  session_deps.host_resolver->AddObserver(&resolution_observer);
 
   // Connect up a mock socket which will fail when reading.
   MockRead data_reads[] = {
@@ -3119,14 +3339,14 @@ TEST_F(HttpNetworkTransactionTest, BypassHostCacheOnRefresh) {
   // Warm up the host cache so it has an entry for "www.google.com" (by doing
   // a synchronous lookup.)
   AddressList addrlist;
-  int rv = session_deps.host_resolver.Resolve(
+  int rv = session_deps.host_resolver->Resolve(
     HostResolver::RequestInfo("www.google.com", 80), &addrlist, NULL, NULL);
   EXPECT_EQ(OK, rv);
 
   // Verify that it was added to host cache, by doing a subsequent async lookup
   // and confirming it completes synchronously.
   TestCompletionCallback resolve_callback;
-  rv = session_deps.host_resolver.Resolve(
+  rv = session_deps.host_resolver->Resolve(
       HostResolver::RequestInfo("www.google.com", 80), &addrlist,
       &resolve_callback, NULL);
   EXPECT_EQ(OK, rv);
