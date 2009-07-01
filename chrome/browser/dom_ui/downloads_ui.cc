@@ -515,6 +515,7 @@ DownloadsUI::DownloadsUI(TabContents* contents) : DOMUI(contents) {
   DownloadsDOMHandler* handler = new DownloadsDOMHandler(this, dlm);
   AddMessageHandler(handler);
   handler->Init();
+  handler->Init();
 
   DownloadsUIHTMLSource* html_source = new DownloadsUIHTMLSource();
 
