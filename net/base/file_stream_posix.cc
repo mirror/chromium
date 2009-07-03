@@ -209,6 +209,8 @@ class FileStream::AsyncContext {
   int result_;
   CancelableCallbackTask* message_loop_task_;
 
+  bool is_closing_;
+
   DISALLOW_COPY_AND_ASSIGN(AsyncContext);
 };
 
@@ -218,9 +220,11 @@ FileStream::AsyncContext::AsyncContext()
       background_io_completed_callback_(
           this, &AsyncContext::OnBackgroundIOCompleted),
       background_io_completed_(true, false),
-      message_loop_task_(NULL) {}
+      message_loop_task_(NULL),
+      is_closing_(false) {}
 
 FileStream::AsyncContext::~AsyncContext() {
+  is_closing_ = true;
   if (callback_) {
     // If |callback_| is non-NULL, that implies either the worker thread is
     // still running the IO task, or the completion callback is queued up on the
@@ -279,6 +283,11 @@ void FileStream::AsyncContext::RunAsynchronousCallback() {
   // from happening again.  Must do it here after calling Wait().
   message_loop_task_->Cancel();
   message_loop_task_ = NULL;
+
+  if (is_closing_) {
+    callback_ = NULL;
+    return;
+  }
 
   DCHECK(callback_);
   CompletionCallback* temp = NULL;

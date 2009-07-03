@@ -50,7 +50,7 @@ static int MapErrorCode(DWORD err) {
 class FileStream::AsyncContext : public MessageLoopForIO::IOHandler {
  public:
   AsyncContext(FileStream* owner)
-      : owner_(owner), context_(), callback_(NULL) {
+      : owner_(owner), context_(), callback_(NULL), is_closing_(false) {
     context_.handler = this;
   }
   ~AsyncContext();
@@ -67,9 +67,11 @@ class FileStream::AsyncContext : public MessageLoopForIO::IOHandler {
   FileStream* owner_;
   MessageLoopForIO::IOContext context_;
   CompletionCallback* callback_;
+  bool is_closing_;
 };
 
 FileStream::AsyncContext::~AsyncContext() {
+  is_closing_ = true;
   bool waited = false;
   base::Time start = base::Time::Now();
   while (callback_) {
@@ -92,6 +94,11 @@ void FileStream::AsyncContext::OnIOCompleted(
     MessageLoopForIO::IOContext* context, DWORD bytes_read, DWORD error) {
   DCHECK(&context_ == context);
   DCHECK(callback_);
+
+  if (is_closing_) {
+    callback_ = NULL;
+    return;
+  }
 
   int result = static_cast<int>(bytes_read);
   if (error && error != ERROR_HANDLE_EOF)
