@@ -96,8 +96,7 @@ int GetDirectoryWriteAgeInHours(const wchar_t* path) {
 bool RelaunchSetup(const std::wstring& flag) {
   CommandLine cmd_line(CommandLine::ForCurrentProcess()->program());
   cmd_line.AppendSwitch(flag);
-  return base::LaunchApp(InstallUtil::GetChromeUninstallCmd(false),
-                         false, false, NULL);
+  return base::LaunchApp(cmd_line, false, false, NULL);
 }
 
 }  // namespace
@@ -462,6 +461,8 @@ void GoogleChromeDistribution::LaunchUserExperiment(
     }
   }
   LOG(INFO) << "User drafted for toast experiment";
+  if (!GoogleUpdateSettings::SetClient(kToastExpBaseGroup))
+    return;
   // The experiment needs to be performed in a different process because
   // google_update expects the upgrade process to be quick and nimble.
   RelaunchSetup(installer_util::switches::kInactiveUserToast);
@@ -470,11 +471,8 @@ void GoogleChromeDistribution::LaunchUserExperiment(
 void GoogleChromeDistribution::InactiveUserToastExperiment() {
   // User qualifies for the experiment. Launch chrome with --try-chrome. Before
   // that we need to change the client so we can track the progress.
-  if (!GoogleUpdateSettings::SetClient(kToastExpBaseGroup))
-    return;
   int32 exit_code = 0;
-  std::wstring option(L"--");
-  option.append(switches::kTryChromeAgain);
+  std::wstring option(std::wstring(L" --") + switches::kTryChromeAgain);
   if (!installer::LaunchChromeAndWaitForResult(false, option, &exit_code))
     return;
   // The chrome process has exited, figure out what happened.
