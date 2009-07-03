@@ -698,6 +698,9 @@ class TryChromeDialog : public views::ButtonListener,
     icon->SetImage(*rb.GetBitmapNamed(IDR_PRODUCT_ICON_32));
     gfx::Size icon_size = icon->GetPreferredSize();
 
+    // An approximate window size. After Layout() we'll get better bounds.
+    gfx::Rect pos(310, 160);
+
     const int width = 310;
     const int height = 160;
     gfx::Rect pos = ComputeWindowPosition(width, height);
@@ -803,8 +806,16 @@ class TryChromeDialog : public views::ButtonListener,
     link->SetController(this);
     layout->AddView(link);
 
+    // We resize the window according to the layout manager. This takes into
+    // account the differences between XP and Vista fonts and buttons.
     layout->Layout(root_view);
-    SetToastRegion(popup->GetNativeView(), width, height);
+    gfx::Size preferred = layout->GetPreferredSize(root_view);
+    pos = ComputeWindowPosition(preferred.width(), preferred.height());
+    popup->SetBounds(pos);
+
+    // Carve the toast shape into the window.
+    SetToastRegion(popup->GetNativeView(),
+                   preferred.width(), preferred.height());    
     // Time to show the window in a modal loop.
     popup_ = popup;
     popup_->Show();
