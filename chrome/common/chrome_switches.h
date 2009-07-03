@@ -162,6 +162,8 @@ extern const wchar_t kViewsGtk[];
 extern const wchar_t kBookmarkMenu[];
 extern const wchar_t kEnableStatsTable[];
 
+extern const wchar_t kTryChromeAgain[];
+
 }  // namespace switches
 
 #endif  // CHROME_COMMON_CHROME_SWITCHES_H__

@@ -414,4 +414,8 @@ const wchar_t kBookmarkMenu[] = L"bookmark-menu";
 // Enables StatsTable, logging statistics to a global named shared memory table.
 const wchar_t kEnableStatsTable[] = L"enable-stats-table";
 
+// Experimental. Shows a dialog asking the user to try chrome. This flag
+// is to be used only by the upgrade process.
+const wchar_t kTryChromeAgain[]      = L"try-chrome-again";
+
 }  // namespace switches
