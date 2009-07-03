@@ -228,7 +228,10 @@ bool Upgrade::SwapNewChromeExeIfPresent() {
   return true;
 }
 
-void OpenFirstRunDialog(Profile* profile) { NOTIMPLEMENTED(); }
+// static
+Upgrade::TryResult ShowTryChromeDialog() {
+  return Upgrade::TD_NOT_NOW;
+}
 
 //--------------------------------------------------------------------------
 
