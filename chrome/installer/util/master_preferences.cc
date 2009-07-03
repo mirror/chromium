@@ -69,7 +69,8 @@ const wchar_t kVerboseLogging[] = L"verbose_logging";
 const wchar_t kRequireEula[] = L"require_eula";
 // Use alternate shortcut text for the main shortcut.
 const wchar_t kAltShortcutText[] = L"alternate_shortcut_text";
-
+// Boolean pref that triggers silent import of the default browser homepage.
+const wchar_t kDistroImportHomePagePref[] = L"import_home_page";
 
 int ParseDistributionPreferences(const std::wstring& master_prefs_path) {
   if (!file_util::PathExists(master_prefs_path))
@@ -93,6 +94,8 @@ int ParseDistributionPreferences(const std::wstring& master_prefs_path) {
       parse_result |= MASTER_PROFILE_IMPORT_HISTORY;
     if (GetBooleanPref(distro, kDistroImportBookmarksPref))
       parse_result |= MASTER_PROFILE_IMPORT_BOOKMARKS;
+    if (GetBooleanPref(distro, kDistroImportHomePagePref))
+      parse_result |= MASTER_PROFILE_IMPORT_HOME_PAGE;
     if (GetBooleanPref(distro, kMakeChromeDefaultForUser))
       parse_result |= MASTER_PROFILE_MAKE_CHROME_DEFAULT_FOR_USER;
     if (GetBooleanPref(distro, kCreateAllShortcuts))
