@@ -333,6 +333,23 @@ std::wstring GoogleChromeDistribution::GetDistributionData(RegKey* key) {
     result.append(brand_value);
   }
 
+  std::wstring client_value;
+  if (client_state_key.ReadValue(google_update::kRegClientField,
+                                 &client_value)) {
+    result.append(google_update::kRegClientField);
+    result.append(L"=");
+    result.append(client_value);
+    result.append(L"&");
+  }
+
+  std::wstring ap_value;
+  // If we fail to read the ap key, send up "&ap=" anyway to indicate
+  // that this was probably a stable channel release.
+  client_state_key.ReadValue(google_update::kRegApField, &ap_value);
+  result.append(google_update::kRegApField);
+  result.append(L"=");
+  result.append(ap_value);
+
   return result;
 }
 
