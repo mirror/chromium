@@ -1,4 +1,4 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Copyright (c) 2006-2009 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 //
@@ -60,6 +60,10 @@ class GoogleChromeDistribution : public BrowserDistribution {
 
   virtual std::wstring GetStateKey();
 
+  virtual std::wstring GetStateMediumKey();
+
+  virtual std::wstring GetStatsServerURL();
+
   // This method reads data from the Google Update ClientState key for
   // potential use in the uninstall survey. It must be called before the
   // key returned by GetVersionKey() is deleted.
@@ -73,6 +77,15 @@ class GoogleChromeDistribution : public BrowserDistribution {
 
   virtual void UpdateDiffInstallStatus(bool system_install,
       bool incremental_install, installer_util::InstallStatus install_status);
+
+  virtual void LaunchUserExperiment(installer_util::InstallStatus status,
+                                    const installer::Version& version,
+                                    bool system_install, int options);
+
+  // Assuming that the user qualifies, this function performs the inactive user
+  // toast experiment. It will use chrome to show the UI and it will record the
+  // outcome in the registry.
+  virtual void InactiveUserToastExperiment();
 
  private:
   friend class BrowserDistribution;

@@ -87,9 +87,11 @@ extern const wchar_t kUninstall[];
 extern const wchar_t kVerboseLogging[];
 extern const wchar_t kShowEula[];
 extern const wchar_t kAltDesktopShortcut[];
+extern const wchar_t kInactiveUserToast[];
 }  // namespace switches
 
 extern const wchar_t kInstallBinaryDir[];
+extern const wchar_t kInstallUserDataDir[];
 extern const wchar_t kChromeExe[];
 extern const wchar_t kChromeOldExe[];
 extern const wchar_t kChromeNewExe[];
@@ -101,6 +103,7 @@ extern const wchar_t kUninstallStringField[];
 extern const wchar_t kUninstallDisplayNameField[];
 extern const wchar_t kUninstallMetricsName[];
 extern const wchar_t kUninstallInstallationDate[];
+
 }  // namespace installer_util
 
 #endif  // CHROME_INSTALLER_UTIL_UTIL_CONSTANTS_H__

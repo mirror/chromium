@@ -230,6 +230,7 @@ class WidgetWin : public Widget,
 
   // Overridden from Widget:
   virtual void GetBounds(gfx::Rect* out, bool including_frame) const;
+  virtual void SetBounds(const gfx::Rect& bounds);
   virtual void MoveToFront(bool should_activate);
   virtual gfx::NativeView GetNativeView() const;
   virtual void PaintNow(const gfx::Rect& update_rect);

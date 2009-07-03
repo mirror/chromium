@@ -701,10 +701,6 @@ class TryChromeDialog : public views::ButtonListener,
     // An approximate window size. After Layout() we'll get better bounds.
     gfx::Rect pos(310, 160);
 
-    const int width = 310;
-    const int height = 160;
-    gfx::Rect pos = ComputeWindowPosition(width, height);
-
     views::WidgetWin* popup = new views::WidgetWin();
     if (!popup) {
       NOTREACHED();

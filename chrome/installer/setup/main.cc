@@ -349,6 +349,7 @@ installer_util::InstallStatus InstallChrome(const CommandLine& cmd_line,
   }
   LOG(INFO) << "created path " << temp_path;
 
+  BrowserDistribution* dist = BrowserDistribution::GetDistribution();
   std::wstring unpack_path(temp_path);
   file_util::AppendToPath(&unpack_path,
                           std::wstring(installer::kInstallSourceDir));
@@ -417,6 +418,12 @@ installer_util::InstallStatus InstallChrome(const CommandLine& cmd_line,
         }
       }
     }
+    // There might be an experiment (for upgrade usually) that needs to happen.
+    // An experiment's outcome can include chrome's uninstallation. If that is
+    // the case we would not do that directly at this point but in another
+    //  instance of setup.exe
+    dist->LaunchUserExperiment(install_status, *installer_version,
+                               system_install, options);
   }
 
   // Delete temporary files. These include install temporary directory
@@ -431,7 +438,6 @@ installer_util::InstallStatus InstallChrome(const CommandLine& cmd_line,
   }
   cleanup_list->Do();
 
-  BrowserDistribution* dist = BrowserDistribution::GetDistribution();
   dist->UpdateDiffInstallStatus(system_install, incremental_install,
                                 install_status);
   return install_status;
@@ -492,6 +498,7 @@ installer_util::InstallStatus ShowEULADialog(const std::wstring& inner_frame) {
 bool HandleNonInstallCmdLineOptions(const CommandLine& cmd_line,
                                     bool system_install,
                                     int& exit_code) {
+  BrowserDistribution* dist = BrowserDistribution::GetDistribution();
   if (cmd_line.HasSwitch(installer_util::switches::kShowEula)) {
     // Check if we need to show the EULA. If it is passed as a command line
     // then the dialog is shown and regardless of the outcome setup exits here.
@@ -523,8 +530,11 @@ bool HandleNonInstallCmdLineOptions(const CommandLine& cmd_line,
     installer_setup::DeleteChromeRegistrationKeys(HKEY_LOCAL_MACHINE, tmp);
     exit_code = tmp;
     return true;
+  } else if (cmd_line.HasSwitch(installer_util::switches::kInactiveUserToast)) {
+    // Launch the inactive user toast experiment.
+    dist->InactiveUserToastExperiment();
+    return true;
   }
-
   return false;
 }
 

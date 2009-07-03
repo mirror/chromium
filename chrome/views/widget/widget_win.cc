@@ -223,6 +223,11 @@ void WidgetWin::GetBounds(gfx::Rect* out, bool including_frame) const {
                crect.Width(), crect.Height());
 }
 
+void WidgetWin::SetBounds(const gfx::Rect& bounds) {
+  SetWindowPos(NULL, bounds.x(), bounds.y(), bounds.width(), bounds.height(),
+         SWP_NOACTIVATE);
+}
+
 void WidgetWin::MoveToFront(bool should_activate) {
   int flags = SWP_NOMOVE | SWP_NOSIZE;
   if (!should_activate) {
