@@ -553,12 +553,12 @@ void URLRequestHttpJob::AddExtraHeaders() {
   if (!SdchManager::Global() ||
       !SdchManager::Global()->IsInSupportedDomain(request_->url())) {
     // Tell the server what compression formats we support (other than SDCH).
-    request_info_.extra_headers += "Accept-Encoding: gzip,deflate,bzip2\r\n";
+    request_info_.extra_headers += "Accept-Encoding: gzip,deflate\r\n";
   } else {
     // Supply SDCH related headers, as well as accepting that encoding.
     // Tell the server what compression formats we support.
     request_info_.extra_headers += "Accept-Encoding: "
-        "gzip,deflate,bzip2,sdch\r\n";
+        "gzip,deflate,sdch\r\n";
 
     // TODO(jar): See if it is worth optimizing away these bytes when the URL is
     // probably an img or such. (and SDCH encoding is not likely).

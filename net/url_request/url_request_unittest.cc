@@ -669,7 +669,8 @@ TEST_F(URLRequestTest, ResponseHeadersTest) {
   EXPECT_EQ("a, b", header);
 }
 
-TEST_F(URLRequestTest, BZip2ContentTest) {
+// TODO(jar): 14801 Remove BZIP code completely.
+TEST_F(URLRequestTest, DISABLED_BZip2ContentTest) {
   scoped_refptr<HTTPTestServer> server =
       HTTPTestServer::CreateServer(L"net/data/filter_unittests", NULL);
   ASSERT_TRUE(NULL != server.get());
@@ -695,7 +696,8 @@ TEST_F(URLRequestTest, BZip2ContentTest) {
   EXPECT_EQ(got_content, got_bz2_content);
 }
 
-TEST_F(URLRequestTest, BZip2ContentTest_IncrementalHeader) {
+// TODO(jar): 14801 Remove BZIP code completely.
+TEST_F(URLRequestTest, DISABLED_BZip2ContentTest_IncrementalHeader) {
   scoped_refptr<HTTPTestServer> server =
       HTTPTestServer::CreateServer(L"net/data/filter_unittests", NULL);
   ASSERT_TRUE(NULL != server.get());
@@ -1075,8 +1077,7 @@ TEST_F(URLRequestTest, Post302RedirectGet) {
     "Accept-Language: en-US,en\r\n"
     "Accept-Charset: ISO-8859-1,*,utf-8\r\n"
     "Content-Length: 10\r\n"
-    "Origin: http://localhost:1337/"
-  );
+    "Origin: http://localhost:1337/");
   req.Start();
   MessageLoop::current()->Run();
 
