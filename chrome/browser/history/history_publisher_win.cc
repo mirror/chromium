@@ -10,6 +10,7 @@
 #include <wtypes.h>
 
 #include "base/registry.h"
+#include "base/scoped_comptr_win.h"
 
 namespace {
 
@@ -49,7 +50,7 @@ void AddRegisteredIndexers(HKEY root, const wchar_t* path,
 
 namespace history {
 
-const wchar_t* HistoryPublisher::kRegKeyRegisteredIndexersInfo =
+const wchar_t* const HistoryPublisher::kRegKeyRegisteredIndexersInfo =
     L"Software\\Google\\Google Chrome\\IndexerPlugins";
 
 // static
