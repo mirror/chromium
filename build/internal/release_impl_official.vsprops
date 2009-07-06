@@ -14,14 +14,6 @@
 		FavorSizeOrSpeed="2"
 		OmitFramePointers="true"
 		EnableFiberSafeOptimizations="true"
-		WholeProgramOptimization="true"
-	/>
-	<Tool
-		Name="VCLibrarianTool"
-		AdditionalOptions="/ltcg"
-	/>
-	<Tool
-		Name="VCLinkerTool"
-		LinkTimeCodeGeneration="1"
+		WholeProgramOptimization="false"
 	/>
 </VisualStudioPropertySheet>
