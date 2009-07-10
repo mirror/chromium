@@ -19,7 +19,7 @@ deps = {
     "http://googletest.googlecode.com/svn/trunk@214",
 
   "src/third_party/WebKit":
-    "/branches/WebKit/172@16169",
+    "/branches/WebKit/172@20128",
 
   "src/third_party/icu38":
     "/trunk/deps/third_party/icu38@20192",
@@ -29,10 +29,10 @@ deps = {
     "http://gyp.googlecode.com/svn/trunk@412",
 
   "src/v8":
-    "http://v8.googlecode.com/svn/branches/1.1@1981",
+    "http://v8.googlecode.com/svn/branches/1.1@2248",
 
   "src/webkit/data/layout_tests/LayoutTests":
-    "/branches/LayoutTests/172@15520",
+    "/branches/LayoutTests/172@19960",
 
   "src/third_party/WebKit/WebKitLibraries":
     Var("webkit_trunk") + "/WebKitLibraries@" + Var("webkit_revision"),
