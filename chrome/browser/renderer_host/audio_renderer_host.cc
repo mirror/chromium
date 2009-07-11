@@ -103,6 +103,7 @@ void AudioRendererHost::CreateStream(
     base::ProcessHandle process_handle, int32 render_view_id, int32 stream_id,
     AudioManager::Format format, int channels, int sample_rate,
     int bits_per_sample, size_t packet_size) {
+#if 0
   DCHECK(MessageLoop::current() == io_loop_);
   DCHECK(Lookup(render_view_id, stream_id) == NULL);
 
@@ -130,6 +131,7 @@ void AudioRendererHost::CreateStream(
     DestroySource(source);
     SendErrorMessage(render_view_id, stream_id, 0);
   }
+#endif
 }
 
 void AudioRendererHost::Start(int32 render_view_id, int32 stream_id) {
