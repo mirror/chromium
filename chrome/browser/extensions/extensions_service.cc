@@ -225,11 +225,6 @@ ExtensionsService::ExtensionsService(Profile* profile,
       extensions_enabled_(false),
       show_extensions_prompts_(true),
       ready_(false) {
-  // Figure out if extension installation should be enabled.
-  if (command_line->HasSwitch(switches::kEnableExtensions))
-    extensions_enabled_ = true;
-  else if (profile->GetPrefs()->GetBoolean(prefs::kEnableExtensions))
-    extensions_enabled_ = true;
 
   backend_ = new ExtensionsServiceBackend(
           install_directory_, g_browser_process->resource_dispatcher_host(),
