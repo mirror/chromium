@@ -1410,8 +1410,6 @@ void RenderView::DidFailLoadWithError(WebView* webview,
 
 void RenderView::DidFinishDocumentLoadForFrame(WebView* webview,
                                                WebFrame* frame) {
-  Send(new ViewHostMsg_DocumentLoadedInFrame(routing_id_));
-
   // Check whether we have new encoding name.
   UpdateEncoding(frame, webview->GetMainFrameEncodingName());
 

@@ -505,7 +505,6 @@ class RenderViewHost : public RenderWidgetHost {
   void OnPersonalizationEvent(const std::string& message,
                               const std::string& content);
 #endif
-  void OnMsgDocumentLoadedInFrame();
   void OnMsgGoToEntryAtOffset(int offset);
   void OnMsgSetTooltipText(const std::wstring& tooltip_text);
   void OnMsgRunFileChooser(bool multiple_files,

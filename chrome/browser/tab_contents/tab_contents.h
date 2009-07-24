@@ -506,7 +506,6 @@ class TabContents : public PageNavigator,
 
   // Data ----------------------------------------------------------------------
 
-  virtual void DocumentLoadedInFrame();
   TabContentsType type_;
 
   TabContentsDelegate* delegate_;

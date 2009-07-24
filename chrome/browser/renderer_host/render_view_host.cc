@@ -739,8 +739,6 @@ void RenderViewHost::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(ViewHostMsg_PersonalizationEvent,
                         OnPersonalizationEvent)
 #endif
-    IPC_MESSAGE_HANDLER(ViewHostMsg_DocumentLoadedInFrame,
-                        OnMsgDocumentLoadedInFrame)
     IPC_MESSAGE_HANDLER(ViewHostMsg_GoToEntryAtOffset,
                         OnMsgGoToEntryAtOffset)
     IPC_MESSAGE_HANDLER(ViewHostMsg_SetTooltipText, OnMsgSetTooltipText)
@@ -1091,10 +1089,6 @@ void RenderViewHost::OnPersonalizationEvent(const std::string& message,
   Personalization::HandlePersonalizationEvent(this, message, content);
 }
 #endif
-
-void RenderViewHost::OnMsgDocumentLoadedInFrame() {
-  delegate_->DocumentLoadedInFrame();
-}
 
 void RenderViewHost::DisassociateFromPopupCount() {
   Send(new ViewMsg_DisassociateFromPopupCount(routing_id()));

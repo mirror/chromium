@@ -580,7 +580,3 @@ void TabContents::ExpireInfoBars(
       RemoveInfoBar(delegate);
   }
 }
-void TabContents::DocumentLoadedInFrame() {
-  controller_.DocumentLoadedInFrame();
-}
-

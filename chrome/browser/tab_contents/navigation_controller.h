@@ -11,7 +11,6 @@
 
 #include "base/linked_ptr.h"
 #include "base/string16.h"
-#include "base/time.h"
 #include "googleurl/src/gurl.h"
 #include "chrome/browser/sessions/session_id.h"
 #include "chrome/browser/ssl/ssl_manager.h"
@@ -325,12 +324,6 @@ class NavigationController {
     return active_contents_;
   }
 
-  // Called when a document has been loaded in a frame.
-  void DocumentLoadedInFrame();
-
-  // Called when the user presses the mouse, enter key or space bar.
-  void OnUserGesture();
-
   // For use by TabContents ----------------------------------------------------
 
   // Handles updating the navigation state after the renderer has navigated.
@@ -493,13 +486,6 @@ class NavigationController {
   // Discards the transient entry without updating active_contents_.
   void DiscardTransientEntry();
 
-  // Returns true if the navigation is redirect.
-  bool IsRedirect(const ViewHostMsg_FrameNavigate_Params& params);
-
-  // Returns true if the navigation is likley to be automatic rather than
-  // user-initiated.
-  bool IsLikelyAutoNavigation(base::TimeTicks now);
-
   // ---------------------------------------------------------------------------
 
   // The user profile associated with this controller
@@ -570,12 +556,6 @@ class NavigationController {
 
   // Unique identifier of the window we're in. Used by session restore.
   SessionID window_id_;
-
-  // The time ticks at which the last document was loaded.
-  base::TimeTicks last_document_loaded_;
-
-  // Whether a user gesture has been observed since the last navigation.
-  bool user_gesture_observed_;
 
   // Should Reload check for post data? The default is true, but is set to false
   // when testing.
