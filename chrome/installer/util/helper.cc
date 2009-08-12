@@ -30,7 +30,7 @@ std::wstring GetChromeInstallBasePath(bool system_install,
     BrowserDistribution* dist = BrowserDistribution::GetDistribution();
     file_util::AppendToPath(&install_path, dist->GetInstallSubDir());
     file_util::AppendToPath(&install_path,
-                            std::wstring(installer_util::kInstallBinaryDir));
+                            subpath);
   }
   return install_path;
 }
