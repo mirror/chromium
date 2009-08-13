@@ -552,6 +552,8 @@ void WebContentsViewWin::WasShown() {
 }
 
 void WebContentsViewWin::WasSized(const gfx::Size& size) {
+  UINT swp_flags = SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE;
+  SetWindowPos(NULL, 0, 0, size.width(), size.height(), swp_flags);
   if (web_contents()->interstitial_page())
     web_contents()->interstitial_page()->SetSize(size);
   if (web_contents()->render_widget_host_view())
