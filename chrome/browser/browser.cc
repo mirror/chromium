@@ -1406,8 +1406,11 @@ TabContents* Browser::CreateTabContentsForURL(
   // layout and not recalculated later, we need to ensure the first layout is
   // performed with sane view dimensions even when we're opening a new
   // background tab.
-  if (TabContents* old_contents = tabstrip_model_.GetSelectedTabContents())
-    contents->view()->SizeContents(old_contents->view()->GetContainerSize());
+  if (TabContents* old_contents = tabstrip_model_.GetSelectedTabContents()) {
+    if (contents->AsWebContents() && old_contents->AsWebContents())
+      contents->AsWebContents()->view()->SizeContents(
+          old_contents->AsWebContents()->view()->GetContainerSize());
+  }
 
   if (!defer_load) {
     // Load the initial URL before adding the new tab contents to the tab strip
