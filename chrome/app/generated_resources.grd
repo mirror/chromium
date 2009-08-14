@@ -3037,12 +3037,12 @@ each locale. -->
         Recent bookmarks
       </message>
       <message name="IDS_NEW_TAB_HISTORY_SHOW"
-               desc="The link on the new tab page that takes users to the dedicated History page">
+               desc="The 'Show history' link on the new tab page">
         Show full history
       </message>
       <message name="IDS_NEW_TAB_REMOVE_THUMBNAILS"
-         desc="The link on the new tab page that lets users remove one or more thumbnails">
-        Remove a thumbnail
+         desc="The 'Remove thumbnails' link on the new tab page">
+        Remove thumbnails
       </message>
       <message name="IDS_NEW_TAB_MOST_VISITED_DONE_REMOVING_BUTTON"
          desc="The caption of the button used to validate the removal of thumbnails">
