@@ -250,6 +250,7 @@ void URLRequest::Start() {
     job_->SetUpload(upload_.get());
 
   is_pending_ = true;
+
   response_info_.request_time = Time::Now();
   response_info_.was_cached = false;
 
@@ -319,6 +320,12 @@ bool URLRequest::Read(net::IOBuffer* dest, int dest_size, int *bytes_read) {
   return job_->Read(dest, dest_size, bytes_read);
 }
 
+void URLRequest::FollowDeferredRedirect() {
+  DCHECK(job_);
+
+  job_->FollowDeferredRedirect();
+}
+
 void URLRequest::SetAuth(const wstring& username, const wstring& password) {
   DCHECK(job_);
   DCHECK(job_->NeedsAuth());
@@ -340,6 +347,7 @@ void URLRequest::ContinueDespiteLastError() {
 }
 
 void URLRequest::OrphanJob() {
+  job_->Kill();
   job_->DetachRequest();  // ensures that the job will not call us again
   job_ = NULL;
 }
@@ -380,7 +388,6 @@ int URLRequest::Redirect(const GURL& location, int http_status_code) {
   }
   url_ = location;
   upload_ = NULL;
-  status_ = URLRequestStatus();
   --redirect_limit_;
 
   if (strip_post_specific_headers) {
@@ -399,8 +406,10 @@ int URLRequest::Redirect(const GURL& location, int http_status_code) {
     final_upload_progress_ = job_->GetUploadProgress();
   }
 
+  job_->Kill();
   OrphanJob();
 
+  status_ = URLRequestStatus();
   is_pending_ = false;
   Start();
   return net::OK;
