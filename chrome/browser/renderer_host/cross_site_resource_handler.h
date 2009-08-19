@@ -21,8 +21,7 @@ class CrossSiteResourceHandler : public ResourceHandler {
                            ResourceDispatcherHost* resource_dispatcher_host);
 
   // ResourceHandler implementation:
-  bool OnRequestRedirected(int request_id, const GURL& new_url,
-                           ResourceResponse* response, bool* defer);
+  bool OnRequestRedirected(int request_id, const GURL& new_url);
   bool OnResponseStarted(int request_id,
                          ResourceResponse* response);
   bool OnWillRead(int request_id, net::IOBuffer** buf, int* buf_size,

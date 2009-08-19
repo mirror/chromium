@@ -40,15 +40,10 @@ bool DownloadThrottlingResourceHandler::OnUploadProgress(int request_id,
   return true;
 }
 
-bool DownloadThrottlingResourceHandler::OnRequestRedirected(
-    int request_id,
-    const GURL& url,
-    ResourceResponse* response,
-    bool* defer) {
-  if (download_handler_.get()) {
-    return download_handler_->OnRequestRedirected(
-        request_id, url, response, defer);
-  }
+bool DownloadThrottlingResourceHandler::OnRequestRedirected(int request_id,
+                                                            const GURL& url) {
+  if (download_handler_.get())
+    return download_handler_->OnRequestRedirected(request_id, url);
   url_ = url;
   return true;
 }

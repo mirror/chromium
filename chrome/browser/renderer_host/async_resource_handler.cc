@@ -56,12 +56,10 @@ bool AsyncResourceHandler::OnUploadProgress(int request_id,
 }
 
 bool AsyncResourceHandler::OnRequestRedirected(int request_id,
-                                               const GURL& new_url,
-                                               ResourceResponse* response,
-                                               bool* defer) {
-  *defer = true;
-  return receiver_->Send(new ViewMsg_Resource_ReceivedRedirect(
-      routing_id_, request_id, new_url, response->response_head));
+                                               const GURL& new_url) {
+  return receiver_->Send(new ViewMsg_Resource_ReceivedRedirect(routing_id_,
+                                                               request_id,
+                                                               new_url));
 }
 
 bool AsyncResourceHandler::OnResponseStarted(int request_id,

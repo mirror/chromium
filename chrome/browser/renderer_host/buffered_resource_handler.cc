@@ -58,11 +58,8 @@ bool BufferedResourceHandler::OnUploadProgress(int request_id,
 }
 
 bool BufferedResourceHandler::OnRequestRedirected(int request_id,
-                                                  const GURL& new_url,
-                                                  ResourceResponse* response,
-                                                  bool* defer) {
-  return real_handler_->OnRequestRedirected(
-      request_id, new_url, response, defer);
+                                                  const GURL& new_url) {
+  return real_handler_->OnRequestRedirected(request_id, new_url);
 }
 
 bool BufferedResourceHandler::OnResponseStarted(int request_id,

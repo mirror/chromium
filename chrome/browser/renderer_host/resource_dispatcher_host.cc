@@ -132,20 +132,6 @@ bool ShouldServiceRequest(ChildProcessInfo::ProcessType process_type,
   return true;
 }
 
-void PopulateResourceResponse(URLRequest* request,
-                              FilterPolicy::Type filter_policy,
-                              ResourceResponse* response) {
-  response->response_head.status = request->status();
-  response->response_head.request_time = request->request_time();
-  response->response_head.response_time = request->response_time();
-  response->response_head.headers = request->response_headers();
-  request->GetCharset(&response->response_head.charset);
-  response->response_head.filter_policy = filter_policy;
-  response->response_head.content_length = request->GetExpectedContentSize();
-  response->response_head.app_cache_id = WebAppCacheContext::kNoAppCacheId;
-  request->GetMimeType(&response->response_head.mime_type);
-}
-
 }  // namespace
 
 ResourceDispatcherHost::ResourceDispatcherHost(MessageLoop* io_loop)
@@ -244,7 +230,6 @@ bool ResourceDispatcherHost::OnMessageReceived(const IPC::Message& message,
     IPC_MESSAGE_HANDLER(ViewHostMsg_DownloadProgress_ACK, OnDownloadProgressACK)
     IPC_MESSAGE_HANDLER(ViewHostMsg_UploadProgress_ACK, OnUploadProgressACK)
     IPC_MESSAGE_HANDLER(ViewHostMsg_CancelRequest, OnCancelRequest)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_FollowRedirect, OnFollowRedirect)
     IPC_MESSAGE_HANDLER(ViewHostMsg_ClosePage_ACK, OnClosePageACK)
   IPC_END_MESSAGE_MAP_EX()
 
@@ -466,10 +451,6 @@ void ResourceDispatcherHost::OnCancelRequest(int request_id) {
   CancelRequest(receiver_->GetProcessId(), request_id, true, true);
 }
 
-void ResourceDispatcherHost::OnFollowRedirect(int request_id) {
-  FollowDeferredRedirect(receiver_->GetProcessId(), request_id);
-}
-
 void ResourceDispatcherHost::OnClosePageACK(int new_render_process_host_id,
                                            int new_request_id) {
   GlobalRequestID global_id(new_render_process_host_id, new_request_id);
@@ -627,16 +608,43 @@ void ResourceDispatcherHost::CancelRequest(int process_id,
   CancelRequest(process_id, request_id, from_renderer, true);
 }
 
-void ResourceDispatcherHost::FollowDeferredRedirect(int process_id,
-                                                    int request_id) {
+void ResourceDispatcherHost::CancelRequest(int process_id,
+                                           int request_id,
+                                           bool from_renderer,
+                                           bool allow_delete) {
   PendingRequestList::iterator i = pending_requests_.find(
       GlobalRequestID(process_id, request_id));
   if (i == pending_requests_.end()) {
-    DLOG(WARNING) << "FollowDeferredRedirect for invalid request";
+    // We probably want to remove this warning eventually, but I wanted to be
+    // able to notice when this happens during initial development since it
+    // should be rare and may indicate a bug.
+    DLOG(WARNING) << "Canceling a request that wasn't found";
     return;
   }
 
-  i->second->FollowDeferredRedirect();
+  // WebKit will send us a cancel for downloads since it no longer handles them.
+  // In this case, ignore the cancel since we handle downloads in the browser.
+  ExtraRequestInfo* info = ExtraInfoForRequest(i->second);
+  if (!from_renderer || !info->is_download) {
+    if (info->login_handler) {
+      info->login_handler->OnRequestCancelled();
+      info->login_handler = NULL;
+    }
+    if (!i->second->is_pending() && allow_delete) {
+      // No io is pending, canceling the request won't notify us of anything,
+      // so we explicitly remove it.
+      // TODO: removing the request in this manner means we're not notifying
+      // anyone. We need make sure the event handlers and others are notified
+      // so that everything is cleaned up properly.
+      RemovePendingRequest(info->process_id, info->request_id);
+    } else {
+      i->second->Cancel();
+    }
+  }
+
+  // Do not remove from the pending requests, as the request will still
+  // call AllDataReceived, and may even have more data before it does
+  // that.
 }
 
 bool ResourceDispatcherHost::WillSendData(int process_id,
@@ -644,7 +652,7 @@ bool ResourceDispatcherHost::WillSendData(int process_id,
   PendingRequestList::iterator i = pending_requests_.find(
       GlobalRequestID(process_id, request_id));
   if (i == pending_requests_.end()) {
-    NOTREACHED() << "WillSendData for invalid request";
+    NOTREACHED() << L"WillSendData for invalid request";
     return false;
   }
 
@@ -833,10 +841,7 @@ void ResourceDispatcherHost::OnReceivedRedirect(URLRequest* request,
     return;
   }
 
-  scoped_refptr<ResourceResponse> response = new ResourceResponse;
-  PopulateResourceResponse(request, info->filter_policy, response);
-  if (!info->resource_handler->OnRequestRedirected(info->request_id, new_url,
-                                                   response, defer_redirect))
+  if (!info->resource_handler->OnRequestRedirected(info->request_id, new_url))
     CancelRequest(info->process_id, info->request_id, false);
 }
 
@@ -899,8 +904,16 @@ void ResourceDispatcherHost::OnResponseStarted(URLRequest* request) {
 bool ResourceDispatcherHost::CompleteResponseStarted(URLRequest* request) {
   ExtraRequestInfo* info = ExtraInfoForRequest(request);
 
-  scoped_refptr<ResourceResponse> response = new ResourceResponse;
-  PopulateResourceResponse(request, info->filter_policy, response);
+  scoped_refptr<ResourceResponse> response(new ResourceResponse);
+
+  response->response_head.status = request->status();
+  response->response_head.request_time = request->request_time();
+  response->response_head.response_time = request->response_time();
+  response->response_head.headers = request->response_headers();
+  request->GetCharset(&response->response_head.charset);
+  response->response_head.filter_policy = info->filter_policy;
+  response->response_head.content_length = request->GetExpectedContentSize();
+  request->GetMimeType(&response->response_head.mime_type);
 
   // Make sure we don't get a file handle if LOAD_ENABLE_FILE is not set.
   DCHECK((request->load_flags() & net::LOAD_ENABLE_DOWNLOAD_FILE) ||
@@ -940,49 +953,6 @@ bool ResourceDispatcherHost::CompleteResponseStarted(URLRequest* request) {
   NotifyResponseStarted(request, info->process_id);
   return info->resource_handler->OnResponseStarted(info->request_id,
                                                    response.get());
-}
-
-void ResourceDispatcherHost::CancelRequest(int process_id,
-                                           int request_id,
-                                           bool from_renderer,
-                                           bool allow_delete) {
-  PendingRequestList::iterator i = pending_requests_.find(
-      GlobalRequestID(process_id, request_id));
-  if (i == pending_requests_.end()) {
-    // We probably want to remove this warning eventually, but I wanted to be
-    // able to notice when this happens during initial development since it
-    // should be rare and may indicate a bug.
-    DLOG(WARNING) << "Canceling a request that wasn't found";
-    return;
-  }
-
-  // WebKit will send us a cancel for downloads since it no longer handles them.
-  // In this case, ignore the cancel since we handle downloads in the browser.
-  ExtraRequestInfo* info = ExtraInfoForRequest(i->second);
-  if (!from_renderer || !info->is_download) {
-    if (info->login_handler) {
-      info->login_handler->OnRequestCancelled();
-      info->login_handler = NULL;
-    }
-    if (info->ssl_client_auth_handler) {
-      info->ssl_client_auth_handler->OnRequestCancelled();
-      info->ssl_client_auth_handler = NULL;
-    }
-    if (!i->second->is_pending() && allow_delete) {
-      // No io is pending, canceling the request won't notify us of anything,
-      // so we explicitly remove it.
-      // TODO(sky): removing the request in this manner means we're not
-      // notifying anyone. We need make sure the event handlers and others are
-      // notified so that everything is cleaned up properly.
-      RemovePendingRequest(info->process_id, info->request_id);
-    } else {
-      i->second->Cancel();
-    }
-  }
-
-  // Do not remove from the pending requests, as the request will still
-  // call AllDataReceived, and may even have more data before it does
-  // that.
 }
 
 int ResourceDispatcherHost::IncrementOutstandingRequestsMemoryCost(
@@ -1580,7 +1550,6 @@ bool ResourceDispatcherHost::IsResourceDispatcherHostMessage(
   switch (message.type()) {
     case ViewHostMsg_RequestResource::ID:
     case ViewHostMsg_CancelRequest::ID:
-    case ViewHostMsg_FollowRedirect::ID:
     case ViewHostMsg_ClosePage_ACK::ID:
     case ViewHostMsg_DataReceived_ACK::ID:
     case ViewHostMsg_DownloadProgress_ACK::ID:

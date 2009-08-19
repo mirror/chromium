@@ -31,10 +31,7 @@ class TestRequestCallback : public ResourceLoaderBridge::Peer {
   TestRequestCallback() : complete_(false) {
   }
 
-  virtual bool OnReceivedRedirect(
-      const GURL& new_url,
-      const ResourceLoaderBridge::ResponseInfo& info) {
-    return true;
+  virtual void OnReceivedRedirect(const GURL& new_url) {
   }
 
   virtual void OnReceivedResponse(

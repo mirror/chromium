@@ -10,6 +10,9 @@
 #include "base/thread.h"
 #include "chrome/app/chrome_dll_resource.h"
 #include "chrome/browser/automation/automation_provider_list.h"
+#include "chrome/browser/automation/url_request_failed_dns_job.h"
+#include "chrome/browser/automation/url_request_mock_http_job.h"
+#include "chrome/browser/automation/url_request_slow_download_job.h"
 #include "chrome/browser/browser_window.h"
 #include "chrome/browser/dom_operation_notification_details.h"
 #include "chrome/browser/download/download_manager.h"
@@ -27,6 +30,7 @@
 #include "chrome/test/automation/automation_messages.h"
 #include "net/base/cookie_monster.h"
 #include "net/url_request/url_request_context.h"
+#include "net/url_request/url_request_filter.h"
 
 #if defined(OS_WIN)
 // TODO(port): Port these headers.
@@ -876,6 +880,8 @@ void AutomationProvider::OnMessageReceived(const IPC::Message& message) {
                         GetFocusedViewID)
     IPC_MESSAGE_HANDLER_DELAY_REPLY(AutomationMsg_InspectElement,
                                     HandleInspectElementRequest)
+    IPC_MESSAGE_HANDLER(AutomationMsg_SetFilteredInet,
+                        SetFilteredInet);
     IPC_MESSAGE_HANDLER(AutomationMsg_DownloadDirectory,
                         GetDownloadDirectory);
     IPC_MESSAGE_HANDLER(AutomationMsg_OpenNewBrowserWindow,
@@ -2024,6 +2030,38 @@ void AutomationProvider::ReceivedInspectElementResponse(int num_resources) {
     Send(reply_message_);
     reply_message_ = NULL;
   }
+}
+
+// Helper class for making changes to the URLRequest ProtocolFactory on the
+// IO thread.
+class SetFilteredInetTask : public Task {
+ public:
+  explicit SetFilteredInetTask(bool enabled) : enabled_(enabled) { }
+  virtual void Run() {
+    if (enabled_) {
+      URLRequestFilter::GetInstance()->ClearHandlers();
+
+      URLRequestFailedDnsJob::AddUITestUrls();
+      URLRequestSlowDownloadJob::AddUITestUrls();
+
+      std::wstring root_http;
+      PathService::Get(chrome::DIR_TEST_DATA, &root_http);
+      URLRequestMockHTTPJob::AddUITestUrls(root_http);
+    } else {
+      // Revert to the default handlers.
+      URLRequestFilter::GetInstance()->ClearHandlers();
+    }
+  }
+ private:
+  bool enabled_;
+};
+
+void AutomationProvider::SetFilteredInet(const IPC::Message& message,
+                                         bool enabled) {
+  // Since this involves changing the URLRequest ProtocolFactory, we want to
+  // run on the main thread.
+  g_browser_process->io_thread()->message_loop()->PostTask(FROM_HERE,
+      new SetFilteredInetTask(enabled));
 }
 
 void AutomationProvider::GetDownloadDirectory(

@@ -60,12 +60,9 @@ class PluginRequestHandlerProxy
       upload_progress(cprequest_.get(), position, size);
   }
 
-  virtual bool OnReceivedRedirect(
-      const GURL& new_url,
-      const ResourceLoaderBridge::ResponseInfo& info) {
+  virtual void OnReceivedRedirect(const GURL& new_url) {
     plugin_->functions().response_funcs->received_redirect(
         cprequest_.get(), new_url.spec().c_str());
-    return true;
   }
 
   virtual void OnReceivedResponse(

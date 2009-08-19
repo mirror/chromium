@@ -39,9 +39,7 @@ class SecurityFilterPeer : public webkit_glue::ResourceLoaderBridge::Peer {
 
   // ResourceLoaderBridge::Peer methods.
   virtual void OnUploadProgress(uint64 position, uint64 size);
-  virtual bool OnReceivedRedirect(
-      const GURL& new_url,
-      const webkit_glue::ResourceLoaderBridge::ResponseInfo& info);
+  virtual void OnReceivedRedirect(const GURL& new_url);
   virtual void OnReceivedResponse(
       const webkit_glue::ResourceLoaderBridge::ResponseInfo& info,
       bool content_filtered);

@@ -104,11 +104,8 @@ void SecurityFilterPeer::OnUploadProgress(uint64 position, uint64 size) {
   original_peer_->OnUploadProgress(position, size);
 }
 
-bool SecurityFilterPeer::OnReceivedRedirect(
-    const GURL& new_url,
-    const webkit_glue::ResourceLoaderBridge::ResponseInfo& info) {
+void SecurityFilterPeer::OnReceivedRedirect(const GURL& new_url) {
   NOTREACHED();
-  return false;
 }
 
 void SecurityFilterPeer::OnReceivedResponse(

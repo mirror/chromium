@@ -25,8 +25,7 @@ class DownloadResourceHandler : public ResourceHandler {
                           bool save_as);
 
   // Not needed, as this event handler ought to be the final resource.
-  bool OnRequestRedirected(int request_id, const GURL& url,
-                           ResourceResponse* response, bool* defer);
+  bool OnRequestRedirected(int request_id, const GURL& url);
 
   // Send the download creation information to the download thread.
   bool OnResponseStarted(int request_id, ResourceResponse* response);
