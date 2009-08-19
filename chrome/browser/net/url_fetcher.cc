@@ -44,6 +44,8 @@ class URLFetcher::Core
   void Stop();
 
   // URLRequest::Delegate implementations
+  virtual void OnReceivedRedirect(URLRequest* request,
+                                  const GURL& new_url) { }
   virtual void OnResponseStarted(URLRequest* request);
   virtual void OnReadCompleted(URLRequest* request, int bytes_read);
 

@@ -192,8 +192,7 @@ class PluginRequestHandler : public PluginHelper, public URLRequest::Delegate {
   }
 
   // URLRequest::Delegate
-  virtual void OnReceivedRedirect(URLRequest* request, const GURL& new_url,
-                                  bool* defer_redirect) {
+  virtual void OnReceivedRedirect(URLRequest* request, const GURL& new_url) {
     plugin_->functions().response_funcs->received_redirect(
         cprequest_.get(), new_url.spec().c_str());
   }

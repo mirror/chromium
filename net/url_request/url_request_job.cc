@@ -6,6 +6,7 @@
 
 #include "base/message_loop.h"
 #include "base/string_util.h"
+#include "googleurl/src/gurl.h"
 #include "net/base/auth.h"
 #include "net/base/io_buffer.h"
 #include "net/base/load_flags.h"
@@ -29,8 +30,7 @@ URLRequestJob::URLRequestJob(URLRequest* request)
       read_buffer_len_(0),
       has_handled_response_(false),
       expected_content_size_(-1),
-      filter_input_byte_count_(0) ,
-      deferred_redirect_status_code_(-1) {
+      filter_input_byte_count_(0) {
   load_flags_ = request_->load_flags();
   is_profiling_ = request->enable_profiling();
   if (is_profiling()) {
@@ -91,17 +91,6 @@ void URLRequestJob::ContinueDespiteLastError() {
   // If this code was reached, we are trying to recover from an error that
   // we don't know how to recover from.
   NOTREACHED();
-}
-
-void URLRequestJob::FollowDeferredRedirect() {
-  DCHECK(deferred_redirect_status_code_ != -1);
-  // NOTE: deferred_redirect_url_ may be invalid, and attempting to redirect to
-  // such an URL will fail inside FollowRedirect.  The DCHECK above asserts
-  // that we called OnReceivedRedirect.
-
-  FollowRedirect(deferred_redirect_url_, deferred_redirect_status_code_);
-  deferred_redirect_url_ = GURL();
-  deferred_redirect_status_code_ = -1;
 }
 
 int64 URLRequestJob::GetByteReadCount() const {
@@ -180,14 +169,6 @@ bool URLRequestJob::ReadRawDataForFilter(int *bytes_read) {
       RecordBytesRead(*bytes_read);
   }
   return rv;
-}
-
-void URLRequestJob::FollowRedirect(const GURL& location, int http_status_code) {
-  g_url_request_job_tracker.OnJobRedirect(this, location, http_status_code);
-
-  int rv = request_->Redirect(location, http_status_code);
-  if (rv != net::OK)
-    NotifyDone(URLRequestStatus(URLRequestStatus::FAILED, rv));
 }
 
 void URLRequestJob::FilteredDataRead(int bytes_read) {
@@ -337,8 +318,8 @@ void URLRequestJob::NotifyHeadersComplete() {
   // survival until we can get out of this method.
   scoped_refptr<URLRequestJob> self_preservation = this;
 
-  GURL new_location;
   int http_status_code;
+  GURL new_location;
   if (IsRedirectResponse(&new_location, &http_status_code)) {
     const GURL& url = request_->url();
 
@@ -353,21 +334,19 @@ void URLRequestJob::NotifyHeadersComplete() {
       new_location = new_location.ReplaceComponents(replacements);
     }
 
-    bool defer_redirect = false;
-    request_->ReceivedRedirect(new_location, &defer_redirect);
+    // Toggle this flag to true so the consumer can access response headers.
+    // Then toggle it back if we choose to follow the redirect.
+    has_handled_response_ = true;
+    request_->delegate()->OnReceivedRedirect(request_, new_location);
 
     // Ensure that the request wasn't destroyed in OnReceivedRedirect
     if (!request_ || !request_->delegate())
       return;
 
-    // If we were not cancelled, then maybe follow the redirect.
+    // If we were not cancelled, then follow the redirect.
     if (request_->status().is_success()) {
-      if (defer_redirect) {
-        deferred_redirect_url_ = new_location;
-        deferred_redirect_status_code_ = http_status_code;
-      } else {
-        FollowRedirect(new_location, http_status_code);
-      }
+      has_handled_response_ = false;
+      FollowRedirect(new_location, http_status_code);
       return;
     }
   } else if (NeedsAuth()) {
@@ -517,6 +496,19 @@ void URLRequestJob::NotifyCanceled() {
 
 bool URLRequestJob::FilterHasData() {
     return filter_.get() && filter_->stream_data_len();
+}
+
+void URLRequestJob::FollowRedirect(const GURL& location,
+                                   int http_status_code) {
+  g_url_request_job_tracker.OnJobRedirect(this, location, http_status_code);
+  Kill();
+  // Kill could have notified the Delegate and destroyed the request.
+  if (!request_)
+    return;
+
+  int rv = request_->Redirect(location, http_status_code);
+  if (rv != net::OK)
+    NotifyStartError(URLRequestStatus(URLRequestStatus::FAILED, rv));
 }
 
 void URLRequestJob::RecordBytesRead(int bytes_read) {

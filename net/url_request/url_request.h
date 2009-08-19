@@ -103,19 +103,10 @@ class URLRequest {
     //
     // When this function is called, the request will still contain the
     // original URL, the destination of the redirect is provided in 'new_url'.
-    // If the delegate does not cancel the request and |*defer_redirect| is
-    // false, then the redirect will be followed, and the request's URL will be
-    // changed to the new URL.  Otherwise if the delegate does not cancel the
-    // request and |*defer_redirect| is true, then the redirect will be
-    // followed once FollowDeferredRedirect is called on the URLRequest.
-    //
-    // The caller must set |*defer_redirect| to false, so that delegates do not
-    // need to set it if they are happy with the default behavior of not
-    // deferring redirect.
+    // If the request is not canceled the redirect will be followed and the
+    // request's URL will be changed to the new URL.
     virtual void OnReceivedRedirect(URLRequest* request,
-                                    const GURL& new_url,
-                                    bool* defer_redirect) {
-    }
+                                    const GURL& new_url) = 0;
 
     // Called when we receive an authentication failure.  The delegate should
     // call request->SetAuth() with the user's credentials once it obtains them,
@@ -405,10 +396,6 @@ class URLRequest {
   // If a read error occurs, Read returns false and the request->status
   // will be set to an error.
   bool Read(net::IOBuffer* buf, int max_bytes, int *bytes_read);
-
-  // This method may be called to follow a redirect that was deferred in
-  // response to an OnReceivedRedirect call.
-  void FollowDeferredRedirect();
 
   // One of the following two methods should be called in response to an
   // OnAuthRequired() callback (and only then).

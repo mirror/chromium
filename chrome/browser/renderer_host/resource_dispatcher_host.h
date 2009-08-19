@@ -306,8 +306,7 @@ class ResourceDispatcherHost : public URLRequest::Delegate {
 
   // URLRequest::Delegate
   virtual void OnReceivedRedirect(URLRequest* request,
-                                  const GURL& new_url,
-                                  bool* defer_redirect);
+                                  const GURL& new_url);
   virtual void OnAuthRequired(URLRequest* request,
                               net::AuthChallengeInfo* auth_info);
   virtual void OnSSLCertificateError(URLRequest* request,
