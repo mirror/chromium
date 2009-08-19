@@ -194,6 +194,7 @@ class AutomationProvider : public base::RefCounted<AutomationProvider>,
                          IPC::Message* reply_message);
   void GetShelfVisibility(int handle, bool* visible);
   void SetFilteredInet(const IPC::Message& message, bool enabled);
+  void GetFilteredInetHitCount(int* hit_count);
 
 #if defined(OS_WIN)
   // TODO(port): Replace POINT.

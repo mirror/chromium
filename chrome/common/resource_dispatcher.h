@@ -47,7 +47,7 @@ class ResourceDispatcher {
     int origin_pid,
     ResourceType::Type resource_type,
     uint32 request_context /* used for plugin->browser requests */,
-    int route_id);
+    int routing_id);
 
   // Adds a request from the pending_requests_ list, returning the new
   // requests' ID
@@ -57,6 +57,9 @@ class ResourceDispatcher {
   // Removes a request from the pending_requests_ list, returning true if the
   // request was found and removed.
   bool RemovePendingRequest(int request_id);
+
+  // Cancels a request in the pending_requests_ list.
+  void CancelPendingRequest(int routing_id, int request_id);
 
   IPC::Message::Sender* message_sender() const {
     return message_sender_;
@@ -76,7 +79,8 @@ class ResourceDispatcher {
         : peer(peer),
           resource_type(resource_type),
           filter_policy(FilterPolicy::DONT_FILTER),
-          is_deferred(false) {
+          is_deferred(false),
+          is_cancelled(false) {
     }
     ~PendingRequestInfo() { }
     webkit_glue::ResourceLoaderBridge::Peer* peer;
@@ -84,25 +88,33 @@ class ResourceDispatcher {
     FilterPolicy::Type filter_policy;
     MessageQueue deferred_message_queue;
     bool is_deferred;
+    bool is_cancelled;
   };
   typedef base::hash_map<int, PendingRequestInfo> PendingRequestList;
 
   // Message response handlers, called by the message handler for this process.
-  void OnUploadProgress(const IPC::Message& message,
-                        int request_id,
-                        int64 position,
-                        int64 size);
+  void OnUploadProgress(
+      const IPC::Message& message,
+      int request_id,
+      int64 position,
+      int64 size);
   void OnDownloadProgress(const IPC::Message& message,
                           int request_id, int64 position, int64 size);
   void OnReceivedResponse(int request_id, const ResourceResponseHead&);
-  void OnReceivedRedirect(int request_id, const GURL& new_url);
-  void OnReceivedData(const IPC::Message& message,
-                      int request_id,
-                      base::SharedMemoryHandle data,
-                      int data_len);
-  void OnRequestComplete(int request_id,
-                         const URLRequestStatus& status,
-                         const std::string& security_info);
+  void OnReceivedRedirect(
+      const IPC::Message& message,
+      int request_id,
+      const GURL& new_url,
+      const webkit_glue::ResourceLoaderBridge::ResponseInfo& info);
+  void OnReceivedData(
+      const IPC::Message& message,
+      int request_id,
+      base::SharedMemoryHandle data,
+      int data_len);
+  void OnRequestComplete(
+      int request_id,
+      const URLRequestStatus& status,
+      const std::string& security_info);
 
   // Dispatch the message to one of the message response handlers.
   void DispatchMessage(const IPC::Message& message);

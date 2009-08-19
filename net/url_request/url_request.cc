@@ -1,3 +1,4 @@
+u// Copyright (c) 2006-2009 The Chromium Authors. All rights reserved.
 // Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -11,6 +12,7 @@
 #include "base/string_util.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
+#include "net/base/ssl_cert_request_info.h"
 #include "net/base/upload_data.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_util.h"
@@ -346,6 +348,17 @@ void URLRequest::ContinueDespiteLastError() {
   job_->ContinueDespiteLastError();
 }
 
+void URLRequest::PrepareToRestart() {
+  DCHECK(job_);
+
+  job_->Kill();
+  OrphanJob();
+
+  response_info_ = net::HttpResponseInfo();
+  status_ = URLRequestStatus();
+  is_pending_ = false;
+}
+
 void URLRequest::OrphanJob() {
   job_->Kill();
   job_->DetachRequest();  // ensures that the job will not call us again
@@ -402,15 +415,10 @@ int URLRequest::Redirect(const GURL& location, int http_status_code) {
     extra_request_headers_ = StripPostSpecificHeaders(extra_request_headers_);
   }
 
-  if (!final_upload_progress_) {
+  if (!final_upload_progress_)
     final_upload_progress_ = job_->GetUploadProgress();
-  }
 
-  job_->Kill();
-  OrphanJob();
-
-  status_ = URLRequestStatus();
-  is_pending_ = false;
+  PrepareToRestart();
   Start();
   return net::OK;
 }

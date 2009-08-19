@@ -46,7 +46,6 @@ class URLRequestHttpJob : public URLRequestJob {
   virtual bool GetContentEncodings(
       std::vector<Filter::FilterType>* encoding_type);
   virtual bool IsSdchResponse() const;
-  virtual bool IsRedirectResponse(GURL* location, int* http_status_code);
   virtual bool IsSafeRedirect(const GURL& location);
   virtual bool NeedsAuth();
   virtual void GetAuthChallengeInfo(scoped_refptr<net::AuthChallengeInfo>*);

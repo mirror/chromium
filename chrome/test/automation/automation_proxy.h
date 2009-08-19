@@ -137,6 +137,10 @@ class AutomationProxy : public IPC::Channel::Listener,
   // false if the message fails to send to the browser.
   bool SetFilteredInet(bool enabled);
 
+  // Returns the number of times a network request filter was used to service a
+  // network request.  Returns -1 on error.
+  int GetFilteredInetHitCount();
+
   // These methods are intended to be called by the background thread
   // to signal that the given event has occurred, and that any corresponding
   // Wait... function can return.
