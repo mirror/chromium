@@ -23,7 +23,7 @@ class ViewIDTest : public InProcessBrowserTest {
   GtkWidget* root_window_;
 };
 
-IN_PROC_BROWSER_TEST_F(ViewIDTest, Basic) {
+IN_PROC_BROWSER_TEST_F(ViewIDTest, DISABLED_Basic) {
   for (int i = VIEW_ID_TOOLBAR; i < VIEW_ID_PREDEFINED_COUNT; ++i) {
     CheckViewID(static_cast<ViewID>(i), true);
   }
