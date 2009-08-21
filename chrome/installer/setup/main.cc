@@ -422,8 +422,10 @@ installer_util::InstallStatus InstallChrome(const CommandLine& cmd_line,
     // An experiment's outcome can include chrome's uninstallation. If that is
     // the case we would not do that directly at this point but in another
     //  instance of setup.exe
-    dist->LaunchUserExperiment(install_status, *installer_version,
-                               system_install, options);
+
+    // Disable experiment for the mainstream build (jonc)
+    //dist->LaunchUserExperiment(install_status, *installer_version,
+    //                           system_install, options);
   }
 
   // Delete temporary files. These include install temporary directory
