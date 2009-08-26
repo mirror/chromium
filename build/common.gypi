@@ -266,10 +266,10 @@
         },
         'conditions': [
           [ 'OS=="win" and msvs_use_common_release', {
-            'configuration_platform': 'Win32',
             'msvs_props': ['release.vsprops'],
           }],
           [ 'OS=="win"', {
+            'configuration_platform': 'Win32',
             'msvs_configuration_attributes': {
               'OutputDirectory': '$(SolutionDir)$(ConfigurationName)',
               'IntermediateDirectory': '$(OutDir)\\obj\\$(ProjectName)',
@@ -287,6 +287,7 @@
         [ 'OS=="win"', {
           # TODO(bradnelson): add a gyp mechanism to make this more graceful.
           'Purify': {
+            'configuration_platform': 'Win32',
             'defines': [
               'NDEBUG',
               'PURIFY',
@@ -310,12 +311,12 @@
             },
             'conditions': [
               [ 'msvs_use_common_release', {
-                'configuration_platform': 'Win32',
                 'msvs_props': ['release.vsprops'],
               }],
             ],
           },
           'Release - no tcmalloc': {
+            'configuration_platform': 'Win32',
             'defines': [
               'NDEBUG',
               'NO_TCMALLOC',
@@ -327,7 +328,6 @@
             },
             'conditions': [
               [ 'msvs_use_common_release', {
-                'configuration_platform': 'Win32',
                 'msvs_props': ['release.vsprops'],
               }],
             ],
