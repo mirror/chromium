@@ -549,7 +549,7 @@ void RenderWidgetHostViewMac::SetActive(bool active) {
   renderWidgetHostView_->about_to_validate_and_paint_ = false;
   dirtyRect = renderWidgetHostView_->invalid_rect_;
 
-  if (backing_store && backing_store->cg_layer()) {
+  if (backing_store) {
     NSRect view_bounds = [self bounds];
     gfx::Rect damaged_rect([self NSRectToRect:dirtyRect]);
 
