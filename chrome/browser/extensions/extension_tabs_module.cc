@@ -667,23 +667,8 @@ bool CaptureVisibleTabFunction::RunImpl() {
 
   screen_capture = temp_canvas.getTopPlatformDevice().accessBitmap(false);
 #elif defined(OS_MACOSX)
-  skia::PlatformCanvas temp_canvas;
-  if (!temp_canvas.initialize(backing_store->size().width(),
-                              backing_store->size().height(), true)) {
-    error_ = ExtensionErrorUtils::FormatErrorMessage(
-        keys::kInternalVisibleTabCaptureError, "");
-    return false;
-  }
-  CGContextRef temp_context = temp_canvas.beginPlatformPaint();
-  CGContextSaveGState(temp_context);
-  CGContextTranslateCTM(temp_context, 0.0, backing_store->size().height());
-  CGContextScaleCTM(temp_context, 1.0, -1.0);
-  CGContextDrawLayerAtPoint(temp_context, CGPointMake(0.0, 0.0),
-                            backing_store->cg_layer());
-  CGContextRestoreGState(temp_context);
-  temp_canvas.endPlatformPaint();
-
-  screen_capture = temp_canvas.getTopPlatformDevice().accessBitmap(false);
+  screen_capture = backing_store->canvas()->getTopPlatformDevice()
+      .accessBitmap(false);
 #elif defined(OS_LINUX)
   screen_capture = backing_store->PaintRectToBitmap(
       gfx::Rect(0, 0, backing_store->size().width(),
