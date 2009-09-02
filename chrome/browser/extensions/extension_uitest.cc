@@ -37,6 +37,8 @@ template <class ParentTestType>
 class ExtensionUITest : public ParentTestType {
  public:
   explicit ExtensionUITest(const std::string& extension_path) {
+    launch_arguments_.AppendSwitch(switches::kEnableExtensions);
+
     FilePath filename(test_data_directory_);
     filename = filename.AppendASCII(extension_path);
     launch_arguments_.AppendSwitchWithValue(switches::kLoadExtension,
