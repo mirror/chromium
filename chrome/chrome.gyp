@@ -3351,7 +3351,6 @@
         }],
         ['OS=="win"', {
           'dependencies': [
-            '../app/app.gyp:app_id',
             'installer/installer.gyp:installer_util',
             'installer/installer.gyp:installer_util_strings',
             '../breakpad/breakpad.gyp:breakpad_handler',
