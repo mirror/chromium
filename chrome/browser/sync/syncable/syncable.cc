@@ -4,8 +4,6 @@
 
 #include "chrome/browser/sync/syncable/syncable.h"
 
-#include "build/build_config.h"
-
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <time.h>
@@ -13,7 +11,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 #elif defined(OS_LINUX)
 #include <glib.h>
-#elif defined(OS_WIN)
+#elif defined(OS_WINDOWS)
 #include <shlwapi.h>  // for PathMatchSpec
 #endif
 
@@ -38,7 +36,7 @@
 #include "chrome/browser/sync/syncable/syncable_changes_version.h"
 #include "chrome/browser/sync/syncable/syncable_columns.h"
 #include "chrome/browser/sync/util/character_set_converters.h"
-#include "chrome/browser/sync/util/compat_file.h"
+#include "chrome/browser/sync/util/compat-file.h"
 #include "chrome/browser/sync/util/crypto_helpers.h"
 #include "chrome/browser/sync/util/event_sys-inl.h"
 #include "chrome/browser/sync/util/fast_dump.h"
@@ -69,7 +67,7 @@ using std::string;
 namespace syncable {
 
 int64 Now() {
-#ifdef OS_WIN
+#ifdef OS_WINDOWS
   FILETIME filetime;
   SYSTEMTIME systime;
   GetSystemTime(&systime);
@@ -93,7 +91,7 @@ int64 Now() {
 // Callback for sqlite3
 int ComparePathNames16(void*, int a_bytes, const void* a, int b_bytes,
                        const void* b) {
-#ifdef OS_WIN
+#ifdef OS_WINDOWS
   DCHECK_EQ(0, a_bytes % 2);
   DCHECK_EQ(0, b_bytes % 2);
   int result = CompareString(LOCALE_INVARIANT, NORM_IGNORECASE,
@@ -254,7 +252,7 @@ Directory::~Directory() {
 }
 
 BOOL PathNameMatch(const PathString& pathname, const PathString& pathspec) {
-#ifdef OS_WIN
+#ifdef OS_WINDOWS
   // Note that if we go Vista only this is easier:
   // http://msdn2.microsoft.com/en-us/library/ms628611.aspx
 
@@ -1868,7 +1866,7 @@ void DBName::MakeNoncollidingForEntry(BaseTransaction* trans,
 
 PathString GetFullPath(BaseTransaction* trans, const Entry& e) {
   PathString result;
-#ifdef COMPILER_MSVC
+#ifdef STL_MSVC
   result.reserve(MAX_PATH);
 #endif
   ReverseAppend(e.Get(NAME), &result);

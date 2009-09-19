@@ -4,12 +4,10 @@
 //
 // High resolution timer functions defined for each OS.
 
-#include "build/build_config.h"
-
-#if defined(OS_WIN)
-#include "chrome/browser/sync/util/highres_timer_win.h"
+#if defined(OS_WINDOWS)
+#include "chrome/browser/sync/util/highres_timer-win32.h"
 #elif defined(OS_MACOSX)
 #error "Mac timer functions are missing."
 #else
-#include "chrome/browser/sync/util/highres_timer_linux.h"
+#include "chrome/browser/sync/util/highres_timer-linux.h"
 #endif

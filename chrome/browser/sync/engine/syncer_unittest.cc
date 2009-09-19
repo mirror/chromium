@@ -13,7 +13,6 @@
 #include "base/at_exit.h"
 
 #include "base/scoped_ptr.h"
-#include "build/build_config.h"
 #include "chrome/browser/sync/engine/client_command_channel.h"
 #include "chrome/browser/sync/engine/conflict_resolution_view.h"
 #include "chrome/browser/sync/engine/conflict_resolver.h"
@@ -29,7 +28,7 @@
 #include "chrome/browser/sync/syncable/directory_manager.h"
 #include "chrome/browser/sync/syncable/syncable.h"
 #include "chrome/browser/sync/util/character_set_converters.h"
-#include "chrome/browser/sync/util/compat_file.h"
+#include "chrome/browser/sync/util/compat-file.h"
 #include "chrome/browser/sync/util/event_sys-inl.h"
 #include "chrome/test/sync/engine/mock_server_connection.h"
 #include "chrome/test/sync/engine/test_directory_setter_upper.h"
@@ -935,7 +934,7 @@ TEST_F(SyncerTest, UpdateWithZeroLengthName) {
   syncer_->SyncShare();
 }
 
-#ifdef OS_WIN
+#ifdef OS_WINDOWS
 TEST_F(SyncerTest, NameSanitizationWithClientRename) {
   ScopedDirLookup dir(syncdb_.manager(), syncdb_.name());
   ASSERT_TRUE(dir.good());

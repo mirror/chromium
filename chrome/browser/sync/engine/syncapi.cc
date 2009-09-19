@@ -4,9 +4,7 @@
 
 #include "chrome/browser/sync/engine/syncapi.h"
 
-#include "build/build_config.h"
-
-#if defined(OS_WIN)
+#if defined(OS_WINDOWS)
 #include <windows.h>
 #include <iphlpapi.h>
 #endif
@@ -79,7 +77,7 @@ static base::AtExitManager g_at_exit_manager;  // Necessary for NewCallback.
 
 struct ThreadParams {
   browser_sync::ServerConnectionManager* conn_mgr;
-#if defined(OS_WIN)
+#if defined(OS_WINDOWS)
   HANDLE exit_flag;
 #endif
 };
@@ -91,7 +89,7 @@ void* AddressWatchThread(void* arg) {
   NameCurrentThreadForDebugging("SyncEngine_AddressWatcher");
   LOG(INFO) << "starting the address watch thread";
   const ThreadParams* const params = reinterpret_cast<const ThreadParams*>(arg);
-#if defined(OS_WIN)
+#if defined(OS_WINDOWS)
   OVERLAPPED overlapped = {0};
   overlapped.hEvent = CreateEvent(NULL, FALSE, TRUE, NULL);
   HANDLE file;
@@ -170,7 +168,7 @@ static bool EndsWithSpace(const string16& string) {
 static inline void String16ToPathString(const sync_char16 *in,
                                         PathString *out) {
   string16 in_str(in);
-#if defined(OS_WIN)
+#if defined(OS_WINDOWS)
   out->assign(in_str);
 #else
   UTF16ToUTF8(in_str.c_str(), in_str.length(), out);
@@ -178,7 +176,7 @@ static inline void String16ToPathString(const sync_char16 *in,
 }
 
 static inline void PathStringToString16(const PathString& in, string16* out) {
-#if defined(OS_WIN)
+#if defined(OS_WINDOWS)
   out->assign(in);
 #else
   UTF8ToUTF16(in.c_str(), in.length(), out);
@@ -1015,7 +1013,7 @@ bool SyncManager::SyncInternal::Init(
   // platform independent in here.
   // TODO(ncarter): When this gets cleaned up, the implementation of
   // CreatePThread can also be removed.
-#if defined(OS_WIN)
+#if defined(OS_WINDOWS)
   HANDLE exit_flag = CreateEvent(NULL, TRUE /*manual reset*/, FALSE, NULL);
   address_watch_params_.exit_flag = exit_flag;
 #endif
@@ -1209,7 +1207,7 @@ void SyncManager::SyncInternal::Shutdown() {
   syncer_event_.reset();
   authwatcher_hookup_.reset();
 
-#if defined(OS_WIN)
+#if defined(OS_WINDOWS)
   // Stop the address watch thread by signaling the exit flag.
   // TODO(timsteele): Same as todo in Init().
   SetEvent(address_watch_params_.exit_flag);
@@ -1358,7 +1356,6 @@ SyncManager::Status SyncManager::SyncInternal::ComputeAggregatedStatus() {
         allstatus()->status().unsynced_count,
         allstatus()->status().conflicting_count,
         allstatus()->status().syncing,
-        false,  // TODO(ncarter): remove syncer_paused
         allstatus()->status().initial_sync_ended,
         allstatus()->status().syncer_stuck,
         allstatus()->status().updates_available,

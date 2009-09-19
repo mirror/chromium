@@ -63,7 +63,9 @@ class HttpBridge : public base::RefCountedThreadSafe<HttpBridge>,
     }
 
     virtual bool AllowSendingCookies(const URLRequest* request) const {
-      return false;
+      // TODO(chron):  http://crbug.com/20182. Change this to return false once
+      // all clients use Authenticate: header auth mode.
+      return true;
     }
 
    private:

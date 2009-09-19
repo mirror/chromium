@@ -9,7 +9,6 @@
 #include <set>
 #include <string>
 
-#include "build/build_config.h"
 #include "chrome/browser/sync/util/pthread_helpers.h"
 #include "chrome/browser/sync/util/signin.h"
 #include "chrome/browser/sync/util/sync_types.h"
@@ -101,10 +100,10 @@ class UserSettings {
   // TODO(sync): Use in-memory cache for service auth tokens on posix.
   // Have someone competent in Windows switch it over to not use Sqlite in the
   // future.
-#ifndef OS_WIN
+#ifndef OS_WINDOWS
   typedef std::map<std::string, std::string> ServiceTokenMap;
   ServiceTokenMap service_tokens_;
-#endif  // OS_WIN
+#endif  // OS_WINDOWS
 
   DISALLOW_COPY_AND_ASSIGN(UserSettings);
 };

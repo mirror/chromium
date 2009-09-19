@@ -4,7 +4,6 @@
 
 #ifdef CHROME_PERSONALIZATION
 
-#include "build/build_config.h"
 #include "base/file_version_info.h"
 #include "base/file_util.h"
 #include "base/string_util.h"

@@ -7,9 +7,8 @@
 
 #include <pthread.h>
 #include "base/logging.h"
-#include "build/build_config.h"
 
-#ifdef OS_WIN
+#ifdef OS_WINDOWS
 typedef void* thread_handle;
 #else
 typedef pthread_t thread_handle;
