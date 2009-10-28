@@ -97,7 +97,7 @@ ExtensionsService::ExtensionsService(Profile* profile,
       extension_prefs_(new ExtensionPrefs(prefs, install_directory)),
       backend_loop_(backend_loop),
       install_directory_(install_directory),
-      extensions_enabled_(true),
+      extensions_enabled_(false),
       show_extensions_prompts_(true),
       ready_(false) {
   // Figure out if extension installation should be enabled.
