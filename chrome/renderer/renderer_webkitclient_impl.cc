@@ -153,15 +153,25 @@ void RendererWebKitClientImpl::suddenTerminationChanged(bool enabled) {
 
 WebStorageNamespace* RendererWebKitClientImpl::createLocalStorageNamespace(
     const WebString& path, unsigned quota) {
+#if ENABLE_DOM_STORAGE
   if (CommandLine::ForCurrentProcess()->HasSwitch(switches::kSingleProcess))
     return WebStorageNamespace::createLocalStorageNamespace(path, quota);
   return new RendererWebStorageNamespaceImpl(DOM_STORAGE_LOCAL);
+#else
+  CHECK(false);
+  return NULL;
+#endif
 }
 
 WebStorageNamespace* RendererWebKitClientImpl::createSessionStorageNamespace() {
+#if ENABLE_DOM_STORAGE
   if (CommandLine::ForCurrentProcess()->HasSwitch(switches::kSingleProcess))
     return WebStorageNamespace::createSessionStorageNamespace();
   return new RendererWebStorageNamespaceImpl(DOM_STORAGE_SESSION);
+#else
+  CHECK(false);
+  return NULL;
+#endif
 }
 
 WebApplicationCacheHost* RendererWebKitClientImpl::createApplicationCacheHost(

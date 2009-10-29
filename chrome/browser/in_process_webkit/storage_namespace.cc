@@ -97,7 +97,7 @@ WebStorageArea* StorageNamespace::CreateWebStorageArea(const string16& origin) {
 void StorageNamespace::CreateWebStorageNamespaceIfNecessary() {
   if (storage_namespace_.get())
     return;
-
+#if ENABLE_DATABASE
   if (dom_storage_type_ == DOM_STORAGE_LOCAL) {
     storage_namespace_.reset(
         WebStorageNamespace::createLocalStorageNamespace(data_dir_path_,
@@ -106,4 +106,5 @@ void StorageNamespace::CreateWebStorageNamespaceIfNecessary() {
     storage_namespace_.reset(
         WebStorageNamespace::createSessionStorageNamespace());
   }
+#endif
 }
