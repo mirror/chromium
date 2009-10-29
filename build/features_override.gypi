@@ -12,11 +12,11 @@
     'feature_defines': [
       'ENABLE_3D_CANVAS=0',
       'ENABLE_CHANNEL_MESSAGING=1',
-      'ENABLE_DATABASE=1',
+      'ENABLE_DATABASE=0',
       'ENABLE_DATAGRID=0',
-      'ENABLE_OFFLINE_WEB_APPLICATIONS=1',
+      'ENABLE_OFFLINE_WEB_APPLICATIONS=0',
       'ENABLE_DASHBOARD_SUPPORT=0',
-      'ENABLE_DOM_STORAGE=1',
+      'ENABLE_DOM_STORAGE=0',
       'ENABLE_JAVASCRIPT_DEBUGGER=0',
       'ENABLE_JSC_MULTIPLE_THREADS=0',
       'ENABLE_ICONDATABASE=0',
@@ -32,6 +32,7 @@
       'ENABLE_SVG_FOREIGN_OBJECT=1',
       'ENABLE_SVG_FONTS=1',
       'ENABLE_VIDEO=1',
+      'ENABLE_WEB_SOCKETS=0',
       'ENABLE_WORKERS=1',
     ],
     # TODO: If the need arises, create a mechanism that will intelligently
