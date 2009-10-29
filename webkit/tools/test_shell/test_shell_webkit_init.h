@@ -182,12 +182,15 @@ class TestShellWebKitInit : public webkit_glue::WebKitClientImpl {
     return ASCIIToUTF16("en-US");
   }
 
+#if ENABLE_DATABASE
   virtual WebKit::WebStorageNamespace* createLocalStorageNamespace(
       const WebKit::WebString& path, unsigned quota) {
     return WebKit::WebStorageNamespace::createLocalStorageNamespace(path,
                                                                     quota);
   }
+#endif
 
+#if ENABLE_DOM_STORAGE
   virtual WebKit::WebStorageNamespace* createSessionStorageNamespace() {
     return WebKit::WebStorageNamespace::createSessionStorageNamespace();
   }
@@ -206,6 +209,7 @@ class TestShellWebKitInit : public webkit_glue::WebKitClientImpl {
     dom_storage_event_dispatcher_->dispatchStorageEvent(key, old_value,
         new_value, origin, is_local_storage);
   }
+#endif
 
   virtual WebKit::WebApplicationCacheHost* createApplicationCacheHost(
         WebKit::WebApplicationCacheHostClient* client) {

@@ -514,7 +514,9 @@ void ChromeClientImpl::exceededDatabaseQuota(WebCore::Frame* frame,
   // set a reasonable quota for now -- 5Mb should be enough for anybody
   // TODO(dglazkov): this should be configurable
   WebCore::SecurityOrigin* origin = frame->document()->securityOrigin();
+#if ENABLE(DATABASE)
   WebCore::DatabaseTracker::tracker().setQuota(origin, 1024 * 1024 * 5);
+#endif
 }
 
 void ChromeClientImpl::runOpenPanel(WebCore::Frame* frame,
