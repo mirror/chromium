@@ -514,7 +514,7 @@ int BrowserMain(const MainFunctionParams& parameters) {
     Upgrade::TryResult answer =
         Upgrade::ShowTryChromeDialog(StringToInt(try_chrome));
     if (answer == Upgrade::TD_NOT_NOW)
-      return ResultCodes::NORMAL_EXIT_CANCEL;
+      return ResultCodes::NORMAL_EXIT_EXP1;
     if (answer == Upgrade::TD_UNINSTALL_CHROME)
       return ResultCodes::NORMAL_EXIT_EXP2;
   }
