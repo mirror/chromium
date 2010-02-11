@@ -120,16 +120,13 @@ int GetDirectoryWriteAgeInHours(const wchar_t* path) {
   return (now_time - dir_time);
 }
 
-// Launches again this same process with switch --|flag|=|value|.
-// If system_level_toast is true, appends --system-level-toast.
+// Launches again this same process with a single switch --|flag|=|value|.
 // Does not wait for the process to terminate.
-bool RelaunchSetup(const std::wstring& flag, int value,
-                   bool system_level_toast) {
+bool RelaunchSetup(const std::wstring& flag, int value, bool system_install) {
   CommandLine cmd_line(CommandLine::ForCurrentProcess()->GetProgram());
   cmd_line.AppendSwitchWithValue(WideToASCII(flag), IntToWString(value));
-  if (system_level_toast)
-    cmd_line.AppendSwitch(
-      WideToASCII(installer_util::switches::kSystemLevelToast));
+  if (system_install)
+    cmd_line.AppendSwitch(WideToASCII(installer_util::switches::kSystemLevel));
   return base::LaunchApp(cmd_line, false, false, NULL);
 }
 
@@ -474,7 +471,7 @@ void GoogleChromeDistribution::UpdateDiffInstallStatus(bool system_install,
 // 1- Is a per-user-install and it updated: perform the experiment
 // 2- Is a system-install and it updated : relaunch as the interactive user
 // 3- It has been re-launched from the #2 case. In this case we enter
-//    this function with |system_install| true and a REENTRY_SYS_UPDATE status.
+//    this function with |system_install| false.
 void GoogleChromeDistribution::LaunchUserExperiment(
     installer_util::InstallStatus status, const installer::Version& version,
     bool system_install) {
