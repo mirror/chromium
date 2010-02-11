@@ -464,9 +464,7 @@ bool HandleNonInstallCmdLineOptions(const CommandLine& cmd_line,
     return true;
   } else if (cmd_line.HasSwitch(installer_util::switches::kInactiveUserToast)) {
     // Launch the inactive user toast experiment.
-    std::wstring flavor =
-        cmd_line.GetSwitchValue(installer_util::switches::kInactiveUserToast);
-    dist->InactiveUserToastExperiment(StringToInt(flavor));
+    dist->InactiveUserToastExperiment();
     return true;
   }
   return false;

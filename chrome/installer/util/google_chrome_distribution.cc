@@ -96,11 +96,12 @@ int GetDirectoryWriteAgeInHours(const wchar_t* path) {
   return (now_time - dir_time);
 }
 
-// Launches again this same process with a single switch --|flag|=|value|.
+// Launches again this same process with a single switch --|flag|.
 // Does not wait for the process to terminate.
-bool RelaunchSetup(const std::wstring& flag, int value) {
+bool RelaunchSetup(const std::wstring& flag) {
   CommandLine cmd_line(CommandLine::ForCurrentProcess()->GetProgram());
-  cmd_line.AppendSwitchWithValue(WideToASCII(flag), IntToWString(value));
+  // TODO: make switches into ASCII.
+  cmd_line.AppendSwitch(WideToASCII(flag));
   return base::LaunchApp(cmd_line, false, false, NULL);
 }
 
@@ -460,14 +461,14 @@ void GoogleChromeDistribution::LaunchUserExperiment(
     return;
   // The experiment needs to be performed in a different process because
   // google_update expects the upgrade process to be quick and nimble.
-  RelaunchSetup(installer_util::switches::kInactiveUserToast, 0);
+  RelaunchSetup(installer_util::switches::kInactiveUserToast);
 }
 
-void GoogleChromeDistribution::InactiveUserToastExperiment(int flavor) {
+void GoogleChromeDistribution::InactiveUserToastExperiment() {
   // User qualifies for the experiment. Launch chrome with --try-chrome=0.
   int32 exit_code = 0;
   std::wstring option(
-      StringPrintf(L"--%ls=%d", switches::kTryChromeAgain, flavor));
+      StringPrintf(L"--%ls=%d", switches::kTryChromeAgain, 0));
   if (!installer::LaunchChromeAndWaitForResult(false, option, &exit_code))
     return;
   // The chrome process has exited, figure out what happened.
