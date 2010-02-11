@@ -1,0 +1,22 @@
+# These tests fail under valgrind.
+# See http://crbug.com/29583.
+ChromeMainTest.AppLaunch
+# See http://crbug.com/29585.
+MetricsServiceTest.CrashRenderers
+# See http://crbug.com/29587.
+UnloadTest.CrossSiteInfiniteBeforeUnloadSync
+# See http://crbug.com/29592.
+WorkerTest.SharedWorkerFastLayoutTests
+WorkerTest.FLAKY_SharedWorkerFastLayoutTests
+WorkerTest.IncognitoSharedWorkers
+WorkerTest.WorkerHttpLayoutTests
+
+# Fails due to mmap failure (http://crbug.com/28439)
+WorkerTest.FLAKY_WorkerWebSocketLayoutTests
+WorkerTest.SharedWorkerHttpAuth
+WorkerTest.WorkerHttpAuth
+WorkerTest.WorkerClose
+WorkerTest.FLAKY_WorkerHttpLayoutTests
+WorkerTest.QueuedSharedWorkerShutdown
+WorkerTest.MultipleTabsQueuedSharedWorker
+WorkerTest.QueuedSharedWorkerStartedFromOtherTab
