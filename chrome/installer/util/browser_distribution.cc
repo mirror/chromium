@@ -115,6 +115,5 @@ void BrowserDistribution::LaunchUserExperiment(
 }
 
 
-void BrowserDistribution::InactiveUserToastExperiment(int flavor,
-                                                      bool system_install) {
+void BrowserDistribution::InactiveUserToastExperiment(int flavor) {
 }
