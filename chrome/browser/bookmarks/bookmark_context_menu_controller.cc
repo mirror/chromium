@@ -289,7 +289,6 @@ void BookmarkContextMenuController::AddCheckboxItem(int id) {
 }
 
 void BookmarkContextMenuController::ExecuteCommand(int id) {
-  BookmarkModel* model = RemoveModelObserver();
   if (delegate_)
     delegate_->WillExecuteCommand();
 
@@ -344,7 +343,7 @@ void BookmarkContextMenuController::ExecuteCommand(int id) {
       UserMetrics::RecordAction("BookmarkBar_ContextMenu_Remove", profile_);
 
       for (size_t i = 0; i < selection_.size(); ++i) {
-        model->Remove(selection_[i]->GetParent(),
+        model_->Remove(selection_[i]->GetParent(),
                       selection_[i]->GetParent()->IndexOfChild(selection_[i]));
       }
       selection_.clear();
@@ -401,15 +400,15 @@ void BookmarkContextMenuController::ExecuteCommand(int id) {
 
     case IDS_BOOKMARK_MANAGER_SORT:
       UserMetrics::RecordAction("BookmarkManager_Sort", profile_);
-      model->SortChildren(parent_);
+      model_->SortChildren(parent_);
       break;
 
     case IDS_CUT:
-      bookmark_utils::CopyToClipboard(model, selection_, true);
+      bookmark_utils::CopyToClipboard(model_, selection_, true);
       break;
 
     case IDS_COPY:
-      bookmark_utils::CopyToClipboard(model, selection_, false);
+      bookmark_utils::CopyToClipboard(model_, selection_, false);
       break;
 
     case IDS_PASTE: {
@@ -421,7 +420,7 @@ void BookmarkContextMenuController::ExecuteCommand(int id) {
       if (selection_.size() == 1 && selection_[0]->is_url())
         index = paste_target->IndexOfChild(selection_[0]) + 1;
 
-      bookmark_utils::PasteFromClipboard(model, parent_, index);
+      bookmark_utils::PasteFromClipboard(model_, parent_, index);
       break;
     }
 
@@ -529,13 +528,6 @@ void BookmarkContextMenuController::BookmarkNodeChildrenReordered(
 void BookmarkContextMenuController::ModelChanged() {
   if (delegate_)
     delegate_->CloseMenu();
-}
-
-BookmarkModel* BookmarkContextMenuController::RemoveModelObserver() {
-  BookmarkModel* model = model_;
-  model_->RemoveObserver(this);
-  model_ = NULL;
-  return model;
 }
 
 bool BookmarkContextMenuController::HasURLs() const {
