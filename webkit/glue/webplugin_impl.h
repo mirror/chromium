@@ -109,14 +109,25 @@ class WebPluginImpl : public WebPlugin,
     GENERAL_FAILURE
   };
 
+  // Determines the referrer value sent along with outgoing HTTP requests
+  // issued by plugins.
+  enum Referrer {
+    PLUGIN_SRC,
+    DOCUMENT_URL,
+    NO_REFERRER
+  };
+
   // Given a download request, check if we need to route the output to a frame.
   // Returns ROUTED if the load is done and routed to a frame, NOT_ROUTED or
   // corresponding error codes otherwise.
-  RoutingStatus RouteToFrame(const char* method, bool is_javascript_url,
-                             const char* target, unsigned int len,
-                             const char* buf, bool is_file_data,
-                             bool notify_needed, intptr_t notify_data,
-                             const char* url);
+  RoutingStatus RouteToFrame(const char* url,
+                             bool is_javascript_url,
+                             const char* method,
+                             const char* target,
+                             const char* buf,
+                             unsigned int len,
+                             int notify_id,
+                             Referrer referrer_flag);
 
   // Cancels a pending request.
   void CancelResource(int id);
@@ -126,10 +137,14 @@ class WebPluginImpl : public WebPlugin,
 
   // Initiates HTTP GET/POST requests.
   // Returns true on success.
-  bool InitiateHTTPRequest(int resource_id, WebPluginResourceClient* client,
-                           const char* method, const char* buf, int buf_len,
-                           const GURL& url, const char* range_info,
-                           bool use_plugin_src_as_referer);
+  bool InitiateHTTPRequest(int resource_id,
+                           WebPluginResourceClient* client,
+                           const GURL& url,
+                           const char* method,
+                           const char* buf,
+                           int buf_len,
+                           const char* range_info,
+                           bool use_plugin_src_as_referrer);
 
   gfx::Rect GetWindowClipRect(const gfx::Rect& rect);
 
@@ -181,18 +196,18 @@ class WebPluginImpl : public WebPlugin,
   // request given a handle.
   void RemoveClient(WebKit::WebURLLoader* loader);
 
-  void HandleURLRequest(const char *method,
-                        bool is_javascript_url,
-                        const char* target, unsigned int len,
-                        const char* buf, bool is_file_data,
-                        bool notify, const char* url,
-                        intptr_t notify_data, bool popups_allowed);
+  void HandleURLRequest(const char* url,
+                        const char *method,
+                        const char* target,
+                        const char* buf,
+                        unsigned int len,
+                        int notify_id,
+                        bool popups_allowed);
 
   void CancelDocumentLoad();
 
-  void InitiateHTTPRangeRequest(const char* url, const char* range_info,
-                                intptr_t existing_stream, bool notify_needed,
-                                intptr_t notify_data);
+  void InitiateHTTPRangeRequest(
+      const char* url, const char* range_info, int pending_request_id);
 
   void SetDeferResourceLoading(int resource_id, bool defer);
 
@@ -204,12 +219,14 @@ class WebPluginImpl : public WebPlugin,
   void HandleHttpMultipartResponse(const WebKit::WebURLResponse& response,
                                    WebPluginResourceClient* client);
 
-  void HandleURLRequestInternal(const char *method, bool is_javascript_url,
-                                const char* target, unsigned int len,
-                                const char* buf, bool is_file_data,
-                                bool notify, const char* url,
-                                intptr_t notify_data, bool popups_allowed,
-                                bool use_plugin_src_as_referrer);
+  void HandleURLRequestInternal(const char* url,
+                                const char *method,
+                                const char* target,
+                                const char* buf,
+                                unsigned int len,
+                                int notify_id,
+                                bool popups_allowed,
+                                Referrer referrer_flag);
 
   // Tears down the existing plugin instance and creates a new plugin instance
   // to handle the response identified by the loader parameter.
