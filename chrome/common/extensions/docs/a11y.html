@@ -15,7 +15,7 @@
     </script>
     <script type="text/javascript" src="js/api_page_generator.js"></script>
     <script type="text/javascript" src="js/bootstrap.js"></script>
-  <title>Overview - Google Chrome Extensions - Google Code</title></head><body>  <div id="gc-container" class="labs">
+  <title>Accessibility (a11y) - Google Chrome Extensions - Google Code</title></head><body>  <div id="gc-container" class="labs">
       <div id="devModeWarning">
         You are viewing extension docs in chrome via the 'file:' scheme: are you expecting to see local changes when you refresh? You'll need run chrome with --allow-file-access-from-files.
       </div>
@@ -129,7 +129,7 @@
       <div class="g-unit g-first" id="gc-toc">
         <ul>
           <li><a href="getstarted.html">Getting Started</a></li>
-          <li class="leftNavSelected">Overview</li>
+          <li><a href="overview.html">Overview</a></li>
           <li><h2><a href="devguide.html">Developer's Guide</a></h2>
             <ul>
               <li>Browser UI
@@ -153,7 +153,7 @@
               </li>
               <li>Implementation
                 <ul>
-                  <li><a href="a11y.html">Accessibility</a></li>
+                  <li class="leftNavSelected">Accessibility</li>
                   <li><a href="background_pages.html">Background Pages</a></li>
                   <li><a href="content_scripts.html">Content Scripts</a></li>
                   <li><a href="xhr.html">Cross-Origin XHR</a></li>
@@ -196,53 +196,47 @@
 
     <div class="g-unit" id="gc-pagecontent">
       <div id="pageTitle">
-        <h1 class="page_title">Overview</h1>
+        <h1 class="page_title">Accessibility (a11y)</h1>
       </div>
         <!-- TABLE OF CONTENTS -->
         <div id="toc">
           <h2>Contents</h2>
           <ol>
             <li>
-              <a href="#what">The basics</a>
-              <ol>
-                <li style="display: none; ">
-                  <a>h3Name</a>
-                </li>
-              </ol>
-            </li><li>
-              <a href="#files">Files</a>
+              <a href="#controls">Use accessible UI controls</a>
               <ol>
                 <li>
-                  <a href="#H3-2">Referring to files</a>
+                  <a href="#htmlcontrols">Standard controls</a>
                 </li><li>
-                  <a href="#H3-3">The manifest file</a>
+                  <a href="#aria">ARIA in custom controls</a>
+                </li><li>
+                  <a href="#focus">Focus in custom controls</a>
                 </li>
               </ol>
             </li><li>
-              <a href="#arch">Architecture</a>
+              <a href="#keyboard"> Support keyboard access </a>
               <ol>
                 <li>
-                  <a href="#pages">Pages</a>
+                  <a href="#navigation"> Navigation </a>
                 </li><li>
-                  <a href="#contentScripts">Content scripts</a>
+                  <a href="#shortcuts"> Shortcuts </a>
                 </li>
               </ol>
             </li><li>
-              <a href="#pageComm">Communication between pages </a>
+              <a href="#more"> Provide accessible content </a>
               <ol>
-                <li style="display: none; ">
-                  <a>h3Name</a>
+                <li>
+                  <a href="#text">Text</a>
+                </li><li>
+                  <a href="#colors">Colors</a>
+                </li><li>
+                  <a href="#sound">Sound</a>
+                </li><li>
+                  <a href="#images">Images</a>
                 </li>
               </ol>
             </li><li>
-              <a href="#incognito"> Saving data and incognito mode </a>
-              <ol>
-                <li style="display: none; ">
-                  <a>h3Name</a>
-                </li>
-              </ol>
-            </li><li>
-              <a href="#now-what"> Now what? </a>
+              <a href="#examples">Examples</a>
               <ol>
                 <li style="display: none; ">
                   <a>h3Name</a>
@@ -291,371 +285,446 @@
         <!-- /TABLE OF CONTENTS -->
 
         <!-- STATIC CONTENT PLACEHOLDER -->
-        <div id="static"><div id="pageData-name" class="pageData">Overview</div>
+        <div id="static"><div id="pageData-name" class="pageData">Accessibility (a11y)</div>
 <div id="pageData-showTOC" class="pageData">true</div>
 
 <p>
-Once you've finished this page
-and the
-<a href="getstarted.html">Getting Started</a> tutorial,
-you'll be all set to start writing extensions.
-</p>
-
-
-<h2 id="what">The basics</h2>
-
-<p>
-An extension is a zipped bundle of files —
-HTML, CSS, JavaScript, images, and anything else you need —
-that adds functionality to the Google Chrome browser.
-Extensions are essentially web pages,
-and they can use all the APIs
-that the browser provides
-to web pages,
-from XMLHttpRequest to JSON to HTML5 local storage.
+When you design an extension,
+try to make it as accessible as possible
+to people with disabilities such as
+visual impairment, hearing loss, and limited dexterity.
 </p>
 
 <p>
-Many extensions add UI to Google Chrome,
-in the form of
-<a href="browserAction.html">browser actions</a>
-or <a href="pageAction.html">page actions</a>.
-Extensions can also interact programmatically
-with browser features such as
-<a href="bookmarks.html">bookmarks</a>
-and <a href="tabs.html">tabs</a>.
-To interact with web pages or servers,
-extensions can use
-<a href="content_scripts.html">content scripts</a> or
-<a href="xhr.html">cross-origin XMLHttpRequests</a>.
+Everyone — not just people with special needs —
+can benefit from the alternative access modes
+that accessible extensions provide.
+For example, keyboard shortcuts are important
+for blind people and people with limited dexterity,
+but they also help power users get things done
+more quickly without using a mouse.
+Captions and transcripts give deaf people access to audio content,
+but they are also useful to language learners.
 </p>
 
 <p>
-<b>Note:</b>
-Each extension can have at most one browser action or page action.
-Choose a <b>browser action</b> when the extension is relevant to most pages.
-Choose a <b>page action</b> when the extension's icon
-should appear or disappear,
-depending on the page.
+People can interact with your extension in a variety of ways.
+They might use a standard monitor, keyboard, and mouse,
+or they might use a screen magnifier and just a keyboard.
+Another possibility is a <em>screen reader</em>,
+an assistive application tool that interprets
+what's displayed onscreen
+for a blind or visually impaired user.
+A screen reader might speak out loud or produce Braille output.
 </p>
 
 <p>
-See the <a href="devguide.html">Developer's Guide</a>
-for a complete list of extension features,
-with implementation details
-for each one.
+Although you can't predict what tools people will use,
+by following a few simple guidelines
+you can write an extension that is
+more likely to be accessible to more people.
+The guidelines on this page aren't going to
+make your extension accessible for absolutely everyone,
+but they're a good starting point.
 </p>
 
-<h2 id="files">Files</h2>
-<p>
-Each extension has the following files:
-<!-- PENDING: This could use a picture -->
-</p>
 
-<ul>
-  <li>A <b>manifest file</b></li>
-  <li>One or more <b>HTML files</b> (unless the extension is a theme)</li>
-  <li><em>Optional:</em> One or more <b>JavaScript files</b></li>
-  <li><em>Optional:</em> Any other files your extension needs —
-  for example, image files</li>
-</ul>
+<h2 id="controls">Use accessible UI controls</h2>
 
 <p>
-While you're working on your extension,
-you put all these files into a single folder.
-When you distribute your extension,
-the contents of the folder are packaged into a special ZIP file
-that has a <code>.crx</code> suffix.
-If you put your extension in the gallery,
-the gallery creates the <code>.crx</code> file for you.
-For details on distributing extensions,
-see <a href="hosting.html">Hosting</a>.
+First, use UI controls that support accessibility.
+The easiest way to get an accessible control is to use a
+standard HTML control.
+If you need to build a custom control,
+keep in mind that it's much easier
+to make the control accessible from the beginning
+than to go back and add accessibility support later.
 </p>
 
-
-<a name="H3-2"></a><h3>Referring to files</h3>
+<h3 id="htmlcontrols">Standard controls</h3>
 
 <p>
-You can put any file you like into an extension,
-but how do you use it?
-Usually,
-you can refer to the file using a relative URL,
-just as you would in an ordinary HTML page.
-Here's an example of referring to
-a file named <code>myimage.png</code>
-that's in a subfolder named <code>images</code>.
+Try to use standard HTML UI controls whenever possible.
+Standard HTML controls (shown in the following figure)
+are keyboard accessible, scale easily,
+and are generally understood by screen readers.
 </p>
 
-<pre>&lt;img <b>src="images/myimage.png"</b>&gt;
+<img src="images/a11y/standard-html-controls.png" width="550" height="350" alt="Screenshots and code for button, checkbox, radio, text, select/option, and link">
+
+
+<h3 id="aria">ARIA in custom controls</h3>
+
+<p>
+ARIA is a specification for making UI controls accessible to screen readers
+by means of a standard set of DOM attributes.
+These attributes provide clues to the screen reader
+about the function and current state of controls on a web page.
+ARIA is a
+<a href=" http://www.w3.org/WAI/intro/aria">work in progress at the W3C</a>.
+</p>
+
+<p>
+Adding ARIA support to custom controls in your extension
+involves modifying DOM elements to add attributes
+Google Chrome uses
+to raise events during user interaction.
+Screen readers respond to these events
+and describe the function of the control.
+The DOM attributes specified by ARIA are classified into
+<em>roles</em>, <em>states</em>, and <em>properties</em>.
+</p>
+
+<p>
+The ARIA attribute <em>role</em>
+is an indication of the control type
+and describes the way the control should behave.
+It is expressed with the DOM attribute <code>role</code>,
+with a value set to one of the pre-defined ARIA role strings.
+Because ARIA roles are static,
+the role attribute should not change its value.
+</p>
+
+<p>
+The <a href="http://www.w3.org/WAI/PF/aria/roles">ARIA Role Specification</a>
+holds detailed information on how to pick the correct role.
+For example, if your extension includes a toolbar,
+set the <code>role</code> attribute of the toolbar's DOM element as follows:
+</p>
+
+<pre>&lt;div role="toolbar"&gt;
 </pre>
 
 <p>
-As you might notice while you use the Google Chrome debugger,
-every file in an extension is also accessible by an absolute URL like this:
+ARIA attributes are also used to describe
+the current state and properties of controls of a particular role.
+A <em>state</em> is dynamic and should be updated during user interaction.
+For example, a control with the role "checkbox"
+could be in the states "checked" or "unchecked".
+A <em>property</em> is not generally dynamic,
+but is similar to a state
+in that it expresses specific information about a control.
+For more information on ARIA states and properties,
+refer to the
+<a href="http://www.w3.org/TR/wai-aria/states_and_properties">W3C States and Properties specification</a>.
 </p>
 
-<blockquote>
-<b>chrome-extension://</b><em>&lt;extensionID&gt;</em><b>/</b><em>&lt;pathToFile&gt;</em>
-</blockquote>
-
-<p>
-In that URL, the <em>&lt;extensionID&gt;</em> is a unique identifier
-that the extension system generates for each extension.
-You can see the IDs for all your loaded extensions
-by going to the URL <b>chrome://extensions</b>.
-The <em>&lt;pathToFile&gt;</em> is the location of the file
-under the extension's top folder;
-it's the same as the relative URL.
-</p>
-
-<!-- [PENDING: Should mention/reflect/link to <a href="http://dev.chromium.org/developers/design-documents/extensions/i18n">internationalization</a> when it's ready.] -->
-
-
-<a name="H3-3"></a><h3>The manifest file</h3>
-
-<p>
-The manifest file, called <code>manifest.json</code>,
-gives information about the extension,
-such as the most important files
-and the capabilities that the extension might use.
-Here's a typical manifest file for a browser action
-that uses information from google.com:
-</p>
-
-<pre>{
-  "name": "My Extension",
-  "version": "2.1",
-  "description": "Gets information from Google.",
-  "icons": { "128": "icon_128.png" },
-  "background_page": "bg.html",
-  "permissions": ["http://*.google.com/", "https://*.google.com/"],
-  "browser_action": {
-    "default_title": "",
-    "default_icon": "icon_19.png",
-    "default_popup": "popup.html"
-  }
-}</pre>
-
-<p>
-For details, see
-<a href="manifest.html">Manifest Files</a>.
-</p>
-
-<h2 id="arch">Architecture</h2>
-
-<p>
-Most extensions have a
-<a href="background_pages.html">background page</a>,
-an invisible page
-that holds the main logic of the extension.
-</p>
-
-<img src="images/arch-1.gif" width="232" height="168" alt="Two windows and a box representing a background page (background.html). One window has a yellow icon; the other has both a yellow icon and a blue icon. The yellow icons are connected to the background page.">
-
-<p>
-The preceding figure shows a browser
-that has at least two extensions installed:
-a browser action (yellow icon)
-and a page action (blue icon).
-The browser action's background page,
-which is defined by an HTML file
-(<code>background.html</code>),
-has JavaScript code that controls
-the behavior of the browser action in both windows.
-</p>
-
-
-<h3 id="pages">Pages</h3>
-
-<p>
-The background page isn't the only HTML page
-that an extension can have.
-For example, a browser action can have a popup,
-which is implemented by an HTML file.
-Extensions can also
-use <a href="tabs.html#Method-create"><code>chrome.tabs.create()</code></a>
-or <code>window.open()</code>
-to display HTML files that are in the extension.
-</p>
-
-<p>
-The HTML pages inside an extension
-have complete access to each other's DOMs,
-and they can invoke functions on each other.
-</p>
-
-<p>
-The following figure shows the architecture
-of a browser action's popup.
-The popup's contents are a web page
-defined by an HTML file
-(<code>popup.html</code>).
-The popup doesn't need to duplicate code
-that's in the background page
-(<code>background.html</code>)
-because the popup can invoke functions on the background page.
-</p>
-
-<img src="images/arch-2.gif" width="256" height="168" alt="A browser window containing a browser action that's displaying a popup. The popup's HTML file (popup.html) can communicate with the extension's background page (background.html).">
-
-<p>
-See the <a href="browserAction.html">Browser Actions</a> page and
-the <a href="#pageComm">Communication between pages</a> section
-for more details.
-</p>
-
-
-<h3 id="contentScripts">Content scripts</h3>
-
-<p>
-If your extension needs to interact with web pages,
-then it needs a <em>content script</em>.
-A content script is some JavaScript
-that executes in the context of a page
-that's been loaded into the browser.
-Think of a content script as part of that loaded page,
-not as part of the extension it was packaged with
-(its <em>parent extension</em>).
-</p>
-
-<!-- [PENDING: Consider explaining that the reason content scripts are separated from the extension is due to chrome's multiprocess design.  Something like:
-
-Each extension runs in its own process.
-To have rich interaction with a web page, however,
-the extension must be able to
-run some code in the web page's process.
-Extensions accomplish this with content scripts.]
--->
-
-<p>
-Content scripts can read details of the web pages the browser visits,
-and they can make changes to the pages.
-In the following figure,
-the content script
-can read and modify
-the DOM for the displayed web page.
-It cannot, however, modify the DOM of its parent extension's background page.
-</p>
-
-<img src="images/arch-3.gif" width="238" height="169" alt="A browser window with a browser action (controlled by background.html) and a content script (controlled by contentscript.js).">
-
-<p>
-Content scripts aren't completely cut off from their parent extensions.
-A content script can exchange messages with its parent extension,
-as the arrows in the following figure show.
-For example, a content script might send a message
-whenever it finds an RSS feed in a browser page.
-Or a background page might send a message
-asking a content script to change the appearance of its browser page.
-</p>
-
-<img src="images/arch-cs.gif" width="238" height="194" alt="Like the previous figure, but showing more of the parent extension's files, as well as a communication path between the content script and the parent extension.">
-
-<!-- [PENDING: Add overview of message passing.] -->
-
-<p>
-For more information,
-see <a href="content_scripts.html">Content Scripts</a>.
-</p>
-
-
-<h2 id="pageComm">Communication between pages </h2>
-
-<p>
-The HTML pages within an extension often need to communicate.
-<!-- [PENDING: For example, ...] -->
-Because all of an extension's pages
-execute in same process on the same thread,
-the pages can make direct function calls to each other.
-</p>
-
-<p>
-To find pages in the extension, use
-<a href="extension.html"><code>chrome.extension</code></a>
-methods such as
-<code>getViews()</code> and
-<code>getBackgroundPage()</code>.
-Once a page has a reference to other pages within the extension,
-the first page can invoke functions on the other pages,
-and it can manipulate their DOMs.
-</p>
-
-<!-- [PENDING: Here's an example of communication between xyz and the background page.  (code example goes here)] -->
-
-
-<h2 id="incognito"> Saving data and incognito mode </h2>
-
-<p>
-Extensions can save data using
-the HTML5 <a href="http://dev.w3.org/html5/webstorage/">web storage API</a>
-(such as <code>localStorage</code>)
-or by making server requests that result in saving data.
-Whenever you want to save something,
-first consider whether it's
-from a window that's in incognito mode.
-By default, extensions don't run in incognito windows.
-However, users can selectively enable your extension for incognito mode,
-so you need to consider what a user expects
-from your extension in that case.
-</p>
-
-<p>
-<em>Incognito mode</em> promises that the window will leave no tracks.
-When dealing with data from incognito windows,
-do your best to honor this promise.
-For example, if your extension normally
-saves browsing history to the cloud,
-don't save history from incognito windows.
-On the other hand, you can store
-your extension's settings from any window,
-incognito or not.
-</p>
 
 <p class="note">
-<b>Rule of thumb:</b>
-If a piece of data might show where a user
-has been on the web or what the user has done,
-don't store it if it's from an incognito window.
+<b>Note:</b>
+You don't have to use
+all of the states and properties available for a particular role.
 </p>
 
 <p>
-To detect whether a window is in incognito mode,
-check the <code>incognito</code> property of the relevant
-<a href="tabs.html#type-Tab">Tab</a> or
-<a href="windows.html#type-Window">Window</a> object.
+Here's an example of adding
+the ARIA property <code>aria-activedescendant</code>
+to the example toolbar control:
+</p>
+
+<pre>&lt;div role="toolbar" tabindex="0" aria-activedescendant="button1"&gt;
+</pre>
+
+<p>
+The
+<a href="http://www.w3.org/WAI/PF/aria/states_and_properties#aria-activedescendant"><code>aria-activedescendant</code></a>
+property specifies which child of the toolbar receives focus
+when the toolbar receives focus.
+In this example, the toolbar's first button
+(which has the <code>id</code> "button1")
+is the child that gets focus.
+The code <code>tabindex="0"</code>
+specifies that the toolbar
+receives focus in document order.
+</p>
+
+<p>
+Here's the complete specification for the example toolbar:
+</p>
+
+<pre>&lt;div role="toolbar" tabindex="0" aria-activedescendant="button1"&gt;
+  &lt;img src="buttoncut.png" role="button" alt="cut" id="button1"&gt;
+  &lt;img src="buttoncopy.png" role="button" alt="copy" id="button2"&gt;
+  &lt;img src="buttonpaste.png" role="button" alt="paste" id="button3"&gt;
+&lt;/div&gt;
+</pre>
+
+<p>
+Once ARIA roles, states, and properties are added to the DOM of a control,
+Google Chrome raises the appropriate events to the screen reader.
+Because ARIA support is still a work in progress,
+Google Chrome might not raise an event for every ARIA property,
+and screen readers might not recognize all of the events being raised.
+You can find more information on ARIA support in Google Chrome in the
+<a href="http://www.chromium.org/developers/design-documents/accessibility#TOC-WAI-ARIA-Support">Chromium Accessibility Design Document</a>.
+</p>
+
+<p>
+For a quick tutorial on adding ARIA controls to custom controls, see
+<a href="http://www.w3.org/2010/Talks/www2010-dsr-diy-aria/">Dave Raggett's presentation from WWW2010</a>.
+
+</p><h3 id="focus">Focus in custom controls</h3>
+
+<p>
+Make sure that operation and navigation controls of your extension
+can receive keyboard focus.
+Operation controls might include
+buttons, trees, and list boxes.
+Navigation controls might include tabs and menu bars.
+</p>
+
+<p>
+By default, the only elements in the HTML DOM
+that can receive keyboard focus
+are anchors, buttons, and form controls.
+However, setting the HTML attribute <code>tabIndex</code> to <code>0</code>
+places DOM elements in the default tab sequence,
+enabling them to receive keyboard focus.
 For example:
 </p>
 
-<pre>var bgPage = chrome.extension.getBackgroundPage();
+<pre><em>element</em>.tabIndex = 0
+</pre>
 
-function saveTabData(tab, data) {
-  if (tab.incognito) {
-    bgPage[tab.url] = data;       // Persist data ONLY in memory
-  } else {
-    localStorage[tab.url] = data; // OK to store data
-}
+<p>
+Setting <code>tabIndex = -1</code> removes the element from the tab sequence
+but still allows the element to receive keyboard focus programmatically.
+Here's an example of setting keyboard focus:
+</p>
+
+<pre><em>element</em>.focus();
+</pre>
+
+<p>
+Ensuring that your custom UI controls include keyboard support
+is important not only for users who don't use the mouse
+but also because screen readers use keyboard focus
+to determine which control to describe.
+</p>
+
+<h2 id="keyboard"> Support keyboard access </h2>
+
+<p>
+People should be able to use your extension
+even if they can't or don't want to use a mouse.
+</p>
+
+<h3 id="navigation"> Navigation </h3>
+
+<p>
+Check that the user can navigate between
+the different parts of your extension
+without using the mouse.
+Also check that any popups on page actions or browser actions
+are keyboard navigable. 
+</p>
+
+<p class="note">
+<b>Note:</b>
+We're improving keyboard accessibility to Google Chrome's interface;
+keyboard navigation to the icons of page actions and browser actions
+will be coming soon.
+</p>
+
+<p>
+Make sure that it's easy to see
+which part of the interface has keyboard focus.
+Usually a focus outline moves around the interface,
+but if you’re using CSS heavily this outline might be suppressed 
+or the contrast might be reduced.
+Two examples of focus outline follow.
+</p>
+
+<img src="images/a11y/focus-outline-2.png" width="200" height="75" alt="A focus outline on a Search button">
+<br>
+<img src="images/a11y/focus-outline.png" width="400" height="40" alt="A focus outline on one of a series of links">
+
+<h3 id="shortcuts"> Shortcuts </h3>
+
+<p>
+Although the most common keyboard navigation strategy involves
+using the Tab key to move focus through the extension interface,
+that's not always the easiest or most efficient way
+to use the interface.
+You can make keyboard navigation easier
+by providing explicit keyboard shortcuts.
+</p>
+
+<p>
+To implement shortcuts,
+connect keyboard event listeners to your controls.
+A good reference is the DHTML Style Guide Working Group’s
+<a href="http://dev.aol.com/dhtml_style_guide">guidelines for keyboard shortcuts</a>.
+</p>
+
+<p>
+A good way to ensure discoverability of keyboard shortcuts
+is to list them somewhere.
+Your extension’s
+<a href="options.html">Options page</a>
+might be a good place to do this.
+</p>
+
+<p>
+For the example toolbar,
+a simple JavaScript keyboard handler could look like the following.
+Note how the ARIA property <code>aria-activedescendant</code>
+is updated in response to user input
+to reflect the current active toolbar button.
+</p>
+
+<pre>&lt;head&gt;
+&lt;script&gt;		
+ function optionKeyEvent(event) {
+  var tb = event.target;
+  var buttonid; 
+ 
+  ENTER_KEYCODE = 13;
+  RIGHT_KEYCODE = 39;
+  LEFT_KEYCODE = 37;
+  // Partial sample code for processing arrow keys.
+  if (event.type == "keydown") {
+    // Implement circular keyboard navigation within the toolbar buttons
+    if (event.keyCode == ENTER_KEYCODE) {
+      ExecuteButtonAction(getCurrentButtonID());
+      <em>// getCurrentButtonID defined elsewhere </em>
+    } else if (event.keyCode == event.RIGHT_KEYCODE) {
+      // Change the active toolbar button to the one to the right (circular). 
+      var buttonid = getNextButtonID();
+      <em>// getNextButtonID defined elsewhere </em>
+      tb.setAttribute("aria-activedescendant", buttonid); 
+    } else if (event.keyCode == event.LEFT_KEYCODE) {
+      // Change the active toolbar button to the one to the left (circular). 
+      var buttonid = getPrevButtonID();
+      <em>// getPrevButtonID defined elsewhere </em>
+      tb.setAttribute("aria-activedescendant", buttonid); 
+    } else {
+      return true;
+    }
+    return false;
+  }
+}  
+&lt;/script&gt;		
+
+&lt;div role="toolbar" tabindex="0" aria-activedescendant="button1" id="tb1" 
+     onkeydown="return optionKeyEvent(event);"
+     onkeypress="return optionKeyEvent(event);"&gt;
+  &lt;img src="buttoncut" role="button" alt="cut" id="button1"&gt;      
+  &lt;img src="buttoncopy" role="button" alt="copy" id="button1"&gt;     
+  &lt;img src="buttonpaste" role="button" alt="paste" id="button1"&gt;     
+&lt;/div&gt;
 </pre>
 
 
-<h2 id="now-what"> Now what? </h2>
+<h2 id="more"> Provide accessible content </h2>
+
 
 <p>
-Now that you've been introduced to extensions,
-you should be ready to write your own.
-Here are some ideas for where to go next:
+The remaining guidelines might be familiar
+because they reflect good practices for all web content,
+not just extensions.
 </p>
 
-<ul>
-  <li> <a href="getstarted.html">Tutorial: Getting Started</a> </li>
-  <li> <a href="tut_debugging.html">Tutorial: Debugging</a> </li>
-  <li> <a href="devguide.html">Developer's Guide</a> </li>
-  <li> <a href="http://dev.chromium.org/developers/design-documents/extensions/samples">Samples</a> </li>
-  <li> <a href="http://www.youtube.com/view_play_list?p=CA101D6A85FE9D4B">Videos</a>,
-    such as
-    <a href="http://www.youtube.com/watch?v=B4M_a7xejYI&amp;feature=PlayList&amp;p=CA101D6A85FE9D4B&amp;index=6">Extension Message Passing</a>
-    </li>
-</ul>
-</div>
+<h3 id="text">Text</h3>
+
+<p>
+Evaluate your use of text in your extension.
+Many people might find it helpful
+if you provide a way to increase the text size within your extension.
+If you are using keyboard shortcuts,
+make sure that they don't interfere with
+the zoom shortcuts built into Google Chrome.
+</p>
+
+<p>
+As an indicator of the flexibility of your UI,
+apply the <a href="http://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-scale">200% test</a>.
+If you increase the text size or page zoom 200%,
+is your extension still usable?
+</p>
+
+<p>
+Also, avoid baking text into images:
+users cannot modify the size of text displayed as an image,
+and screenreaders cannot interpret images.
+Consider using a web font instead,
+such as one of the fonts collected in the
+<a href="http://code.google.com/apis/webfonts/">Google Font API</a>.
+Text styled in a web font is searchable,
+scales to different sizes,
+and is accessible to people using screen readers.
+</p>
+
+<h3 id="colors">Colors</h3>
+
+<p>
+Check that there is sufficient contrast between
+background color and foreground/text color in your extension.
+<a href="http://snook.ca/technical/colour_contrast/colour.html">This contrast checking tool</a>
+checks whether your background and foreground colors
+provide appropriate contrast.
+If you’re developing in a Windows environment,
+you can also enable High Contrast Mode
+to check the contrast of your extension.
+When evaluating contrast,
+verify that every part of your extension that relies on
+color or graphics to convey information is clearly visible.
+For specific images, you can use a tool such as the
+<a href="http://www.vischeck.com/vischeck/">Vischeck simulation tool</a>
+to see what an image looks like in various forms of color deficiency.
+</p>
+
+<p>
+You might consider offering different color themes,
+or giving the user the ability to customize the color scheme
+for better contrast. 
+</p>
+
+<h3 id="sound">Sound</h3>
+
+<p>
+If your extension relies upon sound or video to convey information,
+ensure that captions or a transcript are available.
+See the
+<a href="http://www.dcmp.org/ciy/">Described and Captioned Media Program guidelines</a>
+for more information on captions. 
+</p>
+
+<h3 id="images">Images</h3>
+
+<p>
+Provide informative alt text for your images.
+For example:
+</p>
+
+<pre>&lt;img src="img.jpg" alt="The logo for the extension"&gt;
+</pre>
+
+<p>
+Use the alt text to state the purpose of the image
+rather than as a literal description of the contents of an image.
+Spacer images or purely decorative images
+should have blank ("") alt text
+or be removed from the HTML entirely and placed in the CSS.
+</p>
+
+<p>
+If you must use text in an image,
+include the image text in the alt text.
+A good resource to refer to is the
+<a href="http://www.webaim.org/techniques/alttext/">WebAIM article on appropriate alt text</a>.
+
+</p><h2 id="examples">Examples</h2>
+
+<p>
+For an example that implements keyboard navigation and ARIA properties, see
+<a href="http://src.chromium.org/viewvc/chrome/trunk/src/chrome/common/extensions/docs/examples/extensions/news_a11y/">examples/extensions/news_a11y</a>
+(compare it to
+<a href="http://src.chromium.org/viewvc/chrome/trunk/src/chrome/common/extensions/docs/examples/extensions/news/">examples/extensions/news</a>).
+For more examples and for help in viewing the source code,
+see <a href="samples.html">Samples</a>.
+
+</p></div>
 
         <!-- API PAGE -->
         <div class="apiPage" style="display: none; ">
@@ -787,7 +856,7 @@ Here are some ideas for where to go next:
 
           <!-- TYPES -->
           <div class="apiGroup">
-            <a name="types.sort(sortByName)"></a>
+            <a name="types"></a>
             <h3 id="types">Types</h3>
 
             <!-- iterates over all types -->
