@@ -54,11 +54,6 @@ using WebKit::WebContextMenuData;
 using WebKit::WebMediaPlayerAction;
 
 // static
-const size_t RenderViewContextMenu::kMaxExtensionItemTitleLength = 75;
-// static
-const size_t RenderViewContextMenu::kMaxSelectionTextLength = 50;
-
-// static
 bool RenderViewContextMenu::IsDevToolsURL(const GURL& url) {
   return url.SchemeIs(chrome::kChromeUIScheme) &&
       url.host() == chrome::kChromeUIDevToolsHost;
@@ -207,8 +202,7 @@ void RenderViewContextMenu::AppendExtensionItems(
   } else {
     ExtensionMenuItem* item = items[0];
     extension_item_map_[menu_id] = item->id();
-    title = item->TitleWithReplacement(PrintableSelectionText(),
-                                       kMaxExtensionItemTitleLength);
+    title = item->TitleWithReplacement(PrintableSelectionText());
     submenu_items = GetRelevantExtensionItems(item->children(), params_);
   }
 
@@ -249,8 +243,7 @@ void RenderViewContextMenu::RecursivelyAppendExtensionItems(
     if (menu_id >= IDC_EXTENSIONS_CONTEXT_CUSTOM_LAST)
       return;
     extension_item_map_[menu_id] = item->id();
-    string16 title = item->TitleWithReplacement(selection_text,
-                                                kMaxExtensionItemTitleLength);
+    string16 title = item->TitleWithReplacement(selection_text);
     if (item->type() == ExtensionMenuItem::NORMAL) {
       ExtensionMenuItem::List children =
           GetRelevantExtensionItems(item->children(), params_);
@@ -1374,8 +1367,7 @@ bool RenderViewContextMenu::IsDevCommandEnabled(int id) const {
 }
 
 string16 RenderViewContextMenu::PrintableSelectionText() {
-  return WideToUTF16(l10n_util::TruncateString(params_.selection_text,
-                                               kMaxSelectionTextLength));
+  return WideToUTF16(l10n_util::TruncateString(params_.selection_text, 50));
 }
 
 // Controller functions --------------------------------------------------------

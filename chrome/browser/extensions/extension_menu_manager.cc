@@ -6,7 +6,6 @@
 
 #include <algorithm>
 
-#include "app/l10n_util.h"
 #include "base/logging.h"
 #include "base/stl_util-inl.h"
 #include "base/string_util.h"
@@ -77,16 +76,11 @@ std::set<ExtensionMenuItem::Id> ExtensionMenuItem::RemoveAllDescendants() {
 }
 
 string16 ExtensionMenuItem::TitleWithReplacement(
-    const string16& selection, size_t max_length) const {
+    const string16& selection) const {
   string16 result = UTF8ToUTF16(title_);
   // TODO(asargent) - Change this to properly handle %% escaping so you can
   // put "%s" in titles that won't get substituted.
   ReplaceSubstringsAfterOffset(&result, 0, ASCIIToUTF16("%s"), selection);
-
-  if (result.length() > max_length) {
-    result = WideToUTF16(l10n_util::TruncateString(UTF16ToWideHack(result),
-                                                   max_length));
-  }
   return result;
 }
 
