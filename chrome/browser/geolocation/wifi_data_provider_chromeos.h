@@ -25,6 +25,8 @@ class WifiDataProviderChromeOs : public WifiDataProviderCommon {
   virtual WlanApiInterface* NewWlanApi();
   virtual PollingPolicyInterface* NewPollingPolicy();
 
+  scoped_ptr<chromeos::NetworkLibrary> network_library_;
+
   DISALLOW_COPY_AND_ASSIGN(WifiDataProviderChromeOs);
 };
 
