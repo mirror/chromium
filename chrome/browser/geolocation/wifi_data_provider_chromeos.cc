@@ -84,11 +84,11 @@ WifiDataProviderCommon::WlanApiInterface*
 
 WifiDataProviderCommon::WlanApiInterface*
     WifiDataProviderChromeOs::NewWlanApi() {
-  if (network_library_ == NULL) {
-    network_library_.reset(new chromeos::NetworkLibraryImpl());
-    // TODO(joth): Check net_lib loaded ok, if not return NULL.
-  }
-  return NewWlanApi(network_library_.get());
+  chromeos::CrosLibrary* cros_lib = chromeos::CrosLibrary::Get();
+  DCHECK(cros_lib);
+  if (!cros_lib->EnsureLoaded())
+    return NULL;
+  return NewWlanApi(cros_lib->GetNetworkLibrary());
 }
 
 PollingPolicyInterface* WifiDataProviderChromeOs::NewPollingPolicy() {
