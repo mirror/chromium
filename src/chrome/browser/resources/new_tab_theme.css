@@ -1,0 +1,135 @@
+html {
+  background-image: url(chrome://theme/IDR_THEME_NTP_BACKGROUND?$1);
+  background-color: $2; /* COLOR_NTP_BACKGROUND */
+  background-position: $3;
+  background-repeat: $5;
+  overflow: hidden;
+}
+
+html[bookmarkbarattached='true'] {
+  background-position: $4;
+}
+
+body {
+  color: $8; /* COLOR_NTP_TEXT */
+  height: 100%;
+  overflow: auto;
+}
+
+/* TODO(aa): Is this still in use? The styling may be incorrect with M7 NTP
+   rework. */
+#notification.first-run {
+  background-color: $$1; /* COLOR_NTP_SECTION */
+  border-color: $$2; /* COLOR_NTP_SECTION_BORDER */
+}
+
+#notification.first-run .link {
+   color: $$6; /* COLOR_NTP_LINK_UNDERLINE */
+}
+
+#notification.first-run .link-color {
+  color: $9; /* COLOR_NTP_LINK */
+}
+
+.thumbnail {
+  border-color: $$1; /* COLOR_NTP_SECTION */
+}
+
+.thumbnail-container,
+.thumbnail-container > .title {
+  color: $8; /* COLOR_NTP_TEXT */
+}
+
+.thumbnail-container:focus .thumbnail,
+.thumbnail-container:hover .thumbnail {
+  border-color: $6; /* COLOR_NTP_HEADER */
+}
+
+.thumbnail-container:focus .edit-bar,
+.thumbnail-container:hover .edit-bar {
+  background-color: $6; /* COLOR_NTP_HEADER */
+  background-image: -webkit-gradient(linear, left top, left bottom,
+                                     from($7), /* color_header_gradient_light */
+                                     to($6)); /* COLOR_NTP_HEADER */
+}
+.thumbnail-container:hover > .edit-mode-border {
+  background-color: $6; /* COLOR_NTP_HEADER */
+}
+
+.filler .thumbnail-wrapper {
+  border: 3px solid $$1; /* COLOR_NTP_SECTION */
+  background-color: $2; /* COLOR_NTP_BACKGROUND */
+}
+
+.filler .thumbnail {
+  border: 1px solid $2; /* COLOR_NTP_BACKGROUND */
+  background-color: $$1; /* COLOR_NTP_SECTION */
+}
+
+#option-button {
+  background-color: $7; /* color_header_gradient_light */
+  -webkit-mask-image: url(chrome://theme/IDR_NEWTAB_MENU_MASK);
+}
+
+.miniview {
+  color: $8; /* COLOR_NTP_TEXT */
+}
+
+.miniview > span > span {
+  color: $$6; /* COLOR_NTP_LINK_UNDERLINE */
+  text-decoration: underline;
+}
+
+.miniview > span > span > .item {
+  color: $9; /* COLOR_NTP_LINK */
+  text-decoration: none;
+}
+
+#attribution {
+  display: $$5;
+  color: $9; /* COLOR_NTP_LINK */
+  text-align: end;
+}
+
+#tip-line {
+  color: $8; /* COLOR_NTP_TEXT */
+}
+
+.link-color {
+  color: $9; /* COLOR_NTP_LINK */
+}
+
+:link,
+:visited,
+.link {
+  color: $$6; /* COLOR_NTP_LINK_UNDERLINE */
+}
+
+.section > h2 {
+  color: $$9;
+  background-image: url(chrome://theme/IDR_NEWTAB_SECTION_HEADER_BACKGROUND_A);
+}
+
+.section.hidden > h2 {
+  color: $$8; /* COLOR_NTP_SECTION_HEADER_TEXT */
+  background-image: url(chrome://theme/IDR_NEWTAB_SECTION_HEADER_BACKGROUND);
+}
+
+.section.hidden:not([noexpand]) > h2:hover {
+  color: $$9;
+  background-image: url(chrome://theme/IDR_NEWTAB_SECTION_HEADER_BACKGROUND_H);
+}
+
+.section > h2 > span {
+  background: $2; /* COLOR_NTP_BACKGROUND */
+}
+
+#apps-section .app a {
+  color: $8; /* COLOR_NTP_TEXT */
+}
+
+#apps-section .app:hover > .front > a,
+#apps-section .app > .back {
+  color: $$3; /* COLOR_NTP_SECTION_TEXT */
+  background-color: $$1; /* COLOR_NTP_SECTION */;
+}

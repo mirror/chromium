@@ -1,0 +1,428 @@
+html {
+  /* This is needed because of chrome://theme/css/new_tab.css */
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  overflow: auto;
+  -webkit-user-select: none;
+  cursor: default;
+}
+
+html[mode=app-launcher] {
+  height: auto;
+}
+
+#main {
+  -webkit-box-sizing: border-box;
+  -webkit-transition: width .15s;
+  margin: 0 auto;
+  min-height: 100%;
+  padding:10px 0 20px;
+  position: relative;
+  width: 920px;
+}
+
+html[dir=rtl] #main {
+  background-position-x: 100%;
+}
+
+html[mode=app-launcher] #main {
+  min-height: 50px;
+}
+
+html[anim=false] *,
+.no-anim, .no-anim *,
+.loading * {
+  -webkit-transition: none !important;
+  -webkit-animation: none !important;
+}
+
+:link,
+:visited,
+.link {
+  cursor: pointer;
+  text-decoration: underline;
+  color: hsla(213, 90%, 24%, 0.33333);
+  -webkit-appearance: none;
+  border: 0;
+  background: none;
+}
+
+.link-color {
+  color: hsl(213, 90%, 24%);
+  text-decoration: none;
+}
+
+.hide {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none;
+}
+
+/* Notification */
+
+#notification {
+  position: relative;
+  background-color: hsl(52, 100%, 80%);
+  border: 1px solid rgb(211, 211, 211);
+  border-radius: 6px;
+  padding: 7px 15px;
+  white-space: nowrap;
+  display: table;
+  /* Set the height and margin so that the element does not use any vertical
+    space */
+  height: 16px;
+  margin: -44px auto 12px auto;
+  font-weight: bold;
+  opacity: 0;
+  pointer-events: none;
+  -webkit-transition: opacity .15s;
+  z-index: 1;
+  color: black;
+}
+
+#notification.first-run {
+  padding: 5px 13px; /* subtract the border witdh */
+  border: 2px solid hsl(213, 55%, 75%);
+  background-color: hsl(213, 63%, 93%);
+  -webkit-box-shadow: 2px 2px 3px hsla(0, 0%, 0%, .3);
+  font-weight: normal;
+}
+
+#notification > * {
+  display: table-cell;
+  max-width: 500px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#notification.show {
+  opacity: 1;
+  pointer-events: all;
+  -webkit-transition: opacity 1s;
+}
+
+#notification .link {
+  color: rgba(0, 102, 204, 0.3);
+  -webkit-padding-start: 20px;
+}
+
+#notification .link-color {
+  color: rgb(0, 102, 204);
+}
+
+#notification > span > .blacklist-title {
+  display: inline-block;
+  max-width: 30ex;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item {
+  background: no-repeat 0% 50%;
+  padding: 2px;
+  padding-left: 18px;
+  background-size: 16px;
+  background-color: hsla(213, 63%, 93%, 0);
+  display: block;
+  line-height: 20px;
+  -webkit-box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 100%;
+}
+
+.item:visited,
+.item:link {
+  color: hsl(213, 90%, 24%);
+}
+
+html[dir=rtl] .item {
+  background-position-x: 100%;
+  padding-right: 18px;
+  padding-left: 2px;
+  text-align: right;
+}
+
+.window {
+  overflow: visible; /* We use visible so that the menu can be a child and shown
+                        on :hover. To get this to work we have to set visibility
+                        to visible which unfortunately breaks the ellipsis for t
+                        he window items */
+  background-image: url('ntp/closed_window.png');
+}
+
+.window-menu {
+  position: absolute;
+  display: none;
+  border: 1px solid #999;
+  -webkit-box-shadow: 2px 2px 3px hsla(0, 0%, 0%, .3);
+  color: black;
+  background-color: white;
+  left: 0;
+  white-space: nowrap;
+  z-index: 2;
+  padding: 2px;
+  cursor: default;
+  border-radius: 4px;
+}
+
+/* Made to look like a tooltip using vista/win7 look and feel.
+   TODO(arv): Replace with -webkit-appearance once issue 17371 is fixed
+ */
+#window-tooltip {
+  color: #555;
+  pointer-events: none;
+  border: 1px solid rgb(118, 118, 118);
+  border-radius: 3px;
+  padding: 0px 3px;
+  background: -webkit-gradient(linear, left top, left bottom,
+                               from(white),
+                               to(rgb(228, 229, 240)));
+  width: auto;
+  max-width: 300px;
+}
+
+.hbox {
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+}
+
+#sync-status {
+  display: none;
+  border-radius: 6px;
+  padding: 5px 0;
+  margin: 10px 0;
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+
+#sync-status > * {
+  display: inline-block;
+  max-width: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 100%;
+  margin: 0 10px;
+}
+
+.notification.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#option-button {
+  -webkit-appearance: none;
+  background-color: transparent;
+  width: 19px;
+  height: 17px;
+  position: absolute;
+  right: 0;
+  left: auto;
+  top: 20px;
+  border: 0;
+  padding: 0;
+  vertical-align: top;
+  -webkit-margin-start: 10px;
+  /* Do not show focus outline */
+  outline: none;
+  background-image: url(chrome://theme/IDR_NEWTAB_OPTION);
+}
+
+#option-button:hover,
+#option-button:focus {
+  background-image: url(chrome://theme/IDR_NEWTAB_OPTION_H);
+}
+
+#option-button:active,
+#option-button.open {
+  background-image: url(chrome://theme/IDR_NEWTAB_OPTION_P);
+}
+
+#option-menu {
+  right: 0;
+  left: auto;
+  min-width: 175px;
+}
+
+html[dir=rtl] #option-button,
+html[dir=rtl] #option-menu {
+  right: auto;
+  left: 0;
+}
+
+#option-menu > * {
+  /* Work around rendering bug. */
+  outline: 1px solid transparent;
+}
+
+#option-menu > [command=show]:before,
+#option-menu > [command=hide]:before {
+  -webkit-margin-start: -14px;
+  content: '\00a0'; /* non breaking space */
+  display: inline-block;
+  background-position: 0 50%;
+  background-repeat: no-repeat;
+  width: 14px;
+}
+
+html[dir=rtl] #option-menu > [command=show]:before,
+html[dir=rtl] #option-menu > [command=hide]:before {
+  background-position-x: 100%;
+}
+
+#option-menu > [command=hide]:before {
+  background-image: url('ntp/checkbox_black.png');
+}
+
+#option-menu > [selected][command=hide]:active:before {
+  background-image: url('ntp/checkbox_white.png');
+}
+
+#attribution {
+  margin: 10px 0;
+}
+
+.sync-button {
+  font-size: inherit;
+  padding: 0;
+  margin: 0;
+  -webkit-appearance: none;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-decoration: underline;
+  font-family: inherit;
+}
+
+#apps-launch-control {
+  margin-top: 10px;
+}
+
+#apps-launch-control input {
+  position: relative;
+  top: 1px;
+  margin-right: 0.2em;
+  margin-left: 1em;
+}
+
+#debug > h2 {
+  color: red;
+}
+
+#debug > div {
+  margin: 0;
+}
+
+.section > * {
+  font-size: 12px;
+}
+
+.section.disabled {
+  display: none !important;
+}
+
+.section > div {
+  margin-bottom: 15px;
+}
+
+#apps-section-content {
+  /* This one is special because the app buttons already have a lot of empty
+  space around them. */
+  margin-bottom: 5px;
+}
+
+.section > h2 {
+  background-position: 0 center;
+  background-repeat: no-repeat;
+  -webkit-background-size: 100% 26px;
+  display: block;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: normal;
+  margin:10px 0;
+  -webkit-margin-collapse: separate;
+}
+
+.section:not([noexpand]) > h2 {
+  cursor: pointer;
+}
+
+.section > h2 > img {
+  margin-left:-13px;
+  padding-right:4px;
+}
+
+.section:not(.hidden) > h2 > img {
+  -webkit-transform:rotate(90deg);
+}
+
+.section > h2 > span {
+  padding-right: 4px;
+}
+
+.section > .miniview {
+  display: none;
+  /* Because the items have 10px horizontal margins. */
+  margin-left:-10px;
+  margin-right:-10px;
+}
+
+.section.hidden > * {
+  display: none;
+}
+
+.section.hidden > h2,
+.section.hidden > .miniview {
+  display: block;
+}
+
+.section.hidden > h2 {
+  margin-right: 0px;
+}
+
+.miniview {
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+
+.miniview > span  {
+  display: inline-block;
+  max-width: 114px; /* Selected so that we can fit 5 items in EN-US */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 100%;
+  margin: 0 10px;
+}
+
+/* small */
+
+@media (max-width: 940px) {
+
+  #main {
+    width: 692px;
+  }
+
+  #notification > * {
+    max-width: 300px;
+  }
+
+  #notification > span > .blacklist-title {
+    max-width: 15ex;
+  }
+}
+
+/* Ensure we have at least 10px horizontal marging. */
+@media (max-width: 712px) {
+  #main {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
