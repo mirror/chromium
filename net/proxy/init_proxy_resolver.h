@@ -8,6 +8,8 @@
 #include <string>
 #include <vector>
 
+#include "base/time.h"
+#include "base/timer.h"
 #include "googleurl/src/gurl.h"
 #include "net/base/completion_callback.h"
 #include "net/base/net_log.h"
@@ -46,12 +48,17 @@ class InitProxyResolver {
   ~InitProxyResolver();
 
   // Apply the PAC settings of |config| to |resolver_|.
+  // If |wait_delay| is positive, the initialization will pause for this
+  // amount of time before getting started.
   int Init(const ProxyConfig& config,
+           const base::TimeDelta wait_delay,
            CompletionCallback* callback);
 
  private:
   enum State {
     STATE_NONE,
+    STATE_WAIT,
+    STATE_WAIT_COMPLETE,
     STATE_FETCH_PAC_SCRIPT,
     STATE_FETCH_PAC_SCRIPT_COMPLETE,
     STATE_SET_PAC_SCRIPT,
@@ -65,6 +72,9 @@ class InitProxyResolver {
   void OnIOCompletion(int result);
   int DoLoop(int result);
   void DoCallback(int result);
+
+  int DoWait();
+  int DoWaitComplete(int result);
 
   int DoFetchPacScript();
   int DoFetchPacScriptComplete(int result);
@@ -85,6 +95,7 @@ class InitProxyResolver {
   // Returns the current PAC URL we are fetching/testing.
   const GURL& current_pac_url() const;
 
+  void OnWaitTimerFired();
   void DidCompleteInit();
   void Cancel();
 
@@ -103,6 +114,9 @@ class InitProxyResolver {
   State next_state_;
 
   BoundNetLog net_log_;
+
+  base::TimeDelta wait_delay_;
+  base::OneShotTimer<InitProxyResolver> wait_timer_;
 
   DISALLOW_COPY_AND_ASSIGN(InitProxyResolver);
 };
