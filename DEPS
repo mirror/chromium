@@ -4,7 +4,7 @@ vars = {
   "googlecode_url": "http://%s.googlecode.com/svn",
   "webkit_trunk": "http://svn.webkit.org/repository/webkit/trunk",
   "nacl_trunk": "http://src.chromium.org/native_client/trunk",
-  "webkit_revision": "68995",
+  "webkit_revision": "69022",
   "skia_revision": "599",
   "chromium_git": "http://src.chromium.org/git",
   "swig_revision": "40423",
@@ -169,7 +169,7 @@ deps = {
     Var("libvpx_revision"),
 
   "src/third_party/ppapi":
-    (Var("googlecode_url") % "ppapi") + "/trunk@268",
+    (Var("googlecode_url") % "ppapi") + "/trunk@269",
 
   "src/third_party/libjingle/source":
     (Var("googlecode_url") % "libjingle") + "/trunk@" +

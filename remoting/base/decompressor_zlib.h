@@ -18,12 +18,15 @@ class DecompressorZlib : public Decompressor {
   DecompressorZlib();
   virtual ~DecompressorZlib();
 
+  virtual void Reset();
+
   // Decompressor implementations.
   virtual bool Process(const uint8* input_data, int input_size,
                        uint8* output_data, int output_size,
                        int* consumed, int* written);
 
  private:
+  void InitStream();
   scoped_ptr<z_stream> stream_;
 };
 
