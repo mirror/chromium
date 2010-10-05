@@ -1,0 +1,31 @@
+<!--
+Copyright (c) 2010 The Chromium Authors. All rights reserved.
+Use of this source code is governed by a BSD-style license that can be
+found in the LICENSE file.
+-->
+
+<html>
+  <head>
+    <script type="text/javascript" src="base.js"></script>
+    <script type="text/javascript" src="client.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.css" />
+    <title>Remote Access</title>
+  </head>
+  <body onload="init();">
+
+    <h1>Remote Access</h1>
+
+    <div id="hostlist_div" class="hostlist">
+      <p class='message'>Initializing...</p>
+    </div>
+
+    <p class="reload">
+    <a href="javascript:listHosts()">Reload host list</a>
+    </p>
+
+    <div id="login_div" class="login">
+    </div>
+
+    <br />
+  </body>
+</html>

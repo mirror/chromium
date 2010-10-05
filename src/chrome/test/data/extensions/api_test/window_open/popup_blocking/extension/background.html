@@ -1,0 +1,23 @@
+<!--
+Copyright (c) 2010 The Chromium Authors. All rights reserved.
+Use of this source code is governed by a BSD-style license that can be
+found in the LICENSE file.
+-->
+
+<script src="pop.js"></script>
+<script>
+var webPageURL =
+    "http://b.com:1337/files/extensions/api_test/window_open/popup_blocking/" +
+    "extension/foo.html";
+
+// Open a popup and a tab from the background page.
+pop();
+
+// Open a popup and a tab from a tab (tabs don't use ExtensionHost, so it's
+// interesting to test them separately).
+chrome.tabs.create({url: "tab.html", index: 1});
+
+// Open a tab to a URL that will cause our content script to run. The content
+// script will open a popup and a tab.
+chrome.tabs.create({url: webPageURL, index: 2});
+</script>
