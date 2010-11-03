@@ -1,0 +1,36 @@
+// Copyright (c) 2010 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+//
+// Sync protocol datatype extension for nigori keys.
+
+syntax = "proto2";
+
+option optimize_for = LITE_RUNTIME;
+option retain_unknown_fields = true;
+
+package sync_pb;
+
+import "encryption.proto";
+import "sync.proto";
+
+message NigoriKey {
+  optional string name = 1;
+  optional bytes user_key = 2;
+  optional bytes encryption_key = 3;
+  optional bytes mac_key = 4;
+}
+
+message NigoriKeyBag {
+  repeated NigoriKey key = 2;
+}
+
+// Properties of nigori sync object.
+message NigoriSpecifics {
+  optional EncryptedData encrypted = 1;
+}
+
+extend EntitySpecifics {
+  optional NigoriSpecifics nigori = 47745;
+}
+

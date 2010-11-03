@@ -1,0 +1,391 @@
+body {
+  -webkit-user-select: none;
+  cursor: default;
+  font-size: 100%;
+}
+
+#settings-title {
+  -webkit-padding-end: 24px;
+  padding-top: 16px;
+  padding-bottom: 34px;
+  text-align: end;
+  font-size: 125%;
+  font-weight: normal;
+  color: #53627d;
+  margin: 0;
+}
+
+#main-content {
+  display: -webkit-box;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.overlay {
+  position: fixed;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .2);
+  top: 0;
+  bottom: 0;
+  z-index: 10;
+  padding: 20px;
+  display: -webkit-box;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+}
+
+#close-overlay {
+  position: relative;
+  top: -20px;
+  width: 20px;
+  height: 20px;
+}
+
+html[dir='ltr'] #close-overlay {
+  float: right;
+  right: -20px;
+}
+
+html[dir='rtl'] #close-overlay {
+  float: left;
+  left: -20px;
+}
+
+.overlay .button-strip {
+  padding: 12px;
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+}
+
+.overlay > div {
+  background: white;
+  border-radius: 5px;
+  padding: 15px;
+  border: 1px solid #666;
+  padding-bottom: 50px;
+  position: relative;
+  -webkit-box-shadow: 3px 3px 3px #666;
+}
+
+#navbar {
+  margin: 0;
+}
+
+#navbar-container {
+  -webkit-border-end: 1px solid #c6c9ce;
+  background: -webkit-gradient(linear,
+                               left top,
+                               left bottom,
+                               from(rgba(234, 238, 243, 0)),
+                               to(#eaeef3)),
+              -webkit-gradient(linear,
+                               left top,
+                               right top,
+                               from(#eaeef3),
+                               color-stop(0.97, #eaeef3),
+                               to(#d3d7db));
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 250px;
+  z-index: 2;
+  display: none;
+}
+
+html[dir='rtl'] #navbar-container {
+  background: -webkit-gradient(linear,
+                               left top,
+                               left bottom,
+                               from(rgba(255, 255, 255, 0)),
+                               color-stop(0.7, rgba(255, 255, 255, 0)),
+                               to(white)),
+              -webkit-gradient(linear,
+                               right top,
+                               left top,
+                               from(white),
+                               color-stop(0.8, white),
+                               to(#f3f3f3));
+  left: auto;
+  right: 0;
+}
+
+html[hide-menu=false] #navbar-container {
+  display: block;
+}
+
+#navbar-container > hr {
+  -webkit-margin-start: 35%;
+  background-color: #dbdbdb;
+  border: 0;
+  height: 1px;
+  width: 65%;
+}
+
+.navbar-item, .navbar-item2 {
+  padding: 7px 0;
+  -webkit-padding-end: 24px;
+  text-align: end;
+  display: block;
+  color: #426dc9;
+  outline:none;
+}
+
+.navbar-item-selected {
+  background: -webkit-gradient(linear,
+                               left top,
+                               right top,
+                               from(#eaeef3),
+                               color-stop(0.95, #b4c8ea),
+                               to(#9bacc5));
+  font-weight: bold;
+  color: black;
+}
+
+html[dir='rtl'] .navbar-item-selected {
+  background: -webkit-gradient(linear,
+                               right top,
+                               left top,
+                               from(white),
+                               to(#d6def3));
+}
+
+.navbar-item-normal {
+  background-color: #dfdfdf;
+}
+
+#mainview {
+  -webkit-box-align: stretch;
+  -webkit-padding-start: 251px;
+  margin: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+html[hide-menu=true] #mainview {
+  -webkit-padding-start: 0;
+}
+
+#mainview-content {
+  width: 600px;
+  padding: 0 24px;
+}
+
+#managed-prefs-banner {
+  background: -webkit-gradient(linear,
+                               left top,
+                               left bottom,
+                               from(#fff2b7),
+                               color-stop(0.97, #fae691),
+                               to(#878787));
+  height: 31px;
+  width: 100%;
+}
+
+#managed-prefs-banner {
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+}
+
+#managed-prefs-icon {
+  background-image: url("chrome://theme/IDR_WARNING");
+  background-repeat: no-repeat;
+  background-position:center;
+  padding: 5px;
+  width: 24px;
+  height: 21px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+#managed-prefs-text {
+  vertical-align: middle;
+}
+
+.page > h1 {
+  -webkit-padding-end: 24px;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  border-bottom: 1px solid #eeeeee;
+  -webkit-padding-start: 0;
+  font-size: 125%;
+  color: #54637f;
+  margin: 0;
+}
+
+section {
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  border-bottom: 1px solid #eeeeee;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding-bottom: 0.5em;
+}
+
+section > h3 {
+  width: 150px;
+  font-weight: normal;
+  -webkit-padding-start: 0;
+  vertical-align: middle;
+  margin: 0;
+  font-size: 100%;
+  padding-top: 2px;
+  font-weight: bold;
+}
+
+section > div:only-of-type {
+  -webkit-box-flex: 1;
+}
+
+.option {
+  margin-top: 0;
+}
+
+.option-control-table, section > div:only-of-type {
+  -webkit-padding-start: 10px;
+  border-spacing: 0 0;
+}
+
+/* TODO(stuartmorgan): make this less specific once all pages
+ * are converted to the non-table style.
+ */
+section > div:only-of-type label {
+  display: block;
+  margin: 3px 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.touch-slider {
+  -webkit-appearance: slider-horizontal;
+}
+
+select {
+  margin: 0px;
+}
+
+.link-button {
+  background-color: transparent;
+  border: none;
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.text-button {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+#contentSettingsPage :invalid {
+  background-color: pink;
+}
+
+list > .heading {
+  color: #666666;
+}
+
+list > .heading:hover {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.left-side-table {
+  display: -webkit-box;
+}
+
+.left-side-table > div:first-child {
+  -webkit-box-flex: 1;
+}
+
+.left-side-table > :last-child {
+  -webkit-padding-start: 20px;
+}
+
+.left-side-table > :last-child button {
+  width: 100%;
+}
+
+.option-name {
+  padding-right: 5px;
+}
+
+html[dir=rtl].option-name {
+  padding-left: 5px;
+}
+
+.favicon-cell {
+  background-position: left;
+  background-repeat: no-repeat;
+  -webkit-padding-start: 20px;
+}
+html[dir=rtl] .favicon-cell {
+  background-position: right;
+}
+
+html[enable-background-mode=false] #background-mode-section {
+ display: none;
+}
+
+html[enable-cloud-print-proxy=false] #cloud-print-proxy-section {
+ display: none;
+}
+
+html[enable-cloud-print-proxy=true] #cloudPrintProxyManageButton {
+ display: none;
+}
+
+input[type=checkbox],
+input[type=radio],
+button {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Checkbox and radio buttons have different sizes on different platforms. The
+ * following rules have platform specific tweaks.
+ * TODO(arv): Test the vertical position on Linux and CrOS as well.
+ */
+
+/*
+ * Webkit does not move the absolute positioned input element properly and
+ * filed bug 48348 to track the problem.
+ *   https://bugs.webkit.org/show_bug.cgi?id=48348
+ * In the mean time, mark the outer label element 'relative' so that webkit
+ * aligns the input element properly.
+ */
+label.checkbox,
+label.radio {
+  position: relative;
+}
+
+label.checkbox > input,
+label.radio > input {
+  margin-top: 1px;
+  position: absolute;
+}
+
+label.checkbox > span,
+label.radio > span,
+.suboption {
+  -webkit-margin-start: 16px;
+  display: block;
+}
+
+html[os=mac] label.checkbox > input,
+html[os=mac] label.radio > input {
+  margin-top: 2px;
+}

@@ -1,0 +1,10 @@
+#account-picture {
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  width: 70px;
+  height: 70px;
+}
+
+.sync-error {
+  background-color: #FF9A9A;
+}

@@ -1,0 +1,171 @@
+/*
+ * TODO(xiyuan): Remove the section overrides when options_page.css uses the
+ * new style.
+ */
+#inetTitle {
+  border: none;
+}
+
+#internetPage > section {
+  display: block;
+}
+
+#internetPage > section > h3 {
+  font-size: 100%;
+  width: auto;
+}
+
+#internetPage > section[hidden] {
+  display: none;
+}
+
+#networkingControls {
+  display: -webkit-box;
+  -webkit-margin-start: 10px;
+}
+
+.networks {
+  -webkit-margin-start: 15px;
+  padding: 2px;
+}
+
+.network-password {
+  left: 0px;
+  position: relative;
+}
+
+.network-password > input, select {
+  width: 200px;
+}
+
+.network-item {
+  -webkit-box-align: center;
+  -webkit-padding-start: 30px;
+  border: 1px solid rgba(255,255,255,0); /* transparent white */
+  border-radius: 2px;
+  display: -webkit-box;
+  height: 35px;
+}
+
+.network-item:hover {
+  border-color: hsl(214, 91%, 85%);
+  background-color: hsl(214, 91%, 97%);
+}
+
+.network-item[connected] {
+  background-image: -webkit-gradient(linear, left top, left bottom,
+      from(rgba(255,255,255,0.8)), to(rgba(255,255,255,0)));
+  background-color: hsl(214,91%,89%);
+  border-color: hsl(214, 91%, 65%);
+}
+
+.network-item[connected]:hover {
+  background-color: hsl(214, 91%, 87%);
+  border-color: hsl(214, 91%, 65%);
+}
+
+.network-item[connecting] {
+  background-color: hsl(214, 91%, 97%);
+  border-color: hsl(214, 91%, 85%);
+  padding-top: 5px;
+  height: 60px;
+  -webkit-box-align: start;
+  display: block;
+}
+
+.network-item[connecting][other] {
+  height: 105px;
+}
+
+.network-item-text {
+  -webkit-padding-start: 30px;
+  background: left center no-repeat;
+  cursor: default;
+  display: table-cell;
+  height: 32px;
+  line-height: 100%;
+  max-width: 320px;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+html[dir='rtl'] .network-item-text {
+  background: right center no-repeat;
+}
+
+
+.network-item[connected] > * > .network-name-label {
+  font-weight: bold;
+}
+
+.network-status-label {
+  color: grey;
+}
+
+.network-item > * > button {
+  min-width: 100px;
+  visibility: hidden;
+  margin-right: 5px;
+}
+
+.network-item:hover > * > button,
+.network-item[connected] > * > button {
+  visibility: visible;
+}
+
+.network-item[connecting] > * > button {
+  visibility: hidden;
+}
+
+.network-item-box-spacer {
+  -webkit-box-flex: 1;
+}
+
+#detailsInternetPage {
+  min-width: 400px;
+  min-height: 360px;
+  position: relative;
+}
+
+.details-button {
+  float: right;
+}
+
+#details-plan-table {
+  width: 100%;
+}
+
+#planSummary {
+  width: 250px;
+}
+
+html[dir='rtl'] .details-button {
+  float: left;
+}
+
+#detailsInternetPage:not([connected]) > #advancedSection,
+#detailsInternetPage[connecting] > * > #detailsInternetLogin,
+#detailsInternetPage[connected] > * > #detailsInternetLogin,
+#detailsInternetPage:not([wireless]) > * > #detailsInternetOk,
+#detailsInternetPage[ethernet] .wifi-details,
+#detailsInternetPage[ethernet] .cellular-details,
+#detailsInternetPage[cellular] .wifi-details,
+#detailsInternetPage[wireless] .cellular-details,
+#detailsInternetPage[cellplanloading] .no-plan-info,
+#detailsInternetPage[cellplanloading] .plan-details-info,
+#detailsInternetPage[hascellplan] .plan-loading-info,
+#detailsInternetPage[hascellplan] .no-plan-info,
+#detailsInternetPage[nocellplan] .plan-loading-info,
+#detailsInternetPage[nocellplan] .plan-details-info,
+#detailsInternetPage:not([gsm]) .gsm-only,
+#detailsInternetPage:not([password]) .password-details,
+#detailsInternetPage[cert] .password-details,
+#detailsInternetPage[certPkcs] .password-details,
+#detailsInternetPage:not([cert]) .cert-details,
+#detailsInternetPage:not([certPkcs]) .cert-pkcs-details {
+  display: none;
+}
+
+#wirelessButtons > * > button {
+  margin-left: 5px;
+}

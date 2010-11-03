@@ -1,0 +1,1082 @@
+# There are three kinds of suppressions in this file:
+# 1. Third party stuff we have no control over.
+#
+# 2. Intentional unit test errors, stuff that is somehow a false positive
+# in our own code, or stuff that is so trivial it's not worth fixing.
+#
+# 3. Suppressions for real chromium bugs that are not yet fixed.
+# These should all be in chromium's bug tracking system.
+# Periodically we should sweep this file and the bug tracker clean by
+# running overnight and removing outdated bugs/suppressions.
+#-----------------------------------------------------------------------
+
+# 1. Third party stuff we have no control over.
+{
+   FIXME mac kevent libevent probably needs valgrind hooks
+   Memcheck:Param
+   kevent(changelist)
+   fun:kevent
+   fun:event_base_new
+}
+{
+   # CoreAudio leak.  See http://crbug.com/9351
+   bug_9351
+   Memcheck:Leak
+   ...
+   fun:_ZN12HALCADClient19AddPropertyListenerEmPK26AudioObjectPropertyAddressPFlmmS2_PvES3_
+   fun:_ZN16HALDefaultDevice22InstallServerListenersEv
+   fun:_ZN16HALDefaultDevice10InitializeEv
+   fun:_ZN9HALSystem16CheckOutInstanceEv
+}
+{
+   # Mac test_shell_tests.  See http://crbug.com/11134
+   # Doesn't happen on bots, but happens like crazy on the smo
+   # test machine 'caliban'.  Don't delete just because it
+   # doesn't happen on the bots.
+   bug_11134
+   Memcheck:Value4
+   fun:vCMMVectorConvert8BitRGBToRGB
+   fun:_ZNK15CMMConvRGBToRGB7ConvertER8CMM8BitsP14CMMRuntimeInfomm
+}
+{
+   # Mac system library bug?  See http://crbug.com/11327
+   bug_11327
+   Memcheck:Cond
+   fun:_ZN19AudioConverterChain5ResetEv
+   fun:AudioConverterReset
+   obj:/System/Library/Components/CoreAudio.component/Contents/MacOS/CoreAudio
+}
+{
+   # Mac system library bug?  See http://crbug.com/11327
+   bug_11327b
+   Memcheck:Cond
+   fun:AUNetSendEntry
+   fun:AUNetSendEntry
+   obj:/System/Library/Components/CoreAudio.component/Contents/MacOS/CoreAudio
+}
+{
+   # Filed with Apple as rdar://6915060; see http://crbug.com/11270
+   bug_11270
+   Memcheck:Leak
+   fun:calloc
+   fun:CMSSetLabCLUT
+}
+{
+   # Mac leak in CMOpenOrNewAccess in unit_tests PlatformCanvas_SkLayer_Test,
+   # ToolbarControllerTest_FocusLocation_Test. See http://crbug.com/11333.
+   bug_11333
+   Memcheck:Leak
+   fun:malloc
+   fun:stdSmartNewPtr
+   fun:stdSmartNewHandle
+   fun:IOCreateAndOpen
+   fun:ScratchInit
+   fun:CMOpenOrNewAccess
+}
+{
+   # suddenly very common as of 6 aug 2009
+   bug_11333b
+   Memcheck:Leak
+   fun:malloc
+   fun:stdSmartNewPtr
+   fun:stdSmartNewHandle
+   fun:IOCreateAndOpen
+   fun:ScratchInit
+   fun:CMNewAccessFromAnother
+}
+{
+   # Tiny one-time leak, widely seen by valgind users; everyone suppresses this.
+   # See related discussion at http://gcc.gnu.org/bugzilla/show_bug.cgi?id=39366
+   plugin_bundle_global_leak
+   Memcheck:Leak
+   fun:malloc
+   fun:__cxa_get_globals
+   fun:__cxa_allocate_exception
+   fun:_ZN4dyld4loadEPKcRKNS_11LoadContextE
+   fun:dlopen
+   fun:dlopen
+   fun:_CFBundleDlfcnCheckLoaded
+}
+{
+   bug_18215
+   Memcheck:Cond
+   fun:_DPSNextEvent
+   fun:-[NSApplication nextEventMatchingMask:untilDate:inMode:dequeue:]
+   fun:-[NSApplication run]
+}
+{
+   bug_18223
+   Memcheck:Cond
+   fun:_ZNK8Security12UnixPlusPlus17StaticForkMonitorclEv
+   fun:_ZN12ocspdGlobals10serverPortEv
+}
+{
+   # Filed with Apple as rdar://7255382
+   bug_20459a
+   Memcheck:Leak
+   ...
+   fun:_CFRuntimeCreateInstance
+   fun:CFRunLoopSourceCreate
+   fun:CFMachPortCreateRunLoopSource
+   fun:_ZN8Security12MachPlusPlus10CFAutoPort6enableEv
+   fun:_ZN8Security14SecurityServer14ThreadNotifierC2Ev
+}
+{
+   # Also filed with Apple as rdar://7255382
+   bug_20459b
+   Memcheck:Leak
+   fun:malloc_zone_malloc
+   fun:_CFRuntimeCreateInstance
+   fun:__CFArrayInit
+   fun:CFArrayCreateMutableCopy
+   fun:_ZN8Security12KeychainCore5Trust8evaluateEv
+}
+# See description of bug_20653a/b in suppressions.txt.
+{
+   bug_20653a_mac
+   Memcheck:Param
+   write(buf)
+   fun:write$UNIX2003
+   fun:pager_write_pagelist
+}
+{
+   bug_20653b_mac
+   Memcheck:Param
+   write(buf)
+   fun:write$UNIX2003
+   ...
+   fun:pager_write
+}
+{
+   bug_32564
+   Memcheck:Free
+   fun:free
+   fun:_cache_free_block
+   fun:_cache_collect_free
+   fun:_cache_fill
+}
+
+# See http://www.openradar.me/8287193
+{
+   Invalid redzone accesses in DKeyHas8Words
+   Memcheck:Addr4
+   fun:DKeyHas8Words
+}
+
+# See https://bugs.kde.org/show_bug.cgi?id=188572
+# This suppression is missing in Valgrind on Mac 10.6
+# TODO(glider): remove it once it arrives in the trunk.
+{
+   Unavoidable leak in setenv()
+   Memcheck:Leak
+   fun:malloc_zone_malloc
+   fun:__setenv
+   fun:setenv$UNIX2003
+}
+
+# 2. Intentional unit test errors, stuff that is somehow a false positive
+# in our own code, or stuff that is so trivial it's not worth fixing.
+{
+   # Plugins are deliberately not unloaded (on shutdown) on the Mac, in order to
+   # prevent crashes for those that don't unload cleanly.
+   plugin_unload
+   Memcheck:Leak
+   fun:_Znw*
+   fun:_ZN4base17LoadNativeLibraryERK8FilePath
+   fun:_ZN5NPAPI9PluginLib4LoadEv
+   fun:_ZN5NPAPI9PluginLib13NP_InitializeEv
+   fun:_ZN21WebPluginDelegateImpl6CreateERK8FilePathRKSsy
+   fun:_ZN19TestWebViewDelegate20CreatePluginDelegateERK8FilePathRKSs
+   fun:_ZN11webkit_glue13WebPluginImpl10initializeEPN6WebKit18WebPluginContainerE
+}
+{
+   # Mac Sandbox test cases are registered in a global map.  This code is only
+   # used in the unit test binary.
+   Mac_Sandbox_Intentional_Leak1
+   Memcheck:Leak
+   fun:_Znw*
+   fun:_ZN11sandboxtest8internal19RegisterSandboxTestIN12_GLOBAL__N_*
+   fun:_ZN11sandboxtest8internal19RegisterSandboxTestIN12_GLOBAL__N_*
+   fun:_Z41__static_initialization_and_destruction_0ii
+   fun:_GLOBAL__I__ZNSt3tr112_GLOBAL__N_16ignoreE
+   fun:_ZN16ImageLoaderMachO18doModInitFunctionsERKN11ImageLoader11LinkContextE
+   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEj
+   fun:_ZN11ImageLoader15runInitializersERKNS_11LinkContextE
+   fun:_ZN4dyld24initializeMainExecutableEv
+}
+{
+   # With our tweaks to get Chromium to link on Mac 10.5, we sometimes get	
+   # this suppression instead.	
+   Mac_Sandbox_Intentional_Leak3	
+   Memcheck:Leak	
+   fun:_Znw*	
+   fun:_Z41__static_initialization_and_destruction_0ii	
+   fun:_ZN16ImageLoaderMachO18doModInitFunctionsERKN11ImageLoader11LinkContextE	
+   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEj	
+   fun:_ZN11ImageLoader15runInitializersERKNS_11LinkContextE	
+   fun:_ZN4dyld24initializeMainExecutableEv	
+}
+
+# 3. Suppressions for real chromium bugs that are not yet fixed.
+{
+  bug_17297
+  Memcheck:Leak
+  fun:malloc
+  ...
+  fun:+[NSColor keyboardFocusIndicatorColor]
+  fun:+[NSColor colorWithCatalogName:colorName:]
+  fun:+[NSCatalogColor newWithCoder:zone:]
+  fun:-[NSColor initWithCoder:]
+}
+{
+   bug_18218
+   Memcheck:Leak
+   fun:malloc
+   fun:__addHandler2
+   fun:__NSFinalizeThreadData
+   fun:_pthread_tsd_cleanup
+   fun:_pthread_exit
+   fun:thread_start
+}
+{
+   bug_20504
+   Memcheck:Leak
+   fun:malloc_zone_calloc
+   fun:_internal_class_createInstanceFromZone
+   fun:+[NSObject allocWithZone:]
+   ...
+   fun:-[NSCustomObject nibInstantiate]
+   fun:-[NSIBObjectData instantiateObject:]
+   fun:-[NSIBObjectData nibInstantiateWithOwner:topLevelObjects:]
+   fun:-[NSNib instantiateNibWithExternalNameTable:]
+   fun:-[NSNib instantiateNibWithOwner:topLevelObjects:]
+   fun:_ZN19BrowserMainPartsMac23PreMainMessageLoopStartEv
+}
+{
+   bug_20582
+   Memcheck:Leak
+   fun:_Znw*
+   fun:_ZN4base19MessagePumpLibevent19WatchFileDescriptorEibNS0_4ModeEPNS0_21FileDescriptorWatcherEPNS0_7WatcherE
+   fun:_ZN16MessageLoopForIO19WatchFileDescriptorEibNS_4ModeEPN4base19MessagePumpLibevent21FileDescriptorWatcherEPNS2_7WatcherE
+   fun:_ZN3IPC7Channel11ChannelImpl23ProcessOutgoingMessagesEv
+}
+{
+   bug_21479a
+   Memcheck:Leak
+   fun:malloc_zone_malloc
+   fun:_CFRuntimeCreateInstance
+   fun:CFPasteboardCreate
+   fun:CFPasteboardCreateUnique
+   fun:+[NSPasteboard _pasteboardWithName:]
+   fun:+[NSPasteboard pasteboardWithUniqueName]
+}
+{
+   bug_21479b
+   Memcheck:Leak
+   fun:malloc_zone_malloc
+   fun:_CFRuntimeCreateInstance
+   fun:CFPasteboardCreate
+   fun:+[NSPasteboard _pasteboardWithName:]
+   fun:-[FindPasteboard findPboard]
+}
+{
+   bug_27315
+   Memcheck:Leak
+   fun:_Znw*
+   fun:_ZNSt8_Rb_treeIlSt4pairIKlPN4llvm8PassInfoEESt10_Select1stIS5_ESt4lessIlESaIS5_EE9_M_insertEPSt18_Rb_tree_node_baseSD_RKS5_
+   fun:_ZNSt8_Rb_treeIlSt4pairIKlPN4llvm8PassInfoEESt10_Select1stIS5_ESt4lessIlESaIS5_EE13insert_uniqueERKS5_
+   fun:_ZN4llvm16RegisterPassBase12registerPassEv
+   fun:_Z41__static_initialization_and_destruction_0ii
+   fun:_ZN16ImageLoaderMachO18doModInitFunctionsERKN11ImageLoader11LinkContextE
+   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEj
+   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEj
+   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEj
+   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEj
+   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEj
+   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEj
+   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEj
+   fun:_ZN11ImageLoader23recursiveInitializationERKNS_11LinkContextEj
+   fun:_ZN11ImageLoader15runInitializersERKNS_11LinkContextE
+}
+{
+   bug_27644
+   Memcheck:Leak
+   ...
+   fun:_ZN19WebSharedWorkerStub9OnConnectEii
+   fun:_Z16DispatchToMethodI19WebSharedWorkerStubMS0_FviiEiiEvPT_T0_RK6Tuple2IT1_T2_E
+   fun:_ZN3IPC16MessageWithTupleI6Tuple2IiiEE8DispatchI19WebSharedWorkerStubMS5_FviiEEEbPKNS_7MessageEPT_T0_
+   fun:_ZN19WebSharedWorkerStub17OnMessageReceivedERKN3IPC7MessageE
+   fun:_ZN13MessageRouter12RouteMessageERKN3IPC7MessageE
+   fun:_ZN13MessageRouter17OnMessageReceivedERKN3IPC7MessageE
+   fun:_ZN11ChildThread17OnMessageReceivedERKN3IPC7MessageE
+   fun:_ZN3IPC12ChannelProxy7Context17OnDispatchMessageERKNS_7MessageE
+   fun:_Z16DispatchToMethodIN3IPC12ChannelProxy7ContextEMS2_FvRKNS0_7MessageEES3_EvPT_T0_RK6Tuple1IT1_E
+   fun:_ZN14RunnableMethodIN3IPC12ChannelProxy7ContextEMS2_FvRKNS0_7MessageEE6Tuple1IS3_EE3RunEv
+   fun:_ZN11MessageLoop7RunTaskEP4Task
+   fun:_ZN11MessageLoop21DeferOrRunPendingTaskERKNS_11PendingTaskE
+   fun:_ZN11MessageLoop6DoWorkEv
+   fun:_ZN4base18MessagePumpDefault3RunEPNS_11MessagePump8DelegateE
+   fun:_ZN11MessageLoop11RunInternalEv
+   fun:_ZN11MessageLoop10RunHandlerEv
+}
+{
+   bug_28847a
+   Memcheck:Leak
+   fun:_Znw*
+   fun:_ZN13WorkerService12CreateWorkerERK4GURLbbRKSbItN4base20string16_char_traitsESaItEEiiPN3IPC7Message6SenderEi
+   fun:_ZN21ResourceMessageFilter14OnCreateWorkerERK4GURLbRKSbItN4base20string16_char_traitsESaItEEiPi
+}
+{
+   bug_28847b
+   Memcheck:Leak
+   fun:_Znw*
+   fun:_ZN16ChildProcessHost6LaunchERKSt6vectorISt4pairISsSsESaIS2_EEP11CommandLine
+   fun:_ZN17WorkerProcessHost4InitEv
+   fun:_ZN13WorkerService12CreateWorkerERK4GURLbbRKSbItN4base20string16_char_traitsESaItEEiiPN3IPC7Message6SenderEi
+   fun:_ZN21ResourceMessageFilter14OnCreateWorkerERK4GURLbRKSbItN4base20string16_char_traitsESaItEEiPi
+}
+{
+   bug_28072a
+   Memcheck:Leak
+   ...
+   fun:CSBackupSetItemExcluded
+   fun:_ZN8mac_util22SetFileBackupExclusionERK8FilePathb
+   fun:_ZN7history15HistoryDatabase4InitERK8FilePathS3_
+   fun:_ZN7history14HistoryBackend8InitImplEv
+   fun:_ZN7history14HistoryBackend4InitEb
+}
+{
+   bug_28072b
+   Memcheck:Leak
+   fun:_Znw*
+   fun:_ZN7history14HistoryBackend8InitImplEv
+   fun:_ZN7history14HistoryBackend4InitEb
+}
+{
+   bug_28072c
+   Memcheck:Addr2
+   ...
+   fun:CSBackupSetItemExcluded
+   fun:_ZN8mac_util22SetFileBackupExclusionERK8FilePathb
+   fun:_ZN7history15HistoryDatabase4InitERK8FilePathS3_
+   fun:_ZN7history14HistoryBackend8InitImplEv
+   fun:_ZN7history14HistoryBackend4InitEb
+}
+{
+   bug_35164
+   Memcheck:Cond
+   ...
+   fun:gl_context_init_client_state
+   fun:ogl_begin_rendering
+   fun:CARenderOGLRender
+   fun:view_draw
+}
+{
+   bug_35625
+   Memcheck:Leak
+   fun:malloc_zone_malloc
+   fun:_CFRuntimeCreateInstance
+   fun:CGTypeCreateInstanceWithAllocator
+   fun:CGTypeCreateInstance
+   fun:CGFunctionCreate
+   fun:CGGradientGetFunction
+   fun:CGContextDrawLinearGradient
+   ...
+   fun:-[NSView _drawRect:clip:]
+   fun:-[NSView _recursiveDisplayAllDirtyWithLockFocus:visRect:]
+}
+{
+   bug_36605
+   Memcheck:Leak
+   fun:malloc
+   fun:realloc
+   fun:new_sem_from_pool
+   fun:_pthread_cond_wait
+   fun:pthread_cond_wait$UNIX2003
+   fun:_ZN17ConditionVariable4WaitEv
+   fun:_ZN4base13WaitableEvent9TimedWaitERKNS_9TimeDeltaE
+   fun:_ZN4base13WaitableEvent4WaitEv
+   fun:_ZN4base6Thread16StartWithOptionsERKNS0_7OptionsE
+   fun:_ZN4base6Thread5StartEv
+   fun:_ZN14HistoryService4InitERK8FilePathP15BookmarkServiceb
+   fun:_ZN14TestingProfile20CreateHistoryServiceEbb
+   fun:_ZN12_GLOBAL__N_127HistoryContentsProviderTest5SetUpEv
+}
+{
+   bug_40429
+   Memcheck:Leak
+   fun:calloc
+   fun:_internal_class_createInstanceFromZone
+   fun:_internal_class_createInstance
+   fun:+[NSObject allocWithZone:]
+   fun:_decodeObjectBinary
+   fun:_decodeObject
+   fun:-[NSButtonCell initWithCoder:]
+   fun:_decodeObjectBinary
+   fun:_decodeObject
+   fun:-[NSControl initWithCoder:]
+   fun:-[NSButton initWithCoder:]
+   fun:_decodeObjectBinary
+   fun:-[NSKeyedUnarchiver _decodeArrayOfObjectsForKey:]
+   fun:-[NSArray(NSArray) initWithCoder:]
+   fun:_decodeObjectBinary
+   fun:_decodeObject
+   fun:-[NSView initWithCoder:]
+   fun:_decodeObjectBinary
+   fun:_decodeObject
+   fun:-[NSWindowTemplate initWithCoder:]
+   fun:_decodeObjectBinary
+   fun:_decodeObject
+}
+{
+   bug_40429b
+   Memcheck:Leak
+   fun:calloc
+   fun:_internal_class_createInstanceFromZone
+   fun:_internal_class_createInstance
+   fun:+[NSObject allocWithZone:]
+   fun:_decodeObjectBinary
+   fun:_decodeObject
+   fun:-[NSButtonCell initWithCoder:]
+   fun:_decodeObjectBinary
+   fun:_decodeObject
+   fun:-[NSControl initWithCoder:]
+   fun:-[NSButton initWithCoder:]
+   fun:_decodeObjectBinary
+   fun:_decodeObject
+   fun:-[NSNibConnector initWithCoder:]
+   fun:-[NSNibControlConnector initWithCoder:]
+   fun:_decodeObjectBinary
+   fun:-[NSKeyedUnarchiver _decodeArrayOfObjectsForKey:]
+   fun:-[NSArray(NSArray) initWithCoder:]
+   fun:_decodeObjectBinary
+   fun:_decodeObject
+   fun:-[NSIBObjectData initWithCoder:]
+   fun:_decodeObjectBinary
+}
+{
+   bug_40429c
+   Memcheck:Leak
+   fun:calloc
+   fun:_internal_class_createInstanceFromZone
+   fun:_internal_class_createInstance
+   fun:+[NSObject allocWithZone:]
+   fun:_decodeObjectBinary
+   fun:_decodeObject
+   fun:-[NSButtonCell initWithCoder:]
+   fun:_decodeObjectBinary
+   fun:_decodeObject
+   fun:-[NSControl initWithCoder:]
+   fun:-[NSButton initWithCoder:]
+   fun:_decodeObjectBinary
+   fun:-[NSKeyedUnarchiver _decodeArrayOfObjectsForKey:]
+   fun:-[NSArray(NSArray) initWithCoder:]
+   fun:_decodeObjectBinary
+   fun:_decodeObject
+   fun:-[NSView initWithCoder:]
+   fun:_decodeObjectBinary
+   fun:_decodeObject
+   fun:-[NSResponder initWithCoder:]
+   fun:-[NSView initWithCoder:]
+}
+{
+  bug_40659
+   Memcheck:Leak
+   fun:_Znw*
+   ...
+   fun:_ZN19extension_file_util13LoadExtensionERK8FilePathbPSs
+   fun:_ZN12CrxInstaller15CompleteInstallEv
+   fun:_Z16DispatchToMethodI12CrxInstallerMS0_FvvEEvPT_T0_RK6Tuple0
+   fun:_ZN14RunnableMethodI12CrxInstallerMS0_FvvE6Tuple0E3RunEv
+   fun:_ZN11MessageLoop7RunTaskEP4Task
+   fun:_ZN11MessageLoop21DeferOrRunPendingTaskERKNS_11PendingTaskE
+   fun:_ZN11MessageLoop6DoWorkEv
+   fun:_ZN4base19MessagePumpLibevent3RunEPNS_11MessagePump8DelegateE
+   fun:_ZN11MessageLoop11RunInternalEv
+   fun:_ZN11MessageLoop10RunHandlerEv
+}
+{
+   bug_46186_a
+   Memcheck:Leak
+   fun:_Znw*
+   fun:_ZN12HALCADClient19AddPropertyListenerEmPK26AudioObjectPropertyAddressPFlmmS2_PvES3_
+   fun:_ZN16HALDefaultDevice22InstallServerListenersEv
+   fun:_ZN16HALDefaultDevice10InitializeEv
+   fun:_ZN9HALSystem16CheckOutInstanceEv
+   fun:AudioObjectAddPropertyListener
+   fun:_ZN10AQMEDeviceC2EmPK27AudioStreamBasicDescriptionPK18AudioChannelLayout
+   fun:_Z11NewAQIONodembPK27AudioStreamBasicDescriptionPK18AudioChannelLayout
+   fun:_ZN15AQIONodeManager13_FindAQIONodeEmbb
+   fun:_ZN15AQIONodeManager12FindAQIONodeEmbb
+   fun:_ZN16AudioQueueObject15DoIONodeConnectERK25AudioQueueStreamSpecifierPK27AudioStreamBasicDescriptionPK18AudioChannelLayout
+   fun:_ZN16AudioQueueObject13EnqueueBufferEP16AudioQueueBufferjPK28AudioStreamPacketDescriptionjjjPK24AudioQueueParameterEventRK11AQTimeStampPS8_
+   fun:AQServer_EnqueueBuffer
+   fun:AudioQueueEnqueueBufferWithParameters
+   fun:AudioQueueEnqueueBuffer
+   fun:_ZN28PCMQueueOutAudioOutputStream5StartEPN17AudioOutputStream19AudioSourceCallbackE
+   fun:_ZN5media21AudioOutputController6DoPlayEv
+   fun:_ZN14RunnableMethodIN5media21AudioOutputControllerEMS1_FvvE6Tuple0E3RunEv
+   fun:_ZN11MessageLoop7RunTaskEP4Task
+   fun:_ZN11MessageLoop21DeferOrRunPendingTaskERKNS_11PendingTaskE
+   fun:_ZN11MessageLoop6DoWorkEv
+   fun:_ZN4base18MessagePumpDefault3RunEPNS_11MessagePump8DelegateE
+}
+{
+   bug_46186_b
+   Memcheck:Leak
+   fun:malloc_zone_malloc
+   fun:_ZN4base12_GLOBAL__N_137oom_killer_cfallocator_system_defaultElmPv
+   fun:_CFRuntimeCreateInstance
+   fun:CFRunLoopSourceCreate
+   fun:MSHCreateMIGServerSource
+   fun:_ZN20HALCADClientListenerC2EPFlmmPK26AudioObjectPropertyAddressPvES3_
+   fun:_ZN12HALCADClient19AddPropertyListenerEmPK26AudioObjectPropertyAddressPFlmmS2_PvES3_
+   fun:_ZN16HALDefaultDevice22InstallServerListenersEv
+   fun:_ZN16HALDefaultDevice10InitializeEv
+   fun:_ZN9HALSystem16CheckOutInstanceEv
+   fun:AudioObjectAddPropertyListener
+   fun:_ZN10AQMEDeviceC2EmPK27AudioStreamBasicDescriptionPK18AudioChannelLayout
+   fun:_Z11NewAQIONodembPK27AudioStreamBasicDescriptionPK18AudioChannelLayout
+   fun:_ZN15AQIONodeManager13_FindAQIONodeEmbb
+   fun:_ZN15AQIONodeManager12FindAQIONodeEmbb
+   fun:_ZN16AudioQueueObject15DoIONodeConnectERK25AudioQueueStreamSpecifierPK27AudioStreamBasicDescriptionPK18AudioChannelLayout
+   fun:_ZN16AudioQueueObject13EnqueueBufferEP16AudioQueueBufferjPK28AudioStreamPacketDescriptionjjjPK24AudioQueueParameterEventRK11AQTimeStampPS8_
+   fun:AQServer_EnqueueBuffer
+   fun:AudioQueueEnqueueBufferWithParameters
+   fun:AudioQueueEnqueueBuffer
+   fun:_ZN28PCMQueueOutAudioOutputStream5StartEPN17AudioOutputStream19AudioSourceCallbackE
+   fun:_ZN17AudioRendererHost14IPCAudioSource4PlayEv
+}
+{
+   bug_46186_c
+   Memcheck:Leak
+   fun:_Znw*
+   fun:_ZN12HALCADClient19AddPropertyListenerEmPK26AudioObjectPropertyAddressPFlmmS2_PvES3_
+   fun:_ZN16HALDefaultDevice22InstallServerListenersEv
+   fun:_ZN16HALDefaultDevice10InitializeEv
+   fun:_ZN9HALSystem15InitializeShellEv
+   fun:_ZN9HALSystem16CheckOutInstanceEv
+   fun:AudioObjectAddPropertyListener
+   fun:_ZN10AQMEDeviceC2EmbPK27AudioStreamBasicDescriptionPK18AudioChannelLayout
+   fun:_Z11NewAQIONodembbPK27AudioStreamBasicDescriptionPK18AudioChannelLayout
+   fun:_ZN15AQIONodeManager13_FindAQIONodeEmbbb
+   fun:_ZN15AQIONodeManager12FindAQIONodeEmbbb
+}
+{
+   bug_47949
+   Memcheck:Cond
+   fun:rips_f_DrawRing
+   fun:rips_f_BltShape
+   fun:ripc_Render
+   fun:ripc_DrawRects
+   fun:CGContextFillRects
+   fun:CGContextFillRect
+   fun:NSRectFill
+   fun:_ZN18FocusIndicationFix40currentOSHasSetFocusRingStyleInBitmapBugEv
+}
+{
+   bug_49250_a
+   Memcheck:Cond
+   fun:gleUpdateFogData
+   fun:gleUpdateState
+   fun:_ZN8remoting11CapturerMac12CaptureRectsERKSt6vectorIN3gfx4RectESaIS3_EEP14CallbackRunnerI6Tuple1I13scoped_refptrINS_8Capturer11CaptureDataEEEE
+   fun:_ZN8remoting8Capturer19CaptureInvalidRectsEP14CallbackRunnerI6Tuple1I13scoped_refptrINS0_11CaptureDataEEEE
+   fun:_ZN8remoting28CapturerMacTest_Capture_Test8TestBodyEv
+}
+{
+   bug_49250_b
+   Memcheck:Cond
+   fun:gleUpdateFogData
+   fun:gleUpdateState
+   fun:_ZN8remoting11CapturerMac12CaptureRectsERKSt6vectorIN3gfx4RectESaIS3_EEP14CallbackRunnerI6Tuple1I13scoped_refptrINS_8Capturer11CaptureDataEEEE
+   fun:_ZN8remoting8Capturer19CaptureInvalidRectsEP14CallbackRunnerI6Tuple1I13scoped_refptrINS0_11CaptureDataEEEE
+   fun:_ZN8remoting28CapturerMacTest_Capture_Test8TestBodyEv
+}
+{
+   bug_49250_c
+   Memcheck:Cond
+   fun:gleUpdateFogData
+   fun:gleUpdateState
+   fun:_ZN8remoting11CapturerMac12CaptureRectsERKSt3setIN3gfx4RectESt4lessIS3_ESaIS3_EEP14CallbackRunnerI6Tuple1I13scoped_refptrINS_11CaptureDataEEEE
+   fun:_ZN8remoting8Capturer19CaptureInvalidRectsEP14CallbackRunnerI6Tuple1I13scoped_refptrINS_11CaptureDataEEEE
+   fun:_ZN8remoting28CapturerMacTest_Capture_Test8TestBodyEv
+}
+{
+   bug_49250_d
+   Memcheck:Leak
+   fun:_Znw*
+   fun:_ZN8remoting12TraceContext3GetEv
+   fun:_ZN8remoting12TraceContext6tracerEv
+   fun:_ZN8remoting8Capturer19CaptureInvalidRectsEP14CallbackRunnerI6Tuple1I13scoped_refptrINS_11CaptureDataEEEE
+   fun:_ZN8remoting28CapturerMacTest_Capture_Test8TestBodyEv
+}
+{
+   bug_49250_e
+   Memcheck:Cond
+   ...
+   fun:gleUpdateState
+   fun:gleInitializeContext
+   fun:gliCreateContext
+   fun:CGLRestoreDispatchFunction
+   fun:CGLCreateContext
+   fun:_ZN8remoting11CapturerMac26ScreenConfigurationChangedEv
+   fun:_ZN8remoting15CapturerMacTest5SetUpEv
+   fun:_ZN7testingL35HandleExceptionsInMethodIfSupportedINS_4TestEvEET0_PT_MS3_FS2_vEPKc
+}
+{
+   bug_50286
+   Memcheck:Leak
+   fun:_Znw*
+   fun:_ZN11ProfileImpl14InitExtensionsEv
+   fun:_ZN14ProfileManager10AddProfileEP7Profileb
+   fun:_ZN14ProfileManager10GetProfileERK8FilePathb
+   fun:_ZN14ProfileManager10GetProfileERK8FilePath
+   fun:_ZN14ProfileManager17GetDefaultProfileERK8FilePath
+   fun:_ZN12_GLOBAL__N_113CreateProfileERK18MainFunctionParamsRK8FilePath
+   fun:_Z11BrowserMainRK18MainFunctionParams
+   fun:ChromeMain
+   fun:main
+}
+{
+   bug_50297_a
+   Memcheck:Cond
+   fun:_ZN3IPC7Channel11ChannelImpl23ProcessIncomingMessagesEv
+   fun:_ZN3IPC7Channel11ChannelImpl28OnFileCanReadWithoutBlockingEi
+   fun:_ZN4base19MessagePumpLibevent21FileDescriptorWatcher28OnFileCanReadWithoutBlockingEiPS0_
+   ...
+   fun:event_process_active
+   fun:event_base_loop
+   fun:_ZN4base19MessagePumpLibevent3RunEPNS_11MessagePump8DelegateE
+   fun:_ZN11MessageLoop11RunInternalEv
+}
+{
+   bug_50297_b
+   Memcheck:Cond
+   fun:_ZN6Pickle8FindNextEmPKcS1_
+   fun:_ZN3IPC7Message8FindNextEPKcS2_
+   fun:_ZN3IPC7Channel11ChannelImpl23ProcessIncomingMessagesEv
+   fun:_ZN3IPC7Channel11ChannelImpl28OnFileCanReadWithoutBlockingEi
+   fun:_ZN4base19MessagePumpLibevent21FileDescriptorWatcher28OnFileCanReadWithoutBlockingEiPS0_
+   ...
+   fun:event_process_active
+   fun:event_base_loop
+   fun:_ZN4base19MessagePumpLibevent3RunEPNS_11MessagePump8DelegateE
+   fun:_ZN11MessageLoop11RunInternalEv
+}
+{
+   bug_50638_a
+   Memcheck:Cond
+   fun:gleUpdateViewScissorData
+   ...
+   fun:cgl_set_surface
+   fun:ogl_attach_surface
+   fun:ogl_render_fade_transition
+   fun:ogl_render_layer_
+   ...
+   fun:ogl_render_layers
+   fun:CARenderOGLRender
+   fun:view_draw
+}
+{
+   bug_50638_b
+   Memcheck:Cond
+   fun:gleUpdateViewScissorData
+   fun:cgl_set_surface
+   fun:ogl_attach_surface
+   fun:ogl_render_layer_contents_bg
+   fun:ogl_render_layer_image_
+   fun:ogl_render_layer_
+   fun:ogl_render_layer_image_
+   fun:ogl_render_layer_
+   fun:ogl_render_layer_image_
+   fun:ogl_render_layer_
+   fun:ogl_render_layers
+   fun:CARenderOGLRender
+   fun:view_draw
+}
+{
+   bug_52364_a
+   Memcheck:Value4
+   fun:_ZNK10CMMConvLut7ConvertER10CMMMinBitsP14CMMRuntimeInfomm
+   fun:_Z16CMMProcessBitmapP15CMMBitmapParams
+   fun:DoMatchBitmap
+   fun:CWMatchBitmap
+   fun:ConvertImageGeneric
+   fun:CMSColorWorldConvertData
+   fun:CMSTransformConvertData
+   fun:CGCMSInterfaceTransformConvertData
+   fun:CGColorTransformConvertData
+}
+{
+   bug_52364_b
+   Memcheck:Cond
+   fun:_ZNK10CMMMtxOnly10ConvertMinE10CMM3x3Type10CMM3x1TypeR12CMMMinBuffermm
+   fun:_ZNK21CMMConvMatrixTemplateI10CMMMtxOnly22CMMConvGrayToRGBMatrixE7ConvertER10CMMMinBitsP14CMMRuntimeInfomm
+   fun:_Z16CMMProcessBitmapP15CMMBitmapParams
+   fun:DoMatchBitmap
+   fun:CWMatchBitmap
+   fun:ConvertImageGeneric
+   fun:CMSColorWorldConvertData
+   fun:CMSTransformConvertData
+   fun:CGCMSInterfaceTransformConvertData
+   fun:CGColorTransformConvertData
+}
+{
+   bug_52681_a
+   Memcheck:Leak
+   fun:_Znw*
+   fun:_ZN16ChildProcessHost13CreateChannelEv
+   fun:_ZN18UtilityProcessHost12StartProcessERK8FilePath
+   fun:_ZN18UtilityProcessHost22StartExtensionUnpackerERK8FilePath
+   fun:_ZN14RunnableMethodI26SandboxedExtensionUnpackerMS0_FvRK8FilePathE6Tuple1IS1_EE3RunEv
+   fun:_ZN11MessageLoop7RunTaskEP4Task
+}
+{
+   bug_52681_b
+   Memcheck:Leak
+   fun:_Znw*
+   ...
+   fun:_ZN16ChildProcessHost13CreateChannelEv
+   fun:_ZN18UtilityProcessHost12StartProcessERK8FilePath
+   fun:_ZN18UtilityProcessHost22StartExtensionUnpackerERK8FilePath
+   fun:_ZN26SandboxedExtensionUnpacker22StartProcessOnIOThreadERK8FilePath
+   fun:_Z16DispatchToMethodI26SandboxedExtensionUnpackerMS0_FvRK8FilePathES1_EvPT_T0_RK6Tuple1IT1_E
+   fun:_ZN14RunnableMethodI26SandboxedExtensionUnpackerMS0_FvRK8FilePathE6Tuple1IS1_EE3RunEv
+   fun:_ZN11MessageLoop7RunTaskEP4Task
+}
+{
+   bug_53742_a
+   Memcheck:Cond
+   ...
+   fun:_ZN16AudioQueueObject12ConvertInputEP9AQCommandRmb
+   fun:_ZN16AudioQueueObject12RunConverterEi
+   fun:_ZN18AQConverterManager17AQConverterThread3RunEv
+   fun:_ZN18AQConverterManager17AQConverterThread20ConverterThreadEntryEPv
+   fun:_ZN9CAPThread5EntryEPS_
+   fun:_pthread_start
+   fun:thread_start
+}
+{
+   bug_53742_b
+   Memcheck:Cond
+   fun:_ZN16AudioQueueObject12ConvertInputEP9AQCommandRmb
+   fun:_ZN16AudioQueueObject5ResetEv
+   fun:_ZN16AudioQueueObject4StopEb
+}
+{
+   bug_53989_a
+   Memcheck:Cond
+   fun:glvm_function_new
+   fun:glvmCreateModularFunction
+   fun:gleGetVertexSubmitFuncObjectAndKey
+   fun:gleSetVertexArrayFunc
+   fun:gleDrawArraysOrElements_ExecCore
+   fun:gleDrawArraysOrElements_IMM_Exec
+   fun:gl_context_draw
+   fun:ogl_array_flush
+   fun:ogl_primitives_end_
+   fun:ogl_emit_quad_indices
+   fun:ogl_emit_nine_part_rect
+   fun:ogl_emit_rect_tex
+   fun:ogl_render_layer_contents_bg
+   fun:ogl_render_layer_image_
+   fun:ogl_render_layer_
+   fun:ogl_render_layer_image_
+   fun:ogl_render_layer_
+   fun:ogl_render_layers
+   fun:CARenderOGLRender
+   fun:view_draw
+   fun:view_display_link
+   fun:link_callback
+}
+{
+   bug_53989_b
+   Memcheck:Cond
+   fun:glvm_function_hash_value_6
+   fun:glvm_hash_set_*
+   fun:glvm*ModularFunction*Cache
+   fun:gleGetVertexSubmitFuncObjectAndKey
+   fun:gleSetVertexArrayFunc
+   fun:gleDrawArraysOrElements_ExecCore
+   fun:gleDrawArraysOrElements_IMM_Exec
+   fun:gl_context_draw
+   fun:ogl_array_flush
+   fun:ogl_primitives_end_
+   fun:ogl_emit_quad_indices
+   fun:ogl_emit_nine_part_rect
+   fun:ogl_emit_rect_tex
+   fun:ogl_render_layer_contents_bg
+   fun:ogl_render_layer_image_
+   fun:ogl_render_layer_
+   fun:ogl_render_layer_image_
+   fun:ogl_render_layer_
+   fun:ogl_render_layers
+   fun:CARenderOGLRender
+   fun:view_draw
+   fun:view_display_link
+}
+{
+   bug_53989_c
+   Memcheck:Value4
+   ...
+   fun:gleGetVertexSubmitFuncObjectAndKey
+   fun:gleSetVertexArrayFunc
+   fun:gleDrawArraysOrElements_ExecCore
+   fun:gleDrawArraysOrElements_IMM_Exec
+   fun:gl_context_draw
+   fun:ogl_array_flush
+   fun:ogl_primitives_end_
+   fun:ogl_emit_quad_indices
+   fun:ogl_emit_nine_part_rect
+   fun:ogl_emit_rect_tex
+   fun:ogl_render_layer_contents_bg
+   fun:ogl_render_layer_image_
+   fun:ogl_render_layer_
+   fun:ogl_render_layer_image_
+   fun:ogl_render_layer_
+   fun:ogl_render_layers
+   fun:CARenderOGLRender
+   fun:view_draw
+   fun:view_display_link
+   fun:link_callback
+}
+{
+   bug_55773
+   Memcheck:Addr8
+   fun:sseCGSFill8by1
+   fun:argb32_mark_constshape
+   fun:argb32_mark
+   fun:ripl_BltShape
+   fun:ripc_Render
+   fun:ripc_DrawRects
+   fun:CGContextFillRects
+   fun:CGContextFillRect
+   fun:NSRectFill
+   fun:-[NSView _drawRect:clip:]
+   fun:-[NSView _recursiveDisplayAllDirtyWithLockFocus:visRect:]
+   fun:-[NSView _recursiveDisplayRectIfNeededIgnoringOpacity:isVisibleRect:rectIsVisibleRectForView:topView:]
+   fun:-[NSNextStepFrame _recursiveDisplayRectIfNeededIgnoringOpacity:isVisibleRect:rectIsVisibleRectForView:topView:]
+   fun:-[NSView _displayRectIgnoringOpacity:isVisibleRect:rectIsVisibleRectForView:]
+   fun:-[NSView displayIfNeeded]
+   fun:-[NSWindow displayIfNeeded]
+   fun:-[NSWindow _reallyDoOrderWindow:relativeTo:findKey:forCounter:force:isModal:]
+   fun:-[NSWindow orderWindow:relativeTo:]
+   fun:-[NSWindow addChildWindow:ordered:]
+   fun:-[GTMWindowSheetController(PrivateMethods) beginSystemSheet:withInfo:modalForView:withParameters:]
+   fun:-[GTMWindowSheetController beginSystemSheet:modalForView:withParameters:]
+   fun:-[GTMWindowSheetController beginSheet:modalForView:modalDelegate:didEndSelector:contextInfo:]
+}
+{
+   bug_57268
+   Memcheck:Leak
+   fun:_Znw*
+   fun:_ZN4base17LoadNativeLibraryERK8FilePath
+   fun:_ZN5media22InitializeMediaLibraryERK8FilePath
+}
+{
+   bug_58244
+   Memcheck:Addr4
+   fun:_ZN17GpuWatchdogThread6OnExitEv
+   fun:_Z16DispatchToMethodI17GpuWatchdogThreadMS0_FvvEEvPT_T0_RK6Tuple0
+   fun:_ZN27ScopedRunnableMethodFactoryI17GpuWatchdogThreadE14RunnableMethodIMS0_FvvE6Tuple0E3RunEv
+   fun:_ZN11MessageLoop7RunTaskEP4Task
+}
+
+{
+   bug_58245
+   Memcheck:Leak
+   fun:_Znw*
+   fun:sendSimpleEventToSelf
+   fun:aeInitializeFromHIToolbox
+   fun:INIT_AppleEvents
+   fun:_FirstEventTime
+   fun:RunCurrentEventLoopInMode
+   fun:ReceiveNextEventCommon
+   fun:BlockUntilNextEventMatchingListInMode
+   fun:_DPSNextEvent
+   fun:-[NSApplication nextEventMatchingMask:untilDate:inMode:dequeue:]
+   fun:-[NSApplication run]
+   fun:_ZN4base24MessagePumpNSApplication5DoRunEPNS_11MessagePump8DelegateE
+   fun:_ZN4base24MessagePumpCFRunLoopBase3RunEPNS_11MessagePump8DelegateE
+}
+{
+   bug_58860_a
+   Memcheck:Addr1
+   fun:memcpy
+   ...
+   fun:FSFindFolder
+   fun:_ZN12_GLOBAL__N_124GetPluginCommonDirectoryEPSt6vectorI8FilePathSaIS1_EEb
+   fun:_ZN5NPAPI10PluginList20GetPluginDirectoriesEPSt6vectorI8FilePathSaIS2_EE
+   fun:_ZN5NPAPI10PluginList11LoadPluginsEb
+   fun:_ZN5NPAPI10PluginList10GetPluginsEbPSt6vectorI13WebPluginInfoSaIS2_EE
+   fun:_ZN13PluginUpdater30GetPreferencesDataOnFileThreadEPv
+}
+{
+   bug_58860_b
+   Memcheck:Addr4
+   ...
+   fun:FSFindFolder
+   fun:_ZN12_GLOBAL__N_124GetPluginCommonDirectoryEPSt6vectorI8FilePathSaIS1_EEb
+   fun:_ZN5NPAPI10PluginList20GetPluginDirectoriesEPSt6vectorI8FilePathSaIS2_EE
+   fun:_ZN5NPAPI10PluginList11LoadPluginsEb
+   fun:_ZN5NPAPI10PluginList10GetPluginsEbPSt6vectorI13WebPluginInfoSaIS2_EE
+   fun:_ZN13PluginUpdater30GetPreferencesDataOnFileThreadEPv
+}
+{
+   bug_59243_a
+   Memcheck:Leak
+   fun:_Znw*
+   fun:_ZN20BrowserAccessibility6CreateEv
+   fun:_ZN24BrowserAccessibilityTest5SetUpEv
+   fun:_ZN7testingL35HandleExceptionsInMethodIfSupportedINS_4TestEvEET0_PT_MS3_FS2_vEPKc
+}
+{
+   bug_59243_b
+   Memcheck:Leak
+   fun:_Znw*
+   ...
+   fun:_ZNSt3mapIiSbItN4base20string16_char_traitsESaItEESt4lessIiESaISt4pairIKiS3_EEEaSERKSA_
+   fun:_ZN20BrowserAccessibility10InitializeEP27BrowserAccessibilityManagerPS_iiRKN11webkit_glue16WebAccessibilityE
+   fun:_ZN24BrowserAccessibilityTest5SetUpEv
+   fun:_ZN7testingL35HandleExceptionsInMethodIfSupportedINS_4TestEvEET0_PT_MS3_FS2_vEPKc
+}
+
+{
+   bug_51682a
+   Memcheck:Leak
+   fun:malloc
+   fun:__cxa_get_globals
+   fun:__cxa_allocate_exception
+   fun:_ZN8Security9CssmError7throwMeEi
+   fun:_ZN9RSASigner6verifyEPKvmS1_m
+   fun:_ZN16SignatureContext5finalERKN8Security8CssmDataE
+   fun:_ZL20cssm_VerifyDataFinallyPK9cssm_data
+   fun:CSSM_VerifyDataFinal
+   fun:_ZN4base17SignatureVerifier11VerifyFinalEv
+   fun:_ZN36SignatureVerifierTest_BasicTest_Test8TestBodyEv
+}
+
+{
+   bug_51682b
+   Memcheck:Leak
+   fun:malloc
+   fun:__cxa_get_globals
+   fun:__cxa_allocate_exception
+   fun:_ZN8Security9CssmError7throwMeEi
+   fun:_ZNK8Security9DbVersion9findTableEj
+   fun:_ZNK8Security9DbVersion12createCursorEPK10cssm_query
+   fun:_ZN8Security10DbModifier12createCursorEPK10cssm_query
+   fun:_ZN8Security13AppleDatabase12dataGetFirstERNS_9DbContextEPKNS_9CssmQueryEP29cssm_db_record_attribute_dataPNS_8CssmDataERP21cssm_db_unique_record
+   fun:_ZN8Security15DatabaseSession12DataGetFirstElPKNS_9CssmQueryEP29cssm_db_record_attribute_dataPNS_8CssmDataERP21cssm_db_unique_record
+   fun:_ZL17cssm_DataGetFirst17cssm_dl_db_handlePK10cssm_queryPlP29cssm_db_record_attribute_dataP9cssm_dataPP21cssm_db_unique_record
+   fun:CSSM_DL_DataGetFirst
+}
+{
+   bug_60873
+   Memcheck:Cond
+   fun:UTF8ToCString
+   fun:_Z16UTF8ToClassicHFSPKcmmmPh
+   fun:_Z14PathMakeFSSpecPKcP6FSSpecPh
+   fun:NativePathNameToFSSpec
+   fun:ConvertProfLocation
+   fun:GetProfileLocationOfSuite
+   fun:_CMGetProfileOfSuite
+   fun:CMGetProfileByAVID
+   fun:CMSCreateDisplayProfile
+   fun:create
+   fun:CMSTransformCreate
+   fun:createBase
+   fun:initialize
+   fun:createColorTransform
+   fun:CGColorTransformCreateMutable
+   fun:CGBitmapColorTransformCreate
+   fun:__CGBitmapContextDelegateCreate
+   fun:__CGBitmapContextDelegateCreate
+   fun:createBitmapContext
+   fun:CGBitmapContextCreate
+   fun:_ZN4skia12_GLOBAL__N_1L16CGContextForDataEPvii
+   fun:_ZN4skia20BitmapPlatformDevice14CreateWithDataEPhiib
+}
+{
+   bug_61228_a
+   Memcheck:Leak
+   fun:_Znw*
+   fun:_ZN15FilePathWatcherC2Ev
+   fun:_ZN15FilePathWatcherC1Ev
+   fun:_ZN6policy22FileBasedPolicyWatcherC2Ev
+   fun:_ZN6policy22FileBasedPolicyWatcherC1Ev
+   fun:_ZN6policy23FileBasedPolicyProviderC2EPKNS_27ConfigurationPolicyProvider20PolicyDefinitionListEPNS0_8DelegateE
+   fun:_ZN6policy30ConfigurationPolicyProviderMacC2EPKNS_27ConfigurationPolicyProvider20PolicyDefinitionListEP14MacPreferences
+   fun:_ZN6policy30ConfigurationPolicyProviderMacC1EPKNS_27ConfigurationPolicyProvider20PolicyDefinitionListEP14MacPreferences
+   fun:_ZN6policy47ConfigurationPolicyProviderMacTest_Invalid_Test8TestBodyEv
+   fun:_ZN7testingL35HandleExceptionsInMethodIfSupportedINS_4TestEvEET0_PT_MS3_FS2_vEPKc
+}
+{
+   bug_61228_b
+   Memcheck:Leak
+   fun:_Znw*
+   fun:_ZN15FilePathWatcherC2Ev
+   fun:_ZN15FilePathWatcherC1Ev
+   fun:_ZN6policy22FileBasedPolicyWatcherC2Ev
+   fun:_ZN6policy22FileBasedPolicyWatcherC1Ev
+   fun:_ZN6policy23FileBasedPolicyProviderC2EPKNS_27ConfigurationPolicyProvider20PolicyDefinitionListEPNS0_8DelegateE
+   fun:_ZN6policy30ConfigurationPolicyProviderMacC2EPKNS_27ConfigurationPolicyProvider20PolicyDefinitionListE
+   fun:_ZN6policy30ConfigurationPolicyProviderMacC1EPKNS_27ConfigurationPolicyProvider20PolicyDefinitionListE
+   fun:_ZN6policy33ConfigurationPolicyProviderKeeper21CreateManagedProviderEv
+   fun:_ZN6policy33ConfigurationPolicyProviderKeeperC2Ev
+   fun:_ZN6policy33ConfigurationPolicyProviderKeeperC1Ev
+   fun:_ZN22DefaultSingletonTraitsIN6policy33ConfigurationPolicyProviderKeeperEE3NewEv
+   fun:_ZN9SingletonIN6policy33ConfigurationPolicyProviderKeeperE22DefaultSingletonTraitsIS1_ES1_E3getEv
+   fun:_ZN6policy28ConfigurationPolicyPrefStore28CreateManagedPolicyPrefStoreEv
+   fun:_ZN14PrefValueStore18RefreshPolicyPrefsEP14CallbackRunnerI6Tuple1ISt6vectorISsSaISsEEEE
+   fun:_Z16DispatchToMethodIN18TestingPrefService21TestingPrefValueStoreEM14PrefValueStoreFvP14CallbackRunnerI6Tuple1ISt6vectorISsSaISsEEEEESA_EvPT_T0_RKS4_IT1_E
+   fun:_ZN14RunnableMethodIN18TestingPrefService21TestingPrefValueStoreEM14PrefValueStoreFvP14CallbackRunnerI6Tuple1ISt6vectorISsSaISsEEEEES4_ISA_EE3RunEv
+   fun:_ZN11MessageLoop7RunTaskEP4Task
+   fun:_ZN11MessageLoop21DeferOrRunPendingTaskERKNS_11PendingTaskE
+   fun:_ZN11MessageLoop6DoWorkEv
+   fun:_ZN4base18MessagePumpDefault3RunEPNS_11MessagePump8DelegateE
+   fun:_ZN11MessageLoop11RunInternalEv
+}
+{
+   bug_61228_c
+   Memcheck:Leak
+   fun:_Znw*
+   fun:_ZN15FilePathWatcherC2Ev
+   fun:_ZN15FilePathWatcherC1Ev
+   fun:_ZN6policy22FileBasedPolicyWatcherC2Ev
+   fun:_ZN6policy22FileBasedPolicyWatcherC1Ev
+   fun:_ZN6policy23FileBasedPolicyProviderC2EPKNS_27ConfigurationPolicyProvider20PolicyDefinitionListEPNS0_8DelegateE
+   fun:_ZN6policy30ConfigurationPolicyProviderMacC2EPKNS_27ConfigurationPolicyProvider20PolicyDefinitionListEP14MacPreferences
+   fun:_ZN6policy30ConfigurationPolicyProviderMacC1EPKNS_27ConfigurationPolicyProvider20PolicyDefinitionListEP14MacPreferences
+   fun:_ZN6policy58ConfigurationPolicyProviderMacTest_TestNonForcedValue_Test8TestBodyEv
+   fun:_ZN7testingL35HandleExceptionsInMethodIfSupportedINS_4TestEvEET0_PT_MS3_FS2_vEPKc
+}
+{
+   bug_61228_d
+   Memcheck:Leak
+   fun:_Znw*
+   fun:_ZN15FilePathWatcherC2Ev
+   fun:_ZN15FilePathWatcherC1Ev
+   fun:_ZN6policy22FileBasedPolicyWatcherC2Ev
+   fun:_ZN6policy22FileBasedPolicyWatcherC1Ev
+   fun:_ZN6policy23FileBasedPolicyProviderC2EPKNS_27ConfigurationPolicyProvider20PolicyDefinitionListEPNS0_8DelegateE
+   fun:_ZN6policy30ConfigurationPolicyProviderMacC2EPKNS_27ConfigurationPolicyProvider20PolicyDefinitionListEP14MacPreferences
+   fun:_ZN6policy30ConfigurationPolicyProviderMacC1EPKNS_27ConfigurationPolicyProvider20PolicyDefinitionListEP14MacPreferences
+   fun:_ZN6policy47ConfigurationPolicyProviderMacTest_Default_Test8TestBodyEv
+   fun:_ZN7testingL35HandleExceptionsInMethodIfSupportedINS_4TestEvEET0_PT_MS3_FS2_vEPKc
+}
+{
+   bug_61228_e
+   Memcheck:Leak
+   fun:_Znw*
+   fun:_ZN15FilePathWatcherC2Ev
+   fun:_ZN15FilePathWatcherC1Ev
+   fun:_ZN6policy22FileBasedPolicyWatcherC2Ev
+   fun:_ZN6policy22FileBasedPolicyWatcherC1Ev
+   fun:_ZN6policy23FileBasedPolicyProviderC2EPKNS_27ConfigurationPolicyProvider20PolicyDefinitionListEPNS0_8DelegateE
+   fun:_ZN6policy30ConfigurationPolicyProviderMacC2EPKNS_27ConfigurationPolicyProvider20PolicyDefinitionListEP14MacPreferences
+   fun:_ZN6policy30ConfigurationPolicyProviderMacC1EPKNS_27ConfigurationPolicyProvider20PolicyDefinitionListEP14MacPreferences
+   fun:_ZN6policy49ConfigurationPolicyProviderMacTest_TestValue_Test8TestBodyEv
+   fun:_ZN7testingL35HandleExceptionsInMethodIfSupportedINS_4TestEvEET0_PT_MS3_FS2_vEPKc
+}
+

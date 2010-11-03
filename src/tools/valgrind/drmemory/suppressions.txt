@@ -1,0 +1,390 @@
+############################
+# Suppress some false reports due to bugs in Dr.Memory like wrong analysis
+# assumptions or unhandled syscalls
+
+# False reports during printing using fprintf
+UNINITIALIZED READ
+system call NtRaiseException
+KERNEL32.dll!RaiseException
+*!DebuggerProbe
+*!DebuggerKnownHandle
+
+UNADDRESSABLE ACCESS
+ntdll.dll!towlower
+ntdll.dll!KiUserExceptionDispatcher
+*!DebuggerProbe
+*!DebuggerKnownHandle
+
+# LoadLibrary calls give some strange reports
+UNADDRESSABLE ACCESS
+ntdll.dll!strchr
+KERNEL32.dll!LoadLibraryExW
+
+# http://code.google.com/p/drmemory/issues/detail?id=12
+UNINITIALIZED READ
+ntdll.dll!Rtl*
+ntdll.dll!Rtl*
+ntdll.dll!RtlFindActivationContextSectionString
+
+UNINITIALIZED READ
+...
+SHELL32.dll!SHFileOperation*
+
+UNINITIALIZED READ
+...
+SHELL32.dll!SHGetFolderPath*
+
+UNINITIALIZED READ
+...
+SHELL32.dll!SHCreateDirectory*
+
+UNADDRESSABLE ACCESS
+...
+SHELL32.dll!SHFileOperation*
+
+UNINITIALIZED READ
+...
+SHELL32.dll!ILLoadFromStream*
+
+UNINITIALIZED READ
+...
+SHELL32.dll!ILSaveToStream*
+
+# http://code.google.com/p/drmemory/issues/detail?id=14
+UNINITIALIZED READ
+...
+*!CreateProcess*
+
+UNINITIALIZED READ
+...
+*!base::LaunchApp*
+
+# http://code.google.com/p/drmemory/issues/detail?id=15
+UNINITIALIZED READ
+...
+*!rand_s
+
+# http://code.google.com/p/drmemory/issues/detail?id=17
+UNINITIALIZED READ
+...
+*!CreateWindow*
+
+# http://code.google.com/p/drmemory/issues/detail?id=18
+UNINITIALIZED READ
+...
+*!CoInitialize*
+
+UNINITIALIZED READ
+...
+*!CoCreateInstance*
+
+UNINITIALIZED READ
+...
+*!CoUninitialize*
+
+UNINITIALIZED READ
+...
+UxTheme.dll!*
+
+UNINITIALIZED READ
+...
+RPCRT4.dll!UuidCreate
+
+# http://code.google.com/p/drmemory/issues/detail?id=36
+UNINITIALIZED READ
+system call NtContinue
+*!DebuggerProbe
+*!DebuggerKnownHandle
+
+# http://code.google.com/p/drmemory/issues/detail?id=40
+UNINITIALIZED READ
+...
+WINSPOOL.DRV!*
+
+UNADDRESSABLE ACCESS
+...
+WINSPOOL.DRV!*
+
+INVALID HEAP ARGUMENT
+...
+WINSPOOL.DRV!*
+
+LEAK
+...
+WINSPOOL.DRV!*
+
+# http://code.google.com/p/drmemory/issues/detail?id=45
+UNINITIALIZED READ
+drmemorylib.dll!replace_strlen
+*!*length
+*!*assign
+
+UNINITIALIZED READ
+drmemorylib.dll!replace_strcmp
+
+UNINITIALIZED READ
+...
+*!*cmp
+...
+*!*lipboard*
+
+UNADDRESSABLE ACCESS
+...
+*!*lipboard*
+
+UNINITIALIZED READ
+KERNEL32.dll!WideCharToMultiByte
+KERNEL32.dll!WideCharToMultiByte
+USER32.dll!DeregisterShellHookWindow
+*!*lipboard*
+
+# http://code.google.com/p/drmemory/issues/detail?id=48
+UNINITIALIZED READ
+system call NtContinue
+*!*SetThreadName
+
+# http://code.google.com/p/drmemory/issues/detail?id=52
+UNINITIALIZED READ
+...
+DBGHELP.dll!SymInitialize
+
+UNINITIALIZED READ
+...
+DBGHELP.dll!SymEnumSourceFiles
+
+UNINITIALIZED READ
+...
+msvcrt.dll!_RTDynamicCast 
+
+# http://code.google.com/p/drmemory/issues/detail?id=52
+UNINITIALIZED READ
+ADVAPI32.dll!WmiMofEnumerateResourcesA
+ADVAPI32.dll!WmiMofEnumerateResourcesA
+ADVAPI32.dll!Sta*TraceW
+
+# http://code.google.com/p/drmemory/issues/detail?id=55
+UNADDRESSABLE ACCESS
+ntdll.dll!Rtl*CriticalSection*
+
+UNADDRESSABLE ACCESS
+*!Send
+
+UNADDRESSABLE ACCESS
+...
+*!tracked_objects::Tracked::Tracked
+
+UNADDRESSABLE ACCESS
+*!Pickle::Pickle
+
+UNADDRESSABLE ACCESS
+...
+*!IPC::Channel*::*Message*
+
+# http://code.google.com/p/drmemory/issues/detail?id=58
+UNINITIALIZED READ
+...
+*!_cfltcvt_l
+
+# http://code.google.com/p/drmemory/issues/detail?id=59
+UNADDRESSABLE ACCESS
+...
+*!SetEnvironmentVariable*
+
+# http://code.google.com/p/drmemory/issues/detail?id=60
+UNINITIALIZED READ
+...
+*!MessageBoxIndirect*
+
+UNINITIALIZED READ
+...
+*!IsDlgButtonChecked*
+
+UNADDRESSABLE ACCESS
+...
+*!MessageBoxIndirect*
+
+# http://code.google.com/p/drmemory/issues/detail?id=65
+UNINITIALIZED READ
+...
+ADVAPI32.dll!SystemFunction036
+
+UNINITIALIZED READ
+...
+*!talk_base::CreateRandomString
+
+# http://code.google.com/p/drmemory/issues/detail?id=68
+UNINITIALIZED READ
+...
+WS2_32.dll!*
+
+UNINITIALIZED READ
+...
+ADVAPI32.dll!SetSecurityDescriptorDacl
+
+UNINITIALIZED READ
+...
+ADVAPI32.dll!Reg*Value*
+
+UNINITIALIZED READ
+...
+MSWSOCK.dll!WSPStartup
+
+UNADDRESSABLE ACCESS
+...
+MSWSOCK.dll!WSPStartup
+
+UNINITIALIZED READ
+...
+ntdll.dll!RtlValidateUnicodeString
+
+UNADDRESSABLE ACCESS
+...
+ntdll.dll!RtlValidateUnicodeString
+
+
+############################
+# TODO(timurrrr): investigate these
+UNINITIALIZED READ
+...
+*!win_util::GetLogonSessionOnlyDACL
+
+UNINITIALIZED READ
+...
+ADVAPI32.dll!Crypt*
+
+UNINITIALIZED READ
+...
+ntshrui.dll!IsPathSharedW
+
+UNINITIALIZED READ
+...
+*!NetApiBufferFree
+
+UNINITIALIZED READ
+...
+*!ShellExecute*
+
+UNADDRESSABLE ACCESS
+...
+*!SHParseDisplayName
+
+UNINITIALIZED READ
+...
+*!SHParseDisplayName
+
+UNINITIALIZED READ
+...
+*!GetCanonicalPathInfo*
+
+UNADDRESSABLE ACCESS
+...
+*!GetCanonicalPathInfo*
+
+UNINITIALIZED READ
+...
+SHELL32.dll!Ordinal*
+
+UNADDRESSABLE ACCESS
+...
+GDI32.dll!CreateDC*
+
+UNINITIALIZED READ
+...
+USER32.dll!DrawText*
+
+UNINITIALIZED READ
+...
+GDI32.dll!GetTextExtentPoint32*
+
+# This one looks interesting
+INVALID HEAP ARGUMENT
+...
+KERNEL32.dll!ExitProcess
+
+UNINITIALIZED READ
+...
+*!SyncSocketClientListener::OnMsgClassResponse
+
+UNINITIALIZED READ
+...
+*!*NSPRInitSingleton*
+
+UNINITIALIZED READ
+*!NdrSimpleStructFree
+
+UNINITIALIZED READ
+...
+*!NdrClientCall2
+
+UNINITIALIZED READ
+ntdll.dll!RtlpNtOpenKey
+ntdll.dll!RtlMakeSelfRelativeSD
+ntdll.dll!RtlAbsoluteToSelfRelativeSD
+ADVAPI32.dll!MakeSelfRelativeSD
+
+############################
+# Intentional errors in Chromium tests (ToolsSanityTests)
+
+UNADDRESSABLE ACCESS
+base_unittests.exe!*ReadValueOutOfArrayBoundsLeft
+base_unittests.exe!*MakeSomeErrors
+base_unittests.exe!ToolsSanityTest_AccessesToMallocMemory_Test::TestBody
+
+UNADDRESSABLE ACCESS
+base_unittests.exe!*ReadValueOutOfArrayBoundsRight
+base_unittests.exe!*MakeSomeErrors
+base_unittests.exe!ToolsSanityTest_AccessesToMallocMemory_Test::TestBody
+
+UNADDRESSABLE ACCESS
+base_unittests.exe!*WriteValueOutOfArrayBoundsLeft
+base_unittests.exe!*MakeSomeErrors
+base_unittests.exe!ToolsSanityTest_AccessesToMallocMemory_Test::TestBody
+
+UNADDRESSABLE ACCESS
+base_unittests.exe!*WriteValueOutOfArrayBoundsRight
+base_unittests.exe!*MakeSomeErrors
+base_unittests.exe!ToolsSanityTest_AccessesToMallocMemory_Test::TestBody
+
+UNINITIALIZED READ
+base_unittests.exe!*ReadUninitializedValue
+base_unittests.exe!*MakeSomeErrors
+base_unittests.exe!ToolsSanityTest_AccessesToMallocMemory_Test::TestBody
+
+# Write after free
+UNADDRESSABLE ACCESS
+base_unittests.exe!ToolsSanityTest_AccessesToMallocMemory_Test::TestBody
+
+UNADDRESSABLE ACCESS
+base_unittests.exe!*ReadValueOutOfArrayBoundsLeft
+base_unittests.exe!*MakeSomeErrors
+base_unittests.exe!ToolsSanityTest_AccessesToNewMemory_Test::TestBody
+
+UNADDRESSABLE ACCESS
+base_unittests.exe!*ReadValueOutOfArrayBoundsRight
+base_unittests.exe!*MakeSomeErrors
+base_unittests.exe!ToolsSanityTest_AccessesToNewMemory_Test::TestBody
+
+UNINITIALIZED READ
+base_unittests.exe!*ReadUninitializedValue
+base_unittests.exe!*MakeSomeErrors
+base_unittests.exe!ToolsSanityTest_AccessesToNewMemory_Test::TestBody
+
+# Write after delete []
+UNADDRESSABLE ACCESS
+base_unittests.exe!ToolsSanityTest_AccessesToNewMemory_Test::TestBody
+
+############################
+# Real issues in Chromium
+
+# http://crbug.com/57266 (1)
+UNINITIALIZED READ
+...
+*!remoting::EncoderVp8::Encode
+
+# http://crbug.com/57266 (2)
+UNINITIALIZED READ
+...
+*!vp8_*
+
+# Empty line at EOF - workaround for
+# http://code.google.com/p/drmemory/issues/detail?id=41

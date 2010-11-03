@@ -1,0 +1,96 @@
+// Copyright (c) 2010 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// Protocol for event messages.
+
+syntax = "proto2";
+
+option optimize_for = LITE_RUNTIME;
+
+package remoting;
+
+// Defines a keyboard event.
+// NEXT ID: 3
+message KeyEvent {
+  // The POSIX key code.
+  required int32 key = 1;
+  required bool pressed = 2;
+}
+
+// Sets the absolute position of the mouse cursor.
+// dimension of the screen area.
+// NEXT ID: 3
+message MouseSetPositionEvent {
+  required int32 x = 1;
+  required int32 y = 2;
+
+  // Windows sets absolute mouse pointer positions as a relative value to
+  // the screen size. So pass the screen size to make this calculation easier.
+  optional int32 width = 3;
+  optional int32 height = 4;
+}
+
+// Adjust the position of the mouse cursor by an offset.
+// NEXT ID: 3
+message MouseMoveEvent {
+  required int32 offset_x = 1;
+  required int32 offset_y = 2;
+}
+
+// Motion of the mouse wheel.
+// TODO(garykac): What are units here? How many units correspond to a single
+// wheel click? On Windows, one click (WHEEL_DELTA) is 120 wheel units.
+// NEXT ID: 3
+message MouseWheelEvent {
+  required int32 offset_x = 1;
+  required int32 offset_y = 2;
+}
+
+enum MouseButton {
+  MouseButtonUndefined = 0;
+  MouseButtonLeft = 1;
+  MouseButtonMiddle = 2;
+  MouseButtonRight = 3;
+}
+
+// Mouse button is pressed down.
+// NEXT ID: 2
+message MouseDownEvent {
+  required MouseButton button = 1;
+}
+
+// Mouse button is released.
+// NEXT ID: 2
+message MouseUpEvent {
+  required MouseButton button = 1;
+}
+
+// Defines a mouse event message on the event channel. 
+message MouseEvent {
+  // Mouse position information.
+  optional int32 mouse_x = 1;
+  optional int32 mouse_y = 2;
+
+  // Mouse wheel information.
+  optional int32 wheel_offset_x = 3;
+  optional int32 wheel_offset_y = 4;
+
+  // Mouse button information.
+  optional MouseButton button = 5;
+  optional bool button_down = 6;
+}
+
+// Defines an event message on the event channel.
+message Event {
+  required int32 timestamp = 1;  // Client timestamp for event
+  optional bool dummy = 2;       // Is this a dummy event?
+
+  optional KeyEvent key = 3;
+  optional MouseEvent mouse = 4;
+}
+
+// Message sent in the event channel.
+message EventMessage {
+  repeated Event event = 1;
+}
