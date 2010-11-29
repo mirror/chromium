@@ -1,0 +1,27 @@
+// Copyright (c) 2010 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// Internal message types that should not be seen outside the protocol
+// directory.
+
+syntax = "proto2";
+
+import "control.proto";
+import "event.proto";
+import "video.proto";
+
+option optimize_for = LITE_RUNTIME;
+
+package remoting;
+
+// Defines the message that is sent from the client to the host.
+// Only one of the optional messages should be present.
+message ChromotingClientMessage {
+  optional KeyEvent key_event = 1;
+  optional MouseSetPositionEvent mouse_set_position_event = 2;
+  optional MouseMoveEvent mouse_move_event = 3;
+  optional MouseWheelEvent mouse_wheel_event = 4;
+  optional MouseDownEvent mouse_down_event = 5;
+  optional MouseUpEvent mouse_up_event = 6;
+}

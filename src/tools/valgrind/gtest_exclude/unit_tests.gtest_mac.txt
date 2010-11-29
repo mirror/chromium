@@ -1,0 +1,16 @@
+# Times out too often
+# crbug.com/15817
+IPCSyncChannelTest.*
+# Hangs
+# http://crbug.com/21890
+WebDropTargetTest.URL
+WebDropTargetTest.Data
+
+# Following tests do not pass memcheck test.
+# See http://crbug.com/30393.
+NSMenuItemAdditionsTest.TestMOnDifferentLayouts
+# See http://crbug.com/30394.
+PrefsControllerTest.GetPrefsViewForPage
+PrefsControllerTest.GetToolbarItemForPage
+PrefsControllerTest.ShowAndClose
+PrefsControllerTest.SwitchToPage

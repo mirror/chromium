@@ -1,0 +1,35 @@
+// This file should almost always be empty. Normally Chromium test expectations
+// are found in
+// src/third_party/WebKit/LayoutTests/platform/chromium/test_expectations.txt
+//
+// Only add expectations here to temporarily suppress messages on the bots
+// until the changes can be landed upstream.
+
+BUG_LEVIN WIN : fast/xsl/xslt-mismatched-tags-in-xslt.xml = IMAGE PASS
+
+// Not sure when this started crashing, seen on my webkit roll, but was crashing before that.
+BUG_JPARENT SLOW LINUX : fast/dom/HTMLHeadElement/head-check.html = CRASH PASS
+
+// Debug only timeout, so no coverage from canaries, somewhere in range 72395:72417.
+BUG_JPARENT WIN DEBUG : inspector/styles-disable-then-delete.html = TIMEOUT
+
+// Started to flake since http://src.chromium.org/viewvc/chrome?view=rev&revision=66937
+// (72440; 72514] range
+BUG_ANTON LINUX DEBUG : fast/ruby/nested-ruby.html = CRASH PASS
+
+// Rebaseline tool wasn't working for these tests.
+BUG64394 MAC : svg/W3C-SVG-1.1/struct-image-10-t.svg = IMAGE
+BUG64395 MAC : tables/mozilla/bugs/bug14929.html = IMAGE
+
+BUG_THAKIS MAC : fast/repaint/block-layout-inline-children-replaced.html = IMAGE PASS
+
+// Need rebaseline.
+BUG_KINUKO : fast/filesystem/read-directory.html = TEXT
+BUG_KINUKO : fast/filesystem/simple-persistent.html = TEXT
+BUG_KINUKO : fast/filesystem/simple-temporary.html = TEXT
+BUG_KINUKO : fast/filesystem/async-operations.html = TEXT
+
+BUG_LOISLO WIN RELEASE : http/tests/appcache/online-whitelist.html = TEXT 
+BUGWK46940 WIN RELEASE : fast/dom/Window/window-screen-properties.html = TEXT
+
+

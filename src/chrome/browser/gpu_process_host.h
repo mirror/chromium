@@ -1,0 +1,131 @@
+// Copyright (c) 2010 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef CHROME_BROWSER_GPU_PROCESS_HOST_H_
+#define CHROME_BROWSER_GPU_PROCESS_HOST_H_
+#pragma once
+
+#include <queue>
+
+#include "base/basictypes.h"
+#include "base/non_thread_safe.h"
+#include "base/ref_counted.h"
+#include "chrome/browser/browser_child_process_host.h"
+#include "gfx/native_widget_types.h"
+
+struct GpuHostMsg_AcceleratedSurfaceSetIOSurface_Params;
+struct GpuHostMsg_AcceleratedSurfaceBuffersSwapped_Params;
+class GPUInfo;
+class ResourceMessageFilter;
+
+namespace gfx {
+class Size;
+}
+
+namespace IPC {
+struct ChannelHandle;
+class Message;
+}
+
+class GpuProcessHost : public BrowserChildProcessHost, public NonThreadSafe {
+ public:
+  // Getter for the singleton. This will return NULL on failure.
+  static GpuProcessHost* Get();
+
+  virtual bool Send(IPC::Message* msg);
+
+  // IPC::Channel::Listener implementation.
+  virtual void OnMessageReceived(const IPC::Message& message);
+
+  // Tells the GPU process to create a new channel for communication with a
+  // renderer. Will asynchronously send message to object with given routing id
+  // on completion.
+  void EstablishGpuChannel(int renderer_id,
+                           ResourceMessageFilter* filter);
+
+  // Sends a reply message later when the next GpuHostMsg_SynchronizeReply comes
+  // in.
+  void Synchronize(IPC::Message* reply,
+                   ResourceMessageFilter* filter);
+
+ private:
+  // Used to queue pending channel requests.
+  struct ChannelRequest {
+    explicit ChannelRequest(ResourceMessageFilter* filter);
+    ~ChannelRequest();
+
+    // Used to send the reply message back to the renderer.
+    scoped_refptr<ResourceMessageFilter> filter;
+  };
+
+  // Used to queue pending synchronization requests.
+  struct SynchronizationRequest {
+    SynchronizationRequest(IPC::Message* reply,
+                           ResourceMessageFilter* filter);
+    ~SynchronizationRequest();
+
+    // The delayed reply message which needs to be sent to the
+    // renderer.
+    IPC::Message* reply;
+
+    // Used to send the reply message back to the renderer.
+    scoped_refptr<ResourceMessageFilter> filter;
+  };
+
+  GpuProcessHost();
+  virtual ~GpuProcessHost();
+
+  bool EnsureInitialized();
+  bool Init();
+
+  void OnControlMessageReceived(const IPC::Message& message);
+
+  // Message handlers.
+  void OnChannelEstablished(const IPC::ChannelHandle& channel_handle,
+                            const GPUInfo& gpu_info);
+  void OnSynchronizeReply();
+#if defined(OS_LINUX)
+  void OnGetViewXID(gfx::NativeViewId id, IPC::Message* reply_msg);
+  void OnResizeXID(unsigned long xid, gfx::Size size, IPC::Message* reply_msg);
+#elif defined(OS_MACOSX)
+  void OnAcceleratedSurfaceSetIOSurface(
+      const GpuHostMsg_AcceleratedSurfaceSetIOSurface_Params& params);
+  void OnAcceleratedSurfaceBuffersSwapped(
+      const GpuHostMsg_AcceleratedSurfaceBuffersSwapped_Params& params);
+#endif
+
+  // Sends the response for establish channel request to the renderer.
+  void SendEstablishChannelReply(const IPC::ChannelHandle& channel,
+                                 const GPUInfo& gpu_info,
+                                 ResourceMessageFilter* filter);
+  // Sends the response for synchronization request to the renderer.
+  void SendSynchronizationReply(IPC::Message* reply,
+                                ResourceMessageFilter* filter);
+
+  // ResourceDispatcherHost::Receiver implementation:
+  virtual URLRequestContext* GetRequestContext(
+      uint32 request_id,
+      const ViewHostMsg_Resource_Request& request_data);
+
+  virtual bool CanShutdown();
+  virtual void OnChildDied();
+  virtual void OnProcessCrashed();
+
+  bool CanLaunchGpuProcess() const;
+  bool LaunchGpuProcess();
+
+  bool initialized_;
+  bool initialized_successfully_;
+
+  // These are the channel requests that we have already sent to
+  // the GPU process, but haven't heard back about yet.
+  std::queue<ChannelRequest> sent_requests_;
+
+  // The pending synchronization requests we need to reply to.
+  std::queue<SynchronizationRequest> queued_synchronization_replies_;
+
+  DISALLOW_COPY_AND_ASSIGN(GpuProcessHost);
+};
+
+#endif  // CHROME_BROWSER_GPU_PROCESS_HOST_H_
