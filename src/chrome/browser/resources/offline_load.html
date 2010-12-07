@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html id="template_root" i18n-values="dir:textdirection">
+<head>
+<title i18n-content="title">
+</title>
+<style>
+html {
+  height: 100%;
+}
+body {
+  color: #000;
+  font-family: Helvetica, Arial, sans-serif;
+  background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      color-stop(0, rgb(236,244,255)),
+      color-stop(0.50, rgb(255,255,255))
+  );
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-pack: center;
+  visibility: hidden;
+}
+
+#error {
+  margin-top: 150px;
+  font-size: 16px;
+  display: -webkit-box;
+  width : 800px;
+  max-width: 80%;
+  -webkit-box-orient: horizontal;
+}
+
+#error img {
+  vertical-align: middle;
+  width: 96px;
+  height: 96px;
+  -webkit-margin-end: 10px;
+  -webkit-box-flex: 0;
+}
+
+#error #msg_box {
+  vertical-align: middle;
+  -webkit-box-flex: 1;
+}
+
+</style>
+<script src="shared/js/local_strings.js"></script>
+<script>
+var localStrings = new LocalStrings();
+
+function sendCommand(cmd) {
+  window.domAutomationController.setAutomationId(1);
+  window.domAutomationController.send(cmd);
+}
+// Show the offline page.
+function showPage() {
+  document.body.style.visibility = 'visible';
+}
+document.addEventListener('DOMContentLoaded', function() {
+  var timeToWait = localStrings.getString('timeToWait');
+  window.setTimeout(showPage, timeToWait);
+});
+</script>
+</head>
+
+<body oncontextmenu="return false;">
+<div id="error" i18n-values=".title:url">
+  <img i18n-values=".src:icon;.style.display:display_icon">
+  <div id="msg_box">
+    <h3 i18n-content="heading"></h3>
+    <div id="msg" i18n-values=".innerHTML:msg"></div>
+
+    <button id="continue_button" i18n-content="load_button"
+            onclick="sendCommand('proceed')">
+    </button>
+    <button id="cancel_button" i18n-content="cancel_button"
+            i18n-values=".style.display:display_cancel"
+            onclick="sendCommand('dontproceed')">
+    </button>
+    <a href="chrome://settings/internet"
+       onclick="sendCommand('open_network_settings')"
+       i18n-content="network_settings">
+    </a>
+  </div>
+</div>
+</body>
+</html>

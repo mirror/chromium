@@ -1,0 +1,70 @@
+#startupPageManagement {
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+}
+
+#startupPages {
+  height: auto;
+  padding-bottom: 1px;
+}
+
+#startupPageManagement > :last-child {
+  border-top: 1px solid #d9d9d9;
+  padding: 5px 10px;
+}
+
+#customHomePageGroup {
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+}
+
+#customHomePageGroup > div {
+  -webkit-padding-start: 1ex;
+  -webkit-box-flex: 1;
+}
+
+#homepageURL {
+  box-sizing: border-box;
+  padding-top: 3px;
+  width: 100%;
+}
+
+#defaultSearchEngineGroup {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+#defaultSearchEngineGroup > div {
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+}
+
+#defaultSearchEngine {
+  display: block;
+  -webkit-box-flex: 1;
+  max-width: 300px;
+}
+
+#defaultSearchManageEnginesButton {
+  margin-top: 0px;
+  -webkit-margin-start: 10px;
+}
+
+#defaultBrowserState {
+  margin-top: 6px;
+}
+
+#instantOption {
+  margin-bottom: 0px;
+}
+
+#instantConfirmText {
+  font-family: inherit;
+  white-space: pre-wrap;
+  width: 500px;
+}
+
+#instantConfirmLearnMore {
+  position: absolute;
+  bottom: 18px;
+}

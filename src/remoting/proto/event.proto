@@ -1,0 +1,56 @@
+// Copyright (c) 2010 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// Protocol for event messages.
+
+syntax = "proto2";
+
+option optimize_for = LITE_RUNTIME;
+
+package remoting.protocol;
+
+// Defines a keyboard event.
+// NEXT ID: 3
+message KeyEvent {
+  // The POSIX key code.
+  required int32 key = 1;
+  required bool pressed = 2;
+}
+
+// Defines a mouse event message on the event channel. 
+message MouseEvent {
+
+  enum MouseButton {
+    BUTTON_UNDEFINED = 0;
+    BUTTON_LEFT = 1;
+    BUTTON_MIDDLE = 2;
+    BUTTON_RIGHT = 3;
+  }
+
+  // Mouse position information.
+  optional int32 x = 1;
+  optional int32 y = 2;
+
+  // Mouse wheel information.
+  optional int32 wheel_offset_x = 3;
+  optional int32 wheel_offset_y = 4;
+
+  // Mouse button event.
+  optional MouseButton button = 5;
+  optional bool button_down = 6;
+}
+
+// Defines an event message on the event channel.
+message Event {
+  required int32 timestamp = 1;  // Client timestamp for event
+  optional bool dummy = 2;       // Is this a dummy event?
+
+  optional KeyEvent key = 3;
+  optional MouseEvent mouse = 4;
+}
+
+// Message sent in the event channel.
+message EventMessage {
+  repeated Event event = 1;
+}

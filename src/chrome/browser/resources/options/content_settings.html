@@ -1,0 +1,191 @@
+<div class="page hidden" id="contentSettingsPage">
+  <h1 i18n-content="contentSettingsPage"></h1>
+  <!-- Cookie filter tab contents -->
+  <section>
+    <h3 i18n-content="cookies_tab_label"></h3>
+    <div>
+      <label class="radio">
+        <input type="radio" name="cookies" value="allow">
+        <span i18n-content="cookies_allow"></span>
+      </label>
+      <label class="radio">
+        <input type="radio" name="cookies" value="block">
+         <span i18n-content="cookies_block"></span>
+      </label>
+
+      <label class="checkbox">
+        <input id="block-third-party-cookies"
+            pref="profile.block_third_party_cookies" type="checkbox">
+        <span i18n-content="cookies_block_3rd_party"></span>
+      </label>
+      <label class="checkbox">
+        <input id="clear-cookies-on-exit"
+            pref="profile.clear_site_data_on_exit" type="checkbox">
+        <span i18n-content="cookies_clear_on_exit"></span>
+      </label>
+      <button id="show-cookies-button"
+          i18n-content="cookies_show_cookies"></button>
+      <a i18n-values="href:flash_storage_url"
+          i18n-content="flash_storage_settings" target="_blank"></a>
+
+      <!-- TODO(estade): put this in a sub-sub-page. -->
+      <div contentType="cookies">
+        <list mode="normal"></list>
+        <div>
+          <span i18n-content="otr_exceptions_explanation"></span>
+          <list mode="otr"></list>
+        </div>
+      </div>
+   </div>
+  </section>
+
+  <!-- Image filter -->
+  <section>
+    <h3 i18n-content="images_tab_label"></h3>
+    <div>
+        <label class="radio">
+          <input type="radio" name="images" value="allow">
+          <span i18n-content="images_allow"></span>
+        </label>
+        <label class="radio">
+          <input type="radio" name="images" value="block">
+          <span i18n-content="images_block"></span>
+        </label>
+
+      <!-- TODO(estade): put this in a sub-sub-page. -->
+      <div contentType="images">
+        <list mode="normal"></list>
+        <div>
+          <span i18n-content="otr_exceptions_explanation"></span>
+          <list mode="otr"></list>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JavaScript filter -->
+  <section>
+    <h3 i18n-content="javascript_tab_label"></h3>
+    <div>
+      <label class="radio">
+        <input type="radio" name="javascript" value="allow">
+        <span i18n-content="javascript_allow"></span>
+      </label>
+      <label class="radio">
+        <input type="radio" name="javascript" value="block">
+        <span i18n-content="javascript_block"></span>
+      </label>
+
+      <!-- TODO(estade): put this in a sub-sub-page. -->
+      <div contentType="javascript">
+        <list mode="normal"></list>
+        <div>
+          <span i18n-content="otr_exceptions_explanation"></span>
+          <list mode="otr"></list>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plug-ins filter -->
+  <section>
+    <h3 i18n-content="plugins_tab_label"></h3>
+    <div>
+      <label class="radio">
+        <input type="radio" name="plugins" value="allow">
+        <span i18n-content="plugins_allow"></span>
+      </label>
+      <label class="radio" id="click_to_play">
+        <input type="radio" name="plugins" value="ask">
+        <span i18n-content="plugins_ask"></span>
+      </label>
+      <label class="radio">
+        <input type="radio" name="plugins" value="block">
+        <span i18n-content="plugins_block"></span>
+      </label>
+
+      <!-- TODO(estade): put this in a sub-sub-page. -->
+      <div contentType="plugins">
+        <list mode="normal"></list>
+        <div>
+          <span i18n-content="otr_exceptions_explanation"></span>
+          <list mode="otr"></list>
+        </div>
+      </div>
+
+      <a i18n-content="disable_individual_plugins" id="plugins-tab" href="#"></a>
+    </div>
+  </section>
+
+  <!-- Pop-ups filter -->
+  <section>
+    <h3 i18n-content="popups_tab_label" class="contentSettingsHeader"></h3>
+    <div>
+      <label class="radio">
+        <input type="radio" name="popups" value="allow">
+         <span i18n-content="popups_allow"></span>
+      </label>
+      <label class="radio">
+        <input type="radio" name="popups" value="block">
+        <span i18n-content="popups_block"></span>
+      </label>
+
+      <!-- TODO(estade): put this in a sub-sub-page. -->
+      <div contentType="popups">
+        <list mode="normal"></list>
+        <div>
+          <span i18n-content="otr_exceptions_explanation"></span>
+          <list mode="otr"></list>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Location filter -->
+  <section>
+    <h3 i18n-content="location_tab_label"></h3>
+    <div>
+      <label class="radio">
+        <input type="radio" name="location" value="allow">
+        <span i18n-content="location_allow"></span>
+      </label>
+      <label class="radio">
+        <input type="radio" name="location" value="ask">
+        <span i18n-content="location_ask"></span>
+      </label>
+      <label class="radio">
+        <input type="radio" name="location" value="block">
+        <span i18n-content="location_block"></span>
+      </label>
+
+      <!-- TODO(estade): put this in a sub-sub-page. -->
+      <div contentType="popups">
+        <list mode="normal"></list>
+      </div>
+    </div>
+  </section>
+
+  <!-- Notifications filter tab contents -->
+  <section>
+    <h3 i18n-content="notifications_tab_label"></h3>
+    <div>
+      <label class="radio">
+        <input type="radio" name="notifications" value="allow">
+        <span i18n-content="notifications_allow"></span>
+      </label>
+      <label class="radio">
+        <input type="radio" name="notifications" value="ask">
+        <span i18n-content="notifications_ask"></span>
+      </label>
+      <label class="radio">
+        <input type="radio" name="notifications" value="block">
+        <span i18n-content="notifications_block"></span>
+      </label>
+
+      <!-- TODO(estade): put this in a sub-sub-page. -->
+      <div contentType="notifications">
+        <list mode="normal"></list>
+      </div>
+    </div>
+  </section>
+</div>
