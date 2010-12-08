@@ -1,0 +1,38 @@
+<div class="page hidden" id="autoFillOptionsPage">
+  <h1 i18n-content="autoFillOptionsTitle"></h1>
+
+  <div class="autofill-section" id="profileSelectContainer">
+    <div id="profileSelectLeftColumn">
+      <select id="profileList" size="10">
+        <option value="addressesHeader" disabled
+            i18n-content="addressesHeader"></option>
+        <option value="addressesHorizontalRule" disabled></option>
+        <option value="addressesBlankOption" disabled></option>
+        <option value="creditCardsHeader" disabled
+            i18n-content="creditCardsHeader"></option>
+        <option value="creditCardsHorizontalRule" disabled></option>
+      </select>
+    </div>
+    <div id="profileSelectRightColumn">
+      <div><button id="addAddressButton" i18n-content="addAddressButton">
+          </button></div>
+      <div><button id="addCreditCardButton" i18n-content="addCreditCardButton">
+          </button></div>
+      <div><button id="autoFillEditButton" i18n-content="editButton">
+          </button></div>
+      <div><button id="autoFillRemoveButton" i18n-content="deleteButton">
+          </button></div>
+    </div>
+  </div>
+
+  <div class="autofill-section">
+<if expr="pp_ifdef('chromeos')">
+    <a href="http://www.google.com/support/chromeos/bin/answer.py?answer=142893"
+        target="_blank" i18n-content="helpButton"></a>
+</if>
+<if expr="not pp_ifdef('chromeos')">
+    <a href="http://www.google.com/support/chrome/bin/answer.py?answer=142893"
+        target="_blank" i18n-content="helpButton"></a>
+</if>
+  </div>
+</div>
