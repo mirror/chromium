@@ -1,0 +1,9 @@
+reliability_tests.exe
+test_shell.exe
+automated_ui_tests.exe
+icudt38.dll
+icudt42.dll
+plugins\npTestNetscapePlugIn.dll
+pyautolib.py
+_pyautolib.pyd
+fonts\*

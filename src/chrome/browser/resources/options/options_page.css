@@ -1,0 +1,513 @@
+body {
+  -webkit-user-select: none;
+  cursor: default;
+  font-size: 100%;
+}
+
+#settings-title {
+  -webkit-padding-end: 24px;
+  color: #53637d;
+  font-size: 200%;
+  font-weight: normal;
+  margin: 0;
+  padding-bottom: 14px;
+  padding-top: 13px;
+  text-align: end;
+}
+
+#main-content {
+  display: -webkit-box;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+#search-field {
+  margin: 0;
+}
+
+.overlay {
+  position: fixed;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .2);
+  top: 0;
+  bottom: 0;
+  z-index: 10;
+  padding: 20px;
+  display: -webkit-box;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+}
+
+.close-subpage {
+  background-color: transparent;
+  background-image: url('chrome://theme/IDR_CLOSE_BAR');
+  border: none;
+  position: relative;
+  top: 12px;
+  height: 16px;
+  width: 16px;
+}
+
+.close-subpage:hover {
+  background-image: url('chrome://theme/IDR_CLOSE_BAR_H');
+}
+
+.close-subpage:active {
+  background-image: url('chrome://theme/IDR_CLOSE_BAR_P');
+}
+
+html[dir='ltr'] .close-subpage {
+  float: right;
+  right: 0;
+}
+
+html[dir='rtl'] .close-subpage {
+  float: left;
+  left: 0;
+}
+
+html[hide-menu=true] .close-subpage {
+  display: none
+}
+
+.action-area {
+  -webkit-box-align: center;
+  -webkit-box-orient: horizontal;
+  bottom: 0;
+  display: -webkit-box;
+  padding: 12px;
+  position: absolute;
+  right: 0;
+}
+
+html[dir='rtl'] .action-area {
+  left: 0;
+}
+
+.button-strip {
+  -webkit-box-orient: horizontal;
+  display: -webkit-box;
+}
+
+html[toolkit=views] .button-strip {
+  -webkit-box-direction: reverse;
+}
+
+.button-strip > button {
+  -webkit-margin-start: 4px;
+  display: block;
+}
+
+.overlay > div {
+  -webkit-box-shadow: 3px 3px 3px #666;
+  background: white;
+  border-radius: 5px;
+  padding: 15px;
+  border: 1px solid #666;
+  padding-bottom: 50px;
+  position: relative;
+}
+
+#navbar {
+  margin: 0;
+}
+
+#navbar-container {
+  -webkit-border-end: 1px solid #c6c9ce;
+  background: -webkit-linear-gradient(rgba(234, 238, 243, 0), #eaeef3),
+              -webkit-linear-gradient(left, #eaeef3, #eaeef3 97%, #d3d7db);
+  bottom: 0;
+  cursor: pointer;
+  display: none;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 266px;
+  z-index: 2;
+}
+
+html[dir='rtl'] #navbar-container {
+  background: -webkit-linear-gradient(rgba(255, 255, 255, 0)),
+                                      rgba(255, 255, 255, 0) 70%,
+                                      white),
+              -webkit-linear-gradient(right, white, white 80%, #f3f3f3);
+  left: auto;
+  right: 0;
+}
+
+html[hide-menu=false] #navbar-container {
+  display: block;
+}
+
+#navbar-container > hr {
+  -webkit-margin-start: 35%;
+  background-color: #dbdbdb;
+  border: 0;
+  height: 1px;
+  width: 65%;
+}
+
+#navbar-container > ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-item, .navbar-item2 {
+  color: #426dc9;
+  display: block;
+  font-size: 105%;
+  outline: none;
+  padding: 7px 0;
+  text-align: end;
+  -webkit-padding-end: 24px;
+}
+
+.navbar-item-selected {
+  background: #bbcee9;
+  border-bottom: 1px solid #8faad9;
+  border-top: 1px solid #8faad9;
+  color: black;
+  font-weight: bold;
+}
+
+.navbar-item-normal {
+  background-color: #dfdfdf;
+}
+
+#mainview {
+  -webkit-box-align: stretch;
+  -webkit-padding-start: 267px;
+  margin: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+html[hide-menu=true] #mainview {
+  -webkit-padding-start: 0;
+}
+
+#mainview-content {
+  box-sizing: border-box;
+  max-width: 888px;
+  min-height: 100%;
+  min-width: 600px;
+  padding: 0 24px;
+  position: relative;
+}
+
+.subpage-sheet-container {
+  padding: 8px;
+  -webkit-padding-start: 60px;
+  box-sizing: border-box;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#subpage-sheet-container-1 {
+  width: 748px;
+  z-index: 5;
+}
+
+#subpage-sheet-container-2 {
+  left: 60px;
+  width: 688px;
+  z-index: 10;
+}
+
+.subpage-sheet {
+  -webkit-box-shadow: #666 0px 3px 5px;
+  background-color: white;
+  border: 1px solid #b8b8b8;
+  border-radius: 2px;
+  box-sizing: border-box;
+  min-height: 100%;
+  padding: 0px 20px;
+  position: relative;
+  width: 100%;
+}
+
+#managed-prefs-banner {
+  background: -webkit-linear-gradient(#fff2b7, #fae691 97%, #878787);
+  height: 31px;
+  width: 100%;
+}
+
+#managed-prefs-banner {
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+}
+
+#managed-prefs-icon {
+  background-image: url("chrome://theme/IDR_WARNING");
+  background-repeat: no-repeat;
+  background-position:center;
+  display: inline-block;
+  padding: 5px;
+  height: 21px;
+  vertical-align: middle;
+  width: 24px;
+}
+
+#managed-prefs-text {
+  vertical-align: middle;
+}
+
+.page h1 {
+  -webkit-padding-end: 24px;
+  border-bottom: 1px solid #eeeeee;
+  color: #53637d;
+  font-size: 200%;
+  font-weight: normal;
+  margin: 0;
+  padding-bottom: 4px;
+  padding-top: 13px;
+}
+
+.subpage-sheet .page h1 {
+  padding-top: 4px;
+}
+
+section {
+  -webkit-box-orient: horizontal;
+  border-bottom: 1px solid #eeeeee;
+  display: -webkit-box;
+  margin-top: 17px;
+  padding-bottom: 20px;
+}
+
+div.page section:last-child {
+  border-bottom: none;
+}
+
+div.page > h3 {
+  font-size: 105%;
+  font-weight: bold;
+  margin: 20px 0 10px 0;
+}
+
+section > h3 {
+  font-size: 105%;
+  font-weight: bold;
+  margin: 0;
+  vertical-align: middle;
+  width: 140px;
+}
+
+section > div:only-of-type {
+  -webkit-box-flex: 1;
+}
+
+.option {
+  margin-top: 0;
+}
+
+/* TODO(stuartmorgan): make this less specific once all pages
+ * are converted to the non-table style.
+ */
+section > div:only-of-type label {
+  margin: 5px 0;
+}
+
+label.checkbox,
+label.radio {
+  display: block
+}
+
+.hidden {
+  display: none !important;
+}
+
+.touch-slider {
+  -webkit-appearance: slider-horizontal;
+}
+
+select {
+  margin: 0;
+}
+
+.link-button {
+  background-color: transparent;
+  border: none;
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.text-button {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.settings-list {
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+}
+
+list > * {
+  -webkit-box-align: center;
+  -webkit-transition: .15s background-color;
+  box-sizing: border-box;
+  border-radius: 0;
+  display: -webkit-box;
+  height: 32px;
+  border: none;
+  margin: 0;
+}
+
+list:not([disabled]) > :hover {
+  background-color: #f2f2f2;
+}
+
+list > [selected],
+list:focus > [selected],
+list:focus > [lead][selected],
+list > [selected]:hover {
+  background-color: #f2f2f2;
+  background-image: none;
+}
+
+list[disabled] > [lead][selected],
+list[disabled]:focus > [lead][selected] {
+  border: none;
+}
+
+list[disabled] {
+  opacity: 0.6;
+}
+
+list > .heading {
+  color: #666666;
+}
+
+list > .heading:hover {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+list .deletable-item {
+  -webkit-box-align: center;
+}
+
+list .deletable-item > :first-child {
+  -webkit-box-flex: 1;
+  display: -webkit-box;
+}
+
+list .close-button {
+  -webkit-transition: .15s opacity;
+  background-color: transparent;
+  /* TODO(stuartmorgan): Replace with real images once they are available. */
+  background-image: url("../../../app/theme/close_bar.png");
+  border: none;
+  height: 16px;
+  opacity: 1;
+  width: 16px;
+}
+
+list > *:not(:hover) .close-button,
+list[disabled] .close-button,
+list .close-button[disabled] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+list .close-button:hover {
+  background-image: url("../../../app/theme/close_bar_h.png");
+}
+
+list .close-button:active {
+  background-image: url("../../../app/theme/close_bar_p.png");
+}
+
+.left-side-table {
+  display: -webkit-box;
+}
+
+.left-side-table > div:first-child {
+  -webkit-box-flex: 1;
+}
+
+.left-side-table > :last-child {
+  -webkit-padding-start: 20px;
+}
+
+.left-side-table > :last-child button {
+  width: 100%;
+}
+
+.option-name {
+  padding-right: 5px;
+}
+
+html[dir=rtl].option-name {
+  padding-left: 5px;
+}
+
+.favicon-cell {
+  -webkit-padding-start: 20px;
+  background-position: left;
+  background-repeat: no-repeat;
+}
+
+list .favicon-cell {
+  -webkit-margin-start: 7px;
+  -webkit-padding-start: 26px;
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+html[dir=rtl] list .favicon-cell {
+  background-position: right;
+}
+
+html[enable-background-mode=false] #background-mode-section {
+ display: none;
+}
+
+html[enable-cloud-print-proxy=false] #cloud-print-proxy-section {
+ display: none;
+}
+
+html[enable-cloud-print-proxy=true] #cloudPrintProxyManageButton {
+ display: none;
+}
+
+input[type=checkbox],
+input[type=radio],
+button {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Checkbox and radio buttons have different sizes on different platforms. The
+ * following rules have platform specific tweaks.
+ * TODO(arv): Test the vertical position on Linux and CrOS as well.
+ */
+
+label > input[type=checkbox],
+label > input[type=radio] {
+  margin-top: 1px;
+}
+
+.suboption {
+  -webkit-margin-start: 16px;
+}
+
+html[os=mac] label > input[type=checkbox],
+html[os=mac] label > input[type=radio] {
+  margin-top: 2px;
+}
