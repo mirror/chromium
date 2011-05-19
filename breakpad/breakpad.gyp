@@ -2,8 +2,10 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+
 {
   'includes': [
+    'test.gypi',
     'breakpad_sender.gypi',
     'breakpad_handler.gypi',
   ],
