@@ -2,9 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// WK Bug 55728 is fixed on the chrome 12 branch but not on the trunk.
-// TODO(rginda): Enable this everywhere once we have a trunk-worthy fix.
-const ENABLE_EXIF_READER = navigator.userAgent.match(/chrome\/12\.0/i);
+// WK Bug 55728 is fixed everywhere now, we can enable this by default.
+// TODO(rginda): Remove this const, assume the exif reader and thumbnail view
+// are enabled everywhere.
+const ENABLE_EXIF_READER = true;
 
 // Thumbnail view is painful without the exif reader.
 const ENABLE_THUMBNAIL_VIEW = ENABLE_EXIF_READER;
