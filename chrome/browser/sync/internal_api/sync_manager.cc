@@ -788,6 +788,8 @@ bool SyncManager::SyncInternal::Init(
 
   connection_manager()->AddListener(this);
 
+  // TODO(akalin): CheckServerReachable() can block, which may cause jank if we
+  // try to shut down sync.  Fix this.
   MessageLoop::current()->PostTask(
       FROM_HERE, base::Bind(&SyncInternal::CheckServerReachable,
                             weak_ptr_factory_.GetWeakPtr()));
@@ -959,10 +961,7 @@ void SyncManager::SyncInternal::UpdateCredentials(
     sync_notifier_->UpdateCredentials(
         credentials.email, credentials.sync_token);
     if (!setup_for_test_mode_) {
-      // Post a task so we don't block UpdateCredentials.
-      MessageLoop::current()->PostTask(
-          FROM_HERE, base::Bind(&SyncInternal::CheckServerReachable,
-                                weak_ptr_factory_.GetWeakPtr()));
+      CheckServerReachable();
     }
   }
 }
@@ -1339,7 +1338,9 @@ void SyncManager::SyncInternal::OnIPAddressChanged() {
 
 void SyncManager::SyncInternal::OnIPAddressChangedImpl() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  CheckServerReachable();
+  // TODO(akalin): CheckServerReachable() can block, which may cause
+  // jank if we try to shut down sync.  Fix this.
+  connection_manager()->CheckServerReachable();
 }
 
 void SyncManager::SyncInternal::OnServerConnectionEvent(
