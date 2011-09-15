@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAFX//9fo\u003d",
+        "filename": "chrome/tools/chromeactions.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000710
+      },
+      "writtenOn": "2011-09-15T21:54:38Z",
+      "side": 1,
+      "message": "It seems that executing the .py script also added these lines. Shall I remove them manually and upload again?",
+      "revId": "58f04782cb7ed59b24b8be024be3e49a232d0e70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
