@@ -15,7 +15,7 @@
 namespace google_breakpad {
 
 class CrashReportSender;
-class CrashGenerationServer;
+class CrashGenerationService;
 class ClientInfo;
 
 }
