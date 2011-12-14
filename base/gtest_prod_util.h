@@ -8,6 +8,20 @@
 
 #include "testing/gtest/include/gtest/gtest_prod.h"
 
+
+#if 1 || defined(GOOGLE_CHROME_BUILD)
+
+#undef FRIEND_TEST
+
+// Provide a no-op that can live in a class definition.
+// We can't use an expression, so we define a useless local class name.
+#define FRIEND_TEST(test_case_name, test_name)                                 \
+  class test_case_name##_##test_name##_Test {int garbage;}
+
+#endif
+
+
+
 // This is a wrapper for gtest's FRIEND_TEST macro that friends
 // test with all possible prefixes. This is very helpful when changing the test
 // prefix, because the friend declarations don't need to be updated.
