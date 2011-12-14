@@ -6,6 +6,8 @@
 #define BASE_GTEST_PROD_UTIL_H_
 #pragma once
 
+#undef FRIEND_TEST
+
 #include "testing/gtest/include/gtest/gtest_prod.h"
 
 
