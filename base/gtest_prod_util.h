@@ -11,7 +11,7 @@
 #include "testing/gtest/include/gtest/gtest_prod.h"
 
 
-#if 1 || defined(GOOGLE_CHROME_BUILD)
+#if defined(GOOGLE_CHROME_BUILD)
 
 #undef FRIEND_TEST
 

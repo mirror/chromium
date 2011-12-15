@@ -38,7 +38,7 @@
 // unable to compile on both if we include gtest_prod.h here.  Instead, include
 // its only contents -- this will need to be updated if the macro ever changes.
 
-#if 1 || defined(GOOGLE_CHROME_BUILD)
+#if defined(GOOGLE_CHROME_BUILD)
 
 #undef FRIEND_TEST
 
