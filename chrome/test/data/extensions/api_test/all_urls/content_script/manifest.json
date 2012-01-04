@@ -1,0 +1,11 @@
+{
+   "background_page": "background.html",
+   "content_scripts": [ {
+      "js": [ "content_script.js" ],
+      "matches": [ "<all_urls>" ]
+   } ],
+   "description": "Test whether whitelisted extensions can run scripts everywhere using content script",
+   "name": "AllUrls content script permissions",
+   "manifest_version": 2,
+   "version": "1.0"
+}

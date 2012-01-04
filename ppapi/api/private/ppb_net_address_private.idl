@@ -1,0 +1,61 @@
+/* Copyright (c) 2011 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file.
+ */
+
+/**
+ * This file defines the <code>PPB_NetAddress_Private</code> interface.
+ */
+
+label Chrome {
+  M17 = 0.1
+};
+
+/**
+ * This is an opaque type holding a network address.
+ */
+[assert_size(132)]
+struct PP_NetAddress_Private {
+  uint32_t size;
+  char[128] data;
+};
+
+/**
+ * The <code>PPB_NetAddress_Private</code> interface provides operations on
+ * network addresses.
+ */
+interface PPB_NetAddress_Private {
+  /**
+    * Returns PP_TRUE if the two addresses are equal (host and port).
+    */
+  PP_Bool AreEqual([in] PP_NetAddress_Private addr1,
+                   [in] PP_NetAddress_Private addr2);
+
+  /**
+    * Returns PP_TRUE if the two addresses refer to the same host.
+    */
+  PP_Bool AreHostsEqual([in] PP_NetAddress_Private addr1,
+                        [in] PP_NetAddress_Private addr2);
+
+  /**
+    * Returns a human-readable description of the network address, optionally
+    * including the port (e.g., "192.168.0.1", "192.168.0.1:99", or "[::1]:80"),
+    * or an undefined var on failure.
+    */
+  PP_Var Describe([in] PP_Module module,
+                  [in] PP_NetAddress_Private addr,
+                  [in] PP_Bool include_port);
+
+  /**
+    * Replaces the port in the given source address. Returns PP_TRUE on success.
+    */
+  PP_Bool ReplacePort([in] PP_NetAddress_Private src_addr,
+                      [in] uint16_t port,
+                      [out] PP_NetAddress_Private dest_addr);
+
+  /**
+    * Gets the "any" address (for IPv4 or IPv6); for use with UDP Bind.
+    */
+  void GetAnyAddress([in] PP_Bool is_ipv6,
+                     [out] PP_NetAddress_Private addr);
+};

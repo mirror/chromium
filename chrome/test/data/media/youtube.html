@@ -1,0 +1,29 @@
+<!-- This is a test html file for Youtube video tests -->
+<html>
+<script type="text/javascript" src="swfobject.js"></script>    
+<div id="ytapiplayer"> 
+You need Flash player 8+ and JavaScript enabled to view this video. 
+</div> 
+
+<script type="text/javascript">
+function onYouTubePlayerReady(playerId) {
+    ytplayer = document.getElementById("myytplayer");
+    console.log("player ready to play");
+    document.getElementById('player_status').innerHTML = 'player ready';
+}
+function loadPlayer() {
+  var params = { allowScriptAccess: "always" };
+  var atts = { id: "myytplayer" };
+  var video_id = window.location.href.split("video=");
+  swfobject.embedSWF(
+    "http://www.youtube.com/e/" + video_id[1] +
+      "?enablejsapi=1&playerapiid=ytplayer",
+    "ytapiplayer", "800", "600", "8", null, null, params, atts);
+}
+</script>
+
+<body onload="loadPlayer()">
+<div id=player_status>Not Ready</div>
+Youtube flash test</body>
+
+</html>
