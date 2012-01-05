@@ -545,6 +545,7 @@
       'variables': {
         'base_target': 1,
         'enable_wexit_time_destructors': 1,
+        'optimize': 'max',
       },
       'dependencies': [
         'base_static',
