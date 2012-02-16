@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html i18n-values="dir:textdirection;" class="loading">
+<head>
+<meta charset="utf-8">
+
+<link rel="icon" href="chrome://theme/IDR_EXTENSIONS_FAVICON">
+<link rel="stylesheet" href="extensions.css">
+<link rel="stylesheet" href="pack_extension_overlay.css">
+<link rel="stylesheet" href="../shared/css/chrome_shared2.css">
+<link rel="stylesheet" href="../shared/css/overlay.css">
+<link rel="stylesheet" href="../shared/css/trash.css">
+<link rel="stylesheet" href="../uber/uber_shared.css">
+
+<script src="chrome://resources/js/cr.js"></script>
+<script src="chrome://resources/js/local_strings.js"></script>
+<script src="chrome://resources/js/util.js"></script>
+<script src="chrome://resources/js/cr/ui.js"></script>
+<script src="chrome://resources/js/cr/ui/alert_overlay.js"></script>
+<script src="chrome://resources/js/cr/ui/overlay.js"></script>
+
+<script src="chrome://extensions-frame/extensions.js"></script>
+</head>
+
+<body class="uber-frame"
+    i18n-values=".style.fontFamily:fontfamily;.style.fontSize:fontsize">
+
+<div id="overlay" class="overlay" hidden>
+  <include src="pack_extension_overlay.html">
+  <include src="../shared/html/alert_overlay.html">
+</div>
+
+<div class="page" id="extension-settings">
+  <header id="page-header"><h1 i18n-content="extensionSettings"></h1></header>
+  <div id="dev-toggle">
+    <label>
+      <input id="toggle-dev-on" type="checkbox">
+      <span i18n-content="extensionSettingsDeveloperMode">
+    </label>
+  </div>
+  <div id="dev-controls" hidden>
+    <button id="load-unpacked"
+        i18n-content="extensionSettingsLoadUnpackedButton"></button>
+    <button id="pack-extension"
+        i18n-content="extensionSettingsPackButton"></button>
+    <div id="dev-controls-spacer"></div>
+    <button id="update-extensions-now"
+        i18n-content="extensionSettingsUpdateButton"></button>
+  </div>
+  <div id="extension-settings-list"></div>
+  <div>
+    <strong id="no-extensions" i18n-content="extensionSettingsNoExtensions"
+        hidden></strong>
+  </div>
+  <div id="suggest-gallery" hidden></div>
+  <div id="get-more-extensions-container" hidden>
+    <img src="chrome://theme/IDR_WEBSTORE_ICON_32">
+    <div id="get-more-extensions"></div>
+  </div>
+</div>
+
+<div id="template-collection" hidden>
+
+  <div class="extension-list-item-wrapper">
+    <div class="extension-list-item">
+      <div class="extension-details">
+        <div>
+          <span class="extension-title"></span>
+          <span class="extension-version"></span>
+        </div>
+        <p class="extension-description"></p>
+        <div class="developer-extras">
+          <div>
+            <span i18n-content="extensionSettingsExtensionId"></span>
+            <span class="extension-id"></span>
+          </div>
+          <div class="load-path" hidden>
+            <span i18n-content="extensionSettingsExtensionPath"></span>
+            <span></span>
+          </div>
+          <div class="managed-message"
+              i18n-content="extensionSettingsPolicyControlled" hidden>
+          </div>
+          <div class="active-views" hidden>
+            <span i18n-content="extensionSettingsInspectViews"></span>
+            <a href="#"></a>
+          </div>
+        </div>
+        <div class="optional-controls">
+          <button class="show-button"
+              i18n-content="extensionSettingsShowButton" hidden ></button>
+          <label class="incognito-control">
+            <input type="checkbox">
+            <span i18n-content="extensionSettingsEnableIncognito"></span>
+          </label>
+          <label class="file-access-control" hidden>
+            <input type="checkbox">
+            <span i18n-content="extensionSettingsAllowFileAccess"></span>
+          </label>
+          <a class="options-link" i18n-content="extensionSettingsOptions"
+              href="#" hidden></a>
+          <a class="activity-link" i18n-content="extensionSettingsActivity"
+              href="#" hidden></a>
+          <a class="store-link" i18n-content="extensionSettingsVisitWebsite"
+              target="_parent" hidden></a>
+          <a class="reload-link" i18n-content="extensionSettingsReload"
+              href="#" hidden></a>
+        </div>
+        <div class="butter-bar"
+            i18n-values=".innerHTML:extensionSettingsIncognitoWarning" hidden>
+        </div>
+      </div>
+      <div class="enable-controls">
+        <a class="terminated-reload-link" href="#"
+            i18n-content="extensionSettingsReload" hidden></a>
+        <label class="enable-checkbox" hidden>
+          <input type="checkbox">
+          <div class="enable-checkbox-text">
+            <span class="enabled-text" i18n-content="extensionSettingsEnabled">
+            </span>
+            <span class="enable-text" i18n-content="extensionSettingsEnable">
+            </span>
+          </div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <include src="../shared/html/trash.html">
+
+</div>
+
+<script src="chrome://extensions-frame/strings.js"></script>
+<script src="chrome://resources/js/i18n_template.js"></script>
+<script src="chrome://resources/js/i18n_process.js"></script>
+
+</body>
+</html>

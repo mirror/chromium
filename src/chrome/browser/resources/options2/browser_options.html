@@ -1,0 +1,322 @@
+<div id="settings" class="page" hidden>
+  <header>
+    <h1 i18n-content="settingsTitle"></h1>
+    <span id="browser-options-search-field-container"
+        class="search-field-container">
+      <input id="search-field" type="search"
+          i18n-values="placeholder:searchPlaceholder;
+                       aria-label:searchPlaceholder" incremental>
+    </span>
+  </header>
+<if expr="not pp_ifdef('chromeos')">
+  <section id="sync-section">
+    <h3 i18n-content="sectionTitleSync"></h3>
+    <div id="sync-overview" class="section-description" hidden>
+      <p i18n-content="syncOverview"></p>
+      <a i18n-values="href:syncLearnMoreURL" i18n-content="learnMore"
+          target="_blank">
+      </a>
+    </div>
+    <div id="sync-status" hidden>
+      <span id="sync-status-text"></span>
+      <button id="sync-action-link" class="link-button"></button>
+    </div>
+    <div id="sync-buttons">
+      <button id="start-stop-sync" hidden></button>
+      <button id="customize-sync" i18n-content="customizeSync" hidden>
+      </button>
+      <div id="enable-auto-login-checkbox" class="checkbox" hidden>
+        <label>
+          <input id="enable-auto-login" pref="autologin.enabled"
+              metric="Options_Autologin" type="checkbox">
+          <span i18n-content="autologinEnabled"></span>
+        </label>
+      </div>
+    </div>
+  </section>
+</if>
+<if expr="pp_ifdef('chromeos')">
+  <section>
+    <h3 i18n-content="sectionTitleInternet"></h3>
+    <div>
+      <button id="internet-options-button"
+          i18n-content="internetOptionsButtonTitle">
+      </button>
+    </div>
+  </section>
+</if>
+<if expr="not pp_ifdef('chromeos')">
+  <!-- This section is temporarily duplicated down below for ChromeOS. -->
+  <section id="startup-section">
+    <h3 i18n-content="sectionTitleStartup"></h3>
+    <div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="startup" value="0"
+              pref="session.restore_on_startup"
+              metric="Options_Startup_Homepage">
+          <span i18n-content="startupShowDefaultAndNewTab"></span>
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="startup" value="1"
+              pref="session.restore_on_startup"
+              metric="Options_Startup_LastSession">
+          <span id="old-startup-last-text"
+              i18n-content="startupShowLastSession">
+          </span>
+          <span id="new-startup-last-text"
+              i18n-content="startupRestoreLastSession" hidden></span>
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input id="startup-show-pages" type="radio" name="startup"
+              pref="session.restore_on_startup"
+              value="4" metric="Options_Startup_Custom">
+          <span>
+            <span i18n-content="startupShowPages"></span>
+            <button id="startup-set-pages" class="link-button"
+                i18n-content="startupSetPages"></button>
+          </span>
+        </label>
+      </div>
+    </div>
+  </section>
+</if>
+  <section>
+    <h3 i18n-content="sectionTitleAppearance"></h3>
+<if expr="not pp_ifdef('toolkit_views') and is_posix and not is_macosx">
+    <div>
+      <button id="themes-gallery" i18n-content="themesGallery"></button>
+      <button id="themes-GTK-button"
+          i18n-content="themesGTKButton"></button>
+      <button id="themes-reset"
+          i18n-content="themesSetClassic"></button>
+    </div>
+</if>
+<if expr="pp_ifdef('toolkit_views') or os == 'win32' or os == 'darwin'">
+    <div>
+      <button id="themes-gallery" i18n-content="themesGallery"></button>
+      <button id="themes-reset" i18n-content="themesReset"></button>
+    </div>
+</if>
+    <div>
+      <div class="checkbox">
+        <input id="toolbar-show-home-button" pref="browser.show_home_button"
+            metric="Options_Homepage_HomeButton" type="checkbox">
+        <label id="home-page-label" for="toolbar-show-home-button"
+            i18n-content="toolbarShowHomeButton">
+        </label>
+        <button id="change-home-page" i18n-content="changeHomePage"
+            class="link-button">
+        </button>
+      </div>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" pref="bookmark_bar.show_on_all_tabs"
+              metric="Options_ShowBookmarksBar">
+          <span i18n-content="toolbarShowBookmarksBar"></span>
+        </label>
+      </div>
+<if expr="not pp_ifdef('toolkit_views') and is_posix and not is_macosx">
+      <div class="checkbox">
+        <label>
+          <input id="show-window-decorations" type="checkbox"
+              pref="browser.custom_chrome_frame" metric="Options_CustomFrame"
+              inverted_pref>
+          <span i18n-content="showWindowDecorations"></span>
+        </label>
+      </div>
+</if>
+    </div>
+  </section>
+<if expr="pp_ifdef('chromeos')">
+  <section>
+    <h3 i18n-content="sectionTitleDevice"></h3>
+    <div class="option-control-table">
+      <span class="option-name" i18n-content="deviceGroupPointer"></span>
+      <div id="pointer-value">
+        <div id="slider-control">
+          <input id="sensitivity-range" type="range" min="1" max="5"
+              pref="settings.touchpad.sensitivity2" class="touch-slider">
+          <div>
+            <span i18n-content="pointerSensitivityLess"></span>
+            <span id="pointer-sensitivity-more"
+                i18n-content="pointerSensitivityMore"></span>
+          </div>
+        </div>
+      </div>
+      <button id="pointer-settings-button"
+          i18n-content="pointerSettingsButtonTitle" hidden>
+      </button>
+    </div>
+    <div>
+      <span i18n-content="deviceGroupKeyboard"></span>
+      <button id="keyboard-settings-button"
+          i18n-content="keyboardSettingsButtonTitle">
+      </button>
+    </div>
+    <div id="brightness-value">
+      <span i18n-content="deviceGroupBrightness"></span>
+      <button id="brightness-decrease-button"
+          i18n-content="brightnessDecrease">
+      </button>
+      <button id="brightness-increase-button"
+          i18n-content="brightnessIncrease">
+      </button>
+    </div>
+  </section>
+</if>
+  <section>
+    <h3 i18n-content="sectionTitleSearch"></h3>
+      <div id="default-search-engine-group">
+        <div id="default-search-group-label"
+            i18n-values=".innerHTML:defaultSearchGroupLabel">
+        </div>
+        <div>
+          <select id="default-search-engine" class="weakrtl"></select>
+          <button id="manage-default-search-engines"
+              i18n-content="defaultSearchManageEngines">
+          </button>
+        </div>
+        <div id="instant-setting" class="checkbox">
+          <label id="instant-label">
+            <!-- TODO(estade): metric? -->
+            <input id="instant-field-trial-control" type="checkbox"
+                checked="checked" hidden>
+            <input id="instant-enabled-control" type="checkbox"
+                pref="instant.enabled">
+            <span i18n-values=".innerHTML:instantPrefAndWarning"></span>
+          </label>
+        </div>
+      </div>
+  </section>
+  <section>
+    <h3 i18n-content="sectionTitleUsers"></h3>
+<if expr="pp_ifdef('chromeos')">
+    <div id="sync-section">
+      <div id="sync-overview" class="section-description" hidden>
+        <p i18n-content="syncOverview"></p>
+        <a i18n-values="href:syncLearnMoreURL" i18n-content="learnMore"></a>
+      </div>
+      <div id="sync-status" hidden>
+        <span id="sync-status-text"></span>
+        <button id="sync-action-link" class="link-button"></button>
+      </div>
+      <div id="sync-buttons">
+        <div id="enable-auto-login-checkbox" class="checkbox" hidden>
+          <label>
+            <input id="enable-auto-login" pref="autologin.enabled"
+                metric="Options_Autologin" type="checkbox">
+            <span i18n-content="autologinEnabled"></span>
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input id="enable-screen-lock" type="checkbox"
+                pref="settings.enable_screen_lock">
+            <span i18n-content="enableScreenlock"></span>
+          </label>
+        </div>
+        <button id="change-picture-button" i18n-content="changePicture">
+        </button>
+        <button id="start-stop-sync" hidden></button>
+        <button id="customize-sync" i18n-content="customizeSync" hidden>
+        </button>
+        <button id="manage-accounts-button"
+            i18n-content="manageAccountsButtonTitle">
+        </button>
+      </div>
+    </div>
+</if>
+    <div id="profiles-section" hidden>
+      <list id="profiles-list" class="settings-list" hidden></list>
+      <div id="profiles-single-message" i18n-content="profilesSingleUser">
+      </div>
+      <div id="profiles-buttons">
+        <button id="profiles-create" i18n-content="profilesCreate"></button>
+        <button id="profiles-manage" i18n-content="profilesManage" disabled>
+        </button>
+        <button id="profiles-delete" i18n-content="profilesDelete">
+        </button>
+      </div>
+    </div>
+<if expr="not pp_ifdef('chromeos')">
+    <div id="manage-data-group">
+      <div i18n-content="manageDataDescription"></div>
+      <div>
+        <button id="import-data" i18n-content="importData"></button>
+      </div>
+    </div>
+</if>
+  </section>
+<if expr="not pp_ifdef('chromeos')">
+  <section>
+    <h3 i18n-content="sectionTitleDefaultBrowser"></h3>
+    <div>
+      <button id="set-as-default-browser"
+          i18n-content="defaultBrowserUseAsDefault" hidden>
+      </button>
+      <div id="default-browser-state" i18n-content="defaultBrowserUnknown">
+      </div>
+      <div id="auto-launch-option" class="checkbox" hidden>
+        <label id="auto-launch-label">
+          <input id="auto-launch" type="checkbox">
+          <span i18n-content="autoLaunchText"></span>
+        </label>
+      </div>
+    </div>
+  </section>
+</if>
+<if expr="pp_ifdef('chromeos')">
+  <!-- This section is temporarily duplicated here for ChromeOS. -->
+  <!-- TODO(csilv): Move to 'Under the Hood' for ChromeOS only. -->
+  <!-- http://crbug.com/110527 -->
+  <section id="startup-section">
+    <h3 i18n-content="sectionTitleStartup"></h3>
+    <div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="startup" value="0"
+              pref="session.restore_on_startup"
+              metric="Options_Startup_Homepage">
+          <span i18n-content="startupShowDefaultAndNewTab"></span>
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="startup" value="1"
+              pref="session.restore_on_startup"
+              metric="Options_Startup_LastSession">
+          <span i18n-content="startupShowLastSession"></span>
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input id="startup-show-pages" type="radio" name="startup"
+              pref="session.restore_on_startup"
+              value="4" metric="Options_Startup_Custom">
+          <span>
+            <span id="startupShowPagesLabel"
+                i18n-content="startupShowPages">
+            </span>
+            <button id="startup-set-pages" class="link-button"
+                i18n-content="startupSetPages">
+            </button>
+          </span>
+        </label>
+      </div>
+    </div>
+  </section>
+</if>
+  <section>
+    <h3 i18n-content="sectionTitleAdvanced"></h3>
+    <div>
+      <button id="advanced-settings"
+          i18n-content="advancedSettings">
+      </button>
+    </div>
+  </section>
+</div>

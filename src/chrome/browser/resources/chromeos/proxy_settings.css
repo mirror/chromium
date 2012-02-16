@@ -1,0 +1,21 @@
+/* These additional styles constrain the size of the proxy page to the height of
+   the dialog containing them. */
+html {
+  height: 100%;
+}
+
+body {
+  -webkit-box-sizing: border-box;
+  height: 100%;
+  margin: 0;
+  padding: 8px;
+}
+
+#proxyPage {
+  height: 100%;
+}
+
+#proxy-page-title {
+  /* We have a title on the window, so the title in domui should be hidden. */
+  display: none;
+}

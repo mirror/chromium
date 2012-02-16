@@ -1,0 +1,94 @@
+<html>
+<head>
+<script type="text/javascript"
+        src="../../../../third_party/webgl_conformance/resources/webgl-test-harness.js">
+</script>
+<script>
+// We parse the test list offline and run the harness multiple times with each
+// test. Therefore, the version and options do not matter for the browsertests.
+// However, we still need to pass in a valid options for the harness to run.
+var CONFORMANCE_TEST_VERSION = "1.0.1 (beta)";
+var OPTIONS = {
+  version: CONFORMANCE_TEST_VERSION
+};
+
+var BASE_URL = "../../../../third_party/webgl_conformance/";
+var gl = null;
+var message;
+
+function start(start_url) {
+  // Report function called by each conformance test.
+  function report(type, msg, success) {
+    var reportType = WebGLTestHarnessModule.TestHarness.reportType;
+    switch (type) {
+      case reportType.START_PAGE:
+        // Accept every page loaded.
+        return true;
+      case reportType.TEST_RESULT:
+        if (!success)
+          message = "FAILURE: " + msg;
+        else
+          message = "SUCCESS";
+        break;
+      case reportType.FINISH_PAGE:
+        if (!success)
+          message = "TIMEOUT (" + window.webglTestHarness.timeoutDelay + " ms)";
+      case reportType.FINISHED_ALL_TESTS:
+        if (message.substr(0, 7) != "SUCCESS") {
+          var ext = gl.getExtension("WEBGL_debug_renderer_info");
+          if (ext) {
+            message += "\nGL_VENDOR:   " +
+                gl.getParameter(ext.UNMASKED_VENDOR_WEBGL) + "\n";
+            message += "GL_RENDERER: " +
+                gl.getParameter(ext.UNMASKED_RENDERER_WEBGL);
+          }
+        }
+        domAutomationController.setAutomationId(1);
+        domAutomationController.send(message);
+        break;
+    }
+  }
+
+  function create3DContext() {
+    var canvas = document.createElement("canvas");
+    var context = null;
+    try {
+      context = canvas.getContext("webgl");
+    } catch(e) {
+    }
+    if (!context) {
+      try {
+        context = canvas.getContext("experimental-webgl");
+      } catch(e) {
+      }
+    }
+    return context;
+  }
+
+  message = "";
+
+  // Assert the WebGL context exists.
+  gl = create3DContext();
+  if (!gl) {
+    message = "FAILURE: unable to fetch WebGL context";
+    domAutomationController.setAutomationId(1);
+    domAutomationController.send(message);
+    return;
+  }
+
+  var iframe = document.getElementById("testframe");
+  var testHarness = new WebGLTestHarnessModule.TestHarness(
+      iframe,
+      BASE_URL + start_url,
+      report,
+      OPTIONS);
+
+  window.webglTestHarness = testHarness;
+  window.webglTestHarness.runTests();
+}
+</script>
+</head>
+<body>
+<iframe id="testframe" scrolling="yes" width="100%" height="100%"></iframe>
+</body>
+</html>

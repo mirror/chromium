@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html i18n-values="dir:textdirection;" id="uber" class="loading">
+<head>
+<meta charset="utf-8">
+<title i18n-content="pageTitle"></title>
+<link id="favicon" rel="icon" type="image/png">
+
+<link rel="stylesheet" href="../shared/css/chrome_shared2.css">
+<link rel="stylesheet" href="uber.css">
+
+<script src="chrome://resources/js/cr.js"></script>
+<script src="chrome://resources/js/local_strings.js"></script>
+<script src="chrome://resources/js/util.js"></script>
+
+<script src="chrome://chrome/uber.js"></script>
+<script src="chrome://chrome/uber_utils.js"></script>
+</head>
+
+<body>
+
+<div id="navigation"><iframe src="chrome://uber-frame/"></iframe></div>
+
+<div class="iframe-container" i18n-values="id:settingsHost"
+    data-favicon="chrome://theme/IDR_SETTINGS_FAVICON"
+    data-url="chrome://settings-frame/"></div>
+<div class="iframe-container" i18n-values="id:extensionsHost"
+    data-favicon="chrome://theme/IDR_EXTENSIONS_FAVICON"
+    data-url="chrome://extensions-frame/"></div>
+<div class="iframe-container" i18n-values="id:helpHost"
+    data-favicon="chrome://theme/IDR_PRODUCT_LOGO_16"
+    data-url="chrome://help-frame/"></div>
+
+<script src="chrome://chrome/strings.js"></script>
+<script src="chrome://resources/js/i18n_template.js"></script>
+<script src="chrome://resources/js/i18n_process.js"></script>
+
+</body>
+</html>

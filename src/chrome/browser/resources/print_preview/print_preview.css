@@ -1,0 +1,464 @@
+/* Copyright (c) 2012 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file.
+ */
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* Header */
+
+header {
+  -webkit-padding-start: 16px;
+}
+
+#print-preview #navbar-container {
+  -webkit-box-orient: vertical;
+  -webkit-user-select: none;
+  display: -webkit-box;
+  width: 310px;
+}
+
+#print-preview #navbar-content-title {
+  cursor: default;
+  text-align: start;
+}
+
+#print-header {
+  -webkit-padding-end: 16px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+#print-summary {
+  color: #53637d;
+  display: block;
+  min-height: 30px;
+}
+
+/* Settings */
+
+#settings {
+  -webkit-box-flex: 1;
+  -webkit-box-shadow: inset 0 2px 2px rgba(0, 0, 0, .3);
+  background: white;
+  overflow-y: auto;
+  padding-top: 2px;
+}
+
+label input[disabled] + span,
+input[type=text][disabled] {
+  color: gray;
+}
+
+.two-column {
+  display: table-row;
+}
+
+.right-column {
+  -webkit-padding-end: 16px;
+  display: table-cell;
+  width: auto;
+}
+
+.right-column > *:not(:first-child):not(.hint) {
+  margin-top: 8px;
+}
+
+.two-column h1 {
+  -webkit-padding-start: 16px;
+  display: table-cell;
+  font-size: 1.1em;
+  width: 86px;
+}
+
+.two-column.visible h1,
+.two-column.visible .right-column {
+  border-bottom: 1px solid #dcdcdc;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.two-column:not(.visible) select {
+  border-top-width: 0;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+p {
+  -webkit-line-box-contain: block;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+h1 {
+  color: #808080;
+  font-weight: 300;
+}
+
+.preview-link-button {
+  -webkit-padding-start: 16px;
+  outline: 0;
+  padding-top: 10px;
+  text-decoration: none;
+  text-align: start;
+}
+
+.preview-link-button:hover:not(:disabled) {
+  text-decoration: underline;
+}
+
+.preview-link-button:disabled {
+  color: rgba(0, 0, 0, .5);
+  cursor: default;
+  text-shadow: none;
+}
+
+button.loading {
+  cursor: progress;
+}
+
+button.default {
+  font-weight: bold;
+}
+
+button.default:not(:focus):not(:disabled) {
+  border-color: #808080;
+}
+
+span.hint {
+  -webkit-transition: color 200ms;
+  background: white;
+  display: block;
+  font-size: 0.9em;
+  font-weight: bold;
+  height: 0;
+  line-height: 10px;
+  margin: 0;
+  overflow: hidden;
+}
+
+span.hint.visible {
+  -webkit-animation-duration: 200ms;
+  -webkit-animation-fill-mode: forwards;
+  -webkit-user-select: text;
+  color: #8c1414;
+  height: auto;
+  margin-bottom: -5px;
+  margin-top: 5px;
+  padding-bottom: 5px;
+}
+
+span.hint.closing {
+  -webkit-transition: margin 150ms, height 150ms, opacity 150ms;
+  background: transparent;
+  height: 0 !important;
+  margin: 0;
+  opacity: 0;
+}
+
+.collapsible {
+  height: 0;
+  overflow: hidden;
+}
+
+.collapsible.visible {
+  -webkit-animation-duration: 200ms;
+  -webkit-animation-fill-mode: forwards;
+  height: auto;
+}
+
+.collapsible.closing {
+  -webkit-transition: margin 150ms, height 150ms, opacity 150ms;
+  height: 0 !important;
+  opacity: 0;
+}
+
+select {
+  width: 100%;
+}
+
+label {
+  -webkit-user-select: none;
+}
+
+.hidden-section {
+  background: white;
+  position: relative;
+}
+
+.extra {
+  background: white;
+  height: 0;
+  opacity: 0;
+  padding-top: 0;
+  position: absolute;
+  visibility: hidden;
+}
+
+.visible .extra {
+  -webkit-animation-duration: 200ms;
+  -webkit-animation-fill-mode: forwards;
+  height: auto;
+  opacity: 1;
+  overflow: hidden;
+  padding-bottom: 0;
+  position: static;
+  visibility: visible;
+}
+
+.closing .extra {
+  -webkit-transition: padding-top 100ms, height 100ms, opacity 200ms,
+      background 300ms;
+  height: 0 !important;
+  opacity: 0;
+  overflow: hidden;
+  padding-top: 0;
+  position: static;
+  visibility: visible;
+}
+
+/* TODO(estade): this shouldn't be necessary. */
+#print-preview input[type=radio] {
+  margin-top: 0;
+}
+
+/* Individual settings sections  */
+
+#print-pages-div {
+  -webkit-box-align: center;
+  -webkit-box-orient: horizontal;
+  display: -webkit-box;
+}
+
+#individual-pages {
+  -webkit-box-flex: 1;
+  -webkit-margin-start: 5px;
+  display: block;
+}
+
+#collate-option {
+ -webkit-transition: opacity 200ms, -webkit-transform 200ms;
+ -webkit-padding-start: 16px;
+ display: inline-block;
+ opacity: 1;
+}
+
+#collate-option[hidden] {
+ -webkit-transition: opacity 100ms, -webkit-transform 100ms;
+ opacity: 0;
+ pointer-events: none;
+}
+
+#copies {
+  position: relative;
+  width: 1.5em;
+}
+
+#copies.invalid {
+  background: #fff0f0;
+  color: #8c1414;
+}
+
+#increment,
+#decrement {
+  -webkit-padding-end: 8px;
+  -webkit-padding-start: 8px;
+  font-weight: 600;
+  min-width: 0;
+  position: relative;
+  width: 25px;
+}
+
+#increment:focus,
+#decrement:focus,
+#copies:focus {
+  z-index: 1;
+}
+
+#increment {
+  -webkit-margin-start: -5px;
+  border-radius: 0;
+}
+
+#decrement {
+  -webkit-margin-start: -5px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 3px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 3px;
+}
+
+html[dir='rtl'] #decrement {
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 0;
+}
+
+/* PDF view */
+
+#print-preview #mainview {
+  -webkit-margin-start: 310px;
+  -webkit-padding-start: 0;
+  -webkit-user-select: none;
+  background-color: #ccc;
+  overflow: hidden;
+}
+
+#pdf-viewer {
+  /* pluginFadeInTransitionDuration = 200ms */
+  -webkit-transition: opacity 200ms linear;
+  /* pluginFadeInTransitionDelay = overlayFadeOutTransitionDuration = 100ms */
+  -webkit-transition-delay: 100ms;
+  height: 100%;
+  opacity: 1;
+  width: 100%;
+}
+
+#pdf-viewer.invisible {
+  /* pluginFadeOutTransitionDuration = 100ms */
+  -webkit-transition: opacity 100ms linear;
+  /* pluginFadeOutTransitionDelay = 250ms */
+  -webkit-transition-delay: 250ms;
+  opacity: 0;
+}
+
+#no-plugin {
+  padding: 20px;
+}
+
+/* TODO(estade): this should be in a shared location but I'm afraid of the
+ * damage it could do. */
+[hidden] {
+  display: none !important;
+}
+
+#overlay-layer {
+  -webkit-transition: opacity 200ms linear;
+  /* overlayFadeInTransitionDelay = pluginFadeOutTransitionDelay +
+   *     pluginFadeOutTransitionDuration = 350ms */
+  -webkit-transition-delay: 350ms;
+  -webkit-user-select: none;
+  background: #cccccc;
+  height: 100%;
+  margin: 0;
+  opacity: 1;
+  position: absolute;
+  width: 100%;
+}
+
+#overlay-layer.invisible {
+  /* overlayFadeOutTransitionDuration = 100ms */
+  -webkit-transition: opacity 100ms linear;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#messages {
+  color: #404040;
+  position: relative;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .5);
+  top: 50%;
+}
+
+@-webkit-keyframes dancing-dots-jump {
+  0% { top: 0; }
+  55% { top: 0; }
+  60% { top: -10px; }
+  80% { top: 3px; }
+  90% { top: -2px; }
+  95% { top: 1px; }
+  100% { top: 0; }
+}
+
+#loading {
+  -webkit-margin-end: -3px;
+}
+
+.message-with-dots span span {
+  -webkit-animation-duration: 1800ms;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-name: dancing-dots-jump;
+  padding: 1px;
+  position: relative;
+}
+
+.message-with-dots span span:nth-child(2) {
+  -webkit-animation-delay: 100ms;
+}
+
+.message-with-dots span span:nth-child(3) {
+  -webkit-animation-delay: 300ms;
+}
+
+#two-sided-option {
+  display: inline-block;
+}
+
+#error-action-area {
+  margin-top: 10px;
+}
+
+/* TODO(estade): unfork this code. */
+.button-strip {
+  -webkit-box-orient: horizontal;
+  -webkit-box-pack: end;
+  display: -webkit-box;
+}
+
+html:not([toolkit=views]) .button-strip {
+  -webkit-box-direction: reverse;
+}
+
+.button-strip button {
+  display: block;
+}
+
+#dummy-box {
+  -webkit-box-align: stretch;
+  -webkit-box-flex: 1;
+  -webkit-box-orient: vertical;
+  background: #ccc;
+  display: -webkit-box;
+  height: 100%;
+  margin: 0;
+  min-height: 100%;
+  min-width: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+#dummy-page {
+  -webkit-box-flex: 1;
+  background: white;
+  box-shadow: 0 0 8px rgba(0, 0, 0, .4);
+  height: auto;
+  margin: 10px;
+}
+
+#dummy-article {
+  line-height: 1.5;
+  margin-top: -10px;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  width: 100%;
+}
+
+#intentionally-blank {
+  color: black;
+  display: inline-block;
+  font-style: italic;
+  text-align: center;
+  text-decoration: none;
+  padding: 0 10px;
+}

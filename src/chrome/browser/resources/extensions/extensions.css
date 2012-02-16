@@ -1,0 +1,166 @@
+/* Copyright (c) 2012 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file. */
+
+html.loading * {
+  -webkit-transition-duration: 0 !important;
+}
+
+/* Developer mode */
+
+#dev-controls {
+  -webkit-padding-end: 3px;
+  -webkit-padding-start: 4px;
+  -webkit-transition: padding 100ms, height 100ms, opacity 100ms;
+  border-bottom: 1px solid rgb(205, 205, 205);
+  display: -webkit-box;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+#extension-settings.dev-mode #dev-controls {
+  -webkit-transition-duration: 250ms;
+  height: 32px;
+  opacity: 1;
+  padding-bottom: 7px;
+  padding-top: 13px;
+}
+
+#dev-controls-spacer {
+  -webkit-box-flex: 1;
+}
+
+#dev-toggle {
+  -webkit-margin-end: 8px;
+  display: block;
+  text-align: end;
+  margin-top: 5px;
+}
+
+#extension-settings:not(.dev-mode) .developer-extras {
+  display: none;
+}
+
+.developer-extras > div {
+  margin: 5px 0;
+}
+
+/* Contents */
+
+#suggest-gallery {
+  -webkit-padding-start: 10px;
+}
+
+#get-more-extensions-container {
+  display: -webkit-box;
+}
+
+#get-more-extensions {
+  -webkit-padding-start: 10px;
+  padding-top: 5px;
+  font-size: 15px;
+}
+
+#extension-settings {
+  max-width: 700px;
+  min-width: 500px;
+}
+
+.extension-list-item-wrapper {
+  margin: 23px 0;
+}
+
+.extension-list-item {
+  background-repeat: no-repeat;
+  display: -webkit-box;
+  min-height: 48px;
+}
+
+html[dir="rtl"] .extension-list-item {
+  background-position: right;
+}
+
+.extension-title {
+  -webkit-padding-end: 20px;
+  color: rgb(48, 57, 66);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.extension-version {
+  -webkit-padding-end: 7px;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.extension-description {
+  -webkit-padding-end: 5px;
+  font-size: 13px;
+  margin: 5px 0;
+  white-space: normal;
+}
+
+.extension-details {
+  -webkit-box-flex: 1;
+  -webkit-padding-start: 55px;
+}
+
+.extension-description,
+.extension-list-item-wrapper.disabled-extension .extension-details {
+  color: rgb(151, 156, 160);
+}
+
+.enable-checkbox-text {
+  display: inline-block;
+}
+
+.enabled-text {
+  font-weight: bold;
+}
+
+.extension-list-item-wrapper.disabled-extension .enabled-text,
+.extension-list-item-wrapper:not(.disabled-extension) .enable-text,
+.extension-list-item-wrapper.disabled-extension .optional-controls,
+.extension-list-item-wrapper.disabled-extension .butter-bar {
+  display: none;
+}
+
+.terminated-reload-link {
+  -webkit-margin-end: 2em;
+}
+
+.extension-list-item a {
+  -webkit-margin-start: 0.5em;
+  display: inline-block;
+}
+
+.butter-bar {
+  background: rgb(255, 242, 153);
+  border-radius: 3px;
+  margin-top: 5px;
+  padding: 2px 5px;
+}
+
+/* Overlays */
+
+#overlay {
+  z-index: 5;
+}
+
+#overlay .page:not(.showing) {
+  display: none;
+}
+
+/* Trash */
+
+.trash {
+  -webkit-transition: opacity 200ms;
+  height: 22px;
+  opacity: 0.8;
+  vertical-align: middle;
+}
+
+.extension-list-item:not(:hover) .trash:not(:focus) {
+  opacity: 0;
+}

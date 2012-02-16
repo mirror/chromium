@@ -1,0 +1,264 @@
+{
+  "ACCESS_CODE": {
+    "message": "Access code",
+    "description": "Label for the access code entry box. This is where the client user enters the code that permits access to the host."
+  },
+  "ACCESS_CODE_TIMER": {
+    "message": "This access code will expire in $timeout$",
+    "description": "Text displayed when the access code is due to time out within 30 seconds.",
+    "placeholders": {
+      "timeout": {
+        "content": "$1",
+        "example": "0:30"
+      }
+    }
+  },
+  "ASK_PIN_DIALOG_DESCRIPTION": {
+    "message": "To protect access to this computer, please choose a PIN. This PIN will be required when connecting from another location.",
+    "description": "Explanatory text displayed when the user enables remote access or changes the PIN."
+  },
+  "ASK_PIN_DIALOG_LABEL": {
+    "message": "PIN",
+    "description": "Label next to the PIN entry edit box. The user must enter a PIN before enabling remote access to their computer."
+  },
+  "ASK_PIN_DIALOG_CONFIRM_LABEL": {
+    "message": "Re-type PIN",
+    "description": "Label next to the PIN confirmation edit box. The user must enter a PIN before enabling remote access to their computer."
+  },
+  "CANCEL": {
+    "message": "Cancel",
+    "description": "Label for general-purpose Cancel buttons."
+  },
+  "CLOSE_PROMPT": {
+    "message": "Leaving this page will end your Chromoting session.",
+    "description": "Message shown when the Chromoting client tab is closed while a connection is active."
+  },
+  "CONNECT_BUTTON": {
+    "message": "Connect",
+    "description": "Label for the connect button. Clicking this button will start the Chromoting session if the access code is correct."
+  },
+  "CONTINUE_BUTTON": {
+    "message": "Continue",
+    "description": "Label for the continue button on the pre-authorization page. Clicking this button takes the user to the standard Google Accounts authorization page."
+  },
+  "CONTINUE_PROMPT": {
+    "message": "You are currently sharing this machine with another user. Do you want to continue sharing?",
+    "description": "Message displayed when the session has lasted longer than five minutes, explaining that the host computer is being shared and asking whether or not the user wants to continue sharing it."
+  },
+  "DESCRIPTION_AUTHORIZE": {
+    "message": "To use Chromoting you must grant extended access permissions to your computer. You only have to do this once.",
+    "description": "Text shown when the app first starts, or if the access token is invalidated, explaining the need to authorize the Chromoting app before use."
+  },
+  "DESCRIPTION_CONNECT": {
+    "message": "Ask the user whose computer you wish to access to click \u2018Share Now\u2019 and give you the access code.",
+    "description": "Description for the client app. This is shown to the client user above the access code entry box before the connection is started. Note that the 'Share Now' quote should be copied verbatim from the corresponding translation."
+  },
+  "DESCRIPTION_HOME": {
+    "message": "Chromoting allows you to securely share your computer over the Web. Both users must be running the Chromoting app, which can be found at $url$.",
+    "description": "Description for the home screen. This is shown when the app starts up, above buttons to share or connect.",
+    "placeholders": {
+      "url": {
+        "content": "$1",
+        "example": "<a href=http://g.co/remote>g.co/remote</a>"
+      }
+    }
+  },
+  "DISCONNECT_BUTTON_PLUS_SHORTCUT_LINUX": {
+    "message": "Disconnect (Ctrl+Alt+Esc)",
+    "description": "Label for the disconnect button including the Linux keyboard shortcut. Clicking this button disconnects the remote user."
+  },
+  "DISCONNECT_BUTTON_PLUS_SHORTCUT_MAC_OS_X": {
+    "message": "Disconnect (Opt+Ctrl+Esc)",
+    "description": "Label for the disconnect button including the Mac OS X keyboard shortcut. Clicking this button disconnects the remote user."
+  },
+  "DISCONNECT_BUTTON_PLUS_SHORTCUT_WINDOWS": {
+    "message": "Disconnect (Ctrl+Alt+Esc)",
+    "description": "Label for the disconnect button including the Windows keyboard shortcut. Clicking this button disconnects the remote user."
+  },
+  "DISCONNECT_MYSELF_BUTTON": {
+    "message": "Disconnect",
+    "description": "Label for the client-side disconnect button. Clicking this button disconnects oneself from the host."
+  },
+  "DISCONNECT_OTHER_BUTTON": {
+    "message": "Disconnect",
+    "description": "Label for the host-side disconnect button, without keyboard shortcuts. Only used in case we aren't able to enable hot-key support. Clicking this button disconnects the remote user."
+  },
+  "ERROR_AUTHENTICATION_FAILED": {
+    "message": "Authentication failed. Please sign out of Chromoting and try again.",
+    "description": "Error displayed if authentication fails. This can be caused by stale credentials, in which logging out of the web-app and retrying can fix the problem."
+  },
+  "ERROR_BAD_PLUGIN_VERSION": {
+    "message": "Some components required for Chromoting are missing. Please make sure you have installed the latest version and try again.",
+    "description": "Error displayed if the host or client plugin are missing or if they could not be loaded."
+  },
+  "ERROR_GENERIC": {
+    "message": "An unknown error occurred. Please sign out of Chromoting and try again.",
+    "description": "Generic error message, displayed if something went wrong, but we aren't able to determine what, or the cause is too technical to be of use to a typical user."
+  },
+  "ERROR_HOST_IS_OFFLINE": {
+    "message": "The remote computer is not responding to connection requests. Please verify that it is online and try again.",
+    "description": "Error that is shown on the client side when we don't get a response from the host."
+  },
+  "ERROR_INCOMPATIBLE_PROTOCOL": {
+    "message": "An incompatible version of Chromoting was detected. Please make sure that you have the latest version of Chromium and Chromoting on both computers and try again.",
+    "description": "Error that is shown on the client side when incompatible Chromoting versions are installed on host and client."
+  },
+  "ERROR_INVALID_ACCESS_CODE": {
+    "message": "The access code is invalid. Please try again.",
+    "description": "Error displayed if an invalid access code is entered."
+  },
+  "ERROR_MISSING_PLUGIN": {
+    "message": "Some components required for Chromoting are missing. Please make sure you're running the latest version of Chromium and try again.",
+    "description": "Error displayed if the client plugin fails to load."
+  },
+  "ERROR_NO_RESPONSE": {
+    "message": "The server failed to respond to the network request.",
+    "description": "Error displayed by the client if the server does not respond to a network request."
+  },
+  "ERROR_SERVICE_UNAVAILABLE": {
+    "message": "The service is temporarily unavailable. Please try again later.",
+    "description": "Error displayed when the service returns a 503 error. Such errors are usually temporary, and resolve themselves in about 30 seconds."
+  },
+  "ERROR_UNEXPECTED": {
+    "message": "An unexpected error occurred. Please report this problem to the developers.",
+    "description": "Error displayed in situations where things go wrong in ways not anticipated by the developers. There is typically no user-workaround to suggest, other than reporting the error so that we can investigate further."
+  },
+  "FOOTER_WAITING": {
+    "message": "waiting for connection\u2026",
+    "description": "Footer text displayed at the host after an access code has been generated, but before a client connects."
+  },
+  "HELP": {
+    "message": "Help",
+    "description": "Help link, displayed in the top-left (assuming ltr layout) corner of the main screen. Clicking this takes the user to our FAQ."
+  },
+  "HOME_ACCESS_BUTTON": {
+    "message": "Access Now",
+    "description": "Clicking this button starts the desktop access process."
+  },
+  "HOME_ACCESS_DESCRIPTION": {
+    "message": "See and control a shared computer.",
+    "description": "Description of the 'access' or 'client' functionality, displayed next to a button that instigates an access operation."
+  },
+  "HOME_DAEMON_ACTIVE_MESSAGE": {
+    "message": "You may securely access this computer from anywhere you sign in to Chromoting.",
+    "description": "Message displayed when the current computer is accepting remote connections."
+  },
+  "HOME_DAEMON_CHANGE_PIN_LINK": {
+    "message": "Change PIN",
+    "description": "Hyperlink displayed immediately after the message indicating that the current computer is accepting remote connectins. Clicking this link allows the user to change the PIN (personal identification number) for accessing this host."
+  },
+  "HOME_DAEMON_STOP_BUTTON": {
+    "message": "Disable remote connections",
+    "description": "Button displayed when the current computer is accepting remote connections. Clicking this button causes it to stop accepting remote connections."
+  },
+  "HOME_DAEMON_START_BUTTON": {
+    "message": "Enable remote connections",
+    "description": "Button displayed when the current computer is not accepting remote connections. Clicking this button causes it to start accepting remote connections."
+  },
+  "HOME_DAEMON_START_MESSAGE": {
+    "message": "To securely access this computer from anywhere you sign in to Chromoting, you must first enable remote connections.",
+    "description": "Message displayed when the current computer is not accepting remote connections, instructing the user how to enable them."
+  },
+  "HOME_MY_COMPUTERS_TITLE": {
+    "message": "My Computers",
+    "description": "Title for the portion of the home page showing the list of hosts the user has previously registered for remote access at any time."
+  },
+  "HOME_SHARE_BUTTON": {
+    "message": "Share Now",
+    "description": "Clicking this button starts the desktop sharing process."
+  },
+  "HOME_SHARE_DESCRIPTION": {
+    "message": "Share this computer for another user to see and control.",
+    "description": "Description of the 'share' or 'host' functionality, displayed next to a button that instigates a share operation."
+  },
+  "HOME_SHARE_DESCRIPTION_CHROME_OS": {
+    "message": "(this feature is not yet available for Chromebooks\u2026 stay tuned)",
+    "description": "Text displayed below the description of the 'share' or 'host' functionality on ChromeOS devices, where it is not yet supported."
+  },
+  "INSTRUCTIONS_SHARE_ABOVE": {
+    "message": "To begin sharing your desktop, give the access code below to the person who will be assisting you.",
+    "description": "Instructions shown above the access code when it is ready to be conveyed to the client."
+  },
+  "INSTRUCTIONS_SHARE_BELOW": {
+    "message": "Once they enter the code your sharing session will begin.",
+    "description": "Instructions shown below the access code when it is ready to be conveyed to the client."
+  },
+  "LABEL_CONNECTED": {
+    "message": "Connected:",
+    "description": "String displayed in front of the host when a connection is active informing the client user who they are connected to."
+  },
+  "MESSAGE_CONNECTING": {
+    "message": "Connecting\u2026",
+    "description": "Message displayed on the client while a connection to the host is being established."
+  },
+  "MESSAGE_GENERATING": {
+    "message": "Generating access code\u2026",
+    "description": "Text shown while generating an access code."
+  },
+  "MESSAGE_SESSION_FINISHED": {
+    "message": "Your Chromoting session has ended.",
+    "description": "Message displayed when the client or host has disconnected."
+  },
+  "MESSAGE_SHARED": {
+    "message": "Your desktop is currently being shared with $user$.",
+    "description": "Message shown on the host computer while a session is active informing them who is connected.",
+    "placeholders": {
+      "user": {
+        "content": "$1",
+        "example": "user@domain.com"
+      }
+    }
+  },
+  "MODE_AUTHORIZE": {
+    "message": "Authorize",
+    "description": "Sub-title for the one-time authorization step. Displayed after the product name and separated by a chevron."
+  },
+  "MODE_CONNECT": {
+    "message": "Connect",
+    "description": "Sub-title for the client app. Displayed after the product name and separated by a chevron."
+  },
+  "MODE_SHARE": {
+    "message": "Share",
+    "description": "Sub-title for the host app. Displayed after the product name and separated by a chevron."
+  },
+  "OK": {
+    "message": "OK",
+    "description": "Label for general-purpose OK buttons."
+  },
+  "OFFLINE": {
+    "message": "Offline",
+    "description": "Label indicating that a host in the list is not currently available for remote access."
+  },
+  "PIN": {
+    "message": "PIN",
+    "description": "Label for the PIN entry box."
+  },
+  "PRODUCT_DESCRIPTION": {
+    "message": "Access other computers or allow another user to access your computer securely over the Internet.",
+    "description": "Web-app description. Displayed in Chromium's extensions page."
+  },
+  "PRODUCT_NAME": {
+    "message": "Chromoting BETA",
+    "description": "The product name. Displayed in various Chromium pages, including the New Tab page, and displayed prominently on the app's main page."
+  },
+  "RECONNECT": {
+    "message": "Reconnect",
+    "description": "Label for button to reconnect to the previous Me2Me host. This button appears on the 'session-finished' page."
+  },
+  "SIGN_OUT_BUTTON": {
+    "message": "Sign out",
+    "description": "Sign out button, visible if the user has authenticated. Clicking this clears authentication credentials and returns the web-app to the initial 'unauthenticated' state."
+  },
+  "STOP_SHARING_BUTTON": {
+    "message": "Stop Sharing",
+    "description": "Label for the 'stop sharing' button on the host-side. Clicking this button disconnects the client."
+  },
+  "TOOLTIP_SCALING": {
+    "message": "Scale to fit",
+    "description": "The tool-tip shown when the user hovers over the scale to fit button. Clicking this button toggles between scaling down the remote desktop to fit it inside the Chromium browser window and displaying it at 1:1 scale."
+  },
+  "WARNING_NAT_DISABLED": {
+    "message": "NOTE: Policy settings permit connections only between computers within your network.",
+    "description": "Message displayed at the bottom of the host screen if local policy dictates that NAT traversal is disabled, meaning that connections outside the local network will not work."
+  }
+}

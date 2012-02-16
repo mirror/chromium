@@ -1,0 +1,399 @@
+<!doctype html>
+<!--
+Copyright (c) 2012 The Chromium Authors. All rights reserved.
+Use of this source code is governed by a BSD-style license that can be
+found in the LICENSE file.
+-->
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans&amp;v1"
+          rel="stylesheet" type="text/css">
+    <link rel="icon" type="image/png" href="chromoting16.png" />
+    <link rel="stylesheet" href="debug_log.css" />
+    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="choice.css" />
+    <link rel="stylesheet" href="toolbar.css" />
+    <script src="ask_pin_dialog.js"></script>
+    <script src="client_plugin_async.js"></script>
+    <script src="client_plugin_v1.js"></script>
+    <script src="client_screen.js"></script>
+    <script src="client_session.js"></script>
+    <script src="daemon_plugin.js"></script>
+    <script src="debug_log.js"></script>
+    <script src="event_handlers.js"></script>
+    <script src="host_list.js"></script>
+    <script src="host_screen.js"></script>
+    <script src="host_session.js"></script>
+    <script src="host_table_entry.js"></script>
+    <script src="l10n.js"></script>
+    <script src="log_to_server.js"></script>
+    <script src="oauth2.js"></script>
+    <script src="plugin_settings.js"></script>
+    <script src="remoting.js"></script>
+    <script src="server_log_entry.js"></script>
+    <script src="stats_accumulator.js"></script>
+    <script src="toolbar.js"></script>
+    <script src="ui_mode.js"></script>
+    <script src="util.js"></script>
+    <script src="xhr.js"></script>
+    <script src="wcs.js"></script>
+    <script src="wcs_loader.js"></script>
+    <title i18n-content="PRODUCT_NAME"></title>
+  </head>
+
+  <body>
+
+    <!-- loading-mode is initially visible, but becomes hidden as soon as an
+         AppMode is selected by remoting.init. All other divs are initially
+         hidden, but are shown appropriately when the mode changes. -->
+    <section id="loading-mode" data-ui-mode="">
+      <em>Loading&hellip;</em>
+    </section> <!-- loading-mode -->
+
+    <div id="daemon-plugin-container"></div>
+
+    <div class="top-primary"
+         data-ui-mode="home client host"
+         hidden>
+      <span id="email-status">
+        <span id="current-email"></span>
+        <span data-ui-mode="home client.unconnected client.connect-failed">
+        (<a id="clear-oauth" href="#" i18n-content="SIGN_OUT_BUTTON"></a>)
+        </span>
+      </span>
+    </div>
+
+    <div class="top-secondary" data-ui-mode="auth home client host">
+      <a href="https://www.google.com/support/chrome/bin/answer.py?answer=1649523"
+         target="_blank" i18n-content="HELP"></a>
+    </div>
+
+    <div id="session-toolbar"
+         data-ui-mode="in-session"
+         class="toolbar-container"
+         hidden>
+      <div class="toolbar-border">
+        <span id="session-status-message" i18n-content="LABEL_CONNECTED"></span>
+        <strong id="connected-to"></strong>
+        <button id="toolbar-disconnect"
+                type="button"
+                i18n-content="DISCONNECT_MYSELF_BUTTON">
+        </button>
+        <span class="end-align">
+          <button id="toggle-scaling">
+            <img src="scale-to-fit.png">
+          </button>
+        </span>
+      </div>
+      <div class="toolbar-stub" id="toolbar-stub">
+        <div class="arrow-down"></div>
+      </div>
+    </div> <!-- session-toolbar -->
+
+    <div id="main" data-ui-mode="auth home host client" hidden>
+
+      <header class="choice-header">
+        <img id="icon" src="chromoting128.png">
+        <h1 class="icon-label">
+          <span i18n-content="PRODUCT_NAME"></span>
+          <span data-ui-mode="auth client host">&nbsp;&rsaquo;&nbsp;</span>
+          <span i18n-content="MODE_AUTHORIZE" data-ui-mode="auth"></span>
+          <span i18n-content="MODE_CONNECT" data-ui-mode="client"></span>
+          <span i18n-content="MODE_SHARE" data-ui-mode="host"></span>
+        </h1>
+      </header>
+
+      <img id="divider-top" src="dividertop.png">
+
+      <div id="auth-panel" data-ui-mode="auth">
+        <div class="description" i18n-content="DESCRIPTION_AUTHORIZE"></div>
+        <div class="centered-button">
+          <button id="auth-button"
+                  class="big-button"
+                  type="button"
+                  i18n-content="CONTINUE_BUTTON">
+          </button>
+        </div>
+      </div> <!-- auth-panel -->
+
+      <div data-ui-mode="home">
+        <div class="description"
+             i18n-content="DESCRIPTION_HOME"
+             i18n-value-1="<a href='https://chrome.google.com/remotedesktop'>chrome.google.com/remotedesktop</a>"></div>
+        <table class="mode-select-table">
+          <tr>
+            <td>
+              <div i18n-content="HOME_SHARE_DESCRIPTION"
+                  class="mode-select-label"></div>
+              <div id="chrome-os-no-share"
+                   i18n-content="HOME_SHARE_DESCRIPTION_CHROME_OS"
+                   class="small-print"></div>
+            </td>
+            <td>
+              <button id="share-button"
+                      i18n-content="HOME_SHARE_BUTTON"
+                      class="mode-select-button"
+                      type="button">
+              </button>
+            </td>
+          </tr>
+          <tr class="mode-select-table-underline mode-select-table-spacer">
+            <td></td><td></td>
+          </tr>
+          <tr class="mode-select-table-spacer">
+          </tr>
+          <tr>
+            <td i18n-content="HOME_ACCESS_DESCRIPTION"
+                class="mode-select-label"></td>
+            <td>
+              <button id="access-mode-button"
+                      i18n-content="HOME_ACCESS_BUTTON"
+                      class="mode-select-button"
+                      type="button">
+              </button>
+            </td>
+          </tr>
+        </table>
+
+        <div id="host-list-div"
+             class="host-list-container collapsed"
+             hidden>
+          <img src="dividerbottom.png">
+          <h1 i18n-content="HOME_MY_COMPUTERS_TITLE"></h1>
+          <table id="host-list" class="host-list-table"></table>
+          <div id="host-list-error" class="error-state"></div>
+        </div> <!-- host-list-div -->
+
+        <div id="daemon-control" data-ui-mode="home.daemon">
+          <table>
+            <tr>
+              <td>
+                <img src="icon_host.png">
+              </td>
+              <td>
+                <span id="this-computer-name"
+                      data-ui-mode="home.daemon.enabled">
+                  Spongebob Squaretrousers
+                </span>
+                <span i18n-content="HOME_DAEMON_START_MESSAGE"
+                      data-ui-mode="home.daemon.disabled">
+                </span>
+              </td>
+              <td>
+                <button type="button"
+                        id="stop-daemon"
+                        i18n-content="HOME_DAEMON_STOP_BUTTON"
+                        data-ui-mode="home.daemon.enabled">
+                </button>
+                <button type="button"
+                        id="start-daemon"
+                        i18n-content="HOME_DAEMON_START_BUTTON"
+                        data-ui-mode="home.daemon.disabled">
+                </button>
+              </td>
+            </tr>
+          </table>
+          <div data-ui-mode="home.daemon.enabled">
+            <span i18n-content="HOME_DAEMON_ACTIVE_MESSAGE"></span>
+            <a id="change-daemon-pin"
+               href="#"
+               i18n-content="HOME_DAEMON_CHANGE_PIN_LINK"></a>
+          </div>
+        </div> <!-- daemon-control -->
+
+        <div id="dialog-screen" hidden></div>
+
+        <div id="ask-pin-dialog" hidden>
+          <p i18n-content="ASK_PIN_DIALOG_DESCRIPTION"></p>
+          <form id="ask-pin-form"
+                action="">
+            <label for="daemon-pin-input"
+                   i18n-content="ASK_PIN_DIALOG_LABEL"></label>
+            <input id="daemon-pin-entry" type="password">
+            <br>
+            <label for="daemon-pin-confirm"
+                   i18n-content="ASK_PIN_DIALOG_CONFIRM_LABEL"></label>
+            <input id="daemon-pin-confirm" type="password">
+            <button id="daemon-pin-ok" type="submit" i18n-content="OK"></button>
+            <img id="start-daemon-spinner" src="spinner.gif" hidden>
+          </form>
+        </div>
+
+      </div> <!-- home -->
+
+      <div id="host-panel" data-ui-mode="host">
+
+        <div data-ui-mode="host.waiting-for-code" class="message"
+             i18n-content="MESSAGE_GENERATING">
+        </div> <!-- host.waiting-for-code -->
+
+        <div data-ui-mode="host.waiting-for-connection">
+          <div class="description"
+               i18n-content="INSTRUCTIONS_SHARE_ABOVE"></div>
+          <div id="access-code-display" dir="ltr"></div>
+          <div id="access-code-countdown-container">
+            <div id="access-code-countdown" class="expiring" hidden>
+              <span id="seconds-remaining"
+                    i18n-content="ACCESS_CODE_TIMER"></span>
+            </div>
+          </div>
+          <div class="description"
+               i18n-content="INSTRUCTIONS_SHARE_BELOW"></div>
+        </div> <!-- host.waiting-for-connection -->
+
+        <div data-ui-mode="host.shared">
+          <div id="host-shared-message" class="message"
+               i18n-content="MESSAGE_SHARED"></div>
+          <div class="centered-button">
+            <button id="cancel-share-button"
+                    type="button"
+                    class="big-button"
+                    i18n-content="STOP_SHARING_BUTTON">
+            </button>
+          </div>
+        </div> <!-- host.shared -->
+
+        <div data-ui-mode="host.share-failed" class="message">
+          <span id="host-plugin-error" class="error-state"></span>
+        </div> <!-- host.share-failed -->
+
+        <div data-ui-mode="host.share-finished" class="message"
+             i18n-content="MESSAGE_SESSION_FINISHED">
+        </div> <!-- host.share-finished -->
+
+        <div class="centered-button"
+             data-ui-mode="host.share-failed host.share-finished">
+          <button id="host-finished-button"
+                  type="button"
+                  class="big-button"
+                  autofocus="autofocus"
+                  i18n-content="OK">
+          </button>
+        </div>
+
+        <div id="host-plugin-container"></div>
+
+      </div> <!-- host-panel -->
+
+      <div id="client-panel" data-ui-mode="client">
+        <div data-ui-mode="client.unconnected">
+          <div class="description" i18n-content="DESCRIPTION_CONNECT"></div>
+          <div id="access-code-entry-row">
+            <form id="access-code-form" action="">
+              <label for="access-code-entry" i18n-content="ACCESS_CODE"></label>
+              <input id="access-code-entry"
+                     type="text"
+                     autofocus="autofocus"
+                     autocomplete="off"/>
+              <button id="connect-button"
+                      class="big-button"
+                      type="submit"
+                      i18n-content="CONNECT_BUTTON">
+              </button>
+              <button id="client-cancel-button"
+                      class="big-button"
+                      type="button"
+                      i18n-content="CANCEL">
+              </button>
+            </form>
+          </div> <!-- code-entry-row -->
+        </div> <!-- client.unconnected -->
+
+        <div data-ui-mode="client.connecting" class="message"
+             i18n-content="MESSAGE_CONNECTING">
+        </div> <!-- client.connecting -->
+
+        <div data-ui-mode="client.pin-prompt" class="message">
+          <div>
+            <form id="pin-form" action="">
+              <label for="pin-entry" i18n-content="PIN"></label>
+              <input id="pin-entry"
+                     type="password"
+                     autofocus="autofocus"
+                     autocomplete="off"/>
+              <button id="connect-button"
+                      class="big-button"
+                      type="submit"
+                      i18n-content="CONNECT_BUTTON">
+              </button>
+            </form>
+          </div>
+        </div> <!-- client.pin-prompt -->
+
+        <div data-ui-mode="client.connect-failed"
+             class="message">
+          <span id="connect-error-message" class="error-state"></span>
+        </div> <!-- client.connect-failed -->
+
+        <div data-ui-mode="client.session-finished"
+             class="message" i18n-content="MESSAGE_SESSION_FINISHED">
+        </div> <!-- client.session-finished -->
+
+        <div data-ui-mode="client.connect-failed.it2me client.session-finished.it2me"
+             class="centered-button">
+          <button id="client-finished-it2me-button"
+                  type="button"
+                  class="big-button"
+                  i18n-content="OK"
+                  autofocus="autofocus">
+          </button>
+        </div> <!-- client.connect-failed.it2me client.session-finished.it2me -->
+
+        <div data-ui-mode="client.connect-failed.me2me client.session-finished.me2me"
+             class="centered-button">
+          <button id="client-finished-me2me-button"
+                  type="button"
+                  class="big-button"
+                  i18n-content="OK"
+                  autofocus="autofocus">
+          </button>
+          <button id="client-reconnect-button"
+                  type="button"
+                  class="big-button"
+                  i18n-content="RECONNECT">
+          </button>
+        </div> <!-- client.connect-failed.me2me client.session-finished.me2me -->
+
+      </div> <!-- client-panel -->
+
+      <img id="divider-bottom"
+           src="dividerbottom.png"
+           data-ui-mode="auth host client">
+
+      <footer class="choice-footer">
+        <div id="waiting-footer"
+             data-ui-mode="host.waiting-for-connection host.waiting-for-code client.connecting">
+          <img src="spinner.gif">
+          <span class="waiting icon-label" i18n-content="FOOTER_WAITING"></span>
+          <button id="cancel-button"
+                  class="big-button"
+                  i18n-content="CANCEL">
+          </button>
+        </div> <!-- waiting-footer -->
+      </footer>
+
+    </div> <!-- main -->
+
+    <div id="nat-box-container" class="information-box-centerer" hidden>
+      <div class="information-box-padding"></div>
+      <div class="information-box"
+           i18n-content="WARNING_NAT_DISABLED"
+           data-ui-mode="host.waiting-for-code host.waiting-for-connection">
+      </div>
+      <div class="information-box-padding"></div>
+    </div> <!-- nat-box-container -->
+
+    <div id="session-mode" data-ui-mode="in-session client" hidden>
+    </div> <!-- session-mode -->
+
+    <section id="debug-log" dir="ltr" hidden>
+      <div id="statistics">
+      </div>
+      <div id="debug-messages">
+      </div>
+    </section> <!-- debug-log -->
+
+  </body>
+</html>

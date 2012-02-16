@@ -1,0 +1,136 @@
+/* Copyright (c) 2012 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file. */
+
+#recently-closed-menu-button {
+  -webkit-appearance: none;
+  -webkit-padding-end: 15px;
+  -webkit-padding-start: 9px;
+  -webkit-transition: opacity 200ms;
+  -webkit-transition-delay: 100ms;
+  background: none;
+  border: 0;
+  color: #7F7F7F;
+  cursor: pointer;
+  display: block;
+  font-size: 9pt;
+  font-weight: bold;
+  height: 100%;
+  margin: 0;
+  /* The padding increases the clickable area. */
+  padding-bottom: 0;
+  padding-top: 0;
+}
+
+.enable-cws-experiment #recently-closed-menu-button {
+  -webkit-margin-end: 0;
+  -webkit-padding-end: 16px;
+  position: relative;
+}
+
+#recently-closed-menu-button:hover:not([menu-shown]) {
+  color: #666;
+}
+
+#recently-closed-menu-button:hover:not([menu-shown]) .disclosure-triangle {
+  background-color: #666;
+}
+
+#recently-closed-menu-button[menu-shown] {
+  color: #555;
+}
+
+#recently-closed-menu-button[menu-shown] .disclosure-triangle {
+  background-color: #555;
+}
+
+/* Reserve space for the menu button even when it's hidden. */
+#recently-closed-menu-button.invisible,
+#footer.showing-trash-mode #recently-closed-menu-button {
+  visibility: hidden;
+}
+
+#footer.showing-trash-mode #recently-closed-menu-button {
+  -webkit-transition-delay: 0;
+  opacity: 0;
+}
+
+#recently-closed-menu-button > * {
+  vertical-align: middle;
+}
+
+.recent-menu {
+  padding: 6px 8px;
+  /* Needs to be above #footer. */
+  z-index: 10;
+}
+
+.recent-menu-item {
+  -webkit-margin-end: 8px;
+  -webkit-margin-start: 0;
+  -webkit-padding-end: 0;
+  -webkit-padding-start: 22px;
+  background: no-repeat 0 50%;
+  background-color: transparent !important;
+  background-size: 16px 16px;
+  box-sizing: border-box;
+  display: block;
+  font-size: 100%;
+  line-height: 20px;
+  margin-bottom: 8px;
+  margin-top: 8px;
+  max-width: 450px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recent-menu-item:not(:hover) {
+  text-decoration: none;
+}
+
+.recent-menu-item:first-of-type {
+  margin-top: 4px;
+}
+
+.recent-menu-item:last-of-type {
+  margin-bottom: 4px;
+}
+
+html[dir='rtl'] .recent-menu-item {
+  background: no-repeat 100% 50%;
+}
+
+.recent-window {
+  background-image: url('images/closed_window.png');
+}
+
+/* TODO(estade): find a better color for active. */
+.recent-menu-item:active,
+.recent-menu-item:visited,
+.recent-menu-item:link {
+  color: hsl(213, 90%, 24%) !important;
+}
+
+.disclosure-triangle {
+  -webkit-margin-start: 2px;
+  -webkit-mask-image: url('images/disclosure_triangle_mask.png');
+  background-color: #7F7F7F;
+  display: inline-block;
+  height: 9px;
+  width: 9px;
+}
+
+#vertical-separator {
+  background-color: #B2B2B2;
+  display: none;
+  height: 20px;
+  left: 15px;
+  position: relative;
+  right: 15px;
+  width: 1px;
+}
+
+.enable-cws-experiment #vertical-separator {
+  display: inline-block;
+}

@@ -1,0 +1,81 @@
+/* Copyright (c) 2012 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file.
+ */
+
+/**
+ * This file defines the private <code>PPB_Flash_Clipboard</code> API used by
+ * Pepper Flash for reading and writing to the clipboard.
+ */
+
+label Chrome {
+  M17 = 3.0
+};
+
+#inline c
+/**
+ * The old version string for this interface, equivalent to version 3.0.
+ * TODO(viettrungluu): Remove this when enough time has passed. crbug.com/104184
+ */
+#define PPB_FLASH_CLIPBOARD_INTERFACE_3_LEGACY "PPB_Flash_Clipboard;3"
+#endinl
+
+/**
+ * This enumeration contains the types of clipboards that can be accessed.
+ * These types correspond to clipboard types in WebKit.
+ */
+[assert_size(4)]
+enum PP_Flash_Clipboard_Type {
+  /** The standard clipboard. */
+  PP_FLASH_CLIPBOARD_TYPE_STANDARD = 0,
+  /** The selection clipboard (e.g., on Linux). */
+  PP_FLASH_CLIPBOARD_TYPE_SELECTION = 1
+};
+
+/**
+ * This enumeration contains the supported clipboard data formats.
+ */
+[assert_size(4)]
+enum PP_Flash_Clipboard_Format {
+  /** Indicates an invalid or unsupported clipboard data format. */
+  PP_FLASH_CLIPBOARD_FORMAT_INVALID = 0,
+  /** Indicates plain text clipboard data. */
+  PP_FLASH_CLIPBOARD_FORMAT_PLAINTEXT = 1,
+  /** Indicates HTML clipboard data. */
+  PP_FLASH_CLIPBOARD_FORMAT_HTML = 2
+};
+
+/**
+ * The <code>PPB_Flash_Clipboard</code> interface contains pointers to functions
+ * used by Pepper Flash to access the clipboard.
+ *
+ * TODO(viettrungluu): Support more formats (e.g., HTML)....
+ */
+[version=3.0]
+interface PPB_Flash_Clipboard {
+  /**
+   * Checks whether a given data format is available from the given clipboard.
+   * Returns true if the given format is available from the given clipboard.
+   */
+  PP_Bool IsFormatAvailable(
+      [in] PP_Instance instance_id,
+      [in] PP_Flash_Clipboard_Type clipboard_type,
+      [in] PP_Flash_Clipboard_Format format);
+
+  /**
+   * Reads plain text data from the clipboard.
+   */
+  PP_Var ReadPlainText(
+      [in] PP_Instance instance_id,
+      [in] PP_Flash_Clipboard_Type clipboard_type);
+
+  /**
+   * Writes plain text data to the clipboard. If <code>text</code> is too large,
+   * it will return <code>PP_ERROR_NOSPACE</code> and not write to the
+   * clipboard.
+   */
+  int32_t WritePlainText(
+      [in] PP_Instance instance_id,
+      [in] PP_Flash_Clipboard_Type clipboard_type,
+      [in] PP_Var text);
+};

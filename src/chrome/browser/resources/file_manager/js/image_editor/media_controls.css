@@ -1,0 +1,477 @@
+/*
+ * Copyright (c) 2012 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file.
+ */
+
+.media-button {
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Custom sliders for progress and volume. */
+
+/* Customize the standard input[type='range']. */
+.custom-slider > input[type='range'] {
+  position: absolute;
+  -webkit-appearance: none !important;  /* Hide the default thumb icon. */
+  left: -2px;  /* Required to align the input element with the parent. */
+  top: -2px;
+  width: 100%;
+  height: 100%;
+  background: transparent;  /* Hide the standard slider bar */
+}
+
+/* Custom thumb icon. */
+.custom-slider > input[type='range']::-webkit-slider-thumb {
+  position: relative;
+  -webkit-appearance: none;
+  z-index: 2;
+  height: 24px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+/* Custom slider bar (we hide the standard one). */
+.custom-slider > .bar {
+  position: absolute;
+  /* In order to match the horizontal position of the standard slider bar
+     left and right must be equal to 1/2 of the thumb icon width. */
+  top: 11px;
+  bottom: 11px;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  pointer-events: none;  /* Mouse events pass through to the standard input. */
+}
+
+.disabled .custom-slider > .bar {
+  border-color: gray;
+}
+
+/* The filled portion of the slider bar to the left of the thumb. */
+.custom-slider > .bar > .filled {
+  position: absolute;
+  width: 0; /* The element style.width is manipulated from the code. */
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background-color: white;
+}
+
+.disabled .custom-slider > .bar > .filled {
+  background-color: transparent;
+}
+
+/* Rounded caps to the left and right of the slider bar. */
+.custom-slider > .bar > .cap {
+  position: absolute;
+  width: 4px;
+  top: -1px;
+  bottom: -1px;
+}
+
+/* Left cap is always filled, should be the same color as .filled. */
+.custom-slider > .bar > .cap.left {
+  right: 100%;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  background: white;
+}
+
+.disabled .custom-slider > .bar > .cap.left {
+  border: 1px solid gray;
+  border-right-style: none;
+  background: transparent;
+}
+
+/* Right cap is always not filled. */
+.custom-slider > .bar > .cap.right {
+  left: 100%;
+  border: 1px solid white;
+  border-left-style: none;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  background: transparent;
+}
+
+.disabled .custom-slider > .bar > .cap.right {
+  border-color: gray;
+}
+
+.custom-slider.readonly {
+  pointer-events: none;
+}
+
+/* Progress seek marker (precise time shown on mouse hover. */
+
+/* Thin vertical line across the slider bar */
+.custom-slider > .bar > .seek-mark {
+  position: absolute;
+  left: 0;
+  width: 0;
+  top: -1px;
+  bottom: -1px;
+  background-color: #202020;
+}
+
+.custom-slider > .bar > .seek-mark.visible {
+  width: 1px;
+}
+
+.custom-slider > .bar > .seek-mark.inverted {
+  background-color: white;
+}
+
+/* Text label giving the precise time corresponding to the hover position. */
+.custom-slider > .bar > .seek-mark > .seek-label {
+  position: absolute;
+  left: 0;
+  bottom: 20px;
+
+  padding-left: 0.1em;
+  padding-right: 0.1em;
+
+  height: 0;
+  -webkit-transition: height 0.15s ease;
+
+  color: white;
+  background: #202020;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+
+  overflow: hidden;
+}
+
+.custom-slider > .bar > .seek-mark.visible > .seek-label {
+  height: 18px;
+}
+
+/* Media controls in order of appearance. */
+
+/* Play/pause button. */
+
+.media-button.play {
+  margin-left: -7px;
+  margin-right: -7px;
+  background-image: url(../../images/media/media_play.png);
+}
+
+.media-button.play:hover {
+  background-image: url(../../images/media/media_play_hover.png);
+}
+
+.media-button.play:active {
+  background-image: url(../../images/media/media_play_down.png);
+}
+
+.disabled .play {
+  background-image: url(../../images/media/media_play_disabled.png);
+}
+
+.media-button.play.playing {
+  background-image: url(../../images/media/media_pause.png);
+}
+
+.media-button.play.playing:hover {
+  background-image: url(../../images/media/media_pause_hover.png);
+}
+
+.media-button.play.playing:active {
+  background-image: url(../../images/media/media_pause_down.png);
+}
+
+.disabled .media-button.play.playing {
+  background-image: url(../../images/media/media_pause_disabled.png);
+}
+
+/* Time controls: a slider and a text time display. */
+
+.time-controls {
+  height: 100%;
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  -webkit-box-flex: 1;
+}
+
+.custom-slider.progress {
+  position: relative;
+  height: 100%;
+  display: -webkit-box;
+  -webkit-box-flex: 1;
+  margin-left: -9px;  /* Set the margins at the edges of the slider bar. */
+  margin-right: -9px;
+}
+
+.custom-slider.progress > input[type='range']::-webkit-slider-thumb {
+  width: 28px;
+  background-image: url(../../images/media/media_slider_thumb.png);
+}
+
+.custom-slider.progress > input[type='range']::-webkit-slider-thumb:hover {
+  background-image: url(../../images/media/media_slider_thumb_hover.png);
+}
+
+.custom-slider.progress > input[type='range']::-webkit-slider-thumb:active {
+  background-image: url(../../images/media/media_slider_thumb_down.png);
+}
+
+.disabled .custom-slider.progress > input[type='range']::-webkit-slider-thumb {
+  background-image: url(../../images/media/media_slider_thumb_disabled.png);
+}
+
+.custom-slider.progress > .bar {
+  left: 14px;  /* Exactly 1/2 of the thumb width */
+  right: 14px;
+}
+
+/* Time display. */
+
+.time-controls > .time {
+  position: relative;
+  height: 100%;
+  margin-left: 15px;
+}
+
+/* Invisible div used to compute the width required for the elapsed time. */
+.time-controls > .time > .duration {
+  color: transparent;
+}
+
+.time-controls > .time > .current {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: center;
+  -webkit-box-pack: end;
+  color: white;
+}
+
+.disabled .time-controls > .time > .current {
+  color: transparent;
+}
+
+/* Volume controls: sound button and volume slider */
+
+.volume-controls {
+  height: 100%;
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+}
+
+/* Sound button */
+
+.media-button.sound {
+  margin-left: -4px;
+  margin-right: -2px;
+  background-position: -2px center;
+}
+
+
+.media-button.sound[level='0'] {
+  background-image: url(../../images/media/media_sound_disabled.png);
+}
+
+.media-button.sound[level='0']:hover {
+  background-image: url(../../images/media/media_sound_disabled_hover.png);
+}
+
+.media-button.sound[level='0']:active {
+  background-image: url(../../images/media/media_sound_disabled_down.png);
+}
+
+.disabled .media-button.sound[level='0'] {
+  background-image: url(../../images/media/media_sound_disabled_disabled.png);
+}
+
+
+.media-button.sound[level='1'] {
+  background-image: url(../../images/media/media_sound_level1.png);
+}
+
+.media-button.sound[level='1']:hover {
+  background-image: url(../../images/media/media_sound_level1_hover.png);
+}
+
+.media-button.sound[level='1']:active {
+  background-image: url(../../images/media/media_sound_level1_down.png);
+}
+
+.disabled .media-button.sound[level='1'] {
+  background-image: url(../../images/media/media_sound_level1_disabled.png);
+}
+
+
+.media-button.sound[level='2'] {
+  background-image: url(../../images/media/media_sound_level2.png);
+}
+
+.media-button.sound[level='2']:hover {
+  background-image: url(../../images/media/media_sound_level2_hover.png);
+}
+
+.media-button.sound[level='2']:active {
+  background-image: url(../../images/media/media_sound_level2_down.png);
+}
+
+.disabled .media-button.sound[level='2'] {
+  background-image: url(../../images/media/media_sound_level2_disabled.png);
+}
+
+
+.media-button.sound[level='3'] {
+  background-image: url(../../images/media/media_sound_full.png);
+}
+
+.media-button.sound[level='3']:hover {
+  background-image: url(../../images/media/media_sound_full_hover.png);
+}
+
+.media-button.sound[level='3']:active {
+  background-image: url(../../images/media/media_sound_full_down.png);
+}
+
+.disabled .media-button.sound[level='3'] {
+  background-image: url(../../images/media/media_sound_full_disabled.png);
+}
+
+/* Volume slider. */
+
+.custom-slider.volume {
+  position: relative;
+  height: 100%;
+  width: 60px;
+  margin-left: -4px;
+  margin-right: -4px;
+}
+
+.custom-slider.volume > input[type='range']::-webkit-slider-thumb {
+  width: 20px;
+  background-image: url(../../images/media/media_volume_slider_thumb.png);
+}
+
+.custom-slider.volume > input[type='range']::-webkit-slider-thumb:hover {
+  background-image: url(../../images/media/media_volume_slider_thumb_hover.png);
+}
+
+.custom-slider.volume > input[type='range']::-webkit-slider-thumb:active {
+  background-image: url(../../images/media/media_volume_slider_thumb_down.png);
+}
+
+.disabled .custom-slider.volume > input[type='range']::-webkit-slider-thumb {
+  background-image: url(../../images/media/media_volume_slider_thumb_disabled.png);
+}
+
+.custom-slider.volume > .bar {
+  left: 10px;  /* Exactly 1/2 of the thumb width */
+  right: 10px;
+}
+
+/* Horizontal video control bar, all controls in a row. */
+
+.video-controls {
+  pointer-events: auto;
+
+  font-size: 12pt;
+  height: 30px;
+  border-radius: 5px;
+
+  padding-left: 15px;
+  padding-right: 15px;
+
+  opacity: 0.8;
+
+  background: #202020;
+
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+}
+
+.video-controls.disabled {
+  pointer-events: none;
+}
+
+.video-controls .time-controls,
+.video-controls .volume-controls {
+  margin-left: 15px;
+}
+
+/* Fullscreen button. */
+/* There is no final decision whether we need a separate icon when toggled. */
+
+.media-button.fullscreen {
+  margin-left: 9px;  /* 15px visible margin - 6px whitespace in the icon. */
+  margin-right: -6px;
+  background-image: url(../../images/media/media_fullscreen.png);
+}
+
+.media-button.fullscreen:hover {
+  background-image: url(../../images/media/media_fullscreen_hover.png);
+}
+
+.media-button.fullscreen:active {
+  background-image: url(../../images/media/media_fullscreen_down.png);
+}
+
+.disabled .media-button.fullscreen {
+  background-image: url(../../images/media/media_fullscreen_disabled.png);
+}
+
+.playback-state-icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 32px;
+  height: 32px;
+  margin-left: -16px;
+  margin-top: -16px;
+  border-radius: 5px;
+  pointer-events: none;
+  display: none;
+
+  background-color: #202020;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  opacity: 1;
+  -webkit-transform: scaleX(1) scaleY(1);
+
+  -webkit-transition-property: webkit-transform, opacity;
+  -webkit-transition-duration: 500ms;
+  -webkit-transition-timing-function: linear;
+
+  z-index: 2;
+}
+
+.playback-state-icon[visible] {
+  display: block;
+}
+
+.playback-state-icon[state] {
+  opacity: 0;
+  -webkit-transform: scaleX(3) scaleY(3);
+}
+
+.playback-state-icon[state='play'] {
+  background-image: url(../../images/media/media_play.png);
+}
+
+.playback-state-icon[state='pause'] {
+  background-image: url(../../images/media/media_pause.png);
+}

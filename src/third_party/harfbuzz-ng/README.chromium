@@ -1,0 +1,13 @@
+Name: harfbuzz-ng
+Short Name: harfbuzz-ng
+URL: http://freedesktop.org/wiki/Software/HarfBuzz
+Version: unknown
+Date: 20120127
+Revision: 1a5a91dc0d8bf4b72a2f22dc6300b06ad7000b79
+Security Critical: yes
+
+Description:
+This is harfbuzz-ng, a new implementation of harfbuzz with a different
+API from the old one.
+
+I also deleted all unneeded files from the root directory (but left src/ alone).

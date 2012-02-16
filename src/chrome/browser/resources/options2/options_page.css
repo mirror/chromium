@@ -1,0 +1,783 @@
+/* Copyright (c) 2012 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file. */
+
+body {
+  position: relative;
+}
+
+#main-content {
+  bottom: 0;
+  display: -webkit-box;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+#mainview {
+  -webkit-box-align: stretch;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}
+
+html.hide-menu #mainview {
+  -webkit-padding-start: 0;
+}
+
+#mainview-content {
+  min-height: 100%;
+  position: relative;
+}
+
+#page-container {
+  -webkit-padding-end: 24px;
+  box-sizing: border-box;
+  max-width: 888px;
+  min-width: 600px;
+}
+
+#page-container .page {
+  -webkit-transition-duration: 200ms;
+  -webkit-transition-property: margin-top;
+}
+
+#page-container .page.under-managed-prefs-banner {
+  margin-top: 31px;
+}
+
+#page-container header {
+  -webkit-transition-duration: 200ms;
+  -webkit-transition-property: top;
+}
+
+#page-container .page.under-managed-prefs-banner header {
+  top: 31px;
+}
+
+div.disabled {
+  color: #888;
+}
+
+/* TODO(jhawkins): Refactor back into button.css once more pages are converted.
+ */
+/* Note |link-button| has no additional styling for focus, hover, or active. */
+.link-button {
+  color: rgb(48, 57, 66);
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* TEXT */
+input[type='password'],
+input[type='text'],
+input[type='url'],
+input:not([type]) {
+  -webkit-border-radius: 2px;
+  border: 1px solid #aaa;
+  font-size: inherit;
+  padding: 3px;
+}
+
+input[type='text']:disabled {
+  color: #888;
+}
+
+.hbox {
+  -webkit-box-orient: horizontal;
+  display: -webkit-box;
+}
+
+.vbox {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+}
+
+.stretch {
+  -webkit-box-flex: 1;
+}
+
+.frozen,
+.subpage-sheet-container.frozen {
+  position: fixed;
+}
+
+.search-field-container {
+  position: absolute;
+  right: 18px;
+  top: 18px;
+}
+
+html[dir='rtl'] .search-field-container {
+  left: 18px;
+  right: auto;
+}
+
+/* TODO(csilv): M19 Move this styling to a shared location for all webui. */
+#search-field {
+  -webkit-margin-end: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+  font: inherit;
+  margin: 0;
+  /* NOTE: Keep a relatively high min-width for this so we don't obscure the end
+   * of the default text in relatively spacious languages (i.e. German). */
+  min-width: 160px;
+}
+
+/*
+ * Add padding to increase the touchable area of search box. Use original font
+ * size to avoid the width of search box exceeding the width of navbar.
+ */
+html[touch-optimized] #search-field {
+  font-size: 13px;
+  padding: 5px;
+}
+html[touch-optimized] #search-field::-webkit-search-cancel-button {
+  -webkit-transform: scale(1.5);
+}
+
+/*
+ * For touch-optimized UI, make the radio/checkbox input boxes in
+ * options/preference pages easier to touch.
+ * TODO(rbyers): We need to solve this more generally for all web pages
+ * (crbug.com/99981), and perhaps temporarily for all WebUI (crbug.com/102482).
+ */
+html[touch-optimized] div.radio > label > span,
+html[touch-optimized] div.checkbox > label > span {
+  -webkit-padding-start: 5px;
+}
+
+html[touch-optimized] label > input[type=checkbox],
+html[touch-optimized] label > input[type=radio] {
+  -webkit-transform: scale(1.4);
+}
+
+/*
+ * Override the font-size rule in shared_options.css file.
+ * 16 px font-size proved to be more touch friendly. It increases the touchable
+ * area for buttons and input boxes.
+ */
+html[touch-optimized] body {
+  font-size: 16px;
+}
+
+#overlay-container-1 {
+  z-index: 11;
+}
+#overlay-container-2 {
+  z-index: 12;
+}
+#overlay-container-3 {
+  z-index: 13;
+}
+
+.raw-button,
+.raw-button:hover,
+.raw-button:active {
+  -webkit-box-shadow: none;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  min-width: 0;
+  padding: 1px 6px;
+}
+
+.close-subpage {
+  background-image: url('../../../../ui/resources/close_bar.png');
+  height: 16px;
+  min-width: 0;
+  position: fixed;
+  top: 16px;
+  width: 16px;
+}
+
+.close-subpage:hover {
+  background-image: url('../../../../ui/resources/close_bar_h.png');
+}
+
+.close-subpage:active {
+  background-image: url('../../../../ui/resources/close_bar_p.png');
+}
+
+html[dir='ltr'] .close-subpage {
+  right: 20px;
+}
+
+html[dir='rtl'] .close-subpage {
+  left: 20px;
+}
+
+html.hide-menu .close-subpage {
+  display: none
+}
+
+.bottom-strip {
+  border-top: none;
+  bottom: 0;
+  padding: 12px;
+  position: absolute;
+  right: 0;
+}
+
+#mainview-content .page {
+  padding-bottom: 20px;
+}
+
+#subpage-backdrop {
+  background: black;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  opacity: 0.3;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+#subpage-backdrop:hover {
+  background: #424242;
+}
+
+.subpage-sheet-container {
+  -webkit-transition: 250ms opacity, 100ms padding-left, 100ms padding-right;
+  box-sizing: border-box;
+  left: 0;
+  min-height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+/* Omit top padding (currently only on #settings) whenever the search page is
+ * showing.
+ */
+#searchPage:not([hidden]) + #settings {
+  padding-top: 0;
+}
+
+#subpage-sheet-container-1 {
+  -webkit-padding-start: 52px;
+  z-index: 5;
+}
+
+#subpage-sheet-container-2 {
+  -webkit-padding-start: 104px;
+  z-index: 7;
+}
+
+#subpage-sheet-container-3 {
+  -webkit-padding-start: 156px;
+  z-index: 9;
+}
+
+#subpage-sheet-container-1 header {
+  left: 72px;
+  right: 72px;
+}
+
+#subpage-sheet-container-2 header {
+  left: 124px;
+  right: 124px;
+}
+
+#subpage-sheet-container-3 header {
+  left: 176px;
+  right: 176px;
+}
+
+.subpage-sheet {
+  -webkit-margin-start: -155px;
+  background-color: white;
+  box-shadow: #666 0 2px 5px;
+  box-sizing: border-box;
+  min-height: 100%;
+  min-width: 651px;
+}
+
+/* Special shadow for only first subpage sheet. */
+#subpage-sheet-1 {
+  box-shadow: 0 0 17px rgba(0, 0, 0, 0.3), 0 0 57px rgba(0, 0, 0, 0.3);
+}
+
+.subpage-sheet-contents {
+  box-sizing: border-box;
+  max-width: 900px;
+  min-height: 100%;
+  min-width: 650px;
+  padding: 0 20px;
+  width: 95%;
+}
+
+.subpage-sheet-contents .page {
+  z-index: 1;
+}
+
+.managed-prefs-banner {
+  -webkit-transition-duration: 200ms;
+  -webkit-transition-property: height;
+  background: -webkit-linear-gradient(rgb(255, 242, 183),
+                                      rgb(250, 230, 145) 97%,
+                                      rgb(135, 135, 135));
+  height: 31px;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  vertical-align: middle;
+  width: 100%;
+  z-index: 2;
+}
+
+.managed-prefs-banner[hidden] {
+  height: 0;
+}
+
+.managed-prefs-banner.clickable:active {
+  background: -webkit-linear-gradient(rgb(135, 135, 135),
+                                      rgb(250, 230, 145) 3%,
+                                      rgb(255, 242, 183));
+}
+
+.managed-prefs-icon {
+  background-image: url('chrome://theme/IDR_WARNING');
+  background-position: center;
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 21px;
+  padding: 5px;
+  vertical-align: middle;
+  width: 24px;
+}
+
+.managed-prefs-text {
+  vertical-align: middle;
+}
+
+.overlay .page h1 {
+  background: -webkit-linear-gradient(white, #F8F8F8);
+  border-bottom: 1px solid rgba(188, 193, 208, .5);
+  font-size: 105%;
+  font-weight: bold;
+  padding: 10px 15px 8px 15px;
+}
+
+.page list {
+  /* Min height is a multiple of the list item height (32) */
+  min-height: 192px;
+}
+
+section {
+  -webkit-padding-start: 18px;
+  margin-bottom: 24px;
+  margin-top: 8px;
+  max-width: 600px;
+}
+
+section:last-of-type {
+  margin-bottom: 0;
+}
+
+section > h3 {
+  -webkit-margin-start: -18px;
+  color: black;
+  font-size: 14px;
+  font-weight: normal;
+  margin-bottom: 4px;
+}
+
+section > div:only-of-type {
+  -webkit-box-flex: 1;
+}
+
+.section-description {
+  margin-top: 4px;
+}
+
+.option {
+  margin-top: 0;
+}
+
+.transparent {
+  opacity: 0;
+}
+
+.touch-slider {
+  -webkit-appearance: slider-horizontal;
+}
+
+.settings-list,
+.settings-list-empty {
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+}
+
+.settings-list-empty {
+  background-color: #f4f4f4;
+  box-sizing: border-box;
+  min-height: 125px;
+  padding-left: 20px;
+  padding-top: 20px;
+}
+
+list > * {
+  -webkit-box-align: center;
+  -webkit-transition: 150ms background-color;
+  border: none;
+  border-radius: 0;  /* TODO(dbeam): Is this necessary? */
+  box-sizing: border-box;
+  display: -webkit-box;
+  height: 32px;
+  margin: 0;
+}
+
+list > .spacer {
+  /* The above height rule should not apply to spacers. When redraw is called
+     on the list they will be given an explicit element height but this ensures
+     they have 0 height to begin with. */
+  height: 0;
+}
+
+list:not([disabled]) > :hover {
+  background-color: rgb(228, 236, 247);
+}
+
+/* TODO(stuartmorgan): Once this becomes the list style for other WebUI pages
+ * these rules can be simplified (since they wont need to override other rules).
+ */
+
+list:not([hasElementFocus]) > [selected],
+list:not([hasElementFocus]) > [lead][selected] {
+  background-color: #d0d0d0;
+  background-image: none;
+}
+
+list[hasElementFocus] > [selected],
+list[hasElementFocus] > [lead][selected],
+list:not([hasElementFocus]) > [selected]:hover,
+list:not([hasElementFocus]) > [selected][lead]:hover {
+  background-color: rgb(187, 206, 233);
+  background-image: none;
+}
+
+list[hasElementFocus] > [lead],
+list[hasElementFocus] > [lead][selected] {
+  border-bottom: 1px solid rgb(120, 146, 180);
+  border-top: 1px solid rgb(120, 146, 180);
+}
+
+list[hasElementFocus] > [lead]:nth-child(2),
+list[hasElementFocus] > [lead][selected]:nth-child(2) {
+  border-top: 1px solid transparent;
+}
+
+list[hasElementFocus] > [lead]:nth-last-child(2),
+list[hasElementFocus] > [lead][selected]:nth-last-child(2) {
+  border-bottom: 1px solid transparent;
+}
+
+list[disabled] > [lead][selected],
+list[disabled]:focus > [lead][selected] {
+  border: none;
+}
+
+list[disabled] {
+  opacity: 0.6;
+}
+
+list > .heading {
+  color: #666;
+}
+
+list > .heading:hover {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+list .deletable-item {
+  -webkit-box-align: center;
+}
+
+list .deletable-item > :first-child {
+  -webkit-box-align: center;
+  -webkit-box-flex: 1;
+  -webkit-padding-end: 5px;
+  display: -webkit-box;
+}
+
+list .close-button {
+  -webkit-transition: 150ms opacity;
+  background-color: transparent;
+  /* TODO(stuartmorgan): Replace with real images once they are available. */
+  background-image: url('../../../../ui/resources/close_bar.png');
+  border: none;
+  display: block;
+  height: 16px;
+  opacity: 1;
+  width: 16px;
+}
+
+list > *:not(:hover):not([lead]) .close-button,
+list > *:not(:hover):not([selected]) .close-button,
+list:not([hasElementFocus]) > *:not(:hover) .close-button,
+list[disabled] .close-button,
+list .close-button[disabled] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+list .close-button:hover {
+  background-image: url('../../../../ui/resources/close_bar_h.png');
+}
+
+list .close-button:active {
+  background-image: url('../../../../ui/resources/close_bar_p.png');
+}
+
+list .static-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+list[inlineeditable] input {
+  box-sizing: border-box;
+  margin: 0;
+  width: 100%;
+}
+
+list > :not([editing]) [displaymode='edit'] {
+  display: none;
+}
+
+list > [editing] [displaymode='static'] {
+  display: none;
+}
+
+list > [editing] input:invalid {
+  /* TODO(stuartmorgan): Replace with validity badge */
+  background-color: pink;
+}
+
+.option-name {
+  padding-right: 5px;
+}
+
+html[dir=rtl].option-name {
+  padding-left: 5px;
+}
+
+.favicon-cell {
+  -webkit-padding-start: 20px;
+  background-position: left;
+  background-repeat: no-repeat;
+}
+
+input[type='url'].favicon-cell {
+  -webkit-padding-start: 22px;
+  background-position-x: 4px;
+}
+
+/* TODO(jhawkins): Use something better than 99.3% when CSS3 background
+ * positioning is available.
+ */
+html[dir=rtl] input.favicon-cell {
+  background-position-x: 99.3%;
+}
+
+list .favicon-cell {
+  -webkit-margin-start: 7px;
+  -webkit-padding-start: 26px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+html[dir=rtl] list .favicon-cell {
+  background-position: right;
+}
+
+html[enable-background-mode=false] #background-mode-section {
+ display: none;
+}
+
+/* UI Controls */
+
+/* LIST */
+html:not([os=mac]) list[hasElementFocus] {
+  outline: 1px solid rgba(0, 128, 256, 0.5);
+  outline-offset: -2px;
+}
+
+/* This matches the native list outline on Mac */
+html[os=mac] list[hasElementFocus] {
+  outline-color: rgb(117, 154, 217);
+  outline-offset: -1px;
+  outline-style: auto;
+  outline-width: 5px;
+}
+
+.suboption {
+  -webkit-margin-start: 23px;
+}
+
+.informational-text {
+  color: grey;
+}
+
+list.autocomplete-suggestions {
+  background-color: white;
+  border: 1px solid #aaa;
+  border-radius: 2px;
+  min-height: 0;
+  opacity: 0.9;
+  position: fixed;
+  z-index: 3;
+}
+
+list.autocomplete-suggestions > div {
+  height: auto;
+}
+
+list.autocomplete-suggestions:not([hasElementFocus]) > [selected],
+list.autocomplete-suggestions:not([hasElementFocus]) > [lead][selected] {
+  background-color: rgb(187, 206, 233);
+}
+
+html:not([hasFlashPlugin]) .flash-plugin-area,
+/* If the Flash plug-in supports the NPP_ClearSiteData API, we don't need to
+ * show the link to the Flash storage settings manager:
+ */
+html[flashPluginSupportsClearSiteData] .flash-plugin-area,
+html:not([flashPluginSupportsClearSiteData]) .clear-plugin-lso-data-enabled,
+html[flashPluginSupportsClearSiteData] .clear-plugin-lso-data-disabled {
+  display: none;
+}
+
+/* Controlled setting indicator and bubble. */
+.controlled-setting-indicator {
+  display: inline-block;
+  /* Establish a containing block for absolutely positioning the bubble. */
+  position: relative;
+  vertical-align: text-bottom;
+}
+
+.controlled-setting-indicator[controlled-by] summary {
+  background-size: contain;
+  height: 16px;
+  width: 16px;
+}
+
+.controlled-setting-indicator summary::-webkit-details-marker {
+  display: none;
+}
+
+.controlled-setting-indicator[controlled-by='policy'] summary {
+  background-image:
+      url('chrome://theme/IDR_CONTROLLED_SETTING_MANDATORY_GRAY');
+}
+
+.controlled-setting-indicator[controlled-by='policy'] summary:hover {
+  background-image:
+      url('chrome://theme/IDR_CONTROLLED_SETTING_MANDATORY');
+}
+
+.controlled-setting-indicator[controlled-by='extension'] summary {
+  background-image:
+      url('chrome://theme/IDR_CONTROLLED_SETTING_EXTENSION_GRAY');
+}
+
+.controlled-setting-indicator[controlled-by='extension'] summary:hover {
+  background-image:
+      url('chrome://theme/IDR_CONTROLLED_SETTING_EXTENSION');
+}
+
+.controlled-setting-indicator[controlled-by='recommended'] summary {
+  background-image:
+      url('chrome://theme/IDR_CONTROLLED_SETTING_RECOMMENDED_GRAY');
+}
+
+.controlled-setting-indicator[controlled-by='recommended'] summary:hover {
+  background-image:
+      url('chrome://theme/IDR_CONTROLLED_SETTING_RECOMMENDED');
+}
+
+.controlled-setting-bubble {
+  -webkit-margin-start: -20px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 2px #ddd;
+  margin-top: 10px;
+  padding: 10px;
+  position: absolute;
+  top: 50%;
+  z-index: 10;
+}
+
+html[dir='ltr'] .controlled-setting-bubble {
+  left: 50%;
+}
+
+html[dir='rtl'] .controlled-setting-bubble {
+  right: 50%;
+}
+
+.controlled-setting-bubble::before {
+  -webkit-margin-start: 4px;
+  border-color: #ccc transparent;
+  border-style: solid;
+  border-width: 0 5px 5px;
+  content: '';
+  position: absolute;
+  top: -5px;
+}
+
+.controlled-setting-bubble::after {
+  -webkit-margin-start: 5px;
+  border-color: white transparent;
+  border-style: solid;
+  border-width: 0 4px 4px;
+  content: '';
+  position: absolute;
+  top: -4px;
+}
+
+.controlled-setting-bubble-text {
+  -webkit-padding-start: 30px;
+  background-repeat: no-repeat;
+  margin: 0;
+  min-height: 32px;
+  min-width: 200px;
+}
+
+.controlled-setting-indicator[controlled-by='policy']
+    .controlled-setting-bubble-text {
+  background-image:
+      url('chrome://theme/IDR_CONTROLLED_SETTING_MANDATORY_LARGE');
+}
+
+.controlled-setting-indicator[controlled-by='extension']
+    .controlled-setting-bubble-text {
+  background-image:
+      url('chrome://theme/IDR_CONTROLLED_SETTING_EXTENSION_LARGE');
+}
+
+.controlled-setting-indicator[controlled-by='recommended']
+    .controlled-setting-bubble-text {
+  background-image:
+      url('chrome://theme/IDR_CONTROLLED_SETTING_RECOMMENDED_LARGE');
+}
+
+html[dir='rtl'] .controlled-setting-bubble-text {
+  background-position: right top;
+}
+
+.controlled-setting-bubble-action {
+  padding: 0 !important;
+}

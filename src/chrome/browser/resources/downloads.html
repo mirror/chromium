@@ -1,0 +1,187 @@
+<!DOCTYPE HTML>
+<html i18n-values="dir:textdirection;">
+<head>
+<meta charset="utf-8">
+<title i18n-content="title"></title>
+<link rel="icon" href="../../app/theme/downloads_favicon.png">
+<link rel="stylesheet" href="old_webui.css">
+<link rel="stylesheet" href="shared/css/button.css">
+<link rel="stylesheet" href="shared/css/chrome_shared.css">
+<style>
+
+#downloads-summary {
+  background-color: rgb(235, 239, 249);
+  border-top: 1px solid rgb(156, 194, 239);
+  margin-bottom: 6px;
+  margin-top: 12px;
+  padding: 3px;
+}
+
+#downloads-summary-text {
+  font-weight: bold;
+}
+
+#downloads-actions {
+  float: right;
+}
+
+html[dir=rtl] #downloads-actions {
+  float: left;
+}
+
+#downloads-actions > a {
+  margin-left: 10px;
+}
+
+#downloads-actions > a:first-child {
+  margin-left: 0;
+}
+
+#downloads-display {
+  max-width: 740px;
+}
+
+.download {
+  -webkit-margin-start: 114px;
+  -webkit-padding-start: 56px;
+  margin-bottom: 15px;
+  margin-top: 6px;
+  position: relative;
+}
+
+.date-container {
+  left: -110px;
+  position: absolute;
+  width: 110px;
+}
+
+html[dir=rtl] .date-container {
+  left: auto;
+  right: -110px;
+}
+
+.date-container .since {
+  color: black;
+}
+
+.date-container .date {
+  color: #666;
+}
+
+.download .icon {
+  height: 32px;
+  left: 9px;
+  position: absolute;
+  top: 2px;
+  width: 32px;
+}
+
+html[dir=rtl] .icon {
+  left: auto;
+  right: 9px;
+}
+
+.download.otr > .safe,
+.download.otr > .show-dangerous {
+  -webkit-transition: opacity 150ms;
+  background: url('shared/images/otr_icon_standalone.png') no-repeat 100% 100%;
+  opacity: .66;
+}
+
+html[dir=rtl] .download.otr > .safe,
+html[dir=rtl] .download.otr > .show-dangerous {
+  background-position: 0% 100%;
+}
+
+.download.otr > .safe:hover,
+.download.otr > .show-dangerous:hover {
+  opacity: 1;
+}
+
+.progress {
+  height: 48px;
+  left: 0;
+  position: absolute;
+  top: -6px;
+  width: 48px;
+}
+
+html[dir=rtl] .progress {
+  left: auto;
+  right: 0;
+}
+
+.progress.background {
+  background: url('../../app/theme/download_progress_background32.png');
+}
+
+.progress.foreground {
+  background: url('../../app/theme/download_progress_foreground32.png');
+}
+
+.name {
+  -webkit-padding-end: 16px;
+  display: none;
+  max-width: 450px;
+  word-break: break-all;
+}
+
+.download .status {
+  display: inline;
+  color: #999;
+  white-space: nowrap;
+}
+
+.download .src-url {
+  color: rgb(85, 102, 221);
+  display: inline-block;
+  max-width: 500px;
+  overflow: hidden;
+  padding-bottom: 1px;
+  padding-top: 4px;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.controls a {
+  color: #777;
+  margin-right: 16px;
+}
+
+#downloads-pagination {
+  padding-top: 24px;
+  margin-left: 18px;
+}
+
+</style>
+<script src="chrome://resources/js/local_strings.js"></script>
+</head>
+<body i18n-values=".style.fontFamily:fontfamily;.style.fontSize:fontsize">
+<div class="header">
+  <a id="search-link" href="">
+    <img src="shared/images/downloads_section.png"
+         width="67" height="67" class="logo" border="0" /></a>
+  <form id="search-form" method="post" action="" class="form">
+    <input type="text" name="term" id="term" />
+    <input id="search-submit"
+           type="submit" name="submit" i18n-values="value:searchbutton" />
+  </form>
+</div>
+<div class="main">
+  <div id="downloads-summary">
+    <span id="downloads-summary-text" i18n-content="downloads">Downloads</span>
+    <span id="downloads-actions">
+      <a id="open-downloads-folder" href=""
+         i18n-content="open_downloads_folder">Open downloads folder</a>
+      <a id="clear-all" href="" i18n-content="clear_all">Clear All</a>
+    </span>
+  </div>
+  <div id="downloads-display"></div>
+</div>
+<script src="chrome://downloads/downloads.js"></script>
+<script src="chrome://downloads/strings.js"></script>
+<script src="chrome://resources/js/i18n_template.js"></script>
+<script src="chrome://resources/js/i18n_process.js"></script>
+</body>
+</html>

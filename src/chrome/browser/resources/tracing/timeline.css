@@ -1,0 +1,64 @@
+/*
+Copyright (c) 2012 The Chromium Authors. All rights reserved.
+Use of this source code is governed by a BSD-style license that can be
+found in the LICENSE file.
+*/
+
+.timeline-drag-box {
+  background-color: rgba(0, 0, 255, 0.25);
+  border: 1px solid #000060
+  font-size: 75%;
+  position: fixed;
+}
+
+.timeline-thread-track {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  padding: 1px 0;
+}
+
+.timeline-thread-track:not(:first-child) {
+  border-top: 1px solid #D0D0D0;
+}
+
+.timeline-canvas-based-track {
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  background-color: white;
+  display: -webkit-box;
+  margin: 0;
+  padding: 0;
+  padding-right: 5px;
+}
+
+.timeline-canvas-based-track-title {
+  overflow: hidden;
+  padding-right: 5px;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.timeline-canvas-based-track-canvas-container {
+  -webkit-box-flex: 1;
+  width: 100%;
+}
+
+.timeline-canvas-based-track-canvas {
+  -webkit-box-flex: 1;
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.timeline-viewport-track {
+  height: 12px;
+}
+
+.timeline-slice-track {
+  height: 18px;
+}
+
+.timeline-counter-track {
+  height: 30px;
+}
