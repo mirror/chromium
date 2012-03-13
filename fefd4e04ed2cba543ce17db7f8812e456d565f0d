@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAHn//Wks\u003d",
+        "filename": "chrome/browser/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001437
+      },
+      "writtenOn": "2012-03-13T23:32:22Z",
+      "side": 1,
+      "message": "Do you want to rename this to target_version_pattern? As it defines a pattern, rather than a specific version. Thanks.",
+      "revId": "fefd4e04ed2cba543ce17db7f8812e456d565f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
