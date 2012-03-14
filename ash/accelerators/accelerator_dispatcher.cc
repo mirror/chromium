@@ -36,12 +36,13 @@ bool IsKeyEvent(const MSG& msg) {
 bool IsKeyRelease(const MSG& msg) {
   return msg.message == WM_KEYUP || msg.message == WM_SYSKEYUP;
 }
-#elif defined(USE_X11)
-bool IsKeyEvent(const XEvent* xev) {
-  return xev->type == KeyPress || xev->type == KeyRelease;
+#elif defined(USE_X11) || defined(USE_EVDEV)
+bool IsKeyEvent(const base::NativeEvent& event) {
+  return (ui::EventTypeFromNative(event) == ui::ET_KEY_PRESSED ||
+	  ui::EventTypeFromNative(event) == ui::ET_KEY_RELEASED);
 }
-bool IsKeyRelease(const XEvent* xev) {
-  return xev->type == KeyRelease;
+bool IsKeyRelease(const base::NativeEvent& event) {
+  return (ui::EventTypeFromNative(event) == ui::ET_KEY_RELEASED);
 }
 #endif
 

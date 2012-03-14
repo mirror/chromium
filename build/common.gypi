@@ -32,6 +32,9 @@
           # Enable DIP (Density Independent Pixels) support.
           'enable_dip%': 0,
 
+          # Whether or not we are using drm.
+          'use_drm%': 0,
+
           # Whether to use MessagePumpEvdev and read inputs from /dev/input
           'use_evdev%': 0,
 
@@ -52,6 +55,7 @@
         'use_aura%': '<(use_aura)',
         'use_ash%': '<(use_ash)',
         'enable_dip%': '<(enable_dip)',
+        'use_drm%': '<(use_drm)',
         'use_evdev%': '<(use_evdev)',
         'use_openssl%': '<(use_openssl)',
         'use_virtual_keyboard%': '<(use_virtual_keyboard)',
@@ -95,6 +99,11 @@
           ['OS=="mac"', {
             'enable_hidpi%': 1,
           }],
+
+          # drm implies evdev
+          ['use_drm==1', {
+            'use_evdev%': 1,
+          }],
         ],
       },
 
@@ -105,6 +114,7 @@
       'use_aura%': '<(use_aura)',
       'use_ash%': '<(use_ash)',
       'enable_dip%': '<(enable_dip)',
+      'use_drm%': '<(use_drm)',
       'use_evdev%': '<(use_evdev)',
       'use_openssl%': '<(use_openssl)',
       'use_virtual_keyboard%': '<(use_virtual_keyboard)',
@@ -384,6 +394,10 @@
           'enable_skia_text%': 1,
         }],
 
+        ['use_drm==1', {
+          'use_x11%': 0,
+        }],
+
         # A flag to enable or disable our compile-time dependency
         # on gnome-keyring. If that dependency is disabled, no gnome-keyring
         # support will be available. This option is useful
@@ -493,6 +507,7 @@
     'use_aura%': '<(use_aura)',
     'use_ash%': '<(use_ash)',
     'enable_dip%': '<(enable_dip)',
+    'use_drm%': '<(use_drm)',
     'use_evdev%': '<(use_evdev)',
     'use_openssl%': '<(use_openssl)',
     'use_nss%': '<(use_nss)',
@@ -1242,6 +1257,10 @@
       }],
       ['enable_dip==1', {
         'defines': ['ENABLE_DIP'],
+      }],
+      ['use_drm==1', {
+        'defines': ['USE_DRM=1', '__GBM__=1'],
+      }],
       ['use_evdev==1', {
         'defines': ['USE_EVDEV=1'],
       }],
