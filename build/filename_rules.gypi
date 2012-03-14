@@ -86,5 +86,12 @@
                     ['exclude', '(^|/)ash/'],
       ]
     }],
+    ['use_evdev!=1', {
+      'sources/': [
+        ['exclude', '_evdev(_unittest)?\\.(h|cc)$'],
+        ['exclude', '(^|/)evdev/'],
+        ['exclude', '(^|/)evdev_[^/]*\\.(h|cc)$'],
+      ],
+    }],
   ]
 }

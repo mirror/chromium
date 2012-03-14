@@ -17,11 +17,11 @@
 
 namespace views {
 
-#if defined(USE_AURA) && defined(USE_X11)
-// Dispatch an XEvent to the RootView. Return true if the event was dispatched
+#if defined(USE_AURA) && (defined(USE_X11) || defined(USE_DRM))
+// Dispatch an Event to the RootView. Return true if the event was dispatched
 // and handled, false otherwise.
-bool VIEWS_EXPORT DispatchXEvent(XEvent* xevent);
-#endif  // USE_AURA && USE_X11
+bool VIEWS_EXPORT DispatchEvent(base::NativeEvent event);
+#endif
 
 // This class delegates the key messages to the associated FocusManager class
 // for the window that is receiving these messages for accelerator processing.
