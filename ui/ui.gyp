@@ -158,6 +158,7 @@
         'base/dragdrop/os_exchange_data_provider_gtk.h',
         'base/dragdrop/os_exchange_data_provider_win.cc',
         'base/dragdrop/os_exchange_data_provider_win.h',
+        'base/evdev/events_evdev.cc',
         'base/events/event.cc',
         'base/events/event.h',
         'base/events/event_constants.h',
@@ -846,6 +847,12 @@
         ['inside_chromium_build==0', {
           'dependencies': [
             '<(DEPTH)/webkit/support/setup_third_party.gyp:third_party_headers',
+          ],
+        }],
+        ['use_evdev==1', {
+          'sources!': [
+            'base/touch/touch_factory.cc',
+            'base/x/events_x.cc',
           ],
         }],
       ],

@@ -632,6 +632,7 @@ static string16 GetStringF(int message_id,
   const string16& format_string = rb.GetLocalizedString(message_id);
 
 #ifndef NDEBUG
+#if !defined(USE_DRM)
   // Make sure every replacement string is being used, so we don't just
   // silently fail to insert one. If |offsets| is non-NULL, then don't do this
   // check as the code may simply want to find the placeholders rather than
@@ -657,6 +658,7 @@ static string16 GetStringF(int message_id,
       }
     }
   }
+#endif
 #endif
 
   string16 formatted = ReplaceStringPlaceholders(format_string, replacements,
