@@ -21,7 +21,11 @@ static const int kDefaultHostWindowHeight = 1024;
 }  // namespace
 
 // static
+#if defined(USE_DRM)
+bool MonitorManager::use_fullscreen_host_window_ = true;
+#else
 bool MonitorManager::use_fullscreen_host_window_ = false;
+#endif
 
 // static
 Monitor* MonitorManager::CreateMonitorFromSpec(const std::string& spec) {

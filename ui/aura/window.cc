@@ -591,13 +591,14 @@ void Window::SetVisible(bool visible) {
 
   bool was_visible = IsVisible();
   if (visible != layer_->visible()) {
+#if !defined(USE_DRM) //TODO(msb) fix this
     RootWindow* root_window = GetRootWindow();
-    if (client::GetVisibilityClient(root_window)) {
+    if (client::GetVisibilityClient(root_window))
       client::GetVisibilityClient(root_window)->UpdateLayerVisibility(
           this, visible);
-    } else {
+    else
+#endif
       layer_->SetVisible(visible);
-    }
   }
   visible_ = visible;
   bool is_visible = IsVisible();

@@ -80,6 +80,7 @@
         'single_monitor_manager.h',
         'single_monitor_manager.cc',
         'root_window_host.h',
+        'root_window_host_drm.cc',
         'root_window_host_linux.cc',
         'root_window_host_linux.h',
         'root_window_host_mac.h',
@@ -92,6 +93,7 @@
         'root_window_view_mac.mm',
         'root_window.cc',
         'root_window.h',
+        'ui_controls_drm.cc',
         'ui_controls_win.cc',
         'ui_controls_x11.cc',
         'window.cc',
@@ -104,6 +106,17 @@
           'sources/': [
             ['exclude', 'client/dispatcher_client.cc'],
             ['exclude', 'client/dispatcher_client.h'],
+          ],
+        }],
+        ['use_drm==1', {
+          'sources/': [
+            ['exclude', 'dispatcher_linux.cc'],
+            ['exclude', 'dispatcher_linux.h'],
+            ['exclude', 'root_window_host_linux.cc'],
+            ['exclude', 'root_window_host_linux.h'],
+          ],
+          'dependencies': [
+            '<(DEPTH)/build/linux/system.gyp:drm',
           ],
         }],
         ['use_evdev==1', {
