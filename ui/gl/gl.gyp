@@ -84,6 +84,8 @@
         'gl_surface.h',
         'gl_surface_android.cc',
         'gl_surface_android.h',
+        'gl_surface_drm.cc',
+        'gl_surface_drm.h',
         'gl_surface_linux.cc',
         'gl_surface_mac.cc',
         'gl_surface_stub.cc',
@@ -95,6 +97,7 @@
         'gl_switches.h',
         'gpu_switching_manager.cc',
         'gpu_switching_manager.h',
+        'native_window_interface_android.h',
         'scoped_make_current.cc',
         'scoped_make_current.h',
         'gl_state_restorer.cc',
@@ -165,6 +168,14 @@
             '<(DEPTH)/third_party/angle/include',
           ],
         }],
+        ['use_drm == 1', {
+          'sources!': [
+            'gl_surface_linux.cc',
+          ],
+          'dependencies': [
+            '<(DEPTH)/build/linux/system.gyp:drm',
+          ],
+        }],
         ['use_x11 == 1', {
           'sources': [
             'gl_context_glx.cc',
@@ -228,10 +239,6 @@
           ],
         }],
         ['OS=="android"', {
-          'sources': [
-            'android_native_window.cc',
-            'android_native_window.h',
-          ],
           'sources!': [
             'gl_context_osmesa.cc',
             'system_monitor_posix.cc',

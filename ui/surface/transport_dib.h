@@ -91,7 +91,7 @@ class SURFACE_EXPORT TransportDIB {
     static int fake_handle = 10;
     return Handle(fake_handle++, false);
   }
-#elif defined(USE_X11)
+#elif defined(USE_X11) || defined(USE_DRM)
   typedef int Handle;  // These two ints are SysV IPC shared memory keys
   struct Id {
     // Ensure that default initialized Ids are invalid.
@@ -209,13 +209,15 @@ class SURFACE_EXPORT TransportDIB {
   explicit TransportDIB(base::SharedMemoryHandle dib);
   base::SharedMemory shared_memory_;
   uint32 sequence_num_;
-#elif defined(USE_X11)
+#elif defined(USE_X11) || defined(USE_DRM)
   Id key_;  // SysV shared memory id
   void* address_;  // mapped address
+#if defined(USE_X11)
   XSharedMemoryId x_shm_;  // X id for the shared segment
   Display* display_;  // connection to the X server
   size_t inflight_counter_;  // How many requests to the X server are in flight
   bool detached_;  // If true, delete the transport DIB when it is idle
+#endif
 #endif
   size_t size_;  // length, in bytes
 
