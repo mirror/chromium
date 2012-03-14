@@ -29,6 +29,9 @@
           # Whether or not we are building the Ash shell.
           'use_ash%': 0,
 
+          # Whether or not we are using drm.
+          'use_drm%': 0,
+
           # Whether to use MessagePumpEvdev and read inputs from /dev/input
           'use_evdev%': 0,
 
@@ -45,6 +48,7 @@
         'chromeos%': '<(chromeos)',
         'use_aura%': '<(use_aura)',
         'use_ash%': '<(use_ash)',
+        'use_drm%': '<(use_drm)',
         'use_evdev%': '<(use_evdev)',
         'use_openssl%': '<(use_openssl)',
         'use_virtual_keyboard%': '<(use_virtual_keyboard)',
@@ -82,6 +86,11 @@
           }, {
             'toolkit_views%': 0,
           }],
+
+          # drm implies evdev
+          ['use_drm==1', {
+            'use_evdev%': 1,
+          }],
         ],
       },
 
@@ -91,6 +100,7 @@
       'toolkit_views%': '<(toolkit_views)',
       'use_aura%': '<(use_aura)',
       'use_ash%': '<(use_ash)',
+      'use_drm%': '<(use_drm)',
       'use_evdev%': '<(use_evdev)',
       'use_openssl%': '<(use_openssl)',
       'use_virtual_keyboard%': '<(use_virtual_keyboard)',
@@ -343,6 +353,10 @@
           'enable_skia_text%': 1,
         }],
 
+        ['use_drm==1', {
+          'use_x11%': 0,
+        }],
+
         # A flag to enable or disable our compile-time dependency
         # on gnome-keyring. If that dependency is disabled, no gnome-keyring
         # support will be available. This option is useful
@@ -452,6 +466,7 @@
     'ui_compositor_image_transport%': '<(ui_compositor_image_transport)',
     'use_aura%': '<(use_aura)',
     'use_ash%': '<(use_ash)',
+    'use_drm%': '<(use_drm)',
     'use_evdev%': '<(use_evdev)',
     'use_openssl%': '<(use_openssl)',
     'use_nss%': '<(use_nss)',
@@ -1167,6 +1182,9 @@
       }],
       ['use_ash==1', {
         'defines': ['USE_ASH=1'],
+      }],
+      ['use_drm==1', {
+        'defines': ['USE_DRM=1', '__GBM__=1'],
       }],
       ['use_evdev==1', {
         'defines': ['USE_EVDEV=1'],

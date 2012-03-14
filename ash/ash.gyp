@@ -40,6 +40,7 @@
         'accelerators/accelerator_controller.h',
         'accelerators/accelerator_dispatcher.cc',
         'accelerators/accelerator_dispatcher.h',
+        'accelerators/accelerator_dispatcher_drm.cc',
         'accelerators/accelerator_dispatcher_linux.cc',
         'accelerators/accelerator_dispatcher_win.cc',
         'accelerators/accelerator_filter.cc',
@@ -289,6 +290,13 @@
             ['exclude', 'accelerators/accelerator_filter.h'],
             ['exclude', 'accelerators/nested_dispatcher_controller.cc'],
             ['exclude', 'accelerators/nested_dispatcher_controller.h'],
+          ],
+        }],
+      ],
+      'conditions': [
+        ['use_drm==1', {
+          'sources!': [
+	    'accelerators/accelerator_dispatcher_linux.cc',
           ],
         }],
       ],
