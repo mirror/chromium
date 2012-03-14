@@ -43,6 +43,7 @@
         'gl_context.cc',
         'gl_context.h',
         'gl_context_android.cc',
+        'gl_context_drm.cc',
         'gl_context_linux.cc',
         'gl_context_mac.mm',
         'gl_context_osmesa.cc',
@@ -67,6 +68,8 @@
         'gl_surface.h',
         'gl_surface_android.cc',
         'gl_surface_android.h',
+        'gl_surface_drm.cc',
+        'gl_surface_drm.h',
         'gl_surface_linux.cc',
         'gl_surface_mac.cc',
         'gl_surface_stub.cc',
@@ -135,6 +138,16 @@
           ],
           'include_dirs': [
             '<(DEPTH)/third_party/angle/include',
+          ],
+        }],
+        ['use_drm == 1', {
+          'sources!': [
+            'gl_surface_linux.cc',
+            'gl_surface_egl.cc',
+            'gl_context_linux.cc',
+          ],
+          'dependencies': [
+            '<(DEPTH)/build/linux/system.gyp:drm',
           ],
         }],
         ['use_x11 == 1 and use_wayland != 1', {

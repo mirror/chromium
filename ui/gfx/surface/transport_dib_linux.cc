@@ -12,7 +12,9 @@
 #include "base/logging.h"
 #include "base/memory/scoped_ptr.h"
 #include "skia/ext/platform_canvas.h"
+#if defined(USE_X11)
 #include "ui/base/x/x11_util.h"
+#endif
 #include "ui/gfx/size.h"
 
 // The shmat system call uses this as it's invalid return address
@@ -20,8 +22,10 @@ static void *const kInvalidAddress = (void*) -1;
 
 TransportDIB::TransportDIB()
     : address_(kInvalidAddress),
+#if defined(USE_X11)
       x_shm_(0),
       display_(NULL),
+#endif
       size_(0) {
 }
 
@@ -30,11 +34,12 @@ TransportDIB::~TransportDIB() {
     shmdt(address_);
     address_ = kInvalidAddress;
   }
-
+#if defined(USE_X11)
   if (x_shm_) {
     DCHECK(display_);
     ui::DetachSharedMemory(display_, x_shm_);
   }
+#endif
 }
 
 // static
@@ -62,6 +67,7 @@ TransportDIB* TransportDIB::Create(size_t size, uint32 sequence_num) {
   dib->key_.shmkey = shmkey;
   dib->address_ = address;
   dib->size_ = size;
+  LOG(ERROR) << "Creating a transport dib";
   return dib;
 }
 
@@ -75,6 +81,7 @@ TransportDIB* TransportDIB::Map(Handle handle) {
 
 // static
 TransportDIB* TransportDIB::CreateWithHandle(Handle shmkey) {
+  LOG(ERROR) << "Creating a transport dib with handle";
   TransportDIB* dib = new TransportDIB;
   dib->key_.shmkey = shmkey;
   return dib;
@@ -131,6 +138,7 @@ TransportDIB::Handle TransportDIB::handle() const {
   return key_.shmkey;
 }
 
+#if defined(USE_X11)
 XID TransportDIB::MapToX(Display* display) {
   if (!x_shm_) {
     x_shm_ = ui::AttachSharedMemory(display, key_.shmkey);
@@ -139,3 +147,4 @@ XID TransportDIB::MapToX(Display* display) {
 
   return x_shm_;
 }
+#endif

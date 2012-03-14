@@ -74,6 +74,10 @@ typedef HWND    EGLNativeWindowType;
 typedef void                       *EGLNativeDisplayType;
 typedef struct egl_native_pixmap_t *EGLNativePixmapType;
 typedef struct ANativeWindow       *EGLNativeWindowType;
+#elif defined(USE_DRM)
+typedef struct gbm_device  *EGLNativeDisplayType;
+typedef struct gbm_bo      *EGLNativePixmapType;
+typedef void               *EGLNativeWindowType;
 #elif defined(USE_WAYLAND)
 typedef struct wl_display     *EGLNativeDisplayType;
 typedef struct wl_egl_pixmap  *EGLNativePixmapType;
@@ -95,7 +99,7 @@ typedef Window   EGLNativeWindowType;
 #elif defined(USE_X11)
 #include "gl_bindings_autogen_egl.h"
 #include "gl_bindings_autogen_glx.h"
-#elif defined(OS_ANDROID)
+#elif defined(OS_ANDROID) || defined(USE_DRM)
 #include "gl_bindings_autogen_egl.h"
 #endif
 

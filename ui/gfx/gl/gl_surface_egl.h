@@ -23,6 +23,8 @@ typedef void* EGLSurface;
 typedef void* EGLNativeDisplayType;
 #elif defined(OS_WIN)
 typedef HDC EGLNativeDisplayType;
+#elif defined(USE_DRM)
+typedef struct gbm_device* EGLNativeDisplayType;
 #elif defined(USE_WAYLAND)
 typedef struct wl_display* EGLNativeDisplayType;
 #else

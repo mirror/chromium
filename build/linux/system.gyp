@@ -634,6 +634,30 @@
       ],
     },
     {
+      'target_name': 'drm',
+      'type': 'none',
+      'conditions': [
+        ['use_drm == 1', {
+          'cflags': [
+            '<!@(<(pkg-config) --cflags gbm libdrm)',
+          ],
+          'direct_dependent_settings': {
+            'cflags': [
+              '<!@(<(pkg-config) --cflags gbm libdrm)',
+            ],
+          },
+          'link_settings': {
+            'ldflags': [
+              '<!@(<(pkg-config) --libs-only-L --libs-only-other gbm libdrm)',
+            ],
+            'libraries': [
+              '<!@(<(pkg-config) --libs-only-l gbm libdrm)',
+            ],
+          },
+        }],
+      ],
+    },
+    {
       'target_name': 'udev',
       'type': 'none',
       'conditions': [
