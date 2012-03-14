@@ -529,6 +529,16 @@
           ['<(toolkit_uses_gtk)==0 or >(nacl_untrusted_build)==1', {
             'sources!': ['message_pump_gtk.cc'],
           }],
+          [ '<(use_evdev)==1', {
+            'sources/': [
+              [ 'include', '^message_pump_epoll\\.cc$',],
+              [ 'exclude', '^message_pump_aurax11\\.cc$',],
+            ],
+          }, {
+            'sources!': [
+              [ 'exclude', '^message_pump_epoll\\.cc$',],
+            ],
+          }],
           ['(OS != "linux" and <(os_bsd) != 1 and OS != "android") or >(nacl_untrusted_build)==1', {
               'sources!': [
                 # Not automatically excluded by the *linux.cc rules.

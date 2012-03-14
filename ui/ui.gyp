@@ -129,6 +129,7 @@
         'base/dialogs/selected_file_info.h',
         'base/dragdrop/cocoa_dnd_util.h',
         'base/dragdrop/cocoa_dnd_util.mm',
+        'base/evdev/events_evdev.cc',
         'base/dragdrop/drag_drop_types_gtk.cc',
         'base/dragdrop/drag_drop_types.h',
         'base/dragdrop/drag_drop_types_win.cc',
@@ -723,6 +724,12 @@
         ['inside_chromium_build==0', {
           'dependencies': [
             '<(DEPTH)/webkit/support/setup_third_party.gyp:third_party_headers',
+          ],
+        }],
+        ['use_evdev==1', {
+          'sources!': [
+            'base/touch/touch_factory.cc',
+            'base/x/events_x.cc',
           ],
         }],
       ],

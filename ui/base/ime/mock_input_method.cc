@@ -65,22 +65,24 @@ void MockInputMethod::DispatchKeyEvent(const base::NativeEvent& native_event) {
   } else {
     delegate_->DispatchKeyEventPostIME(native_event);
   }
-#elif defined(USE_X11)
+#elif defined(USE_X11) || defined(USE_EVDEV)
   DCHECK(native_event);
-  if (native_event->type == KeyRelease) {
+  if (ui::EventTypeFromNative(native_event) == ui::ET_KEY_RELEASED) {
     // On key release, just dispatch it.
     delegate_->DispatchKeyEventPostIME(native_event);
   } else {
-    const uint32 state = EventFlagsFromXFlags(native_event->xkey.state);
+    const uint32 state = EventFlagsFromNative(native_event);
     // Send a RawKeyDown event first,
     delegate_->DispatchKeyEventPostIME(native_event);
     if (text_input_client_) {
       // then send a Char event via ui::TextInputClient.
       const KeyboardCode key_code = ui::KeyboardCodeFromNative(native_event);
       uint16 ch = 0;
+#if defined(USE_X11) // TODO(msb) do we need this for EVDEV
       if (!(state & ui::EF_CONTROL_DOWN))
         ch = ui::GetCharacterFromXEvent(native_event);
       if (!ch)
+#endif
         ch = ui::GetCharacterFromKeyCode(key_code, state);
       if (ch)
         text_input_client_->InsertChar(ch, state);
@@ -89,6 +91,7 @@ void MockInputMethod::DispatchKeyEvent(const base::NativeEvent& native_event) {
 #else
   // TODO(yusukes): Support other platforms. Call InsertChar() when necessary.
   delegate_->DispatchKeyEventPostIME(native_event);
+  NOTIMPLEMENTED();
 #endif
 }
 

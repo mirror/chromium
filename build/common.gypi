@@ -29,6 +29,9 @@
           # Whether or not we are building the Ash shell.
           'use_ash%': 0,
 
+          # Whether to use MessagePumpEvdev and read inputs from /dev/input
+          'use_evdev%': 0,
+
           # Use OpenSSL instead of NSS. Under development: see http://crbug.com/62803
           'use_openssl%': 0,
 
@@ -62,6 +65,7 @@
         'chromeos%': '<(chromeos)',
         'use_aura%': '<(use_aura)',
         'use_ash%': '<(use_ash)',
+        'use_evdev%': '<(use_evdev)',
         'use_openssl%': '<(use_openssl)',
         'use_ibus%': '<(use_ibus)',
         'enable_viewport%': '<(enable_viewport)',
@@ -129,6 +133,7 @@
       'toolkit_views%': '<(toolkit_views)',
       'use_aura%': '<(use_aura)',
       'use_ash%': '<(use_ash)',
+      'use_evdev%': '<(use_evdev)',
       'use_openssl%': '<(use_openssl)',
       'use_ibus%': '<(use_ibus)',
       'enable_viewport%': '<(enable_viewport)',
@@ -537,6 +542,7 @@
     'ui_compositor_image_transport%': '<(ui_compositor_image_transport)',
     'use_aura%': '<(use_aura)',
     'use_ash%': '<(use_ash)',
+    'use_evdev%': '<(use_evdev)',
     'use_openssl%': '<(use_openssl)',
     'use_ibus%': '<(use_ibus)',
     'use_nss%': '<(use_nss)',
@@ -1368,6 +1374,9 @@
       }],
       ['use_ash==1', {
         'defines': ['USE_ASH=1'],
+      }],
+      ['use_evdev==1', {
+        'defines': ['USE_EVDEV=1'],
       }],
       ['use_nss==1', {
         'defines': ['USE_NSS=1'],
