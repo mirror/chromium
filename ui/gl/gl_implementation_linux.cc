@@ -48,9 +48,13 @@ base::NativeLibrary LoadLibrary(const char* filename) {
 }  // namespace anonymous
 
 void GetAllowedGLImplementations(std::vector<GLImplementation>* impls) {
+#if defined(USE_X11)
   impls->push_back(kGLImplementationDesktopGL);
+#endif
   impls->push_back(kGLImplementationEGLGLES2);
+#if defined(USE_X11)
   impls->push_back(kGLImplementationOSMesaGL);
+#endif
 }
 
 bool InitializeGLBindings(GLImplementation implementation) {
@@ -67,6 +71,7 @@ bool InitializeGLBindings(GLImplementation implementation) {
   base::ThreadRestrictions::ScopedAllowIO allow_io;
 
   switch (implementation) {
+#if defined(USE_X11)
     case kGLImplementationOSMesaGL: {
       FilePath module_path;
       if (!PathService::Get(base::DIR_MODULE, &module_path)) {
@@ -134,6 +139,7 @@ bool InitializeGLBindings(GLImplementation implementation) {
       InitializeGLBindingsGLX();
       break;
     }
+#endif  // defined(USE_X11)
     case kGLImplementationEGLGLES2: {
       base::NativeLibrary gles_library = LoadLibrary("libGLESv2.so.2");
       if (!gles_library)
@@ -186,6 +192,7 @@ bool InitializeGLBindings(GLImplementation implementation) {
 bool InitializeGLExtensionBindings(GLImplementation implementation,
     GLContext* context) {
   switch (implementation) {
+#if defined(USE_X11)
     case kGLImplementationOSMesaGL:
       InitializeGLExtensionBindingsGL(context);
       InitializeGLExtensionBindingsOSMESA(context);
@@ -194,6 +201,7 @@ bool InitializeGLExtensionBindings(GLImplementation implementation,
       InitializeGLExtensionBindingsGL(context);
       InitializeGLExtensionBindingsGLX(context);
       break;
+#endif
     case kGLImplementationEGLGLES2:
       InitializeGLExtensionBindingsGL(context);
       InitializeGLExtensionBindingsEGL(context);
@@ -211,15 +219,19 @@ bool InitializeGLExtensionBindings(GLImplementation implementation,
 void InitializeDebugGLBindings() {
   InitializeDebugGLBindingsEGL();
   InitializeDebugGLBindingsGL();
+#if defined(USE_X11)
   InitializeDebugGLBindingsGLX();
   InitializeDebugGLBindingsOSMESA();
+#endif
 }
 
 void ClearGLBindings() {
   ClearGLBindingsEGL();
   ClearGLBindingsGL();
+#if defined(USE_X11)
   ClearGLBindingsGLX();
   ClearGLBindingsOSMESA();
+#endif
   SetGLImplementation(kGLImplementationNone);
 
   UnloadGLNativeLibraries();

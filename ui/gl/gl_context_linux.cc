@@ -10,14 +10,13 @@
 #include "third_party/mesa/MesaLib/include/GL/osmesa.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_context_egl.h"
+#if defined(USE_X11)
 #include "ui/gl/gl_context_glx.h"
 #include "ui/gl/gl_context_osmesa.h"
+#endif
 #include "ui/gl/gl_context_stub.h"
 #include "ui/gl/gl_implementation.h"
-#include "ui/gl/gl_surface_egl.h"
-#include "ui/gl/gl_surface_glx.h"
-#include "ui/gl/gl_surface_osmesa.h"
-#include "ui/gl/gl_surface_stub.h"
+#include "ui/gl/gl_surface.h"
 
 namespace gfx {
 
@@ -29,6 +28,7 @@ scoped_refptr<GLContext> GLContext::CreateGLContext(
     GpuPreference gpu_preference) {
   TRACE_EVENT0("gpu", "GLContext::CreateGLContext");
   switch (GetGLImplementation()) {
+#if defined(USE_X11)
     case kGLImplementationOSMesaGL: {
       scoped_refptr<GLContext> context(new GLContextOSMesa(share_group));
       if (!context->Initialize(compatible_surface, gpu_preference))
@@ -43,6 +43,7 @@ scoped_refptr<GLContext> GLContext::CreateGLContext(
 
       return context;
     }
+#endif
     case kGLImplementationEGLGLES2: {
       scoped_refptr<GLContext> context(new GLContextEGL(share_group));
       if (!context->Initialize(compatible_surface, gpu_preference))

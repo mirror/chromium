@@ -70,6 +70,10 @@ class RootWindowHostDRM : public RootWindowHost,
   virtual bool ConfineCursorToRootWindow() { return true; };
   virtual void UnConfineCursor() {};
   virtual void SetFocusWhenShown(bool focus_when_shown) {};
+  virtual bool GrabSnapshot(
+      const gfx::Rect& snapshot_bounds,
+      std::vector<unsigned char>* png_representation) { return true; };
+  virtual void OnDeviceScaleFactorChanged(float device_scale_factor) {};
 
   // RootWindowHostDRM private functions
   bool SetupKMS();
