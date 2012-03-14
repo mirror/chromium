@@ -197,7 +197,7 @@ struct ParamTraits<TransportDIB::Id> {
 };
 #endif
 
-#if defined(USE_X11)
+#if defined(USE_X11) || defined(USE_DRM)
 template<>
 struct ParamTraits<TransportDIB::Id> {
   typedef TransportDIB::Id param_type;

@@ -210,6 +210,9 @@ static inline NativeView NativeViewFromIdInBrowser(NativeViewId id) {
 #if defined(OS_WIN)
   typedef HWND PluginWindowHandle;
   const PluginWindowHandle kNullPluginWindow = NULL;
+#elif defined(USE_DRM)
+  typedef uint32_t PluginWindowHandle;
+  const PluginWindowHandle kNullPluginWindow = 0;
 #elif defined(USE_X11)
   typedef unsigned long PluginWindowHandle;
   const PluginWindowHandle kNullPluginWindow = 0;
@@ -269,6 +272,9 @@ struct GLSurfaceHandle {
 #if defined(OS_WIN)
 typedef HWND AcceleratedWidget;
 const AcceleratedWidget kNullAcceleratedWidget = NULL;
+#elif defined(USE_DRM)
+typedef uint32_t AcceleratedWidget;
+const AcceleratedWidget kNullAcceleratedWidget = 0;
 #elif defined(USE_X11)
 typedef unsigned long AcceleratedWidget;
 const AcceleratedWidget kNullAcceleratedWidget = 0;
