@@ -5,6 +5,8 @@
 // This file contains the definition for CppBindingExample, which is used in
 // cpp_bound_class_unittest.
 
+#include <stdio.h>
+
 #include "cpp_binding_example.h"
 
 #include "base/bind.h"
