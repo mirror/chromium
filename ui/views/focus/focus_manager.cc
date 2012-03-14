@@ -25,7 +25,7 @@ FocusManager::FocusManager(Widget* widget)
       focused_view_(NULL),
       accelerator_manager_(new ui::AcceleratorManager),
       focus_change_reason_(kReasonDirectFocusChange),
-#if defined(USE_X11)
+#if defined(USE_X11) || defined(USE_EVDEV)
       should_handle_menu_key_release_(false),
 #endif
       is_changing_focus_(false) {
@@ -40,7 +40,7 @@ FocusManager::~FocusManager() {
 bool FocusManager::OnKeyEvent(const KeyEvent& event) {
   const int key_code = event.key_code();
 
-#if defined(USE_X11)
+#if defined(USE_X11) || defined(USE_EVDEV)
   // TODO(ben): beng believes that this should be done in
   // RootWindowHosLinux for aura/linux.
 
@@ -292,7 +292,7 @@ void FocusManager::ClearFocus() {
 }
 
 void FocusManager::StoreFocusedView() {
-#if defined(USE_X11)
+#if defined(USE_X11) || defined(USE_EVDEV)
   // Forget menu key state when the window lost focus.
   should_handle_menu_key_release_ = false;
 #endif
@@ -329,7 +329,7 @@ void FocusManager::StoreFocusedView() {
 }
 
 void FocusManager::RestoreFocusedView() {
-#if defined(USE_X11)
+#if defined(USE_X11) || defined(USE_EVDEV)
   DCHECK(!should_handle_menu_key_release_);
 #endif
   ViewStorage* view_storage = ViewStorage::GetInstance();
@@ -425,7 +425,7 @@ bool FocusManager::ProcessAccelerator(const ui::Accelerator& accelerator) {
 }
 
 void FocusManager::MaybeResetMenuKeyState(const KeyEvent& key) {
-#if defined(USE_X11)
+#if defined(USE_X11) || defined(USE_EVDEV)
   // Always reset |should_handle_menu_key_release_| unless we are handling a
   // VKEY_MENU key release event. It ensures that VKEY_MENU accelerator can only
   // be activated when handling a VKEY_MENU key release event which is preceded

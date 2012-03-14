@@ -920,10 +920,9 @@ base::MessagePumpDispatcher::DispatchStatus
       base::MessagePumpDispatcher::EVENT_QUIT :
       base::MessagePumpDispatcher::EVENT_PROCESSED;
 }
-
 #elif defined(USE_AURA)
 base::MessagePumpDispatcher::DispatchStatus
-    MenuController::Dispatch(XEvent* xev) {
+    MenuController::Dispatch(base::NativeEvent xev) {
   if (exit_type_ == EXIT_ALL || exit_type_ == EXIT_DESTROYED) {
     aura::Env::GetInstance()->GetDispatcher()->Dispatch(xev);
     return base::MessagePumpDispatcher::EVENT_QUIT;

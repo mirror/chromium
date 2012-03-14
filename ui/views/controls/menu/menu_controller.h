@@ -247,7 +247,7 @@ class VIEWS_EXPORT MenuController : public MessageLoop::Dispatcher {
       base::wayland::WaylandEvent* event) OVERRIDE;
 #elif defined(USE_AURA)
   virtual base::MessagePumpDispatcher::DispatchStatus Dispatch(
-      XEvent* xevent) OVERRIDE;
+     base::NativeEvent event) OVERRIDE;
 #endif
 
   // Key processing. The return value of this is returned from Dispatch.

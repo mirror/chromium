@@ -26,9 +26,9 @@ class ASH_EXPORT AcceleratorDispatcher : public MessageLoop::Dispatcher,
                                  aura::Window* associated_window);
   virtual ~AcceleratorDispatcher();
 
-#if defined(USE_X11)
+#if defined(USE_X11) || defined(USE_EVDEV)
   virtual base::MessagePumpDispatcher::DispatchStatus Dispatch(
-      XEvent* xev) OVERRIDE;
+      base::NativeEvent ev) OVERRIDE;
 #elif defined(OS_WIN)
   bool AcceleratorDispatcher::Dispatch(const MSG& msg) OVERRIDE;
 #endif

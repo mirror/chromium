@@ -96,6 +96,7 @@
         'base/cocoa/find_pasteboard.mm',
         'base/dragdrop/cocoa_dnd_util.h',
         'base/dragdrop/cocoa_dnd_util.mm',
+        'base/evdev/events_evdev.cc',
         'base/dragdrop/drag_drop_types_gtk.cc',
         'base/dragdrop/drag_drop_types.h',
         'base/dragdrop/drag_drop_types_win.cc',
@@ -642,6 +643,12 @@
         ['os_bsd==1 and use_system_libjpeg==1', {
           'include_dirs': [
             '/usr/local/include',
+          ],
+        }],
+        ['use_evdev==1', {
+          'sources!': [
+            'base/touch/touch_factory.cc',
+            'base/x/events_x.cc',
           ],
         }],
       ],

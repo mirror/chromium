@@ -17,11 +17,11 @@
 
 namespace views {
 
-#if defined(USE_AURA) && defined(USE_X11) && !defined(USE_WAYLAND)
+#if defined(USE_AURA) && (defined(USE_X11) || defined(USE_DRM))
 // Dispatch an XEvent to the RootView. Return true if the event was dispatched
 // and handled, false otherwise.
-bool VIEWS_EXPORT DispatchXEvent(XEvent* xevent);
-#endif  // USE_AURA && USE_X11 && !USE_WAYLAND
+bool VIEWS_EXPORT DispatchEvent(base::NativeEvent event);
+#endif  // USE_AURA && USE_X11
 
 // This class delegates the key messages to the associated FocusManager class
 // for the window that is receiving these messages for accelerator processing.
@@ -44,7 +44,7 @@ class VIEWS_EXPORT AcceleratorHandler : public MessageLoop::Dispatcher {
   // TODO(dhollowa): Implement on Mac.  http://crbug.com/109946
 #elif defined(USE_AURA)
   virtual base::MessagePumpDispatcher::DispatchStatus Dispatch(
-      XEvent* xev) OVERRIDE;
+      base::NativeEvent ev) OVERRIDE;
 #endif
 
  private:

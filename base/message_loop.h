@@ -33,6 +33,8 @@
 
 #if defined(USE_WAYLAND)
 #include "base/message_pump_wayland.h"
+#elif defined(USE_EVDEV)
+#include "base/message_pump_evdev.h"
 #elif defined(USE_AURA)
 #include "base/message_pump_x.h"
 #else

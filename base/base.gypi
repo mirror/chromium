@@ -467,10 +467,14 @@
             'sources!' : [ 'message_pump_gtk.cc', ],
             'sources/' : [ [ 'include', '^message_pump_x\\.cc$', ] ],
           }],
-          [ 'use_wayland==1', {
+          [ 'use_evdev==1', {
             'sources/': [
-              [ 'exclude', '^message_pump_gtk\\.cc$',],
+              [ 'include', '^message_pump_epoll\\.cc$',],
               [ 'exclude', '^message_pump_x\\.cc$',],
+            ],
+          }, {
+            'sources!': [
+              [ 'exclude', '^message_pump_epoll\\.cc$',],
             ],
           }],
           [ 'OS != "linux" and os_bsd != 1', {
@@ -759,6 +763,10 @@
         'md5.h',
         'message_pump_android.cc',
         'message_pump_android.h',
+        'message_pump_epoll.cc',
+        'message_pump_epoll.h',
+        'message_pump_evdev.cc',
+        'message_pump_evdev.h',
         'message_pump_glib.cc',
         'message_pump_glib.h',
         'message_pump_gtk.cc',

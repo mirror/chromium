@@ -33,6 +33,9 @@ namespace base {
 typedef MSG NativeEvent;
 #elif defined(USE_WAYLAND)
 typedef wayland::WaylandEvent* NativeEvent;
+#elif defined(USE_EVDEV)
+struct EvdevEvent;
+typedef EvdevEvent* NativeEvent;
 #elif defined(USE_X11)
 typedef XEvent* NativeEvent;
 #elif defined(OS_MACOSX)
