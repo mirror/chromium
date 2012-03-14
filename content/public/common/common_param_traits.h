@@ -167,6 +167,31 @@ struct ParamTraits<gfx::NativeWindow> {
   }
 };
 
+#if defined(USE_DRM)
+template <>
+struct ParamTraits<gfx::PluginWindowHandle> {
+  typedef gfx::PluginWindowHandle param_type;
+  static void Write(Message* m, const param_type& p) {
+    m->WriteData(reinterpret_cast<const char*>(&p), sizeof(p));
+  }
+  static bool Read(const Message* m, PickleIterator* iter, param_type* r) {
+    const char *data;
+    int data_size = 0;
+    bool result = m->ReadData(iter, &data, &data_size);
+    if (result && data_size == sizeof(gfx::PluginWindowHandle)) {
+      memcpy(r, data, sizeof(gfx::PluginWindowHandle));
+    } else {
+      result = false;
+      NOTREACHED();
+    }
+    return result;
+  }
+  static void Log(const param_type& p, std::string* l) {
+    l->append("<gfx::PluginWindowHandle>");
+  }
+};
+#endif
+
 template <>
 struct CONTENT_EXPORT ParamTraits<ui::Range> {
   typedef ui::Range param_type;
@@ -197,7 +222,7 @@ struct ParamTraits<TransportDIB::Id> {
 };
 #endif
 
-#if defined(USE_X11)
+#if defined(USE_X11) || defined(USE_DRM)
 template<>
 struct ParamTraits<TransportDIB::Id> {
   typedef TransportDIB::Id param_type;

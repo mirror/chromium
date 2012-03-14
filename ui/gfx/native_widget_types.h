@@ -89,6 +89,10 @@ typedef struct _GtkWidget GtkWidget;
 typedef struct _GtkWindow GtkWindow;
 #elif defined(OS_ANDROID)
 class ChromeView;
+#elif defined(USE_DRM)
+namespace aura {
+struct kms;
+}
 #endif
 class SkBitmap;
 
@@ -210,6 +214,9 @@ static inline NativeView NativeViewFromIdInBrowser(NativeViewId id) {
 #if defined(OS_WIN)
   typedef HWND PluginWindowHandle;
   const PluginWindowHandle kNullPluginWindow = NULL;
+#elif defined(USE_DRM)
+  typedef aura::kms* PluginWindowHandle;
+  const PluginWindowHandle kNullPluginWindow = NULL;
 #elif defined(USE_X11)
   typedef unsigned long PluginWindowHandle;
   const PluginWindowHandle kNullPluginWindow = 0;
@@ -268,6 +275,9 @@ struct GLSurfaceHandle {
 // AcceleratedWidget provides a surface to compositors to paint pixels.
 #if defined(OS_WIN)
 typedef HWND AcceleratedWidget;
+const AcceleratedWidget kNullAcceleratedWidget = NULL;
+#elif defined(USE_DRM)
+typedef aura::kms* AcceleratedWidget;
 const AcceleratedWidget kNullAcceleratedWidget = NULL;
 #elif defined(USE_X11)
 typedef unsigned long AcceleratedWidget;
