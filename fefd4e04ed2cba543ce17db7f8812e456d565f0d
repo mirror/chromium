@@ -16,6 +16,23 @@
       "revId": "fefd4e04ed2cba543ce17db7f8812e456d565f0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAHn//Weg\u003d",
+        "filename": "chrome/browser/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001437
+      },
+      "writtenOn": "2012-03-14T00:40:47Z",
+      "side": 1,
+      "message": "btw, the copy on the server-side contains two additional settings. so the tag will become 17. The copy at http://src.chromium.org/viewvc/chrome/trunk/src/chrome/browser/policy/proto/chrome_device_policy.proto also contains the two additional settings\n\nforced_logout_timeouts and login_screen_saver.\n\nMaybe your local copy is already out-of-date?",
+      "revId": "fefd4e04ed2cba543ce17db7f8812e456d565f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
