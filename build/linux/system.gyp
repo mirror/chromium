@@ -609,6 +609,30 @@
       ],
     },
     {
+      'target_name': 'drm',
+      'type': 'none',
+      'conditions': [
+        ['use_drm == 1', {
+          'cflags': [
+            '<!@(<(pkg-config) --cflags gbm libdrm xkbcommon)',
+          ],
+          'direct_dependent_settings': {
+            'cflags': [
+              '<!@(<(pkg-config) --cflags gbm libdrm xkbcommon)',
+            ],
+          },
+          'link_settings': {
+            'ldflags': [
+              '<!@(<(pkg-config) --libs-only-L --libs-only-other gbm libdrm xkbcommon)',
+            ],
+            'libraries': [
+              '<!@(<(pkg-config) --libs-only-l gbm libdrm xkbcommon)',
+            ],
+          },
+        }],
+      ],
+    },
+    {
       'target_name': 'udev',
       'type': 'none',
       'conditions': [
