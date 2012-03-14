@@ -4,6 +4,11 @@
 
 #include "ui/gl/gl_surface_egl.h"
 
+#if defined(USE_DRM)
+#include <gbm.h>
+#endif
+
+#include "build/build_config.h"
 #include "base/logging.h"
 #include "base/memory/scoped_ptr.h"
 #include "base/message_loop.h"
@@ -12,6 +17,10 @@
 #include "third_party/angle/include/EGL/eglext.h"
 #include "ui/gl/egl_util.h"
 #include "ui/gl/gl_context.h"
+
+#if defined(USE_DRM)
+#include "ui/aura/root_window_host_drm.h"
+#endif
 
 // This header must come after the above third-party include, as
 // it brings in #defines that cause conflicts.
@@ -48,6 +57,8 @@ bool GLSurfaceEGL::InitializeOneOff() {
 
 #if defined(USE_X11)
   g_native_display = base::MessagePumpForUI::GetDefaultXDisplay();
+#elif defined(USE_DRM)
+  g_native_display = gbm_create_device(aura::RootWindowHostDRM::GetDRMFd());
 #else
   g_native_display = EGL_DEFAULT_DISPLAY;
 #endif
@@ -71,7 +82,11 @@ bool GLSurfaceEGL::InitializeOneOff() {
     EGL_GREEN_SIZE, 8,
     EGL_RED_SIZE, 8,
     EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT,
+#if defined(USE_DRM)
+    EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
+#else
     EGL_SURFACE_TYPE, EGL_WINDOW_BIT | EGL_PBUFFER_BIT,
+#endif
     EGL_NONE
   };
 
@@ -107,7 +122,7 @@ bool GLSurfaceEGL::InitializeOneOff() {
 
   initialized = true;
 
-#if defined(USE_X11) || defined(OS_ANDROID)
+#if defined(USE_X11) || defined(USE_DRM) || defined(OS_ANDROID)
   return true;
 #else
   g_software_native_display = EGL_SOFTWARE_DISPLAY_ANGLE;
@@ -202,7 +217,11 @@ bool NativeViewGLSurfaceEGL::Initialize() {
   // Create a surface for the native window.
   surface_ = eglCreateWindowSurface(GetDisplay(),
                                     GetConfig(),
+#if defined(USE_DRM)
+                                    reinterpret_cast<void *>(window_),
+#else
                                     window_,
+#endif
                                     gfx::g_EGL_NV_post_sub_buffer ?
                                         egl_window_attributes_sub_buffer :
                                         NULL);
