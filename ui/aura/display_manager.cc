@@ -24,7 +24,11 @@ const int kDefaultHostWindowHeight = 1024;
 }  // namespace
 
 // static
+#if defined(USE_DRM)
+bool DisplayManager::use_fullscreen_host_window_ = true;
+#else
 bool DisplayManager::use_fullscreen_host_window_ = false;
+#endif
 
 // static
 gfx::Display DisplayManager::CreateDisplayFromSpec(const std::string& spec) {
