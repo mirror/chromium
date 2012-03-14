@@ -25,6 +25,9 @@ namespace base {
 // Cross platform typedefs for native event types.
 #if defined(OS_WIN)
 typedef MSG NativeEvent;
+#elif defined(USE_EVDEV)
+struct EvdevEvent;
+typedef EvdevEvent* NativeEvent;
 #elif defined(USE_X11)
 typedef XEvent* NativeEvent;
 #elif defined(OS_MACOSX)

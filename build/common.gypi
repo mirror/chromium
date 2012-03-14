@@ -32,6 +32,9 @@
           # Enable DIP (Density Independent Pixels) support.
           'enable_dip%': 0,
 
+          # Whether to use MessagePumpEvdev and read inputs from /dev/input
+          'use_evdev%': 0,
+
           # Use OpenSSL instead of NSS. Under development: see http://crbug.com/62803
           'use_openssl%': 0,
 
@@ -46,6 +49,7 @@
         'use_aura%': '<(use_aura)',
         'use_ash%': '<(use_ash)',
         'enable_dip%': '<(enable_dip)',
+        'use_evdev%': '<(use_evdev)',
         'use_openssl%': '<(use_openssl)',
         'use_virtual_keyboard%': '<(use_virtual_keyboard)',
         'enable_viewport%': '<(enable_viewport)',
@@ -92,6 +96,7 @@
       'use_aura%': '<(use_aura)',
       'use_ash%': '<(use_ash)',
       'enable_dip%': '<(enable_dip)',
+      'use_evdev%': '<(use_evdev)',
       'use_openssl%': '<(use_openssl)',
       'use_virtual_keyboard%': '<(use_virtual_keyboard)',
       'enable_viewport%': '<(enable_viewport)',
@@ -473,6 +478,7 @@
     'use_aura%': '<(use_aura)',
     'use_ash%': '<(use_ash)',
     'enable_dip%': '<(enable_dip)',
+    'use_evdev%': '<(use_evdev)',
     'use_openssl%': '<(use_openssl)',
     'use_nss%': '<(use_nss)',
     'os_bsd%': '<(os_bsd)',
@@ -1215,6 +1221,8 @@
       }],
       ['enable_dip==1', {
         'defines': ['ENABLE_DIP'],
+      ['use_evdev==1', {
+        'defines': ['USE_EVDEV=1'],
       }],
       ['use_nss==1', {
         'defines': ['USE_NSS=1'],
