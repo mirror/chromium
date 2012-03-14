@@ -137,6 +137,11 @@
             ],
           },
         }],
+        ['use_evdev==1', {
+          'dependencies': [
+            '<(DEPTH)/build/linux/system.gyp:udev',
+          ],
+        }],
       ],
     },
     {

@@ -81,6 +81,11 @@
               ['exclude', '_nss\\.cc$'],
             ],
         }],
+        ['use_evdev==1 and _toolset=="target"', {
+          'dependencies': [
+            '../build/linux/system.gyp:udev',
+          ],
+        }],
         ['OS == "android" and _toolset == "host"', {
           # Base for host support is the minimum required to run the
           # ssl false start blacklist tool. It requires further changes
@@ -220,6 +225,10 @@
         'md5.h',
         'message_pump_android.cc',
         'message_pump_android.h',
+        'message_pump_epoll.cc',
+        'message_pump_epoll.h',
+        'message_pump_evdev.cc',
+        'message_pump_evdev.h',
         'message_pump_glib.cc',
         'message_pump_glib.h',
         'message_pump_gtk.cc',

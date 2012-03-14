@@ -30,7 +30,9 @@
 #include "base/message_pump_libevent.h"
 #if !defined(OS_MACOSX) && !defined(OS_ANDROID)
 
-#if defined(USE_AURA)
+#if defined(USE_EVDEV)
+#include "base/message_pump_evdev.h"
+#elif defined(USE_AURA)
 #include "base/message_pump_aurax11.h"
 #else
 #include "base/message_pump_gtk.h"
