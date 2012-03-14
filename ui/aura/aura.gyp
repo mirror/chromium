@@ -93,6 +93,7 @@
         'display_manager.h',
         'root_window_host.h',
         'root_window_host_delegate.h',
+        'root_window_host_drm.cc',
         'root_window_host_linux.cc',
         'root_window_host_linux.h',
         'root_window_host_mac.h',
@@ -113,6 +114,7 @@
         'shared/root_window_capture_client.h',
         'single_display_manager.cc',
         'single_display_manager.h',
+        'ui_controls_drm.cc',
         'ui_controls_win.cc',
         'ui_controls_x11.cc',
         'window.cc',
@@ -131,13 +133,24 @@
             ['exclude', 'client/dispatcher_client.h'],
           ],
         }],
-        ['OS=="linux"', {
+        ['OS=="linux" and use_x11==1', {
           'link_settings': {
             'libraries': [
               '-lXfixes',
               '-lXrandr',
             ],
           },
+        }],
+        ['use_drm==1', {
+          'sources/': [
+            ['exclude', 'dispatcher_linux.cc'],
+            ['exclude', 'dispatcher_linux.h'],
+            ['exclude', 'root_window_host_linux.cc'],
+            ['exclude', 'root_window_host_linux.h'],
+          ],
+          'dependencies': [
+            '<(DEPTH)/build/linux/system.gyp:drm',
+          ],
         }],
         ['use_evdev==1', {
           'dependencies': [
