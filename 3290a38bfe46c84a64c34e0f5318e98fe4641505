@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAHn//SVM\u003d",
+        "filename": "chrome/browser/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000325
+      },
+      "writtenOn": "2012-03-18T18:31:27Z",
+      "side": 1,
+      "message": "I might point out that the client is only a pass through for this pattern and that Omaha enforces it as it pleases.\n\nAlso, be very clear on what is \"no policy\" and thus nothing is passed to Omaha.\n\nNot Set means nothing special passed to Omaha.\n\nDoes \"\" mean no policy, or that Omaha will interpret it as a policy of \"*\"?",
+      "revId": "3290a38bfe46c84a64c34e0f5318e98fe4641505",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
