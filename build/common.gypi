@@ -413,7 +413,7 @@
         # linux_use_gold_flags: whether to use build flags that rely on gold.
         # On by default for x64 Linux.  Temporarily off for ChromeOS as
         # it failed on a buildbot.
-        ['OS=="linux" and chromeos==0', {
+        ['OS=="linux" and chromeos==0 and use_aura==0', {
           'linux_use_gold_flags%': 1,
         }, {
           'linux_use_gold_flags%': 0,
