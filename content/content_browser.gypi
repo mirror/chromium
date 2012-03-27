@@ -467,6 +467,7 @@
     'browser/renderer_host/gtk_window_utils.cc',
     'browser/renderer_host/gtk_window_utils.h',
     'browser/renderer_host/image_transport_client.cc',
+    'browser/renderer_host/image_transport_client_drm.cc',
     'browser/renderer_host/image_transport_client.h',
     'browser/renderer_host/image_transport_client_linux.cc',
     'browser/renderer_host/image_transport_factory.cc',
@@ -780,6 +781,11 @@
             'LINUX_SANDBOX_PATH="<(linux_sandbox_path)"',
           ],
         }],
+      ],
+    }],
+    ['use_drm==1', {
+      'sources!': [
+        'browser/renderer_host/image_transport_client_linux.cc',
       ],
     }],
     ['OS=="linux" and use_aura==1', {

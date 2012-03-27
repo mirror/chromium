@@ -189,6 +189,7 @@
     'common/gpu/image_transport_surface.h',
     'common/gpu/image_transport_surface.cc',
     'common/gpu/image_transport_surface_android.cc',
+    'common/gpu/image_transport_surface_drm.cc',
     'common/gpu/image_transport_surface_linux.cc',
     'common/gpu/image_transport_surface_mac.cc',
     'common/gpu/image_transport_surface_win.cc',
@@ -335,6 +336,17 @@
     ['toolkit_uses_gtk == 1', {
       'dependencies': [
         '../build/linux/system.gyp:gtk',
+      ],
+    }],
+    ['use_drm == 1', {
+      'sources!': [
+        'common/gpu/image_transport_surface_linux.cc',
+      ],
+      'dependencies': [
+        '../build/linux/system.gyp:pangocairo',
+      ],
+      'include_dirs': [
+        '<(DEPTH)/third_party/angle/include',
       ],
     }],
     ['use_x11 == 1', {
