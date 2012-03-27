@@ -289,15 +289,15 @@ void PanelBrowserFrameView::MouseWatcher::DidProcessEvent(
       break;
   }
 }
-#elif defined(USE_AURA) && defined(USE_X11)
+#elif defined(USE_AURA) && (defined(USE_X11) || defined(USE_DRM))
 base::EventStatus PanelBrowserFrameView::MouseWatcher::WillProcessEvent(
-    XEvent* const& event) {
+    base::NativeEvent const& event) {
   return base::EVENT_CONTINUE;
 }
 
 void PanelBrowserFrameView::MouseWatcher::DidProcessEvent(
-    XEvent* const& event) {
-  if (ui::IsMotionEvent(event))
+    base::NativeEvent const& event) {
+  if (ui::IsMouseEvent(event))
     HandleGlobalMouseMoveEvent();
 }
 #elif defined(TOOLKIT_USES_GTK)
