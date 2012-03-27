@@ -4,8 +4,10 @@
 
 #include "content/browser/renderer_host/image_transport_client.h"
 
+#if defined(USE_X11)
 #include <X11/Xlib.h>
 #include <X11/extensions/Xcomposite.h>
+#endif
 
 #include "base/debug/trace_event.h"
 #include "base/lazy_instance.h"
@@ -17,18 +19,22 @@
 #include "ui/gfx/gl/gl_bindings.h"
 #include "ui/gfx/gl/gl_implementation.h"
 #include "ui/gfx/gl/gl_surface_egl.h"
+#if defined(USE_X11)
 #include "ui/gfx/gl/gl_surface_glx.h"
+#endif
 #include "ui/gfx/gl/scoped_make_current.h"
 #include "ui/gfx/size.h"
 
 namespace {
 
+#if defined(USE_X11)
 class ScopedPtrXFree {
  public:
   void operator()(void* x) const {
     ::XFree(x);
   }
 };
+#endif
 
 GLuint CreateTexture() {
   GLuint texture;
@@ -60,10 +66,28 @@ class ImageTransportClientEGL : public ImageTransportClient {
   }
 
   virtual bool Initialize(uint64* surface_handle) {
+#if defined(USE_DRM)
+    EGLint attribs[] = {
+      EGL_WIDTH, size().width(),
+      EGL_HEIGHT, size().height(),
+      EGL_DRM_BUFFER_STRIDE_MESA, (*surface_handle & 0xFFFF) / 4,
+      EGL_DRM_BUFFER_FORMAT_MESA, EGL_DRM_BUFFER_FORMAT_ARGB32_MESA,
+      EGL_NONE
+    };
+#endif
     scoped_ptr<gfx::ScopedMakeCurrent> bind(factory_->GetScopedMakeCurrent());
     image_ = eglCreateImageKHR(
-        gfx::GLSurfaceEGL::GetHardwareDisplay(), EGL_NO_CONTEXT,
-        EGL_NATIVE_PIXMAP_KHR, reinterpret_cast<void*>(*surface_handle), NULL);
+        gfx::GLSurfaceEGL::GetHardwareDisplay(),
+	EGL_NO_CONTEXT,
+        EGL_NATIVE_PIXMAP_KHR,
+#if defined(USE_DRM)
+	reinterpret_cast<void*>(*surface_handle >> 32),
+	attribs);
+#else
+	reinterpret_cast<void*>(*surface_handle),
+	NULL);
+#endif
+
     if (!image_)
       return false;
     set_texture_id(CreateTexture());
@@ -82,6 +106,8 @@ class ImageTransportClientEGL : public ImageTransportClient {
   ImageTransportFactory* factory_;
   EGLImageKHR image_;
 };
+
+#if defined(USE_X11)
 
 class ImageTransportClientGLX : public ImageTransportClient {
  public:
@@ -287,16 +313,20 @@ class ImageTransportClientOSMesa : public ImageTransportClient {
 };
 uint32 ImageTransportClientOSMesa::next_handle_ = 0;
 
+#endif  // USE_X11
+
 }  // anonymous namespace
 
 ImageTransportClient* ImageTransportClient::Create(
     ImageTransportFactory* factory,
     const gfx::Size& size) {
   switch (gfx::GetGLImplementation()) {
+#if defined(USE_X11)
     case gfx::kGLImplementationOSMesaGL:
       return new ImageTransportClientOSMesa(factory, size);
     case gfx::kGLImplementationDesktopGL:
       return new ImageTransportClientGLX(factory, size);
+#endif
     case gfx::kGLImplementationEGLGLES2:
       return new ImageTransportClientEGL(factory, size);
     default:

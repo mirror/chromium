@@ -339,6 +339,14 @@
         '../build/linux/system.gyp:gtk',
       ],
     }],
+    ['use_drm == 1', {
+      'dependencies': [
+        '../build/linux/system.gyp:pangocairo',
+      ],
+      'include_dirs': [
+        '<(DEPTH)/third_party/angle/include',
+      ],
+    }],
     ['use_x11 == 1', {
       'dependencies': [
         '../build/linux/system.gyp:pangocairo',

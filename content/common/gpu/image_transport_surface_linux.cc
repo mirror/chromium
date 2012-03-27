@@ -9,8 +9,12 @@
 
 #include <map>
 #include <vector>
+#if defined(USE_DRM)
+#include <gbm.h>
+#else
 #include <X11/Xlib.h>
 #include <X11/extensions/Xcomposite.h>
+#endif
 
 // Note: these must be included before anything that includes gl_bindings.h
 // They're effectively standard library headers.
@@ -30,12 +34,17 @@
 #include "ui/gfx/gl/gl_bindings.h"
 #include "ui/gfx/gl/gl_implementation.h"
 #include "ui/gfx/gl/gl_surface_egl.h"
+#if defined(USE_X11)
 #include "ui/gfx/gl/gl_surface_glx.h"
 #include "ui/gfx/gl/gl_surface_osmesa.h"
+#elif defined(USE_DRM)
+#include "ui/gfx/gl/gl_surface_drm.h"
+#endif
 #include "ui/gfx/rect.h"
 
 namespace {
 
+#if defined(USE_X11)
 class ScopedDisplayLock {
  public:
   ScopedDisplayLock(Display* display): display_(display) {
@@ -51,6 +60,7 @@ class ScopedDisplayLock {
 
   DISALLOW_COPY_AND_ASSIGN(ScopedDisplayLock);
 };
+#endif
 
 // The GL context associated with the surface must be current when
 // an instance is created or destroyed.
@@ -58,7 +68,11 @@ class EGLAcceleratedSurface : public base::RefCounted<EGLAcceleratedSurface> {
  public:
   explicit EGLAcceleratedSurface(const gfx::Size& size);
   const gfx::Size& size() const { return size_; }
+#if defined(USE_DRM)
+  uint64 pixmap() const { return pixmap_; }
+#else
   uint32 pixmap() const { return pixmap_; }
+#endif
   uint32 texture() const { return texture_; }
 
  private:
@@ -66,7 +80,12 @@ class EGLAcceleratedSurface : public base::RefCounted<EGLAcceleratedSurface> {
 
   gfx::Size size_;
   void* image_;
+#if defined(USE_DRM)
+  uint64 pixmap_;
+  gbm_bo* bo_;
+#else
   uint32 pixmap_;
+#endif
   uint32 texture_;
 
   friend class base::RefCounted<EGLAcceleratedSurface>;
@@ -77,7 +96,11 @@ class EGLAcceleratedSurface : public base::RefCounted<EGLAcceleratedSurface> {
 // context, but use FBOs to render to X Pixmap backed EGLImages.
 class EGLImageTransportSurface
     : public ImageTransportSurface,
+#if defined(USE_DRM)
+      public gfx::GLSurfaceDRM,
+#else
       public gfx::PbufferGLSurfaceEGL,
+#endif
       public base::SupportsWeakPtr<EGLImageTransportSurface> {
  public:
   EGLImageTransportSurface(GpuChannelManager* manager,
@@ -127,6 +150,7 @@ class EGLImageTransportSurface
   DISALLOW_COPY_AND_ASSIGN(EGLImageTransportSurface);
 };
 
+#if defined(USE_X11)
 // We render to an off-screen (but mapped) window that the browser process will
 // read from via XComposite
 class GLXImageTransportSurface
@@ -228,22 +252,36 @@ class OSMesaImageTransportSurface : public ImageTransportSurface,
 
   DISALLOW_COPY_AND_ASSIGN(OSMesaImageTransportSurface);
 };
+#endif
 
 EGLAcceleratedSurface::EGLAcceleratedSurface(const gfx::Size& size)
     : size_(size), texture_(0) {
-  Display* dpy = gfx::GLSurfaceEGL::GetNativeDisplay();
+  EGLNativeDisplayType dpy = gfx::GLSurfaceEGL::GetNativeDisplay();
   EGLDisplay edpy = gfx::GLSurfaceEGL::GetHardwareDisplay();
 
+#if defined(USE_DRM)
+  bo_  = gbm_bo_create(dpy, size.width(), size.height(),
+		       GBM_BO_FORMAT_XRGB8888,
+		       GBM_BO_USE_RENDERING);
+  pixmap_ = (uint64)bo_;
+#else
   XID window = XDefaultRootWindow(dpy);
   XWindowAttributes gwa;
   bool success = XGetWindowAttributes(dpy, window, &gwa);
   DCHECK(success);
   pixmap_ = XCreatePixmap(
       dpy, window, size_.width(), size_.height(), gwa.depth);
+#endif
 
   image_ = eglCreateImageKHR(
       edpy, EGL_NO_CONTEXT, EGL_NATIVE_PIXMAP_KHR,
       reinterpret_cast<void*>(pixmap_), NULL);
+
+#if defined(USE_DRM)
+  EGLint name, stride;
+  eglExportDRMImageMESA(edpy, image_, &name, NULL, &stride);
+  pixmap_ = ((uint64)name << 32) | stride;
+#endif
 
   glGenTextures(1, &texture_);
 
@@ -263,13 +301,21 @@ EGLAcceleratedSurface::EGLAcceleratedSurface(const gfx::Size& size)
 EGLAcceleratedSurface::~EGLAcceleratedSurface() {
   glDeleteTextures(1, &texture_);
   eglDestroyImageKHR(gfx::GLSurfaceEGL::GetHardwareDisplay(), image_);
+#if defined(USE_DRM)
+  gbm_bo_destroy(bo_);
+#else
   XFreePixmap(gfx::GLSurfaceEGL::GetNativeDisplay(), pixmap_);
+#endif
 }
 
 EGLImageTransportSurface::EGLImageTransportSurface(
     GpuChannelManager* manager,
     GpuCommandBufferStub* stub)
+#if defined(USE_DRM)
+    : gfx::GLSurfaceDRM(gfx::Size(1, 1)),
+#else
     : gfx::PbufferGLSurfaceEGL(false, gfx::Size(1, 1)),
+#endif
       buffer_allocation_state_(BUFFER_ALLOCATION_FRONT_AND_BACK),
       fbo_id_(0),
       made_current_(false) {
@@ -286,7 +332,11 @@ EGLImageTransportSurface::~EGLImageTransportSurface() {
 bool EGLImageTransportSurface::Initialize() {
   if (!helper_->Initialize())
     return false;
+#if defined(USE_DRM)
+  return gfx::GLSurfaceDRM::Initialize();
+#else
   return gfx::PbufferGLSurfaceEGL::Initialize();
+#endif
 }
 
 void EGLImageTransportSurface::Destroy() {
@@ -296,7 +346,11 @@ void EGLImageTransportSurface::Destroy() {
     ReleaseSurface(&front_surface_);
 
   helper_->Destroy();
+#if defined(USE_DRM)
+  gfx::GLSurfaceDRM::Destroy();
+#else
   gfx::PbufferGLSurfaceEGL::Destroy();
+#endif
 }
 
 // Make sure that buffer swaps occur for the surface, so we can send the data
@@ -521,6 +575,8 @@ void EGLImageTransportSurface::OnPostSubBufferACK() {
 void EGLImageTransportSurface::OnResizeViewACK() {
   NOTREACHED();
 }
+
+#if defined(USE_X11)
 
 GLXImageTransportSurface::GLXImageTransportSurface(
     GpuChannelManager* manager,
@@ -902,6 +958,8 @@ gfx::Size OSMesaImageTransportSurface::GetSize() {
   return size_;
 }
 
+#endif  // USE_X11
+
 }  // namespace
 
 // static
@@ -914,14 +972,16 @@ scoped_refptr<gfx::GLSurface> ImageTransportSurface::CreateSurface(
     DCHECK(handle.transport);
     if (!handle.parent_client_id) {
       switch (gfx::GetGLImplementation()) {
+#if defined(USE_X11)
         case gfx::kGLImplementationDesktopGL:
           surface = new GLXImageTransportSurface(manager, stub);
           break;
-        case gfx::kGLImplementationEGLGLES2:
-          surface = new EGLImageTransportSurface(manager, stub);
-          break;
         case gfx::kGLImplementationOSMesaGL:
           surface = new OSMesaImageTransportSurface(manager, stub);
+          break;
+#endif
+        case gfx::kGLImplementationEGLGLES2:
+          surface = new EGLImageTransportSurface(manager, stub);
           break;
         default:
           NOTREACHED();
