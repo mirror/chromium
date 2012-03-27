@@ -119,7 +119,7 @@ void WebPluginProxy::WillDestroyWindow(gfx::PluginWindowHandle window) {
   PluginThread::current()->Send(
       new PluginProcessHostMsg_PluginWindowDestroyed(
           window, ::GetParent(window)));
-#elif defined(USE_X11)
+#elif defined(USE_X11) || defined(USE_DRM)
   // Nothing to do.
 #else
   NOTIMPLEMENTED();
@@ -639,6 +639,43 @@ void WebPluginProxy::SetWindowlessBuffers(
                            window_rect,
                            &windowless_shm_pixmaps_[1]);
   }
+}
+
+#elif defined(USE_DRM)
+
+void WebPluginProxy::CreateDIBAndCanvasFromHandle(
+    const TransportDIB::Handle& dib_handle,
+    const gfx::Rect& window_rect,
+    scoped_ptr<TransportDIB>* dib_out,
+    scoped_ptr<skia::PlatformCanvas>* canvas_out) {
+  TransportDIB* dib = TransportDIB::Map(dib_handle);
+  skia::PlatformCanvas* canvas = NULL;
+  // dib may be NULL if the renderer has already destroyed the TransportDIB by
+  // the time we receive the handle, e.g. in case of multiple resizes.
+  if (dib) {
+    canvas = dib->GetPlatformCanvas(window_rect.width(), window_rect.height());
+  }
+  dib_out->reset(dib);
+  canvas_out->reset(canvas);
+}
+
+void WebPluginProxy::SetWindowlessBuffers(
+    const TransportDIB::Handle& windowless_buffer0,
+    const TransportDIB::Handle& windowless_buffer1,
+    const TransportDIB::Handle& background_buffer,
+    const gfx::Rect& window_rect) {
+  CreateDIBAndCanvasFromHandle(windowless_buffer0,
+                               window_rect,
+                               &windowless_dibs_[0],
+                               &windowless_canvases_[0]);
+  CreateDIBAndCanvasFromHandle(windowless_buffer1,
+                               window_rect,
+                               &windowless_dibs_[1],
+                               &windowless_canvases_[1]);
+  CreateDIBAndCanvasFromHandle(background_buffer,
+                               window_rect,
+                               &background_dib_,
+                               &background_canvas_);
 }
 
 #endif
