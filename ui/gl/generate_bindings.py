@@ -866,6 +866,10 @@ EGL_FUNCTIONS = [
   'names': ['eglQuerySurfacePointerANGLE'],
   'arguments':
       'EGLDisplay dpy, EGLSurface surface, EGLint attribute, void** value', },
+{ 'return_type': 'EGLBoolean',
+  'names': ['eglExportDRMImageMESA'],
+  'arguments': 'EGLDisplay dpy, EGLImageKHR image, '
+    'EGLint* name, EGLint* handle, EGLint* stride', },
 ]
 
 WGL_FUNCTIONS = [
