@@ -422,6 +422,7 @@
         'browser/chrome_browser_main_android.cc',
         'browser/chrome_browser_main_android.h',
         'browser/chrome_browser_main_extra_parts.h',
+        'browser/chrome_browser_main_drm.cc',
         'browser/chrome_browser_main_linux.cc',
         'browser/chrome_browser_main_linux.h',
         'browser/chrome_browser_main_mac.h',
