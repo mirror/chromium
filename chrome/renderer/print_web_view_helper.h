@@ -233,7 +233,7 @@ class PrintWebViewHelper
   bool PrintPages(WebKit::WebFrame* frame, const WebKit::WebNode& node);
 
   // Prints the page listed in |params|.
-#if defined(USE_X11)
+#if defined(USE_X11) || defined(USE_DRM)
   void PrintPageInternal(const PrintMsg_PrintPage_Params& params,
                          const gfx::Size& canvas_size,
                          WebKit::WebFrame* frame,
