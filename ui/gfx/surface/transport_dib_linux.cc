@@ -67,7 +67,6 @@ TransportDIB* TransportDIB::Create(size_t size, uint32 sequence_num) {
   dib->key_.shmkey = shmkey;
   dib->address_ = address;
   dib->size_ = size;
-  LOG(ERROR) << "Creating a transport dib";
   return dib;
 }
 
@@ -81,7 +80,6 @@ TransportDIB* TransportDIB::Map(Handle handle) {
 
 // static
 TransportDIB* TransportDIB::CreateWithHandle(Handle shmkey) {
-  LOG(ERROR) << "Creating a transport dib with handle";
   TransportDIB* dib = new TransportDIB;
   dib->key_.shmkey = shmkey;
   return dib;
