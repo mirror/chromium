@@ -6,7 +6,9 @@
 
 #include "ash/accelerators/accelerator_controller.h"
 #include "ash/shell.h"
+#include "ash/ime/event.h"
 #include "ui/aura/event.h"
+#include "ui/aura/env.h"
 #include "ui/aura/root_window.h"
 #include "ui/base/accelerators/accelerator.h"
 
@@ -20,22 +22,31 @@ const int kModifierMask = (ui::EF_SHIFT_DOWN |
 }  // namespace
 
 base::MessagePumpDispatcher::DispatchStatus AcceleratorDispatcher::Dispatch(
-    base::NativeEvent event) {
-  ash::Shell* shell = ash::Shell::GetInstance();
-  if (shell->IsScreenLocked())
-    return aura::RootWindow::GetInstance()->GetDispatcher()->Dispatch(event);
-#if 0
-  if (event->type == base::DEVINPUT_EVENT_KEYBOARD) {
+    base::NativeEvent ev) {
+  // TODO(oshima): Consolidate win and linux.  http://crbug.com/116282
+  if (!associated_window_)
+    return EVENT_QUIT;
+  if (!ui::IsNoopEvent(ev) && !associated_window_->CanReceiveEvents())
+    return aura::Env::GetInstance()->GetDispatcher()->Dispatch(ev);
+
+  if (ui::EventTypeFromNative(ev) == ui::ET_KEY_PRESSED ||
+      ui::EventTypeFromNative(ev) == ui::ET_KEY_RELEASED) {
     ash::AcceleratorController* accelerator_controller =
-        shell->accelerator_controller();
-    ui::Accelerator accelerator(ui::KeyboardCodeFromNative(event),
-                                ui::EventFlagsFromNative(event) &
-				kModifierMask);
-    if (accelerator_controller && accelerator_controller->Process(accelerator))
-      return EVENT_PROCESSED;
+        ash::Shell::GetInstance()->accelerator_controller();
+    if (accelerator_controller) {
+      ui::Accelerator accelerator(ui::KeyboardCodeFromNative(ev),
+          ui::EventFlagsFromNative(ev) & kModifierMask);
+      if (ui::EventTypeFromNative(ev) == ui::ET_KEY_RELEASED)
+        accelerator.set_type(ui::ET_KEY_RELEASED);
+      if (accelerator_controller->Process(accelerator))
+        return EVENT_PROCESSED;
+
+      accelerator.set_type(TranslatedKeyEvent(ev, false).type());
+      if (accelerator_controller->Process(accelerator))
+        return EVENT_PROCESSED;
+    }
   }
-#endif
-  return nested_dispatcher_->Dispatch(event);
+  return nested_dispatcher_->Dispatch(ev);
 }
 
 }  // namespace ash
