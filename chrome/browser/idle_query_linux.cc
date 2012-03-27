@@ -12,6 +12,7 @@ namespace browser {
 class IdleData {
  public:
   IdleData() {
+#if defined(USE_X11)
     int event_base;
     int error_base;
     if (XScreenSaverQueryExtension(ui::GetXDisplay(), &event_base,
@@ -20,14 +21,19 @@ class IdleData {
     } else {
       mit_info = NULL;
     }
+#endif
   }
 
   ~IdleData() {
+#if defined(USE_X11)
     if (mit_info)
       XFree(mit_info);
+#endif
   }
 
+#if defined(USE_X11)
   XScreenSaverInfo *mit_info;
+#endif
 };
 
 IdleQueryLinux::IdleQueryLinux() : idle_data_(new IdleData()) {}
@@ -35,6 +41,7 @@ IdleQueryLinux::IdleQueryLinux() : idle_data_(new IdleData()) {}
 IdleQueryLinux::~IdleQueryLinux() {}
 
 int IdleQueryLinux::IdleTime() {
+#if defined(USE_X11)
   if (!idle_data_->mit_info)
     return 0;
 
@@ -45,6 +52,9 @@ int IdleQueryLinux::IdleTime() {
   } else {
     return 0;
   }
+#else
+  return 0;
+#endif
 }
 
 }  // namespace browser
