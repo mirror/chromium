@@ -215,17 +215,18 @@ class WebPluginProxy : public webkit::npapi::WebPlugin {
       const gfx::Rect& window_rect,
       scoped_ptr<TransportDIB>* dib_out,
       base::mac::ScopedCFTypeRef<CGContextRef>* cg_context_out);
-#elif defined(USE_X11)
+#elif defined(USE_X11) || defined(USE_DRM)
   static void CreateDIBAndCanvasFromHandle(
       const TransportDIB::Handle& dib_handle,
       const gfx::Rect& window_rect,
       scoped_ptr<TransportDIB>* dib_out,
       scoped_ptr<skia::PlatformCanvas>* canvas_out);
-
+#if defined(USE_X11)
   static void CreateShmPixmapFromDIB(
       TransportDIB* dib,
       const gfx::Rect& window_rect,
       XID* pixmap_out);
+#endif
 #endif
 
   // Updates the shared memory sections where windowless plugins paint.
@@ -283,13 +284,15 @@ class WebPluginProxy : public webkit::npapi::WebPlugin {
   scoped_ptr<skia::PlatformCanvas> windowless_canvases_[2];
   scoped_ptr<skia::PlatformCanvas> background_canvas_;
 
-#if defined(USE_X11)
+#if defined(USE_X11) || defined(USE_DRM)
   scoped_ptr<TransportDIB> windowless_dibs_[2];
   scoped_ptr<TransportDIB> background_dib_;
+#if defined(USE_X11)
   // If we can use SHM pixmaps for windowless plugin painting or not.
   bool use_shm_pixmap_;
   // The SHM pixmaps for windowless plugin painting.
   XID windowless_shm_pixmaps_[2];
+#endif
 #endif
 
 #endif
