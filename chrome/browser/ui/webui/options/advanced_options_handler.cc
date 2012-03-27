@@ -307,9 +307,11 @@ void AdvancedOptionsHandler::RegisterMessages() {
         base::Bind(&AdvancedOptionsHandler::HandleDisableCloudPrintConnector,
                    base::Unretained(this)));
   }
+#if !defined(USE_DRM)
   web_ui()->RegisterMessageCallback("showNetworkProxySettings",
       base::Bind(&AdvancedOptionsHandler::ShowNetworkProxySettings,
                  base::Unretained(this)));
+#endif
 #endif
   web_ui()->RegisterMessageCallback("checkRevocationCheckboxAction",
       base::Bind(&AdvancedOptionsHandler::HandleCheckRevocationCheckbox,
@@ -465,7 +467,7 @@ void AdvancedOptionsHandler::SetupBackgroundModeSettings() {
 }
 #endif
 
-#if !defined(OS_CHROMEOS)
+#if !defined(OS_CHROMEOS) && !defined(USE_DRM)
 void AdvancedOptionsHandler::ShowNetworkProxySettings(const ListValue* args) {
   content::RecordAction(UserMetricsAction("Options_ShowProxySettings"));
   AdvancedOptionsUtilities::ShowNetworkProxySettings(

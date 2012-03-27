@@ -478,7 +478,7 @@ void BrowserOptionsHandler::RegisterMessages() {
       "showCloudPrintManagePage",
       base::Bind(&BrowserOptionsHandler::ShowCloudPrintManagePage,
                  base::Unretained(this)));
-#if !defined(OS_CHROMEOS)
+#if !defined(OS_CHROMEOS) && !defined (USE_DRM)
   if (cloud_print_connector_ui_enabled_) {
     web_ui()->RegisterMessageCallback(
         "showCloudPrintSetupDialog",
@@ -1135,7 +1135,7 @@ void BrowserOptionsHandler::SetupBackgroundModeSettings() {
 }
 #endif
 
-#if !defined(OS_CHROMEOS)
+#if !defined(OS_CHROMEOS) && !defined(USE_DRM)
 void BrowserOptionsHandler::ShowNetworkProxySettings(const ListValue* args) {
   content::RecordAction(UserMetricsAction("Options_ShowProxySettings"));
   AdvancedOptionsUtilities::ShowNetworkProxySettings(

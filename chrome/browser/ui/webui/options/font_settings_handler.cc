@@ -78,7 +78,9 @@ void FontSettingsHandler::InitializeHandler() {
 void FontSettingsHandler::RegisterMessages() {
   // Perform validation for saved fonts.
   PrefService* pref_service = Profile::FromWebUI(web_ui())->GetPrefs();
+#if !defined(USE_DRM)
   FontSettingsUtilities::ValidateSavedFonts(pref_service);
+#endif
 
   // Register for preferences that we need to observe manually.
   standard_font_.Init(prefs::kWebKitGlobalStandardFontFamily,
