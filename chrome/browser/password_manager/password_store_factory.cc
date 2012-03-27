@@ -21,7 +21,7 @@
 #include "chrome/browser/password_manager/password_store_mac.h"
 #include "crypto/keychain_mac.h"
 #include "crypto/mock_keychain_mac.h"
-#elif defined(OS_CHROMEOS) || defined(OS_ANDROID)
+#elif defined(OS_CHROMEOS) || defined(OS_ANDROID) || defined(USE_DRM)
 // Don't do anything. We're going to use the default store.
 #elif defined(OS_POSIX)
 #include "base/nix/xdg_util.h"
@@ -33,7 +33,7 @@
 #endif
 
 #if !defined(OS_MACOSX) && !defined(OS_CHROMEOS) && !defined(OS_ANDROID) && \
-    defined(OS_POSIX)
+    !defined(USE_DRM) && defined(OS_POSIX)
 namespace {
 
 const LocalProfileId kInvalidLocalProfileId =
@@ -72,7 +72,7 @@ PasswordStoreFactory::PasswordStoreFactory()
 PasswordStoreFactory::~PasswordStoreFactory() {}
 
 #if !defined(OS_MACOSX) && !defined(OS_CHROMEOS) && !defined(OS_ANDROID) && \
-    defined(OS_POSIX)
+    !defined(USE_DRM) && defined(OS_POSIX)
 LocalProfileId PasswordStoreFactory::GetLocalProfileId(
     PrefService* prefs) const {
   LocalProfileId id = prefs->GetInteger(prefs::kLocalProfileId);
@@ -115,7 +115,7 @@ PasswordStoreFactory::BuildServiceInstanceFor(Profile* profile) const {
   } else {
     ps = new PasswordStoreMac(new crypto::MacKeychain(), login_db);
   }
-#elif defined(OS_CHROMEOS) || defined(OS_ANDROID)
+#elif defined(OS_CHROMEOS) || defined(OS_ANDROID) || defined(USE_DRM)
   // For now, we use PasswordStoreDefault. We might want to make a native
   // backend for PasswordStoreX (see below) in the future though.
   ps = new PasswordStoreDefault(
@@ -192,7 +192,7 @@ PasswordStoreFactory::BuildServiceInstanceFor(Profile* profile) const {
 
 void PasswordStoreFactory::RegisterUserPrefs(PrefService* prefs) {
 #if !defined(OS_MACOSX) && !defined(OS_CHROMEOS) && !defined(OS_ANDROID) \
-  && defined(OS_POSIX)
+    && !defined(USE_DRM) && defined(OS_POSIX)
   prefs->RegisterIntegerPref(prefs::kLocalProfileId,
                              kInvalidLocalProfileId,
                              PrefService::UNSYNCABLE_PREF);

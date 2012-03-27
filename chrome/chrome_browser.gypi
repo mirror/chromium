@@ -373,6 +373,7 @@
         'browser/chrome_browser_main_extra_parts_gtk.h',
         'browser/chrome_browser_main_extra_parts_views.cc',
         'browser/chrome_browser_main_extra_parts_views.h',
+        'browser/chrome_browser_main_drm.cc',
         'browser/chrome_browser_main_linux.cc',
         'browser/chrome_browser_main_linux.h',
         'browser/chrome_browser_main_mac.h',

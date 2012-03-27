@@ -17,7 +17,7 @@
 
 class CommandLine;
 
-#if defined(USE_X11)
+#if defined(USE_X11) || defined(USE_DRM)
 namespace base {
 class Environment;
 }
@@ -119,7 +119,7 @@ class ShellIntegration {
       const FilePath& user_data_dir,
       const FilePath& extension_path);
 
-#if defined(USE_X11)
+#if defined(USE_X11) || defined(USE_DRM)
   // Returns filename of the desktop shortcut used to launch the browser.
   static std::string GetDesktopName(base::Environment* env);
 
@@ -142,7 +142,7 @@ class ShellIntegration {
 
   static void CreateDesktopShortcut(const ShortcutInfo& shortcut_info,
                                     const std::string& shortcut_template);
-#endif  // defined(USE_X11)
+#endif  // defined(USE_X11) || defined(USE_DRM)
 
 #if defined(OS_WIN)
   // Generates Win7 app id for given app name and profile path. The returned app

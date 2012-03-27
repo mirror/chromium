@@ -1770,7 +1770,7 @@ bool BrowserInit::ProcessCmdLineImpl(
   }
 #endif
 
-#if defined(TOOLKIT_VIEWS) && defined(OS_LINUX)
+#if defined(TOOLKIT_VIEWS) && defined(OS_LINUX) && !defined(USE_DRM)
   // Get a list of pointer-devices that should be treated as touch-devices.
   // This is primarily used for testing/debugging touch-event processing when a
   // touch-device isn't available.
