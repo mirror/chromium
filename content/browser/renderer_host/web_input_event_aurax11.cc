@@ -44,6 +44,7 @@
 
 #include "base/event_types.h"
 #include "base/logging.h"
+#include "base/message_pump_evdev.h"
 #include "content/browser/renderer_host/ui_events_helper.h"
 #include "ui/base/events/event.h"
 #include "ui/base/events/event_constants.h"
@@ -57,6 +58,32 @@ namespace content {
 
 namespace {
 
+int EvdevToWebEventModifiers(unsigned int state) {
+  int modifiers = 0;
+  if (state & ui::EF_SHIFT_DOWN)
+    modifiers |= WebKit::WebInputEvent::ShiftKey;
+  if (state & ui::EF_CONTROL_DOWN)
+    modifiers |= WebKit::WebInputEvent::ControlKey;
+  if (state & ui::EF_ALT_DOWN)
+    modifiers |= WebKit::WebInputEvent::AltKey;
+  // TODO(beng): MetaKey/META_MASK
+  if (state & ui::EF_LEFT_MOUSE_BUTTON)
+    modifiers |= WebKit::WebInputEvent::LeftButtonDown;
+  if (state & ui::EF_MIDDLE_MOUSE_BUTTON)
+    modifiers |= WebKit::WebInputEvent::MiddleButtonDown;
+  if (state & ui::EF_RIGHT_MOUSE_BUTTON)
+    modifiers |= WebKit::WebInputEvent::RightButtonDown;
+  if (state & ui::EF_CAPS_LOCK_DOWN)
+    modifiers |= WebKit::WebInputEvent::CapsLockOn;
+#if 0 //TODO(msb)
+  if (state & Mod2Mask)
+    modifiers |= WebKit::WebInputEvent::NumLockOn;
+#endif
+  return modifiers;
+}
+
+
+#if defined(USE_X11)
 int XKeyEventToWindowsKeyCode(XKeyEvent* event) {
   int windows_key_code =
       ui::KeyboardCodeFromXKeyEvent(reinterpret_cast<XEvent*>(event));
@@ -86,6 +113,7 @@ int XKeyEventToWindowsKeyCode(XKeyEvent* event) {
   }
   return windows_key_code;
 }
+#endif
 
 // From
 // third_party/WebKit/Source/WebKit/chromium/src/gtk/WebInputEventFactory.cpp:
@@ -188,10 +216,51 @@ WebKit::WebGestureEvent MakeWebGestureEventFromAuraEvent(
   return webkit_event;
 }
 
+#if defined(USE_DRM)
 WebKit::WebKeyboardEvent MakeWebKeyboardEventFromAuraEvent(
     ui::KeyEvent* event) {
-  base::NativeEvent native_event = event->native_event();
   WebKit::WebKeyboardEvent webkit_event;
+  base::NativeEvent native_event = event->native_event();
+
+  webkit_event.timeStampSeconds = event->time_stamp().InSecondsF();
+  webkit_event.modifiers = EvdevToWebEventModifiers(native_event->modifiers);
+
+  if (native_event->value)
+      webkit_event.type = event->is_char() ? WebKit::WebInputEvent::Char :
+          WebKit::WebInputEvent::RawKeyDown;
+  else
+      webkit_event.type = WebKit::WebInputEvent::KeyUp;
+
+  if (webkit_event.modifiers & WebKit::WebInputEvent::AltKey)
+    webkit_event.isSystemKey = true;
+
+  webkit_event.windowsKeyCode = ui::KeyboardCodeFromNative(native_event);
+  webkit_event.nativeKeyCode = native_event->code;
+
+  if (webkit_event.windowsKeyCode == ui::VKEY_RETURN)
+    webkit_event.unmodifiedText[0] = '\r';
+  else
+    webkit_event.unmodifiedText[0] = event->GetCharacter();
+
+  if (webkit_event.modifiers & WebKit::WebInputEvent::ControlKey) {
+    webkit_event.text[0] =
+        GetControlCharacter(
+            webkit_event.windowsKeyCode,
+            webkit_event.modifiers & WebKit::WebInputEvent::ShiftKey);
+  } else {
+    webkit_event.text[0] = webkit_event.unmodifiedText[0];
+  }
+
+  webkit_event.setKeyIdentifierFromWindowsKeyCode();
+
+  // TODO: IsAutoRepeat/IsKeyPad?
+  return webkit_event;
+}
+#else
+WebKit::WebKeyboardEvent MakeWebKeyboardEventFromAuraEvent(
+    ui::KeyEvent* event) {
+  WebKit::WebKeyboardEvent webkit_event;
+  base::NativeEvent native_event = event->native_event();
   XKeyEvent* native_key_event = &native_event->xkey;
 
   webkit_event.timeStampSeconds = event->time_stamp().InSecondsF();
@@ -235,5 +304,7 @@ WebKit::WebKeyboardEvent MakeWebKeyboardEventFromAuraEvent(
 
   return webkit_event;
 }
+#endif
+
 
 }  // namespace content
