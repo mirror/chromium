@@ -80,7 +80,7 @@ class SimpleMessageBoxViews : public views::DialogDelegate,
   virtual bool Dispatch(const MSG& msg) OVERRIDE;
 #elif defined(USE_AURA)
   virtual base::MessagePumpDispatcher::DispatchStatus Dispatch(
-      XEvent* xevent) OVERRIDE;
+      base::NativeEvent event) OVERRIDE;
 #endif
 
   const DialogType type_;

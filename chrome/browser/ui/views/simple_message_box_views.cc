@@ -157,8 +157,8 @@ bool SimpleMessageBoxViews::Dispatch(const MSG& msg) {
 }
 #elif defined(USE_AURA)
 base::MessagePumpDispatcher::DispatchStatus
-    SimpleMessageBoxViews::Dispatch(XEvent* xev) {
-  if (!aura::Env::GetInstance()->GetDispatcher()->Dispatch(xev))
+    SimpleMessageBoxViews::Dispatch(base::NativeEvent ev) {
+  if (!aura::Env::GetInstance()->GetDispatcher()->Dispatch(ev))
     return EVENT_IGNORED;
 
   if (disposition_ == DISPOSITION_UNKNOWN)
