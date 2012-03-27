@@ -443,7 +443,7 @@ bool StartupBrowserCreator::ProcessCmdLineImpl(
   }
 #endif
 
-#if defined(TOOLKIT_VIEWS) && defined(OS_LINUX)
+#if defined(TOOLKIT_VIEWS) && defined(OS_LINUX) && !defined(USE_DRM)
   ui::TouchFactory::SetTouchDeviceListFromCommandLine();
 #endif
 
