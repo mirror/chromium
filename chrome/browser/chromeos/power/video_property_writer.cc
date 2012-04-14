@@ -7,7 +7,9 @@
 #include <ctime>
 
 #include "ash/shell.h"
+#if defined(USE_X11)
 #include "ui/base/x/x11_util.h"
+#endif
 
 namespace {
 
@@ -34,6 +36,8 @@ void VideoPropertyWriter::OnVideoDetected() {
   if (last_update_time_.is_null() ||
       (now - last_update_time_).InSecondsF() >= kUpdateIntervalSec) {
     last_update_time_ = now;
+    // TODO(nitrous) implement non-X11 equivalent
+#if defined(USE_X11)
     if (!ui::SetIntProperty(
             ui::GetX11RootWindow(),
             kPropertyName,
@@ -41,6 +45,7 @@ void VideoPropertyWriter::OnVideoDetected() {
             time(NULL))) {
       LOG(WARNING) << "Failed setting " << kPropertyName << " on root window";
     }
+#endif
   }
 }
 
