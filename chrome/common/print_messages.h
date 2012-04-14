@@ -345,7 +345,7 @@ IPC_SYNC_MESSAGE_ROUTED1_1(PrintHostMsg_ScriptedPrint,
                            PrintMsg_PrintPages_Params
                                /* settings chosen by the user*/)
 
-#if defined(USE_X11)
+#if defined(USE_X11) || defined(USE_DRM)
 // Asks the browser to create a temporary file for the renderer to fill
 // in resulting NativeMetafile in printing.
 IPC_SYNC_MESSAGE_CONTROL0_2(PrintHostMsg_AllocateTempFileForPrinting,

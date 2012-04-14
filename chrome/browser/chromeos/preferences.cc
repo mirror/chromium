@@ -374,7 +374,12 @@ void Preferences::NotifyPrefChanged(const std::string* pref_name) {
   }
   if (!pref_name || *pref_name == prefs::kNaturalScroll) {
     const bool enabled = natural_scroll_.GetValue();
+#if defined(USE_X11)
     ui::SetNaturalScroll(enabled);
+#else
+    // TODO(nitrous)
+    NOTIMPLEMENTED();
+#endif
     if (pref_name)
       UMA_HISTOGRAM_BOOLEAN("Touchpad.NaturalScroll.Changed", enabled);
     else
