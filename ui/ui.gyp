@@ -106,6 +106,7 @@
         'base/cocoa/window_size_constants.mm',
         'base/cursor/cursor.cc',
         'base/cursor/cursor.h',
+        'base/cursor/cursor_drm.cc',
         'base/cursor/cursor_loader.h',
         'base/cursor/cursor_loader_win.cc',
         'base/cursor/cursor_loader_win.h',
