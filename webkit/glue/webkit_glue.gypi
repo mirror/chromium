@@ -392,6 +392,7 @@
         'webcursor_aura.cc',
         'webcursor_aurawin.cc',
         'webcursor_aurax11.cc',
+        'webcursor_drm.cc',
         'webcursor_gtk.cc',
         'webcursor_gtk_data.h',
         'webcursor_mac.mm',
@@ -475,6 +476,11 @@
           'sources!': [
             'webcursor_mac.mm',
             'webcursor_win.cc',
+          ],
+        }],
+        ['use_drm==1', {
+          'sources!': [
+            'webcursor_aurax11.cc',
           ],
         }],
         ['use_aura==1 and use_x11==1', {
