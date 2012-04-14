@@ -14,7 +14,8 @@
 #include "ui/base/keycodes/keyboard_code_conversion.h"
 #include "ui/base/keycodes/keyboard_codes.h"
 
-#if defined(OS_CHROMEOS)
+// TODO(nitrous) fix this
+#if defined(OS_CHROMEOS) && defined(USE_X11)
 #include <X11/extensions/XInput2.h>
 #include <X11/keysym.h>
 #include <X11/Xlib.h>
@@ -35,7 +36,7 @@ KeyRewriter::KeyRewriter() : last_device_id_(kBadDeviceId) {
   // The ash shell isn't instantiated for our unit tests.
   if (ash::Shell::HasInstance())
     ash::Shell::GetInstance()->GetRootWindow()->AddRootWindowObserver(this);
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   if (base::chromeos::IsRunningOnChromeOS()) {
     chromeos::XInputHierarchyChangedEventListener::GetInstance()
         ->AddObserver(this);
@@ -47,7 +48,7 @@ KeyRewriter::KeyRewriter() : last_device_id_(kBadDeviceId) {
 KeyRewriter::~KeyRewriter() {
   if (ash::Shell::HasInstance())
     ash::Shell::GetInstance()->GetRootWindow()->RemoveRootWindowObserver(this);
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   if (base::chromeos::IsRunningOnChromeOS()) {
     chromeos::XInputHierarchyChangedEventListener::GetInstance()
         ->RemoveObserver(this);
@@ -104,12 +105,12 @@ ash::KeyRewriterDelegate::Action KeyRewriter::RewriteOrFilterKeyEvent(
 }
 
 void KeyRewriter::OnKeyboardMappingChanged(const aura::RootWindow* root) {
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   RefreshKeycodes();
 #endif
 }
 
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
 void KeyRewriter::DeviceAdded(int device_id) {
   DCHECK_NE(XIAllDevices, device_id);
   DCHECK_NE(XIAllMasterDevices, device_id);
@@ -178,7 +179,7 @@ void KeyRewriter::RewriteCommandToControl(aura::KeyEvent* event) {
   if (type != kDeviceAppleKeyboard)
     return;
 
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   XEvent* xev = event->native_event();
   XKeyEvent* xkey = &(xev->xkey);
 
