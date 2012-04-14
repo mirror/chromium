@@ -14,7 +14,7 @@
 #include "ui/aura/root_window_observer.h"
 #include "ui/base/keycodes/keyboard_codes.h"
 
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
 #include "chrome/browser/chromeos/device_hierarchy_observer.h"
 #endif
 
@@ -24,7 +24,7 @@ namespace aura {
 class RootWindow;
 }
 
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
 namespace chromeos {
 namespace input_method {
 class XKeyboard;
@@ -34,7 +34,7 @@ class XKeyboard;
 
 class EventRewriter : public ash::EventRewriterDelegate,
                       public aura::RootWindowObserver
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
                     , public chromeos::DeviceHierarchyObserver
 #endif
 {
@@ -62,7 +62,7 @@ class EventRewriter : public ash::EventRewriterDelegate,
   void set_pref_service_for_testing(const PrefService* pref_service) {
     pref_service_ = pref_service;
   }
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   void set_xkeyboard_for_testing(chromeos::input_method::XKeyboard* xkeyboard) {
     xkeyboard_ = xkeyboard;
   }
@@ -81,7 +81,7 @@ class EventRewriter : public ash::EventRewriterDelegate,
   // aura::RootWindowObserver overrides:
   virtual void OnKeyboardMappingChanged(const aura::RootWindow* root) OVERRIDE;
 
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   // chromeos::DeviceHierarchyObserver overrides:
   virtual void DeviceHierarchyChanged() OVERRIDE {}
   virtual void DeviceAdded(int device_id) OVERRIDE;
@@ -140,7 +140,7 @@ class EventRewriter : public ash::EventRewriterDelegate,
   std::map<int, DeviceType> device_id_to_type_;
   int last_device_id_;
 
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   // X keycodes corresponding to various keysyms.
   unsigned int control_l_xkeycode_;
   unsigned int control_r_xkeycode_;
