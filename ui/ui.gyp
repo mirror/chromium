@@ -104,6 +104,7 @@
         'base/cocoa/underlay_opengl_hosting_window.mm',
         'base/cursor/cursor.cc',
         'base/cursor/cursor.h',
+        'base/cursor/cursor_drm.cc',
         'base/cursor/cursor_win.cc',
         'base/cursor/cursor_x11.cc',
         'base/dragdrop/cocoa_dnd_util.h',
