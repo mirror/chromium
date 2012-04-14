@@ -4,16 +4,22 @@
 
 #include "chrome/browser/chromeos/system_key_event_listener.h"
 
+#if defined(USE_X11)
 #define XK_MISCELLANY 1
 #include <X11/keysymdef.h>
 #include <X11/XF86keysym.h>
 #include <X11/XKBlib.h>
 #undef Status
+#endif
 
+#if defined(USE_X11)
 #include "base/message_pump_x.h"
 #include "chrome/browser/chromeos/input_method/input_method_manager.h"
 #include "chrome/browser/chromeos/input_method/xkeyboard.h"
 #include "ui/base/x/x11_util.h"
+#elif defined(USE_EVDEV)
+#include "base/message_pump_epoll.h"
+#endif
 
 namespace chromeos {
 
@@ -47,6 +53,7 @@ SystemKeyEventListener::SystemKeyEventListener()
     : stopped_(false),
       num_lock_mask_(0),
       xkb_event_base_(0) {
+#if defined(USE_X11)
   input_method::XKeyboard* xkeyboard =
       input_method::InputMethodManager::GetInstance()->GetXKeyboard();
   num_lock_mask_ = xkeyboard->GetNumLockMask();
@@ -71,6 +78,7 @@ SystemKeyEventListener::SystemKeyEventListener()
   }
 
   MessageLoopForUI::current()->AddObserver(this);
+#endif
 }
 
 SystemKeyEventListener::~SystemKeyEventListener() {
@@ -95,7 +103,11 @@ void SystemKeyEventListener::RemoveCapsLockObserver(
 
 base::EventStatus SystemKeyEventListener::WillProcessEvent(
     const base::NativeEvent& event) {
+#if defined(USE_X11)
   return ProcessedXEvent(event) ? base::EVENT_HANDLED : base::EVENT_CONTINUE;
+#else
+  return base::EVENT_CONTINUE;
+#endif
 }
 
 void SystemKeyEventListener::DidProcessEvent(const base::NativeEvent& event) {
@@ -107,6 +119,7 @@ void SystemKeyEventListener::OnCapsLock(bool enabled) {
                     OnCapsLockChange(enabled));
 }
 
+#if defined (USE_X11)
 bool SystemKeyEventListener::ProcessedXEvent(XEvent* xevent) {
   input_method::InputMethodManager* input_method_manager =
       input_method::InputMethodManager::GetInstance();
@@ -147,5 +160,6 @@ bool SystemKeyEventListener::ProcessedXEvent(XEvent* xevent) {
   }
   return false;
 }
+#endif
 
 }  // namespace chromeos

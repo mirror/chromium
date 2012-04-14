@@ -50,8 +50,10 @@ class SystemKeyEventListener : public MessageLoopForUI::Observer {
 
   void OnCapsLock(bool enabled);
 
+#if defined(USE_X11)
   // Returns true if the event was processed, false otherwise.
   virtual bool ProcessedXEvent(XEvent* xevent);
+#endif
 
   bool stopped_;
 
