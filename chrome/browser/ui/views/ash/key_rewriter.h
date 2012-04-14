@@ -25,7 +25,7 @@ class RootWindow;
 
 class KeyRewriter : public ash::KeyRewriterDelegate,
                     public aura::RootWindowObserver
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
                   , public chromeos::DeviceHierarchyObserver
 #endif
 {
@@ -64,7 +64,7 @@ class KeyRewriter : public ash::KeyRewriterDelegate,
   // aura::RootWindowObserver overrides:
   virtual void OnKeyboardMappingChanged(const aura::RootWindow* root) OVERRIDE;
 
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   // chromeos::DeviceHierarchyObserver overrides:
   virtual void DeviceHierarchyChanged() OVERRIDE {}
   virtual void DeviceAdded(int device_id) OVERRIDE;
@@ -98,7 +98,7 @@ class KeyRewriter : public ash::KeyRewriterDelegate,
   std::map<int, DeviceType> device_id_to_type_;
   int last_device_id_;
 
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   // X keycodes corresponding to various keysyms.
   unsigned int control_l_xkeycode_;
   unsigned int control_r_xkeycode_;

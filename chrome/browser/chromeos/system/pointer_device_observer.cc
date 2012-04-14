@@ -32,13 +32,17 @@ PointerDeviceObserver::PointerDeviceObserver()
 }
 
 PointerDeviceObserver::~PointerDeviceObserver() {
+#if defined(USE_X11)
   XInputHierarchyChangedEventListener::GetInstance()
       ->RemoveObserver(this);
+#endif
 }
 
 void PointerDeviceObserver::Init() {
+#if defined(USE_X11)
   XInputHierarchyChangedEventListener::GetInstance()
       ->AddObserver(this);
+#endif
   DeviceHierarchyChanged();
 }
 
