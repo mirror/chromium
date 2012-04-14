@@ -4495,6 +4495,13 @@
             'browser/ui/tabs/tab_strip_layout_type_prefs.h',
           ],
         }],
+        ['use_drm==1', {
+          'sources!': [
+            'browser/chromeos/xinput_hierarchy_changed_event_listener.cc',
+            'browser/chromeos/xinput_hierarchy_changed_event_listener.h',
+            'browser/chromeos/xinput_hierarchy_changed_event_listener_aura.cc',
+          ],
+        }],
         ['chromeos==0', {
           'sources/': [
             ['exclude', '^browser/chromeos'],
