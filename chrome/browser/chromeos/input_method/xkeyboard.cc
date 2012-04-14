@@ -19,12 +19,16 @@
 #include "chrome/browser/chromeos/input_method/input_method_util.h"
 #include "chrome/browser/chromeos/input_method/xkeyboard_data.h"
 #include "content/public/browser/browser_thread.h"
+#if defined(USE_X11)
 #include "ui/base/x/x11_util.h"
 
 // These includes conflict with base/tracked_objects.h so must come last.
 #include <X11/XKBlib.h>
 #include <X11/Xlib.h>
 #include <glib.h>
+#else
+#include <X11/XKBlib.h>
+#endif
 
 using content::BrowserThread;
 
@@ -210,6 +214,7 @@ bool XKeyboardImpl::SetLayoutInternal(const std::string& layout_name,
 // in the |execute_queue_|. Do nothing if the queue is empty.
 // TODO(yusukes): Use libxkbfile.so instead of the command (crosbug.com/13105)
 void XKeyboardImpl::MaybeExecuteSetLayoutCommand() {
+#if defined(USE_X11)
   if (execute_queue_.empty()) {
     return;
   }
@@ -236,6 +241,7 @@ void XKeyboardImpl::MaybeExecuteSetLayoutCommand() {
                     reinterpret_cast<GChildWatchFunc>(OnSetLayoutFinish),
                     this);
   DVLOG(1) << "ExecuteSetLayoutCommand: " << layout_to_set << ": pid=" << pid;
+#endif
 }
 
 bool XKeyboardImpl::NumLockIsEnabled() {
@@ -255,6 +261,7 @@ unsigned int XKeyboardImpl::GetNumLockMask() {
   static const unsigned int kBadMask = 0;
 
   unsigned int real_mask = kBadMask;
+#if defined(USE_X11)
   XkbDescPtr xkb_desc =
       XkbGetKeyboard(ui::GetXDisplay(), XkbAllComponentsMask, XkbUseCoreKbd);
   if (!xkb_desc) {
@@ -279,6 +286,10 @@ unsigned int XKeyboardImpl::GetNumLockMask() {
     }
   }
   XkbFreeKeyboard(xkb_desc, 0, True /* free all components */);
+#else
+  // TODO(nitrous)
+  NOTIMPLEMENTED();
+#endif
   return real_mask;
 }
 
@@ -297,6 +308,7 @@ void XKeyboardImpl::GetLockedModifiers(bool* out_caps_lock_enabled,
     return;
   }
 
+#if defined(USE_X11)
   XkbStateRec status;
   XkbGetState(ui::GetXDisplay(), XkbUseCoreKbd, &status);
   if (out_caps_lock_enabled) {
@@ -305,6 +317,10 @@ void XKeyboardImpl::GetLockedModifiers(bool* out_caps_lock_enabled,
   if (out_num_lock_enabled) {
     *out_num_lock_enabled = status.locked_mods & num_lock_mask_;
   }
+#else
+  // TODO(nitrous)
+  NOTIMPLEMENTED();
+#endif
 }
 
 std::string XKeyboardImpl::CreateFullXkbLayoutName(
@@ -399,9 +415,14 @@ void XKeyboardImpl::SetLockedModifiers(ModifierLockStatus new_caps_lock_status,
     current_num_lock_status_ = (new_num_lock_status == kEnableLock);
   }
 
+#if defined(USE_X11)
   if (affect_mask) {
     XkbLockModifiers(ui::GetXDisplay(), XkbUseCoreKbd, affect_mask, value_mask);
   }
+#else
+  // TODO(nitrous)
+  NOTIMPLEMENTED();
+#endif
 }
 
 void XKeyboardImpl::SetNumLockEnabled(bool enable_num_lock) {
@@ -508,12 +529,17 @@ void XKeyboardImpl::OnSetLayoutFinish(pid_t pid,
 // static
 bool XKeyboard::SetAutoRepeatEnabled(bool enabled) {
   CHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
+#if defined(USE_X11)
   if (enabled) {
     XAutoRepeatOn(ui::GetXDisplay());
   } else {
     XAutoRepeatOff(ui::GetXDisplay());
   }
   DVLOG(1) << "Set auto-repeat mode to: " << (enabled ? "on" : "off");
+#else
+  // TODO(nitrous)
+  NOTIMPLEMENTED();
+#endif
   return true;
 }
 
@@ -523,27 +549,43 @@ bool XKeyboard::SetAutoRepeatRate(const AutoRepeatRate& rate) {
   DVLOG(1) << "Set auto-repeat rate to: "
            << rate.initial_delay_in_ms << " ms delay, "
            << rate.repeat_interval_in_ms << " ms interval";
+#if defined(USE_X11)
   if (XkbSetAutoRepeatRate(ui::GetXDisplay(), XkbUseCoreKbd,
                            rate.initial_delay_in_ms,
                            rate.repeat_interval_in_ms) != True) {
     DVLOG(1) << "Failed to set auto-repeat rate";
     return false;
   }
+#else
+  // TODO(nitrous)
+  NOTIMPLEMENTED();
+#endif
   return true;
 }
 
 // static
 bool XKeyboard::GetAutoRepeatEnabledForTesting() {
   XKeyboardState state = {};
+#if defined(USE_X11)
   XGetKeyboardControl(ui::GetXDisplay(), &state);
+#else
+  // TODO(nitrous)
+  NOTIMPLEMENTED();
+#endif
   return state.global_auto_repeat != AutoRepeatModeOff;
 }
 
 // static
 bool XKeyboard::GetAutoRepeatRateForTesting(AutoRepeatRate* out_rate) {
+#if defined(USE_X11)
   return XkbGetAutoRepeatRate(ui::GetXDisplay(), XkbUseCoreKbd,
                               &(out_rate->initial_delay_in_ms),
                               &(out_rate->repeat_interval_in_ms)) == True;
+#else
+  // TODO(nitrous)
+  NOTIMPLEMENTED();
+  return false;
+#endif
 }
 
 // static
