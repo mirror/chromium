@@ -555,10 +555,12 @@ void ChromeBrowserMainPartsChromeos::PreBrowserStart() {
 
   g_browser_process->metrics_service()->StartExternalMetrics();
 
+#if defined (USE_X11)
   // Listen for XI_HierarchyChanged events. Note: if this is moved to
   // PreMainMessageLoopRun() then desktopui_PageCyclerTests fail for unknown
   // reasons, see http://crosbug.com/24833.
   XInputHierarchyChangedEventListener::GetInstance();
+#endif
 
   // -- This used to be in ChromeBrowserMainParts::PreMainMessageLoopRun()
   // -- immediately after ChildProcess::WaitForDebugger().
@@ -628,9 +630,11 @@ void ChromeBrowserMainPartsChromeos::PostMainMessageLoopRun() {
   magnification_manager_.reset();
   power_state_override_ = NULL;
 
+#if defined(USE_X11)
   // The XInput2 event listener needs to be shut down earlier than when
   // Singletons are finally destroyed in AtExitManager.
   XInputHierarchyChangedEventListener::GetInstance()->Stop();
+#endif
 
   // chromeos::SystemKeyEventListener::Shutdown() is always safe to call,
   // even if Initialize() wasn't called.

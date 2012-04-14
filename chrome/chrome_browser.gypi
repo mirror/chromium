@@ -2391,6 +2391,13 @@
             'browser/media_transfer_protocol/media_transfer_protocol_manager.h',
           ],
         }],
+        ['use_drm==1', {
+          'sources!': [
+            'browser/chromeos/xinput_hierarchy_changed_event_listener.cc',
+            'browser/chromeos/xinput_hierarchy_changed_event_listener.h',
+            'browser/chromeos/xinput_hierarchy_changed_event_listener_aura.cc',
+          ],
+        }],
         ['chromeos==0', {
           'sources!': [
             'browser/extensions/api/input_ime/input_ime_api.cc',

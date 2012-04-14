@@ -16,7 +16,8 @@
 #include "ui/base/events/event_utils.h"
 #include "ui/base/keycodes/keyboard_code_conversion.h"
 
-#if defined(OS_CHROMEOS)
+// TODO(nitrous) fix this
+#if defined(OS_CHROMEOS) && defined(USE_X11)
 #include <X11/extensions/XInput2.h>
 #include <X11/keysym.h>
 #include <X11/XF86keysym.h>
@@ -44,7 +45,7 @@ namespace {
 
 const int kBadDeviceId = -1;
 
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
 const char kNeo2LayoutId[] = "xkb:de:neo:ger";
 
 // A key code and a flag we should use when a key is remapped to |remap_to|.
@@ -148,14 +149,14 @@ const PrefService* GetPrefService() {
 
 EventRewriter::EventRewriter()
     : last_device_id_(kBadDeviceId),
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
       xkeyboard_(NULL),
 #endif
       pref_service_(NULL) {
   // The ash shell isn't instantiated for our unit tests.
   if (ash::Shell::HasInstance())
     ash::Shell::GetPrimaryRootWindow()->AddRootWindowObserver(this);
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   if (base::chromeos::IsRunningOnChromeOS()) {
     chromeos::XInputHierarchyChangedEventListener::GetInstance()
         ->AddObserver(this);
@@ -167,7 +168,7 @@ EventRewriter::EventRewriter()
 EventRewriter::~EventRewriter() {
   if (ash::Shell::HasInstance())
     ash::Shell::GetPrimaryRootWindow()->RemoveRootWindowObserver(this);
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   if (base::chromeos::IsRunningOnChromeOS()) {
     chromeos::XInputHierarchyChangedEventListener::GetInstance()
         ->RemoveObserver(this);
@@ -222,12 +223,12 @@ ash::EventRewriterDelegate::Action EventRewriter::RewriteOrFilterLocatedEvent(
 }
 
 void EventRewriter::OnKeyboardMappingChanged(const aura::RootWindow* root) {
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   RefreshKeycodes();
 #endif
 }
 
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
 void EventRewriter::DeviceAdded(int device_id) {
   DCHECK_NE(XIAllDevices, device_id);
   DCHECK_NE(XIAllMasterDevices, device_id);
@@ -360,7 +361,7 @@ KeyCode EventRewriter::NativeKeySymToNativeKeycode(KeySym keysym) {
   }
   return 0U;
 }
-#endif
+#endif  // defined(OS_CHROMEOS) && defined(USE_X11)
 
 void EventRewriter::Rewrite(ui::KeyEvent* event) {
 #if defined(OS_CHROMEOS)
@@ -396,7 +397,7 @@ void EventRewriter::GetRemappedModifierMasks(
     unsigned int original_native_modifiers,
     int* remapped_flags,
     unsigned int* remapped_native_modifiers) const {
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   // TODO(glotov): remove the following condition when we do not restart chrome
   // when user logs in as guest. See Rewrite() for details.
   if (chromeos::UserManager::Get()->IsLoggedInAsGuest() &&
@@ -461,17 +462,17 @@ bool EventRewriter::RewriteModifiers(ui::KeyEvent* event) {
   // restart chrome process. In future this is to be changed.
   // TODO(glotov): remove the following condition when we do not restart chrome
   // when user logs in as guest.
- #if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
    if (chromeos::UserManager::Get()->IsLoggedInAsGuest() &&
        chromeos::BaseLoginDisplayHost::default_host())
      return false;
- #endif  // defined(OS_CHROMEOS)
+#endif  // defined(OS_CHROMEOS)
   const PrefService* pref_service =
       pref_service_ ? pref_service_ : GetPrefService();
   if (!pref_service)
     return false;
 
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   DCHECK_EQ(chromeos::input_method::kControlKey,
             kModifierRemappingCtrl->remap_to);
 
@@ -561,7 +562,7 @@ bool EventRewriter::RewriteModifiers(ui::KeyEvent* event) {
 
 bool EventRewriter::RewriteNumPadKeys(ui::KeyEvent* event) {
   bool rewritten = false;
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   XEvent* xev = event->native_event();
   XKeyEvent* xkey = &(xev->xkey);
 
@@ -643,7 +644,7 @@ bool EventRewriter::RewriteNumPadKeys(ui::KeyEvent* event) {
 
 bool EventRewriter::RewriteBackspaceAndArrowKeys(ui::KeyEvent* event) {
   bool rewritten = false;
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   // On a Chromebook keyboard, modifier keys can be used to access extended
   // keyboard shortcuts. On other keyboards, keys such as delete and page up are
   // already available, so we do not need to rewrite anything here.
@@ -732,7 +733,7 @@ bool EventRewriter::RewriteBackspaceAndArrowKeys(ui::KeyEvent* event) {
 }
 
 void EventRewriter::RewriteLocatedEvent(ui::LocatedEvent* event) {
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   if (event->flags() & ui::EF_IS_SYNTHESIZED)
     return;
 
@@ -778,7 +779,7 @@ void EventRewriter::OverwriteEvent(ui::KeyEvent* event,
                                    unsigned int new_native_state,
                                    ui::KeyboardCode new_keycode,
                                    int new_flags) {
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   XEvent* xev = event->native_event();
   XKeyEvent* xkey = &(xev->xkey);
   xkey->keycode = new_native_keycode;
