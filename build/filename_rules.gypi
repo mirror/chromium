@@ -56,7 +56,7 @@
 
     ['use_x11!=1', {
       'sources/': [
-        ['exclude', '_(chromeos|x|x11)(_unittest)?\\.(h|cc)$'],
+        ['exclude', '_(x|x11)(_unittest)?\\.(h|cc)$'],
         ['exclude', '(^|/)x11_[^/]*\\.(h|cc)$'],
       ],
     }],
