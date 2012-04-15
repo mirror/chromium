@@ -3775,6 +3775,7 @@
         'browser/ui/webui/options2/font_settings_handler2.cc',
         'browser/ui/webui/options2/font_settings_handler2.h',
         'browser/ui/webui/options2/font_settings_utils2.h',
+        'browser/ui/webui/options2/font_settings_utils2_drm.cc',
         'browser/ui/webui/options2/font_settings_utils2_mac.mm',
         'browser/ui/webui/options2/font_settings_utils2_win.cc',
         'browser/ui/webui/options2/font_settings_utils2_x11.cc',
