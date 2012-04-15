@@ -4136,6 +4136,7 @@
         'browser/ui/webui/options2/font_settings_handler.cc',
         'browser/ui/webui/options2/font_settings_handler.h',
         'browser/ui/webui/options2/font_settings_utils.h',
+        'browser/ui/webui/options2/font_settings_utils_drm.cc',
         'browser/ui/webui/options2/font_settings_utils_mac.mm',
         'browser/ui/webui/options2/font_settings_utils_win.cc',
         'browser/ui/webui/options2/font_settings_utils_x11.cc',
