@@ -52,7 +52,10 @@ ChromeShellDelegate::~ChromeShellDelegate() {
 }
 
 bool ChromeShellDelegate::IsUserLoggedIn() {
-#if defined(OS_CHROMEOS)
+#if defined(USE_DRM)
+  // TODO(nitrous)
+  return true;
+#elif defined(OS_CHROMEOS)
   // When running a Chrome OS build outside of a device (i.e. on a developer's
   // workstation), pretend like we're always logged in.
   if (!base::chromeos::IsRunningOnChromeOS())

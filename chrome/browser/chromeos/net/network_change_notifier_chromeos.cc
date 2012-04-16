@@ -84,7 +84,12 @@ void NetworkChangeNotifierChromeos::OnNetworkManagerChanged(
 }
 
 bool NetworkChangeNotifierChromeos::IsCurrentlyOffline() const {
+#if defined(USE_DRM)
+  // TODO (nitrous)
+  return false;
+#else
   return !IsOnline(connection_state_);
+#endif
 }
 
 void NetworkChangeNotifierChromeos::OnNetworkChanged(

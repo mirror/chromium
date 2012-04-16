@@ -138,7 +138,10 @@ XKeyboardImpl::XKeyboardImpl(const InputMethodUtil& util)
   // to Num Lock.
   // TODO(yusukes): Check the assumption is really okay. If not, modify the Aura
   // code, and then remove the CHECK below.
+#if defined(USE_X11)
+  // TODO(nitrous)
   CHECK(!is_running_on_chrome_os_ || (num_lock_mask_ == Mod2Mask));
+#endif
   GetLockedModifiers(&current_caps_lock_status_, &current_num_lock_status_);
 
   for (size_t i = 0; i < arraysize(kCustomizableKeys); ++i) {

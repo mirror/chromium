@@ -13,11 +13,16 @@ namespace base {
 namespace chromeos {
 
 bool IsRunningOnChromeOS() {
+#if defined(USE_DRM)
+  // TODO(nitrous) fix this
+  return true;
+#else
   // Check if the user name is chronos. Note that we don't go with
   // getuid() + getpwuid_r() as it may end up reading /etc/passwd, which
   // can be expensive.
   const char* user = getenv("USER");
   return user && strcmp(user, "chronos") == 0;
+#endif
 }
 
 }  // namespace chromeos
