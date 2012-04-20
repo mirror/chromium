@@ -288,6 +288,7 @@ unsigned int XKeyboardImpl::GetNumLockMask() {
   XkbFreeKeyboard(xkb_desc, 0, True /* free all components */);
 #else
   // TODO(nitrous)
+  real_mask = Mod2Mask;
   NOTIMPLEMENTED();
 #endif
   return real_mask;
