@@ -31,6 +31,10 @@
 #include "content/browser/zygote_host_impl_linux.h"
 #endif
 
+#if defined(USE_DRM)
+#include "ui/aura/root_window_host_drm.h"
+#endif
+
 #if defined(OS_POSIX)
 #include "base/global_descriptors_posix.h"
 #endif
@@ -171,6 +175,15 @@ class ChildProcessLauncher::Context
             kSandboxIPCChannel + base::GlobalDescriptors::kBaseDescriptor));
       }
 #endif  // defined(OS_POSIX) && !defined(OS_MACOSX)
+
+#if defined(USE_DRM)
+      if (process_type == switches::kGpuProcess) {
+	const int drm_fd = aura::RootWindowHostDRM::GetDRMFd();
+        fds_to_map.push_back(std::make_pair(
+            drm_fd,
+            kDRMFd + base::GlobalDescriptors::kBaseDescriptor));
+      }
+#endif
 
       // Actually launch the app.
       base::LaunchOptions options;

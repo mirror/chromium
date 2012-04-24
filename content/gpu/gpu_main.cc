@@ -34,6 +34,12 @@
 #include "ui/base/x/x11_util.h"
 #endif
 
+#if defined(USE_DRM)
+#include "base/global_descriptors_posix.h"
+#include "content/common/chrome_descriptors.h"
+#include "ui/aura/root_window_host_drm.h"
+#endif
+
 #if defined(OS_LINUX)
 #include "content/public/common/sandbox_init.h"
 #endif
@@ -46,6 +52,11 @@ int GpuMain(const content::MainFunctionParams& parameters) {
   if (command_line.HasSwitch(switches::kGpuStartupDialog)) {
     ChildProcess::WaitForDebugger("Gpu");
   }
+
+#if defined(USE_DRM)
+  aura::RootWindowHostDRM::SetDRMFd(
+    kDRMFd + base::GlobalDescriptors::kBaseDescriptor);
+#endif
 
   if (!command_line.HasSwitch(switches::kSingleProcess)) {
 #if defined(OS_WIN)

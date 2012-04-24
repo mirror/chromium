@@ -13,6 +13,7 @@
 enum {
   kCrashDumpSignal = kPrimaryIPCChannel + 1,
   kSandboxIPCChannel = kPrimaryIPCChannel + 2,  // http://code.google.com/p/chromium/LinuxSandboxIPC
+  kDRMFd = kPrimaryIPCChannel + 3,
 };
 
 #endif  // CONTENT_COMMON_CHROME_DESCRIPTORS_H_
