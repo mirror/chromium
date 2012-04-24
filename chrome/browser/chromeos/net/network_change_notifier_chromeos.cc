@@ -86,7 +86,12 @@ void NetworkChangeNotifierChromeos::OnNetworkManagerChanged(
 
 net::NetworkChangeNotifier::ConnectionType
 NetworkChangeNotifierChromeos::GetCurrentConnectionType() const {
+#if defined(USE_DRM)
+  // TODO (nitrous)
+  return NetworkChangeNotifier::CONNECTION_UNKNOWN;
+#else
   return connection_type_;
+#endif
 }
 
 void NetworkChangeNotifierChromeos::OnNetworkChanged(
