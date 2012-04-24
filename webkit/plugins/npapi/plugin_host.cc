@@ -746,7 +746,7 @@ NPError NPN_GetValue(NPP id, NPNVariable variable, void* value) {
         return NPERR_INVALID_INSTANCE_ERROR;
       }
       gfx::PluginWindowHandle handle = plugin->window_handle();
-      *((void**)value) = (void*)handle;
+      *((void**)value) = (void*)(intptr_t)handle;
       rv = NPERR_NO_ERROR;
       break;
     }
