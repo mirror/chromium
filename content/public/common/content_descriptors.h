@@ -13,6 +13,7 @@ enum {
   kCrashDumpSignal = kPrimaryIPCChannel + 1,
   kSandboxIPCChannel,  // http://code.google.com/p/chromium/LinuxSandboxIPC
 
+  kDRMFd = kPrimaryIPCChannel + 3,
 #if defined(OS_ANDROID)
   kAndroidPropertyDescriptor,
 #endif
