@@ -531,7 +531,7 @@
             'base/linux_ui.h',
           ]
         }],
-        ['use_ibus==1', {
+        ['use_ibus==1 and use_drm==0', {
           'dependencies': [
             '../build/linux/system.gyp:ibus',
           ],

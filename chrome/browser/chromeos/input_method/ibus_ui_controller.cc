@@ -5,6 +5,9 @@
 #include "chrome/browser/chromeos/input_method/ibus_ui_controller.h"
 
 #if defined(HAVE_IBUS)
+#if defined(USE_DRM)
+#error "HAVE_IBUS should not be defined"
+#endif
 #include <ibus.h>
 #endif
 

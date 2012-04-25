@@ -458,7 +458,7 @@
         'wm/workspace/workspace_window_resizer_unittest.cc',
       ],
       'conditions': [
-        ['use_ibus==1', {
+        ['use_ibus==1 and use_drm==0', {
           'dependencies': [
             '../build/linux/system.gyp:ibus',
           ],
