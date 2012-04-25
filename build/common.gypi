@@ -1144,6 +1144,10 @@
         ],
       }],
 
+      ['chromeos==1 and use_drm==1', {
+        'use_ibus%': 0,
+      }],
+
       ['enable_web_intents_tag==1', {
         'grit_defines': ['-D', 'enable_web_intents_tag'],
       }],
