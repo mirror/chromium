@@ -588,7 +588,7 @@
         '<(SHARED_INTERMEDIATE_DIR)/ash/ash_resources/ash_wallpaper_resources.rc',
       ],
       'conditions': [
-        ['use_ibus==1', {
+        ['use_ibus==1 and use_drm==0', {
           'dependencies': [
             '../build/linux/system.gyp:ibus',
           ],
