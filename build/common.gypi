@@ -1061,7 +1061,7 @@
       }],
 
       # Set use_ibus to 1 to enable ibus support.
-      ['use_virtual_keyboard==1 and chromeos==1', {
+      ['use_virtual_keyboard==1 and chromeos==1 and use_drm==0', {
         'use_ibus%': 1,
       }, {
         'use_ibus%': 0,
