@@ -239,7 +239,7 @@ class RenderViewImplTest : public content::RenderViewTest {
                                      flags);
     output->assign(1, static_cast<char16>(c));
     return 1;
-#elif defined(OS_LINUX)
+#elif defined(OS_LINUX) && !defined(USE_DRM)
     // We ignore |layout|, which means we are only testing the layout of the
     // current locale. TODO(estade): fix this to respect |layout|.
     std::vector<GdkEvent*> events;
