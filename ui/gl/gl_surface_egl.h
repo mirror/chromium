@@ -38,6 +38,7 @@ class GL_EXPORT GLSurfaceEGL : public GLSurface {
 
   // Implement GLSurface.
   virtual EGLDisplay GetDisplay() OVERRIDE;
+  virtual EGLConfig GetConfig() OVERRIDE;
 
   static bool InitializeOneOff();
   static EGLDisplay GetHardwareDisplay();
