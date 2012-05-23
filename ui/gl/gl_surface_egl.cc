@@ -166,6 +166,10 @@ EGLDisplay GLSurfaceEGL::GetDisplay() {
   return software_ ? g_software_display : g_display;
 }
 
+EGLConfig GLSurfaceEGL::GetConfig() {
+  return software_ ? g_software_config : g_config;
+}
+
 EGLDisplay GLSurfaceEGL::GetHardwareDisplay() {
   return g_display;
 }
