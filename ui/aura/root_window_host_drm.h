@@ -61,6 +61,7 @@ class RootWindowHostDRM : public RootWindowHost,
   virtual gfx::Point QueryMouseLocation() OVERRIDE;
   virtual void MoveCursorTo(const gfx::Point& location) OVERRIDE;
   virtual void PostNativeEvent(const base::NativeEvent& event) OVERRIDE;
+  virtual void OnDeviceScaleFactorChanged(float device_scale_factor) OVERRIDE;
 
   // Nothing to do on DRM
   virtual void ToggleFullScreen() {};
@@ -73,11 +74,20 @@ class RootWindowHostDRM : public RootWindowHost,
   virtual bool GrabSnapshot(
       const gfx::Rect& snapshot_bounds,
       std::vector<unsigned char>* png_representation) { return true; };
-  virtual void OnDeviceScaleFactorChanged(float device_scale_factor) {};
 
   // RootWindowHostDRM private functions
   bool SetupKMS();
   xkb_desc *CreateXKB();
+
+  // Looks up and returns the cursor image from the image library.
+  ui::PlatformCursor GetPlatformCursor(gfx::NativeCursor);
+
+  // Sets the current DRM cursor to |cursor|.  Does not check or update
+  // |current_cursor_|.
+  void SetCursorInternal(gfx::NativeCursor cursor);
+
+  // Sets the DRM cursor to the current location.
+  void UpdateDRMCursor();
 
   RootWindow* root_window_;
 
@@ -93,6 +103,13 @@ class RootWindowHostDRM : public RootWindowHost,
   // Current Aura cursor.
   gfx::NativeCursor current_cursor_;
   gfx::Point cursor_position_;
+  ui::PlatformCursor current_platform_cursor_;
+
+  class ImageCursors;
+  scoped_ptr<ImageCursors> image_cursors_;
+
+  // For hiding the cursor.
+  ui::Cursor empty_cursor_;
 
   // The default cursor is showed after startup, and hidden when touch pressed.
   // Once mouse moved, the cursor is immediately displayed.
