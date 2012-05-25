@@ -27,17 +27,28 @@
 #include "ui/aura/root_window.h"
 #include "ui/base/cursor/cursor.h"
 #include "ui/base/keycodes/keyboard_codes.h"
+#include "ui/base/resource/resource_bundle.h"
 #include "ui/compositor/layer.h"
+#include "ui/gfx/image/image_skia.h"
+#include "ui/gfx/skia_util.h"
 
 using std::max;
 using std::min;
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <errno.h>
+#include <png.h>
+
 struct dumb_bo {
-    uint32_t handle;
-    uint32_t size;
-    void *ptr;
-    int map_count;
-    uint32_t pitch;
+  uint32_t handle;
+  uint32_t size;
+  void *ptr;
+  int map_count;
+  uint32_t pitch;
+  int hot_x;
+  int hot_y;
 };
 
 namespace aura {
@@ -45,6 +56,10 @@ namespace aura {
 namespace {
 
 int g_drm_fd;
+
+// DRM supports only 64x64 cursors as of kernel 3.4.
+const int kDrmCursorWidth = 64;
+const int kDrmCursorHeight = 64;
 
 RootWindowHostDRM* GetRootWindowHostInstance() {
   static RootWindowHostDRM* g_root_window_host;
@@ -58,10 +73,8 @@ RootWindowHostDRM* GetRootWindowHostInstance() {
 
 }  // namespace
 
-static struct dumb_bo *dumb_bo_create(int fd,
-                          const unsigned width, const unsigned height,
-                          const unsigned bpp)
-{
+static struct dumb_bo *dumb_bo_create(
+    int fd, const unsigned width, const unsigned height, const unsigned bpp) {
   struct drm_mode_create_dumb arg;
   struct dumb_bo *bo;
   int ret;
@@ -89,8 +102,7 @@ static struct dumb_bo *dumb_bo_create(int fd,
   return NULL;
 }
 
-static int dumb_bo_map(int fd, struct dumb_bo *bo)
-{
+static int dumb_bo_map(int fd, struct dumb_bo *bo) {
   struct drm_mode_map_dumb arg;
   int ret;
   void *map;
@@ -117,8 +129,7 @@ static int dumb_bo_map(int fd, struct dumb_bo *bo)
 }
 
 #if 0
-static int dumb_bo_destroy(int fd, struct dumb_bo *bo)
-{
+static int dumb_bo_destroy(int fd, struct dumb_bo *bo) {
   struct drm_mode_destroy_dumb arg;
   int ret;
 
@@ -138,6 +149,143 @@ static int dumb_bo_destroy(int fd, struct dumb_bo *bo)
 }
 #endif
 
+class RootWindowHostDRM::ImageCursors {
+ public:
+  ImageCursors(int drm_fd)
+      : scale_factor_(0.0),
+        drm_fd_(drm_fd) {
+  }
+
+  void Reload(float scale_factor) {
+    if (scale_factor_ == scale_factor)
+      return;
+    scale_factor_ = scale_factor;
+    UnloadAll();
+    // The cursor's hot points are defined in chromeos's
+    // src/platforms/assets/cursors/*.cfg files.
+    LoadImageCursor(ui::kCursorNull, IDR_AURA_CURSOR_PTR, 9, 5);
+    LoadImageCursor(ui::kCursorPointer, IDR_AURA_CURSOR_PTR, 9, 5);
+    LoadImageCursor(ui::kCursorNoDrop, IDR_AURA_CURSOR_NO_DROP, 9, 5);
+    LoadImageCursor(ui::kCursorCopy, IDR_AURA_CURSOR_COPY, 9, 5);
+    LoadImageCursor(ui::kCursorHand, IDR_AURA_CURSOR_HAND, 9, 4);
+    LoadImageCursor(ui::kCursorMove, IDR_AURA_CURSOR_MOVE, 12, 12);
+    LoadImageCursor(ui::kCursorNorthEastResize,
+                    IDR_AURA_CURSOR_NORTH_EAST_RESIZE, 12, 11);
+    LoadImageCursor(ui::kCursorSouthWestResize,
+                    IDR_AURA_CURSOR_SOUTH_WEST_RESIZE, 12, 11);
+    LoadImageCursor(ui::kCursorSouthEastResize,
+                    IDR_AURA_CURSOR_SOUTH_EAST_RESIZE, 11, 11);
+    LoadImageCursor(ui::kCursorNorthWestResize,
+                    IDR_AURA_CURSOR_NORTH_WEST_RESIZE, 11, 11);
+    LoadImageCursor(ui::kCursorNorthResize,
+                    IDR_AURA_CURSOR_NORTH_RESIZE, 11, 10);
+    LoadImageCursor(ui::kCursorSouthResize,
+                    IDR_AURA_CURSOR_SOUTH_RESIZE, 11, 10);
+    LoadImageCursor(ui::kCursorEastResize, IDR_AURA_CURSOR_EAST_RESIZE, 11, 11);
+    LoadImageCursor(ui::kCursorWestResize, IDR_AURA_CURSOR_WEST_RESIZE, 11, 11);
+    LoadImageCursor(ui::kCursorIBeam, IDR_AURA_CURSOR_IBEAM, 12, 11);
+
+    // TODO (varunjain): add more cursors once we have assets.
+  }
+
+  ~ImageCursors() {
+    UnloadAll();
+  }
+
+  void UnloadAll() {
+    std::map<int, ui::Cursor>::iterator it;
+    for (it = cursors_.begin(); it != cursors_.end(); ++it)
+      it->second.UnrefCustomCursor();
+  }
+
+  // Returns true if we have an image resource loaded for the |native_cursor|.
+  bool IsImageCursor(gfx::NativeCursor native_cursor) {
+    return cursors_.find(native_cursor.native_type()) != cursors_.end();
+  }
+
+  // Gets the DRM Cursor corresponding to the |native_cursor|.
+  ui::Cursor ImageCursorFromNative(gfx::NativeCursor native_cursor) {
+    DCHECK(cursors_.find(native_cursor.native_type()) != cursors_.end());
+    return cursors_[native_cursor.native_type()];
+  }
+
+ private:
+  struct dumb_bo* SkBitmapToCursorBO(const SkBitmap* bitmap) {
+    DCHECK(bitmap->config() == SkBitmap::kARGB_8888_Config);
+
+    if (bitmap->width() == 0 || bitmap->height() == 0)
+      return NULL;
+
+    struct dumb_bo* bo =
+        dumb_bo_create(drm_fd_, kDrmCursorWidth, kDrmCursorHeight, 32);
+    CHECK(bo);
+
+    int ret = dumb_bo_map(drm_fd_, bo);
+    DCHECK_EQ(ret, 0);
+
+    // Copy bitmap contents into a temporary buffer so it can be later converted
+    // to 64x64.
+    uint32_t* bitmap_buffer = new uint32_t[bitmap->width() * bitmap->height()];
+    CHECK(bitmap_buffer) << "Could not create bitmap buffer.";
+
+    bitmap->lockPixels();
+    gfx::ConvertSkiaToRGBA(
+        static_cast<const unsigned char*>(bitmap->getPixels()),
+        bitmap->width() * bitmap->height(),
+        reinterpret_cast<unsigned char*>(bitmap_buffer));
+    bitmap->unlockPixels();
+
+    // Crop or expand the bitmap to a DRM cursor.
+    unsigned char* drm_buffer = static_cast<unsigned char*>(bo->ptr);
+    memset(drm_buffer, 0, bo->size);
+
+    for (int y = 0; y < std::min(bitmap->height(), kDrmCursorHeight); y++) {
+      memcpy(&drm_buffer[y * bo->pitch],
+             &bitmap_buffer[y * bitmap->width()],
+             std::min(static_cast<uint32_t>(bitmap->width() * 4), bo->pitch));
+    }
+    delete [] bitmap_buffer;
+
+    return bo;
+  }
+
+  ui::Cursor CreateReffedCustomDRMCursor(int id, struct dumb_bo* bo) {
+    ui::Cursor cursor = id;
+    cursor.SetPlatformCursor(bo);
+    cursor.RefCustomCursor();
+    return cursor;
+  }
+
+  // Creates a DRM Cursor from an image resource and puts it in the cursor map.
+  void LoadImageCursor(int id, int resource_id, int hot_x, int hot_y) {
+    const gfx::ImageSkia* image =
+        ui::ResourceBundle::GetSharedInstance().GetImageSkiaNamed(resource_id);
+    const SkBitmap& bitmap = SkBitmap(*image);
+    // We never use scaled cursor, but the following DCHECK fails
+    // because the method above computes the actual scale from the image
+    // size instead of obtaining from the resource data, and the some
+    // of cursors are indeed not 2x size of the 2x images.
+    // TODO(oshima): Fix this and enable the following DCHECK.
+    // DCHECK_EQ(actual_scale, scale_factor_);
+    struct dumb_bo* bo = SkBitmapToCursorBO(&bitmap);
+    bo->hot_x = std::max(std::min(hot_x, bitmap.width()), 0);
+    bo->hot_y = std::max(std::min(hot_y, bitmap.height()), 0);
+
+    cursors_[id] = CreateReffedCustomDRMCursor(id, bo);
+    // |bitmap| is owned by the resource bundle. So we do not need to free it.
+  }
+
+  // A map to hold all image cursors. It maps the cursor ID to the Cursor.
+  std::map<int, ui::Cursor> cursors_;
+
+  float scale_factor_;
+
+  // DRM device handle.
+  int drm_fd_;
+
+  DISALLOW_COPY_AND_ASSIGN(ImageCursors);
+};
+
 RootWindowHostDRM::RootWindowHostDRM(const gfx::Rect& bounds)
     : root_window_(NULL),
       modifiers_(0),
@@ -145,16 +293,12 @@ RootWindowHostDRM::RootWindowHostDRM(const gfx::Rect& bounds)
       cursor_position_(0, 0),
       is_cursor_visible_(true),
       bounds_(bounds) {
-  struct dumb_bo *bo;
-  uint32_t *ptr;
-  int ret;
-
   xkb_ = CreateXKB();
   CHECK(xkb_);
 
   fd_ = GetDRMFd();
   if (fd_ < 0) {
-    /* Probably permissions error */
+    // Probably permissions error
     return;
   }
   display_ = gbm_create_device(fd_);
@@ -173,21 +317,21 @@ RootWindowHostDRM::RootWindowHostDRM(const gfx::Rect& bounds)
     return;
   }
 
-  bo = dumb_bo_create(fd_, 64, 64, 32);
-  DCHECK_NE(bo, (struct dumb_bo *)NULL);
+  // Load cursors.
+  image_cursors_ = scoped_ptr<ImageCursors>(new ImageCursors(fd_));
 
-  ret = dumb_bo_map(fd_, bo);
+  // Create invisible cursor.
+  struct dumb_bo* bo =
+      dumb_bo_create(fd_, kDrmCursorWidth, kDrmCursorHeight, 32);
+  CHECK(bo);
+  int ret = dumb_bo_map(fd_, bo);
   DCHECK_EQ(ret, 0);
-  (void)ret; // Prevent warning in release mode.
+  memset(bo->ptr, 0, bo->size);
+  empty_cursor_ = ui::Cursor(ui::kCursorNone);
+  empty_cursor_.SetPlatformCursor(bo);
 
-  ptr = (uint32_t *)(bo->ptr);
-
-  /* make the cursor a white square */
-  for (int i = 0; i < 64 * 64; i++)
-    ptr[i] = 0xFFFFFFFF;
-
-  ret = drmModeSetCursor(fd_, kms_.encoder->crtc_id, bo->handle, 64, 64);
-  drmModeMoveCursor(fd_, kms_.encoder->crtc_id, 0, 0);
+  current_platform_cursor_ = bo;
+//  drmModeMoveCursor(fd_, kms_.encoder->crtc_id, 0, 0);
 
   base::MessagePumpForUI::SetDefaultDispatcher(this);
 }
@@ -199,6 +343,8 @@ RootWindowHostDRM::~RootWindowHostDRM() {
     drmModeSetCrtc(fd_, saved_crtc_->crtc_id, saved_crtc_->buffer_id,
                    saved_crtc_->x, saved_crtc_->y,
                    &kms_.connector->connector_id, 1, &saved_crtc_->mode);
+
+  image_cursors_.reset();
 
   if (display_)
     gbm_device_destroy(display_);
@@ -273,7 +419,7 @@ bool RootWindowHostDRM::Dispatch(const base::NativeEvent& event) {
       event->x = x = std::min(std::max(x, 0), bounds_.width() - 1);
       event->y = y = std::min(std::max(y, 0), bounds_.height() - 1);
       cursor_position_= gfx::Point(x, y);
-      drmModeMoveCursor(fd_, kms_.encoder->crtc_id, x, y);
+      UpdateDRMCursor();
       event->modifiers = modifiers_;
       MouseEvent ev(event);
       root_window_->DispatchMouseEvent(&ev);
@@ -349,8 +495,45 @@ bool RootWindowHostDRM::Dispatch(const base::NativeEvent& event) {
   return true;
 }
 
+ui::PlatformCursor RootWindowHostDRM::GetPlatformCursor(
+    gfx::NativeCursor cursor) {
+  ui::Cursor drm_cursor;
+  if (image_cursors_->IsImageCursor(cursor))
+    drm_cursor = image_cursors_->ImageCursorFromNative(cursor);
+  else if (cursor == ui::kCursorCustom)
+    drm_cursor = cursor;
+  else if (cursor == ui::kCursorNone)
+    drm_cursor = empty_cursor_;
+  else
+    drm_cursor = image_cursors_->ImageCursorFromNative(ui::kCursorNull);
+
+  struct dumb_bo* cursor_bo = drm_cursor.platform();
+  if (!cursor_bo)
+    LOG(ERROR) << "Invalid cursor, cursors may not have been loaded.";
+  return cursor_bo;
+}
+
+void RootWindowHostDRM::SetCursorInternal(gfx::NativeCursor cursor) {
+  struct dumb_bo* cursor_bo = GetPlatformCursor(cursor);
+  CHECK(cursor_bo);
+  int ret = drmModeSetCursor(fd_, kms_.encoder->crtc_id, cursor_bo->handle,
+                             kDrmCursorWidth, kDrmCursorHeight);
+  if (ret)
+    LOG(ERROR) << "Unable to set cursor: " << ret;
+}
+
+void RootWindowHostDRM::UpdateDRMCursor() {
+  struct dumb_bo* cursor_bo = current_platform_cursor_;
+  CHECK(cursor_bo);
+  int drm_x = cursor_position_.x() - cursor_bo->hot_x;
+  int drm_y = cursor_position_.y() - cursor_bo->hot_y;
+  drmModeMoveCursor(fd_, kms_.encoder->crtc_id, drm_x, drm_y);
+}
+
 void RootWindowHostDRM::SetRootWindow(RootWindow* root_window) {
   root_window_ = root_window;
+  // The device scale factor is now accessible, so load cursors now.
+  image_cursors_->Reload(root_window_->layer()->device_scale_factor());
 }
 
 RootWindow* RootWindowHostDRM::GetRootWindow() {
@@ -395,6 +578,7 @@ gfx::Point RootWindowHostDRM::GetLocationOnNativeScreen() const {
 void RootWindowHostDRM::SetCursor(gfx::NativeCursor cursor) {
   if (cursor == ui::kCursorNone && is_cursor_visible_) {
     current_cursor_ = cursor;
+    current_platform_cursor_ = GetPlatformCursor(cursor);
     ShowCursor(false);
     return;
   }
@@ -402,9 +586,12 @@ void RootWindowHostDRM::SetCursor(gfx::NativeCursor cursor) {
   if (current_cursor_ == cursor)
     return;
   current_cursor_ = cursor;
+  current_platform_cursor_ = GetPlatformCursor(cursor);
   // Custom web cursors are handled directly.
   if (cursor == ui::kCursorCustom)
     return;
+  if (is_cursor_visible_)
+    SetCursorInternal(cursor);
 }
 
 void RootWindowHostDRM::ShowCursor(bool show) {
@@ -412,6 +599,8 @@ void RootWindowHostDRM::ShowCursor(bool show) {
     return;
 
   is_cursor_visible_ = show;
+  if (is_cursor_visible_)
+    SetCursorInternal(show ? current_cursor_ : ui::kCursorNone);
 }
 
 gfx::Point RootWindowHostDRM::QueryMouseLocation() {
@@ -420,11 +609,16 @@ gfx::Point RootWindowHostDRM::QueryMouseLocation() {
 
 void RootWindowHostDRM::MoveCursorTo(const gfx::Point& location) {
   cursor_position_ = location;
+  UpdateDRMCursor();
 }
 
 void RootWindowHostDRM::PostNativeEvent(
     const base::NativeEvent& native_event) {
   NOTIMPLEMENTED();
+}
+
+void RootWindowHostDRM::OnDeviceScaleFactorChanged(float device_scale_factor) {
+  image_cursors_->Reload(device_scale_factor);
 }
 
 // static
