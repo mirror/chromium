@@ -28,7 +28,7 @@
 #include "ui/views/focus/accelerator_handler.h"
 #include "ui/views/test/test_views_delegate.h"
 
-#if defined(OS_LINUX)
+#if defined(OS_LINUX) && !defined(USE_DRM)
 #include "ui/base/touch/touch_factory.h"
 #endif
 
@@ -72,7 +72,7 @@ ShellBrowserMainParts::~ShellBrowserMainParts() {
 
 #if !defined(OS_MACOSX)
 void ShellBrowserMainParts::PreMainMessageLoopStart() {
-#if defined(OS_LINUX)
+#if defined(OS_LINUX) && !defined(USE_DRM)
   ui::TouchFactory::SetTouchDeviceListFromCommandLine();
 #endif
 }
