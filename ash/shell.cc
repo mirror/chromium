@@ -97,7 +97,13 @@
 #endif
 
 #if defined(OS_CHROMEOS)
+
+#if defined(USE_X11)
+#include "chromeos/display/output_configurator_x11.h"
+#else
 #include "chromeos/display/output_configurator.h"
+#endif  // defined(USE_X11)
+
 #include "ui/aura/dispatcher_linux.h"
 #endif  // defined(OS_CHROMEOS)
 
@@ -174,7 +180,7 @@ Shell::Shell(ShellDelegate* delegate)
       env_filter_(NULL),
       delegate_(delegate),
 #if defined(OS_CHROMEOS)
-      output_configurator_(new chromeos::OutputConfigurator()),
+      output_configurator_(new chromeos::OutputConfiguratorX11()),
 #endif  // defined(OS_CHROMEOS)
       shelf_(NULL),
       panel_layout_manager_(NULL),
@@ -187,7 +193,7 @@ Shell::Shell(ShellDelegate* delegate)
   static_cast<aura::DispatcherLinux*>(
       aura::Env::GetInstance()->GetDispatcher())->AddDispatcherForRootWindow(
           output_configurator());
-#endif  // defined(OS_CHROMEOS)
+#endif  // defined(OS_CHROMEOS) && defined (USE_X11)
 }
 
 Shell::~Shell() {
@@ -269,7 +275,7 @@ Shell::~Shell() {
   static_cast<aura::DispatcherLinux*>(
       aura::Env::GetInstance()->GetDispatcher())->RemoveDispatcherForRootWindow(
           output_configurator());
-#endif  // defined(OS_CHROMEOS)
+#endif  // defined(OS_CHROMEOS) && defined (USE_X11)
 }
 
 // static

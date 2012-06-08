@@ -109,6 +109,8 @@
         'dbus/update_engine_client.h',
         'display/output_configurator.cc',
         'display/output_configurator.h',
+        'display/output_configurator_x11.cc',
+        'display/output_configurator_x11.h',
         'network/network_sms_handler.cc',
         'network/network_sms_handler.h',
       ],
