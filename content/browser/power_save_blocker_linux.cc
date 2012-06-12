@@ -4,12 +4,14 @@
 
 #include "content/browser/power_save_blocker.h"
 
+#if defined (USE_X11)
 #include <X11/Xlib.h>
 #include <X11/extensions/dpms.h>
 // Xlib #defines Status, but we can't have that for some of our headers.
 #ifdef Status
 #undef Status
 #endif
+#endif  // defined (USE_X11)
 
 #include "base/basictypes.h"
 #include "base/bind.h"
@@ -24,7 +26,7 @@
 #include "base/message_loop_proxy.h"
 #if defined(TOOLKIT_GTK)
 #include "base/message_pump_gtk.h"
-#else
+#elif defined(USE_X11)
 #include "base/message_pump_aurax11.h"
 #endif
 #include "base/nix/xdg_util.h"
@@ -297,6 +299,7 @@ void PowerSaveBlocker::Delegate::RemoveBlock(DBusAPI api) {
 
 // static
 bool PowerSaveBlocker::Delegate::DPMSEnabled() {
+#if defined (USE_X11)
   Display* display = base::MessagePumpForUI::GetDefaultXDisplay();
   BOOL enabled = false;
   int dummy;
@@ -305,6 +308,9 @@ bool PowerSaveBlocker::Delegate::DPMSEnabled() {
     DPMSInfo(display, &state, &enabled);
   }
   return enabled;
+#else
+  return false;
+#endif  // defined (USE_X11)
 }
 
 // static
