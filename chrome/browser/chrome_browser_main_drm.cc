@@ -47,10 +47,6 @@ void WarnAboutMinimumSystemRequirements() {
   // Nothing to warn about on DRM right now.
 }
 
-void RecordBrowserStartupTime() {
-  // Not implemented on DRM for now.
-}
-
 // From browser_main_win.h, stubs until we figure out the right thing...
 
 int DoUninstallTasks(bool chrome_still_running) {
