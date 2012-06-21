@@ -304,7 +304,7 @@ void EvdevHandler::ProcessRelativeMotion(input_event *e) {
 void EvdevHandler::ProcessAbsolute(input_event *e)
 {
   if (device_.is_touchpad)
-    ProcessAbsoluteMotion(e);
+    ProcessAbsoluteMotionTouchpad(e);
   else if (device_.is_mt)
     ProcessTouch(e);
   else
