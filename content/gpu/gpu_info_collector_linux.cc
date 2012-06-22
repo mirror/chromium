@@ -172,6 +172,7 @@ std::string CollectDriverVersionATI() {
 // Use NVCtrl extention to query NV driver version.
 // Return empty string on failing.
 std::string CollectDriverVersionNVidia() {
+#if defined(USE_X11)
   Display* display = base::MessagePumpForUI::GetDefaultXDisplay();
   if (!display) {
     LOG(ERROR) << "XOpenDisplay failed.";
@@ -194,6 +195,7 @@ std::string CollectDriverVersionNVidia() {
       return driver_version;
     }
   }
+#endif
   return std::string();
 }
 
