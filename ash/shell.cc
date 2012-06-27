@@ -100,8 +100,8 @@
 
 #if defined(USE_X11)
 #include "chromeos/display/output_configurator_x11.h"
-#else
-#include "chromeos/display/output_configurator.h"
+#elif defined(USE_DRM)
+#include "chromeos/display/output_configurator_drm.h"
 #endif  // defined(USE_X11)
 
 #include "ui/aura/dispatcher_linux.h"
@@ -180,7 +180,15 @@ Shell::Shell(ShellDelegate* delegate)
       env_filter_(NULL),
       delegate_(delegate),
 #if defined(OS_CHROMEOS)
+
+#if defined(USE_X11)
       output_configurator_(new chromeos::OutputConfiguratorX11()),
+#elif defined(USE_DRM)
+      output_configurator_(new chromeos::OutputConfiguratorDRM()),
+#else
+#error "No valid output configurator available."
+#endif
+
 #endif  // defined(OS_CHROMEOS)
       shelf_(NULL),
       panel_layout_manager_(NULL),

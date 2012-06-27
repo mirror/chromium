@@ -18,6 +18,7 @@
 #include <X11/extensions/XKBcommon.h>
 
 #include <algorithm>
+#include <vector>
 
 #include "base/logging.h"
 #include "base/message_loop.h"
@@ -27,6 +28,7 @@
 #include "ui/aura/root_window.h"
 #include "ui/base/cursor/cursor.h"
 #include "ui/base/keycodes/keyboard_codes.h"
+#include "ui/base/output_drm.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/compositor/layer.h"
 #include "ui/gfx/image/image_skia.h"
@@ -640,7 +642,12 @@ RootWindowHost* RootWindowHost::Create(const gfx::Rect& bounds) {
 
 // static
 gfx::Size RootWindowHost::GetNativeScreenSize() {
-  return gfx::Size(1280, 800);
+  std::vector<ui::OutputDRM*> outputs;
+  ui::DRMGetConnectedOutputs(RootWindowHostDRM::GetDRMFd(), &outputs);
+  if (outputs.size() == 0)
+    return gfx::Size(1280, 800);
+  ui::ModeDRM mode = outputs[0]->GetPreferredMode();
+  return gfx::Size(mode.width(), mode.height());
 }
 
 MessageLoop::Dispatcher* CreateDispatcher() {

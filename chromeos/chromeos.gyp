@@ -109,16 +109,27 @@
         'dbus/update_engine_client.h',
         'display/output_configurator.cc',
         'display/output_configurator.h',
+        'display/output_configurator_drm.cc',
+        'display/output_configurator_drm.h',
         'display/output_configurator_x11.cc',
         'display/output_configurator_x11.h',
         'network/network_sms_handler.cc',
         'network/network_sms_handler.h',
       ],
-      'link_settings': {
-        'libraries': [
-          '-lXext',
-        ],
-      },
+      'conditions': [
+        ['use_drm==1', {
+          'dependencies': [
+            '<(DEPTH)/build/linux/system.gyp:drm',
+          ],
+        }],
+        ['use_x11==1', {
+          'link_settings': {
+            'libraries': [
+              '-lXext',
+            ],
+          },
+        }],
+      ],
     },
     {
       # This target contains mocks that can be used to write unit tests.
