@@ -18,9 +18,14 @@ enum EvdevEventType {
   EVDEV_EVENT_RELATIVE_MOTION,
   EVDEV_EVENT_BUTTON,
   EVDEV_EVENT_KEY,
+  EVDEV_EVENT_SCROLL,
 };
 
 struct EvdevMotionEvent {
+  int x, y;
+};
+
+struct EvdevScrollEvent {
   int x, y;
 };
 
@@ -32,6 +37,7 @@ struct EvdevEvent {
   int x, y;
   union {
     EvdevMotionEvent motion;
+    EvdevScrollEvent scroll;
   };
 };
 

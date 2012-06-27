@@ -425,6 +425,15 @@ bool RootWindowHostDRM::Dispatch(const base::NativeEvent& event) {
       root_window_->DispatchMouseEvent(&ev);
     }
     break;
+  case base::EVDEV_EVENT_SCROLL:
+    {
+      event->x = cursor_position_.x();
+      event->y = cursor_position_.y();
+      event->modifiers = modifiers_;
+      ScrollEvent ev(event);
+      root_window_->DispatchScrollEvent(&ev);
+    }
+    break;
   case base::EVDEV_EVENT_BUTTON:
     {
       switch (event->code) {
