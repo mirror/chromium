@@ -74,7 +74,7 @@ struct evdev_input_device {
 
   int type;
 
-  bool is_touchpad, is_mt;
+  bool is_touchpad, is_mt, is_repeatable;
 };
 
 class EvdevHandler : public MessagePumpEpollHandler {
@@ -122,9 +122,9 @@ class EvdevHandler : public MessagePumpEpollHandler {
 
 bool EvdevHandler::Configure() {
   struct input_absinfo absinfo;
-  unsigned long ev_bits[NBITS(EV_MAX)];
-  unsigned long abs_bits[NBITS(ABS_MAX)];
-  unsigned long key_bits[NBITS(KEY_MAX)];
+  unsigned long ev_bits[NBITS(EV_CNT)];
+  unsigned long abs_bits[NBITS(ABS_CNT)];
+  unsigned long key_bits[NBITS(KEY_CNT)];
   bool has_key = false, has_abs = false;
 
   ioctl(fd_, EVIOCGBIT(0, sizeof(ev_bits)), ev_bits);
@@ -152,6 +152,9 @@ bool EvdevHandler::Configure() {
     if (TEST_BIT(key_bits, BTN_TOOL_FINGER) &&
         !TEST_BIT(key_bits, BTN_TOOL_PEN))
       device_.is_touchpad = true;
+    if (TEST_BIT(ev_bits, EV_REP)) {
+      device_.is_repeatable = true;
+    }
   }
 
   // This rule tries to catch accelerometer devices and opt out. We may
@@ -169,6 +172,7 @@ EvdevHandler::EvdevHandler(MessagePumpEpoll *pump, const char *devnode)
   DCHECK_GE(fd_, 0);
   device_.is_touchpad = false;
   device_.is_mt = false;
+  device_.is_repeatable = false;
   devnode_ = strdup(devnode);
   device_.mt.slot = -1;
   device_.rel.dx = 0;
@@ -182,7 +186,7 @@ EvdevHandler::~EvdevHandler() {
 }
 
 void EvdevHandler::ProcessKey(input_event *e) {
-  if (e->value == 2)
+  if (e->value == 2 && !device_.is_repeatable)
     return;
 
   switch (e->code) {
