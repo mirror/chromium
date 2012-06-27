@@ -43,6 +43,7 @@
 #define EVDEV_ABSOLUTE_MT_MOTION   (1 << 2)
 #define EVDEV_ABSOLUTE_MT_UP       (1 << 3)
 #define EVDEV_RELATIVE_MOTION      (1 << 4)
+#define EVDEV_RELATIVE_SCROLL      (1 << 5)
 
 // TODO(msb) fix this
 # define WL_INPUT_DEVICE_TOUCH_DOWN 0
@@ -68,6 +69,7 @@ struct evdev_input_device {
 
   struct {
     uint32_t dx, dy;
+    uint32_t sx, sy;
   } rel;
 
   int type;
@@ -98,6 +100,7 @@ class EvdevHandler : public MessagePumpEpollHandler {
   void NotifyKey(timeval time, uint16_t code, uint32_t value);
   void NotifyRelMotion(timeval time, uint32_t dx, uint32_t dy);
   void NotifyAbsMotion(timeval time, uint32_t x, uint32_t y);
+  void NotifyScroll(timeval time, uint32_t sx, uint32_t sy);
   void NotifyTouch(timeval time, int touch_id,
                    uint32_t x, uint32_t y, int touch_type);
 
@@ -170,6 +173,8 @@ EvdevHandler::EvdevHandler(MessagePumpEpoll *pump, const char *devnode)
   device_.mt.slot = -1;
   device_.rel.dx = 0;
   device_.rel.dy = 0;
+  device_.rel.sx = 0;
+  device_.rel.sy = 0;
 }
 
 EvdevHandler::~EvdevHandler() {
@@ -289,6 +294,8 @@ void EvdevHandler::ProcessAbsoluteMotionTouchpad(
 }
 
 void EvdevHandler::ProcessRelativeMotion(input_event *e) {
+  // TODO(sheckylin) Make this configurable somehow.
+  const int scroll_speed = 106;
   switch (e->code) {
   case REL_X:
     device_.rel.dx += e->value;
@@ -297,6 +304,15 @@ void EvdevHandler::ProcessRelativeMotion(input_event *e) {
   case REL_Y:
     device_.rel.dy += e->value;
     device_.type |= EVDEV_RELATIVE_MOTION;
+    break;
+  case REL_WHEEL:
+    device_.rel.sy += e->value * scroll_speed;
+    device_.type |= EVDEV_RELATIVE_SCROLL;
+    break;
+  case REL_HWHEEL:
+    // The minus sign here is to match the common scroll experience.
+    device_.rel.sx -= e->value * scroll_speed;
+    device_.type |= EVDEV_RELATIVE_SCROLL;
     break;
   }
 }
@@ -317,6 +333,8 @@ bool EvdevHandler::IsMotionEvent(input_event *e) {
     switch (e->code) {
     case REL_X:
     case REL_Y:
+    case REL_WHEEL:
+    case REL_HWHEEL:
       return true;
     }
   case EV_ABS:
@@ -340,6 +358,12 @@ void EvdevHandler::FlushMotion(timeval time) {
     device_.type &= ~EVDEV_RELATIVE_MOTION;
     device_.rel.dx = 0;
     device_.rel.dy = 0;
+  }
+  if (device_.type & EVDEV_RELATIVE_SCROLL) {
+    NotifyScroll(time, device_.rel.sx, device_.rel.sy);
+    device_.type &= ~EVDEV_RELATIVE_SCROLL;
+    device_.rel.sx = 0;
+    device_.rel.sy = 0;
   }
   if (device_.type & EVDEV_ABSOLUTE_MT_DOWN) {
     NotifyTouch(time,
@@ -431,6 +455,15 @@ void EvdevHandler::NotifyRelMotion(timeval time, uint32_t dx, uint32_t dy) {
 }
 void EvdevHandler::NotifyAbsMotion(timeval time, uint32_t x, uint32_t y) {
   NOTIMPLEMENTED();
+}
+void EvdevHandler::NotifyScroll(timeval time, uint32_t sx, uint32_t sy) {
+  EvdevEvent event;
+
+  event.type = EVDEV_EVENT_SCROLL;
+  event.time = time;
+  event.scroll.x = sx;
+  event.scroll.y = sy;
+  pump_->DispatchEvent(&event);
 }
 void EvdevHandler::NotifyTouch(timeval time, int touch_id,
                                uint32_t x, uint32_t y, int touch_type) {

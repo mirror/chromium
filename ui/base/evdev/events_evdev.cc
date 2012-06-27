@@ -358,6 +358,8 @@ EventType EventTypeFromNative(const base::NativeEvent& event) {
     return event->value ? ET_MOUSE_PRESSED : ET_MOUSE_RELEASED;
   case base::EVDEV_EVENT_KEY:
     return event->value ? ET_KEY_PRESSED : ET_KEY_RELEASED;
+  case base::EVDEV_EVENT_SCROLL:
+    return ET_SCROLL;
   default:
     NOTIMPLEMENTED();
     return ET_UNKNOWN;
@@ -370,8 +372,8 @@ int EventFlagsFromNative(const base::NativeEvent& native_event) {
 }
 
 base::TimeDelta EventTimeFromNative(const base::NativeEvent& native_event) {
-  //TODO(msb): implement this
-  return base::TimeDelta();
+  //TODO(sheckylin): implement this
+  return base::TimeDelta::FromMilliseconds(native_event->time.tv_usec);
 }
 
 gfx::Point EventLocationFromNative(const base::NativeEvent& native_event) {
@@ -393,13 +395,28 @@ bool IsMouseEvent(const base::NativeEvent& event) {
 }
 
 int GetMouseWheelOffset(const base::NativeEvent& native_event) {
-  NOTIMPLEMENTED();
-  return 0;
+  return native_event->scroll.y;
 }
 
 bool GetScrollOffsets(const base::NativeEvent& native_event,
                       float* x_offset,
                       float* y_offset) {
+  *x_offset = native_event->scroll.x;
+  *y_offset = native_event->scroll.y;
+  return true;
+}
+
+bool GetFlingData(const base::NativeEvent& native_event,
+                  float* vx,
+                  float* vy,
+                  bool* is_cancel) {
+  return false;
+}
+
+
+bool GetGestureTimes(const base::NativeEvent& native_event,
+                     double* start_time,
+                     double* end_time) {
   return false;
 }
 
