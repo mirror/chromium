@@ -30,7 +30,9 @@ void ChromeBrowserMainExtraPartsAsh::PreProfileInit() {
   } else {
     aura::Env::GetInstance()->SetDisplayManager(new aura::SingleDisplayManager);
     stacking_client_.reset(new aura::DesktopStackingClient);
+#if !defined(USE_DRM)
     gfx::Screen::SetInstance(aura::CreateDesktopScreen());
+#endif
   }
 
 #if defined(FILE_MANAGER_EXTENSION)
