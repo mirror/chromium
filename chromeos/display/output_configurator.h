@@ -51,7 +51,7 @@ class CHROMEOS_EXPORT OutputConfigurator : public MessageLoop::Dispatcher {
   // add/remove events.  Note that Output add/remove events are sent in response
   // to our own reconfiguration operations so spurious events are common.
   // Spurious events will have no effect.
-  virtual bool Dispatch(const base::NativeEvent& event) OVERRIDE;
+  virtual bool Dispatch(const base::NativeEvent& event) = 0;
 
  protected:
   // Container for implementation-specific display system info.
@@ -69,17 +69,17 @@ class CHROMEOS_EXPORT OutputConfigurator : public MessageLoop::Dispatcher {
   // Returns true if the update succeeded or false if it was skipped since no
   // actual change was observed.
   // Note that |output_state_| is not updated by this call.
-  virtual bool TryRecacheOutputs(const DisplayInfo& info) = 0;
+  virtual bool TryRecacheOutputs(const DisplayInfo& info) { return true; }
 
   // Uses the data stored in |output_cache_| and the given |new_state| to
   // configure the output interface and then updates |output_state_| to reflect
   // the new state.
   virtual void UpdateCacheAndOutputToState(const DisplayInfo& info,
-                                           State new_state) = 0;
+                                           State new_state) {}
 
   // A helper to re-cache instance variable state and transition into the
   // appropriate default state for the observed displays.
-  virtual bool RecacheAndUseDefaultState() = 0;
+  virtual bool RecacheAndUseDefaultState() { return true; }
 
   // Checks the |primary_output_index_|, |secondary_output_index_|, and
   // |mirror_supported_| to see how many displays are currently connected and
@@ -92,7 +92,7 @@ class CHROMEOS_EXPORT OutputConfigurator : public MessageLoop::Dispatcher {
   // in |output_cache_|.  Returns STATE_INVALID if the current display state
   // doesn't match any supported state.  |output_cache_| must be up-to-date with
   // regards to actual output state or this method may return incorrect results.
-  virtual State InferCurrentState(const DisplayInfo& info) const = 0;
+  virtual State InferCurrentState(const DisplayInfo& info) const { return STATE_INVALID; }
 
   // Calls IsProjecting() to determine whether or not we are in a "projecting"
   // state and then calls the DBus kSetIsProjectingMethod on powerd with the
