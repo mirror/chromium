@@ -1,0 +1,28 @@
+// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// File-level comment to appease parser. Eventually this will not be necessary.
+
+namespace fileSystem {
+  dictionary ChooseFileOptions {
+    // Valid types are 'openFile', 'openWritableFile' or 'saveFile'. Both
+    // 'openFile' and 'openWritableFile' will prompt the user to open an
+    // existing file, with 'openFile' returning a read-only FileEntry on
+    // success. 'saveFile' will prompt the user to choose an existing file or
+    // a new file, and will return a writable FileEntry. The default is
+    // 'openFile'.
+    DOMString? type;
+  };
+  callback GetDisplayPathCallback = void (DOMString displayPath);
+  callback FileEntryCallback = void ([instanceOf=fileEntry] object fileEntry);
+
+  interface Functions {
+    static void getDisplayPath([instanceOf=FileEntry] object fileEntry,
+                               GetDisplayPathCallback callback);
+    static void getWritableFileEntry([instanceOf=FileEntry] object fileEntry,
+                                     FileEntryCallback callback);
+    static void chooseFile(optional ChooseFileOptions options,
+                           FileEntryCallback callback);
+  };
+};

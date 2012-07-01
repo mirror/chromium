@@ -1,0 +1,47 @@
+// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+[
+  {
+    "namespace": "runtime",
+    "documentation_permissions_required": ["runtime"],
+    "functions": [
+      {
+        "name": "getBackgroundPage",
+        "type": "function",
+        "description": "Retrieves the JavaScript 'window' object for the background page running inside the current extension. If the background page is an event page, the system will ensure it is loaded before calling the callback. If there is no background page, an error is set.",
+        "parameters": [
+          {
+            "type": "function",
+            "name": "callback",
+            "parameters": [
+              {
+                "name": "backgroundPage",
+                // Note: Only optional because we don't support validation
+                // for custom callbacks.
+                "optional": true,
+                "type": "object",
+                "isInstanceOf": "global",
+                "additionalProperties": { "type": "any" },
+                "description": "The JavaScript 'window' object for the background page."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "onInstalled",
+        "type": "function",
+        "description": "Fired when the extension is first installed."
+      },
+      {
+        "name": "onSuspend",
+        "type": "function",
+        "description": "Sent to the event page just before it is unloaded. This gives the extension opportunity to do some clean up. Note that since the page is unloading, any asynchronous operations started while handling this event are not guaranteed to complete."
+      }
+    ]
+  }
+]
