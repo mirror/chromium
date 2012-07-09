@@ -188,12 +188,12 @@ Shell::Shell(ShellDelegate* delegate)
       browser_context_(NULL) {
   gfx::Screen::SetInstance(screen_);
   ui_controls::InstallUIControlsAura(internal::CreateUIControls());
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   // OutputConfigurator needs to get events regarding added/removed outputs.
   static_cast<aura::DispatcherLinux*>(
       aura::Env::GetInstance()->GetDispatcher())->AddDispatcherForRootWindow(
           output_configurator());
-#endif  // defined(OS_CHROMEOS)
+#endif  // defined(OS_CHROMEOS) && defined(USE_X11)
 }
 
 Shell::~Shell() {
@@ -270,12 +270,12 @@ Shell::~Shell() {
   DCHECK(instance_ == this);
   instance_ = NULL;
 
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   // Remove OutputConfigurator from Dispatcher.
   static_cast<aura::DispatcherLinux*>(
       aura::Env::GetInstance()->GetDispatcher())->RemoveDispatcherForRootWindow(
           output_configurator());
-#endif  // defined(OS_CHROMEOS)
+#endif  // defined(OS_CHROMEOS) && defined(USE_X11)
 }
 
 // static
