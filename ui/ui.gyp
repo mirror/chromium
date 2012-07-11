@@ -260,6 +260,8 @@
         'base/models/tree_model.h',
         'base/models/tree_node_iterator.h',
         'base/models/tree_node_model.h',
+        'base/output_drm.cc',
+        'base/output_drm.h',
         'base/range/range.cc',
         'base/range/range.h',
         'base/range/range_mac.mm',
@@ -636,6 +638,11 @@
         ['use_ibus==1 and use_drm==0', {
           'dependencies': [
             '../build/linux/system.gyp:ibus',
+          ],
+        }],
+        ['use_drm==1', {
+          'dependencies': [
+            '../build/linux/system.gyp:drm',
           ],
         }],
         ['use_glib == 1', {

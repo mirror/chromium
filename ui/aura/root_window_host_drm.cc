@@ -18,6 +18,7 @@
 #include <X11/extensions/XKBcommon.h>
 
 #include <algorithm>
+#include <vector>
 
 #include "base/logging.h"
 #include "base/message_loop.h"
@@ -27,6 +28,7 @@
 #include "ui/aura/root_window.h"
 #include "ui/base/cursor/cursor.h"
 #include "ui/base/keycodes/keyboard_codes.h"
+#include "ui/base/output_drm.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/compositor/layer.h"
 #include "ui/gfx/image/image_skia.h"
@@ -462,6 +464,7 @@ bool RootWindowHostDRM::Dispatch(const base::NativeEvent& event) {
             modifiers_ |= ui::EF_MIDDLE_MOUSE_BUTTON;
           break;
         default:
+          NOTREACHED();
           break;
         }
       }
@@ -478,6 +481,7 @@ bool RootWindowHostDRM::Dispatch(const base::NativeEvent& event) {
           modifiers_ &= ~ui::EF_MIDDLE_MOUSE_BUTTON;
           break;
         default:
+          NOTREACHED();
           break;
         }
       }
@@ -531,6 +535,7 @@ bool RootWindowHostDRM::Dispatch(const base::NativeEvent& event) {
           modifiers_ ^= ui::EF_CAPS_LOCK_DOWN;
         break;
       default:
+        NOTREACHED();
         break;
       }
       KeyEvent ev(event, false);
@@ -689,7 +694,13 @@ RootWindowHost* RootWindowHost::Create(RootWindowHostDelegate* delegate,
 
 // static
 gfx::Size RootWindowHost::GetNativeScreenSize() {
-  return gfx::Size(1280, 800);
+  std::vector<uint32_t> outputs;
+  ui::DRMGetConnectedOutputs(RootWindowHostDRM::GetDRMFd(), &outputs);
+  if (outputs.size() == 0)
+    return gfx::Size(1280, 800);
+  ui::OutputDRM output(RootWindowHostDRM::GetDRMFd(), outputs[0]);
+  ui::ModeDRM mode = output.GetPreferredMode();
+  return gfx::Size(mode.width(), mode.height());
 }
 
 MessageLoop::Dispatcher* CreateDispatcher() {
