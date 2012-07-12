@@ -265,7 +265,7 @@ UI_EXPORT void SetDefaultX11ErrorHandlers();
 UI_EXPORT bool IsX11WindowFullScreen(XID window);
 
 // Return true if event type is MotionNotify.
-UI_EXPORT bool IsMotionEvent(XEvent* event);
+UI_EXPORT bool IsMotionEvent(const base::NativeEvent& native_event);
 
 // Returns the mapped button.
 int GetMappedButton(int button);
@@ -279,7 +279,7 @@ UI_EXPORT void UpdateButtonMap();
 UI_EXPORT void InitXKeyEventForTesting(EventType type,
                                        KeyboardCode key_code,
                                        int flags,
-                                       XEvent* event);
+                                       const base::NativeEvent& native_event);
 
 // Keeps track of a string returned by an X function (e.g. XGetAtomName) and
 // makes sure it's XFree'd.

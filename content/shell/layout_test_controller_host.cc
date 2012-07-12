@@ -150,7 +150,9 @@ void LayoutTestControllerHost::OnImageDump(
 
     printf("Content-Type: image/png\n");
     printf("Content-Length: %u\n", static_cast<unsigned>(png.size()));
-    fwrite(&png[0], 1, png.size(), stdout);
+    size_t ret = fwrite(&png[0], 1, png.size(), stdout);
+    if (ret != png.size())
+        return;
   }
 
   MessageLoop::current()->PostTask(FROM_HERE, MessageLoop::QuitClosure());
