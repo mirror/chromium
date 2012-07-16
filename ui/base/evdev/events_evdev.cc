@@ -381,7 +381,7 @@ gfx::Point EventLocationFromNative(const base::NativeEvent& native_event) {
 }
 
 KeyboardCode KeyboardCodeFromNative(const base::NativeEvent& native_event) {
-  return ui::KeyboardCodeFromXKeysym(native_event->code);
+  return ui::KeyboardCodeFromXKeysym(native_event->key.sym);
 }
 
 bool IsMouseEvent(const base::NativeEvent& event) {

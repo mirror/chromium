@@ -31,7 +31,9 @@ base::NativeEvent CopyNativeEvent(const base::NativeEvent& event) {
   XEvent* copy = new XEvent;
   *copy = *event;
   return copy;
-#elif defined(OS_WIN) || defined(USE_EVDEV)
+#elif defined(OS_WIN)
+  return event;
+#elif defined(USE_EVDEV)
   // TODO(msb): not sure what we should do here
   return event;
 #elif defined(OS_MACOSX)
@@ -366,6 +368,8 @@ uint16 KeyEvent::GetCharacter() const {
   if (!IsControlDown())
     ch = ui::GetCharacterFromXEvent(native_event());
   return ch ? ch : ui::GetCharacterFromKeyCode(key_code_, flags());
+#elif defined(USE_EVDEV)
+  return ui::GetCharacterFromKeyCode(key_code_, flags());
 #else
   NOTIMPLEMENTED();
   return 0;
