@@ -23,8 +23,6 @@
 //           Commit eb866cd9fe5939efed532f4eb400cd889c00c2f4
 //                  "drm: Fix drmModeRes leak on error paths"
 
-#include "base/message_pump_evdev.h"
-
 #include <stdint.h>
 #include <string.h>
 #include <libudev.h>
@@ -34,6 +32,9 @@
 
 #include <map>
 #include <string>
+
+#include "base/message_pump_evdev.h"
+#include "ui/base/events.h"
 
 #define MAX_SLOTS 16
 

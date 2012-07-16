@@ -408,8 +408,6 @@ xkb_desc * RootWindowHostDRM::CreateXKB() {
 }
 
 bool RootWindowHostDRM::Dispatch(const base::NativeEvent& event) {
-  int modifier = 0;
-
   switch(event->type) {
   case base::EVDEV_EVENT_RELATIVE_MOTION:
     {
@@ -418,9 +416,9 @@ bool RootWindowHostDRM::Dispatch(const base::NativeEvent& event) {
       y = event->motion.y + cursor_position_.y();
       event->x = x = std::min(std::max(x, 0), bounds_.width() - 1);
       event->y = y = std::min(std::max(y, 0), bounds_.height() - 1);
+      event->modifiers = modifiers_;
       cursor_position_= gfx::Point(x, y);
       UpdateDRMCursor();
-      event->modifiers = modifiers_;
       MouseEvent ev(event);
       root_window_->DispatchMouseEvent(&ev);
     }
@@ -436,64 +434,95 @@ bool RootWindowHostDRM::Dispatch(const base::NativeEvent& event) {
     break;
   case base::EVDEV_EVENT_BUTTON:
     {
-      switch (event->code) {
-      case BTN_LEFT:
-        modifier |= ui::EF_LEFT_MOUSE_BUTTON;
-        break;
-      case BTN_MIDDLE:
-        modifier |= ui::EF_MIDDLE_MOUSE_BUTTON;
-        break;
-      case BTN_RIGHT:
-        modifier |= ui::EF_RIGHT_MOUSE_BUTTON;
-        break;
-      default:
-        NOTREACHED();
-        break;
-      }
-      if (event->value)
-        modifiers_ |= modifier;
-      else
-        modifiers_ &= modifier;
-      event->modifiers = modifiers_;
       event->x = cursor_position_.x();
       event->y = cursor_position_.y();
+      // We need to issue both mouse button up/down events with modifiers on and
+      // set the modifier off after the button is up.
+      if (event->value) {
+        switch (event->code) {
+        case BTN_LEFT:
+            modifiers_ |= ui::EF_LEFT_MOUSE_BUTTON;
+          break;
+        case BTN_RIGHT:
+            modifiers_ |= ui::EF_RIGHT_MOUSE_BUTTON;
+          break;
+        case BTN_MIDDLE:
+            modifiers_ |= ui::EF_MIDDLE_MOUSE_BUTTON;
+          break;
+        default:
+          NOTREACHED();
+          break;
+        }
+      }
+      event->modifiers = modifiers_;
+      if (!event->value) {
+        switch (event->code) {
+        case BTN_LEFT:
+          modifiers_ &= ~ui::EF_LEFT_MOUSE_BUTTON;
+          break;
+        case BTN_RIGHT:
+          modifiers_ &= ~ui::EF_RIGHT_MOUSE_BUTTON;
+          break;
+        case BTN_MIDDLE:
+          modifiers_ &= ~ui::EF_MIDDLE_MOUSE_BUTTON;
+          break;
+        default:
+          NOTREACHED();
+          break;
+        }
+      }
       MouseEvent ev(event);
       root_window_->DispatchMouseEvent(&ev);
     }
     break;
   case base::EVDEV_EVENT_KEY:
     {
+      // Keysym are used to get ui::KeyboardCode(Windows keycode) and are used
+      // by the input bus. XKeysyms are not real key symbols. We need them for
+      // now because we have not build our own kernel keycode-to-
+      // ui::KeyboardCode mapping yet. Also, we need to get ibus using kernel
+      // keycodes too.
+      // PATH: kernel keycode -> XKeysym -> ui::KeyboardCode -> real chars.
       uint32_t code = event->code + xkb_->min_key_code;
-      uint32_t sym, level = 0;
+      uint32_t level = 0;
 
-      if ((modifiers_ & ui::EF_SHIFT_DOWN) &&
+      if (((modifiers_ & ui::EF_SHIFT_DOWN) ||
+          (modifiers_ & ui::EF_CAPS_LOCK_DOWN)) &&
           XkbKeyGroupWidth(xkb_, code, 0) > 1)
         level = 1;
 
-      sym = XkbKeySymEntry(xkb_, code, level, 0);
-
-      switch(xkb_->map->modmap[code]) {
-      case XKB_COMMON_SHIFT_MASK:
-        modifier |= ui::EF_SHIFT_DOWN;
+      event->key.sym = XkbKeySymEntry(xkb_, code, level, 0);
+      event->modifiers = modifiers_;
+      switch (event->code) {
+      case KEY_LEFTCTRL:
+      case KEY_RIGHTCTRL:
+        if (event->value)
+          modifiers_ |= ui::EF_CONTROL_DOWN;
+        else
+          modifiers_ &= ~ui::EF_CONTROL_DOWN;
         break;
-      case XKB_COMMON_LOCK_MASK:
-        modifier |= ui::EF_CAPS_LOCK_DOWN;
+      case KEY_LEFTSHIFT:
+      case KEY_RIGHTSHIFT:
+        if (event->value)
+          modifiers_ |= ui::EF_SHIFT_DOWN;
+        else
+          modifiers_ &= ~ui::EF_SHIFT_DOWN;
         break;
-      case XKB_COMMON_CONTROL_MASK:
-        modifier |= ui::EF_CONTROL_DOWN;
+      case KEY_LEFTALT:
+      case KEY_RIGHTALT:
+        if (event->value)
+          modifiers_ |= ui::EF_ALT_DOWN;
+        else
+          modifiers_ &= ~ui::EF_ALT_DOWN;
         break;
-      case XKB_COMMON_MOD1_MASK:
-        modifier |= ui::EF_ALT_DOWN;
+      case KEY_CAPSLOCK:
+        if (event->value)
+          modifiers_ ^= ui::EF_CAPS_LOCK_DOWN;
         break;
       default:
+        NOTREACHED();
         break;
       }
-      if (event->value)
-        modifiers_ |= modifier;
-      else
-        modifiers_ &= modifier;
-      event->modifiers = modifiers_;
-      event->code = sym;
       KeyEvent ev(event, false);
       root_window_->DispatchKeyEvent(&ev);
     }
