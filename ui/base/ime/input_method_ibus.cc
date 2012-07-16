@@ -4,11 +4,23 @@
 
 #include "ui/base/ime/input_method_ibus.h"
 
+#if defined(USE_X11)
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
+#include "ui/base/keycodes/keyboard_code_conversion_x.h"
 #undef FocusIn
 #undef FocusOut
+#elif defined(USE_EVDEV)
+#include "base/message_pump_evdev.h"
+#define XShiftMask   (1<<0)
+#define XLockMask    (1<<1)
+#define XControlMask   (1<<2)
+#define XMod1Mask    (1<<3)
+#define XButton1Mask   (1<<8)
+#define XButton2Mask   (1<<9)
+#define XButton3Mask   (1<<10)
+#endif
 
 #include <algorithm>
 #include <cstring>
@@ -30,7 +42,6 @@
 #include "ui/base/ime/ibus_client.h"
 #include "ui/base/ime/text_input_client.h"
 #include "ui/base/keycodes/keyboard_code_conversion.h"
-#include "ui/base/keycodes/keyboard_code_conversion_x.h"
 #include "ui/base/keycodes/keyboard_codes.h"
 #include "ui/gfx/rect.h"
 
@@ -44,6 +55,7 @@ const char kClientName[] = "chrome";
 const uint32 kIBusCapabilityPreeditText = 1U;
 const uint32 kIBusCapabilityFocus = 8U;
 
+#if defined(USE_X11)
 XKeyEvent* GetKeyEvent(XEvent* event) {
   DCHECK(event && (event->type == KeyPress || event->type == KeyRelease));
   return &event->xkey;
@@ -65,6 +77,18 @@ uint32 IBusStateFromXFlags(unsigned int flags) {
   return (flags & (LockMask | ControlMask | ShiftMask | Mod1Mask |
                    Button1Mask | Button2Mask | Button3Mask));
 }
+#elif defined(USE_EVDEV)
+// Converts event flags to ibus key state flags.
+uint32 IBusStateFromEventFlags(unsigned int flags) {
+  return (flags & ui::EF_CAPS_LOCK_DOWN ? XLockMask : 0) |
+        (flags & ui::EF_CONTROL_DOWN ? XControlMask : 0) |
+        (flags & ui::EF_SHIFT_DOWN ? XShiftMask : 0) |
+        (flags & ui::EF_ALT_DOWN ? XMod1Mask : 0) |
+        (flags & ui::EF_LEFT_MOUSE_BUTTON ? XButton1Mask : 0) |
+        (flags & ui::EF_MIDDLE_MOUSE_BUTTON ? XButton2Mask: 0) |
+        (flags & ui::EF_RIGHT_MOUSE_BUTTON ? XButton3Mask : 0);
+}
+#endif
 
 void IBusKeyEventFromNativeKeyEvent(const base::NativeEvent& native_event,
                                     uint32* ibus_keyval,
@@ -82,6 +106,12 @@ void IBusKeyEventFromNativeKeyEvent(const base::NativeEvent& native_event,
   *ibus_keycode = x_key->keycode;
   *ibus_state = IBusStateFromXFlags(x_key->state);
   if (native_event->type == KeyRelease)
+    *ibus_state |= kIBusReleaseMask;
+#elif defined(USE_EVDEV)
+  *ibus_keyval = native_event->key.sym;
+  *ibus_keycode = ui::KeyboardCodeFromNative(native_event);
+  *ibus_state = IBusStateFromEventFlags(native_event->modifiers);
+  if (!native_event->value)
     *ibus_state |= kIBusReleaseMask;
 #endif
 }
@@ -120,9 +150,13 @@ class InputMethodIBus::PendingKeyEvent {
   // code, 'character_', and 'unmodified_character_'. See views::InputMethodIBus
   // for details.
 
+#if defined(USE_X11)
   // corresponding XEvent data of a key event. It's a plain struct so we can do
   // bitwise copy.
   XKeyEvent x_event_;
+#elif defined(USE_EVDEV)
+  base::EvdevEvent event_;
+#endif
 
   const uint32 ibus_keyval_;
 
@@ -141,6 +175,8 @@ InputMethodIBus::PendingKeyEvent::PendingKeyEvent(
   DCHECK(native_event);
 #if defined(USE_X11)
   x_event_ = *GetKeyEvent(native_event);
+#elif defined(USE_EVDEV)
+  event_ = *native_event;
 #endif
 }
 
@@ -160,6 +196,10 @@ void InputMethodIBus::PendingKeyEvent::ProcessPostIME(bool handled) {
                                           handled);
     return;
   }
+#elif defined(USE_EVDEV)
+  input_method_->ProcessKeyEventPostIME(
+      reinterpret_cast<base::EvdevEvent*>(&event_), ibus_keyval_, handled);
+  return;
 #endif
 
   // TODO(yusukes): Support non-native event (from e.g. a virtual keyboard).
@@ -292,9 +332,11 @@ void InputMethodIBus::ProcessKeyEventFail(PendingKeyEvent* pending_key_event) {
 }
 
 void InputMethodIBus::DispatchKeyEvent(const base::NativeEvent& native_event) {
+#if defined(USE_X11) || defined(USE_EVDEV)
+  DCHECK(native_event);
 #if defined(USE_X11)
-  DCHECK(native_event && (native_event->type == KeyPress ||
-                          native_event->type == KeyRelease));
+  DCHECK(native_event->type == KeyPress || native_event->type == KeyRelease);
+#endif
   DCHECK(system_toplevel_window_focused());
 
   uint32 ibus_keyval = 0;
@@ -312,10 +354,17 @@ void InputMethodIBus::DispatchKeyEvent(const base::NativeEvent& native_event) {
       GetTextInputType() == TEXT_INPUT_TYPE_PASSWORD ||
       ibus_client_->GetInputMethodType() ==
       internal::IBusClient::INPUT_METHOD_XKB_LAYOUT) {
+#if defined(USE_X11)
     if (native_event->type == KeyPress)
       ProcessUnfilteredKeyPressEvent(native_event, ibus_keyval);
     else
       DispatchKeyEventPostIME(native_event);
+#elif defined(USE_EVDEV)
+    if (native_event->value)
+      ProcessUnfilteredKeyPressEvent(native_event, ibus_keyval);
+    else
+      DispatchKeyEventPostIME(native_event);
+#endif
     return;
   }
 
@@ -554,7 +603,7 @@ void InputMethodIBus::ProcessKeyEventPostIME(
     const base::NativeEvent& native_event,
     uint32 ibus_keyval,
     bool handled) {
-#if defined(USE_X11)
+#if defined(USE_X11) || defined(USE_EVDEV)
   TextInputClient* client = GetTextInputClient();
 
   if (!client) {
@@ -564,8 +613,13 @@ void InputMethodIBus::ProcessKeyEventPostIME(
     return;
   }
 
+#if defined(USE_X11)
   if (native_event->type == KeyPress && handled)
     ProcessFilteredKeyPressEvent(native_event);
+#elif defined(USE_EVDEV)
+  if (native_event->value && handled)
+    ProcessFilteredKeyPressEvent(native_event);
+#endif
 
   // In case the focus was changed by the key event. The |context_| should have
   // been reset when the focused window changed.
@@ -580,30 +634,42 @@ void InputMethodIBus::ProcessKeyEventPostIME(
   if (client != GetTextInputClient())
     return;
 
+#if defined(USE_X11)
   if (native_event->type == KeyPress && !handled)
     ProcessUnfilteredKeyPressEvent(native_event, ibus_keyval);
   else if (native_event->type == KeyRelease)
     DispatchKeyEventPostIME(native_event);
+#elif defined(USE_EVDEV)
+  if (native_event->value && !handled)
+    ProcessUnfilteredKeyPressEvent(native_event, ibus_keyval);
+  else if (!native_event->value)
+    DispatchKeyEventPostIME(native_event);
+#endif
 #endif
 }
 
 void InputMethodIBus::ProcessFilteredKeyPressEvent(
     const base::NativeEvent& native_event) {
-#if defined(USE_X11)
+#if defined(USE_X11) || defined(USE_EVDEV)
   if (NeedInsertChar())
     DispatchKeyEventPostIME(native_event);
   else
+#if defined(USE_X11)
     DispatchFabricatedKeyEventPostIME(
         ET_KEY_PRESSED,
         VKEY_PROCESSKEY,
         EventFlagsFromXFlags(GetKeyEvent(native_event)->state));
+#elif defined(USE_EVDEV)
+    DispatchFabricatedKeyEventPostIME(
+        ET_KEY_PRESSED, VKEY_PROCESSKEY, native_event->modifiers);
+#endif
 #endif
 }
 
 void InputMethodIBus::ProcessUnfilteredKeyPressEvent(
     const base::NativeEvent& native_event,
     uint32 ibus_keyval) {
-#if defined(USE_X11)
+#if defined(USE_X11) || defined(USE_EVDEV)
   // For a fabricated event, ProcessUnfilteredFabricatedKeyPressEvent should be
   // called instead.
   DCHECK(native_event);
@@ -621,8 +687,12 @@ void InputMethodIBus::ProcessUnfilteredKeyPressEvent(
   if (client != GetTextInputClient())
     return;
 
+#if defined(USE_X11)
   const uint32 state =
       EventFlagsFromXFlags(GetKeyEvent(native_event)->state);
+#elif defined(USE_EVDEV)
+  const uint32 state = native_event->modifiers;
+#endif
 
   // Process compose and dead keys
   if (ProcessUnfilteredKeyPressEventWithCharacterComposer(ibus_keyval, state))
@@ -634,8 +704,10 @@ void InputMethodIBus::ProcessUnfilteredKeyPressEvent(
   client = GetTextInputClient();
 
   uint16 ch = 0;
+#if defined(USE_X11)
   if (!(state & ui::EF_CONTROL_DOWN))
     ch = ui::GetCharacterFromXEvent(native_event);
+#endif
   if (!ch) {
     ch = ui::GetCharacterFromKeyCode(
         ui::KeyboardCodeFromNative(native_event), state);
@@ -701,14 +773,18 @@ bool InputMethodIBus::ProcessUnfilteredKeyPressEventWithCharacterComposer(
 void InputMethodIBus::ProcessInputMethodResult(
     const base::NativeEvent& native_event,
     bool handled) {
-#if defined(USE_X11)
+#if defined(USE_X11) || defined(USE_EVDEV)
   TextInputClient* client = GetTextInputClient();
   DCHECK(client);
 
   if (result_text_.length()) {
     if (handled && NeedInsertChar()) {
+#if defined(USE_X11)
       const uint32 state =
           EventFlagsFromXFlags(GetKeyEvent(native_event)->state);
+#elif defined(USE_EVDEV)
+      const uint32 state = native_event->modifiers;
+#endif
       for (string16::const_iterator i = result_text_.begin();
            i != result_text_.end(); ++i) {
         client->InsertChar(*i, state);
@@ -798,13 +874,21 @@ void InputMethodIBus::OnCommitText(const chromeos::ibus::IBusText& text) {
 void InputMethodIBus::OnForwardKeyEvent(uint32 keyval,
                                         uint32 keycode,
                                         uint32 state) {
+#if defined(USE_X11)
   KeyboardCode ui_key_code = KeyboardCodeFromXKeysym(keyval);
+#elif defined(USE_EVDEV)
+  KeyboardCode ui_key_code = (KeyboardCode)keycode;
+#endif
   if (!ui_key_code)
     return;
 
   const EventType event_type =
       (state & kIBusReleaseMask) ? ET_KEY_RELEASED : ET_KEY_PRESSED;
+#if defined(USE_X11)
   const int event_flags = EventFlagsFromXFlags(state);
+#elif defined(USE_EVDEV)
+  const int event_flags = state;
+#endif
 
   // It is not clear when the input method will forward us a fake key event.
   // If there is a pending key event, then we may already received some input

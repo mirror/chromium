@@ -29,15 +29,20 @@ struct EvdevScrollEvent {
   int x, y;
 };
 
+struct EvdevKeyEvent {
+  int sym;
+};
+
 struct EvdevEvent {
   EvdevEventType type;
   timeval time;
-  int modifiers;
+  unsigned int modifiers;
   int code, value;
   int x, y;
   union {
     EvdevMotionEvent motion;
     EvdevScrollEvent scroll;
+    EvdevKeyEvent key;
   };
 };
 
