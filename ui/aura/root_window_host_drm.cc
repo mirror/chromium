@@ -20,6 +20,7 @@
 #include <algorithm>
 #include <vector>
 
+#include "ash/shell.h"
 #include "base/logging.h"
 #include "base/message_loop.h"
 #include "chromeos/display/output_configurator.h"
@@ -500,6 +501,17 @@ bool RootWindowHostDRM::Dispatch(const base::NativeEvent& event) {
       root_window_->DispatchKeyEvent(&ev);
     }
     break;
+  case base::EVDEV_EVENT_DISPLAY:
+    {
+      if (!ash::Shell::HasInstance())
+        break;
+      chromeos::OutputConfigurator* output_configurator =
+          ash::Shell::GetInstance()->output_configurator();
+      if (!output_configurator)
+        break;
+      output_configurator->Dispatch(event);
+      break;
+    }
   default:
     break;
   }
@@ -651,11 +663,12 @@ RootWindowHost* RootWindowHost::Create(const gfx::Rect& bounds) {
 
 // static
 gfx::Size RootWindowHost::GetNativeScreenSize() {
-  std::vector<ui::OutputDRM*> outputs;
+  std::vector<uint32_t> outputs;
   ui::DRMGetConnectedOutputs(RootWindowHostDRM::GetDRMFd(), &outputs);
   if (outputs.size() == 0)
     return gfx::Size(1280, 800);
-  ui::ModeDRM mode = outputs[0]->GetPreferredMode();
+  ui::ModeDRM mode = ui::OutputDRM(
+      RootWindowHostDRM::GetDRMFd(), outputs[0]).GetPreferredMode();
   return gfx::Size(mode.width(), mode.height());
 }
 

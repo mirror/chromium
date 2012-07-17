@@ -500,6 +500,7 @@ UdevHandler::UdevHandler(MessagePumpEpoll *pump)
   udev *udev = udev_new();
   udev_monitor_ = udev_monitor_new_from_netlink(udev, "udev");
   udev_monitor_filter_add_match_subsystem_devtype(udev_monitor_, "input", NULL);
+  udev_monitor_filter_add_match_subsystem_devtype(udev_monitor_, "drm", NULL);
 
   ret = udev_monitor_enable_receiving(udev_monitor_);
   DCHECK_EQ(ret, 0);
@@ -541,6 +542,7 @@ void UdevHandler::AddDevices(udev *udev) {
 
   e = udev_enumerate_new(udev);
   udev_enumerate_add_match_subsystem(e, "input");
+  udev_enumerate_add_match_subsystem(e, "drm");
   udev_enumerate_scan_devices(e);
   udev_list_entry_foreach(entry, udev_enumerate_get_list_entry(e)) {
     const char *path = udev_list_entry_get_name(entry);
@@ -575,13 +577,19 @@ void UdevHandler::Process() {
   if (!action)
     return;
 
-  if (strncmp("event", udev_device_get_sysname(udev_device), 5))
-    return;
+  if (strcmp(udev_device_get_subsystem(udev_device), "input") == 0) {
+    if (strncmp("event", udev_device_get_sysname(udev_device), 5))
+      return;
 
-  if (!strcmp(action, "add"))
-    AddDevice(udev_device_get_devnode(udev_device));
-  else if (!strcmp(action, "remove"))
-    RemoveDevice(udev_device_get_devnode(udev_device));
+    if (!strcmp(action, "add"))
+      AddDevice(udev_device_get_devnode(udev_device));
+    else if (!strcmp(action, "remove"))
+      RemoveDevice(udev_device_get_devnode(udev_device));
+  } else if (strcmp(udev_device_get_subsystem(udev_device), "drm") == 0) {
+    EvdevEvent event;
+    event.type = EVDEV_EVENT_DISPLAY;
+    pump_->DispatchEvent(&event);
+  }
 
   udev_device_unref(udev_device);
 }

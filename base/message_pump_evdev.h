@@ -19,6 +19,7 @@ enum EvdevEventType {
   EVDEV_EVENT_BUTTON,
   EVDEV_EVENT_KEY,
   EVDEV_EVENT_SCROLL,
+  EVDEV_EVENT_DISPLAY,
 };
 
 struct EvdevMotionEvent {

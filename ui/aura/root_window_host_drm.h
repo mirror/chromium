@@ -46,6 +46,8 @@ class RootWindowHostDRM : public RootWindowHost,
   // Overridden from Dispatcher overrides:
   virtual bool Dispatch(const base::NativeEvent& event) OVERRIDE;
 
+  // TODO(sque): make this private again.
+  virtual void SetSize(const gfx::Size& size);
  private:
   // RootWindowHost Overrides.
   virtual void SetRootWindow(RootWindow* root_window) OVERRIDE;
@@ -54,7 +56,7 @@ class RootWindowHostDRM : public RootWindowHost,
   virtual gfx::Rect GetBounds() const OVERRIDE;
   virtual void SetBounds(const gfx::Rect& bounds) OVERRIDE;
   virtual gfx::Size GetSize() const OVERRIDE;
-  virtual void SetSize(const gfx::Size& size) OVERRIDE;
+  //virtual void SetSize(const gfx::Size& size) OVERRIDE;
   virtual gfx::Point GetLocationOnNativeScreen() const OVERRIDE;
   virtual void SetCursor(gfx::NativeCursor cursor_type) OVERRIDE;
   virtual void ShowCursor(bool show) OVERRIDE;
