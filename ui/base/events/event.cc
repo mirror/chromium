@@ -34,8 +34,9 @@ base::NativeEvent CopyNativeEvent(const base::NativeEvent& event) {
 #elif defined(OS_WIN)
   return event;
 #elif defined(USE_EVDEV)
-  // TODO(msb): not sure what we should have here.
-  return event;
+  base::EvdevEvent* copy = new base::EvdevEvent;
+  *copy = *event;
+  return copy;
 #else
   NOTREACHED() <<
       "Don't know how to copy base::NativeEvent for this platform";
@@ -62,7 +63,7 @@ namespace ui {
 // Event
 
 Event::~Event() {
-#if defined(USE_X11)
+#if defined(USE_X11) || defined(USE_EVDEV)
   if (delete_native_event_)
     delete native_event_;
 #endif
@@ -440,7 +441,7 @@ uint16 KeyEvent::GetUnmodifiedCharacter() const {
 
 KeyEvent* KeyEvent::Copy() {
   KeyEvent* copy = new KeyEvent(::CopyNativeEvent(native_event()), is_char());
-#if defined(USE_X11)
+#if defined(USE_X11) || defined(USE_EVDEV)
   copy->set_delete_native_event(true);
 #endif
   return copy;

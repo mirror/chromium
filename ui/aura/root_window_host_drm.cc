@@ -462,7 +462,6 @@ bool RootWindowHostDRM::Dispatch(const base::NativeEvent& event) {
             modifiers_ |= ui::EF_MIDDLE_MOUSE_BUTTON;
           break;
         default:
-          NOTREACHED();
           break;
         }
       }
@@ -479,7 +478,6 @@ bool RootWindowHostDRM::Dispatch(const base::NativeEvent& event) {
           modifiers_ &= ~ui::EF_MIDDLE_MOUSE_BUTTON;
           break;
         default:
-          NOTREACHED();
           break;
         }
       }
@@ -533,7 +531,6 @@ bool RootWindowHostDRM::Dispatch(const base::NativeEvent& event) {
           modifiers_ ^= ui::EF_CAPS_LOCK_DOWN;
         break;
       default:
-        NOTREACHED();
         break;
       }
       KeyEvent ev(event, false);
