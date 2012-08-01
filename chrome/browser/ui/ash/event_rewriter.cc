@@ -364,7 +364,7 @@ KeyCode EventRewriter::NativeKeySymToNativeKeycode(KeySym keysym) {
 #endif  // defined(OS_CHROMEOS) && defined(USE_X11)
 
 void EventRewriter::Rewrite(ui::KeyEvent* event) {
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   // Do not rewrite an event sent by ui_controls::SendKeyPress(). See
   // crbug.com/136465.
   if (event->native_event()->xkey.send_event)
