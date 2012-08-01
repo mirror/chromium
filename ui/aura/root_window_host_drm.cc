@@ -61,13 +61,21 @@ int g_drm_fd;
 const int kDrmCursorWidth = 64;
 const int kDrmCursorHeight = 64;
 
-RootWindowHostDRM* GetRootWindowHostInstance() {
-  static RootWindowHostDRM* g_root_window_host;
+RootWindowHostDRM* GetRootWindowHostInstance(RootWindowHostDelegate* delegate) {
+  static RootWindowHostDRM* g_root_window_host = NULL;
 
-  if (!g_root_window_host)
+  // TODO(sque): this is a workaround because CreateDispatcher() may get called
+  // first, but a RootWindowHostDelegate will not be provided.  This code allows
+  // a later call to Create() to provide a delegate to an existing
+  // RootWindowHostDRM.
+  if (!g_root_window_host) {
     g_root_window_host =
         new RootWindowHostDRM(
+            delegate,
             gfx::Rect(RootWindowHostDRM::GetNativeScreenSize()));
+  } else if (g_root_window_host->delegate() == NULL && delegate != NULL) {
+    g_root_window_host->set_delegate(delegate);
+  }
   return g_root_window_host;
 }
 
@@ -286,8 +294,9 @@ class RootWindowHostDRM::ImageCursors {
   DISALLOW_COPY_AND_ASSIGN(ImageCursors);
 };
 
-RootWindowHostDRM::RootWindowHostDRM(const gfx::Rect& bounds)
-    : root_window_(NULL),
+RootWindowHostDRM::RootWindowHostDRM(RootWindowHostDelegate* delegate,
+                                     const gfx::Rect& bounds)
+    : delegate_(delegate),
       modifiers_(0),
       current_cursor_(ui::kCursorNull),
       cursor_position_(0, 0),
@@ -319,6 +328,7 @@ RootWindowHostDRM::RootWindowHostDRM(const gfx::Rect& bounds)
 
   // Load cursors.
   image_cursors_ = scoped_ptr<ImageCursors>(new ImageCursors(fd_));
+  image_cursors_->Reload(1.0);
 
   // Create invisible cursor.
   struct dumb_bo* bo =
@@ -420,7 +430,8 @@ bool RootWindowHostDRM::Dispatch(const base::NativeEvent& event) {
       cursor_position_= gfx::Point(x, y);
       UpdateDRMCursor();
       MouseEvent ev(event);
-      root_window_->DispatchMouseEvent(&ev);
+      if (delegate_)
+        delegate_->OnHostMouseEvent(&ev);
     }
     break;
   case base::EVDEV_EVENT_SCROLL:
@@ -429,7 +440,8 @@ bool RootWindowHostDRM::Dispatch(const base::NativeEvent& event) {
       event->y = cursor_position_.y();
       event->modifiers = modifiers_;
       ScrollEvent ev(event);
-      root_window_->DispatchScrollEvent(&ev);
+      if (delegate_)
+        delegate_->OnHostScrollEvent(&ev);
     }
     break;
   case base::EVDEV_EVENT_BUTTON:
@@ -472,7 +484,8 @@ bool RootWindowHostDRM::Dispatch(const base::NativeEvent& event) {
         }
       }
       MouseEvent ev(event);
-      root_window_->DispatchMouseEvent(&ev);
+      if (delegate_)
+        delegate_->OnHostMouseEvent(&ev);
     }
     break;
   case base::EVDEV_EVENT_KEY:
@@ -524,7 +537,8 @@ bool RootWindowHostDRM::Dispatch(const base::NativeEvent& event) {
         break;
       }
       KeyEvent ev(event, false);
-      root_window_->DispatchKeyEvent(&ev);
+      if (delegate_)
+        delegate_->OnHostKeyEvent(&ev);
     }
     break;
   default:
@@ -568,14 +582,8 @@ void RootWindowHostDRM::UpdateDRMCursor() {
   drmModeMoveCursor(fd_, kms_.encoder->crtc_id, drm_x, drm_y);
 }
 
-void RootWindowHostDRM::SetRootWindow(RootWindow* root_window) {
-  root_window_ = root_window;
-  // The device scale factor is now accessible, so load cursors now.
-  image_cursors_->Reload(root_window_->layer()->device_scale_factor());
-}
-
 RootWindow* RootWindowHostDRM::GetRootWindow() {
-  return root_window_;
+  return delegate_->AsRootWindow();
 }
 
 gfx::Rect RootWindowHostDRM::GetBounds() const {
@@ -606,7 +614,7 @@ void RootWindowHostDRM::SetSize(const gfx::Size& size) {
   // (possibly synthetic) ConfigureNotify about the actual size and correct
   // |bounds_| later.
   bounds_.set_size(size);
-  root_window_->OnHostResized(size);
+  delegate_->OnHostResized(size);
 }
 
 gfx::Point RootWindowHostDRM::GetLocationOnNativeScreen() const {
@@ -641,8 +649,9 @@ void RootWindowHostDRM::ShowCursor(bool show) {
     SetCursorInternal(show ? current_cursor_ : ui::kCursorNone);
 }
 
-gfx::Point RootWindowHostDRM::QueryMouseLocation() {
-  return cursor_position_;
+bool RootWindowHostDRM::QueryMouseLocation(gfx::Point* point) {
+  *point = cursor_position_;
+  return true;
 }
 
 void RootWindowHostDRM::MoveCursorTo(const gfx::Point& location) {
@@ -659,6 +668,10 @@ void RootWindowHostDRM::OnDeviceScaleFactorChanged(float device_scale_factor) {
   image_cursors_->Reload(device_scale_factor);
 }
 
+void RootWindowHostDRM::Show() {
+  image_cursors_->Reload(delegate_->GetDeviceScaleFactor());
+}
+
 // static
 int RootWindowHostDRM::GetDRMFd() {
   if (!g_drm_fd)
@@ -672,8 +685,9 @@ void RootWindowHostDRM::SetDRMFd(int fd) {
 }
 
 // static
-RootWindowHost* RootWindowHost::Create(const gfx::Rect& bounds) {
-  return GetRootWindowHostInstance();
+RootWindowHost* RootWindowHost::Create(RootWindowHostDelegate* delegate,
+                                       const gfx::Rect& bounds) {
+  return GetRootWindowHostInstance(delegate);
 }
 
 // static
@@ -682,7 +696,7 @@ gfx::Size RootWindowHost::GetNativeScreenSize() {
 }
 
 MessageLoop::Dispatcher* CreateDispatcher() {
-  return GetRootWindowHostInstance();
+  return GetRootWindowHostInstance(NULL);
 }
 
 }  // namespace aura
