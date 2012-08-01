@@ -19,14 +19,21 @@
 #include "base/bind.h"
 #include "base/chromeos/chromeos_version.h"
 #include "base/logging.h"
-#include "base/message_pump_aurax11.h"
 #include "base/metrics/histogram.h"
 #include "base/perftimer.h"
 #include "base/time.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/power_manager_client.h"
 
+#if defined(USE_X11)
+#include "base/message_pump_aurax11.h"
+#else
+#include "base/message_pump_evdev.h"
+#endif
+
 namespace chromeos {
+
+#if defined(USE_X11)
 
 struct OutputSnapshot {
   RROutput output;
@@ -150,6 +157,7 @@ static void ConfigureCrtc(Display* display,
           << ", output " << output
           << ", x " << x
           << ", y " << y;
+#if defined(USE_X11)
   const Rotation kRotate = RR_Rotate_0;
   RROutput* outputs = NULL;
   int num_outputs = 0;
@@ -180,6 +188,7 @@ static void CreateFrameBuffer(Display* display,
                               int width,
                               int height) {
   VLOG(1) << "CreateFrameBuffer " << width << " by " << height;
+#if defined(USE_X11)
   // Note that setting the screen size fails if any CRTCs are currently
   // pointing into it so disable them all.
   for (int i = 0; i < screen->ncrtc; ++i) {
@@ -202,6 +211,7 @@ static void CreateFrameBuffer(Display* display,
   int mm_width = width * kPixelsToMmScale;
   int mm_height = height * kPixelsToMmScale;
   XRRSetScreenSize(display, window, width, height, mm_width, mm_height);
+#endif  // defined(USE_X11)
 }
 
 static OutputState InferCurrentState(Display* display,
@@ -551,6 +561,8 @@ void OutputConfigurator::Init(bool is_panel_fitting_enabled) {
 OutputConfigurator::~OutputConfigurator() {
 }
 
+#endif  // defined(USE_X11)
+
 bool OutputConfigurator::CycleDisplayMode() {
   VLOG(1) << "CycleDisplayMode";
   if (!is_running_on_chrome_os_)
@@ -600,6 +612,7 @@ bool OutputConfigurator::ScreenPowerSet(bool power_on, bool all_displays) {
     return false;
 
   bool success = false;
+#if defined(USE_X11)
   Display* display = base::MessagePumpAuraX11::GetDefaultXDisplay();
   CHECK(display != NULL);
   XGrabServer(display);
@@ -672,6 +685,7 @@ bool OutputConfigurator::ScreenPowerSet(bool power_on, bool all_displays) {
   XRRFreeScreenResources(screen);
   XUngrabServer(display);
 
+#endif  // defined(USE_X11)
   return success;
 }
 
@@ -684,6 +698,7 @@ bool OutputConfigurator::SetDisplayMode(OutputState new_state) {
   if (output_state_ == new_state)
     return true;
 
+#if defined(USE_X11)
   Display* display = base::MessagePumpAuraX11::GetDefaultXDisplay();
   CHECK(display != NULL);
   XGrabServer(display);
@@ -708,10 +723,12 @@ bool OutputConfigurator::SetDisplayMode(OutputState new_state) {
 
   if (output_state_ != new_state)
     FOR_EACH_OBSERVER(Observer, observers_, OnDisplayModeChangeFailed());
+#endif  // defined(USE_X11)
   return true;
 }
 
 bool OutputConfigurator::Dispatch(const base::NativeEvent& event) {
+#if defined(USE_X11)
   // Ignore this event if the Xrandr extension isn't supported.
   if (!is_running_on_chrome_os_ ||
       (event->type - xrandr_event_base_ != RRNotify)) {
@@ -778,6 +795,7 @@ bool OutputConfigurator::Dispatch(const base::NativeEvent& event) {
         this,
         &OutputConfigurator::NotifyOnDisplayChanged);
   }
+#endif  // defined(USE_X11)
   return true;
 }
 
@@ -966,5 +984,7 @@ RRMode OutputConfigurator::GetOutputNativeMode(
 
   return output_info->modes[0];
 }
+
+#endif  // defined(USE_X11)
 
 }  // namespace chromeos

@@ -27,6 +27,10 @@ struct _XRROutputInfo;
 typedef _XRROutputInfo XRROutputInfo;
 struct _XRRScreenResources;
 typedef _XRRScreenResources XRRScreenResources;
+#if !defined(USE_X11)
+struct _XDisplay;
+typedef struct _XDisplay Display;
+#endif
 
 namespace chromeos {
 
