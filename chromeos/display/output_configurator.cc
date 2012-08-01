@@ -18,7 +18,6 @@
 
 #include "base/chromeos/chromeos_version.h"
 #include "base/logging.h"
-#include "base/message_pump_aurax11.h"
 #include "base/metrics/histogram.h"
 #include "base/perftimer.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -29,7 +28,15 @@
 #include "dbus/object_proxy.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
 
+#if defined(USE_X11)
+#include "base/message_pump_aurax11.h"
+#else
+#include "base/message_pump_evdev.h"
+#endif
+
 namespace chromeos {
+
+#if defined(USE_X11)
 
 namespace {
 // DPI measurements.
@@ -83,40 +90,20 @@ static bool FindMirrorModeForOutputs(Display* display,
                                      RRMode* out_two_mode) {
   XRROutputInfo* primary = XRRGetOutputInfo(display, screen, one);
   XRROutputInfo* secondary = XRRGetOutputInfo(display, screen, two);
-
-  int one_index = 0;
-  int two_index = 0;
   bool found = false;
-  while (!found &&
-      (one_index < primary->nmode) &&
-      (two_index < secondary->nmode)) {
-    RRMode one_id = primary->modes[one_index];
-    RRMode two_id = secondary->modes[two_index];
-    XRRModeInfo* one_mode = ModeInfoForID(screen, one_id);
-    XRRModeInfo* two_mode = ModeInfoForID(screen, two_id);
-    int one_width = one_mode->width;
-    int one_height = one_mode->height;
-    int two_width = two_mode->width;
-    int two_height = two_mode->height;
-    if ((one_width == two_width) && (one_height == two_height)) {
-      *out_one_mode = one_id;
-      *out_two_mode = two_id;
-      found = true;
-    } else {
-      // The sort order of the modes is NOT by mode area but is sorted by width,
-      // then by height within each like width.
-      if (one_width > two_width) {
-        one_index += 1;
-      } else if (one_width < two_width) {
-        two_index += 1;
-      } else {
-        if (one_height > two_height) {
-          one_index += 1;
-        } else {
-          two_index += 1;
-        }
-      }
-    }
+  std::map<std::pair<int, int>, XRRModeInfo*> modes;
+  int i;
+  for (i = 0; i < primary->nmode; ++i) {
+    XRRModeInfo* mode = ModeInfoForID(screen, primary->modes[i]);
+    modes[std::make_pair(mode->width, mode->height)] = mode;
+  }
+  for (i = 0; i < seconary->nmode && !found; ++i) {
+    XRRModeInfo* mode = ModeInfoForID(screen, secondary->modes[i]);
+    if (modes.find(std::make_pair(mode->width, mode->height)) == modes.end())
+      continue;
+    *out_one_mode = modes[std::make_pair(mode->width, mode->height)].id;
+    *out_two_mode = mode->id;
+    found = true;
   }
   XRRFreeOutputInfo(primary);
   XRRFreeOutputInfo(secondary);
@@ -132,10 +119,10 @@ static void ConfigureCrtc(Display *display,
                           int y,
                           RRMode mode,
                           RROutput output) {
+#if defined(USE_X11)
   const Rotation kRotate = RR_Rotate_0;
   RROutput* outputs = NULL;
   int num_outputs = 0;
-
   // Check the output and mode argument - if either are None, we should disable.
   if ((output != None) && (mode != None)) {
     outputs = &output;
@@ -157,6 +144,7 @@ static void ConfigureCrtc(Display *display,
     CHECK(DPMSEnable(display));
     CHECK(DPMSForceLevel(display, DPMSModeOn));
   }
+#endif  // defined(USE_X11)
 }
 
 // Called to set the frame buffer (underling XRR "screen") size.  Has a
@@ -166,6 +154,7 @@ static void CreateFrameBuffer(Display* display,
                               Window window,
                               int width,
                               int height) {
+#if defined(USE_X11)
   // Note that setting the screen size fails if any CRTCs are currently
   // pointing into it so disable them all.
   for (int i = 0; i < screen->ncrtc; ++i) {
@@ -188,6 +177,7 @@ static void CreateFrameBuffer(Display* display,
   int mm_width = width * kPixelsToMmScale;
   int mm_height = height * kPixelsToMmScale;
   XRRSetScreenSize(display, window, width, height, mm_width, mm_height);
+#endif  // defined(USE_X11)
 }
 
 // A helper to get the current CRTC, Mode, and height for a given output.  This
@@ -275,12 +265,15 @@ OutputConfigurator::OutputConfigurator()
 OutputConfigurator::~OutputConfigurator() {
 }
 
+#endif  // defined(USE_X11)
+
 bool OutputConfigurator::CycleDisplayMode(bool extended_desktop_enabled) {
   VLOG(1) << "CycleDisplayMode";
   if (!is_running_on_chrome_os_)
     return false;
 
   bool did_change = false;
+#if defined(USE_X11)
   // Rules:
   // - if there are 0 or 1 displays, do nothing and return false.
   // - use y-coord of CRTCs to determine if we are mirror, primary-first, or
@@ -314,7 +307,7 @@ bool OutputConfigurator::CycleDisplayMode(bool extended_desktop_enabled) {
   }
   if (STATE_INVALID != new_state)
     did_change = SetDisplayMode(new_state);
-
+#endif  // defined(USE_X11)
   return did_change;
 }
 
@@ -323,8 +316,8 @@ bool OutputConfigurator::ScreenPowerSet(bool power_on, bool all_displays) {
           << " all displays " << all_displays;
   if (!is_running_on_chrome_os_)
     return false;
-
   bool success = false;
+#if defined(USE_X11)
   Display* display = base::MessagePumpAuraX11::GetDefaultXDisplay();
   CHECK(display != NULL);
   XGrabServer(display);
@@ -375,7 +368,7 @@ bool OutputConfigurator::ScreenPowerSet(bool power_on, bool all_displays) {
 
   XRRFreeScreenResources(screen);
   XUngrabServer(display);
-
+#endif  // defined(USE_X11)
   return success;
 }
 
@@ -384,7 +377,7 @@ bool OutputConfigurator::SetDisplayMode(OutputState new_state) {
       output_state_ == STATE_HEADLESS ||
       output_state_ == STATE_SINGLE)
     return false;
-
+#if defined(USE_X11)
   Display* display = base::MessagePumpAuraX11::GetDefaultXDisplay();
   CHECK(display != NULL);
   XGrabServer(display);
@@ -398,10 +391,12 @@ bool OutputConfigurator::SetDisplayMode(OutputState new_state) {
                               new_state);
   XRRFreeScreenResources(screen);
   XUngrabServer(display);
+#endif  // defined(USE_X11)
   return true;
 }
 
 bool OutputConfigurator::Dispatch(const base::NativeEvent& event) {
+#if defined(USE_X11)
   // Ignore this event if the Xrandr extension isn't supported.
   if (!is_running_on_chrome_os_ ||
       (event->type - xrandr_event_base_ != RRNotify)) {
@@ -420,8 +415,11 @@ bool OutputConfigurator::Dispatch(const base::NativeEvent& event) {
     }
     // Ignore the case of RR_UnkownConnection.
   }
+#endif  // defined(USE_X11)
   return true;
 }
+
+#if defined(USE_X11)
 
 bool OutputConfigurator::TryRecacheOutputs(Display* display,
                                            XRRScreenResources* screen) {
@@ -837,5 +835,7 @@ void OutputConfigurator::CheckIsProjectingAndNotify() {
       dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
       dbus::ObjectProxy::EmptyResponseCallback());
 }
+
+#endif  // defined(USE_X11)
 
 }  // namespace chromeos

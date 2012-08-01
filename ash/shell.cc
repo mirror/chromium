@@ -179,7 +179,7 @@ Shell::Shell(ShellDelegate* delegate)
       active_root_window_(NULL),
       env_filter_(NULL),
       delegate_(delegate),
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
       output_configurator_(new chromeos::OutputConfigurator()),
 #endif  // defined(OS_CHROMEOS)
       shelf_(NULL),
