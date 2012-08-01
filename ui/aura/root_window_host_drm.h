@@ -37,7 +37,8 @@ struct kms {
 class RootWindowHostDRM : public RootWindowHost,
                           public MessageLoop::Dispatcher {
  public:
-  explicit RootWindowHostDRM(const gfx::Rect& bounds);
+  explicit RootWindowHostDRM(RootWindowHostDelegate* delegate,
+                             const gfx::Rect& bounds);
   virtual ~RootWindowHostDRM();
 
   static int GetDRMFd();
@@ -46,9 +47,11 @@ class RootWindowHostDRM : public RootWindowHost,
   // Overridden from Dispatcher overrides:
   virtual bool Dispatch(const base::NativeEvent& event) OVERRIDE;
 
+  RootWindowHostDelegate* delegate() { return delegate_; }
+  void set_delegate(RootWindowHostDelegate* delegate) { delegate_ = delegate; }
+
  private:
   // RootWindowHost Overrides.
-  virtual void SetRootWindow(RootWindow* root_window) OVERRIDE;
   virtual RootWindow* GetRootWindow() OVERRIDE;
   virtual gfx::AcceleratedWidget GetAcceleratedWidget() OVERRIDE;
   virtual gfx::Rect GetBounds() const OVERRIDE;
@@ -58,14 +61,14 @@ class RootWindowHostDRM : public RootWindowHost,
   virtual gfx::Point GetLocationOnNativeScreen() const OVERRIDE;
   virtual void SetCursor(gfx::NativeCursor cursor_type) OVERRIDE;
   virtual void ShowCursor(bool show) OVERRIDE;
-  virtual gfx::Point QueryMouseLocation() OVERRIDE;
+  virtual bool QueryMouseLocation(gfx::Point*) OVERRIDE;
   virtual void MoveCursorTo(const gfx::Point& location) OVERRIDE;
   virtual void PostNativeEvent(const base::NativeEvent& event) OVERRIDE;
   virtual void OnDeviceScaleFactorChanged(float device_scale_factor) OVERRIDE;
+  virtual void Show() OVERRIDE;
 
   // Nothing to do on DRM
   virtual void ToggleFullScreen() {};
-  virtual void Show() {};
   virtual void SetCapture() {};
   virtual void ReleaseCapture() {};
   virtual bool ConfineCursorToRootWindow() { return true; };
@@ -89,7 +92,7 @@ class RootWindowHostDRM : public RootWindowHost,
   // Sets the DRM cursor to the current location.
   void UpdateDRMCursor();
 
-  RootWindow* root_window_;
+  RootWindowHostDelegate* delegate_;
 
   // The display and the fd for the graphics card.
   struct gbm_device* display_;
