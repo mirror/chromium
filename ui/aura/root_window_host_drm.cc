@@ -446,6 +446,14 @@ bool RootWindowHostDRM::Dispatch(const base::NativeEvent& event) {
         delegate_->OnHostScrollEvent(&ev);
     }
     break;
+  case base::EVDEV_EVENT_TOUCH:
+    {
+      event->modifiers = modifiers_;
+      TouchEvent ev(event);
+      if (delegate_)
+        delegate_->OnHostTouchEvent(&ev);
+    }
+    break;
   case base::EVDEV_EVENT_BUTTON:
     {
       event->x = cursor_position_.x();
@@ -535,7 +543,6 @@ bool RootWindowHostDRM::Dispatch(const base::NativeEvent& event) {
           modifiers_ ^= ui::EF_CAPS_LOCK_DOWN;
         break;
       default:
-        NOTREACHED();
         break;
       }
       KeyEvent ev(event, false);

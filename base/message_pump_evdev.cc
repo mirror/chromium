@@ -30,86 +30,108 @@
 #include <unistd.h>
 #include <fcntl.h>
 
+#include <vector>
 #include <map>
 #include <string>
 
 #include "base/message_pump_evdev.h"
 #include "ui/base/events.h"
 
-#define MAX_SLOTS 16
-
 // event type flags
-#define EVDEV_ABSOLUTE_MOTION      (1 << 0)
-#define EVDEV_ABSOLUTE_MT_DOWN     (1 << 1)
-#define EVDEV_ABSOLUTE_MT_MOTION   (1 << 2)
-#define EVDEV_ABSOLUTE_MT_UP       (1 << 3)
-#define EVDEV_RELATIVE_MOTION      (1 << 4)
-#define EVDEV_RELATIVE_SCROLL      (1 << 5)
-
-// TODO(msb) fix this
-# define WL_INPUT_DEVICE_TOUCH_DOWN 0
-# define WL_INPUT_DEVICE_TOUCH_UP 0
-# define WL_INPUT_DEVICE_TOUCH_MOTION 0
+#define EVDEV_ABSOLUTE_DOWN        (1 << 0)
+#define EVDEV_ABSOLUTE_UP          (1 << 1)
+#define EVDEV_RELATIVE_MOTION      (1 << 2)
+#define EVDEV_RELATIVE_SCROLL      (1 << 3)
 
 namespace base {
 
-namespace {
-
-struct evdev_input_device {
-  struct {
-    int min_x, max_x, min_y, max_y;
-    int old_x, old_y, reset_x, reset_y;
-    uint32_t x, y;
-  } abs;
-
-  struct {
-    int slot;
-    uint32_t x[MAX_SLOTS];
-    uint32_t y[MAX_SLOTS];
-  } mt;
-
-  struct {
-    uint32_t dx, dy;
-    uint32_t sx, sy;
-  } rel;
-
-  int type;
-
-  bool is_touchpad, is_mt, is_repeatable;
-};
-
+// Base class for evdev handlers of different device types.
 class EvdevHandler : public MessagePumpEpollHandler {
  public:
-  EvdevHandler(MessagePumpEpoll *pump, const char *devnode);
+  EvdevHandler(MessagePumpEpoll *pump, const char *devnode,
+               const size_t ev_buf_len);
   virtual ~EvdevHandler();
 
-  virtual void Process() OVERRIDE;
-  bool Configure();
+  void Process();
+  virtual bool Configure() = 0;
 
-  char *devnode() { return devnode_; };
+  char *devnode() { return devnode_; }
 
- private:
-  void ProcessKey(input_event *e);
-  void ProcessTouch(input_event *e);
-  void ProcessAbsoluteMotion(input_event *e);
-  void ProcessAbsoluteMotionTouchpad(input_event *e);
-  void ProcessRelativeMotion(input_event *e);
-  void ProcessAbsolute(input_event *e);
-  bool IsMotionEvent(input_event *e);
-  void FlushMotion(timeval time);
-  void NotifyButton(timeval time, uint16_t code, uint32_t value);
-  void NotifyKey(timeval time, uint16_t code, uint32_t value);
-  void NotifyRelMotion(timeval time, uint32_t dx, uint32_t dy);
-  void NotifyAbsMotion(timeval time, uint32_t x, uint32_t y);
-  void NotifyScroll(timeval time, uint32_t sx, uint32_t sy);
-  void NotifyTouch(timeval time, int touch_id,
-                   uint32_t x, uint32_t y, int touch_type);
-
+ protected:
+  virtual void ProcessEvents(input_event *e) = 0;
+  virtual void Notify(timeval time, uint16_t code, uint32_t value,
+                      EvdevEventType type);
+  virtual void NotifyRelMotion(timeval time, uint32_t dx, uint32_t dy);
+  virtual void NotifyScroll(timeval time, uint32_t sx, uint32_t sy);
   char *devnode_;
-  struct evdev_input_device device_;
+  const size_t ev_buf_len_;
+  input_event *ev_buf_;
 
   DISALLOW_COPY_AND_ASSIGN(EvdevHandler);
 };
+
+EvdevHandler::EvdevHandler(MessagePumpEpoll *pump, const char *devnode,
+                           const size_t ev_buf_len)
+    : MessagePumpEpollHandler(pump), ev_buf_len_(ev_buf_len) {
+  fd_ = open(devnode, O_RDONLY);
+  DCHECK_GE(fd_, 0);
+  devnode_ = strdup(devnode);
+  ev_buf_ = new input_event[ev_buf_len_];
+}
+
+EvdevHandler::~EvdevHandler() {
+  free(devnode_);
+  delete[] ev_buf_;
+}
+
+void EvdevHandler::Process() {
+  input_event *e, *end;
+  int len;
+
+  len = read(fd(), ev_buf_, ev_buf_len_ * sizeof e[0]);
+  if (len < 0 || len % sizeof e[0] != 0)
+    return;
+
+  end = ev_buf_ + (len / sizeof e[0]);
+  for (e = ev_buf_; e < end; ++e)
+    ProcessEvents(e);
+}
+
+void EvdevHandler::Notify(timeval time, uint16_t code, uint32_t value,
+                          EvdevEventType type) {
+  EvdevEvent event;
+
+  event.id = (uintptr_t) this;
+  event.type = type;
+  event.time = time;
+  event.code = code;
+  event.value = value;
+  pump_->DispatchEvent(&event);
+}
+
+void EvdevHandler::NotifyRelMotion(timeval time, uint32_t dx, uint32_t dy) {
+  EvdevEvent event;
+
+  event.id = (uintptr_t) this;
+  event.type = EVDEV_EVENT_RELATIVE_MOTION;
+  event.time = time;
+  event.motion.x = dx;
+  event.motion.y = dy;
+  pump_->DispatchEvent(&event);
+}
+
+void EvdevHandler::NotifyScroll(timeval time, uint32_t sx, uint32_t sy) {
+  EvdevEvent event;
+
+  event.id = (uintptr_t) this;
+  event.type = EVDEV_EVENT_SCROLL;
+  event.time = time;
+  event.scroll.x = sx;
+  event.scroll.y = sy;
+  pump_->DispatchEvent(&event);
+}
+
+namespace {
 
 // copied from udev/extras/input_id/input_id.c
 // we must use this kernel-compatible implementation
@@ -121,16 +143,281 @@ class EvdevHandler : public MessagePumpEpollHandler {
 #define TEST_BIT(array, bit)    ((array[LONG(bit)] >> OFF(bit)) & 1)
 // end copied
 
-bool EvdevHandler::Configure() {
+class KeyboardEvdevHandler : public EvdevHandler {
+ public:
+  KeyboardEvdevHandler(MessagePumpEpoll *pump, const char *devnode);
+  virtual ~KeyboardEvdevHandler() {};
+
+  virtual bool Configure() OVERRIDE;
+
+ private:
+  static const size_t BUF_LEN = 16;
+  struct input_device {
+    bool is_repeatable;
+  };
+
+  virtual void ProcessEvents(input_event *e) OVERRIDE;
+  void ProcessKey(input_event *e);
+  input_device device_;
+
+  DISALLOW_COPY_AND_ASSIGN(KeyboardEvdevHandler);
+};
+
+bool KeyboardEvdevHandler::Configure() {
+  unsigned long ev_bits[NBITS(EV_CNT)];
+  ioctl(fd_, EVIOCGBIT(0, sizeof(ev_bits)), ev_bits);
+  if (TEST_BIT(ev_bits, EV_REP))
+    device_.is_repeatable = true;
+  return true;
+}
+
+KeyboardEvdevHandler::KeyboardEvdevHandler(MessagePumpEpoll *pump,
+                                           const char *devnode)
+    : EvdevHandler(pump, devnode, BUF_LEN) {
+  device_.is_repeatable = false;
+}
+
+void KeyboardEvdevHandler::ProcessKey(input_event *e) {
+  if (e->value == 2 && !device_.is_repeatable)
+    return;
+  Notify(e->time, e->code, e->value, EVDEV_EVENT_KEY);
+}
+
+void KeyboardEvdevHandler::ProcessEvents(input_event *e) {
+  switch (e->type) {
+    case EV_KEY:
+      ProcessKey(e);
+      break;
+    case EV_SYN:
+      break;
+  }
+}
+
+class MouseEvdevHandler : public EvdevHandler {
+ public:
+  MouseEvdevHandler(MessagePumpEpoll *pump, const char *devnode);
+  virtual ~MouseEvdevHandler() {};
+
+  virtual bool Configure() OVERRIDE;
+
+ private:
+  static const size_t BUF_LEN = 16;
+  struct input_device {
+    struct {
+      uint32_t dx, dy;
+      uint32_t sx, sy;
+    } rel;
+
+    int update_flags;
+    bool is_repeatable;
+  };
+
+  virtual void ProcessEvents(input_event *e) OVERRIDE;
+  void ProcessKey(input_event *e);
+  void ProcessRelativeMotion(input_event *e);
+  void FlushMotion(timeval time);
+  input_device device_;
+
+  DISALLOW_COPY_AND_ASSIGN(MouseEvdevHandler);
+};
+
+bool MouseEvdevHandler::Configure() {
+  unsigned long ev_bits[NBITS(EV_CNT)];
+  ioctl(fd_, EVIOCGBIT(0, sizeof(ev_bits)), ev_bits);
+  if (TEST_BIT(ev_bits, EV_REP))
+    device_.is_repeatable = true;
+  return true;
+}
+
+MouseEvdevHandler::MouseEvdevHandler(MessagePumpEpoll *pump,
+                                           const char *devnode)
+    : EvdevHandler(pump, devnode, BUF_LEN) {
+  device_.is_repeatable = false;
+  device_.update_flags = 0;
+  device_.rel.dx = 0;
+  device_.rel.dy = 0;
+  device_.rel.sx = 0;
+  device_.rel.sy = 0;
+}
+
+void MouseEvdevHandler::ProcessKey(input_event *e) {
+  if (e->value == 2 && !device_.is_repeatable)
+    return;
+
+  switch (e->code) {
+  case BTN_TOUCH:
+    // Treat BTN_TOUCH from devices that only have BTN_TOUCH as BTN_LEFT
+    e->code = BTN_LEFT;
+    // Intentional fallthrough!
+  case BTN_LEFT:
+  case BTN_RIGHT:
+  case BTN_MIDDLE:
+#if 0 // Not supported by Chromium
+  case BTN_SIDE:
+  case BTN_EXTRA:
+  case BTN_FORWARD:
+  case BTN_BACK:
+  case BTN_TASK:
+#endif
+    Notify(e->time, e->code, e->value, EVDEV_EVENT_BUTTON);
+    break;
+  default:
+    NOTREACHED();
+    break;
+  }
+}
+
+void MouseEvdevHandler::ProcessRelativeMotion(input_event *e) {
+  // TODO(sheckylin) Make this configurable somehow.
+  const int scroll_speed = 106;
+  switch (e->code) {
+  case REL_X:
+    device_.rel.dx += e->value;
+    device_.update_flags |= EVDEV_RELATIVE_MOTION;
+    break;
+  case REL_Y:
+    device_.rel.dy += e->value;
+    device_.update_flags |= EVDEV_RELATIVE_MOTION;
+    break;
+  case REL_WHEEL:
+    device_.rel.sy += e->value * scroll_speed;
+    device_.update_flags |= EVDEV_RELATIVE_SCROLL;
+    break;
+  case REL_HWHEEL:
+    // The minus sign here is to match the common scroll experience.
+    device_.rel.sx -= e->value * scroll_speed;
+    device_.update_flags |= EVDEV_RELATIVE_SCROLL;
+    break;
+  }
+}
+
+void MouseEvdevHandler::FlushMotion(timeval time) {
+  if (!device_.update_flags)
+    return;
+
+  if (device_.update_flags & EVDEV_RELATIVE_MOTION) {
+    NotifyRelMotion(time, device_.rel.dx, device_.rel.dy);
+    device_.rel.dx = 0;
+    device_.rel.dy = 0;
+  }
+  if (device_.update_flags & EVDEV_RELATIVE_SCROLL) {
+    NotifyScroll(time, device_.rel.sx, device_.rel.sy);
+    device_.rel.sx = 0;
+    device_.rel.sy = 0;
+  }
+  device_.update_flags = 0;
+}
+
+void MouseEvdevHandler::ProcessEvents(input_event *e) {
+  switch (e->type) {
+    case EV_REL:
+      ProcessRelativeMotion(e);
+      break;
+    case EV_KEY:
+      ProcessKey(e);
+      break;
+    case EV_SYN:
+      FlushMotion(e->time);
+      break;
+  }
+}
+
+class TouchEvdevHandler : public EvdevHandler {
+ public:
+  TouchEvdevHandler(MessagePumpEpoll *pump, const char *devnode,
+                    const size_t ev_buf_len);
+  virtual ~TouchEvdevHandler() {}
+
+  virtual bool Configure() OVERRIDE { return false; }
+
+ protected:
+  struct mt_slot {
+    mt_slot(): update_flags(0), id(0), x(0), y(0), p(0), o(0), ma(0), mi(0) {}
+
+    uint32_t update_flags;
+    uint32_t id;
+    uint32_t x, y;
+    uint32_t p;
+    uint32_t o, ma, mi;
+  };
+
+  virtual void ProcessEvents(input_event *e) OVERRIDE {}
+  virtual void NotifyTouch(timeval time, const mt_slot &vals);
+
+  DISALLOW_COPY_AND_ASSIGN(TouchEvdevHandler);
+};
+
+TouchEvdevHandler::TouchEvdevHandler(MessagePumpEpoll *pump,
+                                     const char *devnode,
+                                     const size_t ev_buf_len)
+    : EvdevHandler(pump, devnode, ev_buf_len) {
+}
+
+void TouchEvdevHandler::NotifyTouch(timeval time, const mt_slot &vals) {
+  EvdevEvent event;
+
+  event.id = (uintptr_t) this;
+  event.type = EVDEV_EVENT_TOUCH;
+  event.time = time;
+  event.code = vals.id;
+  if (vals.update_flags & EVDEV_ABSOLUTE_DOWN)
+    event.value = 1;
+  else if (vals.update_flags & EVDEV_ABSOLUTE_UP)
+    event.value = 0;
+  else
+    event.value = 2;
+  event.x = vals.x;
+  event.y = vals.y;
+  event.touch.p = vals.p;
+  event.touch.o = vals.o;
+  event.touch.ma = vals.ma;
+  event.touch.mi = vals.mi;
+  pump_->DispatchEvent(&event);
+}
+
+class TouchpadEvdevHandler : public TouchEvdevHandler {
+ public:
+  TouchpadEvdevHandler(MessagePumpEpoll *pump, const char *devnode);
+  virtual ~TouchpadEvdevHandler() {};
+
+  virtual bool Configure() OVERRIDE;
+
+ private:
+  static const size_t BUF_LEN = 256;
+  struct input_device {
+    struct {
+      int min_x, max_x, min_y, max_y;
+      int old_x, old_y, reset_x, reset_y;
+      uint32_t x, y;
+    } abs;
+
+    struct {
+      uint32_t dx, dy;
+    } rel;
+
+    int update_flags;
+
+    bool is_repeatable;
+    bool is_touchpad, is_mt;
+  };
+
+  virtual void ProcessEvents(input_event *e) OVERRIDE;
+  void ProcessKey(input_event *e);
+  void ProcessAbsoluteMotionTouchpad(input_event *e);
+  void FlushMotion(timeval time);
+  input_device device_;
+
+  DISALLOW_COPY_AND_ASSIGN(TouchpadEvdevHandler);
+};
+
+bool TouchpadEvdevHandler::Configure() {
   struct input_absinfo absinfo;
   unsigned long ev_bits[NBITS(EV_CNT)];
   unsigned long abs_bits[NBITS(ABS_CNT)];
   unsigned long key_bits[NBITS(KEY_CNT)];
-  bool has_key = false, has_abs = false;
 
   ioctl(fd_, EVIOCGBIT(0, sizeof(ev_bits)), ev_bits);
   if (TEST_BIT(ev_bits, EV_ABS)) {
-    has_abs = true;
     ioctl(fd_, EVIOCGBIT(EV_ABS, sizeof(abs_bits)), abs_bits);
     if (TEST_BIT(abs_bits, ABS_X)) {
       ioctl(fd_, EVIOCGABS(ABS_X), &absinfo);
@@ -142,13 +429,10 @@ bool EvdevHandler::Configure() {
       device_.abs.min_y = absinfo.minimum;
       device_.abs.max_y = absinfo.maximum;
     }
-    if (TEST_BIT(abs_bits, ABS_MT_SLOT)) {
+    if (TEST_BIT(abs_bits, ABS_MT_SLOT))
       device_.is_mt = true;
-      device_.mt.slot = 0;
-    }
   }
   if (TEST_BIT(ev_bits, EV_KEY)) {
-    has_key = true;
     ioctl(fd_, EVIOCGBIT(EV_KEY, sizeof(key_bits)), key_bits);
     if (TEST_BIT(key_bits, BTN_TOOL_FINGER) &&
         !TEST_BIT(key_bits, BTN_TOOL_PEN))
@@ -157,36 +441,21 @@ bool EvdevHandler::Configure() {
       device_.is_repeatable = true;
     }
   }
-
-  // This rule tries to catch accelerometer devices and opt out. We may
-  // want to adjust the protocol later adding a proper event for dealing
-  // with accelerometers and implement here accordingly
-  if (has_abs && !has_key)
-    return false;
-
   return true;
 }
 
-EvdevHandler::EvdevHandler(MessagePumpEpoll *pump, const char *devnode)
-    : MessagePumpEpollHandler(pump) {
-  fd_ = open(devnode, O_RDONLY);
-  DCHECK_GE(fd_, 0);
+TouchpadEvdevHandler::TouchpadEvdevHandler(MessagePumpEpoll *pump,
+                                           const char *devnode)
+    : TouchEvdevHandler(pump, devnode, BUF_LEN) {
+  device_.update_flags = 0;
+  device_.is_repeatable = false;
   device_.is_touchpad = false;
   device_.is_mt = false;
-  device_.is_repeatable = false;
-  devnode_ = strdup(devnode);
-  device_.mt.slot = -1;
   device_.rel.dx = 0;
   device_.rel.dy = 0;
-  device_.rel.sx = 0;
-  device_.rel.sy = 0;
 }
 
-EvdevHandler::~EvdevHandler() {
-  free(devnode_);
-}
-
-void EvdevHandler::ProcessKey(input_event *e) {
+void TouchpadEvdevHandler::ProcessKey(input_event *e) {
   if (e->value == 2 && !device_.is_repeatable)
     return;
 
@@ -217,57 +486,15 @@ void EvdevHandler::ProcessKey(input_event *e) {
   case BTN_LEFT:
   case BTN_RIGHT:
   case BTN_MIDDLE:
-#if 0 // Not supported by Chromium
-  case BTN_SIDE:
-  case BTN_EXTRA:
-  case BTN_FORWARD:
-  case BTN_BACK:
-  case BTN_TASK:
-#endif
-    NotifyButton(e->time, e->code, e->value);
+    Notify(e->time, e->code, e->value, EVDEV_EVENT_BUTTON);
     break;
   default:
-    NotifyKey(e->time, e->code, e->value);
+    NOTIMPLEMENTED();
     break;
   }
 }
 
-void EvdevHandler::ProcessTouch(input_event *e) {
-  switch (e->code) {
-  case ABS_MT_SLOT:
-    device_.mt.slot = e->value;
-    break;
-  case ABS_MT_TRACKING_ID:
-    if (e->value >= 0)
-      device_.type |= EVDEV_ABSOLUTE_MT_DOWN;
-    else
-      device_.type |= EVDEV_ABSOLUTE_MT_UP;
-    break;
-  case ABS_MT_POSITION_X:
-    device_.mt.x[device_.mt.slot] = e->value;
-    device_.type |= EVDEV_ABSOLUTE_MT_MOTION;
-    break;
-  case ABS_MT_POSITION_Y:
-    device_.mt.y[device_.mt.slot] = e->value;
-    device_.type |= EVDEV_ABSOLUTE_MT_MOTION;
-    break;
-  }
-}
-
-void EvdevHandler::ProcessAbsoluteMotion(input_event *e) {
-  switch (e->code) {
-  case ABS_X:
-    device_.abs.x = e->value;
-    device_.type |= EVDEV_ABSOLUTE_MOTION;
-    break;
-  case ABS_Y:
-    device_.abs.y = e->value;
-    device_.type |= EVDEV_ABSOLUTE_MOTION;
-    break;
-  }
-}
-
-void EvdevHandler::ProcessAbsoluteMotionTouchpad(
+void TouchpadEvdevHandler::ProcessAbsoluteMotionTouchpad(
     input_event *e) {
   // TODO(msb) Make this configurable somehow.
   const int touchpad_speed = 700;
@@ -282,7 +509,7 @@ void EvdevHandler::ProcessAbsoluteMotionTouchpad(
           (e->value - device_.abs.old_x) * touchpad_speed /
           (device_.abs.max_x - device_.abs.min_x);
     device_.abs.old_x = e->value;
-    device_.type |= EVDEV_RELATIVE_MOTION;
+    device_.update_flags |= EVDEV_RELATIVE_MOTION;
     break;
   case ABS_Y:
     e->value -= device_.abs.min_y;
@@ -293,188 +520,302 @@ void EvdevHandler::ProcessAbsoluteMotionTouchpad(
           (e->value - device_.abs.old_y) * touchpad_speed /
           (device_.abs.max_y - device_.abs.min_y);
     device_.abs.old_y = e->value;
-    device_.type |= EVDEV_RELATIVE_MOTION;
+    device_.update_flags |= EVDEV_RELATIVE_MOTION;
     break;
   }
 }
 
-void EvdevHandler::ProcessRelativeMotion(input_event *e) {
-  // TODO(sheckylin) Make this configurable somehow.
-  const int scroll_speed = 106;
-  switch (e->code) {
-  case REL_X:
-    device_.rel.dx += e->value;
-    device_.type |= EVDEV_RELATIVE_MOTION;
-    break;
-  case REL_Y:
-    device_.rel.dy += e->value;
-    device_.type |= EVDEV_RELATIVE_MOTION;
-    break;
-  case REL_WHEEL:
-    device_.rel.sy += e->value * scroll_speed;
-    device_.type |= EVDEV_RELATIVE_SCROLL;
-    break;
-  case REL_HWHEEL:
-    // The minus sign here is to match the common scroll experience.
-    device_.rel.sx -= e->value * scroll_speed;
-    device_.type |= EVDEV_RELATIVE_SCROLL;
-    break;
-  }
-}
-
-void EvdevHandler::ProcessAbsolute(input_event *e)
-{
-  if (device_.is_touchpad)
-    ProcessAbsoluteMotionTouchpad(e);
-  else if (device_.is_mt)
-    ProcessTouch(e);
-  else
-    ProcessAbsoluteMotion(e);
-}
-
-bool EvdevHandler::IsMotionEvent(input_event *e) {
-  switch (e->type) {
-  case EV_REL:
-    switch (e->code) {
-    case REL_X:
-    case REL_Y:
-    case REL_WHEEL:
-    case REL_HWHEEL:
-      return true;
-    }
-  case EV_ABS:
-    switch (e->code) {
-    case ABS_X:
-    case ABS_Y:
-    case ABS_MT_POSITION_X:
-    case ABS_MT_POSITION_Y:
-      return true;
-    }
-  }
-  return false;
-}
-
-void EvdevHandler::FlushMotion(timeval time) {
-  if (!device_.type)
+void TouchpadEvdevHandler::FlushMotion(timeval time) {
+  if (!device_.update_flags)
     return;
 
-  if (device_.type & EVDEV_RELATIVE_MOTION) {
+  if (device_.update_flags & EVDEV_RELATIVE_MOTION) {
     NotifyRelMotion(time, device_.rel.dx, device_.rel.dy);
-    device_.type &= ~EVDEV_RELATIVE_MOTION;
     device_.rel.dx = 0;
     device_.rel.dy = 0;
   }
-  if (device_.type & EVDEV_RELATIVE_SCROLL) {
-    NotifyScroll(time, device_.rel.sx, device_.rel.sy);
-    device_.type &= ~EVDEV_RELATIVE_SCROLL;
-    device_.rel.sx = 0;
-    device_.rel.sy = 0;
-  }
-  if (device_.type & EVDEV_ABSOLUTE_MT_DOWN) {
-    NotifyTouch(time,
-                device_.mt.slot,
-                device_.mt.x[device_.mt.slot],
-                device_.mt.y[device_.mt.slot],
-                WL_INPUT_DEVICE_TOUCH_DOWN);
-    device_.type &= ~EVDEV_ABSOLUTE_MT_DOWN;
-    device_.type &= ~EVDEV_ABSOLUTE_MT_MOTION;
-  }
-  if (device_.type & EVDEV_ABSOLUTE_MT_MOTION) {
-    NotifyTouch(time,
-                device_.mt.slot,
-                device_.mt.x[device_.mt.slot],
-                device_.mt.y[device_.mt.slot],
-                WL_INPUT_DEVICE_TOUCH_MOTION);
-    device_.type &= ~EVDEV_ABSOLUTE_MT_DOWN;
-    device_.type &= ~EVDEV_ABSOLUTE_MT_MOTION;
-  }
-  if (device_.type & EVDEV_ABSOLUTE_MT_UP) {
-    NotifyTouch(time, device_.mt.slot, 0, 0,
-                WL_INPUT_DEVICE_TOUCH_UP);
-    device_.type &= ~EVDEV_ABSOLUTE_MT_UP;
-  }
-  if (device_.type & EVDEV_ABSOLUTE_MOTION) {
-    NotifyAbsMotion(time, device_.abs.x, device_.abs.y);
-    device_.type &= ~EVDEV_ABSOLUTE_MOTION;
-  }
+  device_.update_flags = 0;
 }
 
-void EvdevHandler::Process() {
-  input_event ev[8], *e, *end;
-  int len;
-
-  len = read(fd(), &ev, sizeof ev);
-  if (len < 0 || len % sizeof e[0] != 0)
-    return;
-
-  device_.type = 0;
-
-  end = ev + (len / sizeof e[0]);
-  for (e = ev; e < end; ++e) {
-    /* we try to minimize the amount of notifications to be
-     * forwarded to the compositor, so we accumulate motion
-     * events and send as a bunch */
-    if (!IsMotionEvent(e))
-      FlushMotion(e->time);
-    switch (e->type) {
-    case EV_REL:
-      ProcessRelativeMotion(e);
-      break;
+void TouchpadEvdevHandler::ProcessEvents(input_event *e) {
+  switch (e->type) {
     case EV_ABS:
-      ProcessAbsolute(e);
+      ProcessAbsoluteMotionTouchpad(e);
       break;
     case EV_KEY:
       ProcessKey(e);
       break;
+    case EV_SYN:
+      FlushMotion(e->time);
+      break;
+  }
+}
+
+class TouchscreenEvdevHandler : public TouchEvdevHandler {
+ public:
+  TouchscreenEvdevHandler(MessagePumpEpoll *pump, const char *devnode);
+  virtual ~TouchscreenEvdevHandler() {};
+
+  virtual bool Configure() OVERRIDE;
+
+ private:
+  static const size_t BUF_LEN = 256;
+  static const size_t MAX_SLOTS = 32;
+  struct input_device {
+    struct {
+      mt_slot slots[MAX_SLOTS];
+      std::vector<mt_slot *> updated_slots;
+    } mt;
+
+    struct {
+      int id;
+    } st;
+
+    mt_slot *active_mt_slot;
+
+    bool is_mt;
+    bool is_oriented, is_circular;
+  };
+
+  virtual void ProcessEvents(input_event *e) OVERRIDE;
+  void ProcessMultiTouch(input_event *e);
+  void ProcessSimpleTouch(input_event *e);
+  void ProcessKey(input_event *e);
+  void FlushMotion(timeval time);
+  input_device device_;
+
+  DISALLOW_COPY_AND_ASSIGN(TouchscreenEvdevHandler);
+};
+
+bool TouchscreenEvdevHandler::Configure() {
+  unsigned long ev_bits[NBITS(EV_CNT)];
+  unsigned long abs_bits[NBITS(ABS_CNT)];
+
+  ioctl(fd_, EVIOCGBIT(0, sizeof(ev_bits)), ev_bits);
+  if (TEST_BIT(ev_bits, EV_ABS)) {
+    ioctl(fd_, EVIOCGBIT(EV_ABS, sizeof(abs_bits)), abs_bits);
+    if (TEST_BIT(abs_bits, ABS_MT_SLOT))
+      device_.is_mt = true;
+    if (TEST_BIT(abs_bits, ABS_MT_ORIENTATION))
+      device_.is_oriented = true;
+    if (TEST_BIT(abs_bits, ABS_MT_TOUCH_MINOR))
+      device_.is_circular = false;
+  }
+  return true;
+}
+
+TouchscreenEvdevHandler::TouchscreenEvdevHandler(MessagePumpEpoll *pump,
+                                           const char *devnode)
+    : TouchEvdevHandler(pump, devnode, BUF_LEN) {
+  device_.is_mt = false;
+  device_.is_oriented = false;
+  device_.is_circular = true;
+  device_.active_mt_slot = device_.mt.slots;
+  device_.st.id = 0;
+}
+
+void TouchscreenEvdevHandler::ProcessKey(input_event *e) {
+  switch (e->code) {
+  case BTN_TOUCH:
+    // Multitouch touchscreen devices might not send individually
+    // button events each time a new finger is down. So we don't
+    // send notification for such devices and we solve the button
+    // case emulating on compositor side.
+    if (device_.is_mt)
+      break;
+    if (e->value) {
+      device_.active_mt_slot->id = device_.st.id++;
+      device_.active_mt_slot->update_flags |= EVDEV_ABSOLUTE_DOWN;
+    } else
+      device_.active_mt_slot->update_flags |= EVDEV_ABSOLUTE_UP;
+    if (device_.mt.updated_slots.empty())
+      device_.mt.updated_slots.push_back(device_.active_mt_slot);
+    break;
+  default:
+    NOTIMPLEMENTED();
+    break;
+  }
+}
+
+void TouchscreenEvdevHandler::ProcessSimpleTouch(input_event *e) {
+  // We will treat single-touch touchscreens as single-slot MT touchscreens.
+  switch (e->code) {
+  case ABS_X:
+    device_.active_mt_slot->x = e->value;
+    break;
+  case ABS_Y:
+    device_.active_mt_slot->y = e->value;
+    break;
+  case ABS_PRESSURE:
+    device_.active_mt_slot->ma = e->value;
+    device_.active_mt_slot->mi = e->value;
+    device_.active_mt_slot->p = e->value;
+    break;
+  }
+
+  if (device_.mt.updated_slots.empty())
+    device_.mt.updated_slots.push_back(device_.active_mt_slot);
+}
+
+void TouchscreenEvdevHandler::ProcessMultiTouch(input_event *e) {
+  switch (e->code) {
+  case ABS_MT_SLOT:
+    device_.active_mt_slot = device_.mt.slots + e->value;
+    break;
+  case ABS_MT_TRACKING_ID:
+    if (e->value >= 0) {
+      device_.active_mt_slot->id = e->value;
+      device_.active_mt_slot->update_flags |= EVDEV_ABSOLUTE_DOWN;
+    } else
+      device_.active_mt_slot->update_flags |= EVDEV_ABSOLUTE_UP;
+    break;
+  case ABS_MT_POSITION_X:
+    device_.active_mt_slot->x = e->value;
+    break;
+  case ABS_MT_POSITION_Y:
+    device_.active_mt_slot->y = e->value;
+    break;
+  case ABS_MT_PRESSURE:
+    device_.active_mt_slot->p = e->value;
+    break;
+  case ABS_MT_TOUCH_MAJOR:
+    device_.active_mt_slot->ma = e->value;
+    if (device_.is_circular)
+      device_.active_mt_slot->mi = e->value;
+    break;
+  case ABS_MT_TOUCH_MINOR:
+    device_.active_mt_slot->mi = e->value;
+    break;
+  case ABS_MT_ORIENTATION:
+    device_.active_mt_slot->o = e->value;
+    break;
+  }
+
+  // The logic here assumes will be at least one MT event for every non-MT
+  // event on an MT device. Otherwise it might send ghost updates.
+  if (device_.mt.updated_slots.empty() ||
+      device_.mt.updated_slots.back() != device_.active_mt_slot)
+    device_.mt.updated_slots.push_back(device_.active_mt_slot);
+}
+
+void TouchscreenEvdevHandler::FlushMotion(timeval time) {
+  while (!device_.mt.updated_slots.empty()) {
+    mt_slot *current_slot = device_.mt.updated_slots.back();
+    device_.mt.updated_slots.pop_back();
+    NotifyTouch(time, *current_slot);
+    current_slot->update_flags = 0;
+  }
+}
+
+void TouchscreenEvdevHandler::ProcessEvents(input_event *e) {
+  switch (e->type) {
+    case EV_ABS:
+      device_.is_mt ? ProcessMultiTouch(e) : ProcessSimpleTouch(e);
+      break;
+    case EV_KEY:
+      ProcessKey(e);
+      break;
+    case EV_SYN:
+      FlushMotion(e->time);
+      break;
+  }
+}
+
+class CommonEvdevHandler : public EvdevHandler {
+ public:
+  CommonEvdevHandler(MessagePumpEpoll *pump, const char *devnode);
+  virtual ~CommonEvdevHandler() {};
+
+  virtual bool Configure() OVERRIDE;
+
+ private:
+  static const size_t BUF_LEN = 8;
+  struct input_device {
+    struct {
+      int min_x, max_x, min_y, max_y;
+    } abs;
+
+    bool is_repeatable;
+    bool is_touchpad, is_mt;
+    bool is_oriented, is_circular;
+  };
+
+  virtual void ProcessEvents(input_event *e) OVERRIDE;
+  input_device device_;
+
+  DISALLOW_COPY_AND_ASSIGN(CommonEvdevHandler);
+};
+
+bool CommonEvdevHandler::Configure() {
+  struct input_absinfo absinfo;
+  unsigned long ev_bits[NBITS(EV_CNT)];
+  unsigned long abs_bits[NBITS(ABS_CNT)];
+  unsigned long key_bits[NBITS(KEY_CNT)];
+  bool has_key = false, has_abs = false;
+
+  ioctl(fd_, EVIOCGBIT(0, sizeof(ev_bits)), ev_bits);
+  if (TEST_BIT(ev_bits, EV_ABS)) {
+    has_abs = true;
+    ioctl(fd_, EVIOCGBIT(EV_ABS, sizeof(abs_bits)), abs_bits);
+    if (TEST_BIT(abs_bits, ABS_X)) {
+      ioctl(fd_, EVIOCGABS(ABS_X), &absinfo);
+      device_.abs.min_x = absinfo.minimum;
+      device_.abs.max_x = absinfo.maximum;
+    }
+    if (TEST_BIT(abs_bits, ABS_Y)) {
+      ioctl(fd_, EVIOCGABS(ABS_Y), &absinfo);
+      device_.abs.min_y = absinfo.minimum;
+      device_.abs.max_y = absinfo.maximum;
+    }
+    if (TEST_BIT(abs_bits, ABS_MT_SLOT))
+      device_.is_mt = true;
+    if (TEST_BIT(abs_bits, ABS_MT_ORIENTATION))
+      device_.is_oriented = true;
+    if (TEST_BIT(abs_bits, ABS_MT_TOUCH_MINOR))
+      device_.is_circular = false;
+  }
+  if (TEST_BIT(ev_bits, EV_KEY)) {
+    has_key = true;
+    ioctl(fd_, EVIOCGBIT(EV_KEY, sizeof(key_bits)), key_bits);
+    if (TEST_BIT(key_bits, BTN_TOOL_FINGER) &&
+        !TEST_BIT(key_bits, BTN_TOOL_PEN))
+      device_.is_touchpad = true;
+    if (TEST_BIT(ev_bits, EV_REP)) {
+      device_.is_repeatable = true;
     }
   }
-  FlushMotion((--e)->time);
+
+  // This rule tries to catch accelerometer devices and opt out. We may
+  // want to adjust the protocol later adding a proper event for dealing
+  // with accelerometers and implement here accordingly
+  if (has_abs && !has_key)
+    return false;
+  return true;
 }
 
-void EvdevHandler::NotifyButton(timeval time, uint16_t code, uint32_t value) {
-  EvdevEvent event;
-
-  event.type = EVDEV_EVENT_BUTTON;
-  event.time = time;
-  event.code = code;
-  event.value = value;
-  pump_->DispatchEvent(&event);
-}
-void EvdevHandler::NotifyKey(timeval time, uint16_t code, uint32_t value) {
-  EvdevEvent event;
-
-  event.type = EVDEV_EVENT_KEY;
-  event.time = time;
-  event.code = code;
-  event.value = value;
-  pump_->DispatchEvent(&event);
-}
-void EvdevHandler::NotifyRelMotion(timeval time, uint32_t dx, uint32_t dy) {
-  EvdevEvent event;
-
-  event.type = EVDEV_EVENT_RELATIVE_MOTION;
-  event.time = time;
-  event.motion.x = dx;
-  event.motion.y = dy;
-  pump_->DispatchEvent(&event);
-}
-void EvdevHandler::NotifyAbsMotion(timeval time, uint32_t x, uint32_t y) {
-  NOTIMPLEMENTED();
-}
-void EvdevHandler::NotifyScroll(timeval time, uint32_t sx, uint32_t sy) {
-  EvdevEvent event;
-
-  event.type = EVDEV_EVENT_SCROLL;
-  event.time = time;
-  event.scroll.x = sx;
-  event.scroll.y = sy;
-  pump_->DispatchEvent(&event);
-}
-void EvdevHandler::NotifyTouch(timeval time, int touch_id,
-                               uint32_t x, uint32_t y, int touch_type) {
-  NOTIMPLEMENTED();
+CommonEvdevHandler::CommonEvdevHandler(MessagePumpEpoll *pump,
+                                       const char *devnode)
+    : EvdevHandler(pump, devnode, BUF_LEN) {
+  device_.is_repeatable = false;
+  device_.is_touchpad = false;
+  device_.is_mt = false;
+  device_.is_oriented = false;
+  device_.is_circular = true;
 }
 
+void CommonEvdevHandler::ProcessEvents(input_event *e) {
+  switch (e->type) {
+    case EV_REL:
+    case EV_ABS:
+    case EV_KEY:
+    case EV_SYN:
+      Notify(e->time, e->code, e->value, EVDEV_EVENT_UNKNOWN);
+      break;
+    default:
+      NOTIMPLEMENTED();
+      break;
+  }
+}
 
 class UdevHandler : public MessagePumpEpollHandler {
  public:
@@ -484,7 +825,7 @@ class UdevHandler : public MessagePumpEpollHandler {
   virtual void Process() OVERRIDE;
 
  private:
-  void AddDevice(const char *devname);
+  void AddDevice(struct udev_device *device);
   void RemoveDevice(const char *devname);
   void AddDevices(udev *udev);
   void RemoveDevices();
@@ -515,8 +856,21 @@ UdevHandler::~UdevHandler() {
   RemoveDevices();
 }
 
-void UdevHandler::AddDevice(const char *devnode) {
-  EvdevHandler *handler = new EvdevHandler(pump_, devnode);
+void UdevHandler::AddDevice(struct udev_device *device) {
+  const char* devnode = udev_device_get_devnode(device);
+
+  // Identify the device type.
+  EvdevHandler *handler;
+  if (udev_device_get_property_value(device, "ID_INPUT_TOUCHSCREEN"))
+    handler = new TouchscreenEvdevHandler(pump_, devnode);
+  else if (udev_device_get_property_value(device, "ID_INPUT_TOUCHPAD"))
+    handler = new TouchpadEvdevHandler(pump_, devnode);
+  else if (udev_device_get_property_value(device, "ID_INPUT_KEYBOARD"))
+    handler = new KeyboardEvdevHandler(pump_, devnode);
+  else if (udev_device_get_property_value(device, "ID_INPUT_MOUSE"))
+    handler = new MouseEvdevHandler(pump_, devnode);
+  else
+    handler = new CommonEvdevHandler(pump_, devnode);
 
   if (!handler->Configure()) {
     delete handler;
@@ -550,7 +904,7 @@ void UdevHandler::AddDevices(udev *udev) {
     if (strncmp("event", udev_device_get_sysname(device), 5))
       continue;
 
-    AddDevice(udev_device_get_devnode(device));
+    AddDevice(device);
 
     udev_device_unref(device);
   }
@@ -580,7 +934,7 @@ void UdevHandler::Process() {
     return;
 
   if (!strcmp(action, "add"))
-    AddDevice(udev_device_get_devnode(udev_device));
+    AddDevice(udev_device);
   else if (!strcmp(action, "remove"))
     RemoveDevice(udev_device_get_devnode(udev_device));
 

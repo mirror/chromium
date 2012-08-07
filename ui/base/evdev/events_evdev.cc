@@ -360,6 +360,9 @@ EventType EventTypeFromNative(const base::NativeEvent& event) {
     return event->value ? ET_KEY_PRESSED : ET_KEY_RELEASED;
   case base::EVDEV_EVENT_SCROLL:
     return ET_SCROLL;
+  case base::EVDEV_EVENT_TOUCH:
+    return event->value ? ((event->value == 2) ?
+        ET_TOUCH_MOVED : ET_TOUCH_PRESSED) : ET_TOUCH_RELEASED;
   default:
     NOTIMPLEMENTED();
     return ET_UNKNOWN;
@@ -421,28 +424,23 @@ bool GetGestureTimes(const base::NativeEvent& native_event,
 }
 
 int GetTouchId(const base::NativeEvent& native_event) {
-  NOTIMPLEMENTED();
-  return 0;
+  return native_event->code;
 }
 
 float GetTouchRadiusX(const base::NativeEvent& native_event) {
-  NOTIMPLEMENTED();
-  return 0.0;
+  return native_event->touch.ma;
 }
 
 float GetTouchRadiusY(const base::NativeEvent& native_event) {
-  NOTIMPLEMENTED();
-  return 0.0;
+  return native_event->touch.mi;
 }
 
 float GetTouchAngle(const base::NativeEvent& native_event) {
-  NOTIMPLEMENTED();
-  return 0.0;
+  return native_event->touch.o;
 }
 
 float GetTouchForce(const base::NativeEvent& native_event) {
-  NOTIMPLEMENTED();
-  return 0.0;
+  return native_event->touch.p;
 }
 
 base::NativeEvent CreateNoopEvent() {

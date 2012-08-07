@@ -10,15 +10,20 @@
 #define MESSAGE_PUMP_FOR_UI
 #endif
 
+#include <stdint.h>
+
 #include "base/message_pump_epoll.h"
 
 namespace base {
 
 enum EvdevEventType {
+  EVDEV_EVENT_UNKNOWN,
   EVDEV_EVENT_RELATIVE_MOTION,
   EVDEV_EVENT_BUTTON,
   EVDEV_EVENT_KEY,
   EVDEV_EVENT_SCROLL,
+  EVDEV_EVENT_TOUCH,
+  EVDEV_EVENT_GESTURE,
 };
 
 struct EvdevMotionEvent {
@@ -33,7 +38,15 @@ struct EvdevKeyEvent {
   int sym;
 };
 
+struct EvdevTouchEvent {
+  int p;
+  int o, ma, mi;
+};
+
+typedef uintptr_t EvdevID;
+
 struct EvdevEvent {
+  EvdevID id;
   EvdevEventType type;
   timeval time;
   unsigned int modifiers;
@@ -43,6 +56,7 @@ struct EvdevEvent {
     EvdevMotionEvent motion;
     EvdevScrollEvent scroll;
     EvdevKeyEvent key;
+    EvdevTouchEvent touch;
   };
 };
 
