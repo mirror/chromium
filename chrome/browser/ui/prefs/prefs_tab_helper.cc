@@ -236,6 +236,68 @@ const PerScriptFontDefault kPerScriptFontDefaults[] = {
 const size_t kPerScriptFontDefaultsLength = arraysize(kPerScriptFontDefaults);
 #endif
 
+// Returns the script of the font pref |pref_name|.  For example, suppose
+// |pref_name| is "webkit.webprefs.fonts.serif.Hant".  Since the script code for
+// the script name "Hant" is USCRIPT_TRADITIONAL_HAN, the function returns
+// USCRIPT_TRADITIONAL_HAN.  |pref_name| must be a valid font pref name.
+UScriptCode GetScriptOfFontPref(const char* pref_name) {
+  // ICU script names are four letters.
+  static const size_t kScriptNameLength = 4;
+
+  size_t len = strlen(pref_name);
+  DCHECK_GT(len, kScriptNameLength);
+  const char* scriptName = &pref_name[len - kScriptNameLength];
+  int32 code = u_getPropertyValueEnum(UCHAR_SCRIPT, scriptName);
+  DCHECK(code >= 0 && code < USCRIPT_CODE_LIMIT);
+  return static_cast<UScriptCode>(code);
+}
+
+// If |scriptCode| is a member of a family of "similar" script codes, returns
+// the script code in that family that is used in font pref names.  For example,
+// USCRIPT_HANGUL and USCRIPT_KOREAN are considered equivalent for the purposes
+// of font selection.  Chrome uses the script code USCRIPT_HANGUL (script name
+// "Hang") in Korean font pref names (for example,
+// "webkit.webprefs.fonts.serif.Hang").  So, if |scriptCode| is USCRIPT_KOREAN,
+// the function returns USCRIPT_HANGUL.  If |scriptCode| is not a member of such
+// a family, returns |scriptCode|.
+UScriptCode GetScriptForFontPrefMatching(UScriptCode scriptCode) {
+  switch (scriptCode) {
+  case USCRIPT_HIRAGANA:
+  case USCRIPT_KATAKANA:
+  case USCRIPT_KATAKANA_OR_HIRAGANA:
+    return USCRIPT_JAPANESE;
+  case USCRIPT_KOREAN:
+    return USCRIPT_HANGUL;
+  default:
+    return scriptCode;
+  }
+}
+
+// Returns the primary script used by the browser's UI locale.  For example, if
+// the locale is "ru", the function returns USCRIPT_CYRILLIC, and if the locale
+// is "en", the function returns USCRIPT_LATIN.
+UScriptCode GetScriptOfBrowserLocale() {
+  std::string locale = g_browser_process->GetApplicationLocale();
+
+  // For Chinese locales, uscript_getCode() just returns USCRIPT_HAN but our
+  // per-script fonts are for USCRIPT_SIMPLIFIED_HAN and
+  // USCRIPT_TRADITIONAL_HAN.
+  if (locale == "zh-CN")
+    return USCRIPT_SIMPLIFIED_HAN;
+  if (locale == "zh-TW")
+    return USCRIPT_TRADITIONAL_HAN;
+
+  UScriptCode code = USCRIPT_INVALID_CODE;
+  UErrorCode err = U_ZERO_ERROR;
+  uscript_getCode(locale.c_str(), &code, 1, &err);
+
+  // Ignore the error that multiple scripts could be returned, since we only
+  // want one script.
+  if (U_FAILURE(err) && err != U_BUFFER_OVERFLOW_ERROR)
+    code = USCRIPT_INVALID_CODE;
+  return GetScriptForFontPrefMatching(code);
+}
+
 const struct {
   const char* from;
   const char* to;
