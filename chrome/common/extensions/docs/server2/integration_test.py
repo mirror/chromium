@@ -38,8 +38,27 @@ class _MockRequest(object):
     self.url = 'http://localhost' + path
 
 class IntegrationTest(unittest.TestCase):
-  def testAll(self):
-    logging.getLogger().setLevel(logging.ERROR)
+  def _TestSamplesLocales(self, sample_path, failures):
+    # Use US English, Spanish, and Arabic.
+    for lang in ['en-US', 'es', 'ar']:
+      request = _MockRequest(sample_path)
+      request.headers['Accept-Language'] = lang + ';q=0.8'
+      response = _MockResponse()
+      try:
+        Handler(request, response, local_path=BASE_PATH).get()
+        if 200 != response.status:
+          failures.append(
+              'Samples page with language %s does not have 200 status.'
+              ' Status was %d.' %  (lang, response.status))
+        if not response.out.getvalue():
+          failures.append(
+              'Rendering samples page with language %s produced no output.' %
+                  lang)
+      except Exception as e:
+        failures.append('Error rendering samples page with language %s: %s' %
+            (lang, e))
+
+  def _RunPublicTemplatesTest(self):
     base_path = os.path.join('templates', 'public')
     for path, dirs, files in os.walk(base_path):
       for name in files:
@@ -56,7 +75,17 @@ class IntegrationTest(unittest.TestCase):
         self.assertEqual(200, response.status)
         self.assertTrue(response.out.getvalue())
 
-  def test404(self):
+  def testAllPublicTemplates(self):
+    logging.getLogger().setLevel(logging.ERROR)
+    logging_error = logging.error
+    try:
+      logging.error = self.fail
+      self._RunPublicTemplatesTest()
+    finally:
+      logging.error = logging_error
+
+  def testNonexistentFile(self):
+    logging.getLogger().setLevel(logging.CRITICAL)
     request = _MockRequest('extensions/junk.html')
     bad_response = _MockResponse()
     Handler(request, bad_response, local_path=BASE_PATH).get()
@@ -74,11 +103,16 @@ class IntegrationTest(unittest.TestCase):
       self.assertTrue(response.out.getvalue())
 
   def testCron(self):
-    request = _MockRequest('/cron/trunk')
-    response = _MockResponse()
-    Handler(request, response, local_path=BASE_PATH).get()
-    self.assertEqual(200, response.status)
-    self.assertEqual('Success', response.out.getvalue())
+    logging_error = logging.error
+    try:
+      logging.error = self.fail
+      request = _MockRequest('/cron/trunk')
+      response = _MockResponse()
+      Handler(request, response, local_path=BASE_PATH).get()
+      self.assertEqual(200, response.status)
+      self.assertEqual('Success', response.out.getvalue())
+    finally:
+      logging.error = logging_error
 
 if __name__ == '__main__':
   # TODO(cduvall): Use optparse module.
