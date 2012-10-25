@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAQn//1Oc\u003d",
+        "filename": "ash/desktop_background/desktop_background_resources.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1001959
+      },
+      "writtenOn": "2012-10-25T02:53:48Z",
+      "side": 1,
+      "message": "Need a space between the // and the comment text here.",
+      "revId": "17b57922ed0b5aab5640702123a134b1fce3bc30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
