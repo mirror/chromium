@@ -196,11 +196,11 @@ Shell::Shell(ShellDelegate* delegate)
     : screen_(new ScreenAsh),
       active_root_window_(NULL),
       delegate_(delegate),
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
       output_configurator_(new chromeos::OutputConfigurator()),
       output_configurator_animation_(
           new internal::OutputConfiguratorAnimation()),
-#endif  // defined(OS_CHROMEOS)
+#endif  // defined(OS_CHROMEOS) && defined(USE_X11)
       browser_context_(NULL),
       simulate_modal_window_open_for_testing_(false) {
   DCHECK(delegate_.get());
@@ -217,11 +217,15 @@ Shell::Shell(ShellDelegate* delegate)
       (blacklisted_features & content::GPU_FEATURE_TYPE_PANEL_FITTING) ||
       CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kAshDisablePanelFitting);
+#if defined(USE_X11)
   output_configurator_->Init(!is_panel_fitting_disabled);
 
   output_configurator_->AddObserver(output_configurator_animation_.get());
+
   base::MessagePumpAuraX11::Current()->AddDispatcherForRootWindow(
       output_configurator());
+#endif  // defined(USE_X11)
+
 #endif  // defined(OS_CHROMEOS)
 }
 
@@ -299,11 +303,11 @@ Shell::~Shell() {
   DCHECK(instance_ == this);
   instance_ = NULL;
 
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   output_configurator_->RemoveObserver(output_configurator_animation_.get());
   base::MessagePumpAuraX11::Current()->RemoveDispatcherForRootWindow(
       output_configurator());
-#endif  // defined(OS_CHROMEOS)
+#endif  // defined(OS_CHROMEOS) && defined(USE_X11)
 }
 
 // static
