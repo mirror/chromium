@@ -31,7 +31,8 @@ base::NativeEvent CopyNativeEvent(const base::NativeEvent& event) {
   XEvent* copy = new XEvent;
   *copy = *event;
   return copy;
-#elif defined(OS_WIN)
+#elif defined(OS_WIN) || defined(USE_EVDEV)
+  // TODO(msb): not sure what we should have here.
   return event;
 #else
   NOTREACHED() <<
@@ -408,6 +409,9 @@ uint16 KeyEvent::GetUnmodifiedCharacter() const {
   // Looks like there is no way to get unmodified character on Windows.
   return (native_event().message == WM_CHAR) ? key_code_ :
       GetCharacterFromKeyCode(key_code_, flags() & EF_SHIFT_DOWN);
+#elif defined(USE_EVDEV)
+  NOTIMPLEMENTED();  // TODO(msb)
+  return 0;
 #elif defined(USE_X11)
   if (!native_event())
     return GetCharacterFromKeyCode(key_code_, flags() & EF_SHIFT_DOWN);
