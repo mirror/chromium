@@ -49,7 +49,7 @@ bool GLSurfaceDRM::Initialize() {
                                     NULL);
   if (!surface_) {
     LOG(ERROR) << "eglCreateWindowSurface failed with error "
-               << GetLastEGLErrorString();
+               << ui::GetLastEGLErrorString();
     Destroy();
     return false;
   }
@@ -61,7 +61,7 @@ void GLSurfaceDRM::Destroy() {
   if (surface_) {
     if (!eglDestroySurface(GetDisplay(), surface_)) {
       LOG(ERROR) << "eglDestroySurface failed with error "
-                 << GetLastEGLErrorString();
+                 << ui::GetLastEGLErrorString();
     }
     surface_ = NULL;
   }
@@ -173,7 +173,7 @@ bool NativeViewGLSurfaceDRM::SwapBuffers() {
 
   if (!eglSwapBuffers(GetDisplay(), surface_)) {
     LOG(ERROR) << "eglSwapBuffers failed with error "
-               << GetLastEGLErrorString();
+               << ui::GetLastEGLErrorString();
     return false;
   }
 
