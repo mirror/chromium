@@ -22,6 +22,10 @@
 #include "ui/base/keycodes/keyboard_code_conversion_x.h"
 #endif
 
+#if defined(USE_EVDEV)
+#include "base/message_pump_evdev.h"
+#endif
+
 namespace {
 
 base::NativeEvent CopyNativeEvent(const base::NativeEvent& event) {
