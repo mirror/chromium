@@ -126,6 +126,8 @@
             ['exclude', 'dispatcher_linux.h'],
             ['exclude', 'root_window_host_linux.cc'],
             ['exclude', 'root_window_host_linux.h'],
+            ['exclude', 'device_list_updater_aurax11.cc'],
+            ['exclude', 'device_list_updater_aurax11.h'],
           ],
           'dependencies': [
             '<(DEPTH)/build/linux/system.gyp:drm',
