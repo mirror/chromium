@@ -202,7 +202,7 @@ bool NativeViewGLSurfaceDRM::SwapBuffers() {
   }
 
   handle = gbm_bo_get_handle(next_bo_).u32;
-  stride = gbm_bo_get_pitch(next_bo_);
+  stride = gbm_bo_get_stride(next_bo_);
 
   ret = drmModeAddFB(fd_,
                      size_.width(), size_.height(),
