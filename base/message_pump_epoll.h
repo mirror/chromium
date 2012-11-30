@@ -10,6 +10,8 @@
 #define MESSAGE_PUMP_FOR_UI
 #endif
 
+#include <unistd.h>
+
 #include "base/message_pump.h"
 
 #include "base/message_pump_dispatcher.h"

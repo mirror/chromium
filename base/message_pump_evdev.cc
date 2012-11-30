@@ -35,7 +35,7 @@
 #include <string>
 
 #include "base/message_pump_evdev.h"
-#include "ui/base/events.h"
+#include "ui/base/events/event.h"
 
 // event type flags
 #define EVDEV_ABSOLUTE_DOWN        (1 << 0)
