@@ -174,8 +174,10 @@ class UI_EXPORT InputMethodIBus : public InputMethodBase {
 
   void CreateInputContextDone(const dbus::ObjectPath& object_path);
   void CreateInputContextFail();
+#if defined(USE_X11)
   void ProcessKeyEventDone(uint32 id, XEvent* xevent, uint32 keyval,
                            bool is_handled);
+#endif  // defined(USE_X11)
 
   scoped_ptr<internal::IBusClient> ibus_client_;
 
