@@ -23,13 +23,13 @@
 #include "base/logging.h"
 #include "base/message_loop.h"
 #include "chromeos/display/output_configurator.h"
+//#include "grit/ash_resources.h"
 #include "grit/ui_resources.h"
 #include "ui/aura/root_window.h"
 #include "ui/base/events/event.h"
 #include "ui/base/cursor/cursor.h"
 #include "ui/base/keycodes/keyboard_codes.h"
 #include "ui/base/output_drm.h"
-#include "ui/base/resource/resource_bundle.h"
 #include "ui/compositor/layer.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/skia_util.h"
@@ -173,6 +173,7 @@ class RootWindowHostDRM::ImageCursors {
     UnloadAll();
     // The cursor's hot points are defined in chromeos's
     // src/platforms/assets/cursors/*.cfg files.
+/*
     LoadImageCursor(ui::kCursorNull, IDR_AURA_CURSOR_PTR, 9, 5);
     LoadImageCursor(ui::kCursorPointer, IDR_AURA_CURSOR_PTR, 9, 5);
     LoadImageCursor(ui::kCursorNoDrop, IDR_AURA_CURSOR_NO_DROP, 9, 5);
@@ -194,7 +195,7 @@ class RootWindowHostDRM::ImageCursors {
     LoadImageCursor(ui::kCursorEastResize, IDR_AURA_CURSOR_EAST_RESIZE, 11, 11);
     LoadImageCursor(ui::kCursorWestResize, IDR_AURA_CURSOR_WEST_RESIZE, 11, 11);
     LoadImageCursor(ui::kCursorIBeam, IDR_AURA_CURSOR_IBEAM, 12, 11);
-
+*/
     // TODO (varunjain): add more cursors once we have assets.
   }
 
@@ -268,6 +269,7 @@ class RootWindowHostDRM::ImageCursors {
 
   // Creates a DRM Cursor from an image resource and puts it in the cursor map.
   void LoadImageCursor(int id, int resource_id, int hot_x, int hot_y) {
+/*
     const gfx::ImageSkia* image =
         ui::ResourceBundle::GetSharedInstance().GetImageSkiaNamed(resource_id);
     const SkBitmap& bitmap = SkBitmap(*image);
@@ -283,6 +285,7 @@ class RootWindowHostDRM::ImageCursors {
 
     cursors_[id] = CreateReffedCustomDRMCursor(id, bo);
     // |bitmap| is owned by the resource bundle. So we do not need to free it.
+*/
   }
 
   // A map to hold all image cursors. It maps the cursor ID to the Cursor.
