@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ui/base/events.h"
+#include "ui/base/events/event.h"
 
 #include <X11/keysym.h>
 #include <X11/keysymdef.h>
