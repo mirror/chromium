@@ -434,7 +434,7 @@ bool RootWindowHostDRM::Dispatch(const base::NativeEvent& event) {
       event->modifiers = modifiers_;
       cursor_position_= gfx::Point(x, y);
       UpdateDRMCursor();
-      MouseEvent ev(event);
+      ui::MouseEvent ev(event);
       if (delegate_)
         delegate_->OnHostMouseEvent(&ev);
     }
@@ -444,7 +444,7 @@ bool RootWindowHostDRM::Dispatch(const base::NativeEvent& event) {
       event->x = cursor_position_.x();
       event->y = cursor_position_.y();
       event->modifiers = modifiers_;
-      ScrollEvent ev(event);
+      ui::ScrollEvent ev(event);
       if (delegate_)
         delegate_->OnHostScrollEvent(&ev);
     }
@@ -452,7 +452,7 @@ bool RootWindowHostDRM::Dispatch(const base::NativeEvent& event) {
   case base::EVDEV_EVENT_TOUCH:
     {
       event->modifiers = modifiers_;
-      TouchEvent ev(event);
+      ui::TouchEvent ev(event);
       if (delegate_)
         delegate_->OnHostTouchEvent(&ev);
     }
@@ -496,7 +496,7 @@ bool RootWindowHostDRM::Dispatch(const base::NativeEvent& event) {
           break;
         }
       }
-      MouseEvent ev(event);
+      ui::MouseEvent ev(event);
       if (delegate_)
         delegate_->OnHostMouseEvent(&ev);
     }
@@ -548,7 +548,7 @@ bool RootWindowHostDRM::Dispatch(const base::NativeEvent& event) {
       default:
         break;
       }
-      KeyEvent ev(event, false);
+      ui::KeyEvent ev(event, false);
       if (delegate_)
         delegate_->OnHostKeyEvent(&ev);
     }
