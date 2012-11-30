@@ -76,7 +76,7 @@ RootWindowHostDRM* GetRootWindowHostInstance(RootWindowHostDelegate* delegate) {
             delegate,
             gfx::Rect(RootWindowHostDRM::GetNativeScreenSize()));
   } else if (g_root_window_host->delegate() == NULL && delegate != NULL) {
-    g_root_window_host->set_delegate(delegate);
+    g_root_window_host->SetDelegate(delegate);
   }
   return g_root_window_host;
 }
@@ -299,9 +299,8 @@ class RootWindowHostDRM::ImageCursors {
   DISALLOW_COPY_AND_ASSIGN(ImageCursors);
 };
 
-RootWindowHostDRM::RootWindowHostDRM(RootWindowHostDelegate* delegate,
-                                     const gfx::Rect& bounds)
-    : delegate_(delegate),
+RootWindowHostDRM::RootWindowHostDRM(const gfx::Rect& bounds)
+    : delegate_(NULL),
       modifiers_(0),
       current_cursor_(ui::kCursorNull),
       cursor_position_(0, 0),
@@ -595,6 +594,7 @@ void RootWindowHostDRM::UpdateDRMCursor() {
 }
 
 RootWindow* RootWindowHostDRM::GetRootWindow() {
+  CHECK(delegate_);
   return delegate_->AsRootWindow();
 }
 
@@ -626,7 +626,8 @@ void RootWindowHostDRM::SetSize(const gfx::Size& size) {
   // (possibly synthetic) ConfigureNotify about the actual size and correct
   // |bounds_| later.
   bounds_.set_size(size);
-  delegate_->OnHostResized(size);
+  if (delegate_)
+    delegate_->OnHostResized(size);
 }
 
 gfx::Point RootWindowHostDRM::GetLocationOnNativeScreen() const {
@@ -681,7 +682,12 @@ void RootWindowHostDRM::OnDeviceScaleFactorChanged(float device_scale_factor) {
 }
 
 void RootWindowHostDRM::Show() {
+  CHECK(delegate_);
   image_cursors_->Reload(delegate_->GetDeviceScaleFactor());
+}
+
+void RootWindowHostDRM::Hide() {
+  // TODO(sque)
 }
 
 // static

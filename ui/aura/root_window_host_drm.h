@@ -37,8 +37,7 @@ struct kms {
 class RootWindowHostDRM : public RootWindowHost,
                           public MessageLoop::Dispatcher {
  public:
-  explicit RootWindowHostDRM(RootWindowHostDelegate* delegate,
-                             const gfx::Rect& bounds);
+  explicit RootWindowHostDRM(const gfx::Rect& bounds);
   virtual ~RootWindowHostDRM();
 
   static int GetDRMFd();
@@ -48,7 +47,7 @@ class RootWindowHostDRM : public RootWindowHost,
   virtual bool Dispatch(const base::NativeEvent& event) OVERRIDE;
 
   RootWindowHostDelegate* delegate() { return delegate_; }
-  void set_delegate(RootWindowHostDelegate* delegate) { delegate_ = delegate; }
+  void SetDelegate(RootWindowHostDelegate* delegate) { delegate_ = delegate; }
 
  private:
   // RootWindowHost Overrides.
@@ -66,6 +65,7 @@ class RootWindowHostDRM : public RootWindowHost,
   virtual void PostNativeEvent(const base::NativeEvent& event) OVERRIDE;
   virtual void OnDeviceScaleFactorChanged(float device_scale_factor) OVERRIDE;
   virtual void Show() OVERRIDE;
+  virtual void Hide() OVERRIDE;
 
   // Nothing to do on DRM
   virtual void ToggleFullScreen() {};
@@ -77,6 +77,10 @@ class RootWindowHostDRM : public RootWindowHost,
   virtual bool GrabSnapshot(
       const gfx::Rect& snapshot_bounds,
       std::vector<unsigned char>* png_representation) { return true; };
+  virtual bool CopyAreaToSkCanvas(const gfx::Rect& source_bounds,
+                                  const gfx::Point& dest_offset,
+                                  SkCanvas* canvas) { return true}
+  virtual void PrepareForShutdown() {}
 
   // RootWindowHostDRM private functions
   bool SetupKMS();
