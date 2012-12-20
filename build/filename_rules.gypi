@@ -82,7 +82,7 @@
                     ['exclude', '(^|/)aura/'],
       ]
     }],
-    ['<(use_aura)==0 or (<(use_x11)==0 and <(use_drm)==0) or >(nacl_untrusted_build)==1', {
+    ['<(use_aura)==0 or <(use_x11)==0 or >(nacl_untrusted_build)==1', {
       'sources/': [ ['exclude', '_aurax11\\.(h|cc)$'] ]
     }],
     ['<(use_aura)==0 or OS!="win" or >(nacl_untrusted_build)==1', {
