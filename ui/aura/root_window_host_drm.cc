@@ -63,7 +63,7 @@ int g_drm_fd;
 const int kDrmCursorWidth = 64;
 const int kDrmCursorHeight = 64;
 
-RootWindowHostDRM* GetRootWindowHostInstance(RootWindowHostDelegate* delegate) {
+RootWindowHostDRM* GetRootWindowHostInstance() {
   static RootWindowHostDRM* g_root_window_host = NULL;
 
   // TODO(sque): this is a workaround because CreateDispatcher() may get called
@@ -73,10 +73,8 @@ RootWindowHostDRM* GetRootWindowHostInstance(RootWindowHostDelegate* delegate) {
   if (!g_root_window_host) {
     g_root_window_host =
         new RootWindowHostDRM(
-            delegate,
             gfx::Rect(RootWindowHostDRM::GetNativeScreenSize()));
-  } else if (g_root_window_host->delegate() == NULL && delegate != NULL) {
-    g_root_window_host->SetDelegate(delegate);
+    CHECK(g_root_window_host);
   }
   return g_root_window_host;
 }
@@ -703,9 +701,8 @@ void RootWindowHostDRM::SetDRMFd(int fd) {
 }
 
 // static
-RootWindowHost* RootWindowHost::Create(RootWindowHostDelegate* delegate,
-                                       const gfx::Rect& bounds) {
-  return GetRootWindowHostInstance(delegate);
+RootWindowHost* RootWindowHost::Create(const gfx::Rect& bounds) {
+  return GetRootWindowHostInstance();
 }
 
 // static
@@ -720,7 +717,7 @@ gfx::Size RootWindowHost::GetNativeScreenSize() {
 }
 
 MessageLoop::Dispatcher* CreateDispatcher() {
-  return GetRootWindowHostInstance(NULL);
+  return GetRootWindowHostInstance();
 }
 
 }  // namespace aura

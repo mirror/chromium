@@ -79,7 +79,7 @@ class RootWindowHostDRM : public RootWindowHost,
       std::vector<unsigned char>* png_representation) { return true; };
   virtual bool CopyAreaToSkCanvas(const gfx::Rect& source_bounds,
                                   const gfx::Point& dest_offset,
-                                  SkCanvas* canvas) { return true}
+                                  SkCanvas* canvas) { return true; }
   virtual void PrepareForShutdown() {}
 
   // RootWindowHostDRM private functions
