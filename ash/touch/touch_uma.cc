@@ -300,7 +300,7 @@ void TouchUMA::RecordTouchEvent(aura::Window* target,
 
   // Prefer raw event location (when available) over calibrated location.
   if (event.HasNativeEvent()) {
-#if defined(USE_XI2_MT)
+#if defined(USE_XI2_MT) && defined(USE_X11)
     XEvent* xevent = event.native_event();
     CHECK_EQ(GenericEvent, xevent->type);
     XIEvent* xievent = static_cast<XIEvent*>(xevent->xcookie.data);
