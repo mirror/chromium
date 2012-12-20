@@ -45,7 +45,7 @@
 #endif
 
 #if defined(USE_DRM)
-#include "base/global_descriptors_posix.h"
+#include "base/posix/global_descriptors.h"
 #include "content/public/common/content_descriptors.h"
 #include "ui/aura/root_window_host_drm.h"
 #endif
