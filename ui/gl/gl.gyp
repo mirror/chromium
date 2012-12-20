@@ -170,6 +170,8 @@
         }],
         ['use_drm == 1', {
           'sources!': [
+            'gl_image_linux.cc',
+            'gl_implementation_linux.cc',
             'gl_surface_linux.cc',
           ],
           'dependencies': [
