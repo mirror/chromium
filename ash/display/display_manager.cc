@@ -61,7 +61,7 @@ gfx::Display& GetInvalidDisplay() {
   return *invalid_display;
 }
 
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined (USE_X11)
 int64 GetDisplayIdForOutput(XID output) {
   uint16 manufacturer_id = 0;
   uint32 serial_number = 0;
@@ -408,7 +408,7 @@ void DisplayManager::OnRootWindowResized(const aura::RootWindow* root,
 }
 
 void DisplayManager::Init() {
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined (USE_X11)
   if (base::chromeos::IsRunningOnChromeOS()) {
     std::vector<XID> outputs;
     ui::GetOutputDeviceHandles(&outputs);
