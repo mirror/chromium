@@ -27,10 +27,10 @@ class CommandLine;
 
 namespace aura {
 class EventFilter;
+class FocusManager;
 class RootWindow;
 class Window;
 namespace client {
-class FocusClient;
 class StackingClient;
 class UserActionClient;
 }
@@ -505,7 +505,7 @@ class ASH_EXPORT Shell : internal::SystemModalContainerEventFilterDelegate,
   scoped_ptr<HighContrastController> high_contrast_controller_;
   scoped_ptr<MagnificationController> magnification_controller_;
   scoped_ptr<PartialMagnificationController> partial_magnification_controller_;
-  scoped_ptr<aura::client::FocusClient> focus_client_;
+  scoped_ptr<aura::FocusManager> focus_manager_;
   scoped_ptr<aura::client::UserActionClient> user_action_client_;
   scoped_ptr<internal::MouseCursorEventFilter> mouse_cursor_filter_;
   scoped_ptr<internal::ScreenPositionController> screen_position_controller_;
@@ -541,9 +541,10 @@ class ASH_EXPORT Shell : internal::SystemModalContainerEventFilterDelegate,
   scoped_ptr<chromeos::OutputConfigurator> output_configurator_;
   scoped_ptr<internal::OutputConfiguratorAnimation>
       output_configurator_animation_;
-
+#if defined(USE_X11)
   // Receives output change events and udpates the display manager.
   scoped_ptr<internal::DisplayChangeObserverX11> display_change_observer_;
+#endif  // defined(USE_X11)
 #endif  // defined(OS_CHROMEOS)
 
   CursorManager cursor_manager_;
