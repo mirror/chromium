@@ -119,6 +119,11 @@ GL_EXPORT extern GLXApi* g_current_glx_context;
 GL_EXPORT extern DriverEGL g_driver_egl;
 GL_EXPORT extern DriverGLX g_driver_glx;
 
+#elif defined(USE_DRM)
+
+GL_EXPORT extern EGLApi* g_current_egl_context;
+GL_EXPORT extern DriverEGL g_driver_egl;
+
 #elif defined(OS_ANDROID)
 
 GL_EXPORT extern EGLApi* g_current_egl_context;
