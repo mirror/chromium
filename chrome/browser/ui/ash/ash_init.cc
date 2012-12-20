@@ -31,7 +31,11 @@
 #include "chrome/browser/ui/ash/brightness_controller_chromeos.h"
 #include "chrome/browser/ui/ash/ime_controller_chromeos.h"
 #include "chrome/browser/ui/ash/volume_controller_chromeos.h"
+
+#if defined (USE_X11)
 #include "ui/base/x/x11_util.h"
+#endif
+
 #endif
 
 namespace chrome {
@@ -58,7 +62,7 @@ void OpenAsh() {
   bool use_fullscreen = CommandLine::ForCurrentProcess()->HasSwitch(
       switches::kAuraHostWindowUseFullscreen);
 
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   if (base::chromeos::IsRunningOnChromeOS()) {
     use_fullscreen = true;
     // Hides the cursor outside of the Aura root window. The cursor will be
