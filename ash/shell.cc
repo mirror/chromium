@@ -97,10 +97,14 @@
 #endif
 
 #if defined(OS_CHROMEOS)
+
+#if defined(USE_X11)
 #include "ash/display/display_change_observer_x11.h"
+#include "base/message_pump_aurax11.h"
+#endif  // defined(USE_X11)
+
 #include "ash/display/output_configurator_animation.h"
 #include "base/chromeos/chromeos_version.h"
-#include "base/message_pump_aurax11.h"
 #include "chromeos/display/output_configurator.h"
 #include "content/public/browser/gpu_data_manager.h"
 #include "content/public/common/gpu_feature_type.h"
@@ -196,11 +200,11 @@ Shell::Shell(ShellDelegate* delegate)
     : screen_(new ScreenAsh),
       active_root_window_(NULL),
       delegate_(delegate),
-#if defined(OS_CHROMEOS) && defined(USE_X11)
+#if defined(OS_CHROMEOS)
       output_configurator_(new chromeos::OutputConfigurator()),
       output_configurator_animation_(
           new internal::OutputConfiguratorAnimation()),
-#endif  // defined(OS_CHROMEOS) && defined(USE_X11)
+#endif  // defined(OS_CHROMEOS)
       browser_context_(NULL),
       simulate_modal_window_open_for_testing_(false) {
   DCHECK(delegate_.get());
@@ -217,15 +221,14 @@ Shell::Shell(ShellDelegate* delegate)
       (blacklisted_features & content::GPU_FEATURE_TYPE_PANEL_FITTING) ||
       CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kAshDisablePanelFitting);
-#if defined(USE_X11)
   output_configurator_->Init(!is_panel_fitting_disabled);
 
   output_configurator_->AddObserver(output_configurator_animation_.get());
 
+#if defined(USE_X11)
   base::MessagePumpAuraX11::Current()->AddDispatcherForRootWindow(
       output_configurator());
 #endif  // defined(USE_X11)
-
 #endif  // defined(OS_CHROMEOS)
 }
 
@@ -303,11 +306,13 @@ Shell::~Shell() {
   DCHECK(instance_ == this);
   instance_ = NULL;
 
-#if defined(OS_CHROMEOS) && defined(USE_X11)
+#if defined(OS_CHROMEOS)
   output_configurator_->RemoveObserver(output_configurator_animation_.get());
+#if defined(USE_X11)
   base::MessagePumpAuraX11::Current()->RemoveDispatcherForRootWindow(
       output_configurator());
-#endif  // defined(OS_CHROMEOS) && defined(USE_X11)
+#endif  // defined(USE_X11)
+#endif  // defined(OS_CHROMEOS)
 }
 
 // static
@@ -399,7 +404,7 @@ bool Shell::IsLauncherPerDisplayEnabled() {
 }
 
 void Shell::Init() {
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   if (base::chromeos::IsRunningOnChromeOS()) {
     display_change_observer_.reset(new internal::DisplayChangeObserverX11);
     display_change_observer_->NotifyDisplayChange();
@@ -413,12 +418,14 @@ void Shell::Init() {
   env_filter_.reset(new views::corewm::CompoundEventFilter);
   AddPreTargetHandler(env_filter_.get());
 
+#if defined(OS_CHROMEOS) && defined(USE_X11)
   focus_client_.reset(new aura::FocusManager);
   activation_controller_.reset(
       new internal::ActivationController(
           focus_client_.get(),
           new internal::AshActivationController));
   AddPreTargetHandler(activation_controller_.get());
+#endif
 
   focus_cycler_.reset(new internal::FocusCycler());
 
@@ -775,7 +782,9 @@ SystemTray* Shell::system_tray() {
 }
 
 void Shell::InitRootWindowForSecondaryDisplay(aura::RootWindow* root) {
+#if !defined(OS_CHROMEOS) || defined(USE_X11)
   aura::client::SetFocusClient(root, focus_client_.get());
+#endif
   internal::RootWindowController* controller =
       new internal::RootWindowController(root);
   controller->CreateContainers();
@@ -812,7 +821,9 @@ void Shell::InitRootWindowController(
   DCHECK(capture_controller_.get());
   DCHECK(window_cycle_controller_.get());
 
+#if !defined(OS_CHROMEOS) || defined(USE_X11)
   aura::client::SetFocusClient(root_window, focus_client_.get());
+#endif
   input_method_filter_->SetInputMethodPropertyInRootWindow(root_window);
   aura::client::SetActivationClient(root_window, activation_controller_.get());
   aura::client::SetVisibilityClient(root_window, visibility_controller_.get());
