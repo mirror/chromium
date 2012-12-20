@@ -715,6 +715,11 @@
             '../build/linux/system.gyp:ibus',
           ],
         }],
+        ['use_drm==1', {
+          'sources/': [
+            ['exclude', 'browser/chromeos/xinput_hierarchy_changed_event_listener_aura.cc'],
+          ],
+        }],
         ['use_ash==1', {
           'dependencies': [
             '../ash/ash.gyp:ash',

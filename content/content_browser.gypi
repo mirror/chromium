@@ -1083,6 +1083,11 @@
         'browser/renderer_host/ui_events_helper.h',
       ],
     }],
+    ['use_drm==1', {
+      'sources/': [
+        ['exclude', '^browser/renderer_host/web_input_event_aurax11.cc'],
+      ],
+    }],
     ['use_aura==1', {
       'dependencies': [
         '../ui/aura/aura.gyp:aura',
