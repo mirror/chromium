@@ -145,7 +145,6 @@ XID TransportDIB::MapToX(Display* display) {
 
   return x_shm_;
 }
-#endif
 
 void TransportDIB::DecreaseInFlightCounter() {
   CHECK(inflight_counter_);
@@ -160,3 +159,4 @@ void TransportDIB::Detach() {
   if (!inflight_counter_)
     delete this;
 }
+#endif
