@@ -297,14 +297,14 @@ void Network::SetState(ConnectionState new_state) {
   ConnectionState old_state = state_;
   VLOG(2) << "Entering new state: " << ConnectionStateString(new_state);
   state_ = new_state;
-  if (!IsConnectingState(new_state))
-    set_connection_started(false);
   if (new_state == STATE_FAILURE) {
     VLOG(2) << "Detected Failure state.";
-    if (old_state != STATE_UNKNOWN && old_state != STATE_IDLE) {
+    if (old_state != STATE_UNKNOWN && old_state != STATE_IDLE &&
+        (type() != TYPE_CELLULAR || connection_started())) {
       // New failure, the user needs to be notified.
       // Transition STATE_IDLE -> STATE_FAILURE sometimes happens on resume
       // but is not an actual failure as network device is not ready yet.
+      // For Cellular we only show failure notifications if user initiated.
       notify_failure_ = true;
       // Normally error_ should be set, but if it is not we need to set it to
       // something here so that the retry logic will be triggered.
@@ -319,6 +319,8 @@ void Network::SetState(ConnectionState new_state) {
     // Note: blocking DBus call. TODO(stevenjb): refactor this.
     InitIPAddress();
   }
+  if (!IsConnectingState(new_state))
+    set_connection_started(false);
   VLOG(1) << name() << ".State [" << service_path() << "]: " << GetStateString()
           << " (was: " << ConnectionStateString(old_state) << ")";
 }
