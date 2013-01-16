@@ -30,6 +30,7 @@ class NetworkObserver {
     MESSAGE_DATA_NONE,
     MESSAGE_DATA_LOW,
     MESSAGE_DATA_PROMO,
+    MESSAGE_DATA_PROMO_LTE,
   };
 
   virtual ~NetworkObserver() {}

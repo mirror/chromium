@@ -198,14 +198,20 @@ void DataPromoNotification::ShowOptionalMobileDataPromoNotification(
     else
       link_message_id = IDS_STATUSBAR_NETWORK_VIEW_ACCOUNT;
 
+    ash::NetworkObserver::MessageType type =
+        ash::NetworkObserver::MESSAGE_DATA_PROMO;
+    const chromeos::CellularNetwork* net = cros->cellular_network();
+    if (net && (net->network_technology() == NETWORK_TECHNOLOGY_LTE ||
+                net->network_technology() == NETWORK_TECHNOLOGY_LTE_ADVANCED)) {
+      type = ash::NetworkObserver::MESSAGE_DATA_PROMO_LTE;
+    }
     std::vector<string16> links;
     links.push_back(l10n_util::GetStringUTF16(link_message_id));
     if (!deal_info_url_.empty())
       links.push_back(l10n_util::GetStringUTF16(IDS_LEARN_MORE));
     if (ash::Shell::GetInstance()->system_tray()->network_observer()) {
       ash::Shell::GetInstance()->system_tray()->network_observer()->
-          SetNetworkMessage(listener, ash::NetworkObserver::MESSAGE_DATA_PROMO,
-              string16(), message, links);
+          SetNetworkMessage(listener, type, string16(), message, links);
     }
 
     check_for_promo_ = false;

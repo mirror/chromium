@@ -69,6 +69,7 @@ class NetworkMessageNotification : public ash::NetworkTrayDelegate {
         title_ = l10n_util::GetStringUTF16(IDS_NETWORK_OUT_OF_DATA_TITLE);
         break;
       case ash::NetworkObserver::MESSAGE_DATA_PROMO:
+      case ash::NetworkObserver::MESSAGE_DATA_PROMO_LTE:
         NOTREACHED();
         break;
     }

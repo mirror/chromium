@@ -100,6 +100,8 @@ int GetMessageIcon(TrayNetwork::MessageType message_type) {
       return IDR_AURA_UBER_TRAY_NETWORK_DATA_NONE;
     case TrayNetwork::MESSAGE_DATA_PROMO:
       return IDR_AURA_UBER_TRAY_NOTIFICATION_3G;
+    case TrayNetwork::MESSAGE_DATA_PROMO_LTE:
+      return IDR_AURA_UBER_TRAY_NOTIFICATION_LTE;
   }
   NOTREACHED();
   return 0;
