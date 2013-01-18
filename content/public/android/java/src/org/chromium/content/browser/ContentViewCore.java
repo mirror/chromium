@@ -1082,8 +1082,8 @@ public class ContentViewCore implements MotionEventDelegate, NavigationClient {
                 return true;
             case ContentViewGestureHandler.GESTURE_FLING_START:
                 nativeFlingStart(mNativeContentViewCore, timeMs, x, y,
-                        clampFlingVelocityX(b.getInt(ContentViewGestureHandler.VELOCITY_X, 0)),
-                        clampFlingVelocityY(b.getInt(ContentViewGestureHandler.VELOCITY_Y, 0)));
+                        b.getInt(ContentViewGestureHandler.VELOCITY_X, 0),
+                        b.getInt(ContentViewGestureHandler.VELOCITY_Y, 0));
                 return true;
             case ContentViewGestureHandler.GESTURE_FLING_CANCEL:
                 nativeFlingCancel(mNativeContentViewCore, timeMs);
@@ -1631,32 +1631,6 @@ public class ContentViewCore implements MotionEventDelegate, NavigationClient {
     void selectPopupMenuItems(int[] indices) {
         if (mNativeContentViewCore != 0) {
             nativeSelectPopupMenuItems(mNativeContentViewCore, indices);
-        }
-    }
-
-    /*
-     * To avoid checkerboard, we clamp the fling velocity based on the maximum number of tiles
-     * allowed to be uploaded per 100ms. Calculation is limited to one direction. We assume the
-     * tile size is 256x256. The precise distance / velocity should be calculated based on the
-     * logic in Scroller.java. As it is almost linear for the first 100ms, we use a simple math.
-     */
-    private int clampFlingVelocityX(int velocity) {
-        int cols = mMaxNumUploadTiles / (int) (Math.ceil((float) getHeight() / 256) + 1);
-        int maxVelocity = cols > 0 ? cols * 2560 : 1000;
-        if (Math.abs(velocity) > maxVelocity) {
-            return velocity > 0 ? maxVelocity : -maxVelocity;
-        } else {
-            return velocity;
-        }
-    }
-
-    private int clampFlingVelocityY(int velocity) {
-        int rows = mMaxNumUploadTiles / (int) (Math.ceil((float) getWidth() / 256) + 1);
-        int maxVelocity = rows > 0 ? rows * 2560 : 1000;
-        if (Math.abs(velocity) > maxVelocity) {
-            return velocity > 0 ? maxVelocity : -maxVelocity;
-        } else {
-            return velocity;
         }
     }
 
