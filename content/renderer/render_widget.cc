@@ -1960,6 +1960,19 @@ void RenderWidget::resetInputMethod() {
   UpdateCompositionInfo(range, std::vector<gfx::Rect>());
 }
 
+void RenderWidget::didHandleGestureEvent(
+    const WebGestureEvent& event,
+    EventStatus event_status) {
+#if defined(OS_ANDROID)
+  if (event_status == EventStatusCancelled)
+    return;
+  if (event.type == WebInputEvent::GestureTap ||
+      event.type == WebInputEvent::GestureLongPress) {
+    UpdateTextInputState(SHOW_IME_IF_NEEDED);
+  }
+#endif
+}
+
 void RenderWidget::SchedulePluginMove(
     const webkit::npapi::WebPluginGeometry& move) {
   size_t i = 0;

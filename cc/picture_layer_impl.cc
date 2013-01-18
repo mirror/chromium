@@ -254,6 +254,7 @@ void PictureLayerImpl::SyncFromActiveLayer() {
 
 void PictureLayerImpl::SyncFromActiveLayer(const PictureLayerImpl* other) {
   tilings_.CloneAll(other->tilings_, invalidation_);
+  DCHECK(bounds() == tilings_.LayerBounds());
 }
 
 void PictureLayerImpl::SyncTiling(
@@ -303,6 +304,8 @@ bool PictureLayerImpl::areVisibleResourcesReady() const {
                                            rect);
          iter;
          ++iter) {
+      if (iter.geometry_rect().IsEmpty())
+        continue;
       // Resource not ready yet.
       if (!*iter || !iter->GetResourceId())
         return false;

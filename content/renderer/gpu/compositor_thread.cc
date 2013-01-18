@@ -12,6 +12,11 @@
 #include "third_party/WebKit/Source/WebKit/chromium/public/WebCompositorInputHandler.h"
 #include "third_party/WebKit/Source/WebKit/chromium/public/WebView.h"
 
+#if defined(OS_ANDROID)
+// TODO(epenner): Move thread priorities to base. (crbug.com/170549)
+#include <sys/resource.h>
+#endif
+
 using WebKit::WebCompositorInputHandler;
 using WebKit::WebInputEvent;
 
@@ -90,6 +95,10 @@ CompositorThread::CompositorThread(IPC::Listener* main_listener)
                            thread_.message_loop()->message_loop_proxy(),
                            base::Bind(&CompositorThread::HandleInputEvent,
                                       base::Unretained(this)));
+  thread_.message_loop()->PostTask(FROM_HERE,
+                                   base::Bind(&CompositorThread::InitOnThread,
+                                   // thread_ out-lives 'this'
+                                   base::Unretained(this)));
 }
 
 CompositorThread::~CompositorThread() {
@@ -164,6 +173,14 @@ void CompositorThread::HandleInputEvent(
   }
 
   it->second->input_handler()->handleInputEvent(*input_event);
+}
+
+void CompositorThread::InitOnThread() {
+#if defined(OS_ANDROID)
+  // TODO(epenner): Move thread priorities to base. (crbug.com/170549)
+  int nice_value = -6; // High priority.
+  setpriority(PRIO_PROCESS, base::PlatformThread::CurrentId(), nice_value);
+#endif
 }
 
 }  // namespace content
