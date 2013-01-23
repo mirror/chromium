@@ -25,8 +25,10 @@ class DisambiguationPopupHelper {
   CONTENT_EXPORT static float ComputeZoomAreaAndScaleFactor(
       const gfx::Rect& tap_rect,
       const WebKit::WebVector<WebKit::WebRect>& target_rects,
-      const gfx::Size& viewport_size,
-      gfx::Rect* zoom_rect);
+      const gfx::Size& screen_size,
+      const gfx::Size& visible_content_size,
+      gfx::Rect* zoom_rect,
+      float impl_scale);
 };
 
 }  // namespace content
