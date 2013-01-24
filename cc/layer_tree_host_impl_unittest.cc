@@ -556,7 +556,6 @@ TEST_P(LayerTreeHostImplTest, clearRootRenderSurfaceAndHitTestTouchHandlerRegion
     EXPECT_EQ(m_hostImpl->haveTouchEventHandlersAt(gfx::Point(0, 0)), false);
 }
 
-#if 0
 TEST_P(LayerTreeHostImplTest, implPinchZoom)
 {
     // This test is specific to the page-scale based pinch zoom.
@@ -613,7 +612,6 @@ TEST_P(LayerTreeHostImplTest, implPinchZoom)
         expectContains(*scrollInfo.get(), m_hostImpl->rootLayer()->id(), scrollDelta);
     }
 }
-#endif
 
 TEST_P(LayerTreeHostImplTest, pinchGesture)
 {
@@ -775,7 +773,6 @@ TEST_P(LayerTreeHostImplTest, pageScaleAnimation)
     }
 }
 
-#if 0
 TEST_P(LayerTreeHostImplTest, inhibitScrollAndPageScaleUpdatesWhilePinchZooming)
 {
     setupScrollAndContentsLayers(gfx::Size(100, 100));
@@ -890,7 +887,6 @@ TEST_P(LayerTreeHostImplTest, inhibitScrollAndPageScaleUpdatesWhileAnimatingPage
     EXPECT_EQ(scrollInfo->pageScaleDelta, pageScaleDelta);
     expectContains(*scrollInfo, scrollLayer->id(), scaledTarget);
 }
-#endif
 
 TEST_P(LayerTreeHostImplTest, compositorFrameMetadata)
 {
@@ -4013,7 +4009,6 @@ TEST_P(LayerTreeHostImplTest, testRemoveRenderPasses)
     }
 }
 
-#if 0
 // Make sure that scrolls that only pan the pinch viewport, and not the document,
 // still force redraw/commit.
 void LayerTreeHostImplTest::pinchZoomPanViewportForcesCommitRedraw(const float deviceScaleFactor)
@@ -4384,7 +4379,6 @@ TEST_P(LayerTreeHostImplTest, pinchZoomPanViewportAndScrollBoundaryWithDeviceSca
 {
     pinchZoomPanViewportAndScrollBoundaryTest(2);
 }
-#endif
 
 class LayerTreeHostImplTestWithDelegatingRenderer : public LayerTreeHostImplTest {
 protected:
