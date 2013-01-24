@@ -27,7 +27,6 @@ class DisambiguationPopupHelperUnittest : public testing::Test {
   const gfx::Size kViewportSize_;
 };
 
-#if 0
 TEST_F(DisambiguationPopupHelperUnittest, ClipByViewport) {
   gfx::Rect tap_rect(1000, 1000, 10, 10);
   WebKit::WebVector<WebKit::WebRect> target_rects(static_cast<size_t>(1));
@@ -78,5 +77,5 @@ TEST_F(DisambiguationPopupHelperUnittest, LongLinks) {
   gfx::Size scaled_size = ToCeiledSize(ScaleSize(zoom_rect.size(), scale));
   EXPECT_TRUE(gfx::Rect(kViewportSize_).Contains(gfx::Rect(scaled_size)));
 }
-#endif
+
 }  // namespace content
