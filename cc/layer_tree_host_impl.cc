@@ -772,7 +772,7 @@ CompositorFrameMetadata LayerTreeHostImpl::makeCompositorFrameMetadata() const
 {
     CompositorFrameMetadata metadata;
     metadata.page_scale_factor = m_pinchZoomViewport.total_page_scale_factor();
-    metadata.viewport_size = m_pinchZoomViewport.ZoomedViewport().size();
+    metadata.viewport_size = m_pinchZoomViewport.ZoomedViewportSizeInLayoutSpace();
     metadata.root_layer_size = activeTree()->ScrollableSize();
     metadata.min_page_scale_factor = m_pinchZoomViewport.min_page_scale_factor();
     metadata.max_page_scale_factor = m_pinchZoomViewport.max_page_scale_factor();
@@ -1231,15 +1231,10 @@ static gfx::Vector2dF scrollLayerWithViewportSpaceDelta(PinchZoomViewport* viewp
 
     // Apply the scroll delta.
     gfx::Vector2dF previousDelta = layerImpl.scrollDelta();
-    gfx::Vector2dF unscrolled = layerImpl.scrollBy(localEndPoint - localStartPoint);
-    gfx::Vector2dF scrollAmount = localEndPoint - localStartPoint;
-
-    gfx::Vector2dF viewportAppliedPan;
-    if (viewport)
-        viewportAppliedPan = unscrolled - viewport->ApplyScroll(unscrolled);
+    layerImpl.scrollBy(localEndPoint - localStartPoint);
 
     // Get the end point in the layer's content space so we can apply its screenSpaceTransform.
-    gfx::PointF actualLocalEndPoint = localStartPoint + layerImpl.scrollDelta() + viewportAppliedPan - previousDelta;
+    gfx::PointF actualLocalEndPoint = localStartPoint + layerImpl.scrollDelta() - previousDelta;
     gfx::PointF actualLocalContentEndPoint = gfx::ScalePoint(actualLocalEndPoint, 1 / widthScale, 1 / heightScale);
 
     // Calculate the applied scroll delta in viewport space coordinates.
@@ -1359,8 +1354,7 @@ void LayerTreeHostImpl::pinchGestureUpdate(float magnifyDelta, gfx::Point anchor
         move.Scale(1 / m_pinchZoomViewport.page_scale_factor());
     }
 
-    gfx::Vector2dF scrollOverflow = m_settings.pageScalePinchZoomEnabled ? m_pinchZoomViewport.ApplyScroll(move) : move;
-    rootScrollLayer()->scrollBy(scrollOverflow);
+    rootScrollLayer()->scrollBy(move);
 
     if (rootScrollLayer()->scrollbarAnimationController())
         rootScrollLayer()->scrollbarAnimationController()->didPinchGestureUpdate(base::TimeTicks::Now());
@@ -1440,8 +1434,8 @@ static void collectScrollDeltas(ScrollAndScaleSet* scrollInfo, LayerImpl* layerI
     if (!layerImpl)
         return;
 
-    if (!layerImpl->scrollDelta().IsZero()) {
-        gfx::Vector2d scrollDelta = gfx::ToFlooredVector2d(layerImpl->scrollDelta());
+    gfx::Vector2d scrollDelta = gfx::ToFlooredVector2d(layerImpl->scrollDelta());
+    if (!scrollDelta.IsZero()) {
         LayerTreeHostCommon::ScrollUpdateInfo scroll;
         scroll.layerId = layerImpl->id();
         scroll.scrollDelta = scrollDelta;
@@ -1457,12 +1451,10 @@ scoped_ptr<ScrollAndScaleSet> LayerTreeHostImpl::processScrollDeltas()
 {
     scoped_ptr<ScrollAndScaleSet> scrollInfo(new ScrollAndScaleSet());
 
-    if (m_pinchGestureActive || m_pageScaleAnimation) {
+    if (!m_settings.pageScalePinchZoomEnabled && (m_pinchGestureActive || m_pageScaleAnimation)) {
         scrollInfo->pageScaleDelta = 1;
         m_pinchZoomViewport.set_sent_page_scale_delta(1);
-        // FIXME(aelias): Make pinch-zoom painting optimization compatible with
-        // compositor-side scaling.
-        if (!m_settings.pageScalePinchZoomEnabled && m_pinchGestureActive)
+        if (m_pinchGestureActive)
             computePinchZoomDeltas(scrollInfo.get());
         else if (m_pageScaleAnimation.get())
             computeDoubleTapZoomDeltas(scrollInfo.get());
