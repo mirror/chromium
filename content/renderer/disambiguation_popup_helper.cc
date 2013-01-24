@@ -29,21 +29,20 @@ const float kDisambiguationPopupMinScale = 2.0;
 
 // Compute the scaling factor to ensure the smallest touch candidate reaches
 // a certain clickable size after zooming
-float FindOptimalScaleFactor(const WebVector<WebRect>& target_rects,
-                             float impl_scale) {
+float FindOptimalScaleFactor(const WebVector<WebRect>& target_rects) {
   using std::min;
   using std::max;
   if (!target_rects.size())  // shall never reach
     return kDisambiguationPopupMinScale;
-  float smallest_target = min(target_rects[0].width * impl_scale,
-                            target_rects[0].height * impl_scale);
+  int smallest_target = min(target_rects[0].width, target_rects[0].height);
   for (size_t i = 1; i < target_rects.size(); i++) {
-    smallest_target = min(smallest_target, target_rects[i].width * impl_scale);
-    smallest_target = min(smallest_target, target_rects[i].height * impl_scale);
+    smallest_target = min(smallest_target, target_rects[i].width);
+    smallest_target = min(smallest_target, target_rects[i].height);
   }
-  smallest_target = max(smallest_target, 1.0f);
+  smallest_target = max(smallest_target, 1);
   return min(kDisambiguationPopupMaxScale, max(kDisambiguationPopupMinScale,
-      kDisambiguationPopupMinimumTouchSize / smallest_target)) * impl_scale;
+      static_cast<float>(kDisambiguationPopupMinimumTouchSize)
+          / smallest_target));
 }
 
 void TrimEdges(int *e1, int *e2, int max_combined) {
@@ -89,23 +88,19 @@ namespace content {
 float DisambiguationPopupHelper::ComputeZoomAreaAndScaleFactor(
     const gfx::Rect& tap_rect,
     const WebVector<WebRect>& target_rects,
-    const gfx::Size& screen_size,
-    const gfx::Size& visible_content_size,
-    gfx::Rect* zoom_rect,
-    float impl_scale) {
+    const gfx::Size& viewport_size,
+    gfx::Rect* zoom_rect) {
   *zoom_rect = tap_rect;
   for (size_t i = 0; i < target_rects.size(); i++)
     zoom_rect->Union(gfx::Rect(target_rects[i]));
   zoom_rect->Inset(-kDisambiguationPopupPadding, -kDisambiguationPopupPadding);
+  zoom_rect->Intersect(gfx::Rect(viewport_size));
 
-  zoom_rect->Intersect(gfx::Rect(visible_content_size));
-
-  float new_impl_scale =
-      FindOptimalScaleFactor(target_rects, impl_scale);
+  float scale = FindOptimalScaleFactor(target_rects);
   *zoom_rect = CropZoomArea(
-      *zoom_rect, screen_size, tap_rect.CenterPoint(), new_impl_scale);
+      *zoom_rect, viewport_size, tap_rect.CenterPoint(), scale);
 
-  return new_impl_scale;
+  return scale;
 }
 
 }  // namespace content

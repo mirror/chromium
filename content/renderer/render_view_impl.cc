@@ -188,7 +188,6 @@
 #include "ui/base/ui_base_switches.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/gfx/point.h"
-#include "ui/gfx/point_conversions.h"
 #include "ui/gfx/rect.h"
 #include "ui/gfx/size_conversions.h"
 #include "ui/shell_dialogs/selected_file_info.h"
@@ -2126,6 +2125,18 @@ bool RenderViewImpl::handleCurrentKeyboardEvent() {
   return did_execute_command;
 }
 
+void RenderViewImpl::didHandleGestureEvent(const WebGestureEvent& event,
+                                           bool event_swallowed) {
+#if defined(OS_ANDROID)
+  if (event.type == WebInputEvent::GestureTap ||
+      event.type == WebInputEvent::GestureLongPress) {
+    UpdateTextInputState(SHOW_IME_IF_NEEDED);
+  }
+#endif
+  FOR_EACH_OBSERVER(RenderViewObserver, observers_,
+                    DidHandleGestureEvent(event));
+}
+
 WebKit::WebColorChooser* RenderViewImpl::createColorChooser(
     WebKit::WebColorChooserClient* client,
     const WebKit::WebColor& initial_color) {
@@ -2539,14 +2550,6 @@ void RenderViewImpl::didActivateCompositor(int input_handler_identifier) {
   RenderWidget::didActivateCompositor(input_handler_identifier);
 
   ProcessAcceleratedPinchZoomFlags(*CommandLine::ForCurrentProcess());
-}
-
-void RenderViewImpl::didHandleGestureEvent(
-    const WebGestureEvent& event,
-    bool event_cancelled) {
-  RenderWidget::didHandleGestureEvent(event, event_cancelled);
-  FOR_EACH_OBSERVER(RenderViewObserver, observers_,
-                    DidHandleGestureEvent(event));
 }
 
 // WebKit::WebFrameClient -----------------------------------------------------
@@ -6558,30 +6561,17 @@ void RenderViewImpl::OnUpdatedFrameTree(
 bool RenderViewImpl::didTapMultipleTargets(
     const WebKit::WebGestureEvent& event,
     const WebVector<WebRect>& target_rects) {
-
-  float impl_scale =
-      (webkit_preferences_.apply_default_device_scale_factor_in_compositor ?
-          deviceScaleFactor() : 1.0) *
-      (webkit_preferences_.apply_page_scale_factor_in_compositor ?
-          webview()->pageScaleFactor() : 1.0);
-
   gfx::Rect finger_rect(
       event.x - event.data.tap.width / 2, event.y - event.data.tap.height / 2,
       event.data.tap.width, event.data.tap.height);
-  gfx::Size visible_content_size = GetSize();
-  if (webkit_preferences_.apply_page_scale_factor_in_compositor)
-    visible_content_size = ToCeiledSize(gfx::ScaleSize(visible_content_size,
-        webview()->pageScaleFactor()));
   gfx::Rect zoom_rect;
-  float new_impl_scale =
-      DisambiguationPopupHelper::ComputeZoomAreaAndScaleFactor(
-          finger_rect, target_rects, GetSize(), visible_content_size,
-          &zoom_rect, impl_scale);
-  if (!new_impl_scale)
+  float scale = DisambiguationPopupHelper::ComputeZoomAreaAndScaleFactor(
+      finger_rect, target_rects, GetSize(), &zoom_rect);
+  if (!scale)
     return false;
 
   gfx::Size canvas_size = zoom_rect.size();
-  canvas_size = ToCeiledSize(gfx::ScaleSize(canvas_size, new_impl_scale));
+  canvas_size = ToCeiledSize(gfx::ScaleSize(canvas_size, scale));
   TransportDIB* transport_dib = NULL;
   {
     scoped_ptr<skia::PlatformCanvas> canvas(
@@ -6590,44 +6580,14 @@ bool RenderViewImpl::didTapMultipleTargets(
     if (!canvas.get())
       return false;
 
-    // TODO(trchen): Cleanup the device scale factor mess.
-    // case apply_default_device_scale_factor_in_compositor == true:
-    //   device scale will be applied in WebKit
-    //   --> zoom_rect doesn't include device scale,
-    //       but WebKit will still draw on zoom_rect * deviceScaleFactor()
-    // case apply_default_device_scale_factor_in_compositor == false:
-    //   device scale will be combined with page scale and applied in WebCore
-    //   --> zoom_rect includes device scale already
-    if (webkit_preferences_.apply_default_device_scale_factor_in_compositor) {
-      canvas->scale(new_impl_scale / deviceScaleFactor(),
-                    new_impl_scale / deviceScaleFactor());
-      canvas->translate(-zoom_rect.x() * deviceScaleFactor(),
-                        -zoom_rect.y() * deviceScaleFactor());
-    } else {
-      canvas->scale(new_impl_scale, new_impl_scale);
-      canvas->translate(-zoom_rect.x(), -zoom_rect.y());
-    }
+    canvas->scale(scale, scale);
 
+    canvas->translate(-zoom_rect.x(), -zoom_rect.y());
     webwidget_->paint(webkit_glue::ToWebCanvas(canvas.get()), zoom_rect,
         WebWidget::ForceSoftwareRenderingAndIgnoreGPUResidentContent);
   }
-
-  gfx::Rect physical_window_zoom_rect = zoom_rect;
-
-  if (webkit_preferences_.apply_page_scale_factor_in_compositor){
-    gfx::Point top_left = gfx::ToRoundedPoint(gfx::ScalePoint(
-        gfx::PointF(zoom_rect.origin()),
-        deviceScaleFactor() * webview()->pageScaleFactor()));
-    gfx::Point bottom_right = gfx::ToRoundedPoint(gfx::ScalePoint(
-        gfx::PointF(zoom_rect.bottom_right()),
-        deviceScaleFactor() * webview()->pageScaleFactor()));
-    physical_window_zoom_rect = gfx::Rect(top_left,
-        gfx::Size(bottom_right.x() - top_left.x(),
-                  bottom_right.y() - top_left.y()));
-  }
-
   Send(new ViewHostMsg_ShowDisambiguationPopup(routing_id_,
-                                               physical_window_zoom_rect,
+                                               zoom_rect,
                                                canvas_size,
                                                transport_dib->id()));
 

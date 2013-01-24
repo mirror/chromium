@@ -29,7 +29,6 @@
 #endif
 
 #if defined(OS_ANDROID)
-#include <sys/resource.h>
 #include "base/android/jni_android.h"
 #endif
 
@@ -58,11 +57,6 @@ struct ThreadParams {
 };
 
 void* ThreadFunc(void* params) {
-#if defined(OS_ANDROID)
-  // Threads on linux/android may inherit their priority from the thread
-  // where they were created. This sets all threads to the default.
-  setpriority(PRIO_PROCESS, base::PlatformThread::CurrentId(), 0);
-#endif
   ThreadParams* thread_params = static_cast<ThreadParams*>(params);
   PlatformThread::Delegate* delegate = thread_params->delegate;
   if (!thread_params->joinable)

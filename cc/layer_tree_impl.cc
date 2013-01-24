@@ -107,7 +107,7 @@ void LayerTreeImpl::UpdateMaxScrollOffset() {
     }
     view_bounds.Scale(1 / pinch_zoom_viewport().page_scale_delta());
   } else {
-    view_bounds = pinch_zoom_viewport().LayoutSpaceViewportSize();
+    view_bounds = layout_viewport_size();
   }
 
   gfx::Vector2dF max_scroll = gfx::Rect(ScrollableSize()).bottom_right() -

@@ -44,8 +44,6 @@ class CompositorThread {
 
   MessageLoop* message_loop() { return thread_.message_loop(); }
 
-  void InitOnThread();
-
  private:
   // Callback only from the compositor's thread.
   void RemoveInputHandler(int routing_id);

@@ -11,6 +11,10 @@
 
 namespace cc {
 
+// PinchZoomViewport models the bounds and offset of the viewport that is used
+// during a pinch-zoom operation. It tracks the layout-space dimensions of the
+// viewport before any applied scale, and then tracks the layout-space
+// coordinates of the viewport respecting the pinch settings.
 class CC_EXPORT PinchZoomViewport {
  public:
   PinchZoomViewport();
@@ -43,6 +47,15 @@ class CC_EXPORT PinchZoomViewport {
                                    float min_page_scale_factor,
                                    float max_page_scale_factor);
 
+  // Returns the zoomed viewport in layout space. The rect's position is an
+  // offset from the root layer's scroll position (therefore, zero if fully
+  // zoomed out).
+  gfx::RectF ZoomedViewport() const;
+
+  const gfx::Vector2dF& zoomed_viewport_offset() const {
+    return zoomed_viewport_offset_;
+  }
+
   void set_layout_viewport_size(const gfx::SizeF& size) {
     layout_viewport_size_ = size;
   }
@@ -53,12 +66,17 @@ class CC_EXPORT PinchZoomViewport {
     device_viewport_size_ = size;
   }
 
-  // The implTransform applies the page scale transformation.
-  //
-  // implTransform = S[pageScaleFactor] * S[pageScaleDelta]
-  gfx::Transform ImplTransform(bool page_scale_pinch_zoom_enabled) const;
+  // Apply the scroll offset in layout space to the offset of the pinch-zoom
+  // viewport. The viewport cannot be scrolled outside of the layout viewport
+  // bounds. Returns the component of the scroll that is un-applied due to this
+  // constraint.
+  gfx::Vector2dF ApplyScroll(const gfx::Vector2dF);
 
-  gfx::SizeF LayoutSpaceViewportSize() const;
+  // The implTransform goes from the origin of the unzoomedDeviceViewport to the
+  // origin of the zoomedDeviceViewport.
+  //
+  // implTransform = S[pageScale] * Tr[-zoomedDeviceViewportOffset]
+  gfx::Transform ImplTransform(bool page_scale_pinch_zoom_enabled) const;
 
  private:
   float page_scale_factor_;
@@ -68,6 +86,7 @@ class CC_EXPORT PinchZoomViewport {
   float min_page_scale_factor_;
   float device_scale_factor_;
 
+  gfx::Vector2dF zoomed_viewport_offset_;
   gfx::SizeF layout_viewport_size_;
   gfx::SizeF device_viewport_size_;
 };
