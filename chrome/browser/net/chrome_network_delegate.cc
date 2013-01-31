@@ -7,12 +7,20 @@
 #include <vector>
 
 #include "base/base_paths.h"
+#if defined(OS_ANDROID)
+#include "base/basictypes.h"
+#include "base/file_util.h"
+#endif
 #include "base/logging.h"
 #include "base/metrics/histogram.h"
 #include "base/path_service.h"
 #include "base/prefs/public/pref_member.h"
 #include "base/string_number_conversions.h"
 #include "base/string_split.h"
+#if defined(OS_ANDROID)
+#include "base/stringprintf.h"
+#include "base/time.h"
+#endif
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/content_settings/cookie_settings.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
@@ -263,6 +271,25 @@ void RecordContentLengthHistograms(
 #endif
 }
 
+#if defined(OS_ANDROID)
+void AppendToTraceFile(const FilePath& path, const std::string& msg,
+                       bool create) {
+  DCHECK(BrowserThread::CurrentlyOn(BrowserThread::FILE));
+  DCHECK(!path.empty());
+  if (create) {
+    FILE* f = file_util::OpenFile(path, "w");
+    file_util::CloseFile(f);
+  }
+  LOG(WARNING) << msg;
+  file_util::AppendToFile(path, msg.c_str(), msg.length());
+}
+
+void AppendToTrace(const FilePath& path, const std::string& msg, bool create) {
+  BrowserThread::PostTask(BrowserThread::FILE, FROM_HERE,
+                          base::Bind(&AppendToTraceFile, path, msg, create));
+}
+#endif
+
 }  // namespace
 
 ChromeNetworkDelegate::ChromeNetworkDelegate(
@@ -279,6 +306,9 @@ ChromeNetworkDelegate::ChromeNetworkDelegate(
       original_content_length_(0) {
   DCHECK(event_router);
   DCHECK(enable_referrers);
+#if defined(OS_ANDROID)
+  trace_file_path_ = "";
+#endif
 }
 
 ChromeNetworkDelegate::~ChromeNetworkDelegate() {}
@@ -466,6 +496,45 @@ void ChromeNetworkDelegate::OnCompleted(net::URLRequest* request,
     // Only record for http or https urls.
     bool is_http = request->url().SchemeIs("http");
     bool is_https = request->url().SchemeIs("https");
+
+#if defined(OS_ANDROID)
+    std::string headers_str;
+    std::string mime_type;
+    request->GetMimeType(&mime_type);
+    request->response_headers()->GetNormalizedHeaders(&headers_str);
+    base::TimeDelta freshness_time = request->response_headers()->
+        GetFreshnessLifetime(request->response_time());
+    base::Time::Exploded exploded;
+    base::Time::Now().LocalExplode(&exploded);
+
+    std::string timestamp =
+        base::StringPrintf("%04d-%02d-%02d-%02d-%02d-%02d-%03d",
+                           exploded.year, exploded.month, exploded.day_of_month,
+                           exploded.hour, exploded.minute, exploded.second,
+                           exploded.millisecond);
+
+    std::string trace_msg =
+        base::StringPrintf("Time: %s MIME Type: %s "
+                           "Cached: %d Freshness: %lld "
+                           "Status: %d Size: %lld URL: %s Referrer: %s "
+                           "Headers: %sEOM\n",
+                           timestamp.c_str(),
+                           mime_type.c_str(),
+                           request->was_cached(),
+                           freshness_time.InSeconds(),
+                           request->response_headers()->response_code(),
+                           received_content_length,
+                           request->url().spec().c_str(),
+                           request->referrer().c_str(),
+                           headers_str.c_str());
+    bool create = false;
+    if (trace_file_path_.empty()) {
+      create = true;
+      trace_file_path_ = StringPrintf("/sdcard/chrome-%s.trace",
+                                      timestamp.c_str());
+    }
+    AppendToTrace(FilePath(trace_file_path_), trace_msg, create);
+#endif
 
     if (!request->was_cached() &&         // Don't record cached content
         received_content_length &&        // Zero-byte responses aren't useful.

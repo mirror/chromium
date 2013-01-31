@@ -203,6 +203,10 @@ class ChromeNetworkDelegate : public net::NetworkDelegate {
   // Total original size of all content before it was transferred.
   int64 original_content_length_;
 
+#if defined(OS_ANDROID)
+  std::string trace_file_path_;
+#endif
+
   DISALLOW_COPY_AND_ASSIGN(ChromeNetworkDelegate);
 };
 
