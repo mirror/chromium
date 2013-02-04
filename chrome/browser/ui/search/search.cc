@@ -12,7 +12,6 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/chrome_version_info.h"
-#include "content/public/browser/navigation_entry.h"
 
 #if !defined(OS_ANDROID)
 #include "chrome/browser/themes/theme_service.h"
@@ -50,9 +49,6 @@ const char kDisablingSuffix[] = "DISABLED";
 
 namespace chrome {
 namespace search {
-
-// static
-const char kInstantExtendedSearchTermsKey[] = "search_terms";
 
 InstantExtendedDefault InstantExtendedDefaultFromInt64(int64 default_value) {
   switch (default_value) {
@@ -165,13 +161,6 @@ void EnableQueryExtractionForTesting() {
   CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kEnableInstantExtendedAPI);
 #endif
-}
-
-string16 GetSearchTermsFromNavigationEntry(
-    const content::NavigationEntry* entry) {
-  string16 search_terms;
-  entry->GetExtraData(kInstantExtendedSearchTermsKey, &search_terms);
-  return search_terms;
 }
 
 bool IsForcedInstantURL(const GURL& url) {

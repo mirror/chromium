@@ -14,7 +14,6 @@
 #include "base/utf_string_conversions.h"
 #include "chrome/browser/sessions/session_types.h"
 #include "chrome/browser/sessions/session_types_test_helper.h"
-#include "chrome/browser/ui/search/search.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/common/page_transition_types.h"
 #include "content/public/common/referrer.h"
@@ -44,7 +43,6 @@ const int64 kPostID = 100;
 const GURL kOriginalRequestURL("http://www.original-request.com");
 const bool kIsOverridingUserAgent = true;
 const base::Time kTimestamp = syncer::ProtoTimeToTime(100);
-const string16 kSearchTerms = ASCIIToUTF16("my search terms");
 
 const int kPageID = 10;
 
@@ -62,8 +60,6 @@ scoped_ptr<content::NavigationEntry> MakeNavigationEntryForTest() {
   navigation_entry->SetOriginalRequestURL(kOriginalRequestURL);
   navigation_entry->SetIsOverridingUserAgent(kIsOverridingUserAgent);
   navigation_entry->SetTimestamp(kTimestamp);
-  navigation_entry->SetExtraData(
-      chrome::search::kInstantExtendedSearchTermsKey, kSearchTerms);
   return navigation_entry.Pass();
 }
 
@@ -80,7 +76,6 @@ sync_pb::TabNavigation MakeSyncDataForTest() {
   sync_data.set_timestamp(syncer::TimeToProtoTime(kTimestamp));
   sync_data.set_redirect_type(sync_pb::SyncEnums::CLIENT_REDIRECT);
   sync_data.set_navigation_home_page(true);
-  sync_data.set_search_terms(UTF16ToUTF8(kSearchTerms));
   return sync_data;
 }
 
@@ -103,7 +98,6 @@ TEST(TabNavigationTest, DefaultInitializer) {
   EXPECT_EQ(GURL(), SessionTypesTestHelper::GetOriginalRequestURL(navigation));
   EXPECT_FALSE(SessionTypesTestHelper::GetIsOverridingUserAgent(navigation));
   EXPECT_TRUE(SessionTypesTestHelper::GetTimestamp(navigation).is_null());
-  EXPECT_TRUE(navigation.search_terms().empty());
 }
 
 // Create a TabNavigation from a NavigationEntry.  All its fields
@@ -161,7 +155,6 @@ TEST(TabNavigationTest, FromSyncData) {
   EXPECT_EQ(GURL(), SessionTypesTestHelper::GetOriginalRequestURL(navigation));
   EXPECT_FALSE(SessionTypesTestHelper::GetIsOverridingUserAgent(navigation));
   EXPECT_TRUE(SessionTypesTestHelper::GetTimestamp(navigation).is_null());
-  EXPECT_EQ(kSearchTerms, navigation.search_terms());
 }
 
 // Create a TabNavigation, pickle it, then create another one by
@@ -198,7 +191,6 @@ TEST(TabNavigationTest, Pickle) {
   EXPECT_EQ(kIsOverridingUserAgent,
             SessionTypesTestHelper::GetIsOverridingUserAgent(new_navigation));
   EXPECT_EQ(kTimestamp, SessionTypesTestHelper::GetTimestamp(new_navigation));
-  EXPECT_EQ(kSearchTerms, new_navigation.search_terms());
 }
 
 // Create a NavigationEntry, then create another one by converting to
@@ -229,9 +221,6 @@ TEST(TabNavigationTest, ToNavigationEntry) {
             new_navigation_entry->GetOriginalRequestURL());
   EXPECT_EQ(kIsOverridingUserAgent,
             new_navigation_entry->GetIsOverridingUserAgent());
-  EXPECT_EQ(kSearchTerms,
-            chrome::search::GetSearchTermsFromNavigationEntry(
-                new_navigation_entry.get()));
 }
 
 // Create a NavigationEntry, convert it to a TabNavigation, then
