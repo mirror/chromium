@@ -34,4 +34,8 @@ const char kNoTimeout[] = "no-timeout";
 // Save results when layout-as-browser tests fail.
 const char kOutputLayoutTestDifferences[] = "output-layout-test-differences";
 
+// Sets a  window size.
+// "1024x768" creates a window of size 1024x768.
+const char kContentShellWindowBounds[] = "window-bounds";
+
 }  // namespace switches

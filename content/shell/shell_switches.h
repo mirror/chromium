@@ -18,6 +18,7 @@ extern const char kDumpRenderTree[];
 extern const char kEnableSoftwareCompositing[];
 extern const char kNoTimeout[];
 extern const char kOutputLayoutTestDifferences[];
+extern const char kContentShellWindowBounds[];
 
 }  // namespace switches
 

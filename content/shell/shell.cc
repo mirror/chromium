@@ -4,6 +4,8 @@
 
 #include "content/shell/shell.h"
 
+#include <string>
+
 #include "base/auto_reset.h"
 #include "base/command_line.h"
 #include "base/message_loop.h"
@@ -80,8 +82,22 @@ Shell::~Shell() {
 }
 
 Shell* Shell::CreateShell(WebContents* web_contents) {
+  const CommandLine& command_line = *CommandLine::ForCurrentProcess();
   Shell* shell = new Shell(web_contents);
-  shell->PlatformCreateWindow(kTestWindowWidth, kTestWindowHeight);
+  int width = kTestWindowWidth;
+  int height = kTestWindowHeight;
+
+  if (command_line.HasSwitch(switches::kContentShellWindowBounds)) {
+    int tmp_width, tmp_height;
+    const std::string size_str = command_line.GetSwitchValueASCII(
+        switches::kContentShellWindowBounds);
+
+    if (sscanf(size_str.c_str(), "%dx%d", &tmp_width, &tmp_height) == 2) {
+      width = tmp_width;
+      height = tmp_height;
+    }
+  }
+  shell->PlatformCreateWindow(width, height);
 
   shell->web_contents_.reset(web_contents);
   web_contents->SetDelegate(shell);
