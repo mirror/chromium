@@ -99,7 +99,7 @@ class UI_EXPORT Clipboard : NON_EXPORTED_BASE(public base::ThreadChecker) {
     explicit FormatType(NSString* native_format);
     NSString* ToNSString() const { return data_; }
     NSString* data_;
-#elif defined(USE_AURA)
+#elif defined(USE_AURA) || defined(USE_DFB)
     explicit FormatType(const std::string& native_format);
    public:
     const std::string& ToString() const { return data_; }

@@ -123,7 +123,7 @@ float GetPixelsInPoint() {
 }  // namespace
 
 PangoContext* GetPangoContext() {
-#if defined(USE_AURA)
+#if defined(USE_AURA) || defined(USE_DFB)
   PangoFontMap* font_map = pango_cairo_font_map_get_default();
   return pango_font_map_create_context(font_map);
 #else

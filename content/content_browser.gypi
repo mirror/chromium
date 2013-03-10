@@ -1084,6 +1084,13 @@
         '../dbus/dbus.gyp:dbus',
       ],
     }],
+    ['use_dfb==1', {
+      'dependencies': [
+        '../build/linux/system.gyp:dbus',
+        '../build/linux/system.gyp:fontconfig',
+        '../dbus/dbus.gyp:dbus',
+      ],
+    }],
     ['OS=="android"', {
       'dependencies': [
         '../media/media.gyp:media',

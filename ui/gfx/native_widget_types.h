@@ -152,6 +152,12 @@ typedef content::ContentViewCore* NativeView;
 typedef ui::WindowAndroid* NativeWindow;
 typedef void* NativeRegion;
 typedef jobject NativeEvent;
+#elif defined(USE_DFB)
+typedef void* NativeCursor;
+typedef void* NativeView;
+typedef void* NativeWindow;
+typedef void* NativeRegion;
+typedef void* NativeEvent;
 #endif
 
 #if defined(OS_WIN)
@@ -173,7 +179,7 @@ typedef PangoFontDescription* NativeFont;
 typedef GtkWidget* NativeEditView;
 typedef cairo_t* NativeDrawingContext;
 typedef void* NativeViewAccessible;
-#elif defined(USE_AURA)
+#elif defined(USE_AURA) || defined(USE_DFB)
 typedef PangoFontDescription* NativeFont;
 typedef void* NativeEditView;
 typedef cairo_t* NativeDrawingContext;

@@ -26,11 +26,15 @@
 
             # Whether or not we are building the Ash shell.
             'use_ash%': 0,
+
+            # Whether or not to use DirectFB
+            'use_dfb%': 0,
           },
           # Copy conditionally-set variables out one scope.
           'chromeos%': '<(chromeos)',
           'use_aura%': '<(use_aura)',
           'use_ash%': '<(use_ash)',
+          'use_dfb%': '<(use_dfb)',
 
           # Whether we are using Views Toolkit
           'toolkit_views%': 0,
@@ -91,6 +95,7 @@
         'chromeos%': '<(chromeos)',
         'use_aura%': '<(use_aura)',
         'use_ash%': '<(use_ash)',
+        'use_dfb%': '<(use_dfb)',
         'use_openssl%': '<(use_openssl)',
         'enable_viewport%': '<(enable_viewport)',
         'enable_hidpi%': '<(enable_hidpi)',
@@ -112,14 +117,14 @@
 
         'conditions': [
           # Set default value of toolkit_views based on OS.
-          ['OS=="win" or chromeos==1 or use_aura==1', {
+          ['OS=="win" or chromeos==1 or use_aura==1 or use_dfb==1', {
             'toolkit_views%': 1,
           }, {
             'toolkit_views%': 0,
           }],
 
           # Set toolkit_uses_gtk for the Chromium browser on Linux.
-          ['(OS=="linux" or OS=="freebsd" or OS=="openbsd" or OS=="solaris") and use_aura==0', {
+          ['(OS=="linux" or OS=="freebsd" or OS=="openbsd" or OS=="solaris") and use_aura==0 and use_dfb==0', {
             'toolkit_uses_gtk%': 1,
           }, {
             'toolkit_uses_gtk%': 0,
@@ -165,6 +170,7 @@
       'toolkit_uses_gtk%': '<(toolkit_uses_gtk)',
       'use_aura%': '<(use_aura)',
       'use_ash%': '<(use_ash)',
+      'use_dfb%': '<(use_dfb)',
       'use_openssl%': '<(use_openssl)',
       'enable_viewport%': '<(enable_viewport)',
       'enable_hidpi%': '<(enable_hidpi)',
@@ -444,6 +450,10 @@
           'use_x11%': 1,
         }],
 
+	['use_dfb==1', {
+          'use_x11%': 0,
+	}],
+
         # We always use skia text rendering in Aura on Windows, since GDI
         # doesn't agree with our BackingStore.
         # TODO(beng): remove once skia text rendering is on by default.
@@ -659,6 +669,7 @@
     'ui_compositor_image_transport%': '<(ui_compositor_image_transport)',
     'use_aura%': '<(use_aura)',
     'use_ash%': '<(use_ash)',
+    'use_dfb%': '<(use_dfb)',
     'use_openssl%': '<(use_openssl)',
     'use_nss%': '<(use_nss)',
     'os_bsd%': '<(os_bsd)',
@@ -1360,6 +1371,9 @@
       ['use_ash==1', {
         'grit_defines': ['-D', 'use_ash'],
       }],
+      ['use_dfb==1', {
+        'grit_defines': ['-D', 'use_dfb'],
+      }],
       ['use_nss==1', {
         'grit_defines': ['-D', 'use_nss'],
       }],
@@ -1683,6 +1697,9 @@
       }],
       ['use_ash==1', {
         'defines': ['USE_ASH=1'],
+      }],
+      ['use_dfb==1', {
+        'defines': ['USE_DFB=1'],
       }],
       ['use_default_render_theme==1', {
         'defines': ['USE_DEFAULT_RENDER_THEME=1'],
