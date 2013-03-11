@@ -622,18 +622,22 @@
             '../build/linux/system.gyp:fontconfig',
             '../build/linux/system.gyp:glib',
             '../build/linux/system.gyp:pangocairo',
-            '../build/linux/system.gyp:x11',
-            '../build/linux/system.gyp:xext',
-            '../build/linux/system.gyp:xfixes',
           ],
-          'link_settings': {
-            'libraries': [
-              '-lXcursor',  # For XCursor* function calls in x11_util.cc.
-              '-lXrender',  # For XRender* function calls in x11_util.cc.
-              '-lXrandr',   # For XRR* function calls in x11_util.cc.
-            ],
-          },
           'conditions': [
+            ['use_x11==1', {
+              'dependencies': [
+                '../build/linux/system.gyp:x11',
+                '../build/linux/system.gyp:xext',
+                '../build/linux/system.gyp:xfixes',
+              ],
+              'link_settings': {
+                'libraries': [
+                  '-lXcursor',  # For XCursor* function calls in x11_util.cc.
+                  '-lXrender',  # For XRender* function calls in x11_util.cc.
+                  '-lXrandr',   # For XRR* function calls in x11_util.cc.
+                ],
+              },
+            }],
             ['toolkit_views==0', {
               # Note: because of gyp predence rules this has to be defined as
               # 'sources/' rather than 'sources!'.

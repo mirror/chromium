@@ -536,6 +536,26 @@
             'webm/chromeos/webm_encoder.h',
           ],
         }],
+	['use_cras == 1', {
+          'cflags': [
+            '<!@(<(pkg-config) --cflags libcras)',
+          ],
+          'link_settings': {
+            'libraries': [
+              '<!@(<(pkg-config) --libs libcras)',
+            ],
+          },
+          'defines': [
+            'USE_CRAS',
+          ],
+        }, {  # else: use_cras == 0
+          'sources!': [
+            'audio/linux/cras_input.cc',
+            'audio/linux/cras_input.h',
+            'audio/linux/cras_output.cc',
+            'audio/linux/cras_output.h',
+          ],
+        }],
         ['OS=="linux" or OS=="freebsd" or OS=="solaris"', {
           'link_settings': {
             'libraries': [
@@ -557,7 +577,7 @@
             'audio/openbsd/audio_manager_openbsd.h',
           ],
         }],
-        ['OS=="linux"', {
+        ['use_x11==1', {
           'variables': {
             'conditions': [
               ['sysroot!=""', {
@@ -575,28 +595,6 @@
               '-lXfixes',
             ],
           },
-          'conditions': [
-            ['use_cras == 1', {
-              'cflags': [
-                '<!@(<(pkg-config) --cflags libcras)',
-              ],
-              'link_settings': {
-                'libraries': [
-                  '<!@(<(pkg-config) --libs libcras)',
-                ],
-              },
-              'defines': [
-                'USE_CRAS',
-              ],
-            }, {  # else: use_cras == 0
-              'sources!': [
-                'audio/linux/cras_input.cc',
-                'audio/linux/cras_input.h',
-                'audio/linux/cras_output.cc',
-                'audio/linux/cras_output.h',
-              ],
-            }],
-          ],
         }],
         ['os_posix == 1', {
           'conditions': [
@@ -1224,7 +1222,7 @@
         },
       ],
     }],
-    ['os_posix == 1 and OS != "mac" and OS != "ios" and OS != "android"', {
+    ['use_x11==1', {
       'targets': [
         {
           'target_name': 'player_x11',

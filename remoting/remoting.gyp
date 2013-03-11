@@ -437,7 +437,7 @@
                 '*_gtk.cc',
               ],
             }],
-            ['OS=="linux"', {
+            ['use_x11==1', {
               'link_settings': {
                 'libraries': [
                   '-lX11',

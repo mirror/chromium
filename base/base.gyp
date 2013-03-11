@@ -58,11 +58,18 @@
                 '../build/linux/system.gyp:gtk',
               ],
             }],
+	    ['use_x11==1', {
+              'dependencies': [
+                '../build/linux/system.gyp:x11',
+              ],
+              'export_dependent_settings': [
+                '../build/linux/system.gyp:x11',
+              ],
+            }],
           ],
           'dependencies': [
             'symbolize',
             '../build/linux/system.gyp:glib',
-            '../build/linux/system.gyp:x11',
             'xdg_mime',
           ],
           'defines': [
@@ -73,7 +80,6 @@
           ],
           'export_dependent_settings': [
             '../build/linux/system.gyp:glib',
-            '../build/linux/system.gyp:x11',
           ],
         }, {  # use_glib!=1
             'sources/': [
@@ -708,6 +714,12 @@
                 ],
               },
             ],
+            [ 'use_x11==1', {
+                'dependencies': [
+                  '../tools/xdisplaycheck/xdisplaycheck.gyp:xdisplaycheck',
+                ],
+              },
+            ],
             [ 'toolkit_uses_gtk==1', {
               'sources': [
                 'nix/xdg_util_unittest.cc',
@@ -720,7 +732,6 @@
           'dependencies': [
             '../build/linux/system.gyp:glib',
             '../build/linux/system.gyp:ssl',
-            '../tools/xdisplaycheck/xdisplaycheck.gyp:xdisplaycheck',
           ],
         }, {  # use_glib!=1
           'sources!': [
