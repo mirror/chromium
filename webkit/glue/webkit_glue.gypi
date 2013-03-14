@@ -322,6 +322,7 @@
         'webcursor_aura.cc',
         'webcursor_aurawin.cc',
         'webcursor_aurax11.cc',
+        'webcursor_dfb.cc',
         'webcursor_gtk.cc',
         'webcursor_gtk_data.h',
         'webcursor_mac.mm',

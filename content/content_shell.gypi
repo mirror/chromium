@@ -67,6 +67,7 @@
         'shell/shell.h',
         'shell/shell_android.cc',
         'shell/shell_aura.cc',
+        'shell/shell_dfb.cc',
         'shell/shell_gtk.cc',
         'shell/shell_mac.mm',
         'shell/shell_win.cc',

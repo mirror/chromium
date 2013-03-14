@@ -22,6 +22,7 @@
         'snapshot.h',
         'snapshot_android.cc',
         'snapshot_aura.cc',
+        'snapshot_dfb.cc',
         'snapshot_export.h',
         'snapshot_gtk.cc',
         'snapshot_ios.mm',

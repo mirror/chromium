@@ -1,0 +1,45 @@
+// Copyright (c) 2011 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "content/public/browser/native_web_keyboard_event.h"
+
+#include "base/logging.h"
+#include "ui/base/events/event.h"
+
+using WebKit::WebKeyboardEvent;
+
+namespace content {
+
+NativeWebKeyboardEvent::NativeWebKeyboardEvent()
+    : os_event(NULL),
+      skip_in_browser(false) {
+}
+
+NativeWebKeyboardEvent::NativeWebKeyboardEvent(gfx::NativeEvent native_event)
+    : os_event(NULL),
+      skip_in_browser(false) {
+  NOTIMPLEMENTED();
+}
+
+NativeWebKeyboardEvent::NativeWebKeyboardEvent(
+    const NativeWebKeyboardEvent& other)
+    : WebKeyboardEvent(other),
+      os_event(NULL),
+      skip_in_browser(other.skip_in_browser) {
+  NOTIMPLEMENTED();
+}
+
+NativeWebKeyboardEvent& NativeWebKeyboardEvent::operator=(
+    const NativeWebKeyboardEvent& other) {
+  WebKeyboardEvent::operator=(other);
+  os_event = NULL;
+  skip_in_browser = other.skip_in_browser;
+
+  return *this;
+}
+
+NativeWebKeyboardEvent::~NativeWebKeyboardEvent() {
+}
+
+}  // namespace content
