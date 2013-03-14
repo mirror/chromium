@@ -179,6 +179,7 @@ void VideoCaptureManager::OnOpen(int capture_session_id,
       }
       case MEDIA_SCREEN_VIDEO_CAPTURE: {
 #if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
+#if !defined(USE_DFB)
         CHECK(CommandLine::ForCurrentProcess()->HasSwitch(
                 switches::kEnableUserMediaScreenCapturing));
         scoped_refptr<base::SequencedWorkerPool> blocking_pool =
@@ -186,6 +187,7 @@ void VideoCaptureManager::OnOpen(int capture_session_id,
         video_capture_device = new media::ScreenCaptureDevice(
             blocking_pool->GetSequencedTaskRunner(
                 blocking_pool->GetSequenceToken()));
+#endif
 #endif  // defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
         break;
       }
