@@ -309,6 +309,9 @@ const AcceleratedWidget kNullAcceleratedWidget = 0;
 #elif defined(OS_ANDROID)
 typedef ANativeWindow* AcceleratedWidget;
 const AcceleratedWidget kNullAcceleratedWidget = 0;
+#elif defined(USE_DFB)
+typedef uint64 AcceleratedWidget;
+const AcceleratedWidget kNullAcceleratedWidget = 0;
 #else
 #error unknown platform
 #endif
