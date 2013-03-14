@@ -12,12 +12,15 @@
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_implementation.h"
 #include "ui/gl/gl_surface_egl.h"
+#if defined(USE_X11)
 #include "ui/gl/gl_surface_glx.h"
 #include "ui/gl/gl_surface_osmesa.h"
+#endif
 #include "ui/gl/gl_surface_stub.h"
 
 namespace gfx {
 
+#if defined(USE_X11)
 namespace {
 Display* g_osmesa_display;
 }  // namespace
@@ -50,9 +53,11 @@ class NativeViewGLSurfaceOSMesa : public GLSurfaceOSMesa {
 
   DISALLOW_COPY_AND_ASSIGN(NativeViewGLSurfaceOSMesa);
 };
+#endif
 
 bool GLSurface::InitializeOneOffInternal() {
   switch (GetGLImplementation()) {
+#if defined(USE_X11)
     case kGLImplementationDesktopGL:
       if (!GLSurfaceGLX::InitializeOneOff()) {
         LOG(ERROR) << "GLSurfaceGLX::InitializeOneOff failed.";
@@ -65,6 +70,7 @@ bool GLSurface::InitializeOneOffInternal() {
         return false;
       }
       break;
+#endif
     case kGLImplementationEGLGLES2:
       if (!GLSurfaceEGL::InitializeOneOff()) {
         LOG(ERROR) << "GLSurfaceEGL::InitializeOneOff failed.";
@@ -78,6 +84,7 @@ bool GLSurface::InitializeOneOffInternal() {
   return true;
 }
 
+#if defined(USE_X11)
 NativeViewGLSurfaceOSMesa::NativeViewGLSurfaceOSMesa(
     gfx::AcceleratedWidget window)
   : GLSurfaceOSMesa(OSMESA_BGRA, gfx::Size(1, 1)),
@@ -264,6 +271,7 @@ bool NativeViewGLSurfaceOSMesa::PostSubBuffer(
 NativeViewGLSurfaceOSMesa::~NativeViewGLSurfaceOSMesa() {
   Destroy();
 }
+#endif
 
 scoped_refptr<GLSurface> GLSurface::CreateViewGLSurface(
     bool software,
@@ -273,6 +281,7 @@ scoped_refptr<GLSurface> GLSurface::CreateViewGLSurface(
     return NULL;
 
   switch (GetGLImplementation()) {
+#if defined(USE_X11)
     case kGLImplementationOSMesaGL: {
       scoped_refptr<GLSurface> surface(
           new NativeViewGLSurfaceOSMesa(window));
@@ -289,6 +298,7 @@ scoped_refptr<GLSurface> GLSurface::CreateViewGLSurface(
 
       return surface;
     }
+#endif
     case kGLImplementationEGLGLES2: {
       scoped_refptr<GLSurface> surface(new NativeViewGLSurfaceEGL(
           false, window));
@@ -313,6 +323,7 @@ scoped_refptr<GLSurface> GLSurface::CreateOffscreenGLSurface(
     return NULL;
 
   switch (GetGLImplementation()) {
+#if defined(USE_X11)
     case kGLImplementationOSMesaGL: {
       scoped_refptr<GLSurface> surface(new GLSurfaceOSMesa(OSMESA_RGBA,
                                                            size));
@@ -328,6 +339,7 @@ scoped_refptr<GLSurface> GLSurface::CreateOffscreenGLSurface(
 
       return surface;
     }
+#endif
     case kGLImplementationEGLGLES2: {
       scoped_refptr<GLSurface> surface(new PbufferGLSurfaceEGL(false, size));
       if (!surface->Initialize())

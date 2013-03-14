@@ -14,6 +14,7 @@ namespace gfx {
 scoped_refptr<GLImage> GLImage::CreateGLImage(gfx::PluginWindowHandle window) {
   TRACE_EVENT0("gpu", "GLImage::CreateGLImage");
   switch (GetGLImplementation()) {
+#if defined(USE_X11)
     case kGLImplementationOSMesaGL: {
       return NULL;
     }
@@ -24,6 +25,7 @@ scoped_refptr<GLImage> GLImage::CreateGLImage(gfx::PluginWindowHandle window) {
 
       return image;
     }
+#endif
     case kGLImplementationEGLGLES2: {
       return NULL;
     }

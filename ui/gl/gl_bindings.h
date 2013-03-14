@@ -199,7 +199,7 @@ typedef uint64 EGLuint64CHROMIUM;
 #elif defined(USE_X11)
 #include "gl_bindings_autogen_egl.h"
 #include "gl_bindings_autogen_glx.h"
-#elif defined(OS_ANDROID)
+#elif defined(OS_ANDROID) || defined(USE_DFB)
 #include "gl_bindings_autogen_egl.h"
 #endif
 
@@ -224,7 +224,7 @@ GL_EXPORT extern GLXApi* g_current_glx_context;
 GL_EXPORT extern DriverEGL g_driver_egl;
 GL_EXPORT extern DriverGLX g_driver_glx;
 
-#elif defined(OS_ANDROID)
+#elif defined(OS_ANDROID) || defined(USE_DFB)
 
 GL_EXPORT extern EGLApi* g_current_egl_context;
 GL_EXPORT extern DriverEGL g_driver_egl;
