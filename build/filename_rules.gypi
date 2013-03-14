@@ -63,6 +63,13 @@
         ['exclude', '_xdg(_unittest)?\\.(h|cc)$'],
       ],
     }],
+    ['<(use_dfb)!=1 or >(nacl_untrusted_build)==1', {
+      'sources/': [
+        ['exclude', '_dfb(_browsertest|_unittest)?\\.(h|cc)$'],
+        ['exclude', '(^|/)dfb/'],
+        ['exclude', '(^|/)dfb_[^/]*\\.(h|cc)$'],
+      ],
+    }],
     ['<(use_x11)!=1 or >(nacl_untrusted_build)==1', {
       'sources/': [
         ['exclude', '_(x|x11)(_unittest)?\\.(h|cc)$'],
