@@ -4,7 +4,9 @@
 
 #include "content/gpu/gpu_info_collector.h"
 
+#if defined(USE_X11)
 #include <X11/Xlib.h>
+#endif
 #include <vector>
 
 #include "base/command_line.h"
@@ -18,8 +20,10 @@
 #include "base/strings/string_split.h"
 #include "base/strings/string_tokenizer.h"
 #include "library_loaders/libpci.h"
+#if defined(USE_X11)
 #include "third_party/libXNVCtrl/NVCtrl.h"
 #include "third_party/libXNVCtrl/NVCtrlLib.h"
+#endif
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_context.h"
 #include "ui/gl/gl_implementation.h"
@@ -65,6 +69,7 @@ std::string CollectDriverVersionATI() {
   return std::string();
 }
 
+#if defined(USE_X11)
 // Use NVCtrl extention to query NV driver version.
 // Return empty string on failing.
 std::string CollectDriverVersionNVidia() {
@@ -92,6 +97,7 @@ std::string CollectDriverVersionNVidia() {
   }
   return std::string();
 }
+#endif
 
 const uint32 kVendorIDIntel = 0x8086;
 const uint32 kVendorIDNVidia = 0x10de;
@@ -245,6 +251,7 @@ bool CollectBasicGraphicsInfo(content::GPUInfo* gpu_info) {
         gpu_info->driver_version = driver_version;
       }
       break;
+#if defined(USE_X11)
     case kVendorIDNVidia:
       driver_version = CollectDriverVersionNVidia();
       if (!driver_version.empty()) {
@@ -264,6 +271,7 @@ bool CollectBasicGraphicsInfo(content::GPUInfo* gpu_info) {
           gpu_info->optimus = true;
       }
       break;
+#endif
   }
 
   return rt;

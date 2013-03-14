@@ -88,6 +88,10 @@
     ['OS=="linux"', {
       'dependencies': [
         '../build/linux/system.gyp:libpci',
+      ],
+    }],
+    ['use_x11==1', {
+      'dependencies': [
         '../third_party/libXNVCtrl/libXNVCtrl.gyp:libXNVCtrl',
       ],
     }],
