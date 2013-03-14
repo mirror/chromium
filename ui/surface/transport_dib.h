@@ -8,7 +8,7 @@
 #include "base/basictypes.h"
 #include "ui/surface/surface_export.h"
 
-#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_ANDROID)
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_ANDROID) || defined(USE_DFB)
 #include "base/shared_memory.h"
 #endif
 
@@ -91,7 +91,7 @@ class SURFACE_EXPORT TransportDIB {
     static int fake_handle = 10;
     return Handle(fake_handle++, false);
   }
-#elif defined(USE_X11)
+#elif defined(USE_X11) || defined(USE_DFB)
   typedef int Handle;  // These two ints are SysV IPC shared memory keys
   struct Id {
     // Ensure that default initialized Ids are invalid.
@@ -188,10 +188,12 @@ class SURFACE_EXPORT TransportDIB {
   // wire to give this transport DIB to another process.
   Handle handle() const;
 
+#if defined(USE_X11) || defined(USE_DFB)
 #if defined(USE_X11)
   // Map the shared memory into the X server and return an id for the shared
   // segment.
   XID MapToX(Display* connection);
+#endif
 
   void IncreaseInFlightCounter() { inflight_counter_++; }
   // Decreases the inflight counter, and deletes the transport DIB if it is
@@ -209,11 +211,13 @@ class SURFACE_EXPORT TransportDIB {
   explicit TransportDIB(base::SharedMemoryHandle dib);
   base::SharedMemory shared_memory_;
   uint32 sequence_num_;
-#elif defined(USE_X11)
+#elif defined(USE_X11) || defined(USE_DFB)
   Id key_;  // SysV shared memory id
   void* address_;  // mapped address
+#if defined(USE_X11)
   XSharedMemoryId x_shm_;  // X id for the shared segment
   Display* display_;  // connection to the X server
+#endif
   size_t inflight_counter_;  // How many requests to the X server are in flight
   bool detached_;  // If true, delete the transport DIB when it is idle
 #endif
