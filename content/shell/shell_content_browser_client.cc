@@ -159,7 +159,7 @@ std::string ShellContentBrowserClient::GetDefaultDownloadName() {
 
 WebContentsViewDelegate* ShellContentBrowserClient::GetWebContentsViewDelegate(
     WebContents* web_contents) {
-#if defined(TOOLKIT_GTK) || defined(OS_WIN) || defined(OS_MACOSX)
+#if defined(TOOLKIT_GTK) || defined(OS_WIN) || defined(OS_MACOSX) || defined(USE_DFB)
   return CreateShellWebContentsViewDelegate(web_contents);
 #endif
   NOTIMPLEMENTED();
