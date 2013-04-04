@@ -1,0 +1,13 @@
+AXWebArea
+    AXGroup invalid='true'
+        AXStaticText value='invalid=true'
+    AXGroup invalid='spelling'
+        AXStaticText value='invalid=spelling'
+    AXGroup invalid='grammar'
+        AXStaticText value='invalid=grammar'
+    AXGroup invalid='false'
+        AXStaticText value='invalid=false'
+    AXGroup invalid='false'
+        AXStaticText value='invalid=<empty>'
+    AXGroup invalid='somethingelse'
+        AXStaticText value='invalid=somethingelse'

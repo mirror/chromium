@@ -1,0 +1,2 @@
+AXWebArea roleDescription='HTML content'
+    AXSlider roleDescription='stepper' value='5'

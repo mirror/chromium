@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<!--
+Copyright (c) 2012 The Chromium Authors. All rights reserved.
+Use of this source code is governed by a BSD-style license that can be
+found in the LICENSE file.
+-->
+<head>
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="-1">
+  <title>{{title}}</title>
+  <script type="text/javascript" src="common.js"></script>
+  <script type="text/javascript" src="example.js"></script>
+</head>
+<body {{attrs}}>
+  <h1>{{title}}</h1>
+  <h2>Status: <code id="statusField">NO-STATUS</code></h2>
+  <div>Magic eightball: type a question below, press the button, and get a
+      response.</div>
+  <form>
+    <input type="text" id="question" value="">
+    <input type="submit" value="ASK!">
+  </form>
+  <p>... or click this button to reverse the string.</p>
+  <button id="reverse">Reverse</button>
+  <!-- The NaCl plugin will be embedded inside the element with id "listener".
+      See common.js.-->
+  <div id="listener"></div>
+  <div id="log"></div>
+</body>
+</html>

@@ -1,0 +1,7 @@
+AXWebArea
+    AXGroup
+        AXStaticText value='State'
+        AXComboBox
+    AXList
+        AXStaticText title='Alabama'
+        AXStaticText title='Alaska'

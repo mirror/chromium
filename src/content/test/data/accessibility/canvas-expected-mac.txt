@@ -1,0 +1,7 @@
+AXWebArea
+    AXGroup
+        AXImage
+            AXStaticText value='Static fallback'
+        AXGroup
+            AXLink title='Interactive fallback'
+                AXStaticText value='Interactive fallback'

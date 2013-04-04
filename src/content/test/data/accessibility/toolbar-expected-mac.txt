@@ -1,0 +1,3 @@
+AXWebArea roleDescription='HTML content'
+    AXToolbar roleDescription='toolbar'
+        AXStaticText roleDescription='text' value='A toolbar'

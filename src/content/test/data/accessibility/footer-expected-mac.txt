@@ -1,0 +1,3 @@
+AXWebArea
+    AXGroup subrole=AXLandmarkContentInfo roleDescription='footer'
+        AXStaticText value='Footer element'

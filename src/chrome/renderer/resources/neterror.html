@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html i18n-values="dir:textdirection">
+<head>
+<meta name="viewport" content="width=device-width" />
+<title i18n-content="title">
+</title>
+<style>
+
+body {
+  background-color: #E6E6E6;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 10pt;
+  margin: 50px 40px 20px 40px;
+  text-align: center;
+}
+
+#cell {
+  margin: auto;
+  max-width: 540px;
+  min-width: 200px;
+}
+
+#box {
+  background-color: #fbfbfb;
+  border: 1px solid #AAA;
+  border-bottom: 1px solid #888;
+  border-radius: 3px;
+  color: black;
+<if expr="not pp_ifdef('android') and not pp_ifdef('ios')">
+  /* Not done on mobile for performance reasons. */
+  box-shadow: 0px 2px 2px #AAA;
+</if>
+}
+
+ul {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+li {
+  padding-top: 2px;
+}
+
+h1 {
+  color: #666;
+  margin: 10px 0px 25px 0px;
+  font-weight: normal;
+  font-size: 1.5em;
+}
+
+h2 {
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: #00c;
+}
+
+a:active {
+  color: #f00;
+}
+
+a:visited {
+  color: #551a8b;
+}
+
+#content-top {
+  margin: 20px 20px 20px 25px;
+}
+
+#help-box-outer {
+  overflow: hidden;
+  -webkit-transition: height ease-in 218ms;
+}
+
+#help-box-inner {
+  background-color: #f9f9f9;
+  border-top: 1px solid #EEE;
+  color: #444;
+  padding: 25px 20px;
+  text-align: left;
+}
+
+#suggestions {
+  margin-top: 15px;
+}
+
+#details {
+  color: #8F8F8F;
+  margin: 20px;
+<if expr="not pp_ifdef('android') and not pp_ifdef('ios')">
+  /* Not done on mobile for performance reasons. */
+  text-shadow: 0 1px 0 rgba(255,255,255,0.3);
+</if>
+}
+
+.failedUrl {
+  word-wrap: break-word;
+}
+
+button {
+  background-image: linear-gradient(#f6f6f6 5%, #efefef 50%, #ddd);
+  border: 1px solid #d1d1d3;
+  border-bottom: 1px solid #c1c1c3;
+  color: #666;
+  font-weight: bold;
+  margin: 0 5px;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+  -webkit-user-select: none;
+  padding: 8px 13px;
+<if expr="not pp_ifdef('android') and not pp_ifdef('ios')">
+  /* Not done on mobile for performance reasons. */
+  border-radius: 2px;
+  box-shadow: inset 0 1px 0 #fff;
+</if>
+}
+
+#reloadButton {
+  background-image: linear-gradient(#5499f4 5%, #5294f2 50%, #4b85f1);
+  border: 1px solid #5187df;
+  border-bottom: 1px solid #3870cf;
+  box-shadow: inset 0 1px 0 #5fa8f7;
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.2);
+}
+
+.failedUrl {
+  word-wrap: break-word;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Increase line height at higher resolutions. */
+@media (min-width: 641px) and (min-height: 641px) {
+  #details {
+    line-height: 18px;
+  }
+  #help-box-inner {
+    line-height: 20px;
+  }
+}
+
+/* Decrease padding at low sizes. */
+@media (max-width: 640px), (max-height: 640px) {
+  body {
+    margin: 15px;
+  }
+  h1 {
+    margin: 10px 0px 15px 0px;
+  }
+  #content-top {
+    margin: 15px;
+  }
+  #help-box-inner {
+    padding: 20px;
+  }
+  #details {
+    margin: 15px;
+  }
+}
+
+</style>
+</head>
+
+<script>
+/**
+ * Sets the classes of elements to match their jscontent values.
+ * Elements without jscontent values are ignored.
+ *
+ * This allows styles to be applied to nested elements from
+ * within GRD files.  To work on these elements, this must be
+ * called after jscontent substitution.
+ */
+function setJsContentElementClasses() {
+  var elements = document.querySelectorAll('[jscontent]');
+  for (var i = 0; i < elements.length; ++i) {
+    elements[i].className = elements[i].getAttribute('jscontent');
+  }
+}
+
+document.addEventListener('DOMContentLoaded',
+                          setJsContentElementClasses,
+                          false);
+
+function toggleHelpBox() {
+  var helpBoxOuter = document.getElementById('help-box-outer');
+  helpBoxOuter.classList.toggle('hidden');
+  var moreLessButton = document.getElementById('moreLessButton');
+  if (helpBoxOuter.classList.contains('hidden')) {
+    moreLessButton.innerText = moreLessButton.moreText;
+  } else {
+    moreLessButton.innerText = moreLessButton.lessText;
+  }
+}
+
+</script>
+
+<body id="t">
+<div id="cell">
+ <div id="box">
+  <div id="content-top">
+    <h1>
+     <span i18n-content="heading"></span>
+    </h1>
+
+    <button id="reloadButton" onclick="location = this.url" jsselect="reload" jsvalues=".url:reloadUrl" jscontent="msg"></button>
+    <button id="moreLessButton" onclick="toggleHelpBox()" jsdisplay="more" jsvalues=".moreText:more; .lessText:less;" jscontent="more"></button>
+  </div>
+
+  <!-- Outer and inner divs are needed both for margins and sizing. -->
+  <div id="help-box-outer" class="hidden">
+   <div id="help-box-inner">
+    <div id="errorSummary" jsselect="summary">
+     <span jsvalues=".innerHTML:msg"></span>
+    </div>
+
+    <div id="suggestions" jsdisplay="suggestionsHeading">
+     <h2 i18n-content="suggestionsHeading"></h2>
+     <ul>
+      <li jsselect="suggestionsHomepage">
+        <span jscontent="suggestionsHomepageMsg"></span>
+        <a jscontent="hostName" jsvalues="href:homePage"></a>
+      </li>
+      <li jsselect="suggestionsCheckConnection">
+        <span jsvalues=".innerHTML:msg"></span>
+      </li>
+      <li jsselect="suggestionsDNSConfig">
+        <span jsvalues=".innerHTML:msg"></span>
+      </li>
+      <li jsselect="suggestionsDisableNetworkPrediction">
+        <span jsvalues=".innerHTML:msg"></span>
+      </li>
+      <li jsselect="suggestionsFirewallConfig">
+        <span jsvalues=".innerHTML:msg"></span>
+      </li>
+      <li jsselect="suggestionsProxyConfig">
+        <span jsvalues=".innerHTML:msg"></span>
+      </li>
+      <li jsselect="suggestionsProxyDisable">
+        <span jsvalues=".innerHTML:msg"></span>
+      </li>
+      <li jsselect="suggestionsDisableExtension">
+        <span jsvalues=".innerHTML:msg"></span>
+      </li>
+      <li jsselect="suggestionsLearnMore">
+        <span jsvalues=".innerHTML:msg"></span>
+      </li>
+      <li jsselect="suggestionsViewPolicies">
+        <span jsvalues=".innerHTML:msg"></span>
+      </li>
+      <li jsselect="suggestionsContactAdministrator">
+        <span jsvalues=".innerHTML:msg"></span>
+      </li>
+     </ul>
+    </div>
+   </div>
+  </div>
+ </div>
+ <div id="details">
+  <div jsdisplay="errorDetails" jscontent="errorDetails"></div>
+  <div jscontent="errorCode"></div>
+ </div>
+</div>
+</body>
+</html>

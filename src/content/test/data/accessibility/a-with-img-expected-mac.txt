@@ -1,0 +1,16 @@
+AXWebArea
+    AXGroup
+        AXLink title='Link with image at start.'
+            AXImage description='Link'
+            AXStaticText value=' with image at start.'
+        AXLink title='Link with image in the middle.'
+            AXStaticText value='Link with '
+            AXImage description='image'
+            AXStaticText value=' in the middle.'
+        AXLink title='Link with broken in the middle.'
+            AXStaticText value='Link with '
+            AXImage description='broken'
+            AXStaticText value=' in the middle.'
+        AXLink title='Link with image at the end'
+            AXStaticText value='Link with image at the '
+            AXImage description='end'
