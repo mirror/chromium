@@ -10,7 +10,4 @@ namespace downloadsInternal {
                                   optional DOMString filename,
                                   optional boolean overwrite);
   };
-
-  interface Events {
-  };
 };

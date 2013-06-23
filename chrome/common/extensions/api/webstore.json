@@ -5,6 +5,7 @@
 [
   {
     "namespace": "webstore",
+    "description": "webstore",
 
     // Any webpage can use the webstore API.
     "matches": [ "http://*/*", "https://*/*" ],

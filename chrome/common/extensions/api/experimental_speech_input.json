@@ -5,6 +5,7 @@
 [
   {
     "namespace": "experimental.speechInput",
+    "description": "experimental.speechInput",
     "types": [
       {
         "id": "SpeechInputStartOptions",
