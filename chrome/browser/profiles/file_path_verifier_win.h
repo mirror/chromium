@@ -27,8 +27,9 @@ PathComparisonReason ComparePathsIgnoreCase(const base::FilePath& path1,
 
 }  // namespace internal
 
-// Verifies that the Preferences file at |pref_file_path| is found as expected
-// on disk and reports the result via UMA stat Stability.FileAtPath.Preferences.
-void VerifyPreferencesFile(const base::FilePath& pref_file_path);
+// Verifies that |file| is found as expected on disk and reports the result via
+// a UMA stat with suffix |metric_suffix|.
+void VerifyFileAtPath(const base::FilePath& file,
+                      const std::string& metric_suffix);
 
 #endif  // CHROME_BROWSER_PROFILES_FILE_PATH_VERIFIER_WIN_H_
