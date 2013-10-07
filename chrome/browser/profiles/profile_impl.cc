@@ -98,7 +98,6 @@
 #include "ui/base/l10n/l10n_util.h"
 
 #if defined(OS_WIN)
-#include "chrome/browser/profiles/file_path_verifier_win.h"
 #include "chrome/installer/util/install_util.h"
 #endif
 
@@ -237,17 +236,6 @@ std::string ExitTypeToSessionTypePrefValue(Profile::ExitType type) {
   }
   NOTREACHED();
   return std::string();
-}
-
-void SchedulePrefsFileVerification(const base::FilePath& prefs_file) {
-#if defined(OS_WIN)
-  // Only do prefs file verification on Windows.
-  const int kVerifyPrefsFileDelaySeconds = 60;
-  BrowserThread::GetBlockingPool()->PostDelayedTask(
-        FROM_HERE,
-        base::Bind(&VerifyFileAtPath, prefs_file, "Preferences"),
-        base::TimeDelta::FromSeconds(kVerifyPrefsFileDelaySeconds));
-#endif
 }
 
 }  // namespace
@@ -779,8 +767,6 @@ void ProfileImpl::OnPrefsLoaded(bool success) {
         prerender::PrerenderManagerFactory::GetForProfile(this),
         predictor_));
   }
-
-  SchedulePrefsFileVerification(GetPrefFilePath());
 
   ChromeVersionService::OnProfileLoaded(prefs_.get(), IsNewProfile());
   DoFinalInit();
