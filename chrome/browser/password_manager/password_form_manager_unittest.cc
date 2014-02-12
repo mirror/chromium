@@ -32,6 +32,10 @@ class TestPasswordManagerDelegate : public PasswordManagerDelegate {
 
   virtual void FillPasswordForm(
       const autofill::PasswordFormFillData& form_data) OVERRIDE {}
+  virtual void AuthenticateAutofillAndFillForm(
+      scoped_ptr<autofill::PasswordFormFillData> fill_data) OVERRIDE {
+    FillPasswordForm(*fill_data.get());
+  }
   virtual void AddSavePasswordInfoBarIfPermitted(
       PasswordFormManager* form_to_save) OVERRIDE {}
   virtual Profile* GetProfile() OVERRIDE { return profile_; }

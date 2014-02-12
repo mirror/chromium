@@ -38,6 +38,15 @@ class MockPasswordManagerDelegate : public PasswordManagerDelegate {
   MOCK_METHOD1(AddSavePasswordInfoBarIfPermitted, void(PasswordFormManager*));
   MOCK_METHOD0(GetProfile, Profile*());
   MOCK_METHOD0(DidLastPageLoadEncounterSSLErrors, bool());
+
+  // The following is required because GMock does not support move-only
+  // parameters.
+  MOCK_METHOD1(AuthenticateAutofillAndFillFormPtr,
+               void(autofill::PasswordFormFillData* fill_data));
+  virtual void AuthenticateAutofillAndFillForm(
+      scoped_ptr<autofill::PasswordFormFillData> fill_data) OVERRIDE {
+    return AuthenticateAutofillAndFillFormPtr(fill_data.release());
+  }
 };
 
 ACTION_P(InvokeConsumer, forms) {
