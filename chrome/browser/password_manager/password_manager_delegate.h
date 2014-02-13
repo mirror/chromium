@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_PASSWORD_MANAGER_PASSWORD_MANAGER_DELEGATE_H_
 #define CHROME_BROWSER_PASSWORD_MANAGER_PASSWORD_MANAGER_DELEGATE_H_
 
+#include "base/memory/scoped_ptr.h"
+
 class PasswordFormManager;
 class Profile;
 
@@ -25,6 +27,11 @@ class PasswordManagerDelegate {
   // to sever the dependency on the entire rendering stack.
   virtual void FillPasswordForm(
       const autofill::PasswordFormFillData& form_data) = 0;
+
+  // Called to authenticate the autofill password data.  If authentication is
+  // successful, this should continue filling the form.
+  virtual void AuthenticateAutofillAndFillForm(
+      scoped_ptr<autofill::PasswordFormFillData> fill_data) = 0;
 
   // A mechanism to show an infobar in the current tab at our request.
   // The infobar may not show in some circumstances, such as when the one-click
