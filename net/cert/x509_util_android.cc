@@ -14,6 +14,10 @@ void NotifyKeyChainChanged(JNIEnv* env, jclass clazz) {
   CertDatabase::GetInstance()->OnAndroidKeyChainChanged();
 }
 
+void NotifyClientCertificatesChanged(JNIEnv* env, jclass clazz) {
+  CertDatabase::GetInstance()->OnAndroidKeyStoreChanged();
+}
+
 jobject GetApplicationContext(JNIEnv* env, jclass clazz) {
   return base::android::GetApplicationContext();
 }

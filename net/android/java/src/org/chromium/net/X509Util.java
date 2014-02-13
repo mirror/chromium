@@ -162,6 +162,11 @@ public class X509Util {
         ensureInitialized();
     }
 
+    public static void notifyClientCertificatesChanged() {
+        Log.d(TAG, "ClientCertificatesChanged!");
+        nativeNotifyClientCertificatesChanged();
+    }
+
     /**
      * Convert a DER encoded certificate to an X509Certificate.
      */
@@ -291,6 +296,9 @@ public class X509Util {
     public static void setDisableCertificateObservationForTest(boolean disabled) {
         sDisableCertificateObservationForTest = disabled;
     }
+
+    private static native void nativeNotifyClientCertificatesChanged();
+
     /**
      * Notify the native net::CertDatabase instance that the system database has been updated.
      */
