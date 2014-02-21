@@ -76,8 +76,13 @@ class ChromeWebContentsDelegateAndroid
       const content::WebContents* web_contents,
       const GURL& frame_url,
       const base::Callback<void(bool)>& callback) OVERRIDE;
+  virtual void WebContentsCreated(content::WebContents* source_contents,
+                                  int64 source_frame_id,
+                                  const base::string16& frame_name,
+                                  const GURL& target_url,
+                                  content::WebContents* new_contents) OVERRIDE;
 
- private:
+private:
   // NotificationObserver implementation.
   virtual void Observe(int type,
                        const content::NotificationSource& source,
