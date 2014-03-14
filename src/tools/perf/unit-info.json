@@ -1,0 +1,141 @@
+{
+  "_description" : "This file contains info about our performance test units, used by the perf dashboard (http://chromeperf.appspot.com).",
+
+  "%": {
+    "improvement_direction": "down",
+    "why": "Percent CPU usage. Used by cpu metric."
+  },
+  "bytes": {
+    "improvement_direction": "down"
+  },
+  "commit_count": {
+    "improvement_direction": "up",
+    "why": "layer_tree_host_perftest"
+  },
+  "count": {
+    "improvement_direction": "down",
+    "why": "Processes"
+  },
+  "files": {
+    "improvement_direction": "down",
+    "why": "Static initializers"
+  },
+  "fps": {
+    "improvement_direction": "up",
+    "why": "The faster the better. Used by scirra benchmark."
+  },
+  "frames": {
+    "improvement_direction": "down",
+    "why": "Dropped frames."
+  },
+  "frames-per-second": {
+    "improvement_direction": "up",
+    "why": "Synonym for fps."
+  },
+  "frame_count": {
+    "improvement_direction": "up",
+    "why": "layer_tree_host_perftest"
+  },
+  "frame_time": {
+    "improvement_direction": "down"
+  },
+  "kb": {
+    "improvement_direction": "down",
+    "why": "Synonym for KB, used in memory and io metrics."
+  },
+  "KB": {
+    "improvement_direction": "down",
+    "why": "KB of memory usage. Less memory usage is better. Used in endure."
+  },
+  "lines": {
+    "improvement_direction": "up",
+    "why": "Coverage. More test coverage is better."
+  },
+  "load": {
+    "improvement_direction": "down"
+  },
+  "MB": {
+    "improvement_direction": "down"
+  },
+  "ms": {
+    "improvement_direction": "down",
+    "why": "Used in many Telemetry measurements. Fewer ms of time means faster."
+  },
+  "milliseconds": {
+    "improvement_direction": "down",
+    "why": "Synonym for ms."
+  },
+  "milliseconds-per-frame": {
+    "improvement_direction": "down"
+  },
+  "minutes": {
+    "improvement_direction": "down",
+    "why": "Used for NaCl build time."
+  },
+  "mWh": {
+    "improvement_direction": "down",
+    "why": "Fewer milliwatt-hours means less energy consumed."
+  },
+  "objects (bigger is better)": {
+    "improvement_direction": "up",
+    "why": "Used in spaceport benchmark."
+  },
+  "ObjectsAt30FPS": {
+    "improvement_direction": "up"
+  },
+  "percent": {
+    "improvement_direction": "down",
+    "why": "Synonym for %, used in memory metric for percent fragmentation."
+  },
+  "coverage%": {
+    "improvement_direction": "up",
+    "why": "Used in alloy-perf-test/cts%/passed."
+  },
+  "points": {
+    "improvement_direction": "up",
+    "why": "Synonym for score, used in ChromeOS touchpad tests."
+  },
+  "ports": {
+    "improvement_direction": "down"
+  },
+  "relocs": {
+    "improvement_direction": "down"
+  },
+  "runs/ms": {
+    "improvement_direction": "up",
+    "why": "Higher runs/ms implies faster execution."
+  },
+  "runs/s": {
+    "improvement_direction": "up",
+    "why": "Used in dromaeo. Higher runs/s implies faster execution."
+  },
+  "runs_per_s": {
+    "improvement_direction": "up",
+    "why": "Synonym for runs/s, used in dromaeo data sent by cros bots."
+  },
+  "runs_per_second": {
+    "improvement_direction": "up",
+    "why": "Synonym for runs/s."
+  },
+  "score": {
+    "improvement_direction": "up",
+    "why": "Used in a variety of benchmarks where a higher score is better."
+  },
+  "score_(bigger_is_better)": {
+    "improvement_direction": "up",
+    "why": "Synonym for score."
+  },
+  "score (bigger is better)": {
+    "improvement_direction": "up",
+    "why": "Synonym for score, used in jsgamebench and dom_perf."
+  },
+  "sec": {
+    "improvement_direction": "down"
+  },
+  "seconds": {
+    "improvement_direction": "down"
+  },
+  "us": {
+    "improvement_direction": "down"
+  }
+}

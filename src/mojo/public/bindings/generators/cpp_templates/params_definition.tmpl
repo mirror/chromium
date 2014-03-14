@@ -1,0 +1,44 @@
+{%- import "struct_macros.tmpl" as struct_macros %}
+{%- set class_name = struct.name ~ "_Data" %}
+{%- set method_name = "k%s_%s_Name"|format(interface.name, method.name) %}
+const uint32_t {{method_name}} = {{method.ordinal}};
+class {{class_name}} {
+ public:
+  static {{class_name}}* New(mojo::Buffer* buf) {
+    return new (buf->Allocate(sizeof({{class_name}})))
+        {{class_name}}();
+  }
+
+{#--- Setters -#}
+{{ struct_macros.setters(struct) }}
+
+{#--- Getters -#}
+{{ struct_macros.getters(struct) }}
+
+  void CloseHandles() {
+{%- for pf in struct.packed.packed_fields if pf.field.kind|is_object_kind %}
+    if ({{pf.field.name}}_.ptr)
+      {{pf.field.name}}_.ptr->CloseHandles();
+{%- endfor %}
+  }
+
+  void EncodePointersAndHandles(std::vector<mojo::Handle>* handles) {
+    {{ struct_macros.encodes(struct)|indent(4) }}
+  }
+
+  bool DecodePointersAndHandles(mojo::Message* message) {
+    {{ struct_macros.decodes(struct)|indent(4) }}
+    return true;
+  }
+
+ private:
+  {{class_name}}() {
+    _header_.num_bytes = sizeof(*this);
+    _header_.num_fields = 3;
+  }
+
+  mojo::internal::StructHeader _header_;
+{{ struct_macros.fields(struct) }}
+};
+MOJO_COMPILE_ASSERT(sizeof({{class_name}}) == {{struct.packed|struct_size}},
+                    bad_sizeof_{{class_name}});

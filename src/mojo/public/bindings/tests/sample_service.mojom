@@ -1,0 +1,72 @@
+// Copyright 2013 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+import "sample_import.mojom"
+import "sample_import2.mojom"
+
+module sample {
+
+struct Bar {
+  enum Type {
+    TYPE_VERTICAL = 1 << 0,
+    TYPE_HORIZONTAL = (1 << 1) + 0,
+    TYPE_BOTH = TYPE_VERTICAL | TYPE_HORIZONTAL,
+    TYPE_INVALID
+  };
+  uint8 alpha = (0x100 - 1) @0;
+  uint8 beta @1;
+  uint8 gamma @2;
+  Type type = sample.Bar.TYPE_VERTICAL @3;
+};
+
+[RequiredFields=7]
+struct Foo {
+  string name = "Fooby" @8;
+  int32 x @0;
+  int32 y @1;
+  bool a = true @2;
+  bool b @3;
+  bool c @4;
+  Bar bar @5;
+  Bar[] extra_bars @7;
+  uint8[] data = [1,2,3] @6;
+  handle<message_pipe> source @9;
+  handle<data_pipe_consumer>[] input_streams @10;
+  handle<data_pipe_producer>[] output_streams @11;
+};
+
+struct DefaultsTestInner {
+  int32 age @2;
+  string[] names = ["Jim"] @1;
+  int32 height = 6*12 @3;
+};
+
+struct DefaultsTest {
+  sample.DefaultsTestInner[] people = [{32, ["Bob", "Bobby"]}] @1;
+  uint8[] data = [1, 2, 3] @2;
+  imported.Point point = {7, 15} @3;
+  int32[] shape_masks = [1 << imported.SHAPE_RECTANGLE] @4;
+  imported.Thing thing = {imported.SHAPE_CIRCLE, imported.COLOR_BLACK};
+  Bar.Type bar_type = Bar.TYPE_BOTH;
+};
+
+interface Port {
+  PostMessage@0(string message_text @0);
+};
+
+[Peer=ServiceClient]
+interface Service {
+  enum BazOptions {
+    BAZ_REGULAR = 0,
+    BAZ_EXTRA
+  };
+  Frobinate@0(Foo foo @0, BazOptions baz @1, Port port @2);
+};
+
+[Peer=Service]
+interface ServiceClient {
+  DidFrobinate@0(int32 result @0);
+};
+
+}

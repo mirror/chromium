@@ -1,0 +1,4 @@
+# This file is reserved for temporary suppressions needed while importing
+# tests from the W3C until they can be moved to
+# src/third_party/WebKit/LayoutTests/TestExpectations and dealt with.
+#

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Copyright 2014 The Chromium Authors. All rights reserved.
+     Use of this source code is governed by a BSD-style license that can be
+     found in the LICENSE file.
+-->
+
+<!--Action bar buttons for the Android app's remote desktop viewer-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/actionbar_keyboard"
+            android:title="@string/show_hide_keyboard"
+            android:icon="@drawable/ic_action_keyboard"
+            android:showAsAction="ifRoom"/>
+    <item android:id="@+id/actionbar_hide"
+            android:title="@string/close"
+            android:icon="@android:drawable/ic_menu_close_clear_cancel"
+            android:showAsAction="ifRoom"/>
+    <item android:id="@+id/actionbar_send_ctrl_alt_del"
+            android:title="@string/send_ctrl_alt_del"
+            android:showAsAction="withText"/>
+    <item android:id="@+id/actionbar_disconnect"
+            android:title="@string/disconnect_myself_button"
+            android:showAsAction="withText"/>
+    <!--
+        The Help option must be the final menu item and it must only appear in
+        the action-bar overflow menu.
+    -->
+    <item android:id="@+id/actionbar_help"
+            android:title="@string/actionbar_help"
+            android:showAsAction="never"/>
+</menu>

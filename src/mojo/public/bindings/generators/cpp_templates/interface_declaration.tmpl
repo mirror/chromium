@@ -1,0 +1,35 @@
+class {{interface.name}}Proxy;
+class {{interface.name}}Stub;
+{% if interface.peer %}
+class {{interface.peer}};
+{% endif %}
+
+class {{interface.name}} {
+ public:
+  typedef {{interface.name}}Proxy _Proxy;
+  typedef {{interface.name}}Stub _Stub;
+{% if interface.peer %}
+  typedef {{interface.peer}} _Peer;
+{% else %}
+  typedef mojo::NoInterface _Peer;
+{% endif %}
+
+{#--- Enums #}
+{%- for enum in interface.enums %}
+{%    macro enum_def() %}{% include "enum_declaration.tmpl" %}{% endmacro %}
+  {{enum_def()|indent(2)}}
+{%- endfor %}
+
+{#--- Methods #}
+{%  for method in interface.methods %}
+  virtual void {{method.name}}(
+{%-   for param in method.parameters -%}
+    {{param.kind|cpp_const_wrapper_type}} {{param.name}}
+{%-     if not loop.last %}, {% endif -%}
+{%-   endfor -%}
+  ) = 0;
+{%- endfor %}
+};
+
+typedef mojo::Interface<{{interface.name}}>::Handle {{interface.name}}Handle;
+typedef mojo::Interface<{{interface.name}}>::ScopedHandle Scoped{{interface.name}}Handle;

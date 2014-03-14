@@ -1,0 +1,25 @@
+{{- This is the shared template for Extension/App articles.
+  - |article|       The article content.
+  - |platform|      The platform.
+  - |platformTitle| The title of the platform ("Extensions" or "Apps").
+  - |removeToc|     Whether or not to remove the Table of Contents.
+  -}}
+{{+content:partials.site
+       platform:platform
+       platformTitle:platformTitle}}
+<article class="article-content">
+  <div itemprop="articleBody">
+
+{{- This is unindented because it may contain whitespace-sensitive tags. -}}
+{{+article platform:platform platformTitle:platformTitle /}}
+    
+    {{+partials.cc /}}
+    <nav class="inline-toc no-permalink">
+      {{+partials.relatedpages_items items:sidenavs.related /}}
+      {{^removeToc}}
+      $(table_of_contents)
+      {{/removeToc}}
+    </nav>
+  </div>
+</article>
+{{/partials.site}}

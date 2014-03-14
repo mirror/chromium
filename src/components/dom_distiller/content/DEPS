@@ -1,0 +1,9 @@
+include_rules = [
+  "+components/browser_context_keyed_service",
+  "+content/public",
+  "+content/shell",
+  "+content/test",
+  "+net/base",
+  "+net/test",
+  "+ui/base/l10n",
+]

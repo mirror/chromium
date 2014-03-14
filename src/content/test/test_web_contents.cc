@@ -1,0 +1,256 @@
+// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "content/test/test_web_contents.h"
+
+#include <utility>
+
+#include "content/browser/browser_url_handler_impl.h"
+#include "content/browser/frame_host/cross_process_frame_connector.h"
+#include "content/browser/frame_host/navigation_entry_impl.h"
+#include "content/browser/frame_host/navigator.h"
+#include "content/browser/renderer_host/render_view_host_impl.h"
+#include "content/browser/site_instance_impl.h"
+#include "content/common/frame_messages.h"
+#include "content/common/view_messages.h"
+#include "content/public/browser/notification_registrar.h"
+#include "content/public/browser/notification_source.h"
+#include "content/public/browser/notification_types.h"
+#include "content/public/common/page_state.h"
+#include "content/public/common/page_transition_types.h"
+#include "content/public/test/mock_render_process_host.h"
+#include "content/test/test_render_view_host.h"
+
+namespace content {
+
+TestWebContents::TestWebContents(BrowserContext* browser_context)
+    : WebContentsImpl(browser_context, NULL),
+      transition_cross_site(false),
+      delegate_view_override_(NULL),
+      expect_set_history_length_and_prune_(false),
+      expect_set_history_length_and_prune_site_instance_(NULL),
+      expect_set_history_length_and_prune_history_length_(0),
+      expect_set_history_length_and_prune_min_page_id_(-1) {
+}
+
+TestWebContents* TestWebContents::Create(BrowserContext* browser_context,
+                                         SiteInstance* instance) {
+  TestWebContents* test_web_contents = new TestWebContents(browser_context);
+  test_web_contents->Init(WebContents::CreateParams(browser_context, instance));
+  return test_web_contents;
+}
+
+TestWebContents::~TestWebContents() {
+  EXPECT_FALSE(expect_set_history_length_and_prune_);
+}
+
+RenderViewHost* TestWebContents::GetPendingRenderViewHost() const {
+  return GetRenderManager()->pending_render_view_host();
+}
+
+TestRenderViewHost* TestWebContents::pending_test_rvh() const {
+  return static_cast<TestRenderViewHost*>(GetPendingRenderViewHost());
+}
+
+void TestWebContents::TestDidNavigate(RenderViewHost* render_view_host,
+                                      int page_id,
+                                      const GURL& url,
+                                      PageTransition transition) {
+  TestDidNavigateWithReferrer(render_view_host,
+                              page_id,
+                              url,
+                              Referrer(),
+                              transition);
+}
+
+void TestWebContents::TestDidNavigateWithReferrer(
+    RenderViewHost* render_view_host,
+    int page_id,
+    const GURL& url,
+    const Referrer& referrer,
+    PageTransition transition) {
+  FrameHostMsg_DidCommitProvisionalLoad_Params params;
+
+  params.page_id = page_id;
+  params.url = url;
+  params.referrer = referrer;
+  params.transition = transition;
+  params.redirects = std::vector<GURL>();
+  params.should_update_history = false;
+  params.searchable_form_url = GURL();
+  params.searchable_form_encoding = std::string();
+  params.security_info = std::string();
+  params.gesture = NavigationGestureUser;
+  params.was_within_same_page = false;
+  params.is_post = false;
+  params.page_state = PageState::CreateFromURL(url);
+
+  RenderViewHostImpl* rvh = static_cast<RenderViewHostImpl*>(render_view_host);
+  RenderFrameHostImpl* rfh = RenderFrameHostImpl::FromID(
+      rvh->GetProcess()->GetID(), rvh->main_frame_routing_id());
+  frame_tree_.root()->navigator()->DidNavigate(rfh, params);
+}
+
+WebPreferences TestWebContents::TestGetWebkitPrefs() {
+  return GetWebkitPrefs();
+}
+
+bool TestWebContents::CreateRenderViewForRenderManager(
+    RenderViewHost* render_view_host,
+    int opener_route_id,
+    CrossProcessFrameConnector* frame_connector) {
+  // This will go to a TestRenderViewHost.
+  static_cast<RenderViewHostImpl*>(
+      render_view_host)->CreateRenderView(base::string16(),
+                                          opener_route_id,
+                                          -1);
+  return true;
+}
+
+WebContents* TestWebContents::Clone() {
+  WebContentsImpl* contents =
+      Create(GetBrowserContext(), SiteInstance::Create(GetBrowserContext()));
+  contents->GetController().CopyStateFrom(controller_);
+  return contents;
+}
+
+void TestWebContents::NavigateAndCommit(const GURL& url) {
+  GetController().LoadURL(
+      url, Referrer(), PAGE_TRANSITION_LINK, std::string());
+  GURL loaded_url(url);
+  bool reverse_on_redirect = false;
+  BrowserURLHandlerImpl::GetInstance()->RewriteURLIfNecessary(
+      &loaded_url, GetBrowserContext(), &reverse_on_redirect);
+
+  // LoadURL created a navigation entry, now simulate the RenderView sending
+  // a notification that it actually navigated.
+  CommitPendingNavigation();
+}
+
+void TestWebContents::TestSetIsLoading(bool value) {
+  SetIsLoading(GetRenderViewHost(), value, NULL);
+}
+
+void TestWebContents::CommitPendingNavigation() {
+  // If we are doing a cross-site navigation, this simulates the current RVH
+  // notifying that it has unloaded so the pending RVH is resumed and can
+  // navigate.
+  ProceedWithCrossSiteNavigation();
+  RenderViewHost* old_rvh = GetRenderViewHost();
+  TestRenderViewHost* rvh =
+      static_cast<TestRenderViewHost*>(GetPendingRenderViewHost());
+  if (!rvh)
+    rvh = static_cast<TestRenderViewHost*>(old_rvh);
+
+  const NavigationEntry* entry = GetController().GetPendingEntry();
+  DCHECK(entry);
+  int page_id = entry->GetPageID();
+  if (page_id == -1) {
+    // It's a new navigation, assign a never-seen page id to it.
+    page_id = GetMaxPageIDForSiteInstance(rvh->GetSiteInstance()) + 1;
+  }
+
+  rvh->SendNavigate(page_id, entry->GetURL());
+  // Simulate the SwapOut_ACK. This is needed when cross-site navigation happens
+  // (old_rvh != rvh).
+  if (old_rvh != rvh)
+    static_cast<RenderViewHostImpl*>(old_rvh)->OnSwappedOut(false);
+}
+
+void TestWebContents::ProceedWithCrossSiteNavigation() {
+  if (!GetPendingRenderViewHost())
+    return;
+  TestRenderViewHost* rvh = static_cast<TestRenderViewHost*>(
+      GetRenderViewHost());
+  rvh->SendBeforeUnloadACK(true);
+}
+
+RenderViewHostDelegateView* TestWebContents::GetDelegateView() {
+  if (delegate_view_override_)
+    return delegate_view_override_;
+  return WebContentsImpl::GetDelegateView();
+}
+
+void TestWebContents::SetOpener(TestWebContents* opener) {
+  // This is normally only set in the WebContents constructor, which also
+  // registers an observer for when the opener gets closed.
+  opener_ = opener;
+  AddDestructionObserver(opener_);
+}
+
+void TestWebContents::AddPendingContents(TestWebContents* contents) {
+  // This is normally only done in WebContentsImpl::CreateNewWindow.
+  pending_contents_[contents->GetRenderViewHost()->GetRoutingID()] = contents;
+  AddDestructionObserver(contents);
+}
+
+void TestWebContents::ExpectSetHistoryLengthAndPrune(
+    const SiteInstance* site_instance,
+    int history_length,
+    int32 min_page_id) {
+  expect_set_history_length_and_prune_ = true;
+  expect_set_history_length_and_prune_site_instance_ =
+      static_cast<const SiteInstanceImpl*>(site_instance);
+  expect_set_history_length_and_prune_history_length_ = history_length;
+  expect_set_history_length_and_prune_min_page_id_ = min_page_id;
+}
+
+void TestWebContents::SetHistoryLengthAndPrune(
+    const SiteInstance* site_instance, int history_length,
+    int32 min_page_id) {
+  EXPECT_TRUE(expect_set_history_length_and_prune_);
+  expect_set_history_length_and_prune_ = false;
+  EXPECT_EQ(expect_set_history_length_and_prune_site_instance_, site_instance);
+  EXPECT_EQ(expect_set_history_length_and_prune_history_length_,
+            history_length);
+  EXPECT_EQ(expect_set_history_length_and_prune_min_page_id_, min_page_id);
+}
+
+void TestWebContents::TestDidFinishLoad(const GURL& url,
+                                        bool is_main_frame) {
+  FrameHostMsg_DidFinishLoad msg(0, url, is_main_frame);
+  frame_tree_.root()->current_frame_host()->OnMessageReceived(msg);
+}
+
+void TestWebContents::TestDidFailLoadWithError(
+    const GURL& url,
+    bool is_main_frame,
+    int error_code,
+    const base::string16& error_description) {
+  FrameHostMsg_DidFailLoadWithError msg(
+      0, url, is_main_frame, error_code, error_description);
+  frame_tree_.root()->current_frame_host()->OnMessageReceived(msg);
+}
+
+void TestWebContents::CreateNewWindow(
+    int render_process_id,
+    int route_id,
+    int main_frame_route_id,
+    const ViewHostMsg_CreateWindow_Params& params,
+    SessionStorageNamespace* session_storage_namespace) {
+}
+
+void TestWebContents::CreateNewWidget(int render_process_id,
+                                      int route_id,
+                                      blink::WebPopupType popup_type) {
+}
+
+void TestWebContents::CreateNewFullscreenWidget(int render_process_id,
+                                                int route_id) {
+}
+
+void TestWebContents::ShowCreatedWindow(int route_id,
+                                        WindowOpenDisposition disposition,
+                                        const gfx::Rect& initial_pos,
+                                        bool user_gesture) {
+}
+
+void TestWebContents::ShowCreatedWidget(int route_id,
+                                        const gfx::Rect& initial_pos) {
+}
+
+void TestWebContents::ShowCreatedFullscreenWidget(int route_id) {
+}
+
+}  // namespace content
