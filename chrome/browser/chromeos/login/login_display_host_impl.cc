@@ -29,7 +29,6 @@
 #include "chrome/browser/chromeos/boot_times_loader.h"
 #include "chrome/browser/chromeos/charger_replace/charger_replacement_dialog.h"
 #include "chrome/browser/chromeos/customization_document.h"
-#include "chrome/browser/chromeos/first_run/drive_first_run_controller.h"
 #include "chrome/browser/chromeos/first_run/first_run.h"
 #include "chrome/browser/chromeos/input_method/input_method_util.h"
 #include "chrome/browser/chromeos/kiosk_mode/kiosk_mode_settings.h"
@@ -371,12 +370,6 @@ LoginDisplayHostImpl::~LoginDisplayHostImpl() {
   chrome::EndKeepAlive();
 
   default_host_ = NULL;
-  // TODO(tengs): This should be refactored. See crbug.com/314934.
-  if (UserManager::Get()->IsCurrentUserNew()) {
-    // DriveOptInController will delete itself when finished.
-    (new DriveFirstRunController(
-        ProfileManager::GetActiveUserProfile()))->EnableOfflineMode();
-  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
