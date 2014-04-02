@@ -1966,6 +1966,9 @@ void RenderWidgetHostViewMac::GotAcceleratedFrame() {
 }
 
 void RenderWidgetHostViewMac::GotSoftwareFrame() {
+  if (!render_widget_host_)
+    return;
+
   EnsureSoftwareLayer();
   SendVSyncParametersToRenderer();
 
