@@ -30,7 +30,7 @@
         {
           'action_name': 'libaddressinput_strings',
           'variables': {
-            'grit_grd_file': '<(libaddressinput_dir)/cpp/res/libaddressinput_strings.grd',
+            'grit_grd_file': '<(libaddressinput_dir)/cpp/res/messages.grd',
           },
           'includes': [
             '../../build/grit_action.gypi',
