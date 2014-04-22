@@ -4,7 +4,6 @@
 
 #include "remoting/host/gnubby_socket.h"
 
-#include "base/macros.h"
 #include "base/timer/timer.h"
 #include "net/socket/stream_listen_socket.h"
 
@@ -76,7 +75,7 @@ void GnubbySocket::SendResponse(const std::string& response_data) {
 void GnubbySocket::SendSshError() {
   DCHECK(CalledOnValidThread());
 
-  SendResponse(std::string(kSshError, arraysize(kSshError)));
+  SendResponse(kSshError);
 }
 
 bool GnubbySocket::IsSocket(net::StreamListenSocket* socket) const {
