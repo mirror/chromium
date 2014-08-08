@@ -3,5 +3,8 @@
   "interval": 5,
   "pending_tag_prefix": "refs/pending-tags",
   "pending_ref_prefix": "refs/pending",
-  "enabled_refglobs": ["refs/heads/master"]
+  "enabled_refglobs": ["refs/heads/master"],
+  "push_synth_extra": {
+    "refs/heads/master": ["refs/heads/git-svn"]
+  }
 }
