@@ -1,0 +1,36 @@
+{
+  "enabled_paths": [
+    "base",
+    "build",
+    "chrome/browser/chromeos/policy/proto",
+    "chrome/browser/policy/proto",
+    "chrome/test/data/reliability",
+    "components/feedback",
+    "components/metrics",
+    "components/policy/proto",
+    "courgette",
+    "crypto",
+    "dbus",
+    "gpu",
+    "media",
+    "mojo",
+    "net",
+    "net/tools/testserver",
+    "ppapi",
+    "third_party/hwcplus",
+    "third_party/jsoncpp",
+    "third_party/khronos",
+    "third_party/lcov",
+    "third_party/ply",
+    "third_party/pyftpdlib",
+    "third_party/tcmalloc/chromium",
+    "third_party/tlslite",
+    "tools/clang",
+    "tools/cros.DEPS",
+    "tools/perf_expectations",
+    "tools/valgrind"
+  ],
+  "enabled_refglobs": [
+    "refs/heads/master"
+  ]
+}
