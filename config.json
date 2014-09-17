@@ -19,6 +19,7 @@
     "net/tools/testserver",
     "ppapi",
     "third_party/hwcplus",
+    "third_party/jinja2",
     "third_party/jsoncpp",
     "third_party/khronos",
     "third_party/lcov",
@@ -30,8 +31,10 @@
     "third_party/zlib",
     "tools/clang",
     "tools/cros.DEPS",
+    "tools/idl_parser",
     "tools/perf_expectations",
-    "tools/valgrind"
+    "tools/valgrind",
+    "webkit/tools/test_shell/resources"
   ],
   "enabled_refglobs": [
     "refs/heads/master"
