@@ -33,8 +33,7 @@
     "tools/cros.DEPS",
     "tools/idl_parser",
     "tools/perf_expectations",
-    "tools/valgrind",
-    "webkit/tools/test_shell/resources"
+    "tools/valgrind"
   ],
   "enabled_refglobs": [
     "refs/heads/master"
