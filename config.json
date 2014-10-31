@@ -8,6 +8,7 @@
     "components/feedback",
     "components/metrics",
     "components/policy/proto",
+    "components/timers",
     "courgette",
     "crypto",
     "dbus",
