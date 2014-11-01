@@ -11,7 +11,6 @@
 #include "base/memory/weak_ptr.h"
 #include "chrome/browser/ui/sync/one_click_signin_sync_starter.h"
 #include "chrome/browser/ui/webui/signin/inline_login_handler.h"
-#include "content/public/browser/web_contents_delegate.h"
 
 class GaiaAuthFetcher;
 
@@ -19,7 +18,6 @@ class GaiaAuthFetcher;
 // CrOS migrates to the same webview approach as desktop Chrome, much of the
 // code in this class should move to its base class |InlineLoginHandler|.
 class InlineLoginHandlerImpl : public InlineLoginHandler,
-                               public content::WebContentsDelegate,
                                public content::WebContentsObserver {
  public:
   InlineLoginHandlerImpl();
@@ -42,10 +40,6 @@ class InlineLoginHandlerImpl : public InlineLoginHandler,
   // InlineLoginHandler overrides:
   virtual void SetExtraInitParams(base::DictionaryValue& params) OVERRIDE;
   virtual void CompleteLogin(const base::ListValue* args) OVERRIDE;
-
-  // Overridden from content::WebContentsDelegate.
-  virtual bool HandleContextMenu(
-      const content::ContextMenuParams& params) OVERRIDE;
 
   // Overridden from content::WebContentsObserver overrides.
   virtual void DidCommitProvisionalLoadForFrame(
