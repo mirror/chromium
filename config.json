@@ -7,6 +7,7 @@
     "chrome/test/data/reliability",
     "components/feedback",
     "components/metrics",
+    "components/policy",
     "components/policy/proto",
     "components/timers",
     "courgette",
