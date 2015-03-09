@@ -1,5 +1,6 @@
 {
   "enabled_paths": [
+    "android_webview/glue",
     "base",
     "build",
     "chrome/browser/chromeos/policy/proto",
