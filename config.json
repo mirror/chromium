@@ -3,6 +3,8 @@
     "android_webview/glue",
     "base",
     "build",
+    "build/config",
+    "build/toolchain",
     "chrome/browser/chromeos/policy/proto",
     "chrome/browser/policy/proto",
     "chrome/test/data/reliability",
@@ -36,6 +38,7 @@
     "third_party/zlib",
     "tools/clang",
     "tools/cros.DEPS",
+    "tools/gn",
     "tools/idl_parser",
     "tools/perf_expectations",
     "tools/valgrind"
