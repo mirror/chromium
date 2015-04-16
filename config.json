@@ -45,6 +45,6 @@
   ],
   "enabled_refglobs": [
     "refs/heads/master",
-    "refs/branch-heads/2\d\d\d"
+    "refs/branch-heads/2\\d\\d\\d"
   ]
 }
