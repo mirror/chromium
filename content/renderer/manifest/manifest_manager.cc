@@ -98,7 +98,12 @@ void ManifestManager::GetManifest(const GetManifestCallback& callback) {
 
 void ManifestManager::DidChangeManifest() {
   may_have_manifest_ = true;
-  manifest_dirty_ = true;
+  GURL url(render_frame()->GetWebFrame()->document().manifestURL());
+  if (manifest_.manifest_url.is_empty() ||
+      url.is_empty() ||
+      url != manifest_.manifest_url) {
+    manifest_dirty_ = true;
+  }
 }
 
 void ManifestManager::DidCommitProvisionalLoad(
@@ -108,7 +113,6 @@ void ManifestManager::DidCommitProvisionalLoad(
     return;
 
   may_have_manifest_ = false;
-  manifest_dirty_ = true;
 }
 
 void ManifestManager::FetchManifest() {

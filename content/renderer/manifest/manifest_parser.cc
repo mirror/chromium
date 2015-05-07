@@ -121,6 +121,7 @@ void ManifestParser::Parse() {
   }
   DCHECK(dictionary);
 
+  manifest_.manifest_url = manifest_url_;
   manifest_.name = ParseName(*dictionary);
   manifest_.short_name = ParseShortName(*dictionary);
   manifest_.start_url = ParseStartURL(*dictionary);

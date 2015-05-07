@@ -61,6 +61,9 @@ struct CONTENT_EXPORT Manifest {
   // Manifest is always empty.
   bool IsEmpty() const;
 
+  // MUST be a valid url.
+  GURL manifest_url;
+
   // Null if the parsing failed or the field was not present.
   base::NullableString16 name;
 

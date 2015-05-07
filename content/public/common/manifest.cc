@@ -26,7 +26,8 @@ Manifest::~Manifest() {
 }
 
 bool Manifest::IsEmpty() const {
-  return name.is_null() &&
+  return manifest_url.is_empty() &&
+         name.is_null() &&
          short_name.is_null() &&
          start_url.is_empty() &&
          display == DISPLAY_MODE_UNSPECIFIED &&
