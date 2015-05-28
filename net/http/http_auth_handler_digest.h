@@ -81,10 +81,9 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerDigest : public HttpAuthHandler {
   HttpAuth::AuthorizationResult HandleAnotherChallenge(
       HttpAuthChallengeTokenizer* challenge) override;
 
- protected:
-  bool Init(HttpAuthChallengeTokenizer* challenge,
-            const SSLInfo& ssl_info) override;
+  bool IsValid() const;
 
+ protected:
   int GenerateAuthToken(const AuthCredentials* credentials,
                         const HttpRequestInfo* request,
                         const CompletionCallback& callback,
@@ -174,6 +173,8 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerDigest : public HttpAuthHandler {
 
   int nonce_count_;
   const NonceGenerator* nonce_generator_;
+
+  static const int kScore; // Priority score: 2
 };
 
 }  // namespace net

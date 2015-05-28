@@ -25,6 +25,8 @@
 namespace net {
 
 static const char* const kDigestSchemeName = "digest";
+// static
+const int HttpAuthHandlerDigest::kScore = 2;
 
 // Digest authentication is specified in RFC 2617.
 // The expanded derivations are listed in the tables below.
@@ -101,12 +103,10 @@ int HttpAuthHandlerDigest::Factory::CreateAuthHandler(
     int digest_nonce_count,
     const NetLogWithSource& net_log,
     std::unique_ptr<HttpAuthHandler>* handler) {
-  // TODO(cbentzel): Move towards model of parsing in the factory
-  //                 method and only constructing when valid.
-  std::unique_ptr<HttpAuthHandler> tmp_handler(
-      new HttpAuthHandlerDigest(digest_nonce_count, nonce_generator_.get()));
-  if (!tmp_handler->InitFromChallenge(challenge, target, ssl_info, origin,
-                                      net_log))
+  std::unique_ptr<HttpAuthHandlerDigest> tmp_handler(new HttpAuthHandlerDigest(
+      challenge, digest_nonce_count, nonce_generator_.get(), origin, target,
+      net_log));
+  if (!tmp_handler->IsValid())
     return ERR_INVALID_RESPONSE;
   handler->swap(tmp_handler);
   return OK;
@@ -139,11 +139,6 @@ HttpAuth::AuthorizationResult HttpAuthHandlerDigest::HandleAnotherChallenge(
       HttpAuth::AUTHORIZATION_RESULT_REJECT;
 }
 
-bool HttpAuthHandlerDigest::Init(HttpAuthChallengeTokenizer* challenge,
-                                 const SSLInfo& ssl_info) {
-  return ParseChallenge(challenge);
-}
-
 int HttpAuthHandlerDigest::GenerateAuthToken(const AuthCredentials* credentials,
                                              const HttpRequestInfo* request,
                                              const CompletionCallback& callback,
@@ -163,16 +158,37 @@ int HttpAuthHandlerDigest::GenerateAuthToken(const AuthCredentials* credentials,
 }
 
 HttpAuthHandlerDigest::HttpAuthHandlerDigest(
-    int nonce_count, const NonceGenerator* nonce_generator)
-    : stale_(false),
+    HttpAuthChallengeTokenizer* challenge,
+    int nonce_count,
+    const NonceGenerator* nonce_generator,
+    const GURL& origin,
+    HttpAuth::Target target,
+    const BoundNetLog& net_log)
+    : HttpAuthHandler(HttpAuth::AUTH_SCHEME_DIGEST,
+                      std::string(),
+                      std::string(),
+                      origin,
+                      kScore,
+                      target,
+                      net_log),
+      stale_(false),
       algorithm_(ALGORITHM_UNSPECIFIED),
       qop_(QOP_UNSPECIFIED),
       nonce_count_(nonce_count),
       nonce_generator_(nonce_generator) {
   DCHECK(nonce_generator_);
+  // The ParseChallenge() call initializes the authentication parameters based
+  // on the challenge. If there's an error, clearing the required nonce_
+  // parameter signals that the handler can't proceed.
+  if (!ParseChallenge(challenge))
+    nonce_.clear();
 }
 
 HttpAuthHandlerDigest::~HttpAuthHandlerDigest() {
+}
+
+bool HttpAuthHandlerDigest::IsValid() const {
+  return !nonce_.empty();
 }
 
 // The digest challenge header looks like:
@@ -195,14 +211,6 @@ HttpAuthHandlerDigest::~HttpAuthHandlerDigest() {
 // webserver was not sending the realm with a BASIC challenge).
 bool HttpAuthHandlerDigest::ParseChallenge(
     HttpAuthChallengeTokenizer* challenge) {
-  auth_scheme_ = kDigestSchemeName;
-
-  // Initialize to defaults.
-  stale_ = false;
-  algorithm_ = ALGORITHM_UNSPECIFIED;
-  qop_ = QOP_UNSPECIFIED;
-  realm_ = original_realm_ = nonce_ = domain_ = opaque_ = std::string();
-
   // FAIL -- Couldn't match auth-scheme.
   if (!challenge->SchemeIs(kDigestSchemeName))
     return false;
@@ -266,10 +274,8 @@ bool HttpAuthHandlerDigest::ParseChallengeProperty(const std::string& name,
         break;
       }
     }
-  } else {
-    DVLOG(1) << "Skipping unrecognized digest property";
-    // TODO(eroman): perhaps we should fail instead of silently skipping?
   }
+  // Silently ignoring unrecognized parameters as required by RFC 7235.
   return true;
 }
 

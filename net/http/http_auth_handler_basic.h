@@ -35,18 +35,23 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerBasic : public HttpAuthHandler {
       HttpAuthChallengeTokenizer* challenge) override;
 
  protected:
-  bool Init(HttpAuthChallengeTokenizer* challenge,
-            const SSLInfo& ssl_info) override;
-
   int GenerateAuthToken(const AuthCredentials* credentials,
                         const HttpRequestInfo* request,
                         const CompletionCallback& callback,
                         std::string* auth_token) override;
 
  private:
+  HttpAuthHandlerBasic(const std::string& realm,
+                       const std::string& challenge,
+                       const GURL& origin,
+                       HttpAuth::Target target,
+                       const BoundNetLog& net_log);
   ~HttpAuthHandlerBasic() override {}
 
   bool ParseChallenge(HttpAuthChallengeTokenizer* challenge);
+
+  static const char kScheme[]; // Name of scheme: "basic"
+  static const int kScore; // Priority score: 1
 };
 
 }  // namespace net

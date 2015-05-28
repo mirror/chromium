@@ -17,8 +17,28 @@
 
 namespace net {
 
-HttpAuthHandlerMock::HttpAuthHandlerMock()
-    : generate_rv_(OK), weak_factory_(this) {}
+HttpAuthHandlerMock::HttpAuthHandlerMock(const std::string realm,
+                                         const std::string challenge_text,
+                                         const GURL& origin,
+                                         HttpAuth::Target target,
+                                         const BoundNetLog& net_log)
+    : HttpAuthHandler(HttpAuth::AUTH_SCHEME_MOCK,
+                      realm,
+                      challenge_text,
+                      origin,
+                      1 /* Score */,
+                      target,
+                      net_log),
+      resolve_(RESOLVE_INIT),
+      generate_async_(false),
+      generate_rv_(OK),
+      auth_token_(NULL),
+      first_round_(true),
+      connection_based_(false),
+      allows_default_credentials_(false),
+      allows_explicit_credentials_(true),
+      weak_factory_(this) {
+}
 
 HttpAuthHandlerMock::~HttpAuthHandlerMock() {
 }

@@ -39,7 +39,7 @@ const char* const kBasicSchemeName = "basic";
 // well, see http://crbug.com/25790.
 bool ParseRealm(const HttpAuthChallengeTokenizer& tokenizer,
                 std::string* realm) {
-  CHECK(realm);
+  DCHECK(realm);
   realm->clear();
   HttpUtil::NameValuePairsIterator parameters = tokenizer.param_pairs();
   while (parameters.GetNext()) {
@@ -55,23 +55,28 @@ bool ParseRealm(const HttpAuthChallengeTokenizer& tokenizer,
 
 }  // namespace
 
-bool HttpAuthHandlerBasic::Init(HttpAuthChallengeTokenizer* challenge, const SSLInfo& ssl_info) {
-  auth_scheme_ = kBasicSchemeName;
-  return ParseChallenge(challenge);
+// static
+const char HttpAuthHandlerBasic::kScheme[] = "basic";
+const int HttpAuthHandlerBasic::kScore = 1;
+
+HttpAuthHandlerBasic::HttpAuthHandlerBasic(const std::string& realm,
+                                           const std::string& challenge,
+                                           const GURL& origin,
+                                           HttpAuth::Target target,
+                                           const BoundNetLog& net_log)
+    : HttpAuthHandler(HttpAuth::AUTH_SCHEME_BASIC,
+                      realm,
+                      challenge,
+                      origin,
+                      kScore,
+                      target,
+                      net_log) {
 }
 
-bool HttpAuthHandlerBasic::ParseChallenge(
-    HttpAuthChallengeTokenizer* challenge) {
-  // Verify the challenge's auth-scheme.
-  if (!challenge->SchemeIs(kBasicSchemeName))
-    return false;
-
-  std::string realm;
-  if (!ParseRealm(*challenge, &realm))
-    return false;
-
-  realm_ = realm;
-  return true;
+bool HttpAuthHandlerBasic::Init(HttpAuthChallengeTokenizer* challenge) {
+>>>>>>> wip
+  auth_scheme_ = kBasicSchemeName;
+  return ParseChallenge(challenge);
 }
 
 HttpAuth::AuthorizationResult HttpAuthHandlerBasic::HandleAnotherChallenge(
@@ -116,13 +121,15 @@ int HttpAuthHandlerBasic::Factory::CreateAuthHandler(
     int digest_nonce_count,
     const NetLogWithSource& net_log,
     std::unique_ptr<HttpAuthHandler>* handler) {
-  // TODO(cbentzel): Move towards model of parsing in the factory
-  //                 method and only constructing when valid.
-  std::unique_ptr<HttpAuthHandler> tmp_handler(new HttpAuthHandlerBasic());
-  if (!tmp_handler->InitFromChallenge(challenge, target, ssl_info, origin,
-                                      net_log))
+  if (!LowerCaseEqualsASCII(challenge->scheme(), kScheme))
     return ERR_INVALID_RESPONSE;
-  handler->swap(tmp_handler);
+
+  std::string realm;
+  if (!ParseRealm(*challenge, &realm))
+    return ERR_INVALID_RESPONSE;
+
+  handler->reset(new HttpAuthHandlerBasic(realm, challenge->challenge_text(), origin,
+                                          target, net_log));
   return OK;
 }
 

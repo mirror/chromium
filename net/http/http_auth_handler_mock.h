@@ -60,7 +60,11 @@ class HttpAuthHandlerMock : public HttpAuthHandler {
     bool do_init_from_challenge_;
   };
 
-  HttpAuthHandlerMock();
+  HttpAuthHandlerMock(const std::string realm,
+                      const std::string challenge_text,
+                      const GURL& origin,
+                      HttpAuth::Target target,
+                      const BoundNetLog& net_log);
 
   ~HttpAuthHandlerMock() override;
 
@@ -102,9 +106,6 @@ class HttpAuthHandlerMock : public HttpAuthHandler {
   bool AllowsExplicitCredentials() override;
 
  protected:
-  bool Init(HttpAuthChallengeTokenizer* challenge,
-            const SSLInfo& ssl_info) override;
-
   int GenerateAuthToken(const AuthCredentials* credentials,
                         const HttpRequestInfo* request,
                         const CompletionCallback& callback,

@@ -23,19 +23,12 @@ class SSLInfo;
 // HttpAuthHandler objects are typically created by an HttpAuthHandlerFactory.
 class NET_EXPORT_PRIVATE HttpAuthHandler {
  public:
-  HttpAuthHandler();
+  HttpAuthHandler(HttpAuth::Scheme scheme,
+                  const std::string& realm,
+                  const std::string& initial_challenge,
+                  const GURL& origin,
+                  HttpAuth::Target target);
   virtual ~HttpAuthHandler();
-
-  // Initializes the handler using a challenge issued by a server.
-  // |challenge| must be non-NULL and have already tokenized the
-  // authentication scheme, but none of the tokens occurring after the
-  // authentication scheme. |target| and |origin| are both stored
-  // for later use, and are not part of the initial challenge.
-  bool InitFromChallenge(HttpAuthChallengeTokenizer* challenge,
-                         HttpAuth::Target target,
-                         const SSLInfo& ssl_info,
-                         const GURL& origin,
-                         const NetLogWithSource& net_log);
 
   // Determines how the previous authorization attempt was received.
   //
@@ -119,18 +112,12 @@ class NET_EXPORT_PRIVATE HttpAuthHandler {
   virtual bool AllowsExplicitCredentials();
 
  protected:
-  // Initializes the handler using a challenge issued by a server.
-  // |challenge| must be non-NULL and have already tokenized the
-  // authentication scheme, but none of the tokens occurring after the
-  // authentication scheme.
-  //
-  // If the request was sent over an encrypted connection, |ssl_info| is valid
-  // and describes the connection.
-  //
-  // Implementations are expected to initialize the following members:
-  // scheme_, realm_
-  virtual bool Init(HttpAuthChallengeTokenizer* challenge,
-                    const SSLInfo& ssl_info) = 0;
+  // Initializes the handler using a challenge issued by a server.  |challenge|
+  // must be non-NULL and have already tokenized the authentication scheme, but
+  // none of the tokens occurring after the authentication scheme.
+  // Implementations are expected to initialize the following members: scheme_,
+  // realm_
+  virtual bool Init(HttpAuthChallengeTokenizer* challenge) = 0;
 
   // |GenerateAuthTokenImpl()} is the auth-scheme specific implementation of
   // generating the next auth token. Callers should use |GenerateAuthToken()|
