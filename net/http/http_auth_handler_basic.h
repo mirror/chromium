@@ -38,10 +38,10 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerBasic : public HttpAuthHandler {
   bool Init(HttpAuthChallengeTokenizer* challenge,
             const SSLInfo& ssl_info) override;
 
-  int GenerateAuthTokenImpl(const AuthCredentials* credentials,
-                            const HttpRequestInfo* request,
-                            const CompletionCallback& callback,
-                            std::string* auth_token) override;
+  int GenerateAuthToken(const AuthCredentials* credentials,
+                        const HttpRequestInfo* request,
+                        const CompletionCallback& callback,
+                        std::string* auth_token) override;
 
  private:
   ~HttpAuthHandlerBasic() override {}

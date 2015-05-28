@@ -39,42 +39,6 @@ bool HttpAuthHandler::InitFromChallenge(HttpAuthChallengeTokenizer* challenge,
   return ok;
 }
 
-namespace {
-
-NetLogEventType EventTypeFromAuthTarget(HttpAuth::Target target) {
-  switch (target) {
-    case HttpAuth::AUTH_PROXY:
-      return NetLogEventType::AUTH_PROXY;
-    case HttpAuth::AUTH_SERVER:
-      return NetLogEventType::AUTH_SERVER;
-    default:
-      NOTREACHED();
-      return NetLogEventType::CANCELLED;
-  }
-}
-
-}  // namespace
-
-int HttpAuthHandler::GenerateAuthToken(
-    const AuthCredentials* credentials, const HttpRequestInfo* request,
-    const CompletionCallback& callback, std::string* auth_token) {
-  DCHECK(!callback.is_null());
-  DCHECK(request);
-  DCHECK(credentials != NULL || AllowsDefaultCredentials());
-  DCHECK(auth_token != NULL);
-  DCHECK(callback_.is_null());
-  callback_ = callback;
-  net_log_.BeginEvent(EventTypeFromAuthTarget(target_));
-  int rv = GenerateAuthTokenImpl(
-      credentials, request,
-      base::Bind(&HttpAuthHandler::OnGenerateAuthTokenComplete,
-                 base::Unretained(this)),
-      auth_token);
-  if (rv != ERR_IO_PENDING)
-    FinishGenerateAuthToken();
-  return rv;
-}
-
 bool HttpAuthHandler::NeedsIdentity() {
   return true;
 }
@@ -85,19 +49,6 @@ bool HttpAuthHandler::AllowsDefaultCredentials() {
 
 bool HttpAuthHandler::AllowsExplicitCredentials() {
   return true;
-}
-
-void HttpAuthHandler::OnGenerateAuthTokenComplete(int rv) {
-  CompletionCallback callback = callback_;
-  FinishGenerateAuthToken();
-  DCHECK(!callback.is_null());
-  callback.Run(rv);
-}
-
-void HttpAuthHandler::FinishGenerateAuthToken() {
-  // TOOD(cbentzel): Should this be done in OK case only?
-  net_log_.EndEvent(EventTypeFromAuthTarget(target_));
-  callback_.Reset();
 }
 
 }  // namespace net

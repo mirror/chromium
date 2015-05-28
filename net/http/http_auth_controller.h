@@ -116,7 +116,7 @@ class NET_EXPORT_PRIVATE HttpAuthController
   // otherwise.
   bool DisableOnAuthHandlerResult(int result);
 
-  void OnIOComplete(int result);
+  void OnGenerateAuthTokenComplete(const BoundNetLog& net_log, int result);
 
   // Indicates if this handler is for Proxy auth or Server auth.
   HttpAuth::Target target_;

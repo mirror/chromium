@@ -73,10 +73,10 @@ class NET_EXPORT_PRIVATE HttpAuthHandler {
   //
   // All other return codes indicate that there was a problem generating a
   // token, and the value of |*auth_token| is unspecified.
-  int GenerateAuthToken(const AuthCredentials* credentials,
-                        const HttpRequestInfo* request,
-                        const CompletionCallback& callback,
-                        std::string* auth_token);
+  virtual int GenerateAuthToken(const AuthCredentials* credentials,
+                                const HttpRequestInfo* request,
+                                const CompletionCallback& callback,
+                                std::string* auth_token) = 0;
 
   // The authentication scheme as an enumerated value.
   const std::string& auth_scheme() const { return auth_scheme_; }
@@ -132,8 +132,8 @@ class NET_EXPORT_PRIVATE HttpAuthHandler {
   virtual bool Init(HttpAuthChallengeTokenizer* challenge,
                     const SSLInfo& ssl_info) = 0;
 
-  // |GenerateAuthTokenImpl()} is the auth-scheme specific implementation
-  // of generating the next auth token. Callers should use |GenerateAuthToken()|
+  // |GenerateAuthTokenImpl()} is the auth-scheme specific implementation of
+  // generating the next auth token. Callers should use |GenerateAuthToken()|
   // which will in turn call |GenerateAuthTokenImpl()|
   virtual int GenerateAuthTokenImpl(const AuthCredentials* credentials,
                                     const HttpRequestInfo* request,
@@ -158,12 +158,6 @@ class NET_EXPORT_PRIVATE HttpAuthHandler {
   HttpAuth::Target target_;
 
   NetLogWithSource net_log_;
-
- private:
-  void OnGenerateAuthTokenComplete(int rv);
-  void FinishGenerateAuthToken();
-
-  CompletionCallback callback_;
 };
 
 }  // namespace net

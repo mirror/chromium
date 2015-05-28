@@ -189,16 +189,20 @@ int HttpAuthController::MaybeGenerateAuthToken(
     credentials = &identity_.credentials;
   DCHECK(auth_token_.empty());
   DCHECK(callback_.is_null());
+  net_log.BeginEvent(target_ == HttpAuth::AUTH_PROXY
+                         ? NetLog::TYPE_AUTH_PROXY
+                         : NetLog::TYPE_AUTH_SERVER);
   int rv = handler_->GenerateAuthToken(
       credentials, request,
-      base::Bind(&HttpAuthController::OnIOComplete, base::Unretained(this)),
+      base::Bind(&HttpAuthController::OnGenerateAuthTokenComplete,
+                 base::Unretained(this), net_log),
       &auth_token_);
   if (DisableOnAuthHandlerResult(rv))
     rv = OK;
   if (rv == ERR_IO_PENDING)
     callback_ = callback;
   else
-    OnIOComplete(rv);
+    OnGenerateAuthTokenComplete(net_log, rv);
   return rv;
 }
 
@@ -536,8 +540,13 @@ bool HttpAuthController::DisableOnAuthHandlerResult(int result) {
   }
 }
 
-void HttpAuthController::OnIOComplete(int result) {
+void HttpAuthController::OnGenerateAuthTokenComplete(const BoundNetLog& net_log,
+                                                     int result) {
   DCHECK(CalledOnValidThread());
+  net_log.EndEventWithNetErrorCode(target_ == HttpAuth::AUTH_PROXY
+                                       ? NetLog::TYPE_AUTH_PROXY
+                                       : NetLog::TYPE_AUTH_SERVER,
+                                   result);
   if (DisableOnAuthHandlerResult(result))
     result = OK;
   if (!callback_.is_null()) {

@@ -100,7 +100,7 @@ bool HttpAuthHandlerMock::Init(HttpAuthChallengeTokenizer* challenge,
   return true;
 }
 
-int HttpAuthHandlerMock::GenerateAuthTokenImpl(
+int HttpAuthHandlerMock::GenerateAuthToken(
     const AuthCredentials* credentials,
     const HttpRequestInfo* request,
     const CompletionCallback& callback,

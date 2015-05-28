@@ -144,9 +144,10 @@ bool HttpAuthHandlerDigest::Init(HttpAuthChallengeTokenizer* challenge,
   return ParseChallenge(challenge);
 }
 
-int HttpAuthHandlerDigest::GenerateAuthTokenImpl(
-    const AuthCredentials* credentials, const HttpRequestInfo* request,
-    const CompletionCallback& callback, std::string* auth_token) {
+int HttpAuthHandlerDigest::GenerateAuthToken(const AuthCredentials* credentials,
+                                             const HttpRequestInfo* request,
+                                             const CompletionCallback& callback,
+                                             std::string* auth_token) {
   // Generate a random client nonce.
   std::string cnonce = nonce_generator_->GenerateNonce();
 
