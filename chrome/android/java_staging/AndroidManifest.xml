@@ -373,6 +373,18 @@ by a child template that "extends" this file.
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <!-- PhysicalWeb service. -->
+        <service android:name="org.chromium.chrome.browser.physicalweb.BeaconDiscoveryService"
+            android:exported="false"
+            android:enabled="true">
+        </service>
+        <receiver
+            android:name="org.chromium.chrome.browser.physicalweb.AutostartBeaconDiscoveryServiceReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
         <!-- Sync adapter for browser invalidation. -->
         <service android:name="org.chromium.chrome.browser.invalidation.ChromeBrowserSyncAdapterService"
             android:exported="false">
