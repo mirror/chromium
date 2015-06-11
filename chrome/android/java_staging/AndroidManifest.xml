@@ -38,6 +38,10 @@ by a child template that "extends" this file.
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
 
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
     <permission android:name="{{ manifest_package }}.permission.CHILD_SERVICE" android:protectionLevel="signature" />
     <permission android:name="{{ manifest_package }}.permission.READ_WRITE_BOOKMARK_FOLDERS" android:protectionLevel="signatureOrSystem" />
     <permission android:name="{{ manifest_package }}.TOS_ACKED" android:protectionLevel="signatureOrSystem" />
@@ -372,6 +376,17 @@ by a child template that "extends" this file.
             <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <!-- PhysicalWeb service. -->
+        <service android:name="org.chromium.chrome.browser.physicalweb.BeaconDiscoveryService"
+            android:exported="false"
+            android:enabled="true">
+        </service>
+        <receiver android:name="org.chromium.chrome.browser.physicalweb.AutostartBeaconDiscoveryServiceReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <!-- Sync adapter for browser invalidation. -->
         <service android:name="org.chromium.chrome.browser.invalidation.ChromeBrowserSyncAdapterService"

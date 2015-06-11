@@ -6,10 +6,13 @@ package org.chromium.chrome.browser;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
+import android.util.Log;
 
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import org.chromium.chrome.browser.infobar.MessageInfoBar;
+import org.chromium.chrome.browser.physicalweb.BeaconDiscoveryService;
 import org.chromium.ui.base.ActivityWindowAndroid;
 
 /**
@@ -17,6 +20,8 @@ import org.chromium.ui.base.ActivityWindowAndroid;
  * and show error messages.
  */
 public class ChromeWindow extends ActivityWindowAndroid {
+    private static final String TAG = "ChromeWindow";
+    
     /**
      * Creates Chrome specific ActivityWindowAndroid.
      * @param activity The activity that owns the ChromeWindow.
@@ -51,5 +56,13 @@ public class ChromeWindow extends ActivityWindowAndroid {
         } else {
             super.showCallbackNonExistentError(error);
         }
+    }
+
+    @Override
+    public void onActivityStateChange(Activity activity, int newState) {
+        super.onActivityStateChange(activity, newState);
+        Intent intent = new Intent(activity, BeaconDiscoveryService.class);
+        activity.startService(intent);
+        Log.e(TAG, "HERE WE ARE");
     }
 }

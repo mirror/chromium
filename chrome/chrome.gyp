@@ -607,6 +607,8 @@
             '../third_party/android_tools/android_tools.gyp:android_support_v7_mediarouter_javalib',
             '../third_party/android_tools/android_tools.gyp:android_support_v13_javalib',
             '../third_party/android_tools/android_tools.gyp:google_play_services_javalib',
+            '../third_party/volley/volley.gyp:volley_jar',
+            '../third_party/uribeacon/uribeacon.gyp:uribeacon_jar',
             '../ui/android/ui_android.gyp:ui_java',
           ],
           'variables': {

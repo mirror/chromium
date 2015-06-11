@@ -37,7 +37,7 @@ public class AboutChromePreferences extends PreferenceFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle(R.string.prefs_about_chrome);
+        getActivity().setTitle(R.string.prefs_about_chrome + "from java file");
         addPreferencesFromResource(R.xml.about_chrome_preferences);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
