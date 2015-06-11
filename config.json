@@ -6,8 +6,5 @@
   "enabled_refglobs": [
     "refs/heads/master",
     "refs/branch-heads/*"
-  ],
-  "push_synth_extra": {
-    "refs/heads/master": ["refs/heads/git-svn"]
-  }
+  ]
 }
