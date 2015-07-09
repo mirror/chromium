@@ -239,6 +239,7 @@ SECURITY_STATUS SSPILibraryDefault::FreeContextBuffer(PVOID pvContextBuffer) {
   return ::FreeContextBuffer(pvContextBuffer);
 }
 
+// TODO(asanka): Get rid of |scheme| parameter.
 HttpAuthSSPI::HttpAuthSSPI(SSPILibrary* library,
                            const std::string& scheme,
                            const SEC_WCHAR* security_package,
@@ -280,14 +281,6 @@ void HttpAuthSSPI::ResetSecurityContext() {
   }
 }
 
-HttpAuth::AuthorizationResult HttpAuthSSPI::ParseChallenge(
-    HttpAuthChallengeTokenizer* tok) {
-  if (!SecIsValidHandle(&ctxt_)) {
-    return net::ParseFirstRoundChallenge(scheme_, tok);
-  }
-  std::string encoded_auth_token;
-  return net::ParseLaterRoundChallenge(scheme_, tok, &encoded_auth_token,
-                                       &decoded_server_auth_token_);
 }
 
 int HttpAuthSSPI::GenerateAuthToken(const AuthCredentials* credentials,

@@ -118,9 +118,6 @@ class NET_EXPORT_PRIVATE HttpAuthSSPI {
 
   bool AllowsExplicitCredentials() const;
 
-  HttpAuth::AuthorizationResult ParseChallenge(
-      HttpAuthChallengeTokenizer* tok);
-
   // Generates an authentication token.
   //
   // The return value is an error code. The authentication token will be
@@ -154,6 +151,10 @@ class NET_EXPORT_PRIVATE HttpAuthSSPI {
   // to act as the user, such as an IIS server retrieving data from a
   // Kerberized MSSQL server.
   void Delegate();
+
+  void set_decoded_server_auth_token(const std::string& new_token) {
+    decoded_server_auth_token_ = new_token;
+  }
 
  private:
   int OnFirstRound(const AuthCredentials* credentials);

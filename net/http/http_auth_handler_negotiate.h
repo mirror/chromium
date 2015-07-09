@@ -91,6 +91,7 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerNegotiate : public HttpAuthHandler {
       HostResolver* host_resolver);
 
   ~HttpAuthHandlerNegotiate() override;
+  bool Init(const HttpAuthChallengeTokenizer* challenge);
 
   // These are public for unit tests
   std::string CreateSPN(const AddressList& address_list, const GURL& orign);
@@ -104,13 +105,10 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerNegotiate : public HttpAuthHandler {
   bool AllowsExplicitCredentials() override;
 
  protected:
-  bool Init(HttpAuthChallengeTokenizer* challenge,
-            const SSLInfo& ssl_info) override;
-
-  int GenerateAuthTokenImpl(const AuthCredentials* credentials,
-                            const HttpRequestInfo* request,
-                            const CompletionCallback& callback,
-                            std::string* auth_token) override;
+  int GenerateAuthToken(const AuthCredentials* credentials,
+                        const HttpRequestInfo* request,
+                        const CompletionCallback& callback,
+                        std::string* auth_token) override;
 
  private:
   enum State {

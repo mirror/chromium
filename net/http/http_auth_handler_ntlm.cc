@@ -24,10 +24,12 @@ HttpAuth::AuthorizationResult HttpAuthHandlerNTLM::HandleAnotherChallenge(
   return ParseChallenge(challenge, false);
 }
 
-bool HttpAuthHandlerNTLM::Init(HttpAuthChallengeTokenizer* tok,
-                               const SSLInfo& ssl_info) {
-
+// TODO(asanka): Get rid of this, and fold it into the constructor.
+bool HttpAuthHandlerNTLM::Init(HttpAuthChallengeTokenizer* tok) {
   auth_scheme_ = "ntlm";
+  // TODO(asanka): ParseChallenge should be a no-op for the constructor. It
+  // should only be checking whether the scheme is correct and that there is no
+  // incoming token. The rest of the state should be set already.
   if (ssl_info.is_valid())
     x509_util::GetTLSServerEndPointChannelBinding(*ssl_info.cert,
                                                   &channel_bindings_);
@@ -35,9 +37,12 @@ bool HttpAuthHandlerNTLM::Init(HttpAuthChallengeTokenizer* tok,
   return ParseChallenge(tok, true) == HttpAuth::AUTHORIZATION_RESULT_ACCEPT;
 }
 
-int HttpAuthHandlerNTLM::GenerateAuthTokenImpl(
-    const AuthCredentials* credentials, const HttpRequestInfo* request,
-    const CompletionCallback& callback, std::string* auth_token) {
+// TODO(asanka): Break this up into auth_handler_ntlm_portable and
+// auth_handler_ntlm_win.
+int HttpAuthHandlerNTLM::GenerateAuthToken(const AuthCredentials* credentials,
+                                           const HttpRequestInfo* request,
+                                           const CompletionCallback& callback,
+                                           std::string* auth_token) {
 #if defined(NTLM_SSPI)
   return auth_sspi_.GenerateAuthToken(credentials, CreateSPN(origin_),
                                       channel_bindings_, auth_token, callback);

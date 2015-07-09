@@ -66,9 +66,14 @@ int HttpAuthHandlerNegotiate::Factory::CreateAuthHandler(
     int digest_nonce_count,
     const NetLogWithSource& net_log,
     std::unique_ptr<HttpAuthHandler>* handler) {
-#if defined(OS_WIN)
+  if (!LowerCaseEqualsASCII(challenge->scheme(), kScheme))
+    return ERR_INVALID_RESPONSE;
+  if (!challenge->base64_param().empty())
+    return ERR_INVALID_RESPONSE;
   if (is_unsupported_ || reason == CREATE_PREEMPTIVE)
     return ERR_UNSUPPORTED_AUTH_SCHEME;
+
+#if defined(OS_WIN)
   if (max_token_length_ == 0) {
     int rv = DetermineMaxTokenLength(auth_library_.get(), NEGOSSP_NAME,
                                      &max_token_length_);
@@ -92,8 +97,6 @@ int HttpAuthHandlerNegotiate::Factory::CreateAuthHandler(
   std::unique_ptr<HttpAuthHandler> tmp_handler(
       new HttpAuthHandlerNegotiate(http_auth_preferences(), resolver_));
 #elif defined(OS_POSIX)
-  if (is_unsupported_)
-    return ERR_UNSUPPORTED_AUTH_SCHEME;
   if (!auth_library_->Init()) {
     is_unsupported_ = true;
     return ERR_UNSUPPORTED_AUTH_SCHEME;
@@ -103,8 +106,7 @@ int HttpAuthHandlerNegotiate::Factory::CreateAuthHandler(
   std::unique_ptr<HttpAuthHandler> tmp_handler(new HttpAuthHandlerNegotiate(
       auth_library_.get(), http_auth_preferences(), resolver_));
 #endif
-  if (!tmp_handler->InitFromChallenge(challenge, target, ssl_info, origin,
-                                      net_log))
+  if (!tmp_handler->Init())
     return ERR_INVALID_RESPONSE;
   handler->swap(tmp_handler);
   return OK;
@@ -122,9 +124,9 @@ HttpAuthHandlerNegotiate::HttpAuthHandlerNegotiate(
 #if defined(OS_ANDROID)
     : auth_system_(prefs),
 #elif defined(OS_WIN)
-    : auth_system_(auth_library, "Negotiate", NEGOSSP_NAME, max_token_length),
+      auth_system_(auth_library, kScheme, NEGOSSP_NAME, max_token_length),
 #elif defined(OS_POSIX)
-    : auth_system_(auth_library, "Negotiate", CHROME_GSS_SPNEGO_MECH_OID_DESC),
+      auth_system_(auth_library, kScheme, CHROME_GSS_SPNEGO_MECH_OID_DESC),
 #endif
       resolver_(resolver),
       already_called_(false),
@@ -189,7 +191,30 @@ std::string HttpAuthHandlerNegotiate::CreateSPN(const AddressList& address_list,
 
 HttpAuth::AuthorizationResult HttpAuthHandlerNegotiate::HandleAnotherChallenge(
     HttpAuthChallengeTokenizer* challenge) {
-  return auth_system_.ParseChallenge(challenge);
+  if (!LowerCaseEqualsASCII(challenge->scheme(), kScheme))
+    return HttpAuth::AUTHORIZATION_RESULT_INVALID;
+
+  std::string encoded_auth_token = challenge->base64_param();
+
+  if (encoded_auth_token.empty()) {
+    // If a context has already been established, an empty Negotiate challenge
+    // should be treated as a rejection of the current attempt.
+    if (auth_system_.HandshakeStarted())
+      return HttpAuth::AUTHORIZATION_RESULT_REJECT;
+    return HttpAuth::AUTHORIZATION_RESULT_ACCEPT;
+  } else {
+    // If a context has not already been established, additional tokens should
+    // not be present in the auth challenge.
+    if (!auth_system_.HandshakeStarted())
+      return HttpAuth::AUTHORIZATION_RESULT_INVALID;
+  }
+
+  std::string decoded_auth_token;
+  bool base64_rv = base::Base64Decode(encoded_auth_token, &decoded_auth_token);
+  if (!base64_rv)
+    return HttpAuth::AUTHORIZATION_RESULT_INVALID;
+  auth_system_.set_decoded_server_auth_token(decoded_auth_token);
+  return HttpAuth::AUTHORIZATION_RESULT_ACCEPT;
 }
 
 // Require identity on first pass instead of second.
@@ -209,10 +234,7 @@ bool HttpAuthHandlerNegotiate::AllowsExplicitCredentials() {
   return auth_system_.AllowsExplicitCredentials();
 }
 
-// The Negotiate challenge header looks like:
-//   WWW-Authenticate: NEGOTIATE auth-data
-bool HttpAuthHandlerNegotiate::Init(HttpAuthChallengeTokenizer* challenge,
-                                    const SSLInfo& ssl_info) {
+bool HttpAuthHandlerNegotiate::Init() {
 #if defined(OS_POSIX)
   if (!auth_system_.Init()) {
     VLOG(1) << "can't initialize GSSAPI library";
@@ -245,8 +267,10 @@ bool HttpAuthHandlerNegotiate::Init(HttpAuthChallengeTokenizer* challenge,
 }
 
 int HttpAuthHandlerNegotiate::GenerateAuthTokenImpl(
-    const AuthCredentials* credentials, const HttpRequestInfo* request,
-    const CompletionCallback& callback, std::string* auth_token) {
+    const AuthCredentials* credentials,
+    const HttpRequestInfo* request,
+    const CompletionCallback& callback,
+    std::string* auth_token) {
   DCHECK(callback_.is_null());
   DCHECK(auth_token_ == NULL);
   auth_token_ = auth_token;

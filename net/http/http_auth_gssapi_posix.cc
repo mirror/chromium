@@ -688,14 +688,6 @@ void HttpAuthGSSAPI::Delegate() {
   can_delegate_ = true;
 }
 
-HttpAuth::AuthorizationResult HttpAuthGSSAPI::ParseChallenge(
-    HttpAuthChallengeTokenizer* tok) {
-  if (scoped_sec_context_.get() == GSS_C_NO_CONTEXT) {
-    return net::ParseFirstRoundChallenge(scheme_, tok);
-  }
-  std::string encoded_auth_token;
-  return net::ParseLaterRoundChallenge(scheme_, tok, &encoded_auth_token,
-                                       &decoded_server_auth_token_);
 }
 
 int HttpAuthGSSAPI::GenerateAuthToken(const AuthCredentials* credentials,

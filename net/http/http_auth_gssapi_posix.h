@@ -244,9 +244,6 @@ class NET_EXPORT_PRIVATE HttpAuthGSSAPI {
 
   bool AllowsExplicitCredentials() const;
 
-  HttpAuth::AuthorizationResult ParseChallenge(
-      HttpAuthChallengeTokenizer* tok);
-
   // Generates an authentication token.
   //
   // The return value is an error code. The authentication token will be
@@ -280,6 +277,12 @@ class NET_EXPORT_PRIVATE HttpAuthGSSAPI {
   // to act as the user, such as an IIS server retrieving data from a
   // Kerberized MSSQL server.
   void Delegate();
+
+  bool HandshakeStarted() const;
+
+  void set_decoded_server_auth_token(const std::string& new_token) {
+    decoded_server_auth_token_ = new_token;
+  }
 
  private:
   int GetNextSecurityToken(const std::string& spn,

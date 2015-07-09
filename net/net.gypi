@@ -690,6 +690,8 @@
       'http/http_auth_multi_round_parse.h',
       'http/http_auth_preferences.cc',
       'http/http_auth_preferences.h',
+      'http/http_token_based_auth_handler.h',
+      'http/http_token_based_auth_handler.cc',
       'http/http_auth_sspi_win.cc',
       'http/http_auth_sspi_win.h',
       'http/http_basic_state.cc',
