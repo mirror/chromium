@@ -284,6 +284,31 @@ TEST(BPFDSL, ArgSizeTest) {
   emulator.ExpectErrno(EPERM, FakeSyscall(__NR_uname, kDeadBeefAddr));
 }
 
+class NegativeConstantsPolicy : public Policy {
+ public:
+  NegativeConstantsPolicy() {}
+  ~NegativeConstantsPolicy() override {}
+  ResultExpr EvaluateSyscall(int sysno) const override {
+    if (sysno == __NR_fcntl) {
+      const Arg<int> fd(0);
+      return If(fd == -314, Error(EPERM)).Else(Allow());
+    }
+    return Allow();
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(NegativeConstantsPolicy);
+};
+
+TEST(BPFDSL, NegativeConstantsTest) {
+  NegativeConstantsPolicy policy;
+  PolicyEmulator emulator(&policy);
+
+  emulator.ExpectAllow(FakeSyscall(__NR_fcntl, -5, F_DUPFD));
+  emulator.ExpectAllow(FakeSyscall(__NR_fcntl, 20, F_DUPFD));
+  emulator.ExpectErrno(EPERM, FakeSyscall(__NR_fcntl, -314, F_DUPFD));
+}
+
 #if 0
 // TODO(mdempsky): This is really an integration test.
 
