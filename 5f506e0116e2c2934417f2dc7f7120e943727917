@@ -1,0 +1,7 @@
+Code-Review+2: Sergiy Byelozyorov <sergiyb@chromium.org>
+Verified+1: Nodir Turakulov <nodir@chromium.org>
+Submitted-by: Nodir Turakulov <nodir@chromium.org>
+Submitted-at: Mon, 27 Jul 2015 23:57:25 +0000
+Reviewed-on: https://chromium-review.googlesource.com/288382
+Project: chromium/src
+Branch: refs/heads/infra/config
