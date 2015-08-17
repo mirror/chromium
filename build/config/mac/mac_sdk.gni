@@ -6,7 +6,7 @@ import("//build/config/chrome_build.gni")
 
 declare_args() {
   # Minimum supported version of the Mac SDK.
-  mac_sdk_min = "10.10"
+  mac_sdk_min = "10.6"
 
   # Minimum supported version of OSX.
   mac_deployment_target = "10.6"
