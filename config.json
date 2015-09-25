@@ -26,6 +26,7 @@
     "net/tools/testserver",
     "ppapi",
     "sandbox",
+    "third_party",
     "third_party/binutils",
     "third_party/hwcplus",
     "third_party/jinja2",
