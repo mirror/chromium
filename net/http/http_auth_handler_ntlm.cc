@@ -20,11 +20,11 @@
 namespace net {
 
 HttpAuth::AuthorizationResult HttpAuthHandlerNTLM::HandleAnotherChallenge(
-    HttpAuthChallengeTokenizer* challenge) {
+    const HttpAuthChallengeTokenizer& challenge) {
   return ParseChallenge(challenge, false);
 }
 
-bool HttpAuthHandlerNTLM::Init(HttpAuthChallengeTokenizer* tok,
+int HttpAuthHandlerNTLM::Init(const HttpAuthChallengeTokenizer& tok,
                                const SSLInfo& ssl_info) {
 
   auth_scheme_ = "ntlm";
@@ -32,12 +32,16 @@ bool HttpAuthHandlerNTLM::Init(HttpAuthChallengeTokenizer* tok,
     x509_util::GetTLSServerEndPointChannelBinding(*ssl_info.cert,
                                                   &channel_bindings_);
 
-  return ParseChallenge(tok, true) == HttpAuth::AUTHORIZATION_RESULT_ACCEPT;
+  return ParseChallenge(tok, true) == HttpAuth::AUTHORIZATION_RESULT_ACCEPT
+             ? OK
+             : ERR_INVALID_RESPONSE;
 }
 
 int HttpAuthHandlerNTLM::GenerateAuthTokenImpl(
-    const AuthCredentials* credentials, const HttpRequestInfo* request,
-    const CompletionCallback& callback, std::string* auth_token) {
+    const AuthCredentials* credentials,
+    const HttpRequestInfo& request,
+    const CompletionCallback& callback,
+    std::string* auth_token) {
 #if defined(NTLM_SSPI)
   return auth_sspi_.GenerateAuthToken(credentials, CreateSPN(origin_),
                                       channel_bindings_, auth_token, callback);
@@ -105,7 +109,8 @@ int HttpAuthHandlerNTLM::GenerateAuthTokenImpl(
 // The NTLM challenge header looks like:
 //   WWW-Authenticate: NTLM auth-data
 HttpAuth::AuthorizationResult HttpAuthHandlerNTLM::ParseChallenge(
-    HttpAuthChallengeTokenizer* tok, bool initial_challenge) {
+    const HttpAuthChallengeTokenizer& tok,
+    bool initial_challenge) {
 #if defined(NTLM_SSPI)
   // auth_sspi_ contains state for whether or not this is the initial challenge.
   return auth_sspi_.ParseChallenge(tok);
@@ -121,7 +126,7 @@ HttpAuth::AuthorizationResult HttpAuthHandlerNTLM::ParseChallenge(
   if (!tok->SchemeIs(kNtlmAuthScheme))
     return HttpAuth::AUTHORIZATION_RESULT_INVALID;
 
-  std::string base64_param = tok->base64_param();
+  std::string base64_param = tok.base64_param();
   if (base64_param.empty()) {
     if (!initial_challenge)
       return HttpAuth::AUTHORIZATION_RESULT_REJECT;

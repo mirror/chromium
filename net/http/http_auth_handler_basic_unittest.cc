@@ -50,7 +50,7 @@ TEST(HttpAuthHandlerBasicTest, GenerateAuthToken) {
     HttpRequestInfo request_info;
     std::string auth_token;
     TestCompletionCallback callback;
-    int rv = basic->GenerateAuthToken(&credentials, &request_info,
+    int rv = basic->GenerateAuthToken(&credentials, request_info,
                                       callback.callback(), &auth_token);
     EXPECT_THAT(rv, IsOk());
     EXPECT_STREQ(tests[i].expected_credentials, auth_token.c_str());
@@ -104,11 +104,11 @@ TEST(HttpAuthHandlerBasicTest, HandleAnotherChallenge) {
     std::string challenge(tests[i].challenge);
     HttpAuthChallengeTokenizer tok(challenge.begin(),
                                    challenge.end());
-    EXPECT_EQ(tests[i].expected_rv, basic->HandleAnotherChallenge(&tok));
+    EXPECT_EQ(tests[i].expected_rv, basic->HandleAnotherChallenge(tok));
   }
 }
 
-TEST(HttpAuthHandlerBasicTest, InitFromChallenge) {
+TEST(HttpAuthHandlerBasicTest, HandleInitialChallenge) {
   static const struct {
     const char* challenge;
     int expected_rv;

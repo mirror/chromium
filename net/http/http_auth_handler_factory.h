@@ -82,7 +82,7 @@ class NET_EXPORT HttpAuthHandlerFactory {
   // NOTE: This will apply to ALL |origin| values if the filters are empty.
   //
   // |*challenge| should not be reused after a call to |CreateAuthHandler()|,
-  virtual int CreateAuthHandler(HttpAuthChallengeTokenizer* challenge,
+  virtual int CreateAuthHandler(const HttpAuthChallengeTokenizer& challenge,
                                 HttpAuth::Target target,
                                 const SSLInfo& ssl_info,
                                 const GURL& origin,

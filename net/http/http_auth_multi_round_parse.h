@@ -16,11 +16,11 @@ class HttpAuthChallengeTokenizer;
 
 NET_EXPORT_PRIVATE HttpAuth::AuthorizationResult ParseFirstRoundChallenge(
     const std::string& scheme,
-    HttpAuthChallengeTokenizer* challenge);
+    const HttpAuthChallengeTokenizer& challenge);
 
 NET_EXPORT_PRIVATE HttpAuth::AuthorizationResult ParseLaterRoundChallenge(
     const std::string& scheme,
-    HttpAuthChallengeTokenizer* challenge,
+    const HttpAuthChallengeTokenizer& challenge,
     std::string* encoded_token,
     std::string* decoded_token);
 

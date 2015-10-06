@@ -81,7 +81,7 @@ class NET_EXPORT_PRIVATE HttpAuthNegotiateAndroid {
 
   // Parse a received Negotiate challenge.
   HttpAuth::AuthorizationResult ParseChallenge(
-      net::HttpAuthChallengeTokenizer* tok);
+      const HttpAuthChallengeTokenizer& tok);
 
   // Generates an authentication token.
   //
@@ -110,7 +110,7 @@ class NET_EXPORT_PRIVATE HttpAuthNegotiateAndroid {
                         const std::string& spn,
                         const std::string& channel_bindings,
                         std::string* auth_token,
-                        const net::CompletionCallback& callback);
+                        const CompletionCallback& callback);
 
   // Delegation is allowed on the Kerberos ticket. This allows certain servers
   // to act as the user, such as an IIS server retrieving data from a

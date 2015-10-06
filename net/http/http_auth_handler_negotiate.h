@@ -98,17 +98,16 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerNegotiate : public HttpAuthHandler {
 
   // HttpAuthHandler:
   HttpAuth::AuthorizationResult HandleAnotherChallenge(
-      HttpAuthChallengeTokenizer* challenge) override;
+      const HttpAuthChallengeTokenizer& challenge) override;
   bool NeedsIdentity() override;
   bool AllowsDefaultCredentials() override;
   bool AllowsExplicitCredentials() override;
 
  protected:
-  bool Init(HttpAuthChallengeTokenizer* challenge,
-            const SSLInfo& ssl_info) override;
+  int Init(const HttpAuthChallengeTokenizer& challenge,const SSLInfo& ssl_info) override;
 
   int GenerateAuthTokenImpl(const AuthCredentials* credentials,
-                            const HttpRequestInfo* request,
+                            const HttpRequestInfo& request,
                             const CompletionCallback& callback,
                             std::string* auth_token) override;
 

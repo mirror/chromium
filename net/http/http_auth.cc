@@ -147,7 +147,7 @@ HttpAuth::AuthorizationResult HttpAuth::HandleChallengeResponse(
     HttpAuthChallengeTokenizer props(challenge.begin(), challenge.end());
     if (!props.SchemeIs(current_scheme))
       continue;
-    authorization_result = handler->HandleAnotherChallenge(&props);
+    authorization_result = handler->HandleAnotherChallenge(props);
     if (authorization_result != HttpAuth::AUTHORIZATION_RESULT_INVALID) {
       *challenge_used = challenge;
       return authorization_result;

@@ -31,8 +31,8 @@ int HttpAuthHandlerFactory::CreateAuthHandlerFromString(
     const BoundNetLog& net_log,
     std::unique_ptr<HttpAuthHandler>* handler) {
   HttpAuthChallengeTokenizer props(challenge.begin(), challenge.end());
-  return CreateAuthHandler(&props, target, ssl_info, origin, CREATE_CHALLENGE,
-                           1, net_log, handler);
+  return CreateAuthHandler(props, target, ssl_info, origin, CREATE_CHALLENGE, 1, net_log,
+                           handler);
 }
 
 int HttpAuthHandlerFactory::CreatePreemptiveAuthHandlerFromString(
@@ -169,7 +169,7 @@ HttpAuthHandlerRegistryFactory::Create(const HttpAuthPreferences* prefs,
 }
 
 int HttpAuthHandlerRegistryFactory::CreateAuthHandler(
-    HttpAuthChallengeTokenizer* challenge,
+    const HttpAuthChallengeTokenizer& challenge,
     HttpAuth::Target target,
     const SSLInfo& ssl_info,
     const GURL& origin,
@@ -177,7 +177,7 @@ int HttpAuthHandlerRegistryFactory::CreateAuthHandler(
     int digest_nonce_count,
     const BoundNetLog& net_log,
     std::unique_ptr<HttpAuthHandler>* handler) {
-  std::string scheme = challenge->NormalizedScheme();
+  std::string scheme = challenge.NormalizedScheme();
   if (scheme.empty()) {
     handler->reset();
     return ERR_INVALID_RESPONSE;

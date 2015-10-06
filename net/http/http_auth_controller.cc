@@ -180,6 +180,7 @@ int HttpAuthController::MaybeGenerateAuthToken(
     const HttpRequestInfo* request, const CompletionCallback& callback,
     const BoundNetLog& net_log) {
   DCHECK(CalledOnValidThread());
+  DCHECK(request);
   bool needs_auth = HaveAuth() || SelectPreemptiveAuth(net_log);
   if (!needs_auth)
     return OK;
@@ -189,7 +190,7 @@ int HttpAuthController::MaybeGenerateAuthToken(
   DCHECK(auth_token_.empty());
   DCHECK(callback_.is_null());
   int rv = handler_->GenerateAuthToken(
-      credentials, request,
+      credentials, *request,
       base::Bind(&HttpAuthController::OnIOComplete, base::Unretained(this)),
       &auth_token_);
   if (DisableOnAuthHandlerResult(rv))

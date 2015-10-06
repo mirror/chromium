@@ -93,7 +93,7 @@ void HttpAuthHandlerDigest::Factory::set_nonce_generator(
 }
 
 int HttpAuthHandlerDigest::Factory::CreateAuthHandler(
-    HttpAuthChallengeTokenizer* challenge,
+    const HttpAuthChallengeTokenizer& challenge,
     HttpAuth::Target target,
     const SSLInfo& ssl_info,
     const GURL& origin,
@@ -105,23 +105,23 @@ int HttpAuthHandlerDigest::Factory::CreateAuthHandler(
   //                 method and only constructing when valid.
   std::unique_ptr<HttpAuthHandler> tmp_handler(
       new HttpAuthHandlerDigest(digest_nonce_count, nonce_generator_.get()));
-  if (!tmp_handler->InitFromChallenge(challenge, target, ssl_info, origin,
-                                      net_log))
-    return ERR_INVALID_RESPONSE;
-  handler->swap(tmp_handler);
-  return OK;
+  int result =
+      tmp_handler->HandleInitialChallenge(challenge, target, origin, net_log);
+  if (result == OK)
+    handler->swap(tmp_handler);
+  return result;
 }
 
 HttpAuth::AuthorizationResult HttpAuthHandlerDigest::HandleAnotherChallenge(
-    HttpAuthChallengeTokenizer* challenge) {
+    const HttpAuthChallengeTokenizer& challenge) {
   // Even though Digest is not connection based, a "second round" is parsed
   // to differentiate between stale and rejected responses.
   // Note that the state of the current handler is not mutated - this way if
   // there is a rejection the realm hasn't changed.
-  if (!challenge->SchemeIs(kDigestSchemeName))
+  if (!challenge.SchemeIs(kDigestSchemeName))
     return HttpAuth::AUTHORIZATION_RESULT_INVALID;
 
-  HttpUtil::NameValuePairsIterator parameters = challenge->param_pairs();
+  HttpUtil::NameValuePairsIterator parameters = challenge.param_pairs();
 
   // Try to find the "stale" value, and also keep track of the realm
   // for the new challenge.
@@ -141,12 +141,14 @@ HttpAuth::AuthorizationResult HttpAuthHandlerDigest::HandleAnotherChallenge(
 
 bool HttpAuthHandlerDigest::Init(HttpAuthChallengeTokenizer* challenge,
                                  const SSLInfo& ssl_info) {
-  return ParseChallenge(challenge);
+  return ParseChallenge(challenge) ? OK : ERR_INVALID_RESPONSE;
 }
 
 int HttpAuthHandlerDigest::GenerateAuthTokenImpl(
-    const AuthCredentials* credentials, const HttpRequestInfo* request,
-    const CompletionCallback& callback, std::string* auth_token) {
+    const AuthCredentials* credentials,
+    const HttpRequestInfo& request,
+    const CompletionCallback& callback,
+    std::string* auth_token) {
   // Generate a random client nonce.
   std::string cnonce = nonce_generator_->GenerateNonce();
 
@@ -193,7 +195,7 @@ HttpAuthHandlerDigest::~HttpAuthHandlerDigest() {
 // send the realm (See http://crbug.com/20984 for an instance where a
 // webserver was not sending the realm with a BASIC challenge).
 bool HttpAuthHandlerDigest::ParseChallenge(
-    HttpAuthChallengeTokenizer* challenge) {
+    const HttpAuthChallengeTokenizer& challenge) {
   auth_scheme_ = kDigestSchemeName;
 
   // Initialize to defaults.
@@ -203,10 +205,10 @@ bool HttpAuthHandlerDigest::ParseChallenge(
   realm_ = original_realm_ = nonce_ = domain_ = opaque_ = std::string();
 
   // FAIL -- Couldn't match auth-scheme.
-  if (!challenge->SchemeIs(kDigestSchemeName))
+  if (!challenge.SchemeIs(kDigestSchemeName))
     return false;
 
-  HttpUtil::NameValuePairsIterator parameters = challenge->param_pairs();
+  HttpUtil::NameValuePairsIterator parameters = challenge.param_pairs();
 
   // Loop through all the properties.
   while (parameters.GetNext()) {
@@ -302,19 +304,17 @@ std::string HttpAuthHandlerDigest::AlgorithmToString(
 }
 
 void HttpAuthHandlerDigest::GetRequestMethodAndPath(
-    const HttpRequestInfo* request,
+    const HttpRequestInfo& request,
     std::string* method,
     std::string* path) const {
-  DCHECK(request);
-
-  const GURL& url = request->url;
+  const GURL& url = request.url;
 
   if (target_ == HttpAuth::AUTH_PROXY &&
       (url.SchemeIs("https") || url.SchemeIsWSOrWSS())) {
     *method = "CONNECT";
     *path = GetHostAndPort(url);
   } else {
-    *method = request->method;
+    *method = request.method;
     *path = url.PathForRequest();
   }
 }

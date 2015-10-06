@@ -252,7 +252,7 @@ TEST_F(HttpAuthHandlerNegotiateTest, DisableCname) {
   HttpRequestInfo request_info;
   std::string token;
   EXPECT_EQ(OK, callback.GetResult(auth_handler->GenerateAuthToken(
-                    NULL, &request_info, callback.callback(), &token)));
+                    NULL, request_info, callback.callback(), &token)));
 #if defined(OS_WIN)
   EXPECT_EQ("HTTP/alias", auth_handler->spn());
 #elif defined(OS_POSIX)
@@ -270,7 +270,7 @@ TEST_F(HttpAuthHandlerNegotiateTest, DisableCnameStandardPort) {
   HttpRequestInfo request_info;
   std::string token;
   EXPECT_EQ(OK, callback.GetResult(auth_handler->GenerateAuthToken(
-                    NULL, &request_info, callback.callback(), &token)));
+                    NULL, request_info, callback.callback(), &token)));
 #if defined(OS_WIN)
   EXPECT_EQ("HTTP/alias", auth_handler->spn());
 #elif defined(OS_POSIX)
@@ -288,7 +288,7 @@ TEST_F(HttpAuthHandlerNegotiateTest, DisableCnameNonstandardPort) {
   HttpRequestInfo request_info;
   std::string token;
   EXPECT_EQ(OK, callback.GetResult(auth_handler->GenerateAuthToken(
-                    NULL, &request_info, callback.callback(), &token)));
+                    NULL, request_info, callback.callback(), &token)));
 #if defined(OS_WIN)
   EXPECT_EQ("HTTP/alias:500", auth_handler->spn());
 #elif defined(OS_POSIX)
@@ -306,7 +306,7 @@ TEST_F(HttpAuthHandlerNegotiateTest, CnameSync) {
   HttpRequestInfo request_info;
   std::string token;
   EXPECT_EQ(OK, callback.GetResult(auth_handler->GenerateAuthToken(
-                    NULL, &request_info, callback.callback(), &token)));
+                    NULL, request_info, callback.callback(), &token)));
 #if defined(OS_WIN)
   EXPECT_EQ("HTTP/canonical.example.com", auth_handler->spn());
 #elif defined(OS_POSIX)
@@ -323,8 +323,9 @@ TEST_F(HttpAuthHandlerNegotiateTest, CnameAsync) {
   TestCompletionCallback callback;
   HttpRequestInfo request_info;
   std::string token;
-  EXPECT_EQ(ERR_IO_PENDING, auth_handler->GenerateAuthToken(
-      NULL, &request_info, callback.callback(), &token));
+  EXPECT_EQ(ERR_IO_PENDING,
+            auth_handler->GenerateAuthToken(NULL, request_info,
+                                            callback.callback(), &token));
   EXPECT_THAT(callback.WaitForResult(), IsOk());
 #if defined(OS_WIN)
   EXPECT_EQ("HTTP/canonical.example.com", auth_handler->spn());
@@ -346,8 +347,9 @@ TEST_F(HttpAuthHandlerNegotiateTest, ServerNotInKerberosDatabase) {
   TestCompletionCallback callback;
   HttpRequestInfo request_info;
   std::string token;
-  EXPECT_EQ(ERR_IO_PENDING, auth_handler->GenerateAuthToken(
-      NULL, &request_info, callback.callback(), &token));
+  EXPECT_EQ(ERR_IO_PENDING,
+            auth_handler->GenerateAuthToken(NULL, request_info,
+                                            callback.callback(), &token));
   EXPECT_THAT(callback.WaitForResult(), IsError(ERR_MISSING_AUTH_CREDENTIALS));
 }
 
@@ -362,8 +364,9 @@ TEST_F(HttpAuthHandlerNegotiateTest, NoKerberosCredentials) {
   TestCompletionCallback callback;
   HttpRequestInfo request_info;
   std::string token;
-  EXPECT_EQ(ERR_IO_PENDING, auth_handler->GenerateAuthToken(
-      NULL, &request_info, callback.callback(), &token));
+  EXPECT_EQ(ERR_IO_PENDING,
+            auth_handler->GenerateAuthToken(NULL, request_info,
+                                            callback.callback(), &token));
   EXPECT_THAT(callback.WaitForResult(), IsError(ERR_MISSING_AUTH_CREDENTIALS));
 }
 

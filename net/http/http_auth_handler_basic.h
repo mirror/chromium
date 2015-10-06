@@ -21,7 +21,7 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerBasic : public HttpAuthHandler {
     Factory();
     ~Factory() override;
 
-    int CreateAuthHandler(HttpAuthChallengeTokenizer* challenge,
+    int CreateAuthHandler(const HttpAuthChallengeTokenizer& challenge,
                           HttpAuth::Target target,
                           const SSLInfo& ssl_info,
                           const GURL& origin,
@@ -32,21 +32,21 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerBasic : public HttpAuthHandler {
   };
 
   HttpAuth::AuthorizationResult HandleAnotherChallenge(
-      HttpAuthChallengeTokenizer* challenge) override;
+      const HttpAuthChallengeTokenizer& challenge) override;
 
  protected:
-  bool Init(HttpAuthChallengeTokenizer* challenge,
+  int Init(HttpAuthChallengeTokenizer* challenge,
             const SSLInfo& ssl_info) override;
 
   int GenerateAuthTokenImpl(const AuthCredentials* credentials,
-                            const HttpRequestInfo* request,
+                            const HttpRequestInfo& request,
                             const CompletionCallback& callback,
                             std::string* auth_token) override;
 
  private:
   ~HttpAuthHandlerBasic() override {}
 
-  bool ParseChallenge(HttpAuthChallengeTokenizer* challenge);
+  int ParseChallenge(const HttpAuthChallengeTokenizer& challenge);
 };
 
 }  // namespace net

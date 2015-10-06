@@ -47,10 +47,10 @@ TEST(HttpAuthHandlerTest, NetLog) {
             BoundNetLog::Make(&test_net_log, NetLogSourceType::NONE));
 
         SSLInfo empty_ssl_info;
-        mock_handler.InitFromChallenge(&tokenizer, target, empty_ssl_info,
-                                       origin, bound_net_log);
+        mock_handler.HandleInitialChallenge(tokenizer, target, empty_ssl_info, origin,
+                                            bound_net_log);
         mock_handler.SetGenerateExpectation(async, rv);
-        mock_handler.GenerateAuthToken(&credentials, &request,
+        mock_handler.GenerateAuthToken(&credentials, request,
                                        test_callback.callback(), &auth_token);
         if (async)
           test_callback.WaitForResult();

@@ -19,24 +19,24 @@ HttpAuthHandler::HttpAuthHandler() : target_(HttpAuth::AUTH_NONE) {}
 HttpAuthHandler::~HttpAuthHandler() {
 }
 
-bool HttpAuthHandler::InitFromChallenge(HttpAuthChallengeTokenizer* challenge,
-                                        HttpAuth::Target target,
+int HttpAuthHandler::HandleInitialChallenge(
+    const HttpAuthChallengeTokenizer& challenge,
+    HttpAuth::Target target,
                                         const SSLInfo& ssl_info,
-                                        const GURL& origin,
-                                        const BoundNetLog& net_log) {
+    const GURL& origin,
+    const BoundNetLog& net_log) {
   origin_ = origin;
   target_ = target;
   net_log_ = net_log;
 
-  auth_challenge_ = challenge->challenge_text();
-  bool ok = Init(challenge, ssl_info);
+  auth_challenge_ = challenge.challenge_text();
+  int result = Init(challenge, ssl_info);
 
-  // Init() is expected to set the scheme, realm, and properties. The realm may
-  // be empty.
-  DCHECK_IMPLIES(ok,
-                 HttpUtil::IsToken(auth_scheme_.begin(), auth_scheme_.end()) &&
-                     base::ToLowerASCII(auth_scheme_) == auth_scheme_);
-  return ok;
+  // Init() is expected to set the scheme, realm, score, and properties.  The
+  // realm may be empty.
+  DCHECK_IMPLIES(result == OK, HttpAuth::IsValidNormalizedScheme(auth_scheme_));
+
+  return result;
 }
 
 namespace {
@@ -55,11 +55,11 @@ NetLogEventType EventTypeFromAuthTarget(HttpAuth::Target target) {
 
 }  // namespace
 
-int HttpAuthHandler::GenerateAuthToken(
-    const AuthCredentials* credentials, const HttpRequestInfo* request,
-    const CompletionCallback& callback, std::string* auth_token) {
+int HttpAuthHandler::GenerateAuthToken(const AuthCredentials* credentials,
+                                       const HttpRequestInfo& request,
+                                       const CompletionCallback& callback,
+                                       std::string* auth_token) {
   DCHECK(!callback.is_null());
-  DCHECK(request);
   DCHECK(credentials != NULL || AllowsDefaultCredentials());
   DCHECK(auth_token != NULL);
   DCHECK(callback_.is_null());

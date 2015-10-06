@@ -58,7 +58,7 @@ void HttpAuthHandlerNegotiate::Factory::set_host_resolver(
 }
 
 int HttpAuthHandlerNegotiate::Factory::CreateAuthHandler(
-    HttpAuthChallengeTokenizer* challenge,
+    const HttpAuthChallengeTokenizer& challenge,
     HttpAuth::Target target,
     const SSLInfo& ssl_info,
     const GURL& origin,
@@ -103,11 +103,11 @@ int HttpAuthHandlerNegotiate::Factory::CreateAuthHandler(
   std::unique_ptr<HttpAuthHandler> tmp_handler(new HttpAuthHandlerNegotiate(
       auth_library_.get(), http_auth_preferences(), resolver_));
 #endif
-  if (!tmp_handler->InitFromChallenge(challenge, target, ssl_info, origin,
-                                      net_log))
-    return ERR_INVALID_RESPONSE;
-  handler->swap(tmp_handler);
-  return OK;
+  int result =
+      tmp_handler->HandleInitialChallenge(challenge, target, ssl_info, origin, net_log);
+  if (result == OK)
+    handler->swap(tmp_handler);
+  return result;
 }
 
 HttpAuthHandlerNegotiate::HttpAuthHandlerNegotiate(
@@ -188,7 +188,7 @@ std::string HttpAuthHandlerNegotiate::CreateSPN(const AddressList& address_list,
 }
 
 HttpAuth::AuthorizationResult HttpAuthHandlerNegotiate::HandleAnotherChallenge(
-    HttpAuthChallengeTokenizer* challenge) {
+    const HttpAuthChallengeTokenizer& challenge) {
   return auth_system_.ParseChallenge(challenge);
 }
 
@@ -211,42 +211,36 @@ bool HttpAuthHandlerNegotiate::AllowsExplicitCredentials() {
 
 // The Negotiate challenge header looks like:
 //   WWW-Authenticate: NEGOTIATE auth-data
-bool HttpAuthHandlerNegotiate::Init(HttpAuthChallengeTokenizer* challenge,
-                                    const SSLInfo& ssl_info) {
+int HttpAuthHandlerNegotiate::Init(
+    const HttpAuthChallengeTokenizer& challenge,
+    const SSLInfo& ssl_info) {
 #if defined(OS_POSIX)
   if (!auth_system_.Init()) {
     VLOG(1) << "can't initialize GSSAPI library";
-    return false;
+    return ERR_UNSUPPORTED_AUTH_SCHEME;
   }
   // GSSAPI does not provide a way to enter username/password to
   // obtain a TGT. If the default credentials are not allowed for
   // a particular site (based on whitelist), fall back to a
   // different scheme.
   if (!AllowsDefaultCredentials())
-    return false;
+    return ERR_UNSUPPORTED_AUTH_SCHEME;
 #endif
   if (CanDelegate())
     auth_system_.Delegate();
   auth_scheme_ = "negotiate";
   HttpAuth::AuthorizationResult auth_result =
       auth_system_.ParseChallenge(challenge);
-  if (auth_result != HttpAuth::AUTHORIZATION_RESULT_ACCEPT)
-    return false;
-
-  // Try to extract channel bindings.
-  if (ssl_info.is_valid())
-    x509_util::GetTLSServerEndPointChannelBinding(*ssl_info.cert,
-                                                  &channel_bindings_);
-  if (!channel_bindings_.empty())
-    net_log_.AddEvent(
-        NetLogEventType::AUTH_CHANNEL_BINDINGS,
-        base::Bind(&NetLogParameterChannelBindings, channel_bindings_));
-  return true;
+  return auth_result == HttpAuth::AUTHORIZATION_RESULT_ACCEPT
+             ? OK
+             : ERR_INVALID_RESPONSE;
 }
 
 int HttpAuthHandlerNegotiate::GenerateAuthTokenImpl(
-    const AuthCredentials* credentials, const HttpRequestInfo* request,
-    const CompletionCallback& callback, std::string* auth_token) {
+    const AuthCredentials* credentials,
+    const HttpRequestInfo& request,
+    const CompletionCallback& callback,
+    std::string* auth_token) {
   DCHECK(callback_.is_null());
   DCHECK(auth_token_ == NULL);
   auth_token_ = auth_token;

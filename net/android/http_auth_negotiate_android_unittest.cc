@@ -50,7 +50,7 @@ TEST(HttpAuthNegotiateAndroidTest, ParseChallenge_FirstRound) {
   HttpAuthChallengeTokenizer challenge(challenge_text.begin(),
                                        challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_ACCEPT,
-            auth.ParseChallenge(&challenge));
+            auth.ParseChallenge(challenge));
 }
 
 TEST(HttpAuthNegotiateAndroidTest, ParseChallenge_UnexpectedTokenFirstRound) {
@@ -64,7 +64,7 @@ TEST(HttpAuthNegotiateAndroidTest, ParseChallenge_UnexpectedTokenFirstRound) {
   HttpAuthChallengeTokenizer challenge(challenge_text.begin(),
                                        challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_INVALID,
-            auth.ParseChallenge(&challenge));
+            auth.ParseChallenge(challenge));
 }
 
 TEST(HttpAuthNegotiateAndroidTest, ParseChallenge_TwoRounds) {
@@ -78,13 +78,13 @@ TEST(HttpAuthNegotiateAndroidTest, ParseChallenge_TwoRounds) {
   HttpAuthChallengeTokenizer first_challenge(first_challenge_text.begin(),
                                              first_challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_ACCEPT,
-            auth.ParseChallenge(&first_challenge));
+            auth.ParseChallenge(first_challenge));
 
   std::string second_challenge_text = "Negotiate Zm9vYmFy";
   HttpAuthChallengeTokenizer second_challenge(second_challenge_text.begin(),
                                               second_challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_ACCEPT,
-            auth.ParseChallenge(&second_challenge));
+            auth.ParseChallenge(second_challenge));
 }
 
 TEST(HttpAuthNegotiateAndroidTest, ParseChallenge_MissingTokenSecondRound) {
@@ -98,13 +98,13 @@ TEST(HttpAuthNegotiateAndroidTest, ParseChallenge_MissingTokenSecondRound) {
   HttpAuthChallengeTokenizer first_challenge(first_challenge_text.begin(),
                                              first_challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_ACCEPT,
-            auth.ParseChallenge(&first_challenge));
+            auth.ParseChallenge(first_challenge));
 
   std::string second_challenge_text = "Negotiate";
   HttpAuthChallengeTokenizer second_challenge(second_challenge_text.begin(),
                                               second_challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_REJECT,
-            auth.ParseChallenge(&second_challenge));
+            auth.ParseChallenge(second_challenge));
 }
 
 }  // namespace android

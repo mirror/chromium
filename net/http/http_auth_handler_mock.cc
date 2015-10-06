@@ -29,17 +29,17 @@ void HttpAuthHandlerMock::SetGenerateExpectation(bool async, int rv) {
 }
 
 HttpAuth::AuthorizationResult HttpAuthHandlerMock::HandleAnotherChallenge(
-    HttpAuthChallengeTokenizer* challenge) {
+    const HttpAuthChallengeTokenizer& challenge) {
   // If we receive a second challenge for a regular scheme, assume it's a
   // rejection. Receiving an empty second challenge when expecting multiple
   // rounds is also considered a rejection.
-  if (!expect_multiple_challenges_ || challenge->base64_param().empty())
+  if (!expect_multiple_challenges_ || challenge.base64_param().empty())
     return HttpAuth::AUTHORIZATION_RESULT_REJECT;
-  if (!challenge->SchemeIs(auth_scheme_))
+  if (!challenge.SchemeIs(auth_scheme_))
     return HttpAuth::AUTHORIZATION_RESULT_INVALID;
   auth_token_ = auth_scheme_;
   auth_token_.append(" continuation,");
-  auth_token_.append(challenge->base64_param());
+  auth_token_.append(challenge.base64_param());
   return HttpAuth::AUTHORIZATION_RESULT_ACCEPT;
 }
 
@@ -55,28 +55,28 @@ bool HttpAuthHandlerMock::AllowsExplicitCredentials() {
   return allows_explicit_credentials_;
 }
 
-bool HttpAuthHandlerMock::Init(HttpAuthChallengeTokenizer* challenge) {
-  EXPECT_TRUE(challenge->SchemeIs(expected_auth_scheme_))
-      << "Mismatched scheme for challenge: " << challenge->challenge_text();
+int HttpAuthHandlerMock::Init(const HttpAuthChallengeTokenizer& challenge) {
+  EXPECT_TRUE(challenge.SchemeIs(expected_auth_scheme_))
+      << "Mismatched scheme for challenge: " << challenge.challenge_text();
   EXPECT_TRUE(auth_scheme_.empty()) << "Init was already called.";
   EXPECT_TRUE(HttpAuth::IsValidNormalizedScheme(expected_auth_scheme_))
       << "Invalid expected auth scheme.";
   auth_scheme_ = expected_auth_scheme_;
   auth_token_ = expected_auth_scheme_ + " auth_token";
-  if (challenge->params_end() != challenge->params_begin()) {
+  if (challenge.params_end() != challenge.params_begin()) {
     auth_token_ += ",";
-    auth_token_.append(challenge->params_begin(), challenge->params_end());
+    auth_token_.append(challenge.params_begin(), challenge.params_end());
   }
-  return true;
+  return OK;
 }
 
 int HttpAuthHandlerMock::GenerateAuthTokenImpl(
     const AuthCredentials* credentials,
-    const HttpRequestInfo* request,
+    const HttpRequestInfo& request,
     const CompletionCallback& callback,
     std::string* auth_token) {
   first_round_ = false;
-  request_url_ = request->url;
+  request_url_ = request.url;
 
   if (!credentials || credentials->Empty()) {
     EXPECT_TRUE(AllowsDefaultCredentials()) << "Credentials must be specified "
@@ -139,7 +139,7 @@ bool HttpAuthHandlerMock::Factory::HaveAuthHandlers(
 }
 
 int HttpAuthHandlerMock::Factory::CreateAuthHandler(
-    HttpAuthChallengeTokenizer* challenge,
+    const HttpAuthChallengeTokenizer& challenge,
     HttpAuth::Target target,
     const SSLInfo& ssl_info,
     const GURL& origin,
@@ -154,10 +154,11 @@ int HttpAuthHandlerMock::Factory::CreateAuthHandler(
     return ERR_UNEXPECTED;
   std::unique_ptr<HttpAuthHandler> tmp_handler = std::move(handler_list.front());
   handler_list.erase(handler_list.begin());
-  if (!tmp_handler->InitFromChallenge(challenge, target, origin, net_log))
-    return ERR_INVALID_RESPONSE;
-  handler->swap(tmp_handler);
-  return OK;
+  int result =
+      tmp_handler->HandleInitialChallenge(challenge, target, origin, net_log);
+  if (result == OK)
+    handler->swap(tmp_handler);
+  return result;
 }
 
 }  // namespace net

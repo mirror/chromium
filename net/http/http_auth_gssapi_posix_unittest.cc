@@ -192,7 +192,7 @@ TEST(HttpAuthGSSAPITest, ParseChallenge_FirstRound) {
   HttpAuthChallengeTokenizer challenge(challenge_text.begin(),
                                        challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_ACCEPT,
-            auth_gssapi.ParseChallenge(&challenge));
+            auth_gssapi.ParseChallenge(challenge));
 }
 
 TEST(HttpAuthGSSAPITest, ParseChallenge_TwoRounds) {
@@ -205,7 +205,7 @@ TEST(HttpAuthGSSAPITest, ParseChallenge_TwoRounds) {
   HttpAuthChallengeTokenizer first_challenge(first_challenge_text.begin(),
                                              first_challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_ACCEPT,
-            auth_gssapi.ParseChallenge(&first_challenge));
+            auth_gssapi.ParseChallenge(first_challenge));
 
   // Generate an auth token and create another thing.
   EstablishInitialContext(&mock_library);
@@ -218,7 +218,7 @@ TEST(HttpAuthGSSAPITest, ParseChallenge_TwoRounds) {
   HttpAuthChallengeTokenizer second_challenge(second_challenge_text.begin(),
                                               second_challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_ACCEPT,
-            auth_gssapi.ParseChallenge(&second_challenge));
+            auth_gssapi.ParseChallenge(second_challenge));
 }
 
 TEST(HttpAuthGSSAPITest, ParseChallenge_UnexpectedTokenFirstRound) {
@@ -231,7 +231,7 @@ TEST(HttpAuthGSSAPITest, ParseChallenge_UnexpectedTokenFirstRound) {
   HttpAuthChallengeTokenizer challenge(challenge_text.begin(),
                                        challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_INVALID,
-            auth_gssapi.ParseChallenge(&challenge));
+            auth_gssapi.ParseChallenge(challenge));
 }
 
 TEST(HttpAuthGSSAPITest, ParseChallenge_MissingTokenSecondRound) {
@@ -244,7 +244,7 @@ TEST(HttpAuthGSSAPITest, ParseChallenge_MissingTokenSecondRound) {
   HttpAuthChallengeTokenizer first_challenge(first_challenge_text.begin(),
                                              first_challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_ACCEPT,
-            auth_gssapi.ParseChallenge(&first_challenge));
+            auth_gssapi.ParseChallenge(first_challenge));
 
   EstablishInitialContext(&mock_library);
   std::string auth_token;
@@ -255,7 +255,7 @@ TEST(HttpAuthGSSAPITest, ParseChallenge_MissingTokenSecondRound) {
   HttpAuthChallengeTokenizer second_challenge(second_challenge_text.begin(),
                                               second_challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_REJECT,
-            auth_gssapi.ParseChallenge(&second_challenge));
+            auth_gssapi.ParseChallenge(second_challenge));
 }
 
 TEST(HttpAuthGSSAPITest, ParseChallenge_NonBase64EncodedToken) {
@@ -268,7 +268,7 @@ TEST(HttpAuthGSSAPITest, ParseChallenge_NonBase64EncodedToken) {
   HttpAuthChallengeTokenizer first_challenge(first_challenge_text.begin(),
                                              first_challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_ACCEPT,
-            auth_gssapi.ParseChallenge(&first_challenge));
+            auth_gssapi.ParseChallenge(first_challenge));
 
   EstablishInitialContext(&mock_library);
   std::string auth_token;
@@ -279,7 +279,7 @@ TEST(HttpAuthGSSAPITest, ParseChallenge_NonBase64EncodedToken) {
   HttpAuthChallengeTokenizer second_challenge(second_challenge_text.begin(),
                                               second_challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_INVALID,
-            auth_gssapi.ParseChallenge(&second_challenge));
+            auth_gssapi.ParseChallenge(second_challenge));
 }
 
 }  // namespace net

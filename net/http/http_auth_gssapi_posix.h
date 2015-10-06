@@ -245,7 +245,7 @@ class NET_EXPORT_PRIVATE HttpAuthGSSAPI {
   bool AllowsExplicitCredentials() const;
 
   HttpAuth::AuthorizationResult ParseChallenge(
-      HttpAuthChallengeTokenizer* tok);
+      const HttpAuthChallengeTokenizer& tok);
 
   // Generates an authentication token.
   //
