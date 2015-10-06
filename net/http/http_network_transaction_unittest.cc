@@ -11312,23 +11312,23 @@ TEST_F(HttpNetworkTransactionTest, GenerateAuthToken) {
       "GET / HTTP/1.1\r\n"
       "Host: www.example.com\r\n"
       "Connection: keep-alive\r\n"
-      "Authorization: auth_token\r\n\r\n");
+      "Authorization: mock auth_token,realm=server\r\n\r\n");
   const MockWrite kGetProxyAuth(
       "GET http://www.example.com/ HTTP/1.1\r\n"
       "Host: www.example.com\r\n"
       "Proxy-Connection: keep-alive\r\n"
-      "Proxy-Authorization: auth_token\r\n\r\n");
+      "Proxy-Authorization: mock auth_token,realm=proxy\r\n\r\n");
   const MockWrite kGetAuthThroughProxy(
       "GET http://www.example.com/ HTTP/1.1\r\n"
       "Host: www.example.com\r\n"
       "Proxy-Connection: keep-alive\r\n"
-      "Authorization: auth_token\r\n\r\n");
+      "Authorization: mock auth_token,realm=server\r\n\r\n");
   const MockWrite kGetAuthWithProxyAuth(
       "GET http://www.example.com/ HTTP/1.1\r\n"
       "Host: www.example.com\r\n"
       "Proxy-Connection: keep-alive\r\n"
-      "Proxy-Authorization: auth_token\r\n"
-      "Authorization: auth_token\r\n\r\n");
+      "Proxy-Authorization: mock auth_token,realm=proxy\r\n"
+      "Authorization: mock auth_token,realm=server\r\n\r\n");
   const MockWrite kConnect(
       "CONNECT www.example.com:443 HTTP/1.1\r\n"
       "Host: www.example.com:443\r\n"
@@ -11337,7 +11337,7 @@ TEST_F(HttpNetworkTransactionTest, GenerateAuthToken) {
       "CONNECT www.example.com:443 HTTP/1.1\r\n"
       "Host: www.example.com:443\r\n"
       "Proxy-Connection: keep-alive\r\n"
-      "Proxy-Authorization: auth_token\r\n\r\n");
+      "Proxy-Authorization: mock auth_token,realm=proxy\r\n\r\n");
 
   const MockRead kSuccess(
       "HTTP/1.1 200 OK\r\n"
@@ -11576,6 +11576,7 @@ TEST_F(HttpNetworkTransactionTest, GenerateAuthToken) {
   };
 
   for (size_t i = 0; i < arraysize(test_configs); ++i) {
+    SCOPED_TRACE(::testing::Message() << "Test config " << i);
     HttpAuthHandlerMock::Factory* auth_factory(
         new HttpAuthHandlerMock::Factory());
     session_deps_.http_auth_handler_factory.reset(auth_factory);
@@ -11585,33 +11586,25 @@ TEST_F(HttpNetworkTransactionTest, GenerateAuthToken) {
     // Set up authentication handlers as necessary.
     if (test_config.proxy_auth_timing != AUTH_NONE) {
       for (int n = 0; n < 2; n++) {
-        HttpAuthHandlerMock* auth_handler(new HttpAuthHandlerMock());
-        std::string auth_challenge = "Mock realm=proxy";
-        GURL origin(test_config.proxy_url);
-        HttpAuthChallengeTokenizer tokenizer(auth_challenge.begin(),
-                                             auth_challenge.end());
-        auth_handler->InitFromChallenge(&tokenizer, HttpAuth::AUTH_PROXY,
-                                        empty_ssl_info, origin,
-                                        NetLogWithSource());
+        scoped_ptr<HttpAuthHandlerMock> auth_handler(new HttpAuthHandlerMock());
         auth_handler->SetGenerateExpectation(
             test_config.proxy_auth_timing == AUTH_ASYNC,
             test_config.proxy_auth_rv);
-        auth_factory->AddMockHandler(auth_handler, HttpAuth::AUTH_PROXY);
+        auth_factory->AddMockHandler(
+            auth_handler.Pass(),
+            n == 0 ? HttpAuthHandlerFactory::CREATE_CHALLENGE
+                   : HttpAuthHandlerFactory::CREATE_PREEMPTIVE,
+            HttpAuth::AUTH_PROXY);
       }
     }
     if (test_config.server_auth_timing != AUTH_NONE) {
-      HttpAuthHandlerMock* auth_handler(new HttpAuthHandlerMock());
-      std::string auth_challenge = "Mock realm=server";
-      GURL origin(test_config.server_url);
-      HttpAuthChallengeTokenizer tokenizer(auth_challenge.begin(),
-                                           auth_challenge.end());
-      auth_handler->InitFromChallenge(&tokenizer, HttpAuth::AUTH_SERVER,
-                                      empty_ssl_info, origin,
-                                      NetLogWithSource());
+      scoped_ptr<HttpAuthHandlerMock> auth_handler(new HttpAuthHandlerMock());
       auth_handler->SetGenerateExpectation(
           test_config.server_auth_timing == AUTH_ASYNC,
           test_config.server_auth_rv);
-      auth_factory->AddMockHandler(auth_handler, HttpAuth::AUTH_SERVER);
+      auth_factory->AddMockHandler(auth_handler.Pass(),
+                                   HttpAuthHandlerFactory::CREATE_CHALLENGE,
+                                   HttpAuth::AUTH_SERVER);
     }
     if (test_config.proxy_url) {
       session_deps_.proxy_service =
@@ -11672,6 +11665,7 @@ TEST_F(HttpNetworkTransactionTest, GenerateAuthToken) {
     HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
 
     for (int round = 0; round < test_config.num_auth_rounds; ++round) {
+      SCOPED_TRACE(::testing::Message() << "Test round " << round);
       const TestRound& read_write_round = test_config.rounds[round];
       // Start or restart the transaction.
       TestCompletionCallback callback;
@@ -11710,17 +11704,14 @@ TEST_F(HttpNetworkTransactionTest, MultiRoundAuth) {
   session_deps_.host_resolver->rules()->AddRule("www.example.com", "10.0.0.1");
   session_deps_.host_resolver->set_synchronous_mode(true);
 
-  HttpAuthHandlerMock* auth_handler(new HttpAuthHandlerMock());
+  scoped_ptr<HttpAuthHandlerMock> auth_handler(new HttpAuthHandlerMock());
+  auth_handler->SetGenerateExpectation(false, OK);
   auth_handler->set_expect_multiple_challenges(true);
-  std::string auth_challenge = "Mock realm=server";
-  GURL origin("http://www.example.com");
-  HttpAuthChallengeTokenizer tokenizer(auth_challenge.begin(),
-                                       auth_challenge.end());
-  SSLInfo empty_ssl_info;
-  auth_handler->InitFromChallenge(&tokenizer, HttpAuth::AUTH_SERVER,
-                                  empty_ssl_info, origin, NetLogWithSource());
-  auth_factory->AddMockHandler(auth_handler, HttpAuth::AUTH_SERVER);
+  auth_factory->AddMockHandler(auth_handler.Pass(),
+                               HttpAuthHandlerFactory::CREATE_CHALLENGE,
+                               HttpAuth::AUTH_SERVER);
 
+  GURL origin("http://www.example.com");
   int rv = OK;
   const HttpResponseInfo* response = NULL;
   HttpRequestInfo request;
@@ -11747,22 +11738,32 @@ TEST_F(HttpNetworkTransactionTest, MultiRoundAuth) {
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
   TestCompletionCallback callback;
 
+  // Initial request
   const MockWrite kGet(
       "GET / HTTP/1.1\r\n"
       "Host: www.example.com\r\n"
       "Connection: keep-alive\r\n\r\n");
-  const MockWrite kGetAuth(
-      "GET / HTTP/1.1\r\n"
-      "Host: www.example.com\r\n"
-      "Connection: keep-alive\r\n"
-      "Authorization: auth_token\r\n\r\n");
 
+  // Challenge / Response cycle. Repeats 3 times for primary request. Competing
+  // request never sees the server challenge.
   const MockRead kServerChallenge(
       "HTTP/1.1 401 Unauthorized\r\n"
       "WWW-Authenticate: Mock realm=server\r\n"
       "Content-Type: text/html; charset=iso-8859-1\r\n"
       "Content-Length: 14\r\n\r\n"
       "Unauthorized\r\n");
+  const MockWrite kGetAuth(
+      "GET / HTTP/1.1\r\n"
+      "Host: www.example.com\r\n"
+      "Connection: keep-alive\r\n"
+      "Authorization: mock auth_token,realm=server\r\n\r\n");
+  const MockWrite kGetAuthContinuation(
+      "GET / HTTP/1.1\r\n"
+      "Host: www.example.com\r\n"
+      "Connection: keep-alive\r\n"
+      "Authorization: mock continuation,realm=server\r\n\r\n");
+
+  // Final server response.
   const MockRead kSuccess(
       "HTTP/1.1 200 OK\r\n"
       "Content-Type: text/html; charset=iso-8859-1\r\n"
@@ -11770,16 +11771,16 @@ TEST_F(HttpNetworkTransactionTest, MultiRoundAuth) {
       "Yes");
 
   MockWrite writes[] = {
-    // First round
-    kGet,
-    // Second round
-    kGetAuth,
-    // Third round
-    kGetAuth,
-    // Fourth round
-    kGetAuth,
-    // Competing request
-    kGet,
+      // First round
+      kGet,
+      // Second round
+      kGetAuth,
+      // Third round
+      kGetAuthContinuation,
+      // Fourth round
+      kGetAuthContinuation,
+      // Competing request
+      kGet,
   };
   MockRead reads[] = {
     // First round
@@ -11800,7 +11801,6 @@ TEST_F(HttpNetworkTransactionTest, MultiRoundAuth) {
   const char kSocketGroup[] = "www.example.com:80";
 
   // First round of authentication.
-  auth_handler->SetGenerateExpectation(false, OK);
   rv = trans.Start(&request, callback.callback(), NetLogWithSource());
   if (rv == ERR_IO_PENDING)
     rv = callback.WaitForResult();
@@ -11823,7 +11823,6 @@ TEST_F(HttpNetworkTransactionTest, MultiRoundAuth) {
   // the pool until after authentication completes.
 
   // Second round of authentication.
-  auth_handler->SetGenerateExpectation(false, OK);
   rv = trans.RestartWithAuth(AuthCredentials(kFoo, kBar), callback.callback());
   if (rv == ERR_IO_PENDING)
     rv = callback.WaitForResult();
@@ -11834,7 +11833,6 @@ TEST_F(HttpNetworkTransactionTest, MultiRoundAuth) {
   EXPECT_EQ(0, transport_pool->IdleSocketCountInGroup(kSocketGroup));
 
   // Third round of authentication.
-  auth_handler->SetGenerateExpectation(false, OK);
   rv = trans.RestartWithAuth(AuthCredentials(), callback.callback());
   if (rv == ERR_IO_PENDING)
     rv = callback.WaitForResult();
@@ -11845,7 +11843,6 @@ TEST_F(HttpNetworkTransactionTest, MultiRoundAuth) {
   EXPECT_EQ(0, transport_pool->IdleSocketCountInGroup(kSocketGroup));
 
   // Fourth round of authentication, which completes successfully.
-  auth_handler->SetGenerateExpectation(false, OK);
   rv = trans.RestartWithAuth(AuthCredentials(), callback.callback());
   if (rv == ERR_IO_PENDING)
     rv = callback.WaitForResult();
@@ -11859,9 +11856,7 @@ TEST_F(HttpNetworkTransactionTest, MultiRoundAuth) {
   // release the socket back to the pool.
   scoped_refptr<IOBufferWithSize> io_buf(new IOBufferWithSize(50));
   rv = trans.Read(io_buf.get(), io_buf->size(), callback.callback());
-  if (rv == ERR_IO_PENDING)
-    rv = callback.WaitForResult();
-  EXPECT_EQ(3, rv);
+  EXPECT_EQ(3, callback.GetResult(rv));
   rv = trans.Read(io_buf.get(), io_buf->size(), callback.callback());
   EXPECT_EQ(0, rv);
   // There are still 0 idle sockets, since the trans_compete transaction
@@ -11873,9 +11868,7 @@ TEST_F(HttpNetworkTransactionTest, MultiRoundAuth) {
   rv = callback_compete.WaitForResult();
   EXPECT_THAT(rv, IsOk());
   rv = trans_compete.Read(io_buf.get(), io_buf->size(), callback.callback());
-  if (rv == ERR_IO_PENDING)
-    rv = callback.WaitForResult();
-  EXPECT_EQ(3, rv);
+  EXPECT_EQ(3, callback.GetResult(rv));
   rv = trans_compete.Read(io_buf.get(), io_buf->size(), callback.callback());
   EXPECT_EQ(0, rv);
 
@@ -11995,6 +11988,167 @@ class UrlRecordingHttpAuthHandlerMock : public HttpAuthHandlerMock {
  private:
   GURL* url_;
 };
+
+// This test ensures that the URL passed into the proxy is upgraded to https
+// when doing an Alternate Protocol upgrade.
+TEST_P(HttpNetworkTransactionTest, SpdyAlternativeServiceThroughProxy) {
+  session_deps_.proxy_service =
+      ProxyService::CreateFixedFromPacResult("PROXY myproxy:70");
+  TestNetLog net_log;
+  session_deps_.net_log = &net_log;
+  GURL request_url;
+  {
+    HttpAuthHandlerMock::Factory* auth_factory =
+        new HttpAuthHandlerMock::Factory();
+    scoped_ptr<UrlRecordingHttpAuthHandlerMock> auth_handler(
+        new UrlRecordingHttpAuthHandlerMock(&request_url));
+    auth_factory->AddMockHandler(auth_handler.Pass(),
+                                 HttpAuthHandlerFactory::CREATE_CHALLENGE,
+                                 HttpAuth::AUTH_PROXY);
+    session_deps_.http_auth_handler_factory.reset(auth_factory);
+  }
+
+  HttpRequestInfo request;
+  request.method = "GET";
+  request.url = GURL("http://www.example.org");
+  request.load_flags = 0;
+
+  // First round goes unauthenticated through the proxy.
+  MockWrite data_writes_1[] = {
+      MockWrite(
+          "GET http://www.example.org/ HTTP/1.1\r\n"
+          "Host: www.example.org\r\n"
+          "Proxy-Connection: keep-alive\r\n"
+          "\r\n"),
+  };
+  MockRead data_reads_1[] = {
+      MockRead(SYNCHRONOUS, ERR_TEST_PEER_CLOSE_AFTER_NEXT_MOCK_READ),
+      MockRead("HTTP/1.1 200 OK\r\n"),
+      MockRead("Alt-Svc: "),
+      MockRead(GetAlternateProtocolFromParam()),
+      MockRead("=\":443\"\r\n"),
+      MockRead("Proxy-Connection: close\r\n"),
+      MockRead("\r\n"),
+  };
+  StaticSocketDataProvider data_1(data_reads_1, arraysize(data_reads_1),
+                                  data_writes_1, arraysize(data_writes_1));
+
+  // Second round tries to tunnel to www.example.org due to the
+  // Alternate-Protocol announcement in the first round. It fails due
+  // to a proxy authentication challenge.
+  // After the failure, a tunnel is established to www.example.org using
+  // Proxy-Authorization headers. There is then a SPDY request round.
+  //
+  // NOTE: Despite the "Proxy-Connection: Close", these are done on the
+  // same MockTCPClientSocket since the underlying HttpNetworkClientSocket
+  // does a Disconnect and Connect on the same socket, rather than trying
+  // to obtain a new one.
+  //
+  // NOTE: Originally, the proxy response to the second CONNECT request
+  // simply returned another 407 so the unit test could skip the SSL connection
+  // establishment and SPDY framing issues. Alas, the
+  // retry-http-when-alternate-protocol fails logic kicks in, which was more
+  // complicated to set up expectations for than the SPDY session.
+
+  std::unique_ptr<SpdySerializedFrame> req(
+      spdy_util_.ConstructSpdyGet(nullptr, 0, 1, LOWEST, true));
+  std::unique_ptr<SpdySerializedFrame> resp(
+      spdy_util_.ConstructSpdyGetSynReply(NULL, 0, 1));
+  std::unique_ptr<SpdySerializedFrame> data(
+      spdy_util_.ConstructSpdyBodyFrame(1, true));
+
+  MockWrite data_writes_2[] = {
+      // First connection attempt without Proxy-Authorization.
+      MockWrite(ASYNC, 0,
+                "CONNECT www.example.org:443 HTTP/1.1\r\n"
+                "Host: www.example.org:443\r\n"
+                "Proxy-Connection: keep-alive\r\n"
+                "\r\n"),
+
+      // Second connection attempt with Proxy-Authorization.
+      MockWrite(ASYNC, 2,
+                "CONNECT www.example.org:443 HTTP/1.1\r\n"
+                "Host: www.example.org:443\r\n"
+                "Proxy-Connection: keep-alive\r\n"
+                "Proxy-Authorization: mock auth_token\r\n"
+                "\r\n"),
+
+      // SPDY request
+      CreateMockWrite(*req, 4),
+  };
+  MockRead data_reads_2[] = {
+      // First connection attempt fails
+      MockRead(ASYNC, 1,
+               "HTTP/1.1 407 Unauthorized\r\n"
+               "Proxy-Authenticate: Mock\r\n"
+               "Content-Length: 0\r\n"
+               "Proxy-Connection: keep-alive\r\n"
+               "\r\n"),
+
+      // Second connection attempt passes
+      MockRead(ASYNC, 3, "HTTP/1.1 200 Connected\r\n\r\n"),
+
+      // SPDY response
+      CreateMockRead(*resp.get(), 5), CreateMockRead(*data.get(), 6),
+      MockRead(ASYNC, 0, 0, 7),
+  };
+  SequencedSocketData data_2(data_reads_2, arraysize(data_reads_2),
+                             data_writes_2, arraysize(data_writes_2));
+
+  SSLSocketDataProvider ssl(ASYNC, OK);
+  ssl.SetNextProto(GetProtocol());
+  ssl.cert = ImportCertFromFile(GetTestCertsDirectory(), "spdy_pooling.pem");
+  ASSERT_TRUE(ssl.cert);
+
+  MockConnect never_finishing_connect(SYNCHRONOUS, ERR_IO_PENDING);
+  StaticSocketDataProvider hanging_non_alternate_protocol_socket(
+      NULL, 0, NULL, 0);
+  hanging_non_alternate_protocol_socket.set_connect_data(
+      never_finishing_connect);
+
+  session_deps_.socket_factory->AddSocketDataProvider(&data_1);
+  session_deps_.socket_factory->AddSocketDataProvider(&data_2);
+  session_deps_.socket_factory->AddSSLSocketDataProvider(&ssl);
+  session_deps_.socket_factory->AddSocketDataProvider(
+      &hanging_non_alternate_protocol_socket);
+  std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
+
+  // First round should work and provide the Alternate-Protocol state.
+  TestCompletionCallback callback_1;
+  std::unique_ptr<HttpTransaction> trans_1(
+      new HttpNetworkTransaction(DEFAULT_PRIORITY, session.get()));
+  int rv = trans_1->Start(&request, callback_1.callback(), BoundNetLog());
+  EXPECT_EQ(ERR_IO_PENDING, rv);
+  EXPECT_EQ(OK, callback_1.WaitForResult());
+
+  // Second round should attempt a tunnel connect and get an auth challenge.
+  TestCompletionCallback callback_2;
+  std::unique_ptr<HttpTransaction> trans_2(
+      new HttpNetworkTransaction(DEFAULT_PRIORITY, session.get()));
+  rv = trans_2->Start(&request, callback_2.callback(), BoundNetLog());
+  EXPECT_EQ(ERR_IO_PENDING, rv);
+  EXPECT_EQ(OK, callback_2.WaitForResult());
+  const HttpResponseInfo* response = trans_2->GetResponseInfo();
+  ASSERT_TRUE(response);
+  ASSERT_TRUE(response->auth_challenge);
+
+  // Restart with auth. Tunnel should work and response received.
+  TestCompletionCallback callback_3;
+  rv = trans_2->RestartWithAuth(
+      AuthCredentials(kFoo, kBar), callback_3.callback());
+  EXPECT_EQ(ERR_IO_PENDING, rv);
+  EXPECT_EQ(OK, callback_3.WaitForResult());
+
+  // After all that work, these two lines (or actually, just the scheme) are
+  // what this test is all about. Make sure it happens correctly.
+  EXPECT_EQ("https", request_url.scheme());
+  EXPECT_EQ("www.example.org", request_url.host());
+
+  LoadTimingInfo load_timing_info;
+  EXPECT_TRUE(trans_2->GetLoadTimingInfo(&load_timing_info));
+  TestLoadTimingNotReusedWithPac(load_timing_info,
+                                 CONNECT_TIMING_HAS_SSL_TIMES);
+}
 
 // Test that if we cancel the transaction as the connection is completing, that
 // everything tears down correctly.

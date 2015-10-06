@@ -63,11 +63,12 @@ void RunSingleRoundAuthTest(HandlerRunMode run_mode,
       "\r\n"));
 
   HttpAuthHandlerMock::Factory auth_handler_factory;
-  HttpAuthHandlerMock* auth_handler = new HttpAuthHandlerMock();
+  scoped_ptr<HttpAuthHandlerMock> auth_handler(new HttpAuthHandlerMock());
   auth_handler->SetGenerateExpectation((run_mode == RUN_HANDLER_ASYNC),
                                        handler_rv);
-  auth_handler_factory.AddMockHandler(auth_handler, HttpAuth::AUTH_PROXY);
-  auth_handler_factory.set_do_init_from_challenge(true);
+  auth_handler_factory.AddMockHandler(auth_handler.Pass(),
+                                      HttpAuthHandlerFactory::CREATE_CHALLENGE,
+                                      HttpAuth::AUTH_PROXY);
 
   scoped_refptr<HttpAuthController> controller(
       new HttpAuthController(HttpAuth::AUTH_PROXY,
@@ -77,7 +78,8 @@ void RunSingleRoundAuthTest(HandlerRunMode run_mode,
   ASSERT_EQ(OK, controller->HandleAuthChallenge(headers, null_ssl_info, false,
                                                 false, dummy_log));
   ASSERT_TRUE(controller->HaveAuthHandler());
-  controller->ResetAuth(AuthCredentials());
+  controller->ResetAuth(
+      AuthCredentials(base::ASCIIToUTF16("a"), base::ASCIIToUTF16("b")));
   EXPECT_TRUE(controller->HaveAuth());
 
   TestCompletionCallback callback;
@@ -121,49 +123,6 @@ TEST(HttpAuthControllerTest, PermanentErrors) {
 // If an HttpAuthHandler indicates that it doesn't allow explicit
 // credentials, don't prompt for credentials.
 TEST(HttpAuthControllerTest, NoExplicitCredentialsAllowed) {
-  // Modified mock HttpAuthHandler for this test.
-  class MockHandler : public HttpAuthHandlerMock {
-   public:
-    MockHandler(int expected_rv, const std::string& scheme)
-        : expected_scheme_(scheme) {
-      SetGenerateExpectation(false, expected_rv);
-    }
-
-   protected:
-    bool Init(HttpAuthChallengeTokenizer* challenge,
-              const SSLInfo& ssl_info) override {
-      HttpAuthHandlerMock::Init(challenge, ssl_info);
-      set_allows_default_credentials(true);
-      set_allows_explicit_credentials(false);
-      // Pretend to be Bert so we can test failover logic.
-      if (challenge->SchemeIs("bert")) {
-        auth_scheme_ = "bert";
-        set_allows_explicit_credentials(true);
-      } else {
-        auth_scheme_ = "ernie";
-      }
-      EXPECT_EQ(expected_scheme_, auth_scheme_);
-      return true;
-    }
-
-    int GenerateAuthTokenImpl(const AuthCredentials* credentials,
-                              const HttpRequestInfo* request,
-                              const CompletionCallback& callback,
-                              std::string* auth_token) override {
-      int result =
-          HttpAuthHandlerMock::GenerateAuthTokenImpl(credentials,
-                                                     request, callback,
-                                                     auth_token);
-      EXPECT_TRUE(result != OK ||
-                  !AllowsExplicitCredentials() ||
-                  !credentials->Empty());
-      return result;
-    }
-
-   private:
-    std::string expected_scheme_;
-  };
-
   NetLogWithSource dummy_log;
   HttpAuthCache dummy_auth_cache;
   HttpRequestInfo request;
@@ -178,11 +137,15 @@ TEST(HttpAuthControllerTest, NoExplicitCredentialsAllowed) {
                         "\r\n"));
 
   HttpAuthHandlerMock::Factory auth_handler_factory;
-  auth_handler_factory.set_do_init_from_challenge(true);
 
   // Handler for the first attempt at authentication. "Ernie" handler accepts
-  // the default identity and successfully constructs a token.
-  auth_handler_factory.AddMockHandler(new MockHandler(OK, "ernie"),
+  // the default identity and successfully constructs a token.  Handler for the
+  scoped_ptr<HttpAuthHandlerMock> auth_handler(new HttpAuthHandlerMock());
+  auth_handler->set_allows_default_credentials(true);
+  auth_handler->set_allows_explicit_credentials(false);
+  auth_handler->set_expected_auth_scheme("ernie");
+  auth_handler_factory.AddMockHandler(auth_handler.Pass(),
+                                      HttpAuthHandlerFactory::CREATE_CHALLENGE,
                                       HttpAuth::AUTH_SERVER);
 
   scoped_refptr<HttpAuthController> controller(
@@ -205,13 +168,23 @@ TEST(HttpAuthControllerTest, NoExplicitCredentialsAllowed) {
   // Handlers for the second attempt. Neither should be used to generate a
   // token. Instead the controller should realize that there are no viable
   // identities to use with the "Ernie" handler and fail.
-  auth_handler_factory.AddMockHandler(new MockHandler(ERR_UNEXPECTED, "ernie"),
+  auth_handler.reset(new HttpAuthHandlerMock());
+  auth_handler->set_allows_default_credentials(true);
+  auth_handler->set_allows_explicit_credentials(false);
+  auth_handler->set_expected_auth_scheme("ernie");
+  auth_handler_factory.AddMockHandler(auth_handler.Pass(),
+                                      HttpAuthHandlerFactory::CREATE_CHALLENGE,
                                       HttpAuth::AUTH_SERVER);
 
   // Fallback handlers for the second attempt. The "Ernie" handler should be
   // discarded due to the disabled scheme, and the "Bert" handler should
   // successfully be used to generate a token.
-  auth_handler_factory.AddMockHandler(new MockHandler(OK, "bert"),
+  auth_handler.reset(new HttpAuthHandlerMock());
+  auth_handler->set_allows_default_credentials(false);
+  auth_handler->set_allows_explicit_credentials(true);
+  auth_handler->set_expected_auth_scheme("bert");
+  auth_handler_factory.AddMockHandler(auth_handler.Pass(),
+                                      HttpAuthHandlerFactory::CREATE_CHALLENGE,
                                       HttpAuth::AUTH_SERVER);
 
   // Once a token is generated, simulate the receipt of a server response

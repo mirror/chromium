@@ -31,9 +31,9 @@ namespace {
 HttpAuthHandlerMock* CreateMockHandler(bool expect_multiple_challenges) {
   HttpAuthHandlerMock* auth_handler = new HttpAuthHandlerMock();
   auth_handler->set_expect_multiple_challenges(expect_multiple_challenges);
-  std::string challenge_text = "Basic";
+  std::string challenge_text = "Mock";
   HttpAuthChallengeTokenizer challenge(challenge_text.begin(),
-                                         challenge_text.end());
+                                       challenge_text.end());
   GURL origin("www.example.com");
   SSLInfo null_ssl_info;
   EXPECT_TRUE(auth_handler->InitFromChallenge(&challenge, HttpAuth::AUTH_SERVER,
@@ -56,7 +56,7 @@ HttpAuth::AuthorizationResult HandleChallengeResponse(
   HttpAuthSchemeSet disabled_schemes;
   scoped_refptr<HttpResponseHeaders> headers(
       HeadersFromResponseText(headers_text));
-  return HttpAuth::HandleChallengeResponse(mock_handler.get(), *headers,
+  return HttpAuth::HandleChallengeResponse(mock_handler.get(), headers.get(),
                                            HttpAuth::AUTH_SERVER,
                                            disabled_schemes, challenge_used);
 }
