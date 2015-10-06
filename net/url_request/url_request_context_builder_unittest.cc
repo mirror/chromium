@@ -117,7 +117,7 @@ TEST_F(URLRequestContextBuilderTest, CustomHttpAuthHandlerFactory) {
   const int kBasicReturnCode = OK;
   std::unique_ptr<HttpAuthHandler> handler;
   builder_.SetHttpAuthHandlerFactory(
-      base::MakeUnique<MockHttpAuthHandlerFactory>("ExtraScheme",
+      base::MakeUnique<MockHttpAuthHandlerFactory>("extrascheme",
                                                    kBasicReturnCode));
   std::unique_ptr<URLRequestContext> context(builder_.Build());
   SSLInfo null_ssl_info;

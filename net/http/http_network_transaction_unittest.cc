@@ -11708,7 +11708,7 @@ TEST_F(HttpNetworkTransactionTest, MultiRoundAuth) {
   session_deps_.host_resolver->set_synchronous_mode(true);
 
   HttpAuthHandlerMock* auth_handler(new HttpAuthHandlerMock());
-  auth_handler->set_connection_based(true);
+  auth_handler->set_expect_multiple_challenges(true);
   std::string auth_challenge = "Mock realm=server";
   GURL origin("http://www.example.com");
   HttpAuthChallengeTokenizer tokenizer(auth_challenge.begin(),
@@ -15379,9 +15379,9 @@ TEST_F(HttpNetworkTransactionTest, ProxyHeadersNotSentOverWsTunnel) {
                                 arraysize(data_writes));
   session_deps_.socket_factory->AddSocketDataProvider(&data);
 
-  session->http_auth_cache()->Add(
-      GURL("http://myproxy:70/"), "MyRealm1", HttpAuth::AUTH_SCHEME_BASIC,
-      "Basic realm=MyRealm1", AuthCredentials(kFoo, kBar), "/");
+  session->http_auth_cache()->Add(GURL("http://myproxy:70/"), "MyRealm1",
+                                  "basic", "Basic realm=MyRealm1",
+                                  AuthCredentials(kFoo, kBar), "/");
 
   std::unique_ptr<HttpNetworkTransaction> trans(
       new HttpNetworkTransaction(DEFAULT_PRIORITY, session.get()));

@@ -18,16 +18,7 @@
 namespace net {
 
 HttpAuthHandlerMock::HttpAuthHandlerMock()
-  : resolve_(RESOLVE_INIT),
-    generate_async_(false),
-    generate_rv_(OK),
-    auth_token_(NULL),
-    first_round_(true),
-    connection_based_(false),
-    allows_default_credentials_(false),
-    allows_explicit_credentials_(true),
-    weak_factory_(this) {
-}
+    : generate_rv_(OK), weak_factory_(this) {}
 
 HttpAuthHandlerMock::~HttpAuthHandlerMock() {
 }
@@ -81,11 +72,12 @@ void HttpAuthHandlerMock::SetGenerateExpectation(bool async, int rv) {
 
 HttpAuth::AuthorizationResult HttpAuthHandlerMock::HandleAnotherChallenge(
     HttpAuthChallengeTokenizer* challenge) {
-  // If we receive an empty challenge for a connection based scheme, or a second
-  // challenge for a non connection based scheme, assume it's a rejection.
-  if (!is_connection_based() || challenge->base64_param().empty())
+  // If we receive a second challenge for a regular scheme, assume it's a
+  // rejection. Receiving an empty second challenge when expecting multiple
+  // rounds is also considered a rejection.
+  if (!expect_multiple_challenges() || challenge->base64_param().empty())
     return HttpAuth::AUTHORIZATION_RESULT_REJECT;
-  if (!base::LowerCaseEqualsASCII(challenge->scheme(), "mock"))
+  if (!challenge->SchemeIs("mock"))
     return HttpAuth::AUTHORIZATION_RESULT_INVALID;
   return HttpAuth::AUTHORIZATION_RESULT_ACCEPT;
 }
@@ -104,9 +96,7 @@ bool HttpAuthHandlerMock::AllowsExplicitCredentials() {
 
 bool HttpAuthHandlerMock::Init(HttpAuthChallengeTokenizer* challenge,
                                const SSLInfo& ssl_info) {
-  auth_scheme_ = HttpAuth::AUTH_SCHEME_MOCK;
-  score_ = 1;
-  properties_ = connection_based_ ? IS_CONNECTION_BASED : 0;
+  auth_scheme_ = "mock";
   return true;
 }
 
@@ -164,6 +154,11 @@ HttpAuthHandlerMock::Factory::~Factory() {
 void HttpAuthHandlerMock::Factory::AddMockHandler(
     HttpAuthHandler* handler, HttpAuth::Target target) {
   handlers_[target].push_back(base::WrapUnique(handler));
+}
+
+bool HttpAuthHandlerMock::Factory::HaveAuthHandlers(
+    HttpAuth::Target target) const {
+  return !handlers_[target].empty();
 }
 
 int HttpAuthHandlerMock::Factory::CreateAuthHandler(

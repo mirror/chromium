@@ -14,6 +14,7 @@
 #include "net/base/completion_callback.h"
 #include "net/base/net_export.h"
 #include "net/http/http_auth.h"
+#include "net/http/http_auth_scheme_set.h"
 #include "net/log/net_log.h"
 #include "url/gurl.h"
 
@@ -70,8 +71,8 @@ class NET_EXPORT_PRIVATE HttpAuthController
 
   virtual scoped_refptr<AuthChallengeInfo> auth_info();
 
-  virtual bool IsAuthSchemeDisabled(HttpAuth::Scheme scheme) const;
-  virtual void DisableAuthScheme(HttpAuth::Scheme scheme);
+  virtual bool IsAuthSchemeDisabled(const std::string& scheme) const;
+  virtual void DisableAuthScheme(const std::string& scheme);
   virtual void DisableEmbeddedIdentity();
 
  private:
@@ -162,7 +163,7 @@ class NET_EXPORT_PRIVATE HttpAuthController
   HttpAuthCache* const http_auth_cache_;
   HttpAuthHandlerFactory* const http_auth_handler_factory_;
 
-  std::set<HttpAuth::Scheme> disabled_schemes_;
+  HttpAuthSchemeSet disabled_schemes_;
 
   CompletionCallback callback_;
 };

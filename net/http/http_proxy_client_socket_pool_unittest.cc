@@ -85,15 +85,12 @@ class HttpProxyClientSocketPoolTest
   void AddAuthToCache() {
     const base::string16 kFoo(base::ASCIIToUTF16("foo"));
     const base::string16 kBar(base::ASCIIToUTF16("bar"));
-    GURL proxy_url(GetParam() == HTTP
+    GURL proxy_url(GetParam().proxy_type == HTTP
                        ? (std::string("http://") + kHttpProxyHost)
                        : (std::string("https://") + kHttpsProxyHost));
-    session_->http_auth_cache()->Add(proxy_url,
-                                     "MyRealm1",
-                                     HttpAuth::AUTH_SCHEME_BASIC,
+    session_->http_auth_cache()->Add(proxy_url, "MyRealm1", "basic",
                                      "Basic realm=MyRealm1",
-                                     AuthCredentials(kFoo, kBar),
-                                     "/");
+                                     AuthCredentials(kFoo, kBar), "/");
   }
 
   scoped_refptr<TransportSocketParams> CreateHttpProxyParams() const {

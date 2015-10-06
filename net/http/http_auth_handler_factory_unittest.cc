@@ -73,20 +73,20 @@ TEST(HttpAuthHandlerFactoryTest, RegistryFactory) {
                 BoundNetLog(), &handler));
 
   // Test what happens with a single scheme.
-  registry_factory.RegisterSchemeFactory("Basic", mock_factory_basic);
-  EXPECT_EQ(kBasicReturnCode, registry_factory.CreateAuthHandlerFromString(
-                                  "Basic", HttpAuth::AUTH_SERVER, null_ssl_info,
-                                  gurl, BoundNetLog(), &handler));
+  registry_factory.RegisterSchemeFactory("basic", mock_factory_basic);
+  EXPECT_EQ(kBasicReturnCode,
+            registry_factory.CreateAuthHandlerFromString(
+                "Basic", HttpAuth::AUTH_SERVER, null_ssl_info, gurl, BoundNetLog(), &handler));
   EXPECT_EQ(ERR_UNSUPPORTED_AUTH_SCHEME,
             registry_factory.CreateAuthHandlerFromString(
                 "Digest", HttpAuth::AUTH_SERVER, null_ssl_info, gurl,
                 BoundNetLog(), &handler));
 
   // Test multiple schemes
-  registry_factory.RegisterSchemeFactory("Digest", mock_factory_digest);
-  EXPECT_EQ(kBasicReturnCode, registry_factory.CreateAuthHandlerFromString(
-                                  "Basic", HttpAuth::AUTH_SERVER, null_ssl_info,
-                                  gurl, BoundNetLog(), &handler));
+  registry_factory.RegisterSchemeFactory("digest", mock_factory_digest);
+  EXPECT_EQ(kBasicReturnCode,
+            registry_factory.CreateAuthHandlerFromString(
+                "Basic", HttpAuth::AUTH_SERVER, null_ssl_info, gurl, BoundNetLog(), &handler));
   EXPECT_EQ(kDigestReturnCode,
             registry_factory.CreateAuthHandlerFromString(
                 "Digest", HttpAuth::AUTH_SERVER, null_ssl_info, gurl,
@@ -98,10 +98,10 @@ TEST(HttpAuthHandlerFactoryTest, RegistryFactory) {
                                   gurl, BoundNetLog(), &handler));
 
   // Test replacement of existing auth scheme
-  registry_factory.RegisterSchemeFactory("Digest", mock_factory_digest_replace);
-  EXPECT_EQ(kBasicReturnCode, registry_factory.CreateAuthHandlerFromString(
-                                  "Basic", HttpAuth::AUTH_SERVER, null_ssl_info,
-                                  gurl, BoundNetLog(), &handler));
+  registry_factory.RegisterSchemeFactory("digest", mock_factory_digest_replace);
+  EXPECT_EQ(kBasicReturnCode,
+            registry_factory.CreateAuthHandlerFromString(
+                "Basic", HttpAuth::AUTH_SERVER, null_ssl_info, gurl, BoundNetLog(), &handler));
   EXPECT_EQ(kDigestReturnCodeReplace,
             registry_factory.CreateAuthHandlerFromString(
                 "Digest", HttpAuth::AUTH_SERVER, null_ssl_info, gurl,
@@ -125,11 +125,9 @@ TEST(HttpAuthHandlerFactoryTest, DefaultFactory) {
         server_origin, BoundNetLog(), &handler);
     EXPECT_THAT(rv, IsOk());
     ASSERT_FALSE(handler.get() == NULL);
-    EXPECT_EQ(HttpAuth::AUTH_SCHEME_BASIC, handler->auth_scheme());
+    EXPECT_EQ("basic", handler->auth_scheme());
     EXPECT_STREQ("FooBar", handler->realm().c_str());
     EXPECT_EQ(HttpAuth::AUTH_SERVER, handler->target());
-    EXPECT_FALSE(handler->encrypts_identity());
-    EXPECT_FALSE(handler->is_connection_based());
   }
   {
     std::unique_ptr<HttpAuthHandler> handler;
@@ -146,11 +144,9 @@ TEST(HttpAuthHandlerFactoryTest, DefaultFactory) {
         null_ssl_info, proxy_origin, BoundNetLog(), &handler);
     EXPECT_THAT(rv, IsOk());
     ASSERT_FALSE(handler.get() == NULL);
-    EXPECT_EQ(HttpAuth::AUTH_SCHEME_DIGEST, handler->auth_scheme());
+    EXPECT_EQ("digest", handler->auth_scheme());
     EXPECT_STREQ("FooBar", handler->realm().c_str());
     EXPECT_EQ(HttpAuth::AUTH_PROXY, handler->target());
-    EXPECT_TRUE(handler->encrypts_identity());
-    EXPECT_FALSE(handler->is_connection_based());
   }
   {
     std::unique_ptr<HttpAuthHandler> handler;
@@ -159,11 +155,9 @@ TEST(HttpAuthHandlerFactoryTest, DefaultFactory) {
         BoundNetLog(), &handler);
     EXPECT_THAT(rv, IsOk());
     ASSERT_FALSE(handler.get() == NULL);
-    EXPECT_EQ(HttpAuth::AUTH_SCHEME_NTLM, handler->auth_scheme());
+    EXPECT_EQ("ntlm", handler->auth_scheme());
     EXPECT_STREQ("", handler->realm().c_str());
     EXPECT_EQ(HttpAuth::AUTH_SERVER, handler->target());
-    EXPECT_TRUE(handler->encrypts_identity());
-    EXPECT_TRUE(handler->is_connection_based());
   }
   {
     std::unique_ptr<HttpAuthHandler> handler;
@@ -174,11 +168,9 @@ TEST(HttpAuthHandlerFactoryTest, DefaultFactory) {
 #if defined(USE_KERBEROS) && !defined(OS_ANDROID)
     EXPECT_THAT(rv, IsOk());
     ASSERT_FALSE(handler.get() == NULL);
-    EXPECT_EQ(HttpAuth::AUTH_SCHEME_NEGOTIATE, handler->auth_scheme());
+    EXPECT_EQ("negotiate", handler->auth_scheme());
     EXPECT_STREQ("", handler->realm().c_str());
     EXPECT_EQ(HttpAuth::AUTH_SERVER, handler->target());
-    EXPECT_TRUE(handler->encrypts_identity());
-    EXPECT_TRUE(handler->is_connection_based());
 #else
     EXPECT_THAT(rv, IsError(ERR_UNSUPPORTED_AUTH_SCHEME));
     EXPECT_TRUE(handler.get() == NULL);

@@ -156,12 +156,9 @@ class SSLClientSocketPoolTest : public testing::Test {
   void AddAuthToCache() {
     const base::string16 kFoo(base::ASCIIToUTF16("foo"));
     const base::string16 kBar(base::ASCIIToUTF16("bar"));
-    session_->http_auth_cache()->Add(GURL("http://proxy:443/"),
-                                     "MyRealm1",
-                                     HttpAuth::AUTH_SCHEME_BASIC,
-                                     "Basic realm=MyRealm1",
-                                     AuthCredentials(kFoo, kBar),
-                                     "/");
+    session_->http_auth_cache()->Add(GURL("http://proxy:443/"), "MyRealm1",
+                                     "basic", "Basic realm=MyRealm1",
+                                     AuthCredentials(kFoo, kBar), "/");
   }
 
   HttpNetworkSession* CreateNetworkSession() {

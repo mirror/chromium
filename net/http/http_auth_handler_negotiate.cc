@@ -15,6 +15,7 @@
 #include "net/base/net_errors.h"
 #include "net/cert/x509_util.h"
 #include "net/dns/host_resolver.h"
+#include "net/http/http_auth_challenge_tokenizer.h"
 #include "net/http/http_auth_filter.h"
 #include "net/http/http_auth_preferences.h"
 #include "net/log/net_log.h"
@@ -226,10 +227,7 @@ bool HttpAuthHandlerNegotiate::Init(HttpAuthChallengeTokenizer* challenge,
 #endif
   if (CanDelegate())
     auth_system_.Delegate();
-  auth_scheme_ = HttpAuth::AUTH_SCHEME_NEGOTIATE;
-  score_ = 4;
-  properties_ = ENCRYPTS_IDENTITY | IS_CONNECTION_BASED;
-
+  auth_scheme_ = "negotiate";
   HttpAuth::AuthorizationResult auth_result =
       auth_system_.ParseChallenge(challenge);
   if (auth_result != HttpAuth::AUTHORIZATION_RESULT_ACCEPT)

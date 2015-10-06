@@ -26,10 +26,8 @@ HttpAuth::AuthorizationResult HttpAuthHandlerNTLM::HandleAnotherChallenge(
 
 bool HttpAuthHandlerNTLM::Init(HttpAuthChallengeTokenizer* tok,
                                const SSLInfo& ssl_info) {
-  auth_scheme_ = HttpAuth::AUTH_SCHEME_NTLM;
-  score_ = 3;
-  properties_ = ENCRYPTS_IDENTITY | IS_CONNECTION_BASED;
 
+  auth_scheme_ = "ntlm";
   if (ssl_info.is_valid())
     x509_util::GetTLSServerEndPointChannelBinding(*ssl_info.cert,
                                                   &channel_bindings_);
@@ -120,7 +118,7 @@ HttpAuth::AuthorizationResult HttpAuthHandlerNTLM::ParseChallenge(
   auth_data_.clear();
 
   // Verify the challenge's auth-scheme.
-  if (!base::LowerCaseEqualsASCII(tok->scheme(), kNtlmAuthScheme))
+  if (!tok->SchemeIs(kNtlmAuthScheme))
     return HttpAuth::AUTHORIZATION_RESULT_INVALID;
 
   std::string base64_param = tok->base64_param();

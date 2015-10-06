@@ -380,8 +380,6 @@ TEST(HttpAuthHandlerDigestTest, ParseChallenge) {
     EXPECT_EQ(tests[i].parsed_stale, digest->stale_);
     EXPECT_EQ(tests[i].parsed_algorithm, digest->algorithm_);
     EXPECT_EQ(tests[i].parsed_qop, digest->qop_);
-    EXPECT_TRUE(handler->encrypts_identity());
-    EXPECT_FALSE(handler->is_connection_based());
     EXPECT_TRUE(handler->NeedsIdentity());
     EXPECT_FALSE(handler->AllowsDefaultCredentials());
   }

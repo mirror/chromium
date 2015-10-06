@@ -9,24 +9,11 @@
 
 namespace net {
 
-namespace {
-
-// Check that the scheme in the challenge matches the expected scheme
-bool SchemeIsValid(const std::string& scheme,
-                   HttpAuthChallengeTokenizer* challenge) {
-  // There is no guarantee that challenge->scheme() is valid ASCII, but
-  // LowerCaseEqualsASCII will do the right thing even if it isn't.
-  return base::LowerCaseEqualsASCII(challenge->scheme(),
-                                    base::ToLowerASCII(scheme));
-}
-
-}  // namespace
-
 HttpAuth::AuthorizationResult ParseFirstRoundChallenge(
     const std::string& scheme,
     HttpAuthChallengeTokenizer* challenge) {
   // Verify the challenge's auth-scheme.
-  if (!SchemeIsValid(scheme, challenge))
+  if (!challenge->SchemeIs(base::ToLowerASCII(scheme)))
     return HttpAuth::AUTHORIZATION_RESULT_INVALID;
 
   std::string encoded_auth_token = challenge->base64_param();
@@ -42,7 +29,7 @@ HttpAuth::AuthorizationResult ParseLaterRoundChallenge(
     std::string* encoded_token,
     std::string* decoded_token) {
   // Verify the challenge's auth-scheme.
-  if (!SchemeIsValid(scheme, challenge))
+  if (!challenge->SchemeIs(base::ToLowerASCII(scheme)))
     return HttpAuth::AUTHORIZATION_RESULT_INVALID;
 
   *encoded_token = challenge->base64_param();
