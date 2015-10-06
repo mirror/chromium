@@ -15,7 +15,7 @@ TEST(HttpAuthHandlerNegotiateParseTest, ParseFirstRoundChallenge) {
   HttpAuthChallengeTokenizer challenge(challenge_text.begin(),
                                        challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_ACCEPT,
-            ParseFirstRoundChallenge("dummyscheme", &challenge));
+            ParseFirstRoundChallenge("dummyscheme", challenge));
 }
 
 TEST(HttpAuthHandlerNegotiateParseTest,
@@ -26,7 +26,7 @@ TEST(HttpAuthHandlerNegotiateParseTest,
   HttpAuthChallengeTokenizer challenge(challenge_text.begin(),
                                        challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_INVALID,
-            ParseFirstRoundChallenge("negotiate", &challenge));
+            ParseFirstRoundChallenge("negotiate", challenge));
 }
 
 TEST(HttpAuthHandlerNegotiateParseTest,
@@ -35,7 +35,7 @@ TEST(HttpAuthHandlerNegotiateParseTest,
   HttpAuthChallengeTokenizer challenge(challenge_text.begin(),
                                        challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_INVALID,
-            ParseFirstRoundChallenge("negotiate", &challenge));
+            ParseFirstRoundChallenge("negotiate", challenge));
 }
 
 TEST(HttpAuthHandlerNegotiateParseTest, ParseLaterRoundChallenge) {
@@ -46,7 +46,7 @@ TEST(HttpAuthHandlerNegotiateParseTest, ParseLaterRoundChallenge) {
   std::string encoded_token;
   std::string decoded_token;
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_ACCEPT,
-            ParseLaterRoundChallenge("negotiate", &challenge, &encoded_token,
+            ParseLaterRoundChallenge("negotiate", challenge, &encoded_token,
                                      &decoded_token));
   EXPECT_EQ("Zm9vYmFy", encoded_token);
   EXPECT_EQ("foobar", decoded_token);
@@ -60,7 +60,7 @@ TEST(HttpAuthHandlerNegotiateParseTest,
   std::string encoded_token;
   std::string decoded_token;
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_REJECT,
-            ParseLaterRoundChallenge("negotiate", &challenge, &encoded_token,
+            ParseLaterRoundChallenge("negotiate", challenge, &encoded_token,
                                      &decoded_token));
 }
 
@@ -72,7 +72,7 @@ TEST(HttpAuthHandlerNegotiateParseTest,
   std::string encoded_token;
   std::string decoded_token;
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_INVALID,
-            ParseLaterRoundChallenge("negotiate", &challenge, &encoded_token,
+            ParseLaterRoundChallenge("negotiate", challenge, &encoded_token,
                                      &decoded_token));
 }
 }

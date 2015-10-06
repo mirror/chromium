@@ -55,32 +55,32 @@ bool ParseRealm(const HttpAuthChallengeTokenizer& tokenizer,
 
 }  // namespace
 
-bool HttpAuthHandlerBasic::Init(HttpAuthChallengeTokenizer* challenge, const SSLInfo& ssl_info) {
+int HttpAuthHandlerBasic::Init(HttpAuthChallengeTokenizer* challenge, const SSLInfo& ssl_info) {
   auth_scheme_ = kBasicSchemeName;
   return ParseChallenge(challenge);
 }
 
-bool HttpAuthHandlerBasic::ParseChallenge(
-    HttpAuthChallengeTokenizer* challenge) {
+int HttpAuthHandlerBasic::ParseChallenge(
+    const HttpAuthChallengeTokenizer& challenge) {
   // Verify the challenge's auth-scheme.
-  if (!challenge->SchemeIs(kBasicSchemeName))
-    return false;
+  if (!challenge.SchemeIs(kBasicSchemeName))
+    return ERR_INVALID_RESPONSE;
 
   std::string realm;
-  if (!ParseRealm(*challenge, &realm))
-    return false;
+  if (!ParseRealm(challenge, &realm))
+    return ERR_INVALID_RESPONSE;
 
   realm_ = realm;
-  return true;
+  return OK;
 }
 
 HttpAuth::AuthorizationResult HttpAuthHandlerBasic::HandleAnotherChallenge(
-    HttpAuthChallengeTokenizer* challenge) {
+    const HttpAuthChallengeTokenizer& challenge) {
   // Basic authentication is always a single round, so any responses
   // should be treated as a rejection.  However, if the new challenge
   // is for a different realm, then indicate the realm change.
   std::string realm;
-  if (!ParseRealm(*challenge, &realm))
+  if (!ParseRealm(challenge, &realm))
     return HttpAuth::AUTHORIZATION_RESULT_INVALID;
   return (realm_ != realm)?
       HttpAuth::AUTHORIZATION_RESULT_DIFFERENT_REALM:
@@ -88,8 +88,10 @@ HttpAuth::AuthorizationResult HttpAuthHandlerBasic::HandleAnotherChallenge(
 }
 
 int HttpAuthHandlerBasic::GenerateAuthTokenImpl(
-    const AuthCredentials* credentials, const HttpRequestInfo*,
-    const CompletionCallback&, std::string* auth_token) {
+    const AuthCredentials* credentials,
+    const HttpRequestInfo&,
+    const CompletionCallback&,
+    std::string* auth_token) {
   DCHECK(credentials);
   // TODO(eroman): is this the right encoding of username/password?
   std::string base64_username_password;
@@ -107,7 +109,7 @@ HttpAuthHandlerBasic::Factory::~Factory() {
 }
 
 int HttpAuthHandlerBasic::Factory::CreateAuthHandler(
-    HttpAuthChallengeTokenizer* challenge,
+    const HttpAuthChallengeTokenizer& challenge,
     HttpAuth::Target target,
     const SSLInfo& ssl_info,
     const GURL& origin,
@@ -118,11 +120,11 @@ int HttpAuthHandlerBasic::Factory::CreateAuthHandler(
   // TODO(cbentzel): Move towards model of parsing in the factory
   //                 method and only constructing when valid.
   std::unique_ptr<HttpAuthHandler> tmp_handler(new HttpAuthHandlerBasic());
-  if (!tmp_handler->InitFromChallenge(challenge, target, ssl_info, origin,
-                                      net_log))
-    return ERR_INVALID_RESPONSE;
-  handler->swap(tmp_handler);
-  return OK;
+  int result =
+      tmp_handler->HandleInitialChallenge(challenge, target, ssl_info, origin, net_log);
+  if (result == OK)
+    handler->swap(tmp_handler);
+  return result;
 }
 
 }  // namespace net

@@ -65,7 +65,7 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerDigest : public HttpAuthHandler {
     // This factory owns the passed in |nonce_generator|.
     void set_nonce_generator(const NonceGenerator* nonce_generator);
 
-    int CreateAuthHandler(HttpAuthChallengeTokenizer* challenge,
+    int CreateAuthHandler(const HttpAuthChallengeTokenizer& challenge,
                           HttpAuth::Target target,
                           const SSLInfo& ssl_info,
                           const GURL& origin,
@@ -79,14 +79,14 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerDigest : public HttpAuthHandler {
   };
 
   HttpAuth::AuthorizationResult HandleAnotherChallenge(
-      HttpAuthChallengeTokenizer* challenge) override;
+      const HttpAuthChallengeTokenizer& challenge) override;
 
  protected:
-  bool Init(HttpAuthChallengeTokenizer* challenge,
-            const SSLInfo& ssl_info) override;
+  int Init(const HttpAuthChallengeTokenizer& challenge,
+           const SSLInfo& ssl_info) override;
 
   int GenerateAuthTokenImpl(const AuthCredentials* credentials,
-                            const HttpRequestInfo* request,
+                            const HttpRequestInfo& request,
                             const CompletionCallback& callback,
                             std::string* auth_token) override;
 
@@ -126,7 +126,7 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerDigest : public HttpAuthHandler {
 
   // Parse the challenge, saving the results into this instance.
   // Returns true on success.
-  bool ParseChallenge(HttpAuthChallengeTokenizer* challenge);
+  bool ParseChallenge(const HttpAuthChallengeTokenizer& challenge);
 
   // Parse an individual property. Returns true on success.
   bool ParseChallengeProperty(const std::string& name,
@@ -141,7 +141,7 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerDigest : public HttpAuthHandler {
 
   // Extract the method and path of the request, as needed by
   // the 'A2' production. (path may be a hostname for proxy).
-  void GetRequestMethodAndPath(const HttpRequestInfo* request,
+  void GetRequestMethodAndPath(const HttpRequestInfo& request,
                                std::string* method,
                                std::string* path) const;
 

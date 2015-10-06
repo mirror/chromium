@@ -11977,10 +11977,10 @@ class UrlRecordingHttpAuthHandlerMock : public HttpAuthHandlerMock {
 
  protected:
   int GenerateAuthTokenImpl(const AuthCredentials* credentials,
-                            const HttpRequestInfo* request,
+                            const HttpRequestInfo& request,
                             const CompletionCallback& callback,
                             std::string* auth_token) override {
-    *url_ = request->url;
+    *url_ = request.url;
     return HttpAuthHandlerMock::GenerateAuthTokenImpl(
         credentials, request, callback, auth_token);
   }

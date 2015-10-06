@@ -76,8 +76,8 @@ bool RespondToChallenge(HttpAuth::Target target,
   request->url = GURL(request_url);
   AuthCredentials credentials(base::ASCIIToUTF16("foo"),
                               base::ASCIIToUTF16("bar"));
-  int rv_generate = handler->GenerateAuthToken(
-      &credentials, request.get(), callback.callback(), token);
+  int rv_generate = handler->GenerateAuthToken(&credentials, *request,
+                                               callback.callback(), token);
   if (rv_generate != OK) {
     ADD_FAILURE() << "Problems generating auth token";
     return false;
@@ -559,26 +559,26 @@ TEST(HttpAuthHandlerDigest, HandleAnotherChallenge) {
   HttpAuthChallengeTokenizer tok_default(default_challenge.begin(),
                                          default_challenge.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_REJECT,
-            handler->HandleAnotherChallenge(&tok_default));
+            handler->HandleAnotherChallenge(tok_default));
 
   std::string stale_challenge = default_challenge + ", stale=true";
   HttpAuthChallengeTokenizer tok_stale(stale_challenge.begin(),
                                        stale_challenge.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_STALE,
-            handler->HandleAnotherChallenge(&tok_stale));
+            handler->HandleAnotherChallenge(tok_stale));
 
   std::string stale_false_challenge = default_challenge + ", stale=false";
   HttpAuthChallengeTokenizer tok_stale_false(stale_false_challenge.begin(),
                                              stale_false_challenge.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_REJECT,
-            handler->HandleAnotherChallenge(&tok_stale_false));
+            handler->HandleAnotherChallenge(tok_stale_false));
 
   std::string realm_change_challenge =
       "Digest realm=\"SomethingElse\", nonce=\"nonce-value2\"";
   HttpAuthChallengeTokenizer tok_realm_change(realm_change_challenge.begin(),
                                               realm_change_challenge.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_DIFFERENT_REALM,
-            handler->HandleAnotherChallenge(&tok_realm_change));
+            handler->HandleAnotherChallenge(tok_realm_change));
 }
 
 TEST(HttpAuthHandlerDigest, RespondToServerChallenge) {

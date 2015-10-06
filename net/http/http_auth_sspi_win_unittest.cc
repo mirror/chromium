@@ -76,7 +76,7 @@ TEST(HttpAuthSSPITest, ParseChallenge_FirstRound) {
   HttpAuthChallengeTokenizer challenge(challenge_text.begin(),
                                        challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_ACCEPT,
-            auth_sspi.ParseChallenge(&challenge));
+            auth_sspi.ParseChallenge(challenge));
 }
 
 TEST(HttpAuthSSPITest, ParseChallenge_TwoRounds) {
@@ -89,7 +89,7 @@ TEST(HttpAuthSSPITest, ParseChallenge_TwoRounds) {
   HttpAuthChallengeTokenizer first_challenge(first_challenge_text.begin(),
                                              first_challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_ACCEPT,
-            auth_sspi.ParseChallenge(&first_challenge));
+            auth_sspi.ParseChallenge(first_challenge));
 
   // Generate an auth token and create another thing.
   std::string auth_token;
@@ -101,7 +101,7 @@ TEST(HttpAuthSSPITest, ParseChallenge_TwoRounds) {
   HttpAuthChallengeTokenizer second_challenge(second_challenge_text.begin(),
                                               second_challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_ACCEPT,
-            auth_sspi.ParseChallenge(&second_challenge));
+            auth_sspi.ParseChallenge(second_challenge));
 }
 
 TEST(HttpAuthSSPITest, ParseChallenge_UnexpectedTokenFirstRound) {
@@ -114,7 +114,7 @@ TEST(HttpAuthSSPITest, ParseChallenge_UnexpectedTokenFirstRound) {
   HttpAuthChallengeTokenizer challenge(challenge_text.begin(),
                                        challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_INVALID,
-            auth_sspi.ParseChallenge(&challenge));
+            auth_sspi.ParseChallenge(challenge));
 }
 
 TEST(HttpAuthSSPITest, ParseChallenge_MissingTokenSecondRound) {
@@ -127,7 +127,7 @@ TEST(HttpAuthSSPITest, ParseChallenge_MissingTokenSecondRound) {
   HttpAuthChallengeTokenizer first_challenge(first_challenge_text.begin(),
                                              first_challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_ACCEPT,
-            auth_sspi.ParseChallenge(&first_challenge));
+            auth_sspi.ParseChallenge(first_challenge));
 
   std::string auth_token;
   EXPECT_EQ(OK, auth_sspi.GenerateAuthToken(NULL, "HTTP/intranet.google.com",
@@ -137,7 +137,7 @@ TEST(HttpAuthSSPITest, ParseChallenge_MissingTokenSecondRound) {
   HttpAuthChallengeTokenizer second_challenge(second_challenge_text.begin(),
                                               second_challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_REJECT,
-            auth_sspi.ParseChallenge(&second_challenge));
+            auth_sspi.ParseChallenge(second_challenge));
 }
 
 TEST(HttpAuthSSPITest, ParseChallenge_NonBase64EncodedToken) {
@@ -150,7 +150,7 @@ TEST(HttpAuthSSPITest, ParseChallenge_NonBase64EncodedToken) {
   HttpAuthChallengeTokenizer first_challenge(first_challenge_text.begin(),
                                              first_challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_ACCEPT,
-            auth_sspi.ParseChallenge(&first_challenge));
+            auth_sspi.ParseChallenge(first_challenge));
 
   std::string auth_token;
   EXPECT_EQ(OK, auth_sspi.GenerateAuthToken(NULL, "HTTP/intranet.google.com",
@@ -160,7 +160,7 @@ TEST(HttpAuthSSPITest, ParseChallenge_NonBase64EncodedToken) {
   HttpAuthChallengeTokenizer second_challenge(second_challenge_text.begin(),
                                               second_challenge_text.end());
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_INVALID,
-            auth_sspi.ParseChallenge(&second_challenge));
+            auth_sspi.ParseChallenge(second_challenge));
 }
 
 }  // namespace net

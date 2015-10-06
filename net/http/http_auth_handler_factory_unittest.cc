@@ -30,7 +30,7 @@ class MockHttpAuthHandlerFactory : public HttpAuthHandlerFactory {
       return_code_(return_code) {}
   ~MockHttpAuthHandlerFactory() override {}
 
-  int CreateAuthHandler(HttpAuthChallengeTokenizer* challenge,
+  int CreateAuthHandler(const HttpAuthChallengeTokenizer& challenge,
                         HttpAuth::Target target,
                         const SSLInfo& ssl_info,
                         const GURL& origin,

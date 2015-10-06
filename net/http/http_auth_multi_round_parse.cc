@@ -11,12 +11,12 @@ namespace net {
 
 HttpAuth::AuthorizationResult ParseFirstRoundChallenge(
     const std::string& scheme,
-    HttpAuthChallengeTokenizer* challenge) {
+    const HttpAuthChallengeTokenizer& challenge) {
   // Verify the challenge's auth-scheme.
-  if (!challenge->SchemeIs(base::ToLowerASCII(scheme)))
+  if (!challenge.SchemeIs(base::ToLowerASCII(scheme)))
     return HttpAuth::AUTHORIZATION_RESULT_INVALID;
 
-  std::string encoded_auth_token = challenge->base64_param();
+  std::string encoded_auth_token = challenge.base64_param();
   if (!encoded_auth_token.empty()) {
     return HttpAuth::AUTHORIZATION_RESULT_INVALID;
   }
@@ -25,14 +25,14 @@ HttpAuth::AuthorizationResult ParseFirstRoundChallenge(
 
 HttpAuth::AuthorizationResult ParseLaterRoundChallenge(
     const std::string& scheme,
-    HttpAuthChallengeTokenizer* challenge,
+    const HttpAuthChallengeTokenizer& challenge,
     std::string* encoded_token,
     std::string* decoded_token) {
   // Verify the challenge's auth-scheme.
-  if (!challenge->SchemeIs(base::ToLowerASCII(scheme)))
+  if (!challenge.SchemeIs(base::ToLowerASCII(scheme)))
     return HttpAuth::AUTHORIZATION_RESULT_INVALID;
 
-  *encoded_token = challenge->base64_param();
+  *encoded_token = challenge.base64_param();
   if (encoded_token->empty())
     return HttpAuth::AUTHORIZATION_RESULT_REJECT;
 

@@ -88,14 +88,14 @@ bool HttpAuthNegotiateAndroid::AllowsExplicitCredentials() const {
 }
 
 HttpAuth::AuthorizationResult HttpAuthNegotiateAndroid::ParseChallenge(
-    net::HttpAuthChallengeTokenizer* tok) {
+    const HttpAuthChallengeTokenizer& tok) {
   if (first_challenge_) {
     first_challenge_ = false;
-    return net::ParseFirstRoundChallenge("negotiate", tok);
+    return ParseFirstRoundChallenge("negotiate", tok);
   }
   std::string decoded_auth_token;
-  return net::ParseLaterRoundChallenge("negotiate", tok, &server_auth_token_,
-                                       &decoded_auth_token);
+  return ParseLaterRoundChallenge("negotiate", tok, &server_auth_token_,
+                                  &decoded_auth_token);
 }
 
 int HttpAuthNegotiateAndroid::GenerateAuthToken(

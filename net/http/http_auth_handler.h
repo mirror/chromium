@@ -31,8 +31,8 @@ class NET_EXPORT_PRIVATE HttpAuthHandler {
   // authentication scheme, but none of the tokens occurring after the
   // authentication scheme. |target| and |origin| are both stored
   // for later use, and are not part of the initial challenge.
-  bool InitFromChallenge(HttpAuthChallengeTokenizer* challenge,
-                         HttpAuth::Target target,
+  int HandleInitialChallenge(const HttpAuthChallengeTokenizer& challenge,
+                             HttpAuth::Target target,
                          const SSLInfo& ssl_info,
                          const GURL& origin,
                          const NetLogWithSource& net_log);
@@ -51,7 +51,7 @@ class NET_EXPORT_PRIVATE HttpAuthHandler {
   // authentication scheme, but none of the tokens occurring after the
   // authentication scheme.
   virtual HttpAuth::AuthorizationResult HandleAnotherChallenge(
-      HttpAuthChallengeTokenizer* challenge) = 0;
+      const HttpAuthChallengeTokenizer& challenge) = 0;
 
   // Generates an authentication token, potentially asynchronously.
   //
@@ -74,7 +74,7 @@ class NET_EXPORT_PRIVATE HttpAuthHandler {
   // All other return codes indicate that there was a problem generating a
   // token, and the value of |*auth_token| is unspecified.
   int GenerateAuthToken(const AuthCredentials* credentials,
-                        const HttpRequestInfo* request,
+                        const HttpRequestInfo& request,
                         const CompletionCallback& callback,
                         std::string* auth_token);
 
@@ -107,9 +107,9 @@ class NET_EXPORT_PRIVATE HttpAuthHandler {
   virtual bool NeedsIdentity();
 
   // Returns whether the default credentials may be used for the |origin| passed
-  // into |InitFromChallenge|. If true, the user does not need to be prompted
-  // for username and password to establish credentials.
-  // NOTE: SSO is a potential security risk.
+  // into |HandleInitialChallenge|. If true, the user does not need to be
+  // prompted for username and password to establish credentials.  NOTE: SSO is
+  // a potential security risk.
   // TODO(cbentzel): Add a pointer to Firefox documentation about risk.
   virtual bool AllowsDefaultCredentials();
 
@@ -129,14 +129,14 @@ class NET_EXPORT_PRIVATE HttpAuthHandler {
   //
   // Implementations are expected to initialize the following members:
   // scheme_, realm_
-  virtual bool Init(HttpAuthChallengeTokenizer* challenge,
+  virtual int Init(const HttpAuthChallengeTokenizer& challenge,
                     const SSLInfo& ssl_info) = 0;
 
   // |GenerateAuthTokenImpl()} is the auth-scheme specific implementation
   // of generating the next auth token. Callers should use |GenerateAuthToken()|
   // which will in turn call |GenerateAuthTokenImpl()|
   virtual int GenerateAuthTokenImpl(const AuthCredentials* credentials,
-                                    const HttpRequestInfo* request,
+                                    const HttpRequestInfo& request,
                                     const CompletionCallback& callback,
                                     std::string* auth_token) = 0;
 

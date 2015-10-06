@@ -48,7 +48,7 @@ HttpAuthHandlerNTLM::Factory::~Factory() {
 }
 
 int HttpAuthHandlerNTLM::Factory::CreateAuthHandler(
-    HttpAuthChallengeTokenizer* challenge,
+    const HttpAuthChallengeTokenizer& challenge,
     HttpAuth::Target target,
     const SSLInfo& ssl_info,
     const GURL& origin,

@@ -119,7 +119,7 @@ class NET_EXPORT_PRIVATE HttpAuthSSPI {
   bool AllowsExplicitCredentials() const;
 
   HttpAuth::AuthorizationResult ParseChallenge(
-      HttpAuthChallengeTokenizer* tok);
+      const HttpAuthChallengeTokenizer& tok);
 
   // Generates an authentication token.
   //
