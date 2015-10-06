@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "base/memory/weak_ptr.h"
+#include "net/http/http_auth.h"
 #include "net/http/http_auth_handler.h"
 #include "net/http/http_auth_handler_factory.h"
 #include "url/gurl.h"
@@ -21,14 +22,6 @@ class HostResolver;
 // MockAuthHandler is used in tests to reliably trigger edge cases.
 class HttpAuthHandlerMock : public HttpAuthHandler {
  public:
-  enum Resolve {
-    RESOLVE_INIT,
-    RESOLVE_SKIP,
-    RESOLVE_SYNC,
-    RESOLVE_ASYNC,
-    RESOLVE_TESTED,
-  };
-
   // The Factory class returns handlers in the order they were added via
   // AddMockHandler.
   class Factory : public HttpAuthHandlerFactory {
@@ -36,13 +29,11 @@ class HttpAuthHandlerMock : public HttpAuthHandler {
     Factory();
     ~Factory() override;
 
-    void AddMockHandler(HttpAuthHandler* handler, HttpAuth::Target target);
+    void AddMockHandler(std::unique_ptr<HttpAuthHandler> handler,
+                        CreateReason reason,
+                        HttpAuth::Target target);
 
     bool HaveAuthHandlers(HttpAuth::Target) const;
-
-    void set_do_init_from_challenge(bool do_init_from_challenge) {
-      do_init_from_challenge_ = do_init_from_challenge;
-    }
 
     // HttpAuthHandlerFactory:
     int CreateAuthHandler(HttpAuthChallengeTokenizer* challenge,
@@ -56,23 +47,20 @@ class HttpAuthHandlerMock : public HttpAuthHandler {
 
    private:
     std::vector<std::unique_ptr<HttpAuthHandler>>
-        handlers_[HttpAuth::AUTH_NUM_TARGETS];
-    bool do_init_from_challenge_;
+        challenge_handlers_[HttpAuth::AUTH_NUM_TARGETS];
+    std::vector<std::unique_ptr<HttpAuthHandler>>
+        preemptive_handlers_[HttpAuth::AUTH_NUM_TARGETS];
   };
 
   HttpAuthHandlerMock();
 
   ~HttpAuthHandlerMock() override;
 
-  void SetResolveExpectation(Resolve resolve);
-
-  virtual bool NeedsCanonicalName();
-
-  virtual int ResolveCanonicalName(HostResolver* host_resolver,
-                                   const CompletionCallback& callback);
-
-
   void SetGenerateExpectation(bool async, int rv);
+
+  void set_expected_auth_scheme(const std::string& scheme) {
+    expected_auth_scheme_ = scheme;
+  }
 
   void set_expect_multiple_challenges(bool expect_multiple_challenges) {
     expect_multiple_challenges_ = expect_multiple_challenges;
@@ -82,12 +70,12 @@ class HttpAuthHandlerMock : public HttpAuthHandler {
     allows_default_credentials_ = allows_default_credentials;
   }
 
-  bool expect_multiple_challenges() const {
-    return expect_multiple_challenges_;
-  }
-
   void set_allows_explicit_credentials(bool allows_explicit_credentials) {
     allows_explicit_credentials_ = allows_explicit_credentials;
+  }
+
+  void set_auth_token(const std::string& auth_token) {
+    auth_token_ = auth_token;
   }
 
   const GURL& request_url() const {
@@ -111,15 +99,14 @@ class HttpAuthHandlerMock : public HttpAuthHandler {
                             std::string* auth_token) override;
 
  private:
-  void OnResolveCanonicalName();
-
   void OnGenerateAuthToken();
 
-  Resolve resolve_ = RESOLVE_INIT;
   CompletionCallback callback_;
+  std::string expected_auth_scheme_;
   bool generate_async_ = false;
-  int generate_rv_;
-  std::string* auth_token_ = nullptr;
+  int generate_rv_ = 0;
+  std::string auth_token_;
+  std::string* generate_auth_token_buffer_ = nullptr;
   bool first_round_ = true;
   bool allows_default_credentials_ = false;
   bool allows_explicit_credentials_ = true;
