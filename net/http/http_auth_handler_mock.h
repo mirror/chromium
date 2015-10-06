@@ -38,6 +38,8 @@ class HttpAuthHandlerMock : public HttpAuthHandler {
 
     void AddMockHandler(HttpAuthHandler* handler, HttpAuth::Target target);
 
+    bool HaveAuthHandlers(HttpAuth::Target) const;
+
     void set_do_init_from_challenge(bool do_init_from_challenge) {
       do_init_from_challenge_ = do_init_from_challenge;
     }
@@ -72,12 +74,16 @@ class HttpAuthHandlerMock : public HttpAuthHandler {
 
   void SetGenerateExpectation(bool async, int rv);
 
-  void set_connection_based(bool connection_based) {
-    connection_based_ = connection_based;
+  void set_expect_multiple_challenges(bool expect_multiple_challenges) {
+    expect_multiple_challenges_ = expect_multiple_challenges;
   }
 
   void set_allows_default_credentials(bool allows_default_credentials) {
     allows_default_credentials_ = allows_default_credentials;
+  }
+
+  bool expect_multiple_challenges() const {
+    return expect_multiple_challenges_;
   }
 
   void set_allows_explicit_credentials(bool allows_explicit_credentials) {
@@ -109,15 +115,15 @@ class HttpAuthHandlerMock : public HttpAuthHandler {
 
   void OnGenerateAuthToken();
 
-  Resolve resolve_;
+  Resolve resolve_ = RESOLVE_INIT;
   CompletionCallback callback_;
-  bool generate_async_;
+  bool generate_async_ = false;
   int generate_rv_;
-  std::string* auth_token_;
-  bool first_round_;
-  bool connection_based_;
-  bool allows_default_credentials_;
-  bool allows_explicit_credentials_;
+  std::string* auth_token_ = nullptr;
+  bool first_round_ = true;
+  bool allows_default_credentials_ = false;
+  bool allows_explicit_credentials_ = true;
+  bool expect_multiple_challenges_ = false;
   GURL request_url_;
   base::WeakPtrFactory<HttpAuthHandlerMock> weak_factory_;
 };

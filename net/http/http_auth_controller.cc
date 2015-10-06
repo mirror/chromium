@@ -38,6 +38,41 @@ enum AuthTarget {
   AUTH_TARGET_MAX,
 };
 
+// Known authentication schemes.
+enum AuthScheme {
+  AUTH_SCHEME_BASIC = 0,
+  AUTH_SCHEME_DIGEST,
+  AUTH_SCHEME_NTLM,
+  AUTH_SCHEME_NEGOTIATE,
+  AUTH_SCHEME_SPDYPROXY_DEPRECATED,
+  AUTH_SCHEME_MOCK,
+
+  // Add new schemes above this line and don't remove any values. This
+  // enumeration is used for UMA.
+  AUTH_SCHEME_MAX,
+};
+
+AuthScheme AuthSchemeForUMA(const std::string& scheme) {
+  DCHECK(HttpAuth::IsValidNormalizedScheme(scheme));
+
+  if (scheme == "basic")
+    return AUTH_SCHEME_BASIC;
+
+  if (scheme == "digest")
+    return AUTH_SCHEME_DIGEST;
+
+  if (scheme == "ntlm")
+    return AUTH_SCHEME_NTLM;
+
+  if (scheme == "negotiate")
+    return AUTH_SCHEME_NEGOTIATE;
+
+  if (scheme == "mock")
+    return AUTH_SCHEME_MOCK;
+
+  return AUTH_SCHEME_MAX;
+}
+
 AuthTarget DetermineAuthTarget(const HttpAuthHandler* handler) {
   switch (handler->target()) {
     case HttpAuth::AUTH_PROXY:
@@ -69,8 +104,10 @@ void HistogramAuthEvent(HttpAuthHandler* handler, AuthEvent auth_event) {
   DCHECK_EQ(first_thread, base::PlatformThread::CurrentId());
 #endif
 
-  HttpAuth::Scheme auth_scheme = handler->auth_scheme();
-  DCHECK(auth_scheme >= 0 && auth_scheme < HttpAuth::AUTH_SCHEME_MAX);
+  AuthScheme auth_scheme = AuthSchemeForUMA(handler->auth_scheme());
+  // Only measure known auth schemes.
+  if (auth_scheme == AUTH_SCHEME_MAX)
+    return;
 
   // Record start and rejection events for authentication.
   //
@@ -83,8 +120,7 @@ void HistogramAuthEvent(HttpAuthHandler* handler, AuthEvent auth_event) {
   //   NTLM Reject: 5
   //   Negotiate Start: 6
   //   Negotiate Reject: 7
-  static const int kEventBucketsEnd =
-      HttpAuth::AUTH_SCHEME_MAX * AUTH_EVENT_MAX;
+  static const int kEventBucketsEnd = AUTH_SCHEME_MAX * AUTH_EVENT_MAX;
   int event_bucket = auth_scheme * AUTH_EVENT_MAX + auth_event;
   DCHECK(event_bucket >= 0 && event_bucket < kEventBucketsEnd);
   UMA_HISTOGRAM_ENUMERATION("Net.HttpAuthCount", event_bucket,
@@ -111,8 +147,7 @@ void HistogramAuthEvent(HttpAuthHandler* handler, AuthEvent auth_event) {
   //   Negotiate Secure Server: 15
   if (auth_event != AUTH_EVENT_START)
     return;
-  static const int kTargetBucketsEnd =
-      HttpAuth::AUTH_SCHEME_MAX * AUTH_TARGET_MAX;
+  static const int kTargetBucketsEnd = AUTH_SCHEME_MAX * AUTH_TARGET_MAX;
   AuthTarget auth_target = DetermineAuthTarget(handler);
   int target_bucket = auth_scheme * AUTH_TARGET_MAX + auth_target;
   DCHECK(target_bucket >= 0 && target_bucket < kTargetBucketsEnd);
@@ -467,7 +502,7 @@ void HttpAuthController::PopulateAuthChallenge() {
   auth_info_ = new AuthChallengeInfo;
   auth_info_->is_proxy = (target_ == HttpAuth::AUTH_PROXY);
   auth_info_->challenger = url::Origin(auth_origin_);
-  auth_info_->scheme = HttpAuth::SchemeToString(handler_->auth_scheme());
+  auth_info_->scheme = handler_->auth_scheme();
   auth_info_->realm = handler_->realm();
 }
 
@@ -517,14 +552,14 @@ scoped_refptr<AuthChallengeInfo> HttpAuthController::auth_info() {
   return auth_info_;
 }
 
-bool HttpAuthController::IsAuthSchemeDisabled(HttpAuth::Scheme scheme) const {
+bool HttpAuthController::IsAuthSchemeDisabled(const std::string& scheme) const {
   DCHECK(CalledOnValidThread());
-  return disabled_schemes_.find(scheme) != disabled_schemes_.end();
+  return disabled_schemes_.Contains(scheme);
 }
 
-void HttpAuthController::DisableAuthScheme(HttpAuth::Scheme scheme) {
+void HttpAuthController::DisableAuthScheme(const std::string& scheme) {
   DCHECK(CalledOnValidThread());
-  disabled_schemes_.insert(scheme);
+  disabled_schemes_.Add(scheme);
 }
 
 void HttpAuthController::DisableEmbeddedIdentity() {

@@ -88,7 +88,7 @@ void RunSingleRoundAuthTest(HandlerRunMode run_mode,
   if (run_mode == RUN_HANDLER_ASYNC)
     EXPECT_EQ(expected_controller_rv, callback.WaitForResult());
   EXPECT_EQ((scheme_state == SCHEME_IS_DISABLED),
-            controller->IsAuthSchemeDisabled(HttpAuth::AUTH_SCHEME_MOCK));
+            controller->IsAuthSchemeDisabled("mock"));
 }
 
 }  // namespace
@@ -124,7 +124,7 @@ TEST(HttpAuthControllerTest, NoExplicitCredentialsAllowed) {
   // Modified mock HttpAuthHandler for this test.
   class MockHandler : public HttpAuthHandlerMock {
    public:
-    MockHandler(int expected_rv, HttpAuth::Scheme scheme)
+    MockHandler(int expected_rv, const std::string& scheme)
         : expected_scheme_(scheme) {
       SetGenerateExpectation(false, expected_rv);
     }
@@ -135,12 +135,12 @@ TEST(HttpAuthControllerTest, NoExplicitCredentialsAllowed) {
       HttpAuthHandlerMock::Init(challenge, ssl_info);
       set_allows_default_credentials(true);
       set_allows_explicit_credentials(false);
-      set_connection_based(true);
-      // Pretend to be SCHEME_BASIC so we can test failover logic.
-      if (challenge->scheme() == "Basic") {
-        auth_scheme_ = HttpAuth::AUTH_SCHEME_BASIC;
-        --score_;  // Reduce score, so we rank below Mock.
+      // Pretend to be Bert so we can test failover logic.
+      if (challenge->SchemeIs("bert")) {
+        auth_scheme_ = "bert";
         set_allows_explicit_credentials(true);
+      } else {
+        auth_scheme_ = "ernie";
       }
       EXPECT_EQ(expected_scheme_, auth_scheme_);
       return true;
@@ -161,7 +161,7 @@ TEST(HttpAuthControllerTest, NoExplicitCredentialsAllowed) {
     }
 
    private:
-    HttpAuth::Scheme expected_scheme_;
+    std::string expected_scheme_;
   };
 
   NetLogWithSource dummy_log;
@@ -171,42 +171,19 @@ TEST(HttpAuthControllerTest, NoExplicitCredentialsAllowed) {
   request.url = GURL("http://example.com");
 
   HttpRequestHeaders request_headers;
-  scoped_refptr<HttpResponseHeaders> headers(HeadersFromString(
-      "HTTP/1.1 401\r\n"
-      "WWW-Authenticate: Mock\r\n"
-      "WWW-Authenticate: Basic\r\n"
-      "\r\n"));
+  scoped_refptr<HttpResponseHeaders> headers(
+      HeadersFromString("HTTP/1.1 401\r\n"
+                        "WWW-Authenticate: Ernie\r\n"
+                        "WWW-Authenticate: Bert\r\n"
+                        "\r\n"));
 
   HttpAuthHandlerMock::Factory auth_handler_factory;
-
-  // Handlers for the first attempt at authentication.  AUTH_SCHEME_MOCK handler
-  // accepts the default identity and successfully constructs a token.
-  auth_handler_factory.AddMockHandler(
-      new MockHandler(OK, HttpAuth::AUTH_SCHEME_MOCK), HttpAuth::AUTH_SERVER);
-  auth_handler_factory.AddMockHandler(
-      new MockHandler(ERR_UNEXPECTED, HttpAuth::AUTH_SCHEME_BASIC),
-      HttpAuth::AUTH_SERVER);
-
-  // Handlers for the second attempt.  Neither should be used to generate a
-  // token.  Instead the controller should realize that there are no viable
-  // identities to use with the AUTH_SCHEME_MOCK handler and fail.
-  auth_handler_factory.AddMockHandler(
-      new MockHandler(ERR_UNEXPECTED, HttpAuth::AUTH_SCHEME_MOCK),
-      HttpAuth::AUTH_SERVER);
-  auth_handler_factory.AddMockHandler(
-      new MockHandler(ERR_UNEXPECTED, HttpAuth::AUTH_SCHEME_BASIC),
-      HttpAuth::AUTH_SERVER);
-
-  // Fallback handlers for the second attempt.  The AUTH_SCHEME_MOCK handler
-  // should be discarded due to the disabled scheme, and the AUTH_SCHEME_BASIC
-  // handler should successfully be used to generate a token.
-  auth_handler_factory.AddMockHandler(
-      new MockHandler(ERR_UNEXPECTED, HttpAuth::AUTH_SCHEME_MOCK),
-      HttpAuth::AUTH_SERVER);
-  auth_handler_factory.AddMockHandler(
-      new MockHandler(OK, HttpAuth::AUTH_SCHEME_BASIC),
-      HttpAuth::AUTH_SERVER);
   auth_handler_factory.set_do_init_from_challenge(true);
+
+  // Handler for the first attempt at authentication. "Ernie" handler accepts
+  // the default identity and successfully constructs a token.
+  auth_handler_factory.AddMockHandler(new MockHandler(OK, "ernie"),
+                                      HttpAuth::AUTH_SERVER);
 
   scoped_refptr<HttpAuthController> controller(
       new HttpAuthController(HttpAuth::AUTH_SERVER,
@@ -218,11 +195,24 @@ TEST(HttpAuthControllerTest, NoExplicitCredentialsAllowed) {
   ASSERT_TRUE(controller->HaveAuthHandler());
   controller->ResetAuth(AuthCredentials());
   EXPECT_TRUE(controller->HaveAuth());
+  EXPECT_FALSE(auth_handler_factory.HaveAuthHandlers(HttpAuth::AUTH_SERVER));
 
-  // Should only succeed if we are using the AUTH_SCHEME_MOCK MockHandler.
+  // Should only succeed if we are using the "Ernie" MockHandler.
   EXPECT_EQ(OK, controller->MaybeGenerateAuthToken(
       &request, CompletionCallback(), dummy_log));
   controller->AddAuthorizationHeader(&request_headers);
+
+  // Handlers for the second attempt. Neither should be used to generate a
+  // token. Instead the controller should realize that there are no viable
+  // identities to use with the "Ernie" handler and fail.
+  auth_handler_factory.AddMockHandler(new MockHandler(ERR_UNEXPECTED, "ernie"),
+                                      HttpAuth::AUTH_SERVER);
+
+  // Fallback handlers for the second attempt. The "Ernie" handler should be
+  // discarded due to the disabled scheme, and the "Bert" handler should
+  // successfully be used to generate a token.
+  auth_handler_factory.AddMockHandler(new MockHandler(OK, "bert"),
+                                      HttpAuth::AUTH_SERVER);
 
   // Once a token is generated, simulate the receipt of a server response
   // indicating that the authentication attempt was rejected.
@@ -232,10 +222,10 @@ TEST(HttpAuthControllerTest, NoExplicitCredentialsAllowed) {
   controller->ResetAuth(AuthCredentials(base::ASCIIToUTF16("Hello"),
                         base::string16()));
   EXPECT_TRUE(controller->HaveAuth());
-  EXPECT_TRUE(controller->IsAuthSchemeDisabled(HttpAuth::AUTH_SCHEME_MOCK));
-  EXPECT_FALSE(controller->IsAuthSchemeDisabled(HttpAuth::AUTH_SCHEME_BASIC));
+  EXPECT_TRUE(controller->IsAuthSchemeDisabled("ernie"));
+  EXPECT_FALSE(controller->IsAuthSchemeDisabled("bert"));
 
-  // Should only succeed if we are using the AUTH_SCHEME_BASIC MockHandler.
+  // Should only succeed if we are using the "Bert" MockHandler.
   EXPECT_EQ(OK, controller->MaybeGenerateAuthToken(
       &request, CompletionCallback(), dummy_log));
 }

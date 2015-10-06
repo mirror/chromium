@@ -21,15 +21,13 @@ namespace {
 
 class MockAuthHandler : public HttpAuthHandler {
  public:
-  MockAuthHandler(HttpAuth::Scheme scheme,
+  MockAuthHandler(const std::string& scheme,
                   const std::string& realm,
                   HttpAuth::Target target) {
     // Can't use initializer list since these are members of the base class.
     auth_scheme_ = scheme;
     realm_ = realm;
-    score_ = 1;
     target_ = target;
-    properties_ = 0;
   }
 
   HttpAuth::AuthorizationResult HandleAnotherChallenge(
@@ -87,22 +85,22 @@ TEST(HttpAuthCacheTest, Basic) {
   // Add cache entries for 4 realms: "Realm1", "Realm2", "Realm3" and
   // "Realm4"
 
-  std::unique_ptr<HttpAuthHandler> realm1_handler(new MockAuthHandler(
-      HttpAuth::AUTH_SCHEME_BASIC, kRealm1, HttpAuth::AUTH_SERVER));
+  std::unique_ptr<HttpAuthHandler> realm1_handler(
+      new MockAuthHandler("basic", kRealm1, HttpAuth::AUTH_SERVER));
   cache.Add(origin, realm1_handler->realm(), realm1_handler->auth_scheme(),
             "Basic realm=Realm1",
             CreateASCIICredentials("realm1-user", "realm1-password"),
             "/foo/bar/index.html");
 
-  std::unique_ptr<HttpAuthHandler> realm2_handler(new MockAuthHandler(
-      HttpAuth::AUTH_SCHEME_BASIC, kRealm2, HttpAuth::AUTH_SERVER));
+  std::unique_ptr<HttpAuthHandler> realm2_handler(
+      new MockAuthHandler("basic", kRealm2, HttpAuth::AUTH_SERVER));
   cache.Add(origin, realm2_handler->realm(), realm2_handler->auth_scheme(),
             "Basic realm=Realm2",
             CreateASCIICredentials("realm2-user", "realm2-password"),
             "/foo2/index.html");
 
-  std::unique_ptr<HttpAuthHandler> realm3_basic_handler(new MockAuthHandler(
-      HttpAuth::AUTH_SCHEME_BASIC, kRealm3, HttpAuth::AUTH_PROXY));
+  std::unique_ptr<HttpAuthHandler> realm3_basic_handler(
+      new MockAuthHandler("basic", kRealm3, HttpAuth::AUTH_PROXY));
   cache.Add(
       origin,
       realm3_basic_handler->realm(),
@@ -111,16 +109,16 @@ TEST(HttpAuthCacheTest, Basic) {
       CreateASCIICredentials("realm3-basic-user", "realm3-basic-password"),
       std::string());
 
-  std::unique_ptr<HttpAuthHandler> realm3_digest_handler(new MockAuthHandler(
-      HttpAuth::AUTH_SCHEME_DIGEST, kRealm3, HttpAuth::AUTH_PROXY));
+  std::unique_ptr<HttpAuthHandler> realm3_digest_handler(
+      new MockAuthHandler("digest", kRealm3, HttpAuth::AUTH_PROXY));
   cache.Add(origin, realm3_digest_handler->realm(),
             realm3_digest_handler->auth_scheme(), "Digest realm=Realm3",
             CreateASCIICredentials("realm3-digest-user",
                                    "realm3-digest-password"),
             "/baz/index.html");
 
-  std::unique_ptr<HttpAuthHandler> realm4_basic_handler(new MockAuthHandler(
-      HttpAuth::AUTH_SCHEME_BASIC, kRealm4, HttpAuth::AUTH_SERVER));
+  std::unique_ptr<HttpAuthHandler> realm4_basic_handler(
+      new MockAuthHandler("basic", kRealm4, HttpAuth::AUTH_SERVER));
   cache.Add(origin, realm4_basic_handler->realm(),
             realm4_basic_handler->auth_scheme(), "Basic realm=Realm4",
             CreateASCIICredentials("realm4-basic-user",
@@ -128,24 +126,21 @@ TEST(HttpAuthCacheTest, Basic) {
             "/");
 
   // There is no Realm5
-  entry = cache.Lookup(origin, kRealm5, HttpAuth::AUTH_SCHEME_BASIC);
+  entry = cache.Lookup(origin, kRealm5, "basic");
   EXPECT_TRUE(NULL == entry);
 
   // While Realm3 does exist, the origin scheme is wrong.
-  entry = cache.Lookup(GURL("https://www.google.com"), kRealm3,
-                       HttpAuth::AUTH_SCHEME_BASIC);
+  entry = cache.Lookup(GURL("https://www.google.com"), kRealm3, "basic");
   EXPECT_TRUE(NULL == entry);
 
   // Realm, origin scheme ok, authentication scheme wrong
-  entry = cache.Lookup
-      (GURL("http://www.google.com"), kRealm1, HttpAuth::AUTH_SCHEME_DIGEST);
+  entry = cache.Lookup(GURL("http://www.google.com"), kRealm1, "digest");
   EXPECT_TRUE(NULL == entry);
 
   // Valid lookup by origin, realm, scheme.
-  entry = cache.Lookup(
-      GURL("http://www.google.com:80"), kRealm3, HttpAuth::AUTH_SCHEME_BASIC);
+  entry = cache.Lookup(GURL("http://www.google.com:80"), kRealm3, "basic");
   ASSERT_FALSE(NULL == entry);
-  EXPECT_EQ(HttpAuth::AUTH_SCHEME_BASIC, entry->scheme());
+  EXPECT_EQ("basic", entry->scheme());
   EXPECT_EQ(kRealm3, entry->realm());
   EXPECT_EQ("Basic realm=Realm3", entry->auth_challenge());
   EXPECT_EQ(ASCIIToUTF16("realm3-basic-user"), entry->credentials().username());
@@ -154,10 +149,9 @@ TEST(HttpAuthCacheTest, Basic) {
 
   // Valid lookup by origin, realm, scheme when there's a duplicate
   // origin, realm in the cache
-  entry = cache.Lookup(
-      GURL("http://www.google.com:80"), kRealm3, HttpAuth::AUTH_SCHEME_DIGEST);
+  entry = cache.Lookup(GURL("http://www.google.com:80"), kRealm3, "digest");
   ASSERT_FALSE(NULL == entry);
-  EXPECT_EQ(HttpAuth::AUTH_SCHEME_DIGEST, entry->scheme());
+  EXPECT_EQ("digest", entry->scheme());
   EXPECT_EQ(kRealm3, entry->realm());
   EXPECT_EQ("Digest realm=Realm3", entry->auth_challenge());
   EXPECT_EQ(ASCIIToUTF16("realm3-digest-user"),
@@ -166,19 +160,17 @@ TEST(HttpAuthCacheTest, Basic) {
             entry->credentials().password());
 
   // Valid lookup by realm.
-  entry = cache.Lookup(origin, kRealm2, HttpAuth::AUTH_SCHEME_BASIC);
+  entry = cache.Lookup(origin, kRealm2, "basic");
   ASSERT_FALSE(NULL == entry);
-  EXPECT_EQ(HttpAuth::AUTH_SCHEME_BASIC, entry->scheme());
+  EXPECT_EQ("basic", entry->scheme());
   EXPECT_EQ(kRealm2, entry->realm());
   EXPECT_EQ("Basic realm=Realm2", entry->auth_challenge());
   EXPECT_EQ(ASCIIToUTF16("realm2-user"), entry->credentials().username());
   EXPECT_EQ(ASCIIToUTF16("realm2-password"), entry->credentials().password());
 
   // Check that subpaths are recognized.
-  HttpAuthCache::Entry* realm2_entry = cache.Lookup(
-      origin, kRealm2, HttpAuth::AUTH_SCHEME_BASIC);
-  HttpAuthCache::Entry* realm4_entry = cache.Lookup(
-      origin, kRealm4, HttpAuth::AUTH_SCHEME_BASIC);
+  HttpAuthCache::Entry* realm2_entry = cache.Lookup(origin, kRealm2, "basic");
+  HttpAuthCache::Entry* realm4_entry = cache.Lookup(origin, kRealm4, "basic");
   EXPECT_FALSE(NULL == realm2_entry);
   EXPECT_FALSE(NULL == realm4_entry);
   // Realm4 applies to '/' and Realm2 applies to '/foo2/'.
@@ -205,7 +197,7 @@ TEST(HttpAuthCacheTest, Basic) {
 
   // Confirm we find the same realm, different auth scheme by path lookup
   HttpAuthCache::Entry* realm3_digest_entry =
-      cache.Lookup(origin, kRealm3, HttpAuth::AUTH_SCHEME_DIGEST);
+      cache.Lookup(origin, kRealm3, "digest");
   EXPECT_FALSE(NULL == realm3_digest_entry);
   entry = cache.LookupByPath(origin, "/baz/index.html");
   EXPECT_TRUE(realm3_digest_entry == entry);
@@ -216,7 +208,7 @@ TEST(HttpAuthCacheTest, Basic) {
 
   // Confirm we find the same realm, different auth scheme by path lookup
   HttpAuthCache::Entry* realm3DigestEntry =
-      cache.Lookup(origin, kRealm3, HttpAuth::AUTH_SCHEME_DIGEST);
+      cache.Lookup(origin, kRealm3, "digest");
   EXPECT_FALSE(NULL == realm3DigestEntry);
   entry = cache.LookupByPath(origin, "/baz/index.html");
   EXPECT_TRUE(realm3DigestEntry == entry);
@@ -228,7 +220,7 @@ TEST(HttpAuthCacheTest, Basic) {
   // Lookup using empty path (may be used for proxy).
   entry = cache.LookupByPath(origin, std::string());
   EXPECT_FALSE(NULL == entry);
-  EXPECT_EQ(HttpAuth::AUTH_SCHEME_BASIC, entry->scheme());
+  EXPECT_EQ("basic", entry->scheme());
   EXPECT_EQ(kRealm3, entry->realm());
 }
 
@@ -271,8 +263,8 @@ TEST(HttpAuthCacheTest, AddToExistingEntry) {
   GURL origin("http://www.foobar.com:70");
   const std::string auth_challenge = "Basic realm=MyRealm";
 
-  std::unique_ptr<HttpAuthHandler> handler(new MockAuthHandler(
-      HttpAuth::AUTH_SCHEME_BASIC, "MyRealm", HttpAuth::AUTH_SERVER));
+  std::unique_ptr<HttpAuthHandler> handler(
+      new MockAuthHandler("basic", "MyRealm", HttpAuth::AUTH_SERVER));
   HttpAuthCache::Entry* orig_entry = cache.Add(
       origin, handler->realm(), handler->auth_scheme(), auth_challenge,
       CreateASCIICredentials("user1", "password1"), "/x/y/z/");
@@ -281,10 +273,9 @@ TEST(HttpAuthCacheTest, AddToExistingEntry) {
   cache.Add(origin, handler->realm(), handler->auth_scheme(), auth_challenge,
             CreateASCIICredentials("user3", "password3"), "/z/y");
 
-  HttpAuthCache::Entry* entry = cache.Lookup(
-      origin, "MyRealm", HttpAuth::AUTH_SCHEME_BASIC);
+  HttpAuthCache::Entry* entry = cache.Lookup(origin, "MyRealm", "basic");
 
-  EXPECT_TRUE(entry == orig_entry);
+  ASSERT_TRUE(entry == orig_entry);
   EXPECT_EQ(ASCIIToUTF16("user3"), entry->credentials().username());
   EXPECT_EQ(ASCIIToUTF16("password3"), entry->credentials().password());
 
@@ -296,17 +287,17 @@ TEST(HttpAuthCacheTest, AddToExistingEntry) {
 TEST(HttpAuthCacheTest, Remove) {
   GURL origin("http://foobar2.com");
 
-  std::unique_ptr<HttpAuthHandler> realm1_handler(new MockAuthHandler(
-      HttpAuth::AUTH_SCHEME_BASIC, kRealm1, HttpAuth::AUTH_SERVER));
+  std::unique_ptr<HttpAuthHandler> realm1_handler(
+      new MockAuthHandler("basic", kRealm1, HttpAuth::AUTH_SERVER));
 
-  std::unique_ptr<HttpAuthHandler> realm2_handler(new MockAuthHandler(
-      HttpAuth::AUTH_SCHEME_BASIC, kRealm2, HttpAuth::AUTH_SERVER));
+  std::unique_ptr<HttpAuthHandler> realm2_handler(
+      new MockAuthHandler("basic", kRealm2, HttpAuth::AUTH_SERVER));
 
-  std::unique_ptr<HttpAuthHandler> realm3_basic_handler(new MockAuthHandler(
-      HttpAuth::AUTH_SCHEME_BASIC, kRealm3, HttpAuth::AUTH_SERVER));
+  std::unique_ptr<HttpAuthHandler> realm3_basic_handler(
+      new MockAuthHandler("basic", kRealm3, HttpAuth::AUTH_SERVER));
 
-  std::unique_ptr<HttpAuthHandler> realm3_digest_handler(new MockAuthHandler(
-      HttpAuth::AUTH_SCHEME_DIGEST, kRealm3, HttpAuth::AUTH_SERVER));
+  std::unique_ptr<HttpAuthHandler> realm3_digest_handler(
+      new MockAuthHandler("digest", kRealm3, HttpAuth::AUTH_SERVER));
 
   HttpAuthCache cache;
   cache.Add(origin, realm1_handler->realm(), realm1_handler->auth_scheme(),
@@ -322,58 +313,47 @@ TEST(HttpAuthCacheTest, Remove) {
             AuthCredentials(kRoot, kWileCoyote), "/");
 
   // Fails, because there is no realm "Realm5".
-  EXPECT_FALSE(cache.Remove(
-      origin, kRealm5, HttpAuth::AUTH_SCHEME_BASIC,
-      AuthCredentials(kAlice, k123)));
+  EXPECT_FALSE(
+      cache.Remove(origin, kRealm5, "basic", AuthCredentials(kAlice, k123)));
 
   // Fails because the origin is wrong.
-  EXPECT_FALSE(cache.Remove(GURL("http://foobar2.com:100"),
-                            kRealm1,
-                            HttpAuth::AUTH_SCHEME_BASIC,
+  EXPECT_FALSE(cache.Remove(GURL("http://foobar2.com:100"), kRealm1, "basic",
                             AuthCredentials(kAlice, k123)));
 
   // Fails because the username is wrong.
-  EXPECT_FALSE(cache.Remove(
-      origin, kRealm1, HttpAuth::AUTH_SCHEME_BASIC,
-      AuthCredentials(kAlice2, k123)));
+  EXPECT_FALSE(
+      cache.Remove(origin, kRealm1, "basic", AuthCredentials(kAlice2, k123)));
 
   // Fails because the password is wrong.
-  EXPECT_FALSE(cache.Remove(
-      origin, kRealm1, HttpAuth::AUTH_SCHEME_BASIC,
-      AuthCredentials(kAlice, k1234)));
+  EXPECT_FALSE(
+      cache.Remove(origin, kRealm1, "basic", AuthCredentials(kAlice, k1234)));
 
   // Fails because the authentication type is wrong.
-  EXPECT_FALSE(cache.Remove(
-      origin, kRealm1, HttpAuth::AUTH_SCHEME_DIGEST,
-      AuthCredentials(kAlice, k123)));
+  EXPECT_FALSE(
+      cache.Remove(origin, kRealm1, "digest", AuthCredentials(kAlice, k123)));
 
   // Succeeds.
-  EXPECT_TRUE(cache.Remove(
-      origin, kRealm1, HttpAuth::AUTH_SCHEME_BASIC,
-      AuthCredentials(kAlice, k123)));
+  EXPECT_TRUE(
+      cache.Remove(origin, kRealm1, "basic", AuthCredentials(kAlice, k123)));
 
   // Fails because we just deleted the entry!
-  EXPECT_FALSE(cache.Remove(
-      origin, kRealm1, HttpAuth::AUTH_SCHEME_BASIC,
-      AuthCredentials(kAlice, k123)));
+  EXPECT_FALSE(
+      cache.Remove(origin, kRealm1, "basic", AuthCredentials(kAlice, k123)));
 
   // Succeed when there are two authentication types for the same origin,realm.
-  EXPECT_TRUE(cache.Remove(
-      origin, kRealm3, HttpAuth::AUTH_SCHEME_DIGEST,
-      AuthCredentials(kRoot, kWileCoyote)));
+  EXPECT_TRUE(cache.Remove(origin, kRealm3, "digest",
+                           AuthCredentials(kRoot, kWileCoyote)));
 
   // Succeed as above, but when entries were added in opposite order
   cache.Add(origin, realm3_digest_handler->realm(),
             realm3_digest_handler->auth_scheme(), "digest realm=Realm3",
             AuthCredentials(kRoot, kWileCoyote), "/");
-  EXPECT_TRUE(cache.Remove(
-      origin, kRealm3, HttpAuth::AUTH_SCHEME_BASIC,
-      AuthCredentials(kAdmin, kPassword)));
+  EXPECT_TRUE(cache.Remove(origin, kRealm3, "basic",
+                           AuthCredentials(kAdmin, kPassword)));
 
   // Make sure that removing one entry still leaves the other available for
   // lookup.
-  HttpAuthCache::Entry* entry = cache.Lookup(
-      origin, kRealm3, HttpAuth::AUTH_SCHEME_DIGEST);
+  HttpAuthCache::Entry* entry = cache.Lookup(origin, kRealm3, "digest");
   EXPECT_FALSE(NULL == entry);
 }
 
@@ -418,8 +398,8 @@ TEST(HttpAuthCacheTest, ClearEntriesAddedWithin) {
 TEST(HttpAuthCacheTest, UpdateStaleChallenge) {
   HttpAuthCache cache;
   GURL origin("http://foobar2.com");
-  std::unique_ptr<HttpAuthHandler> digest_handler(new MockAuthHandler(
-      HttpAuth::AUTH_SCHEME_DIGEST, kRealm1, HttpAuth::AUTH_PROXY));
+  std::unique_ptr<HttpAuthHandler> digest_handler(
+      new MockAuthHandler("digest", kRealm1, HttpAuth::AUTH_PROXY));
   HttpAuthCache::Entry* entry_pre = cache.Add(
       origin,
       digest_handler->realm(),
@@ -468,17 +448,17 @@ TEST(HttpAuthCacheTest, UpdateAllFrom) {
   std::string path("/some/path");
   std::string another_path("/another/path");
 
-  std::unique_ptr<HttpAuthHandler> realm1_handler(new MockAuthHandler(
-      HttpAuth::AUTH_SCHEME_BASIC, kRealm1, HttpAuth::AUTH_SERVER));
+  std::unique_ptr<HttpAuthHandler> realm1_handler(
+      new MockAuthHandler("basic", kRealm1, HttpAuth::AUTH_SERVER));
 
-  std::unique_ptr<HttpAuthHandler> realm2_handler(new MockAuthHandler(
-      HttpAuth::AUTH_SCHEME_BASIC, kRealm2, HttpAuth::AUTH_PROXY));
+  std::unique_ptr<HttpAuthHandler> realm2_handler(
+      new MockAuthHandler("basic", kRealm2, HttpAuth::AUTH_PROXY));
 
-  std::unique_ptr<HttpAuthHandler> realm3_digest_handler(new MockAuthHandler(
-      HttpAuth::AUTH_SCHEME_DIGEST, kRealm3, HttpAuth::AUTH_SERVER));
+  std::unique_ptr<HttpAuthHandler> realm3_digest_handler(
+      new MockAuthHandler("digest", kRealm3, HttpAuth::AUTH_SERVER));
 
-  std::unique_ptr<HttpAuthHandler> realm4_handler(new MockAuthHandler(
-      HttpAuth::AUTH_SCHEME_BASIC, kRealm4, HttpAuth::AUTH_SERVER));
+  std::unique_ptr<HttpAuthHandler> realm4_handler(
+      new MockAuthHandler("basic", kRealm4, HttpAuth::AUTH_SERVER));
 
   HttpAuthCache first_cache;
   HttpAuthCache::Entry* entry;
@@ -512,19 +492,19 @@ TEST(HttpAuthCacheTest, UpdateAllFrom) {
   second_cache.UpdateAllFrom(first_cache);
 
   // Copied from first_cache.
-  entry = second_cache.Lookup(origin, kRealm1, HttpAuth::AUTH_SCHEME_BASIC);
+  entry = second_cache.Lookup(origin, kRealm1, "basic");
   EXPECT_TRUE(NULL != entry);
   EXPECT_EQ(kAlice, entry->credentials().username());
   EXPECT_EQ(k123, entry->credentials().password());
 
   // Copied from first_cache.
-  entry = second_cache.Lookup(origin, kRealm2, HttpAuth::AUTH_SCHEME_BASIC);
+  entry = second_cache.Lookup(origin, kRealm2, "basic");
   EXPECT_TRUE(NULL != entry);
   EXPECT_EQ(kAlice2, entry->credentials().username());
   EXPECT_EQ(k1234, entry->credentials().password());
 
   // Overwritten from first_cache.
-  entry = second_cache.Lookup(origin, kRealm3, HttpAuth::AUTH_SCHEME_DIGEST);
+  entry = second_cache.Lookup(origin, kRealm3, "digest");
   EXPECT_TRUE(NULL != entry);
   EXPECT_EQ(kRoot, entry->credentials().username());
   EXPECT_EQ(kWileCoyote, entry->credentials().password());
@@ -538,7 +518,7 @@ TEST(HttpAuthCacheTest, UpdateAllFrom) {
   EXPECT_EQ(kWileCoyote, entry->credentials().password());
 
   // Left intact in second_cache.
-  entry = second_cache.Lookup(origin, kRealm4, HttpAuth::AUTH_SCHEME_BASIC);
+  entry = second_cache.Lookup(origin, kRealm4, "basic");
   EXPECT_TRUE(NULL != entry);
   EXPECT_EQ(kAdmin, entry->credentials().username());
   EXPECT_EQ(kRoot, entry->credentials().password());
@@ -563,18 +543,14 @@ class HttpAuthCacheEvictionTest : public testing::Test {
   }
 
   void AddPathToRealm(int realm_i, int path_i) {
-    cache_.Add(origin_,
-               GenerateRealm(realm_i),
-               HttpAuth::AUTH_SCHEME_BASIC,
-               std::string(),
+    cache_.Add(origin_, GenerateRealm(realm_i), "basic", std::string(),
                AuthCredentials(kUsername, kPassword),
                GeneratePath(realm_i, path_i));
   }
 
   void CheckRealmExistence(int realm_i, bool exists) {
     const HttpAuthCache::Entry* entry =
-        cache_.Lookup(
-            origin_, GenerateRealm(realm_i), HttpAuth::AUTH_SCHEME_BASIC);
+        cache_.Lookup(origin_, GenerateRealm(realm_i), "basic");
     if (exists) {
       EXPECT_FALSE(entry == NULL);
       EXPECT_EQ(GenerateRealm(realm_i), entry->realm());

@@ -1974,6 +1974,13 @@ EVENT_TYPE(AUTH_SERVER)
 // The channel bindings generated for the connection.
 EVENT_TYPE(AUTH_CHANNEL_BINDINGS)
 
+// Unexepcted failure while trying to create an HttpAuthhandler.
+//   {
+//     "challenge": <Authentication challenge that caused the failure>,
+//     "net_error": <net::Error>
+//   }
+EVENT_TYPE(AUTH_HANDLER_CREATION_FAILURE)
+
 // ------------------------------------------------------------------------
 // HTML5 Application Cache
 // ------------------------------------------------------------------------

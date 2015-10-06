@@ -13,13 +13,12 @@
 #include "net/base/net_export.h"
 #include "net/http/http_util.h"
 
-template <class T> class scoped_refptr;
-
 namespace net {
 
 class NetLogWithSource;
 class HttpAuthHandler;
 class HttpAuthHandlerFactory;
+class HttpAuthSchemeSet;
 class HttpResponseHeaders;
 class SSLInfo;
 
@@ -88,28 +87,19 @@ class NET_EXPORT_PRIVATE HttpAuth {
     IDENT_SRC_DEFAULT_CREDENTIALS,
   };
 
-  enum Scheme {
-    AUTH_SCHEME_BASIC = 0,
-    AUTH_SCHEME_DIGEST,
-    AUTH_SCHEME_NTLM,
-    AUTH_SCHEME_NEGOTIATE,
-    AUTH_SCHEME_SPDYPROXY,
-    AUTH_SCHEME_MOCK,
-    AUTH_SCHEME_MAX,
-  };
-
-  // Helper structure used by HttpNetworkTransaction to track
-  // the current identity being used for authorization.
+  // Helper structure used by HttpNetworkTransaction to track the current
+  // identity being used for authorization.
   struct Identity {
     Identity();
+    ~Identity();
 
     IdentitySource source;
     bool invalid;
     AuthCredentials credentials;
   };
 
-  // Get the name of the header containing the auth challenge
-  // (either WWW-Authenticate or Proxy-Authenticate).
+  // Get the name of the header containing the auth challenge (either
+  // WWW-Authenticate or Proxy-Authenticate).
   static std::string GetChallengeHeaderName(Target target);
 
   // Get the name of the header where the credentials go
@@ -120,13 +110,10 @@ class NET_EXPORT_PRIVATE HttpAuth {
   // messages.
   static std::string GetAuthTargetString(Target target);
 
-  // Returns a string representation of an authentication Scheme.
-  static const char* SchemeToString(Scheme scheme);
-
-  // Iterate through |response_headers|, and pick the best one that we support.
-  // Obtains the implementation class for handling the challenge, and passes it
-  // back in |*handler|. If no supported challenge was found, |*handler| is set
-  // to NULL.
+  // Iterate through the challenge headers, and pick the best one that we
+  // support. Obtains the implementation class for handling the challenge, and
+  // passes it back in |*handler|. If no supported challenge was found,
+  // |*handler| is set to NULL.
   //
   // |disabled_schemes| is the set of schemes that we should not use.
   //
@@ -141,7 +128,7 @@ class NET_EXPORT_PRIVATE HttpAuth {
       const SSLInfo& ssl_info,
       Target target,
       const GURL& origin,
-      const std::set<Scheme>& disabled_schemes,
+      const HttpAuthSchemeSet& disabled_schemes,
       const NetLogWithSource& net_log,
       std::unique_ptr<HttpAuthHandler>* handler);
 
@@ -170,8 +157,12 @@ class NET_EXPORT_PRIVATE HttpAuth {
       HttpAuthHandler* handler,
       const HttpResponseHeaders& response_headers,
       Target target,
-      const std::set<Scheme>& disabled_schemes,
+      const HttpAuthSchemeSet& disabled_schemes,
       std::string* challenge_used);
+
+  // RFC 7235 states that an authentication scheme is a case insensitive token.
+  // This function checks whether |scheme| is a token AND is lowercase.
+  static bool IsValidNormalizedScheme(const std::string& scheme);
 };
 
 }  // namespace net

@@ -219,7 +219,7 @@ net::AuthCredentials MediaResourceGetterTask::RequestAuthCredentials(
       auth_cache->LookupByPath(url.GetOrigin(), url.path());
 
   // TODO(qinmin): handle other auth schemes. See http://crbug.com/395219.
-  if (entry && entry->scheme() == net::HttpAuth::AUTH_SCHEME_BASIC)
+  if (entry && entry->scheme() == "basic")
     return entry->credentials();
   else
     return net::AuthCredentials();

@@ -31,12 +31,18 @@ class NET_EXPORT_PRIVATE HttpAuthChallengeTokenizer {
     return std::string(begin_, end_);
   }
 
-  // Get the auth scheme of the challenge.
+  // Get the auth scheme of the challenge. Could potentially be invalid.
   std::string::const_iterator scheme_begin() const { return scheme_begin_; }
   std::string::const_iterator scheme_end() const { return scheme_end_; }
-  std::string scheme() const {
-    return std::string(scheme_begin_, scheme_end_);
-  }
+
+  // Return the normalized scheme for the challenge. Will be empty if the
+  // challenge was invalid. RFC 7235 requires a valid scheme to be a token. A
+  // normalized scheme is a lower case ASCII token.
+  std::string NormalizedScheme() const;
+
+  // Returns true if the scheme of the challenge is |scheme|. |scheme| is
+  // expected to be a valid scheme.
+  bool SchemeIs(const base::StringPiece& scheme) const;
 
   std::string::const_iterator params_begin() const { return params_begin_; }
   std::string::const_iterator params_end() const { return params_end_; }

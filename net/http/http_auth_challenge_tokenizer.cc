@@ -5,6 +5,8 @@
 #include "net/http/http_auth_challenge_tokenizer.h"
 
 #include "base/strings/string_tokenizer.h"
+#include "base/strings/string_util.h"
+#include "net/http/http_util.h"
 
 namespace net {
 
@@ -59,6 +61,19 @@ void HttpAuthChallengeTokenizer::Init(std::string::const_iterator begin,
   params_begin_ = scheme_end_;
   params_end_ = end;
   HttpUtil::TrimLWS(&params_begin_, &params_end_);
+}
+
+std::string HttpAuthChallengeTokenizer::NormalizedScheme() const {
+  if (!HttpUtil::IsToken(scheme_begin_, scheme_end_))
+    return std::string();
+  return base::ToLowerASCII(base::StringPiece(scheme_begin_, scheme_end_));
+}
+
+bool HttpAuthChallengeTokenizer::SchemeIs(
+    const base::StringPiece& scheme) const {
+  DCHECK(base::ToLowerASCII(scheme) == scheme);
+  return base::LowerCaseEqualsASCII(
+      base::StringPiece(scheme_begin_, scheme_end_), scheme);
 }
 
 }  // namespace net

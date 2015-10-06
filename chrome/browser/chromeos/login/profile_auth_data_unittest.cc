@@ -40,6 +40,7 @@ namespace chromeos {
 namespace {
 
 const char kProxyAuthURL[] = "http://example.com/";
+const char kProxyAuthScheme[] = "basic";
 const char kProxyAuthRealm[] = "realm";
 const char kProxyAuthChallenge[] = "challenge";
 const char kProxyAuthPassword1[] = "password 1";
@@ -162,10 +163,8 @@ net::ChannelIDStore::ChannelIDList ProfileAuthDataTest::GetUserChannelIDs() {
 
 void ProfileAuthDataTest::VerifyTransferredUserProxyAuthEntry() {
   net::HttpAuthCache::Entry* entry =
-      GetProxyAuth(&user_browser_context_)->Lookup(
-          GURL(kProxyAuthURL),
-          kProxyAuthRealm,
-          net::HttpAuth::AUTH_SCHEME_BASIC);
+      GetProxyAuth(&user_browser_context_)
+          ->Lookup(GURL(kProxyAuthURL), kProxyAuthRealm, kProxyAuthScheme);
   ASSERT_TRUE(entry);
   EXPECT_EQ(base::ASCIIToUTF16(kProxyAuthPassword1),
             entry->credentials().password());
@@ -208,14 +207,12 @@ void ProfileAuthDataTest::PopulateBrowserContext(
     const std::string& proxy_auth_password,
     const std::string& cookie_value,
     std::unique_ptr<crypto::ECPrivateKey> channel_id_key) {
-  GetProxyAuth(browser_context)->Add(
-      GURL(kProxyAuthURL),
-      kProxyAuthRealm,
-      net::HttpAuth::AUTH_SCHEME_BASIC,
-      kProxyAuthChallenge,
-      net::AuthCredentials(base::string16(),
-                           base::ASCIIToUTF16(proxy_auth_password)),
-      std::string());
+  GetProxyAuth(browser_context)
+      ->Add(GURL(kProxyAuthURL), kProxyAuthRealm, kProxyAuthScheme,
+            kProxyAuthChallenge,
+            net::AuthCredentials(base::string16(),
+                                 base::ASCIIToUTF16(proxy_auth_password)),
+            std::string());
 
   net::CookieStore* cookies = GetCookies(browser_context);
   // Ensure |cookies| is fully initialized.

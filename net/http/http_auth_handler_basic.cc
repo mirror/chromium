@@ -19,6 +19,8 @@ namespace net {
 
 namespace {
 
+const char* const kBasicSchemeName = "basic";
+
 // Parses a realm from an auth challenge, and converts to UTF8-encoding.
 // Returns whether the realm is invalid or the parameters are invalid.
 //
@@ -53,18 +55,15 @@ bool ParseRealm(const HttpAuthChallengeTokenizer& tokenizer,
 
 }  // namespace
 
-bool HttpAuthHandlerBasic::Init(HttpAuthChallengeTokenizer* challenge,
-                                const SSLInfo& ssl_info) {
-  auth_scheme_ = HttpAuth::AUTH_SCHEME_BASIC;
-  score_ = 1;
-  properties_ = 0;
+bool HttpAuthHandlerBasic::Init(HttpAuthChallengeTokenizer* challenge, const SSLInfo& ssl_info) {
+  auth_scheme_ = kBasicSchemeName;
   return ParseChallenge(challenge);
 }
 
 bool HttpAuthHandlerBasic::ParseChallenge(
     HttpAuthChallengeTokenizer* challenge) {
   // Verify the challenge's auth-scheme.
-  if (!base::LowerCaseEqualsASCII(challenge->scheme(), kBasicAuthScheme))
+  if (!challenge->SchemeIs(kBasicSchemeName))
     return false;
 
   std::string realm;

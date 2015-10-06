@@ -118,12 +118,17 @@ void HttpAuthHandlerRegistryFactory::SetHttpAuthPreferences(
 void HttpAuthHandlerRegistryFactory::RegisterSchemeFactory(
     const std::string& scheme,
     HttpAuthHandlerFactory* factory) {
-  factory->set_http_auth_preferences(http_auth_preferences());
-  std::string lower_scheme = base::ToLowerASCII(scheme);
-  if (factory)
-    factory_map_[lower_scheme] = base::WrapUnique(factory);
-  else
-    factory_map_.erase(lower_scheme);
+  DCHECK(HttpAuth::IsValidNormalizedScheme(scheme));
+  FactoryMap::iterator it = factory_map_.find(scheme);
+  if (it != factory_map_.end()) {
+    delete it->second;
+  }
+  if (factory) {
+    factory->set_http_auth_preferences(http_auth_preferences());
+    factory_map_[scheme] = base::WrapUnique(factory);
+  } else {
+    factory_map_.erase(it);
+  }
 }
 
 HttpAuthHandlerFactory* HttpAuthHandlerRegistryFactory::GetSchemeFactory(
@@ -172,13 +177,12 @@ int HttpAuthHandlerRegistryFactory::CreateAuthHandler(
     int digest_nonce_count,
     const NetLogWithSource& net_log,
     std::unique_ptr<HttpAuthHandler>* handler) {
-  std::string scheme = challenge->scheme();
+  std::string scheme = challenge->NormalizedScheme();
   if (scheme.empty()) {
     handler->reset();
     return ERR_INVALID_RESPONSE;
   }
-  std::string lower_scheme = base::ToLowerASCII(scheme);
-  FactoryMap::iterator it = factory_map_.find(lower_scheme);
+  FactoryMap::iterator it = factory_map_.find(scheme);
   if (it == factory_map_.end()) {
     handler->reset();
     return ERR_UNSUPPORTED_AUTH_SCHEME;

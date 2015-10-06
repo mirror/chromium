@@ -28,9 +28,9 @@ namespace net {
 
 namespace {
 
-HttpAuthHandlerMock* CreateMockHandler(bool connection_based) {
+HttpAuthHandlerMock* CreateMockHandler(bool expect_multiple_challenges) {
   HttpAuthHandlerMock* auth_handler = new HttpAuthHandlerMock();
-  auth_handler->set_connection_based(connection_based);
+  auth_handler->set_expect_multiple_challenges(expect_multiple_challenges);
   std::string challenge_text = "Basic";
   HttpAuthChallengeTokenizer challenge(challenge_text.begin(),
                                          challenge_text.end());
@@ -48,12 +48,12 @@ HttpResponseHeaders* HeadersFromResponseText(const std::string& response) {
 }
 
 HttpAuth::AuthorizationResult HandleChallengeResponse(
-    bool connection_based,
+    bool expect_multiple_challenges,
     const std::string& headers_text,
     std::string* challenge_used) {
   std::unique_ptr<HttpAuthHandlerMock> mock_handler(
-      CreateMockHandler(connection_based));
-  std::set<HttpAuth::Scheme> disabled_schemes;
+      CreateMockHandler(expect_multiple_challenges));
+  HttpAuthSchemeSet disabled_schemes;
   scoped_refptr<HttpResponseHeaders> headers(
       HeadersFromResponseText(headers_text));
   return HttpAuth::HandleChallengeResponse(mock_handler.get(), *headers,
@@ -66,61 +66,60 @@ HttpAuth::AuthorizationResult HandleChallengeResponse(
 TEST(HttpAuthTest, ChooseBestChallenge) {
   static const struct {
     const char* headers;
-    HttpAuth::Scheme challenge_scheme;
+    const char* challenge_scheme;
     const char* challenge_realm;
   } tests[] = {
       {
-       // Basic is the only challenge type, pick it.
-       "Y: Digest realm=\"X\", nonce=\"aaaaaaaaaa\"\n"
-       "www-authenticate: Basic realm=\"BasicRealm\"\n",
+          // Basic is the only challenge type, pick it.
+          "Y: Digest realm=\"X\", nonce=\"aaaaaaaaaa\"\n"
+          "www-authenticate: Basic realm=\"BasicRealm\"\n",
 
-       HttpAuth::AUTH_SCHEME_BASIC,
-       "BasicRealm",
+          "basic", "BasicRealm",
       },
       {
-       // Fake is the only challenge type, but it is unsupported.
-       "Y: Digest realm=\"FooBar\", nonce=\"aaaaaaaaaa\"\n"
-       "www-authenticate: Fake realm=\"FooBar\"\n",
+          // Fake is the only challenge type, but it is unsupported.
+          "Y: Digest realm=\"FooBar\", nonce=\"aaaaaaaaaa\"\n"
+          "www-authenticate: Fake realm=\"FooBar\"\n",
 
-       HttpAuth::AUTH_SCHEME_MAX,
-       "",
+          nullptr, "",
       },
       {
-       // Pick Digest over Basic.
-       "www-authenticate: Basic realm=\"FooBar\"\n"
-       "www-authenticate: Fake realm=\"FooBar\"\n"
-       "www-authenticate: nonce=\"aaaaaaaaaa\"\n"
-       "www-authenticate: Digest realm=\"DigestRealm\", nonce=\"aaaaaaaaaa\"\n",
+          // Pick Digest over Basic.
+          "www-authenticate: Basic realm=\"FooBar\"\n"
+          "www-authenticate: Fake realm=\"FooBar\"\n"
+          "www-authenticate: nonce=\"aaaaaaaaaa\"\n"
+          "www-authenticate: Digest realm=\"DigestRealm\", "
+          "nonce=\"aaaaaaaaaa\"\n",
 
-       HttpAuth::AUTH_SCHEME_DIGEST,
-       "DigestRealm",
+          "digest", "DigestRealm",
       },
       {
-       // Handle an empty header correctly.
-       "Y: Digest realm=\"X\", nonce=\"aaaaaaaaaa\"\n"
-       "www-authenticate:\n",
+          // Handle an empty header correctly.
+          "Y: Digest realm=\"X\", nonce=\"aaaaaaaaaa\"\n"
+          "www-authenticate:\n",
 
-       HttpAuth::AUTH_SCHEME_MAX,
-       "",
+          nullptr, "",
       },
       {
-       "WWW-Authenticate: Negotiate\n"
-       "WWW-Authenticate: NTLM\n",
+          // NTLM appears earlier in the list, but HttAuth should pick
+          // Negotiate.
+          "WWW-Authenticate: NTLM\n"
+          "WWW-Authenticate: Negotiate\n",
 
 #if defined(USE_KERBEROS) && !defined(OS_ANDROID)
-       // Choose Negotiate over NTLM on all platforms.
-       // TODO(ahendrickson): This may be flaky on Linux and OSX as it
-       // relies on being able to load one of the known .so files
-       // for gssapi.
-       HttpAuth::AUTH_SCHEME_NEGOTIATE,
+          // Choose Negotiate over NTLM on all platforms.
+          // TODO(ahendrickson): This may be flaky on Linux and OSX as it
+          // relies on being able to load one of the known .so files
+          // for gssapi.
+          "negotiate",
 #else
-       // On systems that don't use Kerberos fall back to NTLM.
-       HttpAuth::AUTH_SCHEME_NTLM,
+          // On systems that don't use Kerberos fall back to NTLM.
+          "ntlm",
 #endif  // defined(USE_KERBEROS)
-       "",
+          "",
       }};
   GURL origin("http://www.example.com");
-  std::set<HttpAuth::Scheme> disabled_schemes;
+  HttpAuthSchemeSet disabled_schemes;
   MockAllowHttpAuthPreferences http_auth_preferences;
   std::unique_ptr<HostResolver> host_resolver(new MockHostResolver());
   std::unique_ptr<HttpAuthHandlerRegistryFactory> http_auth_handler_factory(
@@ -146,7 +145,7 @@ TEST(HttpAuthTest, ChooseBestChallenge) {
       EXPECT_EQ(tests[i].challenge_scheme, handler->auth_scheme());
       EXPECT_STREQ(tests[i].challenge_realm, handler->realm().c_str());
     } else {
-      EXPECT_EQ(HttpAuth::AUTH_SCHEME_MAX, tests[i].challenge_scheme);
+      EXPECT_EQ(nullptr, tests[i].challenge_scheme);
       EXPECT_STREQ("", tests[i].challenge_realm);
     }
   }

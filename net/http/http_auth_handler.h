@@ -79,9 +79,7 @@ class NET_EXPORT_PRIVATE HttpAuthHandler {
                         std::string* auth_token);
 
   // The authentication scheme as an enumerated value.
-  HttpAuth::Scheme auth_scheme() const {
-    return auth_scheme_;
-  }
+  const std::string& auth_scheme() const { return auth_scheme_; }
 
   // The realm, encoded as UTF-8. This may be empty.
   const std::string& realm() const {
@@ -90,12 +88,6 @@ class NET_EXPORT_PRIVATE HttpAuthHandler {
 
   // The challenge which was issued when creating the handler.
   const std::string& challenge() const { return auth_challenge_; }
-
-  // Numeric rank based on the challenge's security level. Higher
-  // numbers are better. Used by HttpAuth::ChooseBestChallenge().
-  int score() const {
-    return score_;
-  }
 
   HttpAuth::Target target() const {
     return target_;
@@ -106,20 +98,6 @@ class NET_EXPORT_PRIVATE HttpAuthHandler {
   // port, but does not include path.
   const GURL& origin() const {
     return origin_;
-  }
-
-  // Returns true if the authentication scheme does not send the username and
-  // password in the clear.
-  bool encrypts_identity() const {
-    return (properties_ & ENCRYPTS_IDENTITY) != 0;
-  }
-
-  // Returns true if the authentication scheme is connection-based, for
-  // example, NTLM.  A connection-based authentication scheme does not support
-  // preemptive authentication, and must use the same handler object
-  // throughout the life of an HTTP transaction.
-  bool is_connection_based() const {
-    return (properties_ & IS_CONNECTION_BASED) != 0;
   }
 
   // Returns true if the response to the current authentication challenge
@@ -141,11 +119,6 @@ class NET_EXPORT_PRIVATE HttpAuthHandler {
   virtual bool AllowsExplicitCredentials();
 
  protected:
-  enum Property {
-    ENCRYPTS_IDENTITY = 1 << 0,
-    IS_CONNECTION_BASED = 1 << 1,
-  };
-
   // Initializes the handler using a challenge issued by a server.
   // |challenge| must be non-NULL and have already tokenized the
   // authentication scheme, but none of the tokens occurring after the
@@ -155,7 +128,7 @@ class NET_EXPORT_PRIVATE HttpAuthHandler {
   // and describes the connection.
   //
   // Implementations are expected to initialize the following members:
-  // scheme_, realm_, score_, properties_
+  // scheme_, realm_
   virtual bool Init(HttpAuthChallengeTokenizer* challenge,
                     const SSLInfo& ssl_info) = 0;
 
@@ -167,8 +140,8 @@ class NET_EXPORT_PRIVATE HttpAuthHandler {
                                     const CompletionCallback& callback,
                                     std::string* auth_token) = 0;
 
-  // The auth-scheme as an enumerated value.
-  HttpAuth::Scheme auth_scheme_;
+  // The auth-scheme as a lowercase ASCII RFC 2616 2.2 token.
+  std::string auth_scheme_;
 
   // The realm, encoded as UTF-8. Used by "basic" and "digest".
   std::string realm_;
@@ -180,15 +153,9 @@ class NET_EXPORT_PRIVATE HttpAuthHandler {
   // and "negotiate" to construct the service principal name.
   GURL origin_;
 
-  // The score for this challenge. Higher numbers are better.
-  int score_;
-
   // Whether this authentication request is for a proxy server, or an
   // origin server.
   HttpAuth::Target target_;
-
-  // A bitmask of the properties of the authentication scheme.
-  int properties_;
 
   NetLogWithSource net_log_;
 

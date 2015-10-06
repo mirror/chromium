@@ -24,6 +24,8 @@
 
 namespace net {
 
+static const char* const kDigestSchemeName = "digest";
+
 // Digest authentication is specified in RFC 2617.
 // The expanded derivations are listed in the tables below.
 
@@ -116,7 +118,7 @@ HttpAuth::AuthorizationResult HttpAuthHandlerDigest::HandleAnotherChallenge(
   // to differentiate between stale and rejected responses.
   // Note that the state of the current handler is not mutated - this way if
   // there is a rejection the realm hasn't changed.
-  if (!base::LowerCaseEqualsASCII(challenge->scheme(), kDigestAuthScheme))
+  if (!challenge->SchemeIs(kDigestSchemeName))
     return HttpAuth::AUTHORIZATION_RESULT_INVALID;
 
   HttpUtil::NameValuePairsIterator parameters = challenge->param_pairs();
@@ -192,9 +194,7 @@ HttpAuthHandlerDigest::~HttpAuthHandlerDigest() {
 // webserver was not sending the realm with a BASIC challenge).
 bool HttpAuthHandlerDigest::ParseChallenge(
     HttpAuthChallengeTokenizer* challenge) {
-  auth_scheme_ = HttpAuth::AUTH_SCHEME_DIGEST;
-  score_ = 2;
-  properties_ = ENCRYPTS_IDENTITY;
+  auth_scheme_ = kDigestSchemeName;
 
   // Initialize to defaults.
   stale_ = false;
@@ -203,7 +203,7 @@ bool HttpAuthHandlerDigest::ParseChallenge(
   realm_ = original_realm_ = nonce_ = domain_ = opaque_ = std::string();
 
   // FAIL -- Couldn't match auth-scheme.
-  if (!base::LowerCaseEqualsASCII(challenge->scheme(), kDigestAuthScheme))
+  if (!challenge->SchemeIs(kDigestSchemeName))
     return false;
 
   HttpUtil::NameValuePairsIterator parameters = challenge->param_pairs();

@@ -7,18 +7,14 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/logging.h"
+#include "base/strings/string_util.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_auth_challenge_tokenizer.h"
 #include "net/log/net_log_event_type.h"
 
 namespace net {
 
-HttpAuthHandler::HttpAuthHandler()
-    : auth_scheme_(HttpAuth::AUTH_SCHEME_MAX),
-      score_(-1),
-      target_(HttpAuth::AUTH_NONE),
-      properties_(-1) {
-}
+HttpAuthHandler::HttpAuthHandler() : target_(HttpAuth::AUTH_NONE) {}
 
 HttpAuthHandler::~HttpAuthHandler() {
 }
@@ -30,19 +26,16 @@ bool HttpAuthHandler::InitFromChallenge(HttpAuthChallengeTokenizer* challenge,
                                         const NetLogWithSource& net_log) {
   origin_ = origin;
   target_ = target;
-  score_ = -1;
-  properties_ = -1;
   net_log_ = net_log;
 
   auth_challenge_ = challenge->challenge_text();
   bool ok = Init(challenge, ssl_info);
 
-  // Init() is expected to set the scheme, realm, score, and properties.  The
-  // realm may be empty.
-  DCHECK(!ok || score_ != -1);
-  DCHECK(!ok || properties_ != -1);
-  DCHECK(!ok || auth_scheme_ != HttpAuth::AUTH_SCHEME_MAX);
-
+  // Init() is expected to set the scheme, realm, and properties. The realm may
+  // be empty.
+  DCHECK_IMPLIES(ok,
+                 HttpUtil::IsToken(auth_scheme_.begin(), auth_scheme_.end()) &&
+                     base::ToLowerASCII(auth_scheme_) == auth_scheme_);
   return ok;
 }
 

@@ -41,10 +41,9 @@ class NET_EXPORT HttpAuthCache {
     // The case-sensitive realm string of the challenge.
     const std::string& realm() const { return realm_; }
 
-    // The authentication scheme of the challenge.
-    HttpAuth::Scheme scheme() const {
-      return scheme_;
-    }
+    // The normalized authentication scheme of the challenge. See
+    // HttpAuth::IsValidNormalizedScheme().
+    const std::string& scheme() const { return scheme_; }
 
     // The authentication challenge.
     const std::string& auth_challenge() const { return auth_challenge_; }
@@ -90,7 +89,7 @@ class NET_EXPORT HttpAuthCache {
     // |origin_| contains the {protocol, host, port} of the server.
     GURL origin_;
     std::string realm_;
-    HttpAuth::Scheme scheme_;
+    std::string scheme_;
 
     // Identity.
     std::string auth_challenge_;
@@ -121,11 +120,11 @@ class NET_EXPORT HttpAuthCache {
   // scheme |scheme|.
   //   |origin| - the {scheme, host, port} of the server.
   //   |realm|  - case sensitive realm string.
-  //   |scheme| - the authentication scheme (i.e. basic, negotiate).
+  //   |scheme| - the normalized authentication scheme (i.e. basic, negotiate).
   //   returns  - the matched entry or NULL.
   Entry* Lookup(const GURL& origin,
                 const std::string& realm,
-                HttpAuth::Scheme scheme);
+                const std::string& scheme);
 
   // Find the entry on server |origin| whose protection space includes
   // |path|. This uses the assumption in RFC 2617 section 2 that deeper
@@ -142,14 +141,15 @@ class NET_EXPORT HttpAuthCache {
   // paths list.
   //   |origin|   - the {scheme, host, port} of the server.
   //   |realm|    - the auth realm for the challenge.
-  //   |scheme|   - the authentication scheme (i.e. basic, negotiate).
+  //   |scheme|   - the normalized authentication scheme (i.e. basic,
+  //   negotiate).
   //   |credentials| - login information for the realm.
   //   |path|     - absolute path for a resource contained in the protection
   //                space; this will be added to the list of known paths.
   //   returns    - the entry that was just added/updated.
   Entry* Add(const GURL& origin,
              const std::string& realm,
-             HttpAuth::Scheme scheme,
+             const std::string& scheme,
              const std::string& auth_challenge,
              const AuthCredentials& credentials,
              const std::string& path);
@@ -158,25 +158,26 @@ class NET_EXPORT HttpAuthCache {
   // if one exists AND if the cached credentials matches |credentials|.
   //   |origin|   - the {scheme, host, port} of the server.
   //   |realm|    - case sensitive realm string.
-  //   |scheme|   - the authentication scheme (i.e. basic, negotiate).
+  //   |scheme|   - the normalized authentication scheme (i.e. basic,
+  //   negotiate).
   //   |credentials| - the credentials to match.
   //   returns    - true if an entry was removed.
   bool Remove(const GURL& origin,
               const std::string& realm,
-              HttpAuth::Scheme scheme,
+              const std::string& scheme,
               const AuthCredentials& credentials);
 
   // Clears cache entries created within |duration| of base::TimeTicks::Now().
   void ClearEntriesAddedWithin(base::TimeDelta duration);
 
   // Updates a stale digest entry on server |origin| for realm |realm| and
-  // scheme |scheme|. The cached auth challenge is replaced with
+  // normalized scheme |scheme|. The cached auth challenge is replaced with
   // |auth_challenge| and the nonce count is reset.
   // |UpdateStaleChallenge()| returns true if a matching entry exists in the
   // cache, false otherwise.
   bool UpdateStaleChallenge(const GURL& origin,
                             const std::string& realm,
-                            HttpAuth::Scheme scheme,
+                            const std::string& scheme,
                             const std::string& auth_challenge);
 
   // Copies all entries from |other| cache.
