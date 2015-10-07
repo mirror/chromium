@@ -33,7 +33,6 @@ class HttpAuthHandlerMock : public HttpAuthHandler {
 
     void AddMockHandler(std::unique_ptr<HttpAuthHandler> handler,
                         HttpAuthHandlerCreateReason reason);
-
     bool HaveAuthHandlers() const;
 
     // HttpAuthHandlerFactory:
@@ -41,7 +40,6 @@ class HttpAuthHandlerMock : public HttpAuthHandler {
         const std::string& scheme) override;
     std::unique_ptr<HttpAuthHandler> CreateAndInitPreemptiveAuthHandler(
         HttpAuthCache::Entry* cache_entry,
-        const HttpAuthChallengeTokenizer& tokenizer,
         HttpAuth::Target target,
         const BoundNetLog& net_log) override;
 
@@ -56,6 +54,7 @@ class HttpAuthHandlerMock : public HttpAuthHandler {
 
   ~HttpAuthHandlerMock() override;
 
+  void SetInitExpectation(bool async, int rv);
   void SetGenerateExpectation(bool async, int rv);
 
   void set_expected_auth_scheme(const std::string& scheme) {
@@ -78,10 +77,6 @@ class HttpAuthHandlerMock : public HttpAuthHandler {
     allows_explicit_credentials_ = allows_explicit_credentials;
   }
 
-  void set_auth_token(const std::string& auth_token) {
-    auth_token_ = auth_token;
-  }
-
   const GURL& request_url() const {
     return request_url_;
   }
@@ -94,18 +89,25 @@ class HttpAuthHandlerMock : public HttpAuthHandler {
   bool AllowsExplicitCredentials() override;
 
  protected:
-  int Init(const HttpAuthChallengeTokenizer& challenge,
-           const SSLInfo& ssl_info) override;
-
+  // HttpAuthHandler
+  int InitializeFromChallengeInternal(
+      const HttpAuthChallengeTokenizer& challenge,
+      const HttpResponseInfo& response_with_challenge,
+      const CompletionCallback& callback) override;
+  int InitializeFromCacheEntryInternal(
+      HttpAuthCache::Entry* cache_entry) override;
   int GenerateAuthTokenImpl(const AuthCredentials* credentials,
                             const HttpRequestInfo& request,
                             const CompletionCallback& callback,
                             std::string* auth_token) override;
 
  private:
-  void OnGenerateAuthToken();
+  void OnInitializeComplete();
+  void OnGenerateAuthTokenComplete();
 
   CompletionCallback callback_;
+  bool init_async_ = false;
+  int init_rv_ = 0;
   bool generate_async_ = false;
   int generate_rv_ = 0;
   std::string auth_token_;
@@ -114,6 +116,8 @@ class HttpAuthHandlerMock : public HttpAuthHandler {
   bool allows_default_credentials_ = false;
   bool allows_explicit_credentials_ = true;
   bool expect_multiple_challenges_ = false;
+  bool initialized_ = false;
+  bool initialization_succeeded = false;
   HttpAuth::Target expected_auth_target_ = HttpAuth::AUTH_SERVER;
   GURL request_url_;
   base::WeakPtrFactory<HttpAuthHandlerMock> weak_factory_;

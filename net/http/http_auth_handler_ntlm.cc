@@ -24,17 +24,20 @@ HttpAuth::AuthorizationResult HttpAuthHandlerNTLM::HandleAnotherChallenge(
   return ParseChallenge(challenge, false);
 }
 
-int HttpAuthHandlerNTLM::Init(const HttpAuthChallengeTokenizer& tok,
-                               const SSLInfo& ssl_info) {
-
-  auth_scheme_ = "ntlm";
-  if (ssl_info.is_valid())
-    x509_util::GetTLSServerEndPointChannelBinding(*ssl_info.cert,
-                                                  &channel_bindings_);
-
-  return ParseChallenge(tok, true) == HttpAuth::AUTHORIZATION_RESULT_ACCEPT
+int HttpAuthHandlerNTLM::InitializeFromChallengeInternal(
+    const HttpAuthChallengeTokenizer& challenge,
+    const HttpResponseInfo& response_with_challenge,
+    const CompletionCallback& callback) {
+  return ParseChallenge(challenge, true) ==
+                 HttpAuth::AUTHORIZATION_RESULT_ACCEPT
              ? OK
              : ERR_INVALID_RESPONSE;
+}
+
+int HttpAuthHandlerNTLM::InitializeFromCacheEntryInternal(
+    HttpAuthCache::Entry*) {
+  NOTREACHED();
+  return ERR_UNSUPPORTED_AUTH_SCHEME;
 }
 
 int HttpAuthHandlerNTLM::GenerateAuthTokenImpl(
@@ -155,7 +158,6 @@ std::string HttpAuthHandlerNTLM::CreateSPN(const GURL& origin) {
 scoped_ptr<HttpAuthHandler>
 HttpAuthHandlerNTLM::Factory::CreateAndInitPreemptiveAuthHandler(
     HttpAuthCache::Entry* cache_entry,
-    const HttpAuthChallengeTokenizer& tokenizer,
     HttpAuth::Target target,
     const BoundNetLog& net_log) {
   return scoped_ptr<HttpAuthHandler>();

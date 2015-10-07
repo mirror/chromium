@@ -670,6 +670,21 @@ HttpAuthGSSAPI::HttpAuthGSSAPI(GSSAPILibrary* library,
 HttpAuthGSSAPI::~HttpAuthGSSAPI() {
 }
 
+// TODO(asanka): Take a HttpResonseInfo along with the initial challenge to
+// initialize the HttpAuthHandler. Then HttpAuthHandlerNegotiate can generate a
+// channel binding token from the SSLInfo which can then be used when tokens are
+// being generated.
+//
+// Only the HandleAnotherChallenge() and InitFromChallenge() phases have
+// realiable access to a HttpResonseInfo.
+//
+// There is a lot of cleanup to do here, but should be kept separate from the
+// other ongoing work.
+//
+// We unfortunately can't move the token generation code to be after header
+// receipt in http_network_transaction because it's needed for pre-emptive
+// authentication :(. We need to make both HTTP auth challenge handling and
+// token generation to be potentially asynchronous.
 bool HttpAuthGSSAPI::Init() {
   if (!library_)
     return false;

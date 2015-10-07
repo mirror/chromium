@@ -12,6 +12,8 @@
 #include "base/strings/string_util.h"
 #include "net/base/net_errors.h"
 #include "net/dns/mock_host_resolver.h"
+
+#include "net/http/http_auth.h"
 #include "net/http/http_auth_challenge_tokenizer.h"
 #include "net/http/http_auth_filter.h"
 #include "net/http/http_auth_handler.h"

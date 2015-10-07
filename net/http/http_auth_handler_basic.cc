@@ -55,7 +55,17 @@ bool ParseRealm(const HttpAuthChallengeTokenizer& tokenizer,
 
 }  // namespace
 
-int HttpAuthHandlerBasic::Init(const HttpAuthChallengeTokenizer& challenge) {
+int HttpAuthHandlerBasic::InitializeFromChallengeInternal(
+    const HttpAuthChallengeTokenizer& challenge,
+    const HttpResponseInfo&,
+    const CompletionCallback&) {
+  return ParseChallenge(challenge);
+}
+
+int HttpAuthHandlerBasic::InitializeFromCacheEntryInternal(
+    HttpAuthCache::Entry* cache_entry) {
+  HttpAuthChallengeTokenizer challenge(cache_entry->auth_challenge().begin(),
+                                       cache_entry->auth_challenge().end());
   return ParseChallenge(challenge);
 }
 
@@ -122,14 +132,12 @@ HttpAuthHandlerBasic::Factory::CreateAuthHandlerForScheme(
 std::unique_ptr<HttpAuthHandler>
 HttpAuthHandlerBasic::Factory::CreateAndInitPreemptiveAuthHandler(
     HttpAuthCache::Entry* cache_entry,
-    const HttpAuthChallengeTokenizer& tokenizer,
     HttpAuth::Target target,
     const BoundNetLog& net_log) {
   if (cache_entry->scheme() != kBasicSchemeName)
     return std::unique_ptr<HttpAuthHandler>();
   std::unique_ptr<HttpAuthHandler> handler(new HttpAuthHandlerBasic());
-  int rv = handler->HandleInitialChallenge(tokenizer, target,
-                                           cache_entry->origin(), net_log);
+  int rv = handler->InitializeFromCacheEntry(cache_entry, target, net_log);
   if (rv == OK)
     return handler;
   return std::unique_ptr<HttpAuthHandler>();

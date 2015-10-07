@@ -181,7 +181,6 @@ HttpAuthHandlerRegistryFactory::CreateAuthHandlerForScheme(
 std::unique_ptr<HttpAuthHandler>
 HttpAuthHandlerRegistryFactory::CreateAndInitPreemptiveAuthHandler(
     HttpAuthCache::Entry* cache_entry,
-    const HttpAuthChallengeTokenizer& tokenizer,
     HttpAuth::Target target,
     const BoundNetLog& net_log) {
   std::string scheme_name = cache_entry->scheme();
@@ -189,8 +188,8 @@ HttpAuthHandlerRegistryFactory::CreateAndInitPreemptiveAuthHandler(
   if (it == factory_map_.end())
     return std::unique_ptr<HttpAuthHandler>();
   DCHECK(it->second);
-  return it->second->CreateAndInitPreemptiveAuthHandler(cache_entry, tokenizer,
-                                                        target, net_log);
+  return it->second->CreateAndInitPreemptiveAuthHandler(cache_entry, target,
+                                                        net_log);
 }
 
 }  // namespace net

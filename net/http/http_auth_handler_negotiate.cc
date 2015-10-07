@@ -62,7 +62,6 @@ void HttpAuthHandlerNegotiate::Factory::set_host_resolver(
 std::unique_ptr<HttpAuthHandler>
 HttpAuthHandlerNegotiate::Factory::CreateAndInitPreemptiveAuthHandler(
     HttpAuthCache::Entry* cache_entry,
-    const HttpAuthChallengeTokenizer& tokenizer,
     HttpAuth::Target target,
     const BoundNetLog& net_log) {
   return std::unique_ptr<HttpAuthHandler>();
@@ -214,9 +213,10 @@ bool HttpAuthHandlerNegotiate::AllowsExplicitCredentials() {
 
 // The Negotiate challenge header looks like:
 //   WWW-Authenticate: NEGOTIATE auth-data
-int HttpAuthHandlerNegotiate::Init(
+int HttpAuthHandlerNegotiate::InitializeFromChallengeInternal(
     const HttpAuthChallengeTokenizer& challenge,
-    const SSLInfo& ssl_info) {
+    const HttpResponseInfo& response_with_challenge,
+    const CompletionCallback& callback) {
 #if defined(OS_POSIX)
   if (!auth_system_.Init()) {
     VLOG(1) << "can't initialize GSSAPI library";
@@ -237,6 +237,12 @@ int HttpAuthHandlerNegotiate::Init(
   return auth_result == HttpAuth::AUTHORIZATION_RESULT_ACCEPT
              ? OK
              : ERR_INVALID_RESPONSE;
+}
+
+int HttpAuthHandlerNegotiate::InitializeFromCacheEntryInternal(
+    HttpAuthCache::Entry*) {
+  NOTREACHED();
+  return ERR_UNSUPPORTED_AUTH_SCHEME;
 }
 
 int HttpAuthHandlerNegotiate::GenerateAuthTokenImpl(

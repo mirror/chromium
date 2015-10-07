@@ -93,7 +93,6 @@ class NET_EXPORT HttpAuthHandlerFactory {
   // more details on return values.
   virtual std::unique_ptr<HttpAuthHandler> CreateAndInitPreemptiveAuthHandler(
       HttpAuthCache::Entry* cache_entry,
-      const HttpAuthChallengeTokenizer& tokenizer,
       HttpAuth::Target target,
       const BoundNetLog& net_log) = 0;
 

@@ -94,7 +94,7 @@ class NET_EXPORT_PRIVATE HttpAuth {
     ~Identity();
 
     IdentitySource source;
-    bool invalid;
+    bool invalid;  // TODO(asanka): Invert this.
     AuthCredentials credentials;
   };
 
@@ -109,56 +109,6 @@ class NET_EXPORT_PRIVATE HttpAuth {
   // Returns a string representation of a Target value that can be used in log
   // messages.
   static std::string GetAuthTargetString(Target target);
-
-  // Iterate through the challenge headers, and pick the best one that we
-  // support. Obtains the implementation class for handling the challenge, and
-  // passes it back in |*handler|. If no supported challenge was found,
-  // |*handler| is set to NULL.
-  //
-  // |disabled_schemes| is the set of schemes that we should not use.
-  //
-  // |origin| is used by the NTLM and Negotiation authentication scheme to
-  // construct the service principal name. It is ignored by other schemes.
-  //
-  // |ssl_info| is passed through to the scheme specific authentication handlers
-  // to use as appropriate.
-  static void ChooseBestChallenge(
-      HttpAuthHandlerFactory* http_auth_handler_factory,
-      const HttpResponseHeaders& response_headers,
-      const SSLInfo& ssl_info,
-      Target target,
-      const GURL& origin,
-      const HttpAuthSchemeSet& disabled_schemes,
-      const BoundNetLog& net_log,
-      std::unique_ptr<HttpAuthHandler>* handler);
-
-  // Handle a 401/407 response from a server/proxy after a previous
-  // authentication attempt. For connection-based authentication schemes, the
-  // new response may be another round in a multi-round authentication sequence.
-  // For request-based schemes, a 401/407 response is typically treated like a
-  // rejection of the previous challenge, except in the Digest case when a
-  // "stale" attribute is present.
-  //
-  // |handler| must be non-NULL, and is the HttpAuthHandler from the previous
-  // authentication round.
-  //
-  // |response_headers| must contain the new HTTP response.
-  //
-  // |target| specifies whether the authentication challenge response came
-  // from a server or a proxy.
-  //
-  // |disabled_schemes| are the authentication schemes to ignore.
-  //
-  // |challenge_used| is the text of the authentication challenge used in
-  // support of the returned AuthorizationResult. If no headers were used for
-  // the result (for example, all headers have unknown authentication schemes),
-  // the value is cleared.
-  static AuthorizationResult HandleChallengeResponse(
-      HttpAuthHandler* handler,
-      const HttpResponseHeaders& response_headers,
-      Target target,
-      const HttpAuthSchemeSet& disabled_schemes,
-      std::string* challenge_used);
 
   // RFC 7235 states that an authentication scheme is a case insensitive token.
   // This function checks whether |scheme| is a token AND is lowercase.

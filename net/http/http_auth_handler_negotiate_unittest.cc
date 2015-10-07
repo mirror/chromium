@@ -221,8 +221,12 @@ class HttpAuthHandlerNegotiateTest : public PlatformTest {
         factory_->CreateAuthHandlerForScheme(tokenizer.NormalizedScheme());
     if (!generic_handler)
       return ERR_UNSUPPORTED_AUTH_SCHEME;
+    HttpResponseInfo fake_response_info;
+    TestCompletionCallback callback;
     int rv = generic_handler->HandleInitialChallenge(
-        tokenizer, HttpAuth::AUTH_SERVER, gurl, BoundNetLog());
+        tokenizer, fake_response_info, HttpAuth::AUTH_SERVER, gurl,
+        BoundNetLog(), callback.callback());
+    rv = callback.GetResult(rv);
     if (rv != OK)
       return rv;
     HttpAuthHandlerNegotiate* negotiate_handler =

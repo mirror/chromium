@@ -6,13 +6,16 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/callback_helpers.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/platform_thread.h"
+#include "base/values.h"
 #include "net/base/auth.h"
 #include "net/base/url_util.h"
 #include "net/dns/host_resolver.h"
+#include "net/http/http_auth_challenge_tokenizer.h"
 #include "net/http/http_auth_challenge_tokenizer.h"
 #include "net/http/http_auth_handler.h"
 #include "net/http/http_auth_handler_factory.h"
@@ -156,6 +159,32 @@ void HistogramAuthEvent(HttpAuthHandler* handler, AuthEvent auth_event) {
                             kTargetBucketsEnd);
 }
 
+// Hardcoded map of HTTP authentication scheme priorities. Higher priorities are
+// preferred over lower.
+struct SchemePriority {
+  const char* scheme;
+  int priority;
+} kSchemeScores[] = {
+    {"basic", 1},
+    {"digest", 2},
+    {"ntlm", 3},
+    {"negotiate", 4},
+};
+
+// Priority assigned to unknown authentication schemes. They are currently
+// ranked lower than Basic, which might be a bit too conservative.
+const int kSchemePriorityDefault = 0;
+
+// Higher priority schemes are preferred over lower priority schemes.
+int GetSchemePriority(const std::string& scheme) {
+  DCHECK(HttpAuth::IsValidNormalizedScheme(scheme));
+  for (const auto& iter : kSchemeScores) {
+    if (scheme == iter.scheme)
+      return iter.priority;
+  }
+  return kSchemePriorityDefault;
+}
+
 }  // namespace
 
 HttpAuthController::HttpAuthController(
@@ -170,7 +199,10 @@ HttpAuthController::HttpAuthController(
       embedded_identity_used_(false),
       default_credentials_used_(false),
       http_auth_cache_(http_auth_cache),
-      http_auth_handler_factory_(http_auth_handler_factory) {
+      http_auth_handler_factory_(http_auth_handler_factory),
+      weak_ptr_factory_(this) {
+  io_callback_ = base::Bind(&HttpAuthController::OnIOComplete,
+                            weak_ptr_factory_.GetWeakPtr());
 }
 
 HttpAuthController::~HttpAuthController() {
@@ -181,25 +213,18 @@ int HttpAuthController::MaybeGenerateAuthToken(
     const HttpRequestInfo* request, const CompletionCallback& callback,
     const BoundNetLog& net_log) {
   DCHECK(CalledOnValidThread());
-  DCHECK(request);
+  DCHECK(callback_.is_null());
+  DCHECK(!callback.is_null());
+
   bool needs_auth = HaveAuth() || SelectPreemptiveAuth(net_log);
   if (!needs_auth)
     return OK;
-  const AuthCredentials* credentials = NULL;
-  if (identity_.source != HttpAuth::IDENT_SRC_DEFAULT_CREDENTIALS)
-    credentials = &identity_.credentials;
-  DCHECK(auth_token_.empty());
-  DCHECK(callback_.is_null());
-  int rv = handler_->GenerateAuthToken(
-      credentials, *request,
-      base::Bind(&HttpAuthController::OnIOComplete, base::Unretained(this)),
-      &auth_token_);
-  if (DisableOnAuthHandlerResult(rv))
-    rv = OK;
+  request_info_ = request;
+  next_state_ = STATE_GENERATE_TOKEN;
+  net_log_ = net_log;
+  int rv = DoLoop(OK);
   if (rv == ERR_IO_PENDING)
     callback_ = callback;
-  else
-    OnIOComplete(rv);
   return rv;
 }
 
@@ -223,11 +248,9 @@ bool HttpAuthController::SelectPreemptiveAuth(const BoundNetLog& net_log) {
     return false;
 
   // Try to create a handler using the previous auth challenge.
-  std::string challenge = entry->auth_challenge();
-  HttpAuthChallengeTokenizer tokenizer(challenge.begin(), challenge.end());
   std::unique_ptr<HttpAuthHandler> handler_preemptive =
       http_auth_handler_factory_->CreateAndInitPreemptiveAuthHandler(
-          entry, tokenizer, target_, net_log);
+          entry, target_, net_log);
   if (!handler_preemptive)
     return false;
 
@@ -255,11 +278,10 @@ void HttpAuthController::AddAuthorizationHeader(
 int HttpAuthController::HandleAuthChallenge(
     scoped_refptr<HttpResponseHeaders> headers,
     const SSLInfo& ssl_info,
-    bool do_not_send_server_auth,
-    bool establishing_tunnel,
+    const CompletionCallback& callback,
     const BoundNetLog& net_log) {
   DCHECK(CalledOnValidThread());
-  DCHECK(headers.get());
+  DCHECK(response_info.headers.get());
   DCHECK(auth_origin_.is_valid());
 
   // Give the existing auth handler first try at the authentication headers.
@@ -348,29 +370,20 @@ int HttpAuthController::HandleAuthChallenge(
     }
 
     // From this point on, we are restartable.
+=======
+  DCHECK(callback_.is_null());
+  DCHECK(!callback.is_null());
+>>>>>>> refs/heads/auth-async
 
-    if (identity_.invalid) {
-      // We have exhausted all identity possibilities.
-      if (!handler_->AllowsExplicitCredentials()) {
-        // If the handler doesn't accept explicit credentials, then we need to
-        // choose a different auth scheme.
-        HistogramAuthEvent(handler_.get(), AUTH_EVENT_REJECT);
-        InvalidateCurrentHandler(INVALIDATE_HANDLER_AND_DISABLE_SCHEME);
-      } else {
-        // Pass the challenge information back to the client.
-        PopulateAuthChallenge();
-      }
-    } else {
-      auth_info_ = NULL;
-    }
+  next_state_ = HaveAuthHandler() ? STATE_HANDLE_ANOTHER_CHALLENGE
+                                  : STATE_CHOOSE_CHALLENGE;
+  response_info_ = &response_info;
+  net_log_ = net_log;
+  int result = DoLoop(OK);
 
-    // If we get here and we don't have a handler_, that's because we
-    // invalidated it due to not having any viable identities to use with it. Go
-    // back and try again.
-    // TODO(asanka): Instead we should create a priority list of
-    //     <handler,identity> and iterate through that.
-  } while(!handler_.get());
-  return OK;
+  if (result == ERR_IO_PENDING)
+    callback_ = callback;
+  return result;
 }
 
 void HttpAuthController::ResetAuth(const AuthCredentials& credentials) {
@@ -495,6 +508,7 @@ bool HttpAuthController::SelectNextAuthIdentityToTry() {
 
 void HttpAuthController::PopulateAuthChallenge() {
   DCHECK(CalledOnValidThread());
+  DCHECK(!auth_info_);
 
   // Populates response_.auth_challenge with the authentication challenge info.
   // This info is consumed by URLRequestHttpJob::GetAuthChallengeInfo().
@@ -538,12 +552,10 @@ bool HttpAuthController::DisableOnAuthHandlerResult(int result) {
 
 void HttpAuthController::OnIOComplete(int result) {
   DCHECK(CalledOnValidThread());
-  if (DisableOnAuthHandlerResult(result))
-    result = OK;
-  if (!callback_.is_null()) {
-    CompletionCallback c = callback_;
-    callback_.Reset();
-    c.Run(result);
+  result = DoLoop(result);
+
+  if (result != ERR_IO_PENDING && !callback_.is_null()) {
+    base::ResetAndReturn(&callback_).Run(result);
   }
 }
 
@@ -565,6 +577,267 @@ void HttpAuthController::DisableAuthScheme(const std::string& scheme) {
 void HttpAuthController::DisableEmbeddedIdentity() {
   DCHECK(CalledOnValidThread());
   embedded_identity_used_ = true;
+}
+
+int HttpAuthController::DoLoop(int result) {
+  DCHECK(CalledOnValidThread());
+
+  do {
+    State state = next_state_;
+    next_state_ = STATE_NONE;
+
+    switch (state) {
+      case STATE_CHOOSE_CHALLENGE:
+        DCHECK_EQ(OK, result);
+        result = DoChooseChallenge();
+        break;
+
+      case STATE_TRY_NEXT_CHALLENGE:
+        DCHECK_EQ(OK, result);
+        result = DoTryNextChallenge();
+        break;
+
+      case STATE_TRY_NEXT_CHALLENGE_COMPLETE:
+        result = DoTryNextChallengeComplete(result);
+        break;
+
+      case STATE_CHOOSE_IDENTITY:
+        DCHECK_EQ(OK, result);
+        result = DoChooseIdentity();
+        break;
+
+      case STATE_HANDLE_ANOTHER_CHALLENGE:
+        DCHECK_EQ(OK, result);
+        result = DoHandleAnotherChallenge();
+        break;
+
+      case STATE_HANDLE_ANOTHER_CHALLENGE_COMPLETE:
+        result = DoHandleAnotherChallengeComplete(result);
+        break;
+
+      case STATE_GENERATE_TOKEN:
+        DCHECK_EQ(OK, result);
+        result = DoGenerateToken();
+        break;
+
+      case STATE_GENERATE_TOKEN_COMPLETE:
+        result = DoGenerateTokenComplete(result);
+        break;
+
+      case STATE_NONE:
+        NOTREACHED() << "next_state_: " << next_state_;
+    }
+  } while (next_state_ != STATE_NONE && result != ERR_IO_PENDING);
+
+  if (result != ERR_IO_PENDING) {
+    // Exiting the state machine.
+    request_info_ = nullptr;
+    response_info_ = nullptr;
+    net_log_ = BoundNetLog();
+  }
+
+  return result;
+}
+
+int HttpAuthController::DoChooseChallenge() {
+  DCHECK(response_info_);
+  DCHECK(response_info_->headers.get());
+  DCHECK(!handler_);
+  DCHECK(auth_token_.empty());
+
+  auth_info_ = nullptr;
+
+  std::priority_queue<CandidateChallenge> old_challenges;
+  candidate_challenges_.swap(old_challenges);
+
+  void* iter = nullptr;
+  const std::string header_name = HttpAuth::GetChallengeHeaderName(target_);
+  std::string current_challenge;
+  while (response_info_->headers->EnumerateHeader(&iter, header_name,
+                                                  &current_challenge)) {
+    HttpAuthChallengeTokenizer tokenizer(current_challenge.begin(),
+                                         current_challenge.end());
+    std::string current_scheme = tokenizer.NormalizedScheme();
+    if (current_scheme.empty())
+      continue;
+    if (IsAuthSchemeDisabled(current_scheme))
+      continue;
+
+    CandidateChallenge candidate_challenge;
+    candidate_challenge.scheme = current_scheme;
+    candidate_challenge.priority = GetSchemePriority(current_scheme);
+    candidate_challenge.challenge = current_challenge;
+    candidate_challenges_.push(candidate_challenge);
+  }
+  next_state_ = STATE_TRY_NEXT_CHALLENGE;
+  return OK;
+}
+
+int HttpAuthController::DoTryNextChallenge() {
+  DCHECK(!handler_);
+  DCHECK(auth_token_.empty());
+  DCHECK(response_info_);
+
+  for (; !handler_ && !candidate_challenges_.empty();
+       candidate_challenges_.pop()) {
+    const CandidateChallenge& candidate = candidate_challenges_.top();
+    selected_auth_challenge_ = candidate.challenge;
+    if (IsAuthSchemeDisabled(candidate.scheme))
+      continue;
+    handler_ = http_auth_handler_factory_->CreateAuthHandlerForScheme(
+        candidate.scheme);
+  }
+
+  if (!handler_)
+    return OK;
+
+  HttpAuthChallengeTokenizer tokenizer(selected_auth_challenge_.begin(),
+                                       selected_auth_challenge_.end());
+  next_state_ = STATE_TRY_NEXT_CHALLENGE_COMPLETE;
+  return handler_->HandleInitialChallenge(tokenizer, *response_info_, target_,
+                                          auth_origin_, net_log_, io_callback_);
+}
+
+int HttpAuthController::DoTryNextChallengeComplete(int result) {
+  DCHECK(handler_);
+
+  if (result != OK) {
+    InvalidateCurrentHandler(INVALIDATE_HANDLER);
+    next_state_ = STATE_TRY_NEXT_CHALLENGE;
+    return OK;
+  }
+
+  HistogramAuthEvent(handler_.get(), AUTH_EVENT_START);
+  next_state_ = STATE_CHOOSE_IDENTITY;
+  return OK;
+}
+
+int HttpAuthController::DoChooseIdentity() {
+  DCHECK(handler_.get());
+  DCHECK(identity_.invalid);
+  DCHECK(!auth_info_);
+
+  if (handler_->NeedsIdentity()) {
+    SelectNextAuthIdentityToTry();
+  } else {
+    // TODO(asanka): This is a false flag and shouldn't be necessary. Instead
+    // rely on NeedsIdentity() to determine if the handler needs an identity.
+    identity_.invalid = false;
+  }
+
+  if (!identity_.invalid) {
+    return OK;
+  }
+
+  if (!handler_->AllowsExplicitCredentials()) {
+    HistogramAuthEvent(handler_.get(), AUTH_EVENT_REJECT);
+    InvalidateCurrentHandler(INVALIDATE_HANDLER_AND_DISABLE_SCHEME);
+    next_state_ = STATE_TRY_NEXT_CHALLENGE;
+    return OK;
+  }
+
+  PopulateAuthChallenge();
+  return OK;
+}
+
+int HttpAuthController::DoHandleAnotherChallenge() {
+  DCHECK(HaveAuth());
+  DCHECK(response_info_);
+  DCHECK(response_info_->headers.get());
+  DCHECK(auth_token_.empty());
+
+  next_state_ = STATE_HANDLE_ANOTHER_CHALLENGE_COMPLETE;
+  auth_info_ = nullptr;
+
+  selected_auth_challenge_.clear();
+  if (disabled_schemes_.Contains(handler_->auth_scheme()))
+    return HttpAuth::AUTHORIZATION_RESULT_REJECT;
+
+  std::string current_scheme_name = handler_->auth_scheme();
+  std::string challenge_header_name = HttpAuth::GetChallengeHeaderName(target_);
+
+  std::string challenge;
+  void* iter = nullptr;
+  HttpAuth::AuthorizationResult authorization_result =
+      HttpAuth::AUTHORIZATION_RESULT_INVALID;
+  while (response_info_->headers->EnumerateHeader(&iter, challenge_header_name,
+                                                  &challenge)) {
+    HttpAuthChallengeTokenizer tokenizer(challenge.begin(), challenge.end());
+    if (!tokenizer.SchemeIs(current_scheme_name))
+      continue;
+
+    authorization_result = handler_->HandleAnotherChallenge(tokenizer);
+    if (authorization_result != HttpAuth::AUTHORIZATION_RESULT_INVALID) {
+      selected_auth_challenge_ = challenge;
+      return authorization_result;
+    }
+  }
+
+  return HttpAuth::AUTHORIZATION_RESULT_REJECT;
+}
+
+int HttpAuthController::DoHandleAnotherChallengeComplete(int result) {
+  if (result < 0)
+    return result;
+
+  HttpAuth::AuthorizationResult auth_result =
+      static_cast<HttpAuth::AuthorizationResult>(result);
+  switch (auth_result) {
+    case HttpAuth::AUTHORIZATION_RESULT_ACCEPT:
+      return OK;
+
+    case HttpAuth::AUTHORIZATION_RESULT_INVALID:
+      InvalidateCurrentHandler(INVALIDATE_HANDLER_AND_CACHED_CREDENTIALS);
+      break;
+
+    case HttpAuth::AUTHORIZATION_RESULT_REJECT:
+      HistogramAuthEvent(handler_.get(), AUTH_EVENT_REJECT);
+      InvalidateCurrentHandler(INVALIDATE_HANDLER_AND_CACHED_CREDENTIALS);
+      break;
+
+    case HttpAuth::AUTHORIZATION_RESULT_STALE:
+      if (http_auth_cache_->UpdateStaleChallenge(
+              auth_origin_, handler_->realm(), handler_->auth_scheme(),
+              selected_auth_challenge_)) {
+        InvalidateCurrentHandler(INVALIDATE_HANDLER);
+      } else {
+        InvalidateCurrentHandler(INVALIDATE_HANDLER_AND_CACHED_CREDENTIALS);
+      }
+      break;
+
+    case HttpAuth::AUTHORIZATION_RESULT_DIFFERENT_REALM:
+      InvalidateCurrentHandler(identity_.source ==
+                                       HttpAuth::IDENT_SRC_PATH_LOOKUP
+                                   ? INVALIDATE_HANDLER
+                                   : INVALIDATE_HANDLER_AND_CACHED_CREDENTIALS);
+      break;
+  }
+
+  DCHECK(!handler_.get());
+  next_state_ = STATE_CHOOSE_CHALLENGE;
+  return OK;
+}
+
+int HttpAuthController::DoGenerateToken() {
+  DCHECK(handler_.get());
+  DCHECK(!identity_.invalid || !handler_->NeedsIdentity());
+  DCHECK(request_info_);
+  DCHECK(HaveAuth());
+  DCHECK(auth_token_.empty());
+
+  next_state_ = STATE_GENERATE_TOKEN_COMPLETE;
+  const AuthCredentials* credentials =
+      identity_.source == HttpAuth::IDENT_SRC_DEFAULT_CREDENTIALS
+          ? nullptr
+          : &identity_.credentials;
+  return handler_->GenerateAuthToken(credentials, *request_info_, io_callback_,
+                                     &auth_token_);
+}
+
+int HttpAuthController::DoGenerateTokenComplete(int result) {
+  if (DisableOnAuthHandlerResult(result))
+    result = OK;
+  return result;
 }
 
 }  // namespace net

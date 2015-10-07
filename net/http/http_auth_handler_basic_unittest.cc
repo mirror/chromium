@@ -44,16 +44,19 @@ TEST(HttpAuthHandlerBasicTest, GenerateAuthToken) {
         factory.CreateAuthHandlerForScheme("basic");
     ASSERT_TRUE(basic);
     HttpAuthChallengeTokenizer tokenizer(challenge.begin(), challenge.end());
-    EXPECT_EQ(OK, basic->HandleInitialChallenge(
-                      tokenizer, HttpAuth::AUTH_SERVER, origin, BoundNetLog()));
+    HttpResponseInfo response_info;
+    TestCompletionCallback callback;
+    int rv = basic->HandleInitialChallenge(tokenizer, response_info,
+                                           HttpAuth::AUTH_SERVER, origin,
+                                           BoundNetLog(), callback.callback());
+    EXPECT_EQ(OK, callback.GetResult(rv));
     AuthCredentials credentials(base::ASCIIToUTF16(tests[i].username),
                                 base::ASCIIToUTF16(tests[i].password));
     HttpRequestInfo request_info;
     std::string auth_token;
-    TestCompletionCallback callback;
-    int rv = basic->GenerateAuthToken(&credentials, request_info,
-                                      callback.callback(), &auth_token);
-    EXPECT_THAT(rv, IsOk());
+    rv = basic->GenerateAuthToken(&credentials, request_info,
+                                  callback.callback(), &auth_token);
+    EXPECT_THAT(callback.GetResult(rv), IsOk());
     EXPECT_STREQ(tests[i].expected_credentials, auth_token.c_str());
   }
 }
@@ -100,8 +103,12 @@ TEST(HttpAuthHandlerBasicTest, HandleAnotherChallenge) {
   std::string initial_challenge(tests[0].challenge);
   HttpAuthChallengeTokenizer tokenizer(initial_challenge.begin(),
                                        initial_challenge.end());
-  EXPECT_EQ(OK, basic->HandleInitialChallenge(tokenizer, HttpAuth::AUTH_SERVER,
-                                              origin, BoundNetLog()));
+  HttpResponseInfo response_info;
+  TestCompletionCallback callback;
+  int rv = basic->HandleInitialChallenge(tokenizer, response_info,
+                                         HttpAuth::AUTH_SERVER, origin,
+                                         BoundNetLog(), callback.callback());
+  EXPECT_EQ(OK, callback.GetResult(rv));
 
   for (size_t i = 0; i < arraysize(tests); ++i) {
     std::string challenge(tests[i].challenge);
@@ -194,9 +201,12 @@ TEST(HttpAuthHandlerBasicTest, HandleInitialChallenge) {
     std::unique_ptr<HttpAuthHandler> basic =
         factory.CreateAuthHandlerForScheme("basic");
     HttpAuthChallengeTokenizer tokenizer(challenge.begin(), challenge.end());
-    int rv = basic->HandleInitialChallenge(tokenizer, HttpAuth::AUTH_SERVER,
-                                           origin, BoundNetLog());
-    EXPECT_EQ(tests[i].expected_rv, rv);
+    HttpResponseInfo response_info;
+    TestCompletionCallback callback;
+    int rv = basic->HandleInitialChallenge(tokenizer, response_info,
+                                           HttpAuth::AUTH_SERVER, origin,
+                                           BoundNetLog(), callback.callback());
+    EXPECT_EQ(tests[i].expected_rv, callback.GetResult(rv));
     if (rv == OK)
       EXPECT_EQ(tests[i].expected_realm, basic->realm());
   }
@@ -213,26 +223,24 @@ TEST(HttpAuthHandlerBasicTest, CreateAndInitPreemptiveAuthHandler_Valid) {
   HttpAuthHandlerBasic::Factory digest_factory;
   HttpAuthCache auth_cache;
   std::string challenge("basic realm=\"Foo\"");
-  HttpAuthChallengeTokenizer tokenizer(challenge.begin(), challenge.end());
 
   HttpAuthCache::Entry* entry =
       auth_cache.Add(GURL("http://example.com/foo").GetOrigin(), "foo", "basic",
                      challenge, AuthCredentials(), "/foo");
   EXPECT_TRUE(digest_factory.CreateAndInitPreemptiveAuthHandler(
-      entry, tokenizer, HttpAuth::AUTH_SERVER, BoundNetLog()));
+      entry, HttpAuth::AUTH_SERVER, BoundNetLog()));
 }
 
 TEST(HttpAuthHandlerBasicTest, CreateAndInitPreemptiveAuthHandler_Invalid) {
   HttpAuthHandlerBasic::Factory digest_factory;
   HttpAuthCache auth_cache;
   std::string challenge("digest realm=\"foo\"");
-  HttpAuthChallengeTokenizer tokenizer(challenge.begin(), challenge.end());
 
   HttpAuthCache::Entry* entry =
       auth_cache.Add(GURL("http://example.com").GetOrigin(), "bar", "digest",
                      challenge, AuthCredentials(), "/bar");
   EXPECT_FALSE(digest_factory.CreateAndInitPreemptiveAuthHandler(
-      entry, tokenizer, HttpAuth::AUTH_SERVER, BoundNetLog()));
+      entry, HttpAuth::AUTH_SERVER, BoundNetLog()));
 }
 
 }  // namespace net

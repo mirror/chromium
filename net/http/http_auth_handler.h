@@ -10,6 +10,7 @@
 #include "net/base/completion_callback.h"
 #include "net/base/net_export.h"
 #include "net/http/http_auth.h"
+#include "net/http/http_auth_cache.h"
 #include "net/log/net_log.h"
 
 namespace net {
@@ -60,6 +61,10 @@ class NET_EXPORT_PRIVATE HttpAuthHandler {
  public:
   virtual ~HttpAuthHandler();
 
+  int InitializeFromCacheEntry(HttpAuthCache::Entry* cache_entry,
+                               HttpAuth::Target target,
+                               const BoundNetLog& net_log);
+
   // Initializes the handler and associates it with the specified |target| and
   // |origin|. The |net_log| parameter indicates BoundNetLog to be used for the
   // lifetime of this handler. |challenge| is required and *must* match the
@@ -71,10 +76,12 @@ class NET_EXPORT_PRIVATE HttpAuthHandler {
   // Note: This method *must* be the first method to be invoked on the
   // HttpAuthHandler.
   int HandleInitialChallenge(const HttpAuthChallengeTokenizer& challenge,
+                             const HttpResponseInfo& response_info,
                              HttpAuth::Target target,
                          const SSLInfo& ssl_info,
                              const GURL& origin,
-                             const BoundNetLog& net_log);
+                             const BoundNetLog& net_log,
+                             const CompletionCallback& callback);
 
   // Generates an authentication token, potentially asynchronously.
   //
@@ -182,7 +189,14 @@ class NET_EXPORT_PRIVATE HttpAuthHandler {
   // none of the tokens occurring after the authentication scheme.
   // Implementations are expected to initialize the following members: scheme_,
   // realm_
-  virtual int Init(const HttpAuthChallengeTokenizer& challenge, const SSLInfo& ssl_info) = 0;
+  virtual int InitializeFromChallengeInternal(
+      const HttpAuthChallengeTokenizer& challenge,
+      const HttpResponseInfo& response_with_challenge,
+      const CompletionCallback& callback) = 0;
+
+  // TODO(asanka): Update comment
+  virtual int InitializeFromCacheEntryInternal(
+      HttpAuthCache::Entry* cache_entry) = 0;
 
   // |GenerateAuthTokenImpl()} is the auth-scheme specific implementation
   // of generating the next auth token. Callers should use |GenerateAuthToken()|

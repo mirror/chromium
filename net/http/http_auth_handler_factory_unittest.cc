@@ -8,6 +8,7 @@
 
 #include "base/strings/string_util.h"
 #include "net/base/net_errors.h"
+#include "net/base/test_completion_callback.h"
 #include "net/dns/mock_host_resolver.h"
 #include "net/http/http_auth_challenge_tokenizer.h"
 #include "net/http/http_auth_handler.h"
@@ -34,12 +35,13 @@ class MockHttpAuthHandlerFactory : public HttpAuthHandlerFactory {
 
   std::unique_ptr<HttpAuthHandler> CreateAuthHandlerForScheme(
       const std::string& scheme) override {
+    if (scheme_.empty())
+      return scoped_ptr<HttpAuthHandler>();
     EXPECT_EQ(scheme, scheme_) << scheme << " vs. " << scheme_;
     return make_scoped_ptr(new HttpAuthHandlerMock());
   }
   std::unique_ptr<HttpAuthHandler> CreateAndInitPreemptiveAuthHandler(
       HttpAuthCache::Entry* cache_entry,
-      const HttpAuthChallengeTokenizer& tokenizer,
       HttpAuth::Target target,
       const BoundNetLog& net_log) override {
     EXPECT_EQ(cache_entry->scheme(), scheme_) << cache_entry->scheme()
@@ -84,7 +86,7 @@ TEST(HttpAuthHandlerFactoryTest, RegistryFactory) {
 
   // Test replacement of existing schemes.
   registry_factory.RegisterSchemeFactory("digest",
-                                         new HttpAuthHandlerMock::Factory());
+                                         new MockHttpAuthHandlerFactory(""));
   handler = registry_factory.CreateAuthHandlerForScheme("digest");
   EXPECT_FALSE(handler);
   registry_factory.RegisterSchemeFactory(
@@ -110,10 +112,10 @@ TEST(HttpAuthHandlerFactoryTest, DefaultFactory) {
         http_auth_handler_factory->CreateAuthHandlerForScheme(
             tokenizer.NormalizedScheme());
     ASSERT_TRUE(handler);
-    int rv = handler->HandleInitialChallenge(tokenizer, HttpAuth::AUTH_SERVER,
-                                             server_origin, BoundNetLog());
-    EXPECT_THAT(rv, IsOk());
-    ASSERT_FALSE(handler.get() == NULL);
+    int rv = handler->HandleInitialChallenge(
+        tokenizer, response_info, HttpAuth::AUTH_SERVER, server_origin,
+        BoundNetLog(), callback.callback());
+    EXPECT_THAT(callback.GetResult(rv), IsOk());
     EXPECT_EQ("basic", handler->auth_scheme());
     EXPECT_STREQ("FooBar", handler->realm().c_str());
     EXPECT_EQ(HttpAuth::AUTH_SERVER, handler->target());
@@ -130,9 +132,10 @@ TEST(HttpAuthHandlerFactoryTest, DefaultFactory) {
         http_auth_handler_factory->CreateAuthHandlerForScheme(
             tokenizer.NormalizedScheme());
     ASSERT_TRUE(handler);
-    int rv = handler->HandleInitialChallenge(tokenizer, HttpAuth::AUTH_PROXY,
-                                             proxy_origin, BoundNetLog());
-    EXPECT_THAT(rv, IsOk());
+    int rv = handler->HandleInitialChallenge(
+        tokenizer, response_info, HttpAuth::AUTH_PROXY, proxy_origin,
+        BoundNetLog(), callback.callback());
+    EXPECT_EQ(callback.GetResult(rv), IsOk());
     ASSERT_FALSE(handler.get() == NULL);
     EXPECT_EQ("digest", handler->auth_scheme());
     EXPECT_STREQ("FooBar", handler->realm().c_str());
@@ -145,9 +148,10 @@ TEST(HttpAuthHandlerFactoryTest, DefaultFactory) {
         http_auth_handler_factory->CreateAuthHandlerForScheme(
             tokenizer.NormalizedScheme());
     ASSERT_TRUE(handler);
-    int rv = handler->HandleInitialChallenge(tokenizer, HttpAuth::AUTH_SERVER,
-                                             server_origin, BoundNetLog());
-    EXPECT_THAT(rv, IsOk());
+    int rv = handler->HandleInitialChallenge(
+        tokenizer, response_info, HttpAuth::AUTH_SERVER, server_origin,
+        BoundNetLog(), callback.callback());
+    EXPECT_EQ(callback.GetResult(rv), IsOk());
     ASSERT_FALSE(handler.get() == NULL);
     EXPECT_EQ("ntlm", handler->auth_scheme());
     EXPECT_STREQ("", handler->realm().c_str());
@@ -160,8 +164,10 @@ TEST(HttpAuthHandlerFactoryTest, DefaultFactory) {
         http_auth_handler_factory->CreateAuthHandlerForScheme(
             tokenizer.NormalizedScheme());
     ASSERT_TRUE(handler);
-    int rv = handler->HandleInitialChallenge(tokenizer, HttpAuth::AUTH_SERVER,
-                                             server_origin, BoundNetLog());
+    int rv = handler->HandleInitialChallenge(
+        tokenizer, response_info, HttpAuth::AUTH_SERVER, server_origin,
+        BoundNetLog(), callback.callback());
+    rv = callback.GetResult(rv);
 // Note the default factory doesn't support Kerberos on Android
 #if defined(USE_KERBEROS) && !defined(OS_ANDROID)
     EXPECT_THAT(rv, IsOk());

@@ -107,8 +107,17 @@ HttpAuth::AuthorizationResult HttpAuthHandlerDigest::HandleAnotherChallenge(
       HttpAuth::AUTHORIZATION_RESULT_REJECT;
 }
 
-bool HttpAuthHandlerDigest::Init(HttpAuthChallengeTokenizer* challenge,
-                                 const SSLInfo& ssl_info) {
+int HttpAuthHandlerDigest::InitializeFromChallengeInternal(
+    const HttpAuthChallengeTokenizer& challenge,
+    const HttpResponseInfo&,
+    const CompletionCallback&) {
+  return ParseChallenge(challenge) ? OK : ERR_INVALID_RESPONSE;
+}
+
+int HttpAuthHandlerDigest::InitializeFromCacheEntryInternal(
+    HttpAuthCache::Entry* cache_entry) {
+  HttpAuthChallengeTokenizer challenge(cache_entry->auth_challenge().begin(),
+                                       cache_entry->auth_challenge().end());
   return ParseChallenge(challenge) ? OK : ERR_INVALID_RESPONSE;
 }
 
@@ -374,15 +383,13 @@ HttpAuthHandlerDigest::Factory::CreateAuthHandlerForScheme(
 std::unique_ptr<HttpAuthHandler>
 HttpAuthHandlerDigest::Factory::CreateAndInitPreemptiveAuthHandler(
     HttpAuthCache::Entry* cache_entry,
-    const HttpAuthChallengeTokenizer& tokenizer,
     HttpAuth::Target target,
     const BoundNetLog& net_log) {
   if (cache_entry->scheme() != kDigestSchemeName)
     return std::unique_ptr<HttpAuthHandler>();
   std::unique_ptr<HttpAuthHandler> handler(new HttpAuthHandlerDigest(
       cache_entry->IncrementNonceCount(), nonce_generator_.get()));
-  int rv = handler->HandleInitialChallenge(tokenizer, target,
-                                           cache_entry->origin(), net_log);
+  int rv = handler->InitializeFromCacheEntry(cache_entry, target, net_log);
   if (rv == OK)
     return handler;
   return std::unique_ptr<HttpAuthHandler>();

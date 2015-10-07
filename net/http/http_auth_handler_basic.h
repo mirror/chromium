@@ -26,7 +26,6 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerBasic : public HttpAuthHandler {
         const std::string& scheme) override;
     std::unique_ptr<HttpAuthHandler> CreateAndInitPreemptiveAuthHandler(
         HttpAuthCache::Entry* cache_entry,
-        const HttpAuthChallengeTokenizer& tokenizer,
         HttpAuth::Target target,
         const BoundNetLog& net_log) override;
   };
@@ -39,7 +38,12 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerBasic : public HttpAuthHandler {
 
  protected:
   // HttpAuthHandler
-  int Init(const HttpAuthChallengeTokenizer& challenge) override;
+  int InitializeFromChallengeInternal(
+      const HttpAuthChallengeTokenizer& challenge,
+      const HttpResponseInfo& response_with_challenge,
+      const CompletionCallback& callback) override;
+  int InitializeFromCacheEntryInternal(
+      HttpAuthCache::Entry* cache_entry) override;
   int GenerateAuthTokenImpl(const AuthCredentials* credentials,
                             const HttpRequestInfo& request,
                             const CompletionCallback& callback,

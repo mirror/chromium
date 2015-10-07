@@ -104,8 +104,13 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerNegotiate : public HttpAuthHandler {
   bool AllowsExplicitCredentials() override;
 
  protected:
-  int Init(const HttpAuthChallengeTokenizer& challenge,const SSLInfo& ssl_info) override;
-
+  // HttpAuthHandler
+  int InitializeFromChallengeInternal(
+      const HttpAuthChallengeTokenizer& challenge,
+      const HttpResponseInfo& response_with_challenge,
+      const CompletionCallback& callback) override;
+  int InitializeFromCacheEntryInternal(
+      HttpAuthCache::Entry* cache_entry) override;
   int GenerateAuthTokenImpl(const AuthCredentials* credentials,
                             const HttpRequestInfo& request,
                             const CompletionCallback& callback,

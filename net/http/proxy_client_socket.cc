@@ -54,19 +54,6 @@ void ProxyClientSocket::BuildTunnelRequest(
 }
 
 // static
-int ProxyClientSocket::HandleProxyAuthChallenge(HttpAuthController* auth,
-                                                HttpResponseInfo* response,
-                                                const BoundNetLog& net_log) {
-  DCHECK(response->headers.get());
-  int rv = auth->HandleAuthChallenge(response->headers, response->ssl_info,
-                                     false, true, net_log);
-  response->auth_challenge = auth->auth_info();
-  if (rv == OK)
-    return ERR_PROXY_AUTH_REQUESTED;
-  return rv;
-}
-
-// static
 void ProxyClientSocket::LogBlockedTunnelResponse(int http_status_code,
                                                  bool is_https_proxy) {
   if (is_https_proxy) {
@@ -101,9 +88,7 @@ bool ProxyClientSocket::SanitizeProxyAuth(HttpResponseInfo* response) {
   CopyHeaderValues(old_headers, new_headers, "trailer");
   CopyHeaderValues(old_headers, new_headers, "transfer-encoding");
   CopyHeaderValues(old_headers, new_headers, "upgrade");
-
   CopyHeaderValues(old_headers, new_headers, "content-length");
-
   CopyHeaderValues(old_headers, new_headers, "proxy-authenticate");
 
   response->headers = new_headers;

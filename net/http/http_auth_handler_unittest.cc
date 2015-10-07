@@ -13,6 +13,7 @@
 #include "net/http/http_request_info.h"
 #include "net/log/net_log_event_type.h"
 #include "net/log/net_log_source_type.h"
+#include "net/http/http_response_info.h"
 #include "net/log/test_net_log.h"
 #include "net/log/test_net_log_entry.h"
 #include "net/log/test_net_log_util.h"
@@ -30,9 +31,9 @@ TEST(HttpAuthHandlerTest, NetLog) {
   HttpRequestInfo request;
 
   for (int i = 0; i < 2; ++i) {
-    bool async = (i == 0);
+    bool generate_token_async = (i == 0);
     for (int j = 0; j < 2; ++j) {
-      int rv = (j == 0) ? OK : ERR_UNEXPECTED;
+      int generate_token_rv = (j == 0) ? OK : ERR_UNEXPECTED;
       for (int k = 0; k < 2; ++k) {
         TestCompletionCallback test_callback;
         HttpAuth::Target target =
@@ -46,13 +47,17 @@ TEST(HttpAuthHandlerTest, NetLog) {
         BoundNetLog bound_net_log(
             BoundNetLog::Make(&test_net_log, NetLogSourceType::NONE));
 
-        SSLInfo empty_ssl_info;
-        mock_handler.HandleInitialChallenge(tokenizer, target, empty_ssl_info, origin,
-                                            bound_net_log);
-        mock_handler.SetGenerateExpectation(async, rv);
+        HttpResponseInfo response_info;
+        int rv = mock_handler.HandleInitialChallenge(
+            tokenizer, response_info, target, origin, bound_net_log,
+            test_callback.callback());
+        // TODO(asanka): Test async init behavior
+        test_callback.GetResult(rv);
+        mock_handler.SetGenerateExpectation(generate_token_async,
+                                            generate_token_rv);
         mock_handler.GenerateAuthToken(&credentials, request,
                                        test_callback.callback(), &auth_token);
-        if (async)
+        if (generate_token_async)
           test_callback.WaitForResult();
 
         TestNetLogEntry::List entries;

@@ -48,7 +48,6 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerNTLM : public HttpAuthHandler {
         const std::string& scheme) override;
     std::unique_ptr<HttpAuthHandler> CreateAndInitPreemptiveAuthHandler(
         HttpAuthCache::Entry* cache_entry,
-        const HttpAuthChallengeTokenizer& tokenizer,
         HttpAuth::Target target,
         const BoundNetLog& net_log) override;
 #if defined(NTLM_SSPI)
@@ -119,7 +118,12 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerNTLM : public HttpAuthHandler {
   int InitializeBeforeFirstChallenge();
 
   // HttpAuthHandler
-  int Init(const HttpAuthChallengeTokenizer& tok) override;
+  int InitializeFromChallengeInternal(
+      const HttpAuthChallengeTokenizer& challenge,
+      const HttpResponseInfo& response_with_challenge,
+      const CompletionCallback& callback) override;
+  int InitializeFromCacheEntryInternal(
+      HttpAuthCache::Entry* cache_entry) override;
   int GenerateAuthTokenImpl(const AuthCredentials* credentials,
                             const HttpRequestInfo& request,
                             const CompletionCallback& callback,

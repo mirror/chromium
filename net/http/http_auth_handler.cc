@@ -22,16 +22,29 @@ HttpAuthHandler::~HttpAuthHandler() {
 
 int HttpAuthHandler::HandleInitialChallenge(
     const HttpAuthChallengeTokenizer& challenge,
+    const HttpResponseInfo& response_info,
     HttpAuth::Target target,
                                         const SSLInfo& ssl_info,
     const GURL& origin,
-    const BoundNetLog& net_log) {
+    const BoundNetLog& net_log,
+    const CompletionCallback& callback) {
   origin_ = origin;
   target_ = target;
   net_log_ = net_log;
 
   auth_challenge_ = challenge.challenge_text();
-  return Init(challenge);
+  return InitializeFromChallengeInternal(challenge, response_info, callback);
+}
+
+int HttpAuthHandler::InitializeFromCacheEntry(HttpAuthCache::Entry* cache_entry,
+                                              HttpAuth::Target target,
+                                              const BoundNetLog& net_log) {
+  origin_ = cache_entry->origin();
+  target_ = target;
+  net_log_ = net_log;
+
+  auth_challenge_ = cache_entry->auth_challenge();
+  return InitializeFromCacheEntryInternal(cache_entry);
 }
 
 namespace {

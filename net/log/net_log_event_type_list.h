@@ -1149,6 +1149,9 @@ EVENT_TYPE(HTTP_TRANSACTION_QUIC_SEND_REQUEST_HEADERS)
 // Measures the time to read HTTP response headers from the server.
 EVENT_TYPE(HTTP_TRANSACTION_READ_HEADERS)
 
+// Measures the time to handle an HTTP authentication challenge.
+EVENT_TYPE(HTTP_TRANSACTION_HANDLE_AUTH_CHALLENGE)
+
 // This event is sent on receipt of the HTTP response headers.
 // The following parameters are attached:
 //   {

@@ -36,9 +36,16 @@ class MockAuthHandler : public HttpAuthHandler {
   }
 
  protected:
-  bool Init(HttpAuthChallengeTokenizer* challenge,
-            const SSLInfo& ssl_info) override {
-    return ERR_UNEXPECTED;  // Unused.
+  int InitializeFromChallengeInternal(
+      const HttpAuthChallengeTokenizer& challenge,
+      const HttpResponseInfo& response_with_challenge,
+      const CompletionCallback& callback) override {
+    return ERR_UNEXPECTED;
+  }
+
+  int InitializeFromCacheEntryInternal(
+      HttpAuthCache::Entry* cache_entry) override {
+    return ERR_UNEXPECTED;
   }
 
   int GenerateAuthTokenImpl(const AuthCredentials*,
