@@ -12,6 +12,7 @@
 #include "net/base/net_errors.h"
 #include "net/base/test_completion_callback.h"
 #include "net/dns/mock_host_resolver.h"
+#include "net/http/http_auth_challenge_tokenizer.h"
 #include "net/http/http_request_info.h"
 #include "net/http/mock_allow_http_auth_preferences.h"
 #include "net/ssl/ssl_info.h"
@@ -213,11 +214,15 @@ class HttpAuthHandlerNegotiateTest : public PlatformTest {
     // std::unique_ptr<HttpAuthHandlerNegotiate>*. This needs to do the cast
     // after creating the handler, and make sure that generic_handler
     // no longer holds on to the HttpAuthHandlerNegotiate object.
-    std::unique_ptr<HttpAuthHandler> generic_handler;
-    SSLInfo null_ssl_info;
-    int rv = factory_->CreateAuthHandlerFromString(
-        "Negotiate", HttpAuth::AUTH_SERVER, null_ssl_info, gurl,
-        NetLogWithSource(), &generic_handler);
+    std::string challenge = "Negotiate";
+    HttpAuthChallengeTokenizer tokenizer(challenge.begin(), challenge.end());
+
+    std::unique_ptr<HttpAuthHandler> generic_handler =
+        factory_->CreateAuthHandlerForScheme(tokenizer.NormalizedScheme());
+    if (!generic_handler)
+      return ERR_UNSUPPORTED_AUTH_SCHEME;
+    int rv = generic_handler->HandleInitialChallenge(
+        tokenizer, HttpAuth::AUTH_SERVER, gurl, BoundNetLog());
     if (rv != OK)
       return rv;
     HttpAuthHandlerNegotiate* negotiate_handler =

@@ -23,8 +23,7 @@ HttpAuthHandlerNTLM::HttpAuthHandlerNTLM(
     : auth_sspi_(sspi_library, "NTLM", NTLMSP_NAME, max_token_length),
       http_auth_preferences_(http_auth_preferences) {}
 
-HttpAuthHandlerNTLM::~HttpAuthHandlerNTLM() {
-}
+HttpAuthHandlerNTLM::~HttpAuthHandlerNTLM() {}
 
 // Require identity on first pass instead of second.
 bool HttpAuthHandlerNTLM::NeedsIdentity() {
@@ -47,24 +46,19 @@ HttpAuthHandlerNTLM::Factory::Factory()
 HttpAuthHandlerNTLM::Factory::~Factory() {
 }
 
-int HttpAuthHandlerNTLM::Factory::CreateAuthHandler(
-    const HttpAuthChallengeTokenizer& challenge,
-    HttpAuth::Target target,
-    const SSLInfo& ssl_info,
-    const GURL& origin,
-    CreateReason reason,
-    int digest_nonce_count,
-    const NetLogWithSource& net_log,
-    std::unique_ptr<HttpAuthHandler>* handler) {
-  if (is_unsupported_ || reason == CREATE_PREEMPTIVE)
-    return ERR_UNSUPPORTED_AUTH_SCHEME;
+std::unique_ptr<HttpAuthHandler>
+HttpAuthHandlerNTLM::Factory::CreateAuthHandlerForScheme(
+    const std::string& scheme) {
+  DCHECK(HttpAuth::IsValidNormalizedScheme(scheme));
+  if (scheme != "ntlm" || is_unsupported_)
+    return std::unique_ptr<HttpAuthHandler>();
   if (max_token_length_ == 0) {
     int rv = DetermineMaxTokenLength(sspi_library_.get(), NTLMSP_NAME,
                                      &max_token_length_);
     if (rv == ERR_UNSUPPORTED_AUTH_SCHEME)
       is_unsupported_ = true;
     if (rv != OK)
-      return rv;
+      return std::unique_ptr<HttpAuthHandler>();
   }
   // TODO(cbentzel): Move towards model of parsing in the factory
   //                 method and only constructing when valid.

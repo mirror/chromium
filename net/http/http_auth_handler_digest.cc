@@ -24,7 +24,7 @@
 
 namespace net {
 
-static const char* const kDigestSchemeName = "digest";
+static const char kDigestSchemeName[] = "digest";
 
 // Digest authentication is specified in RFC 2617.
 // The expanded derivations are listed in the tables below.
@@ -80,38 +80,6 @@ std::string HttpAuthHandlerDigest::FixedNonceGenerator::GenerateNonce() const {
   return nonce_;
 }
 
-HttpAuthHandlerDigest::Factory::Factory()
-    : nonce_generator_(new DynamicNonceGenerator()) {
-}
-
-HttpAuthHandlerDigest::Factory::~Factory() {
-}
-
-void HttpAuthHandlerDigest::Factory::set_nonce_generator(
-    const NonceGenerator* nonce_generator) {
-  nonce_generator_.reset(nonce_generator);
-}
-
-int HttpAuthHandlerDigest::Factory::CreateAuthHandler(
-    const HttpAuthChallengeTokenizer& challenge,
-    HttpAuth::Target target,
-    const SSLInfo& ssl_info,
-    const GURL& origin,
-    CreateReason reason,
-    int digest_nonce_count,
-    const NetLogWithSource& net_log,
-    std::unique_ptr<HttpAuthHandler>* handler) {
-  // TODO(cbentzel): Move towards model of parsing in the factory
-  //                 method and only constructing when valid.
-  std::unique_ptr<HttpAuthHandler> tmp_handler(
-      new HttpAuthHandlerDigest(digest_nonce_count, nonce_generator_.get()));
-  int result =
-      tmp_handler->HandleInitialChallenge(challenge, target, origin, net_log);
-  if (result == OK)
-    handler->swap(tmp_handler);
-  return result;
-}
-
 HttpAuth::AuthorizationResult HttpAuthHandlerDigest::HandleAnotherChallenge(
     const HttpAuthChallengeTokenizer& challenge) {
   // Even though Digest is not connection based, a "second round" is parsed
@@ -164,8 +132,10 @@ int HttpAuthHandlerDigest::GenerateAuthTokenImpl(
 }
 
 HttpAuthHandlerDigest::HttpAuthHandlerDigest(
-    int nonce_count, const NonceGenerator* nonce_generator)
-    : stale_(false),
+    int nonce_count,
+    const NonceGenerator* nonce_generator)
+    : HttpAuthHandler(kDigestSchemeName),
+      stale_(false),
       algorithm_(ALGORITHM_UNSPECIFIED),
       qop_(QOP_UNSPECIFIED),
       nonce_count_(nonce_count),
@@ -196,17 +166,15 @@ HttpAuthHandlerDigest::~HttpAuthHandlerDigest() {
 // webserver was not sending the realm with a BASIC challenge).
 bool HttpAuthHandlerDigest::ParseChallenge(
     const HttpAuthChallengeTokenizer& challenge) {
-  auth_scheme_ = kDigestSchemeName;
+  // FAIL -- Couldn't match auth-scheme.
+  if (!challenge.SchemeIs(kDigestSchemeName))
+    return false;
 
   // Initialize to defaults.
   stale_ = false;
   algorithm_ = ALGORITHM_UNSPECIFIED;
   qop_ = QOP_UNSPECIFIED;
   realm_ = original_realm_ = nonce_ = domain_ = opaque_ = std::string();
-
-  // FAIL -- Couldn't match auth-scheme.
-  if (!challenge.SchemeIs(kDigestSchemeName))
-    return false;
 
   HttpUtil::NameValuePairsIterator parameters = challenge.param_pairs();
 
@@ -382,6 +350,42 @@ std::string HttpAuthHandlerDigest::AssembleCredentials(
   }
 
   return authorization;
+}
+
+HttpAuthHandlerDigest::Factory::Factory()
+    : nonce_generator_(new DynamicNonceGenerator()) {}
+
+HttpAuthHandlerDigest::Factory::~Factory() {}
+
+void HttpAuthHandlerDigest::Factory::set_nonce_generator(
+    const NonceGenerator* nonce_generator) {
+  nonce_generator_.reset(nonce_generator);
+}
+
+std::unique_ptr<HttpAuthHandler>
+HttpAuthHandlerDigest::Factory::CreateAuthHandlerForScheme(
+    const std::string& scheme) {
+  DCHECK(HttpAuth::IsValidNormalizedScheme(scheme));
+  if (scheme != kDigestSchemeName)
+    return std::unique_ptr<HttpAuthHandler>();
+  return make_scoped_ptr(new HttpAuthHandlerDigest(1, nonce_generator_.get()));
+}
+
+std::unique_ptr<HttpAuthHandler>
+HttpAuthHandlerDigest::Factory::CreateAndInitPreemptiveAuthHandler(
+    HttpAuthCache::Entry* cache_entry,
+    const HttpAuthChallengeTokenizer& tokenizer,
+    HttpAuth::Target target,
+    const BoundNetLog& net_log) {
+  if (cache_entry->scheme() != kDigestSchemeName)
+    return std::unique_ptr<HttpAuthHandler>();
+  std::unique_ptr<HttpAuthHandler> handler(new HttpAuthHandlerDigest(
+      cache_entry->IncrementNonceCount(), nonce_generator_.get()));
+  int rv = handler->HandleInitialChallenge(tokenizer, target,
+                                           cache_entry->origin(), net_log);
+  if (rv == OK)
+    return handler;
+  return std::unique_ptr<HttpAuthHandler>();
 }
 
 }  // namespace net

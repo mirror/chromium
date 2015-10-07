@@ -18,10 +18,9 @@
 namespace net {
 
 HttpAuthHandlerMock::HttpAuthHandlerMock()
-    : expected_auth_scheme_("mock"), weak_factory_(this) {}
+    : HttpAuthHandler("mock"), weak_factory_(this) {}
 
-HttpAuthHandlerMock::~HttpAuthHandlerMock() {
-}
+HttpAuthHandlerMock::~HttpAuthHandlerMock() {}
 
 void HttpAuthHandlerMock::SetGenerateExpectation(bool async, int rv) {
   generate_async_ = async;
@@ -30,6 +29,7 @@ void HttpAuthHandlerMock::SetGenerateExpectation(bool async, int rv) {
 
 HttpAuth::AuthorizationResult HttpAuthHandlerMock::HandleAnotherChallenge(
     const HttpAuthChallengeTokenizer& challenge) {
+  EXPECT_TRUE(challenge.SchemeIs(auth_scheme_));
   // If we receive a second challenge for a regular scheme, assume it's a
   // rejection. Receiving an empty second challenge when expecting multiple
   // rounds is also considered a rejection.
@@ -56,13 +56,11 @@ bool HttpAuthHandlerMock::AllowsExplicitCredentials() {
 }
 
 int HttpAuthHandlerMock::Init(const HttpAuthChallengeTokenizer& challenge) {
-  EXPECT_TRUE(challenge.SchemeIs(expected_auth_scheme_))
+  EXPECT_TRUE(challenge.SchemeIs(auth_scheme_))
       << "Mismatched scheme for challenge: " << challenge.challenge_text();
-  EXPECT_TRUE(auth_scheme_.empty()) << "Init was already called.";
-  EXPECT_TRUE(HttpAuth::IsValidNormalizedScheme(expected_auth_scheme_))
+  EXPECT_TRUE(HttpAuth::IsValidNormalizedScheme(auth_scheme_))
       << "Invalid expected auth scheme.";
-  auth_scheme_ = expected_auth_scheme_;
-  auth_token_ = expected_auth_scheme_ + " auth_token";
+  auth_token_ = auth_scheme_ + " auth_token";
   if (challenge.params_end() != challenge.params_begin()) {
     auth_token_ += ",";
     auth_token_.append(challenge.params_begin(), challenge.params_end());
@@ -124,41 +122,50 @@ HttpAuthHandlerMock::Factory::~Factory() {
 
 void HttpAuthHandlerMock::Factory::AddMockHandler(
     std::unique_ptr<HttpAuthHandler> handler,
-    CreateReason reason,
-    HttpAuth::Target target) {
-  if (reason == CREATE_PREEMPTIVE)
-    preemptive_handlers_[target].push_back(handler.Pass());
+    HttpAuthHandlerCreateReason reason) {
+  if (reason == HttpAuthHandlerCreateReason::PREEMPTIVE)
+    preemptive_handlers_.push_back(handler.Pass());
   else
-    challenge_handlers_[target].push_back(handler.Pass());
+    challenge_handlers_.push_back(handler.Pass());
 }
 
-bool HttpAuthHandlerMock::Factory::HaveAuthHandlers(
-    HttpAuth::Target target) const {
-  return !challenge_handlers_[target].empty() ||
-         !preemptive_handlers_[target].empty();
+bool HttpAuthHandlerMock::Factory::HaveAuthHandlers() const {
+  return !challenge_handlers_.empty() || !preemptive_handlers_.empty();
 }
 
-int HttpAuthHandlerMock::Factory::CreateAuthHandler(
-    const HttpAuthChallengeTokenizer& challenge,
+std::unique_ptr<HttpAuthHandler> HttpAuthHandlerMock::Factory::GetNextAuthHandler(
+    ScopedVector<HttpAuthHandler>* handler_list) {
+  if (handler_list->empty())
+    return std::unique_ptr<HttpAuthHandler>();
+  std::unique_ptr<HttpAuthHandler> tmp_handler = std::move(handler_list->front());
+  handler_list->erase(handler_list->begin());
+  return tmp_handler;
+}
+
+std::unique_ptr<HttpAuthHandler>
+HttpAuthHandlerMock::Factory::CreateAuthHandlerForScheme(
+    const std::string& scheme) {
+  std::unique_ptr<HttpAuthHandler> handler =
+      GetNextAuthHandler(&challenge_handlers_);
+  EXPECT_TRUE(!handler || handler->auth_scheme() == scheme)
+      << "Next auth handler is for scheme " << handler->auth_scheme()
+      << " while request scheme is " << scheme;
+  return handler.Pass();
+}
+
+std::unique_ptr<HttpAuthHandler>
+HttpAuthHandlerMock::Factory::CreateAndInitPreemptiveAuthHandler(
+    HttpAuthCache::Entry* cache_entry,
+    const HttpAuthChallengeTokenizer& tokenizer,
     HttpAuth::Target target,
-    const SSLInfo& ssl_info,
-    const GURL& origin,
-    CreateReason reason,
-    int nonce_count,
-    const NetLogWithSource& net_log,
-    std::unique_ptr<HttpAuthHandler>* handler) {
-  std::vector<std::unique_ptr<HttpAuthHandler>>& handler_list =
-      reason == CREATE_PREEMPTIVE ? preemptive_handlers_[target]
-                                  : challenge_handlers_[target];
-  if (handler_list.empty())
-    return ERR_UNEXPECTED;
-  std::unique_ptr<HttpAuthHandler> tmp_handler = std::move(handler_list.front());
-  handler_list.erase(handler_list.begin());
-  int result =
-      tmp_handler->HandleInitialChallenge(challenge, target, origin, net_log);
-  if (result == OK)
-    handler->swap(tmp_handler);
-  return result;
+    const BoundNetLog& net_log) {
+  std::unique_ptr<HttpAuthHandler> handler =
+      GetNextAuthHandler(&preemptive_handlers_);
+  if (handler) {
+    handler->HandleInitialChallenge(tokenizer, target, cache_entry->origin(),
+                                    net_log);
+  }
+  return handler;
 }
 
 }  // namespace net

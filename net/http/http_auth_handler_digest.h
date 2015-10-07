@@ -65,14 +65,14 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerDigest : public HttpAuthHandler {
     // This factory owns the passed in |nonce_generator|.
     void set_nonce_generator(const NonceGenerator* nonce_generator);
 
-    int CreateAuthHandler(const HttpAuthChallengeTokenizer& challenge,
-                          HttpAuth::Target target,
-                          const SSLInfo& ssl_info,
-                          const GURL& origin,
-                          CreateReason reason,
-                          int digest_nonce_count,
-                          const NetLogWithSource& net_log,
-                          std::unique_ptr<HttpAuthHandler>* handler) override;
+    // HttpAuthHandlerFactory
+    std::unique_ptr<HttpAuthHandler> CreateAuthHandlerForScheme(
+        const std::string& scheme) override;
+    std::unique_ptr<HttpAuthHandler> CreateAndInitPreemptiveAuthHandler(
+        HttpAuthCache::Entry* cache_entry,
+        const HttpAuthChallengeTokenizer& tokenizer,
+        HttpAuth::Target target,
+        const BoundNetLog& net_log) override;
 
    private:
     std::unique_ptr<const NonceGenerator> nonce_generator_;
@@ -80,6 +80,7 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerDigest : public HttpAuthHandler {
 
   HttpAuth::AuthorizationResult HandleAnotherChallenge(
       const HttpAuthChallengeTokenizer& challenge) override;
+  ~HttpAuthHandlerDigest() override;
 
  protected:
   int Init(const HttpAuthChallengeTokenizer& challenge,
@@ -122,7 +123,6 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerDigest : public HttpAuthHandler {
   // the handler. The lifetime of the |nonce_generator| must exceed that of this
   // handler.
   HttpAuthHandlerDigest(int nonce_count, const NonceGenerator* nonce_generator);
-  ~HttpAuthHandlerDigest() override;
 
   // Parse the challenge, saving the results into this instance.
   // Returns true on success.

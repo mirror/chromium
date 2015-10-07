@@ -636,8 +636,7 @@ HttpAuthHandlerNTLM::generate_random_proc_ = GenerateRandom;
 HttpAuthHandlerNTLM::HostNameProc
 HttpAuthHandlerNTLM::get_host_name_proc_ = GetHostName;
 
-HttpAuthHandlerNTLM::HttpAuthHandlerNTLM() {
-}
+HttpAuthHandlerNTLM::HttpAuthHandlerNTLM() : HttpAuthHandler("ntlm") {}
 
 bool HttpAuthHandlerNTLM::NeedsIdentity() {
   // This gets called for each round-trip.  Only require identity on
@@ -711,27 +710,16 @@ int HttpAuthHandlerNTLM::GetNextToken(const void* in_token,
   return rv;
 }
 
-int HttpAuthHandlerNTLM::Factory::CreateAuthHandler(
-    const HttpAuthChallengeTokenizer& challenge,
-    HttpAuth::Target target,
-    const SSLInfo& ssl_info,
-    const GURL& origin,
-    CreateReason reason,
-    int digest_nonce_count,
-    const NetLogWithSource& net_log,
-    std::unique_ptr<HttpAuthHandler>* handler) {
-  if (reason == CREATE_PREEMPTIVE)
-    return ERR_UNSUPPORTED_AUTH_SCHEME;
-  // TODO(cbentzel): Move towards model of parsing in the factory
-  //                 method and only constructing when valid.
-  // NOTE: Default credentials are not supported for the portable implementation
-  // of NTLM.
-  std::unique_ptr<HttpAuthHandler> tmp_handler(new HttpAuthHandlerNTLM);
-  int result =
-      tmp_handler->HandleInitialChallenge(challenge, target, ssl_info, origin, net_log);
-  if (result == OK)
-    handler->swap(tmp_handler);
-  return result;
+std::unique_ptr<HttpAuthHandler>
+HttpAuthHandlerNTLM::Factory::CreateAuthHandlerForScheme(
+    const std::string& scheme) {
+  DCHECK(HttpAuth::IsValidNormalizedScheme(scheme));
+  if (scheme != "ntlm")
+    return std::unique_ptr<HttpAuthHandler>();
+  // TODO(cbentzel): Move towards model of parsing in the factory method and
+  // only constructing when valid.  NOTE: Default credentials are not supported
+  // for the portable implementation of NTLM.
+  return make_scoped_ptr(new HttpAuthHandlerNTLM);
 }
 
 }  // namespace net

@@ -19,23 +19,96 @@ struct HttpRequestInfo;
 class SSLInfo;
 
 // HttpAuthHandler is the interface for the authentication schemes
-// (basic, digest, NTLM, Negotiate).
-// HttpAuthHandler objects are typically created by an HttpAuthHandlerFactory.
+// (basic, digest, NTLM, Negotiate). Each authentication scheme is expected to
+// subclass HttpAuthHandler.
+//
+// The lifecycle of a HttpAuthHandler -- i.e. how to use HttpAuthHandler --:
+//
+// 1. Construct via HttpAuthHandlerFactory::CreateAuthHandlerForScheme() or
+//    HttpAuthHandlerFactory::CreateAndInitPreemptiveAuthHandler().
+//
+//    Upon creation, an HttpAuthHandler is not associated with any HTTP
+//    connection or session. That association is established by calling
+//    HandleInitialChallenge().
+//
+// 2. Call HttpAuthHandler::HandleInitialChallenge(). This *must* be the first
+//    method or getter invoked by an owner of HttpAuthHandler. The invocation
+//    establishes the state for HttpAuthHandler associating it with an
+//    authentication target, an origin and an initial challenge from the server
+//    which may establish scheme specific state.
+//
+//    If the return value of HandleInitialChallenge() indicates failure, then
+//    this handler can no longer be used. The owner is expected to discard the
+//    handler without invoking any other methods.
+//
+// 3. Repeat the following steps:
+//
+//    3.1. Call GenerateAuthToken() to generate an authentication token. The
+//      token returned by this method call should be passed via a suitable
+//      authorization header to the server. E.g. "Authorization: <returned
+//      token>".
+//
+//    3.2 If the server responds with an additional challenge, call
+//      HandleAnotherChallenge(). This method continues an authentication
+//      handshake. The AuthorizationResult return value indicates whether the
+//      handler can continue with the current authentication handshake or if it
+//      has encountered an error. A return value of AUTHORIZATION_RESULT_ACCEPT
+//      indicates that the handler can continue. In all other cases, the handler
+//      should be considered no longer usable.
+//
 class NET_EXPORT_PRIVATE HttpAuthHandler {
  public:
-  HttpAuthHandler();
   virtual ~HttpAuthHandler();
 
-  // Initializes the handler using a challenge issued by a server.
-  // |challenge| must be non-NULL and have already tokenized the
-  // authentication scheme, but none of the tokens occurring after the
-  // authentication scheme. |target| and |origin| are both stored
-  // for later use, and are not part of the initial challenge.
+  // Initializes the handler and associates it with the specified |target| and
+  // |origin|. The |net_log| parameter indicates BoundNetLog to be used for the
+  // lifetime of this handler. |challenge| is required and *must* match the
+  // authentication scheme of this handler.
+  //
+  // Returns a Error value. The HttpAuthHandler can only be used if the return
+  // value is OK.
+  //
+  // Note: This method *must* be the first method to be invoked on the
+  // HttpAuthHandler.
   int HandleInitialChallenge(const HttpAuthChallengeTokenizer& challenge,
                              HttpAuth::Target target,
                          const SSLInfo& ssl_info,
                          const GURL& origin,
                          const NetLogWithSource& net_log);
+
+  // Generates an authentication token, potentially asynchronously.
+  //
+  // If NeedsIdentity() is true, then the value of |credentials| indicates how
+  // the authentication identity is established.
+  //
+  // 1. If |credentials| is nullptr, then the handler attempts to use ambient
+  //    credentials to establish an identity. Passing in a nullptr for
+  //    |credentials| is only valid if AllowsDefaultCredentials() returns true.
+  //
+  // 2. If |credentials| is is not nullptr, then it will be used to establish
+  //    the authentication identity. Passing in a non-null |credentials| is only
+  //    valid if AllowsExplicitCredentials() returns true.
+  //
+  // |request| is required and should represent the request that will, if the
+  // call is successful, contain the generated authentication token.
+  //
+  // The return value is a net error code.
+  //
+  // If |OK| is returned, |*auth_token| is filled in with an authentication
+  // token which can be sent via an appropriate authorization header. E.g.
+  // "Authorization: <returned token>".
+  //
+  // If |ERR_IO_PENDING| is returned, |*auth_token| will be filled in
+  // asynchronously and |callback| will be invoked. The lifetime of
+  // |request|, |callback|, and |auth_token| must last until |callback| is
+  // invoked, but |credentials| is only used during the initial call.
+  //
+  // All other return codes indicate that there was a problem generating a
+  // token, and the value of |*auth_token| is unspecified.
+  int GenerateAuthToken(const AuthCredentials* credentials,
+                        const HttpRequestInfo& request,
+                        const CompletionCallback& callback,
+                        std::string* auth_token);
 
   // Determines how the previous authorization attempt was received.
   //
@@ -53,55 +126,37 @@ class NET_EXPORT_PRIVATE HttpAuthHandler {
   virtual HttpAuth::AuthorizationResult HandleAnotherChallenge(
       const HttpAuthChallengeTokenizer& challenge) = 0;
 
-  // Generates an authentication token, potentially asynchronously.
-  //
-  // When |credentials| is NULL, the default credentials for the currently
-  // logged in user are used. |AllowsDefaultCredentials()| MUST be true in this
-  // case.
-  //
-  // |request|, |callback|, and |auth_token| must be non-NULL.
-  //
-  // The return value is a net error code.
-  //
-  // If |OK| is returned, |*auth_token| is filled in with an authentication
-  // token which can be inserted in the HTTP request.
-  //
-  // If |ERR_IO_PENDING| is returned, |*auth_token| will be filled in
-  // asynchronously and |callback| will be invoked. The lifetime of
-  // |request|, |callback|, and |auth_token| must last until |callback| is
-  // invoked, but |credentials| is only used during the initial call.
-  //
-  // All other return codes indicate that there was a problem generating a
-  // token, and the value of |*auth_token| is unspecified.
-  int GenerateAuthToken(const AuthCredentials* credentials,
-                        const HttpRequestInfo& request,
-                        const CompletionCallback& callback,
-                        std::string* auth_token);
-
   // The authentication scheme as an enumerated value.
   const std::string& auth_scheme() const { return auth_scheme_; }
 
-  // The realm, encoded as UTF-8. This may be empty.
+  // The realm, encoded as UTF-8. This may be empty. Only valid after
+  // HandleInitialChallenge() is called.
   const std::string& realm() const {
     return realm_;
   }
 
-  // The challenge which was issued when creating the handler.
+  // The challenge which was issued when creating the handler. Only valid after
+  // HandleInitialChallenge() is called.
   const std::string& challenge() const { return auth_challenge_; }
 
+  // Authentication target. Only valid after HandleInitialChallenge() is called.
   HttpAuth::Target target() const {
     return target_;
   }
 
   // Returns the proxy or server which issued the authentication challenge
   // that this HttpAuthHandler is handling. The URL includes scheme, host, and
-  // port, but does not include path.
+  // port, but does not include path. Only valid after HandleInitialChallenge()
+  // is called.
   const GURL& origin() const {
     return origin_;
   }
 
   // Returns true if the response to the current authentication challenge
-  // requires an identity.
+  // requires an identity. This function can be called after a successful call
+  // to HandleInitialChallenge() or HandleAnotherChallenge() to determine
+  // whether the next GenerateAuthToken() call should specify an identity.
+  //
   // TODO(wtc): Find a better way to handle a multi-round challenge-response
   // sequence used by a connection-based authentication scheme.
   virtual bool NeedsIdentity();
@@ -113,24 +168,21 @@ class NET_EXPORT_PRIVATE HttpAuthHandler {
   // TODO(cbentzel): Add a pointer to Firefox documentation about risk.
   virtual bool AllowsDefaultCredentials();
 
-  // Returns whether explicit credentials can be used with this handler.  If
-  // true the user may be prompted for credentials if an implicit identity
-  // cannot be determined.
+  // Returns whether explicit credentials can be used with this handler. If true
+  // the credentials passed in to GenerateAuthToken() may specify explicit
+  // credentials.
   virtual bool AllowsExplicitCredentials();
 
  protected:
-  // Initializes the handler using a challenge issued by a server.
-  // |challenge| must be non-NULL and have already tokenized the
-  // authentication scheme, but none of the tokens occurring after the
-  // authentication scheme.
-  //
-  // If the request was sent over an encrypted connection, |ssl_info| is valid
-  // and describes the connection.
-  //
-  // Implementations are expected to initialize the following members:
-  // scheme_, realm_
-  virtual int Init(const HttpAuthChallengeTokenizer& challenge,
-                    const SSLInfo& ssl_info) = 0;
+  // |scheme| sets the return value for auth_scheme().
+  HttpAuthHandler(const std::string& scheme);
+
+  // Initializes the handler using a challenge issued by a server.  |challenge|
+  // must be non-NULL and have already tokenized the authentication scheme, but
+  // none of the tokens occurring after the authentication scheme.
+  // Implementations are expected to initialize the following members: scheme_,
+  // realm_
+  virtual int Init(const HttpAuthChallengeTokenizer& challenge, const SSLInfo& ssl_info) = 0;
 
   // |GenerateAuthTokenImpl()} is the auth-scheme specific implementation
   // of generating the next auth token. Callers should use |GenerateAuthToken()|

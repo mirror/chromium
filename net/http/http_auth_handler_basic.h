@@ -21,31 +21,32 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerBasic : public HttpAuthHandler {
     Factory();
     ~Factory() override;
 
-    int CreateAuthHandler(const HttpAuthChallengeTokenizer& challenge,
-                          HttpAuth::Target target,
-                          const SSLInfo& ssl_info,
-                          const GURL& origin,
-                          CreateReason reason,
-                          int digest_nonce_count,
-                          const NetLogWithSource& net_log,
-                          std::unique_ptr<HttpAuthHandler>* handler) override;
+    // HttpAuthHandlerFactory
+    std::unique_ptr<HttpAuthHandler> CreateAuthHandlerForScheme(
+        const std::string& scheme) override;
+    std::unique_ptr<HttpAuthHandler> CreateAndInitPreemptiveAuthHandler(
+        HttpAuthCache::Entry* cache_entry,
+        const HttpAuthChallengeTokenizer& tokenizer,
+        HttpAuth::Target target,
+        const BoundNetLog& net_log) override;
   };
 
+  ~HttpAuthHandlerBasic() override {}
+
+  // HttpAuthHandler
   HttpAuth::AuthorizationResult HandleAnotherChallenge(
       const HttpAuthChallengeTokenizer& challenge) override;
 
  protected:
-  int Init(HttpAuthChallengeTokenizer* challenge,
-            const SSLInfo& ssl_info) override;
-
+  // HttpAuthHandler
+  int Init(const HttpAuthChallengeTokenizer& challenge) override;
   int GenerateAuthTokenImpl(const AuthCredentials* credentials,
                             const HttpRequestInfo& request,
                             const CompletionCallback& callback,
                             std::string* auth_token) override;
 
  private:
-  ~HttpAuthHandlerBasic() override {}
-
+  HttpAuthHandlerBasic();
   int ParseChallenge(const HttpAuthChallengeTokenizer& challenge);
 };
 

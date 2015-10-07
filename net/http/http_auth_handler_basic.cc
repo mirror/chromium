@@ -19,7 +19,7 @@ namespace net {
 
 namespace {
 
-const char* const kBasicSchemeName = "basic";
+const char kBasicSchemeName[] = "basic";
 
 // Parses a realm from an auth challenge, and converts to UTF8-encoding.
 // Returns whether the realm is invalid or the parameters are invalid.
@@ -55,10 +55,12 @@ bool ParseRealm(const HttpAuthChallengeTokenizer& tokenizer,
 
 }  // namespace
 
-int HttpAuthHandlerBasic::Init(HttpAuthChallengeTokenizer* challenge, const SSLInfo& ssl_info) {
-  auth_scheme_ = kBasicSchemeName;
+int HttpAuthHandlerBasic::Init(const HttpAuthChallengeTokenizer& challenge) {
   return ParseChallenge(challenge);
 }
+
+HttpAuthHandlerBasic::HttpAuthHandlerBasic()
+    : HttpAuthHandler(kBasicSchemeName) {}
 
 int HttpAuthHandlerBasic::ParseChallenge(
     const HttpAuthChallengeTokenizer& challenge) {
@@ -108,23 +110,29 @@ HttpAuthHandlerBasic::Factory::Factory() {
 HttpAuthHandlerBasic::Factory::~Factory() {
 }
 
-int HttpAuthHandlerBasic::Factory::CreateAuthHandler(
-    const HttpAuthChallengeTokenizer& challenge,
+std::unique_ptr<HttpAuthHandler>
+HttpAuthHandlerBasic::Factory::CreateAuthHandlerForScheme(
+    const std::string& scheme) {
+  DCHECK(HttpAuth::IsValidNormalizedScheme(scheme));
+  if (scheme == kBasicSchemeName)
+    return make_scoped_ptr(new HttpAuthHandlerBasic());
+  return std::unique_ptr<HttpAuthHandler>();
+}
+
+std::unique_ptr<HttpAuthHandler>
+HttpAuthHandlerBasic::Factory::CreateAndInitPreemptiveAuthHandler(
+    HttpAuthCache::Entry* cache_entry,
+    const HttpAuthChallengeTokenizer& tokenizer,
     HttpAuth::Target target,
-    const SSLInfo& ssl_info,
-    const GURL& origin,
-    CreateReason reason,
-    int digest_nonce_count,
-    const NetLogWithSource& net_log,
-    std::unique_ptr<HttpAuthHandler>* handler) {
-  // TODO(cbentzel): Move towards model of parsing in the factory
-  //                 method and only constructing when valid.
-  std::unique_ptr<HttpAuthHandler> tmp_handler(new HttpAuthHandlerBasic());
-  int result =
-      tmp_handler->HandleInitialChallenge(challenge, target, ssl_info, origin, net_log);
-  if (result == OK)
-    handler->swap(tmp_handler);
-  return result;
+    const BoundNetLog& net_log) {
+  if (cache_entry->scheme() != kBasicSchemeName)
+    return std::unique_ptr<HttpAuthHandler>();
+  std::unique_ptr<HttpAuthHandler> handler(new HttpAuthHandlerBasic());
+  int rv = handler->HandleInitialChallenge(tokenizer, target,
+                                           cache_entry->origin(), net_log);
+  if (rv == OK)
+    return handler;
+  return std::unique_ptr<HttpAuthHandler>();
 }
 
 }  // namespace net

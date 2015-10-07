@@ -108,9 +108,16 @@ void HttpAuth::ChooseBestChallenge(
     // rare. Servers typically specify higher priority schemes before lower
     // priority schemes.
     std::unique_ptr<HttpAuthHandler> current_handler;
-    int rv = http_auth_handler_factory->CreateAuthHandler(
-        &challenge_tokenizer, target, ssl_info, origin,
-        HttpAuthHandlerFactory::CREATE_CHALLENGE, 1, net_log, &current_handler);
+    current_handler = http_auth_handler_factory->CreateAuthHandlerForScheme(
+        challenge_tokenizer.NormalizedScheme());
+    if (!current_handler) {
+      net_log.AddEvent(NetLog::TYPE_AUTH_HANDLER_CREATION_FAILURE,
+                       base::Bind(&AuthHandlerCreationFailureParams,
+                                  &cur_challenge, ERR_UNSUPPORTED_AUTH_SCHEME));
+      continue;
+    }
+    int rv = current_handler->HandleInitialChallenge(challenge_tokenizer,
+                                                     target, origin, net_log);
     if (rv != OK) {
       net_log.AddEvent(
           NetLog::TYPE_AUTH_HANDLER_CREATION_FAILURE,

@@ -22,6 +22,8 @@
 #include "net/log/net_log_event_type.h"
 #include "net/ssl/ssl_info.h"
 
+// TODO(asanka): This file is a mess of platform dependent code. We should break
+// it up.
 namespace net {
 
 namespace {
@@ -57,25 +59,31 @@ void HttpAuthHandlerNegotiate::Factory::set_host_resolver(
   resolver_ = resolver;
 }
 
-int HttpAuthHandlerNegotiate::Factory::CreateAuthHandler(
-    const HttpAuthChallengeTokenizer& challenge,
+std::unique_ptr<HttpAuthHandler>
+HttpAuthHandlerNegotiate::Factory::CreateAndInitPreemptiveAuthHandler(
+    HttpAuthCache::Entry* cache_entry,
+    const HttpAuthChallengeTokenizer& tokenizer,
     HttpAuth::Target target,
-    const SSLInfo& ssl_info,
-    const GURL& origin,
-    CreateReason reason,
-    int digest_nonce_count,
-    const NetLogWithSource& net_log,
-    std::unique_ptr<HttpAuthHandler>* handler) {
+    const BoundNetLog& net_log) {
+  return std::unique_ptr<HttpAuthHandler>();
+}
+
+std::unique_ptr<HttpAuthHandler>
+HttpAuthHandlerNegotiate::Factory::CreateAuthHandlerForScheme(
+    const std::string& scheme) {
+  DCHECK(HttpAuth::IsValidNormalizedScheme(scheme));
+  if (scheme != "negotiate")
+    return std::unique_ptr<HttpAuthHandler>();
 #if defined(OS_WIN)
-  if (is_unsupported_ || reason == CREATE_PREEMPTIVE)
-    return ERR_UNSUPPORTED_AUTH_SCHEME;
+  if (is_unsupported_)
+    return std::unique_ptr<HttpAuthHandler>();
   if (max_token_length_ == 0) {
     int rv = DetermineMaxTokenLength(auth_library_.get(), NEGOSSP_NAME,
                                      &max_token_length_);
     if (rv == ERR_UNSUPPORTED_AUTH_SCHEME)
       is_unsupported_ = true;
     if (rv != OK)
-      return rv;
+      return std::unique_ptr<HttpAuthHandler>();
   }
   // TODO(cbentzel): Move towards model of parsing in the factory
   //                 method and only constructing when valid.
@@ -93,21 +101,16 @@ int HttpAuthHandlerNegotiate::Factory::CreateAuthHandler(
       new HttpAuthHandlerNegotiate(http_auth_preferences(), resolver_));
 #elif defined(OS_POSIX)
   if (is_unsupported_)
-    return ERR_UNSUPPORTED_AUTH_SCHEME;
+    return std::unique_ptr<HttpAuthHandler>();
   if (!auth_library_->Init()) {
     is_unsupported_ = true;
-    return ERR_UNSUPPORTED_AUTH_SCHEME;
+    return std::unique_ptr<HttpAuthHandler>();
   }
   // TODO(ahendrickson): Move towards model of parsing in the factory
   //                     method and only constructing when valid.
   std::unique_ptr<HttpAuthHandler> tmp_handler(new HttpAuthHandlerNegotiate(
       auth_library_.get(), http_auth_preferences(), resolver_));
 #endif
-  int result =
-      tmp_handler->HandleInitialChallenge(challenge, target, ssl_info, origin, net_log);
-  if (result == OK)
-    handler->swap(tmp_handler);
-  return result;
 }
 
 HttpAuthHandlerNegotiate::HttpAuthHandlerNegotiate(
@@ -122,9 +125,9 @@ HttpAuthHandlerNegotiate::HttpAuthHandlerNegotiate(
 #if defined(OS_ANDROID)
     : auth_system_(prefs),
 #elif defined(OS_WIN)
-    : auth_system_(auth_library, "Negotiate", NEGOSSP_NAME, max_token_length),
+      auth_system_(auth_library, "Negotiate", NEGOSSP_NAME, max_token_length),
 #elif defined(OS_POSIX)
-    : auth_system_(auth_library, "Negotiate", CHROME_GSS_SPNEGO_MECH_OID_DESC),
+      auth_system_(auth_library, "Negotiate", CHROME_GSS_SPNEGO_MECH_OID_DESC),
 #endif
       resolver_(resolver),
       already_called_(false),

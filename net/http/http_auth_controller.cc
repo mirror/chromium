@@ -13,6 +13,7 @@
 #include "net/base/auth.h"
 #include "net/base/url_util.h"
 #include "net/dns/host_resolver.h"
+#include "net/http/http_auth_challenge_tokenizer.h"
 #include "net/http/http_auth_handler.h"
 #include "net/http/http_auth_handler_factory.h"
 #include "net/http/http_network_session.h"
@@ -223,13 +224,12 @@ bool HttpAuthController::SelectPreemptiveAuth(const NetLogWithSource& net_log) {
     return false;
 
   // Try to create a handler using the previous auth challenge.
-  std::unique_ptr<HttpAuthHandler> handler_preemptive;
-  int rv_create = http_auth_handler_factory_->
-      CreatePreemptiveAuthHandlerFromString(entry->auth_challenge(), target_,
-                                            auth_origin_,
-                                            entry->IncrementNonceCount(),
-                                            net_log, &handler_preemptive);
-  if (rv_create != OK)
+  std::string challenge = entry->auth_challenge();
+  HttpAuthChallengeTokenizer tokenizer(challenge.begin(), challenge.end());
+  std::unique_ptr<HttpAuthHandler> handler_preemptive =
+      http_auth_handler_factory_->CreateAndInitPreemptiveAuthHandler(
+          entry, tokenizer, target_, net_log);
+  if (!handler_preemptive)
     return false;
 
   // Set the state

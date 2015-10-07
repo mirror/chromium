@@ -23,9 +23,9 @@ class MockAuthHandler : public HttpAuthHandler {
  public:
   MockAuthHandler(const std::string& scheme,
                   const std::string& realm,
-                  HttpAuth::Target target) {
+                  HttpAuth::Target target)
+      : HttpAuthHandler(scheme) {
     // Can't use initializer list since these are members of the base class.
-    auth_scheme_ = scheme;
     realm_ = realm;
     target_ = target;
   }
