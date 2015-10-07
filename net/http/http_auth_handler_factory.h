@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "net/base/net_export.h"
 #include "net/http/http_auth.h"
+#include "net/http/http_auth_cache.h"
 #include "net/http/url_security_manager.h"
 
 class GURL;
@@ -82,39 +83,19 @@ class NET_EXPORT HttpAuthHandlerFactory {
   // NOTE: This will apply to ALL |origin| values if the filters are empty.
   //
   // |*challenge| should not be reused after a call to |CreateAuthHandler()|,
-  virtual int CreateAuthHandler(const HttpAuthChallengeTokenizer& challenge,
-                                HttpAuth::Target target,
-                                const SSLInfo& ssl_info,
-                                const GURL& origin,
-                                CreateReason create_reason,
-                                int digest_nonce_count,
-                                const BoundNetLog& net_log,
-                                std::unique_ptr<HttpAuthHandler>* handler) = 0;
+  virtual std::unique_ptr<HttpAuthHandler> CreateAuthHandlerForScheme(
+      const std::string& scheme) = 0;
 
   // Creates an HTTP authentication handler based on the authentication
   // challenge string |challenge|.
   // This is a convenience function which creates a ChallengeTokenizer for
   // |challenge| and calls |CreateAuthHandler|. See |CreateAuthHandler| for
   // more details on return values.
-  int CreateAuthHandlerFromString(const std::string& challenge,
-                                  HttpAuth::Target target,
-                                  const SSLInfo& ssl_info,
-                                  const GURL& origin,
-                                  const BoundNetLog& net_log,
-                                  std::unique_ptr<HttpAuthHandler>* handler);
-
-  // Creates an HTTP authentication handler based on the authentication
-  // challenge string |challenge|.
-  // This is a convenience function which creates a ChallengeTokenizer for
-  // |challenge| and calls |CreateAuthHandler|. See |CreateAuthHandler| for
-  // more details on return values.
-  int CreatePreemptiveAuthHandlerFromString(
-      const std::string& challenge,
+  virtual std::unique_ptr<HttpAuthHandler> CreateAndInitPreemptiveAuthHandler(
+      HttpAuthCache::Entry* cache_entry,
+      const HttpAuthChallengeTokenizer& tokenizer,
       HttpAuth::Target target,
-      const GURL& origin,
-      int digest_nonce_count,
-      const BoundNetLog& net_log,
-      std::unique_ptr<HttpAuthHandler>* handler);
+      const BoundNetLog& net_log) = 0;
 
   // Creates a standard HttpAuthHandlerRegistryFactory. The caller is
   // responsible for deleting the factory.

@@ -168,29 +168,29 @@ HttpAuthHandlerRegistryFactory::Create(const HttpAuthPreferences* prefs,
   return registry_factory;
 }
 
-int HttpAuthHandlerRegistryFactory::CreateAuthHandler(
-    const HttpAuthChallengeTokenizer& challenge,
-    HttpAuth::Target target,
-    const SSLInfo& ssl_info,
-    const GURL& origin,
-    CreateReason reason,
-    int digest_nonce_count,
-    const BoundNetLog& net_log,
-    std::unique_ptr<HttpAuthHandler>* handler) {
-  std::string scheme = challenge.NormalizedScheme();
-  if (scheme.empty()) {
-    handler->reset();
-    return ERR_INVALID_RESPONSE;
-  }
-  FactoryMap::iterator it = factory_map_.find(scheme);
-  if (it == factory_map_.end()) {
-    handler->reset();
-    return ERR_UNSUPPORTED_AUTH_SCHEME;
-  }
+std::unique_ptr<HttpAuthHandler>
+HttpAuthHandlerRegistryFactory::CreateAuthHandlerForScheme(
+    const std::string& scheme) {
+  const auto it = factory_map_.find(scheme);
+  if (it == factory_map_.end())
+    return std::unique_ptr<HttpAuthHandler>();
   DCHECK(it->second);
-  return it->second->CreateAuthHandler(challenge, target, ssl_info, origin,
-                                       reason, digest_nonce_count, net_log,
-                                       handler);
+  return it->second->CreateAuthHandlerForScheme(scheme);
+}
+
+std::unique_ptr<HttpAuthHandler>
+HttpAuthHandlerRegistryFactory::CreateAndInitPreemptiveAuthHandler(
+    HttpAuthCache::Entry* cache_entry,
+    const HttpAuthChallengeTokenizer& tokenizer,
+    HttpAuth::Target target,
+    const BoundNetLog& net_log) {
+  std::string scheme_name = cache_entry->scheme();
+  const auto it = factory_map_.find(scheme_name);
+  if (it == factory_map_.end())
+    return std::unique_ptr<HttpAuthHandler>();
+  DCHECK(it->second);
+  return it->second->CreateAndInitPreemptiveAuthHandler(cache_entry, tokenizer,
+                                                        target, net_log);
 }
 
 }  // namespace net

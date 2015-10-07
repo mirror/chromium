@@ -40,11 +40,12 @@ TEST(HttpAuthHandlerBasicTest, GenerateAuthToken) {
   HttpAuthHandlerBasic::Factory factory;
   for (size_t i = 0; i < arraysize(tests); ++i) {
     std::string challenge = "Basic realm=\"Atlantis\"";
-    SSLInfo null_ssl_info;
-    std::unique_ptr<HttpAuthHandler> basic;
-    EXPECT_EQ(OK, factory.CreateAuthHandlerFromString(
-                      challenge, HttpAuth::AUTH_SERVER, null_ssl_info, origin,
-                      BoundNetLog(), &basic));
+    std::unique_ptr<HttpAuthHandler> basic =
+        factory.CreateAuthHandlerForScheme("basic");
+    ASSERT_TRUE(basic);
+    HttpAuthChallengeTokenizer tokenizer(challenge.begin(), challenge.end());
+    EXPECT_EQ(OK, basic->HandleInitialChallenge(
+                      tokenizer, HttpAuth::AUTH_SERVER, origin, BoundNetLog()));
     AuthCredentials credentials(base::ASCIIToUTF16(tests[i].username),
                                 base::ASCIIToUTF16(tests[i].password));
     HttpRequestInfo request_info;
@@ -94,11 +95,13 @@ TEST(HttpAuthHandlerBasicTest, HandleAnotherChallenge) {
 
   GURL origin("http://www.example.com");
   HttpAuthHandlerBasic::Factory factory;
-  SSLInfo null_ssl_info;
-  std::unique_ptr<HttpAuthHandler> basic;
-  EXPECT_EQ(OK, factory.CreateAuthHandlerFromString(
-                    tests[0].challenge, HttpAuth::AUTH_SERVER, null_ssl_info,
-                    origin, BoundNetLog(), &basic));
+  std::unique_ptr<HttpAuthHandler> basic =
+      factory.CreateAuthHandlerForScheme("basic");
+  std::string initial_challenge(tests[0].challenge);
+  HttpAuthChallengeTokenizer tokenizer(initial_challenge.begin(),
+                                       initial_challenge.end());
+  EXPECT_EQ(OK, basic->HandleInitialChallenge(tokenizer, HttpAuth::AUTH_SERVER,
+                                              origin, BoundNetLog()));
 
   for (size_t i = 0; i < arraysize(tests); ++i) {
     std::string challenge(tests[i].challenge);
@@ -168,13 +171,6 @@ TEST(HttpAuthHandlerBasicTest, HandleInitialChallenge) {
     },
 #endif
 
-    // The parser fails when the first token is not "Basic".
-    {
-      "Negotiate",
-      ERR_INVALID_RESPONSE,
-      ""
-    },
-
     // Although RFC 2617 isn't explicit about this case, if there is
     // more than one realm directive, we pick the last one.
     {
@@ -195,15 +191,48 @@ TEST(HttpAuthHandlerBasicTest, HandleInitialChallenge) {
   GURL origin("http://www.example.com");
   for (size_t i = 0; i < arraysize(tests); ++i) {
     std::string challenge = tests[i].challenge;
-    SSLInfo null_ssl_info;
-    std::unique_ptr<HttpAuthHandler> basic;
-    int rv = factory.CreateAuthHandlerFromString(
-        challenge, HttpAuth::AUTH_SERVER, null_ssl_info, origin, BoundNetLog(),
-        &basic);
+    std::unique_ptr<HttpAuthHandler> basic =
+        factory.CreateAuthHandlerForScheme("basic");
+    HttpAuthChallengeTokenizer tokenizer(challenge.begin(), challenge.end());
+    int rv = basic->HandleInitialChallenge(tokenizer, HttpAuth::AUTH_SERVER,
+                                           origin, BoundNetLog());
     EXPECT_EQ(tests[i].expected_rv, rv);
     if (rv == OK)
       EXPECT_EQ(tests[i].expected_realm, basic->realm());
   }
+}
+
+TEST(HttpAuthHandlerBasicTest, CreateAuthHandlerForScheme) {
+  HttpAuthHandlerBasic::Factory basic_factory;
+
+  EXPECT_TRUE(basic_factory.CreateAuthHandlerForScheme("basic"));
+  EXPECT_FALSE(basic_factory.CreateAuthHandlerForScheme("bogus"));
+}
+
+TEST(HttpAuthHandlerBasicTest, CreateAndInitPreemptiveAuthHandler_Valid) {
+  HttpAuthHandlerBasic::Factory digest_factory;
+  HttpAuthCache auth_cache;
+  std::string challenge("basic realm=\"Foo\"");
+  HttpAuthChallengeTokenizer tokenizer(challenge.begin(), challenge.end());
+
+  HttpAuthCache::Entry* entry =
+      auth_cache.Add(GURL("http://example.com/foo").GetOrigin(), "foo", "basic",
+                     challenge, AuthCredentials(), "/foo");
+  EXPECT_TRUE(digest_factory.CreateAndInitPreemptiveAuthHandler(
+      entry, tokenizer, HttpAuth::AUTH_SERVER, BoundNetLog()));
+}
+
+TEST(HttpAuthHandlerBasicTest, CreateAndInitPreemptiveAuthHandler_Invalid) {
+  HttpAuthHandlerBasic::Factory digest_factory;
+  HttpAuthCache auth_cache;
+  std::string challenge("digest realm=\"foo\"");
+  HttpAuthChallengeTokenizer tokenizer(challenge.begin(), challenge.end());
+
+  HttpAuthCache::Entry* entry =
+      auth_cache.Add(GURL("http://example.com").GetOrigin(), "bar", "digest",
+                     challenge, AuthCredentials(), "/bar");
+  EXPECT_FALSE(digest_factory.CreateAndInitPreemptiveAuthHandler(
+      entry, tokenizer, HttpAuth::AUTH_SERVER, BoundNetLog()));
 }
 
 }  // namespace net

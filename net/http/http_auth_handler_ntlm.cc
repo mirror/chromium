@@ -111,6 +111,7 @@ int HttpAuthHandlerNTLM::GenerateAuthTokenImpl(
 HttpAuth::AuthorizationResult HttpAuthHandlerNTLM::ParseChallenge(
     const HttpAuthChallengeTokenizer& tok,
     bool initial_challenge) {
+  DCHECK(tok.SchemeIs("ntlm"));
 #if defined(NTLM_SSPI)
   // auth_sspi_ contains state for whether or not this is the initial challenge.
   return auth_sspi_.ParseChallenge(tok);
@@ -148,6 +149,16 @@ std::string HttpAuthHandlerNTLM::CreateSPN(const GURL& origin) {
   std::string target("HTTP/");
   target.append(GetHostAndPort(origin));
   return target;
+}
+
+// None of the implementations support pre-emptive authentication for NTLM.
+scoped_ptr<HttpAuthHandler>
+HttpAuthHandlerNTLM::Factory::CreateAndInitPreemptiveAuthHandler(
+    HttpAuthCache::Entry* cache_entry,
+    const HttpAuthChallengeTokenizer& tokenizer,
+    HttpAuth::Target target,
+    const BoundNetLog& net_log) {
+  return scoped_ptr<HttpAuthHandler>();
 }
 
 }  // namespace net

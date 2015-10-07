@@ -11590,10 +11590,9 @@ TEST_F(HttpNetworkTransactionTest, GenerateAuthToken) {
             test_config.proxy_auth_timing == AUTH_ASYNC,
             test_config.proxy_auth_rv);
         auth_factory->AddMockHandler(
-            auth_handler.Pass(),
-            n == 0 ? HttpAuthHandlerFactory::CREATE_CHALLENGE
-                   : HttpAuthHandlerFactory::CREATE_PREEMPTIVE,
-            HttpAuth::AUTH_PROXY);
+            auth_handler.Pass(), n == 0
+                                     ? HttpAuthHandlerCreateReason::CHALLENGE
+                                     : HttpAuthHandlerCreateReason::PREEMPTIVE);
       }
     }
     if (test_config.server_auth_timing != AUTH_NONE) {
@@ -11602,8 +11601,7 @@ TEST_F(HttpNetworkTransactionTest, GenerateAuthToken) {
           test_config.server_auth_timing == AUTH_ASYNC,
           test_config.server_auth_rv);
       auth_factory->AddMockHandler(auth_handler.Pass(),
-                                   HttpAuthHandlerFactory::CREATE_CHALLENGE,
-                                   HttpAuth::AUTH_SERVER);
+                                   HttpAuthHandlerCreateReason::CHALLENGE);
     }
     if (test_config.proxy_url) {
       session_deps_.proxy_service =
@@ -11707,8 +11705,7 @@ TEST_F(HttpNetworkTransactionTest, MultiRoundAuth) {
   auth_handler->SetGenerateExpectation(false, OK);
   auth_handler->set_expect_multiple_challenges(true);
   auth_factory->AddMockHandler(auth_handler.Pass(),
-                               HttpAuthHandlerFactory::CREATE_CHALLENGE,
-                               HttpAuth::AUTH_SERVER);
+                               HttpAuthHandlerCreateReason::CHALLENGE);
 
   GURL origin("http://www.example.com");
   int rv = OK;
@@ -12002,8 +11999,7 @@ TEST_P(HttpNetworkTransactionTest, SpdyAlternativeServiceThroughProxy) {
     scoped_ptr<UrlRecordingHttpAuthHandlerMock> auth_handler(
         new UrlRecordingHttpAuthHandlerMock(&request_url));
     auth_factory->AddMockHandler(auth_handler.Pass(),
-                                 HttpAuthHandlerFactory::CREATE_CHALLENGE,
-                                 HttpAuth::AUTH_PROXY);
+                                 HttpAuthHandlerCreateReason::CHALLENGE);
     session_deps_.http_auth_handler_factory.reset(auth_factory);
   }
 

@@ -54,15 +54,16 @@ bool RespondToChallenge(HttpAuth::Target target,
   HttpAuthHandlerDigest::NonceGenerator* nonce_generator =
       new HttpAuthHandlerDigest::FixedNonceGenerator("client_nonce");
   factory->set_nonce_generator(nonce_generator);
-  std::unique_ptr<HttpAuthHandler> handler;
 
   // Create a handler for a particular challenge.
   SSLInfo null_ssl_info;
   GURL url_origin(target == HttpAuth::AUTH_SERVER ? request_url : proxy_name);
-  int rv_create = factory->CreateAuthHandlerFromString(
-      challenge, target, null_ssl_info, url_origin.GetOrigin(), BoundNetLog(),
-      &handler);
-  if (rv_create != OK || handler.get() == NULL) {
+  HttpAuthChallengeTokenizer tokenizer(challenge.begin(), challenge.end());
+  std::unique_ptr<HttpAuthHandler> handler =
+      factory->CreateAuthHandlerForScheme(tokenizer.NormalizedScheme());
+  int rv = handler->HandleInitialChallenge(
+      tokenizer, target, url_origin.GetOrigin(), BoundNetLog());
+  if (rv != OK || handler.get() == NULL) {
     ADD_FAILURE() << "Unable to create auth handler.";
     return false;
   }
@@ -76,9 +77,9 @@ bool RespondToChallenge(HttpAuth::Target target,
   request->url = GURL(request_url);
   AuthCredentials credentials(base::ASCIIToUTF16("foo"),
                               base::ASCIIToUTF16("bar"));
-  int rv_generate = handler->GenerateAuthToken(&credentials, *request,
-                                               callback.callback(), token);
-  if (rv_generate != OK) {
+  rv = handler->GenerateAuthToken(&credentials, *request, callback.callback(),
+                                  token);
+  if (rv != OK) {
     ADD_FAILURE() << "Problems generating auth token";
     return false;
   }
@@ -88,6 +89,38 @@ bool RespondToChallenge(HttpAuth::Target target,
 
 }  // namespace
 
+TEST(HttpAuthHandlerDigestTest, CreateAuthHandlerForScheme) {
+  HttpAuthHandlerDigest::Factory digest_factory;
+
+  EXPECT_TRUE(digest_factory.CreateAuthHandlerForScheme("digest"));
+  EXPECT_FALSE(digest_factory.CreateAuthHandlerForScheme("bogus"));
+}
+
+TEST(HttpAuthHandlerDigestTest, CreateAndInitPreemptiveAuthHandler_Valid) {
+  HttpAuthHandlerDigest::Factory digest_factory;
+  HttpAuthCache auth_cache;
+  std::string challenge(kSimpleChallenge);
+  HttpAuthChallengeTokenizer tokenizer(challenge.begin(), challenge.end());
+
+  HttpAuthCache::Entry* entry =
+      auth_cache.Add(GURL("http://example.com/foo").GetOrigin(), "foo",
+                     "digest", challenge, AuthCredentials(), "/foo");
+  EXPECT_TRUE(digest_factory.CreateAndInitPreemptiveAuthHandler(
+      entry, tokenizer, HttpAuth::AUTH_SERVER, BoundNetLog()));
+}
+
+TEST(HttpAuthHandlerDigestTest, CreateAndInitPreemptiveAuthHandler_Invalid) {
+  HttpAuthHandlerDigest::Factory digest_factory;
+  HttpAuthCache auth_cache;
+  std::string challenge("Basic realm=\"bar\"");
+  HttpAuthChallengeTokenizer tokenizer(challenge.begin(), challenge.end());
+
+  HttpAuthCache::Entry* entry =
+      auth_cache.Add(GURL("http://example.com").GetOrigin(), "bar", "basic",
+                     challenge, AuthCredentials(), "/bar");
+  EXPECT_FALSE(digest_factory.CreateAndInitPreemptiveAuthHandler(
+      entry, tokenizer, HttpAuth::AUTH_SERVER, BoundNetLog()));
+}
 
 TEST(HttpAuthHandlerDigestTest, ParseChallenge) {
   static const struct {
@@ -340,37 +373,25 @@ TEST(HttpAuthHandlerDigestTest, ParseChallenge) {
       HttpAuthHandlerDigest::ALGORITHM_UNSPECIFIED,
       HttpAuthHandlerDigest::QOP_UNSPECIFIED
     },
-
-    { // If a non-Digest scheme is somehow passed in, it should be rejected.
-      "Basic realm=\"foo\"",
-      false,
-      "",
-      "",
-      "",
-      "",
-      false,
-      HttpAuthHandlerDigest::ALGORITHM_UNSPECIFIED,
-      HttpAuthHandlerDigest::QOP_UNSPECIFIED
-    },
   };
 
   GURL origin("http://www.example.com");
   std::unique_ptr<HttpAuthHandlerDigest::Factory> factory(
       new HttpAuthHandlerDigest::Factory());
   for (size_t i = 0; i < arraysize(tests); ++i) {
-    SSLInfo null_ssl_info;
-    std::unique_ptr<HttpAuthHandler> handler;
-    int rv = factory->CreateAuthHandlerFromString(
-        tests[i].challenge, HttpAuth::AUTH_SERVER, null_ssl_info, origin,
-        BoundNetLog(), &handler);
+    std::string challenge = tests[i].challenge;
+    HttpAuthChallengeTokenizer tokenizer(challenge.begin(), challenge.end());
+    std::unique_ptr<HttpAuthHandler> handler =
+        factory->CreateAuthHandlerForScheme(tokenizer.NormalizedScheme());
+    ASSERT_TRUE(handler);
+    int rv = handler->HandleInitialChallenge(tokenizer, HttpAuth::AUTH_SERVER,
+                                             origin, BoundNetLog());
     if (tests[i].parsed_success) {
       EXPECT_THAT(rv, IsOk());
     } else {
       EXPECT_NE(OK, rv);
-      EXPECT_TRUE(handler.get() == NULL);
       continue;
     }
-    ASSERT_TRUE(handler.get() != NULL);
     HttpAuthHandlerDigest* digest =
         static_cast<HttpAuthHandlerDigest*>(handler.get());
     EXPECT_STREQ(tests[i].parsed_realm, digest->realm_.c_str());
@@ -520,11 +541,12 @@ TEST(HttpAuthHandlerDigestTest, AssembleCredentials) {
   std::unique_ptr<HttpAuthHandlerDigest::Factory> factory(
       new HttpAuthHandlerDigest::Factory());
   for (size_t i = 0; i < arraysize(tests); ++i) {
-    SSLInfo null_ssl_info;
-    std::unique_ptr<HttpAuthHandler> handler;
-    int rv = factory->CreateAuthHandlerFromString(
-        tests[i].challenge, HttpAuth::AUTH_SERVER, null_ssl_info, origin,
-        BoundNetLog(), &handler);
+    std::unique_ptr<HttpAuthHandler> handler =
+        factory->CreateAuthHandlerForScheme("digest");
+    std::string challenge = tests[i].challenge;
+    HttpAuthChallengeTokenizer tokenizer(challenge.begin(), challenge.end());
+    int rv = handler->HandleInitialChallenge(tokenizer, HttpAuth::AUTH_SERVER,
+                                             origin, BoundNetLog());
     EXPECT_THAT(rv, IsOk());
     ASSERT_TRUE(handler != NULL);
 
@@ -546,18 +568,17 @@ TEST(HttpAuthHandlerDigestTest, AssembleCredentials) {
 TEST(HttpAuthHandlerDigest, HandleAnotherChallenge) {
   std::unique_ptr<HttpAuthHandlerDigest::Factory> factory(
       new HttpAuthHandlerDigest::Factory());
-  std::unique_ptr<HttpAuthHandler> handler;
   std::string default_challenge =
       "Digest realm=\"Oblivion\", nonce=\"nonce-value\"";
-  GURL origin("intranet.google.com");
-  SSLInfo null_ssl_info;
-  int rv = factory->CreateAuthHandlerFromString(
-      default_challenge, HttpAuth::AUTH_SERVER, null_ssl_info, origin,
-      BoundNetLog(), &handler);
-  EXPECT_THAT(rv, IsOk());
-  ASSERT_TRUE(handler.get() != NULL);
   HttpAuthChallengeTokenizer tok_default(default_challenge.begin(),
                                          default_challenge.end());
+  GURL origin("intranet.google.com");
+  std::unique_ptr<HttpAuthHandler> handler =
+      factory->CreateAuthHandlerForScheme(tok_default.NormalizedScheme());
+  int rv= handler->HandleInitialChallenge(
+                    tok_default, HttpAuth::AUTH_SERVER, origin, BoundNetLog());
+  EXPECT_THAT(rv, IsOk());
+  ASSERT_TRUE(handler.get() != NULL);
   EXPECT_EQ(HttpAuth::AUTHORIZATION_RESULT_REJECT,
             handler->HandleAnotherChallenge(tok_default));
 

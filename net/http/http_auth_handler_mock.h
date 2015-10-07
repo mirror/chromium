@@ -19,6 +19,8 @@ namespace net {
 
 class HostResolver;
 
+enum class HttpAuthHandlerCreateReason { PREEMPTIVE, CHALLENGE };
+
 // MockAuthHandler is used in tests to reliably trigger edge cases.
 class HttpAuthHandlerMock : public HttpAuthHandler {
  public:
@@ -30,26 +32,24 @@ class HttpAuthHandlerMock : public HttpAuthHandler {
     ~Factory() override;
 
     void AddMockHandler(std::unique_ptr<HttpAuthHandler> handler,
-                        CreateReason reason,
-                        HttpAuth::Target target);
+                        HttpAuthHandlerCreateReason reason);
 
-    bool HaveAuthHandlers(HttpAuth::Target) const;
+    bool HaveAuthHandlers() const;
 
     // HttpAuthHandlerFactory:
-    int CreateAuthHandler(const HttpAuthChallengeTokenizer& challenge,
-                          HttpAuth::Target target,
-                          const SSLInfo& ssl_info,
-                          const GURL& origin,
-                          CreateReason reason,
-                          int nonce_count,
-                          const BoundNetLog& net_log,
-                          std::unique_ptr<HttpAuthHandler>* handler) override;
+    std::unique_ptr<HttpAuthHandler> CreateAuthHandlerForScheme(
+        const std::string& scheme) override;
+    std::unique_ptr<HttpAuthHandler> CreateAndInitPreemptiveAuthHandler(
+        HttpAuthCache::Entry* cache_entry,
+        const HttpAuthChallengeTokenizer& tokenizer,
+        HttpAuth::Target target,
+        const BoundNetLog& net_log) override;
 
    private:
-    std::vector<std::unique_ptr<HttpAuthHandler>>
-        challenge_handlers_[HttpAuth::AUTH_NUM_TARGETS];
-    std::vector<std::unique_ptr<HttpAuthHandler>>
-        preemptive_handlers_[HttpAuth::AUTH_NUM_TARGETS];
+    std::unique_ptr<HttpAuthHandler> GetNextAuthHandler(
+        std::vector<std::unique_ptr<HttpAuthHandler>>* handler_list);
+    std::vector<std::unique_ptr<HttpAuthHandler>> challenge_handlers_;
+    std::vector<std::unique_ptr<HttpAuthHandler>> preemptive_handlers_;
   };
 
   HttpAuthHandlerMock();
@@ -59,7 +59,11 @@ class HttpAuthHandlerMock : public HttpAuthHandler {
   void SetGenerateExpectation(bool async, int rv);
 
   void set_expected_auth_scheme(const std::string& scheme) {
-    expected_auth_scheme_ = scheme;
+    auth_scheme_ = scheme;
+  }
+
+  void set_expected_auth_target(HttpAuth::Target target) {
+    expected_auth_target_ = target;
   }
 
   void set_expect_multiple_challenges(bool expect_multiple_challenges) {
@@ -102,7 +106,6 @@ class HttpAuthHandlerMock : public HttpAuthHandler {
   void OnGenerateAuthToken();
 
   CompletionCallback callback_;
-  std::string expected_auth_scheme_;
   bool generate_async_ = false;
   int generate_rv_ = 0;
   std::string auth_token_;
@@ -111,6 +114,7 @@ class HttpAuthHandlerMock : public HttpAuthHandler {
   bool allows_default_credentials_ = false;
   bool allows_explicit_credentials_ = true;
   bool expect_multiple_challenges_ = false;
+  HttpAuth::Target expected_auth_target_ = HttpAuth::AUTH_SERVER;
   GURL request_url_;
   base::WeakPtrFactory<HttpAuthHandlerMock> weak_factory_;
 };

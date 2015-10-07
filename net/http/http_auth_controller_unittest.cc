@@ -67,8 +67,7 @@ void RunSingleRoundAuthTest(HandlerRunMode run_mode,
   auth_handler->SetGenerateExpectation((run_mode == RUN_HANDLER_ASYNC),
                                        handler_rv);
   auth_handler_factory.AddMockHandler(auth_handler.Pass(),
-                                      HttpAuthHandlerFactory::CREATE_CHALLENGE,
-                                      HttpAuth::AUTH_PROXY);
+                                      HttpAuthHandlerCreateReason::CHALLENGE);
 
   scoped_refptr<HttpAuthController> controller(
       new HttpAuthController(HttpAuth::AUTH_PROXY,
@@ -145,8 +144,7 @@ TEST(HttpAuthControllerTest, NoExplicitCredentialsAllowed) {
   auth_handler->set_allows_explicit_credentials(false);
   auth_handler->set_expected_auth_scheme("ernie");
   auth_handler_factory.AddMockHandler(auth_handler.Pass(),
-                                      HttpAuthHandlerFactory::CREATE_CHALLENGE,
-                                      HttpAuth::AUTH_SERVER);
+                                      HttpAuthHandlerCreateReason::CHALLENGE);
 
   scoped_refptr<HttpAuthController> controller(
       new HttpAuthController(HttpAuth::AUTH_SERVER,
@@ -158,7 +156,7 @@ TEST(HttpAuthControllerTest, NoExplicitCredentialsAllowed) {
   ASSERT_TRUE(controller->HaveAuthHandler());
   controller->ResetAuth(AuthCredentials());
   EXPECT_TRUE(controller->HaveAuth());
-  EXPECT_FALSE(auth_handler_factory.HaveAuthHandlers(HttpAuth::AUTH_SERVER));
+  EXPECT_FALSE(auth_handler_factory.HaveAuthHandlers());
 
   // Should only succeed if we are using the "Ernie" MockHandler.
   EXPECT_EQ(OK, controller->MaybeGenerateAuthToken(
@@ -173,8 +171,7 @@ TEST(HttpAuthControllerTest, NoExplicitCredentialsAllowed) {
   auth_handler->set_allows_explicit_credentials(false);
   auth_handler->set_expected_auth_scheme("ernie");
   auth_handler_factory.AddMockHandler(auth_handler.Pass(),
-                                      HttpAuthHandlerFactory::CREATE_CHALLENGE,
-                                      HttpAuth::AUTH_SERVER);
+                                      HttpAuthHandlerCreateReason::CHALLENGE);
 
   // Fallback handlers for the second attempt. The "Ernie" handler should be
   // discarded due to the disabled scheme, and the "Bert" handler should
@@ -184,8 +181,7 @@ TEST(HttpAuthControllerTest, NoExplicitCredentialsAllowed) {
   auth_handler->set_allows_explicit_credentials(true);
   auth_handler->set_expected_auth_scheme("bert");
   auth_handler_factory.AddMockHandler(auth_handler.Pass(),
-                                      HttpAuthHandlerFactory::CREATE_CHALLENGE,
-                                      HttpAuth::AUTH_SERVER);
+                                      HttpAuthHandlerCreateReason::CHALLENGE);
 
   // Once a token is generated, simulate the receipt of a server response
   // indicating that the authentication attempt was rejected.

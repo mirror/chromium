@@ -14,7 +14,8 @@
 
 namespace net {
 
-HttpAuthHandler::HttpAuthHandler() : target_(HttpAuth::AUTH_NONE) {}
+HttpAuthHandler::HttpAuthHandler(const std::string& scheme)
+    : auth_scheme_(scheme), target_(HttpAuth::AUTH_NONE) {}
 
 HttpAuthHandler::~HttpAuthHandler() {
 }
@@ -30,13 +31,7 @@ int HttpAuthHandler::HandleInitialChallenge(
   net_log_ = net_log;
 
   auth_challenge_ = challenge.challenge_text();
-  int result = Init(challenge, ssl_info);
-
-  // Init() is expected to set the scheme, realm, score, and properties.  The
-  // realm may be empty.
-  DCHECK_IMPLIES(result == OK, HttpAuth::IsValidNormalizedScheme(auth_scheme_));
-
-  return result;
+  return Init(challenge);
 }
 
 namespace {
