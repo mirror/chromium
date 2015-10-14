@@ -23,6 +23,8 @@ source_set("base") {
     "device_capabilities_impl.h",
     "error_codes.cc",
     "error_codes.h",
+    "json_message.cc",
+    "json_message.h",
     "path_utils.cc",
     "path_utils.h",
     "pref_names.cc",

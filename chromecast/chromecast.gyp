@@ -104,6 +104,8 @@
         'base/device_capabilities_impl.h',
         'base/error_codes.cc',
         'base/error_codes.h',
+        'base/json_message.cc',
+        'base/json_message.h',
         'base/metrics/cast_histograms.h',
         'base/metrics/cast_metrics_helper.cc',
         'base/metrics/cast_metrics_helper.h',
