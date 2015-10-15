@@ -6,6 +6,7 @@
     "build",
     "build/config",
     "build/toolchain",
+    "build_overrides",
     "chrome/browser/chromeos/policy/proto",
     "chrome/browser/policy/proto",
     "chrome/test/data/dromaeo",
