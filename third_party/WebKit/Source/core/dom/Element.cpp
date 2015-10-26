@@ -3565,6 +3565,29 @@ bool Element::supportsStyleSharing() const
     return true;
 }
 
+void Element::registerIntersectionObserver(IntersectionObserver* observer)
+{
+    size_t index = m_intersectionObservers.find(observer);
+    if (index != WTF::kNotFound)
+        return;
+
+    m_intersectionObservers.append(observer);
+    if (document().layoutView() && layoutObject())
+        document().layoutView()->addIntersectionObserverTarget(layoutObject());
+}
+
+void Element::unregisterIntersectionObserver(IntersectionObserver* observer)
+{
+    size_t index = m_intersectionObservers.find(observer);
+    if (index == WTF::kNotFound)
+        return;
+
+    m_intersectionObservers.remove(index);
+    if (document().layoutView() && layoutObject())
+        document().layoutView()->removeIntersectionObserverTarget(layoutObject());
+}
+
+
 DEFINE_TRACE(Element)
 {
 #if ENABLE(OILPAN)

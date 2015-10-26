@@ -76,6 +76,7 @@
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContextTask.h"
 #include "core/dom/FrameRequestCallback.h"
+#include "core/dom/IntersectionObserver.h"
 #include "core/dom/LayoutTreeBuilderTraversal.h"
 #include "core/dom/MainThreadTaskRunner.h"
 #include "core/dom/Microtask.h"
@@ -232,6 +233,8 @@ using namespace Unicode;
 namespace blink {
 
 using namespace HTMLNames;
+
+using IntersectionObserverVector = WillBeHeapVector<RefPtrWillBeMember<IntersectionObserver>>;
 
 static const unsigned cMaxWriteRecursionDepth = 21;
 
@@ -432,6 +435,7 @@ Document::Document(const DocumentInit& initializer, DocumentClassFlags documentC
     , m_loadEventDelayCount(0)
     , m_loadEventDelayTimer(this, &Document::loadEventDelayTimerFired)
     , m_pluginLoadingTimer(this, &Document::pluginLoadingTimerFired)
+    , m_deliverIntersectionObservationsTimer(this, &Document::deliverIntersectionObservationsTimerFired)
     , m_documentTiming(*this)
     , m_writeRecursionIsTooDeep(false)
     , m_writeRecursionDepth(0)
@@ -5724,6 +5728,44 @@ WebTaskRunner* Document::timerTaskRunner() const
     return m_timers.timerTaskRunner();
 }
 
+void Document::activateIntersectionObserver(IntersectionObserver& observer)
+{
+    if (m_activeIntersectionObservers.isEmpty())
+        m_deliverIntersectionObservationsTimer.startOneShot(0, BLINK_FROM_HERE);
+
+    m_activeIntersectionObservers.add(&observer);
+}
+
+void Document::resumeSuspendedIntersectionObservers()
+{
+    ASSERT(isMainThread());
+    if (m_suspendedIntersectionObservers.isEmpty())
+        return;
+
+    IntersectionObserverVector suspended;
+    copyToVector(m_suspendedIntersectionObservers, suspended);
+    for (size_t i = 0; i < suspended.size(); ++i) {
+        if (!suspended[i]->shouldBeSuspended()) {
+            m_suspendedIntersectionObservers.remove(suspended[i]);
+            activateIntersectionObserver(*suspended[i]);
+        }
+    }
+}
+
+void Document::deliverIntersectionObservationsTimerFired(Timer<Document>*)
+{
+    ASSERT(isMainThread());
+    IntersectionObserverVector observers;
+    copyToVector(m_activeIntersectionObservers, observers);
+    m_activeIntersectionObservers.clear();
+    for (size_t i = 0; i < observers.size(); ++i) {
+        if (observers[i]->shouldBeSuspended())
+            m_suspendedIntersectionObservers.add(observers[i]);
+        else
+            observers[i]->deliver();
+    }
+}
+
 DEFINE_TRACE(Document)
 {
 #if ENABLE(OILPAN)
@@ -5779,6 +5821,8 @@ DEFINE_TRACE(Document)
     visitor->trace(m_compositorPendingAnimations);
     visitor->trace(m_contextDocument);
     visitor->trace(m_canvasFontCache);
+    visitor->trace(m_activeIntersectionObservers);
+    visitor->trace(m_suspendedIntersectionObservers);
     WillBeHeapSupplementable<Document>::trace(visitor);
 #endif
     TreeScope::trace(visitor);

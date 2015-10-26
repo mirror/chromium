@@ -744,6 +744,7 @@ private:
     void updateViewportIntersectionsForSubtree();
     void updateViewportIntersectionIfNeeded();
     void notifyIntersectionObservers();
+    void computeIntersectionObservations(PaintInvalidationState&);
 
     LayoutSize m_size;
 

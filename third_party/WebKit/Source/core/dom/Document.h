@@ -126,6 +126,7 @@ class HitTestRequest;
 class IdleRequestCallback;
 class IdleRequestOptions;
 class InputDeviceCapabilities;
+class IntersectionObserver;
 class LayoutPoint;
 class LiveNodeListBase;
 class Locale;
@@ -173,6 +174,8 @@ struct IconURL;
 
 using MouseEventWithHitTestResults = EventWithHitTestResults<PlatformMouseEvent>;
 using ExceptionCode = int;
+
+using IntersectionObservers = WillBeHeapListHashSet<RefPtrWillBeMember<IntersectionObserver>>;
 
 enum StyleResolverUpdateMode {
     // Discards the StyleResolver and rebuilds it.
@@ -679,6 +682,9 @@ public:
     bool hasMutationObservers() const { return m_mutationObserverTypes; }
     void addMutationObserverTypes(MutationObserverOptions types) { m_mutationObserverTypes |= types; }
 
+    void activateIntersectionObserver(IntersectionObserver&);
+    void resumeSuspendedIntersectionObservers();
+
     void updateViewportDescription();
     void processReferrerPolicy(const String& policy);
 
@@ -1066,6 +1072,8 @@ protected:
     void lockCompatibilityMode() { m_compatibilityModeLocked = true; }
     ParserSynchronizationPolicy parserSynchronizationPolicy() const { return m_parserSyncPolicy; }
 
+    void deliverIntersectionObservationsTimerFired(Timer<Document>*);
+
 private:
     friend class IgnoreDestructiveWriteCountIncrementer;
     friend class NthIndexCache;
@@ -1329,6 +1337,10 @@ private:
     int m_loadEventDelayCount;
     Timer<Document> m_loadEventDelayTimer;
     Timer<Document> m_pluginLoadingTimer;
+
+    Timer<Document> m_deliverIntersectionObservationsTimer;
+    IntersectionObservers m_activeIntersectionObservers;
+    IntersectionObservers m_suspendedIntersectionObservers;
 
     ViewportDescription m_viewportDescription;
     ViewportDescription m_legacyViewportDescription;

@@ -662,6 +662,8 @@ public:
 
     bool isFinishedParsingChildren() const { return getFlag(IsFinishedParsingChildrenFlag); }
 
+    virtual bool hasIntersectionObserver() const { return false; }
+
     DECLARE_VIRTUAL_TRACE();
 
     unsigned lengthOfContents() const;

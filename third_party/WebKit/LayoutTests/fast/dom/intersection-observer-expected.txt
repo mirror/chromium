@@ -1,0 +1,20 @@
+This tests that IntersectionObserver gets called the right number of times.
+
+On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
+
+
+PASS entries[0].time is 0
+PASS a.bounds.top is b.bounds.top
+PASS a.bounds.right is b.bounds.right
+PASS a.bounds.bottom is b.bounds.bottom
+PASS a.bounds.left is b.bounds.left
+PASS a.intersection.top is b.intersection.top
+PASS a.intersection.right is b.intersection.right
+PASS a.intersection.bottom is b.intersection.bottom
+PASS a.intersection.left is b.intersection.left
+PASS a.rootBounds.top is b.rootBounds.top
+PASS a.rootBounds.right is b.rootBounds.right
+PASS a.rootBounds.bottom is b.rootBounds.bottom
+PASS a.rootBounds.left is b.rootBounds.left
+PASS entries[0].target is expectedEntries[0].target
+

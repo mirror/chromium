@@ -2689,6 +2689,12 @@ interface ImageData
 interface InputDeviceCapabilities
     getter firesTouchEvents
     method constructor
+interface IntersectionObserverEntry
+    getter quads
+    getter target
+    getter time
+    getter viewport
+    method constructor
 interface KeyboardEvent
     attribute DOM_KEY_LOCATION_LEFT
     attribute DOM_KEY_LOCATION_NUMPAD

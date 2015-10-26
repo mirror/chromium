@@ -1108,6 +1108,27 @@ void FrameView::invalidateTreeIfNeeded(PaintInvalidationState& paintInvalidation
 
     m_doFullPaintInvalidation = false;
     lifecycle().advanceTo(DocumentLifecycle::PaintInvalidationClean);
+
+    if (RuntimeEnabledFeatures::intersectionObserverEnabled()) {
+        computeIntersectionObservations(paintInvalidationState);
+    }
+}
+
+void FrameView::computeIntersectionObservations(PaintInvalidationState& paintInvalidationState)
+{
+    ASSERT(layoutView());
+
+    if (FrameView* parent = parentFrameView()) {
+        m_viewportIntersection = IntRect(frameRect().location(), paintInvalidationState.clipRect().pixelSnappedSize());
+        m_viewportIntersection = parent->contentsToRootFrame(m_viewportIntersection);
+        m_viewportIntersection.intersect(parent->contentsToRootFrame(parent->m_viewportIntersection));
+        if (!m_viewportIntersection.isEmpty())
+            m_viewportIntersection = rootFrameToContents(m_viewportIntersection);
+    } else {
+        m_viewportIntersection = pixelSnappedIntRect(paintInvalidationState.clipRect());
+    }
+
+    layoutView()->computeIntersectionObservations(FloatRect(m_viewportIntersection));
 }
 
 DocumentLifecycle& FrameView::lifecycle() const

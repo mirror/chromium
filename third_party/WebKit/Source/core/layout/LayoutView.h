@@ -40,6 +40,8 @@ class FrameView;
 class PaintLayerCompositor;
 class LayoutQuote;
 
+using IntersectionObserverTargetMap = HashMap<LayoutObject*, FloatRect>;
+
 // LayoutView is the root of the layout tree and the Document's LayoutObject.
 //
 // It corresponds to the CSS concept of 'initial containing block' (or ICB).
@@ -199,6 +201,10 @@ public:
     // TODO(skobes): This is not quite the ideal behavior, see http://crbug.com/250514 and http://crbug.com/249860.
     bool shouldPlaceBlockDirectionScrollbarOnLogicalLeft() const override { return false; }
 
+    void addIntersectionObserverTarget(LayoutObject*);
+    void removeIntersectionObserverTarget(LayoutObject*);
+    void computeIntersectionObservations(const FloatRect&);
+
 private:
     void mapLocalToContainer(const LayoutBoxModelObject* paintInvalidationContainer, TransformState&, MapCoordinatesFlags = ApplyContainerFlip, bool* wasFixed = nullptr, const PaintInvalidationState* = nullptr) const override;
 
@@ -261,6 +267,8 @@ private:
     unsigned m_hitTestCount;
     unsigned m_hitTestCacheHits;
     OwnPtrWillBePersistent<HitTestCache> m_hitTestCache;
+
+    IntersectionObserverTargetMap m_intersectionObserverTargets;
 };
 
 DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutView, isLayoutView());

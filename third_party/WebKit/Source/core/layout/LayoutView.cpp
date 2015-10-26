@@ -23,6 +23,7 @@
 
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
+#include "core/dom/IntersectionObserver.h"
 #include "core/editing/FrameSelection.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
@@ -945,6 +946,37 @@ void LayoutView::willBeDestroyed()
 {
     LayoutBlockFlow::willBeDestroyed();
     m_compositor.clear();
+}
+
+void LayoutView::addIntersectionObserverTarget(LayoutObject* obj)
+{
+    m_intersectionObserverTargets.add(obj, IntRect());
+}
+
+void LayoutView::removeIntersectionObserverTarget(LayoutObject* obj)
+{
+    m_intersectionObserverTargets.remove(obj);
+}
+
+void LayoutView::computeIntersectionObservations(const FloatRect& rootBounds)
+{
+    for (auto& obj : m_intersectionObserverTargets) {
+        LayoutObject* layoutObject = obj.key;
+        Node* node = layoutObject->node();
+        if (!node || !node->isElementNode())
+            continue;
+        FloatRect bounds = layoutObject->absoluteBoundingBoxFloatRect();
+        FloatRect intersection(bounds);
+        intersection.intersect(rootBounds);
+        const FloatRect& oldIntersection = obj.value;
+        if (oldIntersection == intersection)
+            continue;
+        obj.value = intersection;
+        Element* element = toElement(node);
+        for (auto& observer : element->intersectionObservers()) {
+            observer->enqueueIntersectionObserverEntry(IntersectionObserverEntry::create(0, bounds, rootBounds, intersection, element));
+        }
+    }
 }
 
 } // namespace blink

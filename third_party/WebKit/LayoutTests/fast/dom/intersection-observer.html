@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<script src="../../resources/js-test.js"></script>
+
+<div id="top_div" style="background-color:blue;position:absolute; top:50px; left:20px; width:600px; height:800px">
+</div>
+
+<div id="target_div"  style="background-color:red;position:absolute; top:855px; left:66px; width:300px; height:250px">
+</div>
+
+<script>
+window.jsTestIsAsync = true;
+
+var entries = [];
+var expectedEntries = [
+    {
+        time:'mark',
+        boundingClientRect:{top:855, right:366, bottom: 1105, left: 66},
+        intersectionRect:{top:855, right:366, bottom: 1000, left: 66},
+        rootBounds: {top:400, right:785, bottom:1000, left:0},
+        target: document.getElementById('target_div')
+    }
+];
+
+var a = {}, b = {};
+function shouldBeClientRect(name, value1, value2)
+{
+    a[name] = value1;
+    b[name] = value2;
+    shouldBe('a.'+name+'.top', 'b.'+name+'.top');
+    shouldBe('a.'+name+'.right', 'b.'+name+'.right');
+    shouldBe('a.'+name+'.bottom', 'b.'+name+'.bottom');
+    shouldBe('a.'+name+'.left', 'b.'+name+'.left');
+}
+
+function testIntersectionObserver()
+{
+    var observer = new IntersectionObserver(intersectionCallback, {});
+
+    function intersectionCallback(changes)
+    {
+        entries = entries.concat(changes);
+        if (entries.length != expectedEntries.length)
+            return;
+        shouldBe('entries[0].time', '0');
+        shouldBeClientRect('bounds', changes[0].boundingClientRect, expectedEntries[0].boundingClientRect);
+        shouldBeClientRect('intersection', changes[0].intersectionRect, expectedEntries[0].intersectionRect);
+        shouldBeClientRect('rootBounds', changes[0].rootBounds, expectedEntries[0].rootBounds);
+        shouldBe('entries[0].target', 'expectedEntries[0].target');
+        testRunner.notifyDone();
+    }
+
+    var target_div = document.getElementById('target_div');
+    observer.observe(target_div);
+    window.setTimeout(function() { window.scrollBy(0, 400); }, 0);
+}
+
+description("This tests that IntersectionObserver gets called the right number of times.");
+
+testIntersectionObserver();
+testRunner.waitUntilDone();
+</script>

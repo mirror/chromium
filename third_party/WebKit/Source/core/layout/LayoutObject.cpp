@@ -2534,6 +2534,9 @@ void LayoutObject::willBeDestroyed()
 
     if (frameView())
         setIsBackgroundAttachmentFixedObject(false);
+
+    if (view() && hasIntersectionObserver())
+        view()->removeIntersectionObserverTarget(this);
 }
 
 void LayoutObject::insertedIntoTree()
@@ -2562,6 +2565,9 @@ void LayoutObject::insertedIntoTree()
 
     if (LayoutFlowThread* flowThread = flowThreadContainingBlock())
         flowThread->flowThreadDescendantWasInserted(this);
+
+    if (view() && hasIntersectionObserver())
+        view()->addIntersectionObserverTarget(this);
 }
 
 void LayoutObject::willBeRemovedFromTree()
@@ -2591,6 +2597,9 @@ void LayoutObject::willBeRemovedFromTree()
     // Update cached boundaries in SVG layoutObjects if a child is removed.
     if (parent()->isSVG())
         parent()->setNeedsBoundariesUpdate();
+
+    if (view() && hasIntersectionObserver())
+        view()->removeIntersectionObserverTarget(this);
 }
 
 void LayoutObject::removeFromLayoutFlowThread()

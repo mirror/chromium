@@ -56,6 +56,7 @@ class ElementRareData;
 class ElementShadow;
 class ExceptionState;
 class Image;
+class IntersectionObserver;
 class IntSize;
 class Locale;
 class MutableStylePropertySet;
@@ -88,6 +89,7 @@ enum ElementFlags {
 enum class ShadowRootType;
 
 typedef WillBeHeapVector<RefPtrWillBeMember<Attr>> AttrNodeList;
+typedef WillBeHeapVector<RawPtrWillBeMember<IntersectionObserver>> IntersectionObserverList;
 
 class CORE_EXPORT Element : public ContainerNode {
     DEFINE_WRAPPERTYPEINFO();
@@ -522,6 +524,11 @@ public:
 
     SpellcheckAttributeState spellcheckAttributeState() const;
 
+    void registerIntersectionObserver(IntersectionObserver*);
+    void unregisterIntersectionObserver(IntersectionObserver*);
+    bool hasIntersectionObserver() const override { return m_intersectionObservers.size() > 0; }
+    IntersectionObserverList& intersectionObservers() { return m_intersectionObservers; }
+
 protected:
     Element(const QualifiedName& tagName, Document*, ConstructionType);
 
@@ -668,6 +675,7 @@ private:
     v8::Local<v8::Object> wrapCustomElement(v8::Isolate*, v8::Local<v8::Object> creationContext);
 
     RefPtrWillBeMember<ElementData> m_elementData;
+    IntersectionObserverList m_intersectionObservers;
 };
 
 DEFINE_NODE_TYPE_CASTS(Element, isElementNode());

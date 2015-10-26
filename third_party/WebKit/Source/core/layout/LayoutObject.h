@@ -1305,6 +1305,8 @@ public:
     // Called before anonymousChild.setStyle(). Override to set custom styles for the child.
     virtual void updateAnonymousChildStyle(const LayoutObject& anonymousChild, ComputedStyle& style) const { }
 
+    bool hasIntersectionObserver() { return  m_node && m_node->hasIntersectionObserver(); }
+
     // Painters can use const methods only, except for these explicitly declared methods.
     class MutableForPainting {
     public:
