@@ -36,6 +36,7 @@
     "third_party/jsoncpp",
     "third_party/khronos",
     "third_party/lcov",
+    "third_party/libc++-static",
     "third_party/modp_b64",
     "third_party/ply",
     "third_party/pyftpdlib",
