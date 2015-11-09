@@ -56,10 +56,10 @@
     "tools/perf_expectations",
     "tools/protoc_wrapper",
     "tools/python",
-    "tools/valgrind"
+    "tools/valgrind",
     "tools/vim",
     "tools/win",
-    "tools/xdisplaycheck",
+    "tools/xdisplaycheck"
   ],
   "enabled_refglobs": [
     "refs/heads/master",
