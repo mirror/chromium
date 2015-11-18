@@ -2,6 +2,7 @@
   "enabled_paths": [
     "android_webview/glue",
     "base",
+    "base/trace_event/common",
     "breakpad",
     "build",
     "build/config",
