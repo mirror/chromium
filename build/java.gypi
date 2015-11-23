@@ -45,6 +45,8 @@
 #    These directories may be generated at build time.
 #  res_extra_files - A list of the files in res_extra_dirs.
 #  never_lint - Set to 1 to not run lint on this target.
+#
+# Touching build/java.gypi
 
 {
   'dependencies': [
