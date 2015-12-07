@@ -268,7 +268,9 @@ class NET_EXPORT_PRIVATE HttpAuthGSSAPI {
   // Delegation is allowed on the Kerberos ticket. This allows certain servers
   // to act as the user, such as an IIS server retrieving data from a
   // Kerberized MSSQL server.
-  void Delegate();
+  void AllowDelegation();
+
+  void AllowDefaultCredentialsForNTLM();
 
  private:
   int GetNextSecurityToken(const std::string& spn,

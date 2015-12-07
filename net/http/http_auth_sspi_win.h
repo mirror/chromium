@@ -153,7 +153,9 @@ class NET_EXPORT_PRIVATE HttpAuthSSPI {
   // Delegation is allowed on the Kerberos ticket. This allows certain servers
   // to act as the user, such as an IIS server retrieving data from a
   // Kerberized MSSQL server.
-  void Delegate();
+  void AllowDelegation();
+
+  void AllowDefaultCredentialsForNTLM();
 
  private:
   int OnFirstRound(const AuthCredentials* credentials);
@@ -175,6 +177,8 @@ class NET_EXPORT_PRIVATE HttpAuthSSPI {
   CredHandle cred_;
   CtxtHandle ctxt_;
   bool can_delegate_;
+  bool can_use_ntlm_with_default_credentials_;
+  bool can_use_ntlm_with_explicit_credentials_;
 };
 
 // Splits |combined| into domain and username.

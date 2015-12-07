@@ -206,7 +206,7 @@ bool HttpAuthHandlerNegotiate::AllowsDefaultCredentials() {
     return true;
   if (!http_auth_preferences_)
     return false;
-  return http_auth_preferences_->CanUseDefaultCredentials(origin_);
+  return http_auth_preferences_->CanUseAmbientCredentialsForNegotiate(origin_);
 }
 
 bool HttpAuthHandlerNegotiate::AllowsExplicitCredentials() {
@@ -230,7 +230,9 @@ bool HttpAuthHandlerNegotiate::Init(HttpAuthChallengeTokenizer* challenge,
     return false;
 #endif
   if (CanDelegate())
-    auth_system_.Delegate();
+    auth_system_.AllowDelegation();
+  if (url_security_manager_->CanUseAmbientCredentialsForNTLM(origin_))
+    auth_system_.AllowDefaultCredentialsForNTLM();
   auth_scheme_ = HttpAuth::AUTH_SCHEME_NEGOTIATE;
   score_ = 4;
   properties_ = ENCRYPTS_IDENTITY | IS_CONNECTION_BASED;

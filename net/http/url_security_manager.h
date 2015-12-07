@@ -20,8 +20,17 @@ class HttpAuthFilter;
 // regarding URL actions (e.g., sending the default credentials to a server).
 class NET_EXPORT_PRIVATE URLSecurityManager {
  public:
-  URLSecurityManager() {}
-  virtual ~URLSecurityManager() {}
+  URLSecurityManager();
+  virtual ~URLSecurityManager();
+
+  enum NTLMCredentialsUsePolicy {
+    DISALLOW_NTLM,  // NTLM shouldn't be used either with explicit or ambient
+                    // credentials.
+    ALLOW_EXPLICIT_CREDENTIALS_WITH_NTLM,  // Only use NTLM with explicit
+                                           // credentials.
+    ALLOW_AMBIENT_CREDENTIALS_WITH_NTLM  // Ambient and explicit credentials can
+                                         // be used with NTLM.
+  };
 
   // Creates a platform-dependent instance of URLSecurityManager.
   //
@@ -43,9 +52,23 @@ class NET_EXPORT_PRIVATE URLSecurityManager {
   //
   static std::unique_ptr<URLSecurityManager> Create();
 
+  // Return true if NTLM is allowed to be used with explicit (user supplied)
+  // credentials when authenticating with |auth_origin|.
+  virtual bool CanUseExplicitCredentialsForNTLM(
+      const GURL& auth_origin) const = 0;
+
+  // Returns true if NTLM is allowed to be used with ambient credentials when
+  // authenticating with |auth_origin|.
+  virtual bool CanUseAmbientCredentialsForNTLM(
+      const GURL& auth_origin) const = 0;
+
   // Returns true if we can send the default credentials to the server at
-  // |auth_origin| for HTTP NTLM or Negotiate authentication.
-  virtual bool CanUseDefaultCredentials(const GURL& auth_origin) const = 0;
+  // |auth_origin| for HTTP Negotiate authentication. Note that Negotiate may
+  // involve NTLM authentication as well. The result of calling
+  // CanUseAmbientCredentialsForNTLM() governs whether SPNEGO is allowed to
+  // negotiate NTLM.
+  virtual bool CanUseAmbientCredentialsForNegotiate(
+      const GURL& auth_origin) const = 0;
 
   // Returns true if Kerberos delegation is allowed for the server at
   // |auth_origin| for HTTP Negotiate authentication.
@@ -65,8 +88,11 @@ class URLSecurityManagerWhitelist : public URLSecurityManager {
   URLSecurityManagerWhitelist();
   ~URLSecurityManagerWhitelist() override;
 
-  // URLSecurityManager methods.
-  bool CanUseDefaultCredentials(const GURL& auth_origin) const override;
+  // URLSecurityManager
+  bool CanUseExplicitCredentialsForNTLM(const GURL& auth_origin) const override;
+  bool CanUseAmbientCredentialsForNTLM(const GURL& auth_origin) const override;
+  bool CanUseAmbientCredentialsForNegotiate(
+      const GURL& auth_origin) const override;
   bool CanDelegate(const GURL& auth_origin) const override;
   void SetDefaultWhitelist(
       std::unique_ptr<HttpAuthFilter> whitelist_default) override;
@@ -79,6 +105,7 @@ class URLSecurityManagerWhitelist : public URLSecurityManager {
  private:
   std::unique_ptr<const HttpAuthFilter> whitelist_default_;
   std::unique_ptr<const HttpAuthFilter> whitelist_delegate_;
+  NTLMCredentialsUsePolicy ntlm_credentials_policy_;
 
   DISALLOW_COPY_AND_ASSIGN(URLSecurityManagerWhitelist);
 };

@@ -17,7 +17,6 @@ namespace {
 
 struct TestData {
   const char* const url;
-  bool succeds_in_windows_default;
   bool succeeds_in_whitelist;
 };
 
@@ -29,71 +28,82 @@ const char kTestAuthWhitelist[] = "*example.com,*foobar.com,baz";
 // In Posix systems (or on Windows if a whitelist is specified explicitly),
 // everything depends on the whitelist.
 const TestData kTestDataList[] = {
-  { "http://localhost", true, false },
-  { "http://bat", true, false },
-  { "http://www.example.com", false, true },
-  { "http://example.com", false, true },
-  { "http://foobar.com", false, true },
-  { "http://boo.foobar.com", false, true },
-  { "http://baz", true, true },
-  { "http://www.exampl.com", false, false },
-  { "http://example.org", false, false },
-  { "http://foobar.net", false, false },
-  { "http://boo.fubar.com", false, false },
+    {"http://localhost", false},
+    {"http://bat", false},
+    {"http://www.example.com", true},
+    {"http://example.com", true},
+    {"http://foobar.com", true},
+    {"http://boo.foobar.com", true},
+    {"http://baz", true},
+    {"http://www.exampl.com", false},
+    {"http://example.org", false},
+    {"http://foobar.net", false},
+    {"http://boo.fubar.com", false},
 };
 
 }  // namespace
 
-TEST(URLSecurityManager, UseDefaultCredentials) {
+TEST(URLSecurityManager, AmbientCredentialsWhitelist) {
   std::unique_ptr<HttpAuthFilter> auth_filter(
       new HttpAuthFilterWhitelist(kTestAuthWhitelist));
-  ASSERT_TRUE(auth_filter);
-  // The URL security manager takes ownership of |auth_filter|.
   std::unique_ptr<URLSecurityManager> url_security_manager(
-      URLSecurityManager::Create());
-  url_security_manager->SetDefaultWhitelist(std::move(auth_filter));
+      URLSecurityManager::Create(
+          auth_filter.Pass(), std::unique_ptr<HttpAuthFilter>(),
+          URLSecurityManager::ALLOW_AMBIENT_CREDENTIALS_WITH_NTLM));
+
+  auth_filter.reset(new HttpAuthFilterWhitelist(kTestAuthWhitelist));
+  std::unique_ptr<URLSecurityManager> url_security_manager_no_ntlm(
+      URLSecurityManager::Create(auth_filter.Pass(),
+                                 std::unique_ptr<HttpAuthFilter>(),
+                                 URLSecurityManager::DISALLOW_NTLM));
+
+  for (size_t i = 0; i < arraysize(kTestDataList); ++i) {
+    GURL gurl(kTestDataList[i].url);
+    SCOPED_TRACE(testing::Message() << "Run: " << i << " URL: '" << gurl
+                                    << "'");
+
+    EXPECT_EQ(kTestDataList[i].succeeds_in_whitelist,
+              url_security_manager->CanUseAmbientCredentialsForNegotiate(gurl));
+    EXPECT_EQ(kTestDataList[i].succeeds_in_whitelist,
+              url_security_manager->CanUseAmbientCredentialsForNTLM(gurl));
+    EXPECT_FALSE(
+        url_security_manager_no_ntlm->CanUseAmbientCredentialsForNTLM(gurl));
+  }
+}
+
+TEST(URLSecurityManager, AuthDelegateWhitelist) {
+  std::unique_ptr<HttpAuthFilter> auth_filter(
+      new HttpAuthFilterWhitelist(kTestAuthWhitelist));
+  std::unique_ptr<URLSecurityManager> url_security_manager(
+      URLSecurityManager::Create(
+          std::unique_ptr<HttpAuthFilter>(), auth_filter.Pass(),
+          URLSecurityManager::ALLOW_AMBIENT_CREDENTIALS_WITH_NTLM));
   ASSERT_TRUE(url_security_manager.get());
 
   for (size_t i = 0; i < arraysize(kTestDataList); ++i) {
     GURL gurl(kTestDataList[i].url);
-    bool can_use_default =
-        url_security_manager->CanUseDefaultCredentials(gurl);
-
-    EXPECT_EQ(kTestDataList[i].succeeds_in_whitelist, can_use_default)
+    EXPECT_EQ(kTestDataList[i].succeeds_in_whitelist,
+              url_security_manager->CanDelegate(gurl))
         << " Run: " << i << " URL: '" << gurl << "'";
   }
 }
 
-TEST(URLSecurityManager, CanDelegate) {
-  std::unique_ptr<HttpAuthFilter> auth_filter(
-      new HttpAuthFilterWhitelist(kTestAuthWhitelist));
-  ASSERT_TRUE(auth_filter);
-  // The URL security manager takes ownership of |auth_filter|.
-  std::unique_ptr<URLSecurityManager> url_security_manager(
-      URLSecurityManager::Create());
-  url_security_manager->SetDelegateWhitelist(std::move(auth_filter));
-  ASSERT_TRUE(url_security_manager.get());
+#if defined(OS_POSIX)
 
-  for (size_t i = 0; i < arraysize(kTestDataList); ++i) {
-    GURL gurl(kTestDataList[i].url);
-    bool can_delegate = url_security_manager->CanDelegate(gurl);
-    EXPECT_EQ(kTestDataList[i].succeeds_in_whitelist, can_delegate)
-        << " Run: " << i << " URL: '" << gurl << "'";
-  }
-}
-
-TEST(URLSecurityManager, CanDelegate_NoWhitelist) {
-  // Nothing can delegate in this case.
+TEST(URLSecurityManager, EmptyWhitelistst_Posix) {
   std::unique_ptr<URLSecurityManager> url_security_manager(
       URLSecurityManager::Create());
   ASSERT_TRUE(url_security_manager.get());
 
   for (size_t i = 0; i < arraysize(kTestDataList); ++i) {
     GURL gurl(kTestDataList[i].url);
-    bool can_delegate = url_security_manager->CanDelegate(gurl);
-    EXPECT_FALSE(can_delegate);
+    EXPECT_FALSE(url_security_manager->CanDelegate(gurl));
+    EXPECT_FALSE(url_security_manager->CanUseAmbientCredentialsForNTLM(gurl));
+    EXPECT_FALSE(
+        url_security_manager->CanUseAmbientCredentialsForNegotiate(gurl));
   }
 }
 
+#endif  // OS_POSIX
 
 }  // namespace net

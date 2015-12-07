@@ -10,21 +10,34 @@
 
 namespace net {
 
+URLSecurityManager::URLSecurityManager() = default;
+
+URLSecurityManager::~URLSecurityManager() = default;
+
 URLSecurityManagerWhitelist::URLSecurityManagerWhitelist() = default;
 
 URLSecurityManagerWhitelist::~URLSecurityManagerWhitelist() = default;
 
-bool URLSecurityManagerWhitelist::CanUseDefaultCredentials(
-    const GURL& auth_origin) const  {
-  if (whitelist_default_.get())
-    return whitelist_default_->IsValid(auth_origin, HttpAuth::AUTH_SERVER);
-  return false;
+bool URLSecurityManagerWhitelist::CanUseExplicitCredentialsForNTLM(
+    const GURL& auth_origin) const {
+  return ntlm_credentials_policy_ != DISALLOW_NTLM;
+}
+
+bool URLSecurityManagerWhitelist::CanUseAmbientCredentialsForNTLM(
+    const GURL& auth_origin) const {
+  return ntlm_credentials_policy_ == ALLOW_AMBIENT_CREDENTIALS_WITH_NTLM &&
+         CanUseAmbientCredentialsForNegotiate(auth_origin);
+}
+
+bool URLSecurityManagerWhitelist::CanUseAmbientCredentialsForNegotiate(
+    const GURL& auth_origin) const {
+  return whitelist_default_.get() &&
+         whitelist_default_->IsValid(auth_origin, HttpAuth::AUTH_SERVER);
 }
 
 bool URLSecurityManagerWhitelist::CanDelegate(const GURL& auth_origin) const {
-  if (whitelist_delegate_.get())
-    return whitelist_delegate_->IsValid(auth_origin, HttpAuth::AUTH_SERVER);
-  return false;
+  return whitelist_delegate_.get() &&
+         whitelist_delegate_->IsValid(auth_origin, HttpAuth::AUTH_SERVER);
 }
 
 void URLSecurityManagerWhitelist::SetDefaultWhitelist(

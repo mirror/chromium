@@ -117,11 +117,10 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerNTLM : public HttpAuthHandler {
                       ULONG max_token_length,
                       const HttpAuthPreferences* http_auth_preferences);
 #endif
-
+  // HttpAuthHandler:
   bool NeedsIdentity() override;
-
+  bool AllowsExplicitCredentials() override;
   bool AllowsDefaultCredentials() override;
-
   HttpAuth::AuthorizationResult HandleAnotherChallenge(
       HttpAuthChallengeTokenizer* challenge) override;
 

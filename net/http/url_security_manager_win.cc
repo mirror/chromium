@@ -35,6 +35,7 @@ class URLSecurityManagerWin : public URLSecurityManagerWhitelist {
   bool CanUseDefaultCredentials(const GURL& auth_origin) const override;
 
  private:
+  bool CanUseAmbientCredentials(const GURL& auth_origin) const;
   bool EnsureSystemSecurityManager();
 
   Microsoft::WRL::ComPtr<IInternetSecurityManager> security_manager_;
@@ -45,7 +46,25 @@ class URLSecurityManagerWin : public URLSecurityManagerWhitelist {
 URLSecurityManagerWin::URLSecurityManagerWin() {}
 URLSecurityManagerWin::~URLSecurityManagerWin() {}
 
-bool URLSecurityManagerWin::CanUseDefaultCredentials(
+bool URLSecurityManagerWin::CanUseExplicitCredentialsForNTLM(
+    const GURL& auth_origin) const {
+  return primary_security_manager_->CanUseExplicitCredentialsForNTLM(
+      auth_origin);
+}
+
+bool URLSecurityManagerWin::CanUseAmbientCredentialsForNTLM(
+    const GURL& auth_origin) const {
+  return primary_security_manager_->CanUseAmbientCredentialsForNTLM(
+             auth_origin) &&
+         CanUseAmbientCredentials(auth_origin);
+}
+
+bool URLSecurityManagerWin::CanUseAmbientCredentialsForNegotiate(
+    const GURL& auth_origin) const {
+  return CanUseAmbientCredentials(auth_origin);
+}
+
+bool URLSecurityManagerWin::CanUseAmbientCredentials(
     const GURL& auth_origin) const {
   if (HasDefaultWhitelist())
     return URLSecurityManagerWhitelist::CanUseDefaultCredentials(auth_origin);
@@ -55,11 +74,9 @@ bool URLSecurityManagerWin::CanUseDefaultCredentials(
   base::string16 url16 = base::ASCIIToUTF16(auth_origin.spec());
   DWORD policy = 0;
   HRESULT hr;
-  hr = security_manager_->ProcessUrlAction(url16.c_str(),
-                                           URLACTION_CREDENTIALS_USE,
-                                           reinterpret_cast<BYTE*>(&policy),
-                                           sizeof(policy), NULL, 0,
-                                           PUAF_NOUI, 0);
+  hr = internet_security_manager_->ProcessUrlAction(
+      url16.c_str(), URLACTION_CREDENTIALS_USE,
+      reinterpret_cast<BYTE*>(&policy), sizeof(policy), NULL, 0, PUAF_NOUI, 0);
   if (FAILED(hr)) {
     LOG(ERROR) << "IInternetSecurityManager::ProcessUrlAction failed: " << hr;
     return false;
@@ -83,7 +100,7 @@ bool URLSecurityManagerWin::CanUseDefaultCredentials(
       // URLZONE_INTERNET      3
       // URLZONE_UNTRUSTED     4
       DWORD zone = 0;
-      hr = security_manager_->MapUrlToZone(url16.c_str(), &zone, 0);
+      hr = internet_security_manager_->MapUrlToZone(url16.c_str(), &zone, 0);
       if (FAILED(hr)) {
         LOG(ERROR) << "IInternetSecurityManager::MapUrlToZone failed: " << hr;
         return false;
@@ -100,7 +117,12 @@ bool URLSecurityManagerWin::CanUseDefaultCredentials(
       return false;
   }
 }
-// TODO(cbentzel): Could CanDelegate use the security zone as well?
+
+bool URLSecurityManagerWin::CanDelegate(const GURL& auth_origin) const {
+  // TODO(cbentzel): Can this use the security zones as well? Apparently that's
+  // what IE does.
+  return primary_security_manager_->CanDelegate(auth_origin);
+}
 
 bool URLSecurityManagerWin::EnsureSystemSecurityManager() {
   if (!security_manager_.Get()) {

@@ -49,6 +49,10 @@ bool HttpAuthHandlerNTLM::NeedsIdentity() {
   return auth_data_.empty();
 }
 
+bool HttpAuthHandlerNTLM::AllowsExplicitCredentials() {
+  return true;
+}
+
 bool HttpAuthHandlerNTLM::AllowsDefaultCredentials() {
   // Default credentials are not supported in the portable implementation of
   // NTLM, but are supported in the SSPI implementation.
@@ -120,6 +124,9 @@ int HttpAuthHandlerNTLM::Factory::CreateAuthHandler(
     const NetLogWithSource& net_log,
     std::unique_ptr<HttpAuthHandler>* handler) {
   if (reason == CREATE_PREEMPTIVE)
+    return ERR_UNSUPPORTED_AUTH_SCHEME;
+  if (!url_security_manager() ||
+      !url_security_manager()->CanUseExplicitCredentialsForNTLM(origin))
     return ERR_UNSUPPORTED_AUTH_SCHEME;
   // TODO(cbentzel): Move towards model of parsing in the factory
   //                 method and only constructing when valid.

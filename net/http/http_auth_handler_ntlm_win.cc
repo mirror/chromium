@@ -31,12 +31,17 @@ bool HttpAuthHandlerNTLM::NeedsIdentity() {
   return auth_sspi_.NeedsIdentity();
 }
 
+bool HttpAuthHandlerNTLM::AllowsExplicitCredentials() {
+  return url_security_manager_ &&
+         url_security_manager_->CanUseExplicitCredentialsForNTLM(origin_);
+}
+
 bool HttpAuthHandlerNTLM::AllowsDefaultCredentials() {
   if (target_ == HttpAuth::AUTH_PROXY)
     return true;
   if (!http_auth_preferences_)
     return false;
-  return http_auth_preferences_->CanUseDefaultCredentials(origin_);
+  return http_auth_preferences_->CanUseAmbientCredentialsForNTLM(origin_);
 }
 
 HttpAuthHandlerNTLM::Factory::Factory()
@@ -57,6 +62,10 @@ int HttpAuthHandlerNTLM::Factory::CreateAuthHandler(
     const NetLogWithSource& net_log,
     std::unique_ptr<HttpAuthHandler>* handler) {
   if (is_unsupported_ || reason == CREATE_PREEMPTIVE)
+    return ERR_UNSUPPORTED_AUTH_SCHEME;
+  if (!url_security_manager() ||
+      !(url_security_manager()->CanUseExplicitCredentialsForNTLM(origin) &&
+        url_security_manager()->CanUseAmbientCredentialsForNTLM(origin)))
     return ERR_UNSUPPORTED_AUTH_SCHEME;
   if (max_token_length_ == 0) {
     int rv = DetermineMaxTokenLength(sspi_library_.get(), NTLMSP_NAME,

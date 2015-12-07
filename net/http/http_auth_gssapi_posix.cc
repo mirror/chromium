@@ -683,8 +683,13 @@ bool HttpAuthGSSAPI::AllowsExplicitCredentials() const {
   return false;
 }
 
-void HttpAuthGSSAPI::Delegate() {
+void HttpAuthGSSAPI::AllowDelegation() {
   can_delegate_ = true;
+}
+
+void HttpAuthGSSAPI::AllowDefaultCredentialsForNTLM() {
+  // TODO(asanka): Heimdal on Mac can attempt to use NTLM authentication with
+  // SPNEGO. If not allowing NTLM, disallow NTLM from being negotiated.
 }
 
 HttpAuth::AuthorizationResult HttpAuthGSSAPI::ParseChallenge(
