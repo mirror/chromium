@@ -239,10 +239,8 @@ public class CustomTabActivity extends ChromeActivity {
     }
 
     private void recordClientPackageName() {
-        String clientName = CustomTabsConnection.getInstance(getApplication())
+        final String packageName = CustomTabsConnection.getInstance(getApplication())
                 .getClientPackageNameForSession(mSession);
-        if (TextUtils.isEmpty(clientName)) clientName = mIntentDataProvider.getClientPackageName();
-        final String packageName = clientName;
         if (TextUtils.isEmpty(packageName) || packageName.contains(getPackageName())) return;
         ThreadUtils.runOnUiThread(new Runnable() {
             @Override
