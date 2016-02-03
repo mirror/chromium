@@ -44,6 +44,7 @@
     "third_party/sqlite",
     "third_party/tcmalloc/chromium",
     "third_party/tlslite",
+    "third_party/WebKit/Source/devtools",
     "third_party/zlib",
     "tools/android",
     "tools/clang",
