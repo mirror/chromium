@@ -7,11 +7,8 @@
 
     <org.chromium.chrome.browser.preferences.ChromeSwitchPreference
         android:key="sync_switch"
-        android:title="@string/sign_in_sync"
-        android:summary="@string/sync_description" />
-
-    <org.chromium.chrome.browser.preferences.SyncedAccountPreference
-        android:key="synced_account" />
+        android:summaryOn="@string/text_on"
+        android:summaryOff="@string/text_off" />
 
     <PreferenceCategory
         android:key="sync_data_types"

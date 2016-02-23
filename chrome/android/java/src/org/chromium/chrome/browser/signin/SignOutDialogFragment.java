@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.profiles.ProfileAccountManagementMetrics;
 
 /**
  * Shows the dialog that explains the user the consequences of signing out of Chrome.
@@ -19,11 +18,6 @@ import org.chromium.chrome.browser.profiles.ProfileAccountManagementMetrics;
  */
 public class SignOutDialogFragment extends DialogFragment implements
         DialogInterface.OnClickListener {
-    /**
-     * The extra key used to specify the GAIA service that triggered this dialog.
-     */
-    public static final String SHOW_GAIA_SERVICE_TYPE_EXTRA = "ShowGAIAServiceType";
-
     /**
      * Receives updates when the user clicks "Sign out" or dismisses the dialog.
      */
@@ -44,20 +38,8 @@ public class SignOutDialogFragment extends DialogFragment implements
 
     private boolean mSignOutClicked;
 
-    /**
-     * The GAIA service that's prompted this dialog. Values can be any constant in
-     * signin::GAIAServiceType
-     */
-    private int mGaiaServiceType;
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        mGaiaServiceType = AccountManagementScreenHelper.GAIA_SERVICE_TYPE_NONE;
-        if (getArguments() != null) {
-            mGaiaServiceType = getArguments().getInt(
-                    SHOW_GAIA_SERVICE_TYPE_EXTRA, mGaiaServiceType);
-        }
-
         String managementDomain = SigninManager.get(getActivity()).getManagementDomain();
         String message;
         if (managementDomain == null) {
@@ -69,7 +51,7 @@ public class SignOutDialogFragment extends DialogFragment implements
 
         return new AlertDialog.Builder(getActivity(), R.style.AlertDialogTheme)
                 .setTitle(R.string.signout_title)
-                .setPositiveButton(R.string.signout_dialog_positive_button, this)
+                .setPositiveButton(R.string.ok, this)
                 .setNegativeButton(R.string.cancel, this)
                 .setMessage(message)
                 .create();
@@ -78,9 +60,6 @@ public class SignOutDialogFragment extends DialogFragment implements
     @Override
     public void onClick(DialogInterface dialog, int which) {
         if (which == AlertDialog.BUTTON_POSITIVE) {
-            AccountManagementScreenHelper.logEvent(
-                    ProfileAccountManagementMetrics.SIGNOUT_SIGNOUT, mGaiaServiceType);
-
             mSignOutClicked = true;
             SignOutDialogListener targetFragment = (SignOutDialogListener) getTargetFragment();
             targetFragment.onSignOutClicked();
@@ -90,9 +69,6 @@ public class SignOutDialogFragment extends DialogFragment implements
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        AccountManagementScreenHelper.logEvent(
-                ProfileAccountManagementMetrics.SIGNOUT_CANCEL, mGaiaServiceType);
-
         SignOutDialogListener targetFragment = (SignOutDialogListener) getTargetFragment();
         targetFragment.onSignOutDialogDismissed(mSignOutClicked);
     }
