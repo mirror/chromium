@@ -135,8 +135,6 @@ public class NewTabPage
     // Whether destroy() has been called.
     private boolean mIsDestroyed;
 
-    private boolean mIsTablet;
-
     /**
      * Allows clients to listen for updates to the scroll changes of the search box on the
      * NTP.
@@ -582,8 +580,6 @@ public class NewTabPage
         mNewTabPageView.initialize(mNewTabPageManager, isInSingleUrlBarMode(activity),
                 mSearchProviderHasLogo);
 
-        mIsTablet = DeviceFormFactor.isTablet(activity);
-
         RecordHistogram.recordBooleanHistogram(
                 "NewTabPage.MobileIsUserOnline", NetworkChangeNotifier.isOnline());
     }
@@ -633,7 +629,7 @@ public class NewTabPage
     }
 
     private boolean isInSingleUrlBarMode(Context context) {
-        if (mIsTablet) return false;
+        if (DeviceFormFactor.isTablet(context)) return false;
         if (mOptOutPromoShown) return false;
 
         return mSearchProviderHasLogo;
