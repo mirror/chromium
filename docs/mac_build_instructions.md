@@ -143,16 +143,28 @@ With hybrid builds, compilation is still handled by ninja, and can be run by the
 command line (e.g. ninja -C out/Debug chrome) or by choosing the chrome target
 in the hybrid workspace and choosing build.
 
-To use Xcode-Ninja Hybrid, set `GYP_GENERATORS=ninja,xcode-ninja`.
+To use Xcode-Ninja Hybrid, set GYP\_GENERATORS like the following:
+```
+$ export GYP_GENERATORS="ninja,xcode-ninja"
+```
 
 Due to the way Xcode parses ninja output paths, it's also necessary to change
 the main gyp location to anything two directories deep. Otherwise Xcode build
-output will not be clickable. Adding
-`xcode_ninja_main_gyp=src/build/ninja/all.ninja.gyp` to your
-`GYP_GENERATOR_FLAGS` will fix this.
+output will not be clickable. Exporting your GYP\_GENERATOR\_FLAGS like the
+following will fix it:
+```
+$ export GYP_GENERATOR_FLAGS="xcode_ninja_main_gyp=src/build/ninja/all.ninja.gyp"
+```
 
-After generating the project files with gclient runhooks, open
-`src/build/ninja/all.ninja.xcworkspace`.
+After, generate the project files with:
+```
+$ gclient runhooks
+```
+
+And finally, open it:
+```
+$ open build/ninja/all.ninja.xcworkspace
+```
 
 You may run into a problem where http://YES is opened as a new tab every time
 you launch Chrome. To fix this, open the scheme editor for the Run scheme,
