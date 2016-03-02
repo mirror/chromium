@@ -225,6 +225,8 @@
         'browser/browsing_data/ios_chrome_browsing_data_remover.h',
         'browser/browsing_data/ios_chrome_browsing_data_remover.mm',
         'browser/browsing_data_change_listening.h',
+        'browser/browsing_data_remover_helper.cc',
+        'browser/browsing_data_remover_helper.h',
         'browser/chrome_constants.cc',
         'browser/chrome_constants.h',
         'browser/chrome_paths.h',

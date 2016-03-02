@@ -86,6 +86,8 @@ source_set("browser") {
     "browser_state_metrics/browser_state_metrics.cc",
     "browser_state_metrics/browser_state_metrics.h",
     "browsing_data_change_listening.h",
+    "browsing_data_remover_helper.cc",
+    "browsing_data_remover_helper.h",
     "chrome_constants.cc",
     "chrome_constants.h",
     "chrome_paths.h",
