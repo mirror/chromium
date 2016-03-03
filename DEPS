@@ -25,6 +25,7 @@
 #  # You should now have a modified DEPS file; commit and upload as normal
 #  git commit -a
 #  git cl upload
+#  TEST
 
 
 vars = {
