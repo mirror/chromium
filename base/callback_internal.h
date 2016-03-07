@@ -111,7 +111,7 @@ template <typename T> struct IsMoveOnlyType {
   static NoType Test(...);
 
   static const bool value = sizeof((Test<T>(0))) == sizeof(YesType) &&
-                            !is_const<T>::value;
+                            !std::is_const<T>::value;
 };
 
 // Specialization of IsMoveOnlyType so that std::unique_ptr is still considered

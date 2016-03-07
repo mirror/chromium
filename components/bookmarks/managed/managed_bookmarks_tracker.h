@@ -94,4 +94,3 @@ class ManagedBookmarksTracker {
 }  // namespace bookmarks
 
 #endif  // COMPONENTS_BOOKMARKS_MANAGED_MANAGED_BOOKMARKS_TRACKER_H_
-
