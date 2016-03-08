@@ -25,7 +25,7 @@
 #  # You should now have a modified DEPS file; commit and upload as normal
 #  git commit -a
 #  git cl upload
-
+#  Hello, I am a DEPS change
 
 vars = {
   # Use this googlecode_url variable only if there is an internal mirror for it.
