@@ -30,6 +30,7 @@
     "ppapi",
     "sandbox",
     "testing",
+    "testing/libfuzzer",
     "third_party",
     "third_party/binutils",
     "third_party/hwcplus",
