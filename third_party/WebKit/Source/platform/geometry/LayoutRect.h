@@ -164,6 +164,12 @@ public:
     void unite(const LayoutRect&);
     void uniteIfNonZero(const LayoutRect&);
 
+    // Unlike intersect(), this uses edge-inclusive intersections.  If the argument
+    // rect is zero-area, the intersection will be the proper zero-area intersection.
+    // The return value indicates whether this actually intersects with the argument,
+    // since checking this rect for zero-area is not sufficient.
+    bool inclusiveIntersect(const LayoutRect&);
+
     // Besides non-empty rects, this method also unites empty rects (as points or line segments).
     // For example, union of (100, 100, 0x0) and (200, 200, 50x0) is (100, 100, 150x100).
     void uniteEvenIfEmpty(const LayoutRect&);

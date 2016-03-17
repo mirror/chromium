@@ -62,7 +62,7 @@ void IntersectionObservation::initializeRootRect(LayoutRect& rect) const
     applyRootMargin(rect);
 }
 
-void IntersectionObservation::clipToRoot(LayoutRect& rect, const LayoutRect& rootRect) const
+bool IntersectionObservation::clipToRoot(LayoutRect& rect, const LayoutRect& rootRect) const
 {
     // Map and clip rect into root element coordinates.
     // TODO(szager): the writing mode flipping needs a test.
@@ -73,7 +73,7 @@ void IntersectionObservation::clipToRoot(LayoutRect& rect, const LayoutRect& roo
     targetLayoutObject->mapToVisibleRectInAncestorSpace(toLayoutBoxModelObject(rootLayoutObject), rect, nullptr);
     LayoutRect rootClipRect(rootRect);
     toLayoutBox(rootLayoutObject)->flipForWritingMode(rootClipRect);
-    rect.intersect(rootClipRect);
+    return rect.inclusiveIntersect(rootClipRect);
 }
 
 static void mapRectUpToDocument(LayoutRect& rect, const LayoutObject& layoutObject, const Document& document)
@@ -167,8 +167,7 @@ bool IntersectionObservation::computeGeometry(IntersectionGeometry& geometry) co
     initializeTargetRect(geometry.targetRect);
     geometry.intersectionRect = geometry.targetRect;
     initializeRootRect(geometry.rootRect);
-
-    clipToRoot(geometry.intersectionRect, geometry.rootRect);
+    geometry.doesIntersect = clipToRoot(geometry.intersectionRect, geometry.rootRect);
 
     // TODO(szager): there are some simple optimizations that can be done here:
     //   - Don't transform rootRect if it's not going to be reported
