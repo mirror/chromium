@@ -62,7 +62,7 @@ typedef void (^SSLErrorCallback)(BOOL);
 - (void)openURLWithParams:(const web::WebState::OpenURLParams&)params;
 // Called when a link to an external app needs to be opened. Returns YES iff
 // |url| is launched in an external app.
-- (BOOL)openExternalURL:(const GURL&)url;
+- (BOOL)openExternalURL:(const GURL&)url linkClicked:(BOOL)linkClicked;
 
 // This method is called when a network request has an issue with the SSL
 // connection to present it to the user. The user will decide if the request
@@ -173,7 +173,8 @@ typedef void (^SSLErrorCallback)(BOOL);
 // provide a hook/API to steal a URL navigation. That way the logic to determine
 // a URL as triggering a native app launch can also be moved.
 - (BOOL)urlTriggersNativeAppLaunch:(const GURL&)url
-                         sourceURL:(const GURL&)sourceURL;
+                         sourceURL:(const GURL&)sourceURL
+                       linkClicked:(BOOL)linkClicked;
 
 // Called to ask the delegate for a controller to display the given url,
 // which contained content that the UIWebView couldn't display. Returns
