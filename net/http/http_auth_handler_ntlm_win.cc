@@ -12,6 +12,7 @@
 #include "base/strings/string_util.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_auth_preferences.h"
+#include "net/http/http_auth_challenge_tokenizer.h"
 #include "net/http/http_auth_sspi_win.h"
 
 namespace net {
@@ -36,6 +37,32 @@ bool HttpAuthHandlerNTLM::AllowsDefaultCredentials() {
   if (!http_auth_preferences_)
     return false;
   return http_auth_preferences_->CanUseDefaultCredentials(origin_);
+}
+
+int HttpAuthHandlerNTLM::GenerateAuthTokenImpl(
+    const AuthCredentials* credentials,
+    const HttpRequestInfo& request,
+    const CompletionCallback& callback,
+    std::string* auth_token) {
+  return auth_sspi_.GenerateAuthToken(credentials, CreateSPN(origin_),
+                                      auth_token, callback);
+}
+
+// static
+std::string HttpAuthHandlerNTLM::CreateSPN(const GURL& origin) {
+  // The service principal name of the destination server.  See
+  // http://msdn.microsoft.com/en-us/library/ms677949%28VS.85%29.aspx
+  std::string target("HTTP/");
+  target.append(GetHostAndPort(origin));
+  return target;
+}
+
+HttpAuth::AuthorizationResult HttpAuthHandlerNTLM::ParseChallenge(
+    const HttpAuthChallengeTokenizer& tok,
+    bool initial_challenge) {
+  DCHECK(tok.SchemeIs("ntlm"));
+  // auth_sspi_ contains state for whether or not this is the initial challenge.
+  return auth_sspi_.ParseChallenge(tok);
 }
 
 HttpAuthHandlerNTLM::Factory::Factory()

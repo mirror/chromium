@@ -5,7 +5,6 @@
 #include "net/http/http_auth_handler_ntlm.h"
 
 #if !defined(NTLM_SSPI)
-#include "base/base64.h"
 #endif
 #include "base/logging.h"
 #include "base/strings/string_util.h"

@@ -656,14 +656,8 @@ ScopedSecurityContext::~ScopedSecurityContext() {
   }
 }
 
-HttpAuthGSSAPI::HttpAuthGSSAPI(GSSAPILibrary* library,
-                               const std::string& scheme,
-                               gss_OID gss_oid)
-    : scheme_(scheme),
-      gss_oid_(gss_oid),
-      library_(library),
-      scoped_sec_context_(library),
-      can_delegate_(false) {
+HttpAuthGSSAPI::HttpAuthGSSAPI(GSSAPILibrary* library)
+    : library_(library), scoped_sec_context_(library), can_delegate_(false) {
   DCHECK(library_);
 }
 
@@ -706,10 +700,10 @@ void HttpAuthGSSAPI::Delegate() {
 HttpAuth::AuthorizationResult HttpAuthGSSAPI::ParseChallenge(
     const HttpAuthChallengeTokenizer& tok) {
   if (scoped_sec_context_.get() == GSS_C_NO_CONTEXT) {
-    return ParseFirstRoundChallenge(scheme_, tok);
+    return ParseFirstRoundChallenge("Negotiate", tok);
   }
   std::string encoded_auth_token;
-  return ParseLaterRoundChallenge(scheme_, tok, &encoded_auth_token,
+  return ParseLaterRoundChallenge("Negotiate", tok, &encoded_auth_token,
                                   &decoded_server_auth_token_);
 }
 
@@ -737,7 +731,7 @@ int HttpAuthGSSAPI::GenerateAuthToken(const AuthCredentials* credentials,
                            output_token.length);
   std::string encode_output;
   base::Base64Encode(encode_input, &encode_output);
-  *auth_token = scheme_ + " " + encode_output;
+  *auth_token = "Negotiate " + encode_output;
   return OK;
 }
 
@@ -867,8 +861,8 @@ int HttpAuthGSSAPI::GetNextSecurityToken(const std::string& spn,
     req_flags |= GSS_C_DELEG_FLAG;
   major_status = library_->init_sec_context(
       &minor_status, GSS_C_NO_CREDENTIAL, scoped_sec_context_.receive(),
-      principal_name, gss_oid_, req_flags, GSS_C_INDEFINITE,
-      GSS_C_NO_CHANNEL_BINDINGS, in_token,
+      principal_name, CHROME_GSS_SPNEGO_MECH_OID_DESC, req_flags,
+      GSS_C_INDEFINITE, GSS_C_NO_CHANNEL_BINDINGS, in_token,
       nullptr,  // actual_mech_type
       out_token,
       nullptr,  // ret flags

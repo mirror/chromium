@@ -25,6 +25,14 @@ namespace net {
 
 class HttpAuthChallengeTokenizer;
 
+
+// TODO(asanka): Going here. We need to determine the max size of the token and
+// store it somewhere. The Factory would be great, but we don't want to make the
+// factory platform dependent. On the other hand, making the library be aware of
+// its scheme specificity would allow us to store the token size here. Maybe we
+// need a platform auth state for the scheme so that we can keep state about
+// initialization failures etc..
+
 // SSPILibrary is introduced so unit tests can mock the calls to Windows' SSPI
 // implementation. The default implementation simply passes the arguments on to
 // the SSPI implementation provided by Secur32.dll.
@@ -34,6 +42,8 @@ class HttpAuthChallengeTokenizer;
 class SSPILibrary {
  public:
   virtual ~SSPILibrary() {}
+
+  bool InitForPackage(LPWSTR pszPackage) = 0;
 
   virtual SECURITY_STATUS AcquireCredentialsHandle(LPWSTR pszPrincipal,
                                                    LPWSTR pszPackage,
@@ -72,6 +82,8 @@ class SSPILibraryDefault : public SSPILibrary {
  public:
   SSPILibraryDefault() {}
   ~SSPILibraryDefault() override {}
+
+  bool InitForPackage(LPWSTR pszPackage) override;
 
   SECURITY_STATUS AcquireCredentialsHandle(LPWSTR pszPrincipal,
                                            LPWSTR pszPackage,
@@ -113,6 +125,8 @@ class NET_EXPORT_PRIVATE HttpAuthSSPI {
                const SEC_WCHAR* security_package,
                ULONG max_token_length);
   ~HttpAuthSSPI();
+
+  bool Init();
 
   bool NeedsIdentity() const;
 
@@ -171,7 +185,6 @@ class NET_EXPORT_PRIVATE HttpAuthSSPI {
   std::string scheme_;
   const SEC_WCHAR* security_package_;
   std::string decoded_server_auth_token_;
-  ULONG max_token_length_;
   CredHandle cred_;
   CtxtHandle ctxt_;
   bool can_delegate_;
@@ -204,6 +217,13 @@ NET_EXPORT_PRIVATE void SplitDomainAndUser(const base::string16& combined,
 NET_EXPORT_PRIVATE int DetermineMaxTokenLength(SSPILibrary* library,
                                                const std::wstring& package,
                                                ULONG* max_token_length);
+
+using HttpAuthNegotiateLibrary = SSPILibrary;
+
+class HttpAuthNegotiateAuthSystem : public HttpAuthSSPI {
+ public:
+  explicit HttpAuthNegotiateAuthSystem(HttpAuthNegotiateLibrary* auth_library);
+};
 
 }  // namespace net
 

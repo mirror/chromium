@@ -134,6 +134,12 @@ class NET_EXPORT_PRIVATE HttpAuthNegotiateAndroid {
 };
 
 }  // namespace android
+
+// For Android this isn't a library, but for the Android Account type, which
+// indirectly identifies the Kerberos/SPNEGO authentication app.
+using HttpAuthNegotiateLibrary = std::string;
+using HttpAuthNegotiateAuthSystem = android::HttpAuthNegotiateAndroid;
+
 }  // namespace net
 
 #endif  // NET_ANDROID_HTTP_AUTH_NEGOTIATE_ANDROID_H_

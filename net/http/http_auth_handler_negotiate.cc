@@ -22,8 +22,6 @@
 #include "net/log/net_log_event_type.h"
 #include "net/ssl/ssl_info.h"
 
-// TODO(asanka): This file is a mess of platform dependent code. We should break
-// it up.
 namespace net {
 
 namespace {
@@ -51,8 +49,7 @@ HttpAuthHandlerNegotiate::Factory::Factory()
       is_unsupported_(false) {
 }
 
-HttpAuthHandlerNegotiate::Factory::~Factory() {
-}
+HttpAuthHandlerNegotiate::Factory::~Factory() {}
 
 void HttpAuthHandlerNegotiate::Factory::set_host_resolver(
     HostResolver* resolver) {
@@ -136,8 +133,7 @@ HttpAuthHandlerNegotiate::HttpAuthHandlerNegotiate(
       http_auth_preferences_(prefs) {
 }
 
-HttpAuthHandlerNegotiate::~HttpAuthHandlerNegotiate() {
-}
+HttpAuthHandlerNegotiate::~HttpAuthHandlerNegotiate() {}
 
 std::string HttpAuthHandlerNegotiate::CreateSPN(const AddressList& address_list,
                                                 const GURL& origin) {
@@ -217,18 +213,11 @@ int HttpAuthHandlerNegotiate::InitializeFromChallengeInternal(
     const HttpAuthChallengeTokenizer& challenge,
     const HttpResponseInfo& response_with_challenge,
     const CompletionCallback& callback) {
-#if defined(OS_POSIX)
-  if (!auth_system_.Init()) {
-    VLOG(1) << "can't initialize GSSAPI library";
+  if (!auth_system_.Init())
     return ERR_UNSUPPORTED_AUTH_SCHEME;
-  }
-  // GSSAPI does not provide a way to enter username/password to
-  // obtain a TGT. If the default credentials are not allowed for
-  // a particular site (based on whitelist), fall back to a
-  // different scheme.
-  if (!AllowsDefaultCredentials())
+  if (!AllowsDefaultCredentials() && !AllowsExplicitCredentials())
     return ERR_UNSUPPORTED_AUTH_SCHEME;
-#endif
+
   if (CanDelegate())
     auth_system_.Delegate();
   auth_scheme_ = "negotiate";

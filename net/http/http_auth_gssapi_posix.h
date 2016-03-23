@@ -233,9 +233,7 @@ class ScopedSecurityContext {
 // TODO(ahendrickson): Share code with HttpAuthSSPI.
 class NET_EXPORT_PRIVATE HttpAuthGSSAPI {
  public:
-  HttpAuthGSSAPI(GSSAPILibrary* library,
-                 const std::string& scheme,
-                 const gss_OID gss_oid);
+  explicit HttpAuthGSSAPI(GSSAPILibrary* library);
   ~HttpAuthGSSAPI();
 
   bool Init();
@@ -287,13 +285,14 @@ class NET_EXPORT_PRIVATE HttpAuthGSSAPI {
                            gss_buffer_t in_token,
                            gss_buffer_t out_token);
 
-  std::string scheme_;
-  gss_OID gss_oid_;
   GSSAPILibrary* library_;
   std::string decoded_server_auth_token_;
   ScopedSecurityContext scoped_sec_context_;
   bool can_delegate_;
 };
+
+using HttpAuthNegotiateLibrary = GSSAPILibrary;
+using HttpAuthNegotiateAuthSystem = HttpAuthGSSAPI;
 
 }  // namespace net
 

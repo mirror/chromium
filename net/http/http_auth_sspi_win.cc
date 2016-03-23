@@ -185,6 +185,10 @@ int MapFreeContextBufferStatusToError(SECURITY_STATUS status) {
 
 }  // anonymous namespace
 
+bool SSPILibraryDefault::Init() {
+  return true;
+}
+
 SECURITY_STATUS SSPILibraryDefault::AcquireCredentialsHandle(
     LPWSTR pszPrincipal,
     LPWSTR pszPackage,
@@ -239,14 +243,15 @@ SECURITY_STATUS SSPILibraryDefault::FreeContextBuffer(PVOID pvContextBuffer) {
   return ::FreeContextBuffer(pvContextBuffer);
 }
 
+HttpAuthNegotiateAuthSystem::HttpAuthNegotiateAuthSystem(SSPILibrary* auth_library)
+  : HttpAuthSSPI(auth_library, "Negotiate", NEGOSSP_NAME) {}
+
 HttpAuthSSPI::HttpAuthSSPI(SSPILibrary* library,
                            const std::string& scheme,
-                           const SEC_WCHAR* security_package,
-                           ULONG max_token_length)
+                           const SEC_WCHAR* security_package)
     : library_(library),
       scheme_(scheme),
       security_package_(security_package),
-      max_token_length_(max_token_length),
       can_delegate_(false) {
   DCHECK(library_);
   SecInvalidateHandle(&cred_);
@@ -259,6 +264,10 @@ HttpAuthSSPI::~HttpAuthSSPI() {
     library_->FreeCredentialsHandle(&cred_);
     SecInvalidateHandle(&cred_);
   }
+}
+
+bool HttpAuthSSPI::Init() {
+  return library_->Init();  
 }
 
 bool HttpAuthSSPI::NeedsIdentity() const {
