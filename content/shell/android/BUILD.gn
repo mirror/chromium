@@ -88,6 +88,7 @@ android_library("content_shell_apk_java") {
     "//media/capture/video/android:capture_java",
     "//net/android:net_java",
     "//ui/android:ui_java",
+    "//third_party/cardboard-java:cardboard-java",
   ]
   java_files = [
     "shell_apk/src/org/chromium/content_shell_apk/ContentShellActivity.java",
@@ -107,6 +108,19 @@ android_assets("content_shell_assets") {
   ]
 }
 
+action("remoting_cardboard_extract_native_lib") {
+  script = "//remoting/tools/extract_android_native_lib.py"
+  sources = [
+    "//third_party/cardboard-java/src/CardboardSample/libs/cardboard.jar",
+  ]
+  outputs = [
+    "$root_out_dir/libvrtoolkit.so",
+  ]
+  args = [ android_app_abi ]
+  args += rebase_path(sources, root_build_dir)
+  args += rebase_path(outputs, root_build_dir)
+}
+
 android_apk("content_shell_apk") {
   testonly = true
   deps = [
@@ -122,11 +136,15 @@ android_apk("content_shell_apk") {
     "//net/android:net_java",
     "//third_party/mesa:osmesa",
     "//ui/android:ui_java",
+    ":remoting_cardboard_extract_native_lib",
   ]
   apk_name = "ContentShell"
   android_manifest = content_shell_manifest
   native_libs = [ "libcontent_shell_content_view.so" ]
-  loadable_modules = [ "$root_out_dir/libosmesa.so" ]
+  loadable_modules = [
+    "$root_out_dir/libosmesa.so",
+    "$root_out_dir/libvrtoolkit.so",
+  ]
 }
 
 android_library("content_shell_test_java") {

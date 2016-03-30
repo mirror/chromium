@@ -19,21 +19,23 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application android:name="ContentShellApplication"
             android:icon="@mipmap/app_icon"
             android:label="Content Shell">
-        <activity android:name="ContentShellActivity"
-                  android:launchMode="singleTask"
-                  android:theme="@android:style/Theme.Holo.Light.NoActionBar"
-                  android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
+        <activity android:name="ContentCardboardActivity"
                   android:windowSoftInputMode="adjustResize"
-                  android:hardwareAccelerated="true">
+                  android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
+                  android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="com.google.intent.category.CARDBOARD" />
             </intent-filter>
         </activity>
+
         <!-- The following service entries exist in order to allow us to
              start more than one sandboxed process. -->
 

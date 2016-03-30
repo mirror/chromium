@@ -29,13 +29,10 @@ import org.chromium.content_shell.Shell;
 import org.chromium.content_shell.ShellManager;
 import org.chromium.ui.base.ActivityWindowAndroid;
 
-import com.google.vrtoolkit.cardboard.CardboardActivity;
-import com.google.vrtoolkit.cardboard.CardboardView;
-
 /**
  * Activity for managing the Content Shell.
  */
-public class ContentShellActivity extends CardboardActivity {
+public class ContentShellActivity extends Activity {
 
     private static final String TAG = "ContentShellActivity";
 
@@ -43,7 +40,6 @@ public class ContentShellActivity extends CardboardActivity {
     public static final String COMMAND_LINE_ARGS_KEY = "commandLineArgs";
 
     private ShellManager mShellManager;
-    private CardboardRender mRenderer;
     private ActivityWindowAndroid mWindowAndroid;
     private Intent mLastSentIntent;
 
@@ -74,11 +70,8 @@ public class ContentShellActivity extends CardboardActivity {
             return;
         }
 
-        setContentView(R.layout.content_vr_shell_activity);
+        setContentView(R.layout.content_shell_activity);
         mShellManager = (ShellManager) findViewById(R.id.shell_container);
-        CardboardView cardboardView = (CardboardView) findViewById(R.id.cardboard_view);
-        mRenderer = new CardboardRender(this);
-        cardboardView.setRenderer(mRenderer);
         final boolean listenToActivityState = true;
         mWindowAndroid = new ActivityWindowAndroid(this, listenToActivityState);
         mWindowAndroid.restoreInstanceState(savedInstanceState);

@@ -11,11 +11,16 @@ import android.opengl.GLES20;
 import android.opengl.Matrix;
 
 import com.google.vrtoolkit.cardboard.CardboardView;
+import com.google.vrtoolkit.cardboard.Eye;
+import com.google.vrtoolkit.cardboard.HeadTransform;
+import com.google.vrtoolkit.cardboard.Viewport;
+
+import javax.microedition.khronos.egl.EGLConfig;
 
 /**
  * Renderer for Cardboard view.
  */
-public class CardboardRenderer implements CardboardView.StereoRenderer {
+public class ContentCardboardRenderer implements CardboardView.StereoRenderer {
     private static final String TAG = "cr.CardboardRenderer";
 
     private static final int BYTE_PER_FLOAT = 4;
@@ -26,7 +31,7 @@ public class CardboardRenderer implements CardboardView.StereoRenderer {
 
     private final Activity mActivity;
 
-    public CardboardRenderer(Activity activity) {
+    public ContentCardboardRenderer(Activity activity) {
         mActivity = activity;
     }
 
@@ -41,12 +46,12 @@ public class CardboardRenderer implements CardboardView.StereoRenderer {
         // Enable depth testing.
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 
-        mDesktop = new Desktop(mClient);
-        mMenuBar = new MenuBar(mActivity);
-        mPhotosphere = new Photosphere(mActivity);
-        mCursor = new Cursor(mClient);
-
-        initializeRedrawCallback();
+//        mDesktop = new Desktop(mClient);
+//        mMenuBar = new MenuBar(mActivity);
+//        mPhotosphere = new Photosphere(mActivity);
+//        mCursor = new Cursor(mClient);
+//
+//        initializeRedrawCallback();
     }
 
     @Override
@@ -56,4 +61,17 @@ public class CardboardRenderer implements CardboardView.StereoRenderer {
     @Override
     public void onNewFrame(HeadTransform headTransform) {
     }
+
+    @Override
+    public void onDrawEye(Eye eye) {
+    }
+
+    @Override
+    public void onRendererShutdown() {
+    }
+
+    @Override
+    public void onFinishFrame(Viewport viewport) {
+    }
+
 }
