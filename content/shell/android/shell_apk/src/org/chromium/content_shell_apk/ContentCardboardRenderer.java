@@ -62,11 +62,11 @@ public class ContentCardboardRenderer implements CardboardView.StereoRenderer {
     // floating-point imprecision.
     private static final float EPSILON = 1e-5f;
 
-
     private final Activity mActivity;
-    private float mCameraPosition;
 
     private MenuBar mMenuBar;
+
+    private float mCameraPosition;
 
     // Lock to allow multithreaded access to mCameraPosition.
     private final Object mCameraPositionLock = new Object();

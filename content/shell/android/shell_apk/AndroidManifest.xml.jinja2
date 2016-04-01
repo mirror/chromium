@@ -25,6 +25,18 @@
     <application android:name="ContentShellApplication"
             android:icon="@mipmap/app_icon"
             android:label="Content Shell">
+        <activity android:name="ContentShellActivity"
+                  android:launchMode="singleTask"
+                  android:theme="@android:style/Theme.Holo.Light.NoActionBar"
+                  android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
+                  android:windowSoftInputMode="adjustResize"
+                  android:hardwareAccelerated="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+<!--
         <activity android:name="ContentCardboardActivity"
                   android:windowSoftInputMode="adjustResize"
                   android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
@@ -35,7 +47,7 @@
                 <category android:name="com.google.intent.category.CARDBOARD" />
             </intent-filter>
         </activity>
-
+-->
         <!-- The following service entries exist in order to allow us to
              start more than one sandboxed process. -->
 

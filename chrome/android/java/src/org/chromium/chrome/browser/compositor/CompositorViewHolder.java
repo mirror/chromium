@@ -19,7 +19,7 @@ import android.support.v4.widget.ExploreByTouchHelper;
 import android.util.AttributeSet;
 import android.util.Pair;
 import android.view.MotionEvent;
-import android.view.SurfaceView;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
@@ -385,9 +385,9 @@ public class CompositorViewHolder extends FrameLayout
     }
 
     /**
-     * @return The SurfaceView used by the Compositor.
+     * @return The TextureView used by the Compositor.
      */
-    public SurfaceView getSurfaceView() {
+    public TextureView getTextureView() {
         return mCompositorView;
     }
 
