@@ -23,6 +23,7 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityManager;
+import android.graphics.SurfaceTexture;
 
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
@@ -41,6 +42,17 @@ import java.util.LinkedList;
 @JNINamespace("ui")
 public class WindowAndroid {
     private static final String TAG = "WindowAndroid";
+
+  ////////Hack
+  static private SurfaceTexture mTextureDataHandle;
+
+  public static void setTextureHandle(SurfaceTexture handle) {
+    mTextureDataHandle = handle;
+  }
+
+  public static SurfaceTexture getTextureHandle() {
+    return mTextureDataHandle;
+  }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private class TouchExplorationMonitor {

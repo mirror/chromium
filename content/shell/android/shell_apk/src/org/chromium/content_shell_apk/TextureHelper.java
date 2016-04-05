@@ -4,6 +4,7 @@
 
 package org.chromium.content_shell_apk;
 
+import android.opengl.GLES11Ext;
 import static android.opengl.GLES20.GL_LINEAR;
 import static android.opengl.GLES20.GL_NEAREST;
 import static android.opengl.GLES20.GL_TEXTURE_2D;
@@ -35,7 +36,16 @@ public class TextureHelper {
     public static int createTextureHandle() {
         int[] textureDataHandle = new int[1];
         glGenTextures(1, textureDataHandle, 0);
+
+
         if (textureDataHandle[0] != 0) {
+            // Bind to the texture in OpenGL.
+            glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, textureDataHandle[0]);
+
+            glTexParameteri(GLES11Ext.GL_TEXTURE_EXTERNAL_OES,
+                    GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glTexParameteri(GLES11Ext.GL_TEXTURE_EXTERNAL_OES,
+                    GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             return textureDataHandle[0];
         } else {
             throw new RuntimeException("Error generating texture handle.");
