@@ -19,8 +19,7 @@ import java.nio.FloatBuffer;
  * Cardboard activity menu item representing a corresponding function.
  */
 public class MenuItem {
-    private static final String VERTEX_SHADER =
-            "uniform mat4 u_CombinedMatrix;"
+    private static final String VERTEX_SHADER = "uniform mat4 u_CombinedMatrix;"
             + "attribute vec4 a_Position;"
             + "attribute vec2 a_TexCoordinate;"
             + "varying vec2 v_TexCoordinate;"
@@ -32,8 +31,7 @@ public class MenuItem {
             + "  gl_Position = u_CombinedMatrix * a_Position;"
             + "}";
 
-    private static final String FRAGMENT_SHADER =
-            "precision mediump float;"
+    private static final String FRAGMENT_SHADER = "precision mediump float;"
             + "uniform sampler2D u_Texture;"
             + "varying vec2 v_TexCoordinate;"
             + "varying float v_selected;"
@@ -47,8 +45,8 @@ public class MenuItem {
             + "  }"
             + "}";
 
-    private static final FloatBuffer TEXTURE_COORDINATES = CardboardUtil.makeRectangularTextureBuffer(
-            0.0f, 1.0f, 0.0f, 1.0f);
+    private static final FloatBuffer TEXTURE_COORDINATES =
+            CardboardUtil.makeRectangularTextureBuffer(0.0f, 1.0f, 0.0f, 1.0f);
 
     private static final int POSITION_COORDINATE_DATA_SIZE = 3;
     private static final int TEXTURE_COORDINATE_DATA_SIZE = 2;
@@ -77,34 +75,27 @@ public class MenuItem {
         mRect = new RectF(rect);
         float halfHeight = mRect.height() / 2;
         float halfWidth = mRect.width() / 2;
-        mPositionCoordinates = CardboardUtil.makeFloatBuffer(new float[] {
-            // Desktop model coordinates.
-            -halfWidth, halfHeight, 0.0f,
-            -halfWidth, -halfHeight, 0.0f,
-            halfWidth, halfHeight, 0.0f,
-            -halfWidth, -halfHeight, 0.0f,
-            halfWidth, -halfHeight, 0.0f,
-            halfWidth, halfHeight, 0.0f
-        });
+        mPositionCoordinates =
+                CardboardUtil.makeFloatBuffer(new float[] {// Desktop model coordinates.
+                        -halfWidth, halfHeight, 0.0f, -halfWidth, -halfHeight, 0.0f, halfWidth,
+                        halfHeight, 0.0f, -halfWidth, -halfHeight, 0.0f, halfWidth, -halfHeight,
+                        0.0f, halfWidth, halfHeight, 0.0f});
 
-        mVertexShaderHandle =
-                ShaderHelper.compileShader(GLES20.GL_VERTEX_SHADER, VERTEX_SHADER);
+        mVertexShaderHandle = ShaderHelper.compileShader(GLES20.GL_VERTEX_SHADER, VERTEX_SHADER);
         mFragmentShaderHandle =
                 ShaderHelper.compileShader(GLES20.GL_FRAGMENT_SHADER, FRAGMENT_SHADER);
         mProgramHandle = ShaderHelper.createAndLinkProgram(mVertexShaderHandle,
-                mFragmentShaderHandle, new String[] {"a_Position", "a_TexCoordinate",
-                    "a_selected", "u_CombinedMatrix", "u_Texture"});
+                mFragmentShaderHandle, new String[] {"a_Position", "a_TexCoordinate", "a_selected",
+                                               "u_CombinedMatrix", "u_Texture"});
 
-        mCombinedMatrixHandle =
-                GLES20.glGetUniformLocation(mProgramHandle, "u_CombinedMatrix");
+        mCombinedMatrixHandle = GLES20.glGetUniformLocation(mProgramHandle, "u_CombinedMatrix");
         mTextureUniformHandle = GLES20.glGetUniformLocation(mProgramHandle, "u_Texture");
         mPositionHandle = GLES20.glGetAttribLocation(mProgramHandle, "a_Position");
         mItemSelectedHandle = GLES20.glGetAttribLocation(mProgramHandle, "a_selected");
         mTextureDataHandle = TextureHelper.createTextureHandle();
         mTextureCoordinateHandle = GLES20.glGetAttribLocation(mProgramHandle, "a_TexCoordinate");
 
-        Bitmap texture = BitmapFactory.decodeResource(context.getResources(),
-                    type.resourceId());
+        Bitmap texture = BitmapFactory.decodeResource(context.getResources(), type.resourceId());
         TextureHelper.linkTexture(mTextureDataHandle, texture);
         texture.recycle();
     }
@@ -173,6 +164,6 @@ public class MenuItem {
     public void clean() {
         GLES20.glDeleteShader(mVertexShaderHandle);
         GLES20.glDeleteShader(mFragmentShaderHandle);
-        GLES20.glDeleteTextures(1, new int[]{mTextureDataHandle}, 0);
+        GLES20.glDeleteTextures(1, new int[] {mTextureDataHandle}, 0);
     }
 }

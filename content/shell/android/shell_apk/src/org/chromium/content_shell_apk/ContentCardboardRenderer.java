@@ -9,8 +9,6 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 
 import com.google.vrtoolkit.cardboard.CardboardView;
@@ -21,7 +19,6 @@ import com.google.vrtoolkit.cardboard.Viewport;
 import javax.microedition.khronos.egl.EGLConfig;
 import java.lang.ref.WeakReference;
 
-import static org.chromium.ui.base.WindowAndroid.getTextureHandle;
 import java.lang.Thread;
 
 /**
@@ -30,9 +27,6 @@ import java.lang.Thread;
 public class ContentCardboardRenderer implements CardboardView.StereoRenderer {
     private static final String TAG = "cr.CardboardRenderer";
 
-    private static final int BYTE_PER_FLOAT = 4;
-    private static final int POSITION_DATA_SIZE = 3;
-    private static final int TEXTURE_COORDINATE_DATA_SIZE = 2;
     private static final float Z_NEAR = 0.1f;
     private static final float Z_FAR = 1000.0f;
 
@@ -43,11 +37,8 @@ public class ContentCardboardRenderer implements CardboardView.StereoRenderer {
 
     // Menu bar position is relative to the view point.
     private static final float MENU_BAR_POSITION_X = 0.0f;
-    private static final float MENU_BAR_POSITION_Y = 0.7f;
-    private static final float MENU_BAR_POSITION_Z = -0.9f;
-
-    // Distance to move camera each time.
-    private static final float CAMERA_MOTION_STEP = 0.5f;
+    private static final float MENU_BAR_POSITION_Y = 1.0f;
+    private static final float MENU_BAR_POSITION_Z = -1.9f;
 
     // Small number used to avoid division-overflow or other problems with
     // floating-point imprecision.
@@ -78,35 +69,6 @@ public class ContentCardboardRenderer implements CardboardView.StereoRenderer {
     // Eye position at the menu bar distance;
     private PointF mEyeMenuBarPosition;
 
-    private MainHandler mHandler;
-    public static class MainHandler extends Handler {
-        public static final int MSG_FRAME_AVAILABLE = 0;
-
-        private WeakReference<ContentCardboardRenderer> mWeakContentCardboardRenderer;
-
-        public MainHandler(ContentCardboardRenderer browser) {
-            mWeakContentCardboardRenderer = new WeakReference<ContentCardboardRenderer>(browser);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            ContentCardboardRenderer browser = mWeakContentCardboardRenderer.get();
-            if (browser == null) {
-                Log.d("bshe:log", "Got message for dead browser");
-                return;
-            }
-
-            switch (msg.what) {
-              case MSG_FRAME_AVAILABLE: {
-                    browser.uploadTexImage();
-                    break;
-              }
-              default:
-                  throw new RuntimeException("Unknown message " + msg.what);
-            }
-        }
-    }
-
     public ContentCardboardRenderer(Activity activity) {
         long id = Thread.currentThread().getId();
         Log.d("bshe:log", "thread id when create cardboad renderer: " + id);
@@ -123,17 +85,11 @@ public class ContentCardboardRenderer implements CardboardView.StereoRenderer {
         mEyePointCombinedMatrix = new float[16];
 
         mForwardVector = new float[3];
-
-        mHandler = new MainHandler(this);
-    }
-
-    public void uploadTexImage() {
-        getTextureHandle().updateTexImage();
     }
 
     @Override
     public void onSurfaceCreated(EGLConfig config) {
-      // on Render thread
+        // on Render thread
         // Set the background clear color to black.
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -143,15 +99,12 @@ public class ContentCardboardRenderer implements CardboardView.StereoRenderer {
         // Enable depth testing.
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 
-        mCardboardBrowser = new CardboardBrowser(mHandler);
+        mCardboardBrowser = new CardboardBrowser();
         mMenuBar = new MenuBar(mActivity);
-
-//      initializeRedrawCallback();
     }
 
     @Override
-    public void onSurfaceChanged(int width, int height) {
-    }
+    public void onSurfaceChanged(int width, int height) {}
 
     @Override
     public void onNewFrame(HeadTransform headTransform) {
@@ -177,8 +130,6 @@ public class ContentCardboardRenderer implements CardboardView.StereoRenderer {
 
         headTransform.getForwardVector(mForwardVector, 0);
         mEyeMenuBarPosition = getLookingPosition(Math.abs(MENU_BAR_POSITION_Z));
-
-        mCardboardBrowser.maybeLoadDesktopTexture();
     }
 
     @Override
@@ -201,22 +152,20 @@ public class ContentCardboardRenderer implements CardboardView.StereoRenderer {
     }
 
     @Override
-    public void onFinishFrame(Viewport viewport) {
-    }
+    public void onFinishFrame(Viewport viewport) {}
 
     private void drawDesktop() {
         Matrix.setIdentityM(mDesktopModelMatrix, 0);
-        Matrix.translateM(mDesktopModelMatrix, 0, DESKTOP_POSITION_X,
-                DESKTOP_POSITION_Y, DESKTOP_POSITION_Z);
+        Matrix.translateM(
+                mDesktopModelMatrix, 0, DESKTOP_POSITION_X, DESKTOP_POSITION_Y, DESKTOP_POSITION_Z);
 
         // Pass in Model View Matrix and Model View Project Matrix.
         Matrix.multiplyMM(mDesktopCombinedMatrix, 0, mViewMatrix, 0, mDesktopModelMatrix, 0);
-        Matrix.multiplyMM(mDesktopCombinedMatrix, 0, mProjectionMatrix,
-                0, mDesktopCombinedMatrix, 0);
+        Matrix.multiplyMM(
+                mDesktopCombinedMatrix, 0, mProjectionMatrix, 0, mDesktopCombinedMatrix, 0);
 
         mCardboardBrowser.draw(mDesktopCombinedMatrix, false);
     }
-
 
     private void drawMenuBar() {
         float menuBarZ;
@@ -240,6 +189,4 @@ public class ContentCardboardRenderer implements CardboardView.StereoRenderer {
                     mForwardVector[1] * distance / mForwardVector[2]);
         }
     }
-
-
 }

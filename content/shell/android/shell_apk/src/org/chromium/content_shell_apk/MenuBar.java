@@ -49,8 +49,8 @@ public class MenuBar {
         final float halfMenuHeight = MENU_ITEM_SIZE / 2;
         mMenuBarRect = new RectF(-halfMenuWidth, -halfMenuHeight, halfMenuWidth, halfMenuHeight);
 
-        RectF currentRect = new RectF(-halfMenuWidth, -halfMenuHeight,
-                -halfMenuWidth + MENU_ITEM_SIZE, halfMenuHeight);
+        RectF currentRect = new RectF(
+                -halfMenuWidth, -halfMenuHeight, -halfMenuWidth + MENU_ITEM_SIZE, halfMenuHeight);
         mItems = new MenuItem[numItem];
         for (int i = 0; i < numItem; i++) {
             mItems[i] = new MenuItem(context, menuItemTypes[i], currentRect);

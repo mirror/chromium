@@ -59,8 +59,8 @@ public class ShaderHelper {
      * @param attributes Attributes that need to be bound to the program.
      * @return An OpenGL handle to the program.
      */
-    public static int createAndLinkProgram(int vertexShaderHandle,
-            int fragmentShaderHandle, String[] attributes) {
+    public static int createAndLinkProgram(
+            int vertexShaderHandle, int fragmentShaderHandle, String[] attributes) {
         int programHandle = GLES20.glCreateProgram();
 
         if (programHandle != 0) {

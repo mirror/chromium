@@ -51,7 +51,7 @@ import org.chromium.ui.resources.ResourceManager;
 @JNINamespace("chrome::android")
 public class CompositorView
         extends TextureView implements ContentOffsetProvider, TextureView.SurfaceTextureListener {
-        //extends TextureView implements ContentOffsetProvider, SurfaceHolder.Callback {
+    // extends TextureView implements ContentOffsetProvider, SurfaceHolder.Callback {
     private static final String TAG = "CompositorView";
 
     // Cache objects that should not be created every frame
@@ -95,7 +95,7 @@ public class CompositorView
         mRenderHost = host;
         resetFlags();
         setVisibility(View.INVISIBLE);
-        //setZOrderMediaOverlay(true);
+        // setZOrderMediaOverlay(true);
         Log.d("bshe:log", "create compositor view");
     }
 
@@ -165,7 +165,7 @@ public class CompositorView
      * Should be called for cleanup when the CompositorView instance is no longer used.
      */
     public void shutDown() {
-        //getHolder().removeCallback(this);
+        // getHolder().removeCallback(this);
         if (mNativeCompositorView != 0) nativeDestroy(mNativeCompositorView);
         mNativeCompositorView = 0;
     }
@@ -187,9 +187,9 @@ public class CompositorView
                 ApiCompatibilityUtils.getColor(getResources(), R.color.tab_switcher_background),
                 windowAndroid.getNativePointer(), layerTitleCache, tabContentManager);
 
-//        assert !getHolder().getSurface().isValid()
-//            : "Surface created before native library loaded.";
-//        getHolder().addCallback(this);
+        //        assert !getHolder().getSurface().isValid()
+        //            : "Surface created before native library loaded.";
+        //        getHolder().addCallback(this);
         setSurfaceTextureListener(this);
         getSurfaceTexture();
 
@@ -212,7 +212,7 @@ public class CompositorView
      */
     public void setOverlayVideoMode(boolean enabled) {
         mCurrentPixelFormat = enabled ? PixelFormat.TRANSLUCENT : PixelFormat.OPAQUE;
-        //getHolder().setFormat(mCurrentPixelFormat);
+        // getHolder().setFormat(mCurrentPixelFormat);
         nativeSetOverlayVideoMode(mNativeCompositorView, enabled);
     }
 
@@ -251,7 +251,8 @@ public class CompositorView
     @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
         if (mNativeCompositorView == 0) return;
-        nativeSurfaceChanged(mNativeCompositorView, 1 /*hard coded RGBA_8888*/, width, height, new Surface(surface));
+        nativeSurfaceChanged(mNativeCompositorView, 1 /*hard coded RGBA_8888*/, width, height,
+                new Surface(surface));
         mRenderHost.onPhysicalBackingSizeChanged(width, height);
         mSurfaceWidth = width;
         mSurfaceHeight = height;
@@ -317,7 +318,7 @@ public class CompositorView
                 assert false;
                 Log.e(TAG, "Unknown current pixel format.");
         }
-        //getHolder().setFormat(mCurrentPixelFormat);
+        // getHolder().setFormat(mCurrentPixelFormat);
     }
 
     /**

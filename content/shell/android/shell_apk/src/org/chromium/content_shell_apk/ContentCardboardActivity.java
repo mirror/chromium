@@ -34,12 +34,10 @@ import org.chromium.content_shell.Shell;
 import org.chromium.content_shell.ShellManager;
 import org.chromium.ui.base.ActivityWindowAndroid;
 
-
 /**
  * Activity for managing the Content Shell.
  */
 public class ContentCardboardActivity extends CardboardActivity {
-
     private static final String TAG = "ContentShellActivity";
 
     private static final String ACTIVE_SHELL_URL_KEY = "activeUrl";
@@ -53,9 +51,10 @@ public class ContentCardboardActivity extends CardboardActivity {
     @Override
     @SuppressFBWarnings("DM_EXIT")
     protected void onCreate(final Bundle savedInstanceState) {
+        // Most of the code is the same as ContentActivity.java onCreate function.
+        // Except the lines wrapped by "////////". They are cardboard setup code.
         super.onCreate(savedInstanceState);
 
-        //DeviceUtils.addDeviceSpecificUserAgentSwitch(this);
         try {
             LibraryLoader.get(LibraryProcessType.PROCESS_BROWSER)
                     .ensureInitialized(getApplicationContext());
@@ -67,11 +66,13 @@ public class ContentCardboardActivity extends CardboardActivity {
             return;
         }
 
+        ////////
         setContentView(R.layout.content_vr_shell_activity);
         CardboardView cardboardView = (CardboardView) findViewById(R.id.cardboard_view);
         mRenderer = new ContentCardboardRenderer(this);
         cardboardView.setRenderer(mRenderer);
         setCardboardView(cardboardView);
+        ////////
 
         mShellManager = (ShellManager) findViewById(R.id.shell_container);
         final boolean listenToActivityState = true;
@@ -89,24 +90,22 @@ public class ContentCardboardActivity extends CardboardActivity {
         }
 
         try {
-                BrowserStartupController.get(this, LibraryProcessType.PROCESS_BROWSER)
-                        .startBrowserProcessesAsync(
-                                new BrowserStartupController.StartupCallback() {
-                                    @Override
-                                    public void onSuccess(boolean alreadyStarted) {
-                                        finishInitialization(savedInstanceState);
-                                    }
+            BrowserStartupController.get(this, LibraryProcessType.PROCESS_BROWSER)
+                    .startBrowserProcessesAsync(new BrowserStartupController.StartupCallback() {
+                        @Override
+                        public void onSuccess(boolean alreadyStarted) {
+                            finishInitialization(savedInstanceState);
+                        }
 
-                                    @Override
-                                    public void onFailure() {
-                                        initializationFailed();
-                                    }
-                                });
-            } catch (ProcessInitException e) {
-                Log.e(TAG, "Unable to load native library.", e);
-                System.exit(-1);
-            }
-
+                        @Override
+                        public void onFailure() {
+                            initializationFailed();
+                        }
+                    });
+        } catch (ProcessInitException e) {
+            Log.e(TAG, "Unable to load native library.", e);
+            System.exit(-1);
+        }
     }
 
     private static String getUrlFromIntent(Intent intent) {
@@ -115,8 +114,7 @@ public class ContentCardboardActivity extends CardboardActivity {
 
     private void finishInitialization(Bundle savedInstanceState) {
         String shellUrl = ShellManager.DEFAULT_SHELL_URL;
-        if (savedInstanceState != null
-                && savedInstanceState.containsKey(ACTIVE_SHELL_URL_KEY)) {
+        if (savedInstanceState != null && savedInstanceState.containsKey(ACTIVE_SHELL_URL_KEY)) {
             shellUrl = savedInstanceState.getString(ACTIVE_SHELL_URL_KEY);
         }
         mShellManager.launchShell(shellUrl);
@@ -125,13 +123,12 @@ public class ContentCardboardActivity extends CardboardActivity {
     private void initializationFailed() {
         Log.e(TAG, "ContentView initialization failed.");
         Toast.makeText(ContentCardboardActivity.this,
-                R.string.browser_process_initialization_failed,
-                Toast.LENGTH_SHORT).show();
+                     R.string.browser_process_initialization_failed, Toast.LENGTH_SHORT)
+                .show();
         finish();
     }
     @Override
-    public void onCardboardTrigger() {
-    }
+    public void onCardboardTrigger() {}
 
     @Override
     protected void onStart() {
@@ -157,5 +154,4 @@ public class ContentCardboardActivity extends CardboardActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
-
 }

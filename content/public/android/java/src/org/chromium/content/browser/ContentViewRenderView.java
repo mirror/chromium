@@ -7,21 +7,21 @@ package org.chromium.content.browser;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
+import android.graphics.SurfaceTexture;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.TextureView;
 import android.view.TextureView.SurfaceTextureListener;
-import android.widget.FrameLayout;
 import android.util.Log;
-import android.graphics.SurfaceTexture;
+import android.widget.FrameLayout;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.ui.base.WindowAndroid;
-import static org.chromium.ui.base.WindowAndroid.getTextureHandle;
-import static org.chromium.ui.base.WindowAndroid.setTextureHandle;
+
+import static org.chromium.ui.base.WindowAndroid.getSurfaceTexture;
 
 /***
  * This view is used by a ContentView to render its content.
@@ -30,10 +30,10 @@ import static org.chromium.ui.base.WindowAndroid.setTextureHandle;
  * Note that only one ContentViewCore can be shown at a time.
  */
 @JNINamespace("content")
-public class ContentViewRenderView extends FrameLayout implements TextureView.SurfaceTextureListener {
+public class ContentViewRenderView
+        extends FrameLayout implements TextureView.SurfaceTextureListener {
     // The native side of this object.
     private long mNativeContentViewRenderView;
-    private SurfaceHolder.Callback mSurfaceCallback;
 
     private final TextureView mSurfaceView;
     private Surface mSurface = null;
@@ -50,7 +50,7 @@ public class ContentViewRenderView extends FrameLayout implements TextureView.Su
         super(context);
 
         mSurfaceView = new TextureView(getContext());
-        //mSurfaceView.setZOrderMediaOverlay(true);
+        // mSurfaceView.setZOrderMediaOverlay(true);
 
         setSurfaceViewBackgroundColor(Color.WHITE);
         addView(mSurfaceView,
@@ -59,56 +59,44 @@ public class ContentViewRenderView extends FrameLayout implements TextureView.Su
                         FrameLayout.LayoutParams.MATCH_PARENT));
         mSurfaceView.setSurfaceTextureListener(this);
         mSurfaceView.setVisibility(GONE);
-
-//              if (getTextureHandle() != 0) {
-//                Log.d("bshe:log", "texture id =" + getTextureHandle());
-//                SurfaceTexture texture = new SurfaceTexture(getTextureHandle());
-//                mSurfaceView.setSurfaceTexture(texture);
-//              }
     }
 
-          @Override
-          public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-               assert mNativeContentViewRenderView != 0;
-               Log.d("bshe:log", "texture available");
-               nativeSurfaceCreated(mNativeContentViewRenderView);
+    @Override
+    public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+        assert mNativeContentViewRenderView != 0;
+        Log.d("bshe:log", "texture available");
+        nativeSurfaceCreated(mNativeContentViewRenderView);
 
-               onReadyToRender();
-               onSurfaceTextureSizeChanged(surface, width, height);
-          }
+        onReadyToRender();
+        onSurfaceTextureSizeChanged(surface, width, height);
+    }
 
-          @Override
-          public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-                assert mNativeContentViewRenderView != 0;
-                Log.d("bshe:log", "size changed");
+    @Override
+    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+        assert mNativeContentViewRenderView != 0;
+        Log.d("bshe:log", "size changed");
 
-                if (getTextureHandle() != null) {
-                  getTextureHandle().setDefaultBufferSize(width, height);
-                  mSurface = new Surface(getTextureHandle());
-                }
-//                  nativeSurfaceChanged(mNativeContentViewRenderView,
-//                          1 /*hard coded RGBA_8888*/, width, height, new Surface(surface));
-                  nativeSurfaceChanged(mNativeContentViewRenderView,
-                          1 /*hard coded RGBA_8888*/, width, height, mSurface);
-                if (mContentViewCore != null) {
-                    mContentViewCore.onPhysicalBackingSizeChanged(
-                            width, height);
-                }
+        if (getSurfaceTexture() != null) {
+            getSurfaceTexture().setDefaultBufferSize(width, height);
+            mSurface = new Surface(getSurfaceTexture());
+        }
+        nativeSurfaceChanged(
+                mNativeContentViewRenderView, 1 /*hard coded RGBA_8888*/, width, height, mSurface);
+        if (mContentViewCore != null) {
+            mContentViewCore.onPhysicalBackingSizeChanged(width, height);
+        }
+    }
 
-          }
+    @Override
+    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+        assert mNativeContentViewRenderView != 0;
+        nativeSurfaceDestroyed(mNativeContentViewRenderView);
 
-          @Override
-          public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-            assert mNativeContentViewRenderView != 0;
-            nativeSurfaceDestroyed(mNativeContentViewRenderView);
+        return true;
+    }
 
-            return true;
-          }
-
-          @Override
-          public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-          }
-
+    @Override
+    public void onSurfaceTextureUpdated(SurfaceTexture surface) {}
 
     /**
      * Initialization that requires native libraries should be done here.
@@ -116,44 +104,11 @@ public class ContentViewRenderView extends FrameLayout implements TextureView.Su
      * @param rootWindow The {@link WindowAndroid} this render view should be linked to.
      */
     public void onNativeLibraryLoaded(WindowAndroid rootWindow) {
-//        assert !mSurfaceView.getHolder().getSurface().isValid() :
-//                "Surface created before native library loaded.";
+        //        assert !mSurfaceView.getHolder().getSurface().isValid() :
+        //                "Surface created before native library loaded.";
         assert rootWindow != null;
         mNativeContentViewRenderView = nativeInit(rootWindow.getNativePointer());
         assert mNativeContentViewRenderView != 0;
-        mSurfaceCallback = new SurfaceHolder.Callback() {
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-                assert mNativeContentViewRenderView != 0;
-
-                if (getTextureHandle() != null) {
-                  mSurface = new Surface(getTextureHandle());
-                }
-                  nativeSurfaceChanged(mNativeContentViewRenderView,
-                          format, width, height, mSurface);
-//                  nativeSurfaceChanged(mNativeContentViewRenderView,
-//                          format, width, height, holder.getSurface());
-                if (mContentViewCore != null) {
-                    mContentViewCore.onPhysicalBackingSizeChanged(
-                            width, height);
-                }
-            }
-
-            @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-                assert mNativeContentViewRenderView != 0;
-                nativeSurfaceCreated(mNativeContentViewRenderView);
-
-                onReadyToRender();
-            }
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-                assert mNativeContentViewRenderView != 0;
-                nativeSurfaceDestroyed(mNativeContentViewRenderView);
-            }
-        };
-        //mSurfaceView.getHolder().addCallback(mSurfaceCallback);
         mSurfaceView.setVisibility(VISIBLE);
     }
 
@@ -181,7 +136,6 @@ public class ContentViewRenderView extends FrameLayout implements TextureView.Su
      * native resource can be freed.
      */
     public void destroy() {
-        //mSurfaceView.getHolder().removeCallback(mSurfaceCallback);
         nativeDestroy(mNativeContentViewRenderView);
         mNativeContentViewRenderView = 0;
     }
@@ -220,7 +174,7 @@ public class ContentViewRenderView extends FrameLayout implements TextureView.Su
      * @return whether the surface view is initialized and ready to render.
      */
     public boolean isInitialized() {
-        //return mSurfaceView.getHolder().getSurface() != null;
+        // return mSurfaceView.getHolder().getSurface() != null;
         return mSurfaceView.getSurfaceTexture() != null;
     }
 
@@ -230,7 +184,7 @@ public class ContentViewRenderView extends FrameLayout implements TextureView.Su
      */
     public void setOverlayVideoMode(boolean enabled) {
         int format = enabled ? PixelFormat.TRANSLUCENT : PixelFormat.OPAQUE;
-        //mSurfaceView.getHolder().setFormat(format);
+        // mSurfaceView.getHolder().setFormat(format);
         nativeSetOverlayVideoMode(mNativeContentViewRenderView, enabled);
     }
 

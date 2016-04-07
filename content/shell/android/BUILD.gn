@@ -87,8 +87,8 @@ android_library("content_shell_apk_java") {
     "//content/public/android:content_java",
     "//media/capture/video/android:capture_java",
     "//net/android:net_java",
-    "//ui/android:ui_java",
     "//third_party/cardboard-java:cardboard-java",
+    "//ui/android:ui_java",
   ]
   java_files = [
     "shell_apk/src/org/chromium/content_shell_apk/ContentShellActivity.java",
@@ -130,13 +130,13 @@ android_apk("content_shell_apk") {
     ":content_shell_java",
     ":content_shell_manifest",
     ":libcontent_shell_content_view",
+    ":remoting_cardboard_extract_native_lib",
     "//base:base_java",
     "//content/public/android:content_java",
     "//media/capture/video/android:capture_java",
     "//net/android:net_java",
     "//third_party/mesa:osmesa",
     "//ui/android:ui_java",
-    ":remoting_cardboard_extract_native_lib",
   ]
   apk_name = "ContentShell"
   android_manifest = content_shell_manifest

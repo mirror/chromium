@@ -13,7 +13,7 @@ declare_args() {
   enable_internal_app_remoting_targets = false
 
   # Set this to enable Android Chromoting Cardboard Activity.
-  remoting_enable_cardboard = true
+  remoting_enable_cardboard = false
 }
 
 # Set this to use GCD instead of the remoting directory service.

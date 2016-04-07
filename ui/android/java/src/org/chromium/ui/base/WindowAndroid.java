@@ -41,18 +41,21 @@ import java.util.LinkedList;
  */
 @JNINamespace("ui")
 public class WindowAndroid {
+
+    //////// Hacks to plumb SurfaceTexture. This package can be accessed by both
+    //org.chromium.content.browser and org.chromium.content_shell_apk
+    static private SurfaceTexture mSurfaceTexture;
+
+    public static void setSurfaceTexture(SurfaceTexture surfaceTexture) {
+        mSurfaceTexture = surfaceTexture;
+    }
+
+    public static SurfaceTexture getSurfaceTexture() {
+        return mSurfaceTexture;
+    }
+    ///////
+
     private static final String TAG = "WindowAndroid";
-
-  ////////Hack
-  static private SurfaceTexture mTextureDataHandle;
-
-  public static void setTextureHandle(SurfaceTexture handle) {
-    mTextureDataHandle = handle;
-  }
-
-  public static SurfaceTexture getTextureHandle() {
-    return mTextureDataHandle;
-  }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private class TouchExplorationMonitor {
