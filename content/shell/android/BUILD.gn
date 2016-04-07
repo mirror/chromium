@@ -91,8 +91,14 @@ android_library("content_shell_apk_java") {
     "//ui/android:ui_java",
   ]
   java_files = [
+    "shell_apk/src/org/chromium/content_shell_apk/CardboardBrowser.java",
+    "shell_apk/src/org/chromium/content_shell_apk/CardboardUtil.java",
+    "shell_apk/src/org/chromium/content_shell_apk/ContentCardboardActivity.java",
+    "shell_apk/src/org/chromium/content_shell_apk/ContentCardboardRenderer.java",
     "shell_apk/src/org/chromium/content_shell_apk/ContentShellActivity.java",
     "shell_apk/src/org/chromium/content_shell_apk/ContentShellApplication.java",
+    "shell_apk/src/org/chromium/content_shell_apk/ShaderHelper.java",
+    "shell_apk/src/org/chromium/content_shell_apk/TextureHelper.java",
   ]
 }
 
