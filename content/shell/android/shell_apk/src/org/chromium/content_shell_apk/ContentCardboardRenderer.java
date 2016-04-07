@@ -35,11 +35,6 @@ public class ContentCardboardRenderer implements CardboardView.StereoRenderer {
     private static final float DESKTOP_POSITION_Y = 0.0f;
     private static final float DESKTOP_POSITION_Z = -2.0f;
 
-    // Menu bar position is relative to the view point.
-    private static final float MENU_BAR_POSITION_X = 0.0f;
-    private static final float MENU_BAR_POSITION_Y = 1.0f;
-    private static final float MENU_BAR_POSITION_Z = -1.9f;
-
     // Small number used to avoid division-overflow or other problems with
     // floating-point imprecision.
     private static final float EPSILON = 1e-5f;
@@ -47,7 +42,6 @@ public class ContentCardboardRenderer implements CardboardView.StereoRenderer {
     private final Activity mActivity;
 
     private CardboardBrowser mCardboardBrowser;
-    private MenuBar mMenuBar;
 
     private float mCameraPosition;
     // Lock to allow multithreaded access to mCameraPosition.
@@ -67,7 +61,6 @@ public class ContentCardboardRenderer implements CardboardView.StereoRenderer {
     private float[] mForwardVector;
 
     // Eye position at the menu bar distance;
-    private PointF mEyeMenuBarPosition;
 
     public ContentCardboardRenderer(Activity activity) {
         long id = Thread.currentThread().getId();
@@ -100,7 +93,6 @@ public class ContentCardboardRenderer implements CardboardView.StereoRenderer {
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 
         mCardboardBrowser = new CardboardBrowser();
-        mMenuBar = new MenuBar(mActivity);
     }
 
     @Override
@@ -129,7 +121,6 @@ public class ContentCardboardRenderer implements CardboardView.StereoRenderer {
         Matrix.setLookAtM(mCameraMatrix, 0, eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ);
 
         headTransform.getForwardVector(mForwardVector, 0);
-        mEyeMenuBarPosition = getLookingPosition(Math.abs(MENU_BAR_POSITION_Z));
     }
 
     @Override
@@ -142,13 +133,11 @@ public class ContentCardboardRenderer implements CardboardView.StereoRenderer {
         mProjectionMatrix = eye.getPerspective(Z_NEAR, Z_FAR);
 
         drawDesktop();
-        drawMenuBar();
     }
 
     @Override
     public void onRendererShutdown() {
         mCardboardBrowser.cleanup();
-        mMenuBar.cleanup();
     }
 
     @Override
@@ -167,26 +156,4 @@ public class ContentCardboardRenderer implements CardboardView.StereoRenderer {
         mCardboardBrowser.draw(mDesktopCombinedMatrix, false);
     }
 
-    private void drawMenuBar() {
-        float menuBarZ;
-        synchronized (mCameraPositionLock) {
-            menuBarZ = mCameraPosition + MENU_BAR_POSITION_Z;
-        }
-
-        mMenuBar.draw(mViewMatrix, mProjectionMatrix, mEyeMenuBarPosition, MENU_BAR_POSITION_X,
-                MENU_BAR_POSITION_Y, menuBarZ);
-    }
-
-    /**
-     * Get eye position at the given distance.
-     */
-    private PointF getLookingPosition(float distance) {
-        if (Math.abs(mForwardVector[2]) < EPSILON) {
-            return new PointF(Math.copySign(Float.MAX_VALUE, mForwardVector[0]),
-                    Math.copySign(Float.MAX_VALUE, mForwardVector[1]));
-        } else {
-            return new PointF(mForwardVector[0] * distance / mForwardVector[2],
-                    mForwardVector[1] * distance / mForwardVector[2]);
-        }
-    }
 }
