@@ -22,11 +22,6 @@
     'include_dirs': [
       '..',  # Root of Chromium checkout
     ],
-    'conditions': [
-      ['disable_display==1', {
-        'defines': ['DISABLE_DISPLAY'],
-      }],
-    ],
     'target_conditions': [
       ['_type=="executable"', {
         'ldflags': [
