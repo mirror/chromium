@@ -5,9 +5,18 @@
 import("//tools/grit/grit_rule.gni")
 import("//build/config/nacl/config.gni")
 
+declare_args() {
+  # Enable vr shell for chrome. Maybe moved to lower level in dependacy chain.
+  enable_vr_shell = false
+}
+
 # Applied by targets internal to content.
 config("content_implementation") {
   defines = [ "CONTENT_IMPLEMENTATION" ]
+}
+
+config("content_vr_shell") {
+  defines = [ "ENABLE_VR_SHELL=1" ]
 }
 
 # When targets depend on, e.g. //content/public/browser, what happens? To
