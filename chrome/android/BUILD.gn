@@ -204,6 +204,12 @@ android_library("chrome_java") {
       "//sync/android:sync_java",
     ]
   }
+
+  if (enable_vr_shell) {
+     deps += [
+       "//third_party/cardboard-java:cardboard-java",
+     ]
+  }
 }
 
 # GYP: //chrome/chrome_browser.gypi:activity_type_ids_java
@@ -423,6 +429,9 @@ jinja_template("chrome_public_apk_manifest") {
     "min_sdk_version=16",
     "target_sdk_version=23",
   ]
+  if (enable_vr_shell) {
+    variables += [ "enable_vr_shell=1" ]
+  }
 }
 
 # GYP: //chrome/android/chrome_apk.gyp:chrome_sync_shell_apk_manifest
@@ -494,6 +503,21 @@ template("chrome_public_apk_tmpl_shared") {
   }
 }
 
+if (enable_vr_shell) {
+  action("remoting_cardboard_extract_native_lib") {
+    script = "//remoting/tools/extract_android_native_lib.py"
+    sources = [
+      "//third_party/cardboard-java/src/CardboardSample/libs/cardboard.jar",
+    ]
+    outputs = [
+      "$root_out_dir/libvrtoolkit.so",
+    ]
+    args = [ android_app_abi ]
+    args += rebase_path(sources, root_build_dir)
+    args += rebase_path(outputs, root_build_dir)
+  }
+}
+
 chrome_public_apk_tmpl_shared("chrome_public_apk") {
   android_manifest = get_target_outputs(":chrome_public_apk_manifest")
   android_manifest = android_manifest[1]
@@ -505,6 +529,15 @@ chrome_public_apk_tmpl_shared("chrome_public_apk") {
     ":chrome_public_apk_manifest",
     ":chrome_public_apk_template_resources",
   ]
+
+  if (enable_vr_shell) {
+    deps += [
+      ":remoting_cardboard_extract_native_lib",
+    ]
+    loadable_modules = [
+      "$root_out_dir/libvrtoolkit.so",
+    ]
+  }
 }
 
 chrome_public_apk_tmpl_shared("chrome_sync_shell_apk") {

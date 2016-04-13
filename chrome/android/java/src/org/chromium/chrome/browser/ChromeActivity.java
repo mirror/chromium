@@ -773,7 +773,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
      */
     @SuppressLint("NewApi")
     @Override
-    protected final void onDestroy() {
+    protected void onDestroy() {
         if (mReaderModeManager != null) {
             mReaderModeManager.destroy();
             mReaderModeManager = null;

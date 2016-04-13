@@ -45,6 +45,8 @@ import org.chromium.ui.base.WindowAndroid;
 import org.chromium.ui.resources.AndroidResourceType;
 import org.chromium.ui.resources.ResourceManager;
 
+import static org.chromium.ui.base.WindowAndroid.getSurfaceTexture;
+
 /**
  * The is the {@link View} displaying the ui compositor results; including webpages and tabswitcher.
  */
@@ -66,6 +68,8 @@ public class CompositorView
     private int mPreviousWindowTop = -1;
 
     private int mLastLayerCount;
+
+    private Surface mSurface = null;
 
     // Resource Management
     private ResourceManager mResourceManager;
@@ -251,8 +255,16 @@ public class CompositorView
     @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
         if (mNativeCompositorView == 0) return;
+        if (getSurfaceTexture() != null) {
+          getSurfaceTexture().setDefaultBufferSize(width, height);
+          mSurface = new Surface(getSurfaceTexture());
+          Log.d("bshe:log", "use surface created from cardboard");
+        }
         nativeSurfaceChanged(mNativeCompositorView, 1 /*hard coded RGBA_8888*/, width, height,
-                new Surface(surface));
+                mSurface);
+
+//        nativeSurfaceChanged(mNativeCompositorView, 1 /*hard coded RGBA_8888*/, width, height,
+//                new Surface(surface));
         mRenderHost.onPhysicalBackingSizeChanged(width, height);
         mSurfaceWidth = width;
         mSurfaceHeight = height;
@@ -268,7 +280,7 @@ public class CompositorView
 
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-        Log.d("bshe:log", "surface texture updated. but you can't see me");
+        //Log.d("bshe:log", "surface texture updated. but you can't see me");
     }
 
     @Override

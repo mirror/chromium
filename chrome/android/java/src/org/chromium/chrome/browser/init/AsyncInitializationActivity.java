@@ -195,7 +195,7 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
      * be called on that order.
      */
     @Override
-    protected final void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         if (DocumentModeAssassin.getInstance().isMigrationNecessary()) {
             super.onCreate(null);
 

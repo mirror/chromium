@@ -6,6 +6,7 @@ package org.chromium.chrome.browser;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.res.Configuration;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -107,11 +108,15 @@ import org.chromium.ui.widget.Toast;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import com.google.vrtoolkit.cardboard.sensors.SensorConnection;
+import com.google.vrtoolkit.cardboard.CardboardDeviceParams;
+
 /**
  * This is the main activity for ChromeMobile when not running in document mode.  All the tabs
  * are accessible via a chrome specific tab switching UI.
  */
-public class ChromeTabbedActivity extends ChromeActivity implements OverviewModeObserver {
+public class ChromeTabbedActivity extends ChromeActivity
+    implements OverviewModeObserver, SensorConnection.SensorListener {
 
     private static final int FIRST_RUN_EXPERIENCE_RESULT = 101;
     private static final int CCT_RESULT = 102;
@@ -206,6 +211,8 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
     // Time at which an intent was received and handled.
     private long mIntentHandlingTimeMs = 0;
 
+    private final SensorConnection sensorConnection = new SensorConnection(this);
+
     private class TabbedAssistStatusHandler extends AssistStatusHandler {
         public TabbedAssistStatusHandler(Activity activity) {
             super(activity);
@@ -281,6 +288,76 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
     public void onNewIntent(Intent intent) {
         mIntentHandlingTimeMs = SystemClock.uptimeMillis();
         super.onNewIntent(intent);
+    }
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+      super.onConfigurationChanged(newConfig);
+
+      // Hack. Connect orientation change to cardboard.
+      if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        Intent cardboardIntend = new Intent(ChromeTabbedActivity.this,
+            ChromeCardboardActivity.class);
+        startActivity(cardboardIntend);
+      }
+    }
+
+    /**
+     * @hide
+     * Called when the device was placed inside a Cardboard.
+     *
+     * @param cardboardDeviceParams Parameters of the Cardboard device.
+     */
+    @Override
+    public void onInsertedIntoCardboard(CardboardDeviceParams cardboardDeviceParams) {
+        Log.d("bshe:log", "---inserted to cardboard----");
+        Intent cardboardIntend = new Intent(ChromeTabbedActivity.this,
+            ChromeCardboardActivity.class);
+        startActivity(cardboardIntend);
+    }
+
+    /**
+     * @hide
+     * Called when the device was removed from a Cardboard.
+     */
+    @Override
+    public void onRemovedFromCardboard() {
+      Log.d("bshe:log", "---removed from cardboard----");
+    }
+
+    /**
+     * Override to detect when the Cardboard trigger was pulled and released.
+     * </p><p>
+     * Provides click-like events when the device is inside a Cardboard.
+     */
+    @Override
+    public void onCardboardTrigger() {
+      Log.d("bshe:log", "---triggered----");
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+      super.onCreate(savedInstanceState);
+      sensorConnection.onCreate(this);
+    }
+
+    @Override
+    public void onResume() {
+      super.onResume();
+      sensorConnection.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+      super.onPause();
+      sensorConnection.onPause(this);
+    }
+
+    @Override
+    public void onDestroy() {
+      super.onDestroy();
+      sensorConnection.onDestroy(this);
     }
 
     @Override
