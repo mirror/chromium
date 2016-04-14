@@ -99,11 +99,17 @@ public class CardboardBrowser implements SurfaceTexture.OnFrameAvailableListener
         mTextureDataHandle = TextureHelper.createTextureHandle();
         mTexture = new SurfaceTexture(mTextureDataHandle);
         mTexture.setOnFrameAvailableListener(this);
+        Log.d("bshe:log", "In cardboard browser");
+        Log.d("bshe:log", mTexture.toString());
         setSurfaceTexture(mTexture);
 
-        mPosition = makeFloatBuffer(new float[] {-1.0f, 1.0f, 0.0f, -1.0f, -HALF_HEIGHT, 0.0f, 1.0f,
-                HALF_HEIGHT, 0.0f, -1.0f, -HALF_HEIGHT, 0.0f, 1.0f, -HALF_HEIGHT, 0.0f, 1.0f,
-                HALF_HEIGHT, 0.0f});
+        mPosition = makeFloatBuffer(new float[] {
+            -1.0f, 1.0f, 0.0f,
+            -1.0f, -HALF_HEIGHT, 0.0f,
+            1.0f, HALF_HEIGHT, 0.0f,
+            -1.0f, -HALF_HEIGHT, 0.0f,
+            1.0f, -HALF_HEIGHT, 0.0f,
+            1.0f, HALF_HEIGHT, 0.0f});
     }
 
     @Override // SurfaceTexture.OnFrameAvailableListener; runs on arbitrary thread

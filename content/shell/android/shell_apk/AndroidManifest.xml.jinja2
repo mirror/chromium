@@ -25,7 +25,6 @@
     <application android:name="ContentShellApplication"
             android:icon="@mipmap/app_icon"
             android:label="Content Shell">
-<!--
         <activity android:name="ContentShellActivity"
                   android:launchMode="singleTask"
                   android:theme="@android:style/Theme.Holo.Light.NoActionBar"
@@ -37,14 +36,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
--->
         <activity android:name="ContentCardboardActivity"
                   android:windowSoftInputMode="adjustResize"
                   android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
                   android:screenOrientation="sensorLandscape">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
                 <category android:name="com.google.intent.category.CARDBOARD" />
             </intent-filter>
         </activity>

@@ -414,25 +414,25 @@ public class ChromeTabbedActivity extends ChromeActivity
 
     @Override
     public void onPauseWithNative() {
-        mTabModelSelectorImpl.commitAllTabClosures();
-        CookiesFetcher.persistCookies(this);
-        super.onPauseWithNative();
+//        mTabModelSelectorImpl.commitAllTabClosures();
+//        CookiesFetcher.persistCookies(this);
+//        super.onPauseWithNative();
     }
 
     @Override
     public void onStopWithNative() {
-        super.onStopWithNative();
-
-        if (getActivityTab() != null) getActivityTab().setIsAllowedToReturnToExternalApp(false);
-
-        mTabModelSelectorImpl.saveState();
-        try {
-            getConnectionChangeReceiver().unregisterReceiver(ChromeTabbedActivity.this);
-        } catch (IllegalArgumentException e) {
-            // This may happen when onStop get called very early in UI test.
-        }
-        StartupMetrics.getInstance().recordHistogram(true);
-        mActivityStopMetrics.onStopWithNative(this);
+//        super.onStopWithNative();
+//
+//        if (getActivityTab() != null) getActivityTab().setIsAllowedToReturnToExternalApp(false);
+//
+//        mTabModelSelectorImpl.saveState();
+//        try {
+//            getConnectionChangeReceiver().unregisterReceiver(ChromeTabbedActivity.this);
+//        } catch (IllegalArgumentException e) {
+//            // This may happen when onStop get called very early in UI test.
+//        }
+//        StartupMetrics.getInstance().recordHistogram(true);
+//        mActivityStopMetrics.onStopWithNative(this);
     }
 
     @Override

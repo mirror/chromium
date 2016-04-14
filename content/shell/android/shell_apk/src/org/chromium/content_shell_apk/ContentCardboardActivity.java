@@ -44,7 +44,6 @@ public class ContentCardboardActivity extends CardboardActivity {
     public static final String COMMAND_LINE_ARGS_KEY = "commandLineArgs";
 
     private ShellManager mShellManager;
-    private ActivityWindowAndroid mWindowAndroid;
     private Intent mLastSentIntent;
     private ContentCardboardRenderer mRenderer;
 
@@ -74,59 +73,8 @@ public class ContentCardboardActivity extends CardboardActivity {
         setCardboardView(cardboardView);
         ////////
 
-        mShellManager = (ShellManager) findViewById(R.id.shell_container);
-        final boolean listenToActivityState = true;
-        mWindowAndroid = new ActivityWindowAndroid(this, listenToActivityState);
-        mWindowAndroid.restoreInstanceState(savedInstanceState);
-        mShellManager.setWindow(mWindowAndroid);
-        // Set up the animation placeholder to be the SurfaceView. This disables the
-        // SurfaceView's 'hole' clipping during animations that are notified to the window.
-        mWindowAndroid.setAnimationPlaceholderView(
-                mShellManager.getContentViewRenderView().getSurfaceView());
-
-        String startupUrl = getUrlFromIntent(getIntent());
-        if (!TextUtils.isEmpty(startupUrl)) {
-            mShellManager.setStartupUrl(Shell.sanitizeUrl(startupUrl));
-        }
-
-        try {
-            BrowserStartupController.get(this, LibraryProcessType.PROCESS_BROWSER)
-                    .startBrowserProcessesAsync(new BrowserStartupController.StartupCallback() {
-                        @Override
-                        public void onSuccess(boolean alreadyStarted) {
-                            finishInitialization(savedInstanceState);
-                        }
-
-                        @Override
-                        public void onFailure() {
-                            initializationFailed();
-                        }
-                    });
-        } catch (ProcessInitException e) {
-            Log.e(TAG, "Unable to load native library.", e);
-            System.exit(-1);
-        }
     }
 
-    private static String getUrlFromIntent(Intent intent) {
-        return intent != null ? intent.getDataString() : null;
-    }
-
-    private void finishInitialization(Bundle savedInstanceState) {
-        String shellUrl = ShellManager.DEFAULT_SHELL_URL;
-        if (savedInstanceState != null && savedInstanceState.containsKey(ACTIVE_SHELL_URL_KEY)) {
-            shellUrl = savedInstanceState.getString(ACTIVE_SHELL_URL_KEY);
-        }
-        mShellManager.launchShell(shellUrl);
-    }
-
-    private void initializationFailed() {
-        Log.e(TAG, "ContentView initialization failed.");
-        Toast.makeText(ContentCardboardActivity.this,
-                     R.string.browser_process_initialization_failed, Toast.LENGTH_SHORT)
-                .show();
-        finish();
-    }
     @Override
     public void onCardboardTrigger() {}
 

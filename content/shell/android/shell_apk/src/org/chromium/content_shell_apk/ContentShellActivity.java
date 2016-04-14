@@ -6,10 +6,14 @@ package org.chromium.content_shell_apk;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import org.chromium.base.BaseSwitches;
@@ -29,6 +33,8 @@ import org.chromium.content_shell.Shell;
 import org.chromium.content_shell.ShellManager;
 import org.chromium.ui.base.ActivityWindowAndroid;
 
+import com.google.vrtoolkit.cardboard.CardboardView;
+
 /**
  * Activity for managing the Content Shell.
  */
@@ -42,6 +48,50 @@ public class ContentShellActivity extends Activity {
     private ShellManager mShellManager;
     private ActivityWindowAndroid mWindowAndroid;
     private Intent mLastSentIntent;
+
+    private CardboardView mCardboardView;
+    private ContentCardboardRenderer mRenderer;
+    private boolean mVrEnabled = false;
+    private int mSystemUiVisibilityFlag = -1;
+
+    private void setupCardboardWindowFlags(boolean isCardboard) {
+      Window window = getWindow();
+      if (isCardboard) {
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        mSystemUiVisibilityFlag = window.getDecorView().getSystemUiVisibility();
+        window.getDecorView().setSystemUiVisibility(
+             View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+             | View.SYSTEM_UI_FLAG_FULLSCREEN
+             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        );
+      } else {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        if (mSystemUiVisibilityFlag != -1) {
+          window.getDecorView().setSystemUiVisibility(mSystemUiVisibilityFlag);
+        }
+      }
+    }
+
+
+    @Override
+    protected void onPause() {
+      super.onPause();
+      mCardboardView.onPause();
+      setupCardboardWindowFlags(false);
+    }
+
+    @Override
+    protected void onResume() {
+      super.onResume();
+      mCardboardView.onResume();
+      // Should check if we are in vr mode.
+      if (mVrEnabled) {
+          setupCardboardWindowFlags(true);
+      }
+    }
 
     @Override
     @SuppressFBWarnings("DM_EXIT")
@@ -114,6 +164,37 @@ public class ContentShellActivity extends Activity {
                 System.exit(-1);
             }
         }
+
+        ////
+        mCardboardView = (CardboardView) findViewById(R.id.cardboard_view);
+        mRenderer = new ContentCardboardRenderer(this);
+        mCardboardView.setRenderer(mRenderer);
+        //setCardboardView(mCardboardView);
+        mCardboardView.setVisibility(View.GONE);
+        ////
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+      super.onConfigurationChanged(newConfig);
+
+      // Hack. Connect orientation change to cardboard.
+      if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//        Intent cardboardIntend = new Intent(this,
+//            ContentCardboardActivity.class);
+//        startActivity(cardboardIntend);
+
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mVrEnabled = true;
+        mCardboardView.setVisibility(View.VISIBLE);
+        setupCardboardWindowFlags(true);
+        Log.d("bshe:log", "About to make cardboard view visible.");
+      } else {
+        mVrEnabled = false;
+        mCardboardView.setVisibility(View.GONE);
+        setupCardboardWindowFlags(false);
+        Log.d("bshe:log", "About to make cardboard view disappear.");
+      }
     }
 
     private void finishInitialization(Bundle savedInstanceState) {

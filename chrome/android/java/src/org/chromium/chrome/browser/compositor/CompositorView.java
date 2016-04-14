@@ -342,6 +342,7 @@ public class CompositorView
 
     @CalledByNative
     private void onSwapBuffersCompleted(int pendingSwapBuffersCount) {
+        Log.d("bshe:log", "swap buffers");
         // Clear the color used to cover the uninitialized surface.
         if (getBackground() != null) {
             post(new Runnable() {

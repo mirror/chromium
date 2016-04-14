@@ -41,13 +41,28 @@ import java.util.LinkedList;
  */
 @JNINamespace("ui")
 public class WindowAndroid {
+    public interface SurfaceListener {
+      public void OnNewSurface(SurfaceTexture sufaceTexture);
+    }
+
+    private static SurfaceListener mListener = null;
 
     //////// Hacks to plumb SurfaceTexture. This package can be accessed by both
     //org.chromium.content.browser and org.chromium.content_shell_apk
-    static private SurfaceTexture mSurfaceTexture;
+    private static SurfaceTexture mSurfaceTexture;
+
+    public static void addListener(SurfaceListener listener) {
+      if (mListener != null) {
+        Log.d("bshe:log", "added multiple listener");
+      }
+      mListener = listener;
+    }
 
     public static void setSurfaceTexture(SurfaceTexture surfaceTexture) {
         mSurfaceTexture = surfaceTexture;
+        if (mListener != null) {
+          mListener.OnNewSurface(surfaceTexture);
+        }
     }
 
     public static SurfaceTexture getSurfaceTexture() {

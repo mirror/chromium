@@ -11,4 +11,8 @@
         android:id="@+id/shell_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    <com.google.vrtoolkit.cardboard.CardboardView
+        android:id="@+id/cardboard_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </merge>
