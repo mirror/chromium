@@ -85,7 +85,7 @@ public class ContentViewRenderView
       ThreadUtils.postOnUiThread(new Runnable(){
         @Override
         public void run() {
-          onSurfaceTextureSizeChanged(surface1, mWidth, mHeight);
+          onSurfaceTextureSizeChanged(surface1, getWidth(), getHeight());
         }
       });
     }
@@ -98,9 +98,9 @@ public class ContentViewRenderView
         if (mSurface != null) {
           Log.d("bshe:log", "In surface texture changed");
           Log.d("bshe:log", mSurface.toString());
-          mSurface.setDefaultBufferSize(width, height);
+          mSurface.setDefaultBufferSize(getWidth(), getHeight());
           nativeSurfaceChanged(
-              mNativeContentViewRenderView, 1 /*hard coded RGBA_8888*/, width, height, new Surface(mSurface));
+              mNativeContentViewRenderView, 1 /*hard coded RGBA_8888*/, getWidth(), getHeight(), new Surface(mSurface));
         }
         if (mContentViewCore != null) {
             mContentViewCore.onPhysicalBackingSizeChanged(width, height);
