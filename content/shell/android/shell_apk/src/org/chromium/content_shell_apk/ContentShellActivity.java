@@ -187,10 +187,12 @@ public class ContentShellActivity extends Activity {
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
         mVrEnabled = true;
         mCardboardView.setVisibility(View.VISIBLE);
+        mShellManager.getContentViewRenderView().useSurface(false);
         setupCardboardWindowFlags(true);
         Log.d("bshe:log", "About to make cardboard view visible.");
       } else {
         mVrEnabled = false;
+        mShellManager.getContentViewRenderView().useSurface(true);
         mCardboardView.setVisibility(View.GONE);
         setupCardboardWindowFlags(false);
         Log.d("bshe:log", "About to make cardboard view disappear.");

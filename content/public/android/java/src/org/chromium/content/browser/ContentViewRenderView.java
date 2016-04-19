@@ -38,11 +38,11 @@ public class ContentViewRenderView
     private long mNativeContentViewRenderView;
 
     private final TextureView mSurfaceView;
+    private SurfaceTexture mOldSurface = null;
+    private boolean mUseOldSurface = true;
     private SurfaceTexture mSurface = null;
     protected ContentViewCore mContentViewCore;
 
-    private int mWidth = 0;
-    private int mHeight = 0;
     /**
      * Constructs a new ContentViewRenderView.
      * This should be called and the {@link ContentViewRenderView} should be added to the view
@@ -64,14 +64,16 @@ public class ContentViewRenderView
         mSurfaceView.setSurfaceTextureListener(this);
         mSurfaceView.setVisibility(GONE);
         addListener(this);
+        if (mSurfaceView.isAvailable()) {
+          onSurfaceTextureSizeChanged(mSurfaceView.getSurfaceTexture(), getWidth(), getHeight());
+        }
     }
 
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
         assert mNativeContentViewRenderView != 0;
         Log.d("bshe:log", "texture available");
-        mWidth = width;
-        mHeight = height;
+        mOldSurface = surface;
         nativeSurfaceCreated(mNativeContentViewRenderView);
 
         onReadyToRender();
@@ -81,27 +83,68 @@ public class ContentViewRenderView
     @Override
     public void OnNewSurface(SurfaceTexture surface) {
       mSurface = surface;
-      final SurfaceTexture surface1 = surface;
+      mUseOldSurface = false;
       ThreadUtils.postOnUiThread(new Runnable(){
         @Override
         public void run() {
-          onSurfaceTextureSizeChanged(surface1, getWidth(), getHeight());
+          Log.d("bshe:log", "Set new surface texture");
+          Log.d("bshe:log", mSurface.toString());
+          Log.d("bshe:log", "width: " + getWidth() + ", height: " + getHeight());
+          mSurface.setDefaultBufferSize(getWidth(), getHeight());
+
+          // reset previous suface.
+//          assert mNativeContentViewRenderView != 0;
+//          nativeSurfaceDestroyed(mNativeContentViewRenderView);
+//          nativeSurfaceCreated(mNativeContentViewRenderView);
+//          mSurfaceView.setSurfaceTexture(mSurface);
+//
+          nativeSurfaceCreated(mNativeContentViewRenderView);
+          onSurfaceTextureSizeChanged(mSurface, getWidth(), getHeight());
         }
       });
+    }
+
+    public void useSurface(boolean old) {
+        // hack to allow surface update. If the format of surface is the same, compositor wont
+        // try to update the surface in onSurfaceTextureSizeChanged.
+        mUseOldSurface = old;
+        nativeSurfaceCreated(mNativeContentViewRenderView);
+
+        if (mUseOldSurface) {
+            onSurfaceTextureSizeChanged(mOldSurface, getWidth(), getHeight());
+        } else if (mSurface != null) {
+            onSurfaceTextureSizeChanged(mSurface, getWidth(), getHeight());
+        }
+        // reset previous suface.
+//        assert mNativeContentViewRenderView != 0;
+//        nativeSurfaceDestroyed(mNativeContentViewRenderView);
+//        nativeSurfaceCreated(mNativeContentViewRenderView);
+//
+//        mSurfaceView.setSurfaceTexture(mOldSurface);
+//        onSurfaceTextureSizeChanged(mOldSurface, getWidth(), getHeight());
     }
 
     @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
         assert mNativeContentViewRenderView != 0;
-        mWidth = width;
-        mHeight = height;
-        if (mSurface != null) {
-          Log.d("bshe:log", "In surface texture changed");
-          Log.d("bshe:log", mSurface.toString());
-          mSurface.setDefaultBufferSize(getWidth(), getHeight());
-          nativeSurfaceChanged(
-              mNativeContentViewRenderView, 1 /*hard coded RGBA_8888*/, getWidth(), getHeight(), new Surface(mSurface));
+
+        if (mUseOldSurface) {
+            Log.d("bshe:log", "In surface texture changed");
+            Log.d("bshe:log", surface.toString());
+            nativeSurfaceChanged(
+                mNativeContentViewRenderView, 1 /*hard coded RGBA_8888*/,
+                getWidth(), getHeight(), new Surface(mOldSurface));
+        } else if (!mUseOldSurface && mSurface != null) {
+            Log.d("bshe:log", "In surface texture changed");
+            Log.d("bshe:log", surface.toString());
+            nativeSurfaceChanged(
+                mNativeContentViewRenderView, 1 /*hard coded RGBA_8888*/,
+                getWidth(), getHeight(), new Surface(mSurface));
         }
+//        nativeSurfaceChanged(
+//              mNativeContentViewRenderView, 1 /*hard coded RGBA_8888*/,
+//              getWidth(), getHeight(), new Surface(surface));
+//
         if (mContentViewCore != null) {
             mContentViewCore.onPhysicalBackingSizeChanged(width, height);
         }
@@ -109,6 +152,11 @@ public class ContentViewRenderView
 
     @Override
     public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+        Log.d("bshe:log", "In surface texture destroy");
+        if (surface != mSurface)
+          return true;
+        Log.d("bshe:log", "This surface is destroy");
+        Log.d("bshe:log", surface.toString());
         assert mNativeContentViewRenderView != 0;
         nativeSurfaceDestroyed(mNativeContentViewRenderView);
 
@@ -126,6 +174,7 @@ public class ContentViewRenderView
     public void onNativeLibraryLoaded(WindowAndroid rootWindow) {
         //        assert !mSurfaceView.getHolder().getSurface().isValid() :
         //                "Surface created before native library loaded.";
+        Log.d("bshe:log", "onNativeLibaryLoaded. TextureView should be visible.");
         assert rootWindow != null;
         mNativeContentViewRenderView = nativeInit(rootWindow.getNativePointer());
         assert mNativeContentViewRenderView != 0;
