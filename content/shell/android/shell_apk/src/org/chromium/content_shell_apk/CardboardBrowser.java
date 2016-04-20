@@ -114,7 +114,6 @@ public class CardboardBrowser implements SurfaceTexture.OnFrameAvailableListener
 
     @Override // SurfaceTexture.OnFrameAvailableListener; runs on arbitrary thread
     public void onFrameAvailable(SurfaceTexture surfaceTexture) {
-        Log.d("bshe:log", "frame available in browser");
     }
 
     /**
