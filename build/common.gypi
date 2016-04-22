@@ -3735,6 +3735,15 @@
                   '-Wl,--no-as-needed',
                 ],
               }],
+	      ['OS=="linux" and target_arch=="arm" and linux_use_gold_flags==1 and binutils_version>=225', {
+	        'target_conditions': [
+                  ['_toolset=="target"', {
+	            'ldflags': [
+                      '-Wl,--long-plt',
+                    ],
+		  }],
+		],
+ 	      }],
               ['debug_unwind_tables==1', {
                 'cflags': ['-funwind-tables'],
               }, {
