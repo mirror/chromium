@@ -34,11 +34,14 @@ import org.chromium.content_shell.ShellManager;
 import org.chromium.ui.base.ActivityWindowAndroid;
 
 import com.google.vrtoolkit.cardboard.CardboardView;
+import com.google.vrtoolkit.cardboard.sensors.SensorConnection;
+import com.google.vrtoolkit.cardboard.CardboardDeviceParams;
 
 /**
  * Activity for managing the Content Shell.
  */
-public class ContentShellActivity extends Activity {
+public class ContentShellActivity extends Activity
+    implements SensorConnection.SensorListener {
 
     private static final String TAG = "ContentShellActivity";
 
@@ -53,6 +56,8 @@ public class ContentShellActivity extends Activity {
     private ContentCardboardRenderer mRenderer;
     private boolean mVrEnabled = false;
     private int mSystemUiVisibilityFlag = -1;
+
+    private final SensorConnection sensorConnection = new SensorConnection(this);
 
     private void setupCardboardWindowFlags(boolean isCardboard) {
       Window window = getWindow();
@@ -75,12 +80,42 @@ public class ContentShellActivity extends Activity {
       }
     }
 
+    /**
+     * @hide
+     * Called when the device was placed inside a Cardboard.
+     *
+     * @param cardboardDeviceParams Parameters of the Cardboard device.
+     */
+    @Override
+    public void onInsertedIntoCardboard(CardboardDeviceParams cardboardDeviceParams) {
+        Log.d("bshe:log", "---inserted to cardboard----");
+    }
+
+    /**
+     * @hide
+     * Called when the device was removed from a Cardboard.
+     */
+    @Override
+    public void onRemovedFromCardboard() {
+      Log.d("bshe:log", "---removed from cardboard----");
+    }
+
+    /**
+     * Override to detect when the Cardboard trigger was pulled and released.
+     * </p><p>
+     * Provides click-like events when the device is inside a Cardboard.
+     */
+    @Override
+    public void onCardboardTrigger() {
+      Log.d("bshe:log", "---triggered----");
+    }
 
     @Override
     protected void onPause() {
       super.onPause();
       mCardboardView.onPause();
       setupCardboardWindowFlags(false);
+      sensorConnection.onPause(this);
     }
 
     @Override
@@ -91,6 +126,7 @@ public class ContentShellActivity extends Activity {
       if (mVrEnabled) {
           setupCardboardWindowFlags(true);
       }
+      sensorConnection.onResume(this);
     }
 
     @Override
@@ -171,6 +207,7 @@ public class ContentShellActivity extends Activity {
         mCardboardView.setRenderer(mRenderer);
         //setCardboardView(mCardboardView);
         mCardboardView.setVisibility(View.GONE);
+        sensorConnection.onCreate(this);
         ////
     }
 
@@ -290,6 +327,7 @@ public class ContentShellActivity extends Activity {
     protected void onDestroy() {
         if (mShellManager != null) mShellManager.destroy();
         super.onDestroy();
+        sensorConnection.onDestroy(this);
     }
 
     public Intent getLastSentIntent() {
