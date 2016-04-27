@@ -46,6 +46,8 @@
     "third_party/tcmalloc/chromium",
     "third_party/tlslite",
     "third_party/WebKit/Source/devtools",
+    "third_party/WebKit/Source/platform/inspector_protocol",
+    "third_party/WebKit/Source/platform/v8_inspector",
     "third_party/WebKit/Source/wtf",
     "third_party/zlib",
     "tools/android",
