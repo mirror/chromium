@@ -503,21 +503,6 @@ template("chrome_public_apk_tmpl_shared") {
   }
 }
 
-if (enable_vr_shell) {
-  action("remoting_cardboard_extract_native_lib") {
-    script = "//remoting/tools/extract_android_native_lib.py"
-    sources = [
-      "//third_party/cardboard-java/src/CardboardSample/libs/cardboard.jar",
-    ]
-    outputs = [
-      "$root_out_dir/libvrtoolkit.so",
-    ]
-    args = [ android_app_abi ]
-    args += rebase_path(sources, root_build_dir)
-    args += rebase_path(outputs, root_build_dir)
-  }
-}
-
 chrome_public_apk_tmpl_shared("chrome_public_apk") {
   android_manifest = get_target_outputs(":chrome_public_apk_manifest")
   android_manifest = android_manifest[1]
@@ -532,8 +517,11 @@ chrome_public_apk_tmpl_shared("chrome_public_apk") {
 
   if (enable_vr_shell) {
     deps += [
-      ":remoting_cardboard_extract_native_lib",
+      "//third_party/cardboard-java:cardboard_extract_aar",
     ]
+  }
+
+  if (enable_vr_shell) {
     loadable_modules = [
       "$root_out_dir/libvrtoolkit.so",
     ]

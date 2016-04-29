@@ -21,7 +21,7 @@ def main():
   output_file = sys.argv[3]  # e.g. path/to/libfoo.so
 
   library_filename = os.path.basename(output_file)
-  library_in_jar = os.path.join('lib', android_app_abi, library_filename)
+  library_in_jar = os.path.join('jni', android_app_abi, library_filename)
 
   with zipfile.ZipFile(jar_file, 'r') as archive:
     with open(output_file, 'wb') as target:

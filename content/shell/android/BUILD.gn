@@ -95,7 +95,9 @@ android_library("content_shell_apk_java") {
   ]
   if (enable_vr_shell) {
     deps += [
+      "//third_party/cardboard-java:cardboard-common-java",
       "//third_party/cardboard-java:cardboard-java",
+      "//third_party/cardboard-java:cardboard-core-res",
     ]
     java_files += [
       "shell_apk/src/org/chromium/content_shell_apk/CardboardBrowser.java",
@@ -120,21 +122,6 @@ android_assets("content_shell_assets") {
   ]
 }
 
-if (enable_vr_shell) {
-  action("remoting_cardboard_extract_native_lib") {
-    script = "//remoting/tools/extract_android_native_lib.py"
-    sources = [
-      "//third_party/cardboard-java/src/CardboardSample/libs/cardboard.jar",
-    ]
-    outputs = [
-      "$root_out_dir/libvrtoolkit.so",
-    ]
-    args = [ android_app_abi ]
-    args += rebase_path(sources, root_build_dir)
-    args += rebase_path(outputs, root_build_dir)
-  }
-}
-
 android_apk("content_shell_apk") {
   testonly = true
   deps = [
@@ -153,15 +140,17 @@ android_apk("content_shell_apk") {
   ]
   if (enable_vr_shell) {
     deps += [
-      ":remoting_cardboard_extract_native_lib",
+      "//third_party/cardboard-java:cardboard_extract_aar",
     ]
   }
+
   apk_name = "ContentShell"
   android_manifest = content_shell_manifest
   native_libs = [ "libcontent_shell_content_view.so" ]
   loadable_modules = [
     "$root_out_dir/libosmesa.so",
   ]
+
   if (enable_vr_shell) {
     loadable_modules += [
       "$root_out_dir/libvrtoolkit.so",

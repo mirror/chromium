@@ -283,7 +283,7 @@ def main(argv):
       options.possible_deps_configs)
 
   allow_unknown_deps = (options.type in
-                        ('android_apk', 'android_assets', 'android_resources'))
+                        ('android_apk', 'java_library', 'android_assets', 'android_resources'))
   unknown_deps = [
       c for c in possible_deps_config_paths if not os.path.exists(c)]
   if unknown_deps and not allow_unknown_deps:

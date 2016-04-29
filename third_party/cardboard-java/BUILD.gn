@@ -6,8 +6,36 @@ import("//build/config/android/rules.gni")
 
 # GYP: //third_party/cardboard-java/cardboard.gyp:cardboard_jar
 android_java_prebuilt("cardboard-java") {
-  jar_path = "src/CardboardSample/libs/cardboard.jar"
+  jar_path = "$root_out_dir/cardboard.jar"
+  #jar_path = "cardboard.jar"
   deps = [
-    "//third_party/android_protobuf:protobuf_nano_javalib",
+    ":cardboard_extract_aar",
   ]
+}
+
+android_java_prebuilt("cardboard-common-java") {
+  jar_path = "common.jar"
+}
+
+# need to extract res too. Note there were some deperactaed property that
+# I updated to solve compiler errors. The custom package is also in vr.cardbaord
+# not in vrtoolkit.cardboard although the folder is in core.aar
+android_resources("cardboard-core-res") {
+  testonly = true
+  resource_dirs = ["res"]
+  custom_package = "com.google.vr.cardboard"
+}
+
+action("cardboard_extract_aar") {
+  script = "extract_aar_lib.py"
+  sources = [
+    "src/libraries/core/core.aar",
+  ]
+  outputs = [
+    "$root_out_dir/cardboard.jar",
+    "$root_out_dir/libvrtoolkit.so",
+  ]
+  args = [ android_app_abi ]
+  args += rebase_path(sources, root_build_dir)
+  args += rebase_path(outputs, root_build_dir)
 }

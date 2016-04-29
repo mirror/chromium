@@ -101,7 +101,7 @@ if (target_cpu == "arm") {
   action("remoting_cardboard_extract_native_lib") {
     script = "//remoting/tools/extract_android_native_lib.py"
     sources = [
-      "//third_party/cardboard-java/src/CardboardSample/libs/cardboard.jar",
+      "//third_party/cardboard-java/src/libraries/core/core.aar",
     ]
     outputs = [
       "$root_out_dir/libvrtoolkit.so",
