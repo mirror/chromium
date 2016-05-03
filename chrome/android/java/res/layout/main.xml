@@ -64,4 +64,10 @@
         android:layout_height="0px"
         android:layout_gravity="bottom|start"
         />
+
+    <com.google.vrtoolkit.cardboard.CardboardView
+        android:id="@+id/cardboard_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </merge>

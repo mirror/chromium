@@ -314,6 +314,8 @@ void CompositorImpl::SetSurface(jobject surface) {
     window = ANativeWindow_fromSurface(env, surface);
   }
 
+  LOG(ERROR) << "------------------set surface called -----------" << window;
+
   if (window) {
     window_ = window;
     ANativeWindow_acquire(window);

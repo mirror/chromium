@@ -208,6 +208,8 @@ android_library("chrome_java") {
   if (enable_vr_shell) {
      deps += [
        "//third_party/cardboard-java:cardboard-java",
+       "//third_party/cardboard-java:cardboard-common-java",
+       "//third_party/cardboard-java:cardboard-core-res",
      ]
   }
 }
@@ -519,9 +521,6 @@ chrome_public_apk_tmpl_shared("chrome_public_apk") {
     deps += [
       "//third_party/cardboard-java:cardboard_extract_aar",
     ]
-  }
-
-  if (enable_vr_shell) {
     loadable_modules = [
       "$root_out_dir/libvrtoolkit.so",
     ]

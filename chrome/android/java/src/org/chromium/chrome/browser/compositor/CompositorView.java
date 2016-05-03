@@ -13,7 +13,7 @@ import android.graphics.SurfaceTexture;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.SurfaceHolder;
-import android.view.TextureView;
+import android.view.SurfaceView;
 import android.view.View;
 
 import org.chromium.base.ApiCompatibilityUtils;
@@ -45,15 +45,16 @@ import org.chromium.ui.base.WindowAndroid;
 import org.chromium.ui.resources.AndroidResourceType;
 import org.chromium.ui.resources.ResourceManager;
 
+import org.chromium.base.ThreadUtils;
 import static org.chromium.ui.base.WindowAndroid.getSurfaceTexture;
+import static org.chromium.ui.base.WindowAndroid.addListener;
 
 /**
  * The is the {@link View} displaying the ui compositor results; including webpages and tabswitcher.
  */
 @JNINamespace("chrome::android")
 public class CompositorView
-        extends TextureView implements ContentOffsetProvider, TextureView.SurfaceTextureListener {
-    // extends TextureView implements ContentOffsetProvider, SurfaceHolder.Callback {
+        extends SurfaceView implements ContentOffsetProvider, SurfaceHolder.Callback, WindowAndroid.SurfaceListener {
     private static final String TAG = "CompositorView";
 
     // Cache objects that should not be created every frame
@@ -69,7 +70,9 @@ public class CompositorView
 
     private int mLastLayerCount;
 
+    private Surface mOldSurface = null;
     private Surface mSurface = null;
+    private boolean mUseOldSurface = true;
 
     // Resource Management
     private ResourceManager mResourceManager;
@@ -99,8 +102,8 @@ public class CompositorView
         mRenderHost = host;
         resetFlags();
         setVisibility(View.INVISIBLE);
-        // setZOrderMediaOverlay(true);
-        Log.d("bshe:log", "create compositor view");
+        setZOrderMediaOverlay(true);
+        addListener(this);
     }
 
     /**
@@ -169,7 +172,7 @@ public class CompositorView
      * Should be called for cleanup when the CompositorView instance is no longer used.
      */
     public void shutDown() {
-        // getHolder().removeCallback(this);
+        getHolder().removeCallback(this);
         if (mNativeCompositorView != 0) nativeDestroy(mNativeCompositorView);
         mNativeCompositorView = 0;
     }
@@ -191,11 +194,9 @@ public class CompositorView
                 ApiCompatibilityUtils.getColor(getResources(), R.color.tab_switcher_background),
                 windowAndroid.getNativePointer(), layerTitleCache, tabContentManager);
 
-        //        assert !getHolder().getSurface().isValid()
-        //            : "Surface created before native library loaded.";
-        //        getHolder().addCallback(this);
-        setSurfaceTextureListener(this);
-        getSurfaceTexture();
+        assert !getHolder().getSurface().isValid()
+            : "Surface created before native library loaded.";
+        getHolder().addCallback(this);
 
         // Cover the black surface before it has valid content.
         setBackgroundColor(Color.WHITE);
@@ -216,15 +217,64 @@ public class CompositorView
      */
     public void setOverlayVideoMode(boolean enabled) {
         mCurrentPixelFormat = enabled ? PixelFormat.TRANSLUCENT : PixelFormat.OPAQUE;
-        // getHolder().setFormat(mCurrentPixelFormat);
+        getHolder().setFormat(mCurrentPixelFormat);
         nativeSetOverlayVideoMode(mNativeCompositorView, enabled);
     }
 
-    /*///////SurfaceHolder.Callback override
+    @Override
+    public void OnNewSurface(SurfaceTexture surface) {
+      final int width = getWidth() > getHeight() ? getWidth() : getHeight();
+      final int height = getWidth() < getHeight() ? getWidth() : getHeight();
+      surface.setDefaultBufferSize(width, height);
+      mSurface = new Surface(surface);
+      mUseOldSurface = false;
+      ThreadUtils.postOnUiThread(new Runnable(){
+        @Override
+        public void run() {
+          Log.d("bshe:log", "First set new surface texture");
+          nativeSurfaceCreated(mNativeCompositorView);
+          //setVisibility(GONE);
+          surfaceChanged(null, 4, width, height);
+        }
+      });
+    }
+
+    public void useSurface(boolean old) {
+        // hack to allow surface update. If the format of surface is the same, compositor wont
+        // try to update the surface in onSurfaceTextureSizeChanged.
+        mUseOldSurface = old;
+        nativeSurfaceCreated(mNativeCompositorView);
+        Log.d("bshe:log", "use surface called");
+        if (mUseOldSurface) {
+            setVisibility(VISIBLE);
+        } else {
+            setVisibility(GONE);
+            int width = getWidth() > getHeight() ? getWidth() : getHeight();
+            int height = getWidth() < getHeight() ? getWidth() : getHeight();
+            surfaceChanged(null, 4, width, height);
+        }
+    }
+
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         if (mNativeCompositorView == 0) return;
-        nativeSurfaceChanged(mNativeCompositorView, format, width, height, holder.getSurface());
+
+        Log.d("bshe:log", "surface changed called");
+        if (mUseOldSurface || mSurface == null) {
+            Log.d("bshe:log", "use old surface");
+            Log.d("bshe:log", "format = " + format);
+            Log.d("bshe:log", "width = " + width + " height = " + height);
+            Log.d("bshe:log", "getWidth = " + getWidth() + " height = " + getHeight());
+            nativeSurfaceChanged(
+                mNativeCompositorView, format, width, height, mOldSurface);
+        } else if (!mUseOldSurface && mSurface != null) {
+            Log.d("bshe:log", "use new surface");
+            Log.d("bshe:log", "format = " + format);
+            Log.d("bshe:log", "width = " + width + " height = " + height);
+            Log.d("bshe:log", "getWidth = " + getWidth() + " height = " + getHeight());
+            nativeSurfaceChanged(
+                mNativeCompositorView, format, width, height, mSurface);
+        }
         mRenderHost.onPhysicalBackingSizeChanged(width, height);
         mSurfaceWidth = width;
         mSurfaceHeight = height;
@@ -233,6 +283,7 @@ public class CompositorView
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         if (mNativeCompositorView == 0) return;
+        mOldSurface = holder.getSurface();
         nativeSurfaceCreated(mNativeCompositorView);
         mRenderHost.onSurfaceCreated();
     }
@@ -242,46 +293,45 @@ public class CompositorView
         if (mNativeCompositorView == 0) return;
         nativeSurfaceDestroyed(mNativeCompositorView);
     }
-    ////////////////*/
 
-    @Override
-    public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-        if (mNativeCompositorView == 0) return;
-        nativeSurfaceCreated(mNativeCompositorView);
-        mRenderHost.onSurfaceCreated();
-        Log.d("bshe:log", "created surface texture");
-    }
-
-    @Override
-    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-        if (mNativeCompositorView == 0) return;
-        if (getSurfaceTexture() != null) {
-          getSurfaceTexture().setDefaultBufferSize(width, height);
-          mSurface = new Surface(getSurfaceTexture());
-          Log.d("bshe:log", "use surface created from cardboard");
-        }
-        nativeSurfaceChanged(mNativeCompositorView, 1 /*hard coded RGBA_8888*/, width, height,
-                mSurface);
-
+//    @Override
+//    public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+//        if (mNativeCompositorView == 0) return;
+//        nativeSurfaceCreated(mNativeCompositorView);
+//        mRenderHost.onSurfaceCreated();
+//        Log.d("bshe:log", "created surface texture");
+//    }
+//
+//    @Override
+//    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+//        if (mNativeCompositorView == 0) return;
+//        if (getSurfaceTexture() != null) {
+//          getSurfaceTexture().setDefaultBufferSize(width, height);
+//          mSurface = new Surface(getSurfaceTexture());
+//          Log.d("bshe:log", "use surface created from cardboard");
+//        }
 //        nativeSurfaceChanged(mNativeCompositorView, 1 /*hard coded RGBA_8888*/, width, height,
-//                new Surface(surface));
-        mRenderHost.onPhysicalBackingSizeChanged(width, height);
-        mSurfaceWidth = width;
-        mSurfaceHeight = height;
-        Log.d("bshe:log", "surface texture changed");
-    }
-
-    @Override
-    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-        if (mNativeCompositorView == 0) return false;
-        nativeSurfaceDestroyed(mNativeCompositorView);
-        return true;
-    }
-
-    @Override
-    public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-        //Log.d("bshe:log", "surface texture updated. but you can't see me");
-    }
+//                mSurface);
+//
+////        nativeSurfaceChanged(mNativeCompositorView, 1 /*hard coded RGBA_8888*/, width, height,
+////                new Surface(surface));
+//        mRenderHost.onPhysicalBackingSizeChanged(width, height);
+//        mSurfaceWidth = width;
+//        mSurfaceHeight = height;
+//        Log.d("bshe:log", "surface texture changed");
+//    }
+//
+//    @Override
+//    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+//        if (mNativeCompositorView == 0) return false;
+//        nativeSurfaceDestroyed(mNativeCompositorView);
+//        return true;
+//    }
+//
+//    @Override
+//    public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+//        //Log.d("bshe:log", "surface texture updated. but you can't see me");
+//    }
 
     @Override
     public void onWindowVisibilityChanged(int visibility) {
@@ -330,7 +380,7 @@ public class CompositorView
                 assert false;
                 Log.e(TAG, "Unknown current pixel format.");
         }
-        // getHolder().setFormat(mCurrentPixelFormat);
+        getHolder().setFormat(mCurrentPixelFormat);
     }
 
     /**
@@ -342,7 +392,6 @@ public class CompositorView
 
     @CalledByNative
     private void onSwapBuffersCompleted(int pendingSwapBuffersCount) {
-        Log.d("bshe:log", "swap buffers");
         // Clear the color used to cover the uninitialized surface.
         if (getBackground() != null) {
             post(new Runnable() {

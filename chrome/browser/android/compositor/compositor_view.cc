@@ -154,6 +154,7 @@ void CompositorView::SurfaceCreated(JNIEnv* env,
 
 void CompositorView::SurfaceDestroyed(JNIEnv* env,
                                       const JavaParamRef<jobject>& object) {
+  LOG(ERROR) << "------------------Surface Destroy-----------";
   compositor_->SetSurface(NULL);
   current_surface_format_ = 0;
   tab_content_manager_->OnUIResourcesWereEvicted();
@@ -168,6 +169,7 @@ void CompositorView::SurfaceChanged(JNIEnv* env,
   DCHECK(surface);
   if (current_surface_format_ != format) {
     current_surface_format_ = format;
+    LOG(ERROR) << "------------------Surface changed-----------";
     compositor_->SetSurface(surface);
   }
   gfx::Size size = gfx::Size(width, height);
@@ -307,6 +309,7 @@ void CompositorView::BrowserChildProcessHostDisconnected(
           base::android::SDK_VERSION_JELLY_BEAN_MR2 &&
       data.process_type == content::PROCESS_TYPE_GPU) {
     JNIEnv* env = base::android::AttachCurrentThread();
+    LOG(ERROR) << "------------------Child process disconnect -----------";
     compositor_->SetSurface(nullptr);
     Java_CompositorView_onJellyBeanSurfaceDisconnectWorkaround(
         env, obj_.obj(), overlay_video_mode_);

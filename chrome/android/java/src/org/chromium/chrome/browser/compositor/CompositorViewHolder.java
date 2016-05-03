@@ -19,7 +19,7 @@ import android.support.v4.widget.ExploreByTouchHelper;
 import android.util.AttributeSet;
 import android.util.Pair;
 import android.view.MotionEvent;
-import android.view.TextureView;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
@@ -80,7 +80,7 @@ public class CompositorViewHolder extends FrameLayout
     private final Invalidator mInvalidator = new Invalidator();
     private LayoutManager mLayoutManager;
     private LayerTitleCache mLayerTitleCache;
-    private CompositorView mCompositorView;
+    public CompositorView mCompositorView;
 
     private boolean mContentOverlayVisiblity = true;
 
@@ -385,9 +385,9 @@ public class CompositorViewHolder extends FrameLayout
     }
 
     /**
-     * @return The TextureView used by the Compositor.
+     * @return The SurfaceView used by the Compositor.
      */
-    public TextureView getTextureView() {
+    public SurfaceView getSurfaceView() {
         return mCompositorView;
     }
 

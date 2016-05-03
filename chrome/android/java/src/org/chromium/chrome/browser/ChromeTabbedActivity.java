@@ -108,6 +108,7 @@ import org.chromium.ui.widget.Toast;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import com.google.vrtoolkit.cardboard.CardboardView;
 import com.google.vrtoolkit.cardboard.sensors.SensorConnection;
 import com.google.vrtoolkit.cardboard.CardboardDeviceParams;
 
@@ -211,7 +212,33 @@ public class ChromeTabbedActivity extends ChromeActivity
     // Time at which an intent was received and handled.
     private long mIntentHandlingTimeMs = 0;
 
+    public CardboardView mCardboardView;
+    private ChromeCardboardRenderer mRenderer;
+    private boolean mVrEnabled = false;
     private final SensorConnection sensorConnection = new SensorConnection(this);
+    private int mSystemUiVisibilityFlag = -1;
+
+    private void setupCardboardWindowFlags(boolean isCardboard) {
+      Window window = getWindow();
+      if (isCardboard) {
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        mSystemUiVisibilityFlag = window.getDecorView().getSystemUiVisibility();
+        window.getDecorView().setSystemUiVisibility(
+             View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+             | View.SYSTEM_UI_FLAG_FULLSCREEN
+             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        );
+      } else {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        if (mSystemUiVisibilityFlag != -1) {
+          window.getDecorView().setSystemUiVisibility(mSystemUiVisibilityFlag);
+        }
+      }
+    }
+
 
     private class TabbedAssistStatusHandler extends AssistStatusHandler {
         public TabbedAssistStatusHandler(Activity activity) {
@@ -297,10 +324,22 @@ public class ChromeTabbedActivity extends ChromeActivity
 
       // Hack. Connect orientation change to cardboard.
       if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-        Intent cardboardIntend = new Intent(ChromeTabbedActivity.this,
-            ChromeCardboardActivity.class);
-        startActivity(cardboardIntend);
+//        Intent cardboardIntend = new Intent(ChromeTabbedActivity.this,
+//            ChromeCardboardActivity.class);
+//        startActivity(cardboardIntend);
+        mVrEnabled = true;
+        setupCardboardWindowFlags(true);
+        getCompositorViewHolder().mCompositorView.useSurface(false);
+        mCardboardView.setVisibility(View.VISIBLE);
+        Log.d("bshe:log", "About to make cardboard view visible.");
+      } else {
+        mVrEnabled = false;
+        setupCardboardWindowFlags(false);
+        getCompositorViewHolder().mCompositorView.useSurface(true);
+        mCardboardView.setVisibility(View.GONE);
+        Log.d("bshe:log", "About to make cardboard view disappear.");
       }
+
     }
 
     /**
@@ -312,9 +351,9 @@ public class ChromeTabbedActivity extends ChromeActivity
     @Override
     public void onInsertedIntoCardboard(CardboardDeviceParams cardboardDeviceParams) {
         Log.d("bshe:log", "---inserted to cardboard----");
-        Intent cardboardIntend = new Intent(ChromeTabbedActivity.this,
-            ChromeCardboardActivity.class);
-        startActivity(cardboardIntend);
+//        Intent cardboardIntend = new Intent(ChromeTabbedActivity.this,
+//            ChromeCardboardActivity.class);
+//        startActivity(cardboardIntend);
     }
 
     /**
@@ -339,12 +378,23 @@ public class ChromeTabbedActivity extends ChromeActivity
     @Override
     public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
+
+      ////
+      mCardboardView = (CardboardView) findViewById(R.id.cardboard_view);
+      mRenderer = new ChromeCardboardRenderer(this);
+      mCardboardView.setRenderer(mRenderer);
+      //setCardboardView(mCardboardView);
+      mCardboardView.setVisibility(View.GONE);
       sensorConnection.onCreate(this);
     }
 
     @Override
     public void onResume() {
       super.onResume();
+      if (mVrEnabled) {
+          setupCardboardWindowFlags(true);
+      }
+
       sensorConnection.onResume(this);
     }
 
