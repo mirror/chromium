@@ -63,6 +63,8 @@ import org.chromium.ui.resources.dynamics.DynamicResourceLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.chromium.base.Log;
+
 /**
  * This class holds a {@link CompositorView}. This level of indirection is needed to benefit from
  * the {@link android.view.ViewGroup#onInterceptTouchEvent(android.view.MotionEvent)} capability on
@@ -756,6 +758,7 @@ public class CompositorViewHolder extends FrameLayout
     }
 
     private void updateContentOverlayVisibility(boolean show) {
+        Log.d("bshe:log", "update content overlay visiblity");
         if (mView == null) return;
 
         sCachedCVCList.clear();

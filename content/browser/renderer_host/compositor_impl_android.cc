@@ -441,6 +441,7 @@ CreateGpuProcessViewContext(
 }
 
 void CompositorImpl::UpdateLayerTreeHost() {
+  LOG(ERROR) << "===============Update Layer Tree host======";
   client_->UpdateLayerTreeHost();
   if (needs_animate_) {
     needs_animate_ = false;

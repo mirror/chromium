@@ -335,10 +335,11 @@ public class CompositorView
 
     @Override
     public void onWindowVisibilityChanged(int visibility) {
+        Log.d("bshe:log", "visibility changed called on view");
         super.onWindowVisibilityChanged(visibility);
         if (mWindowAndroid == null) return;
         if (visibility == View.GONE) {
-            mWindowAndroid.onVisibilityChanged(false);
+            //mWindowAndroid.onVisibilityChanged(false);
         } else if (visibility == View.VISIBLE) {
             mWindowAndroid.onVisibilityChanged(true);
         }
@@ -387,11 +388,13 @@ public class CompositorView
      * Request compositor view to render a frame.
      */
     public void requestRender() {
+        Log.d("bshe:log", "requestRender is called");
         if (mNativeCompositorView != 0) nativeSetNeedsComposite(mNativeCompositorView);
     }
 
     @CalledByNative
     private void onSwapBuffersCompleted(int pendingSwapBuffersCount) {
+        Log.d("bshe:log", "swap buffers");
         // Clear the color used to cover the uninitialized surface.
         if (getBackground() != null) {
             post(new Runnable() {

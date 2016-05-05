@@ -1453,6 +1453,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Screen
      * To be called when the ContentView is hidden.
      */
     public void onHide() {
+        Log.d("bshe:log", "===onhide in CVC===");
         assert mWebContents != null;
         hidePopupsAndPreserveSelection();
         mWebContents.onHide();
@@ -1516,6 +1517,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Screen
     @SuppressWarnings("javadoc")
     @SuppressLint("MissingSuperCall")
     public void onDetachedFromWindow() {
+        Log.d("bshe:log", "===onDetachFromWindow in CVC===");
         mZoomControlsDelegate.dismissZoomPicker();
 
         ScreenOrientationListener.getInstance().removeObserver(this);
@@ -1536,6 +1538,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Screen
      * @see View#onVisibilityChanged(android.view.View, int)
      */
     public void onVisibilityChanged(View changedView, int visibility) {
+        Log.d("bshe:log", "===onVisibilityChanged in CVC===");
         if (visibility != View.VISIBLE) {
             mZoomControlsDelegate.dismissZoomPicker();
         }
@@ -1640,6 +1643,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Screen
     }
 
     public void onFocusChanged(boolean gainFocus) {
+        Log.d("bshe:log", "===onFocusChanged in CVC===");
         mImeAdapter.onViewFocusChanged(gainFocus);
         mJoystickScrollProvider.setEnabled(gainFocus && !mFocusedNodeEditable);
 

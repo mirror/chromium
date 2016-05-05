@@ -118,6 +118,7 @@ import com.google.vrtoolkit.cardboard.CardboardDeviceParams;
  */
 public class ChromeTabbedActivity extends ChromeActivity
     implements OverviewModeObserver, SensorConnection.SensorListener {
+    //implements OverviewModeObserver {
 
     private static final int FIRST_RUN_EXPERIENCE_RESULT = 101;
     private static final int CCT_RESULT = 102;
@@ -331,6 +332,7 @@ public class ChromeTabbedActivity extends ChromeActivity
         setupCardboardWindowFlags(true);
         getCompositorViewHolder().mCompositorView.useSurface(false);
         mCardboardView.setVisibility(View.VISIBLE);
+        Log.d("bshe:log", "---cardboardview width===" + mCardboardView.getWidth());
         Log.d("bshe:log", "About to make cardboard view visible.");
       } else {
         mVrEnabled = false;
@@ -383,7 +385,7 @@ public class ChromeTabbedActivity extends ChromeActivity
       mCardboardView = (CardboardView) findViewById(R.id.cardboard_view);
       mRenderer = new ChromeCardboardRenderer(this);
       mCardboardView.setRenderer(mRenderer);
-      //setCardboardView(mCardboardView);
+      mCardboardView.setTransitionViewEnabled(true);
       mCardboardView.setVisibility(View.GONE);
       sensorConnection.onCreate(this);
     }
@@ -391,6 +393,7 @@ public class ChromeTabbedActivity extends ChromeActivity
     @Override
     public void onResume() {
       super.onResume();
+      mCardboardView.onResume();
       if (mVrEnabled) {
           setupCardboardWindowFlags(true);
       }
@@ -400,13 +403,25 @@ public class ChromeTabbedActivity extends ChromeActivity
 
     @Override
     public void onPause() {
+      Log.d("bshe:log", "on pause called");
       super.onPause();
+      mCardboardView.onPause();
       sensorConnection.onPause(this);
     }
 
     @Override
+    public void onStop() {
+      Log.d("bshe:log", "onStop called");
+      super.onStop();
+//      mCardboardView.onStop();
+    }
+
+    @Override
     public void onDestroy() {
+      Log.d("bshe:log", "onDestroy called");
       super.onDestroy();
+//      mCardboardView.shutdown();
+      mCardboardView = null;
       sensorConnection.onDestroy(this);
     }
 
@@ -464,6 +479,7 @@ public class ChromeTabbedActivity extends ChromeActivity
 
     @Override
     public void onPauseWithNative() {
+      Log.d("bshe:log", "onpause with native called");
 //        mTabModelSelectorImpl.commitAllTabClosures();
 //        CookiesFetcher.persistCookies(this);
 //        super.onPauseWithNative();
@@ -471,6 +487,7 @@ public class ChromeTabbedActivity extends ChromeActivity
 
     @Override
     public void onStopWithNative() {
+      Log.d("bshe:log", "onstop with native called");
 //        super.onStopWithNative();
 //
 //        if (getActivityTab() != null) getActivityTab().setIsAllowedToReturnToExternalApp(false);

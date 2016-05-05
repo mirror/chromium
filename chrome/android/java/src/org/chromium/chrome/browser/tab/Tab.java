@@ -2940,6 +2940,7 @@ public final class Tab implements ViewGroup.OnHierarchyChangeListener,
      *         foreground, or null if this isn't possible.
      */
     public static Intent createBringTabToFrontIntent(int tabId) {
+        Log.d("bshe:log", "======create bring tab to front===");
         // Iterate through all {@link CustomTab}s and check whether the given tabId belongs to a
         // {@link CustomTab}. If so, return null as the client app's task cannot be foregrounded.
         List<WeakReference<Activity>> list = ApplicationStatus.getRunningActivities();
