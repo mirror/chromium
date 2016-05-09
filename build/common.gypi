@@ -424,7 +424,7 @@
       'chrome_pgo_phase%': '0',
 
       # Experimental setting to build the official builds with full WPO.
-      'full_wpo_on_official%': '1',
+      'full_wpo_on_official%': '0',
 
       # Set to select the Title Case versions of strings in GRD files.
       'use_titlecase_in_grd%': 0,
