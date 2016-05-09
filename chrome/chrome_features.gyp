@@ -20,7 +20,6 @@
           'ANDROID_JAVA_UI=<(android_java_ui)',
           'USE_VULCANIZE=<(use_vulcanize)',
           'ENABLE_PACKAGE_MASH_SERVICES=<(enable_package_mash_services)',
-          'WPO_BUILD=<(wpo_build)',
         ],
       },
     },

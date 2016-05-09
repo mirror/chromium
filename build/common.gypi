@@ -5572,6 +5572,11 @@
               4702, # unreachable code
             ],
           }],
+          ['full_wpo_on_official==1', {
+            'defines': [
+              'WPO_BUILD',
+            ],
+          }]
         ],
         # Add extra include directories here that need to be in front of the
         # installed and packaged include directories. This may be needed in

@@ -1229,7 +1229,7 @@ void ChromeBrowserMainParts::PostProfileInit() {
 
 #if defined(OS_WIN)
 void RegisterWPOFieldTrial() {
-#if BUILDFLAG(WPO_BUILD)
+#if defined(WPO_BUILD)
   ChromeMetricsServiceAccessor::RegisterSyntheticFieldTrial(
       "ChromeFullWPOBuild", "Enabled");
 #else
