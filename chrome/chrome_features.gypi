@@ -21,6 +21,11 @@
         }, {
           'enable_background%': 1,
           'enable_google_now%': 1,
+        }],
+        ['buildtype=="Official" and full_wpo_on_official==1', {
+          'wpo_build%': 1,
+        }, {
+          'wpo_build%': 0,
         }]
       ],
 
@@ -35,6 +40,7 @@
     'enable_google_now%': '<(enable_google_now)',
     'android_java_ui%': '<(android_java_ui)',
     'use_vulcanize%': '<(use_vulcanize)',
+    'wpo_build%': '<(wpo_build)',
 
     # GN only, but defined here so BUILDFLAG works without ifdef.
     'enable_package_mash_services%': 0,

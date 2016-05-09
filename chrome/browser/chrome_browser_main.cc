@@ -1224,10 +1224,23 @@ void ChromeBrowserMainParts::PostProfileInit() {
     chrome_extra_parts_[i]->PostProfileInit();
 }
 
+// These functions must be in the global namespace as they need to be friended
+// by ChromeMetricsServiceAccessor.
+
+#if defined(OS_WIN)
+void RegisterWPOFieldTrial() {
+#if BUILDFLAG(WPO_BUILD)
+  ChromeMetricsServiceAccessor::RegisterSyntheticFieldTrial(
+      "ChromeFullWPOBuild", "Enabled");
+#else
+  ChromeMetricsServiceAccessor::RegisterSyntheticFieldTrial(
+      "ChromeFullWPOBuild", "Disabled");
+#endif
+}
+#endif
+
 #if defined(SYZYASAN)
 
-// This function must be in the global namespace as it needs to be friended
-// by ChromeMetricsServiceAccessor.
 void SyzyASANRegisterExperiment(const char* name, const char* group) {
   ChromeMetricsServiceAccessor::RegisterSyntheticFieldTrial(name, group);
 }
@@ -1278,7 +1291,6 @@ void SetupSyzyASAN() {
 
 #endif  // SYZYASAN
 
-
 void ChromeBrowserMainParts::PreBrowserStart() {
   TRACE_EVENT0("startup", "ChromeBrowserMainParts::PreBrowserStart");
   for (size_t i = 0; i < chrome_extra_parts_.size(); ++i)
@@ -1288,6 +1300,11 @@ void ChromeBrowserMainParts::PreBrowserStart() {
 
 #if defined(SYZYASAN)
   SetupSyzyASAN();
+#endif
+
+#if defined(OS_WIN)
+  if (chrome::GetChannel() == version_info::Channel::DEV)
+    RegisterWPOFieldTrial();
 #endif
 
 // Start the tab manager here so that we give the most amount of time for the

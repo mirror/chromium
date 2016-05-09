@@ -5,6 +5,8 @@
 # This is the GN version of //chrome/chrome_features.gypi.
 # Please keep in sync!
 
+import("//build/config/compiler/compiler.gni")
+
 declare_args() {
   enable_google_now = !is_ios && !is_android
 
@@ -26,6 +28,8 @@ declare_args() {
   # Set to true to bundle all the mash related mojo services into chrome.
   # Specify --mash to chrome to have chrome start the mash environment.
   enable_package_mash_services = is_chromeos
+
+  wpo_build = is_official_build && full_wpo_on_official
 }
 
 chrome_grit_defines = [
