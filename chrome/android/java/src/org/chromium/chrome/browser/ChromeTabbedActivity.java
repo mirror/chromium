@@ -332,16 +332,12 @@ public class ChromeTabbedActivity extends ChromeActivity
         setupCardboardWindowFlags(true);
         getCompositorViewHolder().mCompositorView.useSurface(false);
         mCardboardView.setVisibility(View.VISIBLE);
-        Log.d("bshe:log", "---cardboardview width===" + mCardboardView.getWidth());
-        Log.d("bshe:log", "About to make cardboard view visible.");
       } else {
         mVrEnabled = false;
         setupCardboardWindowFlags(false);
         getCompositorViewHolder().mCompositorView.useSurface(true);
         mCardboardView.setVisibility(View.GONE);
-        Log.d("bshe:log", "About to make cardboard view disappear.");
       }
-
     }
 
     /**

@@ -339,7 +339,7 @@ public class CompositorView
         super.onWindowVisibilityChanged(visibility);
         if (mWindowAndroid == null) return;
         if (visibility == View.GONE) {
-            //mWindowAndroid.onVisibilityChanged(false);
+            mWindowAndroid.onVisibilityChanged(false);
         } else if (visibility == View.VISIBLE) {
             mWindowAndroid.onVisibilityChanged(true);
         }

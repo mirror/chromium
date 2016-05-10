@@ -451,7 +451,12 @@ by a child template that "extends" this file.
 
         {% if enable_vr_shell == "1" %}
         <activity android:name="org.chromium.chrome.browser.ChromeCardboardActivity"
+                  android:theme="@style/MainTheme"
+                  android:exported="false"
+                  android:windowBackground="@drawable/window_background"
                   android:windowSoftInputMode="adjustResize"
+                  android:launchMode="singleTask"
+                  android:hardwareAccelerated="false"
                   android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
                   android:screenOrientation="sensorLandscape">
             <intent-filter>
