@@ -435,8 +435,8 @@ public class ContentShellActivity extends Activity
         return shell != null ? shell.getWebContents() : null;
     }
 
-  private class EventListener extends Controller.EventListener
-      implements ControllerManager.EventListener, Runnable {
+    private class EventListener extends Controller.EventListener
+        implements ControllerManager.EventListener, Runnable {
 
     private int controllerState = ConnectionStates.DISCONNECTED;
     private String serviceState;

@@ -73,6 +73,8 @@ public class CompositorView
     private Surface mOldSurface = null;
     private Surface mSurface = null;
     private boolean mUseOldSurface = true;
+    private int mVrWindowWidth = 2560;
+    private int mVrWindowHeight = 1440;
 
     // Resource Management
     private ResourceManager mResourceManager;
@@ -223,9 +225,7 @@ public class CompositorView
 
     @Override
     public void OnNewSurface(SurfaceTexture surface) {
-      final int width = getWidth() > getHeight() ? getWidth() : getHeight();
-      final int height = getWidth() < getHeight() ? getWidth() : getHeight();
-      surface.setDefaultBufferSize(width, height);
+      surface.setDefaultBufferSize(mVrWindowWidth, mVrWindowHeight);
       mSurface = new Surface(surface);
       mUseOldSurface = false;
       ThreadUtils.postOnUiThread(new Runnable(){
@@ -233,8 +233,8 @@ public class CompositorView
         public void run() {
           Log.d("bshe:log", "First set new surface texture");
           nativeSurfaceCreated(mNativeCompositorView);
-          //setVisibility(GONE);
-          surfaceChanged(null, 4, width, height);
+          setVisibility(GONE);
+          surfaceChanged(null, 4, mVrWindowWidth, mVrWindowHeight);
         }
       });
     }
@@ -249,9 +249,7 @@ public class CompositorView
             setVisibility(VISIBLE);
         } else {
             setVisibility(GONE);
-            int width = getWidth() > getHeight() ? getWidth() : getHeight();
-            int height = getWidth() < getHeight() ? getWidth() : getHeight();
-            surfaceChanged(null, 4, width, height);
+            surfaceChanged(null, 4, mVrWindowWidth, mVrWindowHeight);
         }
     }
 
