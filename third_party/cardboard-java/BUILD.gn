@@ -19,6 +19,12 @@ android_java_prebuilt("cardboard-common-java") {
   jar_path = "common.jar"
 }
 
+# A special version of common.jar protobuf related classes have been deleted
+# manually.
+android_java_prebuilt("cardboard-controller-java") {
+  jar_path = "controller.jar"
+}
+
 # need to extract res too. Note there were some deperactaed property that
 # I updated to solve compiler errors. The custom package is also in vr.cardbaord
 # not in vrtoolkit.cardboard although the folder is in core.aar

@@ -614,6 +614,8 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Screen
     // ResultReceiver in the InputMethodService (IME app) gets gc'ed.
     private ShowKeyboardResultReceiver mShowKeyboardResultReceiver;
 
+    private MotionEventModifier mMotionEventModifier = null;
+
     /**
      * @param webContents The {@link WebContents} to find a {@link ContentViewCore} of.
      * @return            A {@link ContentViewCore} that is connected to {@code webContents} or
@@ -1157,11 +1159,17 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Screen
 
     // End FrameLayout overrides.
 
+    public void setMotionEventModifier(MotionEventModifier modifier) {
+        mMotionEventModifier = modifier;
+    }
+
     /**
      * @see View#onTouchEvent(MotionEvent)
      */
     public boolean onTouchEvent(MotionEvent event) {
         final boolean isTouchHandleEvent = false;
+        if (mMotionEventModifier != null)
+           event = mMotionEventModifier.getCalibratedEvent(event);
         return onTouchEventImpl(event, isTouchHandleEvent);
     }
 
@@ -1829,6 +1837,12 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Screen
         nativeScrollEnd(mNativeContentViewCore, time);
     }
 
+    public void hoverboardSingleTap(float x, float y) {
+        if (mNativeContentViewCore != 0) {
+            long time = System.currentTimeMillis();
+            nativeSingleTap(mNativeContentViewCore, time, x, y);
+        }
+    }
     /**
      * @see View#scrollTo(int, int)
      */

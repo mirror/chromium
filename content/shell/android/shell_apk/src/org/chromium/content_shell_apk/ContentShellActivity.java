@@ -5,16 +5,25 @@
 package org.chromium.content_shell_apk;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Vibrator;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
+
+import com.google.vrtoolkit.cardboard.controller.Controller;
+import com.google.vrtoolkit.cardboard.controller.Controller.ConnectionStates;
+import com.google.vrtoolkit.cardboard.controller.ControllerManager;
 
 import org.chromium.base.BaseSwitches;
 import org.chromium.base.CommandLine;
@@ -27,15 +36,22 @@ import org.chromium.content.app.ContentApplication;
 import org.chromium.content.browser.BrowserStartupController;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.DeviceUtils;
+import org.chromium.content.browser.MotionEventModifier;
+import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.content.common.ContentSwitches;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_shell.Shell;
 import org.chromium.content_shell.ShellManager;
 import org.chromium.ui.base.ActivityWindowAndroid;
+//TODO move these two imports. they should be in GestureHandler
+import android.view.MotionEvent.PointerCoords;
+import android.view.MotionEvent.PointerProperties;
 
 import com.google.vrtoolkit.cardboard.CardboardView;
 import com.google.vrtoolkit.cardboard.sensors.SensorConnection;
 import com.google.vrtoolkit.cardboard.CardboardDeviceParams;
+
+import java.lang.reflect.*;
 
 /**
  * Activity for managing the Content Shell.
@@ -56,6 +72,14 @@ public class ContentShellActivity extends Activity
     private ContentCardboardRenderer mRenderer;
     private boolean mVrEnabled = false;
     private int mSystemUiVisibilityFlag = -1;
+
+    private Vibrator vibrator;
+    private int mWidth;
+    private int mHeight;
+
+    private ControllerManager controllerManager;
+    private Controller controller;
+    private Handler uiHandler;
 
     private final SensorConnection sensorConnection = new SensorConnection(this);
 
@@ -108,6 +132,7 @@ public class ContentShellActivity extends Activity
     @Override
     public void onCardboardTrigger() {
       Log.d("bshe:log", "---triggered----");
+      vibrator.vibrate(50);
     }
 
     @Override
@@ -167,7 +192,7 @@ public class ContentShellActivity extends Activity
         mWindowAndroid.setAnimationPlaceholderView(
                 mShellManager.getContentViewRenderView().getSurfaceView());
 
-        String startupUrl = getUrlFromIntent(getIntent());
+        String startupUrl = "file:///storage/self/primary/Cardboard/print.html";//getUrlFromIntent(getIntent());
         if (!TextUtils.isEmpty(startupUrl)) {
             mShellManager.setStartupUrl(Shell.sanitizeUrl(startupUrl));
         }
@@ -205,9 +230,16 @@ public class ContentShellActivity extends Activity
         mCardboardView = (CardboardView) findViewById(R.id.cardboard_view);
         mRenderer = new ContentCardboardRenderer(this);
         mCardboardView.setRenderer(mRenderer);
-        //setCardboardView(mCardboardView);
+        mCardboardView.setTransitionViewEnabled(true);
         mCardboardView.setVisibility(View.GONE);
         sensorConnection.onCreate(this);
+
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        EventListener listener = new EventListener();
+        controllerManager = new ControllerManager(this, listener);
+        controller = controllerManager.getController();
+        controller.setEventListener(listener);
+        uiHandler = new Handler();
         ////
     }
 
@@ -227,6 +259,7 @@ public class ContentShellActivity extends Activity
         mShellManager.getContentViewRenderView().useSurface(false);
         setupCardboardWindowFlags(true);
         Log.d("bshe:log", "About to make cardboard view visible.");
+        controllerManager.start();
       } else {
         mVrEnabled = false;
         mShellManager.getContentViewRenderView().useSurface(true);
@@ -237,12 +270,32 @@ public class ContentShellActivity extends Activity
     }
 
     private void finishInitialization(Bundle savedInstanceState) {
-        String shellUrl = ShellManager.DEFAULT_SHELL_URL;
+        String shellUrl = "file:///storage/self/primary/Cardboard/print.html";//ShellManager.DEFAULT_SHELL_URL;
         if (savedInstanceState != null
                 && savedInstanceState.containsKey(ACTIVE_SHELL_URL_KEY)) {
             shellUrl = savedInstanceState.getString(ACTIVE_SHELL_URL_KEY);
         }
         mShellManager.launchShell(shellUrl);
+
+        mShellManager.getActiveShell().getContentViewCore().addGestureStateListener(new GestureStateListener(){
+               @Override
+               public void onSingleTap(boolean consumed, int x, int y) {
+                  onCardboardTrigger();
+               }
+            });
+
+    }
+
+    private <T> void inspect(Class<T> klazz) {
+        Field[] fields = klazz.getDeclaredFields();
+        Log.i("Inspect: ",String.format("%d fields:%n", fields.length));
+        for (Field field : fields) {
+            Log.i("  + ", String.format("%s %s %s%n",
+                Modifier.toString(field.getModifiers()),
+                field.getType().getSimpleName(),
+                field.getName())
+            );
+        }
     }
 
     private void initializationFailed() {
@@ -306,9 +359,16 @@ public class ContentShellActivity extends Activity
     @Override
     protected void onStart() {
         super.onStart();
-
+        if (mVrEnabled)
+            controllerManager.start();
         ContentViewCore contentViewCore = getActiveContentViewCore();
         if (contentViewCore != null) contentViewCore.onShow();
+    }
+
+    @Override
+    protected void onStop() {
+       controllerManager.stop();
+       super.onStop();
     }
 
     @Override
@@ -374,5 +434,68 @@ public class ContentShellActivity extends Activity
         Shell shell = getActiveShell();
         return shell != null ? shell.getWebContents() : null;
     }
+
+  private class EventListener extends Controller.EventListener
+      implements ControllerManager.EventListener, Runnable {
+
+    private int controllerState = ConnectionStates.DISCONNECTED;
+    private String serviceState;
+    private float lastx;
+    private float lasty;
+    private boolean lastb = false;
+
+    @Override
+    public void onServiceDebugStringChanged(String state) {
+      serviceState = state;
+      uiHandler.post(this);
+    }
+
+    @Override
+    public void onConnectionStateChanged(int state) {
+      controllerState = state;
+      uiHandler.post(this);
+    }
+
+    @Override
+    public void onUpdate() {
+      uiHandler.post(this);
+    }
+    private static final int MAX_NUM_POINTERS = 16;
+    @Override
+    public void run() {
+      controller.update();
+      Log.i(TAG, String.format("Hoverboard input: [%4.2f, %4.2f]-[w: %4.2f, x: %4.2f, y: %4.2f, z: %4.2f][%s][%s][%s][%s][%s]",
+          controller.touch.x, controller.touch.y,
+          controller.orientation.w, controller.orientation.x,
+          controller.orientation.y, controller.orientation.z,
+          controller.appButtonState ? "A" : " ",
+          controller.homeButtonState ? "H" : " ",
+          controller.clickButtonState ? "T" : " ",
+          controller.volumeUpButtonState ? "+" : " ",
+          controller.volumeDownButtonState ? "-" : " "));
+      float dx = (lastx - controller.touch.x) * 500;
+      float dy = (lasty - controller.touch.y) * 500;
+      if ((controller.touch.x != 0 || controller.touch.y != 0) &&
+          (dx != 0 || dy != 0)) {
+        if (Math.abs(lastx - controller.touch.x) < 0.3 && Math.abs(lasty - controller.touch.y) < 0.3)
+          mShellManager.getActiveShell().getContentViewCore().scrollBy(dx, dy, false);
+      }
+      lastx = controller.touch.x;
+      lasty = controller.touch.y;
+      if (controller.homeButtonState)
+          mRenderer.setAngleDot(controller.orientation.y, controller.orientation.x);
+      if (controller.appButtonState) {
+        Log.i("CHROME: ", "Step 1");
+        Display display = getWindowManager().getDefaultDisplay();
+        mWidth = display.getWidth();
+        mHeight = display.getHeight();
+        if (!lastb)
+            mShellManager.getActiveShell().getContentViewCore().hoverboardSingleTap(
+                mRenderer.getLookAtX(mWidth, mHeight), mRenderer.getLookAtY(mWidth, mHeight));
+      }
+      lastb = controller.appButtonState;
+    }
+
+  }
 
 }

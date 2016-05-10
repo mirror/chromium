@@ -125,6 +125,7 @@ android_library("content_java") {
     "java/src/org/chromium/content/browser/MediaResourceGetter.java",
     "java/src/org/chromium/content/browser/MediaSessionDelegate.java",
     "java/src/org/chromium/content/browser/MediaThrottler.java",
+    "java/src/org/chromium/content/browser/MotionEventModifier.java",
     "java/src/org/chromium/content/browser/MotionEventSynthesizer.java",
     "java/src/org/chromium/content/browser/OverscrollRefreshHandler.java",
     "java/src/org/chromium/content/browser/PepperPluginManager.java",

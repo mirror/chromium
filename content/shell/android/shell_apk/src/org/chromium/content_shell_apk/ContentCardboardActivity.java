@@ -9,9 +9,12 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.google.vrtoolkit.cardboard.CardboardActivity;
@@ -27,11 +30,13 @@ import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.content.app.ContentApplication;
 import org.chromium.content.browser.BrowserStartupController;
 import org.chromium.content.browser.ContentViewCore;
+import org.chromium.content.browser.MotionEventModifier;
 import org.chromium.content.browser.DeviceUtils;
 import org.chromium.content.common.ContentSwitches;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_shell.Shell;
 import org.chromium.content_shell.ShellManager;
+import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.ui.base.ActivityWindowAndroid;
 
 /**
@@ -47,6 +52,9 @@ public class ContentCardboardActivity extends CardboardActivity {
     private Intent mLastSentIntent;
     private ContentCardboardRenderer mRenderer;
 
+    private Vibrator vibrator;
+    private int mWidth;
+    private int mHeight;
     @Override
     @SuppressFBWarnings("DM_EXIT")
     protected void onCreate(final Bundle savedInstanceState) {
@@ -76,7 +84,10 @@ public class ContentCardboardActivity extends CardboardActivity {
     }
 
     @Override
-    public void onCardboardTrigger() {}
+    public void onCardboardTrigger() {
+        Log.d(TAG, "Cardboard Triggered");
+        vibrator.vibrate(50);
+    }
 
     @Override
     protected void onStart() {

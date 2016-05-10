@@ -95,9 +95,11 @@ android_library("content_shell_apk_java") {
   ]
   if (enable_vr_shell) {
     deps += [
+      "//third_party/android_protobuf:protobuf_nano_javalib",
       "//third_party/cardboard-java:cardboard-common-java",
-      "//third_party/cardboard-java:cardboard-java",
+      "//third_party/cardboard-java:cardboard-controller-java",
       "//third_party/cardboard-java:cardboard-core-res",
+      "//third_party/cardboard-java:cardboard-java",
     ]
     java_files += [
       "shell_apk/src/org/chromium/content_shell_apk/CardboardBrowser.java",

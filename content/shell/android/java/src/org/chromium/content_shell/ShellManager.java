@@ -28,7 +28,7 @@ import org.chromium.ui.base.WindowAndroid;
 @JNINamespace("content")
 public class ShellManager extends FrameLayout {
 
-    public static final String DEFAULT_SHELL_URL = "http://www.google.com";
+    public static final String DEFAULT_SHELL_URL = "http://rbyers.github.io/paint";
     private static boolean sStartup = true;
     private WindowAndroid mWindow;
     private Shell mActiveShell;

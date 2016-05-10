@@ -44,6 +44,8 @@ public class ContentCardboardRenderer implements CardboardView.StereoRenderer {
     private CardboardBrowser mCardboardBrowser;
 
     private float mCameraPosition;
+    private float mMarkerX = 0;
+    private float mMarkerY = 0;
     // Lock to allow multithreaded access to mCameraPosition.
     private final Object mCameraPositionLock = new Object();
 
@@ -53,12 +55,17 @@ public class ContentCardboardRenderer implements CardboardView.StereoRenderer {
 
     // Make matrix member variable to avoid unnecessary initialization.
     private float[] mDesktopModelMatrix;
+    private float[] mCursorModelMatrix;
     private float[] mDesktopCombinedMatrix;
+    private float[] mCursorCombinedMatrix;
     private float[] mEyePointModelMatrix;
     private float[] mEyePointCombinedMatrix;
 
+    private float[] mMarkerCombinedMatrix;
+    private float[] mMarkerModelMatrix;
     // Direction that user is looking towards.
     private float[] mForwardVector;
+    private float[] mHeadView;
 
     // Eye position at the menu bar distance;
 
@@ -73,11 +80,17 @@ public class ContentCardboardRenderer implements CardboardView.StereoRenderer {
         mViewMatrix = new float[16];
         mProjectionMatrix = new float[16];
         mDesktopModelMatrix = new float[16];
+        mCursorModelMatrix = new float[16];
         mDesktopCombinedMatrix = new float[16];
+        mCursorCombinedMatrix = new float[16];
         mEyePointModelMatrix = new float[16];
         mEyePointCombinedMatrix = new float[16];
 
+        mMarkerModelMatrix = new float[16];
+        mMarkerCombinedMatrix = new float[16];
+
         mForwardVector = new float[3];
+        mHeadView = new float[16];
     }
 
     @Override
@@ -121,6 +134,7 @@ public class ContentCardboardRenderer implements CardboardView.StereoRenderer {
         Matrix.setLookAtM(mCameraMatrix, 0, eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ);
 
         headTransform.getForwardVector(mForwardVector, 0);
+        headTransform.getHeadView(mHeadView, 0);
     }
 
     @Override
@@ -145,15 +159,57 @@ public class ContentCardboardRenderer implements CardboardView.StereoRenderer {
 
     private void drawDesktop() {
         Matrix.setIdentityM(mDesktopModelMatrix, 0);
+        Matrix.setIdentityM(mCursorModelMatrix, 0);
+        Matrix.setIdentityM(mMarkerModelMatrix, 0);
         Matrix.translateM(
                 mDesktopModelMatrix, 0, DESKTOP_POSITION_X, DESKTOP_POSITION_Y, DESKTOP_POSITION_Z);
 
         // Pass in Model View Matrix and Model View Project Matrix.
         Matrix.multiplyMM(mDesktopCombinedMatrix, 0, mViewMatrix, 0, mDesktopModelMatrix, 0);
+        Matrix.invertM(mCursorModelMatrix, 0, mHeadView, 0);
+        Matrix.multiplyMM(mCursorCombinedMatrix, 0, mCursorModelMatrix, 0, mDesktopCombinedMatrix, 0);
+        // rotate.
+        Matrix.translateM(mMarkerCombinedMatrix, 0, mCursorCombinedMatrix,0, mMarkerX * -2.0f, mMarkerY * 2.0f, 0);
+
         Matrix.multiplyMM(
                 mDesktopCombinedMatrix, 0, mProjectionMatrix, 0, mDesktopCombinedMatrix, 0);
+        Matrix.multiplyMM(
+                mCursorCombinedMatrix, 0, mProjectionMatrix, 0, mCursorCombinedMatrix, 0);
+        Matrix.multiplyMM(
+                mMarkerCombinedMatrix, 0, mProjectionMatrix, 0, mMarkerCombinedMatrix, 0);
 
         mCardboardBrowser.draw(mDesktopCombinedMatrix, false);
+        mCardboardBrowser.drawTriangle(mCursorCombinedMatrix, false);
+        mCardboardBrowser.drawMarker(mMarkerCombinedMatrix, false);
     }
 
+    public float getLookAtX(float maxX, float maxY) {
+       float[] initVec = {0, 0, 0, 1.0f};
+       float[] objPositionVec = new float[4];
+
+       float[] temp;
+       temp = new float[16];
+       Matrix.multiplyMM(temp, 0, mHeadView, 0, mDesktopModelMatrix, 0);
+       Matrix.multiplyMV(objPositionVec, 0, temp, 0, initVec, 0);
+       float yaw = (float) Math.atan2(objPositionVec[0], -objPositionVec[2]);
+       float posX = -(float) Math.sin(yaw) * maxX + maxX / 2;
+       return posX;
+    }
+
+    public float getLookAtY(float maxX, float maxY) {
+       float[] initVec = {0, 0, 0, 1.0f};
+       float[] objPositionVec = new float[4];
+       float[] temp;
+       temp = new float[16];
+       Matrix.multiplyMM(temp, 0, mHeadView, 0, mDesktopModelMatrix, 0);
+       Matrix.multiplyMV(objPositionVec, 0, temp, 0, initVec, 0);
+       float pitch = (float) Math.atan2(objPositionVec[1], -objPositionVec[2]);
+       float posY = (float) Math.sin(pitch) * maxY + maxY/2;
+       return posY;
+    }
+
+    public void setAngleDot(float x, float y) {
+       mMarkerX = x;
+       mMarkerY = y;
+    }
 }
