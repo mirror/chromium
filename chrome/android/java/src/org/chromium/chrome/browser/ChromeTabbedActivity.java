@@ -112,6 +112,20 @@ import com.google.vrtoolkit.cardboard.CardboardView;
 import com.google.vrtoolkit.cardboard.sensors.SensorConnection;
 import com.google.vrtoolkit.cardboard.CardboardDeviceParams;
 
+import android.os.Handler;
+import android.os.Vibrator;
+import android.view.Display;
+import android.view.MotionEvent;
+import com.google.vrtoolkit.cardboard.controller.Controller;
+import com.google.vrtoolkit.cardboard.controller.Controller.ConnectionStates;
+import com.google.vrtoolkit.cardboard.controller.ControllerManager;
+import org.chromium.content.browser.MotionEventModifier;
+import org.chromium.content_public.browser.GestureStateListener;
+//TODO move these two imports. they should be in GestureHandler
+import android.view.MotionEvent.PointerCoords;
+import android.view.MotionEvent.PointerProperties;
+import java.lang.reflect.*;
+
 /**
  * This is the main activity for ChromeMobile when not running in document mode.  All the tabs
  * are accessible via a chrome specific tab switching UI.
@@ -218,6 +232,14 @@ public class ChromeTabbedActivity extends ChromeActivity
     private boolean mVrEnabled = false;
     private final SensorConnection sensorConnection = new SensorConnection(this);
     private int mSystemUiVisibilityFlag = -1;
+
+    private Vibrator vibrator;
+    private int mWidth;
+    private int mHeight;
+
+    private ControllerManager controllerManager;
+    private Controller controller;
+    private Handler uiHandler;
 
     private void setupCardboardWindowFlags(boolean isCardboard) {
       Window window = getWindow();
@@ -332,6 +354,7 @@ public class ChromeTabbedActivity extends ChromeActivity
         setupCardboardWindowFlags(true);
         getCompositorViewHolder().mCompositorView.useSurface(false);
         mCardboardView.setVisibility(View.VISIBLE);
+        controllerManager.start();
       } else {
         mVrEnabled = false;
         setupCardboardWindowFlags(false);
@@ -371,6 +394,7 @@ public class ChromeTabbedActivity extends ChromeActivity
     @Override
     public void onCardboardTrigger() {
       Log.d("bshe:log", "---triggered----");
+      vibrator.vibrate(50);
     }
 
     @Override
@@ -383,7 +407,20 @@ public class ChromeTabbedActivity extends ChromeActivity
       mCardboardView.setRenderer(mRenderer);
       mCardboardView.setTransitionViewEnabled(true);
       mCardboardView.setVisibility(View.GONE);
+      mCardboardView.setOnCardboardTriggerListener(new Runnable() {
+        @Override
+        public void run() {
+          onCardboardTrigger();
+        }
+      });
       sensorConnection.onCreate(this);
+
+      vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+      EventListener listener = new EventListener();
+      controllerManager = new ControllerManager(this, listener);
+      controller = controllerManager.getController();
+      controller.setEventListener(listener);
+      uiHandler = new Handler();
     }
 
     @Override
@@ -408,6 +445,7 @@ public class ChromeTabbedActivity extends ChromeActivity
     @Override
     public void onStop() {
       Log.d("bshe:log", "onStop called");
+      controllerManager.stop();
       super.onStop();
 //      mCardboardView.onStop();
     }
@@ -416,6 +454,7 @@ public class ChromeTabbedActivity extends ChromeActivity
     public void onDestroy() {
       Log.d("bshe:log", "onDestroy called");
       super.onDestroy();
+      mCardboardView.setOnCardboardTriggerListener(null);
 //      mCardboardView.shutdown();
       mCardboardView = null;
       sensorConnection.onDestroy(this);
@@ -501,6 +540,9 @@ public class ChromeTabbedActivity extends ChromeActivity
     @Override
     public void onStart() {
         super.onStart();
+        if (mVrEnabled)
+            controllerManager.start();
+
         StartupMetrics.getInstance().updateIntent(getIntent());
     }
 
@@ -1588,4 +1630,69 @@ public class ChromeTabbedActivity extends ChromeActivity
     protected void setStatusBarColor(Tab tab, int color) {
         super.setStatusBarColor(tab, isInOverviewMode() ? Color.BLACK : color);
     }
+
+   private class EventListener extends Controller.EventListener
+      implements ControllerManager.EventListener, Runnable {
+
+    private int controllerState = ConnectionStates.DISCONNECTED;
+    private String serviceState;
+    private float lastx;
+    private float lasty;
+    private boolean lastb = false;
+
+    @Override
+    public void onServiceDebugStringChanged(String state) {
+      serviceState = state;
+      uiHandler.post(this);
+    }
+
+    @Override
+    public void onConnectionStateChanged(int state) {
+      controllerState = state;
+      uiHandler.post(this);
+    }
+
+    @Override
+    public void onUpdate() {
+      uiHandler.post(this);
+    }
+    private static final int MAX_NUM_POINTERS = 16;
+    @Override
+    public void run() {
+      controller.update();
+      Log.i(TAG, String.format("Hoverboard input: [%4.2f, %4.2f]-[w: %4.2f, x: %4.2f, y: %4.2f, z: %4.2f][%s][%s][%s][%s][%s]",
+          controller.touch.x, controller.touch.y,
+          controller.orientation.w, controller.orientation.x,
+          controller.orientation.y, controller.orientation.z,
+          controller.appButtonState ? "A" : " ",
+          controller.homeButtonState ? "H" : " ",
+          controller.clickButtonState ? "T" : " ",
+          controller.volumeUpButtonState ? "+" : " ",
+          controller.volumeDownButtonState ? "-" : " "));
+      float dx = (lastx - controller.touch.x) * 500;
+      float dy = (lasty - controller.touch.y) * 500;
+      if ((controller.touch.x != 0 || controller.touch.y != 0) &&
+          (dx != 0 || dy != 0)) {
+        if (Math.abs(lastx - controller.touch.x) < 0.3 && Math.abs(lasty - controller.touch.y) < 0.3) {
+          getActivityTab().getContentViewCore().scrollBy(dx, dy, false);
+        }
+      }
+      lastx = controller.touch.x;
+      lasty = controller.touch.y;
+      if (controller.homeButtonState)
+          mRenderer.setAngleDot(controller.orientation.y, controller.orientation.x);
+      if (controller.appButtonState) {
+        Log.i("CHROME: ", "Step 1");
+        Display display = getWindowManager().getDefaultDisplay();
+        mWidth = display.getWidth();
+        mHeight = display.getHeight();
+        if (!lastb) {
+            getActivityTab().getContentViewCore().hoverboardSingleTap(
+                mRenderer.getLookAtX(mWidth, mHeight), mRenderer.getLookAtY(mWidth, mHeight));
+        }
+      }
+      lastb = controller.appButtonState;
+    }
+
+  }
 }

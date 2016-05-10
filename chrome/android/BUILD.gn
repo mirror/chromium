@@ -207,9 +207,10 @@ android_library("chrome_java") {
 
   if (enable_vr_shell) {
      deps += [
-       "//third_party/cardboard-java:cardboard-java",
        "//third_party/cardboard-java:cardboard-common-java",
+       "//third_party/cardboard-java:cardboard-controller-java",
        "//third_party/cardboard-java:cardboard-core-res",
+       "//third_party/cardboard-java:cardboard-java",
      ]
   }
 }
