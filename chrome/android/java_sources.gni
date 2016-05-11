@@ -21,7 +21,6 @@ chrome_java_sources = [
   "java/src/org/chromium/chrome/browser/ChromeActivity.java",
   "java/src/org/chromium/chrome/browser/ChromeApplication.java",
   "java/src/org/chromium/chrome/browser/ChromeBackgroundService.java",
-  "java/src/org/chromium/chrome/browser/ChromeCardboardActivity.java",
   "java/src/org/chromium/chrome/browser/ChromeCardboardRenderer.java",
   "java/src/org/chromium/chrome/browser/ChromeFeatureList.java",
   "java/src/org/chromium/chrome/browser/ChromeHttpAuthHandler.java",
