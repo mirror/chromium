@@ -60,6 +60,7 @@
     'gn_release_trybot_x86': ['gn', 'release_trybot', 'x86'],
     'gyp_debug_bot': ['gyp', 'debug_bot'],
     'gyp_debug_bot_x86': ['gyp', 'debug_bot', 'x86'],
+    'gyp_official': ['gyp', 'official'],
     'gyp_official_goma': ['gyp', 'official', 'goma'],
     'gyp_official_goma_chromeos': ['gyp', 'official', 'goma', 'chromeos'],
     'gyp_official_goma_x86': ['gyp', 'official', 'goma', 'x86'],
@@ -67,6 +68,14 @@
     'gyp_official_goma_minimal_symbols_android_arm64': ['gyp', 'official', 'goma', 'minimal_symbols', 'android', 'arm64'],
     'gyp_official_goma_minimal_symbols_x64': ['gyp', 'official', 'goma', 'minimal_symbols', 'x64'],
     'gyp_official_goma_minimal_symbols_x86': ['gyp', 'official', 'goma', 'minimal_symbols', 'x86'],
+    'gyp_official_syzyasan': ['gyp', 'official', 'syzyasan'],
+
+    # TODO(crbug.com/595947) - figure out how to handle PGO, which needs
+    # to invoke GYP/GN twice, with two different sets of flags, apparently.
+    'gyp_official_winpgo': ['gyp', 'error'],
+    'gyp_official_winpgo_x64': ['gyp', 'error', 'x64'],
+
+    'gyp_official_x64': ['gyp', 'official', 'x64'],
     'gyp_release_bot_android': ['gyp', 'release_bot', 'android'],
     'gyp_release_trybot': ['gyp', 'release_trybot'],
     'gyp_release_trybot_x64': ['gyp', 'release_trybot', 'x64'],
@@ -293,6 +302,15 @@
       'gyp_defines': 'embedded=1',
     },
 
+    # This mixin is used to force configs that use it to fail. It
+    # is sued in two cases: when we have bots that we haven't looked at
+    # yet and don't know whether they need MB or not, and for bots
+    # that are test-only and should never run MB.
+    'error': {
+      'gn_args': 'error',
+      'gyp_defines': 'target_arch=unknown',
+    },
+
     'full_symbols': {
       'gn_args': 'symbol_level=2',
       'gyp_defines': 'fastbuild=0',
@@ -429,6 +447,11 @@
     'swarming': {
       'gn_args': '',
       'gyp_defines': 'test_isolation_mode=prepare',
+    },
+
+    'syzyasan': {
+      'gn_args': 'is_syzyasan=true',
+      'gyp_defines': 'syzyasan=1',
     },
 
     'tsan': {
@@ -681,13 +704,28 @@
       'V8 Android GN (dbg)': 'android_gn_debug_bot',
     },
     'official.desktop': {
-      'precise64': 'gn_official',
       'blimp-engine': 'gn_blimp_debug',
+      'mac64': 'gyp_official',
+      'precise64': 'gn_official',
+
+      # Currently the official bots set mini_installer_official_deps=1
+      # but it's not clear if that's actually used anywhere.
+      'win': 'gyp_official',
+      'win-asan': 'gyp_official_syzyasan',
+      'win-pgo': 'gyp_official_winpgo',
+      'win64': 'gyp_official_x64',
+      'win64-pgo': 'gyp_official_winpgo_x64',
     },
     'official.desktop.continuous': {
-      'precise64 trunk': 'gn_official',
+      'mac beta': 'gyp_official',
+      'mac stable': 'gyp_official',
+      'mac trunk': 'gyp_official',
       'precise64 beta': 'gn_official',
       'precise64 stable': 'gn_official',
+      'precise64 trunk': 'gn_official',
+      'win beta': 'gyp_official',
+      'win stable': 'gyp_official',
+      'win trunk': 'gyp_official',
     },
     'tryserver.blink': {
       'linux_blink_dbg': 'swarming_gn_debug_bot_minimal_symbols_x64',
