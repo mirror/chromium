@@ -482,7 +482,7 @@ public class CompositorView
         }
 
         // IMPORTANT: Do not do anything that impacts the compositor layer tree before this line.
-        // If you do, you could inadvertently trigger follow up renders.  For further information
+        // If you do, you could inadvertently trigger follow up renders. For further information
         // see dtrainor@, tedchoc@, or klobag@.
 
         // TODO(jscholler): change 1.0f to dpToPx once the native part is fully supporting dp.
