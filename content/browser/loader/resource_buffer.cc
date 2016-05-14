@@ -61,9 +61,17 @@ bool ResourceBuffer::IsInitialized() const {
   return shared_mem_.memory() != NULL;
 }
 
-base::SharedMemory& ResourceBuffer::GetSharedMemory() {
+bool ResourceBuffer::ShareToProcess(
+    base::ProcessHandle process_handle,
+    base::SharedMemoryHandle* shared_memory_handle,
+    int* shared_memory_size) {
   CHECK(IsInitialized());
-  return shared_mem_;
+
+  if (!shared_mem_.ShareToProcess(process_handle, shared_memory_handle))
+    return false;
+
+  *shared_memory_size = buf_size_;
+  return true;
 }
 
 bool ResourceBuffer::CanAllocate() const {
