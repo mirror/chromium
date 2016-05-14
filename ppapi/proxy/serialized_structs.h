@@ -134,7 +134,11 @@ struct PPB_AudioEncodeParameters {
 };
 
 // TODO(raymes): Make ImageHandle compatible with SerializedHandle.
+#if defined(OS_WIN)
+typedef HANDLE ImageHandle;
+#else
 typedef base::SharedMemoryHandle ImageHandle;
+#endif
 
 }  // namespace proxy
 }  // namespace ppapi
