@@ -95,7 +95,7 @@ scoped_refptr<GbmBuffer> GbmBuffer::CreateBuffer(
   }
 
   scoped_refptr<GbmBuffer> buffer(new GbmBuffer(
-      gbm, bo, format, usage, std::move(fd), size, gbm_bo_get_stride(bo)));
+      gbm, bo, format, usage, std::move(fd), size, gbm_bo_get_stride_or_tiling(bo)));
   if (usage == gfx::BufferUsage::SCANOUT && !buffer->GetFramebufferId())
     return nullptr;
 
