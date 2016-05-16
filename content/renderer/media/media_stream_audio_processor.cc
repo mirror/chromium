@@ -117,6 +117,13 @@ bool GetStartupMinVolumeForAgc(int* startup_min_volume) {
          base::StringToInt(min_volume_str, startup_min_volume);
 }
 
+// Checks if the AEC's refined adaptive filter tuning was enabled on the command
+// line.
+bool UseAecRefinedAdaptiveFilter() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kAecRefinedAdaptiveFilter);
+}
+
 }  // namespace
 
 // Wraps AudioBus to provide access to the array of channel pointers, since this
@@ -529,6 +536,10 @@ void MediaStreamAudioProcessor::InitializeAudioProcessingModule(
       new webrtc::ExperimentalNs(goog_experimental_ns));
   if (IsDelayAgnosticAecEnabled())
     config.Set<webrtc::DelayAgnostic>(new webrtc::DelayAgnostic(true));
+  if (UseAecRefinedAdaptiveFilter()) {
+    config.Set<webrtc::RefinedAdaptiveFilter>(
+        new webrtc::RefinedAdaptiveFilter(true));
+  }
   if (goog_beamforming) {
     const auto& geometry =
         GetArrayGeometryPreferringConstraints(audio_constraints, input_params);
