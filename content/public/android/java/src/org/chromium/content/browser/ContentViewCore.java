@@ -22,6 +22,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
 import android.os.SystemClock;
+import android.speech.RecognitionListener;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.provider.Browser;
 import android.text.TextUtils;
 import android.util.Pair;
@@ -103,7 +106,7 @@ import java.util.Map.Entry;
  */
 @JNINamespace("content")
 public class ContentViewCore implements AccessibilityStateChangeListener, ScreenOrientationObserver,
-                                        SystemCaptioningBridge.SystemCaptioningBridgeListener {
+                                        SystemCaptioningBridge.SystemCaptioningBridgeListener, RecognitionListener {
     private static final String TAG = "cr.ContentViewCore";
 
     // Used to avoid enabling zooming in / out if resulting zooming will
@@ -475,7 +478,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Screen
 
     // Native pointer to C++ ContentViewCoreImpl object which will be set by nativeInit().
     private long mNativeContentViewCore = 0;
-
+    private boolean mVoiceInput = false;
     private final ObserverList<GestureStateListener> mGestureStateListeners;
     private final RewindableIterator<GestureStateListener> mGestureStateListenersIterator;
     private ZoomControlsDelegate mZoomControlsDelegate;
@@ -615,6 +618,8 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Screen
     private ShowKeyboardResultReceiver mShowKeyboardResultReceiver;
 
     private MotionEventModifier mMotionEventModifier = null;
+    private SpeechRecognizer speech = null;
+    private Intent recognizerIntent;
 
     /**
      * @param webContents The {@link WebContents} to find a {@link ContentViewCore} of.
@@ -649,6 +654,73 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Screen
         mGestureStateListenersIterator = mGestureStateListeners.rewindableIterator();
 
         mContainerViewObservers = new ObserverList<ContainerViewObserver>();
+
+        speech = SpeechRecognizer.createSpeechRecognizer(mContext);
+        speech.setRecognitionListener(this);
+        recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "en");
+//        recognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,
+//                                  this.getPackageName());
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                                  RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3);
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
+    }
+
+    @Override
+    public void onBeginningOfSpeech() {
+        Log.i(TAG, "onBeginningOfSpeech");
+    }
+
+    @Override
+    public void onBufferReceived(byte[] buffer) {
+        Log.i(TAG, "onBufferReceived: " + buffer);
+    }
+
+    @Override
+    public void onEndOfSpeech() {
+        Log.i(TAG, "onEndOfSpeech");
+    }
+
+    @Override
+    public void onError(int errorCode) {
+        Log.i(TAG, "onError");
+    }
+
+    @Override
+    public void onEvent(int arg0, Bundle arg1) {
+        Log.i(TAG, "onEvent");
+    }
+
+    @Override
+    public void onPartialResults(Bundle arg0) {
+        Log.i(TAG, "onPartialResults");
+    }
+
+    @Override
+    public void onReadyForSpeech(Bundle arg0) {
+        Log.i(TAG, "onReadyForSpeech");
+    }
+
+    @Override
+    public void onResults(Bundle results) {
+        Log.i(TAG, "onResults");
+        ArrayList<String> matches =
+            results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+        String text = "";
+        if (matches.size() > 0)
+            text = matches.get(0);
+        else
+            text = "";
+        Log.i(TAG, String.format("Result: %s", text));
+        mImeAdapter.sendCompositionToNative(text, 1, false, 0);
+        mImeAdapter.updateState(text, 0, 0, 0, text.length(),  true);
+        mImeAdapter.updateState(text, 0, 0, 0, text.length(),  false);
+    }
+
+    @Override
+    public void onRmsChanged(float rmsdB) {
+        Log.d(TAG, "onRmsChanged: " + rmsdB);
     }
 
     /**
@@ -1843,6 +1915,11 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Screen
             nativeSingleTap(mNativeContentViewCore, time, x, y);
         }
     }
+
+    public void setVoiceInput(boolean voiceInput) {
+        mVoiceInput = voiceInput;
+    }
+
     /**
      * @see View#scrollTo(int, int)
      */
@@ -2484,11 +2561,19 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Screen
             boolean focusedNodeIsPassword = (textInputType == TextInputType.PASSWORD);
             if (!focusedNodeEditable) hidePastePopup();
 
-            mImeAdapter.attach(nativeImeAdapterAndroid);
-            mImeAdapter.updateKeyboardVisibility(
-                    textInputType, textInputFlags, showImeIfNeeded);
-            mImeAdapter.updateState(text, selectionStart, selectionEnd, compositionStart,
-                    compositionEnd, isNonImeChange);
+            if (mVoiceInput) {
+                if (showImeIfNeeded && textInputType == 1) {
+                    speech.startListening(recognizerIntent);
+                } else if (showImeIfNeeded && textInputType == 0) {
+                    speech.stopListening();
+                }
+            } else {
+                mImeAdapter.attach(nativeImeAdapterAndroid);
+                mImeAdapter.updateKeyboardVisibility(
+                        textInputType, textInputFlags, showImeIfNeeded);
+                mImeAdapter.updateState(text, selectionStart, selectionEnd, compositionStart,
+                        compositionEnd, isNonImeChange);
+            }
 
             if (mActionMode != null) {
                 final boolean actionModeConfigurationChanged =

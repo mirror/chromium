@@ -355,11 +355,14 @@ public class ChromeTabbedActivity extends ChromeActivity
         getCompositorViewHolder().mCompositorView.useSurface(false);
         mCardboardView.setVisibility(View.VISIBLE);
         controllerManager.start();
+        getActivityTab().getContentViewCore().setVoiceInput(true);
+//        getActivityTab().getContentViewCore().resetPopupsAndInput();
       } else {
         mVrEnabled = false;
         setupCardboardWindowFlags(false);
         getCompositorViewHolder().mCompositorView.useSurface(true);
         mCardboardView.setVisibility(View.GONE);
+        getActivityTab().getContentViewCore().setVoiceInput(false);
       }
     }
 

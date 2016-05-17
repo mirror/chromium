@@ -298,6 +298,7 @@ public class ImeAdapter {
      */
     public void updateState(String text, int selectionStart, int selectionEnd, int compositionStart,
             int compositionEnd, boolean isNonImeChange) {
+        Log.e("VOICE", text);
         if (mCursorAnchorInfoController != null && (!TextUtils.equals(mLastText, text)
                 || mLastSelectionStart != selectionStart || mLastSelectionEnd != selectionEnd
                 || mLastCompositionStart != compositionStart
@@ -506,7 +507,7 @@ public class ImeAdapter {
                 flags));
     }
 
-    boolean sendCompositionToNative(
+    public boolean sendCompositionToNative(
             CharSequence text, int newCursorPosition, boolean isCommit, int unicodeFromKeyEvent) {
         if (mNativeImeAdapterAndroid == 0) return false;
 
