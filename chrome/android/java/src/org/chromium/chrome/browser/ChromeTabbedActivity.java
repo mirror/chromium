@@ -1660,15 +1660,6 @@ public class ChromeTabbedActivity extends ChromeActivity
     @Override
     public void run() {
       controller.update();
-      Log.i(TAG, String.format("Hoverboard input: [%4.2f, %4.2f]-[w: %4.2f, x: %4.2f, y: %4.2f, z: %4.2f][%s][%s][%s][%s][%s]",
-          controller.touch.x, controller.touch.y,
-          controller.orientation.w, controller.orientation.x,
-          controller.orientation.y, controller.orientation.z,
-          controller.appButtonState ? "A" : " ",
-          controller.homeButtonState ? "H" : " ",
-          controller.clickButtonState ? "T" : " ",
-          controller.volumeUpButtonState ? "+" : " ",
-          controller.volumeDownButtonState ? "-" : " "));
       float dx = (lastx - controller.touch.x) * 500;
       float dy = (lasty - controller.touch.y) * 500;
       if ((controller.touch.x != 0 || controller.touch.y != 0) &&
@@ -1681,15 +1672,28 @@ public class ChromeTabbedActivity extends ChromeActivity
       lasty = controller.touch.y;
       if (controller.homeButtonState)
           mRenderer.setAngleDot(controller.orientation.y, controller.orientation.x);
+        mWidth = getActivityTab().getContentViewCore().getViewportWidthPix();
+        mHeight = getActivityTab().getContentViewCore().getViewportHeightPix();
       if (controller.appButtonState) {
-        Log.i("CHROME: ", "Step 1");
-        Display display = getWindowManager().getDefaultDisplay();
-        mWidth = display.getWidth();
-        mHeight = display.getHeight();
-        if (!lastb) {
-            getActivityTab().getContentViewCore().hoverboardSingleTap(
-                mRenderer.getLookAtX(mWidth, mHeight), mRenderer.getLookAtY(mWidth, mHeight));
+       if (!lastb) {
+            MotionEvent event = MotionEvent.obtain(
+                SystemClock.uptimeMillis(),SystemClock.uptimeMillis(),
+                MotionEvent.ACTION_DOWN,
+                mRenderer.getLookAtX(mWidth, mHeight),
+                mRenderer.getLookAtY(mWidth, mHeight),
+                0);
+              getCompositorViewHolder().dispatchTouchEvent(event);
         }
+      } else {
+          if (lastb) {
+              MotionEvent event = MotionEvent.obtain(
+                  SystemClock.uptimeMillis(), SystemClock.uptimeMillis(),
+                  MotionEvent.ACTION_UP,
+                  mRenderer.getLookAtX(mWidth, mHeight),
+                  mRenderer.getLookAtY(mWidth, mHeight),
+                  0);
+              getCompositorViewHolder().dispatchTouchEvent(event);
+          }
       }
       lastb = controller.appButtonState;
     }

@@ -66,6 +66,7 @@ public class ChromeCardboardRenderer implements CardboardView.StereoRenderer {
     // Direction that user is looking towards.
     private float[] mForwardVector;
     private float[] mHeadView;
+    private float[] mEulerAngles;
 
     // Eye position at the menu bar distance;
 
@@ -91,6 +92,7 @@ public class ChromeCardboardRenderer implements CardboardView.StereoRenderer {
 
         mForwardVector = new float[3];
         mHeadView = new float[16];
+        mEulerAngles = new float[4];
     }
 
     @Override
@@ -138,6 +140,7 @@ public class ChromeCardboardRenderer implements CardboardView.StereoRenderer {
 
         headTransform.getForwardVector(mForwardVector, 0);
         headTransform.getHeadView(mHeadView, 0);
+        headTransform.getEulerAngles(mEulerAngles, 0);
     }
 
     @Override
@@ -187,27 +190,12 @@ public class ChromeCardboardRenderer implements CardboardView.StereoRenderer {
     }
 
     public float getLookAtX(float maxX, float maxY) {
-       float[] initVec = {0, 0, 0, 1.0f};
-       float[] objPositionVec = new float[4];
-
-       float[] temp;
-       temp = new float[16];
-       Matrix.multiplyMM(temp, 0, mHeadView, 0, mDesktopModelMatrix, 0);
-       Matrix.multiplyMV(objPositionVec, 0, temp, 0, initVec, 0);
-       float yaw = (float) Math.atan2(objPositionVec[0], -objPositionVec[2]);
-       float posX = -(float) Math.sin(yaw) * maxX + maxX / 2;
+       float posX = -(float) Math.tan(mEulerAngles[1]) * maxX + maxX / 2;
        return posX;
     }
 
     public float getLookAtY(float maxX, float maxY) {
-       float[] initVec = {0, 0, 0, 1.0f};
-       float[] objPositionVec = new float[4];
-       float[] temp;
-       temp = new float[16];
-       Matrix.multiplyMM(temp, 0, mHeadView, 0, mDesktopModelMatrix, 0);
-       Matrix.multiplyMV(objPositionVec, 0, temp, 0, initVec, 0);
-       float pitch = (float) Math.atan2(objPositionVec[1], -objPositionVec[2]);
-       float posY = (float) Math.sin(pitch) * maxY + maxY/2;
+       float posY = -(float) Math.tan(mEulerAngles[0]) * maxY + maxY / 2;
        return posY;
     }
 
