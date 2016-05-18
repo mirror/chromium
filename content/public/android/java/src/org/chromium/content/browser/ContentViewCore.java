@@ -713,9 +713,9 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Screen
         else
             text = "";
         Log.i(TAG, String.format("Result: %s", text));
-        mImeAdapter.sendCompositionToNative(text, 1, false, 0);
-        mImeAdapter.updateState(text, 0, 0, 0, text.length(),  true);
-        mImeAdapter.updateState(text, 0, 0, 0, text.length(),  false);
+        mImeAdapter.sendCompositionToNative(text, 1, true, 0);
+        //mImeAdapter.updateState(text, 0, 0, 0, text.length(),  false);
+
     }
 
     @Override
@@ -2557,12 +2557,18 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Screen
             boolean isNonImeChange) {
         try {
             TraceEvent.begin("ContentViewCore.updateImeAdapter");
+            Log.i(TAG, "Ime Adapter update");
             boolean focusedNodeEditable = (textInputType != TextInputType.NONE);
             boolean focusedNodeIsPassword = (textInputType == TextInputType.PASSWORD);
             if (!focusedNodeEditable) hidePastePopup();
 
             if (mVoiceInput) {
-                if (showImeIfNeeded && textInputType == 1) {
+                Log.i(TAG, String.format("Text input type: %d, %s", textInputType, text));
+                if (showImeIfNeeded && (textInputType == 1 || textInputType == 3) ) {
+//                    mImeAdapter.updateState("", 0, 0, 0,
+//                        0, isNonImeChange);
+
+                    mImeAdapter.deleteSurroundingText(text.length(),0);
                     speech.startListening(recognizerIntent);
                 } else if (showImeIfNeeded && textInputType == 0) {
                     speech.stopListening();

@@ -573,7 +573,7 @@ public class ImeAdapter {
      *                    selection.
      * @return Whether the native counterpart of ImeAdapter received the call.
      */
-    boolean deleteSurroundingText(int beforeLength, int afterLength) {
+    public boolean deleteSurroundingText(int beforeLength, int afterLength) {
         mViewEmbedder.onImeEvent();
         if (mNativeImeAdapterAndroid == 0) return false;
         nativeSendSyntheticKeyEvent(mNativeImeAdapterAndroid, WebInputEventType.RawKeyDown,

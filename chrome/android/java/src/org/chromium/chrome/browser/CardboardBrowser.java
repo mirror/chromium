@@ -108,24 +108,24 @@ public class CardboardBrowser implements SurfaceTexture.OnFrameAvailableListener
             // X, Y, Z,
             // R, G, B, A
             0.0f, 0.0f,  0.0f,
-            0.2f, 0.2f, 0.2f, 1.0f,
+            0.2f, 0.2f, 0.2f, 0.4f,
 
-            0.2f, -0.2f, 0.4f,
-            0.5f, 0.5f, 0.5f, 1.0f,
+            0.1f, -0.05f, 0.4f,
+            0.5f, 0.5f, 0.5f, 0.4f,
 
-            0.0f, -0.22f, 0.4f,
-            0.6f, 0.6f, 0.6f, 1.0f};
+            0.05f, -0.1f, 0.4f,
+            0.6f, 0.6f, 0.6f, 0.4f};
    final float[] triangle2VerticesData = {
             // X, Y, Z,
             // R, G, B, A
             0.0f, 0.0f,  0.1f,
-            1.0f, 1.0f, 0.3f, 1.0f,
+            1.0f, 0.6f, 0.3f, 0.4f,
 
-            0.1f, -0.1f, 0.1f,
-            1.0f, 1.0f, 0.4f, 1.0f,
+            0.1f, -0.05f, 0.1f,
+            1.0f, 0.6f, 0.4f, 0.4f,
 
-            0.0f, -0.1f, 0.1f,
-            1.0f, 1.0f, 0.5f, 1.0f};
+            0.05f, -0.1f, 0.1f,
+            1.0f, 0.6f, 0.5f, 0.4f};
 
     private static final FloatBuffer TEXTURE_COORDINATES =
             makeRectangularTextureBuffer(0.0f, 1.0f, 0.0f, 1.0f);
@@ -328,6 +328,9 @@ public class CardboardBrowser implements SurfaceTexture.OnFrameAvailableListener
         mTriangle1Vertices.position(mColorOffset);
         GLES20.glVertexAttribPointer(mTriangleColorHandle, mColorDataSize, GLES20.GL_FLOAT, false,
                 mStrideBytes, mTriangle1Vertices);
+
+        GLES20.glEnable(GLES20.GL_BLEND);
+        GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
 
         GLES20.glEnableVertexAttribArray(mTriangleColorHandle);
 
