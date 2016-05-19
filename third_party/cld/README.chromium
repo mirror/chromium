@@ -14,3 +14,9 @@ available from the Chromium tree, and not well-documented otherwise.
 Local Modifications:
   * Add support for arm64 architecture
   * Remove dead USE_TCMALLOC #define.
+
+DO NOT USE THIS PACKAGE. It has been deprecated, all DEPS pointing to
+it have been pruned, and there is no guarantee that it compiles,
+links or runs any longer.
+
+See crbug.com/605688 for more information.
