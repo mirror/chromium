@@ -428,6 +428,7 @@ void V4L2VideoEncodeAccelerator::EncodeTask(
     std::vector<struct v4l2_ext_control> ctrls;
     struct v4l2_ext_control ctrl;
     memset(&ctrl, 0, sizeof(ctrl));
+#define V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME                (V4L2_CID_MPEG_BASE+229)
     ctrl.id = V4L2_CID_MPEG_VIDEO_FORCE_KEY_FRAME;
     ctrls.push_back(ctrl);
     if (!SetExtCtrls(ctrls)) {
