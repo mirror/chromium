@@ -33,14 +33,16 @@ GbmBuffer::GbmBuffer(const scoped_refptr<GbmDevice>& gbm,
                      std::vector<base::ScopedFD>&& fds,
                      const gfx::Size& size,
                      const std::vector<int>& strides,
-                     const std::vector<int>& offsets)
+                     const std::vector<int>& offsets,
+                     const std::vector<uint64_t>& modifiers)
     : GbmBufferBase(gbm, bo, format, usage),
       format_(format),
       usage_(usage),
       fds_(std::move(fds)),
       size_(size),
       strides_(strides),
-      offsets_(offsets) {}
+      offsets_(offsets),
+      modifiers_(modifiers) {}
 
 GbmBuffer::~GbmBuffer() {
   if (bo())
@@ -75,6 +77,11 @@ int GbmBuffer::GetStride(size_t plane) const {
 int GbmBuffer::GetOffset(size_t plane) const {
   DCHECK_LT(plane, offsets_.size());
   return offsets_[plane];
+}
+
+uint64_t GbmBuffer::GetFormatModifier(size_t plane) const {
+  DCHECK_LT(plane, modifiers_.size());
+  return modifiers_[plane];
 }
 
 // TODO(reveman): This should not be needed once crbug.com/597932 is fixed,
@@ -124,8 +131,10 @@ scoped_refptr<GbmBuffer> GbmBuffer::CreateBuffer(
   strides.push_back(gbm_bo_get_stride(bo));
   std::vector<int> offsets;
   offsets.push_back(gbm_bo_get_plane_offset(bo, 0));
+  std::vector<uint64_t> modifiers;
+  modifiers.push_back(gbm_bo_get_format_modifier(bo));
   scoped_refptr<GbmBuffer> buffer(new GbmBuffer(
-      gbm, bo, format, usage, std::move(fds), size, strides, offsets));
+      gbm, bo, format, usage, std::move(fds), size, strides, offsets, modifiers));
   if (usage == gfx::BufferUsage::SCANOUT && !buffer->GetFramebufferId())
     return nullptr;
 
@@ -143,11 +152,12 @@ scoped_refptr<GbmBuffer> GbmBuffer::CreateBufferFromFds(
   TRACE_EVENT2("drm", "GbmBuffer::CreateBufferFromFD", "device",
                gbm->device_path().value(), "size", size.ToString());
   DCHECK_EQ(fds.size(), strides.size());
+  std::vector<uint64_t> modifiers;
   // TODO(reveman): Use gbm_bo_import after making buffers survive
   // GPU process crashes. crbug.com/597932
   return make_scoped_refptr(
       new GbmBuffer(gbm, nullptr, format, gfx::BufferUsage::GPU_READ,
-                    std::move(fds), size, strides, offsets));
+                    std::move(fds), size, strides, offsets, modifiers));
 }
 
 GbmPixmap::GbmPixmap(GbmSurfaceFactory* surface_manager,
@@ -202,6 +212,10 @@ int GbmPixmap::GetDmaBufPitch(size_t plane) const {
 
 int GbmPixmap::GetDmaBufOffset(size_t plane) const {
   return buffer_->GetOffset(plane);
+}
+
+uint64_t GbmPixmap::GetDmaBufModifier(size_t plane) const {
+  return buffer_->GetFormatModifier(plane);
 }
 
 gfx::BufferFormat GbmPixmap::GetBufferFormat() const {
