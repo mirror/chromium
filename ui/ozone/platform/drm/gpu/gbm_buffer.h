@@ -36,6 +36,7 @@ class GbmBuffer : public GbmBufferBase {
   gfx::BufferUsage GetUsage() const { return usage_; }
   int GetFd() const;
   int GetStride() const;
+  uint64_t GetFormatModifier() const;
   gfx::Size GetSize() const override;
 
  private:
@@ -45,7 +46,8 @@ class GbmBuffer : public GbmBufferBase {
             gfx::BufferUsage usage,
             base::ScopedFD fd,
             const gfx::Size& size,
-            int stride);
+            int stride,
+            uint64_t modifier);
   ~GbmBuffer() override;
 
   gfx::BufferFormat format_;
@@ -53,6 +55,7 @@ class GbmBuffer : public GbmBufferBase {
   base::ScopedFD fd_;
   gfx::Size size_;
   int stride_;
+  uint64_t modifier_;
 
   DISALLOW_COPY_AND_ASSIGN(GbmBuffer);
 };
@@ -69,6 +72,7 @@ class GbmPixmap : public NativePixmap {
   void* GetEGLClientBuffer() const override;
   int GetDmaBufFd() const override;
   int GetDmaBufPitch() const override;
+  uint64_t GetDmaBufModifier() const override;
   gfx::BufferFormat GetBufferFormat() const override;
   gfx::Size GetBufferSize() const override;
   bool ScheduleOverlayPlane(gfx::AcceleratedWidget widget,

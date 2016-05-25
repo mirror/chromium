@@ -14,6 +14,21 @@
 #define DRM_FORMAT_XRGB8888 FOURCC('X', 'R', '2', '4')
 #define DRM_FORMAT_XBGR8888 FOURCC('X', 'B', '2', '4')
 
+#define EGL_LINUX_DRM_PLANE0_MODIFIER0_EXT 0x3286
+#define EGL_LINUX_DRM_PLANE0_MODIFIER1_EXT 0x3287
+#define EGL_LINUX_DRM_PLANE1_MODIFIER0_EXT 0x3288
+#define EGL_LINUX_DRM_PLANE1_MODIFIER1_EXT 0x3289
+#define EGL_LINUX_DRM_PLANE2_MODIFIER0_EXT 0x328a
+#define EGL_LINUX_DRM_PLANE2_MODIFIER1_EXT 0x328b
+
+/* XXX */
+typedef bool (PFNGLEGLIMAGEFLUSHEXTERNALEXT) (EGLDisplay dpy, EGLImageKHR image, const
+		EGLint *attrib_list);
+
+//PFNGLEGLIMAGEFLUSHEXTERNALEXT EGLImageFlushExternalEXT;
+bool (*EGLImageFlushExternalEXT) (EGLDisplay dpy, EGLImageKHR image, const
+		EGLint *attrib_list);
+
 namespace gfx {
 namespace {
 
@@ -113,6 +128,8 @@ bool GLImageOzoneNativePixmap::Initialize(ui::NativePixmap* pixmap,
       return false;
     }
 
+    uint64_t modifier = pixmap->GetDmaBufModifier();
+
     // Note: If eglCreateImageKHR is successful for a EGL_LINUX_DMA_BUF_EXT
     // target, the EGL will take a reference to the dma_buf.
     EGLint attrs[] = {EGL_WIDTH,
@@ -127,6 +144,10 @@ bool GLImageOzoneNativePixmap::Initialize(ui::NativePixmap* pixmap,
                       0,
                       EGL_DMA_BUF_PLANE0_PITCH_EXT,
                       pixmap->GetDmaBufPitch(),
+                      EGL_LINUX_DRM_PLANE0_MODIFIER0_EXT,
+                      (uint32_t)modifier & 0xffffffff,
+                      EGL_LINUX_DRM_PLANE0_MODIFIER1_EXT,
+                      (uint32_t)((modifier >> 32) & 0xffffffff),
                       EGL_NONE};
     if (!gl::GLImageEGL::Initialize(EGL_LINUX_DMA_BUF_EXT,
                                     static_cast<EGLClientBuffer>(nullptr),
@@ -136,6 +157,13 @@ bool GLImageOzoneNativePixmap::Initialize(ui::NativePixmap* pixmap,
   }
 
   pixmap_ = pixmap;
+#if 0
+	EGLImageFlushExternalEXT =
+		    (PFNGLEGLIMAGEFLUSHEXTERNALEXT)eglGetProcAddress("eglImageFlushExternalEXT");
+#else
+	EGLImageFlushExternalEXT =
+		    reinterpret_cast<bool (*) (void *, void *, const int *)>(eglGetProcAddress("eglImageFlushExternalEXT"));
+#endif
   return true;
 }
 
@@ -166,6 +194,19 @@ bool GLImageOzoneNativePixmap::ScheduleOverlayPlane(AcceleratedWidget widget,
                                                     const Rect& bounds_rect,
                                                     const RectF& crop_rect) {
   DCHECK(pixmap_);
+#if 1
+#define EGL_IMAGE_EXTERNAL_TARGET_NVX           0x3330
+#define EGL_DECOMPRESSED_NVX                    0x3331
+	const EGLint attribs[] = {
+		EGL_IMAGE_EXTERNAL_TARGET_NVX, EGL_DECOMPRESSED_NVX,
+		EGL_NONE
+	};
+
+  EGLDisplay display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+
+  EGLImageFlushExternalEXT((void*)display, (void*)egl_image_, (const int*)attribs);
+#endif
+
   return pixmap_->ScheduleOverlayPlane(widget, z_order, transform, bounds_rect,
                                        crop_rect);
 }

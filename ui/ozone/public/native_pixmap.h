@@ -28,6 +28,7 @@ class NativePixmap : public base::RefCountedThreadSafe<NativePixmap> {
   virtual void* /* EGLClientBuffer */ GetEGLClientBuffer() const = 0;
   virtual int GetDmaBufFd() const = 0;
   virtual int GetDmaBufPitch() const = 0;
+  virtual uint64_t GetDmaBufModifier() const = 0;
   virtual gfx::BufferFormat GetBufferFormat() const = 0;
   virtual gfx::Size GetBufferSize() const = 0;
 

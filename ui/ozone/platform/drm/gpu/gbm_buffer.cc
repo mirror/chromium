@@ -31,13 +31,15 @@ GbmBuffer::GbmBuffer(const scoped_refptr<GbmDevice>& gbm,
                      gfx::BufferUsage usage,
                      base::ScopedFD fd,
                      const gfx::Size& size,
-                     int stride)
+                     int stride,
+                     uint64_t modifier)
     : GbmBufferBase(gbm, bo, format, usage),
       format_(format),
       usage_(usage),
       fd_(std::move(fd)),
       size_(size),
-      stride_(stride) {}
+      stride_(stride),
+      modifier_(modifier) {}
 
 GbmBuffer::~GbmBuffer() {
   if (bo())
@@ -50,6 +52,10 @@ int GbmBuffer::GetFd() const {
 
 int GbmBuffer::GetStride() const {
   return stride_;
+}
+
+uint64_t GbmBuffer::GetFormatModifier() const {
+  return modifier_;
 }
 
 // TODO(reveman): This should not be needed once crbug.com/597932 is fixed,
@@ -95,7 +101,8 @@ scoped_refptr<GbmBuffer> GbmBuffer::CreateBuffer(
   }
 
   scoped_refptr<GbmBuffer> buffer(new GbmBuffer(
-      gbm, bo, format, usage, std::move(fd), size, gbm_bo_get_stride_or_tiling(bo)));
+      gbm, bo, format, usage, std::move(fd), size, gbm_bo_get_stride_or_tiling(bo),
+      gbm_bo_get_format_modifier(bo)));
   if (usage == gfx::BufferUsage::SCANOUT && !buffer->GetFramebufferId())
     return nullptr;
 
@@ -116,7 +123,7 @@ scoped_refptr<GbmBuffer> GbmBuffer::CreateBufferFromFD(
   // GPU process crashes. crbug.com/597932
   return make_scoped_refptr(new GbmBuffer(gbm, nullptr, format,
                                           gfx::BufferUsage::GPU_READ,
-                                          std::move(fd), size, stride));
+                                          std::move(fd), size, stride, 0));
 }
 
 GbmPixmap::GbmPixmap(GbmSurfaceFactory* surface_manager,
@@ -156,6 +163,10 @@ int GbmPixmap::GetDmaBufFd() const {
 
 int GbmPixmap::GetDmaBufPitch() const {
   return buffer_->GetStride();
+}
+
+uint64_t GbmPixmap::GetDmaBufModifier() const {
+  return buffer_->GetFormatModifier();
 }
 
 gfx::BufferFormat GbmPixmap::GetBufferFormat() const {
