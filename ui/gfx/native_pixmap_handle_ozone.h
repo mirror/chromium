@@ -13,6 +13,19 @@
 
 namespace gfx {
 
+struct GFX_EXPORT GbmBufferPlane {
+  GbmBufferPlane();
+  GbmBufferPlane(int stride, int offset, uint64_t modifier);
+  GbmBufferPlane(const GbmBufferPlane& other);
+  ~GbmBufferPlane();
+
+  // The strides and offsets in bytes to be used when accessing the buffers via
+  // a memory mapping. One per plane per entry.
+  int stride;
+  int offset;
+  uint64_t modifier;
+};
+
 struct GFX_EXPORT NativePixmapHandle {
   NativePixmapHandle();
   NativePixmapHandle(const NativePixmapHandle& other);
@@ -21,9 +34,7 @@ struct GFX_EXPORT NativePixmapHandle {
   // File descriptors for the underlying memory objects (usually dmabufs).
   std::vector<base::FileDescriptor> fds;
 
-  // The strides and offsets in bytes to be used when accessing the buffers via
-  // a memory mapping. One per plane per entry.
-  std::vector<std::pair<int, int>> strides_and_offsets;
+  std::vector<GbmBufferPlane> planes;
 };
 
 }  // namespace gfx

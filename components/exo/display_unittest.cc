@@ -68,15 +68,13 @@ TEST_F(DisplayTest, CreateLinuxDMABufBuffer) {
                                gfx::BufferFormat::RGBA_8888,
                                gfx::BufferUsage::GPU_READ);
   gfx::NativePixmapHandle native_pixmap_handle = pixmap->ExportHandle();
-  std::vector<int> strides;
-  std::vector<int> offsets;
+  std::vector<gfx::GbmBufferPlane> planes;
   std::vector<base::ScopedFD> fds;
-  strides.push_back(native_pixmap_handle.strides_and_offsets[0].first);
-  offsets.push_back(native_pixmap_handle.strides_and_offsets[0].second);
+  planes.push_back(native_pixmap_handle.planes[0]);
   fds.push_back(base::ScopedFD(native_pixmap_handle.fds[0].fd));
 
   std::unique_ptr<Buffer> buffer1 = display->CreateLinuxDMABufBuffer(
-      buffer_size, gfx::BufferFormat::RGBA_8888, strides, offsets,
+      buffer_size, gfx::BufferFormat::RGBA_8888, std::move(planes),
       std::move(fds));
   EXPECT_TRUE(buffer1);
 
@@ -84,7 +82,7 @@ TEST_F(DisplayTest, CreateLinuxDMABufBuffer) {
   invalid_fds.push_back(base::ScopedFD());
   // Creating a prime buffer using an invalid fd should fail.
   std::unique_ptr<Buffer> buffer2 = display->CreateLinuxDMABufBuffer(
-      buffer_size, gfx::BufferFormat::RGBA_8888, strides, offsets,
+      buffer_size, gfx::BufferFormat::RGBA_8888, std::move(planes),
       std::move(invalid_fds));
   EXPECT_FALSE(buffer2);
 }

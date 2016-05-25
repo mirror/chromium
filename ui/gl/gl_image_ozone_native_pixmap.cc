@@ -140,6 +140,7 @@ bool GLImageOzoneNativePixmap::Initialize(ui::NativePixmap* pixmap,
     for (size_t plane = 0;
          plane < gfx::NumberOfPlanesForBufferFormat(pixmap->GetBufferFormat());
          ++plane) {
+      uint64_t modifier = pixmap->GetDmaBufModifier(plane);
       attrs.push_back(EGL_DMA_BUF_PLANE0_FD_EXT + plane * 3);
       attrs.push_back(
           pixmap->GetDmaBufFd(plane < pixmap->GetDmaBufFdCount() ? plane : 0));
@@ -147,6 +148,10 @@ bool GLImageOzoneNativePixmap::Initialize(ui::NativePixmap* pixmap,
       attrs.push_back(pixmap->GetDmaBufOffset(plane));
       attrs.push_back(EGL_DMA_BUF_PLANE0_PITCH_EXT + plane * 3);
       attrs.push_back(pixmap->GetDmaBufPitch(plane));
+      attrs.push_back(EGL_LINUX_DRM_PLANE0_MODIFIER0_EXT + plane * 3);
+      attrs.push_back(modifier & 0xffffffff);
+      attrs.push_back(EGL_LINUX_DRM_PLANE0_MODIFIER1_EXT + plane * 3);
+      attrs.push_back(static_cast<uint32_t>((modifier >> 32) & 0xffffffff));
     }
     attrs.push_back(EGL_NONE);
 
