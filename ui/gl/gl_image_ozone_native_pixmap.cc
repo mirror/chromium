@@ -129,12 +129,17 @@ bool GLImageOzoneNativePixmap::Initialize(ui::NativePixmap* pixmap,
     for (size_t plane = 0;
          plane < gfx::NumberOfPlanesForBufferFormat(pixmap->GetBufferFormat());
          ++plane) {
+      uint64_t modifier = pixmap->GetDmaBufModifier(plane);
       attrs.push_back(EGL_DMA_BUF_PLANE0_FD_EXT + plane * 3);
       attrs.push_back(pixmap->GetDmaBufFd(plane));
       attrs.push_back(EGL_DMA_BUF_PLANE0_OFFSET_EXT + plane * 3);
       attrs.push_back(0);
       attrs.push_back(EGL_DMA_BUF_PLANE0_PITCH_EXT + plane * 3);
       attrs.push_back(pixmap->GetDmaBufPitch(plane));
+      attrs.push_back(EGL_LINUX_DRM_PLANE0_MODIFIER0_EXT + plane * 3);
+      attrs.push_back(modifier & 0xffffffff);
+      attrs.push_back(EGL_LINUX_DRM_PLANE0_MODIFIER1_EXT + plane * 3);
+      attrs.push_back((uint32_t)((modifier >> 32) & 0xffffffff));
     }
     attrs.push_back(EGL_NONE);
 
@@ -146,6 +151,7 @@ bool GLImageOzoneNativePixmap::Initialize(ui::NativePixmap* pixmap,
   }
 
   pixmap_ = pixmap;
+
   return true;
 }
 
@@ -177,6 +183,7 @@ bool GLImageOzoneNativePixmap::ScheduleOverlayPlane(
     const gfx::Rect& bounds_rect,
     const gfx::RectF& crop_rect) {
   DCHECK(pixmap_);
+
   return pixmap_->ScheduleOverlayPlane(widget, z_order, transform, bounds_rect,
                                        crop_rect);
 }
