@@ -116,6 +116,8 @@ bool GLImageOzoneNativePixmap::Initialize(ui::NativePixmap* pixmap,
       return false;
     }
 
+    uint64_t modifier = pixmap->GetDmaBufModifier();
+
     // Note: If eglCreateImageKHR is successful for a EGL_LINUX_DMA_BUF_EXT
     // target, the EGL will take a reference to the dma_buf.
     std::vector<EGLint> attrs;
@@ -135,6 +137,10 @@ bool GLImageOzoneNativePixmap::Initialize(ui::NativePixmap* pixmap,
       attrs.push_back(0);
       attrs.push_back(EGL_DMA_BUF_PLANE0_PITCH_EXT + plane * 3);
       attrs.push_back(pixmap->GetDmaBufPitch(plane));
+	  attrs.push_back(EGL_LINUX_DRM_PLANE0_MODIFIER0_EXT + plane * 3);
+	  attrs.push_back(modifier & 0xffffffff);
+	  attrs.push_back(EGL_LINUX_DRM_PLANE0_MODIFIER1_EXT + plane * 3);
+	  attrs.push_back((uint32_t)((modifier >> 32) & 0xffffffff));
     }
     attrs.push_back(EGL_NONE);
 
@@ -146,6 +152,7 @@ bool GLImageOzoneNativePixmap::Initialize(ui::NativePixmap* pixmap,
   }
 
   pixmap_ = pixmap;
+
   return true;
 }
 
@@ -177,6 +184,7 @@ bool GLImageOzoneNativePixmap::ScheduleOverlayPlane(
     const gfx::Rect& bounds_rect,
     const gfx::RectF& crop_rect) {
   DCHECK(pixmap_);
+
   return pixmap_->ScheduleOverlayPlane(widget, z_order, transform, bounds_rect,
                                        crop_rect);
 }

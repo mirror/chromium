@@ -32,13 +32,15 @@ GbmBuffer::GbmBuffer(const scoped_refptr<GbmDevice>& gbm,
                      gfx::BufferUsage usage,
                      std::vector<base::ScopedFD>&& fds,
                      const gfx::Size& size,
-                     const std::vector<int>& strides)
+                     const std::vector<int>& strides,
+                     const std::vector<uint64_t>& modifiers)
     : GbmBufferBase(gbm, bo, format, usage),
       format_(format),
       usage_(usage),
       fds_(std::move(fds)),
       size_(size),
-      strides_(strides) {}
+      strides_(strides),
+      modifiers_(modifiers) {}
 
 GbmBuffer::~GbmBuffer() {
   if (bo())
@@ -64,6 +66,11 @@ int GbmBuffer::GetFd(size_t plane) const {
 int GbmBuffer::GetStride(size_t plane) const {
   DCHECK_LT(plane, strides_.size());
   return strides_[plane];
+}
+
+uint64_t GbmBuffer::GetFormatModifier(size_t plane) const {
+  DCHECK_LT(plane, modifiers_.size());
+  return modifiers_[plane];
 }
 
 // TODO(reveman): This should not be needed once crbug.com/597932 is fixed,
@@ -111,8 +118,11 @@ scoped_refptr<GbmBuffer> GbmBuffer::CreateBuffer(
   fds.emplace_back(std::move(fd));
   std::vector<int> strides;
   strides.push_back(gbm_bo_get_stride(bo));
+  std::vector<uint64_t> modifiers;
+  modifiers.push_back(gbm_bo_get_format_modifier(bo));
   scoped_refptr<GbmBuffer> buffer(
-      new GbmBuffer(gbm, bo, format, usage, std::move(fds), size, strides));
+      new GbmBuffer(gbm, bo, format, usage, std::move(fds), size, strides,
+		  modifiers));
   if (usage == gfx::BufferUsage::SCANOUT && !buffer->GetFramebufferId())
     return nullptr;
 
@@ -133,7 +143,7 @@ scoped_refptr<GbmBuffer> GbmBuffer::CreateBufferFromFds(
   // GPU process crashes. crbug.com/597932
   return make_scoped_refptr(new GbmBuffer(gbm, nullptr, format,
                                           gfx::BufferUsage::GPU_READ,
-                                          std::move(fds), size, strides));
+                                          std::move(fds), size, strides, 0));
 }
 
 GbmPixmap::GbmPixmap(GbmSurfaceFactory* surface_manager,
@@ -179,6 +189,10 @@ int GbmPixmap::GetDmaBufFd(size_t plane) const {
 
 int GbmPixmap::GetDmaBufPitch(size_t plane) const {
   return buffer_->GetStride(plane);
+}
+
+uint64_t GbmPixmap::GetDmaBufModifier() const {
+  return buffer_->GetFormatModifier();
 }
 
 gfx::BufferFormat GbmPixmap::GetBufferFormat() const {
