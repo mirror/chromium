@@ -26,6 +26,7 @@ public:
     static PassOwnPtr<SourceLocation> capture(ExecutionContext* = nullptr);
 
     static PassOwnPtr<SourceLocation> create(const String& url, unsigned lineNumber, unsigned columnNumber, std::unique_ptr<V8StackTrace>, int scriptId = 0);
+    static PassOwnPtr<SourceLocation> createFromNonEmptyV8StackTrace(std::unique_ptr<V8StackTrace>, int scriptId = 0);
     ~SourceLocation();
 
     bool isEmpty() const { return m_url.isNull(); }

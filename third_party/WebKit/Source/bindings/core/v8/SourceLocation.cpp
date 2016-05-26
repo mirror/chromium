@@ -41,7 +41,7 @@ PassOwnPtr<SourceLocation> SourceLocation::capture(const String& url, unsigned l
 {
     std::unique_ptr<V8StackTrace> stackTrace = captureStackTrace();
     if (stackTrace && !stackTrace->isEmpty())
-        return SourceLocation::create(stackTrace->topSourceURL(), stackTrace->topLineNumber(), stackTrace->topColumnNumber(), std::move(stackTrace), 0);
+        return SourceLocation::createFromNonEmptyV8StackTrace(std::move(stackTrace), 0);
     return SourceLocation::create(url, lineNumber, columnNumber, std::move(stackTrace));
 }
 
@@ -50,7 +50,7 @@ PassOwnPtr<SourceLocation> SourceLocation::capture(ExecutionContext* executionCo
 {
     std::unique_ptr<V8StackTrace> stackTrace = captureStackTrace();
     if (stackTrace && !stackTrace->isEmpty())
-        return SourceLocation::create(stackTrace->topSourceURL(), stackTrace->topLineNumber(), stackTrace->topColumnNumber(), std::move(stackTrace), 0);
+        return SourceLocation::createFromNonEmptyV8StackTrace(std::move(stackTrace), 0);
 
     Document* document = executionContext && executionContext->isDocument() ? toDocument(executionContext) : nullptr;
     if (document) {
@@ -68,6 +68,16 @@ PassOwnPtr<SourceLocation> SourceLocation::capture(ExecutionContext* executionCo
 // static
 PassOwnPtr<SourceLocation> SourceLocation::create(const String& url, unsigned lineNumber, unsigned columnNumber, std::unique_ptr<V8StackTrace> stackTrace, int scriptId)
 {
+    return adoptPtr(new SourceLocation(url, lineNumber, columnNumber, std::move(stackTrace), scriptId));
+}
+
+// static
+PassOwnPtr<SourceLocation> SourceLocation::createFromNonEmptyV8StackTrace(std::unique_ptr<V8StackTrace> stackTrace, int scriptId)
+{
+    // Retrieve the data before passing the ownership to SourceLocation.
+    const String& url = stackTrace->topSourceURL();
+    unsigned lineNumber = stackTrace->topLineNumber();
+    unsigned columnNumber = stackTrace->topColumnNumber();
     return adoptPtr(new SourceLocation(url, lineNumber, columnNumber, std::move(stackTrace), scriptId));
 }
 
