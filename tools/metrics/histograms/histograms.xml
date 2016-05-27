@@ -32999,6 +32999,46 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Network.Shill.WiFi.SuspendDurationWoWOffConnected" units="seconds">
+  <owner>semenzato@chromium.org</owner>
+  <owner>kirtika@chromium.org</owner>
+  <summary>
+    Metric tracking the time spent in suspended state, on a resume, for the case
+    when wake on wifi is disabled (WoWOff), and wifi stays connected on resume.
+  </summary>
+</histogram>
+
+<histogram name="Network.Shill.WiFi.SuspendDurationWoWOnConnected" units="seconds">
+  <owner>semenzato@chromium.org</owner>
+  <owner>kirtika@chromium.org</owner>
+  <summary>
+    Metric tracking the time spent in suspended state, on a resume, for the case
+    when wake on wifi is supported and enabled (WoWOn), and wifi stays connected
+    on resume.
+  </summary>
+</histogram>
+
+<histogram name="Network.Shill.WiFi.SuspendDurationWoWOnDisconnected" units="seconds">
+  <owner>semenzato@chromium.org</owner>
+  <owner>kirtika@chromium.org</owner>
+  <summary>
+    Metric tracking the time spent in suspended state, on a resume, for the case
+    when wake on wifi is supported and enabled (WoWOn), and wifi was not connected
+    on resume.
+  </summary>
+</histogram>
+
+
+<histogram name="Network.Shill.WiFi.SuspendDurationWoWOffDisconnected" units="seconds">
+  <owner>semenzato@chromium.org</owner>
+  <owner>kirtika@chromium.org</owner>
+  <summary>
+    Metric tracking the time spent in suspended state, on a resume, for the case
+    when wake on wifi is supported and enabled (WoWOff), and wifi was not connected
+    on resume.
+  </summary>
+</histogram>
+
 <histogram name="Network.Shill.Wifi.TimeOnline" units="seconds">
   <owner>quiche@chromium.org</owner>
   <summary>
