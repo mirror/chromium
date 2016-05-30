@@ -3029,6 +3029,7 @@ class MockGLImage : public gl::GLImage {
                void(base::trace_event::ProcessMemoryDump*,
                     uint64_t,
                     const std::string&));
+  void Flush() override {}
 
  protected:
   virtual ~MockGLImage() {}
