@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "ui/gfx/buffer_format_util.h"
+#include "ui/gl/gl_fence.h"
 #include "ui/gl/gl_image_ozone_native_pixmap.h"
 #include "ui/gl/gl_surface_egl.h"
 
@@ -204,6 +205,20 @@ bool GLImageOzoneNativePixmap::ScheduleOverlayPlane(
     const gfx::Rect& bounds_rect,
     const gfx::RectF& crop_rect) {
   DCHECK(pixmap_);
+
+  if (GLSurfaceEGL::HasEGLExtension("EGL_EXT_image_flush_external")) {
+    EGLDisplay display = GLSurfaceEGL::GetHardwareDisplay();
+    const EGLAttrib attribs[] = {EGL_IMAGE_EXTERNAL_TARGET_NVX,
+                                 EGL_DECOMPRESSED_NVX, EGL_NONE};
+    if (!eglImageFlushExternalEXT(display, egl_image_, attribs)) {
+      LOG(ERROR) << "Failed to flush rendering";
+      return false;
+    }
+
+    std::unique_ptr<GLFence> fence(GLFence::Create());
+    fence->ClientWait();
+  }
+
   return pixmap_->ScheduleOverlayPlane(widget, z_order, transform, bounds_rect,
                                        crop_rect);
 }
