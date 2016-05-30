@@ -574,6 +574,13 @@ typedef EGLint (EGLAPIENTRYP PFNEGLDUPNATIVEFENCEFDANDROIDPROC)(EGLDisplay dpy, 
 #define EGL_SYNC_PRIOR_COMMANDS_IMPLICIT_EXTERNAL_ARM 0x328A
 #endif /* EGL_ARM_implicit_external_sync */
 
+
+#ifndef EGL_EXT_image_flush_external
+#define EGL_EXT_image_flush_external 1
+#define EGL_IMAGE_EXTERNAL_TARGET_NVX	0x3330
+#define EGL_DECOMPRESSED_NVX		0x3331
+#endif
+
 #ifdef __cplusplus
 }
 #endif
