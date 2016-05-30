@@ -32,6 +32,7 @@ class GL_EXPORT GLImageOzoneNativePixmap : public GLImageEGL {
   void OnMemoryDump(base::trace_event::ProcessMemoryDump* pmd,
                     uint64_t process_tracing_id,
                     const std::string& dump_name) override;
+  void Flush() override;
 
   static unsigned GetInternalFormatForTesting(gfx::BufferFormat format);
 
