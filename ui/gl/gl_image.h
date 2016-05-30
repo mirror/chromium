@@ -85,6 +85,8 @@ class GL_EXPORT GLImage : public base::RefCounted<GLImage> {
   // removed. https://crbug.com/581777#c36
   virtual bool EmulatingRGB() const;
 
+  virtual void Flush() = 0;
+
  protected:
   virtual ~GLImage() {}
 
