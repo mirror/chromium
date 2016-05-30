@@ -59,6 +59,7 @@ class StreamTexture : public gpu::gles2::GLStreamTextureImage,
   void OnMemoryDump(base::trace_event::ProcessMemoryDump* pmd,
                     uint64_t process_tracing_id,
                     const std::string& dump_name) override;
+  void Flush() override {}
 
   // gpu::gles2::GLStreamTextureMatrix implementation
   void GetTextureMatrix(float xform[16]) override;

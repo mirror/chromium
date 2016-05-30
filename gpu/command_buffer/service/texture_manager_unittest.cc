@@ -172,6 +172,7 @@ class GLStreamTextureImageStub : public GLStreamTextureImage {
                     const std::string& dump_name) override {}
   bool EmulatingRGB() const override { return false; }
   void GetTextureMatrix(float matrix[16]) override {}
+  void Flush() override {}
 
  protected:
   ~GLStreamTextureImageStub() override {}
