@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "ui/gfx/buffer_format_util.h"
+#include "ui/gl/gl_fence.h"
 #include "ui/gl/gl_image_ozone_native_pixmap.h"
 
 #define FOURCC(a, b, c, d)                                        \
@@ -239,6 +240,18 @@ unsigned GLImageOzoneNativePixmap::GetInternalFormatForTesting(
 
   NOTREACHED();
   return GL_NONE;
+}
+
+void GLImageOzoneNativePixmap::Flush() {
+  const EGLint attribs[] = {EGL_IMAGE_EXTERNAL_TARGET_NVX, EGL_DECOMPRESSED_NVX,
+                            EGL_NONE};
+
+  EGLDisplay display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+  eglImageFlushExternalEXT(display, egl_image_, attribs);
+
+  GLFence* fence = GLFence::Create();
+  fence->ClientWait();
+  delete fence;
 }
 
 }  // namespace gl

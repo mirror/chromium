@@ -41,6 +41,7 @@ class GL_EXPORT GLImageMemory : public GLImage {
                             const gfx::RectF& crop_rect) override;
 
   static unsigned GetInternalFormatForTesting(gfx::BufferFormat format);
+  void Flush() override {}
 
  protected:
   ~GLImageMemory() override;
