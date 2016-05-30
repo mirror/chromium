@@ -92,6 +92,9 @@ class GL_EXPORT GLImage : public base::RefCounted<GLImage> {
   };
   virtual Type GetType() const;
 
+  // Flush any preceding rendering for the image.
+  virtual void Flush() = 0;
+
  protected:
   virtual ~GLImage() {}
 

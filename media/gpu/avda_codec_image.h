@@ -52,6 +52,8 @@ class AVDACodecImage : public gpu::gles2::GLStreamTextureImage {
   // gpu::gles2::GLStreamTextureMatrix implementation
   void GetTextureMatrix(float xform[16]) override;
 
+  void Flush() override {}
+
   enum class UpdateMode {
     // Discards the codec buffer, no UpdateTexImage().
     DISCARD_CODEC_BUFFER,

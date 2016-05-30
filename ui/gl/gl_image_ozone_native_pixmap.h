@@ -35,6 +35,8 @@ class GL_EXPORT GLImageOzoneNativePixmap : public GLImageEGL {
 
   static unsigned GetInternalFormatForTesting(gfx::BufferFormat format);
 
+  void Flush() override;
+
  protected:
   ~GLImageOzoneNativePixmap() override;
 

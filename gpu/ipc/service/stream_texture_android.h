@@ -81,6 +81,8 @@ class StreamTexture : public gpu::gles2::GLStreamTextureImage,
   void OnEstablishPeer(int32_t primary_id, int32_t secondary_id);
   void OnSetSize(const gfx::Size& size) { size_ = size; }
 
+  void Flush() override {}
+
   scoped_refptr<gl::SurfaceTexture> surface_texture_;
 
   // Current transform matrix of the surface texture.

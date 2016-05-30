@@ -74,6 +74,8 @@ class GL_EXPORT GLImageIOSurface : public GLImage {
   // Downcasts from |image|. Returns |nullptr| on failure.
   static GLImageIOSurface* FromGLImage(GLImage* image);
 
+  void Flush() override {}
+
  protected:
   ~GLImageIOSurface() override;
 
