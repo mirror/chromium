@@ -16,6 +16,8 @@
 #define DRM_FORMAT_XRGB8888 FOURCC('X', 'R', '2', '4')
 #define DRM_FORMAT_XBGR8888 FOURCC('X', 'B', '2', '4')
 
+bool (*EGLImageFlushExternalEXT) (EGLDisplay dpy, EGLImageKHR image, const
+                EGLint *attrib_list);
 namespace gl {
 namespace {
 
@@ -149,6 +151,10 @@ bool GLImageOzoneNativePixmap::Initialize(ui::NativePixmap* pixmap,
                                 &attrs[0])) {
       return false;
     }
+
+    EGLImageFlushExternalEXT =
+                    reinterpret_cast<bool (*) (void *, void *, const int *)>(eglGetProcAddress("eglImageFlushExternalEXT"));
+
   }
 
   pixmap_ = pixmap;
@@ -184,6 +190,17 @@ bool GLImageOzoneNativePixmap::ScheduleOverlayPlane(
     const gfx::Rect& bounds_rect,
     const gfx::RectF& crop_rect) {
   DCHECK(pixmap_);
+
+  if (EGLImageFlushExternalEXT) {
+    const EGLint attribs[] = {
+      EGL_IMAGE_EXTERNAL_TARGET_NVX, EGL_DECOMPRESSED_NVX,
+      EGL_NONE
+    };
+
+    EGLDisplay display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+
+    EGLImageFlushExternalEXT((void*)display, (void*)egl_image_, (const int*)attribs);
+  }
 
   return pixmap_->ScheduleOverlayPlane(widget, z_order, transform, bounds_rect,
                                        crop_rect);
