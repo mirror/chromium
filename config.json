@@ -58,6 +58,7 @@
     "tools/gn",
     "tools/grit",
     "tools/idl_parser",
+    "tools/mb",
     "tools/memory",
     "tools/perf_expectations",
     "tools/protoc_wrapper",
