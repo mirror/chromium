@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f91f9d52_cf4fe127",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 33079,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2016-06-01T22:25:45Z",
+      "side": 1,
+      "message": "You don\u0027t have to say \"Metric tracking\" since these are all metrics tracking something.\n\nInstead write something along these lines: \"Time spent in suspended state, sent at resume, when wake-on-wifi is enabled, and the NIC is connected upon resume.\"",
+      "range": {
+        "startLine": 33079,
+        "startChar": 4,
+        "endLine": 33079,
+        "endChar": 34
+      },
+      "revId": "b1bc9e22444ccc2734deccf44ebac82d13af8589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f91f9d52_4ff63109",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 33094,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2016-06-01T22:25:45Z",
+      "side": 1,
+      "message": "extra blank line here",
+      "range": {
+        "startLine": 33094,
+        "startChar": 0,
+        "endLine": 33094,
+        "endChar": 0
+      },
+      "revId": "b1bc9e22444ccc2734deccf44ebac82d13af8589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
