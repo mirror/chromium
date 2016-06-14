@@ -9,7 +9,6 @@
 #include <set>
 
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
-#include "chrome/browser/engagement/site_engagement_score.h"
 #include "chrome/browser/engagement/site_engagement_service.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/content_settings/core/common/content_settings.h"
@@ -77,8 +76,7 @@ std::vector<std::pair<GURL, double>> GenerateSortedOriginsForContentTypeAllowed(
 void FillTopRegisterableDomains(
     const std::vector<std::pair<GURL, double>>& sorted_new_origins,
     size_t max_important_domains,
-    std::vector<std::string>* final_list,
-    std::vector<GURL>* optional_example_origins) {
+    std::vector<std::string>* final_list) {
   for (const auto& pair : sorted_new_origins) {
     if (final_list->size() >= max_important_domains)
       return;
@@ -86,14 +84,10 @@ void FillTopRegisterableDomains(
         net::registry_controlled_domains::GetDomainAndRegistry(
             pair.first,
             net::registry_controlled_domains::INCLUDE_PRIVATE_REGISTRIES);
-    if (registerable_domain.empty() && pair.first.HostIsIPAddress())
-      registerable_domain = pair.first.host();
     // Just iterate to find, as we assume our size is small.
     if (std::find(final_list->begin(), final_list->end(),
                   registerable_domain) == final_list->end()) {
       final_list->push_back(registerable_domain);
-      if (optional_example_origins)
-        optional_example_origins->push_back(pair.first);
     }
   }
 }
@@ -102,8 +96,7 @@ void FillTopRegisterableDomains(
 
 std::vector<std::string> ImportantSitesUtil::GetImportantRegisterableDomains(
     Profile* profile,
-    size_t max_results,
-    std::vector<GURL>* optional_example_origins) {
+    size_t max_results) {
   // First get data from site engagement.
   SiteEngagementService* site_engagement_service =
       SiteEngagementService::Get(profile);
@@ -126,20 +119,9 @@ std::vector<std::string> ImportantSitesUtil::GetImportantRegisterableDomains(
   std::vector<std::string> final_list;
   // We start with notifications.
   FillTopRegisterableDomains(sorted_notification_origins, max_results,
-                             &final_list, optional_example_origins);
+                             &final_list);
   // And now we fill the rest with high engagement sites.
   FillTopRegisterableDomains(sorted_engagement_origins, max_results,
-                             &final_list, optional_example_origins);
+                             &final_list);
   return final_list;
-}
-
-void ImportantSitesUtil::MarkOriginAsImportantForTesting(Profile* profile,
-                                                         const GURL& origin) {
-  // First get data from site engagement.
-  SiteEngagementService* site_engagement_service =
-      SiteEngagementService::Get(profile);
-  site_engagement_service->ResetScoreForURL(
-      origin, SiteEngagementScore::GetMediumEngagementBoundary());
-  DCHECK(site_engagement_service->IsEngagementAtLeast(
-      origin, SiteEngagementService::ENGAGEMENT_LEVEL_MEDIUM));
 }

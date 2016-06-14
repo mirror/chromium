@@ -6,18 +6,15 @@ package org.chromium.chrome.browser.preferences.privacy;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.support.annotation.Nullable;
 import android.widget.ListView;
 
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.BrowsingDataType;
-import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.TimePeriod;
 import org.chromium.chrome.browser.help.HelpAndFeedback;
 import org.chromium.chrome.browser.preferences.ButtonPreference;
@@ -40,10 +37,10 @@ import java.util.EnumSet;
  * from which to clear data.
  */
 public class ClearBrowsingDataPreferences extends PreferenceFragment
-        implements PrefServiceBridge.ImportantSitesCallback,
-                   PrefServiceBridge.OnClearBrowsingDataListener,
+        implements PrefServiceBridge.OnClearBrowsingDataListener,
                    PrefServiceBridge.OtherFormsOfBrowsingHistoryListener,
-                   Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
+                   Preference.OnPreferenceClickListener,
+                   Preference.OnPreferenceChangeListener {
     /**
      * Represents a single item in the dialog.
      */
@@ -141,12 +138,6 @@ public class ClearBrowsingDataPreferences extends PreferenceFragment
             "https://history.google.com/history/?utm_source=chrome_cbd";
 
     /**
-     * Used for the onActivityResult pattern. The value is arbitrary, just to distinguish from other
-     * activities that we might be using onActivityResult with as well.
-     */
-    private static final int IMPORTANT_SITES_DIALOG_CODE = 1;
-
-    /**
      * The various data types that can be cleared via this screen.
      */
     public enum DialogOption {
@@ -213,15 +204,6 @@ public class ClearBrowsingDataPreferences extends PreferenceFragment
     private ProgressDialog mProgressDialog;
     private Item[] mItems;
 
-    // This is the sorted list of important registerable domains. If null, then we haven't finished
-    // fetching them yet.
-    private String[] mSortedImportantDomains;
-    // These are full url examples of the domains above. We use them for favicons.
-    private String[] mSortedExampleOrigins;
-    // This is the dialog we show to the user that lets them 'uncheck' (or exclude) the above
-    // important domains from being cleared.
-    private ConfirmImportantSitesDialogFragment mConfirmImportantSitesDialog;
-
     private final EnumSet<DialogOption> getSelectedOptions() {
         EnumSet<DialogOption> selected = EnumSet.noneOf(DialogOption.class);
         for (Item item : mItems) {
@@ -234,8 +216,7 @@ public class ClearBrowsingDataPreferences extends PreferenceFragment
      * Requests the browsing data corresponding to the given dialog options to be deleted.
      * @param options The dialog options whose corresponding data should be deleted.
      */
-    private final void clearBrowsingData(
-            EnumSet<DialogOption> options, @Nullable String[] blacklistedDomains) {
+    private final void clearBrowsingData(EnumSet<DialogOption> options) {
         showProgressDialog();
 
         int[] dataTypes = new int[options.size()];
@@ -248,12 +229,7 @@ public class ClearBrowsingDataPreferences extends PreferenceFragment
         Object spinnerSelection =
                 ((SpinnerPreference) findPreference(PREF_TIME_RANGE)).getSelectedOption();
         int timePeriod = ((TimePeriodSpinnerOption) spinnerSelection).getTimePeriod();
-        if (blacklistedDomains != null && blacklistedDomains.length != 0) {
-            PrefServiceBridge.getInstance().clearBrowsingDataExcludingDomains(
-                    this, dataTypes, timePeriod, blacklistedDomains);
-        } else {
-            PrefServiceBridge.getInstance().clearBrowsingData(this, dataTypes, timePeriod);
-        }
+        PrefServiceBridge.getInstance().clearBrowsingData(this, dataTypes, timePeriod);
     }
 
     private void dismissProgressDialog() {
@@ -269,12 +245,11 @@ public class ClearBrowsingDataPreferences extends PreferenceFragment
      */
     private DialogOption[] getDialogOptions() {
         return new DialogOption[] {
-                DialogOption.CLEAR_HISTORY,
-                DialogOption.CLEAR_COOKIES_AND_SITE_DATA,
-                DialogOption.CLEAR_CACHE,
-                DialogOption.CLEAR_PASSWORDS,
-                DialogOption.CLEAR_FORM_DATA
-        };
+            DialogOption.CLEAR_HISTORY,
+            DialogOption.CLEAR_COOKIES_AND_SITE_DATA,
+            DialogOption.CLEAR_CACHE,
+            DialogOption.CLEAR_PASSWORDS,
+            DialogOption.CLEAR_FORM_DATA};
     }
 
     /**
@@ -306,7 +281,7 @@ public class ClearBrowsingDataPreferences extends PreferenceFragment
      */
     private boolean isOptionSelectedByDefault(DialogOption option) {
         return PrefServiceBridge.getInstance().getBrowsingDataDeletionPreference(
-                option.getDataType());
+            option.getDataType());
     }
 
     /**
@@ -334,33 +309,10 @@ public class ClearBrowsingDataPreferences extends PreferenceFragment
         }
     }
 
-    /**
-     * Returns if we should show the important sites dialog. We check to see if
-     * <ol>
-     * <li>We've fetched the important sites,
-     * <li>there are important sites,
-     * <li>the feature is enabled, and
-     * <li>we have cache or cookies selected.
-     * </ol>
-     */
-    private boolean shouldShowImportantSitesDialog() {
-        if (mSortedImportantDomains == null || mSortedImportantDomains.length == 0) return false;
-        EnumSet<DialogOption> selectedOptions = getSelectedOptions();
-        return ChromeFeatureList.isEnabled(ChromeFeatureList.IMPORTANT_SITES_IN_CBD)
-                && (selectedOptions.contains(DialogOption.CLEAR_CACHE)
-                           || selectedOptions.contains(DialogOption.CLEAR_COOKIES_AND_SITE_DATA));
-    }
-
     @Override
     public boolean onPreferenceClick(Preference preference) {
         if (preference.getKey().equals(PREF_CLEAR_BUTTON)) {
-            if (shouldShowImportantSitesDialog()) {
-                showImportantDialogThenClear();
-                return true;
-            }
-            // If sites haven't been fetched, just clear the browsing data regularly rather than
-            // waiting to show the important sites dialog.
-            clearBrowsingData(getSelectedOptions(), null);
+            clearBrowsingData(getSelectedOptions());
             return true;
         }
         return false;
@@ -482,9 +434,6 @@ public class ClearBrowsingDataPreferences extends PreferenceFragment
             getPreferenceScreen().removePreference(google_summary);
             general_summary.setSummary(R.string.clear_browsing_data_footnote_site_settings);
         }
-        if (ChromeFeatureList.isEnabled(ChromeFeatureList.IMPORTANT_SITES_IN_CBD)) {
-            PrefServiceBridge.fetchImportantSites(this);
-        }
     }
 
     @Override
@@ -506,10 +455,9 @@ public class ClearBrowsingDataPreferences extends PreferenceFragment
         }
     }
 
-    // We either show the dialog, or modify the current one to display our messages.  This avoids
-    // a dialog flash.
     private final void showProgressDialog() {
         if (getActivity() == null) return;
+
         mProgressDialog = ProgressDialog.show(getActivity(),
                 getActivity().getString(R.string.clear_browsing_data_progress_title),
                 getActivity().getString(R.string.clear_browsing_data_progress_message), true,
@@ -519,22 +467,6 @@ public class ClearBrowsingDataPreferences extends PreferenceFragment
     @VisibleForTesting
     ProgressDialog getProgressDialog() {
         return mProgressDialog;
-    }
-
-    @VisibleForTesting
-    ConfirmImportantSitesDialogFragment getImportantSitesDialogFragment() {
-        return mConfirmImportantSitesDialog;
-    }
-
-    /**
-     * This method shows the important sites dialog. After the dialog is shown, we correctly clear.
-     */
-    private void showImportantDialogThenClear() {
-        mConfirmImportantSitesDialog = ConfirmImportantSitesDialogFragment.newInstance(
-                mSortedImportantDomains, mSortedExampleOrigins);
-        mConfirmImportantSitesDialog.setTargetFragment(this, IMPORTANT_SITES_DIALOG_CODE);
-        mConfirmImportantSitesDialog.show(
-                getFragmentManager(), ConfirmImportantSitesDialogFragment.FRAGMENT_TAG);
     }
 
     @Override
@@ -561,25 +493,5 @@ public class ClearBrowsingDataPreferences extends PreferenceFragment
     @VisibleForTesting
     OtherFormsOfHistoryDialogFragment getDialogAboutOtherFormsOfBrowsingHistory() {
         return mDialogAboutOtherFormsOfBrowsingHistory;
-    }
-
-    @Override
-    public void onImportantRegisterableDomainsReady(String[] domains, String[] exampleOrigins) {
-        mSortedImportantDomains = Arrays.copyOf(domains, domains.length);
-        mSortedExampleOrigins = Arrays.copyOf(exampleOrigins, exampleOrigins.length);
-    }
-
-    /**
-     * This is the callback for the important domain dialog. We should only clear if we get the
-     * positive button response.
-     */
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == IMPORTANT_SITES_DIALOG_CODE && resultCode == Activity.RESULT_OK) {
-            // Deselected means that the user is excluding the domain from being cleared.
-            String[] deselectedDomains = data.getStringArrayExtra(
-                    ConfirmImportantSitesDialogFragment.DESELECTED_DOMAINS_TAG);
-            clearBrowsingData(getSelectedOptions(), deselectedDomains);
-        }
     }
 }

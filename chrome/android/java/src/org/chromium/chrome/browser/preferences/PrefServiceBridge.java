@@ -88,11 +88,9 @@ public final class PrefServiceBridge {
          * See net/base/registry_controlled_domains/registry_controlled_domain.h for more details on
          * registrable domains and the current list of effective eTLDs.
          * @param domains Important registerable domains.
-         * @param exampleOrigins Example origins for each domain. These can be used to retrieve
-         *                       favicons.
          */
         @CalledByNative("ImportantSitesCallback")
-        void onImportantRegisterableDomainsReady(String[] domains, String[] exampleOrigins);
+        void onImportantRegisterableDomainsReady(String[] domains);
     }
 
     /**
@@ -818,17 +816,6 @@ public final class PrefServiceBridge {
         nativeFetchImportantSites(callback);
     }
 
-    /** @return The maximum number of important sites that will be returned from the call above. */
-    public static int getMaxImportantSites() {
-        return nativeGetMaxImportantSites();
-    }
-
-    /** This lets us mark an origin as important for testing. */
-    @VisibleForTesting
-    public static void markOriginAsImportantForTesting(String origin) {
-        nativeMarkOriginAsImportantForTesting(origin);
-    }
-
     /**
      * Requests that the web history service finds out if we should inform the user about the
      * existence of other forms of browsing history. The response will be asynchronous, through
@@ -1165,8 +1152,6 @@ public final class PrefServiceBridge {
             OtherFormsOfBrowsingHistoryListener listener);
     private native boolean nativeCanDeleteBrowsingHistory();
     private static native void nativeFetchImportantSites(ImportantSitesCallback callback);
-    private static native int nativeGetMaxImportantSites();
-    private static native void nativeMarkOriginAsImportantForTesting(String origin);
     private native void nativeSetAutoplayEnabled(boolean allow);
     private native void nativeSetAllowCookiesEnabled(boolean allow);
     private native void nativeSetBackgroundSyncEnabled(boolean allow);

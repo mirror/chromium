@@ -104,9 +104,8 @@ public abstract class WebsitePreferenceBridge {
     @SuppressWarnings("unchecked")
     @CalledByNative
     private static void insertLocalStorageInfoIntoMap(
-            HashMap map, String origin, String fullOrigin, long size, boolean important) {
-        ((HashMap<String, LocalStorageInfo>) map)
-                .put(origin, new LocalStorageInfo(origin, size, important));
+            HashMap map, String origin, String fullOrigin, long size) {
+        ((HashMap<String, LocalStorageInfo>) map).put(origin, new LocalStorageInfo(origin, size));
     }
 
     /**

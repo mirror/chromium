@@ -6,7 +6,6 @@ package org.chromium.content.browser;
 
 import android.content.Context;
 import android.os.Handler;
-import android.os.StrictMode;
 
 import org.chromium.base.Log;
 import org.chromium.base.ResourceExtractor;
@@ -293,19 +292,9 @@ public class BrowserStartupController {
         ResourceExtractor resourceExtractor = ResourceExtractor.get(mContext);
         resourceExtractor.startExtractingResources();
 
-        // This strictmode exception is to cover the case where the browser process is being started
-        // asynchronously but not in the main browser flow.  The main browser flow will trigger
-        // library loading earlier and this will be a no-op, but in the other cases this will need
-        // to block on loading libraries.
-        // This applies to tests and ManageSpaceActivity, which can be launched from Settings.
-        StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
-        try {
-            // Normally Main.java will have already loaded the library asynchronously, we only need
-            // to load it here if we arrived via another flow, e.g. bookmark access & sync setup.
-            LibraryLoader.get(mLibraryProcessType).ensureInitialized(mContext);
-        } finally {
-            StrictMode.setThreadPolicy(oldPolicy);
-        }
+        // Normally Main.java will have already loaded the library asynchronously, we only need
+        // to load it here if we arrived via another flow, e.g. bookmark access & sync setup.
+        LibraryLoader.get(mLibraryProcessType).ensureInitialized(mContext);
 
         Runnable postResourceExtraction = new Runnable() {
             @Override
