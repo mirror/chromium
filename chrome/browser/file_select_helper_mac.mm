@@ -7,15 +7,78 @@
 #include <Cocoa/Cocoa.h>
 #include <sys/stat.h>
 
+#include <vector>
+
+#include "base/bind.h"
+#include "base/callback.h"
 #include "base/files/file.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/mac/foundation_util.h"
+#include "base/memory/scoped_ptr.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/web_contents.h"
+#include "content/public/browser/web_contents_observer.h"
 #include "third_party/zlib/google/zip.h"
 #include "ui/shell_dialogs/selected_file_info.h"
 
 namespace {
+
+void DeleteFiles(scoped_ptr<std::vector<base::FilePath>> paths) {
+  for (auto& file_path : *paths)
+    base::DeleteFile(file_path, false);
+}
+
+class TemporaryFileTracker : public content::WebContentsObserver {
+ public:
+  TemporaryFileTracker(content::WebContents* web_contents,
+                       content::RenderViewHost* render_view_host,
+                       scoped_ptr<std::vector<base::FilePath>> temporary_files);
+  virtual ~TemporaryFileTracker();
+
+ private:
+  // content::WebContentsObserver
+  void RenderViewDeleted(content::RenderViewHost* render_view_host) override;
+  void RenderViewHostChanged(content::RenderViewHost* old_host,
+                             content::RenderViewHost* new_host) override;
+  void WebContentsDestroyed() override;
+
+  content::RenderViewHost* render_view_host_;
+  scoped_ptr<std::vector<base::FilePath>> temporary_files_;
+};
+
+TemporaryFileTracker::TemporaryFileTracker(
+    content::WebContents* web_contents,
+    content::RenderViewHost* render_view_host,
+    scoped_ptr<std::vector<base::FilePath>> temporary_files)
+    : WebContentsObserver(web_contents),
+      render_view_host_(render_view_host),
+      temporary_files_(std::move(temporary_files)) {
+  if (!web_contents || !render_view_host)
+    delete this;
+}
+
+TemporaryFileTracker::~TemporaryFileTracker() {
+  content::BrowserThread::PostBlockingPoolTask(
+      FROM_HERE, base::Bind(&DeleteFiles, base::Passed(&temporary_files_)));
+}
+
+void TemporaryFileTracker::RenderViewDeleted(
+    content::RenderViewHost* render_view_host) {
+  DCHECK_EQ(render_view_host, render_view_host_);
+  delete this;
+}
+
+void TemporaryFileTracker::RenderViewHostChanged(
+    content::RenderViewHost* old_host,
+    content::RenderViewHost* new_host) {
+  DCHECK_EQ(old_host, render_view_host_);
+  delete this;
+}
+
+void TemporaryFileTracker::WebContentsDestroyed() {
+  delete this;
+}
 
 // Given the |path| of a package, returns the destination that the package
 // should be zipped to. Returns an empty path on any errors.
@@ -124,23 +187,12 @@ void FileSelectHelper::ProcessSelectedFilesMac(
 }
 
 void FileSelectHelper::ProcessSelectedFilesMacOnUIThread(
-    const std::vector<ui::SelectedFileInfo>& files,
-    const std::vector<base::FilePath>& temporary_files) {
+    scoped_ptr<std::vector<ui::SelectedFileInfo>> files,
+    scoped_ptr<std::vector<base::FilePath>> temporary_files) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  if (!temporary_files.empty()) {
-    temporary_files_.insert(
-        temporary_files_.end(), temporary_files.begin(), temporary_files.end());
-
-    // Typically, |temporary_files| are deleted after |web_contents_| is
-    // destroyed. If |web_contents_| is already NULL, then the temporary files
-    // need to be deleted now.
-    if (!web_contents_) {
-      DeleteTemporaryFiles();
-      RunFileChooserEnd();
-      return;
-    }
-  }
-
-  NotifyRenderFrameHostAndEnd(files);
+  if (!temporary_files->empty())
+    new TemporaryFileTracker(web_contents_, render_view_host_,
+                             std::move(temporary_files));
+  NotifyRenderViewHostAndEnd(*files);
 }

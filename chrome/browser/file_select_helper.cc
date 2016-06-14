@@ -79,11 +79,6 @@ std::vector<ui::SelectedFileInfo> FilePathListToSelectedFileInfoList(
   return selected_files;
 }
 
-void DeleteFiles(std::vector<base::FilePath> paths) {
-  for (auto& file_path : paths)
-    base::DeleteFile(file_path, false);
-}
-
 bool IsValidProfile(Profile* profile) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   // No profile manager in unit tests.
@@ -338,23 +333,6 @@ void FileSelectHelper::NotifyRenderFrameHostAndEndAfterConversion(
   RunFileChooserEnd();
 }
 
-void FileSelectHelper::DeleteTemporaryFiles() {
-  base::PostTaskWithTraits(
-      FROM_HERE,
-      {base::MayBlock(), base::TaskPriority::BACKGROUND,
-       base::TaskShutdownBehavior::BLOCK_SHUTDOWN},
-      base::BindOnce(&DeleteFiles, std::move(temporary_files_)));
-}
-
-void FileSelectHelper::CleanUp() {
-  if (!temporary_files_.empty()) {
-    DeleteTemporaryFiles();
-
-    // Now that the temporary files have been scheduled for deletion, there
-    // is no longer any reason to keep this instance around.
-    Release();
-  }
-}
 
 bool FileSelectHelper::AbortIfWebContentsDestroyed() {
   if (render_frame_host_ && web_contents_)
@@ -629,12 +607,6 @@ void FileSelectHelper::RunFileChooserOnUIThread(
 // dialog or if the renderer was destroyed. Perform any cleanup and release the
 // reference we added in RunFileChooser().
 void FileSelectHelper::RunFileChooserEnd() {
-  // If there are temporary files, then this instance needs to stick around
-  // until web_contents_ is destroyed, so that this instance can delete the
-  // temporary files.
-  if (!temporary_files_.empty())
-    return;
-
   render_frame_host_ = nullptr;
   web_contents_ = nullptr;
   Release();
@@ -682,7 +654,6 @@ void FileSelectHelper::RenderFrameDeleted(
 void FileSelectHelper::WebContentsDestroyed() {
   render_frame_host_ = nullptr;
   web_contents_ = nullptr;
-  CleanUp();
 }
 
 // static

@@ -33,9 +33,28 @@ namespace ui {
 struct SelectedFileInfo;
 }
 
-// This class handles file-selection requests coming from renderer processes.
-// It implements both the initialisation and listener functions for
-// file-selection dialogs.
+// TODO(asanka):
+// 1. Move temporary_files_ handling into a separate class and move that shit to
+//    the .mm file. It doesn't need to be here.
+//
+// 2. Make it not be ref counted and create a bunch of static methods that pass
+//    the ownership along the thread hops.
+//
+//    2.1 For this we'll need to create a state class and a job class. The state
+//      class will be the one that will hold the state and the thing that will
+//      hold the logic for talking to the RVH and stuff.
+//
+//    2.2 The job class will consist of static methods that pass along the state
+//      as a scoped_ptr without dropping it on the floor. It should only be
+//      destroying said scoped_ptr on the UI thread.
+//
+//    2.3 Any UI observers, meanwhile, should definitely only live on the UI
+//      thread. Perhaps UI observers should be moved to a separate class since
+//      it need to live on the UI thread. Hmm.
+
+// This class handles file-selection requests coming from WebUI elements
+// (via the extensions::ExtensionHost class). It implements both the
+// initialisation and listener functions for file-selection dialogs.
 //
 // Since FileSelectHelper has-a NotificationRegistrar, it needs to live on and
 // be destroyed on the UI thread. References to FileSelectHelper may be passed
@@ -166,8 +185,8 @@ class FileSelectHelper : public base::RefCountedThreadSafe<
   // Saves the paths of |zipped_files| for later deletion. Passes |files| to the
   // render view host.
   void ProcessSelectedFilesMacOnUIThread(
-      const std::vector<ui::SelectedFileInfo>& files,
-      const std::vector<base::FilePath>& zipped_files);
+      scoped_ptr<std::vector<ui::SelectedFileInfo>> files,
+      scoped_ptr<std::vector<base::FilePath>> zipped_files);
 
   // Zips the package at |path| into a temporary destination. Returns the
   // temporary destination, if the zip was successful. Otherwise returns an
@@ -183,13 +202,6 @@ class FileSelectHelper : public base::RefCountedThreadSafe<
   // Sends the result to the render process, and call |RunFileChooserEnd|.
   void NotifyRenderFrameHostAndEndAfterConversion(
       const std::vector<content::FileChooserFileInfo>& list);
-
-  // Schedules the deletion of the files in |temporary_files_| and clears the
-  // vector.
-  void DeleteTemporaryFiles();
-
-  // Cleans up when the initiator of the file chooser is no longer valid.
-  void CleanUp();
 
   // Calls RunFileChooserEnd() if the webcontents was destroyed. Returns true
   // if the file chooser operation shouldn't proceed.
@@ -249,10 +261,6 @@ class FileSelectHelper : public base::RefCountedThreadSafe<
 
   // Registrar for notifications regarding our RenderViewHost.
   content::NotificationRegistrar notification_registrar_;
-
-  // Temporary files only used on OSX. This class is responsible for deleting
-  // these files when they are no longer needed.
-  std::vector<base::FilePath> temporary_files_;
 
   DISALLOW_COPY_AND_ASSIGN(FileSelectHelper);
 };
