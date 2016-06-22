@@ -10,7 +10,7 @@
 #include "wtf/Assertions.h"
 #include "wtf/text/WTFString.h"
 
-#define CHECK_DISPLAY_ITEM_CLIENT_ALIVENESS 1
+#define CHECK_DISPLAY_ITEM_CLIENT_ALIVENESS 0
 // TODO(wangxianzhu): Restore the following line after we fix crbug.com/609218.
 // #define CHECK_DISPLAY_ITEM_CLIENT_ALIVENESS DCHECK_IS_ON()
 
