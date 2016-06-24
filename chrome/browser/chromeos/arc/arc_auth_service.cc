@@ -17,6 +17,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_process_platform_part.h"
 #include "chrome/browser/chromeos/arc/arc_auth_notification.h"
+#include "chrome/browser/chromeos/arc/arc_oops_notification.h"
 #include "chrome/browser/chromeos/arc/arc_optin_uma.h"
 #include "chrome/browser/chromeos/arc/arc_support_host.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
@@ -119,6 +120,7 @@ void ArcAuthService::RegisterProfilePrefs(
       prefs::kArcEnabled, false,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
   registry->RegisterBooleanPref(prefs::kArcSignedIn, false);
+  registry->RegisterBooleanPref(prefs::kArcOopsShown, false);
 }
 
 // static
@@ -460,6 +462,11 @@ void ArcAuthService::OnOptInPreferenceChanged() {
     initial_opt_in_ = true;
     StartUI();
   } else {
+    // Show the "oops" notification if the user was previously opted-in, because
+    // their data was just wiped.  Only show this once.
+    if (!profile_->GetPrefs()->GetBoolean(prefs::kArcOopsShown)) {
+      arc::ArcOopsNotification::Show();
+    }
     // Ready to start Arc, but check Android management first.
     if (!disable_ui_for_testing ||
         enable_check_android_management_for_testing) {
@@ -468,6 +475,9 @@ void ArcAuthService::OnOptInPreferenceChanged() {
       StartArc();
     }
   }
+  // Mark the "oops" notification as shown in both cases so we don't show it
+  // unnecessarily to users who cleanly opted-in the first time here.
+  profile_->GetPrefs()->SetBoolean(prefs::kArcOopsShown, true);
 
   UpdateEnabledStateUMA(true);
 }

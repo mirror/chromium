@@ -6611,6 +6611,12 @@ All users must sign out to continue.
   <message name="IDS_OPTIONS_ARC_MANAGE_APPS" desc="Label for launching  Android apps settings.">
     Manage your Android apps via <ph name="BEGIN_LINK">&lt;a is="action-link" id="android-apps-settings-link" role="link"&gt;</ph>App Settings<ph name="END_LINK">&lt;/a&gt;</ph>.
   </message>
+  <message name="IDS_ARC_OOPS_NOTIFICATION_TITLE" desc="Title of the first-run notification that indicates we messed up.">
+    Aw, Snap!
+  </message>
+  <message name="IDS_ARC_OOPS_NOTIFICATION_MESSAGE" desc="Description message of the first-run notification that indicates we messed up.">
+    The last dev channel build caused an error with Android apps.  Your Android Data and Apps were reset to fix the issues.  Please Powerwash your <ph name="DEVICE_TYPE">$1<ex>Chromebook</ex></ph> if errors on dev channel persist.
+  </message>
   <message name="IDS_ARC_NOTIFICATION_TITLE" desc="Title of the first-run notification that enables Android apps.">
     Google Play Store
   </message>

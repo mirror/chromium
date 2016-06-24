@@ -19,6 +19,7 @@ namespace prefs {
 extern const char kArcApps[];
 extern const char kArcEnabled[];
 extern const char kArcSignedIn[];
+extern const char kArcOopsShown[];
 #endif
 extern const char kChildAccountStatusKnown[];
 extern const char kDefaultApps[];

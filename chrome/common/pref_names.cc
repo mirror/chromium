@@ -20,6 +20,8 @@ const char kArcApps[] = "arc.apps";
 const char kArcEnabled[] = "arc.enabled";
 // A preference that indicates status of Android sign-in.
 const char kArcSignedIn[] = "arc.signedin";
+// A preference that indicates the user was already shown the ARC oops message.
+const char kArcOopsShown[] = "arc.oopsshown";
 #endif
 
 // A bool pref that keeps whether the child status for this profile was already
