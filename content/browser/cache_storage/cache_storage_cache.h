@@ -40,8 +40,8 @@ class TestCacheStorageCache;
 
 // Represents a ServiceWorker Cache as seen in
 // https://slightlyoff.github.io/ServiceWorker/spec/service_worker/ The
-// asynchronous methods are executed serially (except for Size). Callbacks to
-// the public functions will be called so long as the cache object lives.
+// asynchronous methods are executed serially. Callbacks to the public functions
+// will be called so long as the cache object lives.
 class CONTENT_EXPORT CacheStorageCache
     : public base::RefCounted<CacheStorageCache> {
  public:
@@ -99,6 +99,13 @@ class CONTENT_EXPORT CacheStorageCache
   // http://crbug.com/486637
   void BatchOperation(const std::vector<CacheStorageBatchOperation>& operations,
                       const ErrorCallback& callback);
+  void BatchDidGetUsageAndQuota(
+      const std::vector<CacheStorageBatchOperation>& operations,
+      const ErrorCallback& callback,
+      int64_t space_required,
+      storage::QuotaStatusCode status_code,
+      int64_t usage,
+      int64_t quota);
   void BatchDidOneOperation(const base::Closure& barrier_closure,
                             ErrorCallback* callback,
                             CacheStorageError error);
@@ -112,11 +119,7 @@ class CONTENT_EXPORT CacheStorageCache
   // will exit early. Close should only be called once per CacheStorageCache.
   void Close(const base::Closure& callback);
 
-  // The size of the cache's contents. This runs in parallel with other Cache
-  // operations. This is because QuotaManager is a dependency of the Put
-  // operation and QuotaManager calls Size. If the cache isn't yet initialized,
-  // runs immediately after initialization, before any pending operations in the
-  // scheduler are run.
+  // The size of the cache's contents.
   void Size(const SizeCallback& callback);
 
   // Gets the cache's size, closes the backend, and then runs |callback| with
@@ -305,7 +308,6 @@ class CONTENT_EXPORT CacheStorageCache
   base::WeakPtr<storage::BlobStorageContext> blob_storage_context_;
   BackendState backend_state_ = BACKEND_UNINITIALIZED;
   scoped_ptr<CacheStorageScheduler> scheduler_;
-  std::vector<SizeCallback> pending_size_callbacks_;
   bool initializing_ = false;
   int64_t cache_size_ = 0;
 
