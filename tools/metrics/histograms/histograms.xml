@@ -35250,6 +35250,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Network.Shill.Wifi.TimeSinceResumeAtFirstDisconnect"
+    units="ms">
+  <owner>kirtika@chromium.org</owner>
+  <summary>
+    Time from resume to the first disconnect after resume in milliseconds.
+    Disconnects that happen immediately after resume are not problematic. Shill
+    allows 1 second after resume for wpa_supplicant to update its connected
+    state before logging. Any disconnects before then should be benign.
+  </summary>
+</histogram>
+
 <histogram name="Network.Shill.Wifi.TimeToConfig" units="ms">
   <owner>quiche@chromium.org</owner>
   <summary>
