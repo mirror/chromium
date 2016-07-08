@@ -120,14 +120,36 @@
             "group_name": "Enabled"
         }
     ],
-    "SafeBrowsingUnverifiedDownloads": [
+    "SafeBrowsingIncidentReportingService": [
         {
-            "group_name": "DisableByParameterMostSbTypes2",
+            "enable_features": [
+                "IncidentReportingDisableUpload"
+            ],
+            "group_name": "Enabled",
             "params": {
-                "blacklist": ".exe-,.zip-",
-                "block_sb_types": "true",
-                "whitelist": ".rar,.svg,.url,.xml,.zip"
+                "collect_reg_data": "true"
             }
+        },
+        {
+            "group_name": "Default"
+        }
+    ],
+    "SafeBrowsingIncidentReportingServiceFeatures": [
+        {
+            "enable_features": [
+                "IncidentReportingModuleLoadAnalysis",
+                "IncidentReportingSuspiciousModuleReporting"
+            ],
+            "group_name": "WithSuspiciousModuleReporting"
+        },
+        {
+            "enable_features": [
+                "IncidentReportingModuleLoadAnalysis"
+            ],
+            "group_name": "WithModuleLoadAnalysis"
+        },
+        {
+            "group_name": "Default"
         }
     ],
     "SchedulerExpensiveTaskBlocking": [

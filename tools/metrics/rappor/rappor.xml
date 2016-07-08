@@ -1236,8 +1236,9 @@ components/rappor/rappor_parameters.h.
     type="SAFEBROWSING_RAPPOR_TYPE">
   <owner>nparker@chromium.org</owner>
   <summary>
-    The domain and registry of the URL for which a download was allowed without
-    being verified by Safe Browsing.  Recorded before the download is started.
+    **DEPRECATED: No longer reported as of M52. The domain and registry of the
+    URL for which a download was allowed without being verified by Safe
+    Browsing. Recorded before the download is started.
   </summary>
 </rappor-metric>
 
@@ -1245,10 +1246,10 @@ components/rappor/rappor_parameters.h.
     type="SAFEBROWSING_RAPPOR_TYPE">
   <owner>nparker@chromium.org</owner>
   <summary>
-    The domain and registry of the URL for which a download was allowed without
-    being verified by Safe Browsing because it was on a whitelisted domain.
-    Recorded before the download is started.  The candidates should come from
-    the domain whitelist.
+    **DEPRECATED: No longer reported as of M52. The domain and registry of the
+    URL for which a download was allowed without being verified by Safe
+    Browsing because it was on a whitelisted domain. Recorded before the
+    download is started. The candidates should come from the domain whitelist.
   </summary>
 </rappor-metric>
 
@@ -1257,9 +1258,10 @@ components/rappor/rappor_parameters.h.
     type="SAFEBROWSING_RAPPOR_TYPE">
   <owner>nparker@chromium.org</owner>
   <summary>
-    The domain and registry of the URL for which a download was allowed without
-    being verified by Safe Browsing because the service was disabled at the
-    time.  Recorded before the download is started.
+    **DEPRECATED: No longer reported as of M52. The domain and registry of the
+    URL for which a download was allowed without being verified by Safe
+    Browsing because the service was disabled at the time. Recorded before the
+    download is started.
   </summary>
 </rappor-metric>
 
@@ -1267,9 +1269,10 @@ components/rappor/rappor_parameters.h.
     type="SAFEBROWSING_RAPPOR_TYPE">
   <owner>nparker@chromium.org</owner>
   <summary>
-    The domain and registry of the URL for which a download was blocked without
-    being verified by Safe Browsing because the extension matched the blacklist
-    provided by Finch.  Recorded before the download is started.
+    **DEPRECATED: No longer reported as of M52. The domain and registry of the
+    URL for which a download was blocked without being verified by Safe
+    Browsing because the extension matched the blacklist provided by Finch.
+    Recorded before the download is started.
   </summary>
 </rappor-metric>
 
