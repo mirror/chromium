@@ -7,8 +7,10 @@
 #include <string>
 
 #include "base/format_macros.h"
+#include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
+#include "content/public/browser/download_item.h"
 
 namespace content {
 
@@ -17,22 +19,23 @@ DownloadCreateInfo::DownloadCreateInfo(
     const net::NetLogWithSource& net_log,
     std::unique_ptr<DownloadSaveInfo> save_info)
     : download_id(DownloadItem::kInvalidId),
-      start_time(start_time),
-      total_bytes(0),
-      has_user_gesture(false),
-      result(DOWNLOAD_INTERRUPT_REASON_NONE),
+      request(new DownloadItem::RequestInfo),
+      response(new DownloadItem::ResponseInfo),
       save_info(std::move(save_info)),
-      request_net_log(net_log) {}
+      request_net_log(net_log) {
+  request->start_time = start_time;
+}
 
 DownloadCreateInfo::DownloadCreateInfo()
-    : DownloadCreateInfo(base::Time(),
-                         net::NetLogWithSource(),
+    : DownloadCreateInfo(base::Time::Now(),
+                         net::BoundNetLog(),
                          base::WrapUnique(new DownloadSaveInfo)) {}
 
-DownloadCreateInfo::~DownloadCreateInfo() {}
-
-const GURL& DownloadCreateInfo::url() const {
-  return url_chain.empty() ? GURL::EmptyGURL() : url_chain.back();
+DownloadCreateInfo::~DownloadCreateInfo() {
+  DCHECK(!this->request);
+  DCHECK(!this->response);
+  DCHECK(!this->save_info);
+  DCHECK(!this->request_handle);
 }
 
 }  // namespace content

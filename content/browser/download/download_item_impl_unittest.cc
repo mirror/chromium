@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/browser/download/download_item_impl.h"
+#include "content/browser/download/download_url_job.h"
 
 #include <stdint.h>
 
@@ -22,8 +22,8 @@
 #include "content/browser/download/download_create_info.h"
 #include "content/browser/download/download_destination_observer.h"
 #include "content/browser/download/download_file_factory.h"
-#include "content/browser/download/download_item_impl_delegate.h"
 #include "content/browser/download/download_request_handle.h"
+#include "content/browser/download/download_url_job_delegate.h"
 #include "content/browser/download/mock_download_file.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/download_interrupt_reasons.h"

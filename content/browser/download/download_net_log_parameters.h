@@ -24,16 +24,9 @@ class NetLogCaptureMode;
 
 namespace content {
 
-enum DownloadType {
-  SRC_ACTIVE_DOWNLOAD,
-  SRC_HISTORY_IMPORT,
-  SRC_SAVE_PAGE_AS
-};
-
 // Returns NetLog parameters when a DownloadItem is activated.
 std::unique_ptr<base::Value> ItemActivatedNetLogCallback(
     const DownloadItem* download_item,
-    DownloadType download_type,
     const std::string* file_name,
     net::NetLogCaptureMode capture_mode);
 

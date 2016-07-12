@@ -20,10 +20,11 @@
 #include "base/observer_list.h"
 #include "base/sequenced_task_runner_helpers.h"
 #include "base/synchronization/lock.h"
-#include "content/browser/download/download_item_impl_delegate.h"
+#include "content/browser/download/download_url_job_delegate.h"
 #include "content/browser/download/url_downloader.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/download_item_delegate.h"
 #include "content/public/browser/download_manager.h"
 #include "content/public/browser/download_manager_delegate.h"
 #include "content/public/browser/download_url_parameters.h"
@@ -34,15 +35,15 @@ class NetLog;
 
 namespace content {
 class DownloadFileFactory;
-class DownloadItemFactory;
-class DownloadItemImpl;
+class DownloadItem;
 class DownloadRequestHandleInterface;
 class ResourceContext;
 
 class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
-                                           private DownloadItemImplDelegate {
+                                           public DownloadItemDelegate,
+                                           public DownloadUrlJobDelegate {
  public:
-  using DownloadItemImplCreated = base::Callback<void(DownloadItemImpl*)>;
+  using DownloadItemCreated = base::Callback<void(DownloadItem*)>;
 
   // Caller guarantees that |net_log| will remain valid
   // for the lifetime of DownloadManagerImpl (until Shutdown() is called).
@@ -59,7 +60,7 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
       const GURL& page_url,
       const std::string& mime_type,
       std::unique_ptr<DownloadRequestHandleInterface> request_handle,
-      const DownloadItemImplCreated& item_created);
+      const DownloadItemCreated& item_created);
 
   // Notifies DownloadManager about a successful completion of |download_item|.
   void OnSavePackageSuccessfullyFinished(DownloadItem* download_item);
@@ -112,8 +113,6 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
   DownloadItem* GetDownloadByGuid(const std::string& guid) override;
 
   // For testing; specifically, accessed from TestFileErrorInjector.
-  void SetDownloadItemFactoryForTesting(
-      std::unique_ptr<DownloadItemFactory> item_factory);
   void SetDownloadFileFactoryForTesting(
       std::unique_ptr<DownloadFileFactory> file_factory);
   virtual DownloadFileFactory* GetDownloadFileFactoryForTesting();
@@ -137,8 +136,7 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
 
  private:
   using DownloadSet = std::set<DownloadItem*>;
-  using DownloadGuidMap = std::unordered_map<std::string, DownloadItemImpl*>;
-  using DownloadItemImplVector = std::vector<DownloadItemImpl*>;
+  using DownloadGuidMap = std::unordered_map<std::string, DownloadItem*>;
 
   // For testing.
   friend class DownloadManagerTest;
@@ -156,13 +154,14 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
       const GURL& page_url,
       const std::string& mime_type,
       std::unique_ptr<DownloadRequestHandleInterface> request_handle,
-      const DownloadItemImplCreated& on_started,
+      const DownloadItemCreated& on_started,
       uint32_t id);
 
   // Create a new active item based on the info.  Separate from
   // StartDownload() for testing.
-  DownloadItemImpl* CreateActiveItem(uint32_t id,
-                                     const DownloadCreateInfo& info);
+  DownloadItem* CreateNewDownload(
+      uint32_t id,
+      std::unique_ptr<DownloadItem::RequestInfo> request_info);
 
   // Get next download id. |callback| is called on the UI thread and may
   // be called synchronously.
@@ -173,30 +172,34 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
   // observer.
   void OnFileExistenceChecked(uint32_t download_id, bool result);
 
+<<<<<<< HEAD
   // Overridden from DownloadItemImplDelegate
+=======
+  // Remove all downloads for which |remover| returns true.
+  int RemoveDownloads(const DownloadRemover& remover);
+
+  // Overridden from DownloadUrlJobDelegate
+>>>>>>> WIP
   // (Note that |GetBrowserContext| are present in both interfaces.)
-  void DetermineDownloadTarget(DownloadItemImpl* item,
+  void DetermineDownloadTarget(DownloadUrlJob* job,
                                const DownloadTargetCallback& callback) override;
-  bool ShouldCompleteDownload(DownloadItemImpl* item,
+  bool ShouldCompleteDownload(DownloadUrlJob* job,
                               const base::Closure& complete_callback) override;
   bool ShouldOpenFileBasedOnExtension(const base::FilePath& path) override;
-  bool ShouldOpenDownload(DownloadItemImpl* item,
+  bool ShouldOpenDownload(DownloadUrlJob* job,
                           const ShouldOpenDownloadCallback& callback) override;
-  void CheckForFileRemoval(DownloadItemImpl* download_item) override;
+  void CheckForFileRemoval(DownloadItem* download_item) override;
   std::string GetApplicationClientIdForFileScanning() const override;
   void ResumeInterruptedDownload(
       std::unique_ptr<content::DownloadUrlParameters> params,
       uint32_t id) override;
-  void OpenDownload(DownloadItemImpl* download) override;
-  void ShowDownloadInShell(DownloadItemImpl* download) override;
-  void DownloadRemoved(DownloadItemImpl* download) override;
+  void OpenDownload(DownloadItem* download) override;
+  void ShowDownloadInShell(DownloadItem* download) override;
+  void DownloadRemoved(DownloadItem* download) override;
 
   void AddUrlDownloader(
       std::unique_ptr<UrlDownloader, BrowserThread::DeleteOnIOThread>
           downloader);
-
-  // Factory for creation of downloads items.
-  std::unique_ptr<DownloadItemFactory> item_factory_;
 
   // Factory for the creation of download files.
   std::unique_ptr<DownloadFileFactory> file_factory_;
@@ -212,7 +215,7 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
   // Same as the above, but maps from GUID to download item. Note that the
   // container is case sensitive. Hence the key needs to be normalized to
   // upper-case when inserting new elements here. Fortunately for us,
-  // DownloadItemImpl already normalizes the string GUID.
+  // DownloadItem already normalizes the string GUID.
   DownloadGuidMap downloads_by_guid_;
 
   // True if the download manager has been initialized and requires a shutdown.
@@ -229,6 +232,7 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
 
   net::NetLog* net_log_;
 
+  // Pending URL downloaders.
   std::vector<std::unique_ptr<UrlDownloader, BrowserThread::DeleteOnIOThread>>
       url_downloaders_;
 

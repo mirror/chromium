@@ -42,7 +42,7 @@ struct CONTENT_EXPORT DownloadSaveInfo {
   // If valid, contains the source data stream for the file contents.
   base::File file;
 
-  // The file offset at which to start the download.  May be 0.
+  // The file offset at which to start the download. May be 0.
   int64_t offset;
 
   // The number of the bytes to download from |offset|. Set to
