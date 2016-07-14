@@ -47,6 +47,8 @@
         'tracing/core/proto_zero_message.h',
         'tracing/core/scattered_stream_writer.cc',
         'tracing/core/scattered_stream_writer.h',
+        'tracing/core/trace_buffer_writer.cc',
+        'tracing/core/trace_buffer_writer.h',
         'tracing/core/trace_ring_buffer.cc',
         'tracing/core/trace_ring_buffer.h',
         'tracing/tracing_export.h',
