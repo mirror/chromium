@@ -48,6 +48,7 @@
 #include "net/http/http_auth_handler_mock.h"
 #include "net/http/http_auth_handler_ntlm.h"
 #include "net/http/http_auth_scheme.h"
+#include "net/http/http_auth_sspi_win.h"
 #include "net/http/http_basic_state.h"
 #include "net/http/http_basic_stream.h"
 #include "net/http/http_network_session.h"
@@ -96,10 +97,14 @@
 #include "testing/platform_test.h"
 #include "url/gurl.h"
 
-using net::test::IsError;
-using net::test::IsOk;
+#if defined(OS_WIN)
+#include "net/http/http_auth_sspi_win.h"
+#include "net/http/mock_sspi_library_win.h"
+#endif
 
 using base::ASCIIToUTF16;
+using net::test::IsError;
+using net::test::IsOk;
 
 //-----------------------------------------------------------------------------
 
@@ -125,8 +130,6 @@ const base::string16 kFoo2(ASCIIToUTF16("foo2"));
 const base::string16 kFoo3(ASCIIToUTF16("foo3"));
 const base::string16 kFou(ASCIIToUTF16("fou"));
 const base::string16 kSecond(ASCIIToUTF16("second"));
-const base::string16 kTestingNTLM(ASCIIToUTF16("testing-ntlm"));
-const base::string16 kWrongPassword(ASCIIToUTF16("wrongpassword"));
 
 const char kAlternativeServiceHttpHeader[] =
     "Alt-Svc: h2=\"mail.example.org:443\"\r\n";
@@ -521,7 +524,47 @@ void FillLargeHeadersString(std::string* str, int size) {
     str->append(row, sizeof_row);
 }
 
+class ScopedMockNTLMState {
+ public:
+  ScopedMockNTLMState(SpdySessionDependencies* session_deps,
+                      URLSecurityManager::NTLMCredentialsUsePolicy ntlm_policy);
+  ~ScopedMockNTLMState();
+
+ private:
+  SpdySessionDependencies* session_deps_;
+  scoped_ptr<HttpAuthHandlerFactory> previous_auth_handler_factory_;
+  scoped_ptr<URLSecurityManager> url_security_manager_;
+};
+
+ScopedMockNTLMState::ScopedMockNTLMState(
+    SpdySessionDependencies* session_deps,
+    URLSecurityManager::NTLMCredentialsUsePolicy ntlm_policy)
+    : session_deps_(session_deps),
+      proc_setter_(MockGenerateRandom1, MockGetHostName) {
+  url_security_manager_.reset(new URLSecurityManagerWhitelist(
+      scoped_ptr<const HttpAuthFilter>(new HttpAuthFilterWhitelist("*")),
+      scoped_ptr<const HttpAuthFilter>(new HttpAuthFilterWhitelist("*")),
+      ntlm_policy));
+  scoped_ptr<HttpAuthHandlerRegistryFactory> auth_handler_factory(
+      new HttpAuthHandlerRegistryFactory());
+  HttpAuthHandlerNTLM::Factory* ntlm_factory =
+      new HttpAuthHandlerNTLM::Factory();
+  ntlm_factory->set_url_security_manager(url_security_manager_.get());
+  auth_handler_factory->RegisterSchemeFactory("ntlm", ntlm_factory);
+  session_deps_->http_auth_handler_factory.swap(auth_handler_factory);
+  previous_auth_handler_factory_.swap(auth_handler_factory);
+}
+
+ScopedMockNTLMState::~ScopedMockNTLMState() {
+  session_deps_->http_auth_handler_factory.swap(previous_auth_handler_factory_);
+}
+
 #if defined(NTLM_PORTABLE)
+
+const base::string16 kTestingNTLMUsername(ASCIIToUTF16("testing-ntlm"));
+const base::string16 kTestingNTLMPassword(ASCIIToUTF16("testing-ntlm"));
+const base::string16 kWrongPassword(ASCIIToUTF16("wrongpassword"));
+
 // Alternative functions that eliminate randomness and dependency on the local
 // host name so that the generated NTLM messages are reproducible.
 void MockGenerateRandom1(uint8_t* output, size_t n) {
@@ -548,7 +591,30 @@ void MockGenerateRandom2(uint8_t* output, size_t n) {
 std::string MockGetHostName() {
   return "WTC-WIN7";
 }
-#endif  // defined(NTLM_PORTABLE)
+#endif
+
+const struct NTLMTestConfiguration {
+  HttpAuthHandlerNTLM::GenerateRandomProc random_proc;
+  HttpAuthHandlerNTLM::HostNameProc hostname_proc;
+} kMockNTLMState1 = {MockGenerateRandom1, MockGetHostName},
+  kMockNTLMState2 = {MockGenerateRandom2, MockGetHostName};
+
+#endif
+
+#if defined(NTLM_SSPI)
+
+// TODO(asanka): Going here.
+//
+// Need to modify MockSSPILibrary so that it does what we want. Then get the
+// tests running correctly in both Windows and Linux. In reality, we want to
+// separate out some sort of NTLM provider that we can implement for both
+// platforms. Then we can test it correctly.
+//
+// Also experiment with using instantiated test cases for NTLM specific tests.
+// Then add tests that are currently disbaled that test HTTP auth scheme
+// fallback etc.
+
+#endif
 
 template<typename ParentPool>
 class CaptureGroupNameSocketPool : public ParentPool {
@@ -5654,14 +5720,24 @@ TEST_P(HttpNetworkTransactionTest, BasicAuthProxyThenServer) {
   EXPECT_EQ(100, response->headers->GetContentLength());
 }
 
-// For the NTLM implementation using SSPI, we skip the NTLM tests since we
-// can't hook into its internals to cause it to generate predictable NTLM
-// authorization headers.
-#if defined(NTLM_PORTABLE)
+// Testing assumptions for NTLM_PORTABLE:
+//   Tests swap out a mock random number generator (one that returns fixed
+//   numbers), and a mock gethostname function that also returns a predicatable
+//   name. Test expecations are satisfied if the the response generation of the
+//   portable NTLM implementation matches the expected values. However, it is
+//   not the intention of these tests to ensure the correctness of the lower
+//   level implementation details for NTLM.
+//
+// Testing assumptions for NTLM SSPI:
+//   Tests use a MockSSPILibrary that responds to native SSPI calls. This
+//   verifies that the underlying SSPI implementation is used in as intended.
+//   However, this doesn't catch regressions caused by changes to the platform
+//   implementation.
+//
 // The NTLM authentication unit tests were generated by capturing the HTTP
 // requests and responses using Fiddler 2 and inspecting the generated random
 // bytes in the debugger.
-
+//
 // Enter the correct password and authenticate successfully.
 TEST_P(HttpNetworkTransactionTest, NTLMAuth1) {
   HttpRequestInfo request;
@@ -5763,7 +5839,7 @@ TEST_P(HttpNetworkTransactionTest, NTLMAuth1) {
 
   const HttpResponseInfo* response = trans->GetResponseInfo();
   ASSERT_TRUE(response);
-  EXPECT_TRUE(CheckNTLMServerAuth(response->auth_challenge.get()));
+  ASSERT_TRUE(CheckNTLMServerAuth(response->auth_challenge.get()));
 
   TestCompletionCallback callback2;
 
@@ -5943,7 +6019,7 @@ TEST_P(HttpNetworkTransactionTest, NTLMAuth2) {
 
   const HttpResponseInfo* response = trans->GetResponseInfo();
   ASSERT_TRUE(response);
-  EXPECT_TRUE(CheckNTLMServerAuth(response->auth_challenge.get()));
+  ASSERT_TRUE(CheckNTLMServerAuth(response->auth_challenge.get()));
 
   TestCompletionCallback callback2;
 
