@@ -61,7 +61,8 @@ public abstract class FirstRunFlowSequencer  {
      * Once finished, calls onFlowIsKnown().
      */
     public void start() {
-        if (CommandLine.getInstance().hasSwitch(ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE)) {
+        if (CommandLine.getInstance().hasSwitch(ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE)
+                || ApiCompatibilityUtils.isDemoUser(mActivity)) {
             onFlowIsKnown(null);
             return;
         }
@@ -218,7 +219,8 @@ public abstract class FirstRunFlowSequencer  {
      */
     public static Intent checkIfFirstRunIsNecessary(Context context, boolean fromChromeIcon) {
         // If FRE is disabled (e.g. in tests), proceed directly to the intent handling.
-        if (CommandLine.getInstance().hasSwitch(ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE)) {
+        if (CommandLine.getInstance().hasSwitch(ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE)
+                || ApiCompatibilityUtils.isDemoUser(context)) {
             return null;
         }
 
