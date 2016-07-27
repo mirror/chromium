@@ -34,6 +34,7 @@
     "third_party",
     "third_party/binutils",
     "third_party/hwcplus",
+    "third_party/instrumented_libraries",
     "third_party/jinja2",
     "third_party/jsoncpp",
     "third_party/khronos",
