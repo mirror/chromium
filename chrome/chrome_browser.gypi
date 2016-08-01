@@ -1991,6 +1991,7 @@
       'android/java/src/org/chromium/chrome/browser/ntp/interests/InterestsService.java',
       'android/java/src/org/chromium/chrome/browser/ntp/LogoBridge.java',
       'android/java/src/org/chromium/chrome/browser/ntp/NewTabPagePrefs.java',
+      'android/java/src/org/chromium/chrome/browser/ntp/PopularSites.java',
       'android/java/src/org/chromium/chrome/browser/ntp/RecentlyClosedBridge.java',
       'android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetsBridge.java',
       'android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetsLauncher.java',
