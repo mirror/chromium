@@ -27,6 +27,11 @@
 #include "ui/gfx/codec/jpeg_codec.h"
 #include "url/gurl.h"
 
+#if defined(OS_ANDROID)
+#include "base/android/jni_android.h"
+#include "jni/PopularSites_jni.h"
+#endif
+
 using content::BrowserThread;
 using history::TopSites;
 using suggestions::ChromeSuggestion;
@@ -100,6 +105,14 @@ bool ShouldShowPopularSites() {
     return false;
   if (cmd_line->HasSwitch(ntp_tiles::switches::kEnableNTPPopularSites))
     return true;
+
+#if defined(OS_ANDROID)
+  if (Java_PopularSites_isPopularSitesForceEnabled(
+          base::android::AttachCurrentThread())) {
+    return true;
+  }
+#endif
+
   return base::StartsWith(group_name, "Enabled",
                           base::CompareCase::INSENSITIVE_ASCII);
 }
@@ -199,6 +212,13 @@ MostVisitedSites::MostVisitedSites(
 MostVisitedSites::~MostVisitedSites() {
   supervisor_->SetObserver(nullptr);
 }
+
+#if defined(OS_ANDROID)
+// static
+bool MostVisitedSites::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+#endif
 
 void MostVisitedSites::SetMostVisitedURLsObserver(Observer* observer,
                                                   int num_sites) {
