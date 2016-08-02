@@ -703,8 +703,6 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
                 TabOpenType tabOpenType, String externalAppId, int tabIdToBringToFront,
                 boolean hasUserGesture, Intent intent) {
             TabModel tabModel = getCurrentTabModel();
-            boolean fromLauncherShortcut = IntentUtils.safeGetBooleanExtra(
-                    intent, IntentHandler.EXTRA_INVOKED_FROM_SHORTCUT, false);
             switch (tabOpenType) {
                 case REUSE_URL_MATCHING_TAB_ELSE_NEW_TAB:
                     // Used by the bookmarks application.
@@ -767,12 +765,10 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
                     openNewTab(url, referer, headers, externalAppId, intent, false);
                     break;
                 case OPEN_NEW_TAB:
-                    if (fromLauncherShortcut) recordLauncherShortcutAction(false);
                     openNewTab(url, referer, headers, externalAppId, intent, true);
                     break;
                 case OPEN_NEW_INCOGNITO_TAB:
                     if (url == null || url.equals(UrlConstants.NTP_URL)) {
-                        if (fromLauncherShortcut) recordLauncherShortcutAction(true);
                         if (TextUtils.equals(externalAppId, getPackageName())) {
                             // Used by the Account management screen to open a new incognito tab.
                             // Account management screen collects its metrics separately.
@@ -1096,14 +1092,6 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
         RecordHistogram.recordEnumeratedHistogram(
                 "Android.Activity.ChromeTabbedActivity.SystemBackAction",
                 action, BACK_PRESSED_COUNT);
-    }
-
-    private void recordLauncherShortcutAction(boolean isIncognito) {
-        if (isIncognito) {
-            RecordUserAction.record("Android.LauncherShortcut.NewIncognitoTab");
-        } else {
-            RecordUserAction.record("Android.LauncherShortcut.NewTab");
-        }
     }
 
     private void moveTabToOtherWindow(Tab tab) {
