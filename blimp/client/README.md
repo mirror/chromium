@@ -1,0 +1,93 @@
+# Blimp Client
+
+This document contains documentation for the blimp client code structure.
+
+[TOC]
+
+## Code Structure
+
+The blimp client has two main directories to be used for code, `core` and
+`public`. Embedders should only ever have to deal with the `public` directory.
+
+There are sub-directories resembling the ones in `core` for parts that needs to
+be exposed to embedders, such as `BlimpContents`.
+
+All Java-code is put in the `public/android` directory, with a package structure
+that resembles the one in `core`.
+
+### The `core` directory
+
+The `core` directory is to be used for all business logic code, and is an
+internal concept of the client code.
+
+There are sub-directories for logically separate parts, such as `contents` for
+code that relate to the contents of a web page. All Android code is put into
+their respective directories, so Android and Java-code related to `contents`
+is put in `contents/android`.
+
+Each of the sub-directories have their own `BUILD.gn` file, which includes
+targets for both C++ and Java.
+
+*   `//blimp/client/core/`
+    *    `android/` All Android-related code, including Java-code, that are for
+         the code living directly in `//blimp/client/core`.
+    *    `compositor/` Code related to the Chrome Compositor.
+    *    `contents/` Code related to the contents of a web page.
+    *    `contents/android/` JNI bridges and Java-code for `contents`.
+    *    `session/` Code related to the session with the engine.
+
+Most code in `core` do not need any Java counterparts unless the embedder is
+written for Android and it is typically only needed for things that relate to
+the embedder UI.
+
+#### Actual and dummy implementations of `core`
+
+The `core` directory has two implementations of the public API, a dummy one
+and a real one. The default is to use the dummy API, but an embedder can choose
+to enable full blimp support by setting the GN arguments `enable_blimp_client`
+to `true`.
+
+Basically only the implementation of BlimpClientContext has been split out into
+two parts (both in C++ and Java), and the choice of which backing implementation
+to be used is selected by the `enable_blimp_client` flag.
+
+### The `public` directory
+
+The `public` directory represents the public API of the blimp client, to be
+used by the embedders.
+
+Embedders should be able to depend on `//blimp/client/public` for C++ code,
+and for Java they should depend on `//blimp/client/public:public_java`. This
+automatically pulls in the dependencies on the code in `core`.
+
+*   `//blimp/client/public/`
+    *    `android/` All Android-related code, including Java-code. This includes
+         also code from all the sub-directories such as `contents`.
+    *    `contents/` Code from `//blimp/client/core/contents/` that needs to be
+         exposed to embedders.
+    *    `session/` Code from `//blimp/client/core/session/` that needs to be
+          exposed to embedders.
+
+### Other directories
+
+#### The `app` directory
+
+The `app` directory represents the directory that contains embedder code for
+a Blimp application on its own. Under a transition period, this directory
+also contains code that depends directly on `core`, until everything can be
+updated to depend only on `public`.
+
+#### The `feature` directory
+
+The `feature` directory is from the old directory structure, and all the content
+of this will move over to the `core` directory. The feature-specific code will
+move together with the usage of the feature itself, such as `core/contents`.
+
+#### The `session` directory
+
+The `session` directory is from the old directory structure, and all the content
+of this will move over to the `core/session` directory.
+
+#### The `test` directory
+
+The `test` directory contains tools helpful for testing client code.
