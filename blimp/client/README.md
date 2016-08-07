@@ -3,7 +3,7 @@
 This document contains documentation for the blimp client code organization.
 
 For a quick guide for how to add Java files to an existing directory, see
-[Adding Java files](#Adding-Java-files) below.
+[Adding Java files](#adding-java-files) below.
 
 [TOC]
 
@@ -24,7 +24,7 @@ ensure that embedders and dependencies are correctly set up. Currently, the
 depend directly on code in `core`, but that should change when the migration to
 `core` is finished.
 
-### The `core` directory
+### The core directory
 
 The `core` directory is to be used for all business logic code, and is an
 internal concept of the client code.
@@ -49,7 +49,7 @@ Most code in `core` do not need any Java counterparts unless the embedder is
 written for Android and it is typically only needed for things that relate to
 the embedder UI.
 
-#### Actual and dummy implementations of `core`
+#### Actual and dummy implementations of core
 
 The `core` directory has two implementations of the public API, a dummy one
 and a real one. The default is to use the dummy API, but an embedder can choose
@@ -60,7 +60,7 @@ Basically only the implementation of BlimpClientContext has been split out into
 two parts (both in C++ and Java), and the choice of which backing implementation
 to be used is selected by the `enable_blimp_client` flag.
 
-### The `public` directory
+### The public directory
 
 The `public` directory represents the public API of the blimp client, to be
 used by the embedders.
@@ -79,30 +79,30 @@ automatically pulls in the dependencies on the code in `core`.
 
 ### Other directories
 
-#### The `app` directory
+#### The app directory
 
 The `app` directory represents the directory that contains embedder code for
 a Blimp application on its own. Under a transition period, this directory
 also contains code that depends directly on `core`, until everything can be
 updated to depend only on `public`.
 
-#### The `feature` directory
+#### The feature directory
 
 The `feature` directory is from the old directory organization, and all the
 content of this will move over to the `core` directory. The feature-specific
 code will move together with the usage of the feature itself, such as
 `core/contents`.
 
-#### The `session` directory
+#### The session directory
 
 The `session` directory is from the old directory organization, and all the
 content of this will move over to the `core/session` directory.
 
-#### The `test` directory
+#### The test directory
 
 The `test` directory contains tools helpful for testing client code.
 
-### Adding Java files
+### Adding Java files {#adding-java-files}
 
 Most of Blimp is written in C++, but some parts have to be written in Java for
 the Android platform. For those parts of the code, it is required to add an
