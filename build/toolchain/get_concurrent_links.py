@@ -50,8 +50,8 @@ def _GetDefaultConcurrentLinks(is_lto):
           if not match:
             continue
           mem_total_gb = float(match.group(1)) / (2 ** 20)
-          # Allow 8Gb per link on Linux because Gold is quite memory hungry
-          mem_per_link_gb = 8
+          # Allow 20Gb per link on Linux because Gold is quite memory hungry
+          mem_per_link_gb = 20
           if is_lto:
             mem_total_gb -= 10 # Reserve
             # For LTO builds the RAM requirements are even higher
