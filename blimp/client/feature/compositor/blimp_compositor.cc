@@ -183,9 +183,7 @@ void BlimpCompositor::SetVisibleInternal(bool visible) {
     // If not visible, hide the compositor and have it drop it's output
     // surface.
     host_->SetVisible(false);
-    if (!host_->output_surface_lost()) {
-      host_->ReleaseOutputSurface();
-    }
+    host_->ReleaseOutputSurface();
   }
 }
 
