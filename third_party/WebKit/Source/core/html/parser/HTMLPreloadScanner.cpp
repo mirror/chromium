@@ -238,7 +238,6 @@ public:
         ReferrerPolicy referrerPolicy = (m_referrerPolicy != ReferrerPolicyDefault) ? m_referrerPolicy : documentReferrerPolicy;
         OwnPtr<PreloadRequest> request = PreloadRequest::create(initiatorFor(m_tagImpl), position, m_urlToLoad, predictedBaseURL, type, referrerPolicy, resourceWidth, clientHintsPreferences, requestType);
         request->setCrossOrigin(m_crossOrigin);
-        request->setNonce(m_nonce);
         request->setCharset(charset());
         request->setDefer(m_defer);
         request->setIntegrityMetadata(m_integrityMetadata);
@@ -254,8 +253,6 @@ private:
             setUrlToLoad(attributeValue, DisallowURLReplacement);
         else if (match(attributeName, crossoriginAttr))
             setCrossOrigin(attributeValue);
-        else if (match(attributeName, nonceAttr))
-            setNonce(attributeValue);
         else if (match(attributeName, asyncAttr))
             setDefer(FetchRequest::LazyLoad);
         else if (match(attributeName, deferAttr))
@@ -313,8 +310,6 @@ private:
             m_matchedMediaAttribute = mediaAttributeMatches(*m_mediaValues, attributeValue);
         } else if (match(attributeName, crossoriginAttr)) {
             setCrossOrigin(attributeValue);
-        } else if (match(attributeName, nonceAttr)) {
-            setNonce(attributeValue);
         } else if (match(attributeName, asAttr)) {
             m_asAttributeValue = attributeValue;
         } else if (match(attributeName, typeAttr)) {
@@ -446,11 +441,6 @@ private:
         m_crossOrigin = crossOriginAttributeValue(corsSetting);
     }
 
-    void setNonce(const String& nonce)
-    {
-        m_nonce = nonce;
-    }
-
     void setDefer(FetchRequest::DeferOption defer)
     {
         m_defer = defer;
@@ -479,7 +469,6 @@ private:
     bool m_sourceSizeSet;
     FetchRequest::DeferOption m_defer;
     CrossOriginAttributeValue m_crossOrigin;
-    String m_nonce;
     Member<MediaValuesCached> m_mediaValues;
     bool m_referrerPolicySet;
     ReferrerPolicy m_referrerPolicy;
