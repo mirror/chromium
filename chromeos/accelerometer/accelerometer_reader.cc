@@ -4,6 +4,7 @@
 
 #include "chromeos/accelerometer/accelerometer_reader.h"
 
+#include <math.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -482,13 +483,39 @@ void AccelerometerFileReader::ReadFileAndNotify() {
     }
     for (AccelerometerSource source : reading_data.sources) {
       DCHECK(configuration_.has[source]);
-      int16_t* values = reinterpret_cast<int16_t*>(reading);
-      update_->Set(source, values[configuration_.index[source][0]] *
-                               configuration_.scale[source][0],
-                   values[configuration_.index[source][1]] *
-                       configuration_.scale[source][1],
-                   values[configuration_.index[source][2]] *
-                       configuration_.scale[source][2]);
+      float x, y, z;
+
+      if (source == ACCELEROMETER_SOURCE_SCREEN) {
+        static unsigned long iteration = 0;
+        static int theta = 0;
+        static bool is_opening = false; // start false to trigger print
+        const int delta = 15;
+        const double kRad2deg = 180.0 / M_PI;
+
+        if (!is_opening && theta <= 0) {
+          LOG(ERROR) << "lid open iteration " << iteration++;
+          theta = 0;
+          is_opening = true;
+        } else if (is_opening && theta >= 360) {
+          theta = 360;
+          is_opening = false;
+        }
+
+        x = 0;
+        y = kMeanGravity * sin(theta / kRad2deg);
+        z = kMeanGravity * cos(-theta / kRad2deg);
+
+        theta += is_opening ? delta : -delta;
+
+      } else {
+        x = 0;
+        y = 0;
+        z = kMeanGravity;
+      }
+
+      VLOG(2) << kAccelerometerNames[source] << " x: " << x << " y: " << y << " z: " << z;
+
+      update_->Set(source, x, y, z);
     }
   }
 
