@@ -241,19 +241,10 @@ To attach a debugger:
 build/android/adb_gdb --output-directory=out/Default --package-name=org.chromium.native_test
 ```
 
-After attaching `gdb` to the process you need to return form the
-`WaitForDebugger` method:
+After attaching gdb to the process you can use it normally. For example:
 
 ```
-(gdb) bt
-#0  0x4018dc34 in system () from ... src/out/Debug/lib/libc.so
-#1  0x5e93e4b2 in base::debug::BreakDebugger () at ../../base/debug/debugger_posix.cc:232
-#2  0x5e93e39e in base::debug::WaitForDebugger (wait_seconds=<optimized out>, silent=<optimized out>) at ../../base/debug/debugger.cc:24
-...
-(gdb) f 2
-#2  0x5e93e39e in base::debug::WaitForDebugger (wait_seconds=<optimized out>, silent=<optimized out>) at ../../base/debug/debugger.cc:24
-24         BreakDebugger();
-(gdb) return
-Make base::debug::WaitForDebugger(int, bool) return now? (y or n) y
+(gdb) break main
+Breakpoint 1 at 0x9750793c: main. (2 locations)
 (gdb) continue
 ```
