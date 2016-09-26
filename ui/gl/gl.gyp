@@ -26,7 +26,6 @@
         'GL_IMPLEMENTATION',
       ],
       'include_dirs': [
-        '<(DEPTH)/third_party/swiftshader/include',
         '<(DEPTH)/third_party/khronos',
       ],
       'export_dependent_settings': [
@@ -230,6 +229,9 @@
           'dependencies': [
             '<(DEPTH)/third_party/angle/src/angle.gyp:libEGL',
             '<(DEPTH)/third_party/angle/src/angle.gyp:libGLESv2',
+          ],
+          'include_dirs': [
+            '<(DEPTH)/third_party/swiftshader/include',
           ],
         }],
         ['OS=="mac"', {
