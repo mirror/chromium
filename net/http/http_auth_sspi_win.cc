@@ -82,24 +82,46 @@ int AcquireExplicitCredentials(SSPILibrary* library,
   return MapAcquireCredentialsStatusToError(status, package);
 }
 
-int AcquireDefaultCredentials(SSPILibrary* library, const SEC_WCHAR* package,
+int AcquireDefaultCredentials(SSPILibrary* library,
+                              const SEC_WCHAR* package,
+                              NTLMUsePolicy ntlm_policy,
                               CredHandle* cred) {
+  static const WCHAR kNTLMExcludingPackageList[] = L"!ntlm";
   TimeStamp expiry;
+  void* auth_data = NULL;
+  SEC_WINNT_AUTH_IDENTITY_EX identity_ex;
+
+  if (ntlm_policy == DISALLOW_NTLM) {
+    memset(&identity_ex, 0, sizeof(identity_ex));
+    identity_ex.Version = SEC_WINNT_AUTH_IDENTITY_VERSION;
+    identity_ex.Length = sizeof(identity_ex);
+    identity_ex.User = NULL;
+    identity_ex.UserLength = 0;
+    identity_ex.Domain = NULL;
+    identity_ex.DomainLength = 0;
+    identity_ex.Password = NULL;
+    identity_ex.PasswordLength = 0;
+    identity_ex.Flags = 0;
+    identity_ex.PackageList = reinterpret_cast<unsigned short*>(
+        const_cast<WCHAR*>(kNTLMExcludingPackageList));
+    identity_ex.PackageListLength = arraysize(kNTLMExcludingPackageList) - 1;
+    auth_data = &identity_ex;
+  }
 
   // Pass the username/password to get the credentials handle.
   // Note: Since the 5th argument is NULL, it uses the default
   // cached credentials for the logged in user, which can be used
   // for a single sign-on.
   SECURITY_STATUS status = library->AcquireCredentialsHandle(
-      NULL,  // pszPrincipal
+      NULL,                             // pszPrincipal
       const_cast<SEC_WCHAR*>(package),  // pszPackage
-      SECPKG_CRED_OUTBOUND,  // fCredentialUse
-      NULL,  // pvLogonID
-      NULL,  // pAuthData
-      NULL,  // pGetKeyFn (not used)
-      NULL,  // pvGetKeyArgument (not used)
-      cred,  // phCredential
-      &expiry);  // ptsExpiry
+      SECPKG_CRED_OUTBOUND,             // fCredentialUse
+      NULL,                             // pvLogonID
+      auth_data,                        // pAuthData
+      NULL,                             // pGetKeyFn (not used)
+      NULL,                             // pvGetKeyArgument (not used)
+      cred,                             // phCredential
+      &expiry);                         // ptsExpiry
 
   return MapAcquireCredentialsStatusToError(status, package);
 }
@@ -247,7 +269,8 @@ HttpAuthSSPI::HttpAuthSSPI(SSPILibrary* library,
       scheme_(scheme),
       security_package_(security_package),
       max_token_length_(max_token_length),
-      can_delegate_(false) {
+      can_delegate_(false),
+      can_use_ntlm_with_default_credentials_(false) {
   DCHECK(library_);
   SecInvalidateHandle(&cred_);
   SecInvalidateHandle(&ctxt_);
@@ -269,8 +292,12 @@ bool HttpAuthSSPI::AllowsExplicitCredentials() const {
   return true;
 }
 
-void HttpAuthSSPI::Delegate() {
+void HttpAuthSSPI::AllowDelegation() {
   can_delegate_ = true;
+}
+
+void HttpAuthSSPI::AllowDefaultCredentialsForNTLM() {
+  can_use_ntlm_with_default_credentials_ = true;
 }
 
 void HttpAuthSSPI::ResetSecurityContext() {
@@ -334,7 +361,10 @@ int HttpAuthSSPI::OnFirstRound(const AuthCredentials* credentials) {
     if (rv != OK)
       return rv;
   } else {
-    rv = AcquireDefaultCredentials(library_, security_package_, &cred_);
+    rv = AcquireDefaultCredentials(
+        library_, security_package_,
+        can_use_ntlm_with_default_credentials_ ? ALLOW_NTLM : DISALLOW_NTLM,
+        &cred_);
     if (rv != OK)
       return rv;
   }
