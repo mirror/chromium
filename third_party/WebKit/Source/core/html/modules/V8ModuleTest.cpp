@@ -74,21 +74,27 @@ TEST_F(V8ModuleTest, runScript)
         << "the script should have run";
 }
 
+// exports do not work yet (apparently?)
+// TODO(dominicc): Do imports work?
 TEST_F(V8ModuleTest, instantiateModule)
 {
     Stuff stuff(isolate_);
     v8::ScriptCompiler::Source module_source(v8_str(
-        "function greet(name) { return `Hello, ${name}!`; }\n"
-        "//export default { greet: 42 };"));
+        "Object.greet = (name) => `Hello, ${name}!`;\n"
+        "//export ... ;"));
     v8::Local<v8::Module> module =
         v8::ScriptCompiler::CompileModule(isolate_, &module_source)
         .ToLocalChecked();
     EXPECT_TRUE(module->Instantiate(stuff.context_, nullptr));
-    v8::Local<v8::Value> module_value =
+    //v8::Local<v8::Value> module_value =
         module->Evaluate(stuff.context_).ToLocalChecked();
-    v8::Local<v8::Function> f = module_value.As<v8::Object>()->Get(
-        stuff.context_,
-        v8_str("greet")).ToLocalChecked().As<v8::Function>();
+    // v8::Local<v8::Function> f = module_value.As<v8::Object>()->Get(
+    v8::Local<v8::Function> f =
+        stuff.context_->Global()
+        ->Get(stuff.context_, v8_str("Object"))
+        .ToLocalChecked().As<v8::Object>()
+        ->Get(stuff.context_, v8_str("greet"))
+        .ToLocalChecked().As<v8::Function>();
     v8::Local<v8::Value> args[] = {v8_str("Mars")};
     v8::Local<v8::Value> result =
         f->Call(stuff.context_, stuff.context_->Global(), 1, args)
