@@ -4,9 +4,6 @@
 
 #include "services/shell/public/cpp/interface_registry.h"
 
-#include <sstream>
-
-#include "mojo/public/cpp/bindings/message.h"
 #include "services/shell/public/cpp/connection.h"
 
 namespace shell {
@@ -93,11 +90,9 @@ void InterfaceRegistry::GetInterface(const std::string& interface_name,
                                 interface_name,
                                 std::move(handle));
   } else if (!CanBindRequestForInterface(interface_name)) {
-    std::stringstream ss;
-    ss << "Capability spec prevented service " << remote_identity_.name()
-       << " from binding interface: " << interface_name;
-    LOG(ERROR) << ss.str();
-    mojo::ReportBadMessage(ss.str());
+    LOG(ERROR) << "Capability spec prevented service: "
+               << remote_identity_.name()
+               << " from binding interface: " << interface_name;
   } else if (!default_binder_.is_null()) {
     default_binder_.Run(interface_name, std::move(handle));
   } else {
