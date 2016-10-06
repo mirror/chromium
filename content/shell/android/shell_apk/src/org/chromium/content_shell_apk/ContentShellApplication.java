@@ -27,6 +27,10 @@ public class ContentShellApplication extends ContentApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+    }
+
+    @Override
+    protected void initializeLibraryDependencies() {
         PathUtils.setPrivateDataDirectorySuffix(PRIVATE_DATA_DIRECTORY_SUFFIX, this);
     }
 
