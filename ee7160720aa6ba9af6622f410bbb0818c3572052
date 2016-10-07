@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fcaac6e_763e50de",
+        "filename": "net/http/http_auth_sspi_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2016-10-07T00:48:48Z",
+      "side": 1,
+      "message": "Should use \"ambient\" consistently.",
+      "range": {
+        "startLine": 158,
+        "startChar": 12,
+        "endLine": 158,
+        "endChar": 19
+      },
+      "revId": "ee7160720aa6ba9af6622f410bbb0818c3572052",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
