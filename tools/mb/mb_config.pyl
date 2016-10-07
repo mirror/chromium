@@ -11,6 +11,11 @@
     # include a configuration with 'chrome_with_codecs' since these builders
     # generated publicly advertised non-Official builds which are not allowed
     # to have proprietary codecs enabled.
+    'chromeos.chrome': {
+      'Chrome4CROS Packages': 'swarming_chromeos_gn_release_bot',
+      'Linux ChromeOS Buildspec Tests': 'swarming_chromeos_gn_release_bot',
+    },
+
     'chromium': {
       'Android': 'android_without_codecs_gn_release_bot_minimal_symbols',
       'Linux x64': 'noswarming_gn_release_bot',
