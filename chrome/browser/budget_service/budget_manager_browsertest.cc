@@ -117,7 +117,13 @@ IN_PROC_BROWSER_TEST_F(BudgetManagerBrowserTest, BudgetInDocument) {
   ASSERT_FALSE(success());
 }
 
-IN_PROC_BROWSER_TEST_F(BudgetManagerBrowserTest, BudgetInWorker) {
+// Flaky (crbug/657202)
+#if defined(OS_CHROMEOS)
+#define MAYBE_BudgetInWorker DISABLED_BudgetInWorker
+#else
+#define MAYBE_BudgetInWorker BudgetInWorker
+#endif
+IN_PROC_BROWSER_TEST_F(BudgetManagerBrowserTest, MAYBE_BudgetInWorker) {
   std::string script_result;
 
   ASSERT_TRUE(RunScript("registerServiceWorker()", &script_result));
