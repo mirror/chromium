@@ -153,8 +153,7 @@ TEST(SdkMediaCodecBridgeTest, Initialize) {
 
   std::unique_ptr<media::MediaCodecBridge> media_codec;
   media_codec.reset(VideoCodecBridge::CreateDecoder(
-      kCodecH264, false, gfx::Size(640, 480), nullptr, nullptr,
-      std::vector<uint8_t>(), std::vector<uint8_t>()));
+      kCodecH264, false, gfx::Size(640, 480), nullptr, nullptr));
 }
 
 TEST(SdkMediaCodecBridgeTest, DoNormal) {
@@ -275,8 +274,7 @@ TEST(SdkMediaCodecBridgeTest, PresentationTimestampsDoNotDecrease) {
   SKIP_TEST_IF_VP8_DECODER_IS_NOT_SUPPORTED();
 
   std::unique_ptr<VideoCodecBridge> media_codec(VideoCodecBridge::CreateDecoder(
-      kCodecVP8, false, gfx::Size(320, 240), nullptr, nullptr,
-      std::vector<uint8_t>(), std::vector<uint8_t>()));
+      kCodecVP8, false, gfx::Size(320, 240), nullptr, nullptr));
   EXPECT_TRUE(media_codec.get());
   scoped_refptr<DecoderBuffer> buffer = ReadTestDataFile("vp8-I-frame-320x240");
   DecodeMediaFrame(media_codec.get(), buffer->data(), buffer->data_size(),
@@ -301,10 +299,9 @@ TEST(SdkMediaCodecBridgeTest, PresentationTimestampsDoNotDecrease) {
 
 TEST(SdkMediaCodecBridgeTest, CreateUnsupportedCodec) {
   EXPECT_EQ(nullptr, AudioCodecBridge::Create(kUnknownAudioCodec));
-  EXPECT_EQ(nullptr,
-            VideoCodecBridge::CreateDecoder(
-                kUnknownVideoCodec, false, gfx::Size(320, 240), nullptr,
-                nullptr, std::vector<uint8_t>(), std::vector<uint8_t>()));
+  EXPECT_EQ(nullptr, VideoCodecBridge::CreateDecoder(kUnknownVideoCodec, false,
+                                                     gfx::Size(320, 240),
+                                                     nullptr, nullptr));
 }
 
 }  // namespace media

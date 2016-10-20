@@ -380,13 +380,8 @@ bool AndroidVideoDecodeAccelerator::Initialize(const Config& config,
       codec_config_->codec_ != kCodecHEVC &&
 #endif
       codec_config_->codec_ != kCodecH264) {
-    DLOG(ERROR) << "Unsupported profile: " << config.profile;
+    LOG(ERROR) << "Unsupported profile: " << config.profile;
     return false;
-  }
-
-  if (codec_config_->codec_ == kCodecH264) {
-    codec_config_->csd0_ = config.sps;
-    codec_config_->csd1_ = config.pps;
   }
 
   // Only use MediaCodec for VP8/9 if it's likely backed by hardware
@@ -402,7 +397,7 @@ bool AndroidVideoDecodeAccelerator::Initialize(const Config& config,
 
   auto gles_decoder = get_gles2_decoder_cb_.Run();
   if (!gles_decoder) {
-    DLOG(ERROR) << "Failed to get gles2 decoder instance.";
+    LOG(ERROR) << "Failed to get gles2 decoder instance.";
     return false;
   }
 
@@ -1048,8 +1043,8 @@ AndroidVideoDecodeAccelerator::ConfigureMediaCodecOnAnyThread(
   std::unique_ptr<VideoCodecBridge> codec(VideoCodecBridge::CreateDecoder(
       codec_config->codec_, codec_config->needs_protected_surface_,
       codec_config->initial_expected_coded_size_,
-      codec_config->surface_.j_surface().obj(), media_crypto,
-      codec_config->csd0_, codec_config->csd1_, true, require_software_codec));
+      codec_config->surface_.j_surface().obj(), media_crypto, true,
+      require_software_codec));
 
   return codec;
 }
