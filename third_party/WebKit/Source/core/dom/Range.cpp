@@ -958,7 +958,10 @@ String Range::toString() const {
 }
 
 String Range::text() const {
-  DCHECK(!m_ownerDocument->needsLayoutTreeUpdate());
+  // TODO(xiaochengh): The use of updateStyleAndLayoutIgnorePendingStylesheets
+  // needs to be audited.  see http://crbug.com/590369 for more details.
+  ownerDocument().updateStyleAndLayoutIgnorePendingStylesheets();
+
   return plainText(EphemeralRange(this),
                    TextIteratorEmitsObjectReplacementCharacter);
 }
