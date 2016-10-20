@@ -1,0 +1,4 @@
+include_rules = [
+  "+perf/tracing/public",
+  "+perf/tracing/platform.h",
+]
