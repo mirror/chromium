@@ -1,0 +1,15 @@
+include_rules = [
+  "-base",
+  "-build",
+  "-ipc",
+  "-testing",
+  "-perf/tracing",
+  "+perf/tracing/core/common",
+  "+perf/tracing/core/public",
+]
+
+specific_include_rules = {
+  ".*_unittest\.cc": [
+    "+testing/gtest",
+  ],
+}

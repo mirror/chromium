@@ -1,0 +1,6 @@
+# This is TBD, see discussion here:
+https://docs.google.com/document/d/1w7KxYRMFNuVIrAbenFZsP-Fb3bT7ftsZGHsDeRqA1b8/edit#bookmark=id.90ndoaitizgb
+
+include_rules = [
+  "+perf/tracing/platform.h",
+]
