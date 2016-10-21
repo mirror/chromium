@@ -150,3 +150,7 @@ QUIC_FLAG(bool, FLAGS_quic_stream_sequencer_buffer_debug, true)
 // If true, release QuicCryptoStream\'s read buffer when stream are less
 // frequently used.
 QUIC_FLAG(bool, FLAGS_quic_release_crypto_stream_buffer, false)
+
+// If true, v33 QUIC client uses 1 bit to specify 8-byte connection id in
+// public flag.
+QUIC_FLAG(bool, FLAGS_quic_remove_v33_hacks2, false)
