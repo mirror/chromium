@@ -7,6 +7,7 @@
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/strings/string_util.h"
+#include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/test_file_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -193,6 +194,8 @@ TEST(FilenameUtilTest, FileURLConversion) {
      "%E9%A1%B5.doc"},
     {L"D:\\plane1\\\xD835\xDC00\xD835\xDC01.txt",  // Math alphabet "AB"
      "file:///D:/plane1/%F0%9D%90%80%F0%9D%90%81.txt"},
+    {L"C:\\Downloads\\1.%5BABC%5D xyz (1).pdf",
+      "file:///C:/Downloads/1.%255BABC%255D%20xyz%20(1).pdf"},
 #elif defined(OS_POSIX)
     {L"/foo/bar.txt", "file:///foo/bar.txt"},
     {L"/foo/BAR.txt", "file:///foo/BAR.txt"},
@@ -222,6 +225,15 @@ TEST(FilenameUtilTest, FileURLConversion) {
     // Back to the filename.
     EXPECT_TRUE(FileURLToFilePath(file_url, &output));
     EXPECT_EQ(round_trip_cases[i].file, FilePathAsWString(output));
+
+#if defined(OS_WIN)
+    // Also test raw GURL performance.
+    GURL file_url_gurl(base::SysWideToUTF8(round_trip_cases[i].file));
+    EXPECT_EQ(file_url, file_url_gurl);
+    base::FilePath output2;
+    EXPECT_TRUE(FileURLToFilePath(file_url_gurl, &output2));
+    EXPECT_EQ(round_trip_cases[i].file, FilePathAsWString(output2));
+#endif
   }
 
   // Test that various file: URLs get decoded into the correct file type

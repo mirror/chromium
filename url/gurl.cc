@@ -165,8 +165,8 @@ const std::string& GURL::spec() const {
   if (is_valid_ || spec_.empty())
     return spec_;
 
-  DCHECK(false) << "Trying to get the spec of an invalid URL!";
-  return empty_string.Get();
+  DCHECK(false) << "Trying to get the spec of an invalid URL!:" << possibly_invalid_spec();
+  return EmptyStringForGURL();
 }
 
 bool GURL::operator<(const GURL& other) const {

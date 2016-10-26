@@ -62,9 +62,12 @@ bool FileURLToFilePath(const GURL& url, base::FilePath* file_path) {
   base::FilePath::StringType& file_path_str =
       const_cast<base::FilePath::StringType&>(file_path->value());
   file_path_str.clear();
+  LOG(WARNING) << "Mapping URL:[" << url.spec() << "] to a path";
 
-  if (!url.is_valid())
+  if (!url.is_valid()) {
+    LOG(WARNING) << "URL is not valid";
     return false;
+  }
 
 #if defined(OS_WIN)
   std::string path;
@@ -93,8 +96,10 @@ bool FileURLToFilePath(const GURL& url, base::FilePath* file_path) {
   std::string path = url.path();
 #endif  // !defined(OS_WIN)
 
-  if (path.empty())
+  if (path.empty()) {
+    LOG(WARNING) << "Path is empty.";
     return false;
+  }
 
   // GURL stores strings as percent-encoded 8-bit, this will undo if possible.
   path = UnescapeURLComponent(
@@ -128,6 +133,8 @@ bool FileURLToFilePath(const GURL& url, base::FilePath* file_path) {
 
   file_path_str.assign(path);
 #endif  // !defined(OS_WIN)
+
+  LOG(WARNING) << "Path is [" << file_path_str << "]";
 
   return !file_path_str.empty();
 }
