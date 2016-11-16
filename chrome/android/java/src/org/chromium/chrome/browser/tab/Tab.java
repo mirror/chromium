@@ -726,6 +726,9 @@ public class Tab implements ViewGroup.OnHierarchyChangeListener,
                 mAppAssociatedWith = null;
                 setIsAllowedToReturnToExternalApp(false);
             }
+            if (params.getUrl().equals("chrome://java-crash/")) {
+                return javaCrash();
+            }
 
             // We load the URL from the tab rather than directly from the ContentView so the tab has
             // a chance of using a prerenderer page is any.
@@ -756,6 +759,10 @@ public class Tab implements ViewGroup.OnHierarchyChangeListener,
         for (TabObserver observer : mObservers) {
             observer.onContextualActionBarVisibilityChanged(this, show);
         }
+    }
+
+    private int javaCrash() {
+        throw new RuntimeException("Intentional Java Crash");
     }
 
     /**
