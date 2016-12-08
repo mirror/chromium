@@ -1071,3 +1071,4 @@ recursedeps = [
   # ANGLE manages DEPS that it also owns the build files for, such as dEQP.
   ("src/third_party/angle", "DEPS.chromium"),
 ]
+
