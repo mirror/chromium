@@ -34,6 +34,7 @@ import org.chromium.ui.text.SpanApplier;
 import org.chromium.ui.text.SpanApplier.SpanInfo;
 import org.chromium.ui.widget.ButtonCompat;
 
+import java.util.Collections;
 import java.util.List;
 
 // TODO(gogerald): refactor common part into one place after redesign all sign in screens.
@@ -101,7 +102,7 @@ public class AccountSigninView extends FrameLayout implements ProfileDownloader.
     private static final String SETTINGS_LINK_CLOSE = "</LINK1>";
 
     private AccountManagerHelper mAccountManagerHelper;
-    private List<String> mAccountNames;
+    private List<String> mAccountNames = Collections.emptyList();
     private AccountSigninChooseView mSigninChooseView;
     private ButtonCompat mPositiveButton;
     private Button mNegativeButton;
@@ -126,12 +127,16 @@ public class AccountSigninView extends FrameLayout implements ProfileDownloader.
     }
 
     /**
-     * Initializes this view with profile images and full names.
+     * Initializes this view with profile data cache, delegate and listener.
      * @param profileData ProfileDataCache that will be used to call to retrieve user account info.
+     * @param delegate    The UI object creation delegate.
+     * @param listener    The account selection event listener.
      */
-    public void init(ProfileDataCache profileData) {
+    public void init(ProfileDataCache profileData, Delegate delegate, Listener listener) {
         mProfileData = profileData;
         mProfileData.setObserver(this);
+        mDelegate = delegate;
+        mListener = listener;
         showSigninPage();
     }
 
@@ -212,27 +217,15 @@ public class AccountSigninView extends FrameLayout implements ProfileDownloader.
     }
 
     /**
-     * Set the account selection event listener.  See {@link Listener}
-     *
-     * @param listener The listener.
-     */
-    public void setListener(Listener listener) {
-        mListener = listener;
-    }
-
-    /**
-     * Set the UI object creation delegate. See {@link Delegate}
-     * @param delegate The delegate.
-     */
-    public void setDelegate(Delegate delegate) {
-        mDelegate = delegate;
-    }
-
-    /**
      * Refresh the list of available system accounts.
      */
     private void updateAccounts() {
         if (mSignedIn || mProfileData == null) return;
+
+        if (!ExternalAuthUtils.getInstance().canUseGooglePlayServices(getContext(),
+                    new UserRecoverableErrorHandler.ModalDialog(mDelegate.getActivity()))) {
+            return;
+        }
 
         List<String> oldAccountNames = mAccountNames;
         mAccountNames = mAccountManagerHelper.getGoogleAccountNames();
@@ -363,11 +356,6 @@ public class AccountSigninView extends FrameLayout implements ProfileDownloader.
     }
 
     private void showConfirmSigninPageAccountTrackerServiceCheck() {
-        if (!ExternalAuthUtils.getInstance().canUseGooglePlayServices(getContext(),
-                new UserRecoverableErrorHandler.ModalDialog(mDelegate.getActivity()))) {
-            return;
-        }
-
         // Disable the buttons to prevent them being clicked again while waiting for the callbacks.
         setButtonsEnabled(false);
 
