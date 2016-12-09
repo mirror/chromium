@@ -1022,8 +1022,7 @@ ${NATIVES}
           'P0_TYPE': native.p0_type,
       })
       template = Template("""\
-extern "C" __attribute__((visibility("default")))
-${RETURN} ${STUB_NAME}(JNIEnv* env,
+JNI_GENERATOR_EXPORT ${RETURN} ${STUB_NAME}(JNIEnv* env,
     ${PARAMS_IN_STUB}) {
   ${P0_TYPE}* native = reinterpret_cast<${P0_TYPE}*>(${PARAM0_NAME});
   CHECK_NATIVE_PTR(env, jcaller, native, "${NAME}"${OPTIONAL_ERROR_RETURN});
@@ -1034,8 +1033,7 @@ ${RETURN} ${STUB_NAME}(JNIEnv* env,
       template = Template("""
 static ${RETURN_DECLARATION} ${NAME}(JNIEnv* env, ${PARAMS});
 
-extern "C" __attribute__((visibility("default")))
-${RETURN} ${STUB_NAME}(JNIEnv* env, ${PARAMS_IN_STUB}) {
+JNI_GENERATOR_EXPORT ${RETURN} ${STUB_NAME}(JNIEnv* env, ${PARAMS_IN_STUB}) {
   return ${NAME}(${PARAMS_IN_CALL})${POST_CALL};
 }
 """)
