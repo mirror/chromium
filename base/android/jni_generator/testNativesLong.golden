@@ -26,7 +26,8 @@ base::subtle::AtomicWord g_TestJni_clazz __attribute__((unused)) = 0;
 }  // namespace
 
 // Step 2: method stubs.
-JNI_GENERATOR_EXPORT void Java_org_chromium_TestJni_nativeDestroy(JNIEnv* env,
+extern "C" __attribute__((visibility("default")))
+void Java_org_chromium_TestJni_nativeDestroy(JNIEnv* env,
     jobject jcaller,
     jlong nativeChromeBrowserProvider) {
   ChromeBrowserProvider* native =

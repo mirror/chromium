@@ -11,7 +11,7 @@ action("jni_generator_py_tests") {
     "jni_generator.py",
     "jni_generator_tests.py",
     "java/src/org/chromium/example/jni_generator/SampleForTests.java",
-    "SampleForTests_jni.golden",
+    "golden_sample_for_tests_jni.h",
   ]
   outputs = [
     _stamp,
