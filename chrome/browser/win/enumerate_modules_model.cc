@@ -445,7 +445,6 @@ void ModuleEnumerator::ScanImpl() {
                       checkpoint2 - checkpoint);
 
   // TODO(chrisha): Annotate any modules that are suspicious/bad.
-  AnnotateBadModules();
 
   ReportThirdPartyMetrics();
 
@@ -630,19 +629,6 @@ void ModuleEnumerator::CollapsePath(Module* entry) {
       if (length < min_length) {
         entry->location = new_location;
         min_length = length;
-      }
-    }
-  }
-}
-
-void ModuleEnumerator::AnnotateBadModules() {
-  for (auto& module : *enumerated_modules_) {
-    if (module.name == L"rapportnikko.dll") {
-      base::Version version(base::UTF16ToASCII(module.version));
-      base::Version good("3.6");
-      if (version.CompareTo(good) < 0) {
-        module.status = ModuleStatus::CONFIRMED_BAD;
-        module.recommended_action = RecommendedAction::UNINSTALL;
       }
     }
   }

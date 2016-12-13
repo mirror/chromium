@@ -201,9 +201,6 @@ class ModuleEnumerator {
   // based on the |path_mapping_| vector.
   void CollapsePath(Module* module);
 
-  // Annotate any known third party modules with actions the user can take.
-  void AnnotateBadModules();
-
   // Reports (via UMA) a handful of high-level metrics regarding third party
   // modules in this process. Called by ScanImpl after modules have been
   // enumerated and processed.
