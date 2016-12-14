@@ -5,6 +5,7 @@
 #include "ui/gl/gl_context_stub.h"
 
 #include "ui/gl/gl_gl_api_implementation.h"
+#include "ui/gl/gl_stub_api.h"
 
 namespace gl {
 
@@ -18,7 +19,7 @@ bool GLContextStub::Initialize(GLSurface* compatible_surface,
 }
 
 bool GLContextStub::MakeCurrent(GLSurface* surface) {
-  SetGLToStubGLApi();
+  BindGLApi();
   SetCurrent(surface);
   InitializeDynamicBindings();
   return true;
@@ -44,5 +45,9 @@ std::string GLContextStub::GetGLRenderer() {
 }
 
 GLContextStub::~GLContextStub() {}
+
+GLApi* GLContextStub::CreateGLApi(DriverGL* driver) {
+  return new GLStubApi();
+}
 
 }  // namespace gl

@@ -11,7 +11,7 @@
 namespace gl {
 
 class GLApi;
-
+/*
 class GL_EXPORT ScopedSetGLToRealGLApi {
  public:
   ScopedSetGLToRealGLApi();
@@ -23,6 +23,7 @@ class GL_EXPORT ScopedSetGLToRealGLApi {
   DISALLOW_COPY_AND_ASSIGN(ScopedSetGLToRealGLApi);
 };
 
+*/
 }  // namespace gl
 
 #endif  // UI_GL_SCOPED_API_H_

@@ -8,13 +8,15 @@
 
 namespace gl {
 
+/*
 ScopedSetGLToRealGLApi::ScopedSetGLToRealGLApi()
-    : old_gl_api_(GetCurrentGLApi()) {
-  SetGLToRealGLApi();
+: old_gl_api_(GetCurrentGLApi()) {
+SetGLToRealGLApi();
 }
 
 ScopedSetGLToRealGLApi::~ScopedSetGLToRealGLApi() {
-  SetGLApi(old_gl_api_);
+SetGLApi(old_gl_api_);
 }
+*/
 
 }  // namespace gl

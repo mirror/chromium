@@ -32,6 +32,8 @@ class GL_EXPORT GLContextStub : public GLContextReal {
  protected:
   ~GLContextStub() override;
 
+  GLApi* CreateGLApi(DriverGL* driver) override;
+
  private:
   DISALLOW_COPY_AND_ASSIGN(GLContextStub);
 };

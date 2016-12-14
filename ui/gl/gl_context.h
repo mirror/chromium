@@ -28,10 +28,16 @@ class GLContextVirtual;
 
 namespace gl {
 
+struct CurrentGL;
+class DebugGLApi;
+struct DriverGL;
+class GLApi;
 class GLSurface;
 class GPUTiming;
 class GPUTimingClient;
 struct GLVersionInfo;
+class RealGLApi;
+class TraceGLApi;
 
 struct GLContextAttribs {
   GpuPreference gpu_preference = PreferIntegratedGpu;
@@ -140,6 +146,10 @@ class GL_EXPORT GLContext : public base::RefCounted<GLContext> {
  protected:
   virtual ~GLContext();
 
+  // Create the GLApi for this context using the provided driver. Creates a
+  // RealGLApi by default.
+  virtual GLApi* CreateGLApi(DriverGL* driver);
+
   // Will release the current context when going out of scope, unless canceled.
   class ScopedReleaseCurrent {
    public:
@@ -153,7 +163,7 @@ class GL_EXPORT GLContext : public base::RefCounted<GLContext> {
   };
 
   // Sets the GL api to the real hardware API (vs the VirtualAPI)
-  static void SetRealGLApi();
+  void BindGLApi();
   virtual void SetCurrent(GLSurface* surface);
 
   // Initialize function pointers to functions where the bound version depends
@@ -171,6 +181,14 @@ class GL_EXPORT GLContext : public base::RefCounted<GLContext> {
 
   // For GetRealCurrent.
   friend class gpu::GLContextVirtual;
+
+  bool static_bindings_initialized_;
+  bool dynamic_bindings_initialized_;
+  std::unique_ptr<DriverGL> driver_gl_;
+  std::unique_ptr<GLApi> gl_api_;
+  std::unique_ptr<TraceGLApi> trace_gl_api_;
+  std::unique_ptr<DebugGLApi> debug_gl_api_;
+  std::unique_ptr<CurrentGL> current_gl_;
 
   scoped_refptr<GLShareGroup> share_group_;
   GLContext* current_virtual_context_;

@@ -84,8 +84,8 @@ GpuChannelManager::~GpuChannelManager() {
 
 gles2::ProgramCache* GpuChannelManager::program_cache() {
   if (!program_cache_.get() &&
-      (gl::g_driver_gl.ext.b_GL_ARB_get_program_binary ||
-       gl::g_driver_gl.ext.b_GL_OES_get_program_binary) &&
+      (gl::g_current_gl_driver->ext.b_GL_ARB_get_program_binary ||
+       gl::g_current_gl_driver->ext.b_GL_OES_get_program_binary) &&
       !gpu_preferences_.disable_gpu_program_cache) {
     bool disable_disk_cache =
         gpu_preferences_.disable_gpu_shader_disk_cache ||
