@@ -159,7 +159,7 @@ CandidateWindowView::CandidateWindowView(gfx::NativeView parent)
 
   SetBorder(views::Border::CreateSolidBorder(
       1,
-      GetNativeTheme()->theme->GetSystemColor(
+      GetNativeTheme()->GetSystemColor(
           ui::NativeTheme::kColorId_MenuBorderColor)));
 
   SetLayoutManager(new views::BoxLayout(views::BoxLayout::kVertical, 0, 0, 0));
