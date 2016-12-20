@@ -54,8 +54,6 @@
 #include "core/imagebitmap/ImageBitmapOptions.h"
 #include "core/layout/HitTestCanvasResult.h"
 #include "core/layout/LayoutHTMLCanvas.h"
-#include "core/layout/api/LayoutViewItem.h"
-#include "core/layout/compositing/PaintLayerCompositor.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/PaintTiming.h"
 #include "platform/Histogram.h"
@@ -1406,13 +1404,8 @@ bool HTMLCanvasElement::createSurfaceLayer() {
       mojo::GetProxy(&service));
   m_surfaceLayerBridge =
       WTF::wrapUnique(new CanvasSurfaceLayerBridge(std::move(service)));
-  bool result =
-      m_surfaceLayerBridge->createSurfaceLayer(this->width(), this->height());
-  // After creating a new WebLayer, we want to force compositor commit
-  // to repaint.
-  document().layoutViewItem().compositor()->setNeedsCompositingUpdate(
-      CompositingUpdateRebuildTree);
-  return result;
+  return m_surfaceLayerBridge->createSurfaceLayer(this->width(),
+                                                  this->height());
 }
 
 }  // namespace blink

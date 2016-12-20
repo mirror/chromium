@@ -51,7 +51,8 @@ scoped_refptr<SurfaceLayer> SurfaceLayer::Create(
 
 SurfaceLayer::SurfaceLayer(const SatisfyCallback& satisfy_callback,
                            const RequireCallback& require_callback)
-    : satisfy_callback_(satisfy_callback),
+    : surface_scale_(1.f),
+      satisfy_callback_(satisfy_callback),
       require_callback_(require_callback) {}
 
 SurfaceLayer::~SurfaceLayer() {
@@ -61,13 +62,11 @@ SurfaceLayer::~SurfaceLayer() {
 
 void SurfaceLayer::SetSurfaceId(const SurfaceId& surface_id,
                                 float scale,
-                                const gfx::Size& size,
-                                bool stretch_content_to_fill_bounds) {
+                                const gfx::Size& size) {
   SatisfyDestroySequence();
   surface_id_ = surface_id;
   surface_size_ = size;
   surface_scale_ = scale;
-  stretch_content_to_fill_bounds_ = stretch_content_to_fill_bounds;
   CreateNewDestroySequence();
 
   UpdateDrawsContent(HasDrawableContent());
@@ -102,7 +101,6 @@ void SurfaceLayer::PushPropertiesTo(LayerImpl* layer) {
   layer_impl->SetSurfaceId(surface_id_);
   layer_impl->SetSurfaceSize(surface_size_);
   layer_impl->SetSurfaceScale(surface_scale_);
-  layer_impl->SetStretchContentToFillBounds(stretch_content_to_fill_bounds_);
 }
 
 void SurfaceLayer::CreateNewDestroySequence() {

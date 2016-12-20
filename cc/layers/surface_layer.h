@@ -32,11 +32,9 @@ class CC_EXPORT SurfaceLayer : public Layer {
       const SatisfyCallback& satisfy_callback,
       const RequireCallback& require_callback);
 
-  // When stretch_content_to_fill_bounds is true, scale is unused.
   void SetSurfaceId(const SurfaceId& surface_id,
                     float scale,
-                    const gfx::Size& size,
-                    bool stretch_content_to_fill_bounds);
+                    const gfx::Size& size);
 
   // Layer overrides.
   std::unique_ptr<LayerImpl> CreateLayerImpl(LayerTreeImpl* tree_impl) override;
@@ -62,8 +60,7 @@ class CC_EXPORT SurfaceLayer : public Layer {
 
   SurfaceId surface_id_;
   gfx::Size surface_size_;
-  float surface_scale_ = 1.f;
-  bool stretch_content_to_fill_bounds_ = false;
+  float surface_scale_;
   SurfaceSequence destroy_sequence_;
   SatisfyCallback satisfy_callback_;
   RequireCallback require_callback_;
