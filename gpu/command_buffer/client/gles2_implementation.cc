@@ -836,8 +836,7 @@ bool GLES2Implementation::GetHelper(GLenum pname, GLint* params) {
       *params = bound_pixel_unpack_transfer_buffer_id_;
       return true;
     case GL_READ_FRAMEBUFFER_BINDING:
-      if (capabilities_.major_version >= 3 ||
-          IsChromiumFramebufferMultisampleAvailable()) {
+      if (IsChromiumFramebufferMultisampleAvailable()) {
         *params = bound_read_framebuffer_;
         return true;
       }
@@ -4360,16 +4359,20 @@ void GLES2Implementation::BindFramebufferHelper(
       }
       break;
     case GL_READ_FRAMEBUFFER:
-      DCHECK(capabilities_.major_version >= 3 ||
-          IsChromiumFramebufferMultisampleAvailable());
+      if (!IsChromiumFramebufferMultisampleAvailable()) {
+        SetGLErrorInvalidEnum("glBindFramebuffer", target, "target");
+        return;
+      }
       if (bound_read_framebuffer_ != framebuffer) {
         bound_read_framebuffer_ = framebuffer;
         changed = true;
       }
       break;
     case GL_DRAW_FRAMEBUFFER:
-      DCHECK(capabilities_.major_version >= 3 ||
-          IsChromiumFramebufferMultisampleAvailable());
+      if (!IsChromiumFramebufferMultisampleAvailable()) {
+        SetGLErrorInvalidEnum("glBindFramebuffer", target, "target");
+        return;
+      }
       if (bound_framebuffer_ != framebuffer) {
         bound_framebuffer_ = framebuffer;
         changed = true;
