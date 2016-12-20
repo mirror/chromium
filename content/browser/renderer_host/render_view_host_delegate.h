@@ -35,7 +35,6 @@ class BrowserContext;
 class FrameTree;
 class PageState;
 class RenderViewHost;
-class RenderViewHostImpl;
 class RenderViewHostDelegateView;
 class SessionStorageNamespace;
 class SiteInstance;
@@ -64,7 +63,7 @@ class CONTENT_EXPORT RenderViewHostDelegate {
   virtual RenderViewHostDelegateView* GetDelegateView();
 
   // This is used to give the delegate a chance to filter IPC messages.
-  virtual bool OnMessageReceived(RenderViewHostImpl* render_view_host,
+  virtual bool OnMessageReceived(RenderViewHost* render_view_host,
                                  const IPC::Message& message);
 
   // Return this object cast to a WebContents, if it is one. If the object is

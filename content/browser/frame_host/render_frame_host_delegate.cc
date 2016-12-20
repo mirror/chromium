@@ -15,7 +15,7 @@
 namespace content {
 
 bool RenderFrameHostDelegate::OnMessageReceived(
-    RenderFrameHostImpl* render_frame_host,
+    RenderFrameHost* render_view_host,
     const IPC::Message& message) {
   return false;
 }

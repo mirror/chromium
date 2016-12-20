@@ -41,7 +41,6 @@ class FrameTreeNode;
 class InterstitialPage;
 class PageState;
 class RenderFrameHost;
-class RenderFrameHostImpl;
 class ScreenOrientationProvider;
 class WebContents;
 struct AXEventNotificationDetails;
@@ -54,7 +53,7 @@ struct FileChooserParams;
 class CONTENT_EXPORT RenderFrameHostDelegate {
  public:
   // This is used to give the delegate a chance to filter IPC messages.
-  virtual bool OnMessageReceived(RenderFrameHostImpl* render_frame_host,
+  virtual bool OnMessageReceived(RenderFrameHost* render_frame_host,
                                  const IPC::Message& message);
 
   // Allows the delegate to filter incoming associated inteface requests.
