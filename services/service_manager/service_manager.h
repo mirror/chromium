@@ -162,16 +162,17 @@ class ServiceManager {
 
   std::unique_ptr<ServiceOverrides> service_overrides_;
 
-  // Ownership of all Instances.
+  // Ownership of all root Instances. Non-root Instances are owned by their
+  // parent Instance.
   using InstanceMap = std::map<Instance*, std::unique_ptr<Instance>>;
-  InstanceMap instances_;
+  InstanceMap root_instances_;
 
   // Maps service identities to reachable instances. Note that the Instance*
   // values here are NOT owned by this map.
   std::map<Identity, Instance*> identity_to_instance_;
 
   // Always points to the ServiceManager's own Instance. Note that this
-  // Instance still has an entry in |instances_|.
+  // Instance still has an entry in |root_instances_|.
   Instance* service_manager_instance_;
 
   // Tracks the names of instances that are allowed to field connection requests
