@@ -399,12 +399,10 @@ class CORE_EXPORT HTMLMediaElement
   WebMediaPlayer::TrackId getSelectedVideoTrackId() final;
   bool isAutoplayingMuted() final;
   void requestReload(const WebURL&) final;
-  void activateViewportIntersectionMonitoring(bool) final;
 
   void loadTimerFired(TimerBase*);
   void progressEventTimerFired(TimerBase*);
   void playbackProgressTimerFired(TimerBase*);
-  void checkViewportIntersectionTimerFired(TimerBase*);
   void startPlaybackProgressTimer();
   void startProgressEventTimer();
   void stopPeriodicTimers();
@@ -551,6 +549,7 @@ class CORE_EXPORT HTMLMediaElement
 
   void onVisibilityChangedForAutoplay(bool isVisible);
 
+  void checkViewportIntersectionChanged();
   void viewportFillDebouncerTimerFired(TimerBase*);
 
   UnthrottledThreadTimer<HTMLMediaElement> m_loadTimer;
@@ -558,7 +557,6 @@ class CORE_EXPORT HTMLMediaElement
   UnthrottledThreadTimer<HTMLMediaElement> m_playbackProgressTimer;
   UnthrottledThreadTimer<HTMLMediaElement> m_audioTracksTimer;
   UnthrottledThreadTimer<HTMLMediaElement> m_viewportFillDebouncerTimer;
-  UnthrottledThreadTimer<HTMLMediaElement> m_checkViewportIntersectionTimer;
   Member<TimeRanges> m_playedTimeRanges;
   Member<GenericEventQueue> m_asyncEventQueue;
 

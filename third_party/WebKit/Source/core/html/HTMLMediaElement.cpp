@@ -128,7 +128,6 @@ namespace {
 
 constexpr float kMostlyFillViewportThreshold = 0.85f;
 constexpr double kMostlyFillViewportBecomeStableSeconds = 5;
-constexpr double kCheckViewportIntersectionIntervalSeconds = 1;
 
 enum MediaControlsShow {
   MediaControlsShowAttribute = 0,
@@ -371,9 +370,6 @@ HTMLMediaElement::HTMLMediaElement(const QualifiedName& tagName,
       m_viewportFillDebouncerTimer(
           this,
           &HTMLMediaElement::viewportFillDebouncerTimerFired),
-      m_checkViewportIntersectionTimer(
-          this,
-          &HTMLMediaElement::checkViewportIntersectionTimerFired),
       m_playedTimeRanges(),
       m_asyncEventQueue(GenericEventQueue::create(this)),
       m_playbackRate(1.0f),
@@ -2466,6 +2462,8 @@ void HTMLMediaElement::startPlaybackProgressTimer() {
 }
 
 void HTMLMediaElement::playbackProgressTimerFired(TimerBase*) {
+  checkViewportIntersectionChanged();
+
   if (!std::isnan(m_fragmentEndTime) && currentTime() >= m_fragmentEndTime &&
       getDirectionOfPlayback() == Forward) {
     m_fragmentEndTime = std::numeric_limits<double>::quiet_NaN();
@@ -3304,7 +3302,6 @@ void HTMLMediaElement::updatePlayState() {
 void HTMLMediaElement::stopPeriodicTimers() {
   m_progressEventTimer.stop();
   m_playbackProgressTimer.stop();
-  m_checkViewportIntersectionTimer.stop();
 }
 
 void HTMLMediaElement::
@@ -4065,16 +4062,9 @@ DEFINE_TRACE(HTMLMediaElement::AudioSourceProviderImpl) {
   visitor->trace(m_client);
 }
 
-void HTMLMediaElement::activateViewportIntersectionMonitoring(bool activate) {
-  if (activate && !m_checkViewportIntersectionTimer.isActive()) {
-    m_checkViewportIntersectionTimer.startRepeating(
-        kCheckViewportIntersectionIntervalSeconds, BLINK_FROM_HERE);
-  } else if (!activate) {
-    m_checkViewportIntersectionTimer.stop();
-  }
-}
+void HTMLMediaElement::checkViewportIntersectionChanged() {
+  // TODO(xjz): Early return if we not in tab mirroring.
 
-void HTMLMediaElement::checkViewportIntersectionTimerFired(TimerBase*) {
   bool shouldReportRootBounds = true;
   IntersectionGeometry geometry(nullptr, *this, Vector<Length>(),
                                 shouldReportRootBounds);
