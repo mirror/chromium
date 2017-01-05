@@ -1,7 +1,9 @@
 # UUID                                  	Group Name
 #
 1d21d7f7db3a11dd4a44337dbff67a0c1ec40fec	chromium-committers
+1eb1fb0ff044d33b8c9add48fa91b8b89e20c7dc	chromeos-bots
 3d0a66ed8f9706f4df433a293bac0330232af1d6	chromium-branch-creators
+4d4288efd7d780ff5a35b8cc13fa6ff0f62c06cc	chrome-commit-bot
 99d8472e7048286ce8a7386a221797d885ff3f91	Administrators
 global:Anonymous-Users                  	Anonymous Users
 global:Registered-Users                 	Registered Users
