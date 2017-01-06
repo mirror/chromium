@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97884e74_f1a46859",
+        "filename": "skia/config/SkUserConfig.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-01-06T18:23:26Z",
+      "side": 1,
+      "message": "Nit: we usually add temporary legacy flags in the section above, with guards - e.g.\n\n#ifndef    SK_SUPPORT_LEGACY_AAA\n#   define SK_SUPPORT_LEGACY_AAA\n#endif",
+      "revId": "8f3c90ce3ec0489470f6a9d8b7e616607800ef07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
