@@ -22,6 +22,7 @@
     "dbus",
     "google_apis",
     "gpu",
+    "ios",
     "media",
     "mojo",
     "net",
