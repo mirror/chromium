@@ -3265,7 +3265,7 @@ void Document::updateBaseURL() {
 
   selectorQueryCache().invalidate();
 
-  if (!m_baseURL.isValid())
+  if (!m_baseURL.isValid() || m_baseURL.protocolIsData())
     m_baseURL = KURL();
 
   if (m_elemSheet) {
@@ -3325,13 +3325,17 @@ void Document::processBaseElement() {
   }
 
   if (!baseElementURL.isEmpty()) {
-    if (baseElementURL.protocolIsData())
+    if (baseElementURL.protocolIsData()) {
       UseCounter::count(*this, UseCounter::BaseWithDataHref);
+      addConsoleMessage(ConsoleMessage::create(
+          SecurityMessageSource, ErrorMessageLevel,
+          "'data:' URLs may not be used as base URLs for a document."));
+    }
     if (!this->getSecurityOrigin()->canRequest(baseElementURL))
       UseCounter::count(*this, UseCounter::BaseWithCrossOriginHref);
   }
 
-  if (m_baseElementURL != baseElementURL &&
+  if (baseElementURL != m_baseElementURL && !baseElementURL.protocolIsData() &&
       contentSecurityPolicy()->allowBaseURI(baseElementURL)) {
     m_baseElementURL = baseElementURL;
     updateBaseURL();
