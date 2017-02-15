@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL Test that cues are being matched properly by :past and :future pseudo classes. Cannot read property 'firstChild' of null
+Harness: the test ran to completion.
+
