@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f37acc1_84435c06",
+        "filename": "tools/perf/generate_perf_json.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-02-16T02:03:55Z",
+      "side": 1,
+      "message": "I kinda guessed on all of this. Is this allowed at all?",
+      "revId": "f4e79dc67c2851048a86c1e5c2207ec339f984fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c8ae7e_ed1e06a3",
+        "filename": "tools/perf/generate_perf_json.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-02-16T02:03:55Z",
+      "side": 1,
+      "message": "This is kinda hacky :/",
+      "revId": "f4e79dc67c2851048a86c1e5c2207ec339f984fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
