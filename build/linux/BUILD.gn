@@ -48,21 +48,12 @@ group("fontconfig") {
   }
 }
 
-if (!is_chromecast) {
-  pkg_config("freetype2_config") {
-    visibility = [ ":freetype2" ]
-    packages = [ "freetype2" ]
-  }
-}
-
 group("freetype2") {
-  if (is_chromecast) {
-    # Chromecast platform doesn't provide freetype, so use Chromium's.
-    # The version in freetype-android is unmodified from freetype2 upstream.
-    public_deps = [
-      "//third_party/freetype-android:freetype",
-    ]
-  } else {
-    public_configs = [ ":freetype2_config" ]
-  }
+  # We need to track upstream FreeType closesly for variable fonts support,
+  # see crbug.com/274030 and the blocked bug for details. This also benefits
+  # color emoji on systems with older system FreeType. Chromecast platform
+  # doesn't provide freetype, so use Chromium's.
+  public_deps = [
+    "//third_party/freetype2",
+  ]
 }
