@@ -18,6 +18,13 @@
 
 #include "pngpriv.h"
 
+#ifdef PNG_ARM_NEON_IMPLEMENTATION
+#if PNG_ARM_NEON_IMPLEMENTATION == 1
+#define PNG_ARM_NEON_INTRINSICS_AVAILABLE
+#include <arm_neon.h>
+#endif
+#endif
+
 #ifdef PNG_READ_SUPPORTED
 
 /* Set the action on getting a CRC error for an ancillary or critical chunk. */
@@ -4202,12 +4209,13 @@ png_do_encode_alpha(png_row_infop row_info, png_bytep row, png_structrp png_ptr)
  * upon whether you supply trans and num_trans.
  */
 static void
-png_do_expand_palette(png_row_infop row_info, png_bytep row,
-    png_const_colorp palette, png_const_bytep trans_alpha, int num_trans)
+png_do_expand_palette(png_structrp png_ptr, png_row_infop row_info,
+   png_bytep row, png_const_colorp palette, png_const_bytep trans_alpha,
+   int num_trans)
 {
    int shift, value;
    png_bytep sp, dp;
-   png_uint_32 i;
+   png_uint_32 pixel_in_row;
    png_uint_32 row_width=row_info->width;
 
    png_debug(1, "in png_do_expand_palette");
@@ -4223,7 +4231,7 @@ png_do_expand_palette(png_row_infop row_info, png_bytep row,
                sp = row + (png_size_t)((row_width - 1) >> 3);
                dp = row + (png_size_t)row_width - 1;
                shift = 7 - (int)((row_width + 7) & 0x07);
-               for (i = 0; i < row_width; i++)
+               for (pixel_in_row = 0; pixel_in_row < row_width; pixel_in_row++)
                {
                   if ((*sp >> shift) & 0x01)
                      *dp = 1;
@@ -4250,7 +4258,7 @@ png_do_expand_palette(png_row_infop row_info, png_bytep row,
                sp = row + (png_size_t)((row_width - 1) >> 2);
                dp = row + (png_size_t)row_width - 1;
                shift = (int)((3 - ((row_width + 3) & 0x03)) << 1);
-               for (i = 0; i < row_width; i++)
+               for (pixel_in_row = 0; pixel_in_row < row_width; pixel_in_row++)
                {
                   value = (*sp >> shift) & 0x03;
                   *dp = (png_byte)value;
@@ -4273,7 +4281,7 @@ png_do_expand_palette(png_row_infop row_info, png_bytep row,
                sp = row + (png_size_t)((row_width - 1) >> 1);
                dp = row + (png_size_t)row_width - 1;
                shift = (int)((row_width & 0x01) << 2);
-               for (i = 0; i < row_width; i++)
+               for (pixel_in_row = 0; pixel_in_row < row_width; pixel_in_row++)
                {
                   value = (*sp >> shift) & 0x0f;
                   *dp = (png_byte)value;
@@ -4307,14 +4315,22 @@ png_do_expand_palette(png_row_infop row_info, png_bytep row,
                sp = row + (png_size_t)row_width - 1;
                dp = row + ((png_size_t)row_width << 2) - 1;
 
-               for (i = 0; i < row_width; i++)
+               pixel_in_row = 0;
+#ifdef PNG_ARM_NEON_INTRINSICS_AVAILABLE
+               if (png_ptr->row_tmp_palette != NULL) {
+                  /* The RGBA optimization works with png_ptr->bit_depth == 8
+                     but sometimes row_info->bit_depth has been changed to 8.
+                     In these cases, the palette hasn't been riffled. */
+                  pixel_in_row = png_do_expand_palette_neon_rgba(png_ptr, row_info, row, &sp, &dp);
+               }
+#endif
+
+               for (; pixel_in_row < row_width; pixel_in_row++)
                {
                   if ((int)(*sp) >= num_trans)
                      *dp-- = 0xff;
-
                   else
                      *dp-- = trans_alpha[*sp];
-
                   *dp-- = palette[*sp].blue;
                   *dp-- = palette[*sp].green;
                   *dp-- = palette[*sp].red;
@@ -4331,8 +4347,12 @@ png_do_expand_palette(png_row_infop row_info, png_bytep row,
             {
                sp = row + (png_size_t)row_width - 1;
                dp = row + (png_size_t)(row_width * 3) - 1;
+               pixel_in_row = 0;
+#ifdef PNG_ARM_NEON_INTRINSICS_AVAILABLE
+               pixel_in_row = png_do_expand_palette_neon_rgb(png_ptr, row_info, row, &sp, &dp);
+#endif
 
-               for (i = 0; i < row_width; i++)
+               for (; pixel_in_row < row_width; pixel_in_row++)
                {
                   *dp-- = palette[*sp].blue;
                   *dp-- = palette[*sp].green;
@@ -4748,8 +4768,21 @@ png_do_read_transformations(png_structrp png_ptr, png_row_infop row_info)
    {
       if (row_info->color_type == PNG_COLOR_TYPE_PALETTE)
       {
-         png_do_expand_palette(row_info, png_ptr->row_buf + 1,
-             png_ptr->palette, png_ptr->trans_alpha, png_ptr->num_trans);
+#ifdef PNG_ARM_NEON_INTRINSICS_AVAILABLE
+       if ((png_ptr->num_trans > 0) && (png_ptr->bit_depth == 8)) {
+          /* Allocate space for the decompressed full palette. */
+          if (png_ptr->row_tmp_palette == NULL) {
+              png_ptr->row_tmp_palette = png_malloc(png_ptr, 256*4);
+              if (png_ptr->row_tmp_palette == NULL) {
+                  png_error(png_ptr, "NULL row buffer");
+              }
+              /* Build the RGBA palette. */
+              png_riffle_palette_rgba(png_ptr, row_info);
+          }
+       }
+#endif
+         png_do_expand_palette(png_ptr, row_info, png_ptr->row_buf + 1,
+            png_ptr->palette, png_ptr->trans_alpha, png_ptr->num_trans);
       }
 
       else
