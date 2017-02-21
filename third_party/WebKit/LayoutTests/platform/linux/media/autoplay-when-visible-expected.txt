@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL Test behaviour of autoplay muted videos with regards to visibility assert_greater_than_equal: expected a number greater than or equal to 4 but got 1
+Harness: the test ran to completion.
+
