@@ -2,22 +2,26 @@
 
 ## Background
 
+In Android M+ it is encouraged to use `JobScheduler` for all background jobs,
+instead of using things like `IntentService` or polling using alarms. Using the
+system API is beneficial as it has a full view of what goes on in the system and
+can schedule jobs accordingly.
+
+However, this functionality was introduced in Android L, and
+the API has been very stable since Android M. This means that we also need a
+similar framework for older versions of Android, which is provided by
+Google Play services. We prefer system APIs, since they do not require including
+external libraries which bloats the APK size of Chrome and adds unnecessary
+complexity. The GcmNetworkManager isonly used when the system API is not
+available.
+
 The `background_task_scheduler` component provides a new framework for use
 within chromium to schedule and execute background jobs using the frameworks
 available on a given version of Android.
-
 The public API of the framework is similar to that of the Android
 `JobScheduler`, but it is backed by either the system `JobScheduler` API or by
 GcmNetworkManager. What service is used to back the framework remains unknown to
 callers of the API.
-
-In Android N+ it is encouraged to use `JobScheduler` for all background jobs,
-instead of using things like `IntentService`. Using the system API is beneficial
-as it has a full view of what goes on in the system and can schedule jobs
-accordingly. In addition, it does not require including external libraries
-which bloats the APK size of Chrome and adds unnecessary complexity. However,
-on device running older than Android L, a fallback option is required, and this
-framework uses the fallback for all versions older than Android M.
 
 ## What is a task
 
