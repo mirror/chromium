@@ -13,12 +13,12 @@
         },
         {
           "object": "LayoutText #text",
-          "rect": [3, 192, 59, 19],
+          "rect": [3, 192, 63, 19],
           "reason": "forced by layout"
         },
         {
           "object": "LayoutText #text",
-          "rect": [3, 142, 59, 19],
+          "rect": [3, 142, 63, 19],
           "reason": "forced by layout"
         }
       ]
