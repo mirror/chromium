@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Test that query rejects if it doesn't get a configuration 
+PASS Test that query rejects if the MediaConfiguration isn't valid 
+FAIL Test that query returns a valid MediaDecodingAbility objects promise_test: Unhandled rejection with value: object "TypeError: Failed to execute 'query' on 'MediaCapabilities': required member contentType is undefined."
+Harness: the test ran to completion.
+

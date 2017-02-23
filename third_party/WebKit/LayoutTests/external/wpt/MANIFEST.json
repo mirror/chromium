@@ -6493,11 +6493,6 @@
      {}
     ]
    ],
-   "./MANIFEST.json": [
-    [
-     {}
-    ]
-   ],
    "./README.md": [
     [
      {}
@@ -18418,7 +18413,17 @@
      {}
     ]
    ],
+   "mixed-content/allowed/http-csp/same-host-https/audio-tag/top-level/keep-scheme-redirect/allowed.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
    "mixed-content/allowed/http-csp/same-host-https/audio-tag/top-level/keep-scheme-redirect/allowed.https.html.headers": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/allowed/http-csp/same-host-https/audio-tag/top-level/no-redirect/allowed.https-expected.txt": [
     [
      {}
     ]
@@ -18518,7 +18523,17 @@
      {}
     ]
    ],
+   "mixed-content/allowed/http-csp/same-host-https/video-tag/top-level/keep-scheme-redirect/allowed.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
    "mixed-content/allowed/http-csp/same-host-https/video-tag/top-level/keep-scheme-redirect/allowed.https.html.headers": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/allowed/http-csp/same-host-https/video-tag/top-level/no-redirect/allowed.https-expected.txt": [
     [
      {}
     ]
@@ -18554,6 +18569,36 @@
     ]
    ],
    "mixed-content/allowed/http-csp/same-host-wss/websocket-request/top-level/no-redirect/websocket-allowed.https.html.headers": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/allowed/meta-csp/same-host-https/audio-tag/top-level/no-redirect/allowed.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/allowed/meta-csp/same-host-https/video-tag/top-level/no-redirect/allowed.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/allowed/no-opt-in/same-host-https/audio-tag/top-level/keep-scheme-redirect/allowed.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/allowed/no-opt-in/same-host-https/audio-tag/top-level/no-redirect/allowed.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/allowed/no-opt-in/same-host-https/video-tag/top-level/keep-scheme-redirect/allowed.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/allowed/no-opt-in/same-host-https/video-tag/top-level/no-redirect/allowed.https-expected.txt": [
     [
      {}
     ]
@@ -19019,6 +19064,66 @@
     ]
    ],
    "mixed-content/optionally-blockable/http-csp/same-host-http/video-tag/top-level/swap-scheme-redirect/opt-in-blocks.https.html.headers": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/audio-tag/top-level/keep-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/audio-tag/top-level/no-redirect/no-opt-in-allows.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/audio-tag/top-level/swap-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/video-tag/top-level/keep-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/video-tag/top-level/no-redirect/no-opt-in-allows.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/video-tag/top-level/swap-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/optionally-blockable/no-opt-in/same-host-http/audio-tag/top-level/keep-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/optionally-blockable/no-opt-in/same-host-http/audio-tag/top-level/no-redirect/no-opt-in-allows.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/optionally-blockable/no-opt-in/same-host-http/audio-tag/top-level/swap-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/optionally-blockable/no-opt-in/same-host-http/video-tag/top-level/keep-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/optionally-blockable/no-opt-in/same-host-http/video-tag/top-level/no-redirect/no-opt-in-allows.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/optionally-blockable/no-opt-in/same-host-http/video-tag/top-level/swap-scheme-redirect/no-opt-in-allows.https-expected.txt": [
     [
      {}
     ]
@@ -21358,42 +21463,12 @@
      {}
     ]
    ],
-   "selection/collapse-00-expected.txt": [
-    [
-     {}
-    ]
-   ],
-   "selection/collapse-30-expected.txt": [
-    [
-     {}
-    ]
-   ],
    "selection/collapse.js": [
     [
      {}
     ]
    ],
-   "selection/collapseToStartEnd-expected.txt": [
-    [
-     {}
-    ]
-   ],
    "selection/common.js": [
-    [
-     {}
-    ]
-   ],
-   "selection/extend-00-expected.txt": [
-    [
-     {}
-    ]
-   ],
-   "selection/extend-20-expected.txt": [
-    [
-     {}
-    ]
-   ],
-   "selection/extend-40-expected.txt": [
     [
      {}
     ]
@@ -21404,11 +21479,6 @@
     ]
    ],
    "selection/interfaces-expected.txt": [
-    [
-     {}
-    ]
-   ],
-   "selection/isCollapsed-expected.txt": [
     [
      {}
     ]
@@ -54611,10 +54681,6 @@
    "89af73c41d456ee93bd40921e96414c1908fc48c",
    "support"
   ],
-  "./MANIFEST.json": [
-   "1ba6d9d96ac2726755be2db4cfbae75877b16384",
-   "support"
-  ],
   "./README.md": [
    "f7f7d6a2bc0bc23e1c5fa3e812f710dc29ed6711",
    "support"
@@ -72252,7 +72318,7 @@
    "support"
   ],
   "html/syntax/parsing-html-fragments/the-input-byte-stream-015.html": [
-   "3189757330f3abc8d209f9c75827d6ea616800b8",
+   "6564a6f963fdccf6156287f0acd6c20eaacbd48a",
    "testharness"
   ],
   "html/syntax/parsing-html-fragments/the-input-byte-stream-015.html.headers": [
@@ -73620,11 +73686,11 @@
    "support"
   ],
   "media-capabilities/idlharness.html": [
-   "d9a80463af2e0fc7bda0a4370a3ba0bbbb791897",
+   "4ee7d3eb90c352a0888468578e49bbd49f91b789",
    "testharness"
   ],
   "media-capabilities/query.html": [
-   "a83f2c7a7d9c38c707c4f96c3cd74f77185b7e43",
+   "11afd4ba4eb40a5ff89c06ecf375eb16df65faaa",
    "testharness"
   ],
   "media/2048x1360-random.jpg": [
@@ -73815,12 +73881,20 @@
    "70a1f9e81faa3dbbe320a71a008e4594a29878a8",
    "testharness"
   ],
+  "mixed-content/allowed/http-csp/same-host-https/audio-tag/top-level/keep-scheme-redirect/allowed.https-expected.txt": [
+   "90380d95ffc250f2bcb86a71825a532f9ea3b40a",
+   "support"
+  ],
   "mixed-content/allowed/http-csp/same-host-https/audio-tag/top-level/keep-scheme-redirect/allowed.https.html": [
    "fdeac10c0682de4545c5f0e8f43efb19070cbd91",
    "testharness"
   ],
   "mixed-content/allowed/http-csp/same-host-https/audio-tag/top-level/keep-scheme-redirect/allowed.https.html.headers": [
    "562977daf4fd9e09dc6153058804bc247cbe5354",
+   "support"
+  ],
+  "mixed-content/allowed/http-csp/same-host-https/audio-tag/top-level/no-redirect/allowed.https-expected.txt": [
+   "0da07dc88c186b2f3a970e63af82f8f3caeb5e3c",
    "support"
   ],
   "mixed-content/allowed/http-csp/same-host-https/audio-tag/top-level/no-redirect/allowed.https.html": [
@@ -73975,12 +74049,20 @@
    "562977daf4fd9e09dc6153058804bc247cbe5354",
    "support"
   ],
+  "mixed-content/allowed/http-csp/same-host-https/video-tag/top-level/keep-scheme-redirect/allowed.https-expected.txt": [
+   "8c5eb00f4e83bcfd2c1cc9ff31e022f2db38be6e",
+   "support"
+  ],
   "mixed-content/allowed/http-csp/same-host-https/video-tag/top-level/keep-scheme-redirect/allowed.https.html": [
    "3e5e01b52ef7a96b3dc41a5fd65af5ad14474a4d",
    "testharness"
   ],
   "mixed-content/allowed/http-csp/same-host-https/video-tag/top-level/keep-scheme-redirect/allowed.https.html.headers": [
    "562977daf4fd9e09dc6153058804bc247cbe5354",
+   "support"
+  ],
+  "mixed-content/allowed/http-csp/same-host-https/video-tag/top-level/no-redirect/allowed.https-expected.txt": [
+   "1a6028563007684c78190ddc8481ca2898923723",
    "support"
   ],
   "mixed-content/allowed/http-csp/same-host-https/video-tag/top-level/no-redirect/allowed.https.html": [
@@ -74039,6 +74121,10 @@
    "562977daf4fd9e09dc6153058804bc247cbe5354",
    "support"
   ],
+  "mixed-content/allowed/meta-csp/same-host-https/audio-tag/top-level/no-redirect/allowed.https-expected.txt": [
+   "c8bbd81706e37d501c775412c9a152136138389c",
+   "support"
+  ],
   "mixed-content/allowed/meta-csp/same-host-https/audio-tag/top-level/no-redirect/allowed.https.html": [
    "3233030cfc42075de689b39be9dca812e153955c",
    "testharness"
@@ -74079,6 +74165,10 @@
    "0575fd64689c5b0f3970bdad033fe944ff6644bb",
    "testharness"
   ],
+  "mixed-content/allowed/meta-csp/same-host-https/video-tag/top-level/no-redirect/allowed.https-expected.txt": [
+   "3af9b65bfe40a18917f506bd97740bef6fe4112b",
+   "support"
+  ],
   "mixed-content/allowed/meta-csp/same-host-https/video-tag/top-level/no-redirect/allowed.https.html": [
    "a55b1cc03051118df894858733f91cb794ed893e",
    "testharness"
@@ -74095,9 +74185,17 @@
    "e20eb313f66981ae7bb650a19d8fd61f62b5bd9b",
    "testharness"
   ],
+  "mixed-content/allowed/no-opt-in/same-host-https/audio-tag/top-level/keep-scheme-redirect/allowed.https-expected.txt": [
+   "1519271db01831f1d6d026b26e8d486243588479",
+   "support"
+  ],
   "mixed-content/allowed/no-opt-in/same-host-https/audio-tag/top-level/keep-scheme-redirect/allowed.https.html": [
    "e716de28d27503516e6066bfe5715880aee61d2d",
    "testharness"
+  ],
+  "mixed-content/allowed/no-opt-in/same-host-https/audio-tag/top-level/no-redirect/allowed.https-expected.txt": [
+   "2d20686592f6a6c7ebe1b22ce85135e85054d7e9",
+   "support"
   ],
   "mixed-content/allowed/no-opt-in/same-host-https/audio-tag/top-level/no-redirect/allowed.https.html": [
    "bf977afe3f0b5daa0e899dff1d55241352125531",
@@ -74175,9 +74273,17 @@
    "f87d399643fdbdc7135e1db1fd9b3ff9c9a4bbec",
    "testharness"
   ],
+  "mixed-content/allowed/no-opt-in/same-host-https/video-tag/top-level/keep-scheme-redirect/allowed.https-expected.txt": [
+   "e02952e8c0326b7c9969ad0b88b8e857859616ea",
+   "support"
+  ],
   "mixed-content/allowed/no-opt-in/same-host-https/video-tag/top-level/keep-scheme-redirect/allowed.https.html": [
    "3ac75e4ddf21586beec825628aa421ce66b3eb51",
    "testharness"
+  ],
+  "mixed-content/allowed/no-opt-in/same-host-https/video-tag/top-level/no-redirect/allowed.https-expected.txt": [
+   "06c4336dfa0266bcf24b50f9af7764a699800414",
+   "support"
   ],
   "mixed-content/allowed/no-opt-in/same-host-https/video-tag/top-level/no-redirect/allowed.https.html": [
    "1c26515cb6831d895f537df85edb2c9709cae754",
@@ -75267,13 +75373,25 @@
    "cf89b222539b6fb932f0ffb226b4584c55bd7b0b",
    "testharness"
   ],
+  "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/audio-tag/top-level/keep-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+   "5982f747849b2a9e65e8eac2c1920f6b86e52806",
+   "support"
+  ],
   "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/audio-tag/top-level/keep-scheme-redirect/no-opt-in-allows.https.html": [
    "a78a3c8b9950ca95859c98837d86540ed7074633",
    "testharness"
   ],
+  "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/audio-tag/top-level/no-redirect/no-opt-in-allows.https-expected.txt": [
+   "1960c3625fd0aa1e5a9dfb9df00d5f250931c7bf",
+   "support"
+  ],
   "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/audio-tag/top-level/no-redirect/no-opt-in-allows.https.html": [
    "c4f7ba79294030cae5439e7d46b3a7d24a01fdf4",
    "testharness"
+  ],
+  "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/audio-tag/top-level/swap-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+   "ae2066d3f479d87f6a3883fca50c62741c80880c",
+   "support"
   ],
   "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/audio-tag/top-level/swap-scheme-redirect/no-opt-in-allows.https.html": [
    "fab6658b6b049386ff531ffbd38ef0a923eb7e94",
@@ -75303,25 +75421,49 @@
    "2b4266e2798cffa4df8085d85dc6192151125d13",
    "testharness"
   ],
+  "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/video-tag/top-level/keep-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+   "90be3eed734c8d08d0b88270473cd8249dfef3ff",
+   "support"
+  ],
   "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/video-tag/top-level/keep-scheme-redirect/no-opt-in-allows.https.html": [
    "80519194240ebaebe70a1782d972fb5e1641f5a1",
    "testharness"
+  ],
+  "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/video-tag/top-level/no-redirect/no-opt-in-allows.https-expected.txt": [
+   "ed3520fd8f5382e538408fb020cc4a5b6319b005",
+   "support"
   ],
   "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/video-tag/top-level/no-redirect/no-opt-in-allows.https.html": [
    "91ad70b49d688006d8d560aa536d6d46a8de1275",
    "testharness"
   ],
+  "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/video-tag/top-level/swap-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+   "4f3dd5bfc7ff73c75c4cce54eb3aa81892deb6c3",
+   "support"
+  ],
   "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/video-tag/top-level/swap-scheme-redirect/no-opt-in-allows.https.html": [
    "72e3fa99e486be0aedd623da3beb2d8b0b745ad1",
    "testharness"
+  ],
+  "mixed-content/optionally-blockable/no-opt-in/same-host-http/audio-tag/top-level/keep-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+   "c0a9ccb24883f298b0c20dd4ffc680739c9b7dec",
+   "support"
   ],
   "mixed-content/optionally-blockable/no-opt-in/same-host-http/audio-tag/top-level/keep-scheme-redirect/no-opt-in-allows.https.html": [
    "73429ee5cb2de97bda1090156d9bb3f716fcce4d",
    "testharness"
   ],
+  "mixed-content/optionally-blockable/no-opt-in/same-host-http/audio-tag/top-level/no-redirect/no-opt-in-allows.https-expected.txt": [
+   "b0e86c22beb7578dacb8134c29d2f5e778e5f005",
+   "support"
+  ],
   "mixed-content/optionally-blockable/no-opt-in/same-host-http/audio-tag/top-level/no-redirect/no-opt-in-allows.https.html": [
    "64069b6bbac147b17e29d53143fe136944de0daf",
    "testharness"
+  ],
+  "mixed-content/optionally-blockable/no-opt-in/same-host-http/audio-tag/top-level/swap-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+   "d26609e0895dfc921af2a897999acd35153a0166",
+   "support"
   ],
   "mixed-content/optionally-blockable/no-opt-in/same-host-http/audio-tag/top-level/swap-scheme-redirect/no-opt-in-allows.https.html": [
    "5692d6f7cc2c237a203de6c5a73ff6d6fcb9fc27",
@@ -75351,13 +75493,25 @@
    "b98e1a5a55b229fabc73ff520e93d1aae5786a84",
    "testharness"
   ],
+  "mixed-content/optionally-blockable/no-opt-in/same-host-http/video-tag/top-level/keep-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+   "dd79d44bf5bf864deadf1dd19cced198d269b3af",
+   "support"
+  ],
   "mixed-content/optionally-blockable/no-opt-in/same-host-http/video-tag/top-level/keep-scheme-redirect/no-opt-in-allows.https.html": [
    "67b828060540ab4abb8d7070a3a777dcb6b764c4",
    "testharness"
   ],
+  "mixed-content/optionally-blockable/no-opt-in/same-host-http/video-tag/top-level/no-redirect/no-opt-in-allows.https-expected.txt": [
+   "5005b70fa14d38cb1ada1239eca1f5859cc4aa1c",
+   "support"
+  ],
   "mixed-content/optionally-blockable/no-opt-in/same-host-http/video-tag/top-level/no-redirect/no-opt-in-allows.https.html": [
    "f366b0f28d087b46c7e1b8787012b0427a5c668e",
    "testharness"
+  ],
+  "mixed-content/optionally-blockable/no-opt-in/same-host-http/video-tag/top-level/swap-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+   "4f6fb0a77a62395baa757bcf1a4bf694e4d61ac0",
+   "support"
   ],
   "mixed-content/optionally-blockable/no-opt-in/same-host-http/video-tag/top-level/swap-scheme-redirect/no-opt-in-allows.https.html": [
    "845e3332f83a552ba268bd369089cd408c5c9ed1",
@@ -75992,7 +76146,7 @@
    "testharness"
   ],
   "referrer-policy/README.md": [
-   "a908472f8b8c083f37da8feb38a198363f75376c",
+   "74a9b42995a0bf224f538b6ae7b82fc14cc851ee",
    "support"
   ],
   "referrer-policy/generic/common.js": [
@@ -82892,31 +83046,19 @@
    "testharness"
   ],
   "selection/addRange.js": [
-   "67bd52a4653938061f121ed57ead8d768acdde2b",
-   "support"
-  ],
-  "selection/collapse-00-expected.txt": [
-   "cb6b89a32ab5910d7552abb9bf13c3de31a44824",
+   "df6dcd50618466c323d4343a8a2a55b2443e4498",
    "support"
   ],
   "selection/collapse-00.html": [
    "6c06617a84c3d4e5f121e4ccf8f7761ba1be1ceb",
    "testharness"
   ],
-  "selection/collapse-30-expected.txt": [
-   "b848752153c11aba04cb02d76bf0f75541a35ec8",
-   "support"
-  ],
   "selection/collapse-30.html": [
    "943e7d8960212bc5d5eadb45ff641b9d9525a44a",
    "testharness"
   ],
   "selection/collapse.js": [
-   "4cd755764b43e348b2dcf23d1c800953ee28f059",
-   "support"
-  ],
-  "selection/collapseToStartEnd-expected.txt": [
-   "c255bb04eda843b87c255fdb965136b2a786a8af",
+   "41ae670c54b9141b065659a751f8495ded80ac1b",
    "support"
   ],
   "selection/collapseToStartEnd.html": [
@@ -82924,7 +83066,7 @@
    "testharness"
   ],
   "selection/common.js": [
-   "279c4bf2f03cb1caa26b83a5898adfbf8bef2a5f",
+   "ffb4fe96df8ae290cb35574f751bafcc00805b4d",
    "support"
   ],
   "selection/deleteFromDocument.html": [
@@ -82935,32 +83077,20 @@
    "d20aba9b9ef8654b553f1adb1eb4f16e642fe649",
    "manual"
   ],
-  "selection/extend-00-expected.txt": [
-   "3c68a9961b52dbedf5eea97287db485236d34221",
-   "support"
-  ],
   "selection/extend-00.html": [
    "189e4939230b1a0540e326640f6390e64708efed",
    "testharness"
   ],
-  "selection/extend-20-expected.txt": [
-   "9acbe1d83b64ae83252fb896a21668944def8f5f",
-   "support"
-  ],
   "selection/extend-20.html": [
    "23664c8f1957d8491526ba9f53e03242f3f3042f",
    "testharness"
-  ],
-  "selection/extend-40-expected.txt": [
-   "0160a1d69f15c454ec0386418f10e8b07daa4fd9",
-   "support"
   ],
   "selection/extend-40.html": [
    "5e3ce84e8a060b0de0a5468faeec433b67c5aea7",
    "testharness"
   ],
   "selection/extend.js": [
-   "21daf8d7634f3c325bf9e5564d21701264497a38",
+   "e5982a39ff7d36cd893bbe0bba19a7078a4096dd",
    "support"
   ],
   "selection/getRangeAt.html": [
@@ -82972,16 +83102,12 @@
    "testharness"
   ],
   "selection/interfaces-expected.txt": [
-   "ccb4664f886a9f11a3c48eb4d99ca2fe854b0e23",
+   "ba5cf4a994fc761670c2c21dce9853c8f7acd10e",
    "support"
   ],
   "selection/interfaces.html": [
    "9ec3001efd5e443a533d261a51c94c3f60e273ed",
    "testharness"
-  ],
-  "selection/isCollapsed-expected.txt": [
-   "12310c61c361c3c8214e536593c310dbfb611124",
-   "support"
   ],
   "selection/isCollapsed.html": [
    "9304191778ec0fb6b5d613efde19d1574b867dac",
