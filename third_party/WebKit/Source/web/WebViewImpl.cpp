@@ -3614,11 +3614,8 @@ void WebViewImpl::didCommitLoad(bool isNewNavigation,
 }
 
 void WebViewImpl::postLayoutResize(WebLocalFrameImpl* webframe) {
-  FrameView* view = webframe->frame()->view();
   if (webframe == mainFrame())
     m_resizeViewportAnchor->resizeFrameView(mainFrameSize());
-  else
-    view->resize(webframe->frameView()->size());
 }
 
 void WebViewImpl::layoutUpdated(WebLocalFrameImpl* webframe) {

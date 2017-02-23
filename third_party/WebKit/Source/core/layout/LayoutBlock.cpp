@@ -393,11 +393,8 @@ void LayoutBlock::removeLeftoverAnonymousBlock(LayoutBlock* child) {
 
 void LayoutBlock::updateAfterLayout() {
   invalidateStickyConstraints();
-
-  // Update our scroll information if we're overflow:auto/scroll/hidden now that
-  // we know if we overflow or not.
-  if (hasOverflowClip())
-    layer()->getScrollableArea()->updateAfterLayout();
+  if (hasLayer())
+    layer()->updateSizeAndScrollingAfterLayout();
 }
 
 void LayoutBlock::layout() {

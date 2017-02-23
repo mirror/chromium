@@ -310,7 +310,7 @@ IntRect PaintLayerScrollableArea::scrollCornerRect() const {
   if ((hasHorizontalBar && hasVerticalBar) ||
       (hasResizer && (hasHorizontalBar || hasVerticalBar)))
     return cornerRect(box(), horizontalScrollbar(), verticalScrollbar(),
-                      box().pixelSnappedBorderBoxRect());
+                      IntRect(IntPoint(), m_layer.size()));
   return IntRect();
 }
 
@@ -559,6 +559,29 @@ int PaintLayerScrollableArea::visibleWidth() const {
   return layer()->size().width();
 }
 
+int PaintLayerScrollableArea::pixelSnappedVisibleClientWidth() const {
+  if (RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
+    bool isMainFrameRootLayer =
+        m_layer.isRootLayer()
+        && box().document().frame()->isMainFrame();
+    if (isMainFrameRootLayer) {
+      return box().frameView()->width();
+    }
+  }
+  return box().pixelSnappedClientWidth();
+}
+
+int PaintLayerScrollableArea::pixelSnappedVisibleClientHeight() const {
+  if (RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
+    bool isMainFrameRootLayer =
+        m_layer.isRootLayer()
+        && box().document().frame()->isMainFrame();
+    if (isMainFrameRootLayer)
+      return box().frameView()->width();
+  }
+  return box().pixelSnappedClientWidth();
+}
+
 IntSize PaintLayerScrollableArea::contentsSize() const {
   return IntSize(pixelSnappedScrollWidth(), pixelSnappedScrollHeight());
 }
@@ -600,7 +623,9 @@ bool PaintLayerScrollableArea::scrollbarsCanBeActive() const {
 }
 
 IntRect PaintLayerScrollableArea::scrollableAreaBoundingBox() const {
-  return box().absoluteBoundingBoxRect(TraverseDocumentBoundaries);
+  FloatQuad quad(FloatRect(FloatPoint(), FloatSize(m_layer.size())));
+  quad = box().localToAbsoluteQuad(quad, TraverseDocumentBoundaries);
+  return quad.enclosingBoundingBox();
 }
 
 void PaintLayerScrollableArea::registerForAnimation() {
@@ -635,6 +660,11 @@ bool PaintLayerScrollableArea::shouldPlaceVerticalScrollbarOnLeft() const {
 }
 
 int PaintLayerScrollableArea::pageStep(ScrollbarOrientation orientation) const {
+  // Note: For the root layer of the main frame, pageStep() will not be based
+  // on the scrollable area size (which matches the layout viewport), but
+  // instead on the initial containing block size.  It's unclear whether this
+  // is "correct" behavior; there is no spec guidance on the scroll distance
+  // of page scrolling in this circumstance.
   int length = (orientation == HorizontalScrollbar)
                    ? box().pixelSnappedClientWidth()
                    : box().pixelSnappedClientHeight();
@@ -800,12 +830,12 @@ void PaintLayerScrollableArea::updateAfterLayout() {
 
     // Set up the range (and page step/line step).
     if (Scrollbar* horizontalScrollbar = this->horizontalScrollbar()) {
-      int clientWidth = box().pixelSnappedClientWidth();
+      int clientWidth = pixelSnappedVisibleClientWidth();
       horizontalScrollbar->setProportion(clientWidth,
                                          overflowRect().width().toInt());
     }
     if (Scrollbar* verticalScrollbar = this->verticalScrollbar()) {
-      int clientHeight = box().pixelSnappedClientHeight();
+      int clientHeight = pixelSnappedVisibleClientHeight();
       verticalScrollbar->setProportion(clientHeight,
                                        overflowRect().height().toInt());
     }
@@ -901,14 +931,15 @@ bool PaintLayerScrollableArea::hasHorizontalOverflow() const {
   // converse problem seems to happen much less frequently in practice, so we
   // bias the logic towards preventing unwanted horizontal scrollbars, which
   // are more common and annoying.
-  int clientWidth = box().pixelSnappedClientWidth();
+  int clientWidth = pixelSnappedVisibleClientWidth();
   if (needsRelayout() && !hadVerticalScrollbarBeforeRelayout())
     clientWidth += verticalScrollbarWidth();
   return pixelSnappedScrollWidth() > clientWidth;
 }
 
 bool PaintLayerScrollableArea::hasVerticalOverflow() const {
-  return pixelSnappedScrollHeight() > box().pixelSnappedClientHeight();
+  int clientHeight = pixelSnappedVisibleClientHeight();
+  return pixelSnappedScrollHeight() > clientHeight;
 }
 
 bool PaintLayerScrollableArea::hasScrollableHorizontalOverflow() const {
@@ -1013,12 +1044,12 @@ bool PaintLayerScrollableArea::updateAfterCompositingChange() {
 void PaintLayerScrollableArea::updateAfterOverflowRecalc() {
   updateScrollDimensions();
   if (Scrollbar* horizontalScrollbar = this->horizontalScrollbar()) {
-    int clientWidth = box().pixelSnappedClientWidth();
+    int clientWidth = pixelSnappedVisibleClientWidth();
     horizontalScrollbar->setProportion(clientWidth,
                                        overflowRect().width().toInt());
   }
   if (Scrollbar* verticalScrollbar = this->verticalScrollbar()) {
-    int clientHeight = box().pixelSnappedClientHeight();
+    int clientHeight = pixelSnappedVisibleClientHeight();
     verticalScrollbar->setProportion(clientHeight,
                                      overflowRect().height().toInt());
   }
@@ -1094,15 +1125,15 @@ int PaintLayerScrollableArea::horizontalScrollbarStart(int minX) const {
 IntSize PaintLayerScrollableArea::scrollbarOffset(
     const Scrollbar& scrollbar) const {
   if (&scrollbar == verticalScrollbar()) {
-    return IntSize(verticalScrollbarStart(0, box().size().width().toInt()),
+    return IntSize(verticalScrollbarStart(0, m_layer.size().width()),
                    box().borderTop().toInt());
   }
 
-  if (&scrollbar == horizontalScrollbar())
+  if (&scrollbar == horizontalScrollbar()) {
     return IntSize(
         horizontalScrollbarStart(0),
-        (box().size().height() - box().borderBottom() - scrollbar.height())
-            .toInt());
+        m_layer.size().height() - box().borderBottom().toInt() - scrollbar.height());
+  }
 
   ASSERT_NOT_REACHED();
   return IntSize();
@@ -1306,12 +1337,12 @@ void PaintLayerScrollableArea::positionOverflowControls() {
   if (!hasScrollbar() && !box().canResize())
     return;
 
-  const IntRect borderBox = box().pixelSnappedBorderBoxRect();
+  const IntRect layerBounds(IntPoint(), m_layer.size());
   if (Scrollbar* verticalScrollbar = this->verticalScrollbar())
-    verticalScrollbar->setFrameRect(rectForVerticalScrollbar(borderBox));
+    verticalScrollbar->setFrameRect(rectForVerticalScrollbar(layerBounds));
 
   if (Scrollbar* horizontalScrollbar = this->horizontalScrollbar())
-    horizontalScrollbar->setFrameRect(rectForHorizontalScrollbar(borderBox));
+    horizontalScrollbar->setFrameRect(rectForHorizontalScrollbar(layerBounds));
 
   const IntRect& scrollCorner = scrollCornerRect();
   if (m_scrollCorner)
@@ -1319,7 +1350,7 @@ void PaintLayerScrollableArea::positionOverflowControls() {
 
   if (m_resizer)
     m_resizer->setFrameRect(
-        LayoutRect(resizerCornerRect(borderBox, ResizerForPointer)));
+        LayoutRect(resizerCornerRect(layerBounds, ResizerForPointer)));
 
   // FIXME, this should eventually be removed, once we are certain that
   // composited controls get correctly positioned on a compositor update. For
@@ -1363,7 +1394,7 @@ bool PaintLayerScrollableArea::hitTestOverflowControls(
   IntRect resizeControlRect;
   if (box().style()->resize() != RESIZE_NONE) {
     resizeControlRect =
-        resizerCornerRect(box().pixelSnappedBorderBoxRect(), ResizerForPointer);
+        resizerCornerRect(IntRect(IntPoint(), m_layer.size()), ResizerForPointer);
     if (resizeControlRect.contains(localPoint))
       return true;
   }
@@ -1374,7 +1405,7 @@ bool PaintLayerScrollableArea::hitTestOverflowControls(
     LayoutRect vBarRect(verticalScrollbarStart(0, box().size().width().toInt()),
                         box().borderTop().toInt(),
                         verticalScrollbar()->scrollbarThickness(),
-                        box().size().height().toInt() -
+                        m_layer.size().height() -
                             (box().borderTop() + box().borderBottom()).toInt() -
                             (hasHorizontalScrollbar()
                                  ? horizontalScrollbar()->scrollbarThickness()
@@ -1391,10 +1422,10 @@ bool PaintLayerScrollableArea::hitTestOverflowControls(
     // TODO(crbug.com/638981): Are the conversions to int intentional?
     LayoutRect hBarRect(
         horizontalScrollbarStart(0),
-        (box().size().height() - box().borderBottom() -
+        (m_layer.size().height() - box().borderBottom() -
          horizontalScrollbar()->scrollbarThickness())
             .toInt(),
-        (box().size().width() - (box().borderLeft() + box().borderRight()) -
+        (m_layer.size().width() - (box().borderLeft() + box().borderRight()) -
          (hasVerticalScrollbar() ? verticalScrollbar()->scrollbarThickness()
                                  : resizeControlSize))
             .toInt(),
@@ -1448,8 +1479,7 @@ bool PaintLayerScrollableArea::isPointInResizeControl(
 
   IntPoint localPoint =
       roundedIntPoint(box().absoluteToLocal(absolutePoint, UseTransforms));
-  IntRect localBounds(0, 0, box().pixelSnappedWidth(),
-                      box().pixelSnappedHeight());
+  IntRect localBounds(IntPoint(), m_layer.size());
   return resizerCornerRect(localBounds, resizerHitTestType)
       .contains(localPoint);
 }
@@ -1641,9 +1671,10 @@ LayoutRect PaintLayerScrollableArea::scrollIntoView(
           .absoluteToLocalQuad(FloatQuad(FloatRect(rect)), UseTransforms)
           .boundingBox());
   localExposeRect.move(-box().borderLeft(), -box().borderTop());
-  LayoutRect layerBounds(LayoutPoint(),
-                         LayoutSize(box().clientWidth(), box().clientHeight()));
-  LayoutRect r = ScrollAlignment::getRectToExpose(layerBounds, localExposeRect,
+  LayoutRect visibleRect(LayoutPoint(),
+                         LayoutSize(pixelSnappedVisibleClientWidth(),
+                                    pixelSnappedVisibleClientHeight()));
+  LayoutRect r = ScrollAlignment::getRectToExpose(visibleRect, localExposeRect,
                                                   alignX, alignY);
 
   ScrollOffset oldScrollOffset = getScrollOffset();
@@ -1654,8 +1685,8 @@ LayoutRect PaintLayerScrollableArea::scrollIntoView(
   localExposeRect.move(-LayoutSize(scrollOffsetDifference));
 
   LayoutRect intersect =
-      localToAbsolute(box(), intersection(layerBounds, localExposeRect));
-  if (intersect.isEmpty() && !layerBounds.isEmpty() &&
+      localToAbsolute(box(), intersection(visibleRect, localExposeRect));
+  if (intersect.isEmpty() && !visibleRect.isEmpty() &&
       !localExposeRect.isEmpty()) {
     return localToAbsolute(box(), localExposeRect);
   }

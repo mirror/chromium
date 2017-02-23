@@ -67,6 +67,7 @@
 #include "core/layout/compositing/PaintLayerCompositor.h"
 #include "core/layout/svg/LayoutSVGResourceClipper.h"
 #include "core/layout/svg/LayoutSVGRoot.h"
+#include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
 #include "core/page/scrolling/RootScrollerController.h"
 #include "core/page/scrolling/ScrollingCoordinator.h"
@@ -772,18 +773,8 @@ void PaintLayer::update3DTransformedDescendantStatus() {
 
 void PaintLayer::updateLayerPosition() {
   LayoutPoint localPoint;
-
-  bool didResize = false;
-  if (layoutObject()->isInline() && layoutObject()->isLayoutInline()) {
-    LayoutInline* inlineFlow = toLayoutInline(layoutObject());
-    IntRect lineBox = enclosingIntRect(inlineFlow->linesBoundingBox());
-    m_size = lineBox.size();
-  } else if (LayoutBox* box = layoutBox()) {
-    IntSize newSize = pixelSnappedIntSize(box->size(), box->location());
-    didResize = newSize != m_size;
-    m_size = newSize;
+  if (LayoutBox* box = layoutBox())
     localPoint.moveBy(box->physicalLocation());
-  }
 
   if (!layoutObject()->isOutOfFlowPositioned() &&
       !layoutObject()->isColumnSpanAll()) {
@@ -831,12 +822,42 @@ void PaintLayer::updateLayerPosition() {
 
   m_location = localPoint;
 
-  if (m_scrollableArea && didResize)
-    m_scrollableArea->visibleSizeChanged();
-
 #if DCHECK_IS_ON()
   m_needsPositionUpdate = false;
 #endif
+}
+
+void PaintLayer::updateSizeAndScrollingAfterLayout() {
+  bool didResize = false;
+  if (RuntimeEnabledFeatures::rootLayerScrollingEnabled()
+      && isRootLayer()
+      && layoutObject()->document().frame()->isMainFrame()) {
+    // Unlike every other layer, the root PaintLayer for the main frame takes
+    // its size from the layout viewport size.  The call to adjustViewSize()
+    // will update the frame's contents size, which will also update the page's
+    // minimum scale factor.  The call to layoutUpdated() will calculate the
+    // layout viewport size based on the page minimum scale factor, and then
+    // update the FrameView with the new size.
+    LocalFrame* frame = layoutObject()->document().frame();
+    frame->view()->adjustViewSize();
+    frame->chromeClient().layoutUpdated(frame);
+    const IntSize newSize = frame->view()->size();
+    didResize = newSize != m_size;
+    m_size = newSize;
+  } else if (layoutObject()->isInline() && layoutObject()->isLayoutInline()) {
+    LayoutInline* inlineFlow = toLayoutInline(layoutObject());
+    IntRect lineBox = enclosingIntRect(inlineFlow->linesBoundingBox());
+    m_size = lineBox.size();
+  } else if (LayoutBox* box = layoutBox()) {
+    IntSize newSize = pixelSnappedIntSize(box->size(), box->location());
+    didResize = newSize != m_size;
+    m_size = newSize;
+  }
+  if (layoutObject()->hasOverflowClip()) {
+    m_scrollableArea->updateAfterLayout();
+    if (didResize)
+      m_scrollableArea->visibleSizeChanged();
+  }
 }
 
 TransformationMatrix PaintLayer::perspectiveTransform() const {

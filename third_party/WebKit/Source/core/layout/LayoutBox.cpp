@@ -825,7 +825,7 @@ void LayoutBox::setLocationAndUpdateOverflowControlsIfNeeded(
     IntSize oldPixelSnappedBorderRectSize = pixelSnappedBorderBoxRect().size();
     setLocation(location);
     if (pixelSnappedBorderBoxRect().size() != oldPixelSnappedBorderRectSize)
-      getScrollableArea()->updateAfterLayout();
+      layer()->updateSizeAndScrollingAfterLayout();
     return;
   }
 
