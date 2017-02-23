@@ -349,6 +349,12 @@
      {}
     ]
    ],
+   "pointerevents/pointerevent_click_during_capture-manual.html": [
+    [
+     "/pointerevents/pointerevent_click_during_capture-manual.html",
+     {}
+    ]
+   ],
    "pointerevents/pointerevent_element_haspointercapture-manual.html": [
     [
      "/pointerevents/pointerevent_element_haspointercapture-manual.html",
@@ -6493,11 +6499,6 @@
      {}
     ]
    ],
-   "./MANIFEST.json": [
-    [
-     {}
-    ]
-   ],
    "./README.md": [
     [
      {}
@@ -9079,11 +9080,6 @@
     ]
    ],
    "domparsing/DOMParser-parseFromString-xml-expected.txt": [
-    [
-     {}
-    ]
-   ],
-   "domparsing/createContextualFragment-expected.txt": [
     [
      {}
     ]
@@ -16683,11 +16679,6 @@
      {}
     ]
    ],
-   "html/semantics/forms/the-input-element/selection-expected.txt": [
-    [
-     {}
-    ]
-   ],
    "html/semantics/forms/the-input-element/time-expected.txt": [
     [
      {}
@@ -17633,11 +17624,6 @@
      {}
     ]
    ],
-   "html/syntax/parsing-html-fragments/the-input-byte-stream-015.html.headers": [
-    [
-     {}
-    ]
-   ],
    "html/syntax/parsing-html-fragments/the-input-byte-stream-016.html.headers": [
     [
      {}
@@ -18418,7 +18404,17 @@
      {}
     ]
    ],
+   "mixed-content/allowed/http-csp/same-host-https/audio-tag/top-level/keep-scheme-redirect/allowed.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
    "mixed-content/allowed/http-csp/same-host-https/audio-tag/top-level/keep-scheme-redirect/allowed.https.html.headers": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/allowed/http-csp/same-host-https/audio-tag/top-level/no-redirect/allowed.https-expected.txt": [
     [
      {}
     ]
@@ -18518,7 +18514,17 @@
      {}
     ]
    ],
+   "mixed-content/allowed/http-csp/same-host-https/video-tag/top-level/keep-scheme-redirect/allowed.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
    "mixed-content/allowed/http-csp/same-host-https/video-tag/top-level/keep-scheme-redirect/allowed.https.html.headers": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/allowed/http-csp/same-host-https/video-tag/top-level/no-redirect/allowed.https-expected.txt": [
     [
      {}
     ]
@@ -18554,6 +18560,36 @@
     ]
    ],
    "mixed-content/allowed/http-csp/same-host-wss/websocket-request/top-level/no-redirect/websocket-allowed.https.html.headers": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/allowed/meta-csp/same-host-https/audio-tag/top-level/no-redirect/allowed.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/allowed/meta-csp/same-host-https/video-tag/top-level/no-redirect/allowed.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/allowed/no-opt-in/same-host-https/audio-tag/top-level/keep-scheme-redirect/allowed.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/allowed/no-opt-in/same-host-https/audio-tag/top-level/no-redirect/allowed.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/allowed/no-opt-in/same-host-https/video-tag/top-level/keep-scheme-redirect/allowed.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/allowed/no-opt-in/same-host-https/video-tag/top-level/no-redirect/allowed.https-expected.txt": [
     [
      {}
     ]
@@ -19023,6 +19059,66 @@
      {}
     ]
    ],
+   "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/audio-tag/top-level/keep-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/audio-tag/top-level/no-redirect/no-opt-in-allows.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/audio-tag/top-level/swap-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/video-tag/top-level/keep-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/video-tag/top-level/no-redirect/no-opt-in-allows.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/video-tag/top-level/swap-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/optionally-blockable/no-opt-in/same-host-http/audio-tag/top-level/keep-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/optionally-blockable/no-opt-in/same-host-http/audio-tag/top-level/no-redirect/no-opt-in-allows.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/optionally-blockable/no-opt-in/same-host-http/audio-tag/top-level/swap-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/optionally-blockable/no-opt-in/same-host-http/video-tag/top-level/keep-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/optionally-blockable/no-opt-in/same-host-http/video-tag/top-level/no-redirect/no-opt-in-allows.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "mixed-content/optionally-blockable/no-opt-in/same-host-http/video-tag/top-level/swap-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
    "mixed-content/spec.src.json": [
     [
      {}
@@ -19094,11 +19190,6 @@
     ]
    ],
    "pointerevents/idlharness-expected.txt": [
-    [
-     {}
-    ]
-   ],
-   "pointerevents/pointerevent_attributes_nohover_pointers-manual-expected.txt": [
     [
      {}
     ]
@@ -21358,42 +21449,12 @@
      {}
     ]
    ],
-   "selection/collapse-00-expected.txt": [
-    [
-     {}
-    ]
-   ],
-   "selection/collapse-30-expected.txt": [
-    [
-     {}
-    ]
-   ],
    "selection/collapse.js": [
     [
      {}
     ]
    ],
-   "selection/collapseToStartEnd-expected.txt": [
-    [
-     {}
-    ]
-   ],
    "selection/common.js": [
-    [
-     {}
-    ]
-   ],
-   "selection/extend-00-expected.txt": [
-    [
-     {}
-    ]
-   ],
-   "selection/extend-20-expected.txt": [
-    [
-     {}
-    ]
-   ],
-   "selection/extend-40-expected.txt": [
     [
      {}
     ]
@@ -21404,11 +21465,6 @@
     ]
    ],
    "selection/interfaces-expected.txt": [
-    [
-     {}
-    ]
-   ],
-   "selection/isCollapsed-expected.txt": [
     [
      {}
     ]
@@ -23054,6 +23110,11 @@
     ]
    ],
    "streams/writable-streams/general.serviceworker-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "streams/writable-streams/reentrant-strategy.js": [
     [
      {}
     ]
@@ -25488,36 +25549,6 @@
      {}
     ]
    ],
-   "webvtt/webvtt-api-for-browsers/vttcue-interface/align-expected.txt": [
-    [
-     {}
-    ]
-   ],
-   "webvtt/webvtt-api-for-browsers/vttcue-interface/getCueAsHTML-expected.txt": [
-    [
-     {}
-    ]
-   ],
-   "webvtt/webvtt-api-for-browsers/vttcue-interface/line-expected.txt": [
-    [
-     {}
-    ]
-   ],
-   "webvtt/webvtt-api-for-browsers/vttcue-interface/snapToLines-expected.txt": [
-    [
-     {}
-    ]
-   ],
-   "webvtt/webvtt-api-for-browsers/vttcue-interface/text-expected.txt": [
-    [
-     {}
-    ]
-   ],
-   "webvtt/webvtt-api-for-browsers/vttcue-interface/vertical-expected.txt": [
-    [
-     {}
-    ]
-   ],
    "webvtt/webvtt-file-format-parsing/webvtt-cue-text-parsing-rules/buildtests.py": [
     [
      {}
@@ -27001,6 +27032,18 @@
    "IndexedDB/idbdatabase_transaction5.htm": [
     [
      "/IndexedDB/idbdatabase_transaction5.htm",
+     {}
+    ]
+   ],
+   "IndexedDB/idbfactory-deleteDatabase-opaque-origin.html": [
+    [
+     "/IndexedDB/idbfactory-deleteDatabase-opaque-origin.html",
+     {}
+    ]
+   ],
+   "IndexedDB/idbfactory-open-opaque-origin.html": [
+    [
+     "/IndexedDB/idbfactory-open-opaque-origin.html",
      {}
     ]
    ],
@@ -37799,12 +37842,6 @@
    "html/syntax/parsing-html-fragments/the-input-byte-stream-009.html": [
     [
      "/html/syntax/parsing-html-fragments/the-input-byte-stream-009.html",
-     {}
-    ]
-   ],
-   "html/syntax/parsing-html-fragments/the-input-byte-stream-015.html": [
-    [
-     "/html/syntax/parsing-html-fragments/the-input-byte-stream-015.html",
      {}
     ]
    ],
@@ -51168,6 +51205,12 @@
      {}
     ]
    ],
+   "storage/opaque-origin.https.html": [
+    [
+     "/storage/opaque-origin.https.html",
+     {}
+    ]
+   ],
    "streams/byte-length-queuing-strategy.dedicatedworker.html": [
     [
      "/streams/byte-length-queuing-strategy.dedicatedworker.html",
@@ -51984,6 +52027,30 @@
      {}
     ]
    ],
+   "streams/writable-streams/reentrant-strategy.dedicatedworker.html": [
+    [
+     "/streams/writable-streams/reentrant-strategy.dedicatedworker.html",
+     {}
+    ]
+   ],
+   "streams/writable-streams/reentrant-strategy.html": [
+    [
+     "/streams/writable-streams/reentrant-strategy.html",
+     {}
+    ]
+   ],
+   "streams/writable-streams/reentrant-strategy.serviceworker.https.html": [
+    [
+     "/streams/writable-streams/reentrant-strategy.serviceworker.https.html",
+     {}
+    ]
+   ],
+   "streams/writable-streams/reentrant-strategy.sharedworker.html": [
+    [
+     "/streams/writable-streams/reentrant-strategy.sharedworker.html",
+     {}
+    ]
+   ],
    "streams/writable-streams/start.dedicatedworker.html": [
     [
      "/streams/writable-streams/start.dedicatedworker.html",
@@ -52569,6 +52636,12 @@
    "web-animations/timing-model/animation-effects/current-iteration.html": [
     [
      "/web-animations/timing-model/animation-effects/current-iteration.html",
+     {}
+    ]
+   ],
+   "web-animations/timing-model/animation-effects/local-time.html": [
+    [
+     "/web-animations/timing-model/animation-effects/local-time.html",
      {}
     ]
    ],
@@ -53508,45 +53581,129 @@
      {}
     ]
    ],
+   "webvtt/api/VTTCue/align.html": [
+    [
+     "/webvtt/api/VTTCue/align.html",
+     {}
+    ]
+   ],
+   "webvtt/api/VTTCue/constructor.html": [
+    [
+     "/webvtt/api/VTTCue/constructor.html",
+     {}
+    ]
+   ],
+   "webvtt/api/VTTCue/getCueAsHTML.html": [
+    [
+     "/webvtt/api/VTTCue/getCueAsHTML.html",
+     {}
+    ]
+   ],
+   "webvtt/api/VTTCue/line.html": [
+    [
+     "/webvtt/api/VTTCue/line.html",
+     {}
+    ]
+   ],
+   "webvtt/api/VTTCue/lineAlign.html": [
+    [
+     "/webvtt/api/VTTCue/lineAlign.html",
+     {}
+    ]
+   ],
+   "webvtt/api/VTTCue/position.html": [
+    [
+     "/webvtt/api/VTTCue/position.html",
+     {}
+    ]
+   ],
+   "webvtt/api/VTTCue/positionAlign.html": [
+    [
+     "/webvtt/api/VTTCue/positionAlign.html",
+     {}
+    ]
+   ],
+   "webvtt/api/VTTCue/region.html": [
+    [
+     "/webvtt/api/VTTCue/region.html",
+     {}
+    ]
+   ],
+   "webvtt/api/VTTCue/size.html": [
+    [
+     "/webvtt/api/VTTCue/size.html",
+     {}
+    ]
+   ],
+   "webvtt/api/VTTCue/snapToLines.html": [
+    [
+     "/webvtt/api/VTTCue/snapToLines.html",
+     {}
+    ]
+   ],
+   "webvtt/api/VTTCue/text.html": [
+    [
+     "/webvtt/api/VTTCue/text.html",
+     {}
+    ]
+   ],
+   "webvtt/api/VTTCue/vertical.html": [
+    [
+     "/webvtt/api/VTTCue/vertical.html",
+     {}
+    ]
+   ],
+   "webvtt/api/VTTRegion/constructor.html": [
+    [
+     "/webvtt/api/VTTRegion/constructor.html",
+     {}
+    ]
+   ],
+   "webvtt/api/VTTRegion/lines.html": [
+    [
+     "/webvtt/api/VTTRegion/lines.html",
+     {}
+    ]
+   ],
+   "webvtt/api/VTTRegion/regionAnchorX.html": [
+    [
+     "/webvtt/api/VTTRegion/regionAnchorX.html",
+     {}
+    ]
+   ],
+   "webvtt/api/VTTRegion/regionAnchorY.html": [
+    [
+     "/webvtt/api/VTTRegion/regionAnchorY.html",
+     {}
+    ]
+   ],
+   "webvtt/api/VTTRegion/scroll.html": [
+    [
+     "/webvtt/api/VTTRegion/scroll.html",
+     {}
+    ]
+   ],
+   "webvtt/api/VTTRegion/viewportAnchorX.html": [
+    [
+     "/webvtt/api/VTTRegion/viewportAnchorX.html",
+     {}
+    ]
+   ],
+   "webvtt/api/VTTRegion/viewportAnchorY.html": [
+    [
+     "/webvtt/api/VTTRegion/viewportAnchorY.html",
+     {}
+    ]
+   ],
+   "webvtt/api/VTTRegion/width.html": [
+    [
+     "/webvtt/api/VTTRegion/width.html",
+     {}
+    ]
+   ],
    "webvtt/interfaces.html": [
     [
      "/webvtt/interfaces.html",
-     {}
-    ]
-   ],
-   "webvtt/webvtt-api-for-browsers/vttcue-interface/align.html": [
-    [
-     "/webvtt/webvtt-api-for-browsers/vttcue-interface/align.html",
-     {}
-    ]
-   ],
-   "webvtt/webvtt-api-for-browsers/vttcue-interface/getCueAsHTML.html": [
-    [
-     "/webvtt/webvtt-api-for-browsers/vttcue-interface/getCueAsHTML.html",
-     {}
-    ]
-   ],
-   "webvtt/webvtt-api-for-browsers/vttcue-interface/line.html": [
-    [
-     "/webvtt/webvtt-api-for-browsers/vttcue-interface/line.html",
-     {}
-    ]
-   ],
-   "webvtt/webvtt-api-for-browsers/vttcue-interface/snapToLines.html": [
-    [
-     "/webvtt/webvtt-api-for-browsers/vttcue-interface/snapToLines.html",
-     {}
-    ]
-   ],
-   "webvtt/webvtt-api-for-browsers/vttcue-interface/text.html": [
-    [
-     "/webvtt/webvtt-api-for-browsers/vttcue-interface/text.html",
-     {}
-    ]
-   ],
-   "webvtt/webvtt-api-for-browsers/vttcue-interface/vertical.html": [
-    [
-     "/webvtt/webvtt-api-for-browsers/vttcue-interface/vertical.html",
      {}
     ]
    ],
@@ -54611,16 +54768,12 @@
    "89af73c41d456ee93bd40921e96414c1908fc48c",
    "support"
   ],
-  "./MANIFEST.json": [
-   "1ba6d9d96ac2726755be2db4cfbae75877b16384",
-   "support"
-  ],
   "./README.md": [
    "f7f7d6a2bc0bc23e1c5fa3e812f710dc29ed6711",
    "support"
   ],
   "./check_stability.py": [
-   "0a0ea60b590564b4099d05d82131da247ee63c33",
+   "5f8efc8738edef4c84109e3547658d4cab37357d",
    "support"
   ],
   "./ci_built_diff.sh": [
@@ -54680,7 +54833,7 @@
    "support"
   ],
   "FileAPI/blob/Blob-XHR-revoke.html": [
-   "3db9200582a45806ecfae1d0f10bbd6f934de448",
+   "5858a79442dcad6325b3ab4bb6a20fc302fcf64c",
    "testharness"
   ],
   "FileAPI/blob/Blob-constructor-expected.txt": [
@@ -54852,7 +55005,7 @@
    "support"
   ],
   "IndexedDB/abort-in-initial-upgradeneeded.html": [
-   "efc9c2476e812f1bb378665f397f71c590439006",
+   "4cd712bd5fed3581ed770c4dbc4200f3a50c5299",
    "testharness"
   ],
   "IndexedDB/bindings-inject-key.html": [
@@ -54864,7 +55017,7 @@
    "testharness"
   ],
   "IndexedDB/close-in-upgradeneeded.html": [
-   "949f5e8a429a7524c9a68ef0d19baf04dadbd84a",
+   "835c1e1a408e9a6a2c5347eb3a98ba4b40571bb1",
    "testharness"
   ],
   "IndexedDB/cursor-overloads.htm": [
@@ -55068,7 +55221,7 @@
    "testharness"
   ],
   "IndexedDB/idbcursor_continue_objectstore.htm": [
-   "10ae006680c7963f0b09dcfcf26eaf5d62aed3cc",
+   "d494e8553d1ff8c72cd3b39cbf32b55d4d299710",
    "testharness"
   ],
   "IndexedDB/idbcursor_continue_objectstore2.htm": [
@@ -55327,6 +55480,14 @@
    "6a20bae0d687ff41608e222d1f477606831e2164",
    "testharness"
   ],
+  "IndexedDB/idbfactory-deleteDatabase-opaque-origin.html": [
+   "faebbda16f92e9d993086578e12fd5ccdb794749",
+   "testharness"
+  ],
+  "IndexedDB/idbfactory-open-opaque-origin.html": [
+   "f29edb81b7c6cf534d48e1485f219d51c047c02e",
+   "testharness"
+  ],
   "IndexedDB/idbfactory_cmp.htm": [
    "6a00456a5f0011cf389d2f327f370b21829713cd",
    "testharness"
@@ -55356,7 +55517,7 @@
    "testharness"
   ],
   "IndexedDB/idbfactory_deleteDatabase4.htm": [
-   "bdd320c4530d4ec4c9aa92d7283e5458ea92ec25",
+   "10109da5b09ab80f71c69422662840c8b637c560",
    "testharness"
   ],
   "IndexedDB/idbfactory_open.htm": [
@@ -55460,7 +55621,7 @@
    "testharness"
   ],
   "IndexedDB/idbindex_get.htm": [
-   "32d6d204c0d52f2e4ebf4649ddb1482d2ca2bbf7",
+   "fe9ff4b4c3d8ea03ace7ff6dd9cec91ed9b6e118",
    "testharness"
   ],
   "IndexedDB/idbindex_get2.htm": [
@@ -55728,7 +55889,7 @@
    "testharness"
   ],
   "IndexedDB/idbobjectstore_createIndex13.htm": [
-   "180c2699b841636a3bec5a857ad1690af2e7d729",
+   "04af5554d0a8f1c8d4ffce81662ba8b69501b011",
    "testharness"
   ],
   "IndexedDB/idbobjectstore_createIndex14-exception_order.htm": [
@@ -56024,7 +56185,7 @@
    "testharness"
   ],
   "IndexedDB/keypath_invalid.htm": [
-   "d5ac98199a0ab7a4e05c88d9480613d9d34f4181",
+   "7d6bf2f7cf77bdafd5b3b5e3f82299f844bd7225",
    "testharness"
   ],
   "IndexedDB/keypath_maxsize.htm": [
@@ -60311,10 +60472,6 @@
    "f981058d771b4e6a0936e9f496527fe6177b2479",
    "testharness"
   ],
-  "domparsing/createContextualFragment-expected.txt": [
-   "6fec3d7f117871eb0e4373c0977300f323886564",
-   "support"
-  ],
   "domparsing/createContextualFragment.html": [
    "e3d576cab516b137b3c758f4ab7528303a28744a",
    "testharness"
@@ -61996,7 +62153,7 @@
    "support"
   ],
   "html/browsers/browsing-the-web/unloading-documents/beforeunload-canceling.html": [
-   "c98f22b2c05a3c6e3df1d90e88f5d59dd5f4cd86",
+   "3164df75ba277feef3b5c9a1ff6021f3e51d48de",
    "testharness"
   ],
   "html/browsers/browsing-the-web/unloading-documents/beforeunload-on-history-back-1.html": [
@@ -62892,11 +63049,11 @@
    "support"
   ],
   "html/browsers/offline/application-cache-api/api_update.html": [
-   "d749e9f18bb01cf2e9fb114b86210b18a93b28b4",
+   "99e4b5d9ebec73a932fe522aceece7fb3b94ef26",
    "testharness"
   ],
   "html/browsers/offline/application-cache-api/api_update_error.html": [
-   "51873cf265052ac2c96f155c564e1900e29a4063",
+   "a08540b1a71a7512a8b9cc2b0af28fd5c64bfe25",
    "testharness"
   ],
   "html/browsers/offline/browser-state/navigator_online_online.html": [
@@ -63232,7 +63389,7 @@
    "testharness"
   ],
   "html/browsers/the-window-object/support/noopener-target.html": [
-   "a2872e4bb40c8b186774d82eea5db6d9875a8b50",
+   "8b54eda2f83525a82588c889a0a24e2356cac670",
    "support"
   ],
   "html/browsers/the-window-object/the-windowproxy-object/test-window-proxy-locationbar-manual.html": [
@@ -63288,7 +63445,7 @@
    "testharness"
   ],
   "html/browsers/the-window-object/window-open-noopener.html": [
-   "d362bf2698f0d6f752bba6b9b094e6c41026ccd9",
+   "2e20bfcd1dfe9bee00a9747b87cdaf42004d6415",
    "testharness"
   ],
   "html/browsers/the-window-object/window-properties-expected.txt": [
@@ -69004,7 +69161,7 @@
    "testharness"
   ],
   "html/semantics/document-metadata/styling/LinkStyle.html": [
-   "d1d35da0a14099a63d595edfc42b1570342d36eb",
+   "9204127131c4ff7c7fc7753733c54f4a13242131",
    "testharness"
   ],
   "html/semantics/document-metadata/styling/support/alternate.css": [
@@ -70320,7 +70477,7 @@
    "testharness"
   ],
   "html/semantics/forms/textfieldselection/selection-not-application.html": [
-   "39ecb031aca3655a06152f94a514981fe59ebbaf",
+   "3763f117f8973ca9a994354ccbf22cb7114ece7a",
    "testharness"
   ],
   "html/semantics/forms/textfieldselection/selection.html": [
@@ -70579,10 +70736,6 @@
    "09007bf5a204053412838612e97d64c21a596315",
    "testharness"
   ],
-  "html/semantics/forms/the-input-element/selection-expected.txt": [
-   "5b0876ba1e8241cffe43238fdbd23fc82da9211a",
-   "support"
-  ],
   "html/semantics/forms/the-input-element/selection.html": [
    "0ebcacbae26e48abf51d30410c490da698b087dc",
    "testharness"
@@ -70728,7 +70881,7 @@
    "testharness"
   ],
   "html/semantics/forms/the-select-element/selected-index.html": [
-   "3ab30abb683f3fb42b6fdc84555126379d472a3d",
+   "0753a7487a10bde3b879d4c2ed10ba3d0260a48a",
    "testharness"
   ],
   "html/semantics/forms/the-textarea-element/cloning-steps.html": [
@@ -72251,14 +72404,6 @@
    "41e260e7df49e0e4ddb1fc5df11913dbda15edd7",
    "support"
   ],
-  "html/syntax/parsing-html-fragments/the-input-byte-stream-015.html": [
-   "3189757330f3abc8d209f9c75827d6ea616800b8",
-   "testharness"
-  ],
-  "html/syntax/parsing-html-fragments/the-input-byte-stream-015.html.headers": [
-   "41e260e7df49e0e4ddb1fc5df11913dbda15edd7",
-   "support"
-  ],
   "html/syntax/parsing-html-fragments/the-input-byte-stream-016.html": [
    "60de0ad291a918bacc47556736867f671bdd1bb8",
    "testharness"
@@ -72760,7 +72905,7 @@
    "testharness"
   ],
   "html/syntax/parsing/test.js": [
-   "601fc3cf58080c100c5f0a16f097d5d518d91efe",
+   "2ac20d68953dd8e0374d8bb35616277a6f1d1eeb",
    "support"
   ],
   "html/syntax/parsing/the-end.html": [
@@ -72776,7 +72921,7 @@
    "testharness"
   ],
   "html/syntax/serializing-html-fragments/serializing-expected.txt": [
-   "b5fc2fd23061b442cba52b18c44326674e1d43b9",
+   "7bb14c17a3ad5721c31f98fcca1a521cc447c36b",
    "support"
   ],
   "html/syntax/serializing-html-fragments/serializing.html": [
@@ -72828,11 +72973,11 @@
    "testharness"
   ],
   "html/webappapis/dynamic-markup-insertion/opening-the-input-stream/origin-check-in-document-open-basic.html": [
-   "8544d006dcbad6142d31c81adcba3528435a8b3b",
+   "5aea157f38d3bc075959be3d1f277ea25c731a66",
    "testharness"
   ],
   "html/webappapis/dynamic-markup-insertion/opening-the-input-stream/origin-check-in-document-open-same-origin-domain.sub.html": [
-   "4549cb718f2e4a1e22a561ef0eb0718c1ed6b05c",
+   "b4cdd98c6eb9a3946b49a6876c62c7e35501f413",
    "testharness"
   ],
   "html/webappapis/dynamic-markup-insertion/opening-the-input-stream/resources/set-document-domain.html": [
@@ -73060,7 +73205,7 @@
    "support"
   ],
   "html/webappapis/scripting/processing-model-2/compile-error-cross-origin-setTimeout.html": [
-   "0a588a749377d21e08f33da857500f921a07be99",
+   "6f49f9b984646f1738988f16d57c18278754c31e",
    "testharness"
   ],
   "html/webappapis/scripting/processing-model-2/compile-error-cross-origin.html": [
@@ -73088,7 +73233,7 @@
    "support"
   ],
   "html/webappapis/scripting/processing-model-2/compile-error-in-setInterval.html": [
-   "ad60cdcd56908e83491aa08adf3c65c9fb0dc839",
+   "ef844547e22243e00605fe61dae98fc4799849b1",
    "testharness"
   ],
   "html/webappapis/scripting/processing-model-2/compile-error-in-setTimeout-expected.txt": [
@@ -73096,7 +73241,7 @@
    "support"
   ],
   "html/webappapis/scripting/processing-model-2/compile-error-in-setTimeout.html": [
-   "f7e2f3cb84041a8fd81eef525697348460f02d34",
+   "a76b8a140592153305d33c6cebe987754d6d42d3",
    "testharness"
   ],
   "html/webappapis/scripting/processing-model-2/compile-error-same-origin-with-hash-expected.txt": [
@@ -73132,7 +73277,7 @@
    "support"
   ],
   "html/webappapis/scripting/processing-model-2/runtime-error-cross-origin-setTimeout.html": [
-   "8eb05dee678b74a75a37ca556c8db3c6ce90cd49",
+   "b97829dfacc9ff0e1ef650cdd3cf4ccb9138f7fc",
    "testharness"
   ],
   "html/webappapis/scripting/processing-model-2/runtime-error-cross-origin.html": [
@@ -73156,7 +73301,7 @@
    "support"
   ],
   "html/webappapis/scripting/processing-model-2/runtime-error-in-setInterval.html": [
-   "7130ee175c71eac941e471f8d387d6fc96a699a4",
+   "7e8952fe584c9f7e8e04777d2d4946d54eb6f288",
    "testharness"
   ],
   "html/webappapis/scripting/processing-model-2/runtime-error-in-setTimeout-expected.txt": [
@@ -73164,7 +73309,7 @@
    "support"
   ],
   "html/webappapis/scripting/processing-model-2/runtime-error-in-setTimeout.html": [
-   "18eee3a24d9569ff4bf8d48e5480da0adc42b724",
+   "51840a7f6f72e730c7d7410bdbe80e9c9d9eb6fe",
    "testharness"
   ],
   "html/webappapis/scripting/processing-model-2/runtime-error-in-window-onerror.html": [
@@ -73188,7 +73333,7 @@
    "testharness"
   ],
   "html/webappapis/scripting/processing-model-2/support/syntax-error-in-setInterval.js": [
-   "125f465530468196b263492b0d7ff48b2f5aa27e",
+   "35395df72ad9dd2ba9138588ad29a348f9b7ac44",
    "support"
   ],
   "html/webappapis/scripting/processing-model-2/support/syntax-error-in-setTimeout.js": [
@@ -73200,7 +73345,7 @@
    "support"
   ],
   "html/webappapis/scripting/processing-model-2/support/undefined-variable-in-setInterval.js": [
-   "5a5ed170634b7d057b962ef3fa6c849f97e0ac9d",
+   "17951f5292839ac7fd3d761946e8fefdcfe815f5",
    "support"
   ],
   "html/webappapis/scripting/processing-model-2/support/undefined-variable-in-setTimeout.js": [
@@ -73588,7 +73733,7 @@
    "testharness"
   ],
   "innerText/setter-expected.txt": [
-   "196037647b07f1f78725b04748964d9b6dd2ba73",
+   "5330e9d6db01f7e4bbb2a99345f1be683251c815",
    "support"
   ],
   "innerText/setter-tests.js": [
@@ -73815,12 +73960,20 @@
    "70a1f9e81faa3dbbe320a71a008e4594a29878a8",
    "testharness"
   ],
+  "mixed-content/allowed/http-csp/same-host-https/audio-tag/top-level/keep-scheme-redirect/allowed.https-expected.txt": [
+   "90380d95ffc250f2bcb86a71825a532f9ea3b40a",
+   "support"
+  ],
   "mixed-content/allowed/http-csp/same-host-https/audio-tag/top-level/keep-scheme-redirect/allowed.https.html": [
    "fdeac10c0682de4545c5f0e8f43efb19070cbd91",
    "testharness"
   ],
   "mixed-content/allowed/http-csp/same-host-https/audio-tag/top-level/keep-scheme-redirect/allowed.https.html.headers": [
    "562977daf4fd9e09dc6153058804bc247cbe5354",
+   "support"
+  ],
+  "mixed-content/allowed/http-csp/same-host-https/audio-tag/top-level/no-redirect/allowed.https-expected.txt": [
+   "0da07dc88c186b2f3a970e63af82f8f3caeb5e3c",
    "support"
   ],
   "mixed-content/allowed/http-csp/same-host-https/audio-tag/top-level/no-redirect/allowed.https.html": [
@@ -73975,12 +74128,20 @@
    "562977daf4fd9e09dc6153058804bc247cbe5354",
    "support"
   ],
+  "mixed-content/allowed/http-csp/same-host-https/video-tag/top-level/keep-scheme-redirect/allowed.https-expected.txt": [
+   "8c5eb00f4e83bcfd2c1cc9ff31e022f2db38be6e",
+   "support"
+  ],
   "mixed-content/allowed/http-csp/same-host-https/video-tag/top-level/keep-scheme-redirect/allowed.https.html": [
    "3e5e01b52ef7a96b3dc41a5fd65af5ad14474a4d",
    "testharness"
   ],
   "mixed-content/allowed/http-csp/same-host-https/video-tag/top-level/keep-scheme-redirect/allowed.https.html.headers": [
    "562977daf4fd9e09dc6153058804bc247cbe5354",
+   "support"
+  ],
+  "mixed-content/allowed/http-csp/same-host-https/video-tag/top-level/no-redirect/allowed.https-expected.txt": [
+   "1a6028563007684c78190ddc8481ca2898923723",
    "support"
   ],
   "mixed-content/allowed/http-csp/same-host-https/video-tag/top-level/no-redirect/allowed.https.html": [
@@ -74039,6 +74200,10 @@
    "562977daf4fd9e09dc6153058804bc247cbe5354",
    "support"
   ],
+  "mixed-content/allowed/meta-csp/same-host-https/audio-tag/top-level/no-redirect/allowed.https-expected.txt": [
+   "c8bbd81706e37d501c775412c9a152136138389c",
+   "support"
+  ],
   "mixed-content/allowed/meta-csp/same-host-https/audio-tag/top-level/no-redirect/allowed.https.html": [
    "3233030cfc42075de689b39be9dca812e153955c",
    "testharness"
@@ -74079,6 +74244,10 @@
    "0575fd64689c5b0f3970bdad033fe944ff6644bb",
    "testharness"
   ],
+  "mixed-content/allowed/meta-csp/same-host-https/video-tag/top-level/no-redirect/allowed.https-expected.txt": [
+   "3af9b65bfe40a18917f506bd97740bef6fe4112b",
+   "support"
+  ],
   "mixed-content/allowed/meta-csp/same-host-https/video-tag/top-level/no-redirect/allowed.https.html": [
    "a55b1cc03051118df894858733f91cb794ed893e",
    "testharness"
@@ -74095,9 +74264,17 @@
    "e20eb313f66981ae7bb650a19d8fd61f62b5bd9b",
    "testharness"
   ],
+  "mixed-content/allowed/no-opt-in/same-host-https/audio-tag/top-level/keep-scheme-redirect/allowed.https-expected.txt": [
+   "1519271db01831f1d6d026b26e8d486243588479",
+   "support"
+  ],
   "mixed-content/allowed/no-opt-in/same-host-https/audio-tag/top-level/keep-scheme-redirect/allowed.https.html": [
    "e716de28d27503516e6066bfe5715880aee61d2d",
    "testharness"
+  ],
+  "mixed-content/allowed/no-opt-in/same-host-https/audio-tag/top-level/no-redirect/allowed.https-expected.txt": [
+   "2d20686592f6a6c7ebe1b22ce85135e85054d7e9",
+   "support"
   ],
   "mixed-content/allowed/no-opt-in/same-host-https/audio-tag/top-level/no-redirect/allowed.https.html": [
    "bf977afe3f0b5daa0e899dff1d55241352125531",
@@ -74175,9 +74352,17 @@
    "f87d399643fdbdc7135e1db1fd9b3ff9c9a4bbec",
    "testharness"
   ],
+  "mixed-content/allowed/no-opt-in/same-host-https/video-tag/top-level/keep-scheme-redirect/allowed.https-expected.txt": [
+   "e02952e8c0326b7c9969ad0b88b8e857859616ea",
+   "support"
+  ],
   "mixed-content/allowed/no-opt-in/same-host-https/video-tag/top-level/keep-scheme-redirect/allowed.https.html": [
    "3ac75e4ddf21586beec825628aa421ce66b3eb51",
    "testharness"
+  ],
+  "mixed-content/allowed/no-opt-in/same-host-https/video-tag/top-level/no-redirect/allowed.https-expected.txt": [
+   "06c4336dfa0266bcf24b50f9af7764a699800414",
+   "support"
   ],
   "mixed-content/allowed/no-opt-in/same-host-https/video-tag/top-level/no-redirect/allowed.https.html": [
    "1c26515cb6831d895f537df85edb2c9709cae754",
@@ -75267,13 +75452,25 @@
    "cf89b222539b6fb932f0ffb226b4584c55bd7b0b",
    "testharness"
   ],
+  "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/audio-tag/top-level/keep-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+   "5982f747849b2a9e65e8eac2c1920f6b86e52806",
+   "support"
+  ],
   "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/audio-tag/top-level/keep-scheme-redirect/no-opt-in-allows.https.html": [
    "a78a3c8b9950ca95859c98837d86540ed7074633",
    "testharness"
   ],
+  "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/audio-tag/top-level/no-redirect/no-opt-in-allows.https-expected.txt": [
+   "1960c3625fd0aa1e5a9dfb9df00d5f250931c7bf",
+   "support"
+  ],
   "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/audio-tag/top-level/no-redirect/no-opt-in-allows.https.html": [
    "c4f7ba79294030cae5439e7d46b3a7d24a01fdf4",
    "testharness"
+  ],
+  "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/audio-tag/top-level/swap-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+   "ae2066d3f479d87f6a3883fca50c62741c80880c",
+   "support"
   ],
   "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/audio-tag/top-level/swap-scheme-redirect/no-opt-in-allows.https.html": [
    "fab6658b6b049386ff531ffbd38ef0a923eb7e94",
@@ -75303,25 +75500,49 @@
    "2b4266e2798cffa4df8085d85dc6192151125d13",
    "testharness"
   ],
+  "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/video-tag/top-level/keep-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+   "90be3eed734c8d08d0b88270473cd8249dfef3ff",
+   "support"
+  ],
   "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/video-tag/top-level/keep-scheme-redirect/no-opt-in-allows.https.html": [
    "80519194240ebaebe70a1782d972fb5e1641f5a1",
    "testharness"
+  ],
+  "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/video-tag/top-level/no-redirect/no-opt-in-allows.https-expected.txt": [
+   "ed3520fd8f5382e538408fb020cc4a5b6319b005",
+   "support"
   ],
   "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/video-tag/top-level/no-redirect/no-opt-in-allows.https.html": [
    "91ad70b49d688006d8d560aa536d6d46a8de1275",
    "testharness"
   ],
+  "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/video-tag/top-level/swap-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+   "4f3dd5bfc7ff73c75c4cce54eb3aa81892deb6c3",
+   "support"
+  ],
   "mixed-content/optionally-blockable/no-opt-in/cross-origin-http/video-tag/top-level/swap-scheme-redirect/no-opt-in-allows.https.html": [
    "72e3fa99e486be0aedd623da3beb2d8b0b745ad1",
    "testharness"
+  ],
+  "mixed-content/optionally-blockable/no-opt-in/same-host-http/audio-tag/top-level/keep-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+   "c0a9ccb24883f298b0c20dd4ffc680739c9b7dec",
+   "support"
   ],
   "mixed-content/optionally-blockable/no-opt-in/same-host-http/audio-tag/top-level/keep-scheme-redirect/no-opt-in-allows.https.html": [
    "73429ee5cb2de97bda1090156d9bb3f716fcce4d",
    "testharness"
   ],
+  "mixed-content/optionally-blockable/no-opt-in/same-host-http/audio-tag/top-level/no-redirect/no-opt-in-allows.https-expected.txt": [
+   "b0e86c22beb7578dacb8134c29d2f5e778e5f005",
+   "support"
+  ],
   "mixed-content/optionally-blockable/no-opt-in/same-host-http/audio-tag/top-level/no-redirect/no-opt-in-allows.https.html": [
    "64069b6bbac147b17e29d53143fe136944de0daf",
    "testharness"
+  ],
+  "mixed-content/optionally-blockable/no-opt-in/same-host-http/audio-tag/top-level/swap-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+   "d26609e0895dfc921af2a897999acd35153a0166",
+   "support"
   ],
   "mixed-content/optionally-blockable/no-opt-in/same-host-http/audio-tag/top-level/swap-scheme-redirect/no-opt-in-allows.https.html": [
    "5692d6f7cc2c237a203de6c5a73ff6d6fcb9fc27",
@@ -75351,13 +75572,25 @@
    "b98e1a5a55b229fabc73ff520e93d1aae5786a84",
    "testharness"
   ],
+  "mixed-content/optionally-blockable/no-opt-in/same-host-http/video-tag/top-level/keep-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+   "dd79d44bf5bf864deadf1dd19cced198d269b3af",
+   "support"
+  ],
   "mixed-content/optionally-blockable/no-opt-in/same-host-http/video-tag/top-level/keep-scheme-redirect/no-opt-in-allows.https.html": [
    "67b828060540ab4abb8d7070a3a777dcb6b764c4",
    "testharness"
   ],
+  "mixed-content/optionally-blockable/no-opt-in/same-host-http/video-tag/top-level/no-redirect/no-opt-in-allows.https-expected.txt": [
+   "5005b70fa14d38cb1ada1239eca1f5859cc4aa1c",
+   "support"
+  ],
   "mixed-content/optionally-blockable/no-opt-in/same-host-http/video-tag/top-level/no-redirect/no-opt-in-allows.https.html": [
    "f366b0f28d087b46c7e1b8787012b0427a5c668e",
    "testharness"
+  ],
+  "mixed-content/optionally-blockable/no-opt-in/same-host-http/video-tag/top-level/swap-scheme-redirect/no-opt-in-allows.https-expected.txt": [
+   "4f6fb0a77a62395baa757bcf1a4bf694e4d61ac0",
+   "support"
   ],
   "mixed-content/optionally-blockable/no-opt-in/same-host-http/video-tag/top-level/swap-scheme-redirect/no-opt-in-allows.https.html": [
    "845e3332f83a552ba268bd369089cd408c5c9ed1",
@@ -75595,10 +75828,6 @@
    "9a71336042a931e45c7aef0e031669c26ac5c36c",
    "manual"
   ],
-  "pointerevents/pointerevent_attributes_nohover_pointers-manual-expected.txt": [
-   "4255532d6457756bc573260613c710c684e52069",
-   "support"
-  ],
   "pointerevents/pointerevent_attributes_nohover_pointers-manual.html": [
    "b010a8ff22c0522c8bbd5332e5d4ff8f1032a766",
    "manual"
@@ -75617,6 +75846,10 @@
   ],
   "pointerevents/pointerevent_change-touch-action-onpointerdown_touch-manual.html": [
    "c1bc66cc70a1d58ab31d00717a688c66e39533c2",
+   "manual"
+  ],
+  "pointerevents/pointerevent_click_during_capture-manual.html": [
+   "19fedd25b597078b6a828e6fa0cd997e68cdf661",
    "manual"
   ],
   "pointerevents/pointerevent_constructor.html": [
@@ -82895,17 +83128,9 @@
    "67bd52a4653938061f121ed57ead8d768acdde2b",
    "support"
   ],
-  "selection/collapse-00-expected.txt": [
-   "cb6b89a32ab5910d7552abb9bf13c3de31a44824",
-   "support"
-  ],
   "selection/collapse-00.html": [
    "6c06617a84c3d4e5f121e4ccf8f7761ba1be1ceb",
    "testharness"
-  ],
-  "selection/collapse-30-expected.txt": [
-   "b848752153c11aba04cb02d76bf0f75541a35ec8",
-   "support"
   ],
   "selection/collapse-30.html": [
    "943e7d8960212bc5d5eadb45ff641b9d9525a44a",
@@ -82915,12 +83140,8 @@
    "4cd755764b43e348b2dcf23d1c800953ee28f059",
    "support"
   ],
-  "selection/collapseToStartEnd-expected.txt": [
-   "c255bb04eda843b87c255fdb965136b2a786a8af",
-   "support"
-  ],
   "selection/collapseToStartEnd.html": [
-   "630885adfd3996c7dc7da4088fc8c8449a8da452",
+   "2067830e0fa02de58d8459da435b13c277341196",
    "testharness"
   ],
   "selection/common.js": [
@@ -82935,25 +83156,13 @@
    "d20aba9b9ef8654b553f1adb1eb4f16e642fe649",
    "manual"
   ],
-  "selection/extend-00-expected.txt": [
-   "3c68a9961b52dbedf5eea97287db485236d34221",
-   "support"
-  ],
   "selection/extend-00.html": [
    "189e4939230b1a0540e326640f6390e64708efed",
    "testharness"
   ],
-  "selection/extend-20-expected.txt": [
-   "9acbe1d83b64ae83252fb896a21668944def8f5f",
-   "support"
-  ],
   "selection/extend-20.html": [
    "23664c8f1957d8491526ba9f53e03242f3f3042f",
    "testharness"
-  ],
-  "selection/extend-40-expected.txt": [
-   "0160a1d69f15c454ec0386418f10e8b07daa4fd9",
-   "support"
   ],
   "selection/extend-40.html": [
    "5e3ce84e8a060b0de0a5468faeec433b67c5aea7",
@@ -82972,19 +83181,15 @@
    "testharness"
   ],
   "selection/interfaces-expected.txt": [
-   "ccb4664f886a9f11a3c48eb4d99ca2fe854b0e23",
+   "ba5cf4a994fc761670c2c21dce9853c8f7acd10e",
    "support"
   ],
   "selection/interfaces.html": [
-   "9ec3001efd5e443a533d261a51c94c3f60e273ed",
+   "dc08fae99f9b481a63ed5f78aa8b32eeaba28b35",
    "testharness"
   ],
-  "selection/isCollapsed-expected.txt": [
-   "12310c61c361c3c8214e536593c310dbfb611124",
-   "support"
-  ],
   "selection/isCollapsed.html": [
-   "9304191778ec0fb6b5d613efde19d1574b867dac",
+   "d1984a9359d880dfb81197e7ec31b2456833809d",
    "testharness"
   ],
   "selection/removeAllRanges-expected.txt": [
@@ -83692,7 +83897,7 @@
    "testharness"
   ],
   "service-workers/service-worker/request-end-to-end.https.html": [
-   "751848110fcccb77528114424511fd53857e38ff",
+   "1e2b1ee0455beeb2a609e927d2bf2655a9a801f6",
    "testharness"
   ],
   "service-workers/service-worker/resource-timing.https-expected.txt": [
@@ -84184,7 +84389,7 @@
    "support"
   ],
   "service-workers/service-worker/resources/request-end-to-end-worker.js": [
-   "90e12e47594d86ca558d755880c80c1fba257a87",
+   "cafcb5f15ae073a68fbd10629374d8ad8f2b3b3c",
    "support"
   ],
   "service-workers/service-worker/resources/request-headers.py": [
@@ -84876,7 +85081,7 @@
    "testharness"
   ],
   "shadow-dom/untriaged/html-elements-in-shadow-trees/inert-html-elements/test-001.html": [
-   "a849b5ce7ab54771eed9315851665f54f8169ee2",
+   "aa57cc92b2ce5ba36a9ef1b5d307ffb9d35ccc01",
    "testharness"
   ],
   "shadow-dom/untriaged/html-elements-in-shadow-trees/inert-html-elements/test-002.html": [
@@ -85045,6 +85250,10 @@
   ],
   "storage/interfaces.worker.js": [
    "da11cf56486fe08214f91d181b3a19775f6aa59c",
+   "testharness"
+  ],
+  "storage/opaque-origin.https.html": [
+   "6ce5a9b14d80030f0adfa1808857294e8c923cb2",
    "testharness"
   ],
   "streams/README.md": [
@@ -85768,7 +85977,7 @@
    "testharness"
   ],
   "streams/writable-streams/bad-strategies.js": [
-   "58cf46e9e07c61e2a7d170cb93837b9e16aa66e3",
+   "a7a30fd91bba81c332a3447c99a5a0354dda04b4",
    "support"
   ],
   "streams/writable-streams/bad-strategies.serviceworker-expected.txt": [
@@ -85969,6 +86178,26 @@
   ],
   "streams/writable-streams/general.sharedworker.html": [
    "44f9ceaa3bfc9d8b92885997d322486bd0f237a6",
+   "testharness"
+  ],
+  "streams/writable-streams/reentrant-strategy.dedicatedworker.html": [
+   "5d9e5a6b69fbe79183ac6e0d2c8559f13be6e386",
+   "testharness"
+  ],
+  "streams/writable-streams/reentrant-strategy.html": [
+   "c05bf8306c3fe8e97b936a26c6de1649e9d0d243",
+   "testharness"
+  ],
+  "streams/writable-streams/reentrant-strategy.js": [
+   "e5e39b5045b532bbb9999c3c87c998ed0f6f33b1",
+   "support"
+  ],
+  "streams/writable-streams/reentrant-strategy.serviceworker.https.html": [
+   "663075ee687ea54010f76d0e37191e46f37b9a49",
+   "testharness"
+  ],
+  "streams/writable-streams/reentrant-strategy.sharedworker.html": [
+   "5dabe1367481c57c58fe208ba66d8c13d4e2b796",
    "testharness"
   ],
   "streams/writable-streams/start.dedicatedworker.html": [
@@ -86808,27 +87037,27 @@
    "testharness"
   ],
   "web-animations/interfaces/AnimationEffectTiming/delay.html": [
-   "e70fdbf4ae3afd405f53fc3e2efcdf2d9d71204b",
+   "ee2d870fae13e77e500e7067b89dbb79bd2d209a",
    "testharness"
   ],
   "web-animations/interfaces/AnimationEffectTiming/direction.html": [
-   "ab150d71daf36949d4d6804033e19c734a68552d",
+   "87eb8b9a7b954e0eb77566eefb3034cd6235296f",
    "testharness"
   ],
   "web-animations/interfaces/AnimationEffectTiming/duration.html": [
-   "2e0f0a270b8acd3d345732327ee2eabd32bdb2b2",
+   "4db95d7e5f518fc812886e7dcfddd40943077f90",
    "testharness"
   ],
   "web-animations/interfaces/AnimationEffectTiming/easing.html": [
-   "5d21bb3ae43da1226f9510595b47b452b3b8f223",
+   "3d0175c4879d60ee04442debf32b00ee8241bda5",
    "testharness"
   ],
   "web-animations/interfaces/AnimationEffectTiming/endDelay.html": [
-   "644eed9bf43bb0332ee33842ba0ad4423d90fc90",
+   "fde46c549f70439c80e3990ebf6897d6d6dfb76e",
    "testharness"
   ],
   "web-animations/interfaces/AnimationEffectTiming/fill.html": [
-   "bf5b77d3c96e737700e51f8a2c5b8e2b9629902f",
+   "adc56d3ce3595154045cb87e1cb89fe7ce2096ba",
    "testharness"
   ],
   "web-animations/interfaces/AnimationEffectTiming/getAnimations.html": [
@@ -86848,11 +87077,11 @@
    "support"
   ],
   "web-animations/interfaces/AnimationEffectTiming/iterationStart.html": [
-   "3fc37ef76990ed1b4f742c0478985fcaa03b6ff8",
+   "1ddaceeb8b5e3fc93e5bf4dc1136e8714a08f474",
    "testharness"
   ],
   "web-animations/interfaces/AnimationEffectTiming/iterations.html": [
-   "1eadd48065f48cb9cb0cbcf7ac08e96b985ff0e5",
+   "9a6eae75862dec36b7839dc68edc31891a651284",
    "testharness"
   ],
   "web-animations/interfaces/AnimationTimeline/document-timeline.html": [
@@ -86981,6 +87210,10 @@
   ],
   "web-animations/timing-model/animation-effects/current-iteration.html": [
    "b08a35ae832ce33da7fe7fee22e589a6b85a6353",
+   "testharness"
+  ],
+  "web-animations/timing-model/animation-effects/local-time.html": [
+   "4b24cf2374a690395398f8caed9d340667dd0a9d",
    "testharness"
   ],
   "web-animations/timing-model/animation-effects/phases-and-states-expected.txt": [
@@ -87773,6 +88006,86 @@
   ],
   "webvr/idlharness.html": [
    "ecfd51818c20d46b9983bb1d045a9308fc9a26b7",
+   "testharness"
+  ],
+  "webvtt/api/VTTCue/align.html": [
+   "be0efb52616f9447139c536269f8365cf78027d0",
+   "testharness"
+  ],
+  "webvtt/api/VTTCue/constructor.html": [
+   "c844f513868cbf4053c70f37bbb630b53a763a2a",
+   "testharness"
+  ],
+  "webvtt/api/VTTCue/getCueAsHTML.html": [
+   "2c4a14607efdc17772f2878e9c0943300a2f8840",
+   "testharness"
+  ],
+  "webvtt/api/VTTCue/line.html": [
+   "2b57866c1bec1c074f18218a994194c9adfc4b7a",
+   "testharness"
+  ],
+  "webvtt/api/VTTCue/lineAlign.html": [
+   "72c3bc90e36c046c170e5c5cfb035c3efc990068",
+   "testharness"
+  ],
+  "webvtt/api/VTTCue/position.html": [
+   "af2af913e9d0bd5bc52f7900fe35ed6ab5a405c6",
+   "testharness"
+  ],
+  "webvtt/api/VTTCue/positionAlign.html": [
+   "8629fc577988d8594f550d12b8ffc1a45bc3e376",
+   "testharness"
+  ],
+  "webvtt/api/VTTCue/region.html": [
+   "13857e6b5fdd7091ea05829c333f90575f3502f4",
+   "testharness"
+  ],
+  "webvtt/api/VTTCue/size.html": [
+   "54aecea9f627426c7126fa15b4e0295417d68874",
+   "testharness"
+  ],
+  "webvtt/api/VTTCue/snapToLines.html": [
+   "aaca4c55f900600f7334f196d7275d69ffe7f0f9",
+   "testharness"
+  ],
+  "webvtt/api/VTTCue/text.html": [
+   "d7597ca893a7d2be17b908efa55cb70727d64f0b",
+   "testharness"
+  ],
+  "webvtt/api/VTTCue/vertical.html": [
+   "9f415b3a239e0a380a03411827c38abd4532ef1a",
+   "testharness"
+  ],
+  "webvtt/api/VTTRegion/constructor.html": [
+   "0ee58bc32daf656ddc1c8ea6eec84f487b2bf010",
+   "testharness"
+  ],
+  "webvtt/api/VTTRegion/lines.html": [
+   "c0a1332a0d0c9b0d079d369c2dcf53687d478005",
+   "testharness"
+  ],
+  "webvtt/api/VTTRegion/regionAnchorX.html": [
+   "1ec595b78b2a28b04395db6eb9d79055a0eca9fc",
+   "testharness"
+  ],
+  "webvtt/api/VTTRegion/regionAnchorY.html": [
+   "c100e095d0abf50e43d2bde458b8968c33aedead",
+   "testharness"
+  ],
+  "webvtt/api/VTTRegion/scroll.html": [
+   "48c364fe76b641dddef42ac9ed7ecc14e01254b1",
+   "testharness"
+  ],
+  "webvtt/api/VTTRegion/viewportAnchorX.html": [
+   "51d892bf9b458b9eb3556d51a5aab5ad1e6f3d71",
+   "testharness"
+  ],
+  "webvtt/api/VTTRegion/viewportAnchorY.html": [
+   "d6628d8cd499e8d6fb0a1e9823e3adf947110759",
+   "testharness"
+  ],
+  "webvtt/api/VTTRegion/width.html": [
+   "c091d65379708544f68000e8938d45257d9fc292",
    "testharness"
   ],
   "webvtt/interfaces-expected.txt": [
@@ -89850,54 +90163,6 @@
   "webvtt/rendering/cues-with-video/processing-model/too_many_cues_wrapped.html": [
    "f2372a492268a1b17763a42a808351128128fd89",
    "reftest"
-  ],
-  "webvtt/webvtt-api-for-browsers/vttcue-interface/align-expected.txt": [
-   "e82503e83ba539f896b353dd6a358f2475c063c8",
-   "support"
-  ],
-  "webvtt/webvtt-api-for-browsers/vttcue-interface/align.html": [
-   "49a9bf76b1a8d907e48ca95d3e8d3b0afc306566",
-   "testharness"
-  ],
-  "webvtt/webvtt-api-for-browsers/vttcue-interface/getCueAsHTML-expected.txt": [
-   "1ad453df49e45ff18cd6a6681ecad254f18c10ee",
-   "support"
-  ],
-  "webvtt/webvtt-api-for-browsers/vttcue-interface/getCueAsHTML.html": [
-   "79c03cfbda74f1047bd88886fa6ab44ce0c9cded",
-   "testharness"
-  ],
-  "webvtt/webvtt-api-for-browsers/vttcue-interface/line-expected.txt": [
-   "3e11ceaab25e30c8c1aabed811b884bdccda9441",
-   "support"
-  ],
-  "webvtt/webvtt-api-for-browsers/vttcue-interface/line.html": [
-   "f76ca4b827ed42faa1c46e6a8a6a4dc66938f6e3",
-   "testharness"
-  ],
-  "webvtt/webvtt-api-for-browsers/vttcue-interface/snapToLines-expected.txt": [
-   "c456dfc5bb6f8a876ed57b51c7158f5e88e3fff3",
-   "support"
-  ],
-  "webvtt/webvtt-api-for-browsers/vttcue-interface/snapToLines.html": [
-   "365542b9a68ddb679408e5b9df16ff77027e125a",
-   "testharness"
-  ],
-  "webvtt/webvtt-api-for-browsers/vttcue-interface/text-expected.txt": [
-   "c070481c2ea2189090684786662a3009d3ba544a",
-   "support"
-  ],
-  "webvtt/webvtt-api-for-browsers/vttcue-interface/text.html": [
-   "a02594bd42c9564554bb876b1d931a28877b8315",
-   "testharness"
-  ],
-  "webvtt/webvtt-api-for-browsers/vttcue-interface/vertical-expected.txt": [
-   "e3069a394386c4d75cd72d8c500a2f45aa3a9536",
-   "support"
-  ],
-  "webvtt/webvtt-api-for-browsers/vttcue-interface/vertical.html": [
-   "a0754c219568a19cbd244b7adabaffb0afc6eedc",
-   "testharness"
   ],
   "webvtt/webvtt-file-format-parsing/webvtt-cue-text-parsing-rules/buildtests.py": [
    "5fe90ed238ef80fd3f69f72ca5df90984451d044",
