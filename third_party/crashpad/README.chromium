@@ -35,4 +35,5 @@ $ cd "${CRASHPAD_DIR}"
 $ git am --3way --message-id -p4 /tmp/patchdir
 
 Local Modifications:
-None.
+ - ALLOW_UNUSED_LOCAL things that are only used in DPLOG_IF.
+   https://crbug.com/695314
