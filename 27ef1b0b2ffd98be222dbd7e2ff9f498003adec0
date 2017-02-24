@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e45e8ab6_ee5d7eb9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/storage/opaque-origin.https-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-02-24T22:01:22Z",
+      "side": 1,
+      "message": "Failures expected here - I have a CL to fix ready to go, was just waiting for this import. yay!",
+      "revId": "27ef1b0b2ffd98be222dbd7e2ff9f498003adec0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
