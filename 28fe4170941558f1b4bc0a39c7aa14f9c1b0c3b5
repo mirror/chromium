@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1171949_75b6376a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-02-24T18:09:53Z",
+      "side": 1,
+      "message": "Hey, this should have a bug",
+      "revId": "28fe4170941558f1b4bc0a39c7aa14f9c1b0c3b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3e19514_84e93559",
+        "filename": "build/whitespace_file.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-02-24T18:09:53Z",
+      "side": 1,
+      "message": "This is a file comment.",
+      "revId": "28fe4170941558f1b4bc0a39c7aa14f9c1b0c3b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58cfe379_a824cb0f",
+        "filename": "build/whitespace_file.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-02-24T18:09:53Z",
+      "side": 1,
+      "message": "This is a line comment",
+      "range": {
+        "startLine": 161,
+        "startChar": 21,
+        "endLine": 161,
+        "endChar": 34
+      },
+      "revId": "28fe4170941558f1b4bc0a39c7aa14f9c1b0c3b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
