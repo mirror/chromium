@@ -1,0 +1,19 @@
+CONSOLE ERROR: line 11: Uncaught SyntaxError: Unexpected token import
+CONSOLE ERROR: line 11: Uncaught SyntaxError: Unexpected token import
+CONSOLE ERROR: line 11: Uncaught SyntaxError: Unexpected token import
+CONSOLE ERROR: line 11: Uncaught SyntaxError: Unexpected token import
+CONSOLE ERROR: line 1: Uncaught SyntaxError: Unexpected token export
+CONSOLE ERROR: line 1: Uncaught SyntaxError: Unexpected token export
+CONSOLE ERROR: Access to Script at 'http://www2.web-platform.test:8001/html/semantics/scripting-1/the-script-element/module/crossorigin-scripterror.js?pipe=header(Access-Control-Allow-Origin,http://www2.web-platform.test:8001)' from origin 'http://web-platform.test:8001' has been blocked by CORS policy: The 'Access-Control-Allow-Origin' header has a value 'http://www2.web-platform.test:8001' that is not equal to the supplied origin. Origin 'http://web-platform.test:8001' is therefore not allowed access.
+CONSOLE ERROR: Access to Script at 'http://www2.web-platform.test:8001/html/semantics/scripting-1/the-script-element/module/crossorigin-scripterror.js' from origin 'http://web-platform.test:8001' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://web-platform.test:8001' is therefore not allowed access.
+This is a testharness.js-based test.
+FAIL Root module, Error in CORS-different-origin script assert_equals: Unexpected _log value expected "running,0-0" but got "0-0"
+FAIL Root module, Error in CORS-same-origin script assert_equals: Unexpected _log value expected "running,8-1" but got "1-1"
+PASS Root module, Blocked script download, missing CORS ACAO header 
+PASS Root module, Blocked script download, mismatched CORS ACAO header 
+FAIL Imported module, Error in CORS-different-origin script assert_equals: Unexpected _log value expected "running,0-0" but got "11-9"
+FAIL Imported module, Error in CORS-same-origin script assert_equals: Unexpected _log value expected "running,8-1" but got "11-9"
+FAIL Imported module, Blocked script download, missing CORS ACAO header assert_equals: Unexpected _log value expected "error" but got "11-9"
+FAIL Imported module, Blocked script download, mismatched CORS ACAO header assert_equals: Unexpected _log value expected "error" but got "11-9"
+Harness: the test ran to completion.
+

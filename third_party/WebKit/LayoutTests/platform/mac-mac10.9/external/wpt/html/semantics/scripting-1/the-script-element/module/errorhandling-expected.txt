@@ -1,0 +1,13 @@
+CONSOLE ERROR: line 1: Uncaught SyntaxError: Unexpected token import
+CONSOLE ERROR: line 11: Uncaught SyntaxError: Unexpected token import
+CONSOLE ERROR: line 11: Uncaught SyntaxError: Invalid or unexpected token
+CONSOLE ERROR: line 11: Uncaught SyntaxError: Unexpected token import
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = Uncaught SyntaxError: Unexpected token import
+PASS IFrame test: 'iframe_parseError_Root' 
+PASS IFrame test: 'iframe_parseError_Dependent' 
+FAIL IFrame test: 'iframe_parseError_DependentMultiple' assert_equals: Unexpected _errorReported value expected "error,error" but got "error"
+PASS External root module with non-script mimetype 
+FAIL Module with imported non-script mimetype assert_unreached: This script should not have loaded! Reached unreachable code
+Harness: the test ran to completion.
+
