@@ -94,6 +94,30 @@
       "revId": "50f57a5e6a71e5d6ced971aee6742c8d8b7f059b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2867bcc_b9932269",
+        "filename": "third_party/WebKit/LayoutTests/canvas/philip/tests/2d.path.arcTo.shape.curve2.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1179084
+      },
+      "writtenOn": "2017-02-25T18:49:24Z",
+      "side": 1,
+      "message": "My change only outputs a one-byte coverage for each pixel so I don\u0027t think that it can introduce bugs for blending. I believe that my algorithm outputs 254 as the coverage, and that triggers the blending bug that instead of writing (0, 254, 0, 255), it writes (0, 255, 0, 254).",
+      "parentUuid": "6da882d0_0dab1300",
+      "range": {
+        "startLine": 43,
+        "startChar": 36,
+        "endLine": 43,
+        "endChar": 39
+      },
+      "revId": "50f57a5e6a71e5d6ced971aee6742c8d8b7f059b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
