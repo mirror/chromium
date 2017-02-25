@@ -22,6 +22,30 @@
       "revId": "50f57a5e6a71e5d6ced971aee6742c8d8b7f059b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "376ec0c2_2cf8330d",
+        "filename": "third_party/WebKit/LayoutTests/canvas/philip/tests/2d.path.arcTo.shape.curve2.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1179084
+      },
+      "writtenOn": "2017-02-25T17:04:26Z",
+      "side": 1,
+      "message": "Hmm... if it\u0027s RGBA then it does seem problematic. My algorithm may give 254 alpha during to AA, but in the end everything should be opaque. Is it possible for us to file a bug after landing the rebaseline?",
+      "parentUuid": "a63e0c4a_c3879d3c",
+      "range": {
+        "startLine": 43,
+        "startChar": 36,
+        "endLine": 43,
+        "endChar": 39
+      },
+      "revId": "50f57a5e6a71e5d6ced971aee6742c8d8b7f059b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
