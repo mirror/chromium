@@ -325,9 +325,9 @@
      {}
     ]
    ],
-   "mediacapture-streams/MediaStreamTrack-end-manual.html": [
+   "mediacapture-streams/MediaStreamTrack-end-manual.https.html": [
     [
-     "/mediacapture-streams/MediaStreamTrack-end-manual.html",
+     "/mediacapture-streams/MediaStreamTrack-end-manual.https.html",
      {}
     ]
    ],
@@ -10658,6 +10658,11 @@
      {}
     ]
    ],
+   "html/browsers/offline/no-appcache-in-shared-workers-historical.js": [
+    [
+     {}
+    ]
+   ],
    "html/browsers/offline/resources/css/clock.css": [
     [
      {}
@@ -17958,6 +17963,16 @@
      {}
     ]
    ],
+   "html/webappapis/scripting/events/resources/compiled-event-handler-settings-objects-support.html": [
+    [
+     {}
+    ]
+   ],
+   "html/webappapis/scripting/events/resources/open-window.html": [
+    [
+     {}
+    ]
+   ],
    "html/webappapis/scripting/processing-model-2/addEventListener-expected.txt": [
     [
      {}
@@ -22748,6 +22763,11 @@
      {}
     ]
    ],
+   "storage/opaque-origin.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
    "streams/README.md": [
     [
      {}
@@ -23138,12 +23158,32 @@
      {}
     ]
    ],
+   "streams/writable-streams/bad-strategies-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "streams/writable-streams/bad-strategies.dedicatedworker-expected.txt": [
+    [
+     {}
+    ]
+   ],
    "streams/writable-streams/bad-strategies.js": [
     [
      {}
     ]
    ],
    "streams/writable-streams/bad-strategies.serviceworker-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "streams/writable-streams/bad-strategies.serviceworker.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "streams/writable-streams/bad-strategies.sharedworker-expected.txt": [
     [
      {}
     ]
@@ -23943,6 +23983,11 @@
      {}
     ]
    ],
+   "web-animations/timing-model/animation-effects/local-time-expected.txt": [
+    [
+     {}
+    ]
+   ],
    "web-animations/timing-model/animation-effects/phases-and-states-expected.txt": [
     [
      {}
@@ -23964,6 +24009,11 @@
     ]
    ],
    "web-animations/timing-model/animations/set-the-timeline-of-an-animation-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "web-animations/timing-model/time-transformations/transformed-progress-expected.txt": [
     [
      {}
     ]
@@ -24159,6 +24209,56 @@
     ]
    ],
    "webvr/idlharness-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "webvtt/api/VTTCue/align-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "webvtt/api/VTTCue/constructor-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "webvtt/api/VTTCue/getCueAsHTML-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "webvtt/api/VTTCue/line-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "webvtt/api/VTTCue/lineAlign-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "webvtt/api/VTTCue/positionAlign-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "webvtt/api/VTTCue/region-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "webvtt/api/VTTCue/snapToLines-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "webvtt/api/VTTCue/text-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "webvtt/api/VTTCue/vertical-expected.txt": [
     [
      {}
     ]
@@ -33792,6 +33892,12 @@
      {}
     ]
    ],
+   "html/browsers/offline/no-appcache-in-shared-workers-historical.html": [
+    [
+     "/html/browsers/offline/no-appcache-in-shared-workers-historical.html",
+     {}
+    ]
+   ],
    "html/browsers/origin/cross-origin-objects/cross-origin-objects-on-new-window.html": [
     [
      "/html/browsers/origin/cross-origin-objects/cross-origin-objects-on-new-window.html",
@@ -39447,6 +39553,12 @@
    "html/webappapis/scripting/events/body-onload.html": [
     [
      "/html/webappapis/scripting/events/body-onload.html",
+     {}
+    ]
+   ],
+   "html/webappapis/scripting/events/compile-event-handler-settings-objects.html": [
+    [
+     "/html/webappapis/scripting/events/compile-event-handler-settings-objects.html",
      {}
     ]
    ],
@@ -54925,10 +55037,6 @@
    "89af73c41d456ee93bd40921e96414c1908fc48c",
    "support"
   ],
-  "./MANIFEST.json": [
-   "49ed1806559e344b58eda2479a32992e41b5ecdd",
-   "support"
-  ],
   "./README.md": [
    "f7f7d6a2bc0bc23e1c5fa3e812f710dc29ed6711",
    "support"
@@ -54990,7 +55098,7 @@
    "testharness"
   ],
   "FileAPI/blob/Blob-XHR-revoke-expected.txt": [
-   "ca6d78e8c57e84d86745e9914448645b18a497bd",
+   "787131c00ad00d2365cdd58bc29f30a9fb1f0a87",
    "support"
   ],
   "FileAPI/blob/Blob-XHR-revoke.html": [
@@ -63307,6 +63415,14 @@
   ],
   "html/browsers/offline/manifests/contains.json": [
    "f844a4d122bf6a46e2ccd4725483a72f8ebb9f42",
+   "support"
+  ],
+  "html/browsers/offline/no-appcache-in-shared-workers-historical.html": [
+   "2c48e76225b084b3a13b7d9f52c95a98463e4bee",
+   "testharness"
+  ],
+  "html/browsers/offline/no-appcache-in-shared-workers-historical.js": [
+   "097443ac350588c2dcfb6909269cf9be8ad9b84c",
    "support"
   ],
   "html/browsers/offline/resources/css/clock.css": [
@@ -73301,6 +73417,10 @@
    "c8e48064f18b1d1eb13e151b69ee60b8d68f4dab",
    "testharness"
   ],
+  "html/webappapis/scripting/events/compile-event-handler-settings-objects.html": [
+   "43a17069cb0d3c819d1b55eaa4616af0b0a338b7",
+   "testharness"
+  ],
   "html/webappapis/scripting/events/contains.json": [
    "2b05164b274d7719e27e3b9def3f25eaa156b839",
    "support"
@@ -73392,6 +73512,14 @@
   "html/webappapis/scripting/events/onerroreventhandler.html": [
    "8ade4c9c6b63935d437cc4c045b22512207e3ee0",
    "testharness"
+  ],
+  "html/webappapis/scripting/events/resources/compiled-event-handler-settings-objects-support.html": [
+   "bec82bc1771743c4262af46e36eaf68a3e2cf9be",
+   "support"
+  ],
+  "html/webappapis/scripting/events/resources/open-window.html": [
+   "f8ea32a9c2fe17f1ed0459f222e5f3151c286caa",
+   "support"
   ],
   "html/webappapis/scripting/events/uncompiled_event_handler_with_scripting_disabled.html": [
    "875ab8aa7b99cec015d82bcfe9ef4133b7adf97f",
@@ -74189,7 +74317,7 @@
    "ff30dfac08aae859ad469c15fd7e5469b830d3a9",
    "testharness"
   ],
-  "mediacapture-streams/MediaStreamTrack-end-manual.html": [
+  "mediacapture-streams/MediaStreamTrack-end-manual.https.html": [
    "e5550adb1a9ce03ba672271aa1cdcec7ffde27d6",
    "manual"
   ],
@@ -83454,7 +83582,7 @@
    "testharness"
   ],
   "selection/interfaces-expected.txt": [
-   "ba5cf4a994fc761670c2c21dce9853c8f7acd10e",
+   "db570dc214d7d94698ee7215f8ea35d6e8f23bb5",
    "support"
   ],
   "selection/interfaces.html": [
@@ -83474,7 +83602,7 @@
    "testharness"
   ],
   "selection/removeRange.html": [
-   "9a4f6531d510b781edd02acae9ffd2453bf48423",
+   "c67aebaddeb575fe92b7339f0c2e67209faf468a",
    "testharness"
   ],
   "selection/selectAllChildren.html": [
@@ -85529,6 +85657,10 @@
    "da11cf56486fe08214f91d181b3a19775f6aa59c",
    "testharness"
   ],
+  "storage/opaque-origin.https-expected.txt": [
+   "d33853b6c37f68b0d903be4323d3abd506f49675",
+   "support"
+  ],
   "storage/opaque-origin.https.html": [
    "6ce5a9b14d80030f0adfa1808857294e8c923cb2",
    "testharness"
@@ -86245,6 +86377,14 @@
    "9e792fad19cd10a96440478cb7e0486f41b70bf4",
    "testharness"
   ],
+  "streams/writable-streams/bad-strategies-expected.txt": [
+   "198832f2e65d637b0eeca87b66fd99f525caceeb",
+   "support"
+  ],
+  "streams/writable-streams/bad-strategies.dedicatedworker-expected.txt": [
+   "198832f2e65d637b0eeca87b66fd99f525caceeb",
+   "support"
+  ],
   "streams/writable-streams/bad-strategies.dedicatedworker.html": [
    "269e32606201603b326048f42573c8535c060a18",
    "testharness"
@@ -86261,9 +86401,17 @@
    "04408971a1d82a7d3c990774456381313f1584bb",
    "support"
   ],
+  "streams/writable-streams/bad-strategies.serviceworker.https-expected.txt": [
+   "5be0e879d35214475aabb71a92a25fdd2d3aca33",
+   "support"
+  ],
   "streams/writable-streams/bad-strategies.serviceworker.https.html": [
    "1cc76d2d9135082afcaba8e45de4a4cbdf0c35e0",
    "testharness"
+  ],
+  "streams/writable-streams/bad-strategies.sharedworker-expected.txt": [
+   "198832f2e65d637b0eeca87b66fd99f525caceeb",
+   "support"
   ],
   "streams/writable-streams/bad-strategies.sharedworker.html": [
    "a4692c839ca53134bc5036b2f813e2311db3f2d0",
@@ -87350,7 +87498,7 @@
    "testharness"
   ],
   "web-animations/interfaces/AnimationEffectTiming/iterationStart-expected.txt": [
-   "23ffdb367e71c6574f4e76d964f67e7a19d0901b",
+   "013cbd10904b6320d62f086ac5c37d4c4fba66ef",
    "support"
   ],
   "web-animations/interfaces/AnimationEffectTiming/iterationStart.html": [
@@ -87489,6 +87637,10 @@
    "b08a35ae832ce33da7fe7fee22e589a6b85a6353",
    "testharness"
   ],
+  "web-animations/timing-model/animation-effects/local-time-expected.txt": [
+   "a84af3e2e735115ace5b0667c966e2d71dae1600",
+   "support"
+  ],
   "web-animations/timing-model/animation-effects/local-time.html": [
    "4b24cf2374a690395398f8caed9d340667dd0a9d",
    "testharness"
@@ -87540,6 +87692,10 @@
   "web-animations/timing-model/animations/updating-the-finished-state.html": [
    "266f1b793aa74a59486081f3ba8f6cbb482e714b",
    "testharness"
+  ],
+  "web-animations/timing-model/time-transformations/transformed-progress-expected.txt": [
+   "722aa62582cb856a726a00c7b39abe32e6850099",
+   "support"
   ],
   "web-animations/timing-model/time-transformations/transformed-progress.html": [
    "6eebd47c9e60c9590de4d1747f8b8b7866a4a275",
@@ -88285,21 +88441,41 @@
    "ecfd51818c20d46b9983bb1d045a9308fc9a26b7",
    "testharness"
   ],
+  "webvtt/api/VTTCue/align-expected.txt": [
+   "1eebcffae3170ed1d21562b28547b5b78d1a1d76",
+   "support"
+  ],
   "webvtt/api/VTTCue/align.html": [
    "be0efb52616f9447139c536269f8365cf78027d0",
    "testharness"
+  ],
+  "webvtt/api/VTTCue/constructor-expected.txt": [
+   "4ff0d66c5acf66b7e45082fc0ce0a26bc24a84e4",
+   "support"
   ],
   "webvtt/api/VTTCue/constructor.html": [
    "c844f513868cbf4053c70f37bbb630b53a763a2a",
    "testharness"
   ],
+  "webvtt/api/VTTCue/getCueAsHTML-expected.txt": [
+   "1ad453df49e45ff18cd6a6681ecad254f18c10ee",
+   "support"
+  ],
   "webvtt/api/VTTCue/getCueAsHTML.html": [
    "2c4a14607efdc17772f2878e9c0943300a2f8840",
    "testharness"
   ],
+  "webvtt/api/VTTCue/line-expected.txt": [
+   "3e11ceaab25e30c8c1aabed811b884bdccda9441",
+   "support"
+  ],
   "webvtt/api/VTTCue/line.html": [
    "2b57866c1bec1c074f18218a994194c9adfc4b7a",
    "testharness"
+  ],
+  "webvtt/api/VTTCue/lineAlign-expected.txt": [
+   "bc91a54160ee1124b1b370eb1d19cbb6189a4fbb",
+   "support"
   ],
   "webvtt/api/VTTCue/lineAlign.html": [
    "72c3bc90e36c046c170e5c5cfb035c3efc990068",
@@ -88309,9 +88485,17 @@
    "af2af913e9d0bd5bc52f7900fe35ed6ab5a405c6",
    "testharness"
   ],
+  "webvtt/api/VTTCue/positionAlign-expected.txt": [
+   "9330303c727375a34ad94308ce55ec32adcbacb4",
+   "support"
+  ],
   "webvtt/api/VTTCue/positionAlign.html": [
    "8629fc577988d8594f550d12b8ffc1a45bc3e376",
    "testharness"
+  ],
+  "webvtt/api/VTTCue/region-expected.txt": [
+   "44e6b7eaa3ba5c2f13afec8993f57bf6ee86d4cf",
+   "support"
   ],
   "webvtt/api/VTTCue/region.html": [
    "13857e6b5fdd7091ea05829c333f90575f3502f4",
@@ -88321,13 +88505,25 @@
    "54aecea9f627426c7126fa15b4e0295417d68874",
    "testharness"
   ],
+  "webvtt/api/VTTCue/snapToLines-expected.txt": [
+   "c456dfc5bb6f8a876ed57b51c7158f5e88e3fff3",
+   "support"
+  ],
   "webvtt/api/VTTCue/snapToLines.html": [
    "aaca4c55f900600f7334f196d7275d69ffe7f0f9",
    "testharness"
   ],
+  "webvtt/api/VTTCue/text-expected.txt": [
+   "c070481c2ea2189090684786662a3009d3ba544a",
+   "support"
+  ],
   "webvtt/api/VTTCue/text.html": [
    "d7597ca893a7d2be17b908efa55cb70727d64f0b",
    "testharness"
+  ],
+  "webvtt/api/VTTCue/vertical-expected.txt": [
+   "8db8dc0caa62b5aa1cad3ef4d283cecddd4f44ce",
+   "support"
   ],
   "webvtt/api/VTTCue/vertical.html": [
    "9f415b3a239e0a380a03411827c38abd4532ef1a",
@@ -90914,7 +91110,7 @@
    "testharness"
   ],
   "workers/constructors/SharedWorker/global-members.html": [
-   "d432270dba50e06e0640623bd64b500894497a57",
+   "a5a1d5bfb927545460fcec7f84fa934bce132c4c",
    "testharness"
   ],
   "workers/constructors/SharedWorker/interface-objects.html": [
