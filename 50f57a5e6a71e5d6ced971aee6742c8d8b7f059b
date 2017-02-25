@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a63e0c4a_c3879d3c",
+        "filename": "third_party/WebKit/LayoutTests/canvas/philip/tests/2d.path.arcTo.shape.curve2.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-02-25T16:56:12Z",
+      "side": 1,
+      "message": "This rebase doesn\u0027t look right: why did we lose opacity?  We start with an opaque-filled canvas, so AA/blending should never drop the result alpha, no?",
+      "range": {
+        "startLine": 43,
+        "startChar": 36,
+        "endLine": 43,
+        "endChar": 39
+      },
+      "revId": "50f57a5e6a71e5d6ced971aee6742c8d8b7f059b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
