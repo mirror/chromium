@@ -46,6 +46,30 @@
       "revId": "50f57a5e6a71e5d6ced971aee6742c8d8b7f059b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f7f3829_77b96e67",
+        "filename": "third_party/WebKit/LayoutTests/canvas/philip/tests/2d.path.arcTo.shape.curve2.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-02-25T17:35:54Z",
+      "side": 1,
+      "message": "I think the question is whether this is a regression introduced with this CL, or a latent blending issue that now triggers for this test.\n\nIf the former, I would rather fix it before landing to avoid another massive rebaseline if we end up tweaking the algorithm.  If the latter, I\u0027m fine with a bug.  WDYT?",
+      "parentUuid": "376ec0c2_2cf8330d",
+      "range": {
+        "startLine": 43,
+        "startChar": 36,
+        "endLine": 43,
+        "endChar": 39
+      },
+      "revId": "50f57a5e6a71e5d6ced971aee6742c8d8b7f059b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
