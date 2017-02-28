@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "237033e8_119a85bc",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/manager.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-02-28T22:44:48Z",
+      "side": 1,
+      "message": "@qyearsley @foolip this alleviates the issue but is probably a terrible hack. lmk your thoughts. I think we should fix the manifest regeneration problem independent of this CL and before this CL lands.",
+      "revId": "e257514fcd5382654ce56a3f6cb61b9e33c5923f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
