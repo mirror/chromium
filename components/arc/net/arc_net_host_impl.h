@@ -14,15 +14,12 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
+#include "base/values.h"
 #include "chromeos/network/network_state_handler_observer.h"
 #include "components/arc/common/net.mojom.h"
 #include "components/arc/instance_holder.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
-
-namespace base {
-class DictionaryValue;
-}  // namespace base
 
 namespace content {
 class BrowserContext;
@@ -77,6 +74,13 @@ class ArcNetHostImpl : public KeyedService,
   void StartDisconnect(const std::string& guid,
                        const StartDisconnectCallback& callback) override;
 
+  void AndroidVpnConnected(mojom::AndroidVpnConfigurationPtr cfg) override;
+
+  void AndroidVpnStateChanged(mojom::ConnectionStateType state) override;
+
+  std::unique_ptr<base::DictionaryValue> TranslateVpnConfigurationToOnc(
+      const mojom::AndroidVpnConfiguration& cfg);
+
   // Overriden from chromeos::NetworkStateHandlerObserver.
   void ScanCompleted(const chromeos::DeviceState* /*unused*/) override;
   void OnShuttingDown() override;
@@ -100,6 +104,20 @@ class ArcNetHostImpl : public KeyedService,
   // successive Create operations (crbug.com/631646).
   bool GetNetworkPathFromGuid(const std::string& guid, std::string* path);
 
+  // Look through the list of known networks for an ARC VPN service.
+  // If found, populate |arc_vpn_guid_| and return true.  Otherwise return
+  // false.
+  bool LookupArcVpnGuid();
+  std::unique_ptr<base::Value> TranslateStringListToOnc(
+    const std::vector<std::string>& in);
+
+  void ConnectAndroidVpn(const std::string& service_path,
+                         const std::string& guid);
+  void AndroidVpnSuccessCallback();
+  void AndroidVpnErrorCallback(
+      const std::string& error_name,
+      std::unique_ptr<base::DictionaryValue> error_data);
+
   void CreateNetworkSuccessCallback(
       const mojom::NetHost::CreateNetworkCallback& mojo_callback,
       const std::string& service_path,
@@ -118,6 +136,7 @@ class ArcNetHostImpl : public KeyedService,
 
   std::string cached_service_path_;
   std::string cached_guid_;
+  std::string arc_vpn_guid_;
 
   THREAD_CHECKER(thread_checker_);
   mojo::Binding<mojom::NetHost> binding_;
