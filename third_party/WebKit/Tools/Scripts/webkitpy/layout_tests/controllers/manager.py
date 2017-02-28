@@ -44,6 +44,7 @@ import sys
 import time
 
 from webkitpy.common.net.file_uploader import FileUploader
+from webkitpy.common.webkit_finder import WebKitFinder
 from webkitpy.layout_tests.controllers.layout_test_finder import LayoutTestFinder
 from webkitpy.layout_tests.controllers.layout_test_runner import LayoutTestRunner
 from webkitpy.layout_tests.controllers.test_result_writer import TestResultWriter
@@ -71,6 +72,7 @@ class Manager(object):
           printer: A Printer object to record updates to.
         """
         self._port = port
+        self._executive = port.host.executive
         self._filesystem = port.host.filesystem
         self._options = options
         self._printer = printer
@@ -88,6 +90,7 @@ class Manager(object):
 
         self._results_directory = self._port.results_directory()
         self._finder = LayoutTestFinder(self._port, self._options)
+        self._webkit_finder = WebKitFinder(port.host.filesystem)
         self._runner = LayoutTestRunner(self._options, self._port, self._printer, self._results_directory, self._test_is_slow)
 
     def run(self, args):
@@ -95,6 +98,10 @@ class Manager(object):
         start_time = time.time()
         self._printer.write_update("Collecting tests ...")
         running_all_tests = False
+
+        # Regenerate MANIFEST.json from template, necessary for web-platform-tests metadata.
+        self._ensure_manifest()
+
         try:
             paths, all_test_names, running_all_tests = self._collect_tests(args)
         except IOError:
@@ -545,3 +552,26 @@ class Manager(object):
         for name, value in stats.iteritems():
             json_results_generator.add_path_to_trie(name, value, stats_trie)
         return stats_trie
+
+    def _ensure_manifest(self):
+        manifest_path = self._webkit_finder.path_from_webkit_base(
+            'LayoutTests', 'external', 'wpt', 'MANIFEST.json')
+        manifest_base_path = self._webkit_finder.path_from_webkit_base(
+            'LayoutTests', 'external', 'WPT_BASE_MANIFEST.json')
+
+        if not self._filesystem.exists(manifest_path):
+            self._filesystem.copyfile(manifest_base_path, manifest_path)
+
+        # Hack around the MANIFEST.json-in-MANIFEST.json issue
+        manifest = json.loads(self._filesystem.read_binary_file(manifest_path))
+        if './MANIFEST.json' in manifest['paths']:
+            del manifest['paths']['./MANIFEST.json']
+            self._filesystem.write_binary_file(manifest_path, json.dumps(manifest))
+        # End hack
+
+        manifest_tool_path = self._webkit_finder.path_from_webkit_base(
+            'Tools', 'Scripts', 'webkitpy', 'thirdparty', 'wpt', 'wpt', 'manifest')
+        wpt_path = self._webkit_finder.path_from_webkit_base('LayoutTests', 'external', 'wpt')
+
+        self._printer.write_update('Generating MANIFEST.json for web-platform-tests ...')
+        self._executive.run_command(['python', manifest_tool_path, '--work', '--tests-root', wpt_path])
