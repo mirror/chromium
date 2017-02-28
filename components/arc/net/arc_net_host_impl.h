@@ -14,15 +14,13 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
+#include "base/values.h"
+#include "chromeos/network/network_connection_observer.h"
 #include "chromeos/network/network_state_handler_observer.h"
 #include "components/arc/common/net.mojom.h"
 #include "components/arc/instance_holder.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
-
-namespace base {
-class DictionaryValue;
-}  // namespace base
 
 namespace content {
 class BrowserContext;
@@ -35,6 +33,7 @@ class ArcBridgeService;
 // Private implementation of ArcNetHost.
 class ArcNetHostImpl : public KeyedService,
                        public InstanceHolder<mojom::NetInstance>::Observer,
+                       public chromeos::NetworkConnectionObserver,
                        public chromeos::NetworkStateHandlerObserver,
                        public mojom::NetHost {
  public:
@@ -77,12 +76,24 @@ class ArcNetHostImpl : public KeyedService,
   void StartDisconnect(const std::string& guid,
                        const StartDisconnectCallback& callback) override;
 
+  void AndroidVpnConnected(mojom::AndroidVpnConfigurationPtr cfg) override;
+
+  void AndroidVpnStateChanged(mojom::ConnectionStateType state) override;
+
+  std::unique_ptr<base::DictionaryValue> TranslateVpnConfigurationToOnc(
+      const mojom::AndroidVpnConfiguration& cfg);
+
   // Overriden from chromeos::NetworkStateHandlerObserver.
   void ScanCompleted(const chromeos::DeviceState* /*unused*/) override;
   void OnShuttingDown() override;
   void DefaultNetworkChanged(const chromeos::NetworkState* network) override;
+  void NetworkConnectionStateChanged(
+      const chromeos::NetworkState* network) override;
   void DeviceListChanged() override;
   void GetDefaultNetwork(const GetDefaultNetworkCallback& callback) override;
+
+  // Overriden from chromeos::NetworkConnectionObserver.
+  void DisconnectRequested(const std::string& service_path) override;
 
   // Overridden from ArcBridgeService::InterfaceObserver<mojom::NetInstance>:
   void OnInstanceReady() override;
@@ -99,6 +110,30 @@ class ArcNetHostImpl : public KeyedService,
   // This is sufficient to pass CTS but it might not handle multiple
   // successive Create operations (crbug.com/631646).
   bool GetNetworkPathFromGuid(const std::string& guid, std::string* path);
+
+  // Look through the list of known networks for an ARC VPN service.
+  // If found, populate |guid| and return true.  Otherwise return
+  // false.
+  bool LookupArcVpnGuid(std::string* guid);
+  std::unique_ptr<base::Value> TranslateStringListToOnc(
+      const std::vector<std::string>& in);
+
+  // Ask shill to connect to the Android VPN with name |service_path|.
+  // |service_path| and |guid| are stored locally for future reference.
+  // This is used as the callback from a CreateConfiguration() or
+  // SetProperties() call, depending on whether an ARCVPN service already
+  // exists.
+  void ConnectAndroidVpn(const std::string& service_path,
+                         const std::string& guid);
+
+  // Ask Android to disconnect any VPN app that is currently connected.
+  void DisconnectAndroidVpn();
+
+  // Trivial success/error callbacks that log the status and exit.
+  void AndroidVpnSuccessCallback();
+  void AndroidVpnErrorCallback(
+      const std::string& error_name,
+      std::unique_ptr<base::DictionaryValue> error_data);
 
   void CreateNetworkSuccessCallback(
       const mojom::NetHost::CreateNetworkCallback& mojo_callback,
@@ -118,6 +153,10 @@ class ArcNetHostImpl : public KeyedService,
 
   std::string cached_service_path_;
   std::string cached_guid_;
+
+  std::string arc_vpn_guid_;
+  std::string arc_vpn_service_path_;
+  std::unique_ptr<base::Value> cached_default_network_;
 
   THREAD_CHECKER(thread_checker_);
   mojo::Binding<mojom::NetHost> binding_;
