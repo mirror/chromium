@@ -6,8 +6,8 @@
 4d4288efd7d780ff5a35b8cc13fa6ff0f62c06cc	chrome-commit-bot
 99d8472e7048286ce8a7386a221797d885ff3f91	Administrators
 e4a6753cb8e0a928d950ddfdb98015fc00ed8303	git-numbering-bot
-global:Anonymous-Users                  	Anonymous Users
-global:Registered-Users                 	Registered Users
+global:Anonymous-Users                  	Anonymous Public Users
+global:Registered-Users                 	Logged-in Public Users
 mdb:bling-git-admins                    	mdb/bling-git-admins
 mdb:bling-git-committers                	mdb/bling-git-committers
 mdb:chrome-git-admins                   	mdb/chrome-git-admins
