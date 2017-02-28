@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c4ee541_fde63dbc",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/manager.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-02-28T22:17:41Z",
+      "side": 1,
+      "message": "This could use WPTManifest.generate_manifest:\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_manifest.py?l\u003d91",
+      "revId": "a9d94bf55e260d737b4b9830c99a318b033e90e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
