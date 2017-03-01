@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13a5da13_bff781e7",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/thirdparty/wpt/wpt/tools/manifest/manifest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-01T22:10:13Z",
+      "side": 1,
+      "message": "I haven\u0027t yet understood the problem, and why this prevents it :-/\n\nIf MANIFEST.json already exists in the repo, then we expect \"MANIFEST.json\" to be in self._path_hash, so is_new should be false, right? But for some reason even if \"MANIFEST.json\" is in \"MANIFEST.json\", its not in self._path_hash?",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 28
+      },
+      "revId": "d2d670fc6b165be9d3b98218e460dea2c2988afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
