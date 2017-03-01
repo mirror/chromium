@@ -1442,7 +1442,6 @@ crbug.com/613672 [ Mac ] fast/events/pointerevents/pointer-event-consumed-touchs
 crbug.com/613672 [ Mac ] fast/events/pointerevents/pointer-event-in-slop-region.html [ Skip ]
 crbug.com/613672 [ Mac ] external/wpt/pointerevents/pointerlock/pointerevent_movementxy-manual.html [ Skip ]
 crbug.com/613672 [ Mac ] external/wpt/pointerevents/compat/pointerevent_touch-action_two-finger_interaction-manual.html [ Skip ]
-crbug.com/613672 [ Mac ] external/wpt/pointerevents/pointerevent_disabled_form_control-manual.html [ Skip ]
 crbug.com/613672 [ Mac ] external/wpt/pointerevents/pointerevent_sequence_at_implicit_release_on_drag-manual.html [ Skip ]
 crbug.com/613672 [ Mac ] external/wpt/pointerevents/pointerevent_sequence_at_implicit_release_on_click-manual.html [ Skip ]
 crbug.com/613672 [ Mac ] external/wpt/pointerevents/pointerevent_boundary_events_in_capturing-manual.html [ Skip ]
@@ -1895,8 +1894,8 @@ crbug.com/694525 external/wpt/content-security-policy/securitypolicyviolation [ 
 
 # 2017-02-17: These directories were just imported but expectations and baselines haven't been set yet.
 crbug.com/692105 external/wpt/domxpath/interfaces.html [ Skip ]
-crbug.com/692105 external/wpt/service-workers/service-worker/fetch-event-within-sw-manual.html [ Skip ]
-crbug.com/692105 external/wpt/service-workers/service-worker/fetch-event-within-sw.html [ Skip ]
+crbug.com/692105 external/wpt/service-workers/service-worker/fetch-event-within-sw-manual.https.html [ Skip ]
+crbug.com/692105 external/wpt/service-workers/service-worker/fetch-event-within-sw.https.html [ Skip ]
 crbug.com/692105 external/wpt/storage/interfaces.html [ Skip ]
 crbug.com/692105 external/wpt/streams/readable-streams/floating-point-total-queue-size.dedicatedworker.html [ Skip ]
 crbug.com/692105 external/wpt/streams/readable-streams/floating-point-total-queue-size.html [ Skip ]
