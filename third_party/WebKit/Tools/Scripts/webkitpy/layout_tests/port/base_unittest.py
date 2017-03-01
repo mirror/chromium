@@ -236,7 +236,7 @@ class PortTest(unittest.TestCase):
 
     @staticmethod
     def _add_manifest_to_mock_file_system(filesystem):
-        filesystem.write_text_file(LAYOUT_TEST_DIR + '/external/wpt/MANIFEST.json', json.dumps({
+        filesystem.write_text_file(LAYOUT_TEST_DIR + '/external/MANIFEST.json', json.dumps({
             'items': {
                 'testharness': {
                     'dom/ranges/Range-attributes.html': [

@@ -146,20 +146,21 @@ class TestImporterTest(LoggingTestCase):
         host = MockHost()
         importer = TestImporter(host)
         importer._generate_manifest(
-            '/mock-checkout/third_party/WebKit/LayoutTests/external/wpt')
+            '/mock-checkout/third_party/WebKit/LayoutTests/external/')
         self.assertEqual(
             host.executive.calls,
             [
                 [
+                    'python',
                     '/mock-checkout/third_party/WebKit/Tools/Scripts/webkitpy/thirdparty/wpt/wpt/manifest',
                     '--work',
                     '--tests-root',
-                    '/mock-checkout/third_party/WebKit/LayoutTests/external/wpt'
+                    '/mock-checkout/third_party/WebKit/LayoutTests/external/'
                 ],
                 [
                     'git',
                     'add',
-                    '/mock-checkout/third_party/WebKit/LayoutTests/external/wpt/MANIFEST.json'
+                    '/mock-checkout/third_party/WebKit/LayoutTests/external/MANIFEST.json'
                 ]
             ])
 
