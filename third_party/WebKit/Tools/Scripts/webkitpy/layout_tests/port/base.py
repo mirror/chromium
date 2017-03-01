@@ -748,7 +748,7 @@ class Port(object):
 
     @memoized
     def _wpt_manifest(self):
-        manifest_path = self._filesystem.join(self.layout_tests_dir(), 'external', 'wpt', 'MANIFEST.json')
+        manifest_path = self._filesystem.join(self.layout_tests_dir(), 'external', 'MANIFEST.json')
         return WPTManifest(self._filesystem.read_text_file(manifest_path))
 
     def is_slow_wpt_test(self, test_file):
