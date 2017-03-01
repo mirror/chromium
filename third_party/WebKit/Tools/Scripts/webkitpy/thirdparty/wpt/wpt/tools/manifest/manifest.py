@@ -78,6 +78,8 @@ class Manifest(object):
 
             if not is_new:
                 old_hash, old_type = self._path_hash[rel_path]
+                if rel_path not in old_files[old_type]:
+                    continue
                 old_files[old_type].remove(rel_path)
                 if old_hash != file_hash:
                     new_type, manifest_items = source_file.manifest_items()
