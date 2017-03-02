@@ -16,6 +16,24 @@
       "revId": "dcdab29feaeb7167498e52f00eda288c98ed29df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9f16e2c_7fdf7e2f",
+        "filename": "testing/buildbot/client.v8.chromium.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-03-02T16:43:57Z",
+      "side": 1,
+      "message": "I doubt that\u0027s intentional, actually.",
+      "parentUuid": "94086d38_58e52fa4",
+      "revId": "dcdab29feaeb7167498e52f00eda288c98ed29df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
