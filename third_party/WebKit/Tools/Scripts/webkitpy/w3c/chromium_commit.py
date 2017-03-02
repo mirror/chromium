@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+from dateutil import parser
 from webkitpy.w3c.chromium_finder import absolute_chromium_dir, absolute_chromium_wpt_dir
 
 CHROMIUM_WPT_DIR = 'third_party/WebKit/LayoutTests/external/wpt/'
@@ -100,3 +101,9 @@ class ChromiumCommit(object):
         return self.host.executive.run_command([
             'git', 'format-patch', '-1', '--stdout', self.sha, '--'
         ] + filtered_files, cwd=self.absolute_chromium_dir)
+
+    def date(self):
+        date_str = self.host.executive.run_command([
+            'git', 'show', '--format=%ci', '--no-patch', self.sha
+        ], cwd=self.absolute_chromium_dir).strip()
+        return parser.parse(date_str)
