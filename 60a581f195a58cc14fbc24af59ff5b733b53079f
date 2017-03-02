@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fa49375_c8af1cb6",
+        "filename": "docs/testing/web_platform_tests.md",
+        "patchSetId": 11
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-02T19:34:12Z",
+      "side": 1,
+      "message": "I updated the docs since people don\u0027t need to manually update MANIFEST.json anymore, but would it be worth keeping the command around just in case people run into a problem?",
+      "revId": "60a581f195a58cc14fbc24af59ff5b733b53079f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
