@@ -34,6 +34,24 @@
       "revId": "dcdab29feaeb7167498e52f00eda288c98ed29df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99d0d7dd_8b44bfcd",
+        "filename": "testing/buildbot/client.v8.chromium.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2017-03-02T17:48:53Z",
+      "side": 1,
+      "message": "I\u0027ll maybe dump the to test lists side by side somewhere to have a comparison... I think it\u0027s important that all tests run by trybots are covered by a release and a debug bot, otherwise we could get dchecks failing only on tryservers.",
+      "parentUuid": "c9f16e2c_7fdf7e2f",
+      "revId": "dcdab29feaeb7167498e52f00eda288c98ed29df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
