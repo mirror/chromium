@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94086d38_58e52fa4",
+        "filename": "testing/buildbot/client.v8.chromium.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2017-03-02T16:27:21Z",
+      "side": 1,
+      "message": "Stripped down copy of https://cs.chromium.org/chromium/src/testing/buildbot/chromium.linux.json?l\u003d3331\n\nI noticed that the debug bot runs a few test less than the release bot, but I assume that\u0027s by design. I kept only the ones relevant to V8.",
+      "revId": "dcdab29feaeb7167498e52f00eda288c98ed29df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
