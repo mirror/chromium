@@ -16497,6 +16497,11 @@
      {}
     ]
    ],
+   "html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-invoke-insert-source-networkState-expected.txt": [
+    [
+     {}
+    ]
+   ],
    "html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-invoke-load-expected.txt": [
     [
      {}
@@ -16538,6 +16543,11 @@
     ]
    ],
    "html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-pointer-insert-text-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-pointer-remove-source-after-expected.txt": [
     [
      {}
     ]
@@ -16927,6 +16937,11 @@
      {}
     ]
    ],
+   "html/semantics/forms/textfieldselection/select-event-expected.txt": [
+    [
+     {}
+    ]
+   ],
    "html/semantics/forms/the-button-element/button-activate-frame.html": [
     [
      {}
@@ -17253,6 +17268,11 @@
     ]
    ],
    "html/semantics/scripting-1/the-script-element/external-script-utf8.js": [
+    [
+     {}
+    ]
+   ],
+   "html/semantics/scripting-1/the-script-element/external-script-windows1250.js": [
     [
      {}
     ]
@@ -18178,6 +18198,11 @@
     ]
    ],
    "html/webappapis/scripting/events/body-exposed-window-event-handlers-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "html/webappapis/scripting/events/compile-event-handler-settings-objects-expected.txt": [
     [
      {}
     ]
@@ -22242,6 +22267,51 @@
      {}
     ]
    ],
+   "selection/addRange-00-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "selection/addRange-04-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "selection/addRange-12-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "selection/addRange-16-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "selection/addRange-20-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "selection/addRange-24-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "selection/addRange-28-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "selection/addRange-32-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "selection/addRange-36-expected.txt": [
+    [
+     {}
+    ]
+   ],
    "selection/addRange.js": [
     [
      {}
@@ -23418,11 +23488,6 @@
     ]
    ],
    "storage/interfaces.idl": [
-    [
-     {}
-    ]
-   ],
-   "storage/opaque-origin.https-expected.txt": [
     [
      {}
     ]
@@ -26863,6 +26928,21 @@
     ]
    ],
    "workers/non-automated/post-a-1.js": [
+    [
+     {}
+    ]
+   ],
+   "workers/semantics/encodings/001.html.headers": [
+    [
+     {}
+    ]
+   ],
+   "workers/semantics/encodings/002.html.headers": [
+    [
+     {}
+    ]
+   ],
+   "workers/semantics/encodings/003-1.py": [
     [
      {}
     ]
@@ -30395,18 +30475,6 @@
      {}
     ]
    ],
-   "content-security-policy/securitypolicyviolation/script-sample-no-opt-in.html": [
-    [
-     "/content-security-policy/securitypolicyviolation/script-sample-no-opt-in.html",
-     {}
-    ]
-   ],
-   "content-security-policy/securitypolicyviolation/script-sample.html": [
-    [
-     "/content-security-policy/securitypolicyviolation/script-sample.html",
-     {}
-    ]
-   ],
    "content-security-policy/securitypolicyviolation/securitypolicyviolation-block-cross-origin-image-from-script.sub.html": [
     [
      "/content-security-policy/securitypolicyviolation/securitypolicyviolation-block-cross-origin-image-from-script.sub.html",
@@ -30428,18 +30496,6 @@
    "content-security-policy/securitypolicyviolation/securitypolicyviolation-block-image.sub.html": [
     [
      "/content-security-policy/securitypolicyviolation/securitypolicyviolation-block-image.sub.html",
-     {}
-    ]
-   ],
-   "content-security-policy/securitypolicyviolation/style-sample-no-opt-in.html": [
-    [
-     "/content-security-policy/securitypolicyviolation/style-sample-no-opt-in.html",
-     {}
-    ]
-   ],
-   "content-security-policy/securitypolicyviolation/style-sample.html": [
-    [
-     "/content-security-policy/securitypolicyviolation/style-sample.html",
      {}
     ]
    ],
@@ -32670,6 +32726,18 @@
    "domparsing/xml-serialization.xhtml": [
     [
      "/domparsing/xml-serialization.xhtml",
+     {}
+    ]
+   ],
+   "domxpath/001.html": [
+    [
+     "/domxpath/001.html",
+     {}
+    ]
+   ],
+   "domxpath/002.html": [
+    [
+     "/domxpath/002.html",
      {}
     ]
    ],
@@ -38544,6 +38612,24 @@
    "html/semantics/scripting-1/the-script-element/nomodule-set-on-synchronously-loaded-classic-scripts.html": [
     [
      "/html/semantics/scripting-1/the-script-element/nomodule-set-on-synchronously-loaded-classic-scripts.html",
+     {}
+    ]
+   ],
+   "html/semantics/scripting-1/the-script-element/script-charset-01.html": [
+    [
+     "/html/semantics/scripting-1/the-script-element/script-charset-01.html",
+     {}
+    ]
+   ],
+   "html/semantics/scripting-1/the-script-element/script-charset-02.html": [
+    [
+     "/html/semantics/scripting-1/the-script-element/script-charset-02.html",
+     {}
+    ]
+   ],
+   "html/semantics/scripting-1/the-script-element/script-charset-03.html": [
+    [
+     "/html/semantics/scripting-1/the-script-element/script-charset-03.html",
      {}
     ]
    ],
@@ -56179,6 +56265,36 @@
      {}
     ]
    ],
+   "workers/semantics/encodings/001.html": [
+    [
+     "/workers/semantics/encodings/001.html",
+     {}
+    ]
+   ],
+   "workers/semantics/encodings/002.html": [
+    [
+     "/workers/semantics/encodings/002.html",
+     {}
+    ]
+   ],
+   "workers/semantics/encodings/003.html": [
+    [
+     "/workers/semantics/encodings/003.html",
+     {}
+    ]
+   ],
+   "workers/semantics/encodings/004.html": [
+    [
+     "/workers/semantics/encodings/004.html",
+     {}
+    ]
+   ],
+   "workers/semantics/encodings/004.worker.js": [
+    [
+     "/workers/semantics/encodings/004.worker.html",
+     {}
+    ]
+   ],
    "workers/semantics/interface-objects/001.worker.js": [
     [
      "/workers/semantics/interface-objects/001.worker.html",
@@ -59964,14 +60080,6 @@
    "fb7fc789e44d9f17ff508cc9a080c23aec5e1597",
    "testharness"
   ],
-  "content-security-policy/securitypolicyviolation/script-sample-no-opt-in.html": [
-   "44cad18dc963c49062c0f3b7ea7a8951157cbcb7",
-   "testharness"
-  ],
-  "content-security-policy/securitypolicyviolation/script-sample.html": [
-   "009e5de237b0aa1d3b7e2c100cb8fdf9bb1080a5",
-   "testharness"
-  ],
   "content-security-policy/securitypolicyviolation/securitypolicyviolation-block-cross-origin-image-from-script.sub.html": [
    "156d207242f9cfaf200f442a6c7756ad4504f026",
    "testharness"
@@ -59986,14 +60094,6 @@
   ],
   "content-security-policy/securitypolicyviolation/securitypolicyviolation-block-image.sub.html": [
    "38b10d421ec3e2e156180db3cfab54291f22074d",
-   "testharness"
-  ],
-  "content-security-policy/securitypolicyviolation/style-sample-no-opt-in.html": [
-   "b2d6d11fc189d78f5ea623c52e1d1f64fe53a772",
-   "testharness"
-  ],
-  "content-security-policy/securitypolicyviolation/style-sample.html": [
-   "e570217f560f6e7a8917e79266ac9d2e8ea078f6",
    "testharness"
   ],
   "content-security-policy/securitypolicyviolation/support/inside-worker.sub.js": [
@@ -61185,7 +61285,7 @@
    "testharness"
   ],
   "dom/nodes/Document-getElementsByTagName-expected.txt": [
-   "dc9806c46b97d93eb3f72fc8422c8147014a4f58",
+   "7a455888f847aebb2e0a525ef3c9fccaee24a7cf",
    "support"
   ],
   "dom/nodes/Document-getElementsByTagName-xhtml-expected.txt": [
@@ -61321,7 +61421,7 @@
    "testharness"
   ],
   "dom/nodes/Element-getElementsByTagName-expected.txt": [
-   "282f3fc010d2db0858a8b8bb141028a3c0d03361",
+   "ce17050c4337e3700155846313ae8d61adcc3ca0",
    "support"
   ],
   "dom/nodes/Element-getElementsByTagName.html": [
@@ -61661,7 +61761,7 @@
    "support"
   ],
   "dom/nodes/case-expected.txt": [
-   "a69d54b7c153ff65eb2ae91802681fca13517866",
+   "04da91ce54c42bbd57496a60483553e45fd43947",
    "support"
   ],
   "dom/nodes/case.html": [
@@ -62190,6 +62290,14 @@
   ],
   "domparsing/xml-serialization.xhtml": [
    "71944bd6e03639c4736db03b651e265d103cf5cf",
+   "testharness"
+  ],
+  "domxpath/001.html": [
+   "f7161655a8955dd5a028b2e7dd5ada945176a930",
+   "testharness"
+  ],
+  "domxpath/002.html": [
+   "44e057c92dd61fbc6ea081c5f328596736371e85",
    "testharness"
   ],
   "domxpath/evaluator-constructor.html": [
@@ -71656,6 +71764,10 @@
    "f3bbb0f87c26f01b76c6e032891bbbc45b964f77",
    "testharness"
   ],
+  "html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-invoke-insert-source-networkState-expected.txt": [
+   "955753cfadaa82b8ccf6521e879fdec9aefb1c6e",
+   "support"
+  ],
   "html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-invoke-insert-source-networkState.html": [
    "faf29cdae002b841d0e38ac7291c08ae56619b4d",
    "testharness"
@@ -71763,6 +71875,10 @@
   "html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-pointer-insert-text.html": [
    "964479f38332cebf9dea9312f28d47836203dad5",
    "testharness"
+  ],
+  "html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-pointer-remove-source-after-expected.txt": [
+   "b336ec3decb591e7565b52edde20d076dbd51595",
+   "support"
   ],
   "html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-pointer-remove-source-after.html": [
    "665427ef1cdad4fc4648f11ba7322156afcfbebf",
@@ -72518,6 +72634,10 @@
   ],
   "html/semantics/forms/textfieldselection/original-id.json": [
    "14a6f0077d512837c24931a2a9723e11d1d7a1c7",
+   "support"
+  ],
+  "html/semantics/forms/textfieldselection/select-event-expected.txt": [
+   "2cdb4a00c85c2f68497c065ca53e40c1e573dd51",
    "support"
   ],
   "html/semantics/forms/textfieldselection/select-event.html": [
@@ -73392,6 +73512,10 @@
    "2d1c2cf696010feb64b17f00a072f3bbe6b1d713",
    "support"
   ],
+  "html/semantics/scripting-1/the-script-element/external-script-windows1250.js": [
+   "43e3b65a18328fa95ba89cb4f075d1ab422580fa",
+   "support"
+  ],
   "html/semantics/scripting-1/the-script-element/fetch-src/alpha/base.html": [
    "13d313f817d5597dd0cecbc23f0162f95f9634cc",
    "testharness"
@@ -73679,6 +73803,18 @@
   "html/semantics/scripting-1/the-script-element/resources/set-script-executed.js": [
    "87f80eee703965c88f2bf7015bfa76233d459d06",
    "support"
+  ],
+  "html/semantics/scripting-1/the-script-element/script-charset-01.html": [
+   "4d8f27447b5c76174a2e353f160066fbe156a005",
+   "testharness"
+  ],
+  "html/semantics/scripting-1/the-script-element/script-charset-02.html": [
+   "fd855537451d81818fda97de8a6eff2f8ebd7a5e",
+   "testharness"
+  ],
+  "html/semantics/scripting-1/the-script-element/script-charset-03.html": [
+   "c1daf890ff2c71f63d1c668de9002d493dbcb417",
+   "testharness"
   ],
   "html/semantics/scripting-1/the-script-element/script-crossorigin-network.html": [
    "ca03ec45f3b8d117d0488b67f082868bac847af6",
@@ -75131,6 +75267,10 @@
   "html/webappapis/scripting/events/body-onload.html": [
    "c8e48064f18b1d1eb13e151b69ee60b8d68f4dab",
    "testharness"
+  ],
+  "html/webappapis/scripting/events/compile-event-handler-settings-objects-expected.txt": [
+   "13a1074c8a857731e0c1a18814f2d27413f156b5",
+   "support"
   ],
   "html/webappapis/scripting/events/compile-event-handler-settings-objects.html": [
    "43a17069cb0d3c819d1b55eaa4616af0b0a338b7",
@@ -85748,9 +85888,17 @@
    "31a5ee7a3619c62dbd35eafb66725bf4192639a0",
    "testharness"
   ],
+  "selection/addRange-00-expected.txt": [
+   "eedac4c59c749216666bcd60a08711810db36e73",
+   "support"
+  ],
   "selection/addRange-00.html": [
    "e99b95a6bdcba9f4945fb9b03de34ff54469012a",
    "testharness"
+  ],
+  "selection/addRange-04-expected.txt": [
+   "cdd195d7aadd66603ca9c0f5bf2b52cf054b92f2",
+   "support"
   ],
   "selection/addRange-04.html": [
    "c241e1c3a82f09c14bbf217350b2ee0b58c17178",
@@ -85760,29 +85908,57 @@
    "6d51d9f4042e5590483fae60d19351602d6b0aa2",
    "testharness"
   ],
+  "selection/addRange-12-expected.txt": [
+   "c37408236a59467912d31966c48e105b372be787",
+   "support"
+  ],
   "selection/addRange-12.html": [
    "add2e904651f3564741742dc5e1dcb7e3debc50c",
    "testharness"
+  ],
+  "selection/addRange-16-expected.txt": [
+   "d8e9f67a786aea3ea8b94f942663ad69a419c52a",
+   "support"
   ],
   "selection/addRange-16.html": [
    "b8357b81e8cff46960b158f2eff40950aba04158",
    "testharness"
   ],
+  "selection/addRange-20-expected.txt": [
+   "2bc82fd38cd3bd635d3bda05fe3d92bc99f5e98a",
+   "support"
+  ],
   "selection/addRange-20.html": [
    "88fb182b058eae495b92c10a1ddc2bd7768e96cd",
    "testharness"
+  ],
+  "selection/addRange-24-expected.txt": [
+   "fd4aabd6d0ed1531e3adc99411095b501e2be0de",
+   "support"
   ],
   "selection/addRange-24.html": [
    "d6c0ce809239b2bafda14dab540bda45e3e89752",
    "testharness"
   ],
+  "selection/addRange-28-expected.txt": [
+   "a0eb6bab0cdc1093ccad3c96eef6e99895d1a537",
+   "support"
+  ],
   "selection/addRange-28.html": [
    "a2583e4f46561f8b09183186aed7ca137fab26dd",
    "testharness"
   ],
+  "selection/addRange-32-expected.txt": [
+   "c5bc03594b1095dedab19073232291b45f73a31a",
+   "support"
+  ],
   "selection/addRange-32.html": [
    "431ec670ebbcd0d0032fc416bd0910507fa76680",
    "testharness"
+  ],
+  "selection/addRange-36-expected.txt": [
+   "fbed318b78eb54ba405d9b055d92f66bf899cf0a",
+   "support"
   ],
   "selection/addRange-36.html": [
    "9572f7b20ee6891157025e576cf837e496a61669",
@@ -87927,10 +88103,6 @@
   "storage/interfaces.worker.js": [
    "da11cf56486fe08214f91d181b3a19775f6aa59c",
    "testharness"
-  ],
-  "storage/opaque-origin.https-expected.txt": [
-   "d33853b6c37f68b0d903be4323d3abd506f49675",
-   "support"
   ],
   "storage/opaque-origin.https.html": [
    "6ce5a9b14d80030f0adfa1808857294e8c923cb2",
@@ -93858,6 +94030,38 @@
   ],
   "workers/postMessage_target_source.htm": [
    "57c96d6fe9b09b015cc63be4aa8cb0d068f0d810",
+   "testharness"
+  ],
+  "workers/semantics/encodings/001.html": [
+   "9e4ebc403b7160f1bb29a291a111326f53ac27a4",
+   "testharness"
+  ],
+  "workers/semantics/encodings/001.html.headers": [
+   "3355b0c0188586c90715df2a82e5194c4e455da8",
+   "support"
+  ],
+  "workers/semantics/encodings/002.html": [
+   "51bb54279c2d46797e9684cd7831eb34d432b6b2",
+   "testharness"
+  ],
+  "workers/semantics/encodings/002.html.headers": [
+   "3355b0c0188586c90715df2a82e5194c4e455da8",
+   "support"
+  ],
+  "workers/semantics/encodings/003-1.py": [
+   "37f7812b142d48a3c84cb5f6b3f42400052e51a1",
+   "support"
+  ],
+  "workers/semantics/encodings/003.html": [
+   "237768c04968f414c0bc2323acf058bd1458ad7b",
+   "testharness"
+  ],
+  "workers/semantics/encodings/004.html": [
+   "050c5d8d2d4ef34f791488eb1cb27d31385b9373",
+   "testharness"
+  ],
+  "workers/semantics/encodings/004.worker.js": [
+   "29d11e52a82f8c3fda12966fc0c6d02c957a6ffd",
    "testharness"
   ],
   "workers/semantics/interface-objects/001.worker.js": [
