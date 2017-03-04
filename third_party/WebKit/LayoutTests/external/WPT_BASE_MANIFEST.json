@@ -379,6 +379,12 @@
      {}
     ]
    ],
+   "pointerevents/pointerevent_disabled_form_control-manual.html": [
+    [
+     "/pointerevents/pointerevent_disabled_form_control-manual.html",
+     {}
+    ]
+   ],
    "pointerevents/pointerevent_element_haspointercapture-manual.html": [
     [
      "/pointerevents/pointerevent_element_haspointercapture-manual.html",
@@ -9162,6 +9168,11 @@
      {}
     ]
    ],
+   "domxpath/interfaces-expected.txt": [
+    [
+     {}
+    ]
+   ],
    "domxpath/xml_xpath_tests.xml": [
     [
      {}
@@ -9337,6 +9348,11 @@
      {}
     ]
    ],
+   "editing/event-expected.txt": [
+    [
+     {}
+    ]
+   ],
    "editing/include/implementation.js": [
     [
      {}
@@ -9388,6 +9404,181 @@
     ]
    ],
    "editing/manual/inserttext2.manual.html": [
+    [
+     {}
+    ]
+   ],
+   "editing/other/delete-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/other/restoration-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/backcolor-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/bold-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/createlink-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/delete-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/fontname-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/fontsize-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/forecolor-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/formatblock-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/forwarddelete-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/hilitecolor-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/indent-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/inserthorizontalrule-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/inserthtml-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/insertimage-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/insertlinebreak-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/insertorderedlist-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/insertparagraph-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/inserttext-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/insertunorderedlist-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/italic-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/justifycenter-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/justifyfull-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/justifyleft-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/justifyright-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/misc-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/multitest-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/outdent-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/removeformat-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/strikethrough-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/subscript-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/superscript-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/underline-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "editing/run/unlink-expected.txt": [
     [
      {}
     ]
@@ -11998,11 +12189,6 @@
     ]
    ],
    "html/dom/resources/untested-interfaces.idl": [
-    [
-     {}
-    ]
-   ],
-   "html/dom/self-origin.sub-expected.txt": [
     [
      {}
     ]
@@ -16072,6 +16258,41 @@
      {}
     ]
    ],
+   "html/infrastructure/urls/resolving-urls/query-encoding/resources/blank.py": [
+    [
+     {}
+    ]
+   ],
+   "html/infrastructure/urls/resolving-urls/query-encoding/resources/css-tmpl.py": [
+    [
+     {}
+    ]
+   ],
+   "html/infrastructure/urls/resolving-urls/query-encoding/resources/manifest.py": [
+    [
+     {}
+    ]
+   ],
+   "html/infrastructure/urls/resolving-urls/query-encoding/resources/page-using-manifest.py": [
+    [
+     {}
+    ]
+   ],
+   "html/infrastructure/urls/resolving-urls/query-encoding/resources/resolve-url.js": [
+    [
+     {}
+    ]
+   ],
+   "html/infrastructure/urls/resolving-urls/query-encoding/resources/resource.py": [
+    [
+     {}
+    ]
+   ],
+   "html/infrastructure/urls/resolving-urls/query-encoding/resources/stash.py": [
+    [
+     {}
+    ]
+   ],
    "html/infrastructure/urls/terminology-0/document-base-url-expected.txt": [
     [
      {}
@@ -16497,6 +16718,11 @@
      {}
     ]
    ],
+   "html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-invoke-insert-source-networkState-expected.txt": [
+    [
+     {}
+    ]
+   ],
    "html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-invoke-load-expected.txt": [
     [
      {}
@@ -16538,6 +16764,11 @@
     ]
    ],
    "html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-pointer-insert-text-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-pointer-remove-source-after-expected.txt": [
     [
      {}
     ]
@@ -16927,6 +17158,11 @@
      {}
     ]
    ],
+   "html/semantics/forms/textfieldselection/select-event-expected.txt": [
+    [
+     {}
+    ]
+   ],
    "html/semantics/forms/the-button-element/button-activate-frame.html": [
     [
      {}
@@ -17253,6 +17489,11 @@
     ]
    ],
    "html/semantics/scripting-1/the-script-element/external-script-utf8.js": [
+    [
+     {}
+    ]
+   ],
+   "html/semantics/scripting-1/the-script-element/external-script-windows1250.js": [
     [
      {}
     ]
@@ -18182,6 +18423,11 @@
      {}
     ]
    ],
+   "html/webappapis/scripting/events/compile-event-handler-settings-objects-expected.txt": [
+    [
+     {}
+    ]
+   ],
    "html/webappapis/scripting/events/contains.json": [
     [
      {}
@@ -18448,6 +18694,16 @@
     ]
    ],
    "html/webappapis/system-state-and-capabilities/the-navigator-object/protocol/006-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "html/webappapis/the-windoworworkerglobalscope-mixin/support/WorkerSelfOriginSharedWorker.js": [
+    [
+     {}
+    ]
+   ],
+   "html/webappapis/the-windoworworkerglobalscope-mixin/support/WorkerSelfOriginWorker.js": [
     [
      {}
     ]
@@ -22242,6 +22498,51 @@
      {}
     ]
    ],
+   "selection/addRange-00-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "selection/addRange-04-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "selection/addRange-12-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "selection/addRange-16-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "selection/addRange-20-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "selection/addRange-24-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "selection/addRange-28-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "selection/addRange-32-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "selection/addRange-36-expected.txt": [
+    [
+     {}
+    ]
+   ],
    "selection/addRange.js": [
     [
      {}
@@ -23417,12 +23718,12 @@
      {}
     ]
    ],
-   "storage/interfaces.idl": [
+   "storage/interfaces-expected.txt": [
     [
      {}
     ]
    ],
-   "storage/opaque-origin.https-expected.txt": [
+   "storage/interfaces.idl": [
     [
      {}
     ]
@@ -23687,6 +23988,11 @@
      {}
     ]
    ],
+   "streams/readable-streams/default-reader.js": [
+    [
+     {}
+    ]
+   ],
    "streams/readable-streams/floating-point-total-queue-size.js": [
     [
      {}
@@ -23733,16 +24039,6 @@
     ]
    ],
    "streams/readable-streams/pipe-through.serviceworker-expected.txt": [
-    [
-     {}
-    ]
-   ],
-   "streams/readable-streams/readable-stream-reader.js": [
-    [
-     {}
-    ]
-   ],
-   "streams/readable-streams/readable-stream-reader.serviceworker-expected.txt": [
     [
      {}
     ]
@@ -26863,6 +27159,21 @@
     ]
    ],
    "workers/non-automated/post-a-1.js": [
+    [
+     {}
+    ]
+   ],
+   "workers/semantics/encodings/001.html.headers": [
+    [
+     {}
+    ]
+   ],
+   "workers/semantics/encodings/002.html.headers": [
+    [
+     {}
+    ]
+   ],
+   "workers/semantics/encodings/003-1.py": [
     [
      {}
     ]
@@ -30587,6 +30898,24 @@
      {}
     ]
    ],
+   "css-typed-om/CSSMatrixComponent-DOMMatrix-mutable.html": [
+    [
+     "/css-typed-om/CSSMatrixComponent-DOMMatrix-mutable.html",
+     {}
+    ]
+   ],
+   "css-typed-om/declared-styleMap-accepts-inherit.html": [
+    [
+     "/css-typed-om/declared-styleMap-accepts-inherit.html",
+     {}
+    ]
+   ],
+   "css-typed-om/styleMap-update-function.html": [
+    [
+     "/css-typed-om/styleMap-update-function.html",
+     {}
+    ]
+   ],
    "css-values/unset-value-storage.html": [
     [
      "/css-values/unset-value-storage.html",
@@ -31756,6 +32085,12 @@
    "dom/nodes/Element-tagName.html": [
     [
      "/dom/nodes/Element-tagName.html",
+     {}
+    ]
+   ],
+   "dom/nodes/Element-webkitMatchesSelector.html": [
+    [
+     "/dom/nodes/Element-webkitMatchesSelector.html",
      {}
     ]
    ],
@@ -36429,6 +36764,46 @@
      {}
     ]
    ],
+   "html/infrastructure/urls/resolving-urls/query-encoding/utf-16be.html": [
+    [
+     "/html/infrastructure/urls/resolving-urls/query-encoding/utf-16be.html",
+     {
+      "timeout": "long"
+     }
+    ]
+   ],
+   "html/infrastructure/urls/resolving-urls/query-encoding/utf-16le.html": [
+    [
+     "/html/infrastructure/urls/resolving-urls/query-encoding/utf-16le.html",
+     {
+      "timeout": "long"
+     }
+    ]
+   ],
+   "html/infrastructure/urls/resolving-urls/query-encoding/utf-8.html": [
+    [
+     "/html/infrastructure/urls/resolving-urls/query-encoding/utf-8.html",
+     {
+      "timeout": "long"
+     }
+    ]
+   ],
+   "html/infrastructure/urls/resolving-urls/query-encoding/windows-1251.html": [
+    [
+     "/html/infrastructure/urls/resolving-urls/query-encoding/windows-1251.html",
+     {
+      "timeout": "long"
+     }
+    ]
+   ],
+   "html/infrastructure/urls/resolving-urls/query-encoding/windows-1252.html": [
+    [
+     "/html/infrastructure/urls/resolving-urls/query-encoding/windows-1252.html",
+     {
+      "timeout": "long"
+     }
+    ]
+   ],
    "html/infrastructure/urls/terminology-0/document-base-url.html": [
     [
      "/html/infrastructure/urls/terminology-0/document-base-url.html",
@@ -38544,6 +38919,24 @@
    "html/semantics/scripting-1/the-script-element/nomodule-set-on-synchronously-loaded-classic-scripts.html": [
     [
      "/html/semantics/scripting-1/the-script-element/nomodule-set-on-synchronously-loaded-classic-scripts.html",
+     {}
+    ]
+   ],
+   "html/semantics/scripting-1/the-script-element/script-charset-01.html": [
+    [
+     "/html/semantics/scripting-1/the-script-element/script-charset-01.html",
+     {}
+    ]
+   ],
+   "html/semantics/scripting-1/the-script-element/script-charset-02.html": [
+    [
+     "/html/semantics/scripting-1/the-script-element/script-charset-02.html",
+     {}
+    ]
+   ],
+   "html/semantics/scripting-1/the-script-element/script-charset-03.html": [
+    [
+     "/html/semantics/scripting-1/the-script-element/script-charset-03.html",
      {}
     ]
    ],
@@ -40958,6 +41351,12 @@
    "html/webappapis/system-state-and-capabilities/the-navigator-object/protocol/006.xhtml": [
     [
      "/html/webappapis/system-state-and-capabilities/the-navigator-object/protocol/006.xhtml",
+     {}
+    ]
+   ],
+   "html/webappapis/the-windoworworkerglobalscope-mixin/Worker_Self_Origin.html": [
+    [
+     "/html/webappapis/the-windoworworkerglobalscope-mixin/Worker_Self_Origin.html",
      {}
     ]
    ],
@@ -53215,6 +53614,30 @@
      {}
     ]
    ],
+   "streams/readable-streams/default-reader.dedicatedworker.html": [
+    [
+     "/streams/readable-streams/default-reader.dedicatedworker.html",
+     {}
+    ]
+   ],
+   "streams/readable-streams/default-reader.html": [
+    [
+     "/streams/readable-streams/default-reader.html",
+     {}
+    ]
+   ],
+   "streams/readable-streams/default-reader.serviceworker.https.html": [
+    [
+     "/streams/readable-streams/default-reader.serviceworker.https.html",
+     {}
+    ]
+   ],
+   "streams/readable-streams/default-reader.sharedworker.html": [
+    [
+     "/streams/readable-streams/default-reader.sharedworker.html",
+     {}
+    ]
+   ],
    "streams/readable-streams/floating-point-total-queue-size.dedicatedworker.html": [
     [
      "/streams/readable-streams/floating-point-total-queue-size.dedicatedworker.html",
@@ -53308,30 +53731,6 @@
    "streams/readable-streams/pipe-through.sharedworker.html": [
     [
      "/streams/readable-streams/pipe-through.sharedworker.html",
-     {}
-    ]
-   ],
-   "streams/readable-streams/readable-stream-reader.dedicatedworker.html": [
-    [
-     "/streams/readable-streams/readable-stream-reader.dedicatedworker.html",
-     {}
-    ]
-   ],
-   "streams/readable-streams/readable-stream-reader.html": [
-    [
-     "/streams/readable-streams/readable-stream-reader.html",
-     {}
-    ]
-   ],
-   "streams/readable-streams/readable-stream-reader.serviceworker.https.html": [
-    [
-     "/streams/readable-streams/readable-stream-reader.serviceworker.https.html",
-     {}
-    ]
-   ],
-   "streams/readable-streams/readable-stream-reader.sharedworker.html": [
-    [
-     "/streams/readable-streams/readable-stream-reader.sharedworker.html",
      {}
     ]
    ],
@@ -56179,6 +56578,36 @@
      {}
     ]
    ],
+   "workers/semantics/encodings/001.html": [
+    [
+     "/workers/semantics/encodings/001.html",
+     {}
+    ]
+   ],
+   "workers/semantics/encodings/002.html": [
+    [
+     "/workers/semantics/encodings/002.html",
+     {}
+    ]
+   ],
+   "workers/semantics/encodings/003.html": [
+    [
+     "/workers/semantics/encodings/003.html",
+     {}
+    ]
+   ],
+   "workers/semantics/encodings/004.html": [
+    [
+     "/workers/semantics/encodings/004.html",
+     {}
+    ]
+   ],
+   "workers/semantics/encodings/004.worker.js": [
+    [
+     "/workers/semantics/encodings/004.worker.html",
+     {}
+    ]
+   ],
    "workers/semantics/interface-objects/001.worker.js": [
     [
      "/workers/semantics/interface-objects/001.worker.html",
@@ -56369,7 +56798,7 @@
    "support"
   ],
   "./check_stability.py": [
-   "5f8efc8738edef4c84109e3547658d4cab37357d",
+   "a6a6b19f271626f16feed38c53113178f6eb30a0",
    "support"
   ],
   "./ci_built_diff.sh": [
@@ -57109,7 +57538,7 @@
    "testharness"
   ],
   "IndexedDB/idbfactory_deleteDatabase4.htm": [
-   "10109da5b09ab80f71c69422662840c8b637c560",
+   "a42c82f245079b0be06f6249a6b37f076c754345",
    "testharness"
   ],
   "IndexedDB/idbfactory_open.htm": [
@@ -57225,7 +57654,7 @@
    "testharness"
   ],
   "IndexedDB/idbindex_get4.htm": [
-   "d8b39b7cc23e6b89b47b657ff53eeece44970f02",
+   "82be62b113f1ed362feb4f88c94cb65109b21735",
    "testharness"
   ],
   "IndexedDB/idbindex_get5.htm": [
@@ -57265,7 +57694,7 @@
    "testharness"
   ],
   "IndexedDB/idbindex_getKey4.htm": [
-   "d5d1449086078aa744d156e062a23ca3ffb264a8",
+   "d9b30635c943e401ba275d3611d17520cbf3334a",
    "testharness"
   ],
   "IndexedDB/idbindex_getKey5.htm": [
@@ -57569,7 +57998,7 @@
    "testharness"
   ],
   "IndexedDB/idbobjectstore_get4.htm": [
-   "828be6d2ebacc7c2ff80ed479124db16a5e3524a",
+   "7b8ffbe373654f98869af07960ae352df024bcab",
    "testharness"
   ],
   "IndexedDB/idbobjectstore_get5.htm": [
@@ -57837,7 +58266,7 @@
    "testharness"
   ],
   "IndexedDB/transaction-lifetime-blocked.htm": [
-   "2b97fa14d13e5ea212dc51b728bcc469557248f2",
+   "e05a90c62a9f304bb5e7b0c7d8f4360ea860c907",
    "testharness"
   ],
   "IndexedDB/transaction-lifetime-empty.html": [
@@ -57845,7 +58274,7 @@
    "testharness"
   ],
   "IndexedDB/transaction-lifetime.htm": [
-   "226a7242cf0f8eb9f6f39c4d467a044c8da8d00f",
+   "19325bbfa1865ae5cbc3d38d7a7da2ed298da0dc",
    "testharness"
   ],
   "IndexedDB/transaction-requestqueue.htm": [
@@ -57877,7 +58306,7 @@
    "testharness"
   ],
   "IndexedDB/writer-starvation.htm": [
-   "d49f3f1bffc93174522c6d8c815e7f7ae0cd18a9",
+   "76b34c6324cb5191aee56de0fd94e6132e65f15a",
    "testharness"
   ],
   "WebIDL/current-realm-expected.txt": [
@@ -59257,7 +59686,7 @@
    "support"
   ],
   "content-security-policy/child-src/child-src-about-blank-allowed-by-default.sub.html": [
-   "5cac17e73bbf919ababbd3823d56762a96a231d5",
+   "3cfb06c55ac7dc026170b1ae886beba63cebac57",
    "testharness"
   ],
   "content-security-policy/child-src/child-src-about-blank-allowed-by-default.sub.html.sub.headers": [
@@ -60216,6 +60645,18 @@
    "ff4d7ca289ea20fa00bca535fdcf929876a2278b",
    "testharness"
   ],
+  "css-typed-om/CSSMatrixComponent-DOMMatrix-mutable.html": [
+   "f6056e2480829c7aa9885673d332496faf7777b5",
+   "testharness"
+  ],
+  "css-typed-om/declared-styleMap-accepts-inherit.html": [
+   "2d6e5a3bc89559c671ed9a2dbad8e5f456b947a9",
+   "testharness"
+  ],
+  "css-typed-om/styleMap-update-function.html": [
+   "ba9d58c998b7c7ab586fd54e80a0466133c91ebc",
+   "testharness"
+  ],
   "css-values/unset-value-storage.html": [
    "d2e5101f623e29cc993fe2460f6c85f6ec31b471",
    "testharness"
@@ -60729,7 +61170,7 @@
    "support"
   ],
   "dom/lists/DOMTokenList-coverage-for-attributes.html": [
-   "6c23a5f1c45aaa6e0e0c821986094ae491fdae43",
+   "ef209cd9285ddaaaa1c09d3448607070332bedf7",
    "testharness"
   ],
   "dom/lists/DOMTokenList-iteration-expected.txt": [
@@ -61185,7 +61626,7 @@
    "testharness"
   ],
   "dom/nodes/Document-getElementsByTagName-expected.txt": [
-   "dc9806c46b97d93eb3f72fc8422c8147014a4f58",
+   "7a455888f847aebb2e0a525ef3c9fccaee24a7cf",
    "support"
   ],
   "dom/nodes/Document-getElementsByTagName-xhtml-expected.txt": [
@@ -61321,7 +61762,7 @@
    "testharness"
   ],
   "dom/nodes/Element-getElementsByTagName-expected.txt": [
-   "282f3fc010d2db0858a8b8bb141028a3c0d03361",
+   "ce17050c4337e3700155846313ae8d61adcc3ca0",
    "support"
   ],
   "dom/nodes/Element-getElementsByTagName.html": [
@@ -61365,11 +61806,11 @@
    "support"
   ],
   "dom/nodes/Element-matches.html": [
-   "cd92efe8ce474ce030e3e9ad5997c5ee247e481a",
+   "1c3babeb4f7c2a9f2a35d96aa6eb456f88966cbd",
    "testharness"
   ],
   "dom/nodes/Element-matches.js": [
-   "f3923e42c55eac3f4dc9d2f8fb128e4e9b1b3afb",
+   "9ce802ae7a010a1a8458f49f1fdc1db81dafb8c7",
    "support"
   ],
   "dom/nodes/Element-nextElementSibling-xhtml.xhtml": [
@@ -61406,6 +61847,10 @@
   ],
   "dom/nodes/Element-tagName.html": [
    "d6bb6d9f107f2d3ffd3c86793185eeb4336df834",
+   "testharness"
+  ],
+  "dom/nodes/Element-webkitMatchesSelector.html": [
+   "31934621453740439f9b318c0bb8b180ac3071c3",
    "testharness"
   ],
   "dom/nodes/MutationObserver-attributes-expected.txt": [
@@ -61661,7 +62106,7 @@
    "support"
   ],
   "dom/nodes/case-expected.txt": [
-   "a69d54b7c153ff65eb2ae91802681fca13517866",
+   "04da91ce54c42bbd57496a60483553e45fd43947",
    "support"
   ],
   "dom/nodes/case.html": [
@@ -62196,6 +62641,10 @@
    "4842d40e22e25ee72536946d785a3cd03bc6a11d",
    "testharness"
   ],
+  "domxpath/interfaces-expected.txt": [
+   "2b5d022a5dab228aaac03cb32b042179f9673adb",
+   "support"
+  ],
   "domxpath/interfaces.html": [
    "6848bd27f62d93fa527684c5625a42f4dc6470c2",
    "testharness"
@@ -62257,7 +62706,7 @@
    "support"
   ],
   "editing/data/inserthorizontalrule.js": [
-   "1db27b1d9ace51dc47cb1b5f51e2827357a73dd5",
+   "a65609ebe407670a94a2ff59ed62ea4c2a3e1080",
    "support"
   ],
   "editing/data/inserthtml.js": [
@@ -62289,7 +62738,7 @@
    "support"
   ],
   "editing/data/italic.js": [
-   "6677c18d063d0444cba053e082edce38ad60822b",
+   "5459c6140ac7aadc49b716b82feba092eb8f67af",
    "support"
   ],
   "editing/data/justifycenter.js": [
@@ -62313,7 +62762,7 @@
    "support"
   ],
   "editing/data/multitest.js": [
-   "a7a7c79afbc60598311ec40ee630d119653684c8",
+   "aaecbcfb0c1077e4940181f74c6ddbd91d23fcbd",
    "support"
   ],
   "editing/data/outdent.js": [
@@ -62321,27 +62770,31 @@
    "support"
   ],
   "editing/data/removeformat.js": [
-   "a7dce438b92b252bccabaf86488428008df2d721",
+   "b7a24b8162be7c11b0cf2a6443fe0d3973e3bc75",
    "support"
   ],
   "editing/data/strikethrough.js": [
-   "e6d44fd95d818454b9c84ab76449be23ed7e1c94",
+   "6016f3210874b49ae49093d0c3ab63ac8cd5abf8",
    "support"
   ],
   "editing/data/subscript.js": [
-   "adfce261588df0b26fd2cdd881453a49caa7075d",
+   "0bf0515ad3643a09ab8af047fa01e14f62d13208",
    "support"
   ],
   "editing/data/superscript.js": [
-   "0640a4319d8a788e90adfcd8662ec7191080bcce",
+   "f8b0e882d6911894e0b3b9ba74faad382d3db478",
    "support"
   ],
   "editing/data/underline.js": [
-   "15c33ca88e2d4a797327cd72b6aba8c2d8aa838a",
+   "cb53bbac4065882c9bb1ef95975794cfd6b8616a",
    "support"
   ],
   "editing/data/unlink.js": [
    "b15636f4a5dc2a56712aa5133139244d0ba77624",
+   "support"
+  ],
+  "editing/event-expected.txt": [
+   "f99f6085ec29df4e94a71275915ef0eef4fa5875",
    "support"
   ],
   "editing/event.html": [
@@ -62365,7 +62818,7 @@
    "support"
   ],
   "editing/include/tests.js": [
-   "30ccc3c37af706c78276459eb5b539262eddb3a8",
+   "b14610e875467c62eedb10fd8b3feefe5a3a25b6",
    "support"
   ],
   "editing/manual/delete.manual.html": [
@@ -62392,141 +62845,281 @@
    "7a5589f41ab8405d6ed09a4b83bd0c60e2a59677",
    "support"
   ],
+  "editing/other/delete-expected.txt": [
+   "c095b49ca535a2e22d1ebdabb081d9828ed622f8",
+   "support"
+  ],
   "editing/other/delete.html": [
    "c812df13215631719f8ff17eee4e0a854684670d",
    "testharness"
+  ],
+  "editing/other/restoration-expected.txt": [
+   "44e469414a6a79011ef935a70af52aeee7b3689d",
+   "support"
   ],
   "editing/other/restoration.html": [
    "432d9d66ec7621faf22a31960816290193b60aed",
    "testharness"
   ],
+  "editing/run/backcolor-expected.txt": [
+   "6db848a0cbdd9c3a20841060b28826d044f689d0",
+   "support"
+  ],
   "editing/run/backcolor.html": [
    "72840bfcf7e62249773e925f79ba196218964373",
    "testharness"
+  ],
+  "editing/run/bold-expected.txt": [
+   "62e92d7096dcc4efe1dd09c348289be0d3d34452",
+   "support"
   ],
   "editing/run/bold.html": [
    "afd5a6f83bea4869dd3e26c3155f42fa97825f31",
    "testharness"
   ],
+  "editing/run/createlink-expected.txt": [
+   "363e100149b3786029418ca216c878e875a4032e",
+   "support"
+  ],
   "editing/run/createlink.html": [
    "ec46bf84c1e1a93884e84cd8508fb80954e5509e",
    "testharness"
+  ],
+  "editing/run/delete-expected.txt": [
+   "2564f5956e2ba87099a328381af2d456054fcc20",
+   "support"
   ],
   "editing/run/delete.html": [
    "453817d93bbee28d068b35b79ef2708046380d6e",
    "testharness"
   ],
+  "editing/run/fontname-expected.txt": [
+   "9d85af786d1b7e6837276a586852b022008ae70b",
+   "support"
+  ],
   "editing/run/fontname.html": [
    "17e45bc9d2a9fd68eed1ed0f667ad6c594245f69",
    "testharness"
+  ],
+  "editing/run/fontsize-expected.txt": [
+   "21549190395e8771956c6ac1d09a7097eb4794aa",
+   "support"
   ],
   "editing/run/fontsize.html": [
    "ddbe2003d7750c2cae2e314d725a3ec18fe58803",
    "testharness"
   ],
+  "editing/run/forecolor-expected.txt": [
+   "9a01307055af93761b90ef8203d7d06e8f4c988e",
+   "support"
+  ],
   "editing/run/forecolor.html": [
    "c30cfc807ebfaff9a0035ffdad4bb594a9fc3c36",
    "testharness"
+  ],
+  "editing/run/formatblock-expected.txt": [
+   "43b5b385837b21859b3ffb43dce5a12b75f3f34d",
+   "support"
   ],
   "editing/run/formatblock.html": [
    "22b79f3cc4c50b902679315d9c391785bfd4b407",
    "testharness"
   ],
+  "editing/run/forwarddelete-expected.txt": [
+   "25cd7e50a10ce2b54240b3806fbc85085862fdca",
+   "support"
+  ],
   "editing/run/forwarddelete.html": [
    "8f038ec65ff7ee900792053c87d5a43997f9513c",
    "testharness"
+  ],
+  "editing/run/hilitecolor-expected.txt": [
+   "6ed6fea5e8e7e95fdd5507dec9cf146d4d3869c3",
+   "support"
   ],
   "editing/run/hilitecolor.html": [
    "267c72c439d1b10fa29431cf4051a21e1188aada",
    "testharness"
   ],
+  "editing/run/indent-expected.txt": [
+   "f895cf8194134186abe4cafe14c093fb551976fe",
+   "support"
+  ],
   "editing/run/indent.html": [
    "1bed1283ad3b220b2949c0720cba60105c888ec2",
    "testharness"
+  ],
+  "editing/run/inserthorizontalrule-expected.txt": [
+   "54ede2e3f1ae625deefa1cba046fd594348b623d",
+   "support"
   ],
   "editing/run/inserthorizontalrule.html": [
    "49b66e6425c8d7d8c3c7b63070a745483bcfc46f",
    "testharness"
   ],
+  "editing/run/inserthtml-expected.txt": [
+   "abaa4e5c3b25ff5527264686ccf983b6496a80d5",
+   "support"
+  ],
   "editing/run/inserthtml.html": [
    "030d9b7c2a4beeb59771824026bbeca52412f11e",
    "testharness"
+  ],
+  "editing/run/insertimage-expected.txt": [
+   "7f9708745189ec549f4fc6cefb6cb3bb8765cf74",
+   "support"
   ],
   "editing/run/insertimage.html": [
    "3e0e8ba9ead38584dd2aff90dcaef951e5516ad0",
    "testharness"
   ],
+  "editing/run/insertlinebreak-expected.txt": [
+   "0499f6848246afb3698c6c9b0c4295662d8baa4f",
+   "support"
+  ],
   "editing/run/insertlinebreak.html": [
    "03dab78410d2b46b1207f98b0c7558476272eb6c",
    "testharness"
+  ],
+  "editing/run/insertorderedlist-expected.txt": [
+   "6a15e382f43703f5086c69aec2af70c22bb14632",
+   "support"
   ],
   "editing/run/insertorderedlist.html": [
    "4bbd92617b99dcc52e8ec30578293c9807485f4f",
    "testharness"
   ],
+  "editing/run/insertparagraph-expected.txt": [
+   "cdc50139687a32be4866575c810b1790478b1eaf",
+   "support"
+  ],
   "editing/run/insertparagraph.html": [
    "85fc96c65b9b7ebde21e6d01f1987ef1eca1de7c",
    "testharness"
+  ],
+  "editing/run/inserttext-expected.txt": [
+   "a8daa42d55dde6130d824c336cdfdeca6cbdda28",
+   "support"
   ],
   "editing/run/inserttext.html": [
    "9d67c24d5c6d3ff7b43b92c6c2a22543a04a5f05",
    "testharness"
   ],
+  "editing/run/insertunorderedlist-expected.txt": [
+   "238a3e32f880ab9a480b933ed2cef39c04ecde7a",
+   "support"
+  ],
   "editing/run/insertunorderedlist.html": [
    "3f714f7a4def53a2daa9d44712b76061e2ca7552",
    "testharness"
+  ],
+  "editing/run/italic-expected.txt": [
+   "ce87e74285f048c36a5649cbe3687f9a64837ba6",
+   "support"
   ],
   "editing/run/italic.html": [
    "6a4b267457182ea6de8835db633c1420b84c1c05",
    "testharness"
   ],
+  "editing/run/justifycenter-expected.txt": [
+   "55ab8bf1f428bcb16d6f7e635461fc58fc4e40cd",
+   "support"
+  ],
   "editing/run/justifycenter.html": [
    "8cd4e2356ad9f624c3dd60fe3c11879144667ade",
    "testharness"
+  ],
+  "editing/run/justifyfull-expected.txt": [
+   "71cfbe2894a934a7dbe755f96be22ae3cfd76ff5",
+   "support"
   ],
   "editing/run/justifyfull.html": [
    "86c11e290c9cd638d47772f5d768a85032959255",
    "testharness"
   ],
+  "editing/run/justifyleft-expected.txt": [
+   "f24ed43ba14adc0b230f97fbb1da1ad7484d9857",
+   "support"
+  ],
   "editing/run/justifyleft.html": [
    "ae457fa7fd35d9f8a23c491e0c34035ecaecf910",
    "testharness"
+  ],
+  "editing/run/justifyright-expected.txt": [
+   "77f076f3a55d44ec69fd16a8671500e729e78242",
+   "support"
   ],
   "editing/run/justifyright.html": [
    "a2b6ddbde460033add9355db7667fa01808cf163",
    "testharness"
   ],
+  "editing/run/misc-expected.txt": [
+   "d6ca3ff4f6d5ba3ec0c992141b277db0c2c4fe66",
+   "support"
+  ],
   "editing/run/misc.html": [
    "0120aa0c66d6e53d77cb12f60759138bdd06d19d",
    "testharness"
+  ],
+  "editing/run/multitest-expected.txt": [
+   "464596fc13fbc8bd30a0dd5599482bde709f7d08",
+   "support"
   ],
   "editing/run/multitest.html": [
    "76f32abdd5a42bc72e3af19c906a6a4ea85b1758",
    "testharness"
   ],
+  "editing/run/outdent-expected.txt": [
+   "6bc2b5bc64e244f405fef10491ff488fde49f4dc",
+   "support"
+  ],
   "editing/run/outdent.html": [
    "0888d3530c6a646218f7c5267916dd98960796e7",
    "testharness"
+  ],
+  "editing/run/removeformat-expected.txt": [
+   "1b9192a8c6ffe728bf7ed29bb5ecaf3031c019da",
+   "support"
   ],
   "editing/run/removeformat.html": [
    "2bc4c61e197ef3591509cd7cad0484f879d0bb26",
    "testharness"
   ],
+  "editing/run/strikethrough-expected.txt": [
+   "556fe981e6ff39f05c684cf09cad988d0f6826aa",
+   "support"
+  ],
   "editing/run/strikethrough.html": [
    "b702fc2dfff8245ec6d91f0ab79566ff92a131b3",
    "testharness"
+  ],
+  "editing/run/subscript-expected.txt": [
+   "3cd2f59a054793b380b26c97e14dd66a4eafdf17",
+   "support"
   ],
   "editing/run/subscript.html": [
    "3c0bb1665e110da97b1d4466dfb3f9baa8d2ade3",
    "testharness"
   ],
+  "editing/run/superscript-expected.txt": [
+   "99bdbce26037adcdb4ae4d590b89855872507f1d",
+   "support"
+  ],
   "editing/run/superscript.html": [
    "1dfa51b6575d008f018c48681c1510e0dc20acc0",
    "testharness"
   ],
+  "editing/run/underline-expected.txt": [
+   "394462e6cbceb3ba7252aab62f7faee51394b940",
+   "support"
+  ],
   "editing/run/underline.html": [
    "ac6b3430cf6f21e3d2a09567a6c14ff45ddef913",
    "testharness"
+  ],
+  "editing/run/unlink-expected.txt": [
+   "430f6b6c0fb8c5979c342ca8c2055bfc4c721d0c",
+   "support"
   ],
   "editing/run/unlink.html": [
    "43917206cc52c52334fdb3112dc6ffc1ce9c0d3c",
@@ -67245,11 +67838,11 @@
    "testharness"
   ],
   "html/dom/reflection.js": [
-   "7675f0b4e2b364d84cc878edf0608cf563267e6c",
+   "d952a2936d184f18f3de4c00c5a871ce303b3963",
    "support"
   ],
   "html/dom/resources/interfaces.idl": [
-   "4319380dff6b1b48a5a8b75efdf6819fc34542fb",
+   "c1956dd55ef38013b13d940ba6f4897e4da822cd",
    "support"
   ],
   "html/dom/resources/self-origin-subframe.html": [
@@ -67263,10 +67856,6 @@
   "html/dom/self-origin.any.js": [
    "187b3657775b815f9360c01d2ddb358a53e1f920",
    "testharness"
-  ],
-  "html/dom/self-origin.sub-expected.txt": [
-   "3290e26b35ce68236d0b3067e949a725601ee5a1",
-   "support"
   ],
   "html/dom/self-origin.sub.html": [
    "d821d4b41ac8517d345f86a9f8298f67284d1967",
@@ -70664,6 +71253,54 @@
    "ed3aa629bb438b285cc30761f526e76bad8c01b8",
    "testharness"
   ],
+  "html/infrastructure/urls/resolving-urls/query-encoding/resources/blank.py": [
+   "e55787bc9f46f01aece15afed2ce0686d143dc03",
+   "support"
+  ],
+  "html/infrastructure/urls/resolving-urls/query-encoding/resources/css-tmpl.py": [
+   "d3c8152013bb23c76a4ce9f96a30dc453309bc88",
+   "support"
+  ],
+  "html/infrastructure/urls/resolving-urls/query-encoding/resources/manifest.py": [
+   "ac4bab3d195d554570b3b035093a2750a4fdfa01",
+   "support"
+  ],
+  "html/infrastructure/urls/resolving-urls/query-encoding/resources/page-using-manifest.py": [
+   "349a5e8aec778ee6cabac210226a01f14be904e1",
+   "support"
+  ],
+  "html/infrastructure/urls/resolving-urls/query-encoding/resources/resolve-url.js": [
+   "2c408d03723d2b0fca4d15ec233f6b5143c93680",
+   "support"
+  ],
+  "html/infrastructure/urls/resolving-urls/query-encoding/resources/resource.py": [
+   "1fe80369b002489cec48913f0a59c8099cef6461",
+   "support"
+  ],
+  "html/infrastructure/urls/resolving-urls/query-encoding/resources/stash.py": [
+   "0d599936f6a0baf6d9cce8d3236c146a159f1add",
+   "support"
+  ],
+  "html/infrastructure/urls/resolving-urls/query-encoding/utf-16be.html": [
+   "a541d9b6f0ef22d39112a81056be12e49264d4a0",
+   "testharness"
+  ],
+  "html/infrastructure/urls/resolving-urls/query-encoding/utf-16le.html": [
+   "457b5c54592a4b887dbc9cd0d0aac6440646467f",
+   "testharness"
+  ],
+  "html/infrastructure/urls/resolving-urls/query-encoding/utf-8.html": [
+   "e2e8de4a8cb424217fe3c6c4e6c7a0088cf0e154",
+   "testharness"
+  ],
+  "html/infrastructure/urls/resolving-urls/query-encoding/windows-1251.html": [
+   "424312dc522d01f4ae0eedccc618451f13ca65fa",
+   "testharness"
+  ],
+  "html/infrastructure/urls/resolving-urls/query-encoding/windows-1252.html": [
+   "1b8570b2cf1f5a136c0f4b4d1506b01e6fb6cb31",
+   "testharness"
+  ],
   "html/infrastructure/urls/terminology-0/document-base-url-expected.txt": [
    "f6c6e95beebcbe393896d1b31941141e7c45b97e",
    "support"
@@ -71129,11 +71766,11 @@
    "reftest"
   ],
   "html/rendering/replaced-elements/resources/svg-sizing.js": [
-   "f5ce42553e067f5357d31d9cc5a1deb41410df4b",
+   "bbf4061fac8f777b444c23e6df31cd4fa8cc3955",
    "support"
   ],
   "html/rendering/replaced-elements/svg-embedded-sizing/svg-embedded-sizing.js": [
-   "91661663d6c6ea13e455e0296c9350ccc19d0089",
+   "8a81ef6d6d92a20cb4c86ef8e4f8a3e18f09a7a0",
    "support"
   ],
   "html/rendering/replaced-elements/svg-embedded-sizing/svg-in-img-auto.html": [
@@ -71656,6 +72293,10 @@
    "f3bbb0f87c26f01b76c6e032891bbbc45b964f77",
    "testharness"
   ],
+  "html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-invoke-insert-source-networkState-expected.txt": [
+   "955753cfadaa82b8ccf6521e879fdec9aefb1c6e",
+   "support"
+  ],
   "html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-invoke-insert-source-networkState.html": [
    "faf29cdae002b841d0e38ac7291c08ae56619b4d",
    "testharness"
@@ -71763,6 +72404,10 @@
   "html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-pointer-insert-text.html": [
    "964479f38332cebf9dea9312f28d47836203dad5",
    "testharness"
+  ],
+  "html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-pointer-remove-source-after-expected.txt": [
+   "b336ec3decb591e7565b52edde20d076dbd51595",
+   "support"
   ],
   "html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-pointer-remove-source-after.html": [
    "665427ef1cdad4fc4648f11ba7322156afcfbebf",
@@ -72057,7 +72702,7 @@
    "testharness"
   ],
   "html/semantics/embedded-content/the-iframe-element/iframe_sandbox_allow_top_navigation_by_user_activation-manual.html": [
-   "31fa1d1e2ad26e0e6746269a4f7673c2e12c187f",
+   "7f8cc0226de24738bc75517e95d2942396b222a8",
    "manual"
   ],
   "html/semantics/embedded-content/the-iframe-element/iframe_sandbox_allow_top_navigation_by_user_activation_without_user_gesture.html": [
@@ -72117,7 +72762,7 @@
    "support"
   ],
   "html/semantics/embedded-content/the-iframe-element/support/iframe-that-performs-top-navigation.html": [
-   "1fb30b9d76157dc9f5ac9d294cec54c2d9479a9d",
+   "a4a67179771917899f41114467b46be39d857eb5",
    "support"
   ],
   "html/semantics/embedded-content/the-iframe-element/support/navigation-changed-iframe.html": [
@@ -72518,6 +73163,10 @@
   ],
   "html/semantics/forms/textfieldselection/original-id.json": [
    "14a6f0077d512837c24931a2a9723e11d1d7a1c7",
+   "support"
+  ],
+  "html/semantics/forms/textfieldselection/select-event-expected.txt": [
+   "2cdb4a00c85c2f68497c065ca53e40c1e573dd51",
    "support"
   ],
   "html/semantics/forms/textfieldselection/select-event.html": [
@@ -73392,6 +74041,10 @@
    "2d1c2cf696010feb64b17f00a072f3bbe6b1d713",
    "support"
   ],
+  "html/semantics/scripting-1/the-script-element/external-script-windows1250.js": [
+   "43e3b65a18328fa95ba89cb4f075d1ab422580fa",
+   "support"
+  ],
   "html/semantics/scripting-1/the-script-element/fetch-src/alpha/base.html": [
    "13d313f817d5597dd0cecbc23f0162f95f9634cc",
    "testharness"
@@ -73679,6 +74332,18 @@
   "html/semantics/scripting-1/the-script-element/resources/set-script-executed.js": [
    "87f80eee703965c88f2bf7015bfa76233d459d06",
    "support"
+  ],
+  "html/semantics/scripting-1/the-script-element/script-charset-01.html": [
+   "4d8f27447b5c76174a2e353f160066fbe156a005",
+   "testharness"
+  ],
+  "html/semantics/scripting-1/the-script-element/script-charset-02.html": [
+   "fd855537451d81818fda97de8a6eff2f8ebd7a5e",
+   "testharness"
+  ],
+  "html/semantics/scripting-1/the-script-element/script-charset-03.html": [
+   "c1daf890ff2c71f63d1c668de9002d493dbcb417",
+   "testharness"
   ],
   "html/semantics/scripting-1/the-script-element/script-crossorigin-network.html": [
    "ca03ec45f3b8d117d0488b67f082868bac847af6",
@@ -75132,6 +75797,10 @@
    "c8e48064f18b1d1eb13e151b69ee60b8d68f4dab",
    "testharness"
   ],
+  "html/webappapis/scripting/events/compile-event-handler-settings-objects-expected.txt": [
+   "13a1074c8a857731e0c1a18814f2d27413f156b5",
+   "support"
+  ],
   "html/webappapis/scripting/events/compile-event-handler-settings-objects.html": [
    "43a17069cb0d3c819d1b55eaa4616af0b0a338b7",
    "testharness"
@@ -75651,6 +76320,18 @@
   "html/webappapis/system-state-and-capabilities/the-navigator-object/protocol/006.xhtml": [
    "8efe37cac0d5dd0004bf0743c702eba27690058f",
    "testharness"
+  ],
+  "html/webappapis/the-windoworworkerglobalscope-mixin/Worker_Self_Origin.html": [
+   "9b895ac9dba41e20e341114eac7ab383cd8b08fb",
+   "testharness"
+  ],
+  "html/webappapis/the-windoworworkerglobalscope-mixin/support/WorkerSelfOriginSharedWorker.js": [
+   "42077e6038d7dca23ea9dbd6f95f0f53a9e762fa",
+   "support"
+  ],
+  "html/webappapis/the-windoworworkerglobalscope-mixin/support/WorkerSelfOriginWorker.js": [
+   "00ef4a167d7b93567416ee0de031feb76eaec937",
+   "support"
   ],
   "html/webappapis/timers/evil-spec-example.html": [
    "49fd55dbbf64c6973a0e76284c0e3d8b7bf0ef3c",
@@ -77979,6 +78660,10 @@
   "pointerevents/pointerevent_constructor.html": [
    "0b247d3b7dfd047c217a78c59652a3c32df0fcfa",
    "testharness"
+  ],
+  "pointerevents/pointerevent_disabled_form_control-manual.html": [
+   "dff74a4548994fcef47d4f0361f6c48607d08b18",
+   "manual"
   ],
   "pointerevents/pointerevent_element_haspointercapture-manual.html": [
    "fd7ceeb1f55491c3082a0171951a9bc1489500cc",
@@ -85748,9 +86433,17 @@
    "31a5ee7a3619c62dbd35eafb66725bf4192639a0",
    "testharness"
   ],
+  "selection/addRange-00-expected.txt": [
+   "eedac4c59c749216666bcd60a08711810db36e73",
+   "support"
+  ],
   "selection/addRange-00.html": [
    "e99b95a6bdcba9f4945fb9b03de34ff54469012a",
    "testharness"
+  ],
+  "selection/addRange-04-expected.txt": [
+   "cdd195d7aadd66603ca9c0f5bf2b52cf054b92f2",
+   "support"
   ],
   "selection/addRange-04.html": [
    "c241e1c3a82f09c14bbf217350b2ee0b58c17178",
@@ -85760,29 +86453,57 @@
    "6d51d9f4042e5590483fae60d19351602d6b0aa2",
    "testharness"
   ],
+  "selection/addRange-12-expected.txt": [
+   "c37408236a59467912d31966c48e105b372be787",
+   "support"
+  ],
   "selection/addRange-12.html": [
    "add2e904651f3564741742dc5e1dcb7e3debc50c",
    "testharness"
+  ],
+  "selection/addRange-16-expected.txt": [
+   "d8e9f67a786aea3ea8b94f942663ad69a419c52a",
+   "support"
   ],
   "selection/addRange-16.html": [
    "b8357b81e8cff46960b158f2eff40950aba04158",
    "testharness"
   ],
+  "selection/addRange-20-expected.txt": [
+   "2bc82fd38cd3bd635d3bda05fe3d92bc99f5e98a",
+   "support"
+  ],
   "selection/addRange-20.html": [
    "88fb182b058eae495b92c10a1ddc2bd7768e96cd",
    "testharness"
+  ],
+  "selection/addRange-24-expected.txt": [
+   "fd4aabd6d0ed1531e3adc99411095b501e2be0de",
+   "support"
   ],
   "selection/addRange-24.html": [
    "d6c0ce809239b2bafda14dab540bda45e3e89752",
    "testharness"
   ],
+  "selection/addRange-28-expected.txt": [
+   "a0eb6bab0cdc1093ccad3c96eef6e99895d1a537",
+   "support"
+  ],
   "selection/addRange-28.html": [
    "a2583e4f46561f8b09183186aed7ca137fab26dd",
    "testharness"
   ],
+  "selection/addRange-32-expected.txt": [
+   "c5bc03594b1095dedab19073232291b45f73a31a",
+   "support"
+  ],
   "selection/addRange-32.html": [
    "431ec670ebbcd0d0032fc416bd0910507fa76680",
    "testharness"
+  ],
+  "selection/addRange-36-expected.txt": [
+   "fbed318b78eb54ba405d9b055d92f66bf899cf0a",
+   "support"
   ],
   "selection/addRange-36.html": [
    "9572f7b20ee6891157025e576cf837e496a61669",
@@ -85809,7 +86530,7 @@
    "testharness"
   ],
   "selection/addRange.js": [
-   "67bd52a4653938061f121ed57ead8d768acdde2b",
+   "36982e3d91452822913d41c41c36d28339cab8a2",
    "support"
   ],
   "selection/collapse-00.html": [
@@ -85829,7 +86550,7 @@
    "testharness"
   ],
   "selection/common.js": [
-   "279c4bf2f03cb1caa26b83a5898adfbf8bef2a5f",
+   "faf1740b23010409c1a26f7e847b75268b947d16",
    "support"
   ],
   "selection/deleteFromDocument.html": [
@@ -86457,11 +87178,11 @@
    "testharness"
   ],
   "service-workers/service-worker/navigate-window.https-expected.txt": [
-   "de75d3fb7cce8c624f454e55f9a888a55fb1c3a8",
+   "577a4fb4ab8695806f19dd72c6683cd1b3f04c0b",
    "support"
   ],
   "service-workers/service-worker/navigate-window.https.html": [
-   "669507683c98d99aa5dcfbddd71c23f8464b7c21",
+   "0499d4489276c2a933b79e47f1de591f467f42aa",
    "testharness"
   ],
   "service-workers/service-worker/navigation-redirect.https-expected.txt": [
@@ -87916,6 +88637,10 @@
    "5ce835b9c17e0cd61830abdd4f4e7aa5d5a47d8d",
    "support"
   ],
+  "storage/interfaces-expected.txt": [
+   "2763c4aab3b040727421dbd408d05582fe5ad17f",
+   "support"
+  ],
   "storage/interfaces.html": [
    "76fa61c3a87485266a7f9d6f66e5d08bb7881ff7",
    "testharness"
@@ -87927,10 +88652,6 @@
   "storage/interfaces.worker.js": [
    "da11cf56486fe08214f91d181b3a19775f6aa59c",
    "testharness"
-  ],
-  "storage/opaque-origin.https-expected.txt": [
-   "d33853b6c37f68b0d903be4323d3abd506f49675",
-   "support"
   ],
   "storage/opaque-origin.https.html": [
    "6ce5a9b14d80030f0adfa1808857294e8c923cb2",
@@ -88353,7 +89074,7 @@
    "testharness"
   ],
   "streams/readable-streams/brand-checks.js": [
-   "b3d64fa1a34d38a56451722efdc1d66b2227503d",
+   "c8ffdcf56bfddf5792af6eed627db55d7df3b444",
    "support"
   ],
   "streams/readable-streams/brand-checks.serviceworker-expected.txt": [
@@ -88416,6 +89137,26 @@
    "42cf0e2dd45eae0311c210cced7d9c9c83620501",
    "testharness"
   ],
+  "streams/readable-streams/default-reader.dedicatedworker.html": [
+   "42750f1d324f57507feb0260704a55c4cc0f8382",
+   "testharness"
+  ],
+  "streams/readable-streams/default-reader.html": [
+   "4dca4e9785abb22b398029417dde50621c5c92aa",
+   "testharness"
+  ],
+  "streams/readable-streams/default-reader.js": [
+   "bf6b1859b76b4891b558da229e7a2e4d40eb3a1d",
+   "support"
+  ],
+  "streams/readable-streams/default-reader.serviceworker.https.html": [
+   "7a3f17c90551967ccc24bbc835eef2b521bf08b9",
+   "testharness"
+  ],
+  "streams/readable-streams/default-reader.sharedworker.html": [
+   "399221af8cca8157bcaa05582dc66e94e56bc856",
+   "testharness"
+  ],
   "streams/readable-streams/floating-point-total-queue-size.dedicatedworker.html": [
    "e07b6c46f7975b76a309ac9b728e4215d5e7fe9d",
    "testharness"
@@ -88445,7 +89186,7 @@
    "testharness"
   ],
   "streams/readable-streams/garbage-collection.js": [
-   "1f6fdea9689eb6a21d3fd6a0be362aaed642fda9",
+   "aea6c64d62b25ee9bf9ccf29214ec9bef7eab993",
    "support"
   ],
   "streams/readable-streams/garbage-collection.serviceworker-expected.txt": [
@@ -88518,30 +89259,6 @@
   ],
   "streams/readable-streams/pipe-through.sharedworker.html": [
    "8ecb019e754fd4239cb35c27787897efc2dacccb",
-   "testharness"
-  ],
-  "streams/readable-streams/readable-stream-reader.dedicatedworker.html": [
-   "1e6d8e7a09378353b62385ca3bb88961ac4b329c",
-   "testharness"
-  ],
-  "streams/readable-streams/readable-stream-reader.html": [
-   "952983c614a48e3e3cb80e9c498a1dbff4b666ad",
-   "testharness"
-  ],
-  "streams/readable-streams/readable-stream-reader.js": [
-   "76fbfc44284d6197edbcb3b54d1dba93fa142858",
-   "support"
-  ],
-  "streams/readable-streams/readable-stream-reader.serviceworker-expected.txt": [
-   "04408971a1d82a7d3c990774456381313f1584bb",
-   "support"
-  ],
-  "streams/readable-streams/readable-stream-reader.serviceworker.https.html": [
-   "e320ca7c96cfd77589d783f4e6a088935b277b82",
-   "testharness"
-  ],
-  "streams/readable-streams/readable-stream-reader.sharedworker.html": [
-   "dd2388b7f28a215f5032fc27231528e3b58abec2",
    "testharness"
   ],
   "streams/readable-streams/tee.dedicatedworker.html": [
@@ -89157,7 +89874,7 @@
    "support"
   ],
   "uievents/constructors/inputevent-constructor.html": [
-   "5af5377e8f5435b7c7bfafa2808e0a8dcf848ce4",
+   "757b9777e0cd956a27f036a1524c378bd922852b",
    "testharness"
   ],
   "uievents/hierarchy/README.md": [
@@ -89741,7 +90458,7 @@
    "testharness"
   ],
   "web-animations/interfaces/AnimationEffectTiming/duration.html": [
-   "4db95d7e5f518fc812886e7dcfddd40943077f90",
+   "54858f64784c74a3d112e559fb765a1dbb9ba279",
    "testharness"
   ],
   "web-animations/interfaces/AnimationEffectTiming/easing.html": [
@@ -89889,7 +90606,7 @@
    "support"
   ],
   "web-animations/resources/keyframe-utils.js": [
-   "7a0f21838f4bbda51fe7e0b5d8e55952c6cdcbd4",
+   "ff5700466b5af6ffaad824437d6566003a22e25b",
    "support"
   ],
   "web-animations/testcommon.js": [
@@ -93858,6 +94575,38 @@
   ],
   "workers/postMessage_target_source.htm": [
    "57c96d6fe9b09b015cc63be4aa8cb0d068f0d810",
+   "testharness"
+  ],
+  "workers/semantics/encodings/001.html": [
+   "9e4ebc403b7160f1bb29a291a111326f53ac27a4",
+   "testharness"
+  ],
+  "workers/semantics/encodings/001.html.headers": [
+   "3355b0c0188586c90715df2a82e5194c4e455da8",
+   "support"
+  ],
+  "workers/semantics/encodings/002.html": [
+   "51bb54279c2d46797e9684cd7831eb34d432b6b2",
+   "testharness"
+  ],
+  "workers/semantics/encodings/002.html.headers": [
+   "3355b0c0188586c90715df2a82e5194c4e455da8",
+   "support"
+  ],
+  "workers/semantics/encodings/003-1.py": [
+   "37f7812b142d48a3c84cb5f6b3f42400052e51a1",
+   "support"
+  ],
+  "workers/semantics/encodings/003.html": [
+   "237768c04968f414c0bc2323acf058bd1458ad7b",
+   "testharness"
+  ],
+  "workers/semantics/encodings/004.html": [
+   "050c5d8d2d4ef34f791488eb1cb27d31385b9373",
+   "testharness"
+  ],
+  "workers/semantics/encodings/004.worker.js": [
+   "29d11e52a82f8c3fda12966fc0c6d02c957a6ffd",
    "testharness"
   ],
   "workers/semantics/interface-objects/001.worker.js": [
