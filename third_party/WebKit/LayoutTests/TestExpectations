@@ -848,8 +848,6 @@ Bug(github) external/wpt/uievents/keyboard/key-manual.js [ Skip ]
 crbug.com/698135 external/wpt/editing/run/delete.html [ Crash Failure Timeout ]
 crbug.com/698165 external/wpt/editing/run/forwarddelete.html [ Pass Timeout ]
 crbug.com/698165 external/wpt/editing/run/justifycenter.html [ Pass Timeout ]
-crbug.com/698165 external/wpt/editing/run/multitest.html [ Pass Timeout ]
-crbug.com/698165 external/wpt/editing/run/removeformat.html [ Pass Timeout ]
 
 crbug.com/688613 external/wpt/mediacapture-streams/MediaStreamTrack-MediaElement-disabled-audio-is-silence.https.html [ Skip ]
 
@@ -1824,6 +1822,13 @@ crbug.com/695270 [ Linux ] external/csswg-test/css-writing-modes-3/overconstrain
 crbug.com/695270 [ Linux ] external/csswg-test/css-writing-modes-3/overconstrained-rel-pos-rtl-top-bottom-vrl-006.xht [ Failure ]
 
 # ====== New tests from w3c-test-autoroller added here ======
+crbug.com/626703 [ Android Linux Mac10.10 Mac10.11 ] external/wpt/fullscreen/api/document-exit-fullscreen-nested-in-iframe-manual.html [ Timeout ]
+crbug.com/626703 external/wpt/html/infrastructure/urls/resolving-urls/query-encoding/utf-16be.html [ Timeout ]
+crbug.com/626703 external/wpt/html/infrastructure/urls/resolving-urls/query-encoding/utf-16le.html [ Timeout ]
+crbug.com/626703 external/wpt/html/infrastructure/urls/resolving-urls/query-encoding/utf-8.html [ Timeout ]
+crbug.com/626703 external/wpt/html/infrastructure/urls/resolving-urls/query-encoding/windows-1251.html [ Timeout ]
+crbug.com/626703 external/wpt/html/infrastructure/urls/resolving-urls/query-encoding/windows-1252.html [ Timeout ]
+crbug.com/626703 [ Android Mac ] external/wpt/pointerevents/pointerevent_disabled_form_control-manual.html [ Timeout ]
 crbug.com/626703 external/wpt/streams/readable-streams/floating-point-total-queue-size.dedicatedworker.html [ Timeout ]
 crbug.com/626703 external/wpt/streams/readable-streams/floating-point-total-queue-size.sharedworker.html [ Timeout ]
 crbug.com/626703 external/wpt/streams/writable-streams/floating-point-total-queue-size.dedicatedworker.html [ Timeout ]
@@ -2136,7 +2141,6 @@ crbug.com/626703 external/wpt/streams/readable-streams/cancel.html [ Failure Tim
 crbug.com/626703 external/wpt/streams/readable-streams/count-queuing-strategy-integration.html [ Failure Timeout ]
 crbug.com/626703 external/wpt/streams/readable-streams/garbage-collection.html [ Failure Timeout ]
 crbug.com/626703 external/wpt/streams/readable-streams/general.html [ Failure Timeout ]
-crbug.com/626703 external/wpt/streams/readable-streams/readable-stream-reader.html [ Failure Timeout ]
 crbug.com/626703 external/wpt/streams/readable-streams/tee.html [ Failure Timeout ]
 crbug.com/626703 external/wpt/streams/readable-streams/templated.html [ Failure Timeout ]
 crbug.com/626703 external/wpt/html/webappapis/idle-callbacks/callback-exception.html [ Timeout ]
