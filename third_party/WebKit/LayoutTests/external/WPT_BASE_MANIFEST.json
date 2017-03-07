@@ -43503,6 +43503,18 @@
      {}
     ]
    ],
+   "pointerevents/extension/idlharness.html": [
+    [
+     "/pointerevents/extension/idlharness.html",
+     {}
+    ]
+   ],
+   "pointerevents/extension/pointerevent_constructor.html": [
+    [
+     "/pointerevents/extension/pointerevent_constructor.html",
+     {}
+    ]
+   ],
    "pointerevents/idlharness.html": [
     [
      "/pointerevents/idlharness.html",
@@ -78965,6 +78977,14 @@
   "pointerevents/compat/pointerevent_touch-action_two-finger_interaction-manual.html": [
    "cba44e2dd2a3c54106bfecc6cdd407643e2ba995",
    "manual"
+  ],
+  "pointerevents/extension/idlharness.html": [
+   "64ed6d6c201773f0b5ab4b81369a2d601fe3363a",
+   "testharness"
+  ],
+  "pointerevents/extension/pointerevent_constructor.html": [
+   "2af9a0d673339553ddfd30433c569f42b4803c22",
+   "testharness"
   ],
   "pointerevents/idlharness-expected.txt": [
    "4a3c8f5f9332c268d13f404a09c54e7812f30c0c",
