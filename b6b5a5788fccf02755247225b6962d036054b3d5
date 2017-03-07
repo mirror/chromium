@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1eff7bb3_2722f1a3",
+        "filename": "third_party/WebKit/LayoutTests/platform/mac-mac10.11/external/wpt/domxpath/002-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-03-07T23:00:58Z",
+      "side": 1,
+      "message": "all platform/*/external/wpt/domxapth/002-expected.txt look identical.",
+      "revId": "b6b5a5788fccf02755247225b6962d036054b3d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
