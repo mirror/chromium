@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b48d023b_eca8e654",
+        "filename": "tools/perf/generate_perf_json.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-03-08T00:49:17Z",
+      "side": 1,
+      "message": "nits: also add bug link",
+      "revId": "be3f5d6a05cb547e4efe757e12e3eaabfc278ccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
