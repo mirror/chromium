@@ -74,11 +74,11 @@ layer at (0,0) size 800x600
                 LayoutTableCell {TD} at (170,1) size 342x37 [r=0 c=1 rs=1 cs=1]
                   LayoutTextControl {INPUT} at (0.50,0) size 341x19 [bgcolor=#FFFFFF] [border: (2px inset #EEEEEE)]
                   LayoutBR {BR} at (341,14) size 1x0
-                  LayoutButton {INPUT} at (72.05,19) size 92.16x18 [bgcolor=#C0C0C0]
-                    LayoutBlockFlow (anonymous) at (8,2) size 76.16x13
+                  LayoutButton {INPUT} at (71.97,19) size 92.31x18 [bgcolor=#C0C0C0]
+                    LayoutBlockFlow (anonymous) at (8,2) size 76.31x13
                       LayoutText {#text} at (0,0) size 77x13
                         text run at (0,0) width 77: "Google Search"
-                  LayoutButton {INPUT} at (164.20,19) size 105.75x18 [bgcolor=#C0C0C0]
+                  LayoutButton {INPUT} at (164.28,19) size 105.75x18 [bgcolor=#C0C0C0]
                     LayoutBlockFlow (anonymous) at (8,2) size 89.75x13
                       LayoutText {#text} at (0,0) size 90x13
                         text run at (0,0) width 90: "I'm Feeling Lucky"
