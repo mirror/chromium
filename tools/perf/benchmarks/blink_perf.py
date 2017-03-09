@@ -236,6 +236,9 @@ class BlinkPerfDOM(_BlinkPerfBenchmark):
   tag = 'dom'
   subdir = 'DOM'
 
+class BlinkPerfEditing(_BlinkPerfBenchmark):
+  tag = 'editing'
+  subdir = 'Editing'
 
 class BlinkPerfEvents(_BlinkPerfBenchmark):
   tag = 'events'
