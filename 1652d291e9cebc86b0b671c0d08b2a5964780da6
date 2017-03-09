@@ -22,6 +22,30 @@
       "revId": "1652d291e9cebc86b0b671c0d08b2a5964780da6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b7114c_6344a9e2",
+        "filename": "third_party/WebKit/LayoutTests/W3CImportExpectations",
+        "patchSetId": 5
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-09T00:08:44Z",
+      "side": 0,
+      "message": "I *believe* so - I didn\u0027t hit any errors when running the import script after removing these skips...",
+      "parentUuid": "ab4a49dc_85afd584",
+      "range": {
+        "startLine": 663,
+        "startChar": 7,
+        "endLine": 663,
+        "endChar": 11
+      },
+      "revId": "1652d291e9cebc86b0b671c0d08b2a5964780da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
