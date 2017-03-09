@@ -331,6 +331,102 @@
      {}
     ]
    ],
+   "orientation-event/free-fall-manual.html": [
+    [
+     "/orientation-event/free-fall-manual.html",
+     {}
+    ]
+   ],
+   "orientation-event/horizontal-surface-manual.html": [
+    [
+     "/orientation-event/horizontal-surface-manual.html",
+     {}
+    ]
+   ],
+   "orientation-event/screen-upmost-manual.html": [
+    [
+     "/orientation-event/screen-upmost-manual.html",
+     {}
+    ]
+   ],
+   "orientation-event/screen-upright-manual.html": [
+    [
+     "/orientation-event/screen-upright-manual.html",
+     {}
+    ]
+   ],
+   "orientation-event/t001-manual.html": [
+    [
+     "/orientation-event/t001-manual.html",
+     {}
+    ]
+   ],
+   "orientation-event/t002-manual.html": [
+    [
+     "/orientation-event/t002-manual.html",
+     {}
+    ]
+   ],
+   "orientation-event/t003-manual.html": [
+    [
+     "/orientation-event/t003-manual.html",
+     {}
+    ]
+   ],
+   "orientation-event/t006-manual.html": [
+    [
+     "/orientation-event/t006-manual.html",
+     {}
+    ]
+   ],
+   "orientation-event/t009-manual.html": [
+    [
+     "/orientation-event/t009-manual.html",
+     {}
+    ]
+   ],
+   "orientation-event/t010-manual.html": [
+    [
+     "/orientation-event/t010-manual.html",
+     {}
+    ]
+   ],
+   "orientation-event/t012-manual.html": [
+    [
+     "/orientation-event/t012-manual.html",
+     {}
+    ]
+   ],
+   "orientation-event/t021-manual.html": [
+    [
+     "/orientation-event/t021-manual.html",
+     {}
+    ]
+   ],
+   "orientation-event/t022-manual.html": [
+    [
+     "/orientation-event/t022-manual.html",
+     {}
+    ]
+   ],
+   "orientation-event/t023-manual.html": [
+    [
+     "/orientation-event/t023-manual.html",
+     {}
+    ]
+   ],
+   "orientation-event/t025-manual.html": [
+    [
+     "/orientation-event/t025-manual.html",
+     {}
+    ]
+   ],
+   "orientation-event/t028-manual.html": [
+    [
+     "/orientation-event/t028-manual.html",
+     {}
+    ]
+   ],
    "pointerevents/compat/pointerevent_touch-action_two-finger_interaction-manual.html": [
     [
      "/pointerevents/compat/pointerevent_touch-action_two-finger_interaction-manual.html",
@@ -9133,11 +9229,6 @@
      {}
     ]
    ],
-   "domparsing/DOMParser-parseFromString-html-expected.txt": [
-    [
-     {}
-    ]
-   ],
    "domparsing/DOMParser-parseFromString-xml-expected.txt": [
     [
      {}
@@ -10154,6 +10245,11 @@
     ]
    ],
    "html/browsers/browsing-the-web/history-traversal/browsing_context_name-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "html/browsers/browsing-the-web/history-traversal/browsing_context_name_cross_origin-0.html": [
     [
      {}
     ]
@@ -11368,11 +11464,6 @@
      {}
     ]
    ],
-   "html/browsers/windows/browsing-context-first-created-expected.txt": [
-    [
-     {}
-    ]
-   ],
    "html/browsers/windows/browsing-context-names/001-1.html": [
     [
      {}
@@ -11428,42 +11519,42 @@
      {}
     ]
    ],
-   "html/browsers/windows/noreferrer-cross-origin-window-name.sub.html": [
+   "html/browsers/windows/resources/browsing-context-window.html": [
     [
      {}
     ]
    ],
-   "html/browsers/windows/support-close.html": [
+   "html/browsers/windows/resources/echo-window-name.html": [
     [
      {}
     ]
    ],
-   "html/browsers/windows/support-named-null-opener.html": [
+   "html/browsers/windows/resources/nested-post-to-opener.html": [
     [
      {}
     ]
    ],
-   "html/browsers/windows/support-nested-browsing-contexts.html": [
+   "html/browsers/windows/resources/noreferrer-window-name.html": [
     [
      {}
     ]
    ],
-   "html/browsers/windows/support-open-cross-origin.sub.html": [
+   "html/browsers/windows/resources/post-to-opener.html": [
     [
      {}
     ]
    ],
-   "html/browsers/windows/support-opener-null.html": [
+   "html/browsers/windows/resources/target-cross-origin.sub.html": [
     [
      {}
     ]
    ],
-   "html/browsers/windows/support-post-to-opener.html": [
+   "html/browsers/windows/resources/window-close-button.html": [
     [
      {}
     ]
    ],
-   "html/browsers/windows/support-window-name-echo.html": [
+   "html/browsers/windows/resources/window-opener.html": [
     [
      {}
     ]
@@ -17153,11 +17244,6 @@
      {}
     ]
    ],
-   "html/semantics/forms/textfieldselection/select-event-expected.txt": [
-    [
-     {}
-    ]
-   ],
    "html/semantics/forms/the-button-element/button-activate-frame.html": [
     [
      {}
@@ -22778,16 +22864,6 @@
      {}
     ]
    ],
-   "service-workers/service-worker/foreign-fetch-cors.https-expected.txt": [
-    [
-     {}
-    ]
-   ],
-   "service-workers/service-worker/foreign-fetch-workers.https-expected.txt": [
-    [
-     {}
-    ]
-   ],
    "service-workers/service-worker/multi-globals/current/current.https.html": [
     [
      {}
@@ -22964,6 +23040,11 @@
     ]
    ],
    "service-workers/service-worker/resources/empty-worker.js": [
+    [
+     {}
+    ]
+   ],
+   "service-workers/service-worker/resources/empty.html": [
     [
      {}
     ]
@@ -27670,7 +27751,9 @@
    "IndexedDB/idb-binary-key-roundtrip.htm": [
     [
      "/IndexedDB/idb-binary-key-roundtrip.htm",
-     {}
+     {
+      "timeout": "long"
+     }
     ]
    ],
    "IndexedDB/idb_binary_key_conversion.htm": [
@@ -29124,7 +29207,9 @@
    "IndexedDB/idbobjectstore_getKey.html": [
     [
      "/IndexedDB/idbobjectstore_getKey.html",
-     {}
+     {
+      "timeout": "long"
+     }
     ]
    ],
    "IndexedDB/idbobjectstore_index.htm": [
@@ -29322,7 +29407,9 @@
    "IndexedDB/key-conversion-exceptions.htm": [
     [
      "/IndexedDB/key-conversion-exceptions.htm",
-     {}
+     {
+      "timeout": "long"
+     }
     ]
    ],
    "IndexedDB/key_invalid.htm": [
@@ -29342,6 +29429,18 @@
    "IndexedDB/keygenerator-constrainterror.htm": [
     [
      "/IndexedDB/keygenerator-constrainterror.htm",
+     {}
+    ]
+   ],
+   "IndexedDB/keygenerator-explicit.html": [
+    [
+     "/IndexedDB/keygenerator-explicit.html",
+     {}
+    ]
+   ],
+   "IndexedDB/keygenerator-inject.html": [
+    [
+     "/IndexedDB/keygenerator-inject.html",
      {}
     ]
    ],
@@ -35477,12 +35576,6 @@
      {}
     ]
    ],
-   "html/browsers/windows/browsing-context-first-created.xhtml": [
-    [
-     "/html/browsers/windows/browsing-context-first-created.xhtml",
-     {}
-    ]
-   ],
    "html/browsers/windows/browsing-context-names/001.html": [
     [
      "/html/browsers/windows/browsing-context-names/001.html",
@@ -35519,6 +35612,18 @@
      {}
     ]
    ],
+   "html/browsers/windows/browsing-context-window.html": [
+    [
+     "/html/browsers/windows/browsing-context-window.html",
+     {}
+    ]
+   ],
+   "html/browsers/windows/browsing-context.html": [
+    [
+     "/html/browsers/windows/browsing-context.html",
+     {}
+    ]
+   ],
    "html/browsers/windows/nested-browsing-contexts/frameElement.html": [
     [
      "/html/browsers/windows/nested-browsing-contexts/frameElement.html",
@@ -35531,15 +35636,15 @@
      {}
     ]
    ],
-   "html/browsers/windows/noreferrer-window-name.html": [
+   "html/browsers/windows/noreferrer-null-opener.html": [
     [
-     "/html/browsers/windows/noreferrer-window-name.html",
+     "/html/browsers/windows/noreferrer-null-opener.html",
      {}
     ]
    ],
-   "html/browsers/windows/noreferrer.html": [
+   "html/browsers/windows/noreferrer-window-name.html": [
     [
-     "/html/browsers/windows/noreferrer.html",
+     "/html/browsers/windows/noreferrer-window-name.html",
      {}
     ]
    ],
@@ -38216,7 +38321,9 @@
    "html/semantics/forms/textfieldselection/select-event.html": [
     [
      "/html/semantics/forms/textfieldselection/select-event.html",
-     {}
+     {
+      "timeout": "long"
+     }
     ]
    ],
    "html/semantics/forms/textfieldselection/selection-after-content-change.html": [
@@ -43518,6 +43625,30 @@
    "navigation-timing/test_unique_performance_objects.html": [
     [
      "/navigation-timing/test_unique_performance_objects.html",
+     {}
+    ]
+   ],
+   "orientation-event/devicemotionevent-init.html": [
+    [
+     "/orientation-event/devicemotionevent-init.html",
+     {}
+    ]
+   ],
+   "orientation-event/deviceorientationabsoluteevent.html": [
+    [
+     "/orientation-event/deviceorientationabsoluteevent.html",
+     {}
+    ]
+   ],
+   "orientation-event/deviceorientationevent-init.html": [
+    [
+     "/orientation-event/deviceorientationevent-init.html",
+     {}
+    ]
+   ],
+   "orientation-event/idlharness.html": [
+    [
+     "/orientation-event/idlharness.html",
      {}
     ]
    ],
@@ -52203,6 +52334,18 @@
      {}
     ]
    ],
+   "service-workers/service-worker/claim-affect-other-registration.https.html": [
+    [
+     "/service-workers/service-worker/claim-affect-other-registration.https.html",
+     {}
+    ]
+   ],
+   "service-workers/service-worker/claim-fetch.https.html": [
+    [
+     "/service-workers/service-worker/claim-fetch.https.html",
+     {}
+    ]
+   ],
    "service-workers/service-worker/claim-not-using-registration.https.html": [
     [
      "/service-workers/service-worker/claim-not-using-registration.https.html",
@@ -52239,9 +52382,21 @@
      {}
     ]
    ],
+   "service-workers/service-worker/clients-matchall-exact-controller.https.html": [
+    [
+     "/service-workers/service-worker/clients-matchall-exact-controller.https.html",
+     {}
+    ]
+   ],
    "service-workers/service-worker/clients-matchall-include-uncontrolled.https.html": [
     [
      "/service-workers/service-worker/clients-matchall-include-uncontrolled.https.html",
+     {}
+    ]
+   ],
+   "service-workers/service-worker/clients-matchall-order.https.html": [
+    [
+     "/service-workers/service-worker/clients-matchall-order.https.html",
      {}
     ]
    ],
@@ -57153,7 +57308,7 @@
  },
  "paths": {
   "./.gitignore": [
-   "bfa8422ef9849af857cdbddbe8044c2179953f6d",
+   "a74e35d1ce44dcca7ecb513a8cbd6194fe0f2c58",
    "support"
   ],
   "./CONTRIBUTING.md": [
@@ -57445,7 +57600,7 @@
    "testharness"
   ],
   "IndexedDB/idb-binary-key-roundtrip.htm": [
-   "ed1e8ae0ca73fdc6fd4d15fcd7623f8f15b7f296",
+   "587b7c783d77450a2c9c1cc09ccaf530e6e5d363",
    "testharness"
   ],
   "IndexedDB/idb_binary_key_conversion.htm": [
@@ -58405,7 +58560,7 @@
    "testharness"
   ],
   "IndexedDB/idbobjectstore_getKey.html": [
-   "58272cd29a4137d30247cef03da5576bd5beddc2",
+   "76906dde291ad82b93070aef7b1fcecae80adfff",
    "testharness"
   ],
   "IndexedDB/idbobjectstore_index.htm": [
@@ -58549,7 +58704,7 @@
    "testharness"
   ],
   "IndexedDB/key-conversion-exceptions.htm": [
-   "66c9ee49f2689e8917e5206f1bd2b9759b755d53",
+   "aed58068ec48e3fd682a195bd5b0ea3f87c5a0e7",
    "testharness"
   ],
   "IndexedDB/key_invalid.htm": [
@@ -58562,6 +58717,14 @@
   ],
   "IndexedDB/keygenerator-constrainterror.htm": [
    "3bd30e912c27c5e93e28c6847ff726c8e6ffae90",
+   "testharness"
+  ],
+  "IndexedDB/keygenerator-explicit.html": [
+   "6415cf0734ab1ab94d6fac420a70f85046036bb1",
+   "testharness"
+  ],
+  "IndexedDB/keygenerator-inject.html": [
+   "1e8439807fd9be6cfdb01b3579017dd3a220478d",
    "testharness"
   ],
   "IndexedDB/keygenerator-overflow.htm": [
@@ -62357,7 +62520,7 @@
    "testharness"
   ],
   "dom/nodes/Node-lookupNamespaceURI-expected.txt": [
-   "bb4bc0db4bd4a3ba44ff14fcd0a684f51bbbade6",
+   "6c12735c3b786e8eead0decb994f55384befe772",
    "support"
   ],
   "dom/nodes/Node-lookupNamespaceURI.html": [
@@ -62928,10 +63091,6 @@
    "29f250eddff5e2145da8348ea586d4d35d910093",
    "support"
   ],
-  "domparsing/DOMParser-parseFromString-html-expected.txt": [
-   "32df6d5dfe5b64ecac68d64fbad2375ac3c3d2b6",
-   "support"
-  ],
   "domparsing/DOMParser-parseFromString-html.html": [
    "000f4669cf7f452fc2bf3f5c2b2eb279253d1f55",
    "testharness"
@@ -62941,7 +63100,7 @@
    "testharness"
   ],
   "domparsing/DOMParser-parseFromString-xml-expected.txt": [
-   "5626449d28d99d2b8e9e356ae237bedd3fa74144",
+   "269dafc7295e934be1fc49fe190019f9a1372b46",
    "support"
   ],
   "domparsing/DOMParser-parseFromString-xml.html": [
@@ -64660,12 +64819,16 @@
    "87d7d141b05200ad3db0660d9d8d8bdf7876ee4b",
    "testharness"
   ],
+  "html/browsers/browsing-the-web/history-traversal/browsing_context_name_cross_origin-0.html": [
+   "a0512a75c277b22bbbcd37692580c779334ab74b",
+   "support"
+  ],
   "html/browsers/browsing-the-web/history-traversal/browsing_context_name_cross_origin-expected.txt": [
    "9762c240f4c9c44cdb9d71d2d9d07c9866b61af4",
    "support"
   ],
   "html/browsers/browsing-the-web/history-traversal/browsing_context_name_cross_origin.html": [
-   "7455a083f29518418a3508b8fd3ade74cb747666",
+   "80ddf5ab19d6698340820c2fa4145d4aa6960459",
    "testharness"
   ],
   "html/browsers/browsing-the-web/history-traversal/browsing_context_name_cross_origin_2-expected.txt": [
@@ -66448,14 +66611,6 @@
    "aecd2f28b5bd6301c51d535a4b1068a10b497899",
    "support"
   ],
-  "html/browsers/windows/browsing-context-first-created-expected.txt": [
-   "604d794fbda3f96189c7c35e30cb3f6bab7ab096",
-   "support"
-  ],
-  "html/browsers/windows/browsing-context-first-created.xhtml": [
-   "1393800854d0b2daa509eeec75e43fadc2be3a5c",
-   "testharness"
-  ],
   "html/browsers/windows/browsing-context-names/001-1.html": [
    "7f9396d2baeeafd98832c7fe5a0a1474fc358e98",
    "support"
@@ -66512,6 +66667,14 @@
    "174e949fcfb26b9c93463a4eeecb338115ed56b2",
    "support"
   ],
+  "html/browsers/windows/browsing-context-window.html": [
+   "8400240acf63f30ec67ecd003030e81201783d2b",
+   "testharness"
+  ],
+  "html/browsers/windows/browsing-context.html": [
+   "ad718fb943e000ad5d2f376ea5ac8a011661ab37",
+   "testharness"
+  ],
   "html/browsers/windows/nested-browsing-contexts/contains.json": [
    "0f2e164f656015ba43e2b3471af67a5d16fb97ea",
    "support"
@@ -66532,48 +66695,48 @@
    "24855b6261867799f59c5aaedd014bb78c877233",
    "testharness"
   ],
-  "html/browsers/windows/noreferrer-cross-origin-window-name.sub.html": [
-   "e7f97f2c9c76773719a53e0a16cad28942583efa",
-   "support"
+  "html/browsers/windows/noreferrer-null-opener.html": [
+   "cfced8fc2302ae4111c9c44976f36fe211ae379c",
+   "testharness"
   ],
   "html/browsers/windows/noreferrer-window-name.html": [
-   "50afeed23c4279ed044802c6b33c5b5ac9ad4d7a",
+   "163e478a1fb6bb341d10f2ac94f868207b71bbf1",
    "testharness"
   ],
-  "html/browsers/windows/noreferrer.html": [
-   "c59de38af4cf52877cf722bda7997b0dae8026d8",
-   "testharness"
-  ],
-  "html/browsers/windows/support-close.html": [
-   "83bc4461894fdfc0b708c5740a8f5361178cf870",
+  "html/browsers/windows/resources/browsing-context-window.html": [
+   "391d8d5a5d0d8d8cfb98e4938a5bc4a5946eb13e",
    "support"
   ],
-  "html/browsers/windows/support-named-null-opener.html": [
-   "0713aa5c65f801ba146994d504cb1ee4b3bb2599",
-   "support"
-  ],
-  "html/browsers/windows/support-nested-browsing-contexts.html": [
-   "605d0c4f4e80cccd58226d7ecf3bdab8788aa4c8",
-   "support"
-  ],
-  "html/browsers/windows/support-open-cross-origin.sub.html": [
-   "9c78af14dcc8056383dd428c45439a514fe2580c",
-   "support"
-  ],
-  "html/browsers/windows/support-opener-null.html": [
-   "3b7934e44c2b2cfbcc68a6f965a824ebef132baf",
-   "support"
-  ],
-  "html/browsers/windows/support-post-to-opener.html": [
-   "fb65db2b3dd74a04f29bdbd938d5a3b0fe189abb",
-   "support"
-  ],
-  "html/browsers/windows/support-window-name-echo.html": [
+  "html/browsers/windows/resources/echo-window-name.html": [
    "8921da98fd0c74e8fa3a500310d434419119714c",
    "support"
   ],
+  "html/browsers/windows/resources/nested-post-to-opener.html": [
+   "605d0c4f4e80cccd58226d7ecf3bdab8788aa4c8",
+   "support"
+  ],
+  "html/browsers/windows/resources/noreferrer-window-name.html": [
+   "0713aa5c65f801ba146994d504cb1ee4b3bb2599",
+   "support"
+  ],
+  "html/browsers/windows/resources/post-to-opener.html": [
+   "fb65db2b3dd74a04f29bdbd938d5a3b0fe189abb",
+   "support"
+  ],
+  "html/browsers/windows/resources/target-cross-origin.sub.html": [
+   "a2d5c6b8771f5394dd1c5aee41a0b0f63276bfaa",
+   "support"
+  ],
+  "html/browsers/windows/resources/window-close-button.html": [
+   "83bc4461894fdfc0b708c5740a8f5361178cf870",
+   "support"
+  ],
+  "html/browsers/windows/resources/window-opener.html": [
+   "3b7934e44c2b2cfbcc68a6f965a824ebef132baf",
+   "support"
+  ],
   "html/browsers/windows/targeting-cross-origin-nested-browsing-contexts.html": [
-   "f7873dc96cadadccf6097d387c94f8db60a54e69",
+   "81b59630c8973be637f2ef2f379e126ea6dca69d",
    "testharness"
   ],
   "html/dom/documents/dom-tree-accessors/Document.body.html": [
@@ -73552,12 +73715,8 @@
    "14a6f0077d512837c24931a2a9723e11d1d7a1c7",
    "support"
   ],
-  "html/semantics/forms/textfieldselection/select-event-expected.txt": [
-   "2cdb4a00c85c2f68497c065ca53e40c1e573dd51",
-   "support"
-  ],
   "html/semantics/forms/textfieldselection/select-event.html": [
-   "90528b5c92d94342b3fe2ef248d90d6a4d397377",
+   "e4835db1c781cad4b259b782a57b452022a50d79",
    "testharness"
   ],
   "html/semantics/forms/textfieldselection/selection-after-content-change.html": [
@@ -73949,7 +74108,7 @@
    "testharness"
   ],
   "html/semantics/forms/the-select-element/common-HTMLOptionsCollection.html": [
-   "de186d5f39bf85cc073ad6262fa933f89a4500d5",
+   "b5a01e973e4d4c97c6fa06bd9fd1e535e8c622e8",
    "testharness"
   ],
   "html/semantics/forms/the-select-element/select-ask-for-reset.html": [
@@ -75209,7 +75368,7 @@
    "testharness"
   ],
   "html/semantics/tabular-data/the-table-element/tFoot.html": [
-   "8017cabc08b5c10566ce97dee0cecd73d7ee3bce",
+   "ec9513f8c78bed931ac9ea51910d314b46639317",
    "testharness"
   ],
   "html/semantics/tabular-data/the-table-element/tHead-expected.txt": [
@@ -75217,7 +75376,7 @@
    "support"
   ],
   "html/semantics/tabular-data/the-table-element/tHead.html": [
-   "45cd1c63c80dce76c5a51644fa17f8535846cb54",
+   "96c3470e247189297a84310173392007bad4977d",
    "testharness"
   ],
   "html/semantics/tabular-data/the-table-element/table-insertRow.html": [
@@ -75257,7 +75416,7 @@
    "testharness"
   ],
   "html/semantics/tabular-data/the-tr-element/insertCell.html": [
-   "d3e48e89cfc8a9f3478af5c922fea6a59e88135e",
+   "8161e1f20e42a9fe5270cc779dca71ada097cd75",
    "testharness"
   ],
   "html/semantics/tabular-data/the-tr-element/rowIndex.html": [
@@ -78995,6 +79154,86 @@
   "navigation-timing/test_unique_performance_objects.html": [
    "c7d89bf7a3119dbfe9a581f82b5ac43ff6645a64",
    "testharness"
+  ],
+  "orientation-event/devicemotionevent-init.html": [
+   "fab191bbebab21f696fefc0ad9e8110b99855eee",
+   "testharness"
+  ],
+  "orientation-event/deviceorientationabsoluteevent.html": [
+   "39b8076ee3dc20b085f06d52441766389155f04b",
+   "testharness"
+  ],
+  "orientation-event/deviceorientationevent-init.html": [
+   "ccd2db5f8266737e2eaf4aa8462b1a51201c42ab",
+   "testharness"
+  ],
+  "orientation-event/free-fall-manual.html": [
+   "e291465a89d97156f518e12e1bf65e6ab8091ce7",
+   "manual"
+  ],
+  "orientation-event/horizontal-surface-manual.html": [
+   "ef54a144013c5eb07a1c5742d8239e741a2a18dc",
+   "manual"
+  ],
+  "orientation-event/idlharness.html": [
+   "d23bfd2d59820008a8783e73e5e349a762dd8b64",
+   "testharness"
+  ],
+  "orientation-event/screen-upmost-manual.html": [
+   "2842c8cce38c52b44779debd172ec06acf1a6bed",
+   "manual"
+  ],
+  "orientation-event/screen-upright-manual.html": [
+   "6b5ad2a9357f9d2dcb320b8b20ae853aa5decbb1",
+   "manual"
+  ],
+  "orientation-event/t001-manual.html": [
+   "d8dc1eae6318e5ef713968ddd2066137178b6160",
+   "manual"
+  ],
+  "orientation-event/t002-manual.html": [
+   "85d511b9cf2a4467a2b066f96771c31919ee6cb2",
+   "manual"
+  ],
+  "orientation-event/t003-manual.html": [
+   "1890e3cef5b51c9322954186a46616524d1090e7",
+   "manual"
+  ],
+  "orientation-event/t006-manual.html": [
+   "445dee427dcf509941e1a340e2dcc010662a5696",
+   "manual"
+  ],
+  "orientation-event/t009-manual.html": [
+   "b6ee2d44a5821c0722c640a703c388a05b738dac",
+   "manual"
+  ],
+  "orientation-event/t010-manual.html": [
+   "66e4118c1084ea73e7ab97e0a2fb75c6d8baf145",
+   "manual"
+  ],
+  "orientation-event/t012-manual.html": [
+   "818ba14af7086635293c7f3d071cf8e482f762ed",
+   "manual"
+  ],
+  "orientation-event/t021-manual.html": [
+   "25d5ebcb60cd8ad8baeeb591a8ae47bd1b918289",
+   "manual"
+  ],
+  "orientation-event/t022-manual.html": [
+   "4cb600579d8f2776af34c2c384b357b615382a0a",
+   "manual"
+  ],
+  "orientation-event/t023-manual.html": [
+   "bf0788e0a38910362a49a9f27325a081ad0a9c9e",
+   "manual"
+  ],
+  "orientation-event/t025-manual.html": [
+   "c75b1abe106111ace7f213ee84087daf17f0f48d",
+   "manual"
+  ],
+  "orientation-event/t028-manual.html": [
+   "6948dbbdc88ffd9aa84ad5a6c822b354809561b2",
+   "manual"
   ],
   "pointerevents/README.md": [
    "91a8bd86357b0d96ba3ab8f08f88c28436de484c",
@@ -87296,6 +87535,14 @@
    "a71f51cde17f9d209750877dfbe1bacd26412ab3",
    "testharness"
   ],
+  "service-workers/service-worker/claim-affect-other-registration.https.html": [
+   "96ffb6f3376a5fa73abd405e123d019d8cac694d",
+   "testharness"
+  ],
+  "service-workers/service-worker/claim-fetch.https.html": [
+   "adec77bbeec2ec9ea7da3aba94375bc92e1b4f6f",
+   "testharness"
+  ],
   "service-workers/service-worker/claim-not-using-registration.https.html": [
    "72da19e038b6ab32ea04a0e91d117bc67d25a301",
    "testharness"
@@ -87317,15 +87564,23 @@
    "testharness"
   ],
   "service-workers/service-worker/clients-matchall-client-types.https.html": [
-   "576b4306b0976071ec1c7e085e016b99b5ab12cc",
+   "aaca38d0ad5e6a03775632fcef1657dd40753ae0",
+   "testharness"
+  ],
+  "service-workers/service-worker/clients-matchall-exact-controller.https.html": [
+   "231ce3ee744eeb670e00ee3a670ba361d5ca0707",
    "testharness"
   ],
   "service-workers/service-worker/clients-matchall-include-uncontrolled.https.html": [
-   "f3fbc439d4352a9c781290d80373fce8ff3e7c40",
+   "a4f4cb575ffea826c642aa3de424c0a0f986fdd0",
+   "testharness"
+  ],
+  "service-workers/service-worker/clients-matchall-order.https.html": [
+   "b2617b7dce0dce64c1a354a3dc07c67f1fa0adf2",
    "testharness"
   ],
   "service-workers/service-worker/clients-matchall.https.html": [
-   "91be48b6b8513197d131dc5f2ffbf43553cb89b3",
+   "ac873d343a0c9d0af058f84d7e8db2809825c64c",
    "testharness"
   ],
   "service-workers/service-worker/controller-on-disconnect.https-expected.txt": [
@@ -87476,10 +87731,6 @@
    "6600d201f205fe3586cbfab088cf9f2be7d96b87",
    "testharness"
   ],
-  "service-workers/service-worker/foreign-fetch-cors.https-expected.txt": [
-   "695cb32da1ec015990684439ae033d60a0ea0a4a",
-   "support"
-  ],
   "service-workers/service-worker/foreign-fetch-cors.https.html": [
    "aac5e2b6b096af5fb5edd9b8c5193774089afac2",
    "testharness"
@@ -87487,10 +87738,6 @@
   "service-workers/service-worker/foreign-fetch-event.https.html": [
    "8fbf910205f175a457846100deb34a01c02b00ab",
    "testharness"
-  ],
-  "service-workers/service-worker/foreign-fetch-workers.https-expected.txt": [
-   "d3f1cd1321ee6461a0270b59290e61e745e2aafb",
-   "support"
   ],
   "service-workers/service-worker/foreign-fetch-workers.https.html": [
    "4838204f935a89eccb333e347dd56f30846460fe",
@@ -87721,7 +87968,7 @@
    "support"
   ],
   "service-workers/service-worker/resources/claim-worker.js": [
-   "2839599adca9049d31085e50504623576dc81643",
+   "e779a28c42928ff10219073171c1216c6623b4d4",
    "support"
   ],
   "service-workers/service-worker/resources/client-navigate-frame.html": [
@@ -87757,7 +88004,7 @@
    "support"
   ],
   "service-workers/service-worker/resources/clients-matchall-worker.js": [
-   "e204fdb53a9ae84f1b463f4655d62d1182d77cd5",
+   "88326b2119c68ba656c62a74b9c1af201bca1548",
    "support"
   ],
   "service-workers/service-worker/resources/dummy-shared-worker-interceptor.js": [
@@ -87786,6 +88033,10 @@
   ],
   "service-workers/service-worker/resources/empty-worker.js": [
    "84b3339c3419e318803e51f46d7252d9e8ac183b",
+   "support"
+  ],
+  "service-workers/service-worker/resources/empty.html": [
+   "90aa64bd32d0dd20f0fda1783b0d9ec4a97b3430",
    "support"
   ],
   "service-workers/service-worker/resources/empty.js": [
@@ -87949,7 +88200,7 @@
    "support"
   ],
   "service-workers/service-worker/resources/foreign-fetch-cors-worker.js": [
-   "de8574422145b4c5385e34312b323201bbc35518",
+   "0bee2a7495fd8590c65fbdb10c02bb4024f729a9",
    "support"
   ],
   "service-workers/service-worker/resources/foreign-fetch-event-worker.js": [
@@ -87965,7 +88216,7 @@
    "support"
   ],
   "service-workers/service-worker/resources/foreign-fetch-helper-worker.js": [
-   "750ddd06ccb14b662e64be7faa54552bc04e9358",
+   "94061830f3d478ac53d9eeb03af662c3635f7860",
    "support"
   ],
   "service-workers/service-worker/resources/foreign-fetch-helpers.js": [
@@ -89205,7 +89456,7 @@
    "testharness"
   ],
   "streams/piping/general.js": [
-   "cb4f7956b3973e318f6227122ab0df3c017414d5",
+   "3883820b3c21c05bedc258bae42731b42a42944b",
    "support"
   ],
   "streams/piping/general.serviceworker.https.html": [
@@ -89269,7 +89520,7 @@
    "testharness"
   ],
   "streams/piping/pipe-through.js": [
-   "7506ed68f5b64d7339af19cacd5d1d1201e1e5f7",
+   "08daa95df8e64c57f082b297ffd8bd11cda54d26",
    "support"
   ],
   "streams/piping/pipe-through.serviceworker.https-expected.txt": [
@@ -89341,7 +89592,7 @@
    "testharness"
   ],
   "streams/readable-byte-streams/general.js": [
-   "4a7d7a12437ad4c3ad39411c8fddffeca664dab7",
+   "944b6cec4ef71b243b97b69248fbd3d9af0fce43",
    "support"
   ],
   "streams/readable-byte-streams/general.serviceworker.https-expected.txt": [
@@ -89389,7 +89640,7 @@
    "testharness"
   ],
   "streams/readable-streams/bad-underlying-sources.js": [
-   "f980e8d1a99149a2292835eafb5484f8ee8da966",
+   "f6eeb95c1eb3cf9d60cb7e8f1b44a4c460c5bbaf",
    "support"
   ],
   "streams/readable-streams/bad-underlying-sources.serviceworker.https.html": [
@@ -89429,7 +89680,7 @@
    "testharness"
   ],
   "streams/readable-streams/cancel.js": [
-   "de3fc5a6a025a8ae42cb4870200af196d844e818",
+   "1874c77f2018facc15f233b30daa998f407841b2",
    "support"
   ],
   "streams/readable-streams/cancel.serviceworker.https.html": [
@@ -89469,7 +89720,7 @@
    "testharness"
   ],
   "streams/readable-streams/default-reader.js": [
-   "bf6b1859b76b4891b558da229e7a2e4d40eb3a1d",
+   "4bf42e5e2f45275c98122fd6e884d7af0dee1e77",
    "support"
   ],
   "streams/readable-streams/default-reader.serviceworker.https.html": [
@@ -89541,7 +89792,7 @@
    "testharness"
   ],
   "streams/readable-streams/general.js": [
-   "655cd8df67e0ef1c7f14e60bfb1584631e3291b5",
+   "81c44fb5c5c416d4882bf266319c384ced4a0ffe",
    "support"
   ],
   "streams/readable-streams/general.serviceworker.https-expected.txt": [
@@ -89569,7 +89820,7 @@
    "testharness"
   ],
   "streams/readable-streams/pipe-through.js": [
-   "1fdceec0fdec41293e411e7263fec1bf8f397853",
+   "df79dbb2844e85b65abc5ffb356aedc833b81b0a",
    "support"
   ],
   "streams/readable-streams/pipe-through.serviceworker.https.html": [
@@ -89653,7 +89904,7 @@
    "testharness"
   ],
   "streams/writable-streams/aborting.js": [
-   "744d55d9887783d92cdf81685358dab5a2016f84",
+   "b69e46b09fbc395512a63f8213dfe16fcab9e1e8",
    "support"
   ],
   "streams/writable-streams/aborting.serviceworker.https-expected.txt": [
@@ -89777,7 +90028,7 @@
    "testharness"
   ],
   "streams/writable-streams/close.js": [
-   "ac7f1df6753c0d171d61a274a8ae7c6f5107857c",
+   "fae91aef3ae70841716304a91e603ed591e514ef",
    "support"
   ],
   "streams/writable-streams/close.serviceworker.https.html": [
@@ -89933,7 +90184,7 @@
    "testharness"
   ],
   "streams/writable-streams/write.js": [
-   "f956e42aa67abce9b3e11179c800a6f9c625d111",
+   "d3c5ce9a44188acb6def61118b2d1d3119fce1c4",
    "support"
   ],
   "streams/writable-streams/write.serviceworker.https-expected.txt": [
@@ -91425,7 +91676,7 @@
    "testharness"
   ],
   "webrtc/rtcpeerconnection/rtcpeerconnection-idl-expected.txt": [
-   "35c0cae70e3415ca49b29d91ca7dad467d73221b",
+   "eab3ff4a40f07d4045c25f0a6f3bb0fcaca1cb7c",
    "support"
   ],
   "webrtc/rtcpeerconnection/rtcpeerconnection-idl.html": [
@@ -91693,7 +91944,7 @@
    "testharness"
   ],
   "webstorage/storage_string_conversion.html": [
-   "3d8b227e0884935392f66d00c9d09e0f0d4aadc5",
+   "33c748773a518af29ea2ef8cbbc859fe988fb88a",
    "testharness"
   ],
   "webstorage/storage_supported_property_names.html": [
@@ -91729,7 +91980,7 @@
    "support"
   ],
   "webvtt/api/VTTCue/getCueAsHTML.html": [
-   "2c4a14607efdc17772f2878e9c0943300a2f8840",
+   "88e868bd5a243bfb24151028b6012914341e3742",
    "testharness"
   ],
   "webvtt/api/VTTCue/line-expected.txt": [
@@ -94877,7 +95128,7 @@
    "testharness"
   ],
   "workers/data-url-shared.html": [
-   "50debec2192e5a6b0b18ce53942fc08ff0f2df11",
+   "0fee4678c53e3f30e0f6090b5b9fc51b7bb74806",
    "testharness"
   ],
   "workers/data-url.html": [
