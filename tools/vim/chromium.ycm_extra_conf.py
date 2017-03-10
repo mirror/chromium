@@ -2,9 +2,9 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-# Autocompletion config for YouCompleteMe in Chromium.
+# Autocompletion configuration for using YouCompleteMe with Chromium code.
 #
-# USAGE with Vim:
+# Usage:
 #
 #   1. Install YCM [https://github.com/Valloric/YouCompleteMe]
 #          (Googlers should check out [go/ycm])
@@ -12,26 +12,44 @@
 #   2. Create a symbolic link to this file called .ycm_extra_conf.py in the
 #      directory above your Chromium checkout (i.e. next to your .gclient file).
 #
-#          cd src
-#          ln -rs tools/vim/chromium.ycm_extra_conf.py ../.ycm_extra_conf.py
+#          cd src/..
+#          ln -rs src/tools/vim/chromium.ycm_extra_conf.py .ycm_extra_conf.py
 #
-#   3. (optional) Whitelist the .ycm_extra_conf.py from step #2 by adding the
-#      following to your .vimrc:
+#      Or on Windows (Powershell):
+#
+#          cd src\..
+#          New-Item -Type SymbolicLink -Value src\tools\vim\chromium.ycm_extra_conf.py -Path .ycm_extra_conf.py
+#
+# If you are using Vim/NeoVIm:
+
+#   Whitelist the .ycm_extra_conf.py from step #2 by adding the following to
+#   your .vimrc:
 #
 #          let g:ycm_extra_conf_globlist=['<path to .ycm_extra_conf.py>']
 #
-#      You can also add other .ycm_extra_conf.py files you want to use to this
-#      list to prevent excessive prompting each time you visit a directory
-#      covered by a config file.
-#
-#   4. Profit
+#   You can also add other .ycm_extra_conf.py files you want to use to this list
+#   to prevent excessive prompting each time you visit a directory covered by a
+#   config file.
 #
 #
-# Usage notes:
+# Notes:
 #
-#   * You must use ninja and clang to build Chromium.
+#   * You must use ninja and Clang to build Chromium.
 #
-#   * You must have built Chromium recently.
+#   * You must have built Chromium recently. YCM relies on generated files being
+#     available in the output directory.
+#
+#   * Windows: ** IMPORTANT **
+#
+#     On Windows, YCM relies on the response files used during compilation to be
+#     available in the build directory.
+#
+#     To generate the response files:
+#
+#        ninja -C <build directory> -d keeprsp -n
+#
+#     The above command doesn't invoke the compiler, but generates the response
+#     file and leaves it on the disk.
 #
 #
 # Hacking notes:
@@ -39,13 +57,11 @@
 #   * The purpose of this script is to construct an accurate enough command line
 #     for YCM to pass to clang so it can build and extract the symbols.
 #
-#   * Right now, we only pull the -I and -D flags. That seems to be sufficient
-#     for everything I've used it for.
+#   * If you are changing the code, please add a test.
 #
 #   * That whole ninja & clang thing? We could support other configs if someone
 #     were willing to write the correct commands and a parser.
 #
-#   * This has only been tested on Linux and macOS.
 
 import os
 import os.path
