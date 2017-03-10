@@ -734,11 +734,13 @@ FloatRect LayoutBox::localBoundingBoxRectForAccessibility() const {
                    m_frameRect.height().toFloat());
 }
 
-void LayoutBox::updateLayerTransformAfterLayout() {
+void LayoutBox::updateAfterLayout() {
   // Transform-origin depends on box size, so we need to update the layer
   // transform after layout.
-  if (hasLayer())
+  if (hasLayer()) {
     layer()->updateTransformationMatrix();
+    layer()->updateSizeAndScrollingAfterLayout();
+  }
 }
 
 LayoutUnit LayoutBox::logicalHeightWithVisibleOverflow() const {

@@ -114,6 +114,8 @@ class CORE_EXPORT LayoutView final : public LayoutBlockFlow {
 
   FrameView* frameView() const { return m_frameView; }
 
+  void updateAfterLayout() override;
+
   // |ancestor| can be nullptr, which will map the rect to the main frame's
   // space, even if the main frame is remote (or has intermediate remote
   // frames in the chain).

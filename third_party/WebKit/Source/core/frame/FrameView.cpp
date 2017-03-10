@@ -531,12 +531,17 @@ void FrameView::setFrameRect(const IntRect& newRect) {
 
   const bool frameSizeChanged = oldRect.size() != newRect.size();
 
-  m_needsScrollbarsUpdate = frameSizeChanged;
+  m_needsScrollbarsUpdate |= frameSizeChanged;
   // TODO(wjmaclean): find out why scrollbars fail to resize for complex
   // subframes after changing the zoom level. For now always calling
   // updateScrollbarsIfNeeded() here fixes the issue, but it would be good to
   // discover the deeper cause of this. http://crbug.com/607987.
-  updateScrollbarsIfNeeded();
+  if (RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
+    if (LayoutView* lv = layoutView())
+      lv->getScrollableArea()->clampScrollOffsetAfterOverflowChange();
+  } else {
+    updateScrollbarsIfNeeded();
+  }
 
   frameRectsChanged();
 
@@ -684,7 +689,8 @@ void FrameView::setContentsSize(const IntSize& size) {
     return;
 
   m_contentsSize = size;
-  updateScrollbars();
+  m_needsScrollbarsUpdate = true;
+  //updateScrollbars();
   ScrollableArea::contentsResized();
 
   Page* page = frame().page();
@@ -1270,6 +1276,7 @@ void FrameView::layout() {
         this, TracedLayoutObject::create(*layoutView(), false));
 
     performLayout(inSubtreeLayout);
+    updateScrollbarsIfNeeded();
 
     if (!inSubtreeLayout && !document->printing())
       adjustViewSizeAndLayout();

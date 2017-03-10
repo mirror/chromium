@@ -481,8 +481,6 @@ void LayoutBlockFlow::layoutBlock(bool relayoutChildren) {
 
   m_descendantsWithFloatsMarkedForLayout = false;
 
-  updateLayerTransformAfterLayout();
-
   updateAfterLayout();
 
   if (isHTMLDialogElement(node()) && isOutOfFlowPositioned())

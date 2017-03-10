@@ -3103,14 +3103,6 @@ void WebViewImpl::refreshPageScaleFactorAfterLayout() {
   setPageScaleFactor(newPageScaleFactor);
 
   updateLayerTreeViewport();
-
-  // Changes to page-scale during layout may require an additional frame.
-  // We can't update the lifecycle here because we may be in the middle of
-  // layout in the caller of this method.
-  // TODO(chrishtr): clean all this up. All layout should happen in one
-  // lifecycle run (crbug.com/578239).
-  if (mainFrameImpl()->frameView()->needsLayout())
-    mainFrameImpl()->frameWidget()->scheduleAnimation();
 }
 
 void WebViewImpl::updatePageDefinedViewportConstraints(
@@ -3618,7 +3610,7 @@ void WebViewImpl::postLayoutResize(WebLocalFrameImpl* webframe) {
     m_resizeViewportAnchor->resizeFrameView(mainFrameSize());
 }
 
-void WebViewImpl::layoutUpdated(WebLocalFrameImpl* webframe) {
+void WebViewImpl::resizeAfterLayout(WebLocalFrameImpl* webframe) {
   LocalFrame* frame = webframe->frame();
   if (!m_client || !frame->isLocalRoot())
     return;
@@ -3640,17 +3632,17 @@ void WebViewImpl::layoutUpdated(WebLocalFrameImpl* webframe) {
   if (pageScaleConstraintsSet().constraintsDirty())
     refreshPageScaleFactorAfterLayout();
 
-  FrameView* view = webframe->frame()->view();
-
   postLayoutResize(webframe);
+}
 
+void WebViewImpl::layoutUpdated(WebLocalFrameImpl* webframe) {
   // Relayout immediately to avoid violating the rule that needsLayout()
   // isn't set at the end of a layout.
+  FrameView* view = webframe->frame()->view();
   if (view->needsLayout())
     view->layout();
 
   updatePageOverlays();
-
   m_fullscreenController->didUpdateLayout();
   m_client->didUpdateLayout();
 }

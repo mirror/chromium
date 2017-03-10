@@ -133,7 +133,7 @@ void LayoutEmbeddedObject::layout() {
   m_overflow.reset();
   addVisualEffectOverflow();
 
-  updateLayerTransformAfterLayout();
+  updateAfterLayout();
 
   Widget* widget = this->widget();
   if (!widget && frameView())

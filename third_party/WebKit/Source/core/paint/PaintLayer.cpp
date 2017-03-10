@@ -772,6 +772,11 @@ void PaintLayer::update3DTransformedDescendantStatus() {
 }
 
 void PaintLayer::updateLayerPosition() {
+  // LayoutBox'es will call updateSizeAndScrollingAfterLayout() from
+  // LayoutBox::updateAfterLayout, but LayoutInline's will still need to update
+  // their size.
+  if (layoutObject()->isInline() && layoutObject()->isLayoutInline())
+    updateSizeAndScrollingAfterLayout();
   LayoutPoint localPoint;
   if (LayoutBox* box = layoutBox())
     localPoint.moveBy(box->physicalLocation());
@@ -829,19 +834,8 @@ void PaintLayer::updateLayerPosition() {
 
 void PaintLayer::updateSizeAndScrollingAfterLayout() {
   bool didResize = false;
-  if (RuntimeEnabledFeatures::rootLayerScrollingEnabled()
-      && isRootLayer()
-      && layoutObject()->document().frame()->isMainFrame()) {
-    // Unlike every other layer, the root PaintLayer for the main frame takes
-    // its size from the layout viewport size.  The call to adjustViewSize()
-    // will update the frame's contents size, which will also update the page's
-    // minimum scale factor.  The call to layoutUpdated() will calculate the
-    // layout viewport size based on the page minimum scale factor, and then
-    // update the FrameView with the new size.
-    LocalFrame* frame = layoutObject()->document().frame();
-    frame->view()->adjustViewSize();
-    frame->chromeClient().layoutUpdated(frame);
-    const IntSize newSize = frame->view()->size();
+  if (isRootLayer() && RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
+    const IntSize newSize = layoutObject()->document().view()->size();
     didResize = newSize != m_size;
     m_size = newSize;
   } else if (layoutObject()->isInline() && layoutObject()->isLayoutInline()) {

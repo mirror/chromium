@@ -37,6 +37,7 @@
 #include "core/layout/api/LayoutPartItem.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/layout/compositing/PaintLayerCompositor.h"
+#include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/ViewPainter.h"
@@ -952,6 +953,24 @@ LayoutUnit LayoutView::viewLogicalHeightForPercentages() const {
 
 float LayoutView::zoomFactor() const {
   return m_frameView->frame().pageZoomFactor();
+}
+
+void LayoutView::updateAfterLayout() {
+  // Unlike every other layer, the root PaintLayer takes its size from the
+  // layout viewport size.  The call to adjustViewSize() will update the
+  // frame's contents size, which will also update the page's minimum scale
+  // factor.  The call to layoutUpdated() will calculate the layout viewport
+  // size based on the page minimum scale factor, and then update the FrameView
+  // with the new size.
+  if (hasOverflowClip()) {
+    DCHECK(RuntimeEnabledFeatures::rootLayerScrollingEnabled());
+    getScrollableArea()->clampScrollOffsetAfterOverflowChange();
+  }
+  LocalFrame& frame = frameView()->frame();
+  frameView()->adjustViewSize();
+  frame.chromeClient().resizeAfterLayout(&frame);
+  LayoutBlock::updateAfterLayout();
+  frame.chromeClient().layoutUpdated(&frame);
 }
 
 void LayoutView::updateHitTestResult(HitTestResult& result,

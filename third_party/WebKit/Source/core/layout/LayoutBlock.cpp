@@ -393,8 +393,7 @@ void LayoutBlock::removeLeftoverAnonymousBlock(LayoutBlock* child) {
 
 void LayoutBlock::updateAfterLayout() {
   invalidateStickyConstraints();
-  if (hasLayer())
-    layer()->updateSizeAndScrollingAfterLayout();
+  LayoutBox::updateAfterLayout();
 }
 
 void LayoutBlock::layout() {
@@ -658,8 +657,6 @@ bool LayoutBlock::simplifiedLayout() {
                                         : clientLogicalBottom();
     computeOverflow(oldClientAfterEdge, true);
   }
-
-  updateLayerTransformAfterLayout();
 
   updateAfterLayout();
 

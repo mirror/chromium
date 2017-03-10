@@ -487,7 +487,7 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   void clearLayoutOverflow();
   void clearAllOverflows() { m_overflow.reset(); }
 
-  void updateLayerTransformAfterLayout();
+  virtual void updateAfterLayout();
 
   DISABLE_CFI_PERF LayoutUnit contentWidth() const {
     return clientWidth() - paddingLeft() - paddingRight();

@@ -401,7 +401,6 @@ void LayoutDeprecatedFlexibleBox::layoutBlock(bool relayoutChildren) {
     computeOverflow(oldClientAfterEdge);
   }
 
-  updateLayerTransformAfterLayout();
   updateAfterLayout();
 
   clearNeedsLayout();

@@ -577,9 +577,9 @@ int PaintLayerScrollableArea::pixelSnappedVisibleClientHeight() const {
         m_layer.isRootLayer()
         && box().document().frame()->isMainFrame();
     if (isMainFrameRootLayer)
-      return box().frameView()->width();
+      return box().frameView()->height();
   }
-  return box().pixelSnappedClientWidth();
+  return box().pixelSnappedClientHeight();
 }
 
 IntSize PaintLayerScrollableArea::contentsSize() const {

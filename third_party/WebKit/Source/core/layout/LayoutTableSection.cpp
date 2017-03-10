@@ -1145,7 +1145,7 @@ void LayoutTableSection::layoutRows() {
           rowLogicalHeight -= nextRowObject->paginationStrut();
       }
       rowLayoutObject->setLogicalHeight(rowLogicalHeight);
-      rowLayoutObject->updateLayerTransformAfterLayout();
+      rowLayoutObject->updateAfterLayout();
     }
   }
 

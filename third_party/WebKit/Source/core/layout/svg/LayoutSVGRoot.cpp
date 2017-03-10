@@ -201,7 +201,7 @@ void LayoutSVGRoot::layout() {
     addContentsVisualOverflow(enclosingLayoutRect(contentVisualRect));
   }
 
-  updateLayerTransformAfterLayout();
+  updateAfterLayout();
   m_hasBoxDecorationBackground = isDocumentElement()
                                      ? styleRef().hasBoxDecorationBackground()
                                      : hasBoxDecorationBackground();

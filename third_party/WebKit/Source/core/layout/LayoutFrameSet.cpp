@@ -381,7 +381,7 @@ void LayoutFrameSet::layout() {
 
   computeEdgeInfo();
 
-  updateLayerTransformAfterLayout();
+  updateAfterLayout();
 
   clearNeedsLayout();
 }

@@ -617,6 +617,10 @@ float ChromeClientImpl::clampPageScaleFactorToLimits(float scale) const {
   return m_webView->clampPageScaleFactorToLimits(scale);
 }
 
+void ChromeClientImpl::resizeAfterLayout(LocalFrame* frame) const {
+  m_webView->resizeAfterLayout(WebLocalFrameImpl::fromFrame(frame));
+}
+
 void ChromeClientImpl::layoutUpdated(LocalFrame* frame) const {
   m_webView->layoutUpdated(WebLocalFrameImpl::fromFrame(frame));
 }
