@@ -18,7 +18,10 @@
 #      Or on Windows (Powershell):
 #
 #          cd src\..
-#          New-Item -Type SymbolicLink -Value src\tools\vim\chromium.ycm_extra_conf.py -Path .ycm_extra_conf.py
+#
+#          New-Item -Type SymbolicLink `
+#              -Value src\tools\vim\chromium.ycm_extra_conf.py `
+#              -Path .ycm_extra_conf.py
 #
 # If you are using Vim/NeoVIm:
 
