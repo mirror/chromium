@@ -4,7 +4,7 @@
 
 # Autocompletion config for YouCompleteMe in Chromium.
 #
-# USAGE:
+# USAGE with Vim:
 #
 #   1. Install YCM [https://github.com/Valloric/YouCompleteMe]
 #          (Googlers should check out [go/ycm])
@@ -29,7 +29,7 @@
 #
 # Usage notes:
 #
-#   * You must use ninja & clang to build Chromium.
+#   * You must use ninja and clang to build Chromium.
 #
 #   * You must have built Chromium recently.
 #
@@ -54,14 +54,6 @@ import shlex
 import subprocess
 import sys
 
-# Flags from YCM's default config.
-_default_flags = [
-    '-DUSE_CLANG_COMPLETER',
-    '-std=c++14',
-    '-x',
-    'c++',
-]
-
 _header_alternates = ('.cc', '.cpp', '.c', '.mm', '.m')
 
 _extension_flags = {
@@ -72,6 +64,28 @@ _extension_flags = {
 
 def PathExists(*args):
   return os.path.exists(os.path.join(*args))
+
+
+def HasCommandLineFlag(command_line, flag):
+  """Returns true |command_line| contains the specified flag.
+
+  Args:
+    command_line: (List of Strings) Tokenized command line.
+    flag: (String) Flag to search for. E.g. '--foo'
+
+  Returns:
+    (Boolean): True if |command_line| contains |flag| or an option of the form
+       |flag| + '=' + value. E.g. either '--foo' or '--foo=bar'.
+  """
+  if flag in command_line:
+    return True
+
+  flag = flag + '='
+
+  for c in command_line:
+    if c.startswith(flag):
+      return True
+  return False
 
 
 def FindChromeSrcFromFilename(filename):
@@ -217,6 +231,108 @@ def GetClangCommandLineFromNinjaForSource(out_dir, filename):
   return None
 
 
+# Based on Clang's lib/Driver/ToolChain.cpp.
+def GetClangDriverModeForCompiler(compiler_name):
+  """Given a compiler name, returns the corresponding '--driver-mode' flag.
+
+  Args:
+    compiler_name: (String) Name of compiler. Could be a path name. E.g. clang,
+        clang-cl.exe, /foo/bar/g++.
+
+  Returns:
+    String: The driver mode flag, or None if one could not be determined.
+  """
+
+  _clang_driver_suffixes = [
+      ('clang', None),  # No driver
+      ('clang++', '--driver-mode=g++'),  # g++
+      ('clang-c++', '--driver-mode=g++'),  # g++
+      ('clang-cc', None),
+      ('clang-cpp', '--driver-mode=cpp'),  # cpp
+      ('clang-g++', '--driver-mode=g++'),  # g++
+      ('clang-gcc', None),
+      ('clang-cl', '--driver-mode=cl'),  # cl
+      ('cc', None),
+      ('cpp', '--driver-mode=cpp'),  # cpp
+      ('cl', '--driver-mode=cl'),  # cl
+      ('++', '--driver-mode=g++')  # g++
+  ]
+
+  def FindDriverSuffix(basename):
+    for d in _clang_driver_suffixes:
+      if basename.endswith(d[0]):
+        return (d[1], True)
+    return (None, False)
+
+  compiler_name = os.path.basename(compiler_name)
+
+  # clang-cl.exe -> clang-cl
+  compiler_name = os.path.splitext(compiler_name)[0]
+
+  flag, found = FindDriverSuffix(compiler_name)
+
+  if not found:
+    # Try again after stripping trailing version number.
+    # clang++3.5 -> clang++
+    compiler_name = compiler_name.rstrip('0123456789.')
+    flag, found = FindDriverSuffix(compiler_name)
+
+  if not found:
+    # Try again after removing trailing components.
+    # clang++-tot -> clang++
+    compiler_name = compiler_name.rsplit('-', 1)[0]
+    flag, found = FindDriverSuffix(compiler_name)
+
+  return flag
+
+
+def EnsureDriverFlagForClangCommandLine(clang_commandline):
+  """Ensure that a suitable '--driver-mode' flag exists on the commandline.
+
+  Args:
+    clang_commandline: (List of String) Clang command line.
+
+  Returns:
+    (List of String) The same command line possibly with additional
+        '--driver-mode' flags. |clang_commandline| will be returned as is if no
+        driver mode can be determined.
+  """
+  if HasCommandLineFlag(clang_commandline, '--driver-mode'):
+    return
+
+  driver_mode = GetClangDriverModeForCompiler(clang_commandline[0])
+  if driver_mode is not None:
+    clang_commandline.insert(1, driver_mode)
+
+
+def ReadOptionsFromResponseFile(workdir, rspfile):
+  """Read options from Ninja response files.
+
+  The YCM pipeline currently loses @foo.rsp style response file specifiers in
+  the command line. This function reads in the contents of a response file and
+  returns the corresponding list of command line options.
+
+  While the resulting command line will likely fail if used with a limited shell
+  like cmd.exe, the YCM pipeline doesn't indirect through a shell.
+
+  Args:
+    workdir: (String) Working directory. If the response file uses a relative
+        path, it will be resolved relative to this path.
+    rspfile: (String) Path to response file.
+
+  Returns:
+    (List of Strings) The list of command line arguments read from the response
+        file.
+  """
+  rspfile = os.path.normpath(os.path.join(workdir, rspfile))
+  try:
+    with open(rspfile, 'r') as f:
+      rspdata = f.read()
+      return shlex.split(rspdata)
+  except:
+    return ['@missing-rsp-file:{}'.format(rspfile)]
+
+
 def GetClangOptionsFromCommandLine(clang_commandline, out_dir,
                                    additional_flags):
   """Extracts relevant command line options from |clang_commandline|
@@ -225,47 +341,43 @@ def GetClangOptionsFromCommandLine(clang_commandline, out_dir,
     clang_commandline: (String) Full Clang invocation.
     out_dir: (String) Absolute path to ninja build directory. Relative paths in
         the command line are relative to |out_dir|.
-    additional_flags: (List of String) Additional flags to return.
+    additional_flags: (List of String) Additional flags to return. These flags
+        will be appended to the curated Clang commandline.
 
   Returns:
     (List of Strings) The list of command line flags for this source file. Can
     be empty.
   """
-  clang_flags = [] + additional_flags
-
-  def abspath(path):
-    return os.path.normpath(os.path.join(out_dir, path))
-
   # Parse flags that are important for YCM's purposes.
   clang_tokens = shlex.split(clang_commandline)
-  include_pattern = re.compile(r'^(-I|-isystem)(.+)$')
-  for flag_index, flag in enumerate(clang_tokens):
-    include_match = include_pattern.match(flag)
-    if include_match:
-      # Relative paths need to be resolved, because they're relative to the
-      # output dir, not the source.
-      path = abspath(include_match.group(2))
-      clang_flags.append(include_match.group(1) + path)
-    elif flag.startswith('-std') or flag == '-nostdinc++':
-      clang_flags.append(flag)
-    elif flag.startswith('-') and flag[1] in 'DWFfmO':
-      if flag == '-Wno-deprecated-register' or flag == '-Wno-header-guard':
-        # These flags causes libclang (3.3) to crash. Remove it until things
-        # are fixed.
-        continue
-      clang_flags.append(flag)
-    elif flag == '-isysroot' or flag == '-isystem' or flag == '-I':
-      if flag_index + 1 < len(clang_tokens):
-        clang_flags.append(flag)
-        clang_flags.append(abspath(clang_tokens[flag_index + 1]))
-    elif flag.startswith('--sysroot='):
-      # On Linux we use a sysroot image.
-      sysroot_path = flag.lstrip('--sysroot=')
-      if sysroot_path.startswith('/'):
-        clang_flags.append(flag)
-      else:
-        clang_flags.append('--sysroot=' + abspath(sysroot_path))
-  return clang_flags
+
+  # Slurp any wrappers until we get to a clang invocation:
+  clang_invocation_index = -1
+  rspfile_index = -1
+  for token_index, token in enumerate(clang_tokens):
+    if 'clang' in token and clang_invocation_index == -1:
+      clang_invocation_index = token_index
+
+    if token.startswith('@') and rspfile_index == -1:
+      rspfile_index = token_index
+
+  if clang_invocation_index != -1:
+    clang_tokens = clang_tokens[clang_invocation_index:]
+    rspfile_index -= clang_invocation_index
+
+  if rspfile_index > 0:
+    rspoptions = ReadOptionsFromResponseFile(out_dir,
+                                             clang_tokens[rspfile_index][1:])
+    clang_tokens=clang_tokens[:rspfile_index] + \
+        rspoptions + clang_tokens[rspfile_index + 1:]
+
+  if not HasCommandLineFlag(clang_tokens, '--working-directory'):
+    clang_tokens.insert(1, '--working-directory={}'.format(out_dir))
+
+  EnsureDriverFlagForClangCommandLine(clang_tokens)
+
+  # Pass all other flags as-is including the compiler name.
+  return clang_tokens + additional_flags
 
 
 def GetClangOptionsFromNinjaForFilename(chrome_root, filename):
@@ -288,15 +400,11 @@ def GetClangOptionsFromNinjaForFilename(chrome_root, filename):
   if not chrome_root:
     return []
 
-  # Generally, everyone benefits from including Chromium's src/, because all of
-  # Chromium's includes are relative to that.
-  additional_flags = ['-I' + os.path.join(chrome_root)]
-
   # Version of Clang used to compile Chromium can be newer then version of
   # libclang that YCM uses for completion. So it's possible that YCM's libclang
   # doesn't know about some used warning options, which causes compilation
   # warnings (and errors, because of '-Werror');
-  additional_flags.append('-Wno-unknown-warning-option')
+  additional_flags = ['-Wno-unknown-warning-option']
 
   sys.path.append(os.path.join(chrome_root, 'tools', 'vim'))
   from ninja_output import GetNinjaOutputDirectory
@@ -353,6 +461,4 @@ def FlagsForFile(filename):
   # determine the flags again.
   should_cache_flags_for_file = bool(clang_flags)
 
-  final_flags = _default_flags + clang_flags
-
-  return {'flags': final_flags, 'do_cache': should_cache_flags_for_file}
+  return {'flags': clang_flags, 'do_cache': should_cache_flags_for_file}

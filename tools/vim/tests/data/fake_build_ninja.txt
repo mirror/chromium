@@ -11,16 +11,19 @@ default_cc_file = ../../base/logging.cc
 default_test_file = ../../base/logging_unittest.cc
 
 rule cxx
-  command = $cxx -Ia -Itag-$tag $in -o $out
+  command = $cxx -Ia -isysroot /mac.sdk -Itag-$tag -c $in -o $out
 
 rule cxx_i
   command = $cxx -I a -I tag-$tag $in -o $out
 
 rule cxx_sysroot_abs
-  command = $cxx -Ia --sysroot=/usr/lib/sysroot-image -isysroot /mac.sdk $in -o $out
+  command = $cxx -Ia --sysroot=/usr/lib/sysroot-image -c $in -o $out
 
 rule cxx_sysroot_rel
-  command = $cxx -Ia --sysroot=../../build/sysroot-image -isysroot ../../build/mac.sdk $in -o $out
+  command = $cxx -Ia --sysroot=../../build/sysroot-image -c $in -o $out
+
+rule cxx_gxx
+  command = clang-g++ -Ia -I../.. -c $in -o $out
 
 rule cxx_isystem
   command = $cxx -Ib -isystema -isystem ../../build/c -isystem /usr/lib/include $in -o $out
@@ -67,4 +70,16 @@ build obj/ten.o: cxx_isystem ../../ten.cc
 
 build obj/eleven.o: cxx_i ../../eleven.cc
   tag = eleven
+
+build obj/ten.o: cxx_gxx ../../ten.cc
+
+build obj/eleven.o: cxx_gxx_ver ../../eleven.c
+
+build obj/twelve.o: cxx_cl_tok ../../twelve.CC
+
+build obj/thirteen.o: cxx_cl_path ../../thirteen.CPP
+
+build obj/fourteen.o: cxx_cl_tok_exe ../../fourteen.cc
+
+build obj/fifteen.o: cxx_cl_rspfile ../../fifteen.cc
 
