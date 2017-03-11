@@ -1,0 +1,6 @@
+CONSOLE WARNING: line 16: The deviceorientation event is deprecated on insecure origins, and support will be removed in the future. You should consider switching your application to a secure origin, such as HTTPS. See https://goo.gl/rStTGz for more details.
+This is a testharness.js-based test.
+FAIL X angle assert_approx_equals: expected a number but got a "undefined"
+FAIL Y angle assert_approx_equals: expected a number but got a "undefined"
+Harness: the test ran to completion.
+
