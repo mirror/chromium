@@ -90,6 +90,9 @@ class TestExporter(object):
         _log.info('Picking the earliest commit and creating a PR')
         _log.info('- %s %s', outbound_commit.sha, outbound_commit.subject())
 
+        self.export_commit(outbound_commit)
+
+    def export_commit(self, outbound_commit):
         patch = outbound_commit.format_patch()
         message = outbound_commit.message()
         author = outbound_commit.author()
@@ -114,3 +117,5 @@ class TestExporter(object):
         if response_data:
             data, status_code = self.wpt_github.add_label(response_data['number'])
             _log.info('Add label response (status %s): %s', status_code, data)
+
+        return response_data
