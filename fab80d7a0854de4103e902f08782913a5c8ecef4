@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8c27747_d856e525",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-13T19:42:47Z",
+      "side": 1,
+      "message": "This is split into a separate function so try_gerrit can use it",
+      "revId": "fab80d7a0854de4103e902f08782913a5c8ecef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e52a7eb4_27f2adf6",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/try_gerrit.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-13T19:42:47Z",
+      "side": 1,
+      "message": "I\u0027m using requests here because webkitpy.common.net.web doesn\u0027t have support for non-GET HTTP requests. Before this CL lands I\u0027ll move over to urllib2 (which the exporter already uses). If possible, I\u0027ll do this by adding POST and PUT support to webkitpy.common.net.web.",
+      "revId": "fab80d7a0854de4103e902f08782913a5c8ecef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
