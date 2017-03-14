@@ -33,6 +33,23 @@
       "revId": "fab80d7a0854de4103e902f08782913a5c8ecef4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58a0ad65_87656b23",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/try_gerrit.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-14T18:33:30Z",
+      "side": 1,
+      "message": "Would it make anything simpler if test_exporter.export_commit took a diff/patch string instead of a commit?",
+      "revId": "fab80d7a0854de4103e902f08782913a5c8ecef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
