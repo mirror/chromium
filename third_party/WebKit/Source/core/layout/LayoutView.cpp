@@ -962,15 +962,20 @@ void LayoutView::updateAfterLayout() {
   // factor.  The call to layoutUpdated() will calculate the layout viewport
   // size based on the page minimum scale factor, and then update the FrameView
   // with the new size.
+  bool rls = RuntimeEnabledFeatures::rootLayerScrollingEnabled();
   if (hasOverflowClip()) {
-    DCHECK(RuntimeEnabledFeatures::rootLayerScrollingEnabled());
+    DCHECK(rls);
     getScrollableArea()->clampScrollOffsetAfterOverflowChange();
   }
   LocalFrame& frame = frameView()->frame();
-  frameView()->adjustViewSize();
-  frame.chromeClient().resizeAfterLayout(&frame);
+  if (rls) {
+    if (!document().printing())
+      frameView()->adjustViewSize();
+    frame.chromeClient().resizeAfterLayout(&frame);
+  }
   LayoutBlock::updateAfterLayout();
-  frame.chromeClient().layoutUpdated(&frame);
+  if (rls)
+    frame.chromeClient().layoutUpdated(&frame);
 }
 
 void LayoutView::updateHitTestResult(HitTestResult& result,

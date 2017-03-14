@@ -340,15 +340,8 @@ TEST_P(BoxPaintInvalidatorTest, NonCompositedLayoutViewResize) {
   EXPECT_EQ(
       static_cast<const DisplayItemClient*>(content->layoutObject()->view()),
       rasterInvalidations[1].client);
-  if (RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
-    // TODO(skobes): Treat LayoutView in the same way as normal objects having
-    // background-attachment: local. crbug.com/568847.
-    EXPECT_EQ(IntRect(0, 0, 100, 200), rasterInvalidations[1].rect);
-    EXPECT_EQ(PaintInvalidationFull, rasterInvalidations[1].reason);
-  } else {
-    EXPECT_EQ(IntRect(0, 100, 100, 100), rasterInvalidations[1].rect);
-    EXPECT_EQ(PaintInvalidationIncremental, rasterInvalidations[1].reason);
-  }
+  EXPECT_EQ(IntRect(0, 100, 100, 100), rasterInvalidations[1].rect);
+  EXPECT_EQ(PaintInvalidationIncremental, rasterInvalidations[1].reason);
   document().view()->setTracksPaintInvalidations(false);
 }
 
@@ -406,14 +399,7 @@ TEST_P(BoxPaintInvalidatorTest, NonCompositedLayoutViewGradientResize) {
   EXPECT_EQ(static_cast<const DisplayItemClient*>(frameLayoutView),
             (*rasterInvalidations)[1].client);
   EXPECT_EQ(IntRect(0, 0, 100, 200), (*rasterInvalidations)[1].rect);
-  if (RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
-    // TODO(skobes): Treat LayoutView in the same way as normal objects having
-    // background-attachment: local. crbug.com/568847.
-    EXPECT_EQ(PaintInvalidationFull, (*rasterInvalidations)[1].reason);
-  } else {
-    EXPECT_EQ(PaintInvalidationBorderBoxChange,
-              (*rasterInvalidations)[1].reason);
-  }
+  EXPECT_EQ(PaintInvalidationBorderBoxChange, (*rasterInvalidations)[1].reason);
   document().view()->setTracksPaintInvalidations(false);
 }
 
