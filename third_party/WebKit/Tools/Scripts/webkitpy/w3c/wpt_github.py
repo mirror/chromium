@@ -79,6 +79,14 @@ class WPTGitHub(object):
         else:
             raise Exception('Non-200 status code (%s): %s' % (status_code, data))
 
+    def get_pr_branch(self, pr_number):
+        path = '/repos/w3c/web-platform-tests/pulls/{}'.format(pr_number)
+        data, status_code = self.request(path, method='GET')
+        if status_code == 200:
+            return data['head']['ref']
+        else:
+            raise Exception('Non-200 status code (%s): %s' % (status_code, data))
+
     def merge_pull_request(self, pull_request_number):
         path = '/repos/w3c/web-platform-tests/pulls/%d/merge' % pull_request_number
         body = {

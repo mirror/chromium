@@ -29,36 +29,21 @@ class TestExporter(object):
         """
         pull_requests = self.wpt_github.in_flight_pull_requests()
 
-        if len(pull_requests) == 1:
-            self.merge_in_flight_pull_request(pull_requests.pop())
-        elif len(pull_requests) > 1:
-            _log.error(pull_requests)
-            # TODO(jeffcarp): Print links to PRs
-            raise Exception('More than two in-flight PRs!')
-        else:
+        # Merge all open PRs
+        for pr in pull_requests:
+            _log.info('In-flight PR found: #%d %s', pr['number'], pr['title'])
+            _log.info('Attempting to merge...')
+
+            if self.dry_run:
+                _log.info('[dry_run] Would have attempted to merge PR')
+            else:
+                branch = self.wpt_github.get_pr_branch(pr['number'])
+                self.wpt_github.merge_pull_request(pr['number'])
+                self.wpt_github.delete_remote_branch(branch)
+
+        if not pull_requests:
+            _log.info('No in-flight PRs found, looking for exportable commits.')
             self.export_first_exportable_commit()
-
-    def merge_in_flight_pull_request(self, pull_request):
-        """Attempt to merge an in-flight PR.
-
-        Args:
-            pull_request: a PR object returned from the GitHub API.
-        """
-
-        _log.info('In-flight PR found: #%d', pull_request['number'])
-        _log.info(pull_request['title'])
-
-        # TODO(jeffcarp): Check the PR status here (for Travis CI, etc.)
-
-        if self.dry_run:
-            _log.info('[dry_run] Would have attempted to merge PR')
-            return
-
-        _log.info('Merging...')
-        self.wpt_github.merge_pull_request(pull_request['number'])
-        _log.info('PR merged! Deleting branch.')
-        self.wpt_github.delete_remote_branch('chromium-export-try')
-        _log.info('Branch deleted!')
 
     def export_first_exportable_commit(self):
         """Looks for exportable commits in Chromium, creates PR if found."""
