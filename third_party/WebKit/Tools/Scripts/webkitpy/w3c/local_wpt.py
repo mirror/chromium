@@ -44,6 +44,10 @@ class LocalWPT(object):
         """Runs a command in the local WPT directory."""
         return self.host.executive.run_command(command, cwd=self.path, **kwargs)
 
+    def run_multiline(self, command):
+        """Runs a command in the local WPT directory."""
+        return [s.strip() for s in self.run(command).splitlines()]
+
     def most_recent_chromium_commit(self):
         """Finds the most recent commit in WPT with a Chromium commit position."""
         wpt_commit_hash = self.run(['git', 'rev-list', 'HEAD', '-n', '1', '--grep=Cr-Commit-Position'])
@@ -57,6 +61,14 @@ class LocalWPT(object):
 
         chromium_commit = ChromiumCommit(self.host, position=position)
         return wpt_commit_hash, chromium_commit
+
+    def all_chromium_commits(self):
+        revisions = self.run_multiline(['git', 'rev-list', 'HEAD', '--grep=Cr-Commit-Position'])
+        return revisions
+
+    def all_chromium_merge_commits(self):
+        revisions = self.run_multiline(['git', 'rev-list', 'HEAD', '--grep=from w3c/chromium-export-try'])
+        return revisions
 
     def clean(self):
         self.run(['git', 'reset', '--hard', 'HEAD'])
