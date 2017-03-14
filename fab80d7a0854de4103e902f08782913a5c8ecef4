@@ -50,6 +50,24 @@
       "revId": "fab80d7a0854de4103e902f08782913a5c8ecef4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ced151c_b0df6689",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/try_gerrit.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-14T19:23:42Z",
+      "side": 1,
+      "message": "test_exporter.export_commit needs the commit SHA since it\u0027s also extracting the commit subject + description to create a GitHub PR",
+      "parentUuid": "58a0ad65_87656b23",
+      "revId": "fab80d7a0854de4103e902f08782913a5c8ecef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
