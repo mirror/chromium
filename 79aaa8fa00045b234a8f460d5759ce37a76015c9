@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "769fb60a_f55a0054",
+        "filename": "tools/directory_component_mapping/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1143925
+      },
+      "writtenOn": "2017-03-14T23:52:11Z",
+      "side": 1,
+      "message": "I don\u0027t think the component should be FindIt, you can create an new component for this project.",
+      "range": {
+        "startLine": 3,
+        "startChar": 23,
+        "endLine": 3,
+        "endChar": 24
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eae66d51_54160a7d",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1143925
+      },
+      "writtenOn": "2017-03-14T23:52:11Z",
+      "side": 1,
+      "message": "Nit: Directory ...",
+      "range": {
+        "startLine": 5,
+        "startChar": 2,
+        "endLine": 5,
+        "endChar": 11
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dfd661d_dcbe705d",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1143925
+      },
+      "writtenOn": "2017-03-14T23:52:11Z",
+      "side": 1,
+      "message": "Nit: use full length of the line before changing to a new line.",
+      "range": {
+        "startLine": 6,
+        "startChar": 2,
+        "endLine": 6,
+        "endChar": 7
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33d34f5b_50f87b7e",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1143925
+      },
+      "writtenOn": "2017-03-14T23:52:11Z",
+      "side": 1,
+      "message": "Nit: Train ...",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 10
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eae5faf_4df15493",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1143925
+      },
+      "writtenOn": "2017-03-14T23:52:11Z",
+      "side": 1,
+      "message": "Period at the end.",
+      "range": {
+        "startLine": 27,
+        "startChar": 11,
+        "endLine": 27,
+        "endChar": 16
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f187b578_d8dba9e3",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1143925
+      },
+      "writtenOn": "2017-03-14T23:52:11Z",
+      "side": 1,
+      "message": "nit: indentation\n\nhttps://google.github.io/styleguide/pyguide.html#Indentation",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 10
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a2512ca_32acc6dd",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1143925
+      },
+      "writtenOn": "2017-03-14T23:52:11Z",
+      "side": 1,
+      "message": "nit: indentation.",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 5
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bbd5cb4_d607ec47",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1143925
+      },
+      "writtenOn": "2017-03-14T23:52:11Z",
+      "side": 1,
+      "message": "The name is a little confusing, ``PredictComponent`` should be better.",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 90,
+        "endChar": 25
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5169701_f3e97f95",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1143925
+      },
+      "writtenOn": "2017-03-14T23:52:11Z",
+      "side": 1,
+      "message": "Avoid abbreviation like this, should use full name like components.",
+      "range": {
+        "startLine": 91,
+        "startChar": 45,
+        "endLine": 91,
+        "endChar": 51
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f0a1828_a1ea84a2",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1143925
+      },
+      "writtenOn": "2017-03-14T23:52:11Z",
+      "side": 1,
+      "message": "Add parameter type as well, like below:\n\ninput_dir (list): ...",
+      "range": {
+        "startLine": 95,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 11
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faf7151b_48317019",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1143925
+      },
+      "writtenOn": "2017-03-14T23:52:11Z",
+      "side": 1,
+      "message": "It seems we return a tuple",
+      "range": {
+        "startLine": 103,
+        "startChar": 4,
+        "endLine": 103,
+        "endChar": 8
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d733bb42_1e828b00",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1143925
+      },
+      "writtenOn": "2017-03-14T23:52:11Z",
+      "side": 1,
+      "message": "the usage of ``i`` is a little confusing here. We can just use:\n\nfor index in predicted_ind:\n  xxx\n\nA convention is using meaningful variable names instead of abbreviations like ``i``, ``j``.",
+      "range": {
+        "startLine": 109,
+        "startChar": 24,
+        "endLine": 109,
+        "endChar": 37
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde78bb3_7f81f450",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1143925
+      },
+      "writtenOn": "2017-03-14T23:52:11Z",
+      "side": 1,
+      "message": "period at the end.",
+      "range": {
+        "startLine": 120,
+        "startChar": 44,
+        "endLine": 120,
+        "endChar": 47
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "025d9fbe_3ea23bcd",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1143925
+      },
+      "writtenOn": "2017-03-14T23:52:11Z",
+      "side": 1,
+      "message": "Ditto. And some comments will be helpful.",
+      "range": {
+        "startLine": 151,
+        "startChar": 24,
+        "endLine": 151,
+        "endChar": 33
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ccd0347_6ea8401c",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1143925
+      },
+      "writtenOn": "2017-03-14T23:52:11Z",
+      "side": 1,
+      "message": "No empty space at the beginning.\n\nIf it\u0027s a one line doc -  \"\"\"Train ..... .\"\"\"",
+      "range": {
+        "startLine": 170,
+        "startChar": 6,
+        "endLine": 170,
+        "endChar": 11
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f62bfca2_780b2ef1",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1143925
+      },
+      "writtenOn": "2017-03-14T23:52:11Z",
+      "side": 1,
+      "message": "Alignment",
+      "range": {
+        "startLine": 192,
+        "startChar": 54,
+        "endLine": 192,
+        "endChar": 64
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e8a2950_722832d3",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1143925
+      },
+      "writtenOn": "2017-03-14T23:52:11Z",
+      "side": 1,
+      "message": "Ditto.\n\nI notice there are some duplication of code across these functions, can you make some utility function or model to reuse some code?",
+      "range": {
+        "startLine": 208,
+        "startChar": 24,
+        "endLine": 208,
+        "endChar": 33
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
