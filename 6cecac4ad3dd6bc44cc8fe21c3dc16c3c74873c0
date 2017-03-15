@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b03a12e_cfb13c89",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 3
+      },
+      "lineNbr": 1450,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-03-15T04:23:23Z",
+      "side": 1,
+      "message": "Why does this CL enable a manual test?",
+      "range": {
+        "startLine": 1450,
+        "startChar": 90,
+        "endLine": 1450,
+        "endChar": 108
+      },
+      "revId": "6cecac4ad3dd6bc44cc8fe21c3dc16c3c74873c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
