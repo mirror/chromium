@@ -15,32 +15,43 @@ class TestExporterTest(unittest.TestCase):
     def setUp(self):
         self.host = MockHost()
 
-    def test_stops_if_more_than_one_pr_is_in_flight(self):
+    def test_merges_more_than_one_pr(self):
         host = MockHost()
         test_exporter = TestExporter(host, 'gh-username', 'gh-token')
-        test_exporter.wpt_github = MockWPTGitHub(pull_requests=[{'id': 1}, {'id': 2}])
-
-        # TODO: make Exception more specific
-        with self.assertRaises(Exception):
-            test_exporter.run()
-
-    def test_if_pr_exists_merges_it(self):
-        host = MockHost()
-        test_exporter = TestExporter(host, 'gh-username', 'gh-token')
-        test_exporter.wpt_github = MockWPTGitHub(pull_requests=[{'number': 1, 'title': 'abc'}])
+        test_exporter.wpt_github = MockWPTGitHub(pull_requests=[
+            {'id': 1, 'title': 'title', 'number': 1234},
+            {'id': 2, 'title': 'title', 'number': 5678},
+        ])
         test_exporter.run()
 
-        self.assertIn('merge_pull_request', test_exporter.wpt_github.calls)
+        self.assertEqual(test_exporter.wpt_github.calls, [
+            'in_flight_pull_requests',
+            'get_pr_branch',
+            'merge_pull_request',
+            'delete_remote_branch',
+            'get_pr_branch',
+            'merge_pull_request',
+            'delete_remote_branch',
+        ])
 
-    def test_merge_failure_errors_out(self):
+    def test_merges_all_prs_even_if_one_fails(self):
         host = MockHost()
         test_exporter = TestExporter(host, 'gh-username', 'gh-token')
-        test_exporter.wpt_github = MockWPTGitHub(pull_requests=[{'number': 1, 'title': 'abc'}],
-                                                 unsuccessful_merge=True)
+        test_exporter.wpt_github = MockWPTGitHub(pull_requests=[
+            {'id': 1, 'title': 'title', 'number': 1234, 'unsuccessful_merge': True},
+            {'id': 2, 'title': 'title', 'number': 5678},
+        ])
 
-        # TODO: make Exception more specific
-        with self.assertRaises(Exception):
-            test_exporter.run()
+        test_exporter.run()
+        self.assertEqual(test_exporter.wpt_github.pull_requests_merged, [5678])
+        self.assertEqual(test_exporter.wpt_github.calls, [
+            'in_flight_pull_requests',
+            'get_pr_branch',
+            'merge_pull_request',
+            'get_pr_branch',
+            'merge_pull_request',
+            'delete_remote_branch',
+        ])
 
     def test_dry_run_stops_before_creating_pr(self):
         host = MockHost()
