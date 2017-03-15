@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c2ac813_32cd5feb",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-15T22:02:42Z",
+      "side": 1,
+      "message": "For consistency with docstring below: \"Queries\", \"merges\", \"creates\"",
+      "revId": "f9ef9475fcb5a52d81826f1163934d2385780a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "444ed4c7_987465cc",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-15T22:02:42Z",
+      "side": 1,
+      "message": "These pull requests are dicts parsed from JSON returned from GitHub, right?\n\nDo you think it would be unnecessary complication to make a namedtuple class (https://docs.python.org/2/library/collections.html#collections.namedtuple) called PullRequest, just to help express that a PullRequest is a type of thing which always must have a title and number (and maybe id)?",
+      "revId": "f9ef9475fcb5a52d81826f1163934d2385780a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e87db030_f94e0dfa",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-15T22:02:42Z",
+      "side": 1,
+      "message": "Would it change the behavior if this was moved inside of the try? (Not saying it should be, just wondering)",
+      "revId": "f9ef9475fcb5a52d81826f1163934d2385780a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50049354_54fae278",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-15T22:02:42Z",
+      "side": 1,
+      "message": "It seems like a method could be extracted from here, so that this method is kept relatively high-level;\n\nsomething like:\n\n    def merge_all_pull_requests(self, pull_requests):\n        for pr in pull_requests:\n            self.merge_pull_request(pr)\n\n    def merge_pull_request(pull_request):\n        _log.info(\u0027In-flight PR found: %s\u0027, pr[\u0027title\u0027])\n        _log.info(\u0027https://github.com/w3c/web-platform-tests/pull/%d\u0027, pr[\u0027number\u0027])\n        _log.info(\u0027Attempting to merge...\u0027)\n\n        if self.dry_run:\n            _log.info(\u0027[dry_run] Would have attempted to merge PR\u0027)\n            return\n\n        branch \u003d self.wpt_github.get_pr_branch(pr[\u0027number\u0027])\n        try:\n            self.wpt_github.merge_pull_request(pr[\u0027number\u0027])\n            self.wpt_github.delete_remote_branch(branch)\n        except MergeError:\n            _log.info(\u0027Could not merge PR.\u0027)",
+      "revId": "f9ef9475fcb5a52d81826f1163934d2385780a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6daa61e1_2a09ab15",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter_unittest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-15T22:02:42Z",
+      "side": 1,
+      "message": "What is id here?\n\nAlso, would it make sense for MockWPTGitHub to take a dict mapping PR numbers to dicts?",
+      "revId": "f9ef9475fcb5a52d81826f1163934d2385780a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2d1c4d2_b1f3d033",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-15T22:02:42Z",
+      "side": 1,
+      "message": "Should this also be a MergeError, or do we want to keep this separate since this is not expected if everything is working correctly?",
+      "revId": "f9ef9475fcb5a52d81826f1163934d2385780a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d17c57_80aee8ec",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-15T22:02:42Z",
+      "side": 1,
+      "message": "Do we also want to have different exceptions for other types of failure response from GitHub?\n\nOptionally if you think it\u0027s helpful, you could add a docstring describing more specifically what this exception represents.",
+      "revId": "f9ef9475fcb5a52d81826f1163934d2385780a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
