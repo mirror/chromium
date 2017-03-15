@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "7fe4974e_a6be5b90",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1143925
+      },
+      "writtenOn": "2017-03-15T23:28:57Z",
+      "side": 1,
+      "message": "+1 \"component mapper\" sounds like a better name.",
+      "parentUuid": "1326d5e7_770f6641",
+      "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aae8f555_39de9e4b",
         "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
         "patchSetId": 1
@@ -64,6 +82,29 @@
       "writtenOn": "2017-03-15T22:58:24Z",
       "side": 1,
       "message": "This should have some sort of high-level description, either for the module, or since it\u0027s basically just the one class, at the class-level.",
+      "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1178f80_0a7a67d4",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1143925
+      },
+      "writtenOn": "2017-03-15T23:28:57Z",
+      "side": 1,
+      "message": "Add TODOs and README.md to explain the external dependencies.",
+      "range": {
+        "startLine": 5,
+        "startChar": 7,
+        "endLine": 5,
+        "endChar": 14
+      },
       "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -109,6 +150,76 @@
         "startChar": 0,
         "endLine": 10,
         "endChar": 9
+      },
+      "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c47755ee_b1427be3",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1143925
+      },
+      "writtenOn": "2017-03-15T23:28:57Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "5e90b45c_86cda9bb",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 9
+      },
+      "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f199e7f_3e285403",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1143925
+      },
+      "writtenOn": "2017-03-15T23:28:57Z",
+      "side": 1,
+      "message": "I don\u0027t think ``Compo`` here in many place is a good short name, we should use ``Component`` instead.\nComponentTree might be a better name.",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 15
+      },
+      "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef13fa71_1d1c14ec",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1143925
+      },
+      "writtenOn": "2017-03-15T23:28:57Z",
+      "side": 1,
+      "message": "Class document and method documents are missing.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 5
       },
       "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
