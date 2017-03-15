@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "f9903558_2f4792cc",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-15T00:10:54Z",
+      "side": 1,
+      "message": "This should be formatted as proper module docstring. Also, this description kind of doesn\u0027t really mean anything to anybody who doesn\u0027t already know what it means, so it\u0027s not really serving its purpose. At the very least, it should probably link to the design doc, although including a more detailed, though still high-level, description here wouldn\u0027t hurt either. Or maybe add a README.md with that kind of overview (and link to the design doc from there for even more info).",
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7dfd661d_dcbe705d",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 1
@@ -64,6 +81,46 @@
         "startChar": 2,
         "endLine": 6,
         "endChar": 7
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "749a84c7_fe9d6e94",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-15T00:10:54Z",
+      "side": 1,
+      "message": "Sort imports alphabetically (not sure if pylint warns about that or not, but it\u0027s generally how we do it). Also, I wouldn\u0027t rename common modules like numpy, although the cPickle rename makes sense.",
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f736102_357ca8a4",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-15T00:10:54Z",
+      "side": 1,
+      "message": "Where is sklearn coming from? Is it expected to be installed on the user system, or is it in the chromium codebase? Either way, it sounds like it will require some setup or usage instructions (or maybe even a wrapper script, to make sure PATHs and such are set correctly). This is more info that would be appropriate for a README.md.",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 12
       },
       "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -133,6 +190,98 @@
         "startChar": 2,
         "endLine": 30,
         "endChar": 10
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "082d10fe_a03c729b",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-15T00:10:54Z",
+      "side": 1,
+      "message": "typo.\n\nAlso, probably easier stated like:\n  dict of \"directory_path: components\"",
+      "range": {
+        "startLine": 30,
+        "startChar": 23,
+        "endLine": 30,
+        "endChar": 30
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d6eaf21_ed44d509",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-15T00:10:54Z",
+      "side": 1,
+      "message": "typo.\n\nAlso, is this a class that\u0027s defined somewhere? If so, you could probably just point to that, rather than itemizing all the fields here. If it\u0027s not, well, it looks a lot like a class, so maybe it should be. Or just pass compo_path_list and compo_par_list as their own variables, since components_info doesn\u0027t seem to do anything other than bundle them together (and complicate this docstring).",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 17
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd339d39_0c1c48a4",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-15T00:10:54Z",
+      "side": 1,
+      "message": "These details aren\u0027t very useful. It seems pretty obvious that passing \u0027svm\u0027 implies you want the svm model. I\u0027d either simply list the supported methods, and assume the caller knows what they mean (which they probably need to in order to properly choose one of them), or maybe link to some more information about each of them in the sklearn docs.",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 8
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88872b03_351ccab9",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-15T00:10:54Z",
+      "side": 1,
+      "message": "Probably simpler to just allow None in the data_path, which would imply you don\u0027t want to same the model. So it would be:\n\ndata_path: Directory where the model should be saved, or None if it shouldn\u0027t be saved.",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 11
       },
       "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
