@@ -7,9 +7,9 @@
 #include <vector>
 
 #include "base/bind.h"
-#include "base/callback.h"
 #include "base/location.h"
 #include "base/strings/string16.h"
+#include "base/task_runner_util.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "chrome/browser/android/offline_pages/offline_page_utils.h"
 #include "chrome/browser/android/shortcut_helper.h"
@@ -74,6 +74,10 @@ AddToHomescreenDataFetcher::AddToHomescreenDataFetcher(
     bool check_webapk_compatibility,
     Observer* observer)
     : WebContentsObserver(web_contents),
+      background_task_runner_(
+          content::BrowserThread::GetBlockingPool()
+              ->GetTaskRunnerWithShutdownBehavior(
+                  base::SequencedWorkerPool::SKIP_ON_SHUTDOWN)),
       weak_observer_(observer),
       shortcut_info_(GetShortcutUrl(web_contents->GetBrowserContext(),
                                     web_contents->GetLastCommittedURL())),
@@ -93,13 +97,6 @@ AddToHomescreenDataFetcher::AddToHomescreenDataFetcher(
 
   // Send a message to the renderer to retrieve information about the page.
   Send(new ChromeViewMsg_GetWebApplicationInfo(routing_id()));
-}
-
-base::Closure AddToHomescreenDataFetcher::FetchSplashScreenImageCallback(
-    const std::string& webapp_id) {
-  return base::Bind(&ShortcutHelper::FetchSplashScreenImage, web_contents(),
-                    splash_screen_url_, ideal_splash_image_size_in_px_,
-                    minimum_splash_image_size_in_px_, webapp_id);
 }
 
 void AddToHomescreenDataFetcher::OnDidGetWebApplicationInfo(
@@ -123,6 +120,8 @@ void AddToHomescreenDataFetcher::OnDidGetWebApplicationInfo(
   if (web_app_info.mobile_capable == WebApplicationInfo::MOBILE_CAPABLE ||
       web_app_info.mobile_capable == WebApplicationInfo::MOBILE_CAPABLE_APPLE) {
     shortcut_info_.display = blink::WebDisplayModeStandalone;
+    shortcut_info_.UpdateSource(
+        ShortcutInfo::SOURCE_ADD_TO_HOMESCREEN_STANDALONE);
   }
 
   // Record what type of shortcut was added by the user.
@@ -202,26 +201,21 @@ void AddToHomescreenDataFetcher::OnDidPerformInstallableCheck(
     const InstallableData& data) {
   badge_icon_.reset();
 
-  if (!web_contents() || !weak_observer_)
+  if (!web_contents() || !weak_observer_ || is_installable_check_complete_)
     return;
 
   is_installable_check_complete_ = true;
 
+  bool webapk_compatible = false;
   if (check_webapk_compatibility_) {
-    bool webapk_compatible =
-        (data.error_code == NO_ERROR_DETECTED &&
-         AreWebManifestUrlsWebApkCompatible(data.manifest));
+    webapk_compatible = (data.error_code == NO_ERROR_DETECTED &&
+                         AreWebManifestUrlsWebApkCompatible(data.manifest));
     weak_observer_->OnDidDetermineWebApkCompatibility(webapk_compatible);
 
     if (webapk_compatible) {
       // WebAPKs are wholly defined by the Web Manifest. Ignore the <meta> tag
       // data received in OnDidGetWebApplicationInfo().
       shortcut_info_ = ShortcutInfo(GURL());
-
-      if (data.badge_icon && !data.badge_icon->drawsNothing()) {
-        shortcut_info_.best_badge_icon_url = data.badge_icon_url;
-        badge_icon_ = *data.badge_icon;
-      }
     }
   }
 
@@ -230,13 +224,25 @@ void AddToHomescreenDataFetcher::OnDidPerformInstallableCheck(
         base::UserMetricsAction("webapps.AddShortcut.Manifest"));
     shortcut_info_.UpdateFromManifest(data.manifest);
     shortcut_info_.manifest_url = data.manifest_url;
+
+    if (webapk_compatible) {
+      shortcut_info_.UpdateSource(ShortcutInfo::SOURCE_ADD_TO_HOMESCREEN_PWA);
+
+      if (data.badge_icon && !data.badge_icon->drawsNothing()) {
+        shortcut_info_.best_badge_icon_url = data.badge_icon_url;
+        badge_icon_ = *data.badge_icon;
+      }
+    }
   }
 
   // Save the splash screen URL for the later download.
-  splash_screen_url_ = ManifestIconSelector::FindBestMatchingIcon(
+  shortcut_info_.splash_image_url = ManifestIconSelector::FindBestMatchingIcon(
       data.manifest.icons, ideal_splash_image_size_in_px_,
       minimum_splash_image_size_in_px_,
       content::Manifest::Icon::IconPurpose::ANY);
+  shortcut_info_.ideal_splash_image_size_in_px = ideal_splash_image_size_in_px_;
+  shortcut_info_.minimum_splash_image_size_in_px =
+      minimum_splash_image_size_in_px_;
 
   weak_observer_->OnUserTitleAvailable(shortcut_info_.user_title);
 
@@ -280,14 +286,16 @@ void AddToHomescreenDataFetcher::OnFaviconFetched(
   if (!web_contents() || !weak_observer_ || is_icon_saved_)
     return;
 
-  content::BrowserThread::GetBlockingPool()->PostWorkerTaskWithShutdownBehavior(
-      FROM_HERE, base::Bind(&AddToHomescreenDataFetcher::
-                                CreateLauncherIconFromFaviconInBackground,
-                            this, bitmap_result),
-      base::SequencedWorkerPool::SKIP_ON_SHUTDOWN);
+  base::PostTaskAndReplyWithResult(
+      background_task_runner_.get(), FROM_HERE,
+      base::Bind(&AddToHomescreenDataFetcher::
+                     CreateLauncherIconFromFaviconInBackground,
+                 base::Unretained(this), bitmap_result),
+      base::Bind(&AddToHomescreenDataFetcher::NotifyObserver,
+                 base::RetainedRef(this)));
 }
 
-void AddToHomescreenDataFetcher::CreateLauncherIconFromFaviconInBackground(
+SkBitmap AddToHomescreenDataFetcher::CreateLauncherIconFromFaviconInBackground(
     const favicon_base::FaviconRawBitmapResult& bitmap_result) {
   DCHECK(content::BrowserThread::GetBlockingPool()->RunsTasksOnCurrentThread());
 
@@ -298,19 +306,20 @@ void AddToHomescreenDataFetcher::CreateLauncherIconFromFaviconInBackground(
   }
 
   shortcut_info_.best_primary_icon_url = bitmap_result.icon_url;
-  CreateLauncherIconInBackground(raw_icon);
+  return CreateLauncherIconInBackground(raw_icon);
 }
 
 void AddToHomescreenDataFetcher::CreateLauncherIcon(const SkBitmap& raw_icon) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  content::BrowserThread::GetBlockingPool()->PostWorkerTaskWithShutdownBehavior(
-      FROM_HERE,
+  base::PostTaskAndReplyWithResult(
+      background_task_runner_.get(), FROM_HERE,
       base::Bind(&AddToHomescreenDataFetcher::CreateLauncherIconInBackground,
-                 this, raw_icon),
-      base::SequencedWorkerPool::SKIP_ON_SHUTDOWN);
+                 base::Unretained(this), raw_icon),
+      base::Bind(&AddToHomescreenDataFetcher::NotifyObserver,
+                 base::RetainedRef(this)));
 }
 
-void AddToHomescreenDataFetcher::CreateLauncherIconInBackground(
+SkBitmap AddToHomescreenDataFetcher::CreateLauncherIconInBackground(
     const SkBitmap& raw_icon) {
   DCHECK(content::BrowserThread::GetBlockingPool()->RunsTasksOnCurrentThread());
 
@@ -324,10 +333,7 @@ void AddToHomescreenDataFetcher::CreateLauncherIconInBackground(
   if (is_generated)
     shortcut_info_.best_primary_icon_url = GURL();
 
-  content::BrowserThread::PostTask(
-      content::BrowserThread::UI, FROM_HERE,
-      base::Bind(&AddToHomescreenDataFetcher::NotifyObserver, this,
-                 primary_icon));
+  return primary_icon;
 }
 
 void AddToHomescreenDataFetcher::NotifyObserver(const SkBitmap& primary_icon) {

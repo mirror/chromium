@@ -25,6 +25,9 @@ bool IsMethodSafe(const std::string& method) {
          method == "TRACE";
 }
 
+// Keep in sync with X_DevTools_Request_Id defined in HTTPNames.json5.
+const char kDevtoolsRequestId[] = "X-DevTools-Request-Id";
+
 }  // namespace
 
 GenericURLRequestJob::GenericURLRequestJob(
@@ -45,6 +48,11 @@ GenericURLRequestJob::~GenericURLRequestJob() = default;
 void GenericURLRequestJob::SetExtraRequestHeaders(
     const net::HttpRequestHeaders& headers) {
   extra_request_headers_ = headers;
+
+  if (extra_request_headers_.GetHeader(kDevtoolsRequestId,
+                                       &devtools_request_id_)) {
+    extra_request_headers_.RemoveHeader(kDevtoolsRequestId);
+  }
 }
 
 void GenericURLRequestJob::Start() {
@@ -67,7 +75,8 @@ void GenericURLRequestJob::Start() {
     }
   };
 
-  if (!delegate_->BlockOrRewriteRequest(request_->url(), request_->method(),
+  if (!delegate_->BlockOrRewriteRequest(request_->url(), devtools_request_id_,
+                                        request_->method(),
                                         request_->referrer(), callback)) {
     PrepareCookies(request_->url(), request_->method(),
                    url::Origin(request_->first_party_for_cookies()));
@@ -118,7 +127,7 @@ void GenericURLRequestJob::OnCookiesAvailable(
 
   // The resource may have been supplied in the request.
   const HttpResponse* matched_resource = delegate_->MaybeMatchResource(
-      rewritten_url, method, extra_request_headers_);
+      rewritten_url, devtools_request_id_, method, extra_request_headers_);
 
   if (matched_resource) {
     OnFetchCompleteExtractHeaders(
@@ -126,7 +135,7 @@ void GenericURLRequestJob::OnCookiesAvailable(
         matched_resource->response_data, matched_resource->response_data_size);
   } else {
     url_fetcher_->StartFetch(rewritten_url, method, extra_request_headers_,
-                             this);
+                             devtools_request_id_, this);
   }
 }
 
@@ -151,7 +160,8 @@ void GenericURLRequestJob::OnFetchComplete(
   std::string mime_type;
   GetMimeType(&mime_type);
 
-  delegate_->OnResourceLoadComplete(final_url, mime_type, http_response_code);
+  delegate_->OnResourceLoadComplete(final_url, devtools_request_id_, mime_type,
+                                    http_response_code);
 }
 
 int GenericURLRequestJob::ReadRawData(net::IOBuffer* buf, int buf_size) {

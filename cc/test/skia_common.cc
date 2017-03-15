@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 
+#include "base/memory/ptr_util.h"
 #include "cc/paint/paint_canvas.h"
 #include "cc/playback/display_item_list.h"
 #include "third_party/skia/include/core/SkImageGenerator.h"
@@ -47,7 +48,7 @@ void DrawDisplayList(unsigned char* buffer,
       SkImageInfo::MakeN32Premul(layer_rect.width(), layer_rect.height());
   SkBitmap bitmap;
   bitmap.installPixels(info, buffer, info.minRowBytes());
-  PaintCanvas canvas(bitmap);
+  SkCanvas canvas(bitmap);
   canvas.clipRect(gfx::RectToSkRect(layer_rect));
   list->Raster(&canvas, NULL, layer_rect, 1.0f);
 }
@@ -68,7 +69,7 @@ bool AreDisplayListDrawingResultsSame(const gfx::Rect& layer_rect,
 }
 
 sk_sp<SkImage> CreateDiscardableImage(const gfx::Size& size) {
-  return SkImage::MakeFromGenerator(new TestImageGenerator(
+  return SkImage::MakeFromGenerator(base::MakeUnique<TestImageGenerator>(
       SkImageInfo::MakeN32Premul(size.width(), size.height())));
 }
 

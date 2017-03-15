@@ -26,6 +26,10 @@
 #include "ui/gfx/native_widget_types.h"
 #endif
 
+#if defined(OS_ANDROID)
+#include "base/android/scoped_java_ref.h"
+#endif
+
 class GURL;
 
 namespace IPC {
@@ -39,6 +43,10 @@ class WakeLockServiceContext;
 
 namespace gfx {
 class Rect;
+}
+
+namespace url {
+class Origin;
 }
 
 namespace content {
@@ -168,7 +176,7 @@ class CONTENT_EXPORT RenderFrameHostDelegate {
 
   // Called when accessibility events or location changes are received
   // from a render frame, when the accessibility mode has the
-  // ACCESSIBILITY_MODE_FLAG_WEB_CONTENTS flag set.
+  // AccessibilityMode::kWebContents flag set.
   virtual void AccessibilityEventReceived(
       const std::vector<AXEventNotificationDetails>& details) {}
   virtual void AccessibilityLocationChangesReceived(
@@ -270,6 +278,26 @@ class CONTENT_EXPORT RenderFrameHostDelegate {
                                  WindowOpenDisposition disposition,
                                  const gfx::Rect& initial_rect,
                                  bool user_gesture) {}
+
+  // Notifies that mixed content was displayed or ran.
+  virtual void DidDisplayInsecureContent() {}
+  virtual void DidRunInsecureContent(const GURL& security_origin,
+                                     const GURL& target_url) {}
+
+  // Reports that passive mixed content was found at the specified url.
+  virtual void PassiveInsecureContentFound(const GURL& resource_url) {}
+
+  // Checks if running of active mixed content is allowed for the specified
+  // WebContents/tab.
+  virtual bool ShouldAllowRunningInsecureContent(WebContents* web_contents,
+                                                 bool allowed_per_prefs,
+                                                 const url::Origin& origin,
+                                                 const GURL& resource_url);
+
+#if defined(OS_ANDROID)
+  virtual base::android::ScopedJavaLocalRef<jobject>
+  GetJavaRenderFrameHostDelegate();
+#endif
 
  protected:
   virtual ~RenderFrameHostDelegate() {}

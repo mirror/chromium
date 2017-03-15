@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "base/command_line.h"
+#include "build/build_config.h"
 #include "content/browser/dom_storage/dom_storage_context_wrapper.h"
 #include "content/browser/dom_storage/local_storage_context_mojo.h"
 #include "content/browser/web_contents/web_contents_impl.h"
@@ -48,22 +49,27 @@ class MojoDOMStorageBrowserTest : public DOMStorageBrowserTest {
     command_line->AppendSwitch(switches::kMojoLocalStorage);
   }
 
-  void Flush() {
-    // First make sure a connection to the database was set up.
-    LocalStorageContextMojo* context =
-        static_cast<DOMStorageContextWrapper*>(
-            BrowserContext::GetDefaultStoragePartition(
-                shell()->web_contents()->GetBrowserContext())
-                ->GetDOMStorageContext())
-            ->mojo_state_.get();
+  LocalStorageContextMojo* context() {
+    return static_cast<DOMStorageContextWrapper*>(
+               BrowserContext::GetDefaultStoragePartition(
+                   shell()->web_contents()->GetBrowserContext())
+                   ->GetDOMStorageContext())
+        ->mojo_state_.get();
+  }
+
+  void EnsureConnected() {
     base::RunLoop run_loop;
-    context->RunWhenConnected(run_loop.QuitClosure());
+    context()->RunWhenConnected(run_loop.QuitClosure());
     run_loop.Run();
-    // Then process any tasks that are currently queued, to ensure
+  }
+
+  void Flush() {
+    // Process any tasks that are currently queued, to ensure
     // LevelDBWrapperImpl methods get called.
     base::RunLoop().RunUntilIdle();
     // And finally flush all the now queued up changes to leveldb.
-    context->Flush();
+    context()->Flush();
+    base::RunLoop().RunUntilIdle();
   }
 };
 
@@ -101,6 +107,7 @@ IN_PROC_BROWSER_TEST_F(MojoDOMStorageBrowserTest, SanityCheckIncognito) {
 }
 
 IN_PROC_BROWSER_TEST_F(MojoDOMStorageBrowserTest, PRE_DataPersists) {
+  EnsureConnected();
   SimpleTest(GetTestUrl("dom_storage", "store_data.html"), kNotIncognito);
   Flush();
 }

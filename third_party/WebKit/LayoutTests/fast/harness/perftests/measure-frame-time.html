@@ -1,5 +1,9 @@
 <script src="../../../../PerformanceTests/resources/runner.js"></script>
 <script>
+// Suppress JavaScript trace event console messages.
+console.time = function() {};
+console.timeEnd = function() {};
+
 // The initial value doesn't affect result.
 var virtualTime = 123456;
 PerfTestRunner.now = function () { return virtualTime; }
@@ -17,6 +21,7 @@ PerfTestRunner.measureFrameTime({
     virtualTime += 20;
   },
   warmUpCount: 3,
+  iterationCount: 5,
   doNotMeasureMemoryUsage: true,
 });
 </script>

@@ -9,6 +9,7 @@
 #include "core/dom/Element.h"
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/TaskRunnerHelper.h"
+#include "core/editing/EditingUtilities.h"
 #include "core/editing/FrameSelection.h"
 #include "core/editing/SelectionController.h"
 #include "core/events/DragEvent.h"
@@ -230,50 +231,68 @@ WebInputEventResult MouseEventManager::setMousePositionAndDispatchMouseEvent(
 }
 
 WebInputEventResult MouseEventManager::dispatchMouseClickIfNeeded(
-    const MouseEventWithHitTestResults& mev) {
+    Node* target,
+    const WebMouseEvent& mouseEvent,
+    const String& canvasRegionId,
+    Node* targetWithoutCapture) {
   // We only prevent click event when the click may cause contextmenu to popup.
   // However, we always send auxclick.
   bool contextMenuEvent =
       !RuntimeEnabledFeatures::auxclickEnabled() &&
-      mev.event().button == WebPointerProperties::Button::Right;
+      mouseEvent.button == WebPointerProperties::Button::Right;
 #if OS(MACOSX)
   // FIXME: The Mac port achieves the same behavior by checking whether the
   // context menu is currently open in WebPage::mouseEvent(). Consider merging
   // the implementations.
-  if (mev.event().button == WebPointerProperties::Button::Left &&
-      mev.event().modifiers() & WebInputEvent::Modifiers::ControlKey)
+  if (mouseEvent.button == WebPointerProperties::Button::Left &&
+      mouseEvent.modifiers() & WebInputEvent::Modifiers::ControlKey)
     contextMenuEvent = true;
 #endif
 
   WebInputEventResult clickEventResult = WebInputEventResult::NotHandled;
-  const bool shouldDispatchClickEvent =
-      m_clickCount > 0 && !contextMenuEvent && mev.innerNode() && m_clickNode &&
-      mev.innerNode()->canParticipateInFlatTree() &&
-      m_clickNode->canParticipateInFlatTree() &&
-      !(m_frame->eventHandler().selectionController().hasExtendedSelection() &&
-        isLinkSelection(mev));
+  const bool shouldDispatchClickEvent = m_clickCount > 0 && !contextMenuEvent &&
+                                        target && m_clickNode &&
+                                        target->canParticipateInFlatTree() &&
+                                        m_clickNode->canParticipateInFlatTree();
   if (shouldDispatchClickEvent) {
     Node* clickTargetNode = nullptr;
     // Updates distribution because a 'mouseup' event listener can make the
     // tree dirty at dispatchMouseEvent() invocation above.
     // Unless distribution is updated, commonAncestor would hit ASSERT.
-    if (m_clickNode == mev.innerNode()) {
+    if (m_clickNode == target) {
       clickTargetNode = m_clickNode;
       clickTargetNode->updateDistribution();
-    } else if (m_clickNode->document() == mev.innerNode()->document()) {
+    } else if (m_clickNode->document() == target->document()) {
       m_clickNode->updateDistribution();
-      mev.innerNode()->updateDistribution();
-      clickTargetNode = mev.innerNode()->commonAncestor(
+      target->updateDistribution();
+      clickTargetNode = target->commonAncestor(
           *m_clickNode, EventHandlingUtil::parentForClickEvent);
     }
+
+    // This block is only for the purpose of gathering the metric and can be
+    // removed as soon as we don't need the metric.
+    if (targetWithoutCapture != target) {
+      Node* alternativeClickTargetNode = nullptr;
+      if (m_clickNode == targetWithoutCapture) {
+        alternativeClickTargetNode = m_clickNode;
+      } else if (m_clickNode->document() == targetWithoutCapture->document()) {
+        alternativeClickTargetNode = targetWithoutCapture->commonAncestor(
+            *m_clickNode, EventHandlingUtil::parentForClickEvent);
+      }
+      if (alternativeClickTargetNode != clickTargetNode) {
+        UseCounter::count(m_frame,
+                          UseCounter::PointerEventClickRetargetCausedByCapture);
+      }
+    }
+
     if (clickTargetNode) {
       clickEventResult = dispatchMouseEvent(
           clickTargetNode,
           !RuntimeEnabledFeatures::auxclickEnabled() ||
-                  (mev.event().button == WebPointerProperties::Button::Left)
+                  (mouseEvent.button == WebPointerProperties::Button::Left)
               ? EventTypeNames::click
               : EventTypeNames::auxclick,
-          mev.event(), mev.canvasRegionId(), nullptr);
+          mouseEvent, canvasRegionId, nullptr);
     }
   }
   return clickEventResult;
@@ -425,11 +444,15 @@ WebInputEventResult MouseEventManager::handleMouseFocus(
   // be focused if the user does a mouseup over it, however, because the
   // mouseup will set a selection inside it, which will call
   // FrameSelection::setFocusedNodeIfNeeded.
-  if (element && m_frame->selection().isRange()) {
+  if (element &&
+      m_frame->selection()
+          .computeVisibleSelectionInDOMTreeDeprecated()
+          .isRange()) {
     // TODO(yosin) We should not create |Range| object for calling
     // |isNodeFullyContained()|.
-    if (createRange(
-            m_frame->selection().selection().toNormalizedEphemeralRange())
+    if (createRange(m_frame->selection()
+                        .computeVisibleSelectionInDOMTreeDeprecated()
+                        .toNormalizedEphemeralRange())
             ->isNodeFullyContained(*element) &&
         element->isDescendantOf(m_frame->document()->focusedElement()))
       return WebInputEventResult::NotHandled;
@@ -569,8 +592,8 @@ WebInputEventResult MouseEventManager::handleMousePressEvent(
 
   bool singleClick = event.event().clickCount <= 1;
 
-  m_mouseDownMayStartDrag =
-      singleClick && !isLinkSelection(event) && !isExtendingSelection(event);
+  m_mouseDownMayStartDrag = singleClick && !isSelectionOverLink(event) &&
+                            !isExtendingSelection(event);
 
   m_frame->eventHandler().selectionController().handleMousePressEvent(event);
 
@@ -843,10 +866,17 @@ bool MouseEventManager::tryStartDrag(
   // reset. Hence, need to check if this particular drag operation can
   // continue even if dispatchEvent() indicates no (direct) cancellation.
   // Do that by checking if m_dragSrc is still set.
-  m_mouseDownMayStartDrag =
-      dispatchDragSrcEvent(EventTypeNames::dragstart, m_mouseDown) ==
+  m_mouseDownMayStartDrag = false;
+  if (dispatchDragSrcEvent(EventTypeNames::dragstart, m_mouseDown) ==
           WebInputEventResult::NotHandled &&
-      !m_frame->selection().isInPasswordField() && dragState().m_dragSrc;
+      dragState().m_dragSrc) {
+    // TODO(editing-dev): The use of
+    // updateStyleAndLayoutIgnorePendingStylesheets needs to be audited.  See
+    // http://crbug.com/590369 for more details.
+    m_frame->document()->updateStyleAndLayoutIgnorePendingStylesheets();
+    m_mouseDownMayStartDrag = !isInPasswordField(
+        m_frame->selection().computeVisibleSelectionInDOMTree().start());
+  }
 
   // Invalidate clipboard here against anymore pasteboard writing for security.
   // The drag image can still be changed as we drag, but not the pasteboard

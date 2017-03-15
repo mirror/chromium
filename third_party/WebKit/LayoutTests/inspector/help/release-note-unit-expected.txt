@@ -1,0 +1,15 @@
+Unit test for release note
+
+
+Running: getLatestReleaseNote
+Last seen version: 4
+Showed release note in drawer - version: 5
+
+Running: getReleaseNoteTwoVersionsAhead
+Last seen version: 3
+Showed release note in drawer - version: 5
+
+Running: alreadySeenReleaseNote
+Last seen version: 5
+Did not show release note drawer
+

@@ -449,10 +449,15 @@ void PersistentMemoryAllocator::CreateTrackingHistograms(
     return;
   std::string name_string = name.as_string();
 
+#if 0
+  // This histogram wasn't being used so has been disabled. It is left here
+  // in case development of a new use of the allocator could benefit from
+  // recording (temporarily and locally) the allocation sizes.
   DCHECK(!allocs_histogram_);
   allocs_histogram_ = Histogram::FactoryGet(
       "UMA.PersistentAllocator." + name_string + ".Allocs", 1, 10000, 50,
       HistogramBase::kUmaTargetedHistogramFlag);
+#endif
 
   DCHECK(!used_histogram_);
   used_histogram_ = LinearHistogram::FactoryGet(
@@ -535,10 +540,19 @@ bool PersistentMemoryAllocator::ChangeType(Reference ref,
       return false;
     }
 
-    // Clear the memory while the type doesn't match either "from" or "to".
-    memset(const_cast<char*>(reinterpret_cast<volatile char*>(block) +
-                             sizeof(BlockHeader)),
-           0, block->size - sizeof(BlockHeader));
+    // Clear the memory in an atomic manner. Using "release" stores force
+    // every write to be done after the ones before it. This is better than
+    // using memset because (a) it supports "volatile" and (b) it creates a
+    // reliable pattern upon which other threads may rely.
+    volatile std::atomic<int>* data =
+        reinterpret_cast<volatile std::atomic<int>*>(
+            reinterpret_cast<volatile char*>(block) + sizeof(BlockHeader));
+    const uint32_t words = (block->size - sizeof(BlockHeader)) / sizeof(int);
+    DCHECK_EQ(0U, (block->size - sizeof(BlockHeader)) % sizeof(int));
+    for (uint32_t i = 0; i < words; ++i) {
+      data->store(0, std::memory_order_release);
+      ++data;
+    }
 
     // If the destination type is "transitioning" then skip the final exchange.
     if (to_type_id == kTypeIdTransitioning)

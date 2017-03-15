@@ -16,12 +16,8 @@ namespace {
 NSString* const kCertificatePolicyManagerKey = @"certificatePolicyManager";
 NSString* const kCurrentNavigationIndexKey = @"currentNavigationIndex";
 NSString* const kItemStoragesKey = @"entries";
-NSString* const kLastVisitedTimestampKey = @"lastVisitedTimestamp";
-NSString* const kOpenerIDKey = @"openerId";
 NSString* const kOpenedByDOMKey = @"openedByDOM";
-NSString* const kOpenerNavigationIndexKey = @"openerNavigationIndex";
 NSString* const kPreviousNavigationIndexKey = @"previousNavigationIndex";
-NSString* const kWindowNameKey = @"windowName";
 }
 
 @interface CRWSessionStorage () {
@@ -33,13 +29,9 @@ NSString* const kWindowNameKey = @"windowName";
 
 @implementation CRWSessionStorage
 
-@synthesize openerID = _openerID;
 @synthesize openedByDOM = _openedByDOM;
-@synthesize openerNavigationIndex = _openerNavigationIndex;
-@synthesize windowName = _windowName;
 @synthesize currentNavigationIndex = _currentNavigationIndex;
 @synthesize previousNavigationIndex = _previousNavigationIndex;
-@synthesize lastVisitedTimestamp = _lastVisitedTimestamp;
 @synthesize itemStorages = _itemStorages;
 @synthesize sessionCertificatePolicyManager = _sessionCertificatePolicyManager;
 
@@ -59,17 +51,11 @@ NSString* const kWindowNameKey = @"windowName";
 - (instancetype)initWithCoder:(nonnull NSCoder*)decoder {
   self = [super init];
   if (self) {
-    _windowName = [[decoder decodeObjectForKey:kWindowNameKey] copy];
-    _openerID = [[decoder decodeObjectForKey:kOpenerIDKey] copy];
     _openedByDOM = [decoder decodeBoolForKey:kOpenedByDOMKey];
-    _openerNavigationIndex =
-        [decoder decodeIntForKey:kOpenerNavigationIndexKey];
     _currentNavigationIndex =
         [decoder decodeIntForKey:kCurrentNavigationIndexKey];
     _previousNavigationIndex =
         [decoder decodeIntForKey:kPreviousNavigationIndexKey];
-    _lastVisitedTimestamp =
-        [decoder decodeDoubleForKey:kLastVisitedTimestampKey];
     _itemStorages = [[NSMutableArray alloc]
         initWithArray:[decoder decodeObjectForKey:kItemStoragesKey]];
     // Prior to M34, 0 was used as "no index" instead of -1; adjust for that.
@@ -88,16 +74,11 @@ NSString* const kWindowNameKey = @"windowName";
 }
 
 - (void)encodeWithCoder:(NSCoder*)coder {
-  [coder encodeObject:self.openerID forKey:kOpenerIDKey];
   [coder encodeBool:self.openedByDOM forKey:kOpenedByDOMKey];
-  [coder encodeInt:self.openerNavigationIndex forKey:kOpenerNavigationIndexKey];
-  [coder encodeObject:self.windowName forKey:kWindowNameKey];
   [coder encodeInt:self.currentNavigationIndex
             forKey:kCurrentNavigationIndexKey];
   [coder encodeInt:self.previousNavigationIndex
             forKey:kPreviousNavigationIndexKey];
-  [coder encodeDouble:self.lastVisitedTimestamp
-               forKey:kLastVisitedTimestampKey];
   [coder encodeObject:self.itemStorages forKey:kItemStoragesKey];
   [coder encodeObject:self.sessionCertificatePolicyManager
                forKey:kCertificatePolicyManagerKey];

@@ -123,13 +123,13 @@ class PolicyValueStoreTest : public testing::Test {
 
 TEST_F(PolicyValueStoreTest, DontProvideRecommendedPolicies) {
   policy::PolicyMap policies;
-  base::FundamentalValue expected(123);
+  base::Value expected(123);
   policies.Set("must", policy::POLICY_LEVEL_MANDATORY,
                policy::POLICY_SCOPE_USER, policy::POLICY_SOURCE_CLOUD,
                expected.CreateDeepCopy(), nullptr);
   policies.Set("may", policy::POLICY_LEVEL_RECOMMENDED,
                policy::POLICY_SCOPE_USER, policy::POLICY_SOURCE_CLOUD,
-               base::MakeUnique<base::FundamentalValue>(456), nullptr);
+               base::MakeUnique<base::Value>(456), nullptr);
   store_->SetCurrentPolicy(policies);
   ValueStore::ReadResult result = store_->Get();
   ASSERT_TRUE(result->status().ok());
@@ -143,7 +143,7 @@ TEST_F(PolicyValueStoreTest, DontProvideRecommendedPolicies) {
 TEST_F(PolicyValueStoreTest, ReadOnly) {
   ValueStore::WriteOptions options = ValueStore::DEFAULTS;
 
-  base::StringValue string_value("value");
+  base::Value string_value("value");
   EXPECT_FALSE(store_->Set(options, "key", string_value)->status().ok());
 
   base::DictionaryValue dict;
@@ -159,7 +159,7 @@ TEST_F(PolicyValueStoreTest, ReadOnly) {
 
 TEST_F(PolicyValueStoreTest, NotifyOnChanges) {
   // Notify when setting the initial policy.
-  const base::StringValue value("111");
+  const base::Value value("111");
   {
     ValueStoreChangeList changes;
     changes.push_back(ValueStoreChange("aaa", nullptr, value.CreateDeepCopy()));
@@ -193,7 +193,7 @@ TEST_F(PolicyValueStoreTest, NotifyOnChanges) {
   Mock::VerifyAndClearExpectations(&observer_);
 
   // Notify when policies change.
-  const base::StringValue new_value("222");
+  const base::Value new_value("222");
   {
     ValueStoreChangeList changes;
     changes.push_back(ValueStoreChange("bbb", value.CreateDeepCopy(),

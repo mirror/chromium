@@ -80,10 +80,9 @@ class CORE_EXPORT SVGElement : public Element {
 
   enum CTMScope {
     NearestViewportScope,  // Used by SVGGraphicsElement::getCTM()
-    ScreenScope,           // Used by SVGGraphicsElement::getScreenCTM()
     AncestorScope  // Used by SVGSVGElement::get{Enclosure|Intersection}List()
   };
-  virtual AffineTransform localCoordinateSpaceTransform(CTMScope) const;
+  virtual AffineTransform localCoordinateSpaceTransform() const;
   virtual bool needsPendingResourceHandling() const { return true; }
 
   bool instanceUpdatesBlocked() const;
@@ -241,7 +240,7 @@ class CORE_EXPORT SVGElement : public Element {
   SVGElementRareData* ensureSVGRareData();
   inline bool hasSVGRareData() const { return m_SVGRareData; }
   inline SVGElementRareData* svgRareData() const {
-    ASSERT(m_SVGRareData);
+    DCHECK(m_SVGRareData);
     return m_SVGRareData.get();
   }
 

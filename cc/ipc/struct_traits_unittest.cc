@@ -5,6 +5,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "cc/input/selection.h"
+#include "cc/ipc/copy_output_request_struct_traits.h"
 #include "cc/ipc/traits_test_service.mojom.h"
 #include "cc/output/copy_output_result.h"
 #include "cc/quads/debug_border_draw_quad.h"
@@ -47,9 +48,9 @@ class StructTraitsTest : public testing::Test, public mojom::TraitsTestService {
   }
 
   void EchoCompositorFrameMetadata(
-      const CompositorFrameMetadata& c,
+      CompositorFrameMetadata c,
       const EchoCompositorFrameMetadataCallback& callback) override {
-    callback.Run(c);
+    callback.Run(std::move(c));
   }
 
   void EchoCopyOutputRequest(
@@ -130,7 +131,25 @@ class StructTraitsTest : public testing::Test, public mojom::TraitsTestService {
   DISALLOW_COPY_AND_ASSIGN(StructTraitsTest);
 };
 
-void StubCopyOutputRequestCallback(std::unique_ptr<CopyOutputResult> result) {}
+void CopyOutputRequestCallback(base::Closure quit_closure,
+                               gfx::Size expected_size,
+                               std::unique_ptr<CopyOutputResult> result) {
+  EXPECT_EQ(expected_size, result->size());
+  quit_closure.Run();
+}
+
+void CopyOutputRequestCallbackRunsOnceCallback(
+    int* n_called,
+    std::unique_ptr<CopyOutputResult> result) {
+  ++*n_called;
+}
+
+void CopyOutputRequestMessagePipeBrokenCallback(
+    base::Closure closure,
+    std::unique_ptr<CopyOutputResult> result) {
+  EXPECT_TRUE(result->IsEmpty());
+  closure.Run();
+}
 
 void CopyOutputResultCallback(base::Closure quit_closure,
                               const gpu::SyncToken& expected_sync_token,
@@ -208,11 +227,13 @@ TEST_F(StructTraitsTest, CompositorFrame) {
   // TransferableResource constants.
   const uint32_t tr_id = 1337;
   const ResourceFormat tr_format = ALPHA_8;
+  const gfx::BufferFormat tr_buffer_format = gfx::BufferFormat::R_8;
   const uint32_t tr_filter = 1234;
   const gfx::Size tr_size(1234, 5678);
   TransferableResource resource;
   resource.id = tr_id;
   resource.format = tr_format;
+  resource.buffer_format = tr_buffer_format;
   resource.filter = tr_filter;
   resource.size = tr_size;
 
@@ -221,6 +242,7 @@ TEST_F(StructTraitsTest, CompositorFrame) {
   const gfx::Vector2dF root_scroll_offset(1234.5f, 6789.1f);
   const float page_scale_factor = 1337.5f;
   const gfx::SizeF scrollable_viewport_size(1337.7f, 1234.5f);
+  const uint32_t content_source_id = 3;
 
   CompositorFrame input;
   input.metadata.device_scale_factor = device_scale_factor;
@@ -229,6 +251,7 @@ TEST_F(StructTraitsTest, CompositorFrame) {
   input.metadata.scrollable_viewport_size = scrollable_viewport_size;
   input.render_pass_list.push_back(std::move(render_pass));
   input.resource_list.push_back(resource);
+  input.metadata.content_source_id = content_source_id;
 
   mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
   CompositorFrame output;
@@ -238,11 +261,13 @@ TEST_F(StructTraitsTest, CompositorFrame) {
   EXPECT_EQ(root_scroll_offset, output.metadata.root_scroll_offset);
   EXPECT_EQ(page_scale_factor, output.metadata.page_scale_factor);
   EXPECT_EQ(scrollable_viewport_size, output.metadata.scrollable_viewport_size);
+  EXPECT_EQ(content_source_id, output.metadata.content_source_id);
 
   ASSERT_EQ(1u, output.resource_list.size());
   TransferableResource out_resource = output.resource_list[0];
   EXPECT_EQ(tr_id, out_resource.id);
   EXPECT_EQ(tr_format, out_resource.format);
+  EXPECT_EQ(tr_buffer_format, out_resource.buffer_format);
   EXPECT_EQ(tr_filter, out_resource.filter);
   EXPECT_EQ(tr_size, out_resource.size);
 
@@ -305,8 +330,6 @@ TEST_F(StructTraitsTest, CompositorFrameMetadata) {
                         gfx::PointF(1234.3f, 8765.6f));
   selection.end.set_visible(false);
   selection.end.set_type(gfx::SelectionBound::RIGHT);
-  selection.is_editable = true;
-  selection.is_empty_text_form_control = true;
   ui::LatencyInfo latency_info;
   latency_info.AddLatencyNumber(
       ui::LATENCY_BEGIN_SCROLL_LISTENER_UPDATE_MAIN_COMPONENT, 1337, 7331);
@@ -340,7 +363,7 @@ TEST_F(StructTraitsTest, CompositorFrameMetadata) {
 
   mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
   CompositorFrameMetadata output;
-  proxy->EchoCompositorFrameMetadata(input, &output);
+  proxy->EchoCompositorFrameMetadata(std::move(input), &output);
   EXPECT_EQ(device_scale_factor, output.device_scale_factor);
   EXPECT_EQ(root_scroll_offset, output.root_scroll_offset);
   EXPECT_EQ(page_scale_factor, output.page_scale_factor);
@@ -370,19 +393,17 @@ TEST_F(StructTraitsTest, CompositorFrameMetadata) {
     EXPECT_EQ(referenced_surfaces[i], output.referenced_surfaces[i]);
 }
 
-TEST_F(StructTraitsTest, CopyOutputRequest) {
+TEST_F(StructTraitsTest, CopyOutputRequest_BitmapRequest) {
   const gfx::Rect area(5, 7, 44, 55);
-  const auto callback = base::Bind(StubCopyOutputRequestCallback);
-  const int8_t mailbox_name[GL_MAILBOX_SIZE_CHROMIUM] = {
-      0, 9, 8, 7, 6, 5, 4, 3, 2, 1, 9, 7, 5, 3, 1, 3};
-  const uint32_t target = 3;
   const auto source =
       base::UnguessableToken::Deserialize(0xdeadbeef, 0xdeadf00d);
-  gpu::Mailbox mailbox;
-  mailbox.SetName(mailbox_name);
-  TextureMailbox texture_mailbox(mailbox, gpu::SyncToken(), target);
+  gfx::Size size(9, 8);
+  auto bitmap = base::MakeUnique<SkBitmap>();
+  bitmap->allocN32Pixels(size.width(), size.height());
+  base::RunLoop run_loop;
+  auto callback =
+      base::Bind(CopyOutputRequestCallback, run_loop.QuitClosure(), size);
 
-  // Test with bitmap.
   std::unique_ptr<CopyOutputRequest> input;
   input = CopyOutputRequest::CreateBitmapRequest(callback);
   input->set_area(area);
@@ -396,19 +417,66 @@ TEST_F(StructTraitsTest, CopyOutputRequest) {
   EXPECT_TRUE(output->has_area());
   EXPECT_EQ(area, output->area());
   EXPECT_EQ(source, output->source());
+  output->SendBitmapResult(std::move(bitmap));
+  // If CopyOutputRequestCallback is called, this ends. Otherwise, the test
+  // will time out and fail.
+  run_loop.Run();
+}
 
-  // Test with texture mailbox.
-  input = CopyOutputRequest::CreateRequest(callback);
+TEST_F(StructTraitsTest, CopyOutputRequest_TextureRequest) {
+  const int8_t mailbox_name[GL_MAILBOX_SIZE_CHROMIUM] = {
+      0, 9, 8, 7, 6, 5, 4, 3, 2, 1, 9, 7, 5, 3, 1, 3};
+  const uint32_t target = 3;
+  gpu::Mailbox mailbox;
+  mailbox.SetName(mailbox_name);
+  TextureMailbox texture_mailbox(mailbox, gpu::SyncToken(), target);
+  base::RunLoop run_loop;
+  auto callback = base::Bind(CopyOutputRequestCallback, run_loop.QuitClosure(),
+                             gfx::Size());
+
+  auto input = CopyOutputRequest::CreateRequest(callback);
   input->SetTextureMailbox(texture_mailbox);
 
-  std::unique_ptr<CopyOutputRequest> output2;
-  proxy->EchoCopyOutputRequest(std::move(input), &output2);
+  mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
+  std::unique_ptr<CopyOutputRequest> output;
+  proxy->EchoCopyOutputRequest(std::move(input), &output);
 
-  EXPECT_TRUE(output2->has_texture_mailbox());
-  EXPECT_FALSE(output2->has_area());
-  EXPECT_EQ(mailbox, output2->texture_mailbox().mailbox());
-  EXPECT_EQ(target, output2->texture_mailbox().target());
-  EXPECT_FALSE(output2->has_source());
+  EXPECT_TRUE(output->has_texture_mailbox());
+  EXPECT_FALSE(output->has_area());
+  EXPECT_EQ(mailbox, output->texture_mailbox().mailbox());
+  EXPECT_EQ(target, output->texture_mailbox().target());
+  EXPECT_FALSE(output->has_source());
+  output->SendEmptyResult();
+  // If CopyOutputRequestCallback is called, this ends. Otherwise, the test
+  // will time out and fail.
+  run_loop.Run();
+}
+
+TEST_F(StructTraitsTest, CopyOutputRequest_CallbackRunsOnce) {
+  int n_called = 0;
+  auto request = CopyOutputRequest::CreateRequest(
+      base::Bind(CopyOutputRequestCallbackRunsOnceCallback, &n_called));
+  auto result_sender = mojo::StructTraits<
+      mojom::CopyOutputRequestDataView,
+      std::unique_ptr<CopyOutputRequest>>::result_sender(request);
+  for (int i = 0; i < 10; i++)
+    result_sender->SendResult(CopyOutputResult::CreateEmptyResult());
+  EXPECT_EQ(0, n_called);
+  result_sender.FlushForTesting();
+  EXPECT_EQ(1, n_called);
+}
+
+TEST_F(StructTraitsTest, CopyOutputRequest_MessagePipeBroken) {
+  base::RunLoop run_loop;
+  auto request = CopyOutputRequest::CreateRequest(base::Bind(
+      CopyOutputRequestMessagePipeBrokenCallback, run_loop.QuitClosure()));
+  auto result_sender = mojo::StructTraits<
+      mojom::CopyOutputRequestDataView,
+      std::unique_ptr<CopyOutputRequest>>::result_sender(request);
+  result_sender.reset();
+  // The callback must be called with an empty CopyOutputResult. If it's never
+  // called, this will never end and the test times out.
+  run_loop.Run();
 }
 
 TEST_F(StructTraitsTest, CopyOutputResult_Bitmap) {
@@ -582,16 +650,17 @@ TEST_F(StructTraitsTest, QuadListBasic) {
   const gfx::Rect rect4(1234, 5678, 9101112, 13141516);
   const ResourceId resource_id4(1337);
   const int render_pass_id = 1234;
-  const gfx::Vector2dF mask_uv_scale(1337.1f, 1234.2f);
+  const gfx::RectF mask_uv_rect(0, 0, 1337.1f, 1234.2f);
   const gfx::Size mask_texture_size(1234, 5678);
   gfx::Vector2dF filters_scale(1234.1f, 4321.2f);
   gfx::PointF filters_origin(8765.4f, 4567.8f);
+  gfx::RectF tex_coord_rect(1.f, 1.f, 1234.f, 5678.f);
 
   RenderPassDrawQuad* render_pass_quad =
       render_pass->CreateAndAppendDrawQuad<RenderPassDrawQuad>();
   render_pass_quad->SetNew(sqs, rect4, rect4, render_pass_id, resource_id4,
-                           mask_uv_scale, mask_texture_size, filters_scale,
-                           filters_origin);
+                           mask_uv_rect, mask_texture_size, filters_scale,
+                           filters_origin, tex_coord_rect);
 
   const gfx::Rect rect5(123, 567, 91011, 131415);
   const ResourceId resource_id5(1337);
@@ -891,20 +960,14 @@ TEST_F(StructTraitsTest, Selection) {
   end.SetEdge(gfx::PointF(1337.5f, 52124.f), gfx::PointF(1234.3f, 8765.6f));
   end.set_visible(false);
   end.set_type(gfx::SelectionBound::RIGHT);
-  const bool is_editable = true;
-  const bool is_empty_text_form_control = true;
   Selection<gfx::SelectionBound> input;
   input.start = start;
   input.end = end;
-  input.is_editable = is_editable;
-  input.is_empty_text_form_control = is_empty_text_form_control;
   mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
   Selection<gfx::SelectionBound> output;
   proxy->EchoSelection(input, &output);
   EXPECT_EQ(start, output.start);
   EXPECT_EQ(end, output.end);
-  EXPECT_EQ(is_editable, output.is_editable);
-  EXPECT_EQ(is_empty_text_form_control, output.is_empty_text_form_control);
 }
 
 TEST_F(StructTraitsTest, SurfaceId) {
@@ -991,7 +1054,8 @@ TEST_F(StructTraitsTest, TextureMailbox) {
   const bool is_overlay_candidate = true;
   const bool secure_output_only = true;
   const bool nearest_neighbor = true;
-  const gfx::ColorSpace color_space(4, 5, 9, gfx::ColorSpace::RangeID::LIMITED);
+  const gfx::ColorSpace color_space =
+      gfx::ColorSpace::CreateVideo(4, 5, 9, gfx::ColorSpace::RangeID::LIMITED);
 #if defined(OS_ANDROID)
   const bool is_backed_by_surface_texture = true;
   const bool wants_promotion_hint = true;

@@ -212,7 +212,7 @@ IN_PROC_BROWSER_TEST_F(ProfileChooserViewExtensionsTest,
   browser->window()->ShowAvatarBubbleFromAvatarButton(
       BrowserWindow::AVATAR_BUBBLE_MODE_CONFIRM_SIGNIN,
       signin::ManageAccountsParams(),
-      signin_metrics::AccessPoint::ACCESS_POINT_AVATAR_BUBBLE_SIGN_IN);
+      signin_metrics::AccessPoint::ACCESS_POINT_AVATAR_BUBBLE_SIGN_IN, false);
   ASSERT_FALSE(ProfileChooserView::IsShowing());
   CloseBrowserSynchronously(browser);
 }
@@ -250,13 +250,6 @@ IN_PROC_BROWSER_TEST_F(ProfileChooserViewExtensionsTest, ViewProfileUMA) {
   profile->GetPrefs()->SetInteger(prefs::kProfileAvatarTutorialShown, 0);
 
   ASSERT_NO_FATAL_FAILURE(OpenProfileChooserView(browser()));
-
-  // The MD user menu doesn't display any upgrade toast so it doesn't log this
-  // in UMA.
-  if (!switches::IsMaterialDesignUserMenu()) {
-    histograms.ExpectUniqueSample("Profile.NewAvatarMenu.Upgrade",
-        ProfileMetrics::PROFILE_AVATAR_MENU_UPGRADE_VIEW, 1);
-  }
 }
 
 IN_PROC_BROWSER_TEST_F(ProfileChooserViewExtensionsTest, LockProfile) {

@@ -14,8 +14,8 @@
 #include "core/loader/EmptyClients.h"
 #include "core/testing/DummyPageHolder.h"
 #include "platform/UserGestureIndicator.h"
+#include "platform/testing/EmptyWebMediaPlayer.h"
 #include "platform/testing/UnitTestHelpers.h"
-#include "public/platform/WebMediaPlayer.h"
 #include "public/platform/WebSize.h"
 #include "public/platform/modules/screen_orientation/WebLockOrientationCallback.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -36,40 +36,9 @@ class DummyScreenOrientationCallback : public WebLockOrientationCallback {
   void onError(WebLockOrientationError) override {}
 };
 
-class MockVideoWebMediaPlayer : public WebMediaPlayer {
+class MockVideoWebMediaPlayer : public EmptyWebMediaPlayer {
  public:
-  void load(LoadType, const WebMediaPlayerSource&, CORSMode) override{};
-  void play() override{};
-  void pause() override{};
-  bool supportsSave() const override { return false; };
-  void seek(double seconds) override{};
-  void setRate(double) override{};
-  void setVolume(double) override{};
-  WebTimeRanges buffered() const override { return WebTimeRanges(); };
-  WebTimeRanges seekable() const override { return WebTimeRanges(); };
-  void setSinkId(const WebString& sinkId,
-                 const WebSecurityOrigin&,
-                 WebSetSinkIdCallbacks*) override{};
-  bool hasVideo() const override { return true; };
-  bool hasAudio() const override { return false; };
-  bool paused() const override { return false; };
-  bool seeking() const override { return false; };
-  double duration() const override { return 0.0; };
-  double currentTime() const override { return 0.0; };
-  NetworkState getNetworkState() const override { return NetworkStateEmpty; };
-  ReadyState getReadyState() const override { return ReadyStateHaveNothing; };
-  WebString getErrorMessage() override { return WebString(); };
-  bool didLoadingProgress() override { return false; };
-  bool hasSingleSecurityOrigin() const override { return true; };
-  bool didPassCORSAccessCheck() const override { return true; };
-  double mediaTimeForTimeValue(double timeValue) const override {
-    return timeValue;
-  };
-  unsigned decodedFrameCount() const override { return 0; };
-  unsigned droppedFrameCount() const override { return 0; };
-  size_t audioDecodedByteCount() const override { return 0; };
-  size_t videoDecodedByteCount() const override { return 0; };
-  void paint(WebCanvas*, const WebRect&, SkPaint&) override{};
+  bool hasVideo() const override { return true; }
 
   MOCK_CONST_METHOD0(naturalSize, WebSize());
 };
@@ -79,9 +48,9 @@ class MockChromeClient : public EmptyChromeClient {
   MOCK_CONST_METHOD0(screenInfo, WebScreenInfo());
 };
 
-class StubFrameLoaderClient : public EmptyFrameLoaderClient {
+class StubLocalFrameClient : public EmptyLocalFrameClient {
  public:
-  static StubFrameLoaderClient* create() { return new StubFrameLoaderClient; }
+  static StubLocalFrameClient* create() { return new StubLocalFrameClient; }
 
   std::unique_ptr<WebMediaPlayer> createWebMediaPlayer(
       HTMLMediaElement&,
@@ -144,7 +113,7 @@ class MediaControlsOrientationLockDelegateTest : public ::testing::Test {
     clients.chromeClient = m_chromeClient.get();
 
     m_pageHolder = DummyPageHolder::create(IntSize(800, 600), &clients,
-                                           StubFrameLoaderClient::create());
+                                           StubLocalFrameClient::create());
 
     document().write("<body><video></body>");
     m_video = toHTMLVideoElement(*document().querySelector("video"));

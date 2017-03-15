@@ -260,10 +260,12 @@ class CORE_EXPORT LayoutMultiColumnFlowThread : public LayoutFlowThread,
   bool removeSpannerPlaceholderIfNoLongerValid(
       LayoutBox* spannerObjectInFlowThread);
 
-  LayoutMultiColumnFlowThread* enclosingFlowThread() const;
-  FragmentationContext* enclosingFragmentationContext() const;
+  LayoutMultiColumnFlowThread* enclosingFlowThread(
+      AncestorSearchConstraint = IsolateUnbreakableContainers) const;
+  FragmentationContext* enclosingFragmentationContext(
+      AncestorSearchConstraint = IsolateUnbreakableContainers) const;
   LayoutUnit blockOffsetInEnclosingFragmentationContext() const {
-    ASSERT(enclosingFragmentationContext());
+    DCHECK(enclosingFragmentationContext(AnyAncestor));
     return m_blockOffsetInEnclosingFragmentationContext;
   }
 

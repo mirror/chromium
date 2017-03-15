@@ -285,7 +285,7 @@ void SyncSetupHandler::GetStaticLocalizedValues(
 }
 
 void SyncSetupHandler::ConfigureSyncDone() {
-  base::StringValue page("done");
+  base::Value page("done");
   web_ui()->CallJavascriptFunctionUnsafe("SyncSetupOverlay.showSyncSetupPage",
                                          page);
 
@@ -363,8 +363,8 @@ void SyncSetupHandler::DisplayGaiaLoginInNewTabOrWindow(
   bool force_new_tab = false;
   if (!browser) {
     // Settings is not displayed in a browser window. Open a new window.
-    browser =
-        new Browser(Browser::CreateParams(Browser::TYPE_TABBED, GetProfile()));
+    browser = new Browser(
+        Browser::CreateParams(Browser::TYPE_TABBED, GetProfile(), true));
     force_new_tab = true;
   }
 
@@ -384,7 +384,7 @@ void SyncSetupHandler::DisplayGaiaLoginInNewTabOrWindow(
     if (!force_new_tab) {
       browser->window()->ShowAvatarBubbleFromAvatarButton(
           BrowserWindow::AVATAR_BUBBLE_MODE_REAUTH,
-          signin::ManageAccountsParams(), access_point);
+          signin::ManageAccountsParams(), access_point, false);
     } else {
       url = signin::GetReauthURL(
           access_point, signin_metrics::Reason::REASON_REAUTHENTICATION,
@@ -394,7 +394,7 @@ void SyncSetupHandler::DisplayGaiaLoginInNewTabOrWindow(
     if (!force_new_tab) {
       browser->window()->ShowAvatarBubbleFromAvatarButton(
           BrowserWindow::AVATAR_BUBBLE_MODE_SIGNIN,
-          signin::ManageAccountsParams(), access_point);
+          signin::ManageAccountsParams(), access_point, false);
     } else {
       url = signin::GetPromoURL(
           access_point, signin_metrics::Reason::REASON_SIGNIN_PRIMARY_ACCOUNT,
@@ -427,7 +427,7 @@ bool SyncSetupHandler::PrepareSyncSetup() {
 
 void SyncSetupHandler::DisplaySpinner() {
   configuring_sync_ = true;
-  base::StringValue page("spinner");
+  base::Value page("spinner");
   base::DictionaryValue args;
 
   const int kTimeoutSec = 30;
@@ -450,7 +450,7 @@ void SyncSetupHandler::DisplayTimeout() {
   // Do not listen to sync startup events.
   sync_startup_tracker_.reset();
 
-  base::StringValue page("timeout");
+  base::Value page("timeout");
   base::DictionaryValue args;
   web_ui()->CallJavascriptFunctionUnsafe("SyncSetupOverlay.showSyncSetupPage",
                                          page, args);
@@ -797,7 +797,7 @@ void SyncSetupHandler::FocusUI() {
 
 void SyncSetupHandler::CloseUI() {
   CloseSyncSetup();
-  base::StringValue page("done");
+  base::Value page("done");
   web_ui()->CallJavascriptFunctionUnsafe("SyncSetupOverlay.showSyncSetupPage",
                                          page);
 }
@@ -942,7 +942,7 @@ void SyncSetupHandler::DisplayConfigureSync(bool passphrase_failed) {
         GetStringUTF16(IDS_SYNC_FULL_ENCRYPTION_DATA));
   }
 
-  base::StringValue page("configure");
+  base::Value page("configure");
   web_ui()->CallJavascriptFunctionUnsafe("SyncSetupOverlay.showSyncSetupPage",
                                          page, args);
 

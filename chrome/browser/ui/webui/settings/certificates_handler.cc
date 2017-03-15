@@ -35,7 +35,6 @@
 #include "chrome/grit/generated_resources.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_contents.h"
-#include "net/base/crypto_module.h"
 #include "net/base/net_errors.h"
 #include "net/cert/x509_certificate.h"
 #include "net/der/input.h"
@@ -680,7 +679,7 @@ void CertificatesHandler::ImportPersonalFileRead(const int* read_errno,
   file_data_ = *data;
 
   if (CouldBePFX(file_data_)) {
-    ResolveCallback(base::FundamentalValue(true));
+    ResolveCallback(base::Value(true));
     return;
   }
 
@@ -693,7 +692,7 @@ void CertificatesHandler::ImportPersonalFileRead(const int* read_errno,
   int string_id;
   switch (result) {
     case net::OK:
-      ResolveCallback(base::FundamentalValue(false));
+      ResolveCallback(base::Value(false));
       return;
     case net::ERR_NO_PRIVATE_KEY_FOR_CERT:
       string_id = IDS_SETTINGS_CERTIFICATE_MANAGER_IMPORT_MISSING_KEY;
@@ -723,10 +722,10 @@ void CertificatesHandler::HandleImportPersonalPasswordSelected(
     slot_ = certificate_manager_model_->cert_db()->GetPublicSlot();
   }
 
-  net::CryptoModuleList modules;
-  modules.push_back(net::CryptoModule::CreateFromHandle(slot_.get()));
+  std::vector<crypto::ScopedPK11Slot> modules;
+  modules.push_back(crypto::ScopedPK11Slot(PK11_ReferenceSlot(slot_.get())));
   chrome::UnlockSlotsIfNecessary(
-      modules, chrome::kCryptoModulePasswordCertImport,
+      std::move(modules), chrome::kCryptoModulePasswordCertImport,
       net::HostPortPair(),  // unused.
       GetParentWindow(),
       base::Bind(&CertificatesHandler::ImportPersonalSlotUnlocked,
@@ -907,7 +906,7 @@ void CertificatesHandler::ImportCAFileRead(const int* read_errno,
 
   // TODO(mattm): check here if root_cert is not a CA cert and show error.
 
-  base::StringValue cert_name(root_cert->subject().GetDisplayName());
+  base::Value cert_name(root_cert->subject().GetDisplayName());
   ResolveCallback(cert_name);
 }
 
@@ -985,12 +984,12 @@ void CertificatesHandler::OnCertificateManagerModelCreated(
 }
 
 void CertificatesHandler::CertificateManagerModelReady() {
-  base::FundamentalValue user_db_available_value(
+  base::Value user_db_available_value(
       certificate_manager_model_->is_user_db_available());
-  base::FundamentalValue tpm_available_value(
+  base::Value tpm_available_value(
       certificate_manager_model_->is_tpm_available());
   CallJavascriptFunction("cr.webUIListenerCallback",
-                         base::StringValue("certificates-model-ready"),
+                         base::Value("certificates-model-ready"),
                          user_db_available_value, tpm_available_value);
   certificate_manager_model_->Refresh();
 }
@@ -1084,20 +1083,20 @@ void CertificatesHandler::PopulateTree(
     std::sort(nodes->begin(), nodes->end(), comparator);
 
     CallJavascriptFunction("cr.webUIListenerCallback",
-                           base::StringValue("certificates-changed"),
-                           base::StringValue(tab_name), *nodes);
+                           base::Value("certificates-changed"),
+                           base::Value(tab_name), *nodes);
   }
 }
 
 void CertificatesHandler::ResolveCallback(const base::Value& response) {
   DCHECK(!webui_callback_id_.empty());
-  ResolveJavascriptCallback(base::StringValue(webui_callback_id_), response);
+  ResolveJavascriptCallback(base::Value(webui_callback_id_), response);
   webui_callback_id_.clear();
 }
 
 void CertificatesHandler::RejectCallback(const base::Value& response) {
   DCHECK(!webui_callback_id_.empty());
-  RejectJavascriptCallback(base::StringValue(webui_callback_id_), response);
+  RejectJavascriptCallback(base::Value(webui_callback_id_), response);
   webui_callback_id_.clear();
 }
 

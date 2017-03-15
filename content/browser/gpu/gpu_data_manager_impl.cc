@@ -35,6 +35,11 @@ bool GpuDataManagerImpl::IsFeatureEnabled(int feature) const {
   return private_->IsFeatureEnabled(feature);
 }
 
+bool GpuDataManagerImpl::IsWebGLEnabled() const {
+  base::AutoLock auto_lock(lock_);
+  return private_->IsWebGLEnabled();
+}
+
 bool GpuDataManagerImpl::IsDriverBugWorkaroundActive(int feature) const {
   base::AutoLock auto_lock(lock_);
   return private_->IsDriverBugWorkaroundActive(feature);
@@ -81,12 +86,6 @@ bool GpuDataManagerImpl::ShouldUseSwiftShader() const {
   return private_->ShouldUseSwiftShader();
 }
 
-void GpuDataManagerImpl::RegisterSwiftShaderPath(
-    const base::FilePath& path) {
-  base::AutoLock auto_lock(lock_);
-  private_->RegisterSwiftShaderPath(path);
-}
-
 void GpuDataManagerImpl::AddObserver(
     GpuDataManagerObserver* observer) {
   base::AutoLock auto_lock(lock_);
@@ -121,6 +120,12 @@ void GpuDataManagerImpl::GetGLStrings(std::string* gl_vendor,
 void GpuDataManagerImpl::DisableHardwareAcceleration() {
   base::AutoLock auto_lock(lock_);
   private_->DisableHardwareAcceleration();
+}
+
+bool GpuDataManagerImpl::HardwareAccelerationEnabled() const {
+  base::AutoLock auto_lock(lock_);
+  return !private_->ShouldUseSwiftShader() &&
+         private_->GpuAccessAllowed(nullptr);
 }
 
 bool GpuDataManagerImpl::CanUseGpuBrowserCompositor() const {

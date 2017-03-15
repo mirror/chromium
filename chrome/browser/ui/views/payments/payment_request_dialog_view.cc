@@ -12,9 +12,10 @@
 #include "chrome/browser/ui/views/payments/order_summary_view_controller.h"
 #include "chrome/browser/ui/views/payments/payment_method_view_controller.h"
 #include "chrome/browser/ui/views/payments/payment_sheet_view_controller.h"
-#include "chrome/browser/ui/views/payments/shipping_list_view_controller.h"
+#include "chrome/browser/ui/views/payments/profile_list_view_controller.h"
+#include "chrome/browser/ui/views/payments/shipping_option_view_controller.h"
 #include "components/constrained_window/constrained_window_views.h"
-#include "components/payments/payment_request.h"
+#include "components/payments/content/payment_request.h"
 #include "content/public/browser/browser_thread.h"
 #include "ui/views/layout/fill_layout.h"
 
@@ -48,7 +49,7 @@ std::unique_ptr<views::View> CreateViewAndInstallController(
 PaymentRequestDialogView::PaymentRequestDialogView(
     PaymentRequest* request,
     PaymentRequestDialogView::ObserverForTest* observer)
-    : request_(request), observer_for_testing_(observer) {
+    : request_(request), observer_for_testing_(observer), being_closed_(false) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   SetLayoutManager(new views::FillLayout());
 
@@ -65,9 +66,13 @@ ui::ModalType PaymentRequestDialogView::GetModalType() const {
 }
 
 bool PaymentRequestDialogView::Cancel() {
-  // Called when the widget is about to close. We send a message to the
-  // PaymentRequest object to signal user cancellation.
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  // Called when the widget is about to close. We send a message to the
+  // PaymentRequest object to signal user cancellation. Before destroying the
+  // PaymentRequest object, we destroy all controllers so that they are not left
+  // alive with an invalid PaymentRequest pointer.
+  being_closed_ = true;
+  controller_map_.clear();
   request_->UserCancelled();
   return true;
 }
@@ -89,6 +94,10 @@ int PaymentRequestDialogView::GetDialogButtons() const {
   return ui::DIALOG_BUTTON_NONE;
 }
 
+void PaymentRequestDialogView::Pay() {
+  request_->Pay();
+}
+
 void PaymentRequestDialogView::GoBack() {
   view_stack_.Pop();
 
@@ -96,40 +105,60 @@ void PaymentRequestDialogView::GoBack() {
     observer_for_testing_->OnBackNavigation();
 }
 
-void PaymentRequestDialogView::ShowOrderSummary() {
+void PaymentRequestDialogView::ShowContactProfileSheet() {
   view_stack_.Push(
       CreateViewAndInstallController(
-          base::MakeUnique<OrderSummaryViewController>(request_, this),
+          ProfileListViewController::GetContactProfileViewController(
+              request_->spec(), request_->state(), this),
           &controller_map_),
-      /* animate = */ true);
+      /* animate */ true);
+  if (observer_for_testing_)
+    observer_for_testing_->OnContactInfoOpened();
+}
+
+void PaymentRequestDialogView::ShowOrderSummary() {
+  view_stack_.Push(CreateViewAndInstallController(
+                       base::MakeUnique<OrderSummaryViewController>(
+                           request_->spec(), request_->state(), this),
+                       &controller_map_),
+                   /* animate = */ true);
   if (observer_for_testing_)
     observer_for_testing_->OnOrderSummaryOpened();
 }
 
 void PaymentRequestDialogView::ShowPaymentMethodSheet() {
-  view_stack_.Push(
-      CreateViewAndInstallController(
-          base::MakeUnique<PaymentMethodViewController>(request_, this),
-          &controller_map_),
-      /* animate = */ true);
+  view_stack_.Push(CreateViewAndInstallController(
+                       base::MakeUnique<PaymentMethodViewController>(
+                           request_->spec(), request_->state(), this),
+                       &controller_map_),
+                   /* animate = */ true);
   if (observer_for_testing_)
     observer_for_testing_->OnPaymentMethodOpened();
 }
 
-void PaymentRequestDialogView::ShowShippingListSheet() {
+void PaymentRequestDialogView::ShowShippingProfileSheet() {
   view_stack_.Push(
       CreateViewAndInstallController(
-          base::MakeUnique<ShippingListViewController>(request_, this),
+          ProfileListViewController::GetShippingProfileViewController(
+              request_->spec(), request_->state(), this),
           &controller_map_),
       /* animate = */ true);
 }
 
+void PaymentRequestDialogView::ShowShippingOptionSheet() {
+  view_stack_.Push(CreateViewAndInstallController(
+                       base::MakeUnique<ShippingOptionViewController>(
+                           request_->spec(), request_->state(), this),
+                       &controller_map_),
+                   /* animate = */ true);
+}
+
 void PaymentRequestDialogView::ShowCreditCardEditor() {
-  view_stack_.Push(
-      CreateViewAndInstallController(
-          base::MakeUnique<CreditCardEditorViewController>(request_, this),
-          &controller_map_),
-      /* animate = */ true);
+  view_stack_.Push(CreateViewAndInstallController(
+                       base::MakeUnique<CreditCardEditorViewController>(
+                           request_->spec(), request_->state(), this),
+                       &controller_map_),
+                   /* animate = */ true);
   if (observer_for_testing_)
     observer_for_testing_->OnCreditCardEditorOpened();
 }
@@ -140,15 +169,16 @@ void PaymentRequestDialogView::ShowDialog() {
 
 void PaymentRequestDialogView::CloseDialog() {
   // This calls PaymentRequestDialogView::Cancel() before closing.
+  // ViewHierarchyChanged() also gets called after Cancel().
   GetWidget()->Close();
 }
 
 void PaymentRequestDialogView::ShowInitialPaymentSheet() {
-  view_stack_.Push(
-      CreateViewAndInstallController(
-          base::MakeUnique<PaymentSheetViewController>(request_, this),
-          &controller_map_),
-      /* animate = */ false);
+  view_stack_.Push(CreateViewAndInstallController(
+                       base::MakeUnique<PaymentSheetViewController>(
+                           request_->spec(), request_->state(), this),
+                       &controller_map_),
+                   /* animate = */ false);
   if (observer_for_testing_)
     observer_for_testing_->OnDialogOpened();
 }
@@ -159,6 +189,9 @@ gfx::Size PaymentRequestDialogView::GetPreferredSize() const {
 
 void PaymentRequestDialogView::ViewHierarchyChanged(
     const ViewHierarchyChangedDetails& details) {
+  if (being_closed_)
+    return;
+
   // When a view that is associated with a controller is removed from this
   // view's descendants, dispose of the controller.
   if (!details.is_add &&

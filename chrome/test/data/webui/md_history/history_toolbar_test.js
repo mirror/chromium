@@ -15,8 +15,8 @@ suite('history-toolbar', function() {
 
   setup(function() {
     app = replaceApp();
-    element = app.$['history'].$['infinite-list'];
-    toolbar = app.$['toolbar'];
+    element = app.$.history;
+    toolbar = app.$.toolbar;
     return PolymerTest.flushTasks();
   });
 
@@ -99,6 +99,14 @@ suite('history-toolbar', function() {
     MockInteractions.tap(button);
     toolbar.showSyncNotice = false;
     assertTrue(notice.hidden);
+  });
+
+  test('menu promo hides when drawer is opened', function() {
+    app.showMenuPromo_ = true;
+    app.hasDrawer_ = true;
+    Polymer.dom.flush();
+    MockInteractions.tap(toolbar.$['main-toolbar'].$$('#menuButton'));
+    assertFalse(app.showMenuPromo_);
   });
 
   teardown(function() {

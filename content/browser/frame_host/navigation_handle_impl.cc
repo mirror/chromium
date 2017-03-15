@@ -6,7 +6,6 @@
 
 #include <iterator>
 
-#include "base/debug/dump_without_crashing.h"
 #include "base/logging.h"
 #include "content/browser/appcache/appcache_navigation_handle.h"
 #include "content/browser/appcache/appcache_service_impl.h"
@@ -16,6 +15,7 @@
 #include "content/browser/frame_host/ancestor_throttle.h"
 #include "content/browser/frame_host/debug_urls.h"
 #include "content/browser/frame_host/frame_tree_node.h"
+#include "content/browser/frame_host/mixed_content_navigation_throttle.h"
 #include "content/browser/frame_host/navigation_controller_impl.h"
 #include "content/browser/frame_host/navigation_entry_impl.h"
 #include "content/browser/frame_host/navigator.h"
@@ -34,7 +34,6 @@
 #include "content/public/common/url_constants.h"
 #include "net/base/net_errors.h"
 #include "net/url_request/redirect_info.h"
-#include "third_party/WebKit/public/platform/WebMixedContentContextType.h"
 #include "url/gurl.h"
 #include "url/url_constants.h"
 
@@ -108,6 +107,7 @@ NavigationHandleImpl::NavigationHandleImpl(
       is_stream_(false),
       started_from_context_menu_(started_from_context_menu),
       reload_type_(ReloadType::NONE),
+      restore_type_(RestoreType::NONE),
       navigation_type_(NAVIGATION_TYPE_UNKNOWN),
       weak_factory_(this) {
   DCHECK(!navigation_start.is_null());
@@ -130,8 +130,10 @@ NavigationHandleImpl::NavigationHandleImpl(
       nav_entry = nav_controller->GetPendingEntry();
     }
 
-    if (nav_entry)
+    if (nav_entry) {
       reload_type_ = nav_entry->reload_type();
+      restore_type_ = nav_entry->restore_type();
+    }
   }
 
   if (!IsRendererDebugURL(url_))
@@ -263,7 +265,7 @@ RenderFrameHostImpl* NavigationHandleImpl::GetRenderFrameHost() {
   return render_frame_host_;
 }
 
-bool NavigationHandleImpl::IsSamePage() {
+bool NavigationHandleImpl::IsSameDocument() {
   return is_same_page_;
 }
 
@@ -452,6 +454,14 @@ ReloadType NavigationHandleImpl::GetReloadType() {
   return reload_type_;
 }
 
+RestoreType NavigationHandleImpl::GetRestoreType() {
+  return restore_type_;
+}
+
+const GURL& NavigationHandleImpl::GetBaseURLForDataURL() {
+  return base_url_for_data_url_;
+}
+
 NavigationData* NavigationHandleImpl::GetNavigationData() {
   return navigation_data_.get();
 }
@@ -617,7 +627,7 @@ void NavigationHandleImpl::ReadyToCommitNavigation(
   render_frame_host_ = render_frame_host;
   state_ = READY_TO_COMMIT;
 
-  if (!IsRendererDebugURL(url_) && !IsSamePage())
+  if (!IsRendererDebugURL(url_) && !IsSameDocument())
     GetDelegate()->ReadyToCommitNavigation(this);
 }
 
@@ -650,6 +660,14 @@ void NavigationHandleImpl::DidCommitNavigation(
   } else {
     state_ = DID_COMMIT;
   }
+
+  if (url_.SchemeIs(url::kDataScheme) && IsInMainFrame() &&
+      IsRendererInitiated()) {
+    GetRenderFrameHost()->AddMessageToConsole(
+        CONSOLE_MESSAGE_LEVEL_WARNING,
+        "Upcoming versions will block content-initiated top frame navigations "
+        "to data: URLs. For more information, see https://goo.gl/BaZAea.");
+  }
 }
 
 void NavigationHandleImpl::Transfer() {
@@ -659,7 +677,9 @@ void NavigationHandleImpl::Transfer() {
   // transferring, the URLRequest can no longer be cancelled by its original
   // RenderFrame. Instead it will persist until being picked up by the transfer
   // RenderFrame, even if the original RenderFrame is destroyed.
-  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE, transfer_callback_);
+  // Note: |transfer_callback_| can be null in unit tests.
+  if (!transfer_callback_.is_null())
+    BrowserThread::PostTask(BrowserThread::IO, FROM_HERE, transfer_callback_);
   transfer_callback_.Reset();
 }
 
@@ -801,9 +821,6 @@ bool NavigationHandleImpl::MaybeTransferAndProceedInternal() {
   if (!render_frame_host_->is_active()) {
     // This will cause the deletion of this NavigationHandle and the
     // cancellation of the navigation.
-    // TODO(clamy): Remove the logging code once we understand better how we can
-    // get there.
-    base::debug::DumpWithoutCrashing();
     render_frame_host_->SetNavigationHandle(nullptr);
     return false;
   }
@@ -867,6 +884,11 @@ void NavigationHandleImpl::RunCompleteCallback(
   ThrottleChecksFinishedCallback callback = complete_callback_;
   complete_callback_.Reset();
 
+  if (!complete_callback_for_testing_.is_null()) {
+    complete_callback_for_testing_.Run(result);
+    complete_callback_for_testing_.Reset();
+  }
+
   if (!callback.is_null())
     callback.Run(result);
 
@@ -876,11 +898,20 @@ void NavigationHandleImpl::RunCompleteCallback(
 
 void NavigationHandleImpl::RegisterNavigationThrottles() {
   // Register the navigation throttles. The vector returned by
-  // GetNavigationThrottles is not assigned to throttles_ directly because it
-  // would overwrite any throttles previously added with
+  // CreateThrottlesForNavigation is not assigned to throttles_ directly because
+  // it would overwrite any throttles previously added with
   // RegisterThrottleForTesting.
+  // TODO(carlosk, arthursonzogni): should simplify this to either use
+  // |throttles_| directly (except for the case described above) or
+  // |throttles_to_register| for registering all throttles.
   std::vector<std::unique_ptr<NavigationThrottle>> throttles_to_register =
       GetDelegate()->CreateThrottlesForNavigation(this);
+
+  std::unique_ptr<NavigationThrottle> mixed_content_throttle =
+      MixedContentNavigationThrottle::CreateThrottleForNavigation(this);
+  if (mixed_content_throttle)
+    throttles_to_register.push_back(std::move(mixed_content_throttle));
+
   std::unique_ptr<NavigationThrottle> devtools_throttle =
       RenderFrameDevToolsAgentHost::CreateThrottleForNavigation(this);
   if (devtools_throttle)

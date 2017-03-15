@@ -119,6 +119,7 @@
 <translation id="2096368010154057602">Avdeling</translation>
 <translation id="2113977810652731515">Kort</translation>
 <translation id="2114841414352855701">Ignorert fordi det ble overstyrt av <ph name="POLICY_NAME" />.</translation>
+<translation id="2138201775715568214">Leter etter Fysisk nett-sider i nærheten</translation>
 <translation id="213826338245044447">Bokmerker for mobil</translation>
 <translation id="2148716181193084225">I dag</translation>
 <translation id="2154054054215849342">Synkronisering er ikke tilgjengelig for domenet ditt</translation>
@@ -189,6 +190,7 @@
 <translation id="2721148159707890343">Forespørselen var vellykket</translation>
 <translation id="2728127805433021124">Tjenerens sertifikat er signert med en usikker signaturalgoritme.</translation>
 <translation id="2730326759066348565"><ph name="BEGIN_LINK" />Kjør Tilkoblingsdiagnostikk<ph name="END_LINK" /></translation>
+<translation id="2740531572673183784">OK</translation>
 <translation id="2742870351467570537">Fjern valgte elementer</translation>
 <translation id="277499241957683684">Manglende enhetsoppføring</translation>
 <translation id="2784949926578158345">Tilkoblingen ble tilbakestilt.</translation>
@@ -270,6 +272,7 @@
 <translation id="348000606199325318">Kræsj-ID <ph name="CRASH_LOCAL_ID" /> (Tjener-ID: <ph name="CRASH_ID" />)</translation>
 <translation id="3498215018399854026">Vi kunne ikke nå foreldrene dine akkurat nå. Prøv igjen.</translation>
 <translation id="3528171143076753409">Tjenerens sertifikat er ikke pålitelig.</translation>
+<translation id="3538531656504267329">Ugyldig utløpsår</translation>
 <translation id="3539171420378717834">Lagre en kopi av dette kortet på denne enheten</translation>
 <translation id="3542684924769048008">Bruk passord for:</translation>
 <translation id="3549644494707163724">Kryptér alle synkroniserte data med din egen passordfrase for synkronisering</translation>
@@ -352,6 +355,7 @@
 <translation id="425582637250725228">Det kan hende endringene dine ikke er lagret.</translation>
 <translation id="4258748452823770588">Dårlig signatur</translation>
 <translation id="4269787794583293679">(Uten brukernavn)</translation>
+<translation id="4275830172053184480">Start enheten din på nytt</translation>
 <translation id="4280429058323657511">, utløper <ph name="EXPIRATION_DATE_ABBR" /></translation>
 <translation id="4295944351946828969">Google Safe Browsing fant nylig <ph name="BEGIN_LINK" />skadelige programmer<ph name="END_LINK" /> på <ph name="SITE" />. <ph name="BEGIN_LEARN_MORE_LINK" />Finn ut mer<ph name="END_LEARN_MORE_LINK" />.</translation>
 <translation id="4300246636397505754">Overordnede forslag</translation>
@@ -467,6 +471,7 @@
 <translation id="5544037170328430102">En innebygd side på <ph name="SITE" /> sier:</translation>
 <translation id="5556459405103347317">Last inn på nytt</translation>
 <translation id="5565735124758917034">Aktiv</translation>
+<translation id="5572851009514199876">Start og logg på Chrome, så Chrome kan sjekke om du har tillatelse til å gå til dette nettstedet.</translation>
 <translation id="5575380383496039204">Leveringsadressen støttes ikke. Velg en annen adresse.</translation>
 <translation id="5580958916614886209">Kontrollér utløpsmåneden, og prøv igjen</translation>
 <translation id="560412284261940334">Administrering støttes ikke</translation>
@@ -551,12 +556,14 @@
 <translation id="6443118737398455446">Ugyldig utløpsdato</translation>
 <translation id="6446608382365791566">Legg til mer informasjon</translation>
 <translation id="6451458296329894277">Bekreft ny innsending av skjema</translation>
+<translation id="6456339708790392414">Betalingen din</translation>
 <translation id="6458467102616083041">Ignorert fordi standardsøk er deaktivert i henhold til retningslinje.</translation>
 <translation id="6462969404041126431">Denne tjeneren kunne ikke bevise at den er <ph name="DOMAIN" />, ettersom sikkerhetssertifikatet kan ha blitt trukket tilbake. Dette kan skyldes en feilkonfigurasjon eller at en angriper avskjærer tilkoblingen din. <ph name="BEGIN_LEARN_MORE_LINK" />Finn ut mer<ph name="END_LEARN_MORE_LINK" />.</translation>
 <translation id="647261751007945333">Enhetsinnstillinger</translation>
 <translation id="6477321094435799029">Chrome har oppdaget uvanlig kode på denne siden og blokkert den for å beskytte personopplysningene dine (for eksempel passord, telefonnumre og kredittkortinformasjon).</translation>
 <translation id="6477460825583319731">Ugyldig e-postadresse</translation>
 <translation id="6489534406876378309">Start opplastingen av krasj</translation>
+<translation id="6525462735697194615">Ugyldig utløpsmåned</translation>
 <translation id="6529602333819889595">&amp;Slett likevel</translation>
 <translation id="6534179046333460208">Fysisk nett-forslag</translation>
 <translation id="6550675742724504774">Alternativer</translation>
@@ -591,7 +598,6 @@
 <translation id="6895330447102777224">Kortet ditt er bekreftet</translation>
 <translation id="6897140037006041989">Brukeragent</translation>
 <translation id="6915804003454593391">Bruker:</translation>
-<translation id="6937422995269576720">Kortnummeret er ugyldig</translation>
 <translation id="6957887021205513506">Tjenersertifikatet ser ut til å være forfalsket.</translation>
 <translation id="6965382102122355670">OK</translation>
 <translation id="6965978654500191972">Enhet</translation>
@@ -619,6 +625,7 @@
 <translation id="7210863904660874423"><ph name="HOST_NAME" /> retter seg ikke etter sikkerhetsstandardene.</translation>
 <translation id="721197778055552897"><ph name="BEGIN_LINK" />Mer informasjon<ph name="END_LINK" /> om dette problemet.</translation>
 <translation id="7219179957768738017">Tilkoblingen bruker <ph name="SSL_VERSION" />.</translation>
+<translation id="7220786058474068424">Behandler</translation>
 <translation id="724691107663265825">Nettstedet du er på vei til, inneholder skadelig programvare</translation>
 <translation id="724975217298816891">Skriv inn utløpsdatoen og verifiseringskoden for <ph name="CREDIT_CARD" /> for å oppdatere kortinformasjonen din. Når du bekrefter, deles denne informasjonen med dette nettstedet.</translation>
 <translation id="725866823122871198">En privat forbindelse til <ph name="BEGIN_BOLD" /><ph name="DOMAIN" /><ph name="END_BOLD" /> kan ikke opprettes fordi datoen og klokkeslettet (<ph name="DATE_AND_TIME" />) på datamaskinen er feil.</translation>
@@ -685,6 +692,7 @@ Forresten: Inkognitomodus (<ph name="SHORTCUT_KEY" />) kan være kjekt neste gan
 <translation id="7755287808199759310">Forelderen din kan oppheve blokkeringen for deg</translation>
 <translation id="7758069387465995638">Brannmur- eller antivirusprogramvare kan ha blokkert tilkoblingen.</translation>
 <translation id="7761701407923456692">Tjenerens sertifikat samsvarer ikke med nettadressen.</translation>
+<translation id="7764225426217299476">Legg til adresse</translation>
 <translation id="777702478322588152">Prefektur</translation>
 <translation id="7791543448312431591">Legg til</translation>
 <translation id="7793809570500803535">Det kan hende at nettsiden på <ph name="SITE" /> er midlertidig nede eller flyttet permanent til en ny nettadresse.</translation>
@@ -694,7 +702,6 @@ Forresten: Inkognitomodus (<ph name="SHORTCUT_KEY" />) kan være kjekt neste gan
 <translation id="7812922009395017822">Mir</translation>
 <translation id="7813600968533626083">Vil du fjerne skjemaforslaget fra Chrome?</translation>
 <translation id="7815407501681723534">Fant <ph name="NUMBER_OF_RESULTS" /> <ph name="SEARCH_RESULTS" /> for «<ph name="SEARCH_STRING" />»</translation>
-<translation id="7837582000577464779">Det oppsto en feil ved behandling av bestillingen din. Sjekk kontoen din og prøv igjen.</translation>
 <translation id="785549533363645510">Du er imidlertid ikke usynlig. Inkognitomodus skjuler ikke surfingen din for arbeidsgiveren din, Internett-leverandøren eller nettstedene du besøker.</translation>
 <translation id="7855695075675558090"><ph name="TOTAL_LABEL" /> <ph name="CURRENCY_CODE" /> <ph name="FORMATTED_TOTAL_AMOUNT" /></translation>
 <translation id="7887683347370398519">Kontrollér CVC-koden din, og prøv igjen.</translation>
@@ -789,6 +796,7 @@ Forresten: Inkognitomodus (<ph name="SHORTCUT_KEY" />) kan være kjekt neste gan
 <translation id="8932102934695377596">Klokken går for sent</translation>
 <translation id="8954894007019320973">(Forts.)</translation>
 <translation id="8971063699422889582">Tjenerens sertifikat er utløpt.</translation>
+<translation id="8986494364107987395">Send bruksstatistikk og programstopprapporter automatisk til Google</translation>
 <translation id="8987927404178983737">Måned</translation>
 <translation id="8989148748219918422"><ph name="ORGANIZATION" /> [<ph name="COUNTRY" />]</translation>
 <translation id="8996941253935762404">Nettstedet du er i ferd med å åpne, inneholder skadelige programmer</translation>
@@ -807,6 +815,7 @@ Forresten: Inkognitomodus (<ph name="SHORTCUT_KEY" />) kan være kjekt neste gan
 <translation id="9094175695478007090">Kan ikke starte betalingsappen.</translation>
 <translation id="9103872766612412690"><ph name="SITE" /> bruker vanligvis kryptering for å beskytte informasjonen din. Da Chromium prøvde å koble til <ph name="SITE" /> denne gangen, sendte nettstedet tilbake uvanlig og feil legitimasjon. Dette kan skje hvis en angriper prøver å utgi seg for å være <ph name="SITE" />, eller hvis en Wi-Fi-påloggingsskjerm har avbrutt tilkoblingen. Informasjonen din er likevel sikker fordi Chromium stoppet tilkoblingen før det ble utvekslet noen data.</translation>
 <translation id="9137013805542155359">Vis original</translation>
+<translation id="9137248913990643158">Du må starte og logge på Chrome før du bruker denne appen.</translation>
 <translation id="9148507642005240123">&amp;Angre endringen</translation>
 <translation id="9154194610265714752">Oppdatert</translation>
 <translation id="9157595877708044936">Konfigurerer ...</translation>

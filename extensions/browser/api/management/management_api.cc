@@ -469,7 +469,7 @@ void ManagementSetEnabledFunction::OnInstallPromptDone(bool did_accept) {
         ->Get(browser_context())
         ->GetDelegate()
         ->EnableExtension(browser_context(), extension_id_);
-    Respond(OneArgument(base::MakeUnique<base::FundamentalValue>(true)));
+    Respond(OneArgument(base::MakeUnique<base::Value>(true)));
   } else {
     Respond(Error(keys::kUserDidNotReEnableError));
   }
@@ -857,8 +857,9 @@ void ManagementAPI::Shutdown() {
   EventRouter::Get(browser_context_)->UnregisterObserver(this);
 }
 
-static base::LazyInstance<BrowserContextKeyedAPIFactory<ManagementAPI>>
-    g_factory = LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<
+    BrowserContextKeyedAPIFactory<ManagementAPI>>::DestructorAtExit g_factory =
+    LAZY_INSTANCE_INITIALIZER;
 
 // static
 BrowserContextKeyedAPIFactory<ManagementAPI>*

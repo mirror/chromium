@@ -8,6 +8,7 @@
 #include "core/dom/Element.h"
 #include "core/editing/Editor.h"
 #include "core/events/KeyboardEvent.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/html/HTMLDialogElement.h"
 #include "core/input/EventHandler.h"
 #include "core/input/EventHandlingUtil.h"
@@ -15,7 +16,6 @@
 #include "core/input/ScrollManager.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutTextControlSingleLine.h"
-#include "core/loader/FrameLoaderClient.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
@@ -60,7 +60,8 @@ WebFocusType focusDirectionForKey(KeyboardEvent* event) {
 bool mapKeyCodeForScroll(int keyCode,
                          WebInputEvent::Modifiers modifiers,
                          ScrollDirection* scrollDirection,
-                         ScrollGranularity* scrollGranularity) {
+                         ScrollGranularity* scrollGranularity,
+                         UseCounter::Feature* scrollUseUMA) {
   if (modifiers & WebInputEvent::ShiftKey || modifiers & WebInputEvent::MetaKey)
     return false;
 
@@ -86,34 +87,42 @@ bool mapKeyCodeForScroll(int keyCode,
     case VKEY_LEFT:
       *scrollDirection = ScrollLeftIgnoringWritingMode;
       *scrollGranularity = ScrollByLine;
+      *scrollUseUMA = UseCounter::ScrollByKeyboardArrowKeys;
       break;
     case VKEY_RIGHT:
       *scrollDirection = ScrollRightIgnoringWritingMode;
       *scrollGranularity = ScrollByLine;
+      *scrollUseUMA = UseCounter::ScrollByKeyboardArrowKeys;
       break;
     case VKEY_UP:
       *scrollDirection = ScrollUpIgnoringWritingMode;
       *scrollGranularity = ScrollByLine;
+      *scrollUseUMA = UseCounter::ScrollByKeyboardArrowKeys;
       break;
     case VKEY_DOWN:
       *scrollDirection = ScrollDownIgnoringWritingMode;
       *scrollGranularity = ScrollByLine;
+      *scrollUseUMA = UseCounter::ScrollByKeyboardArrowKeys;
       break;
     case VKEY_HOME:
       *scrollDirection = ScrollUpIgnoringWritingMode;
       *scrollGranularity = ScrollByDocument;
+      *scrollUseUMA = UseCounter::ScrollByKeyboardHomeEndKeys;
       break;
     case VKEY_END:
       *scrollDirection = ScrollDownIgnoringWritingMode;
       *scrollGranularity = ScrollByDocument;
+      *scrollUseUMA = UseCounter::ScrollByKeyboardHomeEndKeys;
       break;
     case VKEY_PRIOR:  // page up
       *scrollDirection = ScrollUpIgnoringWritingMode;
       *scrollGranularity = ScrollByPage;
+      *scrollUseUMA = UseCounter::ScrollByKeyboardPageUpDownKeys;
       break;
     case VKEY_NEXT:  // page down
       *scrollDirection = ScrollDownIgnoringWritingMode;
       *scrollGranularity = ScrollByPage;
+      *scrollUseUMA = UseCounter::ScrollByKeyboardPageUpDownKeys;
       break;
     default:
       return false;
@@ -308,6 +317,8 @@ void KeyboardEventManager::defaultSpaceEventHandler(KeyboardEvent* event,
   // FIXME: enable scroll customization in this case. See crbug.com/410974.
   if (m_scrollManager->logicalScroll(direction, ScrollByPage, nullptr,
                                      possibleFocusedNode)) {
+    UseCounter::count(m_frame->document(),
+                      UseCounter::ScrollByKeyboardSpacebarKey);
     event->setDefaultHandled();
     return;
   }
@@ -356,12 +367,14 @@ void KeyboardEventManager::defaultArrowEventHandler(KeyboardEvent* event,
 
   ScrollDirection scrollDirection;
   ScrollGranularity scrollGranularity;
+  UseCounter::Feature scrollUseUMA;
   if (!mapKeyCodeForScroll(event->keyCode(), event->modifiers(),
-                           &scrollDirection, &scrollGranularity))
+                           &scrollDirection, &scrollGranularity, &scrollUseUMA))
     return;
 
   if (m_scrollManager->bubblingScroll(scrollDirection, scrollGranularity,
                                       nullptr, possibleFocusedNode)) {
+    UseCounter::count(m_frame->document(), scrollUseUMA);
     event->setDefaultHandled();
     return;
   }
@@ -424,7 +437,8 @@ bool KeyboardEventManager::currentCapsLockState() {
 #elif OS(MACOSX)
       return GetCurrentKeyModifiers() & alphaLock;
 #else
-      NOTIMPLEMENTED();
+      // Caps lock state use is limited to Mac password input
+      // fields, so just return false. See http://crbug.com/618739.
       return false;
 #endif
     case OverrideCapsLockState::On:

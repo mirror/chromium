@@ -316,6 +316,7 @@ libvpx_srcs_x86 = [
   "//third_party/libvpx/source/libvpx/vpx_dsp/vpx_dsp_common.h",
   "//third_party/libvpx/source/libvpx/vpx_dsp/vpx_dsp_rtcd.c",
   "//third_party/libvpx/source/libvpx/vpx_dsp/vpx_filter.h",
+  "//third_party/libvpx/source/libvpx/vpx_dsp/x86/bitdepth_conversion_avx2.h",
   "//third_party/libvpx/source/libvpx/vpx_dsp/x86/bitdepth_conversion_sse2.h",
   "//third_party/libvpx/source/libvpx/vpx_dsp/x86/convolve.h",
   "//third_party/libvpx/source/libvpx/vpx_dsp/x86/fwd_dct32x32_impl_avx2.h",
@@ -370,8 +371,6 @@ libvpx_srcs_x86_assembly = [
   "//third_party/libvpx/source/libvpx/vp9/common/x86/vp9_mfqe_sse2.asm",
   "//third_party/libvpx/source/libvpx/vp9/encoder/x86/vp9_dct_sse2.asm",
   "//third_party/libvpx/source/libvpx/vp9/encoder/x86/vp9_error_sse2.asm",
-  "//third_party/libvpx/source/libvpx/vp9/encoder/x86/vp9_highbd_error_avx.asm",
-  "//third_party/libvpx/source/libvpx/vp9/encoder/x86/vp9_highbd_error_sse2.asm",
   "//third_party/libvpx/source/libvpx/vp9/encoder/x86/vp9_temporal_filter_apply_sse2.asm",
   "//third_party/libvpx/source/libvpx/vpx_dsp/x86/add_noise_sse2.asm",
   "//third_party/libvpx/source/libvpx/vpx_dsp/x86/deblock_sse2.asm",
@@ -398,7 +397,6 @@ libvpx_srcs_x86_assembly = [
   "//third_party/libvpx/source/libvpx/vpx_dsp/x86/vpx_subpixel_bilinear_sse2.asm",
   "//third_party/libvpx/source/libvpx/vpx_dsp/x86/vpx_subpixel_bilinear_ssse3.asm",
   "//third_party/libvpx/source/libvpx/vpx_ports/emms.asm",
-  "//third_party/libvpx/source/libvpx/vpx_ports/x86_abi_support.asm",
 ]
 libvpx_srcs_x86_mmx = [
   "//third_party/libvpx/source/libvpx/vp8/common/x86/idct_blk_mmx.c",
@@ -429,6 +427,7 @@ libvpx_srcs_x86_sse3 = []
 libvpx_srcs_x86_ssse3 = [
   "//third_party/libvpx/source/libvpx/vp8/encoder/x86/quantize_ssse3.c",
   "//third_party/libvpx/source/libvpx/vp9/encoder/x86/vp9_dct_ssse3.c",
+  "//third_party/libvpx/source/libvpx/vp9/encoder/x86/vp9_frame_scale_ssse3.c",
   "//third_party/libvpx/source/libvpx/vpx_dsp/x86/inv_txfm_ssse3.c",
   "//third_party/libvpx/source/libvpx/vpx_dsp/x86/vpx_subpixel_8t_intrin_ssse3.c",
 ]
@@ -758,6 +757,7 @@ libvpx_srcs_x86_64 = [
   "//third_party/libvpx/source/libvpx/vpx_dsp/vpx_dsp_common.h",
   "//third_party/libvpx/source/libvpx/vpx_dsp/vpx_dsp_rtcd.c",
   "//third_party/libvpx/source/libvpx/vpx_dsp/vpx_filter.h",
+  "//third_party/libvpx/source/libvpx/vpx_dsp/x86/bitdepth_conversion_avx2.h",
   "//third_party/libvpx/source/libvpx/vpx_dsp/x86/bitdepth_conversion_sse2.h",
   "//third_party/libvpx/source/libvpx/vpx_dsp/x86/convolve.h",
   "//third_party/libvpx/source/libvpx/vpx_dsp/x86/fwd_dct32x32_impl_avx2.h",
@@ -813,8 +813,6 @@ libvpx_srcs_x86_64_assembly = [
   "//third_party/libvpx/source/libvpx/vp9/common/x86/vp9_mfqe_sse2.asm",
   "//third_party/libvpx/source/libvpx/vp9/encoder/x86/vp9_dct_sse2.asm",
   "//third_party/libvpx/source/libvpx/vp9/encoder/x86/vp9_error_sse2.asm",
-  "//third_party/libvpx/source/libvpx/vp9/encoder/x86/vp9_highbd_error_avx.asm",
-  "//third_party/libvpx/source/libvpx/vp9/encoder/x86/vp9_highbd_error_sse2.asm",
   "//third_party/libvpx/source/libvpx/vp9/encoder/x86/vp9_quantize_ssse3_x86_64.asm",
   "//third_party/libvpx/source/libvpx/vp9/encoder/x86/vp9_temporal_filter_apply_sse2.asm",
   "//third_party/libvpx/source/libvpx/vpx_dsp/x86/add_noise_sse2.asm",
@@ -828,7 +826,6 @@ libvpx_srcs_x86_64_assembly = [
   "//third_party/libvpx/source/libvpx/vpx_dsp/x86/highbd_variance_impl_sse2.asm",
   "//third_party/libvpx/source/libvpx/vpx_dsp/x86/intrapred_sse2.asm",
   "//third_party/libvpx/source/libvpx/vpx_dsp/x86/intrapred_ssse3.asm",
-  "//third_party/libvpx/source/libvpx/vpx_dsp/x86/inv_txfm_ssse3_x86_64.asm",
   "//third_party/libvpx/source/libvpx/vpx_dsp/x86/inv_wht_sse2.asm",
   "//third_party/libvpx/source/libvpx/vpx_dsp/x86/quantize_avx_x86_64.asm",
   "//third_party/libvpx/source/libvpx/vpx_dsp/x86/quantize_ssse3_x86_64.asm",
@@ -848,7 +845,6 @@ libvpx_srcs_x86_64_assembly = [
   "//third_party/libvpx/source/libvpx/vpx_dsp/x86/vpx_subpixel_bilinear_sse2.asm",
   "//third_party/libvpx/source/libvpx/vpx_dsp/x86/vpx_subpixel_bilinear_ssse3.asm",
   "//third_party/libvpx/source/libvpx/vpx_ports/emms.asm",
-  "//third_party/libvpx/source/libvpx/vpx_ports/x86_abi_support.asm",
 ]
 libvpx_srcs_x86_64_mmx = [
   "//third_party/libvpx/source/libvpx/vp8/common/x86/idct_blk_mmx.c",
@@ -879,6 +875,7 @@ libvpx_srcs_x86_64_sse3 = []
 libvpx_srcs_x86_64_ssse3 = [
   "//third_party/libvpx/source/libvpx/vp8/encoder/x86/quantize_ssse3.c",
   "//third_party/libvpx/source/libvpx/vp9/encoder/x86/vp9_dct_ssse3.c",
+  "//third_party/libvpx/source/libvpx/vp9/encoder/x86/vp9_frame_scale_ssse3.c",
   "//third_party/libvpx/source/libvpx/vpx_dsp/x86/inv_txfm_ssse3.c",
   "//third_party/libvpx/source/libvpx/vpx_dsp/x86/vpx_subpixel_8t_intrin_ssse3.c",
 ]

@@ -63,7 +63,7 @@ v8::Local<v8::Value> roundTrip(v8::Local<v8::Value> value,
                                        : scope.getExceptionState();
 
   // Extract message ports and disentangle them.
-  std::unique_ptr<MessagePortChannelArray> channels;
+  MessagePortChannelArray channels;
   if (transferables) {
     channels = MessagePort::disentanglePorts(scope.getExecutionContext(),
                                              transferables->messagePorts,
@@ -217,7 +217,7 @@ TEST(V8ScriptValueSerializerTest, RoundTripImageData) {
   EXPECT_EQ(200, newImageData->data()->data()[0]);
 }
 
-TEST(V8ScriptValueSerializerTest, DecodeImageData) {
+TEST(V8ScriptValueSerializerTest, DecodeImageDataV9) {
   // Backward compatibility with existing serialized ImageData objects must be
   // maintained. Add more cases if the format changes; don't remove tests for
   // old versions.
@@ -235,12 +235,26 @@ TEST(V8ScriptValueSerializerTest, DecodeImageData) {
   EXPECT_EQ(200, newImageData->data()->data()[0]);
 }
 
+TEST(V8ScriptValueSerializerTest, DecodeImageDataV16) {
+  V8TestingScope scope;
+  ScriptState* scriptState = scope.getScriptState();
+  RefPtr<SerializedScriptValue> input =
+      serializedValue({0xff, 0x10, 0xff, 0x0c, 0x23, 0x02, 0x01, 0x08, 0xc8,
+                       0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
+  v8::Local<v8::Value> result =
+      V8ScriptValueDeserializer(scriptState, input).deserialize();
+  ASSERT_TRUE(V8ImageData::hasInstance(result, scope.isolate()));
+  ImageData* newImageData = V8ImageData::toImpl(result.As<v8::Object>());
+  EXPECT_EQ(IntSize(2, 1), newImageData->size());
+  EXPECT_EQ(8u, newImageData->data()->length());
+  EXPECT_EQ(200, newImageData->data()->data()[0]);
+}
+
 class WebMessagePortChannelImpl final : public WebMessagePortChannel {
  public:
   // WebMessagePortChannel
   void setClient(WebMessagePortChannelClient* client) override {}
-  void destroy() override { delete this; }
-  void postMessage(const WebString&, WebMessagePortChannelArray*) {
+  void postMessage(const WebString&, WebMessagePortChannelArray) {
     NOTIMPLEMENTED();
   }
   bool tryGetMessage(WebString*, WebMessagePortChannelArray&) { return false; }
@@ -370,12 +384,9 @@ TEST(V8ScriptValueSerializerTest, RoundTripImageBitmap) {
 
   // Check that the pixel at (3, 3) is red.
   uint8_t pixel[4] = {};
-  ASSERT_TRUE(
-      newImageBitmap->bitmapImage()
-          ->imageForCurrentFrame(ColorBehavior::transformToTargetForTesting())
-          ->readPixels(SkImageInfo::Make(1, 1, kRGBA_8888_SkColorType,
-                                         kPremul_SkAlphaType),
-                       &pixel, 4, 3, 3));
+  ASSERT_TRUE(newImageBitmap->bitmapImage()->imageForCurrentFrame()->readPixels(
+      SkImageInfo::Make(1, 1, kRGBA_8888_SkColorType, kPremul_SkAlphaType),
+      &pixel, 4, 3, 3));
   ASSERT_THAT(pixel, ::testing::ElementsAre(255, 0, 0, 255));
 }
 
@@ -408,12 +419,9 @@ TEST(V8ScriptValueSerializerTest, DecodeImageBitmap) {
 
   // Check that the pixels are opaque red and green, respectively.
   uint8_t pixels[8] = {};
-  ASSERT_TRUE(
-      newImageBitmap->bitmapImage()
-          ->imageForCurrentFrame(ColorBehavior::transformToTargetForTesting())
-          ->readPixels(SkImageInfo::Make(2, 1, kRGBA_8888_SkColorType,
-                                         kPremul_SkAlphaType),
-                       &pixels, 8, 0, 0));
+  ASSERT_TRUE(newImageBitmap->bitmapImage()->imageForCurrentFrame()->readPixels(
+      SkImageInfo::Make(2, 1, kRGBA_8888_SkColorType, kPremul_SkAlphaType),
+      &pixels, 8, 0, 0));
   ASSERT_THAT(pixels, ::testing::ElementsAre(255, 0, 0, 255, 0, 255, 0, 255));
 }
 
@@ -475,8 +483,8 @@ TEST(V8ScriptValueSerializerTest, TransferImageBitmap) {
 
   // Check that the pixel at (3, 3) is red.
   uint8_t pixel[4] = {};
-  sk_sp<SkImage> newImage = newImageBitmap->bitmapImage()->imageForCurrentFrame(
-      ColorBehavior::transformToTargetForTesting());
+  sk_sp<SkImage> newImage =
+      newImageBitmap->bitmapImage()->imageForCurrentFrame();
   ASSERT_TRUE(newImage->readPixels(
       SkImageInfo::Make(1, 1, kRGBA_8888_SkColorType, kPremul_SkAlphaType),
       &pixel, 4, 3, 3));
@@ -1026,6 +1034,22 @@ TEST(V8ScriptValueSerializerTest, RoundTripCompositorProxy) {
             newProxy->compositorMutableProperties());
 }
 
+TEST(V8ScriptValueSerializerTest, CompositorProxyBadElementDeserialization) {
+  ScopedEnableCompositorWorker enableCompositorWorker;
+  V8TestingScope scope;
+
+  // Normally a CompositorProxy will not be constructed with an element id of 0,
+  // but we force it here to test the deserialization code.
+  uint8_t elementId = 0;
+  uint8_t mutableProperties = CompositorMutableProperty::kOpacity;
+  RefPtr<SerializedScriptValue> input = serializedValue(
+      {0xff, 0x09, 0x3f, 0x00, 0x43, elementId, mutableProperties, 0x00});
+  v8::Local<v8::Value> result =
+      V8ScriptValueDeserializer(scope.getScriptState(), input).deserialize();
+
+  EXPECT_TRUE(result->IsNull());
+}
+
 // Decode tests aren't included here because they're slightly non-trivial (an
 // element with the right ID must actually exist) and this feature is both
 // unshipped and likely to not use this mechanism when it does.
@@ -1037,6 +1061,19 @@ TEST(V8ScriptValueSerializerTest, DecodeHardcodedNullValue) {
                                         SerializedScriptValue::nullValue())
                   .deserialize()
                   ->IsNull());
+}
+
+// This is not the most efficient way to write a small version, but it's
+// technically admissible. We should handle this in a consistent way to avoid
+// DCHECK failure. Thus this is "true" encoded slightly strangely.
+TEST(V8ScriptValueSerializerTest, DecodeWithInefficientVersionEnvelope) {
+  V8TestingScope scope;
+  RefPtr<SerializedScriptValue> input =
+      serializedValue({0xff, 0x80, 0x09, 0xff, 0x09, 0x54});
+  EXPECT_TRUE(
+      V8ScriptValueDeserializer(scope.getScriptState(), std::move(input))
+          .deserialize()
+          ->IsTrue());
 }
 
 }  // namespace

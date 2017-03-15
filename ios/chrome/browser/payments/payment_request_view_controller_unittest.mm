@@ -10,10 +10,11 @@
 #include "components/autofill/core/browser/autofill_test_utils.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/test_personal_data_manager.h"
+#include "components/strings/grit/components_strings.h"
+#import "ios/chrome/browser/payments/cells/autofill_profile_item.h"
 #import "ios/chrome/browser/payments/cells/page_info_item.h"
 #import "ios/chrome/browser/payments/cells/payment_method_item.h"
 #import "ios/chrome/browser/payments/cells/price_item.h"
-#import "ios/chrome/browser/payments/cells/shipping_address_item.h"
 #include "ios/chrome/browser/payments/payment_request.h"
 #include "ios/chrome/browser/payments/payment_request_test_util.h"
 #import "ios/chrome/browser/ui/autofill/cells/status_item.h"
@@ -23,6 +24,10 @@
 #include "ios/chrome/grit/ios_strings.h"
 #include "ios/web/public/payments/payment_request.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 class PaymentRequestViewControllerTest : public CollectionViewControllerTest {
  protected:
@@ -64,12 +69,12 @@ class PaymentRequestViewControllerTest : public CollectionViewControllerTest {
 TEST_F(PaymentRequestViewControllerTest, TestModel) {
   CreateController();
   CheckController();
-  CheckTitleWithId(IDS_IOS_PAYMENT_REQUEST_TITLE);
+  CheckTitleWithId(IDS_PAYMENTS_TITLE);
 
   [GetPaymentRequestViewController() loadModel];
 
   // There should be three sections in total. Summary, Shipping, and Payment.
-  ASSERT_EQ(3, NumberOfSections());
+  ASSERT_EQ(4, NumberOfSections());
 
   // The only item in the Summary section should be of type PriceItem.
   ASSERT_EQ(1U, static_cast<unsigned int>(NumberOfItemsInSection(0)));
@@ -82,10 +87,10 @@ TEST_F(PaymentRequestViewControllerTest, TestModel) {
   // There should be two items in the Shipping section.
   ASSERT_EQ(2U, static_cast<unsigned int>(NumberOfItemsInSection(1)));
 
-  // The first one should be of type ShippingAddressItem.
+  // The first one should be of type AutofillProfileItem.
   item = GetCollectionViewItem(1, 0);
-  EXPECT_TRUE([item isMemberOfClass:[ShippingAddressItem class]]);
-  ShippingAddressItem* shipping_address_item = item;
+  EXPECT_TRUE([item isMemberOfClass:[AutofillProfileItem class]]);
+  AutofillProfileItem* shipping_address_item = item;
   EXPECT_EQ(MDCCollectionViewCellAccessoryDisclosureIndicator,
             shipping_address_item.accessoryType);
 
@@ -100,6 +105,12 @@ TEST_F(PaymentRequestViewControllerTest, TestModel) {
   ASSERT_EQ(1U, static_cast<unsigned int>(NumberOfItemsInSection(2)));
   item = GetCollectionViewItem(2, 0);
   EXPECT_TRUE([item isMemberOfClass:[PaymentMethodItem class]]);
+
+  // The only item in the Contact info section should be of type
+  // AutofillProfileItem.
+  ASSERT_EQ(1U, static_cast<unsigned int>(NumberOfItemsInSection(3)));
+  item = GetCollectionViewItem(3, 0);
+  EXPECT_TRUE([item isMemberOfClass:[AutofillProfileItem class]]);
 }
 
 // Tests that the correct items are displayed after loading the model, when
@@ -176,4 +187,22 @@ TEST_F(PaymentRequestViewControllerTest, TestModelNoSelectedPaymentMethod) {
   EXPECT_TRUE([item isMemberOfClass:[CollectionViewDetailItem class]]);
   CollectionViewDetailItem* detail_item = item;
   EXPECT_EQ(MDCCollectionViewCellAccessoryNone, detail_item.accessoryType);
+}
+
+// Tests that the correct items are displayed after loading the model, when
+// the view is in pending state.
+TEST_F(PaymentRequestViewControllerTest, TestModelPendingState) {
+  CreateController();
+  CheckController();
+
+  [GetPaymentRequestViewController() setPending:YES];
+  [GetPaymentRequestViewController() loadModel];
+
+  ASSERT_EQ(1, NumberOfSections());
+  // There should be only one item.
+  ASSERT_EQ(1U, static_cast<unsigned int>(NumberOfItemsInSection(0)));
+
+  // The item should be of type StatusItem.
+  id item = GetCollectionViewItem(0, 0);
+  EXPECT_TRUE([item isMemberOfClass:[StatusItem class]]);
 }

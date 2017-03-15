@@ -64,7 +64,7 @@ class BrowserCompositorMac : public cc::BeginFrameObserver,
   void SwapCompositorFrame(uint32_t compositor_frame_sink_id,
                            cc::CompositorFrame frame);
   void SetHasTransparentBackground(bool transparent);
-  void SetDisplayColorSpace(const gfx::ColorSpace& color_space);
+  void SetDisplayColorProfile(const gfx::ICCProfile& icc_profile);
   void UpdateVSyncParameters(const base::TimeTicks& timebase,
                              const base::TimeDelta& interval);
   void SetNeedsBeginFrames(bool needs_begin_frames);
@@ -90,7 +90,7 @@ class BrowserCompositorMac : public cc::BeginFrameObserver,
                                   SkColorType preferred_color_type);
   void CopyFromCompositingSurfaceToVideoFrame(
       const gfx::Rect& src_subrect,
-      const scoped_refptr<media::VideoFrame>& target,
+      scoped_refptr<media::VideoFrame> target,
       const base::Callback<void(const gfx::Rect&, bool)>& callback);
 
   // Indicate that the recyclable compositor should be destroyed, and no future

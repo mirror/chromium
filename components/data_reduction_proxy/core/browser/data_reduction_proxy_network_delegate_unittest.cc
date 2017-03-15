@@ -12,11 +12,13 @@
 #include <utility>
 
 #include "base/command_line.h"
+#include "base/files/file_util.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/field_trial.h"
 #include "base/numerics/safe_conversions.h"
+#include "base/path_service.h"
 #include "base/run_loop.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
@@ -57,6 +59,7 @@
 #include "net/test/test_data_directory.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_job_factory_impl.h"
+#include "net/url_request/url_request_status.h"
 #include "net/url_request/url_request_test_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
@@ -101,11 +104,11 @@ class TestLoFiDecider : public LoFiDecider {
         ignore_is_using_data_reduction_proxy_check_(false) {}
   ~TestLoFiDecider() override {}
 
-  bool IsUsingLoFiMode(const net::URLRequest& request) const override {
+  bool IsUsingLoFi(const net::URLRequest& request) const override {
     return should_request_lofi_resource_;
   }
 
-  void SetIsUsingLoFiMode(bool should_request_lofi_resource) {
+  void SetIsUsingLoFi(bool should_request_lofi_resource) {
     should_request_lofi_resource_ = should_request_lofi_resource;
   }
 
@@ -180,7 +183,13 @@ class TestLoFiUIService : public LoFiUIService {
 class DataReductionProxyNetworkDelegateTest : public testing::Test {
  public:
   DataReductionProxyNetworkDelegateTest()
-      : context_(true), context_storage_(&context_) {}
+      : context_(true),
+        context_storage_(&context_),
+        ssl_socket_data_provider_(net::ASYNC, net::OK) {
+    ssl_socket_data_provider_.next_proto = net::kProtoHTTP11;
+    ssl_socket_data_provider_.cert = net::ImportCertFromFile(
+        net::GetTestCertsDirectory(), "unittest.selfsigned.der");
+  }
 
   void Init(bool use_secure_proxy, bool enable_brotli_globally) {
     net::ProxyServer proxy_server =
@@ -213,9 +222,83 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
     test_context_->io_data()->set_lofi_ui_service(std::move(lofi_ui_service));
 
     context_.set_enable_brotli(enable_brotli_globally);
+    context_.set_network_quality_estimator(&test_network_quality_estimator_);
     context_.Init();
 
     test_context_->EnableDataReductionProxyWithSecureProxyCheckSuccess();
+  }
+
+  // Build the sockets by adding appropriate mock data for
+  // |effective_connection_types.size()| number of requests. Data for
+  // chrome-Proxy-ect header is added to the mock data if |expect_ect_header|
+  // is true. |reads_list|, |mock_writes| and |writes_list| should be empty, and
+  // are owned by the caller.
+  void BuildSocket(const std::string& response_headers,
+                   const std::string& response_body,
+                   bool expect_ect_header,
+                   const std::vector<net::EffectiveConnectionType>&
+                       effective_connection_types,
+                   std::vector<net::MockRead>* reads_list,
+                   std::vector<std::string>* mock_writes,
+                   std::vector<net::MockWrite>* writes_list) {
+    EXPECT_LT(0u, effective_connection_types.size());
+    EXPECT_TRUE(reads_list->empty());
+    EXPECT_TRUE(mock_writes->empty());
+    EXPECT_TRUE(writes_list->empty());
+
+    for (size_t i = 0; i < effective_connection_types.size(); ++i) {
+      reads_list->push_back(net::MockRead(response_headers.c_str()));
+      reads_list->push_back(net::MockRead(response_body.c_str()));
+    }
+    reads_list->push_back(net::MockRead(net::SYNCHRONOUS, net::OK));
+
+    std::string prefix = std::string("GET ")
+                             .append(kTestURL)
+                             .append(" HTTP/1.1\r\n")
+                             .append("Host: ")
+                             .append(GURL(kTestURL).host())
+                             .append(
+                                 "\r\n"
+                                 "Proxy-Connection: keep-alive\r\n"
+                                 "User-Agent:\r\n"
+                                 "Accept-Encoding: gzip, deflate\r\n"
+                                 "Accept-Language: en-us,fr\r\n");
+
+    if (io_data()->test_request_options()->GetHeaderValueForTesting().empty()) {
+      // Force regeneration of Chrome-Proxy header.
+      io_data()->test_request_options()->SetSecureSession("123");
+    }
+
+    EXPECT_FALSE(
+        io_data()->test_request_options()->GetHeaderValueForTesting().empty());
+
+    std::string suffix =
+        std::string("Chrome-Proxy: ") +
+        io_data()->test_request_options()->GetHeaderValueForTesting() +
+        std::string("\r\n\r\n");
+
+    mock_socket_factory_.AddSSLSocketDataProvider(&ssl_socket_data_provider_);
+
+    for (net::EffectiveConnectionType effective_connection_type :
+         effective_connection_types) {
+      std::string ect_header;
+      if (expect_ect_header) {
+        ect_header = "chrome-proxy-ect: " +
+                     std::string(net::GetNameForEffectiveConnectionType(
+                         effective_connection_type)) +
+                     "\r\n";
+      }
+
+      std::string mock_write = prefix + ect_header + suffix;
+      mock_writes->push_back(mock_write);
+      writes_list->push_back(net::MockWrite(mock_writes->back().c_str()));
+    }
+
+    EXPECT_FALSE(socket_);
+    socket_ = base::MakeUnique<net::StaticSocketDataProvider>(
+        reads_list->data(), reads_list->size(), writes_list->data(),
+        writes_list->size());
+    mock_socket_factory_.AddSocketDataProvider(socket_.get());
   }
 
   static void VerifyHeaders(bool expected_data_reduction_proxy_used,
@@ -227,12 +310,6 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
     headers.GetHeader(chrome_proxy_accept_transform_header(), &header_value);
     EXPECT_EQ(expected_data_reduction_proxy_used && expected_lofi_used,
               header_value.find("empty-image") != std::string::npos);
-  }
-
-  void VerifyWasLoFiModeActiveOnMainFrame(bool expected_value) {
-    test_context_->RunUntilIdle();
-    EXPECT_EQ(expected_value,
-              test_context_->settings()->WasLoFiModeActiveOnMainFrame());
   }
 
   void VerifyDidNotifyLoFiResponse(bool lofi_response) const {
@@ -280,6 +357,24 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
     return request;
   }
 
+  // Reads brotli encoded content to |encoded_brotli_buffer_|.
+  void ReadBrotliFile() {
+    // Get the path of data directory.
+    const size_t kDefaultBufferSize = 4096;
+    base::FilePath data_dir;
+    PathService::Get(base::DIR_SOURCE_ROOT, &data_dir);
+    data_dir = data_dir.AppendASCII("net");
+    data_dir = data_dir.AppendASCII("data");
+    data_dir = data_dir.AppendASCII("filter_unittests");
+
+    // Read data from the encoded file into buffer.
+    base::FilePath encoded_file_path;
+    encoded_file_path = data_dir.AppendASCII("google.br");
+    ASSERT_TRUE(
+        base::ReadFileToString(encoded_file_path, &encoded_brotli_buffer_));
+    ASSERT_GE(kDefaultBufferSize, encoded_brotli_buffer_.size());
+  }
+
   // Fetches a single URL request, verifies the correctness of Accept-Encoding
   // header, and verifies that the response is cached only if |expect_cached|
   // is set to true. Each line in |response_headers| should end with "\r\n" and
@@ -290,17 +385,21 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
                                       const std::string& response_headers,
                                       bool expect_cached,
                                       bool expect_brotli) {
+    test_network_quality_estimator()->set_effective_connection_type(
+        net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN);
     GURL url(kTestURL);
-    net::SSLSocketDataProvider ssl_socket_data_provider(net::ASYNC, net::OK);
 
     int response_body_size = 140;
-    const std::string response_body(
-        base::checked_cast<size_t>(response_body_size), ' ');
+    std::string response_body;
+    if (expect_brotli && !expect_cached) {
+      response_body = encoded_brotli_buffer_;
+      response_body_size = response_body.size();
+    } else {
+      response_body =
+          std::string(base::checked_cast<size_t>(response_body_size), ' ');
+    }
 
-    ssl_socket_data_provider.next_proto = net::kProtoHTTP11;
-    ssl_socket_data_provider.cert = net::ImportCertFromFile(
-        net::GetTestCertsDirectory(), "unittest.selfsigned.der");
-    mock_socket_factory_.AddSSLSocketDataProvider(&ssl_socket_data_provider);
+    mock_socket_factory_.AddSSLSocketDataProvider(&ssl_socket_data_provider_);
 
     net::MockRead reads[] = {net::MockRead(response_headers.c_str()),
                              net::MockRead(response_body.c_str()),
@@ -326,6 +425,10 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
                                          "User-Agent:\r\n");
 
     std::string accept_language_header("Accept-Language: en-us,fr\r\n");
+    std::string ect_header = "chrome-proxy-ect: " +
+                             std::string(net::GetNameForEffectiveConnectionType(
+                                 net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN)) +
+                             "\r\n";
 
     // Brotli is included in accept-encoding header only if the request went
     // to the network (i.e., it was not a cached response), and if data
@@ -341,13 +444,14 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
         std::string("\r\n\r\n");
 
     std::string mock_write = prefix_headers + accept_language_header +
-                             accept_encoding_header + suffix_headers;
+                             ect_header + accept_encoding_header +
+                             suffix_headers;
 
     if (expect_cached || !expect_brotli) {
       // Order of headers is different if the headers were modified by data
       // reduction proxy network delegate.
       mock_write = prefix_headers + accept_encoding_header +
-                   accept_language_header + suffix_headers;
+                   accept_language_header + ect_header + suffix_headers;
     }
 
     net::MockWrite writes[] = {net::MockWrite(mock_write.c_str())};
@@ -364,6 +468,8 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
     request->Start();
     base::RunLoop().RunUntilIdle();
 
+    EXPECT_EQ(0, request->status().ToNetError());
+
     if (!expect_cached) {
       EXPECT_EQ(response_body_size,
                 request->received_response_content_length());
@@ -373,6 +479,10 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
       VerifyBrotliPresent(request.get(), expect_brotli);
     } else {
       EXPECT_TRUE(request->was_cached());
+      std::string content_encoding_value;
+      request->GetResponseHeaderByName("Content-Encoding",
+                                       &content_encoding_value);
+      EXPECT_EQ(expect_brotli, content_encoding_value == "br");
     }
   }
 
@@ -383,13 +493,64 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
     EXPECT_TRUE(request_headers_sent.GetHeader("Accept-Encoding",
                                                &accept_encoding_value));
     EXPECT_NE(std::string::npos, accept_encoding_value.find("gzip"));
+
+    std::string content_encoding_value;
+    request->GetResponseHeaderByName("Content-Encoding",
+                                     &content_encoding_value);
+
     if (expect_brotli) {
       // Brotli should be the last entry in the Accept-Encoding header.
       EXPECT_EQ(accept_encoding_value.length() - 2,
                 accept_encoding_value.find("br"));
+      EXPECT_EQ("br", content_encoding_value);
     } else {
       EXPECT_EQ(std::string::npos, accept_encoding_value.find("br"));
     }
+  }
+
+  // Fetches a request while the effective connection type is set to
+  // |effective_connection_type|. Verifies that the request headers include the
+  // chrome-proxy-ect header only if |expect_ect_header| is true. The response
+  // must be served from the cache if |expect_cached| is true.
+  void FetchURLRequestAndVerifyECTHeader(
+      net::EffectiveConnectionType effective_connection_type,
+      bool expect_ect_header,
+      bool expect_cached) {
+    test_network_quality_estimator()->set_effective_connection_type(
+        effective_connection_type);
+
+    net::TestDelegate delegate;
+    std::unique_ptr<net::URLRequest> request =
+        context_.CreateRequest(GURL(kTestURL), net::IDLE, &delegate);
+
+    request->Start();
+    base::RunLoop().RunUntilIdle();
+
+    EXPECT_EQ(140, request->received_response_content_length());
+    EXPECT_EQ(expect_cached, request->was_cached());
+    EXPECT_EQ(expect_cached, request->GetTotalSentBytes() == 0);
+    EXPECT_EQ(expect_cached, request->GetTotalReceivedBytes() == 0);
+
+    net::HttpRequestHeaders sent_request_headers;
+    EXPECT_NE(expect_cached,
+              request->GetFullRequestHeaders(&sent_request_headers));
+
+    if (expect_cached) {
+      // Request headers are missing. Return since there is nothing left to
+      // check.
+      return;
+    }
+
+    // Verify that chrome-proxy-ect header is present in the request headers
+    // only if |expect_ect_header| is true.
+    std::string ect_value;
+    EXPECT_EQ(expect_ect_header, sent_request_headers.GetHeader(
+                                     chrome_proxy_ect_header(), &ect_value));
+
+    if (!expect_ect_header)
+      return;
+    EXPECT_EQ(net::GetNameForEffectiveConnectionType(effective_connection_type),
+              ect_value);
   }
 
   void DelegateStageDone(int result) {}
@@ -436,6 +597,10 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
 
   TestLoFiDecider* lofi_decider() const { return lofi_decider_; }
 
+  net::TestNetworkQualityEstimator* test_network_quality_estimator() {
+    return &test_network_quality_estimator_;
+  }
+
  private:
   base::MessageLoopForIO message_loop_;
   net::MockClientSocketFactory mock_socket_factory_;
@@ -446,6 +611,14 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
   TestLoFiDecider* lofi_decider_;
   TestLoFiUIService* lofi_ui_service_;
   std::unique_ptr<DataReductionProxyTestContext> test_context_;
+  net::TestNetworkQualityEstimator test_network_quality_estimator_;
+
+  net::SSLSocketDataProvider ssl_socket_data_provider_;
+
+  std::unique_ptr<net::StaticSocketDataProvider> socket_;
+
+  // Encoded Brotli content read from a file. May be empty.
+  std::string encoded_brotli_buffer_;
 };
 
 TEST_F(DataReductionProxyNetworkDelegateTest, AuthenticationTest) {
@@ -529,16 +702,15 @@ TEST_F(DataReductionProxyNetworkDelegateTest, LoFiTransitions) {
       std::unique_ptr<net::URLRequest> fake_request =
           context()->CreateRequest(GURL(kTestURL), net::IDLE, &delegate);
       fake_request->SetLoadFlags(net::LOAD_MAIN_FRAME_DEPRECATED);
-      lofi_decider()->SetIsUsingLoFiMode(
-          config()->ShouldEnableLoFiMode(*fake_request.get()));
+      lofi_decider()->SetIsUsingLoFi(
+          config()->ShouldEnableLoFi(*fake_request.get()));
       NotifyNetworkDelegate(fake_request.get(), data_reduction_proxy_info,
                             proxy_retry_info, &headers);
 
       VerifyHeaders(tests[i].is_data_reduction_proxy, true, headers);
-      VerifyWasLoFiModeActiveOnMainFrame(tests[i].is_data_reduction_proxy);
       VerifyDataReductionProxyData(
           *fake_request, tests[i].is_data_reduction_proxy,
-          config()->ShouldEnableLoFiMode(*fake_request.get()));
+          config()->ShouldEnableLoFi(*fake_request.get()));
     }
 
     {
@@ -548,13 +720,10 @@ TEST_F(DataReductionProxyNetworkDelegateTest, LoFiTransitions) {
       net::TestDelegate delegate;
       std::unique_ptr<net::URLRequest> fake_request =
           context()->CreateRequest(GURL(kTestURL), net::IDLE, &delegate);
-      lofi_decider()->SetIsUsingLoFiMode(false);
+      lofi_decider()->SetIsUsingLoFi(false);
       NotifyNetworkDelegate(fake_request.get(), data_reduction_proxy_info,
                             proxy_retry_info, &headers);
       VerifyHeaders(tests[i].is_data_reduction_proxy, false, headers);
-      // Not a mainframe request, WasLoFiModeActiveOnMainFrame should still be
-      // true if the proxy is a Data Reduction Proxy.
-      VerifyWasLoFiModeActiveOnMainFrame(tests[i].is_data_reduction_proxy);
       VerifyDataReductionProxyData(*fake_request,
                                    tests[i].is_data_reduction_proxy, false);
     }
@@ -567,13 +736,10 @@ TEST_F(DataReductionProxyNetworkDelegateTest, LoFiTransitions) {
       std::unique_ptr<net::URLRequest> fake_request =
           context()->CreateRequest(GURL(kTestURL), net::IDLE, &delegate);
 
-      lofi_decider()->SetIsUsingLoFiMode(true);
+      lofi_decider()->SetIsUsingLoFi(true);
       NotifyNetworkDelegate(fake_request.get(), data_reduction_proxy_info,
                             proxy_retry_info, &headers);
       VerifyHeaders(tests[i].is_data_reduction_proxy, true, headers);
-      // Not a mainframe request, WasLoFiModeActiveOnMainFrame should still be
-      // true if the proxy is a Data Reduction Proxy.
-      VerifyWasLoFiModeActiveOnMainFrame(tests[i].is_data_reduction_proxy);
       VerifyDataReductionProxyData(*fake_request,
                                    tests[i].is_data_reduction_proxy, true);
     }
@@ -587,11 +753,10 @@ TEST_F(DataReductionProxyNetworkDelegateTest, LoFiTransitions) {
       std::unique_ptr<net::URLRequest> fake_request =
           context()->CreateRequest(GURL(kTestURL), net::IDLE, &delegate);
       fake_request->SetLoadFlags(net::LOAD_MAIN_FRAME_DEPRECATED);
-      lofi_decider()->SetIsUsingLoFiMode(false);
+      lofi_decider()->SetIsUsingLoFi(false);
       NotifyNetworkDelegate(fake_request.get(), data_reduction_proxy_info,
                             proxy_retry_info, &headers);
       VerifyHeaders(tests[i].is_data_reduction_proxy, false, headers);
-      VerifyWasLoFiModeActiveOnMainFrame(false);
       VerifyDataReductionProxyData(*fake_request,
                                    tests[i].is_data_reduction_proxy, false);
     }
@@ -603,13 +768,10 @@ TEST_F(DataReductionProxyNetworkDelegateTest, LoFiTransitions) {
       net::TestDelegate delegate;
       std::unique_ptr<net::URLRequest> fake_request =
           context()->CreateRequest(GURL(kTestURL), net::IDLE, &delegate);
-      lofi_decider()->SetIsUsingLoFiMode(false);
+      lofi_decider()->SetIsUsingLoFi(false);
       NotifyNetworkDelegate(fake_request.get(), data_reduction_proxy_info,
                             proxy_retry_info, &headers);
       VerifyHeaders(tests[i].is_data_reduction_proxy, false, headers);
-      // Not a mainframe request, WasLoFiModeActiveOnMainFrame should still be
-      // false.
-      VerifyWasLoFiModeActiveOnMainFrame(false);
       VerifyDataReductionProxyData(*fake_request,
                                    tests[i].is_data_reduction_proxy, false);
     }
@@ -622,15 +784,13 @@ TEST_F(DataReductionProxyNetworkDelegateTest, LoFiTransitions) {
       std::unique_ptr<net::URLRequest> fake_request =
           context()->CreateRequest(GURL(kTestURL), net::IDLE, &delegate);
       fake_request->SetLoadFlags(net::LOAD_MAIN_FRAME_DEPRECATED);
-      lofi_decider()->SetIsUsingLoFiMode(
-          config()->ShouldEnableLoFiMode(*fake_request.get()));
+      lofi_decider()->SetIsUsingLoFi(
+          config()->ShouldEnableLoFi(*fake_request.get()));
       NotifyNetworkDelegate(fake_request.get(), data_reduction_proxy_info,
                             proxy_retry_info, &headers);
-      VerifyHeaders(tests[i].is_data_reduction_proxy, true, headers);
-      VerifyWasLoFiModeActiveOnMainFrame(tests[i].is_data_reduction_proxy);
       VerifyDataReductionProxyData(
           *fake_request, tests[i].is_data_reduction_proxy,
-          config()->ShouldEnableLoFiMode(*fake_request.get()));
+          config()->ShouldEnableLoFi(*fake_request.get()));
     }
   }
 }
@@ -674,16 +834,14 @@ TEST_F(DataReductionProxyNetworkDelegateTest, RequestDataConfigurations) {
     net::HttpRequestHeaders headers;
     net::ProxyRetryInfoMap proxy_retry_info;
 
-    net::TestNetworkQualityEstimator test_network_quality_estimator;
-    test_network_quality_estimator.set_effective_connection_type(
+    test_network_quality_estimator()->set_effective_connection_type(
         net::EFFECTIVE_CONNECTION_TYPE_OFFLINE);
-    context()->set_network_quality_estimator(&test_network_quality_estimator);
 
     std::unique_ptr<net::URLRequest> request = context()->CreateRequest(
         GURL(kTestURL), net::RequestPriority::IDLE, nullptr);
     request->SetLoadFlags(test.main_frame ? net::LOAD_MAIN_FRAME_DEPRECATED
                                           : 0);
-    lofi_decider()->SetIsUsingLoFiMode(test.lofi_on);
+    lofi_decider()->SetIsUsingLoFi(test.lofi_on);
     io_data()->request_options()->SetSecureSession("fake-session");
     network_delegate()->NotifyBeforeSendHeaders(
         request.get(), data_reduction_proxy_info, proxy_retry_info, &headers);
@@ -763,15 +921,13 @@ TEST_F(DataReductionProxyNetworkDelegateTest, RedirectRequestDataCleared) {
   net::HttpRequestHeaders headers;
   net::ProxyRetryInfoMap proxy_retry_info;
 
-  net::TestNetworkQualityEstimator test_network_quality_estimator;
-  test_network_quality_estimator.set_effective_connection_type(
+  test_network_quality_estimator()->set_effective_connection_type(
       net::EFFECTIVE_CONNECTION_TYPE_OFFLINE);
-  context()->set_network_quality_estimator(&test_network_quality_estimator);
 
   std::unique_ptr<net::URLRequest> request = context()->CreateRequest(
       GURL(kTestURL), net::RequestPriority::IDLE, nullptr);
   request->SetLoadFlags(net::LOAD_MAIN_FRAME_DEPRECATED);
-  lofi_decider()->SetIsUsingLoFiMode(true);
+  lofi_decider()->SetIsUsingLoFi(true);
   io_data()->request_options()->SetSecureSession("fake-session");
   network_delegate()->NotifyBeforeSendHeaders(
       request.get(), data_reduction_proxy_info, proxy_retry_info, &headers);
@@ -917,8 +1073,8 @@ TEST_F(DataReductionProxyNetworkDelegateTest, NetHistograms) {
           switches::kDataReductionProxyLoFiValueAlwaysOn);
     }
 
-    lofi_decider()->SetIsUsingLoFiMode(
-        config()->ShouldEnableLoFiMode(*fake_request.get()));
+    lofi_decider()->SetIsUsingLoFi(
+        config()->ShouldEnableLoFi(*fake_request.get()));
 
     fake_request = (FetchURLRequest(GURL(kTestURL), nullptr, response_headers,
                                     kResponseContentLength));
@@ -1013,6 +1169,8 @@ TEST_F(DataReductionProxyNetworkDelegateTest,
        BrotliAdvertisement_BrotliDisabled) {
   Init(true /* use_secure_proxy */, false /* enable_brotli_globally */);
 
+  ReadBrotliFile();
+
   std::string response_headers =
       "HTTP/1.1 200 OK\r\n"
       "Content-Length: 140\r\n"
@@ -1083,15 +1241,98 @@ TEST_F(DataReductionProxyNetworkDelegateTest, BrotliAdvertisement) {
 
   std::string response_headers =
       "HTTP/1.1 200 OK\r\n"
-      "Content-Length: 140\r\n"
       "Via: 1.1 Chrome-Compression-Proxy\r\n"
       "x-original-content-length: 200\r\n"
       "Cache-Control: max-age=1200\r\n"
+      "Content-Encoding: br\r\n"
       "Vary: accept-encoding\r\n";
   response_headers += "\r\n";
 
   FetchURLRequestAndVerifyBrotli(nullptr, response_headers, false, true);
   FetchURLRequestAndVerifyBrotli(nullptr, response_headers, true, true);
+}
+
+// Test that effective connection type is correctly added to the request
+// headers when it is enabled using field trial. The server is varying on the
+// effective connection type (ECT).
+TEST_F(DataReductionProxyNetworkDelegateTest, ECTHeaderEnabledWithVary) {
+  Init(true /* use_secure_proxy */, false /* enable_brotli_globally */);
+
+  std::string response_headers =
+      "HTTP/1.1 200 OK\r\n"
+      "Content-Length: 140\r\n"
+      "Via: 1.1 Chrome-Compression-Proxy\r\n"
+      "Cache-Control: max-age=1200\r\n"
+      "Vary: chrome-proxy-ect\r\n"
+      "x-original-content-length: 200\r\n\r\n";
+
+  int response_body_size = 140;
+  std::string response_body(base::checked_cast<size_t>(response_body_size),
+                            ' ');
+
+  std::vector<net::MockRead> reads_list;
+  std::vector<std::string> mock_writes;
+  std::vector<net::MockWrite> writes_list;
+
+  std::vector<net::EffectiveConnectionType> effective_connection_types;
+  effective_connection_types.push_back(net::EFFECTIVE_CONNECTION_TYPE_SLOW_2G);
+  effective_connection_types.push_back(net::EFFECTIVE_CONNECTION_TYPE_2G);
+
+  BuildSocket(response_headers, response_body, true, effective_connection_types,
+              &reads_list, &mock_writes, &writes_list);
+
+  // Add 2 socket providers since 2 requests in this test are fetched from the
+  // network.
+  FetchURLRequestAndVerifyECTHeader(effective_connection_types[0], true, false);
+
+  // When the ECT is set to the same value, fetching the same resource should
+  // result in a cache hit.
+  FetchURLRequestAndVerifyECTHeader(effective_connection_types[0], true, true);
+
+  // When the ECT is set to a different value, the response should not be
+  // served from the cache.
+  FetchURLRequestAndVerifyECTHeader(effective_connection_types[1], true, false);
+}
+
+// Test that effective connection type is correctly added to the request
+// headers when it is enabled using field trial. The server is not varying on
+// the effective connection type (ECT).
+TEST_F(DataReductionProxyNetworkDelegateTest, ECTHeaderEnabledWithoutVary) {
+  Init(true /* use_secure_proxy */, false /* enable_brotli_globally */);
+
+  std::string response_headers =
+      "HTTP/1.1 200 OK\r\n"
+      "Content-Length: 140\r\n"
+      "Via: 1.1 Chrome-Compression-Proxy\r\n"
+      "Cache-Control: max-age=1200\r\n"
+      "x-original-content-length: 200\r\n\r\n";
+
+  int response_body_size = 140;
+  std::string response_body(base::checked_cast<size_t>(response_body_size),
+                            ' ');
+
+  std::vector<net::MockRead> reads_list;
+  std::vector<std::string> mock_writes;
+  std::vector<net::MockWrite> writes_list;
+
+  std::vector<net::EffectiveConnectionType> effective_connection_types;
+  effective_connection_types.push_back(net::EFFECTIVE_CONNECTION_TYPE_SLOW_2G);
+  effective_connection_types.push_back(net::EFFECTIVE_CONNECTION_TYPE_2G);
+
+  BuildSocket(response_headers, response_body, true, effective_connection_types,
+              &reads_list, &mock_writes, &writes_list);
+
+  // Add 1 socket provider since 1 request in this test is fetched from the
+  // network.
+  FetchURLRequestAndVerifyECTHeader(effective_connection_types[0], true, false);
+
+  // When the ECT is set to the same value, fetching the same resource should
+  // result in a cache hit.
+  FetchURLRequestAndVerifyECTHeader(effective_connection_types[0], true, true);
+
+  // When the ECT is set to a different value, the response should still be
+  // served from the cache.
+  FetchURLRequestAndVerifyECTHeader(effective_connection_types[1], true, true);
 }
 
 }  // namespace

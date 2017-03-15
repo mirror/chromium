@@ -75,7 +75,6 @@
 #include "chrome/browser/supervised_user/child_accounts/child_account_service.h"
 #include "chrome/browser/supervised_user/child_accounts/child_account_service_factory.h"
 #include "chrome/browser/ui/app_list/app_list_service.h"
-#include "chrome/browser/ui/ash/ash_util.h"
 #include "chrome/browser/ui/startup/startup_browser_creator.h"
 #include "chrome/common/channel_info.h"
 #include "chrome/common/chrome_switches.h"
@@ -1435,15 +1434,14 @@ void UserSessionManager::InitRlzImpl(Profile* profile, bool disabled) {
     local_state->SetBoolean(prefs::kRLZDisabled, disabled);
   }
   // Init the RLZ library.
-  int ping_delay = profile->GetPrefs()->GetInteger(
-      ::first_run::GetPingDelayPrefName().c_str());
+  int ping_delay = profile->GetPrefs()->GetInteger(prefs::kRlzPingDelaySeconds);
   // Negative ping delay means to send ping immediately after a first search is
   // recorded.
   rlz::RLZTracker::SetRlzDelegate(
       base::WrapUnique(new ChromeRLZTrackerDelegate));
   rlz::RLZTracker::InitRlzDelayed(
       user_manager::UserManager::Get()->IsCurrentUserNew(), ping_delay < 0,
-      base::TimeDelta::FromMilliseconds(abs(ping_delay)),
+      base::TimeDelta::FromSeconds(abs(ping_delay)),
       ChromeRLZTrackerDelegate::IsGoogleDefaultSearch(profile),
       ChromeRLZTrackerDelegate::IsGoogleHomepage(profile),
       ChromeRLZTrackerDelegate::IsGoogleInStartpages(profile));
@@ -1775,11 +1773,12 @@ void UserSessionManager::DoBrowserLaunchInternal(Profile* profile,
   if (HatsNotificationController::ShouldShowSurveyToProfile(profile))
     hats_notification_controller_ = new HatsNotificationController(profile);
 
-  if (QuickUnlockNotificationController::ShouldShow(profile) &&
+  if (quick_unlock::QuickUnlockNotificationController::
+          ShouldShowPinNotification(profile) &&
       quick_unlock_notification_handler_.find(profile) ==
           quick_unlock_notification_handler_.end()) {
     auto* qu_feature_notification_controller =
-        new QuickUnlockNotificationController(profile);
+        quick_unlock::QuickUnlockNotificationController::CreateForPin(profile);
     quick_unlock_notification_handler_.insert(
         std::make_pair(profile, qu_feature_notification_controller));
   }

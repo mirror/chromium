@@ -71,8 +71,8 @@ void ExecuteStubGetSession(int* count,
   std::unique_ptr<base::DictionaryValue> capabilities(
       new base::DictionaryValue());
 
-  capabilities->Set("capability1", new base::StringValue("test1"));
-  capabilities->Set("capability2", new base::StringValue("test2"));
+  capabilities->Set("capability1", new base::Value("test1"));
+  capabilities->Set("capability2", new base::Value("test2"));
 
   callback.Run(Status(kOk), std::move(capabilities), session_id, false);
 }
@@ -234,7 +234,7 @@ TEST(CommandsTest, ExecuteSessionCommand) {
 
   base::DictionaryValue params;
   params.SetInteger("param", 5);
-  base::FundamentalValue expected_value(6);
+  base::Value expected_value(6);
   SessionCommand cmd = base::Bind(
       &ExecuteSimpleCommand, id, &params, &expected_value);
 

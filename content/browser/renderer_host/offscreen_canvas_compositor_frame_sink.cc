@@ -52,17 +52,6 @@ void OffscreenCanvasCompositorFrameSink::EvictFrame() {
   support_.EvictFrame();
 }
 
-void OffscreenCanvasCompositorFrameSink::Require(
-    const cc::LocalSurfaceId& local_surface_id,
-    const cc::SurfaceSequence& sequence) {
-  support_.Require(local_surface_id, sequence);
-}
-
-void OffscreenCanvasCompositorFrameSink::Satisfy(
-    const cc::SurfaceSequence& sequence) {
-  support_.Satisfy(sequence);
-}
-
 void OffscreenCanvasCompositorFrameSink::DidReceiveCompositorFrameAck() {
   if (client_)
     client_->DidReceiveCompositorFrameAck();
@@ -80,9 +69,11 @@ void OffscreenCanvasCompositorFrameSink::ReclaimResources(
     client_->ReclaimResources(resources);
 }
 
-void OffscreenCanvasCompositorFrameSink::WillDrawSurface() {
+void OffscreenCanvasCompositorFrameSink::WillDrawSurface(
+    const cc::LocalSurfaceId& local_surface_id,
+    const gfx::Rect& damage_rect) {
   if (client_)
-    client_->WillDrawSurface();
+    client_->WillDrawSurface(local_surface_id, damage_rect);
 }
 
 void OffscreenCanvasCompositorFrameSink::OnClientConnectionLost() {

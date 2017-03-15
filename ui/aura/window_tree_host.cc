@@ -16,6 +16,7 @@
 #include "ui/aura/window_tree_host_observer.h"
 #include "ui/base/ime/input_method.h"
 #include "ui/base/ime/input_method_factory.h"
+#include "ui/base/layout.h"
 #include "ui/base/view_prop.h"
 #include "ui/compositor/dip_util.h"
 #include "ui/compositor/layer.h"
@@ -35,10 +36,7 @@ const char kWindowTreeHostForAcceleratedWidget[] =
     "__AURA_WINDOW_TREE_HOST_ACCELERATED_WIDGET__";
 
 float GetDeviceScaleFactorFromDisplay(Window* window) {
-  display::Display display =
-      display::Screen::GetScreen()->GetDisplayNearestWindow(window);
-  DCHECK(display.is_valid());
-  return display.device_scale_factor();
+  return ui::GetScaleFactorForNativeView(window);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -260,8 +258,6 @@ void WindowTreeHost::CreateCompositor(const cc::FrameSinkId& frame_sink_id) {
     window()->Init(ui::LAYER_NOT_DRAWN);
     window()->set_host(this);
     window()->SetName("RootWindow");
-    window()->SetEventTargeter(
-        std::unique_ptr<ui::EventTargeter>(new WindowTargeter()));
     dispatcher_.reset(new WindowEventDispatcher(this));
   }
 }
@@ -270,8 +266,7 @@ void WindowTreeHost::InitCompositor() {
   compositor_->SetScaleAndSize(GetDeviceScaleFactorFromDisplay(window()),
                                GetBoundsInPixels().size());
   compositor_->SetRootLayer(window()->layer());
-  compositor_->SetDisplayColorSpace(
-      GetICCProfileForCurrentDisplay().GetColorSpace());
+  compositor_->SetDisplayColorProfile(GetICCProfileForCurrentDisplay());
 }
 
 void WindowTreeHost::OnAcceleratedWidgetAvailable() {

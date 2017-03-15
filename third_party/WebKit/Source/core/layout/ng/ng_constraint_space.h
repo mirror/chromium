@@ -6,16 +6,22 @@
 #define NGConstraintSpace_h
 
 #include "core/CoreExport.h"
-#include "core/layout/ng/ng_units.h"
+#include "core/layout/ng/geometry/ng_logical_offset.h"
+#include "core/layout/ng/geometry/ng_logical_size.h"
+#include "core/layout/ng/geometry/ng_margin_strut.h"
+#include "core/layout/ng/geometry/ng_physical_size.h"
+#include "core/layout/ng/ng_exclusion.h"
+#include "core/layout/ng/ng_layout_opportunity_iterator.h"
 #include "core/layout/ng/ng_writing_mode.h"
 #include "platform/heap/Handle.h"
+#include "platform/text/TextDirection.h"
 #include "wtf/Optional.h"
+#include "wtf/RefCounted.h"
 #include "wtf/text/WTFString.h"
 
 namespace blink {
 
 class LayoutBox;
-class NGBoxFragment;
 
 enum NGFragmentationType {
   kFragmentNone,
@@ -27,11 +33,11 @@ enum NGFragmentationType {
 // The NGConstraintSpace represents a set of constraints and available space
 // which a layout algorithm may produce a NGFragment within.
 class CORE_EXPORT NGConstraintSpace final
-    : public GarbageCollectedFinalized<NGConstraintSpace> {
+    : public RefCounted<NGConstraintSpace> {
  public:
   // This should live on NGBlockNode or another layout bridge and probably take
   // a root NGConstraintSpace.
-  static NGConstraintSpace* CreateFromLayoutObject(const LayoutBox&);
+  static RefPtr<NGConstraintSpace> CreateFromLayoutObject(const LayoutBox&);
 
   const std::shared_ptr<NGExclusions>& Exclusions() const {
     return exclusions_;
@@ -67,6 +73,11 @@ class CORE_EXPORT NGConstraintSpace final
   // Formatting Context.
   bool IsNewFormattingContext() const { return is_new_fc_; }
 
+  // Whether the fragment produced from layout should be anonymous, (e.g. it
+  // may be a column in a multi-column layout). In such cases it shouldn't have
+  // any borders or padding.
+  bool IsAnonymous() const { return is_anonymous_; }
+
   // Whether exceeding the AvailableSize() triggers the presence of a scrollbar
   // for the indicated direction.
   // If exceeded the current layout should be aborted and invoked again with a
@@ -84,7 +95,7 @@ class CORE_EXPORT NGConstraintSpace final
   // fragment that satisfies a fixed constraint in the inline and block
   // direction respectively.
   // If these flags are true, the AvailableSize() is interpreted as the fixed
-  // border-box size of this box in the resepective dimension.
+  // border-box size of this box in the respective dimension.
   bool IsFixedSizeInline() const { return is_fixed_size_inline_; }
 
   bool IsFixedSizeBlock() const { return is_fixed_size_block_; }
@@ -97,22 +108,25 @@ class CORE_EXPORT NGConstraintSpace final
   // blockSize if possible.
   NGFragmentationType BlockFragmentationType() const;
 
+  // Returns a pointer to already existing Layout Opportunity iterator
+  // associated with this constraint space and {@code iter_offset} or creates a
+  // new one.
+  NGLayoutOpportunityIterator* LayoutOpportunityIterator(
+      const NGLogicalOffset& iter_offset);
+
   // Return true if this contraint space participates in a fragmentation
   // context.
   bool HasBlockFragmentation() const {
     return BlockFragmentationType() != kFragmentNone;
   }
 
-  // Modifies constraint space to account for a placed fragment. Depending on
-  // the shape of the fragment this will either modify the inline or block
-  // size, or add an exclusion.
-  void Subtract(const NGBoxFragment*);
-
   NGMarginStrut MarginStrut() const { return margin_strut_; }
 
   NGLogicalOffset BfcOffset() const { return bfc_offset_; }
 
-  DEFINE_INLINE_VIRTUAL_TRACE() {}
+  WTF::Optional<LayoutUnit> ClearanceOffset() const {
+    return clearance_offset_;
+  }
 
   String ToString() const;
 
@@ -132,9 +146,11 @@ class CORE_EXPORT NGConstraintSpace final
                     bool is_block_direction_triggers_scrollbar,
                     NGFragmentationType block_direction_fragmentation_type,
                     bool is_new_fc,
+                    bool is_anonymous,
                     const NGMarginStrut& margin_strut,
                     const NGLogicalOffset& bfc_offset,
-                    const std::shared_ptr<NGExclusions>& exclusions);
+                    const std::shared_ptr<NGExclusions>& exclusions,
+                    const WTF::Optional<LayoutUnit>& clearance_offset);
 
   NGPhysicalSize InitialContainingBlockSize() const {
     return initial_containing_block_size_;
@@ -160,12 +176,16 @@ class CORE_EXPORT NGConstraintSpace final
   // formatting Context
   unsigned is_new_fc_ : 1;
 
+  unsigned is_anonymous_ : 1;
+
   unsigned writing_mode_ : 3;
   unsigned direction_ : 1;
 
   NGMarginStrut margin_strut_;
   NGLogicalOffset bfc_offset_;
   const std::shared_ptr<NGExclusions> exclusions_;
+  WTF::Optional<LayoutUnit> clearance_offset_;
+  std::unique_ptr<NGLayoutOpportunityIterator> layout_opp_iter_;
 };
 
 inline std::ostream& operator<<(std::ostream& stream,

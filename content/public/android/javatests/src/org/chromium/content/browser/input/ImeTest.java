@@ -4,6 +4,7 @@
 
 package org.chromium.content.browser.input;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -22,6 +23,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.content.browser.ContentViewCore;
@@ -109,7 +111,7 @@ public class ImeTest extends ContentShellTestBase {
 
         mCallbackContainer = new TestCallbackHelperContainer(mContentViewCore);
         DOMUtils.waitForNonZeroNodeBounds(mWebContents, "input_text");
-        boolean result = DOMUtils.clickNode(this, mContentViewCore, "input_text");
+        boolean result = DOMUtils.clickNode(mContentViewCore, "input_text");
 
         assertEquals("Failed to dispatch touch event.", true, result);
         assertWaitForKeyboardStatus(true);
@@ -147,7 +149,7 @@ public class ImeTest extends ContentShellTestBase {
         fullyLoadUrl(UrlUtils.getIsolatedTestFileUrl(INPUT_FORM_HTML));
         assertWaitForKeyboardStatus(false);
 
-        DOMUtils.clickNode(this, mContentViewCore, "input_text");
+        DOMUtils.clickNode(mContentViewCore, "input_text");
         assertWaitForKeyboardStatus(true);
 
         // Hide keyboard when navigating.
@@ -256,10 +258,42 @@ public class ImeTest extends ContentShellTestBase {
         waitAndVerifyUpdateSelection(2, 3, 3, 2, 3);
 
         // Unexpected selection change occurs, e.g., the user clicks on an area.
-        DOMUtils.clickNode(this, mContentViewCore, "textarea");
+        DOMUtils.clickNode(mContentViewCore, "textarea");
         waitAndVerifyUpdateSelection(3, 5, 5, 2, 3);
         // Keyboard app finishes composition. We emulate this in TestInputMethodManagerWrapper.
         waitAndVerifyUpdateSelection(4, 5, 5, -1, -1);
+    }
+
+    @SmallTest
+    @Feature({"TextInput", "Main"})
+    public void testDeleteSurroundingTextInCodePointsWithRangeSelection() throws Throwable {
+        final String trophy = "\uD83C\uDFC6";
+        commitText("ab" + trophy + "cdef" + trophy + "gh", 1);
+        waitAndVerifyUpdateSelection(0, 12, 12, -1, -1);
+
+        setSelection(6, 8);
+        waitAndVerifyUpdateSelection(1, 6, 8, -1, -1);
+        assertTextsAroundCursor("ab" + trophy + "cd", "ef", trophy + "gh");
+
+        deleteSurroundingTextInCodePoints(2, 2);
+        waitAndVerifyUpdateSelection(2, 4, 6, -1, -1);
+        assertTextsAroundCursor("ab" + trophy, "ef", "h");
+    }
+
+    @SmallTest
+    @Feature({"TextInput", "Main"})
+    public void testDeleteSurroundingTextInCodePointsWithCursorSelection() throws Throwable {
+        final String trophy = "\uD83C\uDFC6";
+        commitText("ab" + trophy + "cd" + trophy, 1);
+        waitAndVerifyUpdateSelection(0, 8, 8, -1, -1);
+
+        setSelection(4, 4);
+        waitAndVerifyUpdateSelection(1, 4, 4, -1, -1);
+        assertTextsAroundCursor("ab" + trophy, null, "cd" + trophy);
+
+        deleteSurroundingTextInCodePoints(2, 2);
+        waitAndVerifyUpdateSelection(2, 1, 1, -1, -1);
+        assertTextsAroundCursor("a", null, trophy);
     }
 
     @SmallTest
@@ -451,7 +485,7 @@ public class ImeTest extends ContentShellTestBase {
         commitText("hello", 1);
         waitAndVerifyUpdateSelection(0, 5, 5, -1, -1);
         restartInput();
-        DOMUtils.clickNode(this, mContentViewCore, "input_text");
+        DOMUtils.clickNode(mContentViewCore, "input_text");
         assertWaitForKeyboardStatus(true);
 
         assertEquals(5, mConnectionFactory.getOutAttrs().initialSelStart);
@@ -459,6 +493,7 @@ public class ImeTest extends ContentShellTestBase {
     }
 
     @SmallTest
+    @DisabledTest(message = "crbug.com/694812")
     @Feature({"TextInput"})
     public void testShowAndHideSoftInput() throws Exception {
         focusElement("input_radio", false);
@@ -492,16 +527,45 @@ public class ImeTest extends ContentShellTestBase {
         focusElement("input_text");
         // showSoftInput() on input_text. restartInput() on input_number1 due to focus change,
         // and restartInput() on input_text later.
-        // TODO(changwan): reduce unnecessary restart input.
-        waitForKeyboardStates(3, 1, 5, new Integer[] {
-                TextInputType.NUMBER, TextInputType.NUMBER, TextInputType.NUMBER,
-                TextInputType.TEXT});
+        waitForKeyboardStates(3, 1, 4,
+                new Integer[] {TextInputType.NUMBER, TextInputType.NUMBER, TextInputType.TEXT});
+
+        resetUpdateSelectionList();
+        setComposingText("a", 1);
+        waitAndVerifyUpdateSelection(0, 1, 1, 0, 1);
+        resetUpdateSelectionList();
+
+        // JavaScript changes focus.
+        String code = "(function() { "
+                + "var textarea = document.getElementById('textarea');"
+                + "textarea.focus();"
+                + "})();";
+        JavaScriptUtils.executeJavaScriptAndWaitForResult(
+                getContentViewCore().getWebContents(), code);
+        waitAndVerifyUpdateSelection(0, 0, 0, -1, -1);
+        resetUpdateSelectionList();
+
+        waitForKeyboardStates(4, 1, 5, new Integer[] {
+                TextInputType.NUMBER, TextInputType.NUMBER, TextInputType.TEXT,
+                TextInputType.TEXT_AREA});
+        assertEquals(0, mConnectionFactory.getOutAttrs().initialSelStart);
+        assertEquals(0, mConnectionFactory.getOutAttrs().initialSelEnd);
+
+        setComposingText("aa", 1);
+        waitAndVerifyUpdateSelection(0, 2, 2, 0, 2);
+
+        focusElement("input_text");
+        waitForKeyboardStates(5, 1, 6, new Integer[] {
+                TextInputType.NUMBER, TextInputType.NUMBER, TextInputType.TEXT,
+                TextInputType.TEXT_AREA, TextInputType.TEXT});
+        assertEquals(1, mConnectionFactory.getOutAttrs().initialSelStart);
+        assertEquals(1, mConnectionFactory.getOutAttrs().initialSelEnd);
 
         focusElement("input_radio", false);
         // hideSoftInput(), restartInput()
-        waitForKeyboardStates(3, 2, 6, new Integer[] {
-                TextInputType.NUMBER, TextInputType.NUMBER, TextInputType.NUMBER,
-                TextInputType.TEXT});
+        waitForKeyboardStates(5, 2, 7, new Integer[] {
+                TextInputType.NUMBER, TextInputType.NUMBER, TextInputType.TEXT,
+                TextInputType.TEXT_AREA, TextInputType.TEXT});
     }
 
     private void assertTextsAroundCursor(
@@ -546,7 +610,7 @@ public class ImeTest extends ContentShellTestBase {
         waitAndVerifyUpdateSelection(0, 11, 11, -1, -1);
 
         // Select 'text' part.
-        DOMUtils.longPressNode(this, mContentViewCore, "input_text");
+        DOMUtils.longPressNode(mContentViewCore, "input_text");
 
         assertWaitForSelectActionBarStatus(true);
 
@@ -562,7 +626,7 @@ public class ImeTest extends ContentShellTestBase {
     public void testImeNotDismissedAfterCutSelection() throws Exception {
         commitText("Sample Text", 1);
         waitAndVerifyUpdateSelection(0, 11, 11, -1, -1);
-        DOMUtils.longPressNode(this, mContentViewCore, "input_text");
+        DOMUtils.longPressNode(mContentViewCore, "input_text");
         assertWaitForSelectActionBarStatus(true);
         assertWaitForKeyboardStatus(true);
         cut();
@@ -574,20 +638,20 @@ public class ImeTest extends ContentShellTestBase {
     @Feature({"TextInput"})
     public void testImeNotShownOnLongPressingEmptyInput() throws Exception {
         DOMUtils.focusNode(mWebContents, "input_radio");
-        DOMUtils.longPressNode(this, mContentViewCore, "input_text");
+        DOMUtils.longPressNode(mContentViewCore, "input_text");
         assertWaitForKeyboardStatus(false);
         commitText("Sample Text", 1);
-        DOMUtils.longPressNode(this, mContentViewCore, "input_text");
+        DOMUtils.longPressNode(mContentViewCore, "input_text");
         assertWaitForKeyboardStatus(true);
     }
 
     @SmallTest
     @Feature({"TextInput"})
     public void testSelectActionBarShownOnLongPressingInput() throws Exception {
-        DOMUtils.longPressNode(this, mContentViewCore, "input_text");
+        DOMUtils.longPressNode(mContentViewCore, "input_text");
         assertWaitForSelectActionBarStatus(false);
         commitText("Sample Text", 1);
-        DOMUtils.longPressNode(this, mContentViewCore, "input_text");
+        DOMUtils.longPressNode(mContentViewCore, "input_text");
         assertWaitForSelectActionBarStatus(true);
     }
 
@@ -597,7 +661,7 @@ public class ImeTest extends ContentShellTestBase {
         assertWaitForSelectActionBarStatus(false);
         setComposingText("Sample Text", 1);
         waitAndVerifyUpdateSelection(0, 11, 11, 0, 11);
-        DOMUtils.longPressNode(this, mContentViewCore, "input_text");
+        DOMUtils.longPressNode(mContentViewCore, "input_text");
 
         assertWaitForSelectActionBarStatus(true);
 
@@ -619,14 +683,14 @@ public class ImeTest extends ContentShellTestBase {
         commitText("Sample Text", 1);
 
         int showCount = mInputMethodManagerWrapper.getShowSoftInputCounter();
-        DOMUtils.longPressNode(this, mContentViewCore, "input_text");
+        DOMUtils.longPressNode(mContentViewCore, "input_text");
         assertWaitForSelectActionBarStatus(true);
         assertEquals(showCount + 1, mInputMethodManagerWrapper.getShowSoftInputCounter());
 
         // Now long press again. Selection region remains the same, but the logic
         // should trigger IME to show up. Note that Android does not provide show /
         // hide status of IME, so we will just check whether showIme() has been triggered.
-        DOMUtils.longPressNode(this, mContentViewCore, "input_text");
+        DOMUtils.longPressNode(mContentViewCore, "input_text");
         final int newCount = showCount + 2;
         CriteriaHelper.pollUiThread(Criteria.equals(newCount, new Callable<Integer>() {
             @Override
@@ -707,10 +771,10 @@ public class ImeTest extends ContentShellTestBase {
     @Feature({"TextInput"})
     public void testSelectActionBarClearedOnTappingInput() throws Exception {
         commitText("Sample Text", 1);
-        DOMUtils.longPressNode(this, mContentViewCore, "input_text");
+        DOMUtils.longPressNode(mContentViewCore, "input_text");
         assertWaitForKeyboardStatus(true);
         assertWaitForSelectActionBarStatus(true);
-        DOMUtils.clickNode(this, mContentViewCore, "input_text");
+        DOMUtils.clickNode(mContentViewCore, "input_text");
         assertWaitForSelectActionBarStatus(false);
     }
 
@@ -718,10 +782,10 @@ public class ImeTest extends ContentShellTestBase {
     @Feature({"TextInput"})
     public void testSelectActionBarClearedOnTappingOutsideInput() throws Exception {
         commitText("Sample Text", 1);
-        DOMUtils.longPressNode(this, mContentViewCore, "input_text");
+        DOMUtils.longPressNode(mContentViewCore, "input_text");
         assertWaitForKeyboardStatus(true);
         assertWaitForSelectActionBarStatus(true);
-        DOMUtils.clickNode(this, mContentViewCore, "input_radio");
+        DOMUtils.clickNode(mContentViewCore, "input_radio");
         assertWaitForKeyboardStatus(false);
         assertWaitForSelectActionBarStatus(false);
     }
@@ -730,9 +794,9 @@ public class ImeTest extends ContentShellTestBase {
     @Feature({"TextInput"})
     public void testImeNotShownOnLongPressingDifferentEmptyInputs() throws Exception {
         DOMUtils.focusNode(mWebContents, "input_radio");
-        DOMUtils.longPressNode(this, mContentViewCore, "input_text");
+        DOMUtils.longPressNode(mContentViewCore, "input_text");
         assertWaitForKeyboardStatus(false);
-        DOMUtils.longPressNode(this, mContentViewCore, "textarea");
+        DOMUtils.longPressNode(mContentViewCore, "textarea");
         assertWaitForKeyboardStatus(false);
     }
 
@@ -752,11 +816,11 @@ public class ImeTest extends ContentShellTestBase {
         commitText("Sample Text", 1);
         waitAndVerifyUpdateSelection(2, 11, 11, -1, -1);
 
-        DOMUtils.longPressNode(this, mContentViewCore, "input_text");
+        DOMUtils.longPressNode(mContentViewCore, "input_text");
         assertWaitForKeyboardStatus(true);
         assertWaitForSelectActionBarStatus(true);
 
-        DOMUtils.longPressNode(this, mContentViewCore, "textarea");
+        DOMUtils.longPressNode(mContentViewCore, "textarea");
         assertWaitForKeyboardStatus(true);
     }
 
@@ -809,16 +873,15 @@ public class ImeTest extends ContentShellTestBase {
 
     @SmallTest
     @Feature({"TextInput"})
-    public void testImeSelectAndUnSelectAll() throws Exception {
+    public void testImeSelectAndCollapseSelection() throws Exception {
         commitText("hello", 1);
         waitAndVerifyUpdateSelection(0, 5, 5, -1, -1);
 
         selectAll();
         waitAndVerifyUpdateSelection(1, 0, 5, -1, -1);
 
-        unselect();
-
-        assertWaitForKeyboardStatus(false);
+        collapseSelection();
+        waitAndVerifyUpdateSelection(2, 5, 5, -1, -1);
     }
 
     @SmallTest
@@ -1184,7 +1247,7 @@ public class ImeTest extends ContentShellTestBase {
         waitAndVerifyUpdateSelection(2, 0, 0, -1, -1);
         assertTextsAroundCursor("", null, "");
 
-        DOMUtils.longPressNode(this, mContentViewCore, "input_text");
+        DOMUtils.longPressNode(mContentViewCore, "input_text");
         CriteriaHelper.pollUiThread(new Criteria() {
             @Override
             public boolean isSatisfied() {
@@ -1209,7 +1272,7 @@ public class ImeTest extends ContentShellTestBase {
         commitText("Sample Text", 1);
         waitAndVerifyUpdateSelection(0, 11, 11, -1, -1);
 
-        DOMUtils.longPressNode(this, mContentViewCore, "input_text");
+        DOMUtils.longPressNode(mContentViewCore, "input_text");
         assertWaitForSelectActionBarStatus(true);
 
         setComposingText("h", 1);
@@ -1220,7 +1283,7 @@ public class ImeTest extends ContentShellTestBase {
     @SmallTest
     @Feature({"TextInput"})
     public void testTextHandlesPreservedWithDpadNavigation() throws Throwable {
-        DOMUtils.longPressNode(this, mContentViewCore, "plain_text");
+        DOMUtils.longPressNode(mContentViewCore, "plain_text");
         assertWaitForSelectActionBarStatus(true);
         assertTrue(mSelectionPopupController.hasSelection());
 
@@ -1344,6 +1407,48 @@ public class ImeTest extends ContentShellTestBase {
         clearEventLogs();
 
         deleteSurroundingText(1, 1);
+        waitAndVerifyUpdateSelection(2, 1, 1, -1, -1);
+        // TODO(yabinh): It should only fire 1 input and 1 selectionchange events.
+        waitForEventLogs("keydown(229),input,input,keyup(229),selectionchange,selectionchange");
+    }
+
+    @MediumTest
+    @Feature({"TextInput"})
+    public void testContentEditableEvents_DeleteSurroundingTextInCodePoints() throws Throwable {
+        focusElementAndWaitForStateUpdate("contenteditable_event");
+        waitForEventLogs("selectionchange,selectionchange");
+        clearEventLogs();
+
+        commitText("hello", 1);
+        waitAndVerifyUpdateSelection(0, 5, 5, -1, -1);
+        waitForEventLogs("keydown(229),input,keyup(229),selectionchange");
+        clearEventLogs();
+
+        setSelection(2, 2);
+        waitAndVerifyUpdateSelection(1, 2, 2, -1, -1);
+        waitForEventLogs("selectionchange");
+        clearEventLogs();
+
+        deleteSurroundingTextInCodePoints(1, 1);
+        waitAndVerifyUpdateSelection(2, 1, 1, -1, -1);
+        // TODO(yabinh): It should only fire 1 input and 1 selectionchange events.
+        waitForEventLogs("keydown(229),input,input,keyup(229),selectionchange,selectionchange");
+    }
+
+    @MediumTest
+    @Feature({"TextInput"})
+    public void testInputTextEvents_DeleteSurroundingTextInCodePoints() throws Throwable {
+        commitText("hello", 1);
+        waitAndVerifyUpdateSelection(0, 5, 5, -1, -1);
+        waitForEventLogs("keydown(229),input,keyup(229),selectionchange");
+        clearEventLogs();
+
+        setSelection(2, 2);
+        waitAndVerifyUpdateSelection(1, 2, 2, -1, -1);
+        waitForEventLogs("selectionchange");
+        clearEventLogs();
+
+        deleteSurroundingTextInCodePoints(1, 1);
         waitAndVerifyUpdateSelection(2, 1, 1, -1, -1);
         // TODO(yabinh): It should only fire 1 input and 1 selectionchange events.
         waitForEventLogs("keydown(229),input,input,keyup(229),selectionchange,selectionchange");
@@ -1624,12 +1729,12 @@ public class ImeTest extends ContentShellTestBase {
         });
     }
 
-    private void unselect() {
+    private void collapseSelection() {
         final WebContents webContents = mWebContents;
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                webContents.unselect();
+                webContents.collapseSelection();
             }
         });
     }
@@ -1725,6 +1830,21 @@ public class ImeTest extends ContentShellTestBase {
         });
     }
 
+    // Note that deleteSurroundingTextInCodePoints() was introduced in Android N (Api level 24), but
+    // the Android repository used in Chrome is behind that (level 23). So this function can't be
+    // called by keyboard apps currently.
+    @TargetApi(24)
+    private boolean deleteSurroundingTextInCodePoints(final int before, final int after)
+            throws Exception {
+        final ThreadedInputConnection connection = (ThreadedInputConnection) mConnection;
+        return runBlockingOnImeThread(new Callable<Boolean>() {
+            @Override
+            public Boolean call() {
+                return connection.deleteSurroundingTextInCodePoints(before, after);
+            }
+        });
+    }
+
     private CharSequence getTextBeforeCursor(final int length, final int flags) throws Exception {
         final ChromiumBaseInputConnection connection = mConnection;
         return runBlockingOnImeThread(new Callable<CharSequence>() {
@@ -1780,6 +1900,7 @@ public class ImeTest extends ContentShellTestBase {
      */
     private void focusElementAndWaitForStateUpdate(String id)
             throws InterruptedException, TimeoutException {
+        resetUpdateSelectionList();
         focusElement(id);
         waitAndVerifyUpdateSelection(0, 0, 0, -1, -1);
         resetUpdateSelectionList();

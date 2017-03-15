@@ -42,6 +42,14 @@ GpuBrowserCompositorOutputSurface::~GpuBrowserCompositorOutputSurface() {
       UpdateVSyncParametersCallback());
 }
 
+void GpuBrowserCompositorOutputSurface::SetNeedsVSync(bool needs_vsync) {
+#if defined(OS_WIN)
+  GetCommandBufferProxy()->SetNeedsVSync(needs_vsync);
+#else
+  NOTREACHED();
+#endif  // defined(OS_WIN)
+}
+
 void GpuBrowserCompositorOutputSurface::OnGpuSwapBuffersCompleted(
     const std::vector<ui::LatencyInfo>& latency_info,
     gfx::SwapResult result,
@@ -88,6 +96,8 @@ void GpuBrowserCompositorOutputSurface::Reshape(
     const gfx::ColorSpace& color_space,
     bool has_alpha,
     bool use_stencil) {
+  size_ = size;
+  has_set_draw_rectangle_since_last_resize_ = false;
   context_provider()->ContextGL()->ResizeCHROMIUM(
       size.width(), size.height(), device_scale_factor, has_alpha);
 }
@@ -96,22 +106,28 @@ void GpuBrowserCompositorOutputSurface::SwapBuffers(
     cc::OutputSurfaceFrame frame) {
   GetCommandBufferProxy()->SetLatencyInfo(frame.latency_info);
 
-  gfx::Rect swap_rect = frame.sub_buffer_rect;
   gfx::Size surface_size = frame.size;
   if (reflector_) {
-    if (swap_rect == gfx::Rect(surface_size)) {
+    if (frame.sub_buffer_rect) {
+      reflector_texture_->CopyTextureSubImage(*frame.sub_buffer_rect);
+      reflector_->OnSourcePostSubBuffer(*frame.sub_buffer_rect, surface_size);
+    } else {
       reflector_texture_->CopyTextureFullImage(surface_size);
       reflector_->OnSourceSwapBuffers(surface_size);
-    } else {
-      reflector_texture_->CopyTextureSubImage(swap_rect);
-      reflector_->OnSourcePostSubBuffer(swap_rect, surface_size);
     }
   }
 
-  if (swap_rect == gfx::Rect(frame.size))
+  set_draw_rectangle_for_frame_ = false;
+
+  if (frame.sub_buffer_rect) {
+    DCHECK(frame.content_bounds.empty());
+    context_provider_->ContextSupport()->PartialSwapBuffers(
+        *frame.sub_buffer_rect);
+  } else if (!frame.content_bounds.empty()) {
+    context_provider_->ContextSupport()->SwapWithBounds(frame.content_bounds);
+  } else {
     context_provider_->ContextSupport()->Swap();
-  else
-    context_provider_->ContextSupport()->PartialSwapBuffers(swap_rect);
+  }
 }
 
 uint32_t GpuBrowserCompositorOutputSurface::GetFramebufferCopyTextureFormat() {
@@ -135,6 +151,19 @@ bool GpuBrowserCompositorOutputSurface::SurfaceIsSuspendForRecycle() const {
 void GpuBrowserCompositorOutputSurface::SetSurfaceSuspendedForRecycle(
     bool suspended) {}
 #endif
+
+void GpuBrowserCompositorOutputSurface::SetDrawRectangle(
+    const gfx::Rect& rect) {
+  if (set_draw_rectangle_for_frame_)
+    return;
+  DCHECK(gfx::Rect(size_).Contains(rect));
+  DCHECK(has_set_draw_rectangle_since_last_resize_ ||
+         (gfx::Rect(size_) == rect));
+  set_draw_rectangle_for_frame_ = true;
+  has_set_draw_rectangle_since_last_resize_ = true;
+  context_provider()->ContextGL()->SetDrawRectangleCHROMIUM(
+      rect.x(), rect.y(), rect.width(), rect.height());
+}
 
 gpu::CommandBufferProxyImpl*
 GpuBrowserCompositorOutputSurface::GetCommandBufferProxy() {

@@ -5,12 +5,14 @@
 #include "components/favicon/core/favicon_driver_impl.h"
 
 #include "base/logging.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
 #include "build/build_config.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/favicon/core/favicon_driver_observer.h"
 #include "components/favicon/core/favicon_handler.h"
 #include "components/favicon/core/favicon_service.h"
+#include "components/favicon/core/favicon_url.h"
 #include "components/history/core/browser/history_service.h"
 
 namespace favicon {
@@ -21,6 +23,26 @@ const bool kEnableTouchIcon = true;
 #else
 const bool kEnableTouchIcon = false;
 #endif
+
+void RecordCandidateMetrics(const std::vector<FaviconURL>& candidates) {
+  size_t with_defined_touch_icons = 0;
+  size_t with_defined_sizes = 0;
+  for (const auto& candidate : candidates) {
+    if (!candidate.icon_sizes.empty()) {
+      with_defined_sizes++;
+    }
+    if (candidate.icon_type &
+        (favicon_base::IconType::TOUCH_ICON |
+         favicon_base::IconType::TOUCH_PRECOMPOSED_ICON)) {
+      with_defined_touch_icons++;
+    }
+  }
+  UMA_HISTOGRAM_COUNTS_100("Favicons.CandidatesCount", candidates.size());
+  UMA_HISTOGRAM_COUNTS_100("Favicons.CandidatesWithDefinedSizesCount",
+                           with_defined_sizes);
+  UMA_HISTOGRAM_COUNTS_100("Favicons.CandidatesWithTouchIconsCount",
+                           with_defined_touch_icons);
+}
 
 }  // namespace
 
@@ -49,26 +71,6 @@ void FaviconDriverImpl::FetchFavicon(const GURL& url) {
     touch_icon_handler_->FetchFavicon(url);
 }
 
-void FaviconDriverImpl::DidDownloadFavicon(
-    int id,
-    int http_status_code,
-    const GURL& image_url,
-    const std::vector<SkBitmap>& bitmaps,
-    const std::vector<gfx::Size>& original_bitmap_sizes) {
-  if (bitmaps.empty() && http_status_code == 404) {
-    DVLOG(1) << "Failed to Download Favicon:" << image_url;
-    if (favicon_service_)
-      favicon_service_->UnableToDownloadFavicon(image_url);
-  }
-
-  favicon_handler_->OnDidDownloadFavicon(id, image_url, bitmaps,
-                                         original_bitmap_sizes);
-  if (touch_icon_handler_.get()) {
-    touch_icon_handler_->OnDidDownloadFavicon(id, image_url, bitmaps,
-                                              original_bitmap_sizes);
-  }
-}
-
 bool FaviconDriverImpl::IsBookmarked(const GURL& url) {
   return bookmark_model_ && bookmark_model_->IsBookmarked(url);
 }
@@ -79,10 +81,6 @@ bool FaviconDriverImpl::HasPendingTasksForTest() {
   if (touch_icon_handler_ && touch_icon_handler_->HasPendingTasksForTest())
     return true;
   return false;
-}
-
-bool FaviconDriverImpl::WasUnableToDownloadFavicon(const GURL& url) {
-  return favicon_service_ && favicon_service_->WasUnableToDownloadFavicon(url);
 }
 
 void FaviconDriverImpl::SetFaviconOutOfDateForPage(const GURL& url,
@@ -98,6 +96,7 @@ void FaviconDriverImpl::OnUpdateFaviconURL(
     const GURL& page_url,
     const std::vector<FaviconURL>& candidates) {
   DCHECK(!candidates.empty());
+  RecordCandidateMetrics(candidates);
   favicon_handler_->OnUpdateFaviconURL(page_url, candidates);
   if (touch_icon_handler_.get())
     touch_icon_handler_->OnUpdateFaviconURL(page_url, candidates);

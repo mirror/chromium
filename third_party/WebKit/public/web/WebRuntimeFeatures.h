@@ -87,6 +87,7 @@ class WebRuntimeFeatures {
   BLINK_EXPORT static void enableHeapCompaction(bool);
   BLINK_EXPORT static void enableInputMultipleFieldsUI(bool);
   BLINK_EXPORT static void enableLazyParseCSS(bool);
+  BLINK_EXPORT static void enableLoadingWithMojo(bool);
   BLINK_EXPORT static void enableMediaCapture(bool);
   BLINK_EXPORT static void enableMediaDocumentDownloadButton(bool);
   BLINK_EXPORT static void enableMediaSession(bool);
@@ -133,17 +134,18 @@ class WebRuntimeFeatures {
   BLINK_EXPORT static void enableWebGLImageChromium(bool);
   BLINK_EXPORT static void enableWebUsb(bool);
   BLINK_EXPORT static void enableWebVR(bool);
+  BLINK_EXPORT static void enableWebVRExperimentalRendering(bool);
   BLINK_EXPORT static void enableXSLT(bool);
   BLINK_EXPORT static void forceOverlayFullscreenVideo(bool);
   BLINK_EXPORT static void enableAutoplayMutedVideos(bool);
   BLINK_EXPORT static void enableTimerThrottlingForBackgroundTabs(bool);
   BLINK_EXPORT static void enableTimerThrottlingForHiddenFrames(bool);
-  BLINK_EXPORT static void enableTrueColorRendering(bool);
   BLINK_EXPORT static void enableExpensiveBackgroundTimerThrottling(bool);
   BLINK_EXPORT static void enableCanvas2dDynamicRenderingModeSwitching(bool);
   BLINK_EXPORT static void enableSendBeaconThrowForBlobWithNonSimpleType(bool);
   BLINK_EXPORT static void enableBackgroundVideoTrackOptimization(bool);
   BLINK_EXPORT static void enableVideoFullscreenOrientationLock(bool);
+  BLINK_EXPORT static void enableMediaControlsOverlayPlayButton(bool);
 
  private:
   WebRuntimeFeatures();

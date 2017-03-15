@@ -222,8 +222,7 @@ void MostVisitedSites::OnMostVisitedURLsAvailable(
   }
 
   mv_source_ = NTPTileSource::TOP_SITES;
-  SaveNewTiles(std::move(tiles));
-  NotifyMostVisitedURLsObserver();
+  SaveNewTilesAndNotify(std::move(tiles));
 }
 
 void MostVisitedSites::OnSuggestionsProfileChanged(
@@ -274,8 +273,7 @@ void MostVisitedSites::BuildCurrentTilesGivenSuggestionsProfile(
   }
 
   mv_source_ = NTPTileSource::SUGGESTIONS_SERVICE;
-  SaveNewTiles(std::move(tiles));
-  NotifyMostVisitedURLsObserver();
+  SaveNewTilesAndNotify(std::move(tiles));
 }
 
 NTPTilesVector MostVisitedSites::CreateWhitelistEntryPointTiles(
@@ -359,9 +357,10 @@ NTPTilesVector MostVisitedSites::CreatePopularSitesTiles(
       tile.source = NTPTileSource::POPULAR;
 
       popular_sites_tiles.push_back(std::move(tile));
-      icon_cacher_->StartFetch(
-          popular_site, base::Bind(&MostVisitedSites::OnIconMadeAvailable,
-                                   base::Unretained(this), popular_site.url));
+      base::Closure icon_available =
+          base::Bind(&MostVisitedSites::OnIconMadeAvailable,
+                     base::Unretained(this), popular_site.url);
+      icon_cacher_->StartFetch(popular_site, icon_available, icon_available);
       if (popular_sites_tiles.size() >= num_popular_sites_tiles)
         break;
     }
@@ -369,7 +368,7 @@ NTPTilesVector MostVisitedSites::CreatePopularSitesTiles(
   return popular_sites_tiles;
 }
 
-void MostVisitedSites::SaveNewTiles(NTPTilesVector personal_tiles) {
+void MostVisitedSites::SaveNewTilesAndNotify(NTPTilesVector personal_tiles) {
   NTPTilesVector whitelist_tiles =
       CreateWhitelistEntryPointTiles(personal_tiles);
   NTPTilesVector popular_sites_tiles =
@@ -379,17 +378,26 @@ void MostVisitedSites::SaveNewTiles(NTPTilesVector personal_tiles) {
                             popular_sites_tiles.size();
   DCHECK_LE(num_actual_tiles, static_cast<size_t>(num_sites_));
 
-  current_tiles_ =
+  NTPTilesVector new_tiles =
       MergeTiles(std::move(personal_tiles), std::move(whitelist_tiles),
                  std::move(popular_sites_tiles));
-  DCHECK_EQ(num_actual_tiles, current_tiles_.size());
+  if (current_tiles_.has_value() && (*current_tiles_ == new_tiles)) {
+    return;
+  }
+
+  current_tiles_.emplace(std::move(new_tiles));
+  DCHECK_EQ(num_actual_tiles, current_tiles_->size());
 
   int num_personal_tiles = 0;
-  for (const auto& tile : current_tiles_) {
+  for (const auto& tile : *current_tiles_) {
     if (tile.source != NTPTileSource::POPULAR)
       num_personal_tiles++;
   }
   prefs_->SetInteger(prefs::kNumPersonalTiles, num_personal_tiles);
+
+  if (!observer_)
+    return;
+  observer_->OnMostVisitedURLsAvailable(*current_tiles_);
 }
 
 // static
@@ -406,24 +414,20 @@ NTPTilesVector MostVisitedSites::MergeTiles(NTPTilesVector personal_tiles,
   return merged_tiles;
 }
 
-void MostVisitedSites::NotifyMostVisitedURLsObserver() {
-  if (!observer_)
-    return;
-
-  observer_->OnMostVisitedURLsAvailable(current_tiles_);
-}
-
 void MostVisitedSites::OnPopularSitesDownloaded(bool success) {
   if (!success) {
     LOG(WARNING) << "Download of popular sites failed";
     return;
   }
+
+  for (const PopularSites::Site& popular_site : popular_sites_->sites()) {
+    // Ignore callback; these icons will be seen on the *next* NTP.
+    icon_cacher_->StartFetch(popular_site, base::Closure(), base::Closure());
+  }
 }
 
-void MostVisitedSites::OnIconMadeAvailable(const GURL& site_url,
-                                           bool newly_available) {
-  if (newly_available)
-    observer_->OnIconMadeAvailable(site_url);
+void MostVisitedSites::OnIconMadeAvailable(const GURL& site_url) {
+  observer_->OnIconMadeAvailable(site_url);
 }
 
 void MostVisitedSites::TopSitesLoaded(TopSites* top_sites) {}

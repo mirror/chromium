@@ -2,6 +2,14 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//third_party/protobuf/proto_library.gni")
+
+proto_library("csd_proto") {
+  sources = [
+    "csd.proto",
+  ]
+}
+
 source_set("safe_browsing") {
   sources = [
     "base_blocking_page.cc",
@@ -13,6 +21,7 @@ source_set("safe_browsing") {
   ]
 
   deps = [
+    ":base_ping_manager",
     "//base:base",
     "//base:i18n",
     "//components/safe_browsing_db:database_manager",
@@ -23,5 +32,40 @@ source_set("safe_browsing") {
     "//content/public/browser:browser",
     "//content/public/common:common",
     "//net:net",
+  ]
+}
+
+static_library("base_ping_manager") {
+  sources = [
+    "base_ping_manager.cc",
+    "base_ping_manager.h",
+  ]
+
+  public_deps = [
+    "//google_apis:google_apis",
+  ]
+
+  deps = [
+    "//base:base",
+    "//components/data_use_measurement/core:core",
+    "//components/safe_browsing_db:hit_report",
+    "//components/safe_browsing_db:util",
+    "//content/public/browser:browser",
+    "//net:net",
+  ]
+}
+
+source_set("base_ping_manager_unittest") {
+  testonly = true
+  sources = [
+    "base_ping_manager_unittest.cc",
+  ]
+
+  deps = [
+    ":base_ping_manager",
+    "//base:base",
+    "//net:net",
+    "//net:test_support",
+    "//testing/gtest",
   ]
 }

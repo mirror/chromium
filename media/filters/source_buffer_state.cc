@@ -146,7 +146,7 @@ void SourceBufferState::Init(
   init_cb_ = init_cb;
 
   std::vector<std::string> expected_codecs_parsed;
-  ParseCodecString(expected_codecs, &expected_codecs_parsed, false);
+  SplitCodecsToVector(expected_codecs, &expected_codecs_parsed, false);
 
   std::vector<AudioCodec> expected_acodecs;
   std::vector<VideoCodec> expected_vcodecs;
@@ -795,7 +795,7 @@ bool SourceBufferState::OnNewConfigs(
 }
 
 void SourceBufferState::SetStreamMemoryLimits() {
-  auto cmd_line = base::CommandLine::ForCurrentProcess();
+  auto* cmd_line = base::CommandLine::ForCurrentProcess();
 
   std::string audio_buf_limit_switch =
       cmd_line->GetSwitchValueASCII(switches::kMSEAudioBufferSizeLimit);

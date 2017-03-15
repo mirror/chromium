@@ -80,6 +80,7 @@
 #include "chrome/browser/ui/views/location_bar/zoom_bubble_view.h"
 #include "chrome/browser/ui/views/new_back_shortcut_bubble.h"
 #include "chrome/browser/ui/views/omnibox/omnibox_view_views.h"
+#include "chrome/browser/ui/views/page_info/website_settings_popup_view.h"
 #include "chrome/browser/ui/views/profiles/profile_indicator_icon.h"
 #include "chrome/browser/ui/views/status_bubble_views.h"
 #include "chrome/browser/ui/views/tabs/browser_tab_strip_controller.h"
@@ -91,7 +92,6 @@
 #include "chrome/browser/ui/views/toolbar/toolbar_view.h"
 #include "chrome/browser/ui/views/translate/translate_bubble_view.h"
 #include "chrome/browser/ui/views/update_recommended_message_box.h"
-#include "chrome/browser/ui/views/website_settings/website_settings_popup_view.h"
 #include "chrome/browser/ui/window_sizer/window_sizer.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/extensions/command.h"
@@ -155,6 +155,7 @@
 #endif  // !defined(OS_CHROMEOS)
 
 #if defined(USE_AURA)
+#include "chrome/browser/ui/views/theme_profile_key.h"
 #include "ui/aura/client/window_parenting_client.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_tree_host.h"
@@ -172,9 +173,6 @@
 #if BUILDFLAG(ENABLE_ONE_CLICK_SIGNIN)
 #include "chrome/browser/ui/sync/one_click_signin_links_delegate_impl.h"
 #include "chrome/browser/ui/views/sync/one_click_signin_dialog_view.h"
-#endif
-
-#if defined(OS_LINUX)
 #endif
 
 using base::TimeDelta;
@@ -268,6 +266,23 @@ void PaintAttachedBookmarkBar(gfx::Canvas* canvas,
                     ThemeProperties::COLOR_TOOLBAR_BOTTOM_SEPARATOR),
         view->GetLocalBounds(), true);
   }
+}
+
+bool GetGestureCommand(ui::GestureEvent* event, int* command) {
+  DCHECK(command);
+  *command = 0;
+#if defined(OS_MACOSX)
+  if (event->details().type() == ui::ET_GESTURE_SWIPE) {
+    if (event->details().swipe_left()) {
+      *command = IDC_BACK;
+      return true;
+    } else if (event->details().swipe_right()) {
+      *command = IDC_FORWARD;
+      return true;
+    }
+  }
+#endif  // OS_MACOSX
+  return false;
 }
 
 }  // namespace
@@ -1329,7 +1344,7 @@ bool BrowserView::PreHandleKeyboardEvent(const NativeWebKeyboardEvent& event,
   }
 
 #if defined(OS_CHROMEOS)
-  if (chrome::IsAcceleratorDeprecated(accelerator)) {
+  if (ash_util::IsAcceleratorDeprecated(accelerator)) {
     if (event.type() == blink::WebInputEvent::RawKeyDown)
       *is_keyboard_shortcut = true;
     return false;
@@ -1641,6 +1656,22 @@ base::string16 BrowserView::GetAccessibleTabLabel(bool include_app_name,
   return base::string16();
 }
 
+void BrowserView::NativeThemeUpdated(const ui::NativeTheme* theme) {
+  // We don't handle theme updates in OnThemeChanged() as that function is
+  // called while views are being iterated over. Please see
+  // View::PropagateNativeThemeChanged() for details. The theme update
+  // handling in UserChangedTheme() can cause views to be nuked or created
+  // which is a bad thing during iteration.
+
+  // Do not handle native theme changes before the browser view is initialized.
+  if (!initialized_)
+    return;
+  // Don't infinitely recurse.
+  if (!handling_theme_changed_)
+    UserChangedTheme();
+  chrome::MaybeShowInvertBubbleView(this);
+}
+
 views::View* BrowserView::GetInitiallyFocusedView() {
   return nullptr;
 }
@@ -1932,6 +1963,18 @@ void BrowserView::Layout() {
       IsToolbarVisible() ? FocusBehavior::ALWAYS : FocusBehavior::NEVER);
 }
 
+void BrowserView::OnGestureEvent(ui::GestureEvent* event) {
+  int command;
+  if (GetGestureCommand(event, &command) &&
+      chrome::IsCommandEnabled(browser(), command)) {
+    chrome::ExecuteCommandWithDisposition(
+        browser(), command, ui::DispositionFromEventFlags(event->flags()));
+    return;
+  }
+
+  ClientView::OnGestureEvent(event);
+}
+
 void BrowserView::ViewHierarchyChanged(
     const ViewHierarchyChangedDetails& details) {
   if (!initialized_ && details.is_add && details.child == this && GetWidget()) {
@@ -1961,17 +2004,6 @@ void BrowserView::OnThemeChanged() {
   }
 
   views::View::OnThemeChanged();
-}
-
-void BrowserView::OnNativeThemeChanged(const ui::NativeTheme* theme) {
-  // Do not handle native theme changes before the browser view is initialized.
-  if (!initialized_)
-    return;
-  ClientView::OnNativeThemeChanged(theme);
-  // Don't infinitely recurse.
-  if (!handling_theme_changed_)
-    UserChangedTheme();
-  chrome::MaybeShowInvertBubbleView(this);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -2030,6 +2062,13 @@ void BrowserView::InitViews() {
   // can get it later when all we have is a native view.
   GetWidget()->SetNativeWindowProperty(Profile::kProfileKey,
                                        browser_->profile());
+
+#if defined(USE_AURA)
+  // Stow a pointer to the browser's original profile onto the window handle so
+  // that windows will be styled with the appropriate NativeTheme.
+  SetThemeProfileForWindow(GetNativeWindow(),
+                           browser_->profile()->GetOriginalProfile());
+#endif
 
   LoadAccelerators();
 
@@ -2319,6 +2358,7 @@ void BrowserView::ProcessFullscreen(bool fullscreen,
   if (ShouldUseImmersiveFullscreenForUrl(url))
     immersive_mode_controller_->SetEnabled(fullscreen);
 
+  browser_->WindowFullscreenStateWillChange();
   browser_->WindowFullscreenStateChanged();
 
   if (fullscreen && !chrome::IsRunningInAppMode()) {
@@ -2463,7 +2503,8 @@ void BrowserView::UpdateAcceleratorMetrics(const ui::Accelerator& accelerator,
 void BrowserView::ShowAvatarBubbleFromAvatarButton(
     AvatarBubbleMode mode,
     const signin::ManageAccountsParams& manage_accounts_params,
-    signin_metrics::AccessPoint access_point) {
+    signin_metrics::AccessPoint access_point,
+    bool focus_first_profile_button) {
 #if !defined(OS_CHROMEOS)
   // Do not show avatar bubble if there is no avatar menu button.
   if (!frame_->GetNewAvatarMenuButton())
@@ -2478,7 +2519,8 @@ void BrowserView::ShowAvatarBubbleFromAvatarButton(
   } else {
     ProfileChooserView::ShowBubble(bubble_view_mode, tutorial_mode,
                                    manage_accounts_params, access_point,
-                                   frame_->GetNewAvatarMenuButton(), browser());
+                                   frame_->GetNewAvatarMenuButton(), browser(),
+                                   focus_first_profile_button);
     ProfileMetrics::LogProfileOpenMethod(ProfileMetrics::ICON_AVATAR_BUBBLE);
   }
 #else

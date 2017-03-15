@@ -65,9 +65,7 @@ class TestImage : public Image {
     return IntSize(m_image->width(), m_image->height());
   }
 
-  sk_sp<SkImage> imageForCurrentFrame(const ColorBehavior&) override {
-    return m_image;
-  }
+  sk_sp<SkImage> imageForCurrentFrame() override { return m_image; }
 
   bool currentFrameKnownToBeOpaque(MetadataMode = UseCurrentMetadata) override {
     return false;
@@ -82,8 +80,7 @@ class TestImage : public Image {
             const FloatRect&,
             const FloatRect&,
             RespectImageOrientationEnum,
-            ImageClampingMode,
-            const ColorBehavior&) override {
+            ImageClampingMode) override {
     // Image pure virtual stub.
   }
 

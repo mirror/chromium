@@ -13,9 +13,12 @@
 
 #include "bindings/core/v8/Dictionary.h"
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/IDLTypes.h"
 #include "bindings/core/v8/LongOrTestDictionary.h"
+#include "bindings/core/v8/NativeValueTraitsImpl.h"
 #include "bindings/core/v8/V8DOMConfiguration.h"
 #include "bindings/core/v8/V8ObjectConstructor.h"
+#include "bindings/core/v8/V8PrivateProperty.h"
 #include "bindings/core/v8/V8TestDictionary.h"
 #include "bindings/core/v8/V8TestInterfaceEmpty.h"
 #include "core/dom/Document.h"
@@ -85,7 +88,7 @@ static void constructor2(const v8::FunctionCallbackInfo<v8::Value>& info) {
   HeapVector<LongOrTestDictionary> sequenceLongOrTestDictionaryArg;
   Dictionary optionalDictionaryArg;
   TestInterfaceEmpty* optionalTestInterfaceEmptyArg;
-  doubleArg = toRestrictedDouble(info.GetIsolate(), info[0], exceptionState);
+  doubleArg = NativeValueTraits<IDLDouble>::nativeValue(info.GetIsolate(), info[0], exceptionState);
   if (exceptionState.hadException())
     return;
 
@@ -105,7 +108,7 @@ static void constructor2(const v8::FunctionCallbackInfo<v8::Value>& info) {
 
     return;
   }
-  dictionaryArg = Dictionary(info.GetIsolate(), info[3], exceptionState);
+  dictionaryArg = NativeValueTraits<Dictionary>::nativeValue(info.GetIsolate(), info[3], exceptionState);
   if (exceptionState.hadException())
     return;
 
@@ -126,7 +129,7 @@ static void constructor2(const v8::FunctionCallbackInfo<v8::Value>& info) {
 
     return;
   }
-  optionalDictionaryArg = Dictionary(info.GetIsolate(), info[7], exceptionState);
+  optionalDictionaryArg = NativeValueTraits<Dictionary>::nativeValue(info.GetIsolate(), info[7], exceptionState);
   if (exceptionState.hadException())
     return;
 
@@ -358,10 +361,39 @@ v8::Local<v8::FunctionTemplate> V8TestInterfaceConstructorConstructor::domTempla
   result = v8::FunctionTemplate::New(isolate, V8TestInterfaceConstructorConstructorCallback);
   v8::Local<v8::ObjectTemplate> instanceTemplate = result->InstanceTemplate();
   instanceTemplate->SetInternalFieldCount(V8TestInterfaceConstructor::internalFieldCount);
-  result->SetClassName(v8AtomicString(isolate, "TestInterfaceConstructor"));
+  result->SetClassName(v8AtomicString(isolate, "Audio"));
   result->Inherit(V8TestInterfaceConstructor::domTemplate(isolate, world));
   data->setInterfaceTemplate(world, &domTemplateKey, result);
   return result;
+}
+
+void V8TestInterfaceConstructorConstructor::NamedConstructorAttributeGetter(
+    v8::Local<v8::Name> propertyName,
+    const v8::PropertyCallbackInfo<v8::Value>& info) {
+  v8::Local<v8::Context> creationContext = info.Holder()->CreationContext();
+  V8PerContextData* perContextData = V8PerContextData::from(creationContext);
+  if (!perContextData) {
+    // TODO(yukishiino): Return a valid named constructor even after the context is detached
+    return;
+  }
+
+  v8::Local<v8::Function> namedConstructor = perContextData->constructorForType(&V8TestInterfaceConstructorConstructor::wrapperTypeInfo);
+
+  // Set the prototype of named constructors to the regular constructor.
+  auto privateProperty = V8PrivateProperty::getNamedConstructorInitialized(info.GetIsolate());
+  v8::Local<v8::Context> currentContext = info.GetIsolate()->GetCurrentContext();
+  v8::Local<v8::Value> privateValue = privateProperty.get(currentContext, namedConstructor);
+
+  if (privateValue.IsEmpty()) {
+    v8::Local<v8::Function> interface = perContextData->constructorForType(&V8TestInterfaceConstructor::wrapperTypeInfo);
+    v8::Local<v8::Value> interfacePrototype = interface->Get(currentContext, v8AtomicString(info.GetIsolate(), "prototype")).ToLocalChecked();
+    bool result = namedConstructor->Set(currentContext, v8AtomicString(info.GetIsolate(), "prototype"), interfacePrototype).ToChecked();
+    if (!result)
+      return;
+    privateProperty.set(currentContext, namedConstructor, v8::True(info.GetIsolate()));
+  }
+
+  v8SetReturnValue(info, namedConstructor);
 }
 
 void V8TestInterfaceConstructor::constructorCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
@@ -409,6 +441,10 @@ v8::Local<v8::Object> V8TestInterfaceConstructor::findInstanceInPrototypeChain(v
 
 TestInterfaceConstructor* V8TestInterfaceConstructor::toImplWithTypeCheck(v8::Isolate* isolate, v8::Local<v8::Value> value) {
   return hasInstance(value, isolate) ? toImpl(v8::Local<v8::Object>::Cast(value)) : nullptr;
+}
+
+TestInterfaceConstructor* NativeValueTraits<TestInterfaceConstructor>::nativeValue(v8::Isolate* isolate, v8::Local<v8::Value> value, ExceptionState& exceptionState) {
+  return V8TestInterfaceConstructor::toImplWithTypeCheck(isolate, value);
 }
 
 }  // namespace blink

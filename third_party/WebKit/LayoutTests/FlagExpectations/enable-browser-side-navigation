@@ -1,85 +1,27 @@
 # These tests currently fail when run with --enable-browser-side-navigation
 # See https://crbug.com/576261
-# https://crbug.com/608372: PlzNavigate: support POST navigations
-#  Layout test does not end for unknown reasons.
-crbug.com/608372 http/tests/history/back-to-post.html [ Timeout ]
-crbug.com/608372 virtual/mojo-loading/http/tests/history/back-to-post.html [ Timeout ]
 
 # https://crbug.com/551000: PlzNavigate: DevTools support
 crbug.com/551000 http/tests/inspector/network/x-frame-options-deny.html [ Failure ]
 crbug.com/551000 virtual/mojo-loading/http/tests/inspector/network/x-frame-options-deny.html [ Failure ]
-#  Console error messages are wrongly ordered.
-crbug.com/551000 http/tests/inspector/console-resource-errors.html [ Failure ]
-crbug.com/551000 virtual/mojo-loading/http/tests/inspector/console-resource-errors.html [ Failure ]
-#  We don't report the right initiator type or line number.
-crbug.com/551000 http/tests/inspector/network/network-document-initiator.html [ Failure ]
-crbug.com/551000 http/tests/inspector/network/network-initiator.html [ Failure ]
-crbug.com/551000 virtual/mojo-loading/http/tests/inspector/network/network-document-initiator.html [ Failure ]
-crbug.com/551000 virtual/mojo-loading/http/tests/inspector/network/network-initiator.html [ Failure ]
-
-#  Forward redirect info to the renderer. Fixed by https://codereview.chromium.org/2653953005/.
-crbug.com/551000 http/tests/inspector/extensions-network-redirect.html [ Timeout ]
-crbug.com/551000 virtual/mojo-loading/http/tests/inspector/extensions-network-redirect.html [ Timeout ]
-#  These ones have an additional issue with a flipped order between diStartProvisionalLoad & willSendRequest
-crbug.com/625765 virtual/mojo-loading/http/tests/loading/redirect-methods.html [ Crash Failure ]
-crbug.com/625765 http/tests/loading/redirect-methods.html [ Crash Failure ]
 
 # https://crbug.com/555418: Move `X-Frame-Options` and CSP's `frame-ancestor`
 # checks up out of the renderer.
-crbug.com/555418 http/tests/security/contentSecurityPolicy/1.1/child-src/frame-redirect-blocked.html [ Timeout ]
 crbug.com/555418 http/tests/security/contentSecurityPolicy/1.1/form-action-src-redirect-blocked.html [ Failure ]
-crbug.com/555418 http/tests/security/contentSecurityPolicy/redirect-does-not-match-paths.html [ Timeout ]
 crbug.com/555418 http/tests/security/isolatedWorld/bypass-main-world-csp-iframes.html [ Failure ]
-crbug.com/555418 virtual/mojo-loading/http/tests/security/contentSecurityPolicy/1.1/child-src/frame-redirect-blocked.html [ Timeout ]
 crbug.com/555418 virtual/mojo-loading/http/tests/security/contentSecurityPolicy/1.1/form-action-src-redirect-blocked.html [ Failure ]
-crbug.com/555418 virtual/mojo-loading/http/tests/security/contentSecurityPolicy/redirect-does-not-match-paths.html [ Timeout ]
 crbug.com/555418 virtual/mojo-loading/http/tests/security/isolatedWorld/bypass-main-world-csp-iframes.html [ Failure ]
 
-# https://crbug.com/576270: Move mixed-content checks that happen during
-# navigation to the browser
-crbug.com/576270 http/tests/security/mixedContent/nonwebby-scheme-in-iframe-allowed.https.html [ Timeout Failure ]
-crbug.com/576270 http/tests/security/mixedContent/redirect-http-to-https-iframe-in-main-frame.html [ Failure ]
-crbug.com/576270 http/tests/security/mixedContent/redirect-https-to-http-iframe-in-main-frame.html [ Failure ]
-crbug.com/576270 virtual/mojo-loading/http/tests/security/mixedContent/nonwebby-scheme-in-iframe-allowed.https.html [ Timeout Failure ]
-crbug.com/576270 virtual/mojo-loading/http/tests/security/mixedContent/redirect-http-to-https-iframe-in-main-frame.html [ Failure ]
-crbug.com/576270 virtual/mojo-loading/http/tests/security/mixedContent/redirect-https-to-http-iframe-in-main-frame.html [ Failure ]
-
-# https://crbug.com/638900: Failing due to flipped order of callbacks to
-# WebFrameClient::didStartProvisionalLoad() and
-# WebFrameClient::didFinishDocumentLoad().
-crbug.com/638900 http/tests/loading/doc-write-sync-third-party-script-reload.html [ Failure ]
-crbug.com/638900 virtual/mojo-loading/http/tests/loading/doc-write-sync-third-party-script-reload.html [ Failure ]
-
-# https://crbug.com/647698: Failing due to absence of call to
-# WebFrameClient::didReceiveServerRedirectForProvisionalLoad.
-crbug.com/647698 http/tests/loading/307-after-303-after-post.html [ Failure ]
-crbug.com/647698 virtual/mojo-loading/http/tests/loading/307-after-303-after-post.html [ Failure ]
-
-# Issue with ServiceWorker timing.
-Bug(none) external/wpt/service-workers/service-worker/navigate-window.https.html [ Failure ]
-
-# https://crbug.com/689153: Timeout when receiving a 204 response
-crbug.com/689153 http/tests/navigation/response204.html [ Timeout ]
-crbug.com/689153 virtual/stable/http/tests/navigation/response204.html [ Timeout ]
-crbug.com/689153 virtual/mojo-loading/http/tests/navigation/response204.html [ Timeout ]
-
-# Missing console warning about usage of legacy protocol.
-Bug(none) external/wpt/html/browsers/history/the-location-interface/location-protocol-setter-non-broken-weird.html [ Failure ]
-
-# Missing error messages.
-Bug(none) external/wpt/html/browsers/history/the-location-interface/location-protocol-setter-non-broken.html [ Failure ]
-
-# Missing console error line number.
-Bug(none) http/tests/security/location-href-clears-username-password.html [ Failure ]
-Bug(none) virtual/mojo-loading/http/tests/security/location-href-clears-username-password.html [ Failure ]
-
-# New untriaged.
-Bug(none) http/tests/navigation/back-to-dynamic-iframe.html [ Failure ]
-Bug(none) virtual/mojo-loading/http/tests/navigation/back-to-dynamic-iframe.html [ Failure ]
-
-# This test seems to be partially failing without PlzNavigate as well.
+# https://crbug.com/695072: Preserve SourceLocation information.
+# This results in a missing line number in console error messages.
+crbug.com/695072 http/tests/security/location-href-clears-username-password.html [ Failure ]
+crbug.com/695072 virtual/mojo-loading/http/tests/security/location-href-clears-username-password.html [ Failure ]
+# The following tests need teh SourceLocation forwarded to the renderer when adding MixedContents error messages to the console.
+crbug.com/695072 http/tests/security/mixedContent/insecure-iframe-with-hsts.https.html [ Failure ]
+crbug.com/695072 virtual/mojo-loading/http/tests/security/mixedContent/insecure-iframe-with-hsts.https.html [ Failure ]
 
 # These tests are flaky.
 Bug(none) http/tests/misc/window-open-then-write.html [ Timeout ]
-Bug(none) external/wpt/html/browsers/browsing-the-web/unloading-documents/beforeunload-on-history-back.html [ Failure ]
+Bug(none) http/tests/security/popup-allowed-by-sandbox-can-navigate.html [ Failure ]
 Bug(none) virtual/mojo-loading/http/tests/misc/window-open-then-write.html [ Timeout ]
+Bug(none) virtual/mojo-loading/http/tests/security/popup-allowed-by-sandbox-can-navigate.html [ Failure ]

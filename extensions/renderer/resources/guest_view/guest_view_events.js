@@ -8,8 +8,13 @@ var EventBindings = require('event_bindings');
 var GuestViewInternalNatives = requireNative('guest_view_internal');
 var MessagingNatives = requireNative('messaging_natives');
 
+var EventBindings;
 var CreateEvent = function(name) {
   var eventOpts = {supportsListeners: true, supportsFilters: true};
+  if (bindingUtil)
+    return bindingUtil.createCustomEvent(name, null, eventOpts);
+  if (!EventBindings)
+    EventBindings = require('event_bindings');
   return new EventBindings.Event(name, undefined, eventOpts);
 };
 
@@ -26,6 +31,12 @@ function GuestViewEvents(view) {
   this.setupEventProperty('resize');
   this.setupEvents();
 }
+
+// Prevent GuestViewEvents inadvertently inheritng code from the global Object,
+// allowing a pathway for unintended execution of user code.
+// TODO(wjmaclean): Use utils.expose() here instead, track down other issues
+// of Object inheritance. https://crbug.com/701034
+GuestViewEvents.prototype.__proto__ = null;
 
 // |GuestViewEvents.EVENTS| is a dictionary of extension events to be listened
 //     for, which specifies how each event should be handled. The events are

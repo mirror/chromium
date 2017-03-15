@@ -28,32 +28,34 @@
 #include "core/frame/FrameHost.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/layout/LayoutPart.h"
 #include "core/layout/api/LayoutPartItem.h"
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/FrameLoader.h"
-#include "core/loader/FrameLoaderClient.h"
 #include "core/plugins/PluginView.h"
 #include "platform/weborigin/SecurityOrigin.h"
 
 namespace blink {
 
-typedef HeapHashMap<Member<Widget>, Member<FrameView>> WidgetToParentMap;
-static WidgetToParentMap& widgetNewParentMap() {
-  DEFINE_STATIC_LOCAL(WidgetToParentMap, map, (new WidgetToParentMap));
+typedef HeapHashMap<Member<FrameViewBase>, Member<FrameView>>
+    FrameViewBaseToParentMap;
+static FrameViewBaseToParentMap& widgetNewParentMap() {
+  DEFINE_STATIC_LOCAL(FrameViewBaseToParentMap, map,
+                      (new FrameViewBaseToParentMap));
   return map;
 }
 
-using WidgetSet = HeapHashSet<Member<Widget>>;
-static WidgetSet& widgetsPendingTemporaryRemovalFromParent() {
-  // Widgets in this set will not leak because it will be cleared in
+using FrameViewBaseSet = HeapHashSet<Member<FrameViewBase>>;
+static FrameViewBaseSet& widgetsPendingTemporaryRemovalFromParent() {
+  // FrameViewBases in this set will not leak because it will be cleared in
   // HTMLFrameOwnerElement::UpdateSuspendScope::performDeferredWidgetTreeOperations.
-  DEFINE_STATIC_LOCAL(WidgetSet, set, (new WidgetSet));
+  DEFINE_STATIC_LOCAL(FrameViewBaseSet, set, (new FrameViewBaseSet));
   return set;
 }
 
-static WidgetSet& widgetsPendingDispose() {
-  DEFINE_STATIC_LOCAL(WidgetSet, set, (new WidgetSet));
+static FrameViewBaseSet& widgetsPendingDispose() {
+  DEFINE_STATIC_LOCAL(FrameViewBaseSet, set, (new FrameViewBaseSet));
   return set;
 }
 
@@ -71,12 +73,12 @@ HTMLFrameOwnerElement::UpdateSuspendScope::UpdateSuspendScope() {
 
 void HTMLFrameOwnerElement::UpdateSuspendScope::
     performDeferredWidgetTreeOperations() {
-  WidgetToParentMap map;
+  FrameViewBaseToParentMap map;
   widgetNewParentMap().swap(map);
-  for (const auto& widget : map) {
-    Widget* child = widget.key.get();
+  for (const auto& frameViewBase : map) {
+    FrameViewBase* child = frameViewBase.key.get();
     FrameView* currentParent = toFrameView(child->parent());
-    FrameView* newParent = widget.value;
+    FrameView* newParent = frameViewBase.value;
     if (newParent != currentParent) {
       if (currentParent)
         currentParent->removeChild(child);
@@ -88,20 +90,20 @@ void HTMLFrameOwnerElement::UpdateSuspendScope::
   }
 
   {
-    WidgetSet set;
+    FrameViewBaseSet set;
     widgetsPendingTemporaryRemovalFromParent().swap(set);
-    for (const auto& widget : set) {
-      FrameView* currentParent = toFrameView(widget->parent());
+    for (const auto& frameViewBase : set) {
+      FrameView* currentParent = toFrameView(frameViewBase->parent());
       if (currentParent)
-        currentParent->removeChild(widget.get());
+        currentParent->removeChild(frameViewBase.get());
     }
   }
 
   {
-    WidgetSet set;
+    FrameViewBaseSet set;
     widgetsPendingDispose().swap(set);
-    for (const auto& widget : set) {
-      widget->dispose();
+    for (const auto& frameViewBase : set) {
+      frameViewBase->dispose();
     }
   }
 }
@@ -114,16 +116,16 @@ HTMLFrameOwnerElement::UpdateSuspendScope::~UpdateSuspendScope() {
 }
 
 // Unlike moveWidgetToParentSoon, this will not call dispose the Widget.
-void temporarilyRemoveWidgetFromParentSoon(Widget* widget) {
+void temporarilyRemoveWidgetFromParentSoon(FrameViewBase* frameViewBase) {
   if (s_updateSuspendCount) {
-    widgetsPendingTemporaryRemovalFromParent().insert(widget);
+    widgetsPendingTemporaryRemovalFromParent().insert(frameViewBase);
   } else {
-    if (toFrameView(widget->parent()))
-      toFrameView(widget->parent())->removeChild(widget);
+    if (toFrameView(frameViewBase->parent()))
+      toFrameView(frameViewBase->parent())->removeChild(frameViewBase);
   }
 }
 
-void moveWidgetToParentSoon(Widget* child, FrameView* parent) {
+void moveWidgetToParentSoon(FrameViewBase* child, FrameView* parent) {
   if (!s_updateSuspendCount) {
     if (parent) {
       parent->addChild(child);
@@ -213,19 +215,12 @@ bool HTMLFrameOwnerElement::isKeyboardFocusable() const {
   return m_contentFrame && HTMLElement::isKeyboardFocusable();
 }
 
-void HTMLFrameOwnerElement::disposeWidgetSoon(Widget* widget) {
+void HTMLFrameOwnerElement::disposeWidgetSoon(FrameViewBase* frameViewBase) {
   if (s_updateSuspendCount) {
-    widgetsPendingDispose().insert(widget);
+    widgetsPendingDispose().insert(frameViewBase);
     return;
   }
-  widget->dispose();
-}
-
-void HTMLFrameOwnerElement::frameOwnerPropertiesChanged() {
-  // Don't notify about updates if contentFrame() is null, for example when
-  // the subframe hasn't been created yet.
-  if (contentFrame())
-    document().frame()->loader().client()->didChangeFrameOwnerProperties(this);
+  frameViewBase->dispose();
 }
 
 void HTMLFrameOwnerElement::dispatchLoad() {
@@ -238,6 +233,12 @@ HTMLFrameOwnerElement::delegatedPermissions() const {
   return permissions;
 }
 
+const WebVector<WebFeaturePolicyFeature>&
+HTMLFrameOwnerElement::allowedFeatures() const {
+  DEFINE_STATIC_LOCAL(WebVector<WebFeaturePolicyFeature>, features, ());
+  return features;
+}
+
 Document* HTMLFrameOwnerElement::getSVGDocument(
     ExceptionState& exceptionState) const {
   Document* doc = contentDocument();
@@ -246,18 +247,9 @@ Document* HTMLFrameOwnerElement::getSVGDocument(
   return nullptr;
 }
 
-void HTMLFrameOwnerElement::setWidget(Widget* widget) {
-  if (widget == m_widget)
+void HTMLFrameOwnerElement::setWidget(FrameViewBase* frameViewBase) {
+  if (frameViewBase == m_widget)
     return;
-
-  Document* doc = contentDocument();
-  if (doc && doc->frame()) {
-    bool willBeDisplayNone = !widget;
-    if (isDisplayNone() != willBeDisplayNone) {
-      doc->willChangeFrameOwnerProperties(marginWidth(), marginHeight(),
-                                          scrollingMode(), willBeDisplayNone);
-    }
-  }
 
   if (m_widget) {
     if (m_widget->parent())
@@ -265,8 +257,7 @@ void HTMLFrameOwnerElement::setWidget(Widget* widget) {
     m_widget = nullptr;
   }
 
-  m_widget = widget;
-  frameOwnerPropertiesChanged();
+  m_widget = frameViewBase;
 
   LayoutPart* layoutPart = toLayoutPart(layoutObject());
   LayoutPartItem layoutPartItem = LayoutPartItem(layoutPart);
@@ -285,7 +276,7 @@ void HTMLFrameOwnerElement::setWidget(Widget* widget) {
     cache->childrenChanged(layoutPart);
 }
 
-Widget* HTMLFrameOwnerElement::releaseWidget() {
+FrameViewBase* HTMLFrameOwnerElement::releaseWidget() {
   if (!m_widget)
     return nullptr;
   if (m_widget->parent())
@@ -298,7 +289,7 @@ Widget* HTMLFrameOwnerElement::releaseWidget() {
   return m_widget.release();
 }
 
-Widget* HTMLFrameOwnerElement::ownedWidget() const {
+FrameViewBase* HTMLFrameOwnerElement::ownedWidget() const {
   return m_widget.get();
 }
 

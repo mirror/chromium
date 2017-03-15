@@ -259,10 +259,10 @@ void SavedFormState::appendControlState(const AtomicString& name,
   FormElementKey key(name.impl(), type.impl());
   FormElementStateMap::iterator it = m_stateForNewFormElements.find(key);
   if (it != m_stateForNewFormElements.end()) {
-    it->value.append(state);
+    it->value.push_back(state);
   } else {
     Deque<FormControlState> stateList;
-    stateList.append(state);
+    stateList.push_back(state);
     m_stateForNewFormElements.set(key, stateList);
   }
   m_controlStateCount++;
@@ -405,12 +405,12 @@ DEFINE_TRACE(DocumentState) {
 
 void DocumentState::addControl(HTMLFormControlElementWithState* control) {
   DCHECK(!m_formControls.contains(control));
-  m_formControls.add(control);
+  m_formControls.insert(control);
 }
 
 void DocumentState::removeControl(HTMLFormControlElementWithState* control) {
-  RELEASE_ASSERT(m_formControls.contains(control));
-  m_formControls.remove(control);
+  CHECK(m_formControls.contains(control));
+  m_formControls.erase(control);
 }
 
 static String formStateSignature() {

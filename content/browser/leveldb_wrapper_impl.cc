@@ -89,6 +89,16 @@ void LevelDBWrapperImpl::ScheduleImmediateCommit() {
   CommitChanges();
 }
 
+void LevelDBWrapperImpl::PurgeMemory() {
+  if (!map_ ||          // We're not using any memory.
+      commit_batch_ ||  // We leave things alone with changes pending.
+      !database_) {  // Don't purge anything if we're not backed by a database.
+    return;
+  }
+
+  map_.reset();
+}
+
 void LevelDBWrapperImpl::AddObserver(
     mojom::LevelDBObserverAssociatedPtrInfo observer) {
   mojom::LevelDBObserverAssociatedPtr observer_ptr;
@@ -186,20 +196,23 @@ void LevelDBWrapperImpl::Delete(const std::vector<uint8_t>& key,
 
 void LevelDBWrapperImpl::DeleteAll(const std::string& source,
                                    const DeleteAllCallback& callback) {
-  if (!map_ && !on_load_complete_tasks_.empty()) {
+  if (!map_) {
     LoadMap(
         base::Bind(&LevelDBWrapperImpl::DeleteAll, base::Unretained(this),
                     source, callback));
     return;
   }
 
-  if (database_ && (!map_ || !map_->empty())) {
+  if (map_->empty()) {
+    callback.Run(true);
+    return;
+  }
+
+  if (database_) {
     CreateCommitBatchIfNeeded();
     commit_batch_->clear_all_first = true;
     commit_batch_->changed_keys.clear();
   }
-  if (!map_)
-    map_.reset(new ValueMap);
 
   map_->clear();
   bytes_used_ = 0;

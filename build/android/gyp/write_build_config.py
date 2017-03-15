@@ -293,6 +293,7 @@ def main(argv):
                     help='Path to JAR that contains java resources. Everything '
                     'from this JAR except meta-inf/ content and .class files '
                     'will be added to the final APK.')
+  parser.add_option('--bootclasspath', help='Path to custom android.jar/rt.jar')
 
   # android library options
   parser.add_option('--dex-path', help='Path to target\'s dex output.')
@@ -373,6 +374,7 @@ def main(argv):
   direct_library_deps = deps.Direct('java_library')
   all_library_deps = deps.All('java_library')
 
+  direct_resources_deps = deps.Direct('android_resources')
   all_resources_deps = deps.All('android_resources')
   # Resources should be ordered with the highest-level dependency first so that
   # overrides are done correctly.
@@ -419,6 +421,8 @@ def main(argv):
     gradle['dependent_java_projects'] = []
     gradle['dependent_prebuilt_jars'] = deps.GradlePrebuiltJarPaths()
 
+    if options.bootclasspath:
+      gradle['bootclasspath'] = options.bootclasspath
     if options.main_class:
       gradle['main_class'] = options.main_class
 
@@ -475,8 +479,11 @@ def main(argv):
           c['package_name'] for c in all_resources_deps if 'package_name' in c]
 
   if options.type == 'android_apk':
-    # Apks will get their resources srcjar explicitly passed to the java step.
+    # Apks will get their resources srcjar explicitly passed to the java step
     config['javac']['srcjars'] = []
+    # Gradle may need to generate resources for some apks.
+    gradle['srcjars'] = [
+        c['srcjar'] for c in direct_resources_deps if 'srcjar' in c]
 
   if options.type == 'android_assets':
     all_asset_sources = []

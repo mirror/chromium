@@ -167,10 +167,21 @@
 #      'target_name': 'search_controller',
 #      'includes': ['../../../compile_js2.gypi'],
 #    },
-#    {
-#      'target_name': 'share_client',
-#      'includes': ['../../../compile_js2.gypi'],
-#    },
+    {
+      'target_name': 'share_client',
+      'dependencies': [
+        '../../../externs/compiled_resources2.gyp:entry_location',
+        '../../../externs/compiled_resources2.gyp:gallery_foreground',
+        '../../../externs/compiled_resources2.gyp:volume_info',
+        '../../../externs/compiled_resources2.gyp:volume_info_list',
+        '../../../externs/compiled_resources2.gyp:volume_manager',
+        '../../../externs/compiled_resources2.gyp:webview_tag',
+        '../../common/js/compiled_resources2.gyp:volume_manager_common',
+        '<(DEPTH)/ui/webui/resources/js/cr/compiled_resources2.gyp:event_target',
+        '<(EXTERNS_GYP):chrome_extensions',
+      ],
+      'includes': ['../../../compile_js2.gypi'],
+    },
 #    {
 #      'target_name': 'sort_menu_controller',
 #      'includes': ['../../../compile_js2.gypi'],
@@ -183,10 +194,16 @@
 #      'target_name': 'task_controller',
 #      'includes': ['../../../compile_js2.gypi'],
 #    },
-#    {
-#      'target_name': 'thumbnail_loader',
-#      'includes': ['../../../compile_js2.gypi'],
-#    },
+    {
+      'target_name': 'thumbnail_loader',
+      'dependencies': [
+        '../../../image_loader/compiled_resources2.gyp:image_loader_client',
+        '../../common/js/compiled_resources2.gyp:file_type',
+        '../../common/js/compiled_resources2.gyp:util',
+        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:assert',
+      ],
+      'includes': ['../../../compile_js2.gypi'],
+    },
 #    {
 #      'target_name': 'toolbar_controller',
 #      'includes': ['../../../compile_js2.gypi'],

@@ -6,12 +6,14 @@ package org.chromium.chrome.browser.ntp.snippets;
 import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
 
+import org.chromium.chrome.browser.suggestions.OfflinableSuggestion;
+
 import java.io.File;
 
 /**
  * Represents the data for an article card on the NTP.
  */
-public class SnippetArticle {
+public class SnippetArticle implements OfflinableSuggestion {
     /** The category of this article. */
     public final int mCategory;
 
@@ -55,7 +57,10 @@ public class SnippetArticle {
     private boolean mImpressionTracked;
 
     /** Whether the linked article represents an asset download. */
-    public boolean mIsAssetDownload;
+    private boolean mIsAssetDownload;
+
+    /** The GUID of the asset download (only for asset download articles). */
+    private String mAssetDownloadGuid;
 
     /** The path to the asset download (only for asset download articles). */
     private File mAssetDownloadFile;
@@ -124,6 +129,21 @@ public class SnippetArticle {
         return mCategory == KnownCategories.DOWNLOADS;
     }
 
+    /** @return whether a snippet is asset download. */
+    public boolean isAssetDownload() {
+        return mIsAssetDownload;
+    }
+
+    /**
+     * @return the GUID of the asset download. May only be called if {@link #mIsAssetDownload} is
+     * {@code true} (which implies that this snippet belongs to the DOWNLOADS category).
+     */
+    public String getAssetDownloadGuid() {
+        assert isDownload();
+        assert mIsAssetDownload;
+        return mAssetDownloadGuid;
+    }
+
     /**
      * @return the asset download path. May only be called if {@link #mIsAssetDownload} is
      * {@code true} (which implies that this snippet belongs to the DOWNLOADS category).
@@ -148,9 +168,10 @@ public class SnippetArticle {
      * Marks the article suggestion as an asset download with the given path and mime type. May only
      * be called if this snippet belongs to DOWNLOADS category.
      */
-    public void setAssetDownloadData(String filePath, String mimeType) {
+    public void setAssetDownloadData(String downloadGuid, String filePath, String mimeType) {
         assert isDownload();
         mIsAssetDownload = true;
+        mAssetDownloadGuid = downloadGuid;
         mAssetDownloadFile = new File(filePath);
         mAssetDownloadMimeType = mimeType;
     }
@@ -165,10 +186,7 @@ public class SnippetArticle {
         setOfflinePageOfflineId(offlinePageId);
     }
 
-    /**
-    * @return whether a snippet has to be matched with the exact offline page or with the most
-    * recent offline page found by the snippet's URL.
-    */
+    @Override
     public boolean requiresExactOfflinePage() {
         return isDownload() || isRecentTab();
     }
@@ -196,15 +214,17 @@ public class SnippetArticle {
         setOfflinePageOfflineId(offlinePageId);
     }
 
-    /** Sets offline id of the corresponding to the snippet offline page. Null to clear.*/
+    @Override
+    public String getUrl() {
+        return mUrl;
+    }
+
+    @Override
     public void setOfflinePageOfflineId(@Nullable Long offlineId) {
         mOfflinePageOfflineId = offlineId;
     }
 
-    /**
-     * Gets offline id of the corresponding to the snippet offline page.
-     * Null if there is no corresponding offline page.
-     */
+    @Override
     @Nullable
     public Long getOfflinePageOfflineId() {
         return mOfflinePageOfflineId;

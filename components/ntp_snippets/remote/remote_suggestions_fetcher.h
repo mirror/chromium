@@ -12,7 +12,6 @@
 #include <vector>
 
 #include "base/callback.h"
-#include "base/memory/weak_ptr.h"
 #include "base/optional.h"
 #include "base/time/clock.h"
 #include "base/time/tick_clock.h"
@@ -21,9 +20,9 @@
 #include "components/ntp_snippets/remote/json_request.h"
 #include "components/ntp_snippets/remote/remote_suggestion.h"
 #include "components/ntp_snippets/remote/request_params.h"
-#include "components/ntp_snippets/remote/request_throttler.h"
 #include "components/ntp_snippets/status.h"
 #include "components/translate/core/browser/language_model.h"
+#include "components/version_info/version_info.h"
 #include "net/url_request/url_request_context_getter.h"
 
 class PrefService;
@@ -36,6 +35,10 @@ class Value;
 namespace ntp_snippets {
 
 class UserClassifier;
+
+// Returns the appropriate API endpoint for the fetcher, in consideration of
+// the channel and variation parameters.
+GURL GetFetchEndpoint(version_info::Channel channel);
 
 // TODO(tschumann): BuildArticleCategoryInfo() and BuildRemoteCategoryInfo()
 // don't really belong into this library. However, as the fetcher is
@@ -84,6 +87,7 @@ class RemoteSuggestionsFetcher : public OAuth2TokenService::Consumer,
       PrefService* pref_service,
       translate::LanguageModel* language_model,
       const ParseJSONCallback& parse_json_callback,
+      const GURL& api_endpoint,
       const std::string& api_key,
       const UserClassifier* user_classifier);
   ~RemoteSuggestionsFetcher() override;
@@ -162,8 +166,6 @@ class RemoteSuggestionsFetcher : public OAuth2TokenService::Consumer,
                       FetchedCategoriesVector* categories,
                       const base::Time& fetch_time);
 
-  bool DemandQuotaForRequest(bool interactive_request);
-
   // Authentication for signed-in users.
   SigninManagerBase* signin_manager_;
   OAuth2TokenService* token_service_;
@@ -200,16 +202,9 @@ class RemoteSuggestionsFetcher : public OAuth2TokenService::Consumer,
   // Classifier that tells us how active the user is. Not owned.
   const UserClassifier* user_classifier_;
 
-  // Request throttlers for limiting requests for different classes of users.
-  RequestThrottler request_throttler_rare_ntp_user_;
-  RequestThrottler request_throttler_active_ntp_user_;
-  RequestThrottler request_throttler_active_suggestions_consumer_;
-
   // Info on the last finished fetch.
   std::string last_status_;
   std::string last_fetch_json_;
-
-  base::WeakPtrFactory<RemoteSuggestionsFetcher> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(RemoteSuggestionsFetcher);
 };

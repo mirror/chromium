@@ -553,37 +553,26 @@ public class DownloadManagerService extends BroadcastReceiver implements
     }
 
     /**
-     * Updates notifications for a given list of downloads. Should not be called from UI thread.
+     * Updates notifications for a given list of downloads.
      * @param progresses A list of notifications to update.
-     * @return A List of failed downloads.
      */
-    private List<DownloadItem> updateAllNotifications(List<DownloadProgress> progresses) {
-        assert !ThreadUtils.runningOnUiThread();
-        List<DownloadItem> downloadItems = new ArrayList<DownloadItem>();
+    private void updateAllNotifications(List<DownloadProgress> progresses) {
+        assert ThreadUtils.runningOnUiThread();
         for (int i = 0; i < progresses.size(); ++i) {
             DownloadProgress progress = progresses.get(i);
             DownloadItem item = progress.mDownloadItem;
             DownloadInfo info = item.getDownloadInfo();
+            boolean notificationUpdateScheduled = true;
+            boolean removeFromDownloadProgressMap = true;
             switch (progress.mDownloadStatus) {
                 case DOWNLOAD_STATUS_COMPLETE:
-                    boolean success = addCompletedDownload(item);
-                    if (success) {
-                        boolean canResolve = isOMADownloadDescription(info)
-                                || canResolveDownloadItem(
-                                        mContext, item, progress.mIsSupportedMimeType);
-                        long systemDownloadId = item.getSystemDownloadId();
-                        mDownloadNotifier.notifyDownloadSuccessful(
-                                info, systemDownloadId, canResolve, progress.mIsSupportedMimeType);
-                        broadcastDownloadSuccessful(info);
-                    } else {
-                        downloadItems.add(item);
-                        mDownloadNotifier.notifyDownloadFailed(info);
-                    }
+                    notificationUpdateScheduled = updateDownloadSuccessNotification(progress);
+                    removeFromDownloadProgressMap = notificationUpdateScheduled;
                     break;
                 case DOWNLOAD_STATUS_FAILED:
-                    downloadItems.add(item);
                     mDownloadNotifier.notifyDownloadFailed(info);
                     Log.w(TAG, "Download failed: " + info.getFilePath());
+                    onDownloadFailed(info.getFileName(), DownloadManager.ERROR_UNKNOWN);
                     break;
                 case DOWNLOAD_STATUS_IN_PROGRESS:
                     if (info.isPaused()) {
@@ -592,6 +581,7 @@ public class DownloadManagerService extends BroadcastReceiver implements
                     } else {
                         mDownloadNotifier.notifyDownloadProgress(info,
                                 progress.mStartTimeInMillis, progress.mCanDownloadWhileMetered);
+                        removeFromDownloadProgressMap = false;
                     }
                     break;
                 case DOWNLOAD_STATUS_CANCELLED:
@@ -599,13 +589,61 @@ public class DownloadManagerService extends BroadcastReceiver implements
                     break;
                 case DOWNLOAD_STATUS_INTERRUPTED:
                     mDownloadNotifier.notifyDownloadInterrupted(info, progress.mIsAutoResumable);
+                    removeFromDownloadProgressMap = !progress.mIsAutoResumable;
                     break;
                 default:
                     assert false;
                     break;
             }
+            if (notificationUpdateScheduled) {
+                progress.mIsUpdated = false;
+            }
+            if (removeFromDownloadProgressMap) {
+                mDownloadProgressMap.remove(item.getId());
+            }
         }
-        return downloadItems;
+    }
+
+    /**
+     * Helper method to schedule a task to update the download success notification.
+     * @param progresses Download progress to update.
+     * @return True if the task can be scheduled, or false otherwise.
+     */
+    private boolean updateDownloadSuccessNotification(DownloadProgress progress) {
+        final boolean isSupportedMimeType = progress.mIsSupportedMimeType;
+        final DownloadItem item = progress.mDownloadItem;
+        AsyncTask<Void, Void, Pair<Long, Boolean>> task =
+                new AsyncTask<Void, Void, Pair<Long, Boolean>>() {
+            @Override
+            public Pair<Long, Boolean> doInBackground(Void... params) {
+                boolean success = addCompletedDownload(item);
+                boolean canResolve = success ? (isOMADownloadDescription(item.getDownloadInfo())
+                        || canResolveDownloadItem(mContext, item, isSupportedMimeType)) : false;
+                return Pair.create(item.getSystemDownloadId(), canResolve);
+            }
+
+            @Override
+            protected void onPostExecute(Pair<Long, Boolean> result) {
+                DownloadInfo info = item.getDownloadInfo();
+                if (result.first != DownloadItem.INVALID_DOWNLOAD_ID) {
+                    mDownloadNotifier.notifyDownloadSuccessful(
+                            info, result.first, result.second, isSupportedMimeType);
+                    broadcastDownloadSuccessful(info);
+                } else {
+                    mDownloadNotifier.notifyDownloadFailed(info);
+                    // TODO(qinmin): get the failure message from native.
+                    onDownloadFailed(info.getFileName(), DownloadManager.ERROR_UNKNOWN);
+                }
+            }
+        };
+        try {
+            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            return true;
+        } catch (RejectedExecutionException e) {
+            // Reaching thread limit, update will be reschduled for the next run.
+            Log.e(TAG, "Thread limit reached, reschedule notification update later.");
+            return false;
+        }
     }
 
     /**
@@ -615,6 +653,7 @@ public class DownloadManagerService extends BroadcastReceiver implements
      * @return true if the download is added to the DownloadManager, or false otherwise.
      */
     protected boolean addCompletedDownload(DownloadItem downloadItem) {
+        assert !ThreadUtils.runningOnUiThread();
         DownloadInfo downloadInfo = downloadItem.getDownloadInfo();
         String description = downloadInfo.getDescription();
         if (TextUtils.isEmpty(description)) description = downloadInfo.getFileName();
@@ -658,7 +697,8 @@ public class DownloadManagerService extends BroadcastReceiver implements
     /**
      * Schedule an update if there is no update scheduled.
      */
-    private void scheduleUpdateIfNeeded() {
+    @VisibleForTesting
+    protected void scheduleUpdateIfNeeded() {
         if (mIsUIUpdateScheduled) return;
 
         mIsUIUpdateScheduled = true;
@@ -674,45 +714,7 @@ public class DownloadManagerService extends BroadcastReceiver implements
             mIsUIUpdateScheduled = false;
             return;
         }
-        // Make a copy of the |progressUpdated|, so that we can update the notification on another
-        // thread without worrying about concurrent modifications.
-        final List<DownloadProgress> progressToUpdate = new ArrayList<DownloadProgress>();
-        for (int i = 0; i < progressPendingUpdate.size(); ++i) {
-            progressToUpdate.add(new DownloadProgress(progressPendingUpdate.get(i)));
-        }
-        AsyncTask<Void, Void, List<DownloadItem>> task =
-                new AsyncTask<Void, Void, List<DownloadItem>>() {
-            @Override
-            public List<DownloadItem> doInBackground(Void... params) {
-                return updateAllNotifications(progressToUpdate);
-            }
-
-            @Override
-            protected void onPostExecute(List<DownloadItem> result) {
-                for (int i = 0; i < result.size(); ++i) {
-                    // TODO(qinmin): get the failure message from native.
-                    onDownloadFailed(result.get(i).getDownloadInfo().getFileName(),
-                            DownloadManager.ERROR_UNKNOWN);
-                }
-            }
-        };
-        try {
-            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            for (int i = 0; i < progressPendingUpdate.size(); ++i) {
-                DownloadProgress progress = progressPendingUpdate.get(i);
-                progress.mIsUpdated = false;
-                // Remove progress entry from  mDownloadProgressMap if they are no longer needed.
-                if ((progress.mDownloadStatus != DOWNLOAD_STATUS_IN_PROGRESS
-                        || progress.mDownloadItem.getDownloadInfo().isPaused())
-                        && (progress.mDownloadStatus != DOWNLOAD_STATUS_INTERRUPTED
-                                || !progress.mIsAutoResumable)) {
-                    mDownloadProgressMap.remove(progress.mDownloadItem.getId());
-                }
-            }
-        } catch (RejectedExecutionException e) {
-            // Reaching thread limit, update will be reschduled for the next run.
-            Log.e(TAG, "reaching thread limit, reschedule notification update later.");
-        }
+        updateAllNotifications(progressPendingUpdate);
 
         Runnable scheduleNextUpdateTask = new Runnable(){
             @Override
@@ -1063,10 +1065,11 @@ public class DownloadManagerService extends BroadcastReceiver implements
                 ? false : ExternalNavigationDelegateImpl.resolveIntent(intent, true);
     }
 
-    /** See {@link #openDownloadedContent(Context, String, boolean, long)}. */
+    /** See {@link #openDownloadedContent(Context, String, boolean, boolean, String, long)}. */
     protected void openDownloadedContent(final DownloadInfo downloadInfo, final long downloadId) {
         openDownloadedContent(mContext, downloadInfo.getFilePath(),
-                isSupportedMimeType(downloadInfo.getMimeType()), downloadId);
+                isSupportedMimeType(downloadInfo.getMimeType()), downloadInfo.isOffTheRecord(),
+                downloadInfo.getDownloadGuid(), downloadId);
     }
 
     /**
@@ -1076,10 +1079,13 @@ public class DownloadManagerService extends BroadcastReceiver implements
      * @param context             Context to use.
      * @param filePath            Path to the downloaded item.
      * @param isSupportedMimeType MIME type of the downloaded item.
+     * @param isOffTheRecord      Whether the download was for a off the record profile.
+     * @param downloadGuid        GUID of the download item in DownloadManager.
      * @param downloadId          ID of the download item in DownloadManager.
      */
     protected static void openDownloadedContent(final Context context, final String filePath,
-            final boolean isSupportedMimeType, final long downloadId) {
+            final boolean isSupportedMimeType, final boolean isOffTheRecord,
+            final String downloadGuid, final long downloadId) {
         new AsyncTask<Void, Void, Intent>() {
             @Override
             public Intent doInBackground(Void... params) {
@@ -1093,6 +1099,10 @@ public class DownloadManagerService extends BroadcastReceiver implements
                         || !ExternalNavigationDelegateImpl.resolveIntent(intent, true)
                         || !DownloadUtils.fireOpenIntentForDownload(context, intent)) {
                     openDownloadsPage(context);
+                } else {
+                    DownloadManagerService service =
+                            DownloadManagerService.getDownloadManagerService(context);
+                    service.updateLastAccessTime(downloadGuid, isOffTheRecord);
                 }
             }
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -1187,9 +1197,8 @@ public class DownloadManagerService extends BroadcastReceiver implements
      */
     @Override
     public void cancelDownload(
-            String downloadGuid, boolean isOffTheRecord, boolean isNotificationDismissed) {
-        nativeCancelDownload(getNativeDownloadManagerService(), downloadGuid, isOffTheRecord,
-                isNotificationDismissed);
+            String downloadGuid, boolean isOffTheRecord) {
+        nativeCancelDownload(getNativeDownloadManagerService(), downloadGuid, isOffTheRecord);
         removeDownloadProgress(downloadGuid);
         recordDownloadFinishedUMA(DOWNLOAD_STATUS_CANCELLED, downloadGuid, 0);
     }
@@ -1775,6 +1784,18 @@ public class DownloadManagerService extends BroadcastReceiver implements
         return mAutoResumptionLimit;
     }
 
+    /**
+     * Updates the last access time of a download.
+     * @param downloadGuid Download GUID.
+     * @param isOffTheRecord Whether the download is off the record.
+     */
+    @Override
+    public void updateLastAccessTime(String downloadGuid, boolean isOffTheRecord) {
+        if (TextUtils.isEmpty(downloadGuid)) return;
+
+        nativeUpdateLastAccessTime(getNativeDownloadManagerService(), downloadGuid, isOffTheRecord);
+    }
+
     @Override
     public void onMaxBandwidthChanged(double maxBandwidthMbps) {}
 
@@ -1797,8 +1818,7 @@ public class DownloadManagerService extends BroadcastReceiver implements
     private native void nativeResumeDownload(
             long nativeDownloadManagerService, String downloadGuid, boolean isOffTheRecord);
     private native void nativeCancelDownload(
-            long nativeDownloadManagerService, String downloadGuid, boolean isOffTheRecord,
-            boolean isNotificationDismissed);
+            long nativeDownloadManagerService, String downloadGuid, boolean isOffTheRecord);
     private native void nativePauseDownload(long nativeDownloadManagerService, String downloadGuid,
             boolean isOffTheRecord);
     private native void nativeRemoveDownload(long nativeDownloadManagerService, String downloadGuid,
@@ -1807,4 +1827,6 @@ public class DownloadManagerService extends BroadcastReceiver implements
             long nativeDownloadManagerService, boolean isOffTheRecord);
     private native void nativeCheckForExternallyRemovedDownloads(
             long nativeDownloadManagerService, boolean isOffTheRecord);
+    private native void nativeUpdateLastAccessTime(
+            long nativeDownloadManagerService, String downloadGuid, boolean isOffTheRecord);
 }

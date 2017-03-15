@@ -24,6 +24,7 @@
 
 #include "core/html/TextControlElement.h"
 
+#include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/HTMLNames.h"
 #include "core/dom/AXObjectCache.h"
@@ -291,7 +292,8 @@ void TextControlElement::setRangeText(const String& replacement,
   else
     text.insert(replacement, start);
 
-  setValue(text, TextFieldEventBehavior::DispatchNoEvent);
+  setValue(text, TextFieldEventBehavior::DispatchNoEvent,
+           TextControlSetValueSelection::kDoNotSet);
 
   if (selectionMode == "select") {
     newSelectionStart = start;
@@ -410,14 +412,14 @@ bool TextControlElement::setSelectionRange(
   if (direction == SelectionHasNoDirection && frame &&
       frame->editor().behavior().shouldConsiderSelectionAsDirectional())
     direction = SelectionHasForwardDirection;
-  cacheSelection(start, end, direction);
+  bool didChange = cacheSelection(start, end, direction);
 
   if (document().focusedElement() != this)
-    return true;
+    return didChange;
 
   HTMLElement* innerEditor = innerEditorElement();
   if (!frame || !innerEditor)
-    return true;
+    return didChange;
 
   Position startPosition = positionForIndex(innerEditor, start);
   Position endPosition =
@@ -434,18 +436,30 @@ bool TextControlElement::setSelectionRange(
     DCHECK_EQ(endPosition.anchorNode()->ownerShadowHost(), this);
   }
 #endif  // DCHECK_IS_ON()
-  VisibleSelection newSelection;
-  if (direction == SelectionHasBackwardDirection)
-    newSelection.setWithoutValidation(endPosition, startPosition);
-  else
-    newSelection.setWithoutValidation(startPosition, endPosition);
-  newSelection.setIsDirectional(direction != SelectionHasNoDirection);
-
   frame->selection().setSelection(
-      newSelection,
-      FrameSelection::DoNotAdjustInFlatTree | FrameSelection::CloseTyping |
-          FrameSelection::ClearTypingStyle | FrameSelection::DoNotSetFocus);
-  return true;
+      SelectionInDOMTree::Builder()
+          .collapse(direction == SelectionHasBackwardDirection ? endPosition
+                                                               : startPosition)
+          .extend(direction == SelectionHasBackwardDirection ? startPosition
+                                                             : endPosition)
+          .setIsDirectional(direction != SelectionHasNoDirection)
+          .build(),
+      FrameSelection::CloseTyping | FrameSelection::ClearTypingStyle |
+          FrameSelection::DoNotSetFocus);
+  return didChange;
+}
+
+bool TextControlElement::cacheSelection(unsigned start,
+                                        unsigned end,
+                                        TextFieldSelectionDirection direction) {
+  DCHECK_LE(start, end);
+  bool didChange = m_cachedSelectionStart != start ||
+                   m_cachedSelectionEnd != end ||
+                   m_cachedSelectionDirection != direction;
+  m_cachedSelectionStart = start;
+  m_cachedSelectionEnd = end;
+  m_cachedSelectionDirection = direction;
+  return didChange;
 }
 
 VisiblePosition TextControlElement::visiblePositionForIndex(int index) const {
@@ -460,18 +474,16 @@ VisiblePosition TextControlElement::visiblePositionForIndex(int index) const {
   return createVisiblePosition(it.endPosition(), TextAffinity::Upstream);
 }
 
+// TODO(yosin): We should move |TextControlElement::indexForVisiblePosition()|
+// to "AXLayoutObject.cpp" since this funciton is used only there.
 int TextControlElement::indexForVisiblePosition(
     const VisiblePosition& pos) const {
   Position indexPosition = pos.deepEquivalent().parentAnchoredEquivalent();
   if (enclosingTextControl(indexPosition) != this)
     return 0;
-  DCHECK(indexPosition.document());
-  Range* range = Range::create(*indexPosition.document());
-  range->setStart(innerEditorElement(), 0, ASSERT_NO_EXCEPTION);
-  range->setEnd(indexPosition.computeContainerNode(),
-                indexPosition.offsetInContainerNode(), ASSERT_NO_EXCEPTION);
-  return TextIterator::rangeLength(range->startPosition(),
-                                   range->endPosition());
+  DCHECK(indexPosition.isConnected()) << indexPosition;
+  return TextIterator::rangeLength(Position(innerEditorElement(), 0),
+                                   indexPosition);
 }
 
 unsigned TextControlElement::selectionStart() const {
@@ -485,9 +497,25 @@ unsigned TextControlElement::selectionStart() const {
 
 unsigned TextControlElement::computeSelectionStart() const {
   DCHECK(isTextControl());
-  if (LocalFrame* frame = document().frame())
-    return indexForPosition(innerEditorElement(), frame->selection().start());
-  return 0;
+  LocalFrame* frame = document().frame();
+  if (!frame)
+    return 0;
+  {
+    // To avoid regression on speedometer benchmark[1] test, we should not
+    // update layout tree in this code block.
+    // [1] http://browserbench.org/Speedometer/
+    DocumentLifecycle::DisallowTransitionScope disallowTransition(
+        document().lifecycle());
+    const SelectionInDOMTree& selection =
+        frame->selection().selectionInDOMTree();
+    if (selection.granularity() == CharacterGranularity) {
+      return indexForPosition(innerEditorElement(),
+                              selection.computeStartPosition());
+    }
+  }
+  const VisibleSelection& visibleSelection =
+      frame->selection().computeVisibleSelectionInDOMTreeDeprecated();
+  return indexForPosition(innerEditorElement(), visibleSelection.start());
 }
 
 unsigned TextControlElement::selectionEnd() const {
@@ -500,9 +528,25 @@ unsigned TextControlElement::selectionEnd() const {
 
 unsigned TextControlElement::computeSelectionEnd() const {
   DCHECK(isTextControl());
-  if (LocalFrame* frame = document().frame())
-    return indexForPosition(innerEditorElement(), frame->selection().end());
-  return 0;
+  LocalFrame* frame = document().frame();
+  if (!frame)
+    return 0;
+  {
+    // To avoid regression on speedometer benchmark[1] test, we should not
+    // update layout tree in this code block.
+    // [1] http://browserbench.org/Speedometer/
+    DocumentLifecycle::DisallowTransitionScope disallowTransition(
+        document().lifecycle());
+    const SelectionInDOMTree& selection =
+        frame->selection().selectionInDOMTree();
+    if (selection.granularity() == CharacterGranularity) {
+      return indexForPosition(innerEditorElement(),
+                              selection.computeEndPosition());
+    }
+  }
+  const VisibleSelection& visibleSelection =
+      frame->selection().computeVisibleSelectionInDOMTreeDeprecated();
+  return indexForPosition(innerEditorElement(), visibleSelection.end());
 }
 
 static const AtomicString& directionString(
@@ -539,10 +583,16 @@ TextFieldSelectionDirection TextControlElement::computeSelectionDirection()
   if (!frame)
     return SelectionHasNoDirection;
 
-  const VisibleSelection& selection = frame->selection().selection();
+  // To avoid regression on speedometer benchmark[1] test, we should not
+  // update layout tree in this code block.
+  // [1] http://browserbench.org/Speedometer/
+  DocumentLifecycle::DisallowTransitionScope disallowTransition(
+      document().lifecycle());
+  const SelectionInDOMTree& selection = frame->selection().selectionInDOMTree();
+  const Position& start = selection.computeStartPosition();
   return selection.isDirectional()
-             ? (selection.isBaseFirst() ? SelectionHasForwardDirection
-                                        : SelectionHasBackwardDirection)
+             ? (selection.base() == start ? SelectionHasForwardDirection
+                                          : SelectionHasBackwardDirection)
              : SelectionHasNoDirection;
 }
 
@@ -685,16 +735,19 @@ void TextControlElement::selectionChanged(bool userTriggered) {
   cacheSelection(computeSelectionStart(), computeSelectionEnd(),
                  computeSelectionDirection());
 
-  if (LocalFrame* frame = document().frame()) {
-    if (frame->selection().isRange() && userTriggered)
-      dispatchEvent(Event::createBubble(EventTypeNames::select));
-  }
+  LocalFrame* frame = document().frame();
+  if (!frame || !userTriggered)
+    return;
+  const SelectionInDOMTree& selection = frame->selection().selectionInDOMTree();
+  if (selection.selectionTypeWithLegacyGranularity() != RangeSelection)
+    return;
+  dispatchEvent(Event::createBubble(EventTypeNames::select));
 }
 
 void TextControlElement::scheduleSelectEvent() {
   Event* event = Event::createBubble(EventTypeNames::select);
   event->setTarget(this);
-  document().enqueueUniqueAnimationFrameEvent(event);
+  document().enqueueAnimationFrameEvent(event);
 }
 
 void TextControlElement::parseAttribute(

@@ -35,6 +35,8 @@ login.createScreen('AccountPickerScreen', 'account-picker', function() {
       'showBannerMessage',
       'showUserPodCustomIcon',
       'hideUserPodCustomIcon',
+      'setUserPodFingerprintIcon',
+      'removeUserPodFingerprintIcon',
       'disablePinKeyboardForUser',
       'setAuthType',
       'setTouchViewState',
@@ -250,7 +252,7 @@ login.createScreen('AccountPickerScreen', 'account-picker', function() {
           }
         }
         var showBubbleCallback = function() {
-          activatedPod.removeEventListener("webkitTransitionEnd",
+          activatedPod.removeEventListener("transitionend",
               showBubbleCallback);
           $('bubble').showContentForElement(bubbleAnchor,
                                             attachment,
@@ -258,7 +260,7 @@ login.createScreen('AccountPickerScreen', 'account-picker', function() {
                                             BUBBLE_OFFSET,
                                             bubblePositioningPadding, true);
         };
-        activatedPod.addEventListener("webkitTransitionEnd",
+        activatedPod.addEventListener("transitionend",
                                       showBubbleCallback);
         ensureTransitionEndEvent(activatedPod);
       }
@@ -416,6 +418,23 @@ login.createScreen('AccountPickerScreen', 'account-picker', function() {
      */
     hideUserPodCustomIcon: function(username) {
       $('pod-row').hideUserPodCustomIcon(username);
+    },
+
+    /**
+     * Set a fingerprint icon in the user pod of |username|.
+     * @param {string} username Username of the selected user
+     * @param {number} state Fingerprint unlock state
+     */
+    setUserPodFingerprintIcon: function(username, state) {
+      $('pod-row').setUserPodFingerprintIcon(username, state);
+    },
+
+    /**
+     * Removes the fingerprint icon in the user pod of |username|.
+     * @param {string} username Username of the selected user.
+     */
+    removeUserPodFingerprintIcon: function(username) {
+      $('pod-row').removeUserPodFingerprintIcon(username);
     },
 
     /**

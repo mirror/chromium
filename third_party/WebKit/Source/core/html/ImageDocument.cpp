@@ -24,6 +24,7 @@
 
 #include "core/html/ImageDocument.h"
 
+#include <limits>
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/HTMLNames.h"
 #include "core/dom/RawDataDocumentParser.h"
@@ -33,6 +34,7 @@
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/frame/VisualViewport.h"
@@ -46,14 +48,10 @@
 #include "core/layout/LayoutObject.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoader.h"
-#include "core/loader/FrameLoaderClient.h"
 #include "core/loader/resource/ImageResource.h"
 #include "core/page/Page.h"
 #include "platform/HostWindow.h"
 #include "wtf/text/StringBuilder.h"
-#include <limits>
-
-using namespace std;
 
 namespace {
 
@@ -150,7 +148,7 @@ void ImageDocumentParser::appendBytes(const char* data, size_t length) {
     return;
 
   if (document()->cachedImageResourceDeprecated()) {
-    RELEASE_ASSERT(length <= std::numeric_limits<unsigned>::max());
+    CHECK_LE(length, std::numeric_limits<unsigned>::max());
     // If decoding has already failed, there's no point in sending additional
     // data to the ImageResource.
     if (document()->cachedImageResourceDeprecated()->getStatus() !=
@@ -317,7 +315,7 @@ float ImageDocument::scale() const {
   float heightScale =
       view->height() * manualZoom / imageSize.height().toFloat();
 
-  return min(widthScale, heightScale);
+  return std::min(widthScale, heightScale);
 }
 
 void ImageDocument::resizeImageToFit() {
@@ -396,11 +394,11 @@ void ImageDocument::updateImageStyle() {
           // To ensure the checker pattern is visible for large images, the
           // checker size is dynamically adjusted to account for how much the
           // page is currently being scaled.
-          scale = frame()->host()->visualViewport().scale();
+          scale = frame()->page()->visualViewport().scale();
         } else {
           // The checker pattern is initialized based on how large the image is
           // relative to the viewport.
-          int viewportWidth = frame()->host()->visualViewport().size().width();
+          int viewportWidth = frame()->page()->visualViewport().size().width();
           scale = viewportWidth / static_cast<double>(calculateDivWidth());
         }
 
@@ -513,7 +511,7 @@ int ImageDocument::calculateDivWidth() {
   //   of the frame.
   // * Images smaller in either dimension are centered along that axis.
   LayoutSize imageSize = cachedImageSize(m_imageElement);
-  int viewportWidth = frame()->host()->visualViewport().size().width();
+  int viewportWidth = frame()->page()->visualViewport().size().width();
 
   // For huge images, minimum-scale=0.1 is still too big on small screens.
   // Set the <div> width so that the image will shrink to fit the width of the
@@ -537,7 +535,7 @@ void ImageDocument::windowSizeChanged() {
     // can display the full image without shrinking it, allowing a full-width
     // reading mode for normal-width-huge-height images.
     float viewportAspectRatio =
-        frame()->host()->visualViewport().size().aspectRatio();
+        frame()->page()->visualViewport().size().aspectRatio();
     int divHeight = std::max(imageSize.height().toInt(),
                              static_cast<int>(divWidth / viewportAspectRatio));
     m_divElement->setInlineStyleProperty(CSSPropertyHeight, divHeight,

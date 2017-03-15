@@ -4,6 +4,10 @@
 
 package org.chromium.chrome.browser.physicalweb;
 
+import android.annotation.TargetApi;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -25,6 +29,7 @@ public class PhysicalWeb {
     public static final int OPTIN_NOTIFY_MAX_TRIES = 1;
     private static final String PREF_PHYSICAL_WEB_NOTIFY_COUNT = "physical_web_notify_count";
     private static final String FEATURE_NAME = "PhysicalWeb";
+    private static final String PHYSICAL_WEB_SHARING_FEATURE_NAME = "PhysicalWebSharing";
     private static final int MIN_ANDROID_VERSION = 18;
 
     /**
@@ -44,6 +49,15 @@ public class PhysicalWeb {
      */
     public static boolean isPhysicalWebPreferenceEnabled() {
         return PrivacyPreferencesManager.getInstance().isPhysicalWebEnabled();
+    }
+
+    /**
+     * Checks whether the Physical Web Sharing feature is enabled.
+     *
+     * @return boolean {@code true} if the feature is enabled
+     */
+    public static boolean sharingIsEnabled() {
+        return ChromeFeatureList.isEnabled(PHYSICAL_WEB_SHARING_FEATURE_NAME);
     }
 
     /**
@@ -142,5 +156,29 @@ public class PhysicalWeb {
         IntentHandler.startChromeLauncherActivityForTrustedIntent(
                 new Intent(Intent.ACTION_VIEW, Uri.parse(UrlConstants.PHYSICAL_WEB_URL))
                         .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+    }
+
+    /**
+     * Check if bluetooth is on and enabled.
+     */
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public static boolean bluetoothIsEnabled() {
+        Context context = ContextUtils.getApplicationContext();
+        BluetoothManager bluetoothManager =
+                (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
+        BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
+        return bluetoothAdapter != null && bluetoothAdapter.isEnabled();
+    }
+
+    /**
+     * Check if the device bluetooth hardware supports BLE advertisements.
+     */
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public static boolean hasBleAdvertiseCapability() {
+        Context context = ContextUtils.getApplicationContext();
+        BluetoothManager bluetoothManager =
+                (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
+        BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
+        return bluetoothAdapter != null && bluetoothAdapter.getBluetoothLeAdvertiser() != null;
     }
 }

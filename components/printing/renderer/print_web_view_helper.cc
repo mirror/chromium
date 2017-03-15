@@ -25,12 +25,12 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
+#include "components/grit/components_resources.h"
 #include "components/printing/common/print_messages.h"
 #include "content/public/common/web_preferences.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_thread.h"
 #include "content/public/renderer/render_view.h"
-#include "grit/components_resources.h"
 #include "net/base/escape.h"
 #include "printing/features/features.h"
 #include "printing/metafile_skia_wrapper.h"
@@ -573,7 +573,7 @@ void PrintWebViewHelper::PrintHeaderAndFooter(
     float webkit_scale_factor,
     const PageSizeMargins& page_layout,
     const PrintMsg_Print_Params& params) {
-  SkAutoCanvasRestore auto_restore(canvas, true);
+  cc::PaintCanvasAutoRestore auto_restore(canvas, true);
   canvas->scale(1 / webkit_scale_factor, 1 / webkit_scale_factor);
 
   blink::WebSize page_size(page_layout.margin_left + page_layout.margin_right +
@@ -591,7 +591,7 @@ void PrintWebViewHelper::PrintHeaderAndFooter(
   web_view->setMainFrame(frame);
   blink::WebFrameWidget::create(nullptr, web_view, frame);
 
-  base::StringValue html(ResourceBundle::GetSharedInstance().GetLocalizedString(
+  base::Value html(ResourceBundle::GetSharedInstance().GetLocalizedString(
       IDR_PRINT_PREVIEW_PAGE));
   // Load page with script to avoid async operations.
   ExecuteScript(frame, kPageLoadScriptFormat, html);
@@ -630,7 +630,7 @@ float PrintWebViewHelper::RenderPageContent(blink::WebFrame* frame,
                                             const gfx::Rect& content_area,
                                             double scale_factor,
                                             blink::WebCanvas* canvas) {
-  SkAutoCanvasRestore auto_restore(canvas, true);
+  cc::PaintCanvasAutoRestore auto_restore(canvas, true);
   canvas->translate((content_area.x() - canvas_area.x()) / scale_factor,
                     (content_area.y() - canvas_area.y()) / scale_factor);
   return frame->printPage(page_number, canvas);
@@ -1260,11 +1260,22 @@ bool PrintWebViewHelper::CreatePreviewDocument() {
     if (source_frame->getPrintPresetOptionsForPlugin(source_node,
                                                      &preset_options)) {
       if (preset_options.isPageSizeUniform) {
+        // Figure out if the sizes have the same orientation
+        bool is_printable_area_landscape = printable_area_in_points.width() >
+                                           printable_area_in_points.height();
+        bool is_preset_landscape = preset_options.uniformPageSize.width >
+                                   preset_options.uniformPageSize.height;
+        bool rotate = is_printable_area_landscape != is_preset_landscape;
+        // Match orientation for computing scaling
+        double printable_width = rotate ? printable_area_in_points.height()
+                                        : printable_area_in_points.width();
+        double printable_height = rotate ? printable_area_in_points.width()
+                                         : printable_area_in_points.height();
         double scale_width =
-            static_cast<double>(printable_area_in_points.width()) /
+            printable_width /
             static_cast<double>(preset_options.uniformPageSize.width);
         double scale_height =
-            static_cast<double>(printable_area_in_points.height()) /
+            printable_height /
             static_cast<double>(preset_options.uniformPageSize.height);
         fit_to_page_scale_factor = std::min(scale_width, scale_height);
       } else {
@@ -1843,9 +1854,15 @@ void PrintWebViewHelper::PrintPageInternal(
 
   double css_scale_factor = 1.0f;
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
-    if (params.params.scale_factor >= kEpsilon)
-      css_scale_factor = params.params.scale_factor;
+  if (params.params.scale_factor >= kEpsilon)
+    css_scale_factor = params.params.scale_factor;
 #endif
+
+  // Save the original page size here to avoid rounding errors incurred by
+  // converting to pixels and back and by scaling the page for reflow and
+  // scaling back. Windows uses |page_size_in_dpi| for the actual page size
+  // so requires an accurate value.
+  gfx::Size original_page_size = params.params.page_size;
   ComputePageLayoutInPointsForCss(frame, params.page_number, params.params,
                                   ignore_css_margins_, &css_scale_factor,
                                   &page_layout_in_points);
@@ -1853,19 +1870,10 @@ void PrintWebViewHelper::PrintPageInternal(
   gfx::Rect content_area;
   GetPageSizeAndContentAreaFromPageLayout(page_layout_in_points, &page_size,
                                           &content_area);
-  int dpi = static_cast<int>(params.params.dpi);
+
   // Calculate the actual page size and content area in dpi.
   if (page_size_in_dpi) {
-    // Windows uses this for the actual page size. We have scaled page size
-    // to get blink to reflow the page, so scale it back to the real size
-    // before returning it.
-    *page_size_in_dpi =
-        gfx::Size(static_cast<int>(ConvertUnitDouble(page_size.width(),
-                                                     kPointsPerInch, dpi) *
-                                   css_scale_factor),
-                  static_cast<int>(ConvertUnitDouble(page_size.height(),
-                                                     kPointsPerInch, dpi) *
-                                   css_scale_factor));
+    *page_size_in_dpi = original_page_size;
   }
 
   if (content_area_in_dpi) {
@@ -1889,12 +1897,12 @@ void PrintWebViewHelper::PrintPageInternal(
   float scale_factor = css_scale_factor;
 #endif
 
-  SkCanvas* canvas = metafile->GetVectorCanvasForNewPage(
-      page_size, canvas_area, scale_factor);
+  cc::PaintCanvas* canvas =
+      metafile->GetVectorCanvasForNewPage(page_size, canvas_area, scale_factor);
   if (!canvas)
     return;
 
-  MetafileSkiaWrapper::SetMetafileOnCanvas(*canvas, metafile);
+  MetafileSkiaWrapper::SetMetafileOnCanvas(canvas, metafile);
 
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
   if (params.params.display_header_footer) {

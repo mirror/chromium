@@ -5,11 +5,10 @@
 #include "ash/common/wm/workspace/multi_window_resize_controller.h"
 
 #include "ash/common/wm/workspace/workspace_window_resizer.h"
-#include "ash/common/wm_lookup.h"
 #include "ash/common/wm_window.h"
 #include "ash/public/cpp/shell_window_ids.h"
+#include "ash/resources/grit/ash_resources.h"
 #include "ash/root_window_controller.h"
-#include "grit/ash_resources.h"
 #include "ui/base/cursor/cursor.h"
 #include "ui/base/hit_test.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -170,8 +169,8 @@ void MultiWindowResizeController::Show(WmWindow* window,
   }
 
   windows_ = windows;
-  windows_.window1->AddObserver(this);
-  windows_.window2->AddObserver(this);
+  windows_.window1->aura_window()->AddObserver(this);
+  windows_.window2->aura_window()->AddObserver(this);
   show_location_in_parent_ =
       window->ConvertPointToTarget(window->GetParent(), point_in_window);
   show_timer_.Start(FROM_HERE, base::TimeDelta::FromMilliseconds(kShowDelayMS),
@@ -184,11 +183,11 @@ void MultiWindowResizeController::Hide() {
     return;  // Ignore hides while actively resizing.
 
   if (windows_.window1) {
-    windows_.window1->RemoveObserver(this);
+    windows_.window1->aura_window()->RemoveObserver(this);
     windows_.window1 = NULL;
   }
   if (windows_.window2) {
-    windows_.window2->RemoveObserver(this);
+    windows_.window2->aura_window()->RemoveObserver(this);
     windows_.window2 = NULL;
   }
 
@@ -198,7 +197,7 @@ void MultiWindowResizeController::Hide() {
     return;
 
   for (size_t i = 0; i < windows_.other_windows.size(); ++i)
-    windows_.other_windows[i]->RemoveObserver(this);
+    windows_.other_windows[i]->aura_window()->RemoveObserver(this);
   mouse_watcher_.reset();
   resize_widget_.reset();
   windows_ = ResizeWindows();
@@ -208,7 +207,7 @@ void MultiWindowResizeController::MouseMovedOutOfHost() {
   Hide();
 }
 
-void MultiWindowResizeController::OnWindowDestroying(WmWindow* window) {
+void MultiWindowResizeController::OnWindowDestroying(aura::Window* window) {
   // Have to explicitly reset the WindowResizer, otherwise Hide() does nothing.
   window_resizer_.reset();
   Hide();
@@ -384,8 +383,7 @@ void MultiWindowResizeController::ShowNow() {
   ResizeView* view = new ResizeView(this, windows_.direction);
   resize_widget_->set_focus_on_creation(false);
   resize_widget_->Init(params);
-  WmLookup::Get()
-      ->GetWindowForWidget(resize_widget_.get())
+  WmWindow::Get(resize_widget_->GetNativeWindow())
       ->SetVisibilityAnimationType(::wm::WINDOW_VISIBILITY_ANIMATION_TYPE_FADE);
   resize_widget_->SetContentsView(view);
   show_bounds_in_screen_ = windows_.window1->GetParent()->ConvertRectToScreen(
@@ -411,7 +409,7 @@ void MultiWindowResizeController::StartResize(
   FindWindowsTouching(windows_.window2, windows_.direction,
                       &windows_.other_windows);
   for (size_t i = 0; i < windows_.other_windows.size(); ++i) {
-    windows_.other_windows[i]->AddObserver(this);
+    windows_.other_windows[i]->aura_window()->AddObserver(this);
     windows.push_back(windows_.other_windows[i]);
   }
   int component = windows_.direction == LEFT_RIGHT ? HTRIGHT : HTBOTTOM;
@@ -453,7 +451,7 @@ void MultiWindowResizeController::CompleteResize() {
     // the |other_windows|. If we start another resize we'll recalculate the
     // |other_windows| and invoke AddObserver() as necessary.
     for (size_t i = 0; i < windows_.other_windows.size(); ++i)
-      windows_.other_windows[i]->RemoveObserver(this);
+      windows_.other_windows[i]->aura_window()->RemoveObserver(this);
     windows_.other_windows.clear();
 
     CreateMouseWatcher();

@@ -30,29 +30,25 @@ std::string DictionaryBuilder::ToJSON() const {
 
 DictionaryBuilder& DictionaryBuilder::Set(const std::string& path,
                                           int in_value) {
-  dict_->SetWithoutPathExpansion(
-      path, base::MakeUnique<base::FundamentalValue>(in_value));
+  dict_->SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
   return *this;
 }
 
 DictionaryBuilder& DictionaryBuilder::Set(const std::string& path,
                                           double in_value) {
-  dict_->SetWithoutPathExpansion(
-      path, base::MakeUnique<base::FundamentalValue>(in_value));
+  dict_->SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
   return *this;
 }
 
 DictionaryBuilder& DictionaryBuilder::Set(const std::string& path,
                                           const std::string& in_value) {
-  dict_->SetWithoutPathExpansion(path,
-                                 base::MakeUnique<base::StringValue>(in_value));
+  dict_->SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
   return *this;
 }
 
 DictionaryBuilder& DictionaryBuilder::Set(const std::string& path,
                                           const base::string16& in_value) {
-  dict_->SetWithoutPathExpansion(path,
-                                 base::MakeUnique<base::StringValue>(in_value));
+  dict_->SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
   return *this;
 }
 
@@ -65,8 +61,7 @@ DictionaryBuilder& DictionaryBuilder::Set(
 
 DictionaryBuilder& DictionaryBuilder::SetBoolean(
     const std::string& path, bool in_value) {
-  dict_->SetWithoutPathExpansion(
-      path, base::MakeUnique<base::FundamentalValue>(in_value));
+  dict_->SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
   return *this;
 }
 

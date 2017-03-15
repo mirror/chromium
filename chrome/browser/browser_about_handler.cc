@@ -21,6 +21,7 @@
 #include "chrome/common/url_constants.h"
 #include "components/url_formatter/url_fixer.h"
 #include "content/public/common/content_features.h"
+#include "content/public/common/url_constants.h"
 #include "extensions/features/features.h"
 
 #if !defined(OS_ANDROID)
@@ -80,12 +81,13 @@ bool WillHandleBrowserAboutURL(GURL* url,
     }
   // Redirect chrome://settings/extensions (legacy URL).
   } else if (host == chrome::kChromeUISettingsHost &&
-      url->path() == std::string("/") + chrome::kExtensionsSubPage) {
+             url->path() ==
+                 std::string("/") + chrome::kDeprecatedExtensionsSubPage) {
     host = chrome::kChromeUIUberHost;
     path = chrome::kChromeUIExtensionsHost;
 #endif  // BUILDFLAG(ENABLE_EXTENSIONS)
   // Redirect chrome://history.
-  } else if (host == chrome::kChromeUIHistoryHost) {
+  } else if (host == content::kChromeUIHistoryHost) {
 #if defined(OS_ANDROID)
     // TODO(twellington): remove this after native Android history launches.
     // See http://crbug.com/654071.
@@ -98,11 +100,11 @@ bool WillHandleBrowserAboutURL(GURL* url,
     // Material design history is handled on the top-level chrome://history
     // host.
     if (base::FeatureList::IsEnabled(features::kMaterialDesignHistory)) {
-      host = chrome::kChromeUIHistoryHost;
+      host = content::kChromeUIHistoryHost;
       path = url->path();
     } else {
       host = chrome::kChromeUIUberHost;
-      path = chrome::kChromeUIHistoryHost + url->path();
+      path = content::kChromeUIHistoryHost + url->path();
     }
 #endif
   // Redirect chrome://settings, unless MD settings is enabled.

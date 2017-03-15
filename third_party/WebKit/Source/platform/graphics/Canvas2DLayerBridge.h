@@ -34,7 +34,6 @@
 #include "platform/graphics/paint/PaintRecorder.h"
 #include "platform/graphics/paint/PaintSurface.h"
 #include "public/platform/WebExternalTextureLayer.h"
-#include "public/platform/WebThread.h"
 #include "third_party/khronos/GLES2/gl2.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 #include "ui/gfx/color_space.h"
@@ -80,7 +79,6 @@ class SharedContextRateLimiter;
 
 class PLATFORM_EXPORT Canvas2DLayerBridge
     : public NON_EXPORTED_BASE(cc::TextureLayerClient),
-      public WebThread::TaskObserver,
       public RefCounted<Canvas2DLayerBridge> {
   WTF_MAKE_NONCOPYABLE(Canvas2DLayerBridge);
 
@@ -180,6 +178,8 @@ class PLATFORM_EXPORT Canvas2DLayerBridge
   void setLoggerForTesting(std::unique_ptr<Logger>);
 
  private:
+  void ResetSurface();
+
 #if USE_IOSURFACE_FOR_2D_CANVAS
   // All information associated with a CHROMIUM image.
   struct ImageInfo;
@@ -205,14 +205,9 @@ class PLATFORM_EXPORT Canvas2DLayerBridge
   void startRecording();
   void skipQueuedDrawCommands();
   void flushRecordingOnly();
-  void unregisterTaskObserver();
   void reportSurfaceCreationFailure();
 
-  // WebThread::TaskOberver implementation
-  void willProcessTask() override;
-  void didProcessTask() override;
-
-  PaintSurface* getOrCreateSurface(AccelerationHint = PreferAcceleration);
+  SkSurface* getOrCreateSurface(AccelerationHint = PreferAcceleration);
   bool shouldAccelerate(AccelerationHint) const;
 
   // Returns the GL filter associated with |m_filterQuality|.
@@ -249,7 +244,8 @@ class PLATFORM_EXPORT Canvas2DLayerBridge
   void resetSkiaTextureBinding();
 
   std::unique_ptr<PaintRecorder> m_recorder;
-  sk_sp<PaintSurface> m_surface;
+  sk_sp<SkSurface> m_surface;
+  std::unique_ptr<PaintCanvas> m_surfacePaintCanvas;
   sk_sp<SkImage> m_hibernationImage;
   int m_initialSurfaceSaveCount;
   std::unique_ptr<WebExternalTextureLayer> m_layer;
@@ -259,14 +255,13 @@ class PLATFORM_EXPORT Canvas2DLayerBridge
   WeakPtrFactory<Canvas2DLayerBridge> m_weakPtrFactory;
   ImageBuffer* m_imageBuffer;
   int m_msaaSampleCount;
+  int m_framesSinceLastCommit = 0;
   size_t m_bytesAllocated;
   bool m_haveRecordedDrawCommands;
   bool m_destructionInProgress;
   SkFilterQuality m_filterQuality;
   bool m_isHidden;
   bool m_isDeferralEnabled;
-  bool m_isRegisteredTaskObserver;
-  bool m_renderingTaskCompletedForCurrentFrame;
   bool m_softwareRenderingWhileHidden;
   bool m_surfaceCreationFailedAtLeastOnce = false;
   bool m_hibernationScheduled = false;

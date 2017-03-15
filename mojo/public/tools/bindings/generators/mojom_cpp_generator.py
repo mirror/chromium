@@ -39,6 +39,7 @@ _for_blink = False
 # TODO(rockot, yzshen): The variant handling is kind of a hack currently. Make
 # it right.
 _variant = None
+_export_attribute = None
 
 
 class _NameFormatter(object):
@@ -152,10 +153,19 @@ def GetNameForKind(kind, internal=False, flatten_nested_kind=False,
       internal=internal, flatten_nested_kind=flatten_nested_kind,
       add_same_module_namespaces=add_same_module_namespaces)
 
-def GetQualifiedNameForKind(kind, internal=False, flatten_nested_kind=False):
-  return _NameFormatter(kind, _variant).FormatForCpp(
-      internal=internal, add_same_module_namespaces=True,
-      flatten_nested_kind=flatten_nested_kind)
+def GetQualifiedNameForKind(kind, internal=False, flatten_nested_kind=False,
+                            include_variant=True):
+  return _NameFormatter(
+      kind, _variant if include_variant else None).FormatForCpp(
+          internal=internal, add_same_module_namespaces=True,
+          flatten_nested_kind=flatten_nested_kind)
+
+
+def GetWtfHashFnNameForEnum(enum):
+  return _NameFormatter(
+      enum, None).Format("_", internal=True, add_same_module_namespaces=True,
+                         flatten_nested_kind=True) + "HashFn"
+
 
 def GetFullMojomNameForKind(kind):
   return _NameFormatter(kind, _variant).FormatForMojom()
@@ -210,6 +220,18 @@ def IsHashableKind(kind):
   return Check(kind)
 
 
+def AllEnumValues(enum):
+  """Return all enum values associated with an enum.
+
+  Args:
+    enum: {mojom.Enum} The enum type.
+
+  Returns:
+   {Set[int]} The values.
+  """
+  return set(field.numeric_value for field in enum.fields)
+
+
 def GetNativeTypeName(typemapped_kind):
   return _current_typemap[GetFullMojomNameForKind(typemapped_kind)]["typename"]
 
@@ -220,7 +242,8 @@ def FormatConstantDeclaration(constant, nested=False):
   if mojom.IsStringKind(constant.kind):
     if nested:
       return "const char %s[]" % constant.name
-    return "extern const char %s[]" % constant.name
+    return "%sextern const char %s[]" % \
+        ((_export_attribute + " ") if _export_attribute else "", constant.name)
   return "constexpr %s %s = %s" % (GetCppPodType(constant.kind), constant.name,
                                    ConstantValue(constant))
 
@@ -482,6 +505,58 @@ def ShouldInlineUnion(union):
       mojom.IsReferenceKind(field.kind) and not mojom.IsStringKind(field.kind)
            for field in union.fields)
 
+
+class StructConstructor(object):
+  """Represents a constructor for a generated struct.
+
+  Fields:
+    fields: {[Field]} All struct fields in order.
+    params: {[Field]} The fields that are passed as params.
+  """
+
+  def __init__(self, fields, params):
+    self._fields = fields
+    self._params = set(params)
+
+  @property
+  def params(self):
+    return [field for field in self._fields if field in self._params]
+
+  @property
+  def fields(self):
+    for field in self._fields:
+      yield (field, field in self._params)
+
+
+def GetStructConstructors(struct):
+  """Returns a list of constructors for a struct.
+
+  Params:
+    struct: {Struct} The struct to return constructors for.
+
+  Returns:
+    {[StructConstructor]} A list of StructConstructors that should be generated
+    for |struct|.
+  """
+  if not mojom.IsStructKind(struct):
+    raise TypeError
+  # Types that are neither copyable nor movable can't be passed to a struct
+  # constructor so only generate a default constructor.
+  if any(IsTypemappedKind(field.kind) and _current_typemap[
+      GetFullMojomNameForKind(field.kind)]["non_copyable_non_movable"]
+         for field in struct.fields):
+    return [StructConstructor(struct.fields, [])]
+
+  param_counts = [0]
+  for version in struct.versions:
+    if param_counts[-1] != version.num_fields:
+      param_counts.append(version.num_fields)
+
+  ordinal_fields = sorted(struct.fields, key=lambda field: field.ordinal)
+  return (StructConstructor(struct.fields, ordinal_fields[:param_count])
+          for param_count in param_counts)
+
+
 def GetContainerValidateParamsCtorArgs(kind):
   if mojom.IsStringKind(kind):
     expected_num_elements = 0
@@ -530,6 +605,7 @@ def GetNewContainerValidateParams(kind):
 class Generator(generator.Generator):
 
   cpp_filters = {
+    "all_enum_values": AllEnumValues,
     "constant_value": ConstantValue,
     "contains_handles_or_interfaces": mojom.ContainsHandlesOrInterfaces,
     "contains_move_only_members": ContainsMoveOnlyMembers,
@@ -572,9 +648,11 @@ class Generator(generator.Generator):
     "is_typemapped_kind": IsTypemappedKind,
     "is_union_kind": mojom.IsUnionKind,
     "passes_associated_kinds": mojom.PassesAssociatedKinds,
+    "struct_constructors": GetStructConstructors,
     "stylize_method": generator.StudlyCapsToCamel,
     "under_to_camel": generator.UnderToCamel,
     "unmapped_type_for_serializer": GetUnmappedTypeForSerializer,
+    "wtf_hash_fn_name_for_enum": GetWtfHashFnNameForEnum,
   }
 
   def GetExtraTraitsHeaders(self):
@@ -730,6 +808,8 @@ class Generator(generator.Generator):
       _use_once_callback = self.use_once_callback
       global _variant
       _variant = self.variant
+      global _export_attribute
+      _export_attribute = self.export_attribute
       suffix = "-%s" % self.variant if self.variant else ""
       self.Write(self.GenerateModuleHeader(),
                  self.MatchMojomFilePath("%s%s.h" % (self.module.name, suffix)))

@@ -11,10 +11,20 @@ namespace features {
 
 // All features in alphabetical order.
 
+#if defined(OS_ANDROID)
+const base::Feature kAllowAutoplayUnmutedInWebappManifestScope{
+    "AllowAutoplayUnmutedInWebappManifestScope",
+    base::FEATURE_ENABLED_BY_DEFAULT};
+#endif  // defined(OS_ANDROID)
+
 #if defined(OS_MACOSX)
 // Enables Javascript execution via AppleScript.
 const base::Feature kAppleScriptExecuteJavaScript{
     "AppleScriptExecuteJavaScript", base::FEATURE_ENABLED_BY_DEFAULT};
+
+// Use the Toolkit-Views Task Manager window.
+const base::Feature kViewsTaskManager{"ViewsTaskManager",
+                                      base::FEATURE_DISABLED_BY_DEFAULT};
 #endif  // defined(OS_MACOSX)
 
 #if defined(OS_CHROMEOS)
@@ -64,6 +74,16 @@ const base::Feature kBlockPromptsIfDismissedOften{
 const base::Feature kBrowserHangFixesExperiment{
     "BrowserHangFixesExperiment", base::FEATURE_DISABLED_BY_DEFAULT};
 
+#if defined(OS_MACOSX)
+// Enables or disables the browser's touch bar.
+const base::Feature kBrowserTouchBar{"BrowserTouchBar",
+                                     base::FEATURE_ENABLED_BY_DEFAULT};
+
+// Enables or disables keyboard focus for the tab strip.
+const base::Feature kTabStripKeyboardFocus{"TabStripKeyboardFocus",
+                                           base::FEATURE_DISABLED_BY_DEFAULT};
+#endif  // defined(OS_MACOSX)
+
 #if defined(OS_ANDROID)
 // Experiment to make Geolocation permissions in the omnibox and the default
 // search engine's search page consistent.
@@ -91,7 +111,7 @@ const base::Feature kDisplayPersistenceToggleInPermissionPrompts{
 // Enables Expect CT reporting, which sends reports for opted-in sites
 // that don't serve sufficient Certificate Transparency information.
 const base::Feature kExpectCTReporting{"ExpectCTReporting",
-                                       base::FEATURE_DISABLED_BY_DEFAULT};
+                                       base::FEATURE_ENABLED_BY_DEFAULT};
 
 // An experimental fullscreen prototype that allows pages to map browser and
 // system-reserved keyboard shortcuts.
@@ -151,7 +171,7 @@ const base::Feature kMaterialDesignHistory{"MaterialDesignHistory",
 // Enables or disables the Material Design version of chrome://settings.
 // Also affects chrome://help.
 const base::Feature kMaterialDesignSettings{"MaterialDesignSettings",
-                                            base::FEATURE_DISABLED_BY_DEFAULT};
+                                            base::FEATURE_ENABLED_BY_DEFAULT};
 
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
 // Enables media content bitstream remoting, an optimization that can activate
@@ -202,6 +222,10 @@ const base::Feature kPostScriptPrinting{"PostScriptPrinting",
 const base::Feature kPreferHtmlOverPlugins{"PreferHtmlOverPlugins",
                                            base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
+
+// Enables the pref service. See https://crbug.com/654988.
+const base::Feature kPrefService{"PrefService",
+                                 base::FEATURE_DISABLED_BY_DEFAULT};
 
 #if defined(OS_CHROMEOS)
 // The lock screen will be preloaded so it is instantly available when the user

@@ -27,7 +27,6 @@
 #define EditCommand_h
 
 #include "core/CoreExport.h"
-#include "core/editing/VisibleSelection.h"
 #include "core/events/InputEvent.h"
 #include "platform/heap/Handle.h"
 
@@ -78,7 +77,7 @@ enum ShouldAssumeContentIsAlwaysEditable {
   DoNotAssumeContentIsAlwaysEditable,
 };
 
-class SimpleEditCommand : public EditCommand {
+class CORE_EXPORT SimpleEditCommand : public EditCommand {
  public:
   virtual void doUnapply() = 0;
   virtual void doReapply();  // calls doApply()

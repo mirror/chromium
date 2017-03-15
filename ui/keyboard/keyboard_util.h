@@ -112,6 +112,13 @@ KEYBOARD_EXPORT void SetKeyboardShowOverride(KeyboardShowOverride override);
 // virtual keyboard window.
 KEYBOARD_EXPORT bool IsInputViewEnabled();
 
+// Sets whehther the keyboards is in restricted state - state where advanced
+// virtual keyboard features are disabled.
+KEYBOARD_EXPORT void SetKeyboardRestricted(bool restricted);
+
+// Returns whether the keyboard is in restricted state.
+KEYBOARD_EXPORT bool GetKeyboardRestricted();
+
 // Returns true if experimental features are enabled for IME input-views.
 KEYBOARD_EXPORT bool IsExperimentalInputViewEnabled();
 
@@ -170,6 +177,10 @@ KEYBOARD_EXPORT const GURL& GetOverrideContentUrl();
 
 // Logs the keyboard control event as a UMA stat.
 void LogKeyboardControlEvent(KeyboardControlEvent event);
+
+// Sets true if keyboard overscrolling is enabled with accessibility keyboard.
+KEYBOARD_EXPORT void SetOverscrollEnabledWithAccessibilityKeyboard(
+    bool enabled);
 
 }  // namespace keyboard
 

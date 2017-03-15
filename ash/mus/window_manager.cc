@@ -14,7 +14,6 @@
 #include "ash/common/wm_window.h"
 #include "ash/mus/accelerators/accelerator_handler.h"
 #include "ash/mus/accelerators/accelerator_ids.h"
-#include "ash/mus/bridge/wm_lookup_mus.h"
 #include "ash/mus/bridge/wm_shell_mus.h"
 #include "ash/mus/move_event_handler.h"
 #include "ash/mus/non_client_frame_controller.h"
@@ -23,6 +22,7 @@
 #include "ash/mus/shell_delegate_mus.h"
 #include "ash/mus/top_level_window_factory.h"
 #include "ash/mus/window_properties.h"
+#include "ash/public/cpp/shelf_types.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/root_window_controller.h"
@@ -65,15 +65,19 @@ WindowManager::WindowManager(service_manager::Connector* connector)
       wm_state_(base::MakeUnique<::wm::WMState>()),
       property_converter_(base::MakeUnique<aura::PropertyConverter>()) {
   property_converter_->RegisterProperty(
-      kPanelAttachedKey, ui::mojom::WindowManager::kPanelAttached_Property);
+      kPanelAttachedKey, ui::mojom::WindowManager::kPanelAttached_Property,
+      aura::PropertyConverter::CreateAcceptAnyValueCallback());
   property_converter_->RegisterProperty(
       kRenderTitleAreaProperty,
-      ui::mojom::WindowManager::kRenderParentTitleArea_Property);
+      ui::mojom::WindowManager::kRenderParentTitleArea_Property,
+      aura::PropertyConverter::CreateAcceptAnyValueCallback());
   property_converter_->RegisterProperty(
-      kShelfItemTypeKey, ui::mojom::WindowManager::kShelfItemType_Property);
+      kShelfItemTypeKey, ui::mojom::WindowManager::kShelfItemType_Property,
+      base::Bind(&IsValidShelfItemType));
   property_converter_->RegisterProperty(
       ::wm::kShadowElevationKey,
-      ui::mojom::WindowManager::kShadowElevation_Property);
+      ui::mojom::WindowManager::kShadowElevation_Property,
+      base::Bind(&::wm::IsValidShadowElevation));
 }
 
 WindowManager::~WindowManager() {
@@ -114,8 +118,6 @@ void WindowManager::Init(
       NonClientFrameController::GetMaxTitleBarButtonWidth();
   window_manager_client_->SetFrameDecorationValues(
       std::move(frame_decoration_values));
-
-  lookup_.reset(new WmLookupMus);
 
   // Notify PointerWatcherEventRouter and CaptureSynchronizer that the capture
   // client has been set.
@@ -193,9 +195,12 @@ void WindowManager::CreateShell(
   ShellInitParams init_params;
   WmShellMus* wm_shell = new WmShellMus(
       WmWindow::Get(window_tree_host->window()),
-      shell_delegate_for_test_ ? std::move(shell_delegate_for_test_)
-                               : base::MakeUnique<ShellDelegateMus>(connector_),
-      this, pointer_watcher_event_router_.get());
+      this, pointer_watcher_event_router_.get(),
+      create_session_state_delegate_stub_for_test_);
+  // Shell::CreateInstance() takes ownership of ShellDelegate.
+  init_params.delegate = shell_delegate_for_test_
+                             ? shell_delegate_for_test_.release()
+                             : new ShellDelegateMus(connector_);
   init_params.primary_window_tree_host = window_tree_host.release();
   init_params.wm_shell = wm_shell;
   init_params.blocking_pool = blocking_pool_.get();
@@ -253,8 +258,6 @@ void WindowManager::Shutdown() {
       capture_client);
 
   Shell::DeleteInstance();
-
-  lookup_.reset();
 
   pointer_watcher_event_router_.reset();
 
@@ -314,13 +317,6 @@ bool WindowManager::OnWmSetProperty(
     aura::Window* window,
     const std::string& name,
     std::unique_ptr<std::vector<uint8_t>>* new_data) {
-  // TODO(sky): constrain this to set of keys we know about, and allowed values.
-  if (name == ui::mojom::WindowManager::kWindowIgnoredByShelf_Property) {
-    wm::WindowState* window_state = WmWindow::Get(window)->GetWindowState();
-    window_state->set_ignored_by_shelf(
-        new_data ? mojo::ConvertTo<bool>(**new_data) : false);
-    return false;  // Won't attempt to map through property converter.
-  }
   if (property_converter_->IsTransportNameRegistered(name))
     return true;
   DVLOG(1) << "unknown property changed, ignoring " << name;

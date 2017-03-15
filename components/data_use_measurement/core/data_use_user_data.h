@@ -22,7 +22,8 @@ class DataUseUserData : public base::SupportsUserData::Data {
  public:
   // This enum should be synced with DataUseServices enum in histograms.xml.
   // Please keep them synced after any updates. Also add service name to
-  // GetServiceNameAsString function.
+  // GetServiceNameAsString function and the same service name to
+  // DataUse.Service.Types histogram suffixes in histograms.xml
   enum ServiceName {
     NOT_TAGGED,
     SUGGESTIONS,
@@ -61,6 +62,9 @@ class DataUseUserData : public base::SupportsUserData::Data {
     SIGNIN,
     NTP_SNIPPETS_SUGGESTIONS,
     NTP_SNIPPETS_THUMBNAILS,
+    DOODLE,
+    UKM,
+    PAYMENTS,
   };
 
   // Data use broken by content type. This enum must remain synchronized

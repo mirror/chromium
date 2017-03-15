@@ -85,8 +85,8 @@ MessageService::PolicyPermission MessageService::IsNativeMessagingHostAllowed(
     return allow_result;
 
   // Check if the name or the wildcard is in the blacklist.
-  base::StringValue name_value(native_host_name);
-  base::StringValue wildcard_value("*");
+  base::Value name_value(native_host_name);
+  base::Value wildcard_value("*");
   if (blacklist->Find(name_value) == blacklist->end() &&
       blacklist->Find(wildcard_value) == blacklist->end()) {
     return allow_result;
@@ -199,8 +199,9 @@ MessageService::~MessageService() {
   channels_.clear();
 }
 
-static base::LazyInstance<BrowserContextKeyedAPIFactory<MessageService> >
-    g_factory = LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<
+    BrowserContextKeyedAPIFactory<MessageService>>::DestructorAtExit g_factory =
+    LAZY_INSTANCE_INITIALIZER;
 
 // static
 BrowserContextKeyedAPIFactory<MessageService>*

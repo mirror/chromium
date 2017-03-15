@@ -11,8 +11,6 @@ source_set("heap") {
 
   sources = [
     "BlinkGC.h",
-    "BlinkGCInterruptor.cpp",
-    "BlinkGCInterruptor.h",
     "BlinkGCMemoryDumpProvider.cpp",
     "BlinkGCMemoryDumpProvider.h",
     "CallbackStack.cpp",
@@ -38,7 +36,6 @@ source_set("heap") {
     "Persistent.h",
     "PersistentNode.cpp",
     "PersistentNode.h",
-    "SafePoint.cpp",
     "SafePoint.h",
     "SelfKeepAlive.h",
     "SparseHeapBitmap.cpp",

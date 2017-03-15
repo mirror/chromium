@@ -21,20 +21,19 @@ bool FirstRunHandler::IsInitialized() {
 
 void FirstRunHandler::SetBackgroundVisible(bool visible) {
   web_ui()->CallJavascriptFunctionUnsafe("cr.FirstRun.setBackgroundVisible",
-                                         base::FundamentalValue(visible));
+                                         base::Value(visible));
 }
 
 void FirstRunHandler::AddRectangularHole(int x, int y, int width, int height) {
   web_ui()->CallJavascriptFunctionUnsafe(
-      "cr.FirstRun.addRectangularHole", base::FundamentalValue(x),
-      base::FundamentalValue(y), base::FundamentalValue(width),
-      base::FundamentalValue(height));
+      "cr.FirstRun.addRectangularHole", base::Value(x), base::Value(y),
+      base::Value(width), base::Value(height));
 }
 
 void FirstRunHandler::AddRoundHole(int x, int y, float radius) {
-  web_ui()->CallJavascriptFunctionUnsafe(
-      "cr.FirstRun.addRoundHole", base::FundamentalValue(x),
-      base::FundamentalValue(y), base::FundamentalValue(radius));
+  web_ui()->CallJavascriptFunctionUnsafe("cr.FirstRun.addRoundHole",
+                                         base::Value(x), base::Value(y),
+                                         base::Value(radius));
 }
 
 void FirstRunHandler::RemoveBackgroundHoles() {
@@ -44,7 +43,7 @@ void FirstRunHandler::RemoveBackgroundHoles() {
 void FirstRunHandler::ShowStepPositioned(const std::string& name,
                                          const StepPosition& position) {
   web_ui()->CallJavascriptFunctionUnsafe(
-      "cr.FirstRun.showStep", base::StringValue(name), *position.AsValue());
+      "cr.FirstRun.showStep", base::Value(name), *position.AsValue());
 }
 
 void FirstRunHandler::ShowStepPointingTo(const std::string& name,
@@ -56,9 +55,8 @@ void FirstRunHandler::ShowStepPointingTo(const std::string& name,
   point_with_offset.AppendInteger(x);
   point_with_offset.AppendInteger(y);
   point_with_offset.AppendInteger(offset);
-  web_ui()->CallJavascriptFunctionUnsafe("cr.FirstRun.showStep",
-                                         base::StringValue(name), *null,
-                                         point_with_offset);
+  web_ui()->CallJavascriptFunctionUnsafe(
+      "cr.FirstRun.showStep", base::Value(name), *null, point_with_offset);
 }
 
 void FirstRunHandler::HideCurrentStep() {

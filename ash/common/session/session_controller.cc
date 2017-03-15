@@ -6,6 +6,7 @@
 
 #include <algorithm>
 
+#include "ash/common/login_status.h"
 #include "ash/common/session/session_state_observer.h"
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -73,9 +74,9 @@ void SessionController::SwitchActiveUser(const AccountId& account_id) {
     client_->SwitchActiveUser(account_id);
 }
 
-void SessionController::CycleActiveUser(bool next_user) {
+void SessionController::CycleActiveUser(CycleUserDirection direction) {
   if (client_)
-    client_->CycleActiveUser(next_user);
+    client_->CycleActiveUser(direction);
 }
 
 void SessionController::AddSessionStateObserver(
@@ -86,6 +87,32 @@ void SessionController::AddSessionStateObserver(
 void SessionController::RemoveSessionStateObserver(
     SessionStateObserver* observer) {
   observers_.RemoveObserver(observer);
+}
+
+LoginStatus SessionController::GetLoginStatus() const {
+  using session_manager::SessionState;
+
+  // TODO(jamescook|xiyuan): There is not a 1:1 mapping of SessionState to
+  // LoginStatus. Fix the cases that don't match. http://crbug.com/701193
+  switch (state_) {
+    case SessionState::UNKNOWN:
+    case SessionState::OOBE:
+    case SessionState::LOGIN_PRIMARY:
+    case SessionState::LOGGED_IN_NOT_ACTIVE:
+      return LoginStatus::NOT_LOGGED_IN;
+
+    case SessionState::ACTIVE:
+      return GetLoginStatusForActiveSession();
+
+    case SessionState::LOCKED:
+      return LoginStatus::LOCKED;
+
+    case SessionState::LOGIN_SECONDARY:
+      // TODO: There is no LoginStatus for this.
+      return LoginStatus::USER;
+  }
+  NOTREACHED();
+  return LoginStatus::NOT_LOGGED_IN;
 }
 
 void SessionController::SetClient(mojom::SessionControllerClientPtr client) {
@@ -161,6 +188,40 @@ void SessionController::AddUserSession(mojom::UserSessionPtr user_session) {
 
   for (auto& observer : observers_)
     observer.UserAddedToSession(account_id);
+}
+
+LoginStatus SessionController::GetLoginStatusForActiveSession() const {
+  DCHECK(state_ == session_manager::SessionState::ACTIVE);
+
+  if (user_sessions_.empty())  // Can be empty in tests.
+    return LoginStatus::USER;
+
+  switch (user_sessions_[0]->type) {
+    case user_manager::USER_TYPE_REGULAR:
+      // TODO: This needs to distinguish between owner and non-owner.
+      return LoginStatus::USER;
+    case user_manager::USER_TYPE_GUEST:
+      return LoginStatus::GUEST;
+    case user_manager::USER_TYPE_PUBLIC_ACCOUNT:
+      return LoginStatus::PUBLIC;
+    case user_manager::USER_TYPE_SUPERVISED:
+      return LoginStatus::SUPERVISED;
+    case user_manager::USER_TYPE_KIOSK_APP:
+      return LoginStatus::KIOSK_APP;
+    case user_manager::USER_TYPE_CHILD:
+      return LoginStatus::SUPERVISED;
+    case user_manager::USER_TYPE_ARC_KIOSK_APP:
+      return LoginStatus::ARC_KIOSK_APP;
+    case user_manager::USER_TYPE_ACTIVE_DIRECTORY:
+      // TODO: There is no LoginStatus for this.
+      return LoginStatus::USER;
+    case user_manager::NUM_USER_TYPES:
+      // Avoid having a "default" case so the compiler catches new enum values.
+      NOTREACHED();
+      return LoginStatus::USER;
+  }
+  NOTREACHED();
+  return LoginStatus::USER;
 }
 
 }  // namespace ash

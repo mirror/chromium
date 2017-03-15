@@ -46,13 +46,15 @@
                 "domain": "Page",
                 "include": ["enable", "disable", "reload", "navigate", "stopLoading", "getNavigationHistory", "navigateToHistoryEntry", "captureScreenshot",
                     "startScreencast", "stopScreencast", "screencastFrameAck", "handleJavaScriptDialog", "setColorPickerEnabled", "requestAppBanner",
-                    "setControlNavigations", "processNavigation"],
+                    "setControlNavigations", "processNavigation", "printToPDF"],
                 "include_events": ["interstitialShown", "interstitialHidden", "navigationRequested", "screencastVisibilityChanged", "screencastFrame", "colorPicked"],
-                "async": ["captureScreenshot"]
+                "async": ["captureScreenshot", "printToPDF"]
             },
             {
                 "domain": "Runtime",
-                "include_types": ["StackTrace", "CallFrame", "RemoteObject", "ObjectPreview", "PropertyPreview", "EntryPreview", "CallArgument", "ExceptionDetails", "CustomPreview", "PropertyDescriptor", "InternalPropertyDescriptor", "ExecutionContextDescription", "ExecutionContextDestroyedNotification", "ExecutionContextCreatedNotification", "ExceptionThrownNotification", "ExceptionRevokedNotification", "ConsoleAPICalledNotification", "InspectRequestedNotification"]
+                "include_types": ["StackTrace", "CallFrame"],
+                "include_events": [],
+                "include": []
             },
             {
                 "domain": "Schema"

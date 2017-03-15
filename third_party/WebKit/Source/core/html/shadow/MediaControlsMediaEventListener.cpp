@@ -14,6 +14,13 @@ namespace blink {
 MediaControlsMediaEventListener::MediaControlsMediaEventListener(
     MediaControls* mediaControls)
     : EventListener(CPPEventListenerType), m_mediaControls(mediaControls) {
+  if (mediaElement().isConnected())
+    attach();
+}
+
+void MediaControlsMediaEventListener::attach() {
+  DCHECK(mediaElement().isConnected());
+
   mediaElement().addEventListener(EventTypeNames::volumechange, this, false);
   mediaElement().addEventListener(EventTypeNames::focusin, this, false);
   mediaElement().addEventListener(EventTypeNames::timeupdate, this, false);
@@ -35,6 +42,18 @@ MediaControlsMediaEventListener::MediaControlsMediaEventListener(
   textTracks->addEventListener(EventTypeNames::addtrack, this, false);
   textTracks->addEventListener(EventTypeNames::change, this, false);
   textTracks->addEventListener(EventTypeNames::removetrack, this, false);
+}
+
+void MediaControlsMediaEventListener::detach() {
+  DCHECK(!mediaElement().isConnected());
+
+  m_mediaControls->document().removeEventListener(
+      EventTypeNames::fullscreenchange, this, false);
+
+  TextTrackList* textTracks = mediaElement().textTracks();
+  textTracks->removeEventListener(EventTypeNames::addtrack, this, false);
+  textTracks->removeEventListener(EventTypeNames::change, this, false);
+  textTracks->removeEventListener(EventTypeNames::removetrack, this, false);
 }
 
 bool MediaControlsMediaEventListener::operator==(

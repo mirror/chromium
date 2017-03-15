@@ -26,6 +26,7 @@
 #include "base/scoped_native_library.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "base/win/pe_image.h"
 #include "base/win/registry.h"
 #include "base/win/win_util.h"
@@ -36,6 +37,8 @@
 #include "chrome/browser/first_run/first_run.h"
 #include "chrome/browser/install_verification/win/install_verification.h"
 #include "chrome/browser/profiles/profile_shortcut_manager.h"
+#include "chrome/browser/safe_browsing/settings_reset_prompt/settings_reset_prompt_config.h"
+#include "chrome/browser/safe_browsing/settings_reset_prompt/settings_reset_prompt_controller.h"
 #include "chrome/browser/shell_integration.h"
 #include "chrome/browser/ui/simple_message_box.h"
 #include "chrome/browser/ui/uninstall_browser_prompt.h"
@@ -311,10 +314,11 @@ void ChromeBrowserMainPartsWin::PreMainMessageLoopStart() {
 }
 
 int ChromeBrowserMainPartsWin::PreCreateThreads() {
-// Record whether the machine is domain joined in a crash key. This will be used
-// to better identify whether crashes are from enterprise users.
-  base::debug::SetCrashKeyValue(crash_keys::kEnrolledToDomain,
-                                base::win::IsEnrolledToDomain() ? "yes" : "no");
+  // Record whether the machine is enterprise managed in a crash key. This will
+  // be used to better identify whether crashes are from enterprise users.
+  base::debug::SetCrashKeyValue(
+      crash_keys::kIsEnterpriseManaged,
+      base::win::IsEnterpriseManaged() ? "yes" : "no");
 
   int rv = ChromeBrowserMainParts::PreCreateThreads();
 
@@ -366,6 +370,14 @@ void ChromeBrowserMainPartsWin::PostBrowserStart() {
       base::Bind(&VerifyInstallation));
 
   InitializeChromeElf();
+
+  if (base::FeatureList::IsEnabled(safe_browsing::kSettingsResetPrompt)) {
+    content::BrowserThread::PostAfterStartupTask(
+        FROM_HERE,
+        content::BrowserThread::GetTaskRunnerForThread(
+            content::BrowserThread::UI),
+        base::Bind(safe_browsing::MaybeShowSettingsResetPromptWithDelay));
+  }
 
   // Record UMA data about whether the fault-tolerant heap is enabled.
   // Use a delayed task to minimize the impact on startup time.
@@ -482,7 +494,7 @@ bool ChromeBrowserMainPartsWin::CheckMachineLevelInstall() {
     base::FilePath exe_path;
     PathService::Get(base::DIR_EXE, &exe_path);
     std::wstring exe = exe_path.value();
-    base::FilePath user_exe_path(installer::GetChromeInstallPath(false, dist));
+    base::FilePath user_exe_path(installer::GetChromeInstallPath(false));
     if (base::FilePath::CompareEqualIgnoreCase(exe, user_exe_path.value())) {
       base::CommandLine uninstall_cmd(
           InstallUtil::GetChromeUninstallCmd(false));

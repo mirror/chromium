@@ -22,6 +22,7 @@ SDK.CSSStyleSheetHeader = class {
     this.isInline = payload.isInline;
     this.startLine = payload.startLine;
     this.startColumn = payload.startColumn;
+    this.contentLength = payload.length;
     if (payload.ownerNode)
       this.ownerNode = new SDK.DeferredDOMNode(cssModel.target(), payload.ownerNode);
     this.setSourceMapURL(payload.sourceMapURL);
@@ -33,8 +34,8 @@ SDK.CSSStyleSheetHeader = class {
   originalContentProvider() {
     if (!this._originalContentProvider) {
       var lazyContent = this._cssModel.originalStyleSheetText.bind(this._cssModel, this);
-      this._originalContentProvider =
-          new Common.StaticContentProvider(this.contentURL(), this.contentType(), lazyContent);
+      this._originalContentProvider = new Common.StaticContentProvider(
+          this.contentURL(), this.contentType(), /** @type {function():!Promise<?string>} */ (lazyContent));
     }
     return this._originalContentProvider;
   }
@@ -129,7 +130,7 @@ SDK.CSSStyleSheetHeader = class {
    * @return {!Promise<?string>}
    */
   requestContent() {
-    return /** @type {!Promise<?string>} */ (this._cssModel.getStyleSheetText(this.id));
+    return this._cssModel.getStyleSheetText(this.id);
   }
 
   /**
@@ -153,62 +154,5 @@ SDK.CSSStyleSheetHeader = class {
    */
   isViaInspector() {
     return this.origin === 'inspector';
-  }
-};
-
-/**
- * @implements {Common.ContentProvider}
- * @unrestricted
- */
-SDK.CSSStyleSheetHeader.OriginalContentProvider = class {
-  /**
-   * @param {!SDK.CSSStyleSheetHeader} header
-   */
-  constructor(header) {
-    this._header = header;
-  }
-
-  /**
-   * @override
-   * @return {string}
-   */
-  contentURL() {
-    return this._header.contentURL();
-  }
-
-  /**
-   * @override
-   * @return {!Common.ResourceType}
-   */
-  contentType() {
-    return this._header.contentType();
-  }
-
-  /**
-   * @override
-   * @return {!Promise<?string>}
-   */
-  requestContent() {
-    return /** @type {!Promise<?string>} */ (this._header.cssModel().originalStyleSheetText(this._header));
-  }
-
-  /**
-   * @override
-   * @param {string} query
-   * @param {boolean} caseSensitive
-   * @param {boolean} isRegex
-   * @param {function(!Array.<!Common.ContentProvider.SearchMatch>)} callback
-   */
-  searchInContent(query, caseSensitive, isRegex, callback) {
-    /**
-     * @param {?string} content
-     */
-    function performSearch(content) {
-      var searchResults =
-          content ? Common.ContentProvider.performSearchInContent(content, query, caseSensitive, isRegex) : [];
-      callback(searchResults);
-    }
-
-    this.requestContent().then(performSearch);
   }
 };

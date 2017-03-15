@@ -198,8 +198,8 @@ void WebFrameWidgetImpl::sendResizeEventAndRepaint() {
 void WebFrameWidgetImpl::resizeVisualViewport(const WebSize& newSize) {
   // TODO(alexmos, kenrb): resizing behavior such as this should be changed
   // to use Page messages.  https://crbug.com/599688.
-  page()->frameHost().visualViewport().setSize(newSize);
-  page()->frameHost().visualViewport().clampToBoundaries();
+  page()->visualViewport().setSize(newSize);
+  page()->visualViewport().clampToBoundaries();
 
   view()->didUpdateFullscreenSize();
 }
@@ -274,7 +274,7 @@ void WebFrameWidgetImpl::updateLayerTreeDeviceScaleFactor() {
   DCHECK(page());
   DCHECK(m_layerTreeView);
 
-  float deviceScaleFactor = page()->deviceScaleFactor();
+  float deviceScaleFactor = page()->deviceScaleFactorDeprecated();
   m_layerTreeView->setDeviceScaleFactor(deviceScaleFactor);
 }
 
@@ -466,7 +466,10 @@ void WebFrameWidgetImpl::setFocus(bool enable) {
     LocalFrame* focusedFrame = page()->focusController().focusedFrame();
     if (focusedFrame) {
       Element* element = focusedFrame->document()->focusedElement();
-      if (element && focusedFrame->selection().selection().isNone()) {
+      if (element &&
+          focusedFrame->selection()
+              .computeVisibleSelectionInDOMTreeDeprecated()
+              .isNone()) {
         // If the selection was cleared while the WebView was not
         // focused, then the focus element shows with a focus ring but
         // no caret and does respond to keyboard inputs.
@@ -545,7 +548,7 @@ bool WebFrameWidgetImpl::selectionBounds(WebRect& anchor,
     return false;
 
   FrameSelection& selection = localFrame->selection();
-  if (selection.isNone())
+  if (selection.computeVisibleSelectionInDOMTreeDeprecated().isNone())
     return false;
 
   // TODO(xiaochengh): The use of updateStyleAndLayoutIgnorePendingStylesheets
@@ -555,11 +558,12 @@ bool WebFrameWidgetImpl::selectionBounds(WebRect& anchor,
   DocumentLifecycle::DisallowTransitionScope disallowTransition(
       localFrame->document()->lifecycle());
 
-  if (selection.isCaret()) {
+  if (selection.computeVisibleSelectionInDOMTreeDeprecated().isCaret()) {
     anchor = focus = selection.absoluteCaretBounds();
   } else {
     const EphemeralRange selectedRange =
-        selection.selection().toNormalizedEphemeralRange();
+        selection.computeVisibleSelectionInDOMTree()
+            .toNormalizedEphemeralRange();
     if (selectedRange.isNull())
       return false;
     anchor = localFrame->editor().firstRectForRange(
@@ -576,7 +580,7 @@ bool WebFrameWidgetImpl::selectionBounds(WebRect& anchor,
   anchor = scaledAnchor;
   focus = scaledFocus;
 
-  if (!selection.selection().isBaseFirst())
+  if (!selection.computeVisibleSelectionInDOMTree().isBaseFirst())
     std::swap(anchor, focus);
   return true;
 }
@@ -594,19 +598,29 @@ bool WebFrameWidgetImpl::selectionTextDirection(WebTextDirection& start,
   frame->document()->updateStyleAndLayoutIgnorePendingStylesheets();
 
   FrameSelection& selection = frame->selection();
-  if (selection.selection().toNormalizedEphemeralRange().isNull())
+  if (selection.computeVisibleSelectionInDOMTree()
+          .toNormalizedEphemeralRange()
+          .isNull())
     return false;
-  start =
-      toWebTextDirection(primaryDirectionOf(*selection.start().anchorNode()));
-  end = toWebTextDirection(primaryDirectionOf(*selection.end().anchorNode()));
+  start = toWebTextDirection(
+      primaryDirectionOf(*selection.computeVisibleSelectionInDOMTreeDeprecated()
+                              .start()
+                              .anchorNode()));
+  end = toWebTextDirection(
+      primaryDirectionOf(*selection.computeVisibleSelectionInDOMTreeDeprecated()
+                              .end()
+                              .anchorNode()));
   return true;
 }
 
 // TODO(ekaramad):This method is almost duplicated in WebViewImpl as well. This
 // code needs to be refactored  (http://crbug.com/629721).
 bool WebFrameWidgetImpl::isSelectionAnchorFirst() const {
-  if (const LocalFrame* frame = focusedLocalFrameInWidget())
-    return frame->selection().selection().isBaseFirst();
+  if (const LocalFrame* frame = focusedLocalFrameInWidget()) {
+    return frame->selection()
+        .computeVisibleSelectionInDOMTreeDeprecated()
+        .isBaseFirst();
+  }
   return false;
 }
 

@@ -15,22 +15,24 @@ namespace favicon {
 class LargeIconService;
 }
 
+class GURL;
 @class ReadingListCollectionViewController;
 @class ReadingListCollectionViewItem;
 class ReadingListDownloadService;
 class ReadingListModel;
 @class TabModel;
 
-// Delegate for the ReadingListCollectionViewController, managing the visibility
-// of the
-// toolbar, dismissing the Reading List View and opening elements.
-@protocol ReadingListCollectionViewControllerDelegate<NSObject>
+// Audience for the ReadingListCollectionViewController
+@protocol ReadingListCollectionViewControllerAudience
 
 // Whether the collection has items.
-- (void)readingListCollectionViewController:
-            (ReadingListCollectionViewController*)
-                readingListCollectionViewController
-                                   hasItems:(BOOL)hasItems;
+- (void)readingListHasItems:(BOOL)hasItems;
+
+@end
+
+// Delegate for the ReadingListCollectionViewController, managing the visibility
+// of the toolbar, dismissing the Reading List View and opening elements.
+@protocol ReadingListCollectionViewControllerDelegate<NSObject>
 
 // Dismisses the Reading List View.
 - (void)dismissReadingListCollectionViewController:
@@ -53,6 +55,21 @@ readingListCollectionViewController:
                            openItem:
                                (ReadingListCollectionViewItem*)readingListItem;
 
+// Opens |URL| in a new tab |incognito| or not.
+- (void)readingListCollectionViewController:
+            (ReadingListCollectionViewController*)
+                readingListCollectionViewController
+                          openNewTabWithURL:(const GURL&)URL
+                                  incognito:(BOOL)incognito;
+
+// Opens the offline url |offlineURL| of the entry saved in the reading list
+// model with the |entryURL| url.
+- (void)readingListCollectionViewController:
+            (ReadingListCollectionViewController*)
+                readingListCollectionViewController
+                             openOfflineURL:(const GURL&)offlineURL
+                      correspondingEntryURL:(const GURL&)entryURL;
+
 @end
 
 @interface ReadingListCollectionViewController
@@ -69,6 +86,9 @@ readingListCollectionViewController:
 
 @property(nonatomic, weak) id<ReadingListCollectionViewControllerDelegate>
     delegate;
+@property(nonatomic, weak) id<ReadingListCollectionViewControllerAudience>
+    audience;
+
 @property(nonatomic, readonly) ReadingListModel* readingListModel;
 @property(nonatomic, readonly) favicon::LargeIconService* largeIconService;
 @property(nonatomic, readonly)

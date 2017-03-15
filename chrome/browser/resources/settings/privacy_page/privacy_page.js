@@ -7,6 +7,19 @@
  * 'settings-privacy-page' is the settings page containing privacy and
  * security settings.
  */
+(function() {
+
+/**
+ * Must be kept in sync with the C++ enum of the same name.
+ * @enum {number}
+ */
+var NetworkPredictionOptions = {
+  ALWAYS: 0,
+  WIFI_ONLY: 1,
+  NEVER: 2,
+  DEFAULT: 1
+};
+
 Polymer({
   is: 'settings-privacy-page',
 
@@ -63,6 +76,27 @@ Polymer({
 
     /** @private */
     showClearBrowsingDataDialog_: Boolean,
+
+    /** @private */
+    showDoNotTrackDialog_: {
+      type: Boolean,
+      value: false,
+    },
+
+    /**
+     * Used for HTML bindings. This is defined as a property rather than within
+     * the ready callback, because the value needs to be available before
+     * local DOM initialization - otherwise, the toggle has unexpected behavior.
+     * @private
+     */
+    networkPredictionEnum_: {
+      type: Object,
+      value: NetworkPredictionOptions,
+    },
+  },
+
+  listeners: {
+    'doNotTrackDialogIf.dom-change': 'onDoNotTrackDomChange_',
   },
 
   ready: function() {
@@ -85,6 +119,68 @@ Polymer({
   currentRouteChanged: function() {
     this.showClearBrowsingDataDialog_ =
         settings.getCurrentRoute() == settings.Route.CLEAR_BROWSER_DATA;
+  },
+
+  /**
+   * @param {Event} event
+   * @private
+   */
+  onDoNotTrackDomChange_: function(event) {
+    if (this.showDoNotTrackDialog_)
+      this.maybeShowDoNotTrackDialog_();
+  },
+
+  /**
+   * Handles the change event for the do-not-track toggle. Shows a
+   * confirmation dialog when enabling the setting.
+   * @param {Event} event
+   * @private
+   */
+  onDoNotTrackChange_: function(event) {
+    var target = /** @type {!SettingsToggleButtonElement} */(event.target);
+    if (!target.checked) {
+      // Always allow disabling the pref.
+      target.sendPrefChange();
+      return;
+    }
+    this.showDoNotTrackDialog_ = true;
+    // If the dialog has already been stamped, show it. Otherwise it will be
+    // shown in onDomChange_.
+    this.maybeShowDoNotTrackDialog_();
+  },
+
+  /** @private */
+  maybeShowDoNotTrackDialog_: function() {
+    var dialog = this.$$('#confirmDoNotTrackDialog');
+    if (dialog && !dialog.open)
+      dialog.showModal();
+  },
+
+  /** @private */
+  closeDoNotTrackDialog_: function() {
+    this.$$('#confirmDoNotTrackDialog').close();
+    this.showDoNotTrackDialog_ = false;
+  },
+
+  /**
+   * Handles the shared proxy confirmation dialog 'Confirm' button.
+   * @private
+   */
+  onDoNotTrackDialogConfirm_: function() {
+    /** @type {!SettingsToggleButtonElement} */ (this.$.doNotTrack)
+        .sendPrefChange();
+    this.closeDoNotTrackDialog_();
+  },
+
+  /**
+   * Handles the shared proxy confirmation dialog 'Cancel' button or a cancel
+   * event.
+   * @private
+   */
+  onDoNotTrackDialogCancel_: function() {
+    /** @type {!SettingsToggleButtonElement} */ (this.$.doNotTrack)
+        .resetToPrefValue();
+    this.closeDoNotTrackDialog_();
   },
 
   /** @private */
@@ -223,3 +319,4 @@ Polymer({
                  : this.i18n('siteSettingsBlocked');
   },
 });
+})();

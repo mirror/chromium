@@ -43,10 +43,11 @@ class LocalFrame;
 class SpellCheckRequester;
 class TextCheckerClient;
 
+// TODO(xiaochengh): Move this class to dedicated files.
 class SpellCheckRequest final : public TextCheckingRequest {
  public:
   static SpellCheckRequest* create(const EphemeralRange& checkingRange,
-                                   int requestNumber = 0);
+                                   int requestNumber);
 
   ~SpellCheckRequest() override;
   void dispose();
@@ -66,11 +67,7 @@ class SpellCheckRequest final : public TextCheckingRequest {
   DECLARE_VIRTUAL_TRACE();
 
  private:
-  SpellCheckRequest(Range* checkingRange,
-                    const String&,
-                    const Vector<uint32_t>& documentMarkersInRange,
-                    const Vector<unsigned>& documentMarkerOffsets,
-                    int requestNumber);
+  SpellCheckRequest(Range* checkingRange, const String&, int requestNumber);
 
   Member<SpellCheckRequester> m_requester;
   Member<Range> m_checkingRange;
@@ -91,7 +88,8 @@ class SpellCheckRequester final
   ~SpellCheckRequester();
   DECLARE_TRACE();
 
-  void requestCheckingFor(SpellCheckRequest*);
+  void requestCheckingFor(const EphemeralRange&);
+  void requestCheckingFor(const EphemeralRange&, int requestNum);
   void cancelCheck();
 
   int lastRequestSequence() const { return m_lastRequestSequence; }

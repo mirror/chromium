@@ -8,16 +8,17 @@
 #include "core/css/CSSFontFace.h"
 #include "core/css/CSSFontSelector.h"
 #include "core/dom/Document.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/inspector/ConsoleMessage.h"
-#include "core/loader/FrameLoaderClient.h"
-#include "core/page/NetworkStateNotifier.h"
 #include "platform/Histogram.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/fonts/FontCache.h"
+#include "platform/fonts/FontCustomPlatformData.h"
 #include "platform/fonts/FontDescription.h"
 #include "platform/fonts/SimpleFontData.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
-#include "platform/network/ResourceLoadPriority.h"
+#include "platform/loader/fetch/ResourceLoadPriority.h"
+#include "platform/network/NetworkStateNotifier.h"
 #include "public/platform/WebEffectiveConnectionType.h"
 #include "wtf/CurrentTime.h"
 
@@ -64,8 +65,6 @@ RemoteFontFaceSource::RemoteFontFaceSource(FontResource* font,
                                           : FontLoadHistograms::FromUnknown,
                    m_display),
       m_isInterventionTriggered(false) {
-  m_font->addClient(this);
-
   if (shouldTriggerWebFontsIntervention()) {
     m_isInterventionTriggered = true;
     m_period = SwapPeriod;
@@ -74,13 +73,18 @@ RemoteFontFaceSource::RemoteFontFaceSource(FontResource* font,
         "Slow network is detected. Fallback font will be used while loading: " +
             m_font->url().elidedString()));
   }
+
+  // Note: this may call notifyFinished() and clear m_font.
+  m_font->addClient(this);
 }
 
 RemoteFontFaceSource::~RemoteFontFaceSource() {}
 
 void RemoteFontFaceSource::dispose() {
-  m_font->removeClient(this);
-  m_font = nullptr;
+  if (m_font) {
+    m_font->removeClient(this);
+    m_font = nullptr;
+  }
   pruneTable();
 }
 
@@ -97,18 +101,19 @@ void RemoteFontFaceSource::pruneTable() {
 }
 
 bool RemoteFontFaceSource::isLoading() const {
-  return m_font->isLoading();
+  return m_font && m_font->isLoading();
 }
 
 bool RemoteFontFaceSource::isLoaded() const {
-  return m_font->isLoaded();
+  return !m_font;
 }
 
 bool RemoteFontFaceSource::isValid() const {
-  return !m_font->errorOccurred();
+  return m_font || m_customFontData;
 }
 
-void RemoteFontFaceSource::notifyFinished(Resource*) {
+void RemoteFontFaceSource::notifyFinished(Resource* unusedResource) {
+  DCHECK_EQ(unusedResource, m_font);
   m_histograms.maySetDataSource(m_font->response().wasCached()
                                     ? FontLoadHistograms::FromDiskCache
                                     : FontLoadHistograms::FromNetwork);
@@ -117,7 +122,8 @@ void RemoteFontFaceSource::notifyFinished(Resource*) {
                           m_font->getStatus() == ResourceStatus::LoadError,
                           m_isInterventionTriggered);
 
-  m_font->ensureCustomFontData();
+  m_customFontData = m_font->getCustomFontData();
+
   // FIXME: Provide more useful message such as OTS rejection reason.
   // See crbug.com/97467
   if (m_font->getStatus() == ResourceStatus::DecodeError &&
@@ -131,6 +137,9 @@ void RemoteFontFaceSource::notifyFinished(Resource*) {
           "OTS parsing error: " + m_font->otsParsingMessage()));
   }
 
+  m_font->removeClient(this);
+  m_font = nullptr;
+
   pruneTable();
   if (m_face) {
     m_fontSelector->fontFaceInvalidated();
@@ -139,7 +148,7 @@ void RemoteFontFaceSource::notifyFinished(Resource*) {
 }
 
 void RemoteFontFaceSource::fontLoadShortLimitExceeded(FontResource*) {
-  if (m_font->isLoaded())
+  if (isLoaded())
     return;
 
   if (m_display == FontDisplayFallback)
@@ -149,7 +158,7 @@ void RemoteFontFaceSource::fontLoadShortLimitExceeded(FontResource*) {
 }
 
 void RemoteFontFaceSource::fontLoadLongLimitExceeded(FontResource*) {
-  if (m_font->isLoaded())
+  if (isLoaded())
     return;
 
   if (m_display == FontDisplayBlock ||
@@ -171,7 +180,7 @@ void RemoteFontFaceSource::switchToSwapPeriod() {
     m_face->didBecomeVisibleFallback(this);
   }
 
-  m_histograms.recordFallbackTime(m_font.get());
+  m_histograms.recordFallbackTime();
 }
 
 void RemoteFontFaceSource::switchToFailurePeriod() {
@@ -206,16 +215,16 @@ bool RemoteFontFaceSource::isLowPriorityLoadingAllowedForRemoteFont() const {
 
 PassRefPtr<SimpleFontData> RemoteFontFaceSource::createFontData(
     const FontDescription& fontDescription) {
+  if (m_period == FailurePeriod || !isValid())
+    return nullptr;
   if (!isLoaded())
     return createLoadingFallbackFontData(fontDescription);
+  DCHECK(m_customFontData);
 
-  if (!m_font->ensureCustomFontData() || m_period == FailurePeriod)
-    return nullptr;
-
-  m_histograms.recordFallbackTime(m_font.get());
+  m_histograms.recordFallbackTime();
 
   return SimpleFontData::create(
-      m_font->platformDataFromCustomData(fontDescription.effectiveFontSize(),
+      m_customFontData->fontPlatformData(fontDescription.effectiveFontSize(),
                                          fontDescription.isSyntheticBold(),
                                          fontDescription.isSyntheticItalic(),
                                          fontDescription.orientation(),
@@ -241,6 +250,10 @@ PassRefPtr<SimpleFontData> RemoteFontFaceSource::createLoadingFallbackFontData(
 }
 
 void RemoteFontFaceSource::beginLoadIfNeeded() {
+  if (isLoaded())
+    return;
+  DCHECK(m_font);
+
   if (m_fontSelector->document() && m_font->stillNeedsLoad()) {
     if (!m_font->url().protocolIsData() && !m_font->isLoaded() &&
         m_display == FontDisplayAuto &&
@@ -297,8 +310,7 @@ void RemoteFontFaceSource::FontLoadHistograms::longLimitExceeded(
     recordInterventionResult(isInterventionTriggered);
 }
 
-void RemoteFontFaceSource::FontLoadHistograms::recordFallbackTime(
-    const FontResource* font) {
+void RemoteFontFaceSource::FontLoadHistograms::recordFallbackTime() {
   if (m_blankPaintTime <= 0)
     return;
   int duration = static_cast<int>(currentTimeMS() - m_blankPaintTime);

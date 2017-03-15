@@ -17,6 +17,7 @@
 
 namespace blink {
 
+class Document;
 class PresentationConnection;
 class PresentationConnectionList;
 class WebPresentationClient;
@@ -45,12 +46,17 @@ class MODULES_EXPORT PresentationReceiver final
   // Implementation of WebPresentationController.
   WebPresentationConnection* onReceiverConnectionAvailable(
       const WebPresentationSessionInfo&) override;
+  void didChangeSessionState(WebPresentationConnectionState) override;
+  void terminateConnection() override;
+
   void registerConnection(PresentationConnection*);
 
   DECLARE_VIRTUAL_TRACE();
 
  private:
   friend class PresentationReceiverTest;
+
+  void recordOriginTypeAccess(Document*) const;
 
   Member<ConnectionListProperty> m_connectionListProperty;
   Member<PresentationConnectionList> m_connectionList;

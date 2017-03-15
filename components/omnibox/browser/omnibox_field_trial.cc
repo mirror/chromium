@@ -26,6 +26,58 @@
 
 using metrics::OmniboxEventProto;
 
+namespace omnibox {
+
+// Feature used to enable the new set of answers in suggest types (currency,
+// dictionary, sports, translation, when is). Note that the state of this
+// Feature is not consulted anywhere in the code. It is only used to force a
+// Finch experiment arm which sends an experiment ID to GWS which triggers
+// serving the new types.
+const base::Feature kNewOmniboxAnswerTypes{"NewOmniboxAnswerTypes",
+                                           base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Feature used to enable the transmission of entity suggestions from GWS
+// to this client.
+const base::Feature kOmniboxEntitySuggestions{
+    "OmniboxEntitySuggestions", base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Feature used to enable clipboard provider, which provides the user with
+// suggestions of the URL in the user's clipboard (if any) upon omnibox focus.
+const base::Feature kEnableClipboardProvider {
+  "OmniboxEnableClipboardProvider",
+#if defined(OS_IOS)
+      base::FEATURE_ENABLED_BY_DEFAULT
+#else
+      base::FEATURE_DISABLED_BY_DEFAULT
+#endif
+};
+
+// Feature to enable the search provider to send a request to the suggest
+// server on focus.  This allows the suggest server to warm up, by, for
+// example, loading per-user models into memory.  Having a per-user model
+// in memory allows the suggest server to respond more quickly with
+// personalized suggestions as the user types.
+const base::Feature kSearchProviderWarmUpOnFocus{
+    "OmniboxWarmUpSearchProviderOnFocus", base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Feature used to enable the transmission of HTTPS URLs as part of the
+// context to the suggest server (assuming SearchProvider is permitted to
+// transmit URLs for context in the first place).
+const base::Feature kSearchProviderContextAllowHttpsUrls{
+    "OmniboixSearchProviderContextAllowHttpsUrls",
+    base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Feature used for the Zero Suggest Redirect to Chrome Field Trial.
+const base::Feature kZeroSuggestRedirectToChrome{
+    "ZeroSuggestRedirectToChrome", base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Feature used to swap the title and URL when providing zero suggest
+// suggestions.
+const base::Feature kZeroSuggestSwapTitleAndUrl{
+    "ZeroSuggestSwapTitleAndUrl", base::FEATURE_DISABLED_BY_DEFAULT};
+
+}  // namespace omnibox
+
 namespace {
 
 typedef std::map<std::string, std::string> VariationParams;
@@ -33,10 +85,6 @@ typedef HUPScoringParams::ScoreBuckets ScoreBuckets;
 
 // Field trial names.
 const char kStopTimerFieldTrialName[] = "OmniboxStopTimer";
-
-// Feature used for the Zero Suggest Redirect to Chrome Field Trial.
-const base::Feature kZeroSuggestRedirectToChrome{
-    "ZeroSuggestRedirectToChrome", base::FEATURE_DISABLED_BY_DEFAULT};
 
 void InitializeBucketsFromString(const std::string& bucket_string,
                                  ScoreBuckets* score_buckets) {
@@ -514,14 +562,19 @@ int OmniboxFieldTrial::KeywordScoreForSufficientlyCompleteMatch() {
 
 OmniboxFieldTrial::EmphasizeTitlesCondition
 OmniboxFieldTrial::GetEmphasizeTitlesConditionForInput(
-    metrics::OmniboxInputType::Type input_type) {
-  // Look up the parameter named kEmphasizeTitlesRule + ":" + input_type,
+    const AutocompleteInput& input) {
+  // First, check if we should emphasize titles for zero suggest suggestions.
+  if (input.from_omnibox_focus() &&
+      base::FeatureList::IsEnabled(omnibox::kZeroSuggestSwapTitleAndUrl)) {
+    return EMPHASIZE_WHEN_NONEMPTY;
+  }
+  // Look up the parameter named kEmphasizeTitlesRule + ":" + input.type(),
   // find its value, and return that value as an enum.  If the parameter
   // isn't redefined, fall back to the generic rule kEmphasizeTitlesRule + ":*"
   std::string value_str(variations::GetVariationParamValue(
       kBundledExperimentFieldTrialName,
       std::string(kEmphasizeTitlesRule) + "_" +
-      base::IntToString(static_cast<int>(input_type))));
+          base::IntToString(static_cast<int>(input.type()))));
   if (value_str.empty()) {
     value_str = variations::GetVariationParamValue(
         kBundledExperimentFieldTrialName,
@@ -580,20 +633,20 @@ int OmniboxFieldTrial::GetPhysicalWebAfterTypingBaseRelevance() {
 
 // static
 bool OmniboxFieldTrial::InZeroSuggestRedirectToChromeFieldTrial() {
-  return base::FeatureList::IsEnabled(kZeroSuggestRedirectToChrome);
+  return base::FeatureList::IsEnabled(omnibox::kZeroSuggestRedirectToChrome);
 }
 
 // static
 std::string OmniboxFieldTrial::ZeroSuggestRedirectToChromeServerAddress() {
   return base::GetFieldTrialParamValueByFeature(
-      kZeroSuggestRedirectToChrome,
+      omnibox::kZeroSuggestRedirectToChrome,
       kZeroSuggestRedirectToChromeServerAddressParam);
 }
 
 // static
 std::string OmniboxFieldTrial::ZeroSuggestRedirectToChromeAdditionalFields() {
   return base::GetFieldTrialParamValueByFeature(
-      kZeroSuggestRedirectToChrome,
+      omnibox::kZeroSuggestRedirectToChrome,
       kZeroSuggestRedirectToChromeAdditionalFieldsParam);
 }
 

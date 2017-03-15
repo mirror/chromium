@@ -49,7 +49,6 @@
 #include "chrome/browser/search/search.h"
 #include "chrome/browser/search_engines/template_url_service_factory.h"
 #include "chrome/browser/spellchecker/spellcheck_service.h"
-#include "chrome/browser/tab_contents/retargeting_details.h"
 #include "chrome/browser/translate/chrome_translate_client.h"
 #include "chrome/browser/translate/translate_service.h"
 #include "chrome/browser/ui/browser_commands.h"
@@ -61,6 +60,7 @@
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/content_restriction.h"
+#include "chrome/common/image_context_menu_renderer.mojom.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/render_messages.h"
 #include "chrome/common/url_constants.h"
@@ -109,6 +109,7 @@
 #include "net/base/escape.h"
 #include "ppapi/features/features.h"
 #include "printing/features/features.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/public/public_features.h"
 #include "third_party/WebKit/public/web/WebContextMenuData.h"
 #include "third_party/WebKit/public/web/WebMediaPlayerAction.h"
@@ -412,12 +413,10 @@ content::Referrer CreateReferrer(const GURL& url,
 content::WebContents* GetWebContentsToUse(content::WebContents* web_contents) {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   // If we're viewing in a MimeHandlerViewGuest, use its embedder WebContents.
-  if (extensions::MimeHandlerViewGuest::FromWebContents(web_contents)) {
-    WebContents* top_level_web_contents =
-        guest_view::GuestViewBase::GetTopLevelWebContents(web_contents);
-    if (top_level_web_contents)
-      return top_level_web_contents;
-  }
+  auto* guest_view =
+      extensions::MimeHandlerViewGuest::FromWebContents(web_contents);
+  if (guest_view)
+    return guest_view->embedder_web_contents();
 #endif
   return web_contents;
 }
@@ -853,6 +852,13 @@ void RenderViewContextMenu::InitMenu() {
   if (content_type_->SupportsGroup(
           ContextMenuContentType::ITEM_GROUP_PRINT_PREVIEW)) {
     AppendPrintPreviewItems();
+  }
+
+  // Remove any redundant trailing separator.
+  if (menu_model_.GetItemCount() > 0 &&
+      menu_model_.GetTypeAt(menu_model_.GetItemCount() - 1) ==
+          ui::MenuModel::TYPE_SEPARATOR) {
+    menu_model_.RemoveItemAt(menu_model_.GetItemCount() - 1);
   }
 }
 
@@ -1298,10 +1304,12 @@ void RenderViewContextMenu::AppendPrintItem() {
 }
 
 void RenderViewContextMenu::AppendMediaRouterItem() {
+#if defined(ENABLE_MEDIA_ROUTER)
   if (media_router::MediaRouterEnabled(browser_context_)) {
     menu_model_.AddItemWithStringId(IDC_ROUTE_MEDIA,
                                     IDS_MEDIA_ROUTER_MENU_ITEM_TITLE);
   }
+#endif  // defined(ENABLE_MEDIA_ROUTER)
 }
 
 void RenderViewContextMenu::AppendRotationItems() {
@@ -1966,24 +1974,6 @@ void RenderViewContextMenu::NotifyMenuShown() {
       content::NotificationService::NoDetails());
 }
 
-void RenderViewContextMenu::NotifyURLOpened(
-    const GURL& url,
-    content::WebContents* new_contents) {
-  RetargetingDetails details;
-  details.source_web_contents = source_web_contents_;
-  // Don't use GetRenderFrameHost() as it may be NULL. crbug.com/399789
-  details.source_render_process_id = render_process_id_;
-  details.source_render_frame_id = render_frame_id_;
-  details.target_url = url;
-  details.target_web_contents = new_contents;
-  details.not_yet_in_tabstrip = false;
-
-  content::NotificationService::current()->Notify(
-      chrome::NOTIFICATION_RETARGETING,
-      content::Source<Profile>(GetProfile()),
-      content::Details<RetargetingDetails>(&details));
-}
-
 base::string16 RenderViewContextMenu::PrintableSelectionText() {
   return gfx::TruncateString(params_.selection_text,
                              kMaxSelectionTextLength,
@@ -2161,6 +2151,7 @@ bool RenderViewContextMenu::IsPrintPreviewEnabled() const {
 }
 
 bool RenderViewContextMenu::IsRouteMediaEnabled() const {
+#if defined(ENABLE_MEDIA_ROUTER)
   if (!media_router::MediaRouterEnabled(browser_context_))
     return false;
 
@@ -2180,6 +2171,9 @@ bool RenderViewContextMenu::IsRouteMediaEnabled() const {
   const web_modal::WebContentsModalDialogManager* manager =
       web_modal::WebContentsModalDialogManager::FromWebContents(web_contents);
   return !manager || !manager->IsDialogActive();
+#else
+  return false;
+#endif  // defined(ENABLE_MEDIA_ROUTER)
 }
 
 bool RenderViewContextMenu::IsOpenLinkOTREnabled() const {
@@ -2352,8 +2346,9 @@ void RenderViewContextMenu::ExecLoadOriginalImage() {
   RenderFrameHost* render_frame_host = GetRenderFrameHost();
   if (!render_frame_host)
     return;
-  render_frame_host->Send(new ChromeViewMsg_RequestReloadImageForContextNode(
-      render_frame_host->GetRoutingID()));
+  chrome::mojom::ImageContextMenuRendererPtr renderer;
+  render_frame_host->GetRemoteInterfaces()->GetInterface(&renderer);
+  renderer->RequestReloadImageForContextNode();
 }
 
 void RenderViewContextMenu::ExecPlayPause() {

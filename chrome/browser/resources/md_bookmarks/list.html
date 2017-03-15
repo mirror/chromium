@@ -8,6 +8,8 @@
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-styles/shadow.html">
 <link rel="import" href="chrome://bookmarks/item.html">
 <link rel="import" href="chrome://bookmarks/shared_style.html">
+<link rel="import" href="chrome://bookmarks/store_client.html">
+<link rel="import" href="chrome://bookmarks/util.html">
 
 <dom-module id="bookmarks-list">
   <template>
@@ -70,16 +72,15 @@
         </paper-button>
       </div>
     </dialog>
-    <div id="bookmarksCard" hidden$="[[isEmptyList_(displayedList.length)]]">
-      <template is="dom-repeat" items="[[displayedList]]" as="item">
-        <bookmarks-item item="[[item]]"
-            is-selected-item="[[item.isSelectedItem]]">
+    <div id="bookmarksCard" hidden$="[[isEmptyList_(displayedList_.length)]]">
+      <template is="dom-repeat" items="[[displayedList_]]" as="id">
+        <bookmarks-item item-id="[[id]]">
         </bookmarks-item>
       </template>
     </div>
     <div class="centered-message"
-        hidden$="[[!isEmptyList_(displayedList.length)]]">
-      [[emptyListMessage_(searchTerm)]]
+        hidden$="[[!isEmptyList_(displayedList_.length)]]">
+      [[emptyListMessage_(searchTerm_)]]
     </div>
   </template>
   <script src="chrome://bookmarks/list.js"></script>

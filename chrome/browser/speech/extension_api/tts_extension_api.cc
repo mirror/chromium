@@ -311,7 +311,7 @@ ExtensionFunction::ResponseAction TtsResumeFunction::Run() {
 }
 
 ExtensionFunction::ResponseAction TtsIsSpeakingFunction::Run() {
-  return RespondNow(OneArgument(base::MakeUnique<base::FundamentalValue>(
+  return RespondNow(OneArgument(base::MakeUnique<base::Value>(
       TtsController::GetInstance()->IsSpeaking())));
 }
 
@@ -367,7 +367,8 @@ TtsAPI::TtsAPI(content::BrowserContext* context) {
 TtsAPI::~TtsAPI() {
 }
 
-static base::LazyInstance<BrowserContextKeyedAPIFactory<TtsAPI> > g_factory =
+static base::LazyInstance<
+    BrowserContextKeyedAPIFactory<TtsAPI>>::DestructorAtExit g_factory =
     LAZY_INSTANCE_INITIALIZER;
 
 BrowserContextKeyedAPIFactory<TtsAPI>* TtsAPI::GetFactoryInstance() {

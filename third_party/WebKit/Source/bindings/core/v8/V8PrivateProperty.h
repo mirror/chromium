@@ -5,15 +5,16 @@
 #ifndef V8PrivateProperty_h
 #define V8PrivateProperty_h
 
+#include <memory>
+
 #include "bindings/core/v8/ScopedPersistent.h"
 #include "bindings/core/v8/ScriptPromiseProperties.h"
 #include "bindings/core/v8/V8BindingMacros.h"
 #include "bindings/core/v8/V8PerIsolateData.h"
 #include "core/CoreExport.h"
+#include "v8/include/v8.h"
 #include "wtf/Allocator.h"
 #include "wtf/PtrUtil.h"
-#include <memory>
-#include <v8.h>
 
 namespace blink {
 
@@ -33,6 +34,7 @@ class ScriptWrappable;
   X(IntersectionObserver, Callback)                   \
   X(MessageEvent, CachedData)                         \
   X(MutationObserver, Callback)                       \
+  X(NamedConstructor, Initialized)                    \
   X(PerformanceObserver, Callback)                    \
   X(SameObject, NotificationActions)                  \
   X(SameObject, NotificationData)                     \

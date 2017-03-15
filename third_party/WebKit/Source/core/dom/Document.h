@@ -41,7 +41,6 @@
 #include "core/dom/DocumentTiming.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/MutationObserver.h"
-#include "core/dom/StyleReattachData.h"
 #include "core/dom/SynchronousMutationNotifier.h"
 #include "core/dom/SynchronousMutationObserver.h"
 #include "core/dom/Text.h"
@@ -63,7 +62,6 @@
 #include "platform/weborigin/ReferrerPolicy.h"
 #include "public/platform/WebFocusType.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
-#include "wtf/Compiler.h"
 #include "wtf/HashSet.h"
 #include "wtf/PassRefPtr.h"
 #include <memory>
@@ -231,20 +229,16 @@ enum CreateElementFlags {
 // See https://crbug.com/635105.
 // Logged to UMA, don't re-arrange entries without creating a new histogram.
 enum WouldLoadReason {
+  Invalid,
   Created,
+  WouldLoad3ScreensAway,
+  WouldLoad2ScreensAway,
+  WouldLoad1ScreenAway,
+  WouldLoadVisible,
   // If outer and inner frames aren't in the same process we can't determine
   // if the inner frame is visible, so just load it.
   // TODO(dgrogan): Revisit after https://crbug.com/650433 is fixed.
-  WouldLoadOutOfProcess,
-  // The next five indicate frames that are probably used for cross-origin
-  // communication.
-  WouldLoadDisplayNone,
-  WouldLoadZeroByZero,
-  WouldLoadAboveAndLeft,
-  WouldLoadAbove,
-  WouldLoadLeft,
-  // We have to load documents in visible frames.
-  WouldLoadVisible,
+  WouldLoadNoParent,
 
   WouldLoadReasonEnd
 };
@@ -348,8 +342,8 @@ class CORE_EXPORT Document : public ContainerNode,
   // just for the web IDL implementation.
   Element* scrollingElementNoLayout();
 
-  void addStyleReattachData(const Node&, StyleReattachData&);
-  StyleReattachData getStyleReattachData(const Node&) const;
+  void addNonAttachedStyle(const Node&, RefPtr<ComputedStyle>);
+  ComputedStyle* getNonAttachedStyle(const Node&) const;
 
   String readyState() const;
 
@@ -384,12 +378,8 @@ class CORE_EXPORT Document : public ContainerNode,
     m_hasXMLDeclaration = hasXMLDeclaration ? 1 : 0;
   }
 
-  String origin() const { return getSecurityOrigin()->toString(); }
-  String suborigin() const {
-    return getSecurityOrigin()->hasSuborigin()
-               ? getSecurityOrigin()->suborigin()->name()
-               : String();
-  }
+  String origin() const;
+  String suborigin() const;
 
   String visibilityState() const;
   PageVisibilityState pageVisibilityState() const;
@@ -449,9 +439,7 @@ class CORE_EXPORT Document : public ContainerNode,
   }
 
   bool canExecuteScripts(ReasonForCallingCanExecuteScripts) override;
-  bool isRenderingReady() const {
-    return haveImportsLoaded() && haveRenderBlockingStylesheetsLoaded();
-  }
+  bool isRenderingReady() const;
   bool isScriptExecutionReady() const {
     return haveImportsLoaded() && haveScriptBlockingStylesheetsLoaded();
   }
@@ -822,8 +810,7 @@ class CORE_EXPORT Document : public ContainerNode,
 
   void willChangeFrameOwnerProperties(int marginWidth,
                                       int marginHeight,
-                                      ScrollbarMode,
-                                      bool isDisplayNone);
+                                      ScrollbarMode);
 
   // Returns true if this document belongs to a frame that the parent document
   // made invisible (for instance by setting as style display:none).
@@ -1301,8 +1288,8 @@ class CORE_EXPORT Document : public ContainerNode,
 
   bool isInMainFrame() const;
 
-  void maybeRecordLoadReason(WouldLoadReason);
-  WouldLoadReason wouldLoadReason() { return m_wouldLoadReason; }
+  void recordDeferredLoadReason(WouldLoadReason);
+  WouldLoadReason deferredLoadReason() { return m_wouldLoadReason; }
 
   const PropertyRegistry* propertyRegistry() const;
   PropertyRegistry* propertyRegistry();
@@ -1334,6 +1321,7 @@ class CORE_EXPORT Document : public ContainerNode,
   friend class IgnoreDestructiveWriteCountIncrementer;
   friend class ThrowOnDynamicMarkupInsertionCountIncrementer;
   friend class NthIndexCache;
+  class NetworkStateObserver;
 
   bool isDocumentFragment() const =
       delete;  // This will catch anyone doing an unnecessary check.
@@ -1377,7 +1365,7 @@ class CORE_EXPORT Document : public ContainerNode,
   String nodeName() const final;
   NodeType getNodeType() const final;
   bool childTypeAllowed(NodeType) const final;
-  Node* cloneNode(bool deep) final;
+  Node* cloneNode(bool deep, ExceptionState&) final;
   void cloneDataFromDocument(const Document&);
   bool isSecureContextImpl(
       const SecureContextCheck priviligeContextCheck) const;
@@ -1449,10 +1437,9 @@ class CORE_EXPORT Document : public ContainerNode,
   Member<DocumentParser> m_parser;
   Member<ContextFeatures> m_contextFeatures;
 
-  // This HashMap is used to stash information (ComputedStyle, nextTextSibling)
-  // generated in the Style Resolution phase that is required in the
-  // Layout Tree construction phase.
-  HeapHashMap<Member<const Node>, StyleReattachData> m_styleReattachDataMap;
+  // This HashMap is used to temporaily store the ComputedStyle generated in the
+  // Style Resolution phase which is used in the Layout Tree construction phase.
+  HeapHashMap<Member<const Node>, RefPtr<ComputedStyle>> m_nonAttachedStyle;
 
   bool m_wellFormed;
 
@@ -1675,6 +1662,8 @@ class CORE_EXPORT Document : public ContainerNode,
   TaskHandle m_sensitiveInputVisibilityTask;
 
   mojom::EngagementLevel m_engagementLevel;
+
+  Member<NetworkStateObserver> m_networkStateObserver;
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<Document>;

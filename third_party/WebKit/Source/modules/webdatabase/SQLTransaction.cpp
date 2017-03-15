@@ -72,8 +72,7 @@ SQLTransaction::SQLTransaction(Database* db,
       m_readOnly(readOnly) {
   DCHECK(isMainThread());
   ASSERT(m_database);
-  InspectorInstrumentation::asyncTaskScheduled(db->getExecutionContext(),
-                                               "SQLTransaction", this, true);
+  probe::asyncTaskScheduled(db->getExecutionContext(), "SQLTransaction", this);
 }
 
 SQLTransaction::~SQLTransaction() {}
@@ -153,8 +152,8 @@ SQLTransactionState SQLTransaction::nextStateForTransactionError() {
 
 SQLTransactionState SQLTransaction::deliverTransactionCallback() {
   bool shouldDeliverErrorCallback = false;
-  InspectorInstrumentation::AsyncTask asyncTask(
-      m_database->getExecutionContext(), this);
+  probe::AsyncTask asyncTask(m_database->getExecutionContext(), this,
+                             "transaction");
 
   // Spec 4.3.2 4: Invoke the transaction callback with the new SQLTransaction
   // object.
@@ -179,10 +178,7 @@ SQLTransactionState SQLTransaction::deliverTransactionCallback() {
 }
 
 SQLTransactionState SQLTransaction::deliverTransactionErrorCallback() {
-  InspectorInstrumentation::AsyncTask asyncTask(
-      m_database->getExecutionContext(), this);
-  InspectorInstrumentation::asyncTaskCanceled(m_database->getExecutionContext(),
-                                              this);
+  probe::AsyncTask asyncTask(m_database->getExecutionContext(), this);
 
   // Spec 4.3.2.10: If exists, invoke error callback with the last
   // error to have occurred in this transaction.
@@ -245,10 +241,7 @@ SQLTransactionState SQLTransaction::deliverQuotaIncreaseCallback() {
 
 SQLTransactionState SQLTransaction::deliverSuccessCallback() {
   DCHECK(isMainThread());
-  InspectorInstrumentation::AsyncTask asyncTask(
-      m_database->getExecutionContext(), this);
-  InspectorInstrumentation::asyncTaskCanceled(m_database->getExecutionContext(),
-                                              this);
+  probe::AsyncTask asyncTask(m_database->getExecutionContext(), this);
 
   // Spec 4.3.2.8: Deliver success callback.
   if (VoidCallback* successCallback = m_successCallback.release())

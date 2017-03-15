@@ -54,20 +54,19 @@ std::unique_ptr<BluetoothServiceAttributeValueBlueZ> ReadAttributeValue(
           uint8_t byte;
           if (!struct_reader->PopVariantOfByte(&byte))
             return nullptr;
-          value = base::MakeUnique<base::FundamentalValue>(byte);
+          value = base::MakeUnique<base::Value>(byte);
           break;
         case 2:
           uint16_t short_val;
           if (!struct_reader->PopVariantOfUint16(&short_val))
             return nullptr;
-          value = base::MakeUnique<base::FundamentalValue>(short_val);
+          value = base::MakeUnique<base::Value>(short_val);
           break;
         case 4:
           uint32_t val;
           if (!struct_reader->PopVariantOfUint32(&val))
             return nullptr;
-          value = base::MakeUnique<base::FundamentalValue>(
-              static_cast<int32_t>(val));
+          value = base::MakeUnique<base::Value>(static_cast<int32_t>(val));
           break;
         case 8:
         // Fall through.
@@ -88,14 +87,14 @@ std::unique_ptr<BluetoothServiceAttributeValueBlueZ> ReadAttributeValue(
       std::string str;
       if (!struct_reader->PopVariantOfString(&str))
         return nullptr;
-      value = base::MakeUnique<base::StringValue>(str);
+      value = base::MakeUnique<base::Value>(str);
       break;
     }
     case bluez::BluetoothServiceAttributeValueBlueZ::BOOL: {
       bool b;
       if (!struct_reader->PopVariantOfBool(&b))
         return nullptr;
-      value = base::MakeUnique<base::FundamentalValue>(b);
+      value = base::MakeUnique<base::Value>(b);
       break;
     }
     case bluez::BluetoothServiceAttributeValueBlueZ::SEQUENCE: {

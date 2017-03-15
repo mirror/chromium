@@ -22,8 +22,6 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 using base::DictionaryValue;
-using base::FundamentalValue;
-using base::StringValue;
 using base::Value;
 using sync_pb::ManagedUserSharedSettingSpecifics;
 using syncer::SUPERVISED_USER_SHARED_SETTINGS;
@@ -161,13 +159,13 @@ TEST_F(SupervisedUserSharedSettingsServiceTest, SetAndGet) {
   const char kIdB[] = "bbbbbb";
   const char kIdC[] = "cccccc";
 
-  StringValue name("Jack");
-  FundamentalValue age(8);
-  StringValue bar("bar");
+  Value name("Jack");
+  Value age(8);
+  Value bar("bar");
   settings_service_.SetValue(kIdA, "name", name);
   ASSERT_EQ(1u, sync_processor_->changes().size());
   VerifySyncChangesAndClear();
-  settings_service_.SetValue(kIdA, "age", FundamentalValue(6));
+  settings_service_.SetValue(kIdA, "age", Value(6));
   ASSERT_EQ(1u, sync_processor_->changes().size());
   VerifySyncChangesAndClear();
   settings_service_.SetValue(kIdA, "age", age);
@@ -202,16 +200,16 @@ TEST_F(SupervisedUserSharedSettingsServiceTest, Merge) {
   const char kIdB[] = "bbbbbb";
   const char kIdC[] = "cccccc";
 
-  FundamentalValue age(8);
-  StringValue bar("bar");
-  settings_service_.SetValue(kIdA, "name", StringValue("Jack"));
+  Value age(8);
+  Value bar("bar");
+  settings_service_.SetValue(kIdA, "name", Value("Jack"));
   settings_service_.SetValue(kIdA, "age", age);
   settings_service_.SetValue(kIdB, "foo", bar);
 
   settings_service_.StopSyncing(SUPERVISED_USER_SHARED_SETTINGS);
 
-  StringValue name("Jill");
-  StringValue blurp("blurp");
+  Value name("Jill");
+  Value blurp("blurp");
   SyncDataList sync_data;
   sync_data.push_back(
       SupervisedUserSharedSettingsService::CreateSyncDataForSetting(
@@ -252,14 +250,14 @@ TEST_F(SupervisedUserSharedSettingsServiceTest, ProcessChanges) {
   const char kIdB[] = "bbbbbb";
   const char kIdC[] = "cccccc";
 
-  FundamentalValue age(8);
-  StringValue bar("bar");
-  settings_service_.SetValue(kIdA, "name", StringValue("Jack"));
+  Value age(8);
+  Value bar("bar");
+  settings_service_.SetValue(kIdA, "name", Value("Jack"));
   settings_service_.SetValue(kIdA, "age", age);
   settings_service_.SetValue(kIdB, "foo", bar);
 
-  StringValue name("Jill");
-  StringValue blurp("blurp");
+  Value name("Jill");
+  Value blurp("blurp");
   SyncChangeList changes;
   changes.push_back(
       SyncChange(FROM_HERE,

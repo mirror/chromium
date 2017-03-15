@@ -39,7 +39,6 @@
 #include "content/public/common/content_features.h"
 #include "content/public/common/resource_response.h"
 #include "content/public/common/resource_type.h"
-#include "mojo/public/cpp/bindings/associated_group.h"
 #include "net/base/net_errors.h"
 #include "net/base/request_priority.h"
 #include "net/http/http_response_headers.h"
@@ -417,7 +416,10 @@ bool ResourceDispatcher::RemovePendingRequest(int request_id) {
 
   PendingRequestInfo* request_info = it->second.get();
 
-  bool release_downloaded_file = request_info->download_to_file;
+  // |url_loader_client| releases the downloaded file. Otherwise (i.e., we
+  // are using Chrome IPC), we should release it here.
+  bool release_downloaded_file =
+      request_info->download_to_file && !it->second->url_loader_client;
 
   ReleaseResourcesInMessageQueue(&request_info->deferred_message_queue);
 
@@ -654,8 +656,7 @@ int ResourceDispatcher::StartAsync(
     const url::Origin& frame_origin,
     std::unique_ptr<RequestPeer> peer,
     blink::WebURLRequest::LoadingIPCType ipc_type,
-    mojom::URLLoaderFactory* url_loader_factory,
-    mojo::AssociatedGroup* associated_group) {
+    mojom::URLLoaderFactory* url_loader_factory) {
   CheckSchemeForReferrerPolicy(*request);
 
   // Compute a unique request_id for this renderer process.
@@ -670,14 +671,16 @@ int ResourceDispatcher::StartAsync(
   }
 
   if (ipc_type == blink::WebURLRequest::LoadingIPCType::Mojo) {
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner =
+        loading_task_runner ? loading_task_runner : main_thread_task_runner_;
     std::unique_ptr<URLLoaderClientImpl> client(
-        new URLLoaderClientImpl(request_id, this, main_thread_task_runner_));
+        new URLLoaderClientImpl(request_id, this, std::move(task_runner)));
     mojom::URLLoaderAssociatedPtr url_loader;
-    mojom::URLLoaderClientAssociatedPtrInfo client_ptr_info;
-    client->Bind(&client_ptr_info, associated_group);
-    url_loader_factory->CreateLoaderAndStart(
-        MakeRequest(&url_loader, associated_group), routing_id, request_id,
-        *request, std::move(client_ptr_info));
+    mojom::URLLoaderClientPtr client_ptr;
+    client->Bind(&client_ptr);
+    url_loader_factory->CreateLoaderAndStart(MakeRequest(&url_loader),
+                                             routing_id, request_id, *request,
+                                             std::move(client_ptr));
     pending_requests_[request_id]->url_loader = std::move(url_loader);
     pending_requests_[request_id]->url_loader_client = std::move(client);
   } else {

@@ -85,7 +85,9 @@ component("compositor") {
     "//cc/surfaces:surfaces",
     "//gpu/command_buffer/common",
     "//skia",
+    "//ui/base",
     "//ui/gfx",
+    "//ui/gfx/animation",
     "//ui/gfx/geometry",
     "//ui/gl",
   ]
@@ -164,6 +166,8 @@ static_library("test_support") {
 
   if (use_ozone) {
     sources += [ "test/test_compositor_host_ozone.cc" ]
+
+    deps += [ "//ui/ozone" ]
   } else if (use_x11) {
     sources += [ "test/test_compositor_host_x11.cc" ]
   }

@@ -183,6 +183,9 @@ void PageInfoModelBubbleBridge::OnPageInfoModelChanged() {
           toSubviews:(NSMutableArray*)subviews
             atOffset:(CGFloat)offset;
 
+// Sends the IDC_HIDE_PAGE_INFO command to hide the current popup.
+- (void)close;
+
 @property(nonatomic, retain) UIView* containerView;
 @property(nonatomic, retain) UIView* popupContainer;
 @end
@@ -398,6 +401,10 @@ void PageInfoModelBubbleBridge::OnPageInfoModelChanged() {
   [scrollView_ setContentSize:innerContainerView_.get().frame.size];
 }
 
+- (void)close {
+  [containerView_ chromeExecuteCommand:containerView_];
+}
+
 - (void)dismiss {
   [self animatePageInfoViewOut];
   UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification,
@@ -478,7 +485,7 @@ void PageInfoModelBubbleBridge::OnPageInfoModelChanged() {
       tag = IDC_RELOAD;
       accessibilityID = @"Reload button";
       [button addTarget:self
-                    action:@selector(dismiss)
+                    action:@selector(close)
           forControlEvents:UIControlEventTouchUpInside];
       break;
   };
@@ -508,6 +515,9 @@ void PageInfoModelBubbleBridge::OnPageInfoModelChanged() {
   CGSize sizeWithFont =
       [[[button titleLabel] text] cr_pixelAlignedSizeWithFont:font];
   frame.size = sizeWithFont;
+  // According to iOS Human Interface Guidelines, minimal size of UIButton
+  // should be 44x44.
+  frame.size.height = std::max<CGFloat>(44, frame.size.height);
 
   [button setFrame:frame];
 
@@ -529,7 +539,7 @@ void PageInfoModelBubbleBridge::OnPageInfoModelChanged() {
 - (void)rootViewTapped:(UIGestureRecognizer*)sender {
   CGPoint pt = [sender locationInView:containerView_];
   if (!CGRectContainsPoint([popupContainer_ frame], pt)) {
-    [containerView_ chromeExecuteCommand:containerView_];
+    [self close];
   }
 }
 

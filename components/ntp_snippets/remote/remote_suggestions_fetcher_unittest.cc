@@ -283,7 +283,6 @@ class RemoteSuggestionsFetcherTestBase : public testing::Test {
         mock_task_runner_(new base::TestMockTimeTaskRunner()),
         mock_task_runner_handle_(mock_task_runner_),
         test_url_(gurl) {
-    RequestThrottler::RegisterProfilePrefs(utils_.pref_service()->registry());
     UserClassifier::RegisterProfilePrefs(utils_.pref_service()->registry());
     user_classifier_ = base::MakeUnique<UserClassifier>(utils_.pref_service());
     // Increase initial time such that ticks are non-zero.
@@ -302,7 +301,9 @@ class RemoteSuggestionsFetcherTestBase : public testing::Test {
     fetcher_ = base::MakeUnique<RemoteSuggestionsFetcher>(
         utils_.fake_signin_manager(), fake_token_service_.get(),
         std::move(request_context_getter), utils_.pref_service(), nullptr,
-        base::Bind(&ParseJsonDelayed), kAPIKey, user_classifier_.get());
+        base::Bind(&ParseJsonDelayed),
+        GetFetchEndpoint(version_info::Channel::STABLE), kAPIKey,
+        user_classifier_.get());
 
     fetcher_->SetClockForTesting(mock_task_runner_->GetMockClock());
   }

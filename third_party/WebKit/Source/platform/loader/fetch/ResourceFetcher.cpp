@@ -36,22 +36,22 @@
 #include "platform/loader/fetch/MemoryCache.h"
 #include "platform/loader/fetch/ResourceLoader.h"
 #include "platform/loader/fetch/ResourceLoadingLog.h"
+#include "platform/loader/fetch/ResourceTimingInfo.h"
 #include "platform/loader/fetch/UniqueIdentifier.h"
 #include "platform/mhtml/ArchiveResource.h"
 #include "platform/mhtml/MHTMLArchive.h"
 #include "platform/network/NetworkInstrumentation.h"
 #include "platform/network/NetworkUtils.h"
-#include "platform/network/ResourceTimingInfo.h"
 #include "platform/weborigin/KnownPorts.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/weborigin/SecurityPolicy.h"
+#include "platform/weborigin/SecurityViolationReportingPolicy.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebCachePolicy.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLRequest.h"
 #include "wtf/text/CString.h"
 #include "wtf/text/WTFString.h"
-#include <memory>
 
 using blink::WebURLRequest;
 
@@ -208,9 +208,9 @@ static void populateTimingInfo(ResourceTimingInfo* info, Resource* resource) {
   info->setFinalResponse(resource->response());
 }
 
-static WebURLRequest::RequestContext requestContextFromType(
-    bool isMainFrame,
-    Resource::Type type) {
+WebURLRequest::RequestContext ResourceFetcher::determineRequestContext(
+    Resource::Type type,
+    bool isMainFrame) {
   switch (type) {
     case Resource::MainResource:
       if (!isMainFrame)
@@ -268,7 +268,7 @@ ResourceFetcher::~ResourceFetcher() {}
 
 Resource* ResourceFetcher::cachedResource(const KURL& resourceURL) const {
   KURL url = MemoryCache::removeFragmentIdentifierIfNeeded(resourceURL);
-  const WeakMember<Resource>& resource = m_documentResources.get(url);
+  const WeakMember<Resource>& resource = m_documentResources.at(url);
   return resource.get();
 }
 
@@ -312,13 +312,13 @@ void ResourceFetcher::requestLoadStarted(unsigned long identifier,
       !m_validatedURLs.contains(request.resourceRequest().url())) {
     // Resources loaded from memory cache should be reported the first time
     // they're used.
-    std::unique_ptr<ResourceTimingInfo> info = ResourceTimingInfo::create(
+    RefPtr<ResourceTimingInfo> info = ResourceTimingInfo::create(
         request.options().initiatorInfo.name, monotonicallyIncreasingTime(),
         resource->getType() == Resource::MainResource);
     populateTimingInfo(info.get(), resource);
     info->clearLoadTimings();
     info->setLoadFinishTime(info->initialTime());
-    m_scheduledResourceTimingReports.push_back(std::move(info));
+    m_scheduledResourceTimingReports.push_back(info.release());
     if (!m_resourceTimingReportTimer.isActive())
       m_resourceTimingReportTimer.startOneShot(0, BLINK_FROM_HERE);
   }
@@ -387,8 +387,10 @@ Resource* ResourceFetcher::resourceForStaticData(
   }
 
   ResourceResponse response(url, mimetype, data->size(), charset);
-  response.setHTTPStatusCode(200);
-  response.setHTTPStatusText("OK");
+  if (!substituteData.isValid() && url.protocolIsData()) {
+    response.setHTTPStatusCode(200);
+    response.setHTTPStatusText("OK");
+  }
 
   Resource* resource = factory.create(request.resourceRequest(),
                                       request.options(), request.charset());
@@ -428,7 +430,7 @@ void ResourceFetcher::makePreloadedResourceBlockOnloadIfNeeded(
       resource->isLoadEventBlockingResourceType() &&
       resource->isLinkPreload() && !request.isLinkPreload() &&
       m_nonBlockingLoaders.contains(resource->loader())) {
-    m_nonBlockingLoaders.remove(resource->loader());
+    m_nonBlockingLoaders.erase(resource->loader());
     m_loaders.insert(resource->loader());
   }
 }
@@ -489,8 +491,8 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::prepareRequest(
       request.options(),
       /* Don't send security violation reports for speculative preloads */
       request.isSpeculativePreload()
-          ? FetchContext::SecurityViolationReportingPolicy::SuppressReporting
-          : FetchContext::SecurityViolationReportingPolicy::Report,
+          ? SecurityViolationReportingPolicy::SuppressReporting
+          : SecurityViolationReportingPolicy::Report,
       request.getOriginRestriction());
   if (blockedReason != ResourceRequestBlockedReason::None) {
     DCHECK(!substituteData.forceSynchronousLoad());
@@ -631,23 +633,15 @@ Resource* ResourceFetcher::requestResource(
 
 void ResourceFetcher::resourceTimingReportTimerFired(TimerBase* timer) {
   DCHECK_EQ(timer, &m_resourceTimingReportTimer);
-  Vector<std::unique_ptr<ResourceTimingInfo>> timingReports;
+  Vector<RefPtr<ResourceTimingInfo>> timingReports;
   timingReports.swap(m_scheduledResourceTimingReports);
   for (const auto& timingInfo : timingReports)
     context().addResourceTiming(*timingInfo);
 }
 
-void ResourceFetcher::determineRequestContext(ResourceRequest& request,
-                                              Resource::Type type,
-                                              bool isMainFrame) {
-  WebURLRequest::RequestContext requestContext =
-      requestContextFromType(isMainFrame, type);
-  request.setRequestContext(requestContext);
-}
-
-void ResourceFetcher::determineRequestContext(ResourceRequest& request,
-                                              Resource::Type type) {
-  determineRequestContext(request, type, context().isMainFrame());
+WebURLRequest::RequestContext ResourceFetcher::determineRequestContext(
+    Resource::Type type) const {
+  return determineRequestContext(type, context().isMainFrame());
 }
 
 void ResourceFetcher::initializeResourceRequest(
@@ -659,7 +653,7 @@ void ResourceFetcher::initializeResourceRequest(
         context().resourceRequestCachePolicy(request, type, defer));
   }
   if (request.requestContext() == WebURLRequest::RequestContextUnspecified)
-    determineRequestContext(request, type);
+    request.setRequestContext(determineRequestContext(type));
   if (type == Resource::LinkPrefetch)
     request.setHTTPHeaderField(HTTPNames::Purpose, "prefetch");
 
@@ -683,8 +677,10 @@ void ResourceFetcher::initializeRevalidation(
   const AtomicString& eTag =
       resource->response().httpHeaderField(HTTPNames::ETag);
   if (!lastModified.isEmpty() || !eTag.isEmpty()) {
-    DCHECK_NE(context().getCachePolicy(), CachePolicyReload);
-    if (context().getCachePolicy() == CachePolicyRevalidate) {
+    DCHECK_NE(WebCachePolicy::BypassingCache,
+              revalidatingRequest.getCachePolicy());
+    if (revalidatingRequest.getCachePolicy() ==
+        WebCachePolicy::ValidatingCacheData) {
       revalidatingRequest.setHTTPHeaderField(HTTPNames::Cache_Control,
                                              "max-age=0");
     }
@@ -759,7 +755,7 @@ void ResourceFetcher::storePerformanceTimingInitiatorInformation(
         ResourceTimingInfo::create(fetchInitiator, startTime, isMainResource);
   }
 
-  std::unique_ptr<ResourceTimingInfo> info =
+  RefPtr<ResourceTimingInfo> info =
       ResourceTimingInfo::create(fetchInitiator, startTime, isMainResource);
 
   if (resource->isCacheValidator()) {
@@ -771,7 +767,7 @@ void ResourceFetcher::storePerformanceTimingInitiatorInformation(
 
   if (!isMainResource ||
       context().updateTimingInfoForIFrameNavigation(info.get())) {
-    m_resourceTimingInfoMap.insert(resource, std::move(info));
+    m_resourceTimingInfoMap.insert(resource, info.release());
   }
 }
 
@@ -799,6 +795,14 @@ ResourceFetcher::determineRevalidationPolicy(Resource::Type type,
 
   if (!existingResource)
     return Load;
+
+  // If the existing resource is loading and the associated fetcher is not equal
+  // to |this|, we must not use the resource. Otherwise, CSP violation may
+  // happen in redirect handling.
+  if (existingResource->loader() &&
+      existingResource->loader()->fetcher() != this) {
+    return Reload;
+  }
 
   // Checks if the resource has an explicit policy about integrity metadata.
   //
@@ -855,8 +859,9 @@ ResourceFetcher::determineRevalidationPolicy(Resource::Type type,
   //
   // TODO(japhet): Can we get rid of one of these settings?
   if (existingResource->isImage() &&
-      !context().allowImage(m_imagesEnabled, existingResource->url()))
+      !context().allowImage(m_imagesEnabled, existingResource->url())) {
     return Reload;
+  }
 
   // Never use cache entries for downloadToFile / useStreamOnResponse requests.
   // The data will be delivered through other paths.
@@ -868,14 +873,15 @@ ResourceFetcher::determineRevalidationPolicy(Resource::Type type,
   if (existingResource->response().wasFetchedViaServiceWorker() &&
       existingResource->response().serviceWorkerResponseType() ==
           WebServiceWorkerResponseTypeOpaque &&
-      request.fetchRequestMode() != WebURLRequest::FetchRequestModeNoCORS)
+      request.fetchRequestMode() != WebURLRequest::FetchRequestModeNoCORS) {
     return Reload;
+  }
 
   // If resource was populated from a SubstituteData load or data: url, use it.
   if (isStaticData)
     return Use;
 
-  if (!existingResource->canReuse(request))
+  if (!existingResource->canReuse(fetchRequest))
     return Reload;
 
   // Certain requests (e.g., XHRs) might have manually set headers that require
@@ -890,8 +896,9 @@ ResourceFetcher::determineRevalidationPolicy(Resource::Type type,
   // In this case, the Resource likely has insufficient context to provide a
   // useful cache hit or revalidation. See http://crbug.com/643659
   if (request.isConditional() ||
-      existingResource->response().httpStatusCode() == 304)
+      existingResource->response().httpStatusCode() == 304) {
     return Reload;
+  }
 
   // Don't reload resources while pasting.
   if (m_allowStaleResources)
@@ -904,9 +911,8 @@ ResourceFetcher::determineRevalidationPolicy(Resource::Type type,
   if (existingResource->isPreloaded())
     return Use;
 
-  // CachePolicyHistoryBuffer uses the cache no matter what.
-  CachePolicy cachePolicy = context().getCachePolicy();
-  if (cachePolicy == CachePolicyHistoryBuffer)
+  // WebCachePolicy::ReturnCacheDataElseLoad uses the cache no matter what.
+  if (request.getCachePolicy() == WebCachePolicy::ReturnCacheDataElseLoad)
     return Use;
 
   // Don't reuse resources with Cache-control: no-store.
@@ -943,21 +949,19 @@ ResourceFetcher::determineRevalidationPolicy(Resource::Type type,
       return Use;
   }
 
-  if (request.getCachePolicy() == WebCachePolicy::BypassingCache)
-    return Reload;
-
-  // CachePolicyReload always reloads
-  if (cachePolicy == CachePolicyReload) {
+  // WebCachePolicy::BypassingCache always reloads
+  if (request.getCachePolicy() == WebCachePolicy::BypassingCache) {
     RESOURCE_LOADING_DVLOG(1) << "ResourceFetcher::determineRevalidationPolicy "
-                                 "reloading due to CachePolicyReload.";
+                                 "reloading due to "
+                                 "WebCachePolicy::BypassingCache.";
     return Reload;
   }
 
   // We'll try to reload the resource if it failed last time.
   if (existingResource->errorOccurred()) {
-    RESOURCE_LOADING_DVLOG(1) << "ResourceFetcher::"
-                                 "determineRevalidationPolicye reloading due "
-                                 "to resource being in the error state";
+    RESOURCE_LOADING_DVLOG(1) << "ResourceFetcher::determineRevalidationPolicy "
+                                 "reloading due to resource being in the error "
+                                 "state";
     return Reload;
   }
 
@@ -965,8 +969,9 @@ ResourceFetcher::determineRevalidationPolicy(Resource::Type type,
   // validation. We restrict this only to images from memory cache which are the
   // same as the version in the current document.
   if (type == Resource::Image &&
-      existingResource == cachedResource(request.url()))
+      existingResource == cachedResource(request.url())) {
     return Use;
+  }
 
   if (existingResource->mustReloadDueToVaryHeader(request))
     return Reload;
@@ -981,7 +986,7 @@ ResourceFetcher::determineRevalidationPolicy(Resource::Type type,
 
   // Check if the cache headers requires us to revalidate (cache expiration for
   // example).
-  if (cachePolicy == CachePolicyRevalidate ||
+  if (request.getCachePolicy() == WebCachePolicy::ValidatingCacheData ||
       existingResource->mustRevalidateDueToCacheHeaders() ||
       request.cacheControlContainsNoCache()) {
     // See if the resource has usable ETag or Last-modified headers. If the page
@@ -1049,12 +1054,12 @@ void ResourceFetcher::clearContext() {
   m_context.clear();
 }
 
-int ResourceFetcher::requestCount() const {
+int ResourceFetcher::blockingRequestCount() const {
   return m_loaders.size();
 }
 
-bool ResourceFetcher::hasPendingRequest() const {
-  return m_loaders.size() > 0 || m_nonBlockingLoaders.size() > 0;
+int ResourceFetcher::nonblockingRequestCount() const {
+  return m_nonBlockingLoaders.size();
 }
 
 void ResourceFetcher::preloadStarted(Resource* resource) {
@@ -1064,7 +1069,7 @@ void ResourceFetcher::preloadStarted(Resource* resource) {
 
   if (!m_preloads)
     m_preloads = new HeapListHashSet<Member<Resource>>;
-  m_preloads->add(resource);
+  m_preloads->insert(resource);
 
   if (m_preloadedURLsForTest)
     m_preloadedURLsForTest->insert(resource->url().getString());
@@ -1097,7 +1102,7 @@ void ResourceFetcher::clearPreloads(ClearPreloadsPolicy policy) {
       resource->decreasePreloadCount();
       if (resource->getPreloadResult() == Resource::PreloadNotReferenced)
         memoryCache()->remove(resource.get());
-      m_preloads->remove(resource);
+      m_preloads->erase(resource);
     }
   }
   if (!m_preloads->size())
@@ -1166,7 +1171,7 @@ void ResourceFetcher::handleLoaderFinish(Resource* resource,
           encodedDataLength == -1 ? 0 : encodedDataLength);
     }
   }
-  if (std::unique_ptr<ResourceTimingInfo> info =
+  if (RefPtr<ResourceTimingInfo> info =
           m_resourceTimingInfoMap.take(resource)) {
     // Store redirect responses that were packed inside the final response.
     addRedirectsToTimingInfo(resource, info.get());
@@ -1189,7 +1194,8 @@ void ResourceFetcher::handleLoaderFinish(Resource* resource,
   }
 
   context().dispatchDidFinishLoading(resource->identifier(), finishTime,
-                                     encodedDataLength);
+                                     encodedDataLength,
+                                     resource->response().decodedBodyLength());
 
   if (type == DidFinishLoading)
     resource->finish(finishTime);
@@ -1222,7 +1228,7 @@ void ResourceFetcher::moveResourceLoaderToNonBlocking(ResourceLoader* loader) {
   // TODO(yoav): Convert CHECK to DCHECK if no crash reports come in.
   CHECK(m_loaders.contains(loader));
   m_nonBlockingLoaders.insert(loader);
-  m_loaders.remove(loader);
+  m_loaders.erase(loader);
 }
 
 bool ResourceFetcher::startLoad(Resource* resource) {
@@ -1249,7 +1255,7 @@ bool ResourceFetcher::startLoad(Resource* resource) {
   // https://w3c.github.io/webappsec-suborigins/.
   SecurityOrigin* sourceOrigin = context().getSecurityOrigin();
   if (sourceOrigin && sourceOrigin->hasSuborigin())
-    request.setSkipServiceWorker(WebURLRequest::SkipServiceWorker::All);
+    request.setServiceWorkerMode(WebURLRequest::ServiceWorkerMode::None);
 
   ResourceLoader* loader = ResourceLoader::create(this, resource);
   if (resource->shouldBlockLoadEvent())
@@ -1268,9 +1274,9 @@ bool ResourceFetcher::startLoad(Resource* resource) {
 void ResourceFetcher::removeResourceLoader(ResourceLoader* loader) {
   DCHECK(loader);
   if (m_loaders.contains(loader))
-    m_loaders.remove(loader);
+    m_loaders.erase(loader);
   else if (m_nonBlockingLoaders.contains(loader))
-    m_nonBlockingLoaders.remove(loader);
+    m_nonBlockingLoaders.erase(loader);
   else
     NOTREACHED();
 }
@@ -1493,7 +1499,7 @@ void ResourceFetcher::emulateLoadStartedForInspector(
   FetchRequest request(resourceRequest, initiatorName, resource->options());
   context().canRequest(resource->getType(), resource->lastResourceRequest(),
                        resource->lastResourceRequest().url(), request.options(),
-                       FetchContext::SecurityViolationReportingPolicy::Report,
+                       SecurityViolationReportingPolicy::Report,
                        request.getOriginRestriction());
   requestLoadStarted(resource->identifier(), resource, request,
                      ResourceLoadingFromCache);

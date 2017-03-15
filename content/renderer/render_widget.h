@@ -27,6 +27,7 @@
 #include "content/common/cursors/webcursor.h"
 #include "content/common/drag_event_source_info.h"
 #include "content/common/edit_command.h"
+#include "content/common/features.h"
 #include "content/common/input/synthetic_gesture_params.h"
 #include "content/public/common/drop_data.h"
 #include "content/public/common/screen_info.h"
@@ -268,6 +269,7 @@ class CONTENT_EXPORT RenderWidget
   void SetInputHandler(RenderWidgetInputHandler* input_handler) override;
   void ShowVirtualKeyboard() override;
   void UpdateTextInputState() override;
+  void ClearTextInputState() override;
   bool WillHandleGestureEvent(const blink::WebGestureEvent& event) override;
   bool WillHandleMouseEvent(const blink::WebMouseEvent& event) override;
 
@@ -292,7 +294,6 @@ class CONTENT_EXPORT RenderWidget
                       blink::WebTextDirection hint) override;
   void setWindowRect(const blink::WebRect&) override;
   blink::WebScreenInfo screenInfo() override;
-  void resetInputMethod() override;
   void didHandleGestureEvent(const blink::WebGestureEvent& event,
                              bool event_cancelled) override;
   void didOverscroll(const blink::WebFloatSize& overscrollDelta,
@@ -414,6 +415,9 @@ class CONTENT_EXPORT RenderWidget
   virtual void TransferActiveWheelFlingAnimation(
       const blink::WebActiveWheelFlingParameters& params) {}
 
+  uint32_t GetContentSourceId();
+  void IncrementContentSourceId();
+
  protected:
   // Friend RefCounted so that the dtor can be non-public. Using this class
   // without ref-counting is an error.
@@ -464,7 +468,7 @@ class CONTENT_EXPORT RenderWidget
 
   // Used to force the size of a window when running layout tests.
   void SetWindowRectSynchronously(const gfx::Rect& new_window_rect);
-#if defined(USE_EXTERNAL_POPUP_MENU)
+#if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
   void SetExternalPopupOriginAdjustmentsForEmulation(
       ExternalPopupMenu* popup,
       RenderWidgetScreenMetricsEmulator* emulator);
@@ -846,6 +850,19 @@ class CONTENT_EXPORT RenderWidget
 
   bool time_to_first_active_paint_recorded_;
   base::TimeTicks was_shown_time_;
+
+  // This is initialized to zero and is incremented on each non-same-page
+  // navigation commit by RenderFrameImpl. At that time it is sent to the
+  // compositor so that it can tag compositor frames, and RenderFrameImpl is
+  // responsible for sending it to the browser process to be used to match
+  // each compositor frame to the most recent page navigation before it was
+  // generated.
+  // This only applies to main frames, and is not touched for subframe
+  // RenderWidgets, where there is no concern around displaying unloaded
+  // content.
+  // TODO(kenrb, fsamuel): This should be removed when SurfaceIDs can be used
+  // to replace it. See https://crbug.com/695579.
+  uint32_t current_content_source_id_;
 
   base::WeakPtrFactory<RenderWidget> weak_ptr_factory_;
 

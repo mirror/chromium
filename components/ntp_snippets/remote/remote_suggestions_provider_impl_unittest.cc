@@ -39,6 +39,7 @@
 #include "components/ntp_snippets/remote/remote_suggestion.h"
 #include "components/ntp_snippets/remote/remote_suggestions_database.h"
 #include "components/ntp_snippets/remote/remote_suggestions_fetcher.h"
+#include "components/ntp_snippets/remote/remote_suggestions_scheduler.h"
 #include "components/ntp_snippets/remote/test_utils.h"
 #include "components/ntp_snippets/user_classifier.h"
 #include "components/prefs/testing_pref_service.h"
@@ -49,6 +50,7 @@
 #include "net/url_request/url_request_test_util.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/gfx/geometry/size.h"
 #include "ui/gfx/image/image.h"
 #include "ui/gfx/image/image_unittest_util.h"
 
@@ -64,6 +66,7 @@ using testing::Mock;
 using testing::MockFunction;
 using testing::NiceMock;
 using testing::Not;
+using testing::Return;
 using testing::SaveArg;
 using testing::SizeIs;
 using testing::StartsWith;
@@ -339,11 +342,13 @@ class MockImageFetcher : public ImageFetcher {
  public:
   MOCK_METHOD1(SetImageFetcherDelegate, void(ImageFetcherDelegate*));
   MOCK_METHOD1(SetDataUseServiceName, void(DataUseServiceName));
+  MOCK_METHOD1(SetDesiredImageFrameSize, void(const gfx::Size&));
   MOCK_METHOD3(
       StartOrQueueNetworkRequest,
       void(const std::string&,
            const GURL&,
            base::Callback<void(const std::string&, const gfx::Image&)>));
+  MOCK_METHOD0(GetImageDecoder, image_fetcher::ImageDecoder*());
 };
 
 class FakeImageDecoder : public image_fetcher::ImageDecoder {
@@ -352,6 +357,7 @@ class FakeImageDecoder : public image_fetcher::ImageDecoder {
   ~FakeImageDecoder() override = default;
   void DecodeImage(
       const std::string& image_data,
+      const gfx::Size& desired_image_frame_size,
       const image_fetcher::ImageDecodedCallback& callback) override {
     callback.Run(decoded_image_);
   }
@@ -360,6 +366,19 @@ class FakeImageDecoder : public image_fetcher::ImageDecoder {
 
  private:
   gfx::Image decoded_image_;
+};
+
+class MockScheduler : public RemoteSuggestionsScheduler {
+ public:
+  MOCK_METHOD0(OnProviderActivated, void());
+  MOCK_METHOD0(OnProviderDeactivated, void());
+  MOCK_METHOD0(OnSuggestionsCleared, void());
+  MOCK_METHOD0(OnHistoryCleared, void());
+  MOCK_METHOD0(OnBrowserForegrounded, void());
+  MOCK_METHOD0(OnBrowserColdStart, void());
+  MOCK_METHOD0(OnNTPOpened, void());
+  MOCK_METHOD0(OnPersistentSchedulerWakeUp, void());
+  MOCK_METHOD0(RescheduleFetching, void());
 };
 
 }  // namespace
@@ -378,7 +397,6 @@ class RemoteSuggestionsProviderImplTest : public ::testing::Test {
         user_classifier_(/*pref_service=*/nullptr),
         suggestions_fetcher_(nullptr),
         image_fetcher_(nullptr),
-        image_decoder_(nullptr),
         database_(nullptr) {
     RemoteSuggestionsProviderImpl::RegisterProfilePrefs(
         utils_.pref_service()->registry());
@@ -414,15 +432,16 @@ class RemoteSuggestionsProviderImplTest : public ::testing::Test {
     auto suggestions_fetcher = base::MakeUnique<RemoteSuggestionsFetcher>(
         utils_.fake_signin_manager(), /*token_service=*/nullptr,
         std::move(request_context_getter), utils_.pref_service(), nullptr,
-        base::Bind(&ParseJson), kAPIKey, &user_classifier_);
+        base::Bind(&ParseJson), GetFetchEndpoint(version_info::Channel::STABLE),
+        kAPIKey, &user_classifier_);
     suggestions_fetcher_ = suggestions_fetcher.get();
 
     auto image_fetcher = base::MakeUnique<NiceMock<MockImageFetcher>>();
 
     image_fetcher_ = image_fetcher.get();
     EXPECT_CALL(*image_fetcher, SetImageFetcherDelegate(_));
-    auto image_decoder = base::MakeUnique<FakeImageDecoder>();
-    image_decoder_ = image_decoder.get();
+    ON_CALL(*image_fetcher, GetImageDecoder())
+        .WillByDefault(Return(&image_decoder_));
     EXPECT_FALSE(observer_);
     observer_ = base::MakeUnique<FakeContentSuggestionsProviderObserver>();
     auto database = base::MakeUnique<RemoteSuggestionsDatabase>(
@@ -431,7 +450,7 @@ class RemoteSuggestionsProviderImplTest : public ::testing::Test {
     return base::MakeUnique<RemoteSuggestionsProviderImpl>(
         observer_.get(), utils_.pref_service(), "fr", category_ranker_.get(),
         std::move(suggestions_fetcher), std::move(image_fetcher),
-        std::move(image_decoder), std::move(database),
+        std::move(database),
         base::MakeUnique<RemoteSuggestionsStatusService>(
             utils_.fake_signin_manager(), utils_.pref_service()));
   }
@@ -495,7 +514,7 @@ class RemoteSuggestionsProviderImplTest : public ::testing::Test {
   // TODO(tschumann): Make this a strict-mock. We want to avoid unneccesary
   // network requests.
   NiceMock<MockImageFetcher>* image_fetcher() { return image_fetcher_; }
-  FakeImageDecoder* image_decoder() { return image_decoder_; }
+  FakeImageDecoder* image_decoder() { return &image_decoder_; }
   PrefService* pref_service() { return utils_.pref_service(); }
   RemoteSuggestionsDatabase* database() { return database_; }
 
@@ -543,7 +562,7 @@ class RemoteSuggestionsProviderImplTest : public ::testing::Test {
   std::unique_ptr<FakeContentSuggestionsProviderObserver> observer_;
   RemoteSuggestionsFetcher* suggestions_fetcher_;
   NiceMock<MockImageFetcher>* image_fetcher_;
-  FakeImageDecoder* image_decoder_;
+  FakeImageDecoder image_decoder_;
 
   base::ScopedTempDir database_dir_;
   RemoteSuggestionsDatabase* database_;
@@ -691,7 +710,6 @@ TEST_F(RemoteSuggestionsProviderImplTest, AddRemoteCategoriesToCategoryRanker) {
           .AddCategory({GetSuggestionN(1)}, /*remote_category_id=*/13)
           .AddCategory({GetSuggestionN(2)}, /*remote_category_id=*/12)
           .Build();
-  SetUpFetchResponse(json_str);
   {
     // The order of categories is determined by the order in which they are
     // added. Thus, the latter is tested here.
@@ -704,6 +722,7 @@ TEST_F(RemoteSuggestionsProviderImplTest, AddRemoteCategoriesToCategoryRanker) {
                 AppendCategoryIfNecessary(Category::FromRemoteCategory(12)));
   }
   auto service = MakeSuggestionsProvider(/*set_empty_response=*/false);
+  LoadFromJSONString(service.get(), json_str);
 }
 
 TEST_F(RemoteSuggestionsProviderImplTest, PersistCategoryInfos) {
@@ -759,8 +778,8 @@ TEST_F(RemoteSuggestionsProviderImplTest, PersistRemoteCategoryOrder) {
           .AddCategory({GetSuggestionN(1)}, /*remote_category_id=*/13)
           .AddCategory({GetSuggestionN(2)}, /*remote_category_id=*/12)
           .Build();
-  SetUpFetchResponse(json_str);
   auto service = MakeSuggestionsProvider(/*set_empty_response=*/false);
+  LoadFromJSONString(service.get(), json_str);
 
   // We manually recreate the service to simulate Chrome restart and enforce a
   // mock ranker. The response is cleared to ensure that the order is not
@@ -1466,26 +1485,6 @@ TEST_F(RemoteSuggestionsProviderImplTest, LogNumArticlesHistogram) {
   EXPECT_THAT(
       tester.GetAllSamples("NewTabPage.Snippets.NumArticlesZeroDueToDiscarded"),
       ElementsAre(base::Bucket(/*min=*/1, /*count=*/1)));
-
-  // There is only a single, dismissed suggestion in the database, so recreating
-  // the service will require us to re-fetch.
-  tester.ExpectTotalCount("NewTabPage.Snippets.NumArticlesFetched", 4);
-  ResetSuggestionsProvider(&service, /*set_empty_response=*/true);
-  EXPECT_EQ(observer().StatusForCategory(articles_category()),
-            CategoryStatus::AVAILABLE);
-  tester.ExpectTotalCount("NewTabPage.Snippets.NumArticlesFetched", 5);
-  EXPECT_THAT(
-      tester.GetAllSamples("NewTabPage.Snippets.NumArticlesZeroDueToDiscarded"),
-      ElementsAre(base::Bucket(/*min=*/1, /*count=*/2)));
-
-  // But if there's a non-dismissed suggestion in the database, recreating it
-  // shouldn't trigger a fetch.
-  LoadFromJSONString(
-      service.get(),
-      GetTestJson({GetSuggestionWithUrl("http://not-dismissed.com")}));
-  tester.ExpectTotalCount("NewTabPage.Snippets.NumArticlesFetched", 6);
-  ResetSuggestionsProvider(&service, /*set_empty_response=*/true);
-  tester.ExpectTotalCount("NewTabPage.Snippets.NumArticlesFetched", 6);
 }
 
 TEST_F(RemoteSuggestionsProviderImplTest, DismissShouldRespectAllKnownUrls) {
@@ -1633,31 +1632,6 @@ TEST_F(RemoteSuggestionsProviderImplTest,
               Eq(CategoryStatus::AVAILABLE));
 }
 
-TEST_F(RemoteSuggestionsProviderImplTest,
-       SuggestionsFetchedOnSignInAndSignOut) {
-  auto service = MakeSuggestionsProvider();
-  EXPECT_THAT(service->GetSuggestionsForTesting(articles_category()),
-              IsEmpty());
-
-  // |MakeSuggestionsProvider()| creates a service where user is signed in
-  // already,
-  // so we start by signing out.
-  SetUpFetchResponse(GetTestJson({GetSuggestionN(1)}));
-  service->OnStatusChanged(RemoteSuggestionsStatus::ENABLED_AND_SIGNED_IN,
-                           RemoteSuggestionsStatus::ENABLED_AND_SIGNED_OUT);
-  base::RunLoop().RunUntilIdle();
-  EXPECT_THAT(service->GetSuggestionsForTesting(articles_category()),
-              SizeIs(1));
-
-  // Sign in to check a transition from signed out to signed in.
-  SetUpFetchResponse(GetTestJson({GetSuggestionN(1), GetSuggestionN(2)}));
-  service->OnStatusChanged(RemoteSuggestionsStatus::ENABLED_AND_SIGNED_OUT,
-                           RemoteSuggestionsStatus::ENABLED_AND_SIGNED_IN);
-  base::RunLoop().RunUntilIdle();
-  EXPECT_THAT(service->GetSuggestionsForTesting(articles_category()),
-              SizeIs(2));
-}
-
 TEST_F(RemoteSuggestionsProviderImplTest, ShouldClearOrphanedImagesOnRestart) {
   auto service = MakeSuggestionsProvider();
 
@@ -1738,86 +1712,102 @@ TEST_F(RemoteSuggestionsProviderImplTest,
   // scheduler refactoring is done (crbug.com/672434).
 }
 
-TEST_F(RemoteSuggestionsProviderImplTest, CallsProviderStatusCallbackIfReady) {
+TEST_F(RemoteSuggestionsProviderImplTest, CallsSchedulerIfInited) {
   // Initiate the service so that it is already READY.
   auto service = MakeSuggestionsProvider();
-
-  StrictMock<MockFunction<void(RemoteSuggestionsProvider::ProviderStatus)>>
-      status_callback;
-  // The callback should be called on registering.
-  EXPECT_CALL(status_callback,
-              Call(RemoteSuggestionsProvider::ProviderStatus::ACTIVE));
-  service->SetProviderStatusCallback(
-      base::MakeUnique<RemoteSuggestionsProvider::ProviderStatusCallback>(
-          base::Bind(&MockFunction<void(
-                         RemoteSuggestionsProvider::ProviderStatus)>::Call,
-                     base::Unretained(&status_callback))));
+  StrictMock<MockScheduler> scheduler;
+  // The scheduler should be notified of activation of the provider.
+  EXPECT_CALL(scheduler, OnProviderActivated());
+  service->SetRemoteSuggestionsScheduler(&scheduler);
 }
 
-TEST_F(RemoteSuggestionsProviderImplTest,
-       DoesNotCallProviderStatusCallbackIfNotInited) {
+TEST_F(RemoteSuggestionsProviderImplTest, DoesNotCallSchedulerIfNotInited) {
   auto service = MakeSuggestionsProviderWithoutInitialization();
-
-  StrictMock<MockFunction<void(RemoteSuggestionsProvider::ProviderStatus)>>
-      status_callback;
+  StrictMock<MockScheduler> scheduler;
   // The provider is not initialized yet, no callback should be called on
   // registering.
-  service->SetProviderStatusCallback(
-      base::MakeUnique<RemoteSuggestionsProvider::ProviderStatusCallback>(
-          base::Bind(&MockFunction<void(
-                         RemoteSuggestionsProvider::ProviderStatus)>::Call,
-                     base::Unretained(&status_callback))));
+  service->SetRemoteSuggestionsScheduler(&scheduler);
 }
 
-TEST_F(RemoteSuggestionsProviderImplTest,
-       CallsProviderStatusCallbackWhenReady) {
+TEST_F(RemoteSuggestionsProviderImplTest, CallsSchedulerWhenReady) {
   auto service = MakeSuggestionsProviderWithoutInitialization();
-  StrictMock<MockFunction<void(RemoteSuggestionsProvider::ProviderStatus)>>
-      status_callback;
-  service->SetProviderStatusCallback(
-      base::MakeUnique<RemoteSuggestionsProvider::ProviderStatusCallback>(
-          base::Bind(&MockFunction<void(
-                         RemoteSuggestionsProvider::ProviderStatus)>::Call,
-                     base::Unretained(&status_callback))));
+  StrictMock<MockScheduler> scheduler;
+  // The provider is not initialized yet, no callback should be called yet.
+  service->SetRemoteSuggestionsScheduler(&scheduler);
 
   // Should be called when becoming ready.
-  EXPECT_CALL(status_callback,
-              Call(RemoteSuggestionsProvider::ProviderStatus::ACTIVE));
+  EXPECT_CALL(scheduler, OnProviderActivated());
   WaitForSuggestionsProviderInitialization(service.get(),
                                            /*set_empty_response=*/true);
 }
 
-TEST_F(RemoteSuggestionsProviderImplTest, CallsProviderStatusCallbackOnError) {
+TEST_F(RemoteSuggestionsProviderImplTest, CallsSchedulerOnError) {
   auto service = MakeSuggestionsProviderWithoutInitialization();
-  StrictMock<MockFunction<void(RemoteSuggestionsProvider::ProviderStatus)>>
-      status_callback;
-  service->SetProviderStatusCallback(
-      base::MakeUnique<RemoteSuggestionsProvider::ProviderStatusCallback>(
-          base::Bind(&MockFunction<void(
-                         RemoteSuggestionsProvider::ProviderStatus)>::Call,
-                     base::Unretained(&status_callback))));
+  StrictMock<MockScheduler> scheduler;
+  // The provider is not initialized yet, no callback should be called yet.
+  service->SetRemoteSuggestionsScheduler(&scheduler);
 
   // Should be called on error.
-  EXPECT_CALL(status_callback,
-              Call(RemoteSuggestionsProvider::ProviderStatus::INACTIVE));
+  EXPECT_CALL(scheduler, OnProviderDeactivated());
   service->EnterState(RemoteSuggestionsProviderImpl::State::ERROR_OCCURRED);
 }
 
-TEST_F(RemoteSuggestionsProviderImplTest,
-       CallsProviderStatusCallbackWhenDisabled) {
+TEST_F(RemoteSuggestionsProviderImplTest, CallsSchedulerWhenDisabled) {
   auto service = MakeSuggestionsProviderWithoutInitialization();
-  StrictMock<MockFunction<void(RemoteSuggestionsProvider::ProviderStatus)>>
-      status_callback;
-  service->SetProviderStatusCallback(
-      base::MakeUnique<RemoteSuggestionsProvider::ProviderStatusCallback>(
-          base::Bind(&MockFunction<void(
-                         RemoteSuggestionsProvider::ProviderStatus)>::Call,
-                     base::Unretained(&status_callback))));
+  StrictMock<MockScheduler> scheduler;
+  // The provider is not initialized yet, no callback should be called yet.
+  service->SetRemoteSuggestionsScheduler(&scheduler);
 
-  // Should be called when becoming disabled.
-  EXPECT_CALL(status_callback,
-              Call(RemoteSuggestionsProvider::ProviderStatus::INACTIVE));
+  // Should be called when becoming disabled. First deactivate and only after
+  // that clear the suggestions so that they are not fetched again.
+  {
+    InSequence s;
+    EXPECT_CALL(scheduler, OnProviderDeactivated());
+    ASSERT_THAT(service->ready(), Eq(false));
+    EXPECT_CALL(scheduler, OnSuggestionsCleared());
+  }
   service->EnterState(RemoteSuggestionsProviderImpl::State::DISABLED);
+}
+
+TEST_F(RemoteSuggestionsProviderImplTest, CallsSchedulerWhenHistoryCleared) {
+  // Initiate the service so that it is already READY.
+  auto service = MakeSuggestionsProvider();
+  StrictMock<MockScheduler> scheduler;
+  // The scheduler should be notified of activation of the provider.
+  EXPECT_CALL(scheduler, OnProviderActivated());
+  // The scheduler should be notified of clearing the history.
+  EXPECT_CALL(scheduler, OnHistoryCleared());
+  service->SetRemoteSuggestionsScheduler(&scheduler);
+  service->ClearHistory(GetDefaultCreationTime(), GetDefaultExpirationTime(),
+                        base::Callback<bool(const GURL& url)>());
+}
+
+TEST_F(RemoteSuggestionsProviderImplTest, CallsSchedulerWhenSignedIn) {
+  // Initiate the service so that it is already READY.
+  auto service = MakeSuggestionsProvider();
+  StrictMock<MockScheduler> scheduler;
+  // The scheduler should be notified of activation of the provider.
+  EXPECT_CALL(scheduler, OnProviderActivated());
+  // The scheduler should be notified of clearing the history.
+  EXPECT_CALL(scheduler, OnSuggestionsCleared());
+
+  service->SetRemoteSuggestionsScheduler(&scheduler);
+  service->OnStatusChanged(RemoteSuggestionsStatus::ENABLED_AND_SIGNED_IN,
+                           RemoteSuggestionsStatus::ENABLED_AND_SIGNED_OUT);
+}
+
+TEST_F(RemoteSuggestionsProviderImplTest, CallsSchedulerWhenSignedOut) {
+  // Initiate the service so that it is already READY.
+  auto service = MakeSuggestionsProvider();
+  StrictMock<MockScheduler> scheduler;
+  // The scheduler should be notified of activation of the provider.
+  EXPECT_CALL(scheduler, OnProviderActivated());
+  // The scheduler should be notified of clearing the history.
+  EXPECT_CALL(scheduler, OnSuggestionsCleared());
+
+  service->SetRemoteSuggestionsScheduler(&scheduler);
+  service->OnStatusChanged(RemoteSuggestionsStatus::ENABLED_AND_SIGNED_OUT,
+                           RemoteSuggestionsStatus::ENABLED_AND_SIGNED_IN);
 }
 
 }  // namespace ntp_snippets

@@ -39,9 +39,9 @@
 #include "content/app/strings/grit/content_strings.h"
 #include "content/child/child_thread_impl.h"
 #include "content/child/content_child_helpers.h"
+#include "content/child/feature_policy/feature_policy_platform.h"
 #include "content/child/notifications/notification_dispatcher.h"
 #include "content/child/notifications/notification_manager.h"
-#include "content/child/push_messaging/push_dispatcher.h"
 #include "content/child/push_messaging/push_provider.h"
 #include "content/child/thread_safe_sender.h"
 #include "content/child/web_url_loader_impl.h"
@@ -292,6 +292,8 @@ static int ToMessageID(WebLocalizedString::Name name) {
       return IDS_FORM_VALIDATION_TOO_LONG;
     case WebLocalizedString::ValidationTooShort:
       return IDS_FORM_VALIDATION_TOO_SHORT;
+    case WebLocalizedString::ValidationTooShortPlural:
+      return IDS_FORM_VALIDATION_TOO_SHORT_PLURAL;
     case WebLocalizedString::ValidationTypeMismatch:
       return IDS_FORM_VALIDATION_TYPE_MISMATCH;
     case WebLocalizedString::ValidationTypeMismatchForEmail:
@@ -365,7 +367,6 @@ void BlinkPlatformImpl::InternalInit() {
     thread_safe_sender_ = ChildThreadImpl::current()->thread_safe_sender();
     notification_dispatcher_ =
         ChildThreadImpl::current()->notification_dispatcher();
-    push_dispatcher_ = ChildThreadImpl::current()->push_dispatcher();
   }
 }
 
@@ -735,11 +736,12 @@ BlinkPlatformImpl::notificationManager() {
 }
 
 blink::WebPushProvider* BlinkPlatformImpl::pushProvider() {
-  if (!thread_safe_sender_.get() || !push_dispatcher_.get())
-    return nullptr;
+  return PushProvider::ThreadSpecificInstance(main_thread_task_runner_);
+}
 
-  return PushProvider::ThreadSpecificInstance(thread_safe_sender_.get(),
-                                              push_dispatcher_.get());
+blink::WebMediaCapabilitiesClient*
+BlinkPlatformImpl::mediaCapabilitiesClient() {
+  return &media_capabilities_client_;
 }
 
 WebThemeEngine* BlinkPlatformImpl::themeEngine() {
@@ -854,6 +856,27 @@ WebString BlinkPlatformImpl::domKeyStringFromEnum(int dom_key) {
 int BlinkPlatformImpl::domKeyEnumFromString(const WebString& key_string) {
   return static_cast<int>(
       ui::KeycodeConverter::KeyStringToDomKey(key_string.utf8()));
+}
+
+blink::WebFeaturePolicy* BlinkPlatformImpl::createFeaturePolicy(
+    const blink::WebFeaturePolicy* parent_policy,
+    const blink::WebParsedFeaturePolicy& container_policy,
+    const blink::WebParsedFeaturePolicy& policy_header,
+    const blink::WebSecurityOrigin& origin) {
+  std::unique_ptr<FeaturePolicy> policy = FeaturePolicy::CreateFromParentPolicy(
+      static_cast<const FeaturePolicy*>(parent_policy),
+      FeaturePolicyHeaderFromWeb(container_policy), url::Origin(origin));
+  policy->SetHeaderPolicy(FeaturePolicyHeaderFromWeb(policy_header));
+  return policy.release();
+}
+
+blink::WebFeaturePolicy* BlinkPlatformImpl::duplicateFeaturePolicyWithOrigin(
+    const blink::WebFeaturePolicy& policy,
+    const blink::WebSecurityOrigin& new_origin) {
+  std::unique_ptr<FeaturePolicy> new_policy =
+      FeaturePolicy::CreateFromPolicyWithOrigin(
+          static_cast<const FeaturePolicy&>(policy), url::Origin(new_origin));
+  return new_policy.release();
 }
 
 }  // namespace content

@@ -14,7 +14,7 @@
     <div class="settings-box first">
       <div class="start">$i18n{fontSize}</div>
       <cr-slider id="sizeSlider"
-          value="{{prefs.webkit.webprefs.default_font_size.value}}"
+          pref="{{prefs.webkit.webprefs.default_font_size}}"
           tick-values="[[fontSizeRange_]]"
           label-min="$i18n{tiny}" label-max="$i18n{huge}">
       </cr-slider>
@@ -22,14 +22,18 @@
     <div class="settings-box">
       <div class="start">$i18n{minimumFont}</div>
       <div class="list-item"
-          style$="[[computeStyle_(
-              prefs.webkit.webprefs.minimum_font_size.value,
-              prefs.webkit.webprefs.fonts.standard.Zyyy.value)]]">
-        <span>[[prefs.webkit.webprefs.minimum_font_size.value]]</span>
+          style="
+              font-size:[[computeMinimumFontSize_(
+                  prefs.webkit.webprefs.minimum_font_size.value)]]px;
+              font-family:
+                  '[[prefs.webkit.webprefs.fonts.standard.Zyyy.value]]';"
+        <span>[[
+            computeMinimumFontSize_(
+                prefs.webkit.webprefs.minimum_font_size.value)]]</span>
         : $i18n{quickBrownFox}
       </div>
       <cr-slider id="minimumSizeSlider"
-          value="{{prefs.webkit.webprefs.minimum_font_size.value}}"
+          pref="{{prefs.webkit.webprefs.minimum_font_size}}"
           tick-values="[[minimumFontSizeRange_]]"
           label-min="$i18n{tiny}" label-max="$i18n{huge}">
       </cr-slider>
@@ -45,9 +49,10 @@
             </settings-dropdown-menu>
           </div>
           <div class="list-item underbar"
-              style$="[[computeStyle_(
-                  prefs.webkit.webprefs.default_font_size.value,
-                  prefs.webkit.webprefs.fonts.standard.Zyyy.value)]]">
+              style="
+                  font-size:[[prefs.webkit.webprefs.default_font_size.value]]px;
+                  font-family:
+                      '[[prefs.webkit.webprefs.fonts.standard.Zyyy.value]]';"
             <span>
               [[prefs.webkit.webprefs.default_font_size.value]]:
               $i18n{quickBrownFox}
@@ -63,9 +68,10 @@
             </settings-dropdown-menu>
           </div>
           <div class="list-item underbar"
-              style$="[[computeStyle_(
-                  prefs.webkit.webprefs.default_font_size.value,
-                  prefs.webkit.webprefs.fonts.serif.Zyyy.value)]]">
+              style="
+                  font-size:[[prefs.webkit.webprefs.default_font_size.value]]px;
+                  font-family:
+                      '[[prefs.webkit.webprefs.fonts.serif.Zyyy.value]]';"
             <span>
               [[prefs.webkit.webprefs.default_font_size.value]]:
               $i18n{quickBrownFox}
@@ -81,9 +87,10 @@
             </settings-dropdown-menu>
           </div>
           <div class="list-item underbar"
-              style$="{{computeStyle_(
-                  prefs.webkit.webprefs.default_font_size.value,
-                  prefs.webkit.webprefs.fonts.sansserif.Zyyy.value)}}">
+              style="
+                  font-size:[[prefs.webkit.webprefs.default_font_size.value]]px;
+                  font-family:
+                      '[[prefs.webkit.webprefs.fonts.sansserif.Zyyy.value]]';"
             <span>
               [[prefs.webkit.webprefs.default_font_size.value]]:
               $i18n{quickBrownFox}
@@ -97,11 +104,12 @@
                 pref="{{prefs.webkit.webprefs.fonts.fixed.Zyyy}}"
                 menu-options="[[fontOptions_]]">
             </settings-dropdown-menu>
-           </div>
+          </div>
           <div class="list-item"
-              style$="[[computeStyle_(
-                  prefs.webkit.webprefs.default_fixed_font_size.value,
-                  prefs.webkit.webprefs.fonts.fixed.Zyyy.value)]]">
+              style="
+                  font-size:[[prefs.webkit.webprefs.default_font_size.value]]px;
+                  font-family:
+                      '[[prefs.webkit.webprefs.fonts.fixed.Zyyy.value]]';"
             <span>
               [[prefs.webkit.webprefs.default_font_size.value]]:
               $i18n{quickBrownFox}

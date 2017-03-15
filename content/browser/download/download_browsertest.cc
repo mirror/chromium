@@ -22,6 +22,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/platform_thread.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
@@ -134,6 +135,7 @@ class DownloadFileWithDelay : public DownloadFileImpl {
       std::unique_ptr<DownloadSaveInfo> save_info,
       const base::FilePath& default_download_directory,
       std::unique_ptr<ByteStreamReader> stream,
+      const std::vector<DownloadItem::ReceivedSlice>& received_slices,
       const net::NetLogWithSource& net_log,
       std::unique_ptr<device::PowerSaveBlocker> power_save_blocker,
       base::WeakPtr<DownloadDestinationObserver> observer,
@@ -180,6 +182,7 @@ class DownloadFileWithDelayFactory : public DownloadFileFactory {
       std::unique_ptr<DownloadSaveInfo> save_info,
       const base::FilePath& default_download_directory,
       std::unique_ptr<ByteStreamReader> stream,
+      const std::vector<DownloadItem::ReceivedSlice>& received_slices,
       const net::NetLogWithSource& net_log,
       base::WeakPtr<DownloadDestinationObserver> observer) override;
 
@@ -201,6 +204,7 @@ DownloadFileWithDelay::DownloadFileWithDelay(
     std::unique_ptr<DownloadSaveInfo> save_info,
     const base::FilePath& default_download_directory,
     std::unique_ptr<ByteStreamReader> stream,
+    const std::vector<DownloadItem::ReceivedSlice>& received_slices,
     const net::NetLogWithSource& net_log,
     std::unique_ptr<device::PowerSaveBlocker> power_save_blocker,
     base::WeakPtr<DownloadDestinationObserver> observer,
@@ -208,7 +212,9 @@ DownloadFileWithDelay::DownloadFileWithDelay(
     : DownloadFileImpl(std::move(save_info),
                        default_download_directory,
                        std::move(stream),
+                       received_slices,
                        net_log,
+                       false,
                        observer),
       owner_(owner) {}
 
@@ -261,6 +267,7 @@ DownloadFile* DownloadFileWithDelayFactory::CreateFile(
     std::unique_ptr<DownloadSaveInfo> save_info,
     const base::FilePath& default_download_directory,
     std::unique_ptr<ByteStreamReader> stream,
+    const std::vector<DownloadItem::ReceivedSlice>& received_slices,
     const net::NetLogWithSource& net_log,
     base::WeakPtr<DownloadDestinationObserver> observer) {
   std::unique_ptr<device::PowerSaveBlocker> psb(new device::PowerSaveBlocker(
@@ -271,6 +278,7 @@ DownloadFile* DownloadFileWithDelayFactory::CreateFile(
   return new DownloadFileWithDelay(std::move(save_info),
                                    default_download_directory,
                                    std::move(stream),
+                                   received_slices,
                                    net_log,
                                    std::move(psb),
                                    observer,
@@ -306,13 +314,16 @@ class CountingDownloadFile : public DownloadFileImpl {
       std::unique_ptr<DownloadSaveInfo> save_info,
       const base::FilePath& default_downloads_directory,
       std::unique_ptr<ByteStreamReader> stream,
+      const std::vector<DownloadItem::ReceivedSlice>& received_slices,
       const net::NetLogWithSource& net_log,
       std::unique_ptr<device::PowerSaveBlocker> power_save_blocker,
       base::WeakPtr<DownloadDestinationObserver> observer)
       : DownloadFileImpl(std::move(save_info),
                          default_downloads_directory,
                          std::move(stream),
+                         received_slices,
                          net_log,
+                         false,
                          observer) {}
 
   ~CountingDownloadFile() override {
@@ -360,6 +371,7 @@ class CountingDownloadFileFactory : public DownloadFileFactory {
       std::unique_ptr<DownloadSaveInfo> save_info,
       const base::FilePath& default_downloads_directory,
       std::unique_ptr<ByteStreamReader> stream,
+      const std::vector<DownloadItem::ReceivedSlice>& received_slices,
       const net::NetLogWithSource& net_log,
       base::WeakPtr<DownloadDestinationObserver> observer) override {
     std::unique_ptr<device::PowerSaveBlocker> psb(new device::PowerSaveBlocker(
@@ -370,6 +382,7 @@ class CountingDownloadFileFactory : public DownloadFileFactory {
     return new CountingDownloadFile(std::move(save_info),
                                     default_downloads_directory,
                                     std::move(stream),
+                                    received_slices,
                                     net_log,
                                     std::move(psb),
                                     observer);
@@ -1846,7 +1859,8 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, ResumeRestoredDownload_NoFile) {
       base::Time(), parameters.etag, std::string(), kIntermediateSize,
       parameters.size, std::string(), DownloadItem::INTERRUPTED,
       DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
-      DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED, false);
+      DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED, false, base::Time(),
+      std::vector<DownloadItem::ReceivedSlice>());
 
   download->Resume();
   WaitForCompletion(download);
@@ -1908,7 +1922,8 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, ResumeRestoredDownload_NoHash) {
       base::Time(), parameters.etag, std::string(), kIntermediateSize,
       parameters.size, std::string(), DownloadItem::INTERRUPTED,
       DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
-      DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED, false);
+      DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED, false, base::Time(),
+      std::vector<DownloadItem::ReceivedSlice>());
 
   download->Resume();
   WaitForCompletion(download);
@@ -1957,7 +1972,8 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest,
       base::Time(), "fake-etag", std::string(), kIntermediateSize,
       parameters.size, std::string(), DownloadItem::INTERRUPTED,
       DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
-      DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED, false);
+      DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED, false, base::Time(),
+      std::vector<DownloadItem::ReceivedSlice>());
 
   download->Resume();
   WaitForCompletion(download);
@@ -2012,7 +2028,8 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest,
       parameters.size,
       std::string(std::begin(kPartialHash), std::end(kPartialHash)),
       DownloadItem::INTERRUPTED, DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
-      DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED, false);
+      DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED, false, base::Time(),
+      std::vector<DownloadItem::ReceivedSlice>());
 
   download->Resume();
   WaitForCompletion(download);
@@ -2073,7 +2090,8 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, ResumeRestoredDownload_WrongHash) {
       parameters.size,
       std::string(std::begin(kPartialHash), std::end(kPartialHash)),
       DownloadItem::INTERRUPTED, DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
-      DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED, false);
+      DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED, false, base::Time(),
+      std::vector<DownloadItem::ReceivedSlice>());
 
   download->Resume();
   WaitForCompletion(download);
@@ -2143,7 +2161,8 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, ResumeRestoredDownload_ShortFile) {
       base::Time(), parameters.etag, std::string(), kIntermediateSize,
       parameters.size, std::string(), DownloadItem::INTERRUPTED,
       DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
-      DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED, false);
+      DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED, false, base::Time(),
+      std::vector<DownloadItem::ReceivedSlice>());
 
   download->Resume();
   WaitForCompletion(download);
@@ -2211,7 +2230,8 @@ IN_PROC_BROWSER_TEST_F(DownloadContentTest, ResumeRestoredDownload_LongFile) {
       base::Time(), parameters.etag, std::string(), kIntermediateSize,
       parameters.size, std::string(), DownloadItem::INTERRUPTED,
       DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
-      DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED, false);
+      DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED, false, base::Time(),
+      std::vector<DownloadItem::ReceivedSlice>());
 
   download->Resume();
   WaitForCompletion(download);

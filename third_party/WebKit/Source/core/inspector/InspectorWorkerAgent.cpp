@@ -38,9 +38,12 @@
 
 namespace blink {
 
+using protocol::Response;
+
 namespace WorkerAgentState {
 static const char autoAttach[] = "autoAttach";
 static const char waitForDebuggerOnStart[] = "waitForDebuggerOnStart";
+static const char attachedWorkerIds[] = "attachedWorkerIds";
 };
 
 InspectorWorkerAgent::InspectorWorkerAgent(InspectedFrames* inspectedFrames)
@@ -52,16 +55,21 @@ void InspectorWorkerAgent::restore() {
   if (!autoAttachEnabled())
     return;
   m_instrumentingAgents->addInspectorWorkerAgent(this);
+  protocol::DictionaryValue* attached = attachedWorkerIds();
+  for (size_t i = 0; i < attached->size(); ++i)
+    frontend()->detachedFromTarget(attached->at(i).first);
+  m_state->remove(WorkerAgentState::attachedWorkerIds);
   connectToAllProxies();
 }
 
 Response InspectorWorkerAgent::disable() {
   if (autoAttachEnabled()) {
-    disconnectFromAllProxies();
+    disconnectFromAllProxies(false);
     m_instrumentingAgents->removeInspectorWorkerAgent(this);
   }
   m_state->setBoolean(WorkerAgentState::autoAttach, false);
   m_state->setBoolean(WorkerAgentState::waitForDebuggerOnStart, false);
+  m_state->remove(WorkerAgentState::attachedWorkerIds);
   return Response::OK();
 }
 
@@ -77,7 +85,7 @@ Response InspectorWorkerAgent::setAutoAttach(bool autoAttach,
     m_instrumentingAgents->addInspectorWorkerAgent(this);
     connectToAllProxies();
   } else {
-    disconnectFromAllProxies();
+    disconnectFromAllProxies(true);
     m_instrumentingAgents->removeInspectorWorkerAgent(this);
   }
   return Response::OK();
@@ -89,7 +97,7 @@ bool InspectorWorkerAgent::autoAttachEnabled() {
 
 Response InspectorWorkerAgent::sendMessageToTarget(const String& targetId,
                                                    const String& message) {
-  WorkerInspectorProxy* proxy = m_connectedProxies.get(targetId);
+  WorkerInspectorProxy* proxy = m_connectedProxies.at(targetId);
   if (!proxy)
     return Response::Error("Not attached to a target with given id");
   proxy->sendMessageToInspector(message);
@@ -122,6 +130,7 @@ void InspectorWorkerAgent::workerTerminated(WorkerInspectorProxy* proxy) {
   DCHECK(frontend() && autoAttachEnabled());
   if (m_connectedProxies.find(proxy->inspectorId()) == m_connectedProxies.end())
     return;
+  attachedWorkerIds()->remove(proxy->inspectorId());
   frontend()->detachedFromTarget(proxy->inspectorId());
   proxy->disconnectFromInspector(this);
   m_connectedProxies.erase(proxy->inspectorId());
@@ -135,9 +144,14 @@ void InspectorWorkerAgent::connectToAllProxies() {
   }
 }
 
-void InspectorWorkerAgent::disconnectFromAllProxies() {
-  for (auto& idProxy : m_connectedProxies)
+void InspectorWorkerAgent::disconnectFromAllProxies(bool reportToFrontend) {
+  for (auto& idProxy : m_connectedProxies) {
+    if (reportToFrontend) {
+      attachedWorkerIds()->remove(idProxy.key);
+      frontend()->detachedFromTarget(idProxy.key);
+    }
     idProxy.value->disconnectFromInspector(this);
+  }
   m_connectedProxies.clear();
 }
 
@@ -149,10 +163,23 @@ void InspectorWorkerAgent::didCommitLoadForLocalFrame(LocalFrame* frame) {
   // Usually, it's fine to report them terminated later, but some tests
   // expect strict set of workers, and we reuse renderer between tests.
   for (auto& idProxy : m_connectedProxies) {
+    attachedWorkerIds()->remove(idProxy.key);
     frontend()->detachedFromTarget(idProxy.key);
     idProxy.value->disconnectFromInspector(this);
   }
   m_connectedProxies.clear();
+}
+
+protocol::DictionaryValue* InspectorWorkerAgent::attachedWorkerIds() {
+  protocol::DictionaryValue* ids =
+      m_state->getObject(WorkerAgentState::attachedWorkerIds);
+  if (!ids) {
+    std::unique_ptr<protocol::DictionaryValue> newIds =
+        protocol::DictionaryValue::create();
+    ids = newIds.get();
+    m_state->setObject(WorkerAgentState::attachedWorkerIds, std::move(newIds));
+  }
+  return ids;
 }
 
 void InspectorWorkerAgent::connectToProxy(WorkerInspectorProxy* proxy,
@@ -160,6 +187,7 @@ void InspectorWorkerAgent::connectToProxy(WorkerInspectorProxy* proxy,
   m_connectedProxies.set(proxy->inspectorId(), proxy);
   proxy->connectToInspector(this);
   DCHECK(frontend());
+  attachedWorkerIds()->setBoolean(proxy->inspectorId(), true);
   frontend()->attachedToTarget(protocol::Target::TargetInfo::create()
                                    .setTargetId(proxy->inspectorId())
                                    .setType("worker")

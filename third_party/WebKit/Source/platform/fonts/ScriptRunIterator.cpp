@@ -177,12 +177,12 @@ bool ScriptRunIterator::consume(unsigned& limit, UScriptCode& script) {
 
 void ScriptRunIterator::openBracket(UChar32 ch) {
   if (m_brackets.size() == kMaxBrackets) {
-    m_brackets.removeFirst();
+    m_brackets.pop_front();
     if (m_bracketsFixupDepth == kMaxBrackets) {
       --m_bracketsFixupDepth;
     }
   }
-  m_brackets.append(BracketRec({ch, USCRIPT_COMMON}));
+  m_brackets.push_back(BracketRec({ch, USCRIPT_COMMON}));
   ++m_bracketsFixupDepth;
 }
 
@@ -200,7 +200,7 @@ void ScriptRunIterator::closeBracket(UChar32 ch) {
         int numPopped = std::distance(m_brackets.rbegin(), it);
         // TODO: No resize operation in WTF::Deque?
         for (int i = 0; i < numPopped; ++i)
-          m_brackets.removeLast();
+          m_brackets.pop_back();
         m_bracketsFixupDepth =
             std::max(static_cast<size_t>(0), m_bracketsFixupDepth - numPopped);
         return;

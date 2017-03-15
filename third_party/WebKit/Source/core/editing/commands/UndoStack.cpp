@@ -45,15 +45,17 @@ UndoStack* UndoStack::create() {
 }
 
 void UndoStack::registerUndoStep(UndoStep* step) {
+  if (m_undoStack.size())
+    DCHECK_GE(step->sequenceNumber(), m_undoStack.back()->sequenceNumber());
   if (m_undoStack.size() == maximumUndoStackDepth)
-    m_undoStack.removeFirst();  // drop oldest item off the far end
+    m_undoStack.pop_front();  // drop oldest item off the far end
   if (!m_inRedo)
     m_redoStack.clear();
-  m_undoStack.append(step);
+  m_undoStack.push_back(step);
 }
 
 void UndoStack::registerRedoStep(UndoStep* step) {
-  m_redoStack.append(step);
+  m_redoStack.push_back(step);
 }
 
 bool UndoStack::canUndo() const {
@@ -68,7 +70,7 @@ void UndoStack::undo() {
   if (canUndo()) {
     UndoStepStack::iterator back = --m_undoStack.end();
     UndoStep* step(back->get());
-    m_undoStack.remove(back);
+    m_undoStack.erase(back);
     step->unapply();
     // unapply will call us back to push this command onto the redo stack.
   }
@@ -78,7 +80,7 @@ void UndoStack::redo() {
   if (canRedo()) {
     UndoStepStack::iterator back = --m_redoStack.end();
     UndoStep* step(back->get());
-    m_redoStack.remove(back);
+    m_redoStack.erase(back);
 
     DCHECK(!m_inRedo);
     AutoReset<bool> redoScope(&m_inRedo, true);
@@ -95,6 +97,13 @@ void UndoStack::clear() {
 DEFINE_TRACE(UndoStack) {
   visitor->trace(m_undoStack);
   visitor->trace(m_redoStack);
+}
+
+UndoStack::UndoStepRange::UndoStepRange(const UndoStepStack& steps)
+    : m_stepStack(steps) {}
+
+UndoStack::UndoStepRange UndoStack::undoSteps() const {
+  return UndoStepRange(m_undoStack);
 }
 
 }  // namespace blink

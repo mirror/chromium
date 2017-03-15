@@ -12,16 +12,18 @@
 #include "ash/common/shelf/wm_shelf_observer.h"
 #include "ash/common/shell_observer.h"
 #include "ash/common/wm/window_state_observer.h"
-#include "ash/common/wm_activation_observer.h"
 #include "ash/common/wm_display_observer.h"
-#include "ash/common/wm_layout_manager.h"
-#include "ash/common/wm_window_observer.h"
-#include "ash/common/wm_window_tracker.h"
+#include "ash/root_window_controller.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/scoped_observer.h"
+#include "ui/aura/layout_manager.h"
+#include "ui/aura/window_observer.h"
+#include "ui/aura/window_tracker.h"
 #include "ui/keyboard/keyboard_controller.h"
 #include "ui/keyboard/keyboard_controller_observer.h"
+#include "ui/wm/public/activation_change_observer.h"
 
 namespace gfx {
 class Rect;
@@ -49,12 +51,12 @@ class RootWindowController;
 // panel_container->SetLayoutManager(new PanelLayoutManager(panel_container));
 
 class ASH_EXPORT PanelLayoutManager
-    : public WmLayoutManager,
+    : public aura::LayoutManager,
       public wm::WindowStateObserver,
-      public WmActivationObserver,
+      public aura::client::ActivationChangeObserver,
       public WmDisplayObserver,
       public ShellObserver,
-      public WmWindowObserver,
+      public aura::WindowObserver,
       public keyboard::KeyboardControllerObserver,
       public WmShelfObserver {
  public:
@@ -82,35 +84,40 @@ class ASH_EXPORT PanelLayoutManager
   WmShelf* shelf() { return shelf_; }
   void SetShelf(WmShelf* shelf);
 
-  // Overridden from WmLayoutManager
+  // WmLayoutManager:
   void OnWindowResized() override;
-  void OnWindowAddedToLayout(WmWindow* child) override;
-  void OnWillRemoveWindowFromLayout(WmWindow* child) override;
-  void OnWindowRemovedFromLayout(WmWindow* child) override;
-  void OnChildWindowVisibilityChanged(WmWindow* child, bool visibile) override;
-  void SetChildBounds(WmWindow* child,
+  void OnWindowAddedToLayout(aura::Window* child) override;
+  void OnWillRemoveWindowFromLayout(aura::Window* child) override;
+  void OnWindowRemovedFromLayout(aura::Window* child) override;
+  void OnChildWindowVisibilityChanged(aura::Window* child,
+                                      bool visibile) override;
+  void SetChildBounds(aura::Window* child,
                       const gfx::Rect& requested_bounds) override;
 
-  // Overridden from ShellObserver:
+  // ShellObserver:
   void OnOverviewModeEnded() override;
   void OnShelfAlignmentChanged(WmWindow* root_window) override;
+  void OnVirtualKeyboardStateChanged(bool activated,
+                                     WmWindow* root_window) override;
 
-  // Overridden from WmWindowObserver
-  void OnWindowPropertyChanged(WmWindow* window,
-                               WmWindowProperty property) override;
+  // aura::WindowObserver
+  void OnWindowPropertyChanged(aura::Window* window,
+                               const void* key,
+                               intptr_t old) override;
 
-  // Overridden from wm::WindowStateObserver
+  // wm::WindowStateObserver:
   void OnPostWindowStateTypeChange(wm::WindowState* window_state,
                                    wm::WindowStateType old_type) override;
 
-  // Overridden from WmActivationObserver
-  void OnWindowActivated(WmWindow* gained_active,
-                         WmWindow* lost_active) override;
+  // aura::client::ActivationChangeObserver:
+  void OnWindowActivated(ActivationReason reason,
+                         aura::Window* gained_active,
+                         aura::Window* lost_active) override;
 
-  // Overridden from WindowTreeHostManager::Observer
+  // WindowTreeHostManager::Observer:
   void OnDisplayConfigurationChanged() override;
 
-  // Overridden from WmShelfObserver
+  // WmShelfObserver:
   void WillChangeVisibilityState(ShelfVisibilityState new_state) override;
   void OnShelfIconPositionsChanged() override;
 
@@ -188,11 +195,16 @@ class ASH_EXPORT PanelLayoutManager
   // When not NULL, the shelf is hidden (i.e. full screen) and this tracks the
   // set of panel windows which have been temporarily hidden and need to be
   // restored when the shelf becomes visible again.
-  std::unique_ptr<WmWindowTracker> restore_windows_on_shelf_visible_;
+  std::unique_ptr<aura::WindowTracker> restore_windows_on_shelf_visible_;
 
   // The last active panel. Used to maintain stacking order even if no panels
   // are currently focused.
   WmWindow* last_active_panel_;
+
+  ScopedObserver<keyboard::KeyboardController,
+                 keyboard::KeyboardControllerObserver>
+      keyboard_observer_;
+
   base::WeakPtrFactory<PanelLayoutManager> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(PanelLayoutManager);

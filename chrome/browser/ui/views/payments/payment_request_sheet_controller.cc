@@ -6,25 +6,30 @@
 
 #include "chrome/browser/ui/views/payments/payment_request_dialog_view.h"
 #include "chrome/browser/ui/views/payments/payment_request_views_util.h"
+#include "components/payments/content/payment_request.h"
 #include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/views/background.h"
 #include "ui/views/controls/button/md_text_button.h"
+#include "ui/views/controls/scroll_view.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/layout/grid_layout.h"
-
 
 namespace payments {
 
 PaymentRequestSheetController::PaymentRequestSheetController(
-    PaymentRequest* request, PaymentRequestDialogView* dialog)
-  : request_(request), dialog_(dialog) {
-  DCHECK(request_);
-  DCHECK(dialog_);
-}
+    PaymentRequestSpec* spec,
+    PaymentRequestState* state,
+    PaymentRequestDialogView* dialog)
+    : spec_(spec), state_(state), dialog_(dialog) {}
 
 std::unique_ptr<views::Button>
 PaymentRequestSheetController::CreatePrimaryButton() {
+  return nullptr;
+}
+
+std::unique_ptr<views::View>
+PaymentRequestSheetController::CreateExtraFooterView() {
   return nullptr;
 }
 
@@ -36,6 +41,9 @@ void PaymentRequestSheetController::ButtonPressed(
       break;
     case PaymentRequestCommonTags::BACK_BUTTON_TAG:
       dialog()->GoBack();
+      break;
+    case PaymentRequestCommonTags::PAY_BUTTON_TAG:
+      dialog()->Pay();
       break;
     case PaymentRequestCommonTags::PAYMENT_REQUEST_COMMON_TAG_MAX:
       NOTREACHED();
@@ -56,22 +64,28 @@ std::unique_ptr<views::View> PaymentRequestSheetController::CreatePaymentView(
   views::GridLayout* layout = new views::GridLayout(view.get());
   view->SetLayoutManager(layout);
 
-  constexpr int kTopInsetSize = 9;
-  constexpr int kBottomInsetSize = 18;
-  layout->SetInsets(kTopInsetSize, 0, kBottomInsetSize, 0);
+  // Note: each view is responsible for its own padding (insets).
   views::ColumnSet* columns = layout->AddColumnSet(0);
-  columns->AddColumn(views::GridLayout::FILL, views::GridLayout::CENTER,
-                     1, views::GridLayout::USE_PREF, 0, 0);
+  columns->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL, 1,
+                     views::GridLayout::USE_PREF, 0, 0);
 
   layout->StartRow(0, 0);
   // |header_view| will be deleted when |view| is.
   layout->AddView(header_view.release());
 
-  layout->StartRow(0, 0);
-  // |content_view| will be deleted when |view| is.
-  layout->AddView(content_view.release());
+  layout->StartRow(1, 0);
+  // |content_view| will go into a views::ScrollView so it needs to be sized now
+  // otherwise it'll be sized to the ScrollView's viewport height, preventing
+  // the scroll bar from ever being shown.
+  content_view->SizeToPreferredSize();
 
-  layout->AddPaddingRow(1, 0);
+  std::unique_ptr<views::ScrollView> scroll =
+      base::MakeUnique<views::ScrollView>();
+  scroll->EnableViewPortLayer();
+  scroll->set_hide_horizontal_scrollbar(true);
+  scroll->SetContents(content_view.release());
+  layout->AddView(scroll.release());
+
   layout->StartRow(0, 0);
   layout->AddView(CreateFooterView().release());
 
@@ -91,24 +105,26 @@ std::unique_ptr<views::View> PaymentRequestSheetController::CreateFooterView() {
   columns->AddColumn(views::GridLayout::TRAILING, views::GridLayout::CENTER,
                      0, views::GridLayout::USE_PREF, 0, 0);
 
+  // The horizontal distance between the right/left edges of the dialog and the
+  // elements.
+  constexpr int kFooterHorizontalInset = 16;
+  // The vertical distance between footer elements and the top/bottom border
+  // (the bottom border is the edge of the dialog).
+  constexpr int kFooterVerticalInset = 16;
+  layout->SetInsets(kFooterVerticalInset, kFooterHorizontalInset,
+                    kFooterVerticalInset, kFooterHorizontalInset);
   layout->StartRow(0, 0);
-  std::unique_ptr<views::View> leading_buttons_container =
-      base::MakeUnique<views::View>();
-
-  // TODO(anthonyvd): Add the other buttons that can eventually go into this
-  // footer.
-
-  layout->AddView(leading_buttons_container.release());
+  std::unique_ptr<views::View> extra_view = CreateExtraFooterView();
+  if (extra_view)
+    layout->AddView(extra_view.release());
+  else
+    layout->SkipColumns(1);
 
   std::unique_ptr<views::View> trailing_buttons_container =
       base::MakeUnique<views::View>();
 
-  constexpr int kButtonSpacing = 10;
   trailing_buttons_container->SetLayoutManager(new views::BoxLayout(
-      views::BoxLayout::kHorizontal,
-      kPaymentRequestRowHorizontalInsets,
-      kPaymentRequestRowVerticalInsets,
-      kButtonSpacing));
+      views::BoxLayout::kHorizontal, 0, 0, kPaymentRequestButtonSpacing));
 
   std::unique_ptr<views::Button> primary_button = CreatePrimaryButton();
   if (primary_button)

@@ -14,8 +14,6 @@
 #include "base/trace_event/trace_event_argument.h"
 #include "cc/base/math_util.h"
 #include "cc/debug/picture_debug_util.h"
-#include "cc/debug/traced_display_item_list.h"
-#include "cc/debug/traced_value.h"
 #include "cc/playback/clip_display_item.h"
 #include "cc/playback/clip_path_display_item.h"
 #include "cc/playback/compositing_display_item.h"
@@ -26,7 +24,6 @@
 #include "cc/playback/transform_display_item.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkPictureRecorder.h"
-#include "third_party/skia/include/utils/SkPictureUtils.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/skia_util.h"
@@ -38,13 +35,6 @@ namespace {
 // We don't perform per-layer solid color analysis when there are too many skia
 // operations.
 const int kOpCountThatIsOkToAnalyze = 10;
-
-bool DisplayItemsTracingEnabled() {
-  bool tracing_enabled;
-  TRACE_EVENT_CATEGORY_GROUP_ENABLED(
-      TRACE_DISABLED_BY_DEFAULT("cc.debug.display_items"), &tracing_enabled);
-  return tracing_enabled;
-}
 
 bool GetCanvasClipBounds(SkCanvas* canvas, gfx::Rect* clip_bounds) {
   SkRect canvas_clip_bounds;
@@ -118,12 +108,10 @@ void DisplayItemList::Finalize() {
       << inputs_.visual_rects.size();
   rtree_.Build(inputs_.visual_rects);
 
-  // TODO(wkorman): Restore the below, potentially with a switch to allow
-  // clearing visual rects except for Blimp engine. http://crbug.com/633750
-  // if (!retain_visual_rects_)
-  //   // This clears both the vector and the vector's capacity, since
-  //   // visual_rects won't be used anymore.
-  //   std::vector<gfx::Rect>().swap(inputs_.visual_rects);
+  if (!retain_visual_rects_)
+    // This clears both the vector and the vector's capacity, since
+    // visual_rects won't be used anymore.
+    std::vector<gfx::Rect>().swap(inputs_.visual_rects);
 }
 
 bool DisplayItemList::IsSuitableForGpuRasterization() const {
@@ -142,8 +130,6 @@ size_t DisplayItemList::ApproximateMemoryUsage() const {
   size_t memory_usage = sizeof(*this);
 
   size_t external_memory_usage = 0;
-  // Warning: this double-counts SkPicture data if use_cached_picture is
-  // also true.
   for (const auto& item : inputs_.items) {
     size_t bytes = 0;
     switch (item.type()) {
@@ -199,60 +185,205 @@ bool DisplayItemList::ShouldBeAnalyzedForSolidColor() const {
   return ApproximateOpCount() <= kOpCountThatIsOkToAnalyze;
 }
 
-std::unique_ptr<base::trace_event::ConvertableToTraceFormat>
-DisplayItemList::AsValue(bool include_items) const {
-  std::unique_ptr<base::trace_event::TracedValue> state(
-      new base::trace_event::TracedValue());
-
-  state->BeginDictionary("params");
-  if (include_items) {
-    state->BeginArray("items");
-    size_t item_index = 0;
-    for (const DisplayItem& item : inputs_.items) {
-      item.AsValueInto(item_index < inputs_.visual_rects.size()
-                           ? inputs_.visual_rects[item_index]
-                           : gfx::Rect(),
-                       state.get());
-      item_index++;
-    }
-    state->EndArray();  // "items".
-  }
-  state->SetValue("layer_rect", MathUtil::AsValue(rtree_.GetBounds()));
-  state->EndDictionary();  // "params".
-
-  SkPictureRecorder recorder;
-  gfx::Rect bounds = rtree_.GetBounds();
-  SkCanvas* canvas = recorder.beginRecording(bounds.width(), bounds.height());
-  canvas->translate(-bounds.x(), -bounds.y());
-  canvas->clipRect(gfx::RectToSkRect(bounds));
-  Raster(canvas, nullptr, gfx::Rect(), 1.f);
-  sk_sp<SkPicture> picture = recorder.finishRecordingAsPicture();
-
-  std::string b64_picture;
-  PictureDebugUtil::SerializeAsBase64(picture.get(), &b64_picture);
-  state->SetString("skp64", b64_picture);
-
-  return std::move(state);
-}
-
 void DisplayItemList::EmitTraceSnapshot() const {
+  bool include_items;
+  TRACE_EVENT_CATEGORY_GROUP_ENABLED(
+      TRACE_DISABLED_BY_DEFAULT("cc.debug.display_items"), &include_items);
   TRACE_EVENT_OBJECT_SNAPSHOT_WITH_ID(
       TRACE_DISABLED_BY_DEFAULT("cc.debug.display_items") ","
       TRACE_DISABLED_BY_DEFAULT("cc.debug.picture") ","
       TRACE_DISABLED_BY_DEFAULT("devtools.timeline.picture"),
-      "cc::DisplayItemList", this,
-      TracedDisplayItemList::AsTraceableDisplayItemList(this,
-          DisplayItemsTracingEnabled()));
+      "cc::DisplayItemList", this, CreateTracedValue(include_items));
+}
+
+std::unique_ptr<base::trace_event::TracedValue>
+DisplayItemList::CreateTracedValue(bool include_items) const {
+  auto state = base::MakeUnique<base::trace_event::TracedValue>();
+  state->BeginDictionary("params");
+
+  if (include_items) {
+    state->BeginArray("items");
+
+    auto visual_rects_it = inputs_.visual_rects.begin();
+    for (const DisplayItem& base_item : inputs_.items) {
+      gfx::Rect visual_rect;
+      if (visual_rects_it != inputs_.visual_rects.end()) {
+        visual_rect = *visual_rects_it;
+        ++visual_rects_it;
+      }
+
+      switch (base_item.type()) {
+        case DisplayItem::CLIP: {
+          const auto& item = static_cast<const ClipDisplayItem&>(base_item);
+          std::string output =
+              base::StringPrintf("ClipDisplayItem rect: [%s] visualRect: [%s]",
+                                 item.clip_rect().ToString().c_str(),
+                                 visual_rect.ToString().c_str());
+          for (const SkRRect& rounded_rect : item.rounded_clip_rects()) {
+            base::StringAppendF(
+                &output, " rounded_rect: [rect: [%s]",
+                gfx::SkRectToRectF(rounded_rect.rect()).ToString().c_str());
+            base::StringAppendF(&output, " radii: [");
+            SkVector upper_left_radius =
+                rounded_rect.radii(SkRRect::kUpperLeft_Corner);
+            base::StringAppendF(&output, "[%f,%f],", upper_left_radius.x(),
+                                upper_left_radius.y());
+            SkVector upper_right_radius =
+                rounded_rect.radii(SkRRect::kUpperRight_Corner);
+            base::StringAppendF(&output, " [%f,%f],", upper_right_radius.x(),
+                                upper_right_radius.y());
+            SkVector lower_right_radius =
+                rounded_rect.radii(SkRRect::kLowerRight_Corner);
+            base::StringAppendF(&output, " [%f,%f],", lower_right_radius.x(),
+                                lower_right_radius.y());
+            SkVector lower_left_radius =
+                rounded_rect.radii(SkRRect::kLowerLeft_Corner);
+            base::StringAppendF(&output, " [%f,%f]]", lower_left_radius.x(),
+                                lower_left_radius.y());
+          }
+          state->AppendString(output);
+          break;
+        }
+        case DisplayItem::END_CLIP:
+          state->AppendString(
+              base::StringPrintf("EndClipDisplayItem visualRect: [%s]",
+                                 visual_rect.ToString().c_str()));
+          break;
+        case DisplayItem::CLIP_PATH: {
+          const auto& item = static_cast<const ClipPathDisplayItem&>(base_item);
+          state->AppendString(base::StringPrintf(
+              "ClipPathDisplayItem length: %d visualRect: [%s]",
+              item.clip_path().countPoints(), visual_rect.ToString().c_str()));
+          break;
+        }
+        case DisplayItem::END_CLIP_PATH:
+          state->AppendString(
+              base::StringPrintf("EndClipPathDisplayItem visualRect: [%s]",
+                                 visual_rect.ToString().c_str()));
+          break;
+        case DisplayItem::COMPOSITING: {
+          const auto& item =
+              static_cast<const CompositingDisplayItem&>(base_item);
+          std::string output = base::StringPrintf(
+              "CompositingDisplayItem alpha: %d, xfermode: %d, visualRect: "
+              "[%s]",
+              item.alpha(), static_cast<int>(item.xfermode()),
+              visual_rect.ToString().c_str());
+          if (item.has_bounds()) {
+            base::StringAppendF(
+                &output, ", bounds: [%s]",
+                gfx::SkRectToRectF(item.bounds()).ToString().c_str());
+          }
+          state->AppendString(output);
+          break;
+        }
+        case DisplayItem::END_COMPOSITING:
+          state->AppendString(
+              base::StringPrintf("EndCompositingDisplayItem visualRect: [%s]",
+                                 visual_rect.ToString().c_str()));
+          break;
+        case DisplayItem::DRAWING: {
+          const auto& item = static_cast<const DrawingDisplayItem&>(base_item);
+          state->BeginDictionary();
+          state->SetString("name", "DrawingDisplayItem");
+
+          state->BeginArray("visualRect");
+          state->AppendInteger(visual_rect.x());
+          state->AppendInteger(visual_rect.y());
+          state->AppendInteger(visual_rect.width());
+          state->AppendInteger(visual_rect.height());
+          state->EndArray();
+
+          state->BeginArray("cullRect");
+          state->AppendInteger(item.picture().cullRect().x());
+          state->AppendInteger(item.picture().cullRect().y());
+          state->AppendInteger(item.picture().cullRect().width());
+          state->AppendInteger(item.picture().cullRect().height());
+          state->EndArray();
+
+          std::string b64_picture;
+          PictureDebugUtil::SerializeAsBase64(ToSkPicture(&item.picture()),
+                                              &b64_picture);
+          state->SetString("skp64", b64_picture);
+          state->EndDictionary();
+          break;
+        }
+        case DisplayItem::FILTER: {
+          const auto& item = static_cast<const FilterDisplayItem&>(base_item);
+          state->AppendString(base::StringPrintf(
+              "FilterDisplayItem bounds: [%s] visualRect: [%s]",
+              item.bounds().ToString().c_str(),
+              visual_rect.ToString().c_str()));
+          break;
+        }
+        case DisplayItem::END_FILTER:
+          state->AppendString(
+              base::StringPrintf("EndFilterDisplayItem visualRect: [%s]",
+                                 visual_rect.ToString().c_str()));
+          break;
+        case DisplayItem::FLOAT_CLIP: {
+          const auto& item =
+              static_cast<const FloatClipDisplayItem&>(base_item);
+          state->AppendString(base::StringPrintf(
+              "FloatClipDisplayItem rect: [%s] visualRect: [%s]",
+              item.clip_rect().ToString().c_str(),
+              visual_rect.ToString().c_str()));
+          break;
+        }
+        case DisplayItem::END_FLOAT_CLIP:
+          state->AppendString(
+              base::StringPrintf("EndFloatClipDisplayItem visualRect: [%s]",
+                                 visual_rect.ToString().c_str()));
+          break;
+        case DisplayItem::TRANSFORM: {
+          const auto& item =
+              static_cast<const TransformDisplayItem&>(base_item);
+          state->AppendString(base::StringPrintf(
+              "TransformDisplayItem transform: [%s] visualRect: [%s]",
+              item.transform().ToString().c_str(),
+              visual_rect.ToString().c_str()));
+          break;
+        }
+        case DisplayItem::END_TRANSFORM:
+          state->AppendString(
+              base::StringPrintf("EndTransformDisplayItem visualRect: [%s]",
+                                 visual_rect.ToString().c_str()));
+          break;
+      }
+    }
+    state->EndArray();  // "items".
+  }
+
+  MathUtil::AddToTracedValue("layer_rect", rtree_.GetBounds(), state.get());
+  state->EndDictionary();  // "params".
+
+  {
+    SkPictureRecorder recorder;
+    gfx::Rect bounds = rtree_.GetBounds();
+    SkCanvas* canvas = recorder.beginRecording(bounds.width(), bounds.height());
+    canvas->translate(-bounds.x(), -bounds.y());
+    canvas->clipRect(gfx::RectToSkRect(bounds));
+    Raster(canvas, nullptr, gfx::Rect(), 1.f);
+    sk_sp<SkPicture> picture = recorder.finishRecordingAsPicture();
+
+    std::string b64_picture;
+    PictureDebugUtil::SerializeAsBase64(picture.get(), &b64_picture);
+    state->SetString("skp64", b64_picture);
+  }
+
+  return state;
 }
 
 void DisplayItemList::GenerateDiscardableImagesMetadata() {
-  // This should be only called once, and only after CreateAndCacheSkPicture.
+  // This should be only called once.
   DCHECK(image_map_.empty());
 
   gfx::Rect bounds = rtree_.GetBounds();
   DiscardableImageMap::ScopedMetadataGenerator generator(
       &image_map_, gfx::Size(bounds.right(), bounds.bottom()));
-  Raster(generator.canvas(), nullptr, gfx::Rect(), 1.f);
+  auto* canvas = generator.canvas();
+  for (const auto& item : inputs_.items)
+    item.Raster(canvas, nullptr);
 }
 
 void DisplayItemList::GetDiscardableImagesInRect(

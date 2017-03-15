@@ -27,7 +27,6 @@
 #define Node_h
 
 #include "bindings/core/v8/ExceptionState.h"
-#include "bindings/core/v8/NodeOrString.h"
 #include "bindings/core/v8/TraceWrapperMember.h"
 #include "core/CoreExport.h"
 #include "core/dom/MutationObserver.h"
@@ -37,9 +36,6 @@
 #include "core/events/EventTarget.h"
 #include "core/style/ComputedStyleConstants.h"
 #include "platform/geometry/LayoutRect.h"
-#include "platform/heap/Handle.h"
-#include "wtf/Compiler.h"
-#include "wtf/Forward.h"
 
 // This needs to be here because Element.cpp also depends on it.
 #define DUMP_NODE_STATISTICS 0
@@ -59,6 +55,7 @@ class IntRect;
 class EventDispatchHandlingState;
 class NodeList;
 class NodeListsNodeData;
+class NodeOrString;
 class NodeRareData;
 class QualifiedName;
 class RegisteredEventListener;
@@ -167,7 +164,7 @@ class CORE_EXPORT Node : public EventTarget {
   static void* allocateObject(size_t size, bool isEager) {
     ThreadState* state =
         ThreadStateFor<ThreadingTrait<Node>::Affinity>::state();
-    const char typeName[] = "blink::Node";
+    const char* typeName = "blink::Node";
     return ThreadHeap::allocateOnArenaIndex(
         state, size,
         isEager ? BlinkGC::EagerSweepArenaIndex : BlinkGC::NodeArenaIndex,
@@ -226,7 +223,7 @@ class CORE_EXPORT Node : public EventTarget {
   Node* appendChild(Node* newChild, ExceptionState& = ASSERT_NO_EXCEPTION);
 
   bool hasChildren() const { return firstChild(); }
-  virtual Node* cloneNode(bool deep) = 0;
+  virtual Node* cloneNode(bool deep, ExceptionState& = ASSERT_NO_EXCEPTION) = 0;
   void normalize();
 
   bool isEqualNode(Node*) const;
@@ -421,8 +418,10 @@ class CORE_EXPORT Node : public EventTarget {
   void setNeedsStyleRecalc(StyleChangeType, const StyleChangeReasonForTracing&);
   void clearNeedsStyleRecalc();
 
-  bool needsReattachLayoutTree() { return getFlag(NeedsReattachLayoutTree); }
-  bool childNeedsReattachLayoutTree() {
+  bool needsReattachLayoutTree() const {
+    return getFlag(NeedsReattachLayoutTree);
+  }
+  bool childNeedsReattachLayoutTree() const {
     return getFlag(ChildNeedsReattachLayoutTree);
   }
 
@@ -775,13 +774,6 @@ class CORE_EXPORT Node : public EventTarget {
 
   unsigned lengthOfContents() const;
 
-  v8::Local<v8::Object> wrap(v8::Isolate*,
-                             v8::Local<v8::Object> creationContext) override;
-  WARN_UNUSED_RESULT v8::Local<v8::Object> associateWithWrapper(
-      v8::Isolate*,
-      const WrapperTypeInfo*,
-      v8::Local<v8::Object> wrapper) override;
-
  private:
   enum NodeFlags {
     HasRareDataFlag = 1,
@@ -830,7 +822,9 @@ class CORE_EXPORT Node : public EventTarget {
     NeedsReattachLayoutTree = 1 << 26,
     ChildNeedsReattachLayoutTree = 1 << 27,
 
-    DefaultNodeFlags = IsFinishedParsingChildrenFlag | NeedsReattachStyleChange
+    DefaultNodeFlags = IsFinishedParsingChildrenFlag |
+                       NeedsReattachStyleChange |
+                       NeedsReattachLayoutTree
   };
 
   // 4 bits remaining.
@@ -853,8 +847,9 @@ class CORE_EXPORT Node : public EventTarget {
   enum ConstructionType {
     CreateOther = DefaultNodeFlags,
     CreateText = DefaultNodeFlags | IsTextFlag,
-    CreateContainer =
-        DefaultNodeFlags | ChildNeedsStyleRecalcFlag | IsContainerFlag,
+    CreateContainer = DefaultNodeFlags | ChildNeedsStyleRecalcFlag |
+                      ChildNeedsReattachLayoutTree |
+                      IsContainerFlag,
     CreateElement = CreateContainer | IsElementFlag,
     CreateShadowRoot =
         CreateContainer | IsDocumentFragmentFlag | IsInShadowTreeFlag,
@@ -922,10 +917,6 @@ class CORE_EXPORT Node : public EventTarget {
 
   void setStyleChange(StyleChangeType);
 
-  virtual ComputedStyle* nonLayoutObjectComputedStyle() const {
-    return nullptr;
-  }
-
   virtual const ComputedStyle* virtualEnsureComputedStyle(
       PseudoId = PseudoIdNone);
 
@@ -978,6 +969,7 @@ inline void Node::lazyReattachIfAttached() {
 
   detachLayoutTree(context);
   markAncestorsWithChildNeedsStyleRecalc();
+  markAncestorsWithChildNeedsReattachLayoutTree();
 }
 
 inline bool Node::shouldCallRecalcStyle(StyleRecalcChange change) {

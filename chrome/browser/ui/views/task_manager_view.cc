@@ -17,6 +17,7 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/task_manager/task_manager_columns.h"
 #include "chrome/browser/ui/user_manager.h"
+#include "chrome/browser/ui/views/harmony/layout_delegate.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/chromium_strings.h"
@@ -78,7 +79,7 @@ task_manager::TaskManagerTableModel* TaskManagerView::Show(Browser* browser) {
   gfx::NativeWindow context =
       browser ? browser->window()->GetNativeWindow() : nullptr;
 #if defined(USE_ASH)
-  if (!chrome::IsRunningInMash() && !context)
+  if (!ash_util::IsRunningInMash() && !context)
     context = ash::wm::GetActiveWindow();
 #endif
 
@@ -99,11 +100,6 @@ task_manager::TaskManagerTableModel* TaskManagerView::Show(Browser* browser) {
 
   g_task_manager_view->SelectTaskOfActiveTab(browser);
   g_task_manager_view->GetWidget()->Show();
-
-  // Set the initial focus to the list of tasks.
-  views::FocusManager* focus_manager = g_task_manager_view->GetFocusManager();
-  if (focus_manager)
-    focus_manager->SetFocusedView(g_task_manager_view->tab_table_);
 
 #if defined(USE_ASH)
   aura::Window* window = g_task_manager_view->GetWidget()->GetNativeWindow();
@@ -163,6 +159,10 @@ bool TaskManagerView::AcceleratorPressed(const ui::Accelerator& accelerator) {
   DCHECK_EQ(ui::EF_CONTROL_DOWN, accelerator.modifiers());
   GetWidget()->Close();
   return true;
+}
+
+views::View* TaskManagerView::GetInitiallyFocusedView() {
+  return tab_table_;
 }
 
 bool TaskManagerView::CanResize() const {
@@ -332,9 +332,10 @@ void TaskManagerView::Init() {
   AddChildView(tab_table_parent_);
 
   SetLayoutManager(new views::FillLayout());
-  SetBorder(views::CreateEmptyBorder(views::kPanelVertMargin,
-                                     views::kButtonHEdgeMarginNew, 0,
-                                     views::kButtonHEdgeMarginNew));
+  SetBorder(views::CreateEmptyBorder(
+      LayoutDelegate::Get()->GetMetric(
+          LayoutDelegate::Metric::PANEL_CONTENT_MARGIN),
+      views::kButtonHEdgeMarginNew, 0, views::kButtonHEdgeMarginNew));
 
   table_model_->RetrieveSavedColumnsSettingsAndUpdateTable();
 

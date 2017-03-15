@@ -180,7 +180,7 @@ bool SecurityPolicy::isUrlWhiteListedTrustworthy(const KURL& url) {
 bool SecurityPolicy::isAccessWhiteListed(const SecurityOrigin* activeOrigin,
                                          const SecurityOrigin* targetOrigin) {
   if (OriginAccessWhiteList* list =
-          originAccessMap().get(activeOrigin->toString())) {
+          originAccessMap().at(activeOrigin->toString())) {
     for (size_t i = 0; i < list->size(); ++i) {
       if (list->at(i).matchesOrigin(*targetOrigin) !=
           OriginAccessEntry::DoesNotMatchOrigin)
@@ -302,8 +302,8 @@ bool SecurityPolicy::referrerPolicyFromHeaderValue(
   headerValue.split(',', true, tokens);
   for (const auto& token : tokens) {
     ReferrerPolicy currentResult;
-    if (SecurityPolicy::referrerPolicyFromString(token, legacyKeywordsSupport,
-                                                 &currentResult)) {
+    if (SecurityPolicy::referrerPolicyFromString(
+            token.stripWhiteSpace(), legacyKeywordsSupport, &currentResult)) {
       referrerPolicy = currentResult;
     }
   }

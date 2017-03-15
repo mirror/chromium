@@ -74,13 +74,11 @@
 #include "content/browser/streams/stream.h"
 #include "content/browser/streams/stream_context.h"
 #include "content/browser/streams/stream_registry.h"
-#include "content/common/navigation_params.h"
 #include "content/common/net/url_request_service_worker_data.h"
 #include "content/common/resource_messages.h"
 #include "content/common/resource_request.h"
 #include "content/common/resource_request_body_impl.h"
 #include "content/common/resource_request_completion_status.h"
-#include "content/common/site_isolation_policy.h"
 #include "content/common/view_messages.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/global_request_id.h"
@@ -234,7 +232,7 @@ void AbortRequestBeforeItStarts(
     IPC::Sender* sender,
     const SyncLoadResultCallback& sync_result_handler,
     int request_id,
-    mojom::URLLoaderClientAssociatedPtr url_loader_client) {
+    mojom::URLLoaderClientPtr url_loader_client) {
   if (sync_result_handler) {
     SyncLoadResult result;
     result.error_code = net::ERR_ABORTED;
@@ -776,7 +774,9 @@ void ResourceDispatcherHostImpl::DidReceiveRedirect(
       info->GetWebContentsGetterForRequest(), std::move(detail));
 }
 
-void ResourceDispatcherHostImpl::DidReceiveResponse(ResourceLoader* loader) {
+void ResourceDispatcherHostImpl::DidReceiveResponse(
+    ResourceLoader* loader,
+    ResourceResponse* response) {
   ResourceRequestInfoImpl* info = loader->GetRequestInfo();
   net::URLRequest* request = loader->request();
   if (request->was_fetched_via_proxy() &&
@@ -794,9 +794,8 @@ void ResourceDispatcherHostImpl::DidReceiveResponse(ResourceLoader* loader) {
 
   ProcessRequestForLinkHeaders(request);
 
-  int render_process_id, render_frame_host;
-  if (!info->GetAssociatedRenderFrame(&render_process_id, &render_frame_host))
-    return;
+  if (delegate_)
+    delegate_->OnResponseStarted(request, info->GetContext(), response);
 
   // Don't notify WebContents observers for requests known to be
   // downloads; they aren't really associated with the Webcontents.
@@ -1026,7 +1025,7 @@ void ResourceDispatcherHostImpl::OnRequestResourceInternal(
     int request_id,
     const ResourceRequest& request_data,
     mojom::URLLoaderAssociatedRequest mojo_request,
-    mojom::URLLoaderClientAssociatedPtr url_loader_client) {
+    mojom::URLLoaderClientPtr url_loader_client) {
   DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
   // TODO(pkasting): Remove ScopedTracker below once crbug.com/477117 is fixed.
   tracked_objects::ScopedTracker tracking_profile(
@@ -1091,7 +1090,7 @@ void ResourceDispatcherHostImpl::UpdateRequestForTransfer(
     const ResourceRequest& request_data,
     LoaderMap::iterator iter,
     mojom::URLLoaderAssociatedRequest mojo_request,
-    mojom::URLLoaderClientAssociatedPtr url_loader_client) {
+    mojom::URLLoaderClientPtr url_loader_client) {
   DCHECK(requester_info->IsRenderer());
   int child_id = requester_info->child_id();
   ResourceRequestInfoImpl* info = iter->second->GetRequestInfo();
@@ -1174,7 +1173,7 @@ void ResourceDispatcherHostImpl::CompleteTransfer(
     const ResourceRequest& request_data,
     int route_id,
     mojom::URLLoaderAssociatedRequest mojo_request,
-    mojom::URLLoaderClientAssociatedPtr url_loader_client) {
+    mojom::URLLoaderClientPtr url_loader_client) {
   DCHECK(requester_info->IsRenderer());
   // Caller should ensure that |request_data| is associated with a transfer.
   DCHECK(request_data.transferred_request_child_id != -1 ||
@@ -1229,7 +1228,7 @@ void ResourceDispatcherHostImpl::BeginRequest(
     const SyncLoadResultCallback& sync_result_handler,  // only valid for sync
     int route_id,
     mojom::URLLoaderAssociatedRequest mojo_request,
-    mojom::URLLoaderClientAssociatedPtr url_loader_client) {
+    mojom::URLLoaderClientPtr url_loader_client) {
   DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
   int child_id = requester_info->child_id();
 
@@ -1340,7 +1339,7 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
     int route_id,
     const net::HttpRequestHeaders& headers,
     mojom::URLLoaderAssociatedRequest mojo_request,
-    mojom::URLLoaderClientAssociatedPtr url_loader_client,
+    mojom::URLLoaderClientPtr url_loader_client,
     bool continue_request,
     int error_code) {
   DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
@@ -1539,12 +1538,12 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
 
   // Initialize the service worker handler for the request. We don't use
   // ServiceWorker for synchronous loads to avoid renderer deadlocks.
-  const SkipServiceWorker should_skip_service_worker =
-      is_sync_load ? SkipServiceWorker::ALL : request_data.skip_service_worker;
+  const ServiceWorkerMode service_worker_mode =
+      is_sync_load ? ServiceWorkerMode::NONE : request_data.service_worker_mode;
   ServiceWorkerRequestHandler::InitializeHandler(
       new_request.get(), requester_info->service_worker_context(), blob_context,
       child_id, request_data.service_worker_provider_id,
-      should_skip_service_worker != SkipServiceWorker::NONE,
+      service_worker_mode != ServiceWorkerMode::ALL,
       request_data.fetch_request_mode, request_data.fetch_credentials_mode,
       request_data.fetch_redirect_mode, request_data.resource_type,
       request_data.fetch_request_context_type, request_data.fetch_frame_type,
@@ -1552,12 +1551,11 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
 
   ForeignFetchRequestHandler::InitializeHandler(
       new_request.get(), requester_info->service_worker_context(), blob_context,
-      child_id, request_data.service_worker_provider_id,
-      should_skip_service_worker, request_data.fetch_request_mode,
-      request_data.fetch_credentials_mode, request_data.fetch_redirect_mode,
-      request_data.resource_type, request_data.fetch_request_context_type,
-      request_data.fetch_frame_type, request_data.request_body,
-      request_data.initiated_in_secure_context);
+      child_id, request_data.service_worker_provider_id, service_worker_mode,
+      request_data.fetch_request_mode, request_data.fetch_credentials_mode,
+      request_data.fetch_redirect_mode, request_data.resource_type,
+      request_data.fetch_request_context_type, request_data.fetch_frame_type,
+      request_data.request_body, request_data.initiated_in_secure_context);
 
   // Have the appcache associate its extra info with the request.
   AppCacheInterceptor::SetExtraRequestInfo(
@@ -1584,7 +1582,7 @@ ResourceDispatcherHostImpl::CreateResourceHandler(
     int child_id,
     ResourceContext* resource_context,
     mojom::URLLoaderAssociatedRequest mojo_request,
-    mojom::URLLoaderClientAssociatedPtr url_loader_client) {
+    mojom::URLLoaderClientPtr url_loader_client) {
   DCHECK(requester_info->IsRenderer() || requester_info->IsNavigationPreload());
   // TODO(pkasting): Remove ScopedTracker below once crbug.com/456331 is fixed.
   tracked_objects::ScopedTracker tracking_profile(
@@ -2085,6 +2083,7 @@ void ResourceDispatcherHostImpl::FinishedWithResourcesForRequest(
 
 void ResourceDispatcherHostImpl::BeginNavigationRequest(
     ResourceContext* resource_context,
+    net::URLRequestContext* request_context,
     const NavigationRequestInfo& info,
     std::unique_ptr<NavigationUIData> navigation_ui_data,
     NavigationURLLoaderImplCore* loader,
@@ -2123,9 +2122,6 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
     loader->NotifyRequestFailed(false, net::ERR_ABORTED);
     return;
   }
-
-  const net::URLRequestContext* request_context =
-      resource_context->GetRequestContext();
 
   int load_flags = info.begin_params.load_flags;
   load_flags |= net::LOAD_VERIFY_EV_CERT;
@@ -2287,7 +2283,7 @@ void ResourceDispatcherHostImpl::OnRequestResourceWithMojo(
     int request_id,
     const ResourceRequest& request,
     mojom::URLLoaderAssociatedRequest mojo_request,
-    mojom::URLLoaderClientAssociatedPtr url_loader_client) {
+    mojom::URLLoaderClientPtr url_loader_client) {
   OnRequestResourceInternal(requester_info, routing_id, request_id, request,
                             std::move(mojo_request),
                             std::move(url_loader_client));

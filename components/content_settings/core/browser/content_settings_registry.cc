@@ -20,7 +20,7 @@ namespace content_settings {
 
 namespace {
 
-base::LazyInstance<ContentSettingsRegistry> g_instance =
+base::LazyInstance<ContentSettingsRegistry>::DestructorAtExit g_instance =
     LAZY_INSTANCE_INITIALIZER;
 
 // TODO(raymes): These overloaded functions make the registration code clearer.
@@ -323,7 +323,7 @@ void ContentSettingsRegistry::Register(
   // Ensure that nothing has been registered yet for the given type.
   DCHECK(!website_settings_registry_->Get(type));
   std::unique_ptr<base::Value> default_value(
-      new base::FundamentalValue(static_cast<int>(initial_default_value)));
+      new base::Value(static_cast<int>(initial_default_value)));
   const WebsiteSettingsInfo* website_settings_info =
       website_settings_registry_->Register(
           type, name, std::move(default_value), sync_status,

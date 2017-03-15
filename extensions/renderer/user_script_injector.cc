@@ -9,16 +9,16 @@
 
 #include "base/lazy_instance.h"
 #include "content/public/common/url_constants.h"
-#include "content/public/renderer/render_thread.h"
 #include "content/public/renderer/render_frame.h"
+#include "content/public/renderer/render_thread.h"
 #include "content/public/renderer/render_view.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/guest_view/extensions_guest_view_messages.h"
 #include "extensions/common/permissions/permissions_data.h"
+#include "extensions/grit/extensions_renderer_resources.h"
 #include "extensions/renderer/injection_host.h"
 #include "extensions/renderer/script_context.h"
 #include "extensions/renderer/scripts_run_info.h"
-#include "grit/extensions_renderer_resources.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebScriptSource.h"
@@ -51,7 +51,7 @@ using RoutingInfoMap = std::map<RoutingInfoKey, bool>;
 // After removed by the webview, the user scipt will also be removed
 // from the render. Therefore, there won't be any query from the same
 // |script_id| and |routing_id| pair.
-base::LazyInstance<RoutingInfoMap> g_routing_info_map =
+base::LazyInstance<RoutingInfoMap>::DestructorAtExit g_routing_info_map =
     LAZY_INSTANCE_INITIALIZER;
 
 // Greasemonkey API source that is injected with the scripts.

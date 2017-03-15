@@ -10,17 +10,13 @@
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/safe_browsing/safe_browsing_navigation_observer.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "chrome/browser/sessions/session_tab_helper.h"
-#include "chrome/browser/tab_contents/retargeting_details.h"
 #include "chrome/common/pref_names.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/navigation_details.h"
-#include "content/public/browser/notification_service.h"
-#include "content/public/browser/notification_types.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
@@ -132,8 +128,8 @@ NavigationEvent* NavigationEventList::FindNavigationEvent(
         // need to adjust our search url to the original request.
         if (!nav_event->server_redirect_urls.empty()) {
           NavigationEvent* retargeting_nav_event =
-              FindNavigationEvent(nav_event->original_request_url, GURL(),
-                                  nav_event->target_tab_id);
+              FindRetargetingNavigationEvent(nav_event->original_request_url,
+                                             nav_event->target_tab_id);
           if (!retargeting_nav_event)
             return nullptr;
           // Adjust retargeting navigation event's attributes.
@@ -151,8 +147,35 @@ NavigationEvent* NavigationEventList::FindNavigationEvent(
   return nullptr;
 }
 
+NavigationEvent* NavigationEventList::FindRetargetingNavigationEvent(
+    const GURL& target_url,
+    int target_tab_id) {
+  if (target_url.is_empty())
+    return nullptr;
+
+  // Since navigation events are recorded in chronological order, we traverse
+  // the vector in reverse order to get the latest match.
+  for (auto rit = navigation_events_.rbegin(); rit != navigation_events_.rend();
+       ++rit) {
+    auto* nav_event = rit->get();
+    // In addition to url and tab_id checking, we need to compare the
+    // source_tab_id and target_tab_id to make sure it is a retargeting event.
+    if (nav_event->original_request_url == target_url &&
+        nav_event->target_tab_id == target_tab_id &&
+        nav_event->source_tab_id != nav_event->target_tab_id) {
+      return nav_event;
+    }
+  }
+  return nullptr;
+}
+
 void NavigationEventList::RecordNavigationEvent(
     std::unique_ptr<NavigationEvent> nav_event) {
+  // Skip page refresh.
+  if (nav_event->source_url == nav_event->GetDestinationUrl() &&
+      nav_event->source_tab_id == nav_event->target_tab_id)
+    return;
+
   if (navigation_events_.size() == size_limit_)
     navigation_events_.pop_front();
   navigation_events_.push_back(std::move(nav_event));
@@ -205,8 +228,6 @@ bool SafeBrowsingNavigationObserverManager::IsEnabledAndReady(
 
 SafeBrowsingNavigationObserverManager::SafeBrowsingNavigationObserverManager()
     : navigation_event_list_(kNavigationRecordMaxSize) {
-  registrar_.Add(this, chrome::NOTIFICATION_RETARGETING,
-                 content::NotificationService::AllSources());
 
   // Schedule clean up in 2 minutes.
   ScheduleNextCleanUpAfterInterval(
@@ -214,7 +235,6 @@ SafeBrowsingNavigationObserverManager::SafeBrowsingNavigationObserverManager()
 }
 
 void SafeBrowsingNavigationObserverManager::RecordNavigationEvent(
-    const GURL& nav_event_key,
     std::unique_ptr<NavigationEvent> nav_event) {
   navigation_event_list_.RecordNavigationEvent(std::move(nav_event));
 }
@@ -313,20 +333,37 @@ SafeBrowsingNavigationObserverManager::IdentifyReferrerChainForDownload(
 }
 
 SafeBrowsingNavigationObserverManager::AttributionResult
-SafeBrowsingNavigationObserverManager::IdentifyReferrerChainForPPAPIDownload(
-    const GURL& initiating_frame_url,
-    const GURL& initiating_main_frame_url,
-    int tab_id,
-    bool has_user_gesture,
-    int user_gesture_count_limit,
-    ReferrerChain* out_referrer_chain) {
+SafeBrowsingNavigationObserverManager::
+    IdentifyReferrerChainByDownloadWebContent(
+        content::WebContents* web_contents,
+        int user_gesture_count_limit,
+        ReferrerChain* out_referrer_chain) {
+  if (!web_contents || !web_contents->GetLastCommittedURL().is_valid())
+    return INVALID_URL;
+  bool has_user_gesture = HasUserGesture(web_contents);
+  int tab_id = SessionTabHelper::IdForTab(web_contents);
+  return IdentifyReferrerChainForDownloadHostingPage(
+      web_contents->GetLastCommittedURL(), GURL(), tab_id, has_user_gesture,
+      user_gesture_count_limit, out_referrer_chain);
+}
+
+SafeBrowsingNavigationObserverManager::AttributionResult
+SafeBrowsingNavigationObserverManager::
+    IdentifyReferrerChainForDownloadHostingPage(
+        const GURL& initiating_frame_url,
+        const GURL& initiating_main_frame_url,
+        int tab_id,
+        bool has_user_gesture,
+        int user_gesture_count_limit,
+        ReferrerChain* out_referrer_chain) {
   if (!initiating_frame_url.is_valid())
     return INVALID_URL;
 
   NavigationEvent* nav_event = navigation_event_list_.FindNavigationEvent(
-      initiating_frame_url, GURL(), tab_id);
+      initiating_frame_url, initiating_main_frame_url, tab_id);
   if (!nav_event) {
-    // We cannot find a single navigation event related to this download.
+    // We cannot find a single navigation event related to this download hosting
+    // page.
     return NAVIGATION_EVENT_NOT_FOUND;
   }
 
@@ -358,33 +395,22 @@ SafeBrowsingNavigationObserverManager::IdentifyReferrerChainForPPAPIDownload(
 SafeBrowsingNavigationObserverManager::
     ~SafeBrowsingNavigationObserverManager() {}
 
-void SafeBrowsingNavigationObserverManager::Observe(
-    int type,
-    const content::NotificationSource& source,
-    const content::NotificationDetails& details) {
-  if (type == chrome::NOTIFICATION_RETARGETING)
-    RecordRetargeting(details);
-}
-
-void SafeBrowsingNavigationObserverManager::RecordRetargeting(
-    const content::NotificationDetails& details) {
-  const RetargetingDetails* retargeting_detail =
-      content::Details<const RetargetingDetails>(details).ptr();
-  DCHECK(retargeting_detail);
-  content::WebContents* source_contents =
-      retargeting_detail->source_web_contents;
-  content::WebContents* target_contents =
-      retargeting_detail->target_web_contents;
-  DCHECK(source_contents);
-  DCHECK(target_contents);
+void SafeBrowsingNavigationObserverManager::RecordNewWebContents(
+    content::WebContents* source_web_contents,
+    int source_render_process_id,
+    int source_render_frame_id,
+    GURL target_url,
+    content::WebContents* target_web_contents,
+    bool not_yet_in_tabstrip) {
+  DCHECK(source_web_contents);
+  DCHECK(target_web_contents);
 
   content::RenderFrameHost* rfh = content::RenderFrameHost::FromID(
-      retargeting_detail->source_render_process_id,
-      retargeting_detail->source_render_frame_id);
+      source_render_process_id, source_render_frame_id);
   // Remove the "#" at the end of URL, since it does not point to any actual
   // page fragment ID.
-  GURL target_url = SafeBrowsingNavigationObserverManager::ClearEmptyRef(
-      retargeting_detail->target_url);
+  GURL cleaned_target_url =
+      SafeBrowsingNavigationObserverManager::ClearEmptyRef(target_url);
 
   std::unique_ptr<NavigationEvent> nav_event =
       base::MakeUnique<NavigationEvent>();
@@ -393,14 +419,14 @@ void SafeBrowsingNavigationObserverManager::RecordRetargeting(
         SafeBrowsingNavigationObserverManager::ClearEmptyRef(
             rfh->GetLastCommittedURL());
   }
-  nav_event->source_tab_id = SessionTabHelper::IdForTab(source_contents);
+  nav_event->source_tab_id = SessionTabHelper::IdForTab(source_web_contents);
   nav_event->source_main_frame_url =
       SafeBrowsingNavigationObserverManager::ClearEmptyRef(
-          source_contents->GetLastCommittedURL());
-  nav_event->original_request_url = target_url;
-  nav_event->target_tab_id = SessionTabHelper::IdForTab(target_contents);
+          source_web_contents->GetLastCommittedURL());
+  nav_event->original_request_url = cleaned_target_url;
+  nav_event->target_tab_id = SessionTabHelper::IdForTab(target_web_contents);
   nav_event->frame_id = rfh ? rfh->GetFrameTreeNodeId() : -1;
-  auto it = user_gesture_map_.find(source_contents);
+  auto it = user_gesture_map_.find(source_web_contents);
   if (it != user_gesture_map_.end() &&
       !SafeBrowsingNavigationObserverManager::IsUserGestureExpired(
           it->second)) {

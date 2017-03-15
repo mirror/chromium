@@ -912,7 +912,7 @@ void AXNodeObject::getSparseAXAttributes(
       getSparseAttributeSetterMap();
   AttributeCollection attributes = toElement(node)->attributesWithoutUpdate();
   for (const Attribute& attr : attributes) {
-    SparseAttributeSetter* setter = axSparseAttributeSetterMap.get(attr.name());
+    SparseAttributeSetter* setter = axSparseAttributeSetterMap.at(attr.name());
     if (setter)
       setter->run(*this, sparseAttributeClient, attr.value());
   }
@@ -1395,7 +1395,6 @@ void AXNodeObject::markers(Vector<DocumentMarker::MarkerType>& markerTypes,
         markerRanges.push_back(
             AXRange(marker->startOffset(), marker->endOffset()));
         break;
-      case DocumentMarker::InvisibleSpellcheck:
       case DocumentMarker::Composition:
         // No need for accessibility to know about these marker types.
         break;

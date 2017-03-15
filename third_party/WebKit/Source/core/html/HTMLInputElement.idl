@@ -79,9 +79,9 @@ interface HTMLInputElement : HTMLElement {
     readonly attribute NodeList labels;
 
     void select();
-    [RaisesException, ImplementedAs=selectionStartForBinding] attribute unsigned long selectionStart;
-    [RaisesException, ImplementedAs=selectionEndForBinding] attribute unsigned long selectionEnd;
-    [RaisesException, ImplementedAs=selectionDirectionForBinding] attribute DOMString selectionDirection;
+    [RaisesException, ImplementedAs=selectionStartForBinding] attribute unsigned long? selectionStart;
+    [RaisesException, ImplementedAs=selectionEndForBinding] attribute unsigned long? selectionEnd;
+    [RaisesException, ImplementedAs=selectionDirectionForBinding] attribute DOMString? selectionDirection;
     [RaisesException] void setRangeText(DOMString replacement);
     [RaisesException] void setRangeText(DOMString replacement,
                                         unsigned long start,
@@ -102,8 +102,10 @@ interface HTMLInputElement : HTMLElement {
     [Measure] attribute DOMString autocapitalize;
 
     // HTML Media Capture
-    // http://www.w3.org/TR/html-media-capture/
-    [RuntimeEnabled=MediaCapture, Reflect] attribute boolean capture;
+    // https://w3c.github.io/html-media-capture/#the-capture-attribute
+    // TODO(mcasas): |capture| is a |CaptureFacingMode| enum in the spec.
+    // https://crbug.com/698853
+    [Measure, RuntimeEnabled=MediaCapture, Reflect] attribute boolean capture;
 
     // Non-standard APIs
     [Reflect, MeasureAs=PrefixedDirectoryAttribute] attribute boolean webkitdirectory;

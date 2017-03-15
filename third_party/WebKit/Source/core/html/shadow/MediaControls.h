@@ -44,7 +44,12 @@ class CORE_EXPORT MediaControls final : public HTMLDivElement {
 
   HTMLMediaElement& mediaElement() const { return *m_mediaElement; }
 
+  // Node override.
+  Node::InsertionNotificationRequest insertedInto(ContainerNode*) override;
+  void removedFrom(ContainerNode*) override;
+
   void reset();
+  void onControlsListUpdated();
 
   void show();
   void hide();
@@ -83,9 +88,6 @@ class CORE_EXPORT MediaControls final : public HTMLDivElement {
     return m_volumeSlider;
   }
 
-  // Notify us that our controls enclosure has changed width.
-  void notifyPanelWidthChanged(const LayoutUnit& newWidth);
-
   // Notify us that the media element's network state has changed.
   void networkStateChanged();
 
@@ -110,6 +112,13 @@ class CORE_EXPORT MediaControls final : public HTMLDivElement {
     refreshCastButtonVisibility();
   }
 
+  // TODO(mlamouri): this method is needed in order to notify the controls that
+  // the `mediaControlsEnabled` setting has changed.
+  void onMediaControlsEnabledChange() {
+    // There is no update because only the overlay is expected to change.
+    refreshCastButtonVisibilityWithoutUpdate();
+  }
+
   DECLARE_VIRTUAL_TRACE();
 
  private:
@@ -119,7 +128,12 @@ class CORE_EXPORT MediaControls final : public HTMLDivElement {
 
   void invalidate(Element*);
 
+  // Need to be members of MediaControls for private member access.
   class BatchedControlUpdate;
+  class MediaControlsResizeObserverCallback;
+
+  // Notify us that our controls enclosure has changed size.
+  void notifyElementSizeChanged(ClientRect* newSize);
 
   explicit MediaControls(HTMLMediaElement&);
 
@@ -144,12 +158,13 @@ class CORE_EXPORT MediaControls final : public HTMLDivElement {
   void stopHideMediaControlsTimer();
   void resetHideMediaControlsTimer();
 
-  void panelWidthChangedTimerFired(TimerBase*);
+  void elementSizeChangedTimerFired(TimerBase*);
 
   void hideAllMenus();
 
   // Hide elements that don't fit, and show those things that we want which
-  // do fit.  This requires that m_panelWidth is current.
+  // do fit.  This requires that m_effectiveWidth and m_effectiveHeight are
+  // current.
   void computeWhichControlsFit();
 
   // Node
@@ -210,8 +225,12 @@ class CORE_EXPORT MediaControls final : public HTMLDivElement {
   bool m_isMouseOverControls : 1;
   bool m_isPausedForScrubbing : 1;
 
-  TaskRunnerTimer<MediaControls> m_panelWidthChangedTimer;
-  int m_panelWidth;
+  // Watches the video element for resize and updates media controls as
+  // necessary.
+  Member<ResizeObserver> m_resizeObserver;
+
+  TaskRunnerTimer<MediaControls> m_elementSizeChangedTimer;
+  IntSize m_size;
 
   bool m_keepShowingUntilTimerFires : 1;
 };

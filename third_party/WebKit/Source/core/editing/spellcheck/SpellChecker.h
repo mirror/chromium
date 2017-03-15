@@ -36,6 +36,7 @@
 namespace blink {
 
 class CompositeEditCommand;
+class IdleSpellCheckCallback;
 class LocalFrame;
 class ReplaceSelectionCommand;
 class SpellCheckerClient;
@@ -57,6 +58,7 @@ class CORE_EXPORT SpellChecker final : public GarbageCollected<SpellChecker> {
   SpellCheckerClient& spellCheckerClient() const;
   TextCheckerClient& textChecker() const;
 
+  static bool isSpellCheckingEnabledAt(const Position&);
   bool isSpellCheckingEnabled() const;
   void toggleSpellCheckingEnabled();
   void ignoreSpelling();
@@ -66,8 +68,9 @@ class CORE_EXPORT SpellChecker final : public GarbageCollected<SpellChecker> {
   void advanceToNextMisspelling(bool startBeforeSelection = false);
   void showSpellingGuessPanel();
   void didBeginEditing(Element*);
-  void clearMisspellingsForMovingParagraphs(const VisibleSelection&);
+  void clearMisspellingsForMovingParagraphs(const SelectionInDOMTree&);
   void markMisspellingsForMovingParagraphs(const VisibleSelection&);
+  void respondToChangedContents();
   void respondToChangedSelection(const Position& oldSelectionStart,
                                  FrameSelection::SetSelectionOptions);
   void replaceMisspelledRange(const String&);
@@ -82,7 +85,6 @@ class CORE_EXPORT SpellChecker final : public GarbageCollected<SpellChecker> {
   bool selectionStartHasMarkerFor(DocumentMarker::MarkerType,
                                   int from,
                                   int length) const;
-  bool selectionStartHasSpellingMarkerFor(int from, int length) const;
   void updateMarkersForWordsAffectedByEditing(
       bool onlyHandleWordsContainingSelection);
   void cancelCheck();
@@ -90,6 +92,9 @@ class CORE_EXPORT SpellChecker final : public GarbageCollected<SpellChecker> {
   // Exposed for testing and idle time spell checker
   SpellCheckRequester& spellCheckRequester() const {
     return *m_spellCheckRequester;
+  }
+  IdleSpellCheckCallback& idleSpellCheckCallback() const {
+    return *m_idleSpellCheckCallback;
   }
 
   // The leak detector will report leaks should queued requests be posted
@@ -99,6 +104,8 @@ class CORE_EXPORT SpellChecker final : public GarbageCollected<SpellChecker> {
   // Hence allow the leak detector to effectively stop the spell checker to
   // ensure leak reporting stability.
   void prepareForLeakDetection();
+
+  void documentAttached(Document*);
 
  private:
   explicit SpellChecker(LocalFrame&);
@@ -118,7 +125,7 @@ class CORE_EXPORT SpellChecker final : public GarbageCollected<SpellChecker> {
   void markMisspellingsAfterReplaceSelectionCommand(
       const ReplaceSelectionCommand&);
 
-  void removeMarkers(const VisibleSelection&, DocumentMarker::MarkerTypes);
+  void removeMarkers(const EphemeralRange&, DocumentMarker::MarkerTypes);
 
   void markMisspellingsInternal(const VisibleSelection&);
   void chunkAndMarkAllMisspellings(
@@ -128,9 +135,8 @@ class CORE_EXPORT SpellChecker final : public GarbageCollected<SpellChecker> {
 
   Member<LocalFrame> m_frame;
 
-  // TODO(xiaochengh): Move it to IdleSpellCheckCallback after idle time spell
-  // checking reaches status=stable.
   const Member<SpellCheckRequester> m_spellCheckRequester;
+  const Member<IdleSpellCheckCallback> m_idleSpellCheckCallback;
 };
 
 }  // namespace blink

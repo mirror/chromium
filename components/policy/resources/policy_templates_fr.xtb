@@ -26,6 +26,9 @@
       Si cette règle est définie sur "True" ou si elle n'est pas configurée, les statistiques seront envoyées.</translation>
 <translation id="1046484220783400299">Activer les fonctionnalités obsolètes de la plate-forme Web pour une durée limitée</translation>
 <translation id="1047128214168693844">Interdire à tous les sites de suivre la position géographique des utilisateurs</translation>
+<translation id="1049138910114524876">Détermine les paramètres régionaux qui sont appliqués sur l'écran de connexion <ph name="PRODUCT_OS_NAME" />.
+
+      Si cette règle est définie, l'écran de connexion est toujours affiché dans les paramètres régionaux indiqués par la première valeur de cette règle (cette dernière est définie en tant que liste pour la compatibilité ascendante). Si cette règle n'est pas définie, ou si elle est définie sur une liste vide, l'écran de connexion est affiché dans les paramètres régionaux de la dernière session de l'utilisateur. Si cette règle est définie sur une valeur qui ne constitue pas des paramètres régionaux valides, l'écran de connexion est affiché dans des paramètres régionaux de remplacement (actuellement "en-US").</translation>
 <translation id="1062011392452772310">Activer l'attestation à distance pour l'appareil</translation>
 <translation id="1090892140761957285">URL de validation du jeton d'authentification du client distant.
 
@@ -93,9 +96,6 @@
       Si cette règle n'est pas configurée, ou si elle est définie sur "False", les suites de chiffrement RC4 dans TLS ne seront pas activées. La règle peut être définie sur "True" pour assurer la compatibilité avec un serveur obsolète. Il s'agit là d'une solution provisoire, et le serveur devrait être reconfiguré.</translation>
 <translation id="1297182715641689552">Utiliser un script de proxy .pac</translation>
 <translation id="1304973015437969093">Identifiants d'extension ou d'application et URL de mise à jour à installer en arrière-plan</translation>
-<translation id="1310333396104446007">Si ce paramètre est configuré pour être défini sur "false", les utilisateurs ne peuvent pas créer de codes dont le niveau de sécurité est considéré comme faible. Il s'agit, entre autres, des codes composés d'une série de chiffres identiques, ceux contenant une suite de chiffres qui augmentent ou diminuent de 1, et des codes trop courants.
-
-          Si ce paramètre est configuré pour être défini sur "true", ou s'il n'est pas configuré, les utilisateurs sont autorisés à saisir ces codes et seul un message d'avertissement s'affiche.</translation>
 <translation id="1313457536529613143">Indique le pourcentage d'adaptation du délai d'assombrissement de l'écran en cas d'activité de l'utilisateur lors de la réduction de la luminosité ou peu de temps après la désactivation de l'écran.
 
           Si vous définissez cette règle, elle indique le pourcentage d'adaptation du délai de réduction de la luminosité de l'écran en cas d'activité de l'utilisateur lors de la réduction de la luminosité ou peu de temps après la désactivation de l'écran. En cas d'adaptation de ce délai, les délais de désactivation, de verrouillage et d'inactivité de l'écran sont ajustés pour maintenir le même décalage par rapport au délai d'assombrissement de l'écran initialement configuré.
@@ -396,7 +396,7 @@ Si cette règle n'est pas configurée, le paramètre "BlockPopups" est utilisé 
 <translation id="2312134445771258233">Vous permet de configurer les pages chargées au démarrage.
 
       Le contenu de la liste "URL à ouvrir au démarrage" est ignoré, sauf si vous sélectionnez "Ouvrir les pages suivantes" dans "Action au démarrage".</translation>
-<translation id="23323722127921515">Affiche l'extension Google Cast</translation>
+<translation id="23323722127921515">Affiche l'icône Google Cast de la barre d'outils</translation>
 <translation id="2337466621458842053">Permet de définir une liste de formats d'URL spécifiant les sites qui sont autorisés à afficher des images. 
 
 Si cette règle n'est pas configurée, la valeur par défaut globale est utilisée pour tous les sites à partir de la règle "DefaultImagesSetting" si elle est configurée, ou à défaut, à partir de la configuration personnelle de l'utilisateur.</translation>
@@ -551,9 +551,9 @@ Cette règle n'est respectée que si la règle "DefaultSearchProviderEnabled" es
 <translation id="2529880111512635313">Configurer la liste des applications et des extensions dont l'installation est forcée</translation>
 <translation id="253135976343875019">Délai d'inactivité avant l'affichage d'un avertissement (en cas de connexion secteur)</translation>
 <translation id="2552966063069741410">Fuseau horaire</translation>
-<translation id="2558917182010914102">Si cette règle est définie sur "true" ou n'est pas définie, Google Cast sera activé et les utilisateurs pourront le lancer depuis le menu de l'application, les menus contextuels des pages, les commandes multimédias sur les sites Web compatibles Google Cast et l'icône Cast de la barre d'outils (si elle est affichée).
+<translation id="2558917182010914102">Si cette règle est définie sur "true" ou n'est pas définie, Google Cast est activé et les utilisateurs peuvent le lancer depuis le menu de l'application, les menus contextuels des pages, les commandes multimédias sur les sites Web compatibles Google Cast et l'icône Cast de la barre d'outils (si elle est affichée).
 
-          Si cette règle est définie sur "false", Google Cast sera désactivé.</translation>
+          Si cette règle est définie sur "false", Google Cast est désactivé.</translation>
 <translation id="2562339630163277285">Spécifie l'URL du moteur de recherche utilisé pour fournir des résultats instantanés. Cette URL doit contenir la chaîne <ph name="SEARCH_TERM_MARKER" />, qui sera remplacée lors de la requête par le texte déjà saisi par l'utilisateur.
 
           Cette règle est facultative. Si elle n'est pas configurée, aucun résultat de recherche instantanée n'est fourni.
@@ -576,13 +576,6 @@ Cette règle n'est respectée que si la règle "DefaultSearchProviderEnabled" es
 <translation id="2587719089023392205">Définir <ph name="PRODUCT_NAME" /> comme navigateur par défaut</translation>
 <translation id="2592091433672667839">Durée d'inactivité préalable à l'affichage de l'économiseur d'écran sur l'écran de connexion en mode Point de vente</translation>
 <translation id="2623014935069176671">Attendre l'activité utilisateur initiale</translation>
-<translation id="2625512435194873786">Ce paramètre permet de contrôler le nombre maximal de caractères d'un code.
-
-          Si ce paramètre est configuré pour être défini sur 0 ou une valeur inférieure, aucune limite maximale de caractères n'est appliquée. Les utilisateurs peuvent donc créer un code contenant le nombre de caractères qu'il souhaite.
-
-          Si le nombre indiqué pour ce paramètre est inférieur à la valeur PinUnlockMinimumLength, mais supérieur à 0, la limite maximale est identique à la limite minimale.
-
-          Si ce paramètre n'est pas configuré, aucune limite maximale n'est appliquée. Les utilisateurs peuvent donc créer un code contenant le nombre de caractères qu'ils souhaitent.</translation>
 <translation id="262740370354162807">Activer l'envoi de documents à <ph name="CLOUD_PRINT_NAME" /></translation>
 <translation id="2633084400146331575">Activer les commentaires audio</translation>
 <translation id="2646290749315461919">Permet de définir si les sites Web sont autorisés à suivre la position géographique des utilisateurs. Ce suivi peut être autorisé par défaut, refusée par défaut, ou l'utilisateur peut recevoir un message chaque fois qu'un site Web demande sa position géographique. 
@@ -965,11 +958,11 @@ Si elle n'est pas configurée, l'utilisateur peut être invité à effectuer l'i
 
           Si ce paramètre n'est pas configuré, aucune restriction n'est imposée concernant les types d'extensions ou d'applications pouvant être installés.</translation>
 <translation id="3780152581321609624">Inclure un port non standard dans le SPN Kerberos</translation>
-<translation id="3780319008680229708">Si cette règle est définie sur "true", l'icône Cast de la barre d'outils s'affichera toujours dans la barre d'outils ou dans le menu à développer et les utilisateurs ne pourront pas la supprimer.
+<translation id="3780319008680229708">Si cette règle est définie sur "true", l'icône Cast de la barre d'outils s'afficher toujours dans la barre d'outils ou dans le menu à développer et les utilisateurs ne peuvent pas la supprimer.
 
-          Si cette règle est définie sur "false" ou n'est pas définie, les utilisateurs pourront l'épingler ou la supprimer depuis son menu contextuel.
+          Si cette règle est définie sur "false" ou n'est pas définie, les utilisateurs peuvent l'épingler ou la supprimer depuis son menu contextuel.
 
-          Si la règle "EnableMediaRouter" a été définie sur "false", la valeur attribuée à la règle "ShowCastIconInToolbar" n'aura aucun effet et l'icône de la barre d'outils ne s'affichera pas.</translation>
+          Si la règle "EnableMediaRouter" est définie sur "false", la valeur attribuée à la règle "ShowCastIconInToolbar" n'a aucun effet et l'icône de la barre d'outils ne s'affiche pas.</translation>
 <translation id="3788662722837364290">Paramètres de gestion de l'alimentation en cas d'inactivité de l'utilisateur</translation>
 <translation id="3793095274466276777">Configure les vérifications du navigateur par défaut dans <ph name="PRODUCT_NAME" /> et empêche les utilisateurs de les modifier.
 
@@ -1203,6 +1196,7 @@ Cette option est habituellement désactivée dans le cadre de la protection cont
           Si cette règle n'est pas définie, la valeur globale par défaut est utilisée pour tous les sites, et déterminée à partir de la règle "DefaultKeygenSetting" si celle-ci est définie, ou à partir de la configuration personnelle de l'utilisateur.</translation>
 <translation id="4239720644496144453">Le cache n'est pas utilisé pour les applications Android. Si plusieurs utilisateurs installent la même application Android, celle-ci sera à nouveau téléchargée pour chacun d'eux.</translation>
 <translation id="4250680216510889253">Non</translation>
+<translation id="4261820385751181068">Paramètres régionaux de l'écran de connexion de l'appareil</translation>
 <translation id="4272136423200695428">Active la connexion forcée pour <ph name="PRODUCT_NAME" />.</translation>
 <translation id="427632463972968153">Spécifie les paramètres utilisés pour la recherche d'image avec POST. Il s'agit de paires de noms et de valeurs séparées par une virgule. Si une valeur est équivalente à un paramètre modèle, comme "{imageThumbnail}" dans l'exemple ci-dessus, elle est remplacée par des miniatures d'images réelles.
 
@@ -1316,6 +1310,11 @@ Si vous désactivez ce paramètre, il est impossible d'ajouter, de supprimer ou 
           Pour voir des exemples de formats, accédez à l'adresse https://www.chromium.org/developers/how-tos/chrome-frame-getting-started.</translation>
 <translation id="467449052039111439">Ouvrir une liste d'URL</translation>
 <translation id="4680961954980851756">Activer la saisie automatique</translation>
+<translation id="4722399051042571387">Si la règle est configurée sur "false", les utilisateurs ne pourront pas définir un code faible et facile à deviner.
+
+          Quelques exemples de codes faibles : ceux qui ne contiennent qu'un chiffre (1111), les suites de chiffres croissantes (1234) et décroissantes (4321), et les codes trop communs.
+
+          Par défaut, les utilisateurs recevront un avertissement, et non un message d'erreur, si le code saisi est considéré comme étant trop faible.</translation>
 <translation id="4723829699367336876">Activer la traversée de pare-feu depuis le client d'accès à distance</translation>
 <translation id="4725528134735324213">Activer Android Backup Service</translation>
 <translation id="4733471537137819387">Stratégies liées à l'authentification HTTP intégrée</translation>
@@ -1535,15 +1534,6 @@ Si cette règle n'est pas configurée, la valeur par défaut globale sera utilis
       Lorsque sa valeur est configurée, et si elle ne correspond pas à 0, l'utilisateur connecté en mode démonstration est déconnecté automatiquement après la durée d'inactivité définie.
 
       Notez que la valeur de cette règle se mesure en millisecondes.</translation>
-<translation id="5506213378070007377">Cette règle renvoie au serveur des informations sur l'état d'Android.
-      
-
-      Si cette règle est définie sur "False", les informations ne sont pas
-      transmises.
-      Si cette règle est définie sur "True" ou si elle n'est pas configurée,
-      les informations sont transmises.
-
-      Cette règle ne s'applique que si les applications Android sont activées.</translation>
 <translation id="5511702823008968136">Activer le barre de favoris</translation>
 <translation id="5512418063782665071">URL de la page d'accueil</translation>
 <translation id="5523812257194833591">Session publique à laquelle le système se connecte automatiquement après l'expiration du délai d'inactivité de l'utilisateur.
@@ -1742,6 +1732,7 @@ Si cette règle n'est pas configurée, le moteur de rendu par défaut est utilis
       Si cette règle est définie sur "True" ou n'est pas configurée, l'accélération matérielle est activée, sauf si une certaine fonctionnalité GPU figure sur la liste noire.
 
       Si cette règle est définie sur "False", l'accélération matérielle est désactivée.</translation>
+<translation id="6070667616071269965">Dispositions de clavier de l'écran de connexion de l'appareil</translation>
 <translation id="6074963268421707432">Interdire à tous les sites d'afficher des notifications sur le Bureau</translation>
 <translation id="6076099373507468537">Définit la liste des appareils USB autorisés à être dissociés de leur pilote de noyau afin d'être utilisés directement au sein d'une application Web via l'API chrome.usb. Les entrées sont des paires composées d'un identifiant de fournisseur USB et d'un identifiant produit associé à un appareil spécifique.
 
@@ -1899,6 +1890,13 @@ Si cette règle n'est pas configurée, la valeur par défaut globale est utilis�
           Si vous choisissez de détecter automatiquement le serveur proxy, l'URL de script "http://wpad/wpad.dat" est transmise aux applications Android. Aucune autre partie du protocole d'auto-détection du proxy n'est utilisée.
 
           Si vous sélectionnez le script de proxy .pac, l'URL de script est fournie aux applications Android.</translation>
+<translation id="6435127182262044446">Ce paramètre permet de contrôler le nombre maximal de caractères que peut contenir un code.
+
+          Si ce paramètre est défini sur 0 ou une valeur inférieure, aucune limite maximale de caractères n'est appliquée. Les utilisateurs peuvent donc créer un code contenant le nombre de caractères qu'ils souhaitent.
+
+          Si le nombre indiqué pour ce paramètre est inférieur à la valeur "PinUnlockMinimumLength", mais supérieur à 0, la limite maximale est identique à la limite minimale.
+
+          Si ce paramètre n'est pas configuré, aucune limite maximale n'est appliquée par défaut.</translation>
 <translation id="6467433935902485842">Permet de définir une liste de formats d'URL spécifiant les sites qui ne sont pas autorisés à exécuter des plug-ins. 
 
 Si cette règle n'est pas configurée, la valeur par défaut globale est utilisée pour tous les sites à partir de la règle "DefaultPluginsSetting", si elle est définie, ou à défaut, à partir de la configuration personnelle de l'utilisateur.</translation>
@@ -2091,11 +2089,6 @@ Si elle n'est pas configurée, l'utilisateur peut être invité à effectuer l'i
 <translation id="7027785306666625591">Configurer la gestion de l'alimentation dans <ph name="PRODUCT_OS_NAME" />
 
       Ces règles vous permettent de configurer le comportement du système d'exploitation "<ph name="PRODUCT_OS_NAME" />" lorsque l'utilisateur est inactif pendant un certain temps.</translation>
-<translation id="703078280527762319">Avertissement : La règle relative à la version TLS maximale sera entièrement supprimée du produit <ph name="PRODUCT_NAME" /> à partir de la version 66 environ (autour de février 2018).
-
-      Si cette règle n'est pas définie, <ph name="PRODUCT_NAME" /> utilise la version maximale par défaut : TLSv1.3.
-
-      Cette règle peut également être définie sur l'une des valeurs suivantes : "tls1.2" ou "tls1.3". Si elle est définie, <ph name="PRODUCT_NAME" /> n'utilisera pas de versions de SSL/TLS supérieures à la version spécifiée. Toute valeur non reconnue sera ignorée.</translation>
 <translation id="7040229947030068419">Exemple de valeur :</translation>
 <translation id="7049373494483449255">Permet à <ph name="PRODUCT_NAME" /> d'envoyer des documents à <ph name="CLOUD_PRINT_NAME" /> en vue d'une impression. REMARQUE : Cette règle affecte uniquement la disponibilité de <ph name="CLOUD_PRINT_NAME" /> dans <ph name="PRODUCT_NAME" />. Elle n'empêche pas les utilisateurs de soumettre des travaux d'impression sur des sites Web. 
 
@@ -2250,18 +2243,7 @@ Si elle est définie sur "False" ou si elle n'est pas configurée, ces publicit�
       Si cette règle n'est pas définie, le nettoyage automatique utilise la stratégie intégrée par défaut. Actuellement, il s'agit de la stratégie "RemoveLRUIfDormant".</translation>
 <translation id="7336878834592315572">Conserver les cookies pendant toute la durée de la session</translation>
 <translation id="7340034977315324840">Indiquer les périodes d'activité de l'appareil</translation>
-<translation id="7340934985429121460">Ce paramètre permet de contrôler le nombre minimal de caractères d'un code.
-
-          Si ce paramètre est configuré pour être défini sur une valeur inférieure à 1, le nombre minimal de caractères d'un code est de 1.
-
-          Si ce paramètre n'est pas configuré, le nombre minimal de caractères d'un code est de 4.</translation>
 <translation id="7384999953864505698">Permet d'utiliser le protocole QUIC</translation>
-<translation id="7406716912696538245">Définit les modes de déverrouillage rapide que l'utilisateur est autorisé à configurer et à utiliser.
-         Ce paramètre ajoute à la liste blanche les modes de déverrouillage rapide qui peuvent être configurés et utilisés pour déverrouiller l'écran de verrouillage. Il s'agit d'une liste de chaînes qui peuvent prendre les valeurs suivantes : "all", "PIN". Si "all" est sélectionné, tous les modes compatibles sont disponibles. Autrement, seuls les modes figurant dans la liste sont disponibles.
-
-         Si ce paramètre est configuré, les modes de déverrouillage rapide dont le type ne figure pas dans cette liste ne peuvent pas être configurés ni utilisés.
-
-      Si ce paramètre n'est pas configuré, le mode "PIN" est activé, tandis que tous les autres sont désactivés.</translation>
 <translation id="7417972229667085380">Pourcentage d'adaptation du délai d'inactivité en mode Présentation (abandonné)</translation>
 <translation id="7421483919690710988">Définir la taille du cache du disque de support en octets</translation>
 <translation id="7424751532654212117">Liste des exceptions à la liste des plug-ins désactivés</translation>
@@ -2440,19 +2422,6 @@ Si cette règle n'est pas configurée, la valeur par défaut globale est utilis�
 <translation id="7848840259379156480">Permet de configurer le moteur de rendu HTML par défaut lorsque <ph name="PRODUCT_FRAME_NAME" /> est installé.
       Le paramétrage par défaut de cette stratégie autorise le navigateur hôte à effectuer le rendu. Toutefois, vous pouvez
       remplacer ce paramétrage pour que <ph name="PRODUCT_FRAME_NAME" /> assure le rendu des pages HTML pages par défaut.</translation>
-<translation id="7853178359124471330">Lorsque cette règle est configurée, le mode de détection automatique du fuseau horaire dépend de la valeur définie :
-
-      TimezoneAutomaticDetectionUsersDecide : les utilisateurs peuvent contrôler la détection automatique du fuseau horaire à l'aide des commandes classiques disponibles dans chrome://settings.
-
-      TimezoneAutomaticDetectionDisabled : les commandes automatiques de fuseau horaire disponibles dans chrome://settings sont désactivées. La détection automatique du fuseau horaire est dans ce cas toujours désactivée.
-
-      TimezoneAutomaticDetectionIPOnly : les commandes de fuseau horaire disponibles dans chrome://settings sont désactivées. La détection automatique du fuseau horaire est dans ce cas toujours activée. Elle utilise une méthode reposant exclusivement sur l'adresse IP pour mettre à jour la position.
-
-      TimezoneAutomaticDetectionSendWiFiAccessPoints : les commandes de fuseau horaire disponibles dans chrome://settings sont désactivées. La détection automatique du fuseau horaire est dans ce cas toujours activée. La liste des points d'accès Wi-Fi visibles est toujours transmise au serveur de l'API Geolocation pour une détection de fuseau horaire plus précise.
-
-      Si cette règle n'est pas configurée, elle est appliquée comme si TimezoneAutomaticDetectionUsersDecide était défini.
-
-      Si la règle SystemTimezone est configurée, elle remplace celle-ci. La détection automatique du fuseau horaire est alors totalement désactivée.</translation>
 <translation id="787125417158068494">Si la règle est définie sur SyncDisabled ou n'est pas configurée, les certificats <ph name="PRODUCT_OS_NAME" /> ne sont pas disponibles pour les applications ARC.
 
       Si la règle est définie sur CopyCaCerts, tous les certificats CA installés via ONC avec <ph name="WEB_TRUSTED_BIT" /> sont disponibles pour les applications ARC.</translation>
@@ -2704,9 +2673,9 @@ Si ce paramètre n'est pas défini, l'utilisateur peut décider d'utiliser cette
 
       Quand cette règle est définie sur "false", le service de localisation Google pour Android est désactivé.
 
-      Dans ce cas, les utilisateurs ne pourront pas modifier eux-mêmes la définition de cette règle.
+      Lorsque cette règle est configurée, les utilisateurs ne peuvent pas modifier eux-mêmes la définition de cette règle.
 
-      Quand cette règle n'est pas définie, les utilisateurs pourront activer ou désactiver le service de localisation Google dans l'application Paramètres de leur appareil Android.
+      Quand cette règle n'est pas configurée, les utilisateurs peuvent activer ou désactiver le service de localisation Google dans l'application Paramètres de leur appareil Android.
 
       Sachez que si la règle <ph name="DEFAULTGEOLOCATIONSETTING_POLICY_NAME" /> est définie sur <ph name="BLOCK_GEOLOCATION_SETTING" />, elle aura priorité sur la valeur attribuée à la présente règle.
 
@@ -2784,7 +2753,6 @@ Si vous désactivez ce paramètre ou s'il n'est pas défini, le nom canonique du
       Si cette règle est définie sur "False", ni l'utilisateur, ni les applications, ni les extensions ne peuvent utiliser le mode plein écran.
 
       Sur toutes les plates-formes, à l'exception du système d'exploitation "<ph name="PRODUCT_OS_NAME" />", le mode Kiosque n'est pas disponible lorsque le mode plein écran est désactivé.</translation>
-<translation id="8795495354632096254">Toujours transmettre les points d'accès Wi-Fi au serveur tout en mettant à jour le fuseau horaire</translation>
 <translation id="8818173863808665831">Permet d'indiquer l'emplacement géographique de l'appareil.
 
       Si cette règle n'est pas définie, ou si la valeur "false" lui est attribuée, l'emplacement n'est pas indiqué.</translation>
@@ -2881,6 +2849,13 @@ Si vous désactivez ce paramètre ou s'il n'est pas défini, le nom canonique du
           Les gestionnaires de protocoles inscrits via la règle sont fusionnés avec ceux inscrits par l'utilisateur, et tous sont disponibles. L'utilisateur peut remplacer les gestionnaires de protocoles installés via la règle en installant un nouveau gestionnaire par défaut, mais il ne peut pas supprimer un gestionnaire de protocoles inscrit via la règle.</translation>
 <translation id="913195841488580904">Bloquer l'accès à une liste d'URL</translation>
 <translation id="9135033364005346124">Activer le proxy <ph name="CLOUD_PRINT_NAME" /></translation>
+<translation id="9136253551939494882">Une liste blanche permet de contrôler les modes de déverrouillage rapide qui peuvent être configurés et utilisés par l'utilisateur pour déverrouiller l'écran de verrouillage.
+
+          Il s'agit d'une liste de chaînes qui peuvent prendre les valeurs suivantes : "all", "PIN". Si "all" est sélectionné, tous les modes de déverrouillage rapide sont disponibles pour les utilisateurs, y compris ceux qui seront définis par la suite. Autrement, seuls les modes figurant dans la liste sont disponibles.
+
+          Par exemple, pour autoriser tous les modes de déverrouillage rapide, utilisez ["all"]. Pour autoriser seulement le déverrouillage par code, utilisez ["PIN"]. Pour désactiver tous les modes de déverrouillage rapides, utilisez [].
+
+          Par défaut, aucun mode de déverrouillage rapide n'est disponible pour les services gérés.</translation>
 <translation id="9147029539363974059">Envoyer des journaux système vers le serveur de gestion pour permettre
       aux administrateurs de les contrôler.
 
@@ -2896,6 +2871,11 @@ Si ce paramètre est désactivé, les utilisateurs ne peuvent pas ouvrir de page
 Si cette règle n'est pas configurée, ce paramètre est activé et l'utilisateur est en mesure d'utiliser le mode navigation privée.</translation>
 <translation id="915194831143859291">Si la règle est définie sur "False" ou n'est pas configurée, <ph name="PRODUCT_OS_NAME" /> permet à l'utilisateur d'arrêter l'appareil.
       Si cette règle est définie sur "True", <ph name="PRODUCT_OS_NAME" /> déclenche un redémarrage lorsque l'utilisateur arrête l'appareil. <ph name="PRODUCT_OS_NAME" /> remplace toutes les occurrences des boutons d'arrêt de l'interface utilisateur par des boutons de redémarrage. Si l'utilisateur arrête l'appareil au moyen du bouton Marche/Arrêt, celui-ci ne redémarre pas automatiquement, même si la règle est activée.</translation>
+<translation id="917887642534332939">Ce paramètre permet de contrôler le nombre minimal de caractères que peut contenir un code.
+
+          Un code doit contenir au minimum 1 caractère ; les valeurs inférieures à 1 sont traitées comme égales à 1.
+
+          Le nombre de caractères minimal recommandé par défaut est de 6.</translation>
 <translation id="9187743794267626640">Désactiver le montage de périphériques de stockage externe</translation>
 <translation id="9197740283131855199">Pourcentage d'adaptation du délai d'assombrissement de l'écran si l'utilisateur devient actif après la réduction de la luminosité</translation>
 <translation id="9200828125069750521">Paramètres pour l'URL d'image utilisant POST</translation>

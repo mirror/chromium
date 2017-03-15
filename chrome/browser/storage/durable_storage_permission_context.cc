@@ -20,7 +20,6 @@
 #include "components/content_settings/core/browser/website_settings_registry.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/child_process_security_policy.h"
-#include "content/public/browser/permission_type.h"
 #include "content/public/common/origin_util.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "url/gurl.h"
@@ -30,7 +29,6 @@ using bookmarks::BookmarkModel;
 DurableStoragePermissionContext::DurableStoragePermissionContext(
     Profile* profile)
     : PermissionContextBase(profile,
-                            content::PermissionType::DURABLE_STORAGE,
                             CONTENT_SETTINGS_TYPE_DURABLE_STORAGE) {}
 
 void DurableStoragePermissionContext::DecidePermission(
@@ -41,12 +39,14 @@ void DurableStoragePermissionContext::DecidePermission(
     bool user_gesture,
     const BrowserPermissionCallback& callback) {
   DCHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
-  DCHECK_NE(
-      CONTENT_SETTING_ALLOW,
-      GetPermissionStatus(requesting_origin, embedding_origin).content_setting);
-  DCHECK_NE(
-      CONTENT_SETTING_BLOCK,
-      GetPermissionStatus(requesting_origin, embedding_origin).content_setting);
+  DCHECK_NE(CONTENT_SETTING_ALLOW,
+            GetPermissionStatus(nullptr /* render_frame_host */,
+                                requesting_origin, embedding_origin)
+                .content_setting);
+  DCHECK_NE(CONTENT_SETTING_BLOCK,
+            GetPermissionStatus(nullptr /* render_frame_host */,
+                                requesting_origin, embedding_origin)
+                .content_setting);
 
   // Durable is only allowed to be granted to the top-level origin. Embedding
   // origin is the last committed navigation origin to the web contents.

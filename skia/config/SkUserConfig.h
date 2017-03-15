@@ -224,6 +224,14 @@ SK_API void SkDebugf_FileLine(const char* file, int line, bool fatal,
 #   define SK_SUPPORT_LEGACY_CLIPOP_EXOTIC_NAMES
 #endif
 
+#ifndef SK_SUPPORT_LEGACY_PATHEFFECT_SUBCLASSES
+#define SK_SUPPORT_LEGACY_PATHEFFECT_SUBCLASSES
+#endif
+
+#ifndef SK_DISABLE_DEFERRED_PROXIES
+#define SK_DISABLE_DEFERRED_PROXIES
+#endif
+
 ///////////////////////// Imported from BUILD.gn and skia_common.gypi
 
 /* In some places Skia can use static initializers for global initialization,
@@ -250,21 +258,6 @@ SK_API void SkDebugf_FileLine(const char* file, int line, bool fatal,
 #define SK_SUPPORT_LEGACY_X86_BLITS
 
 #define SK_DISABLE_TILE_IMAGE_FILTER_OPTIMIZATION
-
-// Updating to a correct SkPMColor lerp will require layout test rebaselines.
-#define SK_SUPPORT_LEGACY_BROKEN_LERP
-
-#ifndef    SK_SUPPORT_LEGACY_AAA
-#   define SK_SUPPORT_LEGACY_AAA
-#endif
-
-#ifndef SK_SUPPORT_LEGACY_SCALARMUL
-#define SK_SUPPORT_LEGACY_SCALARMUL
-#endif
-
-#ifndef SK_SUPPORT_BARE_PTR_IMAGEGENERATOR
-#define SK_SUPPORT_BARE_PTR_IMAGEGENERATOR
-#endif
 
 // ===== End Chrome-specific definitions =====
 

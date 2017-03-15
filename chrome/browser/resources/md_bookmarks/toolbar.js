@@ -5,11 +5,22 @@
 Polymer({
   is: 'bookmarks-toolbar',
 
+  behaviors: [
+    bookmarks.StoreClient,
+  ],
+
   properties: {
-    searchTerm: {
+    /** @private */
+    searchTerm_: {
       type: String,
       observer: 'onSearchTermChanged_',
     },
+  },
+
+  attached: function() {
+    this.watch('searchTerm_', function(state) {
+      return state.search.term;
+    });
   },
 
   /** @return {CrToolbarSearchFieldElement} */
@@ -43,12 +54,14 @@ Polymer({
   },
 
   /** @private */
-  onAddImportTap_: function() {
+  onImportTap_: function() {
+    chrome.bookmarks.import();
     this.closeDropdownMenu_();
   },
 
   /** @private */
-  onAddExportTap_: function() {
+  onExportTap_: function() {
+    chrome.bookmarks.export();
     this.closeDropdownMenu_();
   },
 
@@ -64,11 +77,11 @@ Polymer({
    */
   onSearchChanged_: function(e) {
     var searchTerm = /** @type {string} */ (e.detail);
-    this.fire('search-term-changed', searchTerm);
+    this.dispatch(bookmarks.actions.setSearchTerm(searchTerm));
   },
 
   /** @private */
   onSearchTermChanged_: function() {
-    this.searchField.setValue(this.searchTerm || '');
+    this.searchField.setValue(this.searchTerm_ || '');
   },
 });

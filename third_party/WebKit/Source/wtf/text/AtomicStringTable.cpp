@@ -137,7 +137,7 @@ struct HashAndUTF8CharactersTranslator {
     if (isAllASCII)
       newString = StringImpl::create(buffer.characters, buffer.length);
 
-    location = newString.release().leakRef();
+    location = newString.leakRef();
     location->setHash(hash);
     location->setIsAtomic(true);
   }
@@ -215,7 +215,7 @@ void AtomicStringTable::remove(StringImpl* string) {
   DCHECK(string->isAtomic());
   auto iterator = m_table.find(string);
   RELEASE_ASSERT(iterator != m_table.end());
-  m_table.remove(iterator);
+  m_table.erase(iterator);
 }
 
 }  // namespace WTF

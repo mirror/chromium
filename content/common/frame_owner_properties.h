@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "content/common/content_export.h"
+#include "third_party/WebKit/public/platform/WebFeaturePolicy.h"
 #include "third_party/WebKit/public/platform/modules/permissions/permission.mojom.h"
 #include "third_party/WebKit/public/web/WebFrameOwnerProperties.h"
 
@@ -32,7 +33,6 @@ struct CONTENT_EXPORT FrameOwnerProperties {
   int margin_height;
   bool allow_fullscreen;
   bool allow_payment_request;
-  bool is_display_none;
 
   // An experimental attribute to be used by a parent frame to enforce CSP on a
   // subframe. This is different from replicated CSP headers kept in
@@ -42,6 +42,7 @@ struct CONTENT_EXPORT FrameOwnerProperties {
   std::string required_csp;
 
   std::vector<blink::mojom::PermissionName> delegated_permissions;
+  std::vector<blink::WebFeaturePolicyFeature> allowed_features;
 };
 
 }  // namespace content

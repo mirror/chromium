@@ -2857,5 +2857,29 @@ TEST_F(TaskQueueManagerTest, GetNextScheduledWakeUp) {
   EXPECT_EQ(start_time + delay2, runners_[0]->GetNextScheduledWakeUp());
 }
 
+TEST_F(TaskQueueManagerTest, SetTimeDomainForDisabledQueue) {
+  Initialize(1u);
+
+  runners_[0]->PostDelayedTask(FROM_HERE, base::Bind(&NopTask),
+                               base::TimeDelta::FromMilliseconds(1));
+
+  std::unique_ptr<TaskQueue::QueueEnabledVoter> voter =
+      runners_[0]->CreateQueueEnabledVoter();
+  voter->SetQueueEnabled(false);
+
+  MockTimeDomainObserver observer;
+  // We should not get a notification for a disabled queue.
+  EXPECT_CALL(observer, OnTimeDomainHasDelayedWork(_)).Times(0);
+
+  std::unique_ptr<VirtualTimeDomain> domain(
+      new VirtualTimeDomain(&observer, manager_->delegate()->NowTicks()));
+  manager_->RegisterTimeDomain(domain.get());
+  runners_[0]->SetTimeDomain(domain.get());
+
+  // Tidy up.
+  runners_[0]->UnregisterTaskQueue();
+  manager_->UnregisterTimeDomain(domain.get());
+}
+
 }  // namespace scheduler
 }  // namespace blink

@@ -32,7 +32,6 @@ import android.support.annotation.IntDef;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.Pair;
 import android.util.SparseArray;
 import android.view.KeyEvent;
@@ -50,7 +49,6 @@ import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.CollectionUtil;
 import org.chromium.base.CommandLine;
 import org.chromium.base.VisibleForTesting;
-import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
@@ -73,6 +71,7 @@ import org.chromium.chrome.browser.pageinfo.WebsiteSettingsPopup;
 import org.chromium.chrome.browser.preferences.privacy.PrivacyPreferencesManager;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService;
+import org.chromium.chrome.browser.snackbar.SnackbarManager.SnackbarManageable;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.toolbar.ToolbarActionModeCallback;
 import org.chromium.chrome.browser.toolbar.ToolbarDataProvider;
@@ -134,7 +133,11 @@ public class LocationBarLayout extends FrameLayout
             UrlConstants.HTTP_SCHEME, UrlConstants.HTTPS_SCHEME,
             UrlConstants.INLINE_SCHEME, UrlConstants.JAVASCRIPT_SCHEME,
             UrlConstants.CHROME_SCHEME);
-    private static final HashSet<String> UNSUPPORTED_SCHEMES_TO_SPLIT =
+
+    /**
+     * The URL schemes that should be displayed complete with path.
+     */
+    protected static final HashSet<String> UNSUPPORTED_SCHEMES_TO_SPLIT =
             CollectionUtil.newHashSet(UrlConstants.FILE_SCHEME,
                     UrlConstants.JAVASCRIPT_SCHEME, UrlConstants.DATA_SCHEME);
 
@@ -222,6 +225,36 @@ public class LocationBarLayout extends FrameLayout
     private boolean mSuggestionSelectionInProgress;
 
     private Runnable mShowSuggestions;
+
+    private boolean mShowCachedZeroSuggestResults;
+
+    private DeferredOnSelectionRunnable mDeferredOnSelection;
+
+    private abstract class DeferredOnSelectionRunnable implements Runnable {
+        protected final OmniboxSuggestion mSuggestion;
+        protected final int mPosition;
+        protected boolean mShouldLog;
+
+        public DeferredOnSelectionRunnable(OmniboxSuggestion suggestion, int position) {
+            this.mSuggestion = suggestion;
+            this.mPosition = position;
+        }
+
+        /**
+         * Set whether the selection matches with native results for logging to make sense.
+         * @param log Whether the selection should be logged in native code.
+         */
+        public void setShouldLog(boolean log) {
+            mShouldLog = log;
+        }
+
+        /**
+         * @return Whether the selection should be logged in native code.
+         */
+        public boolean shouldLog() {
+            return mShouldLog;
+        }
+    }
 
     /**
      * Listener for receiving the messages related with interacting with the omnibox during startup.
@@ -758,6 +791,29 @@ public class LocationBarLayout extends FrameLayout
         // If the user focused the omnibox prior to the native libraries being initialized,
         // autocomplete will not always be enabled, so we force it enabled in that case.
         mUrlBar.setIgnoreTextChangesForAutocomplete(false);
+        mAutocomplete = new AutocompleteController(this);
+    }
+
+    /**
+     * Sets to show cached zero suggest results. This will start both caching zero suggest results
+     * in shared preferences and also attempt to show them when appropriate without needing native
+     * initialization. See {@link LocationBarLayout#showCachedZeroSuggestResultsIfAvailable()} for
+     * showing the loaded results before native initialization.
+     * @param showCachedZeroSuggestResults Whether cached zero suggest should be shown.
+     */
+    public void setShowCachedZeroSuggestResults(boolean showCachedZeroSuggestResults) {
+        mShowCachedZeroSuggestResults = showCachedZeroSuggestResults;
+        if (mShowCachedZeroSuggestResults) mAutocomplete.startCachedZeroSuggest();
+    }
+
+    /**
+     * Signals the omnibox to shows the cached zero suggest results if they have been loaded from
+     * cache successfully.
+     */
+    public void showCachedZeroSuggestResultsIfAvailable() {
+        if (!mShowCachedZeroSuggestResults || mSuggestionList == null) return;
+        setSuggestionsListVisibility(true);
+        mSuggestionList.updateLayoutParams();
     }
 
     /**
@@ -790,8 +846,6 @@ public class LocationBarLayout extends FrameLayout
         updateMicButtonState();
         mDeleteButton.setOnClickListener(this);
         mMicButton.setOnClickListener(this);
-
-        mAutocomplete = new AutocompleteController(this);
 
         mOmniboxPrerender = new OmniboxPrerender();
 
@@ -1018,7 +1072,7 @@ public class LocationBarLayout extends FrameLayout
         }
 
         if (hasFocus && currentTab != null) {
-            ChromeActivity activity = (ChromeActivity) mWindowAndroid.getActivity().get();
+            SnackbarManageable activity = (SnackbarManageable) mWindowAndroid.getActivity().get();
             if (activity != null) {
                 GeolocationSnackbarController.maybeShowSnackbar(activity.getSnackbarManager(),
                         LocationBarLayout.this, currentTab.isIncognito(),
@@ -1040,8 +1094,11 @@ public class LocationBarLayout extends FrameLayout
     }
 
     /**
-     * Make a zero suggest request if native is loaded, the URL bar has focus, and the
-     * current tab is not incognito.
+     * Make a zero suggest request if:
+     * - Native is loaded.
+     * - The URL bar has focus.
+     * - The current tab is not incognito.
+     * - Chrome Home is disabled.
      */
     private void startZeroSuggest() {
         // Reset "edited" state in the omnibox if zero suggest is triggered -- new edits
@@ -1049,12 +1106,10 @@ public class LocationBarLayout extends FrameLayout
         mHasStartedNewOmniboxEditSession = false;
         mNewOmniboxEditSessionTimestamp = -1;
         Tab currentTab = getCurrentTab();
-        if (mNativeInitialized
-                && mUrlHasFocus
-                && currentTab != null
+        if (mNativeInitialized && mBottomSheet == null && mUrlHasFocus && currentTab != null
                 && !currentTab.isIncognito()) {
             mAutocomplete.startZeroSuggest(currentTab.getProfile(), mUrlBar.getQueryText(),
-                    currentTab.getUrl(), mUrlFocusedFromFakebox);
+                    mToolbarDataProvider.getCurrentUrl(), mUrlFocusedFromFakebox);
         }
     }
 
@@ -1544,6 +1599,15 @@ public class LocationBarLayout extends FrameLayout
             @Override
             public void onSelection(OmniboxSuggestion suggestion, int position) {
                 mSuggestionSelectionInProgress = true;
+                if (mShowCachedZeroSuggestResults && !mNativeInitialized) {
+                    mDeferredOnSelection = new DeferredOnSelectionRunnable(suggestion, position) {
+                        @Override
+                        public void run() {
+                            onSelection(this.mSuggestion, this.mPosition);
+                        }
+                    };
+                    return;
+                }
                 String suggestionMatchUrl = updateSuggestionUrlIfNeeded(
                         suggestion, position, false);
                 loadUrlFromOmniboxMatch(suggestionMatchUrl, suggestion.getTransition(), position,
@@ -1716,11 +1780,9 @@ public class LocationBarLayout extends FrameLayout
      */
     @Override
     public void hideSuggestions() {
-        if (mAutocomplete == null) return;
+        if (mAutocomplete == null || !mNativeInitialized) return;
 
         if (mShowSuggestions != null) removeCallbacks(mShowSuggestions);
-
-        recordSuggestionsDismissed();
 
         stopAutocomplete(true);
 
@@ -1729,36 +1791,6 @@ public class LocationBarLayout extends FrameLayout
         updateNavigationButton();
 
         mSuggestionSelectionInProgress = false;
-    }
-
-    /**
-     * Records a UMA action indicating that the user dismissed the suggestion list (e.g. pressed
-     * the back button or the 'x' button in the Omnibox).  If there was an answer shown its type
-     * is recorded.
-     *
-     * The action is not recorded if mSelectionInProgress is true.   This allows us to avoid
-     * recording the action in the case where the user is selecting a suggestion which is not
-     * considered a dismissal.
-     */
-    private void recordSuggestionsDismissed() {
-        if (mSuggestionSelectionInProgress || mSuggestionItems.size() == 0) return;
-
-        int answerTypeShown = 0;
-        for (int i = 0; i < mSuggestionItems.size(); i++) {
-            OmniboxSuggestion suggestion = mSuggestionItems.get(i).getSuggestion();
-            if (suggestion.hasAnswer()) {
-                try {
-                    answerTypeShown = Integer.parseInt(suggestion.getAnswerType());
-                } catch (NumberFormatException e) {
-                    Log.e(getClass().getSimpleName(),
-                            "Answer type in dismissed suggestions is not an int: "
-                            + suggestion.getAnswerType());
-                }
-                break;
-            }
-        }
-        RecordHistogram.recordSparseSlowlyHistogram(
-                "Omnibox.SuggestionsDismissed.AnswerType", answerTypeShown);
     }
 
     /**
@@ -1889,12 +1921,13 @@ public class LocationBarLayout extends FrameLayout
         // so can only be called once the native side is set up.
         assert mNativeInitialized : "Suggestions received before native side intialialized";
 
-        if (getCurrentTab() == null) {
-            // If the current tab is not available, drop the suggestions and hide the autocomplete.
-            hideSuggestions();
-            return;
+        if (mDeferredOnSelection != null) {
+            mDeferredOnSelection.setShouldLog(newSuggestions.size() > mDeferredOnSelection.mPosition
+                    && mDeferredOnSelection.mSuggestion.equals(
+                            newSuggestions.get(mDeferredOnSelection.mPosition)));
+            mDeferredOnSelection.run();
+            mDeferredOnSelection = null;
         }
-
         String userText = mUrlBar.getTextWithoutAutocomplete();
         mUrlTextAfterSuggestionsReceived = userText + inlineAutocompleteText;
 
@@ -1973,7 +2006,8 @@ public class LocationBarLayout extends FrameLayout
         // Update the navigation button to show the default suggestion's icon.
         updateNavigationButton();
 
-        if (!CommandLine.getInstance().hasSwitch(ChromeSwitches.DISABLE_INSTANT)
+        if (mNativeInitialized
+                && !CommandLine.getInstance().hasSwitch(ChromeSwitches.DISABLE_INSTANT)
                 && PrivacyPreferencesManager.getInstance().shouldPrerender()) {
             mOmniboxPrerender.prerenderMaybe(
                     userText,
@@ -1984,7 +2018,8 @@ public class LocationBarLayout extends FrameLayout
         }
     }
 
-    private void backKeyPressed() {
+    // TODO(dfalcantara): Make private again after M58.
+    protected void backKeyPressed() {
         hideSuggestions();
         UiUtils.hideKeyboard(mUrlBar);
         // Revert the URL to match the current page.
@@ -2119,13 +2154,23 @@ public class LocationBarLayout extends FrameLayout
         WebContents webContents = currentTab != null ? currentTab.getWebContents() : null;
         long elapsedTimeSinceModified = mNewOmniboxEditSessionTimestamp > 0
                 ? (SystemClock.elapsedRealtime() - mNewOmniboxEditSessionTimestamp) : -1;
-        mAutocomplete.onSuggestionSelected(matchPosition, type, currentPageUrl,
-                mUrlFocusedFromFakebox, elapsedTimeSinceModified, mUrlBar.getAutocompleteLength(),
-                webContents);
+        boolean shouldSkipNativeLog = mShowCachedZeroSuggestResults
+                && (mDeferredOnSelection != null)
+                && !mDeferredOnSelection.shouldLog();
+        if (!shouldSkipNativeLog) {
+            mAutocomplete.onSuggestionSelected(matchPosition, type, currentPageUrl,
+                    mUrlFocusedFromFakebox, elapsedTimeSinceModified,
+                    mUrlBar.getAutocompleteLength(),
+                    webContents);
+        }
         loadUrl(url, transition);
     }
 
-    private void loadUrl(String url, int transition) {
+    /**
+     * Load the url given with the given transition. Exposed for child classes to overwrite as
+     * necessary.
+     */
+    protected void loadUrl(String url, int transition) {
         Tab currentTab = getCurrentTab();
 
         // The code of the rest of this class ensures that this can't be called until the native
@@ -2149,7 +2194,7 @@ public class LocationBarLayout extends FrameLayout
 
             // If the bottom sheet exists, route the navigation through it instead of the tab.
             if (mBottomSheet != null) {
-                mBottomSheet.loadUrl(loadUrlParams);
+                mBottomSheet.loadUrl(loadUrlParams, currentTab.isIncognito());
             } else {
                 currentTab.loadUrl(loadUrlParams);
             }
@@ -2214,14 +2259,10 @@ public class LocationBarLayout extends FrameLayout
         boolean currentlyVisible = mOmniboxResultsContainer.getVisibility() == VISIBLE;
         if (currentlyVisible == visible) return;
 
-        ChromeActivity activity = (ChromeActivity) mWindowAndroid.getActivity().get();
-
         if (visible) {
             mOmniboxResultsContainer.setVisibility(VISIBLE);
-            if (activity != null) activity.addViewObscuringAllTabs(mFadingView);
         } else {
             mOmniboxResultsContainer.setVisibility(INVISIBLE);
-            if (activity != null) activity.removeViewObscuringAllTabs(mFadingView);
         }
     }
 
@@ -2243,8 +2284,17 @@ public class LocationBarLayout extends FrameLayout
     }
 
     @Override
-    public void onFadingViewHidden() {
-        updateOmniboxResultsContainerVisibility(false);
+    public void onFadingViewVisibilityChanged(boolean visible) {
+        Activity activity = mWindowAndroid.getActivity().get();
+        if (!(activity instanceof ChromeActivity)) return;
+        ChromeActivity chromeActivity = (ChromeActivity) activity;
+
+        if (visible) {
+            chromeActivity.addViewObscuringAllTabs(mFadingView);
+        } else {
+            chromeActivity.removeViewObscuringAllTabs(mFadingView);
+            updateOmniboxResultsContainerVisibility(false);
+        }
     }
 
     /**
@@ -2448,4 +2498,9 @@ public class LocationBarLayout extends FrameLayout
 
     @Override
     public void setShowTitle(boolean showTitle) { }
+
+    @Override
+    public boolean mustQueryUrlBarLocationForSuggestions() {
+        return DeviceFormFactor.isTablet(getContext());
+    }
 }

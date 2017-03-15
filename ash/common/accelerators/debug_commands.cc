@@ -14,8 +14,9 @@
 #include "ash/common/wm/maximize_mode/maximize_mode_controller.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
-#include "ash/common/wm_window_property.h"
 #include "ash/root_window_controller.h"
+#include "ash/shell.h"
+#include "ash/wm/window_properties.h"
 #include "base/command_line.h"
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
@@ -63,8 +64,7 @@ void PrintWindowHierarchy(const WmWindow* active_window,
        << ((window == active_window) ? " [active] " : " ")
        << (window->IsVisible() ? " visible " : " ")
        << window->GetBounds().ToString()
-       << (window->GetBoolProperty(
-               WmWindowProperty::SNAP_CHILDREN_TO_PIXEL_BOUNDARY)
+       << (window->aura_window()->GetProperty(kSnapChildrenToPixelBoundary)
                ? " [snapped] "
                : "")
        << ", subpixel offset="
@@ -104,10 +104,10 @@ gfx::ImageSkia CreateWallpaperImage(SkColor fill, SkColor rect) {
 void HandleToggleWallpaperMode() {
   static int index = 0;
   WallpaperController* wallpaper_controller =
-      WmShell::Get()->wallpaper_controller();
+      Shell::GetInstance()->wallpaper_controller();
   switch (++index % 4) {
     case 0:
-      ash::WmShell::Get()->wallpaper_delegate()->InitializeWallpaper();
+      Shell::Get()->wallpaper_delegate()->InitializeWallpaper();
       break;
     case 1:
       wallpaper_controller->SetWallpaperImage(
@@ -129,12 +129,12 @@ void HandleToggleWallpaperMode() {
 
 void HandleToggleTouchpad() {
   base::RecordAction(base::UserMetricsAction("Accel_Toggle_Touchpad"));
-  ash::WmShell::Get()->delegate()->ToggleTouchpad();
+  Shell::Get()->shell_delegate()->ToggleTouchpad();
 }
 
 void HandleToggleTouchscreen() {
   base::RecordAction(base::UserMetricsAction("Accel_Toggle_Touchscreen"));
-  ShellDelegate* delegate = WmShell::Get()->delegate();
+  ShellDelegate* delegate = Shell::Get()->shell_delegate();
   delegate->SetTouchscreenEnabledInPrefs(
       !delegate->IsTouchscreenEnabledInPrefs(false /* use_local_state */),
       false /* use_local_state */);
@@ -188,7 +188,7 @@ void PerformDebugActionIfEnabled(AcceleratorAction action) {
       HandlePrintWindowHierarchy();
       break;
     case DEBUG_SHOW_TOAST:
-      WmShell::Get()->toast_manager()->Show(
+      Shell::GetInstance()->toast_manager()->Show(
           ToastData("id", base::ASCIIToUTF16("Toast"), 5000 /* duration_ms */,
                     base::ASCIIToUTF16("Dismiss")));
       break;

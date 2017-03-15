@@ -50,11 +50,10 @@ class ContentSuggestionsService : public KeyedService,
     // data is then available through |GetSuggestionsForCategory(category)|.
     virtual void OnNewSuggestions(Category category) = 0;
 
-    // Fired when the status of a suggestions category changed. When the status
-    // changes to an unavailable status, the suggestions of the respective
-    // category have been invalidated, which means that they must no longer be
-    // displayed to the user. The UI must immediately clear any suggestions of
-    // that category.
+    // Fired when the status of a suggestions category changed. Note that for
+    // some status changes, the UI must update immediately (e.g. to remove
+    // invalidated suggestions). See comments on the individual CategoryStatus
+    // values for details.
     virtual void OnCategoryStatusChanged(Category category,
                                          CategoryStatus new_status) = 0;
 
@@ -212,6 +211,8 @@ class ContentSuggestionsService : public KeyedService,
   // Consider swapping the dependencies: first constructing all providers, then
   // constructing the service (passing the remote provider as arg), finally
   // registering the service as an observer of all providers?
+  // TODO(jkrcal) Move the getter into the scheduler interface (the setter is
+  // then not needed any more). crbug.com/695447
   void set_remote_suggestions_provider(
       RemoteSuggestionsProvider* remote_suggestions_provider) {
     remote_suggestions_provider_ = remote_suggestions_provider;

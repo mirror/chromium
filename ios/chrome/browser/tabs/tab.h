@@ -33,7 +33,6 @@ class GURL;
 @class PasswordController;
 @class SnapshotManager;
 @protocol SnapshotOverlayProvider;
-@protocol StoreKitLauncher;
 @class FormSuggestionController;
 @protocol TabDelegate;
 @protocol TabDialogDelegate;
@@ -41,6 +40,7 @@ class GURL;
 @protocol TabHeadersDelegate;
 @class TabModel;
 @protocol TabSnapshottingDelegate;
+@protocol FindInPageControllerDelegate;
 
 namespace infobars {
 class InfoBarManager;
@@ -57,6 +57,7 @@ struct SessionTab;
 
 namespace web {
 class NavigationItem;
+class NavigationManager;
 class NavigationManagerImpl;
 struct Referrer;
 class WebState;
@@ -114,10 +115,15 @@ extern NSString* const kProxyPassthroughHeaderValue;
 @property(nonatomic, readonly) NSString* originalTitle;
 
 @property(nonatomic, readonly) NSString* urlDisplayString;
-@property(nonatomic, readonly) NSString* windowName;
 
-// ID associated with this tab, from the SessionManager.
+// ID associated with this tab.
 @property(nonatomic, readonly) NSString* tabId;
+
+// ID of the opener of this tab.
+@property(nonatomic, readonly) NSString* openerID;
+
+// NavigationIndex of the opener of this tab.
+@property(nonatomic, readonly) NSInteger openerNavigationIndex;
 
 // |YES| if snapshot overlay should load from the grey image cache.
 @property(nonatomic, assign) BOOL useGreyImageCache;
@@ -133,8 +139,12 @@ extern NSString* const kProxyPassthroughHeaderValue;
 @property(nonatomic, assign) id<TabHeadersDelegate> tabHeadersDelegate;
 @property(nonatomic, assign) id<TabSnapshottingDelegate>
     tabSnapshottingDelegate;
-@property(nonatomic, readonly) BOOL useDesktopUserAgent;
-@property(nonatomic, assign) id<StoreKitLauncher> storeKitLauncher;
+@property(nonatomic, readonly) id<FindInPageControllerDelegate>
+    findInPageControllerDelegate;
+
+// Whether or not desktop user agent is used for the currently visible page.
+@property(nonatomic, readonly) BOOL usesDesktopUserAgent;
+
 @property(nonatomic, assign) id<FullScreenControllerDelegate>
     fullScreenControllerDelegate;
 @property(nonatomic, readonly)
@@ -153,14 +163,16 @@ extern NSString* const kProxyPassthroughHeaderValue;
 @property(nonatomic, assign) BOOL isLinkLoadingPrerenderTab;
 @property(nonatomic, assign) BOOL isVoiceSearchResultsTab;
 
+// |YES| if the tab has finished loading.
+@property(nonatomic, readonly) BOOL loadFinished;
+
 // Creates a new tab with the given state. |opener| is nil unless another tab
 // is conceptually the parent of this tab. |openedByDOM| is YES if the page was
 // opened by DOM. |model| and |browserState| must not be nil.
-- (instancetype)initWithWindowName:(NSString*)windowName
-                            opener:(Tab*)opener
-                       openedByDOM:(BOOL)openedByDOM
-                             model:(TabModel*)parentModel
-                      browserState:(ios::ChromeBrowserState*)browserState;
+- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
+                              opener:(Tab*)opener
+                         openedByDOM:(BOOL)openedByDOM
+                               model:(TabModel*)parentModel;
 
 // Create a new tab with given web state and tab model. All must be non-nil.
 - (instancetype)initWithWebState:(std::unique_ptr<web::WebState>)webState
@@ -177,20 +189,19 @@ extern NSString* const kProxyPassthroughHeaderValue;
 
 // Creates a new Tab instance loading |url| with |transition|, configured
 // with no TabModel. |opener| may be nil, and behaves exactly as for
-// -initWithWindowName:opener:model:browserState:.
-// |configuration| is a block that will be run before |url| starts loading,
-// and is the correct place to set properties and delegates on the tab.
-// Calling code must take ownership of the tab -- this is particularly important
-// with Tab instances, because they will fail a DCHECK if they are deallocated
-// when falling out of scope without -close being called.
-+ (Tab*)newPreloadingTabWithBrowserState:(ios::ChromeBrowserState*)browserState
-                                     url:(const GURL&)url
-                                referrer:(const web::Referrer&)referrer
-                              transition:(ui::PageTransition)transition
-                                provider:(id<CRWNativeContentProvider>)provider
-                                  opener:(Tab*)opener
-                        desktopUserAgent:(BOOL)desktopUserAgent
-                           configuration:(void (^)(Tab*))configuration;
+// -initWithBrowserState:opener:openedByDOM:model. |configuration| is a block
+// that will be run before |url| starts loading, and is the correct place to set
+// properties and delegates on the tab. Calling code must take ownership of the
+// tab -- this is particularly important with Tab instances, because they will
+// fail a DCHECK if they are deallocated without -close being called.
++ (Tab*)preloadingTabWithBrowserState:(ios::ChromeBrowserState*)browserState
+                                  url:(const GURL&)url
+                             referrer:(const web::Referrer&)referrer
+                           transition:(ui::PageTransition)transition
+                             provider:(id<CRWNativeContentProvider>)provider
+                               opener:(Tab*)opener
+                     desktopUserAgent:(BOOL)desktopUserAgent
+                        configuration:(void (^)(Tab*))configuration;
 
 // Sets the parent tab model for this tab.  Can only be called if the tab does
 // not already have a parent tab model set.
@@ -232,13 +243,12 @@ extern NSString* const kProxyPassthroughHeaderValue;
 // Dismisses all modals owned by the tab.
 - (void)dismissModals;
 
-// Opens StoreKit modal to download a native application identified with
-// |appId|.
-- (void)openAppStore:(NSString*)appId;
-
 // Returns the NavigationManager for this tab's WebState. Requires WebState to
 // be populated. Can return null.
-- (web::NavigationManagerImpl*)navigationManager;
+// TODO(crbug.com/620465): remove navigationManagerImpl once Tab no longer uses
+// nor exposes private ios/web/ API.
+- (web::NavigationManager*)navigationManager;
+- (web::NavigationManagerImpl*)navigationManagerImpl;
 
 // Update the tab's history by replacing all previous navigations with
 // |navigations|.

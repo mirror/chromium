@@ -236,13 +236,13 @@ TEST(GIFImageDecoderTest, badTerminator) {
   referenceDecoder->setData(referenceData.get(), true);
   EXPECT_EQ(1u, referenceDecoder->frameCount());
   ImageFrame* referenceFrame = referenceDecoder->frameBufferAtIndex(0);
-  ASSERT(referenceFrame);
+  DCHECK(referenceFrame);
 
   std::unique_ptr<ImageDecoder> testDecoder = createDecoder();
   testDecoder->setData(testData.get(), true);
   EXPECT_EQ(1u, testDecoder->frameCount());
   ImageFrame* testFrame = testDecoder->frameBufferAtIndex(0);
-  ASSERT(testFrame);
+  DCHECK(testFrame);
 
   EXPECT_EQ(hashBitmap(referenceFrame->bitmap()),
             hashBitmap(testFrame->bitmap()));
@@ -404,6 +404,36 @@ TEST(GIFImageDecoderTest, bitmapAlphaType) {
   EXPECT_TRUE(unpremulFrame &&
               unpremulFrame->getStatus() == ImageFrame::FrameComplete);
   EXPECT_EQ(unpremulFrame->bitmap().alphaType(), kOpaque_SkAlphaType);
+}
+
+namespace {
+// Needed to exercise ImageDecoder::setMemoryAllocator, but still does the
+// default allocation.
+class Allocator final : public SkBitmap::Allocator {
+  bool allocPixelRef(SkBitmap* dst, SkColorTable* ctable) override {
+    return dst->tryAllocPixels(ctable);
+  }
+};
+}
+
+// Ensure that calling setMemoryAllocator does not short-circuit
+// initializeNewFrame.
+TEST(GIFImageDecoderTest, externalAllocator) {
+  auto data = readFile(layoutTestResourcesDir, "boston.gif");
+  ASSERT_TRUE(data.get());
+
+  auto decoder = createDecoder();
+  decoder->setData(data.get(), true);
+
+  Allocator allocator;
+  decoder->setMemoryAllocator(&allocator);
+  EXPECT_EQ(1u, decoder->frameCount());
+  ImageFrame* frame = decoder->frameBufferAtIndex(0);
+  decoder->setMemoryAllocator(nullptr);
+
+  ASSERT_TRUE(frame);
+  EXPECT_EQ(IntRect(IntPoint(), decoder->size()), frame->originalFrameRect());
+  EXPECT_FALSE(frame->hasAlpha());
 }
 
 }  // namespace blink

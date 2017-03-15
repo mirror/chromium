@@ -35,6 +35,10 @@ typedef AshTestBase AcceleratorFilterTest;
 
 // Tests if AcceleratorFilter works without a focused window.
 TEST_F(AcceleratorFilterTest, TestFilterWithoutFocus) {
+  // TODO: mash doesn't support ScreenshotDelgate yet. http://crbug.com/632111.
+  if (WmShell::Get()->IsRunningInMash())
+    return;
+
   const TestScreenshotDelegate* delegate = GetScreenshotDelegate();
   EXPECT_EQ(0, delegate->handle_take_screenshot_count());
 
@@ -49,6 +53,10 @@ TEST_F(AcceleratorFilterTest, TestFilterWithoutFocus) {
 
 // Tests if AcceleratorFilter works as expected with a focused window.
 TEST_F(AcceleratorFilterTest, TestFilterWithFocus) {
+  // TODO: mash doesn't support ScreenshotDelgate yet. http://crbug.com/632111.
+  if (WmShell::Get()->IsRunningInMash())
+    return;
+
   aura::test::TestWindowDelegate test_delegate;
   std::unique_ptr<aura::Window> window(
       CreateTestWindowInShellWithDelegate(&test_delegate, -1, gfx::Rect()));
@@ -71,6 +79,10 @@ TEST_F(AcceleratorFilterTest, TestFilterWithFocus) {
 
 // Tests if AcceleratorFilter ignores the flag for Caps Lock.
 TEST_F(AcceleratorFilterTest, TestCapsLockMask) {
+  // TODO: mash doesn't support ScreenshotDelgate yet. http://crbug.com/632111.
+  if (WmShell::Get()->IsRunningInMash())
+    return;
+
   const TestScreenshotDelegate* delegate = GetScreenshotDelegate();
   EXPECT_EQ(0, delegate->handle_take_screenshot_count());
 
@@ -151,8 +163,8 @@ TEST_F(AcceleratorFilterTest, SearchKeyShortcutsAreAlwaysHandled) {
   EXPECT_FALSE(session_state_delegate->IsScreenLocked());
 
   // Search+L is processed when the app_list target visibility is false.
-  WmShell::Get()->DismissAppList();
-  EXPECT_FALSE(WmShell::Get()->GetAppListTargetVisibility());
+  Shell::Get()->DismissAppList();
+  EXPECT_FALSE(Shell::Get()->GetAppListTargetVisibility());
   generator.PressKey(ui::VKEY_L, ui::EF_COMMAND_DOWN);
   generator.ReleaseKey(ui::VKEY_L, ui::EF_COMMAND_DOWN);
   EXPECT_TRUE(session_state_delegate->IsScreenLocked());

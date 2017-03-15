@@ -5,12 +5,12 @@
 #ifndef ASH_COMMON_DEVTOOLS_ASH_DEVTOOLS_DOM_AGENT_H_
 #define ASH_COMMON_DEVTOOLS_ASH_DEVTOOLS_DOM_AGENT_H_
 
-#include "ash/common/wm_shell.h"
-#include "ash/common/wm_window_observer.h"
-#include "base/compiler_specific.h"
+#include "ash/ash_export.h"
+#include "base/macros.h"
 #include "base/observer_list.h"
 #include "components/ui_devtools/DOM.h"
 #include "components/ui_devtools/devtools_base_agent.h"
+#include "ui/aura/window_observer.h"
 #include "ui/views/view.h"
 #include "ui/views/view_observer.h"
 #include "ui/views/widget/widget.h"
@@ -18,6 +18,9 @@
 #include "ui/views/widget/widget_removals_observer.h"
 
 namespace ash {
+
+class WmWindow;
+
 namespace devtools {
 
 class ASH_EXPORT AshDevToolsDOMAgentObserver {
@@ -30,12 +33,12 @@ class ASH_EXPORT AshDevToolsDOMAgentObserver {
 class ASH_EXPORT AshDevToolsDOMAgent
     : public NON_EXPORTED_BASE(ui::devtools::UiDevToolsBaseAgent<
                                ui::devtools::protocol::DOM::Metainfo>),
-      public WmWindowObserver,
+      public aura::WindowObserver,
       public views::WidgetObserver,
       public views::WidgetRemovalsObserver,
       public views::ViewObserver {
  public:
-  AshDevToolsDOMAgent(ash::WmShell* shell);
+  AshDevToolsDOMAgent();
   ~AshDevToolsDOMAgent() override;
 
   // DOM::Backend
@@ -49,12 +52,10 @@ class ASH_EXPORT AshDevToolsDOMAgent
   ui::devtools::protocol::Response hideHighlight() override;
 
   // WindowObserver
-  void OnWindowTreeChanging(WmWindow* window,
-                            const TreeChangeParams& params) override;
-  void OnWindowTreeChanged(WmWindow* window,
-                           const TreeChangeParams& params) override;
-  void OnWindowStackingChanged(WmWindow* window) override;
-  void OnWindowBoundsChanged(WmWindow* window,
+  void OnWindowHierarchyChanging(const HierarchyChangeParams& params) override;
+  void OnWindowHierarchyChanged(const HierarchyChangeParams& params) override;
+  void OnWindowStackingChanged(aura::Window* window) override;
+  void OnWindowBoundsChanged(aura::Window* window,
                              const gfx::Rect& old_bounds,
                              const gfx::Rect& new_bounds) override;
 
@@ -66,9 +67,9 @@ class ASH_EXPORT AshDevToolsDOMAgent
                              const gfx::Rect& new_bounds) override;
 
   // views::ViewObserver
-  void OnChildViewRemoved(views::View* view, views::View* parent) override;
-  void OnChildViewAdded(views::View* view) override;
-  void OnChildViewReordered(views::View*) override;
+  void OnChildViewRemoved(views::View* parent, views::View* view) override;
+  void OnChildViewAdded(views::View* parent, views::View* view) override;
+  void OnChildViewReordered(views::View* parent, views::View*) override;
   void OnViewBoundsChanged(views::View* view) override;
 
   WmWindow* GetWindowFromNodeId(int nodeId);
@@ -129,7 +130,6 @@ class ASH_EXPORT AshDevToolsDOMAgent
   bool IsHighlightingWindow(WmWindow* window);
 
   std::unique_ptr<views::Widget> widget_for_highlighting_;
-  ash::WmShell* shell_;
 
   using WindowToNodeIdMap = std::unordered_map<WmWindow*, int>;
   WindowToNodeIdMap window_to_node_id_map_;

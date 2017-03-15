@@ -20,17 +20,17 @@
 #include "ash/common/system/user/login_status.h"
 #include "ash/common/system/user/rounded_image_view.h"
 #include "ash/common/system/user/user_card_view.h"
-#include "ash/common/wm_lookup.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
 #include "ash/public/cpp/shell_window_ids.h"
+#include "ash/resources/grit/ash_resources.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/root_window_controller.h"
+#include "ash/shell.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "base/memory/ptr_util.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "components/user_manager/user_info.h"
-#include "grit/ash_resources.h"
-#include "grit/ash_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/canvas.h"
@@ -61,20 +61,19 @@ void SwitchUser(UserIndex user_index) {
 }
 
 bool IsMultiProfileSupportedAndUserActive() {
-  return WmShell::Get()->delegate()->IsMultiProfilesEnabled() &&
+  return Shell::Get()->shell_delegate()->IsMultiProfilesEnabled() &&
          !WmShell::Get()->GetSessionStateDelegate()->IsUserSessionBlocked();
 }
 
 // Creates the view shown in the user switcher popup ("AddUserMenuOption").
 views::View* CreateAddUserView(AddUserSessionPolicy policy,
                                views::ButtonListener* listener) {
-  auto view = new views::View;
+  auto* view = new views::View;
   const int icon_padding = (kMenuButtonSize - kMenuIconSize) / 2;
-  auto layout =
+  auto* layout =
       new views::BoxLayout(views::BoxLayout::kHorizontal, 0, 0,
                            kTrayPopupLabelHorizontalPadding + icon_padding);
-  layout->set_minimum_cross_axis_size(
-      GetTrayConstant(TRAY_POPUP_ITEM_MIN_HEIGHT));
+  layout->set_minimum_cross_axis_size(kTrayPopupItemMinHeight);
   view->SetLayoutManager(layout);
   view->set_background(
       views::Background::CreateSolidBackground(kBackgroundColor));
@@ -84,7 +83,7 @@ views::View* CreateAddUserView(AddUserSessionPolicy policy,
     case AddUserSessionPolicy::ALLOWED: {
       message_id = IDS_ASH_STATUS_TRAY_SIGN_IN_ANOTHER_ACCOUNT;
 
-      auto icon = new views::ImageView();
+      auto* icon = new views::ImageView();
       icon->SetImage(
           gfx::CreateVectorIcon(kSystemMenuNewUserIcon, kMenuIconColor));
       view->AddChildView(icon);
@@ -101,7 +100,7 @@ views::View* CreateAddUserView(AddUserSessionPolicy policy,
       break;
   }
 
-  auto command_label = new views::Label(l10n_util::GetStringUTF16(message_id));
+  auto* command_label = new views::Label(l10n_util::GetStringUTF16(message_id));
   command_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   command_label->SetMultiLine(true);
 
@@ -119,7 +118,7 @@ views::View* CreateAddUserView(AddUserSessionPolicy policy,
                                            vertical_padding,
                                            kTrayPopupLabelHorizontalPadding));
   if (policy == AddUserSessionPolicy::ALLOWED) {
-    auto button =
+    auto* button =
         new ButtonFromView(view, listener, TrayPopupInkDropStyle::INSET_BOUNDS);
     button->SetAccessibleName(
         l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_SIGN_IN_ANOTHER_ACCOUNT));
@@ -188,7 +187,7 @@ class ActiveUserBorder : public views::Border {
         gfx::Rect(
             0, view.height() - kMenuSeparatorVerticalPadding - kSeparatorWidth,
             view.width(), kSeparatorWidth),
-        kHorizontalSeparatorColor);
+        kMenuSeparatorColor);
   }
 
   gfx::Insets GetInsets() const override {
@@ -221,7 +220,7 @@ UserView::UserView(SystemTrayItem* owner, LoginStatus login, UserIndex index)
     AddLogoutButton(login);
   AddUserCard(login);
 
-  auto layout = new views::BoxLayout(views::BoxLayout::kHorizontal, 0, 0, 0);
+  auto* layout = new views::BoxLayout(views::BoxLayout::kHorizontal, 0, 0, 0);
   SetLayoutManager(layout);
   layout->set_cross_axis_alignment(
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_CENTER);
@@ -339,8 +338,7 @@ void UserView::ToggleAddUserMenuOption() {
   params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
   params.opacity = views::Widget::InitParams::TRANSLUCENT_WINDOW;
   params.name = "AddUserMenuOption";
-  WmLookup::Get()
-      ->GetWindowForWidget(GetWidget())
+  WmWindow::Get(GetWidget()->GetNativeWindow())
       ->GetRootWindowController()
       ->ConfigureWidgetInitParamsForContainer(
           add_menu_option_.get(), kShellWindowId_DragImageAndTooltipContainer,
@@ -381,12 +379,6 @@ void UserView::ToggleAddUserMenuOption() {
   // Show the content.
   add_menu_option_->SetAlwaysOnTop(true);
   add_menu_option_->Show();
-
-  // We activate the entry automatically if invoked with focus.
-  if (add_user_enabled_ && user_card_view_->HasFocus()) {
-    add_user_view->GetFocusManager()->SetFocusedView(add_user_view);
-    user_card_view_->GetFocusManager()->SetFocusedView(add_user_view);
-  }
 
   // Install a listener to focus changes so that we can remove the card when
   // the focus gets changed. When called through the destruction of the bubble,

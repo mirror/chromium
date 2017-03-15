@@ -43,6 +43,7 @@ by a child template that "extends" this file.
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
     <uses-permission android:name="android.permission.NFC"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
     <uses-permission android:name="android.permission.READ_SYNC_STATS"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
@@ -54,8 +55,6 @@ by a child template that "extends" this file.
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
     {% set enable_webvr = enable_webvr|default(0) %}
     {% if enable_webvr == "true" %}
-    <!-- Required to read the paired viewer's distortion parameters. -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <!-- Indicates use of Android's VR-mode, available only on Android N+. -->
     <uses-feature android:name="android.software.vr.mode" android:required="false"/>
     <!-- Indicates use of VR features that are available only on Daydream-ready devices. -->
@@ -122,7 +121,7 @@ by a child template that "extends" this file.
         {% else %}
         android:allowBackup="false"
         {% endif %}
-        {% if target_sdk_version|int >= 24 %}
+        {% if target_sdk_version|int >= 24 or target_sdk_version == 'O' %}
         android:networkSecurityConfig="@xml/network_security_config"
         {% endif %}
         {% block extra_application_attributes %}{% endblock %}>
@@ -326,7 +325,8 @@ by a child template that "extends" this file.
             android:exported="false"
             android:windowSoftInputMode="adjustResize"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|mcc|mnc|screenLayout|smallestScreenSize"
-            android:hardwareAccelerated="false">
+            android:hardwareAccelerated="false"
+            {{ self.supports_video_persistence() }} >
         </activity>
         <activity android:name="org.chromium.chrome.browser.customtabs.SeparateTaskCustomTabActivity"
             android:theme="@style/MainTheme"
@@ -336,7 +336,8 @@ by a child template that "extends" this file.
             android:persistableMode="persistNever"
             android:autoRemoveFromRecents="false"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|mcc|mnc|screenLayout|smallestScreenSize"
-            android:hardwareAccelerated="false">
+            android:hardwareAccelerated="false"
+            {{ self.supports_video_persistence() }} >
         </activity>
         {% for i in range(10) %}
         <activity android:name="org.chromium.chrome.browser.customtabs.SeparateTaskCustomTabActivity{{ i }}"
@@ -348,7 +349,8 @@ by a child template that "extends" this file.
             android:persistableMode="persistNever"
             android:taskAffinity=""
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|mcc|mnc|screenLayout|smallestScreenSize"
-            android:hardwareAccelerated="false">
+            android:hardwareAccelerated="false"
+            {{ self.supports_video_persistence() }} >
         </activity>
         {% endfor %}
 
@@ -360,6 +362,8 @@ by a child template that "extends" this file.
             android:launchMode="singleTask"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|mcc|mnc|screenLayout|smallestScreenSize"
             android:hardwareAccelerated="false"
+            {# We can only use blocks once in Jinja, for future substitutions we use
+            self.supports_video_persistence(). #}
             {% block supports_video_persistence %}
             {% endblock %}
             >
@@ -405,7 +409,9 @@ by a child template that "extends" this file.
              android:taskAffinity="{{ manifest_package }}.ChromeTabbedActivity2"
              android:launchMode="singleTask"
              android:configChanges="orientation|keyboardHidden|keyboard|screenSize|mcc|mnc|screenLayout|smallestScreenSize"
-             android:hardwareAccelerated="false">
+             android:hardwareAccelerated="false"
+             {{ self.supports_video_persistence() }}
+             >
         </activity>
         <activity android:name="org.chromium.chrome.browser.multiwindow.MultiInstanceChromeTabbedActivity"
             android:theme="@style/TabbedModeTheme"
@@ -413,12 +419,6 @@ by a child template that "extends" this file.
             android:windowSoftInputMode="adjustResize"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|mcc|mnc|screenLayout|smallestScreenSize"
             android:hardwareAccelerated="false">
-        </activity>
-
-        <activity android:name="org.chromium.chrome.browser.suggestions.ContentSuggestionsActivity"
-            android:theme="@style/FullscreenWhiteActivityTheme"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|mcc|mnc|screenLayout|smallestScreenSize"
-            android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
 
         <activity android:name="org.chromium.chrome.browser.sync.ui.PassphraseActivity"
@@ -532,11 +532,13 @@ by a child template that "extends" this file.
             android:windowSoftInputMode="adjustResize"
             android:persistableMode="persistNever"
             android:hardwareAccelerated="false"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|mcc|mnc|screenLayout|smallestScreenSize">
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|mcc|mnc|screenLayout|smallestScreenSize"
+            {{ self.supports_video_persistence() }} >
         </activity>
         <activity-alias android:name="com.google.android.apps.chrome.webapps.WebappActivity"
             android:targetActivity="org.chromium.chrome.browser.webapps.WebappActivity"
-            android:label="@string/webapp_activity_title">
+            android:label="@string/webapp_activity_title"
+            {{ self.supports_video_persistence() }} >
         </activity-alias>
         {% for i in range(10) %}
         <activity android:name="org.chromium.chrome.browser.webapps.WebappActivity{{ i }}"
@@ -548,7 +550,8 @@ by a child template that "extends" this file.
             android:persistableMode="persistNever"
             android:hardwareAccelerated="false"
             android:taskAffinity="{{ manifest_package }}.webapps.WebappActivity{{ i }}"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|mcc|mnc|screenLayout|smallestScreenSize">
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|mcc|mnc|screenLayout|smallestScreenSize"
+            {{ self.supports_video_persistence() }} >
         </activity>
         <activity-alias android:name="com.google.android.apps.chrome.webapps.WebappActivity{{ i }}"
             android:targetActivity="org.chromium.chrome.browser.webapps.WebappActivity{{ i }}"
@@ -565,7 +568,8 @@ by a child template that "extends" this file.
             android:windowSoftInputMode="adjustResize"
             android:persistableMode="persistNever"
             android:hardwareAccelerated="false"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|mcc|mnc|screenLayout|smallestScreenSize">
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|mcc|mnc|screenLayout|smallestScreenSize"
+            {{ self.supports_video_persistence() }} >
         </activity>
         {% for i in range(10) %}
         <activity android:name="org.chromium.chrome.browser.webapps.WebApkActivity{{ i }}"
@@ -577,7 +581,8 @@ by a child template that "extends" this file.
             android:persistableMode="persistNever"
             android:hardwareAccelerated="false"
             android:taskAffinity="{{ manifest_package }}.webapps.WebApkActivity{{ i }}"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|mcc|mnc|screenLayout|smallestScreenSize">
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|mcc|mnc|screenLayout|smallestScreenSize"
+            {{ self.supports_video_persistence() }} >
         </activity>
         {% endfor %}
 
@@ -630,6 +635,29 @@ by a child template that "extends" this file.
         <!-- Service for handling Nearby Messages -->
         <service android:name="org.chromium.chrome.browser.physicalweb.NearbyMessageIntentService"
             android:exported="false" />
+
+        <!-- This activity is to expose the PhysicalWeb Share option via the generic Android share action. -->
+        <activity
+            android:name="org.chromium.chrome.browser.physicalweb.PhysicalWebShareActivity"
+            android:icon="@drawable/physical_web_notification_large"
+            android:label="@string/physical_web_share_activity_title"
+            android:enabled="false"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:theme="@android:style/Theme.NoDisplay"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|mcc|mnc|screenLayout|smallestScreenSize" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+
+        <!-- Service for Broadcasting a Physical Web URL -->
+        <service
+            android:name="org.chromium.chrome.browser.physicalweb.PhysicalWebBroadcastService"
+            android:exported="false">
+        </service>
 
         <!-- Providers for chrome data. -->
         <provider android:name="org.chromium.chrome.browser.provider.ChromeBrowserProvider"
@@ -764,6 +792,11 @@ by a child template that "extends" this file.
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE"/>
 
+        <!-- Background Task Scheduler job service -->
+        <service android:name="org.chromium.components.background_task_scheduler.BackgroundTaskJobService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
+
         <!-- GcmTaskService implementation to wake Chrome on scheduled events -->
         <service android:name="org.chromium.chrome.browser.ChromeBackgroundService"
             android:permission="com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE"
@@ -784,10 +817,6 @@ by a child template that "extends" this file.
             </intent-filter>
         </service>
         <service android:name="android.support.customtabs.PostMessageService" />
-        <service android:name="org.chromium.chrome.browser.crash.LogcatExtractionService"
-                 android:exported="false"/>
-        <service android:name="org.chromium.chrome.browser.crash.MinidumpPreparationService"
-                 android:exported="false"/>
         <service android:name="org.chromium.chrome.browser.crash.MinidumpUploadService"
             android:exported="false"/>
 

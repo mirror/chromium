@@ -8,6 +8,8 @@
 // ToV8() provides C++ -> V8 conversion. Note that ToV8() can return an empty
 // handle. Call sites must check IsEmpty() before using return value.
 
+#include <utility>
+
 #include "bindings/core/v8/DOMDataStore.h"
 #include "bindings/core/v8/IDLDictionaryBase.h"
 #include "bindings/core/v8/ScriptState.h"
@@ -16,9 +18,8 @@
 #include "bindings/core/v8/V8Binding.h"
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
+#include "v8/include/v8.h"
 #include "wtf/Forward.h"
-#include <utility>
-#include <v8.h>
 
 namespace blink {
 
@@ -45,15 +46,7 @@ inline v8::Local<v8::Value> ToV8(ScriptWrappable* impl,
 inline v8::Local<v8::Value> ToV8(Node* impl,
                                  v8::Local<v8::Object> creationContext,
                                  v8::Isolate* isolate) {
-  if (UNLIKELY(!impl))
-    return v8::Null(isolate);
-  v8::Local<v8::Value> wrapper = DOMDataStore::getWrapper(impl, isolate);
-  if (!wrapper.IsEmpty())
-    return wrapper;
-
-  wrapper = ScriptWrappable::fromNode(impl)->wrap(isolate, creationContext);
-  DCHECK(!wrapper.IsEmpty());
-  return wrapper;
+  return ToV8(ScriptWrappable::fromNode(impl), creationContext, isolate);
 }
 
 // Special versions for DOMWindow and EventTarget
@@ -238,8 +231,31 @@ inline v8::Local<v8::Value> ToV8(const HeapVector<T, inlineCapacity>& value,
   return toV8SequenceInternal(value, creationContext, isolate);
 }
 
+// The following two overloads are also used to convert record<K,V> IDL types
+// back into ECMAScript Objects.
 template <typename T>
 inline v8::Local<v8::Value> ToV8(const Vector<std::pair<String, T>>& value,
+                                 v8::Local<v8::Object> creationContext,
+                                 v8::Isolate* isolate) {
+  v8::Local<v8::Object> object;
+  {
+    v8::Context::Scope contextScope(creationContext->CreationContext());
+    object = v8::Object::New(isolate);
+  }
+  for (unsigned i = 0; i < value.size(); ++i) {
+    v8::Local<v8::Value> v8Value = ToV8(value[i].second, object, isolate);
+    if (v8Value.IsEmpty())
+      v8Value = v8::Undefined(isolate);
+    if (!v8CallBoolean(object->CreateDataProperty(
+            isolate->GetCurrentContext(), v8String(isolate, value[i].first),
+            v8Value)))
+      return v8::Local<v8::Value>();
+  }
+  return object;
+}
+
+template <typename T>
+inline v8::Local<v8::Value> ToV8(const HeapVector<std::pair<String, T>>& value,
                                  v8::Local<v8::Object> creationContext,
                                  v8::Isolate* isolate) {
   v8::Local<v8::Object> object;

@@ -46,7 +46,7 @@ OffscreenCanvasFrameDispatcherImpl::OffscreenCanvasFrameDispatcherImpl(
   if (m_frameSinkId.is_valid()) {
     // Only frameless canvas pass an invalid frame sink id; we don't create
     // mojo channel for this special case.
-    m_currentLocalSurfaceId = m_surfaceIdAllocator.GenerateId();
+    m_currentLocalSurfaceId = m_localSurfaceIdAllocator.GenerateId();
     DCHECK(!m_sink.is_bound());
     mojom::blink::OffscreenCanvasCompositorFrameSinkProviderPtr provider;
     Platform::current()->interfaceProvider()->getInterface(
@@ -75,10 +75,8 @@ void OffscreenCanvasFrameDispatcherImpl::setTransferableResourceToSharedBitmap(
   // TODO(xlai): Optimize to avoid copying pixels. See crbug.com/651456.
   // However, in the case when |image| is texture backed, this function call
   // does a GPU readback which is required.
-  // TODO(ccameron): Canvas should produce sRGB images.
-  // https://crbug.com/672299
-  image->imageForCurrentFrame(ColorBehavior::transformToGlobalTarget())
-      ->readPixels(imageInfo, pixels, imageInfo.minRowBytes(), 0, 0);
+  image->imageForCurrentFrame()->readPixels(imageInfo, pixels,
+                                            imageInfo.minRowBytes(), 0, 0);
   resource.mailbox_holder.mailbox = bitmap->id();
   resource.mailbox_holder.texture_target = 0;
   resource.is_software = true;
@@ -112,10 +110,8 @@ void OffscreenCanvasFrameDispatcherImpl::
     return;
   RefPtr<Uint8Array> dstPixels =
       Uint8Array::create(dstBuffer, 0, dstBuffer->byteLength());
-  // TODO(ccameron): Canvas should produce sRGB images.
-  // https://crbug.com/672299
-  image->imageForCurrentFrame(ColorBehavior::transformToGlobalTarget())
-      ->readPixels(info, dstPixels->data(), info.minRowBytes(), 0, 0);
+  image->imageForCurrentFrame()->readPixels(info, dstPixels->data(),
+                                            info.minRowBytes(), 0, 0);
 
   GLuint textureId = 0u;
   gl->GenTextures(1, &textureId);
@@ -375,7 +371,7 @@ void OffscreenCanvasFrameDispatcherImpl::dispatchFrame(
   }
 
   if (m_changeSizeForNextCommit) {
-    m_currentLocalSurfaceId = m_surfaceIdAllocator.GenerateId();
+    m_currentLocalSurfaceId = m_localSurfaceIdAllocator.GenerateId();
     m_changeSizeForNextCommit = false;
   }
 
@@ -403,14 +399,30 @@ void OffscreenCanvasFrameDispatcherImpl::OnBeginFrame(
 void OffscreenCanvasFrameDispatcherImpl::ReclaimResources(
     const cc::ReturnedResourceArray& resources) {
   for (const auto& resource : resources) {
-    RefPtr<StaticBitmapImage> image = m_cachedImages.get(resource.id);
-    if (image)
-      image->updateSyncToken(resource.sync_token);
+    RefPtr<StaticBitmapImage> image = m_cachedImages.at(resource.id);
+
+    if (image) {
+      if (image->hasMailbox()) {
+        image->updateSyncToken(resource.sync_token);
+      } else if (SharedGpuContext::isValid() && resource.sync_token.HasData()) {
+        // Although image has MailboxTextureHolder at the time when it is
+        // inserted to m_cachedImages, the
+        // OffscreenCanvasPlaceHolder::placeholderFrame() exposes this image to
+        // everyone accessing the placeholder canvas as an image source, some of
+        // which may want to consume the image as a SkImage, thereby converting
+        // the MailTextureHolder to a SkiaTextureHolder. In this case, we
+        // need to wait for the new sync token passed by CompositorFrameSink.
+        SharedGpuContext::gl()->WaitSyncTokenCHROMIUM(
+            resource.sync_token.GetConstData());
+      }
+    }
     reclaimResource(resource.id);
   }
 }
 
-void OffscreenCanvasFrameDispatcherImpl::WillDrawSurface() {
+void OffscreenCanvasFrameDispatcherImpl::WillDrawSurface(
+    const cc::LocalSurfaceId& localSurfaceId,
+    ::gfx::mojom::blink::RectPtr damageRect) {
   // TODO(fsamuel, staraz): Implement this.
 }
 
@@ -422,7 +434,7 @@ void OffscreenCanvasFrameDispatcherImpl::reclaimResource(unsigned resourceId) {
   // resource lock being lifted, and the second will delete
   // the resource for real.
   if (m_spareResourceLocks.contains(resourceId)) {
-    m_spareResourceLocks.remove(resourceId);
+    m_spareResourceLocks.erase(resourceId);
     return;
   }
   m_cachedImages.erase(resourceId);

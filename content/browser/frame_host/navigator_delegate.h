@@ -94,9 +94,8 @@ class CONTENT_EXPORT NavigatorDelegate {
                                                 ReloadType reload_type) {}
 
   // Opens a URL with the given parameters. See PageNavigator::OpenURL, which
-  // this forwards to.
-  virtual void RequestOpenURL(RenderFrameHostImpl* render_frame_host,
-                              const OpenURLParams& params) {}
+  // this is an alias of.
+  virtual WebContents* OpenURL(const OpenURLParams& params) = 0;
 
   // Returns whether to continue a navigation that needs to transfer to a
   // different process between the load start and commit.
@@ -105,6 +104,9 @@ class CONTENT_EXPORT NavigatorDelegate {
   // Returns whether URLs for aborted browser-initiated navigations should be
   // preserved in the omnibox.  Defaults to false.
   virtual bool ShouldPreserveAbortedURLs();
+
+  // Returns the overriden user agent string if it's set.
+  virtual const std::string& GetUserAgentOverride() const = 0;
 
   // A RenderFrameHost in the specified |frame_tree_node| started loading a new
   // document. This correponds to Blink's notion of the throbber starting.

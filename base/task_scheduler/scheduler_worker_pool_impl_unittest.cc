@@ -121,10 +121,11 @@ scoped_refptr<TaskRunner> CreateTaskRunnerWithExecutionMode(
       return worker_pool->CreateTaskRunnerWithTraits(traits);
     case test::ExecutionMode::SEQUENCED:
       return worker_pool->CreateSequencedTaskRunnerWithTraits(traits);
-    case test::ExecutionMode::SINGLE_THREADED:
-      return worker_pool->CreateSingleThreadTaskRunnerWithTraits(traits);
+    default:
+      // Fall through.
+      break;
   }
-  ADD_FAILURE() << "Unknown ExecutionMode";
+  ADD_FAILURE() << "Unexpected ExecutionMode";
   return nullptr;
 }
 
@@ -181,7 +182,7 @@ class ThreadPostingTasks : public SimpleThread {
 
 using WaitBeforePostTask = ThreadPostingTasks::WaitBeforePostTask;
 
-void ShouldNotRunCallback() {
+void ShouldNotRun() {
   ADD_FAILURE() << "Ran a task that shouldn't run.";
 }
 
@@ -316,7 +317,7 @@ TEST_P(TaskSchedulerWorkerPoolImplTest, PostTaskAfterShutdown) {
   auto task_runner =
       CreateTaskRunnerWithExecutionMode(worker_pool_.get(), GetParam());
   task_tracker_.Shutdown();
-  EXPECT_FALSE(task_runner->PostTask(FROM_HERE, Bind(&ShouldNotRunCallback)));
+  EXPECT_FALSE(task_runner->PostTask(FROM_HERE, Bind(&ShouldNotRun)));
 }
 
 // Verify that a Task runs shortly after its delay expires.
@@ -348,10 +349,10 @@ TEST_P(TaskSchedulerWorkerPoolImplTest, PostDelayedTask) {
 // returns true when appropriate so this method complements it to get full
 // coverage of that method.
 TEST_P(TaskSchedulerWorkerPoolImplTest, SequencedRunsTasksOnCurrentThread) {
-  scoped_refptr<TaskRunner> task_runner(
-      CreateTaskRunnerWithExecutionMode(worker_pool_.get(), GetParam()));
-  scoped_refptr<SequencedTaskRunner> sequenced_task_runner(
-      worker_pool_->CreateSequencedTaskRunnerWithTraits(TaskTraits()));
+  auto task_runner =
+      CreateTaskRunnerWithExecutionMode(worker_pool_.get(), GetParam());
+  auto sequenced_task_runner =
+      worker_pool_->CreateSequencedTaskRunnerWithTraits(TaskTraits());
 
   WaitableEvent task_ran(WaitableEvent::ResetPolicy::MANUAL,
                          WaitableEvent::InitialState::NOT_SIGNALED);
@@ -373,128 +374,6 @@ INSTANTIATE_TEST_CASE_P(Parallel,
 INSTANTIATE_TEST_CASE_P(Sequenced,
                         TaskSchedulerWorkerPoolImplTest,
                         ::testing::Values(test::ExecutionMode::SEQUENCED));
-INSTANTIATE_TEST_CASE_P(
-    SingleThreaded,
-    TaskSchedulerWorkerPoolImplTest,
-    ::testing::Values(test::ExecutionMode::SINGLE_THREADED));
-
-namespace {
-
-// Same as TaskSchedulerWorkerPoolImplTest but its SchedulerWorkerPoolImpl
-// instance uses |max_threads == 1|.
-class TaskSchedulerWorkerPoolImplSingleWorkerTest
-    : public TaskSchedulerWorkerPoolImplTest {
- public:
-  TaskSchedulerWorkerPoolImplSingleWorkerTest() = default;
-
- protected:
-  void SetUp() override {
-    InitializeWorkerPool(TimeDelta::Max(), 1);
-  }
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(TaskSchedulerWorkerPoolImplSingleWorkerTest);
-};
-
-}  // namespace
-
-// Verify that the RunsTasksOnCurrentThread() method of a
-// SchedulerSingleThreadTaskRunner returns false when called from a task that
-// isn't part of its sequence even though it's running on that
-// SchedulerSingleThreadTaskRunner's assigned worker. Note: Tests that use
-// TestTaskFactory already verify that RunsTasksOnCurrentThread() returns true
-// when appropriate so this method complements it to get full coverage of that
-// method.
-TEST_P(TaskSchedulerWorkerPoolImplSingleWorkerTest,
-       SingleThreadRunsTasksOnCurrentThread) {
-  scoped_refptr<TaskRunner> task_runner(
-      CreateTaskRunnerWithExecutionMode(worker_pool_.get(), GetParam()));
-  scoped_refptr<SingleThreadTaskRunner> single_thread_task_runner(
-      worker_pool_->CreateSingleThreadTaskRunnerWithTraits(TaskTraits()));
-
-  WaitableEvent task_ran(WaitableEvent::ResetPolicy::MANUAL,
-                         WaitableEvent::InitialState::NOT_SIGNALED);
-  task_runner->PostTask(
-      FROM_HERE,
-      Bind(
-          [](scoped_refptr<TaskRunner> single_thread_task_runner,
-             WaitableEvent* task_ran) {
-            EXPECT_FALSE(single_thread_task_runner->RunsTasksOnCurrentThread());
-            task_ran->Signal();
-          },
-          single_thread_task_runner, Unretained(&task_ran)));
-  task_ran.Wait();
-}
-
-INSTANTIATE_TEST_CASE_P(Parallel,
-                        TaskSchedulerWorkerPoolImplSingleWorkerTest,
-                        ::testing::Values(test::ExecutionMode::PARALLEL));
-INSTANTIATE_TEST_CASE_P(Sequenced,
-                        TaskSchedulerWorkerPoolImplSingleWorkerTest,
-                        ::testing::Values(test::ExecutionMode::SEQUENCED));
-INSTANTIATE_TEST_CASE_P(
-    SingleThreaded,
-    TaskSchedulerWorkerPoolImplSingleWorkerTest,
-    ::testing::Values(test::ExecutionMode::SINGLE_THREADED));
-
-namespace {
-
-class TaskSchedulerWorkerPoolSingleThreadedTest
-    : public TaskSchedulerWorkerPoolImplTest {
- public:
-  void InitializeThreadChecker() {
-    thread_checker_.reset(new ThreadCheckerImpl());
-  }
-
-  void CheckValidThread() {
-    EXPECT_TRUE(thread_checker_->CalledOnValidThread());
-  }
-
- protected:
-  void SetUp() override {
-    InitializeWorkerPool(kReclaimTimeForDetachTests, kNumWorkersInWorkerPool);
-  }
-
-  TaskSchedulerWorkerPoolSingleThreadedTest() = default;
-
- private:
-  std::unique_ptr<ThreadCheckerImpl> thread_checker_;
-
-  DISALLOW_COPY_AND_ASSIGN(TaskSchedulerWorkerPoolSingleThreadedTest);
-};
-
-}  // namespace
-
-// Verify that thread resources for a single thread remain.
-TEST_F(TaskSchedulerWorkerPoolSingleThreadedTest, SingleThreadTask) {
-  auto single_thread_task_runner =
-      worker_pool_->CreateSingleThreadTaskRunnerWithTraits(
-          TaskTraits().WithShutdownBehavior(
-              TaskShutdownBehavior::BLOCK_SHUTDOWN));
-  single_thread_task_runner->PostTask(
-      FROM_HERE,
-      Bind(&TaskSchedulerWorkerPoolSingleThreadedTest::InitializeThreadChecker,
-           Unretained(this)));
-  WaitableEvent task_waiter(WaitableEvent::ResetPolicy::AUTOMATIC,
-                            WaitableEvent::InitialState::NOT_SIGNALED);
-  single_thread_task_runner->PostTask(
-      FROM_HERE, Bind(&WaitableEvent::Signal, Unretained(&task_waiter)));
-  task_waiter.Wait();
-  worker_pool_->WaitForAllWorkersIdleForTesting();
-
-  // Give the worker pool a chance to reclaim its threads.
-  PlatformThread::Sleep(kReclaimTimeForDetachTests + kExtraTimeToWaitForDetach);
-
-  worker_pool_->DisallowWorkerDetachmentForTesting();
-
-  single_thread_task_runner->PostTask(
-      FROM_HERE,
-      Bind(&TaskSchedulerWorkerPoolSingleThreadedTest::CheckValidThread,
-           Unretained(this)));
-  single_thread_task_runner->PostTask(
-      FROM_HERE, Bind(&WaitableEvent::Signal, Unretained(&task_waiter)));
-  task_waiter.Wait();
-}
 
 namespace {
 
@@ -719,6 +598,109 @@ TEST_F(TaskSchedulerWorkerPoolHistogramTest, NumTasksBetweenWaitsWithDetach) {
   worker_pool_->DisallowWorkerDetachmentForTesting();
 }
 
+TEST_F(TaskSchedulerWorkerPoolHistogramTest, NumTasksBeforeDetach) {
+  InitializeWorkerPool(kReclaimTimeForDetachTests, kNumWorkersInWorkerPool);
+
+  auto histogrammed_thread_task_runner =
+      worker_pool_->CreateSequencedTaskRunnerWithTraits(
+          TaskTraits().WithBaseSyncPrimitives());
+
+  // Post 3 tasks and hold the thread for idle thread stack ordering.
+  // This test assumes |histogrammed_thread_task_runner| gets assigned the same
+  // thread for each of its tasks.
+  PlatformThreadRef thread_ref;
+  histogrammed_thread_task_runner->PostTask(
+      FROM_HERE, Bind(
+                     [](PlatformThreadRef* thread_ref) {
+                       ASSERT_TRUE(thread_ref);
+                       *thread_ref = PlatformThread::CurrentRef();
+                     },
+                     Unretained(&thread_ref)));
+  histogrammed_thread_task_runner->PostTask(
+      FROM_HERE, Bind(
+                     [](PlatformThreadRef* thread_ref) {
+                       ASSERT_FALSE(thread_ref->is_null());
+                       EXPECT_EQ(*thread_ref, PlatformThread::CurrentRef());
+                     },
+                     Unretained(&thread_ref)));
+
+  WaitableEvent detach_thread_running(
+      WaitableEvent::ResetPolicy::MANUAL,
+      WaitableEvent::InitialState::NOT_SIGNALED);
+  WaitableEvent detach_thread_continue(
+      WaitableEvent::ResetPolicy::MANUAL,
+      WaitableEvent::InitialState::NOT_SIGNALED);
+  histogrammed_thread_task_runner->PostTask(
+      FROM_HERE,
+      Bind(
+          [](PlatformThreadRef* thread_ref,
+             WaitableEvent* detach_thread_running,
+             WaitableEvent* detach_thread_continue) {
+            ASSERT_FALSE(thread_ref->is_null());
+            EXPECT_EQ(*thread_ref, PlatformThread::CurrentRef());
+            detach_thread_running->Signal();
+            detach_thread_continue->Wait();
+          },
+          Unretained(&thread_ref), Unretained(&detach_thread_running),
+          Unretained(&detach_thread_continue)));
+
+  detach_thread_running.Wait();
+
+  // To allow the SchedulerWorker associated with
+  // |histogrammed_thread_task_runner| to detach, make sure it isn't on top of
+  // the idle stack by waking up another SchedulerWorker via
+  // |task_runner_for_top_idle|. |histogrammed_thread_task_runner| should
+  // release and go idle first and then |task_runner_for_top_idle| should
+  // release and go idle. This allows the SchedulerWorker associated with
+  // |histogrammed_thread_task_runner| to detach.
+  WaitableEvent top_idle_thread_running(
+      WaitableEvent::ResetPolicy::MANUAL,
+      WaitableEvent::InitialState::NOT_SIGNALED);
+  WaitableEvent top_idle_thread_continue(
+      WaitableEvent::ResetPolicy::MANUAL,
+      WaitableEvent::InitialState::NOT_SIGNALED);
+  auto task_runner_for_top_idle =
+      worker_pool_->CreateSequencedTaskRunnerWithTraits(
+          TaskTraits().WithBaseSyncPrimitives());
+  task_runner_for_top_idle->PostTask(
+      FROM_HERE, Bind(
+                     [](PlatformThreadRef thread_ref,
+                        WaitableEvent* top_idle_thread_running,
+                        WaitableEvent* top_idle_thread_continue) {
+                       ASSERT_FALSE(thread_ref.is_null());
+                       EXPECT_NE(thread_ref, PlatformThread::CurrentRef())
+                           << "Worker reused. Thread will not detach and the "
+                              "histogram value will be wrong.";
+                       top_idle_thread_running->Signal();
+                       top_idle_thread_continue->Wait();
+                     },
+                     thread_ref, Unretained(&top_idle_thread_running),
+                     Unretained(&top_idle_thread_continue)));
+  top_idle_thread_running.Wait();
+  detach_thread_continue.Signal();
+  // Wait for the thread processing the |histogrammed_thread_task_runner| work
+  // to go to the idle stack.
+  PlatformThread::Sleep(TestTimeouts::tiny_timeout());
+  top_idle_thread_continue.Signal();
+  // Allow the thread processing the |histogrammed_thread_task_runner| work to
+  // detach.
+  PlatformThread::Sleep(kReclaimTimeForDetachTests +
+                        kReclaimTimeForDetachTests);
+  worker_pool_->WaitForAllWorkersIdleForTesting();
+  worker_pool_->DisallowWorkerDetachmentForTesting();
+
+  // Verify that counts were recorded to the histogram as expected.
+  const auto* histogram = worker_pool_->num_tasks_before_detach_histogram();
+  EXPECT_EQ(0, histogram->SnapshotSamples()->GetCount(0));
+  EXPECT_EQ(0, histogram->SnapshotSamples()->GetCount(1));
+  EXPECT_EQ(0, histogram->SnapshotSamples()->GetCount(2));
+  EXPECT_EQ(1, histogram->SnapshotSamples()->GetCount(3));
+  EXPECT_EQ(0, histogram->SnapshotSamples()->GetCount(4));
+  EXPECT_EQ(0, histogram->SnapshotSamples()->GetCount(5));
+  EXPECT_EQ(0, histogram->SnapshotSamples()->GetCount(6));
+  EXPECT_EQ(0, histogram->SnapshotSamples()->GetCount(10));
+}
+
 namespace {
 
 void NotReachedReEnqueueSequenceCallback(scoped_refptr<Sequence> sequence) {
@@ -726,52 +708,7 @@ void NotReachedReEnqueueSequenceCallback(scoped_refptr<Sequence> sequence) {
       << "Unexpected invocation of NotReachedReEnqueueSequenceCallback.";
 }
 
-void CaptureThreadId(PlatformThreadId* thread_id) {
-  ASSERT_TRUE(thread_id);
-  *thread_id = PlatformThread::CurrentId();
-}
-
-void VerifyThreadIdIsNot(PlatformThreadId thread_id) {
-  EXPECT_NE(thread_id, PlatformThread::CurrentId());
-}
-
 }  // namespace
-
-TEST_F(TaskSchedulerWorkerPoolHistogramTest, NumTasksBeforeDetach) {
-  InitializeWorkerPool(kReclaimTimeForDetachTests, kNumWorkersInWorkerPool);
-
-  // This test assumes that the TaskRunners aren't assigned to the same worker.
-  auto task_runner =
-      worker_pool_->CreateSingleThreadTaskRunnerWithTraits(TaskTraits());
-  auto other_task_runner =
-      worker_pool_->CreateSingleThreadTaskRunnerWithTraits(TaskTraits());
-
-  // Post 3 tasks and wait until they run.
-  PlatformThreadId thread_id;
-  task_runner->PostTask(FROM_HERE,
-                        Bind(&CaptureThreadId, Unretained(&thread_id)));
-  task_runner->PostTask(FROM_HERE, Bind(&DoNothing));
-  task_runner->PostTask(FROM_HERE, Bind(&DoNothing));
-  worker_pool_->WaitForAllWorkersIdleForTesting();
-
-  // To allow the SchedulerWorker associated with |task_runner| to detach:
-  // - Make sure it isn't on top of the idle stack by waking up another
-  //   SchedulerWorker and waiting until it goes back to sleep.
-  // - Release |task_runner|.
-  other_task_runner->PostTask(FROM_HERE, Bind(&VerifyThreadIdIsNot, thread_id));
-  worker_pool_->WaitForAllWorkersIdleForTesting();
-  task_runner = nullptr;
-
-  // Allow the SchedulerWorker that was associated with |task_runner| to detach.
-  PlatformThread::Sleep(kReclaimTimeForDetachTests + kExtraTimeToWaitForDetach);
-  worker_pool_->DisallowWorkerDetachmentForTesting();
-
-  // Verify that counts were recorded to the histogram as expected.
-  const auto* histogram = worker_pool_->num_tasks_before_detach_histogram();
-  EXPECT_EQ(0, histogram->SnapshotSamples()->GetCount(0));
-  EXPECT_EQ(1, histogram->SnapshotSamples()->GetCount(3));
-  EXPECT_EQ(0, histogram->SnapshotSamples()->GetCount(10));
-}
 
 TEST(TaskSchedulerWorkerPoolStandbyPolicyTest, InitLazy) {
   TaskTracker task_tracker;

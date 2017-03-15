@@ -44,9 +44,10 @@ namespace {{variant}} {
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr_info.h"
 #include "mojo/public/cpp/bindings/associated_interface_request.h"
+#include "mojo/public/cpp/bindings/clone_traits.h"
 #include "mojo/public/cpp/bindings/interface_ptr.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
-#include "mojo/public/cpp/bindings/lib/clone_equals_util.h"
+#include "mojo/public/cpp/bindings/lib/equals_traits.h"
 #include "mojo/public/cpp/bindings/lib/control_message_handler.h"
 #include "mojo/public/cpp/bindings/lib/control_message_proxy.h"
 #include "mojo/public/cpp/bindings/lib/serialization.h"
@@ -83,6 +84,16 @@ namespace {{variant}} {
 
 {%- if export_header %}
 #include "{{export_header}}"
+{%- endif %}
+
+{#--- WTF enum hashing #}
+{%- from "enum_macros.tmpl" import enum_hash_blink%}
+{%- if for_blink %}
+{%-   for enum in all_enums %}
+{%-     if not enum|is_native_only_kind %}
+{{enum_hash_blink(enum)}}
+{%-     endif %}
+{%-   endfor %}
 {%- endif %}
 
 {{namespace_begin()}}

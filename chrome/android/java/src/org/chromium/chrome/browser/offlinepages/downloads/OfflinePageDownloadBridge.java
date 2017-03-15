@@ -126,20 +126,27 @@ public class OfflinePageDownloadBridge implements DownloadServiceDelegate, Offli
     }
 
     @Override
-    public void cancelDownload(String downloadGuid, boolean isOffTheRecord,
-            boolean isNotificationDismissed) {
-        nativeCancelDownload(mNativeOfflinePageDownloadBridge, downloadGuid);
+    public void cancelDownload(String downloadGuid, boolean isOffTheRecord) {
+        cancelDownload(downloadGuid);
     }
 
     @Override
     public void pauseDownload(String downloadGuid, boolean isOffTheRecord) {
-        nativePauseDownload(mNativeOfflinePageDownloadBridge, downloadGuid);
+        pauseDownload(downloadGuid);
     }
 
     @Override
     public void resumeDownload(DownloadItem item, boolean hasUserGesture) {
+        // If the resumption was an user action then we have to resume the specific download item.
+        // Otherwise it can only be called when Chrome starts and we would like to resume all
+        // pending requests.
+        // TODO(romax): it's based on the assumption that if this method is called with
+        // |hasUserGesture| == false then we're trying to resume all pending requests. This
+        // assumption may change.
         if (hasUserGesture) {
-            nativeResumeDownload(mNativeOfflinePageDownloadBridge, item.getId());
+            resumeDownload(item.getId());
+        } else {
+            nativeResumePendingRequestImmediately(mNativeOfflinePageDownloadBridge);
         }
     }
 
@@ -179,6 +186,21 @@ public class OfflinePageDownloadBridge implements DownloadServiceDelegate, Offli
                 : new AsyncTabCreationParams(params, componentName);
         final TabDelegate tabDelegate = new TabDelegate(false);
         tabDelegate.createNewTab(asyncParams, TabLaunchType.FROM_CHROME_UI, Tab.INVALID_TAB_ID);
+    }
+
+    @Override
+    public void pauseDownload(String guid) {
+        nativePauseDownload(mNativeOfflinePageDownloadBridge, guid);
+    }
+
+    @Override
+    public void resumeDownload(String guid) {
+        nativeResumeDownload(mNativeOfflinePageDownloadBridge, guid);
+    }
+
+    @Override
+    public void cancelDownload(String guid) {
+        nativeCancelDownload(mNativeOfflinePageDownloadBridge, guid);
     }
 
     /**
@@ -282,4 +304,5 @@ public class OfflinePageDownloadBridge implements DownloadServiceDelegate, Offli
     native void nativeDeleteItemByGuid(long nativeOfflinePageDownloadBridge, String guid);
     native long nativeGetOfflineIdByGuid(long nativeOfflinePageDownloadBridge, String guid);
     native void nativeStartDownload(long nativeOfflinePageDownloadBridge, Tab tab);
+    native void nativeResumePendingRequestImmediately(long nativeOfflinePageDownloadBridge);
 }

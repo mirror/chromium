@@ -102,9 +102,6 @@ struct ContentSettingWithExceptions {
 typedef bool (*AppFilter)(const extensions::Extension& app,
                           content::BrowserContext* profile);
 
-const char kExceptionsLearnMoreUrl[] =
-    "https://support.google.com/chrome/?p=settings_manage_exceptions";
-
 const char kAppName[] = "appName";
 const char kAppId[] = "appId";
 const char kZoom[] = "zoom";
@@ -556,7 +553,7 @@ void ContentSettingsHandler::GetLocalizedValues(
                 IDS_ZOOMLEVELS_HEADER_AND_TAB_LABEL);
 
   localized_strings->SetString("exceptionsLearnMoreUrl",
-                               kExceptionsLearnMoreUrl);
+                               chrome::kContentSettingsExceptionsLearnMoreURL);
 }
 
 void ContentSettingsHandler::InitializeHandler() {
@@ -774,8 +771,7 @@ void ContentSettingsHandler::UpdateMediaSettingsFromPrefs(
 }
 
 void ContentSettingsHandler::UpdateHandlersEnabledRadios() {
-  base::FundamentalValue handlers_enabled(
-      GetProtocolHandlerRegistry()->enabled());
+  base::Value handlers_enabled(GetProtocolHandlerRegistry()->enabled());
 
   web_ui()->CallJavascriptFunctionUnsafe(
       "ContentSettings.updateHandlersEnabledRadios", handlers_enabled);
@@ -880,7 +876,7 @@ void ContentSettingsHandler::UpdateGeolocationExceptionsView() {
     }
   }
 
-  base::StringValue type_string(site_settings::ContentSettingsTypeToGroupName(
+  base::Value type_string(site_settings::ContentSettingsTypeToGroupName(
       CONTENT_SETTINGS_TYPE_GEOLOCATION));
   web_ui()->CallJavascriptFunctionUnsafe("ContentSettings.setExceptions",
                                          type_string, exceptions);
@@ -920,7 +916,7 @@ void ContentSettingsHandler::UpdateNotificationExceptionsView() {
                                         i->source));
   }
 
-  base::StringValue type_string(site_settings::ContentSettingsTypeToGroupName(
+  base::Value type_string(site_settings::ContentSettingsTypeToGroupName(
       CONTENT_SETTINGS_TYPE_NOTIFICATIONS));
   web_ui()->CallJavascriptFunctionUnsafe("ContentSettings.setExceptions",
                                          type_string, exceptions);
@@ -994,7 +990,7 @@ void ContentSettingsHandler::UpdateChooserExceptionsViewFromModel(
   base::ListValue exceptions;
   site_settings::GetChooserExceptionsFromProfile(
       Profile::FromWebUI(web_ui()), false, chooser_type, &exceptions);
-  base::StringValue type_string(chooser_type.name);
+  base::Value type_string(chooser_type.name);
   web_ui()->CallJavascriptFunctionUnsafe("ContentSettings.setExceptions",
                                          type_string, exceptions);
 
@@ -1009,7 +1005,7 @@ void ContentSettingsHandler::UpdateOTRChooserExceptionsViewFromModel(
   base::ListValue exceptions;
   site_settings::GetChooserExceptionsFromProfile(
       Profile::FromWebUI(web_ui()), true, chooser_type, &exceptions);
-  base::StringValue type_string(chooser_type.name);
+  base::Value type_string(chooser_type.name);
   web_ui()->CallJavascriptFunctionUnsafe("ContentSettings.setOTRExceptions",
                                          type_string, exceptions);
 }
@@ -1074,7 +1070,7 @@ void ContentSettingsHandler::UpdateZoomLevelsExceptionsView() {
     zoom_levels_exceptions.Append(std::move(exception));
   }
 
-  base::StringValue type_string(kZoomContentType);
+  base::Value type_string(kZoomContentType);
   web_ui()->CallJavascriptFunctionUnsafe("ContentSettings.setExceptions",
                                          type_string, zoom_levels_exceptions);
 }
@@ -1089,8 +1085,7 @@ void ContentSettingsHandler::UpdateExceptionsViewFromHostContentSettingsMap(
   site_settings::GetExceptionsFromHostContentSettingsMap(
       settings_map, type, extension_registry, web_ui(), /*incognito=*/false,
       /*filter=*/nullptr, &exceptions);
-  base::StringValue type_string(
-      site_settings::ContentSettingsTypeToGroupName(type));
+  base::Value type_string(site_settings::ContentSettingsTypeToGroupName(type));
   web_ui()->CallJavascriptFunctionUnsafe("ContentSettings.setExceptions",
                                          type_string, exceptions);
 
@@ -1119,8 +1114,7 @@ void ContentSettingsHandler::UpdateExceptionsViewFromOTRHostContentSettingsMap(
   site_settings::GetExceptionsFromHostContentSettingsMap(
       otr_settings_map, type, extension_registry, web_ui(), /*incognito=*/true,
       /*filter=*/nullptr, &exceptions);
-  base::StringValue type_string(
-      site_settings::ContentSettingsTypeToGroupName(type));
+  base::Value type_string(site_settings::ContentSettingsTypeToGroupName(type));
   web_ui()->CallJavascriptFunctionUnsafe("ContentSettings.setOTRExceptions",
                                          type_string, exceptions);
 }
@@ -1354,10 +1348,9 @@ void ContentSettingsHandler::CheckExceptionPatternValidity(
       ContentSettingsPattern::FromString(pattern_string);
 
   web_ui()->CallJavascriptFunctionUnsafe(
-      "ContentSettings.patternValidityCheckComplete",
-      base::StringValue(type_string), base::StringValue(mode_string),
-      base::StringValue(pattern_string),
-      base::FundamentalValue(pattern.IsValid()));
+      "ContentSettings.patternValidityCheckComplete", base::Value(type_string),
+      base::Value(mode_string), base::Value(pattern_string),
+      base::Value(pattern.IsValid()));
 }
 
 Profile* ContentSettingsHandler::GetProfile() {
@@ -1418,12 +1411,11 @@ void ContentSettingsHandler::ShowFlashMediaLink(
   if (show_link != show) {
     web_ui()->CallJavascriptFunctionUnsafe(
         "ContentSettings.showMediaPepperFlashLink",
-        base::StringValue(link_type == DEFAULT_SETTING ? "default"
-                                                       : "exceptions"),
-        base::StringValue(content_type == CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC
-                              ? "mic"
-                              : "camera"),
-        base::FundamentalValue(show));
+        base::Value(link_type == DEFAULT_SETTING ? "default" : "exceptions"),
+        base::Value(content_type == CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC
+                        ? "mic"
+                        : "camera"),
+        base::Value(show));
     show_link = show;
   }
 }
@@ -1480,8 +1472,8 @@ void ContentSettingsHandler::UpdateMediaDeviceDropdownVisibility(
 
   web_ui()->CallJavascriptFunctionUnsafe(
       "ContentSettings.setDevicesMenuVisibility",
-      base::StringValue(site_settings::ContentSettingsTypeToGroupName(type)),
-      base::FundamentalValue(!settings.policy_disable));
+      base::Value(site_settings::ContentSettingsTypeToGroupName(type)),
+      base::Value(!settings.policy_disable));
 }
 
 void ContentSettingsHandler::UpdateProtectedContentExceptionsButton() {
@@ -1496,7 +1488,7 @@ void ContentSettingsHandler::UpdateProtectedContentExceptionsButton() {
   bool enable_exceptions = prefs->GetBoolean(prefs::kEnableDRM);
   web_ui()->CallJavascriptFunctionUnsafe(
       "ContentSettings.enableProtectedContentExceptions",
-      base::FundamentalValue(enable_exceptions));
+      base::Value(enable_exceptions));
 }
 
 }  // namespace options

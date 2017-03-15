@@ -21,6 +21,7 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
+#include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_delegate.h"
 #include "content/public/common/bindings_policy.h"
@@ -97,6 +98,10 @@ class HeadlessWebContentsImpl::Delegate : public content::WebContentsDelegate {
                                             security_style_explanations);
   }
 
+  void ActivateContents(content::WebContents* contents) override {
+    contents->GetRenderViewHost()->GetWidget()->Focus();
+  }
+
  private:
   HeadlessBrowserContextImpl* browser_context_;  // Not owned.
   DISALLOW_COPY_AND_ASSIGN(Delegate);
@@ -134,7 +139,7 @@ HeadlessWebContentsImpl::CreateFromWebContents(
 }
 
 void HeadlessWebContentsImpl::InitializeScreen(const gfx::Size& initial_size) {
-  browser()->PlatformSetWebContents(initial_size, web_contents_.get());
+  browser()->PlatformInitializeWebContents(initial_size, web_contents_.get());
 }
 
 HeadlessWebContentsImpl::HeadlessWebContentsImpl(

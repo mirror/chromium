@@ -15,6 +15,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_runner_util.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "base/version.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
@@ -52,6 +53,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/user_metrics.h"
 #include "extensions/features/features.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if !defined(OS_ANDROID)
@@ -873,13 +875,44 @@ void SupervisedUserService::OnBlacklistFileChecked(const base::FilePath& path,
   }
 
   DCHECK(!blacklist_downloader_);
+
+  // Create traffic annotation tag.
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("supervised_users_blacklist", R"(
+        semantics {
+          sender: "Supervised Users"
+          description:
+            "Downloads a static blacklist consisting of hostname hashes of "
+            "common inappropriate websites. This is only enabled for child "
+            "accounts and only if the corresponding setting is enabled by the "
+            "parent."
+          trigger:
+            "The file is downloaded on demand if the child account profile is "
+            "created and the setting is enabled."
+          data:
+            "No additional data is sent to the server beyond the request "
+            "itself."
+          destination: GOOGLE_OWNED_SERVICE
+        }
+        policy {
+          cookies_allowed: false
+          setting:
+            "The feature can be remotely enabled or disabled by the parent. In "
+            "addition, if sign-in is restricted to accounts from a managed "
+            "domain, those accounts are not going to be child accounts."
+          policy {
+            RestrictSigninToPattern {
+              policy_options {mode: MANDATORY}
+              value: "*@manageddomain.com"
+            }
+          }
+        })");
+
   blacklist_downloader_.reset(new FileDownloader(
-      url,
-      path,
-      false,
-      profile_->GetRequestContext(),
+      url, path, false, profile_->GetRequestContext(),
       base::Bind(&SupervisedUserService::OnBlacklistDownloadDone,
-                 base::Unretained(this), path)));
+                 base::Unretained(this), path),
+      traffic_annotation));
 }
 
 void SupervisedUserService::LoadBlacklistFromFile(const base::FilePath& path) {
@@ -1147,7 +1180,7 @@ void SupervisedUserService::OnExtensionInstalled(
     std::string key = SupervisedUserSettingsService::MakeSplitSettingKey(
         supervised_users::kApprovedExtensions, id);
     std::unique_ptr<base::Value> version_value(
-        new base::StringValue(version.GetString()));
+        new base::Value(version.GetString()));
     GetSettingsService()->UpdateSetting(key, std::move(version_value));
   }
   // Upon extension update, the approved version may (or may not) match the

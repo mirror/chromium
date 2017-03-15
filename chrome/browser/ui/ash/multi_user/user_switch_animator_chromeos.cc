@@ -115,7 +115,7 @@ UserSwitchAnimatorChromeOS::UserSwitchAnimatorChromeOS(
       animation_step_(ANIMATION_STEP_HIDE_OLD_USER),
       screen_cover_(GetScreenCover(NULL)),
       windows_by_account_id_() {
-  ash::WmShell::Get()->DismissAppList();
+  ash::Shell::Get()->DismissAppList();
   BuildUserToWindowsListMap();
   AdvanceUserTransitionAnimation();
 
@@ -191,7 +191,7 @@ void UserSwitchAnimatorChromeOS::TransitionWallpaper(
     AnimationStep animation_step) {
   // Handle the wallpaper switch.
   ash::WallpaperDelegate* wallpaper_delegate =
-      ash::WmShell::Get()->wallpaper_delegate();
+      ash::Shell::Get()->wallpaper_delegate();
   if (animation_step == ANIMATION_STEP_HIDE_OLD_USER) {
     // Set the wallpaper cross dissolve animation duration to our complete
     // animation cycle for a fade in and fade out.

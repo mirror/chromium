@@ -49,18 +49,18 @@ function testMultiPointerMoveSuppressionInSlopRegion() {
             [{source: "touch",
               actions: [
                 { name: "pointerDown", x: x, y: y },
-                { name: "pointerMove", x: x, y: y + 10 },
+                { name: "pointerMove", x: x, y: y + 1 },
                 { name: "pause" },
                 { name: "pause" },
                 { name: "pause" },
-                { name: "pointerMove", x: x, y: y + 6 },
+                { name: "pointerMove", x: x, y: y + 2 },
                 { name: "pointerUp" }]},
              {source: "touch",
               actions: [
                 { name: "pause" },
                 { name: "pause" },
                 { name: "pointerDown", x: x, y: y },
-                { name: "pointerMove", x: x, y: y + 10 },
+                { name: "pointerMove", x: x, y: y + 1 },
                 { name: "pointerUp"}]}];
         chrome.gpuBenchmarking.pointerActionSequence(pointerActions, callbackValidMoveCount);
     }

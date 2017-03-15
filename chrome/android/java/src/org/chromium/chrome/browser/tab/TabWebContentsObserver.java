@@ -14,7 +14,7 @@ import org.chromium.base.ApplicationStatus;
 import org.chromium.base.Log;
 import org.chromium.base.ObserverList.RewindableIterator;
 import org.chromium.base.metrics.RecordHistogram;
-import org.chromium.chrome.browser.ChromeApplication;
+import org.chromium.chrome.browser.AppHooks;
 import org.chromium.chrome.browser.fullscreen.FullscreenManager;
 import org.chromium.chrome.browser.media.MediaCaptureNotificationService;
 import org.chromium.chrome.browser.metrics.UmaSessionStats;
@@ -149,8 +149,7 @@ public class TabWebContentsObserver extends WebContentsObserver {
     @Override
     public void didFinishLoad(long frameId, String validatedUrl, boolean isMainFrame) {
         if (isMainFrame) mTab.didFinishPageLoad();
-        PolicyAuditor auditor =
-                ((ChromeApplication) mTab.getApplicationContext()).getPolicyAuditor();
+        PolicyAuditor auditor = AppHooks.get().getPolicyAuditor();
         auditor.notifyAuditEvent(
                 mTab.getApplicationContext(), AuditEvent.OPEN_URL_SUCCESS, validatedUrl, "");
     }
@@ -170,8 +169,7 @@ public class TabWebContentsObserver extends WebContentsObserver {
     }
 
     private void recordErrorInPolicyAuditor(String failingUrl, String description, int errorCode) {
-        PolicyAuditor auditor =
-                ((ChromeApplication) mTab.getApplicationContext()).getPolicyAuditor();
+        PolicyAuditor auditor = AppHooks.get().getPolicyAuditor();
         auditor.notifyAuditEvent(mTab.getApplicationContext(), AuditEvent.OPEN_URL_FAILURE,
                 failingUrl, description);
         if (errorCode == BLOCKED_BY_ADMINISTRATOR) {
@@ -187,26 +185,26 @@ public class TabWebContentsObserver extends WebContentsObserver {
 
     @Override
     public void didStartNavigation(
-            String url, boolean isInMainFrame, boolean isSamePage, boolean isErrorPage) {
-        if (isInMainFrame && !isSamePage) {
+            String url, boolean isInMainFrame, boolean isSameDocument, boolean isErrorPage) {
+        if (isInMainFrame && !isSameDocument) {
             mTab.didStartPageLoad(url, isErrorPage);
         }
 
         RewindableIterator<TabObserver> observers = mTab.getTabObservers();
         while (observers.hasNext()) {
             observers.next().onDidStartNavigation(
-                    mTab, url, isInMainFrame, isSamePage, isErrorPage);
+                    mTab, url, isInMainFrame, isSameDocument, isErrorPage);
         }
     }
 
     @Override
     public void didFinishNavigation(String url, boolean isInMainFrame, boolean isErrorPage,
-            boolean hasCommitted, boolean isSamePage, boolean isFragmentNavigation,
+            boolean hasCommitted, boolean isSameDocument, boolean isFragmentNavigation,
             Integer pageTransition, int errorCode, String errorDescription, int httpStatusCode) {
         RewindableIterator<TabObserver> observers = mTab.getTabObservers();
         while (observers.hasNext()) {
             observers.next().onDidFinishNavigation(mTab, url, isInMainFrame, isErrorPage,
-                    hasCommitted, isSamePage, isFragmentNavigation, pageTransition, errorCode,
+                    hasCommitted, isSameDocument, isFragmentNavigation, pageTransition, errorCode,
                     httpStatusCode);
         }
 
@@ -247,7 +245,7 @@ public class TabWebContentsObserver extends WebContentsObserver {
         }
 
         FullscreenManager fullscreenManager = mTab.getFullscreenManager();
-        if (isInMainFrame && !isSamePage && fullscreenManager != null) {
+        if (isInMainFrame && !isSameDocument && fullscreenManager != null) {
             fullscreenManager.setPersistentFullscreenMode(false);
         }
 
@@ -283,8 +281,7 @@ public class TabWebContentsObserver extends WebContentsObserver {
 
         mTab.updateFullscreenEnabledState();
 
-        PolicyAuditor auditor =
-                ((ChromeApplication) mTab.getApplicationContext()).getPolicyAuditor();
+        PolicyAuditor auditor = AppHooks.get().getPolicyAuditor();
         auditor.notifyCertificateFailure(
                 PolicyAuditor.nativeGetCertificateFailure(mTab.getWebContents()),
                 mTab.getApplicationContext());

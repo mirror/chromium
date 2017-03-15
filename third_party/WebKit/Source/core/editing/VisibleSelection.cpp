@@ -85,13 +85,9 @@ static SelectionType computeSelectionType(
     DCHECK(end.isNull());
     return NoSelection;
   }
+  DCHECK(!needsLayoutTreeUpdate(start)) << start << ' ' << end;
   if (start == end)
     return CaretSelection;
-  // TODO(yosin) We should call |Document::updateStyleAndLayout()| here for
-  // |mostBackwardCaretPosition()|. However, we are here during
-  // |Node::removeChild()|.
-  start.anchorNode()->updateDistribution();
-  end.anchorNode()->updateDistribution();
   if (mostBackwardCaretPosition(start) == mostBackwardCaretPosition(end))
     return CaretSelection;
   return RangeSelection;
@@ -140,48 +136,12 @@ SelectionTemplate<Strategy> VisibleSelectionTemplate<Strategy>::asSelection()
       .build();
 }
 
-template <typename Strategy>
-void VisibleSelectionTemplate<Strategy>::setBase(
-    const PositionTemplate<Strategy>& position) {
-  DCHECK(!needsLayoutTreeUpdate(position));
-  m_base = position;
-  validate();
-}
-
-template <typename Strategy>
-void VisibleSelectionTemplate<Strategy>::setBase(
-    const VisiblePositionTemplate<Strategy>& visiblePosition) {
-  DCHECK(visiblePosition.isValid());
-  m_base = visiblePosition.deepEquivalent();
-  validate();
-}
-
-template <typename Strategy>
-void VisibleSelectionTemplate<Strategy>::setExtent(
-    const PositionTemplate<Strategy>& position) {
-  DCHECK(!needsLayoutTreeUpdate(position));
-  m_extent = position;
-  validate();
-}
-
-template <typename Strategy>
-void VisibleSelectionTemplate<Strategy>::setExtent(
-    const VisiblePositionTemplate<Strategy>& visiblePosition) {
-  DCHECK(visiblePosition.isValid());
-  m_extent = visiblePosition.deepEquivalent();
-  validate();
-}
-
 EphemeralRange firstEphemeralRangeOf(const VisibleSelection& selection) {
   if (selection.isNone())
     return EphemeralRange();
   Position start = selection.start().parentAnchoredEquivalent();
   Position end = selection.end().parentAnchoredEquivalent();
   return EphemeralRange(start, end);
-}
-
-Range* firstRangeOf(const VisibleSelection& selection) {
-  return createRange(firstEphemeralRangeOf(selection));
 }
 
 template <typename Strategy>
@@ -194,7 +154,7 @@ VisibleSelectionTemplate<Strategy>::toNormalizedEphemeralRange() const {
   // in the course of running edit commands which modify the DOM.
   // Failing to ensure this can result in equivalentXXXPosition calls returning
   // incorrect results.
-  DCHECK(!m_start.document()->needsLayoutTreeUpdate());
+  DCHECK(!needsLayoutTreeUpdate(m_start)) << *this;
 
   if (isCaret()) {
     // If the selection is a caret, move the range start upstream. This
@@ -222,7 +182,7 @@ VisibleSelectionTemplate<Strategy>::toNormalizedEphemeralRange() const {
 template <typename Strategy>
 static EphemeralRangeTemplate<Strategy> makeSearchRange(
     const PositionTemplate<Strategy>& pos) {
-  Node* node = pos.anchorNode();
+  Node* node = pos.computeContainerNode();
   if (!node)
     return EphemeralRangeTemplate<Strategy>();
   Document& document = node->document();
@@ -670,9 +630,7 @@ void VisibleSelectionTemplate<
         // The selection crosses an Editing boundary.  This is a
         // programmer error in the editing code.  Happy debugging!
         NOTREACHED();
-        m_base = PositionTemplate<Strategy>();
-        m_extent = PositionTemplate<Strategy>();
-        validate();
+        *this = VisibleSelectionTemplate<Strategy>();
         return;
       }
       m_end = previous.deepEquivalent();
@@ -708,9 +666,7 @@ void VisibleSelectionTemplate<
         // The selection crosses an Editing boundary.  This is a
         // programmer error in the editing code.  Happy debugging!
         NOTREACHED();
-        m_base = PositionTemplate<Strategy>();
-        m_extent = PositionTemplate<Strategy>();
-        validate();
+        *this = VisibleSelectionTemplate<Strategy>();
         return;
       }
       m_start = next.deepEquivalent();
@@ -741,19 +697,6 @@ bool VisibleSelectionTemplate<Strategy>::isContentRichlyEditable() const {
 template <typename Strategy>
 Element* VisibleSelectionTemplate<Strategy>::rootEditableElement() const {
   return rootEditableElementOf(start());
-}
-
-template <typename Strategy>
-void VisibleSelectionTemplate<Strategy>::updateIfNeeded() {
-  Document* document = m_base.document();
-  if (!document)
-    return;
-  DCHECK(!document->needsLayoutTreeUpdate());
-  const bool hasTrailingWhitespace = m_hasTrailingWhitespace;
-  validate(m_granularity);
-  if (!hasTrailingWhitespace)
-    return;
-  appendTrailingWhitespace();
 }
 
 template <typename Strategy>

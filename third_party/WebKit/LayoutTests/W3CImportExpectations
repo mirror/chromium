@@ -1,14 +1,18 @@
-# This file controls which subdirectories of the w3c test repos we do (or don't) import.
+# This file controls which subdirectories of the w3c test repos we import.
 #
-# This file acts as a blacklist; directories and files not listed here will automatically
-# be found and imported.
+# This file acts as a blacklist; directories and files not listed here will
+# automatically be found and imported.
 #
 # This file is read by webkitpy/w3c/directory_owners_extractor.py to decide who
-# to contact for new failures; to allow it to read
+# to contact for new failures; it will read entries with the following format:
 # When removing blacklist entries:
-# * Comment out the line rather than deleting it, to show it is intentional
+# * Comment out the line rather than deleting it, to show it is intentional.
 # * Change [ Skip ] to [ Pass ]
 # * Add a leading comment: ## Owners: user@example.com
+#
+# We may want to move towards importing but not running directories without
+# owners, in order to make it easier to enable or run them in the future --
+# directories that are imported but not run are listed in NeverFixTests.
 
 external/csswg-test/WOFF2-UserAgent [ Skip ]
 external/csswg-test/compositing-1 [ Skip ]
@@ -51,8 +55,10 @@ external/csswg-test/css-style-attr-1 [ Skip ]
 external/csswg-test/css-syntax-3 [ Skip ]
 external/csswg-test/css-tables-3 [ Skip ]
 external/csswg-test/css-text-3/hanging-punctuation [ Skip ]
-external/csswg-test/css-text-3/i18n [ Skip ]
-external/csswg-test/css-text-3/line-break [ Skip ]
+## Owners: kojii@chromium.org
+# external/csswg-test/css-text-3/i18n [ Pass ]
+# external/csswg-test/css-text-3/line-break [ Pass ]
+external/csswg-test/css-text-3/line-breaking [ Skip ]
 ## Owners: kojii@chromium.org
 # external/csswg-test/css-text-3/overflow-wrap [ Pass ]
 external/csswg-test/css-text-3/support [ Skip ]
@@ -241,7 +247,8 @@ external/wpt/dom [ Pass ]
 # external/wpt/domxpath [ Pass ]
 external/wpt/dpub-aam [ Skip ]
 external/wpt/dpub-aria [ Skip ]
-external/wpt/editing [ Skip ]
+## Owners: dom-dev@chromium.org
+# external/wpt/editing [ Skip ]
 ## Owners: jsbell@chromium.org
 # external/wpt/encoding [ Pass ]
 ## Owners: jrummell@chromium.org
@@ -269,7 +276,8 @@ external/wpt/http [ Skip ]
 ## Owners: none; No tests in the directory.
 # external/wpt/images [ Pass ]
 external/wpt/imagebitmap-renderingcontext [ Skip ]
-external/wpt/infrastructure [ Skip ]
+## Owners: smcgruer@chromium.org
+# external/wpt/infrastructure [ Skip ]
 ## Owners: dom-dev@chromium.org
 # external/wpt/innerText [ Pass ]
 external/wpt/js [ Skip ]
@@ -295,11 +303,12 @@ external/wpt/navigation-timing [ Pass ]
 external/wpt/notifications [ Skip ]
 external/wpt/offscreen-canvas [ Skip ]
 external/wpt/old-tests [ Skip ]
-external/wpt/orientation-event [ Skip ]
+## Owners: timvolodine@chromium.org,reillyg@chromium.org
+# external/wpt/orientation-event [ Pass ]
 external/wpt/payment-request [ Skip ]
 external/wpt/page-visibility [ Skip ]
 external/wpt/performance-timeline [ Skip ]
-## Owners: mustaq@chromium.org
+## Owners: nzolghadr@chromium.org,mustaq@chromium.org
 # external/wpt/pointerevents [ Pass ]
 external/wpt/pointerlock [ Skip ]
 external/wpt/presentation-api [ Skip ]
@@ -333,6 +342,8 @@ external/wpt/server-side.md [ Skip ]
 # external/wpt/service-workers/cache-storage [ Pass ]
 ## Owners: dom-dev@chromium.org
 # external/wpt/shadow-dom [ Pass ]
+## Owners: jsbell@chromium.org
+# external/wpt/storage [ Pass ]
 ## Owners: domenic@chromium.org,ricea@chromium.org,tyoshino@chromium.org
 external/wpt/streams [ Pass ]
 ## Owners: mkwst@chromium.org,jochen@chromium.org
@@ -459,28 +470,6 @@ external/wpt/html/semantics/embedded-content/the-video-element/video_dynamic_pos
 external/wpt/html/semantics/embedded-content/the-video-element/video_initially_paused.html [ Skip ]
 
 # crbug.com/493537: Need to support SVG reference tests
-external/wpt/dom/nodes/Document-createElement-namespace-tests/bare_mathml.svg [ Skip ]
-external/wpt/dom/nodes/Document-createElement-namespace-tests/bare_svg.svg [ Skip ]
-external/wpt/dom/nodes/Document-createElement-namespace-tests/bare_xhtml.svg [ Skip ]
-external/wpt/dom/nodes/Document-createElement-namespace-tests/empty.svg [ Skip ]
-external/wpt/dom/nodes/Document-createElement-namespace-tests/mathml.svg [ Skip ]
-external/wpt/dom/nodes/Document-createElement-namespace-tests/minimal_html.svg [ Skip ]
-external/wpt/dom/nodes/Document-createElement-namespace-tests/svg.svg [ Skip ]
-external/wpt/dom/nodes/Document-createElement-namespace-tests/xhtml.svg [ Skip ]
-external/wpt/dom/nodes/Document-createElement-namespace-tests/xhtml_ns_changed.svg [ Skip ]
-external/wpt/dom/nodes/Document-createElement-namespace-tests/xhtml_ns_removed.svg [ Skip ]
-external/wpt/dom/nodes/Element-childElement-null-svg.svg [ Skip ]
-external/wpt/dom/nodes/Element-childElementCount-dynamic-add-svg.svg [ Skip ]
-external/wpt/dom/nodes/Element-childElementCount-dynamic-remove-svg.svg [ Skip ]
-external/wpt/dom/nodes/Element-childElementCount-nochild-svg.svg [ Skip ]
-external/wpt/dom/nodes/Element-childElementCount-svg.svg [ Skip ]
-external/wpt/dom/nodes/Element-firstElementChild-entity.svg [ Skip ]
-external/wpt/dom/nodes/Element-firstElementChild-namespace-svg.svg [ Skip ]
-external/wpt/dom/nodes/Element-firstElementChild-svg.svg [ Skip ]
-external/wpt/dom/nodes/Element-lastElementChild-svg.svg [ Skip ]
-external/wpt/dom/nodes/Element-nextElementSibling-svg.svg [ Skip ]
-external/wpt/dom/nodes/Element-previousElementSibling-svg.svg [ Skip ]
-external/wpt/dom/nodes/Element-siblingElement-null-svg.svg [ Skip ]
 external/wpt/html/editing/the-hidden-attribute/hidden-2.svg [ Skip ]
 external/wpt/svg/shapes/rect-01.svg [ Skip ]
 external/wpt/svg/shapes/rect-02.svg [ Skip ]
@@ -495,22 +484,6 @@ crbug.com/679742 external/wpt/html/semantics/embedded-content/media-elements/tra
 crbug.com/626703 external/csswg-test/css-values-4/ic-unit-004.html [ Failure ]
 crbug.com/626703 external/csswg-test/css-values-4/ic-unit-001.html [ Failure ]
 crbug.com/626703 external/csswg-test/css-values-4/ic-unit-003.html [ Failure ]
-
-# https://github.com/w3c/web-platform-tests/issues/1861: A function can be
-# called before it's defined.
-# crbug.com/493465: Requires the pipe feature of wptserve
-external/wpt/html/browsers/the-window-object/security-window/window-security.sub.html [ Skip ]
-
-# crbug.com/493465: Requires the pipe feature of wptserve
-external/wpt/html/infrastructure/urls/resolving-urls [ Skip ]
-
-# crbug.com/535615: Pathnames are too long for Windows.
-external/wpt/html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-invoke-insert-fragment-into-document.html [ Skip ]
-external/wpt/html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-invoke-insert-parent-into-document.html [ Skip ]
-external/wpt/html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-invoke-insert-source-networkState.html [ Skip ]
-external/wpt/html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-invoke-insert-source-not-in-document.html [ Skip ]
-external/wpt/html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-invoke-remove-from-document-networkState.html [ Skip ]
-external/wpt/html/semantics/embedded-content/media-elements/loading-the-media-resource/resource-selection-pointer-remove-source-after.html [ Skip ]
 
 # It contains only manual SVG tests.
 external/wpt/html/editing/dnd/svg [ Skip ]
@@ -670,22 +643,6 @@ external/wpt/html/semantics/embedded-content/the-iframe-element/iframe_sandbox_p
 external/wpt/html/semantics/embedded-content/the-iframe-element/iframe_sandbox_popups_nonescaping-3.html [ Skip ]
 external/wpt/html/semantics/forms/form-submission-0/url-encoded.html [ Skip ]
 external/wpt/svg/linking/scripted [ Skip ]
-
-# Importer fails to import some files with some non-utf8 encodings.
-crbug.com/656171 external/wpt/workers/semantics/encodings [ Skip ]
-crbug.com/656171 external/wpt/html/semantics/scripting-1/the-script-element/external-script-windows1250.js [ Skip ]
-crbug.com/656171 external/wpt/html/semantics/scripting-1/the-script-element/script-charset-01.html [ Skip ]
-crbug.com/656171 external/wpt/html/semantics/scripting-1/the-script-element/script-charset-02.html [ Skip ]
-crbug.com/656171 external/wpt/html/semantics/scripting-1/the-script-element/script-charset-03.html [ Skip ]
-
-# They have a wrong encoding, and test_parser.py throws UnicodeEncodeError.
-external/wpt/domxpath/001.html [ Skip ]
-external/wpt/domxpath/002.html [ Skip ]
-
-# This test depends on a file xml_xpath_tests.xml, which is too large
-# for Rietveld to handle now, so it's not currently imported.
-crbug.com/676491 external/wpt/domxpath/xml_xpath_runner.html [ Skip ]
-crbug.com/676491 external/wpt/domxpath/xml_xpath_tests.xml [ Skip ]
 
 # This test depends on a support file with non-LF new lines, which
 # causes a patch error in the bot_update step when importing this test.

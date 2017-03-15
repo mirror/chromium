@@ -13,9 +13,12 @@
 #include "extensions/common/features/feature_provider.h"
 #include "extensions/renderer/api_binding_bridge.h"
 #include "extensions/renderer/api_binding_hooks.h"
+#include "extensions/renderer/api_binding_js_util.h"
+#include "extensions/renderer/chrome_setting.h"
 #include "extensions/renderer/module_system.h"
 #include "extensions/renderer/script_context.h"
 #include "extensions/renderer/script_context_set.h"
+#include "extensions/renderer/storage_area.h"
 #include "gin/converter.h"
 #include "gin/handle.h"
 #include "gin/per_context_data.h"
@@ -73,6 +76,9 @@ struct BindingsSystemPerContextData : public base::SupportsUserData::Data {
 // If no 'chrome' property exists (or is undefined), creates a new
 // object, assigns it to Global().chrome, and returns it.
 v8::Local<v8::Object> GetOrCreateChrome(v8::Local<v8::Context> context) {
+  // Ensure that the creation context for any new chrome object is |context|.
+  v8::Context::Scope context_scope(context);
+
   // TODO(devlin): This is a little silly. We expect that this may do the wrong
   // thing if the window has set some other 'chrome' (as in the case of script
   // doing 'window.chrome = true'), but we don't really handle it. It could also
@@ -85,19 +91,20 @@ v8::Local<v8::Object> GetOrCreateChrome(v8::Local<v8::Context> context) {
   if (!context->Global()->Get(context, chrome_string).ToLocal(&chrome_value))
     return v8::Local<v8::Object>();
 
+  v8::Local<v8::Object> chrome_object;
   if (chrome_value->IsUndefined()) {
-    v8::Local<v8::Object> chrome = v8::Object::New(context->GetIsolate());
+    chrome_object = v8::Object::New(context->GetIsolate());
     v8::Maybe<bool> success =
-        context->Global()->CreateDataProperty(context, chrome_string, chrome);
+        context->Global()->CreateDataProperty(context, chrome_string,
+                                              chrome_object);
     if (!success.IsJust() || !success.FromJust())
       return v8::Local<v8::Object>();
-    return chrome;
+  } else if (chrome_value->IsObject()) {
+    chrome_object = chrome_value.As<v8::Object>();
+    DCHECK(chrome_object->CreationContext() == context);
   }
 
-  if (chrome_value->IsObject())
-    return chrome_value.As<v8::Object>();
-
-  return v8::Local<v8::Object>();
+  return chrome_object;
 }
 
 BindingsSystemPerContextData* GetBindingsDataFromContext(
@@ -172,26 +179,24 @@ bool IsAPIMethodAvailable(ScriptContext* context,
 
 // Instantiates the binding object for the given |name|. |name| must specify a
 // specific feature.
-v8::Local<v8::Object> CreateRootBinding(
-    v8::Local<v8::Context> context,
-    ScriptContext* script_context,
-    const std::string& name,
-    APIBindingsSystem* bindings_system,
-    v8::Local<v8::Function> get_internal_api) {
-  v8::Local<v8::Object> hooks_interface;
+v8::Local<v8::Object> CreateRootBinding(v8::Local<v8::Context> context,
+                                        ScriptContext* script_context,
+                                        const std::string& name,
+                                        APIBindingsSystem* bindings_system) {
+  APIBindingHooks* hooks = nullptr;
   v8::Local<v8::Object> binding_object = bindings_system->CreateAPIInstance(
       name, context, context->GetIsolate(),
-      base::Bind(&IsAPIMethodAvailable, script_context), &hooks_interface);
+      base::Bind(&IsAPIMethodAvailable, script_context), &hooks);
 
   gin::Handle<APIBindingBridge> bridge_handle = gin::CreateHandle(
       context->GetIsolate(),
-      new APIBindingBridge(context, binding_object, hooks_interface,
+      new APIBindingBridge(hooks, context, binding_object,
                            script_context->GetExtensionID(),
                            script_context->GetContextTypeDescription(),
                            base::Bind(&CallJsFunction)));
   v8::Local<v8::Value> native_api_bridge = bridge_handle.ToV8();
-  script_context->module_system()->OnNativeBindingCreated(
-      name, native_api_bridge, get_internal_api);
+  script_context->module_system()->OnNativeBindingCreated(name,
+                                                          native_api_bridge);
 
   return binding_object;
 }
@@ -215,8 +220,7 @@ v8::Local<v8::Object> CreateFullBinding(
     ScriptContext* script_context,
     APIBindingsSystem* bindings_system,
     const FeatureProvider* api_feature_provider,
-    const std::string& root_name,
-    v8::Local<v8::Function> get_internal_api) {
+    const std::string& root_name) {
   const FeatureMap& features = api_feature_provider->GetAllFeatures();
   auto lower = features.lower_bound(root_name);
   DCHECK(lower != features.end());
@@ -231,7 +235,7 @@ v8::Local<v8::Object> CreateFullBinding(
     if (script_context->IsAnyFeatureAvailableToContext(
             *lower->second, CheckAliasStatus::NOT_ALLOWED)) {
       root_binding = CreateRootBinding(context, script_context, root_name,
-                                       bindings_system, get_internal_api);
+                                       bindings_system);
     }
     ++lower;
   }
@@ -285,9 +289,9 @@ v8::Local<v8::Object> CreateFullBinding(
     base::StringPiece binding_name =
         GetFirstDifferentAPIName(iter->first, root_name);
 
-    v8::Local<v8::Object> nested_binding = CreateFullBinding(
-        context, script_context, bindings_system, api_feature_provider,
-        binding_name.as_string(), get_internal_api);
+    v8::Local<v8::Object> nested_binding =
+        CreateFullBinding(context, script_context, bindings_system,
+                          api_feature_provider, binding_name.as_string());
     // It's possible that we don't create a binding if no features or
     // prefixed features are available to the context.
     if (nested_binding.IsEmpty())
@@ -330,15 +334,50 @@ NativeExtensionBindingsSystem::NativeExtensionBindingsSystem(
           base::Bind(&NativeExtensionBindingsSystem::OnEventListenerChanged,
                      base::Unretained(this)),
           APILastError(base::Bind(&GetRuntime))),
-      weak_factory_(this) {}
+      weak_factory_(this) {
+  api_system_.RegisterCustomType("storage.StorageArea",
+                                 base::Bind(&StorageArea::CreateStorageArea));
+  api_system_.RegisterCustomType("types.ChromeSetting",
+                                 base::Bind(&ChromeSetting::Create));
+}
 
 NativeExtensionBindingsSystem::~NativeExtensionBindingsSystem() {}
 
 void NativeExtensionBindingsSystem::DidCreateScriptContext(
-    ScriptContext* context) {}
+    ScriptContext* context) {
+  v8::Isolate* isolate = context->isolate();
+  v8::HandleScope handle_scope(isolate);
+  v8::Local<v8::Context> v8_context = context->v8_context();
+  gin::PerContextData* per_context_data = gin::PerContextData::From(v8_context);
+  DCHECK(per_context_data);
+  DCHECK(!per_context_data->GetUserData(kBindingsSystemPerContextKey));
+  auto data = base::MakeUnique<BindingsSystemPerContextData>(
+      weak_factory_.GetWeakPtr());
+  per_context_data->SetUserData(kBindingsSystemPerContextKey, data.release());
+
+  if (get_internal_api_.IsEmpty()) {
+    get_internal_api_.Set(
+        isolate, v8::FunctionTemplate::New(
+                     isolate, &NativeExtensionBindingsSystem::GetInternalAPI,
+                     v8::Local<v8::Value>(), v8::Local<v8::Signature>(), 0,
+                     v8::ConstructorBehavior::kThrow));
+  }
+
+  // Note: it's a shame we can't delay this (until, say, we knew an API would
+  // actually be used), but it's needed for some of our crazier hooks, like
+  // web/guest view.
+  context->module_system()->SetGetInternalAPIHook(
+      get_internal_api_.Get(isolate));
+  context->module_system()->SetJSBindingUtilGetter(
+      base::Bind(&NativeExtensionBindingsSystem::GetJSBindingUtil,
+                 weak_factory_.GetWeakPtr()));
+}
 
 void NativeExtensionBindingsSystem::WillReleaseScriptContext(
-    ScriptContext* context) {}
+    ScriptContext* context) {
+  v8::HandleScope handle_scope(context->isolate());
+  api_system_.WillReleaseContext(context->v8_context());
+}
 
 void NativeExtensionBindingsSystem::UpdateBindingsForContext(
     ScriptContext* context) {
@@ -348,18 +387,8 @@ void NativeExtensionBindingsSystem::UpdateBindingsForContext(
   if (chrome.IsEmpty())
     return;
 
-  gin::PerContextData* per_context_data = gin::PerContextData::From(v8_context);
-  DCHECK(per_context_data);
-  BindingsSystemPerContextData* data =
-      static_cast<BindingsSystemPerContextData*>(
-          per_context_data->GetUserData(kBindingsSystemPerContextKey));
-  if (!data) {
-    auto api_data = base::MakeUnique<BindingsSystemPerContextData>(
-        weak_factory_.GetWeakPtr());
-    data = api_data.get();
-    per_context_data->SetUserData(kBindingsSystemPerContextKey,
-                                  api_data.release());
-  }
+  BindingsSystemPerContextData* data = GetBindingsDataFromContext(v8_context);
+  DCHECK(data);
 
   const FeatureProvider* api_feature_provider =
       FeatureProvider::GetAPIFeatures();
@@ -466,20 +495,9 @@ v8::Local<v8::Object> NativeExtensionBindingsSystem::GetAPIHelper(
   if (data->api_object.IsEmpty()) {
     apis = v8::Object::New(isolate);
     data->api_object = v8::Global<v8::Object>(isolate, apis);
-    if (data->bindings_system->get_internal_api_.IsEmpty()) {
-      data->bindings_system->get_internal_api_.Set(
-          isolate, v8::FunctionTemplate::New(
-                       isolate, &NativeExtensionBindingsSystem::GetInternalAPI,
-                       v8::Local<v8::Value>(), v8::Local<v8::Signature>(), 0,
-                       v8::ConstructorBehavior::kThrow));
-    }
   } else {
     apis = data->api_object.Get(isolate);
   }
-  v8::Local<v8::Function> get_internal_api =
-      data->bindings_system->get_internal_api_.Get(isolate)
-          ->GetFunction(context)
-          .ToLocalChecked();
 
   v8::Maybe<bool> has_property = apis->HasRealNamedProperty(context, api_name);
   if (!has_property.IsJust())
@@ -500,7 +518,7 @@ v8::Local<v8::Object> NativeExtensionBindingsSystem::GetAPIHelper(
 
   v8::Local<v8::Object> root_binding = CreateFullBinding(
       context, script_context, &data->bindings_system->api_system_,
-      FeatureProvider::GetAPIFeatures(), api_name_string, get_internal_api);
+      FeatureProvider::GetAPIFeatures(), api_name_string);
   if (root_binding.IsEmpty())
     return v8::Local<v8::Object>();
 
@@ -566,22 +584,13 @@ void NativeExtensionBindingsSystem::GetInternalAPI(
 
   CHECK(feature->IsInternal());
 
-  // This is only called from the custom bindings for another API, so
-  // |get_internal_api| must have been initialized.
-  DCHECK(!data->bindings_system->get_internal_api_.IsEmpty());
-  v8::Local<v8::Function> get_internal_api =
-      data->bindings_system->get_internal_api_.Get(isolate)
-          ->GetFunction(context)
-          .ToLocalChecked();
-
   // We don't need to go through CreateFullBinding here because internal APIs
   // are always acquired through getInternalBinding and specified by full name,
   // rather than through access on the chrome object. So we can just instantiate
   // a binding keyed with any name, even a prefixed one (e.g.
   // 'app.currentWindowInternal').
-  v8::Local<v8::Object> api_binding =
-      CreateRootBinding(context, script_context, api_name,
-                        &data->bindings_system->api_system_, get_internal_api);
+  v8::Local<v8::Object> api_binding = CreateRootBinding(
+      context, script_context, api_name, &data->bindings_system->api_system_);
 
   if (api_binding.IsEmpty())
     return;
@@ -595,7 +604,7 @@ void NativeExtensionBindingsSystem::GetInternalAPI(
 }
 
 void NativeExtensionBindingsSystem::SendRequest(
-    std::unique_ptr<APIBinding::Request> request,
+    std::unique_ptr<APIRequestHandler::Request> request,
     v8::Local<v8::Context> context) {
   ScriptContext* script_context =
       ScriptContextSet::GetContextByV8Context(context);
@@ -628,6 +637,17 @@ void NativeExtensionBindingsSystem::OnEventListenerChanged(
     v8::Local<v8::Context> context) {
   send_event_listener_ipc_.Run(
       change, ScriptContextSet::GetContextByV8Context(context), event_name);
+}
+
+void NativeExtensionBindingsSystem::GetJSBindingUtil(
+    v8::Local<v8::Context> context,
+    v8::Local<v8::Value>* binding_util_out) {
+  gin::Handle<APIBindingJSUtil> handle =
+      gin::CreateHandle(context->GetIsolate(),
+                        new APIBindingJSUtil(api_system_.type_reference_map(),
+                                             api_system_.request_handler(),
+                                             api_system_.event_handler()));
+  *binding_util_out = handle.ToV8();
 }
 
 }  // namespace extensions

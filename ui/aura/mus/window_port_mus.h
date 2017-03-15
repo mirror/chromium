@@ -13,7 +13,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "cc/surfaces/surface_info.h"
-#include "services/ui/public/cpp/window_compositor_frame_sink.h"
+#include "services/ui/public/cpp/client_compositor_frame_sink.h"
 #include "services/ui/public/interfaces/cursor.mojom.h"
 #include "services/ui/public/interfaces/window_tree.mojom.h"
 #include "services/ui/public/interfaces/window_tree_constants.mojom.h"
@@ -59,18 +59,21 @@ class AURA_EXPORT WindowPortMus : public WindowPort, public WindowMus {
   // Sets the EventTargetingPolicy, default is TARGET_AND_DESCENDANTS.
   void SetEventTargetingPolicy(ui::mojom::EventTargetingPolicy policy);
 
+  // Sets whether this window can accept drops, defaults to false.
+  void SetCanAcceptDrops(bool can_accept_drops);
+
   // Embeds a new client in this Window. See WindowTreeClient::Embed() for
   // details on arguments.
   void Embed(ui::mojom::WindowTreeClientPtr client,
              uint32_t flags,
              const ui::mojom::WindowTree::EmbedCallback& callback);
 
-  std::unique_ptr<ui::WindowCompositorFrameSink> RequestCompositorFrameSink(
+  std::unique_ptr<ui::ClientCompositorFrameSink> RequestCompositorFrameSink(
       scoped_refptr<cc::ContextProvider> context_provider,
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager);
 
   void AttachCompositorFrameSink(
-      std::unique_ptr<ui::WindowCompositorFrameSinkBinding>
+      std::unique_ptr<ui::ClientCompositorFrameSinkBinding>
           compositor_frame_sink_binding);
 
  private:
@@ -234,6 +237,7 @@ class AURA_EXPORT WindowPortMus : public WindowPort, public WindowMus {
   std::unique_ptr<ui::PropertyData> OnWillChangeProperty(
       const void* key) override;
   void OnPropertyChanged(const void* key,
+                         int64_t old_value,
                          std::unique_ptr<ui::PropertyData> data) override;
 
   WindowTreeClient* window_tree_client_;

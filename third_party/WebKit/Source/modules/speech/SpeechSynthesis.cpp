@@ -96,7 +96,7 @@ void SpeechSynthesis::startSpeakingImmediately() {
 void SpeechSynthesis::speak(SpeechSynthesisUtterance* utterance) {
   ASSERT(utterance);
 
-  m_utteranceQueue.append(utterance);
+  m_utteranceQueue.push_back(utterance);
 
   // If the queue was empty, speak this immediately.
   if (m_utteranceQueue.size() == 1)
@@ -144,7 +144,7 @@ void SpeechSynthesis::handleSpeakingCompleted(
   // If the utterance that completed was the one we're currently speaking,
   // remove it from the queue and start speaking the next one.
   if (utterance == currentSpeechUtterance()) {
-    m_utteranceQueue.removeFirst();
+    m_utteranceQueue.pop_front();
     shouldStartSpeaking = !!m_utteranceQueue.size();
   }
 
@@ -227,7 +227,7 @@ SpeechSynthesisUtterance* SpeechSynthesis::currentSpeechUtterance() const {
   if (m_utteranceQueue.isEmpty())
     return nullptr;
 
-  return m_utteranceQueue.first();
+  return m_utteranceQueue.front();
 }
 
 const AtomicString& SpeechSynthesis::interfaceName() const {

@@ -29,7 +29,6 @@
 
 #include "core/dom/Fullscreen.h"
 
-#include "bindings/core/v8/ConditionalFeatures.h"
 #include "core/dom/Document.h"
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/StyleEngine.h"
@@ -86,8 +85,7 @@ bool allowedToUseFullscreen(const Frame* frame) {
 
   // 1. If FP, by itself, enables fullscreen in this document, then fullscreen
   // is allowed.
-  if (frame->securityContext()->getFeaturePolicy()->isFeatureEnabled(
-          kFullscreenFeature)) {
+  if (frame->isFeatureEnabled(WebFeaturePolicyFeature::Fullscreen)) {
     return true;
   }
 
@@ -435,7 +433,7 @@ void Fullscreen::requestFullscreen(Element& element,
     // the IPC that dispatches fullscreenchange.
     HeapDeque<Member<Document>> docs;
     for (Document* doc = &document; doc; doc = nextLocalAncestor(*doc))
-      docs.prepend(doc);
+      docs.push_front(doc);
 
     // 4. For each document in docs, run these substeps:
     HeapDeque<Member<Document>>::iterator current = docs.begin(),
@@ -548,7 +546,7 @@ void Fullscreen::exitFullscreen(Document& document) {
       continue;
     DCHECK(toLocalFrame(descendant)->document());
     if (fullscreenElementFrom(*toLocalFrame(descendant)->document()))
-      descendants.prepend(toLocalFrame(descendant)->document());
+      descendants.push_front(toLocalFrame(descendant)->document());
   }
 
   // 4. For each descendant in descendants, empty descendant's fullscreen
@@ -782,7 +780,7 @@ void Fullscreen::enqueueChangeEvent(Document& document,
       target = &document;
     event = createEvent(EventTypeNames::webkitfullscreenchange, *target);
   }
-  m_eventQueue.append(event);
+  m_eventQueue.push_back(event);
   // NOTE: The timer is started in didEnterFullscreen/didExitFullscreen.
 }
 
@@ -792,7 +790,7 @@ void Fullscreen::enqueueErrorEvent(Element& element, RequestType requestType) {
     event = createEvent(EventTypeNames::fullscreenerror, element.document());
   else
     event = createEvent(EventTypeNames::webkitfullscreenerror, element);
-  m_eventQueue.append(event);
+  m_eventQueue.push_back(event);
   m_eventQueueTimer.startOneShot(0, BLINK_FROM_HERE);
 }
 
@@ -808,7 +806,7 @@ void Fullscreen::eventQueueTimerFired(TimerBase*) {
     // documentElement.
     if (!target->isConnected() && document()->documentElement()) {
       DCHECK(isPrefixed(event->type()));
-      eventQueue.append(
+      eventQueue.push_back(
           createEvent(event->type(), *document()->documentElement()));
     }
 

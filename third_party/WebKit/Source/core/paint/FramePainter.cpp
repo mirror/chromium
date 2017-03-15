@@ -164,13 +164,13 @@ void FramePainter::paintContents(GraphicsContext& context,
 #if DCHECK_IS_ON()
   layoutView->assertSubtreeIsLaidOut();
   LayoutObject::SetLayoutNeededForbiddenScope forbidSetNeedsLayout(
-      *rootLayer->layoutObject());
+      rootLayer->layoutObject());
 #endif
 
   PaintLayerPainter layerPainter(*rootLayer);
 
   float deviceScaleFactor =
-      blink::deviceScaleFactor(rootLayer->layoutObject()->frame());
+      blink::deviceScaleFactorDeprecated(rootLayer->layoutObject().frame());
   context.setDeviceScaleFactor(deviceScaleFactor);
 
   layerPainter.paint(context, LayoutRect(rect), localPaintFlags);
@@ -191,8 +191,7 @@ void FramePainter::paintContents(GraphicsContext& context,
     s_inPaintContents = false;
   }
 
-  InspectorInstrumentation::didPaint(layoutView->frame(), 0, context,
-                                     LayoutRect(rect));
+  probe::didPaint(layoutView->frame(), 0, context, LayoutRect(rect));
 }
 
 void FramePainter::paintScrollbars(GraphicsContext& context,
@@ -229,8 +228,17 @@ void FramePainter::paintScrollCorner(GraphicsContext& context,
     return;
   }
 
-  ScrollbarTheme::theme().paintScrollCorner(context, *frameView().layoutView(),
-                                            cornerRect);
+  ScrollbarTheme* theme = nullptr;
+
+  if (frameView().horizontalScrollbar()) {
+    theme = &frameView().horizontalScrollbar()->theme();
+  } else if (frameView().verticalScrollbar()) {
+    theme = &frameView().verticalScrollbar()->theme();
+  } else {
+    NOTREACHED();
+  }
+
+  theme->paintScrollCorner(context, *frameView().layoutView(), cornerRect);
 }
 
 void FramePainter::paintScrollbar(GraphicsContext& context,

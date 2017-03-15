@@ -83,11 +83,14 @@ void ColorPicker::UpdateFrame() {
   if (!view)
     return;
 
-  gfx::Size size = view->GetViewBounds().size();
-  view->CopyFromCompositingSurface(
-      gfx::Rect(size), size,
-      base::Bind(&ColorPicker::FrameUpdated,
-                 weak_factory_.GetWeakPtr()),
+  // TODO(miu): This is the wrong size. It's the size of the view on-screen, and
+  // not the rendering size of the view. The latter is what is wanted here, so
+  // that the resulting bitmap's pixel coordinates line-up with the
+  // blink::WebMouseEvent coordinates. http://crbug.com/73362
+  gfx::Size should_be_rendering_size = view->GetViewBounds().size();
+  view->CopyFromSurface(
+      gfx::Rect(), should_be_rendering_size,
+      base::Bind(&ColorPicker::FrameUpdated, weak_factory_.GetWeakPtr()),
       kN32_SkColorType);
 }
 
@@ -115,7 +118,8 @@ bool ColorPicker::HandleMouseEvent(const blink::WebMouseEvent& event) {
     return true;
 
   if (event.button == blink::WebMouseEvent::Button::Left &&
-      event.type() == blink::WebInputEvent::MouseDown) {
+      (event.type() == blink::WebInputEvent::MouseDown ||
+       event.type() == blink::WebInputEvent::MouseMove)) {
     if (last_cursor_x_ < 0 || last_cursor_x_ >= frame_.width() ||
         last_cursor_y_ < 0 || last_cursor_y_ >= frame_.height()) {
       return true;

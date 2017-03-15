@@ -9,16 +9,19 @@
 namespace blink {
 {% for flag, function_name in switches %}
 
-bool CSSPropertyMetadata::{{function_name}}(CSSPropertyID property) {
-  switch(property) {
+bool CSSPropertyMetadata::{{function_name}}(CSSPropertyID unresolvedProperty) {
+  switch (unresolvedProperty) {
     case CSSPropertyInvalid:
-      ASSERT_NOT_REACHED();
+      NOTREACHED();
       return false;
-    {% for property_id, property in properties.items() if property[flag] %}
-    case {{property_id}}:
+    {% for property in properties_including_aliases if property[flag] %}
+    case {{property.property_id}}:
     {% endfor %}
-    {% if function_name == "isInheritedProperty" %}
+    {% if function_name in ("isInheritedProperty", "isProperty") %}
     case CSSPropertyVariable:
+    {% endif %}
+    {% if function_name == "isProperty" %}
+    case CSSPropertyApplyAtRule:
     {% endif %}
       return true;
     default:
@@ -27,18 +30,33 @@ bool CSSPropertyMetadata::{{function_name}}(CSSPropertyID property) {
 }
 {% endfor %}
 
+char CSSPropertyMetadata::repetitionSeparator(CSSPropertyID unresolvedProperty) {
+  switch (unresolvedProperty) {
+  {% for property in properties_including_aliases if property.separator %}
+  case {{property.property_id}}:
+    return '{{property.separator}}';
+  {% endfor %}
+  default:
+    return 0;
+  }
+}
+
+bool CSSPropertyMetadata::propertyIsRepeated(CSSPropertyID unresolvedProperty) {
+  return repetitionSeparator(unresolvedProperty) != 0;
+}
+
 bool CSSPropertyMetadata::isEnabledProperty(CSSPropertyID unresolvedProperty) {
   CSSPropertyID property = resolveCSSPropertyID(unresolvedProperty);
   static std::bitset<numCSSProperties>* enabledProperties = nullptr;
   if (!enabledProperties) {
     enabledProperties = new std::bitset<numCSSProperties>();
     enabledProperties->set(); // All bits sets to 1.
-    {% for property_id, property in properties.items() if property.runtime_flag %}
+    {% for property in properties_including_aliases if property.runtime_flag %}
     if (!RuntimeEnabledFeatures::{{property.runtime_flag|lower_first}}Enabled())
-      enabledProperties->reset({{property_id}} - {{first_enum_value}});
+      enabledProperties->reset({{property.property_id}} - {{first_enum_value}});
     {% endfor %}
-    {% for property_id, property in properties.items() if property.is_internal %}
-    enabledProperties->reset({{property_id}} - {{first_enum_value}});
+    {% for property in properties_including_aliases if property.is_internal %}
+    enabledProperties->reset({{property.property_id}} - {{first_enum_value}});
     {% endfor %}
   }
 

@@ -15,14 +15,13 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 std::unique_ptr<TemplateURLData> GenerateDummyTemplateURLData(
-    const std::string& provider_name) {
+    const std::string& keyword) {
   auto data = base::MakeUnique<TemplateURLData>();
-  data->SetShortName(base::UTF8ToUTF16(provider_name + "name"));
-  data->SetKeyword(base::UTF8ToUTF16(provider_name + "key"));
-  data->SetURL(std::string("http://") + provider_name + "foo/{searchTerms}");
-  data->suggestions_url = std::string("http://") + provider_name + "sugg";
-  data->alternate_urls.push_back(std::string("http://") + provider_name +
-                                 "foo/alt");
+  data->SetShortName(base::UTF8ToUTF16(keyword + "name"));
+  data->SetKeyword(base::UTF8ToUTF16(keyword));
+  data->SetURL(std::string("http://") + keyword + "foo/{searchTerms}");
+  data->suggestions_url = std::string("http://") + keyword + "sugg";
+  data->alternate_urls.push_back(std::string("http://") + keyword + "foo/alt");
   data->favicon_url = GURL("http://icon1");
   data->safe_for_autoreplace = true;
   data->input_encodings = {"UTF-8", "UTF-16"};
@@ -55,8 +54,9 @@ void ExpectSimilar(const TemplateURLData* expected,
   EXPECT_EQ(expected->safe_for_autoreplace, actual->safe_for_autoreplace);
   EXPECT_EQ(expected->input_encodings, actual->input_encodings);
   EXPECT_EQ(expected->alternate_urls, actual->alternate_urls);
-  EXPECT_EQ(expected->search_terms_replacement_key,
-            actual->search_terms_replacement_key);
+  EXPECT_TRUE(TemplateURL::SearchTermsReplacementKeysMatch(
+      expected->search_terms_replacement_key,
+      actual->search_terms_replacement_key));
 }
 
 void SetExtensionDefaultSearchInPrefs(

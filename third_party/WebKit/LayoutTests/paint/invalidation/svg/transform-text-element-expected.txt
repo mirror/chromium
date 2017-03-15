@@ -7,11 +7,6 @@
       "drawsContent": true,
       "paintInvalidations": [
         {
-          "object": "LayoutSVGInlineText #text",
-          "rect": [8, 58, 400, 100],
-          "reason": "subtree"
-        },
-        {
           "object": "LayoutSVGText text",
           "rect": [8, 58, 400, 100],
           "reason": "subtree"
@@ -30,6 +25,22 @@
     }
   ],
   "objectPaintInvalidations": [
+    {
+      "object": "LayoutSVGText text",
+      "reason": "subtree"
+    },
+    {
+      "object": "RootInlineBox",
+      "reason": "subtree"
+    },
+    {
+      "object": "LayoutSVGInlineText #text",
+      "reason": "subtree"
+    },
+    {
+      "object": "InlineTextBox 'Test'",
+      "reason": "subtree"
+    },
     {
       "object": "LayoutSVGText text",
       "reason": "subtree"

@@ -126,10 +126,6 @@ WebInputEventResult TouchEventManager::dispatchTouchEvents(
   // http://www.w3.org/TR/touch-events/#touchevent-interface for how these
   // lists fit together.
 
-  // Suppress all the touch moves in the slop region.
-  if (IsTouchSequenceStart(event))
-    m_suppressingTouchmovesWithinSlop = true;
-
   if (event.type() == WebInputEvent::TouchEnd ||
       event.type() == WebInputEvent::TouchCancel || event.touchesLength > 1) {
     m_suppressingTouchmovesWithinSlop = false;
@@ -214,7 +210,7 @@ WebInputEventResult TouchEventManager::dispatchTouchEvents(
     for (const auto& eventTarget : changedTouches[state].m_targets) {
       EventTarget* touchEventTarget = eventTarget;
       TouchEvent* touchEvent = TouchEvent::create(
-          event, touches, touchesByTarget.get(touchEventTarget),
+          event, touches, touchesByTarget.at(touchEventTarget),
           changedTouches[state].m_touches.get(), eventName,
           touchEventTarget->toNode()->document().domWindow(),
           m_currentTouchAction);
@@ -290,6 +286,12 @@ WebInputEventResult TouchEventManager::dispatchTouchEvents(
           eventResult,
           EventHandlingUtil::toWebInputEventResult(domDispatchResult));
     }
+  }
+
+  // Do not suppress any touchmoves if the touchstart is consumed.
+  if (IsTouchSequenceStart(event) &&
+      eventResult == WebInputEventResult::NotHandled) {
+    m_suppressingTouchmovesWithinSlop = true;
   }
 
   return eventResult;
@@ -393,8 +395,8 @@ void TouchEventManager::setAllPropertiesOfTouchInfos(
     } else {
       // No hittest is performed on move or stationary, since the target
       // is not allowed to change anyway.
-      touchNode = m_targetForTouchID.get(touchInfo.point.id);
-      regionID = m_regionForTouchID.get(touchInfo.point.id);
+      touchNode = m_targetForTouchID.at(touchInfo.point.id);
+      regionID = m_regionForTouchID.at(touchInfo.point.id);
     }
 
     LocalFrame* targetFrame = nullptr;
@@ -482,9 +484,9 @@ bool TouchEventManager::reHitTestTouchPointsIfNeeded(
   // If there's no document receiving touch events, or no handlers on the
   // document set to receive the events, then we can skip all the rest of
   // this work.
-  if (!m_touchSequenceDocument || !m_touchSequenceDocument->frameHost() ||
+  if (!m_touchSequenceDocument || !m_touchSequenceDocument->page() ||
       !hasTouchHandlers(
-          m_touchSequenceDocument->frameHost()->eventHandlerRegistry()) ||
+          m_touchSequenceDocument->page()->eventHandlerRegistry()) ||
       !m_touchSequenceDocument->frame()) {
     if (allTouchesReleased) {
       m_touchSequenceDocument.clear();

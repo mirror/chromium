@@ -24,6 +24,10 @@ bool TestingPrefStore::GetValue(const std::string& key,
   return prefs_.GetValue(key, value);
 }
 
+std::unique_ptr<base::DictionaryValue> TestingPrefStore::GetValues() const {
+  return prefs_.AsDictionaryValue();
+}
+
 bool TestingPrefStore::GetMutableValue(const std::string& key,
                                        base::Value** value) {
   return prefs_.GetValue(key, value);
@@ -120,18 +124,15 @@ void TestingPrefStore::ReportValueChanged(const std::string& key,
 
 void TestingPrefStore::SetString(const std::string& key,
                                  const std::string& value) {
-  SetValue(key, base::MakeUnique<base::StringValue>(value),
-           DEFAULT_PREF_WRITE_FLAGS);
+  SetValue(key, base::MakeUnique<base::Value>(value), DEFAULT_PREF_WRITE_FLAGS);
 }
 
 void TestingPrefStore::SetInteger(const std::string& key, int value) {
-  SetValue(key, base::MakeUnique<base::FundamentalValue>(value),
-           DEFAULT_PREF_WRITE_FLAGS);
+  SetValue(key, base::MakeUnique<base::Value>(value), DEFAULT_PREF_WRITE_FLAGS);
 }
 
 void TestingPrefStore::SetBoolean(const std::string& key, bool value) {
-  SetValue(key, base::MakeUnique<base::FundamentalValue>(value),
-           DEFAULT_PREF_WRITE_FLAGS);
+  SetValue(key, base::MakeUnique<base::Value>(value), DEFAULT_PREF_WRITE_FLAGS);
 }
 
 bool TestingPrefStore::GetString(const std::string& key,

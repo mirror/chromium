@@ -11,6 +11,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/content_settings/mixed_content_settings_tab_helper.h"
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
 #include "chrome/browser/data_use_measurement/data_use_web_contents_observer.h"
 #include "chrome/browser/engagement/site_engagement_helper.h"
@@ -21,6 +22,7 @@
 #include "chrome/browser/history/top_sites_factory.h"
 #include "chrome/browser/infobars/infobar_service.h"
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_observer.h"
+#include "chrome/browser/metrics/renderer_uptime_web_contents_observer.h"
 #include "chrome/browser/net/net_error_tab_helper.h"
 #include "chrome/browser/net/predictor_tab_helper.h"
 #include "chrome/browser/ntp_snippets/bookmark_last_visit_updater.h"
@@ -61,6 +63,7 @@
 #include "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.h"
 #include "components/tracing/common/tracing_switches.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "extensions/features/features.h"
 #include "printing/features/features.h"
 
@@ -200,6 +203,10 @@ void TabHelpers::AttachTabHelpers(WebContents* web_contents) {
   // TODO(vabr): Remove TabSpecificContentSettings from here once their function
   // is taken over by ChromeContentSettingsClient. http://crbug.com/387075
   TabSpecificContentSettings::CreateForWebContents(web_contents);
+  if (content::IsBrowserSideNavigationEnabled())
+    MixedContentSettingsTabHelper::CreateForWebContents(web_contents);
+  metrics::RendererUptimeWebContentsObserver::CreateForWebContents(
+      web_contents);
 
   // --- Platform-specific tab helpers ---
 

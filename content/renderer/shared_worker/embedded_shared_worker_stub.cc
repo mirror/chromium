@@ -26,10 +26,9 @@
 #include "ipc/ipc_message_macros.h"
 #include "third_party/WebKit/public/platform/URLConversion.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
-#include "third_party/WebKit/public/web/WebDataSource.h"
+#include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
 #include "third_party/WebKit/public/web/WebSharedWorker.h"
 #include "third_party/WebKit/public/web/WebSharedWorkerClient.h"
-#include "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
 #include "url/origin.h"
 
 namespace content {
@@ -66,70 +65,51 @@ class SharedWorkerWebApplicationCacheHostImpl
   }
 };
 
-// We store an instance of this class in the "extra data" of the WebDataSource
-// and attach a ServiceWorkerNetworkProvider to it as base::UserData.
-// (see createServiceWorkerNetworkProvider).
-class DataSourceExtraData
-    : public blink::WebDataSource::ExtraData,
-      public base::SupportsUserData {
- public:
-  DataSourceExtraData() {}
-  ~DataSourceExtraData() override {}
-  bool is_secure_context = false;
-};
-
 // Called on the main thread only and blink owns it.
 class WebServiceWorkerNetworkProviderImpl
     : public blink::WebServiceWorkerNetworkProvider {
  public:
+  WebServiceWorkerNetworkProviderImpl(
+      std::unique_ptr<ServiceWorkerNetworkProvider> provider,
+      bool is_secure_context)
+      : provider_(std::move(provider)), is_secure_context_(is_secure_context) {}
+
   // Blink calls this method for each request starting with the main script,
   // we tag them with the provider id.
-  void willSendRequest(blink::WebDataSource* data_source,
-                       blink::WebURLRequest& request) override {
-    ServiceWorkerNetworkProvider* provider =
-        GetNetworkProviderFromDataSource(data_source);
+  void willSendRequest(blink::WebURLRequest& request) override {
     std::unique_ptr<RequestExtraData> extra_data(new RequestExtraData);
-    extra_data->set_service_worker_provider_id(provider->provider_id());
-    extra_data->set_initiated_in_secure_context(
-        static_cast<DataSourceExtraData*>(data_source->getExtraData())
-            ->is_secure_context);
+    extra_data->set_service_worker_provider_id(provider_->provider_id());
+    extra_data->set_initiated_in_secure_context(is_secure_context_);
     request.setExtraData(extra_data.release());
     // If the provider does not have a controller at this point, the renderer
     // expects subresource requests to never be handled by a controlling service
-    // worker, so set the SkipServiceWorker flag here. Otherwise, a service
-    // worker that is in the process of becoming the controller (i.e., via
-    // claim()) on the browser-side could handle the request and break the
-    // assumptions of the renderer.
+    // worker, so set the ServiceWorkerMode to skip local workers here.
+    // Otherwise, a service worker that is in the process of becoming the
+    // controller (i.e., via claim()) on the browser-side could handle the
+    // request and break the assumptions of the renderer.
     if (request.getRequestContext() !=
             blink::WebURLRequest::RequestContextSharedWorker &&
-        !provider->IsControlledByServiceWorker() &&
-        request.skipServiceWorker() !=
-            blink::WebURLRequest::SkipServiceWorker::All) {
-      request.setSkipServiceWorker(
-          blink::WebURLRequest::SkipServiceWorker::Controlling);
+        !provider_->IsControlledByServiceWorker() &&
+        request.getServiceWorkerMode() !=
+            blink::WebURLRequest::ServiceWorkerMode::None) {
+      request.setServiceWorkerMode(
+          blink::WebURLRequest::ServiceWorkerMode::Foreign);
     }
   }
 
-  bool isControlledByServiceWorker(blink::WebDataSource& data_source) override {
-    ServiceWorkerNetworkProvider* provider =
-        GetNetworkProviderFromDataSource(&data_source);
-    return provider->IsControlledByServiceWorker();
+  bool isControlledByServiceWorker() override {
+    return provider_->IsControlledByServiceWorker();
   }
 
-  int64_t serviceWorkerID(blink::WebDataSource& data_source) override {
-    ServiceWorkerNetworkProvider* provider =
-        GetNetworkProviderFromDataSource(&data_source);
-    if (provider->context()->controller())
-      return provider->context()->controller()->version_id();
+  int64_t serviceWorkerID() override {
+    if (provider_->context()->controller())
+      return provider_->context()->controller()->version_id();
     return kInvalidServiceWorkerVersionId;
   }
 
  private:
-  ServiceWorkerNetworkProvider* GetNetworkProviderFromDataSource(
-      const blink::WebDataSource* data_source) {
-    return ServiceWorkerNetworkProvider::FromDocumentState(
-        static_cast<DataSourceExtraData*>(data_source->getExtraData()));
-  }
+  std::unique_ptr<ServiceWorkerNetworkProvider> provider_;
+  const bool is_secure_context_;
 };
 
 }  // namespace
@@ -189,22 +169,13 @@ void EmbeddedSharedWorkerStub::workerScriptLoaded() {
   Send(new WorkerHostMsg_WorkerScriptLoaded(route_id_));
   running_ = true;
   // Process any pending connections.
-  for (PendingChannelList::const_iterator iter = pending_channels_.begin();
-       iter != pending_channels_.end();
-       ++iter) {
-    ConnectToChannel(*iter);
-  }
+  for (auto& item : pending_channels_)
+    ConnectToChannel(item.first, std::move(item.second));
   pending_channels_.clear();
 }
 
 void EmbeddedSharedWorkerStub::workerScriptLoadFailed() {
   Send(new WorkerHostMsg_WorkerScriptLoadFailed(route_id_));
-  for (PendingChannelList::const_iterator iter = pending_channels_.begin();
-       iter != pending_channels_.end();
-       ++iter) {
-    blink::WebMessagePortChannel* channel = *iter;
-    channel->destroy();
-  }
   pending_channels_.clear();
   Shutdown();
 }
@@ -254,8 +225,7 @@ blink::WebWorkerContentSettingsClientProxy*
 }
 
 blink::WebServiceWorkerNetworkProvider*
-EmbeddedSharedWorkerStub::createServiceWorkerNetworkProvider(
-    blink::WebDataSource* data_source) {
+EmbeddedSharedWorkerStub::createServiceWorkerNetworkProvider() {
   // Create a content::ServiceWorkerNetworkProvider for this data source so
   // we can observe its requests.
   std::unique_ptr<ServiceWorkerNetworkProvider> provider(
@@ -263,16 +233,9 @@ EmbeddedSharedWorkerStub::createServiceWorkerNetworkProvider(
           route_id_, SERVICE_WORKER_PROVIDER_FOR_SHARED_WORKER,
           true /* is_parent_frame_secure */));
 
-  // The provider is kept around for the lifetime of the DataSource
-  // and ownership is transferred to the DataSource.
-  DataSourceExtraData* extra_data = new DataSourceExtraData();
-  extra_data->is_secure_context = IsOriginSecure(url_);
-  data_source->setExtraData(extra_data);
-  ServiceWorkerNetworkProvider::AttachToDocumentState(extra_data,
-                                                      std::move(provider));
-
   // Blink is responsible for deleting the returned object.
-  return new WebServiceWorkerNetworkProviderImpl();
+  return new WebServiceWorkerNetworkProviderImpl(std::move(provider),
+                                                 IsOriginSecure(url_));
 }
 
 void EmbeddedSharedWorkerStub::sendDevToolsMessage(
@@ -301,24 +264,24 @@ bool EmbeddedSharedWorkerStub::Send(IPC::Message* message) {
 }
 
 void EmbeddedSharedWorkerStub::ConnectToChannel(
-    WebMessagePortChannelImpl* channel) {
-  impl_->connect(channel);
-  Send(
-      new WorkerHostMsg_WorkerConnected(channel->message_port_id(), route_id_));
+    int connection_request_id,
+    std::unique_ptr<WebMessagePortChannelImpl> channel) {
+  impl_->connect(channel.release());
+  Send(new WorkerHostMsg_WorkerConnected(connection_request_id, route_id_));
 }
 
-void EmbeddedSharedWorkerStub::OnConnect(int port,
-                                         int routing_id) {
-  WebMessagePortChannelImpl* channel = new WebMessagePortChannelImpl(
-      routing_id, port, base::ThreadTaskRunnerHandle::Get().get());
+void EmbeddedSharedWorkerStub::OnConnect(int connection_request_id,
+                                         const MessagePort& port) {
+  auto channel = base::MakeUnique<WebMessagePortChannelImpl>(port);
   if (running_) {
-    ConnectToChannel(channel);
+    ConnectToChannel(connection_request_id, std::move(channel));
   } else {
     // If two documents try to load a SharedWorker at the same time, the
     // WorkerMsg_Connect for one of the documents can come in before the
     // worker is started. Just queue up the connect and deliver it once the
     // worker starts.
-    pending_channels_.push_back(channel);
+    pending_channels_.emplace_back(
+        std::make_pair(connection_request_id, std::move(channel)));
   }
 }
 

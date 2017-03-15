@@ -14,10 +14,12 @@
 #include "cc/output/begin_frame_args.h"
 #include "cc/test/ordered_simple_task_runner.h"
 #include "platform/WebTaskRunner.h"
+#include "platform/scheduler/base/real_time_domain.h"
 #include "platform/scheduler/base/test_time_source.h"
 #include "platform/scheduler/child/scheduler_tqm_delegate_for_test.h"
 #include "platform/scheduler/child/scheduler_tqm_delegate_impl.h"
 #include "platform/scheduler/renderer/auto_advancing_virtual_time_domain.h"
+#include "platform/scheduler/renderer/budget_pool.h"
 #include "platform/scheduler/renderer/web_frame_scheduler_impl.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -3681,6 +3683,25 @@ TEST_F(RendererSchedulerImplTest, EnableVirtualTime) {
             scheduler_->GetVirtualTimeDomain());
 }
 
+TEST_F(RendererSchedulerImplTest, DisableVirtualTimeForTesting) {
+  scheduler_->EnableVirtualTime();
+
+  scoped_refptr<TaskQueue> timer_tq =
+      scheduler_->NewTimerTaskRunner(TaskQueue::QueueType::TEST);
+  scoped_refptr<TaskQueue> unthrottled_tq =
+      scheduler_->NewUnthrottledTaskRunner(TaskQueue::QueueType::TEST);
+
+  scheduler_->DisableVirtualTimeForTesting();
+  EXPECT_EQ(scheduler_->DefaultTaskRunner()->GetTimeDomain(),
+            scheduler_->real_time_domain());
+  EXPECT_EQ(scheduler_->CompositorTaskRunner()->GetTimeDomain(),
+            scheduler_->real_time_domain());
+  EXPECT_EQ(scheduler_->LoadingTaskRunner()->GetTimeDomain(),
+            scheduler_->real_time_domain());
+  EXPECT_EQ(scheduler_->TimerTaskRunner()->GetTimeDomain(),
+            scheduler_->real_time_domain());
+}
+
 TEST_F(RendererSchedulerImplTest, Tracing) {
   // This test sets renderer scheduler to some non-trivial state
   // (by posting tasks, creating child schedulers, etc) and converts it into a
@@ -3697,8 +3718,8 @@ TEST_F(RendererSchedulerImplTest, Tracing) {
       new WebViewSchedulerImpl(nullptr, nullptr, scheduler_.get(), false));
   scheduler_->AddWebViewScheduler(web_view_scheduler2.get());
 
-  TaskQueueThrottler::TimeBudgetPool* time_budget_pool =
-      scheduler_->task_queue_throttler()->CreateTimeBudgetPool(
+  CPUTimeBudgetPool* time_budget_pool =
+      scheduler_->task_queue_throttler()->CreateCPUTimeBudgetPool(
           "test", base::nullopt, base::nullopt);
 
   time_budget_pool->AddQueue(base::TimeTicks(),

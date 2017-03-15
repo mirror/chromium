@@ -16,7 +16,8 @@
 #include "content/browser/renderer_host/render_widget_host_view_frame_subscriber.h"
 #include "content/browser/renderer_host/text_input_manager.h"
 #include "content/common/content_switches_internal.h"
-#include "ui/display/display.h"
+#include "media/base/video_frame.h"
+#include "ui/base/layout.h"
 #include "ui/display/screen.h"
 #include "ui/gfx/geometry/point_conversions.h"
 #include "ui/gfx/geometry/size_conversions.h"
@@ -103,10 +104,9 @@ bool RenderWidgetHostViewBase::GetBackgroundOpaque() {
 }
 
 gfx::Size RenderWidgetHostViewBase::GetPhysicalBackingSize() const {
-  display::Display display =
-      display::Screen::GetScreen()->GetDisplayNearestWindow(GetNativeView());
-  return gfx::ScaleToCeiledSize(GetRequestedRendererSize(),
-                                display.device_scale_factor());
+  return gfx::ScaleToCeiledSize(
+      GetRequestedRendererSize(),
+      ui::GetScaleFactorForNativeView(GetNativeView()));
 }
 
 bool RenderWidgetHostViewBase::DoBrowserControlsShrinkBlinkSize() const {
@@ -156,6 +156,27 @@ bool RenderWidgetHostViewBase::IsInVR() const {
   return false;
 }
 
+bool RenderWidgetHostViewBase::IsSurfaceAvailableForCopy() const {
+  return false;
+}
+
+void RenderWidgetHostViewBase::CopyFromSurface(
+    const gfx::Rect& src_rect,
+    const gfx::Size& output_size,
+    const ReadbackRequestCallback& callback,
+    const SkColorType color_type) {
+  NOTIMPLEMENTED();
+  callback.Run(SkBitmap(), READBACK_SURFACE_UNAVAILABLE);
+}
+
+void RenderWidgetHostViewBase::CopyFromSurfaceToVideoFrame(
+    const gfx::Rect& src_rect,
+    scoped_refptr<media::VideoFrame> target,
+    const base::Callback<void(const gfx::Rect&, bool)>& callback) {
+  NOTIMPLEMENTED();
+  callback.Run(gfx::Rect(), false);
+}
+
 bool RenderWidgetHostViewBase::IsShowingContextMenu() const {
   return showing_context_menu_;
 }
@@ -168,15 +189,7 @@ void RenderWidgetHostViewBase::SetShowingContextMenu(bool showing) {
 base::string16 RenderWidgetHostViewBase::GetSelectedText() {
   if (!GetTextInputManager())
     return base::string16();
-
-  const TextInputManager::TextSelection* selection =
-      GetTextInputManager()->GetTextSelection(this);
-
-  if (!selection || !selection->range.IsValid())
-    return base::string16();
-
-  return selection->text.substr(selection->range.GetMin() - selection->offset,
-                                selection->range.length());
+  return GetTextInputManager()->GetTextSelection(this)->selected_text();
 }
 
 bool RenderWidgetHostViewBase::IsMouseLocked() {

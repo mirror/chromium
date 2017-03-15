@@ -38,7 +38,7 @@
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutObject.h"
-#include "platform/Widget.h"
+#include "platform/FrameViewBase.h"
 #include "wtf/HashSet.h"
 
 // This file provides a utility function to support rendering certain elements
@@ -153,7 +153,7 @@ static const Element* topLayerAncestor(const Element* element) {
 // page. In a nutshell, iframe elements should occlude plugins when
 // they occur higher in the stacking order.
 void getPluginOcclusions(Element* element,
-                         Widget* parentWidget,
+                         FrameViewBase* parent,
                          const IntRect& frameRect,
                          Vector<IntRect>& occlusions) {
   LayoutObject* pluginNode = element->layoutObject();
@@ -164,14 +164,14 @@ void getPluginOcclusions(Element* element,
   Vector<const LayoutObject*> iframeZstack;
   getObjectStack(pluginNode, &pluginZstack);
 
-  if (!parentWidget->isFrameView())
+  if (!parent->isFrameView())
     return;
 
-  FrameView* parentFrameView = toFrameView(parentWidget);
+  FrameView* parentFrameView = toFrameView(parent);
 
   // Occlusions by iframes.
-  const FrameView::ChildrenWidgetSet* children = parentFrameView->children();
-  for (FrameView::ChildrenWidgetSet::const_iterator it = children->begin();
+  const FrameView::ChildrenSet* children = parentFrameView->children();
+  for (FrameView::ChildrenSet::const_iterator it = children->begin();
        it != children->end(); ++it) {
     // We only care about FrameView's because iframes show up as FrameViews.
     if (!(*it)->isFrameView())

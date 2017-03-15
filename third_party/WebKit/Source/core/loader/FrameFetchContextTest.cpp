@@ -40,13 +40,15 @@
 #include "core/html/HTMLIFrameElement.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/EmptyClients.h"
+#include "core/loader/SubresourceFilter.h"
 #include "core/page/Page.h"
 #include "core/testing/DummyPageHolder.h"
 #include "platform/loader/fetch/FetchInitiatorInfo.h"
-#include "platform/loader/fetch/MockResource.h"
+#include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/loader/fetch/UniqueIdentifier.h"
-#include "platform/network/ResourceRequest.h"
+#include "platform/loader/testing/MockResource.h"
 #include "platform/weborigin/KURL.h"
+#include "platform/weborigin/SecurityViolationReportingPolicy.h"
 #include "public/platform/WebAddressSpace.h"
 #include "public/platform/WebCachePolicy.h"
 #include "public/platform/WebDocumentSubresourceFilter.h"
@@ -56,28 +58,28 @@
 
 namespace blink {
 
-class StubFrameLoaderClientWithParent final : public EmptyFrameLoaderClient {
+class StubLocalFrameClientWithParent final : public EmptyLocalFrameClient {
  public:
-  static StubFrameLoaderClientWithParent* create(Frame* parent) {
-    return new StubFrameLoaderClientWithParent(parent);
+  static StubLocalFrameClientWithParent* create(Frame* parent) {
+    return new StubLocalFrameClientWithParent(parent);
   }
 
   DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->trace(m_parent);
-    EmptyFrameLoaderClient::trace(visitor);
+    EmptyLocalFrameClient::trace(visitor);
   }
 
   Frame* parent() const override { return m_parent.get(); }
 
  private:
-  explicit StubFrameLoaderClientWithParent(Frame* parent) : m_parent(parent) {}
+  explicit StubLocalFrameClientWithParent(Frame* parent) : m_parent(parent) {}
 
   Member<Frame> m_parent;
 };
 
-class MockFrameLoaderClient : public EmptyFrameLoaderClient {
+class MockLocalFrameClient : public EmptyLocalFrameClient {
  public:
-  MockFrameLoaderClient() : EmptyFrameLoaderClient() {}
+  MockLocalFrameClient() : EmptyLocalFrameClient() {}
   MOCK_METHOD1(didDisplayContentWithCertificateErrors, void(const KURL&));
   MOCK_METHOD2(dispatchDidLoadResourceFromMemoryCache,
                void(const ResourceRequest&, const ResourceResponse&));
@@ -93,6 +95,10 @@ class FixedPolicySubresourceFilter : public WebDocumentSubresourceFilter {
     return m_policy;
   }
 
+  LoadPolicy getLoadPolicyForWebSocketConnect(const WebURL& url) override {
+    return m_policy;
+  }
+
   void reportDisallowedLoad() override { ++*m_filteredLoadCounter; }
 
  private:
@@ -104,7 +110,7 @@ class FrameFetchContextTest : public ::testing::Test {
  protected:
   void SetUp() override {
     dummyPageHolder = DummyPageHolder::create(IntSize(500, 500));
-    dummyPageHolder->page().setDeviceScaleFactor(1.0);
+    dummyPageHolder->page().setDeviceScaleFactorDeprecated(1.0);
     document = &dummyPageHolder->document();
     fetchContext =
         static_cast<FrameFetchContext*>(&document->fetcher()->context());
@@ -118,7 +124,7 @@ class FrameFetchContextTest : public ::testing::Test {
   }
 
   FrameFetchContext* createChildFrame() {
-    childClient = StubFrameLoaderClientWithParent::create(document->frame());
+    childClient = StubLocalFrameClientWithParent::create(document->frame());
     childFrame = LocalFrame::create(childClient.get(),
                                     document->frame()->host(), owner.get());
     childFrame->setView(FrameView::create(*childFrame, IntSize(500, 500)));
@@ -138,7 +144,7 @@ class FrameFetchContextTest : public ::testing::Test {
   Persistent<Document> document;
   Persistent<FrameFetchContext> fetchContext;
 
-  Persistent<StubFrameLoaderClientWithParent> childClient;
+  Persistent<StubLocalFrameClientWithParent> childClient;
   Persistent<LocalFrame> childFrame;
   Persistent<Document> childDocument;
   Persistent<DummyFrameOwner> owner;
@@ -159,24 +165,23 @@ class FrameFetchContextSubresourceFilterTest : public FrameFetchContextTest {
   int getFilteredLoadCallCount() const { return m_filteredLoadCallbackCounter; }
 
   void setFilterPolicy(WebDocumentSubresourceFilter::LoadPolicy policy) {
-    document->loader()->setSubresourceFilter(
-        WTF::makeUnique<FixedPolicySubresourceFilter>(
-            policy, &m_filteredLoadCallbackCounter));
+    document->loader()->setSubresourceFilter(SubresourceFilter::create(
+        document->loader(), WTF::makeUnique<FixedPolicySubresourceFilter>(
+                                policy, &m_filteredLoadCallbackCounter)));
   }
 
   ResourceRequestBlockedReason canRequest() {
-    return canRequestInternal(
-        FetchContext::SecurityViolationReportingPolicy::Report);
+    return canRequestInternal(SecurityViolationReportingPolicy::Report);
   }
 
   ResourceRequestBlockedReason canRequestPreload() {
     return canRequestInternal(
-        FetchContext::SecurityViolationReportingPolicy::SuppressReporting);
+        SecurityViolationReportingPolicy::SuppressReporting);
   }
 
  private:
   ResourceRequestBlockedReason canRequestInternal(
-      FetchContext::SecurityViolationReportingPolicy reportingPolicy) {
+      SecurityViolationReportingPolicy reportingPolicy) {
     KURL inputURL(ParsedURLString, "http://example.com/");
     ResourceRequest resourceRequest(inputURL);
     return fetchContext->canRequest(
@@ -188,16 +193,16 @@ class FrameFetchContextSubresourceFilterTest : public FrameFetchContextTest {
 };
 
 // This test class sets up a mock frame loader client.
-class FrameFetchContextMockedFrameLoaderClientTest
+class FrameFetchContextMockedLocalFrameClientTest
     : public FrameFetchContextTest {
  protected:
   void SetUp() override {
     url = KURL(KURL(), "https://example.test/foo");
     mainResourceUrl = KURL(KURL(), "https://www.example.test");
-    client = new testing::NiceMock<MockFrameLoaderClient>();
+    client = new testing::NiceMock<MockLocalFrameClient>();
     dummyPageHolder =
         DummyPageHolder::create(IntSize(500, 500), nullptr, client);
-    dummyPageHolder->page().setDeviceScaleFactor(1.0);
+    dummyPageHolder->page().setDeviceScaleFactorDeprecated(1.0);
     document = &dummyPageHolder->document();
     document->setURL(mainResourceUrl);
     fetchContext =
@@ -209,7 +214,7 @@ class FrameFetchContextMockedFrameLoaderClientTest
   KURL url;
   KURL mainResourceUrl;
 
-  Persistent<testing::NiceMock<MockFrameLoaderClient>> client;
+  Persistent<testing::NiceMock<MockLocalFrameClient>> client;
 };
 
 class FrameFetchContextModifyRequestTest : public FrameFetchContextTest {
@@ -495,7 +500,7 @@ TEST_F(FrameFetchContextHintsTest, MonitorDPRHints) {
   preferences.setShouldSendDPR(true);
   document->clientHintsPreferences().updateFrom(preferences);
   expectHeader("http://www.example.com/1.gif", "DPR", true, "1");
-  dummyPageHolder->page().setDeviceScaleFactor(2.5);
+  dummyPageHolder->page().setDeviceScaleFactorDeprecated(2.5);
   expectHeader("http://www.example.com/1.gif", "DPR", true, "2.5");
   expectHeader("http://www.example.com/1.gif", "Width", false, "");
   expectHeader("http://www.example.com/1.gif", "Viewport-Width", false, "");
@@ -509,7 +514,7 @@ TEST_F(FrameFetchContextHintsTest, MonitorResourceWidthHints) {
   expectHeader("http://www.example.com/1.gif", "Width", true, "500", 500);
   expectHeader("http://www.example.com/1.gif", "Width", true, "667", 666.6666);
   expectHeader("http://www.example.com/1.gif", "DPR", false, "");
-  dummyPageHolder->page().setDeviceScaleFactor(2.5);
+  dummyPageHolder->page().setDeviceScaleFactorDeprecated(2.5);
   expectHeader("http://www.example.com/1.gif", "Width", true, "1250", 500);
   expectHeader("http://www.example.com/1.gif", "Width", true, "1667", 666.6666);
 }
@@ -637,7 +642,7 @@ TEST_F(FrameFetchContextTest, SetFirstPartyCookieAndRequestorOrigin) {
                                       << test.serializedOrigin);
     // Set up a new document to ensure sandbox flags are cleared:
     dummyPageHolder = DummyPageHolder::create(IntSize(500, 500));
-    dummyPageHolder->page().setDeviceScaleFactor(1.0);
+    dummyPageHolder->page().setDeviceScaleFactorDeprecated(1.0);
     document = &dummyPageHolder->document();
     FrameFetchContext::provideDocumentToContext(*fetchContext, document.get());
 
@@ -712,7 +717,7 @@ TEST_F(FrameFetchContextTest, DisabledDataSaver) {
 
 // Tests that the embedder gets correct notification when a resource is loaded
 // from the memory cache.
-TEST_F(FrameFetchContextMockedFrameLoaderClientTest,
+TEST_F(FrameFetchContextMockedLocalFrameClientTest,
        DispatchDidLoadResourceFromMemoryCache) {
   ResourceRequest resourceRequest(url);
   Resource* resource = MockResource::create(resourceRequest);
@@ -732,7 +737,7 @@ TEST_F(FrameFetchContextMockedFrameLoaderClientTest,
 
 // Tests that when a resource with certificate errors is loaded from the memory
 // cache, the embedder is notified.
-TEST_F(FrameFetchContextMockedFrameLoaderClientTest,
+TEST_F(FrameFetchContextMockedLocalFrameClientTest,
        MemoryCacheCertificateError) {
   ResourceRequest resourceRequest(url);
   ResourceResponse response;

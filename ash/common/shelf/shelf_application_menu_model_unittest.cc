@@ -6,7 +6,7 @@
 
 #include <utility>
 
-#include "ash/public/cpp/shelf_application_menu_item.h"
+#include "ash/common/test/test_shelf_item_delegate.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -49,7 +49,8 @@ class ShelfApplicationMenuModelTestAPI {
 // Verifies the menu contents given an empty item list.
 TEST(ShelfApplicationMenuModelTest, VerifyContentsWithNoMenuItems) {
   base::string16 title = base::ASCIIToUTF16("title");
-  ShelfApplicationMenuModel menu(title, ShelfAppMenuItemList());
+  ShelfApplicationMenuModel menu(title, std::vector<mojom::MenuItemPtr>(),
+                                 nullptr);
   // Expect the title with separators.
   ASSERT_EQ(static_cast<int>(3), menu.GetItemCount());
   EXPECT_EQ(ui::MenuModel::TYPE_SEPARATOR, menu.GetTypeAt(0));
@@ -61,16 +62,19 @@ TEST(ShelfApplicationMenuModelTest, VerifyContentsWithNoMenuItems) {
 
 // Verifies the menu contents given a non-empty item list.
 TEST(ShelfApplicationMenuModelTest, VerifyContentsWithMenuItems) {
-  ShelfAppMenuItemList items;
+  std::vector<mojom::MenuItemPtr> items;
   base::string16 title1 = base::ASCIIToUTF16("title1");
   base::string16 title2 = base::ASCIIToUTF16("title2");
   base::string16 title3 = base::ASCIIToUTF16("title3");
-  items.push_back(base::MakeUnique<ShelfApplicationMenuItem>(title1));
-  items.push_back(base::MakeUnique<ShelfApplicationMenuItem>(title2));
-  items.push_back(base::MakeUnique<ShelfApplicationMenuItem>(title3));
+  items.push_back(ash::mojom::MenuItem::New());
+  items[0]->label = title1;
+  items.push_back(ash::mojom::MenuItem::New());
+  items[1]->label = title2;
+  items.push_back(ash::mojom::MenuItem::New());
+  items[2]->label = title3;
 
   base::string16 title = base::ASCIIToUTF16("title");
-  ShelfApplicationMenuModel menu(title, std::move(items));
+  ShelfApplicationMenuModel menu(title, std::move(items), nullptr);
   ShelfApplicationMenuModelTestAPI menu_test_api(&menu);
 
   // Expect the title with separators, the enabled items, and another separator.
@@ -99,8 +103,9 @@ TEST(ShelfApplicationMenuModelTest, VerifyHistogramBuckets) {
 
   base::HistogramTester histogram_tester;
 
-  ShelfAppMenuItemList items;
-  ShelfApplicationMenuModel menu(base::ASCIIToUTF16("title"), std::move(items));
+  std::vector<mojom::MenuItemPtr> items;
+  ShelfApplicationMenuModel menu(base::ASCIIToUTF16("title"), std::move(items),
+                                 nullptr);
   ShelfApplicationMenuModelTestAPI menu_test_api(&menu);
   menu_test_api.RecordMenuItemSelectedMetrics(kCommandId, kNumMenuItemsEnabled);
 
@@ -117,10 +122,11 @@ TEST(ShelfApplicationMenuModelTest, VerifyHistogramBuckets) {
 TEST(ShelfApplicationMenuModelTest, VerifyHistogramOnExecute) {
   base::HistogramTester histogram_tester;
 
-  ShelfAppMenuItemList items;
+  std::vector<mojom::MenuItemPtr> items;
+  items.push_back(ash::mojom::MenuItem::New());
+  test::TestShelfItemDelegate test_delegate(nullptr);
   base::string16 title = base::ASCIIToUTF16("title");
-  items.push_back(base::MakeUnique<ShelfApplicationMenuItem>(title));
-  ShelfApplicationMenuModel menu(title, std::move(items));
+  ShelfApplicationMenuModel menu(title, std::move(items), &test_delegate);
   menu.ExecuteCommand(0, 0);
 
   histogram_tester.ExpectTotalCount(kNumItemsEnabledHistogramName, 1);

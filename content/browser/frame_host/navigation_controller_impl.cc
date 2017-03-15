@@ -39,7 +39,6 @@
 
 #include "base/bind.h"
 #include "base/command_line.h"
-#include "base/debug/dump_without_crashing.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
@@ -298,6 +297,8 @@ void NavigationControllerImpl::Restore(
 
 void NavigationControllerImpl::Reload(ReloadType reload_type,
                                       bool check_for_repost) {
+  DCHECK_NE(ReloadType::NONE, reload_type);
+
   if (transient_entry_index_ != -1) {
     // If an interstitial is showing, treat a reload as a navigation to the
     // transient entry's URL.
@@ -904,11 +905,7 @@ bool NavigationControllerImpl::RendererDidNavigate(
 
   // All committed entries should have nonempty content state so WebKit doesn't
   // get confused when we go back to them (see the function for details).
-  if (!params.page_state.IsValid()) {
-    // Temporarily generate a minidump to diagnose https://crbug.com/568703.
-    base::debug::DumpWithoutCrashing();
-    NOTREACHED() << "Shouldn't see an empty PageState at commit.";
-  }
+  DCHECK(params.page_state.IsValid()) << "Shouldn't see an empty PageState.";
   NavigationEntryImpl* active_entry = GetLastCommittedEntry();
   active_entry->SetTimestamp(timestamp);
   active_entry->SetHttpStatusCode(params.http_status_code);
@@ -1101,6 +1098,12 @@ void NavigationControllerImpl::RendererDidNavigateToNewPage(
     new_entry = GetLastCommittedEntry()->CloneAndReplace(
         frame_entry, true, rfh->frame_tree_node(),
         delegate_->GetFrameTree()->root());
+    if (new_entry->GetURL().GetOrigin() != params.url.GetOrigin()) {
+      // TODO(jam): we had one report of this with a URL that was redirecting to
+      // only tildes. Until we understand that better, don't copy the cert in
+      // this case.
+      new_entry->GetSSL() = SSLStatus();
+    }
 
     // We expect |frame_entry| to be owned by |new_entry|.  This should never
     // fail, because it's the main frame.
@@ -1212,6 +1215,8 @@ void NavigationControllerImpl::RendererDidNavigateToExistingPage(
     // meanwhile and no new page was created. We are stuck at the last committed
     // entry.
     entry = GetLastCommittedEntry();
+    CHECK(!is_in_page);
+    entry->GetSSL() = handle->ssl_status();
   } else if (params.nav_entry_id) {
     // This is a browser-initiated navigation (back/forward/reload).
     entry = GetEntryWithUniqueID(params.nav_entry_id);

@@ -6,7 +6,7 @@
 #define CHROME_BROWSER_PAYMENTS_CHROME_PAYMENT_REQUEST_DELEGATE_H_
 
 #include "base/macros.h"
-#include "components/payments/payment_request_delegate.h"
+#include "components/payments/content/payment_request_delegate.h"
 
 namespace content {
 class WebContents;
@@ -25,6 +25,7 @@ class ChromePaymentRequestDelegate : public PaymentRequestDelegate {
   void ShowDialog(PaymentRequest* request) override;
   void CloseDialog() override;
   autofill::PersonalDataManager* GetPersonalDataManager() override;
+  const std::string& GetApplicationLocale() const override;
 
  protected:
   // Reference to the dialog so that we can satisfy calls to CloseDialog(). This

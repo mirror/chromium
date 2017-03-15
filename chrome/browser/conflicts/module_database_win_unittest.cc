@@ -10,9 +10,9 @@
 
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
-#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
-#include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_task_scheduler.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/threading/simple_thread.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -62,7 +62,6 @@ constexpr uintptr_t kGoodAddress2 = 0x05000000u;
 class TestModuleDatabase : ModuleDatabase {
  public:
   // Types.
-  using ModuleDatabase::ModuleId;
   using ModuleDatabase::ModuleLoadAddresses;
 
   // Constants.
@@ -81,11 +80,8 @@ class ModuleDatabaseTest : public testing::Test {
   ModuleDatabaseTest()
       : dll1_(kDll1),
         dll2_(kDll2),
-        message_loop_(base::MakeUnique<base::MessageLoop>()),
-        module_database_(
-            base::MakeUnique<ModuleDatabase>(message_loop_->task_runner())) {}
-
-  void RunLoopUntilIdle() { base::RunLoop().RunUntilIdle(); }
+        module_database_(base::MakeUnique<ModuleDatabase>(
+            base::SequencedTaskRunnerHandle::Get())) {}
 
   const ModuleDatabase::ModuleMap& modules() {
     return module_database_->modules_;
@@ -95,6 +91,8 @@ class ModuleDatabaseTest : public testing::Test {
     return module_database_->processes_;
   }
 
+  ModuleDatabase* module_database() { return module_database_.get(); }
+
   static uint32_t ProcessTypeToBit(content::ProcessType process_type) {
     return ModuleDatabase::ProcessTypeToBit(process_type);
   }
@@ -102,27 +100,28 @@ class ModuleDatabaseTest : public testing::Test {
   // Counts the occurrences of the given |module_id| in the given collection of
   // |load_addresses|.
   static size_t ModuleIdCount(
-      ModuleDatabase::ModuleId module_id,
+      ModuleId module_id,
       const ModuleDatabase::ModuleLoadAddresses& load_addresses) {
     return std::count_if(
         load_addresses.begin(), load_addresses.end(),
         [module_id](const auto& x) { return module_id == x.first; });
   }
 
- protected:
   const base::FilePath dll1_;
   const base::FilePath dll2_;
 
-  std::unique_ptr<base::MessageLoop> message_loop_;
+ private:
+  // Must be before |module_database_|.
+  base::test::ScopedTaskScheduler scoped_task_scheduler_;
+
   std::unique_ptr<ModuleDatabase> module_database_;
 
- private:
   DISALLOW_COPY_AND_ASSIGN(ModuleDatabaseTest);
 };
 
 TEST_F(ModuleDatabaseTest, LoadAddressVectorOperations) {
   using TMD = TestModuleDatabase;
-  TestModuleDatabase::ModuleLoadAddresses la;
+  TMD::ModuleLoadAddresses la;
 
   // Finds should fail in an empty collection.
   EXPECT_EQ(TMD::kInvalidIndex, TMD::FindLoadAddressIndexById(0, la));
@@ -271,7 +270,7 @@ TEST_F(ModuleDatabaseTest, LoadAddressVectorOperations) {
 
 TEST_F(ModuleDatabaseTest, LoadAddressVectorStressTest) {
   using TMD = TestModuleDatabase;
-  TestModuleDatabase::ModuleLoadAddresses la;
+  TMD::ModuleLoadAddresses la;
 
   for (size_t n = 1; n < 200; ++n) {
     // Will keep track of which elements have been inserted.
@@ -280,7 +279,7 @@ TEST_F(ModuleDatabaseTest, LoadAddressVectorStressTest) {
 
     // Generate a shuffled list of IDs. This will be the insertion order.
     // More insertions than elements will occur so that rewrites occur.,
-    std::vector<TMD::ModuleId> ids(11 * n / 10);
+    std::vector<ModuleId> ids(11 * n / 10);
     for (size_t i = 0; i < 11 * n / 10; ++i)
       ids[i] = i % n;
     std::random_shuffle(ids.begin(), ids.end());
@@ -326,42 +325,45 @@ TEST_F(ModuleDatabaseTest, LoadAddressVectorStressTest) {
 }
 
 TEST_F(ModuleDatabaseTest, TasksAreBounced) {
-  // Run a task on the current thread. This should not be bounced, so no
-  // task should be scheduled on the task runner.
-  module_database_->OnProcessStarted(kPid1, kCreateTime1,
-                                     content::PROCESS_TYPE_BROWSER);
-  EXPECT_TRUE(message_loop_->IsIdleForTesting());
-  module_database_->OnModuleLoad(kPid1, kCreateTime1, dll1_, kSize1, kTime1,
-                                 kGoodAddress1);
-  EXPECT_TRUE(message_loop_->IsIdleForTesting());
-  module_database_->OnProcessEnded(kPid1, kCreateTime1);
-  EXPECT_TRUE(message_loop_->IsIdleForTesting());
+  // Run a task on the current thread. This should not be bounced, so their
+  // results should be immediately available.
+  module_database()->OnProcessStarted(kPid1, kCreateTime1,
+                                      content::PROCESS_TYPE_BROWSER);
+  EXPECT_EQ(1u, processes().size());
+  module_database()->OnModuleLoad(kPid1, kCreateTime1, dll1_, kSize1, kTime1,
+                                  kGoodAddress1);
+  EXPECT_EQ(1u, modules().size());
+  module_database()->OnProcessEnded(kPid1, kCreateTime1);
+  EXPECT_EQ(0u, processes().size());
 
   // Indicate another process start on this thread. This call can't be
   // bounced.
-  module_database_->OnProcessStarted(kPid2, kCreateTime2,
-                                     content::PROCESS_TYPE_BROWSER);
+  module_database()->OnProcessStarted(kPid2, kCreateTime2,
+                                      content::PROCESS_TYPE_BROWSER);
+  EXPECT_EQ(1u, processes().size());
 
-  // Run similar tasks on another thread. These should be bounced.
+  // Run similar tasks on another thread with another module. These should be
+  // bounced.
   RunTask(base::Bind(&ModuleDatabase::OnModuleLoad,
-                     base::Unretained(module_database_.get()), kPid2,
-                     kCreateTime2, dll1_, kSize1, kTime1, kGoodAddress1));
-  EXPECT_FALSE(message_loop_->IsIdleForTesting());
-  RunLoopUntilIdle();
+                     base::Unretained(module_database()), kPid2, kCreateTime2,
+                     dll2_, kSize1, kTime1, kGoodAddress1));
+  EXPECT_EQ(1u, modules().size());
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(2u, modules().size());
 
   RunTask(base::Bind(&ModuleDatabase::OnProcessEnded,
-                     base::Unretained(module_database_.get()), kPid2,
-                     kCreateTime2));
-  EXPECT_FALSE(message_loop_->IsIdleForTesting());
-  RunLoopUntilIdle();
+                     base::Unretained(module_database()), kPid2, kCreateTime2));
+  EXPECT_EQ(1u, processes().size());
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(0u, processes().size());
 }
 
 TEST_F(ModuleDatabaseTest, EventsWithoutProcessIgnore) {
   EXPECT_EQ(0u, modules().size());
   EXPECT_EQ(0u, processes().size());
 
-  module_database_->OnModuleLoad(kPid1, kCreateTime1, dll1_, kSize1, kTime1,
-                                 kGoodAddress1);
+  module_database()->OnModuleLoad(kPid1, kCreateTime1, dll1_, kSize1, kTime1,
+                                  kGoodAddress1);
 
   EXPECT_EQ(0u, modules().size());
   EXPECT_EQ(0u, processes().size());
@@ -372,8 +374,8 @@ TEST_F(ModuleDatabaseTest, OrphanedUnloadIgnored) {
   EXPECT_EQ(0u, processes().size());
 
   // Start a process.
-  module_database_->OnProcessStarted(kPid1, kCreateTime1,
-                                     content::PROCESS_TYPE_BROWSER);
+  module_database()->OnProcessStarted(kPid1, kCreateTime1,
+                                      content::PROCESS_TYPE_BROWSER);
   EXPECT_EQ(0u, modules().size());
   EXPECT_EQ(1u, processes().size());
   auto p1 = processes().begin();
@@ -385,7 +387,7 @@ TEST_F(ModuleDatabaseTest, OrphanedUnloadIgnored) {
 
   // Indicate a module unload. This should do nothing because there's no
   // corresponding module.
-  module_database_->OnModuleUnload(kPid1, kCreateTime1, kGoodAddress1);
+  module_database()->OnModuleUnload(kPid1, kCreateTime1, kGoodAddress1);
   EXPECT_EQ(0u, modules().size());
   EXPECT_EQ(1u, processes().size());
   EXPECT_EQ(0u, p1->second.loaded_modules.size());
@@ -397,8 +399,8 @@ TEST_F(ModuleDatabaseTest, DatabaseIsConsistent) {
   EXPECT_EQ(0u, processes().size());
 
   // Start a process.
-  module_database_->OnProcessStarted(kPid1, kCreateTime1,
-                                     content::PROCESS_TYPE_BROWSER);
+  module_database()->OnProcessStarted(kPid1, kCreateTime1,
+                                      content::PROCESS_TYPE_BROWSER);
   EXPECT_EQ(0u, modules().size());
   EXPECT_EQ(1u, processes().size());
   auto p1 = processes().begin();
@@ -409,8 +411,8 @@ TEST_F(ModuleDatabaseTest, DatabaseIsConsistent) {
   EXPECT_EQ(0u, p1->second.unloaded_modules.size());
 
   // Load a module.
-  module_database_->OnModuleLoad(kPid1, kCreateTime1, dll1_, kSize1, kTime1,
-                                 kGoodAddress1);
+  module_database()->OnModuleLoad(kPid1, kCreateTime1, dll1_, kSize1, kTime1,
+                                  kGoodAddress1);
   EXPECT_EQ(1u, modules().size());
   EXPECT_EQ(1u, processes().size());
 
@@ -427,8 +429,8 @@ TEST_F(ModuleDatabaseTest, DatabaseIsConsistent) {
   EXPECT_EQ(1u, ModuleIdCount(m1->first.module_id, p1->second.loaded_modules));
 
   // Provide a redundant load message for that module.
-  module_database_->OnModuleLoad(kPid1, kCreateTime1, dll1_, kSize1, kTime1,
-                                 kGoodAddress1);
+  module_database()->OnModuleLoad(kPid1, kCreateTime1, dll1_, kSize1, kTime1,
+                                  kGoodAddress1);
   EXPECT_EQ(1u, modules().size());
   EXPECT_EQ(1u, processes().size());
 
@@ -444,8 +446,8 @@ TEST_F(ModuleDatabaseTest, DatabaseIsConsistent) {
   EXPECT_EQ(1u, ModuleIdCount(m1->first.module_id, p1->second.loaded_modules));
 
   // Load a second module into the process.
-  module_database_->OnModuleLoad(kPid1, kCreateTime1, dll2_, kSize2, kTime2,
-                                 kGoodAddress2);
+  module_database()->OnModuleLoad(kPid1, kCreateTime1, dll2_, kSize2, kTime2,
+                                  kGoodAddress2);
   EXPECT_EQ(2u, modules().size());
   EXPECT_EQ(1u, processes().size());
 
@@ -463,7 +465,7 @@ TEST_F(ModuleDatabaseTest, DatabaseIsConsistent) {
   EXPECT_EQ(1u, ModuleIdCount(m2->first.module_id, p1->second.loaded_modules));
 
   // Unload the second module.
-  module_database_->OnModuleUnload(kPid1, kCreateTime1, kGoodAddress2);
+  module_database()->OnModuleUnload(kPid1, kCreateTime1, kGoodAddress2);
   EXPECT_EQ(2u, modules().size());
   EXPECT_EQ(1u, processes().size());
 
@@ -481,8 +483,8 @@ TEST_F(ModuleDatabaseTest, DatabaseIsConsistent) {
             ModuleIdCount(m2->first.module_id, p1->second.unloaded_modules));
 
   // Start a process.
-  module_database_->OnProcessStarted(kPid2, kCreateTime2,
-                                     content::PROCESS_TYPE_RENDERER);
+  module_database()->OnProcessStarted(kPid2, kCreateTime2,
+                                      content::PROCESS_TYPE_RENDERER);
   EXPECT_EQ(2u, modules().size());
   EXPECT_EQ(2u, processes().size());
   auto p2 = processes().rbegin();
@@ -493,8 +495,8 @@ TEST_F(ModuleDatabaseTest, DatabaseIsConsistent) {
   EXPECT_EQ(0u, p2->second.unloaded_modules.size());
 
   // Load the dummy.dll in the second process as well.
-  module_database_->OnModuleLoad(kPid2, kCreateTime2, dll1_, kSize1, kTime1,
-                                 kGoodAddress1);
+  module_database()->OnModuleLoad(kPid2, kCreateTime2, dll1_, kSize1, kTime1,
+                                  kGoodAddress1);
   EXPECT_EQ(ProcessTypeToBit(content::PROCESS_TYPE_BROWSER) |
                 ProcessTypeToBit(content::PROCESS_TYPE_RENDERER),
             m1->second.process_types);
@@ -506,7 +508,7 @@ TEST_F(ModuleDatabaseTest, DatabaseIsConsistent) {
   EXPECT_EQ(1u, ModuleIdCount(m1->first.module_id, p2->second.loaded_modules));
 
   // End the second process without an explicit unload. This invalidates |p2|.
-  module_database_->OnProcessEnded(kPid2, kCreateTime2);
+  module_database()->OnProcessEnded(kPid2, kCreateTime2);
   EXPECT_EQ(2u, modules().size());
   EXPECT_EQ(1u, processes().size());
   EXPECT_EQ(kPid1, p1->first.process_id);
@@ -518,7 +520,7 @@ TEST_F(ModuleDatabaseTest, DatabaseIsConsistent) {
             m2->second.process_types);
 
   // End the first process without an explicit unload. This invalidates |p1|.
-  module_database_->OnProcessEnded(kPid1, kCreateTime1);
+  module_database()->OnProcessEnded(kPid1, kCreateTime1);
   EXPECT_EQ(2u, modules().size());
   EXPECT_EQ(0u, processes().size());
   EXPECT_EQ(ProcessTypeToBit(content::PROCESS_TYPE_BROWSER) |

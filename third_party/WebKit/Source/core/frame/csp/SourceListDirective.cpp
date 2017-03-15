@@ -29,6 +29,7 @@ SourceListDirective::SourceListDirective(const String& name,
       m_allowEval(false),
       m_allowDynamic(false),
       m_allowHashedAttributes(false),
+      m_reportSample(false),
       m_hashAlgorithmsUsed(0) {
   Vector<UChar> characters;
   value.appendTo(characters);
@@ -61,21 +62,16 @@ bool SourceListDirective::allows(
   if (m_allowStar) {
     if (url.protocolIsInHTTPFamily() || url.protocolIs("ftp") ||
         url.protocolIs("ws") || url.protocolIs("wss") ||
-        m_policy->protocolMatchesSelf(url))
+        m_policy->protocolEqualsSelf(url.protocol()))
       return true;
 
     return hasSourceMatchInList(url, redirectStatus);
   }
 
-  KURL effectiveURL =
-      m_policy->selfMatchesInnerURL() && SecurityOrigin::shouldUseInnerURL(url)
-          ? SecurityOrigin::extractInnerURL(url)
-          : url;
-
-  if (m_allowSelf && m_policy->urlMatchesSelf(effectiveURL))
+  if (m_allowSelf && m_policy->urlMatchesSelf(url))
     return true;
 
-  return hasSourceMatchInList(effectiveURL, redirectStatus);
+  return hasSourceMatchInList(url, redirectStatus);
 }
 
 bool SourceListDirective::allowInline() const {
@@ -101,6 +97,12 @@ bool SourceListDirective::allowHash(const CSPHashValue& hashValue) const {
 
 bool SourceListDirective::allowHashedAttributes() const {
   return m_allowHashedAttributes;
+}
+
+bool SourceListDirective::allowReportSample() const {
+  if (!m_policy->experimentalFeaturesEnabled())
+    return false;
+  return m_reportSample;
 }
 
 bool SourceListDirective::isNone() const {
@@ -208,6 +210,11 @@ bool SourceListDirective::parseSource(
 
   if (equalIgnoringCase("'unsafe-hashed-attributes'", token)) {
     addSourceUnsafeHashedAttributes();
+    return true;
+  }
+
+  if (equalIgnoringCase("'report-sample'", token)) {
+    addReportSample();
     return true;
   }
 
@@ -560,6 +567,10 @@ void SourceListDirective::addSourceUnsafeHashedAttributes() {
   m_allowHashedAttributes = true;
 }
 
+void SourceListDirective::addReportSample() {
+  m_reportSample = true;
+}
+
 void SourceListDirective::addSourceNonce(const String& nonce) {
   m_nonces.insert(nonce);
 }
@@ -696,6 +707,18 @@ bool SourceListDirective::subsumes(
   return CSPSource::firstSubsumesSecond(normalizedA, normalizedB);
 }
 
+WebContentSecurityPolicySourceList
+SourceListDirective::exposeForNavigationalChecks() const {
+  WebContentSecurityPolicySourceList sourceList;
+  sourceList.allowSelf = m_allowSelf;
+  sourceList.allowStar = m_allowStar;
+  WebVector<WebContentSecurityPolicySourceExpression> list(m_list.size());
+  for (size_t i = 0; i < m_list.size(); ++i)
+    list[i] = m_list[i]->exposeForNavigationalChecks();
+  sourceList.sources.swap(list);
+  return sourceList;
+}
+
 bool SourceListDirective::subsumesNoncesAndHashes(
     const HashSet<String>& nonces,
     const HashSet<CSPHashValue> hashes) const {
@@ -755,9 +778,9 @@ SourceListDirective::getIntersectSchemesOnly(
       if (schemesA.contains(sourceB->getScheme()))
         addSourceToMap(intersect, sourceB);
       else if (sourceB->getScheme() == "http" && schemesA.contains("https"))
-        intersect.insert("https", schemesA.get("https"));
+        intersect.insert("https", schemesA.at("https"));
       else if (sourceB->getScheme() == "ws" && schemesA.contains("wss"))
-        intersect.insert("wss", schemesA.get("wss"));
+        intersect.insert("wss", schemesA.at("wss"));
     }
   }
 

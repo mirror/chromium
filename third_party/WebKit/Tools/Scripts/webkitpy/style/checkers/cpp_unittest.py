@@ -40,20 +40,17 @@ import random
 import re
 import unittest
 
-import cpp as cpp_style
-from cpp import CppChecker
-from ..filter import FilterConfiguration
 from webkitpy.common.system.filesystem import FileSystem
+from webkitpy.style.checkers import cpp as cpp_style
+from webkitpy.style.checkers.cpp import CppChecker
+from webkitpy.style.filter import FilterConfiguration
 
 # This class works as an error collector and replaces cpp_style.Error
 # function for the unit tests.  We also verify each category we see
 # is in STYLE_CATEGORIES, to help keep that list up to date.
 
 
-class ErrorCollector:
-    _all_style_categories = CppChecker.categories
-    # This is a list including all categories seen in any unit test.
-    _seen_style_categories = {}
+class ErrorCollector(object):
 
     def __init__(self, assert_fn, filter=None, lines_to_check=None):
         """assert_fn: a function to call when we notice a problem.
@@ -62,6 +59,7 @@ class ErrorCollector:
         self._assert_fn = assert_fn
         self._errors = []
         self._lines_to_check = lines_to_check
+        self._all_style_categories = CppChecker.categories
         if not filter:
             filter = FilterConfiguration()
         self._filter = filter
@@ -74,8 +72,7 @@ class ErrorCollector:
         if self._lines_to_check and not line_number in self._lines_to_check:
             return False
 
-        if self._filter.should_check(category, ""):
-            self._seen_style_categories[category] = 1
+        if self._filter.should_check(category, ''):
             self._errors.append('%s  [%s] [%d]' % (message, category, confidence))
         return True
 
@@ -87,20 +84,6 @@ class ErrorCollector:
 
     def result_list(self):
         return self._errors
-
-    def verify_all_categories_are_seen(self):
-        """Fails if there's a category in _all_style_categories - _seen_style_categories.
-
-        This should only be called after all tests are run, so
-        _seen_style_categories has had a chance to fully populate.  Since
-        this isn't called from within the normal unittest framework, we
-        can't use the normal unittest assert macros.  Instead we just exit
-        when we see an error.  Good thing this test is always run last!
-        """
-        for category in self._all_style_categories:
-            if category not in self._seen_style_categories:
-                import sys
-                sys.exit('FATAL ERROR: There are no tests for category "%s"' % category)
 
 
 class CppFunctionsTest(unittest.TestCase):
@@ -1455,91 +1438,91 @@ class CppStyleTest(CppStyleTestBase):
     # CHECK/EXPECT_TRUE/EXPECT_FALSE replacements
     def test_check_check(self):
         self.assert_lint('CHECK(x == 42)',
-                         'Consider using CHECK_EQ instead of CHECK(a == b)'
+                         'Consider using CHECK_EQ(a, b) instead of CHECK(a == b)'
                          '  [readability/check] [2]')
         self.assert_lint('CHECK(x != 42)',
-                         'Consider using CHECK_NE instead of CHECK(a != b)'
+                         'Consider using CHECK_NE(a, b) instead of CHECK(a != b)'
                          '  [readability/check] [2]')
         self.assert_lint('CHECK(x >= 42)',
-                         'Consider using CHECK_GE instead of CHECK(a >= b)'
+                         'Consider using CHECK_GE(a, b) instead of CHECK(a >= b)'
                          '  [readability/check] [2]')
         self.assert_lint('CHECK(x > 42)',
-                         'Consider using CHECK_GT instead of CHECK(a > b)'
+                         'Consider using CHECK_GT(a, b) instead of CHECK(a > b)'
                          '  [readability/check] [2]')
         self.assert_lint('CHECK(x <= 42)',
-                         'Consider using CHECK_LE instead of CHECK(a <= b)'
+                         'Consider using CHECK_LE(a, b) instead of CHECK(a <= b)'
                          '  [readability/check] [2]')
         self.assert_lint('CHECK(x < 42)',
-                         'Consider using CHECK_LT instead of CHECK(a < b)'
+                         'Consider using CHECK_LT(a, b) instead of CHECK(a < b)'
                          '  [readability/check] [2]')
 
         self.assert_lint('DCHECK(x == 42)',
-                         'Consider using DCHECK_EQ instead of DCHECK(a == b)'
+                         'Consider using DCHECK_EQ(a, b) instead of DCHECK(a == b)'
                          '  [readability/check] [2]')
         self.assert_lint('DCHECK(x != 42)',
-                         'Consider using DCHECK_NE instead of DCHECK(a != b)'
+                         'Consider using DCHECK_NE(a, b) instead of DCHECK(a != b)'
                          '  [readability/check] [2]')
         self.assert_lint('DCHECK(x >= 42)',
-                         'Consider using DCHECK_GE instead of DCHECK(a >= b)'
+                         'Consider using DCHECK_GE(a, b) instead of DCHECK(a >= b)'
                          '  [readability/check] [2]')
         self.assert_lint('DCHECK(x > 42)',
-                         'Consider using DCHECK_GT instead of DCHECK(a > b)'
+                         'Consider using DCHECK_GT(a, b) instead of DCHECK(a > b)'
                          '  [readability/check] [2]')
         self.assert_lint('DCHECK(x <= 42)',
-                         'Consider using DCHECK_LE instead of DCHECK(a <= b)'
+                         'Consider using DCHECK_LE(a, b) instead of DCHECK(a <= b)'
                          '  [readability/check] [2]')
         self.assert_lint('DCHECK(x < 42)',
-                         'Consider using DCHECK_LT instead of DCHECK(a < b)'
+                         'Consider using DCHECK_LT(a, b) instead of DCHECK(a < b)'
                          '  [readability/check] [2]')
 
         self.assert_lint(
             'EXPECT_TRUE("42" == x)',
-            'Consider using EXPECT_EQ instead of EXPECT_TRUE(a == b)'
+            'Consider using EXPECT_EQ(a, b) instead of EXPECT_TRUE(a == b)'
             '  [readability/check] [2]')
         self.assert_lint(
             'EXPECT_TRUE("42" != x)',
-            'Consider using EXPECT_NE instead of EXPECT_TRUE(a != b)'
+            'Consider using EXPECT_NE(a, b) instead of EXPECT_TRUE(a != b)'
             '  [readability/check] [2]')
         self.assert_lint(
             'EXPECT_TRUE(+42 >= x)',
-            'Consider using EXPECT_GE instead of EXPECT_TRUE(a >= b)'
+            'Consider using EXPECT_GE(a, b) instead of EXPECT_TRUE(a >= b)'
             '  [readability/check] [2]')
         self.assert_lint(
             'EXPECT_TRUE_M(-42 > x)',
-            'Consider using EXPECT_GT_M instead of EXPECT_TRUE_M(a > b)'
+            'Consider using EXPECT_GT_M(a, b) instead of EXPECT_TRUE_M(a > b)'
             '  [readability/check] [2]')
         self.assert_lint(
             'EXPECT_TRUE_M(42U <= x)',
-            'Consider using EXPECT_LE_M instead of EXPECT_TRUE_M(a <= b)'
+            'Consider using EXPECT_LE_M(a, b) instead of EXPECT_TRUE_M(a <= b)'
             '  [readability/check] [2]')
         self.assert_lint(
             'EXPECT_TRUE_M(42L < x)',
-            'Consider using EXPECT_LT_M instead of EXPECT_TRUE_M(a < b)'
+            'Consider using EXPECT_LT_M(a, b) instead of EXPECT_TRUE_M(a < b)'
             '  [readability/check] [2]')
 
         self.assert_lint(
             'EXPECT_FALSE(x == 42)',
-            'Consider using EXPECT_NE instead of EXPECT_FALSE(a == b)'
+            'Consider using EXPECT_NE(a, b) instead of EXPECT_FALSE(a == b)'
             '  [readability/check] [2]')
         self.assert_lint(
             'EXPECT_FALSE(x != 42)',
-            'Consider using EXPECT_EQ instead of EXPECT_FALSE(a != b)'
+            'Consider using EXPECT_EQ(a, b) instead of EXPECT_FALSE(a != b)'
             '  [readability/check] [2]')
         self.assert_lint(
             'EXPECT_FALSE(x >= 42)',
-            'Consider using EXPECT_LT instead of EXPECT_FALSE(a >= b)'
+            'Consider using EXPECT_LT(a, b) instead of EXPECT_FALSE(a >= b)'
             '  [readability/check] [2]')
         self.assert_lint(
             'ASSERT_FALSE(x > 42)',
-            'Consider using ASSERT_LE instead of ASSERT_FALSE(a > b)'
+            'Consider using ASSERT_LE(a, b) instead of ASSERT_FALSE(a > b)'
             '  [readability/check] [2]')
         self.assert_lint(
             'ASSERT_FALSE(x <= 42)',
-            'Consider using ASSERT_GT instead of ASSERT_FALSE(a <= b)'
+            'Consider using ASSERT_GT(a, b) instead of ASSERT_FALSE(a <= b)'
             '  [readability/check] [2]')
         self.assert_lint(
             'ASSERT_FALSE_M(x < 42)',
-            'Consider using ASSERT_GE_M instead of ASSERT_FALSE_M(a < b)'
+            'Consider using ASSERT_GE_M(a, b) instead of ASSERT_FALSE_M(a < b)'
             '  [readability/check] [2]')
 
         self.assert_lint('CHECK(some_iterator == obj.end())', '')
@@ -1550,23 +1533,23 @@ class CppStyleTest(CppStyleTestBase):
         self.assert_lint('CHECK(CreateTestFile(dir, (1 >> 20)));', '')
 
         self.assert_lint('CHECK(x<42)',
-                         'Consider using CHECK_LT instead of CHECK(a < b)'
+                         'Consider using CHECK_LT(a, b) instead of CHECK(a < b)'
                          '  [readability/check] [2]')
         self.assert_lint('CHECK(x>42)',
-                         'Consider using CHECK_GT instead of CHECK(a > b)'
+                         'Consider using CHECK_GT(a, b) instead of CHECK(a > b)'
                          '  [readability/check] [2]')
 
         self.assert_lint(
             '  EXPECT_TRUE(42 < x) // Random comment.',
-            'Consider using EXPECT_LT instead of EXPECT_TRUE(a < b)'
+            'Consider using EXPECT_LT(a, b) instead of EXPECT_TRUE(a < b)'
             '  [readability/check] [2]')
         self.assert_lint(
             'EXPECT_TRUE( 42 < x )',
-            'Consider using EXPECT_LT instead of EXPECT_TRUE(a < b)'
+            'Consider using EXPECT_LT(a, b) instead of EXPECT_TRUE(a < b)'
             '  [readability/check] [2]')
         self.assert_lint(
             'CHECK("foo" == "foo")',
-            'Consider using CHECK_EQ instead of CHECK(a == b)'
+            'Consider using CHECK_EQ(a, b) instead of CHECK(a == b)'
             '  [readability/check] [2]')
 
         self.assert_lint('CHECK_EQ("foo", "foo")', '')
@@ -1691,7 +1674,7 @@ class CppStyleTest(CppStyleTestBase):
         self.assert_language_rules_check(
             'foo.h', 'namespace {',
             'Do not use unnamed namespaces in header files.  See'
-            ' http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml#Namespaces'
+            ' https://google.github.io/styleguide/cppguide.html#Unnamed_Namespaces_and_Static_Variables'
             ' for more information.  [build/namespaces] [4]')
         # namespace registration macros are OK.
         self.assert_language_rules_check('foo.h', 'namespace {  \\', '')
@@ -2541,9 +2524,6 @@ class CheckForFunctionLengthsTest(CppStyleTestBase):
 
     def function_body(self, number_of_lines):
         return ' {\n' + '  this_is_just_a_test();\n' * number_of_lines + '}'
-
-    def function_body_with_blank_lines(self, number_of_lines):
-        return ' {\n' + '  this_is_just_a_test();\n\n' * number_of_lines + '}'
 
     def function_body_with_no_lints(self, number_of_lines):
         return ' {\n' + '  this_is_just_a_test();  // NOLINT\n' * number_of_lines + '}'
@@ -3711,7 +3691,7 @@ class WebKitStyleTest(CppStyleTestBase):
         self.assert_lint(
             'using std::min;',
             "Use 'using namespace std;' instead of 'using std::min;'."
-            "  [build/using_std] [4]",
+            '  [build/using_std] [4]',
             'foo.cpp')
 
     def test_using_std_swap_ignored(self):
@@ -3765,9 +3745,9 @@ class WebKitStyleTest(CppStyleTestBase):
 
     def test_names(self):
         name_underscore_error_message = (" is incorrectly named. Don't use underscores in your identifier names."
-                                         "  [readability/naming/underscores] [4]")
+                                         '  [readability/naming/underscores] [4]')
         name_tooshort_error_message = (" is incorrectly named. Don't use the single letter 'l' as an identifier name."
-                                       "  [readability/naming] [4]")
+                                       '  [readability/naming] [4]')
 
         # Basic cases from WebKit style guide.
         self.assert_lint('struct Data;', '')
@@ -4104,13 +4084,13 @@ class CppCheckerTest(unittest.TestCase):
         pass
 
     def _checker(self):
-        return CppChecker("foo", "h", self.mock_handle_style_error, 3)
+        return CppChecker('foo', 'h', self.mock_handle_style_error, 3)
 
     def test_init(self):
         """Test __init__ constructor."""
         checker = self._checker()
-        self.assertEqual(checker.file_extension, "h")
-        self.assertEqual(checker.file_path, "foo")
+        self.assertEqual(checker.file_extension, 'h')
+        self.assertEqual(checker.file_path, 'foo')
         self.assertEqual(checker.handle_style_error, self.mock_handle_style_error)
         self.assertEqual(checker.min_confidence, 3)
 
@@ -4126,11 +4106,11 @@ class CppCheckerTest(unittest.TestCase):
             pass
 
         # Verify that a difference in any argument cause equality to fail.
-        checker = CppChecker("foo", "h", self.mock_handle_style_error, 3)
-        self.assertFalse(checker == CppChecker("bar", "h", self.mock_handle_style_error, 3))
-        self.assertFalse(checker == CppChecker("foo", "c", self.mock_handle_style_error, 3))
-        self.assertFalse(checker == CppChecker("foo", "h", mock_handle_style_error2, 3))
-        self.assertFalse(checker == CppChecker("foo", "h", self.mock_handle_style_error, 4))
+        checker = CppChecker('foo', 'h', self.mock_handle_style_error, 3)
+        self.assertFalse(checker == CppChecker('bar', 'h', self.mock_handle_style_error, 3))
+        self.assertFalse(checker == CppChecker('foo', 'c', self.mock_handle_style_error, 3))
+        self.assertFalse(checker == CppChecker('foo', 'h', mock_handle_style_error2, 3))
+        self.assertFalse(checker == CppChecker('foo', 'h', self.mock_handle_style_error, 4))
 
     def test_ne(self):
         """Test __ne__ inequality function."""

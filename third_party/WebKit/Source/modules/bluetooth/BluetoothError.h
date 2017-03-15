@@ -11,8 +11,26 @@
 
 namespace blink {
 
+// Used when generating DOMExceptions specific to each operation.
+// TODO(crbug.com/684445): Add DescriptorsRetrieval.
+enum class BluetoothOperation {
+  ServicesRetrieval,
+  CharacteristicsRetrieval,
+  DescriptorsRetrieval,
+  GATT,
+};
+
+// These error codes requires detailed error messages.
+enum class BluetoothErrorCode {
+  InvalidService,
+  InvalidCharacteristic,
+  InvalidDescriptor,
+  ServiceNotFound,
+  CharacteristicNotFound,
+  DescriptorNotFound
+};
+
 class DOMException;
-class ScriptPromiseResolver;
 
 // BluetoothError is used with CallbackPromiseAdapter to receive
 // WebBluetoothResult responses. See CallbackPromiseAdapter class comments.
@@ -20,9 +38,12 @@ class BluetoothError {
   STATIC_ONLY(BluetoothError);
 
  public:
-  // Interface required by CallbackPromiseAdapter:
-  static DOMException* take(ScriptPromiseResolver*,
-                            mojom::blink::WebBluetoothResult);
+  static DOMException* CreateNotConnectedException(BluetoothOperation);
+  static DOMException* CreateDOMException(BluetoothErrorCode,
+                                          const String& detailedMessage);
+
+  static DOMException* CreateDOMException(
+      mojom::blink::WebBluetoothResult error);
 };
 
 }  // namespace blink

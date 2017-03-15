@@ -57,16 +57,6 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
         }
     };
 
-    private final Runnable mMoveCursorSelectionEndRunnable = new Runnable() {
-        @Override
-        public void run() {
-            TextInputState textInputState = requestAndWaitForTextInputState();
-            if (textInputState == null) return;
-            Range selection = textInputState.selection();
-            setSelection(selection.end(), selection.end());
-        }
-    };
-
     private final Runnable mRequestTextInputStateUpdate = new Runnable() {
         @Override
         public void run() {
@@ -156,14 +146,6 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
             }
         });
         return true;
-    }
-
-    /**
-     * @see ChromiumBaseInputConnection#moveCursorToSelectionEndOnUiThread()
-     */
-    @Override
-    public void moveCursorToSelectionEndOnUiThread() {
-        mHandler.post(mMoveCursorSelectionEndRunnable);
     }
 
     @Override
@@ -427,9 +409,21 @@ class ThreadedInputConnection extends BaseInputConnection implements ChromiumBas
     /**
      * @see InputConnection#deleteSurroundingTextInCodePoints(int, int)
      */
-    public boolean deleteSurroundingTextInCodePoints(int beforeLength, int afterLength) {
-        // TODO(changwan): Implement this. http://crbug.com/595525
-        return false;
+    public boolean deleteSurroundingTextInCodePoints(
+            final int beforeLength, final int afterLength) {
+        if (DEBUG_LOGS) {
+            Log.w(TAG, "deleteSurroundingTextInCodePoints [%d %d]", beforeLength, afterLength);
+        }
+        ThreadUtils.postOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mPendingAccent != 0) {
+                    finishComposingTextOnUiThread();
+                }
+                mImeAdapter.deleteSurroundingTextInCodePoints(beforeLength, afterLength);
+            }
+        });
+        return true;
     }
 
     /**

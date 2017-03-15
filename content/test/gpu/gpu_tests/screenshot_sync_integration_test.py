@@ -39,8 +39,8 @@ class ScreenshotSyncIntegrationTest(gpu_integration_test.GpuIntegrationTest):
     return 'screenshot_sync'
 
   @classmethod
-  def setUpClass(cls):
-    super(cls, ScreenshotSyncIntegrationTest).setUpClass()
+  def SetUpProcess(cls):
+    super(cls, ScreenshotSyncIntegrationTest).SetUpProcess()
     cls._original_finder_options = cls._finder_options.Copy()
     cls.CustomizeBrowserArgs([])
     cls.StartBrowser()
@@ -115,7 +115,7 @@ class ScreenshotSyncIntegrationTest(gpu_integration_test.GpuIntegrationTest):
                                      random.randint(0, 255),
                                      255)
     tab = self.tab
-    tab.EvaluateJavaScript2(
+    tab.EvaluateJavaScript(
         "window.draw({{ red }}, {{ green }}, {{ blue }});",
         red=canvasRGB.r, green=canvasRGB.g, blue=canvasRGB.b)
     screenshot = tab.Screenshot(5)

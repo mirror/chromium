@@ -4,6 +4,8 @@
 
 #include "modules/presentation/PresentationReceiver.h"
 
+#include <memory>
+
 #include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "bindings/core/v8/V8BindingForTesting.h"
 #include "core/frame/LocalFrame.h"
@@ -16,8 +18,7 @@
 #include "public/platform/modules/presentation/WebPresentationConnectionProxy.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include <memory>
-#include <v8.h>
+#include "v8/include/v8.h"
 
 namespace blink {
 
@@ -85,11 +86,12 @@ class MockWebPresentationClient : public WebPresentationClient {
                     size_t length,
                     const WebPresentationConnectionProxy* proxy));
 
-  MOCK_METHOD2(closeSession,
+  MOCK_METHOD3(closeSession,
                void(const WebURL& presentationUrl,
-                    const WebString& presentationId));
+                    const WebString& presentationId,
+                    const WebPresentationConnectionProxy*));
 
-  MOCK_METHOD2(terminateSession,
+  MOCK_METHOD2(terminateConnection,
                void(const WebURL& presentationUrl,
                     const WebString& presentationId));
 
@@ -202,9 +204,12 @@ TEST_F(PresentationReceiverTest, TwoConnectionsNoEvent) {
   WebPresentationSessionInfo sessionInfo(KURL(KURL(), "http://example.com"),
                                          "id");
   // Receive first connection.
-  receiver->onReceiverConnectionAvailable(sessionInfo);
+  auto* connection1 = receiver->onReceiverConnectionAvailable(sessionInfo);
+  EXPECT_TRUE(connection1);
+
   // Receive second connection.
-  receiver->onReceiverConnectionAvailable(sessionInfo);
+  auto* connection2 = receiver->onReceiverConnectionAvailable(sessionInfo);
+  EXPECT_TRUE(connection2);
 
   receiver->connectionList(scope.getScriptState());
   verifyConnectionListPropertyState(ScriptPromisePropertyBase::Resolved,

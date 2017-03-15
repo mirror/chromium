@@ -43,8 +43,8 @@ Status ExecuteGetAlert(Session* session,
                        WebView* web_view,
                        const base::DictionaryValue& params,
                        std::unique_ptr<base::Value>* value) {
-  value->reset(new base::FundamentalValue(
-      web_view->GetJavaScriptDialogManager()->IsDialogOpen()));
+  value->reset(
+      new base::Value(web_view->GetJavaScriptDialogManager()->IsDialogOpen()));
   return Status(kOk);
 }
 
@@ -57,7 +57,7 @@ Status ExecuteGetAlertText(Session* session,
       web_view->GetJavaScriptDialogManager()->GetDialogMessage(&message);
   if (status.IsError())
     return status;
-  value->reset(new base::StringValue(message));
+  value->reset(new base::Value(message));
   return Status(kOk);
 }
 

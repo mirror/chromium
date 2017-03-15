@@ -82,6 +82,7 @@
 #include "net/base/load_flags.h"
 #include "net/base/network_change_notifier.h"
 #include "net/base/port_util.h"
+#include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/test_url_fetcher_factory.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_fetcher_delegate.h"
@@ -89,7 +90,6 @@
 
 #if defined(OS_CHROMEOS)
 #include "chromeos/chromeos_switches.h"
-#include "components/arc/arc_util.h"
 #endif
 
 using browser_sync::ProfileSyncService;
@@ -298,7 +298,6 @@ void SyncTest::SetUpCommandLine(base::CommandLine* cl) {
 
 #if defined(OS_CHROMEOS)
   cl->AppendSwitch(chromeos::switches::kIgnoreUserProfileMappingForTests);
-  arc::SetArcAvailableCommandLineForTesting(cl);
 #endif
 }
 
@@ -420,11 +419,14 @@ Profile* SyncTest::MakeTestProfile(base::FilePath profile_path, int index) {
 }
 
 Profile* SyncTest::GetProfile(int index) {
-  if (profiles_.empty())
-    LOG(FATAL) << "SetupClients() has not yet been called.";
-  if (index < 0 || index >= static_cast<int>(profiles_.size()))
-    LOG(FATAL) << "GetProfile(): Index is out of bounds.";
-  return profiles_[index];
+  EXPECT_FALSE(profiles_.empty()) << "SetupClients() has not yet been called.";
+  EXPECT_FALSE(index < 0 || index >= static_cast<int>(profiles_.size()))
+      << "GetProfile(): Index is out of bounds.";
+
+  Profile* profile = profiles_[index];
+  EXPECT_NE(nullptr, profile) << "No profile found at index: " << index;
+
+  return profile;
 }
 
 std::vector<Profile*> SyncTest::GetAllProfiles() {
@@ -439,11 +441,22 @@ std::vector<Profile*> SyncTest::GetAllProfiles() {
 }
 
 Browser* SyncTest::GetBrowser(int index) {
-  if (browsers_.empty())
-    LOG(FATAL) << "SetupClients() has not yet been called.";
-  if (index < 0 || index >= static_cast<int>(browsers_.size()))
-    LOG(FATAL) << "GetBrowser(): Index is out of bounds.";
+  EXPECT_FALSE(browsers_.empty()) << "SetupClients() has not yet been called.";
+  EXPECT_FALSE(index < 0 || index >= static_cast<int>(browsers_.size()))
+      << "GetBrowser(): Index is out of bounds.";
+
+  Browser* browser = browsers_[index];
+  EXPECT_NE(browser, nullptr);
+
   return browsers_[index];
+}
+
+Browser* SyncTest::AddBrowser(int profile_index) {
+  Profile* profile = GetProfile(profile_index);
+  browsers_.push_back(new Browser(Browser::CreateParams(profile, true)));
+  profiles_.push_back(profile);
+
+  return browsers_[browsers_.size() - 1];
 }
 
 ProfileSyncServiceHarness* SyncTest::GetClient(int index) {
@@ -488,7 +501,6 @@ bool SyncTest::SetupClients() {
   profiles_.resize(num_clients_);
   profile_delegates_.resize(num_clients_ + 1);  // + 1 for the verifier.
   tmp_profile_paths_.resize(num_clients_);
-  browsers_.resize(num_clients_);
   clients_.resize(num_clients_);
   invalidation_forwarders_.resize(num_clients_);
   sync_refreshers_.resize(num_clients_);
@@ -529,10 +541,7 @@ void SyncTest::InitializeProfile(int index, Profile* profile) {
   DCHECK(profile);
   profiles_[index] = profile;
 
-  // CheckInitialState() assumes that no windows are open at startup.
-  browsers_[index] = new Browser(Browser::CreateParams(GetProfile(index)));
-
-  EXPECT_NE(nullptr, GetBrowser(index)) << "Could not create Browser " << index;
+  AddBrowser(index);
 
   // Make sure the ProfileSyncService has been created before creating the
   // ProfileSyncServiceHarness - some tests expect the ProfileSyncService to
@@ -611,9 +620,21 @@ bool SyncTest::SetupSync() {
     }
   }
 
+  int clientIndex = 0;
+  // If we're using external servers, clear server data so the account starts
+  // with a clean slate.
+  if (UsingExternalServers()) {
+    if (!SetupAndClearClient(clientIndex++)) {
+      LOG(FATAL) << "Setting up and clearing data for client "
+                 << clientIndex - 1 << " failed";
+      return false;
+    }
+  }
+
   // Sync each of the profiles.
-  for (int i = 0; i < num_clients_; ++i) {
-    if (!GetClient(i)->SetupSync()) {
+  for (; clientIndex < num_clients_; clientIndex++) {
+    DVLOG(1) << "Setting up " << clientIndex << " client";
+    if (!GetClient(clientIndex)->SetupSync()) {
       LOG(FATAL) << "SetupSync() failed.";
       return false;
     }
@@ -657,6 +678,23 @@ bool SyncTest::SetupSync() {
     }
   }
 
+  return true;
+}
+
+bool SyncTest::SetupAndClearClient(size_t index) {
+  // Setup the first client so the sync engine is initialized, which is
+  // required to clear server data.
+  DVLOG(1) << "Setting up first client for clear.";
+  if (!GetClient(index)->SetupSyncForClearingServerData()) {
+    LOG(FATAL) << "SetupSync() failed.";
+    return false;
+  }
+
+  DVLOG(1) << "Done setting up first client for clear.";
+  if (!ClearServerData(GetClient(index++))) {
+    LOG(FATAL) << "ClearServerData failed.";
+    return false;
+  }
   return true;
 }
 
@@ -978,7 +1016,8 @@ bool SyncTest::IsTestServerRunning() {
   GURL sync_url_status(sync_url.append("/healthz"));
   SyncServerStatusChecker delegate;
   std::unique_ptr<net::URLFetcher> fetcher =
-      net::URLFetcher::Create(sync_url_status, net::URLFetcher::GET, &delegate);
+      net::URLFetcher::Create(sync_url_status, net::URLFetcher::GET, &delegate,
+                              TRAFFIC_ANNOTATION_FOR_TESTS);
   fetcher->SetLoadFlags(net::LOAD_DISABLE_CACHE |
                         net::LOAD_DO_NOT_SEND_COOKIES |
                         net::LOAD_DO_NOT_SAVE_COOKIES);
@@ -1137,4 +1176,15 @@ void SyncTest::TriggerSyncForModelTypes(int index,
 void SyncTest::SetPreexistingPreferencesFileContents(
     const std::string& contents) {
   preexisting_preferences_file_contents_ = contents;
+}
+
+bool SyncTest::ClearServerData(ProfileSyncServiceHarness* harness) {
+  // At this point our birthday is good.
+  base::RunLoop run_loop;
+  harness->service()->ClearServerDataForTest(run_loop.QuitClosure());
+  run_loop.Run();
+
+  // Our birthday is invalidated on the server here so restart sync to get
+  // the new birthday from the server.
+  return harness->RestartSyncService();
 }

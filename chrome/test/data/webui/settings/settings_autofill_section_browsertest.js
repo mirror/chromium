@@ -18,6 +18,7 @@ GEN_INCLUDE([
  * @constructor
  */
 function CountryDetailManagerTestImpl() {}
+
 CountryDetailManagerTestImpl.prototype = {
   /** @override */
   getCountryList: function() {
@@ -126,9 +127,13 @@ SettingsAutofillSectionBrowserTest.prototype = {
    * @private
    */
   createAutofillSection_: function(addresses, creditCards) {
+    // Override the AutofillManagerImpl for testing.
+    this.autofillManager = new TestAutofillManager();
+    this.autofillManager.data.addresses = addresses;
+    this.autofillManager.data.creditCards = creditCards;
+    AutofillManagerImpl.instance_ = this.autofillManager;
+
     var section = document.createElement('settings-autofill-section');
-    section.addresses = addresses;
-    section.creditCards = creditCards;
     document.body.appendChild(section);
     Polymer.dom.flush();
     return section;
@@ -167,6 +172,10 @@ SettingsAutofillSectionBrowserTest.prototype = {
 
 TEST_F('SettingsAutofillSectionBrowserTest', 'CreditCardTests', function() {
   var self = this;
+
+  setup(function() {
+    PolymerTest.clearBody();
+  });
 
   suite('AutofillSection', function() {
     test('verifyCreditCardCount', function() {
@@ -252,6 +261,12 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'CreditCardTests', function() {
       assertNotEquals(oldCreditCardDialog.title_, newCreditCardDialog.title_);
       assertNotEquals('', newCreditCardDialog.title_);
       assertNotEquals('', oldCreditCardDialog.title_);
+
+      // Wait for dialogs to open before finishing test.
+      return Promise.all([
+        test_util.whenAttributeIs(newCreditCardDialog.$.dialog, 'open', true),
+        test_util.whenAttributeIs(oldCreditCardDialog.$.dialog, 'open', true),
+      ]);
     });
 
     test('verifyExpiredCreditCardYear', function() {
@@ -401,6 +416,10 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'CreditCardTests', function() {
 
 TEST_F('SettingsAutofillSectionBrowserTest', 'AddressTests', function() {
   var self = this;
+
+  setup(function() {
+    PolymerTest.clearBody();
+  });
 
   suite('AutofillSection', function() {
     test('verifyNoAddresses', function() {
@@ -671,6 +690,10 @@ TEST_F('SettingsAutofillSectionBrowserTest', 'AddressTests', function() {
 
 TEST_F('SettingsAutofillSectionBrowserTest', 'AddressLocaleTests', function() {
   var self = this;
+
+  setup(function() {
+    PolymerTest.clearBody();
+  });
 
   suite('AutofillSection', function() {
     // US address has 3 fields on the same line.

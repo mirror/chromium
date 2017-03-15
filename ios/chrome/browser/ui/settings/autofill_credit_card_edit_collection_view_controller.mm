@@ -11,6 +11,7 @@
 #include "base/mac/scoped_block.h"
 #import "base/mac/scoped_nsobject.h"
 #include "base/strings/sys_string_conversions.h"
+#include "components/autofill/core/browser/autofill_data_util.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/field_types.h"
 #include "components/autofill/core/browser/payments/payments_service_url.h"
@@ -22,6 +23,7 @@
 #import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
 #include "ios/chrome/browser/ui/commands/ios_command_ids.h"
 #import "ios/chrome/browser/ui/commands/open_url_command.h"
+#import "ios/chrome/browser/ui/settings/autofill_edit_collection_view_controller+protected.h"
 #import "ios/chrome/browser/ui/settings/cells/autofill_edit_item.h"
 #import "ios/chrome/browser/ui/settings/cells/copied_to_chrome_item.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
@@ -34,6 +36,8 @@ namespace {
 
 NSString* const kAutofillCreditCardEditCollectionViewId =
     @"kAutofillCreditCardEditCollectionViewId";
+
+const CGFloat kCardTypeIconDimension = 30.0;
 
 typedef NS_ENUM(NSInteger, SectionIdentifier) {
   SectionIdentifierFields = kSectionIdentifierEnumZero,
@@ -156,6 +160,8 @@ typedef NS_ENUM(NSInteger, ItemType) {
           : base::SysUTF16ToNSString(_creditCard.LastFourDigits());
   cardNumberitem.textFieldEnabled = isEditing;
   cardNumberitem.autofillType = autofill::CREDIT_CARD_NUMBER;
+  cardNumberitem.cardTypeIcon =
+      [self cardTypeIconFromCardNumber:cardNumberitem.textFieldValue];
   [model addItem:cardNumberitem
       toSectionWithIdentifier:SectionIdentifierFields];
 
@@ -191,6 +197,38 @@ typedef NS_ENUM(NSInteger, ItemType) {
     [model addItem:copiedToChromeItem
         toSectionWithIdentifier:SectionIdentifierCopiedToChrome];
   }
+}
+
+#pragma mark - UITextFieldDelegate
+
+// This method is called as the text is being typed in, pasted, or deleted. Asks
+// the delegate if the text should be changed. Should always return YES. During
+// typing/pasting text, |newText| contains one or more new characters. When user
+// deletes text, |newText| is empty. |range| is the range of characters to be
+// replaced.
+- (BOOL)textField:(UITextField*)textField
+    shouldChangeCharactersInRange:(NSRange)range
+                replacementString:(NSString*)newText {
+  // Find the respective item for the text field.
+  NSIndexPath* indexPath = [self indexPathForCurrentTextField];
+  DCHECK(indexPath);
+  AutofillEditItem* item = base::mac::ObjCCastStrict<AutofillEditItem>(
+      [self.collectionViewModel itemAtIndexPath:indexPath]);
+
+  // If the user is typing in the credit card number field, update the card type
+  // icon (e.g. "Visa") to reflect the number being typed.
+  if (item.autofillType == autofill::CREDIT_CARD_NUMBER) {
+    // Obtain the text being typed.
+    NSString* updatedText =
+        [textField.text stringByReplacingCharactersInRange:range
+                                                withString:newText];
+    item.cardTypeIcon = [self cardTypeIconFromCardNumber:updatedText];
+    // Update the cell.
+    [self reconfigureCellsForItems:@[ item ]
+           inSectionWithIdentifier:SectionIdentifierFields];
+  }
+
+  return YES;
 }
 
 #pragma mark - MDCCollectionViewEditingDelegate
@@ -268,6 +306,24 @@ typedef NS_ENUM(NSInteger, ItemType) {
   _creditCard.set_record_type(autofill::CreditCard::MASKED_SERVER_CARD);
   _creditCard.SetNumber(_creditCard.LastFourDigits());
   [self reloadData];
+}
+
+#pragma mark - Helper Methods
+
+- (UIImage*)cardTypeIconFromCardNumber:(NSString*)cardNumber {
+  const char* cardType = autofill::CreditCard::GetCreditCardType(
+      base::SysNSStringToUTF16(cardNumber));
+  if (cardType != autofill::kGenericCard) {
+    int resourceID =
+        autofill::data_util::GetPaymentRequestData(cardType).icon_resource_id;
+    // Resize and set the card type icon.
+    CGFloat dimension = kCardTypeIconDimension;
+    return ResizeImage(NativeImage(resourceID),
+                       CGSizeMake(dimension, dimension),
+                       ProjectionMode::kAspectFillNoClipping);
+  } else {
+    return nil;
+  }
 }
 
 @end

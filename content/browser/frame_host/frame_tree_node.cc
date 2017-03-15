@@ -32,8 +32,8 @@ namespace {
 // FrameTreeNodes.
 typedef base::hash_map<int, FrameTreeNode*> FrameTreeNodeIdMap;
 
-base::LazyInstance<FrameTreeNodeIdMap> g_frame_tree_node_id_map =
-    LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<FrameTreeNodeIdMap>::DestructorAtExit
+    g_frame_tree_node_id_map = LAZY_INSTANCE_INITIALIZER;
 
 // These values indicate the loading progress status. The minimum progress
 // value matches what Blink's ProgressTracker has traditionally used for a
@@ -291,14 +291,17 @@ void FrameTreeNode::ResetFeaturePolicyHeader() {
 }
 
 void FrameTreeNode::AddContentSecurityPolicy(
-    const ContentSecurityPolicyHeader& header) {
+    const ContentSecurityPolicyHeader& header,
+    const std::vector<ContentSecurityPolicy>& policies) {
   replication_state_.accumulated_csp_headers.push_back(header);
   render_manager_.OnDidAddContentSecurityPolicy(header);
+  csp_policies_.insert(csp_policies_.end(), policies.begin(), policies.end());
 }
 
 void FrameTreeNode::ResetContentSecurityPolicy() {
   replication_state_.accumulated_csp_headers.clear();
   render_manager_.OnDidResetContentSecurityPolicy();
+  csp_policies_.clear();
 }
 
 void FrameTreeNode::SetInsecureRequestPolicy(
@@ -495,8 +498,13 @@ void FrameTreeNode::DidChangeLoadProgress(double load_progress) {
 }
 
 bool FrameTreeNode::StopLoading() {
-  if (IsBrowserSideNavigationEnabled())
+  if (IsBrowserSideNavigationEnabled()) {
+    if (navigation_request_) {
+      navigation_request_->navigation_handle()->set_net_error_code(
+          net::ERR_ABORTED);
+    }
     ResetNavigationRequest(false);
+  }
 
   // TODO(nasko): see if child frames should send IPCs in site-per-process
   // mode.

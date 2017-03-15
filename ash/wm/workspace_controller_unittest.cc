@@ -14,6 +14,7 @@
 #include "ash/common/test/test_shelf_delegate.h"
 #include "ash/common/wm/panels/panel_layout_manager.h"
 #include "ash/common/wm/window_state.h"
+#include "ash/common/wm/wm_event.h"
 #include "ash/common/wm/workspace/workspace_window_resizer.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
@@ -1310,6 +1311,38 @@ TEST_F(WorkspaceControllerTest, VerifyLayerOrdering) {
   EXPECT_EQ(GetWindowNames(parent), GetLayerNames(parent));
 }
 
+// Test that minimizing and restoring a snapped window should restore to the
+// snapped bounds. When a window is created and snapped, it must be a
+// user-initiated operation, no need to do rearrangement for restoring this
+// window (crbug.com/692175).
+TEST_F(WorkspaceControllerTest, RestoreMinimizedSnappedWindow) {
+  // Create an auto-positioned window.
+  std::unique_ptr<aura::Window> window(CreateTestWindowInShellWithId(0));
+  wm::WindowState* window_state = wm::GetWindowState(window.get());
+  window_state->set_window_position_managed(true);
+  window->SetBounds(gfx::Rect(10, 20, 100, 200));
+  window->Show();
+
+  // Left snap |window|.
+  EXPECT_FALSE(window_state->bounds_changed_by_user());
+  const wm::WMEvent snap_left(wm::WM_EVENT_SNAP_LEFT);
+  window_state->OnWMEvent(&snap_left);
+  const gfx::Rect work_area =
+      display::Screen::GetScreen()
+          ->GetDisplayNearestPoint(window->bounds().origin())
+          .work_area();
+  gfx::Rect snapped_bounds(work_area.x(), work_area.y(), work_area.width() / 2,
+                           work_area.height());
+  EXPECT_EQ(snapped_bounds, window->bounds());
+  EXPECT_TRUE(window_state->bounds_changed_by_user());
+
+  // Minimize and Restore |window|, the restored bounds should be equal to the
+  // bounds of left snapped state.
+  window_state->Minimize();
+  window_state->Restore();
+  EXPECT_EQ(snapped_bounds, window->bounds());
+}
+
 namespace {
 
 // Used by DragMaximizedNonTrackedWindow to track how many times the window
@@ -1448,8 +1481,9 @@ TEST_F(WorkspaceControllerTest, WindowEdgeHitTest) {
   ParentWindowInPrimaryRootWindow(second.get());
   second->Show();
 
-  ui::EventTarget* root = first->GetRootWindow();
-  ui::EventTargeter* targeter = root->GetEventTargeter();
+  aura::Window* root = first->GetRootWindow();
+  ui::EventTargeter* targeter =
+      root->GetHost()->dispatcher()->GetDefaultEventTargeter();
 
   // The windows overlap, and |second| is on top of |first|. Events targeted
   // slightly outside the edges of the |second| window should still be targeted
@@ -1497,8 +1531,9 @@ TEST_F(WorkspaceControllerTest, WindowEdgeMouseHitTestPanel) {
   aura::test::TestWindowDelegate delegate;
   std::unique_ptr<Window> window(
       CreateTestPanel(&delegate, gfx::Rect(20, 10, 100, 50)));
-  ui::EventTarget* root = window->GetRootWindow();
-  ui::EventTargeter* targeter = root->GetEventTargeter();
+  aura::Window* root = window->GetRootWindow();
+  ui::EventTargeter* targeter =
+      root->GetHost()->dispatcher()->GetDefaultEventTargeter();
   const gfx::Rect bounds = window->bounds();
   const int kNumPoints = 5;
   struct {
@@ -1533,8 +1568,9 @@ TEST_F(WorkspaceControllerTest, WindowEdgeTouchHitTestPanel) {
   aura::test::TestWindowDelegate delegate;
   std::unique_ptr<Window> window(
       CreateTestPanel(&delegate, gfx::Rect(20, 10, 100, 50)));
-  ui::EventTarget* root = window->GetRootWindow();
-  ui::EventTargeter* targeter = root->GetEventTargeter();
+  aura::Window* root = window->GetRootWindow();
+  ui::EventTargeter* targeter =
+      root->GetHost()->dispatcher()->GetDefaultEventTargeter();
   const gfx::Rect bounds = window->bounds();
   const int kNumPoints = 5;
   struct {
@@ -1574,8 +1610,9 @@ TEST_F(WorkspaceControllerTest, WindowEdgeHitTestDocked) {
       window->GetRootWindow(), kShellWindowId_DockedContainer);
   docked_container->AddChild(window.get());
   window->Show();
-  ui::EventTarget* root = window->GetRootWindow();
-  ui::EventTargeter* targeter = root->GetEventTargeter();
+  aura::Window* root = window->GetRootWindow();
+  ui::EventTargeter* targeter =
+      root->GetHost()->dispatcher()->GetDefaultEventTargeter();
   const gfx::Rect bounds = window->bounds();
   const int kNumPoints = 5;
   struct {

@@ -464,7 +464,7 @@ LayoutMultiColumnSet* LayoutMultiColumnFlowThread::columnSetAtBlockOffset(
     if (m_multiColumnSetList.isEmpty())
       return nullptr;
     if (offset < LayoutUnit()) {
-      columnSet = m_multiColumnSetList.first();
+      columnSet = m_multiColumnSetList.front();
     } else {
       MultiColumnSetSearchAdapter adapter(offset);
       m_multiColumnSetIntervalTree
@@ -472,7 +472,7 @@ LayoutMultiColumnSet* LayoutMultiColumnFlowThread::columnSetAtBlockOffset(
 
       // If no set was found, the offset is in the flow thread overflow.
       if (!adapter.result() && !m_multiColumnSetList.isEmpty())
-        columnSet = m_multiColumnSetList.last();
+        columnSet = m_multiColumnSetList.back();
       else
         columnSet = adapter.result();
     }
@@ -495,7 +495,13 @@ LayoutMultiColumnSet* LayoutMultiColumnFlowThread::columnSetAtBlockOffset(
        walker = walker->nextSiblingMultiColumnSet()) {
     if (!walker->isPageLogicalHeightKnown())
       continue;
-    if (walker->logicalTopInFlowThread() == offset)
+    if (pageBoundaryRule == AssociateWithFormerPage) {
+      if (walker->logicalTopInFlowThread() < offset &&
+          walker->logicalBottomInFlowThread() >= offset)
+        return walker;
+    }
+    if (walker->logicalTopInFlowThread() <= offset &&
+        walker->logicalBottomInFlowThread() > offset)
       return walker;
     break;
   }
@@ -592,23 +598,30 @@ bool LayoutMultiColumnFlowThread::removeSpannerPlaceholderIfNoLongerValid(
   return true;
 }
 
-LayoutMultiColumnFlowThread* LayoutMultiColumnFlowThread::enclosingFlowThread()
-    const {
+LayoutMultiColumnFlowThread* LayoutMultiColumnFlowThread::enclosingFlowThread(
+    AncestorSearchConstraint constraint) const {
   if (isLayoutPagedFlowThread()) {
     // Paged overflow containers should never be fragmented by enclosing
     // fragmentation contexts. They are to be treated as unbreakable content.
     return nullptr;
   }
-  if (multiColumnBlockFlow()->isInsideFlowThread())
-    return toLayoutMultiColumnFlowThread(
-        locateFlowThreadContainingBlockOf(*multiColumnBlockFlow()));
-  return nullptr;
+  if (!multiColumnBlockFlow()->isInsideFlowThread())
+    return nullptr;
+  return toLayoutMultiColumnFlowThread(
+      locateFlowThreadContainingBlockOf(*multiColumnBlockFlow(), constraint));
 }
 
 FragmentationContext*
-LayoutMultiColumnFlowThread::enclosingFragmentationContext() const {
-  if (LayoutMultiColumnFlowThread* enclosingFlowThread =
-          this->enclosingFlowThread())
+LayoutMultiColumnFlowThread::enclosingFragmentationContext(
+    AncestorSearchConstraint constraint) const {
+  // If this multicol container is strictly unbreakable (due to having
+  // scrollbars, for instance), it's also strictly unbreakable in any outer
+  // fragmentation context. As such, what kind of fragmentation that goes on
+  // inside this multicol container is completely opaque to the ancestors.
+  if (constraint == IsolateUnbreakableContainers &&
+      multiColumnBlockFlow()->getPaginationBreakability() == ForbidBreaks)
+    return nullptr;
+  if (auto* enclosingFlowThread = this->enclosingFlowThread(constraint))
     return enclosingFlowThread;
   return view()->fragmentationContext();
 }
@@ -621,19 +634,18 @@ void LayoutMultiColumnFlowThread::appendNewFragmentainerGroupIfNeeded(
   if (!columnSet->newFragmentainerGroupsAllowed())
     return;
 
-  if (!columnSet->hasFragmentainerGroupForColumnAt(offsetInFlowThread,
-                                                   pageBoundaryRule)) {
-    FragmentationContext* enclosingFragmentationContext =
-        this->enclosingFragmentationContext();
-    // Not nested. We'll never need more rows than the one we already have then.
-    if (!enclosingFragmentationContext)
-      return;
-    ASSERT(!isLayoutPagedFlowThread());
+  if (columnSet->needsNewFragmentainerGroupAt(offsetInFlowThread,
+                                              pageBoundaryRule)) {
+    // We should never create additional fragmentainer groups unless we're in a
+    // nested fragmentation context.
+    DCHECK(enclosingFragmentationContext());
+
+    DCHECK(!isLayoutPagedFlowThread());
 
     // We have run out of columns here, so we need to add at least one more row
     // to hold more columns.
     LayoutMultiColumnFlowThread* enclosingFlowThread =
-        enclosingFragmentationContext->associatedFlowThread();
+        enclosingFragmentationContext()->associatedFlowThread();
     do {
       if (enclosingFlowThread) {
         // When we add a new row here, it implicitly means that we're inserting
@@ -661,8 +673,8 @@ void LayoutMultiColumnFlowThread::appendNewFragmentainerGroupIfNeeded(
       ASSERT(newRow.logicalHeight() > 0);
       if (newRow.logicalHeight() <= 0)
         break;
-    } while (!columnSet->hasFragmentainerGroupForColumnAt(offsetInFlowThread,
-                                                          pageBoundaryRule));
+    } while (columnSet->needsNewFragmentainerGroupAt(offsetInFlowThread,
+                                                     pageBoundaryRule));
   }
 }
 
@@ -874,7 +886,7 @@ void LayoutMultiColumnFlowThread::addColumnSetToThread(
     ASSERT(it != m_multiColumnSetList.end());
     m_multiColumnSetList.insertBefore(it, columnSet);
   } else {
-    m_multiColumnSetList.add(columnSet);
+    m_multiColumnSetList.insert(columnSet);
   }
 }
 
@@ -896,13 +908,8 @@ void LayoutMultiColumnFlowThread::skipColumnSpanner(
   LayoutMultiColumnSpannerPlaceholder* placeholder =
       layoutObject->spannerPlaceholder();
   LayoutBox* previousColumnBox = placeholder->previousSiblingMultiColumnBox();
-  if (previousColumnBox && previousColumnBox->isLayoutMultiColumnSet()) {
-    LayoutMultiColumnSet* columnSet = toLayoutMultiColumnSet(previousColumnBox);
-    // Negative margins may cause this.
-    if (logicalTopInFlowThread < columnSet->logicalTopInFlowThread())
-      logicalTopInFlowThread = columnSet->logicalTopInFlowThread();
-    columnSet->endFlow(logicalTopInFlowThread);
-  }
+  if (previousColumnBox && previousColumnBox->isLayoutMultiColumnSet())
+    toLayoutMultiColumnSet(previousColumnBox)->endFlow(logicalTopInFlowThread);
   LayoutBox* nextColumnBox = placeholder->nextSiblingMultiColumnBox();
   if (nextColumnBox && nextColumnBox->isLayoutMultiColumnSet()) {
     LayoutMultiColumnSet* nextSet = toLayoutMultiColumnSet(nextColumnBox);

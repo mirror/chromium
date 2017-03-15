@@ -10,12 +10,20 @@
 class LayoutDelegate {
  public:
   enum class Metric {
+    // Padding on the left and right side of a button's label.
+    BUTTON_HORIZONTAL_PADDING,
+    // The maximum width a button can have and still influence the sizes of
+    // other linked buttons.  This allows short buttons to have linked widths
+    // without long buttons making things overly wide.
+    BUTTON_MAX_LINKABLE_WIDTH,
+    // Default minimum width of a button.
+    BUTTON_MINIMUM_WIDTH,
     // Margin between the edge of a dialog and the left, right, or bottom of a
     // contained button.
     DIALOG_BUTTON_MARGIN,
-    // In theory, this is the spacing between a dialog button and the content
-    // above it.  In practice, what the code does with this value, at least
-    // pre-Harmony, defies easy explanation.
+    // Minimum width of a dialog button.
+    DIALOG_BUTTON_MINIMUM_WIDTH,
+    // Spacing between a dialog button and the content above it.
     DIALOG_BUTTON_TOP_SPACING,
     // Horizontal or vertical margin between the edge of a dialog and the close
     // button in the upper trailing corner.
@@ -36,6 +44,10 @@ class LayoutDelegate {
     // Horizontal indent of a subsection relative to related items above, e.g.
     // checkboxes below explanatory text/headings.
     SUBSECTION_HORIZONTAL_INDENT,
+    // Horizontal spacing between controls that are logically unrelated.
+    UNRELATED_CONTROL_HORIZONTAL_SPACING,
+    // Larger horizontal spacing between unrelated controls.
+    UNRELATED_CONTROL_HORIZONTAL_SPACING_LARGE,
     // Vertical spacing between controls that are logically unrelated.
     UNRELATED_CONTROL_VERTICAL_SPACING,
     // Larger vertical spacing between unrelated controls.

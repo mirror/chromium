@@ -65,6 +65,7 @@ interface InspectorInstrumentation {
 #include "core/html/HTMLSlotElement.h"
 
 class ConsoleMessage;
+class HTMLDocumentParser;
 class ThreadableLoaderClient;
 class WebSocketHandshakeRequest;
 class WebSocketHandshakeResponse;
@@ -138,16 +139,10 @@ class XMLHttpRequest;
     void didFireWebGLErrorOrWarning(Element*, const String& message);
 
     [Page]
-    void didUpdateLayout(LocalFrame*);
-
-    [Page]
     void didResizeMainFrame(LocalFrame*);
 
     [LayerTree]
     void didPaint(LocalFrame*, const GraphicsLayer*, GraphicsContext&, const LayoutRect&);
-
-    [Network]
-    void didScheduleStyleRecalculation([Keep] Document*);
 
     [Network]
     void applyUserAgentOverride(LocalFrame*, String* userAgent);
@@ -158,28 +153,28 @@ class XMLHttpRequest;
     [Network]
     void didChangeResourcePriority(LocalFrame*, unsigned long identifier, ResourceLoadPriority loadPriority);
 
-    [Network]
+    [Network, TraceEvents]
     void willSendRequest([Keep] LocalFrame*, unsigned long identifier, DocumentLoader*, ResourceRequest&, const ResourceResponse& redirectResponse, const FetchInitiatorInfo&);
 
     [Network]
     void markResourceAsCached(LocalFrame*, unsigned long identifier);
 
-    [Network]
+    [Network, TraceEvents]
     void didReceiveResourceResponse([Keep] LocalFrame*, unsigned long identifier, DocumentLoader*, const ResourceResponse&, Resource*);
 
-    [Network]
+    [Network, TraceEvents]
     void didReceiveData([Keep] LocalFrame*, unsigned long identifier, const char* data, int dataLength);
 
     [Network]
     void didReceiveEncodedDataLength([Keep] LocalFrame*, unsigned long identifier, int encodedDataLength);
 
-    [Network]
-    void didFinishLoading(LocalFrame* frame, unsigned long identifier, double finishTime, int64_t encodedDataLength);
+    [Network, TraceEvents]
+    void didFinishLoading([Keep] LocalFrame* frame, unsigned long identifier, double finishTime, int64_t encodedDataLength, int64_t decodedBodyLength);
 
     [Network]
     void didReceiveCORSRedirectResponse([Keep] LocalFrame*, unsigned long identifier, DocumentLoader*, const ResourceResponse&, Resource*);
 
-    [Network]
+    [Network, TraceEvents]
     void didFailLoading(LocalFrame* frame, unsigned long identifier, const ResourceError&);
 
     [Network]
@@ -258,6 +253,12 @@ class XMLHttpRequest;
     [Page, Network]
     void frameClearedScheduledNavigation([Keep] LocalFrame*);
 
+    [Network]
+    void frameScheduledClientNavigation([Keep] LocalFrame*);
+
+    [Network]
+    void frameClearedScheduledClientNavigation([Keep] LocalFrame*);
+
     [Worker]
     void didStartWorker(ExecutionContext*, WorkerInspectorProxy* proxy, bool waitingForDebugger);
 
@@ -312,17 +313,38 @@ class XMLHttpRequest;
     [Log]
     void consoleMessageAdded(ExecutionContext*, ConsoleMessage*);
 
-    [Network]
-    void willRecalculateStyle([Keep] Document*);
-
-    [Page, Network]
-    void didRecalculateStyle(Document*);
-
     [Page]
     void willRunJavaScriptDialog(LocalFrame* frame, const String& message, ChromeClient::DialogType dialogType);
 
     [Page]
     void didRunJavaScriptDialog(LocalFrame* frame, bool result);
+
+    [Performance]
+    void documentWriteFetchScript([Keep] Document*);
+
+    [Page]
+    void didChangeViewport(LocalFrame* document);
+
+    [DOMDebugger]
+    void breakableLocation(ExecutionContext* context, const char* name);
+
+    [Page, Performance]
+    RecalculateStyle(Document* document);
+
+    [Page, Performance]
+    UpdateLayout(Document*);
+
+    [Performance, DOMDebugger]
+    ExecuteScript([Keep] ExecutionContext* context);
+
+    [Performance, TraceEvents]
+    CallFunction([Keep] ExecutionContext* context, v8::Local<v8::Function> function, int depth = 0);
+
+    [Performance, DOMDebugger]
+    UserCallback([Keep] ExecutionContext* context, const char* name, const AtomicString& atomicName, bool recurring, EventTarget* eventTarget = nullptr);
+
+    [TraceEvents]
+    ParseHTML(Document* document, HTMLDocumentParser* parser);
 }
 
 interface InspectorOverrides {

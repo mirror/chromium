@@ -99,10 +99,7 @@ class TestResourceDispatcherHostDelegate final
     : public ResourceDispatcherHostDelegate {
  public:
   TestResourceDispatcherHostDelegate() = default;
-  ~TestResourceDispatcherHostDelegate() override {
-    EXPECT_EQ(num_on_response_started_calls_expectation_,
-              num_on_response_started_calls_);
-  }
+  ~TestResourceDispatcherHostDelegate() override = default;
 
   bool ShouldBeginRequest(const std::string& method,
                           const GURL& url,
@@ -168,7 +165,6 @@ class TestResourceDispatcherHostDelegate final
   void OnResponseStarted(net::URLRequest* request,
                          ResourceContext* resource_context,
                          ResourceResponse* response) override {
-    ++num_on_response_started_calls_;
   }
 
   void OnRequestRedirected(const GURL& redirect_url,
@@ -200,17 +196,7 @@ class TestResourceDispatcherHostDelegate final
     return nullptr;
   }
 
-  int num_on_response_started_calls() const {
-    return num_on_response_started_calls_;
-  }
-  void set_num_on_response_started_calls_expectation(int expectation) {
-    num_on_response_started_calls_expectation_ = expectation;
-  }
-
  private:
-  int num_on_response_started_calls_ = 0;
-  int num_on_response_started_calls_expectation_ = 0;
-
   DISALLOW_COPY_AND_ASSIGN(TestResourceDispatcherHostDelegate);
 };
 
@@ -221,7 +207,7 @@ class MojoAsyncResourceHandlerWithStubOperations
       net::URLRequest* request,
       ResourceDispatcherHostImpl* rdh,
       mojom::URLLoaderAssociatedRequest mojo_request,
-      mojom::URLLoaderClientAssociatedPtr url_loader_client)
+      mojom::URLLoaderClientPtr url_loader_client)
       : MojoAsyncResourceHandler(request,
                                  rdh,
                                  std::move(mojo_request),
@@ -303,23 +289,20 @@ class TestURLLoaderFactory final : public mojom::URLLoaderFactory {
   TestURLLoaderFactory() {}
   ~TestURLLoaderFactory() override {}
 
-  void CreateLoaderAndStart(
-      mojom::URLLoaderAssociatedRequest request,
-      int32_t routing_id,
-      int32_t request_id,
-      const ResourceRequest& url_request,
-      mojom::URLLoaderClientAssociatedPtrInfo client_ptr_info) override {
+  void CreateLoaderAndStart(mojom::URLLoaderAssociatedRequest request,
+                            int32_t routing_id,
+                            int32_t request_id,
+                            const ResourceRequest& url_request,
+                            mojom::URLLoaderClientPtr client_ptr) override {
     loader_request_ = std::move(request);
-    client_ptr_info_ = std::move(client_ptr_info);
+    client_ptr_ = std::move(client_ptr);
   }
 
   mojom::URLLoaderAssociatedRequest PassLoaderRequest() {
     return std::move(loader_request_);
   }
 
-  mojom::URLLoaderClientAssociatedPtrInfo PassClientPtrInfo() {
-    return std::move(client_ptr_info_);
-  }
+  mojom::URLLoaderClientPtr PassClientPtr() { return std::move(client_ptr_); }
 
   void SyncLoad(int32_t routing_id,
                 int32_t request_id,
@@ -330,7 +313,7 @@ class TestURLLoaderFactory final : public mojom::URLLoaderFactory {
 
  private:
   mojom::URLLoaderAssociatedRequest loader_request_;
-  mojom::URLLoaderClientAssociatedPtrInfo client_ptr_info_;
+  mojom::URLLoaderClientPtr client_ptr_;
 
   DISALLOW_COPY_AND_ASSIGN(TestURLLoaderFactory);
 };
@@ -371,22 +354,17 @@ class MojoAsyncResourceHandlerTestBase {
                                 mojo::MakeRequest(&url_loader_factory_));
 
     url_loader_factory_->CreateLoaderAndStart(
-        mojo::MakeRequest(&url_loader_proxy_,
-                          url_loader_factory_.associated_group()),
-        kRouteId, kRequestId, request,
-        url_loader_client_.CreateRemoteAssociatedPtrInfo(
-            url_loader_factory_.associated_group()));
+        mojo::MakeRequest(&url_loader_proxy_), kRouteId, kRequestId, request,
+        url_loader_client_.CreateInterfacePtr());
 
     url_loader_factory_.FlushForTesting();
     DCHECK(weak_binding);
     TestURLLoaderFactory* factory_impl =
         static_cast<TestURLLoaderFactory*>(weak_binding->impl());
 
-    mojom::URLLoaderClientAssociatedPtr client_ptr;
-    client_ptr.Bind(factory_impl->PassClientPtrInfo());
     handler_.reset(new MojoAsyncResourceHandlerWithStubOperations(
         request_.get(), &rdh_, factory_impl->PassLoaderRequest(),
-        std::move(client_ptr)));
+        factory_impl->PassClientPtr()));
     mock_loader_.reset(new MockResourceLoader(handler_.get()));
   }
 
@@ -406,7 +384,6 @@ class MojoAsyncResourceHandlerTestBase {
 
   // Returns false if something bad happens.
   bool CallOnResponseStarted() {
-    rdh_delegate_.set_num_on_response_started_calls_expectation(1);
     MockResourceLoader::Status result = mock_loader_->OnResponseStarted(
         make_scoped_refptr(new ResourceResponse()));
     EXPECT_EQ(MockResourceLoader::Status::IDLE, result);
@@ -491,7 +468,6 @@ TEST_F(MojoAsyncResourceHandlerTest, OnWillStart) {
 }
 
 TEST_F(MojoAsyncResourceHandlerTest, OnResponseStarted) {
-  rdh_delegate_.set_num_on_response_started_calls_expectation(1);
   scoped_refptr<net::IOBufferWithSize> metadata = new net::IOBufferWithSize(5);
   memcpy(metadata->data(), "hello", 5);
   handler_->SetMetadata(metadata);
@@ -506,7 +482,6 @@ TEST_F(MojoAsyncResourceHandlerTest, OnResponseStarted) {
   response->head.response_start =
       base::TimeTicks::UnixEpoch() + base::TimeDelta::FromDays(28);
 
-  EXPECT_EQ(0, rdh_delegate_.num_on_response_started_calls());
   base::TimeTicks now1 = base::TimeTicks::Now();
   ASSERT_EQ(MockResourceLoader::Status::IDLE,
             mock_loader_->OnResponseStarted(response));
@@ -515,7 +490,6 @@ TEST_F(MojoAsyncResourceHandlerTest, OnResponseStarted) {
   EXPECT_EQ(request_->creation_time(), response->head.request_start);
   EXPECT_LE(now1, response->head.response_start);
   EXPECT_LE(response->head.response_start, now2);
-  EXPECT_EQ(1, rdh_delegate_.num_on_response_started_calls());
 
   url_loader_client_.RunUntilResponseReceived();
   EXPECT_EQ(response->head.request_start,
@@ -544,8 +518,7 @@ TEST_F(MojoAsyncResourceHandlerTest, OnWillReadWithInsufficientResource) {
   ASSERT_TRUE(CallOnWillStartAndOnResponseStarted());
 
   ASSERT_EQ(MockResourceLoader::Status::CANCELED, mock_loader_->OnWillRead());
-  // TODO(mmenke): Make this fail with net::ERR_INSUFFICIENT_RESOURCES.
-  EXPECT_EQ(net::ERR_ABORTED, mock_loader_->error_code());
+  EXPECT_EQ(net::ERR_INSUFFICIENT_RESOURCES, mock_loader_->error_code());
   EXPECT_EQ(1, rdh_.num_in_flight_requests_for_testing());
   handler_ = nullptr;
   EXPECT_EQ(0, rdh_.num_in_flight_requests_for_testing());
@@ -1112,8 +1085,6 @@ TEST_P(MojoAsyncResourceHandlerWithAllocationSizeTest, CancelWhileWaiting) {
 }
 
 TEST_P(MojoAsyncResourceHandlerWithAllocationSizeTest, RedirectHandling) {
-  rdh_delegate_.set_num_on_response_started_calls_expectation(1);
-
   ASSERT_EQ(MockResourceLoader::Status::IDLE,
             mock_loader_->OnWillStart(request_->url()));
 
@@ -1186,7 +1157,6 @@ TEST_P(MojoAsyncResourceHandlerWithAllocationSizeTest,
 TEST_P(
     MojoAsyncResourceHandlerWithAllocationSizeTest,
     OnWillStartThenOnResponseStartedThenOnWillReadThenOnReadCompletedThenOnResponseCompleted) {
-  rdh_delegate_.set_num_on_response_started_calls_expectation(1);
 
   ASSERT_EQ(MockResourceLoader::Status::IDLE,
             mock_loader_->OnWillStart(request_->url()));
@@ -1237,7 +1207,6 @@ TEST_P(
 TEST_P(
     MojoAsyncResourceHandlerWithAllocationSizeTest,
     OnWillStartThenOnWillReadThenOnResponseStartedThenOnReadCompletedThenOnResponseCompleted) {
-  rdh_delegate_.set_num_on_response_started_calls_expectation(1);
 
   ASSERT_EQ(MockResourceLoader::Status::IDLE,
             mock_loader_->OnWillStart(request_->url()));

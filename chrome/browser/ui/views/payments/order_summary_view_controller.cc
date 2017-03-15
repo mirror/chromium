@@ -6,6 +6,7 @@
 
 #include <memory>
 #include <utility>
+#include <vector>
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -15,12 +16,13 @@
 #include "chrome/browser/ui/views/payments/payment_request_dialog_view_ids.h"
 #include "chrome/browser/ui/views/payments/payment_request_views_util.h"
 #include "chrome/grit/generated_resources.h"
-#include "components/payments/currency_formatter.h"
-#include "components/payments/payment_request.h"
+#include "components/payments/content/payment_request_spec.h"
+#include "components/payments/core/currency_formatter.h"
 #include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/font.h"
 #include "ui/views/border.h"
+#include "ui/views/controls/button/md_text_button.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/controls/styled_label.h"
 #include "ui/views/layout/box_layout.h"
@@ -82,11 +84,16 @@ std::unique_ptr<views::View> CreateLineItemView(const base::string16& label,
 }  // namespace
 
 OrderSummaryViewController::OrderSummaryViewController(
-    PaymentRequest* request,
+    PaymentRequestSpec* spec,
+    PaymentRequestState* state,
     PaymentRequestDialogView* dialog)
-    : PaymentRequestSheetController(request, dialog) {}
+    : PaymentRequestSheetController(spec, state, dialog), pay_button_(nullptr) {
+  state->AddObserver(this);
+}
 
-OrderSummaryViewController::~OrderSummaryViewController() {}
+OrderSummaryViewController::~OrderSummaryViewController() {
+  state()->RemoveObserver(this);
+}
 
 std::unique_ptr<views::View> OrderSummaryViewController::CreateView() {
   std::unique_ptr<views::View> content_view = base::MakeUnique<views::View>();
@@ -98,35 +105,31 @@ std::unique_ptr<views::View> OrderSummaryViewController::CreateView() {
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_STRETCH);
   content_view->SetLayoutManager(layout);
 
-  CurrencyFormatter* formatter = request()->GetOrCreateCurrencyFormatter(
-      request()->details()->total->amount->currency,
-      request()->details()->total->amount->currency_system,
-      g_browser_process->GetApplicationLocale());
-
   // Set the ID for the first few line items labels, for testing.
   const std::vector<DialogViewID> line_items{
       DialogViewID::ORDER_SUMMARY_LINE_ITEM_1,
       DialogViewID::ORDER_SUMMARY_LINE_ITEM_2,
       DialogViewID::ORDER_SUMMARY_LINE_ITEM_3};
-  for (size_t i = 0; i < request()->details()->display_items.size(); i++) {
+  for (size_t i = 0; i < spec()->details().display_items.size(); i++) {
     DialogViewID view_id =
         i < line_items.size() ? line_items[i] : DialogViewID::VIEW_ID_NONE;
     content_view->AddChildView(
         CreateLineItemView(
-            base::UTF8ToUTF16(request()->details()->display_items[i]->label),
-            formatter->Format(
-                request()->details()->display_items[i]->amount->value),
+            base::UTF8ToUTF16(spec()->details().display_items[i]->label),
+            spec()->GetFormattedCurrencyAmount(
+                spec()->details().display_items[i]->amount->value),
             false, view_id)
             .release());
   }
 
   base::string16 total_label_value = l10n_util::GetStringFUTF16(
       IDS_PAYMENT_REQUEST_ORDER_SUMMARY_SHEET_TOTAL_FORMAT,
-      base::UTF8ToUTF16(request()->details()->total->amount->currency),
-      formatter->Format(request()->details()->total->amount->value));
+      base::UTF8ToUTF16(spec()->details().total->amount->currency),
+      spec()->GetFormattedCurrencyAmount(
+          spec()->details().total->amount->value));
 
   content_view->AddChildView(
-      CreateLineItemView(base::UTF8ToUTF16(request()->details()->total->label),
+      CreateLineItemView(base::UTF8ToUTF16(spec()->details().total->label),
                          total_label_value, true,
                          DialogViewID::ORDER_SUMMARY_TOTAL_AMOUNT_LABEL)
           .release());
@@ -137,6 +140,26 @@ std::unique_ptr<views::View> OrderSummaryViewController::CreateView() {
           l10n_util::GetStringUTF16(IDS_PAYMENT_REQUEST_ORDER_SUMMARY_TITLE),
           this),
       std::move(content_view));
+}
+
+std::unique_ptr<views::Button>
+OrderSummaryViewController::CreatePrimaryButton() {
+  std::unique_ptr<views::Button> button(
+      views::MdTextButton::CreateSecondaryUiBlueButton(
+          this, l10n_util::GetStringUTF16(IDS_PAYMENTS_PAY_BUTTON)));
+  button->set_tag(static_cast<int>(PaymentRequestCommonTags::PAY_BUTTON_TAG));
+  button->set_id(static_cast<int>(DialogViewID::PAY_BUTTON));
+  pay_button_ = button.get();
+  UpdatePayButtonState(state()->is_ready_to_pay());
+  return button;
+}
+
+void OrderSummaryViewController::OnSelectedInformationChanged() {
+  UpdatePayButtonState(state()->is_ready_to_pay());
+}
+
+void OrderSummaryViewController::UpdatePayButtonState(bool enabled) {
+  pay_button_->SetEnabled(enabled);
 }
 
 }  // namespace payments

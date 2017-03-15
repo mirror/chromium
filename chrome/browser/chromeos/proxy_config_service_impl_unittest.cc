@@ -350,10 +350,11 @@ class ProxyConfigServiceImplTest : public testing::Test {
         NetworkHandler::Get()->network_state_handler();
     const NetworkState* network = network_state_handler->DefaultNetwork();
     ASSERT_TRUE(network);
-    DBusThreadManager::Get()->GetShillServiceClient()->GetTestInterface()->
-        SetServiceProperty(network->path(),
-                           shill::kProxyConfigProperty,
-                           base::StringValue(proxy_config));
+    DBusThreadManager::Get()
+        ->GetShillServiceClient()
+        ->GetTestInterface()
+        ->SetServiceProperty(network->path(), shill::kProxyConfigProperty,
+                             base::Value(proxy_config));
   }
 
   // Synchronously gets the latest proxy config.
@@ -522,7 +523,7 @@ TEST_F(ProxyConfigServiceImplTest, SharedEthernetAndUserPolicy) {
   network_configs->Append(std::move(ethernet_policy));
 
   profile_prefs_.SetUserPref(::proxy_config::prefs::kUseSharedProxies,
-                             new base::FundamentalValue(false));
+                             new base::Value(false));
   profile_prefs_.SetManagedPref(::onc::prefs::kOpenNetworkConfiguration,
                                 network_configs.release());
 

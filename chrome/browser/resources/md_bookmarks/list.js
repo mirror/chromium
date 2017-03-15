@@ -5,18 +5,40 @@
 Polymer({
   is: 'bookmarks-list',
 
+  behaviors: [
+    bookmarks.StoreClient,
+  ],
+
   properties: {
-    /** @type {BookmarkTreeNode} */
+    /** @type {BookmarkNode} */
     menuItem_: Object,
 
-    /** @type {Array<BookmarkTreeNode>} */
-    displayedList: Array,
+    /** @private {Array<string>} */
+    displayedList_: {
+      type: Array,
+      value: function() {
+        // Use an empty list during initialization so that the databinding to
+        // hide #bookmarksCard takes effect.
+        return [];
+      },
+    },
 
-    searchTerm: String,
+    /** @private */
+    searchTerm_: String,
   },
 
   listeners: {
     'open-item-menu': 'onOpenItemMenu_',
+  },
+
+  attached: function() {
+    this.watch('displayedList_', function(state) {
+      return bookmarks.util.getDisplayedList(state);
+    });
+    this.watch('searchTerm_', function(state) {
+      return state.search.term;
+    });
+    this.updateFromStore();
   },
 
   /**
@@ -95,12 +117,12 @@ Polymer({
 
   /** @private */
   emptyListMessage_: function() {
-    var emptyListMessage = this.searchTerm ? 'noSearchResults' : 'emptyList';
+    var emptyListMessage = this.searchTerm_ ? 'noSearchResults' : 'emptyList';
     return loadTimeData.getString(emptyListMessage);
   },
 
   /** @private */
   isEmptyList_: function() {
-    return this.displayedList.length == 0;
+    return this.displayedList_.length == 0;
   },
 });

@@ -212,7 +212,7 @@ template <typename Functor>
 void ContainerNode::insertNodeVector(const NodeVector& targets,
                                      Node* next,
                                      const Functor& mutator) {
-  InspectorInstrumentation::willInsertDOMNode(this);
+  probe::willInsertDOMNode(this);
   NodeVector postInsertionNotificationTargets;
   {
     EventDispatchForbiddenScope assertNoEventDispatch;
@@ -225,7 +225,7 @@ void ContainerNode::insertNodeVector(const NodeVector& targets,
       ChildListMutationScope(*this).childAdded(child);
       if (document().containsV1ShadowTree())
         child.checkSlotChangeAfterInserted();
-      InspectorInstrumentation::didInsertDOMNode(&child);
+      probe::didInsertDOMNode(&child);
       notifyNodeInsertedInternal(child, postInsertionNotificationTargets);
     }
   }
@@ -424,7 +424,7 @@ Node* ContainerNode::replaceChild(Node* newChild,
 
   // TODO(tkent): According to the specification, we should remove |newChild|
   // from its parent here, and create a separated mutation record for it.
-  // Refer to imported/wpt/dom/nodes/MutationObserver-childList.html.
+  // Refer to external/wpt/dom/nodes/MutationObserver-childList.html.
 
   // 12. If child’s parent is not null, run these substeps:
   //    1. Set removedNodes to a list solely containing child.
@@ -709,7 +709,7 @@ void ContainerNode::notifyNodeInserted(Node& root,
   if (document().containsV1ShadowTree())
     root.checkSlotChangeAfterInserted();
 
-  InspectorInstrumentation::didInsertDOMNode(&root);
+  probe::didInsertDOMNode(&root);
 
   NodeVector postInsertionNotificationTargets;
   notifyNodeInsertedInternal(root, postInsertionNotificationTargets);
@@ -788,6 +788,7 @@ void ContainerNode::detachLayoutTree(const AttachContext& context) {
     child->detachLayoutTree(childrenContext);
 
   setChildNeedsStyleRecalc();
+  setChildNeedsReattachLayoutTree();
   Node::detachLayoutTree(context);
 }
 
@@ -795,9 +796,15 @@ void ContainerNode::childrenChanged(const ChildrenChange& change) {
   document().incDOMTreeVersion();
   document().notifyChangeChildren(*this);
   invalidateNodeListCachesInAncestors();
-  if (change.isChildInsertion() && !childNeedsStyleRecalc()) {
-    setChildNeedsStyleRecalc();
-    markAncestorsWithChildNeedsStyleRecalc();
+  if (change.isChildInsertion()) {
+    if (!childNeedsStyleRecalc()) {
+      setChildNeedsStyleRecalc();
+      markAncestorsWithChildNeedsStyleRecalc();
+    }
+    if (!childNeedsReattachLayoutTree()) {
+      setChildNeedsReattachLayoutTree();
+      markAncestorsWithChildNeedsReattachLayoutTree();
+    }
   }
 }
 
@@ -1232,7 +1239,7 @@ static void dispatchChildInsertionEvents(Node& child) {
 
 static void dispatchChildRemovalEvents(Node& child) {
   if (child.isInShadowTree()) {
-    InspectorInstrumentation::willRemoveDOMNode(&child);
+    probe::willRemoveDOMNode(&child);
     return;
   }
 
@@ -1240,7 +1247,7 @@ static void dispatchChildRemovalEvents(Node& child) {
   DCHECK(!EventDispatchForbiddenScope::isEventDispatchForbidden());
 #endif
 
-  InspectorInstrumentation::willRemoveDOMNode(&child);
+  probe::willRemoveDOMNode(&child);
 
   Node* c = &child;
   Document* document = &child.document();
@@ -1282,27 +1289,49 @@ void ContainerNode::recalcDescendantStyles(StyleRecalcChange change) {
   DCHECK(change >= UpdatePseudoElements || childNeedsStyleRecalc());
   DCHECK(!needsStyleRecalc());
 
-  // This loop is deliberately backwards because we use insertBefore in the
-  // layout tree, and want to avoid a potentially n^2 loop to find the insertion
-  // point while resolving style.  Having us start from the last child and work
-  // our way back means in the common case, we'll find the insertion point in
-  // O(1) time.  See crbug.com/288225
   StyleResolver& styleResolver = document().ensureStyleResolver();
-  Text* lastTextNode = nullptr;
   for (Node* child = lastChild(); child; child = child->previousSibling()) {
     if (child->isTextNode()) {
-      toText(child)->recalcTextStyle(change, lastTextNode);
-      lastTextNode = toText(child);
+      toText(child)->recalcTextStyle(change);
     } else if (child->isElementNode()) {
       Element* element = toElement(child);
       if (element->shouldCallRecalcStyle(change))
-        element->recalcStyle(change, lastTextNode);
+        element->recalcStyle(change);
       else if (element->supportsStyleSharing())
         styleResolver.addToStyleSharingList(*element);
+    }
+  }
+}
+
+void ContainerNode::rebuildChildrenLayoutTrees() {
+  DCHECK(!needsReattachLayoutTree());
+
+  // This loop is deliberately backwards because we use insertBefore in the
+  // layout tree, and want to avoid a potentially n^2 loop to find the insertion
+  // point while building the layout tree.  Having us start from the last child
+  // and work our way back means in the common case, we'll find the insertion
+  // point in O(1) time.  See crbug.com/288225
+  Text* lastTextNode = nullptr;
+  for (Node* child = lastChild(); child; child = child->previousSibling()) {
+    bool rebuildChild = child->needsReattachLayoutTree() ||
+                        child->childNeedsReattachLayoutTree();
+    if (child->isTextNode()) {
+      Text* textNode = toText(child);
+      if (rebuildChild)
+        textNode->rebuildTextLayoutTree(lastTextNode);
+      lastTextNode = textNode;
+    } else if (child->isElementNode()) {
+      Element* element = toElement(child);
+      if (rebuildChild)
+        element->rebuildLayoutTree(lastTextNode);
       if (element->layoutObject())
         lastTextNode = nullptr;
     }
   }
+  // This is done in ContainerNode::attachLayoutTree but will never be cleared
+  // if we don't enter ContainerNode::attachLayoutTree so we do it here.
+  clearChildNeedsStyleRecalc();
+  clearChildNeedsReattachLayoutTree();
 }
 
 void ContainerNode::checkForSiblingStyleChanges(SiblingCheckType changeType,

@@ -1,0 +1,6 @@
+PASS
+
+Tests the coverage highlight in sources after the recording finishes.
+
+5,6,7,9,10,11,12,18,19,20,22,23,24
+

@@ -16,6 +16,7 @@
 #include "components/webcrypto/webcrypto_impl.h"
 #include "content/child/webfallbackthemeengine_impl.h"
 #include "content/common/content_export.h"
+#include "media/blink/webmediacapabilitiesclient_impl.h"
 #include "third_party/WebKit/public/platform/Platform.h"
 #include "third_party/WebKit/public/platform/WebGestureDevice.h"
 #include "third_party/WebKit/public/platform/WebURLError.h"
@@ -45,7 +46,6 @@ class WebThreadBase;
 namespace content {
 
 class NotificationDispatcher;
-class PushDispatcher;
 class ThreadSafeSender;
 class WebCryptoImpl;
 
@@ -111,6 +111,7 @@ class CONTENT_EXPORT BlinkPlatformImpl
   blink::WebCrypto* crypto() override;
   blink::WebNotificationManager* notificationManager() override;
   blink::WebPushProvider* pushProvider() override;
+  blink::WebMediaCapabilitiesClient* mediaCapabilitiesClient() override;
 
   blink::WebString domCodeStringFromEnum(int dom_code) override;
   int domEnumFromCodeString(const blink::WebString& codeString) override;
@@ -121,6 +122,15 @@ class CONTENT_EXPORT BlinkPlatformImpl
   // of the caller to ensure that the compositor thread is cleared before it is
   // destructed.
   void SetCompositorThread(blink::scheduler::WebThreadBase* compositor_thread);
+
+  blink::WebFeaturePolicy* createFeaturePolicy(
+      const blink::WebFeaturePolicy* parentPolicy,
+      const blink::WebParsedFeaturePolicy& containerPolicy,
+      const blink::WebParsedFeaturePolicy& policyHeader,
+      const blink::WebSecurityOrigin& origin) override;
+  blink::WebFeaturePolicy* duplicateFeaturePolicyWithOrigin(
+      const blink::WebFeaturePolicy& policy,
+      const blink::WebSecurityOrigin& new_origin) override;
 
  private:
   void InternalInit();
@@ -134,10 +144,10 @@ class CONTENT_EXPORT BlinkPlatformImpl
   WebFallbackThemeEngineImpl fallback_theme_engine_;
   base::ThreadLocalStorage::Slot current_thread_slot_;
   webcrypto::WebCryptoImpl web_crypto_;
+  media::WebMediaCapabilitiesClientImpl media_capabilities_client_;
 
   scoped_refptr<ThreadSafeSender> thread_safe_sender_;
   scoped_refptr<NotificationDispatcher> notification_dispatcher_;
-  scoped_refptr<PushDispatcher> push_dispatcher_;
 
   blink::scheduler::WebThreadBase* compositor_thread_;
 };

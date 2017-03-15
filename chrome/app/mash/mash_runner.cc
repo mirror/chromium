@@ -56,6 +56,13 @@
 #include "ui/base/ui_base_paths.h"
 #include "ui/base/ui_base_switches.h"
 
+#if defined(OS_POSIX)
+#include <signal.h>
+
+#include "base/threading/thread_task_runner_handle.h"
+#include "chrome/app/shutdown_signal_handlers_posix.h"
+#endif  // defined(OS_POSIX)
+
 using service_manager::mojom::ServiceFactory;
 
 namespace {
@@ -133,7 +140,7 @@ void OnInstanceQuitInMain(base::RunLoop* run_loop,
 
   if (identity.name() != mash::common::GetWindowManagerServiceName() &&
       identity.name() != ui::mojom::kServiceName &&
-      identity.name() != content::mojom::kBrowserServiceName) {
+      identity.name() != content::mojom::kPackagedServicesServiceName) {
     return;
   }
 
@@ -203,12 +210,20 @@ int MashRunner::RunServiceManagerInMain() {
   background_service_manager.SetInstanceQuitCallback(
       base::Bind(&OnInstanceQuitInMain, &run_loop, &exit_value));
 
+#if defined(OS_POSIX)
+  // Quit the main process in response to shutdown signals (like SIGTERM).
+  // These signals are used by Linux distributions to request clean shutdown.
+  // On Chrome OS the SIGTERM signal is sent by session_manager.
+  InstallShutdownSignalHandlers(run_loop.QuitClosure(),
+                                base::ThreadTaskRunnerHandle::Get());
+#endif
+
   // Ping services that we know we want to launch on startup (UI service,
   // window manager, quick launch app).
   context.connector()->Connect(ui::mojom::kServiceName);
   context.connector()->Connect(mash::common::GetWindowManagerServiceName());
   context.connector()->Connect(mash::quick_launch::mojom::kServiceName);
-  context.connector()->Connect(content::mojom::kBrowserServiceName);
+  context.connector()->Connect(content::mojom::kPackagedServicesServiceName);
 
   run_loop.Run();
 
@@ -237,8 +252,8 @@ void MashRunner::StartChildApp(
   service_manager::ServiceContext context(
       base::MakeUnique<mash::MashPackagedService>(),
       std::move(service_request));
-  // Quit the child process if it loses its connection to service manager.
-  context.SetConnectionLostClosure(run_loop.QuitClosure());
+  // Quit the child process when the service quits.
+  context.SetQuitClosure(run_loop.QuitClosure());
   run_loop.Run();
   // |context| must be destroyed before |message_loop|.
 }
@@ -247,6 +262,16 @@ int MashMain() {
 #if !defined(OFFICIAL_BUILD) && defined(OS_WIN)
   base::RouteStdioToConsole(false);
 #endif
+
+#if defined(OS_POSIX)
+  // We inherit the signal mask of our parent process, which might block signals
+  // like SIGTERM that we need in order to cleanly shut down. Reset the signal
+  // mask to unblock all signals. http://crbug.com/699777
+  sigset_t empty_signal_set;
+  CHECK_EQ(0, sigemptyset(&empty_signal_set));
+  CHECK_EQ(0, sigprocmask(SIG_SETMASK, &empty_signal_set, nullptr));
+#endif
+
   // TODO(sky): wire this up correctly.
   service_manager::InitializeLogging();
 

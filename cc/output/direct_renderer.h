@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "cc/base/cc_export.h"
 #include "cc/output/ca_layer_overlay.h"
+#include "cc/output/dc_layer_overlay.h"
 #include "cc/output/filter_operations.h"
 #include "cc/output/overlay_processor.h"
 #include "cc/quads/tile_draw_quad.h"
@@ -81,6 +82,7 @@ class CC_EXPORT DirectRenderer {
     const ScopedResource* current_texture = nullptr;
 
     gfx::Rect root_damage_rect;
+    std::vector<gfx::Rect> root_content_bounds;
     gfx::Size device_viewport_size;
 
     gfx::Transform projection_matrix;
@@ -88,6 +90,7 @@ class CC_EXPORT DirectRenderer {
 
     OverlayCandidateList overlay_list;
     CALayerOverlayList ca_layer_overlay_list;
+    DCLayerOverlayList dc_layer_overlay_list;
   };
 
  protected:
@@ -176,11 +179,13 @@ class CC_EXPORT DirectRenderer {
 
   // Whether it's valid to SwapBuffers with an empty rect. Trivially true when
   // using partial swap.
-  bool allow_empty_swap_;
+  bool allow_empty_swap_ = false;
   // Whether partial swap can be used.
-  bool use_partial_swap_;
+  bool use_partial_swap_ = false;
   // Whether overdraw feedback is enabled and can be used.
   bool overdraw_feedback_ = false;
+  // Whether the SetDrawRectangle command is in use.
+  bool use_set_draw_rectangle_ = false;
 
   // TODO(danakj): Just use a vector of pairs here? Hash map is way overkill.
   std::unordered_map<int, std::unique_ptr<ScopedResource>>

@@ -167,9 +167,11 @@ class WindowServer : public ServerWindowDelegate,
 
   // These functions trivially delegate to all WindowTrees, which in
   // term notify their clients.
-  void ProcessWindowBoundsChanged(const ServerWindow* window,
-                                  const gfx::Rect& old_bounds,
-                                  const gfx::Rect& new_bounds);
+  void ProcessWindowBoundsChanged(
+      const ServerWindow* window,
+      const gfx::Rect& old_bounds,
+      const gfx::Rect& new_bounds,
+      const base::Optional<cc::LocalSurfaceId>& local_surface_id);
   void ProcessClientAreaChanged(
       const ServerWindow* window,
       const gfx::Insets& new_client_area,
@@ -229,7 +231,6 @@ class WindowServer : public ServerWindowDelegate,
 
   // ServerWindowDelegate:
   cc::mojom::DisplayCompositor* GetDisplayCompositor() override;
-  mojo::AssociatedGroup* GetDisplayCompositorAssociatedGroup() override;
 
   // UserDisplayManagerDelegate:
   bool GetFrameDecorationsForUser(
@@ -283,6 +284,13 @@ class WindowServer : public ServerWindowDelegate,
   void UpdateNativeCursorIfOver(ServerWindow* window);
 
   bool IsUserInHighContrastMode(const UserId& user) const;
+
+  // Finds the parent client that will embed |surface_id| and claims ownership
+  // of the temporary reference. If no parent client is found then tell GPU to
+  // immediately drop the temporary reference. |window| is the ServerWindow
+  // that corresponds to |surface_id|.
+  void HandleTemporaryReferenceForNewSurface(const cc::SurfaceId& surface_id,
+                                             ServerWindow* window);
 
   // Overridden from ServerWindowDelegate:
   ServerWindow* GetRootWindow(const ServerWindow* window) override;

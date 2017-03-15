@@ -38,20 +38,14 @@
 
 namespace blink {
 
-SpellCheckRequest::SpellCheckRequest(
-    Range* checkingRange,
-    const String& text,
-    const Vector<uint32_t>& documentMarkersInRange,
-    const Vector<unsigned>& documentMarkerOffsets,
-    int requestNumber)
+SpellCheckRequest::SpellCheckRequest(Range* checkingRange,
+                                     const String& text,
+                                     int requestNumber)
     : m_requester(nullptr),
       m_checkingRange(checkingRange),
       m_rootEditableElement(
           blink::rootEditableElement(*m_checkingRange->startContainer())),
-      m_requestData(unrequestedTextCheckingSequence,
-                    text,
-                    documentMarkersInRange,
-                    documentMarkerOffsets),
+      m_requestData(text),
       m_requestNumber(requestNumber) {
   DCHECK(m_checkingRange);
   DCHECK(m_checkingRange->isConnected());
@@ -91,18 +85,7 @@ SpellCheckRequest* SpellCheckRequest::create(
 
   Range* checkingRangeObject = createRange(checkingRange);
 
-  const DocumentMarkerVector& markers =
-      checkingRangeObject->ownerDocument().markers().markersInRange(
-          checkingRange, DocumentMarker::SpellCheckClientMarkers());
-  Vector<uint32_t> hashes(markers.size());
-  Vector<unsigned> offsets(markers.size());
-  for (size_t i = 0; i < markers.size(); ++i) {
-    hashes[i] = markers[i]->hash();
-    offsets[i] = markers[i]->startOffset();
-  }
-
-  return new SpellCheckRequest(checkingRangeObject, text, hashes, offsets,
-                               requestNumber);
+  return new SpellCheckRequest(checkingRangeObject, text, requestNumber);
 }
 
 const TextCheckingRequestData& SpellCheckRequest::data() const {
@@ -134,7 +117,7 @@ void SpellCheckRequest::setCheckerAndSequence(SpellCheckRequester* requester,
   DCHECK(!m_requester);
   DCHECK_EQ(m_requestData.sequence(), unrequestedTextCheckingSequence);
   m_requester = requester;
-  m_requestData.m_sequence = sequence;
+  m_requestData.setSequence(sequence);
 }
 
 SpellCheckRequester::SpellCheckRequester(LocalFrame& frame)
@@ -160,7 +143,13 @@ void SpellCheckRequester::timerFiredToProcessQueuedRequest(TimerBase*) {
   invokeRequest(m_requestQueue.takeFirst());
 }
 
-void SpellCheckRequester::requestCheckingFor(SpellCheckRequest* request) {
+void SpellCheckRequester::requestCheckingFor(const EphemeralRange& range) {
+  requestCheckingFor(range, 0);
+}
+
+void SpellCheckRequester::requestCheckingFor(const EphemeralRange& range,
+                                             int requestNum) {
+  SpellCheckRequest* request = SpellCheckRequest::create(range, requestNum);
   if (!request)
     return;
 
@@ -218,7 +207,7 @@ void SpellCheckRequester::enqueueRequest(SpellCheckRequest* request) {
   DCHECK(request);
   bool continuation = false;
   if (!m_requestQueue.isEmpty()) {
-    SpellCheckRequest* lastRequest = m_requestQueue.last();
+    SpellCheckRequest* lastRequest = m_requestQueue.back();
     // It's a continuation if the number of the last request got incremented in
     // the new one and both apply to the same editable.
     continuation =
@@ -236,10 +225,10 @@ void SpellCheckRequester::enqueueRequest(SpellCheckRequest* request) {
                               queuedRequest->rootEditableElement();
                      });
     if (sameElementRequest != m_requestQueue.end())
-      m_requestQueue.remove(sameElementRequest);
+      m_requestQueue.erase(sameElementRequest);
   }
 
-  m_requestQueue.append(request);
+  m_requestQueue.push_back(request);
 }
 
 void SpellCheckRequester::didCheck(int sequence,
@@ -251,7 +240,8 @@ void SpellCheckRequester::didCheck(int sequence,
     return;
   }
 
-  frame().spellChecker().markAndReplaceFor(m_processingRequest, results);
+  if (results.size())
+    frame().spellChecker().markAndReplaceFor(m_processingRequest, results);
 
   DCHECK_LT(m_lastProcessedSequence, sequence);
   m_lastProcessedSequence = sequence;

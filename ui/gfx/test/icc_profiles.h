@@ -11,4 +11,10 @@ ICCProfile ICCProfileForTestingColorSpin();
 ICCProfile ICCProfileForTestingGenericRGB();
 ICCProfile ICCProfileForTestingSRGB();
 
+// A profile that does not have an analytic transfer function.
+ICCProfile ICCProfileForTestingNoAnalyticTrFn();
+
+// A profile that is A2B only.
+ICCProfile ICCProfileForTestingA2BOnly();
+
 }  // namespace gfx

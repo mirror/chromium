@@ -4,8 +4,9 @@
 
 #include "content/browser/background_fetch/background_fetch_data_manager.h"
 
+#include "base/memory/ptr_util.h"
 #include "content/browser/background_fetch/background_fetch_context.h"
-#include "content/browser/background_fetch/fetch_request.h"
+#include "content/browser/background_fetch/background_fetch_request_info.h"
 
 namespace content {
 
@@ -16,20 +17,47 @@ BackgroundFetchDataManager::BackgroundFetchDataManager(
   // TODO(harkness) Read from persistent storage and recreate requests.
 }
 
-BackgroundFetchDataManager::~BackgroundFetchDataManager() {}
+BackgroundFetchDataManager::~BackgroundFetchDataManager() = default;
 
-void BackgroundFetchDataManager::CreateRequest(
-    const FetchRequest& fetch_request) {
-  FetchIdentifier id(fetch_request.service_worker_registration_id(),
-                     fetch_request.tag());
-  if (fetch_map_.find(id) != fetch_map_.end()) {
-    DLOG(ERROR) << "Origin " << fetch_request.origin()
-                << " has already created a fetch request with tag "
-                << fetch_request.tag();
+std::unique_ptr<BackgroundFetchJobData>
+BackgroundFetchDataManager::CreateRequest(
+    const BackgroundFetchJobInfo& job_info,
+    BackgroundFetchRequestInfos request_infos) {
+  JobIdentifier id(job_info.service_worker_registration_id(), job_info.tag());
+  // Ensure that this is not a duplicate request.
+  if (service_worker_tag_map_.find(id) != service_worker_tag_map_.end()) {
+    DVLOG(1) << "Origin " << job_info.origin()
+             << " has already created a batch request with tag "
+             << job_info.tag();
     // TODO(harkness) Figure out how to return errors like this.
-    return;
+    return nullptr;
   }
-  fetch_map_[id] = fetch_request;
+
+  // Add the request to our maps and return a JobData to track the individual
+  // files in the request.
+  service_worker_tag_map_[id] = job_info.guid();
+  WriteJobToStorage(job_info, std::move(request_infos));
+  // TODO(harkness): Remove data when the job is complete.
+
+  return base::MakeUnique<BackgroundFetchJobData>(
+      ReadRequestsFromStorage(job_info.guid()));
+}
+
+void BackgroundFetchDataManager::WriteJobToStorage(
+    const BackgroundFetchJobInfo& job_info,
+    BackgroundFetchRequestInfos request_infos) {
+  // TODO(harkness): Replace these maps with actually writing to storage.
+  // TODO(harkness): Check for job_guid clash.
+  job_map_[job_info.guid()] = job_info;
+  request_map_[job_info.guid()] = std::move(request_infos);
+}
+
+// TODO(harkness): This should be changed to read (and cache) small numbers of
+// the RequestInfos instead of returning all of them.
+BackgroundFetchRequestInfos&
+BackgroundFetchDataManager::ReadRequestsFromStorage(
+    const std::string& job_guid) {
+  return request_map_[job_guid];
 }
 
 }  // namespace content

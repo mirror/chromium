@@ -14,7 +14,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.DrawerLayout.DrawerListener;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.ItemAnimator;
 import android.support.v7.widget.Toolbar.OnMenuItemClickListener;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -84,7 +83,7 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
 
             mOfflinePageBridge = new OfflinePageDownloadBridge(
                     Profile.getLastUsedProfile().getOriginalProfile());
-            mSelectionDelegate = new SelectionDelegate<DownloadHistoryItemWrapper>();
+            mSelectionDelegate = new DownloadItemSelectionDelegate();
             mThumbnailProvider = new ThumbnailProviderImpl(iconSize);
         }
 
@@ -174,7 +173,6 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
     private final ListView mFilterView;
     private final UndoDeletionSnackbarController mUndoDeletionSnackbarController;
     private final RecyclerView mRecyclerView;
-    private final ItemAnimator mItemAnimator;
 
     private BasicNativePage mNativePage;
     private Activity mActivity;
@@ -201,16 +199,15 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
                 mMainView.findViewById(R.id.selectable_list);
 
         mSelectableListLayout.initializeEmptyView(
-                VectorDrawableCompat.create(mActivity.getResources(),
-                        R.drawable.downloads_big, mActivity.getTheme()),
-                R.string.download_manager_ui_empty);
+                VectorDrawableCompat.create(
+                        mActivity.getResources(), R.drawable.downloads_big, mActivity.getTheme()),
+                R.string.download_manager_ui_empty, R.string.download_manager_no_results);
 
         mHistoryAdapter = new DownloadHistoryAdapter(isOffTheRecord, parentComponent);
         mRecyclerView = mSelectableListLayout.initializeRecyclerView(mHistoryAdapter);
-        mItemAnimator = mRecyclerView.getItemAnimator();
 
         // Prevent every progress update from causing a transition animation.
-        mItemAnimator.setChangeDuration(0);
+        mRecyclerView.getItemAnimator().setChangeDuration(0);
 
         mHistoryAdapter.initialize(mBackendProvider);
         addObserver(mHistoryAdapter);
@@ -291,6 +288,20 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
     }
 
     /**
+     * See {@link SelectableListLayout#detachContentView()}.
+     */
+    public View detachContentView() {
+        return mSelectableListLayout.detachContentView();
+    }
+
+    /**
+     * @return The vertical scroll offset of the content view.
+     */
+    public int getVerticalScrollOffset() {
+        return mRecyclerView.computeVerticalScrollOffset();
+    }
+
+    /**
      * Sets the download manager to the state that the url represents.
      */
     public void updateForUrl(String url) {
@@ -310,9 +321,8 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
             shareSelectedItems();
             return true;
         } else if (item.getItemId() == R.id.search_menu_id) {
-            mRecyclerView.setItemAnimator(null);
+            mSelectableListLayout.onStartSearch();
             mToolbar.showSearchView();
-            mSelectableListLayout.setEmptyViewText(R.string.download_manager_no_results);
             RecordUserAction.record("Android.DownloadManager.Search");
             return true;
         }
@@ -391,9 +401,8 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
 
     @Override
     public void onEndSearch() {
-        mSelectableListLayout.setEmptyViewText(R.string.download_manager_ui_empty);
+        mSelectableListLayout.onEndSearch();
         mHistoryAdapter.onEndSearch();
-        mRecyclerView.setItemAnimator(mItemAnimator);
     }
 
     private void shareSelectedItems() {
@@ -430,8 +439,6 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
         if (itemsToDelete.isEmpty()) return;
 
         mHistoryAdapter.markItemsForDeletion(itemsToDelete);
-
-        dismissUndoDeletionSnackbars();
 
         boolean singleItemDeleted = selectedItems.size() == 1;
         String snackbarText = singleItemDeleted ? selectedItems.get(0).getDisplayFileName() :

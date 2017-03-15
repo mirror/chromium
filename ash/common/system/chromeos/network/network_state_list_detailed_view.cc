@@ -8,11 +8,9 @@
 #include <vector>
 
 #include "ash/common/ash_constants.h"
-#include "ash/common/material_design/material_design_controller.h"
 #include "ash/common/system/chromeos/network/network_icon.h"
 #include "ash/common/system/chromeos/network/network_icon_animation.h"
 #include "ash/common/system/chromeos/network/network_info.h"
-#include "ash/common/system/chromeos/network/network_list.h"
 #include "ash/common/system/chromeos/network/network_list_md.h"
 #include "ash/common/system/chromeos/network/network_list_view_base.h"
 #include "ash/common/system/chromeos/network/tray_network_state_observer.h"
@@ -29,11 +27,12 @@
 #include "ash/common/system/tray/tray_details_view.h"
 #include "ash/common/system/tray/tray_popup_header_button.h"
 #include "ash/common/system/tray/tri_view.h"
-#include "ash/common/wm_lookup.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
 #include "ash/public/cpp/shell_window_ids.h"
+#include "ash/resources/grit/ash_resources.h"
 #include "ash/root_window_controller.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "base/command_line.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
@@ -46,8 +45,6 @@
 #include "chromeos/network/network_connect.h"
 #include "chromeos/network/network_state.h"
 #include "chromeos/network/network_state_handler.h"
-#include "grit/ash_resources.h"
-#include "grit/ash_strings.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -74,10 +71,6 @@ using chromeos::NetworkTypePattern;
 namespace ash {
 namespace tray {
 namespace {
-
-bool UseMd() {
-  return MaterialDesignController::IsSystemTrayMenuMaterial();
-}
 
 // Delay between scan requests.
 const int kRequestScanDelaySeconds = 10;
@@ -155,8 +148,7 @@ class NetworkStateListDetailedView::InfoBubble
                                 views::Widget* widget) const override {
     DCHECK(anchor_widget());
     // Place the bubble in the anchor widget's root window.
-    WmLookup::Get()
-        ->GetWindowForWidget(anchor_widget())
+    WmWindow::Get(anchor_widget()->GetNativeWindow())
         ->GetRootWindowController()
         ->ConfigureWidgetInitParamsForContainer(
             widget, kShellWindowId_SettingBubbleContainer, params);
@@ -167,96 +159,6 @@ class NetworkStateListDetailedView::InfoBubble
   NetworkStateListDetailedView* detailed_view_;
 
   DISALLOW_COPY_AND_ASSIGN(InfoBubble);
-};
-
-//------------------------------------------------------------------------------
-
-const int kFadeIconMs = 500;
-
-// A throbber view that fades in/out when shown/hidden.
-class ScanningThrobber : public ThrobberView {
- public:
-  ScanningThrobber() {
-    SetPaintToLayer();
-    layer()->SetFillsBoundsOpaquely(false);
-    layer()->SetOpacity(1.0);
-    accessible_name_ =
-        l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_WIFI_SCANNING_MESSAGE);
-  }
-  ~ScanningThrobber() override {}
-
-  // views::View
-  void SetVisible(bool visible) override {
-    layer()->GetAnimator()->StopAnimating();  // Stop any previous animation.
-    ui::ScopedLayerAnimationSettings animation(layer()->GetAnimator());
-    animation.SetTransitionDuration(
-        base::TimeDelta::FromMilliseconds(kFadeIconMs));
-    layer()->SetOpacity(visible ? 1.0 : 0.0);
-  }
-
-  void GetAccessibleNodeData(ui::AXNodeData* node_data) override {
-    node_data->SetName(accessible_name_);
-    node_data->role = ui::AX_ROLE_BUSY_INDICATOR;
-  }
-
- private:
-  base::string16 accessible_name_;
-
-  DISALLOW_COPY_AND_ASSIGN(ScanningThrobber);
-};
-
-//------------------------------------------------------------------------------
-
-// An image button showing the info icon similar to TrayPopupHeaderButton,
-// but without the toggle properties, that fades in/out when shown/hidden.
-class InfoIcon : public views::ImageButton {
- public:
-  explicit InfoIcon(views::ButtonListener* listener)
-      : views::ImageButton(listener) {
-    ui::ResourceBundle& bundle = ui::ResourceBundle::GetSharedInstance();
-    SetImage(
-        STATE_NORMAL,
-        bundle.GetImageNamed(IDR_AURA_UBER_TRAY_NETWORK_INFO).ToImageSkia());
-    SetImage(STATE_HOVERED,
-             bundle.GetImageNamed(IDR_AURA_UBER_TRAY_NETWORK_INFO_HOVER)
-                 .ToImageSkia());
-    SetImageAlignment(ALIGN_CENTER, ALIGN_MIDDLE);
-    SetAccessibleName(
-        bundle.GetLocalizedString(IDS_ASH_STATUS_TRAY_NETWORK_INFO));
-    SetPaintToLayer();
-    layer()->SetFillsBoundsOpaquely(false);
-    layer()->SetOpacity(1.0);
-  }
-
-  ~InfoIcon() override {}
-
-  // views::View
-  gfx::Size GetPreferredSize() const override {
-    int size = GetTrayConstant(TRAY_POPUP_ITEM_MIN_HEIGHT);
-    return gfx::Size(size, size);
-  }
-
-  void SetVisible(bool visible) override {
-    layer()->GetAnimator()->StopAnimating();  // Stop any previous animation.
-    ui::ScopedLayerAnimationSettings animation(layer()->GetAnimator());
-    animation.SetTransitionDuration(
-        base::TimeDelta::FromMilliseconds(kFadeIconMs));
-    layer()->SetOpacity(visible ? 1.0 : 0.0);
-  }
-
-  // views::CustomButton
-  void StateChanged(ButtonState old_state) override {
-    if (state() == STATE_HOVERED || state() == STATE_PRESSED) {
-      set_background(views::Background::CreateSolidBackground(
-          kTrayPopupHoverBackgroundColor));
-    } else {
-      set_background(nullptr);
-    }
-    SchedulePaint();
-  }
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(InfoIcon);
 };
 
 //------------------------------------------------------------------------------
@@ -319,25 +221,16 @@ NetworkStateListDetailedView::NetworkStateListDetailedView(
     : NetworkDetailedView(owner),
       list_type_(list_type),
       login_(login),
-      prev_wifi_scanning_state_(false),
-      info_icon_(nullptr),
-      info_button_md_(nullptr),
-      settings_button_md_(nullptr),
-      proxy_settings_button_md_(nullptr),
-      info_bubble_(nullptr),
-      scanning_throbber_(nullptr) {
+      info_button_(nullptr),
+      settings_button_(nullptr),
+      proxy_settings_button_(nullptr),
+      info_bubble_(nullptr) {
   if (list_type == LIST_TYPE_VPN) {
     // Use a specialized class to list VPNs.
     network_list_view_.reset(new VPNListView(this));
   } else {
     // Use a common class to list any other network types.
-    // TODO(varkha): NetworkListViewMd is a temporary fork of NetworkListView.
-    // NetworkListView will go away when Material Design becomes default.
-    // See crbug.com/614453.
-    if (UseMd())
-      network_list_view_.reset(new NetworkListViewMd(this));
-    else
-      network_list_view_.reset(new NetworkListView(this));
+    network_list_view_.reset(new NetworkListView(this));
   }
 }
 
@@ -348,6 +241,7 @@ NetworkStateListDetailedView::~NetworkStateListDetailedView() {
 
 void NetworkStateListDetailedView::Update() {
   UpdateNetworkList();
+  UpdateHeaderButtons();
   Layout();
 }
 
@@ -355,15 +249,11 @@ void NetworkStateListDetailedView::Update() {
 
 void NetworkStateListDetailedView::Init() {
   Reset();
-  info_icon_ = nullptr;
-  info_button_md_ = nullptr;
-  settings_button_md_ = nullptr;
-  proxy_settings_button_md_ = nullptr;
-  scanning_throbber_ = nullptr;
+  info_button_ = nullptr;
+  settings_button_ = nullptr;
+  proxy_settings_button_ = nullptr;
 
   CreateScrollableList();
-  if (!UseMd())
-    CreateNetworkExtra();
   CreateTitleRow(list_type_ == ListType::LIST_TYPE_NETWORK
                      ? IDS_ASH_STATUS_TRAY_NETWORK
                      : IDS_ASH_STATUS_TRAY_VPN);
@@ -382,12 +272,12 @@ NetworkStateListDetailedView::GetViewType() const {
 
 void NetworkStateListDetailedView::HandleButtonPressed(views::Button* sender,
                                                        const ui::Event& event) {
-  if (sender == info_button_md_) {
+  if (sender == info_button_) {
     ToggleInfoBubble();
     return;
-  } else if (sender == settings_button_md_) {
+  } else if (sender == settings_button_) {
     ShowSettings();
-  } else if (sender == proxy_settings_button_md_) {
+  } else if (sender == proxy_settings_button_) {
     WmShell::Get()->system_tray_controller()->ShowProxySettings();
   }
 
@@ -402,18 +292,18 @@ void NetworkStateListDetailedView::HandleViewClicked(views::View* view) {
   if (login_ == LoginStatus::LOCKED)
     return;
 
-  std::string service_path;
-  if (!network_list_view_->IsNetworkEntry(view, &service_path))
+  std::string guid;
+  if (!network_list_view_->IsNetworkEntry(view, &guid))
     return;
 
   const NetworkState* network =
-      NetworkHandler::Get()->network_state_handler()->GetNetworkState(
-          service_path);
+      NetworkHandler::Get()->network_state_handler()->GetNetworkStateFromGuid(
+          guid);
   if (!network || network->IsConnectedState() || network->IsConnectingState()) {
     WmShell::Get()->RecordUserMetricsAction(
         list_type_ == LIST_TYPE_VPN
-            ? UMA_STATUS_AREA_SHOW_NETWORK_CONNECTION_DETAILS
-            : UMA_STATUS_AREA_SHOW_VPN_CONNECTION_DETAILS);
+            ? UMA_STATUS_AREA_SHOW_VPN_CONNECTION_DETAILS
+            : UMA_STATUS_AREA_SHOW_NETWORK_CONNECTION_DETAILS);
     WmShell::Get()->system_tray_controller()->ShowNetworkSettings(
         network ? network->guid() : std::string());
   } else {
@@ -429,17 +319,17 @@ void NetworkStateListDetailedView::CreateExtraTitleRowButtons() {
   if (login_ == LoginStatus::LOCKED)
     return;
 
-  DCHECK(!info_button_md_);
+  DCHECK(!info_button_);
   tri_view()->SetContainerVisible(TriView::Container::END, true);
 
-  info_button_md_ = new SystemMenuButton(
+  info_button_ = new SystemMenuButton(
       this, TrayPopupInkDropStyle::HOST_CENTERED, kSystemMenuInfoIcon,
       IDS_ASH_STATUS_TRAY_NETWORK_INFO);
-  tri_view()->AddView(TriView::Container::END, info_button_md_);
+  tri_view()->AddView(TriView::Container::END, info_button_);
 
   if (login_ != LoginStatus::NOT_LOGGED_IN) {
-    DCHECK(!settings_button_md_);
-    settings_button_md_ = new SystemMenuButton(
+    DCHECK(!settings_button_);
+    settings_button_ = new SystemMenuButton(
         this, TrayPopupInkDropStyle::HOST_CENTERED, kSystemMenuSettingsIcon,
         IDS_ASH_STATUS_TRAY_NETWORK_SETTINGS);
 
@@ -448,14 +338,14 @@ void NetworkStateListDetailedView::CreateExtraTitleRowButtons() {
     // creation flow) when session is started but UI flow continues within
     // login UI, i.e., no browser window is yet avaialable.
     if (!WmShell::Get()->system_tray_delegate()->ShouldShowSettings())
-      settings_button_md_->SetEnabled(false);
+      settings_button_->SetEnabled(false);
 
-    tri_view()->AddView(TriView::Container::END, settings_button_md_);
+    tri_view()->AddView(TriView::Container::END, settings_button_);
   } else {
-    proxy_settings_button_md_ = new SystemMenuButton(
+    proxy_settings_button_ = new SystemMenuButton(
         this, TrayPopupInkDropStyle::HOST_CENTERED, kSystemMenuSettingsIcon,
         IDS_ASH_STATUS_TRAY_NETWORK_PROXY_SETTINGS);
-    tri_view()->AddView(TriView::Container::END, proxy_settings_button_md_);
+    tri_view()->AddView(TriView::Container::END, proxy_settings_button_);
   }
 }
 
@@ -466,86 +356,32 @@ void NetworkStateListDetailedView::ShowSettings() {
   WmShell::Get()->system_tray_controller()->ShowNetworkSettings(std::string());
 }
 
-void NetworkStateListDetailedView::CreateNetworkExtra() {
-  DCHECK(!UseMd());
-}
-
-void NetworkStateListDetailedView::SetScanningStateForThrobberView(
-    bool is_scanning) {
-  if (UseMd())
-    return;
-
-  // Hide the network info button if the device is scanning for Wi-Fi networks
-  // and display the WiFi scanning indicator.
-  info_icon_->SetVisible(!is_scanning);
-  scanning_throbber_->SetVisible(is_scanning);
-  // Set the element, network info button or the wifi scanning indicator, as
-  // focusable based on which one is active/visible.
-  // NOTE: As we do not want to lose focus from the network info throbber view,
-  // the order of below operation is important.
-  if (is_scanning) {
-    scanning_throbber_->SetFocusBehavior(FocusBehavior::ALWAYS);
-    info_icon_->SetFocusBehavior(FocusBehavior::NEVER);
-  } else {
-    info_icon_->SetFocusBehavior(FocusBehavior::ALWAYS);
-    scanning_throbber_->SetFocusBehavior(FocusBehavior::NEVER);
-  }
-  // If the Network Info view was in focus while this toggle operation was
-  // being performed then the focus should remain on this view.
-  if (info_icon_->HasFocus() && is_scanning)
-    scanning_throbber_->RequestFocus();
-  else if (scanning_throbber_->HasFocus() && !is_scanning)
-    info_icon_->RequestFocus();
-}
-
-void NetworkStateListDetailedView::UpdateTechnologyButton(
-    TrayPopupHeaderButton* button,
-    const NetworkTypePattern& technology) {
-  NetworkStateHandler::TechnologyState state =
-      NetworkHandler::Get()->network_state_handler()->GetTechnologyState(
-          technology);
-  if (state == NetworkStateHandler::TECHNOLOGY_UNAVAILABLE) {
-    button->SetVisible(false);
-    return;
-  }
-  button->SetVisible(true);
-  if (state == NetworkStateHandler::TECHNOLOGY_AVAILABLE) {
-    button->SetEnabled(true);
-    button->SetToggled(true);
-  } else if (state == NetworkStateHandler::TECHNOLOGY_ENABLED) {
-    button->SetEnabled(true);
-    button->SetToggled(false);
-  } else if (state == NetworkStateHandler::TECHNOLOGY_ENABLING) {
-    button->SetEnabled(false);
-    button->SetToggled(false);
-  } else {  // Initializing
-    button->SetEnabled(false);
-    button->SetToggled(true);
-  }
-}
-
 void NetworkStateListDetailedView::UpdateNetworkList() {
   network_list_view_->Update();
 }
 
-bool NetworkStateListDetailedView::OrderChild(views::View* view, int index) {
-  if (scroll_content()->child_at(index) != view) {
-    scroll_content()->ReorderChildView(view, index);
-    return true;
+void NetworkStateListDetailedView::UpdateHeaderButtons() {
+  if (proxy_settings_button_) {
+    proxy_settings_button_->SetEnabled(
+        NetworkHandler::Get()->network_state_handler()->DefaultNetwork() !=
+        nullptr);
   }
-  return false;
-}
-
-void NetworkStateListDetailedView::CreateSettingsEntry() {
-  DCHECK(!UseMd());
+  if (list_type_ != LIST_TYPE_VPN) {
+    bool scanning =
+        NetworkHandler::Get()->network_state_handler()->GetScanningByType(
+            NetworkTypePattern::WiFi());
+    ShowProgress(-1, scanning);
+    info_button_->SetTooltipText(l10n_util::GetStringUTF16(
+        scanning ? IDS_ASH_STATUS_TRAY_WIFI_SCANNING_MESSAGE
+                 : IDS_ASH_STATUS_TRAY_NETWORK_INFO));
+  }
 }
 
 void NetworkStateListDetailedView::ToggleInfoBubble() {
   if (ResetInfoBubble())
     return;
 
-  info_bubble_ = new InfoBubble(UseMd() ? info_button_md_ : info_icon_,
-                                CreateNetworkInfoView(), this);
+  info_bubble_ = new InfoBubble(info_button_, CreateNetworkInfoView(), this);
   views::BubbleDialogDelegateView::CreateBubble(info_bubble_)->Show();
   info_bubble_->NotifyAccessibilityEvent(ui::AX_EVENT_ALERT, false);
 }
@@ -624,18 +460,6 @@ views::View* NetworkStateListDetailedView::CreateNetworkInfoView() {
   return container;
 }
 
-const gfx::ImageSkia*
-NetworkStateListDetailedView::GetControlledByExtensionIcon() {
-  // Lazily load the icon from the resource bundle.
-  if (controlled_by_extension_icon_.IsEmpty()) {
-    ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
-    controlled_by_extension_icon_ =
-        rb.GetImageNamed(IDR_AURA_UBER_TRAY_NETWORK_CONTROLLED);
-  }
-  DCHECK(!controlled_by_extension_icon_.IsEmpty());
-  return controlled_by_extension_icon_.ToImageSkia();
-}
-
 views::View* NetworkStateListDetailedView::CreateControlledByExtensionView(
     const NetworkInfo& info) {
   NetworkingConfigDelegate* networking_config_delegate =
@@ -643,8 +467,8 @@ views::View* NetworkStateListDetailedView::CreateControlledByExtensionView(
   if (!networking_config_delegate)
     return nullptr;
   std::unique_ptr<const NetworkingConfigDelegate::ExtensionInfo>
-      extension_info = networking_config_delegate->LookUpExtensionForNetwork(
-          info.service_path);
+      extension_info =
+          networking_config_delegate->LookUpExtensionForNetwork(info.guid);
   if (!extension_info)
     return nullptr;
 
@@ -656,7 +480,9 @@ views::View* NetworkStateListDetailedView::CreateControlledByExtensionView(
   views::ImageView* controlled_icon =
       new FixedSizedImageView(kTrayPopupDetailsIconWidth, 0);
 
-  controlled_icon->SetImage(GetControlledByExtensionIcon());
+  controlled_icon->SetImage(
+      ui::ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
+          IDR_AURA_UBER_TRAY_NETWORK_CONTROLLED));
   controlled_icon->SetTooltipText(tooltip_text);
   return controlled_icon;
 }
@@ -671,13 +497,6 @@ void NetworkStateListDetailedView::CallRequestScan() {
       base::TimeDelta::FromSeconds(kRequestScanDelaySeconds));
 }
 
-void NetworkStateListDetailedView::ToggleMobile() {
-  NetworkStateHandler* handler = NetworkHandler::Get()->network_state_handler();
-  bool enabled = handler->IsTechnologyEnabled(NetworkTypePattern::Mobile());
-  chromeos::NetworkConnect::Get()->SetTechnologyEnabled(
-      NetworkTypePattern::Mobile(), !enabled);
-}
-
 views::View* NetworkStateListDetailedView::CreateViewForNetwork(
     const NetworkInfo& info) {
   HoverHighlightView* container = new HoverHighlightView(this);
@@ -688,10 +507,6 @@ views::View* NetworkStateListDetailedView::CreateViewForNetwork(
   else
     container->AddIconAndLabel(info.image, info.label, info.highlight);
   container->set_tooltip(info.tooltip);
-  if (!UseMd()) {
-    container->SetBorder(
-        views::CreateEmptyBorder(0, kTrayPopupPaddingHorizontal, 0, 0));
-  }
   views::View* controlled_icon = CreateControlledByExtensionView(info);
   if (controlled_icon)
     container->AddChildView(controlled_icon);

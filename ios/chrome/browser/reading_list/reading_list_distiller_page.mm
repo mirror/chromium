@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/mac/foundation_util.h"
+#include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/favicon/ios/web_favicon_driver.h"
@@ -39,6 +40,13 @@ const char* kGetIframeURLJavaScript =
     "  }"
     "  return document.getElementsByTagName('iframe')[0].src;"
     "})()";
+
+const char* kWikipediaWorkaround =
+    "(() => {"
+    "  var s = document.createElement('style');"
+    "  s.innerHTML='.client-js .collapsible-block { display: block }';"
+    "  document.head.appendChild(s);"
+    "})()";
 }  // namespace
 
 namespace reading_list {
@@ -53,6 +61,7 @@ ReadingListDistillerPage::ReadingListDistillerPage(
     : dom_distiller::DistillerPageIOS(browser_state),
       web_state_dispatcher_(web_state_dispatcher),
       delegate_(delegate),
+      delayed_task_id_(0),
       weak_ptr_factory_(this) {
   DCHECK(delegate);
 }
@@ -69,9 +78,24 @@ void ReadingListDistillerPage::DistillPageImpl(const GURL& url,
       web_state_dispatcher_->RequestWebState();
   AttachWebState(std::move(new_web_state));
   original_url_ = url;
+  delayed_task_id_++;
   FetchFavicon(url);
 
   DistillerPageIOS::DistillPageImpl(url, script);
+
+  // WKWebView sets the document.hidden property to true and the
+  // document.visibilityState to prerender if the page is not added to a view
+  // hierarchy. Some pages may not render their content in these conditions.
+  // Add the view and move it out of the screen far in the top left corner of
+  // the coordinate space.
+  CGRect frame = [[[UIApplication sharedApplication] keyWindow] frame];
+  frame.origin.x = -5 * std::max(frame.size.width, frame.size.height);
+  frame.origin.y = frame.origin.x;
+  DCHECK(![CurrentWebState()->GetView() superview]);
+  [CurrentWebState()->GetView() setFrame:frame];
+  [[[UIApplication sharedApplication] keyWindow]
+      insertSubview:CurrentWebState()->GetView()
+            atIndex:0];
 }
 
 void ReadingListDistillerPage::FetchFavicon(const GURL& page_url) {
@@ -88,8 +112,10 @@ void ReadingListDistillerPage::OnDistillationDone(const GURL& page_url,
                                                   const base::Value* value) {
   std::unique_ptr<web::WebState> old_web_state = DetachWebState();
   if (old_web_state) {
+    [old_web_state->GetView() removeFromSuperview];
     web_state_dispatcher_->ReturnWebState(std::move(old_web_state));
   }
+  delayed_task_id_++;
   DistillerPageIOS::OnDistillationDone(page_url, value);
 }
 
@@ -143,17 +169,30 @@ void ReadingListDistillerPage::OnLoadURLDone(
       weak_ptr_factory_.GetWeakPtr();
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE,
-      base::Bind(&ReadingListDistillerPage::DelayedOnLoadURLDone, weak_this),
+      base::Bind(&ReadingListDistillerPage::DelayedOnLoadURLDone, weak_this,
+                 delayed_task_id_),
       base::TimeDelta::FromSeconds(kPageLoadDelayInSeconds));
 }
 
-void ReadingListDistillerPage::DelayedOnLoadURLDone() {
+void ReadingListDistillerPage::DelayedOnLoadURLDone(int delayed_task_id) {
+  if (!CurrentWebState() || delayed_task_id != delayed_task_id_) {
+    // Something interrupted the distillation.
+    // Abort here.
+    return;
+  }
   if (IsGoogleCachedAMPPage()) {
     // Workaround for Google AMP pages.
     HandleGoogleCachedAMPPage();
-  } else {
-    ContinuePageDistillation();
+    return;
   }
+  if (IsWikipediaPage()) {
+    // Workaround for Wikipedia pages.
+    // TODO(crbug.com/647667): remove workaround once DOM distiller handle this
+    // case.
+    HandleWikipediaPage();
+    return;
+  }
+  ContinuePageDistillation();
 }
 
 void ReadingListDistillerPage::ContinuePageDistillation() {
@@ -231,6 +270,28 @@ bool ReadingListDistillerPage::HandleGoogleCachedAMPPageJavaScriptResult(
   web::NavigationManager::WebLoadParams params(new_gurl);
   CurrentWebState()->GetNavigationManager()->LoadURLWithParams(params);
   return true;
+}
+
+bool ReadingListDistillerPage::IsWikipediaPage() {
+  // All wikipedia pages are in the form "https://xxx.m.wikipedia.org/..."
+  const GURL& url = CurrentWebState()->GetLastCommittedURL();
+  if (!url.is_valid() || !url.SchemeIs(url::kHttpsScheme)) {
+    return false;
+  }
+  return (base::EndsWith(url.host(), ".m.wikipedia.org",
+                         base::CompareCase::SENSITIVE));
+}
+
+void ReadingListDistillerPage::HandleWikipediaPage() {
+  base::WeakPtr<ReadingListDistillerPage> weak_this =
+      weak_ptr_factory_.GetWeakPtr();
+  [CurrentWebState()->GetJSInjectionReceiver()
+      executeJavaScript:@(kWikipediaWorkaround)
+      completionHandler:^(id result, NSError* error) {
+        if (weak_this) {
+          weak_this->ContinuePageDistillation();
+        }
+      }];
 }
 
 }  // namespace reading_list

@@ -68,6 +68,7 @@ class Node;
 class OriginTrialsTest;
 class Page;
 class Range;
+class RecordTest;
 class SerializedScriptValue;
 class ShadowRoot;
 class TypeConversions;
@@ -252,6 +253,8 @@ class Internals final : public GarbageCollected<Internals>,
 
   int lastSpellCheckRequestSequence(Document*, ExceptionState&);
   int lastSpellCheckProcessedSequence(Document*, ExceptionState&);
+  String idleTimeSpellCheckerState(Document*, ExceptionState&);
+  void runIdleTimeSpellChecker(Document*, ExceptionState&);
 
   Vector<AtomicString> userPreferredLanguages() const;
   void setUserPreferredLanguages(const Vector<String>&);
@@ -378,6 +381,7 @@ class Internals final : public GarbageCollected<Internals>,
       const String& scheme);
 
   TypeConversions* typeConversions() const;
+  RecordTest* recordTest() const;
   DictionaryTest* dictionaryTest() const;
   UnionTypesTest* unionTypesTest() const;
   OriginTrialsTest* originTrialsTest() const;
@@ -417,7 +421,12 @@ class Internals final : public GarbageCollected<Internals>,
   int selectPopupItemStyleFontHeight(Node*, int);
   void resetTypeAheadSession(HTMLSelectElement*);
 
+  Node* visibleSelectionAnchorNode();
+  unsigned visibleSelectionAnchorOffset();
+  Node* visibleSelectionFocusNode();
+  unsigned visibleSelectionFocusOffset();
   ClientRect* selectionBounds(ExceptionState&);
+  String textAffinity();
 
   bool loseSharedGraphicsContext3D();
 
@@ -492,6 +501,7 @@ class Internals final : public GarbageCollected<Internals>,
   // |feature| must be one of the values from the UseCounter::Feature enum.
   bool isUseCounted(Document*, uint32_t feature);
   bool isCSSPropertyUseCounted(Document*, const String&);
+  bool isAnimatedCSSPropertyUseCounted(Document*, const String&);
 
   // Observes changes on Document's UseCounter. Returns a promise that is
   // resolved when |feature| is counted. When |feature| was already counted,

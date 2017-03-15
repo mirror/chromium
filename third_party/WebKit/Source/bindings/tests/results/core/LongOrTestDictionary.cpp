@@ -12,6 +12,8 @@
 #include "LongOrTestDictionary.h"
 
 #include "bindings/core/v8/DoubleOrString.h"
+#include "bindings/core/v8/IDLTypes.h"
+#include "bindings/core/v8/NativeValueTraitsImpl.h"
 #include "bindings/core/v8/TestInterface2OrUint8Array.h"
 #include "bindings/core/v8/ToV8.h"
 
@@ -19,18 +21,18 @@ namespace blink {
 
 LongOrTestDictionary::LongOrTestDictionary() : m_type(SpecificTypeNone) {}
 
-int LongOrTestDictionary::getAsLong() const {
+int32_t LongOrTestDictionary::getAsLong() const {
   DCHECK(isLong());
   return m_long;
 }
 
-void LongOrTestDictionary::setLong(int value) {
+void LongOrTestDictionary::setLong(int32_t value) {
   DCHECK(isNull());
   m_long = value;
   m_type = SpecificTypeLong;
 }
 
-LongOrTestDictionary LongOrTestDictionary::fromLong(int value) {
+LongOrTestDictionary LongOrTestDictionary::fromLong(int32_t value) {
   LongOrTestDictionary container;
   container.setLong(value);
   return container;
@@ -87,7 +89,7 @@ void V8LongOrTestDictionary::toImpl(v8::Isolate* isolate, v8::Local<v8::Value> v
   }
 
   if (v8Value->IsNumber()) {
-    int cppValue = toInt32(isolate, v8Value, NormalConversion, exceptionState);
+    int32_t cppValue = NativeValueTraits<IDLLong>::nativeValue(isolate, v8Value, exceptionState, NormalConversion);
     if (exceptionState.hadException())
       return;
     impl.setLong(cppValue);
@@ -95,7 +97,7 @@ void V8LongOrTestDictionary::toImpl(v8::Isolate* isolate, v8::Local<v8::Value> v
   }
 
   {
-    int cppValue = toInt32(isolate, v8Value, NormalConversion, exceptionState);
+    int32_t cppValue = NativeValueTraits<IDLLong>::nativeValue(isolate, v8Value, exceptionState, NormalConversion);
     if (exceptionState.hadException())
       return;
     impl.setLong(cppValue);

@@ -38,15 +38,41 @@ class APIEventHandler {
   v8::Local<v8::Object> CreateEventInstance(const std::string& event_name,
                                             v8::Local<v8::Context> context);
 
+  // Creates a new event without any name. This is used by custom bindings when
+  // the entirety of the logic for the event is contained in the renderer. These
+  // events do not notify of new/removed listeners or allow for dispatching
+  // through FireEventInContext().
+  v8::Local<v8::Object> CreateAnonymousEventInstance(
+      v8::Local<v8::Context> context);
+
+  // Invalidates the given |event|.
+  void InvalidateCustomEvent(v8::Local<v8::Context> context,
+                             v8::Local<v8::Object> event);
+
   // Notifies all listeners of the event with the given |event_name| in the
   // specified |context|, sending the included |arguments|.
   void FireEventInContext(const std::string& event_name,
                           v8::Local<v8::Context> context,
                           const base::ListValue& arguments);
 
+  // Registers a |function| to serve as an "argument massager" for the given
+  // |event_name|, mutating the original arguments.
+  // The function is called with two arguments: the array of original arguments
+  // being dispatched to the event, and the function to dispatch the event to
+  // listeners.
+  void RegisterArgumentMassager(v8::Local<v8::Context> context,
+                                const std::string& event_name,
+                                v8::Local<v8::Function> function);
+
   // Returns the EventListeners for a given |event_name| and |context|.
   size_t GetNumEventListenersForTesting(const std::string& event_name,
                                         v8::Local<v8::Context> context);
+
+  // Invalidates listeners for the given |context|. It's a shame we have to
+  // have this separately (as opposed to hooking into e.g. a PerContextData
+  // destructor), but we need to do this before the context is fully removed
+  // (because the associated extension ScriptContext needs to be valid).
+  void InvalidateContext(v8::Local<v8::Context> context);
 
  private:
   // Method to run a given v8::Function. Curried in for testing.

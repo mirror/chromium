@@ -147,7 +147,13 @@ IN_PROC_BROWSER_TEST_F(SyncErrorTest, ActionableErrorTest) {
 
 // This test verifies that sync keeps retrying if it encounters error during
 // setup.
-IN_PROC_BROWSER_TEST_F(SyncErrorTest, ErrorWhileSettingUp) {
+// crbug.com/689662
+#if defined(OS_CHROMEOS)
+#define MAYBE_ErrorWhileSettingUp DISABLED_ErrorWhileSettingUp
+#else
+#define MAYBE_ErrorWhileSettingUp ErrorWhileSettingUp
+#endif
+IN_PROC_BROWSER_TEST_F(SyncErrorTest, MAYBE_ErrorWhileSettingUp) {
   ASSERT_TRUE(SetupClients());
 
 #if !defined(OS_CHROMEOS)
@@ -201,14 +207,8 @@ IN_PROC_BROWSER_TEST_F(SyncErrorTest, BirthdayErrorUsingActionableErrorTest) {
 }
 
 // Tests that on receiving CLIENT_DATA_OBSOLETE sync engine gets restarted and
-// initialized with different cache_guld.
-// Flaky on Windows and Linux. See crbug.com/683216
-#if defined(OS_WIN) || defined(OS_LINUX)
-#define MAYBE_ClientDataObsoleteTest DISABLED_ClientDataObsoleteTest
-#else
-#define MAYBE_ClientDataObsoleteTest ClientDataObsoleteTest
-#endif
-IN_PROC_BROWSER_TEST_F(SyncErrorTest, MAYBE_ClientDataObsoleteTest) {
+// initialized with different cache_guid.
+IN_PROC_BROWSER_TEST_F(SyncErrorTest, ClientDataObsoleteTest) {
   ASSERT_TRUE(SetupSync()) << "SetupSync() failed.";
 
   const BookmarkNode* node1 = AddFolder(0, 0, "title1");

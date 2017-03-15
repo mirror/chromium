@@ -145,6 +145,7 @@
 #include "core/frame/HostsUsingFeatures.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/PerformanceMonitor.h"
 #include "core/frame/Settings.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
@@ -196,7 +197,6 @@
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameFetchContext.h"
 #include "core/loader/FrameLoader.h"
-#include "core/loader/FrameLoaderClient.h"
 #include "core/loader/ImageLoader.h"
 #include "core/loader/NavigationScheduler.h"
 #include "core/loader/PrerendererClient.h"
@@ -234,6 +234,7 @@
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/network/ContentSecurityPolicyParsers.h"
 #include "platform/network/HTTPParsers.h"
+#include "platform/network/NetworkStateNotifier.h"
 #include "platform/scroll/Scrollbar.h"
 #include "platform/scroll/ScrollbarTheme.h"
 #include "platform/text/PlatformLocale.h"
@@ -367,11 +368,11 @@ static inline bool isValidNamePart(UChar32 c) {
   return true;
 }
 
-static Widget* widgetForElement(const Element& focusedElement) {
+static FrameViewBase* frameViewBaseForElement(const Element& focusedElement) {
   LayoutObject* layoutObject = focusedElement.layoutObject();
   if (!layoutObject || !layoutObject->isLayoutPart())
     return 0;
-  return toLayoutPart(layoutObject)->widget();
+  return toLayoutPart(layoutObject)->frameViewBase();
 }
 
 static bool acceptsEditingFocus(const Element& element) {
@@ -400,9 +401,46 @@ static void runAutofocusTask(ExecutionContext* context) {
 static void recordLoadReasonToHistogram(WouldLoadReason reason) {
   DEFINE_STATIC_LOCAL(
       EnumerationHistogram, unseenFrameHistogram,
-      ("Navigation.DeferredDocumentLoading.StatesV3", WouldLoadReasonEnd));
+      ("Navigation.DeferredDocumentLoading.StatesV4", WouldLoadReasonEnd));
   unseenFrameHistogram.count(reason);
 }
+
+class Document::NetworkStateObserver final
+    : public GarbageCollectedFinalized<Document::NetworkStateObserver>,
+      public NetworkStateNotifier::NetworkStateObserver,
+      public ContextLifecycleObserver {
+  USING_GARBAGE_COLLECTED_MIXIN(Document::NetworkStateObserver);
+
+ public:
+  explicit NetworkStateObserver(Document& document)
+      : ContextLifecycleObserver(&document) {
+    networkStateNotifier().addOnLineObserver(
+        this,
+        TaskRunnerHelper::get(TaskType::Networking, getExecutionContext()));
+  }
+
+  void onLineStateChange(bool onLine) override {
+    AtomicString eventName =
+        onLine ? EventTypeNames::online : EventTypeNames::offline;
+    Document* document = toDocument(getExecutionContext());
+    if (!document->domWindow())
+      return;
+    document->domWindow()->dispatchEvent(Event::create(eventName));
+    probe::networkStateChanged(document->frame(), onLine);
+  }
+
+  void contextDestroyed(ExecutionContext* context) override {
+    unregisterAsObserver(context);
+  }
+
+  void unregisterAsObserver(ExecutionContext* context) {
+    DCHECK(context);
+    networkStateNotifier().removeOnLineObserver(
+        this, TaskRunnerHelper::get(TaskType::Networking, context));
+  }
+
+  DEFINE_INLINE_VIRTUAL_TRACE() { ContextLifecycleObserver::trace(visitor); }
+};
 
 Document::Document(const DocumentInit& initializer,
                    DocumentClassFlags documentClasses)
@@ -494,7 +532,7 @@ Document::Document(const DocumentInit& initializer,
       m_hasViewportUnits(false),
       m_parserSyncPolicy(AllowAsynchronousParsing),
       m_nodeCount(0),
-      m_wouldLoadReason(Created),
+      m_wouldLoadReason(Invalid),
       m_passwordCount(0),
       m_engagementLevel(mojom::blink::EngagementLevel::NONE) {
   if (m_frame) {
@@ -578,7 +616,7 @@ void Document::mediaQueryAffectingValueChanged() {
     m_evaluateMediaQueriesOnStyleRecalc = true;
   else
     evaluateMediaQueryList();
-  InspectorInstrumentation::mediaQueryResultChanged(this);
+  probe::mediaQueryResultChanged(this);
 }
 
 void Document::setCompatibilityMode(CompatibilityMode mode) {
@@ -651,7 +689,7 @@ bool Document::isInMainFrame() const {
 }
 
 AtomicString Document::convertLocalName(const AtomicString& name) {
-  return isHTMLDocument() ? name.lower() : name;
+  return isHTMLDocument() ? name.lowerASCII() : name;
 }
 
 // https://dom.spec.whatwg.org/#dom-document-createelement
@@ -997,6 +1035,10 @@ ProcessingInstruction* Document::createProcessingInstruction(
         "The data provided ('" + data + "') contains '?>'.");
     return nullptr;
   }
+  if (isHTMLDocument()) {
+    UseCounter::count(*this,
+                      UseCounter::HTMLDocumentCreateProcessingInstruction);
+  }
   return ProcessingInstruction::create(*this, target, data);
 }
 
@@ -1140,7 +1182,16 @@ Node* Document::adoptNode(Node* source, ExceptionState& exceptionState) {
         source->parentNode()->removeChild(source, exceptionState);
         if (exceptionState.hadException())
           return nullptr;
-        RELEASE_ASSERT(!source->parentNode());
+        // The above removeChild() can execute arbitrary JavaScript code.
+        if (source->parentNode()) {
+          addConsoleMessage(ConsoleMessage::create(
+              JSMessageSource, WarningMessageLevel,
+              ExceptionMessages::failedToExecute("adoptNode", "Document",
+                                                 "Unable to remove the "
+                                                 "specified node from the "
+                                                 "original parent.")));
+          return nullptr;
+        }
       }
   }
 
@@ -1375,14 +1426,14 @@ Element* Document::scrollingElementNoLayout() {
 // We use HashMap::set over HashMap::add here as we want to
 // replace the ComputedStyle but not the Node if the Node is
 // already present.
-void Document::addStyleReattachData(const Node& node,
-                                    StyleReattachData& styleReattachData) {
+void Document::addNonAttachedStyle(const Node& node,
+                                   RefPtr<ComputedStyle> computedStyle) {
   DCHECK(node.isElementNode() || node.isTextNode());
-  m_styleReattachDataMap.set(&node, styleReattachData);
+  m_nonAttachedStyle.set(&node, computedStyle);
 }
 
-StyleReattachData Document::getStyleReattachData(const Node& node) const {
-  return m_styleReattachDataMap.get(&node);
+ComputedStyle* Document::getNonAttachedStyle(const Node& node) const {
+  return m_nonAttachedStyle.at(&node);
 }
 
 /*
@@ -1697,8 +1748,6 @@ void Document::scheduleLayoutTreeUpdate() {
   TRACE_EVENT_INSTANT1(TRACE_DISABLED_BY_DEFAULT("devtools.timeline"),
                        "ScheduleStyleRecalculation", TRACE_EVENT_SCOPE_THREAD,
                        "data", InspectorRecalculateStylesEvent::data(frame()));
-  InspectorInstrumentation::didScheduleStyleRecalculation(this);
-
   ++m_styleVersion;
 }
 
@@ -1711,7 +1760,7 @@ void Document::updateStyleInvalidationIfNeeded() {
   DCHECK(isActive());
   ScriptForbiddenScope forbidScript;
 
-  if (!childNeedsStyleInvalidation())
+  if (!childNeedsStyleInvalidation() && !needsStyleInvalidation())
     return;
   TRACE_EVENT0("blink", "Document::updateStyleInvalidationIfNeeded");
   styleEngine().styleInvalidator().invalidate(*this);
@@ -1749,9 +1798,10 @@ void Document::inheritHtmlAndBodyElementStyles(StyleRecalcChange change) {
     bodyStyle = body->mutableComputedStyle();
     if (didRecalcDocumentElement)
       body->clearAnimationStyleChange();
-    if (!bodyStyle || body->needsStyleRecalc() || didRecalcDocumentElement)
+    if (!bodyStyle || body->needsStyleRecalc() || didRecalcDocumentElement) {
       bodyStyle = ensureStyleResolver().styleForElement(
-          body, documentElementStyle.get());
+          body, documentElementStyle.get(), documentElementStyle.get());
+    }
     rootWritingMode = bodyStyle->getWritingMode();
     rootDirection = bodyStyle->direction();
   }
@@ -1950,15 +2000,14 @@ void Document::updateStyleAndLayoutTree() {
   // recalcStyle can tear down the layout tree or (unfortunately) run
   // script. Kill the whole layoutObject if someone managed to get into here in
   // states not allowing tree mutations.
-  RELEASE_ASSERT(lifecycle().stateAllowsTreeMutations());
+  CHECK(lifecycle().stateAllowsTreeMutations());
 
   TRACE_EVENT_BEGIN1("blink,devtools.timeline", "UpdateLayoutTree", "beginData",
                      InspectorRecalculateStylesEvent::data(frame()));
 
   unsigned startElementCount = styleEngine().styleForElementCount();
 
-  InspectorInstrumentation::willRecalculateStyle(this);
-  PerformanceMonitor::willRecalculateStyle(this);
+  probe::RecalculateStyle recalculateStyleScope(this);
 
   DocumentAnimations::updateAnimationTimingIfNeeded(*this);
   evaluateMediaQueryListIfNeeded();
@@ -2003,8 +2052,6 @@ void Document::updateStyleAndLayoutTree() {
 #if DCHECK_IS_ON()
   assertLayoutTreeUpdated(*this);
 #endif
-  InspectorInstrumentation::didRecalculateStyle(this);
-  PerformanceMonitor::didRecalculateStyle(this);
 }
 
 void Document::updateActiveStyle() {
@@ -2021,7 +2068,8 @@ void Document::updateStyle() {
 
   unsigned initialElementCount = styleEngine().styleForElementCount();
 
-  HTMLFrameOwnerElement::UpdateSuspendScope suspendWidgetHierarchyUpdates;
+  HTMLFrameOwnerElement::UpdateSuspendScope
+      suspendFrameViewBaseHierarchyUpdates;
   m_lifecycle.advanceTo(DocumentLifecycle::InStyleRecalc);
 
   StyleRecalcChange change = NoChange;
@@ -2059,13 +2107,16 @@ void Document::updateStyle() {
     inheritHtmlAndBodyElementStyles(change);
     if (documentElement->shouldCallRecalcStyle(change))
       documentElement->recalcStyle(change);
+    if (documentElement->needsReattachLayoutTree() ||
+        documentElement->childNeedsReattachLayoutTree())
+      documentElement->rebuildLayoutTree();
   }
 
   view()->recalcOverflowAfterStyleChange();
 
   // Only retain the HashMap for the duration of StyleRecalc and
   // LayoutTreeConstruction.
-  m_styleReattachDataMap.clear();
+  m_nonAttachedStyle.clear();
   clearChildNeedsStyleRecalc();
   clearChildNeedsReattachLayoutTree();
 
@@ -2077,7 +2128,7 @@ void Document::updateStyle() {
   DCHECK(!childNeedsReattachLayoutTree());
   DCHECK(inStyleRecalc());
   DCHECK_EQ(styleResolver(), &resolver);
-  DCHECK(m_styleReattachDataMap.isEmpty());
+  DCHECK(m_nonAttachedStyle.isEmpty());
   m_lifecycle.advanceTo(DocumentLifecycle::StyleClean);
   if (shouldRecordStats) {
     TRACE_EVENT_END2("blink,blink_style", "Document::updateStyle",
@@ -2264,9 +2315,18 @@ PassRefPtr<ComputedStyle> Document::styleForElementIgnoringPendingStylesheets(
   StyleEngine::IgnoringPendingStylesheet ignoring(styleEngine());
   if (!element->canParticipateInFlatTree())
     return ensureStyleResolver().styleForElement(element, nullptr);
+
   ContainerNode* parent = LayoutTreeBuilderTraversal::parent(*element);
-  return ensureStyleResolver().styleForElement(
-      element, parent ? parent->ensureComputedStyle() : nullptr);
+  const ComputedStyle* parentStyle =
+      parent ? parent->ensureComputedStyle() : nullptr;
+
+  ContainerNode* layoutParent =
+      parent ? LayoutTreeBuilderTraversal::layoutParent(*element) : nullptr;
+  const ComputedStyle* layoutParentStyle =
+      layoutParent ? layoutParent->ensureComputedStyle() : parentStyle;
+
+  return ensureStyleResolver().styleForElement(element, parentStyle,
+                                               layoutParentStyle);
 }
 
 PassRefPtr<ComputedStyle> Document::styleForPage(int pageIndex) {
@@ -2332,9 +2392,6 @@ void Document::setIsViewSource(bool isViewSource) {
   m_isViewSource = isViewSource;
   if (!m_isViewSource)
     return;
-
-  setSecurityOrigin(SecurityOrigin::createUnique());
-  didUpdateSecurityOrigin();
 }
 
 void Document::scheduleUseShadowTreeUpdate(SVGUseElement& element) {
@@ -2343,7 +2400,7 @@ void Document::scheduleUseShadowTreeUpdate(SVGUseElement& element) {
 }
 
 void Document::unscheduleUseShadowTreeUpdate(SVGUseElement& element) {
-  m_useElementsNeedingUpdate.remove(&element);
+  m_useElementsNeedingUpdate.erase(&element);
 }
 
 void Document::updateUseShadowTreesIfNeeded() {
@@ -2390,11 +2447,16 @@ void Document::initialize() {
 
   if (view())
     view()->didAttachDocument();
+
+  // Observer(s) should not be initialized until the document is initialized /
+  // attached to a frame. Otherwise ContextLifecycleObserver::contextDestroyed
+  // wouldn't be fired.
+  m_networkStateObserver = new NetworkStateObserver(*this);
 }
 
 void Document::shutdown() {
   TRACE_EVENT0("blink", "Document::shutdown");
-  RELEASE_ASSERT(!m_frame || m_frame->tree().childCount() == 0);
+  CHECK(!m_frame || m_frame->tree().childCount() == 0);
   if (!isActive())
     return;
 
@@ -2404,20 +2466,21 @@ void Document::shutdown() {
   // to trigger navigation here.  However, plugins (see below) can cause lots of
   // crazy things to happen, since plugin detach involves nested message loops.
   FrameNavigationDisabler navigationDisabler(*m_frame);
-  // Defer widget updates to avoid plugins trying to run script inside
+  // Defer FrameViewBase updates to avoid plugins trying to run script inside
   // ScriptForbiddenScope, which will crash the renderer after
   // https://crrev.com/200984
-  HTMLFrameOwnerElement::UpdateSuspendScope suspendWidgetHierarchyUpdates;
+  HTMLFrameOwnerElement::UpdateSuspendScope
+      suspendFrameViewBaseHierarchyUpdates;
   // Don't allow script to run in the middle of detachLayoutTree() because a
   // detaching Document is not in a consistent state.
   ScriptForbiddenScope forbidScript;
 
   view()->dispose();
 
-  // If the widget of the document's frame owner doesn't match view() then
-  // FrameView::dispose() didn't clear the owner's widget. If we don't clear it
-  // here, it may be clobbered later in LocalFrame::createView(). See also
-  // https://crbug.com/673170 and the comment in FrameView::dispose().
+  // If the FrameViewBase of the document's frame owner doesn't match view()
+  // then FrameView::dispose() didn't clear the owner's FrameViewBase. If we
+  // don't clear it here, it may be clobbered later in LocalFrame::createView().
+  // See also https://crbug.com/673170 and the comment in FrameView::dispose().
   HTMLFrameOwnerElement* ownerElement = m_frame->deprecatedLocalOwner();
   if (ownerElement)
     ownerElement->setWidget(nullptr);
@@ -2428,7 +2491,7 @@ void Document::shutdown() {
 
   if (page())
     page()->documentDetached(this);
-  InspectorInstrumentation::documentDetached(this);
+  probe::documentDetached(this);
 
   if (m_frame->loader().client()->sharedWorkerRepositoryClient())
     m_frame->loader()
@@ -2466,9 +2529,8 @@ void Document::shutdown() {
   if (m_focusedElement.get()) {
     Element* oldFocusedElement = m_focusedElement;
     m_focusedElement = nullptr;
-    if (frameHost())
-      frameHost()->chromeClient().focusedNodeChanged(oldFocusedElement,
-                                                     nullptr);
+    if (page())
+      page()->chromeClient().focusedNodeChanged(oldFocusedElement, nullptr);
   }
   m_sequentialFocusNavigationStartingPoint = nullptr;
 
@@ -2492,7 +2554,7 @@ void Document::shutdown() {
 
   styleEngine().didDetach();
 
-  frameHost()->eventHandlerRegistry().documentDetached(*this);
+  page()->eventHandlerRegistry().documentDetached(*this);
 
   // Signal destruction to mutation observers.
   SynchronousMutationNotifier::notifyContextDestroyed();
@@ -2579,11 +2641,11 @@ AXObjectCache* Document::axObjectCache() const {
   if (!settings || !settings->getAccessibilityEnabled())
     return 0;
 
-  // The only document that actually has a AXObjectCache is the top-level
-  // document.  This is because we need to be able to get from any
-  // WebCoreAXObject to any other WebCoreAXObject on the same page.  Using a
-  // single cache allows lookups across nested webareas (i.e. multiple
-  // documents).
+  // Every document has its own AXObjectCache if accessibility is enabled,
+  // except for page popups (such as select popups or context menus),
+  // which share the AXObjectCache of their owner.
+  //
+  // See http://crbug.com/532249
   Document& cacheOwner = this->axObjectCacheOwner();
 
   // If the document has already been detached, do not make a new axObjectCache.
@@ -2676,6 +2738,9 @@ void Document::open() {
   }
 
   removeAllEventListenersRecursively();
+  resetTreeScope();
+  if (m_frame)
+    m_frame->selection().clear();
   implicitOpen(ForceSynchronousParsing);
   if (ScriptableDocumentParser* parser = scriptableDocumentParser())
     parser->setWasCreatedByScript(true);
@@ -3143,7 +3208,8 @@ void Document::write(const SegmentedString& text,
   }
 
   if (enteredDocument &&
-      !getSecurityOrigin()->canAccess(enteredDocument->getSecurityOrigin())) {
+      !getSecurityOrigin()->isSameSchemeHostPortAndSuborigin(
+          enteredDocument->getSecurityOrigin())) {
     exceptionState.throwSecurityError(
         "Can only call write() on same-origin documents.");
     return;
@@ -3177,8 +3243,10 @@ void Document::write(const SegmentedString& text,
     open(enteredDocument, ASSERT_NO_EXCEPTION);
 
   DCHECK(m_parser);
-  InspectorInstrumentation::NativeBreakpoint nativeBreakpoint(
-      this, "document.write", true, true);
+  PerformanceMonitor::reportGenericViolation(
+      this, PerformanceMonitor::kDiscouragedAPIUse,
+      "Avoid using document.write().", 0, nullptr);
+  probe::breakableLocation(this, "Document.write");
   m_parser->insert(text);
 }
 
@@ -3512,7 +3580,7 @@ ViewportDescription Document::viewportDescription() const {
 
 void Document::updateViewportDescription() {
   if (frame() && frame()->isMainFrame()) {
-    frameHost()->chromeClient().dispatchViewportPropertiesDidChange(
+    page()->chromeClient().dispatchViewportPropertiesDidChange(
         viewportDescription());
   }
 }
@@ -3701,7 +3769,7 @@ bool Document::canAcceptChild(const Node& newChild,
   return true;
 }
 
-Node* Document::cloneNode(bool deep) {
+Node* Document::cloneNode(bool deep, ExceptionState&) {
   Document* clone = cloneDocumentWithoutChildren();
   clone->cloneDataFromDocument(*this);
   if (deep)
@@ -3979,9 +4047,10 @@ bool Document::setFocusedElement(Element* prpNewFocusedElement,
     }
 
     if (view()) {
-      Widget* oldWidget = widgetForElement(*oldFocusedElement);
-      if (oldWidget)
-        oldWidget->setFocused(false, params.type);
+      FrameViewBase* oldFrameViewBase =
+          frameViewBaseForElement(*oldFocusedElement);
+      if (oldFrameViewBase)
+        oldFrameViewBase->setFocused(false, params.type);
       else
         view()->setFocused(false, params.type);
     }
@@ -4053,17 +4122,18 @@ bool Document::setFocusedElement(Element* prpNewFocusedElement,
     // eww, I suck. set the qt focus correctly
     // ### find a better place in the code for this
     if (view()) {
-      Widget* focusWidget = widgetForElement(*m_focusedElement);
-      if (focusWidget) {
-        // Make sure a widget has the right size before giving it focus.
-        // Otherwise, we are testing edge cases of the Widget code.
+      FrameViewBase* focusFrameViewBase =
+          frameViewBaseForElement(*m_focusedElement);
+      if (focusFrameViewBase) {
+        // Make sure a FrameViewBase has the right size before giving it focus.
+        // Otherwise, we are testing edge cases of the FrameViewBase code.
         // Specifically, in WebCore this does not work well for text fields.
         updateStyleAndLayout();
-        // Re-get the widget in case updating the layout changed things.
-        focusWidget = widgetForElement(*m_focusedElement);
+        // Re-get the FrameViewBase in case updating the layout changed things.
+        focusFrameViewBase = frameViewBaseForElement(*m_focusedElement);
       }
-      if (focusWidget)
-        focusWidget->setFocused(true, params.type);
+      if (focusFrameViewBase)
+        focusFrameViewBase->setFocused(true, params.type);
       else
         view()->setFocused(true, params.type);
     }
@@ -4077,9 +4147,10 @@ bool Document::setFocusedElement(Element* prpNewFocusedElement,
                                            newFocusedElement);
   }
 
-  if (!focusChangeBlocked && frameHost())
-    frameHost()->chromeClient().focusedNodeChanged(oldFocusedElement,
-                                                   m_focusedElement.get());
+  if (!focusChangeBlocked && page()) {
+    page()->chromeClient().focusedNodeChanged(oldFocusedElement,
+                                              m_focusedElement.get());
+  }
 
 SetFocusedElementDone:
   updateStyleAndLayoutTree();
@@ -4176,10 +4247,10 @@ void Document::registerNodeList(const LiveNodeListBase* list) {
 
 void Document::unregisterNodeList(const LiveNodeListBase* list) {
   DCHECK(m_nodeLists[list->invalidationType()].contains(list));
-  m_nodeLists[list->invalidationType()].remove(list);
+  m_nodeLists[list->invalidationType()].erase(list);
   if (list->isRootedAtTreeScope()) {
     DCHECK(m_listsInvalidatedAtDocument.contains(list));
-    m_listsInvalidatedAtDocument.remove(list);
+    m_listsInvalidatedAtDocument.erase(list);
   }
 }
 
@@ -4191,7 +4262,7 @@ void Document::registerNodeListWithIdNameCache(const LiveNodeListBase* list) {
 
 void Document::unregisterNodeListWithIdNameCache(const LiveNodeListBase* list) {
   DCHECK(m_nodeLists[InvalidateOnIdNameAttrChange].contains(list));
-  m_nodeLists[InvalidateOnIdNameAttrChange].remove(list);
+  m_nodeLists[InvalidateOnIdNameAttrChange].erase(list);
 }
 
 void Document::attachNodeIterator(NodeIterator* ni) {
@@ -4201,7 +4272,7 @@ void Document::attachNodeIterator(NodeIterator* ni) {
 void Document::detachNodeIterator(NodeIterator* ni) {
   // The node iterator can be detached without having been attached if its root
   // node didn't have a document when the iterator was created, but has it now.
-  m_nodeIterators.remove(ni);
+  m_nodeIterators.erase(ni);
 }
 
 void Document::moveNodeIteratorsToNewDocument(Node& node,
@@ -4414,8 +4485,7 @@ void Document::sendSensitiveInputVisibilityInternal() {
 void Document::runExecutionContextTask(
     std::unique_ptr<ExecutionContextTask> task,
     bool isInstrumented) {
-  InspectorInstrumentation::AsyncTask asyncTask(this, task.get(),
-                                                isInstrumented);
+  probe::AsyncTask asyncTask(this, task.get(), nullptr, isInstrumented);
   task->performTask(this);
 }
 
@@ -4503,19 +4573,12 @@ HTMLFrameOwnerElement* Document::localOwner() const {
 
 void Document::willChangeFrameOwnerProperties(int marginWidth,
                                               int marginHeight,
-                                              ScrollbarMode scrollingMode,
-                                              bool isDisplayNone) {
-  DCHECK(frame() && frame()->owner());
-  FrameOwner* owner = frame()->owner();
-
-  if (documentElement()) {
-    if (isDisplayNone != owner->isDisplayNone()) {
-      documentElement()->lazyReattachIfAttached();
-    }
-  }
-
+                                              ScrollbarMode scrollingMode) {
   if (!body())
     return;
+
+  DCHECK(frame() && frame()->owner());
+  FrameOwner* owner = frame()->owner();
 
   if (marginWidth != owner->marginWidth())
     body()->setIntegralAttribute(marginwidthAttr, marginWidth);
@@ -4660,9 +4723,14 @@ void Document::setDomain(const String& rawDomain,
     return;
   }
 
-  getSecurityOrigin()->setDomainFromDOM(newDomain);
-  if (m_frame)
+  if (m_frame) {
+    bool wasCrossDomain = m_frame->isCrossOriginSubframe();
+    getSecurityOrigin()->setDomainFromDOM(newDomain);
+    if (view() && (wasCrossDomain != m_frame->isCrossOriginSubframe()))
+      view()->crossOriginStatusChanged();
+
     m_frame->script().updateSecurityOrigin(getSecurityOrigin());
+  }
 }
 
 // http://www.whatwg.org/specs/web-apps/current-work/#dom-document-lastmodified
@@ -4674,9 +4742,12 @@ String Document::lastModified() const {
       const AtomicString& httpLastModified =
           documentLoader->response().httpHeaderField(HTTPNames::Last_Modified);
       if (!httpLastModified.isEmpty()) {
-        date.setMillisecondsSinceEpochForDateTime(
-            convertToLocalTime(parseDate(httpLastModified)));
-        foundDate = true;
+        double dateValue = parseDate(httpLastModified);
+        if (!std::isnan(dateValue)) {
+          date.setMillisecondsSinceEpochForDateTime(
+              convertToLocalTime(dateValue));
+          foundDate = true;
+        }
       }
     }
   }
@@ -5271,7 +5342,7 @@ void Document::finishedParsing() {
     TRACE_EVENT_INSTANT1("devtools.timeline", "MarkDOMContent",
                          TRACE_EVENT_SCOPE_THREAD, "data",
                          InspectorMarkLoadEvent::data(frame));
-    InspectorInstrumentation::domContentLoadedEventFired(frame);
+    probe::domContentLoadedEventFired(frame);
   }
 
   // Schedule dropping of the ElementDataCache. We keep it alive for a while
@@ -5560,15 +5631,10 @@ bool Document::canExecuteScripts(ReasonForCallingCanExecuteScripts reason) {
     return false;
   }
 
-  if (isViewSource()) {
-    DCHECK(getSecurityOrigin()->isUnique());
-    return true;
-  }
-
   DCHECK(frame())
       << "you are querying canExecuteScripts on a non contextDocument.";
 
-  FrameLoaderClient* client = frame()->loader().client();
+  LocalFrameClient* client = frame()->loader().client();
   if (!client)
     return false;
 
@@ -5581,6 +5647,11 @@ bool Document::canExecuteScripts(ReasonForCallingCanExecuteScripts reason) {
   }
 
   return true;
+}
+
+bool Document::isRenderingReady() const {
+  return m_styleEngine->ignoringPendingStylesheets() ||
+         (haveImportsLoaded() && haveRenderBlockingStylesheetsLoaded());
 }
 
 bool Document::allowInlineEventHandler(Node* node,
@@ -5644,6 +5715,16 @@ void Document::updateSecurityOrigin(PassRefPtr<SecurityOrigin> origin) {
   didUpdateSecurityOrigin();
 }
 
+String Document::origin() const {
+  return getSecurityOrigin()->toString();
+}
+
+String Document::suborigin() const {
+  return getSecurityOrigin()->hasSuborigin()
+             ? getSecurityOrigin()->suborigin()->name()
+             : String();
+}
+
 void Document::didUpdateSecurityOrigin() {
   if (!m_frame)
     return;
@@ -5680,7 +5761,7 @@ void Document::attachRange(Range* range) {
 void Document::detachRange(Range* range) {
   // We don't ASSERT m_ranges.contains(range) to allow us to call this
   // unconditionally to fix: https://bugs.webkit.org/show_bug.cgi?id=26044
-  m_ranges.remove(range);
+  m_ranges.erase(range);
 }
 
 void Document::initDNSPrefetch() {
@@ -5768,8 +5849,7 @@ void Document::postTask(TaskType taskType,
                         std::unique_ptr<ExecutionContextTask> task,
                         const String& taskNameForInstrumentation) {
   if (!taskNameForInstrumentation.isEmpty()) {
-    InspectorInstrumentation::asyncTaskScheduled(
-        this, taskNameForInstrumentation, task.get());
+    probe::asyncTaskScheduled(this, taskNameForInstrumentation, task.get());
   }
 
   TaskRunnerHelper::get(taskType, this)
@@ -6101,6 +6181,8 @@ static LayoutObject* nearestCommonHoverAncestor(LayoutObject* obj1,
   return 0;
 }
 
+// TODO(mustaq) |request| parameter maybe a misuse of HitTestRequest in
+// updateHoverActiveState() since the function doesn't bother with hit-testing.
 void Document::updateHoverActiveState(const HitTestRequest& request,
                                       Element* innerElement,
                                       Scrollbar* hitScrollbar) {
@@ -6542,7 +6624,8 @@ DEFINE_TRACE(Document) {
   visitor->trace(m_snapCoordinator);
   visitor->trace(m_resizeObserverController);
   visitor->trace(m_propertyRegistry);
-  visitor->trace(m_styleReattachDataMap);
+  visitor->trace(m_nonAttachedStyle);
+  visitor->trace(m_networkStateObserver);
   Supplementable<Document>::trace(visitor);
   TreeScope::trace(visitor);
   ContainerNode::trace(visitor);
@@ -6551,13 +6634,16 @@ DEFINE_TRACE(Document) {
   SynchronousMutationNotifier::trace(visitor);
 }
 
-void Document::maybeRecordLoadReason(WouldLoadReason reason) {
-  DCHECK(m_wouldLoadReason == Created || reason != Created);
+void Document::recordDeferredLoadReason(WouldLoadReason reason) {
+  DCHECK(m_wouldLoadReason == Invalid || reason != Created);
+  DCHECK(reason != Invalid);
   DCHECK(frame());
-  if (m_wouldLoadReason == Created && frame()->isCrossOriginSubframe() &&
-      frame()->loader().stateMachine()->committedFirstRealDocumentLoad()) {
-    recordLoadReasonToHistogram(reason);
-  }
+  DCHECK(frame()->isCrossOriginSubframe());
+  if (reason <= m_wouldLoadReason ||
+      !frame()->loader().stateMachine()->committedFirstRealDocumentLoad())
+    return;
+  for (int i = m_wouldLoadReason + 1; i <= reason; ++i)
+    recordLoadReasonToHistogram(static_cast<WouldLoadReason>(i));
   m_wouldLoadReason = reason;
 }
 
@@ -6580,7 +6666,7 @@ DEFINE_TRACE_WRAPPERS(Document) {
   // Cannot trace in Supplementable<Document> as it is part of platform/ and
   // thus cannot refer to ScriptWrappableVisitor.
   visitor->traceWrappers(
-      static_cast<FontFaceSet*>(Supplementable<Document>::m_supplements.get(
+      static_cast<FontFaceSet*>(Supplementable<Document>::m_supplements.at(
           FontFaceSet::supplementName())));
   ContainerNode::traceWrappers(visitor);
 }

@@ -108,41 +108,6 @@ bool bleedAvoidanceIsClipping(BackgroundBleedAvoidance bleedAvoidance) {
 
 }  // anonymous namespace
 
-// Sets a preferred composited raster scale for box with a background image,
-// if possible.
-// |srcRect| is the rect, in the space of the source image, to raster.
-// |destRect| is the rect, in the local layout space of |obj|, to raster.
-inline void updatePreferredRasterBoundsFromImage(
-    const FloatRect srcRect,
-    const FloatRect& destRect,
-    const LayoutBoxModelObject& obj) {
-  if (!RuntimeEnabledFeatures::preferredImageRasterBoundsEnabled())
-    return;
-  // Not yet implemented for SPv2.
-  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled())
-    return;
-  if (destRect.width() == 0.0f || destRect.height() == 0.0f)
-    return;
-  if (PaintLayer* paintLayer = obj.layer()) {
-    if (paintLayer->compositingState() != PaintsIntoOwnBacking)
-      return;
-    // TODO(chrishtr): ensure that this rounding does not ever lose any
-    // precision.
-    paintLayer->graphicsLayerBacking()->setPreferredRasterBounds(
-        roundedIntSize(srcRect.size()));
-  }
-}
-
-inline void clearPreferredRasterBounds(const LayoutBox& obj) {
-  if (!RuntimeEnabledFeatures::preferredImageRasterBoundsEnabled())
-    return;
-  if (PaintLayer* paintLayer = obj.layer()) {
-    if (paintLayer->compositingState() != PaintsIntoOwnBacking)
-      return;
-    paintLayer->graphicsLayerBacking()->clearPreferredRasterBounds();
-  }
-}
-
 void BoxPainter::paintBoxDecorationBackgroundWithRect(
     const PaintInfo& paintInfo,
     const LayoutPoint& paintOffset,
@@ -178,8 +143,6 @@ void BoxPainter::paintBoxDecorationBackgroundWithRect(
           paintInfo.context, displayItemClient,
           DisplayItem::kBoxDecorationBackground))
     return;
-
-  clearPreferredRasterBounds(m_layoutBox);
 
   DrawingRecorder recorder(
       paintInfo.context, displayItemClient,
@@ -598,8 +561,6 @@ inline bool paintFastBottomLayer(const LayoutBoxModelObject& obj,
   context.drawImageRRect(imageContext.image(), border, srcRect,
                          imageContext.compositeOp());
 
-  updatePreferredRasterBoundsFromImage(srcRect, border.rect(), obj);
-
   return true;
 }
 
@@ -816,14 +777,15 @@ void BoxPainter::paintMaskImages(const PaintInfo& paintInfo,
                                  const LayoutRect& paintRect) {
   // Figure out if we need to push a transparency layer to render our mask.
   bool pushTransparencyLayer = false;
-  bool compositedMask =
-      m_layoutBox.hasLayer() && m_layoutBox.layer()->hasCompositedMask();
   bool flattenCompositingLayers =
       paintInfo.getGlobalPaintFlags() & GlobalPaintFlattenCompositingLayers;
+  bool maskBlendingAppliedByCompositor =
+      !flattenCompositingLayers && m_layoutBox.hasLayer() &&
+      m_layoutBox.layer()->maskBlendingAppliedByCompositor();
 
   bool allMaskImagesLoaded = true;
 
-  if (!compositedMask || flattenCompositingLayers) {
+  if (!maskBlendingAppliedByCompositor) {
     pushTransparencyLayer = true;
     StyleImage* maskBoxImage = m_layoutBox.style()->maskBoxImage().image();
     const FillLayer& maskLayers = m_layoutBox.style()->maskLayers();

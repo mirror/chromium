@@ -297,10 +297,13 @@ class MediaInternals::MediaInternalsUMAHandler {
     base::TimeDelta src_watch_time = media::kNoTimestamp;
     base::TimeDelta ac_watch_time = media::kNoTimestamp;
     base::TimeDelta battery_watch_time = media::kNoTimestamp;
+    base::TimeDelta embedded_experience_watch_time = media::kNoTimestamp;
   };
 
   struct PipelineInfo {
     bool has_pipeline = false;
+    bool has_ever_played = false;
+    bool has_reached_have_enough = false;
     media::PipelineStatus last_pipeline_status = media::PIPELINE_OK;
     bool has_audio = false;
     bool has_video = false;
@@ -356,6 +359,8 @@ class MediaInternals::MediaInternalsUMAHandler {
         MAYBE_RECORD_WATCH_TIME(kWatchTimeAudioVideoMse, mse_watch_time);
         MAYBE_RECORD_WATCH_TIME(kWatchTimeAudioVideoEme, eme_watch_time);
         MAYBE_RECORD_WATCH_TIME(kWatchTimeAudioVideoSrc, src_watch_time);
+        MAYBE_RECORD_WATCH_TIME(kWatchTimeAudioVideoEmbeddedExperience,
+                                embedded_experience_watch_time);
       } else {
         DCHECK_EQ(finalize_type, FinalizeType::POWER_ONLY);
       }
@@ -367,6 +372,8 @@ class MediaInternals::MediaInternalsUMAHandler {
         MAYBE_RECORD_WATCH_TIME(kWatchTimeAudioMse, mse_watch_time);
         MAYBE_RECORD_WATCH_TIME(kWatchTimeAudioEme, eme_watch_time);
         MAYBE_RECORD_WATCH_TIME(kWatchTimeAudioSrc, src_watch_time);
+        MAYBE_RECORD_WATCH_TIME(kWatchTimeAudioEmbeddedExperience,
+                                embedded_experience_watch_time);
       } else {
         DCHECK_EQ(finalize_type, FinalizeType::POWER_ONLY);
       }
@@ -397,6 +404,10 @@ void MediaInternals::MediaInternalsUMAHandler::SavePlayerState(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   PlayerInfoMap& player_info = renderer_info_[render_process_id];
   switch (event.type) {
+    case media::MediaLogEvent::PLAY: {
+      player_info[event.id].has_ever_played = true;
+      break;
+    }
     case media::MediaLogEvent::PIPELINE_STATE_CHANGED: {
       player_info[event.id].has_pipeline = true;
       break;
@@ -437,6 +448,12 @@ void MediaInternals::MediaInternalsUMAHandler::SavePlayerState(
       if (event.params.HasKey("video_dds")) {
         event.params.GetBoolean("video_dds", &player_info[event.id].video_dds);
       }
+      if (event.params.HasKey("pipeline_buffering_state")) {
+        std::string buffering_state;
+        event.params.GetString("pipeline_buffering_state", &buffering_state);
+        if (buffering_state == "BUFFERING_HAVE_ENOUGH")
+          player_info[event.id].has_reached_have_enough = true;
+      }
       break;
     case media::MediaLogEvent::Type::WATCH_TIME_UPDATE: {
       DVLOG(2) << "Processing watch time update.";
@@ -455,6 +472,9 @@ void MediaInternals::MediaInternalsUMAHandler::SavePlayerState(
                          &wti.battery_watch_time);
       MaybeSaveWatchTime(event, media::MediaLog::kWatchTimeAudioAc,
                          &wti.ac_watch_time);
+      MaybeSaveWatchTime(event,
+                         media::MediaLog::kWatchTimeAudioEmbeddedExperience,
+                         &wti.embedded_experience_watch_time);
 
       // Save audio+video watch time information.
       MaybeSaveWatchTime(event, media::MediaLog::kWatchTimeAudioVideoAll,
@@ -469,6 +489,9 @@ void MediaInternals::MediaInternalsUMAHandler::SavePlayerState(
                          &wti.battery_watch_time);
       MaybeSaveWatchTime(event, media::MediaLog::kWatchTimeAudioVideoAc,
                          &wti.ac_watch_time);
+      MaybeSaveWatchTime(
+          event, media::MediaLog::kWatchTimeAudioVideoEmbeddedExperience,
+          &wti.embedded_experience_watch_time);
 
       if (event.params.HasKey(media::MediaLog::kWatchTimeFinalize)) {
         bool should_finalize;
@@ -573,6 +596,11 @@ void MediaInternals::MediaInternalsUMAHandler::ReportUMAForPipelineStatus(
     UMA_HISTOGRAM_BOOLEAN("Media.VideoDecoderFallback",
                           player_info.video_decoder_changed);
   }
+
+  // Report whether this player ever saw a playback event. Used to measure the
+  // effectiveness of efforts to reduce loaded-but-never-used players.
+  if (player_info.has_reached_have_enough)
+    UMA_HISTOGRAM_BOOLEAN("Media.HasEverPlayed", player_info.has_ever_played);
 }
 
 void MediaInternals::MediaInternalsUMAHandler::OnProcessTerminated(

@@ -103,9 +103,8 @@ void WebUIBidiCheckerBrowserTest::SetUpInProcessBrowserTestFixture() {
 void WebUIBidiCheckerBrowserTest::RunBidiCheckerOnPage(
     const std::string& page_url, bool is_rtl) {
   ui_test_utils::NavigateToURL(browser(), GURL(page_url));
-  ASSERT_TRUE(RunJavascriptTest("runBidiChecker",
-                                new base::StringValue(page_url),
-                                new base::FundamentalValue(is_rtl)));
+  ASSERT_TRUE(RunJavascriptTest("runBidiChecker", new base::Value(page_url),
+                                new base::Value(is_rtl)));
 }
 
 void DISABLED_WebUIBidiCheckerBrowserTestLTR::RunBidiCheckerOnPage(
@@ -433,6 +432,7 @@ IN_PROC_BROWSER_TEST_F(DISABLED_WebUIBidiCheckerBrowserTestRTL,
   RunBidiCheckerOnPage(url);
 }
 
+#if !defined(OS_CHROMEOS)
 //========================================
 // chrome://settings-frame/manageProfile
 //========================================
@@ -450,6 +450,7 @@ IN_PROC_BROWSER_TEST_F(DISABLED_WebUIBidiCheckerBrowserTestRTL,
   url += chrome::kManageProfileSubPage;
   RunBidiCheckerOnPage(url);
 }
+#endif  // !defined(OS_CHROMEOS)
 
 //===================================================
 // chrome://settings-frame/contentExceptions#cookies

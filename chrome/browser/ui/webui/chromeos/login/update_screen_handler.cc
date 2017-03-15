@@ -21,7 +21,9 @@ const char kJsScreenPath[] = "login.UpdateScreen";
 
 namespace chromeos {
 
-UpdateScreenHandler::UpdateScreenHandler() : BaseScreenHandler(kJsScreenPath) {}
+UpdateScreenHandler::UpdateScreenHandler() : BaseScreenHandler(kScreenId) {
+  set_call_js_prefix(kJsScreenPath);
+}
 
 UpdateScreenHandler::~UpdateScreenHandler() {
   if (screen_)
@@ -68,7 +70,7 @@ void UpdateScreenHandler::Show() {
     show_on_init_ = true;
     return;
   }
-  ShowScreen(OobeScreen::SCREEN_OOBE_UPDATE);
+  ShowScreen(kScreenId);
 }
 
 void UpdateScreenHandler::Hide() {

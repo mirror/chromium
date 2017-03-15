@@ -24,7 +24,7 @@ class ListValue;
 }
 
 namespace extensions {
-class APIRequestHandler;
+class APIBindingHooks;
 
 // A class encompassing the necessary pieces to construct the JS entry points
 // for Extension APIs. Designed to be used on a single thread, but safe between
@@ -33,11 +33,17 @@ class APIBindingsSystem {
  public:
   using GetAPISchemaMethod =
       base::Callback<const base::DictionaryValue&(const std::string&)>;
+  using CustomTypeHandler =
+      base::Callback<v8::Local<v8::Object>(v8::Local<v8::Context> context,
+                                           const std::string& property_name,
+                                           APIRequestHandler* request_handler,
+                                           APIEventHandler* event_handler,
+                                           APITypeReferenceMap* type_refs)>;
 
   APIBindingsSystem(const binding::RunJSFunction& call_js,
                     const binding::RunJSFunctionSync& call_js_sync,
                     const GetAPISchemaMethod& get_api_schema,
-                    const APIBinding::SendRequestMethod& send_request,
+                    const APIRequestHandler::SendRequestMethod& send_request,
                     const APIEventHandler::EventListenersChangedMethod&
                         event_listeners_changed,
                     APILastError last_error);
@@ -49,7 +55,7 @@ class APIBindingsSystem {
       v8::Local<v8::Context> context,
       v8::Isolate* isolate,
       const APIBinding::AvailabilityCallback& is_available,
-      v8::Local<v8::Object>* hooks_interface_out);
+      APIBindingHooks** hooks_out);
 
   // Responds to the request with the given |request_id|, calling the callback
   // with |response|. If |error| is non-empty, sets the last error.
@@ -72,6 +78,19 @@ class APIBindingsSystem {
   // efficient to register multiple hooks for the same API.
   APIBindingHooks* GetHooksForAPI(const std::string& api_name);
 
+  // Registers the handler for creating a custom type with the given
+  // |type_name|, where |type_name| is the fully-qualified type (e.g.
+  // storage.StorageArea).
+  void RegisterCustomType(const std::string& type_name,
+                          const CustomTypeHandler& function);
+
+  // Handles any cleanup necessary before releasing the given |context|.
+  void WillReleaseContext(v8::Local<v8::Context> context);
+
+  APIRequestHandler* request_handler() { return &request_handler_; }
+  APIEventHandler* event_handler() { return &event_handler_; }
+  APITypeReferenceMap* type_reference_map() { return &type_reference_map_; }
+
  private:
   // Creates a new APIBinding for the given |api_name|.
   std::unique_ptr<APIBinding> CreateNewAPIBinding(const std::string& api_name);
@@ -79,6 +98,11 @@ class APIBindingsSystem {
   // Callback for the APITypeReferenceMap in order to initialize an unknown
   // type.
   void InitializeType(const std::string& name);
+
+  // Handles creating the type for the specified property.
+  v8::Local<v8::Object> CreateCustomType(v8::Local<v8::Context> context,
+                                         const std::string& type_name,
+                                         const std::string& property_name);
 
   // The map of cached API reference types.
   APITypeReferenceMap type_reference_map_;
@@ -98,6 +122,8 @@ class APIBindingsSystem {
   // performance concern?
   std::map<std::string, std::unique_ptr<APIBindingHooks>> binding_hooks_;
 
+  std::map<std::string, CustomTypeHandler> custom_types_;
+
   binding::RunJSFunction call_js_;
 
   binding::RunJSFunctionSync call_js_sync_;
@@ -105,11 +131,6 @@ class APIBindingsSystem {
   // The method to retrieve the DictionaryValue describing a given extension
   // API. Curried in for testing purposes so we can use fake APIs.
   GetAPISchemaMethod get_api_schema_;
-
-  // The method to call when a new API call is triggered. Curried in for testing
-  // purposes. Typically, this would send an IPC to the browser to begin the
-  // function work.
-  APIBinding::SendRequestMethod send_request_;
 
   DISALLOW_COPY_AND_ASSIGN(APIBindingsSystem);
 };

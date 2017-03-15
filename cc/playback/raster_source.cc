@@ -10,6 +10,7 @@
 #include "cc/base/math_util.h"
 #include "cc/base/region.h"
 #include "cc/debug/debug_colors.h"
+#include "cc/debug/traced_value.h"
 #include "cc/playback/display_item_list.h"
 #include "cc/playback/image_hijack_canvas.h"
 #include "cc/playback/skip_image_canvas.h"
@@ -89,8 +90,8 @@ void RasterSource::PlaybackToCanvas(SkCanvas* raster_canvas,
     RasterCommon(&canvas, nullptr);
   } else if (settings.use_image_hijack_canvas) {
     const SkImageInfo& info = raster_canvas->imageInfo();
-
-    ImageHijackCanvas canvas(info.width(), info.height(), image_decode_cache_);
+    ImageHijackCanvas canvas(info.width(), info.height(), image_decode_cache_,
+                             &settings.images_to_skip);
     // Before adding the canvas, make sure that the ImageHijackCanvas is aware
     // of the current transform and clip, which may affect the clip bounds.
     // Since we query the clip bounds of the current canvas to get the list of
@@ -247,6 +248,8 @@ void RasterSource::GetDiscardableImagesInRect(
 }
 
 gfx::Rect RasterSource::GetRectForImage(ImageId image_id) const {
+  if (!display_list_)
+    return gfx::Rect();
   return display_list_->GetRectForImage(image_id);
 }
 
@@ -260,14 +263,6 @@ bool RasterSource::CoversRect(const gfx::Rect& layer_rect) const {
 
 gfx::Size RasterSource::GetSize() const {
   return size_;
-}
-
-bool RasterSource::HasImpliedColorSpace() const {
-  return display_list_->HasImpliedColorSpace();
-}
-
-const gfx::ColorSpace& RasterSource::GetImpliedColorSpace() const {
-  return display_list_->GetImpliedColorSpace();
 }
 
 bool RasterSource::IsSolidColor() const {
@@ -310,5 +305,12 @@ RasterSource::PlaybackSettings::PlaybackSettings()
     : playback_to_shared_canvas(false),
       skip_images(false),
       use_image_hijack_canvas(true) {}
+
+RasterSource::PlaybackSettings::PlaybackSettings(const PlaybackSettings&) =
+    default;
+
+RasterSource::PlaybackSettings::PlaybackSettings(PlaybackSettings&&) = default;
+
+RasterSource::PlaybackSettings::~PlaybackSettings() = default;
 
 }  // namespace cc

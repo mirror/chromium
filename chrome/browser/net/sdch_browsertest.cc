@@ -26,6 +26,7 @@
 #include "chrome/browser/browsing_data/browsing_data_remover.h"
 #include "chrome/browser/browsing_data/browsing_data_remover_factory.h"
 #include "chrome/browser/browsing_data/browsing_data_remover_test_util.h"
+#include "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/browser.h"
@@ -409,10 +410,13 @@ class SdchBrowserTest : public InProcessBrowserTest,
     BrowsingDataRemover* remover =
         BrowsingDataRemoverFactory::GetForBrowserContext(browser()->profile());
     BrowsingDataRemoverCompletionObserver completion_observer(remover);
-    remover->RemoveAndReply(
-        browsing_data::CalculateBeginDeleteTime(browsing_data::LAST_HOUR),
-        browsing_data::CalculateEndDeleteTime(browsing_data::LAST_HOUR),
-        remove_mask, BrowsingDataHelper::UNPROTECTED_WEB, &completion_observer);
+    remover->RemoveAndReply(browsing_data::CalculateBeginDeleteTime(
+                                browsing_data::TimePeriod::LAST_HOUR),
+                            browsing_data::CalculateEndDeleteTime(
+                                browsing_data::TimePeriod::LAST_HOUR),
+                            remove_mask,
+                            BrowsingDataRemover::ORIGIN_TYPE_UNPROTECTED_WEB,
+                            &completion_observer);
     completion_observer.BlockUntilCompletion();
   }
 
@@ -441,7 +445,7 @@ class SdchBrowserTest : public InProcessBrowserTest,
         second_profile_data_dir_.GetPath());
     if (!second_profile_) return false;
 
-    second_browser_ = new Browser(Browser::CreateParams(second_profile_));
+    second_browser_ = new Browser(Browser::CreateParams(second_profile_, true));
     if (!second_browser_) return false;
 
     chrome::AddSelectedTabWithURL(second_browser_,
@@ -674,14 +678,14 @@ IN_PROC_BROWSER_TEST_F(SdchBrowserTest, BrowsingDataRemover) {
 
   // Confirm browsing data remover without removing the cache leaves
   // SDCH alone.
-  BrowsingDataRemoveAndWait(BrowsingDataRemover::REMOVE_ALL &
-                            ~BrowsingDataRemover::REMOVE_CACHE);
+  BrowsingDataRemoveAndWait(ChromeBrowsingDataRemoverDelegate::ALL_DATA_TYPES &
+                            ~BrowsingDataRemover::DATA_TYPE_CACHE);
   bool sdch_encoding_used = false;
   ASSERT_TRUE(GetData(&sdch_encoding_used));
   EXPECT_TRUE(sdch_encoding_used);
 
   // Confirm browsing data remover removing the cache clears SDCH state.
-  BrowsingDataRemoveAndWait(BrowsingDataRemover::REMOVE_CACHE);
+  BrowsingDataRemoveAndWait(BrowsingDataRemover::DATA_TYPE_CACHE);
   sdch_encoding_used = false;
   ASSERT_TRUE(GetData(&sdch_encoding_used));
   EXPECT_FALSE(sdch_encoding_used);

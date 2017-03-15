@@ -317,42 +317,6 @@ void RenderFrameHostManager::SetIsLoading(bool is_loading) {
   }
 }
 
-bool RenderFrameHostManager::ShouldCloseTabOnUnresponsiveRenderer() {
-  // If we're waiting for a close ACK, then the tab should close whether there's
-  // a navigation in progress or not.  Unfortunately, we also need to check for
-  // cases that we arrive here with no navigation in progress, since there are
-  // some tab closure paths that don't set is_waiting_for_close_ack to true.
-  // TODO(creis): Clean this up in http://crbug.com/418266.
-  if (!pending_render_frame_host_ ||
-      render_frame_host_->render_view_host()->is_waiting_for_close_ack())
-    return true;
-
-  // We should always have a pending RFH when there's a cross-process navigation
-  // in progress.  Sanity check this for http://crbug.com/276333.
-  CHECK(pending_render_frame_host_);
-
-  // Unload handlers run in the background, so we should never get an
-  // unresponsiveness warning for them.
-  CHECK(!render_frame_host_->IsWaitingForUnloadACK());
-
-  // If the tab becomes unresponsive during beforeunload while doing a
-  // cross-process navigation, proceed with the navigation.  (This assumes that
-  // the pending RenderFrameHost is still responsive.)
-  if (render_frame_host_->is_waiting_for_beforeunload_ack()) {
-    // Haven't gotten around to starting the request, because we're still
-    // waiting for the beforeunload handler to finish.  We'll pretend that it
-    // did finish, to let the navigation proceed.  Note that there's a danger
-    // that the beforeunload handler will later finish and possibly return
-    // false (meaning the navigation should not proceed), but we'll ignore it
-    // in this case because it took too long.
-    if (pending_render_frame_host_->are_navigations_suspended()) {
-      pending_render_frame_host_->SetNavigationsSuspended(
-          false, base::TimeTicks::Now());
-    }
-  }
-  return false;
-}
-
 void RenderFrameHostManager::OnBeforeUnloadACK(
     bool for_cross_site_transition,
     bool proceed,
@@ -365,10 +329,7 @@ void RenderFrameHostManager::OnBeforeUnloadACK(
 
     if (proceed) {
       // Ok to unload the current page, so proceed with the cross-process
-      // navigation.  Note that if navigations are not currently suspended, it
-      // might be because the renderer was deemed unresponsive and this call was
-      // already made by ShouldCloseTabOnUnresponsiveRenderer.  In that case, it
-      // is ok to do nothing here.
+      // navigation.
       if (pending_render_frame_host_ &&
           pending_render_frame_host_->are_navigations_suspended()) {
         pending_render_frame_host_->SetNavigationsSuspended(false,
@@ -770,11 +731,15 @@ RenderFrameHostImpl* RenderFrameHostManager::GetFrameHostForNavigation(
           ? speculative_render_frame_host_->GetSiteInstance()
           : nullptr;
 
+  bool was_server_redirect = request.navigation_handle() &&
+                             request.navigation_handle()->WasServerRedirect();
+
   scoped_refptr<SiteInstance> dest_site_instance = GetSiteInstanceForNavigation(
       request.common_params().url, request.source_site_instance(),
       request.dest_site_instance(), candidate_site_instance,
       request.common_params().transition,
-      request.restore_type() != RestoreType::NONE, request.is_view_source());
+      request.restore_type() != RestoreType::NONE, request.is_view_source(),
+      was_server_redirect);
 
   // The appropriate RenderFrameHost to commit the navigation.
   RenderFrameHostImpl* navigation_rfh = nullptr;
@@ -804,9 +769,9 @@ RenderFrameHostImpl* RenderFrameHostManager::GetFrameHostForNavigation(
   } else {
     // Subframe navigations will use the current renderer, unless specifically
     // allowed to swap processes.
-    no_renderer_swap |= !CanSubframeSwapProcess(request.common_params().url,
-                                                request.source_site_instance(),
-                                                request.dest_site_instance());
+    no_renderer_swap |= !CanSubframeSwapProcess(
+        request.common_params().url, request.source_site_instance(),
+        request.dest_site_instance(), was_server_redirect);
   }
 
   if (no_renderer_swap) {
@@ -1217,7 +1182,8 @@ RenderFrameHostManager::GetSiteInstanceForNavigation(
     SiteInstance* candidate_instance,
     ui::PageTransition transition,
     bool dest_is_restore,
-    bool dest_is_view_source_mode) {
+    bool dest_is_view_source_mode,
+    bool was_server_redirect) {
   // On renderer-initiated navigations, when the frame initiating the navigation
   // and the frame being navigated differ, |source_instance| is set to the
   // SiteInstance of the initiating frame. |dest_instance| is present on session
@@ -1257,7 +1223,8 @@ RenderFrameHostManager::GetSiteInstanceForNavigation(
   if (ShouldTransitionCrossSite() || force_swap) {
     new_instance_descriptor = DetermineSiteInstanceForURL(
         dest_url, source_instance, current_instance, dest_instance, transition,
-        dest_is_restore, dest_is_view_source_mode, force_swap);
+        dest_is_restore, dest_is_view_source_mode, force_swap,
+        was_server_redirect);
   }
 
   scoped_refptr<SiteInstance> new_instance =
@@ -1285,7 +1252,8 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
     ui::PageTransition transition,
     bool dest_is_restore,
     bool dest_is_view_source_mode,
-    bool force_browsing_instance_swap) {
+    bool force_browsing_instance_swap,
+    bool was_server_redirect) {
   SiteInstanceImpl* current_instance_impl =
       static_cast<SiteInstanceImpl*>(current_instance);
   NavigationControllerImpl& controller =
@@ -1442,12 +1410,20 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
   // Use the source SiteInstance in case of data URLs, about:srcdoc pages and
   // about:blank pages because the content is then controlled and/or scriptable
   // by the source SiteInstance.
+  //
+  // One exception to this is when these URLs are
+  // reached via a server redirect.  Normally, redirects to data: or about:
+  // URLs are disallowed as net::ERR_UNSAFE_REDIRECT, but extensions can still
+  // redirect arbitary requests to those URLs using webRequest or
+  // declarativeWebRequest API.  For these cases, the content isn't controlled
+  // by the source SiteInstance, so it need not use it.
   GURL about_blank(url::kAboutBlankURL);
   GURL about_srcdoc(content::kAboutSrcDocURL);
-  if (source_instance && (dest_url == about_srcdoc || dest_url == about_blank ||
-                          dest_url.scheme() == url::kDataScheme)) {
+  bool dest_is_data_or_about = dest_url == about_srcdoc ||
+                               dest_url == about_blank ||
+                               dest_url.scheme() == url::kDataScheme;
+  if (source_instance && dest_is_data_or_about && !was_server_redirect)
     return SiteInstanceDescriptor(source_instance);
-  }
 
   // Use the current SiteInstance for same site navigations.
   if (IsCurrentlySameSite(render_frame_host_.get(), dest_url))
@@ -2192,6 +2168,15 @@ void RenderFrameHostManager::CommitPending() {
   // The process will no longer try to exit, so we can decrement the count.
   render_frame_host_->GetProcess()->RemovePendingView();
 
+  // Save off the old background color before possibly deleting the
+  // old RenderWidgetHostView.
+  SkColor old_background_color = SK_ColorWHITE;
+  bool has_old_background_color = false;
+  if (old_render_frame_host->GetView()) {
+    has_old_background_color = true;
+    old_background_color = old_render_frame_host->GetView()->background_color();
+  }
+
   // The RenderViewHost keeps track of the main RenderFrameHost routing id.
   // If this is committing a main frame navigation, update it and set the
   // routing id in the RenderViewHost associated with the old RenderFrameHost
@@ -2268,6 +2253,9 @@ void RenderFrameHostManager::CommitPending() {
   delegate_->NotifySwappedFromRenderManager(
       old_render_frame_host.get(), render_frame_host_.get(), is_main_frame);
 
+  if (has_old_background_color && render_frame_host_->GetView())
+    render_frame_host_->GetView()->SetBackgroundColor(old_background_color);
+
   // Swap out the old frame now that the new one is visible.
   // This will swap it out and schedule it for deletion when the swap out ack
   // arrives (or immediately if the process isn't live).
@@ -2305,17 +2293,19 @@ RenderFrameHostImpl* RenderFrameHostManager::UpdateStateForNavigate(
     const GlobalRequestID& transferred_request_id,
     int bindings,
     bool is_reload) {
-  if (!frame_tree_node_->IsMainFrame() &&
-      !CanSubframeSwapProcess(dest_url, source_instance, dest_instance)) {
-    // Note: Do not add code here to determine whether the subframe should swap
-    // or not. Add it to CanSubframeSwapProcess instead.
-    return render_frame_host_.get();
-  }
-
   SiteInstance* current_instance = render_frame_host_->GetSiteInstance();
+  bool was_server_redirect = transfer_navigation_handle_ &&
+                             transfer_navigation_handle_->WasServerRedirect();
   scoped_refptr<SiteInstance> new_instance = GetSiteInstanceForNavigation(
       dest_url, source_instance, dest_instance, nullptr, transition,
-      dest_is_restore, dest_is_view_source_mode);
+      dest_is_restore, dest_is_view_source_mode, was_server_redirect);
+
+  // Note: Do not add code here to determine whether the subframe should swap
+  // or not. Add it to CanSubframeSwapProcess instead.
+  bool allowed_to_swap_process =
+      frame_tree_node_->IsMainFrame() ||
+      CanSubframeSwapProcess(dest_url, source_instance, dest_instance,
+                             was_server_redirect);
 
   // Inform the transferring NavigationHandle of a transfer to a different
   // SiteInstance.  It is important do so now, in order to mark the request as
@@ -2324,11 +2314,22 @@ RenderFrameHostImpl* RenderFrameHostManager::UpdateStateForNavigate(
   // RFH but will persist until it is picked up by the new RFH.
   if (transfer_navigation_handle_.get() &&
       transfer_navigation_handle_->GetGlobalRequestID() ==
-          transferred_request_id &&
-      new_instance.get() !=
-          transfer_navigation_handle_->GetRenderFrameHost()
-              ->GetSiteInstance()) {
-    transfer_navigation_handle_->Transfer();
+          transferred_request_id) {
+    // The transfer is needed when switching to a new SiteInstance.  One
+    // exception is if the process swap is not allowed and the transfer started
+    // in the current RFH, the navigation will stay in the current RFH (even
+    // when there is a new SiteInstance), so avoid calling Transfer() on it.
+    // This matters for some renderer-initiated data URLs navigations, see
+    // https://crbug.com/697513.
+    RenderFrameHostImpl* transferring_rfh =
+        transfer_navigation_handle_->GetRenderFrameHost();
+    bool transfer_started_from_current_rfh =
+        transferring_rfh == render_frame_host_.get();
+    bool should_transfer =
+        new_instance.get() != transferring_rfh->GetSiteInstance() &&
+        (!transfer_started_from_current_rfh || allowed_to_swap_process);
+    if (should_transfer)
+      transfer_navigation_handle_->Transfer();
   }
 
   // If we are currently navigating cross-process to a pending RFH for a
@@ -2345,7 +2346,7 @@ RenderFrameHostImpl* RenderFrameHostManager::UpdateStateForNavigate(
     }
   }
 
-  if (new_instance.get() != current_instance) {
+  if (new_instance.get() != current_instance && allowed_to_swap_process) {
     TRACE_EVENT_INSTANT2(
         "navigation",
         "RenderFrameHostManager::UpdateStateForNavigate:New SiteInstance",
@@ -2748,7 +2749,8 @@ void RenderFrameHostManager::SendPageMessage(IPC::Message* msg,
 bool RenderFrameHostManager::CanSubframeSwapProcess(
     const GURL& dest_url,
     SiteInstance* source_instance,
-    SiteInstance* dest_instance) {
+    SiteInstance* dest_instance,
+    bool was_server_redirect) {
   // On renderer-initiated navigations, when the frame initiating the navigation
   // and the frame being navigated differ, |source_instance| is set to the
   // SiteInstance of the initiating frame. |dest_instance| is present on session
@@ -2770,8 +2772,22 @@ bool RenderFrameHostManager::CanSubframeSwapProcess(
       resolved_url = dest_instance->GetSiteURL();
     } else {
       // If there is no SiteInstance this unique origin can be associated with,
-      // then we should avoid a process swap.
-      return false;
+      // there are two cases:
+      // (1) If there was a server redirect, allow a process swap.  Normally,
+      // redirects to data: or about: URLs are disallowed as
+      // net::ERR_UNSAFE_REDIRECT. However, extensions can still redirect
+      // arbitary requests to those URLs using the chrome.webRequest or
+      // chrome.declarativeWebRequest API, which will end up here (for an
+      // example, see ExtensionWebRequestApiTest.WebRequestDeclarative1).  It's
+      // safest to swap processes for those redirects if we are in an
+      // appropriate OOPIF-enabled mode.
+      //
+      // (2) Otherwise, avoid a process swap.  We can get here during session
+      // restore, and this avoids putting all data: and about:blank subframes
+      // in OOPIFs. We can also get here in tests with browser-initiated
+      // subframe navigations (NavigateFrameToURL).
+      if (!was_server_redirect)
+        return false;
     }
   }
 

@@ -54,9 +54,6 @@
 #include "wtf/text/StringBuffer.h"
 #include "wtf/text/StringBuilder.h"
 
-using namespace WTF;
-using namespace Unicode;
-
 namespace blink {
 
 struct SameSizeAsLayoutText : public LayoutObject {
@@ -139,10 +136,12 @@ static void makeCapitalized(String* string, UChar previous) {
   int32_t startOfWord = boundary->first();
   for (endOfWord = boundary->next(); endOfWord != TextBreakDone;
        startOfWord = endOfWord, endOfWord = boundary->next()) {
-    if (startOfWord)  // Ignore first char of previous string
-      result.append(input[startOfWord - 1] == noBreakSpaceCharacter
-                        ? noBreakSpaceCharacter
-                        : toTitleCase(stringWithPrevious[startOfWord]));
+    if (startOfWord) {  // Ignore first char of previous string
+      result.append(
+          input[startOfWord - 1] == noBreakSpaceCharacter
+              ? noBreakSpaceCharacter
+              : WTF::Unicode::toTitleCase(stringWithPrevious[startOfWord]));
+    }
     for (int i = startOfWord + 1; i < endOfWord; i++)
       result.append(input[i - 1]);
   }
@@ -151,7 +150,7 @@ static void makeCapitalized(String* string, UChar previous) {
 }
 
 LayoutText::LayoutText(Node* node, PassRefPtr<StringImpl> str)
-    : LayoutObject(!node || node->isDocumentNode() ? 0 : node),
+    : LayoutObject(node),
       m_hasTab(false),
       m_linesDirty(false),
       m_containsReversedText(false),
@@ -164,15 +163,12 @@ LayoutText::LayoutText(Node* node, PassRefPtr<StringImpl> str)
       m_firstTextBox(nullptr),
       m_lastTextBox(nullptr) {
   ASSERT(m_text);
-  // FIXME: Some clients of LayoutText (and subclasses) pass Document as node to
-  // create anonymous layoutObject.
-  // They should be switched to passing null and using setDocumentForAnonymous.
-  if (node && node->isDocumentNode())
-    setDocumentForAnonymous(toDocument(node));
+  DCHECK(!node || !node->isDocumentNode());
 
   setIsText();
 
-  view()->frameView()->incrementVisuallyNonEmptyCharacterCount(m_text.length());
+  if (node)
+    frameView()->incrementVisuallyNonEmptyCharacterCount(m_text.length());
 }
 
 #if DCHECK_IS_ON()
@@ -183,6 +179,12 @@ LayoutText::~LayoutText() {
 }
 
 #endif
+
+LayoutText* LayoutText::createEmptyAnonymous(Document& doc) {
+  LayoutText* text = new LayoutText(nullptr, StringImpl::empty);
+  text->setDocumentForAnonymous(&doc);
+  return text;
+}
 
 bool LayoutText::isTextFragment() const {
   return false;
@@ -1003,7 +1005,8 @@ static float minWordFragmentWidthForBreakAll(LayoutText* layoutText,
                                              int length,
                                              EWordBreak breakAllOrBreakWord) {
   DCHECK_GT(length, 0);
-  LazyLineBreakIterator breakIterator(layoutText->text(), style.locale());
+  LazyLineBreakIterator breakIterator(layoutText->text(),
+                                      localeForLineBreakIterator(style));
   int nextBreakable = -1;
   float min = std::numeric_limits<float>::max();
   int end = start + length;
@@ -1071,6 +1074,30 @@ static float maxWordFragmentWidth(LayoutText* layoutText,
   return maxFragmentWidth + layoutText->hyphenWidth(font, textDirection);
 }
 
+AtomicString localeForLineBreakIterator(const ComputedStyle& style) {
+  LineBreakIteratorMode mode = LineBreakIteratorMode::Default;
+  switch (style.getLineBreak()) {
+    default:
+      NOTREACHED();
+    // Fall through.
+    case LineBreakAuto:
+    case LineBreakAfterWhiteSpace:
+      return style.locale();
+    case LineBreakNormal:
+      mode = LineBreakIteratorMode::Normal;
+      break;
+    case LineBreakStrict:
+      mode = LineBreakIteratorMode::Strict;
+      break;
+    case LineBreakLoose:
+      mode = LineBreakIteratorMode::Loose;
+      break;
+  }
+  if (const LayoutLocale* locale = style.getFontDescription().locale())
+    return locale->localeWithBreakKeyword(mode);
+  return style.locale();
+}
+
 void LayoutText::computePreferredLogicalWidths(
     float leadWidth,
     HashSet<const SimpleFontData*>& fallbackFonts,
@@ -1099,7 +1126,8 @@ void LayoutText::computePreferredLogicalWidths(
   const Font& f = styleToUse.font();  // FIXME: This ignores first-line.
   float wordSpacing = styleToUse.wordSpacing();
   int len = textLength();
-  LazyLineBreakIterator breakIterator(m_text, styleToUse.locale());
+  LazyLineBreakIterator breakIterator(m_text,
+                                      localeForLineBreakIterator(styleToUse));
   bool needsWordSpacing = false;
   bool ignoringSpaces = false;
   bool isSpace = false;
@@ -1681,7 +1709,7 @@ void LayoutText::secureText(UChar mask) {
   int lastTypedCharacterOffsetToReveal = -1;
   UChar revealedText;
   SecureTextTimer* secureTextTimer =
-      gSecureTextTimers ? gSecureTextTimers->get(this) : 0;
+      gSecureTextTimers ? gSecureTextTimers->at(this) : 0;
   if (secureTextTimer && secureTextTimer->isActive()) {
     lastTypedCharacterOffsetToReveal =
         secureTextTimer->lastTypedCharacterOffset();
@@ -1993,7 +2021,7 @@ void LayoutText::momentarilyRevealLastTypedCharacter(
   if (!gSecureTextTimers)
     gSecureTextTimers = new SecureTextTimerMap;
 
-  SecureTextTimer* secureTextTimer = gSecureTextTimers->get(this);
+  SecureTextTimer* secureTextTimer = gSecureTextTimers->at(this);
   if (!secureTextTimer) {
     secureTextTimer = new SecureTextTimer(this);
     gSecureTextTimers->insert(this, secureTextTimer);

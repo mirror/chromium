@@ -274,6 +274,11 @@ Textfield::Textfield()
       weak_ptr_factory_(this) {
   set_context_menu_controller(this);
   set_drag_controller(this);
+  cursor_view_.SetPaintToLayer(ui::LAYER_SOLID_COLOR);
+  cursor_view_.layer()->SetColor(GetTextColor());
+  // |cursor_view_| is owned by Textfield view.
+  cursor_view_.set_owned_by_client();
+  AddChildView(&cursor_view_);
   GetRenderText()->SetFontList(GetDefaultFontList());
   View::SetBorder(std::unique_ptr<Border>(new FocusableBorder()));
   SetFocusBehavior(FocusBehavior::ALWAYS);
@@ -450,7 +455,12 @@ bool Textfield::GetCursorEnabled() const {
 }
 
 void Textfield::SetCursorEnabled(bool enabled) {
+  if (GetRenderText()->cursor_enabled() == enabled)
+    return;
+
   GetRenderText()->SetCursorEnabled(enabled);
+  UpdateCursorViewPosition();
+  UpdateCursorVisibility();
 }
 
 const gfx::FontList& Textfield::GetFontList() const {
@@ -508,6 +518,7 @@ size_t Textfield::GetCursorPosition() const {
 
 void Textfield::SetColor(SkColor value) {
   GetRenderText()->SetColor(value);
+  cursor_view_.layer()->SetColor(value);
   SchedulePaint();
 }
 
@@ -975,8 +986,10 @@ void Textfield::OnPaint(gfx::Canvas* canvas) {
 
 void Textfield::OnFocus() {
   GetRenderText()->set_focused(true);
-  if (ShouldShowCursor())
-    GetRenderText()->set_cursor_visible(true);
+  if (ShouldShowCursor()) {
+    UpdateCursorViewPosition();
+    cursor_view_.SetVisible(true);
+  }
   if (GetInputMethod())
     GetInputMethod()->SetFocusedTextInputClient(this);
   OnCaretBoundsChanged();
@@ -997,10 +1010,7 @@ void Textfield::OnBlur() {
   if (GetInputMethod())
     GetInputMethod()->DetachTextInputClient(this);
   StopBlinkingCursor();
-  if (render_text->cursor_visible()) {
-    render_text->set_cursor_visible(false);
-    RepaintCursor();
-  }
+  cursor_view_.SetVisible(false);
 
   DestroyTouchSelection();
 
@@ -1018,10 +1028,10 @@ void Textfield::OnNativeThemeChanged(const ui::NativeTheme* theme) {
   gfx::RenderText* render_text = GetRenderText();
   render_text->SetColor(GetTextColor());
   UpdateBackgroundColor();
-  render_text->set_cursor_color(GetTextColor());
   render_text->set_selection_color(GetSelectionTextColor());
   render_text->set_selection_background_focused_color(
       GetSelectionBackgroundColor());
+  cursor_view_.layer()->SetColor(GetTextColor());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1905,12 +1915,8 @@ void Textfield::UpdateAfterChange(bool text_changed, bool cursor_changed) {
     NotifyAccessibilityEvent(ui::AX_EVENT_TEXT_CHANGED, true);
   }
   if (cursor_changed) {
-    GetRenderText()->set_cursor_visible(ShouldShowCursor());
-    RepaintCursor();
-    if (ShouldBlinkCursor())
-      StartBlinkingCursor();
-    else
-      StopBlinkingCursor();
+    UpdateCursorViewPosition();
+    UpdateCursorVisibility();
     NotifyAccessibilityEvent(ui::AX_EVENT_TEXT_SELECTION_CHANGED, true);
   }
   if (text_changed || cursor_changed) {
@@ -1919,10 +1925,18 @@ void Textfield::UpdateAfterChange(bool text_changed, bool cursor_changed) {
   }
 }
 
-void Textfield::RepaintCursor() {
-  gfx::Rect r(GetRenderText()->GetUpdatedCursorBounds());
-  r.Inset(-1, -1, -1, -1);
-  SchedulePaintInRect(r);
+void Textfield::UpdateCursorVisibility() {
+  cursor_view_.SetVisible(ShouldShowCursor());
+  if (ShouldBlinkCursor())
+    StartBlinkingCursor();
+  else
+    StopBlinkingCursor();
+}
+
+void Textfield::UpdateCursorViewPosition() {
+  gfx::Rect location(GetRenderText()->GetUpdatedCursorBounds());
+  location.set_x(GetMirroredXForRect(location));
+  cursor_view_.SetBoundsRect(location);
 }
 
 void Textfield::PaintTextAndCursor(gfx::Canvas* canvas) {
@@ -1942,8 +1956,10 @@ void Textfield::PaintTextAndCursor(gfx::Canvas* canvas) {
   render_text->Draw(canvas);
 
   // Draw the detached drop cursor that marks where the text will be dropped.
-  if (drop_cursor_visible_)
-    render_text->DrawCursor(canvas, drop_cursor_position_);
+  if (drop_cursor_visible_) {
+    canvas->FillRect(render_text->GetCursorBounds(drop_cursor_position_, true),
+                     GetTextColor());
+  }
 
   canvas->Restore();
 }
@@ -2061,7 +2077,7 @@ void Textfield::OnEditFailed() {
 
 bool Textfield::ShouldShowCursor() const {
   return HasFocus() && !HasSelection() && enabled() && !read_only() &&
-         !drop_cursor_visible_;
+         !drop_cursor_visible_ && GetRenderText()->cursor_enabled();
 }
 
 bool Textfield::ShouldBlinkCursor() const {
@@ -2081,9 +2097,8 @@ void Textfield::StopBlinkingCursor() {
 
 void Textfield::OnCursorBlinkTimerFired() {
   DCHECK(ShouldBlinkCursor());
-  gfx::RenderText* render_text = GetRenderText();
-  render_text->set_cursor_visible(!render_text->cursor_visible());
-  RepaintCursor();
+  cursor_view_.SetVisible(!cursor_view_.visible());
+  UpdateCursorViewPosition();
 }
 
 }  // namespace views

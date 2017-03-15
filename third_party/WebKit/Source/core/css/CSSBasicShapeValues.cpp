@@ -35,8 +35,6 @@
 #include "platform/Length.h"
 #include "wtf/text/StringBuilder.h"
 
-using namespace WTF;
-
 namespace blink {
 
 static String buildCircleString(const String& radius,
@@ -132,9 +130,9 @@ String CSSBasicShapeCircleValue::customCSSText() const {
 
 bool CSSBasicShapeCircleValue::equals(
     const CSSBasicShapeCircleValue& other) const {
-  return compareCSSValuePtr(m_centerX, other.m_centerX) &&
-         compareCSSValuePtr(m_centerY, other.m_centerY) &&
-         compareCSSValuePtr(m_radius, other.m_radius);
+  return dataEquivalent(m_centerX, other.m_centerX) &&
+         dataEquivalent(m_centerY, other.m_centerY) &&
+         dataEquivalent(m_radius, other.m_radius);
 }
 
 DEFINE_TRACE_AFTER_DISPATCH(CSSBasicShapeCircleValue) {
@@ -210,10 +208,10 @@ String CSSBasicShapeEllipseValue::customCSSText() const {
 
 bool CSSBasicShapeEllipseValue::equals(
     const CSSBasicShapeEllipseValue& other) const {
-  return compareCSSValuePtr(m_centerX, other.m_centerX) &&
-         compareCSSValuePtr(m_centerY, other.m_centerY) &&
-         compareCSSValuePtr(m_radiusX, other.m_radiusX) &&
-         compareCSSValuePtr(m_radiusY, other.m_radiusY);
+  return dataEquivalent(m_centerX, other.m_centerX) &&
+         dataEquivalent(m_centerY, other.m_centerY) &&
+         dataEquivalent(m_radiusX, other.m_radiusX) &&
+         dataEquivalent(m_radiusY, other.m_radiusY);
 }
 
 DEFINE_TRACE_AFTER_DISPATCH(CSSBasicShapeEllipseValue) {
@@ -413,14 +411,14 @@ String CSSBasicShapeInsetValue::customCSSText() const {
 
 bool CSSBasicShapeInsetValue::equals(
     const CSSBasicShapeInsetValue& other) const {
-  return compareCSSValuePtr(m_top, other.m_top) &&
-         compareCSSValuePtr(m_right, other.m_right) &&
-         compareCSSValuePtr(m_bottom, other.m_bottom) &&
-         compareCSSValuePtr(m_left, other.m_left) &&
-         compareCSSValuePtr(m_topLeftRadius, other.m_topLeftRadius) &&
-         compareCSSValuePtr(m_topRightRadius, other.m_topRightRadius) &&
-         compareCSSValuePtr(m_bottomRightRadius, other.m_bottomRightRadius) &&
-         compareCSSValuePtr(m_bottomLeftRadius, other.m_bottomLeftRadius);
+  return dataEquivalent(m_top, other.m_top) &&
+         dataEquivalent(m_right, other.m_right) &&
+         dataEquivalent(m_bottom, other.m_bottom) &&
+         dataEquivalent(m_left, other.m_left) &&
+         dataEquivalent(m_topLeftRadius, other.m_topLeftRadius) &&
+         dataEquivalent(m_topRightRadius, other.m_topRightRadius) &&
+         dataEquivalent(m_bottomRightRadius, other.m_bottomRightRadius) &&
+         dataEquivalent(m_bottomLeftRadius, other.m_bottomLeftRadius);
 }
 
 DEFINE_TRACE_AFTER_DISPATCH(CSSBasicShapeInsetValue) {

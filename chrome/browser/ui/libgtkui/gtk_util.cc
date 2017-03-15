@@ -40,7 +40,7 @@ void CommonInitFromCommandLine(const base::CommandLine& command_line,
     // here.
     argv[i] = strdup(args[i].c_str());
   }
-  argv[argc] = NULL;
+  argv[argc] = nullptr;
   char** argv_pointer = argv.get();
 
   {
@@ -203,7 +203,7 @@ aura::Window* GetAuraTransientParent(GtkWidget* dialog) {
 }
 
 void ClearAuraTransientParent(GtkWidget* dialog) {
-  g_object_set_data(G_OBJECT(dialog), kAuraTransientParent, NULL);
+  g_object_set_data(G_OBJECT(dialog), kAuraTransientParent, nullptr);
 }
 
 #if GTK_MAJOR_VERSION > 2
@@ -276,6 +276,23 @@ bool GtkVersionCheck(int major, int minor, int micro) {
     return true;
   else
     return false;
+}
+
+GtkStateFlags StateToStateFlags(ui::NativeTheme::State state) {
+  switch (state) {
+    case ui::NativeTheme::kDisabled:
+      return GTK_STATE_FLAG_INSENSITIVE;
+    case ui::NativeTheme::kHovered:
+      return GTK_STATE_FLAG_PRELIGHT;
+    case ui::NativeTheme::kNormal:
+      return GTK_STATE_FLAG_NORMAL;
+    case ui::NativeTheme::kPressed:
+      return static_cast<GtkStateFlags>(GTK_STATE_FLAG_PRELIGHT |
+                                        GTK_STATE_FLAG_ACTIVE);
+    default:
+      NOTREACHED();
+      return GTK_STATE_FLAG_NORMAL;
+  }
 }
 
 ScopedStyleContext AppendCssNodeToStyleContext(GtkStyleContext* context,
@@ -492,24 +509,8 @@ SkColor GetBorderColor(const char* css_selector) {
   return surface.GetAveragePixelValue(true);
 }
 
-ScopedStyleContext GetSelectedStyleContext(const char* css_selector) {
+SkColor GetSelectionBgColor(const char* css_selector) {
   auto context = GetStyleContextFromCss(css_selector);
-  if (GtkVersionCheck(3, 20)) {
-    context = AppendCssNodeToStyleContext(context, "#selection");
-  } else {
-    GtkStateFlags state = gtk_style_context_get_state(context);
-    state = static_cast<GtkStateFlags>(state | GTK_STATE_FLAG_SELECTED);
-    gtk_style_context_set_state(context, state);
-  }
-  return context;
-}
-
-SkColor GetSelectedTextColor(const char* css_selector) {
-  return GetFgColorFromStyleContext(GetSelectedStyleContext(css_selector));
-}
-
-SkColor GetSelectedBgColor(const char* css_selector) {
-  auto context = GetSelectedStyleContext(css_selector);
   if (GtkVersionCheck(3, 20))
     return GetBgColorFromStyleContext(context);
   // This is verbatim how Gtk gets the selection color on versions before 3.20.

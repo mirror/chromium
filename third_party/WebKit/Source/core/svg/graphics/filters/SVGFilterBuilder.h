@@ -51,14 +51,14 @@ class SVGFilterGraphNodeMap final
 
   inline FilterEffectSet& effectReferences(FilterEffect* effect) {
     // Only allowed for effects belongs to this builder.
-    ASSERT(m_effectReferences.contains(effect));
+    DCHECK(m_effectReferences.contains(effect));
     return m_effectReferences.find(effect)->value;
   }
 
   // Required to change the attributes of a filter during an
   // svgAttributeChanged.
   inline FilterEffect* effectByRenderer(LayoutObject* object) {
-    return m_effectRenderer.get(object);
+    return m_effectRenderer.at(object);
   }
 
   void invalidateDependentEffects(FilterEffect*);
@@ -80,8 +80,8 @@ class SVGFilterBuilder {
  public:
   SVGFilterBuilder(FilterEffect* sourceGraphic,
                    SVGFilterGraphNodeMap* = nullptr,
-                   const PaintFlags* fillPaint = nullptr,
-                   const PaintFlags* strokePaint = nullptr);
+                   const PaintFlags* fillFlags = nullptr,
+                   const PaintFlags* strokeFlags = nullptr);
 
   void buildGraph(Filter*, SVGFilterElement&, const FloatRect&);
 

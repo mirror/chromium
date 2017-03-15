@@ -7,11 +7,6 @@
       "drawsContent": true,
       "paintInvalidations": [
         {
-          "object": "LayoutBlockFlow HTML",
-          "rect": [0, 0, 913, 235],
-          "reason": "forced by layout"
-        },
-        {
           "object": "LayoutView #document",
           "rect": [0, 0, 913, 235],
           "reason": "bounds change"
@@ -19,11 +14,6 @@
         {
           "object": "LayoutBlockFlow BODY",
           "rect": [8, 8, 897, 219],
-          "reason": "forced by layout"
-        },
-        {
-          "object": "LayoutText #text",
-          "rect": [8, 8, 897, 214],
           "reason": "forced by layout"
         },
         {
@@ -42,17 +32,7 @@
           "reason": "scroll"
         },
         {
-          "object": "LayoutBlockFlow HTML",
-          "rect": [483, 0, 430, 500],
-          "reason": "forced by layout"
-        },
-        {
           "object": "LayoutBlockFlow BODY",
-          "rect": [491, 8, 414, 484],
-          "reason": "forced by layout"
-        },
-        {
-          "object": "LayoutText #text",
           "rect": [491, 8, 414, 484],
           "reason": "forced by layout"
         }
@@ -67,10 +47,6 @@
     {
       "object": "LayoutView #document",
       "reason": "bounds change"
-    },
-    {
-      "object": "LayoutBlockFlow HTML",
-      "reason": "forced by layout"
     },
     {
       "object": "LayoutBlockFlow BODY",
@@ -283,11 +259,6 @@
           "reason": "full"
         },
         {
-          "object": "LayoutBlockFlow HTML",
-          "rect": [-513, 0, 913, 235],
-          "reason": "forced by layout"
-        },
-        {
           "object": "LayoutView #document",
           "rect": [-513, 0, 913, 235],
           "reason": "bounds change"
@@ -295,11 +266,6 @@
         {
           "object": "LayoutBlockFlow BODY",
           "rect": [-505, 8, 897, 219],
-          "reason": "forced by layout"
-        },
-        {
-          "object": "LayoutText #text",
-          "rect": [-505, 8, 897, 214],
           "reason": "forced by layout"
         },
         {
@@ -313,18 +279,8 @@
           "reason": "scroll"
         },
         {
-          "object": "LayoutBlockFlow HTML",
-          "rect": [39, 0, 361, 600],
-          "reason": "forced by layout"
-        },
-        {
           "object": "LayoutBlockFlow BODY",
           "rect": [47, 8, 345, 584],
-          "reason": "forced by layout"
-        },
-        {
-          "object": "LayoutText #text",
-          "rect": [47, 8, 345, 565],
           "reason": "forced by layout"
         }
       ]
@@ -338,10 +294,6 @@
     {
       "object": "LayoutView #document",
       "reason": "bounds change"
-    },
-    {
-      "object": "LayoutBlockFlow HTML",
-      "reason": "forced by layout"
     },
     {
       "object": "LayoutBlockFlow BODY",
@@ -391,16 +343,6 @@
           "reason": "incremental"
         },
         {
-          "object": "LayoutBlockFlow HTML",
-          "rect": [439, 0, 361, 600],
-          "reason": "forced by layout"
-        },
-        {
-          "object": "LayoutBlockFlow HTML",
-          "rect": [39, 0, 361, 600],
-          "reason": "forced by layout"
-        },
-        {
           "object": "LayoutBlockFlow BODY",
           "rect": [447, 8, 345, 584],
           "reason": "forced by layout"
@@ -408,16 +350,6 @@
         {
           "object": "LayoutBlockFlow BODY",
           "rect": [47, 8, 345, 584],
-          "reason": "forced by layout"
-        },
-        {
-          "object": "LayoutText #text",
-          "rect": [447, 8, 345, 565],
-          "reason": "forced by layout"
-        },
-        {
-          "object": "LayoutText #text",
-          "rect": [47, 8, 345, 565],
           "reason": "forced by layout"
         }
       ]
@@ -427,10 +359,6 @@
     {
       "object": "LayoutView #document",
       "reason": "incremental"
-    },
-    {
-      "object": "LayoutBlockFlow HTML",
-      "reason": "forced by layout"
     },
     {
       "object": "LayoutBlockFlow BODY",

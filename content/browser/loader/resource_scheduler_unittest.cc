@@ -381,6 +381,39 @@ TEST_F(ResourceSchedulerTest, SchedulerDoesNotYieldForSyncRequests) {
   EXPECT_TRUE(requests[kMaxRequestsBeforeYielding]->started());
 }
 
+TEST_F(ResourceSchedulerTest, SchedulerDoesNotYieldForAlternativeSchemes) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitFromCommandLine(kNetworkSchedulerYielding, "");
+  InitializeScheduler();
+
+  // Use spdy so that we don't throttle.
+  http_server_properties_.SetSupportsSpdy(
+      url::SchemeHostPort("https", "spdyhost", 443), true);
+
+  // Add enough async requests that the last one should yield.
+  std::vector<std::unique_ptr<TestRequest>> requests;
+  for (int i = 0; i < kMaxRequestsBeforeYielding + 1; ++i)
+    requests.push_back(NewRequest("http://host/higher", net::HIGHEST));
+
+  // Add a non-http request.
+  requests.push_back(NewRequest("zzz://host/higher", net::HIGHEST));
+
+  // Verify that the number of requests before yielding started.
+  for (int i = 0; i < kMaxRequestsBeforeYielding; ++i)
+    EXPECT_TRUE(requests[i]->started());
+
+  // The next async request should have yielded.
+  EXPECT_FALSE(requests[kMaxRequestsBeforeYielding]->started());
+
+  // The non-http(s) request should have started even though async is
+  // yielding.
+  EXPECT_TRUE(requests[kMaxRequestsBeforeYielding + 1]->started());
+
+  // Verify that with time the yielded request eventually runs.
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(requests[kMaxRequestsBeforeYielding]->started());
+}
+
 TEST_F(ResourceSchedulerTest, SchedulerDoesNotYieldWithFeatureDisabled) {
   base::test::ScopedFeatureList scoped_feature_list;
   scoped_feature_list.InitFromCommandLine("", kNetworkSchedulerYielding);

@@ -175,7 +175,7 @@ bool SelectionController::handleMousePressEventSingleClick(
                 PositionInFlatTree::firstPositionInOrBeforeNode(innerNode))
           : visibleHitPos;
   const VisibleSelectionInFlatTree& selection =
-      this->selection().visibleSelection<EditingInFlatTreeStrategy>();
+      this->selection().computeVisibleSelectionInFlatTree();
 
   // Don't restart the selection when the mouse is pressed on an
   // existing selection so we can allow for text dragging.
@@ -344,8 +344,9 @@ void SelectionController::updateSelectionForMouseDrag(
   m_frame->document()->updateStyleAndLayoutIgnorePendingStylesheets();
 
   const PositionWithAffinity& rawTargetPosition =
-      positionRespectingEditingBoundary(selection().selection().start(),
-                                        hitTestResult.localPoint(), target);
+      positionRespectingEditingBoundary(
+          selection().computeVisibleSelectionInDOMTreeDeprecated().start(),
+          hitTestResult.localPoint(), target);
   VisiblePositionInFlatTree targetPosition = createVisiblePosition(
       fromPositionInDOMTree<EditingInFlatTreeStrategy>(rawTargetPosition));
   // Don't modify the selection if we're not on a node.
@@ -359,10 +360,7 @@ void SelectionController::updateSelectionForMouseDrag(
   // Special case to limit selection to the containing block for SVG text.
   // FIXME: Isn't there a better non-SVG-specific way to do this?
   if (Node* selectionBaseNode =
-          selection()
-              .visibleSelection<EditingInFlatTreeStrategy>()
-              .base()
-              .anchorNode()) {
+          selection().computeVisibleSelectionInFlatTree().base().anchorNode()) {
     if (LayoutObject* selectionBaseLayoutObject =
             selectionBaseNode->layoutObject()) {
       if (selectionBaseLayoutObject->isSVGText()) {
@@ -387,8 +385,7 @@ void SelectionController::updateSelectionForMouseDrag(
     m_selectionState = SelectionState::ExtendedSelection;
     basePosition = targetPosition.deepEquivalent();
   } else {
-    basePosition =
-        selection().visibleSelection<EditingInFlatTreeStrategy>().base();
+    basePosition = selection().computeVisibleSelectionInFlatTree().base();
   }
   const SelectionInFlatTree& appliedSelection = applySelectAll(
       basePosition, targetPosition.deepEquivalent(), mousePressNode,
@@ -398,9 +395,9 @@ void SelectionController::updateSelectionForMouseDrag(
   if (selection().granularity() != CharacterGranularity)
     builder.setGranularity(selection().granularity());
 
-  setNonDirectionalSelectionIfNeeded(
-      createVisibleSelection(builder.build()), selection().granularity(),
-      AdjustEndpointsAtBidiBoundary, HandleVisibility::NotVisible);
+  setNonDirectionalSelectionIfNeeded(builder.build(), selection().granularity(),
+                                     AdjustEndpointsAtBidiBoundary,
+                                     HandleVisibility::NotVisible);
 }
 
 bool SelectionController::updateSelectionForMouseDownDispatchingSelectStart(
@@ -429,7 +426,7 @@ bool SelectionController::updateSelectionForMouseDownDispatchingSelectStart(
     m_selectionState = SelectionState::PlacedCaret;
   }
 
-  setNonDirectionalSelectionIfNeeded(selection, granularity,
+  setNonDirectionalSelectionIfNeeded(selection.asSelection(), granularity,
                                      DoNotAdjustEndpoints, handleVisibility);
 
   return true;
@@ -638,20 +635,19 @@ static void adjustEndpointsAtBidiBoundary(
   }
 }
 
+// TODO(yosin): We should take |granularity| and |handleVisibility| from
+// |newSelection|.
 void SelectionController::setNonDirectionalSelectionIfNeeded(
-    const VisibleSelectionInFlatTree& passedNewSelection,
+    const SelectionInFlatTree& passedSelection,
     TextGranularity granularity,
     EndPointsAdjustmentMode endpointsAdjustmentMode,
     HandleVisibility handleVisibility) {
-  VisibleSelectionInFlatTree newSelection = passedNewSelection;
-  bool isDirectional =
-      m_frame->editor().behavior().shouldConsiderSelectionAsDirectional() ||
-      newSelection.isDirectional();
-
   // TODO(xiaochengh): The use of updateStyleAndLayoutIgnorePendingStylesheets
   // needs to be audited.  See http://crbug.com/590369 for more details.
   document().updateStyleAndLayoutIgnorePendingStylesheets();
 
+  const VisibleSelectionInFlatTree& newSelection =
+      createVisibleSelection(passedSelection);
   const PositionInFlatTree& basePosition =
       m_originalBaseInFlatTree.deepEquivalent();
   const VisiblePositionInFlatTree& originalBase =
@@ -667,29 +663,33 @@ void SelectionController::setNonDirectionalSelectionIfNeeded(
   if (endpointsAdjustmentMode == AdjustEndpointsAtBidiBoundary)
     adjustEndpointsAtBidiBoundary(newBase, newExtent);
 
+  SelectionInFlatTree::Builder builder(newSelection.asSelection());
   if (newBase.deepEquivalent() != base.deepEquivalent() ||
       newExtent.deepEquivalent() != extent.deepEquivalent()) {
     m_originalBaseInFlatTree = base;
     setContext(&document());
-    newSelection.setBase(newBase);
-    newSelection.setExtent(newExtent);
+    builder.setBaseAndExtent(newBase.deepEquivalent(),
+                             newExtent.deepEquivalent());
   } else if (originalBase.isNotNull()) {
-    if (selection().visibleSelection<EditingInFlatTreeStrategy>().base() ==
-        newSelection.base())
-      newSelection.setBase(originalBase);
+    if (selection().computeVisibleSelectionInFlatTree().base() ==
+        newSelection.base()) {
+      builder.setBaseAndExtent(originalBase.deepEquivalent(),
+                               newSelection.extent());
+    }
     m_originalBaseInFlatTree = VisiblePositionInFlatTree();
   }
 
-  // Adjusting base and extent will make newSelection always directional
-  newSelection.setIsDirectional(isDirectional);
-  const bool isHandleVisible = handleVisibility == HandleVisibility::Visible;
-  if (selection().visibleSelection<EditingInFlatTreeStrategy>() ==
-          newSelection &&
-      selection().isHandleVisible() == isHandleVisible)
+  builder.setIsHandleVisible(handleVisibility == HandleVisibility::Visible)
+      .setIsDirectional(
+          m_frame->editor().behavior().shouldConsiderSelectionAsDirectional() ||
+          newSelection.isDirectional());
+  const SelectionInFlatTree& selectionInFlatTree = builder.build();
+  if (selection().computeVisibleSelectionInFlatTree() ==
+          createVisibleSelection(selectionInFlatTree) &&
+      selection().isHandleVisible() == selectionInFlatTree.isHandleVisible())
     return;
-
   selection().setSelection(
-      newSelection, handleVisibility,
+      selectionInFlatTree,
       FrameSelection::CloseTyping | FrameSelection::ClearTypingStyle,
       CursorAlignOnScroll::IfNeeded, granularity);
 }
@@ -729,7 +729,7 @@ bool SelectionController::handleMousePressEventDoubleClick(
   if (event.event().button != WebPointerProperties::Button::Left)
     return false;
 
-  if (selection().isRange()) {
+  if (selection().computeVisibleSelectionInDOMTreeDeprecated().isRange()) {
     // A double-click when range is already selected
     // should not change the selection.  So, do not call
     // selectClosestWordFromMouseEvent, but do set
@@ -786,9 +786,9 @@ void SelectionController::handleMousePressEvent(
     const MouseEventWithHitTestResults& event) {
   // If we got the event back, that must mean it wasn't prevented,
   // so it's allowed to start a drag or selection if it wasn't in a scrollbar.
-  m_mouseDownMayStartSelect =
-      (canMouseDownStartSelect(event.innerNode()) || isLinkSelection(event)) &&
-      !event.scrollbar();
+  m_mouseDownMayStartSelect = (canMouseDownStartSelect(event.innerNode()) ||
+                               isSelectionOverLink(event)) &&
+                              !event.scrollbar();
   m_mouseDownWasSingleClickInSelection = false;
   if (!selection().isAvailable()) {
     // "gesture-tap-frame-removed.html" reaches here.
@@ -799,7 +799,10 @@ void SelectionController::handleMousePressEvent(
   // Avoid double-tap touch gesture confusion by restricting multi-click side
   // effects, e.g., word selection, to editable regions.
   m_mouseDownAllowsMultiClick =
-      !event.event().fromTouch() || selection().hasEditableStyle();
+      !event.event().fromTouch() ||
+      selection()
+          .computeVisibleSelectionInDOMTreeDeprecated()
+          .hasEditableStyle();
 }
 
 void SelectionController::handleMouseDraggedEvent(
@@ -857,7 +860,7 @@ bool SelectionController::handleMouseReleaseEvent(
   if (m_mouseDownWasSingleClickInSelection &&
       m_selectionState != SelectionState::ExtendedSelection &&
       dragStartPos == flooredIntPoint(event.event().positionInRootFrame()) &&
-      selection().isRange() &&
+      selection().computeVisibleSelectionInDOMTreeDeprecated().isRange() &&
       event.event().button != WebPointerProperties::Button::Right) {
     // TODO(xiaochengh): The use of updateStyleAndLayoutIgnorePendingStylesheets
     // needs to be audited.  See http://crbug.com/590369 for more details.
@@ -872,7 +875,7 @@ bool SelectionController::handleMouseReleaseEvent(
         builder.collapse(pos.toPositionWithAffinity());
     }
 
-    if (selection().visibleSelection<EditingInFlatTreeStrategy>() !=
+    if (selection().computeVisibleSelectionInFlatTree() !=
         createVisibleSelection(builder.build())) {
       selection().setSelection(builder.build());
     }
@@ -991,7 +994,9 @@ void SelectionController::sendContextMenuEvent(
       // If the selection is non-editable, we do word selection to make it
       // easier to use the contextual menu items available for text selections.
       // But only if we're above text.
-      !(selection().isContentEditable() ||
+      !(selection()
+            .computeVisibleSelectionInDOMTreeDeprecated()
+            .isContentEditable() ||
         (mev.innerNode() && mev.innerNode()->isTextNode())))
     return;
 
@@ -1010,6 +1015,10 @@ void SelectionController::sendContextMenuEvent(
 
 void SelectionController::passMousePressEventToSubframe(
     const MouseEventWithHitTestResults& mev) {
+  // TODO(xiaochengh): The use of updateStyleAndLayoutIgnorePendingStylesheets
+  // needs to be audited.  See http://crbug.com/590369 for more details.
+  m_frame->document()->updateStyleAndLayoutIgnorePendingStylesheets();
+
   // If we're clicking into a frame that is selected, the frame will appear
   // greyed out even though we're clicking on the selection.  This looks
   // really strange (having the whole frame be greyed out), so we deselect the
@@ -1018,10 +1027,6 @@ void SelectionController::passMousePressEventToSubframe(
       flooredIntPoint(mev.event().positionInRootFrame()));
   if (!selection().contains(p))
     return;
-
-  // TODO(xiaochengh): The use of updateStyleAndLayoutIgnorePendingStylesheets
-  // needs to be audited.  See http://crbug.com/590369 for more details.
-  m_frame->document()->updateStyleAndLayoutIgnorePendingStylesheets();
 
   const VisiblePositionInFlatTree& visiblePos =
       visiblePositionOfHitTestResult(mev.hitTestResult());
@@ -1051,19 +1056,32 @@ bool SelectionController::mouseDownWasSingleClickInSelection() const {
 }
 
 void SelectionController::notifySelectionChanged() {
-  if (selection().getSelectionType() == SelectionType::RangeSelection)
-    m_selectionState = SelectionState::ExtendedSelection;
-  else if (selection().getSelectionType() == SelectionType::CaretSelection)
-    m_selectionState = SelectionState::PlacedCaret;
-  else
-    m_selectionState = SelectionState::HaveNotStartedSelection;
+  // To avoid regression on speedometer benchmark[1] test, we should not
+  // update layout tree in this code block.
+  // [1] http://browserbench.org/Speedometer/
+  DocumentLifecycle::DisallowTransitionScope disallowTransition(
+      m_frame->document()->lifecycle());
+
+  const SelectionInDOMTree& selection = this->selection().selectionInDOMTree();
+  switch (selection.selectionTypeWithLegacyGranularity()) {
+    case NoSelection:
+      m_selectionState = SelectionState::HaveNotStartedSelection;
+      return;
+    case CaretSelection:
+      m_selectionState = SelectionState::PlacedCaret;
+      return;
+    case RangeSelection:
+      m_selectionState = SelectionState::ExtendedSelection;
+      return;
+  }
+  NOTREACHED() << "We should handle all SelectionType" << selection;
 }
 
 FrameSelection& SelectionController::selection() const {
   return m_frame->selection();
 }
 
-bool isLinkSelection(const MouseEventWithHitTestResults& event) {
+bool isSelectionOverLink(const MouseEventWithHitTestResults& event) {
   return (event.event().modifiers() & WebInputEvent::Modifiers::AltKey) != 0 &&
          event.isOverLink();
 }

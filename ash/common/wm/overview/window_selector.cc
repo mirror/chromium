@@ -22,11 +22,11 @@
 #include "ash/common/wm/switchable_windows.h"
 #include "ash/common/wm/window_state.h"
 #include "ash/common/wm/wm_screen_util.h"
-#include "ash/common/wm_lookup.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
+#include "ash/shell.h"
 #include "base/auto_reset.h"
 #include "base/command_line.h"
 #include "base/metrics/histogram_macros.h"
@@ -38,11 +38,12 @@
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/skia_util.h"
-#include "ui/gfx/vector_icons_public.h"
+#include "ui/vector_icons/vector_icons.h"
 #include "ui/views/border.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/controls/textfield/textfield.h"
 #include "ui/views/layout/box_layout.h"
+#include "ui/wm/public/activation_client.h"
 
 namespace ash {
 
@@ -197,7 +198,7 @@ views::Widget* CreateTextFilter(views::TextfieldController* controller,
   gfx::Transform transform;
   transform.Translate(0, -(*text_filter_bottom));
   WmWindow* text_filter_widget_window =
-      WmLookup::Get()->GetWindowForWidget(widget);
+      WmWindow::Get(widget->GetNativeWindow());
   text_filter_widget_window->SetOpacity(0);
   text_filter_widget_window->SetTransform(transform);
   widget->Show();
@@ -239,7 +240,7 @@ WindowSelector::~WindowSelector() {
 // calls to restoring_minimized_windows() on a partially constructed object.
 void WindowSelector::Init(const WindowList& windows) {
   if (restore_focus_window_)
-    restore_focus_window_->AddObserver(this);
+    restore_focus_window_->aura_window()->AddObserver(this);
 
   WmShell* shell = WmShell::Get();
 
@@ -260,7 +261,7 @@ void WindowSelector::Init(const WindowList& windows) {
     for (size_t i = 0; i < wm::kSwitchableWindowContainerIdsLength; ++i) {
       WmWindow* container =
           root->GetChildByShellWindowId(wm::kSwitchableWindowContainerIds[i]);
-      container->AddObserver(this);
+      container->aura_window()->AddObserver(this);
       observed_windows_.insert(container);
     }
 
@@ -294,9 +295,8 @@ void WindowSelector::Init(const WindowList& windows) {
       window_grid->PositionWindows(true);
     }
 
-    search_image_ =
-        gfx::CreateVectorIcon(gfx::VectorIconId::OMNIBOX_SEARCH,
-                              kTextFilterIconSize, kTextFilterIconColor);
+    search_image_ = gfx::CreateVectorIcon(ui::kSearchIcon, kTextFilterIconSize,
+                                          kTextFilterIconColor);
     WmWindow* root_window = shell->GetPrimaryRootWindow();
     text_filter_widget_.reset(CreateTextFilter(this, root_window, search_image_,
                                                &text_filter_bottom_));
@@ -305,12 +305,12 @@ void WindowSelector::Init(const WindowList& windows) {
   DCHECK(!grid_list_.empty());
   UMA_HISTOGRAM_COUNTS_100("Ash.WindowSelector.Items", num_items_);
 
-  shell->AddActivationObserver(this);
+  Shell::GetInstance()->activation_client()->AddObserver(this);
 
   display::Screen::GetScreen()->AddObserver(this);
   shell->RecordUserMetricsAction(UMA_WINDOW_OVERVIEW);
   // Send an a11y alert.
-  WmShell::Get()->accessibility_delegate()->TriggerAccessibilityAlert(
+  Shell::GetInstance()->accessibility_delegate()->TriggerAccessibilityAlert(
       A11Y_ALERT_WINDOW_OVERVIEW_MODE_ENTERED);
 
   UpdateShelfVisibility();
@@ -372,12 +372,12 @@ void WindowSelector::Shutdown() {
 
 void WindowSelector::RemoveAllObservers() {
   for (WmWindow* window : observed_windows_)
-    window->RemoveObserver(this);
+    window->aura_window()->RemoveObserver(this);
 
-  WmShell::Get()->RemoveActivationObserver(this);
+  Shell::GetInstance()->activation_client()->RemoveObserver(this);
   display::Screen::GetScreen()->RemoveObserver(this);
   if (restore_focus_window_)
-    restore_focus_window_->RemoveObserver(this);
+    restore_focus_window_->aura_window()->RemoveObserver(this);
 }
 
 void WindowSelector::CancelSelection() {
@@ -515,15 +515,15 @@ void WindowSelector::OnDisplayMetricsChanged(const display::Display& display,
   RepositionTextFilterOnDisplayMetricsChange();
 }
 
-void WindowSelector::OnWindowTreeChanged(WmWindow* window,
-                                         const TreeChangeParams& params) {
+void WindowSelector::OnWindowHierarchyChanged(
+    const HierarchyChangeParams& params) {
   // Only care about newly added children of |observed_windows_|.
-  if (!observed_windows_.count(window) ||
-      !observed_windows_.count(params.new_parent)) {
+  if (!observed_windows_.count(WmWindow::Get(params.receiver)) ||
+      !observed_windows_.count(WmWindow::Get(params.new_parent))) {
     return;
   }
 
-  WmWindow* new_window = params.target;
+  WmWindow* new_window = WmWindow::Get(params.target);
   if (!IsSelectable(new_window))
     return;
 
@@ -538,21 +538,23 @@ void WindowSelector::OnWindowTreeChanged(WmWindow* window,
   }
 }
 
-void WindowSelector::OnWindowDestroying(WmWindow* window) {
+void WindowSelector::OnWindowDestroying(aura::Window* window) {
   window->RemoveObserver(this);
-  observed_windows_.erase(window);
-  if (window == restore_focus_window_)
+  observed_windows_.erase(WmWindow::Get(window));
+  if (WmWindow::Get(window) == restore_focus_window_)
     restore_focus_window_ = nullptr;
 }
 
-void WindowSelector::OnWindowActivated(WmWindow* gained_active,
-                                       WmWindow* lost_active) {
-  if (ignore_activations_ || !gained_active ||
-      gained_active == GetTextFilterWidgetWindow()) {
+void WindowSelector::OnWindowActivated(ActivationReason reason,
+                                       aura::Window* gained_active,
+                                       aura::Window* lost_active) {
+  WmWindow* wm_gained_active = WmWindow::Get(gained_active);
+  if (ignore_activations_ || !wm_gained_active ||
+      wm_gained_active == GetTextFilterWidgetWindow()) {
     return;
   }
 
-  WmWindow* root_window = gained_active->GetRootWindow();
+  WmWindow* root_window = wm_gained_active->GetRootWindow();
   auto grid =
       std::find_if(grid_list_.begin(), grid_list_.end(),
                    [root_window](const std::unique_ptr<WindowGrid>& grid) {
@@ -564,12 +566,12 @@ void WindowSelector::OnWindowActivated(WmWindow* gained_active,
 
   auto iter = std::find_if(
       windows.begin(), windows.end(),
-      [gained_active](const std::unique_ptr<WindowSelectorItem>& window) {
-        return window->Contains(gained_active);
+      [wm_gained_active](const std::unique_ptr<WindowSelectorItem>& window) {
+        return window->Contains(wm_gained_active);
       });
 
   if (iter == windows.end() && showing_text_filter_ &&
-      lost_active == GetTextFilterWidgetWindow()) {
+      WmWindow::Get(lost_active) == GetTextFilterWidgetWindow()) {
     return;
   }
 
@@ -578,9 +580,10 @@ void WindowSelector::OnWindowActivated(WmWindow* gained_active,
   CancelSelection();
 }
 
-void WindowSelector::OnAttemptToReactivateWindow(WmWindow* request_active,
-                                                 WmWindow* actual_active) {
-  OnWindowActivated(request_active, actual_active);
+void WindowSelector::OnAttemptToReactivateWindow(aura::Window* request_active,
+                                                 aura::Window* actual_active) {
+  OnWindowActivated(ActivationReason::ACTIVATION_CLIENT, request_active,
+                    actual_active);
 }
 
 void WindowSelector::ContentsChanged(views::Textfield* sender,
@@ -623,7 +626,7 @@ void WindowSelector::ContentsChanged(views::Textfield* sender,
 }
 
 WmWindow* WindowSelector::GetTextFilterWidgetWindow() {
-  return WmLookup::Get()->GetWindowForWidget(text_filter_widget_.get());
+  return WmWindow::Get(text_filter_widget_->GetNativeWindow());
 }
 
 void WindowSelector::PositionWindows(bool animate) {
@@ -656,7 +659,7 @@ void WindowSelector::ResetFocusRestoreWindow(bool focus) {
   // observed.
   if (observed_windows_.find(restore_focus_window_) ==
       observed_windows_.end()) {
-    restore_focus_window_->RemoveObserver(this);
+    restore_focus_window_->aura_window()->RemoveObserver(this);
   }
   restore_focus_window_ = nullptr;
 }

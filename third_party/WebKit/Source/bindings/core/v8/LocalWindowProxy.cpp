@@ -30,25 +30,28 @@
 
 #include "bindings/core/v8/LocalWindowProxy.h"
 
-#include "bindings/core/v8/ConditionalFeatures.h"
+#include "bindings/core/v8/ConditionalFeaturesForCore.h"
 #include "bindings/core/v8/DOMWrapperWorld.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/ToV8.h"
 #include "bindings/core/v8/V8Binding.h"
 #include "bindings/core/v8/V8DOMActivityLogger.h"
+#include "bindings/core/v8/V8DOMWrapper.h"
+#include "bindings/core/v8/V8GCForContextDispose.h"
 #include "bindings/core/v8/V8HTMLDocument.h"
 #include "bindings/core/v8/V8HiddenValue.h"
 #include "bindings/core/v8/V8Initializer.h"
+#include "bindings/core/v8/V8PagePopupControllerBinding.h"
 #include "bindings/core/v8/V8PrivateProperty.h"
 #include "bindings/core/v8/V8Window.h"
 #include "core/dom/Modulator.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/DocumentNameCollection.h"
 #include "core/html/HTMLIFrameElement.h"
 #include "core/inspector/MainThreadDebugger.h"
 #include "core/loader/FrameLoader.h"
-#include "core/loader/FrameLoaderClient.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "platform/Histogram.h"
 #include "platform/RuntimeEnabledFeatures.h"
@@ -56,8 +59,9 @@
 #include "platform/heap/Handle.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/weborigin/SecurityOrigin.h"
+#include "platform/weborigin/SecurityViolationReportingPolicy.h"
+#include "v8/include/v8.h"
 #include "wtf/Assertions.h"
-#include <v8.h>
 
 namespace blink {
 
@@ -74,7 +78,34 @@ void LocalWindowProxy::disposeContext(GlobalDetachmentBehavior behavior) {
                                                        m_world->worldId());
   MainThreadDebugger::instance()->contextWillBeDestroyed(m_scriptState.get());
 
-  WindowProxy::disposeContext(behavior);
+  if (behavior == DetachGlobal) {
+    v8::Local<v8::Context> context = m_scriptState->context();
+    // Clean up state on the global proxy, which will be reused.
+    if (!m_globalProxy.isEmpty()) {
+      CHECK(m_globalProxy == context->Global());
+      CHECK_EQ(toScriptWrappable(context->Global()),
+               toScriptWrappable(
+                   context->Global()->GetPrototype().As<v8::Object>()));
+      m_globalProxy.get().SetWrapperClassId(0);
+    }
+    V8DOMWrapper::clearNativeInfo(isolate(), context->Global());
+    m_scriptState->detachGlobalObject();
+
+#if DCHECK_IS_ON()
+    didDetachGlobalObject();
+#endif
+  }
+
+  m_scriptState->disposePerContextData();
+
+  // It's likely that disposing the context has created a lot of
+  // garbage. Notify V8 about this so it'll have a chance of cleaning
+  // it up when idle.
+  V8GCForContextDispose::instance().notifyContextDisposed(
+      frame()->isMainFrame());
+
+  DCHECK(m_lifecycle == Lifecycle::ContextInitialized);
+  m_lifecycle = Lifecycle::ContextDetached;
 }
 
 void LocalWindowProxy::initialize() {
@@ -101,13 +132,13 @@ void LocalWindowProxy::initialize() {
 
   SecurityOrigin* origin = 0;
   if (m_world->isMainWorld()) {
-    // ActivityLogger for main world is updated within updateDocument().
-    updateDocument();
+    // ActivityLogger for main world is updated within updateDocumentInternal().
+    updateDocumentInternal();
     origin = frame()->document()->getSecurityOrigin();
     // FIXME: Can this be removed when CSP moves to browser?
     ContentSecurityPolicy* csp = frame()->document()->contentSecurityPolicy();
     context->AllowCodeGenerationFromStrings(
-        csp->allowEval(0, ContentSecurityPolicy::SuppressReport));
+        csp->allowEval(0, SecurityViolationReportingPolicy::SuppressReporting));
     context->SetErrorMessageForCodeGenerationFromStrings(
         v8String(isolate(), csp->evalDisabledErrorMessage()));
   } else {
@@ -132,10 +163,7 @@ void LocalWindowProxy::initialize() {
 
 void LocalWindowProxy::createContext() {
   // Create a new v8::Context with the window object as the global object
-  // (aka the inner global).  Reuse the global proxy object (aka the outer
-  // global) if it already exists.  See the comments in
-  // setupWindowPrototypeChain for the structure of the prototype chain of
-  // the global object.
+  // (aka the inner global). Reuse the outer global proxy if it already exists.
   v8::Local<v8::ObjectTemplate> globalTemplate =
       V8Window::domTemplate(isolate(), *m_world)->InstanceTemplate();
   CHECK(!globalTemplate.IsEmpty());
@@ -161,6 +189,10 @@ void LocalWindowProxy::createContext() {
   }
   CHECK(!context.IsEmpty());
 
+#if DCHECK_IS_ON()
+  didAttachGlobalObject();
+#endif
+
   m_scriptState = ScriptState::create(context, m_world);
 
   // TODO(haraken): Currently we cannot enable the following DCHECK because
@@ -168,6 +200,47 @@ void LocalWindowProxy::createContext() {
   // DCHECK(m_lifecycle == Lifecycle::ContextUninitialized);
   m_lifecycle = Lifecycle::ContextInitialized;
   DCHECK(m_scriptState->contextIsValid());
+}
+
+void LocalWindowProxy::setupWindowPrototypeChain() {
+  // Associate the window wrapper object and its prototype chain with the
+  // corresponding native DOMWindow object.
+  DOMWindow* window = frame()->domWindow();
+  const WrapperTypeInfo* wrapperTypeInfo = window->wrapperTypeInfo();
+  v8::Local<v8::Context> context = m_scriptState->context();
+
+  // The global proxy object.  Note this is not the global object.
+  v8::Local<v8::Object> globalProxy = context->Global();
+  CHECK(m_globalProxy == globalProxy);
+  V8DOMWrapper::setNativeInfo(isolate(), globalProxy, wrapperTypeInfo, window);
+  // Mark the handle to be traced by Oilpan, since the global proxy has a
+  // reference to the DOMWindow.
+  m_globalProxy.get().SetWrapperClassId(wrapperTypeInfo->wrapperClassId);
+
+  // The global object, aka window wrapper object.
+  v8::Local<v8::Object> windowWrapper =
+      globalProxy->GetPrototype().As<v8::Object>();
+  windowWrapper = V8DOMWrapper::associateObjectWithWrapper(
+      isolate(), window, wrapperTypeInfo, windowWrapper);
+
+  // The prototype object of Window interface.
+  v8::Local<v8::Object> windowPrototype =
+      windowWrapper->GetPrototype().As<v8::Object>();
+  CHECK(!windowPrototype.IsEmpty());
+  V8DOMWrapper::setNativeInfo(isolate(), windowPrototype, wrapperTypeInfo,
+                              window);
+
+  // The named properties object of Window interface.
+  v8::Local<v8::Object> windowProperties =
+      windowPrototype->GetPrototype().As<v8::Object>();
+  CHECK(!windowProperties.IsEmpty());
+  V8DOMWrapper::setNativeInfo(isolate(), windowProperties, wrapperTypeInfo,
+                              window);
+
+  // TODO(keishi): Remove installPagePopupController and implement
+  // PagePopupController in another way.
+  V8PagePopupControllerBinding::installPagePopupController(context,
+                                                           windowWrapper);
 }
 
 void LocalWindowProxy::updateDocumentProperty() {
@@ -242,12 +315,22 @@ void LocalWindowProxy::updateDocument() {
   // to update. The update is done when the window proxy gets initialized later.
   if (m_lifecycle == Lifecycle::ContextUninitialized)
     return;
-  // TODO(yukishiino): Is it okay to not update document when the context
-  // is detached? It's not trivial to fix this because udpateDocumentProperty
-  // requires a not-yet-detached context to instantiate a document wrapper.
-  if (m_lifecycle == Lifecycle::ContextDetached)
-    return;
 
+  // If this WindowProxy was previously initialized, reinitialize it now to
+  // preserve JS object identity. Otherwise, extant references to the
+  // WindowProxy will be broken.
+  if (m_lifecycle == Lifecycle::ContextDetached) {
+    initialize();
+    DCHECK_EQ(Lifecycle::ContextInitialized, m_lifecycle);
+    // Initialization internally updates the document properties, so just
+    // return afterwards.
+    return;
+  }
+
+  updateDocumentInternal();
+}
+
+void LocalWindowProxy::updateDocumentInternal() {
   updateActivityLogger();
   updateDocumentProperty();
   updateSecurityOrigin(frame()->document()->getSecurityOrigin());

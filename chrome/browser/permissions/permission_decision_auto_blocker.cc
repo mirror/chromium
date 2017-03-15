@@ -22,7 +22,6 @@
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/safe_browsing_db/database_manager.h"
 #include "components/variations/variations_associated_data.h"
-#include "content/public/browser/permission_type.h"
 #include "content/public/browser/web_contents.h"
 #include "url/gurl.h"
 
@@ -74,7 +73,7 @@ base::DictionaryValue* GetOrCreatePermissionDict(
 }
 
 int RecordActionInWebsiteSettings(const GURL& url,
-                                  content::PermissionType permission,
+                                  ContentSettingsType permission,
                                   const char* key,
                                   Profile* profile) {
   HostContentSettingsMap* map =
@@ -96,7 +95,7 @@ int RecordActionInWebsiteSettings(const GURL& url,
 }
 
 int GetActionCount(const GURL& url,
-                   content::PermissionType permission,
+                   ContentSettingsType permission,
                    const char* key,
                    Profile* profile) {
   HostContentSettingsMap* map =
@@ -170,73 +169,6 @@ PermissionDecisionAutoBlocker* PermissionDecisionAutoBlocker::GetForProfile(
   return PermissionDecisionAutoBlocker::Factory::GetForProfile(profile);
 }
 
-PermissionDecisionAutoBlocker::PermissionDecisionAutoBlocker(Profile* profile)
-    : profile_(profile),
-      db_manager_(nullptr),
-      safe_browsing_timeout_(kCheckUrlTimeoutMs),
-      clock_(new base::DefaultClock()) {
-  safe_browsing::SafeBrowsingService* sb_service =
-      g_browser_process->safe_browsing_service();
-  if (sb_service)
-    db_manager_ = sb_service->database_manager();
-}
-
-PermissionDecisionAutoBlocker::~PermissionDecisionAutoBlocker() {}
-
-void PermissionDecisionAutoBlocker::RemoveCountsByUrl(
-    base::Callback<bool(const GURL& url)> filter) {
-  HostContentSettingsMap* map =
-      HostContentSettingsMapFactory::GetForProfile(profile_);
-
-  std::unique_ptr<ContentSettingsForOneType> settings(
-      new ContentSettingsForOneType);
-  map->GetSettingsForOneType(CONTENT_SETTINGS_TYPE_PERMISSION_AUTOBLOCKER_DATA,
-                             std::string(), settings.get());
-
-  for (const auto& site : *settings) {
-    GURL origin(site.primary_pattern.ToString());
-
-    if (origin.is_valid() && filter.Run(origin)) {
-      map->SetWebsiteSettingDefaultScope(
-          origin, GURL(), CONTENT_SETTINGS_TYPE_PERMISSION_AUTOBLOCKER_DATA,
-          std::string(), nullptr);
-    }
-  }
-}
-
-int PermissionDecisionAutoBlocker::GetDismissCount(
-    const GURL& url,
-    content::PermissionType permission) {
-  return GetActionCount(url, permission, kPromptDismissCountKey, profile_);
-}
-
-int PermissionDecisionAutoBlocker::GetIgnoreCount(
-    const GURL& url,
-    content::PermissionType permission) {
-  return GetActionCount(url, permission, kPromptIgnoreCountKey, profile_);
-}
-
-bool PermissionDecisionAutoBlocker::RecordDismissAndEmbargo(
-    const GURL& url,
-    content::PermissionType permission) {
-  int current_dismissal_count = RecordActionInWebsiteSettings(
-      url, permission, kPromptDismissCountKey, profile_);
-
-  if (base::FeatureList::IsEnabled(features::kBlockPromptsIfDismissedOften) &&
-      current_dismissal_count >= g_prompt_dismissals_before_block) {
-    PlaceUnderEmbargo(permission, url, kPermissionDismissalEmbargoKey);
-    return true;
-  }
-  return false;
-}
-
-int PermissionDecisionAutoBlocker::RecordIgnore(
-    const GURL& url,
-    content::PermissionType permission) {
-  return RecordActionInWebsiteSettings(url, permission, kPromptIgnoreCountKey,
-                                       profile_);
-}
-
 // static
 void PermissionDecisionAutoBlocker::UpdateFromVariations() {
   int prompt_dismissals = -1;
@@ -266,12 +198,13 @@ void PermissionDecisionAutoBlocker::UpdateFromVariations() {
   }
 }
 
-void PermissionDecisionAutoBlocker::UpdateEmbargoedStatus(
-    content::PermissionType permission,
-    const GURL& request_origin,
+void PermissionDecisionAutoBlocker::CheckSafeBrowsingBlacklist(
     content::WebContents* web_contents,
+    const GURL& request_origin,
+    ContentSettingsType permission,
     base::Callback<void(bool)> callback) {
-  DCHECK(!IsUnderEmbargo(permission, request_origin));
+  DCHECK_EQ(CONTENT_SETTING_ASK,
+            GetEmbargoResult(request_origin, permission).content_setting);
 
   if (base::FeatureList::IsEnabled(features::kPermissionsBlacklist) &&
       db_manager_) {
@@ -279,10 +212,10 @@ void PermissionDecisionAutoBlocker::UpdateEmbargoedStatus(
     // destroyed before a result is received. In that case this object will have
     // been destroyed by that point.
     PermissionBlacklistClient::CheckSafeBrowsingBlacklist(
-        db_manager_, permission, request_origin, web_contents,
+        web_contents, db_manager_, request_origin, permission,
         safe_browsing_timeout_,
         base::Bind(&PermissionDecisionAutoBlocker::CheckSafeBrowsingResult,
-                   base::Unretained(this), permission, request_origin,
+                   base::Unretained(this), request_origin, permission,
                    callback));
     return;
   }
@@ -290,9 +223,9 @@ void PermissionDecisionAutoBlocker::UpdateEmbargoedStatus(
   callback.Run(false /* permission blocked */);
 }
 
-bool PermissionDecisionAutoBlocker::IsUnderEmbargo(
-    content::PermissionType permission,
-    const GURL& request_origin) {
+PermissionResult PermissionDecisionAutoBlocker::GetEmbargoResult(
+    const GURL& request_origin,
+    ContentSettingsType permission) {
   HostContentSettingsMap* map =
       HostContentSettingsMapFactory::GetForProfile(profile_);
   std::unique_ptr<base::DictionaryValue> dict =
@@ -300,8 +233,7 @@ bool PermissionDecisionAutoBlocker::IsUnderEmbargo(
   base::DictionaryValue* permission_dict = GetOrCreatePermissionDict(
       dict.get(), PermissionUtil::GetPermissionString(permission));
   double embargo_date = -1;
-  bool is_under_dismiss_embargo = false;
-  bool is_under_blacklist_embargo = false;
+
   base::Time current_time = clock_->Now();
   if (base::FeatureList::IsEnabled(features::kPermissionsBlacklist) &&
       permission_dict->GetDouble(kPermissionBlacklistEmbargoKey,
@@ -309,7 +241,8 @@ bool PermissionDecisionAutoBlocker::IsUnderEmbargo(
     if (current_time <
         base::Time::FromInternalValue(embargo_date) +
             base::TimeDelta::FromDays(g_blacklist_embargo_days)) {
-      is_under_blacklist_embargo = true;
+      return PermissionResult(CONTENT_SETTING_BLOCK,
+                              PermissionStatusSource::SAFE_BROWSING_BLACKLIST);
     }
   }
 
@@ -319,31 +252,99 @@ bool PermissionDecisionAutoBlocker::IsUnderEmbargo(
     if (current_time <
         base::Time::FromInternalValue(embargo_date) +
             base::TimeDelta::FromDays(g_dismissal_embargo_days)) {
-      is_under_dismiss_embargo = true;
+      return PermissionResult(CONTENT_SETTING_BLOCK,
+                              PermissionStatusSource::MULTIPLE_DISMISSALS);
     }
   }
 
-  // If either embargo is still in effect, return true.
-  return is_under_dismiss_embargo || is_under_blacklist_embargo;
+  return PermissionResult(CONTENT_SETTING_ASK,
+                          PermissionStatusSource::UNSPECIFIED);
 }
 
+int PermissionDecisionAutoBlocker::GetDismissCount(
+    const GURL& url,
+    ContentSettingsType permission) {
+  return GetActionCount(url, permission, kPromptDismissCountKey, profile_);
+}
+
+int PermissionDecisionAutoBlocker::GetIgnoreCount(
+    const GURL& url,
+    ContentSettingsType permission) {
+  return GetActionCount(url, permission, kPromptIgnoreCountKey, profile_);
+}
+
+bool PermissionDecisionAutoBlocker::RecordDismissAndEmbargo(
+    const GURL& url,
+    ContentSettingsType permission) {
+  int current_dismissal_count = RecordActionInWebsiteSettings(
+      url, permission, kPromptDismissCountKey, profile_);
+
+  if (base::FeatureList::IsEnabled(features::kBlockPromptsIfDismissedOften) &&
+      current_dismissal_count >= g_prompt_dismissals_before_block) {
+    PlaceUnderEmbargo(url, permission, kPermissionDismissalEmbargoKey);
+    return true;
+  }
+  return false;
+}
+
+int PermissionDecisionAutoBlocker::RecordIgnore(
+    const GURL& url,
+    ContentSettingsType permission) {
+  return RecordActionInWebsiteSettings(url, permission, kPromptIgnoreCountKey,
+                                       profile_);
+}
+
+void PermissionDecisionAutoBlocker::RemoveCountsByUrl(
+    base::Callback<bool(const GURL& url)> filter) {
+  HostContentSettingsMap* map =
+      HostContentSettingsMapFactory::GetForProfile(profile_);
+
+  std::unique_ptr<ContentSettingsForOneType> settings(
+      new ContentSettingsForOneType);
+  map->GetSettingsForOneType(CONTENT_SETTINGS_TYPE_PERMISSION_AUTOBLOCKER_DATA,
+                             std::string(), settings.get());
+
+  for (const auto& site : *settings) {
+    GURL origin(site.primary_pattern.ToString());
+
+    if (origin.is_valid() && filter.Run(origin)) {
+      map->SetWebsiteSettingDefaultScope(
+          origin, GURL(), CONTENT_SETTINGS_TYPE_PERMISSION_AUTOBLOCKER_DATA,
+          std::string(), nullptr);
+    }
+  }
+}
+
+PermissionDecisionAutoBlocker::PermissionDecisionAutoBlocker(Profile* profile)
+    : profile_(profile),
+      db_manager_(nullptr),
+      safe_browsing_timeout_(kCheckUrlTimeoutMs),
+      clock_(new base::DefaultClock()) {
+  safe_browsing::SafeBrowsingService* sb_service =
+      g_browser_process->safe_browsing_service();
+  if (sb_service)
+    db_manager_ = sb_service->database_manager();
+}
+
+PermissionDecisionAutoBlocker::~PermissionDecisionAutoBlocker() {}
+
 void PermissionDecisionAutoBlocker::CheckSafeBrowsingResult(
-    content::PermissionType permission,
     const GURL& request_origin,
+    ContentSettingsType permission,
     base::Callback<void(bool)> callback,
     bool should_be_embargoed) {
   if (should_be_embargoed) {
     // Requesting site is blacklisted for this permission, update the content
     // setting to place it under embargo.
-    PlaceUnderEmbargo(permission, request_origin,
+    PlaceUnderEmbargo(request_origin, permission,
                       kPermissionBlacklistEmbargoKey);
   }
   callback.Run(should_be_embargoed /* permission blocked */);
 }
 
 void PermissionDecisionAutoBlocker::PlaceUnderEmbargo(
-    content::PermissionType permission,
     const GURL& request_origin,
+    ContentSettingsType permission,
     const char* key) {
   HostContentSettingsMap* map =
       HostContentSettingsMapFactory::GetForProfile(profile_);

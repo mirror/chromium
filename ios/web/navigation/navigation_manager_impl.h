@@ -12,7 +12,9 @@
 
 #import "base/mac/scoped_nsobject.h"
 #include "base/macros.h"
+#import "ios/web/public/navigation_item_list.h"
 #import "ios/web/public/navigation_manager.h"
+#include "ios/web/public/reload_type.h"
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
 
@@ -25,6 +27,24 @@ struct Referrer;
 class NavigationManagerDelegate;
 class NavigationManagerFacadeDelegate;
 class SessionStorageBuilder;
+
+// Defines the ways how a pending navigation can be initiated.
+enum class NavigationInitiationType {
+  // Navigation initiation type is only valid for pending navigations, use NONE
+  // if a navigation is already committed.
+  NONE = 0,
+
+  // Navigation was initiated by actual user action.
+  USER_INITIATED,
+
+  // Navigation was initiated by renderer. Examples of renderer-initiated
+  // navigations include:
+  //  * <a> link click
+  //  * changing window.location.href
+  //  * redirect via the <meta http-equiv="refresh"> tag
+  //  * using window.history.pushState
+  RENDERER_INITIATED,
+};
 
 // Implementation of NavigationManager.
 // Generally mirrors upstream's NavigationController.
@@ -47,15 +67,9 @@ class NavigationManagerImpl : public NavigationManager {
   // logic into it.
   void SetSessionController(CRWSessionController* session_controller);
 
-  // Initializes a new session history, supplying a unique |window_name| for the
-  // window (or nil). |opener_id| is the id of opener, or nil if there is none.
-  // |opened_by_dom| is YES if the page was opened by DOM.
-  // |opener_index| is the navigation index of the opener, or -1 if there is
-  // none.
-  void InitializeSession(NSString* window_name,
-                         NSString* opener_id,
-                         BOOL opened_by_dom,
-                         int opener_navigation_index);
+  // Initializes a new session history. |opened_by_dom| is YES if the page was
+  // opened by DOM.
+  void InitializeSession(BOOL opened_by_dom);
 
   // Replace the session history with a new one, where |items| is the
   // complete set of navigation items in the new history, and |current_index|
@@ -82,17 +96,26 @@ class NavigationManagerImpl : public NavigationManager {
                const Referrer& referrer,
                ui::PageTransition type);
 
+  // Adds a new item with the given url, referrer, navigation type, and
+  // initiation type, making it the pending item. If pending item is the same as
+  // the current item, this does nothing. |referrer| may be nil if there isn't
+  // one. The item starts out as pending, and will be lost unless
+  // |-commitPendingItem| is called.
+  void AddPendingItem(const GURL& url,
+                      const web::Referrer& referrer,
+                      ui::PageTransition navigation_type,
+                      NavigationInitiationType initiation_type);
+
   // Convenience accessors to get the underlying NavigationItems from the
   // SessionEntries returned from |session_controller_|'s -lastUserEntry and
   // -previousEntry methods.
   // TODO(crbug.com/546365): Remove these methods.
   NavigationItem* GetLastUserItem() const;
-  NavigationItem* GetPreviousItem() const;
 
   // Temporary method. Returns a vector of NavigationItems corresponding to
   // the SessionEntries of the uderlying CRWSessionController.
   // TODO(crbug.com/546365): Remove this method.
-  std::vector<NavigationItem*> GetItems();
+  NavigationItemList GetItems() const;
 
   // NavigationManager:
   BrowserState* GetBrowserState() const override;
@@ -118,7 +141,10 @@ class NavigationManagerImpl : public NavigationManager {
   void GoBack() override;
   void GoForward() override;
   void GoToIndex(int index) override;
-  void Reload(bool check_for_reposts) override;
+  void Reload(ReloadType reload_type, bool check_for_reposts) override;
+  NavigationItemList GetBackwardItems() const override;
+  NavigationItemList GetForwardItems() const override;
+  void OverrideDesktopUserAgentForNextPendingItem() override;
 
   // Returns the current list of transient url rewriters, passing ownership to
   // the caller.
@@ -129,10 +155,6 @@ class NavigationManagerImpl : public NavigationManager {
 
   // Called to reset the transient url rewriter list.
   void RemoveTransientURLRewriters();
-
-  // Copy state from |navigation_manager|, including a copy of that object's
-  // CRWSessionController.
-  void CopyState(NavigationManagerImpl* navigation_manager);
 
   // Returns the navigation index that differs from the current item (or pending
   // item if it exists) by the specified |offset|, skipping redirect navigation
@@ -149,6 +171,16 @@ class NavigationManagerImpl : public NavigationManager {
   // Returns true if the PageTransition for the underlying navigation item at
   // |index| has ui::PAGE_TRANSITION_IS_REDIRECT_MASK.
   bool IsRedirectItemAtIndex(int index) const;
+
+  // Returns the most recent NavigationItem that does not have an app-specific
+  // URL.
+  NavigationItem* GetLastCommittedNonAppSpecificItem() const;
+
+  // If true, override navigation item's useDesktopUserAgent flag and always
+  // create the pending entry using the desktop user agent.
+  // TODO(crbug.com/692303): Remove this when overriding the user agent doesn't
+  // create a new NavigationItem.
+  bool override_desktop_user_agent_for_next_pending_item_;
 
   // The primary delegate for this manager.
   NavigationManagerDelegate* delegate_;

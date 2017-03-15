@@ -35,25 +35,28 @@ namespace blink {
 MediaStreamSource* MediaStreamSource::create(const String& id,
                                              StreamType type,
                                              const String& name,
-                                             bool remote,
                                              ReadyState readyState,
                                              bool requiresConsumer) {
-  return new MediaStreamSource(id, type, name, remote, readyState,
-                               requiresConsumer);
+  return new MediaStreamSource(id, type, name, readyState, requiresConsumer);
 }
 
 MediaStreamSource::MediaStreamSource(const String& id,
                                      StreamType type,
                                      const String& name,
-                                     bool remote,
                                      ReadyState readyState,
                                      bool requiresConsumer)
     : m_id(id),
       m_type(type),
       m_name(name),
-      m_remote(remote),
       m_readyState(readyState),
       m_requiresConsumer(requiresConsumer) {}
+
+MediaStreamSource::~MediaStreamSource() {
+  // Verify that the audio thread isn't consuming audio.
+  // TODO(sof): remove once crbug.com/682945 has been diagnosed.
+  MutexTryLocker tryLocker(m_audioConsumersLock);
+  CHECK(tryLocker.locked());
+}
 
 void MediaStreamSource::setReadyState(ReadyState readyState) {
   if (m_readyState != ReadyStateEnded && m_readyState != readyState) {
@@ -82,11 +85,10 @@ bool MediaStreamSource::removeAudioConsumer(
     AudioDestinationConsumer* consumer) {
   ASSERT(m_requiresConsumer);
   MutexLocker locker(m_audioConsumersLock);
-  HeapHashSet<Member<AudioDestinationConsumer>>::iterator it =
-      m_audioConsumers.find(consumer);
+  auto it = m_audioConsumers.find(consumer);
   if (it == m_audioConsumers.end())
     return false;
-  m_audioConsumers.remove(it);
+  m_audioConsumers.erase(it);
   return true;
 }
 
@@ -98,24 +100,19 @@ void MediaStreamSource::setAudioFormat(size_t numberOfChannels,
                                        float sampleRate) {
   ASSERT(m_requiresConsumer);
   MutexLocker locker(m_audioConsumersLock);
-  for (HeapHashSet<Member<AudioDestinationConsumer>>::iterator it =
-           m_audioConsumers.begin();
-       it != m_audioConsumers.end(); ++it)
-    (*it)->setFormat(numberOfChannels, sampleRate);
+  for (AudioDestinationConsumer* consumer : m_audioConsumers)
+    consumer->setFormat(numberOfChannels, sampleRate);
 }
 
 void MediaStreamSource::consumeAudio(AudioBus* bus, size_t numberOfFrames) {
   ASSERT(m_requiresConsumer);
   MutexLocker locker(m_audioConsumersLock);
-  for (HeapHashSet<Member<AudioDestinationConsumer>>::iterator it =
-           m_audioConsumers.begin();
-       it != m_audioConsumers.end(); ++it)
-    (*it)->consumeAudio(bus, numberOfFrames);
+  for (AudioDestinationConsumer* consumer : m_audioConsumers)
+    consumer->consumeAudio(bus, numberOfFrames);
 }
 
 DEFINE_TRACE(MediaStreamSource) {
   visitor->trace(m_observers);
-  visitor->trace(m_audioConsumers);
 }
 
 }  // namespace blink

@@ -33,6 +33,7 @@
 #include "content/browser/site_instance_impl.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/browser/web_contents/web_contents_view.h"
+#include "content/common/features.h"
 #include "content/common/frame_messages.h"
 #include "content/common/input_messages.h"
 #include "content/common/view_messages.h"
@@ -63,7 +64,7 @@ class InterstitialPageImpl::InterstitialPageRVHDelegateView
   explicit InterstitialPageRVHDelegateView(InterstitialPageImpl* page);
 
   // RenderViewHostDelegateView implementation:
-#if defined(USE_EXTERNAL_POPUP_MENU)
+#if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
   void ShowPopupMenu(RenderFrameHost* render_frame_host,
                      const gfx::Rect& bounds,
                      int item_height,
@@ -421,7 +422,7 @@ AccessibilityMode InterstitialPageImpl::GetAccessibilityMode() const {
   if (web_contents_)
     return static_cast<WebContentsImpl*>(web_contents_)->GetAccessibilityMode();
   else
-    return AccessibilityModeOff;
+    return AccessibilityMode();
 }
 
 void InterstitialPageImpl::Cut() {
@@ -524,6 +525,15 @@ void InterstitialPageImpl::DidNavigate(
     // Hide the original RVH since we're showing the interstitial instead.
     rwh_view->Hide();
   }
+}
+
+WebContents* InterstitialPageImpl::OpenURL(const OpenURLParams& params) {
+  NOTREACHED();
+  return nullptr;
+}
+
+const std::string& InterstitialPageImpl::GetUserAgentOverride() const {
+  return base::EmptyString();
 }
 
 RendererPreferences InterstitialPageImpl::GetRendererPrefs(
@@ -742,6 +752,11 @@ void InterstitialPageImpl::CreateNewWindow(
   NOTREACHED() << "InterstitialPage does not support showing popups.";
 }
 
+void InterstitialPageImpl::SetFocusedFrame(FrameTreeNode* node,
+                                           SiteInstance* source) {
+  frame_tree_.SetFocusedFrame(node, source);
+}
+
 void InterstitialPageImpl::CreateNewWidget(int32_t render_process_id,
                                            int32_t route_id,
                                            blink::WebPopupType popup_type) {
@@ -865,7 +880,7 @@ InterstitialPageImpl::InterstitialPageRVHDelegateView::
     : interstitial_page_(page) {
 }
 
-#if defined(USE_EXTERNAL_POPUP_MENU)
+#if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
 void InterstitialPageImpl::InterstitialPageRVHDelegateView::ShowPopupMenu(
     RenderFrameHost* render_frame_host,
     const gfx::Rect& bounds,

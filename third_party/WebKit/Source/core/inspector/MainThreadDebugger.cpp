@@ -30,6 +30,8 @@
 
 #include "core/inspector/MainThreadDebugger.h"
 
+#include <memory>
+
 #include "bindings/core/v8/BindingSecurity.h"
 #include "bindings/core/v8/DOMWrapperWorld.h"
 #include "bindings/core/v8/ScriptController.h"
@@ -58,6 +60,7 @@
 #include "core/inspector/InspectorTaskRunner.h"
 #include "core/inspector/V8InspectorString.h"
 #include "core/inspector/protocol/Protocol.h"
+#include "core/page/Page.h"
 #include "core/timing/MemoryInfo.h"
 #include "core/workers/MainThreadWorkletGlobalScope.h"
 #include "core/xml/XPathEvaluator.h"
@@ -65,7 +68,6 @@
 #include "platform/UserGestureIndicator.h"
 #include "wtf/PtrUtil.h"
 #include "wtf/ThreadingPrimitives.h"
-#include <memory>
 
 namespace blink {
 
@@ -216,11 +218,11 @@ int MainThreadDebugger::contextGroupId(LocalFrame* frame) {
 }
 
 MainThreadDebugger* MainThreadDebugger::instance() {
-  ASSERT(isMainThread());
-  V8PerIsolateData* data =
-      V8PerIsolateData::from(V8PerIsolateData::mainThreadIsolate());
-  ASSERT(data->threadDebugger() && !data->threadDebugger()->isWorker());
-  return static_cast<MainThreadDebugger*>(data->threadDebugger());
+  DCHECK(isMainThread());
+  ThreadDebugger* debugger =
+      ThreadDebugger::from(V8PerIsolateData::mainThreadIsolate());
+  DCHECK(debugger && !debugger->isWorker());
+  return static_cast<MainThreadDebugger*>(debugger);
 }
 
 void MainThreadDebugger::interruptMainThreadAndRun(
@@ -257,17 +259,17 @@ void MainThreadDebugger::quitMessageLoopOnPause() {
 
 void MainThreadDebugger::muteMetrics(int contextGroupId) {
   LocalFrame* frame = WeakIdentifierMap<LocalFrame>::lookup(contextGroupId);
-  if (frame && frame->host()) {
-    frame->host()->useCounter().muteForInspector();
-    frame->host()->deprecation().muteForInspector();
+  if (frame && frame->page()) {
+    frame->page()->useCounter().muteForInspector();
+    frame->page()->deprecation().muteForInspector();
   }
 }
 
 void MainThreadDebugger::unmuteMetrics(int contextGroupId) {
   LocalFrame* frame = WeakIdentifierMap<LocalFrame>::lookup(contextGroupId);
-  if (frame && frame->host()) {
-    frame->host()->useCounter().unmuteForInspector();
-    frame->host()->deprecation().unmuteForInspector();
+  if (frame && frame->page()) {
+    frame->page()->useCounter().unmuteForInspector();
+    frame->page()->deprecation().unmuteForInspector();
   }
 }
 

@@ -60,12 +60,16 @@ class ASH_EXPORT ShellObserver {
   // animate though.
   virtual void OnMaximizeModeStarted() {}
 
-  // Called when the always maximize mode has ended. Windows may still be
+  // Called when the maximize mode is about to end.
+  virtual void OnMaximizeModeEnding() {}
+
+  // Called when the maximize mode has ended. Windows may still be
   // animating but have been restored.
   virtual void OnMaximizeModeEnded() {}
 
-  // Called when keyboard is activated/deactivated.
-  virtual void OnVirtualKeyboardStateChanged(bool activated) {}
+  // Called when keyboard is activated/deactivated in |root_window|.
+  virtual void OnVirtualKeyboardStateChanged(bool activated,
+                                             WmWindow* root_window) {}
 
   // Called at the end of Shell::Init.
   virtual void OnShellInitialized() {}

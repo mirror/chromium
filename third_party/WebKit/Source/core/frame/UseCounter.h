@@ -26,13 +26,13 @@
 #ifndef UseCounter_h
 #define UseCounter_h
 
-#include <v8.h>
 #include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
 #include "core/css/parser/CSSParserMode.h"
 #include "platform/heap/GarbageCollected.h"
 #include "platform/heap/HeapAllocator.h"
 #include "platform/weborigin/KURL.h"
+#include "v8/include/v8.h"
 #include "wtf/BitVector.h"
 #include "wtf/Noncopyable.h"
 #include "wtf/text/WTFString.h"
@@ -231,7 +231,6 @@ class CORE_EXPORT UseCounter {
     DeprecatedWebKitRepeatingLinearGradient = 262,
     DeprecatedWebKitRadialGradient = 263,
     DeprecatedWebKitRepeatingRadialGradient = 264,
-    UnprefixedImageSmoothingEnabled = 268,
     // The above items are available in M34 branch.
 
     TextAutosizing = 274,
@@ -306,7 +305,7 @@ class CORE_EXPORT UseCounter {
     VTTCueRenderLineNotAuto = 413,
     VTTCueRenderPositionNot50 = 414,
     VTTCueRenderSizeNot100 = 415,
-    VTTCueRenderAlignNotMiddle = 416,
+    VTTCueRenderAlignNotCenter = 416,
     // The above items are available in M36 branch.
 
     ElementRequestPointerLock = 417,
@@ -334,7 +333,6 @@ class CORE_EXPORT UseCounter {
     EditingAppleConvertedSpace = 459,
     EditingApplePasteAsQuotation = 460,
     EditingAppleStyleSpanClass = 461,
-    EditingAppleTabSpanClass = 462,
     HTMLImportsAsyncAttribute = 463,
     XMLHttpRequestSynchronous = 465,
     CSSSelectorPseudoUnresolved = 466,
@@ -354,7 +352,6 @@ class CORE_EXPORT UseCounter {
     MapElement = 482,
     MeterElement = 483,
     ProgressElement = 484,
-    PrefixedHTMLElementDropzone = 490,
     WheelEventWheelDeltaX = 491,
     WheelEventWheelDeltaY = 492,
     WheelEventWheelDelta = 493,
@@ -798,7 +795,6 @@ class CORE_EXPORT UseCounter {
     NodeFilterIsFunction = 1059,
     NodeFilterIsObject = 1060,
     CSSSelectorInternalPseudoListBox = 1062,
-    CSSSelectorInternalMediaControlsCastButton = 1063,
     CSSSelectorInternalMediaControlsOverlayCastButton = 1064,
     CSSSelectorInternalPseudoSpatialNavigationFocus = 1065,
     SameOriginTextScript = 1066,
@@ -1169,7 +1165,6 @@ class CORE_EXPORT UseCounter {
     SVGSMILCurrentTime = 1507,
     HTMLBodyElementOnSelectionChangeAttribute = 1508,
     ForeignFetchInterception = 1509,
-    InputSelectionGettersThrow = 1517,
     UsbGetDevices = 1519,
     UsbRequestDevice = 1520,
     UsbDeviceOpen = 1521,
@@ -1210,23 +1205,6 @@ class CORE_EXPORT UseCounter {
     VRGetDisplays = 1558,
     VRPresent = 1559,
     VRDeprecatedGetPose = 1560,
-    WebAudioAnalyserNode = 1561,
-    WebAudioAudioBuffer = 1562,
-    WebAudioAudioBufferSourceNode = 1563,
-    WebAudioBiquadFilterNode = 1564,
-    WebAudioChannelMergerNode = 1565,
-    WebAudioChannelSplitterNode = 1566,
-    WebAudioConvolverNode = 1567,
-    WebAudioDelayNode = 1568,
-    WebAudioDynamicsCompressorNode = 1569,
-    WebAudioGainNode = 1570,
-    WebAudioIIRFilterNode = 1571,
-    WebAudioMediaElementAudioSourceNode = 1572,
-    WebAudioOscillatorNode = 1573,
-    WebAudioPannerNode = 1574,
-    WebAudioPeriodicWave = 1575,
-    WebAudioStereoPannerNode = 1576,
-    WebAudioWaveShaperNode = 1577,
     CSSZoomReset = 1578,
     CSSZoomDocument = 1579,
     XSSAuditorBlockedScript = 1581,
@@ -1417,11 +1395,6 @@ class CORE_EXPORT UseCounter {
     DocumentCompleteURLHTTPContainingNewline = 1768,
     DocumentCompleteURLHTTPContainingNewlineAndLessThan = 1770,
     DocumentCompleteURLNonHTTPContainingNewline = 1771,
-    CSSSelectorInternalMediaControlsTextTrackList = 1772,
-    CSSSelectorInternalMediaControlsTextTrackListItem = 1773,
-    CSSSelectorInternalMediaControlsTextTrackListItemInput = 1774,
-    CSSSelectorInternalMediaControlsTextTrackListKindCaptions = 1775,
-    CSSSelectorInternalMediaControlsTextTrackListKindSubtitles = 1776,
     ScrollbarUseVerticalScrollbarButton = 1777,
     ScrollbarUseVerticalScrollbarThumb = 1778,
     ScrollbarUseVerticalScrollbarTrack = 1779,
@@ -1466,6 +1439,54 @@ class CORE_EXPORT UseCounter {
     V8HTMLVideoElement_Poster_AttributeSetter = 1816,
     NotificationPermissionRequestedIframe = 1817,
     FileReaderSyncInServiceWorker = 1818,
+    PresentationReceiverInsecureOrigin = 1819,
+    PresentationReceiverSecureOrigin = 1820,
+    PresentationRequestInsecureOrigin = 1821,
+    PresentationRequestSecureOrigin = 1822,
+    RtcpMuxPolicyNegotiate = 1823,
+    DOMClobberedVariableAccessed = 1824,
+    HTMLDocumentCreateProcessingInstruction = 1825,
+    FetchResponseConstructionWithStream = 1826,
+    LocationOrigin = 1827,
+    DocumentOrigin = 1828,
+    SubtleCryptoOnlyStrictSecureContextCheckFailed = 1829,
+    Canvas2DFilter = 1830,
+    Canvas2DImageSmoothingQuality = 1831,
+    CanvasToBlob = 1832,
+    CanvasToDataURL = 1833,
+    OffscreenCanvasConvertToBlob = 1834,
+    SVGInCanvas2D = 1835,
+    SVGInWebGL = 1836,
+    SelectionFuncionsChangeFocus = 1837,
+    HTMLObjectElementGetter = 1838,
+    HTMLObjectElementSetter = 1839,
+    HTMLEmbedElementGetter = 1840,
+    HTMLEmbedElementSetter = 1841,
+    TransformUsesBoxSizeOnSVG = 1842,
+    ScrollByKeyboardArrowKeys = 1843,
+    ScrollByKeyboardPageUpDownKeys = 1844,
+    ScrollByKeyboardHomeEndKeys = 1845,
+    ScrollByKeyboardSpacebarKey = 1846,
+    ScrollByTouch = 1847,
+    ScrollByWheel = 1848,
+    ScheduledActionIgnored = 1849,
+    GetCanvas2DContextAttributes = 1850,
+    V8HTMLInputElement_Capture_AttributeGetter = 1851,
+    V8HTMLInputElement_Capture_AttributeSetter = 1852,
+    HTMLMediaElementControlsListAttribute = 1853,
+    HTMLMediaElementControlsListNoDownload = 1854,
+    HTMLMediaElementControlsListNoFullscreen = 1855,
+    HTMLMediaElementControlsListNoRemotePlayback = 1856,
+    PointerEventClickRetargetCausedByCapture = 1857,
+    VRDisplayIsConnected = 1858,
+    VRDisplayResetPose = 1859,
+    VRDisplayCapabilitiesHasOrientation = 1860,
+    VRDisplayDisplayName = 1861,
+    VREyeParametersOffset = 1862,
+    VRPoseLinearVelocity = 1863,
+    VRPoseLinearAcceleration = 1864,
+    VRPoseAngularVelocity = 1865,
+    VRPoseAngularAcceleration = 1866,
 
     // Add new features immediately above this line. Don't change assigned
     // numbers of any item, and don't reuse removed slots.
@@ -1495,6 +1516,9 @@ class CORE_EXPORT UseCounter {
   void count(CSSParserMode, CSSPropertyID);
   void count(Feature);
 
+  static void countAnimatedCSS(const Document&, CSSPropertyID);
+  void countAnimatedCSS(CSSPropertyID);
+
   // Count only features if they're being used in an iframe which does not
   // have script access into the top level document.
   static void countCrossOriginIframe(const Document&, Feature);
@@ -1506,6 +1530,11 @@ class CORE_EXPORT UseCounter {
   // NOTE: only for use in testing.
   static bool isCounted(Document&, const String&);
   bool isCounted(CSSPropertyID unresolvedProperty);
+
+  // Return whether the CSSPropertyID was previously counted for this document.
+  // NOTE: only for use in testing.
+  static bool isCountedAnimatedCSS(Document&, const String&);
+  bool isCountedAnimatedCSS(CSSPropertyID unresolvedProperty);
 
   // Retains a reference to the observer to notify of UseCounter changes.
   void addObserver(Observer*);
@@ -1536,6 +1565,7 @@ class CORE_EXPORT UseCounter {
 
   EnumerationHistogram& featuresHistogram() const;
   EnumerationHistogram& cssHistogram() const;
+  EnumerationHistogram& animatedCSSHistogram() const;
 
   // If non-zero, ignore all 'count' calls completely.
   unsigned m_muteCount;
@@ -1550,6 +1580,7 @@ class CORE_EXPORT UseCounter {
   // histograms.
   BitVector m_featuresRecorded;
   BitVector m_CSSRecorded;
+  BitVector m_animatedCSSRecorded;
 
   HeapHashSet<Member<Observer>> m_observers;
 

@@ -8,6 +8,7 @@
 #include "base/files/file_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/stl_util.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "content/browser/notifications/blink_notification_service_impl.h"
 #include "content/browser/notifications/notification_database.h"
@@ -131,13 +132,11 @@ void PlatformNotificationContextImpl::CreateServiceOnIO(
 void PlatformNotificationContextImpl::RemoveService(
     BlinkNotificationServiceImpl* service) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  auto services_to_remove = std::remove_if(
-      services_.begin(), services_.end(),
+  base::EraseIf(
+      services_,
       [service](const std::unique_ptr<BlinkNotificationServiceImpl>& ptr) {
         return ptr.get() == service;
       });
-
-  services_.erase(services_to_remove, services_.end());
 }
 
 void PlatformNotificationContextImpl::ReadNotificationData(
@@ -252,10 +251,10 @@ void PlatformNotificationContextImpl::
   UMA_HISTOGRAM_ENUMERATION("Notifications.Database.ReadForServiceWorkerResult",
                             status, NotificationDatabase::STATUS_COUNT);
 
-  std::vector<std::string> obsolete_notifications;
-
   if (status == NotificationDatabase::STATUS_OK) {
     if (synchronization_supported) {
+      // Filter out notifications that are not actually on display anymore.
+      // TODO(miguelg) synchronize the database if there are inconsistencies.
       for (auto it = notification_datas.begin();
            it != notification_datas.end();) {
         // The database is only used for persistent notifications.
@@ -264,7 +263,6 @@ void PlatformNotificationContextImpl::
         if (displayed_notifications->count(it->notification_id)) {
           ++it;
         } else {
-          obsolete_notifications.push_back(it->notification_id);
           it = notification_datas.erase(it);
         }
       }
@@ -273,10 +271,6 @@ void PlatformNotificationContextImpl::
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::Bind(callback, true /* success */, notification_datas));
-
-    // Remove notifications that are not actually on display anymore.
-    for (const auto& it : obsolete_notifications)
-      database_->DeleteNotificationData(it, origin);
     return;
   }
 

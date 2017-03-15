@@ -25,8 +25,8 @@ namespace {
 
 // Map from unique_id to BrowserAccessibility
 using UniqueIDMap = base::hash_map<int32_t, BrowserAccessibility*>;
-base::LazyInstance<UniqueIDMap> g_unique_id_map = LAZY_INSTANCE_INITIALIZER;
-
+base::LazyInstance<UniqueIDMap>::DestructorAtExit g_unique_id_map =
+    LAZY_INSTANCE_INITIALIZER;
 }
 
 #if !defined(PLATFORM_HAS_NATIVE_ACCESSIBILITY_IMPL)
@@ -83,7 +83,6 @@ bool BrowserAccessibility::PlatformIsLeaf() const {
   // buttons are allowed to have content.)
   switch (GetRole()) {
     case ui::AX_ROLE_IMAGE:
-    case ui::AX_ROLE_MATH:
     case ui::AX_ROLE_METER:
     case ui::AX_ROLE_SCROLL_BAR:
     case ui::AX_ROLE_SLIDER:
@@ -1139,6 +1138,13 @@ std::vector<int> BrowserAccessibility::GetLineStartOffsets() const {
   if (!instance_active())
     return std::vector<int>();
   return node()->GetOrComputeLineStartOffsets();
+}
+
+BrowserAccessibility::AXPlatformPositionInstance
+BrowserAccessibility::CreatePositionAt(int offset) const {
+  DCHECK(manager_);
+  return AXPlatformPosition::CreateTextPosition(
+      manager_->ax_tree_id(), GetId(), offset, ui::AX_TEXT_AFFINITY_DOWNSTREAM);
 }
 
 base::string16 BrowserAccessibility::GetInnerText() const {

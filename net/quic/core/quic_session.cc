@@ -15,13 +15,12 @@
 #include "net/quic/platform/api/quic_map_util.h"
 #include "net/quic/platform/api/quic_str_cat.h"
 
-using base::StringPiece;
 using std::string;
 
 namespace net {
 
 #define ENDPOINT \
-  (perspective() == Perspective::IS_SERVER ? "Server: " : " Client: ")
+  (perspective() == Perspective::IS_SERVER ? "Server: " : "Client: ")
 
 QuicSession::QuicSession(QuicConnection* connection,
                          Visitor* owner,

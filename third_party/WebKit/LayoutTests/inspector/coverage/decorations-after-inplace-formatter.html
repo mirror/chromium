@@ -1,0 +1,44 @@
+<html>
+<head>
+<script src="../../http/tests/inspector/inspector-test.js"></script>
+<script src="../../http/tests/inspector/debugger-test.js"></script>
+<script src="../../http/tests/inspector/sources-test.js"></script>
+<script src="coverage-test.js"></script>
+
+<link rel="stylesheet" type="text/css" href="resources/decorations-after-inplace-formatter.css">
+
+<script>
+async function test()
+{
+    InspectorTest.startCoverage();
+    await InspectorTest.evaluateInPagePromise("performActions()");
+    await InspectorTest.stopCoverage();
+    await UI.inspectorView.showPanel("sources");
+    var formatter = await inplaceFormatter();
+    await InspectorTest.sourceDecorated("decorations-after-inplace-formatter.css");
+    var decoratorPromise = InspectorTest.addSnifferPromise(Coverage.CoverageView.LineDecorator.prototype, "decorate");
+    formatter._formatSourceInPlace();
+    await decoratorPromise;
+
+    var lines = Array.prototype.map.call(document.querySelectorAll(".text-editor-coverage-unused-marker"),
+                                         e => e.parentElement.previousSibling.textContent);
+    InspectorTest.addResult("Formatted line numbers of rules that were not used:");
+    InspectorTest.addResult(lines);
+    InspectorTest.completeTest();
+
+    async function inplaceFormatter()
+    {
+        var editorActions = await self.runtime.allInstances(Sources.SourcesView.EditorAction);
+        for (var i = 0; i < editorActions.length; ++i) {
+            if (editorActions[i] instanceof Sources.InplaceFormatterEditorAction)
+                return editorActions[i];
+        }
+    }
+}
+</script>
+</head>
+<p id="id">PASS</p>
+<body onload="runTest()">
+<p>Tests the CSS highlight in sources after the Pretty print formatting.</p>
+</body>
+</html>

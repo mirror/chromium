@@ -95,7 +95,7 @@ class APIBindingsSystemTestBase : public APIBindingTest {
       const std::string& api_name) = 0;
 
   // Stores the request in |last_request_|.
-  void OnAPIRequest(std::unique_ptr<APIBinding::Request> request,
+  void OnAPIRequest(std::unique_ptr<APIRequestHandler::Request> request,
                     v8::Local<v8::Context> context) {
     ASSERT_FALSE(last_request_);
     last_request_ = std::move(request);
@@ -122,8 +122,14 @@ class APIBindingsSystemTestBase : public APIBindingTest {
   }
 
   void TearDown() override {
+    // Dispose all contexts now so that we call WillReleaseContext().
+    DisposeAllContexts();
     bindings_system_.reset();
     APIBindingTest::TearDown();
+  }
+
+  void OnWillDisposeContext(v8::Local<v8::Context> context) override {
+    bindings_system_->WillReleaseContext(context);
   }
 
   // Checks that |last_request_| exists and was provided with the
@@ -131,7 +137,7 @@ class APIBindingsSystemTestBase : public APIBindingTest {
   void ValidateLastRequest(const std::string& expected_name,
                            const std::string& expected_arguments);
 
-  const APIBinding::Request* last_request() const {
+  const APIRequestHandler::Request* last_request() const {
     return last_request_.get();
   }
   void reset_last_request() { last_request_.reset(); }
@@ -144,7 +150,7 @@ class APIBindingsSystemTestBase : public APIBindingTest {
 
   // The last request to be received from the APIBindingsSystem, or null if
   // there is none.
-  std::unique_ptr<APIBinding::Request> last_request_;
+  std::unique_ptr<APIRequestHandler::Request> last_request_;
 
   DISALLOW_COPY_AND_ASSIGN(APIBindingsSystemTestBase);
 };
@@ -226,7 +232,7 @@ void APIBindingsSystemTest::SetUp() {
 // triggering the callback for the request.
 TEST_F(APIBindingsSystemTest, TestInitializationAndCallbacks) {
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
 
   v8::Local<v8::Object> alpha_api = bindings_system()->CreateAPIInstance(
       kAlphaAPIName, context, isolate(), base::Bind(&AllowAllAPIs), nullptr);
@@ -310,7 +316,7 @@ TEST_F(APIBindingsSystemTest, TestInitializationAndCallbacks) {
 // Tests adding a custom hook to an API.
 TEST_F(APIBindingsSystemTest, TestCustomHooks) {
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
 
   bool did_call = false;
   auto hook = [](bool* did_call, const APISignature* signature,
@@ -366,7 +372,7 @@ TEST_F(APIBindingsSystemTest, TestCustomHooks) {
 // Tests the setCustomCallback hook.
 TEST_F(APIBindingsSystemTest, TestSetCustomCallback) {
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
 
   const char kHook[] =
       "(function(hooks) {\n"
@@ -421,7 +427,7 @@ TEST_F(APIBindingsSystemTest, TestSetCustomCallback) {
 // Test that references to other API's types works.
 TEST_F(APIBindingsSystemTest, CrossAPIReferences) {
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
 
   // Instantiate gamma API. Note: It's important that we haven't instantiated
   // alpha API yet, since this tests that we can lazily populate the type
@@ -494,7 +500,7 @@ void APIBindingsSystemTestWithRealAPI::ExecuteScriptAndExpectError(
 // actual APIs.
 TEST_F(APIBindingsSystemTestWithRealAPI, RealAPIs) {
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
 
   v8::Local<v8::Object> chrome = v8::Object::New(isolate());
   {

@@ -233,45 +233,51 @@ void ReadingListDownloadService::OnDownloadEnd(
     const GURL& distilled_url,
     URLDownloader::SuccessState success,
     const base::FilePath& distilled_path,
+    int64_t size,
     const std::string& title) {
   DCHECK(reading_list_model_->loaded());
-  if ((success == URLDownloader::DOWNLOAD_SUCCESS ||
-       success == URLDownloader::DOWNLOAD_EXISTS) &&
-      !distilled_path.empty()) {
-    reading_list_model_->SetEntryDistilledInfo(url, distilled_path,
-                                               distilled_url);
+  URLDownloader::SuccessState real_success_value = success;
+  if (distilled_path.empty()) {
+    real_success_value = URLDownloader::ERROR;
+  }
+  switch (real_success_value) {
+    case URLDownloader::DOWNLOAD_SUCCESS:
+    case URLDownloader::DOWNLOAD_EXISTS: {
+      int64_t now =
+          (base::Time::Now() - base::Time::UnixEpoch()).InMicroseconds();
+      reading_list_model_->SetEntryDistilledInfo(url, distilled_path,
+                                                 distilled_url, size, now);
 
-    std::string trimmed_title = base::CollapseWhitespaceASCII(title, false);
-    if (!trimmed_title.empty())
-      reading_list_model_->SetEntryTitle(url, trimmed_title);
+      std::string trimmed_title = base::CollapseWhitespaceASCII(title, false);
+      if (!trimmed_title.empty())
+        reading_list_model_->SetEntryTitle(url, trimmed_title);
 
-    const ReadingListEntry* entry = reading_list_model_->GetEntryByURL(url);
-    if (entry)
-      UMA_HISTOGRAM_COUNTS_100("ReadingList.Download.Failures",
-                               entry->FailedDownloadCounter());
-    UMA_HISTOGRAM_ENUMERATION("ReadingList.Download.Status", SUCCESS,
-                              STATUS_MAX);
-
-  } else if (success == URLDownloader::ERROR_RETRY) {
-    reading_list_model_->SetEntryDistilledState(url,
-                                                ReadingListEntry::WILL_RETRY);
-    ScheduleDownloadEntry(url);
-
-    const ReadingListEntry* entry = reading_list_model_->GetEntryByURL(url);
-    if (entry) {
-      if (entry->FailedDownloadCounter() < kNumberOfFailsBeforeStop) {
+      const ReadingListEntry* entry = reading_list_model_->GetEntryByURL(url);
+      if (entry)
+        UMA_HISTOGRAM_COUNTS_100("ReadingList.Download.Failures",
+                                 entry->FailedDownloadCounter());
+      UMA_HISTOGRAM_ENUMERATION("ReadingList.Download.Status", SUCCESS,
+                                STATUS_MAX);
+      break;
+    }
+    case URLDownloader::ERROR: {
+      const ReadingListEntry* entry = reading_list_model_->GetEntryByURL(url);
+      // Add this failure to the total failure count.
+      if (entry &&
+          entry->FailedDownloadCounter() + 1 < kNumberOfFailsBeforeStop) {
+        reading_list_model_->SetEntryDistilledState(
+            url, ReadingListEntry::WILL_RETRY);
+        ScheduleDownloadEntry(url);
         UMA_HISTOGRAM_ENUMERATION("ReadingList.Download.Status", RETRY,
                                   STATUS_MAX);
       } else {
         UMA_HISTOGRAM_ENUMERATION("ReadingList.Download.Status", FAILURE,
                                   STATUS_MAX);
+        reading_list_model_->SetEntryDistilledState(url,
+                                                    ReadingListEntry::ERROR);
       }
+      break;
     }
-
-  } else if (success == URLDownloader::ERROR_PERMANENT) {
-    reading_list_model_->SetEntryDistilledState(url, ReadingListEntry::ERROR);
-    UMA_HISTOGRAM_ENUMERATION("ReadingList.Download.Status", FAILURE,
-                              STATUS_MAX);
   }
 }
 

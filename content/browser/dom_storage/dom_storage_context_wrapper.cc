@@ -19,6 +19,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/browser/dom_storage/dom_storage_area.h"
 #include "content/browser/dom_storage/dom_storage_context_impl.h"
@@ -284,6 +285,8 @@ void DOMStorageContextWrapper::PurgeMemory(DOMStorageContextImpl::PurgeOption
   context_->task_runner()->PostTask(
       FROM_HERE,
       base::Bind(&DOMStorageContextImpl::PurgeMemory, context_, purge_option));
+  if (mojo_state_ && purge_option == DOMStorageContextImpl::PURGE_AGGRESSIVE)
+    mojo_state_->PurgeMemory();
 }
 
 void DOMStorageContextWrapper::GotMojoLocalStorageUsage(

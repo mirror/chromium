@@ -6,6 +6,7 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptState.h"
+#include "bindings/core/v8/ToV8.h"
 #include "bindings/core/v8/V8Binding.h"
 #include "bindings/modules/v8/ToV8ForModules.h"
 #include "bindings/modules/v8/V8BindingForModules.h"
@@ -31,39 +32,43 @@ ScriptValue IDBObserverChanges::records(ScriptState* scriptState) {
 IDBObserverChanges* IDBObserverChanges::create(
     IDBDatabase* database,
     const WebVector<WebIDBObservation>& observations,
-    const WebVector<int32_t>& observationIndices) {
+    const WebVector<int32_t>& observationIndices,
+    v8::Isolate* isolate) {
   return new IDBObserverChanges(database, nullptr, observations,
-                                observationIndices);
+                                observationIndices, isolate);
 }
 
 IDBObserverChanges* IDBObserverChanges::create(
     IDBDatabase* database,
     IDBTransaction* transaction,
     const WebVector<WebIDBObservation>& observations,
-    const WebVector<int32_t>& observationIndices) {
+    const WebVector<int32_t>& observationIndices,
+    v8::Isolate* isolate) {
   return new IDBObserverChanges(database, transaction, observations,
-                                observationIndices);
+                                observationIndices, isolate);
 }
 
 IDBObserverChanges::IDBObserverChanges(
     IDBDatabase* database,
     IDBTransaction* transaction,
     const WebVector<WebIDBObservation>& observations,
-    const WebVector<int32_t>& observationIndices)
+    const WebVector<int32_t>& observationIndices,
+    v8::Isolate* isolate)
     : m_database(database), m_transaction(transaction) {
-  extractChanges(observations, observationIndices);
+  extractChanges(observations, observationIndices, isolate);
 }
 
 void IDBObserverChanges::extractChanges(
     const WebVector<WebIDBObservation>& observations,
-    const WebVector<int32_t>& observationIndices) {
+    const WebVector<int32_t>& observationIndices,
+    v8::Isolate* isolate) {
   // TODO(dmurph): Avoid getting and setting repeated times.
   for (const auto& idx : observationIndices) {
     m_records
         .insert(observations[idx].objectStoreId,
                 HeapVector<Member<IDBObservation>>())
         .storedValue->value.push_back(
-            IDBObservation::create(observations[idx]));
+            IDBObservation::create(observations[idx], isolate));
   }
 }
 

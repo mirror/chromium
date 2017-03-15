@@ -662,7 +662,7 @@ class RevocationInjector {
   void SetCRLSet(CRLSet* crl_set) { thread_local_crlset.Set(crl_set); }
 
  private:
-  friend struct base::DefaultLazyInstanceTraits<RevocationInjector>;
+  friend struct base::LazyInstanceTraitsBase<RevocationInjector>;
 
   RevocationInjector() {
     const CRYPT_OID_FUNC_ENTRY kInterceptFunction[] = {
@@ -1192,13 +1192,6 @@ int CertVerifyProcWin::VerifyInternal(
   // TODO(wtc): Suppress CERT_STATUS_NO_REVOCATION_MECHANISM for now to be
   // compatible with WinHTTP, which doesn't report this error (bug 3004).
   verify_result->cert_status &= ~CERT_STATUS_NO_REVOCATION_MECHANISM;
-
-  // Perform hostname verification independent of
-  // CertVerifyCertificateChainPolicy.
-  if (!cert->VerifyNameMatch(hostname,
-                             &verify_result->common_name_fallback_used)) {
-    verify_result->cert_status |= CERT_STATUS_COMMON_NAME_INVALID;
-  }
 
   if (!rev_checking_enabled) {
     // If we didn't do online revocation checking then Windows will report

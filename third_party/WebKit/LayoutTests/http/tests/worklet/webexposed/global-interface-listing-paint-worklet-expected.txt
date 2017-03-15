@@ -39,7 +39,7 @@ CONSOLE MESSAGE: line 138:     method constructor
 CONSOLE MESSAGE: line 138:     method divide
 CONSOLE MESSAGE: line 138:     method multiply
 CONSOLE MESSAGE: line 138:     method subtract
-CONSOLE MESSAGE: line 138: interface CSSMatrixTransformComponent : CSSTransformComponent
+CONSOLE MESSAGE: line 138: interface CSSMatrixComponent : CSSTransformComponent
 CONSOLE MESSAGE: line 138:     getter a
 CONSOLE MESSAGE: line 138:     getter b
 CONSOLE MESSAGE: line 138:     getter c
@@ -66,6 +66,13 @@ CONSOLE MESSAGE: line 138:     method constructor
 CONSOLE MESSAGE: line 138: interface CSSNumberValue : CSSStyleValue
 CONSOLE MESSAGE: line 138:     getter value
 CONSOLE MESSAGE: line 138:     method constructor
+CONSOLE MESSAGE: line 138: interface CSSNumericValue : CSSStyleValue
+CONSOLE MESSAGE: line 138:     method add
+CONSOLE MESSAGE: line 138:     method constructor
+CONSOLE MESSAGE: line 138:     method div
+CONSOLE MESSAGE: line 138:     method mul
+CONSOLE MESSAGE: line 138:     method sub
+CONSOLE MESSAGE: line 138:     method to
 CONSOLE MESSAGE: line 138: interface CSSPerspective : CSSTransformComponent
 CONSOLE MESSAGE: line 138:     getter length
 CONSOLE MESSAGE: line 138:     method constructor
@@ -247,10 +254,13 @@ CONSOLE MESSAGE: line 138:     method getReader
 CONSOLE MESSAGE: line 138:     method pipeThrough
 CONSOLE MESSAGE: line 138:     method pipeTo
 CONSOLE MESSAGE: line 138:     method tee
-CONSOLE MESSAGE: line 138: interface StylePropertyMap
+CONSOLE MESSAGE: line 138: interface StylePropertyMap : StylePropertyMapReadonly
 CONSOLE MESSAGE: line 138:     method append
 CONSOLE MESSAGE: line 138:     method constructor
 CONSOLE MESSAGE: line 138:     method delete
+CONSOLE MESSAGE: line 138:     method set
+CONSOLE MESSAGE: line 138: interface StylePropertyMapReadonly
+CONSOLE MESSAGE: line 138:     method constructor
 CONSOLE MESSAGE: line 138:     method entries
 CONSOLE MESSAGE: line 138:     method forEach
 CONSOLE MESSAGE: line 138:     method get
@@ -258,7 +268,6 @@ CONSOLE MESSAGE: line 138:     method getAll
 CONSOLE MESSAGE: line 138:     method getProperties
 CONSOLE MESSAGE: line 138:     method has
 CONSOLE MESSAGE: line 138:     method keys
-CONSOLE MESSAGE: line 138:     method set
 CONSOLE MESSAGE: line 138:     method values
 CONSOLE MESSAGE: line 138: interface WorkletGlobalScope
 CONSOLE MESSAGE: line 138:     method constructor

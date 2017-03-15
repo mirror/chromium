@@ -97,9 +97,9 @@ Main.Main = class {
     Runtime.experiments.register('audits2', 'Audits 2.0', true);
     Runtime.experiments.register('autoAttachToCrossProcessSubframes', 'Auto-attach to cross-process subframes', true);
     Runtime.experiments.register('blackboxJSFramesOnTimeline', 'Blackbox JavaScript frames on Timeline', true);
+    Runtime.experiments.register('continueToLocationMarkers', 'Continue to location markers', true);
     Runtime.experiments.register('colorContrastRatio', 'Contrast ratio line in color picker', true);
-    Runtime.experiments.register('continueToFirstInvocation', 'Continue to first invocation', true);
-    Runtime.experiments.register('cssTrackerPanel', 'Panel that tracks the usage of CSS rules.');
+    Runtime.experiments.register('cssTrackerPanel', 'Coverage support');
     Runtime.experiments.register('emptySourceMapAutoStepping', 'Empty sourcemap auto-stepping');
     Runtime.experiments.register('inputEventsOnTimelineOverview', 'Input events on Timeline overview', true);
     Runtime.experiments.register('liveSASS', 'Live SASS');
@@ -107,14 +107,16 @@ Main.Main = class {
     Runtime.experiments.register('objectPreviews', 'Object previews', true);
     Runtime.experiments.register('persistence2', 'Persistence 2.0');
     Runtime.experiments.register('persistenceValidation', 'Validate persistence bindings');
+    Runtime.experiments.register('releaseNote', 'Release note', true);
     Runtime.experiments.register('requestBlocking', 'Request blocking', true);
     Runtime.experiments.register('timelineShowAllEvents', 'Show all events on Timeline', true);
     Runtime.experiments.register('timelineShowAllProcesses', 'Show all processes on Timeline', true);
     Runtime.experiments.register('timelinePaintTimingMarkers', 'Show paint timing markers on Timeline', true);
     Runtime.experiments.register('sourceDiff', 'Source diff');
+    Runtime.experiments.register('timelineFlowEvents', 'Timeline flow events', true);
     Runtime.experiments.register('terminalInDrawer', 'Terminal in drawer', true);
     Runtime.experiments.register('timelineInvalidationTracking', 'Timeline invalidation tracking', true);
-    Runtime.experiments.register('timelineMultipleMainViews', 'Timeline with multiple main views');
+    Runtime.experiments.register('timelineMultipleMainViews', 'Tabbed views on Performance panel');
     Runtime.experiments.register('timelineTracingJSProfile', 'Timeline tracing based JS profiler', true);
     Runtime.experiments.register('timelineV8RuntimeCallStats', 'V8 Runtime Call Stats on Timeline', true);
     Runtime.experiments.register('timelinePerFrameTrack', 'Show track per frame on Timeline', true);
@@ -126,13 +128,15 @@ Main.Main = class {
       // Enable experiments for testing.
       if (testPath.indexOf('accessibility/') !== -1)
         Runtime.experiments.enableForTest('accessibilityInspection');
-      if (testPath.indexOf('css_tracker') !== -1)
+      if (testPath.indexOf('coverage') !== -1)
         Runtime.experiments.enableForTest('cssTrackerPanel');
       if (testPath.indexOf('audits2/') !== -1)
         Runtime.experiments.enableForTest('audits2');
+      if (testPath.indexOf('help/') !== -1)
+        Runtime.experiments.enableForTest('releaseNote');
     }
 
-    Runtime.experiments.setDefaultExperiments(['persistenceValidation', 'timelineMultipleMainViews']);
+    Runtime.experiments.setDefaultExperiments(['persistenceValidation']);
   }
 
   /**
@@ -196,7 +200,6 @@ Main.Main = class {
 
     new Main.Main.PauseListener();
     new Main.Main.InspectedNodeRevealer();
-    new Main.NetworkPanelIndicator();
     new Main.SourcesPanelIndicator();
     new Main.BackendSettingsSync();
     Components.domBreakpointsSidebarPane = new Components.DOMBreakpointsSidebarPane();
@@ -278,6 +281,8 @@ Main.Main = class {
     console.timeStamp('Main._lateInitialization');
     this._registerShortcuts();
     Extensions.extensionServer.initializeExtensions();
+    if (!Host.isUnderTest())
+      Help.showReleaseNoteIfNeeded();
   }
 
   _registerForwardedShortcuts() {
@@ -741,35 +746,11 @@ Main.Main.MainMenuItem = class {
       moreTools.appendItem(extension.title(), UI.viewManager.showView.bind(UI.viewManager, descriptor['id']));
     }
 
+    var helpSubMenu = contextMenu.namedSubMenu('mainMenuHelp');
+    helpSubMenu.appendAction('settings.documentation');
+    if (Runtime.experiments.isEnabled('releaseNote'))
+      helpSubMenu.appendItem('Release Notes', () => InspectorFrontendHost.openInNewTab(Help.latestReleaseNote().link));
     contextMenu.show();
-  }
-};
-
-/**
- * @unrestricted
- */
-Main.NetworkPanelIndicator = class {
-  constructor() {
-    // TODO: we should not access network from other modules.
-    if (!UI.inspectorView.hasPanel('network'))
-      return;
-    var manager = SDK.multitargetNetworkManager;
-    manager.addEventListener(SDK.MultitargetNetworkManager.Events.ConditionsChanged, updateVisibility);
-    var blockedURLsSetting = Common.moduleSetting('networkBlockedURLs');
-    blockedURLsSetting.addChangeListener(updateVisibility);
-    updateVisibility();
-
-    function updateVisibility() {
-      var icon = null;
-      if (manager.isThrottling()) {
-        icon = UI.Icon.create('smallicon-warning');
-        icon.title = Common.UIString('Network throttling is enabled');
-      } else if (blockedURLsSetting.get().length) {
-        icon = UI.Icon.create('smallicon-warning');
-        icon.title = Common.UIString('Requests may be blocked');
-      }
-      UI.inspectorView.setPanelIcon('network', icon);
-    }
   }
 };
 
@@ -871,10 +852,10 @@ Main.RemoteDebuggingTerminatedScreen = class extends UI.VBox {
    */
   static show(reason) {
     var dialog = new UI.Dialog();
-    dialog.setWrapsContent(true);
+    dialog.setSizeBehavior(UI.GlassPane.SizeBehavior.MeasureContent);
     dialog.addCloseButton();
     dialog.setDimmed(true);
-    new Main.RemoteDebuggingTerminatedScreen(reason).show(dialog.element);
+    new Main.RemoteDebuggingTerminatedScreen(reason).show(dialog.contentElement);
     dialog.show();
   }
 };
@@ -902,13 +883,13 @@ Main.TargetCrashedScreen = class extends UI.VBox {
    */
   static show(debuggerModel) {
     var dialog = new UI.Dialog();
-    dialog.setWrapsContent(true);
+    dialog.setSizeBehavior(UI.GlassPane.SizeBehavior.MeasureContent);
     dialog.addCloseButton();
     dialog.setDimmed(true);
-    var hideBound = dialog.detach.bind(dialog, false);
+    var hideBound = dialog.hide.bind(dialog);
     debuggerModel.addEventListener(SDK.DebuggerModel.Events.GlobalObjectCleared, hideBound);
 
-    new Main.TargetCrashedScreen(onHide).show(dialog.element);
+    new Main.TargetCrashedScreen(onHide).show(dialog.contentElement);
     dialog.show();
 
     function onHide() {

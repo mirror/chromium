@@ -42,6 +42,9 @@ namespace {
 const unsigned kRafAlignedEnabledTouch = 1;
 const unsigned kRafAlignedEnabledMouse = 1 << 1;
 
+// Simulate a 16ms frame signal.
+const base::TimeDelta kFrameInterval = base::TimeDelta::FromMilliseconds(16);
+
 const int kTestRoutingID = 13;
 const char* kCoalescedCountHistogram =
     "Event.MainThreadEventQueue.CoalescedCount";
@@ -56,13 +59,20 @@ class MainThreadEventQueueTest : public testing::TestWithParam<unsigned>,
         raf_aligned_input_setting_(GetParam()),
         needs_main_frame_(false) {
     std::vector<std::string> features;
-    if (raf_aligned_input_setting_ & kRafAlignedEnabledTouch)
+    std::vector<std::string> disabled_features;
+    if (raf_aligned_input_setting_ & kRafAlignedEnabledTouch) {
       features.push_back(features::kRafAlignedTouchInputEvents.name);
-    if (raf_aligned_input_setting_ & kRafAlignedEnabledMouse)
+    } else {
+      disabled_features.push_back(features::kRafAlignedTouchInputEvents.name);
+    }
+    if (raf_aligned_input_setting_ & kRafAlignedEnabledMouse) {
       features.push_back(features::kRafAlignedMouseInputEvents.name);
+    } else {
+      disabled_features.push_back(features::kRafAlignedMouseInputEvents.name);
+    }
 
     feature_list_.InitFromCommandLine(base::JoinString(features, ","),
-                                      std::string());
+                                      base::JoinString(disabled_features, ","));
   }
 
   void SetUp() override {
@@ -114,14 +124,16 @@ class MainThreadEventQueueTest : public testing::TestWithParam<unsigned>,
     while (needs_main_frame_ || main_task_runner_->HasPendingTask()) {
       main_task_runner_->RunUntilIdle();
       needs_main_frame_ = false;
-      queue_->DispatchRafAlignedInput();
+      frame_time_ += kFrameInterval;
+      queue_->DispatchRafAlignedInput(frame_time_);
     }
   }
 
   void RunSimulatedRafOnce() {
     if (needs_main_frame_) {
       needs_main_frame_ = false;
-      queue_->DispatchRafAlignedInput();
+      frame_time_ += kFrameInterval;
+      queue_->DispatchRafAlignedInput(frame_time_);
     }
   }
 
@@ -135,6 +147,7 @@ class MainThreadEventQueueTest : public testing::TestWithParam<unsigned>,
   std::vector<uint32_t> additional_acked_events_;
   int raf_aligned_input_setting_;
   bool needs_main_frame_;
+  base::TimeTicks frame_time_;
 };
 
 TEST_P(MainThreadEventQueueTest, NonBlockingWheel) {
@@ -343,8 +356,13 @@ TEST_P(MainThreadEventQueueTest, BlockingTouch) {
 
   EXPECT_EQ(0u, event_queue().size());
   EXPECT_EQ(2u, additional_acked_events_.size());
-  EXPECT_EQ(kEvents[2].uniqueTouchEventId, additional_acked_events_.at(0));
-  EXPECT_EQ(kEvents[3].uniqueTouchEventId, additional_acked_events_.at(1));
+  EXPECT_EQ(kEvents[1].uniqueTouchEventId, additional_acked_events_.at(0));
+  EXPECT_EQ(kEvents[2].uniqueTouchEventId, additional_acked_events_.at(1));
+
+  const WebTouchEvent* last_touch_event =
+      static_cast<const WebTouchEvent*>(handled_events_.at(1).eventPointer());
+  EXPECT_EQ(kEvents[3].uniqueTouchEventId,
+            last_touch_event->uniqueTouchEventId);
 
   HandleEvent(kEvents[1], INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING);
   HandleEvent(kEvents[2], INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING);
@@ -532,14 +550,14 @@ TEST_P(MainThreadEventQueueTest, RafAlignedTouchInputCoalescedMoves) {
   EXPECT_FALSE(main_task_runner_->HasPendingTask());
   EXPECT_EQ(0u, event_queue().size());
 
-  // Send a continuous input event (ack required) and then
-  // a discrete event. The events should coalesce together
+  // Send a discrete input event and then a continuous
+  // (ack required)  event. The events should coalesce together
   // and a post task should be on the queue at the end.
-  HandleEvent(kEvents[0], INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
+  HandleEvent(kEvents[1], INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
   EXPECT_EQ(1u, event_queue().size());
   EXPECT_FALSE(main_task_runner_->HasPendingTask());
   EXPECT_TRUE(needs_main_frame_);
-  HandleEvent(kEvents[1], INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
+  HandleEvent(kEvents[0], INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
   EXPECT_EQ(1u, event_queue().size());
   EXPECT_FALSE(main_task_runner_->HasPendingTask());
   EXPECT_TRUE(needs_main_frame_);
@@ -572,6 +590,47 @@ TEST_P(MainThreadEventQueueTest, RafAlignedTouchInputCoalescedMoves) {
   EXPECT_EQ(1u, event_queue().size());
   EXPECT_FALSE(main_task_runner_->HasPendingTask());
   EXPECT_TRUE(needs_main_frame_);
+  RunPendingTasksWithSimulatedRaf();
+  EXPECT_EQ(0u, event_queue().size());
+  EXPECT_EQ(0u, additional_acked_events_.size());
+}
+
+TEST_P(MainThreadEventQueueTest, RafAlignedTouchInputThrottlingMoves) {
+  // Don't run the test when we aren't supporting rAF aligned input.
+  if ((raf_aligned_input_setting_ & kRafAlignedEnabledTouch) == 0)
+    return;
+
+  SyntheticWebTouchEvent kEvents[2];
+  kEvents[0].PressPoint(10, 10);
+  kEvents[0].MovePoint(0, 50, 50);
+  kEvents[0].dispatchType = WebInputEvent::EventNonBlocking;
+  kEvents[1].PressPoint(10, 10);
+  kEvents[1].MovePoint(0, 20, 20);
+  kEvents[1].dispatchType = WebInputEvent::EventNonBlocking;
+
+  EXPECT_FALSE(main_task_runner_->HasPendingTask());
+  EXPECT_EQ(0u, event_queue().size());
+
+  // Send a non-cancelable touch move and then send it another one. The
+  // second one shouldn't go out with the next rAF call and should be throttled.
+  EXPECT_TRUE(HandleEvent(kEvents[0], INPUT_EVENT_ACK_STATE_NOT_CONSUMED));
+  EXPECT_EQ(1u, event_queue().size());
+  EXPECT_FALSE(main_task_runner_->HasPendingTask());
+  EXPECT_TRUE(needs_main_frame_);
+  RunPendingTasksWithSimulatedRaf();
+  EXPECT_TRUE(HandleEvent(kEvents[0], INPUT_EVENT_ACK_STATE_NOT_CONSUMED));
+  EXPECT_TRUE(HandleEvent(kEvents[1], INPUT_EVENT_ACK_STATE_NOT_CONSUMED));
+  EXPECT_EQ(1u, event_queue().size());
+  EXPECT_FALSE(main_task_runner_->HasPendingTask());
+  EXPECT_TRUE(needs_main_frame_);
+
+  // Event should still be in queue after handling a single rAF call.
+  RunSimulatedRafOnce();
+  EXPECT_EQ(1u, event_queue().size());
+  EXPECT_FALSE(main_task_runner_->HasPendingTask());
+  EXPECT_TRUE(needs_main_frame_);
+
+  // And should eventually flush.
   RunPendingTasksWithSimulatedRaf();
   EXPECT_EQ(0u, event_queue().size());
   EXPECT_EQ(0u, additional_acked_events_.size());

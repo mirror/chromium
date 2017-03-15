@@ -24,6 +24,9 @@ const char kDisableMainFrameBeforeActivation[] =
 const char kEnableMainFrameBeforeActivation[] =
     "enable-main-frame-before-activation";
 
+// Enables defering image decodes to the image decode service.
+const char kEnableCheckerImaging[] = "enable-checker-imaging";
+
 // Percentage of the browser controls need to be hidden before they will auto
 // hide.
 const char kBrowserControlsHideThreshold[] = "top-controls-hide-threshold";
@@ -47,12 +50,10 @@ const char kEnableColorCorrectRendering[] = "enable-color-correct-rendering";
 // Enables the GPU benchmarking extension
 const char kEnableGpuBenchmarking[] = "enable-gpu-benchmarking";
 
-// Force all rasterization and compositing to be done in linear color space,
-// with physically correct blending and interpolation.
-const char kEnableTrueColorRendering[] = "enable-true-color-rendering";
-
-// Enables CHECKs to ensure that tile priorities are not inverted.
-const char kCheckTilePriorityInversion[] = "check-tile-priority-inversion";
+// Enables multi-client Surface synchronization. In practice, this indicates
+// that LayerTreeHost expects to be given a valid LocalSurfaceId provided by
+// the parent compositor.
+const char kEnableSurfaceSynchronization[] = "enable-surface-synchronization";
 
 // Renders a border around compositor layers to help debug and study
 // layer compositing.

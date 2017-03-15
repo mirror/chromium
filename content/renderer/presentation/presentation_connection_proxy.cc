@@ -25,35 +25,23 @@ PresentationConnectionProxy::PresentationConnectionProxy(
 PresentationConnectionProxy::~PresentationConnectionProxy() = default;
 
 void PresentationConnectionProxy::SendConnectionMessage(
-    blink::mojom::ConnectionMessagePtr connection_message,
+    PresentationConnectionMessage message,
     const OnMessageCallback& callback) const {
   DCHECK(target_connection_ptr_);
-  target_connection_ptr_->OnMessage(std::move(connection_message), callback);
+  target_connection_ptr_->OnMessage(std::move(message), callback);
 }
 
 void PresentationConnectionProxy::OnMessage(
-    blink::mojom::ConnectionMessagePtr message,
+    PresentationConnectionMessage message,
     const OnMessageCallback& callback) {
   DCHECK(!callback.is_null());
 
-  switch (message->type) {
-    case blink::mojom::PresentationMessageType::TEXT: {
-      DCHECK(message->message);
-      source_connection_->didReceiveTextMessage(
-          blink::WebString::fromUTF8(message->message.value()));
-      break;
-    }
-    case blink::mojom::PresentationMessageType::BINARY: {
-      DCHECK(message->data);
-      source_connection_->didReceiveBinaryMessage(&(message->data->front()),
-                                                  message->data->size());
-      break;
-    }
-    default: {
-      callback.Run(false);
-      NOTREACHED();
-      return;
-    }
+  if (message.is_binary()) {
+    source_connection_->didReceiveBinaryMessage(&(message.data->front()),
+                                                message.data->size());
+  } else {
+    source_connection_->didReceiveTextMessage(
+        blink::WebString::fromUTF8(*(message.message)));
   }
 
   callback.Run(true);
@@ -63,15 +51,26 @@ void PresentationConnectionProxy::OnMessage(
 // in a single place.
 void PresentationConnectionProxy::DidChangeState(
     content::PresentationConnectionState state) {
-  if (state != content::PRESENTATION_CONNECTION_STATE_CONNECTED) {
-    // |DidChangeState| should only handle state transition from connecting ->
-    // connected. PresentationService and MRP handles other state transitions.
+  if (state == content::PRESENTATION_CONNECTION_STATE_CONNECTED) {
+    source_connection_->didChangeState(
+        blink::WebPresentationConnectionState::Connected);
+  } else if (state == content::PRESENTATION_CONNECTION_STATE_CLOSED) {
+    source_connection_->didClose();
+  } else {
     NOTREACHED();
-    return;
   }
+}
 
-  source_connection_->didChangeState(
-      blink::WebPresentationConnectionState::Connected);
+void PresentationConnectionProxy::OnClose() {
+  DCHECK(target_connection_ptr_);
+  source_connection_->didClose();
+  target_connection_ptr_->DidChangeState(
+      content::PRESENTATION_CONNECTION_STATE_CLOSED);
+}
+
+void PresentationConnectionProxy::close() const {
+  DCHECK(target_connection_ptr_);
+  target_connection_ptr_->OnClose();
 }
 
 ControllerConnectionProxy::ControllerConnectionProxy(

@@ -29,60 +29,15 @@ class _BattOrBenchmark(perf_benchmark.PerfBenchmark):
 
   @classmethod
   def ShouldDisable(cls, possible_browser):
-    # Only run if BattOr is detected.
-    if not possible_browser.platform.HasBattOrConnected():
-      return True
-
-    # Galaxy S5s have problems with running system health metrics.
-    # http://crbug.com/600463
-    galaxy_s5_type_name = 'SM-G900H'
-    return possible_browser.platform.GetDeviceTypeName() == galaxy_s5_type_name
+    return not possible_browser.platform.HasBattOrConnected()
 
   @classmethod
   def ShouldTearDownStateAfterEachStoryRun(cls):
     return True
 
 
-# android: See battor.android.tough_video_cases below
-# win8: crbug.com/531618
-# crbug.com/565180: Only include cases that report time_to_play
-# Taken directly from media benchmark.
-@benchmark.Disabled('android', 'win8')
-class BattOrToughVideoCases(_BattOrBenchmark):
-  """Obtains media metrics for key user scenarios."""
-  page_set = page_sets.ToughVideoCasesPageSet
-
-  @classmethod
-  def Name(cls):
-    return 'battor.tough_video_cases'
-
-
-class BattOrPowerCases(_BattOrBenchmark):
-  page_set = page_sets.power_cases.PowerCasesPageSet
-
-  @classmethod
-  def Name(cls):
-    return 'battor.power_cases'
-
-
-@benchmark.Disabled('all')  # crbug.com/651384.
-class BattOrPowerCasesNoChromeTrace(_BattOrBenchmark):
-  page_set = page_sets.power_cases.PowerCasesPageSet
-
-  def CreateTimelineBasedMeasurementOptions(self):
-    options = timeline_based_measurement.Options()
-    options.config.enable_battor_trace = True
-    options.config.enable_chrome_trace = False
-    options.config.chrome_trace_config.SetDefaultOverheadFilter()
-    options.SetTimelineBasedMetrics(['powerMetric', 'clockSyncLatencyMetric'])
-    return options
-
-  @classmethod
-  def Name(cls):
-    return 'battor.power_cases_no_chrome_trace'
-
-
 @benchmark.Enabled('mac')
+@benchmark.Owner(emails=['charliea@chromium.org'])
 class BattOrTrivialPages(_BattOrBenchmark):
 
   def CreateStorySet(self, options):
@@ -94,6 +49,7 @@ class BattOrTrivialPages(_BattOrBenchmark):
     return 'battor.trivial_pages'
 
 @benchmark.Enabled('mac')
+@benchmark.Owner(emails=['charliea@chromium.org'])
 class BattOrSteadyStatePages(_BattOrBenchmark):
 
   def CreateStorySet(self, options):

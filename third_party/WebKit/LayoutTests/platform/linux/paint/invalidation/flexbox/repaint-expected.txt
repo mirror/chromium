@@ -12,59 +12,39 @@
           "reason": "style change"
         },
         {
-          "object": "LayoutBlockFlow P",
-          "rect": [138, 128, 654, 100],
-          "reason": "forced by layout"
-        },
-        {
-          "object": "LayoutText #text",
-          "rect": [137, 128, 652, 99],
-          "reason": "forced by layout"
-        },
-        {
           "object": "LayoutBlockFlow DIV id='content'",
           "rect": [148, 128, 644, 100],
           "reason": "style change"
         },
         {
-          "object": "LayoutBlockFlow P",
-          "rect": [148, 128, 644, 100],
+          "object": "LayoutText #text",
+          "rect": [137, 128, 637, 99],
           "reason": "forced by layout"
         },
         {
           "object": "LayoutText #text",
-          "rect": [147, 128, 641, 99],
+          "rect": [147, 128, 636, 99],
           "reason": "forced by layout"
         },
         {
           "object": "LayoutBlockFlow DIV id='content'",
-          "rect": [400, 128, 392, 160],
+          "rect": [400, 128, 392, 180],
           "reason": "style change"
         },
         {
-          "object": "LayoutBlockFlow P",
-          "rect": [400, 128, 392, 160],
-          "reason": "forced by layout"
-        },
-        {
           "object": "LayoutBlockFlow DIV id='left'",
-          "rect": [8, 228, 392, 60],
-          "reason": "incremental"
-        },
-        {
-          "object": "LayoutText #text",
-          "rect": [400, 128, 389, 159],
-          "reason": "forced by layout"
-        },
-        {
-          "object": "LayoutBlockFlow DIV id='left'",
-          "rect": [148, 128, 252, 160],
+          "rect": [8, 228, 392, 80],
           "reason": "incremental"
         },
         {
           "object": "LayoutBlockFlow DIV id='left'",
-          "rect": [8, 128, 140, 100],
-          "reason": "border box change"
+          "rect": [148, 128, 252, 180],
+          "reason": "incremental"
+        },
+        {
+          "object": "LayoutBlockFlow DIV id='left'",
+          "rect": [138, 128, 10, 100],
+          "reason": "incremental"
         }
       ]
     }
@@ -91,28 +71,28 @@
       "reason": "forced by layout"
     },
     {
-      "object": "InlineTextBox 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean laoreet dolor id urna eleifend aliquet. Nulla'",
+      "object": "InlineTextBox 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean laoreet dolor id urna eleifend aliquet.'",
       "reason": "forced by layout"
     },
     {
-      "object": "InlineTextBox 'vel dolor ipsum. Aliquam ut turpis nisl, in vulputate sapien. Cum sociis natoque penatibus et magnis dis'",
+      "object": "InlineTextBox 'Nulla vel dolor ipsum. Aliquam ut turpis nisl, in vulputate sapien. Cum sociis natoque penatibus et'",
       "reason": "forced by layout"
     },
     {
-      "object": "InlineTextBox 'parturient montes, nascetur ridiculus mus. Sed congue magna vitae dolor feugiat vehicula. Sed volutpat,'",
+      "object": "InlineTextBox 'magnis dis parturient montes, nascetur ridiculus mus. Sed congue magna vitae dolor feugiat vehicula.'",
       "reason": "forced by layout"
     },
     {
-      "object": "InlineTextBox 'tellus vel varius vestibulum, purus quam mollis sapien, in condimentum leo neque sed nulla. Nunc quis porta'",
+      "object": "InlineTextBox 'Sed volutpat, tellus vel varius vestibulum, purus quam mollis sapien, in condimentum leo neque sed'",
       "reason": "forced by layout"
     },
     {
-      "object": "InlineTextBox 'elit. Pellentesque erat lectus, ultricies a lobortis id, faucibus id quam.'",
+      "object": "InlineTextBox 'nulla. Nunc quis porta elit. Pellentesque erat lectus, ultricies a lobortis id, faucibus id quam.'",
       "reason": "forced by layout"
     },
     {
       "object": "LayoutBlockFlow DIV id='left'",
-      "reason": "border box change"
+      "reason": "incremental"
     },
     {
       "object": "LayoutBlockFlow DIV id='content'",
@@ -131,23 +111,23 @@
       "reason": "forced by layout"
     },
     {
-      "object": "InlineTextBox 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean laoreet dolor id urna eleifend aliquet. Nulla'",
+      "object": "InlineTextBox 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean laoreet dolor id urna eleifend aliquet.'",
       "reason": "forced by layout"
     },
     {
-      "object": "InlineTextBox 'vel dolor ipsum. Aliquam ut turpis nisl, in vulputate sapien. Cum sociis natoque penatibus et magnis dis'",
+      "object": "InlineTextBox 'Nulla vel dolor ipsum. Aliquam ut turpis nisl, in vulputate sapien. Cum sociis natoque penatibus et'",
       "reason": "forced by layout"
     },
     {
-      "object": "InlineTextBox 'parturient montes, nascetur ridiculus mus. Sed congue magna vitae dolor feugiat vehicula. Sed volutpat, tellus'",
+      "object": "InlineTextBox 'magnis dis parturient montes, nascetur ridiculus mus. Sed congue magna vitae dolor feugiat vehicula.'",
       "reason": "forced by layout"
     },
     {
-      "object": "InlineTextBox 'vel varius vestibulum, purus quam mollis sapien, in condimentum leo neque sed nulla. Nunc quis porta elit.'",
+      "object": "InlineTextBox 'Sed volutpat, tellus vel varius vestibulum, purus quam mollis sapien, in condimentum leo neque sed'",
       "reason": "forced by layout"
     },
     {
-      "object": "InlineTextBox 'Pellentesque erat lectus, ultricies a lobortis id, faucibus id quam.'",
+      "object": "InlineTextBox 'nulla. Nunc quis porta elit. Pellentesque erat lectus, ultricies a lobortis id, faucibus id quam.'",
       "reason": "forced by layout"
     }
   ]

@@ -409,7 +409,7 @@ InspectorTest.dumpNavigatorViewInMode = function(view, mode)
     InspectorTest.dumpNavigatorView(view);
 }
 
-InspectorTest.waitForUISourceCode = function(url, projectType)
+InspectorTest.waitForUISourceCode = function(urlSuffix, projectType)
 {
     function matches(uiSourceCode)
     {
@@ -417,13 +417,13 @@ InspectorTest.waitForUISourceCode = function(url, projectType)
             return false;
         if (!projectType && uiSourceCode.project().type() === Workspace.projectTypes.Service)
             return false;
-        if (url && !uiSourceCode.url().endsWith(url))
+        if (urlSuffix && !uiSourceCode.url().endsWith(urlSuffix))
             return false;
         return true;
     }
 
     for (var uiSourceCode of Workspace.workspace.uiSourceCodes()) {
-        if (url && matches(uiSourceCode))
+        if (urlSuffix && matches(uiSourceCode))
             return Promise.resolve(uiSourceCode);
     }
 
@@ -451,9 +451,10 @@ InspectorTest.waitForUISourceCodeRemoved = function(callback)
     }
 }
 
+InspectorTest._mockTargetId = 1;
 InspectorTest.createMockTarget = function(name, capabilities, dontAttachToMain)
 {
-    return SDK.targetManager.createTarget(name, capabilities || SDK.Target.Capability.AllForTests, params => new SDK.StubConnection(params), dontAttachToMain ? null : InspectorTest.mainTarget);
+    return SDK.targetManager.createTarget('mock-target-' + InspectorTest._mockTargetId++, name, capabilities || SDK.Target.Capability.AllForTests, params => new SDK.StubConnection(params), dontAttachToMain ? null : InspectorTest.mainTarget);
 }
 
 InspectorTest.assertGreaterOrEqual = function(a, b, message)
@@ -466,6 +467,14 @@ InspectorTest.navigate = function(url, callback)
 {
     InspectorTest._pageLoadedCallback = InspectorTest.safeWrap(callback);
     InspectorTest.evaluateInPage("window.location.replace('" + url + "')");
+}
+
+InspectorTest.navigatePromise = function(url)
+{
+    var fulfill;
+    var promise = new Promise(callback => fulfill = callback);
+    InspectorTest.navigate(url, fulfill);
+    return promise;
 }
 
 InspectorTest.hardReloadPage = function(callback, scriptToEvaluateOnLoad, scriptPreprocessor)
@@ -970,14 +979,14 @@ SDK.targetManager.observeTargets({
         InspectorTest.debuggerModel = SDK.DebuggerModel.fromTarget(target);
         InspectorTest.runtimeModel = target.runtimeModel;
         InspectorTest.domModel = SDK.DOMModel.fromTarget(target);
-        InspectorTest.cssModel = SDK.CSSModel.fromTarget(target);
+        InspectorTest.cssModel = target.model(SDK.CSSModel);
         InspectorTest.powerProfiler = target.powerProfiler;
-        InspectorTest.cpuProfilerModel = target.cpuProfilerModel;
+        InspectorTest.cpuProfilerModel = target.model(SDK.CPUProfilerModel);
         InspectorTest.heapProfilerModel = target.heapProfilerModel;
         InspectorTest.animationModel = target.animationModel;
         InspectorTest.serviceWorkerCacheModel = target.serviceWorkerCacheModel;
-        InspectorTest.serviceWorkerManager = target.serviceWorkerManager;
-        InspectorTest.tracingManager = target.tracingManager;
+        InspectorTest.serviceWorkerManager = target.model(SDK.ServiceWorkerManager);
+        InspectorTest.tracingManager = target.model(SDK.TracingManager);
         InspectorTest.mainTarget = target;
     },
 

@@ -60,7 +60,8 @@ void Fatal(ScriptContext* context, const std::string& message) {
 
   ExtensionsClient* client = ExtensionsClient::Get();
   if (client->ShouldSuppressFatalErrors()) {
-    console::Error(context->GetRenderFrame(), full_message);
+    console::AddMessage(context->GetRenderFrame(),
+                        content::CONSOLE_MESSAGE_LEVEL_ERROR, full_message);
     client->RecordDidSuppressFatalError();
   } else {
     console::Fatal(context->GetRenderFrame(), full_message);
@@ -70,8 +71,9 @@ void Fatal(ScriptContext* context, const std::string& message) {
 void Warn(v8::Isolate* isolate, const std::string& message) {
   ScriptContext* script_context =
       ScriptContextSet::GetContextByV8Context(isolate->GetCurrentContext());
-  console::Warn(script_context ? script_context->GetRenderFrame() : nullptr,
-                message);
+  console::AddMessage(
+      script_context ? script_context->GetRenderFrame() : nullptr,
+      content::CONSOLE_MESSAGE_LEVEL_WARNING, message);
 }
 
 // Default exception handler which logs the exception.
@@ -544,13 +546,24 @@ void ModuleSystem::SetNativeLazyField(v8::Local<v8::Object> object,
 
 void ModuleSystem::OnNativeBindingCreated(
     const std::string& api_name,
-    v8::Local<v8::Value> api_bridge_value,
-    v8::Local<v8::Value> get_internal_api) {
+    v8::Local<v8::Value> api_bridge_value) {
+  DCHECK(!get_internal_api_.IsEmpty());
   v8::HandleScope scope(GetIsolate());
   if (source_map_->Contains(api_name)) {
     NativesEnabledScope enabled(this);
-    LoadModuleWithNativeAPIBridge(api_name, api_bridge_value, get_internal_api);
+    LoadModuleWithNativeAPIBridge(api_name, api_bridge_value);
   }
+}
+
+void ModuleSystem::SetGetInternalAPIHook(
+    v8::Local<v8::FunctionTemplate> get_internal_api) {
+  DCHECK(get_internal_api_.IsEmpty());
+  get_internal_api_.Set(GetIsolate(), get_internal_api);
+}
+
+void ModuleSystem::SetJSBindingUtilGetter(const JSBindingUtilGetter& getter) {
+  DCHECK(js_binding_util_getter_.is_null());
+  js_binding_util_getter_ = getter;
 }
 
 v8::Local<v8::Value> ModuleSystem::RunString(v8::Local<v8::String> code,
@@ -633,7 +646,7 @@ v8::Local<v8::String> ModuleSystem::WrapSource(v8::Local<v8::String> source) {
   v8::Local<v8::String> left = ToV8StringUnsafe(
       GetIsolate(),
       "(function(define, require, requireNative, requireAsync, exports, "
-      "console, privates, apiBridge, getInternalApi,"
+      "console, privates, apiBridge, bindingUtil, getInternalApi,"
       "$Array, $Function, $JSON, $Object, $RegExp, $String, $Error) {"
       "'use strict';");
   v8::Local<v8::String> right = ToV8StringUnsafe(GetIsolate(), "\n})");
@@ -671,14 +684,13 @@ void ModuleSystem::Private(const v8::FunctionCallbackInfo<v8::Value>& args) {
 }
 
 v8::Local<v8::Value> ModuleSystem::LoadModule(const std::string& module_name) {
-  return LoadModuleWithNativeAPIBridge(module_name, v8::Undefined(GetIsolate()),
+  return LoadModuleWithNativeAPIBridge(module_name,
                                        v8::Undefined(GetIsolate()));
 }
 
 v8::Local<v8::Value> ModuleSystem::LoadModuleWithNativeAPIBridge(
     const std::string& module_name,
-    v8::Local<v8::Value> api_bridge,
-    v8::Local<v8::Value> get_internal_api) {
+    v8::Local<v8::Value> api_bridge) {
   v8::EscapableHandleScope handle_scope(GetIsolate());
   v8::Local<v8::Context> v8_context = context()->v8_context();
   v8::Context::Scope context_scope(v8_context);
@@ -732,6 +744,28 @@ v8::Local<v8::Value> ModuleSystem::LoadModuleWithNativeAPIBridge(
   v8::Local<v8::Object> natives(NewInstance());
   CHECK(!natives.IsEmpty());  // this can fail if v8 has issues
 
+  v8::Local<v8::Value> get_internal_api;
+  if (get_internal_api_.IsEmpty()) {
+    get_internal_api = v8::Undefined(GetIsolate());
+  } else {
+    get_internal_api = get_internal_api_.Get(GetIsolate())
+                           ->GetFunction(v8_context)
+                           .ToLocalChecked();
+  }
+
+  v8::Local<v8::Value> binding_util;
+  if (!js_binding_util_getter_.is_null()) {
+    js_binding_util_getter_.Run(v8_context, &binding_util);
+    if (binding_util.IsEmpty()) {
+      // The NativeExtensionBindingsSystem was destroyed. This shouldn't happen,
+      // but JS makes the impossible possible!
+      NOTREACHED();
+      return v8::Undefined(GetIsolate());
+    }
+  } else {
+    binding_util = v8::Undefined(GetIsolate());
+  }
+
   // These must match the argument order in WrapSource.
   v8::Local<v8::Value> args[] = {
       // AMD.
@@ -749,6 +783,7 @@ v8::Local<v8::Value> ModuleSystem::LoadModuleWithNativeAPIBridge(
       GetPropertyUnsafe(v8_context, natives, "privates",
                         v8::NewStringType::kInternalized),
       api_bridge,        // exposed as apiBridge.
+      binding_util,      // exposed as bindingUtil.
       get_internal_api,  // exposed as getInternalApi.
       // Each safe builtin. Keep in order with the arguments in WrapSource.
       context_->safe_builtins()->GetArray(),

@@ -46,7 +46,8 @@ public class UrlManagerTest extends InstrumentationTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        ContextUtils.getAppSharedPreferences().edit()
+        ContextUtils.getAppSharedPreferences()
+                .edit()
                 .putInt(PREF_PHYSICAL_WEB, PHYSICAL_WEB_ON)
                 .apply();
         UrlManager.clearPrefsForTesting();
@@ -88,7 +89,8 @@ public class UrlManagerTest extends InstrumentationTestCase {
     }
 
     private void setOnboarding() {
-        ContextUtils.getAppSharedPreferences().edit()
+        ContextUtils.getAppSharedPreferences()
+                .edit()
                 .putInt(PREF_PHYSICAL_WEB, PHYSICAL_WEB_ONBOARDING)
                 .apply();
     }
@@ -186,17 +188,14 @@ public class UrlManagerTest extends InstrumentationTestCase {
         assertEquals(1, urls.size());
         assertEquals(urlInfo.getDistance(), urls.get(0).getDistance());
         assertEquals(urlInfo.getDeviceAddress(), urls.get(0).getDeviceAddress());
-        assertEquals(urlInfo.getScanTimestamp(), urls.get(0).getScanTimestamp());
+        assertEquals(urlInfo.getFirstSeenTimestamp(), urls.get(0).getFirstSeenTimestamp());
 
-        urlInfo = new UrlInfo(URL1)
-                .setDistance(100.0)
-                .setDeviceAddress("00:11:22:33:AA:BB");
+        urlInfo = new UrlInfo(URL1).setDistance(100.0).setDeviceAddress("00:11:22:33:AA:BB");
         mUrlManager.addUrl(urlInfo);
         urls = mUrlManager.getUrls(true);
         assertEquals(1, urls.size());
         assertEquals(urlInfo.getDistance(), urls.get(0).getDistance());
         assertEquals(urlInfo.getDeviceAddress(), urls.get(0).getDeviceAddress());
-        assertEquals(urlInfo.getScanTimestamp(), urls.get(0).getScanTimestamp());
     }
 
     @SmallTest
@@ -267,7 +266,8 @@ public class UrlManagerTest extends InstrumentationTestCase {
         Set<String> serializedUrls = new HashSet<>();
         serializedUrls.add(new UrlInfo(URL1, 99.5, curTime + 42).jsonSerialize().toString());
         serializedUrls.add("{\"not_a_value\": \"This is totally not a serialized UrlInfo.\"}");
-        ContextUtils.getAppSharedPreferences().edit()
+        ContextUtils.getAppSharedPreferences()
+                .edit()
                 .putStringSet("physicalweb_all_urls", serializedUrls)
                 .apply();
 
@@ -321,7 +321,8 @@ public class UrlManagerTest extends InstrumentationTestCase {
     public void testUpgradeFromNone() throws Exception {
         Set<String> oldResolvedUrls = new HashSet<String>();
         oldResolvedUrls.add("old");
-        ContextUtils.getAppSharedPreferences().edit()
+        ContextUtils.getAppSharedPreferences()
+                .edit()
                 .remove(UrlManager.getVersionKey())
                 .putStringSet("physicalweb_nearby_urls", oldResolvedUrls)
                 .putInt("org.chromium.chrome.browser.physicalweb.VERSION", 1)
@@ -338,13 +339,13 @@ public class UrlManagerTest extends InstrumentationTestCase {
                 return sharedPreferences.contains(UrlManager.getVersionKey())
                         && !sharedPreferences.contains("physicalweb_nearby_urls")
                         && !sharedPreferences.contains(
-                                "org.chromium.chrome.browser.physicalweb.VERSION")
+                                   "org.chromium.chrome.browser.physicalweb.VERSION")
                         && !sharedPreferences.contains("org.chromium.chrome.browser.physicalweb"
-                                + ".BOTTOM_BAR_DISPLAY_COUNT");
+                                   + ".BOTTOM_BAR_DISPLAY_COUNT");
             }
         }, 5000, CriteriaHelper.DEFAULT_POLLING_INTERVAL);
 
-        assertEquals(UrlManager.getVersion(),
-                sharedPreferences.getInt(UrlManager.getVersionKey(), 0));
+        assertEquals(
+                UrlManager.getVersion(), sharedPreferences.getInt(UrlManager.getVersionKey(), 0));
     }
 }

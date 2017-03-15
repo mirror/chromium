@@ -15,6 +15,7 @@
 #include "build/build_config.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/url_constants.h"
+#include "content/public/common/url_constants.h"
 #include "extensions/common/error_utils.h"
 #include "extensions/common/file_util.h"
 #include "extensions/common/manifest.h"
@@ -51,8 +52,8 @@ URLOverrides::URLOverrides() {
 URLOverrides::~URLOverrides() {
 }
 
-static base::LazyInstance<URLOverrides::URLOverrideMap> g_empty_url_overrides =
-    LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<URLOverrides::URLOverrideMap>::DestructorAtExit
+    g_empty_url_overrides = LAZY_INSTANCE_INITIALIZER;
 
 // static
 const URLOverrides::URLOverrideMap& URLOverrides::GetChromeURLOverrides(
@@ -77,7 +78,7 @@ bool DevToolsPageHandler::Parse(Extension* extension, base::string16* error) {
     return false;
   }
   manifest_url->url_ = extension->GetResourceURL(devtools_str);
-  extension->SetManifestData(keys::kDevToolsPage, manifest_url.release());
+  extension->SetManifestData(keys::kDevToolsPage, std::move(manifest_url));
   PermissionsParser::AddAPIPermission(extension, APIPermission::kDevtools);
   return true;
 }
@@ -108,7 +109,7 @@ bool URLOverridesHandler::Parse(Extension* extension, base::string16* error) {
     // Restrict override pages to a list of supported URLs.
     bool is_allowed_host = page == chrome::kChromeUINewTabHost ||
                            page == chrome::kChromeUIBookmarksHost ||
-                           page == chrome::kChromeUIHistoryHost;
+                           page == content::kChromeUIHistoryHost;
 #if defined(OS_CHROMEOS)
     is_allowed_host = is_allowed_host ||
                       page == chrome::kChromeUIActivationMessageHost ||
@@ -143,7 +144,7 @@ bool URLOverridesHandler::Parse(Extension* extension, base::string16* error) {
     return false;
   }
   extension->SetManifestData(keys::kChromeURLOverrides,
-                             url_overrides.release());
+                             std::move(url_overrides));
   return true;
 }
 

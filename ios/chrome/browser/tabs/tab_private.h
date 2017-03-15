@@ -16,8 +16,6 @@ class WebStateImpl;
 @interface Tab ()
 
 - (OpenInController*)openInController;
-- (void)closeThisTab;
-- (web::NavigationItem*)currentNavigationItem;
 - (void)setShouldObserveInfoBarManager:(BOOL)shouldObserveInfoBarManager;
 - (void)setShouldObserveFaviconChanges:(BOOL)shouldObserveFaviconChanges;
 

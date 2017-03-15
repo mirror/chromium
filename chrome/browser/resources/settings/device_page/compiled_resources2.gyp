@@ -55,6 +55,7 @@
       'dependencies': [
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:cr',
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:i18n_behavior',
+        '<(EXTERNS_GYP):settings_private',
         '<(EXTERNS_GYP):system_display',
         '<(INTERFACES_GYP):system_display_interface',
         'display_layout'
@@ -96,6 +97,17 @@
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:cr',
         '<(EXTERNS_GYP):system_display',
         '<(INTERFACES_GYP):system_display_interface',
+      ],
+      'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
+    },
+    {
+      'target_name': 'power',
+      'dependencies': [
+        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:i18n_behavior',
+        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:web_ui_listener_behavior',
+        '../compiled_resources2.gyp:route',
+        '../prefs/compiled_resources2.gyp:prefs_types',
+        'device_page_browser_proxy'
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },

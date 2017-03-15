@@ -63,5 +63,12 @@ spellcheck_test(
       )
     });
 
-// TODO(xiaochengh): Design interface for specifying content of subframes.
+spellcheck_test(
+    '<div contenteditable>zz</div>',
+    '',
+    '<div contenteditable>#zz#</div>',
+    {
+      title: 'Text without focus is checked by cold mode checker',
+      needsFullCheck: true
+    });
 </script>

@@ -74,11 +74,6 @@ void setScriptableObjectProperty(
     v8::Local<v8::Value> value,
     const v8::PropertyCallbackInfo<v8::Value>& info) {
   ASSERT(!value.IsEmpty());
-  // Don't intercept any of the properties of the HTMLPluginElement.
-  v8::Local<v8::String> v8Name = v8String(info.GetIsolate(), name);
-  if (v8CallBoolean(
-          info.Holder()->Has(info.GetIsolate()->GetCurrentContext(), v8Name)))
-    return;
 
   HTMLPlugInElement* impl = ElementType::toImpl(info.Holder());
   RefPtr<SharedPersistent<v8::Object>> wrapper = impl->pluginWrapper();
@@ -89,6 +84,15 @@ void setScriptableObjectProperty(
 
   if (instance.IsEmpty())
     return;
+
+  // Don't intercept any of the properties of the HTMLPluginElement.
+  v8::Local<v8::String> v8Name = v8String(info.GetIsolate(), name);
+  if (!v8CallBoolean(instance->HasOwnProperty(
+          info.GetIsolate()->GetCurrentContext(), v8Name)) &&
+      v8CallBoolean(
+          info.Holder()->Has(info.GetIsolate()->GetCurrentContext(), v8Name))) {
+    return;
+  }
 
   // FIXME: The gTalk pepper plugin is the only plugin to make use of
   // SetProperty and that is being deprecated. This can be removed as soon as
@@ -109,12 +113,16 @@ void setScriptableObjectProperty(
 void V8HTMLEmbedElement::namedPropertyGetterCustom(
     const AtomicString& name,
     const v8::PropertyCallbackInfo<v8::Value>& info) {
+  UseCounter::count(currentExecutionContext(info.GetIsolate()),
+                    UseCounter::HTMLEmbedElementGetter);
   getScriptableObjectProperty<V8HTMLEmbedElement>(name, info);
 }
 
 void V8HTMLObjectElement::namedPropertyGetterCustom(
     const AtomicString& name,
     const v8::PropertyCallbackInfo<v8::Value>& info) {
+  UseCounter::count(currentExecutionContext(info.GetIsolate()),
+                    UseCounter::HTMLObjectElementGetter);
   getScriptableObjectProperty<V8HTMLObjectElement>(name, info);
 }
 
@@ -122,6 +130,8 @@ void V8HTMLEmbedElement::namedPropertySetterCustom(
     const AtomicString& name,
     v8::Local<v8::Value> value,
     const v8::PropertyCallbackInfo<v8::Value>& info) {
+  UseCounter::count(currentExecutionContext(info.GetIsolate()),
+                    UseCounter::HTMLEmbedElementSetter);
   setScriptableObjectProperty<V8HTMLEmbedElement>(name, value, info);
 }
 
@@ -129,6 +139,8 @@ void V8HTMLObjectElement::namedPropertySetterCustom(
     const AtomicString& name,
     v8::Local<v8::Value> value,
     const v8::PropertyCallbackInfo<v8::Value>& info) {
+  UseCounter::count(currentExecutionContext(info.GetIsolate()),
+                    UseCounter::HTMLObjectElementSetter);
   setScriptableObjectProperty<V8HTMLObjectElement>(name, value, info);
 }
 

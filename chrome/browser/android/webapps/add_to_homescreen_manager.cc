@@ -6,7 +6,6 @@
 
 #include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
-#include "base/guid.h"
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
@@ -117,11 +116,7 @@ void AddToHomescreenManager::AddShortcut(const ShortcutInfo& info,
     return;
 
   RecordAddToHomescreen();
-
-  const std::string& uid = base::GenerateGUID();
-  ShortcutHelper::AddToLauncherWithSkBitmap(
-      web_contents->GetBrowserContext(), info, uid, icon,
-      data_fetcher_->FetchSplashScreenImageCallback(uid));
+  ShortcutHelper::AddToLauncherWithSkBitmap(web_contents, info, icon);
 
   // Fire the appinstalled event.
   blink::mojom::InstallationServicePtr installation_service;
@@ -176,14 +171,17 @@ void AddToHomescreenManager::OnDataAvailable(const ShortcutInfo& info,
       ShortcutHelper::ShowWebApkInstallInProgressToast();
     else
       CreateInfoBarForWebApk(info, primary_icon);
+
+    JNIEnv* env = base::android::AttachCurrentThread();
+    Java_AddToHomescreenManager_onFinished(env, java_ref_);
     return;
   }
 
-  JNIEnv* env = base::android::AttachCurrentThread();
   ScopedJavaLocalRef<jobject> java_bitmap;
   if (!primary_icon.drawsNothing())
     java_bitmap = gfx::ConvertToJavaBitmap(&primary_icon);
 
+  JNIEnv* env = base::android::AttachCurrentThread();
   Java_AddToHomescreenManager_onReadyToAdd(env, java_ref_, java_bitmap);
 
   if (add_shortcut_pending_)

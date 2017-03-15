@@ -82,7 +82,8 @@
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/input_method/input_method_configuration.h"
-#endif
+#include "chrome/browser/ui/webui/options/browser_options_handler.h"
+#endif  // defined(OS_CHROMEOS)
 
 #if defined(USE_ASH)
 #include "chrome/test/base/default_ash_event_generator_delegate.h"
@@ -248,6 +249,12 @@ void InProcessBrowserTest::SetUp() {
       chrome_browser_net::NetErrorTabHelper::TESTING_FORCE_DISABLED);
 
   google_util::SetMockLinkDoctorBaseURLForTesting();
+
+#if defined(OS_CHROMEOS)
+  // Polymer Elements are used for quick unlock configuration in options page,
+  // which is chromeos specific feature.
+  options::BrowserOptionsHandler::DisablePolymerPreloadForTesting();
+#endif  // defined(OS_CHROMEOS)
 
   // Use hardcoded quota settings to have a consistent testing environment.
   const int kQuota = 5 * 1024 * 1024;
@@ -446,22 +453,22 @@ Browser* InProcessBrowserTest::OpenURLOffTheRecord(Profile* profile,
 // Creates a browser with a single tab (about:blank), waits for the tab to
 // finish loading and shows the browser.
 Browser* InProcessBrowserTest::CreateBrowser(Profile* profile) {
-  Browser* browser = new Browser(Browser::CreateParams(profile));
+  Browser* browser = new Browser(Browser::CreateParams(profile, true));
   AddBlankTabAndShow(browser);
   return browser;
 }
 
 Browser* InProcessBrowserTest::CreateIncognitoBrowser() {
   // Create a new browser with using the incognito profile.
-  Browser* incognito = new Browser(
-      Browser::CreateParams(browser()->profile()->GetOffTheRecordProfile()));
+  Browser* incognito = new Browser(Browser::CreateParams(
+      browser()->profile()->GetOffTheRecordProfile(), true));
   AddBlankTabAndShow(incognito);
   return incognito;
 }
 
 Browser* InProcessBrowserTest::CreateBrowserForPopup(Profile* profile) {
   Browser* browser =
-      new Browser(Browser::CreateParams(Browser::TYPE_POPUP, profile));
+      new Browser(Browser::CreateParams(Browser::TYPE_POPUP, profile, true));
   AddBlankTabAndShow(browser);
   return browser;
 }
@@ -469,9 +476,8 @@ Browser* InProcessBrowserTest::CreateBrowserForPopup(Profile* profile) {
 Browser* InProcessBrowserTest::CreateBrowserForApp(
     const std::string& app_name,
     Profile* profile) {
-  Browser* browser = new Browser(
-      Browser::CreateParams::CreateForApp(
-          app_name, false /* trusted_source */, gfx::Rect(), profile));
+  Browser* browser = new Browser(Browser::CreateParams::CreateForApp(
+      app_name, false /* trusted_source */, gfx::Rect(), profile, true));
   AddBlankTabAndShow(browser);
   return browser;
 }

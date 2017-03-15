@@ -90,6 +90,9 @@ WebContentsView* CreateWebContentsView(
 
 namespace {
 
+WebContentsViewAura::RenderWidgetHostViewCreateFunction
+    g_create_render_widget_host_view = nullptr;
+
 bool IsScrollEndEffectEnabled() {
   return base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
       switches::kScrollEndEffect) == "1";
@@ -511,6 +514,13 @@ class WebContentsViewAura::WindowObserver
   DISALLOW_COPY_AND_ASSIGN(WindowObserver);
 };
 
+// static
+void WebContentsViewAura::InstallCreateHookForTests(
+    RenderWidgetHostViewCreateFunction create_render_widget_host_view) {
+  CHECK_EQ(nullptr, g_create_render_widget_host_view);
+  g_create_render_widget_host_view = create_render_widget_host_view;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // WebContentsViewAura, public:
 
@@ -699,10 +709,9 @@ void GetScreenInfoForWindow(ScreenInfo* results,
   results->is_monochrome = false;
   results->device_scale_factor = display.device_scale_factor();
   results->icc_profile = gfx::ICCProfile::FromBestMonitor();
-  if (results->icc_profile == gfx::ICCProfile()) {
-    results->icc_profile =
-        gfx::ICCProfile::FromColorSpace(gfx::ColorSpace::CreateSRGB());
-  }
+  if (!results->icc_profile.IsValid())
+    gfx::ColorSpace::CreateSRGB().GetICCProfile(&results->icc_profile);
+  DCHECK(results->icc_profile.IsValid());
 
   // The Display rotation and the ScreenInfo orientation are not the same
   // angle. The former is the physical display rotation while the later is the
@@ -847,7 +856,11 @@ RenderWidgetHostViewBase* WebContentsViewAura::CreateViewForWidget(
   }
 
   RenderWidgetHostViewAura* view =
-      new RenderWidgetHostViewAura(render_widget_host, is_guest_view_hack);
+      g_create_render_widget_host_view
+          ? g_create_render_widget_host_view(render_widget_host,
+                                             is_guest_view_hack)
+          : new RenderWidgetHostViewAura(render_widget_host,
+                                         is_guest_view_hack);
   view->InitAsChild(GetRenderWidgetHostViewParent());
 
   RenderWidgetHostImpl* host_impl =
@@ -1042,13 +1055,14 @@ void WebContentsViewAura::OnOverscrollComplete(OverscrollMode mode) {
 }
 
 void WebContentsViewAura::OnOverscrollModeChange(OverscrollMode old_mode,
-                                                 OverscrollMode new_mode) {
+                                                 OverscrollMode new_mode,
+                                                 OverscrollSource source) {
   if (old_mode == OVERSCROLL_NORTH || old_mode == OVERSCROLL_SOUTH)
     OverscrollUpdateForWebContentsDelegate(0);
 
   current_overscroll_gesture_ = new_mode;
-  navigation_overlay_->relay_delegate()->OnOverscrollModeChange(old_mode,
-                                                                new_mode);
+  navigation_overlay_->relay_delegate()->OnOverscrollModeChange(
+      old_mode, new_mode, source);
   completed_overscroll_gesture_ = OVERSCROLL_NONE;
 }
 
@@ -1313,7 +1327,7 @@ void WebContentsViewAura::OnWindowVisibilityChanged(aura::Window* window,
   web_contents_->UpdateWebContentsVisibility(visible);
 }
 
-#if defined(USE_EXTERNAL_POPUP_MENU)
+#if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
 void WebContentsViewAura::ShowPopupMenu(RenderFrameHost* render_frame_host,
                                         const gfx::Rect& bounds,
                                         int item_height,

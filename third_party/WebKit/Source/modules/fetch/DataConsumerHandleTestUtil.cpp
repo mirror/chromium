@@ -69,8 +69,10 @@ void DataConsumerHandleTestUtil::Thread::initialize() {
   m_thread->initialize();
   if (m_initializationPolicy >= ScriptExecution) {
     v8::HandleScope handleScope(isolate());
-    m_scriptState = ScriptState::create(v8::Context::New(isolate()),
-                                        DOMWrapperWorld::create(isolate()));
+    m_scriptState = ScriptState::create(
+        v8::Context::New(isolate()),
+        DOMWrapperWorld::create(isolate(),
+                                DOMWrapperWorld::WorldType::Testing));
   }
   if (m_initializationPolicy >= WithExecutionContext) {
     m_executionContext = new NullExecutionContext();
@@ -118,7 +120,7 @@ class DataConsumerHandleTestUtil::ReplayingHandle::ReaderImpl final
 void DataConsumerHandleTestUtil::ReplayingHandle::Context::add(
     const Command& command) {
   MutexLocker locker(m_mutex);
-  m_commands.append(command);
+  m_commands.push_back(command);
 }
 
 void DataConsumerHandleTestUtil::ReplayingHandle::Context::attachReader(
@@ -205,7 +207,7 @@ DataConsumerHandleTestUtil::ReplayingHandle::Context::Context()
 const DataConsumerHandleTestUtil::Command&
 DataConsumerHandleTestUtil::ReplayingHandle::Context::top() {
   DCHECK(!isEmpty());
-  return m_commands.first();
+  return m_commands.front();
 }
 
 void DataConsumerHandleTestUtil::ReplayingHandle::Context::consume(
@@ -215,7 +217,7 @@ void DataConsumerHandleTestUtil::ReplayingHandle::Context::consume(
   bool fullyConsumed = (size + m_offset >= top().body().size());
   if (fullyConsumed) {
     m_offset = 0;
-    m_commands.removeFirst();
+    m_commands.pop_front();
   } else {
     m_offset += size;
   }

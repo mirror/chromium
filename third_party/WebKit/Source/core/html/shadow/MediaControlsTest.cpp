@@ -4,6 +4,8 @@
 
 #include "core/html/shadow/MediaControls.h"
 
+#include <limits>
+#include <memory>
 #include "core/HTMLNames.h"
 #include "core/css/StylePropertySet.h"
 #include "core/dom/Document.h"
@@ -11,56 +13,29 @@
 #include "core/dom/StyleEngine.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLVideoElement.h"
+#include "core/html/shadow/MediaControlElementTypes.h"
 #include "core/loader/EmptyClients.h"
 #include "core/testing/DummyPageHolder.h"
 #include "platform/heap/Handle.h"
+#include "platform/testing/EmptyWebMediaPlayer.h"
+#include "platform/testing/HistogramTester.h"
 #include "platform/testing/UnitTestHelpers.h"
-#include "public/platform/WebMediaPlayer.h"
 #include "public/platform/WebSize.h"
 #include "public/platform/modules/remoteplayback/WebRemotePlaybackAvailability.h"
 #include "public/platform/modules/remoteplayback/WebRemotePlaybackClient.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include <memory>
 
 namespace blink {
 
 namespace {
 
-class MockVideoWebMediaPlayer : public WebMediaPlayer {
+class MockVideoWebMediaPlayer : public EmptyWebMediaPlayer {
  public:
-  void load(LoadType, const WebMediaPlayerSource&, CORSMode) override{};
-  void play() override{};
-  void pause() override{};
-  bool supportsSave() const override { return false; };
-  void seek(double seconds) override{};
-  void setRate(double) override{};
-  void setVolume(double) override{};
-  WebTimeRanges buffered() const override { return WebTimeRanges(); };
-  WebTimeRanges seekable() const override { return WebTimeRanges(); };
-  void setSinkId(const WebString& sinkId,
-                 const WebSecurityOrigin&,
-                 WebSetSinkIdCallbacks*) override{};
-  bool hasVideo() const override { return true; };
-  bool hasAudio() const override { return false; };
-  WebSize naturalSize() const override { return WebSize(0, 0); };
-  bool paused() const override { return false; };
-  bool seeking() const override { return false; };
-  double duration() const override { return 0.0; };
-  double currentTime() const override { return 0.0; };
-  NetworkState getNetworkState() const override { return NetworkStateEmpty; };
-  ReadyState getReadyState() const override { return ReadyStateHaveNothing; };
-  WebString getErrorMessage() override { return WebString(); };
-  bool didLoadingProgress() override { return false; };
-  bool hasSingleSecurityOrigin() const override { return true; };
-  bool didPassCORSAccessCheck() const override { return true; };
-  double mediaTimeForTimeValue(double timeValue) const override {
-    return timeValue;
-  };
-  unsigned decodedFrameCount() const override { return 0; };
-  unsigned droppedFrameCount() const override { return 0; };
-  size_t audioDecodedByteCount() const override { return 0; };
-  size_t videoDecodedByteCount() const override { return 0; };
-  void paint(WebCanvas*, const WebRect&, PaintFlags&) override{};
+  // WebMediaPlayer overrides:
+  WebTimeRanges seekable() const override { return m_seekable; }
+  bool hasVideo() const override { return true; }
+
+  WebTimeRanges m_seekable;
 };
 
 class MockWebRemotePlaybackClient : public WebRemotePlaybackClient {
@@ -80,9 +55,9 @@ class MockWebRemotePlaybackClient : public WebRemotePlaybackClient {
       WebRemotePlaybackAvailability::Unknown;
 };
 
-class StubFrameLoaderClient : public EmptyFrameLoaderClient {
+class StubLocalFrameClient : public EmptyLocalFrameClient {
  public:
-  static StubFrameLoaderClient* create() { return new StubFrameLoaderClient; }
+  static StubLocalFrameClient* create() { return new StubLocalFrameClient; }
 
   std::unique_ptr<WebMediaPlayer> createWebMediaPlayer(
       HTMLMediaElement&,
@@ -135,13 +110,20 @@ bool isElementVisible(Element& element) {
   return true;
 }
 
+// This must match MediaControlDownloadButtonElement::DownloadActionMetrics.
+enum DownloadActionMetrics {
+  Shown = 0,
+  Clicked,
+  Count  // Keep last.
+};
+
 }  // namespace
 
 class MediaControlsTest : public ::testing::Test {
  protected:
   virtual void SetUp() {
     m_pageHolder = DummyPageHolder::create(IntSize(800, 600), nullptr,
-                                           StubFrameLoaderClient::create());
+                                           StubLocalFrameClient::create());
     Document& document = this->document();
 
     document.write("<video>");
@@ -158,22 +140,42 @@ class MediaControlsTest : public ::testing::Test {
         WebRemotePlaybackAvailability::DeviceAvailable);
   }
 
-  void ensureLayout() {
-    // Force a relayout, so that the controls know the width.  Otherwise,
-    // they don't know if, for example, the cast button will fit.
-    m_mediaControls->mediaElement().clientWidth();
+  void ensureSizing() {
+    // Fire the size-change callback to ensure that the controls have
+    // been properly notified of the video size.
+    m_mediaControls->notifyElementSizeChanged(
+        m_mediaControls->mediaElement().getBoundingClientRect());
   }
 
   void simulateHideMediaControlsTimerFired() {
     m_mediaControls->hideMediaControlsTimerFired(nullptr);
   }
 
+  void simulateLoadedMetadata() { m_mediaControls->onLoadedMetadata(); }
+
   MediaControls& mediaControls() { return *m_mediaControls; }
+  MockVideoWebMediaPlayer* webMediaPlayer() {
+    return static_cast<MockVideoWebMediaPlayer*>(
+        mediaControls().mediaElement().webMediaPlayer());
+  }
   Document& document() { return m_pageHolder->document(); }
+
+  HistogramTester& histogramTester() { return m_histogramTester; }
+
+  void loadMediaWithDuration(double duration) {
+    mediaControls().mediaElement().setSrc("https://example.com/foo.mp4");
+    testing::runPendingTasks();
+    WebTimeRange timeRange(0.0, duration);
+    webMediaPlayer()->m_seekable.assign(&timeRange, 1);
+    mediaControls().mediaElement().durationChanged(duration,
+                                                   false /* requestSeek */);
+    simulateLoadedMetadata();
+  }
 
  private:
   std::unique_ptr<DummyPageHolder> m_pageHolder;
   Persistent<MediaControls> m_mediaControls;
+  HistogramTester m_histogramTester;
 };
 
 TEST_F(MediaControlsTest, HideAndShow) {
@@ -230,7 +232,7 @@ TEST_F(MediaControlsTest, ResetDoesNotTriggerInitialLayout) {
 }
 
 TEST_F(MediaControlsTest, CastButtonRequiresRoute) {
-  ensureLayout();
+  ensureSizing();
   mediaControls().mediaElement().setBooleanAttribute(HTMLNames::controlsAttr,
                                                      true);
 
@@ -245,7 +247,7 @@ TEST_F(MediaControlsTest, CastButtonRequiresRoute) {
 }
 
 TEST_F(MediaControlsTest, CastButtonDisableRemotePlaybackAttr) {
-  ensureLayout();
+  ensureSizing();
   mediaControls().mediaElement().setBooleanAttribute(HTMLNames::controlsAttr,
                                                      true);
 
@@ -293,6 +295,22 @@ TEST_F(MediaControlsTest, CastOverlayDisableRemotePlaybackAttr) {
   ASSERT_TRUE(isElementVisible(*castOverlayButton));
 }
 
+TEST_F(MediaControlsTest, CastOverlayMediaControlsDisabled) {
+  Element* castOverlayButton = getElementByShadowPseudoId(
+      mediaControls(), "-internal-media-controls-overlay-cast-button");
+  ASSERT_NE(nullptr, castOverlayButton);
+
+  EXPECT_FALSE(isElementVisible(*castOverlayButton));
+  simulateRouteAvailabe();
+  EXPECT_TRUE(isElementVisible(*castOverlayButton));
+
+  document().settings()->setMediaControlsEnabled(false);
+  EXPECT_FALSE(isElementVisible(*castOverlayButton));
+
+  document().settings()->setMediaControlsEnabled(true);
+  EXPECT_TRUE(isElementVisible(*castOverlayButton));
+}
+
 TEST_F(MediaControlsTest, KeepControlsVisibleIfOverflowListVisible) {
   Element* overflowList = getElementByShadowPseudoId(
       mediaControls(), "-internal-media-controls-overflow-menu-list");
@@ -313,6 +331,174 @@ TEST_F(MediaControlsTest, KeepControlsVisibleIfOverflowListVisible) {
   simulateHideMediaControlsTimerFired();
   EXPECT_TRUE(isElementVisible(*overflowList));
   EXPECT_TRUE(isElementVisible(*panel));
+}
+
+TEST_F(MediaControlsTest, DownloadButtonDisplayed) {
+  ensureSizing();
+
+  Element* downloadButton = getElementByShadowPseudoId(
+      mediaControls(), "-internal-media-controls-download-button");
+  ASSERT_NE(nullptr, downloadButton);
+
+  mediaControls().mediaElement().setSrc("https://example.com/foo.mp4");
+  testing::runPendingTasks();
+  simulateLoadedMetadata();
+
+  // Download button should normally be displayed.
+  EXPECT_TRUE(isElementVisible(*downloadButton));
+}
+
+TEST_F(MediaControlsTest, DownloadButtonNotDisplayedEmptyUrl) {
+  ensureSizing();
+
+  Element* downloadButton = getElementByShadowPseudoId(
+      mediaControls(), "-internal-media-controls-download-button");
+  ASSERT_NE(nullptr, downloadButton);
+
+  // Download button should not be displayed when URL is empty.
+  mediaControls().mediaElement().setSrc("");
+  testing::runPendingTasks();
+  simulateLoadedMetadata();
+  EXPECT_FALSE(isElementVisible(*downloadButton));
+}
+
+TEST_F(MediaControlsTest, DownloadButtonDisplayedHiddenAndDisplayed) {
+  ensureSizing();
+
+  Element* downloadButton = getElementByShadowPseudoId(
+      mediaControls(), "-internal-media-controls-download-button");
+  ASSERT_NE(nullptr, downloadButton);
+
+  // Initially show button.
+  mediaControls().mediaElement().setSrc("https://example.com/foo.mp4");
+  testing::runPendingTasks();
+  simulateLoadedMetadata();
+  EXPECT_TRUE(isElementVisible(*downloadButton));
+  histogramTester().expectBucketCount("Media.Controls.Download",
+                                      DownloadActionMetrics::Shown, 1);
+
+  // Hide button.
+  mediaControls().mediaElement().setSrc("");
+  testing::runPendingTasks();
+  EXPECT_FALSE(isElementVisible(*downloadButton));
+  histogramTester().expectBucketCount("Media.Controls.Download",
+                                      DownloadActionMetrics::Shown, 1);
+
+  // Showing button again should not increment Shown count.
+  mediaControls().mediaElement().setSrc("https://example.com/foo.mp4");
+  testing::runPendingTasks();
+  EXPECT_TRUE(isElementVisible(*downloadButton));
+  histogramTester().expectBucketCount("Media.Controls.Download",
+                                      DownloadActionMetrics::Shown, 1);
+}
+
+TEST_F(MediaControlsTest, DownloadButtonRecordsClickOnlyOnce) {
+  ensureSizing();
+
+  MediaControlDownloadButtonElement* downloadButton =
+      static_cast<MediaControlDownloadButtonElement*>(
+          getElementByShadowPseudoId(
+              mediaControls(), "-internal-media-controls-download-button"));
+  ASSERT_NE(nullptr, downloadButton);
+
+  // Initially show button.
+  mediaControls().mediaElement().setSrc("https://example.com/foo.mp4");
+  testing::runPendingTasks();
+  simulateLoadedMetadata();
+  EXPECT_TRUE(isElementVisible(*downloadButton));
+  histogramTester().expectBucketCount("Media.Controls.Download",
+                                      DownloadActionMetrics::Shown, 1);
+
+  // Click button once.
+  downloadButton->dispatchSimulatedClick(
+      Event::createBubble(EventTypeNames::click), SendNoEvents);
+  histogramTester().expectBucketCount("Media.Controls.Download",
+                                      DownloadActionMetrics::Clicked, 1);
+
+  // Clicking button again should not increment Clicked count.
+  downloadButton->dispatchSimulatedClick(
+      Event::createBubble(EventTypeNames::click), SendNoEvents);
+  histogramTester().expectBucketCount("Media.Controls.Download",
+                                      DownloadActionMetrics::Clicked, 1);
+}
+
+TEST_F(MediaControlsTest, DownloadButtonNotDisplayedInfiniteDuration) {
+  ensureSizing();
+
+  Element* downloadButton = getElementByShadowPseudoId(
+      mediaControls(), "-internal-media-controls-download-button");
+  ASSERT_NE(nullptr, downloadButton);
+
+  mediaControls().mediaElement().setSrc("https://example.com/foo.mp4");
+  testing::runPendingTasks();
+
+  // Download button should not be displayed when duration is infinite.
+  mediaControls().mediaElement().durationChanged(
+      std::numeric_limits<double>::infinity(), false /* requestSeek */);
+  simulateLoadedMetadata();
+  EXPECT_FALSE(isElementVisible(*downloadButton));
+}
+
+TEST_F(MediaControlsTest, DownloadButtonNotDisplayedHLS) {
+  ensureSizing();
+
+  Element* downloadButton = getElementByShadowPseudoId(
+      mediaControls(), "-internal-media-controls-download-button");
+  ASSERT_NE(nullptr, downloadButton);
+
+  // Download button should not be displayed for HLS streams.
+  mediaControls().mediaElement().setSrc("https://example.com/foo.m3u8");
+  testing::runPendingTasks();
+  simulateLoadedMetadata();
+  EXPECT_FALSE(isElementVisible(*downloadButton));
+}
+
+TEST_F(MediaControlsTest, TimelineSeekToRoundedEnd) {
+  ensureSizing();
+
+  MediaControlTimelineElement* timeline =
+      static_cast<MediaControlTimelineElement*>(getElementByShadowPseudoId(
+          mediaControls(), "-webkit-media-controls-timeline"));
+  ASSERT_NE(nullptr, timeline);
+
+  // Tests the case where the real length of the video, |exactDuration|, gets
+  // rounded up slightly to |roundedUpDuration| when setting the timeline's
+  // |max| attribute (crbug.com/695065).
+  double exactDuration = 596.586667;
+  double roundedUpDuration = 596.587;
+  loadMediaWithDuration(exactDuration);
+
+  // Simulate a click slightly past the end of the track of the timeline's
+  // underlying <input type="range">. This would set the |value| to the |max|
+  // attribute, which can be slightly rounded relative to the duration.
+  timeline->setValueAsNumber(roundedUpDuration, ASSERT_NO_EXCEPTION);
+  ASSERT_EQ(roundedUpDuration, timeline->valueAsNumber());
+  EXPECT_EQ(0.0, mediaControls().mediaElement().currentTime());
+  timeline->dispatchInputEvent();
+  EXPECT_EQ(exactDuration, mediaControls().mediaElement().currentTime());
+}
+
+TEST_F(MediaControlsTest, TimelineImmediatelyUpdatesCurrentTime) {
+  ensureSizing();
+
+  MediaControlTimelineElement* timeline =
+      static_cast<MediaControlTimelineElement*>(getElementByShadowPseudoId(
+          mediaControls(), "-webkit-media-controls-timeline"));
+  ASSERT_NE(nullptr, timeline);
+  MediaControlCurrentTimeDisplayElement* currentTimeDisplay =
+      static_cast<MediaControlCurrentTimeDisplayElement*>(
+          getElementByShadowPseudoId(
+              mediaControls(), "-webkit-media-controls-current-time-display"));
+  ASSERT_NE(nullptr, currentTimeDisplay);
+
+  double duration = 600;
+  loadMediaWithDuration(duration);
+
+  // Simulate seeking the underlying range to 50%. Current time display should
+  // update synchronously (rather than waiting for media to finish seeking).
+  timeline->setValueAsNumber(duration / 2, ASSERT_NO_EXCEPTION);
+  timeline->dispatchInputEvent();
+  EXPECT_EQ(duration / 2, currentTimeDisplay->currentValue());
 }
 
 }  // namespace blink

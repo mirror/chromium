@@ -2792,6 +2792,10 @@ error::Error GLES2DecoderPassthroughImpl::DoCopyTextureCHROMIUM(
     GLboolean unpack_flip_y,
     GLboolean unpack_premultiply_alpha,
     GLboolean unpack_unmultiply_alpha) {
+  if (!feature_info_->feature_flags().chromium_copy_texture) {
+    return error::kUnknownCommand;
+  }
+
   glCopyTextureCHROMIUM(GetTextureServiceID(source_id, resources_, false),
                         GetTextureServiceID(dest_id, resources_, false),
                         internalformat, dest_type, unpack_flip_y,
@@ -2814,6 +2818,10 @@ error::Error GLES2DecoderPassthroughImpl::DoCopySubTextureCHROMIUM(
     GLboolean unpack_flip_y,
     GLboolean unpack_premultiply_alpha,
     GLboolean unpack_unmultiply_alpha) {
+  if (!feature_info_->feature_flags().chromium_copy_texture) {
+    return error::kUnknownCommand;
+  }
+
   glCopySubTextureCHROMIUM(GetTextureServiceID(source_id, resources_, false),
                            GetTextureServiceID(dest_id, resources_, false),
                            xoffset, yoffset, x, y, width, height, unpack_flip_y,
@@ -2824,6 +2832,10 @@ error::Error GLES2DecoderPassthroughImpl::DoCopySubTextureCHROMIUM(
 error::Error GLES2DecoderPassthroughImpl::DoCompressedCopyTextureCHROMIUM(
     GLenum source_id,
     GLenum dest_id) {
+  if (!feature_info_->feature_flags().chromium_copy_compressed_texture) {
+    return error::kUnknownCommand;
+  }
+
   glCompressedCopyTextureCHROMIUM(
       GetTextureServiceID(source_id, resources_, false),
       GetTextureServiceID(dest_id, resources_, false));
@@ -3085,13 +3097,13 @@ error::Error GLES2DecoderPassthroughImpl::DoWaitSyncTokenCHROMIUM(
     CommandBufferNamespace namespace_id,
     CommandBufferId command_buffer_id,
     GLuint64 release_count) {
-  if (wait_fence_sync_callback_.is_null()) {
+  if (wait_sync_token_callback_.is_null()) {
     return error::kNoError;
   }
-  return wait_fence_sync_callback_.Run(namespace_id, command_buffer_id,
-                                       release_count)
-             ? error::kNoError
-             : error::kDeferCommandUntilLater;
+  SyncToken sync_token(namespace_id, 0, command_buffer_id, release_count);
+  return wait_sync_token_callback_.Run(sync_token)
+             ? error::kDeferCommandUntilLater
+             : error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::DoDrawBuffersEXT(
@@ -3151,6 +3163,26 @@ error::Error GLES2DecoderPassthroughImpl::DoScheduleCALayerCHROMIUM(
 error::Error GLES2DecoderPassthroughImpl::DoScheduleCALayerInUseQueryCHROMIUM(
     GLuint n,
     const volatile GLuint* textures) {
+  NOTIMPLEMENTED();
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderPassthroughImpl::DoScheduleDCLayerSharedStateCHROMIUM(
+    GLfloat opacity,
+    GLboolean is_clipped,
+    const GLfloat* clip_rect,
+    GLint z_order,
+    const GLfloat* transform) {
+  NOTIMPLEMENTED();
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderPassthroughImpl::DoScheduleDCLayerCHROMIUM(
+    GLuint contents_texture_id,
+    const GLfloat* contents_rect,
+    GLuint background_color,
+    GLuint edge_aa_mask,
+    const GLfloat* bounds_rect) {
   NOTIMPLEMENTED();
   return error::kNoError;
 }
@@ -3452,6 +3484,15 @@ error::Error GLES2DecoderPassthroughImpl::DoOverlayPromotionHintCHROMIUM(
     GLboolean promotion_hint,
     GLint display_x,
     GLint display_y) {
+  NOTIMPLEMENTED();
+  return error::kNoError;
+}
+
+error::Error GLES2DecoderPassthroughImpl::DoSetDrawRectangleCHROMIUM(
+    GLint x,
+    GLint y,
+    GLint width,
+    GLint height) {
   NOTIMPLEMENTED();
   return error::kNoError;
 }

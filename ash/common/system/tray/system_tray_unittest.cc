@@ -20,6 +20,7 @@
 #include "ash/common/wm_window.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
+#include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test/status_area_widget_test_helper.h"
 #include "ash/test/test_system_tray_item.h"
@@ -31,6 +32,7 @@
 #include "ui/events/test/event_generator.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/rect.h"
+#include "ui/views/controls/separator.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
@@ -208,21 +210,26 @@ TEST_F(SystemTrayTest, Activation) {
       nullptr, kShellWindowId_DefaultContainer, gfx::Rect(0, 0, 100, 100)));
   EXPECT_TRUE(widget->IsActive());
 
+  // The window stays active after the bubble opens.
   tray->ShowDefaultView(BUBBLE_CREATE_NEW);
   ASSERT_TRUE(tray->GetWidget());
   EXPECT_FALSE(tray->GetSystemBubble()->bubble_view()->GetWidget()->IsActive());
   EXPECT_TRUE(widget->IsActive());
 
+  // Activating the bubble makes the window lose activation.
   tray->ActivateBubble();
   EXPECT_TRUE(tray->GetSystemBubble()->bubble_view()->GetWidget()->IsActive());
   EXPECT_FALSE(widget->IsActive());
 
-  // Accelerator will activate the bubble.
+  // Closing the bubble re-activates the window.
   tray->CloseSystemBubble();
-
   EXPECT_TRUE(widget->IsActive());
+
+  // Opening the bubble with an accelerator activates the bubble because the
+  // user will probably navigate with the keyboard.
   WmShell::Get()->accelerator_controller()->PerformActionIfEnabled(
       SHOW_SYSTEM_TRAY_BUBBLE);
+  ASSERT_TRUE(tray->GetWidget());
   EXPECT_TRUE(tray->GetSystemBubble()->bubble_view()->GetWidget()->IsActive());
   EXPECT_FALSE(widget->IsActive());
 }
@@ -346,41 +353,6 @@ TEST_F(SystemTrayTest, TrayWidgetAutoResizes) {
             tray->GetWidget()->GetWindowBoundsInScreen().size().ToString());
 }
 
-TEST_F(SystemTrayTest, SystemTrayNotifications) {
-  SystemTray* tray = GetPrimarySystemTray();
-  ASSERT_TRUE(tray->GetWidget());
-
-  TestSystemTrayItem* test_item = new TestSystemTrayItem();
-  TestSystemTrayItem* detailed_item = new TestSystemTrayItem();
-  tray->AddTrayItem(base::WrapUnique(test_item));
-  tray->AddTrayItem(base::WrapUnique(detailed_item));
-
-  // Ensure the tray views are created.
-  ASSERT_TRUE(test_item->tray_view() != NULL);
-  ASSERT_TRUE(detailed_item->tray_view() != NULL);
-
-  // Ensure a notification view is created.
-  tray->ShowNotificationView(test_item);
-  ASSERT_TRUE(test_item->notification_view() != NULL);
-
-  // Show the default view, notification view should remain.
-  tray->ShowDefaultView(BUBBLE_CREATE_NEW);
-  RunAllPendingInMessageLoop();
-  ASSERT_TRUE(test_item->notification_view() != NULL);
-
-  // Show the detailed view, ensure the notification view remains.
-  tray->ShowDetailedView(detailed_item, 0, false, BUBBLE_CREATE_NEW);
-  RunAllPendingInMessageLoop();
-  ASSERT_TRUE(detailed_item->detailed_view() != NULL);
-  ASSERT_TRUE(test_item->notification_view() != NULL);
-
-  // Hide the detailed view, ensure the notification view still exists.
-  ASSERT_TRUE(tray->CloseSystemBubble());
-  RunAllPendingInMessageLoop();
-  ASSERT_TRUE(detailed_item->detailed_view() == NULL);
-  ASSERT_TRUE(test_item->notification_view() != NULL);
-}
-
 // Test is flaky. http://crbug.com/637978
 TEST_F(SystemTrayTest, DISABLED_BubbleCreationTypesTest) {
   SystemTray* tray = GetPrimarySystemTray();
@@ -455,6 +427,10 @@ TEST_F(SystemTrayTest, TrayBoundsInWidget) {
 }
 
 TEST_F(SystemTrayTest, PersistentBubble) {
+  // TODO: investigate why this fails in mash. http://crbug.com/695559.
+  if (WmShell::Get()->IsRunningInMash())
+    return;
+
   SystemTray* tray = GetPrimarySystemTray();
   ASSERT_TRUE(tray->GetWidget());
 
@@ -510,7 +486,8 @@ TEST_F(SystemTrayTest, PersistentBubble) {
 
 TEST_F(SystemTrayTest, WithSystemModal) {
   // Check if the accessibility item is created even with system modal dialog.
-  WmShell::Get()->accessibility_delegate()->SetVirtualKeyboardEnabled(true);
+  Shell::GetInstance()->accessibility_delegate()->SetVirtualKeyboardEnabled(
+      true);
   std::unique_ptr<views::Widget> widget(CreateTestWidget(
       new ModalWidgetDelegate, kShellWindowId_SystemModalContainer,
       gfx::Rect(0, 0, 100, 100)));
@@ -578,6 +555,10 @@ TEST_F(SystemTrayTest, SystemTrayHeightWithBubble) {
   RunAllPendingInMessageLoop();
 
   EXPECT_EQ(0, notification_tray->tray_bubble_height_for_test());
+}
+
+TEST_F(SystemTrayTest, SeparatorThickness) {
+  EXPECT_EQ(kSeparatorWidth, views::Separator::kThickness);
 }
 
 }  // namespace test

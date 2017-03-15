@@ -46,7 +46,7 @@
       }
 
       paper-toggle-button {
-        -webkit-margin-start: var(--checkbox-spacing);
+        -webkit-margin-start: var(--settings-control-spacing);
       }
     </style>
 
@@ -76,18 +76,21 @@
     <!-- SIM unlocked -->
     <div class="settings-box two-line"
         hidden$="[[!showSimUnlocked_(networkProperties)]]">
-      <div class="start">$i18n{networkSimLockEnable}</div>
+      <div id="simLockToggleLabel" class="start">
+        $i18n{networkSimLockEnable}
+      </div>
       <paper-button on-tap="onChangePinTap_"
           hidden$="[[!networkProperties.Cellular.SIMLockStatus.LockEnabled]]">
         $i18n{networkSimChangePin}
       </paper-button>
       <paper-toggle-button on-change="onSimLockEnabledChange_"
-          checked="[[networkProperties.Cellular.SIMLockStatus.LockEnabled]]">
+          checked="[[networkProperties.Cellular.SIMLockStatus.LockEnabled]]"
+          aria-labelledby="simLockToggleLabel">
       </paper-toggle-button>
     </div>
 
     <!-- Enter PIN dialog -->
-    <dialog is="cr-dialog" id="enterPinDialog">
+    <dialog is="cr-dialog" id="enterPinDialog" close-text="$i18n{close}">
       <div class="title">$i18n{networkSimEnterPinTitle}</div>
       <div class="body">
         <paper-input id="enterPin" class="pin" no-label-float
@@ -107,7 +110,7 @@
     </dialog>
 
     <!-- Change PIN dialog -->
-    <dialog is="cr-dialog" id="changePinDialog">
+    <dialog is="cr-dialog" id="changePinDialog" close-text="$i18n{close}">
       <div class="title">$i18n{networkSimChangePinTitle}</div>
       <div class="body">
         <paper-input id="changePinOld" class="pin" no-label-float
@@ -133,7 +136,7 @@
     </dialog>
 
     <!-- Unlock PIN dialog -->
-    <dialog is="cr-dialog" id="unlockPinDialog">
+    <dialog is="cr-dialog" id="unlockPinDialog" close-text="$i18n{close}">
       <div class="title">$i18n{networkSimLockedTitle}</div>
       <div class="body">
         <paper-input id="unlockPin" class="pin" no-label-float
@@ -153,7 +156,7 @@
     </dialog>
 
     <!-- Unlock PUK dialog -->
-    <dialog is="cr-dialog" id="unlockPukDialog">
+    <dialog is="cr-dialog" id="unlockPukDialog" close-text="$i18n{close}">
       <div class="title">$i18n{networkSimLockedTitle}</div>
       <div class="body">
         <div>

@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <unordered_set>
+#include <vector>
 
 #include "base/compiler_specific.h"
 #include "base/memory/weak_ptr.h"
@@ -48,13 +49,12 @@ class CC_SURFACES_EXPORT CompositorFrameSinkSupport
 
   void EvictFrame();
   void SetNeedsBeginFrame(bool needs_begin_frame);
+  void DidFinishFrame(const BeginFrameAck& ack);
   void SubmitCompositorFrame(const LocalSurfaceId& local_surface_id,
                              CompositorFrame frame);
-  void Require(const LocalSurfaceId& local_surface_id,
-               const SurfaceSequence& sequence);
-  void Satisfy(const SurfaceSequence& sequence);
-  void AddChildFrameSink(const FrameSinkId& child_frame_sink_id);
-  void RemoveChildFrameSink(const FrameSinkId& child_frame_sink_id);
+  void RequestCopyOfSurface(std::unique_ptr<CopyOutputRequest> request);
+  void ForceReclaimResources();
+  void ClaimTemporaryReference(const SurfaceId& surface_id);
 
  private:
   // Update surface references with SurfaceManager for current CompositorFrame
@@ -113,9 +113,6 @@ class CC_SURFACES_EXPORT CompositorFrameSinkSupport
   // Track the surface references for the surface corresponding to this
   // compositor frame sink.
   ReferencedSurfaceTracker reference_tracker_;
-
-  // The set of BeginFrame children of this CompositorFrameSink.
-  std::unordered_set<FrameSinkId, FrameSinkIdHash> child_frame_sinks_;
 
   const bool is_root_;
 

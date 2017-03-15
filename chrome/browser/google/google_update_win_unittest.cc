@@ -26,7 +26,7 @@
 #include "base/win/registry.h"
 #include "base/win/scoped_comptr.h"
 #include "chrome/common/chrome_version.h"
-#include "chrome/installer/util/browser_distribution.h"
+#include "chrome/install_static/test/scoped_install_details.h"
 #include "chrome/installer/util/google_update_settings.h"
 #include "chrome/installer/util/helper.h"
 #include "google_update/google_update_idl.h"
@@ -531,7 +531,8 @@ class GoogleUpdateWinTest : public ::testing::TestWithParam<bool> {
   GoogleUpdateWinTest()
       : task_runner_(new base::TestSimpleTaskRunner()),
         task_runner_handle_(task_runner_),
-        system_level_install_(GetParam()) {}
+        system_level_install_(GetParam()),
+        scoped_install_details_(system_level_install_, 0) {}
 
   void SetUp() override {
     ::testing::TestWithParam<bool>::SetUp();
@@ -540,8 +541,8 @@ class GoogleUpdateWinTest : public ::testing::TestWithParam<bool> {
     // standard install location for this mode (system-level or user-level).
     base::FilePath file_exe;
     ASSERT_TRUE(PathService::Get(base::FILE_EXE, &file_exe));
-    base::FilePath install_dir(installer::GetChromeInstallPath(
-        system_level_install_, BrowserDistribution::GetDistribution()));
+    base::FilePath install_dir(
+        installer::GetChromeInstallPath(system_level_install_));
     file_exe_override_.reset(new base::ScopedPathOverride(
         base::FILE_EXE, install_dir.Append(file_exe.BaseName()),
         true /* is_absolute */, false /* create */));
@@ -624,6 +625,7 @@ class GoogleUpdateWinTest : public ::testing::TestWithParam<bool> {
   scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
   base::ThreadTaskRunnerHandle task_runner_handle_;
   bool system_level_install_;
+  install_static::ScopedInstallDetails scoped_install_details_;
   std::unique_ptr<base::ScopedPathOverride> file_exe_override_;
   std::unique_ptr<base::ScopedPathOverride> program_files_override_;
   std::unique_ptr<base::ScopedPathOverride> program_files_x86_override_;

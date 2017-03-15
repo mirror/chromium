@@ -11,7 +11,7 @@
 #include "chrome/browser/chromeos/login/help_app_launcher.h"
 #include "chrome/browser/chromeos/login/helper.h"
 #include "chrome/browser/chromeos/login/oobe_screen.h"
-#include "chrome/browser/chromeos/login/screens/core_oobe_actor.h"
+#include "chrome/browser/chromeos/login/screens/core_oobe_view.h"
 #include "chrome/browser/chromeos/login/screens/eula_screen.h"
 #include "chrome/browser/chromeos/login/ui/login_web_dialog.h"
 #include "chrome/browser/chromeos/login/ui/webui_login_display.h"
@@ -82,9 +82,9 @@ void ShowCreditsDialog(Profile* profile,
 
 namespace chromeos {
 
-EulaScreenHandler::EulaScreenHandler(CoreOobeActor* core_oobe_actor)
-    : BaseScreenHandler(kJsScreenPath),
-      core_oobe_actor_(core_oobe_actor) {
+EulaScreenHandler::EulaScreenHandler(CoreOobeView* core_oobe_view)
+    : BaseScreenHandler(kScreenId), core_oobe_view_(core_oobe_view) {
+  set_call_js_prefix(kJsScreenPath);
 }
 
 EulaScreenHandler::~EulaScreenHandler() {
@@ -97,7 +97,7 @@ void EulaScreenHandler::Show() {
     show_on_init_ = true;
     return;
   }
-  ShowScreen(OobeScreen::SCREEN_OOBE_EULA);
+  ShowScreen(kScreenId);
 }
 
 void EulaScreenHandler::Hide() {
@@ -146,6 +146,7 @@ void EulaScreenHandler::DeclareLocalizedValues(
 
   /* MD-OOBE */
   builder->Add("oobeEulaSectionTitle", IDS_OOBE_EULA_SECTION_TITLE);
+  builder->Add("oobeEulaIframeLabel", IDS_OOBE_EULA_IFRAME_LABEL);
   builder->Add("oobeEulaAcceptAndContinueButtonText",
                IDS_OOBE_EULA_ACCEPT_AND_CONTINUE_BUTTON_TEXT);
 }
@@ -172,12 +173,12 @@ void EulaScreenHandler::Initialize() {
   if (!page_is_ready() || !screen_)
     return;
 
-  core_oobe_actor_->SetUsageStats(screen_->IsUsageStatsEnabled());
+  core_oobe_view_->SetUsageStats(screen_->IsUsageStatsEnabled());
 
   // This OEM EULA is a file:// URL which we're unable to load in iframe.
   // Instead if it's defined we use chrome://terms/oem that will load same file.
   if (!screen_->GetOemEulaUrl().is_empty())
-    core_oobe_actor_->SetOemEulaUrl(chrome::kChromeUITermsOemURL);
+    core_oobe_view_->SetOemEulaUrl(chrome::kChromeUITermsOemURL);
 
   if (show_on_init_) {
     Show();
@@ -186,7 +187,7 @@ void EulaScreenHandler::Initialize() {
 }
 
 void EulaScreenHandler::OnPasswordFetched(const std::string& tpm_password) {
-  core_oobe_actor_->SetTpmPassword(tpm_password);
+  core_oobe_view_->SetTpmPassword(tpm_password);
 }
 
 void EulaScreenHandler::HandleOnLearnMore() {

@@ -10,6 +10,7 @@
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/test_personal_data_manager.h"
+#include "components/payments/core/payment_address.h"
 #include "ios/chrome/browser/payments/payment_request_test_util.h"
 #import "ios/chrome/browser/payments/payment_request_view_controller.h"
 #import "ios/chrome/test/scoped_key_window.h"
@@ -20,6 +21,10 @@
 #include "testing/platform_test.h"
 #include "third_party/ocmock/OCMock/OCMock.h"
 #include "third_party/ocmock/gtest_support.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 typedef PlatformTest PaymentRequestCoordinatorTest;
 
@@ -34,7 +39,7 @@ typedef void (^mock_coordinator_confirm)(PaymentRequestCoordinator*,
                                          web::PaymentResponse);
 typedef void (^mock_coordinator_select_shipping_address)(
     PaymentRequestCoordinator*,
-    web::PaymentAddress);
+    payments::PaymentAddress);
 typedef void (^mock_coordinator_select_shipping_option)(
     PaymentRequestCoordinator*,
     web::PaymentShippingOption);
@@ -52,7 +57,7 @@ typedef void (^mock_coordinator_select_shipping_option)(
 }
 
 - (void)paymentRequestCoordinator:(PaymentRequestCoordinator*)coordinator
-         didSelectShippingAddress:(web::PaymentAddress)shippingAddress {
+         didSelectShippingAddress:(payments::PaymentAddress)shippingAddress {
   return static_cast<mock_coordinator_select_shipping_address>(
       [self blockForSelector:_cmd])(coordinator, shippingAddress);
 }
@@ -72,25 +77,24 @@ TEST(PaymentRequestCoordinatorTest, StartAndStop) {
   std::unique_ptr<PaymentRequest> payment_request =
       payment_request_test_util::CreateTestPaymentRequest();
 
-  UIViewController* base_view_controller =
-      [[[UIViewController alloc] init] autorelease];
+  UIViewController* base_view_controller = [[UIViewController alloc] init];
   ScopedKeyWindow scoped_key_window_;
   [scoped_key_window_.Get() setRootViewController:base_view_controller];
 
-  PaymentRequestCoordinator* coordinator = [[[PaymentRequestCoordinator alloc]
-      initWithBaseViewController:base_view_controller] autorelease];
+  PaymentRequestCoordinator* coordinator = [[PaymentRequestCoordinator alloc]
+      initWithBaseViewController:base_view_controller];
   [coordinator setPaymentRequest:payment_request.get()];
 
   [coordinator start];
   // Short delay to allow animation to complete.
   base::test::ios::SpinRunLoopWithMaxDelay(base::TimeDelta::FromSecondsD(1));
-  id persented_view_controller =
+  id presented_view_controller =
       [coordinator baseViewController].presentedViewController;
-  EXPECT_TRUE([persented_view_controller
+  EXPECT_TRUE([presented_view_controller
       isMemberOfClass:[UINavigationController class]]);
   UINavigationController* navigation_controller =
       base::mac::ObjCCastStrict<UINavigationController>(
-          persented_view_controller);
+          presented_view_controller);
   EXPECT_EQ(1u, navigation_controller.viewControllers.count);
   id view_controller = navigation_controller.visibleViewController;
   EXPECT_TRUE(
@@ -103,20 +107,19 @@ TEST(PaymentRequestCoordinatorTest, StartAndStop) {
   EXPECT_EQ(nil, [coordinator baseViewController].presentedViewController);
 }
 
-// Tests that calling the view controller delegate method which notifies the
-// coordinator about confirmation of the PaymentRequest invokes the
-// corresponding coordinator delegate method with the expected information.
-TEST(PaymentRequestCoordinatorTest, DidConfirm) {
+// Tests that calling the card unmasking delegate method which notifies the
+// coordinator about successful unmasking of a credit card invokes the
+// appropriate coordinator delegate method with the expected information.
+TEST(PaymentRequestCoordinatorTest, FullCardRequestDidSucceed) {
   std::unique_ptr<PaymentRequest> payment_request =
       payment_request_test_util::CreateTestPaymentRequest();
 
-  UIViewController* base_view_controller =
-      [[[UIViewController alloc] init] autorelease];
+  UIViewController* base_view_controller = [[UIViewController alloc] init];
   ScopedKeyWindow scoped_key_window_;
   [scoped_key_window_.Get() setRootViewController:base_view_controller];
 
-  PaymentRequestCoordinator* coordinator = [[[PaymentRequestCoordinator alloc]
-      initWithBaseViewController:base_view_controller] autorelease];
+  PaymentRequestCoordinator* coordinator = [[PaymentRequestCoordinator alloc]
+      initWithBaseViewController:base_view_controller];
   [coordinator setPaymentRequest:payment_request.get()];
 
   id delegate = [OCMockObject
@@ -136,12 +139,17 @@ TEST(PaymentRequestCoordinatorTest, DidConfirm) {
                    paymentResponse.details.expiry_month);
          EXPECT_EQ(base::ASCIIToUTF16("2999"),
                    paymentResponse.details.expiry_year);
+         EXPECT_EQ(base::ASCIIToUTF16("123"),
+                   paymentResponse.details.card_security_code);
          EXPECT_EQ(coordinator, callerCoordinator);
        }];
   [coordinator setDelegate:delegate_mock];
 
-  // Call the controller delegate method.
-  [coordinator paymentRequestViewControllerDidConfirm:nil];
+  // Call the card unmasking delegate method.
+  std::unique_ptr<autofill::CreditCard> card =
+      payment_request_test_util::CreateTestCreditCard();
+  [coordinator fullCardRequestDidSucceedWithCard:*card
+                                             CVC:base::ASCIIToUTF16("123")];
 }
 
 // Tests that calling the ShippingAddressSelectionCoordinator delegate method
@@ -151,13 +159,12 @@ TEST(PaymentRequestCoordinatorTest, DidSelectShippingAddress) {
   std::unique_ptr<PaymentRequest> payment_request =
       payment_request_test_util::CreateTestPaymentRequest();
 
-  UIViewController* base_view_controller =
-      [[[UIViewController alloc] init] autorelease];
+  UIViewController* base_view_controller = [[UIViewController alloc] init];
   ScopedKeyWindow scoped_key_window_;
   [scoped_key_window_.Get() setRootViewController:base_view_controller];
 
-  PaymentRequestCoordinator* coordinator = [[[PaymentRequestCoordinator alloc]
-      initWithBaseViewController:base_view_controller] autorelease];
+  PaymentRequestCoordinator* coordinator = [[PaymentRequestCoordinator alloc]
+      initWithBaseViewController:base_view_controller];
   [coordinator setPaymentRequest:payment_request.get()];
 
   // Mock the coordinator delegate.
@@ -168,16 +175,15 @@ TEST(PaymentRequestCoordinatorTest, DidSelectShippingAddress) {
   SEL selector = @selector(paymentRequestCoordinator:didSelectShippingAddress:);
   [delegate_mock onSelector:selector
        callBlockExpectation:^(PaymentRequestCoordinator* callerCoordinator,
-                              web::PaymentAddress shippingAddress) {
+                              payments::PaymentAddress shippingAddress) {
          EXPECT_EQ(base::ASCIIToUTF16("John Mitchell Doe"),
                    shippingAddress.recipient);
          EXPECT_EQ(base::ASCIIToUTF16("Fox"), shippingAddress.organization);
-         ASSERT_EQ(3U, shippingAddress.address_line.size());
+         ASSERT_EQ(2U, shippingAddress.address_line.size());
          EXPECT_EQ(base::ASCIIToUTF16("123 Zoo St"),
                    shippingAddress.address_line[0]);
          EXPECT_EQ(base::ASCIIToUTF16("unit 5"),
                    shippingAddress.address_line[1]);
-         EXPECT_EQ(base::ASCIIToUTF16(""), shippingAddress.address_line[2]);
          EXPECT_EQ(base::ASCIIToUTF16("12345678910"), shippingAddress.phone);
          EXPECT_EQ(base::ASCIIToUTF16("Hollywood"), shippingAddress.city);
          EXPECT_EQ(base::ASCIIToUTF16("CA"), shippingAddress.region);
@@ -201,13 +207,12 @@ TEST(PaymentRequestCoordinatorTest, DidSelectShippingOption) {
   std::unique_ptr<PaymentRequest> payment_request =
       payment_request_test_util::CreateTestPaymentRequest();
 
-  UIViewController* base_view_controller =
-      [[[UIViewController alloc] init] autorelease];
+  UIViewController* base_view_controller = [[UIViewController alloc] init];
   ScopedKeyWindow scoped_key_window_;
   [scoped_key_window_.Get() setRootViewController:base_view_controller];
 
-  PaymentRequestCoordinator* coordinator = [[[PaymentRequestCoordinator alloc]
-      initWithBaseViewController:base_view_controller] autorelease];
+  PaymentRequestCoordinator* coordinator = [[PaymentRequestCoordinator alloc]
+      initWithBaseViewController:base_view_controller];
   [coordinator setPaymentRequest:payment_request.get()];
 
   // Mock the coordinator delegate.
@@ -244,13 +249,12 @@ TEST(PaymentRequestCoordinatorTest, DidCancel) {
   std::unique_ptr<PaymentRequest> payment_request =
       payment_request_test_util::CreateTestPaymentRequest();
 
-  UIViewController* base_view_controller =
-      [[[UIViewController alloc] init] autorelease];
+  UIViewController* base_view_controller = [[UIViewController alloc] init];
   ScopedKeyWindow scoped_key_window_;
   [scoped_key_window_.Get() setRootViewController:base_view_controller];
 
-  PaymentRequestCoordinator* coordinator = [[[PaymentRequestCoordinator alloc]
-      initWithBaseViewController:base_view_controller] autorelease];
+  PaymentRequestCoordinator* coordinator = [[PaymentRequestCoordinator alloc]
+      initWithBaseViewController:base_view_controller];
   [coordinator setPaymentRequest:payment_request.get()];
 
   // Mock the coordinator delegate.

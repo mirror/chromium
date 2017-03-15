@@ -17,26 +17,26 @@ Polymer({
      * Network property associated with the indicator.
      * @type {!CrOnc.ManagedProperty|undefined}
      */
-    property: {type: Object, observer: 'propertyChanged_'},
-
-    /**
-     * Which indicator type to show (or NONE).
-     * @type {!CrPolicyIndicatorType}
-     */
-    indicatorType: {type: String, value: CrPolicyIndicatorType.NONE},
+    property: Object,
 
     /**
      * Recommended value for non enforced properties.
      * @private {!CrOnc.NetworkPropertyType|undefined}
      */
     recommended_: Object,
+
+    /** @override */
+    indicatorTooltip: {
+      type: String,
+      computed: 'getNetworkIndicatorTooltip_(indicatorType, property.*)',
+    },
   },
 
-  /**
-   * @param {!CrOnc.ManagedProperty} property Always defined property value.
-   * @private
-   */
-  propertyChanged_: function(property) {
+  observers: ['propertyChanged_(property.*)'],
+
+  /** @private */
+  propertyChanged_: function() {
+    var property = this.property;
     if (!this.isControlled(property)) {
       this.indicatorType = CrPolicyIndicatorType.NONE;
       return;
@@ -74,7 +74,7 @@ Polymer({
    * @return {string} The tooltip text for |type|.
    * @private
    */
-  getTooltip_: function() {
+  getNetworkIndicatorTooltip_: function() {
     var matches;
     if (this.indicatorType == CrPolicyIndicatorType.RECOMMENDED &&
         this.property) {
@@ -83,6 +83,6 @@ Polymer({
         value = this.property[this.property.Effective];
       matches = value == this.recommended_;
     }
-    return this.getPolicyIndicatorTooltip(this.indicatorType, '', matches);
+    return this.getIndicatorTooltip(this.indicatorType, '', matches);
   }
 });

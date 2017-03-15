@@ -36,12 +36,14 @@
 #include "core/editing/VisiblePosition.h"
 #include "core/editing/VisibleUnits.h"
 #include "core/editing/commands/BreakBlockquoteCommand.h"
+#include "core/editing/commands/DeleteSelectionCommand.h"
 #include "core/editing/commands/InsertIncrementalTextCommand.h"
 #include "core/editing/commands/InsertLineBreakCommand.h"
 #include "core/editing/commands/InsertParagraphSeparatorCommand.h"
 #include "core/editing/commands/InsertTextCommand.h"
 #include "core/editing/spellcheck/SpellChecker.h"
 #include "core/events/BeforeTextInsertedEvent.h"
+#include "core/events/ScopedEventQueue.h"
 #include "core/events/TextEvent.h"
 #include "core/frame/LocalFrame.h"
 #include "core/html/HTMLBRElement.h"
@@ -80,11 +82,12 @@ DispatchEventResult dispatchTextInputEvent(LocalFrame* frame,
 }
 
 PlainTextRange getSelectionOffsets(LocalFrame* frame) {
-  EphemeralRange range = firstEphemeralRangeOf(frame->selection().selection());
+  EphemeralRange range = firstEphemeralRangeOf(
+      frame->selection().computeVisibleSelectionInDOMTreeDeprecated());
   if (range.isNull())
     return PlainTextRange();
-  ContainerNode* editable =
-      frame->selection().rootEditableElementOrTreeScopeRootNode();
+  ContainerNode* const editable = rootEditableElementOrTreeScopeRootNodeOf(
+      frame->selection().computeVisibleSelectionInDOMTree().base());
   DCHECK(editable);
   return PlainTextRange::create(*editable, range);
 }
@@ -152,7 +155,9 @@ void TypingCommand::deleteSelection(Document& document, Options options) {
   LocalFrame* frame = document.frame();
   DCHECK(frame);
 
-  if (!frame->selection().isRange())
+  if (!frame->selection()
+           .computeVisibleSelectionInDOMTreeDeprecated()
+           .isRange())
     return;
 
   if (TypingCommand* lastTypingCommand =
@@ -169,6 +174,20 @@ void TypingCommand::deleteSelection(Document& document, Options options) {
   }
 
   TypingCommand::create(document, DeleteSelection, "", options)->apply();
+}
+
+void TypingCommand::deleteSelectionIfRange(const VisibleSelection& selection,
+                                           EditingState* editingState,
+                                           bool smartDelete,
+                                           bool mergeBlocksAfterDelete,
+                                           bool expandForSpecialElements,
+                                           bool sanitizeMarkup) {
+  if (!selection.isRange())
+    return;
+  applyCommandToComposite(DeleteSelectionCommand::create(
+                              selection, smartDelete, mergeBlocksAfterDelete,
+                              expandForSpecialElements, sanitizeMarkup),
+                          editingState);
 }
 
 void TypingCommand::deleteKeyPressed(Document& document,
@@ -230,7 +249,8 @@ void TypingCommand::updateSelectionIfDifferentFromCurrentSelection(
     TypingCommand* typingCommand,
     LocalFrame* frame) {
   DCHECK(frame);
-  VisibleSelection currentSelection = frame->selection().selection();
+  VisibleSelection currentSelection =
+      frame->selection().computeVisibleSelectionInDOMTreeDeprecated();
   if (currentSelection == typingCommand->endingSelection())
     return;
 
@@ -250,7 +270,7 @@ void TypingCommand::insertText(Document& document,
     document.frame()->spellChecker().updateMarkersForWordsAffectedByEditing(
         isSpaceOrNewline(text[0]));
 
-  insertText(document, text, frame->selection().selection(), options,
+  insertText(document, text, frame->selection().selectionInDOMTree(), options,
              composition, isIncrementalInsertion);
 }
 
@@ -264,7 +284,9 @@ void TypingCommand::adjustSelectionAfterIncrementalInsertion(
   // needs to be audited. see http://crbug.com/590369 for more details.
   frame->document()->updateStyleAndLayoutIgnorePendingStylesheets();
 
-  Element* element = frame->selection().selection().rootEditableElement();
+  Element* element = frame->selection()
+                         .computeVisibleSelectionInDOMTreeDeprecated()
+                         .rootEditableElement();
   DCHECK(element);
 
   const size_t end = m_selectionStart + textLength;
@@ -273,7 +295,10 @@ void TypingCommand::adjustSelectionAfterIncrementalInsertion(
   const SelectionInDOMTree& selection =
       createSelection(start, end, endingSelection().isDirectional(), element);
 
-  if (selection == frame->selection().selection().asSelection())
+  if (selection ==
+      frame->selection()
+          .computeVisibleSelectionInDOMTreeDeprecated()
+          .asSelection())
     return;
 
   setEndingSelection(selection);
@@ -282,16 +307,21 @@ void TypingCommand::adjustSelectionAfterIncrementalInsertion(
 
 // FIXME: We shouldn't need to take selectionForInsertion. It should be
 // identical to FrameSelection's current selection.
-void TypingCommand::insertText(Document& document,
-                               const String& text,
-                               const VisibleSelection& selectionForInsertion,
-                               Options options,
-                               TextCompositionType compositionType,
-                               const bool isIncrementalInsertion) {
+void TypingCommand::insertText(
+    Document& document,
+    const String& text,
+    const SelectionInDOMTree& passedSelectionForInsertion,
+    Options options,
+    TextCompositionType compositionType,
+    const bool isIncrementalInsertion,
+    InputEvent::InputType inputType) {
   LocalFrame* frame = document.frame();
   DCHECK(frame);
 
-  VisibleSelection currentSelection = frame->selection().selection();
+  VisibleSelection currentSelection =
+      frame->selection().computeVisibleSelectionInDOMTreeDeprecated();
+  const VisibleSelection& selectionForInsertion =
+      createVisibleSelection(passedSelectionForInsertion);
 
   String newText = text;
   if (compositionType != TextCompositionUpdate)
@@ -332,9 +362,12 @@ void TypingCommand::insertText(Document& document,
         options & RetainAutocorrectionIndicator);
     lastTypingCommand->setShouldPreventSpellChecking(options &
                                                      PreventSpellChecking);
-    EditingState editingState;
     lastTypingCommand->m_isIncrementalInsertion = isIncrementalInsertion;
     lastTypingCommand->m_selectionStart = selectionStart;
+    lastTypingCommand->m_inputType = inputType;
+
+    EditingState editingState;
+    EventQueueScope eventQueueScope;
     lastTypingCommand->insertText(newText, options & SelectInsertedText,
                                   &editingState);
     return;
@@ -349,11 +382,12 @@ void TypingCommand::insertText(Document& document,
   }
   command->m_isIncrementalInsertion = isIncrementalInsertion;
   command->m_selectionStart = selectionStart;
+  command->m_inputType = inputType;
   command->apply();
 
   if (changeSelection) {
     command->setEndingVisibleSelection(currentSelection);
-    frame->selection().setSelection(currentSelection);
+    frame->selection().setSelection(currentSelection.asSelection());
   }
 }
 
@@ -362,6 +396,7 @@ bool TypingCommand::insertLineBreak(Document& document) {
           lastTypingCommandIfStillOpenForTyping(document.frame())) {
     lastTypingCommand->setShouldRetainAutocorrectionIndicator(false);
     EditingState editingState;
+    EventQueueScope eventQueueScope;
     lastTypingCommand->insertLineBreak(&editingState);
     return !editingState.isAborted();
   }
@@ -374,6 +409,7 @@ bool TypingCommand::insertParagraphSeparatorInQuotedContent(
   if (TypingCommand* lastTypingCommand =
           lastTypingCommandIfStillOpenForTyping(document.frame())) {
     EditingState editingState;
+    EventQueueScope eventQueueScope;
     lastTypingCommand->insertParagraphSeparatorInQuotedContent(&editingState);
     return !editingState.isAborted();
   }
@@ -388,6 +424,7 @@ bool TypingCommand::insertParagraphSeparator(Document& document) {
           lastTypingCommandIfStillOpenForTyping(document.frame())) {
     lastTypingCommand->setShouldRetainAutocorrectionIndicator(false);
     EditingState editingState;
+    EventQueueScope eventQueueScope;
     lastTypingCommand->insertParagraphSeparator(&editingState);
     return !editingState.isAborted();
   }
@@ -455,6 +492,9 @@ InputEvent::InputType TypingCommand::inputType() const {
 
   if (m_compositionType != TextCompositionNone)
     return InputType::InsertCompositionText;
+
+  if (m_inputType != InputType::None)
+    return m_inputType;
 
   switch (m_commandType) {
     // TODO(chongz): |DeleteSelection| is used by IME but we don't have
@@ -796,8 +836,7 @@ void TypingCommand::deleteKeyPressed(TextGranularity granularity,
   if (frame->editor().behavior().shouldUndoOfDeleteSelectText() &&
       m_openedByBackwardDelete)
     setStartingSelection(selectionAfterUndo);
-  CompositeEditCommand::deleteSelection(selectionToDelete, editingState,
-                                        m_smartDelete);
+  deleteSelectionIfRange(selectionToDelete, editingState, m_smartDelete);
   if (editingState->isAborted())
     return;
   setSmartDelete(false);
@@ -924,8 +963,7 @@ void TypingCommand::forwardDeleteKeyPressed(TextGranularity granularity,
   // Make undo select what was deleted on Mac alone
   if (frame->editor().behavior().shouldUndoOfDeleteSelectText())
     setStartingSelection(selectionAfterUndo);
-  CompositeEditCommand::deleteSelection(selectionToDelete, editingState,
-                                        m_smartDelete);
+  deleteSelectionIfRange(selectionToDelete, editingState, m_smartDelete);
   if (editingState->isAborted())
     return;
   setSmartDelete(false);

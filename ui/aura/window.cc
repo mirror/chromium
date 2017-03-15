@@ -46,13 +46,16 @@
 
 namespace aura {
 
-Window::Window(WindowDelegate* delegate) : Window(delegate, nullptr) {}
+Window::Window(WindowDelegate* delegate, ui::wm::WindowType type)
+    : Window(delegate, nullptr, type) {}
 
-Window::Window(WindowDelegate* delegate, std::unique_ptr<WindowPort> port)
+Window::Window(WindowDelegate* delegate,
+               std::unique_ptr<WindowPort> port,
+               ui::wm::WindowType type)
     : port_owner_(std::move(port)),
       port_(port_owner_.get()),
       host_(nullptr),
-      type_(ui::wm::WINDOW_TYPE_UNKNOWN),
+      type_(type),
       owned_by_parent_(true),
       delegate_(delegate),
       parent_(nullptr),
@@ -306,11 +309,8 @@ void Window::SetBoundsInScreen(const gfx::Rect& new_bounds_in_screen,
   if (root) {
     aura::client::ScreenPositionClient* screen_position_client =
         aura::client::GetScreenPositionClient(root);
-    if (screen_position_client) {
-      screen_position_client->SetBounds(this, new_bounds_in_screen,
-                                        dst_display);
-      return;
-    }
+    screen_position_client->SetBounds(this, new_bounds_in_screen, dst_display);
+    return;
   }
   SetBounds(new_bounds_in_screen);
 }
@@ -656,7 +656,7 @@ void Window::AfterPropertyChange(const void* key,
                                  int64_t old_value,
                                  std::unique_ptr<ui::PropertyData> data) {
   if (port_)
-    port_->OnPropertyChanged(key, std::move(data));
+    port_->OnPropertyChanged(key, old_value, std::move(data));
   for (WindowObserver& observer : observers_)
     observer.OnWindowPropertyChanged(this, key, old_value);
 }

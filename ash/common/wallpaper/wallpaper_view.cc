@@ -9,10 +9,10 @@
 #include "ash/common/wallpaper/wallpaper_delegate.h"
 #include "ash/common/wallpaper/wallpaper_widget_controller.h"
 #include "ash/common/wm/overview/window_selector_controller.h"
-#include "ash/common/wm_lookup.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
 #include "ash/root_window_controller.h"
+#include "ash/shell.h"
 #include "ui/display/display.h"
 #include "ui/display/manager/managed_display_info.h"
 #include "ui/display/screen.h"
@@ -39,7 +39,7 @@ class LayerControlView : public views::View {
 
   // Overrides views::View.
   void Layout() override {
-    WmWindow* window = WmLookup::Get()->GetWindowForWidget(GetWidget());
+    WmWindow* window = WmWindow::Get(GetWidget()->GetNativeWindow());
     // Keep |this| at the bottom since there may be other windows on top of the
     // wallpaper view such as an overview mode shield.
     window->GetParent()->StackChildAtBottom(window);
@@ -126,7 +126,8 @@ void WallpaperView::OnPaint(gfx::Canvas* canvas) {
   // to fill the wallpaper. Ideally the image should be larger than the largest
   // display supported, if not we will scale and center it if the layout is
   // wallpaper::WALLPAPER_LAYOUT_CENTER_CROPPED.
-  WallpaperController* controller = WmShell::Get()->wallpaper_controller();
+  WallpaperController* controller =
+      Shell::GetInstance()->wallpaper_controller();
   gfx::ImageSkia wallpaper = controller->GetWallpaper();
   wallpaper::WallpaperLayout layout = controller->GetWallpaperLayout();
 
@@ -192,8 +193,9 @@ void WallpaperView::ShowContextMenuForView(views::View* source,
 }
 
 views::Widget* CreateWallpaper(WmWindow* root_window, int container_id) {
-  WallpaperController* controller = WmShell::Get()->wallpaper_controller();
-  WallpaperDelegate* wallpaper_delegate = WmShell::Get()->wallpaper_delegate();
+  WallpaperController* controller =
+      Shell::GetInstance()->wallpaper_controller();
+  WallpaperDelegate* wallpaper_delegate = Shell::Get()->wallpaper_delegate();
 
   views::Widget* wallpaper_widget = new views::Widget;
   views::Widget::InitParams params(
@@ -207,7 +209,7 @@ views::Widget* CreateWallpaper(WmWindow* root_window, int container_id) {
   wallpaper_widget->SetContentsView(new LayerControlView(new WallpaperView()));
   int animation_type = wallpaper_delegate->GetAnimationType();
   WmWindow* wallpaper_window =
-      WmLookup::Get()->GetWindowForWidget(wallpaper_widget);
+      WmWindow::Get(wallpaper_widget->GetNativeWindow());
   wallpaper_window->SetVisibilityAnimationType(animation_type);
 
   RootWindowController* root_window_controller =

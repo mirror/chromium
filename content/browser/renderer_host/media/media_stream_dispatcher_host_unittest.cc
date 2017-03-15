@@ -122,6 +122,10 @@ class MockMediaStreamDispatcherHost : public MediaStreamDispatcherHost,
         render_frame_id, page_request_id, device_id, type, security_origin);
   }
 
+  void OnStreamStarted(const std::string label) {
+    MediaStreamDispatcherHost::OnStreamStarted(label);
+  }
+
   std::string label_;
   StreamDeviceInfoArray audio_devices_;
   StreamDeviceInfoArray video_devices_;
@@ -164,6 +168,9 @@ class MockMediaStreamDispatcherHost : public MediaStreamDispatcherHost,
       StreamDeviceInfoArray video_device_list) {
     OnStreamGenerated(current_ipc_->routing_id(), request_id,
                       audio_device_list.size(), video_device_list.size());
+    // Simulate the stream started event back to host for UI testing.
+    OnStreamStarted(label);
+
     // Notify that the event have occurred.
     base::Closure quit_closure = quit_closures_.front();
     quit_closures_.pop();
@@ -473,7 +480,7 @@ TEST_F(MediaStreamDispatcherHostTest, GenerateStreamWithDepthVideo) {
   // Video device on index 1 is depth video capture device.  The number of fake
   // devices is 2.
   physical_video_devices_.clear();
-  video_capture_device_factory_->set_number_of_devices(2);
+  video_capture_device_factory_->SetToDefaultDevicesConfig(2);
   video_capture_device_factory_->GetDeviceDescriptors(&physical_video_devices_);
   // We specify to generate both audio and video stream.
   StreamControls controls(true, true);
@@ -680,7 +687,7 @@ TEST_F(MediaStreamDispatcherHostTest, GenerateStreamsWithInvalidAudioSourceId) {
 
 TEST_F(MediaStreamDispatcherHostTest, GenerateStreamsNoAvailableVideoDevice) {
   physical_video_devices_.clear();
-  video_capture_device_factory_->set_number_of_devices(0);
+  video_capture_device_factory_->SetToDefaultDevicesConfig(0);
   video_capture_device_factory_->GetDeviceDescriptors(&physical_video_devices_);
   StreamControls controls(true, true);
 
@@ -837,7 +844,7 @@ TEST_F(MediaStreamDispatcherHostTest, VideoDeviceUnplugged) {
   EXPECT_EQ(host_->audio_devices_.size(), 1u);
   EXPECT_EQ(host_->video_devices_.size(), 1u);
 
-  video_capture_device_factory_->set_number_of_devices(0);
+  video_capture_device_factory_->SetToDefaultDevicesConfig(0);
 
   base::RunLoop run_loop;
   EXPECT_CALL(*host_.get(), OnDeviceStopped(kRenderId))

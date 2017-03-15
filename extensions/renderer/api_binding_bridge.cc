@@ -4,6 +4,8 @@
 
 #include "extensions/renderer/api_binding_bridge.h"
 
+#include "base/values.h"
+#include "extensions/renderer/api_binding_hooks.h"
 #include "gin/converter.h"
 #include "gin/object_template_builder.h"
 
@@ -23,9 +25,9 @@ v8::Local<v8::Private> GetPrivatePropertyName(v8::Isolate* isolate,
 
 gin::WrapperInfo APIBindingBridge::kWrapperInfo = {gin::kEmbedderNativeGin};
 
-APIBindingBridge::APIBindingBridge(v8::Local<v8::Context> context,
+APIBindingBridge::APIBindingBridge(APIBindingHooks* hooks,
+                                   v8::Local<v8::Context> context,
                                    v8::Local<v8::Value> api_object,
-                                   v8::Local<v8::Value> js_hook_interface,
                                    const std::string& extension_id,
                                    const std::string& context_type,
                                    const binding::RunJSFunction& run_js)
@@ -40,6 +42,7 @@ APIBindingBridge::APIBindingBridge(v8::Local<v8::Context> context,
     NOTREACHED();
     return;
   }
+  v8::Local<v8::Object> js_hook_interface = hooks->GetJSHookInterface(context);
   result = wrapper->SetPrivate(context,
                                GetPrivatePropertyName(isolate,
                                                       kHookInterfaceKey),

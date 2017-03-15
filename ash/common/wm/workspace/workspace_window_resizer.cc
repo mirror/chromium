@@ -21,11 +21,11 @@
 #include "ash/common/wm/wm_screen_util.h"
 #include "ash/common/wm/workspace/phantom_window_controller.h"
 #include "ash/common/wm/workspace/two_step_edge_cycler.h"
-#include "ash/common/wm_lookup.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
+#include "ash/shell.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "ui/base/hit_test.h"
@@ -365,9 +365,8 @@ void WorkspaceWindowResizer::Drag(const gfx::Point& location_in_parent,
   // Track the last screen that the pointer was on to keep the snap phantom
   // window there.
   if (display.bounds().Contains(location_in_screen)) {
-    root = WmLookup::Get()
-               ->GetRootWindowControllerWithDisplayId(display.id())
-               ->GetWindow();
+    root =
+        Shell::GetRootWindowControllerWithDisplayId(display.id())->GetWindow();
   }
   if (!attached_windows_.empty())
     LayoutAttachedWindows(&bounds);
@@ -704,12 +703,12 @@ bool WorkspaceWindowResizer::UpdateMagnetismWindow(const gfx::Rect& bounds,
   // If we snapped to a window then check it first. That way we don't bounce
   // around when close to multiple edges.
   if (magnetism_window_) {
-    if (window_tracker_.Contains(magnetism_window_) &&
+    if (window_tracker_.Contains(magnetism_window_->aura_window()) &&
         matcher.ShouldAttach(magnetism_window_->GetBoundsInScreen(),
                              &magnetism_edge_)) {
       return true;
     }
-    window_tracker_.Remove(magnetism_window_);
+    window_tracker_.Remove(magnetism_window_->aura_window());
     magnetism_window_ = NULL;
   }
 
@@ -734,7 +733,7 @@ bool WorkspaceWindowResizer::UpdateMagnetismWindow(const gfx::Rect& bounds,
       if (matcher.ShouldAttach(other_state->window()->GetBoundsInScreen(),
                                &magnetism_edge_)) {
         magnetism_window_ = other_state->window();
-        window_tracker_.Add(magnetism_window_);
+        window_tracker_.Add(magnetism_window_->aura_window());
         return true;
       }
     }

@@ -30,7 +30,9 @@
 
 #include "core/fileapi/Blob.h"
 
+#include <memory>
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/ScriptState.h"
 #include "core/dom/DOMURL.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
@@ -38,7 +40,6 @@
 #include "core/frame/UseCounter.h"
 #include "platform/blob/BlobRegistry.h"
 #include "platform/blob/BlobURL.h"
-#include <memory>
 
 namespace blink {
 
@@ -92,11 +93,6 @@ Blob* Blob::create(
     const BlobPropertyBag& options,
     ExceptionState& exceptionState) {
   ASSERT(options.hasType());
-  if (!options.type().containsOnlyASCII()) {
-    exceptionState.throwDOMException(
-        SyntaxError, "The 'type' property must consist of ASCII characters.");
-    return nullptr;
-  }
 
   ASSERT(options.hasEndings());
   bool normalizeLineEndingsToNative = options.endings() == "native";
@@ -104,7 +100,7 @@ Blob* Blob::create(
     UseCounter::count(context, UseCounter::FileAPINativeLineEndings);
 
   std::unique_ptr<BlobData> blobData = BlobData::create();
-  blobData->setContentType(options.type().lower());
+  blobData->setContentType(normalizeType(options.type()));
 
   populateBlobData(blobData.get(), blobParts, normalizeLineEndingsToNative);
 
@@ -188,13 +184,12 @@ Blob* Blob::slice(long long start,
 
   long long length = end - start;
   std::unique_ptr<BlobData> blobData = BlobData::create();
-  blobData->setContentType(contentType);
+  blobData->setContentType(normalizeType(contentType));
   blobData->appendBlob(m_blobDataHandle, start, length);
   return Blob::create(BlobDataHandle::create(std::move(blobData), length));
 }
 
-void Blob::close(ExecutionContext* executionContext,
-                 ExceptionState& exceptionState) {
+void Blob::close(ScriptState* scriptState, ExceptionState& exceptionState) {
   if (isClosed()) {
     exceptionState.throwDOMException(InvalidStateError,
                                      "Blob has been closed.");
@@ -204,7 +199,7 @@ void Blob::close(ExecutionContext* executionContext,
   // Dereferencing a Blob that has been closed should result in
   // a network error. Revoke URLs registered against it through
   // its UUID.
-  DOMURL::revokeObjectUUID(executionContext, uuid());
+  DOMURL::revokeObjectUUID(scriptState->getExecutionContext(), uuid());
 
   // A Blob enters a 'readability state' of closed, where it will report its
   // size as zero. Blob and FileReader operations now throws on
@@ -222,6 +217,27 @@ void Blob::appendTo(BlobData& blobData) const {
 
 URLRegistry& Blob::registry() const {
   return BlobURLRegistry::registry();
+}
+
+// static
+String Blob::normalizeType(const String& type) {
+  if (type.isNull())
+    return emptyString;
+  const size_t length = type.length();
+  if (type.is8Bit()) {
+    const LChar* chars = type.characters8();
+    for (size_t i = 0; i < length; ++i) {
+      if (chars[i] < 0x20 || chars[i] > 0x7e)
+        return emptyString;
+    }
+  } else {
+    const UChar* chars = type.characters16();
+    for (size_t i = 0; i < length; ++i) {
+      if (chars[i] < 0x0020 || chars[i] > 0x007e)
+        return emptyString;
+    }
+  }
+  return type.lower();
 }
 
 }  // namespace blink

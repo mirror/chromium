@@ -229,7 +229,7 @@ IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorTest, OpenURLsPopup) {
   BrowserList::AddObserver(&observer);
 
   Browser* popup = new Browser(
-      Browser::CreateParams(Browser::TYPE_POPUP, browser()->profile()));
+      Browser::CreateParams(Browser::TYPE_POPUP, browser()->profile(), true));
   ASSERT_TRUE(popup->is_type_popup());
   ASSERT_EQ(popup, observer.added_browser_);
 
@@ -526,14 +526,14 @@ IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorTest, PRE_UpdateWithTwoProfiles) {
 
   // Open some urls with the browsers, and close them.
   Browser* browser1 =
-      new Browser(Browser::CreateParams(Browser::TYPE_TABBED, profile1));
+      new Browser(Browser::CreateParams(Browser::TYPE_TABBED, profile1, true));
   chrome::NewTab(browser1);
   ui_test_utils::NavigateToURL(browser1,
                                embedded_test_server()->GetURL("/empty.html"));
   CloseBrowserSynchronously(browser1);
 
-  Browser* browser2 = new Browser(
-      Browser::CreateParams(Browser::TYPE_TABBED, profile2));
+  Browser* browser2 =
+      new Browser(Browser::CreateParams(Browser::TYPE_TABBED, profile2, true));
   chrome::NewTab(browser2);
   ui_test_utils::NavigateToURL(browser2,
                                embedded_test_server()->GetURL("/form.html"));
@@ -667,7 +667,7 @@ IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorTest,
 
   // Open a page with profile_last.
   Browser* browser_last = new Browser(
-      Browser::CreateParams(Browser::TYPE_TABBED, profile_last));
+      Browser::CreateParams(Browser::TYPE_TABBED, profile_last, true));
   chrome::NewTab(browser_last);
   ui_test_utils::NavigateToURL(browser_last,
                                embedded_test_server()->GetURL("/empty.html"));
@@ -902,7 +902,7 @@ void StartupBrowserCreatorFirstRunTest::SetUpInProcessBrowserTestFixture() {
   policy_map_.Set(policy::key::kMetricsReportingEnabled,
                   policy::POLICY_LEVEL_MANDATORY, policy::POLICY_SCOPE_USER,
                   policy::POLICY_SOURCE_CLOUD,
-                  base::MakeUnique<base::FundamentalValue>(false), nullptr);
+                  base::MakeUnique<base::Value>(false), nullptr);
   provider_.UpdateChromePolicy(policy_map_);
 #endif  // defined(OS_LINUX) && defined(GOOGLE_CHROME_BUILD)
 
@@ -911,7 +911,14 @@ void StartupBrowserCreatorFirstRunTest::SetUpInProcessBrowserTestFixture() {
   policy::BrowserPolicyConnector::SetPolicyProviderForTesting(&provider_);
 }
 
-IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorFirstRunTest, AddFirstRunTab) {
+// http://crbug.com/691707
+#if defined(OS_MACOSX)
+#define MAYBE_AddFirstRunTab DISABLED_AddFirstRunTab
+#else
+#define MAYBE_AddFirstRunTab AddFirstRunTab
+#endif
+IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorFirstRunTest,
+                       MAYBE_AddFirstRunTab) {
   ASSERT_TRUE(embedded_test_server()->Start());
   StartupBrowserCreator browser_creator;
   browser_creator.AddFirstRunTab(
@@ -964,8 +971,7 @@ IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorFirstRunTest,
   policy_map_.Set(
       policy::key::kRestoreOnStartup, policy::POLICY_LEVEL_MANDATORY,
       policy::POLICY_SCOPE_USER, policy::POLICY_SOURCE_CLOUD,
-      base::WrapUnique(
-          new base::FundamentalValue(SessionStartupPref::kPrefValueURLs)),
+      base::WrapUnique(new base::Value(SessionStartupPref::kPrefValueURLs)),
       nullptr);
   base::ListValue startup_urls;
   startup_urls.AppendString(
@@ -1047,7 +1053,13 @@ IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorFirstRunTest,
             tab_strip->GetWebContentsAt(0)->GetURL().ExtractFileName());
 }
 
-IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorFirstRunTest, WelcomePages) {
+// http://crbug.com/691707
+#if defined(OS_MACOSX)
+#define MAYBE_WelcomePages DISABLED_WelcomePages
+#else
+#define MAYBE_WelcomePages WelcomePages
+#endif
+IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorFirstRunTest, MAYBE_WelcomePages) {
   ASSERT_TRUE(embedded_test_server()->Start());
 
   ProfileManager* profile_manager = g_browser_process->profile_manager();

@@ -372,7 +372,7 @@ class CORE_EXPORT LayoutBlockFlow : public LayoutBlock {
   LayoutUnit nextFloatLogicalBottomBelowForBlock(LayoutUnit) const;
 
   FloatingObject* lastFloatFromPreviousLine() const {
-    return containsFloats() ? m_floatingObjects->set().last().get() : nullptr;
+    return containsFloats() ? m_floatingObjects->set().back().get() : nullptr;
   }
 
   void setShouldDoFullPaintInvalidationForFirstLine();
@@ -940,6 +940,11 @@ class CORE_EXPORT LayoutBlockFlow : public LayoutBlock {
                       const BidiStatus& endLineStatus);
   void deleteEllipsisLineBoxes();
   void checkLinesForTextOverflow();
+  void tryPlacingEllipsisOnAtomicInlines(RootInlineBox*,
+                                         LayoutUnit blockRightEdge,
+                                         LayoutUnit blockLeftEdge,
+                                         LayoutUnit width,
+                                         const AtomicString&);
   void markLinesDirtyInBlockRange(LayoutUnit logicalTop,
                                   LayoutUnit logicalBottom,
                                   RootInlineBox* highest = nullptr);

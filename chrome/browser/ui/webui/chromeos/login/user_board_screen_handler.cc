@@ -9,7 +9,8 @@
 
 namespace chromeos {
 
-UserBoardScreenHandler::UserBoardScreenHandler() : weak_factory_(this) {}
+UserBoardScreenHandler::UserBoardScreenHandler()
+    : BaseScreenHandler(kScreenId), weak_factory_(this) {}
 
 UserBoardScreenHandler::~UserBoardScreenHandler() {
 }
@@ -90,17 +91,17 @@ void UserBoardScreenHandler::SetAuthType(
     proximity_auth::ScreenlockBridge::LockHandler::AuthType auth_type,
     const base::string16& initial_value) {
   CallJS("login.AccountPickerScreen.setAuthType", account_id,
-         static_cast<int>(auth_type), base::StringValue(initial_value));
+         static_cast<int>(auth_type), base::Value(initial_value));
 }
 
 void UserBoardScreenHandler::Bind(UserSelectionScreen* screen) {
   screen_ = screen;
-  BaseScreenHandler::SetBaseScreen(screen_);
+  BaseWebUIHandler::SetBaseScreen(screen_);
 }
 
 void UserBoardScreenHandler::Unbind() {
   screen_ = nullptr;
-  BaseScreenHandler::SetBaseScreen(nullptr);
+  BaseWebUIHandler::SetBaseScreen(nullptr);
 }
 
 base::WeakPtr<UserBoardView> UserBoardScreenHandler::GetWeakPtr() {

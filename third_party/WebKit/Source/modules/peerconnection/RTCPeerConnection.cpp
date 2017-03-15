@@ -30,6 +30,8 @@
 
 #include "modules/peerconnection/RTCPeerConnection.h"
 
+#include <algorithm>
+#include <memory>
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/Microtask.h"
@@ -46,12 +48,13 @@
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/frame/Deprecation.h"
 #include "core/frame/HostsUsingFeatures.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/VoidCallback.h"
 #include "core/loader/FrameLoader.h"
-#include "core/loader/FrameLoaderClient.h"
 #include "modules/crypto/CryptoResultImpl.h"
 #include "modules/mediastream/MediaConstraintsImpl.h"
 #include "modules/mediastream/MediaStreamEvent.h"
@@ -96,8 +99,6 @@
 #include "public/platform/WebRTCVoidRequest.h"
 #include "wtf/CurrentTime.h"
 #include "wtf/PtrUtil.h"
-#include <algorithm>
-#include <memory>
 
 namespace blink {
 
@@ -264,6 +265,7 @@ WebRTCConfiguration parseConfiguration(ExecutionContext* context,
   String rtcpMuxPolicyString = configuration.rtcpMuxPolicy();
   if (rtcpMuxPolicyString == "negotiate") {
     rtcpMuxPolicy = WebRTCRtcpMuxPolicy::kNegotiate;
+    Deprecation::countDeprecation(context, UseCounter::RtcpMuxPolicyNegotiate);
   } else {
     DCHECK_EQ(rtcpMuxPolicyString, "require");
   }
@@ -335,6 +337,7 @@ WebRTCConfiguration parseConfiguration(ExecutionContext* context,
     webConfiguration.certificates = std::move(certificatesCopy);
   }
 
+  webConfiguration.iceCandidatePoolSize = configuration.iceCandidatePoolSize();
   return webConfiguration;
 }
 
@@ -1394,7 +1397,12 @@ void RTCPeerConnection::changeSignalingState(SignalingState signalingState) {
 
 void RTCPeerConnection::changeIceGatheringState(
     ICEGatheringState iceGatheringState) {
-  m_iceGatheringState = iceGatheringState;
+  if (m_iceConnectionState != ICEConnectionStateClosed &&
+      m_iceGatheringState != iceGatheringState) {
+    m_iceGatheringState = iceGatheringState;
+    scheduleDispatchEvent(
+        Event::create(EventTypeNames::icegatheringstatechange));
+  }
 }
 
 bool RTCPeerConnection::setIceConnectionState(
@@ -1426,7 +1434,6 @@ void RTCPeerConnection::closeInternal() {
   m_closed = true;
 
   changeIceConnectionState(ICEConnectionStateClosed);
-  changeIceGatheringState(ICEGatheringStateComplete);
   changeSignalingState(SignalingStateClosed);
   Document* document = toDocument(getExecutionContext());
   HostsUsingFeatures::countAnyWorld(

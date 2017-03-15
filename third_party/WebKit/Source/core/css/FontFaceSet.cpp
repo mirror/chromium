@@ -237,12 +237,20 @@ void FontFaceSet::addToLoadingFonts(FontFace* fontFace) {
 }
 
 void FontFaceSet::removeFromLoadingFonts(FontFace* fontFace) {
-  m_loadingFonts.remove(fontFace);
+  m_loadingFonts.erase(fontFace);
   if (m_loadingFonts.isEmpty())
     handlePendingEventsAndPromisesSoon();
 }
 
 ScriptPromise FontFaceSet::ready(ScriptState* scriptState) {
+  if (m_ready->getState() != ReadyProperty::Pending &&
+      inActiveDocumentContext()) {
+    // |m_ready| is already resolved, but there may be pending stylesheet
+    // changes and/or layout operations that may cause another font loads.
+    // So synchronously update style and layout here.
+    // This may trigger font loads, and replace |m_ready| with a new Promise.
+    document()->updateStyleAndLayout();
+  }
   return m_ready->promise(scriptState->world());
 }
 
@@ -257,7 +265,7 @@ FontFaceSet* FontFaceSet::addForBinding(ScriptState*,
   if (isCSSConnectedFontFace(fontFace))
     return this;
   CSSFontSelector* fontSelector = document()->styleEngine().fontSelector();
-  m_nonCSSConnectedFaces.add(fontFace);
+  m_nonCSSConnectedFaces.insert(fontFace);
   fontSelector->fontFaceCache()->addFontFace(fontSelector, fontFace, false);
   if (fontFace->loadStatus() == FontFace::Loading)
     addToLoadingFonts(fontFace);
@@ -288,7 +296,7 @@ bool FontFaceSet::deleteForBinding(ScriptState*,
   HeapListHashSet<Member<FontFace>>::iterator it =
       m_nonCSSConnectedFaces.find(fontFace);
   if (it != m_nonCSSConnectedFaces.end()) {
-    m_nonCSSConnectedFaces.remove(it);
+    m_nonCSSConnectedFaces.erase(it);
     CSSFontSelector* fontSelector = document()->styleEngine().fontSelector();
     fontSelector->fontFaceCache()->removeFontFace(fontFace, false);
     if (fontFace->loadStatus() == FontFace::Loading)
@@ -431,8 +439,8 @@ bool FontFaceSet::check(const String& fontString,
     return true;
   for (const FontFamily* f = &font.getFontDescription().family(); f;
        f = f->next()) {
-    if (fontSelector->isPlatformFontAvailable(font.getFontDescription(),
-                                              f->family()))
+    if (fontSelector->isPlatformFamilyMatchAvailable(font.getFontDescription(),
+                                                     f->family()))
       return true;
   }
   return false;

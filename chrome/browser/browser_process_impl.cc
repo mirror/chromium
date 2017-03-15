@@ -26,6 +26,7 @@
 #include "base/path_service.h"
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -103,7 +104,7 @@
 #include "components/rappor/rappor_service_impl.h"
 #include "components/safe_json/safe_json_parser.h"
 #include "components/signin/core/common/profile_management_switches.h"
-#include "components/subresource_filter/content/browser/content_ruleset_service_delegate.h"
+#include "components/subresource_filter/content/browser/content_ruleset_service.h"
 #include "components/subresource_filter/core/browser/ruleset_service.h"
 #include "components/subresource_filter/core/browser/subresource_filter_constants.h"
 #include "components/subresource_filter/core/browser/subresource_filter_features.h"
@@ -162,7 +163,7 @@
 #include "chrome/browser/component_updater/pnacl_component_installer.h"
 #endif
 
-#if BUILDFLAG(ENABLE_PLUGIN_INSTALLATION)
+#if BUILDFLAG(ENABLE_PLUGINS)
 #include "chrome/browser/plugins/plugins_resource_service.h"
 #endif
 
@@ -305,7 +306,7 @@ void BrowserProcessImpl::StartTearDown() {
   if (safe_browsing_service_.get())
     safe_browsing_service()->ShutDown();
   network_time_tracker_.reset();
-#if BUILDFLAG(ENABLE_PLUGIN_INSTALLATION)
+#if BUILDFLAG(ENABLE_PLUGINS)
   plugins_resource_service_.reset();
 #endif
 
@@ -902,7 +903,7 @@ safe_browsing::ClientSideDetectionService*
   return NULL;
 }
 
-subresource_filter::RulesetService*
+subresource_filter::ContentRulesetService*
 BrowserProcessImpl::subresource_filter_ruleset_service() {
   DCHECK(CalledOnValidThread());
   if (!created_subresource_filter_ruleset_service_)
@@ -1102,11 +1103,10 @@ void BrowserProcessImpl::PreMainMessageLoopRun() {
   // Triggers initialization of the singleton instance on UI thread.
   PluginFinder::GetInstance()->Init();
 
-#if BUILDFLAG(ENABLE_PLUGIN_INSTALLATION)
-  DCHECK(!plugins_resource_service_.get());
-  plugins_resource_service_.reset(new PluginsResourceService(local_state()));
+  DCHECK(!plugins_resource_service_);
+  plugins_resource_service_ =
+      base::MakeUnique<PluginsResourceService>(local_state());
   plugins_resource_service_->Init();
-#endif
 #endif  // BUILDFLAG(ENABLE_PLUGINS)
 
 #if !defined(OS_ANDROID)
@@ -1223,11 +1223,12 @@ void BrowserProcessImpl::CreateSubresourceFilterRulesetService() {
   base::FilePath indexed_ruleset_base_dir =
       user_data_dir.Append(subresource_filter::kTopLevelDirectoryName)
           .Append(subresource_filter::kIndexedRulesetBaseDirectoryName);
-  subresource_filter_ruleset_service_.reset(
-      new subresource_filter::RulesetService(
+  subresource_filter_ruleset_service_ =
+      base::MakeUnique<subresource_filter::ContentRulesetService>();
+  subresource_filter_ruleset_service_->set_ruleset_service(
+      base::MakeUnique<subresource_filter::RulesetService>(
           local_state(), blocking_task_runner,
-          base::MakeUnique<subresource_filter::ContentRulesetServiceDelegate>(),
-          indexed_ruleset_base_dir));
+          subresource_filter_ruleset_service_.get(), indexed_ruleset_base_dir));
 }
 
 void BrowserProcessImpl::CreateGCMDriver() {

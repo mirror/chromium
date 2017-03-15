@@ -58,7 +58,7 @@ void IdTargetObserverRegistry::removeObserver(const AtomicString& id,
   IdToObserverSetMap::iterator iter = m_registry.find(id.impl());
 
   ObserverSet* set = iter->value.get();
-  set->remove(observer);
+  set->erase(observer);
   if (set->isEmpty() && set != m_notifyingObserversInSet)
     m_registry.remove(iter);
 }
@@ -67,7 +67,7 @@ void IdTargetObserverRegistry::notifyObserversInternal(const AtomicString& id) {
   DCHECK(!id.isEmpty());
   DCHECK(!m_registry.isEmpty());
 
-  m_notifyingObserversInSet = m_registry.get(id.impl());
+  m_notifyingObserversInSet = m_registry.at(id.impl());
   if (!m_notifyingObserversInSet)
     return;
 
@@ -87,7 +87,7 @@ void IdTargetObserverRegistry::notifyObserversInternal(const AtomicString& id) {
 bool IdTargetObserverRegistry::hasObservers(const AtomicString& id) const {
   if (id.isEmpty() || m_registry.isEmpty())
     return false;
-  ObserverSet* set = m_registry.get(id.impl());
+  ObserverSet* set = m_registry.at(id.impl());
   return set && !set->isEmpty();
 }
 

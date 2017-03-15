@@ -1161,6 +1161,41 @@ inline void InlineFlowBox::addReplacedChildOverflow(
   logicalLayoutOverflow.unite(childLogicalLayoutOverflow);
 }
 
+static void computeGlyphOverflow(
+    InlineTextBox* text,
+    const LineLayoutText& layoutText,
+    GlyphOverflowAndFallbackFontsMap& textBoxDataMap) {
+  HashSet<const SimpleFontData*> fallbackFonts;
+  FloatRect glyphBounds;
+  GlyphOverflow glyphOverflow;
+  float measuredWidth =
+      layoutText.width(text->start(), text->len(), LayoutUnit(),
+                       text->direction(), false, &fallbackFonts, &glyphBounds);
+  const Font& font = layoutText.style()->font();
+  const SimpleFontData* fontData = font.primaryFont();
+  DCHECK(fontData);
+  glyphOverflow.setFromBounds(
+      glyphBounds, fontData ? fontData->getFontMetrics().floatAscent() : 0,
+      fontData ? fontData->getFontMetrics().floatDescent() : 0, measuredWidth);
+  if (!fallbackFonts.isEmpty()) {
+    GlyphOverflowAndFallbackFontsMap::ValueType* it =
+        textBoxDataMap
+            .insert(text, std::make_pair(Vector<const SimpleFontData*>(),
+                                         GlyphOverflow()))
+            .storedValue;
+    DCHECK(it->value.first.isEmpty());
+    copyToVector(fallbackFonts, it->value.first);
+  }
+  if (!glyphOverflow.isApproximatelyZero()) {
+    GlyphOverflowAndFallbackFontsMap::ValueType* it =
+        textBoxDataMap
+            .insert(text, std::make_pair(Vector<const SimpleFontData*>(),
+                                         GlyphOverflow()))
+            .storedValue;
+    it->value.second = glyphOverflow;
+  }
+}
+
 void InlineFlowBox::computeOverflow(
     LayoutUnit lineTop,
     LayoutUnit lineBottom,
@@ -1196,7 +1231,15 @@ void InlineFlowBox::computeOverflow(
       if (rt.isBR())
         continue;
       LayoutRect textBoxOverflow(text->logicalFrameRect());
-      addTextBoxVisualOverflow(text, textBoxDataMap, textBoxOverflow);
+      if (textBoxDataMap.isEmpty()) {
+        // An empty glyph map means that we're computing overflow without
+        // a layout, so calculate the glyph overflow on the fly.
+        GlyphOverflowAndFallbackFontsMap glyphOverflowForText;
+        computeGlyphOverflow(text, rt, glyphOverflowForText);
+        addTextBoxVisualOverflow(text, glyphOverflowForText, textBoxOverflow);
+      } else {
+        addTextBoxVisualOverflow(text, textBoxDataMap, textBoxOverflow);
+      }
       logicalVisualOverflow.unite(textBoxOverflow);
     } else if (curr->getLineLayoutItem().isLayoutInline()) {
       InlineFlowBox* flow = toInlineFlowBox(curr);
@@ -1409,8 +1452,8 @@ SelectionState InlineFlowBox::getSelectionState() const {
 }
 
 bool InlineFlowBox::canAccommodateEllipsis(bool ltr,
-                                           int blockEdge,
-                                           int ellipsisWidth) const {
+                                           LayoutUnit blockEdge,
+                                           LayoutUnit ellipsisWidth) const {
   for (InlineBox* box = firstChild(); box; box = box->nextOnLine()) {
     if (!box->canAccommodateEllipsis(ltr, blockEdge, ellipsisWidth))
       return false;
@@ -1423,7 +1466,8 @@ LayoutUnit InlineFlowBox::placeEllipsisBox(bool ltr,
                                            LayoutUnit blockRightEdge,
                                            LayoutUnit ellipsisWidth,
                                            LayoutUnit& truncatedWidth,
-                                           bool& foundBox) {
+                                           bool& foundBox,
+                                           LayoutUnit logicalLeftOffset) {
   LayoutUnit result(-1);
   // We iterate over all children, the foundBox variable tells us when we've
   // found the box containing the ellipsis.  All boxes after that one in the
@@ -1434,23 +1478,21 @@ LayoutUnit InlineFlowBox::placeEllipsisBox(bool ltr,
   InlineBox* box = ltr ? firstChild() : lastChild();
 
   // NOTE: these will cross after foundBox = true.
-  int visibleLeftEdge = blockLeftEdge.toInt();
-  int visibleRightEdge = blockRightEdge.toInt();
+  LayoutUnit visibleLeftEdge = blockLeftEdge;
+  LayoutUnit visibleRightEdge = blockRightEdge;
 
   while (box) {
-    int currResult =
-        box->placeEllipsisBox(ltr, LayoutUnit(visibleLeftEdge),
-                              LayoutUnit(visibleRightEdge), ellipsisWidth,
-                              truncatedWidth, foundBox)
-            .toInt();
+    LayoutUnit currResult = box->placeEllipsisBox(
+        ltr, visibleLeftEdge, visibleRightEdge, ellipsisWidth, truncatedWidth,
+        foundBox, logicalLeftOffset);
     if (currResult != -1 && result == -1)
-      result = LayoutUnit(currResult);
+      result = currResult;
 
     // List markers will sit outside the box so don't let them contribute
     // width.
-    int boxWidth = box->getLineLayoutItem().isListMarker()
-                       ? 0
-                       : box->logicalWidth().round();
+    LayoutUnit boxWidth = box->getLineLayoutItem().isListMarker()
+                              ? LayoutUnit()
+                              : box->logicalWidth();
     if (ltr) {
       visibleLeftEdge += boxWidth;
       box = box->nextOnLine();

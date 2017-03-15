@@ -65,10 +65,8 @@ static const int rangeDefaultStepBase = 0;
 static const int rangeStepScaleFactor = 1;
 
 static Decimal ensureMaximum(const Decimal& proposedValue,
-                             const Decimal& minimum,
-                             const Decimal& fallbackValue) {
-  return proposedValue >= minimum ? proposedValue
-                                  : std::max(minimum, fallbackValue);
+                             const Decimal& minimum) {
+  return proposedValue >= minimum ? proposedValue : minimum;
 }
 
 InputType* RangeInputType::create(HTMLInputElement& element) {
@@ -134,7 +132,7 @@ StepRange RangeInputType::createStepRange(
       parseToNumber(element().fastGetAttribute(minAttr), rangeDefaultMinimum);
   const Decimal maximum = ensureMaximum(
       parseToNumber(element().fastGetAttribute(maxAttr), rangeDefaultMaximum),
-      minimum, rangeDefaultMaximum);
+      minimum);
 
   const Decimal step = StepRange::parseStep(
       anyStepHandling, stepDescription, element().fastGetAttribute(stepAttr));
@@ -151,7 +149,7 @@ bool RangeInputType::isSteppable() const {
 }
 
 void RangeInputType::handleMouseDownEvent(MouseEvent* event) {
-  if (element().isDisabledOrReadOnly())
+  if (element().isDisabledFormControl())
     return;
 
   Node* targetNode = event->target()->toNode();
@@ -170,7 +168,7 @@ void RangeInputType::handleMouseDownEvent(MouseEvent* event) {
 }
 
 void RangeInputType::handleKeydownEvent(KeyboardEvent* event) {
-  if (element().isDisabledOrReadOnly())
+  if (element().isDisabledFormControl())
     return;
 
   const String& key = event->key();
@@ -363,6 +361,8 @@ void RangeInputType::updateTickMarkValues() {
   for (unsigned i = 0; i < options->length(); ++i) {
     HTMLOptionElement* optionElement = options->item(i);
     String optionValue = optionElement->value();
+    if (optionElement->isDisabledFormControl() || optionValue.isEmpty())
+      continue;
     if (!this->element().isValidValue(optionValue))
       continue;
     m_tickMarkValues.push_back(parseToNumber(optionValue, Decimal::nan()));

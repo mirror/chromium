@@ -33,7 +33,7 @@ void InProcessWorkerBase::postMessage(ScriptState* scriptState,
                                       ExceptionState& exceptionState) {
   DCHECK(m_contextProxy);
   // Disentangle the port in preparation for sending it to the remote context.
-  std::unique_ptr<MessagePortChannelArray> channels =
+  MessagePortChannelArray channels =
       MessagePort::disentanglePorts(scriptState->getExecutionContext(), ports,
                                     exceptionState);
   if (exceptionState.hadException())
@@ -87,8 +87,8 @@ bool InProcessWorkerBase::hasPendingActivity() const {
 }
 
 void InProcessWorkerBase::onResponse() {
-  InspectorInstrumentation::didReceiveScriptResponse(
-      getExecutionContext(), m_scriptLoader->identifier());
+  probe::didReceiveScriptResponse(getExecutionContext(),
+                                  m_scriptLoader->identifier());
 }
 
 void InProcessWorkerBase::onFinished() {
@@ -102,9 +102,8 @@ void InProcessWorkerBase::onFinished() {
         m_scriptLoader->script(),
         m_scriptLoader->releaseContentSecurityPolicy(),
         m_scriptLoader->getReferrerPolicy());
-    InspectorInstrumentation::scriptImported(getExecutionContext(),
-                                             m_scriptLoader->identifier(),
-                                             m_scriptLoader->script());
+    probe::scriptImported(getExecutionContext(), m_scriptLoader->identifier(),
+                          m_scriptLoader->script());
   }
   m_scriptLoader = nullptr;
 }

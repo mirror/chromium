@@ -22,6 +22,7 @@
 #include "ui/display/screen.h"
 #include "ui/events/event_target.h"
 #include "ui/wm/core/cursor_manager.h"
+#include "ui/wm/public/activation_change_observer.h"
 
 namespace aura {
 class RootWindow;
@@ -31,12 +32,19 @@ class WindowManagerClient;
 class WindowTreeClient;
 namespace client {
 class ActivationClient;
-class FocusClient;
 }
+}
+
+namespace base {
+class SequencedWorkerPool;
 }
 
 namespace chromeos {
 class AudioA11yController;
+}
+
+namespace app_list {
+class AppList;
 }
 
 namespace display {
@@ -49,9 +57,16 @@ namespace gfx {
 class Insets;
 }
 
+namespace preferences {
+class PrefClientStore;
+}
+
 namespace ui {
 class UserActivityDetector;
 class UserActivityPowerManagerNotifier;
+namespace devtools {
+class UiDevToolsServer;
+}
 }
 
 namespace views {
@@ -65,6 +80,7 @@ class TooltipController;
 namespace wm {
 class AcceleratorFilter;
 class CompoundEventFilter;
+class FocusController;
 class ShadowController;
 class VisibilityController;
 class WindowModalityController;
@@ -73,8 +89,10 @@ class WindowModalityController;
 namespace ash {
 
 class AcceleratorControllerDelegateAura;
+class AccessibilityDelegate;
 class AppListDelegateImpl;
 class AshNativeCursorManager;
+class AshTouchTransformController;
 class AutoclickController;
 class BluetoothNotificationController;
 class DisplayColorManager;
@@ -94,6 +112,7 @@ enum class LoginStatus;
 class MagnificationController;
 class MouseCursorEventFilter;
 class OverlayEventFilter;
+class PaletteDelegate;
 class PartialMagnificationController;
 class PowerButtonController;
 class PowerEventObserver;
@@ -107,18 +126,23 @@ class ScreenshotController;
 class ScreenPinningController;
 class ScreenPositionController;
 class SessionStateDelegate;
+class ShellDelegate;
 struct ShellInitParams;
+class ShellObserver;
 class ShutdownObserver;
+class SmsObserver;
 class StickyKeysController;
 class SystemGestureEventFilter;
 class SystemModalContainerEventFilter;
 class SystemTray;
 class ToplevelWindowEventHandler;
-class AshTouchTransformController;
 class ScreenLayoutObserver;
+class ToastManager;
 class VirtualKeyboardController;
 class VideoActivityNotifier;
 class VideoDetector;
+class WallpaperController;
+class WallpaperDelegate;
 class WebNotificationTray;
 class WindowPositioner;
 class WindowTreeHostManager;
@@ -131,6 +155,7 @@ class WindowWatcher;
 
 namespace test {
 class ShellTestApi;
+class SmsObserverTest;
 }
 
 // Shell is a singleton object that presents the Shell API and implements the
@@ -139,7 +164,8 @@ class ShellTestApi;
 // Upon creation, the Shell sets itself as the RootWindow's delegate, which
 // takes ownership of the Shell.
 class ASH_EXPORT Shell : public SystemModalContainerEventFilterDelegate,
-                         public ui::EventTarget {
+                         public ui::EventTarget,
+                         public aura::client::ActivationChangeObserver {
  public:
   typedef std::vector<RootWindowController*> RootWindowControllerList;
 
@@ -149,7 +175,10 @@ class ASH_EXPORT Shell : public SystemModalContainerEventFilterDelegate,
   static Shell* CreateInstance(const ShellInitParams& init_params);
 
   // Should never be called before |CreateInstance()|.
-  static Shell* GetInstance();
+  // TODO: deprecated. Use Get() instead. GetInstance() will be renamed close
+  // to branch point.
+  static Shell* GetInstance() { return Get(); }
+  static Shell* Get();
 
   // Returns true if the ash shell has been instantiated.
   static bool HasInstance();
@@ -160,6 +189,11 @@ class ASH_EXPORT Shell : public SystemModalContainerEventFilterDelegate,
   // TODO(oshima): move this to |RootWindowController|
   static RootWindowController* GetPrimaryRootWindowController();
 
+  // Returns the RootWindowController for the given display id. If there
+  // is no display for |display_id|, null is returned.
+  static RootWindowController* GetRootWindowControllerWithDisplayId(
+      int64_t display_id);
+
   // Returns all root window controllers.
   // TODO(oshima): move this to |RootWindowController|
   static RootWindowControllerList GetAllRootWindowControllers();
@@ -168,16 +202,12 @@ class ASH_EXPORT Shell : public SystemModalContainerEventFilterDelegate,
   // has a launcher.
   static aura::Window* GetPrimaryRootWindow();
 
-  // Returns a root Window when used as a target when creating a new window.
-  // The root window of the active window is used in most cases, but can
-  // be overridden by using ScopedRootWindowForNewWindows.
-  // If you want to get the root Window of the active window, just use
-  // |wm::GetActiveWindow()->GetRootWindow()|.
-  static aura::Window* GetTargetRootWindow();
-
-  // Returns the id of the display::Display corresponding to the window returned
-  // by |GetTargetRootWindow()|
-  static int64_t GetTargetDisplayId();
+  // Returns the root window that newly created windows should be added to.
+  // Value can be temporarily overridden using ScopedRootWindowForNewWindows.
+  // NOTE: this returns the root, newly created window should be added to the
+  // appropriate container in the returned window.
+  static aura::Window* GetRootWindowForNewWindows();
+  static WmWindow* GetWmRootWindowForNewWindows();
 
   // Returns all root windows.
   static aura::Window::Windows GetAllRootWindows();
@@ -214,6 +244,7 @@ class ASH_EXPORT Shell : public SystemModalContainerEventFilterDelegate,
                                 const gfx::Insets& insets);
 
   // Called when the user logs in.
+  // TODO(jamescook): Merge this with WmShell::UpdateAfterLoginStatusChange()?
   void OnLoginStateChanged(LoginStatus status);
 
   // Called when the application is exiting.
@@ -246,6 +277,13 @@ class ASH_EXPORT Shell : public SystemModalContainerEventFilterDelegate,
     return accelerator_controller_delegate_.get();
   }
 
+  AccessibilityDelegate* accessibility_delegate() {
+    return accessibility_delegate_.get();
+  }
+  app_list::AppList* app_list() { return app_list_.get(); }
+  const scoped_refptr<base::SequencedWorkerPool>& blocking_pool() {
+    return blocking_pool_;
+  }
   display::DisplayManager* display_manager() { return display_manager_.get(); }
   DisplayConfigurationController* display_configuration_controller() {
     return display_configuration_controller_.get();
@@ -268,7 +306,14 @@ class ASH_EXPORT Shell : public SystemModalContainerEventFilterDelegate,
   LockStateController* lock_state_controller() {
     return lock_state_controller_.get();
   }
+  preferences::PrefClientStore* pref_store() { return pref_store_.get(); }
+  PaletteDelegate* palette_delegate() { return palette_delegate_.get(); }
+  ShellDelegate* shell_delegate() { return shell_delegate_.get(); }
   VideoDetector* video_detector() { return video_detector_.get(); }
+  WallpaperController* wallpaper_controller() {
+    return wallpaper_controller_.get();
+  }
+  WallpaperDelegate* wallpaper_delegate() { return wallpaper_delegate_.get(); }
   WindowTreeHostManager* window_tree_host_manager() {
     return window_tree_host_manager_.get();
   }
@@ -311,9 +356,9 @@ class ASH_EXPORT Shell : public SystemModalContainerEventFilterDelegate,
     return autoclick_controller_.get();
   }
 
-  aura::client::ActivationClient* activation_client() {
-    return activation_client_;
-  }
+  ToastManager* toast_manager() { return toast_manager_.get(); }
+
+  aura::client::ActivationClient* activation_client();
 
   // Force the shelf to query for it's current visibility state.
   // TODO(jamescook): Move to Shelf.
@@ -382,9 +427,16 @@ class ASH_EXPORT Shell : public SystemModalContainerEventFilterDelegate,
     return is_touch_hud_projection_enabled_;
   }
 
+  // NOTE: Prefer ScopedRootWindowForNewWindows when setting temporarily.
+  void set_root_window_for_new_windows(WmWindow* root) {
+    root_window_for_new_windows_ = root;
+  }
+
   // Creates instance of FirstRunHelper. Caller is responsible for deleting
   // returned object.
   ash::FirstRunHelper* CreateFirstRunHelper();
+
+  void SetLargeCursorSizeInDip(int large_cursor_size_in_dip);
 
   // Toggles cursor compositing on/off. Native cursor is disabled when cursor
   // compositing is enabled, and vice versa.
@@ -400,15 +452,77 @@ class ASH_EXPORT Shell : public SystemModalContainerEventFilterDelegate,
 
   GPUSupport* gpu_support() { return gpu_support_.get(); }
 
+  void AddShellObserver(ShellObserver* observer);
+  void RemoveShellObserver(ShellObserver* observer);
+
+  // Shows the app list on the active root window.
+  void ShowAppList();
+
+  // Dismisses the app list.
+  void DismissAppList();
+
+  // Shows the app list if it's not visible. Dismisses it otherwise.
+  void ToggleAppList();
+
+  // Returns app list actual visibility. This might differ from
+  // GetAppListTargetVisibility() when hiding animation is still in flight.
+  bool IsAppListVisible() const;
+
+  // Returns app list target visibility.
+  bool GetAppListTargetVisibility() const;
+
+  // Notifies observers that maximize mode has started, windows might still
+  // animate.
+  void NotifyMaximizeModeStarted();
+
+  // Notifies observers that maximize mode is about to end.
+  void NotifyMaximizeModeEnding();
+
+  // Notifies observers that maximize mode has ended, windows might still be
+  // returning to their original position.
+  void NotifyMaximizeModeEnded();
+
+  // Notifies observers that overview mode is about to be started (before the
+  // windows get re-arranged).
+  void NotifyOverviewModeStarting();
+
+  // Notifies observers that overview mode has ended.
+  void NotifyOverviewModeEnded();
+
+  // Notifies observers that fullscreen mode has changed for |root_window|.
+  void NotifyFullscreenStateChanged(bool is_fullscreen, WmWindow* root_window);
+
+  // Notifies observers that |pinned_window| changed its pinned window state.
+  void NotifyPinnedStateChanged(WmWindow* pinned_window);
+
+  // Notifies observers that the virtual keyboard has been
+  // activated/deactivated for |root_window|.
+  void NotifyVirtualKeyboardActivated(bool activated, WmWindow* root_window);
+
+  // Notifies observers that the shelf was created for |root_window|.
+  // TODO(jamescook): Move to Shelf.
+  void NotifyShelfCreatedForRootWindow(WmWindow* root_window);
+
+  // Notifies observers that |root_window|'s shelf changed alignment.
+  // TODO(jamescook): Move to Shelf.
+  void NotifyShelfAlignmentChanged(WmWindow* root_window);
+
+  // Notifies observers that |root_window|'s shelf changed auto-hide behavior.
+  // TODO(jamescook): Move to Shelf.
+  void NotifyShelfAutoHideBehaviorChanged(WmWindow* root_window);
+
  private:
   FRIEND_TEST_ALL_PREFIXES(ExtendedDesktopTest, TestCursor);
   FRIEND_TEST_ALL_PREFIXES(WindowManagerTest, MouseEventCursors);
   FRIEND_TEST_ALL_PREFIXES(WindowManagerTest, TransformActivate);
   friend class RootWindowController;
+  friend class ScopedRootWindowForNewWindows;
+  friend class SmsObserverTest;
   friend class test::ShellTestApi;
   friend class shell::WindowWatcher;
 
-  explicit Shell(std::unique_ptr<WmShell> wm_shell);
+  Shell(std::unique_ptr<ShellDelegate> shell_delegate,
+        std::unique_ptr<WmShell> wm_shell);
   ~Shell() override;
 
   void Init(const ShellInitParams& init_params);
@@ -430,6 +544,11 @@ class ASH_EXPORT Shell : public SystemModalContainerEventFilterDelegate,
   EventTarget* GetParentTarget() override;
   std::unique_ptr<ui::EventTargetIterator> GetChildIterator() const override;
   ui::EventTargeter* GetEventTargeter() override;
+
+  // aura::client::ActivationChangeObserver:
+  void OnWindowActivated(ActivationReason reason,
+                         aura::Window* gained_active,
+                         aura::Window* lost_active) override;
 
   static Shell* instance_;
 
@@ -454,11 +573,20 @@ class ASH_EXPORT Shell : public SystemModalContainerEventFilterDelegate,
   std::unique_ptr<SessionStateDelegate> session_state_delegate_;
   std::unique_ptr<WindowPositioner> window_positioner_;
 
+  std::unique_ptr<AccessibilityDelegate> accessibility_delegate_;
+  std::unique_ptr<PaletteDelegate> palette_delegate_;
   std::unique_ptr<DragDropController> drag_drop_controller_;
   std::unique_ptr<ResizeShadowController> resize_shadow_controller_;
+  std::unique_ptr<ShellDelegate> shell_delegate_;
+  std::unique_ptr<ToastManager> toast_manager_;
+  std::unique_ptr<WallpaperController> wallpaper_controller_;
+  std::unique_ptr<WallpaperDelegate> wallpaper_delegate_;
   std::unique_ptr<::wm::ShadowController> shadow_controller_;
   std::unique_ptr<::wm::VisibilityController> visibility_controller_;
   std::unique_ptr<::wm::WindowModalityController> window_modality_controller_;
+  std::unique_ptr<app_list::AppList> app_list_;
+  scoped_refptr<preferences::PrefClientStore> pref_store_;
+  std::unique_ptr<ui::devtools::UiDevToolsServer> devtools_server_;
   std::unique_ptr<views::corewm::TooltipController> tooltip_controller_;
   LinkHandlerModelFactory* link_handler_model_factory_;
   std::unique_ptr<PowerButtonController> power_button_controller_;
@@ -469,9 +597,7 @@ class ASH_EXPORT Shell : public SystemModalContainerEventFilterDelegate,
   std::unique_ptr<HighContrastController> high_contrast_controller_;
   std::unique_ptr<MagnificationController> magnification_controller_;
   std::unique_ptr<AutoclickController> autoclick_controller_;
-  std::unique_ptr<aura::client::FocusClient> focus_client_;
-
-  aura::client::ActivationClient* activation_client_;
+  std::unique_ptr<::wm::FocusController> focus_controller_;
 
   std::unique_ptr<ScreenshotController> screenshot_controller_;
 
@@ -526,6 +652,9 @@ class ASH_EXPORT Shell : public SystemModalContainerEventFilterDelegate,
   // Listens for shutdown and updates DisplayConfigurator.
   std::unique_ptr<ShutdownObserver> shutdown_observer_;
 
+  // Listens for new sms messages and shows notifications.
+  std::unique_ptr<SmsObserver> sms_observer_;
+
   // Implements content::ScreenOrientationController for Chrome OS.
   std::unique_ptr<ScreenOrientationController> screen_orientation_controller_;
   std::unique_ptr<ScreenLayoutObserver> screen_layout_observer_;
@@ -551,12 +680,20 @@ class ASH_EXPORT Shell : public SystemModalContainerEventFilterDelegate,
 
   bool is_touch_hud_projection_enabled_;
 
+  // See comment for GetWmRootWindowForNewWindows().
+  WmWindow* root_window_for_new_windows_ = nullptr;
+  WmWindow* scoped_root_window_for_new_windows_ = nullptr;
+
   // Injected content::GPUDataManager support.
   std::unique_ptr<GPUSupport> gpu_support_;
 
   std::unique_ptr<ImmersiveHandlerFactoryAsh> immersive_handler_factory_;
 
   std::unique_ptr<AppListDelegateImpl> app_list_delegate_impl_;
+
+  base::ObserverList<ShellObserver> shell_observers_;
+
+  scoped_refptr<base::SequencedWorkerPool> blocking_pool_;
 
   DISALLOW_COPY_AND_ASSIGN(Shell);
 };

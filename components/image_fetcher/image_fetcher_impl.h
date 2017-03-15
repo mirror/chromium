@@ -16,6 +16,7 @@
 #include "components/image_fetcher/image_data_fetcher.h"
 #include "components/image_fetcher/image_decoder.h"
 #include "components/image_fetcher/image_fetcher.h"
+#include "ui/gfx/geometry/size.h"
 #include "url/gurl.h"
 
 namespace gfx {
@@ -28,8 +29,7 @@ class URLRequestContextGetter;
 
 namespace image_fetcher {
 
-// TODO(markusheintz): Once the iOS implementation of the ImageFetcher is
-// removed merge the two classes ImageFetcher and ImageFetcherImpl.
+// The standard (non-test) implementation of ImageFetcher.
 class ImageFetcherImpl : public image_fetcher::ImageFetcher {
  public:
   ImageFetcherImpl(
@@ -45,11 +45,15 @@ class ImageFetcherImpl : public image_fetcher::ImageFetcher {
   // Sets a service name against which to track data usage.
   void SetDataUseServiceName(DataUseServiceName data_use_service_name) override;
 
+  void SetDesiredImageFrameSize(const gfx::Size& size) override;
+
   void StartOrQueueNetworkRequest(
       const std::string& id,
       const GURL& image_url,
       base::Callback<void(const std::string&, const gfx::Image&)> callback)
       override;
+
+  ImageDecoder* GetImageDecoder() override;
 
  private:
   using CallbackVector =
@@ -84,8 +88,9 @@ class ImageFetcherImpl : public image_fetcher::ImageFetcher {
   // creating callbacks that are passed to the ImageDecoder.
   void OnImageDecoded(const GURL& image_url, const gfx::Image& image);
 
-
   ImageFetcherDelegate* delegate_;
+
+  gfx::Size desired_image_frame_size_;
 
   scoped_refptr<net::URLRequestContextGetter> url_request_context_;
 

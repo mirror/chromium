@@ -25,18 +25,17 @@ namespace blink {
 
 // static
 TopDocumentRootScrollerController* TopDocumentRootScrollerController::create(
-    FrameHost& host) {
-  return new TopDocumentRootScrollerController(host);
+    Page& page) {
+  return new TopDocumentRootScrollerController(page);
 }
 
-TopDocumentRootScrollerController::TopDocumentRootScrollerController(
-    FrameHost& host)
-    : m_frameHost(&host) {}
+TopDocumentRootScrollerController::TopDocumentRootScrollerController(Page& page)
+    : m_page(&page) {}
 
 DEFINE_TRACE(TopDocumentRootScrollerController) {
   visitor->trace(m_viewportApplyScroll);
   visitor->trace(m_globalRootScroller);
-  visitor->trace(m_frameHost);
+  visitor->trace(m_page);
 }
 
 void TopDocumentRootScrollerController::didChangeRootScroller() {
@@ -71,10 +70,9 @@ IntSize TopDocumentRootScrollerController::rootScrollerVisibleArea() const {
     return IntSize();
 
   float minimumPageScale =
-      m_frameHost->pageScaleConstraintsSet().finalConstraints().minimumScale;
-  int browserControlsAdjustment =
-      ceilf(m_frameHost->visualViewport().browserControlsAdjustment() /
-            minimumPageScale);
+      m_page->pageScaleConstraintsSet().finalConstraints().minimumScale;
+  int browserControlsAdjustment = ceilf(
+      m_page->visualViewport().browserControlsAdjustment() / minimumPageScale);
 
   return topDocument()->view()->visibleContentSize(ExcludeScrollbars) +
          IntSize(0, browserControlsAdjustment);
@@ -134,21 +132,10 @@ void TopDocumentRootScrollerController::recomputeGlobalRootScroller() {
   // scrolling the element so it will apply scroll to the element itself.
   target->setApplyScroll(m_viewportApplyScroll, "disable-native-scroll");
 
-  // A change in global root scroller requires a compositing inputs update to
-  // the new and old global root scroller since it might change how the
-  // ancestor layers are clipped. e.g. An iframe that's the global root
-  // scroller clips its layers like the root frame.  Normally this is set
-  // when the local effective root scroller changes but the global root
-  // scroller can change because the parent's effective root scroller
-  // changes.
-  setNeedsCompositingInputsUpdateOnGlobalRootScroller();
-
   ScrollableArea* oldRootScrollerArea =
       RootScrollerUtil::scrollableAreaForRootScroller(m_globalRootScroller);
 
   m_globalRootScroller = target;
-
-  setNeedsCompositingInputsUpdateOnGlobalRootScroller();
 
   // Ideally, scroll customization would pass the current element to scroll to
   // the apply scroll callback but this doesn't happen today so we set it
@@ -166,39 +153,18 @@ void TopDocumentRootScrollerController::recomputeGlobalRootScroller() {
 }
 
 Document* TopDocumentRootScrollerController::topDocument() const {
-  if (!m_frameHost)
+  if (!m_page || !m_page->mainFrame() || !m_page->mainFrame()->isLocalFrame())
     return nullptr;
 
-  if (!m_frameHost->page().mainFrame() ||
-      !m_frameHost->page().mainFrame()->isLocalFrame())
-    return nullptr;
-
-  return toLocalFrame(m_frameHost->page().mainFrame())->document();
-}
-
-void TopDocumentRootScrollerController::
-    setNeedsCompositingInputsUpdateOnGlobalRootScroller() {
-  if (!m_globalRootScroller)
-    return;
-
-  PaintLayer* layer = m_globalRootScroller->document()
-                          .rootScrollerController()
-                          .rootScrollerPaintLayer();
-
-  if (layer)
-    layer->setNeedsCompositingInputsUpdate();
-
-  if (LayoutView* view = m_globalRootScroller->document().layoutView()) {
-    view->compositor()->setNeedsCompositingUpdate(CompositingUpdateRebuildTree);
-  }
+  return toLocalFrame(m_page->mainFrame())->document();
 }
 
 void TopDocumentRootScrollerController::didUpdateCompositing() {
-  if (!m_frameHost)
+  if (!m_page)
     return;
 
   // Let the compositor-side counterpart know about this change.
-  m_frameHost->chromeClient().registerViewportLayers();
+  m_page->chromeClient().registerViewportLayers();
 }
 
 void TopDocumentRootScrollerController::didDisposeScrollableArea(
@@ -223,9 +189,9 @@ void TopDocumentRootScrollerController::didDisposeScrollableArea(
 
 void TopDocumentRootScrollerController::initializeViewportScrollCallback(
     RootFrameViewport& rootFrameViewport) {
-  DCHECK(m_frameHost);
+  DCHECK(m_page);
   m_viewportApplyScroll = ViewportScrollCallback::create(
-      &m_frameHost->browserControls(), &m_frameHost->overscrollController(),
+      &m_page->browserControls(), &m_page->frameHost().overscrollController(),
       rootFrameViewport);
 
   recomputeGlobalRootScroller();

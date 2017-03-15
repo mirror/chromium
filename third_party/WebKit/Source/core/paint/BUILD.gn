@@ -132,8 +132,6 @@ blink_core_sources("paint") {
     "RootInlineBoxPainter.h",
     "RoundedInnerRectClipper.cpp",
     "RoundedInnerRectClipper.h",
-    "SVGClipPainter.cpp",
-    "SVGClipPainter.h",
     "SVGContainerPainter.cpp",
     "SVGContainerPainter.h",
     "SVGFilterPainter.cpp",
@@ -190,6 +188,8 @@ blink_core_sources("paint") {
     "TransformRecorder.h",
     "VideoPainter.cpp",
     "VideoPainter.h",
+    "ViewPaintInvalidator.cpp",
+    "ViewPaintInvalidator.h",
     "ViewPainter.cpp",
     "ViewPainter.h",
   ]

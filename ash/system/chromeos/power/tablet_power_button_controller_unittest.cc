@@ -67,7 +67,7 @@ class TabletPowerButtonControllerTest : public AshTestBase {
     tablet_controller_->SetTickClockForTesting(
         std::unique_ptr<base::TickClock>(tick_clock_));
     shell_delegate_ =
-        static_cast<TestShellDelegate*>(WmShell::Get()->delegate());
+        static_cast<TestShellDelegate*>(Shell::Get()->shell_delegate());
     generator_ = &AshTestBase::GetEventGenerator();
     power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, false);
     EXPECT_FALSE(GetBacklightsForcedOff());
@@ -75,8 +75,11 @@ class TabletPowerButtonControllerTest : public AshTestBase {
 
   void TearDown() override {
     generator_ = nullptr;
+    const bool is_mash = WmShell::Get()->IsRunningInMash();
     AshTestBase::TearDown();
-    chromeos::DBusThreadManager::Shutdown();
+    // Mash shuts down dbus after each test.
+    if (!is_mash)
+      chromeos::DBusThreadManager::Shutdown();
   }
 
  protected:

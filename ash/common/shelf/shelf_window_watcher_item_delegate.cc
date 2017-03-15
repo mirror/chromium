@@ -9,8 +9,10 @@
 #include "ash/common/wm/window_state.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
-#include "ash/common/wm_window_property.h"
-#include "ui/events/event.h"
+#include "ash/public/cpp/window_properties.h"
+#include "ash/wm/window_util.h"
+#include "ui/aura/window.h"
+#include "ui/events/event_constants.h"
 
 namespace ash {
 
@@ -33,33 +35,36 @@ ShelfWindowWatcherItemDelegate::ShelfWindowWatcherItemDelegate(ShelfID id,
 
 ShelfWindowWatcherItemDelegate::~ShelfWindowWatcherItemDelegate() {}
 
-ShelfItemDelegate::PerformedAction ShelfWindowWatcherItemDelegate::ItemSelected(
-    const ui::Event& event) {
+void ShelfWindowWatcherItemDelegate::ItemSelected(
+    std::unique_ptr<ui::Event> event,
+    int64_t display_id,
+    ShelfLaunchSource source,
+    const ItemSelectedCallback& callback) {
   // Move panels attached on another display to the current display.
   if (GetShelfItemType(id_) == TYPE_APP_PANEL &&
-      window_->GetBoolProperty(WmWindowProperty::PANEL_ATTACHED) &&
-      window_->MoveToEventRoot(event)) {
+      window_->aura_window()->GetProperty(kPanelAttachedKey) &&
+      wm::MoveWindowToDisplay(window_->aura_window(), display_id)) {
     window_->Activate();
-    return kExistingWindowActivated;
+    callback.Run(SHELF_ACTION_WINDOW_ACTIVATED, base::nullopt);
+    return;
   }
 
   if (window_->IsActive()) {
-    if (event.type() & ui::ET_KEY_RELEASED) {
+    if (event && event->type() == ui::ET_KEY_RELEASED) {
       window_->Animate(::wm::WINDOW_ANIMATION_TYPE_BOUNCE);
-      return kNoAction;
+      callback.Run(SHELF_ACTION_NONE, base::nullopt);
+      return;
     }
     window_->Minimize();
-    return kExistingWindowMinimized;
+    callback.Run(SHELF_ACTION_WINDOW_MINIMIZED, base::nullopt);
+    return;
   }
   window_->Activate();
-  return kExistingWindowActivated;
+  callback.Run(SHELF_ACTION_WINDOW_ACTIVATED, base::nullopt);
 }
 
-ShelfAppMenuItemList ShelfWindowWatcherItemDelegate::GetAppMenuItems(
-    int event_flags) {
-  // Return an empty item list to avoid showing an application menu.
-  return ShelfAppMenuItemList();
-}
+void ShelfWindowWatcherItemDelegate::ExecuteCommand(uint32_t command_id,
+                                                    int32_t event_flags) {}
 
 void ShelfWindowWatcherItemDelegate::Close() {
   window_->CloseWidget();

@@ -32,11 +32,11 @@ LayoutSVGResourceRadialGradient::LayoutSVGResourceRadialGradient(
 
 LayoutSVGResourceRadialGradient::~LayoutSVGResourceRadialGradient() {}
 
-bool LayoutSVGResourceRadialGradient::collectGradientAttributes(
-    SVGGradientElement* gradientElement) {
+bool LayoutSVGResourceRadialGradient::collectGradientAttributes() {
+  DCHECK(element());
   m_attributesWrapper->set(RadialGradientAttributes());
-  return toSVGRadialGradientElement(gradientElement)
-      ->collectGradientAttributes(mutableAttributes());
+  return toSVGRadialGradientElement(element())->collectGradientAttributes(
+      mutableAttributes());
 }
 
 FloatPoint LayoutSVGResourceRadialGradient::centerPoint(
@@ -70,7 +70,7 @@ PassRefPtr<Gradient> LayoutSVGResourceRadialGradient::buildGradient() const {
                        centerPoint(attributes), radius(attributes));
   gradient->setSpreadMethod(
       platformSpreadMethodFromSVGType(attributes.spreadMethod()));
-  addStops(*gradient, attributes.stops());
+  gradient->addColorStops(attributes.stops());
   return gradient.release();
 }
 

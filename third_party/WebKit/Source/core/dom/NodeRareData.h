@@ -56,7 +56,7 @@ class NodeMutationObserverData final
 
   void removeTransientRegistration(MutationObserverRegistration* registration) {
     DCHECK(m_transientRegistry.contains(registration));
-    m_transientRegistry.remove(registration);
+    m_transientRegistry.erase(registration);
   }
 
   void addRegistration(MutationObserverRegistration* registration) {
@@ -74,7 +74,7 @@ class NodeMutationObserverData final
     visitor->trace(m_transientRegistry);
   }
 
-  DECLARE_TRACE_WRAPPERS() {
+  DEFINE_INLINE_TRACE_WRAPPERS() {
     for (auto registration : m_registry) {
       visitor->traceWrappers(registration);
     }
@@ -90,6 +90,8 @@ class NodeMutationObserverData final
   HeapHashSet<TraceWrapperMember<MutationObserverRegistration>>
       m_transientRegistry;
 };
+
+DEFINE_TRAIT_FOR_TRACE_WRAPPERS(NodeMutationObserverData);
 
 class NodeRareData : public GarbageCollectedFinalized<NodeRareData>,
                      public NodeRareDataBase {
@@ -143,7 +145,7 @@ class NodeRareData : public GarbageCollectedFinalized<NodeRareData>,
   }
   void setRestyleFlag(DynamicRestyleFlags mask) {
     m_restyleFlags |= mask;
-    RELEASE_ASSERT(m_restyleFlags);
+    CHECK(m_restyleFlags);
   }
   bool hasRestyleFlags() const { return m_restyleFlags; }
   void clearRestyleFlags() { m_restyleFlags = 0; }
@@ -179,6 +181,8 @@ class NodeRareData : public GarbageCollectedFinalized<NodeRareData>,
  protected:
   unsigned m_isElementRareData : 1;
 };
+
+DEFINE_TRAIT_FOR_TRACE_WRAPPERS(NodeRareData);
 
 }  // namespace blink
 

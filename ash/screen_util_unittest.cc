@@ -5,7 +5,7 @@
 #include "ash/screen_util.h"
 
 #include "ash/common/wm/wm_screen_util.h"
-#include "ash/common/wm_lookup.h"
+#include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
@@ -16,6 +16,7 @@
 #include "ui/display/manager/display_manager.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
+#include "ui/wm/core/coordinate_conversion.h"
 
 namespace ash {
 namespace test {
@@ -86,31 +87,33 @@ TEST_F(ScreenUtilTest, ConvertRect) {
       NULL, CurrentContext(), gfx::Rect(610, 10, 100, 100));
   secondary->Show();
 
-  EXPECT_EQ("0,0 100x100",
-            ScreenUtil::ConvertRectFromScreen(primary->GetNativeView(),
-                                              gfx::Rect(10, 10, 100, 100))
-                .ToString());
-  EXPECT_EQ("10,10 100x100",
-            ScreenUtil::ConvertRectFromScreen(secondary->GetNativeView(),
-                                              gfx::Rect(620, 20, 100, 100))
-                .ToString());
+  gfx::Rect r1(10, 10, 100, 100);
+  ::wm::ConvertRectFromScreen(primary->GetNativeView(), &r1);
+  EXPECT_EQ("0,0 100x100", r1.ToString());
 
-  EXPECT_EQ("40,40 100x100",
-            ScreenUtil::ConvertRectToScreen(primary->GetNativeView(),
-                                            gfx::Rect(30, 30, 100, 100))
-                .ToString());
-  EXPECT_EQ("650,50 100x100",
-            ScreenUtil::ConvertRectToScreen(secondary->GetNativeView(),
-                                            gfx::Rect(40, 40, 100, 100))
-                .ToString());
+  gfx::Rect r2(620, 20, 100, 100);
+  ::wm::ConvertRectFromScreen(secondary->GetNativeView(), &r2);
+  EXPECT_EQ("10,10 100x100", r2.ToString());
+
+  gfx::Rect r3(30, 30, 100, 100);
+  ::wm::ConvertRectToScreen(primary->GetNativeView(), &r3);
+  EXPECT_EQ("40,40 100x100", r3.ToString());
+
+  gfx::Rect r4(40, 40, 100, 100);
+  ::wm::ConvertRectToScreen(secondary->GetNativeView(), &r4);
+  EXPECT_EQ("650,50 100x100", r4.ToString());
 }
 
 TEST_F(ScreenUtilTest, ShelfDisplayBoundsInUnifiedDesktop) {
+  // TODO: requires unified desktop mode. http://crbug.com/581462.
+  if (WmShell::Get()->IsRunningInMash())
+    return;
+
   display_manager()->SetUnifiedDesktopEnabled(true);
 
   views::Widget* widget = views::Widget::CreateWindowWithContextAndBounds(
       NULL, CurrentContext(), gfx::Rect(10, 10, 100, 100));
-  WmWindow* window = WmLookup::Get()->GetWindowForWidget(widget);
+  WmWindow* window = WmWindow::Get(widget->GetNativeWindow());
 
   UpdateDisplay("500x400");
   EXPECT_EQ("0,0 500x400", wm::GetDisplayBoundsWithShelf(window).ToString());

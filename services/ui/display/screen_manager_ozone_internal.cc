@@ -11,7 +11,9 @@
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chromeos/system/devicemode.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/service_manager/public/cpp/interface_registry.h"
+#include "services/ui/display/output_protection.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/display/manager/chromeos/display_change_observer.h"
 #include "ui/display/manager/chromeos/touch_transform_controller.h"
@@ -58,11 +60,19 @@ std::unique_ptr<ScreenManager> ScreenManager::Create() {
   return base::MakeUnique<ScreenManagerOzoneInternal>();
 }
 
-ScreenManagerOzoneInternal::ScreenManagerOzoneInternal() {}
+ScreenManagerOzoneInternal::ScreenManagerOzoneInternal()
+    : screen_owned_(base::MakeUnique<ScreenBase>()),
+      screen_(screen_owned_.get()) {
+  Screen::SetScreenInstance(screen_owned_.get());
+}
 
 ScreenManagerOzoneInternal::~ScreenManagerOzoneInternal() {
   // We are shutting down and don't want to make anymore display changes.
   fake_display_controller_ = nullptr;
+
+  // At this point |display_manager_| likely owns the Screen instance. It never
+  // cleans up the instance pointer though, which could cause problems in tests.
+  Screen::SetScreenInstance(nullptr);
 
   touch_transform_controller_.reset();
 
@@ -135,6 +145,7 @@ void ScreenManagerOzoneInternal::SetPrimaryDisplayId(int64_t display_id) {
 void ScreenManagerOzoneInternal::AddInterfaces(
     service_manager::InterfaceRegistry* registry) {
   registry->AddInterface<mojom::DisplayController>(this);
+  registry->AddInterface<mojom::OutputProtection>(this);
   registry->AddInterface<mojom::TestDisplayController>(this);
 }
 
@@ -156,14 +167,9 @@ void ScreenManagerOzoneInternal::Init(ScreenManagerDelegate* delegate) {
         native_display_delegate_->GetFakeDisplayController();
   }
 
-  // Create a new Screen instance.
-  std::unique_ptr<ScreenBase> screen = base::MakeUnique<ScreenBase>();
-  Screen::SetScreenInstance(screen.get());
-  screen_ = screen.get();
-
   // Configure display manager. ScreenManager acts as an observer to find out
   // display changes and as a delegate to find out when changes start/stop.
-  display_manager_ = base::MakeUnique<DisplayManager>(std::move(screen));
+  display_manager_ = base::MakeUnique<DisplayManager>(std::move(screen_owned_));
   display_manager_->set_configure_displays(true);
   display_manager_->AddObserver(this);
   display_manager_->set_delegate(this);
@@ -195,10 +201,6 @@ void ScreenManagerOzoneInternal::RequestCloseDisplay(int64_t display_id) {
   // Tell the NDD to remove the display. ScreenManager will get an update
   // that the display configuration has changed and the display will be gone.
   fake_display_controller_->RemoveDisplay(display_id);
-}
-
-int64_t ScreenManagerOzoneInternal::GetPrimaryDisplayId() const {
-  return primary_display_id_;
 }
 
 void ScreenManagerOzoneInternal::ToggleAddRemoveDisplay() {
@@ -306,7 +308,7 @@ void ScreenManagerOzoneInternal::OnDisplayAdded(const Display& display) {
   DVLOG(1) << "OnDisplayAdded: " << display.ToString() << "\n  "
            << metrics.ToString();
   screen_->display_list().AddDisplay(display, DisplayList::Type::NOT_PRIMARY);
-  delegate_->OnDisplayAdded(display.id(), metrics);
+  delegate_->OnDisplayAdded(display, metrics);
 }
 
 void ScreenManagerOzoneInternal::OnDisplayRemoved(const Display& display) {
@@ -325,7 +327,7 @@ void ScreenManagerOzoneInternal::OnDisplayMetricsChanged(
   DVLOG(1) << "OnDisplayModified: " << display.ToString() << "\n  "
            << metrics.ToString();
   screen_->display_list().UpdateDisplay(display);
-  delegate_->OnDisplayModified(display.id(), metrics);
+  delegate_->OnDisplayModified(display, metrics);
 }
 
 ViewportMetrics ScreenManagerOzoneInternal::GetViewportMetricsForDisplay(
@@ -334,11 +336,9 @@ ViewportMetrics ScreenManagerOzoneInternal::GetViewportMetricsForDisplay(
       display_manager_->GetDisplayInfo(display.id());
 
   ViewportMetrics metrics;
-  metrics.bounds = display.bounds();
-  metrics.work_area = display.work_area();
-  metrics.pixel_size = managed_info.bounds_in_native().size();
-  metrics.rotation = display.rotation();
-  metrics.touch_support = display.touch_support();
+  // TODO(kylechar): The origin of |metrics.bounds_in_pixels| should be updated
+  // so that PlatformWindows appear next to one another for multiple displays.
+  metrics.bounds_in_pixels = managed_info.bounds_in_native();
   metrics.device_scale_factor = display.device_scale_factor();
   metrics.ui_scale_factor = managed_info.configured_ui_scale();
 
@@ -387,6 +387,14 @@ void ScreenManagerOzoneInternal::Create(
     const service_manager::Identity& remote_identity,
     mojom::DisplayControllerRequest request) {
   controller_bindings_.AddBinding(this, std::move(request));
+}
+
+void ScreenManagerOzoneInternal::Create(
+    const service_manager::Identity& remote_identity,
+    mojom::OutputProtectionRequest request) {
+  mojo::MakeStrongBinding(
+      base::MakeUnique<OutputProtection>(display_configurator()),
+      std::move(request));
 }
 
 void ScreenManagerOzoneInternal::Create(

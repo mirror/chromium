@@ -81,11 +81,12 @@ class WebPresentationClient {
 
   // Called when the frame requests to close an existing session.
   virtual void closeSession(const WebURL& presentationUrl,
-                            const WebString& presentationId) = 0;
+                            const WebString& presentationId,
+                            const WebPresentationConnectionProxy*) = 0;
 
   // Called when the frame requests to terminate an existing session.
-  virtual void terminateSession(const WebURL& presentationUrl,
-                                const WebString& presentationId) = 0;
+  virtual void terminateConnection(const WebURL& presentationUrl,
+                                   const WebString& presentationId) = 0;
 
   // Called when the frame wants to know the availability of a presentation
   // display for |availabilityUrl|.

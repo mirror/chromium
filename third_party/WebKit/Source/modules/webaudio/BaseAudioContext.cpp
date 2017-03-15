@@ -33,7 +33,6 @@
 #include "core/dom/DOMException.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
-#include "core/dom/ExecutionContextTask.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLMediaElement.h"
@@ -315,7 +314,7 @@ void BaseAudioContext::handleDecodeAudioData(
 
   // We've resolved the promise.  Remove it now.
   DCHECK(m_decodeAudioResolvers.contains(resolver));
-  m_decodeAudioResolvers.remove(resolver);
+  m_decodeAudioResolvers.erase(resolver);
 }
 
 AudioBufferSourceNode* BaseAudioContext::createBufferSource(
@@ -614,9 +613,9 @@ void BaseAudioContext::setContextState(AudioContextState newState) {
 
   // Notify context that state changed
   if (getExecutionContext())
-    getExecutionContext()->postTask(
-        TaskType::MediaElementEvent, BLINK_FROM_HERE,
-        createSameThreadTask(&BaseAudioContext::notifyStateChange,
+    TaskRunnerHelper::get(TaskType::MediaElementEvent, getExecutionContext())
+        ->postTask(BLINK_FROM_HERE,
+                   WTF::bind(&BaseAudioContext::notifyStateChange,
                              wrapPersistent(this)));
 }
 
@@ -771,6 +770,7 @@ void BaseAudioContext::resolvePromisesForResumeOnMainThread() {
       resolver->reject(DOMException::create(
           InvalidStateError, "Cannot resume a context that has been closed"));
     } else {
+      setContextState(Running);
       resolver->resolve();
     }
   }
@@ -872,14 +872,16 @@ ExecutionContext* BaseAudioContext::getExecutionContext() const {
 }
 
 void BaseAudioContext::startRendering() {
-  // This is called for both online and offline contexts.
+  // This is called for both online and offline contexts.  The caller
+  // must set the context state appropriately. In particular, resuming
+  // a context should wait until the context has actually resumed to
+  // set the state.
   DCHECK(isMainThread());
   DCHECK(m_destinationNode);
   DCHECK(isAllowedToStart());
 
   if (m_contextState == Suspended) {
     destination()->audioDestinationHandler().startRendering();
-    setContextState(Running);
   }
 }
 

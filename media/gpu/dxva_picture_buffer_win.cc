@@ -11,6 +11,7 @@
 #include "ui/gl/gl_context.h"
 #include "ui/gl/gl_fence.h"
 #include "ui/gl/gl_image.h"
+#include "ui/gl/gl_image_dxgi.h"
 #include "ui/gl/gl_surface_egl.h"
 #include "ui/gl/scoped_binders.h"
 
@@ -73,20 +74,6 @@ class GLImagePbuffer : public DummyGLImage {
   }
 
   EGLSurface surface_;
-};
-
-class GLImageEGLStream : public DummyGLImage {
- public:
-  GLImageEGLStream(const gfx::Size& size, EGLStreamKHR stream)
-      : DummyGLImage(size), stream_(stream) {}
-
- private:
-  ~GLImageEGLStream() override {
-    EGLDisplay egl_display = gl::GLSurfaceEGL::GetHardwareDisplay();
-    eglDestroyStreamKHR(egl_display, stream_);
-  }
-
-  EGLStreamKHR stream_;
 };
 
 }  // namespace
@@ -189,7 +176,10 @@ bool PbufferPictureBuffer::Initialize(const DXVAVideoDecodeAccelerator& decoder,
   eglGetConfigAttrib(egl_display, egl_config, EGL_BIND_TO_TEXTURE_RGB,
                      &use_rgb);
 
-  if (!InitializeTexture(decoder, !!use_rgb))
+  EGLint red_bits = 8;
+  eglGetConfigAttrib(egl_display, egl_config, EGL_RED_SIZE, &red_bits);
+
+  if (!InitializeTexture(decoder, !!use_rgb, red_bits == 16))
     return false;
 
   EGLint attrib_list[] = {EGL_WIDTH,
@@ -223,7 +213,8 @@ bool PbufferPictureBuffer::Initialize(const DXVAVideoDecodeAccelerator& decoder,
 
 bool PbufferPictureBuffer::InitializeTexture(
     const DXVAVideoDecodeAccelerator& decoder,
-    bool use_rgb) {
+    bool use_rgb,
+    bool use_fp16) {
   DCHECK(!texture_share_handle_);
   if (decoder.d3d11_device_) {
     D3D11_TEXTURE2D_DESC desc;
@@ -231,7 +222,11 @@ bool PbufferPictureBuffer::InitializeTexture(
     desc.Height = picture_buffer_.size().height();
     desc.MipLevels = 1;
     desc.ArraySize = 1;
-    desc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+    if (use_fp16) {
+      desc.Format = DXGI_FORMAT_R16G16B16A16_FLOAT;
+    } else {
+      desc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+    }
     desc.SampleDesc.Count = 1;
     desc.SampleDesc.Quality = 0;
     desc.Usage = D3D11_USAGE_DEFAULT;
@@ -424,7 +419,7 @@ bool EGLStreamPictureBuffer::Initialize() {
   };
   stream_ = eglCreateStreamKHR(egl_display, stream_attributes);
   RETURN_ON_FAILURE(!!stream_, "Could not create stream", false);
-  gl_image_ = make_scoped_refptr(new GLImageEGLStream(size(), stream_));
+  gl_image_ = make_scoped_refptr(new gl::GLImageDXGI(size(), stream_));
   gl::ScopedActiveTexture texture0(GL_TEXTURE0);
   gl::ScopedTextureBinder texture0_binder(
       GL_TEXTURE_EXTERNAL_OES, picture_buffer_.service_texture_ids()[0]);
@@ -505,6 +500,11 @@ bool EGLStreamPictureBuffer::BindSampleToTexture(
   RETURN_ON_FAILURE(result, "Could not post texture", false);
   result = eglStreamConsumerAcquireKHR(egl_display, stream_);
   RETURN_ON_FAILURE(result, "Could not post acquire stream", false);
+  gl::GLImageDXGI* gl_image_dxgi =
+      gl::GLImageDXGI::FromGLImage(gl_image_.get());
+  DCHECK(gl_image_dxgi);
+
+  gl_image_dxgi->SetTexture(dx11_decoding_texture_, subresource);
   return true;
 }
 
@@ -531,7 +531,7 @@ bool EGLStreamCopyPictureBuffer::Initialize(
   };
   stream_ = eglCreateStreamKHR(egl_display, stream_attributes);
   RETURN_ON_FAILURE(!!stream_, "Could not create stream", false);
-  gl_image_ = make_scoped_refptr(new GLImageEGLStream(size(), stream_));
+  gl_image_ = make_scoped_refptr(new gl::GLImageDXGI(size(), stream_));
   gl::ScopedActiveTexture texture0(GL_TEXTURE0);
   gl::ScopedTextureBinder texture0_binder(
       GL_TEXTURE_EXTERNAL_OES, picture_buffer_.service_texture_ids()[0]);
@@ -645,6 +645,11 @@ bool EGLStreamCopyPictureBuffer::CopySurfaceComplete(
   RETURN_ON_FAILURE(result, "Could not post stream", false);
   result = eglStreamConsumerAcquireKHR(egl_display, stream_);
   RETURN_ON_FAILURE(result, "Could not post acquire stream", false);
+  gl::GLImageDXGI* gl_image_dxgi =
+      gl::GLImageDXGI::FromGLImage(gl_image_.get());
+  DCHECK(gl_image_dxgi);
+
+  gl_image_dxgi->SetTexture(angle_copy_texture_, 0);
 
   return true;
 }

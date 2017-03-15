@@ -27,7 +27,6 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/HTMLNames.h"
-#include "core/InputTypeNames.h"
 #include "core/css/StylePropertySet.h"
 #include "core/dom/AXObjectCache.h"
 #include "core/dom/CharacterData.h"
@@ -119,26 +118,6 @@ bool FrameSelection::isHandleVisible() const {
   return selectionInDOMTree().isHandleVisible();
 }
 
-// TODO(yosin): We should replace |visibleSelection<EditingStrategy>()| to
-// |computeVisibleSelectionInDOMTree()|.
-// TODO(yosin): To avoid undefined symbols in clang, we explicitly
-// have specialized version of |FrameSelection::visibleSelection<Strategy>|
-// before |FrameSelection::selection()| which refers this.
-template <>
-const VisibleSelection& FrameSelection::visibleSelection<EditingStrategy>()
-    const {
-  return m_selectionEditor->visibleSelection<EditingStrategy>();
-}
-
-// TODO(yosin): We should replace
-// |visibleSelection<EditingInFlatTreeStrategy>()| with
-// |computeVisibleSelectionInFlatTree()|.
-template <>
-const VisibleSelectionInFlatTree&
-FrameSelection::visibleSelection<EditingInFlatTreeStrategy>() const {
-  return m_selectionEditor->visibleSelection<EditingInFlatTreeStrategy>();
-}
-
 const VisibleSelection& FrameSelection::computeVisibleSelectionInDOMTree()
     const {
   return m_selectionEditor->computeVisibleSelectionInDOMTree();
@@ -154,22 +133,25 @@ const SelectionInDOMTree& FrameSelection::selectionInDOMTree() const {
 }
 
 Element* FrameSelection::rootEditableElementOrDocumentElement() const {
-  Element* selectionRoot = selection().rootEditableElement();
+  Element* selectionRoot =
+      computeVisibleSelectionInDOMTreeDeprecated().rootEditableElement();
   return selectionRoot ? selectionRoot : document().documentElement();
 }
 
-ContainerNode* FrameSelection::rootEditableElementOrTreeScopeRootNode() const {
-  Element* selectionRoot = selection().rootEditableElement();
+// TODO(yosin): We should move |rootEditableElementOrTreeScopeRootNodeOf()| to
+// "EditingUtilities.cpp"
+ContainerNode* rootEditableElementOrTreeScopeRootNodeOf(
+    const Position& position) {
+  Element* selectionRoot = rootEditableElementOf(position);
   if (selectionRoot)
     return selectionRoot;
 
-  Node* node = selection().base().computeContainerNode();
+  Node* const node = position.computeContainerNode();
   return node ? &node->treeScope().rootNode() : 0;
 }
 
-// TODO(yosin): We should rename |FrameSelection::selection()| to
-// |selectionDeprecated()|.
-const VisibleSelection& FrameSelection::selection() const {
+const VisibleSelection&
+FrameSelection::computeVisibleSelectionInDOMTreeDeprecated() const {
   // TODO(yosin): We should hoist updateStyleAndLayoutIgnorePendingStylesheets
   // to caller. See http://crbug.com/590369 for more details.
   document().updateStyleAndLayoutIgnorePendingStylesheets();
@@ -177,20 +159,21 @@ const VisibleSelection& FrameSelection::selection() const {
 }
 
 const VisibleSelectionInFlatTree& FrameSelection::selectionInFlatTree() const {
-  return visibleSelection<EditingInFlatTreeStrategy>();
+  return computeVisibleSelectionInFlatTree();
 }
 
 void FrameSelection::moveCaretSelection(const IntPoint& point) {
   DCHECK(!document().needsLayoutTreeUpdate());
 
-  Element* const editable = rootEditableElement();
+  Element* const editable =
+      computeVisibleSelectionInDOMTree().rootEditableElement();
   if (!editable)
     return;
 
   const VisiblePosition position =
       visiblePositionForContentsPoint(point, frame());
   SelectionInDOMTree::Builder builder;
-  builder.setIsDirectional(selection().isDirectional());
+  builder.setIsDirectional(selectionInDOMTree().isDirectional());
   builder.setIsHandleVisible(true);
   if (position.isNotNull())
     builder.collapse(position.toPositionWithAffinity());
@@ -201,6 +184,14 @@ void FrameSelection::setSelection(const SelectionInDOMTree& passedSelection,
                                   SetSelectionOptions options,
                                   CursorAlignOnScroll align,
                                   TextGranularity granularity) {
+  if (setSelectionDeprecated(passedSelection, options, granularity))
+    didSetSelectionDeprecated(options, align);
+}
+
+bool FrameSelection::setSelectionDeprecated(
+    const SelectionInDOMTree& passedSelection,
+    SetSelectionOptions options,
+    TextGranularity granularity) {
   DCHECK(isAvailable());
   passedSelection.assertValidFor(document());
 
@@ -226,13 +217,9 @@ void FrameSelection::setSelection(const SelectionInDOMTree& passedSelection,
   const SelectionInDOMTree oldSelectionInDOMTree =
       m_selectionEditor->selectionInDOMTree();
   if (oldSelectionInDOMTree == newSelection)
-    return;
+    return false;
   m_selectionEditor->setSelection(newSelection);
   scheduleVisualUpdateForPaintInvalidationIfNeeded();
-
-  // TODO(yosin): The use of updateStyleAndLayoutIgnorePendingStylesheets
-  // needs to be audited. see http://crbug.com/590369 for more details.
-  document().updateStyleAndLayoutIgnorePendingStylesheets();
 
   const Document& currentDocument = document();
   // TODO(yosin): We should get rid of unsued |options| for
@@ -240,11 +227,15 @@ void FrameSelection::setSelection(const SelectionInDOMTree& passedSelection,
   // Note: Since, setting focus can modify DOM tree, we should use
   // |oldSelection| before setting focus
   m_frame->editor().respondToChangedSelection(
-      createVisibleSelection(oldSelectionInDOMTree).start(), options);
+      oldSelectionInDOMTree.computeStartPosition(), options);
   DCHECK_EQ(currentDocument, document());
+  return true;
+}
 
-  if (!computeVisibleSelectionInDOMTree().isNone() &&
-      !(options & DoNotSetFocus)) {
+void FrameSelection::didSetSelectionDeprecated(SetSelectionOptions options,
+                                               CursorAlignOnScroll align) {
+  const Document& currentDocument = document();
+  if (!selectionInDOMTree().isNone() && !(options & DoNotSetFocus)) {
     setFocusedNodeIfNeeded();
     // |setFocusedNodeIfNeeded()| dispatches sync events "FocusOut" and
     // "FocusIn", |m_frame| may associate to another document.
@@ -256,23 +247,25 @@ void FrameSelection::setSelection(const SelectionInDOMTree& passedSelection,
     }
   }
 
-  if (!(options & DoNotUpdateAppearance)) {
-    m_frameCaret->stopCaretBlinkTimer();
-    updateAppearance();
-  }
+  m_frameCaret->stopCaretBlinkTimer();
+  updateAppearance();
 
   // Always clear the x position used for vertical arrow navigation.
   // It will be restored by the vertical arrow navigation code if necessary.
   m_xPosForVerticalArrowNavigation = NoXPosForVerticalArrowNavigation();
+
   // TODO(yosin): Can we move this to at end of this function?
   // This may dispatch a synchronous focus-related events.
-  selectFrameElementInParentIfFullySelected();
-  if (!isAvailable() || document() != currentDocument) {
-    // editing/selection/selectallchildren-crash.html and
-    // editing/selection/longpress-selection-in-iframe-removed-crash.html
-    // reach here.
-    return;
+  if (!(options & DoNotSetFocus)) {
+    selectFrameElementInParentIfFullySelected();
+    if (!isAvailable() || document() != currentDocument) {
+      // editing/selection/selectallchildren-crash.html and
+      // editing/selection/longpress-selection-in-iframe-removed-crash.html
+      // reach here.
+      return;
+    }
   }
+
   EUserTriggered userTriggered = selectionOptionsToUserTriggered(options);
   notifyLayoutObjectOfSelectionChange(userTriggered);
   if (userTriggered == UserTriggered) {
@@ -286,11 +279,6 @@ void FrameSelection::setSelection(const SelectionInDOMTree& passedSelection,
       alignment = (align == CursorAlignOnScroll::Always)
                       ? ScrollAlignment::alignTopAlways
                       : ScrollAlignment::alignToEdgeIfNeeded;
-
-    // TODO(editing-dev): The use of
-    // updateStyleAndLayoutIgnorePendingStylesheets
-    // needs to be audited.  See http://crbug.com/590369 for more details.
-    document().updateStyleAndLayoutIgnorePendingStylesheets();
 
     revealSelection(alignment, RevealExtent);
   }
@@ -318,53 +306,6 @@ void FrameSelection::setSelection(const SelectionInFlatTree& newSelection,
   return setSelection(builder.build(), options, align, granularity);
 }
 
-void FrameSelection::setSelection(const VisibleSelection& newSelection,
-                                  HandleVisibility handleVisibility,
-                                  SetSelectionOptions options,
-                                  CursorAlignOnScroll align,
-                                  TextGranularity granularity) {
-  setSelection(
-      SelectionInDOMTree::Builder(newSelection.asSelection())
-          .setIsHandleVisible(handleVisibility == HandleVisibility::Visible)
-          .build(),
-      options, align, granularity);
-}
-
-void FrameSelection::setSelection(const VisibleSelection& newSelection,
-                                  SetSelectionOptions options) {
-  setSelection(newSelection.asSelection(), options);
-}
-
-void FrameSelection::setSelection(
-    const VisibleSelectionInFlatTree& newSelection,
-    HandleVisibility handleVisibility,
-    SetSelectionOptions options,
-    CursorAlignOnScroll align,
-    TextGranularity granularity) {
-  setSelection(
-      SelectionInFlatTree::Builder(newSelection.asSelection())
-          .setIsHandleVisible(handleVisibility == HandleVisibility::Visible)
-          .build(),
-      options, align, granularity);
-}
-
-void FrameSelection::setSelection(
-    const VisibleSelectionInFlatTree& newSelection,
-    SetSelectionOptions options) {
-  setSelection(newSelection.asSelection(), options);
-}
-
-// TODO(yosin): We should move |computePositionForChildrenRemoval()| to
-// "SelectionEditor.cpp" since it used only in
-// |SelectionEditor::nodeChildrenWillBeRemoved()|.
-static Position computePositionForChildrenRemoval(const Position& position,
-                                                  ContainerNode& container) {
-  Node* node = position.computeContainerNode();
-  if (container.containsIncludingHostElements(*node))
-    return Position::firstPositionInNode(&container);
-  return position;
-}
-
 void FrameSelection::nodeChildrenWillBeRemoved(ContainerNode& container) {
   if (!container.inActiveDocument())
     return;
@@ -372,55 +313,6 @@ void FrameSelection::nodeChildrenWillBeRemoved(ContainerNode& container) {
   // |Editor| class.
   if (!document().isRunningExecCommand())
     TypingCommand::closeTyping(m_frame);
-}
-
-// TODO(yosin): We should move |SelectionEditor::nodeChildrenWillBeRemoved()|
-// to "SelectionEditor.cpp".
-void SelectionEditor::nodeChildrenWillBeRemoved(ContainerNode& container) {
-  if (m_selection.isNone())
-    return;
-  const Position oldBase = m_selection.m_base;
-  const Position oldExtent = m_selection.m_extent;
-  const Position& newBase =
-      computePositionForChildrenRemoval(oldBase, container);
-  const Position& newExtent =
-      computePositionForChildrenRemoval(oldExtent, container);
-  if (newBase == oldBase && newExtent == oldExtent)
-    return;
-  m_selection = SelectionInDOMTree::Builder()
-                    .setBaseAndExtent(newBase, newExtent)
-                    .build();
-  markCacheDirty();
-}
-
-// TODO(yosin): We should move |computePositionForChildrenRemoval()| with
-// |nodeWillBeRemoved()| to "SelectionEditor.cpp".
-static Position computePositionForNodeRemoval(const Position& position,
-                                              Node& nodeToBeRemoved) {
-  Position result = position;
-  // TODO(yosin): We should rename |updatePositionForNodeRemoval()|
-  // to |computePositionForNodeRemoval()| to avoid using output parameter.
-  updatePositionForNodeRemoval(result, nodeToBeRemoved);
-  return result;
-}
-
-// TODO(yosin): We should move |nodeWillBeRemoved()| to
-// "SelectionEditor.cpp".
-void SelectionEditor::nodeWillBeRemoved(Node& nodeToBeRemoved) {
-  if (m_selection.isNone())
-    return;
-  const Position oldBase = m_selection.m_base;
-  const Position oldExtent = m_selection.m_extent;
-  const Position& newBase =
-      computePositionForNodeRemoval(oldBase, nodeToBeRemoved);
-  const Position& newExtent =
-      computePositionForNodeRemoval(oldExtent, nodeToBeRemoved);
-  if (newBase == oldBase && newExtent == oldExtent)
-    return;
-  m_selection = SelectionInDOMTree::Builder()
-                    .setBaseAndExtent(newBase, newExtent)
-                    .build();
-  markCacheDirty();
 }
 
 void FrameSelection::nodeWillBeRemoved(Node& node) {
@@ -433,163 +325,6 @@ void FrameSelection::nodeWillBeRemoved(Node& node) {
   // |Editor| class.
   if (!document().isRunningExecCommand())
     TypingCommand::closeTyping(m_frame);
-}
-
-// TODO(yosin): We should move |updatePositionAfterAdoptingTextReplacement()|
-// to "SelectionEditor.cpp" since it used only in
-// |SelectionEditor::didUpdateCharacterData()|.
-static Position updatePositionAfterAdoptingTextReplacement(
-    const Position& position,
-    CharacterData* node,
-    unsigned offset,
-    unsigned oldLength,
-    unsigned newLength) {
-  if (position.anchorNode() != node)
-    return position;
-
-  if (position.isBeforeAnchor()) {
-    return updatePositionAfterAdoptingTextReplacement(
-        Position(node, 0), node, offset, oldLength, newLength);
-  }
-  if (position.isAfterAnchor()) {
-    return updatePositionAfterAdoptingTextReplacement(
-        Position(node, oldLength), node, offset, oldLength, newLength);
-  }
-
-  // See:
-  // http://www.w3.org/TR/DOM-Level-2-Traversal-Range/ranges.html#Level-2-Range-Mutation
-  DCHECK_GE(position.offsetInContainerNode(), 0);
-  unsigned positionOffset =
-      static_cast<unsigned>(position.offsetInContainerNode());
-  // Replacing text can be viewed as a deletion followed by insertion.
-  if (positionOffset >= offset && positionOffset <= offset + oldLength)
-    positionOffset = offset;
-
-  // Adjust the offset if the position is after the end of the deleted contents
-  // (positionOffset > offset + oldLength) to avoid having a stale offset.
-  if (positionOffset > offset + oldLength)
-    positionOffset = positionOffset - oldLength + newLength;
-
-  // Due to case folding
-  // (http://unicode.org/Public/UCD/latest/ucd/CaseFolding.txt), LayoutText
-  // length may be different from Text length.  A correct implementation would
-  // translate the LayoutText offset to a Text offset; this is just a safety
-  // precaution to avoid offset values that run off the end of the Text.
-  if (positionOffset > node->length())
-    positionOffset = node->length();
-
-  return Position(node, positionOffset);
-}
-
-// TODO(yosin): We should move |didUpdateCharacterData()| to
-// "SelectionEditor.cpp".
-void SelectionEditor::didUpdateCharacterData(CharacterData* node,
-                                             unsigned offset,
-                                             unsigned oldLength,
-                                             unsigned newLength) {
-  // The fragment check is a performance optimization. See
-  // http://trac.webkit.org/changeset/30062.
-  if (m_selection.isNone() || !node || !node->isConnected()) {
-    didFinishDOMMutation();
-    return;
-  }
-  const Position& newBase = updatePositionAfterAdoptingTextReplacement(
-      m_selection.m_base, node, offset, oldLength, newLength);
-  const Position& newExtent = updatePositionAfterAdoptingTextReplacement(
-      m_selection.m_extent, node, offset, oldLength, newLength);
-  didFinishTextChange(newBase, newExtent);
-}
-
-// TODO(yosin): We should move |updatePostionAfterAdoptingTextNodesMerged()|
-// to "SelectionEditor.cpp" since it used only in
-// |SelectionEditor::didMergeTextNodes()|.
-// TODO(yosin): We should introduce |Position(const Text&, int)| to avoid
-// |const_cast<Text*>|.
-static Position updatePostionAfterAdoptingTextNodesMerged(
-    const Position& position,
-    const Text& mergedNode,
-    const NodeWithIndex& nodeToBeRemovedWithIndex,
-    unsigned oldLength) {
-  Node* const anchorNode = position.anchorNode();
-  const Node& nodeToBeRemoved = nodeToBeRemovedWithIndex.node();
-  switch (position.anchorType()) {
-    case PositionAnchorType::BeforeChildren:
-    case PositionAnchorType::AfterChildren:
-      return position;
-    case PositionAnchorType::BeforeAnchor:
-      if (anchorNode == nodeToBeRemoved)
-        return Position(const_cast<Text*>(&mergedNode), mergedNode.length());
-      return position;
-    case PositionAnchorType::AfterAnchor:
-      if (anchorNode == nodeToBeRemoved)
-        return Position(const_cast<Text*>(&mergedNode), mergedNode.length());
-      if (anchorNode == mergedNode)
-        return Position(const_cast<Text*>(&mergedNode), oldLength);
-      return position;
-    case PositionAnchorType::OffsetInAnchor: {
-      const int offset = position.offsetInContainerNode();
-      if (anchorNode == nodeToBeRemoved)
-        return Position(const_cast<Text*>(&mergedNode), oldLength + offset);
-      if (anchorNode == nodeToBeRemoved.parentNode() &&
-          offset == nodeToBeRemovedWithIndex.index()) {
-        return Position(const_cast<Text*>(&mergedNode), oldLength);
-      }
-      return position;
-    }
-  }
-  NOTREACHED() << position;
-  return position;
-}
-
-// TODO(yosin): We should move |SelectionEditor::didMergeTextNodes()| to
-// "SelectionEditor.cpp".
-void SelectionEditor::didMergeTextNodes(
-    const Text& mergedNode,
-    const NodeWithIndex& nodeToBeRemovedWithIndex,
-    unsigned oldLength) {
-  if (m_selection.isNone()) {
-    didFinishDOMMutation();
-    return;
-  }
-  const Position& newBase = updatePostionAfterAdoptingTextNodesMerged(
-      m_selection.m_base, mergedNode, nodeToBeRemovedWithIndex, oldLength);
-  const Position& newExtent = updatePostionAfterAdoptingTextNodesMerged(
-      m_selection.m_extent, mergedNode, nodeToBeRemovedWithIndex, oldLength);
-  didFinishTextChange(newBase, newExtent);
-}
-
-// TODO(yosin): We should move |updatePostionAfterAdoptingTextNodeSplit()|
-// to "SelectionEditor.cpp" since it used only in
-// |SelectionEditor::didSplitTextNode()|.
-static Position updatePostionAfterAdoptingTextNodeSplit(
-    const Position& position,
-    const Text& oldNode) {
-  if (!position.anchorNode() || position.anchorNode() != &oldNode ||
-      !position.isOffsetInAnchor())
-    return position;
-  // See:
-  // http://www.w3.org/TR/DOM-Level-2-Traversal-Range/ranges.html#Level-2-Range-Mutation
-  DCHECK_GE(position.offsetInContainerNode(), 0);
-  unsigned positionOffset =
-      static_cast<unsigned>(position.offsetInContainerNode());
-  unsigned oldLength = oldNode.length();
-  if (positionOffset <= oldLength)
-    return position;
-  return Position(toText(oldNode.nextSibling()), positionOffset - oldLength);
-}
-
-// TODO(yosin): We should move |SelectionEditor::didSplitTextNode()| to
-// "SelectionEditor.cpp".
-void SelectionEditor::didSplitTextNode(const Text& oldNode) {
-  if (m_selection.isNone() || !oldNode.isConnected()) {
-    didFinishDOMMutation();
-    return;
-  }
-  const Position& newBase =
-      updatePostionAfterAdoptingTextNodeSplit(m_selection.m_base, oldNode);
-  const Position& newExtent =
-      updatePostionAfterAdoptingTextNodeSplit(m_selection.m_extent, oldNode);
-  didFinishTextChange(newBase, newExtent);
 }
 
 void FrameSelection::didChangeFocus() {
@@ -619,12 +354,15 @@ bool FrameSelection::modify(EAlteration alter,
                             SelectionDirection direction,
                             TextGranularity granularity,
                             EUserTriggered userTriggered) {
-  SelectionModifier selectionModifier(*frame(), selection(),
-                                      m_xPosForVerticalArrowNavigation);
+  SelectionModifier selectionModifier(
+      *frame(), computeVisibleSelectionInDOMTreeDeprecated(),
+      m_xPosForVerticalArrowNavigation);
   const bool modified = selectionModifier.modify(alter, direction, granularity);
   if (userTriggered == UserTriggered &&
-      selectionModifier.selection().isRange() && selection().isCaret() &&
-      dispatchSelectStart(selection()) != DispatchEventResult::NotCanceled) {
+      selectionModifier.selection().isRange() &&
+      computeVisibleSelectionInDOMTreeDeprecated().isCaret() &&
+      dispatchSelectStart(computeVisibleSelectionInDOMTreeDeprecated()) !=
+          DispatchEventResult::NotCanceled) {
     return false;
   }
   if (!modified) {
@@ -641,7 +379,7 @@ bool FrameSelection::modify(EAlteration alter,
 
   const SetSelectionOptions options =
       CloseTyping | ClearTypingStyle | userTriggered;
-  setSelection(selectionModifier.selection(), options);
+  setSelection(selectionModifier.selection().asSelection(), options);
 
   if (granularity == LineGranularity || granularity == ParagraphGranularity)
     m_xPosForVerticalArrowNavigation =
@@ -658,13 +396,14 @@ bool FrameSelection::modify(EAlteration alter,
 bool FrameSelection::modify(EAlteration alter,
                             unsigned verticalDistance,
                             VerticalDirection direction) {
-  SelectionModifier selectionModifier(*frame(), selection());
+  SelectionModifier selectionModifier(
+      *frame(), computeVisibleSelectionInDOMTreeDeprecated());
   if (!selectionModifier.modifyWithPageGranularity(alter, verticalDistance,
                                                    direction)) {
     return false;
   }
 
-  setSelection(selectionModifier.selection(), HandleVisibility::NotVisible,
+  setSelection(selectionModifier.selection().asSelection(),
                CloseTyping | ClearTypingStyle | UserTriggered,
                alter == AlterationMove ? CursorAlignOnScroll::Always
                                        : CursorAlignOnScroll::IfNeeded);
@@ -712,20 +451,21 @@ void FrameSelection::updateStyleAndLayoutIfNeeded() {
 
 void FrameSelection::invalidatePaintIfNeeded(
     const LayoutBlock& block,
-    const PaintInvalidatorContext& context,
-    PaintInvalidationReason reason) {
-  m_frameCaret->invalidatePaintIfNeeded(block, context, reason);
+    const PaintInvalidatorContext& context) {
+  m_frameCaret->invalidatePaintIfNeeded(block, context);
 }
 
 bool FrameSelection::shouldPaintCaret(const LayoutBlock& block) const {
   DCHECK_GE(document().lifecycle().state(), DocumentLifecycle::LayoutClean);
   bool result = m_frameCaret->shouldPaintCaret(block);
-  DCHECK(!result || (isCaret() && hasEditableStyle()));
+  DCHECK(!result ||
+         (computeVisibleSelectionInDOMTreeDeprecated().isCaret() &&
+          computeVisibleSelectionInDOMTree().hasEditableStyle()));
   return result;
 }
 
 IntRect FrameSelection::absoluteCaretBounds() {
-  DCHECK(selection().isValidFor(*m_frame->document()));
+  DCHECK(computeVisibleSelectionInDOMTree().isValidFor(*m_frame->document()));
   return m_frameCaret->absoluteCaretBounds();
 }
 
@@ -740,7 +480,7 @@ bool FrameSelection::contains(const LayoutPoint& point) {
 
   // Treat a collapsed selection like no selection.
   const VisibleSelectionInFlatTree& visibleSelection =
-      this->visibleSelection<EditingInFlatTreeStrategy>();
+      computeVisibleSelectionInFlatTree();
   if (!visibleSelection.isRange())
     return false;
 
@@ -786,16 +526,18 @@ void FrameSelection::selectFrameElementInParentIfFullySelected() {
 
   // Check if the selection contains the entire frame contents; if not, then
   // there is nothing to do.
-  if (!isRange())
+  if (selectionInDOMTree().selectionTypeWithLegacyGranularity() !=
+      RangeSelection) {
     return;
+  }
 
   // TODO(xiaochengh): The use of updateStyleAndLayoutIgnorePendingStylesheets
   // needs to be audited.  See http://crbug.com/590369 for more details.
   document().updateStyleAndLayoutIgnorePendingStylesheets();
 
-  if (!isStartOfDocument(selection().visibleStart()))
+  if (!isStartOfDocument(computeVisibleSelectionInDOMTree().visibleStart()))
     return;
-  if (!isEndOfDocument(selection().visibleEnd()))
+  if (!isEndOfDocument(computeVisibleSelectionInDOMTree().visibleEnd()))
     return;
 
   // FIXME: This is not yet implemented for cross-process frame relationships.
@@ -844,7 +586,7 @@ void FrameSelection::selectFrameElementInParentIfFullySelected() {
   // setFocusedFrame can dispatch synchronous focus/blur events.  The document
   // tree might be modified.
   if (newSelection.isNonOrphanedCaretOrRange())
-    toLocalFrame(parent)->selection().setSelection(newSelection);
+    toLocalFrame(parent)->selection().setSelection(newSelection.asSelection());
 }
 
 // Returns a shadow tree node for legacy shadow trees, a child of the
@@ -867,14 +609,17 @@ void FrameSelection::selectAll() {
 
   Node* root = nullptr;
   Node* selectStartTarget = nullptr;
-  if (isContentEditable()) {
-    root = highestEditableRoot(selection().start());
-    if (Node* shadowRoot = nonBoundaryShadowTreeRootNode(selection().start()))
+  if (computeVisibleSelectionInDOMTreeDeprecated().isContentEditable()) {
+    root = highestEditableRoot(
+        computeVisibleSelectionInDOMTreeDeprecated().start());
+    if (Node* shadowRoot = nonBoundaryShadowTreeRootNode(
+            computeVisibleSelectionInDOMTreeDeprecated().start()))
       selectStartTarget = shadowRoot->ownerShadowHost();
     else
       selectStartTarget = root;
   } else {
-    root = nonBoundaryShadowTreeRootNode(selection().start());
+    root = nonBoundaryShadowTreeRootNode(
+        computeVisibleSelectionInDOMTreeDeprecated().start());
     if (root) {
       selectStartTarget = root->ownerShadowHost();
     } else {
@@ -909,11 +654,6 @@ bool FrameSelection::setSelectedRange(const EphemeralRange& range,
                                       SetSelectionOptions options) {
   if (range.isNull())
     return false;
-  m_selectionEditor->resetLogicalRange();
-  // Since |FrameSeleciton::setSelection()| dispatches events and DOM tree
-  // can be modified by event handlers, we should create |Range| object before
-  // calling it.
-  Range* logicalRange = createRange(range);
   setSelection(SelectionInDOMTree::Builder()
                    .setBaseAndExtent(range)
                    .setAffinity(affinity)
@@ -921,7 +661,6 @@ bool FrameSelection::setSelectedRange(const EphemeralRange& range,
                                      SelectionDirectionalMode::Directional)
                    .build(),
                options);
-  m_selectionEditor->setLogicalRange(logicalRange);
   return true;
 }
 
@@ -929,17 +668,14 @@ Range* FrameSelection::firstRange() const {
   return m_selectionEditor->firstRange();
 }
 
-bool FrameSelection::isInPasswordField() const {
-  TextControlElement* textControl = enclosingTextControl(start());
-  return isHTMLInputElement(textControl) &&
-         toHTMLInputElement(textControl)->type() == InputTypeNames::password;
-}
-
 void FrameSelection::notifyAccessibilityForSelectionChange() {
-  if (selection().start().isNotNull() && selection().end().isNotNull()) {
-    if (AXObjectCache* cache = document().existingAXObjectCache())
-      cache->selectionChanged(selection().start().computeContainerNode());
-  }
+  if (selectionInDOMTree().isNone())
+    return;
+  AXObjectCache* cache = document().existingAXObjectCache();
+  if (!cache)
+    return;
+  const Position& start = selectionInDOMTree().computeStartPosition();
+  cache->selectionChanged(start.computeContainerNode());
 }
 
 void FrameSelection::notifyCompositorForSelectionChange() {
@@ -1045,8 +781,11 @@ void FrameSelection::updateAppearance() {
 
 void FrameSelection::notifyLayoutObjectOfSelectionChange(
     EUserTriggered userTriggered) {
-  if (TextControlElement* textControl = enclosingTextControl(start()))
-    textControl->selectionChanged(userTriggered == UserTriggered);
+  TextControlElement* textControl =
+      enclosingTextControl(selectionInDOMTree().base());
+  if (!textControl)
+    return;
+  textControl->selectionChanged(userTriggered == UserTriggered);
 }
 
 // Helper function that tells whether a particular node is an element that has
@@ -1057,15 +796,16 @@ static bool isFrameElement(const Node* n) {
   LayoutObject* layoutObject = n->layoutObject();
   if (!layoutObject || !layoutObject->isLayoutPart())
     return false;
-  Widget* widget = toLayoutPart(layoutObject)->widget();
-  return widget && widget->isFrameView();
+  FrameViewBase* frameViewBase = toLayoutPart(layoutObject)->frameViewBase();
+  return frameViewBase && frameViewBase->isFrameView();
 }
 
 void FrameSelection::setFocusedNodeIfNeeded() {
-  if (isNone() || !isFocused())
+  if (computeVisibleSelectionInDOMTreeDeprecated().isNone() || !isFocused())
     return;
 
-  if (Element* target = rootEditableElement()) {
+  if (Element* target =
+          computeVisibleSelectionInDOMTreeDeprecated().rootEditableElement()) {
     // Walk up the DOM tree to search for a node to focus.
     document().updateStyleAndLayoutTreeIgnorePendingStylesheets();
     while (target) {
@@ -1086,7 +826,7 @@ void FrameSelection::setFocusedNodeIfNeeded() {
 static String extractSelectedText(const FrameSelection& selection,
                                   TextIteratorBehavior behavior) {
   const VisibleSelectionInFlatTree& visibleSelection =
-      selection.visibleSelection<EditingInFlatTreeStrategy>();
+      selection.computeVisibleSelectionInFlatTree();
   const EphemeralRangeInFlatTree& range =
       visibleSelection.toNormalizedEphemeralRange();
   // We remove '\0' characters because they are not visibly rendered to the
@@ -1096,7 +836,7 @@ static String extractSelectedText(const FrameSelection& selection,
 
 String FrameSelection::selectedHTMLForClipboard() const {
   const VisibleSelectionInFlatTree& visibleSelection =
-      this->visibleSelection<EditingInFlatTreeStrategy>();
+      computeVisibleSelectionInFlatTree();
   const EphemeralRangeInFlatTree& range =
       visibleSelection.toNormalizedEphemeralRange();
   return createMarkup(range.startPosition(), range.endPosition(),
@@ -1175,7 +915,7 @@ HTMLFormElement* FrameSelection::currentForm() const {
   // selection is.
   Node* start = document().focusedElement();
   if (!start)
-    start = this->start().anchorNode();
+    start = computeVisibleSelectionInDOMTreeDeprecated().start().anchorNode();
   if (!start)
     return 0;
 
@@ -1202,21 +942,21 @@ void FrameSelection::revealSelection(const ScrollAlignment& alignment,
 
   LayoutRect rect;
 
-  switch (getSelectionType()) {
+  switch (computeVisibleSelectionInDOMTree().getSelectionType()) {
     case NoSelection:
       return;
     case CaretSelection:
       rect = LayoutRect(absoluteCaretBounds());
       break;
     case RangeSelection:
-      rect = LayoutRect(
-          revealExtentOption == RevealExtent
-              ? absoluteCaretBoundsOf(createVisiblePosition(extent()))
-              : enclosingIntRect(unclippedBounds()));
+      rect = LayoutRect(revealExtentOption == RevealExtent
+                            ? absoluteCaretBoundsOf(createVisiblePosition(
+                                  computeVisibleSelectionInDOMTree().extent()))
+                            : enclosingIntRect(unclippedBounds()));
       break;
   }
 
-  Position start = this->start();
+  Position start = computeVisibleSelectionInDOMTreeDeprecated().start();
   DCHECK(start.anchorNode());
   if (start.anchorNode() && start.anchorNode()->layoutObject()) {
     // FIXME: This code only handles scrolling the startContainer's layer, but
@@ -1234,7 +974,8 @@ void FrameSelection::setSelectionFromNone() {
   // entire WebView is editable or designMode is on for this document).
 
   Document* document = m_frame->document();
-  if (!isNone() || !(blink::hasEditableStyle(*document)))
+  if (!computeVisibleSelectionInDOMTreeDeprecated().isNone() ||
+      !(blink::hasEditableStyle(*document)))
     return;
 
   Element* documentElement = document->documentElement();
@@ -1269,7 +1010,7 @@ void FrameSelection::setShouldShowBlockCursor(bool shouldShowBlockCursor) {
 #ifndef NDEBUG
 
 void FrameSelection::showTreeForThis() const {
-  selection().showTreeForThis();
+  computeVisibleSelectionInDOMTreeDeprecated().showTreeForThis();
 }
 
 #endif
@@ -1292,15 +1033,26 @@ void FrameSelection::scheduleVisualUpdateForPaintInvalidationIfNeeded() const {
     frameView->scheduleVisualUpdateForPaintInvalidationIfNeeded();
 }
 
+static bool hasNonSeparatorCharacter(const String& text) {
+  for (unsigned i = 0; i < text.length(); i++) {
+    if (!isSeparator(text.characterStartingAt(i)))
+      return true;
+  }
+  return false;
+}
+
 bool FrameSelection::selectWordAroundPosition(const VisiblePosition& position) {
   static const EWordSide wordSideList[2] = {RightWordIfOnBoundary,
                                             LeftWordIfOnBoundary};
   for (EWordSide wordSide : wordSideList) {
+    // TODO(yoichio): We should have Position version of |start/endOfWord|
+    // for avoiding unnecessary canonicalization.
+    // Then we don't need |hasNonSeparatorCharacter|.
     VisiblePosition start = startOfWord(position, wordSide);
     VisiblePosition end = endOfWord(position, wordSide);
     String text =
         plainText(EphemeralRange(start.deepEquivalent(), end.deepEquivalent()));
-    if (!text.isEmpty() && !isSeparator(text.characterStartingAt(0))) {
+    if (!text.isEmpty() && hasNonSeparatorCharacter(text)) {
       setSelection(SelectionInDOMTree::Builder()
                        .collapse(start.toPositionWithAffinity())
                        .extend(end.deepEquivalent())
@@ -1335,15 +1087,17 @@ GranularityStrategy* FrameSelection::granularityStrategy() {
 }
 
 void FrameSelection::moveRangeSelectionExtent(const IntPoint& contentsPoint) {
-  if (isNone())
+  if (computeVisibleSelectionInDOMTreeDeprecated().isNone())
     return;
 
-  VisibleSelection newSelection =
-      granularityStrategy()->updateExtent(contentsPoint, m_frame);
-  setSelection(newSelection, HandleVisibility::Visible,
-               FrameSelection::CloseTyping | FrameSelection::ClearTypingStyle |
-                   FrameSelection::DoNotClearStrategy | UserTriggered,
-               CursorAlignOnScroll::IfNeeded, CharacterGranularity);
+  const SetSelectionOptions options =
+      FrameSelection::CloseTyping | FrameSelection::ClearTypingStyle |
+      FrameSelection::DoNotClearStrategy | UserTriggered;
+  setSelection(SelectionInDOMTree::Builder(
+                   granularityStrategy()->updateExtent(contentsPoint, m_frame))
+                   .setIsHandleVisible(true)
+                   .build(),
+               options);
 }
 
 // TODO(yosin): We should make |FrameSelection::moveRangeSelection()| to take
@@ -1366,11 +1120,6 @@ void FrameSelection::moveRangeSelection(const VisiblePosition& basePosition,
 
   setSelection(newSelection, CloseTyping | ClearTypingStyle,
                CursorAlignOnScroll::IfNeeded, granularity);
-}
-
-void FrameSelection::updateIfNeeded() {
-  DCHECK(!m_frame->document()->needsLayoutTreeUpdate());
-  m_selectionEditor->updateIfNeeded();
 }
 
 void FrameSelection::setCaretVisible(bool caretIsVisible) {

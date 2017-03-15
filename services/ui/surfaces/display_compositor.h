@@ -62,14 +62,8 @@ class DisplayCompositor
 
   cc::SurfaceManager* manager() { return &manager_; }
 
-  // display_compositor::GpuCompositorFrameSinkDelegate implementation.
-  void OnClientConnectionLost(const cc::FrameSinkId& frame_sink_id,
-                              bool destroy_compositor_frame_sink) override;
-  void OnPrivateConnectionLost(const cc::FrameSinkId& frame_sink_id,
-                               bool destroy_compositor_frame_sink) override;
-
   // cc::mojom::DisplayCompositor implementation:
-  void CreateDisplayCompositorFrameSink(
+  void CreateRootCompositorFrameSink(
       const cc::FrameSinkId& frame_sink_id,
       gpu::SurfaceHandle surface_handle,
       cc::mojom::MojoCompositorFrameSinkAssociatedRequest request,
@@ -77,27 +71,24 @@ class DisplayCompositor
       cc::mojom::MojoCompositorFrameSinkClientPtr client,
       cc::mojom::DisplayPrivateAssociatedRequest display_private_request)
       override;
-  void CreateOffscreenCompositorFrameSink(
+  void CreateCompositorFrameSink(
       const cc::FrameSinkId& frame_sink_id,
       cc::mojom::MojoCompositorFrameSinkRequest request,
       cc::mojom::MojoCompositorFrameSinkPrivateRequest private_request,
       cc::mojom::MojoCompositorFrameSinkClientPtr client) override;
+  void RegisterFrameSinkHierarchy(
+      const cc::FrameSinkId& parent_frame_sink_id,
+      const cc::FrameSinkId& child_frame_sink_id) override;
+  void UnregisterFrameSinkHierarchy(
+      const cc::FrameSinkId& parent_frame_sink_id,
+      const cc::FrameSinkId& child_frame_sink_id) override;
+  void DropTemporaryReference(const cc::SurfaceId& surface_id) override;
 
  private:
   std::unique_ptr<cc::Display> CreateDisplay(
       const cc::FrameSinkId& frame_sink_id,
       gpu::SurfaceHandle surface_handle,
       cc::SyntheticBeginFrameSource* begin_frame_source);
-
-  void CreateCompositorFrameSinkInternal(
-      const cc::FrameSinkId& frame_sink_id,
-      gpu::SurfaceHandle surface_handle,
-      std::unique_ptr<cc::Display> display,
-      std::unique_ptr<cc::SyntheticBeginFrameSource> begin_frame_source,
-      cc::mojom::MojoCompositorFrameSinkRequest request,
-      cc::mojom::MojoCompositorFrameSinkPrivateRequest private_request,
-      cc::mojom::MojoCompositorFrameSinkClientPtr client,
-      cc::mojom::DisplayPrivateRequest display_private_request);
 
   // It is necessary to pass |frame_sink_id| by value because the id
   // is owned by the GpuCompositorFrameSink in the map. When the sink is
@@ -111,6 +102,12 @@ class DisplayCompositor
   void OnSurfaceDamaged(const cc::SurfaceId& surface_id,
                         bool* changed) override;
 
+  // display_compositor::GpuCompositorFrameSinkDelegate implementation.
+  void OnClientConnectionLost(const cc::FrameSinkId& frame_sink_id,
+                              bool destroy_compositor_frame_sink) override;
+  void OnPrivateConnectionLost(const cc::FrameSinkId& frame_sink_id,
+                               bool destroy_compositor_frame_sink) override;
+
   // SurfaceManager should be the first object constructed and the last object
   // destroyed in order to ensure that all other objects that depend on it have
   // access to a valid pointer for the entirety of their liftimes.
@@ -120,10 +117,9 @@ class DisplayCompositor
   std::unique_ptr<gpu::GpuMemoryBufferManager> gpu_memory_buffer_manager_;
   gpu::ImageFactory* image_factory_;
 
-  std::unordered_map<
-      cc::FrameSinkId,
-      std::unique_ptr<display_compositor::GpuCompositorFrameSink>,
-      cc::FrameSinkIdHash>
+  std::unordered_map<cc::FrameSinkId,
+                     std::unique_ptr<cc::mojom::MojoCompositorFrameSink>,
+                     cc::FrameSinkIdHash>
       compositor_frame_sinks_;
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;

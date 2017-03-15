@@ -48,6 +48,7 @@ namespace blink {
 class BlobPropertyBag;
 class ExceptionState;
 class ExecutionContext;
+class ScriptState;
 
 class CORE_EXPORT Blob : public GarbageCollectedFinalized<Blob>,
                          public ScriptWrappable,
@@ -98,7 +99,7 @@ class CORE_EXPORT Blob : public GarbageCollectedFinalized<Blob>,
     return slice(start, end, String(), exceptionState);
   }
 
-  virtual void close(ExecutionContext*, ExceptionState&);
+  virtual void close(ScriptState*, ExceptionState&);
 
   String type() const { return m_blobDataHandle->type(); }
   String uuid() const { return m_blobDataHandle->uuid(); }
@@ -130,6 +131,11 @@ class CORE_EXPORT Blob : public GarbageCollectedFinalized<Blob>,
   static void clampSliceOffsets(long long size,
                                 long long& start,
                                 long long& end);
+
+  // Called by the Blob and File constructors when processing the 'type'
+  // option per the FileAPI standard. Returns "" if |type| contains any
+  // character outside U+0020...U+007E, or |type| ASCII-lowercased otherwise.
+  static String normalizeType(const String& type);
 
  private:
   Blob();

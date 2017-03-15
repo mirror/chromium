@@ -149,14 +149,14 @@ class PLATFORM_EXPORT ImageDecoder {
   // Image decoders that support YUV decoding must override this to
   // provide the size of each component.
   virtual IntSize decodedYUVSize(int component) const {
-    ASSERT(false);
+    NOTREACHED();
     return IntSize();
   }
 
   // Image decoders that support YUV decoding must override this to
   // return the width of each row of the memory allocation.
   virtual size_t decodedYUVWidthBytes(int component) const {
-    ASSERT(false);
+    NOTREACHED();
     return 0;
   }
 
@@ -195,8 +195,8 @@ class PLATFORM_EXPORT ImageDecoder {
   // Whether or not the frame is fully received.
   virtual bool frameIsCompleteAtIndex(size_t) const;
 
-  // Duration for displaying a frame in seconds. This method is only used by
-  // animated images.
+  // Duration for displaying a frame in milliseconds. This method is only used
+  // by animated images.
   virtual float frameDurationAtIndex(size_t) const { return 0; }
 
   // Number of bytes in the decoded frame. Returns 0 if the decoder doesn't
@@ -258,13 +258,15 @@ class PLATFORM_EXPORT ImageDecoder {
   // and returns true. Otherwise returns false.
   virtual bool hotSpot(IntPoint&) const { return false; }
 
-  virtual void setMemoryAllocator(SkBitmap::Allocator* allocator) {
+  void setMemoryAllocator(SkBitmap::Allocator* allocator) {
     // FIXME: this doesn't work for images with multiple frames.
     if (m_frameBufferCache.isEmpty()) {
-      m_frameBufferCache.resize(1);
-      m_frameBufferCache[0].setRequiredPreviousFrameIndex(
-          findRequiredPreviousFrame(0, false));
+      // Ensure that initializeNewFrame is called, after parsing if
+      // necessary.
+      if (!frameCount())
+        return;
     }
+
     m_frameBufferCache[0].setMemoryAllocator(allocator);
   }
 
@@ -313,9 +315,11 @@ class PLATFORM_EXPORT ImageDecoder {
   virtual size_t decodeFrameCount() { return 1; }
 
   // Called to initialize the frame buffer with the given index, based on the
-  // provided and previous frame's characteristics. Returns true on success. On
-  // failure, this will mark the image as failed. Before calling this method,
-  // the caller must verify that the frame exists.
+  // provided and previous frame's characteristics. Returns true on success.
+  // Before calling this method, the caller must verify that the frame exists.
+  // On failure, the client should call setFailed. This method does not call
+  // setFailed itself because that might delete the object directly making this
+  // call.
   bool initFrameBuffer(size_t);
 
   // Performs any additional setup of the requested frame after it has been

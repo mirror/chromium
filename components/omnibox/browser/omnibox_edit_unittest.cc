@@ -85,6 +85,8 @@ class TestingOmniboxView : public OmniboxView {
   bool IsImeComposing() const override { return false; }
   int GetOmniboxTextLength() const override { return 0; }
   void EmphasizeURLComponents() override {}
+  void SetEmphasis(bool emphasize, const gfx::Range& range) override {}
+  void UpdateSchemeStyle(const gfx::Range& range) override {}
 
   const base::string16& inline_autocomplete_text() const {
     return inline_autocomplete_text_;
@@ -150,56 +152,13 @@ class TestingOmniboxClient : public OmniboxClient {
     alternate_nav_match_ = alternate_nav_match;
     return nullptr;
   }
-  bool CurrentPageExists() const override { return true; }
-  const GURL& GetURL() const override { return GURL::EmptyGURL(); }
-  const base::string16& GetTitle() const override {
-    return base::EmptyString16();
-  }
-  gfx::Image GetFavicon() const override { return gfx::Image(); }
-  bool IsInstantNTP() const override { return false; }
-  bool IsSearchResultsPage() const override { return false; }
-  bool IsLoading() const override { return false; }
-  bool IsPasteAndGoEnabled() const override { return false; }
-  bool IsNewTabPage(const std::string& url) const override { return false; }
-  bool IsHomePage(const std::string& url) const override { return false; }
   const SessionID& GetSessionID() const override { return session_id_; }
-  bookmarks::BookmarkModel* GetBookmarkModel() override { return nullptr; }
-  TemplateURLService* GetTemplateURLService() override { return nullptr; }
   const AutocompleteSchemeClassifier& GetSchemeClassifier() const override {
     return scheme_classifier_;
   }
   AutocompleteClassifier* GetAutocompleteClassifier() override {
     return &autocomplete_classifier_;
   }
-  gfx::Image GetIconIfExtensionMatch(
-      const AutocompleteMatch& match) const override {
-    return gfx::Image();
-  }
-  bool ProcessExtensionKeyword(TemplateURL* template_url,
-                               const AutocompleteMatch& match,
-                               WindowOpenDisposition disposition,
-                               OmniboxNavigationObserver* observer) override {
-    return false;
-  }
-  void OnInputStateChanged() override {}
-  void OnFocusChanged(OmniboxFocusState state,
-                      OmniboxFocusChangeReason reason) override {}
-  void OnResultChanged(const AutocompleteResult& result,
-                       bool default_match_changed,
-                       const base::Callback<void(const SkBitmap& bitmap)>&
-                           on_bitmap_fetched) override {}
-  void OnCurrentMatchChanged(const AutocompleteMatch& match) override {}
-  void OnTextChanged(const AutocompleteMatch& current_match,
-                     bool user_input_in_progress,
-                     base::string16& user_text,
-                     const AutocompleteResult& result,
-                     bool is_popup_open,
-                     bool has_focus) override {}
-  void OnInputAccepted(const AutocompleteMatch& match) override {}
-  void OnRevert() override {}
-  void OnURLOpenedFromOmnibox(OmniboxLog* log) override {}
-  void OnBookmarkLaunched() override {}
-  void DiscardNonCommittedNavigations() override {}
 
  private:
   SessionID session_id_;
@@ -215,7 +174,7 @@ TestingOmniboxClient::TestingOmniboxClient()
           base::MakeUnique<AutocompleteController>(
               CreateAutocompleteProviderClient(),
               nullptr,
-              AutocompleteClassifier::kDefaultOmniboxProviders),
+              AutocompleteClassifier::DefaultOmniboxProviders()),
           base::MakeUnique<TestingSchemeClassifier>()) {}
 
 TestingOmniboxClient::~TestingOmniboxClient() {

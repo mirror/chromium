@@ -27,6 +27,7 @@
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/test/test_launcher.h"
 #include "mash/package/mash_packaged_service.h"
+#include "mash/session/public/interfaces/constants.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/service.h"
 #include "services/service_manager/public/cpp/service_context.h"
@@ -34,6 +35,7 @@
 #include "services/service_manager/public/cpp/standalone_service/standalone_service.h"
 #include "services/service_manager/runner/common/switches.h"
 #include "services/service_manager/runner/init.h"
+#include "services/ui/common/switches.h"
 #include "ui/aura/env.h"
 
 namespace {
@@ -42,7 +44,7 @@ const base::FilePath::CharType kCatalogFilename[] =
     FILE_PATH_LITERAL("mash_browser_tests_catalog.json");
 
 void ConnectToDefaultApps(service_manager::Connector* connector) {
-  connector->Connect("mash_session");
+  connector->Connect(mash::session::mojom::kServiceName);
 }
 
 class MashTestSuite : public ChromeTestSuite {
@@ -162,7 +164,7 @@ void StartChildApp(service_manager::mojom::ServiceRequest service_request) {
   service_manager::ServiceContext context(
       base::MakeUnique<mash::MashPackagedService>(),
       std::move(service_request));
-  context.SetConnectionLostClosure(run_loop.QuitClosure());
+  context.SetQuitClosure(run_loop.QuitClosure());
   run_loop.Run();
 }
 
@@ -170,12 +172,11 @@ void StartChildApp(service_manager::mojom::ServiceRequest service_request) {
 
 bool RunMashBrowserTests(int argc, char** argv, int* exit_code) {
   base::CommandLine::Init(argc, argv);
-  const base::CommandLine& command_line =
-      *base::CommandLine::ForCurrentProcess();
-  if (!command_line.HasSwitch("run-in-mash"))
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  if (!command_line->HasSwitch("run-in-mash"))
     return false;
 
-  if (command_line.HasSwitch(MojoTestConnector::kMashApp)) {
+  if (command_line->HasSwitch(MojoTestConnector::kMashApp)) {
 #if defined(OS_LINUX)
     base::AtExitManager exit_manager;
 #endif
@@ -185,6 +186,7 @@ bool RunMashBrowserTests(int argc, char** argv, int* exit_code) {
     base::debug::EnableInProcessStackDumping();
 #endif
 
+    command_line->AppendSwitch(ui::switches::kUseTestConfig);
     service_manager::RunStandaloneService(base::Bind(&StartChildApp));
     *exit_code = 0;
     return true;
@@ -197,8 +199,8 @@ bool RunMashBrowserTests(int argc, char** argv, int* exit_code) {
   // ServiceManagerConnection
   // as though we were embedded.
   content::ServiceManagerConnection::Factory service_manager_connection_factory;
-  if (command_line.HasSwitch(content::kSingleProcessTestsFlag) &&
-      !command_line.HasSwitch(switches::kPrimordialPipeToken)) {
+  if (command_line->HasSwitch(content::kSingleProcessTestsFlag) &&
+      !command_line->HasSwitch(switches::kPrimordialPipeToken)) {
     service_manager_connection_factory =
         base::Bind(&CreateServiceManagerConnection, &delegate);
     content::ServiceManagerConnection::SetFactoryForTest(

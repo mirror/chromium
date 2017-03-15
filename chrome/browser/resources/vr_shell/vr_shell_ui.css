@@ -8,10 +8,10 @@ html {
 
 #ui {
   left: 0;
-  max-width: 1920px;
   position: absolute;
   top: 0;
   transform-origin: left top;
+  width: 1920px;
 }
 
 /* This class manages the position of elements on the texture page.
@@ -75,7 +75,7 @@ html {
   width: 512px;
 }
 
-.round-button .button {
+.round-button {
   background-color: #eee;
   background-position: center;
   background-repeat: no-repeat;
@@ -88,7 +88,7 @@ html {
   width: 96px;
 }
 
-.round-button .caption {
+.button-caption {
   color: white;
   font-size: 24px;
   max-width: 192px;
@@ -99,16 +99,39 @@ html {
   white-space: nowrap;
 }
 
-#back .button,
-#forward .button {
+.rect-button {
+  background-color: #eee;
+  border-radius: 6px;
+  color: black;
+  font-size: 20px;
+  line-height: 96px;
+  opacity: 0.8;
+  overflow: hidden;
+  text-align: center;
+  text-transform: uppercase;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: 300px;
+}
+
+.rect-button:hover {
+  opacity: 1;
+}
+
+.disabled-button {
+  background-color: #aaa;
+}
+
+#back-button,
+#forward-button {
   background-image: url(../../../../ui/webui/resources/images/vr_back.svg);
 }
 
-#reload .button {
+#reload-button {
   background-image: url(../../../../ui/webui/resources/images/vr_reload.svg);
 }
 
-#forward .button {
+#forward-button {
   transform: scaleX(-1);
 }
 
@@ -120,6 +143,12 @@ html {
 
 #reload-ui-button:hover {
   background-color: pink;
+}
+
+#content-interceptor {
+  height: 1px;
+  opacity: 0;
+  width: 1px;
 }
 
 .tab {
@@ -150,7 +179,7 @@ html {
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
-  width: 1500px;
+  width: 1000px;
 }
 
 /* The tab clip element's width will be programmatically set to the total width
@@ -222,9 +251,10 @@ html {
 
 #url-indicator #url {
   color: #252525;
-  font-size: 34px;
+  font-size: 48px;
   overflow: hidden;
   white-space: nowrap;
+  width: 100%;
 }
 
 #url-indicator #path {
@@ -258,7 +288,6 @@ html {
   display: flex;
   height: 24px;
   overflow: hidden;
-  visibility: hidden;
   white-space: nowrap;
 }
 

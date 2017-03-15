@@ -139,6 +139,8 @@
 
     [RaisesException] long lastSpellCheckRequestSequence(Document document);
     [RaisesException] long lastSpellCheckProcessedSequence(Document document);
+    [RuntimeEnabled=IdleTimeSpellChecking, RaisesException] DOMString idleTimeSpellCheckerState(Document document);
+    [RuntimeEnabled=IdleTimeSpellChecking, RaisesException] void runIdleTimeSpellChecker(Document document);
 
     sequence<DOMString> userPreferredLanguages();
     void setUserPreferredLanguages(sequence<DOMString> languages);
@@ -272,7 +274,12 @@
     long selectPopupItemStyleFontHeight(Node select, long itemIndex);
     void resetTypeAheadSession(HTMLSelectElement select);
 
+    readonly attribute Node? visibleSelectionAnchorNode;
+    readonly attribute unsigned long visibleSelectionAnchorOffset;
+    readonly attribute Node? visibleSelectionFocusNode;
+    readonly attribute unsigned long visibleSelectionFocusOffset;
     [RaisesException] ClientRect selectionBounds();
+    readonly attribute DOMString textAffinity;
 
     boolean loseSharedGraphicsContext3D();
 
@@ -312,6 +319,7 @@
     unsigned long canvasFontCacheMaxFonts();
 
     DictionaryTest dictionaryTest();
+    RecordTest recordTest();
     UnionTypesTest unionTypesTest();
     CallbackFunctionTest callbackFunctionTest();
     [RaisesException] void setScrollChain(ScrollState scrollState, sequence<Element> elements);
@@ -330,6 +338,7 @@
 
     boolean isUseCounted(Document document, unsigned long feature);
     boolean isCSSPropertyUseCounted(Document document, DOMString propertyName);
+    boolean isAnimatedCSSPropertyUseCounted(Document document, DOMString propertyName);
 
     // Returns a promise that is resolved when |feature| is counted on
     // |document|'s UseCounter. When |feature| was already counted, it's

@@ -17,6 +17,7 @@
 #include "content/browser/renderer_host/input/input_ack_handler.h"
 #include "content/browser/renderer_host/input/input_router_client.h"
 #include "content/browser/renderer_host/input/legacy_touch_event_queue.h"
+#include "content/browser/renderer_host/input/passthrough_touch_event_queue.h"
 #include "content/browser/renderer_host/input/touch_event_queue.h"
 #include "content/browser/renderer_host/input/touchpad_tap_suppression_controller.h"
 #include "content/common/content_constants_internal.h"
@@ -91,9 +92,18 @@ InputRouterImpl::InputRouterImpl(IPC::Sender* sender,
       wheel_event_queue_(this,
                          base::FeatureList::IsEnabled(
                              features::kTouchpadAndWheelScrollLatching)),
-      touch_event_queue_(new LegacyTouchEventQueue(this, config.touch_config)),
       gesture_event_queue_(this, this, config.gesture_config),
-      device_scale_factor_(1.f) {
+      device_scale_factor_(1.f),
+      raf_aligned_touch_enabled_(
+          base::FeatureList::IsEnabled(features::kRafAlignedTouchInputEvents)) {
+  if (raf_aligned_touch_enabled_) {
+    touch_event_queue_.reset(
+        new PassthroughTouchEventQueue(this, config.touch_config));
+  } else {
+    touch_event_queue_.reset(
+        new LegacyTouchEventQueue(this, config.touch_config));
+  }
+
   DCHECK(sender);
   DCHECK(client);
   DCHECK(ack_handler);
@@ -204,15 +214,6 @@ void InputRouterImpl::SendMouseEventImmediately(
 
 void InputRouterImpl::SendTouchEventImmediately(
     const TouchEventWithLatencyInfo& touch_event) {
-  if (WebTouchEventTraits::IsTouchSequenceStart(touch_event.event)) {
-    touch_action_filter_.ResetTouchAction();
-    // Note that if the previous touch-action was TOUCH_ACTION_NONE, enabling
-    // the timeout here will not take effect until the *following* touch
-    // sequence.  This is a desirable side-effect, giving the renderer a chance
-    // to send a touch-action response without racing against the ack timeout.
-    UpdateTouchAckTimeoutEnabled();
-  }
-
   FilterAndSendWebInputEvent(touch_event.event, touch_event.latency);
 }
 
@@ -277,6 +278,12 @@ void InputRouterImpl::OnTouchEventAck(const TouchEventWithLatencyInfo& event,
     UpdateTouchAckTimeoutEnabled();
   }
   ack_handler_->OnTouchEventAck(event, ack_result);
+
+  // Reset the touch action at the end of a touch-action sequence.
+  if (WebTouchEventTraits::IsTouchSequenceEnd(event.event)) {
+    touch_action_filter_.ResetTouchAction();
+    UpdateTouchAckTimeoutEnabled();
+  }
 }
 
 void InputRouterImpl::OnFilteringTouchEvent(
@@ -372,7 +379,8 @@ void InputRouterImpl::OfferToHandlers(const WebInputEvent& input_event,
   if (OfferToClient(input_event, latency_info))
     return;
 
-  bool should_block = WebInputEventTraits::ShouldBlockEventStream(input_event);
+  bool should_block = WebInputEventTraits::ShouldBlockEventStream(
+      input_event, raf_aligned_touch_enabled_);
   OfferToRenderer(input_event, latency_info,
                   should_block
                       ? InputEventDispatchType::DISPATCH_TYPE_BLOCKING

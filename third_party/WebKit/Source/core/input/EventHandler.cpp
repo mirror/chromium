@@ -28,6 +28,7 @@
 
 #include "core/input/EventHandler.h"
 
+#include <memory>
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/HTMLNames.h"
 #include "core/InputTypeNames.h"
@@ -56,6 +57,7 @@
 #include "core/frame/FrameHost.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/frame/VisualViewport.h"
@@ -73,7 +75,6 @@
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoader.h"
-#include "core/loader/FrameLoaderClient.h"
 #include "core/loader/resource/ImageResourceContent.h"
 #include "core/page/AutoscrollController.h"
 #include "core/page/ChromeClient.h"
@@ -100,7 +101,6 @@
 #include "wtf/CurrentTime.h"
 #include "wtf/PtrUtil.h"
 #include "wtf/StdLibExtras.h"
-#include <memory>
 
 namespace blink {
 
@@ -108,9 +108,9 @@ namespace {
 
 // Refetch the event target node if it is removed or currently is the shadow
 // node inside an <input> element.  If a mouse event handler changes the input
-// element type to one that has a widget associated, we'd like to
-// EventHandler::handleMousePressEvent to pass the event to the widget and thus
-// the event target node can't still be the shadow node.
+// element type to one that has a FrameViewBase associated, we'd like to
+// EventHandler::handleMousePressEvent to pass the event to the FrameViewBase
+// and thus the event target node can't still be the shadow node.
 bool shouldRefetchEventTarget(const MouseEventWithHitTestResults& mev) {
   Node* targetNode = mev.innerNode();
   if (!targetNode || !targetNode->parentNode())
@@ -319,16 +319,16 @@ static LocalFrame* subframeForTargetNode(Node* node) {
   if (!layoutObject || !layoutObject->isLayoutPart())
     return nullptr;
 
-  Widget* widget = toLayoutPart(layoutObject)->widget();
-  if (!widget || !widget->isFrameView())
+  FrameViewBase* frameViewBase = toLayoutPart(layoutObject)->frameViewBase();
+  if (!frameViewBase || !frameViewBase->isFrameView())
     return nullptr;
 
-  return &toFrameView(widget)->frame();
+  return &toFrameView(frameViewBase)->frame();
 }
 
 static LocalFrame* subframeForHitTestResult(
     const MouseEventWithHitTestResults& hitTestResult) {
-  if (!hitTestResult.isOverWidget())
+  if (!hitTestResult.isOverFrameViewBase())
     return nullptr;
   return subframeForTargetNode(hitTestResult.innerNode());
 }
@@ -555,7 +555,10 @@ OptionalCursor EventHandler::selectAutoCursor(const HitTestResult& result,
   if (m_mouseEventManager->mousePressed() &&
       selectionController().mouseDownMayStartSelect() &&
       !m_mouseEventManager->mouseDownMayStartDrag() &&
-      !m_frame->selection().isNone() && !m_capturingMouseEventsNode) {
+      !m_frame->selection()
+           .computeVisibleSelectionInDOMTreeDeprecated()
+           .isNone() &&
+      !m_capturingMouseEventsNode) {
     return iBeam;
   }
 
@@ -606,8 +609,8 @@ WebInputEventResult EventHandler::handleMousePressEvent(
     WebInputEventResult result = passMousePressEventToSubframe(mev, subframe);
     // Start capturing future events for this frame.  We only do this if we
     // didn't clear the m_mousePressed flag, which may happen if an AppKit
-    // widget entered a modal event loop.  The capturing should be done only
-    // when the result indicates it has been handled. See crbug.com/269917
+    // FrameViewBase entered a modal event loop.  The capturing should be done
+    // only when the result indicates it has been handled. See crbug.com/269917
     m_mouseEventManager->setCapturesDragging(
         subframe->eventHandler().m_mouseEventManager->capturesDragging());
     if (m_mouseEventManager->mousePressed() &&
@@ -690,8 +693,8 @@ WebInputEventResult EventHandler::handleMousePressEvent(
       eventResult == WebInputEventResult::NotHandled || mev.scrollbar());
 
   // If the hit testing originally determined the event was in a scrollbar,
-  // refetch the MouseEventWithHitTestResults in case the scrollbar widget was
-  // destroyed when the mouse event was handled.
+  // refetch the MouseEventWithHitTestResults in case the scrollbar
+  // FrameViewBase was destroyed when the mouse event was handled.
   if (mev.scrollbar()) {
     const bool wasLastScrollBar =
         mev.scrollbar() == m_lastScrollbarUnderMouse.get();
@@ -762,6 +765,9 @@ WebInputEventResult EventHandler::handleMouseMoveEvent(
 void EventHandler::handleMouseLeaveEvent(const WebMouseEvent& event) {
   TRACE_EVENT0("blink", "EventHandler::handleMouseLeaveEvent");
 
+  Page* page = m_frame->page();
+  if (page)
+    page->chromeClient().clearToolTip(*m_frame);
   handleMouseMoveOrLeaveEvent(event, Vector<WebMouseEvent>(), 0, false, true);
 }
 
@@ -810,7 +816,7 @@ WebInputEventResult EventHandler::handleMouseMoveOrLeaveEvent(
 
   // Treat any mouse move events as readonly if the user is currently touching
   // the screen.
-  if (m_pointerEventManager->isAnyTouchActive())
+  if (m_pointerEventManager->isAnyTouchActive() && !forceLeave)
     hitType |= HitTestRequest::Active | HitTestRequest::ReadOnly;
   HitTestRequest request(hitType);
   MouseEventWithHitTestResults mev = MouseEventWithHitTestResults(
@@ -972,10 +978,9 @@ WebInputEventResult EventHandler::handleMouseReleaseEvent(
 
   WebInputEventResult eventResult = updatePointerTargetAndDispatchEvents(
       EventTypeNames::mouseup, mev.innerNode(), mev.canvasRegionId(),
-      mev.event(), Vector<WebMouseEvent>());
-
-  WebInputEventResult clickEventResult =
-      m_mouseEventManager->dispatchMouseClickIfNeeded(mev);
+      mev.event(), Vector<WebMouseEvent>(),
+      !(selectionController().hasExtendedSelection() &&
+        isSelectionOverLink(mev)));
 
   m_scrollManager->clearResizeScrollableArea(false);
 
@@ -985,7 +990,7 @@ WebInputEventResult EventHandler::handleMouseReleaseEvent(
 
   m_mouseEventManager->invalidateClick();
 
-  return EventHandlingUtil::mergeEventResult(clickEventResult, eventResult);
+  return eventResult;
 }
 
 static bool targetIsFrame(Node* target, LocalFrame*& frame) {
@@ -999,48 +1004,6 @@ static bool targetIsFrame(Node* target, LocalFrame*& frame) {
 
   frame = toLocalFrame(toHTMLFrameElementBase(target)->contentFrame());
   return true;
-}
-
-static bool findDropZone(Node* target, DataTransfer* dataTransfer) {
-  Element* element =
-      target->isElementNode() ? toElement(target) : target->parentElement();
-  for (; element; element = element->parentElement()) {
-    bool matched = false;
-    AtomicString dropZoneStr = element->fastGetAttribute(webkitdropzoneAttr);
-
-    if (dropZoneStr.isEmpty())
-      continue;
-
-    UseCounter::count(element->document(),
-                      UseCounter::PrefixedHTMLElementDropzone);
-
-    dropZoneStr = dropZoneStr.lower();
-
-    SpaceSplitString keywords(dropZoneStr, SpaceSplitString::ShouldNotFoldCase);
-    if (keywords.isNull())
-      continue;
-
-    DragOperation dragOperation = DragOperationNone;
-    for (unsigned i = 0; i < keywords.size(); i++) {
-      DragOperation op = convertDropZoneOperationToDragOperation(keywords[i]);
-      if (op != DragOperationNone) {
-        if (dragOperation == DragOperationNone)
-          dragOperation = op;
-      } else {
-        matched =
-            matched || dataTransfer->hasDropZoneType(keywords[i].getString());
-      }
-
-      if (matched && dragOperation != DragOperationNone)
-        break;
-    }
-    if (matched) {
-      dataTransfer->setDropEffect(
-          convertDragOperationToDropZoneOperation(dragOperation));
-      return true;
-    }
-  }
-  return false;
 }
 
 WebInputEventResult EventHandler::updateDragAndDrop(
@@ -1090,9 +1053,6 @@ WebInputEventResult EventHandler::updateDragAndDrop(
       }
       eventResult = m_mouseEventManager->dispatchDragEvent(
           EventTypeNames::dragenter, newTarget, event, dataTransfer);
-      if (eventResult == WebInputEventResult::NotHandled &&
-          findDropZone(newTarget, dataTransfer))
-        eventResult = WebInputEventResult::HandledSystem;
     }
 
     if (targetIsFrame(m_dragTarget.get(), targetFrame)) {
@@ -1128,9 +1088,6 @@ WebInputEventResult EventHandler::updateDragAndDrop(
       }
       eventResult = m_mouseEventManager->dispatchDragEvent(
           EventTypeNames::dragover, newTarget, event, dataTransfer);
-      if (eventResult == WebInputEventResult::NotHandled &&
-          findDropZone(newTarget, dataTransfer))
-        eventResult = WebInputEventResult::HandledSystem;
       m_shouldOnlyFireDragOverEvent = false;
     }
   }
@@ -1260,14 +1217,15 @@ WebInputEventResult EventHandler::updatePointerTargetAndDispatchEvents(
     Node* targetNode,
     const String& canvasRegionId,
     const WebMouseEvent& mouseEvent,
-    const Vector<WebMouseEvent>& coalescedEvents) {
+    const Vector<WebMouseEvent>& coalescedEvents,
+    bool selectionOverLink) {
   ASSERT(mouseEventType == EventTypeNames::mousedown ||
          mouseEventType == EventTypeNames::mousemove ||
          mouseEventType == EventTypeNames::mouseup);
 
   const auto& eventResult = m_pointerEventManager->sendMousePointerEvent(
       updateMouseEventTargetNode(targetNode), canvasRegionId, mouseEventType,
-      mouseEvent, coalescedEvents);
+      mouseEvent, coalescedEvents, selectionOverLink);
   return eventResult;
 }
 
@@ -1834,17 +1792,21 @@ WebInputEventResult EventHandler::sendContextMenuEventForKey(
   Element* focusedElement =
       overrideTargetElement ? overrideTargetElement : doc->focusedElement();
   FrameSelection& selection = m_frame->selection();
-  Position start = selection.selection().start();
-  VisualViewport& visualViewport = frameHost()->visualViewport();
+  Position start =
+      selection.computeVisibleSelectionInDOMTreeDeprecated().start();
+  VisualViewport& visualViewport = m_frame->page()->visualViewport();
 
   if (!overrideTargetElement && start.anchorNode() &&
-      (selection.rootEditableElement() || selection.isRange())) {
+      (selection.computeVisibleSelectionInDOMTreeDeprecated()
+           .rootEditableElement() ||
+       selection.computeVisibleSelectionInDOMTreeDeprecated().isRange())) {
     // TODO(xiaochengh): The use of updateStyleAndLayoutIgnorePendingStylesheets
     // needs to be audited.  See http://crbug.com/590369 for more details.
     doc->updateStyleAndLayoutIgnorePendingStylesheets();
 
     IntRect firstRect = m_frame->editor().firstRectForRange(
-        selection.selection().toNormalizedEphemeralRange());
+        selection.computeVisibleSelectionInDOMTree()
+            .toNormalizedEphemeralRange());
 
     int x = rightAligned ? firstRect.maxX() : firstRect.x();
     // In a multiline edit, firstRect.maxY() would end up on the next line, so

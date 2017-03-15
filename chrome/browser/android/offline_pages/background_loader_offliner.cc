@@ -15,8 +15,36 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/browser/web_contents_user_data.h"
 
 namespace offline_pages {
+
+namespace {
+const long kOfflinePageDelayMs = 2000;
+
+class OfflinerData : public content::WebContentsUserData<OfflinerData> {
+ public:
+  static void AddToWebContents(content::WebContents* webcontents,
+                               BackgroundLoaderOffliner* offliner) {
+    DCHECK(offliner);
+    webcontents->SetUserData(UserDataKey(), std::unique_ptr<OfflinerData>(
+                                                new OfflinerData(offliner)));
+  }
+
+  explicit OfflinerData(BackgroundLoaderOffliner* offliner) {
+    offliner_ = offliner;
+  }
+  BackgroundLoaderOffliner* offliner() { return offliner_; }
+
+ private:
+  // The offliner that the WebContents is attached to. The offliner owns the
+  // Delegate which owns the WebContents that this data is attached to.
+  // Therefore, its lifetime should exceed that of the WebContents, so this
+  // should always be non-null.
+  BackgroundLoaderOffliner* offliner_;
+};
+
+}  // namespace
 
 BackgroundLoaderOffliner::BackgroundLoaderOffliner(
     content::BrowserContext* browser_context,
@@ -27,6 +55,8 @@ BackgroundLoaderOffliner::BackgroundLoaderOffliner(
       is_low_end_device_(base::SysInfo::IsLowEndDevice()),
       save_state_(NONE),
       page_load_state_(SUCCESS),
+      page_delay_ms_(kOfflinePageDelayMs),
+      network_bytes_(0LL),
       weak_ptr_factory_(this) {
   DCHECK(offline_page_model_);
   DCHECK(browser_context_);
@@ -34,9 +64,21 @@ BackgroundLoaderOffliner::BackgroundLoaderOffliner(
 
 BackgroundLoaderOffliner::~BackgroundLoaderOffliner() {}
 
-bool BackgroundLoaderOffliner::LoadAndSave(const SavePageRequest& request,
-                                           const CompletionCallback& callback) {
-  DCHECK(callback);
+// static
+BackgroundLoaderOffliner* BackgroundLoaderOffliner::FromWebContents(
+    content::WebContents* contents) {
+  OfflinerData* data = OfflinerData::FromWebContents(contents);
+  if (data)
+    return data->offliner();
+  return nullptr;
+}
+
+bool BackgroundLoaderOffliner::LoadAndSave(
+    const SavePageRequest& request,
+    const CompletionCallback& completion_callback,
+    const ProgressCallback& progress_callback) {
+  DCHECK(completion_callback);
+  DCHECK(progress_callback);
 
   if (pending_request_) {
     DVLOG(1) << "Already have pending request";
@@ -94,9 +136,13 @@ bool BackgroundLoaderOffliner::LoadAndSave(const SavePageRequest& request,
   if (!loader_)
     ResetState();
 
+  // Invalidate ptrs for all delayed/saving tasks.
+  weak_ptr_factory_.InvalidateWeakPtrs();
+
   // Track copy of pending request.
   pending_request_.reset(new SavePageRequest(request));
-  completion_callback_ = callback;
+  completion_callback_ = completion_callback;
+  progress_callback_ = progress_callback;
 
   // Listen for app foreground/background change.
   app_listener_.reset(new base::android::ApplicationStatusListener(
@@ -109,18 +155,30 @@ bool BackgroundLoaderOffliner::LoadAndSave(const SavePageRequest& request,
   return true;
 }
 
-void BackgroundLoaderOffliner::Cancel() {
+void BackgroundLoaderOffliner::Cancel(const CancelCallback& callback) {
   // TODO(chili): We are not able to cancel a pending
-  // OfflinePageModel::SavePage() operation. We just ignore the callback.
-  if (!pending_request_)
-    return;
-
-  if (save_state_ != NONE) {
-    save_state_ = DELETE_AFTER_SAVE;
+  // OfflinePageModel::SavePage() operation. We will notify caller that
+  // cancel completed once the SavePage operation returns.
+  if (!pending_request_) {
+    callback.Run(0LL);
     return;
   }
 
+  if (save_state_ != NONE) {
+    save_state_ = DELETE_AFTER_SAVE;
+    cancel_callback_ = callback;
+    return;
+  }
+
+  int64_t request_id = pending_request_->request_id();
   ResetState();
+  callback.Run(request_id);
+}
+
+bool BackgroundLoaderOffliner::HandleTimeout(const SavePageRequest& request) {
+  // TODO(romax) Decide if we want to also take a snapshot on the last timeout
+  // for the background loader offliner.
+  return false;
 }
 
 void BackgroundLoaderOffliner::DidStopLoading() {
@@ -129,34 +187,15 @@ void BackgroundLoaderOffliner::DidStopLoading() {
     return;
   }
 
-  SavePageRequest request(*pending_request_.get());
-  // If there was an error navigating to page, return loading failed.
-  if (page_load_state_ != SUCCESS) {
-    Offliner::RequestStatus status =
-        (page_load_state_ == RETRIABLE)
-            ? Offliner::RequestStatus::LOADING_FAILED
-            : Offliner::RequestStatus::LOADING_FAILED_NO_RETRY;
-    completion_callback_.Run(request, status);
-    ResetState();
-    return;
-  }
+  // Invalidate ptrs for any ongoing save operation.
+  weak_ptr_factory_.InvalidateWeakPtrs();
 
-  save_state_ = SAVING;
-  content::WebContents* web_contents(
-      content::WebContentsObserver::web_contents());
-
-  std::unique_ptr<OfflinePageArchiver> archiver(
-      new OfflinePageMHTMLArchiver(web_contents));
-
-  OfflinePageModel::SavePageParams params;
-  params.url = web_contents->GetLastCommittedURL();
-  params.client_id = request.client_id();
-  params.proposed_offline_id = request.request_id();
-  params.is_background = true;
-  offline_page_model_->SavePage(
-      params, std::move(archiver),
-      base::Bind(&BackgroundLoaderOffliner::OnPageSaved,
-                 weak_ptr_factory_.GetWeakPtr()));
+  // Post SavePage task with 2 second delay.
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&BackgroundLoaderOffliner::SavePage,
+                 weak_ptr_factory_.GetWeakPtr()),
+      base::TimeDelta::FromMilliseconds(page_delay_ms_));
 }
 
 void BackgroundLoaderOffliner::RenderProcessGone(
@@ -220,10 +259,92 @@ void BackgroundLoaderOffliner::DidFinishNavigation(
       case net::ERR_UNKNOWN_URL_SCHEME:
         page_load_state_ = NONRETRIABLE;
         break;
+      case net::ERR_INTERNET_DISCONNECTED:
+        page_load_state_ = DELAY_RETRY;
+        break;
       default:
         page_load_state_ = RETRIABLE;
     }
   }
+
+  // If the document is not the same, invalidate any pending save tasks.
+  //
+  // Downloads or 204/205 response codes do not commit (no new navigation)
+  // Same-Document (committed) navigations are:
+  // - reference fragment navigations
+  // - pushState/replaceState
+  // - same document history navigation
+  if (navigation_handle->HasCommitted() &&
+      !navigation_handle->IsSameDocument()) {
+    weak_ptr_factory_.InvalidateWeakPtrs();
+  }
+}
+
+void BackgroundLoaderOffliner::SetPageDelayForTest(long delay_ms) {
+  page_delay_ms_ = delay_ms;
+}
+
+void BackgroundLoaderOffliner::OnNetworkBytesChanged(int64_t bytes) {
+  if (pending_request_ && save_state_ != SAVING) {
+    network_bytes_ += bytes;
+    progress_callback_.Run(*pending_request_, network_bytes_);
+  }
+}
+
+void BackgroundLoaderOffliner::SavePage() {
+  if (!pending_request_.get()) {
+    DVLOG(1) << "Pending request was cleared during delay.";
+    return;
+  }
+
+  SavePageRequest request(*pending_request_.get());
+  // If there was an error navigating to page, return loading failed.
+  if (page_load_state_ != SUCCESS) {
+    Offliner::RequestStatus status;
+    switch (page_load_state_) {
+      case RETRIABLE:
+        status = Offliner::RequestStatus::LOADING_FAILED;
+        break;
+      case NONRETRIABLE:
+        status = Offliner::RequestStatus::LOADING_FAILED_NO_RETRY;
+        break;
+      case DELAY_RETRY:
+        status = Offliner::RequestStatus::LOADING_FAILED_NO_NEXT;
+        break;
+      default:
+        // We should've already checked for Success before entering here.
+        NOTREACHED();
+        status = Offliner::RequestStatus::LOADING_FAILED;
+    }
+    completion_callback_.Run(request, status);
+    ResetState();
+    return;
+  }
+
+  save_state_ = SAVING;
+  content::WebContents* web_contents(
+      content::WebContentsObserver::web_contents());
+
+  std::unique_ptr<OfflinePageArchiver> archiver(
+      new OfflinePageMHTMLArchiver(web_contents));
+
+  OfflinePageModel::SavePageParams params;
+  params.url = web_contents->GetLastCommittedURL();
+  params.client_id = request.client_id();
+  params.proposed_offline_id = request.request_id();
+  params.is_background = true;
+
+  // Pass in the original URL if it's different from last committed
+  // when redirects occur.
+  if (!request.original_url().is_empty())
+    params.original_url = request.original_url();
+  else if (params.url != request.url())
+    params.original_url = request.url();
+
+  offline_page_model_->SavePage(
+      params, std::move(archiver),
+      base::Bind(&BackgroundLoaderOffliner::OnPageSaved,
+                 weak_ptr_factory_.GetWeakPtr()));
 }
 
 void BackgroundLoaderOffliner::OnPageSaved(SavePageResult save_result,
@@ -236,6 +357,7 @@ void BackgroundLoaderOffliner::OnPageSaved(SavePageResult save_result,
 
   if (save_state_ == DELETE_AFTER_SAVE) {
     save_state_ = NONE;
+    cancel_callback_.Run(request.request_id());
     return;
   }
 
@@ -253,6 +375,7 @@ void BackgroundLoaderOffliner::OnPageSaved(SavePageResult save_result,
 void BackgroundLoaderOffliner::ResetState() {
   pending_request_.reset();
   page_load_state_ = SUCCESS;
+  network_bytes_ = 0LL;
   // TODO(chili): Remove after RequestCoordinator can handle multiple offliners.
   // We reset the loader and observer after completion so loaders
   // will not be re-used across different requests/tries. This is a temporary
@@ -260,7 +383,9 @@ void BackgroundLoaderOffliner::ResetState() {
   // there are.
   loader_.reset(
       new background_loader::BackgroundLoaderContents(browser_context_));
-  content::WebContentsObserver::Observe(loader_.get()->web_contents());
+  content::WebContents* contents = loader_->web_contents();
+  content::WebContentsObserver::Observe(contents);
+  OfflinerData::AddToWebContents(contents, this);
 }
 
 void BackgroundLoaderOffliner::OnApplicationStateChange(
@@ -270,9 +395,23 @@ void BackgroundLoaderOffliner::OnApplicationStateChange(
           base::android::APPLICATION_STATE_HAS_RUNNING_ACTIVITIES) {
     DVLOG(1) << "App became active, canceling current offlining request";
     SavePageRequest* request = pending_request_.get();
-    Cancel();
-    completion_callback_.Run(*request, RequestStatus::FOREGROUND_CANCELED);
+    // This works because Bind will make a copy of request, and we
+    // should not have to worry about reset being called before cancel callback.
+    Cancel(base::Bind(
+        &BackgroundLoaderOffliner::HandleApplicationStateChangeCancel,
+        weak_ptr_factory_.GetWeakPtr(), *request));
   }
 }
 
+void BackgroundLoaderOffliner::HandleApplicationStateChangeCancel(
+    const SavePageRequest& request,
+    int64_t offline_id) {
+  // If for some reason the request was reset during while waiting for callback
+  // ignore the completion callback.
+  if (pending_request_ && pending_request_->request_id() != offline_id)
+    return;
+  completion_callback_.Run(request, RequestStatus::FOREGROUND_CANCELED);
+}
 }  // namespace offline_pages
+
+DEFINE_WEB_CONTENTS_USER_DATA_KEY(offline_pages::OfflinerData);

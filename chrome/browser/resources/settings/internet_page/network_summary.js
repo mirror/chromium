@@ -48,9 +48,6 @@ Polymer({
       notify: true,
     },
 
-    /** @type {!chrome.networkingPrivate.GlobalPolicy|undefined} */
-    globalPolicy: Object,
-
     /**
      * Interface for networkingPrivate calls, passed from internet_page.
      * @type {NetworkingPrivate}
@@ -61,11 +58,12 @@ Polymer({
      * The device state for each network device type.
      * @private {DeviceStateObject}
      */
-    deviceStates_: {
+    deviceStates: {
       type: Object,
       value: function() {
         return {};
       },
+      notify: true,
     },
 
     /**
@@ -93,25 +91,25 @@ Polymer({
 
   /**
    * Listener function for chrome.networkingPrivate.onNetworkListChanged event.
-   * @type {function(!Array<string>)}
+   * @type {?function(!Array<string>)}
    * @private
    */
-  networkListChangedListener_: function() {},
+  networkListChangedListener_: null,
 
   /**
    * Listener function for chrome.networkingPrivate.onDeviceStateListChanged
    * event.
-   * @type {function(!Array<string>)}
+   * @type {?function(!Array<string>)}
    * @private
    */
-  deviceStateListChangedListener_: function() {},
+  deviceStateListChangedListener_: null,
 
   /**
    * Listener function for chrome.networkingPrivate.onNetworksChanged event.
-   * @type {function(!Array<string>)}
+   * @type {?function(!Array<string>)}
    * @private
    */
-  networksChangedListener_: function() {},
+  networksChangedListener_: null,
 
   /**
    * Set of GUIDs identifying active networks, one for each type.
@@ -124,17 +122,19 @@ Polymer({
   attached: function() {
     this.getNetworkLists_();
 
-    this.networkListChangedListener_ =
+    this.networkListChangedListener_ = this.networkListChangedListener_ ||
         this.onNetworkListChangedEvent_.bind(this);
     this.networkingPrivate.onNetworkListChanged.addListener(
         this.networkListChangedListener_);
 
     this.deviceStateListChangedListener_ =
+        this.deviceStateListChangedListener_ ||
         this.onDeviceStateListChangedEvent_.bind(this);
     this.networkingPrivate.onDeviceStateListChanged.addListener(
         this.deviceStateListChangedListener_);
 
-    this.networksChangedListener_ = this.onNetworksChangedEvent_.bind(this);
+    this.networksChangedListener_ = this.networksChangedListener_ ||
+        this.onNetworksChangedEvent_.bind(this);
     this.networkingPrivate.onNetworksChanged.addListener(
         this.networksChangedListener_);
   },
@@ -142,53 +142,13 @@ Polymer({
   /** @override */
   detached: function() {
     this.networkingPrivate.onNetworkListChanged.removeListener(
-        this.networkListChangedListener_);
+        assert(this.networkListChangedListener_));
 
     this.networkingPrivate.onDeviceStateListChanged.removeListener(
-        this.deviceStateListChangedListener_);
+        assert(this.deviceStateListChangedListener_));
 
     this.networkingPrivate.onNetworksChanged.removeListener(
-        this.networksChangedListener_);
-  },
-
-  /**
-   * Event triggered when the network-summary-item is expanded.
-   * @param {!{detail: {expanded: boolean, type: string}}} event
-   * @private
-   */
-  onExpanded_: function(event) {
-    if (!event.detail.expanded)
-      return;
-    // Get the latest network states.
-    this.getNetworkStates_();
-  },
-
-  /**
-   * Event triggered when a network-summary-item is selected.
-   * @param {!{detail: !CrOnc.NetworkStateProperties}} event
-   * @private
-   */
-  onSelected_: function(event) {
-    var state = event.detail;
-    if (this.canConnect_(state, this.globalPolicy)) {
-      this.connectToNetwork_(state);
-      return;
-    }
-    this.fire('show-detail', state);
-  },
-
-  /**
-   * Event triggered when the enabled state of a network-summary-item is
-   * toggled.
-   * @param {!{detail: {enabled: boolean,
-   *                    type: chrome.networkingPrivate.NetworkType}}} event
-   * @private
-   */
-  onDeviceEnabledToggled_: function(event) {
-    if (event.detail.enabled)
-      this.networkingPrivate.enableNetworkType(event.detail.type);
-    else
-      this.networkingPrivate.disableNetworkType(event.detail.type);
+        assert(this.networksChangedListener_));
   },
 
   /**
@@ -224,25 +184,6 @@ Polymer({
   },
 
   /**
-   * Determines whether or not a network state can be connected to.
-   * @param {!CrOnc.NetworkStateProperties} state The network state.
-   * @param {!chrome.networkingPrivate.GlobalPolicy|undefined} globalPolicy
-   * @private
-   */
-  canConnect_: function(state, globalPolicy) {
-    if (state.Type == CrOnc.Type.ETHERNET ||
-        state.Type == CrOnc.Type.VPN && !this.defaultNetwork) {
-      return false;
-    }
-    if (state.Type == CrOnc.Type.WI_FI && !!globalPolicy &&
-        globalPolicy.AllowOnlyPolicyNetworksToConnect &&
-        !this.isPolicySource(state.Source)) {
-      return false;
-    }
-    return state.ConnectionState == CrOnc.ConnectionState.NOT_CONNECTED;
-  },
-
-  /**
    * networkingPrivate.getState event callback for an active state.
    * @param {string} id The id of the requested state.
    * @param {!chrome.networkingPrivate.NetworkStateProperties} state
@@ -274,25 +215,6 @@ Polymer({
     }
     // Not found
     console.error('Active state not found: ' + state.Name);
-  },
-
-  /**
-   * Handles UI requests to connect to a network.
-   * TODO(stevenjb): Handle Cellular activation, etc.
-   * @param {!CrOnc.NetworkStateProperties} state The network state.
-   * @private
-   */
-  connectToNetwork_: function(state) {
-    this.networkingPrivate.startConnect(state.GUID, function() {
-      if (chrome.runtime.lastError) {
-        var message = chrome.runtime.lastError.message;
-        if (message != 'connecting') {
-          console.error(
-              'Unexpected networkingPrivate.startConnect error: ' + message +
-              'For: ' + state.GUID);
-        }
-      }
-    });
   },
 
   /**
@@ -346,7 +268,7 @@ Polymer({
         newDeviceStates[state.Type] = state;
       }
     } else {
-      newDeviceStates = this.deviceStates_;
+      newDeviceStates = this.deviceStates;
     }
 
     // Clear any current networks.
@@ -408,7 +330,7 @@ Polymer({
       this.activeNetworkIds_.add(state.GUID);
     }
 
-    this.deviceStates_ = newDeviceStates;
+    this.deviceStates = newDeviceStates;
     this.networkStateLists_ = newNetworkStateLists;
     // Set activeNetworkStates last to rebuild the dom-repeat.
     this.activeNetworkStates_ = newActiveNetworkStates;

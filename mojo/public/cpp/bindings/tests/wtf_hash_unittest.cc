@@ -5,7 +5,9 @@
 #include "mojo/public/cpp/bindings/lib/wtf_hash_util.h"
 
 #include "mojo/public/interfaces/bindings/tests/test_structs.mojom-blink.h"
+#include "mojo/public/interfaces/bindings/tests/test_wtf_types.mojom-blink.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/Source/wtf/HashFunctions.h"
 
 namespace mojo {
 namespace test {
@@ -13,26 +15,14 @@ namespace {
 
 using WTFHashTest = testing::Test;
 
-static blink::ContainsOtherPtr MakeContainsOther(uint64_t other) {
-  blink::ContainsOtherPtr ptr = blink::ContainsOther::New();
-  ptr->other = other;
-  return ptr;
-}
-
-static blink::SimpleNestedStructPtr MakeSimpleNestedStruct(
-    blink::ContainsOtherPtr nested) {
-  blink::SimpleNestedStructPtr ptr = blink::SimpleNestedStruct::New();
-  ptr->nested = std::move(nested);
-  return ptr;
-}
-
 TEST_F(WTFHashTest, NestedStruct) {
   // Just check that this template instantiation compiles.
-  ASSERT_EQ(
-      ::mojo::internal::Hash(::mojo::internal::kHashSeed,
-                             MakeSimpleNestedStruct(MakeContainsOther(1))),
-      ::mojo::internal::Hash(::mojo::internal::kHashSeed,
-                             MakeSimpleNestedStruct(MakeContainsOther(1))));
+  ASSERT_EQ(::mojo::internal::Hash(
+                ::mojo::internal::kHashSeed,
+                blink::SimpleNestedStruct::New(blink::ContainsOther::New(1))),
+            ::mojo::internal::Hash(
+                ::mojo::internal::kHashSeed,
+                blink::SimpleNestedStruct::New(blink::ContainsOther::New(1))));
 }
 
 TEST_F(WTFHashTest, UnmappedNativeStruct) {
@@ -41,6 +31,28 @@ TEST_F(WTFHashTest, UnmappedNativeStruct) {
                                    blink::UnmappedNativeStruct::New()),
             ::mojo::internal::Hash(::mojo::internal::kHashSeed,
                                    blink::UnmappedNativeStruct::New()));
+}
+
+TEST_F(WTFHashTest, Enum) {
+  // Just check that this template instantiation compiles.
+
+  // Top-level.
+  ASSERT_EQ(WTF::DefaultHash<blink::TopLevelEnum>::Hash().hash(
+                blink::TopLevelEnum::E0),
+            WTF::DefaultHash<blink::TopLevelEnum>::Hash().hash(
+                blink::TopLevelEnum::E0));
+
+  // Nested in struct.
+  ASSERT_EQ(WTF::DefaultHash<blink::TestWTFStruct::NestedEnum>::Hash().hash(
+                blink::TestWTFStruct::NestedEnum::E0),
+            WTF::DefaultHash<blink::TestWTFStruct::NestedEnum>::Hash().hash(
+                blink::TestWTFStruct::NestedEnum::E0));
+
+  // Nested in interface.
+  ASSERT_EQ(WTF::DefaultHash<blink::TestWTF::NestedEnum>::Hash().hash(
+                blink::TestWTF::NestedEnum::E0),
+            WTF::DefaultHash<blink::TestWTF::NestedEnum>::Hash().hash(
+                blink::TestWTF::NestedEnum::E0));
 }
 
 }  // namespace

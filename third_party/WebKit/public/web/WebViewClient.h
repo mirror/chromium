@@ -272,10 +272,8 @@ class WebViewClient : protected WebWidgetClient {
                      const WebFloatSize& velocityInViewport) override {}
   void hasTouchEventHandlers(bool) override {}
   WebLayerTreeView* initializeLayerTreeView() override { return nullptr; }
-  void resetInputMethod() override {}
   WebScreenInfo screenInfo() override { return WebScreenInfo(); }
   void setTouchAction(WebTouchAction touchAction) override {}
-  void showVirtualKeyboardOnElementFocus() override {}
   void showUnhandledTapUIIfNeeded(const WebPoint& tappedPosition,
                                   const WebNode& tappedNode,
                                   bool pageChanged) override {}

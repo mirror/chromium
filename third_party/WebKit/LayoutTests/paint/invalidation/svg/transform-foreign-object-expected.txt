@@ -7,11 +7,6 @@
       "drawsContent": true,
       "paintInvalidations": [
         {
-          "object": "LayoutBlockFlow DIV",
-          "rect": [108, 8, 100, 100],
-          "reason": "subtree"
-        },
-        {
           "object": "LayoutSVGForeignObject foreignObject",
           "rect": [108, 8, 100, 100],
           "reason": "subtree"
@@ -30,6 +25,14 @@
     }
   ],
   "objectPaintInvalidations": [
+    {
+      "object": "LayoutSVGForeignObject foreignObject",
+      "reason": "subtree"
+    },
+    {
+      "object": "LayoutBlockFlow DIV",
+      "reason": "subtree"
+    },
     {
       "object": "LayoutSVGForeignObject foreignObject",
       "reason": "subtree"

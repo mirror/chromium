@@ -104,6 +104,7 @@
 <translation id="1962204205936693436">Bookmark <ph name="DOMAIN" /></translation>
 <translation id="1973335181906896915">Kesalahan serialisasi</translation>
 <translation id="1974060860693918893">Lanjutan</translation>
+<translation id="1978555033938440688">Versi Firmware</translation>
 <translation id="2001146170449793414">{COUNT,plural, =1{dan 1 lainnya}other{dan # lainnya}}</translation>
 <translation id="2020194265157481222">Perlu nama di kartu</translation>
 <translation id="2025186561304664664">Proxy disetel ke konfigurasi otomatis.</translation>
@@ -119,6 +120,7 @@
 <translation id="2096368010154057602">Departemen</translation>
 <translation id="2113977810652731515">Kartu</translation>
 <translation id="2114841414352855701">Diabaikan karena diganti dengan <ph name="POLICY_NAME" />.</translation>
+<translation id="2138201775715568214">Mencari laman Web Fisik di sekitar</translation>
 <translation id="213826338245044447">Bookmark Seluler</translation>
 <translation id="2148716181193084225">Hari ini</translation>
 <translation id="2154054054215849342">Sinkronisasi tidak tersedia untuk domain Anda</translation>
@@ -189,6 +191,7 @@
 <translation id="2721148159707890343">Permintaan berhasil</translation>
 <translation id="2728127805433021124">Sertifikat server ditandai menggunakan algoritme yang lemah.</translation>
 <translation id="2730326759066348565"><ph name="BEGIN_LINK" />Jalankan Diagnostik Konektivitas<ph name="END_LINK" /></translation>
+<translation id="2740531572673183784">Oke</translation>
 <translation id="2742870351467570537">Hapus item yang dipilih</translation>
 <translation id="277499241957683684">Catatan perangkat hilang</translation>
 <translation id="2784949926578158345">Sambungan disetel ulang.</translation>
@@ -270,6 +273,7 @@
 <translation id="348000606199325318">ID Kerusakan <ph name="CRASH_LOCAL_ID" /> (ID Server: <ph name="CRASH_ID" />)</translation>
 <translation id="3498215018399854026">Orang tua Anda saat ini tidak dapat dihubungi. Coba lagi.</translation>
 <translation id="3528171143076753409">Sertifikat server tidak dipercaya.</translation>
+<translation id="3538531656504267329">Tahun habis masa berlaku tidak valid</translation>
 <translation id="3539171420378717834">Menyimpan salinan kartu ini di perangkat ini</translation>
 <translation id="3542684924769048008">Gunakan sandi untuk:</translation>
 <translation id="3549644494707163724">Enkripsikan data yang disinkronkan dengan frasa sandi sinkronisasi Anda</translation>
@@ -338,6 +342,7 @@
 <translation id="4118212371799607889">Server ini tidak dapat membuktikan bahwa ini adalah <ph name="DOMAIN" />; sertifikat keamanannya tidak dipercaya oleh Chromium. Hal ini dapat disebabkan oleh kesalahan konfigurasi atau ada penyerang yang mencegat sambungan Anda. <ph name="BEGIN_LEARN_MORE_LINK" />Pelajari lebih lanjut<ph name="END_LEARN_MORE_LINK" />.</translation>
 <translation id="4129401438321186435">{COUNT,plural, =1{1 lainnya}other{# lainnya}}</translation>
 <translation id="4130226655945681476">Periksa kabel jaringan, modem, dan router</translation>
+<translation id="4137140866298219568">Kedaluwarsa: <ph name="EXPIRATION_DATE_ABBR" />, terakhir digunakan: <ph name="LAST_USED_DATE_NO_DETAIL" /></translation>
 <translation id="4148925816941278100">American Express</translation>
 <translation id="4169947484918424451">Ingin Chromium menyimpan kartu ini?</translation>
 <translation id="4171400957073367226">Tanda tangan verifikasi tidak valid</translation>
@@ -352,6 +357,7 @@
 <translation id="425582637250725228">Perubahan yang Anda lakukan mungkin tidak disimpan.</translation>
 <translation id="4258748452823770588">Tanda tangan salah</translation>
 <translation id="4269787794583293679">(Tidak ada nama pengguna)</translation>
+<translation id="4275830172053184480">Mulai ulang perangkat Anda</translation>
 <translation id="4280429058323657511">, kedaluwarsa <ph name="EXPIRATION_DATE_ABBR" /></translation>
 <translation id="4295944351946828969">Google Penjelajahan Aman baru-baru ini <ph name="BEGIN_LINK" />menemukan program berbahaya<ph name="END_LINK" /> di <ph name="SITE" />. <ph name="BEGIN_LEARN_MORE_LINK" />Pelajari lebih lanjut<ph name="END_LEARN_MORE_LINK" />.</translation>
 <translation id="4300246636397505754">Saran induk</translation>
@@ -400,6 +406,7 @@
 <translation id="4858792381671956233">Kamu telah meminta izin kepada orang tua untuk mengunjungi situs ini</translation>
 <translation id="4880827082731008257">Telusuri riwayat</translation>
 <translation id="4895877746940133817"><ph name="TYPE_1" />, <ph name="TYPE_2" />, <ph name="TYPE_3" /></translation>
+<translation id="4897073194580895694">Terakhir digunakan: <ph name="LAST_USED_MONTH" /></translation>
 <translation id="4914479371620770914">{URL_count,plural, =1{dan 1 laman web lainnya}other{dan # laman web lainnya}}</translation>
 <translation id="4923417429809017348">Laman ini telah diterjemahkan dari bahasa yang tidak diketahui ke bahasa <ph name="LANGUAGE_LANGUAGE" /></translation>
 <translation id="4923459931733593730">Pembayaran</translation>
@@ -446,6 +453,7 @@
 <translation id="5359637492792381994">Server ini tidak dapat membuktikan bahwa ini adalah <ph name="DOMAIN" />; sertifikat keamanannya tidak valid untuk saat ini. Hal ini dapat disebabkan oleh kesalahan konfigurasi atau ada penyerang yang mencegat sambungan Anda. <ph name="BEGIN_LEARN_MORE_LINK" />Pelajari lebih lanjut<ph name="END_LEARN_MORE_LINK" />.</translation>
 <translation id="536296301121032821">Gagal menyimpan setelan kebijakan</translation>
 <translation id="5386426401304769735">Rantai sertifikat untuk situs ini berisi sertifikat yang ditandatangani menggunakan SHA-1.</translation>
+<translation id="5402410679244714488">Kedaluwarsa: <ph name="EXPIRATION_DATE_ABBR" />, terakhir digunakan lebih dari setahun yang lalu</translation>
 <translation id="5421136146218899937">Hapus data penjelajahan...</translation>
 <translation id="5430298929874300616">Buang bookmark</translation>
 <translation id="5431657950005405462">File Anda tidak ditemukan</translation>
@@ -467,6 +475,7 @@
 <translation id="5544037170328430102">Laman tersemat di <ph name="SITE" /> menyatakan:</translation>
 <translation id="5556459405103347317">Muat ulang</translation>
 <translation id="5565735124758917034">Aktif</translation>
+<translation id="5572851009514199876">Mulai dan login ke Chrome agar Chrome dapat memeriksa apakah Anda diizinkan untuk mengakses situs ini atau tidak.</translation>
 <translation id="5575380383496039204">Alamat pengiriman tidak didukung. Pilih alamat lain.</translation>
 <translation id="5580958916614886209">Periksa bulan kedaluwarsa dan coba lagi</translation>
 <translation id="560412284261940334">Pengelolaan tidak didukung</translation>
@@ -531,6 +540,7 @@
 <translation id="6282194474023008486">Kode pos</translation>
 <translation id="6290238015253830360">Artikel yang disarankan ditampilkan di sini</translation>
 <translation id="6305205051461490394"><ph name="URL" /> tidak dapat dijangkau.</translation>
+<translation id="6319915415804115995">Terakhir digunakan lebih dari setahun yang lalu</translation>
 <translation id="6321917430147971392">Periksa setelan DNS Anda</translation>
 <translation id="6328639280570009161">Coba nonaktifkan prediksi jaringan</translation>
 <translation id="6328786501058569169">Situs ini bersifat menipu</translation>
@@ -551,12 +561,14 @@
 <translation id="6443118737398455446">Tanggal habis masa berlaku tidak valid</translation>
 <translation id="6446608382365791566">Tambahkan informasi lainnya</translation>
 <translation id="6451458296329894277">Konfirmasikan Pengiriman Ulang Formulir</translation>
+<translation id="6456339708790392414">Pembayaran Anda</translation>
 <translation id="6458467102616083041">Diabaikan karena penelusuran default dinonaktifkan oleh kebijakan.</translation>
 <translation id="6462969404041126431">Server ini tidak dapat membuktikan bahwa ini adalah <ph name="DOMAIN" />; sertifikat keamanannya mungkin sudah dicabut. Hal ini dapat disebabkan oleh kesalahan konfigurasi atau ada penyerang yang mencegat sambungan Anda. <ph name="BEGIN_LEARN_MORE_LINK" />Pelajari lebih lanjut<ph name="END_LEARN_MORE_LINK" />.</translation>
 <translation id="647261751007945333">Kebijakan perangkat</translation>
 <translation id="6477321094435799029">Chrome mendeteksi kode yang tidak biasa pada halaman ini dan memblokirnya untuk melindungi informasi pribadi Anda (misalnya, sandi, nomor telepon, dan kartu kredit).</translation>
 <translation id="6477460825583319731">Alamat email tidak valid</translation>
 <translation id="6489534406876378309">Mulai mengupload kerusakan</translation>
+<translation id="6525462735697194615">Bulan habis masa berlaku tidak valid</translation>
 <translation id="6529602333819889595">&amp;Ulangi Penghapusan</translation>
 <translation id="6534179046333460208">Saran Web Fisik</translation>
 <translation id="6550675742724504774">Opsi</translation>
@@ -591,7 +603,6 @@
 <translation id="6895330447102777224">Kartu telah dikonfirmasi</translation>
 <translation id="6897140037006041989">Agen Pengguna</translation>
 <translation id="6915804003454593391">Pengguna:</translation>
-<translation id="6937422995269576720">Nomor kartu tidak valid</translation>
 <translation id="6957887021205513506">Sertifikat server tampaknya palsu.</translation>
 <translation id="6965382102122355670">Oke</translation>
 <translation id="6965978654500191972">Perangkat</translation>
@@ -619,6 +630,7 @@
 <translation id="7210863904660874423"><ph name="HOST_NAME" /> tidak mematuhi standar keamanan.</translation>
 <translation id="721197778055552897"><ph name="BEGIN_LINK" />Selengkapnya<ph name="END_LINK" /> tentang masalah ini.</translation>
 <translation id="7219179957768738017">Koneksi menggunakan <ph name="SSL_VERSION" />.</translation>
+<translation id="7220786058474068424">Dalam proses</translation>
 <translation id="724691107663265825">Situs yang akan dibuka berisi perangkat lunak perusak</translation>
 <translation id="724975217298816891">Masukkan tanggal habis masa berlaku dan CVC untuk <ph name="CREDIT_CARD" /> guna memperbarui detail kartu. Setelah mengonfirmasi, detail kartu Anda akan dibagikan dengan situs ini.</translation>
 <translation id="725866823122871198">Sambungan pribadi ke <ph name="BEGIN_BOLD" /><ph name="DOMAIN" /><ph name="END_BOLD" /> tidak dapat dibuat karena tanggal dan waktu (<ph name="DATE_AND_TIME" />) komputer Anda tidak benar.</translation>
@@ -685,6 +697,7 @@ Ssst! <ph name="SHORTCUT_KEY" /> mode penyamaran mungkin berguna suatu saat nant
 <translation id="7755287808199759310">Orang tua dapat membuka blokirnya untukmu</translation>
 <translation id="7758069387465995638">Perangkat lunak antivirus atau firewall mungkin memblokir sambungan.</translation>
 <translation id="7761701407923456692">Sertifikat server tidak cocok dengan URL.</translation>
+<translation id="7764225426217299476">Tambahkan alamat</translation>
 <translation id="777702478322588152">Prefektur</translation>
 <translation id="7791543448312431591">Tambahkan</translation>
 <translation id="7793809570500803535">Laman web di <ph name="SITE" /> mungkin sedang tidak aktif untuk sementara atau telah dipindahkan secara permanen ke alamat web baru.</translation>
@@ -694,7 +707,6 @@ Ssst! <ph name="SHORTCUT_KEY" /> mode penyamaran mungkin berguna suatu saat nant
 <translation id="7812922009395017822">Mir</translation>
 <translation id="7813600968533626083">Hapus sebagai saran dari Chrome?</translation>
 <translation id="7815407501681723534">Ditemukan <ph name="NUMBER_OF_RESULTS" /> <ph name="SEARCH_RESULTS" /> hasil untuk '<ph name="SEARCH_STRING" />'</translation>
-<translation id="7837582000577464779">Terjadi kesalahan saat memproses pesanan.  Periksa akun Anda dan coba lagi.</translation>
 <translation id="785549533363645510">Namun, Anda masih dapat terlihat. Masuk ke mode penyamaran tidak menyembunyikan penjelajahan Anda dari atasan, penyedia layanan internet, atau situs web yang Anda kunjungi.</translation>
 <translation id="7855695075675558090"><ph name="TOTAL_LABEL" /> <ph name="CURRENCY_CODE" /> <ph name="FORMATTED_TOTAL_AMOUNT" /></translation>
 <translation id="7887683347370398519">Periksa CVC dan coba lagi</translation>
@@ -762,6 +774,7 @@ Ssst! <ph name="SHORTCUT_KEY" /> mode penyamaran mungkin berguna suatu saat nant
 <translation id="859285277496340001">Sertifikat tidak menetapkan mekanisme untuk memeriksa apakah sertifikat telah ditarik.</translation>
 <translation id="8620436878122366504">Orang tuamu belum menyetujuinya</translation>
 <translation id="8647750283161643317">Setel ulang semua ke default</translation>
+<translation id="8662285765512809409">Kedaluwarsa: <ph name="EXPIRATION_DATE_ABBR" />, ditambahkan: <ph name="ADDED_TO_AUTOFILL_MONTH" /></translation>
 <translation id="8703575177326907206">Sambungan ke <ph name="DOMAIN" /> tidak dienkripsi.</translation>
 <translation id="8725066075913043281">Coba lagi</translation>
 <translation id="8728672262656704056">Anda masuk mode penyamaran</translation>
@@ -785,10 +798,12 @@ Ssst! <ph name="SHORTCUT_KEY" /> mode penyamaran mungkin berguna suatu saat nant
 <translation id="8891727572606052622">Mode proxy tidak valid.</translation>
 <translation id="889901481107108152">Maaf, percobaan ini tidak tersedia di platform Anda.</translation>
 <translation id="8903921497873541725">Perbesar</translation>
+<translation id="8928945116588336256">Ditambahkan: <ph name="ADDED_TO_AUTOFILL_MONTH" /></translation>
 <translation id="8931333241327730545">Ingin menyimpan kartu ini ke Akun Google Anda?</translation>
 <translation id="8932102934695377596">Setelan waktu Anda terlalu lambat</translation>
 <translation id="8954894007019320973">(Lanjutan.)</translation>
 <translation id="8971063699422889582">Sertifikat server telah kedaluwarsa.</translation>
+<translation id="8986494364107987395">Kirim statistik penggunaan dan laporan kerusakan ke Google secara otomatis</translation>
 <translation id="8987927404178983737">Bulan</translation>
 <translation id="8989148748219918422"><ph name="ORGANIZATION" /> [<ph name="COUNTRY" />]</translation>
 <translation id="8996941253935762404">Situs yang akan dibuka berisi program berbahaya</translation>
@@ -807,6 +822,7 @@ Ssst! <ph name="SHORTCUT_KEY" /> mode penyamaran mungkin berguna suatu saat nant
 <translation id="9094175695478007090">Tidak dapat meluncurkan aplikasi pembayaran.</translation>
 <translation id="9103872766612412690"><ph name="SITE" /> biasanya menggunakan enkripsi untuk melindungi informasi Anda. Saat Chromium mencoba menyambung ke <ph name="SITE" /> kali ini, situs web mengembalikan kredensial yang salah dan tidak biasa. Hal ini dapat terjadi jika ada penyerang yang berpura-pura menjadi <ph name="SITE" />, atau layar masuk Wi-Fi mengganggu sambungan. Informasi Anda masih aman karena Chromium menghentikan sambungan sebelum terjadi pertukaran data apa pun.</translation>
 <translation id="9137013805542155359">Perlihatkan laman asli</translation>
+<translation id="9137248913990643158">Mulai dan login ke Chrome sebelum menggunakan aplikasi ini.</translation>
 <translation id="9148507642005240123">&amp;Urungkan pengeditan</translation>
 <translation id="9154194610265714752">Diperbarui</translation>
 <translation id="9157595877708044936">Menyiapkan...</translation>

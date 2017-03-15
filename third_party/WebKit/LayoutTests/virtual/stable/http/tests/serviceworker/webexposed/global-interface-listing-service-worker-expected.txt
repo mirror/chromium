@@ -255,6 +255,7 @@ interface IDBCursor
     method advance
     method constructor
     method continue
+    method continuePrimaryKey
     method delete
     method update
 interface IDBCursorWithValue : IDBCursor
@@ -325,6 +326,7 @@ interface IDBObjectStore
     method get
     method getAll
     method getAllKeys
+    method getKey
     method index
     method openCursor
     method openKeyCursor
@@ -373,7 +375,6 @@ interface ImageBitmap
     method close
     method constructor
 interface ImageData
-    getter colorSpace
     getter data
     getter height
     getter width
@@ -642,6 +643,7 @@ interface WorkerGlobalScope : EventTarget
     getter onerror
     getter onrejectionhandled
     getter onunhandledrejection
+    getter origin
     getter performance
     getter self
     method atob
@@ -657,6 +659,7 @@ interface WorkerGlobalScope : EventTarget
     setter onerror
     setter onrejectionhandled
     setter onunhandledrejection
+    setter origin
 interface WorkerLocation
     getter hash
     getter host

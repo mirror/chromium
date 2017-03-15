@@ -58,7 +58,7 @@ class CORE_EXPORT InProcessWorkerMessagingProxy
                               ContentSecurityPolicy*,
                               const String& referrerPolicy);
   void postMessageToWorkerGlobalScope(PassRefPtr<SerializedScriptValue>,
-                                      std::unique_ptr<MessagePortChannelArray>);
+                                      MessagePortChannelArray);
 
   void workerThreadCreated() override;
   void parentObjectDestroyed() override;
@@ -68,7 +68,7 @@ class CORE_EXPORT InProcessWorkerMessagingProxy
   // These methods come from worker context thread via
   // InProcessWorkerObjectProxy and are called on the parent context thread.
   void postMessageToWorkerObject(PassRefPtr<SerializedScriptValue>,
-                                 std::unique_ptr<MessagePortChannelArray>);
+                                 MessagePortChannelArray);
   void dispatchErrorEvent(const String& errorMessage,
                           std::unique_ptr<SourceLocation>,
                           int exceptionId);
@@ -98,17 +98,9 @@ class CORE_EXPORT InProcessWorkerMessagingProxy
   WeakPersistent<InProcessWorkerBase> m_workerObject;
   Persistent<WorkerClients> m_workerClients;
 
-  struct QueuedTask {
-    RefPtr<SerializedScriptValue> message;
-    std::unique_ptr<MessagePortChannelArray> channels;
-
-    QueuedTask(RefPtr<SerializedScriptValue> message,
-               std::unique_ptr<MessagePortChannelArray> channels);
-    ~QueuedTask();
-  };
-
   // Tasks are queued here until there's a thread object created.
-  Vector<std::unique_ptr<QueuedTask>> m_queuedEarlyTasks;
+  struct QueuedTask;
+  Vector<QueuedTask> m_queuedEarlyTasks;
 
   // Unconfirmed messages from the parent context thread to the worker thread.
   // When this is greater than 0, |m_workerGlobalScopeHasPendingActivity| should

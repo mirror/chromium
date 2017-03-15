@@ -110,7 +110,7 @@ class CORE_EXPORT SelectionController final
       const MouseEventWithHitTestResults&);
   void selectClosestWordOrLinkFromMouseEvent(
       const MouseEventWithHitTestResults&);
-  void setNonDirectionalSelectionIfNeeded(const VisibleSelectionInFlatTree&,
+  void setNonDirectionalSelectionIfNeeded(const SelectionInFlatTree&,
                                           TextGranularity,
                                           EndPointsAdjustmentMode,
                                           HandleVisibility);
@@ -144,7 +144,7 @@ class CORE_EXPORT SelectionController final
   SelectionState m_selectionState;
 };
 
-bool isLinkSelection(const MouseEventWithHitTestResults&);
+bool isSelectionOverLink(const MouseEventWithHitTestResults&);
 bool isExtendingSelection(const MouseEventWithHitTestResults&);
 
 }  // namespace blink

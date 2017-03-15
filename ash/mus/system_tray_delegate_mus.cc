@@ -4,7 +4,9 @@
 
 #include "ash/mus/system_tray_delegate_mus.h"
 
+#include "ash/common/session/session_controller.h"
 #include "ash/common/system/networking_config_delegate.h"
+#include "ash/common/wm_shell.h"
 
 namespace ash {
 namespace {
@@ -19,7 +21,7 @@ class StubNetworkingConfigDelegate : public NetworkingConfigDelegate {
  private:
   // NetworkingConfigDelegate:
   std::unique_ptr<const ExtensionInfo> LookUpExtensionForNetwork(
-      const std::string& service_path) override {
+      const std::string& guid) override {
     return nullptr;
   }
 
@@ -32,6 +34,10 @@ SystemTrayDelegateMus::SystemTrayDelegateMus()
     : networking_config_delegate_(new StubNetworkingConfigDelegate) {}
 
 SystemTrayDelegateMus::~SystemTrayDelegateMus() {
+}
+
+LoginStatus SystemTrayDelegateMus::GetUserLoginStatus() const {
+  return WmShell::Get()->session_controller()->GetLoginStatus();
 }
 
 NetworkingConfigDelegate* SystemTrayDelegateMus::GetNetworkingConfigDelegate()

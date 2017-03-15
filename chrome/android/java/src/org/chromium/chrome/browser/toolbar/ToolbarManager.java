@@ -20,7 +20,9 @@ import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.FrameLayout;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.Callback;
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
@@ -136,6 +138,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
     private final ActionBarDelegate mActionBarDelegate;
     private final ActionModeController mActionModeController;
     private final LoadProgressSimulator mLoadProgressSimulator;
+    private final Callback<Boolean> mUrlFocusChangedCallback;
 
     private BrowserStateBrowserControlsVisibilityDelegate mControlsVisibilityDelegate;
     private int mFullscreenFocusToken = FullscreenManager.INVALID_TOKEN;
@@ -158,13 +161,17 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
 
     /**
      * Creates a ToolbarManager object.
+     *
      * @param controlContainer The container of the toolbar.
      * @param menuHandler The handler for interacting with the menu.
+     * @param appMenuPropertiesDelegate Delegate for interactions with the app level menu.
+     * @param invalidator Handler for synchronizing invalidations across UI elements.
+     * @param urlFocusChangedCallback The callback to be notified when the URL focus changes.
      */
     public ToolbarManager(final ChromeActivity activity,
             ToolbarControlContainer controlContainer, final AppMenuHandler menuHandler,
             AppMenuPropertiesDelegate appMenuPropertiesDelegate,
-            Invalidator invalidator) {
+            Invalidator invalidator, Callback<Boolean> urlFocusChangedCallback) {
         mActionBarDelegate = new ActionModeController.ActionBarDelegate() {
             @Override
             public void setControlTopMargin(int margin) {
@@ -207,6 +214,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
         mActionModeController.setCustomSelectionActionModeCallback(
                 new ToolbarActionModeCallback());
         mActionModeController.setTabStripHeight(mToolbar.getTabStripHeight());
+        mUrlFocusChangedCallback = urlFocusChangedCallback;
 
         MenuDelegatePhone menuDelegate = new MenuDelegatePhone() {
             @Override
@@ -423,7 +431,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
 
             @Override
             public void onDidStartNavigation(Tab tab, String url, boolean isInMainFrame,
-                    boolean isSamePage, boolean isErrorPage) {
+                    boolean isSameDocument, boolean isErrorPage) {
                 if (!isInMainFrame) return;
                 // Update URL as soon as it becomes available when it's a new tab.
                 // But we want to update only when it's a new tab. So we check whether the current
@@ -435,7 +443,7 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
                     mLocationBar.setUrlToPageUrl();
                 }
 
-                if (isSamePage) return;
+                if (isSameDocument) return;
                 // This event is used as the primary trigger for the progress bar because it
                 // is the earliest indication that a load has started for a particular frame. In
                 // the case of the progress bar, it should only traverse the screen a single time
@@ -454,10 +462,10 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
 
             @Override
             public void onDidFinishNavigation(Tab tab, String url, boolean isInMainFrame,
-                    boolean isErrorPage, boolean hasCommitted, boolean isSamePage,
+                    boolean isErrorPage, boolean hasCommitted, boolean isSameDocument,
                     boolean isFragmentNavigation, Integer pageTransition, int errorCode,
                     int httpStatusCode) {
-                if (hasCommitted && isInMainFrame && !isSamePage) {
+                if (hasCommitted && isInMainFrame && !isSameDocument) {
                     mToolbar.onNavigatedToDifferentPage();
                 }
 
@@ -682,6 +690,14 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
     }
 
     /**
+     * @return The {@link ToolbarLayout} that constitutes the toolbar.
+     */
+    @VisibleForTesting
+    public ToolbarLayout getToolbarLayout() {
+        return mToolbar;
+    }
+
+    /**
      * @return The controller for toolbar action mode.
      */
     public ActionModeController getActionModeController() {
@@ -901,6 +917,8 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
             mControlsVisibilityDelegate.hideControlsPersistent(mFullscreenFocusToken);
             mFullscreenFocusToken = FullscreenManager.INVALID_TOKEN;
         }
+
+        mUrlFocusChangedCallback.onResult(hasFocus);
     }
 
     /**
@@ -924,6 +942,13 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
      */
     public void setShouldUpdateToolbarPrimaryColor(boolean shouldUpdate) {
         mShouldUpdateToolbarPrimaryColor = shouldUpdate;
+    }
+
+    /**
+     * @return The primary toolbar color.
+     */
+    public int getPrimaryColor() {
+        return mToolbarModel.getPrimaryColor();
     }
 
     /**

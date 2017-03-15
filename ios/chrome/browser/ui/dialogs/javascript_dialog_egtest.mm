@@ -9,7 +9,7 @@
 #import "base/strings/sys_string_conversions.h"
 #include "components/strings/grit/components_strings.h"
 #import "ios/chrome/browser/ui/dialogs/dialog_presenter.h"
-#import "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.h"
+#include "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
 #include "ios/chrome/test/app/chrome_test_util.h"
@@ -29,6 +29,8 @@
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
+
+using chrome_test_util::NavigationBarDoneButton;
 
 namespace {
 
@@ -458,9 +460,7 @@ void TapSuppressDialogsButton() {
   AssertJavaScriptAlertNotPresent();
 
   // Close the settings.
-  [[EarlGrey
-      selectElementWithMatcher:chrome_test_util::ButtonWithAccessibilityLabelId(
-                                   IDS_IOS_NAVIGATION_BAR_DONE_BUTTON)]
+  [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
       performAction:grey_tap()];
 
   // Make sure the alert is present.

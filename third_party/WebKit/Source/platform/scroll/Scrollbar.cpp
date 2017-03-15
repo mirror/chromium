@@ -74,7 +74,7 @@ Scrollbar::Scrollbar(ScrollableArea* scrollableArea,
   m_themeScrollbarThickness = thickness;
   if (m_hostWindow)
     thickness = m_hostWindow->windowToViewportScalar(thickness);
-  Widget::setFrameRect(IntRect(0, 0, thickness, thickness));
+  FrameViewBase::setFrameRect(IntRect(0, 0, thickness, thickness));
 
   m_currentPos = scrollableAreaCurrentPos();
 }
@@ -86,15 +86,17 @@ Scrollbar::~Scrollbar() {
 DEFINE_TRACE(Scrollbar) {
   visitor->trace(m_scrollableArea);
   visitor->trace(m_hostWindow);
-  Widget::trace(visitor);
+  FrameViewBase::trace(visitor);
 }
 
 void Scrollbar::setFrameRect(const IntRect& frameRect) {
   if (frameRect == this->frameRect())
     return;
 
-  Widget::setFrameRect(frameRect);
+  FrameViewBase::setFrameRect(frameRect);
   setNeedsPaintInvalidation(AllParts);
+  if (m_scrollableArea)
+    m_scrollableArea->scrollbarFrameRectChanged();
 }
 
 ScrollbarOverlayColorTheme Scrollbar::getScrollbarOverlayColorTheme() const {
@@ -157,7 +159,7 @@ void Scrollbar::paint(GraphicsContext& context,
     return;
 
   if (!theme().paint(*this, context, cullRect))
-    Widget::paint(context, cullRect);
+    FrameViewBase::paint(context, cullRect);
 }
 
 void Scrollbar::autoscrollTimerFired(TimerBase*) {
@@ -568,39 +570,44 @@ bool Scrollbar::isWindowActive() const {
   return m_scrollableArea && m_scrollableArea->isActive();
 }
 
-IntRect Scrollbar::convertToContainingWidget(const IntRect& localRect) const {
-  if (m_scrollableArea)
-    return m_scrollableArea->convertFromScrollbarToContainingWidget(*this,
-                                                                    localRect);
+IntRect Scrollbar::convertToContainingFrameViewBase(
+    const IntRect& localRect) const {
+  if (m_scrollableArea) {
+    return m_scrollableArea->convertFromScrollbarToContainingFrameViewBase(
+        *this, localRect);
+  }
 
-  return Widget::convertToContainingWidget(localRect);
+  return FrameViewBase::convertToContainingFrameViewBase(localRect);
 }
 
-IntRect Scrollbar::convertFromContainingWidget(
+IntRect Scrollbar::convertFromContainingFrameViewBase(
     const IntRect& parentRect) const {
-  if (m_scrollableArea)
-    return m_scrollableArea->convertFromContainingWidgetToScrollbar(*this,
-                                                                    parentRect);
+  if (m_scrollableArea) {
+    return m_scrollableArea->convertFromContainingFrameViewBaseToScrollbar(
+        *this, parentRect);
+  }
 
-  return Widget::convertFromContainingWidget(parentRect);
+  return FrameViewBase::convertFromContainingFrameViewBase(parentRect);
 }
 
-IntPoint Scrollbar::convertToContainingWidget(
+IntPoint Scrollbar::convertToContainingFrameViewBase(
     const IntPoint& localPoint) const {
-  if (m_scrollableArea)
-    return m_scrollableArea->convertFromScrollbarToContainingWidget(*this,
-                                                                    localPoint);
+  if (m_scrollableArea) {
+    return m_scrollableArea->convertFromScrollbarToContainingFrameViewBase(
+        *this, localPoint);
+  }
 
-  return Widget::convertToContainingWidget(localPoint);
+  return FrameViewBase::convertToContainingFrameViewBase(localPoint);
 }
 
-IntPoint Scrollbar::convertFromContainingWidget(
+IntPoint Scrollbar::convertFromContainingFrameViewBase(
     const IntPoint& parentPoint) const {
-  if (m_scrollableArea)
-    return m_scrollableArea->convertFromContainingWidgetToScrollbar(
+  if (m_scrollableArea) {
+    return m_scrollableArea->convertFromContainingFrameViewBaseToScrollbar(
         *this, parentPoint);
+  }
 
-  return Widget::convertFromContainingWidget(parentPoint);
+  return FrameViewBase::convertFromContainingFrameViewBase(parentPoint);
 }
 
 float Scrollbar::scrollableAreaCurrentPos() const {
@@ -627,11 +634,6 @@ float Scrollbar::scrollableAreaTargetPos() const {
 
   return m_scrollableArea->scrollAnimator().desiredTargetOffset().height() -
          m_scrollableArea->minimumScrollOffset().height();
-}
-
-LayoutRect Scrollbar::visualRect() const {
-  return m_scrollableArea ? m_scrollableArea->visualRectForScrollbarParts()
-                          : LayoutRect();
 }
 
 void Scrollbar::setNeedsPaintInvalidation(ScrollbarPart invalidParts) {

@@ -16,29 +16,28 @@
 #include "ash/common/system/tray/tray_constants.h"
 #include "ash/common/system/tray/tray_utils.h"
 #include "ash/common/system/web_notification/ash_popup_alignment_delegate.h"
-#include "ash/common/wm_lookup.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/root_window_controller.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "base/auto_reset.h"
 #include "base/i18n/number_formatting.h"
 #include "base/i18n/rtl.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "grit/ash_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 #include "ui/gfx/paint_vector_icon.h"
-#include "ui/gfx/vector_icons_public.h"
 #include "ui/message_center/message_center_style.h"
 #include "ui/message_center/message_center_tray_delegate.h"
 #include "ui/message_center/views/message_bubble_base.h"
 #include "ui/message_center/views/message_center_bubble.h"
 #include "ui/message_center/views/message_popup_collection.h"
 #include "ui/strings/grit/ui_strings.h"
+#include "ui/vector_icons/vector_icons.h"
 #include "ui/views/bubble/tray_bubble_view.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/controls/label.h"
@@ -267,10 +266,9 @@ class WebNotificationLabel : public WebNotificationItem {
 
     base::string16 str = base::FormatNumber(notification_count);
     if (small_icons_exist) {
-      if (!base::i18n::IsRTL())
-        str = base::ASCIIToUTF16("+") + str;
-      else
-        str = str + base::ASCIIToUTF16("+");
+      str = base::ASCIIToUTF16("+") + str;
+      if (base::i18n::IsRTL())
+        base::i18n::WrapStringWithRTLFormatting(&str);
     }
 
     view_->SetText(str);
@@ -287,7 +285,7 @@ class WebNotificationLabel : public WebNotificationItem {
 WebNotificationTray::WebNotificationTray(WmShelf* shelf,
                                          WmWindow* status_area_window,
                                          SystemTray* system_tray)
-    : TrayBackgroundView(shelf),
+    : TrayBackgroundView(shelf, true),
       status_area_window_(status_area_window),
       system_tray_(system_tray),
       show_message_center_on_unlock_(false),
@@ -299,16 +297,14 @@ WebNotificationTray::WebNotificationTray(WmShelf* shelf,
 
   if (MaterialDesignController::IsShelfMaterial()) {
     SetInkDropMode(InkDropMode::ON);
-    SetContentsBackground(false);
     gfx::ImageSkia bell_image =
         CreateVectorIcon(kShelfNotificationsIcon, kShelfIconColor);
     const gfx::Size bell_icon_size = kTrayItemInnerIconSize;
     bell_icon_.reset(new WebNotificationImage(
         bell_image, bell_icon_size, animation_container_.get(), this));
   } else {
-    SetContentsBackground(true);
     gfx::ImageSkia bell_image =
-        CreateVectorIcon(gfx::VectorIconId::NOTIFICATIONS, kNoUnreadIconSize,
+        CreateVectorIcon(ui::kNotificationsIcon, kNoUnreadIconSize,
                          kWebNotificationColorNoUnread);
     const gfx::Size bell_icon_size = kTrayItemInnerBellIconSizeNonMd;
     bell_icon_.reset(new WebNotificationImage(
@@ -379,7 +375,6 @@ bool WebNotificationTray::ShowMessageCenterInternal(bool show_settings) {
   message_center_bubble_.reset(new WebNotificationBubbleWrapper(
       this, anchor_tray, message_center_bubble));
 
-  system_tray_->SetHideNotifications(true);
   shelf()->UpdateAutoHideState();
   SetIsActive(true);
   return true;
@@ -396,7 +391,6 @@ void WebNotificationTray::HideMessageCenter() {
   message_center_bubble_.reset();
   should_block_shelf_auto_hide_ = false;
   show_message_center_on_unlock_ = false;
-  system_tray_->SetHideNotifications(false);
   shelf()->UpdateAutoHideState();
 }
 
@@ -424,8 +418,7 @@ void WebNotificationTray::HidePopups() {
 // Private methods.
 
 bool WebNotificationTray::ShouldShowMessageCenter() {
-  return WmShell::Get()->system_tray_delegate()->ShouldShowNotificationTray() &&
-         !system_tray_->HasNotificationBubble();
+  return WmShell::Get()->system_tray_delegate()->ShouldShowNotificationTray();
 }
 
 bool WebNotificationTray::ShouldBlockShelfAutoHide() const {
@@ -504,8 +497,7 @@ void WebNotificationTray::OnBeforeBubbleWidgetInit(
     views::Widget* bubble_widget,
     views::Widget::InitParams* params) const {
   // Place the bubble in the same root window as |anchor_widget|.
-  WmLookup::Get()
-      ->GetWindowForWidget(anchor_widget)
+  WmWindow::Get(anchor_widget->GetNativeWindow())
       ->GetRootWindowController()
       ->ConfigureWidgetInitParamsForContainer(
           bubble_widget, kShellWindowId_SettingBubbleContainer, params);

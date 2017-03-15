@@ -111,7 +111,7 @@ Resources.ClearStorageView = class extends UI.VBox {
     var set = new Set(storageTypes);
     var hasAll = set.has(Protocol.Storage.StorageType.All);
     if (set.has(Protocol.Storage.StorageType.Cookies) || hasAll)
-      this._resourcesPanel.clearCookies(this._securityOrigin);
+      SDK.CookieModel.fromTarget(this._target).clear();
 
     if (set.has(Protocol.Storage.StorageType.Indexeddb) || hasAll) {
       for (var target of SDK.targetManager.targets()) {
@@ -149,10 +149,11 @@ Resources.ClearStorageView = class extends UI.VBox {
     }
 
     this._clearButton.disabled = true;
+    var label = this._clearButton.textContent;
     this._clearButton.textContent = Common.UIString('Clearing...');
     setTimeout(() => {
       this._clearButton.disabled = false;
-      this._clearButton.textContent = Common.UIString('Clear selected');
+      this._clearButton.textContent = label;
     }, 500);
   }
 };

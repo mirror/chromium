@@ -43,14 +43,14 @@
     }
   </style>
   <template>
-    <dialog is="cr-dialog" id="dialog">
+    <dialog is="cr-dialog" id="dialog" close-text="$i18n{close}">
       <div class="title">[[title_]]</div>
       <div class="body">
         <div>
           <iron-a11y-keys keys="enter" on-keys-pressed="onSaveButtonTap_">
           </iron-a11y-keys>
           <paper-input id="nameInput" label="$i18n{creditCardName}"
-              value="{{creditCard.name}}" always-float-label
+              value="{{creditCard.name}}" always-float-label autofocus
               on-input="onCreditCardNameOrNumberChanged_">
           </paper-input>
           <paper-input id="numberInput" label="$i18n{creditCardNumber}"

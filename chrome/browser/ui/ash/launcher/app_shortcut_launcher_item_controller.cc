@@ -6,14 +6,12 @@
 
 #include <stddef.h>
 
-#include "ash/public/cpp/shelf_application_menu_item.h"
 #include "ash/wm/window_util.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/chromeos/arc/arc_support_host.h"
 #include "chrome/browser/extensions/launch_util.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_utils.h"
 #include "chrome/browser/ui/ash/launcher/arc_playstore_shortcut_launcher_item_controller.h"
-#include "chrome/browser/ui/ash/launcher/chrome_launcher_app_menu_item_tab.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller_util.h"
 #include "chrome/browser/ui/ash/launcher/launcher_context_menu.h"
@@ -94,8 +92,18 @@ AppShortcutLauncherItemController::AppShortcutLauncherItemController(
 
 AppShortcutLauncherItemController::~AppShortcutLauncherItemController() {}
 
-ash::ShelfItemDelegate::PerformedAction
-AppShortcutLauncherItemController::Activate(ash::LaunchSource source) {
+void AppShortcutLauncherItemController::ItemSelected(
+    std::unique_ptr<ui::Event> event,
+    int64_t display_id,
+    ash::ShelfLaunchSource source,
+    const ItemSelectedCallback& callback) {
+  // In case of a keyboard event, we were called by a hotkey. In that case we
+  // activate the next item in line if an item of our list is already active.
+  if (event && event->type() == ui::ET_KEY_RELEASED && AdvanceToNextApp()) {
+    callback.Run(ash::SHELF_ACTION_WINDOW_ACTIVATED, base::nullopt);
+    return;
+  }
+
   content::WebContents* content = GetLRUApplication();
   if (!content) {
     // Ideally we come here only once. After that ShellLauncherItemController
@@ -103,39 +111,66 @@ AppShortcutLauncherItemController::Activate(ash::LaunchSource source) {
     // which take a lot of time for pre-processing (like the files app) before
     // they open a window. Since there is currently no other way to detect if an
     // app was started we suppress any further clicks within a special time out.
-    if (IsV2App() && !AllowNextLaunchAttempt())
-      return kNoAction;
+    if (IsV2App() && !AllowNextLaunchAttempt()) {
+      callback.Run(ash::SHELF_ACTION_NONE,
+                   GetAppMenuItems(event ? event->flags() : ui::EF_NONE));
+      return;
+    }
 
     // Launching some items replaces this item controller instance, which
     // destroys the app and launch id strings; making copies avoid crashes.
     launcher_controller()->LaunchApp(ash::AppLauncherId(app_id(), launch_id()),
                                      source, ui::EF_NONE);
-    return kNewWindowCreated;
+    callback.Run(ash::SHELF_ACTION_NEW_WINDOW_CREATED, base::nullopt);
+    return;
   }
-  return ActivateContent(content);
+
+  const ash::ShelfAction action = ActivateContent(content);
+  callback.Run(action, GetAppMenuItems(event ? event->flags() : ui::EF_NONE));
 }
 
-ash::ShelfItemDelegate::PerformedAction
-AppShortcutLauncherItemController::ItemSelected(const ui::Event& event) {
-  // In case of a keyboard event, we were called by a hotkey. In that case we
-  // activate the next item in line if an item of our list is already active.
-  if (event.type() == ui::ET_KEY_RELEASED && AdvanceToNextApp())
-    return kExistingWindowActivated;
-  return Activate(ash::LAUNCH_FROM_UNKNOWN);
-}
-
-ash::ShelfAppMenuItemList AppShortcutLauncherItemController::GetAppMenuItems(
+MenuItemList AppShortcutLauncherItemController::GetAppMenuItems(
     int event_flags) {
-  ash::ShelfAppMenuItemList items;
-  std::vector<content::WebContents*> content_list = GetRunningApplications();
-  for (size_t i = 0; i < content_list.size(); i++) {
-    content::WebContents* web_contents = content_list[i];
-    gfx::Image app_icon = launcher_controller()->GetAppListIcon(web_contents);
-    base::string16 title = launcher_controller()->GetAppListTitle(web_contents);
-    items.push_back(base::MakeUnique<ChromeLauncherAppMenuItemTab>(
-        title, &app_icon, web_contents));
+  MenuItemList items;
+  app_menu_items_ = GetRunningApplications();
+  for (size_t i = 0; i < app_menu_items_.size(); i++) {
+    content::WebContents* tab = app_menu_items_[i];
+    ash::mojom::MenuItemPtr item(ash::mojom::MenuItem::New());
+    item->command_id = base::checked_cast<uint32_t>(i);
+    item->label = launcher_controller()->GetAppListTitle(tab);
+    item->image = *launcher_controller()->GetAppListIcon(tab).ToSkBitmap();
+    items.push_back(std::move(item));
   }
   return items;
+}
+
+void AppShortcutLauncherItemController::ExecuteCommand(uint32_t command_id,
+                                                       int32_t event_flags) {
+  if (static_cast<size_t>(command_id) >= app_menu_items_.size()) {
+    app_menu_items_.clear();
+    return;
+  }
+
+  // If the web contents was destroyed while the menu was open, then the invalid
+  // pointer cached in |app_menu_items_| should yield a null browser or kNoTab.
+  content::WebContents* web_contents = app_menu_items_[command_id];
+  Browser* browser = chrome::FindBrowserWithWebContents(web_contents);
+  TabStripModel* tab_strip = browser ? browser->tab_strip_model() : nullptr;
+  const int index = tab_strip ? tab_strip->GetIndexOfWebContents(web_contents)
+                              : TabStripModel::kNoTab;
+  if (index != TabStripModel::kNoTab) {
+    if (event_flags & (ui::EF_SHIFT_DOWN | ui::EF_MIDDLE_MOUSE_BUTTON)) {
+      tab_strip->CloseWebContentsAt(index, TabStripModel::CLOSE_USER_GESTURE);
+    } else {
+      multi_user_util::MoveWindowToCurrentDesktop(
+          browser->window()->GetNativeWindow());
+      tab_strip->ActivateTabAt(index, false);
+      browser->window()->Show();
+      browser->window()->Activate();
+    }
+  }
+
+  app_menu_items_.clear();
 }
 
 void AppShortcutLauncherItemController::Close() {
@@ -273,8 +308,7 @@ bool AppShortcutLauncherItemController::WebContentMatchesApp(
                                                                   app_id()));
 }
 
-ash::ShelfItemDelegate::PerformedAction
-AppShortcutLauncherItemController::ActivateContent(
+ash::ShelfAction AppShortcutLauncherItemController::ActivateContent(
     content::WebContents* content) {
   Browser* browser = chrome::FindBrowserWithWebContents(content);
   TabStripModel* tab_strip = browser->tab_strip_model();

@@ -30,6 +30,7 @@
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
+#include "content/public/common/url_constants.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 
@@ -51,7 +52,7 @@ bool MenuPromoShown(Profile* profile) {
 content::WebUIDataSource* CreateMdHistoryUIHTMLSource(Profile* profile,
                                                       bool use_test_title) {
   content::WebUIDataSource* source =
-      content::WebUIDataSource::Create(chrome::kChromeUIHistoryHost);
+      content::WebUIDataSource::Create(content::kChromeUIHistoryHost);
 
   // Localized strings (alphabetical order).
   source->AddLocalizedString("bookmarked", IDS_HISTORY_ENTRY_BOOKMARKED);
@@ -155,14 +156,10 @@ content::WebUIDataSource* CreateMdHistoryUIHTMLSource(Profile* profile,
     {"history_item.js", IDR_MD_HISTORY_HISTORY_ITEM_JS},
     {"history_list.html", IDR_MD_HISTORY_HISTORY_LIST_HTML},
     {"history_list.js", IDR_MD_HISTORY_HISTORY_LIST_JS},
-    {"history_list_behavior.html", IDR_MD_HISTORY_HISTORY_LIST_BEHAVIOR_HTML},
-    {"history_list_behavior.js", IDR_MD_HISTORY_HISTORY_LIST_BEHAVIOR_JS},
     {"history_toolbar.html", IDR_MD_HISTORY_HISTORY_TOOLBAR_HTML},
     {"history_toolbar.js", IDR_MD_HISTORY_HISTORY_TOOLBAR_JS},
     {"icons.html", IDR_MD_HISTORY_ICONS_HTML},
     {"lazy_load.html", IDR_MD_HISTORY_LAZY_LOAD_HTML},
-    {"list_container.html", IDR_MD_HISTORY_LIST_CONTAINER_HTML},
-    {"list_container.js", IDR_MD_HISTORY_LIST_CONTAINER_JS},
     {"query_manager.html", IDR_MD_HISTORY_QUERY_MANAGER_HTML},
     {"query_manager.js", IDR_MD_HISTORY_QUERY_MANAGER_JS},
     {"router.html", IDR_MD_HISTORY_ROUTER_HTML},
@@ -253,7 +250,7 @@ void MdHistoryUI::UpdateDataSource() {
   update->SetBoolean(kIsUserSignedInKey, IsUserSignedIn(profile));
   update->SetBoolean(kShowMenuPromoKey, !MenuPromoShown(profile));
 
-  content::WebUIDataSource::Update(profile, chrome::kChromeUIHistoryHost,
+  content::WebUIDataSource::Update(profile, content::kChromeUIHistoryHost,
                                    std::move(update));
 }
 

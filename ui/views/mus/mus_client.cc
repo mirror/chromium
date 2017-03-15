@@ -7,7 +7,6 @@
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread.h"
-#include "components/discardable_memory/client/client_discardable_shared_memory_manager.h"
 #include "services/service_manager/public/cpp/connection.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/ui/public/cpp/gpu/gpu.h"
@@ -18,7 +17,6 @@
 #include "ui/aura/env.h"
 #include "ui/aura/mus/capture_synchronizer.h"
 #include "ui/aura/mus/mus_context_factory.h"
-#include "ui/aura/mus/os_exchange_data_provider_mus.h"
 #include "ui/aura/mus/property_converter.h"
 #include "ui/aura/mus/window_tree_client.h"
 #include "ui/aura/mus/window_tree_host_mus.h"
@@ -81,19 +79,11 @@ MusClient::MusClient(service_manager::Connector* connector,
   property_converter_ = base::MakeUnique<aura::PropertyConverter>();
   property_converter_->RegisterProperty(
       wm::kShadowElevationKey,
-      ui::mojom::WindowManager::kShadowElevation_Property);
+      ui::mojom::WindowManager::kShadowElevation_Property,
+      base::Bind(&wm::IsValidShadowElevation));
 
   if (create_wm_state)
     wm_state_ = base::MakeUnique<wm::WMState>();
-
-  discardable_memory::mojom::DiscardableSharedMemoryManagerPtr manager_ptr;
-  connector->BindInterface(ui::mojom::kServiceName, &manager_ptr);
-
-  discardable_shared_memory_manager_ = base::MakeUnique<
-      discardable_memory::ClientDiscardableSharedMemoryManager>(
-      std::move(manager_ptr), io_task_runner);
-  base::DiscardableMemoryAllocator::SetInstance(
-      discardable_shared_memory_manager_.get());
 
   window_tree_client_ = base::MakeUnique<aura::WindowTreeClient>(
       connector, this, nullptr /* window_manager_delegate */,
@@ -111,10 +101,10 @@ MusClient::MusClient(service_manager::Connector* connector,
   clipboard->Init(connector);
   ui::Clipboard::SetClipboardForCurrentThread(std::move(clipboard));
 
-  ui::OSExchangeDataProviderFactory::SetFactory(this);
-
   ViewsDelegate::GetInstance()->set_native_widget_factory(
       base::Bind(&MusClient::CreateNativeWidget, base::Unretained(this)));
+  ViewsDelegate::GetInstance()->set_desktop_window_tree_host_factory(base::Bind(
+      &MusClient::CreateDesktopWindowTreeHost, base::Unretained(this)));
 }
 
 MusClient::~MusClient() {
@@ -127,9 +117,10 @@ MusClient::~MusClient() {
   if (ViewsDelegate::GetInstance()) {
     ViewsDelegate::GetInstance()->set_native_widget_factory(
         ViewsDelegate::NativeWidgetFactory());
+    ViewsDelegate::GetInstance()->set_desktop_window_tree_host_factory(
+        ViewsDelegate::DesktopWindowTreeHostFactory());
   }
 
-  base::DiscardableMemoryAllocator::SetInstance(nullptr);
   DCHECK_EQ(instance_, this);
   instance_ = nullptr;
   DCHECK(aura::Env::GetInstance());
@@ -220,11 +211,8 @@ NativeWidget* MusClient::CreateNativeWidget(
     native_widget->SetDesktopWindowTreeHost(
         base::WrapUnique(init_params.desktop_window_tree_host));
   } else {
-    std::map<std::string, std::vector<uint8_t>> mus_properties =
-        ConfigurePropertiesFromParams(init_params);
     native_widget->SetDesktopWindowTreeHost(
-        base::MakeUnique<DesktopWindowTreeHostMus>(delegate, native_widget,
-                                                   &mus_properties));
+        CreateDesktopWindowTreeHost(init_params, delegate, native_widget));
   }
   return native_widget;
 }
@@ -253,6 +241,16 @@ void MusClient::RemoveObserver(MusClientObserver* observer) {
 void MusClient::SetMusPropertyMirror(
     std::unique_ptr<MusPropertyMirror> mirror) {
   mus_property_mirror_ = std::move(mirror);
+}
+
+std::unique_ptr<DesktopWindowTreeHost> MusClient::CreateDesktopWindowTreeHost(
+    const Widget::InitParams& init_params,
+    internal::NativeWidgetDelegate* delegate,
+    DesktopNativeWidgetAura* desktop_native_widget_aura) {
+  std::map<std::string, std::vector<uint8_t>> mus_properties =
+      ConfigurePropertiesFromParams(init_params);
+  return base::MakeUnique<DesktopWindowTreeHostMus>(
+      delegate, desktop_native_widget_aura, &mus_properties);
 }
 
 void MusClient::OnEmbed(
@@ -294,10 +292,6 @@ aura::Window* MusClient::GetWindowAtScreenPoint(const gfx::Point& point) {
       return root->GetTopWindowContainingPoint(relative_point);
   }
   return nullptr;
-}
-
-std::unique_ptr<OSExchangeData::Provider> MusClient::BuildProvider() {
-  return base::MakeUnique<aura::OSExchangeDataProviderMus>();
 }
 
 }  // namespace views

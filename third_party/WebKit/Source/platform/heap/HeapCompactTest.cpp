@@ -318,7 +318,7 @@ TEST(HeapCompactTest, CompactHashPartVector) {
 TEST(HeapCompactTest, CompactDeques) {
   Persistent<IntDeque> deque = new IntDeque;
   for (int i = 0; i < 8; ++i) {
-    deque->prepend(IntWrapper::create(i));
+    deque->push_front(IntWrapper::create(i));
   }
   EXPECT_EQ(8u, deque->size());
 
@@ -336,7 +336,7 @@ TEST(HeapCompactTest, CompactDequeVectors) {
   for (int i = 0; i < 8; ++i) {
     IntWrapper* value = IntWrapper::create(i);
     IntVector vector = IntVector(8, value);
-    deque->prepend(vector);
+    deque->push_front(vector);
   }
   EXPECT_EQ(8u, deque->size());
 
@@ -354,7 +354,7 @@ TEST(HeapCompactTest, CompactLinkedHashSet) {
   Persistent<OrderedHashSet> set = new OrderedHashSet;
   for (int i = 0; i < 13; ++i) {
     IntWrapper* value = IntWrapper::create(i);
-    set->add(value);
+    set->insert(value);
   }
   EXPECT_EQ(13u, set->size());
 
@@ -379,7 +379,7 @@ TEST(HeapCompactTest, CompactLinkedHashSetVector) {
   for (int i = 0; i < 13; ++i) {
     IntWrapper* value = IntWrapper::create(i);
     IntVector* vector = new IntVector(19, value);
-    set->add(vector);
+    set->insert(vector);
   }
   EXPECT_EQ(13u, set->size());
 
@@ -407,7 +407,7 @@ TEST(HeapCompactTest, CompactLinkedHashSetMap) {
     IntWrapper* value = IntWrapper::create(i);
     Inner* inner = new Inner;
     inner->insert(value);
-    set->add(inner);
+    set->insert(inner);
   }
   EXPECT_EQ(13u, set->size());
 
@@ -436,8 +436,8 @@ TEST(HeapCompactTest, CompactLinkedHashSetNested) {
   for (int i = 0; i < 13; ++i) {
     IntWrapper* value = IntWrapper::create(i);
     Inner* inner = new Inner;
-    inner->add(value);
-    set->add(inner);
+    inner->insert(value);
+    set->insert(inner);
   }
   EXPECT_EQ(13u, set->size());
 

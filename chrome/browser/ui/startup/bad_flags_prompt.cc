@@ -30,7 +30,6 @@
 #include "media/media_features.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
-#include "ui/gfx/vector_icons_public.h"
 
 namespace chrome {
 
@@ -94,9 +93,7 @@ void ShowBadFlagsPrompt(Browser* browser) {
     if (base::CommandLine::ForCurrentProcess()->HasSwitch(*flag)) {
       SimpleAlertInfoBarDelegate::Create(
           InfoBarService::FromWebContents(web_contents),
-          infobars::InfoBarDelegate::BAD_FLAGS_PROMPT,
-          infobars::InfoBarDelegate::kNoIconID,
-          gfx::VectorIconId::VECTOR_ICON_NONE,
+          infobars::InfoBarDelegate::BAD_FLAGS_PROMPT, nullptr,
           l10n_util::GetStringFUTF16(
               IDS_BAD_FLAGS_WARNING_MESSAGE,
               base::UTF8ToUTF16(std::string("--") + *flag)),

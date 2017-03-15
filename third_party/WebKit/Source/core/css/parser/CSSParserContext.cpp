@@ -6,10 +6,11 @@
 
 #include "core/css/CSSStyleSheet.h"
 #include "core/css/StyleSheetContents.h"
-#include "core/frame/FrameHost.h"
+#include "core/frame/Deprecation.h"
 #include "core/frame/Settings.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/imports/HTMLImportsController.h"
+#include "core/page/Page.h"
 
 namespace blink {
 
@@ -145,9 +146,14 @@ void CSSParserContext::count(UseCounter::Feature feature) const {
     UseCounter::count(*m_document, feature);
 }
 
+void CSSParserContext::countDeprecation(UseCounter::Feature feature) const {
+  if (isUseCounterRecordingEnabled())
+    Deprecation::countDeprecation(*m_document, feature);
+}
+
 void CSSParserContext::count(CSSParserMode mode, CSSPropertyID property) const {
-  if (isUseCounterRecordingEnabled() && m_document->frameHost()) {
-    UseCounter* useCounter = &m_document->frameHost()->useCounter();
+  if (isUseCounterRecordingEnabled() && m_document->page()) {
+    UseCounter* useCounter = &m_document->page()->useCounter();
     if (useCounter)
       useCounter->count(mode, property);
   }

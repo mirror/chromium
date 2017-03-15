@@ -15,26 +15,6 @@
           "object": "LayoutView #document",
           "rect": [0, 250, 600, 250],
           "reason": "incremental"
-        },
-        {
-          "object": "LayoutBlockFlow HTML",
-          "rect": [0, 0, 600, 8],
-          "reason": "forced by layout"
-        },
-        {
-          "object": "LayoutBlockFlow DIV class='parent'",
-          "rect": [0, 0, 6, 500],
-          "reason": "forced by layout"
-        },
-        {
-          "object": "LayoutBlockFlow (relative positioned) DIV class='child'",
-          "rect": [0, 250, 6, 30],
-          "reason": "forced by layout"
-        },
-        {
-          "object": "LayoutBlockFlow (relative positioned) DIV class='child'",
-          "rect": [0, 125, 6, 30],
-          "reason": "forced by layout"
         }
       ]
     }
@@ -43,10 +23,6 @@
     {
       "object": "LayoutView #document",
       "reason": "incremental"
-    },
-    {
-      "object": "LayoutBlockFlow HTML",
-      "reason": "forced by layout"
     },
     {
       "object": "LayoutBlockFlow (positioned) DIV class='container'",
@@ -80,24 +56,9 @@
           "reason": "forced by layout"
         },
         {
-          "object": "LayoutBlockFlow HTML",
-          "rect": [0, 0, 600, 8],
-          "reason": "forced by layout"
-        },
-        {
           "object": "LayoutView #document",
           "rect": [400, 0, 200, 250],
           "reason": "incremental"
-        },
-        {
-          "object": "LayoutBlockFlow DIV class='parent'",
-          "rect": [0, 0, 6, 250],
-          "reason": "forced by layout"
-        },
-        {
-          "object": "LayoutBlockFlow (relative positioned) DIV class='child'",
-          "rect": [0, 125, 6, 30],
-          "reason": "forced by layout"
         }
       ]
     }
@@ -106,10 +67,6 @@
     {
       "object": "LayoutView #document",
       "reason": "incremental"
-    },
-    {
-      "object": "LayoutBlockFlow HTML",
-      "reason": "forced by layout"
     },
     {
       "object": "LayoutBlockFlow (positioned) DIV class='container'",
@@ -146,26 +103,6 @@
           "object": "LayoutView #document",
           "rect": [0, 250, 400, 350],
           "reason": "incremental"
-        },
-        {
-          "object": "LayoutBlockFlow HTML",
-          "rect": [0, 0, 400, 8],
-          "reason": "forced by layout"
-        },
-        {
-          "object": "LayoutBlockFlow DIV class='parent'",
-          "rect": [0, 0, 6, 600],
-          "reason": "forced by layout"
-        },
-        {
-          "object": "LayoutBlockFlow (relative positioned) DIV class='child'",
-          "rect": [0, 300, 6, 30],
-          "reason": "forced by layout"
-        },
-        {
-          "object": "LayoutBlockFlow (relative positioned) DIV class='child'",
-          "rect": [0, 125, 6, 30],
-          "reason": "forced by layout"
         }
       ]
     }
@@ -174,10 +111,6 @@
     {
       "object": "LayoutView #document",
       "reason": "incremental"
-    },
-    {
-      "object": "LayoutBlockFlow HTML",
-      "reason": "forced by layout"
     },
     {
       "object": "LayoutBlockFlow (positioned) DIV class='container'",
@@ -211,24 +144,9 @@
           "reason": "full"
         },
         {
-          "object": "LayoutBlockFlow HTML",
-          "rect": [0, 0, 800, 8],
-          "reason": "forced by layout"
-        },
-        {
           "object": "LayoutView #document",
           "rect": [400, 0, 400, 600],
           "reason": "incremental"
-        },
-        {
-          "object": "LayoutBlockFlow DIV class='parent'",
-          "rect": [0, 0, 6, 600],
-          "reason": "forced by layout"
-        },
-        {
-          "object": "LayoutBlockFlow (relative positioned) DIV class='child'",
-          "rect": [0, 300, 6, 30],
-          "reason": "forced by layout"
         }
       ]
     }
@@ -237,10 +155,6 @@
     {
       "object": "LayoutView #document",
       "reason": "incremental"
-    },
-    {
-      "object": "LayoutBlockFlow HTML",
-      "reason": "forced by layout"
     },
     {
       "object": "LayoutBlockFlow (positioned) DIV class='container'",

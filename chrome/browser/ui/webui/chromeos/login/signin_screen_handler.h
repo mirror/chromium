@@ -21,7 +21,7 @@
 #include "chrome/browser/chromeos/login/signin_specifics.h"
 #include "chrome/browser/chromeos/login/ui/login_display.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
-#include "chrome/browser/ui/webui/chromeos/login/base_screen_handler.h"
+#include "chrome/browser/ui/webui/chromeos/login/base_webui_handler.h"
 #include "chrome/browser/ui/webui/chromeos/login/network_state_informer.h"
 #include "chrome/browser/ui/webui/chromeos/login/oobe_ui.h"
 #include "chromeos/dbus/power_manager_client.h"
@@ -46,7 +46,7 @@ class ListValue;
 
 namespace chromeos {
 
-class CoreOobeActor;
+class CoreOobeView;
 class ErrorScreensHistogramHelper;
 class GaiaScreenHandler;
 class LoginFeedback;
@@ -218,7 +218,7 @@ class SigninScreenHandlerDelegate {
 // A class that handles the WebUI hooks in sign-in screen in OobeUI and
 // LoginDisplay.
 class SigninScreenHandler
-    : public BaseScreenHandler,
+    : public BaseWebUIHandler,
       public LoginDisplayWebUIHandler,
       public content::NotificationObserver,
       public NetworkStateInformer::NetworkStateInformerObserver,
@@ -230,14 +230,15 @@ class SigninScreenHandler
   SigninScreenHandler(
       const scoped_refptr<NetworkStateInformer>& network_state_informer,
       ErrorScreen* error_screen,
-      CoreOobeActor* core_oobe_actor,
-      GaiaScreenHandler* gaia_screen_handler);
+      CoreOobeView* core_oobe_view,
+      GaiaScreenHandler* gaia_screen_handler,
+      JSCallsContainer* js_calls_container);
   ~SigninScreenHandler() override;
 
-  static std::string GetUserLRUInputMethod(const std::string& username);
+  static std::string GetUserLastInputMethod(const std::string& username);
 
   // Update current input method (namely keyboard layout) in the given IME state
-  // to LRU by this user.
+  // to last input method used by this user.
   static void SetUserInputMethod(
       const std::string& username,
       input_method::InputMethodManager::State* ime_state);
@@ -269,6 +270,10 @@ class SigninScreenHandler
   // This method reduces the threshold to zero, allowing the offline message to
   // show instantaneously in tests.
   void ZeroOfflineTimeoutForTesting();
+
+  // Gets the keyboard remapped pref value for |pref_name| key. Returns true if
+  // successful, otherwise returns false.
+  bool GetKeyboardRemappedPrefValue(const std::string& pref_name, int* value);
 
  private:
   enum UIState {
@@ -441,6 +446,9 @@ class SigninScreenHandler
   // Called when the cros property controlling allowed input methods changes.
   void OnAllowedInputMethodsChanged();
 
+  // Update the keyboard settings for |account_id|.
+  void SetKeyboardSettings(const AccountId& account_id);
+
   // Current UI state of the signin screen.
   UIState ui_state_ = UI_STATE_UNKNOWN;
 
@@ -467,7 +475,7 @@ class SigninScreenHandler
   bool preferences_changed_delayed_ = false;
 
   ErrorScreen* error_screen_ = nullptr;
-  CoreOobeActor* core_oobe_actor_ = nullptr;
+  CoreOobeView* core_oobe_view_ = nullptr;
 
   NetworkStateInformer::State last_network_state_ =
       NetworkStateInformer::UNKNOWN;

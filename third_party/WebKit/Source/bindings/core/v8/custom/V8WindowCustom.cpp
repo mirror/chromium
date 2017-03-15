@@ -51,6 +51,7 @@
 #include "core/frame/ImageBitmap.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/Location.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
@@ -60,7 +61,6 @@
 #include "core/inspector/MainThreadDebugger.h"
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/FrameLoader.h"
-#include "core/loader/FrameLoaderClient.h"
 #include "platform/LayoutTestSupport.h"
 #include "wtf/Assertions.h"
 
@@ -284,8 +284,9 @@ void V8Window::postMessageMethodCustom(
   if (exceptionState.hadException())
     return;
 
-  window->postMessage(message.release(), transferables.messagePorts,
-                      targetOrigin, source, exceptionState);
+  message->unregisterMemoryAllocatedWithCurrentScriptContext();
+  window->postMessage(message.get(), transferables.messagePorts, targetOrigin,
+                      source, exceptionState);
 }
 
 void V8Window::openMethodCustom(
@@ -353,6 +354,14 @@ void V8Window::namedPropertyGetterCustom(
       v8SetReturnValueFast(info, child->domWindow(), window);
       return;
     }
+
+    // In addition to the above spec'ed case, we return the child window
+    // regardless of step 3 due to crbug.com/701489 for the time being.
+    // TODO(yukishiino): Makes iframe.name update the browsing context name
+    // appropriately and makes the new name available in the named access on
+    // window.  Then, removes the following two lines.
+    v8SetReturnValueFast(info, child->domWindow(), window);
+    return;
   }
 
   // This is a cross-origin interceptor. Check that the caller has access to the
@@ -377,12 +386,15 @@ void V8Window::namedPropertyGetterCustom(
 
   if (!hasNamedItem && hasIdItem &&
       !doc->containsMultipleElementsWithId(name)) {
+    UseCounter::count(doc, UseCounter::DOMClobberedVariableAccessed);
     v8SetReturnValueFast(info, doc->getElementById(name), window);
     return;
   }
 
   HTMLCollection* items = doc->windowNamedItems(name);
   if (!items->isEmpty()) {
+    UseCounter::count(doc, UseCounter::DOMClobberedVariableAccessed);
+
     // TODO(esprehn): Firefox doesn't return an HTMLCollection here if there's
     // multiple with the same name, but Chrome and Safari does. What's the
     // right behavior?

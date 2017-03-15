@@ -15,24 +15,23 @@
 
 class Profile;
 
+namespace content {
+class WebContents;
+}
+
 // Represents a permission for microphone/camera access.
 class MediaPermission {
  public:
   MediaPermission(ContentSettingsType content_type,
                   const GURL& requesting_origin,
                   const GURL& embedding_origin,
-                  Profile* profile);
+                  Profile* profile,
+                  content::WebContents* web_contents);
 
   // Returns the status of the permission. If the setting is
   // CONTENT_SETTING_BLOCK, |denial_reason| will output the reason for it being
   // blocked.
   ContentSetting GetPermissionStatus(
-      content::MediaStreamRequestResult* denial_reason) const;
-
-  // Returns the status of the permission as with GetPermissionStatus but also
-  // checks that the specified |device_id| is an available device.
-  ContentSetting GetPermissionStatusWithDeviceRequired(
-      const std::string& device_id,
       content::MediaStreamRequestResult* denial_reason) const;
 
  private:
@@ -43,6 +42,7 @@ class MediaPermission {
   const GURL embedding_origin_;
   const std::string device_id_;
   Profile* const profile_;
+  content::WebContents* const web_contents_;
 
   DISALLOW_COPY_AND_ASSIGN(MediaPermission);
 };

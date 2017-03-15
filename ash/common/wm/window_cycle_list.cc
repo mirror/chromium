@@ -13,6 +13,7 @@
 #include "ash/common/wm_window.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
+#include "ash/shell.h"
 #include "base/command_line.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
@@ -62,14 +63,14 @@ class LayerFillBackgroundPainter : public views::Background {
 
 // This view represents a single WmWindow by displaying a title and a thumbnail
 // of the window's contents.
-class WindowPreviewView : public views::View, public WmWindowObserver {
+class WindowPreviewView : public views::View, public aura::WindowObserver {
  public:
   explicit WindowPreviewView(WmWindow* window)
       : window_title_(new views::Label),
         preview_background_(new views::View),
         mirror_view_(window->CreateViewWithRecreatedLayers().release()),
         window_observer_(this) {
-    window_observer_.Add(window);
+    window_observer_.Add(window->aura_window());
     window_title_->SetText(window->GetTitle());
     window_title_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
     window_title_->SetEnabledColor(SK_ColorWHITE);
@@ -135,12 +136,12 @@ class WindowPreviewView : public views::View, public WmWindowObserver {
     node_data->SetName(window_title_->text());
   }
 
-  // WmWindowObserver:
-  void OnWindowDestroying(WmWindow* window) override {
+  // aura::WindowObserver:
+  void OnWindowDestroying(aura::Window* window) override {
     window_observer_.Remove(window);
   }
 
-  void OnWindowTitleChanged(WmWindow* window) override {
+  void OnWindowTitleChanged(aura::Window* window) override {
     window_title_->SetText(window->GetTitle());
   }
 
@@ -200,7 +201,7 @@ class WindowPreviewView : public views::View, public WmWindowObserver {
   // The view that actually renders a thumbnail version of the window.
   views::View* mirror_view_;
 
-  ScopedObserver<WmWindow, WmWindowObserver> window_observer_;
+  ScopedObserver<aura::Window, aura::WindowObserver> window_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(WindowPreviewView);
 };
@@ -386,7 +387,7 @@ WindowCycleList::WindowCycleList(const WindowList& windows)
     WmShell::Get()->mru_window_tracker()->SetIgnoreActivations(true);
 
   for (WmWindow* window : windows_)
-    window->AddObserver(this);
+    window->aura_window()->AddObserver(this);
 
   if (ShouldShowUi()) {
     if (g_disable_initial_delay) {
@@ -403,7 +404,7 @@ WindowCycleList::~WindowCycleList() {
     WmShell::Get()->mru_window_tracker()->SetIgnoreActivations(false);
 
   for (WmWindow* window : windows_)
-    window->RemoveObserver(this);
+    window->aura_window()->RemoveObserver(this);
 
   if (!windows_.empty() && user_did_accept_) {
     WmWindow* target_window = windows_[current_index_];
@@ -467,10 +468,11 @@ void WindowCycleList::DisableInitialDelayForTesting() {
   g_disable_initial_delay = true;
 }
 
-void WindowCycleList::OnWindowDestroying(WmWindow* window) {
+void WindowCycleList::OnWindowDestroying(aura::Window* window) {
   window->RemoveObserver(this);
 
-  WindowList::iterator i = std::find(windows_.begin(), windows_.end(), window);
+  WindowList::iterator i =
+      std::find(windows_.begin(), windows_.end(), WmWindow::Get(window));
   // TODO(oshima): Change this back to DCHECK once crbug.com/483491 is fixed.
   CHECK(i != windows_.end());
   int removed_index = static_cast<int>(i - windows_.begin());
@@ -483,7 +485,8 @@ void WindowCycleList::OnWindowDestroying(WmWindow* window) {
   if (cycle_view_) {
     WmWindow* new_target_window =
         windows_.empty() ? nullptr : windows_[current_index_];
-    cycle_view_->HandleWindowDestruction(window, new_target_window);
+    cycle_view_->HandleWindowDestruction(WmWindow::Get(window),
+                                         new_target_window);
     if (windows_.empty()) {
       // This deletes us.
       WmShell::Get()->window_cycle_controller()->CancelCycling();
@@ -530,7 +533,7 @@ void WindowCycleList::InitWindowCycleView() {
   params.name = "WindowCycleList (Alt+Tab)";
   // TODO(estade): make sure nothing untoward happens when the lock screen
   // or a system modal dialog is shown.
-  WmWindow* root_window = WmShell::Get()->GetRootWindowForNewWindows();
+  WmWindow* root_window = Shell::GetWmRootWindowForNewWindows();
   root_window->GetRootWindowController()->ConfigureWidgetInitParamsForContainer(
       widget, kShellWindowId_OverlayContainer, &params);
   gfx::Rect widget_rect = root_window->GetDisplayNearestWindow().bounds();

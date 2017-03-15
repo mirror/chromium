@@ -12,6 +12,8 @@
 #include "V8TestInterfacePartial.h"
 
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/IDLTypes.h"
+#include "bindings/core/v8/NativeValueTraitsImpl.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptState.h"
 #include "bindings/core/v8/V8DOMConfiguration.h"
@@ -46,7 +48,7 @@ static void partial4LongAttributeAttributeSetter(v8::Local<v8::Value> v8Value, c
   ExceptionState exceptionState(info.GetIsolate(), ExceptionState::SetterContext, "TestInterface", "partial4LongAttribute");
 
   // Prepare the value to be set.
-  int cppValue = toInt32(info.GetIsolate(), v8Value, NormalConversion, exceptionState);
+  int32_t cppValue = NativeValueTraits<IDLLong>::nativeValue(info.GetIsolate(), v8Value, exceptionState, NormalConversion);
   if (exceptionState.hadException())
     return;
 
@@ -61,7 +63,7 @@ static void partial4StaticLongAttributeAttributeSetter(v8::Local<v8::Value> v8Va
   ExceptionState exceptionState(info.GetIsolate(), ExceptionState::SetterContext, "TestInterface", "partial4StaticLongAttribute");
 
   // Prepare the value to be set.
-  int cppValue = toInt32(info.GetIsolate(), v8Value, NormalConversion, exceptionState);
+  int32_t cppValue = NativeValueTraits<IDLLong>::nativeValue(info.GetIsolate(), v8Value, exceptionState, NormalConversion);
   if (exceptionState.hadException())
     return;
 
@@ -375,8 +377,8 @@ void V8TestInterfacePartial::partial4StaticVoidMethodMethodCallback(const v8::Fu
 }
 
 const V8DOMConfiguration::MethodConfiguration V8TestInterfaceMethods[] = {
-    {"partialVoidTestEnumModulesArgMethod", V8TestInterfacePartial::partialVoidTestEnumModulesArgMethodMethodCallback, nullptr, 1, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder},
-    {"unscopableVoidMethod", V8TestInterfacePartial::unscopableVoidMethodMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder},
+    {"partialVoidTestEnumModulesArgMethod", V8TestInterfacePartial::partialVoidTestEnumModulesArgMethodMethodCallback, nullptr, 1, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess},
+    {"unscopableVoidMethod", V8TestInterfacePartial::unscopableVoidMethodMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess},
 };
 
 void V8TestInterfacePartial::installV8TestInterfaceTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
@@ -412,9 +414,9 @@ void V8TestInterfacePartial::installOriginTrialPartialFeature(v8::Isolate* isola
   V8DOMConfiguration::installAccessor(isolate, world, instance, prototype, interface, signature, accessorpartial4StaticLongAttributeConfiguration);
   const V8DOMConfiguration::ConstantConfiguration constantPartial4UnsignedShortConfiguration = {"PARTIAL4_UNSIGNED_SHORT", 4, 0, V8DOMConfiguration::ConstantTypeUnsignedShort};
   V8DOMConfiguration::installConstant(isolate, interface, prototype, constantPartial4UnsignedShortConfiguration);
-  const V8DOMConfiguration::MethodConfiguration methodPartial4StaticvoidmethodConfiguration = {"partial4StaticVoidMethod", V8TestInterfacePartial::partial4StaticVoidMethodMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnInterface, V8DOMConfiguration::CheckHolder};
+  const V8DOMConfiguration::MethodConfiguration methodPartial4StaticvoidmethodConfiguration = {"partial4StaticVoidMethod", V8TestInterfacePartial::partial4StaticVoidMethodMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnInterface, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess};
   V8DOMConfiguration::installMethod(isolate, world, instance, prototype, interface, signature, methodPartial4StaticvoidmethodConfiguration);
-  const V8DOMConfiguration::MethodConfiguration methodPartial4VoidmethodConfiguration = {"partial4VoidMethod", V8TestInterfacePartial::partial4VoidMethodMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder};
+  const V8DOMConfiguration::MethodConfiguration methodPartial4VoidmethodConfiguration = {"partial4VoidMethod", V8TestInterfacePartial::partial4VoidMethodMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess};
   V8DOMConfiguration::installMethod(isolate, world, instance, prototype, interface, signature, methodPartial4VoidmethodConfiguration);
 }
 
@@ -432,7 +434,9 @@ void V8TestInterfacePartial::installOriginTrialPartialFeature(ScriptState* scrip
 
 void V8TestInterfacePartial::preparePrototypeAndInterfaceObject(v8::Local<v8::Context> context, const DOMWrapperWorld& world, v8::Local<v8::Object> prototypeObject, v8::Local<v8::Function> interfaceObject, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
   V8TestInterface::preparePrototypeAndInterfaceObject(context, world, prototypeObject, interfaceObject, interfaceTemplate);
+
   v8::Isolate* isolate = context->GetIsolate();
+
   v8::Local<v8::Name> unscopablesSymbol(v8::Symbol::GetUnscopables(isolate));
   v8::Local<v8::Object> unscopables;
   if (v8CallBoolean(prototypeObject->HasOwnProperty(context, unscopablesSymbol)))

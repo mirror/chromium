@@ -382,6 +382,17 @@ void RenderFrameDevToolsAgentHost::OnBeforeNavigation(
 }
 
 // static
+void RenderFrameDevToolsAgentHost::OnFailedNavigation(
+    RenderFrameHost* host,
+    const CommonNavigationParams& common_params,
+    const BeginNavigationParams& begin_params,
+    net::Error error_code) {
+  RenderFrameDevToolsAgentHost* agent_host = FindAgentHost(host);
+  if (agent_host)
+    agent_host->OnFailedNavigation(common_params, begin_params, error_code);
+}
+
+// static
 std::unique_ptr<NavigationThrottle>
 RenderFrameDevToolsAgentHost::CreateThrottleForNavigation(
     NavigationHandle* navigation_handle) {
@@ -504,12 +515,12 @@ WebContents* RenderFrameDevToolsAgentHost::GetWebContents() {
 void RenderFrameDevToolsAgentHost::AttachSession(DevToolsSession* session) {
   session->SetFallThroughForNotFound(true);
   session->SetRenderFrameHost(handlers_frame_host_);
-  if (!frame_tree_node_->parent()) {
-    session->AddHandler(base::WrapUnique(new protocol::EmulationHandler()));
+  if (frame_tree_node_ && !frame_tree_node_->parent()) {
     session->AddHandler(base::WrapUnique(new protocol::PageHandler()));
     session->AddHandler(base::WrapUnique(new protocol::SecurityHandler()));
   }
   session->AddHandler(base::WrapUnique(new protocol::DOMHandler()));
+  session->AddHandler(base::WrapUnique(new protocol::EmulationHandler()));
   session->AddHandler(base::WrapUnique(new protocol::InputHandler()));
   session->AddHandler(base::WrapUnique(new protocol::InspectorHandler()));
   session->AddHandler(base::WrapUnique(new protocol::IOHandler(
@@ -521,7 +532,7 @@ void RenderFrameDevToolsAgentHost::AttachSession(DevToolsSession* session) {
   session->AddHandler(base::WrapUnique(new protocol::TargetHandler()));
   session->AddHandler(base::WrapUnique(new protocol::TracingHandler(
       protocol::TracingHandler::Renderer,
-      frame_tree_node_->frame_tree_node_id(),
+      frame_tree_node_ ? frame_tree_node_->frame_tree_node_id() : 0,
       GetIOContext())));
 
   if (current_)
@@ -638,18 +649,17 @@ void RenderFrameDevToolsAgentHost::DidFinishNavigation(
   scoped_refptr<RenderFrameDevToolsAgentHost> protect(this);
 
   if (!IsBrowserSideNavigationEnabled()) {
-    if (navigation_handle->IsErrorPage()) {
-      if (pending_ &&
-          pending_->host() == navigation_handle->GetRenderFrameHost()) {
-        DiscardPending();
-      }
-    } else if (navigation_handle->HasCommitted()) {
+    if (navigation_handle->HasCommitted() &&
+        !navigation_handle->IsErrorPage()) {
       if (pending_ &&
           pending_->host() == navigation_handle->GetRenderFrameHost()) {
         CommitPending();
       }
       if (session())
         protocol::TargetHandler::FromSession(session())->UpdateServiceWorkers();
+    } else if (pending_ && pending_->host()->GetFrameTreeNodeId() ==
+                               navigation_handle->GetFrameTreeNodeId()) {
+      DiscardPending();
     }
     DCHECK(CheckConsistency());
     return;
@@ -718,6 +728,22 @@ void RenderFrameDevToolsAgentHost::AboutToNavigate(
   navigating_handles_.insert(navigation_handle);
   current_->Suspend();
   DCHECK(CheckConsistency());
+}
+
+void RenderFrameDevToolsAgentHost::OnFailedNavigation(
+    const CommonNavigationParams& common_params,
+    const BeginNavigationParams& begin_params,
+    net::Error error_code) {
+  DCHECK(IsBrowserSideNavigationEnabled());
+  if (!session())
+    return;
+
+  protocol::NetworkHandler* handler =
+      protocol::NetworkHandler::FromSession(session());
+  if (!handler)
+    return;
+
+  handler->NavigationFailed(common_params, begin_params, error_code);
 }
 
 void RenderFrameDevToolsAgentHost::RenderFrameHostChanged(

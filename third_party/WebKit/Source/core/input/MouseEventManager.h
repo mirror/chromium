@@ -56,8 +56,10 @@ class CORE_EXPORT MouseEventManager final
       const AtomicString& eventType,
       const WebMouseEvent&);
 
-  WebInputEventResult dispatchMouseClickIfNeeded(
-      const MouseEventWithHitTestResults&);
+  WebInputEventResult dispatchMouseClickIfNeeded(Node* target,
+                                                 const WebMouseEvent&,
+                                                 const String& canvasRegionId,
+                                                 Node* targetWithoutCapture);
 
   WebInputEventResult dispatchDragSrcEvent(const AtomicString& eventType,
                                            const WebMouseEvent&);

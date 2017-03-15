@@ -12,7 +12,10 @@
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
 #include "ash/public/cpp/shell_window_ids.h"
+#include "ash/shell.h"
 #include "base/bind.h"
+#include "ui/aura/window.h"
+#include "ui/wm/public/activation_client.h"
 
 namespace ash {
 
@@ -42,7 +45,7 @@ MruWindowTracker::WindowList BuildWindowListInternal(
     const std::list<WmWindow*>* mru_windows,
     const CanActivateWindowPredicate& should_include_window_predicate) {
   MruWindowTracker::WindowList windows;
-  WmWindow* active_root = WmShell::Get()->GetRootWindowForNewWindows();
+  WmWindow* active_root = Shell::GetWmRootWindowForNewWindows();
   for (WmWindow* window : WmShell::Get()->GetAllRootWindows()) {
     if (window == active_root)
       continue;
@@ -98,13 +101,13 @@ MruWindowTracker::WindowList BuildWindowListInternal(
 // MruWindowTracker, public:
 
 MruWindowTracker::MruWindowTracker() : ignore_window_activations_(false) {
-  WmShell::Get()->AddActivationObserver(this);
+  Shell::GetInstance()->activation_client()->AddObserver(this);
 }
 
 MruWindowTracker::~MruWindowTracker() {
-  WmShell::Get()->RemoveActivationObserver(this);
+  Shell::GetInstance()->activation_client()->RemoveObserver(this);
   for (WmWindow* window : mru_windows_)
-    window->RemoveObserver(this);
+    window->aura_window()->RemoveObserver(this);
 }
 
 MruWindowTracker::WindowList MruWindowTracker::BuildMruWindowList() const {
@@ -137,23 +140,24 @@ void MruWindowTracker::SetActiveWindow(WmWindow* active_window) {
       std::find(mru_windows_.begin(), mru_windows_.end(), active_window);
   // Observe all newly tracked windows.
   if (iter == mru_windows_.end())
-    active_window->AddObserver(this);
+    active_window->aura_window()->AddObserver(this);
   else
     mru_windows_.erase(iter);
   mru_windows_.push_front(active_window);
 }
 
-void MruWindowTracker::OnWindowActivated(WmWindow* gained_active,
-                                         WmWindow* lost_active) {
+void MruWindowTracker::OnWindowActivated(ActivationReason reason,
+                                         aura::Window* gained_active,
+                                         aura::Window* lost_active) {
   if (!ignore_window_activations_)
-    SetActiveWindow(gained_active);
+    SetActiveWindow(WmWindow::Get(gained_active));
 }
 
-void MruWindowTracker::OnWindowDestroyed(WmWindow* window) {
+void MruWindowTracker::OnWindowDestroyed(aura::Window* window) {
   // It's possible for OnWindowActivated() to be called after
   // OnWindowDestroying(). This means we need to override OnWindowDestroyed()
   // else we may end up with a deleted window in |mru_windows_|.
-  mru_windows_.remove(window);
+  mru_windows_.remove(WmWindow::Get(window));
   window->RemoveObserver(this);
 }
 

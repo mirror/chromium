@@ -60,7 +60,7 @@ Elements.PropertiesWidget = class extends UI.ThrottledWidget {
    */
   doUpdate() {
     if (this._lastRequestedNode) {
-      this._lastRequestedNode.target().runtimeAgent().releaseObjectGroup(Elements.PropertiesWidget._objectGroupName);
+      this._lastRequestedNode.target().runtimeModel.releaseObjectGroup(Elements.PropertiesWidget._objectGroupName);
       delete this._lastRequestedNode;
     }
 
@@ -137,7 +137,7 @@ Elements.PropertiesWidget = class extends UI.ThrottledWidget {
         var property = properties[i].value;
         var title = property.description;
         title = title.replace(/Prototype$/, '');
-        var section = new Components.ObjectPropertiesSection(property, title);
+        var section = new ObjectUI.ObjectPropertiesSection(property, title);
         section.element.classList.add('properties-widget-section');
         this.sections.push(section);
         this.element.appendChild(section.element);

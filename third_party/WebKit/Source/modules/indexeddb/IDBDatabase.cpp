@@ -93,16 +93,19 @@ const char IDBDatabase::databaseClosedErrorMessage[] =
 
 IDBDatabase* IDBDatabase::create(ExecutionContext* context,
                                  std::unique_ptr<WebIDBDatabase> database,
-                                 IDBDatabaseCallbacks* callbacks) {
-  return new IDBDatabase(context, std::move(database), callbacks);
+                                 IDBDatabaseCallbacks* callbacks,
+                                 v8::Isolate* isolate) {
+  return new IDBDatabase(context, std::move(database), callbacks, isolate);
 }
 
 IDBDatabase::IDBDatabase(ExecutionContext* context,
                          std::unique_ptr<WebIDBDatabase> backend,
-                         IDBDatabaseCallbacks* callbacks)
+                         IDBDatabaseCallbacks* callbacks,
+                         v8::Isolate* isolate)
     : ContextLifecycleObserver(context),
       m_backend(std::move(backend)),
-      m_databaseCallbacks(callbacks) {
+      m_databaseCallbacks(callbacks),
+      m_isolate(isolate) {
   m_databaseCallbacks->connect(this);
 }
 
@@ -155,7 +158,7 @@ void IDBDatabase::transactionCreated(IDBTransaction* transaction) {
 void IDBDatabase::transactionFinished(const IDBTransaction* transaction) {
   DCHECK(transaction);
   DCHECK(m_transactions.contains(transaction->id()));
-  DCHECK_EQ(m_transactions.get(transaction->id()), transaction);
+  DCHECK_EQ(m_transactions.at(transaction->id()), transaction);
   m_transactions.erase(transaction->id());
 
   if (transaction->isVersionChange()) {
@@ -169,12 +172,12 @@ void IDBDatabase::transactionFinished(const IDBTransaction* transaction) {
 
 void IDBDatabase::onAbort(int64_t transactionId, DOMException* error) {
   DCHECK(m_transactions.contains(transactionId));
-  m_transactions.get(transactionId)->onAbort(error);
+  m_transactions.at(transactionId)->onAbort(error);
 }
 
 void IDBDatabase::onComplete(int64_t transactionId) {
   DCHECK(m_transactions.contains(transactionId));
-  m_transactions.get(transactionId)->onComplete();
+  m_transactions.at(transactionId)->onComplete();
 }
 
 void IDBDatabase::onChanges(
@@ -193,7 +196,7 @@ void IDBDatabase::onChanges(
         const std::pair<int64_t, std::vector<int64_t>>& obs_txn = it->second;
         HashSet<String> stores;
         for (int64_t store_id : obs_txn.second) {
-          stores.insert(m_metadata.objectStores.get(store_id)->name);
+          stores.insert(m_metadata.objectStores.at(store_id)->name);
         }
 
         transaction = IDBTransaction::createObserver(
@@ -202,7 +205,7 @@ void IDBDatabase::onChanges(
 
       observer->callback()->call(
           observer, IDBObserverChanges::create(this, transaction, observations,
-                                               map_entry.second));
+                                               map_entry.second, m_isolate));
       if (transaction)
         transaction->setActive(false);
     }
@@ -539,7 +542,7 @@ void IDBDatabase::renameObjectStore(int64_t objectStoreId,
                                newName);
 
   IDBObjectStoreMetadata* objectStoreMetadata =
-      m_metadata.objectStores.get(objectStoreId);
+      m_metadata.objectStores.at(objectStoreId);
   m_versionChangeTransaction->objectStoreRenamed(objectStoreMetadata->name,
                                                  newName);
   objectStoreMetadata->name = newName;

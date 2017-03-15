@@ -14,6 +14,7 @@
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_f.h"
 #include "ui/gfx/geometry/size.h"
+#include "ui/gfx/geometry/vector2d.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/gfx/overlay_transform.h"
 #include "ui/gfx/swap_result.h"
@@ -28,6 +29,7 @@ class VSyncProvider;
 
 namespace ui {
 struct CARendererLayerParams;
+struct DCRendererLayerParams;
 }
 
 namespace gl {
@@ -157,8 +159,10 @@ class GL_EXPORT GLSurface : public base::RefCounted<GLSurface> {
   // with this GLSurface.
   virtual unsigned long GetCompatibilityKey();
 
-  // Get the GL pixel format of the surface, if available.
-  virtual GLSurfaceFormat GetFormat();
+  // Get the GL pixel format of the surface. Must be implemented in a
+  // subclass, though it's ok to just "return GLSurfaceFormat()" if
+  // the default is appropriate.
+  virtual GLSurfaceFormat GetFormat() = 0;
 
   // Get access to a helper providing time of recent refresh and period
   // of screen refresh. If unavailable, returns NULL.
@@ -195,6 +199,8 @@ class GL_EXPORT GLSurface : public base::RefCounted<GLSurface> {
   virtual void ScheduleCALayerInUseQuery(
       std::vector<CALayerInUseQuery> queries);
 
+  virtual bool ScheduleDCLayer(const ui::DCRendererLayerParams& params);
+
   virtual bool IsSurfaceless() const;
 
   virtual bool FlipsVertically() const;
@@ -202,6 +208,15 @@ class GL_EXPORT GLSurface : public base::RefCounted<GLSurface> {
   // Returns true if SwapBuffers or PostSubBuffers causes a flip, such that
   // the next buffer may be 2 frames old.
   virtual bool BuffersFlipped() const;
+
+  virtual bool SupportsSetDrawRectangle() const;
+
+  // Set the rectangle that will be drawn into on the surface.
+  virtual bool SetDrawRectangle(const gfx::Rect& rect);
+
+  // This is the amount by which the scissor and viewport rectangles should be
+  // offset.
+  virtual gfx::Vector2d GetDrawOffset() const;
 
   static GLSurface* GetCurrent();
 
@@ -270,9 +285,14 @@ class GL_EXPORT GLSurfaceAdapter : public GLSurface {
                             GLImage* image,
                             const gfx::Rect& bounds_rect,
                             const gfx::RectF& crop_rect) override;
+  bool ScheduleDCLayer(const ui::DCRendererLayerParams& params) override;
   bool IsSurfaceless() const override;
   bool FlipsVertically() const override;
   bool BuffersFlipped() const override;
+  bool SupportsSetDrawRectangle() const override;
+  bool SetDrawRectangle(const gfx::Rect& rect) override;
+  gfx::Vector2d GetDrawOffset() const override;
+  void OnSetSwapInterval(int interval) override;
 
   GLSurface* surface() const { return surface_.get(); }
 

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef ASH_COMMON_SYSTEM_CHROMEOS_NETWORK_NETWORK_LIST_MD_H_
-#define ASH_COMMON_SYSTEM_CHROMEOS_NETWORK_NETWORK_LIST_MD_H_
+#ifndef ASH_COMMON_SYSTEM_CHROMEOS_NETWORK_NETWORK_LIST_H_
+#define ASH_COMMON_SYSTEM_CHROMEOS_NETWORK_NETWORK_LIST_H_
 
 #include <map>
 #include <memory>
@@ -32,18 +32,17 @@ class NetworkListDelegate;
 
 // A list of available networks of a given type. This class is used for all
 // network types except VPNs. For VPNs, see the |VPNList| class.
-class NetworkListViewMd : public NetworkListViewBase,
-                          public network_icon::AnimationObserver {
+class NetworkListView : public NetworkListViewBase,
+                        public network_icon::AnimationObserver {
  public:
   class SectionHeaderRowView;
 
-  explicit NetworkListViewMd(NetworkListDelegate* delegate);
-  ~NetworkListViewMd() override;
+  explicit NetworkListView(NetworkListDelegate* delegate);
+  ~NetworkListView() override;
 
   // NetworkListViewBase:
   void Update() override;
-  bool IsNetworkEntry(views::View* view,
-                      std::string* service_path) const override;
+  bool IsNetworkEntry(views::View* view, std::string* guid) const override;
 
  private:
   // Clears |network_list_| and adds to it |networks| that match |delegate_|'s
@@ -60,17 +59,17 @@ class NetworkListViewMd : public NetworkListViewBase,
   void OrderNetworks();
 
   // Refreshes a list of child views, updates |network_map_| and
-  // |service_path_map_| and performs layout making sure selected view if any is
+  // |network_guid_map_| and performs layout making sure selected view if any is
   // scrolled into view.
   void UpdateNetworkListInternal();
 
   // Adds new or updates existing child views including header row and messages.
-  // Returns a set of service paths for the added network connections.
+  // Returns a set of guids for the added network connections.
   std::unique_ptr<std::set<std::string>> UpdateNetworkListEntries();
 
   // Adds or updates child views representing the network connections when
   // |is_wifi| is matching the attribute of a network connection starting at
-  // |child_index|. Returns a set of service paths for the added network
+  // |child_index|. Returns a set of guids for the added network
   // connections.
   std::unique_ptr<std::set<std::string>> UpdateNetworkChildren(
       NetworkInfo::Type type,
@@ -109,8 +108,10 @@ class NetworkListViewMd : public NetworkListViewBase,
   views::Label* no_wifi_networks_view_;
   views::Label* no_cellular_networks_view_;
   SectionHeaderRowView* cellular_header_view_;
+  SectionHeaderRowView* tether_header_view_;
   SectionHeaderRowView* wifi_header_view_;
   views::Separator* cellular_separator_view_;
+  views::Separator* tether_separator_view_;
   views::Separator* wifi_separator_view_;
 
   // An owned list of network info.
@@ -119,13 +120,13 @@ class NetworkListViewMd : public NetworkListViewBase,
   using NetworkMap = std::map<views::View*, std::string>;
   NetworkMap network_map_;
 
-  // A map of network service paths to their view.
-  typedef std::map<std::string, views::View*> ServicePathMap;
-  ServicePathMap service_path_map_;
+  // A map of network guids to their view.
+  typedef std::map<std::string, views::View*> NetworkGuidMap;
+  NetworkGuidMap network_guid_map_;
 
-  DISALLOW_COPY_AND_ASSIGN(NetworkListViewMd);
+  DISALLOW_COPY_AND_ASSIGN(NetworkListView);
 };
 
 }  // namespace ash
 
-#endif  // ASH_COMMON_SYSTEM_CHROMEOS_NETWORK_NETWORK_LIST_MD_H_
+#endif  // ASH_COMMON_SYSTEM_CHROMEOS_NETWORK_NETWORK_LIST_H_

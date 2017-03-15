@@ -32,12 +32,12 @@ bool PluginsEnterpriseSettingEnabled(
 
 FlashPermissionContext::FlashPermissionContext(Profile* profile)
     : PermissionContextBase(profile,
-                            content::PermissionType::FLASH,
                             CONTENT_SETTINGS_TYPE_PLUGINS) {}
 
 FlashPermissionContext::~FlashPermissionContext() {}
 
 ContentSetting FlashPermissionContext::GetPermissionStatusInternal(
+    content::RenderFrameHost* render_frame_host,
     const GURL& requesting_origin,
     const GURL& embedding_origin) const {
   HostContentSettingsMap* host_content_settings_map =

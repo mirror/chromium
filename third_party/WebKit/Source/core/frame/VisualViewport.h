@@ -31,6 +31,7 @@
 #ifndef VisualViewport_h
 #define VisualViewport_h
 
+#include <memory>
 #include "core/CoreExport.h"
 #include "core/events/Event.h"
 #include "platform/geometry/FloatRect.h"
@@ -40,7 +41,6 @@
 #include "platform/scroll/ScrollableArea.h"
 #include "public/platform/WebScrollbar.h"
 #include "public/platform/WebSize.h"
-#include <memory>
 
 namespace blink {
 class WebScrollbarLayer;
@@ -49,12 +49,12 @@ class WebLayer;
 
 namespace blink {
 
-class FrameHost;
 class GraphicsContext;
 class GraphicsLayer;
 class IntRect;
 class IntSize;
 class LocalFrame;
+class Page;
 
 // Represents the visual viewport the user is currently seeing the page through.
 // This class corresponds to the InnerViewport on the compositor. It is a
@@ -62,6 +62,25 @@ class LocalFrame;
 // mechanisms. Its contents is the page's main FrameView, which corresponds to
 // the outer viewport. The inner viewport is always contained in the outer
 // viewport and can pan within it.
+//
+// When attached, the tree will look like this:
+//
+// VV::m_rootTransformLayer
+//  +- VV::m_innerViewportContainerLayer
+//     +- VV::m_overscrollElasticityLayer
+//     |   +- VV::m_pageScaleLayer
+//     |       +- VV::m_innerViewportScrollLayer
+//     |           +-- PLC::m_overflowControlsHostLayer
+//     |               +-- PLC::m_containerLayer (fixed pos container)
+//     |                   +-- PLC::m_scrollLayer
+//     |                       +-- PLC::m_rootContentLayer
+//     |                           +-- LayoutView CompositedLayerMapping layers
+//     +- PageOverlay for InspectorOverlay
+//     +- PageOverlay for ColorOverlay
+//     +- PLC::m_layerForHorizontalScrollbar
+//     +- PLC::m_layerForVerticalScrollbar
+//     +- PLC::m_layerForScrollCorner (non-overlay only)
+//
 class CORE_EXPORT VisualViewport final
     : public GarbageCollectedFinalized<VisualViewport>,
       public GraphicsLayerClient,
@@ -69,14 +88,13 @@ class CORE_EXPORT VisualViewport final
   USING_GARBAGE_COLLECTED_MIXIN(VisualViewport);
 
  public:
-  static VisualViewport* create(FrameHost& host) {
-    return new VisualViewport(host);
-  }
+  static VisualViewport* create(Page& host) { return new VisualViewport(host); }
   ~VisualViewport() override;
 
   DECLARE_VIRTUAL_TRACE();
 
-  void attachToLayerTree(GraphicsLayer*);
+  void createLayerTree();
+  void attachLayerTree(GraphicsLayer*);
 
   GraphicsLayer* rootGraphicsLayer() { return m_rootTransformLayer.get(); }
   GraphicsLayer* containerLayer() {
@@ -168,10 +186,6 @@ class CORE_EXPORT VisualViewport final
   void setScrollOffset(const ScrollOffset&,
                        ScrollType,
                        ScrollBehavior = ScrollBehaviorInstant) override;
-  LayoutRect visualRectForScrollbarParts() const override {
-    ASSERT_NOT_REACHED();
-    return LayoutRect();
-  }
   bool isActive() const override { return false; }
   int scrollSize(ScrollbarOrientation) const override;
   bool isScrollCornerVisible() const override { return false; }
@@ -195,7 +209,7 @@ class CORE_EXPORT VisualViewport final
   GraphicsLayer* layerForScrolling() const override;
   GraphicsLayer* layerForHorizontalScrollbar() const override;
   GraphicsLayer* layerForVerticalScrollbar() const override;
-  Widget* getWidget() override;
+  FrameViewBase* getFrameViewBase() override;
   CompositorAnimationHost* compositorAnimationHost() const override;
   CompositorAnimationTimeline* compositorAnimationTimeline() const override;
   IntRect visibleContentRect(
@@ -219,7 +233,7 @@ class CORE_EXPORT VisualViewport final
   bool shouldDisableDesktopWorkarounds() const;
 
  private:
-  explicit VisualViewport(FrameHost&);
+  explicit VisualViewport(Page&);
 
   bool didSetScaleOrLocation(float scale, const FloatPoint& location);
 
@@ -248,12 +262,12 @@ class CORE_EXPORT VisualViewport final
 
   LocalFrame* mainFrame() const;
 
-  FrameHost& frameHost() const {
-    ASSERT(m_frameHost);
-    return *m_frameHost;
+  Page& page() const {
+    DCHECK(m_page);
+    return *m_page;
   }
 
-  Member<FrameHost> m_frameHost;
+  Member<Page> m_page;
   std::unique_ptr<GraphicsLayer> m_rootTransformLayer;
   std::unique_ptr<GraphicsLayer> m_innerViewportContainerLayer;
   std::unique_ptr<GraphicsLayer> m_overscrollElasticityLayer;

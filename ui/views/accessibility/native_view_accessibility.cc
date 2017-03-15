@@ -4,6 +4,7 @@
 
 #include "ui/views/accessibility/native_view_accessibility.h"
 
+#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "ui/events/event_utils.h"
 #include "ui/gfx/native_widget_types.h"
@@ -15,8 +16,11 @@ namespace views {
 
 #if !defined(PLATFORM_HAS_NATIVE_VIEW_ACCESSIBILITY_IMPL)
 // static
-NativeViewAccessibility* NativeViewAccessibility::Create(View* view) {
-  return new NativeViewAccessibility(view);
+std::unique_ptr<NativeViewAccessibility> NativeViewAccessibility::Create(
+    View* view) {
+  // Use WrapUnique over MakeUnique to invoke the protected constructor.
+  return base::WrapUnique<NativeViewAccessibility>(
+      new NativeViewAccessibility(view));
 }
 #endif  // !defined(PLATFORM_HAS_NATIVE_VIEW_ACCESSIBILITY_IMPL)
 
@@ -36,10 +40,6 @@ NativeViewAccessibility::~NativeViewAccessibility() {
 
 gfx::NativeViewAccessible NativeViewAccessibility::GetNativeObject() {
   return ax_node_ ? ax_node_->GetNativeViewAccessible() : nullptr;
-}
-
-void NativeViewAccessibility::Destroy() {
-  delete this;
 }
 
 void NativeViewAccessibility::NotifyAccessibilityEvent(ui::AXEvent event_type) {
@@ -126,12 +126,6 @@ gfx::NativeWindow NativeViewAccessibility::GetTopLevelWidget() {
 gfx::NativeViewAccessible NativeViewAccessibility::GetParent() {
   if (view_->parent())
     return view_->parent()->GetNativeViewAccessible();
-
-  // TODO: move this to NativeViewAccessibilityMac.
-#if defined(OS_MACOSX)
-  if (view_->GetWidget())
-    return view_->GetWidget()->GetNativeView();
-#endif
 
   if (parent_widget_)
     return parent_widget_->GetRootView()->GetNativeViewAccessible();
@@ -251,7 +245,9 @@ void NativeViewAccessibility::PopulateChildWidgetVector(
     std::vector<Widget*>* result_child_widgets) {
   // Only attach child widgets to the root view.
   Widget* widget = view_->GetWidget();
-  if (!widget || widget->GetRootView() != view_)
+  // Note that during window close, a Widget may exist in a state where it has
+  // no NativeView, but hasn't yet torn down its view hierarchy.
+  if (!widget || !widget->GetNativeView() || widget->GetRootView() != view_)
     return;
 
   std::set<Widget*> child_widgets;

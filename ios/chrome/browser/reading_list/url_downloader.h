@@ -48,12 +48,9 @@ class URLDownloader : public net::URLFetcherDelegate,
     DOWNLOAD_SUCCESS,
     // The URL was already available offline. No action was done.
     DOWNLOAD_EXISTS,
-    // The URL could not be downloaded because of a temporary error. Client may
-    // want to try again later.
-    ERROR_RETRY,
-    // The URL could not be dowmloaded and URLDownloader thinks a retry would
-    // end with the same result. There is no need to retry.
-    ERROR_PERMANENT
+    // The URL could not be downloaded because of an error. Client may want to
+    // try again later.
+    ERROR,
   };
 
   // A completion callback that takes a GURL and a bool indicating the
@@ -71,6 +68,7 @@ class URLDownloader : public net::URLFetcherDelegate,
                                                  const GURL&,
                                                  SuccessState,
                                                  const base::FilePath&,
+                                                 int64_t size,
                                                  const std::string&)>;
 
   // Create a URL downloader with completion callbacks for downloads and
@@ -184,6 +182,7 @@ class URLDownloader : public net::URLFetcherDelegate,
   base::FilePath base_directory_;
   GURL original_url_;
   GURL distilled_url_;
+  int64_t saved_size_;
   std::string mime_type_;
   // Fetcher used to redownload the document and save it in the sandbox.
   std::unique_ptr<net::URLFetcher> fetcher_;

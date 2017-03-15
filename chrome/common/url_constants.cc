@@ -209,7 +209,6 @@ const char kChromeUIHangHost[] = "hang";
 const char kChromeUIHangUIHost[] = "uithreadhang";
 const char kChromeUIHelpFrameHost[] = "help-frame";
 const char kChromeUIHelpHost[] = "help";
-const char kChromeUIHistoryHost[] = "history";
 const char kChromeUIHistoryFrameHost[] = "history-frame";
 const char kChromeUIIdentityInternalsHost[] = "identity-internals";
 const char kChromeUIInspectHost[] = "inspect";
@@ -290,7 +289,7 @@ const char kChromeUISnippetsInternalsHost[] = "snippets-internals";
 const char kChromeUIWebApksHost[] = "webapks";
 #endif
 
-#if defined(ENABLE_WEBVR)
+#if BUILDFLAG(ENABLE_WEBVR)
 const char kChromeUIVrShellUIHost[] = "vr-shell-ui";
 #endif
 
@@ -352,20 +351,21 @@ const char kChromeUICastHost[] = "cast";
 #endif
 #endif
 
-// Option sub pages.
-// Add sub page paths to kChromeSettingsSubPages in builtin_provider.cc to be
-// listed by the built-in AutocompleteProvider.
+// Settings sub pages.
+
+// NOTE: Add sub page paths to kChromeSettingsSubPages in
+// chrome_autocomplete_provider_client.cc to be listed by the built-in
+// AutocompleteProvider.
+
 const char kAutofillSubPage[] = "autofill";
 const char kClearBrowserDataSubPage[] = "clearBrowserData";
 const char kContentSettingsSubPage[] = "content";
-const char kCreateProfileSubPage[] = "createProfile";
 const char kDeprecatedOptionsContentSettingsExceptionsSubPage[] =
     "contentExceptions";
-const char kExtensionsSubPage[] = "extensions";
+const char kDeprecatedExtensionsSubPage[] = "extensions";
 const char kHandlerSettingsSubPage[] = "handlers";
 const char kImportDataSubPage[] = "importData";
 const char kLanguageOptionsSubPage[] = "languages";
-const char kManageProfileSubPage[] = "manageProfile";
 const char kPasswordManagerSubPage[] = "passwords";
 const char kResetProfileSettingsSubPage[] = "resetProfileSettings";
 const char kSearchEnginesSubPage[] = "searchEngines";
@@ -375,11 +375,17 @@ const char kTriggeredResetProfileSettingsSubPage[] =
     "triggeredResetProfileSettings";
 #if defined(OS_CHROMEOS)
 const char kAccessibilitySubPage[] = "accessibility";
-const char kBluetoothSubPage[] = "bluetooth";
+const char kBluetoothSubPage[] = "bluetoothDevices";
 const char kDateTimeSubPage[] = "dateTime";
 const char kDeprecatedOptionsSearchSubPage[] = "search";
-const char kInternetOptionsSubPage[] = "internet";
-const char kPowerOptionsSubPage[] = "power-overlay";
+const char kDisplaySubPage[] = "display";
+const char kInternetSubPage[] = "internet";
+const char kNetworkDetailSubPage[] = "networkDetail";
+const char kPowerSubPage[] = "power";
+const char kStylusSubPage[] = "stylus";
+#else
+const char kCreateProfileSubPage[] = "createProfile";
+const char kManageProfileSubPage[] = "manageProfile";
 #endif
 
 // Extension sub pages.
@@ -392,6 +398,9 @@ const char kSyncGoogleDashboardURL[] =
 
 const char kGoogleAccountActivityControlsURL[] =
     "https://myaccount.google.com/activitycontrols/search";
+
+const char kContentSettingsExceptionsLearnMoreURL[] =
+    "https://support.google.com/chrome/?p=settings_manage_exceptions";
 
 const char kPasswordManagerLearnMoreURL[] =
 #if defined(OS_CHROMEOS)
@@ -545,13 +554,13 @@ const char kChromiumProjectURL[] = "https://www.chromium.org/";
 const char kLearnMoreReportingURL[] =
     "https://support.google.com/chrome/?p=ui_usagestat";
 
-#if BUILDFLAG(ENABLE_PLUGIN_INSTALLATION)
+#if BUILDFLAG(ENABLE_PLUGINS)
 const char kOutdatedPluginLearnMoreURL[] =
     "https://support.google.com/chrome/?p=ib_outdated_plugin";
-#endif
 
 const char kBlockedPluginLearnMoreURL[] =
     "https://support.google.com/chrome/?p=ib_blocked_plugin";
+#endif
 
 const char kHotwordLearnMoreURL[] =
     "https://support.google.com/chrome/?p=ui_hotword_search";
@@ -634,7 +643,6 @@ const char* const kChromeHostURLs[] = {
     kChromeUIDeviceLogHost,
     kChromeUIFlagsHost,
     kChromeUIGCMInternalsHost,
-    kChromeUIHistoryHost,
     kChromeUIInvalidationsHost,
     kChromeUILocalStateHost,
     kChromeUINetExportHost,
@@ -665,6 +673,7 @@ const char* const kChromeHostURLs[] = {
     content::kChromeUIDinoHost,
     content::kChromeUIGpuHost,
     content::kChromeUIHistogramHost,
+    content::kChromeUIHistoryHost,
     content::kChromeUIIndexedDBInternalsHost,
     content::kChromeUIMediaInternalsHost,
     content::kChromeUINetworkErrorHost,
@@ -737,6 +746,7 @@ const char* const kChromeHostURLs[] = {
 const size_t kNumberOfChromeHostURLs = arraysize(kChromeHostURLs);
 
 const char* const kChromeDebugURLs[] = {content::kChromeUIBadCastCrashURL,
+                                        content::kChromeUIBrowserCrashURL,
                                         content::kChromeUICrashURL,
                                         content::kChromeUIDumpURL,
                                         content::kChromeUIKillURL,

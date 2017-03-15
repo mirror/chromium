@@ -29,6 +29,7 @@
 #include "chrome/browser/browsing_data/browsing_data_helper.h"
 #include "chrome/browser/browsing_data/browsing_data_remover.h"
 #include "chrome/browser/browsing_data/browsing_data_remover_factory.h"
+#include "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/engagement/important_sites_util.h"
 #include "chrome/browser/history/web_history_service_factory.h"
@@ -132,6 +133,15 @@ PrefService* GetPrefService() {
   return GetOriginalProfile()->GetPrefs();
 }
 
+browsing_data::ClearBrowsingDataTab ToTabEnum(jint clear_browsing_data_tab) {
+  DCHECK_GE(clear_browsing_data_tab, 0);
+  DCHECK_LT(clear_browsing_data_tab,
+            static_cast<int>(browsing_data::ClearBrowsingDataTab::NUM_TYPES));
+
+  return static_cast<browsing_data::ClearBrowsingDataTab>(
+      clear_browsing_data_tab);
+}
+
 }  // namespace
 
 // ----------------------------------------------------------------------------
@@ -209,9 +219,16 @@ static jboolean GetAcceptCookiesEnabled(JNIEnv* env,
   return GetBooleanForContentSetting(CONTENT_SETTINGS_TYPE_COOKIES);
 }
 
-static jboolean GetAcceptCookiesManaged(JNIEnv* env,
-                                        const JavaParamRef<jobject>& obj) {
-  return IsContentSettingManaged(CONTENT_SETTINGS_TYPE_COOKIES);
+static jboolean GetAcceptCookiesUserModifiable(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj) {
+  return IsContentSettingUserModifiable(CONTENT_SETTINGS_TYPE_COOKIES);
+}
+
+static jboolean GetAcceptCookiesManagedByCustodian(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj) {
+  return IsContentSettingManagedByCustodian(CONTENT_SETTINGS_TYPE_COOKIES);
 }
 
 static jboolean GetAutoplayEnabled(JNIEnv* env,
@@ -539,9 +556,11 @@ class ClearBrowsingDataObserver : public BrowsingDataRemover::Observer {
 static jboolean GetBrowsingDataDeletionPreference(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
-    jint data_type) {
+    jint data_type,
+    jint clear_browsing_data_tab) {
   DCHECK_GE(data_type, 0);
-  DCHECK_LT(data_type, browsing_data::NUM_TYPES);
+  DCHECK_LT(data_type,
+            static_cast<int>(browsing_data::BrowsingDataType::NUM_TYPES));
 
   // If there is no corresponding preference for this |data_type|, pretend
   // that it's set to false.
@@ -549,43 +568,50 @@ static jboolean GetBrowsingDataDeletionPreference(
   // data types for consistency.
   std::string pref;
   if (!browsing_data::GetDeletionPreferenceFromDataType(
-          static_cast<browsing_data::BrowsingDataType>(data_type), &pref)) {
+          static_cast<browsing_data::BrowsingDataType>(data_type),
+          ToTabEnum(clear_browsing_data_tab), &pref)) {
     return false;
   }
 
   return GetOriginalProfile()->GetPrefs()->GetBoolean(pref);
 }
 
-static void SetBrowsingDataDeletionPreference(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jint data_type,
-    jboolean value) {
+static void SetBrowsingDataDeletionPreference(JNIEnv* env,
+                                              const JavaParamRef<jobject>& obj,
+                                              jint data_type,
+                                              jint clear_browsing_data_tab,
+                                              jboolean value) {
   DCHECK_GE(data_type, 0);
-  DCHECK_LT(data_type, browsing_data::NUM_TYPES);
+  DCHECK_LT(data_type,
+            static_cast<int>(browsing_data::BrowsingDataType::NUM_TYPES));
 
   std::string pref;
   if (!browsing_data::GetDeletionPreferenceFromDataType(
-          static_cast<browsing_data::BrowsingDataType>(data_type), &pref)) {
+          static_cast<browsing_data::BrowsingDataType>(data_type),
+          ToTabEnum(clear_browsing_data_tab), &pref)) {
     return;
   }
 
   GetOriginalProfile()->GetPrefs()->SetBoolean(pref, value);
 }
 
-static jint GetBrowsingDataDeletionTimePeriod(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj) {
-  return GetPrefService()->GetInteger(browsing_data::prefs::kDeleteTimePeriod);
+static jint GetBrowsingDataDeletionTimePeriod(JNIEnv* env,
+                                              const JavaParamRef<jobject>& obj,
+                                              jint clear_browsing_data_tab) {
+  return GetPrefService()->GetInteger(
+      browsing_data::GetTimePeriodPreferenceName(
+          ToTabEnum(clear_browsing_data_tab)));
 }
 
-static void SetBrowsingDataDeletionTimePeriod(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jint time_period) {
+static void SetBrowsingDataDeletionTimePeriod(JNIEnv* env,
+                                              const JavaParamRef<jobject>& obj,
+                                              jint clear_browsing_data_tab,
+                                              jint time_period) {
   DCHECK_GE(time_period, 0);
-  DCHECK_LE(time_period, browsing_data::TIME_PERIOD_LAST);
-  GetPrefService()->SetInteger(browsing_data::prefs::kDeleteTimePeriod,
+  DCHECK_LE(time_period,
+            static_cast<int>(browsing_data::TimePeriod::TIME_PERIOD_LAST));
+  GetPrefService()->SetInteger(browsing_data::GetTimePeriodPreferenceName(
+                                   ToTabEnum(clear_browsing_data_tab)),
                                time_period);
 }
 
@@ -602,6 +628,11 @@ static void SetLastClearBrowsingDataTab(JNIEnv* env,
   DCHECK_LT(tab_index, 2);
   GetPrefService()->SetInteger(browsing_data::prefs::kLastClearBrowsingDataTab,
                                tab_index);
+}
+
+static void MigrateBrowsingDataPreferences(JNIEnv* env,
+                                           const JavaParamRef<jobject>& obj) {
+  browsing_data::MigratePreferencesToBasic(GetOriginalProfile()->GetPrefs());
 }
 
 static void ClearBrowsingData(
@@ -622,27 +653,27 @@ static void ClearBrowsingData(
   int remove_mask = 0;
   for (const int data_type : data_types_vector) {
     switch (static_cast<browsing_data::BrowsingDataType>(data_type)) {
-      case browsing_data::HISTORY:
-        remove_mask |= BrowsingDataRemover::REMOVE_HISTORY;
+      case browsing_data::BrowsingDataType::HISTORY:
+        remove_mask |= ChromeBrowsingDataRemoverDelegate::DATA_TYPE_HISTORY;
         break;
-      case browsing_data::CACHE:
-        remove_mask |= BrowsingDataRemover::REMOVE_CACHE;
+      case browsing_data::BrowsingDataType::CACHE:
+        remove_mask |= BrowsingDataRemover::DATA_TYPE_CACHE;
         break;
-      case browsing_data::COOKIES:
-        remove_mask |= BrowsingDataRemover::REMOVE_COOKIES;
-        remove_mask |= BrowsingDataRemover::REMOVE_SITE_DATA;
+      case browsing_data::BrowsingDataType::COOKIES:
+        remove_mask |= BrowsingDataRemover::DATA_TYPE_COOKIES;
+        remove_mask |= ChromeBrowsingDataRemoverDelegate::DATA_TYPE_SITE_DATA;
         break;
-      case browsing_data::PASSWORDS:
-        remove_mask |= BrowsingDataRemover::REMOVE_PASSWORDS;
+      case browsing_data::BrowsingDataType::PASSWORDS:
+        remove_mask |= ChromeBrowsingDataRemoverDelegate::DATA_TYPE_PASSWORDS;
         break;
-      case browsing_data::FORM_DATA:
-        remove_mask |= BrowsingDataRemover::REMOVE_FORM_DATA;
+      case browsing_data::BrowsingDataType::FORM_DATA:
+        remove_mask |= ChromeBrowsingDataRemoverDelegate::DATA_TYPE_FORM_DATA;
         break;
-      case browsing_data::BOOKMARKS:
+      case browsing_data::BrowsingDataType::BOOKMARKS:
         // Bookmarks are deleted separately on the Java side.
         NOTREACHED();
         break;
-      case browsing_data::NUM_TYPES:
+      case browsing_data::BrowsingDataType::NUM_TYPES:
         NOTREACHED();
     }
   }
@@ -674,9 +705,11 @@ static void ClearBrowsingData(
   // Delete the types protected by Important Sites with a filter,
   // and the rest completely.
   int filterable_mask =
-      remove_mask & BrowsingDataRemover::IMPORTANT_SITES_DATATYPES;
-  int nonfilterable_mask = remove_mask &
-      ~BrowsingDataRemover::IMPORTANT_SITES_DATATYPES;
+      remove_mask &
+      ChromeBrowsingDataRemoverDelegate::IMPORTANT_SITES_DATA_TYPES;
+  int nonfilterable_mask =
+      remove_mask &
+      ~ChromeBrowsingDataRemoverDelegate::IMPORTANT_SITES_DATA_TYPES;
 
   // ClearBrowsingDataObserver deletes itself when |browsing_data_remover| is
   // done with both removal tasks.
@@ -690,8 +723,8 @@ static void ClearBrowsingData(
   if (filterable_mask) {
     browsing_data_remover->RemoveWithFilterAndReply(
         browsing_data::CalculateBeginDeleteTime(period),
-        browsing_data::CalculateEndDeleteTime(period),
-        filterable_mask, BrowsingDataHelper::UNPROTECTED_WEB,
+        browsing_data::CalculateEndDeleteTime(period), filterable_mask,
+        BrowsingDataRemover::ORIGIN_TYPE_UNPROTECTED_WEB,
         std::move(filter_builder), observer);
   } else {
     // Make sure |observer| doesn't wait for the filtered task.
@@ -701,8 +734,8 @@ static void ClearBrowsingData(
   if (nonfilterable_mask) {
     browsing_data_remover->RemoveAndReply(
         browsing_data::CalculateBeginDeleteTime(period),
-        browsing_data::CalculateEndDeleteTime(period),
-        nonfilterable_mask, BrowsingDataHelper::UNPROTECTED_WEB, observer);
+        browsing_data::CalculateEndDeleteTime(period), nonfilterable_mask,
+        BrowsingDataRemover::ORIGIN_TYPE_UNPROTECTED_WEB, observer);
   } else {
     // Make sure |observer| doesn't wait for the non-filtered task.
     observer->OnBrowsingDataRemoverDone();
@@ -1223,16 +1256,15 @@ void PrefServiceBridge::PrependToAcceptLanguagesIfNecessary(
 }
 
 // static
-std::string PrefServiceBridge::GetAndroidPermissionForContentSetting(
-    ContentSettingsType content_type) {
+void PrefServiceBridge::GetAndroidPermissionsForContentSetting(
+    ContentSettingsType content_type,
+    std::vector<std::string>* out) {
   JNIEnv* env = AttachCurrentThread();
-  base::android::ScopedJavaLocalRef<jstring> android_permission =
-      Java_PrefServiceBridge_getAndroidPermissionForContentSetting(
-          env, content_type);
-  if (android_permission.is_null())
-    return std::string();
-
-  return ConvertJavaStringToUTF8(android_permission);
+  base::android::AppendJavaStringArrayToStringVector(
+      env, Java_PrefServiceBridge_getAndroidPermissionsForContentSetting(
+               env, content_type)
+               .obj(),
+      out);
 }
 
 static void SetSupervisedUserId(JNIEnv* env,

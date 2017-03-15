@@ -27,15 +27,13 @@ const char kCallbackContextReady[] = "contextReady";
 }  // namespace
 
 HostPairingScreenHandler::HostPairingScreenHandler()
-    : BaseScreenHandler(kJsScreenPath),
-      delegate_(NULL),
-      show_on_init_(false),
-      js_context_ready_(false) {
+    : BaseScreenHandler(kScreenId) {
+  set_call_js_prefix(kJsScreenPath);
 }
 
 HostPairingScreenHandler::~HostPairingScreenHandler() {
   if (delegate_)
-    delegate_->OnActorDestroyed(this);
+    delegate_->OnViewDestroyed(this);
 }
 
 void HostPairingScreenHandler::HandleContextReady() {
@@ -98,7 +96,7 @@ void HostPairingScreenHandler::Show() {
     show_on_init_ = true;
     return;
   }
-  ShowScreen(OobeScreen::SCREEN_OOBE_HOST_PAIRING);
+  ShowScreen(kScreenId);
 }
 
 void HostPairingScreenHandler::Hide() {

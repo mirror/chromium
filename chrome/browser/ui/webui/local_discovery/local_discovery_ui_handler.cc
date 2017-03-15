@@ -350,7 +350,7 @@ void LocalDiscoveryUIHandler::DeviceChanged(
 
   base::DictionaryValue info;
 
-  base::StringValue service_key(kKeyPrefixMDns + name);
+  base::Value service_key(kKeyPrefixMDns + name);
 
   if (description.id.empty()) {
     info.SetString(kDictionaryKeyServiceName, name);
@@ -372,7 +372,7 @@ void LocalDiscoveryUIHandler::DeviceChanged(
 void LocalDiscoveryUIHandler::DeviceRemoved(const std::string& name) {
   device_descriptions_.erase(name);
   std::unique_ptr<base::Value> null_value = base::Value::CreateNullValue();
-  base::StringValue name_value(kKeyPrefixMDns + name);
+  base::Value name_value(kKeyPrefixMDns + name);
 
   web_ui()->CallJavascriptFunctionUnsafe(
       "local_discovery.onUnregisteredDeviceUpdate", name_value, *null_value);
@@ -473,8 +473,8 @@ void LocalDiscoveryUIHandler::ResetCurrentRegistration() {
 }
 
 void LocalDiscoveryUIHandler::CheckUserLoggedIn() {
-  base::FundamentalValue logged_in_value(!GetSyncAccount().empty());
-  base::FundamentalValue is_supervised_value(IsUserSupervisedOrOffTheRecord());
+  base::Value logged_in_value(!GetSyncAccount().empty());
+  base::Value is_supervised_value(IsUserSupervisedOrOffTheRecord());
   web_ui()->CallJavascriptFunctionUnsafe("local_discovery.setUserLoggedIn",
                                          logged_in_value, is_supervised_value);
 }
@@ -579,7 +579,7 @@ void LocalDiscoveryUIHandler::SetupCloudPrintConnectorSection() {
   bool cloud_print_connector_allowed =
       !cloud_print_connector_enabled_.IsManaged() ||
       cloud_print_connector_enabled_.GetValue();
-  base::FundamentalValue allowed(cloud_print_connector_allowed);
+  base::Value allowed(cloud_print_connector_allowed);
 
   std::string email;
   Profile* profile = Profile::FromWebUI(web_ui());
@@ -587,7 +587,7 @@ void LocalDiscoveryUIHandler::SetupCloudPrintConnectorSection() {
       cloud_print_connector_allowed) {
     email = profile->GetPrefs()->GetString(prefs::kCloudPrintEmail);
   }
-  base::FundamentalValue disabled(email.empty());
+  base::Value disabled(email.empty());
 
   base::string16 label_str;
   if (email.empty()) {
@@ -600,7 +600,7 @@ void LocalDiscoveryUIHandler::SetupCloudPrintConnectorSection() {
         l10n_util::GetStringUTF16(IDS_GOOGLE_CLOUD_PRINT),
         base::UTF8ToUTF16(email));
   }
-  base::StringValue label(label_str);
+  base::Value label(label_str);
 
   web_ui()->CallJavascriptFunctionUnsafe(
       "local_discovery.setupCloudPrintConnectorSection", disabled, label,

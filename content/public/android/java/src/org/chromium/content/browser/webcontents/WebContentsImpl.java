@@ -19,20 +19,24 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.content.browser.AppWebMessagePort;
-import org.chromium.content.browser.AppWebMessagePortService;
 import org.chromium.content.browser.MediaSessionImpl;
+import org.chromium.content.browser.framehost.RenderFrameHostDelegate;
+import org.chromium.content.browser.framehost.RenderFrameHostImpl;
 import org.chromium.content_public.browser.AccessibilitySnapshotCallback;
 import org.chromium.content_public.browser.AccessibilitySnapshotNode;
 import org.chromium.content_public.browser.ContentBitmapCallback;
 import org.chromium.content_public.browser.ImageDownloadCallback;
 import org.chromium.content_public.browser.JavaScriptCallback;
-import org.chromium.content_public.browser.MessagePortService;
+import org.chromium.content_public.browser.MessagePort;
 import org.chromium.content_public.browser.NavigationController;
+import org.chromium.content_public.browser.RenderFrameHost;
 import org.chromium.content_public.browser.SmartClipCallback;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsObserver;
 import org.chromium.ui.OverscrollRefreshHandler;
 import org.chromium.ui.accessibility.AXTextStyle;
+import org.chromium.ui.base.EventForwarder;
+import org.chromium.ui.base.WindowAndroid;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,9 +47,9 @@ import java.util.UUID;
  * object.
  */
 @JNINamespace("content")
-//TODO(tedchoc): Remove the package restriction once this class moves to a non-public content
+// TODO(tedchoc): Remove the package restriction once this class moves to a non-public content
 //               package whose visibility will be enforced via DEPS.
-/* package */ class WebContentsImpl implements WebContents {
+/* package */ class WebContentsImpl implements WebContents, RenderFrameHostDelegate {
     private static final String PARCEL_VERSION_KEY = "version";
     private static final String PARCEL_WEBCONTENTS_KEY = "webcontents";
     private static final String PARCEL_PROCESS_GUARD_KEY = "processguard";
@@ -92,8 +96,17 @@ import java.util.UUID;
                 }
             };
 
+    public static WebContents fromRenderFrameHost(RenderFrameHost rfh) {
+        RenderFrameHostDelegate delegate = ((RenderFrameHostImpl) rfh).getRenderFrameHostDelegate();
+        if (delegate == null || !(delegate instanceof WebContents)) {
+            return null;
+        }
+        return (WebContents) delegate;
+    }
+
     private long mNativeWebContentsAndroid;
     private NavigationController mNavigationController;
+    private RenderFrameHost mMainFrame;
 
     // Lazily created proxy observer for handling all Java-based WebContentsObservers.
     private WebContentsObserverProxy mObserverProxy;
@@ -103,6 +116,8 @@ import java.util.UUID;
     private MediaSessionImpl mMediaSession;
 
     private SmartClipCallback mSmartClipCallback;
+
+    private EventForwarder mEventForwarder;
 
     private WebContentsImpl(
             long nativeWebContentsAndroid, NavigationController navigationController) {
@@ -149,6 +164,11 @@ import java.util.UUID;
     }
 
     @Override
+    public WindowAndroid getTopLevelNativeWindow() {
+        return nativeGetTopLevelNativeWindow(mNativeWebContentsAndroid);
+    }
+
+    @Override
     public void destroy() {
         if (!ThreadUtils.runningOnUiThread()) {
             throw new IllegalStateException("Attempting to destroy WebContents on non-UI thread");
@@ -164,6 +184,14 @@ import java.util.UUID;
     @Override
     public NavigationController getNavigationController() {
         return mNavigationController;
+    }
+
+    @Override
+    public RenderFrameHost getMainFrame() {
+        if (mMainFrame == null) {
+            mMainFrame = nativeGetMainFrame(mNativeWebContentsAndroid);
+        }
+        return mMainFrame;
     }
 
     @Override
@@ -217,12 +245,12 @@ import java.util.UUID;
     }
 
     @Override
-    public void unselect() {
-        // Unselect may get triggered when certain selection-related widgets
+    public void collapseSelection() {
+        // collapseSelection may get triggered when certain selection-related widgets
         // are destroyed. As the timing for such destruction is unpredictable,
         // safely guard against this case.
         if (isDestroyed()) return;
-        nativeUnselect(mNativeWebContentsAndroid);
+        nativeCollapseSelection(mNativeWebContentsAndroid);
     }
 
     @Override
@@ -342,17 +370,25 @@ import java.util.UUID;
 
     @Override
     public void postMessageToFrame(String frameName, String message,
-            String sourceOrigin, String targetOrigin, int[] sentPortIds) {
-        nativePostMessageToFrame(mNativeWebContentsAndroid, frameName, message,
-                sourceOrigin, targetOrigin, sentPortIds);
+            String sourceOrigin, String targetOrigin, MessagePort[] ports) {
+        if (ports != null) {
+            for (MessagePort port : ports) {
+                if (port.isClosed() || port.isTransferred()) {
+                    throw new IllegalStateException("Port is already closed or transferred");
+                }
+                if (port.isStarted()) {
+                    throw new IllegalStateException("Port is already started");
+                }
+            }
+        }
+        nativePostMessageToFrame(
+                mNativeWebContentsAndroid, frameName, message, sourceOrigin, targetOrigin, ports);
     }
 
     @Override
-    public AppWebMessagePort[] createMessageChannel(MessagePortService service)
+    public AppWebMessagePort[] createMessageChannel()
             throws IllegalStateException {
-        AppWebMessagePort[] ports = ((AppWebMessagePortService) service).createMessageChannel();
-        nativeCreateMessageChannel(mNativeWebContentsAndroid, ports);
-        return ports;
+        return AppWebMessagePort.createPair();
     }
 
     @Override
@@ -457,6 +493,15 @@ import java.util.UUID;
     }
 
     @Override
+    public EventForwarder getEventForwarder() {
+        assert mNativeWebContentsAndroid != 0;
+        if (mEventForwarder == null) {
+            mEventForwarder = nativeGetOrCreateEventForwarder(mNativeWebContentsAndroid);
+        }
+        return mEventForwarder;
+    }
+
+    @Override
     public void addObserver(WebContentsObserver observer) {
         assert mNativeWebContentsAndroid != 0;
         if (mObserverProxy == null) mObserverProxy = new WebContentsObserverProxy(this);
@@ -475,10 +520,8 @@ import java.util.UUID;
     }
 
     @Override
-    public void getContentBitmapAsync(
-            Bitmap.Config config, float scale, Rect srcRect, ContentBitmapCallback callback) {
-        nativeGetContentBitmap(mNativeWebContentsAndroid, callback, config, scale,
-                srcRect.left, srcRect.top, srcRect.width(), srcRect.height());
+    public void getContentBitmapAsync(int width, int height, ContentBitmapCallback callback) {
+        nativeGetContentBitmap(mNativeWebContentsAndroid, width, height, callback);
     }
 
     @CalledByNative
@@ -508,6 +551,16 @@ import java.util.UUID;
     @Override
     public void dismissTextHandles() {
         nativeDismissTextHandles(mNativeWebContentsAndroid);
+    }
+
+    @Override
+    public void setHasPersistentVideo(boolean value) {
+        nativeSetHasPersistentVideo(mNativeWebContentsAndroid, value);
+    }
+
+    @Override
+    public boolean hasActiveEffectivelyFullscreenVideo() {
+        return nativeHasActiveEffectivelyFullscreenVideo(mNativeWebContentsAndroid);
     }
 
     @CalledByNative
@@ -540,6 +593,8 @@ import java.util.UUID;
 
     private static native WebContents nativeFromNativePtr(long webContentsAndroidPtr);
 
+    private native WindowAndroid nativeGetTopLevelNativeWindow(long nativeWebContentsAndroid);
+    private native RenderFrameHost nativeGetMainFrame(long nativeWebContentsAndroid);
     private native String nativeGetTitle(long nativeWebContentsAndroid);
     private native String nativeGetVisibleURL(long nativeWebContentsAndroid);
     private native boolean nativeIsLoading(long nativeWebContentsAndroid);
@@ -550,7 +605,7 @@ import java.util.UUID;
     private native void nativePaste(long nativeWebContentsAndroid);
     private native void nativeReplace(long nativeWebContentsAndroid, String word);
     private native void nativeSelectAll(long nativeWebContentsAndroid);
-    private native void nativeUnselect(long nativeWebContentsAndroid);
+    private native void nativeCollapseSelection(long nativeWebContentsAndroid);
     private native void nativeOnHide(long nativeWebContentsAndroid);
     private native void nativeOnShow(long nativeWebContentsAndroid);
     private native void nativeSuspendAllMediaPlayers(long nativeWebContentsAndroid);
@@ -579,9 +634,7 @@ import java.util.UUID;
     private native void nativeAddMessageToDevToolsConsole(
             long nativeWebContentsAndroid, int level, String message);
     private native void nativePostMessageToFrame(long nativeWebContentsAndroid, String frameName,
-            String message, String sourceOrigin, String targetOrigin, int[] sentPortIds);
-    private native void nativeCreateMessageChannel(
-            long nativeWebContentsAndroid, AppWebMessagePort[] ports);
+            String message, String sourceOrigin, String targetOrigin, MessagePort[] ports);
     private native boolean nativeHasAccessedInitialDocument(
             long nativeWebContentsAndroid);
     private native int nativeGetThemeColor(long nativeWebContentsAndroid);
@@ -591,12 +644,14 @@ import java.util.UUID;
             long nativeWebContentsAndroid, AccessibilitySnapshotCallback callback);
     private native void nativeSetOverscrollRefreshHandler(
             long nativeWebContentsAndroid, OverscrollRefreshHandler nativeOverscrollRefreshHandler);
-    private native void nativeGetContentBitmap(long nativeWebContentsAndroid,
-            ContentBitmapCallback callback, Bitmap.Config config, float scale,
-            float x, float y, float width, float height);
+    private native void nativeGetContentBitmap(
+            long nativeWebContentsAndroid, int width, int height, ContentBitmapCallback callback);
     private native void nativeReloadLoFiImages(long nativeWebContentsAndroid);
     private native int nativeDownloadImage(long nativeWebContentsAndroid,
             String url, boolean isFavicon, int maxBitmapSize,
             boolean bypassCache, ImageDownloadCallback callback);
     private native void nativeDismissTextHandles(long nativeWebContentsAndroid);
+    private native void nativeSetHasPersistentVideo(long nativeWebContentsAndroid, boolean value);
+    private native boolean nativeHasActiveEffectivelyFullscreenVideo(long nativeWebContentsAndroid);
+    private native EventForwarder nativeGetOrCreateEventForwarder(long nativeWebContentsAndroid);
 }

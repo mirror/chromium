@@ -158,6 +158,8 @@ Elements.ComputedStyleWidget = class extends UI.ThrottledWidget {
       var inherited = !inhertiedProperties.has(canonicalName);
       if (!showInherited && inherited && !(propertyName in this._alwaysShowComputedProperties))
         continue;
+      if (!showInherited && propertyName.startsWith('--'))
+        continue;
       if (propertyName !== canonicalName && propertyValue === nodeStyle.computedStyle.get(canonicalName))
         continue;
 
@@ -196,8 +198,8 @@ Elements.ComputedStyleWidget = class extends UI.ThrottledWidget {
       var trace = propertyTraces.get(propertyName);
       if (trace) {
         var activeProperty = this._renderPropertyTrace(cssModel, matchedStyles, nodeStyle.node, treeElement, trace);
-        treeElement.listItemElement.addEventListener('mousedown', (e) => e.consume(), false);
-        treeElement.listItemElement.addEventListener('dblclick', (e) => e.consume(), false);
+        treeElement.listItemElement.addEventListener('mousedown', e => e.consume(), false);
+        treeElement.listItemElement.addEventListener('dblclick', e => e.consume(), false);
         treeElement.listItemElement.addEventListener('click', handleClick.bind(null, treeElement), false);
         var gotoSourceElement = UI.Icon.create('smallicon-arrow-in-circle', 'goto-source-icon');
         gotoSourceElement.addEventListener('click', this._navigateToSource.bind(this, activeProperty));

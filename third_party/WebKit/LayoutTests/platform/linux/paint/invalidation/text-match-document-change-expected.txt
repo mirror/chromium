@@ -7,24 +7,14 @@
       "drawsContent": true,
       "paintInvalidations": [
         {
-          "object": "LayoutBlockFlow HTML",
-          "rect": [10, 102, 285, 400],
-          "reason": "forced by layout"
-        },
-        {
           "object": "LayoutBlockFlow DIV id='to-be-changed'",
           "rect": [18, 130, 269, 40],
           "reason": "full"
         },
         {
           "object": "LayoutText #text",
-          "rect": [18, 130, 235, 39],
+          "rect": [18, 130, 251, 39],
           "reason": "layoutObject removal"
-        },
-        {
-          "object": "LayoutText #text",
-          "rect": [18, 130, 77, 19],
-          "reason": "layoutObject insertion"
         },
         {
           "object": "LayoutView #document",
@@ -42,10 +32,6 @@
     {
       "object": "VerticalScrollbar",
       "reason": "scroll"
-    },
-    {
-      "object": "LayoutBlockFlow HTML",
-      "reason": "forced by layout"
     },
     {
       "object": "LayoutBlockFlow DIV id='to-be-changed'",

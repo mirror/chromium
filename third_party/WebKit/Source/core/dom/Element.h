@@ -25,7 +25,6 @@
 #ifndef Element_h
 #define Element_h
 
-#include "core/CSSPropertyNames.h"
 #include "core/CoreExport.h"
 #include "core/HTMLNames.h"
 #include "core/css/CSSPrimitiveValue.h"
@@ -36,7 +35,6 @@
 #include "core/dom/Document.h"
 #include "core/dom/ElementData.h"
 #include "core/dom/SpaceSplitString.h"
-#include "core/html/CollectionType.h"
 #include "platform/heap/Handle.h"
 #include "platform/scroll/ScrollTypes.h"
 #include "public/platform/WebFocusType.h"
@@ -416,8 +414,8 @@ class CORE_EXPORT Element : public ContainerNode {
 
   virtual LayoutObject* createLayoutObject(const ComputedStyle&);
   virtual bool layoutObjectIsNeeded(const ComputedStyle&);
-  void recalcStyle(StyleRecalcChange, Text* nextTextSibling = nullptr);
-  StyleRecalcChange rebuildLayoutTree();
+  void recalcStyle(StyleRecalcChange);
+  void rebuildLayoutTree(Text* nextTextSibling = nullptr);
   void pseudoStateChanged(CSSSelector::PseudoType);
   void setAnimationStyleChange(bool);
   void clearAnimationStyleChange();
@@ -457,6 +455,17 @@ class CORE_EXPORT Element : public ContainerNode {
   // Element’s ElementRareData.  Used for getComputedStyle when Element is
   // display none.
   const ComputedStyle* ensureComputedStyle(PseudoId = PseudoIdNone);
+
+  const ComputedStyle* nonLayoutObjectComputedStyle() const;
+
+  bool hasDisplayContentsStyle() const;
+
+  ComputedStyle* mutableNonLayoutObjectComputedStyle() const {
+    return const_cast<ComputedStyle*>(nonLayoutObjectComputedStyle());
+  }
+
+  bool shouldStoreNonLayoutObjectComputedStyle(const ComputedStyle&) const;
+  void storeNonLayoutObjectComputedStyle(PassRefPtr<ComputedStyle>);
 
   // Methods for indicating the style is affected by dynamic updates (e.g.,
   // children changing, our position changing in our sibling list, etc.)
@@ -835,7 +844,9 @@ class CORE_EXPORT Element : public ContainerNode {
   // and returns the new style. Otherwise, returns null.
   PassRefPtr<ComputedStyle> propagateInheritedProperties(StyleRecalcChange);
 
-  StyleRecalcChange recalcOwnStyle(StyleRecalcChange, Text*);
+  StyleRecalcChange recalcOwnStyle(StyleRecalcChange);
+  void reattachPseudoElementLayoutTree(PseudoId);
+  void rebuildShadowRootLayoutTree();
   inline void checkForEmptyStyleChange();
 
   void updatePseudoElement(PseudoId, StyleRecalcChange);
@@ -890,9 +901,6 @@ class CORE_EXPORT Element : public ContainerNode {
                                              const AtomicString&,
                                              AttributeModificationReason);
 
-  bool pseudoStyleCacheIsInvalid(const ComputedStyle* currentStyle,
-                                 ComputedStyle* newStyle);
-
   void cancelFocusAppearanceUpdate();
 
   const ComputedStyle* virtualEnsureComputedStyle(
@@ -907,7 +915,7 @@ class CORE_EXPORT Element : public ContainerNode {
 
   // cloneNode is private so that non-virtual cloneElementWithChildren and
   // cloneElementWithoutChildren are used instead.
-  Node* cloneNode(bool deep) override;
+  Node* cloneNode(bool deep, ExceptionState&) override;
   virtual Element* cloneElementWithoutAttributesAndChildren();
 
   QualifiedName m_tagName;
@@ -930,10 +938,6 @@ class CORE_EXPORT Element : public ContainerNode {
   void detachAllAttrNodesFromElement();
   void detachAttrNodeFromElementWithValue(Attr*, const AtomicString& value);
   void detachAttrNodeAtIndex(Attr*, size_t index);
-
-  v8::Local<v8::Object> wrapCustomElement(
-      v8::Isolate*,
-      v8::Local<v8::Object> creationContext);
 
   Member<ElementData> m_elementData;
 };

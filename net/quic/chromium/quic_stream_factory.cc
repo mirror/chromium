@@ -675,7 +675,7 @@ int QuicStreamRequest::Request(const HostPortPair& destination,
                                PrivacyMode privacy_mode,
                                int cert_verify_flags,
                                const GURL& url,
-                               base::StringPiece method,
+                               QuicStringPiece method,
                                const NetLogWithSource& net_log,
                                const CompletionCallback& callback) {
   DCHECK(callback_.is_null());
@@ -967,7 +967,7 @@ int QuicStreamFactory::Create(const QuicServerId& server_id,
                               const HostPortPair& destination,
                               int cert_verify_flags,
                               const GURL& url,
-                              base::StringPiece method,
+                              QuicStringPiece method,
                               const NetLogWithSource& net_log,
                               QuicStreamRequest* request) {
   if (clock_skew_detector_.ClockSkewDetected(base::TimeTicks::Now(),
@@ -1558,7 +1558,7 @@ void QuicStreamFactory::OnSSLConfigChanged() {
   CloseAllSessions(ERR_CERT_DATABASE_CHANGED, QUIC_CONNECTION_CANCELLED);
 }
 
-void QuicStreamFactory::OnCertDBChanged(const X509Certificate* cert) {
+void QuicStreamFactory::OnCertDBChanged() {
   // We should flush the sessions if we removed trust from a
   // cert, because a previously trusted server may have become
   // untrusted.

@@ -16,9 +16,9 @@
 #import "ios/chrome/test/earl_grey/chrome_actions.h"
 #import "ios/chrome/test/earl_grey/chrome_assertions.h"
 #import "ios/chrome/test/earl_grey/chrome_earl_grey.h"
+#import "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h"
 #import "ios/chrome/test/earl_grey/chrome_matchers.h"
 #import "ios/chrome/test/earl_grey/chrome_test_case.h"
-#include "ios/chrome/test/earl_grey/chrome_util.h"
 #import "ios/testing/wait_util.h"
 #import "ios/web/public/test/earl_grey/web_view_matchers.h"
 #import "ios/web/public/test/http_server.h"
@@ -30,6 +30,7 @@
 #endif
 
 using chrome_test_util::ButtonWithAccessibilityLabelId;
+using chrome_test_util::OpenLinkInNewTabButton;
 
 namespace {
 const char kUrlChromiumLogoPage[] =
@@ -54,12 +55,6 @@ id<GREYMatcher> OpenImageButton() {
 id<GREYMatcher> OpenImageInNewTabButton() {
   return ButtonWithAccessibilityLabelId(
       IDS_IOS_CONTENT_CONTEXT_OPENIMAGENEWTAB);
-}
-
-// Matcher for the open link in new tab button in the context menu.
-// TODO(crbug.com/638674): Clean up code duplication.
-id<GREYMatcher> OpenLinkInNewTabButton() {
-  return ButtonWithAccessibilityLabelId(IDS_IOS_CONTENT_CONTEXT_OPENLINKNEWTAB);
 }
 
 // Waits for the context menu item to disappear. TODO(crbug.com/682871): Remove
@@ -194,7 +189,9 @@ void SelectTabAtIndexInCurrentMode(NSUInteger index) {
 // Tests "Open in New Tab" on context menu  on a link that requires scrolling
 // on the page to verify that context menu can be properly triggered in the
 // current screen view.
-- (void)testContextMenuOpenInNewTabFromTallPage {
+// TODO(crbug.com/701104): This test is flaky because sometimes it doesn't
+// scroll down far enough for the link to be visible.
+- (void)FLAKY_testContextMenuOpenInNewTabFromTallPage {
   // Set up test simple http server.
   std::map<GURL, std::string> responses;
   GURL initialURL =
@@ -246,7 +243,7 @@ void SelectTabAtIndexInCurrentMode(NSUInteger index) {
       selectElementWithMatcher:WebViewScrollView(
                                    chrome_test_util::GetCurrentWebState())]
       performAction:grey_swipeFastInDirection(kGREYDirectionDown)];
-  chrome_test_util::AssertToolbarVisible();
+  [ChromeEarlGreyUI waitForToolbarVisible:YES];
 
   SelectTabAtIndexInCurrentMode(1U);
 

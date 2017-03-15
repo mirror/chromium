@@ -17,6 +17,7 @@
 #include "content/browser/renderer_host/render_view_host_delegate_view.h"
 #include "content/browser/web_contents/web_contents_view.h"
 #include "content/common/content_export.h"
+#include "content/common/features.h"
 #include "ui/aura/client/drag_drop_delegate.h"
 #include "ui/aura/window_delegate.h"
 #include "ui/aura/window_observer.h"
@@ -59,6 +60,13 @@ class CONTENT_EXPORT WebContentsViewAura
   void set_init_rwhv_with_null_parent_for_testing(bool set) {
     init_rwhv_with_null_parent_for_testing_ = set;
   }
+
+  using RenderWidgetHostViewCreateFunction =
+      RenderWidgetHostViewAura* (*)(RenderWidgetHost*, bool);
+
+  // Used to override the creation of RenderWidgetHostViews in tests.
+  static void InstallCreateHookForTests(
+      RenderWidgetHostViewCreateFunction create_render_widget_host_view);
 
  private:
   class WindowObserver;
@@ -130,7 +138,7 @@ class CONTENT_EXPORT WebContentsViewAura
   void UpdateDragCursor(blink::WebDragOperation operation) override;
   void GotFocus() override;
   void TakeFocus(bool reverse) override;
-#if defined(USE_EXTERNAL_POPUP_MENU)
+#if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
   void ShowPopupMenu(RenderFrameHost* render_frame_host,
                      const gfx::Rect& bounds,
                      int item_height,
@@ -148,7 +156,8 @@ class CONTENT_EXPORT WebContentsViewAura
   bool OnOverscrollUpdate(float delta_x, float delta_y) override;
   void OnOverscrollComplete(OverscrollMode overscroll_mode) override;
   void OnOverscrollModeChange(OverscrollMode old_mode,
-                              OverscrollMode new_mode) override;
+                              OverscrollMode new_mode,
+                              OverscrollSource source) override;
 
   // Overridden from aura::WindowDelegate:
   gfx::Size GetMinimumSize() const override;

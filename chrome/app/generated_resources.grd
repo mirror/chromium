@@ -439,17 +439,11 @@ are declared in build/common.gypi.
       </message>
 
       <!-- Generic terms -->
-      <message name="IDS_ADD" desc="Used for Add on buttons">
-        Add
-      </message>
       <message name="IDS_UNDO_DELETE" desc="Description for a command to undo a delete command.">
         Undo Delete
       </message>
       <message name="IDS_EDIT" desc="Edit menu item">
         &amp;Edit
-      </message>
-      <message name="IDS_SAVE" desc="Used on a button to save information you are editing.">
-        Save
       </message>
       <message name="IDS_CONFIRM" desc="A button that lets the user confirm something.">
         Confirm
@@ -920,6 +914,10 @@ are declared in build/common.gypi.
           Hide This Plugin
         </message>
       </if>
+      <!-- Since Flash is a proper noun we don't have to distinguish between title and non-title case. -->
+      <message name="IDS_CONTENT_CONTEXT_ENABLE_FLASH" desc="The name of the Enable Flash command on the blocked plugin context menu">
+        Enable Flash
+      </message>
 
       <!-- Ash multi-user warning dialog -->
       <if expr="use_ash">
@@ -1925,6 +1923,19 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
             Always open in Adobe Reader
           </message>
         </if>
+      </if>
+
+      <!-- Touch Bar-->
+      <if expr="is_macosx">
+        <message name="IDS_TOUCH_BAR_GOOGLE_SEARCH"
+                   desc="Text for the search button in the touch bar when Google is the default search provider. Pressing the button will bring focus to the omnibox.">
+          Search or type URL
+        </message>
+        <message name="IDS_TOUCH_BAR_SEARCH"
+                   desc="Text for the search button in the touch bar when Google is not the default search provider. Pressing the button will bring focus to the omnibox.">
+          Search $1
+        </message>
+
       </if>
 
       <!-- Remove in-progress downloads confirmation dialog -->
@@ -3575,9 +3586,6 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
       <message name="IDS_EXTENSION_POST_INSTALL_PERMISSIONS_PROMPT_TITLE" desc="Titlebar of the extension or app permissions prompt. Shows the user the permissions a particular extension or app has.">
         Current Permissions for "<ph name="EXTENSION_NAME">$1<ex>Gmail Checker</ex></ph>"
       </message>
-      <message name="IDS_EXTENSION_LAUNCH_APP_PROMPT_TITLE" desc="Titlebar of the app launch prompt. Asks the user if they want to launch a particular app.">
-        Try "<ph name="EXTENSION_NAME">$1<ex>Gmail Checker</ex></ph>"?
-      </message>
       <message name="IDS_EXTENSION_REMOTE_INSTALL_PROMPT_TITLE" desc="Titlebar of the extension or app installation prompt. Asks the user if they want to enable a particular extension or app that was installed remotely.">
         Enable "<ph name="EXTENSION_NAME">$1<ex>Gmail Checker</ex></ph>"?
       </message>
@@ -3661,9 +3669,6 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
       </message>
       <message name="IDS_EXTENSION_PROMPT_WILL_NOW_HAVE_ACCESS_TO" desc="Second line in the content area of the extension or app re-enable prompt. Note that the exact wording is important. This should mean that the extension _can now_ access the listed privileges, but not necessarily that it will or needs to. This message appeared because the user must approve new permissions of the extension or app.">
         It can now:
-      </message>
-      <message name="IDS_EXTENSION_PROMPT_THESE_WILL_HAVE_ACCESS_TO" desc="Header for the permissions area of the bundled extension or app installation prompt. Note that the exact wording is important. This means that the extensions or apps _can_ access the listed privileges, but not necessarily that it will or needs to.">
-        They can:
       </message>
       <message name="IDS_EXTENSION_PROMPT_WANTS_ACCESS_TO" desc="Second line in the content area of the extension or app permissions prompt. Note that the exact wording is important. This should mean that the extension _wants to_ access the listed privileges, but not necessarily that it will or needs to. This message appeared because the user must approve new permissions of the extension or app.">
         It could:
@@ -4354,6 +4359,9 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
         <message name="IDS_EXTENSIONS_LOG_LEVEL_ERROR" desc="Alt-text indicating a high severity level for the error icon in the chrome://extensions page.">
           Error
         </message>
+        <message name="IDS_MD_EXTENSIONS_DEVELOPER_MODE" desc="The text displayed next to the checkbox to toggle developer mode in the extensions page.">
+          Developer mode
+        </message>
         <message name="IDS_MD_EXTENSIONS_ERROR_PAGE_HEADING" desc="The heading of the page displaying an extension's errors.">
           Errors
         </message>
@@ -4365,6 +4373,9 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
         </message>
         <message name="IDS_MD_EXTENSIONS_ITEM_INSPECT_VIEWS" desc="The text next to any inspectable views for an extension.">
           Inspect views:
+        </message>
+        <message name="IDS_MD_EXTENSIONS_ITEM_INSPECT_VIEWS_EXTRA" desc="The text to indicate there are additional inspectable views that aren't listed.">
+          <ph name="NUMBER_OF_VIEWS">$1<ex>2</ex></ph> more...
         </message>
         <message name="IDS_MD_EXTENSIONS_ITEM_ALLOW_INCOGNITO" desc="The text next to the checkbox to enable an extension in incognito mode.">
           Allow in incognito
@@ -4381,6 +4392,18 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
         <message name="IDS_MD_EXTENSIONS_ITEM_DETAILS" desc="The text on the button to show more details for a given extension.">
           Details
         </message>
+        <message name="IDS_MD_EXTENSIONS_ITEM_ID_HEADING" desc="The heading above the ID of the extension.">
+          ID
+        </message>
+        <message name="IDS_MD_EXTENSIONS_ITEM_OFF" desc="The label to indicate that a specific extension is not currently enabled.">
+          Off
+        </message>
+        <message name="IDS_MD_EXTENSIONS_ITEM_ON" desc="The label to indicate that a specific extension is currently enabled.">
+          On
+        </message>
+        <message name="IDS_MD_EXTENSIONS_ITEM_OPTIONS" desc="The label on the button to open an extension options page.">
+          Extension options
+        </message>
         <message name="IDS_MD_EXTENSIONS_ITEM_PERMISSIONS" desc="The label above the list of an extension's permissions.">
           Permissions
         </message>
@@ -4389,6 +4412,9 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
         </message>
         <message name="IDS_MD_EXTENSIONS_ITEM_REMOVE" desc="The label of the button to remove an extension.">
           Remove
+        </message>
+        <message name="IDS_MD_EXTENSIONS_ITEM_REMOVE_EXTENSION" desc="The label on the button to remove an extension.">
+          Remove extension
         </message>
         <message name="IDS_MD_EXTENSIONS_ITEM_SOURCE" desc="The label above an extension's source, which indicates where the extension came from (webstore, third-party, local disk, etc).">
           Source
@@ -4447,23 +4473,20 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
         <message name="IDS_MD_EXTENSIONS_SIDEBAR_EXTENSIONS" desc="The text displayed in the sidebar to go to the extensions section of the page.">
           Extensions
         </message>
-        <message name="IDS_MD_EXTENSIONS_SIDEBAR_LOAD_UNPACKED" desc="The text displayed in the sidebar to load unpacked extensions.">
-          Load unpacked extensions
-        </message>
-        <message name="IDS_MD_EXTENSIONS_SIDEBAR_PACK" desc="The text displayed in the sidebar to pack an extension directory.">
-          Pack extensions...
-        </message>
-        <message name="IDS_MD_EXTENSIONS_SIDEBAR_UPDATE_NOW" desc="The text displayed in the sidebar to update existing extensions now.">
-          Update extensions now
-        </message>
-        <message name="IDS_MD_EXTENSIONS_SIDEBAR_DEVELOPER_MODE" desc="The text displayed next to the checkbox to toggle developer mode in the extensions page.">
-          Developer mode
-        </message>
         <message name="IDS_MD_EXTENSIONS_SIDEBAR_GET_MORE_EXTENSIONS" desc="The text for the link to get more extensions in the extensions page.">
           Get more extensions
         </message>
         <message name="IDS_MD_EXTENSIONS_SIDEBAR_KEYBOARD_SHORTCUTS" desc="The text for the link to manage keyboard shortcuts for extensions.">
           Keyboard shortcuts
+        </message>
+        <message name="IDS_MD_EXTENSIONS_TOOLBAR_LOAD_UNPACKED" desc="The text displayed in the toolbar to load an unpacked extension.">
+          Load unpacked
+        </message>
+        <message name="IDS_MD_EXTENSIONS_TOOLBAR_PACK" desc="The text displayed in the toolbar to pack an extension directory.">
+          Pack extension
+        </message>
+        <message name="IDS_MD_EXTENSIONS_TOOLBAR_UPDATE_NOW" desc="The text displayed in the toolbar to update existing extensions now.">
+          Update
         </message>
         <message name="IDS_MD_EXTENSIONS_TYPE_A_SHORTCUT" desc="The prompt to the user to enter a keyboard shortcut in order to assign it to an extension.">
           Type a shortcut
@@ -4659,9 +4682,6 @@ Keep your key file in a safe place. You will need it to create new versions of y
       </message>
       <message name="IDS_EXTENSION_INSTALL_PROMPT_ACCEPT_BUTTON_THEME" desc="Text for the install button on the extension install prompt, for a theme.">
         Add theme
-      </message>
-      <message name="IDS_EXTENSION_PROMPT_LAUNCH_BUTTON" desc="Text for the launch button on the extension install prompt">
-        Launch app
       </message>
       <message name="IDS_EXTENSION_PROMPT_UNINSTALL_BUTTON" desc="Text for the uninstall button on the extension uninstall prompt">
         Remove
@@ -4978,6 +4998,16 @@ Keep your key file in a safe place. You will need it to create new versions of y
       </message>
       <message name="IDS_FLAGS_NOSTATE_PREFETCH_DESCRIPTION" desc="Description for the flag to set parameters for No-State Prefetch.">
         "No-State Prefetch" pre-downloads resources to improve load times. "Prerender" does a full pre-rendering of the page, to improve load times even more. "Simple Load" does nothing and is similar to disabling the feature, but collects more metrics for comparison purposes.
+      </message>
+
+      <message name="IDS_FLAGS_SPECULATIVE_PREFETCH_NAME" desc="Name for the flag to set parameters for Speculative Prefetch">
+        Speculative Prefetch
+      </message>
+      <message name="IDS_FLAGS_SPECULATIVE_PREFETCH_DESCRIPTION" desc="Description for the flag to set parameters for Speculative Prefetch.">
+        "Speculative Prefetch" fetches likely resources early to improve load times,
+        based on a local database (see chrome://predictors).
+        "Learning" means that only the database construction is enabled,
+        "Prefetching" that learning and prefetching are enabled.
       </message>
 
       <!-- Print Preview features -->
@@ -5482,6 +5512,12 @@ Keep your key file in a safe place. You will need it to create new versions of y
       <message name="IDS_FLAGS_WEBRTC_STUN_ORIGIN_DESCRIPTION" desc="Description of chrome:flags option to turn on Origin header for WebRTC STUN messages">
         When enabled, Stun messages generated by WebRTC will contain the Origin header.
       </message>
+      <message name="IDS_FLAGS_WEBRTC_ECHO_CANCELLER_3_NAME" desc="Name of chrome:flags option to enable WebRTC Echo Canceller 3.">
+        WebRTC Echo Canceller 3.
+      </message>
+      <message name="IDS_FLAGS_WEBRTC_ECHO_CANCELLER_3_DESCRIPTION" desc="Description of chrome:flags option to enable WebRTC Echo Canceller 3.">
+        Experimental WebRTC echo canceller (AEC3).
+      </message>
       <if expr="is_android">
        <message name="IDS_FLAGS_MEDIA_SCREEN_CAPTURE_NAME" desc="Name of chrome:flags option to enable screen capture." translateable="false">
          Experimental ScreenCapture.
@@ -5503,6 +5539,12 @@ Keep your key file in a safe place. You will need it to create new versions of y
       </message>
       <message name="IDS_FLAGS_WEBVR_DESCRIPTION" desc="Description for the flag to enable WebVR APIs.">
         Enabling this option allows web applications to access experimental Virtual Reality APIs.
+      </message>
+      <message name="IDS_FLAGS_WEBVR_EXPERIMENTAL_RENDERING_NAME" desc="Name of the 'Enable WebVR experimental optimizations' flag.">
+        WebVR experimental rendering optimizations
+      </message>
+      <message name="IDS_FLAGS_WEBVR_EXPERIMENTAL_RENDERING_DESCRIPTION" desc="Description for the flag to enable experimental WebVR rendering optimizations.">
+        Enabling this option activates experimental rendering path optimizations for WebVR.
       </message>
       <message name="IDS_FLAGS_GAMEPAD_EXTENSIONS_NAME" desc="Name of the flag which allows users to enable experimental extensions to the Gamepad API.">
         Gamepad Extensions
@@ -5589,6 +5631,30 @@ Keep your key file in a safe place. You will need it to create new versions of y
           </message>
       </if>
       <if expr="use_ash">
+        <message name="IDS_FLAGS_ASH_SHELF_COLOR" desc="Title of the flag which specifies the shelf coloring in Chrome OS system UI.">
+          Shelf Color in Chrome OS system UI
+        </message>
+        <message name="IDS_FLAGS_ASH_SHELF_COLOR_DESCRIPTION" desc="Description of the flag which specifies the shelf coloring in Chrome OS system UI.">
+          Specify the Shelf Color scheme in Chrome OS system UI
+        </message>
+        <message name="IDS_FLAGS_ASH_SHELF_COLOR_LIGHT_VIBRANT" desc="A shelf coloring style to be used by Chrome OS UI.">
+          Light &amp; Vibrant
+        </message>
+        <message name="IDS_FLAGS_ASH_SHELF_COLOR_NORMAL_VIBRANT" desc="A shelf coloring style to be used by Chrome OS UI.">
+          Normal &amp; Vibrant
+        </message>
+        <message name="IDS_FLAGS_ASH_SHELF_COLOR_DARK_VIBRANT" desc="A shelf coloring style to be used by Chrome OS UI.">
+          Dark &amp; Vibrant
+        </message>
+        <message name="IDS_FLAGS_ASH_SHELF_COLOR_LIGHT_MUTED" desc="A shelf coloring style to be used by Chrome OS UI.">
+          Light &amp; Muted
+        </message>
+        <message name="IDS_FLAGS_ASH_SHELF_COLOR_NORMAL_MUTED" desc="A shelf coloring style to be used by Chrome OS UI.">
+          Normal &amp; Muted
+        </message>
+        <message name="IDS_FLAGS_ASH_SHELF_COLOR_DARK_MUTED" desc="A shelf coloring style to be used by Chrome OS UI.">
+          Dark &amp; Muted
+        </message>
         <message name="IDS_FLAGS_ASH_MAXIMIZE_MODE_WINDOW_BACKDROP_NAME" desc="Title for the flag which can be used for window backdrops in TouchView.">
           Window backdrops in TouchView
         </message>
@@ -5645,11 +5711,17 @@ Keep your key file in a safe place. You will need it to create new versions of y
       <message name="IDS_FLAGS_JAVASCRIPT_HARMONY_DESCRIPTION" desc="Description for the flag to enable JavaScript Harmony features.">
         Enable web pages to use experimental JavaScript features.
       </message>
-      <message name="IDS_FLAGS_V8_FUTURE_NAME" desc="Title for the flag to enable the future V8 compilation pipeline.">
-        Experimental JavaScript Compilation Pipeline
+      <message name="IDS_FLAGS_V8_FUTURE_NAME" desc="Title for the flag to enable future features in V8.">
+        Experimental Features in V8 JavaScript execution
       </message>
-      <message name="IDS_FLAGS_V8_FUTURE_DESCRIPTION" desc="Description for the flag to enable the future V8 compilation pipeline.">
-        Enable V8 to use the experimental Ignition interpreter and TurboFan compiler for JavaScript execution.
+      <message name="IDS_FLAGS_V8_FUTURE_DESCRIPTION" desc="Description for the flag to enable future features in V8.">
+        Enable experimental features in V8 for JavaScript execution.
+      </message>
+      <message name="IDS_FLAGS_V8_DISABLE_IGNITION_TURBO_NAME" desc="Title for disabling the Ignition and TurboFan compilation pipeline in V8.">
+        Disable the new JavaScript Compilation Pipeline
+      </message>
+      <message name="IDS_FLAGS_V8_DISABLE_IGNITION_TURBO_DESCRIPTION" desc="Description for disabling the Ignition and TurboFan compilation pipeline in V8.">
+        Disable V8's new Ignition interpreter and TurboFan compiler for JavaScript execution.
       </message>
       <message name="IDS_FLAGS_ENABLE_ASM_WASM_NAME" desc="Title for the flag to enable Asm.js to WebAssembly.">
         Experimental Validate Asm.js and convert to WebAssembly when valid.
@@ -5867,12 +5939,6 @@ Keep your key file in a safe place. You will need it to create new versions of y
       <message name="IDS_FLAGS_PASSWORD_GENERATION_DESCRIPTION" desc="Description of flag to enable password generation.">
         Allow the user to have Chrome generate passwords when it detects account creation pages.
       </message>
-      <message name="IDS_FLAGS_AUTOMATIC_PASSWORD_SAVING_NAME" desc="Name of the flag to automatically save password.">
-        Save passwords automatically
-      </message>
-      <message name="IDS_FLAGS_AUTOMATIC_PASSWORD_SAVING_DESCRIPTION" desc="Description of the flag to automatically save password.">
-        Skip the passwords prompt and save passwords automatically.
-      </message>
       <message name="IDS_FLAGS_PASSWORD_FORCE_SAVING_NAME" desc="Name of the flag for the password manager's force-saving option.">
         Force-saving of passwords
       </message>
@@ -5883,7 +5949,13 @@ Keep your key file in a safe place. You will need it to create new versions of y
         Manual password generation.
       </message>
       <message name="IDS_FLAGS_MANUAL_PASSWORD_GENERATION_DESCRIPTION" desc="Description of the flag for manual password generation.">
-        Allow the user to manually enforce to generate password on a password field.
+        Show a 'Generate Password' option on the context menu for all password fields.
+      </message>
+      <message name="IDS_FLAGS_SHOW_AUTOFILL_SIGNATURES" desc="Name of the flag to show autofill signatures.">
+        Show autofill signatures.
+      </message>
+      <message name="IDS_FLAGS_SHOW_AUTOFILL_SIGNATURES_DESCRIPTION" desc="Description of the flag to show autofill signatures.">
+        Annotates web forms with Autofill signatures as HTML attributes.
       </message>
       <message name="IDS_PASSWORD_MANAGER_ACCOUNT_CHOOSER_TITLE_MANY_ACCOUNTS" desc="The title of the account chooser dialog/infobar for more than one account.">
         Choose your account saved with <ph name="PASSWORD_MANAGER_BRAND">$1<ex>Google Chrome</ex></ph> to sign in
@@ -5914,10 +5986,13 @@ Keep your key file in a safe place. You will need it to create new versions of y
         </message>
       </if>
       <message name="IDS_PASSWORD_MANAGER_DESKTOP_TO_IOS_PROMO_TITLE" desc="Title for Chrome iOS promotion appearing in the password bubble after a password is saved.">
-        Try Chrome on iPhone
+        Sync this password to your iPhone
       </message>
-      <message name="IDS_PASSWORD_MANAGER_DESKTOP_TO_IOS_PROMO_TEXT" desc="Text for Chrome iOS Promotion appearing in the password bubble after a password is saved.">
-        Never type this password again.  Send a link to install Chrome on your phone.
+      <message name="IDS_PASSWORD_MANAGER_DESKTOP_TO_IOS_PROMO_TITLE_V2" desc="Title for Chrome iOS promotion appearing in the password bubble after a password is saved.">
+        Get this password on your iPhone
+      </message>
+      <message name="IDS_PASSWORD_MANAGER_DESKTOP_TO_IOS_PROMO_TITLE_V3" desc="Title for Chrome iOS promotion appearing in the password bubble after a password is saved.">
+        Share this password with your iPhone
       </message>
       <message name="IDS_PASSWORD_MANAGER_SIGNIN_PROMO_TITLE" desc="Promotion text for Chrome sign-in appearing in the password bubble after a password is saved.">
         Password saved. To get your passwords on all your devices, sign in to Chrome.
@@ -6123,7 +6198,7 @@ Keep your key file in a safe place. You will need it to create new versions of y
       </message>
 
       <!-- Preview InfoBar -->
-      <message name="IDS_PREVIEWS_INFOBAR_SAVED_DATA_TITLE" desc="The text of the infobar notifying the user that a preview page has been shown to save data.">
+      <message name="IDS_PREVIEWS_INFOBAR_SAVED_DATA_TITLE" desc="The text of the infobar notifying the user that mobile data usage was reduced by showing a preview version of the web page instead of the full page.">
          Saved data.
       </message>
       <message name="IDS_PREVIEWS_INFOBAR_FASTER_PAGE_TITLE" desc="The text of the infobar notifying the user that a preview page has been shown to load faster.">
@@ -6249,6 +6324,14 @@ Keep your key file in a safe place. You will need it to create new versions of y
         </message>
         <message name="IDS_FLAGS_FULLSCREEN_TOOLBAR_REVEAL_DESCRIPTION" desc="Description of the flag to reveal the fullscreen toolbar for tab strip changes">
           Reveal the toolbar in fullscreen for a short period when the tab strip has changed.
+        </message>
+        <message name="IDS_FLAGS_TAB_STRIP_KEYBOARD_FOCUS_NAME" desc="Name of the
+  flag to enable keyboard focus for the tab strip">
+          Tab Strip Keyboard Focus
+        </message>
+        <message name="IDS_FLAGS_TAB_STRIP_KEYBOARD_FOCUS_DESCRIPTION"
+  desc="Description of the flag to enable keyboard focus for the tab strip">
+          Enable keyboard focus for the tabs in the tab strip.
         </message>
       </if>
       <message name="IDS_FLAGS_HOSTED_APP_SHIM_CREATION_NAME" desc="Name of the flag to enable creation of app shims for hosted apps on Mac.">
@@ -6387,6 +6470,12 @@ Keep your key file in a safe place. You will need it to create new versions of y
         </message>
         <message name="IDS_FLAGS_MAC_VIEWS_NATIVE_APP_WINDOWS_DESCRIPTION" desc="Description of flag to enable or disable toolkit-views Chrome App windows on Mac.">
           Controls whether to use Toolkit-Views based Chrome App windows.
+        </message>
+        <message name="IDS_FLAGS_MAC_VIEWS_TASK_MANAGER_NAME" desc="Name of the flag to enable or disable the toolkit-views Task Manager on Mac.">
+          Toolkit-Views Task Manager.
+        </message>
+        <message name="IDS_FLAGS_MAC_VIEWS_TASK_MANAGER_DESCRIPTION" desc="Description of the flag to enable or disable the toolkit-views Task Manager on Mac.">
+          Controls whether to use the Toolkit-Views based Task Manager.
         </message>
         <message name="IDS_FLAGS_APP_WINDOW_CYCLING_NAME" desc="Name of the flag to enable or disable custom Cmd+` App window cycling on Mac.">
           Custom Window Cycling for Chrome Apps.
@@ -6747,9 +6836,6 @@ Keep your key file in a safe place. You will need it to create new versions of y
       <message name="IDS_PLUGIN_NOT_AUTHORIZED" desc="The placeholder text for a plugin that requires user permission to run.">
         <ph name="PLUGIN_NAME">$1<ex>Java</ex></ph> needs your permission to run
       </message>
-      <message name="IDS_PLUGIN_NOT_FOUND" desc="The placeholder text for an unknown plugin that is not installed.">
-        Plugin not found
-      </message>
       <message name="IDS_PLUGIN_DOWNLOADING" desc="The placeholder text when downloading a missing plugin.">
         Downloading <ph name="PLUGIN_NAME">$1<ex>Realplayer</ex></ph>...
       </message>
@@ -6762,23 +6848,8 @@ Keep your key file in a safe place. You will need it to create new versions of y
       <message name="IDS_PLUGIN_DOWNLOAD_CANCELLED" desc="The placeholder text when the user canceled downloading the plugin.">
         Canceled
       </message>
-      <message name="IDS_PLUGIN_INSTALLING" desc="The placeholder text when installing a missing plugin.">
-        When <ph name="PLUGIN_NAME">$1<ex>Realplayer</ex></ph> finishes installing, reload the page to activate it
-      </message>
       <message name="IDS_PLUGIN_UPDATING" desc="The placeholder text when updating an out-of-date plugin.">
         When <ph name="PLUGIN_NAME">$1<ex>Realplayer</ex></ph> finishes updating, reload the page to activate it
-      </message>
-      <message name="IDS_PLUGIN_FOUND" desc="The placeholder text for a known plugin that is not installed.">
-        Install <ph name="PLUGIN_NAME">$1<ex>Quicktime</ex></ph> to display this content
-      </message>
-      <message name="IDS_PLUGIN_CONFIRM_INSTALL_DIALOG_TITLE" desc="Title of the plugin installation confirmation dialog.">
-        Install <ph name="PLUGIN_NAME">$1<ex>Realplayer</ex></ph>
-      </message>
-      <message name="IDS_PLUGIN_CONFIRM_INSTALL_DIALOG_MSG" desc="Message of the plugin installation confirmation dialog.">
-        Install <ph name="PLUGIN_NAME">$1<ex>Realplayer</ex></ph>? Only install plugins that you trust.
-      </message>
-      <message name="IDS_PLUGIN_CONFIRM_INSTALL_DIALOG_ACCEPT_BUTTON" desc="Button title to install a missing plugin.">
-        Install
       </message>
       <message name="IDS_PLUGIN_DISABLED" desc="The placeholder text for a disabled plugin.">
         <ph name="PLUGIN_NAME">$1<ex>Flash</ex></ph> disabled.
@@ -6966,6 +7037,18 @@ Keep your key file in a safe place. You will need it to create new versions of y
       </message>
       <message name="IDS_OMNIBOX_ACCESSIBLE_ANSWER" desc="Readable text represening a query typed by the user in the omnibox, followed by an indication that an answer to that query will follow, followed by the answer. The commas are significant as they will introduce a pause in the spoken text.">
         <ph name="QUERY">$1<ex>weather in los angeles</ex></ph>, answer, <ph name="ANSWER">$2<ex>sunny and 84 degrees</ex></ph>
+      </message>
+      <message name="IDS_FLAGS_NEW_OMNIBOX_ANSWER_TYPES_NAME" desc="Name of the flag to enable the new answers in suggest types in the omnibox.">
+        New omnibox answers in suggest types
+      </message>
+      <message name="IDS_FLAGS_NEW_OMNIBOX_ANSWER_TYPES_DESCRIPTION" desc="Description of the flag to enable the new answers in suggest types in the omnibox.">
+        Enables new types of answers in the omnibox suggest drop-down: currency conversions, dictionary definitions, sports scores, translations, and when is.
+      </message>
+      <message name="IDS_FLAGS_ENABLE_ZERO_SUGGEST_REDIRECT_TO_CHROME_NAME" desc="Name of the flag option to enable the redirect of omnibox zero suggest requests to a backend maintained by Chrome.">
+        Experimental contextual omnibox suggestion
+      </message>
+      <message name="IDS_FLAGS_ENABLE_ZERO_SUGGEST_REDIRECT_TO_CHROME_DESCRIPTION" desc="Description of the flag option to enable the redirect of omnibox zero suggest requests to a backend maintained by Chrome.">
+        Change omnibox contextual suggestions to an experimental source. Note that this is not an on/off switch for contextual omnibox and it only applies to suggestions provided before the user starts typing a URL or a search query (i.e. zero suggest).
       </message>
 
       <!--Tooltip strings-->
@@ -7348,11 +7431,20 @@ the Bookmarks menu.">
             Tell us what's happening
           </message>
         </if>
+        <message name="IDS_FEEDBACK_MINIMIZE_BUTTON_LABEL" desc="Label of the app minimize button.">
+          Minimize
+        </message>
+        <message name="IDS_FEEDBACK_CLOSE_BUTTON_LABEL" desc="Label of the app close button.">
+          Close
+        </message>
         <message name="IDS_FEEDBACK_REPORT_URL_LABEL" desc="Label showing the URL that will be reported">
           URL
         </message>
         <message name="IDS_FEEDBACK_USER_EMAIL_LABEL" desc="Label showing the e-mail address that will be reported">
           Email
+        </message>
+        <message name="IDS_FEEDBACK_ANONYMOUS_EMAIL_OPTION" desc="Option in the drop down menu to let the user send the feedback report anonymously.">
+          Report anonymously
         </message>
         <message name="IDS_FEEDBACK_SCREENSHOT_LABEL" desc="Label for the screenshot field if current screenshots are being shown">
           Include this screenshot
@@ -7998,6 +8090,44 @@ I don't think this site should be blocked!
           Unusual behavior detected
         </message>
       </if>
+
+      <!-- Settings reset prompt dialog messages -->
+      <message name="IDS_SETTINGS_RESET_PROMPT_TITLE_SEARCH_ENGINE" desc="The title for the settings reset dialog when the user's search engine setting has been modified. The dialog will ask users if they want to restore their modified setting to its original default value.">
+        Restore default search engine?
+      </message>
+      <message name="IDS_SETTINGS_RESET_PROMPT_TITLE_STARTUP_PAGE" desc="The title for the settings reset dialog when the user's startup page setting has been modified. The dialog will ask users if they want to restore their modified setting to its original default value.">
+        Restore default startup page?
+      </message>
+      <message name="IDS_SETTINGS_RESET_PROMPT_TITLE_HOMEPAGE" desc="The title for the settings reset dialog when the user's homepage setting has been modified by. The dialog will ask users if they want to restore their modified setting to its original default value.">
+        Restore default homepage?
+      </message>
+      <message name="IDS_SETTINGS_RESET_PROMPT_EXPLANATION_FOR_SEARCH_ENGINE_NO_EXTENSIONS" desc="This text is shown in the settings reset dialog to inform the user that their search engine has been modified, for example by unwanted software or extension, to something that they might not want. The value of the setting that is shown in the text is the possibly unwanted setting that will be reset to its original default if the user clicks the Restore button.">
+        Your search engine was changed to <ph name="URL">$1<ex>www.some-domain.com</ex></ph>.
+      </message>
+      <message name="IDS_SETTINGS_RESET_PROMPT_EXPLANATION_FOR_SEARCH_ENGINE_WITH_EXTENSIONS" desc="This text is shown in the settings reset dialog to inform the user that their search engine has been modified by an extension to something that they might not want. The value of the setting that is shown in the text is the possibly unwanted setting that will be reset to its original default value if the user clicks the Restore button.">
+        Your search engine was changed to <ph name="URL">$1<ex>www.some-domain.com</ex></ph>. To disable extensions that change your search engine, click Restore.
+      </message>
+      <message name="IDS_SETTINGS_RESET_PROMPT_EXPLANATION_FOR_STARTUP_PAGE_SINGLE_NO_EXTENSIONS" desc="This text is shown in the settings reset dialog to inform the user that their startup page setting has been modified, for example by unwanted software or extension, to something that they might not want. The value of the setting that is shown in the text is the possibly unwanted setting that will be reset to its original default value if the user clicks the Restore button.">
+        Your startup page was changed to <ph name="URL">$1<ex>www.some-domain.com</ex></ph>.
+      </message>
+      <message name="IDS_SETTINGS_RESET_PROMPT_EXPLANATION_FOR_STARTUP_PAGE_SINGLE_WITH_EXTENSIONS" desc="This text is shown in the settings reset dialog to inform the user that their startup page has been modified by an extension to something that they might not want. The value of the setting that is shown in the text is the possibly unwanted setting that will be reset to its original default value if the user clicks the Restore button.">
+        Your startup page was changed to <ph name="URL">$1<ex>www.some-domain.com</ex></ph>. To disable extensions that change your startup page, click Restore.
+      </message>
+      <message name="IDS_SETTINGS_RESET_PROMPT_EXPLANATION_FOR_STARTUP_PAGE_MULTIPLE_NO_EXTENSIONS" desc="This text is shown in the settings reset dialog to inform the user that their startup page setting has been modified, for example by unwanted software or extension, to something that they might not want. The value of the setting that is shown in the text is the possibly unwanted setting that will be reset to its original default if the user clicks the Restore button.">
+        Your startup pages were changed to include <ph name="URL">$1<ex>www.some-domain.com</ex></ph>.
+      </message>
+      <message name="IDS_SETTINGS_RESET_PROMPT_EXPLANATION_FOR_STARTUP_PAGE_MULTIPLE_WITH_EXTENSIONS" desc="This text is shown in the settings reset dialog to inform the user that their startup page has been modified by an extension to something that they might not want. The value of the setting that is shown in the text is the possibly unwanted setting that will be reset to its original default if the user clicks the Restore button.">
+        Your startup pages were changed to include <ph name="URL">$1<ex>www.some-domain.com</ex></ph>. To disable extensions that change your startup page, click Restore.
+      </message>
+      <message name="IDS_SETTINGS_RESET_PROMPT_EXPLANATION_FOR_HOMEPAGE_NO_EXTENSIONS" desc="This text is shown in the settings reset dialog to inform the user that their homepage setting has been modified, for example by unwanted software or extension, to something that they might not want. The value of the setting that is shown in the text is the possibly unwanted setting that will be reset to its original default value if the user clicks the Restore button.">
+        Your homepage was changed to <ph name="URL">$1<ex>www.some-domain.com</ex></ph>.
+      </message>
+      <message name="IDS_SETTINGS_RESET_PROMPT_EXPLANATION_FOR_HOMEPAGE_WITH_EXTENSIONS" desc="This text is shown in the settings reset dialog to inform the user that their homepagesetting has been modified by an extension to something that they might not want. The value of the setting that is shown in the text is the possibly unwanted setting that will be reset to its original default value if the user clicks the Restore button.">
+        Your homepage page was changed to <ph name="URL">$1<ex>www.some-domain.com</ex></ph>. To disable extensions that change your homepage, click Restore.
+      </message>
+      <message name="IDS_SETTINGS_RESET_PROMPT_ACCEPT_BUTTON_LABEL" desc="The settings reset dialog asks users if they want to restore a Chrome setting that has been modified by an unwanted software or extension to its original default value. This text is displayed on the main button in the dialog that, when clicked, will restore the setting.">
+        Restore
+      </message>
 
       <!-- Upgrade bubble messages -->
       <message name="IDS_REENABLE_UPDATES" desc="Text for the button the user clicks to re-enable automatic updates.">
@@ -9147,6 +9277,12 @@ I don't think this site should be blocked!
         </message>
         <message name="IDS_AUTOFILL_FIELD_LABEL_EXPIRATION_DATE" desc="The label of the Expiration date entry.">
           Expiration date
+        </message>
+        <message name="IDS_AUTOFILL_FIELD_LABEL_EXPIRATION_MONTH" desc="The label of the Expiration date entry.">
+          Expiration month
+        </message>
+        <message name="IDS_AUTOFILL_FIELD_LABEL_EXPIRATION_YEAR" desc="The label of the Expiration date entry.">
+          Expiration year
         </message>
 
         <!-- Extension settings -->
@@ -10408,8 +10544,11 @@ I don't think this site should be blocked!
       <message name="IDS_SYNC_CONFIRMATION_PERSONALIZE_SERVICES_BODY" desc="Body of the personalize services section of the sync confirmation dialog in the tab modal signin flow" formatter_data="android_java">
         Google may use your browsing history to personalize Search, ads, and other Google services
       </message>
+      <message name="IDS_SYNC_CONFIRMATION_PERSONALIZE_SERVICES_BODY_CHILD_ACCOUNT" desc="Body of the personalize services section of the sync confirmation dialog in the tab modal signin flow for child accounts" formatter_data="android_java">
+        Google may use your browsing history to personalize Search and other Google services
+      </message>
       <message name="IDS_SYNC_CONFIRMATION_SYNC_SETTINGS_LINK_BODY" desc="Label of the section containing the link to go to the sync setting page.">
-        Control how this works in <ph name="BEGIN_LINK">&lt;a id="settingsLink" href="#"&gt;</ph>Settings<ph name="END_LINK">&lt;/a&gt;<ex>&lt;/a&gt;</ex></ph>
+        Control how this works in <ph name="BEGIN_LINK">&lt;a id="settingsLink" href="chrome://settings"&gt;</ph>Settings<ph name="END_LINK">&lt;/a&gt;<ex>&lt;/a&gt;</ex></ph>
       </message>
       <message name="IDS_SYNC_CONFIRMATION_CONFIRM_BUTTON_LABEL" desc="Label of the confirmation button in the sync confirmation dialog of the tab modal signin flow">
         Ok, got it
@@ -11869,11 +12008,11 @@ Tell us what happened exactly before you got the profile error message:
         Password saved
       </message>
       <message name="IDS_MANAGE_PASSWORDS_CONFIRM_GENERATED_TEXT" desc="A message that the browser shows after saving a password it has autogenerated for the user. This message appears in a bubble and contains a link to all the user's saved autogenerated passwords. The link text is a separate string in the translation console and appears here as placeholder text.">
-        You can access it and all your <ph name="SAVED_PASSWORDS_LINK">$1<ex>Google saved passwords</ex></ph> from any browser.
+        Access your passwords from any device at <ph name="SAVED_PASSWORDS_LINK">$1<ex>Google saved passwords</ex></ph>.
       </message>
       <if expr="is_android">
         <message name="IDS_MANAGE_PASSWORDS_CONFIRM_GENERATED_TEXT_INFOBAR" desc="A message that the browser shows after saving a password it has autogenerated for the user. This message appears in an infobar and contains a link to all the user's saved autogenerated passwords. The link text is a separate string in the translation console and appears here as placeholder text.">
-          Password saved. You can access it and all your <ph name="SAVED_PASSWORDS_LINK">$1<ex>Google saved passwords</ex></ph> from any browser.
+          Password saved. Access your passwords from any device at <ph name="SAVED_PASSWORDS_LINK">$1<ex>Google saved passwords</ex></ph>.
         </message>
       </if>
       <message name="IDS_MANAGE_PASSWORDS_LINK" desc="The text for a link to the user's saved passwords. This is inserted into an infobar or a bubble that the browser shows to the user. The infobar and the bubble use a separate string in the translation console that has a placeholder for this link title.">
@@ -12441,6 +12580,21 @@ Please check your email at <ph name="ACCOUNT_EMAIL">$2<ex>jane.doe@gmail.com</ex
           <message name="IDS_PIN_KEYBOARD_DELETE_ACCESSIBLE_NAME" desc="Text to be spoken when the focus is set to the delete button of the PIN keyboard.">
             Delete
           </message>
+          <message name="IDS_FINGERPRINT_HINT_TEXT" desc="Text to display in the password field for user pod when user moves his mouse over the fingerprint icon.">
+            Touch to sign in
+          </message>
+          <message name="IDS_FINGERPRINT_LOGIN_TEXT" desc="Text to display in the password field for user pod when user is trying to login with fingerprint.">
+            Signing in...
+          </message>
+          <message name="IDS_FINGERPRINT_LOGIN_FAILED_TEXT" desc="Text to display in the password field for user pod when user failed to login with fingerprint.">
+            Not recognized
+          </message>
+          <message name="IDS_FINGERPRINT_ICON_MESSAGE" desc="Message to display when user moves his mouse over the fingerprint icon in the user pod.">
+            Place your finger on the fingerprint sensor to unlock the device.
+          </message>
+          <message name="IDS_LOGIN_ERROR_FINGERPRINT_MAX_ATTEMPT" desc="Couldn't sign in because fingerprint unlock has reached maximum attempt">
+            Sorry, your fingerprint is still not recognized. Please enter your password.
+          </message>
         </if>
         <message name="IDS_LOGIN_ERROR_AUTHENTICATING" desc="Couldn't sign in because password is invalid">
           Sorry, your password could not be verified. Please try again.
@@ -12597,12 +12751,6 @@ Please check your email at <ph name="ACCOUNT_EMAIL">$2<ex>jane.doe@gmail.com</ex
       </message>
       <message name="IDS_FLAGS_ENABLE_PASSWORD_SEPARATED_SIGNIN_FLOW_DESCRIPTION" desc="Description for the flag to enable the new gaia password-separated sign in flow.">
         When enabled, signing in to the browser will use a new gaia password-separated sign in flow.
-      </message>
-      <message name="IDS_FLAGS_SHOW_MATERIAL_DESIGN_USER_MENU_NAME" desc="Title for the flag to switch to the material design desktop user menu.">
-        Use material design user menu
-      </message>
-      <message name="IDS_FLAGS_SHOW_MATERIAL_DESIGN_USER_MENU_DESCRIPTION" desc="Description for the flag to switch to the material design desktop user menu.">
-        When enabled, the desktop user menu will be switched to the material design version with a more intuitive flow.
       </message>
 
       <message name="IDS_FLAGS_GOOGLE_PROFILE_INFO_NAME" desc="Title for the flag to enable the google profile information">
@@ -14268,17 +14416,17 @@ Please check your email at <ph name="ACCOUNT_EMAIL">$2<ex>jane.doe@gmail.com</ex
       <message name="IDS_FLAGS_CONTENT_SUGGESTIONS_CATEGORY_RANKER_DESCRIPTION" desc="Description for the flag to choose a category ranker for content suggestions, e.g. on the New Tab page." translateable="false">
         Set category ranker to order categories of content suggestions (e.g. on the NTP).
       </message>
-      <message name="IDS_FLAGS_OVERRIDE_SNIPPETS_SOURCE_NAME" desc="Name for flag to override the NTP snippets source" translateable="false">
-        Override New Tab Page suggestions snippets source
-      </message>
-      <message name="IDS_FLAGS_OVERRIDE_SNIPPETS_SOURCE_DESCRIPTION" desc="Description for the flag to override the NTP snippets source." translateable="false">
-        If set to something other than enabled, default or disabled, this will override the source used to retrieve content suggestions on the New Tab Page.
-      </message>
       <message name="IDS_FLAGS_ENABLE_NTP_SNIPPETS_VISIBILITY_NAME" desc="Name for the flag to enable increased visibilty for snippets on the New Tab Page." translateable="false">
         Make New Tab Page Snippets more visible.
       </message>
       <message name="IDS_FLAGS_ENABLE_NTP_SNIPPETS_VISIBILITY_DESCRIPTION" desc="Description for the flag to enable increased visibility for recently viewed tabs on the New Tab page." translateable="false">
         If enabled, the NTP snippets will become more discoverable with a larger portion of the first card above the fold.
+      </message>
+      <message name="IDS_FLAGS_ENABLE_NTP_REMOTE_SUGGESTIONS_NAME" desc="Name for the flag to enable server-side suggestions on the New Tab Page." translateable="false">
+        Show server-side suggestions on the New Tab page
+      </message>
+      <message name="IDS_FLAGS_ENABLE_NTP_REMOTE_SUGGESTIONS_DESCRIPTION" desc="Description for the flag to enable server-side suggestions on the New Tab Page." translateable="false">
+        If enabled, the list of content suggestions on the New Tab page (see #enable-ntp-snippets) will contain server-side suggestions (e.g., Articles for you). Furthermore, it allows to override the source used to retrieve these server-side suggestions.
       </message>
       <message name="IDS_FLAGS_ENABLE_NTP_RECENT_OFFLINE_TAB_SUGGESTIONS_NAME" desc="Name for the flag to enable suggestions for recently viewed tabs, which were captured offline, on the New Tab page." translateable="false">
         Show recent offline tabs on the New Tab page
@@ -14328,12 +14476,6 @@ Please check your email at <ph name="ACCOUNT_EMAIL">$2<ex>jane.doe@gmail.com</ex
       <message name="IDS_FLAGS_ENABLE_NTP_FOREIGN_SESSIONS_SUGGESTIONS_DESCRIPTION" desc="Description for the flag to enable foreign sessions suggestions on the New Tab page." translateable="false">
         If enabled, the list of content suggestions on the New Tab page (see #enable-ntp-snippets) will contain recent foreign tabs.
       </message>
-      <message name="IDS_FLAGS_ENABLE_NTP_STANDALONE_SUGGESTIONS_UI_NAME" desc="Name for the flag to enable a standalone content suggestions UI." translateable="false">
-        Standalone content suggestions UI
-      </message>
-      <message name="IDS_FLAGS_ENABLE_NTP_STANDALONE_SUGGESTIONS_UI_DESCRIPTION" desc="Description for the flag to enable a standalone content suggestions UI." translateable="false">
-        Show a menu item to open a standalone content suggestions UI for testing.
-      </message>
       <message name="IDS_FLAGS_ENABLE_NTP_SUGGESTIONS_NOTIFICATIONS_NAME" desc="Name for the flag to enable notifications for content suggestions on the New Tab page." translateable="false">
         Notify about new content suggestions available at the New Tab page
       </message>
@@ -14345,6 +14487,12 @@ Please check your email at <ph name="ACCOUNT_EMAIL">$2<ex>jane.doe@gmail.com</ex
       </message>
       <message name="IDS_FLAGS_NTP_CONDENSED_LAYOUT_DESCRIPTION" desc="Description for the flag to enable the condensed New Tab Page layout." translateable="false">
         Show a condensed layout on the New Tab Page.
+      </message>
+      <message name="IDS_FLAGS_NTP_CONDENSED_TILE_LAYOUT_NAME" desc="Name for the flag to enable the condensed tile layout on the New Tab Page." translateable="false">
+        Condensed NTP tile layout
+      </message>
+      <message name="IDS_FLAGS_NTP_CONDENSED_TILE_LAYOUT_DESCRIPTION" desc="Description for the flag to enable the condensed tile layout on the New Tab Page." translateable="false">
+        Show a condensed tile layout on the New Tab Page.
       </message>
       <message name="IDS_FLAGS_NTP_GOOGLE_G_IN_OMNIBOX_NAME" desc="Name for the flag to show a Google G in the omnibox on the New Tab Page." translateable="false">
         Google G in New Tab Page omnibox
@@ -14455,9 +14603,21 @@ read aloud to screenreader users to announce that a completion is available.">
       <message name="IDS_VR_SHELL_UI_RELOAD_BUTTON" desc="Text under the VR scene reload page button">
         Reload
       </message>
+      <message name="IDS_VR_SHELL_NEW_TAB_BUTTON" desc="Text on the VR scene new tab button">
+        New Tab
+      </message>
+      <message name="IDS_VR_SHELL_NEW_INCOGNITO_TAB_BUTTON" desc="Text on the VR scene new incognito tab button">
+        New Incognito Tab
+      </message>
     </if>
 
     <!-- Web payments -->
+    <message name="IDS_FLAGS_WEB_PAYMENTS_NAME" desc="Name of the flag to enable Web Payments API." translateable="false">
+      Web Payments
+    </message>
+    <message name="IDS_FLAGS_WEB_PAYMENTS_DESCRIPTION" desc="Description for the flag to enable Web Payments API" translateable="false">
+      Enable Web Payments API integration, a JavaScript API for merchants.
+    </message>
     <if expr="is_android">
       <message name="IDS_FLAGS_ENABLE_ANDROID_PAY_INTEGRATION_V1_NAME" desc="Name of the flag to enable the first version of Android Pay integration" translateable="false">
         Enable Android Pay v1
@@ -14482,6 +14642,12 @@ read aloud to screenreader users to announce that a completion is available.">
       </message>
       <message name="IDS_FLAGS_ANDROID_PAYMENT_APPS_DESCRIPTION" desc="Description for the flag to enable third party Android payment apps" translateable="false">
         Enable third party Android apps to integrate as payment apps
+      </message>
+      <message name="IDS_FLAGS_ANDROID_PAYMENT_APPS_FILTER_TITLE" desc="Title of the flag to enable filtering out third party Android payment apps" translateable="false">
+        Android payment apps filter
+      </message>
+      <message name="IDS_FLAGS_ANDROID_PAYMENT_APPS_FILTER_DESCRIPTION" desc="Description for the flag to enable filtering out third party Android payment apps" translateable="false">
+        Enable filtering out third party Android apps that can not be shown in settings
       </message>
     </if>
 
@@ -14787,6 +14953,54 @@ read aloud to screenreader users to announce that a completion is available.">
     <!-- Automation info bar -->
     <message name="IDS_CONTROLLED_BY_AUTOMATION" desc="Message shown when the browser session is being controlled by an automated test.">
       Chrome is being controlled by automated test software.
+    </message>
+
+    <!-- Desktop iOS promotion chrome://flags strings -->
+    <if expr="is_win">
+      <message name="IDS_FLAGS_ENABLE_DESKTOP_IOS_PROMOTIONS_NAME" desc="Name for the flag to enable desktop to iOS promotions" translateable="false">
+        Desktop to iOS promotions.
+      </message>
+      <message name="IDS_FLAGS_ENABLE_DESKTOP_IOS_PROMOTIONS_DESCRIPTION" desc="Description for the flag to enable desktop to iOS promotions" translateable="false">
+        Enable Desktop to iOS promotions, and allow users to see them if they are eligible.
+      </message>
+    </if>
+
+    <if expr="is_android">
+      <message name="IDS_FLAGS_ENABLE_CUSTOM_FEEDBACK_UI_NAME" desc="Name for the flag to enable custom feeback UI" translateable="false">
+        Enable Custom Feedback UI
+      </message>
+      <message name="IDS_FLAGS_ENABLE_CUSTOM_FEEDBACK_UI_DESCRIPTION" desc="Name for the flag to enable custom feeback UI">
+        Enables a custom feedback UI when submitting feedback through Google Feedback. Works with Google Play Services v10.2+
+      </message>
+    </if>
+
+    <message name="IDS_FLAGS_ENABLE_ADJUSTABLE_LARGE_CURSOR_NAME" desc="Name of the flag that enables adjustable large cursor.">
+      Enable adjustable large cursor
+    </message>
+    <message name="IDS_FLAGS_ENABLE_ADJUSTABLE_LARGE_CURSOR_DESCRIPTION" desc="Description of the flag that enables adjustable large cursor.">
+      Make size of accessibility large cursor adjustable.
+    </message>
+    <if expr="chromeos or is_linux or is_macosx or is_win">
+      <message name="IDS_FLAGS_OMNIBOX_ENTITY_SUGGESTIONS_NAME" desc="Name of the flag that enables receiving entity suggestions.">
+        Omnibox entity suggestions
+      </message>
+      <message name="IDS_FLAGS_OMNIBOX_ENTITY_SUGGESTIONS_DESCRIPTION" desc="Description of the flag that enables entity suggestions.">
+        Enable receiving entity suggestions in Omnibox.
+      </message>
+    </if>
+    <if expr="chromeos">
+      <message name="IDS_FLAGS_ENABLE_CHROMEVOX_ARC_SUPPORT_NAME" desc="Name of the flag that enables ChromeVox support for ARC.">
+        ChromeVox ARC support
+      </message>
+      <message name="IDS_FLAGS_ENABLE_CHROMEVOX_ARC_SUPPORT_DESCRIPTION" desc="Description of the flag that enables ChromeVox support for ARC.">
+        Enable ChromeVox screen reader features in ARC
+      </message>
+    </if>
+    <message name="IDS_FLAGS_MOJO_LOADING_NAME" desc="Title for the flag to enable Mojo IPC for resource loading" translateable="false">
+      Use Mojo IPC for resource loading
+    </message>
+    <message name="IDS_FLAGS_MOJO_LOADING_DESCRIPTION" desc="Description for the flag to enable Mojo IPC for resource loading" translateable="false">
+      Use Mojo IPC instead of traditional Chrome IPC for resource loading.
     </message>
   </messages>
  </release>

@@ -32,9 +32,9 @@ class PropertyTreeManager {
   WTF_MAKE_NONCOPYABLE(PropertyTreeManager);
 
  public:
-  PropertyTreeManager(cc::PropertyTrees&, cc::Layer* rootLayer);
-
-  static constexpr int kPropertyTreeSequenceNumber = 1;
+  PropertyTreeManager(cc::PropertyTrees&,
+                      cc::Layer* rootLayer,
+                      int sequenceNumber);
 
   void setupRootTransformNode();
   void setupRootClipNode();
@@ -75,7 +75,9 @@ class PropertyTreeManager {
 
   int ensureCompositorTransformNode(const TransformPaintPropertyNode*);
   int ensureCompositorClipNode(const ClipPaintPropertyNode*);
-  int ensureCompositorScrollNode(const ScrollPaintPropertyNode*);
+  // Update the layer->scroll and scroll->layer mapping. The latter is temporary
+  // until |owning_layer_id| is removed from the scroll node.
+  void updateLayerScrollMapping(cc::Layer*, const TransformPaintPropertyNode*);
 
   int switchToEffectNode(const EffectPaintPropertyNode& nextEffect);
   int getCurrentCompositorEffectNodeIndex() const {
@@ -89,6 +91,8 @@ class PropertyTreeManager {
   cc::ClipTree& clipTree();
   cc::EffectTree& effectTree();
   cc::ScrollTree& scrollTree();
+
+  int ensureCompositorScrollNode(const ScrollPaintPropertyNode*);
 
   const EffectPaintPropertyNode* currentEffectNode() const;
 
@@ -114,6 +118,7 @@ class PropertyTreeManager {
     int id;
   };
   Vector<BlinkEffectAndCcIdPair> m_effectStack;
+  int m_sequenceNumber;
 
 #if DCHECK_IS_ON()
   HashSet<const EffectPaintPropertyNode*> m_effectNodesConverted;

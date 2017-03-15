@@ -66,7 +66,9 @@ void SurfaceLayerImpl::AppendQuads(RenderPass* render_pass,
   AppendRainbowDebugBorder(render_pass);
   auto* primary = CreateSurfaceDrawQuad(
       render_pass, SurfaceDrawQuadType::PRIMARY, primary_surface_info_);
-  if (primary) {
+  // Emitting a fallback SurfaceDrawQuad is unnecessary if the primary and
+  // fallback surface Ids match.
+  if (primary && fallback_surface_info_.id() != primary_surface_info_.id()) {
     primary->fallback_quad = CreateSurfaceDrawQuad(
         render_pass, SurfaceDrawQuadType::FALLBACK, fallback_surface_info_);
   }
@@ -76,7 +78,7 @@ SurfaceDrawQuad* SurfaceLayerImpl::CreateSurfaceDrawQuad(
     RenderPass* render_pass,
     SurfaceDrawQuadType surface_draw_quad_type,
     const SurfaceInfo& surface_info) {
-  if (!surface_info.id().is_valid())
+  if (!surface_info.is_valid())
     return nullptr;
 
   gfx::Rect quad_rect(surface_info.size_in_pixels());

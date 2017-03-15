@@ -89,7 +89,7 @@ class PropertyTreePrinter {
     for (unsigned i = 0; i < indent; i++)
       stringBuilder.append(' ');
     if (m_nodeToDebugString.contains(node))
-      stringBuilder.append(m_nodeToDebugString.get(node));
+      stringBuilder.append(m_nodeToDebugString.at(node));
     stringBuilder.append(String::format(" %p ", node));
     stringBuilder.append(node->toString());
     stringBuilder.append("\n");
@@ -493,10 +493,9 @@ class PaintPropertyTreeGraphBuilder {
     for (const LayoutObject* child = object.slowFirstChild(); child;
          child = child->nextSibling())
       writeLayoutObjectNode(*child);
-    if (object.isLayoutPart() && toLayoutPart(object).widget() &&
-        toLayoutPart(object).widget()->isFrameView()) {
-      FrameView* frameView =
-          static_cast<FrameView*>(toLayoutPart(object).widget());
+    if (object.isLayoutPart() && toLayoutPart(object).frameViewBase() &&
+        toLayoutPart(object).frameViewBase()->isFrameView()) {
+      FrameView* frameView = toFrameView(toLayoutPart(object).frameViewBase());
       writeFrameViewNode(*frameView, &object);
     }
   }

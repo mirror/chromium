@@ -78,7 +78,7 @@ includes `R.java`).
 * Import Android style settings:
     * Help -&gt; Find Action -&gt; "Code Style" (settings) -&gt; Java -&gt;
       Manage -&gt; Import
-        * Select `third_party/android_platform/development/ide/intellij/codestyles/AndroidStyle.xml`
+        * Select `tools/android/android_studio/ChromiumStyle.xml`
 * Turn on automatic import:
     * Help -&gt; Find Action -&gt; "Auto Import"
         * Tick all the boxes under "Java" and change the dropdown to "All".
@@ -120,11 +120,14 @@ resources, native libraries, etc.
 
 ### What works
 
-* Tested with Android Studio v2.2.
+* Tested with Android Studio v2.3.
+    * If you get an error about build tools version 25.0.0, install it manually.
 * Java editing and gradle compile works.
 * Instrumentation tests included as androidTest.
 * Symlinks to existing .so files in jniLibs (doesn't generate them).
 * Editing resource xml files.
+* Java debugging (see
+[here](/docs/android_debugging_instructions.md#Android-Studio))
 
 ### What doesn't work (yet) ([crbug](https://bugs.chromium.org/p/chromium/issues/detail?id=620034))
 

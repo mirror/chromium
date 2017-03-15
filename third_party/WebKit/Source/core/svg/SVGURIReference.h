@@ -21,14 +21,17 @@
 #ifndef SVGURIReference_h
 #define SVGURIReference_h
 
+#include <memory>
 #include "core/CoreExport.h"
-#include "core/dom/Document.h"
 #include "core/svg/SVGAnimatedHref.h"
 #include "platform/heap/Handle.h"
+#include "wtf/Functional.h"
 
 namespace blink {
 
+class Document;
 class Element;
+class IdTargetObserver;
 
 class CORE_EXPORT SVGURIReference : public GarbageCollectedMixin {
  public:
@@ -52,6 +55,25 @@ class CORE_EXPORT SVGURIReference : public GarbageCollectedMixin {
                                              AtomicString* = nullptr);
 
   const String& hrefString() const { return m_href->currentValue()->value(); }
+
+  // Create an 'id' observer for the href associated with this SVGURIReference
+  // and its corresponding SVGElement (which should be passed as
+  // |contextElement|.) Will call buildPendingResource() on |contextElement|
+  // when changes to the 'id' are noticed.
+  Element* observeTarget(Member<IdTargetObserver>&, SVGElement&);
+  // Create an 'id' observer for any id denoted by |hrefString|, calling
+  // buildPendingResource() on |contextElement| on changes.
+  static Element* observeTarget(Member<IdTargetObserver>&,
+                                SVGElement&,
+                                const String& hrefString);
+  // Create an 'id' observer for |id| in the specified TreeScope. On changes,
+  // the passed Closure will be called.
+  static Element* observeTarget(Member<IdTargetObserver>&,
+                                TreeScope&,
+                                const AtomicString& id,
+                                std::unique_ptr<WTF::Closure>);
+  // Unregister and destroy the observer.
+  static void unobserveTarget(Member<IdTargetObserver>&);
 
   // JS API
   SVGAnimatedHref* href() const { return m_href.get(); }

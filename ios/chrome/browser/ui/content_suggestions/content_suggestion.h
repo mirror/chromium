@@ -7,11 +7,36 @@
 
 #import <UIKit/UIKit.h>
 
-// Data for a suggestions item, compatible with Objective-C.
-@interface ContentSuggestion : NSObject
+#import "ios/chrome/browser/ui/content_suggestions/content_suggestion_identifier.h"
+#include "url/gurl.h"
 
-@property(nonatomic, copy) NSString* title;
-@property(nonatomic, strong) UIImage* image;
+namespace base {
+class Time;
+}
+
+// Enum defining the type of a ContentSuggestions.
+typedef NS_ENUM(NSInteger, ContentSuggestionType) {
+  ContentSuggestionTypeArticle
+};
+
+// Data for a suggestions item, compatible with Objective-C. Mostly acts as a
+// wrapper for ntp_snippets::ContentSuggestion.
+@interface ContentSuggestion : NSObject<ContentSuggestionIdentification>
+
+// Title of the suggestion.
+@property(nonatomic, copy, nullable) NSString* title;
+// Text for the suggestion.
+@property(nonatomic, copy, nullable) NSString* text;
+// Image for the suggestion.
+@property(nonatomic, strong, nullable) UIImage* image;
+// URL associated with the suggestion.
+@property(nonatomic, assign) GURL url;
+// The name of the publisher.
+@property(nonatomic, copy, nullable) NSString* publisher;
+// The date of publication.
+@property(nonatomic, assign) base::Time publishDate;
+
+@property(nonatomic, assign) ContentSuggestionType type;
 
 @end
 

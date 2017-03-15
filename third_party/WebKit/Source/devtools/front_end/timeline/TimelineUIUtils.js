@@ -174,6 +174,9 @@ Timeline.TimelineUIUtils = class {
     eventStyles[recordTypes.GCCollectGarbage] =
         new Timeline.TimelineRecordStyle(Common.UIString('DOM GC'), categories['scripting']);
 
+    eventStyles[recordTypes.AsyncTask] =
+        new Timeline.TimelineRecordStyle(Common.UIString('Async Task'), categories['async']);
+
     Timeline.TimelineUIUtils._eventStylesMap = eventStyles;
     return eventStyles;
   }
@@ -527,6 +530,10 @@ Timeline.TimelineUIUtils = class {
         detailsText = Common.UIString('collect');
         break;
 
+      case recordType.AsyncTask:
+        detailsText = eventData ? eventData['name'] : null;
+        break;
+
       default:
         if (event.hasCategory(TimelineModel.TimelineModel.Category.Console))
           detailsText = null;
@@ -673,25 +680,28 @@ Timeline.TimelineUIUtils = class {
    * @param {!TimelineModel.TimelineModel} model
    * @param {!Components.Linkifier} linkifier
    * @param {boolean} detailed
-   * @param {function(!DocumentFragment)} callback
+   * @return {!Promise<!DocumentFragment>}
    */
-  static buildTraceEventDetails(event, model, linkifier, detailed, callback) {
-    var target = model.targetByEvent(event);
-    if (!target) {
-      callbackWrapper();
-      return;
+  static async buildTraceEventDetails(event, model, linkifier, detailed) {
+    var maybeTarget = model.targetByEvent(event);
+    if (!maybeTarget) {
+      return Timeline.TimelineUIUtils._buildTraceEventDetailsSynchronously(
+          event, model, linkifier, detailed, null);
     }
-    var relatedNodes = null;
-    var barrier = new CallbackBarrier();
+
+    var target = /** @type {!SDK.Target} */ (maybeTarget);
     if (!event[Timeline.TimelineUIUtils._previewElementSymbol]) {
       var url = TimelineModel.TimelineData.forEvent(event).url;
-      if (url) {
-        Components.DOMPresentationUtils.buildImagePreviewContents(
-            target, url, false, barrier.createCallback(saveImage));
-      } else if (TimelineModel.TimelineData.forEvent(event).picture) {
-        Timeline.TimelineUIUtils.buildPicturePreviewContent(event, target, barrier.createCallback(saveImage));
-      }
+      event[Timeline.TimelineUIUtils._previewElementSymbol] = await new Promise(fulfill => {
+        if (url)
+          Components.DOMPresentationUtils.buildImagePreviewContents(target, url, false, fulfill);
+        else if (TimelineModel.TimelineData.forEvent(event).picture)
+          Timeline.TimelineUIUtils.buildPicturePreviewContent(event, target, fulfill);
+        else
+          fulfill();
+      }) || null;
     }
+
     var nodeIdsToResolve = new Set();
     var timelineData = TimelineModel.TimelineData.forEvent(event);
     if (timelineData.backendNodeId)
@@ -699,31 +709,17 @@ Timeline.TimelineUIUtils = class {
     var invalidationTrackingEvents = TimelineModel.InvalidationTracker.invalidationEventsFor(event);
     if (invalidationTrackingEvents)
       Timeline.TimelineUIUtils._collectInvalidationNodeIds(nodeIdsToResolve, invalidationTrackingEvents);
+    var relatedNodes = null;
     if (nodeIdsToResolve.size) {
       var domModel = SDK.DOMModel.fromTarget(target);
-      if (domModel)
-        domModel.pushNodesByBackendIdsToFrontend(nodeIdsToResolve, barrier.createCallback(setRelatedNodeMap));
-    }
-    barrier.callWhenDone(callbackWrapper);
-
-    /**
-     * @param {!Element=} element
-     */
-    function saveImage(element) {
-      event[Timeline.TimelineUIUtils._previewElementSymbol] = element || null;
+      if (domModel) {
+        relatedNodes = await new Promise(fulfill =>
+            domModel.pushNodesByBackendIdsToFrontend(nodeIdsToResolve, fulfill));
+      }
     }
 
-    /**
-     * @param {?Map<number, ?SDK.DOMNode>} nodeMap
-     */
-    function setRelatedNodeMap(nodeMap) {
-      relatedNodes = nodeMap;
-    }
-
-    function callbackWrapper() {
-      callback(Timeline.TimelineUIUtils._buildTraceEventDetailsSynchronously(
-          event, model, linkifier, detailed, relatedNodes));
-    }
+    return Timeline.TimelineUIUtils._buildTraceEventDetailsSynchronously(
+          event, model, linkifier, detailed, relatedNodes);
   }
 
   /**
@@ -802,7 +798,11 @@ Timeline.TimelineUIUtils = class {
         }
         if (eventData['encodedDataLength']) {
           contentHelper.appendTextRow(
-              Common.UIString('Encoded Data Length'), Common.UIString('%d Bytes', eventData['encodedDataLength']));
+              Common.UIString('Encoded Data'), Common.UIString('%d Bytes', eventData['encodedDataLength']));
+        }
+        if (eventData['decodedBodyLength']) {
+          contentHelper.appendTextRow(
+              Common.UIString('Decoded Body'), Common.UIString('%d Bytes', eventData['decodedBodyLength']));
         }
         break;
       case recordTypes.CompileScript:
@@ -1100,12 +1100,14 @@ Timeline.TimelineUIUtils = class {
       contentHelper.appendTextRow(Common.UIString('Mime Type'), request.mimeType);
     var lengthText = '';
     if (request.fromCache)
-      lengthText += Common.UIString('(from cache) ');
+      lengthText += Common.UIString(' (from cache)');
     if (request.fromServiceWorker)
-      lengthText += Common.UIString('(from service worker)');
+      lengthText += Common.UIString(' (from service worker)');
     if (request.encodedDataLength || !lengthText)
-      lengthText = `${Number.bytesToString(request.encodedDataLength)} ${lengthText}`;
-    contentHelper.appendTextRow(Common.UIString('Encoded Length'), lengthText);
+      lengthText = `${Number.bytesToString(request.encodedDataLength)}${lengthText}`;
+    contentHelper.appendTextRow(Common.UIString('Encoded Data'), lengthText);
+    if (request.decodedBodyLength)
+      contentHelper.appendTextRow(Common.UIString('Decoded Body'), Number.bytesToString(request.decodedBodyLength));
     const title = Common.UIString('Initiator');
     const sendRequest = request.children[0];
     const topFrame = TimelineModel.TimelineData.forEvent(sendRequest).topFrame();
@@ -1212,6 +1214,17 @@ Timeline.TimelineUIUtils = class {
       contentHelper.addSection(Common.UIString('Invalidations'));
       Timeline.TimelineUIUtils._generateInvalidations(event, target, relatedNodesMap, contentHelper);
     } else if (initiator) {  // Partial invalidation tracking.
+      var delay = event.startTime - initiator.startTime;
+      contentHelper.appendTextRow(Common.UIString('Pending for'), Number.preciseMillisToString(delay, 1));
+
+      var link = createElementWithClass('span', 'devtools-link');
+      link.textContent = Common.UIString('reveal');
+      link.addEventListener('click', () => {
+        Timeline.TimelinePanel.instance().select(
+            Timeline.TimelineSelection.fromTraceEvent(/** @type {!SDK.TracingModel.Event} */ (initiator)));
+      });
+      contentHelper.appendElementRow(Common.UIString('Initiator'), link);
+
       var initiatorStackTrace = TimelineModel.TimelineData.forEvent(initiator).stackTrace;
       if (initiatorStackTrace) {
         contentHelper.appendStackTrace(
@@ -1392,6 +1405,7 @@ Timeline.TimelineUIUtils = class {
         return;
       }
       var container = createElement('div');
+      UI.appendStyle(container, 'components/imagePreview.css');
       container.classList.add('image-preview-container', 'vbox', 'link');
       var img = container.createChild('img');
       img.src = imageURL;
@@ -1466,6 +1480,8 @@ Timeline.TimelineUIUtils = class {
           'painting', Common.UIString('Painting'), true, 'hsl(109, 33%, 64%)', 'hsl(109, 33%, 55%)'),
       gpu: new Timeline.TimelineCategory(
           'gpu', Common.UIString('GPU'), false, 'hsl(109, 33%, 64%)', 'hsl(109, 33%, 55%)'),
+      async: new Timeline.TimelineCategory(
+          'async', Common.UIString('Async'), false, 'hsl(0, 100%, 50%)', 'hsl(0, 100%, 40%)'),
       other:
           new Timeline.TimelineCategory('other', Common.UIString('Other'), false, 'hsl(0, 0%, 87%)', 'hsl(0, 0%, 79%)'),
       idle: new Timeline.TimelineCategory('idle', Common.UIString('Idle'), false, 'hsl(0, 0%, 98%)', 'hsl(0, 0%, 98%)')
@@ -1955,7 +1971,7 @@ Timeline.TimelineUIUtils.InvalidationsGroupElement = class extends UI.TreeElemen
     for (var i = 0; i < invalidations.length; i++) {
       var invalidation = invalidations[i];
       var invalidationNode = this._createInvalidationNode(invalidation, false);
-      invalidationNode.addEventListener('click', (e) => e.consume(), false);
+      invalidationNode.addEventListener('click', e => e.consume(), false);
       if (invalidationNode && !invalidationNodeIdMap[invalidation.nodeId]) {
         invalidationNodes.push(invalidationNode);
         invalidationNodeIdMap[invalidation.nodeId] = true;

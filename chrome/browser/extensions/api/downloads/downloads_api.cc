@@ -476,8 +476,8 @@ void CompileDownloadQueryOrderBy(
     DownloadQuery* query) {
   // TODO(benjhayden): Consider switching from LazyInstance to explicit string
   // comparisons.
-  static base::LazyInstance<SortTypeMap> sorter_types =
-    LAZY_INSTANCE_INITIALIZER;
+  static base::LazyInstance<SortTypeMap>::DestructorAtExit sorter_types =
+      LAZY_INSTANCE_INITIALIZER;
   if (sorter_types.Get().empty())
     InitSortTypeMap(sorter_types.Pointer());
 
@@ -509,8 +509,8 @@ void RunDownloadQuery(
     DownloadQuery::DownloadVector* results) {
   // TODO(benjhayden): Consider switching from LazyInstance to explicit string
   // comparisons.
-  static base::LazyInstance<FilterTypeMap> filter_types =
-    LAZY_INSTANCE_INITIALIZER;
+  static base::LazyInstance<FilterTypeMap>::DestructorAtExit filter_types =
+      LAZY_INSTANCE_INITIALIZER;
   if (filter_types.Get().empty())
     InitFilterTypeMap(filter_types.Pointer());
 
@@ -1053,8 +1053,7 @@ void DownloadsDownloadFunction::OnStarted(
   VLOG(1) << __func__ << " " << item << " " << interrupt_reason;
   if (item) {
     DCHECK_EQ(content::DOWNLOAD_INTERRUPT_REASON_NONE, interrupt_reason);
-    SetResult(base::MakeUnique<base::FundamentalValue>(
-        static_cast<int>(item->GetId())));
+    SetResult(base::MakeUnique<base::Value>(static_cast<int>(item->GetId())));
     if (!creator_suggested_filename.empty() ||
         (creator_conflict_action !=
          downloads::FILENAME_CONFLICT_ACTION_UNIQUIFY)) {
@@ -1525,7 +1524,7 @@ void DownloadsGetFileIconFunction::OnIconURLExtracted(const std::string& url) {
     return;
   }
   RecordApiFunctions(DOWNLOADS_FUNCTION_GET_FILE_ICON);
-  SetResult(base::MakeUnique<base::StringValue>(url));
+  SetResult(base::MakeUnique<base::Value>(url));
   SendResponse(true);
 }
 
@@ -1862,10 +1861,10 @@ void ExtensionDownloadsEventRouter::OnDownloadRemoved(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (download_item->IsTemporary())
     return;
-  DispatchEvent(events::DOWNLOADS_ON_ERASED, downloads::OnErased::kEventName,
-                true, Event::WillDispatchCallback(),
-                base::MakeUnique<base::FundamentalValue>(
-                    static_cast<int>(download_item->GetId())));
+  DispatchEvent(
+      events::DOWNLOADS_ON_ERASED, downloads::OnErased::kEventName, true,
+      Event::WillDispatchCallback(),
+      base::MakeUnique<base::Value>(static_cast<int>(download_item->GetId())));
 }
 
 void ExtensionDownloadsEventRouter::DispatchEvent(

@@ -460,7 +460,11 @@ void SoftwareRenderer::DrawRenderPassQuad(const RenderPassDrawQuad* quad) {
   SkRect dest_visible_rect = gfx::RectFToSkRect(
       MathUtil::ScaleRectProportional(QuadVertexRect(), gfx::RectF(quad->rect),
                                       gfx::RectF(quad->visible_rect)));
-  SkRect content_rect = SkRect::MakeWH(quad->rect.width(), quad->rect.height());
+  // TODO(sunxd): make this never be empty.
+  SkRect content_rect =
+      quad->tex_coord_rect.IsEmpty()
+          ? SkRect::MakeWH(quad->rect.width(), quad->rect.height())
+          : RectFToSkRect(quad->tex_coord_rect);
 
   const SkBitmap* content = lock.sk_bitmap();
 
@@ -516,10 +520,9 @@ void SoftwareRenderer::DrawRenderPassQuad(const RenderPassDrawQuad* quad) {
     const SkBitmap* mask = mask_lock->sk_bitmap();
 
     // Scale normalized uv rect into absolute texel coordinates.
-    SkRect mask_rect =
-        gfx::RectFToSkRect(gfx::ScaleRect(quad->MaskUVRect(),
-                                          quad->mask_texture_size.width(),
-                                          quad->mask_texture_size.height()));
+    SkRect mask_rect = gfx::RectFToSkRect(
+        gfx::ScaleRect(quad->mask_uv_rect, quad->mask_texture_size.width(),
+                       quad->mask_texture_size.height()));
 
     SkMatrix mask_mat;
     mask_mat.setRectToRect(mask_rect, dest_rect, SkMatrix::kFill_ScaleToFit);

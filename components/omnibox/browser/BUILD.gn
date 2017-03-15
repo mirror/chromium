@@ -19,7 +19,6 @@ aggregate_vector_icons("omnibox_vector_icons") {
     "extension_app.icon",
     "http.icon",
     "keyword_search.icon",
-    "search.icon",
     "star.1x.icon",
     "star.icon",
   ]
@@ -68,6 +67,7 @@ static_library("browser") {
     "keyword_provider.cc",
     "keyword_provider.h",
     "match_compare.h",
+    "omnibox_client.cc",
     "omnibox_client.h",
     "omnibox_controller.cc",
     "omnibox_controller.h",
@@ -155,6 +155,7 @@ static_library("browser") {
     "//components/url_formatter",
     "//components/variations",
     "//components/variations/net",
+    "//extensions/common:common_constants",
     "//net",
     "//skia",
     "//sql",
@@ -166,7 +167,10 @@ static_library("browser") {
 
   if (!is_android && !is_ios) {
     sources += get_target_outputs(":omnibox_vector_icons")
-    deps += [ ":omnibox_vector_icons" ]
+    deps += [
+      ":omnibox_vector_icons",
+      "//ui/vector_icons",
+    ]
   }
 
   # TODO(brettw) Fix the include cycle and remove this line.

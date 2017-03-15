@@ -33,6 +33,7 @@
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/app_mode/kiosk_app_manager.h"
 #include "chrome/browser/chromeos/login/demo_mode/demo_app_launcher.h"
+#include "chrome/browser/chromeos/login/enterprise_user_session_metrics.h"
 #include "chrome/browser/chromeos/login/session/user_session_manager.h"
 #include "chrome/browser/chromeos/login/signin/auth_sync_observer.h"
 #include "chrome/browser/chromeos/login/signin/auth_sync_observer_factory.h"
@@ -163,6 +164,7 @@ void ChromeUserManagerImpl::RegisterPrefs(PrefRegistrySimple* registry) {
   SupervisedUserManager::RegisterPrefs(registry);
   SessionLengthLimiter::RegisterPrefs(registry);
   BootstrapManager::RegisterPrefs(registry);
+  enterprise_user_session_metrics::RegisterPrefs(registry);
 }
 
 // static
@@ -225,6 +227,10 @@ ChromeUserManagerImpl::ChromeUserManagerImpl()
           cros_settings_, device_local_account_policy_service,
           policy::key::kWallpaperImage, this);
   wallpaper_policy_observer_->Init();
+
+  // Record the stored session length for enrolled device.
+  if (IsEnterpriseManaged())
+    enterprise_user_session_metrics::RecordStoredSessionLength();
 }
 
 ChromeUserManagerImpl::~ChromeUserManagerImpl() {
@@ -235,6 +241,17 @@ void ChromeUserManagerImpl::Shutdown() {
   ChromeUserManager::Shutdown();
 
   local_accounts_subscription_.reset();
+
+  if (session_length_limiter_ && IsEnterpriseManaged()) {
+    // Store session length before tearing down |session_length_limiter_| for
+    // enrolled devices so that it can be reported on the next run.
+    const base::TimeDelta session_length =
+        session_length_limiter_->GetSessionDuration();
+    if (!session_length.is_zero()) {
+      enterprise_user_session_metrics::StoreSessionLength(
+          GetActiveUser()->GetType(), session_length);
+    }
+  }
 
   // Stop the session length limiter.
   session_length_limiter_.reset();
@@ -785,7 +802,7 @@ void ChromeUserManagerImpl::SupervisedUserLoggedIn(
   // Add the user to the front of the user list.
   ListPrefUpdate prefs_users_update(GetLocalState(), kRegularUsers);
   prefs_users_update->Insert(
-      0, base::MakeUnique<base::StringValue>(account_id.GetUserEmail()));
+      0, base::MakeUnique<base::Value>(account_id.GetUserEmail()));
   users_.insert(users_.begin(), active_user_);
 
   // Now that user is in the list, save display name.
@@ -1243,20 +1260,20 @@ void ChromeUserManagerImpl::SetUserAffiliation(
 bool ChromeUserManagerImpl::ShouldReportUser(const std::string& user_id) const {
   const base::ListValue& reporting_users =
       *(GetLocalState()->GetList(kReportingUsers));
-  base::StringValue user_id_value(FullyCanonicalize(user_id));
+  base::Value user_id_value(FullyCanonicalize(user_id));
   return !(reporting_users.Find(user_id_value) == reporting_users.end());
 }
 
 void ChromeUserManagerImpl::AddReportingUser(const AccountId& account_id) {
   ListPrefUpdate users_update(GetLocalState(), kReportingUsers);
   users_update->AppendIfNotPresent(
-      base::MakeUnique<base::StringValue>(account_id.GetUserEmail()));
+      base::MakeUnique<base::Value>(account_id.GetUserEmail()));
 }
 
 void ChromeUserManagerImpl::RemoveReportingUser(const AccountId& account_id) {
   ListPrefUpdate users_update(GetLocalState(), kReportingUsers);
   users_update->Remove(
-      base::StringValue(FullyCanonicalize(account_id.GetUserEmail())), NULL);
+      base::Value(FullyCanonicalize(account_id.GetUserEmail())), NULL);
 }
 
 void ChromeUserManagerImpl::UpdateLoginState(

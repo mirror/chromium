@@ -403,8 +403,7 @@ LanguageSettingsPrivateAddSpellcheckWordFunction::Run() {
       SpellcheckServiceFactory::GetForContext(browser_context());
   bool success = service->GetCustomDictionary()->AddWord(params->word);
 
-  return RespondNow(
-      OneArgument(base::MakeUnique<base::FundamentalValue>(success)));
+  return RespondNow(OneArgument(base::MakeUnique<base::Value>(success)));
 }
 
 LanguageSettingsPrivateRemoveSpellcheckWordFunction::
@@ -426,8 +425,7 @@ LanguageSettingsPrivateRemoveSpellcheckWordFunction::Run() {
       SpellcheckServiceFactory::GetForContext(browser_context());
   bool success = service->GetCustomDictionary()->RemoveWord(params->word);
 
-  return RespondNow(
-      OneArgument(base::MakeUnique<base::FundamentalValue>(success)));
+  return RespondNow(OneArgument(base::MakeUnique<base::Value>(success)));
 }
 
 LanguageSettingsPrivateGetTranslateTargetLanguageFunction::
@@ -442,7 +440,7 @@ LanguageSettingsPrivateGetTranslateTargetLanguageFunction::
 ExtensionFunction::ResponseAction
 LanguageSettingsPrivateGetTranslateTargetLanguageFunction::Run() {
   return RespondNow(OneArgument(
-      base::MakeUnique<base::StringValue>(TranslateService::GetTargetLanguage(
+      base::MakeUnique<base::Value>(TranslateService::GetTargetLanguage(
           chrome_details_.GetProfile()->GetPrefs()))));
 }
 

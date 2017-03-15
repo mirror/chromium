@@ -567,6 +567,7 @@ source_set("common") {
     "//content",
     "//content/public/app:both",
     "//content/public/browser",
+    "//content/public/common:content_descriptor_keys",
     "//content/public/common:service_names",
     "//crypto",
     "//gin",
@@ -773,10 +774,9 @@ android_library("android_webview_commandline_java") {
 # (and make them easy to move).
 android_library("android_webview_crash_services_java") {
   java_files = [
+    "java/src/org/chromium/android_webview/crash/AwMinidumpUploadJobService.java",
+    "java/src/org/chromium/android_webview/crash/AwMinidumpUploaderDelegate.java",
     "java/src/org/chromium/android_webview/crash/CrashReceiverService.java",
-    "java/src/org/chromium/android_webview/crash/MinidumpUploaderImpl.java",
-    "java/src/org/chromium/android_webview/crash/MinidumpUploader.java",
-    "java/src/org/chromium/android_webview/crash/MinidumpUploadJobService.java",
   ]
   deps = [
     ":android_webview_commandline_java",
@@ -789,7 +789,7 @@ android_library("android_webview_crash_services_java") {
 }
 
 android_aidl("crash_receiver_aidl") {
-  import_include = "java/src"
+  import_include = [ "java/src" ]
   sources = [
     "java/src/org/chromium/android_webview/crash/ICrashReceiverService.aidl",
   ]

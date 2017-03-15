@@ -21,6 +21,12 @@ class SessionsHierarchy {
   // Creates an empty (no windows) SessionsHierachy.
   SessionsHierarchy();
 
+  // Copy constructor.
+  SessionsHierarchy(const SessionsHierarchy& other);
+
+  // Creates a SessionsHierarchy with specified set of windows.
+  SessionsHierarchy(std::initializer_list<std::multiset<std::string>> windows);
+
   ~SessionsHierarchy();
 
   // Add a window to the builder with one tab.
@@ -47,11 +53,11 @@ class SessionsHierarchy {
 
  private:
   // A collection of tab URLs.
-  typedef std::multiset<std::string> Window;
+  using Window = std::multiset<std::string>;
 
   // A collection of Windows (an instance of this collection represents a
   // sessions hierarchy).
-  typedef std::multiset<Window> WindowContainer;
+  using WindowContainer = std::multiset<Window>;
 
   // The windows of the sessions hierarchy.
   WindowContainer windows_;

@@ -32,10 +32,12 @@
 
 #include "core/loader/NavigationScheduler.h"
 
+#include <memory>
 #include "bindings/core/v8/ScriptController.h"
 #include "core/events/Event.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/HTMLFormElement.h"
 #include "core/inspector/InspectorInstrumentation.h"
@@ -44,7 +46,6 @@
 #include "core/loader/FormSubmission.h"
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/FrameLoader.h"
-#include "core/loader/FrameLoaderClient.h"
 #include "core/loader/FrameLoaderStateMachine.h"
 #include "core/page/Page.h"
 #include "platform/Histogram.h"
@@ -56,7 +57,6 @@
 #include "public/platform/WebScheduler.h"
 #include "wtf/CurrentTime.h"
 #include "wtf/PtrUtil.h"
-#include <memory>
 
 namespace blink {
 
@@ -477,13 +477,13 @@ void NavigationScheduler::navigateTask() {
   if (!m_frame->page())
     return;
   if (m_frame->page()->suspended()) {
-    InspectorInstrumentation::frameClearedScheduledNavigation(m_frame);
+    probe::frameClearedScheduledNavigation(m_frame);
     return;
   }
 
   ScheduledNavigation* redirect(m_redirect.release());
   redirect->fire(m_frame);
-  InspectorInstrumentation::frameClearedScheduledNavigation(m_frame);
+  probe::frameClearedScheduledNavigation(m_frame);
 }
 
 void NavigationScheduler::schedule(ScheduledNavigation* redirect) {
@@ -496,7 +496,8 @@ void NavigationScheduler::schedule(ScheduledNavigation* redirect) {
   // location change. Let the JS have its way.
   // FIXME: This check seems out of place.
   if (!m_frame->loader().stateMachine()->committedFirstRealDocumentLoad() &&
-      m_frame->loader().provisionalDocumentLoader()) {
+      m_frame->loader().provisionalDocumentLoader() &&
+      m_frame->loader().provisionalDocumentLoader()->didStart()) {
     m_frame->loader().stopAllLoaders();
     if (!m_frame->host())
       return;
@@ -528,15 +529,14 @@ void NavigationScheduler::startTimer() {
                                      wrapWeakPersistent(this)),
           m_redirect->delay() * 1000.0);
 
-  InspectorInstrumentation::frameScheduledNavigation(m_frame,
-                                                     m_redirect->delay());
+  probe::frameScheduledNavigation(m_frame, m_redirect->delay());
 }
 
 void NavigationScheduler::cancel() {
   if (m_navigateTaskHandle.isActive()) {
     Platform::current()->currentThread()->scheduler()->removePendingNavigation(
         m_frameType);
-    InspectorInstrumentation::frameClearedScheduledNavigation(m_frame);
+    probe::frameClearedScheduledNavigation(m_frame);
   }
   m_navigateTaskHandle.cancel();
   m_redirect.clear();

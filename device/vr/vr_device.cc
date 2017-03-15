@@ -19,12 +19,6 @@ VRDevice::VRDevice()
 
 VRDevice::~VRDevice() {}
 
-void VRDevice::RequestPresent(const base::Callback<void(bool)>& callback) {
-  callback.Run(true);
-}
-
-void VRDevice::SetSecureOrigin(bool secure_origin) {}
-
 void VRDevice::AddDisplay(VRDisplayImpl* display) {
   displays_.insert(display);
 }
@@ -52,7 +46,7 @@ void VRDevice::OnChanged() {
 void VRDevice::OnVRDisplayInfoCreated(mojom::VRDisplayInfoPtr vr_device_info) {
   if (vr_device_info.is_null())
     return;
-  for (const auto& display : displays_)
+  for (auto* display : displays_)
     display->client()->OnChanged(vr_device_info.Clone());
 }
 
@@ -66,22 +60,22 @@ void VRDevice::OnExitPresent() {
 }
 
 void VRDevice::OnBlur() {
-  for (const auto& display : displays_)
+  for (auto* display : displays_)
     display->client()->OnBlur();
 }
 
 void VRDevice::OnFocus() {
-  for (const auto& display : displays_)
+  for (auto* display : displays_)
     display->client()->OnFocus();
 }
 
 void VRDevice::OnActivate(mojom::VRDisplayEventReason reason) {
-  for (const auto& display : displays_)
+  for (auto* display : displays_)
     display->client()->OnActivate(reason);
 }
 
 void VRDevice::OnDeactivate(mojom::VRDisplayEventReason reason) {
-  for (const auto& display : displays_)
+  for (auto* display : displays_)
     display->client()->OnDeactivate(reason);
 }
 

@@ -25,6 +25,7 @@
 
 #include "bindings/core/v8/V8ScriptRunner.h"
 
+#include "bindings/core/v8/BindingSecurity.h"
 #include "bindings/core/v8/ScriptSourceCode.h"
 #include "bindings/core/v8/ScriptStreamer.h"
 #include "bindings/core/v8/V8Binding.h"
@@ -32,8 +33,9 @@
 #include "bindings/core/v8/V8ThrowException.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
-#include "core/frame/PerformanceMonitor.h"
+#include "core/inspector/InspectorInstrumentation.h"
 #include "core/inspector/InspectorTraceEvents.h"
 #include "core/inspector/ThreadDebugger.h"
 #include "core/loader/resource/ScriptResource.h"
@@ -538,15 +540,14 @@ v8::MaybeLocal<v8::Value> V8ScriptRunner::runCompiledScript(
     }
     v8::MicrotasksScope microtasksScope(isolate,
                                         v8::MicrotasksScope::kRunMicrotasks);
-    PerformanceMonitor::willExecuteScript(context);
+    probe::ExecuteScript probe(context);
     ThreadDebugger::willExecuteScript(isolate,
                                       script->GetUnboundScript()->GetId());
     result = script->Run(isolate->GetCurrentContext());
     ThreadDebugger::didExecuteScript(isolate);
-    PerformanceMonitor::didExecuteScript(context);
   }
 
-  crashIfIsolateIsDead(isolate);
+  CHECK(!isolate->IsDead());
   return result;
 }
 
@@ -566,7 +567,7 @@ v8::MaybeLocal<v8::Value> V8ScriptRunner::compileAndRunInternalScript(
   v8::MicrotasksScope microtasksScope(isolate,
                                       v8::MicrotasksScope::kDoNotRunMicrotasks);
   v8::MaybeLocal<v8::Value> result = script->Run(isolate->GetCurrentContext());
-  crashIfIsolateIsDead(isolate);
+  CHECK(!isolate->IsDead());
   return result;
 }
 
@@ -577,7 +578,7 @@ v8::MaybeLocal<v8::Value> V8ScriptRunner::runCompiledInternalScript(
   v8::MicrotasksScope microtasksScope(isolate,
                                       v8::MicrotasksScope::kDoNotRunMicrotasks);
   v8::MaybeLocal<v8::Value> result = script->Run(isolate->GetCurrentContext());
-  crashIfIsolateIsDead(isolate);
+  CHECK(!isolate->IsDead());
   return result;
 }
 
@@ -608,18 +609,14 @@ v8::MaybeLocal<v8::Value> V8ScriptRunner::callAsConstructor(
   CHECK(constructor->IsFunction());
   v8::Local<v8::Function> function = constructor.As<v8::Function>();
 
-  if (!depth)
-    TRACE_EVENT_BEGIN1("devtools.timeline", "FunctionCall", "data",
-                       InspectorFunctionCallEvent::data(context, function));
   v8::MicrotasksScope microtasksScope(isolate,
                                       v8::MicrotasksScope::kRunMicrotasks);
+  probe::CallFunction probe(context, function, depth);
   ThreadDebugger::willExecuteScript(isolate, function->ScriptId());
   v8::MaybeLocal<v8::Value> result =
       constructor->CallAsConstructor(isolate->GetCurrentContext(), argc, argv);
-  crashIfIsolateIsDead(isolate);
+  CHECK(!isolate->IsDead());
   ThreadDebugger::didExecuteScript(isolate);
-  if (!depth)
-    TRACE_EVENT_END0("devtools.timeline", "FunctionCall");
   return result;
 }
 
@@ -630,8 +627,9 @@ v8::MaybeLocal<v8::Value> V8ScriptRunner::callFunction(
     int argc,
     v8::Local<v8::Value> args[],
     v8::Isolate* isolate) {
-  ScopedFrameBlamer frameBlamer(
-      context->isDocument() ? toDocument(context)->frame() : nullptr);
+  LocalFrame* frame =
+      context->isDocument() ? toDocument(context)->frame() : nullptr;
+  ScopedFrameBlamer frameBlamer(frame);
   TRACE_EVENT0("v8", "v8.callFunction");
 
   int depth = v8::MicrotasksScope::GetCurrentDepth(isolate);
@@ -645,22 +643,20 @@ v8::MaybeLocal<v8::Value> V8ScriptRunner::callFunction(
     throwScriptForbiddenException(isolate);
     return v8::MaybeLocal<v8::Value>();
   }
-  if (!depth)
-    TRACE_EVENT_BEGIN1("devtools.timeline", "FunctionCall", "data",
-                       InspectorFunctionCallEvent::data(context, function));
 
+  DCHECK(!frame || BindingSecurity::shouldAllowAccessToFrame(
+                       toLocalDOMWindow(function->CreationContext()), frame,
+                       BindingSecurity::ErrorReportOption::DoNotReport));
   CHECK(!ThreadState::current()->isWrapperTracingForbidden());
   v8::MicrotasksScope microtasksScope(isolate,
                                       v8::MicrotasksScope::kRunMicrotasks);
-  PerformanceMonitor::willCallFunction(context);
+  probe::CallFunction probe(context, function, depth);
   ThreadDebugger::willExecuteScript(isolate, function->ScriptId());
   v8::MaybeLocal<v8::Value> result =
       function->Call(isolate->GetCurrentContext(), receiver, argc, args);
-  crashIfIsolateIsDead(isolate);
+  CHECK(!isolate->IsDead());
   ThreadDebugger::didExecuteScript(isolate);
-  PerformanceMonitor::didCallFunction(context, function);
-  if (!depth)
-    TRACE_EVENT_END0("devtools.timeline", "FunctionCall");
+
   return result;
 }
 
@@ -676,7 +672,7 @@ v8::MaybeLocal<v8::Value> V8ScriptRunner::callInternalFunction(
                                       v8::MicrotasksScope::kDoNotRunMicrotasks);
   v8::MaybeLocal<v8::Value> result =
       function->Call(isolate->GetCurrentContext(), receiver, argc, args);
-  crashIfIsolateIsDead(isolate);
+  CHECK(!isolate->IsDead());
   return result;
 }
 
@@ -688,53 +684,6 @@ v8::MaybeLocal<v8::Value> V8ScriptRunner::evaluateModule(
   v8::MicrotasksScope microtasksScope(isolate,
                                       v8::MicrotasksScope::kRunMicrotasks);
   return module->Evaluate(context);
-}
-
-v8::MaybeLocal<v8::Object> V8ScriptRunner::instantiateObject(
-    v8::Isolate* isolate,
-    v8::Local<v8::ObjectTemplate> objectTemplate) {
-  TRACE_EVENT0("v8", "v8.newInstance");
-
-  v8::MicrotasksScope microtasksScope(isolate,
-                                      v8::MicrotasksScope::kDoNotRunMicrotasks);
-  v8::MaybeLocal<v8::Object> result =
-      objectTemplate->NewInstance(isolate->GetCurrentContext());
-  crashIfIsolateIsDead(isolate);
-  return result;
-}
-
-v8::MaybeLocal<v8::Object> V8ScriptRunner::instantiateObject(
-    v8::Isolate* isolate,
-    v8::Local<v8::Function> function,
-    int argc,
-    v8::Local<v8::Value> argv[]) {
-  TRACE_EVENT0("v8", "v8.newInstance");
-
-  v8::MicrotasksScope microtasksScope(isolate,
-                                      v8::MicrotasksScope::kDoNotRunMicrotasks);
-  v8::MaybeLocal<v8::Object> result =
-      function->NewInstance(isolate->GetCurrentContext(), argc, argv);
-  crashIfIsolateIsDead(isolate);
-  return result;
-}
-
-v8::MaybeLocal<v8::Object> V8ScriptRunner::instantiateObjectInDocument(
-    v8::Isolate* isolate,
-    v8::Local<v8::Function> function,
-    ExecutionContext* context,
-    int argc,
-    v8::Local<v8::Value> argv[]) {
-  TRACE_EVENT0("v8", "v8.newInstance");
-  if (ScriptForbiddenScope::isScriptForbidden()) {
-    throwScriptForbiddenException(isolate);
-    return v8::MaybeLocal<v8::Object>();
-  }
-  v8::MicrotasksScope microtasksScope(isolate,
-                                      v8::MicrotasksScope::kRunMicrotasks);
-  v8::MaybeLocal<v8::Object> result =
-      function->NewInstance(isolate->GetCurrentContext(), argc, argv);
-  crashIfIsolateIsDead(isolate);
-  return result;
 }
 
 uint32_t V8ScriptRunner::tagForParserCache(

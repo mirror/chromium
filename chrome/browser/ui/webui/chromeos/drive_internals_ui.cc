@@ -592,7 +592,7 @@ void DriveInternalsWebUIHandler::ResetFinished(bool success) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   web_ui()->CallJavascriptFunctionUnsafe("updateResetStatus",
-                                         base::FundamentalValue(success));
+                                         base::Value(success));
 }
 
 void DriveInternalsWebUIHandler::ListFileEntries(const base::ListValue* args) {
@@ -672,7 +672,7 @@ void DriveInternalsWebUIHandler::UpdateGCacheContentsSection() {
   base::DictionaryValue* gcache_summary = new base::DictionaryValue;
   base::PostTaskWithTraitsAndReply(
       FROM_HERE, base::TaskTraits().MayBlock().WithPriority(
-                     base::TaskPriority::BACKGROUND),
+                     base::TaskPriority::USER_VISIBLE),
       base::Bind(&GetGCacheContents, root_path, gcache_contents,
                  gcache_summary),
       base::Bind(&DriveInternalsWebUIHandler::OnGetGCacheContents,
@@ -712,7 +712,7 @@ void DriveInternalsWebUIHandler::UpdateLocalStorageUsageSection() {
     base::DictionaryValue* local_storage_summary = new base::DictionaryValue;
     base::PostTaskWithTraitsAndReply(
         FROM_HERE, base::TaskTraits().MayBlock().WithPriority(
-                       base::TaskPriority::BACKGROUND),
+                       base::TaskPriority::USER_VISIBLE),
         base::Bind(&GetFreeDiskSpace, home_path, local_storage_summary),
         base::Bind(&DriveInternalsWebUIHandler::OnGetFreeDiskSpace,
                    weak_ptr_factory_.GetWeakPtr(),
@@ -811,7 +811,7 @@ void DriveInternalsWebUIHandler::OnGetResourceEntryByPath(
 
   if (error == drive::FILE_ERROR_OK) {
     DCHECK(entry.get());
-    const base::StringValue value(FormatEntry(path, *entry) + "\n");
+    const base::Value value(FormatEntry(path, *entry) + "\n");
     web_ui()->CallJavascriptFunctionUnsafe("updateFileSystemContents", value);
   }
 }
@@ -846,7 +846,7 @@ void DriveInternalsWebUIHandler::OnReadDirectoryByPath(
     // There may be pending ReadDirectoryByPath() calls, but we can update
     // the page with what we have now. This results in progressive
     // updates, which is good for a large file system.
-    const base::StringValue value(file_system_as_text);
+    const base::Value value(file_system_as_text);
     web_ui()->CallJavascriptFunctionUnsafe("updateFileSystemContents", value);
   }
 }

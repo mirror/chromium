@@ -37,7 +37,7 @@
 #include "core/dom/StyleEngine.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/LocalFrame.h"
-#include "core/loader/FrameLoaderClient.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/style/StyleRareNonInheritedData.h"
 
 namespace blink {
@@ -102,7 +102,7 @@ void CSSSelectorWatch::updateSelectorMatches(
     shouldUpdateTimer = true;
     auto it = m_addedSelectors.find(selector);
     if (it != m_addedSelectors.end())
-      m_addedSelectors.remove(it);
+      m_addedSelectors.erase(it);
     else
       m_removedSelectors.insert(selector);
   }
@@ -116,7 +116,7 @@ void CSSSelectorWatch::updateSelectorMatches(
     shouldUpdateTimer = true;
     auto it = m_removedSelectors.find(selector);
     if (it != m_removedSelectors.end())
-      m_removedSelectors.remove(it);
+      m_removedSelectors.erase(it);
     else
       m_addedSelectors.insert(selector);
   }

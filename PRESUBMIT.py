@@ -25,6 +25,7 @@ _EXCLUDED_PATHS = (
     r"^chrome[\\\/]browser[\\\/]resources[\\\/]pdf[\\\/]index.js",
     r".*vulcanized.html$",
     r".*crisper.js$",
+    r"tools[\\\/]md_browser[\\\/].*\.css$",
 )
 
 
@@ -185,6 +186,7 @@ _BANNED_CPP_FUNCTIONS = (
       ),
       True,
       (
+        r"^base[\\\/]memory[\\\/]shared_memory_posix\.cc$",
         r"^base[\\\/]process[\\\/]process_linux\.cc$",
         r"^base[\\\/]process[\\\/]process_metrics_linux\.cc$",
         r"^chrome[\\\/]browser[\\\/]chromeos[\\\/]boot_times_recorder\.cc$",
@@ -338,6 +340,7 @@ _VALID_OS_MACROS = (
 
 _ANDROID_SPECIFIC_PYDEPS_FILES = [
     'build/android/test_runner.pydeps',
+    'build/android/test_wrapper/logdog_wrapper.pydeps',
     'net/tools/testserver/testserver.pydeps',
 ]
 
@@ -431,7 +434,7 @@ def _CheckNoUNIT_TESTInSourceFiles(input_api, output_api):
 
 
 def _CheckDCHECK_IS_ONHasBraces(input_api, output_api):
-  """Checks to make sure DCHECK_IS_ON() does not skip the braces."""
+  """Checks to make sure DCHECK_IS_ON() does not skip the parentheses."""
   errors = []
   pattern = input_api.re.compile(r'DCHECK_IS_ON(?!\(\))',
                                  input_api.re.MULTILINE)
@@ -442,7 +445,7 @@ def _CheckDCHECK_IS_ONHasBraces(input_api, output_api):
       if input_api.re.search(pattern, line):
         errors.append(output_api.PresubmitError(
           ('%s:%d: Use of DCHECK_IS_ON() must be written as "#if ' +
-           'DCHECK_IS_ON()", not forgetting the braces.')
+           'DCHECK_IS_ON()", not forgetting the parentheses.')
           % (f.LocalPath(), lnum)))
   return errors
 
@@ -1191,6 +1194,7 @@ def _CheckSpamLogging(input_api, output_api):
                  r"^remoting[\\\/]host[\\\/].*",
                  r"^sandbox[\\\/]linux[\\\/].*",
                  r"^tools[\\\/]",
+                 r"^ui[\\\/]base[\\\/]resource[\\\/]data_pack.cc$",
                  r"^ui[\\\/]aura[\\\/]bench[\\\/]bench_main\.cc$",
                  r"^ui[\\\/]ozone[\\\/]platform[\\\/]cast[\\\/]",
                  r"^storage[\\\/]browser[\\\/]fileapi[\\\/]" +

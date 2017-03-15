@@ -20,7 +20,7 @@ class PLATFORM_EXPORT FloatClipRect {
         m_hasRadius(false),
         m_isInfinite(true) {}
 
-  FloatClipRect(const FloatRect& rect)
+  explicit FloatClipRect(const FloatRect& rect)
       : m_rect(rect), m_hasRadius(false), m_isInfinite(false) {}
 
   const FloatRect& rect() const { return m_rect; }
@@ -35,14 +35,20 @@ class PLATFORM_EXPORT FloatClipRect {
   }
 
   bool hasRadius() const { return m_hasRadius; }
-  void setHasRadius(bool hasRadius) {
-    m_hasRadius = hasRadius;
+  void setHasRadius() {
+    m_hasRadius = true;
     m_isInfinite = false;
   }
 
   void setRect(const FloatRect& rect) {
     m_rect = rect;
     m_isInfinite = false;
+  }
+
+  void moveBy(const FloatPoint& offset) {
+    if (m_isInfinite)
+      return;
+    m_rect.moveBy(offset);
   }
 
   bool isInfinite() const { return m_isInfinite; }

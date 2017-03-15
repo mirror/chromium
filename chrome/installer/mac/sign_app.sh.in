@@ -41,13 +41,18 @@ versioned_dir="${app_path}/Contents/Versions/@VERSION@"
 
 browser_app="${app_path}"
 framework="${versioned_dir}/@MAC_PRODUCT_NAME@ Framework.framework"
+notification_service="${framework}/XPCServices/AlertNotificationService.xpc"
 crashpad_handler="${framework}/Helpers/crashpad_handler"
 helper_app="${versioned_dir}/@MAC_PRODUCT_NAME@ Helper.app"
 
 requirement_string="\
 designated => \
-(identifier \"com.google.Chrome\" or identifier \"com.google.Chrome.canary\") \
-and certificate leaf = H\"85cee8254216185620ddc8851c7a9fc4dfe120ef\"\
+(identifier \"com.google.Chrome\" or \
+identifier \"com.google.Chrome.beta\" or \
+identifier \"com.google.Chrome.dev\" or \
+identifier \"com.google.Chrome.canary\") \
+and (certificate leaf = H\"85cee8254216185620ddc8851c7a9fc4dfe120ef\" or \
+certificate leaf = H\"c9a99324ca3fcb23dbcc36bd5fd4f9753305130a\") \
 "
 
 enforcement_flags="restrict"
@@ -65,6 +70,7 @@ codesign --display -r- -vvvvvv "${browser_app}"
 # state (b/18474911). Use --no-strict on the app because it uses custom resource
 # rules.
 codesign --verify --deep -vvvvvv "${crashpad_handler}"
+codesign --verify --deep -vvvvvv "${notification_service}"
 codesign --verify -vvvvvv "${framework}"
 codesign --verify --deep -vvvvvv "${helper_app}"
 codesign --verify --deep --no-strict -vvvvvv "${browser_app}"

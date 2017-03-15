@@ -71,12 +71,12 @@ void KeyboardHandler::HandleShowKeyboardShortcutsOverlay(
 }
 
 void KeyboardHandler::UpdateShowKeys() {
-  const base::FundamentalValue has_caps_lock(HasExternalKeyboard());
-  const base::FundamentalValue has_diamond_key(
+  const base::Value has_caps_lock(HasExternalKeyboard());
+  const base::Value has_diamond_key(
       base::CommandLine::ForCurrentProcess()->HasSwitch(
           chromeos::switches::kHasChromeOSDiamondKey));
   CallJavascriptFunction("cr.webUIListenerCallback",
-                         base::StringValue("show-keys-changed"), has_caps_lock,
+                         base::Value("show-keys-changed"), has_caps_lock,
                          has_diamond_key);
 }
 

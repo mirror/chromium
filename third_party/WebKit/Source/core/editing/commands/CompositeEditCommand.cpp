@@ -81,7 +81,9 @@ using namespace HTMLNames;
 
 CompositeEditCommand::CompositeEditCommand(Document& document)
     : EditCommand(document) {
-  setStartingSelection(document.frame()->selection().selection());
+  setStartingSelection(document.frame()
+                           ->selection()
+                           .computeVisibleSelectionInDOMTreeDeprecated());
   setEndingVisibleSelection(m_startingSelection);
 }
 
@@ -127,10 +129,8 @@ bool CompositeEditCommand::apply() {
   LocalFrame* frame = document().frame();
   DCHECK(frame);
   EditingState editingState;
-  {
-    EventQueueScope eventQueueScope;
-    doApply(&editingState);
-  }
+  EventQueueScope eventQueueScope;
+  doApply(&editingState);
 
   // Only need to call appliedEditing for top-level commands, and TypingCommands
   // do it on their own (see TypingCommand::typingAddedToOpenCommand).
@@ -432,7 +432,7 @@ void CompositeEditCommand::updatePositionForNodeRemovalPreservingChildren(
     Node& node) {
   int offset =
       position.isOffsetInAnchor() ? position.offsetInContainerNode() : 0;
-  updatePositionForNodeRemoval(position, node);
+  position = computePositionForNodeRemoval(position, node);
   if (offset == 0)
     return;
   position = Position(position.computeContainerNode(), offset);
@@ -651,19 +651,6 @@ void CompositeEditCommand::deleteSelection(EditingState* editingState,
                             editingState);
 }
 
-void CompositeEditCommand::deleteSelection(const VisibleSelection& selection,
-                                           EditingState* editingState,
-                                           bool smartDelete,
-                                           bool mergeBlocksAfterDelete,
-                                           bool expandForSpecialElements,
-                                           bool sanitizeMarkup) {
-  if (selection.isRange())
-    applyCommandToComposite(DeleteSelectionCommand::create(
-                                selection, smartDelete, mergeBlocksAfterDelete,
-                                expandForSpecialElements, sanitizeMarkup),
-                            editingState);
-}
-
 void CompositeEditCommand::removeCSSProperty(Element* element,
                                              CSSPropertyID property) {
   // RemoveCSSPropertyCommand is never aborted.
@@ -688,6 +675,10 @@ void CompositeEditCommand::setNodeAttribute(Element* element,
 }
 
 bool CompositeEditCommand::canRebalance(const Position& position) const {
+  // TODO(editing-dev): Use of updateStyleAndLayoutIgnorePendingStylesheets()
+  // needs to be audited.  See http://crbug.com/590369 for more details.
+  document().updateStyleAndLayoutIgnorePendingStylesheets();
+
   Node* node = position.computeContainerNode();
   if (!position.isOffsetInAnchor() || !node || !node->isTextNode() ||
       !hasRichlyEditableStyle(*node))
@@ -1495,10 +1486,11 @@ void CompositeEditCommand::moveParagraphs(
 
   DCHECK(!document().needsLayoutTreeUpdate());
 
-  setEndingSelection(
-      SelectionInDOMTree::Builder().collapse(start).extend(end).build());
+  const SelectionInDOMTree& selectionToDelete =
+      SelectionInDOMTree::Builder().collapse(start).extend(end).build();
+  setEndingSelection(selectionToDelete);
   document().frame()->spellChecker().clearMisspellingsForMovingParagraphs(
-      endingSelection());
+      selectionToDelete);
   deleteSelection(editingState, false, false, false);
   if (editingState->isAborted())
     return;

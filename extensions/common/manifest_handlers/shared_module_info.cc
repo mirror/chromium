@@ -32,8 +32,8 @@ namespace {
 
 const char kSharedModule[] = "shared_module";
 
-static base::LazyInstance<SharedModuleInfo> g_empty_shared_module_info =
-    LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<SharedModuleInfo>::DestructorAtExit
+    g_empty_shared_module_info = LAZY_INSTANCE_INITIALIZER;
 
 const SharedModuleInfo& GetSharedModuleInfo(const Extension* extension) {
   SharedModuleInfo* info = static_cast<SharedModuleInfo*>(
@@ -210,7 +210,7 @@ bool SharedModuleHandler::Parse(Extension* extension, base::string16* error) {
   std::unique_ptr<SharedModuleInfo> info(new SharedModuleInfo);
   if (!info->Parse(extension, error))
     return false;
-  extension->SetManifestData(kSharedModule, info.release());
+  extension->SetManifestData(kSharedModule, std::move(info));
   return true;
 }
 

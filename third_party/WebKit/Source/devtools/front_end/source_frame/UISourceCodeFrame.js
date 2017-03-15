@@ -39,7 +39,8 @@ SourceFrame.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
     this.setEditable(this._canEditSource());
 
     if (Runtime.experiments.isEnabled('sourceDiff'))
-      this._diff = new SourceFrame.SourceCodeDiff(uiSourceCode.requestOriginalContent(), this.textEditor);
+      this._diff = new SourceFrame.SourceCodeDiff(WorkspaceDiff.workspaceDiff(), uiSourceCode, this.textEditor);
+
 
     /** @type {?UI.AutocompleteConfig} */
     this._autocompleteConfig = {isWordChar: Common.TextUtils.isWordChar};
@@ -74,6 +75,7 @@ SourceFrame.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
 
     this._errorPopoverHelper = new UI.PopoverHelper(this.element);
     this._errorPopoverHelper.initializeCallbacks(this._getErrorAnchor.bind(this), this._showErrorPopover.bind(this));
+    this._errorPopoverHelper.setHasPadding(true);
 
     this._errorPopoverHelper.setTimeout(100, 100);
 
@@ -166,8 +168,6 @@ SourceFrame.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
    * @override
    */
   onTextEditorContentSet() {
-    if (this._diff)
-      this._diff.updateDiffMarkersImmediately();
     super.onTextEditorContentSet();
     for (var message of this._allMessages())
       this._addMessageToSource(message);
@@ -189,8 +189,6 @@ SourceFrame.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
    * @param {!Common.TextRange} newRange
    */
   onTextChanged(oldRange, newRange) {
-    if (this._diff)
-      this._diff.updateDiffMarkersWhenPossible();
     super.onTextChanged(oldRange, newRange);
     this._errorPopoverHelper.hidePopover();
     if (this._isSettingContent)
@@ -320,6 +318,8 @@ SourceFrame.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
   }
 
   dispose() {
+    if (this._diff)
+      this._diff.dispose();
     this.textEditor.dispose();
     Common.moduleSetting('textEditorAutocompletion').removeChangeListener(this._updateAutocomplete, this);
     this.detach();
@@ -399,15 +399,19 @@ SourceFrame.UISourceCodeFrame = class extends SourceFrame.SourceFrame {
   }
 
   /**
-   * @param {!Element} anchor
-   * @param {!UI.Popover} popover
+   * @param {!Element|!AnchorBox} anchor
+   * @param {!UI.GlassPane} popover
+   * @return {!Promise<boolean>}
    */
   _showErrorPopover(anchor, popover) {
-    var messageBucket = anchor.enclosingNodeOrSelfWithClass('text-editor-line-decoration')._messageBucket;
+    var element = /** @type {!Element} */ (anchor);
+    var messageBucket = element.enclosingNodeOrSelfWithClass('text-editor-line-decoration')._messageBucket;
     var messagesOutline = messageBucket.messagesDescription();
-    var popoverAnchor =
-        anchor.enclosingNodeOrSelfWithClass('text-editor-line-decoration-icon') ? anchor : this._errorWavePopoverAnchor;
-    popover.showForAnchor(messagesOutline, popoverAnchor);
+    popover.setContentAnchorBox(
+        element.enclosingNodeOrSelfWithClass('text-editor-line-decoration-icon') ? element.boxInWindow() :
+                                                                                   this._errorWavePopoverAnchor);
+    popover.contentElement.appendChild(messagesOutline);
+    return Promise.resolve(true);
   }
 
   _updateBucketDecorations() {
@@ -494,9 +498,10 @@ SourceFrame.UISourceCodeFrame.RowMessage = class {
     this.element = createElementWithClass('div', 'text-editor-row-message');
     this._icon = this.element.createChild('label', '', 'dt-icon-label');
     this._icon.type = SourceFrame.UISourceCodeFrame._iconClassPerLevel[message.level()];
-    this._repeatCountElement = this.element.createChild('label', 'message-repeat-count hidden', 'dt-small-bubble');
+    this._repeatCountElement =
+        this.element.createChild('label', 'text-editor-row-message-repeat-count hidden', 'dt-small-bubble');
     this._repeatCountElement.type = SourceFrame.UISourceCodeFrame._bubbleTypePerLevel[message.level()];
-    var linesContainer = this.element.createChild('div', 'text-editor-row-message-lines');
+    var linesContainer = this.element.createChild('div');
     var lines = this._message.text().split('\n');
     for (var i = 0; i < lines.length; ++i) {
       var messageLine = linesContainer.createChild('div');
@@ -579,6 +584,7 @@ SourceFrame.UISourceCodeFrame.RowMessageBucket = class {
    */
   messagesDescription() {
     this._messagesDescriptionElement.removeChildren();
+    UI.appendStyle(this._messagesDescriptionElement, 'source_frame/messagesPopover.css');
     for (var i = 0; i < this._messages.length; ++i)
       this._messagesDescriptionElement.appendChild(this._messages[i].element);
 

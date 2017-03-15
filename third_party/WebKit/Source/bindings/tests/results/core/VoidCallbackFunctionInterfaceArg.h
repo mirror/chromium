@@ -13,6 +13,7 @@
 #ifndef VoidCallbackFunctionInterfaceArg_h
 #define VoidCallbackFunctionInterfaceArg_h
 
+#include "bindings/core/v8/NativeValueTraits.h"
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "bindings/core/v8/TraceWrapperV8Reference.h"
 #include "core/CoreExport.h"
@@ -26,11 +27,11 @@ class HTMLDivElement;
 
 class CORE_EXPORT VoidCallbackFunctionInterfaceArg final : public GarbageCollectedFinalized<VoidCallbackFunctionInterfaceArg>, public TraceWrapperBase {
  public:
-  static VoidCallbackFunctionInterfaceArg* create(ScriptState* scriptState, v8::Local<v8::Value> callback);
+  static VoidCallbackFunctionInterfaceArg* create(ScriptState*, v8::Local<v8::Value> callback);
 
   ~VoidCallbackFunctionInterfaceArg() = default;
 
-  DECLARE_TRACE();
+  DEFINE_INLINE_TRACE() {}
   DECLARE_TRACE_WRAPPERS();
 
   bool call(ScriptWrappable* scriptWrappable, HTMLDivElement* divElement);
@@ -44,6 +45,11 @@ class CORE_EXPORT VoidCallbackFunctionInterfaceArg final : public GarbageCollect
 
   RefPtr<ScriptState> m_scriptState;
   TraceWrapperV8Reference<v8::Function> m_callback;
+};
+
+template <>
+struct NativeValueTraits<VoidCallbackFunctionInterfaceArg> : public NativeValueTraitsBase<VoidCallbackFunctionInterfaceArg> {
+  CORE_EXPORT static VoidCallbackFunctionInterfaceArg* nativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 }  // namespace blink

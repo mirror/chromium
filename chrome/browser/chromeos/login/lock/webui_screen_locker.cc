@@ -21,6 +21,7 @@
 #include "chrome/browser/chromeos/login/ui/preloaded_web_view_factory.h"
 #include "chrome/browser/chromeos/login/ui/webui_login_display.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
+#include "chrome/browser/ui/ash/ash_util.h"
 #include "chrome/browser/ui/webui/chromeos/login/oobe_ui.h"
 #include "chrome/browser/ui/webui/chromeos/login/signin_screen_handler.h"
 #include "chrome/common/chrome_features.h"
@@ -81,6 +82,12 @@ void WebUIScreenLocker::RequestPreload() {
 
 // static
 bool WebUIScreenLocker::ShouldPreloadLockScreen() {
+  // Bail for mash because IdleDetector/UserActivityDetector does not work
+  // properly there.
+  // TODO(xiyuan): Revisit after http://crbug.com/626899.
+  if (ash_util::IsRunningInMash())
+    return false;
+
   Profile* profile = ProfileHelper::Get()->GetProfileByUser(
       user_manager::UserManager::Get()->GetActiveUser());
 
@@ -119,7 +126,7 @@ WebUIScreenLocker::WebUIScreenLocker(ScreenLocker* screen_locker)
       weak_factory_(this) {
   set_should_emit_login_prompt_visible(false);
   ash::WmShell::Get()->AddLockStateObserver(this);
-  ash::WmShell::Get()->AddShellObserver(this);
+  ash::Shell::GetInstance()->AddShellObserver(this);
   display::Screen::GetScreen()->AddObserver(this);
   DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(this);
 
@@ -133,7 +140,7 @@ WebUIScreenLocker::~WebUIScreenLocker() {
   DBusThreadManager::Get()->GetPowerManagerClient()->RemoveObserver(this);
   display::Screen::GetScreen()->RemoveObserver(this);
   ash::WmShell::Get()->RemoveLockStateObserver(this);
-  ash::WmShell::Get()->RemoveShellObserver(this);
+  ash::Shell::GetInstance()->RemoveShellObserver(this);
   // In case of shutdown, lock_window_ may be deleted before WebUIScreenLocker.
   if (lock_window_) {
     lock_window_->RemoveObserver(this);
@@ -409,7 +416,9 @@ void WebUIScreenLocker::RenderProcessGone(base::TerminationStatus status) {
 ////////////////////////////////////////////////////////////////////////////////
 // ash::ShellObserver:
 
-void WebUIScreenLocker::OnVirtualKeyboardStateChanged(bool activated) {
+void WebUIScreenLocker::OnVirtualKeyboardStateChanged(
+    bool activated,
+    ash::WmWindow* root_window) {
   if (keyboard::KeyboardController::GetInstance()) {
     if (activated) {
       if (!is_observing_keyboard_) {
@@ -431,14 +440,14 @@ void WebUIScreenLocker::OnKeyboardBoundsChanging(
   if (new_bounds.IsEmpty()) {
     // Keyboard has been hidden.
     if (GetOobeUI()) {
-      GetOobeUI()->GetCoreOobeActor()->ShowControlBar(true);
-      GetOobeUI()->GetCoreOobeActor()->ShowPinKeyboard(true);
+      GetOobeUI()->GetCoreOobeView()->ShowControlBar(true);
+      GetOobeUI()->GetCoreOobeView()->ShowPinKeyboard(true);
     }
   } else {
     // Keyboard has been shown.
     if (GetOobeUI()) {
-      GetOobeUI()->GetCoreOobeActor()->ShowControlBar(false);
-      GetOobeUI()->GetCoreOobeActor()->ShowPinKeyboard(false);
+      GetOobeUI()->GetCoreOobeView()->ShowControlBar(false);
+      GetOobeUI()->GetCoreOobeView()->ShowPinKeyboard(false);
     }
   }
 }
@@ -463,8 +472,8 @@ void WebUIScreenLocker::OnDisplayMetricsChanged(const display::Display& display,
 
   if (GetOobeUI()) {
     const gfx::Size& size = primary_display.size();
-    GetOobeUI()->GetCoreOobeActor()->SetClientAreaSize(size.width(),
-                                                       size.height());
+    GetOobeUI()->GetCoreOobeView()->SetClientAreaSize(size.width(),
+                                                      size.height());
   }
 }
 

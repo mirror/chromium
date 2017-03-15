@@ -14,7 +14,6 @@ namespace blink {
 
 template <typename T>
 class GarbageCollected;
-class TraceWrapperBase;
 
 // GC_PLUGIN_IGNORE is used to make the plugin ignore a particular class or
 // field when checking for proper usage.  When using GC_PLUGIN_IGNORE
@@ -149,15 +148,15 @@ class PLATFORM_EXPORT GarbageCollectedMixin {
 // when the "operator new" for B runs, and leaving the forbidden GC scope
 // when the constructor of the recorded GarbageCollectedMixinConstructorMarker
 // runs.
-#define USING_GARBAGE_COLLECTED_MIXIN(TYPE)                                  \
-  IS_GARBAGE_COLLECTED_TYPE();                                               \
-  DEFINE_GARBAGE_COLLECTED_MIXIN_METHODS(blink::Visitor*, TYPE)              \
-  DEFINE_GARBAGE_COLLECTED_MIXIN_CONSTRUCTOR_MARKER(TYPE)                    \
- public:                                                                     \
-  bool isHeapObjectAlive() const override {                                  \
-    return ThreadHeap::isHeapObjectAlive(this);                              \
-  }                                                                          \
-                                                                             \
+#define USING_GARBAGE_COLLECTED_MIXIN(TYPE)                     \
+  IS_GARBAGE_COLLECTED_TYPE();                                  \
+  DEFINE_GARBAGE_COLLECTED_MIXIN_METHODS(blink::Visitor*, TYPE) \
+  DEFINE_GARBAGE_COLLECTED_MIXIN_CONSTRUCTOR_MARKER(TYPE)       \
+ public:                                                        \
+  bool isHeapObjectAlive() const override {                     \
+    return ThreadHeap::isHeapObjectAlive(this);                 \
+  }                                                             \
+                                                                \
  private:
 
 // An empty class with a constructor that's arranged invoked when all derived
@@ -245,27 +244,6 @@ class NeedsAdjustAndMark<T, false> {
  public:
   static const bool value =
       IsGarbageCollectedMixin<typename std::remove_const<T>::type>::value;
-};
-
-template <typename T,
-          bool = std::is_base_of<TraceWrapperBase,
-                                 typename std::remove_const<T>::type>::value>
-class CanTraceWrappers;
-
-template <typename T>
-class CanTraceWrappers<T, true> {
-  static_assert(sizeof(T), "T must be fully defined");
-
- public:
-  static const bool value = true;
-};
-
-template <typename T>
-class CanTraceWrappers<T, false> {
-  static_assert(sizeof(T), "T must be fully defined");
-
- public:
-  static const bool value = false;
 };
 
 // TODO(sof): migrate to wtf/TypeTraits.h

@@ -7,9 +7,11 @@
 
 #include <map>
 #include <string>
+#include <unordered_map>
 
 #include "base/macros.h"
-#include "content/browser/background_fetch/fetch_request.h"
+#include "content/browser/background_fetch/background_fetch_job_data.h"
+#include "content/browser/background_fetch/background_fetch_job_info.h"
 #include "content/common/content_export.h"
 #include "url/origin.h"
 
@@ -29,16 +31,30 @@ class CONTENT_EXPORT BackgroundFetchDataManager {
 
   // Called by BackgroundFetchContext when a new request is started, this will
   // store all of the necessary metadata to track the request.
-  void CreateRequest(const FetchRequest& fetch_request);
+  std::unique_ptr<BackgroundFetchJobData> CreateRequest(
+      const BackgroundFetchJobInfo& job_info,
+      BackgroundFetchRequestInfos request_infos);
 
  private:
+  void WriteJobToStorage(const BackgroundFetchJobInfo& job_info,
+                         BackgroundFetchRequestInfos request_infos);
+
+  BackgroundFetchRequestInfos& ReadRequestsFromStorage(
+      const std::string& job_guid);
+
   // BackgroundFetchContext owns this BackgroundFetchDataManager, so the
   // DataManager is guaranteed to be destructed before the Context.
   BackgroundFetchContext* background_fetch_context_;
 
-  // Map from <sw_registration_id, tag> to the FetchRequest for that tag.
-  using FetchIdentifier = std::pair<int64_t, std::string>;
-  std::map<FetchIdentifier, FetchRequest> fetch_map_;
+  // Map from <sw_registration_id, tag> to the job_guid for that tag.
+  using JobIdentifier = std::pair<int64_t, std::string>;
+  std::map<JobIdentifier, std::string> service_worker_tag_map_;
+
+  // Temporary map to hold data which will be written to storage.
+  // Map from job_guid to JobInfo.
+  std::unordered_map<std::string, BackgroundFetchJobInfo> job_map_;
+  // Map from job_guid to RequestInfos.
+  std::unordered_map<std::string, BackgroundFetchRequestInfos> request_map_;
 
   DISALLOW_COPY_AND_ASSIGN(BackgroundFetchDataManager);
 };

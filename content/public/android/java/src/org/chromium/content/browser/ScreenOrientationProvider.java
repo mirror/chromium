@@ -10,9 +10,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.view.Surface;
 
-import org.chromium.base.ApplicationStatus;
 import org.chromium.base.Log;
-import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.content_public.common.ScreenOrientationConstants;
@@ -71,14 +69,15 @@ public class ScreenOrientationProvider {
         }
     }
 
-    // Note that WindowAndroid may be null if the tab is being reparented.
     @CalledByNative
-    static void lockOrientation(@Nullable WindowAndroid window, byte orientation) {
-        lockOrientation(window, orientation, ApplicationStatus.getLastTrackedFocusedActivity());
-    }
+    public static void lockOrientation(@Nullable WindowAndroid window, byte webScreenOrientation) {
+        // WindowAndroid may be null if the tab is being reparented.
+        if (window == null) return;
+        Activity activity = window.getActivity().get();
 
-    public static void lockOrientation(@Nullable WindowAndroid window, byte webScreenOrientation,
-            Activity activity) {
+        // Locking orientation is only supported for web contents that have an associated activity.
+        // Note that we can't just use the focused activity, as that would lead to bugs where
+        // unlockOrientation unlocks a different activity to the one that was locked.
         if (activity == null) return;
 
         int orientation = getOrientationFromWebScreenOrientations(webScreenOrientation, window,
@@ -90,13 +89,16 @@ public class ScreenOrientationProvider {
         activity.setRequestedOrientation(orientation);
     }
 
-    // Note that WindowAndroid may be null if the tab is being reparented.
     @CalledByNative
     static void unlockOrientation(@Nullable WindowAndroid window) {
-        Activity activity = ApplicationStatus.getLastTrackedFocusedActivity();
-        if (activity == null) {
-            return;
-        }
+        // WindowAndroid may be null if the tab is being reparented.
+        if (window == null) return;
+        Activity activity = window.getActivity().get();
+
+        // Locking orientation is only supported for web contents that have an associated activity.
+        // Note that we can't just use the focused activity, as that would lead to bugs where
+        // unlockOrientation unlocks a different activity to the one that was locked.
+        if (activity == null) return;
 
         int defaultOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
 
@@ -119,26 +121,6 @@ public class ScreenOrientationProvider {
         } finally {
             activity.setRequestedOrientation(defaultOrientation);
         }
-    }
-
-    @CalledByNative
-    static void startAccurateListening() {
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                DisplayAndroid.startAccurateListening();
-            }
-        });
-    }
-
-    @CalledByNative
-    static void stopAccurateListening() {
-        ThreadUtils.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                DisplayAndroid.stopAccurateListening();
-            }
-        });
     }
 
     private ScreenOrientationProvider() {

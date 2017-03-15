@@ -31,6 +31,7 @@
 #include "ui/views/corewm/tooltip_controller.h"
 #include "ui/views/drag_utils.h"
 #include "ui/views/view_constants_aura.h"
+#include "ui/views/views_delegate.h"
 #include "ui/views/widget/desktop_aura/desktop_capture_client.h"
 #include "ui/views/widget/desktop_aura/desktop_event_client.h"
 #include "ui/views/widget/desktop_aura/desktop_focus_rules.h"
@@ -389,6 +390,10 @@ void DesktopNativeWidgetAura::HandleActivationChanged(bool active) {
   }
 }
 
+gfx::NativeWindow DesktopNativeWidgetAura::GetNativeWindow() const {
+  return content_window_;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // DesktopNativeWidgetAura, internal::NativeWidgetPrivate implementation:
 
@@ -411,10 +416,20 @@ void DesktopNativeWidgetAura::InitNativeWidget(
   wm::SetShadowElevation(content_window_, wm::ShadowElevation::NONE);
 
   if (!desktop_window_tree_host_) {
-    desktop_window_tree_host_ =
-        params.desktop_window_tree_host
-            ? params.desktop_window_tree_host
-            : DesktopWindowTreeHost::Create(native_widget_delegate_, this);
+    if (params.desktop_window_tree_host) {
+      desktop_window_tree_host_ = params.desktop_window_tree_host;
+    } else if (!ViewsDelegate::GetInstance()
+                    ->desktop_window_tree_host_factory()
+                    .is_null()) {
+      desktop_window_tree_host_ =
+          ViewsDelegate::GetInstance()
+              ->desktop_window_tree_host_factory()
+              .Run(params, native_widget_delegate_, this)
+              .release();
+    } else {
+      desktop_window_tree_host_ =
+          DesktopWindowTreeHost::Create(native_widget_delegate_, this);
+    }
     host_.reset(desktop_window_tree_host_->AsWindowTreeHost());
   }
   desktop_window_tree_host_->Init(content_window_, params);
@@ -560,10 +575,6 @@ const Widget* DesktopNativeWidgetAura::GetWidget() const {
 }
 
 gfx::NativeView DesktopNativeWidgetAura::GetNativeView() const {
-  return content_window_;
-}
-
-gfx::NativeWindow DesktopNativeWidgetAura::GetNativeWindow() const {
   return content_window_;
 }
 

@@ -33,6 +33,7 @@
 #include "services/ui/ws/window_tree.h"
 #include "services/ui/ws/window_tree_binding.h"
 #include "ui/display/display.h"
+#include "ui/display/screen_base.h"
 #include "ui/display/types/display_constants.h"
 
 namespace ui {
@@ -54,12 +55,12 @@ class TestScreenManager : public display::ScreenManager {
   // returns it. Calls OnDisplayAdded() on delegate.
   int64_t AddDisplay();
 
-  // Adds a new display with provided |metrics|, generates a unique display id
+  // Adds a new display with provided |display|, generates a unique display id
   // and returns it. Calls OnDisplayAdded() on delegate.
-  int64_t AddDisplay(const display::ViewportMetrics& metrics);
+  int64_t AddDisplay(const display::Display& display);
 
   // Calls OnDisplayModified() on delegate.
-  void ModifyDisplay(int64_t id, const display::ViewportMetrics& metrics);
+  void ModifyDisplay(const display::Display& display);
 
   // Calls OnDisplayRemoved() on delegate.
   void RemoveDisplay(int64_t id);
@@ -68,11 +69,10 @@ class TestScreenManager : public display::ScreenManager {
   void AddInterfaces(service_manager::InterfaceRegistry* registry) override {}
   void Init(display::ScreenManagerDelegate* delegate) override;
   void RequestCloseDisplay(int64_t display_id) override {}
-  int64_t GetPrimaryDisplayId() const override;
 
  private:
-  display::ScreenManagerDelegate* delegate_;
-  int64_t primary_display_id_ = display::kInvalidDisplayId;
+  display::ScreenManagerDelegate* delegate_ = nullptr;
+  std::unique_ptr<display::ScreenBase> screen_;
   std::set<int64_t> display_ids_;
 
   DISALLOW_COPY_AND_ASSIGN(TestScreenManager);
@@ -278,7 +278,8 @@ class TestPlatformDisplayFactory : public PlatformDisplayFactory {
 
   // PlatformDisplayFactory:
   std::unique_ptr<PlatformDisplay> CreatePlatformDisplay(
-      const PlatformDisplayInitParams& init_params) override;
+      ServerWindow* root_window,
+      const display::ViewportMetrics& metrics) override;
 
  private:
   mojom::Cursor* cursor_storage_;
@@ -414,9 +415,11 @@ class TestWindowTreeClient : public ui::mojom::WindowTreeClient {
                          mojom::WindowDataPtr data,
                          int64_t display_id,
                          bool drawn) override;
-  void OnWindowBoundsChanged(uint32_t window,
-                             const gfx::Rect& old_bounds,
-                             const gfx::Rect& new_bounds) override;
+  void OnWindowBoundsChanged(
+      uint32_t window,
+      const gfx::Rect& old_bounds,
+      const gfx::Rect& new_bounds,
+      const base::Optional<cc::LocalSurfaceId>& local_surface_id) override;
   void OnClientAreaChanged(
       uint32_t window_id,
       const gfx::Insets& new_client_area,
@@ -657,14 +660,14 @@ class WindowEventTargetingHelper {
 // WindowManagerWindowTreeFactory and associated WindowTree for the WM.
 void AddWindowManager(WindowServer* window_server, const UserId& user_id);
 
-// Create a new ViewportMetrics object with specified bounds, size and
-// scale factor. Bounds origin, |origin_x| and |origin_y|, are in DIP and bounds
-// size is computed.
-display::ViewportMetrics MakeViewportMetrics(int origin_x,
-                                             int origin_y,
-                                             int width_pixels,
-                                             int height_pixels,
-                                             float scale_factor);
+// Create a new Display object with specified origin, pixel size and device
+// scale factor. The bounds size is computed based on the pixel size and device
+// scale factor.
+display::Display MakeDisplay(int origin_x,
+                             int origin_y,
+                             int width_pixels,
+                             int height_pixels,
+                             float scale_factor);
 
 // Returns the first and only root of |tree|. If |tree| has zero or more than
 // one root returns null.

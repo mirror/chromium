@@ -31,7 +31,6 @@
 #ifndef WebFrameClient_h
 #define WebFrameClient_h
 
-#include "../platform/WebColor.h"
 #include "WebAXObject.h"
 #include "WebDOMMessageEvent.h"
 #include "WebDataSource.h"
@@ -46,9 +45,12 @@
 #include "WebNavigationType.h"
 #include "WebNavigatorContentUtilsClient.h"
 #include "WebSandboxFlags.h"
+#include "WebSourceLocation.h"
 #include "WebTextDirection.h"
 #include "public/platform/BlameContext.h"
+#include "public/platform/WebColor.h"
 #include "public/platform/WebCommon.h"
+#include "public/platform/WebContentSecurityPolicyStruct.h"
 #include "public/platform/WebEffectiveConnectionType.h"
 #include "public/platform/WebFeaturePolicy.h"
 #include "public/platform/WebFileSystem.h"
@@ -62,8 +64,7 @@
 #include "public/platform/WebStorageQuotaType.h"
 #include "public/platform/WebURLError.h"
 #include "public/platform/WebURLRequest.h"
-#include "public/web/WebContentSecurityPolicy.h"
-#include <v8.h>
+#include "v8/include/v8.h"
 
 namespace blink {
 
@@ -79,7 +80,6 @@ class WebEncryptedMediaClient;
 class WebExternalPopupMenu;
 class WebExternalPopupMenuClient;
 class WebFileChooserCompletion;
-class WebInstalledAppClient;
 class WebLocalFrame;
 class WebMediaPlayer;
 class WebMediaPlayerClient;
@@ -91,6 +91,7 @@ class WebPlugin;
 class WebPresentationClient;
 class WebPushClient;
 class WebRTCPeerConnectionHandler;
+class WebRelatedAppsFetcher;
 class WebScreenOrientationClient;
 class WebString;
 class WebURL;
@@ -203,7 +204,7 @@ class BLINK_EXPORT WebFrameClient {
   virtual void frameFocused() {}
 
   // A provisional load is about to commit.
-  virtual void willCommitProvisionalLoad(WebLocalFrame*) {}
+  virtual void willCommitProvisionalLoad() {}
 
   // This frame's name has changed.
   virtual void didChangeName(const WebString& name,
@@ -228,15 +229,17 @@ class BLINK_EXPORT WebFrameClient {
   // Called when a Feature-Policy HTTP header is encountered while loading the
   // frame's document.
   virtual void didSetFeaturePolicyHeader(
-      const WebParsedFeaturePolicyHeader& parsedHeader) {}
+      const WebParsedFeaturePolicy& parsedHeader) {}
 
   // Called when a new Content Security Policy is added to the frame's
   // document.  This can be triggered by handling of HTTP headers, handling
   // of <meta> element, or by inheriting CSP from the parent (in case of
   // about:blank).
-  virtual void didAddContentSecurityPolicy(const WebString& headerValue,
-                                           WebContentSecurityPolicyType,
-                                           WebContentSecurityPolicySource) {}
+  virtual void didAddContentSecurityPolicy(
+      const WebString& headerValue,
+      WebContentSecurityPolicyType type,
+      WebContentSecurityPolicySource source,
+      const std::vector<WebContentSecurityPolicyPolicy>& policies) {}
 
   // Some frame owner properties have changed for a child frame of this frame.
   // Frame owner properties currently include: scrolling, marginwidth and
@@ -298,6 +301,7 @@ class BLINK_EXPORT WebFrameClient {
     bool isClientRedirect;
     WebFormElement form;
     bool isCacheDisabled;
+    WebSourceLocation sourceLocation;
 
     NavigationPolicyInfo(WebURLRequest& urlRequest)
         : extraData(nullptr),
@@ -344,7 +348,8 @@ class BLINK_EXPORT WebFrameClient {
   virtual void didCreateDataSource(WebLocalFrame*, WebDataSource*) {}
 
   // A new provisional load has been started.
-  virtual void didStartProvisionalLoad(WebDataSource* dataSource) {}
+  virtual void didStartProvisionalLoad(WebDataSource* dataSource,
+                                       WebURLRequest& request) {}
 
   // The provisional load was redirected via a HTTP 3xx response.
   virtual void didReceiveServerRedirectForProvisionalLoad(WebLocalFrame*) {}
@@ -449,7 +454,7 @@ class BLINK_EXPORT WebFrameClient {
   // InstalledApp API ----------------------------------------------------
 
   // Used to access the embedder for the InstalledApp API.
-  virtual WebInstalledAppClient* installedAppClient() { return nullptr; }
+  virtual WebRelatedAppsFetcher* relatedAppsFetcher() { return nullptr; }
 
   // Editing -------------------------------------------------------------
 
@@ -676,16 +681,6 @@ class BLINK_EXPORT WebFrameClient {
       int startOffset,
       const WebAXObject& endObject,
       int endOffset) {}
-
-  // ServiceWorker -------------------------------------------------------
-
-  // Whether the document associated with WebDataSource is controlled by the
-  // ServiceWorker.
-  virtual bool isControlledByServiceWorker(WebDataSource&) { return false; }
-
-  // Returns an identifier of the service worker controlling the document
-  // associated with the WebDataSource.
-  virtual int64_t serviceWorkerID(WebDataSource&) { return -1; }
 
   // Fullscreen ----------------------------------------------------------
 

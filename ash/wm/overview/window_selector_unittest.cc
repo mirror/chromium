@@ -24,14 +24,11 @@
 #include "ash/common/wm/window_state.h"
 #include "ash/common/wm/wm_event.h"
 #include "ash/common/wm/workspace/workspace_window_resizer.h"
-#include "ash/common/wm_lookup.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
-#include "ash/common/wm_window_property.h"
 #include "ash/drag_drop/drag_drop_controller.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
-#include "ash/screen_util.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test/shelf_view_test_api.h"
@@ -71,6 +68,7 @@
 #include "ui/views/controls/label.h"
 #include "ui/views/widget/native_widget_aura.h"
 #include "ui/views/widget/widget_delegate.h"
+#include "ui/wm/core/coordinate_conversion.h"
 #include "ui/wm/core/window_util.h"
 #include "ui/wm/public/activation_delegate.h"
 
@@ -160,8 +158,9 @@ class WindowSelectorTest : public test::AshTestBase {
     params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
     widget->Init(params);
     widget->Show();
-    WmWindow* window = WmLookup::Get()->GetWindowForWidget(widget.get());
-    window->SetIntProperty(WmWindowProperty::TOP_VIEW_INSET, kHeaderHeight);
+    WmWindow* window = WmWindow::Get(widget->GetNativeWindow());
+    window->aura_window()->SetProperty(aura::client::kTopViewInset,
+                                       kHeaderHeight);
     ParentWindowInPrimaryRootWindow(widget->GetNativeWindow());
     return widget;
   }
@@ -199,8 +198,9 @@ class WindowSelectorTest : public test::AshTestBase {
   }
 
   gfx::Rect GetTransformedBounds(aura::Window* window) {
-    gfx::RectF bounds(ScreenUtil::ConvertRectToScreen(
-        window->parent(), window->layer()->bounds()));
+    gfx::Rect bounds_in_screen = window->layer()->bounds();
+    ::wm::ConvertRectToScreen(window->parent(), &bounds_in_screen);
+    gfx::RectF bounds(bounds_in_screen);
     gfx::Transform transform(gfx::TransformAboutPivot(
         gfx::ToFlooredPoint(bounds.origin()), window->layer()->transform()));
     transform.TransformRect(&bounds);
@@ -208,8 +208,9 @@ class WindowSelectorTest : public test::AshTestBase {
   }
 
   gfx::Rect GetTransformedTargetBounds(aura::Window* window) {
-    gfx::RectF bounds(ScreenUtil::ConvertRectToScreen(
-        window->parent(), window->layer()->GetTargetBounds()));
+    gfx::Rect bounds_in_screen = window->layer()->GetTargetBounds();
+    ::wm::ConvertRectToScreen(window->parent(), &bounds_in_screen);
+    gfx::RectF bounds(bounds_in_screen);
     gfx::Transform transform(
         gfx::TransformAboutPivot(gfx::ToFlooredPoint(bounds.origin()),
                                  window->layer()->GetTargetTransform()));
@@ -365,6 +366,11 @@ class WindowSelectorTest : public test::AshTestBase {
 // Tests that the text field in the overview menu is repositioned and resized
 // after a screen rotation.
 TEST_F(WindowSelectorTest, OverviewScreenRotation) {
+  // TODO: fails in mash because rotation is not supported.
+  // http://crbug.com/695556
+  if (WmShell::Get()->IsRunningInMash())
+    return;
+
   gfx::Rect bounds(0, 0, 400, 300);
   std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
   std::unique_ptr<aura::Window> panel1(CreatePanelWindow(bounds));
@@ -399,7 +405,8 @@ TEST_F(WindowSelectorTest, OverviewScreenRotation) {
 // Tests that an a11y alert is sent on entering overview mode.
 TEST_F(WindowSelectorTest, A11yAlertOnOverviewMode) {
   gfx::Rect bounds(0, 0, 400, 400);
-  AccessibilityDelegate* delegate = WmShell::Get()->accessibility_delegate();
+  AccessibilityDelegate* delegate =
+      Shell::GetInstance()->accessibility_delegate();
   std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
   EXPECT_NE(delegate->GetLastAccessibilityAlert(),
             A11Y_ALERT_WINDOW_OVERVIEW_MODE_ENTERED);
@@ -439,8 +446,11 @@ TEST_F(WindowSelectorTest, Basic) {
   EXPECT_FALSE(wm::IsActiveWindow(window1.get()));
   EXPECT_TRUE(wm::IsActiveWindow(window2.get()));
   EXPECT_EQ(window2.get(), GetFocusedWindow());
-  // Hide the cursor before entering overview to test that it will be shown.
-  aura::client::GetCursorClient(root_window)->HideCursor();
+  // TODO: mash doesn't support CursorClient. http://crbug.com/637853.
+  if (!WmShell::Get()->IsRunningInMash()) {
+    // Hide the cursor before entering overview to test that it will be shown.
+    aura::client::GetCursorClient(root_window)->HideCursor();
+  }
 
   // In overview mode the windows should no longer overlap and the text filter
   // widget should be focused.
@@ -456,8 +466,11 @@ TEST_F(WindowSelectorTest, Basic) {
   EXPECT_FALSE(wm::IsActiveWindow(window2.get()));
   EXPECT_EQ(window1.get(), GetFocusedWindow());
 
-  // Cursor should have been unlocked.
-  EXPECT_FALSE(aura::client::GetCursorClient(root_window)->IsCursorLocked());
+  // TODO: mash doesn't support CursorClient. http://crbug.com/637853.
+  if (!WmShell::Get()->IsRunningInMash()) {
+    // Cursor should have been unlocked.
+    EXPECT_FALSE(aura::client::GetCursorClient(root_window)->IsCursorLocked());
+  }
 }
 
 // Tests activating minimized window.
@@ -507,7 +520,7 @@ TEST_F(WindowSelectorTest, TextFilterActive) {
   EXPECT_TRUE(wm::IsActiveWindow(window1.get()));
   EXPECT_EQ(window1.get(), GetFocusedWindow());
 
-  WmShell::Get()->ToggleAppList();
+  Shell::Get()->ToggleAppList();
 
   // Activating overview cancels the App-list which normally would activate the
   // previously active |window1|. Overview mode should properly transfer focus
@@ -852,6 +865,10 @@ TEST_F(WindowSelectorTest, BasicGesture) {
 // recorded when the mouse/touchscreen/keyboard are used to select a window
 // in overview mode which is different from the previously-active window.
 TEST_F(WindowSelectorTest, ActiveWindowChangedUserActionRecorded) {
+  // TODO: fails because of metrics. http://crbug.com/698129.
+  if (WmShell::Get()->IsRunningInMash())
+    return;
+
   base::UserActionTester user_action_tester;
   gfx::Rect bounds(0, 0, 400, 400);
   std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
@@ -1026,7 +1043,8 @@ TEST_F(WindowSelectorTest, WindowDoesNotReceiveEvents) {
                         ui::EventTimeForNow(), ui::EF_NONE, ui::EF_NONE);
 
   ui::EventTarget* root_target = root_window;
-  ui::EventTargeter* targeter = root_target->GetEventTargeter();
+  ui::EventTargeter* targeter =
+      root_window->GetHost()->dispatcher()->GetDefaultEventTargeter();
 
   // The event should target the window because we are still not in overview
   // mode.
@@ -1127,8 +1145,9 @@ TEST_F(WindowSelectorTest, CloseButtonOnMultipleDisplay) {
   params.parent = window1->parent();
   widget->Init(params);
   widget->Show();
-  WmWindow* window = WmLookup::Get()->GetWindowForWidget(widget.get());
-  window->SetIntProperty(WmWindowProperty::TOP_VIEW_INSET, kHeaderHeight);
+  WmWindow* window = WmWindow::Get(widget->GetNativeWindow());
+  window->aura_window()->SetProperty(aura::client::kTopViewInset,
+                                     kHeaderHeight);
 
   ASSERT_EQ(root_windows[1], window1->GetRootWindow());
 
@@ -1221,6 +1240,10 @@ TEST_F(WindowSelectorTest, FullscreenWindowMaximizeMode) {
 
 // Tests that beginning window selection hides the app list.
 TEST_F(WindowSelectorTest, SelectingHidesAppList) {
+  // TODO: fails in mash because of AppListPresenter. http://crbug.com/696028.
+  if (WmShell::Get()->IsRunningInMash())
+    return;
+
   gfx::Rect bounds(0, 0, 400, 400);
   std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
   std::unique_ptr<aura::Window> window2(CreateWindow(bounds));
@@ -1508,6 +1531,11 @@ TEST_F(WindowSelectorTest, Shutdown) {
 
 // Tests removing a display during overview.
 TEST_F(WindowSelectorTest, RemoveDisplay) {
+  // TODO: hits CHECK in stl as order of |ShelfModel::items_| is wrong.
+  // http://crbug.com/698878.
+  if (WmShell::Get()->IsRunningInMash())
+    return;
+
   UpdateDisplay("400x400,400x400");
   gfx::Rect bounds1(0, 0, 100, 100);
   gfx::Rect bounds2(450, 0, 100, 100);
@@ -1589,6 +1617,11 @@ TEST_F(WindowSelectorTest, CreateLabelUnderWindow) {
 // Tests that overview updates the window positions if the display orientation
 // changes.
 TEST_F(WindowSelectorTest, DisplayOrientationChanged) {
+  // TODO: fails in mash because rotation is not supported.
+  // http://crbug.com/695556
+  if (WmShell::Get()->IsRunningInMash())
+    return;
+
   aura::Window* root_window = Shell::GetInstance()->GetPrimaryRootWindow();
   UpdateDisplay("600x200");
   EXPECT_EQ("0,0 600x200", root_window->bounds().ToString());
@@ -1719,6 +1752,11 @@ TEST_F(WindowSelectorTest, BasicMultiMonitorArrowKeyNavigation) {
 // Tests first monitor when display order doesn't match left to right screen
 // positions.
 TEST_F(WindowSelectorTest, MultiMonitorReversedOrder) {
+  // TODO: SetLayoutForCurrentDisplays() needs to ported to mash.
+  // http://crbug.com/698043.
+  if (WmShell::Get()->IsRunningInMash())
+    return;
+
   UpdateDisplay("400x400,400x400");
   Shell::GetInstance()->display_manager()->SetLayoutForCurrentDisplays(
       display::test::CreateDisplayLayout(display_manager(),

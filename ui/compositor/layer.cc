@@ -158,16 +158,6 @@ Layer::~Layer() {
 std::unique_ptr<Layer> Layer::Clone() const {
   auto clone = base::MakeUnique<Layer>(type_);
 
-  clone->SetTransform(GetTargetTransform());
-  clone->SetBounds(bounds_);
-  clone->SetSubpixelPositionOffset(subpixel_position_offset_);
-  clone->SetMasksToBounds(GetMasksToBounds());
-  clone->SetOpacity(GetTargetOpacity());
-  clone->SetVisible(GetTargetVisibility());
-  clone->SetFillsBoundsOpaquely(fills_bounds_opaquely_);
-  clone->SetFillsBoundsCompletely(fills_bounds_completely_);
-  clone->set_name(name_);
-
   // Background filters.
   clone->SetBackgroundBlur(background_blur_radius_);
   clone->SetBackgroundZoom(zoom_, zoom_inset_);
@@ -181,13 +171,23 @@ std::unique_ptr<Layer> Layer::Clone() const {
     clone->SetAlphaShape(base::MakeUnique<SkRegion>(*alpha_shape_));
 
   // cc::Layer state.
-  if (surface_layer_ &&
-      surface_layer_->primary_surface_info().id().is_valid()) {
-    clone->SetShowSurface(surface_layer_->primary_surface_info(),
-                          surface_layer_->surface_reference_factory());
+  if (surface_layer_ && surface_layer_->primary_surface_info().is_valid()) {
+    clone->SetShowPrimarySurface(surface_layer_->primary_surface_info(),
+                                 surface_layer_->surface_reference_factory());
   } else if (type_ == LAYER_SOLID_COLOR) {
     clone->SetColor(GetTargetColor());
   }
+
+  clone->SetTransform(GetTargetTransform());
+  clone->SetBounds(bounds_);
+  clone->SetSubpixelPositionOffset(subpixel_position_offset_);
+  clone->SetMasksToBounds(GetMasksToBounds());
+  clone->SetOpacity(GetTargetOpacity());
+  clone->SetVisible(GetTargetVisibility());
+  clone->SetFillsBoundsOpaquely(fills_bounds_opaquely_);
+  clone->SetFillsBoundsCompletely(fills_bounds_completely_);
+  clone->set_name(name_);
+
   return clone;
 }
 
@@ -653,24 +653,26 @@ bool Layer::TextureFlipped() const {
   return texture_layer_->flipped();
 }
 
-void Layer::SetShowSurface(
+void Layer::SetShowPrimarySurface(
     const cc::SurfaceInfo& surface_info,
     scoped_refptr<cc::SurfaceReferenceFactory> ref_factory) {
   DCHECK(type_ == LAYER_TEXTURED || type_ == LAYER_SOLID_COLOR);
 
-  scoped_refptr<cc::SurfaceLayer> new_layer =
-      cc::SurfaceLayer::Create(ref_factory);
-  new_layer->SetPrimarySurfaceInfo(surface_info);
-  SwitchToLayer(new_layer);
-  surface_layer_ = new_layer;
+  if (!surface_layer_) {
+    scoped_refptr<cc::SurfaceLayer> new_layer =
+        cc::SurfaceLayer::Create(ref_factory);
+    SwitchToLayer(new_layer);
+    surface_layer_ = new_layer;
+  }
+
+  surface_layer_->SetPrimarySurfaceInfo(surface_info);
 
   frame_size_in_dip_ = gfx::ConvertSizeToDIP(surface_info.device_scale_factor(),
                                              surface_info.size_in_pixels());
   RecomputeDrawsContentAndUVRect();
 
-  for (const auto& mirror : mirrors_) {
-    mirror->dest()->SetShowSurface(surface_info, ref_factory);
-  }
+  for (const auto& mirror : mirrors_)
+    mirror->dest()->SetShowPrimarySurface(surface_info, ref_factory);
 }
 
 void Layer::SetShowSolidColorContent() {

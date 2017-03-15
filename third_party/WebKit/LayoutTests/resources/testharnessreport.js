@@ -80,7 +80,7 @@
         var path = location.pathname;
         if (location.hostname == 'web-platform.test' && path.endsWith('-manual.html'))
             return true;
-        return /\/imported\/wpt\/.*-manual\.html$/.test(path);
+        return /\/external\/wpt\/.*-manual\.html$/.test(path);
     }
 
     // Returns a directory part relative to WPT root and a basename part of the
@@ -93,7 +93,7 @@
             var matches = path.match(/^(\/.*)\.html$/);
             return matches ? matches[1] : null;
         }
-        var matches = path.match(/imported\/wpt(\/.*)\.html$/);
+        var matches = path.match(/external\/wpt(\/.*)\.html$/);
         return matches ? matches[1] : null;
     }
 
@@ -101,7 +101,7 @@
         var pathAndBase = pathAndBaseNameInWPT();
         if (!pathAndBase)
             return;
-        var automationPath = location.pathname.replace(/\/imported\/wpt\/.*$/, '/external/wpt_automation');
+        var automationPath = location.pathname.replace(/\/external\/wpt\/.*$/, '/external/wpt_automation');
         if (location.hostname == 'web-platform.test')
             automationPath = '/wpt_automation';
 
@@ -188,11 +188,24 @@
         } else {
             // Iterate through tests array and build string that contains
             // results for all tests.
+            let testResults = "";
+            let resultCounter = [0, 0, 0, 0];
             for (var i = 0; i < tests.length; ++i) {
-                resultStr += convertResult(tests[i].status) + " " +
+                resultCounter[tests[i].status]++;
+                testResults += convertResult(tests[i].status) + " " +
                     sanitize(tests[i].name) + " " +
                     sanitize(tests[i].message) + "\n";
             }
+            if (output_document.URL.indexOf("http://web-platform.test") >= 0 &&
+                tests.length >= 50 && (resultCounter[1] || resultCounter[2] || resultCounter[3])) {
+                // Output failure metrics if there are many.
+                resultStr += `Found ${tests.length} tests;` +
+                    ` ${resultCounter[0]} PASS,` +
+                    ` ${resultCounter[1]} FAIL,` +
+                    ` ${resultCounter[2]} TIMEOUT,` +
+                    ` ${resultCounter[3]} NOTRUN.\n`;
+            }
+            resultStr += testResults;
         }
 
         resultStr += "Harness: the test ran to completion.\n";
@@ -201,6 +214,10 @@
         results.textContent = resultStr;
 
         function done() {
+            let xhtmlNS = 'http://www.w3.org/1999/xhtml';
+            var body = null;
+            if (output_document.body && output_document.body.tagName == 'BODY' && output_document.body.namespaceURI == xhtmlNS)
+                body = output_document.body;
             // A temporary workaround since |window.self| property lookup starts
             // failing if the frame is detached. |output_document| may be an
             // ancestor of |self| so clearing |textContent| may detach |self|.
@@ -217,17 +234,20 @@
 
                 // Anything isn't material to the testrunner output, so should
                 // be hidden from the text dump.
-                if (output_document.body && output_document.body.tagName == 'BODY')
-                    output_document.body.textContent = '';
+                if (body)
+                    body.textContent = '';
             }
 
             // Add results element to output_document.
-            if (!output_document.body || output_document.body.tagName != 'BODY') {
-                if (!output_document.documentElement)
-                    output_document.appendChild(output_document.createElement('html'));
-                else if (output_document.body) // output_document.body is <frameset>.
-                    output_document.body.remove();
-                output_document.documentElement.appendChild(output_document.createElement("body"));
+            if (!body) {
+                // output_document might be an SVG document.
+                if (output_document.documentElement)
+                    output_document.documentElement.remove();
+                let html = output_document.createElementNS(xhtmlNS, 'html');
+                output_document.appendChild(html);
+                body = output_document.createElementNS(xhtmlNS, 'body');
+                body.setAttribute('style', 'white-space:pre;');
+                html.appendChild(body);
             }
             output_document.body.appendChild(results);
 

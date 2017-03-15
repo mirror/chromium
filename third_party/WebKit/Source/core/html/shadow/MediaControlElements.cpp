@@ -38,6 +38,7 @@
 #include "core/events/MouseEvent.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
+#include "core/frame/UseCounter.h"
 #include "core/html/HTMLAnchorElement.h"
 #include "core/html/HTMLLabelElement.h"
 #include "core/html/HTMLMediaSource.h"
@@ -679,7 +680,13 @@ bool MediaControlDownloadButtonElement::shouldDisplayDownloadButton() {
   if (url.isNull() || url.isEmpty())
     return false;
 
-  // Local files and blobs should not have a download button.
+  // If we have no source, we can't download.
+  if (mediaElement().getNetworkState() == HTMLMediaElement::kNetworkEmpty ||
+      mediaElement().getNetworkState() == HTMLMediaElement::kNetworkNoSource) {
+    return false;
+  }
+
+  // Local files and blobs (including MSE) should not have a download button.
   if (url.isLocalFile() || url.protocolIs("blob"))
     return false;
 
@@ -695,7 +702,32 @@ bool MediaControlDownloadButtonElement::shouldDisplayDownloadButton() {
   if (HTMLMediaElement::isHLSURL(url))
     return false;
 
+  // Infinite streams don't have a clear end at which to finish the download
+  // (would require adding UI to prompt for the duration to download).
+  if (mediaElement().duration() == std::numeric_limits<double>::infinity())
+    return false;
+
+  // The attribute disables the download button.
+  if (mediaElement().controlsList()->shouldHideDownload()) {
+    UseCounter::count(mediaElement().document(),
+                      UseCounter::HTMLMediaElementControlsListNoDownload);
+    return false;
+  }
+
   return true;
+}
+
+void MediaControlDownloadButtonElement::setIsWanted(bool wanted) {
+  MediaControlElement::setIsWanted(wanted);
+
+  if (!isWanted())
+    return;
+
+  DCHECK(isWanted());
+  if (!m_showUseCounted) {
+    m_showUseCounted = true;
+    recordMetrics(DownloadActionMetrics::Shown);
+  }
 }
 
 void MediaControlDownloadButtonElement::defaultEventHandler(Event* event) {
@@ -704,6 +736,10 @@ void MediaControlDownloadButtonElement::defaultEventHandler(Event* event) {
       !(url.isNull() || url.isEmpty())) {
     Platform::current()->recordAction(
         UserMetricsAction("Media.Controls.Download"));
+    if (!m_clickUseCounted) {
+      m_clickUseCounted = true;
+      recordMetrics(DownloadActionMetrics::Clicked);
+    }
     if (!m_anchor) {
       HTMLAnchorElement* anchor = HTMLAnchorElement::create(document());
       anchor->setAttribute(HTMLNames::downloadAttr, "");
@@ -718,6 +754,14 @@ void MediaControlDownloadButtonElement::defaultEventHandler(Event* event) {
 DEFINE_TRACE(MediaControlDownloadButtonElement) {
   visitor->trace(m_anchor);
   MediaControlInputElement::trace(visitor);
+}
+
+void MediaControlDownloadButtonElement::recordMetrics(
+    DownloadActionMetrics metric) {
+  DEFINE_STATIC_LOCAL(EnumerationHistogram, downloadActionHistogram,
+                      ("Media.Controls.Download",
+                       static_cast<int>(DownloadActionMetrics::Count)));
+  downloadActionHistogram.count(static_cast<int>(metric));
 }
 
 // ----------------------------
@@ -765,14 +809,21 @@ void MediaControlTimelineElement::defaultEventHandler(Event* event) {
 
   double time = value().toDouble();
 
+  double duration = mediaElement().duration();
+  // Workaround for floating point error - it's possible for this element's max
+  // attribute to be rounded to a value slightly higher than the duration. If
+  // this happens and scrubber is dragged near the max, seek to duration.
+  if (time > duration)
+    time = duration;
+
   // FIXME: This will need to take the timeline offset into consideration
   // once that concept is supported, see https://crbug.com/312699
   if (mediaElement().seekable()->contain(time))
     mediaElement().setCurrentTime(time);
 
-  LayoutSliderItem slider = LayoutSliderItem(toLayoutSlider(layoutObject()));
-  if (!slider.isNull() && slider.inDragMode())
-    mediaControls().updateCurrentTimeDisplay();
+  // Provide immediate feedback (without waiting for media to seek) to make it
+  // easier for user to seek to a precise time.
+  mediaControls().updateCurrentTimeDisplay();
 }
 
 bool MediaControlTimelineElement::willRespondToMouseClickEvents() {
@@ -885,13 +936,24 @@ MediaControlFullscreenButtonElement::create(MediaControls& mediaControls) {
 
 void MediaControlFullscreenButtonElement::defaultEventHandler(Event* event) {
   if (event->type() == EventTypeNames::click) {
+    bool isEmbeddedExperienceEnabled =
+        document().settings() &&
+        document().settings()->getEmbeddedMediaExperienceEnabled();
     if (mediaElement().isFullscreen()) {
       Platform::current()->recordAction(
           UserMetricsAction("Media.Controls.ExitFullscreen"));
+      if (isEmbeddedExperienceEnabled) {
+        Platform::current()->recordAction(UserMetricsAction(
+            "Media.Controls.ExitFullscreen.EmbeddedExperience"));
+      }
       mediaControls().exitFullscreen();
     } else {
       Platform::current()->recordAction(
           UserMetricsAction("Media.Controls.EnterFullscreen"));
+      if (isEmbeddedExperienceEnabled) {
+        Platform::current()->recordAction(UserMetricsAction(
+            "Media.Controls.EnterFullscreen.EmbeddedExperience"));
+      }
       mediaControls().enterFullscreen();
     }
     event->setDefaultHandled();
@@ -929,6 +991,9 @@ MediaControlCastButtonElement* MediaControlCastButtonElement::create(
   MediaControlCastButtonElement* button =
       new MediaControlCastButtonElement(mediaControls, isOverlayButton);
   button->ensureUserAgentShadowRoot();
+  button->setShadowPseudoId(isOverlayButton
+                                ? "-internal-media-controls-overlay-cast-button"
+                                : "-internal-media-controls-cast-button");
   button->setType(InputTypeNames::button);
   return button;
 }
@@ -953,14 +1018,6 @@ void MediaControlCastButtonElement::defaultEventHandler(Event* event) {
     }
   }
   MediaControlInputElement::defaultEventHandler(event);
-}
-
-const AtomicString& MediaControlCastButtonElement::shadowPseudoId() const {
-  DEFINE_STATIC_LOCAL(AtomicString, id_nonOverlay,
-                      ("-internal-media-controls-cast-button"));
-  DEFINE_STATIC_LOCAL(AtomicString, id_overlay,
-                      ("-internal-media-controls-overlay-cast-button"));
-  return m_isOverlayButton ? id_overlay : id_nonOverlay;
 }
 
 void MediaControlCastButtonElement::setIsPlayingRemotely(

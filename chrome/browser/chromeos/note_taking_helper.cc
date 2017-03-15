@@ -122,7 +122,7 @@ NoteTakingAppInfos NoteTakingHelper::GetAvailableApps(Profile* profile) {
 
   const std::vector<const extensions::Extension*> chrome_apps =
       GetChromeApps(profile);
-  for (const auto& app : chrome_apps)
+  for (const auto* app : chrome_apps)
     infos.push_back(NoteTakingAppInfo{app->name(), app->id(), false});
 
   if (arc::IsArcAllowedForProfile(profile))
@@ -186,12 +186,12 @@ void NoteTakingHelper::LaunchAppForNewNote(Profile* profile,
 }
 
 void NoteTakingHelper::OnIntentFiltersUpdated() {
-  if (android_enabled_)
+  if (play_store_enabled_)
     UpdateAndroidApps();
 }
 
 void NoteTakingHelper::OnArcPlayStoreEnabledChanged(bool enabled) {
-  android_enabled_ = enabled;
+  play_store_enabled_ = enabled;
   if (!enabled) {
     android_apps_.clear();
     android_apps_received_ = false;
@@ -221,20 +221,24 @@ NoteTakingHelper::NoteTakingHelper()
   // Track profiles so we can observe their extension registries.
   registrar_.Add(this, chrome::NOTIFICATION_PROFILE_ADDED,
                  content::NotificationService::AllBrowserContextsAndSources());
+  play_store_enabled_ = false;
   for (Profile* profile :
        g_browser_process->profile_manager()->GetLoadedProfiles()) {
     extension_registry_observer_.Add(
         extensions::ExtensionRegistry::Get(profile));
+    // Check if the profile has already enabled Google Play Store.
+    // IsArcPlayStoreEnabledForProfile() can return true only for the primary
+    // profile.
+    play_store_enabled_ |= arc::IsArcPlayStoreEnabledForProfile(profile);
   }
 
-  // Check if the primary profile has already enabled ARC and watch for changes.
-  auto session_manager = arc::ArcSessionManager::Get();
+  // Watch for changes of Google Play Store enabled state.
+  auto* session_manager = arc::ArcSessionManager::Get();
   session_manager->AddObserver(this);
-  android_enabled_ = session_manager->IsArcPlayStoreEnabled();
 
   // ArcIntentHelperBridge will notify us about changes to the list of available
   // Android apps.
-  auto intent_helper_bridge =
+  auto* intent_helper_bridge =
       arc::ArcServiceManager::GetGlobalService<arc::ArcIntentHelperBridge>();
   if (intent_helper_bridge)
     intent_helper_bridge->AddObserver(this);
@@ -242,19 +246,19 @@ NoteTakingHelper::NoteTakingHelper()
   // If the ARC intent helper is ready, get the Android apps. Otherwise,
   // UpdateAndroidApps() will be called when ArcServiceManager calls
   // OnIntentFiltersUpdated().
-  if (android_enabled_ &&
-      arc::ArcServiceManager::Get()
-          ->arc_bridge_service()
-          ->intent_helper()
-          ->has_instance())
+  if (play_store_enabled_ && arc::ArcServiceManager::Get()
+                                 ->arc_bridge_service()
+                                 ->intent_helper()
+                                 ->has_instance()) {
     UpdateAndroidApps();
+  }
 }
 
 NoteTakingHelper::~NoteTakingHelper() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   // ArcSessionManagerTest shuts down ARC before NoteTakingHelper.
-  auto intent_helper_bridge =
+  auto* intent_helper_bridge =
       arc::ArcServiceManager::GetGlobalService<arc::ArcIntentHelperBridge>();
   if (intent_helper_bridge)
     intent_helper_bridge->RemoveObserver(this);
@@ -314,7 +318,7 @@ void NoteTakingHelper::UpdateAndroidApps() {
 void NoteTakingHelper::OnGotAndroidApps(
     std::vector<arc::mojom::IntentHandlerInfoPtr> handlers) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  if (!android_enabled_)
+  if (!play_store_enabled_)
     return;
 
   android_apps_.clear();
@@ -387,7 +391,7 @@ void NoteTakingHelper::Observe(int type,
                                const content::NotificationSource& source,
                                const content::NotificationDetails& details) {
   DCHECK_EQ(type, chrome::NOTIFICATION_PROFILE_ADDED);
-  auto registry = extensions::ExtensionRegistry::Get(
+  auto* registry = extensions::ExtensionRegistry::Get(
       content::Source<Profile>(source).ptr());
   DCHECK(!extension_registry_observer_.IsObserving(registry));
   extension_registry_observer_.Add(registry);

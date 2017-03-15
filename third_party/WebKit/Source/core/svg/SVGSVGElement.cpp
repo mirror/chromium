@@ -107,7 +107,7 @@ float SVGSVGElement::currentScale() const {
 }
 
 void SVGSVGElement::setCurrentScale(float scale) {
-  ASSERT(std::isfinite(scale));
+  DCHECK(std::isfinite(scale));
   if (!isConnected() || !isOutermostSVGSVGElement())
     return;
 
@@ -122,7 +122,7 @@ class SVGCurrentTranslateTearOff : public SVGPointTearOff {
   }
 
   void commitChange() override {
-    ASSERT(contextElement());
+    DCHECK(contextElement());
     toSVGSVGElement(contextElement())->updateUserTransform();
   }
 
@@ -230,18 +230,18 @@ void SVGSVGElement::collectStyleForPresentationAttribute(
     MutableStylePropertySet* style) {
   SVGAnimatedPropertyBase* property = propertyFromAttribute(name);
   if (property == m_x) {
-    addPropertyToPresentationAttributeStyle(style, CSSPropertyX,
+    addPropertyToPresentationAttributeStyle(style, property->cssPropertyId(),
                                             m_x->cssValue());
   } else if (property == m_y) {
-    addPropertyToPresentationAttributeStyle(style, CSSPropertyY,
+    addPropertyToPresentationAttributeStyle(style, property->cssPropertyId(),
                                             m_y->cssValue());
   } else if (isOutermostSVGSVGElement() &&
              (property == m_width || property == m_height)) {
     if (property == m_width) {
-      addPropertyToPresentationAttributeStyle(style, CSSPropertyWidth,
+      addPropertyToPresentationAttributeStyle(style, property->cssPropertyId(),
                                               m_width->cssValue());
     } else if (property == m_height) {
-      addPropertyToPresentationAttributeStyle(style, CSSPropertyHeight,
+      addPropertyToPresentationAttributeStyle(style, property->cssPropertyId(),
                                               m_height->cssValue());
     }
   } else {
@@ -265,7 +265,10 @@ void SVGSVGElement::svgAttributeChanged(const QualifiedName& attrName) {
     // to mark it for updating.
     if (widthOrHeightChanged) {
       LayoutObject* layoutObject = this->layoutObject();
-      if (layoutObject && layoutObject->isSVGRoot()) {
+      // If the element is not attached, we cannot be sure if it is (going to
+      // be) an outermost root, so always mark presentation attributes dirty in
+      // that case.
+      if (!layoutObject || layoutObject->isSVGRoot()) {
         invalidateSVGPresentationAttributeStyle();
         setNeedsStyleRecalc(LocalStyleChange,
                             StyleChangeReasonForTracing::create(
@@ -319,7 +322,7 @@ bool SVGSVGElement::checkIntersectionOrEnclosure(
     const FloatRect& rect,
     GeometryMatchingMode mode) const {
   LayoutObject* layoutObject = element.layoutObject();
-  ASSERT(!layoutObject || layoutObject->style());
+  DCHECK(!layoutObject || layoutObject->style());
   if (!layoutObject ||
       layoutObject->style()->pointerEvents() == EPointerEvents::kNone)
     return false;
@@ -341,7 +344,7 @@ bool SVGSVGElement::checkIntersectionOrEnclosure(
       result = rect.contains(mappedRepaintRect);
       break;
     default:
-      ASSERT_NOT_REACHED();
+      NOTREACHED();
       break;
   }
 
@@ -394,7 +397,7 @@ StaticNodeList* SVGSVGElement::getEnclosureList(
 
 bool SVGSVGElement::checkIntersection(SVGElement* element,
                                       SVGRectTearOff* rect) const {
-  ASSERT(element);
+  DCHECK(element);
   document().updateStyleAndLayoutIgnorePendingStylesheets();
 
   return checkIntersectionOrEnclosure(*element, rect->target()->value(),
@@ -403,7 +406,7 @@ bool SVGSVGElement::checkIntersection(SVGElement* element,
 
 bool SVGSVGElement::checkEnclosure(SVGElement* element,
                                    SVGRectTearOff* rect) const {
-  ASSERT(element);
+  DCHECK(element);
   document().updateStyleAndLayoutIgnorePendingStylesheets();
 
   return checkIntersectionOrEnclosure(*element, rect->target()->value(),
@@ -450,57 +453,18 @@ SVGTransformTearOff* SVGSVGElement::createSVGTransformFromMatrix(
   return SVGTransformTearOff::create(matrix);
 }
 
-AffineTransform SVGSVGElement::localCoordinateSpaceTransform(
-    SVGElement::CTMScope mode) const {
-  AffineTransform viewBoxTransform;
-  if (!hasEmptyViewBox()) {
-    FloatSize size = currentViewportSize();
-    viewBoxTransform = viewBoxToViewTransform(size.width(), size.height());
-  }
-
+AffineTransform SVGSVGElement::localCoordinateSpaceTransform() const {
   AffineTransform transform;
   if (!isOutermostSVGSVGElement()) {
     SVGLengthContext lengthContext(this);
     transform.translate(m_x->currentValue()->value(lengthContext),
                         m_y->currentValue()->value(lengthContext));
-  } else if (mode == SVGElement::ScreenScope) {
-    if (LayoutObject* layoutObject = this->layoutObject()) {
-      FloatPoint location;
-      float zoomFactor = 1;
-
-      // At the SVG/HTML boundary (aka LayoutSVGRoot), we apply the
-      // localToBorderBoxTransform to map an element from SVG viewport
-      // coordinates to CSS box coordinates.  LayoutSVGRoot's localToAbsolute
-      // method expects CSS box coordinates.  We also need to adjust for the
-      // zoom level factored into CSS coordinates (bug #96361).
-      if (layoutObject->isSVGRoot()) {
-        location = toLayoutSVGRoot(layoutObject)
-                       ->localToBorderBoxTransform()
-                       .mapPoint(location);
-        zoomFactor = 1 / layoutObject->style()->effectiveZoom();
-      }
-
-      // Translate in our CSS parent coordinate space
-      // FIXME: This doesn't work correctly with CSS transforms.
-      location = layoutObject->localToAbsolute(location, UseTransforms);
-      location.scale(zoomFactor, zoomFactor);
-
-      // Be careful here! localToBorderBoxTransform() included the x/y offset
-      // coming from the viewBoxToViewTransform(), so we have to subtract it
-      // here (original cause of bug #27183)
-      transform.translate(location.x() - viewBoxTransform.e(),
-                          location.y() - viewBoxTransform.f());
-
-      // Respect scroll offset.
-      if (FrameView* view = document().view()) {
-        LayoutSize scrollOffset(view->getScrollOffset());
-        scrollOffset.scale(zoomFactor);
-        transform.translate(-scrollOffset.width(), -scrollOffset.height());
-      }
-    }
   }
-
-  return transform.multiply(viewBoxTransform);
+  if (!hasEmptyViewBox()) {
+    FloatSize size = currentViewportSize();
+    transform.multiply(viewBoxToViewTransform(size.width(), size.height()));
+  }
+  return transform;
 }
 
 bool SVGSVGElement::layoutObjectIsNeeded(const ComputedStyle& style) {
@@ -574,7 +538,7 @@ float SVGSVGElement::getCurrentTime() const {
 }
 
 void SVGSVGElement::setCurrentTime(float seconds) {
-  ASSERT(std::isfinite(seconds));
+  DCHECK(std::isfinite(seconds));
   seconds = max(seconds, 0.0f);
   m_timeContainer->setElapsed(seconds);
 }

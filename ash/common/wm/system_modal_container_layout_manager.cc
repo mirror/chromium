@@ -10,10 +10,11 @@
 #include "ash/common/wm/window_dimmer.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
-#include "ash/common/wm_window_property.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "base/memory/ptr_util.h"
 #include "base/stl_util.h"
+#include "ui/aura/client/aura_constants.h"
+#include "ui/aura/window.h"
 #include "ui/keyboard/keyboard_controller.h"
 
 namespace ash {
@@ -25,7 +26,7 @@ const int kCenterPixelDelta = 32;
 
 ui::ModalType GetModalType(WmWindow* window) {
   return static_cast<ui::ModalType>(
-      window->GetIntProperty(WmWindowProperty::MODAL_TYPE));
+      window->aura_window()->GetProperty(aura::client::kModalKey));
 }
 
 bool HasTransientAncestor(const WmWindow* window, const WmWindow* ancestor) {
@@ -87,14 +88,14 @@ void SystemModalContainerLayoutManager::OnWindowAddedToLayout(WmWindow* child) {
   DCHECK_NE(GetModalType(child), ui::MODAL_TYPE_CHILD);
   DCHECK_NE(GetModalType(child), ui::MODAL_TYPE_WINDOW);
 
-  child->AddObserver(this);
+  child->aura_window()->AddObserver(this);
   if (GetModalType(child) == ui::MODAL_TYPE_SYSTEM && child->IsVisible())
     AddModalWindow(child);
 }
 
 void SystemModalContainerLayoutManager::OnWillRemoveWindowFromLayout(
     WmWindow* child) {
-  child->RemoveObserver(this);
+  child->aura_window()->RemoveObserver(this);
   windows_to_center_.erase(child);
   if (GetModalType(child) == ui::MODAL_TYPE_SYSTEM)
     RemoveModalWindow(child);
@@ -111,21 +112,23 @@ void SystemModalContainerLayoutManager::SetChildBounds(
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// SystemModalContainerLayoutManager, WmWindowObserver implementation:
+// SystemModalContainerLayoutManager, aura::WindowObserver implementation:
 
 void SystemModalContainerLayoutManager::OnWindowPropertyChanged(
-    WmWindow* window,
-    WmWindowProperty property) {
-  if (property != WmWindowProperty::MODAL_TYPE || !window->IsVisible())
+    aura::Window* window,
+    const void* key,
+    intptr_t old) {
+  if (key != aura::client::kModalKey || !window->IsVisible())
     return;
 
-  if (GetModalType(window) == ui::MODAL_TYPE_SYSTEM) {
-    if (base::ContainsValue(modal_windows_, window))
+  WmWindow* wm_window = WmWindow::Get(window);
+  if (window->GetProperty(aura::client::kModalKey) == ui::MODAL_TYPE_SYSTEM) {
+    if (base::ContainsValue(modal_windows_, wm_window))
       return;
-    AddModalWindow(window);
+    AddModalWindow(wm_window);
   } else {
-    if (RemoveModalWindow(window))
-      WmShell::Get()->OnModalWindowRemoved(window);
+    if (RemoveModalWindow(wm_window))
+      WmShell::Get()->OnModalWindowRemoved(wm_window);
   }
 }
 
@@ -157,7 +160,7 @@ bool SystemModalContainerLayoutManager::ActivateNextModalWindow() {
 
 void SystemModalContainerLayoutManager::CreateModalBackground() {
   if (!window_dimmer_) {
-    window_dimmer_ = base::MakeUnique<WindowDimmer>(container_);
+    window_dimmer_ = base::MakeUnique<WindowDimmer>(container_->aura_window());
     window_dimmer_->window()->SetName(
         "SystemModalContainerLayoutManager.ModalBackground");
     // There isn't always a keyboard controller.
@@ -186,7 +189,7 @@ bool SystemModalContainerLayoutManager::IsModalBackground(WmWindow* window) {
       static_cast<SystemModalContainerLayoutManager*>(
           window->GetParent()->GetLayoutManager());
   return layout_manager->window_dimmer_ &&
-         layout_manager->window_dimmer_->window() == window;
+         WmWindow::Get(layout_manager->window_dimmer_->window()) == window;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

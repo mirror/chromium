@@ -45,13 +45,6 @@
         },
         {
             "type": "@UI.ActionDelegate",
-            "actionId": "network.blocked-urls.show",
-            "className": "Network.BlockedURLsPane.ActionDelegate",
-            "iconClass": "largeicon-block",
-            "title": "Block network requests"
-        },
-        {
-            "type": "@UI.ActionDelegate",
             "actionId": "network.toggle-recording",
             "iconClass": "largeicon-start-recording",
             "toggledIconClass": "largeicon-stop-recording",
@@ -108,7 +101,8 @@
         "perf_ui",
         "cookie_table",
         "data_grid",
-        "network_conditions"
+        "network_conditions",
+        "object_ui"
     ],
     "scripts": [
         "BlockedURLsPane.js",
@@ -143,6 +137,7 @@
         "networkLogView.css",
         "networkManageCustomHeadersView.css",
         "networkPanel.css",
+        "networkTimingTable.css",
         "networkWaterfallColumn.css",
         "requestCookiesView.css",
         "requestHeadersTree.css",

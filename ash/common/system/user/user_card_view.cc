@@ -16,17 +16,16 @@
 #include "ash/common/system/tray/system_tray_delegate.h"
 #include "ash/common/system/tray/tray_constants.h"
 #include "ash/common/system/tray/tray_popup_item_style.h"
-#include "ash/common/system/tray/tray_utils.h"
 #include "ash/common/system/user/rounded_image_view.h"
 #include "ash/common/wm_shell.h"
 #include "ash/resources/vector_icons/vector_icons.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "base/i18n/rtl.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/user_manager/user_info.h"
-#include "grit/ash_strings.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/compositor/compositing_recorder.h"
@@ -69,10 +68,9 @@ views::View* CreateUserAvatarView(LoginStatus login_status, int user_index) {
                          gfx::Size(kTrayItemSize, kTrayItemSize));
   }
 
-  image_view->SetBorder(views::CreateEmptyBorder(
-      gfx::Insets((GetTrayConstant(TRAY_POPUP_ITEM_MAIN_IMAGE_CONTAINER_WIDTH) -
-                   image_view->GetPreferredSize().width()) /
-                  2)));
+  image_view->SetBorder(views::CreateEmptyBorder(gfx::Insets(
+      (kTrayPopupItemMinStartWidth - image_view->GetPreferredSize().width()) /
+      2)));
   return image_view;
 }
 
@@ -90,6 +88,7 @@ class PublicAccountUserDetails : public views::View,
   void Layout() override;
   gfx::Size GetPreferredSize() const override;
   void OnPaint(gfx::Canvas* canvas) override;
+  void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
 
   // Overridden from views::LinkListener.
   void LinkClicked(views::Link* source, int event_flags) override;
@@ -222,6 +221,12 @@ void PublicAccountUserDetails::OnPaint(gfx::Canvas* canvas) {
   views::View::OnPaint(canvas);
 }
 
+void PublicAccountUserDetails::GetAccessibleNodeData(
+    ui::AXNodeData* node_data) {
+  node_data->role = ui::AX_ROLE_STATIC_TEXT;
+  node_data->SetName(text_);
+}
+
 void PublicAccountUserDetails::LinkClicked(views::Link* source,
                                            int event_flags) {
   DCHECK_EQ(source, learn_more_);
@@ -287,11 +292,10 @@ UserCardView::UserCardView(LoginStatus login_status,
       user_name_(nullptr),
       media_capture_label_(nullptr),
       media_capture_icon_(nullptr) {
-  auto layout = new views::BoxLayout(views::BoxLayout::kHorizontal, 0, 0,
-                                     kTrayPopupLabelHorizontalPadding);
+  auto* layout = new views::BoxLayout(views::BoxLayout::kHorizontal, 0, 0,
+                                      kTrayPopupLabelHorizontalPadding);
   SetLayoutManager(layout);
-  layout->set_minimum_cross_axis_size(
-      GetTrayConstant(TRAY_POPUP_ITEM_MIN_HEIGHT));
+  layout->set_minimum_cross_axis_size(kTrayPopupItemMinHeight);
   layout->set_cross_axis_alignment(
       views::BoxLayout::CROSS_AXIS_ALIGNMENT_CENTER);
   // For active users, the left inset is provided by ActiveUserBorder, which
@@ -325,8 +329,30 @@ void UserCardView::PaintChildren(const ui::PaintContext& context) {
 void UserCardView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   node_data->role = ui::AX_ROLE_STATIC_TEXT;
   std::vector<base::string16> labels;
-  for (int i = 0; i < child_count(); ++i)
-    GetAccessibleLabelFromDescendantViews(child_at(i), labels);
+
+  // Construct the name by concatenating descendants' names.
+  std::list<views::View*> descendants;
+  descendants.push_back(this);
+  while (!descendants.empty()) {
+    auto* view = descendants.front();
+    descendants.pop_front();
+    if (view != this) {
+      ui::AXNodeData descendant_data;
+      view->GetAccessibleNodeData(&descendant_data);
+      base::string16 label =
+          descendant_data.GetString16Attribute(ui::AX_ATTR_NAME);
+      // If we find a non-empty name, use that and don't descend further into
+      // the tree.
+      if (!label.empty()) {
+        labels.push_back(label);
+        continue;
+      }
+    }
+
+    // This view didn't have its own name, so look over its children.
+    for (int i = view->child_count() - 1; i >= 0; --i)
+      descendants.push_front(view->child_at(i));
+  }
   node_data->SetName(base::JoinString(labels, base::ASCIIToUTF16(" ")));
 }
 
@@ -385,7 +411,7 @@ void UserCardView::AddUserContent(views::BoxLayout* layout,
   // label starts as black and the entire row is 54% opacity).
   if (is_active_user())
     user_email_style.set_color_style(TrayPopupItemStyle::ColorStyle::INACTIVE);
-  auto user_email = new views::Label();
+  auto* user_email = new views::Label();
   base::string16 user_email_string;
   if (login_status != LoginStatus::GUEST) {
     user_email_string =
@@ -427,8 +453,7 @@ void UserCardView::AddUserContent(views::BoxLayout* layout,
     media_capture_icon_ = new views::ImageView;
     media_capture_icon_->SetImage(
         gfx::CreateVectorIcon(kSystemTrayRecordingIcon, gfx::kGoogleRed700));
-    const int media_capture_width =
-        GetTrayConstant(TRAY_POPUP_ITEM_MIN_END_WIDTH);
+    const int media_capture_width = kTrayPopupItemMinEndWidth;
     media_capture_icon_->SetBorder(views::CreateEmptyBorder(
         gfx::Insets(0, (media_capture_width -
                         media_capture_icon_->GetPreferredSize().width()) /

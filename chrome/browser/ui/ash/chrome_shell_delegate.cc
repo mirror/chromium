@@ -12,7 +12,6 @@
 #include "ash/accelerators/spoken_feedback_toggler.h"
 #include "ash/common/accessibility_delegate.h"
 #include "ash/common/accessibility_types.h"
-#include "ash/common/session/session_state_delegate.h"
 #include "ash/common/wallpaper/wallpaper_delegate.h"
 #include "ash/common/wm/mru_window_tracker.h"
 #include "ash/common/wm/window_state.h"
@@ -104,10 +103,10 @@ void InitAfterFirstSessionStart() {
 class AccessibilityDelegateImpl : public ash::AccessibilityDelegate {
  public:
   AccessibilityDelegateImpl() {
-    ash::WmShell::Get()->AddShellObserver(AccessibilityManager::Get());
+    ash::Shell::GetInstance()->AddShellObserver(AccessibilityManager::Get());
   }
   ~AccessibilityDelegateImpl() override {
-    ash::WmShell::Get()->RemoveShellObserver(AccessibilityManager::Get());
+    ash::Shell::GetInstance()->RemoveShellObserver(AccessibilityManager::Get());
   }
 
   void ToggleHighContrast() override {
@@ -507,7 +506,7 @@ void ChromeShellDelegate::OpenKeyboardShortcutHelpPage() const {
   Browser* browser = chrome::FindTabbedBrowser(profile, false);
 
   if (!browser) {
-    browser = new Browser(Browser::CreateParams(profile));
+    browser = new Browser(Browser::CreateParams(profile, true));
     browser->window()->Show();
   }
 

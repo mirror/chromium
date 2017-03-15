@@ -60,10 +60,11 @@ Console.ConsoleView = class extends UI.VBox {
     this._executionContextComboBox.setMaxWidth(80);
     this._consoleContextSelector = new Console.ConsoleContextSelector(this._executionContextComboBox.selectElement());
 
+    this._filterStatusText = new UI.ToolbarText();
+    this._filterStatusText.element.classList.add('dimmed');
     this._showSettingsPaneSetting = Common.settings.createSetting('consoleShowSettingsToolbar', false);
     this._showSettingsPaneButton = new UI.ToolbarSettingToggle(
         this._showSettingsPaneSetting, 'largeicon-settings-gear', Common.UIString('Console settings'));
-
     this._progressToolbarItem = new UI.ToolbarItem(createElement('div'));
 
     var toolbar = new UI.Toolbar('', this._contentsElement);
@@ -76,7 +77,7 @@ Console.ConsoleView = class extends UI.VBox {
     toolbar.appendToolbarItem(this._filter._levelComboBox);
     toolbar.appendToolbarItem(this._progressToolbarItem);
     toolbar.appendSpacer();
-    toolbar.appendText('');
+    toolbar.appendToolbarItem(this._filterStatusText);
     toolbar.appendSeparator();
     toolbar.appendToolbarItem(this._showSettingsPaneButton);
 
@@ -86,15 +87,29 @@ Console.ConsoleView = class extends UI.VBox {
     this._hideNetworkMessagesCheckbox = new UI.ToolbarSettingCheckbox(
         this._filter._hideNetworkMessagesSetting, this._filter._hideNetworkMessagesSetting.title(),
         Common.UIString('Hide network'));
+    var monitoringXHREnabledSetting = Common.moduleSetting('monitoringXHREnabled');
+    this._timestampsSetting = Common.moduleSetting('consoleTimestampsEnabled');
+    this._consoleHistoryAutocompleteSetting = Common.moduleSetting('consoleHistoryAutocomplete');
 
-    var settingsToolbar = new UI.Toolbar('', this._contentsElement);
-    settingsToolbar.appendToolbarItem(this._hideNetworkMessagesCheckbox);
-    settingsToolbar.appendToolbarItem(this._preserveLogCheckbox);
-    settingsToolbar.appendToolbarItem(this._filter._showTargetMessagesCheckbox);
+    var settingsPane = new UI.HBox();
+    settingsPane.show(this._contentsElement);
+    settingsPane.element.classList.add('console-settings-pane');
+
+    var settingsToolbarLeft = new UI.Toolbar('', settingsPane.element);
+    settingsToolbarLeft.makeVertical();
+    settingsToolbarLeft.appendToolbarItem(this._hideNetworkMessagesCheckbox);
+    settingsToolbarLeft.appendToolbarItem(this._preserveLogCheckbox);
+    settingsToolbarLeft.appendToolbarItem(this._filter._showTargetMessagesCheckbox);
+
+    var settingsToolbarRight = new UI.Toolbar('', settingsPane.element);
+    settingsToolbarRight.makeVertical();
+    settingsToolbarRight.appendToolbarItem(new UI.ToolbarSettingCheckbox(monitoringXHREnabledSetting));
+    settingsToolbarRight.appendToolbarItem(new UI.ToolbarSettingCheckbox(this._timestampsSetting));
+    settingsToolbarRight.appendToolbarItem(new UI.ToolbarSettingCheckbox(this._consoleHistoryAutocompleteSetting));
     if (!this._showSettingsPaneSetting.get())
-      settingsToolbar.element.classList.add('hidden');
+      settingsPane.element.classList.add('hidden');
     this._showSettingsPaneSetting.addChangeListener(
-        () => settingsToolbar.element.classList.toggle('hidden', !this._showSettingsPaneSetting.get()));
+        () => settingsPane.element.classList.toggle('hidden', !this._showSettingsPaneSetting.get()));
 
     this._viewport = new Console.ConsoleViewport(this);
     this._viewport.setStickToBottom(true);
@@ -106,11 +121,6 @@ Console.ConsoleView = class extends UI.VBox {
     this._messagesElement.addEventListener('click', this._messagesClicked.bind(this), true);
 
     this._viewportThrottler = new Common.Throttler(50);
-
-    this._filterStatusMessageElement = createElementWithClass('div', 'console-message');
-    this._messagesElement.insertBefore(this._filterStatusMessageElement, this._messagesElement.firstChild);
-    this._filterStatusTextElement = this._filterStatusMessageElement.createChild('span', 'console-info');
-    this._filterStatusMessageElement.createTextChild(' ');
 
     this._topGroup = Console.ConsoleGroup.createTopGroup();
     this._currentGroup = this._topGroup;
@@ -128,7 +138,7 @@ Console.ConsoleView = class extends UI.VBox {
     this._registerShortcuts();
 
     this._messagesElement.addEventListener('contextmenu', this._handleContextMenuEvent.bind(this), false);
-    Common.moduleSetting('monitoringXHREnabled').addChangeListener(this._monitoringXHREnabledSettingChanged, this);
+    monitoringXHREnabledSetting.addChangeListener(this._monitoringXHREnabledSettingChanged, this);
 
     this._linkifier = new Components.Linkifier();
 
@@ -142,7 +152,6 @@ Console.ConsoleView = class extends UI.VBox {
     this._prompt.show(this._promptElement);
     this._prompt.element.addEventListener('keydown', this._promptKeyDown.bind(this), true);
 
-    this._consoleHistoryAutocompleteSetting = Common.moduleSetting('consoleHistoryAutocomplete');
     this._consoleHistoryAutocompleteSetting.addChangeListener(this._consoleHistoryAutocompleteChanged, this);
 
     var historyData = this._consoleHistorySetting.get();
@@ -150,12 +159,10 @@ Console.ConsoleView = class extends UI.VBox {
     this._consoleHistoryAutocompleteChanged();
 
     this._updateFilterStatus();
-    Common.moduleSetting('consoleTimestampsEnabled').addChangeListener(this._consoleTimestampsSettingChanged, this);
+    this._timestampsSetting.addChangeListener(this._consoleTimestampsSettingChanged, this);
 
     this._registerWithMessageSink();
     SDK.targetManager.observeTargets(this);
-
-    this._initConsoleMessages();
 
     UI.context.addFlavorChangeListener(SDK.ExecutionContext, this._executionContextChanged, this);
 
@@ -175,10 +182,8 @@ Console.ConsoleView = class extends UI.VBox {
   }
 
   static clearConsole() {
-    for (var target of SDK.targetManager.targets()) {
-      target.runtimeModel.discardConsoleEntries();
+    for (var target of SDK.targetManager.targets())
       target.consoleModel.requestClearMessages();
-    }
   }
 
   /**
@@ -197,14 +202,14 @@ Console.ConsoleView = class extends UI.VBox {
     this._prompt.setAddCompletionsFromHistory(this._consoleHistoryAutocompleteSetting.get());
   }
 
-  _initConsoleMessages() {
-    var mainTarget = SDK.targetManager.mainTarget();
-    var resourceTreeModel = mainTarget && SDK.ResourceTreeModel.fromTarget(mainTarget);
-    var resourcesLoaded = !resourceTreeModel || resourceTreeModel.cachedResourcesLoaded();
-    if (!mainTarget || !resourcesLoaded) {
-      SDK.targetManager.addModelListener(
-          SDK.ResourceTreeModel, SDK.ResourceTreeModel.Events.CachedResourcesLoaded, this._onResourceTreeModelLoaded,
-          this);
+  /**
+   * @param {!SDK.Target} target
+   */
+  _initConsoleMessages(target) {
+    var resourceTreeModel = SDK.ResourceTreeModel.fromTarget(target);
+    if (resourceTreeModel && !resourceTreeModel.cachedResourcesLoaded()) {
+      resourceTreeModel.addEventListener(
+          SDK.ResourceTreeModel.Events.CachedResourcesLoaded, this._onResourceTreeModelLoaded, this);
       return;
     }
     this._fetchMultitargetMessages();
@@ -215,11 +220,8 @@ Console.ConsoleView = class extends UI.VBox {
    */
   _onResourceTreeModelLoaded(event) {
     var resourceTreeModel = /** @type {!SDK.ResourceTreeModel} */ (event.data);
-    if (resourceTreeModel.target() !== SDK.targetManager.mainTarget())
-      return;
-    SDK.targetManager.removeModelListener(
-        SDK.ResourceTreeModel, SDK.ResourceTreeModel.Events.CachedResourcesLoaded, this._onResourceTreeModelLoaded,
-        this);
+    resourceTreeModel.removeEventListener(
+        SDK.ResourceTreeModel.Events.CachedResourcesLoaded, this._onResourceTreeModelLoaded, this);
     this._fetchMultitargetMessages();
   }
 
@@ -274,6 +276,8 @@ Console.ConsoleView = class extends UI.VBox {
    * @param {!SDK.Target} target
    */
   targetAdded(target) {
+    if (target === SDK.targetManager.mainTarget())
+      this._initConsoleMessages(target);
     this._viewport.invalidate();
   }
 
@@ -425,11 +429,10 @@ Console.ConsoleView = class extends UI.VBox {
   }
 
   _updateFilterStatus() {
-    this._filterStatusTextElement.removeChildren();
-    this._filterStatusTextElement.createTextChild(Common.UIString(
-        this._hiddenByFilterCount === 1 ? '1 message is hidden by filters.' :
-                                          this._hiddenByFilterCount + ' messages are hidden by filters.'));
-    this._filterStatusMessageElement.style.display = this._hiddenByFilterCount ? '' : 'none';
+    this._filterStatusText.setText(Common.UIString(
+        this._hiddenByFilterCount === 1 ? '1 item hidden by filters' :
+                                          this._hiddenByFilterCount + ' items hidden by filters'));
+    this._filterStatusText.setVisible(!!this._hiddenByFilterCount);
   }
 
   /**
@@ -676,7 +679,7 @@ Console.ConsoleView = class extends UI.VBox {
    * @return {boolean}
    */
   _tryToCollapseMessages(lastMessage, viewMessage) {
-    var timestampsShown = Common.moduleSetting('consoleTimestampsEnabled').get();
+    var timestampsShown = this._timestampsSetting.get();
     if (!timestampsShown && viewMessage && !lastMessage.consoleMessage().isGroupMessage() &&
         lastMessage.consoleMessage().isEqual(viewMessage.consoleMessage())) {
       viewMessage.incrementRepeatCount();
@@ -1038,8 +1041,10 @@ Console.ConsoleViewFilter = class {
    * @param {function()} filterChangedCallback
    */
   constructor(filterChangedCallback) {
-    this._showTargetMessagesCheckbox =
-        new UI.ToolbarCheckbox(Common.UIString('Selected context only'), undefined, filterChangedCallback);
+    this._showTargetMessagesCheckbox = new UI.ToolbarCheckbox(
+        Common.UIString('Selected context only'),
+        Common.UIString('Only show messages from the current context (top, iframe, worker, extension)'),
+        filterChangedCallback);
     this._filterChanged = filterChangedCallback;
 
     this._messageURLFiltersSetting = Common.settings.createSetting('messageURLFilters', {});

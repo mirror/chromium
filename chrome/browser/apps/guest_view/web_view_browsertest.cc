@@ -63,7 +63,9 @@
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/download_test_observer.h"
 #include "content/public/test/fake_speech_recognition_manager.h"
+#include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_renderer_host.h"
+#include "content/public/test/test_utils.h"
 #include "extensions/browser/api/declarative/rules_registry.h"
 #include "extensions/browser/api/declarative/rules_registry_service.h"
 #include "extensions/browser/api/declarative/test_rules_registry.h"
@@ -2405,9 +2407,23 @@ IN_PROC_BROWSER_TEST_P(
 
 IN_PROC_BROWSER_TEST_P(WebViewTest, ClearData) {
   ASSERT_TRUE(StartEmbeddedTestServer());  // For serving guest pages.
-  ASSERT_TRUE(RunPlatformAppTestWithArg(
-      "platform_apps/web_view/common", "cleardata"))
-          << message_;
+  ASSERT_TRUE(
+      RunPlatformAppTestWithArg("platform_apps/web_view/common", "cleardata"))
+      << message_;
+}
+
+IN_PROC_BROWSER_TEST_P(WebViewTest, ClearSessionCookies) {
+  ASSERT_TRUE(StartEmbeddedTestServer());  // For serving guest pages.
+  ASSERT_TRUE(RunPlatformAppTestWithArg("platform_apps/web_view/common",
+                                        "cleardata_session"))
+      << message_;
+}
+
+IN_PROC_BROWSER_TEST_P(WebViewTest, ClearPersistentCookies) {
+  ASSERT_TRUE(StartEmbeddedTestServer());  // For serving guest pages.
+  ASSERT_TRUE(RunPlatformAppTestWithArg("platform_apps/web_view/common",
+                                        "cleardata_persistent"))
+      << message_;
 }
 
 // Regression test for https://crbug.com/615429.
@@ -2774,7 +2790,8 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, DownloadCookieIsolation_CrossSession) {
         download->GetLastModifiedTime(), download->GetReceivedBytes(),
         download->GetTotalBytes(), download->GetHash(), download->GetState(),
         download->GetDangerType(), download->GetLastReason(),
-        download->GetOpened()));
+        download->GetOpened(), download->GetLastAccessTime(),
+        download->GetReceivedSlices()));
   }
 
   std::unique_ptr<content::DownloadTestObserver> completion_observer(
@@ -3216,6 +3233,40 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, NestedGuestContainerBounds) {
             mime_handler_view_container_bounds.origin());
 }
 
+// Test that context menu Back/Forward items in a MimeHandlerViewGuest affect
+// the embedder WebContents. See crbug.com/587355.
+IN_PROC_BROWSER_TEST_P(WebViewTest, ContextMenuNavigationInMimeHandlerView) {
+  TestHelper("testNavigateToPDFInWebview", "web_view/shim", NO_TEST_SERVER);
+
+  std::vector<content::WebContents*> guest_web_contents_list;
+  GetGuestViewManager()->WaitForNumGuestsCreated(2u);
+  GetGuestViewManager()->GetGuestWebContentsList(&guest_web_contents_list);
+  ASSERT_EQ(2u, guest_web_contents_list.size());
+
+  content::WebContents* web_view_contents = guest_web_contents_list[0];
+  content::WebContents* mime_handler_view_contents = guest_web_contents_list[1];
+  ASSERT_TRUE(pdf_extension_test_util::EnsurePDFHasLoaded(web_view_contents));
+
+  // Ensure the <webview> has a previous entry, so we can navigate back to it.
+  ASSERT_TRUE(web_view_contents->GetController().CanGoBack());
+
+  // Open a context menu for the MimeHandlerViewGuest. Since the <webview> can
+  // navigate back, the Back item should be enabled.
+  content::ContextMenuParams params;
+  TestRenderViewContextMenu menu(mime_handler_view_contents->GetMainFrame(),
+                                 params);
+  menu.Init();
+  ASSERT_TRUE(menu.IsCommandIdEnabled(IDC_BACK));
+
+  // Verify that the Back item causes the <webview> to navigate back to the
+  // previous entry.
+  content::TestNavigationObserver observer(web_view_contents);
+  menu.ExecuteCommand(IDC_BACK, 0);
+  observer.Wait();
+  EXPECT_EQ(GURL(url::kAboutBlankURL),
+            web_view_contents->GetLastCommittedURL());
+}
+
 IN_PROC_BROWSER_TEST_P(WebViewTest, Shim_TestMailtoLink) {
   TestHelper("testMailtoLink", "web_view/shim", NEEDS_TEST_SERVER);
 }
@@ -3239,6 +3290,27 @@ IN_PROC_BROWSER_TEST_P(WebViewTest, Shim_TestBlobURL) {
 IN_PROC_BROWSER_TEST_P(WebViewTest, LoadWebviewAccessibleResource) {
   TestHelper("testLoadWebviewAccessibleResource",
              "web_view/load_webview_accessible_resource", NEEDS_TEST_SERVER);
+}
+
+// Tests that a webview inside an iframe can load and that it is destroyed when
+// the iframe is detached.
+IN_PROC_BROWSER_TEST_P(WebViewTest, LoadWebviewInsideIframe) {
+  TestHelper("testLoadWebviewInsideIframe",
+             "web_view/load_webview_inside_iframe", NEEDS_TEST_SERVER);
+
+  // WebContents is leaked when using BrowserPlugin.
+  if (!base::FeatureList::IsEnabled(::features::kGuestViewCrossProcessFrames))
+    return;
+
+  content::WebContentsDestroyedWatcher watcher(
+      GetGuestViewManager()->GetLastGuestCreated());
+
+  // Remove the iframe.
+  EXPECT_TRUE(content::ExecuteScript(
+      GetEmbedderWebContents(), "document.querySelector('iframe').remove()"));
+
+  // Wait for guest to be destroyed.
+  watcher.Wait();
 }
 
 IN_PROC_BROWSER_TEST_P(WebViewAccessibilityTest, LoadWebViewAccessibility) {

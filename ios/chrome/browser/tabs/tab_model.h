@@ -38,8 +38,6 @@ class WebState;
 // kTabModelTabKey. This may fire multiple times during a load, for example, on
 // redirects.
 extern NSString* const kTabModelTabWillStartLoadingNotification;
-// Notification sent when user navigates away from the current page.
-extern NSString* const kTabModelUserNavigatedNotification;
 // A tab started to load a URL. The tab in question is in the userInfo under
 // kTabModelTabKey.
 extern NSString* const kTabModelTabDidStartLoadingNotification;
@@ -143,9 +141,6 @@ NSUInteger const kTabPositionAutomatically = NSNotFound;
 - (Tab*)tabAtIndex:(NSUInteger)index;
 - (NSUInteger)indexOfTab:(Tab*)tab;
 
-// Returns the tab object associated from the given JS-level window name.
-- (Tab*)tabWithWindowName:(NSString*)windowName;
-
 // Returns the next Tab, starting after |tab|, spawned by the specified Tab, If
 // |after| is a valid tab, will only look at tabs following it (in tab ordering,
 // not order opened) in the list, even if it comes before |tab|. Returns nil if
@@ -174,37 +169,27 @@ NSUInteger const kTabPositionAutomatically = NSNotFound;
 
 // Add/modify tabs.
 
-// Either opens a tab at the specified URL and register its JS-supplied window
-// name if appropriate, or navigates the tab corresponding to |windowName| to
-// the given |URL|. Will also update the current tab if |inBackground| is NO.
-// |openedByDOM| is YES if the page was opened by DOM. The |index| parameter can
-// be set to TabModelConstants::kTabPositionAutomatically if the caller doesn't
-// have a preference for the position of the tab.
-- (Tab*)insertOrUpdateTabWithURL:(const GURL&)URL
-                        referrer:(const web::Referrer&)referrer
-                      transition:(ui::PageTransition)transition
-                      windowName:(NSString*)windowName
-                          opener:(Tab*)parentTab
-                     openedByDOM:(BOOL)openedByDOM
-                         atIndex:(NSUInteger)index
-                    inBackground:(BOOL)inBackground;
+// Opens a tab at the specified URL. For certain transition types, will consult
+// the order controller and thus may only use |index| as a hint. |parentTab| may
+// be nil if there is no parent associated with this new tab. |openedByDOM| is
+// YES if the page was opened by DOM. The |index| parameter can be set to
+// TabModelConstants::kTabPositionAutomatically if the caller doesn't have a
+// preference for the position of the tab.
+- (Tab*)insertTabWithURL:(const GURL&)URL
+                referrer:(const web::Referrer&)referrer
+              transition:(ui::PageTransition)transition
+                  opener:(Tab*)parentTab
+             openedByDOM:(BOOL)openedByDOM
+                 atIndex:(NSUInteger)index
+            inBackground:(BOOL)inBackground;
 
 // As above, but using WebLoadParams to specify various optional parameters.
-- (Tab*)insertOrUpdateTabWithLoadParams:
+- (Tab*)insertTabWithLoadParams:
             (const web::NavigationManager::WebLoadParams&)params
-                             windowName:(NSString*)windowName
-                                 opener:(Tab*)parentTab
-                            openedByDOM:(BOOL)openedByDOM
-                                atIndex:(NSUInteger)index
-                           inBackground:(BOOL)inBackground;
-
-// Opens a blank tab without URL and updates the current tab if |inBackground|
-// is NO.
-- (Tab*)insertBlankTabWithTransition:(ui::PageTransition)transition
-                              opener:(Tab*)parentTab
-                         openedByDOM:(BOOL)openedByDOM
-                             atIndex:(NSUInteger)index
-                        inBackground:(BOOL)inBackground;
+                         opener:(Tab*)parentTab
+                    openedByDOM:(BOOL)openedByDOM
+                        atIndex:(NSUInteger)index
+                   inBackground:(BOOL)inBackground;
 
 // Inserts a new tab at the given |index| with the session history specified by
 // |webState|. Does not go through the order controller as this is generally
@@ -242,6 +227,7 @@ NSUInteger const kTabPositionAutomatically = NSNotFound;
 
 // Notifies observers that the given |tab| was changed.
 - (void)notifyTabChanged:(Tab*)tab;
+
 // Notifies observers that the snapshot for the given |tab| changed was changed
 // to |image|.
 - (void)notifyTabSnapshotChanged:(Tab*)tab withImage:(UIImage*)image;
@@ -284,28 +270,8 @@ NSUInteger const kTabPositionAutomatically = NSNotFound;
 // Called by |tab| to inform the model that a navigation has taken place.
 // TODO(crbug.com/661983): once more of the navigation state has moved into WC,
 // replace this with WebStateObserver.
-- (void)navigationCommittedInTab:(Tab*)tab;
-
-@end
-
-@interface TabModel (PrivateForTestingOnly)
-
-// Opens a tab at the specified URL and register its JS-supplied window name if
-// appropriate. The newly created tab will not be the child of any other tab.
-// This does not go through the order controller. Used a page transition of
-// TYPED.
-- (Tab*)addTabWithURL:(const GURL&)URL
-             referrer:(const web::Referrer&)referrer
-           windowName:(NSString*)windowName;
-
-// Inserts a new tab at the given |index| with the given |URL| and |referrer|.
-// This does not go through the order controller. Uses a page transition of
-// TYPED.
-- (Tab*)insertTabWithURL:(const GURL&)URL
-                referrer:(const web::Referrer&)referrer
-              windowName:(NSString*)windowName
-                  opener:(Tab*)parentTab
-                 atIndex:(NSUInteger)index;
+- (void)navigationCommittedInTab:(Tab*)tab
+                    previousItem:(web::NavigationItem*)previousItem;
 
 @end
 

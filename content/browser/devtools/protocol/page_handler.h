@@ -7,6 +7,10 @@
 
 #include <stddef.h>
 
+#include <map>
+#include <memory>
+#include <string>
+
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
@@ -59,7 +63,9 @@ class PageHandler : public DevToolsDomainHandler,
 
   Response Reload(Maybe<bool> bypassCache,
                   Maybe<std::string> script_to_evaluate_on_load) override;
-  Response Navigate(const std::string& url, Page::FrameId* frame_id) override;
+  Response Navigate(const std::string& url,
+                    Maybe<std::string> referrer,
+                    Page::FrameId* frame_id) override;
   Response StopLoading() override;
 
   using NavigationEntries = protocol::Array<Page::NavigationEntry>;
@@ -71,7 +77,9 @@ class PageHandler : public DevToolsDomainHandler,
   void CaptureScreenshot(
       Maybe<std::string> format,
       Maybe<int> quality,
+      Maybe<bool> from_surface,
       std::unique_ptr<CaptureScreenshotCallback> callback) override;
+  void PrintToPDF(std::unique_ptr<PrintToPDFCallback> callback) override;
   Response StartScreencast(Maybe<std::string> format,
                            Maybe<int> quality,
                            Maybe<int> max_width,

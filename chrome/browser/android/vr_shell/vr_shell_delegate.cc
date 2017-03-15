@@ -21,32 +21,34 @@ namespace vr_shell {
 VrShellDelegate::VrShellDelegate(JNIEnv* env, jobject obj)
     : weak_ptr_factory_(this) {
   j_vr_shell_delegate_.Reset(env, obj);
-  GvrDelegateProvider::SetInstance(this);
 }
 
 VrShellDelegate::~VrShellDelegate() {
-  GvrDelegateProvider::SetInstance(nullptr);
   if (device_provider_) {
     device_provider_->Device()->OnDelegateChanged();
   }
 }
 
-VrShellDelegate* VrShellDelegate::GetNativeVrShellDelegate(
-    JNIEnv* env, jobject jdelegate) {
+device::GvrDelegateProvider* VrShellDelegate::CreateVrShellDelegate() {
+  JNIEnv* env = AttachCurrentThread();
+  base::android::ScopedJavaLocalRef<jobject> jdelegate =
+      Java_VrShellDelegate_getInstance(env);
+  if (!jdelegate.is_null())
+    return GetNativeVrShellDelegate(env, jdelegate.obj());
+  return nullptr;
+}
+
+VrShellDelegate* VrShellDelegate::GetNativeVrShellDelegate(JNIEnv* env,
+                                                           jobject jdelegate) {
   return reinterpret_cast<VrShellDelegate*>(
       Java_VrShellDelegate_getNativePointer(env, jdelegate));
 }
 
 void VrShellDelegate::SetDelegate(device::GvrDelegate* delegate,
                                   gvr_context* context) {
-  context_ = context;
   delegate_ = delegate;
   // Clean up the non-presenting delegate.
-  if (non_presenting_delegate_) {
-    device::mojom::VRVSyncProviderRequest request =
-        non_presenting_delegate_->OnSwitchToPresentingDelegate();
-    if (request.is_pending())
-      delegate->OnVRVsyncProviderRequest(std::move(request));
+  if (delegate_ && non_presenting_delegate_) {
     non_presenting_delegate_ = nullptr;
     JNIEnv* env = AttachCurrentThread();
     Java_VrShellDelegate_shutdownNonPresentingNativeContext(
@@ -65,7 +67,7 @@ void VrShellDelegate::SetDelegate(device::GvrDelegate* delegate,
 void VrShellDelegate::RemoveDelegate() {
   delegate_ = nullptr;
   device::GamepadDataFetcherManager::GetInstance()->RemoveSourceFactory(
-        device::GAMEPAD_SOURCE_GVR);
+      device::GAMEPAD_SOURCE_GVR);
   if (device_provider_) {
     CreateNonPresentingDelegate();
     device_provider_->Device()->OnDelegateChanged();
@@ -95,8 +97,7 @@ void VrShellDelegate::UpdateVSyncInterval(JNIEnv* env,
   timebase_nanos_ = timebase_nanos;
   interval_seconds_ = interval_seconds;
   if (delegate_) {
-    delegate_->UpdateVSyncInterval(timebase_nanos_,
-                                   interval_seconds_);
+    delegate_->UpdateVSyncInterval(timebase_nanos_, interval_seconds_);
   }
   if (non_presenting_delegate_) {
     non_presenting_delegate_->UpdateVSyncInterval(timebase_nanos_,
@@ -104,22 +105,42 @@ void VrShellDelegate::UpdateVSyncInterval(JNIEnv* env,
   }
 }
 
-void VrShellDelegate::OnPause(JNIEnv* env,
-                              const JavaParamRef<jobject>& obj) {
+void VrShellDelegate::OnPause(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   if (non_presenting_delegate_) {
     non_presenting_delegate_->Pause();
   }
 }
 
-void VrShellDelegate::OnResume(JNIEnv* env,
-                               const JavaParamRef<jobject>& obj) {
+void VrShellDelegate::OnResume(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   if (non_presenting_delegate_) {
     non_presenting_delegate_->Resume();
   }
 }
 
+void VrShellDelegate::Destroy(JNIEnv* env, const JavaParamRef<jobject>& obj) {
+  delete this;
+}
+
+void VrShellDelegate::ShowTab(int id) {
+  JNIEnv* env = AttachCurrentThread();
+  Java_VrShellDelegate_showTab(env, j_vr_shell_delegate_.obj(), id);
+}
+
+void VrShellDelegate::OpenNewTab(bool incognito) {
+  JNIEnv* env = AttachCurrentThread();
+  Java_VrShellDelegate_openNewTab(env, j_vr_shell_delegate_.obj(), incognito);
+}
+
+device::mojom::VRSubmitFrameClientPtr VrShellDelegate::TakeSubmitFrameClient() {
+  return std::move(submit_client_);
+}
+
 void VrShellDelegate::SetDeviceProvider(
     device::GvrDeviceProvider* device_provider) {
+  if (device_provider_ == device_provider)
+    return;
+  if (device_provider_)
+    ClearDeviceProvider();
   CHECK(!device_provider_);
   device_provider_ = device_provider;
   if (!delegate_)
@@ -132,11 +153,11 @@ void VrShellDelegate::ClearDeviceProvider() {
   JNIEnv* env = AttachCurrentThread();
   Java_VrShellDelegate_shutdownNonPresentingNativeContext(
       env, j_vr_shell_delegate_.obj());
-  device_provider_->Device()->OnDelegateChanged();
   device_provider_ = nullptr;
 }
 
 void VrShellDelegate::RequestWebVRPresent(
+    device::mojom::VRSubmitFrameClientPtr submit_client,
     const base::Callback<void(bool)>& callback) {
   if (!present_callback_.is_null()) {
     // Can only handle one request at a time. This is also extremely unlikely to
@@ -146,6 +167,7 @@ void VrShellDelegate::RequestWebVRPresent(
   }
 
   present_callback_ = std::move(callback);
+  submit_client_ = std::move(submit_client);
 
   // If/When VRShell is ready for use it will call SetPresentResult.
   JNIEnv* env = AttachCurrentThread();
@@ -163,19 +185,11 @@ base::WeakPtr<VrShellDelegate> VrShellDelegate::GetWeakPtr() {
   return weak_ptr_factory_.GetWeakPtr();
 }
 
-void VrShellDelegate::OnVRVsyncProviderRequest(
-    device::mojom::VRVSyncProviderRequest request) {
-  GetDelegate()->OnVRVsyncProviderRequest(std::move(request));
-}
-
 void VrShellDelegate::CreateNonPresentingDelegate() {
   JNIEnv* env = AttachCurrentThread();
   gvr_context* context = reinterpret_cast<gvr_context*>(
       Java_VrShellDelegate_createNonPresentingNativeContext(
           env, j_vr_shell_delegate_.obj()));
-  if (!context)
-    return;
-  context_ = context;
   non_presenting_delegate_ =
       base::MakeUnique<NonPresentingGvrDelegate>(context);
   non_presenting_delegate_->UpdateVSyncInterval(timebase_nanos_,
@@ -204,6 +218,11 @@ bool RegisterVrShellDelegate(JNIEnv* env) {
 
 jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   return reinterpret_cast<intptr_t>(new VrShellDelegate(env, obj));
+}
+
+static void OnLibraryAvailable(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
+  device::GvrDelegateProvider::SetInstance(
+      base::Bind(&VrShellDelegate::CreateVrShellDelegate));
 }
 
 }  // namespace vr_shell

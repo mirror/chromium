@@ -15,6 +15,7 @@
 #include "content/public/browser/permission_type.h"
 #include "content/public/browser/web_contents.h"
 #include "content/shell/browser/layout_test/layout_test_content_browser_client.h"
+#include "content/shell/browser/layout_test/layout_test_notification_manager.h"
 
 namespace content {
 
@@ -133,13 +134,6 @@ blink::mojom::PermissionStatus LayoutTestPermissionManager::GetPermissionStatus(
   if (it == permissions_.end())
     return blink::mojom::PermissionStatus::DENIED;
   return it->second;
-}
-
-void LayoutTestPermissionManager::RegisterPermissionUsage(
-    PermissionType permission,
-    const GURL& requesting_origin,
-    const GURL& embedding_origin) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
 }
 
 int LayoutTestPermissionManager::SubscribePermissionStatusChange(

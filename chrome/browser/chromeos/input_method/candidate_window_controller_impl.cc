@@ -50,11 +50,11 @@ void CandidateWindowControllerImpl::InitCandidateWindowView() {
   // as we have in ChromeOS. For example, candidate pop-up disappears when
   // dragging the window in mash, but it shouldn't.
   gfx::NativeView parent = nullptr;
-  if (!chrome::IsRunningInMash()) {
+  if (!ash_util::IsRunningInMash()) {
     aura::Window* active_window = ash::wm::GetActiveWindow();
     parent = ash::Shell::GetContainer(
         active_window ? active_window->GetRootWindow()
-                      : ash::Shell::GetTargetRootWindow(),
+                      : ash::Shell::GetRootWindowForNewWindows(),
         ash::kShellWindowId_SettingBubbleContainer);
   }
   candidate_window_view_ = new ui::ime::CandidateWindowView(parent);

@@ -20,15 +20,19 @@
 #include "ash/common/wm/wm_event.h"
 #include "ash/common/wm/wm_screen_util.h"
 #include "ash/common/wm/workspace/workspace_window_resizer.h"
-#include "ash/common/wm_lookup.h"
 #include "ash/common/wm_shell.h"
+#include "ash/common/wm_window.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
+#include "ash/shell.h"
+#include "ash/wm/window_state_aura.h"
 #include "base/command_line.h"
 #include "base/run_loop.h"
 #include "ui/aura/env.h"
+#include "ui/aura/window.h"
 #include "ui/base/ui_base_switches.h"
 #include "ui/base/ui_base_types.h"
+#include "ui/compositor/layer_type.h"
 #include "ui/compositor/scoped_animation_duration_scale_mode.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
@@ -62,10 +66,12 @@ class MaximizeDelegateView : public views::WidgetDelegateView {
 class TestShellObserver : public ShellObserver {
  public:
   TestShellObserver() : call_count_(0), is_fullscreen_(false) {
-    WmShell::Get()->AddShellObserver(this);
+    Shell::GetInstance()->AddShellObserver(this);
   }
 
-  ~TestShellObserver() override { WmShell::Get()->RemoveShellObserver(this); }
+  ~TestShellObserver() override {
+    Shell::GetInstance()->RemoveShellObserver(this);
+  }
 
   void OnFullscreenStateChanged(bool is_fullscreen,
                                 WmWindow* root_window) override {
@@ -242,19 +248,18 @@ TEST_F(WorkspaceLayoutManagerTest, MaximizeInDisplayToBeRestored) {
   params.delegate = new MaximizeDelegateView(gfx::Rect(400, 0, 30, 40));
   ConfigureWidgetInitParamsForDisplay(root_windows[0], &params);
   w1->Init(params);
-  WmLookup* wm_lookup = WmLookup::Get();
   EXPECT_EQ(root_windows[0],
-            wm_lookup->GetWindowForWidget(w1.get())->GetRootWindow());
+            WmWindow::Get(w1->GetNativeWindow())->GetRootWindow());
   w1->Show();
   EXPECT_TRUE(w1->IsMaximized());
   EXPECT_EQ(root_windows[1],
-            wm_lookup->GetWindowForWidget(w1.get())->GetRootWindow());
+            WmWindow::Get(w1->GetNativeWindow())->GetRootWindow());
   EXPECT_EQ(
       gfx::Rect(300, 0, 400, 500 - GetShelfConstant(SHELF_SIZE)).ToString(),
       w1->GetWindowBoundsInScreen().ToString());
   w1->Restore();
   EXPECT_EQ(root_windows[1],
-            wm_lookup->GetWindowForWidget(w1.get())->GetRootWindow());
+            WmWindow::Get(w1->GetNativeWindow())->GetRootWindow());
   EXPECT_EQ("400,0 30x40", w1->GetWindowBoundsInScreen().ToString());
 }
 
@@ -292,24 +297,25 @@ TEST_F(WorkspaceLayoutManagerTest, FullscreenInDisplayToBeRestored) {
   EXPECT_EQ("295,0 30x40", window->GetBoundsInScreen().ToString());
 }
 
-// WmWindowObserver implementation used by
+// aura::WindowObserver implementation used by
 // DontClobberRestoreBoundsWindowObserver. This code mirrors what
 // BrowserFrameAsh does. In particular when this code sees the window was
 // maximized it changes the bounds of a secondary window. The secondary window
 // mirrors the status window.
-class DontClobberRestoreBoundsWindowObserver : public WmWindowObserver {
+class DontClobberRestoreBoundsWindowObserver : public aura::WindowObserver {
  public:
   DontClobberRestoreBoundsWindowObserver() : window_(nullptr) {}
 
   void set_window(WmWindow* window) { window_ = window; }
 
-  // WmWindowObserver:
-  void OnWindowPropertyChanged(WmWindow* window,
-                               WmWindowProperty property) override {
+  // aura::WindowObserver:
+  void OnWindowPropertyChanged(aura::Window* window,
+                               const void* key,
+                               intptr_t old) override {
     if (!window_)
       return;
 
-    if (window->GetWindowState()->IsMaximized()) {
+    if (wm::GetWindowState(window)->IsMaximized()) {
       WmWindow* w = window_;
       window_ = nullptr;
 
@@ -331,23 +337,23 @@ class DontClobberRestoreBoundsWindowObserver : public WmWindowObserver {
 // doesn't effect the restore bounds.
 TEST_F(WorkspaceLayoutManagerTest, DontClobberRestoreBounds) {
   DontClobberRestoreBoundsWindowObserver window_observer;
-  WindowOwner window_owner(WmShell::Get()->NewWindow(ui::wm::WINDOW_TYPE_NORMAL,
-                                                     ui::LAYER_TEXTURED));
-  WmWindow* window = window_owner.window();
+  std::unique_ptr<aura::Window> window(
+      base::MakeUnique<aura::Window>(nullptr, ui::wm::WINDOW_TYPE_NORMAL));
+  window->Init(ui::LAYER_TEXTURED);
   window->SetBounds(gfx::Rect(10, 20, 30, 40));
   // NOTE: for this test to exercise the failure the observer needs to be added
   // before the parent set. This mimics what BrowserFrameAsh does.
   window->AddObserver(&window_observer);
-  ParentWindowInPrimaryRootWindow(window);
+  ParentWindowInPrimaryRootWindow(WmWindow::Get(window.get()));
   window->Show();
 
-  wm::WindowState* window_state = window->GetWindowState();
+  wm::WindowState* window_state = wm::GetWindowState(window.get());
   window_state->Activate();
 
   std::unique_ptr<WindowOwner> window2_owner(
       CreateTestWindow(gfx::Rect(12, 20, 30, 40)));
   WmWindow* window2 = window2_owner->window();
-  AddTransientChild(window, window2);
+  AddTransientChild(WmWindow::Get(window.get()), window2);
   window2->Show();
 
   window_observer.set_window(window2);
@@ -374,14 +380,14 @@ TEST_F(WorkspaceLayoutManagerTest, ChildBoundsResetOnMaximize) {
 // Verifies a window created with maximized state has the maximized
 // bounds.
 TEST_F(WorkspaceLayoutManagerTest, MaximizeWithEmptySize) {
-  WindowOwner window_owner(WmShell::Get()->NewWindow(ui::wm::WINDOW_TYPE_NORMAL,
-                                                     ui::LAYER_TEXTURED));
-  WmWindow* window = window_owner.window();
-  window->GetWindowState()->Maximize();
+  std::unique_ptr<aura::Window> window(
+      base::MakeUnique<aura::Window>(nullptr, ui::wm::WINDOW_TYPE_NORMAL));
+  window->Init(ui::LAYER_TEXTURED);
+  wm::GetWindowState(window.get())->Maximize();
   WmWindow* default_container =
       WmShell::Get()->GetPrimaryRootWindowController()->GetWmContainer(
           kShellWindowId_DefaultContainer);
-  default_container->AddChild(window);
+  default_container->aura_window()->AddChild(window.get());
   window->Show();
   gfx::Rect work_area(
       display::Screen::GetScreen()->GetPrimaryDisplay().work_area());
@@ -571,21 +577,22 @@ TEST_F(WorkspaceLayoutManagerTest,
 TEST_F(WorkspaceLayoutManagerTest,
        DoNotAdjustTransientWindowBoundsToEnsureMinimumVisibility) {
   UpdateDisplay("300x400");
-  WindowOwner window_owner(WmShell::Get()->NewWindow(ui::wm::WINDOW_TYPE_NORMAL,
-                                                     ui::LAYER_TEXTURED));
-  WmWindow* window = window_owner.window();
+  std::unique_ptr<aura::Window> window(
+      base::MakeUnique<aura::Window>(nullptr, ui::wm::WINDOW_TYPE_NORMAL));
+  window->Init(ui::LAYER_TEXTURED);
   window->SetBounds(gfx::Rect(10, 0, 100, 200));
-  ParentWindowInPrimaryRootWindow(window);
+  ParentWindowInPrimaryRootWindow(WmWindow::Get(window.get()));
   window->Show();
 
   std::unique_ptr<WindowOwner> window2_owner(
       CreateTestWindow(gfx::Rect(10, 0, 40, 20)));
   WmWindow* window2 = window2_owner->window();
-  AddTransientChild(window, window2);
+  AddTransientChild(WmWindow::Get(window.get()), window2);
   window2->Show();
 
   gfx::Rect expected_bounds = window2->GetBounds();
-  WmShell::Get()->SetDisplayWorkAreaInsets(window, gfx::Insets(50, 0, 0, 0));
+  WmShell::Get()->SetDisplayWorkAreaInsets(WmWindow::Get(window.get()),
+                                           gfx::Insets(50, 0, 0, 0));
   EXPECT_EQ(expected_bounds.ToString(), window2->GetBounds().ToString());
 }
 
@@ -611,15 +618,17 @@ TEST_F(WorkspaceLayoutManagerSoloTest, Minimize) {
   std::unique_ptr<WindowOwner> window_owner(CreateTestWindow(bounds));
   WmWindow* window = window_owner->window();
   window->SetShowState(ui::SHOW_STATE_MINIMIZED);
-  // Note: Currently minimize doesn't do anything except set the state.
-  // See crbug.com/104571.
-  EXPECT_EQ(bounds.ToString(), window->GetBounds().ToString());
+  EXPECT_FALSE(window->IsVisible());
+  EXPECT_TRUE(window->GetWindowState()->IsMinimized());
+  EXPECT_EQ(bounds, window->GetBounds());
   window->SetShowState(ui::SHOW_STATE_NORMAL);
-  EXPECT_EQ(bounds.ToString(), window->GetBounds().ToString());
+  EXPECT_TRUE(window->IsVisible());
+  EXPECT_FALSE(window->GetWindowState()->IsMinimized());
+  EXPECT_EQ(bounds, window->GetBounds());
 }
 
-// A WmWindowObserver which sets the focus when the window becomes visible.
-class FocusDuringUnminimizeWindowObserver : public WmWindowObserver {
+// A aura::WindowObserver which sets the focus when the window becomes visible.
+class FocusDuringUnminimizeWindowObserver : public aura::WindowObserver {
  public:
   FocusDuringUnminimizeWindowObserver()
       : window_(nullptr), show_state_(ui::SHOW_STATE_END) {}
@@ -627,14 +636,14 @@ class FocusDuringUnminimizeWindowObserver : public WmWindowObserver {
 
   void SetWindow(WmWindow* window) {
     if (window_)
-      window_->RemoveObserver(this);
+      window_->aura_window()->RemoveObserver(this);
     window_ = window;
     if (window_)
-      window_->AddObserver(this);
+      window_->aura_window()->AddObserver(this);
   }
 
-  // WmWindowObserver:
-  void OnWindowVisibilityChanged(WmWindow* window, bool visible) override {
+  // aura::WindowObserver:
+  void OnWindowVisibilityChanged(aura::Window* window, bool visible) override {
     if (window_) {
       if (visible)
         window_->SetFocused();

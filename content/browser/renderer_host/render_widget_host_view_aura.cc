@@ -58,6 +58,7 @@
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/content_switches.h"
 #include "gpu/ipc/common/gpu_messages.h"
+#include "media/base/video_frame.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/ui/public/interfaces/window_manager_constants.mojom.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
@@ -81,7 +82,6 @@
 #include "ui/base/ui_base_types.h"
 #include "ui/compositor/compositor_vsync_manager.h"
 #include "ui/compositor/dip_util.h"
-#include "ui/display/display.h"
 #include "ui/display/screen.h"
 #include "ui/events/blink/blink_event_util.h"
 #include "ui/events/blink/web_input_event.h"
@@ -438,9 +438,7 @@ void RenderWidgetHostViewAura::InitAsChild(
   if (parent_view)
     parent_view->AddChild(GetNativeView());
 
-  const display::Display display =
-      display::Screen::GetScreen()->GetDisplayNearestWindow(window_);
-  device_scale_factor_ = display.device_scale_factor();
+  device_scale_factor_ = ui::GetScaleFactorForNativeView(window_);
 }
 
 void RenderWidgetHostViewAura::InitAsPopup(
@@ -489,9 +487,7 @@ void RenderWidgetHostViewAura::InitAsPopup(
 
   event_filter_for_popup_exit_.reset(new EventFilterForPopupExit(this));
 
-  const display::Display display =
-      display::Screen::GetScreen()->GetDisplayNearestWindow(window_);
-  device_scale_factor_ = display.device_scale_factor();
+  device_scale_factor_ = ui::GetScaleFactorForNativeView(window_);
 }
 
 void RenderWidgetHostViewAura::InitAsFullscreen(
@@ -516,9 +512,7 @@ void RenderWidgetHostViewAura::InitAsFullscreen(
   Show();
   Focus();
 
-  const display::Display display =
-      display::Screen::GetScreen()->GetDisplayNearestWindow(window_);
-  device_scale_factor_ = display.device_scale_factor();
+  device_scale_factor_ = ui::GetScaleFactorForNativeView(window_);
 }
 
 RenderWidgetHost* RenderWidgetHostViewAura::GetRenderWidgetHost() const {
@@ -585,10 +579,6 @@ void RenderWidgetHostViewAura::Hide() {
 #endif
 }
 
-aura::Window* RenderWidgetHostViewAura::GetToplevelWindow() {
-  return window_->GetToplevelWindow();
-}
-
 void RenderWidgetHostViewAura::SetSize(const gfx::Size& size) {
   // For a SetSize operation, we don't care what coordinate system the origin
   // of the window is in, it's only important to make sure that the origin
@@ -597,12 +587,21 @@ void RenderWidgetHostViewAura::SetSize(const gfx::Size& size) {
 }
 
 void RenderWidgetHostViewAura::SetBounds(const gfx::Rect& rect) {
-  display::Display display =
-      popup_parent_host_view_
-          ? display::Screen::GetScreen()->GetDisplayNearestWindow(
-                popup_parent_host_view_->window_)
-          : display::Screen::GetScreen()->GetDisplayMatching(rect);
-  GetToplevelWindow()->SetBoundsInScreen(rect, display);
+  gfx::Point relative_origin(rect.origin());
+
+  // RenderWidgetHostViewAura::SetBounds() takes screen coordinates, but
+  // Window::SetBounds() takes parent coordinates, so do the conversion here.
+  aura::Window* root = window_->GetRootWindow();
+  if (root) {
+    aura::client::ScreenPositionClient* screen_position_client =
+        aura::client::GetScreenPositionClient(root);
+    if (screen_position_client) {
+      screen_position_client->ConvertPointFromScreen(window_->parent(),
+                                                     &relative_origin);
+    }
+  }
+
+  InternalSetBounds(gfx::Rect(relative_origin, rect.size()));
 }
 
 gfx::Vector2dF RenderWidgetHostViewAura::GetLastScrollOffset() const {
@@ -737,8 +736,9 @@ bool RenderWidgetHostViewAura::HasFocus() const {
 }
 
 bool RenderWidgetHostViewAura::IsSurfaceAvailableForCopy() const {
-  return delegated_frame_host_ ? delegated_frame_host_->CanCopyToBitmap()
-                               : false;
+  if (!delegated_frame_host_)
+    return false;
+  return delegated_frame_host_->CanCopyFromCompositingSurface();
 }
 
 bool RenderWidgetHostViewAura::IsShowing() {
@@ -850,30 +850,29 @@ gfx::Size RenderWidgetHostViewAura::GetRequestedRendererSize() const {
              : RenderWidgetHostViewBase::GetRequestedRendererSize();
 }
 
-void RenderWidgetHostViewAura::CopyFromCompositingSurface(
+void RenderWidgetHostViewAura::CopyFromSurface(
     const gfx::Rect& src_subrect,
     const gfx::Size& dst_size,
     const ReadbackRequestCallback& callback,
     const SkColorType preferred_color_type) {
-  if (!delegated_frame_host_)
+  if (!IsSurfaceAvailableForCopy()) {
+    callback.Run(SkBitmap(), READBACK_SURFACE_UNAVAILABLE);
     return;
+  }
   delegated_frame_host_->CopyFromCompositingSurface(
       src_subrect, dst_size, callback, preferred_color_type);
 }
 
-void RenderWidgetHostViewAura::CopyFromCompositingSurfaceToVideoFrame(
+void RenderWidgetHostViewAura::CopyFromSurfaceToVideoFrame(
     const gfx::Rect& src_subrect,
-    const scoped_refptr<media::VideoFrame>& target,
+    scoped_refptr<media::VideoFrame> target,
     const base::Callback<void(const gfx::Rect&, bool)>& callback) {
-  if (!delegated_frame_host_)
+  if (!IsSurfaceAvailableForCopy()) {
+    callback.Run(gfx::Rect(), false);
     return;
+  }
   delegated_frame_host_->CopyFromCompositingSurfaceToVideoFrame(
-      src_subrect, target, callback);
-}
-
-bool RenderWidgetHostViewAura::CanCopyToVideoFrame() const {
-  return delegated_frame_host_ ? delegated_frame_host_->CanCopyToVideoFrame()
-                               : false;
+      src_subrect, std::move(target), callback);
 }
 
 void RenderWidgetHostViewAura::BeginFrameSubscription(
@@ -1023,7 +1022,6 @@ void RenderWidgetHostViewAura::GestureEventAck(
 void RenderWidgetHostViewAura::ProcessAckedTouchEvent(
     const TouchEventWithLatencyInfo& touch,
     InputEventAckState ack_result) {
-  ScopedVector<ui::TouchEvent> events;
   aura::WindowTreeHost* host = window_->GetHost();
   // |host| is NULL during tests.
   if (!host)
@@ -1337,8 +1335,8 @@ bool RenderWidgetHostViewAura::GetTextRange(gfx::Range* range) const {
   if (!selection)
     return false;
 
-  range->set_start(selection->offset);
-  range->set_end(selection->offset + selection->text.length());
+  range->set_start(selection->offset());
+  range->set_end(selection->offset() + selection->text().length());
   return true;
 }
 
@@ -1358,8 +1356,8 @@ bool RenderWidgetHostViewAura::GetSelectionRange(gfx::Range* range) const {
   if (!selection)
     return false;
 
-  range->set_start(selection->range.start());
-  range->set_end(selection->range.end());
+  range->set_start(selection->range().start());
+  range->set_end(selection->range().end());
   return true;
 }
 
@@ -1386,8 +1384,8 @@ bool RenderWidgetHostViewAura::GetTextFromRange(
   if (!selection)
     return false;
 
-  gfx::Range selection_text_range(selection->offset,
-                                  selection->offset + selection->text.length());
+  gfx::Range selection_text_range(
+      selection->offset(), selection->offset() + selection->text().length());
 
   if (!selection_text_range.Contains(range)) {
     text->clear();
@@ -1395,10 +1393,10 @@ bool RenderWidgetHostViewAura::GetTextFromRange(
   }
   if (selection_text_range.EqualsIgnoringDirection(range)) {
     // Avoid calling substr whose performance is low.
-    *text = selection->text;
+    *text = selection->text();
   } else {
-    *text = selection->text.substr(range.GetMin() - selection->offset,
-                                   range.length());
+    *text = selection->text().substr(range.GetMin() - selection->offset(),
+                                     range.length());
   }
   return true;
 }
@@ -1889,6 +1887,8 @@ void RenderWidgetHostViewAura::CreateAuraWindow(ui::wm::WindowType type) {
   DCHECK(!window_);
   window_ = new aura::Window(this);
   window_->SetName("RenderWidgetHostViewAura");
+  window_->SetProperty(aura::client::kEmbedType,
+                       aura::client::WindowEmbedType::EMBED_IN_OWNER);
   event_handler_->set_window(window_);
   window_observer_.reset(new WindowObserver(this));
 
@@ -1922,19 +1922,9 @@ void RenderWidgetHostViewAura::CreateDelegatedFrameHostClient() {
   if (IsMus())
     return;
 
-  // GuestViews have two RenderWidgetHostViews and so we need to make sure
-  // we don't have FrameSinkId collisions.
-  // The FrameSinkId generated here must be unique with FrameSinkId allocated
-  // in ContextFactoryPrivate.
-  // TODO(crbug.com/685777): Centralize allocation in one place for easier
-  // maintenance.
-  ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
   cc::FrameSinkId frame_sink_id =
-      is_guest_view_hack_
-          ? factory->GetContextFactoryPrivate()->AllocateFrameSinkId()
-          : cc::FrameSinkId(
-                base::checked_cast<uint32_t>(host_->GetProcess()->GetID()),
-                base::checked_cast<uint32_t>(host_->GetRoutingID()));
+      host_->AllocateFrameSinkId(is_guest_view_hack_);
+
   // Tests may set |delegated_frame_host_client_|.
   if (!delegated_frame_host_client_) {
     delegated_frame_host_client_ =
@@ -2366,14 +2356,12 @@ void RenderWidgetHostViewAura::OnTextSelectionChanged(
   if (!focused_view)
     return;
 
-  base::string16 selected_text;
-  if (GetTextInputManager()
-          ->GetTextSelection(focused_view)
-          ->GetSelectedText(&selected_text) &&
-      selected_text.length()) {
+  const TextInputManager::TextSelection* selection =
+      GetTextInputManager()->GetTextSelection(focused_view);
+  if (selection->selected_text().length()) {
     // Set the CLIPBOARD_TYPE_SELECTION to the ui::Clipboard.
     ui::ScopedClipboardWriter clipboard_writer(ui::CLIPBOARD_TYPE_SELECTION);
-    clipboard_writer.WriteText(selected_text);
+    clipboard_writer.WriteText(selection->selected_text());
   }
 #endif  // defined(USE_X11) && !defined(OS_CHROMEOS)
 }

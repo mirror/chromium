@@ -7,19 +7,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import "ios/chrome/browser/ui/collection_view/collection_view_model.h"
+#import "ios/chrome/browser/ui/content_suggestions/content_suggestion.h"
 
+@class CollectionViewItem;
 @protocol ContentSuggestionsDataSource;
 @class ContentSuggestionsViewController;
-
-// Enum defining the ItemType of this ContentSuggestionsCollectionUpdater.
-typedef NS_ENUM(NSInteger, ItemType) {
-  ItemTypeText = kItemTypeEnumZero,
-  ItemTypeArticle,
-  ItemTypeExpand,
-  ItemTypeStack,
-  ItemTypeFavicon,
-};
 
 // Updater for a CollectionViewController populating it with some items and
 // handling the items addition.
@@ -36,15 +28,22 @@ typedef NS_ENUM(NSInteger, ItemType) {
 @property(nonatomic, assign)
     ContentSuggestionsViewController* collectionViewController;
 
-// Adds a text item with a |title| and a |subtitle| in the section numbered
-// |section|. If |section| is greater than the current number of section, it
-// will add a new section at the end.
-- (void)addTextItem:(NSString*)title
-           subtitle:(NSString*)subtitle
-          toSection:(NSInteger)inputSection;
-
 // Returns whether the section should use the default, non-card style.
 - (BOOL)shouldUseCustomStyleForSection:(NSInteger)section;
+
+// Returns the ContentSuggestionType associated with this item.
+- (ContentSuggestionType)contentSuggestionTypeForItem:(CollectionViewItem*)item;
+
+// Adds the sections for the |suggestions| to the model and returns their
+// indices.
+- (NSIndexSet*)addSectionsForSuggestionsToModel:
+    (NSArray<ContentSuggestion*>*)suggestions;
+
+// Adds the |suggestions| to the model and returns their index paths.
+// The caller must ensure the corresponding sections have been added to the
+// model.
+- (NSArray<NSIndexPath*>*)addSuggestionsToModel:
+    (NSArray<ContentSuggestion*>*)suggestions;
 
 @end
 

@@ -16,22 +16,27 @@
 #include "ash/aura/wm_shell_aura.h"
 #include "ash/autoclick/autoclick_controller.h"
 #include "ash/common/accelerators/accelerator_controller.h"
+#include "ash/common/accelerators/ash_focus_manager_factory.h"
+#include "ash/common/accessibility_delegate.h"
 #include "ash/common/ash_constants.h"
+#include "ash/common/devtools/ash_devtools_css_agent.h"
+#include "ash/common/devtools/ash_devtools_dom_agent.h"
 #include "ash/common/frame/custom_frame_view_ash.h"
 #include "ash/common/gpu_support.h"
 #include "ash/common/keyboard/keyboard_ui.h"
 #include "ash/common/login_status.h"
+#include "ash/common/palette_delegate.h"
 #include "ash/common/session/session_state_delegate.h"
-#include "ash/common/shelf/app_list_shelf_item_delegate.h"
-#include "ash/common/shelf/shelf_delegate.h"
-#include "ash/common/shelf/shelf_item_delegate.h"
-#include "ash/common/shelf/shelf_model.h"
 #include "ash/common/shelf/wm_shelf.h"
 #include "ash/common/shell_delegate.h"
+#include "ash/common/shell_observer.h"
 #include "ash/common/system/chromeos/bluetooth/bluetooth_notification_controller.h"
+#include "ash/common/system/chromeos/network/sms_observer.h"
 #include "ash/common/system/chromeos/power/power_status.h"
 #include "ash/common/system/status_area_widget.h"
+#include "ash/common/system/toast/toast_manager.h"
 #include "ash/common/system/tray/system_tray_delegate.h"
+#include "ash/common/wallpaper/wallpaper_controller.h"
 #include "ash/common/wallpaper/wallpaper_delegate.h"
 #include "ash/common/wm/container_finder.h"
 #include "ash/common/wm/maximize_mode/maximize_mode_controller.h"
@@ -101,8 +106,12 @@
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/system/devicemode.h"
+#include "components/ui_devtools/devtools_server.h"
+#include "services/preferences/public/cpp/pref_client_store.h"
+#include "services/preferences/public/interfaces/preferences.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/ui/public/interfaces/constants.mojom.h"
+#include "ui/app_list/presenter/app_list.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/env.h"
 #include "ui/aura/layout_manager.h"
@@ -127,6 +136,7 @@
 #include "ui/keyboard/keyboard_util.h"
 #include "ui/views/corewm/tooltip_aura.h"
 #include "ui/views/corewm/tooltip_controller.h"
+#include "ui/views/focus/focus_manager_factory.h"
 #include "ui/views/widget/native_widget_aura.h"
 #include "ui/views/widget/widget.h"
 #include "ui/wm/core/accelerator_filter.h"
@@ -189,15 +199,15 @@ Shell* Shell::CreateInstance(const ShellInitParams& init_params) {
   CHECK(!instance_);
   WmShell* wm_shell = init_params.wm_shell;
   if (!wm_shell)
-    wm_shell =
-        new WmShellAura(base::WrapUnique<ShellDelegate>(init_params.delegate));
-  instance_ = new Shell(base::WrapUnique<WmShell>(wm_shell));
+    wm_shell = new WmShellAura();
+  instance_ = new Shell(base::WrapUnique<ShellDelegate>(init_params.delegate),
+                        base::WrapUnique<WmShell>(wm_shell));
   instance_->Init(init_params);
   return instance_;
 }
 
 // static
-Shell* Shell::GetInstance() {
+Shell* Shell::Get() {
   CHECK(instance_);
   return instance_;
 }
@@ -228,22 +238,33 @@ Shell::RootWindowControllerList Shell::GetAllRootWindowControllers() {
 }
 
 // static
+RootWindowController* Shell::GetRootWindowControllerWithDisplayId(
+    int64_t display_id) {
+  CHECK(HasInstance());
+  WmWindow* root_window =
+      instance_->wm_shell_->GetRootWindowForDisplayId(display_id);
+  return root_window ? root_window->GetRootWindowController() : nullptr;
+}
+
+// static
 aura::Window* Shell::GetPrimaryRootWindow() {
   CHECK(HasInstance());
   return instance_->wm_shell_->GetPrimaryRootWindow()->aura_window();
 }
 
 // static
-aura::Window* Shell::GetTargetRootWindow() {
-  CHECK(WmShell::HasInstance());
-  return WmWindow::GetAuraWindow(WmShell::Get()->GetRootWindowForNewWindows());
+aura::Window* Shell::GetRootWindowForNewWindows() {
+  CHECK(Shell::HasInstance());
+  return WmWindow::GetAuraWindow(Shell::GetWmRootWindowForNewWindows());
 }
 
 // static
-int64_t Shell::GetTargetDisplayId() {
-  return display::Screen::GetScreen()
-      ->GetDisplayNearestWindow(GetTargetRootWindow())
-      .id();
+WmWindow* Shell::GetWmRootWindowForNewWindows() {
+  CHECK(Shell::HasInstance());
+  Shell* shell = Shell::GetInstance();
+  if (shell->scoped_root_window_for_new_windows_)
+    return shell->scoped_root_window_for_new_windows_;
+  return shell->root_window_for_new_windows_;
 }
 
 // static
@@ -274,44 +295,40 @@ views::NonClientFrameView* Shell::CreateDefaultNonClientFrameView(
 
 void Shell::SetDisplayWorkAreaInsets(Window* contains,
                                      const gfx::Insets& insets) {
-  if (!window_tree_host_manager_->UpdateWorkAreaOfDisplayNearestWindow(
-          contains, insets)) {
-    return;
-  }
+  wm_shell_->SetDisplayWorkAreaInsets(WmWindow::Get(contains), insets);
 }
 
 void Shell::OnLoginStateChanged(LoginStatus status) {
-  for (auto& observer : *wm_shell_->shell_observers())
+  for (auto& observer : shell_observers_)
     observer.OnLoginStateChanged(status);
 }
 
 void Shell::OnAppTerminating() {
-  for (auto& observer : *wm_shell_->shell_observers())
+  for (auto& observer : shell_observers_)
     observer.OnAppTerminating();
 }
 
 void Shell::OnLockStateChanged(bool locked) {
-  for (auto& observer : *wm_shell_->shell_observers())
+  for (auto& observer : shell_observers_)
     observer.OnLockStateChanged(locked);
 #ifndef NDEBUG
   // Make sure that there is no system modal in Lock layer when unlocked.
   if (!locked) {
-    std::vector<WmWindow*> containers = wm::GetContainersFromAllRootWindows(
-        kShellWindowId_LockSystemModalContainer,
-        WmWindow::Get(GetPrimaryRootWindow()));
-    for (WmWindow* container : containers)
-      DCHECK(container->GetChildren().empty());
+    aura::Window::Windows containers = wm::GetContainersFromAllRootWindows(
+        kShellWindowId_LockSystemModalContainer, GetPrimaryRootWindow());
+    for (aura::Window* container : containers)
+      DCHECK(container->children().empty());
   }
 #endif
 }
 
 void Shell::OnCastingSessionStartedOrStopped(bool started) {
-  for (auto& observer : *wm_shell_->shell_observers())
+  for (auto& observer : shell_observers_)
     observer.OnCastingSessionStartedOrStopped(started);
 }
 
 void Shell::OnRootWindowAdded(WmWindow* root_window) {
-  for (auto& observer : *wm_shell_->shell_observers())
+  for (auto& observer : shell_observers_)
     observer.OnRootWindowAdded(root_window);
 }
 
@@ -341,6 +358,10 @@ bool Shell::ShouldSaveDisplaySettings() {
       resolution_notification_controller_->DoesNotificationTimeout());
 }
 
+aura::client::ActivationClient* Shell::activation_client() {
+  return focus_controller_.get();
+}
+
 void Shell::UpdateShelfVisibility() {
   for (WmWindow* root : wm_shell_->GetAllRootWindows())
     root->GetRootWindowController()->GetShelf()->UpdateVisibilityState();
@@ -365,12 +386,17 @@ void Shell::SetTouchHudProjectionEnabled(bool enabled) {
     return;
 
   is_touch_hud_projection_enabled_ = enabled;
-  for (auto& observer : *wm_shell_->shell_observers())
+  for (auto& observer : shell_observers_)
     observer.OnTouchHudProjectionToggled(enabled);
 }
 
 FirstRunHelper* Shell::CreateFirstRunHelper() {
   return new FirstRunHelperImpl;
+}
+
+void Shell::SetLargeCursorSizeInDip(int large_cursor_size_in_dip) {
+  window_tree_host_manager_->cursor_window_controller()
+      ->SetLargeCursorSizeInDip(large_cursor_size_in_dip);
 }
 
 void Shell::SetCursorCompositingEnabled(bool enabled) {
@@ -385,13 +411,104 @@ void Shell::DoInitialWorkspaceAnimation() {
       ->DoInitialAnimation();
 }
 
+void Shell::AddShellObserver(ShellObserver* observer) {
+  shell_observers_.AddObserver(observer);
+}
+
+void Shell::RemoveShellObserver(ShellObserver* observer) {
+  shell_observers_.RemoveObserver(observer);
+}
+
+void Shell::ShowAppList() {
+  // Show the app list on the default display for new windows.
+  app_list_->Show(
+      GetWmRootWindowForNewWindows()->GetDisplayNearestWindow().id());
+}
+
+void Shell::DismissAppList() {
+  app_list_->Dismiss();
+}
+
+void Shell::ToggleAppList() {
+  // Toggle the app list on the default display for new windows.
+  app_list_->ToggleAppList(
+      GetWmRootWindowForNewWindows()->GetDisplayNearestWindow().id());
+}
+
+bool Shell::IsAppListVisible() const {
+  return app_list_->IsVisible();
+}
+
+bool Shell::GetAppListTargetVisibility() const {
+  return app_list_->GetTargetVisibility();
+}
+
+void Shell::NotifyMaximizeModeStarted() {
+  for (auto& observer : shell_observers_)
+    observer.OnMaximizeModeStarted();
+}
+
+void Shell::NotifyMaximizeModeEnding() {
+  for (auto& observer : shell_observers_)
+    observer.OnMaximizeModeEnding();
+}
+
+void Shell::NotifyMaximizeModeEnded() {
+  for (auto& observer : shell_observers_)
+    observer.OnMaximizeModeEnded();
+}
+
+void Shell::NotifyOverviewModeStarting() {
+  for (auto& observer : shell_observers_)
+    observer.OnOverviewModeStarting();
+}
+
+void Shell::NotifyOverviewModeEnded() {
+  for (auto& observer : shell_observers_)
+    observer.OnOverviewModeEnded();
+}
+
+void Shell::NotifyFullscreenStateChanged(bool is_fullscreen,
+                                         WmWindow* root_window) {
+  for (auto& observer : shell_observers_)
+    observer.OnFullscreenStateChanged(is_fullscreen, root_window);
+}
+
+void Shell::NotifyPinnedStateChanged(WmWindow* pinned_window) {
+  for (auto& observer : shell_observers_)
+    observer.OnPinnedStateChanged(pinned_window);
+}
+
+void Shell::NotifyVirtualKeyboardActivated(bool activated,
+                                           WmWindow* root_window) {
+  for (auto& observer : shell_observers_)
+    observer.OnVirtualKeyboardStateChanged(activated, root_window);
+}
+
+void Shell::NotifyShelfCreatedForRootWindow(WmWindow* root_window) {
+  for (auto& observer : shell_observers_)
+    observer.OnShelfCreatedForRootWindow(root_window);
+}
+
+void Shell::NotifyShelfAlignmentChanged(WmWindow* root_window) {
+  for (auto& observer : shell_observers_)
+    observer.OnShelfAlignmentChanged(root_window);
+}
+
+void Shell::NotifyShelfAutoHideBehaviorChanged(WmWindow* root_window) {
+  for (auto& observer : shell_observers_)
+    observer.OnShelfAutoHideBehaviorChanged(root_window);
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Shell, private:
 
-Shell::Shell(std::unique_ptr<WmShell> wm_shell)
+Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
+             std::unique_ptr<WmShell> wm_shell)
     : wm_shell_(std::move(wm_shell)),
+      shell_delegate_(std::move(shell_delegate)),
+      app_list_(base::MakeUnique<app_list::AppList>()),
       link_handler_model_factory_(nullptr),
-      activation_client_(nullptr),
       display_configurator_(new display::DisplayConfigurator()),
       native_cursor_manager_(nullptr),
       simulate_modal_window_open_for_testing_(false),
@@ -400,7 +517,7 @@ Shell::Shell(std::unique_ptr<WmShell> wm_shell)
   // state on WmShellAura. http://crbug.com/671246.
 
   if (!wm_shell_->IsRunningInMash()) {
-    gpu_support_.reset(wm_shell_->delegate()->CreateGPUSupport());
+    gpu_support_.reset(shell_delegate_->CreateGPUSupport());
     display_manager_.reset(ScreenAsh::CreateDisplayManager());
     window_tree_host_manager_.reset(new WindowTreeHostManager);
     user_metrics_recorder_.reset(new UserMetricsRecorder);
@@ -417,7 +534,7 @@ Shell::~Shell() {
   if (!is_mash)
     user_metrics_recorder_->OnShellShuttingDown();
 
-  wm_shell_->delegate()->PreShutdown();
+  shell_delegate_->PreShutdown();
 
   // Remove the focus from any window. This will prevent overhead and side
   // effects (e.g. crashes) from changing focus during shutdown.
@@ -468,8 +585,7 @@ Shell::~Shell() {
   // layout.
   DeactivateKeyboard();
 
-  // Destroy toasts
-  wm_shell_->DeleteToastManager();
+  toast_manager_.reset();
 
   // Destroy SystemTrayDelegate before destroying the status area(s). Make sure
   // to deinitialize the shelf first, as it is initialized after the delegate.
@@ -538,10 +654,18 @@ Shell::~Shell() {
   // AppListDelegateImpl depends upon AppList.
   app_list_delegate_impl_.reset();
 
+  // These members access Shell in their destructors.
+  wallpaper_controller_.reset();
+  accessibility_delegate_.reset();
+
+  // Balances the Install() in Initialize().
+  views::FocusManagerFactory::Install(nullptr);
+
   wm_shell_->Shutdown();
-  // Depends on |focus_client_|, so must be destroyed before.
+  // Depends on |focus_controller_|, so must be destroyed before.
   window_tree_host_manager_.reset();
-  focus_client_.reset();
+  focus_controller_->RemoveObserver(this);
+  focus_controller_.reset();
   screen_position_controller_.reset();
 
   keyboard::KeyboardController::ResetInstance(nullptr);
@@ -553,7 +677,7 @@ Shell::~Shell() {
     display_configurator_->RemoveObserver(display_error_observer_.get());
   if (projecting_observer_) {
     display_configurator_->RemoveObserver(projecting_observer_.get());
-    wm_shell_->RemoveShellObserver(projecting_observer_.get());
+    RemoveShellObserver(projecting_observer_.get());
   }
   display_change_observer_.reset();
   shutdown_observer_.reset();
@@ -565,6 +689,9 @@ Shell::~Shell() {
 
   // Needs to happen right before |instance_| is reset.
   wm_shell_.reset();
+  wallpaper_delegate_.reset();
+  pref_store_ = nullptr;
+  shell_delegate_.reset();
 
   DCHECK(instance_ == this);
   instance_ = nullptr;
@@ -573,7 +700,42 @@ Shell::~Shell() {
 void Shell::Init(const ShellInitParams& init_params) {
   const bool is_mash = wm_shell_->IsRunningInMash();
 
-  wm_shell_->Initialize(init_params.blocking_pool);
+  blocking_pool_ = init_params.blocking_pool;
+
+  wallpaper_delegate_ = shell_delegate_->CreateWallpaperDelegate();
+
+  // Can be null in tests.
+  if (shell_delegate_->GetShellConnector()) {
+    prefs::mojom::PreferencesServiceFactoryPtr pref_factory_ptr;
+    shell_delegate_->GetShellConnector()->BindInterface(
+        prefs::mojom::kServiceName, &pref_factory_ptr);
+    pref_store_ = new preferences::PrefClientStore(std::move(pref_factory_ptr));
+  }
+
+  // Some delegates access WmShell during their construction. Create them here
+  // instead of the WmShell constructor.
+  accessibility_delegate_.reset(shell_delegate_->CreateAccessibilityDelegate());
+  palette_delegate_ = shell_delegate_->CreatePaletteDelegate();
+  toast_manager_ = base::MakeUnique<ToastManager>();
+
+  // Install the custom factory early on so that views::FocusManagers for Tray,
+  // Shelf, and WallPaper could be created by the factory.
+  views::FocusManagerFactory::Install(new AshFocusManagerFactory);
+
+  wallpaper_controller_ = base::MakeUnique<WallpaperController>(blocking_pool_);
+
+  // Start devtools server
+  devtools_server_ = ui::devtools::UiDevToolsServer::Create(nullptr);
+  if (devtools_server_) {
+    auto dom_backend = base::MakeUnique<devtools::AshDevToolsDOMAgent>();
+    auto css_backend =
+        base::MakeUnique<devtools::AshDevToolsCSSAgent>(dom_backend.get());
+    auto devtools_client = base::MakeUnique<ui::devtools::UiDevToolsClient>(
+        "Ash", devtools_server_.get());
+    devtools_client->AddAgent(std::move(dom_backend));
+    devtools_client->AddAgent(std::move(css_backend));
+    devtools_server_->AttachClient(std::move(devtools_client));
+  }
 
   if (is_mash)
     app_list_delegate_impl_ = base::MakeUnique<AppListDelegateImpl>();
@@ -592,7 +754,7 @@ void Shell::Init(const ShellInitParams& init_params) {
         new CursorManager(base::WrapUnique(native_cursor_manager_)));
   }
 
-  wm_shell_->delegate()->PreInit();
+  shell_delegate_->PreInit();
   bool display_initialized = true;
   if (!is_mash) {
     display_initialized = display_manager_->InitFromCommandLine();
@@ -617,7 +779,7 @@ void Shell::Init(const ShellInitParams& init_params) {
   projecting_observer_.reset(
       new ProjectingObserver(dbus_thread_manager->GetPowerManagerClient()));
   display_configurator_->AddObserver(projecting_observer_.get());
-  wm_shell_->AddShellObserver(projecting_observer_.get());
+  AddShellObserver(projecting_observer_.get());
 
   if (!display_initialized && chromeos::IsRunningAsSystemCompositor()) {
     display_change_observer_ = base::MakeUnique<display::DisplayChangeObserver>(
@@ -662,18 +824,15 @@ void Shell::Init(const ShellInitParams& init_params) {
   env_filter_.reset(new ::wm::CompoundEventFilter);
   AddPreTargetHandler(env_filter_.get());
 
-  wm::AshFocusRules* focus_rules = new wm::AshFocusRules();
-
-  ::wm::FocusController* focus_controller =
-      new ::wm::FocusController(focus_rules);
-  focus_client_.reset(focus_controller);
-  activation_client_ = focus_controller;
+  // FocusController takes ownership of AshFocusRules.
+  focus_controller_ =
+      base::MakeUnique<::wm::FocusController>(new wm::AshFocusRules());
+  focus_controller_->AddObserver(this);
 
   screen_position_controller_.reset(new ScreenPositionController);
 
   wm_shell_->CreatePrimaryHost();
-  wm_shell_->set_root_window_for_new_windows(
-      WmWindow::Get(GetPrimaryRootWindow()));
+  root_window_for_new_windows_ = WmWindow::Get(GetPrimaryRootWindow());
 
   if (!is_mash) {
     resolution_notification_controller_.reset(
@@ -712,7 +871,7 @@ void Shell::Init(const ShellInitParams& init_params) {
 
   overlay_filter_.reset(new OverlayEventFilter);
   AddPreTargetHandler(overlay_filter_.get());
-  wm_shell_->AddShellObserver(overlay_filter_.get());
+  AddShellObserver(overlay_filter_.get());
 
   accelerator_filter_.reset(new ::wm::AcceleratorFilter(
       std::unique_ptr<::wm::AcceleratorDelegate>(new AcceleratorDelegate),
@@ -744,13 +903,13 @@ void Shell::Init(const ShellInitParams& init_params) {
   power_button_controller_->OnDisplayModeChanged(
       display_configurator_->cached_displays());
 
-  wm_shell_->AddShellObserver(lock_state_controller_.get());
+  AddShellObserver(lock_state_controller_.get());
 
   // The connector is unavailable in some tests.
-  if (is_mash && wm_shell_->delegate()->GetShellConnector()) {
+  if (is_mash && shell_delegate_->GetShellConnector()) {
     ui::mojom::UserActivityMonitorPtr user_activity_monitor;
-    wm_shell_->delegate()->GetShellConnector()->BindInterface(
-        ui::mojom::kServiceName, &user_activity_monitor);
+    shell_delegate_->GetShellConnector()->BindInterface(ui::mojom::kServiceName,
+                                                        &user_activity_monitor);
     user_activity_forwarder_ = base::MakeUnique<aura::UserActivityForwarder>(
         std::move(user_activity_monitor), user_activity_detector_.get());
   }
@@ -791,17 +950,16 @@ void Shell::Init(const ShellInitParams& init_params) {
 
   event_client_.reset(new EventClientImpl);
 
-  session_state_delegate_.reset(
-      wm_shell_->delegate()->CreateSessionStateDelegate());
+  session_state_delegate_.reset(shell_delegate_->CreateSessionStateDelegate());
   // Must occur after Shell has installed its early pre-target handlers (for
   // example, WindowModalityController).
   wm_shell_->CreatePointerWatcherAdapter();
 
   resize_shadow_controller_.reset(new ResizeShadowController());
-  shadow_controller_.reset(new ::wm::ShadowController(activation_client_));
+  shadow_controller_.reset(new ::wm::ShadowController(focus_controller_.get()));
 
   wm_shell_->SetSystemTrayDelegate(
-      base::WrapUnique(wm_shell_->delegate()->CreateSystemTrayDelegate()));
+      base::WrapUnique(shell_delegate_->CreateSystemTrayDelegate()));
 
   // Create AshTouchTransformController before
   // WindowTreeHostManager::InitDisplays()
@@ -827,7 +985,7 @@ void Shell::Init(const ShellInitParams& init_params) {
   // Initialize the wallpaper after the RootWindowController has been created,
   // otherwise the widget will not paint when restoring after a browser crash.
   // Also, initialize after display initialization to ensure correct sizing.
-  wm_shell_->wallpaper_delegate()->InitializeWallpaper();
+  wallpaper_delegate_->InitializeWallpaper();
 
   if (cursor_manager_) {
     if (initially_hide_cursor_)
@@ -845,6 +1003,7 @@ void Shell::Init(const ShellInitParams& init_params) {
     screen_orientation_controller_.reset(new ScreenOrientationController());
     screen_layout_observer_.reset(new ScreenLayoutObserver());
   }
+  sms_observer_.reset(new SmsObserver());
 
   // The compositor thread and main message loop have to be running in
   // order to create mirror window. Run it after the main message loop
@@ -852,7 +1011,7 @@ void Shell::Init(const ShellInitParams& init_params) {
   if (!is_mash)
     display_manager_->CreateMirrorWindowAsyncIfAny();
 
-  for (auto& observer : *wm_shell_->shell_observers())
+  for (auto& observer : shell_observers_)
     observer.OnShellInitialized();
 
   if (!is_mash)
@@ -870,22 +1029,19 @@ void Shell::InitKeyboard() {
       }
     }
     keyboard::KeyboardController::ResetInstance(
-        new keyboard::KeyboardController(
-            wm_shell_->delegate()->CreateKeyboardUI(),
-            virtual_keyboard_controller_.get()));
+        new keyboard::KeyboardController(shell_delegate_->CreateKeyboardUI(),
+                                         virtual_keyboard_controller_.get()));
   }
 }
 
 void Shell::InitRootWindow(aura::Window* root_window) {
-  DCHECK(activation_client_);
+  DCHECK(focus_controller_);
   DCHECK(visibility_controller_.get());
   DCHECK(drag_drop_controller_.get());
 
-  aura::client::SetFocusClient(root_window, focus_client_.get());
-  aura::client::SetActivationClient(root_window, activation_client_);
-  ::wm::FocusController* focus_controller =
-      static_cast<::wm::FocusController*>(activation_client_);
-  root_window->AddPreTargetHandler(focus_controller);
+  aura::client::SetFocusClient(root_window, focus_controller_.get());
+  aura::client::SetActivationClient(root_window, focus_controller_.get());
+  root_window->AddPreTargetHandler(focus_controller_.get());
   aura::client::SetVisibilityClient(root_window, visibility_controller_.get());
   aura::client::SetDragDropClient(root_window, drag_drop_controller_.get());
   aura::client::SetScreenPositionClient(root_window,
@@ -942,6 +1098,15 @@ std::unique_ptr<ui::EventTargetIterator> Shell::GetChildIterator() const {
 ui::EventTargeter* Shell::GetEventTargeter() {
   NOTREACHED();
   return nullptr;
+}
+
+void Shell::OnWindowActivated(
+    aura::client::ActivationChangeObserver::ActivationReason reason,
+    aura::Window* gained_active,
+    aura::Window* lost_active) {
+  WmWindow* gained_active_wm = WmWindow::Get(gained_active);
+  if (gained_active_wm)
+    root_window_for_new_windows_ = gained_active_wm->GetRootWindow();
 }
 
 }  // namespace ash

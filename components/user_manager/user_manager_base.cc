@@ -191,9 +191,10 @@ void UserManagerBase::UserLoggedIn(const AccountId& account_id,
       SendGaiaUserLoginMetrics(account_id);
   } else if (primary_user_ != active_user_) {
     // This is only needed for tests where a new user session is created
-    // for non-existent user.
+    // for non-existent user. The new user is created and automatically set
+    // to active and there will be no pending user switch in such case.
     SetIsCurrentUserNew(true);
-    NotifyUserAddedToSession(active_user_, true /* user switch pending */);
+    NotifyUserAddedToSession(active_user_, false /* user switch pending */);
   }
 
   UMA_HISTOGRAM_ENUMERATION(
@@ -263,6 +264,16 @@ void UserManagerBase::OnSessionStarted() {
   GetLocalState()->CommitPendingWrite();
 }
 
+void UserManagerBase::OnProfileInitialized(User* user) {
+  DCHECK(task_runner_->RunsTasksOnCurrentThread());
+
+  // Mark the user as having an initialized session and persist this in
+  // the known_user DB.
+  user->set_profile_ever_initialized(true);
+  known_user::SetProfileEverInitialized(user->GetAccountId(), true);
+  GetLocalState()->CommitPendingWrite();
+}
+
 void UserManagerBase::RemoveUser(const AccountId& account_id,
                                  RemoveUserDelegate* delegate) {
   DCHECK(task_runner_->RunsTasksOnCurrentThread());
@@ -300,7 +311,7 @@ void UserManagerBase::RemoveUserFromList(const AccountId& account_id) {
     // Special case, removing partially-constructed supervised user or
     // boostrapping user during user list loading.
     ListPrefUpdate users_update(GetLocalState(), kRegularUsers);
-    users_update->Remove(base::StringValue(account_id.GetUserEmail()), nullptr);
+    users_update->Remove(base::Value(account_id.GetUserEmail()), nullptr);
     OnUserRemoved(account_id);
   } else {
     NOTREACHED() << "Users are not loaded yet.";
@@ -364,7 +375,7 @@ void UserManagerBase::SaveUserOAuthStatus(
                                              kUserOAuthTokenStatus);
     oauth_status_update->SetWithoutPathExpansion(
         account_id.GetUserEmail(),
-        new base::FundamentalValue(static_cast<int>(oauth_token_status)));
+        new base::Value(static_cast<int>(oauth_token_status)));
   }
   GetLocalState()->CommitPendingWrite();
 }
@@ -400,7 +411,7 @@ void UserManagerBase::SaveUserDisplayName(const AccountId& account_id,
       DictionaryPrefUpdate display_name_update(GetLocalState(),
                                                kUserDisplayName);
       display_name_update->SetWithoutPathExpansion(
-          account_id.GetUserEmail(), new base::StringValue(display_name));
+          account_id.GetUserEmail(), new base::Value(display_name));
     }
   }
 }
@@ -429,8 +440,8 @@ void UserManagerBase::SaveUserDisplayEmail(const AccountId& account_id,
     return;
 
   DictionaryPrefUpdate display_email_update(GetLocalState(), kUserDisplayEmail);
-  display_email_update->SetWithoutPathExpansion(
-      account_id.GetUserEmail(), new base::StringValue(display_email));
+  display_email_update->SetWithoutPathExpansion(account_id.GetUserEmail(),
+                                                new base::Value(display_email));
 }
 
 std::string UserManagerBase::GetUserDisplayEmail(
@@ -456,8 +467,7 @@ void UserManagerBase::SaveUserType(const AccountId& account_id,
 
   DictionaryPrefUpdate user_type_update(GetLocalState(), kUserType);
   user_type_update->SetWithoutPathExpansion(
-      account_id.GetUserEmail(),
-      new base::FundamentalValue(static_cast<int>(user_type)));
+      account_id.GetUserEmail(), new base::Value(static_cast<int>(user_type)));
   GetLocalState()->CommitPendingWrite();
 }
 
@@ -473,8 +483,8 @@ void UserManagerBase::UpdateUserAccountData(
     user->set_given_name(given_name);
     if (!IsUserNonCryptohomeDataEphemeral(account_id)) {
       DictionaryPrefUpdate given_name_update(GetLocalState(), kUserGivenName);
-      given_name_update->SetWithoutPathExpansion(
-          account_id.GetUserEmail(), new base::StringValue(given_name));
+      given_name_update->SetWithoutPathExpansion(account_id.GetUserEmail(),
+                                                 new base::Value(given_name));
     }
   }
 
@@ -799,6 +809,8 @@ void UserManagerBase::EnsureUsersLoaded() {
     const AccountId account_id = user->GetAccountId();
     user->set_oauth_token_status(LoadUserOAuthStatus(*it));
     user->set_force_online_signin(LoadForceOnlineSignin(*it));
+    user->set_profile_ever_initialized(
+        known_user::WasProfileEverInitialized(*it));
     user->set_using_saml(known_user::IsUsingSAML(*it));
     users_.push_back(user);
 
@@ -820,7 +832,6 @@ void UserManagerBase::EnsureUsersLoaded() {
       user->set_display_email(display_email);
     }
   }
-
   user_loading_stage_ = STAGE_LOADED;
 
   PerformPostUserListLoadingActions();
@@ -867,8 +878,8 @@ void UserManagerBase::GuestUserLoggedIn() {
 void UserManagerBase::AddUserRecord(User* user) {
   // Add the user to the front of the user list.
   ListPrefUpdate prefs_users_update(GetLocalState(), kRegularUsers);
-  prefs_users_update->Insert(0, base::MakeUnique<base::StringValue>(
-                                    user->GetAccountId().GetUserEmail()));
+  prefs_users_update->Insert(
+      0, base::MakeUnique<base::Value>(user->GetAccountId().GetUserEmail()));
   users_.insert(users_.begin(), user);
 }
 
@@ -883,6 +894,8 @@ void UserManagerBase::RegularUserLoggedIn(const AccountId& account_id) {
     active_user_->set_oauth_token_status(LoadUserOAuthStatus(account_id));
     SaveUserDisplayName(active_user_->GetAccountId(),
                         base::UTF8ToUTF16(active_user_->GetAccountName(true)));
+    known_user::SetProfileEverInitialized(
+        active_user_->GetAccountId(), active_user_->profile_ever_initialized());
   }
 
   AddUserRecord(active_user_);

@@ -9,8 +9,8 @@
 #include <limits>
 #include <utility>
 
-#include "ash/public/cpp/shelf_application_menu_item.h"
 #include "base/metrics/histogram_macros.h"
+#include "ui/gfx/image/image.h"
 
 namespace {
 
@@ -22,17 +22,20 @@ namespace ash {
 
 ShelfApplicationMenuModel::ShelfApplicationMenuModel(
     const base::string16& title,
-    ShelfAppMenuItemList items)
-    : ui::SimpleMenuModel(this), items_(std::move(items)) {
+    std::vector<mojom::MenuItemPtr> items,
+    mojom::ShelfItemDelegate* delegate)
+    : ui::SimpleMenuModel(this), items_(std::move(items)), delegate_(delegate) {
   AddSeparator(ui::SPACING_SEPARATOR);
   AddItem(kInvalidCommandId, title);
   AddSeparator(ui::SPACING_SEPARATOR);
 
   for (size_t i = 0; i < items_.size(); i++) {
-    ShelfApplicationMenuItem* item = items_[i].get();
-    AddItem(i, item->title());
-    if (!item->icon().IsEmpty())
-      SetIcon(GetIndexOfCommandId(i), item->icon());
+    mojom::MenuItem* item = items_[i].get();
+    AddItem(i, item->label);
+    if (!item->image.isNull()) {
+      SetIcon(GetIndexOfCommandId(i),
+              gfx::Image::CreateFrom1xBitmap(item->image));
+    }
   }
 
   // SimpleMenuModel does not allow two consecutive spacing separator items.
@@ -53,8 +56,10 @@ bool ShelfApplicationMenuModel::IsCommandIdEnabled(int command_id) const {
 
 void ShelfApplicationMenuModel::ExecuteCommand(int command_id,
                                                int event_flags) {
+  DCHECK(delegate_);
   DCHECK(IsCommandIdEnabled(command_id));
-  items_[command_id]->Execute(event_flags);
+  // Have the delegate execute its own custom command id for the given item.
+  delegate_->ExecuteCommand(items_[command_id]->command_id, event_flags);
   RecordMenuItemSelectedMetrics(command_id, items_.size());
 }
 

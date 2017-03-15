@@ -13,6 +13,7 @@ UNION_CPP_INCLUDES = frozenset([
 UNION_H_INCLUDES = frozenset([
     'bindings/core/v8/Dictionary.h',
     'bindings/core/v8/ExceptionState.h',
+    'bindings/core/v8/NativeValueTraits.h',
     'bindings/core/v8/V8Binding.h',
     'platform/heap/Handle.h',
 ])
@@ -51,8 +52,9 @@ def container_context(union_type, interfaces_info):
     interface_types = []
     numeric_type = None
     object_type = None
+    record_type = None
     string_type = None
-    for member in union_type.member_types:
+    for member in sorted(union_type.flattened_member_types, key=lambda m: m.name):
         context = member_context(member, interfaces_info)
         members.append(context)
         if member.base_type == 'ArrayBuffer':
@@ -73,9 +75,13 @@ def container_context(union_type, interfaces_info):
             array_or_sequence_type = context
         # "Dictionary" is an object, rather than an IDL dictionary.
         elif member.base_type == 'Dictionary':
-            if object_type:
+            if object_type or record_type:
                 raise Exception('%s is ambiguous.' % union_type.name)
             object_type = context
+        elif member.is_record_type:
+            if object_type or record_type:
+                raise Exception('%s is ambiguous.' % union_type.name)
+            record_type = context
         elif member.is_interface_type:
             interface_types.append(context)
         elif member is union_type.boolean_member_type:
@@ -110,6 +116,7 @@ def container_context(union_type, interfaces_info):
         'members': members,
         'numeric_type': numeric_type,
         'object_type': object_type,
+        'record_type': record_type,
         'string_type': string_type,
         'type_string': str(union_type),
         'v8_class': v8_types.v8_type(cpp_class),
@@ -127,7 +134,12 @@ def _update_includes_and_forward_decls(member, interface_info):
             cpp_includes.update(member.includes_for_type())
             header_forward_decls.add(member.implemented_as)
     else:
-        cpp_includes.update(member.includes_for_type())
+        if member.is_record_type:
+            # The headers for both T and U must be present when
+            # Vector<std::pair<T, U>> is declared.
+            header_includes.update(member.includes_for_type())
+        else:
+            cpp_includes.update(member.includes_for_type())
 
 
 def member_context(member, interfaces_info):
@@ -150,5 +162,5 @@ def member_context(member, interfaces_info):
         'type_name': member.name,
         'v8_value_to_local_cpp_value': member.v8_value_to_local_cpp_value(
             {}, 'v8Value', 'cppValue', isolate='isolate',
-            use_exception_state=True, restricted_float=True),
+            use_exception_state=True)
     }

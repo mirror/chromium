@@ -220,11 +220,9 @@ class ThreadHeapStats {
   double m_estimatedMarkingTimePerByte;
 };
 
-using ThreadStateSet = HashSet<ThreadState*>;
-
 class PLATFORM_EXPORT ThreadHeap {
  public:
-  ThreadHeap();
+  explicit ThreadHeap(ThreadState*);
   ~ThreadHeap();
 
   // Returns true for main thread's heap.
@@ -270,23 +268,13 @@ class PLATFORM_EXPORT ThreadHeap {
 
   StackFrameDepth& stackFrameDepth() { return m_stackFrameDepth; }
 
-  RecursiveMutex& threadAttachMutex() { return m_threadAttachMutex; }
-  const ThreadStateSet& threads() const { return m_threads; }
   ThreadHeapStats& heapStats() { return m_stats; }
-  SafePointBarrier* safePointBarrier() { return m_safePointBarrier.get(); }
   CallbackStack* markingStack() const { return m_markingStack.get(); }
   CallbackStack* postMarkingCallbackStack() const {
     return m_postMarkingCallbackStack.get();
   }
-  CallbackStack* globalWeakCallbackStack() const {
-    return m_globalWeakCallbackStack.get();
-  }
+  CallbackStack* weakCallbackStack() const { return m_weakCallbackStack.get(); }
   CallbackStack* ephemeronStack() const { return m_ephemeronStack.get(); }
-
-  void attach(ThreadState*);
-  void detach(ThreadState*);
-  void lockThreadAttachMutex();
-  void unlockThreadAttachMutex();
 
   void visitPersistentRoots(Visitor*);
   void visitStackRoots(Visitor*);
@@ -350,7 +338,7 @@ class PLATFORM_EXPORT ThreadHeap {
   // Remove an item from the weak callback work list and call the callback
   // with the visitor and the closure pointer.  Returns false when there is
   // nothing more to do.
-  bool popAndInvokeGlobalWeakCallback(Visitor*);
+  bool popAndInvokeWeakCallback(Visitor*);
 
   // Register an ephemeron table for fixed-point iteration.
   void registerWeakTable(void* containerObject,
@@ -405,7 +393,7 @@ class PLATFORM_EXPORT ThreadHeap {
 
   void processMarkingStack(Visitor*);
   void postMarkingProcessing(Visitor*);
-  void globalWeakProcessing(Visitor*);
+  void weakProcessing(Visitor*);
 
   void preGC();
   void postGC(BlinkGC::GCType);
@@ -455,16 +443,14 @@ class PLATFORM_EXPORT ThreadHeap {
   void commitCallbackStacks();
   void decommitCallbackStacks();
 
-  RecursiveMutex m_threadAttachMutex;
-  ThreadStateSet m_threads;
+  ThreadState* m_threadState;
   ThreadHeapStats m_stats;
   std::unique_ptr<RegionTree> m_regionTree;
   std::unique_ptr<HeapDoesNotContainCache> m_heapDoesNotContainCache;
-  std::unique_ptr<SafePointBarrier> m_safePointBarrier;
   std::unique_ptr<PagePool> m_freePagePool;
   std::unique_ptr<CallbackStack> m_markingStack;
   std::unique_ptr<CallbackStack> m_postMarkingCallbackStack;
-  std::unique_ptr<CallbackStack> m_globalWeakCallbackStack;
+  std::unique_ptr<CallbackStack> m_weakCallbackStack;
   std::unique_ptr<CallbackStack> m_ephemeronStack;
   BlinkGC::GCReason m_lastGCReason;
   StackFrameDepth m_stackFrameDepth;

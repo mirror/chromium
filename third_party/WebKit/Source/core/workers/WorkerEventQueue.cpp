@@ -26,11 +26,10 @@
 
 #include "core/workers/WorkerEventQueue.h"
 
-#include "core/dom/ExecutionContextTask.h"
-#include "core/dom/TaskRunnerHelper.h"
 #include "core/events/Event.h"
 #include "core/inspector/InspectorInstrumentation.h"
 #include "core/workers/WorkerGlobalScope.h"
+#include "core/workers/WorkerThread.h"
 
 namespace blink {
 
@@ -55,29 +54,27 @@ DEFINE_TRACE(WorkerEventQueue) {
 bool WorkerEventQueue::enqueueEvent(Event* event) {
   if (m_isClosed)
     return false;
-  InspectorInstrumentation::asyncTaskScheduled(
-      event->target()->getExecutionContext(), event->type(), event);
+  probe::asyncTaskScheduled(event->target()->getExecutionContext(),
+                            event->type(), event);
   m_pendingEvents.insert(event);
-  m_workerGlobalScope->postTask(
-      TaskType::UnspecedTimer, BLINK_FROM_HERE,
-      createSameThreadTask(&WorkerEventQueue::dispatchEvent,
-                           wrapPersistent(this), wrapWeakPersistent(event)));
+  m_workerGlobalScope->thread()->postTask(
+      BLINK_FROM_HERE,
+      WTF::bind(&WorkerEventQueue::dispatchEvent, wrapPersistent(this),
+                wrapWeakPersistent(event)));
   return true;
 }
 
 bool WorkerEventQueue::cancelEvent(Event* event) {
   if (!removeEvent(event))
     return false;
-  InspectorInstrumentation::asyncTaskCanceled(
-      event->target()->getExecutionContext(), event);
+  probe::asyncTaskCanceled(event->target()->getExecutionContext(), event);
   return true;
 }
 
 void WorkerEventQueue::close() {
   m_isClosed = true;
   for (const auto& event : m_pendingEvents)
-    InspectorInstrumentation::asyncTaskCanceled(
-        event->target()->getExecutionContext(), event);
+    probe::asyncTaskCanceled(event->target()->getExecutionContext(), event);
   m_pendingEvents.clear();
 }
 
@@ -85,7 +82,7 @@ bool WorkerEventQueue::removeEvent(Event* event) {
   auto found = m_pendingEvents.find(event);
   if (found == m_pendingEvents.end())
     return false;
-  m_pendingEvents.remove(found);
+  m_pendingEvents.erase(found);
   return true;
 }
 
@@ -93,7 +90,7 @@ void WorkerEventQueue::dispatchEvent(Event* event) {
   if (!event || !removeEvent(event))
     return;
 
-  InspectorInstrumentation::AsyncTask asyncTask(m_workerGlobalScope, event);
+  probe::AsyncTask asyncTask(m_workerGlobalScope, event);
   event->target()->dispatchEvent(event);
 }
 

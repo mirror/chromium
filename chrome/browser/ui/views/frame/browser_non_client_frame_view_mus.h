@@ -77,11 +77,6 @@ class BrowserNonClientFrameViewMus : public BrowserNonClientFrameView,
   // strip.
   int GetTabStripRightInset() const;
 
-  // Returns true if we should use a super short header with light bars instead
-  // of regular tabs. This header is used in immersive fullscreen when the
-  // top-of-window views are not revealed.
-  bool UseImmersiveLightbarHeaderStyle() const;
-
   // Returns true if the header should be painted so that it looks the same as
   // the header used for packaged apps. Packaged apps use a different color
   // scheme than browser windows.
@@ -97,15 +92,14 @@ class BrowserNonClientFrameViewMus : public BrowserNonClientFrameView,
   // need their frames painted.
   bool ShouldPaint() const;
 
-  // Paints the header background when the frame is in immersive fullscreen and
-  // tab light bar is visible.
-  void PaintImmersiveLightbarStyleHeader(gfx::Canvas* canvas);
-
   void PaintToolbarBackground(gfx::Canvas* canvas);
 
   // Draws the line under the header for windows without a toolbar and not using
   // the packaged app header style.
   void PaintContentEdge(gfx::Canvas* canvas);
+
+  // Returns the height for the header (non-client frame area).
+  int GetHeaderHeight() const;
 
   // TODO(sky): Figure out how to support WebAppLeftHeaderView.
 

@@ -116,7 +116,7 @@ namespace browser_sync {
 
 namespace {
 
-typedef GoogleServiceAuthError AuthError;
+using AuthError = GoogleServiceAuthError;
 
 const char kSyncUnrecoverableErrorHistogram[] = "Sync.UnrecoverableErrors";
 
@@ -148,9 +148,6 @@ const net::BackoffEntry::Policy kRequestAccessTokenBackoffPolicy = {
     false,
 };
 
-const base::FilePath::CharType kLevelDBFolderName[] =
-    FILE_PATH_LITERAL("LevelDB");
-
 }  // namespace
 
 ProfileSyncService::InitParams::InitParams() = default;
@@ -171,12 +168,10 @@ ProfileSyncService::ProfileSyncService(InitParams init_params)
       network_time_update_callback_(
           std::move(init_params.network_time_update_callback)),
       url_request_context_(init_params.url_request_context),
-      blocking_task_runner_(std::move(init_params.blocking_task_runner)),
       is_first_time_sync_configure_(false),
       engine_initialized_(false),
       sync_disabled_by_admin_(false),
       is_auth_in_progress_(false),
-      local_sync_backend_folder_(init_params.local_sync_backend_folder),
       unrecoverable_error_reason_(ERROR_REASON_UNSET),
       expect_sync_configuration_aborted_(false),
       configure_status_(DataTypeManager::UNKNOWN),
@@ -250,8 +245,11 @@ void ProfileSyncService::Initialize() {
     // TODO(skym): Stop creating leveldb files when signed out.
     // TODO(skym): Verify using AsUTF8Unsafe is okay here. Should work as long
     // as the Local State file is guaranteed to be UTF-8.
+    const syncer::ModelTypeStoreFactory& store_factory =
+        GetModelTypeStoreFactory(syncer::DEVICE_INFO, base_directory_,
+                                 sync_client_->GetBlockingPool());
     device_info_sync_bridge_ = base::MakeUnique<DeviceInfoSyncBridge>(
-        local_device_.get(), GetModelTypeStoreFactory(syncer::DEVICE_INFO),
+        local_device_.get(), store_factory,
         base::BindRepeating(
             &ModelTypeChangeProcessor::Create,
             base::BindRepeating(&syncer::ReportUnrecoverableError, channel_)));
@@ -559,7 +557,7 @@ void ProfileSyncService::StartUpSlowEngineComponents() {
 
   engine_.reset(sync_client_->GetSyncApiComponentFactory()->CreateSyncEngine(
       debug_identifier_, invalidator, sync_prefs_.AsWeakPtr(),
-      sync_data_folder_));
+      FormatSyncDataPath(base_directory_)));
 
   // Clear any old errors the first time sync starts.
   if (!IsFirstSetupComplete())
@@ -695,7 +693,7 @@ void ProfileSyncService::ShutdownImpl(syncer::ShutdownReason reason) {
       sync_thread_->task_runner()->PostTask(
           FROM_HERE,
           base::Bind(&syncer::syncable::Directory::DeleteDirectoryFiles,
-                     sync_data_folder_));
+                     FormatSyncDataPath(base_directory_)));
     }
     return;
   }
@@ -931,7 +929,7 @@ void ProfileSyncService::OnEngineInitialized(
 
   // Initialize local device info.
   local_device_->Initialize(cache_guid, signin_scoped_device_id,
-                            blocking_task_runner_);
+                            sync_client_->GetBlockingPool());
 
   if (protocol_event_observers_.might_have_observers()) {
     engine_->RequestBufferedProtocolEventsAndEnableForwarding();
@@ -1199,6 +1197,14 @@ void ProfileSyncService::OnClearServerDataDone() {
                             syncer::CLEAR_SERVER_DATA_MAX);
 }
 
+void ProfileSyncService::ClearServerDataForTest(const base::Closure& callback) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  // Sync has a restriction that the engine must be in configuration mode
+  // in order to run clear server data.
+  engine_->StartConfiguration();
+  engine_->ClearServerData(callback);
+}
+
 void ProfileSyncService::OnConfigureDone(
     const DataTypeManager::ConfigureResult& result) {
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -1386,6 +1392,7 @@ bool ProfileSyncService::IsFirstSetupInProgress() const {
 std::unique_ptr<syncer::SyncSetupInProgressHandle>
 ProfileSyncService::GetSetupInProgressHandle() {
   DCHECK(thread_checker_.CalledOnValidThread());
+
   if (++outstanding_setup_in_progress_handles_ == 1) {
     DCHECK(!startup_controller_->IsSetupInProgress());
     startup_controller_->SetSetupInProgress(true);
@@ -1518,7 +1525,9 @@ void ProfileSyncService::UpdateSelectedTypesHistogram(
       };
 
   static_assert(39 == syncer::MODEL_TYPE_COUNT,
-                "custom config histogram must be updated");
+                "If adding a user selectable type, update "
+                "UserSelectableSyncType in user_selectable_sync_type.h and "
+                "histograms.xml.");
 
   if (!sync_everything) {
     const syncer::ModelTypeSet current_types = GetPreferredDataTypes();
@@ -1669,12 +1678,21 @@ void ProfileSyncService::SetPlatformSyncAllowedProvider(
   platform_sync_allowed_provider_ = platform_sync_allowed_provider;
 }
 
+// static
 syncer::ModelTypeStoreFactory ProfileSyncService::GetModelTypeStoreFactory(
-    ModelType type) {
-  return base::Bind(&ModelTypeStore::CreateStore, type,
-                    sync_data_folder_.Append(base::FilePath(kLevelDBFolderName))
-                        .AsUTF8Unsafe(),
-                    blocking_task_runner_);
+    ModelType type,
+    const base::FilePath& base_path,
+    base::SequencedWorkerPool* blocking_pool) {
+  // TODO(skym): Verify using AsUTF8Unsafe is okay here. Should work as long
+  // as the Local State file is guaranteed to be UTF-8.
+  std::string path = FormatSharedModelTypeStorePath(base_path).AsUTF8Unsafe();
+  base::SequencedWorkerPool::SequenceToken sequence_token =
+      blocking_pool->GetNamedSequenceToken(path);
+  scoped_refptr<base::SequencedTaskRunner> task_runner =
+      blocking_pool->GetSequencedTaskRunnerWithShutdownBehavior(
+          blocking_pool->GetNamedSequenceToken(path),
+          base::SequencedWorkerPool::SKIP_ON_SHUTDOWN);
+  return base::Bind(&ModelTypeStore::CreateStore, type, path, task_runner);
 }
 
 void ProfileSyncService::ConfigureDataTypeManager() {
@@ -2329,7 +2347,7 @@ void ProfileSyncService::FlushDirectory() const {
 
 base::FilePath ProfileSyncService::GetDirectoryPathForTest() const {
   DCHECK(thread_checker_.CalledOnValidThread());
-  return sync_data_folder_;
+  return FormatSyncDataPath(base_directory_);
 }
 
 base::MessageLoop* ProfileSyncService::GetSyncLoopForTest() const {
@@ -2425,5 +2443,4 @@ void ProfileSyncService::OnSetupInProgressHandleDestroyed() {
     ReconfigureDatatypeManager();
   NotifyObservers();
 }
-
 }  // namespace browser_sync

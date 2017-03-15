@@ -32,18 +32,18 @@
 #include "chrome/browser/prefs/browser_prefs.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/common/pref_names.h"
-#include "chrome/common/safe_browsing/csd.pb.h"
 #include "chrome/test/base/testing_browser_process.h"
 #include "chrome/test/base/testing_profile.h"
 #include "chrome/test/base/testing_profile_manager.h"
 #include "components/history/content/browser/content_visit_delegate.h"
-#include "components/history/content/browser/download_constants_utils.h"
+#include "components/history/content/browser/download_conversions.h"
 #include "components/history/content/browser/history_database_helper.h"
 #include "components/history/core/browser/download_constants.h"
 #include "components/history/core/browser/download_row.h"
 #include "components/history/core/browser/history_constants.h"
 #include "components/history/core/browser/history_database_params.h"
 #include "components/history/core/browser/history_service.h"
+#include "components/safe_browsing/csd.pb.h"
 #include "components/safe_browsing_db/safe_browsing_prefs.h"
 #include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -299,6 +299,7 @@ class LastDownloadFinderTest : public testing::Test {
         download_id_++,                                // id
         base::GenerateGUID(),                          // GUID
         false,                                         // download_opened
+        now - base::TimeDelta::FromMinutes(5),         // last_access_time
         std::string(),                                 // ext_id
         std::string(),                                 // ext_name
         std::vector<history::DownloadSliceInfo>());    // download_slice_info

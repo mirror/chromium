@@ -625,6 +625,7 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   bool paintRenderingResultsToCanvas(SourceDrawingBuffer) override;
   WebLayer* platformLayer() const override;
   void stop() override;
+  void finalizeFrame() override;
 
   // DrawingBuffer::Client implementation.
   bool DrawingBufferClientIsBoundForDraw() override;
@@ -645,10 +646,6 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
 
   // Query if depth_stencil buffer is supported.
   bool isDepthStencilSupported() { return m_isDepthStencilSupported; }
-
-  // Helper to return the size in bytes of OpenGL data types
-  // like GL_FLOAT, GL_INT, etc.
-  unsigned sizeInBytes(GLenum type) const;
 
   // Check if each enabled vertex attribute is bound to a buffer.
   bool validateRenderingState(const char*);
@@ -691,6 +688,7 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   TaskRunnerTimer<WebGLRenderingContextBase> m_restoreTimer;
 
   bool m_markedCanvasDirty;
+  bool m_animationFrameInProgress;
 
   // List of bound VBO's. Used to maintain info about sizes for ARRAY_BUFFER and
   // stored values for ELEMENT_ARRAY_BUFFER
@@ -1635,6 +1633,7 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
                             std::unique_ptr<WebGraphicsContext3DProvider>,
                             const CanvasContextCreationAttributes&,
                             unsigned);
+  static bool supportOwnOffscreenSurface(ExecutionContext*);
   static std::unique_ptr<WebGraphicsContext3DProvider>
   createContextProviderInternal(HTMLCanvasElement*,
                                 ScriptState*,

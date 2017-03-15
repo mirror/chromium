@@ -62,20 +62,21 @@ SelectionStrategy CharacterGranularityStrategy::GetType() const {
 
 void CharacterGranularityStrategy::Clear() {}
 
-VisibleSelection CharacterGranularityStrategy::updateExtent(
+SelectionInDOMTree CharacterGranularityStrategy::updateExtent(
     const IntPoint& extentPoint,
     LocalFrame* frame) {
   const VisiblePosition& extentPosition =
       visiblePositionForContentsPoint(extentPoint, frame);
-  const VisibleSelection& selection = frame->selection().selection();
+  const VisibleSelection& selection =
+      frame->selection().computeVisibleSelectionInDOMTreeDeprecated();
   if (selection.visibleBase().deepEquivalent() ==
       extentPosition.deepEquivalent())
-    return selection;
-  return createVisibleSelection(SelectionInDOMTree::Builder()
-                                    .collapse(selection.base())
-                                    .extend(extentPosition.deepEquivalent())
-                                    .setAffinity(selection.affinity())
-                                    .build());
+    return selection.asSelection();
+  return SelectionInDOMTree::Builder()
+      .collapse(selection.base())
+      .extend(extentPosition.deepEquivalent())
+      .setAffinity(selection.affinity())
+      .build();
 }
 
 DirectionGranularityStrategy::DirectionGranularityStrategy()
@@ -96,10 +97,11 @@ void DirectionGranularityStrategy::Clear() {
   m_diffExtentPointFromExtentPosition = IntSize();
 }
 
-VisibleSelection DirectionGranularityStrategy::updateExtent(
+SelectionInDOMTree DirectionGranularityStrategy::updateExtent(
     const IntPoint& extentPoint,
     LocalFrame* frame) {
-  const VisibleSelection& selection = frame->selection().selection();
+  const VisibleSelection& selection =
+      frame->selection().computeVisibleSelectionInDOMTreeDeprecated();
 
   if (m_state == StrategyState::Cleared)
     m_state = StrategyState::Expanding;
@@ -142,7 +144,7 @@ VisibleSelection DirectionGranularityStrategy::updateExtent(
 
   // Do not allow empty selection.
   if (newOffsetExtentPosition.deepEquivalent() == base.deepEquivalent())
-    return selection;
+    return selection.asSelection();
 
   // The direction granularity strategy, particularly the "offset" feature
   // doesn't work with non-horizontal text (e.g. when the text is rotated).
@@ -151,12 +153,11 @@ VisibleSelection DirectionGranularityStrategy::updateExtent(
   // without a line change.
   if (verticalChange &&
       inSameLine(newOffsetExtentPosition, oldOffsetExtentPosition)) {
-    return createVisibleSelection(
-        SelectionInDOMTree::Builder()
-            .collapse(selection.base())
-            .extend(newOffsetExtentPosition.deepEquivalent())
-            .setAffinity(selection.affinity())
-            .build());
+    return SelectionInDOMTree::Builder()
+        .collapse(selection.base())
+        .extend(newOffsetExtentPosition.deepEquivalent())
+        .setAffinity(selection.affinity())
+        .build();
   }
 
   int oldExtentBaseOrder = selection.isBaseFirst() ? 1 : -1;
@@ -166,7 +167,7 @@ VisibleSelection DirectionGranularityStrategy::updateExtent(
   if (newOffsetExtentPosition.deepEquivalent() ==
       oldOffsetExtentPosition.deepEquivalent()) {
     if (m_granularity == CharacterGranularity)
-      return selection;
+      return selection.asSelection();
 
     // If we are in Word granularity, we cannot exit here, since we may pass
     // the middle of the word without changing the position (in which case
@@ -268,11 +269,10 @@ VisibleSelection DirectionGranularityStrategy::updateExtent(
 
   m_diffExtentPointFromExtentPosition =
       extentPoint + IntSize(m_offset, 0) - positionLocation(newSelectionExtent);
-  return createVisibleSelection(
-      SelectionInDOMTree::Builder(selection.asSelection())
-          .collapse(selection.base())
-          .extend(newSelectionExtent.deepEquivalent())
-          .build());
+  return SelectionInDOMTree::Builder(selection.asSelection())
+      .collapse(selection.base())
+      .extend(newSelectionExtent.deepEquivalent())
+      .build();
 }
 
 }  // namespace blink

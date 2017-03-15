@@ -109,19 +109,28 @@ PassRefPtr<SerializedScriptValue> SerializedScriptValue::create(
 }
 
 SerializedScriptValue::SerializedScriptValue()
-    : m_externallyAllocatedMemory(0) {}
+    : m_hasRegisteredExternalAllocation(false),
+      m_transferablesNeedExternalAllocationRegistration(false) {}
 
 SerializedScriptValue::SerializedScriptValue(const String& wireData)
-    : m_dataString(wireData.isolatedCopy()), m_externallyAllocatedMemory(0) {}
+    : m_hasRegisteredExternalAllocation(false),
+      m_transferablesNeedExternalAllocationRegistration(false) {
+  size_t byteLength = wireData.length() * 2;
+  m_dataBuffer.reset(static_cast<uint8_t*>(WTF::Partitions::bufferMalloc(
+      byteLength, "SerializedScriptValue buffer")));
+  m_dataBufferSize = byteLength;
+  wireData.copyTo(reinterpret_cast<UChar*>(m_dataBuffer.get()), 0,
+                  wireData.length());
+}
 
 SerializedScriptValue::~SerializedScriptValue() {
   // If the allocated memory was not registered before, then this class is
   // likely used in a context other than Worker's onmessage environment and the
   // presence of current v8 context is not guaranteed. Avoid calling v8 then.
-  if (m_externallyAllocatedMemory) {
+  if (m_hasRegisteredExternalAllocation) {
     ASSERT(v8::Isolate::GetCurrent());
     v8::Isolate::GetCurrent()->AdjustAmountOfExternalAllocatedMemory(
-        -m_externallyAllocatedMemory);
+        -static_cast<int64_t>(dataLengthInBytes()));
   }
 }
 
@@ -132,9 +141,6 @@ PassRefPtr<SerializedScriptValue> SerializedScriptValue::nullValue() {
 }
 
 String SerializedScriptValue::toWireString() const {
-  if (!m_dataString.isNull())
-    return m_dataString;
-
   // Add the padding '\0', but don't put it in |m_dataBuffer|.
   // This requires direct use of uninitialized strings, though.
   UChar* destination;
@@ -151,36 +157,18 @@ String SerializedScriptValue::toWireString() const {
 void SerializedScriptValue::toWireBytes(Vector<char>& result) const {
   DCHECK(result.isEmpty());
 
-  if (m_dataString.isNull()) {
-    size_t wireSizeBytes = (m_dataBufferSize + 1) & ~1;
-    result.resize(wireSizeBytes);
+  size_t wireSizeBytes = (m_dataBufferSize + 1) & ~1;
+  result.resize(wireSizeBytes);
 
-    const UChar* src = reinterpret_cast<UChar*>(m_dataBuffer.get());
-    UChar* dst = reinterpret_cast<UChar*>(result.data());
-    for (size_t i = 0; i < m_dataBufferSize / 2; i++)
-      dst[i] = htons(src[i]);
-
-    // This is equivalent to swapping the byte order of the two bytes (x, 0),
-    // depending on endianness.
-    if (m_dataBufferSize % 2)
-      dst[wireSizeBytes / 2 - 1] = m_dataBuffer[m_dataBufferSize - 1] << 8;
-
-    return;
-  }
-
-  size_t length = m_dataString.length();
-  result.resize(length * sizeof(UChar));
+  const UChar* src = reinterpret_cast<UChar*>(m_dataBuffer.get());
   UChar* dst = reinterpret_cast<UChar*>(result.data());
+  for (size_t i = 0; i < m_dataBufferSize / 2; i++)
+    dst[i] = htons(src[i]);
 
-  if (m_dataString.is8Bit()) {
-    const LChar* src = m_dataString.characters8();
-    for (size_t i = 0; i < length; i++)
-      dst[i] = htons(static_cast<UChar>(src[i]));
-  } else {
-    const UChar* src = m_dataString.characters16();
-    for (size_t i = 0; i < length; i++)
-      dst[i] = htons(src[i]);
-  }
+  // This is equivalent to swapping the byte order of the two bytes (x, 0),
+  // depending on endianness.
+  if (m_dataBufferSize % 2)
+    dst[wireSizeBytes / 2 - 1] = m_dataBuffer[m_dataBufferSize - 1] << 8;
 }
 
 static void accumulateArrayBuffersForAllWorlds(
@@ -276,11 +264,6 @@ void SerializedScriptValue::transferArrayBuffers(
     ExceptionState& exceptionState) {
   m_arrayBufferContentsArray =
       transferArrayBufferContents(isolate, arrayBuffers, exceptionState);
-}
-
-v8::Local<v8::Value> SerializedScriptValue::deserialize(
-    MessagePortArray* messagePorts) {
-  return deserialize(v8::Isolate::GetCurrent(), messagePorts, 0);
 }
 
 v8::Local<v8::Value> SerializedScriptValue::deserialize(
@@ -458,13 +441,40 @@ SerializedScriptValue::transferArrayBufferContents(
   return contents;
 }
 
+void SerializedScriptValue::
+    unregisterMemoryAllocatedWithCurrentScriptContext() {
+  if (m_hasRegisteredExternalAllocation) {
+    v8::Isolate::GetCurrent()->AdjustAmountOfExternalAllocatedMemory(
+        -static_cast<int64_t>(dataLengthInBytes()));
+    m_hasRegisteredExternalAllocation = false;
+  }
+
+  // TODO: if other transferables start accounting for their external
+  // allocations with V8, extend this with corresponding cases.
+  if (m_arrayBufferContentsArray &&
+      !m_transferablesNeedExternalAllocationRegistration) {
+    for (auto& buffer : *m_arrayBufferContentsArray)
+      buffer.unregisterExternalAllocationWithCurrentContext();
+    m_transferablesNeedExternalAllocationRegistration = true;
+  }
+}
+
 void SerializedScriptValue::registerMemoryAllocatedWithCurrentScriptContext() {
-  if (m_externallyAllocatedMemory)
+  if (m_hasRegisteredExternalAllocation)
     return;
 
-  m_externallyAllocatedMemory = static_cast<intptr_t>(dataLengthInBytes());
-  v8::Isolate::GetCurrent()->AdjustAmountOfExternalAllocatedMemory(
-      m_externallyAllocatedMemory);
+  m_hasRegisteredExternalAllocation = true;
+  int64_t diff = static_cast<int64_t>(dataLengthInBytes());
+  DCHECK_GE(diff, 0);
+  v8::Isolate::GetCurrent()->AdjustAmountOfExternalAllocatedMemory(diff);
+
+  // Only (re)register allocation cost for transferables if this
+  // SerializedScriptValue has explicitly unregistered them before.
+  if (m_arrayBufferContentsArray &&
+      m_transferablesNeedExternalAllocationRegistration) {
+    for (auto& buffer : *m_arrayBufferContentsArray)
+      buffer.registerExternalAllocationWithCurrentContext();
+  }
 }
 
 }  // namespace blink

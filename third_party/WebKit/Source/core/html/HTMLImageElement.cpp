@@ -366,7 +366,8 @@ void HTMLImageElement::attachLayoutTree(const AttachContext& context) {
     LayoutImage* layoutImage = toLayoutImage(layoutObject());
     LayoutImageResource* layoutImageResource = layoutImage->imageResource();
     if (m_isFallbackImage) {
-      float deviceScaleFactor = blink::deviceScaleFactor(layoutImage->frame());
+      float deviceScaleFactor =
+          blink::deviceScaleFactorDeprecated(layoutImage->frame());
       std::pair<Image*, float> brokenImageAndImageScaleFactor =
           ImageResourceContent::brokenImage(deviceScaleFactor);
       ImageResourceContent* newImageResource =
@@ -645,6 +646,7 @@ PassRefPtr<Image> HTMLImageElement::getSourceImageForCanvas(
 
   RefPtr<Image> sourceImage;
   if (cachedImage()->getImage()->isSVGImage()) {
+    UseCounter::count(document(), UseCounter::SVGInCanvas2D);
     SVGImage* svgImage = toSVGImage(cachedImage()->getImage());
     IntSize imageSize =
         roundedIntSize(svgImage->concreteObjectSize(defaultObjectSize));

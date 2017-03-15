@@ -40,6 +40,7 @@
 #include "core/events/EventTarget.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/inspector/InspectorDOMAgent.h"
+#include "core/inspector/InspectorInstrumentation.h"
 #include "core/inspector/V8InspectorString.h"
 
 namespace {
@@ -60,6 +61,9 @@ const int domBreakpointDerivedTypeShift = 16;
 }  // namespace
 
 namespace blink {
+
+using protocol::Maybe;
+using protocol::Response;
 
 static const char webglErrorFiredEventName[] = "webglErrorFired";
 static const char webglWarningFiredEventName[] = "webglWarningFired";
@@ -313,7 +317,7 @@ void InspectorDOMDebuggerAgent::didInvalidateStyleAttr(Node* node) {
 void InspectorDOMDebuggerAgent::didInsertDOMNode(Node* node) {
   if (m_domBreakpoints.size()) {
     uint32_t mask =
-        m_domBreakpoints.get(InspectorDOMAgent::innerParentNode(node));
+        m_domBreakpoints.at(InspectorDOMAgent::innerParentNode(node));
     uint32_t inheritableTypesMask =
         (mask | (mask >> domBreakpointDerivedTypeShift)) &
         inheritableDOMBreakpointTypesMask;
@@ -382,7 +386,7 @@ Response InspectorDOMDebuggerAgent::setDOMBreakpoint(int nodeId,
     return response;
 
   uint32_t rootBit = 1 << type;
-  m_domBreakpoints.set(node, m_domBreakpoints.get(node) | rootBit);
+  m_domBreakpoints.set(node, m_domBreakpoints.at(node) | rootBit);
   if (rootBit & inheritableDOMBreakpointTypesMask) {
     for (Node* child = InspectorDOMAgent::innerFirstChild(node); child;
          child = InspectorDOMAgent::innerNextSibling(child))
@@ -406,7 +410,7 @@ Response InspectorDOMDebuggerAgent::removeDOMBreakpoint(
     return response;
 
   uint32_t rootBit = 1 << type;
-  uint32_t mask = m_domBreakpoints.get(node) & ~rootBit;
+  uint32_t mask = m_domBreakpoints.at(node) & ~rootBit;
   if (mask)
     m_domBreakpoints.set(node, mask);
   else
@@ -551,7 +555,7 @@ void InspectorDOMDebuggerAgent::breakProgramOnDOMEvent(Node* target,
     if (!insertion)
       breakpointOwner = InspectorDOMAgent::innerParentNode(target);
     ASSERT(breakpointOwner);
-    while (!(m_domBreakpoints.get(breakpointOwner) & (1 << breakpointType))) {
+    while (!(m_domBreakpoints.at(breakpointOwner) & (1 << breakpointType))) {
       Node* parentNode = InspectorDOMAgent::innerParentNode(breakpointOwner);
       if (!parentNode)
         break;
@@ -578,13 +582,13 @@ bool InspectorDOMDebuggerAgent::hasBreakpoint(Node* node, int type) {
     return false;
   uint32_t rootBit = 1 << type;
   uint32_t derivedBit = rootBit << domBreakpointDerivedTypeShift;
-  return m_domBreakpoints.get(node) & (rootBit | derivedBit);
+  return m_domBreakpoints.at(node) & (rootBit | derivedBit);
 }
 
 void InspectorDOMDebuggerAgent::updateSubtreeBreakpoints(Node* node,
                                                          uint32_t rootMask,
                                                          bool set) {
-  uint32_t oldMask = m_domBreakpoints.get(node);
+  uint32_t oldMask = m_domBreakpoints.at(node);
   uint32_t derivedMask = rootMask << domBreakpointDerivedTypeShift;
   uint32_t newMask = set ? oldMask | derivedMask : oldMask & ~derivedMask;
   if (newMask)
@@ -683,6 +687,34 @@ void InspectorDOMDebuggerAgent::scriptExecutionBlockedByCSP(
     return;
   eventData->setString("directiveText", directiveText);
   pauseOnNativeEventIfNeeded(std::move(eventData), true);
+}
+
+void InspectorDOMDebuggerAgent::will(const probe::ExecuteScript& probe) {
+  allowNativeBreakpoint("scriptFirstStatement", nullptr, false);
+}
+
+void InspectorDOMDebuggerAgent::did(const probe::ExecuteScript& probe) {
+  cancelNativeBreakpoint();
+}
+
+void InspectorDOMDebuggerAgent::will(const probe::UserCallback& probe) {
+  String name = probe.name ? String(probe.name) : probe.atomicName;
+  if (probe.eventTarget) {
+    Node* node = probe.eventTarget->toNode();
+    String targetName =
+        node ? node->nodeName() : probe.eventTarget->interfaceName();
+    allowNativeBreakpoint(name, &targetName, false);
+    return;
+  }
+  allowNativeBreakpoint(name + ".callback", nullptr, false);
+}
+
+void InspectorDOMDebuggerAgent::did(const probe::UserCallback& probe) {
+  cancelNativeBreakpoint();
+}
+
+void InspectorDOMDebuggerAgent::breakableLocation(const char* name) {
+  allowNativeBreakpoint(name, nullptr, true);
 }
 
 Response InspectorDOMDebuggerAgent::setXHRBreakpoint(const String& url) {

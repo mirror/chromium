@@ -7,24 +7,31 @@
 #import <UIKit/UIKit.h>
 
 #import "base/mac/foundation_util.h"
+#include "components/autofill/core/browser/autofill_data_util.h"
+#include "components/autofill/core/browser/credit_card.h"
 #include "components/grit/components_scaled_resources.h"
+#import "ios/chrome/browser/payments/cells/autofill_profile_item.h"
 #import "ios/chrome/browser/payments/cells/payments_text_item.h"
 #import "ios/chrome/browser/payments/cells/price_item.h"
+#import "ios/chrome/browser/ui/authentication/account_control_item.h"
 #import "ios/chrome/browser/ui/autofill/cells/cvc_item.h"
 #import "ios/chrome/browser/ui/autofill/cells/status_item.h"
 #import "ios/chrome/browser/ui/autofill/cells/storage_switch_item.h"
+#import "ios/chrome/browser/ui/collection_view/cells/MDCCollectionViewCell+Chrome.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_account_item.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_detail_item.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_footer_item.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_switch_item.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_text_item.h"
-#import "ios/chrome/browser/ui/collection_view/cells/MDCCollectionViewCell+Chrome.h"
 #import "ios/chrome/browser/ui/collection_view/collection_view_model.h"
+#import "ios/chrome/browser/ui/content_suggestions/content_suggestions_article_item.h"
+#import "ios/chrome/browser/ui/content_suggestions/content_suggestions_footer_item.h"
 #import "ios/chrome/browser/ui/icons/chrome_icon.h"
-#import "ios/chrome/browser/ui/settings/cells/account_control_item.h"
 #import "ios/chrome/browser/ui/settings/cells/account_signin_item.h"
 #import "ios/chrome/browser/ui/settings/cells/autofill_data_item.h"
+#import "ios/chrome/browser/ui/settings/cells/autofill_edit_item.h"
 #import "ios/chrome/browser/ui/settings/cells/native_app_item.h"
+#import "ios/chrome/browser/ui/settings/cells/signin_promo_item.h"
 #import "ios/chrome/browser/ui/settings/cells/sync_switch_item.h"
 #import "ios/chrome/browser/ui/settings/cells/text_and_error_item.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
@@ -46,6 +53,7 @@ typedef NS_ENUM(NSInteger, SectionIdentifier) {
   SectionIdentifierAccountCell,
   SectionIdentifierAccountControlCell,
   SectionIdentifierFooters,
+  SectionIdentifierContentSuggestionsCell,
 };
 
 typedef NS_ENUM(NSInteger, ItemType) {
@@ -65,6 +73,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
   ItemTypeAccountDetail,
   ItemTypeAccountCheckMark,
   ItemTypeAccountSignIn,
+  ItemTypeSigninPromo,
   ItemTypeApp,
   ItemTypePaymentsSingleLine,
   ItemTypePaymentsDynamicHeight,
@@ -74,6 +83,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
   ItemTypeAutofillStorageSwitch,
   ItemTypeAccountControlDynamicHeight,
   ItemTypeFooter,
+  ItemTypeContentSuggestions,
 };
 
 // Image fixed horizontal size.
@@ -207,6 +217,10 @@ const CGFloat kHorizontalImageFixedSize = 40;
       toSectionWithIdentifier:SectionIdentifierAutofill];
   [model addItem:[self autofillItemWithAllText]
       toSectionWithIdentifier:SectionIdentifierAutofill];
+  [model addItem:[self autofillEditItem]
+      toSectionWithIdentifier:SectionIdentifierAutofill];
+  [model addItem:[self autofillEditItemWithIcon]
+      toSectionWithIdentifier:SectionIdentifierAutofill];
   [model addItem:[self cvcItem]
       toSectionWithIdentifier:SectionIdentifierAutofill];
   [model addItem:[self cvcItemWithDate]
@@ -251,6 +265,29 @@ const CGFloat kHorizontalImageFixedSize = 40;
   priceItem4.price = @"USD $1,000,000,000.00";
   [model addItem:priceItem4 toSectionWithIdentifier:SectionIdentifierPayments];
 
+  AutofillProfileItem* profileItem1 = [[[AutofillProfileItem alloc]
+      initWithType:ItemTypePaymentsDynamicHeight] autorelease];
+  profileItem1.name = @"Profile Name gets wrapped if it's too long";
+  profileItem1.address = @"Profile Address also gets wrapped if it's too long";
+  profileItem1.phoneNumber = @"123-456-7890";
+  profileItem1.email = @"foo@bar.com";
+  profileItem1.notification = @"Some fields are missing";
+  [model addItem:profileItem1
+      toSectionWithIdentifier:SectionIdentifierPayments];
+  AutofillProfileItem* profileItem2 = [[[AutofillProfileItem alloc]
+      initWithType:ItemTypePaymentsDynamicHeight] autorelease];
+  profileItem1.name = @"All fields are optional";
+  profileItem2.phoneNumber = @"123-456-7890";
+  profileItem2.notification = @"Some fields are missing";
+  [model addItem:profileItem2
+      toSectionWithIdentifier:SectionIdentifierPayments];
+  AutofillProfileItem* profileItem3 = [[[AutofillProfileItem alloc]
+      initWithType:ItemTypePaymentsDynamicHeight] autorelease];
+  profileItem3.address = @"All fields are optional";
+  profileItem3.email = @"foo@bar.com";
+  [model addItem:profileItem3
+      toSectionWithIdentifier:SectionIdentifierPayments];
+
   // Account cells.
   [model addSectionWithIdentifier:SectionIdentifierAccountCell];
   [model addItem:[self accountItemDetailWithError]
@@ -259,6 +296,8 @@ const CGFloat kHorizontalImageFixedSize = 40;
       toSectionWithIdentifier:SectionIdentifierAccountCell];
   [model addItem:[self accountSignInItem]
       toSectionWithIdentifier:SectionIdentifierAccountCell];
+  [model addItem:[self signinPromoItem]
+      toSectionWithIdentifier:SectionIdentifierAccountCell];
 
   // Account control cells.
   [model addSectionWithIdentifier:SectionIdentifierAccountControlCell];
@@ -266,6 +305,13 @@ const CGFloat kHorizontalImageFixedSize = 40;
       toSectionWithIdentifier:SectionIdentifierAccountControlCell];
   [model addItem:[self accountControlItemWithExtraLongText]
       toSectionWithIdentifier:SectionIdentifierAccountControlCell];
+
+  // Content Suggestions cells.
+  [model addSectionWithIdentifier:SectionIdentifierContentSuggestionsCell];
+  [model addItem:[self contentSuggestionsArticleItem]
+      toSectionWithIdentifier:SectionIdentifierContentSuggestionsCell];
+  [model addItem:[self contentSuggestionsFooterItem]
+      toSectionWithIdentifier:SectionIdentifierContentSuggestionsCell];
 
   // Footers.
   [model addSectionWithIdentifier:SectionIdentifierFooters];
@@ -309,6 +355,7 @@ const CGFloat kHorizontalImageFixedSize = 40;
   CollectionViewItem* item =
       [self.collectionViewModel itemAtIndexPath:indexPath];
   switch (item.type) {
+    case ItemTypeContentSuggestions:
     case ItemTypeFooter:
     case ItemTypeSwitchDynamicHeight:
     case ItemTypeSwitchSync:
@@ -319,6 +366,7 @@ const CGFloat kHorizontalImageFixedSize = 40;
     case ItemTypeAutofillStorageSwitch:
     case ItemTypePaymentsDynamicHeight:
     case ItemTypeAutofillDynamicHeight:
+    case ItemTypeSigninPromo:
       return [MDCCollectionViewCell
           cr_preferredHeightForWidth:CGRectGetWidth(collectionView.bounds)
                              forItem:item];
@@ -367,13 +415,17 @@ const CGFloat kHorizontalImageFixedSize = 40;
     hidesInkViewAtIndexPath:(nonnull NSIndexPath*)indexPath {
   NSInteger sectionIdentifier =
       [self.collectionViewModel sectionIdentifierForSection:indexPath.section];
-  switch (sectionIdentifier) {
-    case SectionIdentifierFooters:
+  if (sectionIdentifier == SectionIdentifierFooters)
+    return YES;
+  CollectionViewItem* item =
+      [self.collectionViewModel itemAtIndexPath:indexPath];
+  switch (item.type) {
     case ItemTypeSwitchBasic:
     case ItemTypeSwitchDynamicHeight:
     case ItemTypeApp:
     case ItemTypeAutofillStorageSwitch:
     case ItemTypeSwitchSync:
+    case ItemTypeSigninPromo:
       return YES;
     default:
       return NO;
@@ -420,6 +472,19 @@ const CGFloat kHorizontalImageFixedSize = 40;
                                  ->GetDefaultAvatar(),
                              kHorizontalImageFixedSize);
   return accountSignInItem;
+}
+
+- (CollectionViewItem*)signinPromoItem {
+  SigninPromoItem* signinPromoItem =
+      [[[SigninPromoItem alloc] initWithType:ItemTypeSigninPromo] autorelease];
+  signinPromoItem.profileName = @"Jane";
+  signinPromoItem.profileEmail = @"jane@example.com";
+  signinPromoItem.profileImage =
+      CircularImageFromImage(ios::GetChromeBrowserProvider()
+                                 ->GetSigninResourcesProvider()
+                                 ->GetDefaultAvatar(),
+                             kHorizontalImageFixedSize);
+  return signinPromoItem;
 }
 
 - (CollectionViewItem*)accountControlItem {
@@ -509,6 +574,30 @@ const CGFloat kHorizontalImageFixedSize = 40;
   return item;
 }
 
+- (CollectionViewItem*)autofillEditItem {
+  AutofillEditItem* item = [[[AutofillEditItem alloc]
+      initWithType:ItemTypeAutofillDynamicHeight] autorelease];
+  item.textFieldName = @"Credit Number";
+  item.textFieldValue = @"4111111111111111";
+  item.textFieldEnabled = YES;
+  return item;
+}
+
+- (CollectionViewItem*)autofillEditItemWithIcon {
+  AutofillEditItem* item = [[[AutofillEditItem alloc]
+      initWithType:ItemTypeAutofillDynamicHeight] autorelease];
+  item.textFieldName = @"Credit Number";
+  item.textFieldValue = @"4111111111111111";
+  item.textFieldEnabled = YES;
+  int resourceID =
+      autofill::data_util::GetPaymentRequestData(autofill::kVisaCard)
+          .icon_resource_id;
+  item.cardTypeIcon =
+      ResizeImage(NativeImage(resourceID), CGSizeMake(30.0, 30.0),
+                  ProjectionMode::kAspectFillNoClipping);
+  return item;
+}
+
 - (CollectionViewItem*)cvcItem {
   CVCItem* item =
       [[[CVCItem alloc] initWithType:ItemTypeAutofillCVC] autorelease];
@@ -588,6 +677,29 @@ const CGFloat kHorizontalImageFixedSize = 40;
                     @"Hello Hello Hello Hello Hello Hello Hello Hello Hello "
                     @"Hello Hello Hello Hello Hello Hello Hello Hello Hello ";
   footerItem.image = [UIImage imageNamed:@"app_icon_placeholder"];
+  return footerItem;
+}
+
+- (ContentSuggestionsArticleItem*)contentSuggestionsArticleItem {
+  ContentSuggestionsArticleItem* articleItem =
+      [[ContentSuggestionsArticleItem alloc]
+          initWithType:ItemTypeContentSuggestions
+                 title:@"This is an incredible article, you should read it!"
+              subtitle:@"Really, this is the best article I have ever seen, it "
+                       @"is mandatory to read it! It describes how to write "
+                       @"the best article."
+              delegate:nil
+                   url:GURL()];
+  articleItem.publisher = @"Top Publisher.com";
+  return articleItem;
+}
+
+- (ContentSuggestionsFooterItem*)contentSuggestionsFooterItem {
+  ContentSuggestionsFooterItem* footerItem =
+      [[ContentSuggestionsFooterItem alloc]
+          initWithType:ItemTypeContentSuggestions
+                 title:@"Footer title"
+                 block:nil];
   return footerItem;
 }
 

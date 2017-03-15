@@ -14,6 +14,8 @@
 #include "cc/ipc/mojo_compositor_frame_sink.mojom.h"
 #include "cc/surfaces/compositor_frame_sink_support.h"
 #include "cc/surfaces/compositor_frame_sink_support_client.h"
+#include "cc/surfaces/local_surface_id.h"
+#include "cc/surfaces/surface_id.h"
 #include "components/display_compositor/display_compositor_export.h"
 #include "components/display_compositor/gpu_compositor_frame_sink_delegate.h"
 #include "mojo/public/cpp/bindings/binding.h"
@@ -28,7 +30,9 @@ class DISPLAY_COMPOSITOR_EXPORT GpuCompositorFrameSink
  public:
   GpuCompositorFrameSink(
       GpuCompositorFrameSinkDelegate* delegate,
-      std::unique_ptr<cc::CompositorFrameSinkSupport>,
+      cc::SurfaceManager* surface_manager,
+      const cc::FrameSinkId& frame_sink_id,
+      cc::mojom::MojoCompositorFrameSinkRequest request,
       cc::mojom::MojoCompositorFrameSinkPrivateRequest private_request,
       cc::mojom::MojoCompositorFrameSinkClientPtr client);
 
@@ -39,33 +43,32 @@ class DISPLAY_COMPOSITOR_EXPORT GpuCompositorFrameSink
   void SetNeedsBeginFrame(bool needs_begin_frame) override;
   void SubmitCompositorFrame(const cc::LocalSurfaceId& local_surface_id,
                              cc::CompositorFrame frame) override;
-  void Require(const cc::LocalSurfaceId& local_surface_id,
-               const cc::SurfaceSequence& sequence) override;
-  void Satisfy(const cc::SurfaceSequence& sequence) override;
 
   // cc::mojom::MojoCompositorFrameSinkPrivate:
-  void AddChildFrameSink(const cc::FrameSinkId& child_frame_sink_id) override;
-  void RemoveChildFrameSink(
-      const cc::FrameSinkId& child_frame_sink_id) override;
-
- protected:
-  void OnClientConnectionLost();
-  void OnPrivateConnectionLost();
-
-  GpuCompositorFrameSinkDelegate* const delegate_;
-  std::unique_ptr<cc::CompositorFrameSinkSupport> support_;
+  void ClaimTemporaryReference(const cc::SurfaceId& surface_id) override;
+  void RequestCopyOfSurface(
+      std::unique_ptr<cc::CopyOutputRequest> request) override;
 
  private:
   // cc::CompositorFrameSinkSupportClient implementation:
   void DidReceiveCompositorFrameAck() override;
   void OnBeginFrame(const cc::BeginFrameArgs& args) override;
   void ReclaimResources(const cc::ReturnedResourceArray& resources) override;
-  void WillDrawSurface() override;
+  void WillDrawSurface(const cc::LocalSurfaceId& local_surface_id,
+                       const gfx::Rect& damage_rect) override;
+
+  void OnClientConnectionLost();
+  void OnPrivateConnectionLost();
+
+  GpuCompositorFrameSinkDelegate* const delegate_;
+  std::unique_ptr<cc::CompositorFrameSinkSupport> support_;
 
   bool client_connection_lost_ = false;
   bool private_connection_lost_ = false;
 
   cc::mojom::MojoCompositorFrameSinkClientPtr client_;
+  mojo::Binding<cc::mojom::MojoCompositorFrameSink>
+      compositor_frame_sink_binding_;
   mojo::Binding<cc::mojom::MojoCompositorFrameSinkPrivate>
       compositor_frame_sink_private_binding_;
 

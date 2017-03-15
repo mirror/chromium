@@ -5,15 +5,14 @@
 #include "ash/common/system/toast/toast_overlay.h"
 
 #include "ash/common/shelf/wm_shelf.h"
-#include "ash/common/wm_lookup.h"
-#include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
+#include "ash/shell.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "grit/ash_strings.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -55,7 +54,7 @@ const int kToastMinimumWidth = 288;
 // Returns the work area bounds for the root window where new windows are added
 // (including new toasts).
 gfx::Rect GetUserWorkAreaBounds() {
-  return WmShelf::ForWindow(WmShell::Get()->GetRootWindowForNewWindows())
+  return WmShelf::ForWindow(Shell::GetWmRootWindowForNewWindows())
       ->GetUserWorkAreaBounds();
 }
 
@@ -227,8 +226,7 @@ ToastOverlay::ToastOverlay(Delegate* delegate,
   params.remove_standard_frame = true;
   params.bounds = CalculateOverlayBounds();
   // Show toasts above the app list and below the lock screen.
-  WmShell::Get()
-      ->GetRootWindowForNewWindows()
+  Shell::GetWmRootWindowForNewWindows()
       ->GetRootWindowController()
       ->ConfigureWidgetInitParamsForContainer(
           overlay_widget_.get(), kShellWindowId_SystemModalContainer, &params);
@@ -237,8 +235,7 @@ ToastOverlay::ToastOverlay(Delegate* delegate,
   overlay_widget_->SetContentsView(overlay_view_.get());
   overlay_widget_->SetBounds(CalculateOverlayBounds());
 
-  WmWindow* overlay_window =
-      WmLookup::Get()->GetWindowForWidget(overlay_widget_.get());
+  WmWindow* overlay_window = WmWindow::Get(overlay_widget_->GetNativeWindow());
   overlay_window->SetVisibilityAnimationType(
       ::wm::WINDOW_VISIBILITY_ANIMATION_TYPE_VERTICAL);
   overlay_window->SetVisibilityAnimationDuration(

@@ -5,12 +5,14 @@
 #ifndef WebLocalFrame_h
 #define WebLocalFrame_h
 
+#include <set>
 #include "WebCompositionUnderline.h"
 #include "WebFrame.h"
 #include "WebFrameLoadType.h"
 #include "WebHistoryItem.h"
 #include "public/platform/WebCachePolicy.h"
 #include "public/platform/WebURLError.h"
+#include "public/platform/WebURLRequest.h"
 #include "public/platform/site_engagement.mojom-shared.h"
 
 namespace base {
@@ -177,6 +179,21 @@ class WebLocalFrame : public WebFrame {
   // one of its descendants having processed a user gesture.
   virtual void setHasReceivedUserGesture() = 0;
 
+  // Reports a list of unique blink::UseCounter::Feature values representing
+  // Blink features used, performed or encountered by the browser during the
+  // current page load happening on the frame.
+  virtual void blinkFeatureUsageReport(const std::set<int>& features) = 0;
+
+  // Informs the renderer that mixed content was found externally regarding this
+  // frame. Currently only the the browser process can do so. The included data
+  // is used for instance to report to the CSP policy and to log to the frame
+  // console.
+  virtual void mixedContentFound(const WebURL& mainResourceUrl,
+                                 const WebURL& mixedContentUrl,
+                                 WebURLRequest::RequestContext,
+                                 bool wasAllowed,
+                                 bool hadRedirect) = 0;
+
   // Orientation Changes ----------------------------------------------------
 
   // Notify the frame that the screen orientation has changed.
@@ -323,8 +340,15 @@ class WebLocalFrame : public WebFrame {
   // Replaces the selection with the input string.
   virtual void replaceSelection(const WebString&) = 0;
   // Deletes text before and after the current cursor position, excluding the
-  // selection.
+  // selection. The lengths are supplied in UTF-16 Code Unit, not in code points
+  // or in glyphs.
   virtual void deleteSurroundingText(int before, int after) = 0;
+  // A variant of deleteSurroundingText(int, int). Major differences are:
+  // 1. The lengths are supplied in code points, not in UTF-16 Code Unit or in
+  // glyphs.
+  // 2. This method does nothing if there are one or more invalid surrogate
+  // pairs in the requested range.
+  virtual void deleteSurroundingTextInCodePoints(int before, int after) = 0;
 
   virtual void extractSmartClipData(WebRect rectInViewport,
                                     WebString& clipText,

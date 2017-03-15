@@ -5,6 +5,7 @@
 #ifndef WebFrameOwnerProperties_h
 #define WebFrameOwnerProperties_h
 
+#include "../platform/WebFeaturePolicy.h"
 #include "../platform/WebString.h"
 #include "../platform/WebVector.h"
 #include "third_party/WebKit/public/platform/modules/permissions/permission.mojom-shared.h"
@@ -22,17 +23,18 @@ struct WebFrameOwnerProperties {
   int marginHeight;
   bool allowFullscreen;
   bool allowPaymentRequest;
-  bool isDisplayNone;
   WebString requiredCsp;
   WebVector<mojom::PermissionName> delegatedPermissions;
+
+ public:
+  WebVector<WebFeaturePolicyFeature> allowedFeatures;
 
   WebFrameOwnerProperties()
       : scrollingMode(ScrollingMode::Auto),
         marginWidth(-1),
         marginHeight(-1),
         allowFullscreen(false),
-        allowPaymentRequest(false),
-        isDisplayNone(false) {}
+        allowPaymentRequest(false) {}
 
 #if INSIDE_BLINK
   WebFrameOwnerProperties(
@@ -42,18 +44,18 @@ struct WebFrameOwnerProperties {
       int marginHeight,
       bool allowFullscreen,
       bool allowPaymentRequest,
-      bool isDisplayNone,
       const WebString& requiredCsp,
-      const WebVector<mojom::PermissionName>& delegatedPermissions)
+      const WebVector<mojom::PermissionName>& delegatedPermissions,
+      const WebVector<WebFeaturePolicyFeature>& allowedFeatures)
       : name(name),
         scrollingMode(static_cast<ScrollingMode>(scrollingMode)),
         marginWidth(marginWidth),
         marginHeight(marginHeight),
         allowFullscreen(allowFullscreen),
         allowPaymentRequest(allowPaymentRequest),
-        isDisplayNone(isDisplayNone),
         requiredCsp(requiredCsp),
-        delegatedPermissions(delegatedPermissions) {}
+        delegatedPermissions(delegatedPermissions),
+        allowedFeatures(allowedFeatures) {}
 #endif
 };
 

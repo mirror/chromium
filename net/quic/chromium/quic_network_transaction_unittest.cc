@@ -46,6 +46,7 @@
 #include "net/quic/core/crypto/quic_decrypter.h"
 #include "net/quic/core/crypto/quic_encrypter.h"
 #include "net/quic/core/quic_framer.h"
+#include "net/quic/platform/api/quic_string_piece.h"
 #include "net/quic/test_tools/crypto_test_utils.h"
 #include "net/quic/test_tools/mock_clock.h"
 #include "net/quic/test_tools/mock_random.h"
@@ -153,11 +154,15 @@ class HeadersHandler {
 
 class TestSocketPerformanceWatcher : public SocketPerformanceWatcher {
  public:
-  explicit TestSocketPerformanceWatcher(bool* rtt_notification_received)
-      : rtt_notification_received_(rtt_notification_received) {}
+  TestSocketPerformanceWatcher(bool* should_notify_updated_rtt,
+                               bool* rtt_notification_received)
+      : should_notify_updated_rtt_(should_notify_updated_rtt),
+        rtt_notification_received_(rtt_notification_received) {}
   ~TestSocketPerformanceWatcher() override {}
 
-  bool ShouldNotifyUpdatedRTT() const override { return true; }
+  bool ShouldNotifyUpdatedRTT() const override {
+    return *should_notify_updated_rtt_;
+  }
 
   void OnUpdatedRTTAvailable(const base::TimeDelta& rtt) override {
     *rtt_notification_received_ = true;
@@ -166,6 +171,7 @@ class TestSocketPerformanceWatcher : public SocketPerformanceWatcher {
   void OnConnectionChanged() override {}
 
  private:
+  bool* should_notify_updated_rtt_;
   bool* rtt_notification_received_;
 
   DISALLOW_COPY_AND_ASSIGN(TestSocketPerformanceWatcher);
@@ -175,7 +181,9 @@ class TestSocketPerformanceWatcherFactory
     : public SocketPerformanceWatcherFactory {
  public:
   TestSocketPerformanceWatcherFactory()
-      : watcher_count_(0u), rtt_notification_received_(false) {}
+      : watcher_count_(0u),
+        should_notify_updated_rtt_(true),
+        rtt_notification_received_(false) {}
   ~TestSocketPerformanceWatcherFactory() override {}
 
   // SocketPerformanceWatcherFactory implementation:
@@ -186,15 +194,21 @@ class TestSocketPerformanceWatcherFactory
     }
     ++watcher_count_;
     return std::unique_ptr<SocketPerformanceWatcher>(
-        new TestSocketPerformanceWatcher(&rtt_notification_received_));
+        new TestSocketPerformanceWatcher(&should_notify_updated_rtt_,
+                                         &rtt_notification_received_));
   }
 
   size_t watcher_count() const { return watcher_count_; }
 
   bool rtt_notification_received() const { return rtt_notification_received_; }
 
+  void set_should_notify_updated_rtt(bool should_notify_updated_rtt) {
+    should_notify_updated_rtt_ = should_notify_updated_rtt;
+  }
+
  private:
   size_t watcher_count_;
+  bool should_notify_updated_rtt_;
   bool rtt_notification_received_;
 
   DISALLOW_COPY_AND_ASSIGN(TestSocketPerformanceWatcherFactory);
@@ -388,7 +402,7 @@ class QuicNetworkTransactionTest
       bool should_include_version,
       bool fin,
       QuicStreamOffset offset,
-      base::StringPiece data) {
+      QuicStringPiece data) {
     return server_maker_.MakeDataPacket(
         packet_number, stream_id, should_include_version, fin, offset, data);
   }
@@ -399,7 +413,7 @@ class QuicNetworkTransactionTest
       bool should_include_version,
       bool fin,
       QuicStreamOffset offset,
-      base::StringPiece data) {
+      QuicStringPiece data) {
     return client_maker_.MakeDataPacket(
         packet_number, stream_id, should_include_version, fin, offset, data);
   }
@@ -410,7 +424,7 @@ class QuicNetworkTransactionTest
       bool should_include_version,
       bool fin,
       QuicStreamOffset* offset,
-      base::StringPiece data) {
+      QuicStringPiece data) {
     return client_maker_.MakeForceHolDataPacket(
         packet_number, stream_id, should_include_version, fin, offset, data);
   }
@@ -754,6 +768,68 @@ INSTANTIATE_TEST_CASE_P(Version,
                         QuicNetworkTransactionTest,
                         ::testing::ValuesIn(AllSupportedVersions()));
 
+TEST_P(QuicNetworkTransactionTest, SocketWatcherEnabled) {
+  params_.origins_to_force_quic_on.insert(
+      HostPortPair::FromString("mail.example.org:443"));
+
+  MockQuicData mock_quic_data;
+  QuicStreamOffset header_stream_offset = 0;
+  mock_quic_data.AddWrite(ConstructSettingsPacket(
+      1, SETTINGS_MAX_HEADER_LIST_SIZE, kDefaultMaxUncompressedHeaderSize,
+      &header_stream_offset));
+  mock_quic_data.AddWrite(ConstructClientRequestHeadersPacket(
+      2, kClientDataStreamId1, true, true,
+      GetRequestHeaders("GET", "https", "/"), &header_stream_offset));
+  mock_quic_data.AddRead(ConstructServerResponseHeadersPacket(
+      1, kClientDataStreamId1, false, false, GetResponseHeaders("200 OK")));
+  mock_quic_data.AddRead(ConstructServerDataPacket(2, kClientDataStreamId1,
+                                                   false, true, 0, "hello!"));
+  mock_quic_data.AddWrite(ConstructClientAckPacket(3, 2, 1));
+  mock_quic_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);  // No more data to read
+
+  mock_quic_data.AddSocketDataToFactory(&socket_factory_);
+
+  CreateSession();
+  test_socket_performance_watcher_factory_.set_should_notify_updated_rtt(true);
+
+  EXPECT_FALSE(
+      test_socket_performance_watcher_factory_.rtt_notification_received());
+  SendRequestAndExpectQuicResponse("hello!");
+  EXPECT_TRUE(
+      test_socket_performance_watcher_factory_.rtt_notification_received());
+}
+
+TEST_P(QuicNetworkTransactionTest, SocketWatcherDisabled) {
+  params_.origins_to_force_quic_on.insert(
+      HostPortPair::FromString("mail.example.org:443"));
+
+  MockQuicData mock_quic_data;
+  QuicStreamOffset header_stream_offset = 0;
+  mock_quic_data.AddWrite(ConstructSettingsPacket(
+      1, SETTINGS_MAX_HEADER_LIST_SIZE, kDefaultMaxUncompressedHeaderSize,
+      &header_stream_offset));
+  mock_quic_data.AddWrite(ConstructClientRequestHeadersPacket(
+      2, kClientDataStreamId1, true, true,
+      GetRequestHeaders("GET", "https", "/"), &header_stream_offset));
+  mock_quic_data.AddRead(ConstructServerResponseHeadersPacket(
+      1, kClientDataStreamId1, false, false, GetResponseHeaders("200 OK")));
+  mock_quic_data.AddRead(ConstructServerDataPacket(2, kClientDataStreamId1,
+                                                   false, true, 0, "hello!"));
+  mock_quic_data.AddWrite(ConstructClientAckPacket(3, 2, 1));
+  mock_quic_data.AddRead(SYNCHRONOUS, ERR_IO_PENDING);  // No more data to read
+
+  mock_quic_data.AddSocketDataToFactory(&socket_factory_);
+
+  CreateSession();
+  test_socket_performance_watcher_factory_.set_should_notify_updated_rtt(false);
+
+  EXPECT_FALSE(
+      test_socket_performance_watcher_factory_.rtt_notification_received());
+  SendRequestAndExpectQuicResponse("hello!");
+  EXPECT_FALSE(
+      test_socket_performance_watcher_factory_.rtt_notification_received());
+}
+
 TEST_P(QuicNetworkTransactionTest, ForceQuic) {
   params_.origins_to_force_quic_on.insert(
       HostPortPair::FromString("mail.example.org:443"));
@@ -777,11 +853,7 @@ TEST_P(QuicNetworkTransactionTest, ForceQuic) {
 
   CreateSession();
 
-  EXPECT_FALSE(
-      test_socket_performance_watcher_factory_.rtt_notification_received());
   SendRequestAndExpectQuicResponse("hello!");
-  EXPECT_TRUE(
-      test_socket_performance_watcher_factory_.rtt_notification_received());
 
   // Check that the NetLog was filled reasonably.
   TestNetLogEntry::List entries;
@@ -920,9 +992,8 @@ TEST_P(QuicNetworkTransactionTest, QuicProxyWithCert) {
       ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem"));
   ASSERT_TRUE(cert.get());
   // This certificate is valid for the proxy, but not for the origin.
-  bool common_name_fallback_used;
-  EXPECT_TRUE(cert->VerifyNameMatch(proxy_host, &common_name_fallback_used));
-  EXPECT_FALSE(cert->VerifyNameMatch(origin_host, &common_name_fallback_used));
+  EXPECT_TRUE(cert->VerifyNameMatch(proxy_host, false));
+  EXPECT_FALSE(cert->VerifyNameMatch(origin_host, false));
   ProofVerifyDetailsChromium verify_details;
   verify_details.cert_verify_result.verified_cert = cert;
   crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
@@ -947,10 +1018,9 @@ TEST_P(QuicNetworkTransactionTest, AlternativeServicesDifferentHost) {
   ASSERT_TRUE(cert.get());
   // TODO(rch): the connection should be "to" the origin, so if the cert is
   // valid for the origin but not the alternative, that should work too.
-  bool common_name_fallback_used;
-  EXPECT_TRUE(cert->VerifyNameMatch(origin.host(), &common_name_fallback_used));
+  EXPECT_TRUE(cert->VerifyNameMatch(origin.host(), false));
   EXPECT_TRUE(
-      cert->VerifyNameMatch(alternative.host(), &common_name_fallback_used));
+      cert->VerifyNameMatch(alternative.host(), false));
   ProofVerifyDetailsChromium verify_details;
   verify_details.cert_verify_result.verified_cert = cert;
   crypto_client_stream_factory_.AddProofVerifyDetails(&verify_details);
@@ -3255,9 +3325,8 @@ TEST_P(QuicNetworkTransactionWithDestinationTest, InvalidCertificate) {
 
   scoped_refptr<X509Certificate> cert(
       ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem"));
-  bool unused;
-  ASSERT_FALSE(cert->VerifyNameMatch(origin1_, &unused));
-  ASSERT_TRUE(cert->VerifyNameMatch(origin2_, &unused));
+  ASSERT_FALSE(cert->VerifyNameMatch(origin1_, false));
+  ASSERT_TRUE(cert->VerifyNameMatch(origin2_, false));
 
   ProofVerifyDetailsChromium verify_details;
   verify_details.cert_verify_result.verified_cert = cert;
@@ -3295,10 +3364,9 @@ TEST_P(QuicNetworkTransactionWithDestinationTest, PoolIfCertificateValid) {
 
   scoped_refptr<X509Certificate> cert(
       ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem"));
-  bool unused;
-  ASSERT_TRUE(cert->VerifyNameMatch(origin1_, &unused));
-  ASSERT_TRUE(cert->VerifyNameMatch(origin2_, &unused));
-  ASSERT_FALSE(cert->VerifyNameMatch(kDifferentHostname, &unused));
+  ASSERT_TRUE(cert->VerifyNameMatch(origin1_, false));
+  ASSERT_TRUE(cert->VerifyNameMatch(origin2_, false));
+  ASSERT_FALSE(cert->VerifyNameMatch(kDifferentHostname, false));
 
   ProofVerifyDetailsChromium verify_details;
   verify_details.cert_verify_result.verified_cert = cert;
@@ -3365,15 +3433,14 @@ TEST_P(QuicNetworkTransactionWithDestinationTest,
 
   scoped_refptr<X509Certificate> cert1(
       ImportCertFromFile(GetTestCertsDirectory(), "wildcard.pem"));
-  bool unused;
-  ASSERT_TRUE(cert1->VerifyNameMatch(origin1_, &unused));
-  ASSERT_FALSE(cert1->VerifyNameMatch(origin2_, &unused));
-  ASSERT_FALSE(cert1->VerifyNameMatch(kDifferentHostname, &unused));
+  ASSERT_TRUE(cert1->VerifyNameMatch(origin1_, false));
+  ASSERT_FALSE(cert1->VerifyNameMatch(origin2_, false));
+  ASSERT_FALSE(cert1->VerifyNameMatch(kDifferentHostname, false));
 
   scoped_refptr<X509Certificate> cert2(
       ImportCertFromFile(GetTestCertsDirectory(), "spdy_pooling.pem"));
-  ASSERT_TRUE(cert2->VerifyNameMatch(origin2_, &unused));
-  ASSERT_FALSE(cert2->VerifyNameMatch(kDifferentHostname, &unused));
+  ASSERT_TRUE(cert2->VerifyNameMatch(origin2_, false));
+  ASSERT_FALSE(cert2->VerifyNameMatch(kDifferentHostname, false));
 
   ProofVerifyDetailsChromium verify_details1;
   verify_details1.cert_verify_result.verified_cert = cert1;

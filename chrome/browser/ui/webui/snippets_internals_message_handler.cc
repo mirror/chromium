@@ -75,8 +75,6 @@ std::string GetCategoryStatusName(CategoryStatus status) {
       return "ALL_SUGGESTIONS_EXPLICITLY_DISABLED";
     case CategoryStatus::CATEGORY_EXPLICITLY_DISABLED:
       return "CATEGORY_EXPLICITLY_DISABLED";
-    case CategoryStatus::SIGNED_OUT:
-      return "SIGNED_OUT";
     case CategoryStatus::LOADING_ERROR:
       return "LOADING_ERROR";
   }
@@ -317,7 +315,7 @@ void SnippetsInternalsMessageHandler::SendAllContent() {
     SendString("switch-fetch-url", fetcher->fetch_url().spec());
     web_ui()->CallJavascriptFunctionUnsafe(
         "chrome.SnippetsInternals.receiveJson",
-        base::StringValue(fetcher->last_json()));
+        base::Value(fetcher->last_json()));
   }
 
   SendContentSuggestions();
@@ -326,15 +324,15 @@ void SnippetsInternalsMessageHandler::SendAllContent() {
 void SnippetsInternalsMessageHandler::SendClassification() {
   web_ui()->CallJavascriptFunctionUnsafe(
       "chrome.SnippetsInternals.receiveClassification",
-      base::StringValue(content_suggestions_service_->user_classifier()
-                            ->GetUserClassDescriptionForDebugging()),
-      base::FundamentalValue(
+      base::Value(content_suggestions_service_->user_classifier()
+                      ->GetUserClassDescriptionForDebugging()),
+      base::Value(
           content_suggestions_service_->user_classifier()->GetEstimatedAvgTime(
               UserClassifier::Metric::NTP_OPENED)),
-      base::FundamentalValue(
+      base::Value(
           content_suggestions_service_->user_classifier()->GetEstimatedAvgTime(
               UserClassifier::Metric::SUGGESTIONS_SHOWN)),
-      base::FundamentalValue(
+      base::Value(
           content_suggestions_service_->user_classifier()->GetEstimatedAvgTime(
               UserClassifier::Metric::SUGGESTIONS_USED)));
 }
@@ -346,7 +344,7 @@ void SnippetsInternalsMessageHandler::
   web_ui()->CallJavascriptFunctionUnsafe(
       "chrome.SnippetsInternals."
       "receiveLastRemoteSuggestionsBackgroundFetchTime",
-      base::StringValue(base::TimeFormatShortDateAndTime(time)));
+      base::Value(base::TimeFormatShortDateAndTime(time)));
 }
 
 void SnippetsInternalsMessageHandler::SendContentSuggestions() {
@@ -408,8 +406,8 @@ void SnippetsInternalsMessageHandler::SendBoolean(const std::string& name,
 
 void SnippetsInternalsMessageHandler::SendString(const std::string& name,
                                                  const std::string& value) {
-  base::StringValue string_name(name);
-  base::StringValue string_value(value);
+  base::Value string_name(name);
+  base::Value string_value(value);
 
   web_ui()->CallJavascriptFunctionUnsafe(
       "chrome.SnippetsInternals.receiveProperty", string_name, string_value);

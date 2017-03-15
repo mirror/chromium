@@ -32,15 +32,13 @@ class ArcAppDeferredLauncherItemController : public LauncherItemController {
 
   int event_flags() const { return event_flags_; }
 
-  // ash::ShelfItemDelegate
-  ash::ShelfItemDelegate::PerformedAction ItemSelected(
-      const ui::Event& event) override;
-  ash::ShelfAppMenuItemList GetAppMenuItems(int event_flags) override;
+  // LauncherItemController:
+  void ItemSelected(std::unique_ptr<ui::Event> event,
+                    int64_t display_id,
+                    ash::ShelfLaunchSource source,
+                    const ItemSelectedCallback& callback) override;
+  void ExecuteCommand(uint32_t command_id, int32_t event_flags) override;
   void Close() override;
-
-  // LauncherItemController overrides:
-  ash::ShelfItemDelegate::PerformedAction Activate(
-      ash::LaunchSource source) override;
 
  private:
   // The flags of the event that caused the ARC app to be activated. These will

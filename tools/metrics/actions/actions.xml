@@ -757,9 +757,36 @@ should be able to be added at any place in this file.
   <description>Please enter the description of this user action.</description>
 </action>
 
+<action name="Accel_Rotate_Active_Window">
+  <owner>wutao@chromium.org</owner>
+  <description>
+    Metric recorded when the user rotates the active window using the keyboard
+    shortcut. This metric was created in M58. All user actions of rotating the
+    active window using the keyboard shortcut prior to M58, were included in
+    Accel_Rotate_Window.
+  </description>
+</action>
+
+<action name="Accel_Rotate_Screen">
+  <owner>wutao@chromium.org</owner>
+  <description>
+    Metric recorded when the user rotates the screen using the keyboard
+    shortcut. This metric was created in M58. All user actions of rotating the
+    screen using the keyboard shortcut prior to M58, were included in
+    Accel_Rotate_Window.
+  </description>
+</action>
+
 <action name="Accel_Rotate_Window">
-  <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
-  <description>Please enter the description of this user action.</description>
+  <owner>wutao@chromium.org</owner>
+  <description>
+    Metric recorded when the user rotates screen or active window using the
+    keyboard shortcut.
+  </description>
+  <obsolete>
+    Deprecated 03/2017. Replaced by Accel_Rotate_Screen and
+    Accel_Rotate_Active_Window.
+  </obsolete>
 </action>
 
 <action name="Accel_Scale_Ui_Down">
@@ -785,6 +812,14 @@ should be able to be added at any place in this file.
 <action name="Accel_SelectNextTab">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
+</action>
+
+<action name="Accel_SelectNumberedTab">
+  <owner>calamity@chromium.org</owner>
+  <description>
+    Logged when a user press Ctrl/Command + 1-9 to change to a tab in a browser
+    window.
+  </description>
 </action>
 
 <action name="Accel_SelectPreviousTab">
@@ -3531,6 +3566,14 @@ should be able to be added at any place in this file.
   <description>Close button of the CustomTabActivity was clicked.</description>
 </action>
 
+<action name="CustomTabs.CloseButtonClicked.DownloadsUI">
+  <owner>shaktisahu@chromium.org</owner>
+  <description>
+    The user has clicked on the back arrow while viewing downloaded media on
+    Android.
+  </description>
+</action>
+
 <action name="CustomTabs.StartedInitially">
   <owner>tedchoc@chromium.org</owner>
   <description>A CustomTabActivity was stared for the first time.</description>
@@ -3562,9 +3605,25 @@ should be able to be added at any place in this file.
   <description>Please enter the description of the metric.</description>
 </action>
 
+<action name="CustomTabsCustomActionButtonClick.DownloadsUI.Share">
+  <owner>shaktisahu@chromium.org</owner>
+  <description>
+    The user has clicked on the share button while viewing downloaded media on
+    Android.
+  </description>
+</action>
+
 <action name="CustomTabsMenuCustomMenuItem">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of the metric.</description>
+</action>
+
+<action name="CustomTabsMenuCustomMenuItem.DownloadsUI.OpenWith">
+  <owner>shaktisahu@chromium.org</owner>
+  <description>
+    The user has selected Open With from the menu while viewing downloaded media
+    on Android.
+  </description>
 </action>
 
 <action name="CustomTabsMenuFindInPage">
@@ -8959,9 +9018,27 @@ should be able to be added at any place in this file.
   <description>The user entered fullscreen mode from the controls.</description>
 </action>
 
+<action name="Media.Controls.EnterFullscreen.EmbeddedExperience">
+  <owner>shaktisahu@chromium.org</owner>
+  <description>
+    The user has entered fullscreen mode from the controls. Recorded only for
+    downloaded media on Android and is a subset of
+    Media.Controls.EnterFullscreen.
+  </description>
+</action>
+
 <action name="Media.Controls.ExitFullscreen">
   <owner>mlamouri@chromium.org</owner>
   <description>The user left fullscreen mode from the controls.</description>
+</action>
+
+<action name="Media.Controls.ExitFullscreen.EmbeddedExperience">
+  <owner>shaktisahu@chromium.org</owner>
+  <description>
+    The user has left fullscreen mode from the controls. Recorded only for
+    downloaded media on Android and is a subset of
+    Media.Controls.ExitFullscreen.
+  </description>
 </action>
 
 <action name="Media.Controls.Mute">
@@ -9371,11 +9448,15 @@ should be able to be added at any place in this file.
 <action name="MobileBreakpadUploadAttempt" not_user_triggered="true">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
+  <obsolete>
+    Deprecated 2017/02/28 due to confusing semantics and lack of use.
+  </obsolete>
 </action>
 
 <action name="MobileBreakpadUploadFail" not_user_triggered="true">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of the metric.</description>
+  <obsolete>Deprecated as of at least 2017/02/28.</obsolete>
 </action>
 
 <action name="MobileBreakpadUploadFailure" not_user_triggered="true">
@@ -9387,6 +9468,7 @@ should be able to be added at any place in this file.
 <action name="MobileBreakpadUploadSuccess" not_user_triggered="true">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
+  <obsolete>Deprecated as of at least 2017/02/28.</obsolete>
 </action>
 
 <action name="MobileComeToForeground">
@@ -9725,6 +9807,14 @@ should be able to be added at any place in this file.
   <obsolete>This action was renamed to MobileMenuRecentTabs.</obsolete>
 </action>
 
+<action name="MobileMenuOpenWebApk">
+  <owner>hanxi@chromium.org</owner>
+  <owner>pkotwicz@chromium.org</owner>
+  <description>
+    User successfully opened a WebAPK by pressing 'Open WebAPK' in the app menu.
+  </description>
+</action>
+
 <action name="MobileMenuPrint">
   <owner>aurimas@chromium.org</owner>
   <description>User pressed 'Print' in the app menu.</description>
@@ -9760,6 +9850,11 @@ should be able to be added at any place in this file.
   <description>
     User pressed 'Request Desktop Site' in the app menu.
   </description>
+</action>
+
+<action name="MobileMenuRequestMobileSite">
+  <owner>liaoyuke@chromium.org</owner>
+  <description>User pressed 'Request Mobile Site' in the app menu.</description>
 </action>
 
 <action name="MobileMenuSettings">
@@ -10211,6 +10306,14 @@ should be able to be added at any place in this file.
 <action name="MobileStackViewSwipeCloseTab">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
+</action>
+
+<action name="MobileStartup.MainIntentReceived">
+  <owner>tedchoc@chromium.org</owner>
+  <description>
+    An ACTION_MAIN intent was received by Chrome.  This is the best indicator we
+    have to signal the user tapped on the Chrome icon from the launcher.
+  </description>
 </action>
 
 <action name="MobileTabClobbered">
@@ -12916,6 +13019,40 @@ should be able to be added at any place in this file.
   <obsolete>Obsolete as of 08/2016</obsolete>
 </action>
 
+<action name="Overscroll_Cancelled.Back">
+  <owner>mfomitchev@chromium.org</owner>
+  <description>
+    When horizontal overscroll corresponding to the BACK navigation is cancelled
+    - either because the user performed an interfering action such as pressing a
+    key, or because the user ended the drag before the navigation threshold was
+    passed.
+  </description>
+</action>
+
+<action name="Overscroll_Cancelled.Forward">
+  <owner>mfomitchev@chromium.org</owner>
+  <description>
+    When horizontal overscroll corresponding to the FORWARD navigation is
+    cancelled - either because the user performed an interfering action such as
+    pressing a key, or because the user ended the drag before the navigation
+    threshold was passed.
+  </description>
+</action>
+
+<action name="Overscroll_Navigated.Back">
+  <owner>mfomitchev@chromium.org</owner>
+  <description>
+    When horizontal overscroll initiates a BACK navigation in the browser.
+  </description>
+</action>
+
+<action name="Overscroll_Navigated.Forward">
+  <owner>mfomitchev@chromium.org</owner>
+  <description>
+    When horizontal overscroll initiates a FORWARD navigation in the browser.
+  </description>
+</action>
+
 <action name="PDF.FitToHeightButton">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
@@ -14233,6 +14370,23 @@ should be able to be added at any place in this file.
 <action name="SettingsResetBubble.Show">
   <owner>mad@chromium.org</owner>
   <description>Please enter the description of this user action.</description>
+</action>
+
+<action name="SettingsResetPrompt_Accepted">
+  <owner>alito@chromium.org</owner>
+  <description>The user accepted the settings reset prompt.</description>
+</action>
+
+<action name="SettingsResetPrompt_Declined">
+  <owner>alito@chromium.org</owner>
+  <description>The user declined the settings reset prompt.</description>
+</action>
+
+<action name="SettingsResetPrompt_Shown">
+  <owner>alito@chromium.org</owner>
+  <description>
+    The settings reset dialog was displayed to the user.
+  </description>
 </action>
 
 <action name="Shelf_AlignmentSetBottom">
@@ -15808,6 +15962,7 @@ should be able to be added at any place in this file.
 <action name="Unselect">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
+  <obsolete>Deprecated 03/2017 in issue 697756.</obsolete>
 </action>
 
 <action name="UpdateChrome">

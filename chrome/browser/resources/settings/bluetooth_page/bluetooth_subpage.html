@@ -5,6 +5,7 @@
 <link rel="import" href="chrome://resources/polymer/v1_0/iron-list/iron-list.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-spinner/paper-spinner.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../i18n_setup.html">
 <link rel="import" href="../icons.html">
 <link rel="import" href="../settings_shared_css.html">
 <link rel="import" href="bluetooth_device_dialog.html">
@@ -26,10 +27,17 @@
       paper-spinner {
         @apply(--cr-icon-height-width);
       }
+
+      #onoff[on] {
+        color: var(--settings-toggle-color);
+      }
     </style>
 
     <div class="settings-box first">
-      <div class="start">[[getOffOnString_(bluetoothEnabled)]]</div>
+      <div id="onoff" class="start" on$="[[bluetoothEnabled]]">
+        [[getOnOffString_(bluetoothEnabled,
+          '$i18nPolymer{deviceOn}', '$i18nPolymer{deviceOff}')]]
+      </div>
       <paper-toggle-button id="enableBluetooth" checked="{{bluetoothEnabled}}"
           aria-label="$i18n{bluetoothToggleA11yLabel}">
       </paper-toggle-button>

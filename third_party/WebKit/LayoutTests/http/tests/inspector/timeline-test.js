@@ -90,10 +90,11 @@ InspectorTest.invokeWithTracing = function(functionName, callback, additionalCat
     var timelinePanel = UI.panels.timeline;
     var timelineController = InspectorTest.timelineController();
     timelinePanel._timelineController = timelineController;
-    timelineController._startRecordingWithCategories(categories, enableJSSampling, tracingStarted);
+    timelineController._startRecordingWithCategories(categories, enableJSSampling).then(tracingStarted);
 
     function tracingStarted()
     {
+        timelinePanel._recordingStarted();
         InspectorTest.callFunctionInPageAsync(functionName).then(onPageActionsDone);
     }
 
@@ -133,7 +134,7 @@ InspectorTest.timelineController = function()
 {
     var performanceModel = new Timeline.PerformanceModel();
     UI.panels.timeline._pendingPerformanceModel = performanceModel;
-    return new Timeline.TimelineController(SDK.targetManager.mainTarget(), performanceModel, UI.panels.timeline);
+    return new Timeline.TimelineController(InspectorTest.tracingManager, performanceModel, UI.panels.timeline);
 }
 
 InspectorTest.runWhenTimelineIsReady = function(callback)
@@ -144,7 +145,7 @@ InspectorTest.runWhenTimelineIsReady = function(callback)
 InspectorTest.startTimeline = function(callback)
 {
     var panel = UI.panels.timeline;
-    InspectorTest.addSniffer(panel, "recordingStarted", callback);
+    InspectorTest.addSniffer(panel, "_recordingStarted", callback);
     panel._toggleRecording();
 };
 
@@ -363,7 +364,7 @@ InspectorTest.dumpFlameChartProvider = function(provider, includeGroups)
 }
 
 InspectorTest.dumpTimelineFlameChart = function(includeGroups) {
-    const provider = UI.panels.timeline._flameChart._dataProvider;
+    const provider = UI.panels.timeline._flameChart._mainDataProvider;
     InspectorTest.addResult('Timeline Flame Chart');
     InspectorTest.dumpFlameChartProvider(provider, includeGroups);
 }

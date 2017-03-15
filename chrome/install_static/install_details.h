@@ -65,11 +65,22 @@ class InstallDetails {
   // a brand-specific InstallConstantIndex enumerator.
   int install_mode_index() const { return payload_->mode->index; }
 
+  // Returns true if the current mode is the brand's primary install mode rather
+  // than one of its secondary modes (e.g., canary Chrome).
+  bool is_primary_mode() const { return install_mode_index() == 0; }
+
+  // Returns the installer command-line switch that selects the current mode.
+  const char* install_switch() const { return payload_->mode->install_switch; }
+
   // The mode's install suffix (e.g., " SxS" for canary Chrome), or an empty
   // string for a brand's primary install mode.
   const wchar_t* install_suffix() const {
     return payload_->mode->install_suffix;
   }
+
+  // The mode's logo suffix (e.g., "Canary" for canary Chrome), or an empty
+  // string for a brand's primary install mode.
+  const wchar_t* logo_suffix() const { return payload_->mode->logo_suffix; }
 
   // Returns the full name of the installed product (e.g. "Chrome SxS" for
   // canary chrome).
@@ -84,14 +95,30 @@ class InstallDetails {
   // empty string if this brand does not integrate with Google Update.
   const wchar_t* app_guid() const { return payload_->mode->app_guid; }
 
+  // Returns the unsuffixed portion of the AppUserModelId. The AppUserModelId is
+  // used to group an app's windows together on the Windows taskbar along with
+  // its corresponding shortcuts; see
+  // https://msdn.microsoft.com/library/windows/desktop/dd378459.aspx for more
+  // information. Use ShellUtil::GetBrowserModelId to get the suffixed value --
+  // it is almost never correct to use the unsuffixed (base) portion of this id
+  // directly.
+  const wchar_t* base_app_id() const { return payload_->mode->base_app_id; }
+
   // True if the mode supports installation at system-level.
   bool supports_system_level() const {
     return payload_->mode->supports_system_level;
   }
 
-  // True if the mode once supported multi-install.
+  // True if the mode once supported multi-install, a legacy mode of
+  // installation. This exists to provide migration and cleanup for older
+  // installs.
   bool supported_multi_install() const {
     return payload_->mode->supported_multi_install;
+  }
+
+  // Returns the resource id of this mode's main application icon.
+  int32_t app_icon_resource_id() const {
+    return payload_->mode->app_icon_resource_id;
   }
 
   // The install's update channel, or an empty string if the brand does not

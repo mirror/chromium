@@ -104,6 +104,7 @@
 <translation id="1962204205936693436">Zakładki z <ph name="DOMAIN" /></translation>
 <translation id="1973335181906896915">Podczas przekształcania do postaci szeregowej wystąpił błąd</translation>
 <translation id="1974060860693918893">Zaawansowane</translation>
+<translation id="1978555033938440688">Wersja oprogramowania</translation>
 <translation id="2001146170449793414">{COUNT,plural, =1{i jeszcze 1}few{i jeszcze #}many{i jeszcze #}other{i jeszcze #}}</translation>
 <translation id="2020194265157481222">Na karcie musi być imię i nazwisko</translation>
 <translation id="2025186561304664664">Ustawiono automatyczne konfigurowanie proxy.</translation>
@@ -119,6 +120,7 @@
 <translation id="2096368010154057602">Departament</translation>
 <translation id="2113977810652731515">Karta</translation>
 <translation id="2114841414352855701">Ignorowana, ponieważ jest zastąpiona przez <ph name="POLICY_NAME" />.</translation>
+<translation id="2138201775715568214">Szukam stron internetu rzeczy w pobliżu</translation>
 <translation id="213826338245044447">Zakładki na komórce</translation>
 <translation id="2148716181193084225">Dzisiaj</translation>
 <translation id="2154054054215849342">Synchronizacja nie jest dostępna w Twojej domenie.</translation>
@@ -189,6 +191,7 @@
 <translation id="2721148159707890343">Żądanie wykonane pomyślnie</translation>
 <translation id="2728127805433021124">Certyfikat serwera został podpisany przy użyciu słabego algorytmu podpisu.</translation>
 <translation id="2730326759066348565"><ph name="BEGIN_LINK" />Uruchomienie diagnostyki połączeń<ph name="END_LINK" /></translation>
+<translation id="2740531572673183784">OK</translation>
 <translation id="2742870351467570537">Usuń wybrane elementy</translation>
 <translation id="277499241957683684">Brak rekordu urządzenia</translation>
 <translation id="2784949926578158345">Połączenie zostało zresetowane.</translation>
@@ -270,6 +273,7 @@
 <translation id="348000606199325318">Identyfikator awarii: <ph name="CRASH_LOCAL_ID" /> (identyfikator serwera: <ph name="CRASH_ID" />)</translation>
 <translation id="3498215018399854026">Obecnie nie możemy się skontaktować z Twoim rodzicem. Spróbuj ponownie.</translation>
 <translation id="3528171143076753409">Certyfikat serwera nie jest zaufany.</translation>
+<translation id="3538531656504267329">Rok utraty ważności jest nieprawidłowy</translation>
 <translation id="3539171420378717834">Zachowaj kopię tej karty na urządzeniu</translation>
 <translation id="3542684924769048008">Używaj hasła dla:</translation>
 <translation id="3549644494707163724">Szyfruj wszystkie synchronizowane dane za pomocą hasła synchronizacji</translation>
@@ -338,6 +342,7 @@
 <translation id="4118212371799607889">Ten serwer nie mógł udowodnić, że należy do <ph name="DOMAIN" />. Jego certyfikat nie jest zaufany w Chromium. Może to być spowodowane błędną konfiguracją lub przechwyceniem połączenia przez atakującego. <ph name="BEGIN_LEARN_MORE_LINK" />Dowiedz się więcej<ph name="END_LEARN_MORE_LINK" />.</translation>
 <translation id="4129401438321186435">{COUNT,plural, =1{1 inny wpis}few{# inne wpisy}many{# innych wpisów}other{# innego wpisu}}</translation>
 <translation id="4130226655945681476">Sprawdź kable sieciowe, modem i router</translation>
+<translation id="4137140866298219568">Data ważności: <ph name="EXPIRATION_DATE_ABBR" />, ostatnio używana: <ph name="LAST_USED_DATE_NO_DETAIL" /></translation>
 <translation id="4148925816941278100">American Express</translation>
 <translation id="4169947484918424451">Czy Chromium ma zapisać tę kartę?</translation>
 <translation id="4171400957073367226">Nieprawidłowy podpis weryfikujący</translation>
@@ -352,6 +357,7 @@
 <translation id="425582637250725228">Wprowadzone zmiany mogą nie zostać zapisane.</translation>
 <translation id="4258748452823770588">Nieprawidłowy podpis</translation>
 <translation id="4269787794583293679">(Brak nazwy użytkownika)</translation>
+<translation id="4275830172053184480">Zrestartuj urządzenie</translation>
 <translation id="4280429058323657511">, ważna do: <ph name="EXPIRATION_DATE_ABBR" /></translation>
 <translation id="4295944351946828969">Bezpieczne przeglądanie Google ostatnio <ph name="BEGIN_LINK" />wykryło szkodliwe programy<ph name="END_LINK" /> na <ph name="SITE" />. <ph name="BEGIN_LEARN_MORE_LINK" />Dowiedz się więcej<ph name="END_LEARN_MORE_LINK" />.</translation>
 <translation id="4300246636397505754">Propozycje rodziców</translation>
@@ -400,6 +406,7 @@
 <translation id="4858792381671956233">Zapytałeś rodziców, czy możesz wejść na tę stronę</translation>
 <translation id="4880827082731008257">Przeszukaj historię</translation>
 <translation id="4895877746940133817"><ph name="TYPE_1" />, <ph name="TYPE_2" />, <ph name="TYPE_3" /></translation>
+<translation id="4897073194580895694">Ostatnio używana: <ph name="LAST_USED_MONTH" /></translation>
 <translation id="4914479371620770914">{URL_count,plural, =1{i jeszcze 1 strona}few{i jeszcze # strony}many{i jeszcze # stron}other{i jeszcze # strony}}</translation>
 <translation id="4923417429809017348">Ta strona została przetłumaczona z nieznanego języka na język <ph name="LANGUAGE_LANGUAGE" /></translation>
 <translation id="4923459931733593730">Płatność</translation>
@@ -446,6 +453,7 @@
 <translation id="5359637492792381994">Ten serwer nie mógł udowodnić, że należy do <ph name="DOMAIN" />. Jego certyfikat bezpieczeństwa nie jest obecnie ważny. Może to być spowodowane błędną konfiguracją lub przechwyceniem połączenia przez atakującego. <ph name="BEGIN_LEARN_MORE_LINK" />Dowiedz się więcej<ph name="END_LEARN_MORE_LINK" />.</translation>
 <translation id="536296301121032821">Zapisanie ustawień zasady nie powiodło się</translation>
 <translation id="5386426401304769735">Łańcuch certyfikatów tej witryny zawiera certyfikat podpisany za pomocą SHA-1.</translation>
+<translation id="5402410679244714488">Data ważności: <ph name="EXPIRATION_DATE_ABBR" />, ostatnio używana ponad roku temu</translation>
 <translation id="5421136146218899937">Wyczyść dane przeglądania...</translation>
 <translation id="5430298929874300616">Usuń zakładkę</translation>
 <translation id="5431657950005405462">Nie znaleziono pliku</translation>
@@ -467,6 +475,7 @@
 <translation id="5544037170328430102">Komunikat z elementu umieszczonego na stronie <ph name="SITE" />:</translation>
 <translation id="5556459405103347317">Odśwież</translation>
 <translation id="5565735124758917034">Aktywny</translation>
+<translation id="5572851009514199876">Uruchom Chrome i zaloguj się w nim, by mógł sprawdzić, czy masz uprawnienia dostępu do tej strony.</translation>
 <translation id="5575380383496039204">Nieobsługiwany adres dostawy. Wybierz inny.</translation>
 <translation id="5580958916614886209">Sprawdź miesiąc ważności i spróbuj ponownie</translation>
 <translation id="560412284261940334">Zarządzanie jest nieobsługiwane</translation>
@@ -531,6 +540,7 @@
 <translation id="6282194474023008486">Kod pocztowy</translation>
 <translation id="6290238015253830360">Tutaj wyświetlają się sugerowane artykuły</translation>
 <translation id="6305205051461490394">Strona <ph name="URL" /> jest nieosiągalna.</translation>
+<translation id="6319915415804115995">Ostatnio używana ponad rok temu</translation>
 <translation id="6321917430147971392">Sprawdź ustawienia DNS</translation>
 <translation id="6328639280570009161">Wyłącz przewidywanie działań sieciowych</translation>
 <translation id="6328786501058569169">Ta strona wprowadza w błąd</translation>
@@ -551,12 +561,14 @@
 <translation id="6443118737398455446">Data ważności jest nieprawidłowa</translation>
 <translation id="6446608382365791566">Dodaj więcej informacji</translation>
 <translation id="6451458296329894277">Potwierdź ponowne przesłanie formularza</translation>
+<translation id="6456339708790392414">Twoja płatność</translation>
 <translation id="6458467102616083041">Ignorowana, ponieważ wyszukiwarka domyślna jest wyłączona przez zasadę.</translation>
 <translation id="6462969404041126431">Ten serwer nie mógł udowodnić, że należy do <ph name="DOMAIN" />. Jego certyfikat mógł zostać unieważniony. Może to być spowodowane błędną konfiguracją lub przechwyceniem połączenia przez atakującego. <ph name="BEGIN_LEARN_MORE_LINK" />Dowiedz się więcej<ph name="END_LEARN_MORE_LINK" />.</translation>
 <translation id="647261751007945333">Zasady dotyczące urządzeń</translation>
 <translation id="6477321094435799029">Chrome wykrył nietypowy kod na tej stronie i zablokował ją, by chronić Twoje dane osobowe (np. hasła, numery telefonu czy dane kart kredytowych).</translation>
 <translation id="6477460825583319731">Nieprawidłowy adres e-mail</translation>
 <translation id="6489534406876378309">Rozpocznij przesyłanie informacji o awariach</translation>
+<translation id="6525462735697194615">Miesiąc utraty ważności jest nieprawidłowy</translation>
 <translation id="6529602333819889595">&amp;Ponów usunięcie</translation>
 <translation id="6534179046333460208">Sugestie dotyczące internetu rzeczy</translation>
 <translation id="6550675742724504774">Opcje</translation>
@@ -591,7 +603,6 @@
 <translation id="6895330447102777224">Karta została potwierdzona</translation>
 <translation id="6897140037006041989">Klient</translation>
 <translation id="6915804003454593391">Użytkownik:</translation>
-<translation id="6937422995269576720">Nieprawidłowy numer karty</translation>
 <translation id="6957887021205513506">Certyfikat serwera wydaje się sfałszowany.</translation>
 <translation id="6965382102122355670">OK</translation>
 <translation id="6965978654500191972">Urządzenie</translation>
@@ -619,6 +630,7 @@
 <translation id="7210863904660874423">Serwer <ph name="HOST_NAME" /> nie spełnia norm bezpieczeństwa.</translation>
 <translation id="721197778055552897"><ph name="BEGIN_LINK" />Więcej informacji<ph name="END_LINK" /> na temat tego problemu.</translation>
 <translation id="7219179957768738017">Połączenie z szyfrowaniem <ph name="SSL_VERSION" />.</translation>
+<translation id="7220786058474068424">Przetwarzanie</translation>
 <translation id="724691107663265825">Strona, którą chcesz otworzyć, zawiera złośliwe oprogramowanie</translation>
 <translation id="724975217298816891">Wpisz datę ważności i kod CVC karty <ph name="CREDIT_CARD" />, by zaktualizować jej szczegółowe dane. Po potwierdzeniu zostaną one udostępnione tej stronie.</translation>
 <translation id="725866823122871198">Nie można nawiązać prywatnego połączenia z <ph name="BEGIN_BOLD" /><ph name="DOMAIN" /><ph name="END_BOLD" />, ponieważ data i godzina (<ph name="DATE_AND_TIME" />) ustawione na komputerze są nieprawidłowe.</translation>
@@ -673,7 +685,7 @@ Psst! Następnym razem możesz użyć trybu incognito <ph name="SHORTCUT_KEY" />
 <translation id="7637571805876720304">Usunąć tę kartę kredytową z Chromium?</translation>
 <translation id="765676359832457558">Ukryj ustawienia zaawansowane...</translation>
 <translation id="7658239707568436148">Anuluj</translation>
-<translation id="7667346355482952095">Zwrócony token zasad jest pusty lub nie pasuje do bieżącego tokenu</translation>
+<translation id="7667346355482952095">Zwrócony token zasad jest pusty lub nie pasuje do bieżącego tokena</translation>
 <translation id="7668654391829183341">Nieznane urządzenie</translation>
 <translation id="7669271284792375604">Osoby atakujące tę stronę mogą podstępem próbować nakłonić Cię do zainstalowania programów utrudniających przeglądanie internetu (np. zmieniających stronę główną lub wyświetlających dodatkowe reklamy na stronach, na które wchodzisz).</translation>
 <translation id="7674629440242451245">Interesują Cię nowe, przydatne funkcje Chrome? Wypróbuj wersję deweloperską ze strony chrome.com/dev.</translation>
@@ -685,6 +697,7 @@ Psst! Następnym razem możesz użyć trybu incognito <ph name="SHORTCUT_KEY" />
 <translation id="7755287808199759310">Może ją dla Ciebie odblokować Twój rodzic</translation>
 <translation id="7758069387465995638">Połączenie mogło zostać zablokowane przez zaporę sieciową lub program antywirusowy.</translation>
 <translation id="7761701407923456692">Certyfikat serwera jest niezgodny z adresem URL.</translation>
+<translation id="7764225426217299476">Dodaj adres</translation>
 <translation id="777702478322588152">Prefektura</translation>
 <translation id="7791543448312431591">Dodaj</translation>
 <translation id="7793809570500803535">Strona <ph name="SITE" /> może być tymczasowo niedostępna lub została na stałe przeniesiona pod nowy adres internetowy.</translation>
@@ -694,7 +707,6 @@ Psst! Następnym razem możesz użyć trybu incognito <ph name="SHORTCUT_KEY" />
 <translation id="7812922009395017822">Mir</translation>
 <translation id="7813600968533626083">Usunąć tę podpowiedź do formularza z Chrome?</translation>
 <translation id="7815407501681723534">Znalezione <ph name="SEARCH_RESULTS" /> dla zapytania „<ph name="SEARCH_STRING" />”: <ph name="NUMBER_OF_RESULTS" /></translation>
-<translation id="7837582000577464779">Podczas przetwarzania zamówienia wystąpił błąd. Sprawdź swoje konto i spróbuj ponownie.</translation>
 <translation id="785549533363645510">To jednak nie znaczy, że Cię nie widać. Nawet gdy przejdziesz w tryb incognito, Twój pracodawca, dostawca usług internetowych czy webmasterzy stron, na które wchodzisz, mogą dowiedzieć się, co przeglądasz.</translation>
 <translation id="7855695075675558090"><ph name="TOTAL_LABEL" />: <ph name="FORMATTED_TOTAL_AMOUNT" /> <ph name="CURRENCY_CODE" /></translation>
 <translation id="7887683347370398519">Sprawdź kod CVC i spróbuj ponownie</translation>
@@ -762,6 +774,7 @@ Psst! Następnym razem możesz użyć trybu incognito <ph name="SHORTCUT_KEY" />
 <translation id="859285277496340001">Certyfikat nie określa mechanizmu do sprawdzania, czy został on unieważniony.</translation>
 <translation id="8620436878122366504">Twoi rodzice jeszcze na to nie zezwolili</translation>
 <translation id="8647750283161643317">Przywróć wszystkie ustawienia domyślne</translation>
+<translation id="8662285765512809409">Data ważności: <ph name="EXPIRATION_DATE_ABBR" />, dodano: <ph name="ADDED_TO_AUTOFILL_MONTH" /></translation>
 <translation id="8703575177326907206">Połączenie z witryną <ph name="DOMAIN" /> nie jest szyfrowane.</translation>
 <translation id="8725066075913043281">Spróbuj ponownie</translation>
 <translation id="8728672262656704056">Jesteś w trybie incognito</translation>
@@ -785,10 +798,12 @@ Psst! Następnym razem możesz użyć trybu incognito <ph name="SHORTCUT_KEY" />
 <translation id="8891727572606052622">Nieprawidłowy tryb proxy</translation>
 <translation id="889901481107108152">Eksperyment jest niedostępny na Twojej platformie.</translation>
 <translation id="8903921497873541725">Powiększ</translation>
+<translation id="8928945116588336256">Dodano: <ph name="ADDED_TO_AUTOFILL_MONTH" /></translation>
 <translation id="8931333241327730545">Chcesz zapisać tę kartę na swoim koncie Google?</translation>
 <translation id="8932102934695377596">Twój zegar się spóźnia</translation>
 <translation id="8954894007019320973">(cd.)</translation>
 <translation id="8971063699422889582">Ważność certyfikatu serwera wygasła.</translation>
+<translation id="8986494364107987395">Automatycznie przesyłaj do Google statystyki użytkowania i raporty o awariach</translation>
 <translation id="8987927404178983737">Miesiąc</translation>
 <translation id="8989148748219918422"><ph name="ORGANIZATION" /> [<ph name="COUNTRY" />]</translation>
 <translation id="8996941253935762404">Na następnej stronie znajdują się szkodliwe programy</translation>
@@ -807,6 +822,7 @@ Psst! Następnym razem możesz użyć trybu incognito <ph name="SHORTCUT_KEY" />
 <translation id="9094175695478007090">Nie można uruchomić aplikacji do płatności.</translation>
 <translation id="9103872766612412690"><ph name="SITE" /> zazwyczaj używa szyfrowania do ochrony Twoich informacji. Gdy tym razem przeglądarka Chromium próbowała połączyć się ze stroną <ph name="SITE" />, odesłała ona nietypowe i nieprawidłowe dane logowania. Może się tak zdarzyć, gdy pod stronę <ph name="SITE" /> podszywa się osoba atakująca albo gdy ekran logowania do sieci Wi-Fi przerwie połączenie. Twoje informacje są nadal bezpieczne, bo połączenie w Chromium zakończyło się przed wymianą jakichkolwiek danych.</translation>
 <translation id="9137013805542155359">Pokaż tekst oryginalny</translation>
+<translation id="9137248913990643158">Aby użyć tej aplikacji, najpierw uruchom Chrome i zaloguj się w nim.</translation>
 <translation id="9148507642005240123">&amp;Cofnij edycję</translation>
 <translation id="9154194610265714752">Zaktualizowano</translation>
 <translation id="9157595877708044936">Konfigurowanie...</translation>

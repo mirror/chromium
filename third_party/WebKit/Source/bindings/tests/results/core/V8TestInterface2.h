@@ -13,6 +13,7 @@
 #define V8TestInterface2_h
 
 #include "bindings/core/v8/GeneratedCodeHelper.h"
+#include "bindings/core/v8/NativeValueTraits.h"
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "bindings/core/v8/ToV8.h"
 #include "bindings/core/v8/V8Binding.h"
@@ -44,6 +45,7 @@ class V8TestInterface2 {
   static void constructorCallback(const v8::FunctionCallbackInfo<v8::Value>&);
   static const int internalFieldCount = v8DefaultWrapperInternalFieldCount + 0;
   CORE_EXPORT static void preparePrototypeAndInterfaceObject(v8::Local<v8::Context>, const DOMWrapperWorld&, v8::Local<v8::Object> prototypeObject, v8::Local<v8::Function> interfaceObject, v8::Local<v8::FunctionTemplate> interfaceTemplate) {}
+
   CORE_EXPORT static void updateWrapperTypeInfo(InstallTemplateFunction, InstallRuntimeEnabledFunction, PreparePrototypeAndInterfaceObjectFunction);
   CORE_EXPORT static void installV8TestInterface2Template(v8::Isolate*, const DOMWrapperWorld&, v8::Local<v8::FunctionTemplate> interfaceTemplate);
 
@@ -76,6 +78,11 @@ class V8TestInterface2 {
 
  private:
   static InstallTemplateFunction installV8TestInterface2TemplateFunction;
+};
+
+template <>
+struct NativeValueTraits<TestInterface2> : public NativeValueTraitsBase<TestInterface2> {
+  CORE_EXPORT static TestInterface2* nativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

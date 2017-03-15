@@ -111,6 +111,8 @@ public class ContextualSearchManagerTest extends ChromeActivityTestCaseBase<Chro
     private ContextualSearchSelectionController mSelectionController;
     private EmbeddedTestServer mTestServer;
 
+    private float mDpToPx;
+
     // State for an individual test.
     FakeSlowResolveSearch mLatestSlowResolveSearch;
 
@@ -155,6 +157,8 @@ public class ContextualSearchManagerTest extends ChromeActivityTestCaseBase<Chro
         filter.addDataScheme("market");
         mActivityMonitor = getInstrumentation().addMonitor(
                 filter, new Instrumentation.ActivityResult(Activity.RESULT_OK, null), true);
+
+        mDpToPx = getActivity().getResources().getDisplayMetrics().density;
     }
 
     @Override
@@ -201,7 +205,7 @@ public class ContextualSearchManagerTest extends ChromeActivityTestCaseBase<Chro
     public void longPressNodeWithoutWaiting(String nodeId)
             throws InterruptedException, TimeoutException {
         Tab tab = getActivity().getActivityTab();
-        DOMUtils.longPressNode(this, tab.getContentViewCore(), nodeId);
+        DOMUtils.longPressNode(tab.getContentViewCore(), nodeId);
     }
 
     /**
@@ -219,7 +223,7 @@ public class ContextualSearchManagerTest extends ChromeActivityTestCaseBase<Chro
      */
     public void clickNode(String nodeId) throws InterruptedException, TimeoutException {
         Tab tab = getActivity().getActivityTab();
-        DOMUtils.clickNode(this, tab.getContentViewCore(), nodeId);
+        DOMUtils.clickNode(tab.getContentViewCore(), nodeId);
     }
 
     /**
@@ -969,17 +973,13 @@ public class ContextualSearchManagerTest extends ChromeActivityTestCaseBase<Chro
     }
 
     /**
-     * Generate a click in the panel's bar.
+     * Generate a click in the middle of panel's bar.
      * TODO(donnd): Replace this method with panelBarClick since this appears to be unreliable.
-     * @barHeight The vertical position where the click should take place as a percentage
-     *            of the screen size.
      */
-    private void clickPanelBar(float barPositionVertical) {
+    private void clickPanelBar() {
         View root = getActivity().getWindow().getDecorView().getRootView();
-        float w = root.getWidth();
-        float h = root.getHeight();
-        float tapX = w / 2f;
-        float tapY = h * barPositionVertical;
+        float tapX = ((mPanel.getOffsetX() + mPanel.getWidth()) / 2f) * mDpToPx;
+        float tapY = (mPanel.getOffsetY() + (mPanel.getBarContainerHeight() / 2f)) * mDpToPx;
 
         TouchCommon.singleClickView(root, (int) tapX, (int) tapY);
     }
@@ -988,7 +988,7 @@ public class ContextualSearchManagerTest extends ChromeActivityTestCaseBase<Chro
      * Taps the peeking bar to expand the panel
      */
     private void tapPeekingBarToExpandAndAssert() throws InterruptedException {
-        clickPanelBar(0.95f);
+        clickPanelBar();
         waitForPanelToExpand();
     }
 
@@ -1395,7 +1395,7 @@ public class ContextualSearchManagerTest extends ChromeActivityTestCaseBase<Chro
         assertLoadedLowPriorityUrl();
         scrollBasePage();
         assertPanelClosedOrUndefined();
-        assertNull(mSelectionController.getSelectedText());
+        assertTrue(TextUtils.isEmpty(mSelectionController.getSelectedText()));
     }
 
     /**
@@ -2573,7 +2573,6 @@ public class ContextualSearchManagerTest extends ChromeActivityTestCaseBase<Chro
      */
     @SmallTest
     @Feature({"ContextualSearch"})
-    @CommandLineFlags.Add(ContextualSearchFieldTrial.ENABLE_TRANSLATION + "=true")
     public void testTapWithLanguage() throws InterruptedException, TimeoutException {
         // Tapping a German word should trigger translation.
         simulateTapSearch("german");
@@ -2585,11 +2584,24 @@ public class ContextualSearchManagerTest extends ChromeActivityTestCaseBase<Chro
     }
 
     /**
+     * Tests translation with a simple Tap can be disabled.
+     */
+    @SmallTest
+    @Feature({"ContextualSearch"})
+    @CommandLineFlags.Add(ContextualSearchFieldTrial.DISABLE_TRANSLATION + "=true")
+    public void testTapDisabled() throws InterruptedException, TimeoutException {
+        // Tapping a German word would normally trigger translation, but not with the above flag.
+        simulateTapSearch("german");
+
+        // Make sure we did not try to trigger translate.
+        assertFalse(mManager.getRequest().isTranslationForced());
+    }
+
+    /**
      * Tests that a simple Tap without language determination does not trigger translation.
      */
     @SmallTest
     @Feature({"ContextualSearch"})
-    @CommandLineFlags.Add(ContextualSearchFieldTrial.ENABLE_TRANSLATION + "=true")
     public void testTapWithoutLanguage() throws InterruptedException, TimeoutException {
         // Tapping an English word should NOT trigger translation.
         simulateTapSearch("search");
@@ -2599,27 +2611,10 @@ public class ContextualSearchManagerTest extends ChromeActivityTestCaseBase<Chro
     }
 
     /**
-     * Tests that the server-controlled-onebox flag can override behavior on a simple Tap
-     * without language determination.
-     */
-    @SmallTest
-    @Feature({"ContextualSearch"})
-    @CommandLineFlags.Add({ContextualSearchFieldTrial.ENABLE_TRANSLATION + "=true",
-            ContextualSearchFieldTrial.ENABLE_SERVER_CONTROLLED_ONEBOX + "=true"})
-    public void testTapWithoutLanguageCanBeForced() throws InterruptedException, TimeoutException {
-        // Tapping an English word should trigger translation.
-        simulateTapSearch("search");
-
-        // Make sure we did try to trigger translate.
-        assertTrue(mManager.getRequest().isTranslationForced());
-    }
-
-    /**
      * Tests that a long-press does trigger translation.
      */
     @SmallTest
     @Feature({"ContextualSearch"})
-    @CommandLineFlags.Add(ContextualSearchFieldTrial.ENABLE_TRANSLATION + "=true")
     public void testLongpressTranslates() throws InterruptedException, TimeoutException {
         // LongPress on any word should trigger translation.
         simulateLongPressSearch("search");
@@ -2629,31 +2624,14 @@ public class ContextualSearchManagerTest extends ChromeActivityTestCaseBase<Chro
     }
 
     /**
-     * Tests that a long-press does NOT trigger translation when auto-detect is disabled.
+     * Tests that a long-press does NOT trigger translation when disabled.
      */
     @SmallTest
     @Feature({"ContextualSearch"})
-    @CommandLineFlags.Add({ContextualSearchFieldTrial.ENABLE_TRANSLATION + "=true",
-            ContextualSearchFieldTrial.DISABLE_AUTO_DETECT_TRANSLATION_ONEBOX + "=true"})
-    public void testLongpressAutoDetectDisabledDoesNotTranslate()
-            throws InterruptedException, TimeoutException {
-        // Unless disabled, LongPress on any word should trigger translation.
-        simulateLongPressSearch("search");
-
-        // Make sure we did not try to trigger translate.
-        assertFalse(mManager.getRequest().isTranslationForced());
-    }
-
-    /**
-     * Tests that a long-press does NOT trigger translation when general one-box is disabled.
-     */
-    @SmallTest
-    @Feature({"ContextualSearch"})
-    @CommandLineFlags.Add({ContextualSearchFieldTrial.ENABLE_TRANSLATION + "=true",
-            ContextualSearchFieldTrial.DISABLE_FORCE_TRANSLATION_ONEBOX + "=true"})
+    @CommandLineFlags.Add(ContextualSearchFieldTrial.DISABLE_TRANSLATION + "=true")
     public void testLongpressTranslateDisabledDoesNotTranslate()
             throws InterruptedException, TimeoutException {
-        // Unless disabled, LongPress on any word should trigger translation.
+        // When disabled, LongPress on any word should not trigger translation.
         simulateLongPressSearch("search");
 
         // Make sure we did not try to trigger translate.
@@ -2875,9 +2853,34 @@ public class ContextualSearchManagerTest extends ChromeActivityTestCaseBase<Chro
         });
 
         // Tap on the portion of the bar that should trigger the quick action intent to be fired.
-        clickPanelBar(0.95f);
+        clickPanelBar();
 
         // Assert that an intent was fired.
         assertEquals(1, mActivityMonitor.getHits());
+    }
+
+    /**
+     * Tests that the current tab is navigated to the quick action URI for
+     * QuickActionCategory#WEBSITE.
+     */
+    @SmallTest
+    @Feature({"ContextualSearch"})
+    public void testQuickActionUrl() throws InterruptedException, TimeoutException {
+        final String testUrl = mTestServer.getURL("/chrome/test/data/android/google.html");
+
+        // Simulate a tap to show the Bar, then set the quick action data.
+        simulateTapSearch("search");
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                mPanel.onSearchTermResolved("search", null, testUrl, QuickActionCategory.WEBSITE);
+            }
+        });
+
+        // Tap on the portion of the bar that should trigger the quick action.
+        clickPanelBar();
+
+        // Assert that the URL was loaded.
+        ChromeTabUtils.waitForTabPageLoaded(getActivity().getActivityTab(), testUrl);
     }
 }

@@ -116,20 +116,33 @@ class CORE_EXPORT LayoutView final : public LayoutBlockFlow {
 
   void updateAfterLayout() override;
 
+  // See comments for the equivalent method on LayoutObject.
+  bool mapToVisualRectInAncestorSpace(const LayoutBoxModelObject* ancestor,
+                                      LayoutRect&,
+                                      MapCoordinatesFlags mode,
+                                      VisualRectFlags) const;
+
   // |ancestor| can be nullptr, which will map the rect to the main frame's
   // space, even if the main frame is remote (or has intermediate remote
   // frames in the chain).
-  bool mapToVisualRectInAncestorSpace(const LayoutBoxModelObject* ancestor,
-                                      LayoutRect&,
-                                      MapCoordinatesFlags,
-                                      VisualRectFlags) const;
-  bool mapToVisualRectInAncestorSpace(
+  bool mapToVisualRectInAncestorSpaceInternal(
       const LayoutBoxModelObject* ancestor,
-      LayoutRect&,
+      TransformState&,
+      MapCoordinatesFlags,
+      VisualRectFlags) const;
+
+  bool mapToVisualRectInAncestorSpaceInternal(
+      const LayoutBoxModelObject* ancestor,
+      TransformState&,
       VisualRectFlags = DefaultVisualRectFlags) const override;
   LayoutSize offsetForFixedPosition(bool includePendingScroll = false) const;
 
   void invalidatePaintForViewAndCompositedLayers();
+
+  PaintInvalidationReason invalidatePaintIfNeeded(
+      const PaintInvalidationState&) override;
+  PaintInvalidationReason invalidatePaintIfNeeded(
+      const PaintInvalidatorContext&) const override;
 
   void paint(const PaintInfo&, const LayoutPoint&) const override;
   void paintBoxDecorationBackground(const PaintInfo&,
@@ -257,8 +270,6 @@ class CORE_EXPORT LayoutView final : public LayoutBlockFlow {
                           MapCoordinatesFlags) const override;
   void computeSelfHitTestRects(Vector<LayoutRect>&,
                                const LayoutPoint& layerOffset) const override;
-
-  bool canHaveChildren() const override;
 
   void layoutContent();
 #if DCHECK_IS_ON()

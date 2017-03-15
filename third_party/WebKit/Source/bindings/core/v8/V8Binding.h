@@ -48,9 +48,9 @@
 #include "bindings/core/v8/V8ValueCache.h"
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
+#include "v8/include/v8.h"
 #include "wtf/text/AtomicString.h"
 #include "wtf/text/StringView.h"
-#include <v8.h>
 
 namespace blink {
 
@@ -191,15 +191,7 @@ inline void v8SetReturnValue(const CallbackInfo& callbackInfo,
 
 template <typename CallbackInfo>
 inline void v8SetReturnValue(const CallbackInfo& callbackInfo, Node* impl) {
-  if (UNLIKELY(!impl)) {
-    v8SetReturnValueNull(callbackInfo);
-    return;
-  }
-  if (DOMDataStore::setReturnValue(callbackInfo.GetReturnValue(), impl))
-    return;
-  v8::Local<v8::Object> wrapper = ScriptWrappable::fromNode(impl)->wrap(
-      callbackInfo.GetIsolate(), callbackInfo.Holder());
-  v8SetReturnValue(callbackInfo, wrapper);
+  v8SetReturnValue(callbackInfo, ScriptWrappable::fromNode(impl));
 }
 
 // Special versions for DOMWindow and EventTarget
@@ -306,16 +298,8 @@ template <typename CallbackInfo>
 inline void v8SetReturnValueFast(const CallbackInfo& callbackInfo,
                                  Node* impl,
                                  const ScriptWrappable* wrappable) {
-  if (UNLIKELY(!impl)) {
-    v8SetReturnValueNull(callbackInfo);
-    return;
-  }
-  if (DOMDataStore::setReturnValueFast(callbackInfo.GetReturnValue(), impl,
-                                       callbackInfo.Holder(), wrappable))
-    return;
-  v8::Local<v8::Object> wrapper = ScriptWrappable::fromNode(impl)->wrap(
-      callbackInfo.GetIsolate(), callbackInfo.Holder());
-  v8SetReturnValue(callbackInfo, wrapper);
+  v8SetReturnValueFast(callbackInfo, ScriptWrappable::fromNode(impl),
+                       wrappable);
 }
 
 // Special versions for DOMWindow and EventTarget
@@ -405,6 +389,19 @@ inline v8::Local<v8::String> v8String(v8::Isolate* isolate,
       .ToLocalChecked();
 }
 
+// As above, for string literals. The compiler doesn't optimize away the is8Bit
+// and sharedImpl checks for string literals in the StringView version.
+inline v8::Local<v8::String> v8String(v8::Isolate* isolate,
+                                      const char* string) {
+  DCHECK(isolate);
+  if (!string || string[0] == '\0')
+    return v8::String::Empty(isolate);
+  return v8::String::NewFromOneByte(isolate,
+                                    reinterpret_cast<const uint8_t*>(string),
+                                    v8::NewStringType::kNormal, strlen(string))
+      .ToLocalChecked();
+}
+
 inline v8::Local<v8::Value> v8StringOrNull(v8::Isolate* isolate,
                                            const AtomicString& string) {
   if (string.isNull())
@@ -426,6 +423,19 @@ inline v8::Local<v8::String> v8AtomicString(v8::Isolate* isolate,
              isolate, reinterpret_cast<const uint16_t*>(string.characters16()),
              v8::NewStringType::kInternalized,
              static_cast<int>(string.length()))
+      .ToLocalChecked();
+}
+
+// As above, for string literals. The compiler doesn't optimize away the is8Bit
+// check for string literals in the StringView version.
+inline v8::Local<v8::String> v8AtomicString(v8::Isolate* isolate,
+                                            const char* string) {
+  DCHECK(isolate);
+  if (!string || string[0] == '\0')
+    return v8::String::Empty(isolate);
+  return v8::String::NewFromOneByte(
+             isolate, reinterpret_cast<const uint8_t*>(string),
+             v8::NewStringType::kInternalized, strlen(string))
       .ToLocalChecked();
 }
 
@@ -735,12 +745,12 @@ HeapVector<Member<T>> toMemberNativeArray(v8::Local<v8::Value> value,
 
 // Converts a JavaScript value to an array as per the Web IDL specification:
 // http://www.w3.org/TR/2012/CR-WebIDL-20120419/#es-array
-template <typename VectorType>
+template <typename VectorType,
+          typename ValueType = typename VectorType::ValueType>
 VectorType toImplArray(v8::Local<v8::Value> value,
                        int argumentIndex,
                        v8::Isolate* isolate,
                        ExceptionState& exceptionState) {
-  typedef typename VectorType::ValueType ValueType;
   typedef NativeValueTraits<ValueType> TraitsType;
 
   uint32_t length = 0;
@@ -877,6 +887,10 @@ inline bool toV8Sequence(v8::Local<v8::Value> value,
   return true;
 }
 
+// TODO(rakuco): remove the specializations below (and consequently the
+// non-IDLBase version of NativeValueTraitsBase) once we manage to convert all
+// uses of NativeValueTraits to types that derive from IDLBase or for generated
+// IDL interfaces/dictionaries/unions.
 template <>
 struct NativeValueTraits<String> {
   static inline String nativeValue(v8::Isolate* isolate,
@@ -969,14 +983,13 @@ CORE_EXPORT v8::Isolate* toIsolate(ExecutionContext*);
 CORE_EXPORT v8::Isolate* toIsolate(LocalFrame*);
 
 CORE_EXPORT DOMWindow* toDOMWindow(v8::Isolate*, v8::Local<v8::Value>);
-DOMWindow* toDOMWindow(v8::Local<v8::Context>);
+LocalDOMWindow* toLocalDOMWindow(v8::Local<v8::Context>);
 LocalDOMWindow* enteredDOMWindow(v8::Isolate*);
 CORE_EXPORT LocalDOMWindow* currentDOMWindow(v8::Isolate*);
 CORE_EXPORT ExecutionContext* toExecutionContext(v8::Local<v8::Context>);
 CORE_EXPORT void registerToExecutionContextForModules(
     ExecutionContext* (*toExecutionContextForModules)(v8::Local<v8::Context>));
 CORE_EXPORT ExecutionContext* currentExecutionContext(v8::Isolate*);
-CORE_EXPORT ExecutionContext* enteredExecutionContext(v8::Isolate*);
 
 // Returns a V8 context associated with a ExecutionContext and a
 // DOMWrapperWorld.  This method returns an empty context if there is no frame
@@ -985,15 +998,15 @@ CORE_EXPORT v8::Local<v8::Context> toV8Context(ExecutionContext*,
                                                DOMWrapperWorld&);
 // Returns a V8 context associated with a Frame and a DOMWrapperWorld.
 // This method returns an empty context if the frame is already detached.
-CORE_EXPORT v8::Local<v8::Context> toV8Context(Frame*, DOMWrapperWorld&);
+CORE_EXPORT v8::Local<v8::Context> toV8Context(LocalFrame*, DOMWrapperWorld&);
 // Like toV8Context but also returns the context if the frame is already
 // detached.
-CORE_EXPORT v8::Local<v8::Context> toV8ContextEvenIfDetached(Frame*,
+CORE_EXPORT v8::Local<v8::Context> toV8ContextEvenIfDetached(LocalFrame*,
                                                              DOMWrapperWorld&);
 
 // Returns the frame object of the window object associated with
 // a context, if the window is currently being displayed in a Frame.
-CORE_EXPORT Frame* toFrameIfNotDetached(v8::Local<v8::Context>);
+CORE_EXPORT LocalFrame* toLocalFrameIfNotDetached(v8::Local<v8::Context>);
 
 // If 'storage' is non-null, it must be large enough to copy all bytes in the
 // array buffer view into it.  Use allocateFlexibleArrayBufferStorage(v8Value)
@@ -1076,7 +1089,6 @@ VectorType toImplSequence(v8::Isolate* isolate,
 // If the current context causes out of memory, JavaScript setting
 // is disabled and it returns true.
 bool handleOutOfMemory();
-void crashIfIsolateIsDead(v8::Isolate*);
 
 inline bool isUndefinedOrNull(v8::Local<v8::Value> value) {
   return value.IsEmpty() || value->IsNull() || value->IsUndefined();

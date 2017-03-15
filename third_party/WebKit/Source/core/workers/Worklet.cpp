@@ -20,8 +20,11 @@ Worklet::Worklet(LocalFrame* frame)
 
 ScriptPromise Worklet::import(ScriptState* scriptState, const String& url) {
   DCHECK(isMainThread());
-  if (!isInitialized())
-    initialize();
+  if (!getExecutionContext()) {
+    return ScriptPromise::rejectWithDOMException(
+        scriptState, DOMException::create(InvalidStateError,
+                                          "This frame is already detached"));
+  }
 
   KURL scriptURL = getExecutionContext()->completeURL(url);
   if (!scriptURL.isValid()) {
@@ -29,6 +32,9 @@ ScriptPromise Worklet::import(ScriptState* scriptState, const String& url) {
         scriptState,
         DOMException::create(SyntaxError, "'" + url + "' is not a valid URL."));
   }
+
+  if (!isInitialized())
+    initialize();
 
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::create(scriptState);
   ScriptPromise promise = resolver->promise();
@@ -44,7 +50,7 @@ void Worklet::notifyWorkletScriptLoadingFinished(
     WorkletScriptLoader* scriptLoader,
     const ScriptSourceCode& sourceCode) {
   DCHECK(isMainThread());
-  ScriptPromiseResolver* resolver = m_loaderAndResolvers.get(scriptLoader);
+  ScriptPromiseResolver* resolver = m_loaderAndResolvers.at(scriptLoader);
   m_loaderAndResolvers.erase(scriptLoader);
 
   if (!scriptLoader->wasScriptLoadSuccessful()) {

@@ -14,11 +14,10 @@ import org.chromium.chrome.browser.ntp.NTPTileSource.NTPTileSourceEnum;
 /**
  * Holds the details to populate a site suggestion tile.
  */
-public class Tile {
+public class Tile implements OfflinableSuggestion {
     private final String mTitle;
     private final String mUrl;
     private final String mWhitelistIconPath;
-    private final boolean mOfflineAvailable;
     private final int mIndex;
 
     @NTPTileSourceEnum
@@ -30,30 +29,70 @@ public class Tile {
     @Nullable
     private Drawable mIcon;
 
+    @Nullable
+    private Long mOfflinePageOfflineId;
+
     /**
      * @param title The tile title.
      * @param url The site URL.
      * @param whitelistIconPath The path to the icon image file, if this is a whitelisted tile.
      * Empty otherwise.
-     * @param offlineAvailable Whether there is an offline copy of the URL available.
      * @param index The index of this tile in the list of tiles.
      * @param source The {@code NTPTileSource} that generated this tile.
      */
-    public Tile(String title, String url, String whitelistIconPath, boolean offlineAvailable,
-            int index, @NTPTileSourceEnum int source) {
+    public Tile(String title, String url, String whitelistIconPath, int index,
+            @NTPTileSourceEnum int source) {
         mTitle = title;
         mUrl = url;
         mWhitelistIconPath = whitelistIconPath;
-        mOfflineAvailable = offlineAvailable;
         mIndex = index;
         mSource = source;
     }
 
     /**
-     * @return The site URL of this tile.
+     * Imports transient data from an old tile, and reports whether there is a significant
+     * difference between the two that would require a redraw.
+     * Assumes that the current tile and the old tile (if provided) both describe the same site,
+     * so the URLs have to be the same.
      */
+    public boolean importData(@Nullable Tile tile) {
+        if (tile == null) return true;
+
+        assert tile.getUrl().equals(mUrl);
+
+        mType = tile.getType();
+        mIcon = tile.getIcon();
+        mOfflinePageOfflineId = tile.mOfflinePageOfflineId;
+
+        if (!tile.getTitle().equals(mTitle)) return true;
+        if (tile.getIndex() != mIndex) return true;
+
+        // Ignore the whitelist changes when we already have an icon, since we won't need to reload
+        // it. We also omit requesting a redraw when |mSource| changes, as it only affects UMA.
+        if (!tile.getWhitelistIconPath().equals(mWhitelistIconPath) && mIcon == null) return true;
+
+        return false;
+    }
+
+    @Override
     public String getUrl() {
         return mUrl;
+    }
+
+    @Override
+    public void setOfflinePageOfflineId(@Nullable Long offlineId) {
+        mOfflinePageOfflineId = offlineId;
+    }
+
+    @Nullable
+    @Override
+    public Long getOfflinePageOfflineId() {
+        return mOfflinePageOfflineId;
+    }
+
+    @Override
+    public boolean requiresExactOfflinePage() {
+        return false;
     }
 
     /**
@@ -74,7 +113,7 @@ public class Tile {
      * @return Whether this tile is available offline.
      */
     public boolean isOfflineAvailable() {
-        return mOfflineAvailable;
+        return getOfflinePageOfflineId() != null;
     }
 
     /**

@@ -71,16 +71,20 @@ class CORE_EXPORT TypingCommand final : public CompositeEditCommand {
                          Options,
                          TextCompositionType = TextCompositionNone,
                          const bool isIncrementalInsertion = false);
-  static void insertText(Document&,
-                         const String&,
-                         const VisibleSelection&,
-                         Options,
-                         TextCompositionType = TextCompositionNone,
-                         const bool isIncrementalInsertion = false);
+  static void insertText(
+      Document&,
+      const String&,
+      const SelectionInDOMTree&,
+      Options,
+      TextCompositionType = TextCompositionNone,
+      const bool isIncrementalInsertion = false,
+      InputEvent::InputType = InputEvent::InputType::InsertText);
   static bool insertLineBreak(Document&);
   static bool insertParagraphSeparator(Document&);
   static bool insertParagraphSeparatorInQuotedContent(Document&);
   static void closeTyping(LocalFrame*);
+
+  static TypingCommand* lastTypingCommandIfStillOpenForTyping(LocalFrame*);
 
   void insertText(const String& text, bool selectInsertedText, EditingState*);
   void insertTextRunWithoutNewlines(const String& text,
@@ -135,8 +139,6 @@ class CORE_EXPORT TypingCommand final : public CompositeEditCommand {
   bool isOpenForMoreTyping() const { return m_openForMoreTyping; }
   void closeTyping() { m_openForMoreTyping = false; }
 
-  static TypingCommand* lastTypingCommandIfStillOpenForTyping(LocalFrame*);
-
   void doApply(EditingState*) override;
   InputEvent::InputType inputType() const override;
   bool isTypingCommand() const override;
@@ -144,7 +146,6 @@ class CORE_EXPORT TypingCommand final : public CompositeEditCommand {
   void setShouldRetainAutocorrectionIndicator(bool retain) override {
     m_shouldRetainAutocorrectionIndicator = retain;
   }
-  bool shouldStopCaretBlinking() const override { return true; }
   void setShouldPreventSpellChecking(bool prevent) {
     m_shouldPreventSpellChecking = prevent;
   }
@@ -161,6 +162,13 @@ class CORE_EXPORT TypingCommand final : public CompositeEditCommand {
   }
 
   bool isIncrementalInsertion() const { return m_isIncrementalInsertion; }
+
+  void deleteSelectionIfRange(const VisibleSelection&,
+                              EditingState*,
+                              bool smartDelete = false,
+                              bool mergeBlocksAfterDelete = true,
+                              bool expandForSpecialElements = true,
+                              bool sanitizeMarkup = true);
 
   ETypingCommand m_commandType;
   String m_textToInsert;
@@ -182,6 +190,7 @@ class CORE_EXPORT TypingCommand final : public CompositeEditCommand {
 
   bool m_isIncrementalInsertion;
   size_t m_selectionStart;
+  InputEvent::InputType m_inputType;
 };
 
 DEFINE_TYPE_CASTS(TypingCommand,

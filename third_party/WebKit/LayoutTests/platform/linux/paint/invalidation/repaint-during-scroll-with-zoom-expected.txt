@@ -28,13 +28,8 @@
           "reason": "scroll"
         },
         {
-          "object": "LayoutBlockFlow HTML",
-          "rect": [3, 65, 225, 235],
-          "reason": "subtree"
-        },
-        {
           "object": "LayoutText #text",
-          "rect": [3, 65, 52, 17],
+          "rect": [3, 65, 55, 17],
           "reason": "subtree"
         },
         {

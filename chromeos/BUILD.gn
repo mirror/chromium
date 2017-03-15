@@ -45,10 +45,10 @@ component("chromeos") {
     "//crypto",
     "//crypto:platform",
     "//google_apis",
+    "//media/base:video_facing",
     "//net",
     "//skia",  # For components/user_manager
     "//third_party/icu",
-    "//third_party/libxml",
     "//third_party/protobuf:protobuf_lite",
     "//url",
   ]
@@ -136,6 +136,7 @@ static_library("test_support_without_gmock") {
     ":chromeos",
     ":cryptohome_proto",
     ":power_manager_proto",
+    "//components/policy/proto",
     "//crypto",
   ]
   sources = [
@@ -170,6 +171,7 @@ test("chromeos_unittests") {
     "//crypto:test_support",
     "//dbus:test_support",
     "//google_apis",
+    "//media/base:video_facing",
     "//net",
     "//net:test_support",
     "//testing/gmock",

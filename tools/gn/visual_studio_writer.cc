@@ -71,12 +71,15 @@ struct SourceFileWriter {
 
 const char kToolsetVersionVs2013[] = "v120";               // Visual Studio 2013
 const char kToolsetVersionVs2015[] = "v140";               // Visual Studio 2015
+const char kToolsetVersionVs2017[] = "v141";               // Visual Studio 2017
 const char kProjectVersionVs2013[] = "12.0";               // Visual Studio 2013
 const char kProjectVersionVs2015[] = "14.0";               // Visual Studio 2015
+const char kProjectVersionVs2017[] = "15.0";               // Visual Studio 2015
 const char kVersionStringVs2013[] = "Visual Studio 2013";  // Visual Studio 2013
 const char kVersionStringVs2015[] = "Visual Studio 2015";  // Visual Studio 2015
+const char kVersionStringVs2017[] = "Visual Studio 2017";  // Visual Studio 2017
 const char kWindowsKitsVersion[] = "10";                   // Windows 10 SDK
-const char kWindowsKitsIncludeVersion[] = "10.0.10586.0";  // Windows 10 SDK
+const char kWindowsKitsIncludeVersion[] = "10.0.14393.0";  // Windows 10 SDK
 
 const char kGuidTypeProject[] = "{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}";
 const char kGuidTypeFolder[] = "{2150E333-8FDC-42A3-9474-1A3956D46DE8}";
@@ -272,6 +275,11 @@ VisualStudioWriter::VisualStudioWriter(const BuildSettings* build_settings,
       project_version_ = kProjectVersionVs2015;
       toolset_version_ = kToolsetVersionVs2015;
       version_string_ = kVersionStringVs2015;
+      break;
+    case Version::Vs2017:
+      project_version_ = kProjectVersionVs2017;
+      toolset_version_ = kToolsetVersionVs2017;
+      version_string_ = kVersionStringVs2017;
       break;
     default:
       NOTREACHED() << "Not a valid Visual Studio Version: " << version;

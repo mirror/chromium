@@ -285,7 +285,7 @@ void ChangePictureOptionsHandler::SendSelectedImage() {
       if (previous_image_index_ >=
           default_user_image::kFirstDefaultImageIndex) {
         // User has image from the current set of default images.
-        base::StringValue image_url(
+        base::Value image_url(
             default_user_image::GetDefaultImageUrl(previous_image_index_));
         web_ui()->CallJavascriptFunctionUnsafe(
             "ChangePictureOptions.setSelectedImage", image_url);
@@ -301,8 +301,8 @@ void ChangePictureOptionsHandler::SendSelectedImage() {
 
 void ChangePictureOptionsHandler::SendProfileImage(const gfx::ImageSkia& image,
                                                    bool should_select) {
-  base::StringValue data_url(webui::GetBitmapDataUrl(*image.bitmap()));
-  base::FundamentalValue select(should_select);
+  base::Value data_url(webui::GetBitmapDataUrl(*image.bitmap()));
+  base::Value select(should_select);
   web_ui()->CallJavascriptFunctionUnsafe("ChangePictureOptions.setProfileImage",
                                          data_url, select);
 }
@@ -321,7 +321,7 @@ void ChangePictureOptionsHandler::UpdateProfileImage() {
 
 void ChangePictureOptionsHandler::SendOldImage(const std::string& image_url) {
   previous_image_url_ = image_url;
-  base::StringValue url(image_url);
+  base::Value url(image_url);
   web_ui()->CallJavascriptFunctionUnsafe("ChangePictureOptions.setOldImage",
                                          url);
 }
@@ -423,7 +423,7 @@ void ChangePictureOptionsHandler::SetImageFromCamera(
 }
 
 void ChangePictureOptionsHandler::SetCameraPresent(bool present) {
-  base::FundamentalValue present_value(present);
+  base::Value present_value(present);
 
   web_ui()->CallJavascriptFunctionUnsafe(
       "ChangePictureOptions.setCameraPresent", present_value);

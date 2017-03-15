@@ -104,22 +104,25 @@ class RootInlineBox : public InlineFlowBox {
   void childRemoved(InlineBox*);
 
   bool lineCanAccommodateEllipsis(bool ltr,
-                                  int blockEdge,
-                                  int lineBoxEdge,
-                                  int ellipsisWidth);
+                                  LayoutUnit blockEdge,
+                                  LayoutUnit lineBoxEdge,
+                                  LayoutUnit ellipsisWidth);
   // Return the truncatedWidth, the width of the truncated text + ellipsis.
   LayoutUnit placeEllipsis(const AtomicString& ellipsisStr,
                            bool ltr,
                            LayoutUnit blockLeftEdge,
                            LayoutUnit blockRightEdge,
-                           LayoutUnit ellipsisWidth);
+                           LayoutUnit ellipsisWidth,
+                           LayoutUnit logicalLeftOffset,
+                           bool foundBox);
   // Return the position of the EllipsisBox or -1.
   LayoutUnit placeEllipsisBox(bool ltr,
                               LayoutUnit blockLeftEdge,
                               LayoutUnit blockRightEdge,
                               LayoutUnit ellipsisWidth,
                               LayoutUnit& truncatedWidth,
-                              bool& foundBox) final;
+                              bool& foundBox,
+                              LayoutUnit logicalLeftOffset) final;
 
   using InlineBox::hasEllipsisBox;
   EllipsisBox* ellipsisBox() const;

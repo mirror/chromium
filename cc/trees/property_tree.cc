@@ -130,9 +130,9 @@ void TransformTree::clear() {
 }
 
 void TransformTree::set_needs_update(bool needs_update) {
-  if (needs_update && !needs_update_)
+  if (needs_update && !PropertyTree<TransformNode>::needs_update())
     property_trees()->UpdateTransformTreeUpdateNumber();
-  needs_update_ = needs_update;
+  PropertyTree<TransformNode>::set_needs_update(needs_update);
 }
 
 bool TransformTree::ComputeTranslation(int source_id,
@@ -749,13 +749,25 @@ StickyPositionNodeData* TransformTree::StickyPositionData(int node_id) {
   return &sticky_position_data_[node->sticky_position_constraint_id];
 }
 
-EffectTree::EffectTree() {}
+EffectTree::EffectTree() {
+  render_surfaces_.push_back(nullptr);
+}
 
 EffectTree::~EffectTree() {}
+
+int EffectTree::Insert(const EffectNode& tree_node, int parent_id) {
+  int node_id = PropertyTree<EffectNode>::Insert(tree_node, parent_id);
+  DCHECK_EQ(node_id, static_cast<int>(render_surfaces_.size()));
+
+  render_surfaces_.push_back(nullptr);
+  return node_id;
+}
 
 void EffectTree::clear() {
   PropertyTree<EffectNode>::clear();
   mask_layer_ids_.clear();
+  render_surfaces_.clear();
+  render_surfaces_.push_back(nullptr);
 
 #if DCHECK_IS_ON()
   EffectTree tree;
@@ -977,6 +989,26 @@ void EffectTree::AddMaskLayerId(int id) {
   mask_layer_ids_.push_back(id);
 }
 
+void EffectTree::UpdateRenderSurfaces(LayerTreeImpl* layer_tree_impl,
+                                      bool non_root_surfaces_enabled) {
+  for (int id = kContentsRootNodeId; id < static_cast<int>(size()); ++id) {
+    EffectNode* effect_node = Node(id);
+    bool needs_render_surface =
+        id == kContentsRootNodeId ||
+        (non_root_surfaces_enabled && effect_node->has_render_surface);
+    if (needs_render_surface == !!render_surfaces_[id])
+      continue;
+
+    if (needs_render_surface) {
+      render_surfaces_[id] = base::MakeUnique<RenderSurfaceImpl>(
+          layer_tree_impl, effect_node->owning_layer_id);
+      render_surfaces_[id]->set_effect_tree_index(id);
+    } else {
+      render_surfaces_[id].reset();
+    }
+  }
+}
+
 bool EffectTree::ContributesToDrawnSurface(int id) {
   // All drawn nodes contribute to drawn surface.
   // Exception : Nodes that are hidden and are drawn only for the sake of
@@ -989,34 +1021,29 @@ bool EffectTree::ContributesToDrawnSurface(int id) {
 void EffectTree::ResetChangeTracking() {
   for (int id = EffectTree::kContentsRootNodeId; id < static_cast<int>(size());
        ++id) {
-    EffectNode* node = Node(id);
-    node->effect_changed = false;
+    Node(id)->effect_changed = false;
+    if (render_surfaces_[id])
+      render_surfaces_[id]->ResetPropertyChangedFlags();
   }
 }
 
-EffectTree::StableIdRenderSurfaceList
-EffectTree::CreateStableIdRenderSurfaceList() const {
-  StableIdRenderSurfaceList stable_id_render_surface_list;
+void EffectTree::TakeRenderSurfaces(
+    std::vector<std::unique_ptr<RenderSurfaceImpl>>* render_surfaces) {
   for (int id = kContentsRootNodeId; id < static_cast<int>(size()); ++id) {
-    const EffectNode* node = Node(id);
-    if (node->render_surface) {
-      stable_id_render_surface_list.push_back(
-          std::make_pair(node->owning_layer_id, node->render_surface));
+    if (render_surfaces_[id]) {
+      render_surfaces->push_back(std::move(render_surfaces_[id]));
     }
   }
-  std::sort(stable_id_render_surface_list.begin(),
-            stable_id_render_surface_list.end());
-  return stable_id_render_surface_list;
 }
 
-void EffectTree::UpdateRenderSurfaceEffectIds(
-    const EffectTree::StableIdRenderSurfaceList& stable_id_render_surface_list,
+bool EffectTree::CreateOrReuseRenderSurfaces(
+    std::vector<std::unique_ptr<RenderSurfaceImpl>>* old_render_surfaces,
     LayerTreeImpl* layer_tree_impl) {
   // Make a list of {stable id, node id} pairs for nodes that are supposed to
   // have surfaces.
   std::vector<std::pair<int, int>> stable_id_node_id_list;
   for (int id = kContentsRootNodeId; id < static_cast<int>(size()); ++id) {
-    const EffectNode* node = Node(id);
+    EffectNode* node = Node(id);
     if (node->has_render_surface) {
       stable_id_node_id_list.push_back(
           std::make_pair(node->owning_layer_id, node->id));
@@ -1025,46 +1052,53 @@ void EffectTree::UpdateRenderSurfaceEffectIds(
 
   // Sort by stable id so that we can process the two lists cosequentially.
   std::sort(stable_id_node_id_list.begin(), stable_id_node_id_list.end());
+  std::sort(old_render_surfaces->begin(), old_render_surfaces->end(),
+            [](const std::unique_ptr<RenderSurfaceImpl>& a,
+               const std::unique_ptr<RenderSurfaceImpl>& b) {
+              return a->id() < b->id();
+            });
 
-  auto surface_list_it = stable_id_render_surface_list.begin();
-  auto node_id_list_it = stable_id_node_id_list.begin();
-  while (surface_list_it != stable_id_render_surface_list.end() &&
-         node_id_list_it != stable_id_node_id_list.end()) {
-    if (surface_list_it->first == node_id_list_it->first) {
-      RenderSurfaceImpl* surface = surface_list_it->second;
-      int node_id = node_id_list_it->second;
-      Node(node_id)->render_surface = surface;
-      surface->set_effect_tree_index(node_id);
-      surface_list_it++;
-      node_id_list_it++;
+  bool render_surfaces_changed = false;
+  auto surfaces_list_it = old_render_surfaces->begin();
+  auto id_list_it = stable_id_node_id_list.begin();
+  while (surfaces_list_it != old_render_surfaces->end() &&
+         id_list_it != stable_id_node_id_list.end()) {
+    if ((*surfaces_list_it)->id() == id_list_it->first) {
+      int new_node_id = id_list_it->second;
+      render_surfaces_[new_node_id] = std::move(*surfaces_list_it);
+      render_surfaces_[new_node_id]->set_effect_tree_index(new_node_id);
+      surfaces_list_it++;
+      id_list_it++;
       continue;
     }
 
-    if (surface_list_it->first > node_id_list_it->first) {
-      node_id_list_it++;
-      continue;
-    }
+    render_surfaces_changed = true;
 
-    // If we reach here, there's no longer an effect node with stable id
-    // |surface_list_it->first| that has a render surface. If there's no longer
-    // any corresponding layer either, there's nothing more to do since the
-    // surface owned by that layer would have been destroyed when the layer was
-    // destroyed. But if the layer still exists, we need to destroy the surface
-    // since it now has an invalid effect node id.
-    if (LayerImpl* layer_impl =
-            layer_tree_impl->LayerById(surface_list_it->first)) {
-      layer_impl->SetHasRenderSurface(false);
+    if ((*surfaces_list_it)->id() > id_list_it->first) {
+      int new_node_id = id_list_it->second;
+      render_surfaces_[new_node_id] = base::MakeUnique<RenderSurfaceImpl>(
+          layer_tree_impl, id_list_it->first);
+      render_surfaces_[new_node_id]->set_effect_tree_index(new_node_id);
+      id_list_it++;
+    } else {
+      surfaces_list_it++;
     }
-    surface_list_it++;
   }
 
-  while (surface_list_it != stable_id_render_surface_list.end()) {
-    if (LayerImpl* layer_impl =
-            layer_tree_impl->LayerById(surface_list_it->first)) {
-      layer_impl->SetHasRenderSurface(false);
-    }
-    surface_list_it++;
+  if (surfaces_list_it != old_render_surfaces->end() ||
+      id_list_it != stable_id_node_id_list.end()) {
+    render_surfaces_changed = true;
   }
+
+  while (id_list_it != stable_id_node_id_list.end()) {
+    int new_node_id = id_list_it->second;
+    render_surfaces_[new_node_id] =
+        base::MakeUnique<RenderSurfaceImpl>(layer_tree_impl, id_list_it->first);
+    render_surfaces_[new_node_id]->set_effect_tree_index(new_node_id);
+    id_list_it++;
+  }
+
+  return render_surfaces_changed;
 }
 
 void TransformTree::UpdateNodeAndAncestorsHaveIntegerTranslations(
@@ -1098,9 +1132,11 @@ bool ClipTree::operator==(const ClipTree& other) const {
 
 EffectTree& EffectTree::operator=(const EffectTree& from) {
   PropertyTree::operator=(from);
+  render_surfaces_.resize(size());
   mask_layer_ids_ = from.mask_layer_ids_;
   // copy_requests_ are omitted here, since these need to be moved rather
   // than copied or assigned.
+
   return *this;
 }
 
@@ -1142,8 +1178,6 @@ bool ScrollTree::operator==(const ScrollTree& other) const {
 #if DCHECK_IS_ON()
 void ScrollTree::CopyCompleteTreeState(const ScrollTree& other) {
   currently_scrolling_node_id_ = other.currently_scrolling_node_id_;
-  layer_id_to_scrollbars_enabled_map_ =
-      other.layer_id_to_scrollbars_enabled_map_;
   layer_id_to_scroll_offset_map_ = other.layer_id_to_scroll_offset_map_;
   layer_id_to_synced_scroll_offset_map_ =
       other.layer_id_to_synced_scroll_offset_map_;
@@ -1175,7 +1209,7 @@ gfx::ScrollOffset ScrollTree::MaxScrollOffset(int scroll_node_id) const {
   gfx::SizeF scroll_bounds =
       gfx::SizeF(scroll_node->bounds.width(), scroll_node->bounds.height());
 
-  if (scroll_node->is_inner_viewport_scroll_layer) {
+  if (scroll_node->scrolls_inner_viewport) {
     scroll_bounds.Enlarge(
         property_trees()->inner_viewport_scroll_bounds_delta().x(),
         property_trees()->inner_viewport_scroll_bounds_delta().y());
@@ -1225,10 +1259,10 @@ gfx::Size ScrollTree::scroll_clip_layer_bounds(int scroll_node_id) const {
   gfx::Size scroll_clip_layer_bounds = scroll_node->scroll_clip_layer_bounds;
 
   gfx::Vector2dF scroll_clip_layer_bounds_delta;
-  if (scroll_node->is_inner_viewport_scroll_layer) {
+  if (scroll_node->scrolls_inner_viewport) {
     scroll_clip_layer_bounds_delta.Add(
         property_trees()->inner_viewport_container_bounds_delta());
-  } else if (scroll_node->is_outer_viewport_scroll_layer) {
+  } else if (scroll_node->scrolls_outer_viewport) {
     scroll_clip_layer_bounds_delta.Add(
         property_trees()->outer_viewport_container_bounds_delta());
   }
@@ -2084,22 +2118,6 @@ gfx::Transform PropertyTrees::ToScreenSpaceTransformWithoutSurfaceContentsScale(
     screen_space_transform.Scale(1.0 / effect_node->surface_contents_scale.x(),
                                  1.0 / effect_node->surface_contents_scale.y());
   return screen_space_transform;
-}
-
-bool PropertyTrees::ComputeTransformFromTarget(
-    int transform_id,
-    int effect_id,
-    gfx::Transform* transform) const {
-  transform->MakeIdentity();
-  if (transform_id == TransformTree::kInvalidNodeId)
-    return true;
-
-  const EffectNode* effect_node = effect_tree.Node(effect_id);
-
-  bool success = GetFromTarget(transform_id, effect_id, transform);
-  transform->Scale(effect_node->surface_contents_scale.x(),
-                   effect_node->surface_contents_scale.y());
-  return success;
 }
 
 }  // namespace cc

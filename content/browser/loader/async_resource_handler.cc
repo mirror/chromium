@@ -28,7 +28,6 @@
 #include "content/common/resource_messages.h"
 #include "content/common/resource_request_completion_status.h"
 #include "content/common/view_messages.h"
-#include "content/public/browser/resource_dispatcher_host_delegate.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/resource_response.h"
 #include "ipc/ipc_message_macros.h"
@@ -308,11 +307,6 @@ void AsyncResourceHandler::OnResponseStarted(
   }
 
   const ResourceRequestInfoImpl* info = GetRequestInfo();
-  if (rdh_->delegate()) {
-    rdh_->delegate()->OnResponseStarted(request(), info->GetContext(),
-                                        response);
-  }
-
   ResourceMessageFilter* filter = GetFilter();
   if (!filter) {
     controller->Cancel();
@@ -367,21 +361,28 @@ void AsyncResourceHandler::OnWillStart(
   controller->Resume();
 }
 
-bool AsyncResourceHandler::OnWillRead(scoped_refptr<net::IOBuffer>* buf,
-                                      int* buf_size) {
+void AsyncResourceHandler::OnWillRead(
+    scoped_refptr<net::IOBuffer>* buf,
+    int* buf_size,
+    std::unique_ptr<ResourceController> controller) {
   DCHECK(!has_controller());
 
-  // TODO(mmenke):  Should fail with ERR_INSUFFICIENT_RESOURCES here.
-  if (!CheckForSufficientResource())
-    return false;
+  if (!CheckForSufficientResource()) {
+    controller->CancelWithError(net::ERR_INSUFFICIENT_RESOURCES);
+    return;
+  }
 
   // Return early if InliningHelper allocates the buffer, so that we should
   // inline the data into the IPC message without allocating SharedMemory.
-  if (inlining_helper_->PrepareInlineBufferIfApplicable(buf, buf_size))
-    return true;
+  if (inlining_helper_->PrepareInlineBufferIfApplicable(buf, buf_size)) {
+    controller->Resume();
+    return;
+  }
 
-  if (!EnsureResourceBufferIsInitialized())
-    return false;
+  if (!EnsureResourceBufferIsInitialized()) {
+    controller->CancelWithError(net::ERR_INSUFFICIENT_RESOURCES);
+    return;
+  }
 
   DCHECK(buffer_->CanAllocate());
   char* memory = buffer_->Allocate(&allocation_size_);
@@ -390,7 +391,7 @@ bool AsyncResourceHandler::OnWillRead(scoped_refptr<net::IOBuffer>* buf,
   *buf = new DependentIOBuffer(buffer_.get(), memory);
   *buf_size = allocation_size_;
 
-  return true;
+  controller->Resume();
 }
 
 void AsyncResourceHandler::OnReadCompleted(

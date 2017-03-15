@@ -35,6 +35,7 @@
 #include "core/frame/FrameHost.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
 #include "core/input/EventHandler.h"
@@ -89,7 +90,7 @@ class PagePopupChromeClient final : public EmptyChromeClient {
   IntRect rootWindowRect() override { return m_popup->windowRectInScreen(); }
 
   IntRect viewportToScreen(const IntRect& rect,
-                           const Widget* widget) const override {
+                           const FrameViewBase* frameViewBase) const override {
     WebRect rectInScreen(rect);
     WebRect windowRect = m_popup->windowRectInScreen();
     m_popup->widgetClient()->convertViewportToWindow(&rectInScreen);
@@ -122,14 +123,13 @@ class PagePopupChromeClient final : public EmptyChromeClient {
       m_popup->widgetClient()->didInvalidateRect(paintRect);
   }
 
-  void scheduleAnimation(Widget*) override {
+  void scheduleAnimation(FrameViewBase*) override {
     // Calling scheduleAnimation on m_webView so WebViewTestProxy will call
     // beginFrame.
     if (LayoutTestSupport::isRunningLayoutTest())
       m_popup->m_webView->mainFrameImpl()->frameWidget()->scheduleAnimation();
 
-    if (m_popup->isAcceleratedCompositingActive()) {
-      DCHECK(m_popup->m_layerTreeView);
+    if (m_popup->m_layerTreeView) {
       m_popup->m_layerTreeView->setNeedsBeginFrame();
       return;
     }
@@ -305,10 +305,10 @@ bool WebPagePopupImpl::initializePage() {
       mainSettings.getScrollAnimatorEnabled());
 
   provideContextFeaturesTo(*m_page, WTF::makeUnique<PagePopupFeaturesClient>());
-  DEFINE_STATIC_LOCAL(FrameLoaderClient, emptyFrameLoaderClient,
-                      (EmptyFrameLoaderClient::create()));
+  DEFINE_STATIC_LOCAL(LocalFrameClient, emptyLocalFrameClient,
+                      (EmptyLocalFrameClient::create()));
   LocalFrame* frame =
-      LocalFrame::create(&emptyFrameLoaderClient, &m_page->frameHost(), 0);
+      LocalFrame::create(&emptyLocalFrameClient, &m_page->frameHost(), 0);
   frame->setPagePopupOwner(m_popupClient->ownerElement());
   frame->setView(FrameView::create(*frame));
   frame->init();
@@ -323,6 +323,8 @@ bool WebPagePopupImpl::initializePage() {
   PagePopupSupplement::install(*frame, *this, m_popupClient);
   DCHECK_EQ(m_popupClient->ownerElement().document().existingAXObjectCache(),
             frame->document()->existingAXObjectCache());
+
+  initializeLayerTreeView();
 
   RefPtr<SharedBuffer> data = SharedBuffer::create();
   m_popupClient->writeDocument(data.get());
@@ -369,7 +371,7 @@ void WebPagePopupImpl::setRootGraphicsLayer(GraphicsLayer* layer) {
   m_rootGraphicsLayer = layer;
   m_rootLayer = layer ? layer->platformLayer() : 0;
 
-  setIsAcceleratedCompositingActive(layer);
+  m_isAcceleratedCompositingActive = !!layer;
   if (m_layerTreeView) {
     if (m_rootLayer) {
       m_layerTreeView->setRootLayer(*m_rootLayer);
@@ -379,29 +381,16 @@ void WebPagePopupImpl::setRootGraphicsLayer(GraphicsLayer* layer) {
   }
 }
 
-void WebPagePopupImpl::setIsAcceleratedCompositingActive(bool enter) {
-  if (m_isAcceleratedCompositingActive == enter)
-    return;
-
-  if (!enter) {
-    m_isAcceleratedCompositingActive = false;
-  } else if (m_layerTreeView) {
-    m_isAcceleratedCompositingActive = true;
+void WebPagePopupImpl::initializeLayerTreeView() {
+  TRACE_EVENT0("blink", "WebPagePopupImpl::initializeLayerTreeView");
+  m_layerTreeView = m_widgetClient->initializeLayerTreeView();
+  if (m_layerTreeView) {
+    m_layerTreeView->setVisible(true);
+    m_animationHost = WTF::makeUnique<CompositorAnimationHost>(
+        m_layerTreeView->compositorAnimationHost());
+    m_page->layerTreeViewInitialized(*m_layerTreeView, nullptr);
   } else {
-    TRACE_EVENT0("blink",
-                 "WebPagePopupImpl::setIsAcceleratedCompositingActive(true)");
-
-    m_layerTreeView = m_widgetClient->initializeLayerTreeView();
-    if (m_layerTreeView) {
-      m_layerTreeView->setVisible(true);
-      m_isAcceleratedCompositingActive = true;
-      m_animationHost = WTF::makeUnique<CompositorAnimationHost>(
-          m_layerTreeView->compositorAnimationHost());
-      m_page->layerTreeViewInitialized(*m_layerTreeView, nullptr);
-    } else {
-      m_isAcceleratedCompositingActive = false;
-      m_animationHost = nullptr;
-    }
+    m_animationHost = nullptr;
   }
 }
 
@@ -417,7 +406,7 @@ void WebPagePopupImpl::willCloseLayerTreeView() {
   if (m_page && m_layerTreeView)
     m_page->willCloseLayerTreeView(*m_layerTreeView, nullptr);
 
-  setIsAcceleratedCompositingActive(false);
+  m_isAcceleratedCompositingActive = false;
   m_layerTreeView = nullptr;
   m_animationHost = nullptr;
 }
@@ -449,7 +438,7 @@ void WebPagePopupImpl::resize(const WebSize& newSizeInViewport) {
 
   if (m_page) {
     toLocalFrame(m_page->mainFrame())->view()->resize(newSizeInViewport);
-    m_page->frameHost().visualViewport().setSize(newSizeInViewport);
+    m_page->visualViewport().setSize(newSizeInViewport);
   }
 
   m_widgetClient->didInvalidateRect(

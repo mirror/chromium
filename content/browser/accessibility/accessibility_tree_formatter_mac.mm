@@ -92,7 +92,7 @@ std::unique_ptr<base::ListValue> PopulateArray(NSArray* array) {
   return list;
 }
 
-std::unique_ptr<base::StringValue> StringForBrowserAccessibility(
+std::unique_ptr<base::Value> StringForBrowserAccessibility(
     BrowserAccessibilityCocoa* obj) {
   NSMutableArray* tokens = [[NSMutableArray alloc] init];
 
@@ -122,8 +122,8 @@ std::unique_ptr<base::StringValue> StringForBrowserAccessibility(
   }
 
   NSString* result = [tokens componentsJoinedByString:@" "];
-  return std::unique_ptr<base::StringValue>(
-      new base::StringValue(SysNSStringToUTF16(result)));
+  return std::unique_ptr<base::Value>(
+      new base::Value(SysNSStringToUTF16(result)));
 }
 
 std::unique_ptr<base::Value> PopulateObject(id value) {
@@ -138,11 +138,14 @@ std::unique_ptr<base::Value> PopulateObject(id value) {
         StringForBrowserAccessibility((BrowserAccessibilityCocoa*)value));
   }
 
-  return std::unique_ptr<base::Value>(new base::StringValue(
+  return std::unique_ptr<base::Value>(new base::Value(
       SysNSStringToUTF16([NSString stringWithFormat:@"%@", value])));
 }
 
 NSArray* BuildAllAttributesArray() {
+  // Note: clang-format tries to put multiple attributes on one line,
+  // but we prefer to have one per line for readability.
+  // clang-format off
   NSArray* array = [NSArray arrayWithObjects:
       NSAccessibilityRoleDescriptionAttribute,
       NSAccessibilityTitleAttribute,
@@ -167,6 +170,7 @@ NSArray* BuildAllAttributesArray() {
       @"AXARIASetSize",
       @"AXARIAPosInSet",
       NSAccessibilityColumnIndexRangeAttribute,
+      @"AXDOMIdentifier",
       @"AXDropEffects",
       NSAccessibilityEnabledAttribute,
       NSAccessibilityExpandedAttribute,
@@ -189,6 +193,8 @@ NSArray* BuildAllAttributesArray() {
       @"AXVisited",
       @"AXLinkedUIElements",
       nil];
+  // clang-format off
+
   return [array retain];
 }
 

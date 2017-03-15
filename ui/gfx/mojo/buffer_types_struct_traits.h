@@ -115,6 +115,8 @@ struct EnumTraits<gfx::mojom::BufferUsage, gfx::BufferUsage> {
         return gfx::mojom::BufferUsage::GPU_READ;
       case gfx::BufferUsage::SCANOUT:
         return gfx::mojom::BufferUsage::SCANOUT;
+      case gfx::BufferUsage::SCANOUT_CPU_READ_WRITE:
+        return gfx::mojom::BufferUsage::SCANOUT_CPU_READ_WRITE;
       case gfx::BufferUsage::GPU_READ_CPU_READ_WRITE:
         return gfx::mojom::BufferUsage::GPU_READ_CPU_READ_WRITE;
       case gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT:
@@ -131,6 +133,9 @@ struct EnumTraits<gfx::mojom::BufferUsage, gfx::BufferUsage> {
         return true;
       case gfx::mojom::BufferUsage::SCANOUT:
         *out = gfx::BufferUsage::SCANOUT;
+        return true;
+      case gfx::mojom::BufferUsage::SCANOUT_CPU_READ_WRITE:
+        *out = gfx::BufferUsage::SCANOUT_CPU_READ_WRITE;
         return true;
       case gfx::mojom::BufferUsage::GPU_READ_CPU_READ_WRITE:
         *out = gfx::BufferUsage::GPU_READ_CPU_READ_WRITE;
@@ -155,8 +160,8 @@ struct EnumTraits<gfx::mojom::GpuMemoryBufferType, gfx::GpuMemoryBufferType> {
         return gfx::mojom::GpuMemoryBufferType::SHARED_MEMORY_BUFFER;
       case gfx::GpuMemoryBufferType::IO_SURFACE_BUFFER:
         return gfx::mojom::GpuMemoryBufferType::IO_SURFACE_BUFFER;
-      case gfx::GpuMemoryBufferType::OZONE_NATIVE_PIXMAP:
-        return gfx::mojom::GpuMemoryBufferType::OZONE_NATIVE_PIXMAP;
+      case gfx::GpuMemoryBufferType::NATIVE_PIXMAP:
+        return gfx::mojom::GpuMemoryBufferType::NATIVE_PIXMAP;
     }
     NOTREACHED();
     return gfx::mojom::GpuMemoryBufferType::LAST;
@@ -174,8 +179,8 @@ struct EnumTraits<gfx::mojom::GpuMemoryBufferType, gfx::GpuMemoryBufferType> {
       case gfx::mojom::GpuMemoryBufferType::IO_SURFACE_BUFFER:
         *out = gfx::GpuMemoryBufferType::IO_SURFACE_BUFFER;
         return true;
-      case gfx::mojom::GpuMemoryBufferType::OZONE_NATIVE_PIXMAP:
-        *out = gfx::GpuMemoryBufferType::OZONE_NATIVE_PIXMAP;
+      case gfx::mojom::GpuMemoryBufferType::NATIVE_PIXMAP:
+        *out = gfx::GpuMemoryBufferType::NATIVE_PIXMAP;
         return true;
     }
     return false;
@@ -230,10 +235,10 @@ struct StructTraits<gfx::mojom::NativePixmapHandleDataView,
                               void* context);
 
   static bool IsNull(const gfx::NativePixmapHandle& handle) {
-#if defined(USE_OZONE)
+#if defined(OS_LINUX)
     return false;
 #else
-    // NativePixmapHandle are not used on non-ozone platforms.
+    // NativePixmapHandle are not used on non-linux platforms.
     return true;
 #endif
   }

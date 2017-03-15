@@ -221,15 +221,15 @@ public class ContextualSearchBarControl
     }
 
     /**
-     * Sets the search context to display in the control.
+     * Sets the details of the context to display in the control.
      * @param selection The portion of the context that represents the user's selection.
      * @param end The portion of the context after the selection.
      */
-    public void setSearchContext(String selection, String end) {
+    public void setContextDetails(String selection, String end) {
         cancelSearchTermResolutionAnimation();
         hideCaption();
         mQuickActionControl.reset();
-        mContextControl.setSearchContext(selection, end);
+        mContextControl.setContextDetails(selection, end);
         resetSearchBarContextOpacity();
         animateDividerLine(false);
     }
@@ -322,9 +322,13 @@ public class ContextualSearchBarControl
      * Sets the quick action if one is available.
      * @param quickActionUri The URI for the intent associated with the quick action.
      * @param quickActionCategory The {@link QuickActionCategory} for the quick action.
+     * @param toolbarBackgroundColor The current toolbar background color. This may be used for
+     *                               icon tinting.
      */
-    public void setQuickAction(String quickActionUri, int quickActionCategory) {
-        mQuickActionControl.setQuickAction(quickActionUri, quickActionCategory);
+    public void setQuickAction(
+            String quickActionUri, int quickActionCategory, int toolbarBackgroundColor) {
+        mQuickActionControl.setQuickAction(
+                quickActionUri, quickActionCategory, toolbarBackgroundColor);
         if (mQuickActionControl.hasQuickAction()) {
             // TODO(twellington): should the quick action caption be stored separately from the
             // regular caption?

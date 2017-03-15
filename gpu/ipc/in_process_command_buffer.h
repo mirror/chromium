@@ -128,7 +128,8 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
   bool IsFenceSyncReleased(uint64_t release) override;
   void SignalSyncToken(const SyncToken& sync_token,
                        const base::Closure& callback) override;
-  bool CanWaitUnverifiedSyncToken(const SyncToken* sync_token) override;
+  void WaitSyncTokenHint(const SyncToken& sync_token) override;
+  bool CanWaitUnverifiedSyncToken(const SyncToken& sync_token) override;
 
 // ImageTransportSurfaceDelegate implementation:
 #if defined(OS_WIN)
@@ -237,12 +238,8 @@ class GPU_EXPORT InProcessCommandBuffer : public CommandBuffer,
   void ProcessTasksOnGpuThread();
   void CheckSequencedThread();
   void FenceSyncReleaseOnGpuThread(uint64_t release);
-  bool WaitFenceSyncOnGpuThread(gpu::CommandBufferNamespace namespace_id,
-                                gpu::CommandBufferId command_buffer_id,
-                                uint64_t release);
-  void OnWaitFenceSyncCompleted(CommandBufferNamespace namespace_id,
-                                CommandBufferId command_buffer_id,
-                                uint64_t release);
+  bool WaitSyncTokenOnGpuThread(const SyncToken& sync_token);
+  void OnWaitSyncTokenCompleted(const SyncToken& sync_token);
   void DescheduleUntilFinishedOnGpuThread();
   void RescheduleAfterFinishedOnGpuThread();
   void SignalSyncTokenOnGpuThread(const SyncToken& sync_token,

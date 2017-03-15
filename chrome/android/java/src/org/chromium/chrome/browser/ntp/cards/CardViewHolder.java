@@ -22,6 +22,7 @@ import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.ntp.ContextMenuManager.ContextMenuItemId;
+import org.chromium.chrome.browser.suggestions.SuggestionsRecyclerView;
 import org.chromium.chrome.browser.util.MathUtils;
 import org.chromium.chrome.browser.util.ViewUtils;
 import org.chromium.chrome.browser.widget.displaystyle.HorizontalDisplayStyle;
@@ -36,7 +37,7 @@ import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
  * - Cards can peek above the fold if there is enough space.
  *
  * - When peeking, tapping on cards will make them request a scroll up (see
- *   {@link NewTabPageRecyclerView#scrollToFirstCard()}). Tap events in non-peeking state will be
+ *   {@link SuggestionsRecyclerView#scrollToFirstCard()}). Tap events in non-peeking state will be
  *   routed through {@link #onCardTapped()} for subclasses to override.
  *
  * - Cards will get some lateral margins when the viewport is sufficiently wide.
@@ -65,7 +66,7 @@ public abstract class CardViewHolder
     private final int mDefaultLateralMargin;
     private final int mWideLateralMargin;
 
-    protected final NewTabPageRecyclerView mRecyclerView;
+    protected final SuggestionsRecyclerView mRecyclerView;
 
     private final UiConfig mUiConfig;
     private final MarginResizer mMarginResizer;
@@ -85,7 +86,7 @@ public abstract class CardViewHolder
      * @param uiConfig The NTP UI configuration object used to adjust the card UI.
      * @param contextMenuManager The manager responsible for the context menu.
      */
-    public CardViewHolder(int layoutId, final NewTabPageRecyclerView recyclerView,
+    public CardViewHolder(int layoutId, final SuggestionsRecyclerView recyclerView,
             UiConfig uiConfig, final ContextMenuManager contextMenuManager) {
         super(inflateView(layoutId, recyclerView));
 
@@ -102,11 +103,8 @@ public abstract class CardViewHolder
         itemView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isPeeking()) {
-                    recyclerView.scrollToFirstCard();
-                } else {
-                    onCardTapped();
-                }
+                if (recyclerView.interceptCardTapped(CardViewHolder.this)) return;
+                onCardTapped();
             }
         });
 
@@ -173,14 +171,6 @@ public abstract class CardViewHolder
      */
     @CallSuper
     protected void onBindViewHolder() {
-        // Reset the peek status to avoid recycled view holders to be peeking at the wrong moment.
-        if (getAdapterPosition() != mRecyclerView.getNewTabPageAdapter().getFirstCardPosition()) {
-            // Not the first card, we can't peek anyway.
-            setPeekingPercentage(0f);
-        } else {
-            mRecyclerView.updatePeekingCard(this);
-        }
-
         // Reset the transparency and translation in case a dismissed card is being recycled.
         itemView.setAlpha(1f);
         itemView.setTranslationX(0f);
@@ -202,6 +192,8 @@ public abstract class CardViewHolder
 
         // Make sure we use the right background.
         updateLayoutParams();
+
+        mRecyclerView.onCardBound(this);
     }
 
     @Override
@@ -241,26 +233,24 @@ public abstract class CardViewHolder
     }
 
     /**
-     * Change the width, padding and child opacity of the card to give a smooth transition as the
-     * user scrolls.
+     * Resets the appearance of the card to not peeking.
+     */
+    public void setNotPeeking() {
+        setPeekingPercentage(0);
+    }
+
+    /**
+     * Change the width, padding and child opacity of the card to give a smooth transition from
+     * peeking to fully expanded as the user scrolls.
      * @param availableSpace space (pixels) available between the bottom of the screen and the
      *                       above-the-fold section, where the card can peek.
-     * @param canPeek whether the screen size allows having a peeking card.
      */
-    public void updatePeek(int availableSpace, boolean canPeek) {
-        float peekingPercentage;
-
-        if (!canPeek) {
-            peekingPercentage = 0f;
-        } else {
-            // If 1 padding unit (|mMaxPeekPadding|) is visible, the card is fully peeking. This is
-            // reduced as the card is scrolled up, until 2 padding units are visible and the card is
-            // not peeking anymore at all. Anything not between 0 and 1 is clamped.
-            peekingPercentage =
-                    MathUtils.clamp(2f - (float) availableSpace / mMaxPeekPadding, 0f, 1f);
-        }
-
-        setPeekingPercentage(peekingPercentage);
+    public void updatePeek(int availableSpace) {
+        // If 1 padding unit (|mMaxPeekPadding|) is visible, the card is fully peeking. This is
+        // reduced as the card is scrolled up, until 2 padding units are visible and the card is
+        // not peeking anymore at all. Anything not between 0 and 1 is clamped.
+        setPeekingPercentage(
+                MathUtils.clamp(2f - (float) availableSpace / mMaxPeekPadding, 0f, 1f));
     }
 
     /**
@@ -339,7 +329,7 @@ public abstract class CardViewHolder
         return R.drawable.card_single;
     }
 
-    protected NewTabPageRecyclerView getRecyclerView() {
+    public SuggestionsRecyclerView getRecyclerView() {
         return mRecyclerView;
     }
 }

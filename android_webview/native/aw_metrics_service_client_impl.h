@@ -12,6 +12,7 @@
 
 #include "base/lazy_instance.h"
 #include "base/macros.h"
+#include "components/metrics/metrics_log_uploader.h"
 
 namespace metrics {
 class MetricsStateManager;
@@ -26,7 +27,7 @@ namespace android_webview {
 // asynchronous; even after Initialize has returned, some methods may not be
 // ready to use (see below).
 class AwMetricsServiceClientImpl : public AwMetricsServiceClient {
-  friend struct base::DefaultLazyInstanceTraits<AwMetricsServiceClientImpl>;
+  friend struct base::LazyInstanceTraitsBase<AwMetricsServiceClientImpl>;
 
  public:
   void Initialize(PrefService* pref_service,
@@ -53,8 +54,9 @@ class AwMetricsServiceClientImpl : public AwMetricsServiceClient {
       const base::Closure& done_callback) override;
   void CollectFinalMetricsForLog(const base::Closure& done_callback) override;
   std::unique_ptr<metrics::MetricsLogUploader> CreateUploader(
-      const std::string& server_url,
-      const std::string& mime_type,
+      base::StringPiece server_url,
+      base::StringPiece mime_type,
+      metrics::MetricsLogUploader::MetricServiceType service_type,
       const base::Callback<void(int)>& on_upload_complete) override;
   base::TimeDelta GetStandardUploadInterval() override;
 
@@ -77,4 +79,4 @@ bool RegisterAwMetricsServiceClient(JNIEnv* env);
 
 }  // namespace android_webview
 
-#endif  // ANDROID_WEBVIEW_NATIVE_AW_METRICS_SWITCH_
+#endif  // ANDROID_WEBVIEW_NATIVE_AW_METRICS_SERVICE_CLIENT_IMPL_

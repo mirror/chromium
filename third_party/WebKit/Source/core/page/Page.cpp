@@ -30,10 +30,14 @@
 #include "core/editing/DragCaret.h"
 #include "core/editing/markers/DocumentMarkerController.h"
 #include "core/events/Event.h"
+#include "core/frame/BrowserControls.h"
 #include "core/frame/DOMTimer.h"
+#include "core/frame/EventHandlerRegistry.h"
 #include "core/frame/FrameConsole.h"
 #include "core/frame/FrameHost.h"
 #include "core/frame/FrameView.h"
+#include "core/frame/PageScaleConstraints.h"
+#include "core/frame/PageScaleConstraintsSet.h"
 #include "core/frame/RemoteFrame.h"
 #include "core/frame/RemoteFrameView.h"
 #include "core/frame/Settings.h"
@@ -50,7 +54,9 @@
 #include "core/page/PointerLockController.h"
 #include "core/page/ScopedPageSuspender.h"
 #include "core/page/ValidationMessageClient.h"
+#include "core/page/scrolling/OverscrollController.h"
 #include "core/page/scrolling/ScrollingCoordinator.h"
+#include "core/page/scrolling/TopDocumentRootScrollerController.h"
 #include "core/paint/PaintLayer.h"
 #include "platform/WebFrameScheduler.h"
 #include "platform/graphics/GraphicsLayer.h"
@@ -72,35 +78,13 @@ Page::PageSet& Page::ordinaryPages() {
   return pages;
 }
 
-void Page::networkStateChanged(bool online) {
-  HeapVector<Member<LocalFrame>> frames;
-
-  // Get all the frames of all the pages in all the page groups
-  for (Page* page : allPages()) {
-    for (Frame* frame = page->mainFrame(); frame;
-         frame = frame->tree().traverseNext()) {
-      // FIXME: There is currently no way to dispatch events to out-of-process
-      // frames.
-      if (frame->isLocalFrame())
-        frames.push_back(toLocalFrame(frame));
-    }
-  }
-
-  AtomicString eventName =
-      online ? EventTypeNames::online : EventTypeNames::offline;
-  for (const auto& frame : frames) {
-    frame->domWindow()->dispatchEvent(Event::create(eventName));
-    InspectorInstrumentation::networkStateChanged(frame.get(), online);
-  }
-}
-
-float deviceScaleFactor(LocalFrame* frame) {
+float deviceScaleFactorDeprecated(LocalFrame* frame) {
   if (!frame)
     return 1;
   Page* page = frame->page();
   if (!page)
     return 1;
-  return page->deviceScaleFactor();
+  return page->deviceScaleFactorDeprecated();
 }
 
 Page* Page::createOrdinary(PageClients& pageClients) {
@@ -121,7 +105,16 @@ Page::Page(PageClients& pageClients)
       m_focusController(FocusController::create(this)),
       m_contextMenuController(
           ContextMenuController::create(this, pageClients.contextMenuClient)),
+      m_pageScaleConstraintsSet(PageScaleConstraintsSet::create()),
       m_pointerLockController(PointerLockController::create(this)),
+      m_browserControls(BrowserControls::create(*this)),
+      m_consoleMessageStorage(new ConsoleMessageStorage()),
+      m_eventHandlerRegistry(new EventHandlerRegistry(*this)),
+      m_globalRootScrollerController(
+          TopDocumentRootScrollerController::create(*this)),
+      m_visualViewport(VisualViewport::create(*this)),
+      m_overscrollController(
+          OverscrollController::create(visualViewport(), chromeClient())),
       m_mainFrame(nullptr),
       m_editorClient(pageClients.editorClient),
       m_spellCheckerClient(pageClients.spellCheckerClient),
@@ -170,6 +163,58 @@ ScrollingCoordinator* Page::scrollingCoordinator() {
     m_scrollingCoordinator = ScrollingCoordinator::create(this);
 
   return m_scrollingCoordinator.get();
+}
+
+PageScaleConstraintsSet& Page::pageScaleConstraintsSet() {
+  return *m_pageScaleConstraintsSet;
+}
+
+const PageScaleConstraintsSet& Page::pageScaleConstraintsSet() const {
+  return *m_pageScaleConstraintsSet;
+}
+
+BrowserControls& Page::browserControls() {
+  return *m_browserControls;
+}
+
+const BrowserControls& Page::browserControls() const {
+  return *m_browserControls;
+}
+
+ConsoleMessageStorage& Page::consoleMessageStorage() {
+  return *m_consoleMessageStorage;
+}
+
+const ConsoleMessageStorage& Page::consoleMessageStorage() const {
+  return *m_consoleMessageStorage;
+}
+
+EventHandlerRegistry& Page::eventHandlerRegistry() {
+  return *m_eventHandlerRegistry;
+}
+
+const EventHandlerRegistry& Page::eventHandlerRegistry() const {
+  return *m_eventHandlerRegistry;
+}
+
+TopDocumentRootScrollerController& Page::globalRootScrollerController() const {
+  return *m_globalRootScrollerController;
+}
+
+VisualViewport& Page::visualViewport() {
+  return *m_visualViewport;
+}
+
+const VisualViewport& Page::visualViewport() const {
+  return *m_visualViewport;
+}
+
+OverscrollController& Page::overscrollController() {
+  return *m_overscrollController;
+}
+
+const OverscrollController& Page::overscrollController() const {
+  return *m_overscrollController;
 }
 
 ClientRectList* Page::nonFastScrollableRects(const LocalFrame* frame) {
@@ -268,15 +313,57 @@ void Page::setSuspended(bool suspended) {
   }
 }
 
+void Page::setDefaultPageScaleLimits(float minScale, float maxScale) {
+  PageScaleConstraints newDefaults =
+      pageScaleConstraintsSet().defaultConstraints();
+  newDefaults.minimumScale = minScale;
+  newDefaults.maximumScale = maxScale;
+
+  if (newDefaults == pageScaleConstraintsSet().defaultConstraints())
+    return;
+
+  pageScaleConstraintsSet().setDefaultConstraints(newDefaults);
+  pageScaleConstraintsSet().computeFinalConstraints();
+  pageScaleConstraintsSet().setNeedsReset(true);
+
+  if (!mainFrame() || !mainFrame()->isLocalFrame())
+    return;
+
+  FrameView* rootView = deprecatedLocalMainFrame()->view();
+
+  if (!rootView)
+    return;
+
+  rootView->setNeedsLayout();
+}
+
+void Page::setUserAgentPageScaleConstraints(
+    const PageScaleConstraints& newConstraints) {
+  if (newConstraints == pageScaleConstraintsSet().userAgentConstraints())
+    return;
+
+  pageScaleConstraintsSet().setUserAgentConstraints(newConstraints);
+
+  if (!mainFrame() || !mainFrame()->isLocalFrame())
+    return;
+
+  FrameView* rootView = deprecatedLocalMainFrame()->view();
+
+  if (!rootView)
+    return;
+
+  rootView->setNeedsLayout();
+}
+
 void Page::setPageScaleFactor(float scale) {
-  frameHost().visualViewport().setScale(scale);
+  visualViewport().setScale(scale);
 }
 
 float Page::pageScaleFactor() const {
-  return frameHost().visualViewport().scale();
+  return visualViewport().scale();
 }
 
-void Page::setDeviceScaleFactor(float scaleFactor) {
+void Page::setDeviceScaleFactorDeprecated(float scaleFactor) {
   if (m_deviceScaleFactor == scaleFactor)
     return;
 
@@ -437,6 +524,16 @@ void Page::settingsChanged(SettingsDelegate::ChangeType changeType) {
         }
       }
     } break;
+    case SettingsDelegate::MediaControlsChange:
+      for (Frame* frame = mainFrame(); frame;
+           frame = frame->tree().traverseNext()) {
+        if (!frame->isLocalFrame())
+          continue;
+        Document* doc = toLocalFrame(frame)->document();
+        if (doc)
+          HTMLMediaElement::onMediaControlsEnabledChange(doc);
+      }
+      break;
   }
 }
 
@@ -461,14 +558,13 @@ void Page::didCommitLoad(LocalFrame* frame) {
     frameHost().consoleMessageStorage().clear();
     useCounter().didCommitLoad(url);
     deprecation().clearSuppression();
-    frameHost().visualViewport().sendUMAMetrics();
+    visualViewport().sendUMAMetrics();
 
     // Need to reset visual viewport position here since before commit load we
     // would update the previous history item, Page::didCommitLoad is called
     // after a new history item is created in FrameLoader.
     // See crbug.com/642279
-    frameHost().visualViewport().setScrollOffset(ScrollOffset(),
-                                                 ProgrammaticScroll);
+    visualViewport().setScrollOffset(ScrollOffset(), ProgrammaticScroll);
     m_hostsUsingFeatures.updateMeasurementsAndClear();
   }
 }
@@ -498,6 +594,12 @@ DEFINE_TRACE(Page) {
   visitor->trace(m_contextMenuController);
   visitor->trace(m_pointerLockController);
   visitor->trace(m_scrollingCoordinator);
+  visitor->trace(m_browserControls);
+  visitor->trace(m_consoleMessageStorage);
+  visitor->trace(m_eventHandlerRegistry);
+  visitor->trace(m_globalRootScrollerController);
+  visitor->trace(m_visualViewport);
+  visitor->trace(m_overscrollController);
   visitor->trace(m_mainFrame);
   visitor->trace(m_validationMessageClient);
   visitor->trace(m_useCounter);
@@ -524,8 +626,8 @@ void Page::willBeDestroyed() {
   mainFrame->detach(FrameDetachType::Remove);
 
   ASSERT(allPages().contains(this));
-  allPages().remove(this);
-  ordinaryPages().remove(this);
+  allPages().erase(this);
+  ordinaryPages().erase(this);
 
   if (m_scrollingCoordinator)
     m_scrollingCoordinator->willBeDestroyed();

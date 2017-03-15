@@ -6,11 +6,11 @@
 
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
-#include "core/frame/FrameHost.h"
 #include "core/frame/FrameView.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/layout/compositing/PaintLayerCompositor.h"
+#include "core/page/Page.h"
 #include "core/page/scrolling/RootScrollerUtil.h"
 #include "core/page/scrolling/TopDocumentRootScrollerController.h"
 #include "core/paint/PaintLayer.h"
@@ -105,25 +105,10 @@ void RootScrollerController::recomputeEffectiveRootScroller() {
       return;
   }
 
-  PaintLayer* oldRootScrollerLayer = rootScrollerPaintLayer();
-
   m_effectiveRootScroller = newEffectiveRootScroller;
 
-  // This change affects both the old and new layers.
-  if (oldRootScrollerLayer)
-    oldRootScrollerLayer->setNeedsCompositingInputsUpdate();
-  if (rootScrollerPaintLayer())
-    rootScrollerPaintLayer()->setNeedsCompositingInputsUpdate();
-
-  // The above may not be enough as we need to update existing ancestor
-  // GraphicsLayers. This will force us to rebuild the GraphicsLayer tree.
-  if (LayoutView* layoutView = m_document->layoutView()) {
-    layoutView->compositor()->setNeedsCompositingUpdate(
-        CompositingUpdateRebuildTree);
-  }
-
-  if (FrameHost* frameHost = m_document->frameHost())
-    frameHost->globalRootScrollerController().didChangeRootScroller();
+  if (Page* page = m_document->page())
+    page->globalRootScrollerController().didChangeRootScroller();
 }
 
 bool RootScrollerController::isValidRootScroller(const Element& element) const {

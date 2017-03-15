@@ -11,6 +11,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
+#include "base/test/scoped_task_scheduler.h"
 #include "build/build_config.h"
 #include "cc/surfaces/surface.h"
 #include "cc/surfaces/surface_factory.h"
@@ -31,11 +32,6 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/compositor/compositor.h"
 
-#if defined(OS_ANDROID)
-#include "content/browser/renderer_host/context_provider_factory_impl_android.h"
-#include "content/test/mock_gpu_channel_establish_factory.h"
-#endif
-
 namespace content {
 namespace {
 class MockRenderWidgetHostDelegate : public RenderWidgetHostDelegate {
@@ -53,17 +49,13 @@ class MockRenderWidgetHostDelegate : public RenderWidgetHostDelegate {
 
 class RenderWidgetHostViewGuestTest : public testing::Test {
  public:
-  RenderWidgetHostViewGuestTest() {}
+  RenderWidgetHostViewGuestTest() : task_scheduler_(&message_loop_) {}
 
   void SetUp() override {
 #if !defined(OS_ANDROID)
     ImageTransportFactory::InitializeForUnitTests(
         std::unique_ptr<ImageTransportFactory>(
             new NoTransportImageTransportFactory));
-#else
-    ContextProviderFactoryImpl::Initialize(&gpu_channel_factory_);
-    ui::ContextProviderFactory::SetInstance(
-        ContextProviderFactoryImpl::GetInstance());
 #endif
     browser_context_.reset(new TestBrowserContext);
     MockRenderProcessHost* process_host =
@@ -88,14 +80,15 @@ class RenderWidgetHostViewGuestTest : public testing::Test {
     base::RunLoop().RunUntilIdle();
 #if !defined(OS_ANDROID)
     ImageTransportFactory::Terminate();
-#else
-    ui::ContextProviderFactory::SetInstance(nullptr);
-    ContextProviderFactoryImpl::Terminate();
 #endif
   }
 
  protected:
   base::MessageLoopForUI message_loop_;
+
+  // Needed by base::PostTaskWithTraits in RenderWidgetHostImpl constructor.
+  base::test::ScopedTaskScheduler task_scheduler_;
+
   std::unique_ptr<BrowserContext> browser_context_;
   MockRenderWidgetHostDelegate delegate_;
 
@@ -103,10 +96,6 @@ class RenderWidgetHostViewGuestTest : public testing::Test {
   // destruction.
   RenderWidgetHostImpl* widget_host_;
   RenderWidgetHostViewGuest* view_;
-
-#if defined(OS_ANDROID)
-  MockGpuChannelEstablishFactory gpu_channel_factory_;
-#endif
 
  private:
   DISALLOW_COPY_AND_ASSIGN(RenderWidgetHostViewGuestTest);
@@ -164,10 +153,6 @@ class RenderWidgetHostViewGuestSurfaceTest
     ImageTransportFactory::InitializeForUnitTests(
         std::unique_ptr<ImageTransportFactory>(
             new NoTransportImageTransportFactory));
-#else
-    ContextProviderFactoryImpl::Initialize(&gpu_channel_factory_);
-    ui::ContextProviderFactory::SetInstance(
-        ContextProviderFactoryImpl::GetInstance());
 #endif
     browser_context_.reset(new TestBrowserContext);
     MockRenderProcessHost* process_host =
@@ -197,9 +182,6 @@ class RenderWidgetHostViewGuestSurfaceTest
     base::RunLoop().RunUntilIdle();
 #if !defined(OS_ANDROID)
     ImageTransportFactory::Terminate();
-#else
-    ui::ContextProviderFactory::SetInstance(nullptr);
-    ContextProviderFactoryImpl::Terminate();
 #endif
   }
 
@@ -219,10 +201,6 @@ class RenderWidgetHostViewGuestSurfaceTest
   BrowserPluginGuestDelegate browser_plugin_guest_delegate_;
   std::unique_ptr<TestWebContents> web_contents_;
   TestBrowserPluginGuest* browser_plugin_guest_;
-
-#if defined(OS_ANDROID)
-  MockGpuChannelEstablishFactory gpu_channel_factory_;
-#endif
 
   // Tests should set these to NULL if they've already triggered their
   // destruction.
@@ -262,21 +240,22 @@ TEST_F(RenderWidgetHostViewGuestSurfaceTest, TestGuestSurface) {
       0, CreateDelegatedFrame(scale_factor, view_size, view_rect));
 
   cc::SurfaceId id = GetSurfaceId();
-  if (id.is_valid()) {
+
+  EXPECT_TRUE(id.is_valid());
+
 #if !defined(OS_ANDROID)
-    ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
-    cc::SurfaceManager* manager =
-        factory->GetContextFactoryPrivate()->GetSurfaceManager();
-    cc::Surface* surface = manager->GetSurfaceForId(id);
-    EXPECT_TRUE(surface);
-    // There should be a SurfaceSequence created by the RWHVGuest.
-    EXPECT_EQ(1u, surface->GetDestructionDependencyCount());
+  cc::SurfaceManager* manager = ImageTransportFactory::GetInstance()
+                                    ->GetContextFactoryPrivate()
+                                    ->GetSurfaceManager();
+  cc::Surface* surface = manager->GetSurfaceForId(id);
+  EXPECT_TRUE(surface);
+  // There should be a SurfaceSequence created by the RWHVGuest.
+  EXPECT_EQ(1u, surface->GetDestructionDependencyCount());
 #endif
-    // Surface ID should have been passed to BrowserPluginGuest to
-    // be sent to the embedding renderer.
-    EXPECT_EQ(cc::SurfaceInfo(id, scale_factor, view_size),
-              browser_plugin_guest_->last_surface_info_);
-  }
+  // Surface ID should have been passed to BrowserPluginGuest to
+  // be sent to the embedding renderer.
+  EXPECT_EQ(cc::SurfaceInfo(id, scale_factor, view_size),
+            browser_plugin_guest_->last_surface_info_);
 
   browser_plugin_guest_->ResetTestData();
   browser_plugin_guest_->set_has_attached_since_surface_set(true);
@@ -284,29 +263,31 @@ TEST_F(RenderWidgetHostViewGuestSurfaceTest, TestGuestSurface) {
   view_->OnSwapCompositorFrame(
       0, CreateDelegatedFrame(scale_factor, view_size, view_rect));
 
-  id = GetSurfaceId();
-  if (id.is_valid()) {
+  // Since we have not changed the frame size and scale factor, the same surface
+  // id must be used.
+  DCHECK_EQ(id, GetSurfaceId());
+
 #if !defined(OS_ANDROID)
-    ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
-    cc::SurfaceManager* manager =
-        factory->GetContextFactoryPrivate()->GetSurfaceManager();
-    cc::Surface* surface = manager->GetSurfaceForId(id);
-    EXPECT_TRUE(surface);
-    // There should be a SurfaceSequence created by the RWHVGuest.
-    EXPECT_EQ(1u, surface->GetDestructionDependencyCount());
+  surface = manager->GetSurfaceForId(id);
+  EXPECT_TRUE(surface);
+  // Another SurfaceSequence should be created by the RWHVGuest when sending
+  // SurfaceInfo to the embedder.
+  EXPECT_EQ(2u, surface->GetDestructionDependencyCount());
 #endif
-    // Surface ID should have been passed to BrowserPluginGuest to
-    // be sent to the embedding renderer.
-    EXPECT_EQ(cc::SurfaceInfo(id, scale_factor, view_size),
-              browser_plugin_guest_->last_surface_info_);
-  }
+  // Surface ID should have been passed to BrowserPluginGuest to
+  // be sent to the embedding renderer.
+  EXPECT_EQ(cc::SurfaceInfo(id, scale_factor, view_size),
+            browser_plugin_guest_->last_surface_info_);
 
   browser_plugin_guest_->set_attached(false);
   browser_plugin_guest_->ResetTestData();
 
   view_->OnSwapCompositorFrame(
       0, CreateDelegatedFrame(scale_factor, view_size, view_rect));
-  EXPECT_FALSE(GetSurfaceId().is_valid());
+
+  // Since guest is not attached, the CompositorFrame must be processed but the
+  // frame must be evicted to return the resources immediately.
+  EXPECT_FALSE(view_->has_frame());
 }
 
 }  // namespace content

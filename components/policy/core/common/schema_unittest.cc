@@ -641,7 +641,7 @@ TEST(SchemaTest, Validate) {
   bundle.SetBoolean("Boolean", true);
   bundle.SetInteger("Integer", 123);
   bundle.Set("Null", base::Value::CreateNullValue());
-  bundle.Set("Number", new base::FundamentalValue(3.14));
+  bundle.Set("Number", new base::Value(3.14));
   bundle.SetString("String", "omg");
 
   {
@@ -858,16 +858,13 @@ TEST(SchemaTest, Validate) {
     Schema subschema = schema.GetProperty("StringWithPattern");
     ASSERT_TRUE(subschema.valid());
 
-    TestSchemaValidation(
-        subschema, base::StringValue("foobar"), SCHEMA_STRICT, false);
-    TestSchemaValidation(
-        subschema, base::StringValue("foo"), SCHEMA_STRICT, true);
-    TestSchemaValidation(
-        subschema, base::StringValue("fo"), SCHEMA_STRICT, false);
-    TestSchemaValidation(
-        subschema, base::StringValue("fooo"), SCHEMA_STRICT, true);
-    TestSchemaValidation(
-        subschema, base::StringValue("^foo+$"), SCHEMA_STRICT, false);
+    TestSchemaValidation(subschema, base::Value("foobar"), SCHEMA_STRICT,
+                         false);
+    TestSchemaValidation(subschema, base::Value("foo"), SCHEMA_STRICT, true);
+    TestSchemaValidation(subschema, base::Value("fo"), SCHEMA_STRICT, false);
+    TestSchemaValidation(subschema, base::Value("fooo"), SCHEMA_STRICT, true);
+    TestSchemaValidation(subschema, base::Value("^foo+$"), SCHEMA_STRICT,
+                         false);
   }
 
   // Tests on ObjectWithPatternProperties.

@@ -20,11 +20,11 @@ public class DownloadFilter {
     // These statics are used for UMA logging. Please update the AndroidDownloadFilterType enum in
     // histograms.xml if these change.
     public static final int FILTER_ALL = 0;
-    static final int FILTER_PAGE = 1;
-    static final int FILTER_VIDEO = 2;
-    static final int FILTER_AUDIO = 3;
+    public static final int FILTER_PAGE = 1;
+    public static final int FILTER_VIDEO = 2;
+    public static final int FILTER_AUDIO = 3;
     public static final int FILTER_IMAGE = 4;
-    static final int FILTER_DOCUMENT = 5;
+    public static final int FILTER_DOCUMENT = 5;
     public static final int FILTER_OTHER = 6;
     public static final int FILTER_BOUNDARY = 7;
 
@@ -40,14 +40,13 @@ public class DownloadFilter {
      * {@link DownloadHistoryAdapter}.
      */
     static final int[][] FILTER_LIST = new int[][] {
-        {R.drawable.ic_get_app_white_24dp, R.string.download_manager_ui_all_downloads},
-        {R.drawable.ic_drive_site_white_24dp, R.string.download_manager_ui_pages},
-        {R.drawable.ic_play_arrow_white_24dp, R.string.download_manager_ui_video},
-        {R.drawable.ic_music_note_white_24dp, R.string.download_manager_ui_audio},
-        {R.drawable.ic_image_white_24dp, R.string.download_manager_ui_images},
-        {R.drawable.ic_drive_text_white_24dp, R.string.download_manager_ui_documents},
-        {R.drawable.ic_drive_file_white_24dp, R.string.download_manager_ui_other}
-    };
+            {R.drawable.ic_file_download_white_24dp, R.string.download_manager_ui_all_downloads},
+            {R.drawable.ic_drive_site_white_24dp, R.string.download_manager_ui_pages},
+            {R.drawable.ic_play_arrow_white_24dp, R.string.download_manager_ui_video},
+            {R.drawable.ic_music_note_white_24dp, R.string.download_manager_ui_audio},
+            {R.drawable.ic_image_white_24dp, R.string.download_manager_ui_images},
+            {R.drawable.ic_drive_text_white_24dp, R.string.download_manager_ui_documents},
+            {R.drawable.ic_drive_file_white_24dp, R.string.download_manager_ui_other}};
 
     private static final String TAG = "download_ui";
 

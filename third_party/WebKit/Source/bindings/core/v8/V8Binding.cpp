@@ -54,10 +54,10 @@
 #include "core/dom/QualifiedName.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/Settings.h"
 #include "core/inspector/InspectorTraceEvents.h"
 #include "core/loader/FrameLoader.h"
-#include "core/loader/FrameLoaderClient.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "core/workers/WorkletGlobalScope.h"
 #include "core/xml/XPathNSResolver.h"
@@ -717,31 +717,22 @@ DOMWindow* toDOMWindow(v8::Isolate* isolate, v8::Local<v8::Value> value) {
   return 0;
 }
 
-DOMWindow* toDOMWindow(v8::Local<v8::Context> context) {
+LocalDOMWindow* toLocalDOMWindow(v8::Local<v8::Context> context) {
   if (context.IsEmpty())
     return 0;
-  return toDOMWindow(context->GetIsolate(), context->Global());
+  return toLocalDOMWindow(
+      toDOMWindow(context->GetIsolate(), context->Global()));
 }
 
 LocalDOMWindow* enteredDOMWindow(v8::Isolate* isolate) {
   LocalDOMWindow* window =
-      toLocalDOMWindow(toDOMWindow(isolate->GetEnteredContext()));
-  if (!window) {
-    // We don't always have an entered DOM window, for example during microtask
-    // callbacks from V8 (where the entered context may be the DOM-in-JS
-    // context). In that case, we fall back to the current context.
-    //
-    // TODO(haraken): It's nasty to return a current window from
-    // enteredDOMWindow.  All call sites should be updated so that it works even
-    // if it doesn't have an entered window.
-    window = currentDOMWindow(isolate);
-    ASSERT(window);
-  }
+      toLocalDOMWindow(isolate->GetEnteredOrMicrotaskContext());
+  DCHECK(window);
   return window;
 }
 
 LocalDOMWindow* currentDOMWindow(v8::Isolate* isolate) {
-  return toLocalDOMWindow(toDOMWindow(isolate->GetCurrentContext()));
+  return toLocalDOMWindow(isolate->GetCurrentContext());
 }
 
 ExecutionContext* toExecutionContext(v8::Local<v8::Context> context) {
@@ -770,20 +761,8 @@ ExecutionContext* currentExecutionContext(v8::Isolate* isolate) {
   return toExecutionContext(isolate->GetCurrentContext());
 }
 
-ExecutionContext* enteredExecutionContext(v8::Isolate* isolate) {
-  ExecutionContext* context = toExecutionContext(isolate->GetEnteredContext());
-  if (!context) {
-    // We don't always have an entered execution context, for example during
-    // microtask callbacks from V8 (where the entered context may be the
-    // DOM-in-JS context). In that case, we fall back to the current context.
-    context = currentExecutionContext(isolate);
-    ASSERT(context);
-  }
-  return context;
-}
-
-Frame* toFrameIfNotDetached(v8::Local<v8::Context> context) {
-  DOMWindow* window = toDOMWindow(context);
+LocalFrame* toLocalFrameIfNotDetached(v8::Local<v8::Context> context) {
+  LocalDOMWindow* window = toLocalDOMWindow(context);
   if (window && window->isCurrentlyDisplayedInFrame())
     return window->frame();
   // We return 0 here because |context| is detached from the Frame. If we
@@ -823,7 +802,7 @@ v8::Local<v8::Context> toV8Context(ExecutionContext* context,
   return v8::Local<v8::Context>();
 }
 
-v8::Local<v8::Context> toV8Context(Frame* frame, DOMWrapperWorld& world) {
+v8::Local<v8::Context> toV8Context(LocalFrame* frame, DOMWrapperWorld& world) {
   if (!frame)
     return v8::Local<v8::Context>();
   v8::Local<v8::Context> context = toV8ContextEvenIfDetached(frame, world);
@@ -831,24 +810,16 @@ v8::Local<v8::Context> toV8Context(Frame* frame, DOMWrapperWorld& world) {
     return v8::Local<v8::Context>();
   ScriptState* scriptState = ScriptState::from(context);
   if (scriptState->contextIsValid()) {
-    ASSERT(toFrameIfNotDetached(context) == frame);
+    DCHECK_EQ(frame, toLocalFrameIfNotDetached(context));
     return scriptState->context();
   }
   return v8::Local<v8::Context>();
 }
 
-v8::Local<v8::Context> toV8ContextEvenIfDetached(Frame* frame,
+v8::Local<v8::Context> toV8ContextEvenIfDetached(LocalFrame* frame,
                                                  DOMWrapperWorld& world) {
   ASSERT(frame);
   return frame->windowProxy(world)->contextIfInitialized();
-}
-
-void crashIfIsolateIsDead(v8::Isolate* isolate) {
-  if (isolate->IsDead()) {
-    // FIXME: We temporarily deal with V8 internal error situations
-    // such as out-of-memory by crashing the renderer.
-    CRASH();
-  }
 }
 
 bool isValidEnum(const String& value,

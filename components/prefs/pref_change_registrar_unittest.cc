@@ -157,11 +157,9 @@ TEST_F(ObserveSetOfPreferencesTest, IsObserved) {
 TEST_F(ObserveSetOfPreferencesTest, IsManaged) {
   std::unique_ptr<PrefChangeRegistrar> pref_set(CreatePrefChangeRegistrar());
   EXPECT_FALSE(pref_set->IsManaged());
-  pref_service_->SetManagedPref(kHomePage,
-                                new StringValue("http://crbug.com"));
+  pref_service_->SetManagedPref(kHomePage, new Value("http://crbug.com"));
   EXPECT_TRUE(pref_set->IsManaged());
-  pref_service_->SetManagedPref(kHomePageIsNewTabPage,
-                                new FundamentalValue(true));
+  pref_service_->SetManagedPref(kHomePageIsNewTabPage, new Value(true));
   EXPECT_TRUE(pref_set->IsManaged());
   pref_service_->RemoveManagedPref(kHomePage);
   EXPECT_TRUE(pref_set->IsManaged());
@@ -182,16 +180,15 @@ TEST_F(ObserveSetOfPreferencesTest, Observe) {
   pref_set.Add(kHomePageIsNewTabPage, callback);
 
   EXPECT_CALL(*this, OnPreferenceChanged(kHomePage));
-  pref_service_->SetUserPref(kHomePage, new StringValue("http://crbug.com"));
+  pref_service_->SetUserPref(kHomePage, new Value("http://crbug.com"));
   Mock::VerifyAndClearExpectations(this);
 
   EXPECT_CALL(*this, OnPreferenceChanged(kHomePageIsNewTabPage));
-  pref_service_->SetUserPref(kHomePageIsNewTabPage,
-                             new FundamentalValue(true));
+  pref_service_->SetUserPref(kHomePageIsNewTabPage, new Value(true));
   Mock::VerifyAndClearExpectations(this);
 
   EXPECT_CALL(*this, OnPreferenceChanged(_)).Times(0);
-  pref_service_->SetUserPref(kApplicationLocale, new StringValue("en_US.utf8"));
+  pref_service_->SetUserPref(kApplicationLocale, new Value("en_US.utf8"));
   Mock::VerifyAndClearExpectations(this);
 }
 

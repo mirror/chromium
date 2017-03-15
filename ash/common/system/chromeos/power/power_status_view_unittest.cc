@@ -5,9 +5,9 @@
 #include "ash/common/system/chromeos/power/power_status_view.h"
 
 #include "ash/common/system/chromeos/power/power_status.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "ash/test/ash_test_base.h"
 #include "chromeos/dbus/power_manager/power_supply_properties.pb.h"
-#include "grit/ash_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/l10n/time_format.h"
 #include "ui/gfx/image/image_skia.h"

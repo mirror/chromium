@@ -14,10 +14,12 @@
 #include "services/ui/ws/ids.h"
 #include "services/ui/ws/user_id.h"
 #include "services/ui/ws/user_id_tracker_observer.h"
+#include "ui/display/display.h"
 
 namespace ui {
 namespace ws {
 
+class CursorLocationManager;
 class Display;
 class ServerWindow;
 class UserDisplayManager;
@@ -38,6 +40,9 @@ class DisplayManager : public UserIdTrackerObserver,
   // return value.
   UserDisplayManager* GetUserDisplayManager(const UserId& user_id);
 
+  // Returns the CursorLocationManager for |user_id|.
+  CursorLocationManager* GetCursorLocationManager(const UserId& user_id);
+
   // Adds/removes a Display. DisplayManager owns the Displays.
   // TODO(sky): make add take a scoped_ptr.
   void AddDisplay(Display* display);
@@ -47,7 +52,7 @@ class DisplayManager : public UserIdTrackerObserver,
   std::set<const Display*> displays() const;
 
   // Notifies when something about the Display changes.
-  void OnDisplayUpdate(Display* display);
+  void OnDisplayUpdate(const display::Display& display);
 
   // Returns the Display that contains |window|, or null if |window| is not
   // attached to a display.
@@ -82,10 +87,10 @@ class DisplayManager : public UserIdTrackerObserver,
                              const UserId& active_id) override;
 
   // display::ScreenManagerDelegate:
-  void OnDisplayAdded(int64_t id,
+  void OnDisplayAdded(const display::Display& display,
                       const display::ViewportMetrics& metrics) override;
   void OnDisplayRemoved(int64_t id) override;
-  void OnDisplayModified(int64_t id,
+  void OnDisplayModified(const display::Display& display,
                          const display::ViewportMetrics& metrics) override;
   void OnPrimaryDisplayChanged(int64_t primary_display_id) override;
 
@@ -98,6 +103,9 @@ class DisplayManager : public UserIdTrackerObserver,
   std::set<Display*> displays_;
 
   std::map<UserId, std::unique_ptr<UserDisplayManager>> user_display_managers_;
+
+  std::map<UserId, std::unique_ptr<CursorLocationManager>>
+      cursor_location_managers_;
 
   // ID to use for next root node.
   ClientSpecificId next_root_id_;

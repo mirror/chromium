@@ -55,9 +55,9 @@ import org.chromium.chrome.browser.widget.ClipDrawableProgressBar.DrawingInfo;
 import org.chromium.chrome.browser.widget.ControlContainer;
 import org.chromium.content.browser.ContentView;
 import org.chromium.content.browser.ContentViewCore;
-import org.chromium.content.browser.SPenSupport;
 import org.chromium.ui.UiUtils;
 import org.chromium.ui.base.DeviceFormFactor;
+import org.chromium.ui.base.SPenSupport;
 import org.chromium.ui.base.WindowAndroid;
 import org.chromium.ui.resources.ResourceManager;
 import org.chromium.ui.resources.dynamics.DynamicResourceLoader;
@@ -85,7 +85,7 @@ public class CompositorViewHolder extends FrameLayout
 
     private boolean mContentOverlayVisiblity = true;
 
-    private int mPendingSwapBuffersCount;
+    private int mPendingFrameCount;
 
     private final ArrayList<Invalidator.Client> mPendingInvalidations =
             new ArrayList<>();
@@ -497,11 +497,7 @@ public class CompositorViewHolder extends FrameLayout
         ContentViewCore contentViewCore = mTabVisible.getContentViewCore();
         if (contentViewCore == null) return;
 
-        int actionMasked = e.getActionMasked();
-
-        if (SPenSupport.isSPenSupported(getContext())) {
-            actionMasked = SPenSupport.convertSPenEventAction(actionMasked);
-        }
+        int actionMasked = SPenSupport.convertSPenEventAction(e.getActionMasked());
 
         if (actionMasked == MotionEvent.ACTION_DOWN
                 || actionMasked == MotionEvent.ACTION_HOVER_ENTER) {
@@ -583,13 +579,13 @@ public class CompositorViewHolder extends FrameLayout
 
     @Override
     public void onSurfaceCreated() {
-        mPendingSwapBuffersCount = 0;
+        mPendingFrameCount = 0;
         flushInvalidation();
     }
 
     @Override
-    public void onSwapBuffersCompleted(int pendingSwapBuffersCount) {
-        TraceEvent.instant("onSwapBuffersCompleted");
+    public void didSwapFrame(int pendingFrameCount) {
+        TraceEvent.instant("didSwapFrame");
 
         // Wait until the second frame to turn off the placeholder background on
         // tablets so the tab strip has time to start drawing.
@@ -605,9 +601,9 @@ public class CompositorViewHolder extends FrameLayout
 
         mHasDrawnOnce = true;
 
-        mPendingSwapBuffersCount = pendingSwapBuffersCount;
+        mPendingFrameCount = pendingFrameCount;
 
-        if (!mSkipInvalidation || pendingSwapBuffersCount == 0) flushInvalidation();
+        if (!mSkipInvalidation || pendingFrameCount == 0) flushInvalidation();
         mSkipInvalidation = !mSkipInvalidation;
     }
 
@@ -953,7 +949,7 @@ public class CompositorViewHolder extends FrameLayout
 
     @Override
     public void deferInvalidate(Client client) {
-        if (mPendingSwapBuffersCount <= 0) {
+        if (mPendingFrameCount <= 0) {
             client.doInvalidate();
         } else if (!mPendingInvalidations.contains(client)) {
             mPendingInvalidations.add(client);
@@ -975,11 +971,12 @@ public class CompositorViewHolder extends FrameLayout
      * @return The detached {@link TabModelSelector}.
      */
     public TabModelSelector detachForVR() {
-        mTabModelSelector.removeObserver(mTabModelSelectorObserver);
+        if (mTabModelSelector != null) mTabModelSelector.removeObserver(mTabModelSelectorObserver);
         TabModelSelector selector = mTabModelSelector;
         mTabModelSelector = null;
         mLayerTitleCache.setTabModelSelector(null);
         setTab(null);
+        getSurfaceView().setVisibility(View.INVISIBLE);
         return selector;
     }
 
@@ -989,6 +986,7 @@ public class CompositorViewHolder extends FrameLayout
      * @param tabModelSelector
      */
     public void onExitVR(TabModelSelector tabModelSelector) {
+        getSurfaceView().setVisibility(View.VISIBLE);
         attachToTabModelSelector(tabModelSelector);
     }
 

@@ -231,7 +231,7 @@ TEST_F(BrowserCommandControllerTest, AvatarMenuAlwaysDisabledInIncognitoMode) {
 
   // Create a new browser based on the off the record profile.
   Browser::CreateParams profile_params(
-      original_profile->GetOffTheRecordProfile());
+      original_profile->GetOffTheRecordProfile(), true);
   std::unique_ptr<Browser> otr_browser(
       chrome::CreateBrowserWithTestWindowForParams(&profile_params));
 
@@ -359,18 +359,34 @@ TEST_F(BrowserCommandControllerFullscreenTest,
   EXPECT_FALSE(chrome::IsCommandEnabled(browser(), IDC_VIEW_PASSWORDS));
   EXPECT_FALSE(chrome::IsCommandEnabled(browser(), IDC_ABOUT));
   EXPECT_FALSE(chrome::IsCommandEnabled(browser(), IDC_SHOW_APP_MENU));
+  EXPECT_TRUE(chrome::IsCommandEnabled(browser(), IDC_FULLSCREEN));
 
   // In fullscreen, only the exit fullscreen commands are reserved. All other
-  // shortcuts are unreserved. See https://goo.gl/4tJ32G.
-  EXPECT_FALSE(chrome::IsCommandEnabled(browser(), IDC_CLOSE_TAB));
-  EXPECT_FALSE(chrome::IsCommandEnabled(browser(), IDC_CLOSE_WINDOW));
-  EXPECT_FALSE(chrome::IsCommandEnabled(browser(), IDC_NEW_INCOGNITO_WINDOW));
-  EXPECT_FALSE(chrome::IsCommandEnabled(browser(), IDC_NEW_TAB));
-  EXPECT_FALSE(chrome::IsCommandEnabled(browser(), IDC_NEW_WINDOW));
-  EXPECT_FALSE(chrome::IsCommandEnabled(browser(), IDC_SELECT_NEXT_TAB));
-  EXPECT_FALSE(chrome::IsCommandEnabled(browser(), IDC_SELECT_PREVIOUS_TAB));
-  EXPECT_TRUE(chrome::IsCommandEnabled(browser(), IDC_EXIT));
-  EXPECT_TRUE(chrome::IsCommandEnabled(browser(), IDC_FULLSCREEN));
+  // shortcuts should be delivered to the web page. See https://goo.gl/4tJ32G.
+  EXPECT_FALSE(browser()->command_controller()->IsReservedCommandOrKey(
+      IDC_CLOSE_TAB,
+      content::NativeWebKeyboardEvent(blink::WebInputEvent::TypeFirst, 0, 0)));
+  EXPECT_FALSE(browser()->command_controller()->IsReservedCommandOrKey(
+      IDC_CLOSE_WINDOW,
+      content::NativeWebKeyboardEvent(blink::WebInputEvent::TypeFirst, 0, 0)));
+  EXPECT_FALSE(browser()->command_controller()->IsReservedCommandOrKey(
+      IDC_NEW_INCOGNITO_WINDOW,
+      content::NativeWebKeyboardEvent(blink::WebInputEvent::TypeFirst, 0, 0)));
+  EXPECT_FALSE(browser()->command_controller()->IsReservedCommandOrKey(
+      IDC_NEW_TAB,
+      content::NativeWebKeyboardEvent(blink::WebInputEvent::TypeFirst, 0, 0)));
+  EXPECT_FALSE(browser()->command_controller()->IsReservedCommandOrKey(
+      IDC_NEW_WINDOW,
+      content::NativeWebKeyboardEvent(blink::WebInputEvent::TypeFirst, 0, 0)));
+  EXPECT_FALSE(browser()->command_controller()->IsReservedCommandOrKey(
+      IDC_SELECT_NEXT_TAB,
+      content::NativeWebKeyboardEvent(blink::WebInputEvent::TypeFirst, 0, 0)));
+  EXPECT_FALSE(browser()->command_controller()->IsReservedCommandOrKey(
+      IDC_SELECT_PREVIOUS_TAB,
+      content::NativeWebKeyboardEvent(blink::WebInputEvent::TypeFirst, 0, 0)));
+  EXPECT_TRUE(browser()->command_controller()->IsReservedCommandOrKey(
+      IDC_EXIT,
+      content::NativeWebKeyboardEvent(blink::WebInputEvent::TypeFirst, 0, 0)));
 
   // Exit fullscreen.
   chrome::ToggleFullscreenMode(browser());
@@ -395,15 +411,32 @@ TEST_F(BrowserCommandControllerFullscreenTest,
   EXPECT_TRUE(chrome::IsCommandEnabled(browser(), IDC_VIEW_PASSWORDS));
   EXPECT_TRUE(chrome::IsCommandEnabled(browser(), IDC_ABOUT));
   EXPECT_TRUE(chrome::IsCommandEnabled(browser(), IDC_SHOW_APP_MENU));
-  EXPECT_TRUE(chrome::IsCommandEnabled(browser(), IDC_CLOSE_TAB));
-  EXPECT_TRUE(chrome::IsCommandEnabled(browser(), IDC_CLOSE_WINDOW));
-  EXPECT_TRUE(chrome::IsCommandEnabled(browser(), IDC_NEW_INCOGNITO_WINDOW));
-  EXPECT_TRUE(chrome::IsCommandEnabled(browser(), IDC_NEW_TAB));
-  EXPECT_TRUE(chrome::IsCommandEnabled(browser(), IDC_NEW_WINDOW));
-  EXPECT_TRUE(chrome::IsCommandEnabled(browser(), IDC_SELECT_NEXT_TAB));
-  EXPECT_TRUE(chrome::IsCommandEnabled(browser(), IDC_SELECT_PREVIOUS_TAB));
-  EXPECT_TRUE(chrome::IsCommandEnabled(browser(), IDC_EXIT));
   EXPECT_TRUE(chrome::IsCommandEnabled(browser(), IDC_FULLSCREEN));
+
+  EXPECT_TRUE(browser()->command_controller()->IsReservedCommandOrKey(
+      IDC_CLOSE_TAB,
+      content::NativeWebKeyboardEvent(blink::WebInputEvent::TypeFirst, 0, 0)));
+  EXPECT_TRUE(browser()->command_controller()->IsReservedCommandOrKey(
+      IDC_CLOSE_WINDOW,
+      content::NativeWebKeyboardEvent(blink::WebInputEvent::TypeFirst, 0, 0)));
+  EXPECT_TRUE(browser()->command_controller()->IsReservedCommandOrKey(
+      IDC_NEW_INCOGNITO_WINDOW,
+      content::NativeWebKeyboardEvent(blink::WebInputEvent::TypeFirst, 0, 0)));
+  EXPECT_TRUE(browser()->command_controller()->IsReservedCommandOrKey(
+      IDC_NEW_TAB,
+      content::NativeWebKeyboardEvent(blink::WebInputEvent::TypeFirst, 0, 0)));
+  EXPECT_TRUE(browser()->command_controller()->IsReservedCommandOrKey(
+      IDC_NEW_WINDOW,
+      content::NativeWebKeyboardEvent(blink::WebInputEvent::TypeFirst, 0, 0)));
+  EXPECT_TRUE(browser()->command_controller()->IsReservedCommandOrKey(
+      IDC_SELECT_NEXT_TAB,
+      content::NativeWebKeyboardEvent(blink::WebInputEvent::TypeFirst, 0, 0)));
+  EXPECT_TRUE(browser()->command_controller()->IsReservedCommandOrKey(
+      IDC_SELECT_PREVIOUS_TAB,
+      content::NativeWebKeyboardEvent(blink::WebInputEvent::TypeFirst, 0, 0)));
+  EXPECT_TRUE(browser()->command_controller()->IsReservedCommandOrKey(
+      IDC_EXIT,
+      content::NativeWebKeyboardEvent(blink::WebInputEvent::TypeFirst, 0, 0)));
 
   // Guest Profiles disallow some options.
   TestingProfile* testprofile = browser()->profile()->AsTestingProfile();
@@ -415,6 +448,32 @@ TEST_F(BrowserCommandControllerFullscreenTest,
   EXPECT_FALSE(chrome::IsCommandEnabled(browser(), IDC_IMPORT_SETTINGS));
 }
 
+// Ensure that the logic for enabling IDC_OPTIONS is consistent, regardless of
+// the order of entering fullscreen and forced incognito modes. See
+// http://crbug.com/694331.
+TEST_F(BrowserCommandControllerTest, OptionsConsistency) {
+  TestingProfile* profile = browser()->profile()->AsTestingProfile();
+  // Setup guest session.
+  profile->SetGuestSession(true);
+  // Setup forced incognito mode.
+  IncognitoModePrefs::SetAvailability(browser()->profile()->GetPrefs(),
+                                      IncognitoModePrefs::FORCED);
+  EXPECT_TRUE(chrome::IsCommandEnabled(browser(), IDC_OPTIONS));
+  // Enter fullscreen.
+  browser()->command_controller()->FullscreenStateChanged();
+  EXPECT_TRUE(chrome::IsCommandEnabled(browser(), IDC_OPTIONS));
+  // Exit fullscreen
+  browser()->command_controller()->FullscreenStateChanged();
+  EXPECT_TRUE(chrome::IsCommandEnabled(browser(), IDC_OPTIONS));
+  // Reenter incognito mode, this should trigger
+  // UpdateSharedCommandsForIncognitoAvailability() again.
+  IncognitoModePrefs::SetAvailability(browser()->profile()->GetPrefs(),
+                                      IncognitoModePrefs::DISABLED);
+  IncognitoModePrefs::SetAvailability(browser()->profile()->GetPrefs(),
+                                      IncognitoModePrefs::FORCED);
+  EXPECT_TRUE(chrome::IsCommandEnabled(browser(), IDC_OPTIONS));
+}
+
 TEST_F(BrowserCommandControllerTest, IncognitoModeOnSigninAllowedPrefChange) {
   // Set up a profile with an off the record profile.
   std::unique_ptr<TestingProfile> profile1 = TestingProfile::Builder().Build();
@@ -423,7 +482,8 @@ TEST_F(BrowserCommandControllerTest, IncognitoModeOnSigninAllowedPrefChange) {
   EXPECT_EQ(profile2->GetOriginalProfile(), profile1.get());
 
   // Create a new browser based on the off the record profile.
-  Browser::CreateParams profile_params(profile1->GetOffTheRecordProfile());
+  Browser::CreateParams profile_params(profile1->GetOffTheRecordProfile(),
+                                       true);
   std::unique_ptr<Browser> browser2(
       chrome::CreateBrowserWithTestWindowForParams(&profile_params));
 

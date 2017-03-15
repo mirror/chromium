@@ -39,20 +39,20 @@
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/AccessControlStatus.h"
 #include "platform/loader/fetch/CrossOriginAccessControl.h"
+#include "v8/include/v8.h"
 #include "wtf/HashMap.h"
 #include "wtf/Noncopyable.h"
 #include "wtf/Vector.h"
 #include "wtf/text/TextPosition.h"
-#include <v8.h>
 
 namespace blink {
 
 class DOMWrapperWorld;
 class Element;
+class FrameViewBase;
 class KURL;
 class ScriptSourceCode;
 class SecurityOrigin;
-class Widget;
 
 typedef WTF::Vector<v8::Extension*> V8Extensions;
 
@@ -111,7 +111,7 @@ class CORE_EXPORT ScriptController final
   // ignored when evaluating resources injected into the DOM.
   bool shouldBypassMainWorldCSP();
 
-  PassRefPtr<SharedPersistent<v8::Object>> createPluginWrapper(Widget*);
+  PassRefPtr<SharedPersistent<v8::Object>> createPluginWrapper(FrameViewBase*);
 
   void enableEval();
   void disableEval(const String& errorMessage);

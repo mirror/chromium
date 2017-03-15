@@ -143,7 +143,8 @@ public class BookmarkManager implements BookmarkDelegate {
         mSelectableListLayout.initializeEmptyView(
                 ApiCompatibilityUtils.getDrawable(
                         mActivity.getResources(), R.drawable.bookmark_logo_large),
-                R.string.bookmarks_folder_empty);
+                R.string.bookmarks_folder_empty,
+                0 /* Bookmarks search is not yet controlled by the SelectableListLayout. */);
 
         mAdapter = new BookmarkItemsAdapter(activity);
 
@@ -229,6 +230,20 @@ public class BookmarkManager implements BookmarkDelegate {
 
     public View getView() {
         return mMainView;
+    }
+
+    /**
+     * See {@link SelectableListLayout#detachContentView()}.
+     */
+    public View detachContentView() {
+        return mSelectableListLayout.detachContentView();
+    }
+
+    /**
+     * @return The vertical scroll offset of the content view.
+     */
+    public int getVerticalScrollOffset() {
+        return mRecyclerView.computeVerticalScrollOffset();
     }
 
     /**

@@ -79,7 +79,9 @@ class LayoutScrollbarPart final : public LayoutBlock {
   // Must call setStyleWithWritingModeOfParent() instead.
   void setStyle(PassRefPtr<ComputedStyle>) = delete;
 
-  LayoutRect visualRect() const override;
+  // Expose for LayoutScrollbar and PaintInvalidationCapableScrollableArea for
+  // paint invalidation.
+  using LayoutObject::setVisualRect;
 
  protected:
   void styleWillChange(StyleDifference, const ComputedStyle& newStyle) override;

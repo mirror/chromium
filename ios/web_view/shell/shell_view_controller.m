@@ -4,7 +4,12 @@
 
 #import "ios/web_view/shell/shell_view_controller.h"
 
-#import "ios/web_view/public/criwv.h"
+#import <MobileCoreServices/MobileCoreServices.h>
+
+#import "ios/web_view/public/cwv.h"
+#import "ios/web_view/public/cwv_html_element.h"
+#import "ios/web_view/public/cwv_navigation_delegate.h"
+#import "ios/web_view/public/cwv_ui_delegate.h"
 #import "ios/web_view/public/cwv_web_view.h"
 #import "ios/web_view/shell/translate_controller.h"
 
@@ -12,14 +17,23 @@
 #error "This file requires ARC support."
 #endif
 
-@interface ShellViewController ()
+// Externed accessibility identifier.
+NSString* const kWebViewShellBackButtonAccessibilityLabel = @"Back";
+NSString* const kWebViewShellForwardButtonAccessibilityLabel = @"Forward";
+NSString* const kWebViewShellAddressFieldAccessibilityLabel = @"Address field";
+NSString* const kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier =
+    @"WebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier";
+
+@interface ShellViewController ()<CWVNavigationDelegate,
+                                  CWVUIDelegate,
+                                  UITextFieldDelegate>
 // Container for |webView|.
 @property(nonatomic, strong) UIView* containerView;
 // Text field used for navigating to URLs.
 @property(nonatomic, strong) UITextField* field;
 // Toolbar containing navigation buttons and |field|.
 @property(nonatomic, strong) UIToolbar* toolbar;
-// CRIWV view which renders the web page.
+// CWV view which renders the web page.
 @property(nonatomic, strong) CWVWebView* webView;
 // Handles the translation of the content displayed in |webView|.
 @property(nonatomic, strong) TranslateController* translateController;
@@ -79,6 +93,7 @@
   [_field setKeyboardType:UIKeyboardTypeWebSearch];
   [_field setAutocorrectionType:UITextAutocorrectionTypeNo];
   [_field setClearButtonMode:UITextFieldViewModeWhileEditing];
+  [_field setAccessibilityLabel:kWebViewShellAddressFieldAccessibilityLabel];
 
   // Set up the toolbar buttons.
   // Back.
@@ -92,6 +107,7 @@
   [back addTarget:self
                 action:@selector(back)
       forControlEvents:UIControlEventTouchUpInside];
+  [back setAccessibilityLabel:kWebViewShellBackButtonAccessibilityLabel];
 
   // Forward.
   UIButton* forward = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -103,6 +119,7 @@
   [forward addTarget:self
                 action:@selector(forward)
       forControlEvents:UIControlEventTouchUpInside];
+  [forward setAccessibilityLabel:kWebViewShellForwardButtonAccessibilityLabel];
 
   // Stop.
   UIButton* stop = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -120,8 +137,11 @@
   [_toolbar addSubview:stop];
   [_toolbar addSubview:_field];
 
-  self.webView = [CRIWV webViewWithFrame:[_containerView bounds]];
-  [_webView setDelegate:self];
+  self.webView = [CWV webViewWithFrame:[_containerView bounds]];
+  _webView.navigationDelegate = self;
+  _translateController = [[TranslateController alloc] init];
+  _webView.translationDelegate = _translateController;
+
   [_webView setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
                                 UIViewAutoresizingFlexibleHeight];
   [_containerView addSubview:_webView];
@@ -172,35 +192,152 @@
   [_field setText:[[_webView visibleURL] absoluteString]];
 }
 
-#pragma mark CWVWebViewDelegate methods
+#pragma mark CWVUIDelegate methods
 
 - (void)webView:(CWVWebView*)webView
-    didFinishLoadingWithURL:(NSURL*)url
-                loadSuccess:(BOOL)loadSuccess {
+    runContextMenuWithTitle:(NSString*)menuTitle
+             forHTMLElement:(CWVHTMLElement*)element
+                     inView:(UIView*)view
+        userGestureLocation:(CGPoint)location {
+  if (!element.hyperlink) {
+    return;
+  }
+
+  UIAlertController* alert = [UIAlertController
+      alertControllerWithTitle:menuTitle
+                       message:nil
+                preferredStyle:UIAlertControllerStyleActionSheet];
+  alert.popoverPresentationController.sourceView = view;
+  alert.popoverPresentationController.sourceRect =
+      CGRectMake(location.x, location.y, 1.0, 1.0);
+
+  void (^copyHandler)(UIAlertAction*) = ^(UIAlertAction* action) {
+    NSDictionary* item = @{
+      (NSString*)(kUTTypeURL) : element.hyperlink,
+      (NSString*)(kUTTypeUTF8PlainText) : [[element.hyperlink absoluteString]
+          dataUsingEncoding:NSUTF8StringEncoding],
+    };
+    [[UIPasteboard generalPasteboard] setItems:@[ item ]];
+  };
+  [alert addAction:[UIAlertAction actionWithTitle:@"Copy Link"
+                                            style:UIAlertActionStyleDefault
+                                          handler:copyHandler]];
+
+  [alert addAction:[UIAlertAction actionWithTitle:@"Cancel"
+                                            style:UIAlertActionStyleCancel
+                                          handler:nil]];
+
+  [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)webView:(CWVWebView*)webView
+    runJavaScriptAlertPanelWithMessage:(NSString*)message
+                               pageURL:(NSURL*)URL
+                     completionHandler:(void (^)(void))handler {
+  UIAlertController* alert =
+      [UIAlertController alertControllerWithTitle:nil
+                                          message:message
+                                   preferredStyle:UIAlertControllerStyleAlert];
+
+  [alert addAction:[UIAlertAction actionWithTitle:@"Ok"
+                                            style:UIAlertActionStyleDefault
+                                          handler:^(UIAlertAction* action) {
+                                            handler();
+                                          }]];
+
+  [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)webView:(CWVWebView*)webView
+    runJavaScriptConfirmPanelWithMessage:(NSString*)message
+                                 pageURL:(NSURL*)URL
+                       completionHandler:(void (^)(BOOL))handler {
+  UIAlertController* alert =
+      [UIAlertController alertControllerWithTitle:nil
+                                          message:message
+                                   preferredStyle:UIAlertControllerStyleAlert];
+
+  [alert addAction:[UIAlertAction actionWithTitle:@"Ok"
+                                            style:UIAlertActionStyleDefault
+                                          handler:^(UIAlertAction* action) {
+                                            handler(YES);
+                                          }]];
+  [alert addAction:[UIAlertAction actionWithTitle:@"Cancel"
+                                            style:UIAlertActionStyleCancel
+                                          handler:^(UIAlertAction* action) {
+                                            handler(NO);
+                                          }]];
+
+  [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)webView:(CWVWebView*)webView
+    runJavaScriptTextInputPanelWithPrompt:(NSString*)prompt
+                              defaultText:(NSString*)defaultText
+                                  pageURL:(NSURL*)URL
+                        completionHandler:(void (^)(NSString*))handler {
+  UIAlertController* alert =
+      [UIAlertController alertControllerWithTitle:nil
+                                          message:prompt
+                                   preferredStyle:UIAlertControllerStyleAlert];
+
+  [alert addTextFieldWithConfigurationHandler:^(UITextField* textField) {
+    textField.text = defaultText;
+    textField.accessibilityIdentifier =
+        kWebViewShellJavaScriptDialogTextFieldAccessibiltyIdentifier;
+  }];
+
+  __weak UIAlertController* weakAlert = alert;
+  [alert addAction:[UIAlertAction
+                       actionWithTitle:@"Ok"
+                                 style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction* action) {
+                                 NSString* textInput =
+                                     weakAlert.textFields.firstObject.text;
+                                 handler(textInput);
+                               }]];
+  [alert addAction:[UIAlertAction actionWithTitle:@"Cancel"
+                                            style:UIAlertActionStyleCancel
+                                          handler:^(UIAlertAction* action) {
+                                            handler(nil);
+                                          }]];
+
+  [self presentViewController:alert animated:YES completion:nil];
+}
+
+#pragma mark CWVNavigationDelegate methods
+
+- (BOOL)webView:(CWVWebView*)webView
+    shouldStartLoadWithRequest:(NSURLRequest*)request {
+  NSLog(@"shouldStartLoadWithRequest");
+  return YES;
+}
+
+- (BOOL)webView:(CWVWebView*)webView
+    shouldContinueLoadWithResponse:(NSURLResponse*)response {
+  NSLog(@"shouldContinueLoadWithResponse");
+  return YES;
+}
+
+- (void)webViewDidStartProvisionalNavigation:(CWVWebView*)webView {
+  NSLog(@"webViewDidStartProvisionalNavigation");
+  [self updateToolbar];
+}
+
+- (void)webViewDidCommitNavigation:(CWVWebView*)webView {
+  NSLog(@"webViewDidCommitNavigation");
+  [self updateToolbar];
+}
+
+- (void)webView:(CWVWebView*)webView didLoadPageWithSuccess:(BOOL)success {
+  NSLog(@"webView:didLoadPageWithSuccess");
   // TODO(crbug.com/679895): Add some visual indication that the page load has
   // finished.
   [self updateToolbar];
 }
 
-- (void)webView:(CWVWebView*)webView
-    didUpdateWithChanges:(CRIWVWebViewUpdateType)changes {
-  if (changes & CRIWVWebViewUpdateTypeProgress) {
-    // TODO(crbug.com/679895): Add a progress indicator.
-  }
-
-  if (changes & CRIWVWebViewUpdateTypeTitle) {
-    // TODO(crbug.com/679895): Add a title display.
-  }
-
-  if (changes & CRIWVWebViewUpdateTypeURL) {
-    [self updateToolbar];
-  }
-}
-
-- (id<CWVTranslateDelegate>)translateDelegate {
-  if (!_translateController)
-    self.translateController = [[TranslateController alloc] init];
-  return _translateController;
+- (void)webViewWebContentProcessDidTerminate:(CWVWebView*)webView {
+  NSLog(@"webViewWebContentProcessDidTerminate");
 }
 
 @end

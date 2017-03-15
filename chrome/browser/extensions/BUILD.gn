@@ -72,7 +72,6 @@ static_library("extensions") {
     "api/autofill_private/autofill_private_event_router_factory.h",
     "api/autofill_private/autofill_util.cc",
     "api/autofill_private/autofill_util.h",
-    "api/automation_internal/automation_action_adapter.h",
     "api/automation_internal/automation_event_router.cc",
     "api/automation_internal/automation_event_router.h",
     "api/automation_internal/automation_internal_api.cc",
@@ -828,8 +827,8 @@ static_library("extensions") {
     "//chrome/app/resources:platform_locale_settings",
     "//chrome/app/theme:chrome_unscaled_resources",
     "//chrome/app/theme:theme_resources",
+    "//chrome/app/vector_icons",
     "//chrome/browser/devtools",
-    "//chrome/browser/media/router",
     "//chrome/common",
     "//chrome/common/extensions/api:api_registration",
     "//chrome/common/extensions/api:extensions_features",
@@ -926,8 +925,13 @@ static_library("extensions") {
     "//ui/resources",
     "//ui/shell_dialogs",
     "//ui/strings",
+    "//ui/vector_icons",
     "//url",
   ]
+
+  if (enable_media_router) {
+    deps += [ "//chrome/browser/media/router" ]
+  }
 
   if (!is_chromeos) {
     sources += [ "chrome_kiosk_delegate.cc" ]
@@ -1132,12 +1136,6 @@ static_library("extensions") {
 
   if (enable_service_discovery) {
     sources += [
-      "api/gcd_private/gcd_private_api.cc",
-      "api/gcd_private/gcd_private_api.h",
-      "api/gcd_private/privet_v3_context_getter.cc",
-      "api/gcd_private/privet_v3_context_getter.h",
-      "api/gcd_private/privet_v3_session.cc",
-      "api/gcd_private/privet_v3_session.h",
       "api/mdns/dns_sd_delegate.cc",
       "api/mdns/dns_sd_delegate.h",
       "api/mdns/dns_sd_device_lister.cc",

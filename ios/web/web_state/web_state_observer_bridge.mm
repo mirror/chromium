@@ -30,6 +30,13 @@ void WebStateObserverBridge::NavigationItemCommitted(
   }
 }
 
+void WebStateObserverBridge::DidFinishNavigation(
+    web::NavigationContext* navigation_context) {
+  if ([observer_ respondsToSelector:@selector(webState:didFinishNavigation:)]) {
+    [observer_ webState:web_state() didFinishNavigation:navigation_context];
+  }
+}
+
 void WebStateObserverBridge::DidStartLoading() {
   SEL selector = @selector(webStateDidStartLoading:);
   if ([observer_ respondsToSelector:selector]) {
@@ -67,22 +74,21 @@ void WebStateObserverBridge::InterstitialDismissed() {
     [observer_ webStateDidDismissInterstitial:web_state()];
 }
 
-void WebStateObserverBridge::UrlHashChanged() {
-  SEL selector = @selector(webStateDidChangeURLHash:);
-  if ([observer_ respondsToSelector:selector])
-    [observer_ webStateDidChangeURLHash:web_state()];
-}
-
-void WebStateObserverBridge::HistoryStateChanged() {
-  SEL selector = @selector(webStateDidChangeHistoryState:);
-  if ([observer_ respondsToSelector:selector])
-    [observer_ webStateDidChangeHistoryState:web_state()];
-}
-
 void WebStateObserverBridge::LoadProgressChanged(double progress) {
   SEL selector = @selector(webState:didChangeLoadingProgress:);
   if ([observer_ respondsToSelector:selector])
     [observer_ webState:web_state() didChangeLoadingProgress:progress];
+}
+
+void WebStateObserverBridge::TitleWasSet() {
+  if ([observer_ respondsToSelector:@selector(webStateDidChangeTitle:)])
+    [observer_ webStateDidChangeTitle:web_state()];
+}
+
+void WebStateObserverBridge::DidChangeVisibleSecurityState() {
+  SEL selector = @selector(webStateDidChangeVisibleSecurityState:);
+  if ([observer_ respondsToSelector:selector])
+    [observer_ webStateDidChangeVisibleSecurityState:web_state()];
 }
 
 void WebStateObserverBridge::DocumentSubmitted(const std::string& form_name,

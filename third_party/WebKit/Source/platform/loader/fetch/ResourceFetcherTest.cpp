@@ -39,16 +39,16 @@
 #include "platform/loader/fetch/FetchInitiatorInfo.h"
 #include "platform/loader/fetch/FetchInitiatorTypeNames.h"
 #include "platform/loader/fetch/FetchRequest.h"
-#include "platform/loader/fetch/FetchTestingPlatformSupport.h"
 #include "platform/loader/fetch/MemoryCache.h"
-#include "platform/loader/fetch/MockFetchContext.h"
-#include "platform/loader/fetch/MockResource.h"
-#include "platform/loader/fetch/MockResourceClient.h"
 #include "platform/loader/fetch/RawResource.h"
+#include "platform/loader/fetch/ResourceError.h"
 #include "platform/loader/fetch/ResourceLoader.h"
-#include "platform/network/ResourceError.h"
-#include "platform/network/ResourceRequest.h"
-#include "platform/network/ResourceTimingInfo.h"
+#include "platform/loader/fetch/ResourceRequest.h"
+#include "platform/loader/fetch/ResourceTimingInfo.h"
+#include "platform/loader/testing/FetchTestingPlatformSupport.h"
+#include "platform/loader/testing/MockFetchContext.h"
+#include "platform/loader/testing/MockResource.h"
+#include "platform/loader/testing/MockResourceClient.h"
 #include "platform/scheduler/test/fake_web_task_runner.h"
 #include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
@@ -57,6 +57,7 @@
 #include "platform/testing/weburl_loader_mock_factory_impl.h"
 #include "platform/weborigin/KURL.h"
 #include "public/platform/Platform.h"
+#include "public/platform/WebCachePolicy.h"
 #include "public/platform/WebURLLoader.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
 #include "public/platform/WebURLResponse.h"
@@ -207,7 +208,6 @@ TEST_F(ResourceFetcherTest, NavigationTimingInfo) {
 }
 
 TEST_F(ResourceFetcherTest, VaryOnBack) {
-  context()->setCachePolicy(CachePolicyHistoryBuffer);
   ResourceFetcher* fetcher = ResourceFetcher::create(context());
 
   KURL url(ParsedURLString, "http://127.0.0.1:8000/foo.html");
@@ -223,6 +223,7 @@ TEST_F(ResourceFetcherTest, VaryOnBack) {
   ASSERT_TRUE(resource->mustReloadDueToVaryHeader(url));
 
   ResourceRequest resourceRequest(url);
+  resourceRequest.setCachePolicy(WebCachePolicy::ReturnCacheDataElseLoad);
   resourceRequest.setRequestContext(WebURLRequest::RequestContextInternal);
   FetchRequest fetchRequest =
       FetchRequest(resourceRequest, FetchInitiatorInfo());
@@ -265,9 +266,10 @@ class RequestSameResourceOnComplete
     EXPECT_EQ(m_resource, resource);
     MockFetchContext* context =
         MockFetchContext::create(MockFetchContext::kShouldLoadNewResource);
-    context->setCachePolicy(CachePolicyRevalidate);
     ResourceFetcher* fetcher2 = ResourceFetcher::create(context);
-    FetchRequest fetchRequest2(m_resource->url(), FetchInitiatorInfo());
+    ResourceRequest resourceRequest2(m_resource->url());
+    resourceRequest2.setCachePolicy(WebCachePolicy::ValidatingCacheData);
+    FetchRequest fetchRequest2(resourceRequest2, FetchInitiatorInfo());
     Resource* resource2 = MockResource::fetch(fetchRequest2, fetcher2);
     EXPECT_EQ(m_resource, resource2);
     m_notifyFinishedCalled = true;
@@ -647,13 +649,14 @@ TEST_F(ResourceFetcherTest, LinkPreloadResourceMultipleFetchersAndMove) {
   Resource* resource = MockResource::fetch(fetchRequestOriginal, fetcher);
   ASSERT_TRUE(resource);
   EXPECT_TRUE(resource->isLinkPreload());
+  EXPECT_FALSE(fetcher->isFetching());
   fetcher->preloadStarted(resource);
 
   // Resource created by parser on the second fetcher
   FetchRequest fetchRequest2 = FetchRequest(url, FetchInitiatorInfo());
   Resource* newResource2 = MockResource::fetch(fetchRequest2, fetcher2);
   Persistent<MockResourceClient> client2 = new MockResourceClient(newResource2);
-  EXPECT_EQ(resource, newResource2);
+  EXPECT_NE(resource, newResource2);
   EXPECT_FALSE(fetcher2->isFetching());
   Platform::current()->getURLLoaderMockFactory()->serveAsynchronousRequests();
 }

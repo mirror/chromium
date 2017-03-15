@@ -24,12 +24,12 @@ static SelectionVisualRectMap& selectionVisualRectMap() {
   return map;
 }
 
-static void setPreviousSelectionVisualRect(const LayoutObject& object,
-                                           const LayoutRect& rect) {
-  DCHECK(object.hasPreviousSelectionVisualRect() ==
+static void setSelectionVisualRect(const LayoutObject& object,
+                                   const LayoutRect& rect) {
+  DCHECK(object.hasSelectionVisualRect() ==
          selectionVisualRectMap().contains(&object));
   if (rect.isEmpty()) {
-    if (object.hasPreviousSelectionVisualRect()) {
+    if (object.hasSelectionVisualRect()) {
       selectionVisualRectMap().erase(&object);
       object.getMutableForPainting().setHasPreviousSelectionVisualRect(false);
     }
@@ -46,14 +46,14 @@ static LocationInBackingMap& locationInBackingMap() {
 }
 
 void ObjectPaintInvalidator::objectWillBeDestroyed(const LayoutObject& object) {
-  DCHECK(object.hasPreviousSelectionVisualRect() ==
+  DCHECK(object.hasSelectionVisualRect() ==
          selectionVisualRectMap().contains(&object));
-  if (object.hasPreviousSelectionVisualRect())
+  if (object.hasSelectionVisualRect())
     selectionVisualRectMap().erase(&object);
 
-  DCHECK(object.hasPreviousLocationInBacking() ==
+  DCHECK(object.hasLocationInBacking() ==
          locationInBackingMap().contains(&object));
-  if (object.hasPreviousLocationInBacking())
+  if (object.hasLocationInBacking())
     locationInBackingMap().erase(&object);
 }
 
@@ -190,7 +190,7 @@ void ObjectPaintInvalidator::invalidatePaintOfPreviousVisualRect(
   DisablePaintInvalidationStateAsserts invalidationDisabler;
   DisableCompositingQueryAsserts compositingDisabler;
 
-  LayoutRect invalidationRect = m_object.previousVisualRect();
+  LayoutRect invalidationRect = m_object.visualRect();
   invalidatePaintUsingContainer(paintInvalidationContainer, invalidationRect,
                                 reason);
   m_object.invalidateDisplayItemClients(reason);
@@ -424,20 +424,18 @@ void ObjectPaintInvalidator::slowSetPaintingLayerNeedsRepaint() {
     paintingLayer->setNeedsRepaint();
 }
 
-LayoutPoint ObjectPaintInvalidator::previousLocationInBacking() const {
-  DCHECK(m_object.hasPreviousLocationInBacking() ==
+LayoutPoint ObjectPaintInvalidator::locationInBacking() const {
+  DCHECK(m_object.hasLocationInBacking() ==
          locationInBackingMap().contains(&m_object));
-  return m_object.hasPreviousLocationInBacking()
-             ? locationInBackingMap().get(&m_object)
-             : m_object.previousVisualRect().location();
+  return m_object.hasLocationInBacking() ? locationInBackingMap().at(&m_object)
+                                         : m_object.visualRect().location();
 }
 
-void ObjectPaintInvalidator::setPreviousLocationInBacking(
-    const LayoutPoint& location) {
-  DCHECK(m_object.hasPreviousLocationInBacking() ==
+void ObjectPaintInvalidator::setLocationInBacking(const LayoutPoint& location) {
+  DCHECK(m_object.hasLocationInBacking() ==
          locationInBackingMap().contains(&m_object));
-  if (location == m_object.previousVisualRect().location()) {
-    if (m_object.hasPreviousLocationInBacking()) {
+  if (location == m_object.visualRect().location()) {
+    if (m_object.hasLocationInBacking()) {
       locationInBackingMap().erase(&m_object);
       m_object.getMutableForPainting().setHasPreviousLocationInBacking(false);
     }
@@ -455,15 +453,54 @@ void ObjectPaintInvalidatorWithContext::fullyInvalidatePaint(
   // the other.
   if (!newVisualRect.contains(oldVisualRect)) {
     LayoutRect invalidationRect = oldVisualRect;
-    invalidatePaintUsingContainer(*m_context.paintInvalidationContainer,
-                                  invalidationRect, reason);
+    invalidatePaintRectangleWithContext(invalidationRect, reason);
 
     if (invalidationRect.contains(newVisualRect))
       return;
   }
 
-  invalidatePaintUsingContainer(*m_context.paintInvalidationContainer,
-                                newVisualRect, reason);
+  invalidatePaintRectangleWithContext(newVisualRect, reason);
+}
+
+bool ObjectPaintInvalidatorWithContext::parentFullyInvalidatedOnSameBacking() {
+  if (!m_object.parent() || !m_context.parentContext)
+    return false;
+
+  if (!isImmediateFullPaintInvalidationReason(
+          m_object.parent()->fullPaintInvalidationReason()))
+    return false;
+
+  // Parent and child should have the same paint invalidation container.
+  if (m_context.parentContext->paintInvalidationContainer !=
+      m_context.paintInvalidationContainer)
+    return false;
+
+  // Both parent and child are contents of the paint invalidation container,
+  // so they are on the same backing.
+  if (m_object.parent() != m_context.paintInvalidationContainer)
+    return true;
+
+  // If the paint invalidation container (i.e. parent) uses composited
+  // scrolling, parent and child might be on different backing (scrolling
+  // container vs scrolling contents).
+  return !m_context.paintInvalidationContainer->usesCompositedScrolling();
+}
+
+void ObjectPaintInvalidatorWithContext::invalidatePaintRectangleWithContext(
+    const LayoutRect& rect,
+    PaintInvalidationReason reason) {
+  if (rect.isEmpty())
+    return;
+
+  // If the parent has fully invalidated and its visual rect covers this object
+  // on the same backing, skip the invalidation.
+  if (parentFullyInvalidatedOnSameBacking() &&
+      (m_context.parentContext->oldVisualRect.contains(rect) ||
+       m_object.parent()->visualRect().contains(rect)))
+    return;
+
+  invalidatePaintUsingContainer(*m_context.paintInvalidationContainer, rect,
+                                reason);
 }
 
 DISABLE_CFI_PERF
@@ -486,7 +523,7 @@ ObjectPaintInvalidatorWithContext::computePaintInvalidationReason() {
   if (m_object.shouldDoFullPaintInvalidation())
     return m_object.fullPaintInvalidationReason();
 
-  if (m_context.oldVisualRect.isEmpty() && m_context.newVisualRect.isEmpty())
+  if (m_context.oldVisualRect.isEmpty() && m_object.visualRect().isEmpty())
     return PaintInvalidationNone;
 
   if (backgroundObscurationChanged)
@@ -508,14 +545,14 @@ ObjectPaintInvalidatorWithContext::computePaintInvalidationReason() {
   // to do a full invalidation of either old bounds or new bounds.
   if (m_context.oldVisualRect.isEmpty())
     return PaintInvalidationBecameVisible;
-  if (m_context.newVisualRect.isEmpty())
+  if (m_object.visualRect().isEmpty())
     return PaintInvalidationBecameInvisible;
 
   // If we shifted, we don't know the exact reason so we are conservative and
   // trigger a full invalidation. Shifting could be caused by some layout
   // property (left / top) or some in-flow layoutObject inserted / removed
   // before us in the tree.
-  if (m_context.newVisualRect.location() != m_context.oldVisualRect.location())
+  if (m_object.visualRect().location() != m_context.oldVisualRect.location())
     return PaintInvalidationBoundsChange;
 
   if (m_context.newLocation != m_context.oldLocation)
@@ -529,7 +566,7 @@ ObjectPaintInvalidatorWithContext::computePaintInvalidationReason() {
   if (m_object.isBox())
     return PaintInvalidationIncremental;
 
-  if (m_context.oldVisualRect != m_context.newVisualRect)
+  if (m_context.oldVisualRect != m_object.visualRect())
     return PaintInvalidationBoundsChange;
 
   return PaintInvalidationNone;
@@ -546,20 +583,15 @@ void ObjectPaintInvalidatorWithContext::invalidateSelectionIfNeeded(
   if (!fullInvalidation && !m_object.shouldInvalidateSelection())
     return;
 
-  DCHECK(m_object.hasPreviousSelectionVisualRect() ==
+  DCHECK(m_object.hasSelectionVisualRect() ==
          selectionVisualRectMap().contains(&m_object));
   LayoutRect oldSelectionRect;
-  if (m_object.hasPreviousSelectionVisualRect())
-    oldSelectionRect = selectionVisualRectMap().get(&m_object);
+  if (m_object.hasSelectionVisualRect())
+    oldSelectionRect = selectionVisualRectMap().at(&m_object);
   LayoutRect newSelectionRect = m_object.localSelectionRect();
-  if (!newSelectionRect.isEmpty()) {
-    m_context.mapLocalRectToPaintInvalidationBacking(m_object,
-                                                     newSelectionRect);
-    newSelectionRect.move(m_object.scrollAdjustmentForPaintInvalidation(
-        *m_context.paintInvalidationContainer));
-  }
+  m_context.mapLocalRectToVisualRectInBacking(m_object, newSelectionRect);
 
-  setPreviousSelectionVisualRect(m_object, newSelectionRect);
+  setSelectionVisualRect(m_object, newSelectionRect);
 
   if (!fullInvalidation) {
     fullyInvalidatePaint(PaintInvalidationSelection, oldSelectionRect,
@@ -606,7 +638,7 @@ ObjectPaintInvalidatorWithContext::invalidatePaintIfNeededWithComputedReason(
     default:
       DCHECK(isImmediateFullPaintInvalidationReason(reason));
       fullyInvalidatePaint(reason, m_context.oldVisualRect,
-                           m_context.newVisualRect);
+                           m_object.visualRect());
   }
 
   m_context.paintingLayer->setNeedsRepaint();

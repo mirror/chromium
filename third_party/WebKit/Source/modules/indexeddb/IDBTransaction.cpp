@@ -164,6 +164,9 @@ IDBTransaction::IDBTransaction(ExecutionContext* executionContext,
 }
 
 IDBTransaction::~IDBTransaction() {
+  // Note: IDBTransaction is a ContextLifecycleObserver (rather than
+  // ContextClient) only in order to be able call upon getExecutionContext()
+  // during this destructor.
   DCHECK(m_state == Finished || !getExecutionContext());
   DCHECK(m_requestList.isEmpty() || !getExecutionContext());
 }
@@ -218,7 +221,7 @@ IDBObjectStore* IDBTransaction::objectStore(const String& name,
 
   DCHECK(m_database->metadata().objectStores.contains(objectStoreId));
   RefPtr<IDBObjectStoreMetadata> objectStoreMetadata =
-      m_database->metadata().objectStores.get(objectStoreId);
+      m_database->metadata().objectStores.at(objectStoreId);
   DCHECK(objectStoreMetadata.get());
 
   IDBObjectStore* objectStore =
@@ -264,7 +267,7 @@ void IDBTransaction::objectStoreDeleted(const int64_t objectStoreId,
     // correct values from IDB{Database, Transaction}.objectStoreNames.
     DCHECK(m_database->metadata().objectStores.contains(objectStoreId));
     RefPtr<IDBObjectStoreMetadata> metadata =
-        m_database->metadata().objectStores.get(objectStoreId);
+        m_database->metadata().objectStores.at(objectStoreId);
     DCHECK(metadata.get());
     DCHECK_EQ(metadata->name, name);
     m_deletedObjectStores.push_back(std::move(metadata));
@@ -371,13 +374,13 @@ void IDBTransaction::abort(ExceptionState& exceptionState) {
 void IDBTransaction::registerRequest(IDBRequest* request) {
   DCHECK(request);
   DCHECK_EQ(m_state, Active);
-  m_requestList.add(request);
+  m_requestList.insert(request);
 }
 
 void IDBTransaction::unregisterRequest(IDBRequest* request) {
   DCHECK(request);
   // If we aborted the request, it will already have been removed.
-  m_requestList.remove(request);
+  m_requestList.erase(request);
 }
 
 void IDBTransaction::onAbort(DOMException* error) {

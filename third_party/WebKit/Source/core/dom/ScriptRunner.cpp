@@ -25,6 +25,7 @@
 
 #include "core/dom/ScriptRunner.h"
 
+#include <algorithm>
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/dom/ScriptLoader.h"
@@ -57,7 +58,7 @@ void ScriptRunner::queueScriptForExecution(ScriptLoader* scriptLoader,
       break;
 
     case InOrder:
-      m_pendingInOrderScripts.append(scriptLoader);
+      m_pendingInOrderScripts.push_back(scriptLoader);
       m_numberOfInOrderScriptsWithPendingNotification++;
       break;
     case None:
@@ -94,12 +95,13 @@ void ScriptRunner::resume() {
 
 void ScriptRunner::scheduleReadyInOrderScripts() {
   while (!m_pendingInOrderScripts.isEmpty() &&
-         m_pendingInOrderScripts.first()->isReady()) {
+         m_pendingInOrderScripts.front()->isReady()) {
     // A ScriptLoader that failed is responsible for cancelling itself
     // notifyScriptLoadError(); it continues this draining of ready scripts.
-    if (m_pendingInOrderScripts.first()->errorOccurred())
+    if (m_pendingInOrderScripts.front()->errorOccurred())
       break;
-    m_inOrderScriptsToExecuteSoon.append(m_pendingInOrderScripts.takeFirst());
+    m_inOrderScriptsToExecuteSoon.push_back(
+        m_pendingInOrderScripts.takeFirst());
     postTask(BLINK_FROM_HERE);
   }
 }
@@ -109,14 +111,14 @@ void ScriptRunner::notifyScriptReady(ScriptLoader* scriptLoader,
   SECURITY_CHECK(scriptLoader);
   switch (executionType) {
     case Async:
-      // RELEASE_ASSERT makes us crash in a controlled way in error cases
+      // SECURITY_CHECK() makes us crash in a controlled way in error cases
       // where the ScriptLoader is associated with the wrong ScriptRunner
       // (otherwise we'd cause a use-after-free in ~ScriptRunner when it tries
       // to detach).
       SECURITY_CHECK(m_pendingAsyncScripts.contains(scriptLoader));
 
-      m_pendingAsyncScripts.remove(scriptLoader);
-      m_asyncScriptsToExecuteSoon.append(scriptLoader);
+      m_pendingAsyncScripts.erase(scriptLoader);
+      m_asyncScriptsToExecuteSoon.push_back(scriptLoader);
 
       postTask(BLINK_FROM_HERE);
 
@@ -136,37 +138,34 @@ void ScriptRunner::notifyScriptReady(ScriptLoader* scriptLoader,
 }
 
 bool ScriptRunner::removePendingInOrderScript(ScriptLoader* scriptLoader) {
-  for (auto it = m_pendingInOrderScripts.begin();
-       it != m_pendingInOrderScripts.end(); ++it) {
-    if (*it == scriptLoader) {
-      m_pendingInOrderScripts.remove(it);
-      SECURITY_CHECK(m_numberOfInOrderScriptsWithPendingNotification > 0);
-      m_numberOfInOrderScriptsWithPendingNotification--;
-      return true;
-    }
-  }
-  return false;
+  auto it = std::find(m_pendingInOrderScripts.begin(),
+                      m_pendingInOrderScripts.end(), scriptLoader);
+  if (it == m_pendingInOrderScripts.end())
+    return false;
+  m_pendingInOrderScripts.erase(it);
+  SECURITY_CHECK(m_numberOfInOrderScriptsWithPendingNotification > 0);
+  m_numberOfInOrderScriptsWithPendingNotification--;
+  return true;
 }
 
 void ScriptRunner::notifyScriptLoadError(ScriptLoader* scriptLoader,
                                          AsyncExecutionType executionType) {
   switch (executionType) {
     case Async: {
-      // SECURITY_CHECK makes us crash in a controlled way in error cases
-      // where the ScriptLoader is associated with the wrong ScriptRunner
-      // (otherwise we'd cause a use-after-free in ~ScriptRunner when it tries
-      // to detach).
+      // See notifyScriptReady() comment.
       SECURITY_CHECK(m_pendingAsyncScripts.contains(scriptLoader));
-      m_pendingAsyncScripts.remove(scriptLoader);
+      m_pendingAsyncScripts.erase(scriptLoader);
       break;
     }
-    case InOrder:
+    case InOrder: {
       SECURITY_CHECK(removePendingInOrderScript(scriptLoader));
       scheduleReadyInOrderScripts();
       break;
-    case None:
+    }
+    case None: {
       NOTREACHED();
       break;
+    }
   }
   m_document->decrementLoadEventDelayCount();
 }
@@ -201,9 +200,10 @@ void ScriptRunner::movePendingScript(Document& oldDocument,
 
 void ScriptRunner::movePendingScript(ScriptRunner* newRunner,
                                      ScriptLoader* scriptLoader) {
-  if (m_pendingAsyncScripts.contains(scriptLoader)) {
+  auto it = m_pendingAsyncScripts.find(scriptLoader);
+  if (it != m_pendingAsyncScripts.end()) {
     newRunner->queueScriptForExecution(scriptLoader, Async);
-    m_pendingAsyncScripts.remove(scriptLoader);
+    m_pendingAsyncScripts.erase(it);
     m_document->decrementLoadEventDelayCount();
     return;
   }

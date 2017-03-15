@@ -8,7 +8,8 @@
 #include "core/CoreExport.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "platform/heap/Handle.h"
-#include "platform/network/ResourceRequest.h"
+#include "platform/loader/fetch/ResourceRequest.h"
+#include "public/platform/WebContentSecurityPolicyStruct.h"
 #include "wtf/Allocator.h"
 #include "wtf/text/WTFString.h"
 
@@ -19,7 +20,22 @@ class KURL;
 
 class CORE_EXPORT CSPSource : public GarbageCollectedFinalized<CSPSource> {
  public:
-  enum WildcardDisposition { HasWildcard, NoWildcard };
+  enum WildcardDisposition { NoWildcard, HasWildcard };
+
+  // NotMatching is the only negative member, the rest are different types of
+  // matches. NotMatching should always be 0 to let if statements work nicely
+  enum class PortMatchingResult {
+    NotMatching,
+    MatchingWildcard,
+    MatchingUpgrade,
+    MatchingExact
+  };
+
+  enum class SchemeMatchingResult {
+    NotMatching,
+    MatchingUpgrade,
+    MatchingExact
+  };
 
   CSPSource(ContentSecurityPolicy*,
             const String& scheme,
@@ -46,6 +62,8 @@ class CORE_EXPORT CSPSource : public GarbageCollectedFinalized<CSPSource> {
   static bool firstSubsumesSecond(const HeapVector<Member<CSPSource>>&,
                                   const HeapVector<Member<CSPSource>>&);
 
+  WebContentSecurityPolicySourceExpression exposeForNavigationalChecks() const;
+
   DECLARE_TRACE();
 
  private:
@@ -60,12 +78,28 @@ class CORE_EXPORT CSPSource : public GarbageCollectedFinalized<CSPSource> {
   FRIEND_TEST_ALL_PREFIXES(SourceListDirectiveTest, SubsumesWithSelf);
   FRIEND_TEST_ALL_PREFIXES(SourceListDirectiveTest, GetSources);
 
-  bool schemeMatches(const String&) const;
+  SchemeMatchingResult schemeMatches(const String&) const;
   bool hostMatches(const String&) const;
   bool pathMatches(const String&) const;
   // Protocol is necessary to determine default port if it is zero.
-  bool portMatches(int port, const String& protocol) const;
+  PortMatchingResult portMatches(int port, const String& protocol) const;
   bool isSimilar(CSPSource* other) const;
+
+  // Helper inline functions for Port and Scheme MatchingResult enums
+  bool inline requiresUpgrade(const PortMatchingResult result) const {
+    return result == PortMatchingResult::MatchingUpgrade;
+  }
+  bool inline requiresUpgrade(const SchemeMatchingResult result) const {
+    return result == SchemeMatchingResult::MatchingUpgrade;
+  }
+
+  bool inline canUpgrade(const PortMatchingResult result) const {
+    return result == PortMatchingResult::MatchingUpgrade || result == PortMatchingResult::MatchingWildcard;
+  }
+
+  bool inline canUpgrade(const SchemeMatchingResult result) const {
+    return result == SchemeMatchingResult::MatchingUpgrade;
+  }
 
   Member<ContentSecurityPolicy> m_policy;
   String m_scheme;

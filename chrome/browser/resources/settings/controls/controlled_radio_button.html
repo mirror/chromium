@@ -25,7 +25,7 @@
       }
 
       cr-policy-pref-indicator {
-        -webkit-margin-start: var(--checkbox-spacing);
+        -webkit-margin-start: var(--settings-control-spacing);
         /* Enable pointer events for the indicator so :hover works. Disable
          * clicks/taps via onIndicatorTap_ so outer on-tap doesn't trigger. */
         pointer-events: all;
@@ -34,11 +34,12 @@
 
     <paper-radio-button id="radioButton" name="{{name}}" checked="{{checked}}"
         disabled="[[controlled_]]" tabindex$="[[tabindex]]">
-      <content></content>
+      [[label]] <content></content>
     </paper-radio-button>
 
-    <template is="dom-if" if="[[showIndicator_(controlled_, name, pref)]]">
-      <cr-policy-pref-indicator pref="[[pref]]" on-tap="onIndicatorTap_">
+    <template is="dom-if" if="[[showIndicator_(controlled_, name, pref.*)]]">
+      <cr-policy-pref-indicator pref="[[pref]]" on-tap="onIndicatorTap_"
+          icon-aria-label="[[label]]">
       </cr-policy-pref-indicator>
     </template>
 

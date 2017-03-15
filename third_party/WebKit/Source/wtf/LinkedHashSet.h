@@ -235,13 +235,13 @@ class LinkedHashSet {
     return makeConstReverseIterator(anchor());
   }
 
-  Value& first();
-  const Value& first() const;
+  Value& front();
+  const Value& front() const;
   void removeFirst();
 
-  Value& last();
-  const Value& last() const;
-  void removeLast();
+  Value& back();
+  const Value& back() const;
+  void pop_back();
 
   iterator find(ValuePeekInType);
   const_iterator find(ValuePeekInType) const;
@@ -257,14 +257,12 @@ class LinkedHashSet {
   template <typename HashTranslator, typename T>
   bool contains(const T&) const;
 
-  // The return value of add is a pair of a pointer to the stored value,
+  // The return value of insert is a pair of a pointer to the stored value,
   // and a bool that is true if an new entry was added.
-  template <typename IncomingValueType>
-  AddResult add(IncomingValueType&&);
   template <typename IncomingValueType>
   AddResult insert(IncomingValueType&&);
 
-  // Same as add() except that the return value is an
+  // Same as insert() except that the return value is an
   // iterator. Useful in cases where it's needed to have the
   // same return value as find() and where it's not possible to
   // use a pointer to the storedValue.
@@ -290,8 +288,8 @@ class LinkedHashSet {
         std::forward<IncomingValueType>(newValue), it.getNode());
   }
 
-  void remove(ValuePeekInType);
-  void remove(iterator);
+  void erase(ValuePeekInType);
+  void erase(iterator);
   void clear() { m_impl.clear(); }
   template <typename Collection>
   void removeAll(const Collection& other) {
@@ -665,7 +663,7 @@ inline LinkedHashSet<T, U, V, W>::LinkedHashSet(const LinkedHashSet& other)
     : m_anchor() {
   const_iterator end = other.end();
   for (const_iterator it = other.begin(); it != end; ++it)
-    add(*it);
+    insert(*it);
 }
 
 template <typename T, typename U, typename V, typename W>
@@ -702,13 +700,13 @@ inline LinkedHashSet<T, U, V, Allocator>::~LinkedHashSet() {
 }
 
 template <typename T, typename U, typename V, typename W>
-inline T& LinkedHashSet<T, U, V, W>::first() {
+inline T& LinkedHashSet<T, U, V, W>::front() {
   DCHECK(!isEmpty());
   return firstNode()->m_value;
 }
 
 template <typename T, typename U, typename V, typename W>
-inline const T& LinkedHashSet<T, U, V, W>::first() const {
+inline const T& LinkedHashSet<T, U, V, W>::front() const {
   DCHECK(!isEmpty());
   return firstNode()->m_value;
 }
@@ -720,19 +718,19 @@ inline void LinkedHashSet<T, U, V, W>::removeFirst() {
 }
 
 template <typename T, typename U, typename V, typename W>
-inline T& LinkedHashSet<T, U, V, W>::last() {
+inline T& LinkedHashSet<T, U, V, W>::back() {
   DCHECK(!isEmpty());
   return lastNode()->m_value;
 }
 
 template <typename T, typename U, typename V, typename W>
-inline const T& LinkedHashSet<T, U, V, W>::last() const {
+inline const T& LinkedHashSet<T, U, V, W>::back() const {
   DCHECK(!isEmpty());
   return lastNode()->m_value;
 }
 
 template <typename T, typename U, typename V, typename W>
-inline void LinkedHashSet<T, U, V, W>::removeLast() {
+inline void LinkedHashSet<T, U, V, W>::pop_back() {
   DCHECK(!isEmpty());
   m_impl.remove(static_cast<Node*>(m_anchor.m_prev));
 }
@@ -814,21 +812,10 @@ template <typename Value,
           typename Allocator>
 template <typename IncomingValueType>
 typename LinkedHashSet<Value, HashFunctions, Traits, Allocator>::AddResult
-LinkedHashSet<Value, HashFunctions, Traits, Allocator>::add(
+LinkedHashSet<Value, HashFunctions, Traits, Allocator>::insert(
     IncomingValueType&& value) {
   return m_impl.template add<NodeHashFunctions>(
       std::forward<IncomingValueType>(value), &m_anchor);
-}
-
-template <typename Value,
-          typename HashFunctions,
-          typename Traits,
-          typename Allocator>
-template <typename IncomingValueType>
-typename LinkedHashSet<Value, HashFunctions, Traits, Allocator>::AddResult
-LinkedHashSet<Value, HashFunctions, Traits, Allocator>::insert(
-    IncomingValueType&& value) {
-  return add(value);
 }
 
 template <typename T, typename U, typename V, typename W>
@@ -878,15 +865,15 @@ LinkedHashSet<T, U, V, W>::insertBefore(ValuePeekInType beforeValue,
 }
 
 template <typename T, typename U, typename V, typename W>
-inline void LinkedHashSet<T, U, V, W>::remove(iterator it) {
+inline void LinkedHashSet<T, U, V, W>::erase(iterator it) {
   if (it == end())
     return;
   m_impl.remove(it.getNode());
 }
 
 template <typename T, typename U, typename V, typename W>
-inline void LinkedHashSet<T, U, V, W>::remove(ValuePeekInType value) {
-  remove(find(value));
+inline void LinkedHashSet<T, U, V, W>::erase(ValuePeekInType value) {
+  erase(find(value));
 }
 
 inline void swapAnchor(LinkedHashSetNodeBase& a, LinkedHashSetNodeBase& b) {

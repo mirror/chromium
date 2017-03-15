@@ -4,7 +4,7 @@
 
 module content.mojom;
 
-import "components/payments/payment_app.mojom";
+import "components/payments/content/payment_app.mojom";
 import "content/common/url_loader.mojom";
 import "mojo/common/string16.mojom";
 import "mojo/common/time.mojom";
@@ -32,14 +32,16 @@ struct FetchEventPreloadHandle {
 struct ExtendableMessageEvent {
   mojo.common.mojom.String16 message;
   url.mojom.Origin source_origin;
-  array<int32> message_ports;
-  array<int32> new_routing_ids;
+  array<handle<message_pipe>> message_ports;
   ExtendableMessageEventSource source;
 };
 
 // Renderer-side interface bound to ServiceWorkerContextClient for dispatching
 // events.
 interface ServiceWorkerEventDispatcher {
+  DispatchActivateEvent()
+      => (blink.mojom.ServiceWorkerEventStatus status,
+          mojo.common.mojom.Time dispatch_event_time);
   // |fetch_event_id| is used internally when sending the response back to the
   // browser process.
   DispatchFetchEvent(int32 fetch_event_id, ServiceWorkerFetchRequest request,

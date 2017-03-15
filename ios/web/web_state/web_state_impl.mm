@@ -13,7 +13,6 @@
 #include "base/strings/sys_string_conversions.h"
 #import "ios/web/interstitials/web_interstitial_impl.h"
 #import "ios/web/navigation/crw_session_controller.h"
-#import "ios/web/navigation/crw_session_entry.h"
 #import "ios/web/navigation/navigation_item_impl.h"
 #import "ios/web/navigation/session_storage_builder.h"
 #include "ios/web/public/browser_state.h"
@@ -31,6 +30,7 @@
 #include "ios/web/public/web_thread.h"
 #include "ios/web/public/webui/web_ui_ios_controller.h"
 #include "ios/web/web_state/global_web_state_event_tracker.h"
+#include "ios/web/web_state/navigation_context_impl.h"
 #import "ios/web/web_state/ui/crw_web_controller.h"
 #import "ios/web/web_state/ui/crw_web_controller_container_view.h"
 #include "ios/web/web_state/web_state_facade_delegate.h"
@@ -46,13 +46,9 @@ std::unique_ptr<WebState> WebState::Create(const CreateParams& params) {
   std::unique_ptr<WebStateImpl> web_state(
       new WebStateImpl(params.browser_state));
 
-  // Initialized the new session.
-  NSString* window_name = nil;
-  NSString* opener_id = nil;
+  // Initialize the new session.
   BOOL opened_by_dom = NO;
-  int opener_navigation_index = 0;
-  web_state->GetNavigationManagerImpl().InitializeSession(
-      window_name, opener_id, opened_by_dom, opener_navigation_index);
+  web_state->GetNavigationManagerImpl().InitializeSession(opened_by_dom);
 
   // This std::move is required to compile with the version of clang shipping
   // with Xcode 8.0+. Evalute whether the issue is fixed once a new version of
@@ -185,17 +181,34 @@ void WebStateImpl::SetFacadeDelegate(WebStateFacadeDelegate* facade_delegate) {
 }
 
 void WebStateImpl::OnNavigationCommitted(const GURL& url) {
-  UpdateHttpResponseHeaders(url);
+  std::unique_ptr<NavigationContext> context =
+      NavigationContextImpl::CreateNavigationContext(this, url);
+  for (auto& observer : observers_)
+    observer.DidFinishNavigation(context.get());
 }
 
-void WebStateImpl::OnUrlHashChanged() {
+void WebStateImpl::OnSamePageNavigation(const GURL& url) {
+  std::unique_ptr<NavigationContext> context =
+      NavigationContextImpl::CreateSamePageNavigationContext(this, url);
   for (auto& observer : observers_)
-    observer.UrlHashChanged();
+    observer.DidFinishNavigation(context.get());
 }
 
-void WebStateImpl::OnHistoryStateChanged() {
+void WebStateImpl::OnErrorPageNavigation(const GURL& url) {
+  std::unique_ptr<NavigationContext> context =
+      NavigationContextImpl::CreateErrorPageNavigationContext(this, url);
   for (auto& observer : observers_)
-    observer.HistoryStateChanged();
+    observer.DidFinishNavigation(context.get());
+}
+
+void WebStateImpl::OnTitleChanged() {
+  for (auto& observer : observers_)
+    observer.TitleWasSet();
+}
+
+void WebStateImpl::OnVisibleSecurityStateChange() {
+  for (auto& observer : observers_)
+    observer.DidChangeVisibleSecurityState();
 }
 
 void WebStateImpl::OnRenderProcessGone() {
@@ -494,6 +507,22 @@ void WebStateImpl::RunJavaScriptDialog(
   }
   presenter->RunJavaScriptDialog(this, origin_url, javascript_dialog_type,
                                  message_text, default_prompt_text, callback);
+}
+
+WebState* WebStateImpl::CreateNewWebState(const GURL& url,
+                                          const GURL& opener_url,
+                                          bool initiated_by_user) {
+  if (delegate_) {
+    return delegate_->CreateNewWebState(this, url, opener_url,
+                                        initiated_by_user);
+  }
+  return nullptr;
+}
+
+void WebStateImpl::CloseWebState() {
+  if (delegate_) {
+    delegate_->CloseWebState(this);
+  }
 }
 
 void WebStateImpl::OnAuthRequired(

@@ -22,7 +22,6 @@
 #include "core/svg/SVGDocumentExtensions.h"
 
 #include "core/dom/Document.h"
-#include "core/inspector/ConsoleMessage.h"
 #include "core/svg/SVGSVGElement.h"
 #include "core/svg/animation/SMILTimeContainer.h"
 #include "wtf/AutoReset.h"
@@ -41,12 +40,12 @@ void SVGDocumentExtensions::addTimeContainer(SVGSVGElement* element) {
 }
 
 void SVGDocumentExtensions::removeTimeContainer(SVGSVGElement* element) {
-  m_timeContainers.remove(element);
+  m_timeContainers.erase(element);
 }
 
 void SVGDocumentExtensions::addWebAnimationsPendingSVGElement(
     SVGElement& element) {
-  ASSERT(RuntimeEnabledFeatures::webAnimationsSVGEnabled());
+  DCHECK(RuntimeEnabledFeatures::webAnimationsSVGEnabled());
   m_webAnimationsPendingSVGElements.insert(&element);
 }
 
@@ -73,7 +72,7 @@ void SVGDocumentExtensions::serviceAnimations() {
   for (auto& svgElement : webAnimationsPendingSVGElements)
     svgElement->applyActiveWebAnimations();
 
-  ASSERT(m_webAnimationsPendingSVGElements.isEmpty());
+  DCHECK(m_webAnimationsPendingSVGElements.isEmpty());
 }
 
 void SVGDocumentExtensions::startAnimations() {
@@ -113,22 +112,20 @@ void SVGDocumentExtensions::dispatchSVGLoadEventToOutermostSVGElements() {
   }
 }
 
-void SVGDocumentExtensions::reportError(const String& message) {
-  ConsoleMessage* consoleMessage = ConsoleMessage::create(
-      RenderingMessageSource, ErrorMessageLevel, "Error: " + message);
-  m_document->addConsoleMessage(consoleMessage);
-}
-
 void SVGDocumentExtensions::addSVGRootWithRelativeLengthDescendents(
     SVGSVGElement* svgRoot) {
-  ASSERT(!m_inRelativeLengthSVGRootsInvalidation);
+#if DCHECK_IS_ON()
+  DCHECK(!m_inRelativeLengthSVGRootsInvalidation);
+#endif
   m_relativeLengthSVGRoots.insert(svgRoot);
 }
 
 void SVGDocumentExtensions::removeSVGRootWithRelativeLengthDescendents(
     SVGSVGElement* svgRoot) {
-  ASSERT(!m_inRelativeLengthSVGRootsInvalidation);
-  m_relativeLengthSVGRoots.remove(svgRoot);
+#if DCHECK_IS_ON()
+  DCHECK(!m_inRelativeLengthSVGRootsInvalidation);
+#endif
+  m_relativeLengthSVGRoots.erase(svgRoot);
 }
 
 bool SVGDocumentExtensions::isSVGRootWithRelativeLengthDescendents(
@@ -138,8 +135,8 @@ bool SVGDocumentExtensions::isSVGRootWithRelativeLengthDescendents(
 
 void SVGDocumentExtensions::invalidateSVGRootsWithRelativeLengthDescendents(
     SubtreeLayoutScope* scope) {
-  ASSERT(!m_inRelativeLengthSVGRootsInvalidation);
 #if DCHECK_IS_ON()
+  DCHECK(!m_inRelativeLengthSVGRootsInvalidation);
   AutoReset<bool> inRelativeLengthSVGRootsChange(
       &m_inRelativeLengthSVGRootsInvalidation, true);
 #endif
@@ -172,7 +169,7 @@ SVGSVGElement* SVGDocumentExtensions::rootElement(const Document& document) {
 }
 
 SVGSVGElement* SVGDocumentExtensions::rootElement() const {
-  ASSERT(m_document);
+  DCHECK(m_document);
   return rootElement(*m_document);
 }
 

@@ -19,7 +19,6 @@
 #include "build/build_config.h"
 #include "chrome/browser/browsing_data/browsing_data_remover.h"
 #include "chrome/common/features.h"
-#include "components/keyed_service/core/keyed_service.h"
 #include "ppapi/features/features.h"
 #include "storage/common/quota/quota_types.h"
 #include "url/gurl.h"
@@ -32,9 +31,7 @@ class BrowsingDataFilterBuilder;
 class StoragePartition;
 }
 
-class BrowsingDataRemoverImpl :
-    public BrowsingDataRemover,
-    public KeyedService {
+class BrowsingDataRemoverImpl : public BrowsingDataRemover {
  public:
   // The completion inhibitor can artificially delay completion of the browsing
   // data removal process. It is used during testing to simulate scenarios in
@@ -94,7 +91,10 @@ class BrowsingDataRemoverImpl :
   void SetEmbedderDelegate(
       std::unique_ptr<BrowsingDataRemoverDelegate> embedder_delegate) override;
   BrowsingDataRemoverDelegate* GetEmbedderDelegate() const override;
-
+  bool DoesOriginMatchMask(
+      int origin_type_mask,
+      const GURL& origin,
+      storage::SpecialStoragePolicy* special_storage_policy) const override;
   void Remove(const base::Time& delete_begin,
               const base::Time& delete_end,
               int remove_mask,

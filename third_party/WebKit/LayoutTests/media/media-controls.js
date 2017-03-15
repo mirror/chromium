@@ -17,6 +17,22 @@ function castButton(videoElement) {
     return button;
 }
 
+function downloadButton(videoElement) {
+    var controlID = '-internal-media-controls-download-button';
+    var button = mediaControlsElement(window.internals.shadowRoot(videoElement).firstChild, controlID);
+    if (!button)
+        throw 'Failed to find download button';
+    return button;
+}
+
+function fullscreenButton(videoElement) {
+    var controlID = '-webkit-media-controls-fullscreen-button';
+    var button = mediaControlsElement(window.internals.shadowRoot(videoElement).firstChild, controlID);
+    if (!button)
+        throw 'Failed to find fullscreen button';
+    return button;
+}
+
 function overlayCastButton(videoElement)
 {
     var controlID = '-internal-media-controls-overlay-cast-button';
@@ -211,4 +227,10 @@ function hasFullscreenButton(element)
 function isControlsPanelVisible(element)
 {
     return getComputedStyle(mediaControlsButton(element, "panel")).opacity == "1";
+}
+
+function isVisible(button) {
+    var computedStyle = getComputedStyle(button);
+    return computedStyle.display !== "none" &&
+           computedStyle.visibility === "visible";
 }

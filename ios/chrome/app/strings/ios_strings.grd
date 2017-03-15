@@ -543,6 +543,12 @@ locale.  The strings in this file are specific to iOS.
       <message name="IDS_IOS_CONTENT_CONTEXT_DOWNLOADIMAGE" desc="The name of the Download Image command in the content area context menu">
         Download Image
       </message>
+      <message name="IDS_IOS_CONTENT_SUGGESTIONS_DELETE" desc="The name of the Delete command in the Content Suggestions articles context menu">
+        Delete
+      </message>
+      <message name="IDS_IOS_CONTENT_SUGGESTIONS_FOOTER_TITLE" desc="The title of the footer of the sections of Content Suggestions">
+        More
+      </message>
       <message name="IDS_IOS_CONTENT_SETTINGS_TITLE" desc="Title for content settings dialog [Length: 29em] [iOS only]">
         Content Settings
       </message>
@@ -933,57 +939,6 @@ Handoff must also be enabled in the General section of Settings, and your device
       <message name="IDS_IOS_PASSWORD_MANAGER_UPDATE_PASSWORD_FOR_ACCOUNT" desc="Infobar message to update a password for named account, referring to PASSWORD_MANAGER_BRAND as the  [Length:70em]">
         Do you want <ph name="PASSWORD_MANAGER_BRAND">$1<ex>Google Chrome</ex></ph> to update your password for <ph name="USERNAME">$2<ex>don.john.lemon@example.com</ex></ph> for this site?
       </message>
-      <message name="IDS_IOS_PAYMENT_REQUEST_ADD_METHOD_BUTTON" desc="Label of the button to add a new payment method (credit card) [iOS only].">
-        Add Card...
-      </message>
-      <message name="IDS_IOS_PAYMENT_REQUEST_CANCEL_BUTTON" desc="Label of the button to cancel the request for payment presented to the user [iOS only].">
-        Cancel
-      </message>
-      <message name="IDS_IOS_PAYMENT_REQUEST_METHOD_SELECTION_TITLE" desc="Title of the view that allows the user to select the payment method (available credit cards or payment apps) for satisfying a payment request [iOS only].">
-        Payment
-      </message>
-      <message name="IDS_IOS_PAYMENT_REQUEST_PAYMENT_ITEMS_TITLE" desc="Title of the view that displays the payment items in a payment request (for example subtotal, tax, shipping cost) to the user [iOS only].">
-        Order Summary
-      </message>
-      <message name="IDS_IOS_PAYMENT_REQUEST_PAYMENT_ITEMS_TOTAL_FORMAT" desc="The format specifier of the Total label in the payment items in a payment request [iOS only].">
-        <ph name="FORMATTED_CURRENCY_CODE">$1<ex>USD</ex></ph> <ph name="FORMATTED_TOTAL_AMOUNT">$2<ex>$ 12.34</ex></ph>
-      </message>
-      <message name="IDS_IOS_PAYMENT_REQUEST_SHIPPING_ADDRESS_HEADER" desc="Label of the header of the section which displays the currently selected shipping address and the available shipping options for satisfying a payment request [iOS only].">
-        Shipping
-      </message>
-      <message name="IDS_IOS_PAYMENT_REQUEST_ADD_SHIPPING_ADDRESS_BUTTON" desc="Label of the button to add a shipping address [iOS only].">
-        Add
-      </message>
-      <message name="IDS_IOS_PAYMENT_REQUEST_SHIPPING_ADDRESS_SELECTION_TITLE" desc="Title of the view that allows the user to select the shipping address for satisfying a payment request [iOS only].">
-        Shipping Address
-      </message>
-      <message name="IDS_IOS_PAYMENT_REQUEST_SHIPPING_ADDRESS_SELECTION_MESSAGE" desc="Message instructing the user to select a shipping address for satisfying a payment request [iOS only].">
-        Select a shipping address to check shipping methods and requirements.
-      </message>
-      <message name="IDS_IOS_PAYMENT_REQUEST_CHECKING_LABEL" desc="Label showing that the new shipping address or the shipping option is being verified. [iOS only]">
-        Checking
-      </message>
-      <message name="IDS_IOS_PAYMENT_REQUEST_SHIPPING_OPTION_SELECTION_TITLE" desc="Title of the view that allows the user to select the shipping option for satisfying a payment request [iOS only].">
-        Shipping Method
-      </message>
-      <message name="IDS_IOS_PAYMENT_REQUEST_SHIPPING_ADDRESS_SELECTION_ADD_BUTTON" desc="Label of the button to add a new shipping address [iOS only].">
-        Add Address...
-      </message>
-      <message name="IDS_IOS_PAYMENT_REQUEST_PAYMENT_METHOD_HEADER" desc="Label of the header of the section which displays the options (available credit cards or payment apps) for satisfying a payment request [iOS only].">
-        Payment
-      </message>
-      <message name="IDS_IOS_PAYMENT_REQUEST_PAY_BUTTON" desc="Label of the button to confirm that the user wishes to pay for a good or service [iOS only].">
-        Pay
-      </message>
-      <message name="IDS_IOS_PAYMENT_REQUEST_TITLE" desc="Title of the dialog that presents a request for payment for some good or service [iOS only].">
-        Your Payment
-      </message>
-      <message name="IDS_IOS_PAYMENT_REQUEST_TOTAL_HEADER" desc="Label of the header of the section which displays the total charge for a payment request [iOS only].">
-        Total
-      </message>
-      <message name="IDS_IOS_PAYMENT_REQUEST_TOTAL_UPDATED_LABEL" desc="Label placed on the section which displays the total charge for a payment request, indicating that the total charge was updated. [iOS only].">
-        Updated
-      </message>
       <message name="IDS_IOS_PHOTO_LIBRARY_USAGE_DESCRIPTION" desc="Specifies the reason for accessing the user's photo library while the app is in use [Length: unlimited] [iOS only].">
         This lets you save and upload photos.
       </message>
@@ -1048,7 +1003,7 @@ Handoff must also be enabled in the General section of Settings, and your device
         On
       </message>
       <message name="IDS_IOS_QR_SCANNER_VIEWPORT_CAPTION" desc="Message displayed below the QR scanner viewport instructing the user to position the scanned QR or bar code inside the viewport. [Length: unlimited] [iOS only]">
-        QR Code or barcode
+        Position QR code or barcode in this frame
       </message>
       <message name="IDS_IOS_READING_LIST_SNACKBAR_MESSAGE" desc="Message briefly displayed at the bottom of the screen to the user to inform that the selected page has been added to the reading list. [Length: 35em]" meaning="The selected page has been added to your reading list. [Length: 35em]">
         Added to Reading List
@@ -1081,7 +1036,7 @@ Handoff must also be enabled in the General section of Settings, and your device
         Edit
       </message>
       <message name="IDS_IOS_READING_LIST_EMPTY_MESSAGE" desc="Message to explain to the user how to add entries to the reading list" meaning="[Length: unlimited]">
-        Your reading list is available offline. To add a page to your reading list, tap<ph name="SHARE_OPENING_ICON">SHARE_OPENING_ICON<ex>Menu > Share > Read Later</ex></ph>.
+        Your reading list is available offline. To add a page to your reading list, tap <ph name="SHARE_OPENING_ICON">SHARE_OPENING_ICON<ex>Menu > Share > Read Later</ex></ph>.
       </message>
       <message name="IDS_IOS_READING_LIST_MARK_ALL_BUTTON" desc="Label of the button to suggest options to mark all reading list entries read or unread [Length: 25em]" meaning="Display options letting the user mark all the entries as read or as unread. [Length: 25em]">
         Mark All…
@@ -1305,12 +1260,6 @@ Handoff must also be enabled in the General section of Settings, and your device
       <message name="IDS_IOS_SUGGESTIONS_DONE" desc="Label of the navigation bar button to close the view.">
         Done
       </message>
-      <message name="IDS_IOS_SWITCH_BROWSER_MODE_ENTER_INCOGNITO" desc="The accessibility label of the switch browser mode button to enter the Incognito mode [iOS only]">
-        Enter Incognito Mode
-      </message>
-      <message name="IDS_IOS_SWITCH_BROWSER_MODE_LEAVE_INCOGNITO" desc="The accessibility label of the switch browser mode button to leave the Incognito mode [iOS only]">
-        Leave Incognito Mode
-      </message>
       <message name="IDS_IOS_SYNC_AUTHENTICATION_ERROR_ALERT_VIEW_TITLE" desc="The title of the alert view displaying authentication errors. [Length: 20em] [iOS only]">
         Error
       </message>
@@ -1516,6 +1465,9 @@ Your data was encrypted with your sync passphrase on <ph name="TIME">$2<ex>Sept 
       <message name="IDS_IOS_TOOLS_MENU_REQUEST_DESKTOP_SITE" desc="The iOS menu item for requesting the desktop site [Length: 15em] [iOS only]">
         Request Desktop Site
       </message>
+      <message name="IDS_IOS_TOOLS_MENU_REQUEST_MOBILE_SITE" desc="The iOS menu item for requesting the mobile site [Length: 15em] [iOS only]">
+        Request Mobile Site
+      </message>
       <message name="IDS_IOS_TOOLS_MENU_SETTINGS" desc="The iOS menu item for opening the settings [Length: 15em] [iOS only]">
         Settings
       </message>
@@ -1554,6 +1506,12 @@ Your data was encrypted with your sync passphrase on <ph name="TIME">$2<ex>Sept 
       </message>
       <message name="IDS_IOS_VOICE_SEARCH_SETTING_TTS" desc="The label for setting switch enabling text-to-speech response after voice search [Length: 29em] [iOS only]">
         Speak Answers Back
+      </message>
+      <message name="IDS_IOS_SIGNIN_PROMO_CONTINUE_AS" desc="Button that the user can press to login without asking the password and continue using Chrome with this acccount. [Length: 9em]">
+        Continue as <ph name="NAME">$1<ex>John Doe</ex></ph>
+      </message>
+      <message name="IDS_IOS_SIGNIN_PROMO_NOT" desc="Button that the user can press if they are not the profile that Chrome found (opposite of 'Continue as Joe Doe').">
+        Not <ph name="EMAIL">$1<ex>john.doe@example.com</ex>?</ph>
       </message>
     </messages>
   </release>

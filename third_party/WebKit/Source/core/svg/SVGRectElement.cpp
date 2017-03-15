@@ -77,7 +77,7 @@ Path SVGRectElement::asPath() const {
   Path path;
 
   SVGLengthContext lengthContext(this);
-  ASSERT(layoutObject());
+  DCHECK(layoutObject());
   const ComputedStyle& style = layoutObject()->styleRef();
   const SVGComputedStyle& svgStyle = style.svgStyle();
 
@@ -122,22 +122,22 @@ void SVGRectElement::collectStyleForPresentationAttribute(
     MutableStylePropertySet* style) {
   SVGAnimatedPropertyBase* property = propertyFromAttribute(name);
   if (property == m_x) {
-    addPropertyToPresentationAttributeStyle(style, CSSPropertyX,
+    addPropertyToPresentationAttributeStyle(style, property->cssPropertyId(),
                                             m_x->cssValue());
   } else if (property == m_y) {
-    addPropertyToPresentationAttributeStyle(style, CSSPropertyY,
+    addPropertyToPresentationAttributeStyle(style, property->cssPropertyId(),
                                             m_y->cssValue());
   } else if (property == m_width) {
-    addPropertyToPresentationAttributeStyle(style, CSSPropertyWidth,
+    addPropertyToPresentationAttributeStyle(style, property->cssPropertyId(),
                                             m_width->cssValue());
   } else if (property == m_height) {
-    addPropertyToPresentationAttributeStyle(style, CSSPropertyHeight,
+    addPropertyToPresentationAttributeStyle(style, property->cssPropertyId(),
                                             m_height->cssValue());
   } else if (property == m_rx) {
-    addPropertyToPresentationAttributeStyle(style, CSSPropertyRx,
+    addPropertyToPresentationAttributeStyle(style, property->cssPropertyId(),
                                             m_rx->cssValue());
   } else if (property == m_ry) {
-    addPropertyToPresentationAttributeStyle(style, CSSPropertyRy,
+    addPropertyToPresentationAttributeStyle(style, property->cssPropertyId(),
                                             m_ry->cssValue());
   } else {
     SVGGeometryElement::collectStyleForPresentationAttribute(name, value,

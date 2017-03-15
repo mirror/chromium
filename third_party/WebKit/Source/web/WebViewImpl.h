@@ -236,7 +236,7 @@ class WEB_EXPORT WebViewImpl final
   WebHitTestResult hitTestResultAt(const WebPoint&) override;
   WebHitTestResult hitTestResultForTap(const WebPoint&,
                                        const WebSize&) override;
-  void spellingMarkers(WebVector<uint32_t>* markers) override;
+  void spellingMarkerOffsetsForTest(WebVector<unsigned>* offsets) override;
   void removeSpellingMarkersUnderWords(
       const WebVector<WebString>& words) override;
   unsigned long createUniqueIdentifierForRequest() override;
@@ -286,6 +286,7 @@ class WEB_EXPORT WebViewImpl final
 
   void setBaseBackgroundColor(WebColor);
   void setBaseBackgroundColorOverride(WebColor);
+  void clearBaseBackgroundColorOverride();
   void setBackgroundColorOverride(WebColor);
   void setZoomFactorOverride(float);
   void setCompositorDeviceScaleFactorOverride(float);
@@ -707,6 +708,7 @@ class WEB_EXPORT WebViewImpl final
   std::unique_ptr<FullscreenController> m_fullscreenController;
 
   WebColor m_baseBackgroundColor;
+  bool m_baseBackgroundColorOverrideEnabled;
   WebColor m_baseBackgroundColorOverride;
   WebColor m_backgroundColorOverride;
   float m_zoomFactorOverride;

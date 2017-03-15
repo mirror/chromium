@@ -27,22 +27,21 @@
 #ifndef ResourceFetcher_h
 #define ResourceFetcher_h
 
+#include <memory>
 #include "platform/PlatformExport.h"
 #include "platform/Timer.h"
-#include "platform/loader/fetch/CachePolicy.h"
 #include "platform/loader/fetch/FetchContext.h"
 #include "platform/loader/fetch/FetchInitiatorInfo.h"
 #include "platform/loader/fetch/FetchRequest.h"
 #include "platform/loader/fetch/Resource.h"
+#include "platform/loader/fetch/ResourceError.h"
+#include "platform/loader/fetch/ResourceLoadPriority.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/SubstituteData.h"
-#include "platform/network/ResourceError.h"
-#include "platform/network/ResourceLoadPriority.h"
 #include "wtf/HashMap.h"
 #include "wtf/HashSet.h"
 #include "wtf/ListHashSet.h"
 #include "wtf/text/StringHash.h"
-#include <memory>
 
 namespace blink {
 
@@ -94,8 +93,8 @@ class PLATFORM_EXPORT ResourceFetcher
   }
   void clearContext();
 
-  int requestCount() const;
-  bool hasPendingRequest() const;
+  int blockingRequestCount() const;
+  int nonblockingRequestCount() const;
 
   enum ClearPreloadsPolicy { ClearAllPreloads, ClearSpeculativeMarkupPreloads };
 
@@ -132,10 +131,10 @@ class PLATFORM_EXPORT ResourceFetcher
 
   String getCacheIdentifier() const;
 
-  static void determineRequestContext(ResourceRequest&,
-                                      Resource::Type,
-                                      bool isMainFrame);
-  void determineRequestContext(ResourceRequest&, Resource::Type);
+  WARN_UNUSED_RESULT static WebURLRequest::RequestContext
+  determineRequestContext(Resource::Type, bool isMainFrame);
+  WARN_UNUSED_RESULT WebURLRequest::RequestContext determineRequestContext(
+      Resource::Type) const;
 
   void updateAllImageResourcePriorities();
 
@@ -230,12 +229,12 @@ class PLATFORM_EXPORT ResourceFetcher
   TaskRunnerTimer<ResourceFetcher> m_resourceTimingReportTimer;
 
   using ResourceTimingInfoMap =
-      HeapHashMap<Member<Resource>, std::unique_ptr<ResourceTimingInfo>>;
+      HeapHashMap<Member<Resource>, RefPtr<ResourceTimingInfo>>;
   ResourceTimingInfoMap m_resourceTimingInfoMap;
 
-  std::unique_ptr<ResourceTimingInfo> m_navigationTimingInfo;
+  RefPtr<ResourceTimingInfo> m_navigationTimingInfo;
 
-  Vector<std::unique_ptr<ResourceTimingInfo>> m_scheduledResourceTimingReports;
+  Vector<RefPtr<ResourceTimingInfo>> m_scheduledResourceTimingReports;
 
   HeapHashSet<Member<ResourceLoader>> m_loaders;
   HeapHashSet<Member<ResourceLoader>> m_nonBlockingLoaders;

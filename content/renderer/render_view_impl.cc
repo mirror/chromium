@@ -38,6 +38,7 @@
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "cc/base/switches.h"
+#include "cc/paint/skia_paint_canvas.h"
 #include "content/child/appcache/appcache_dispatcher.h"
 #include "content/child/appcache/web_application_cache_host_impl.h"
 #include "content/child/child_shared_bitmap_manager.h"
@@ -264,9 +265,10 @@ namespace content {
 //-----------------------------------------------------------------------------
 
 typedef std::map<blink::WebView*, RenderViewImpl*> ViewMap;
-static base::LazyInstance<ViewMap> g_view_map = LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<ViewMap>::Leaky g_view_map =
+    LAZY_INSTANCE_INITIALIZER;
 typedef std::map<int32_t, RenderViewImpl*> RoutingIDViewMap;
-static base::LazyInstance<RoutingIDViewMap> g_routing_id_view_map =
+static base::LazyInstance<RoutingIDViewMap>::Leaky g_routing_id_view_map =
     LAZY_INSTANCE_INITIALIZER;
 
 // Time, in seconds, we delay before sending content state changes (such as form
@@ -967,9 +969,6 @@ void RenderView::ApplyWebPreferences(const WebPreferences& prefs,
   WebRuntimeFeatures::enableColorCorrectRenderingDefaultMode(
       prefs.color_correct_rendering_default_mode_enabled);
 
-  WebRuntimeFeatures::enableTrueColorRendering(
-      prefs.true_color_rendering_enabled);
-
   settings->setShouldRespectImageOrientation(
       prefs.should_respect_image_orientation);
 
@@ -1025,7 +1024,6 @@ void RenderView::ApplyWebPreferences(const WebPreferences& prefs,
   web_view->setIgnoreViewportTagScaleLimits(prefs.force_enable_zoom);
   settings->setAutoZoomFocusedNodeToLegibleScale(true);
   settings->setDoubleTapToZoomEnabled(prefs.double_tap_to_zoom_enabled);
-  settings->setMediaControlsOverlayPlayButtonEnabled(true);
   settings->setMediaPlaybackRequiresUserGesture(
       prefs.user_gesture_required_for_media_playback);
   settings->setMediaPlaybackGestureWhitelistScope(
@@ -1073,6 +1071,8 @@ void RenderView::ApplyWebPreferences(const WebPreferences& prefs,
 
   WebRuntimeFeatures::enableVideoFullscreenOrientationLock(
       prefs.video_fullscreen_orientation_lock_enabled);
+  settings->setEmbeddedMediaExperienceEnabled(
+      prefs.embedded_media_experience_enabled);
 #else   // defined(OS_ANDROID)
   settings->setCrossOriginMediaPlaybackRequiresUserGesture(
       prefs.cross_origin_media_playback_requires_user_gesture);
@@ -1100,6 +1100,8 @@ void RenderView::ApplyWebPreferences(const WebPreferences& prefs,
       prefs.background_video_track_optimization_enabled);
 
   settings->setPresentationReceiver(prefs.presentation_receiver);
+
+  settings->setMediaControlsEnabled(prefs.media_controls_enabled);
 
 #if defined(OS_MACOSX)
   settings->setDoubleTapToZoomEnabled(true);
@@ -1877,10 +1879,6 @@ void RenderViewImpl::hasTouchEventHandlers(bool has_handlers) {
   RenderWidget::hasTouchEventHandlers(has_handlers);
 }
 
-void RenderViewImpl::resetInputMethod() {
-  RenderWidget::resetInputMethod();
-}
-
 blink::WebRect RenderViewImpl::rootWindowRect() {
   return RenderWidget::windowRect();
 }
@@ -1896,10 +1894,6 @@ void RenderViewImpl::setToolTipText(const blink::WebString& text,
 
 void RenderViewImpl::setTouchAction(blink::WebTouchAction touchAction) {
   RenderWidget::setTouchAction(touchAction);
-}
-
-void RenderViewImpl::showVirtualKeyboardOnElementFocus() {
-  RenderWidget::showVirtualKeyboardOnElementFocus();
 }
 
 void RenderViewImpl::showUnhandledTapUIIfNeeded(
@@ -2503,10 +2497,7 @@ bool RenderViewImpl::didTapMultipleTargets(
   // as this interferes with "touch exploration".
   AccessibilityMode accessibility_mode =
       GetMainRenderFrame()->accessibility_mode();
-  bool matches_accessibility_mode_complete =
-      (accessibility_mode & ACCESSIBILITY_MODE_COMPLETE) ==
-          ACCESSIBILITY_MODE_COMPLETE;
-  if (matches_accessibility_mode_complete)
+  if (accessibility_mode == kAccessibilityModeComplete)
     return false;
 
   // The touch_rect, target_rects and zoom_rect are in the outer viewport
@@ -2538,8 +2529,7 @@ bool RenderViewImpl::didTapMultipleTargets(
         SkImageInfo info = SkImageInfo::MakeN32Premul(canvas_size.width(),
                                                       canvas_size.height());
         bitmap.installPixels(info, shared_bitmap->pixels(), info.minRowBytes());
-        SkCanvas sk_canvas(bitmap);
-        cc::PaintCanvasPassThrough canvas(&sk_canvas);
+        cc::SkiaPaintCanvas canvas(bitmap);
 
         // TODO(trchen): Cleanup the device scale factor mess.
         // device scale will be applied in WebKit

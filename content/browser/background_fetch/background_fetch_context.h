@@ -5,15 +5,20 @@
 #ifndef CONTENT_BROWSER_BACKGROUND_FETCH_BACKGROUND_FETCH_CONTEXT_H_
 #define CONTENT_BROWSER_BACKGROUND_FETCH_BACKGROUND_FETCH_CONTEXT_H_
 
+#include <unordered_map>
+
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "content/browser/background_fetch/background_fetch_data_manager.h"
+#include "content/browser/background_fetch/background_fetch_job_controller.h"
 #include "content/common/content_export.h"
+#include "content/public/browser/browser_thread.h"
 
 namespace content {
 
+class BackgroundFetchJobInfo;
+class BackgroundFetchRequestInfo;
 class BrowserContext;
-class FetchRequest;
 class ServiceWorkerContextWrapper;
 
 // The BackgroundFetchContext is the central moderator of ongoing background
@@ -21,12 +26,14 @@ class ServiceWorkerContextWrapper;
 // Background Fetch requests function similar to normal fetches except that
 // they are persistent across Chromium or service worker shutdown.
 class CONTENT_EXPORT BackgroundFetchContext
-    : public base::RefCountedThreadSafe<BackgroundFetchContext> {
+    : public base::RefCountedThreadSafe<BackgroundFetchContext,
+                                        BrowserThread::DeleteOnUIThread> {
  public:
   // The BackgroundFetchContext will watch the ServiceWorkerContextWrapper so
   // that it can respond to service worker events such as unregister.
   BackgroundFetchContext(
       BrowserContext* browser_context,
+      StoragePartition* storage_partition,
       const scoped_refptr<ServiceWorkerContextWrapper>& context);
 
   // Init and Shutdown are for use on the UI thread when the StoragePartition is
@@ -41,13 +48,27 @@ class CONTENT_EXPORT BackgroundFetchContext
   }
 
  private:
-  void CreateRequest(const FetchRequest& fetch_request);
+  friend class base::DeleteHelper<BackgroundFetchContext>;
+  friend struct BrowserThread::DeleteOnThread<BrowserThread::UI>;
+  friend class base::RefCountedThreadSafe<BackgroundFetchContext,
+                                          BrowserThread::DeleteOnUIThread>;
 
-  friend class base::RefCountedThreadSafe<BackgroundFetchContext>;
   ~BackgroundFetchContext();
+
+  void CreateRequest(const BackgroundFetchJobInfo& job_info,
+                     std::vector<BackgroundFetchRequestInfo>& request_infos);
+
+  void ShutdownOnIO();
+
+  // |this| is owned by the BrowserContext via the StoragePartition.
+  BrowserContext* browser_context_;
+  StoragePartition* storage_partition_;
 
   scoped_refptr<ServiceWorkerContextWrapper> service_worker_context_;
   BackgroundFetchDataManager background_fetch_data_manager_;
+
+  std::unordered_map<std::string, std::unique_ptr<BackgroundFetchJobController>>
+      job_map_;
 
   DISALLOW_COPY_AND_ASSIGN(BackgroundFetchContext);
 };

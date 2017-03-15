@@ -165,6 +165,19 @@ message DeviceServiceApiAccessRequest {
 
   // OAuth2 client ID to which the returned authorization code is bound.
   optional string oauth2_client_id = 2;
+
+  // Enumerates different flavors of registration.
+  enum DeviceType {
+    // Authcode will be used by Chrome OS
+    // (this is typically requested during device enrollment)
+    CHROME = 0;
+    // Authcode will be used by Android (ARC) subsystem
+    // (this is typically requested during ARC Kiosk session setup)
+    ANDROIDOS = 1;
+  };
+
+  // Device type indicates the intended use of the auth code.
+  optional DeviceType device_type = 3;
 }
 
 // Response from server to API access request.
@@ -754,6 +767,9 @@ message DeviceStatusReportRequest {
   // Set only when there is an auto launched with zero delay kiosk app
   // and it is currently running. Otherwise, this field is empty.
   optional AppStatus running_kiosk_app = 18;
+
+  // Sound output volume level in range [0,100].
+  optional int32 sound_volume = 19;
 }
 
 message OsUpdateStatus {
@@ -826,6 +842,9 @@ message SessionStatusReportRequest {
 
   // Information about ARC status.
   optional AndroidStatus android_status = 7;
+
+  // If this is a regular user session, this is the user's DMToken.
+  optional string user_dm_token = 8;
 }
 
 // Response from DMServer to update devices' status.
@@ -1039,6 +1058,9 @@ message RemoteCommand {
 
     // Take a screenshot.
     DEVICE_SCREENSHOT = 1;
+
+    // Set device volume.
+    DEVICE_SET_VOLUME = 2;
   }
 
   // The command type.

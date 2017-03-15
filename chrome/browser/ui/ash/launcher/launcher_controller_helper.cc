@@ -84,7 +84,7 @@ const extensions::Extension* GetExtensionByID(Profile* profile,
       id, extensions::ExtensionRegistry::EVERYTHING);
 }
 
-std::string GetSourceFromAppListSource(ash::LaunchSource source) {
+std::string GetSourceFromAppListSource(ash::ShelfLaunchSource source) {
   switch (source) {
     case ash::LAUNCH_FROM_APP_LIST:
       return std::string(extension_urls::kLaunchSourceAppList);
@@ -109,7 +109,7 @@ base::string16 LauncherControllerHelper::GetAppTitle(
   if (app_id.empty())
     return base::string16();
 
-  // Get the title if the app is an Arc app.
+  // Get the title if the app is an ARC app.
   ArcAppListPrefs* arc_prefs = ArcAppListPrefs::Get(profile);
   const std::string arc_app_id =
       ArcAppWindowLauncherController::GetArcAppIdFromShelfAppId(app_id);
@@ -161,8 +161,8 @@ bool LauncherControllerHelper::IsValidIDForCurrentUser(
     DCHECK(arc_session_manager);
     if (!arc_session_manager->IsAllowed())
       return false;
-    if (!arc_session_manager->IsArcPlayStoreEnabled() &&
-        arc_session_manager->IsArcManaged())
+    if (!arc::IsArcPlayStoreEnabledForProfile(profile()) &&
+        arc::IsArcPlayStoreEnabledPreferenceManagedForProfile(profile()))
       return false;
   }
 
@@ -170,7 +170,7 @@ bool LauncherControllerHelper::IsValidIDForCurrentUser(
 }
 
 void LauncherControllerHelper::LaunchApp(ash::AppLauncherId id,
-                                         ash::LaunchSource source,
+                                         ash::ShelfLaunchSource source,
                                          int event_flags) {
   const std::string& app_id = id.app_id();
   const ArcAppListPrefs* arc_prefs = GetArcAppListPrefs();

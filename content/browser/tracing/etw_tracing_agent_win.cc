@@ -166,47 +166,42 @@ void EtwTracingAgent::AddSyncEventToBuffer() {
 
   // Add fields to the event.
   std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue());
-  value->Set("guid", new base::StringValue("ClockSync"));
-  value->Set("walltime", new base::StringValue(
-      base::StringPrintf("%08X%08X",
-                         walltime_in_us.HighPart,
-                         walltime_in_us.LowPart)));
-  value->Set("tick", new base::StringValue(
-      base::StringPrintf("%08X%08X",
-                         now_in_us.HighPart,
-                         now_in_us.LowPart)));
+  value->Set("guid", new base::Value("ClockSync"));
+  value->Set("walltime",
+             new base::Value(base::StringPrintf(
+                 "%08X%08X", walltime_in_us.HighPart, walltime_in_us.LowPart)));
+  value->Set("tick", new base::Value(base::StringPrintf(
+                         "%08X%08X", now_in_us.HighPart, now_in_us.LowPart)));
 
   // Append it to the events buffer.
   events_->Append(value.release());
 }
 
 void EtwTracingAgent::AppendEventToBuffer(EVENT_TRACE* event) {
-  using base::FundamentalValue;
+  using base::Value;
 
   std::unique_ptr<base::DictionaryValue> value(new base::DictionaryValue());
 
   // Add header fields to the event.
   LARGE_INTEGER ts_us;
   ts_us.QuadPart = event->Header.TimeStamp.QuadPart / 10;
-  value->Set("ts", new base::StringValue(
-      base::StringPrintf("%08X%08X", ts_us.HighPart, ts_us.LowPart)));
+  value->Set("ts", new base::Value(base::StringPrintf(
+                       "%08X%08X", ts_us.HighPart, ts_us.LowPart)));
 
-  value->Set("guid", new base::StringValue(GuidToString(event->Header.Guid)));
+  value->Set("guid", new base::Value(GuidToString(event->Header.Guid)));
 
-  value->Set("op", new FundamentalValue(event->Header.Class.Type));
-  value->Set("ver", new FundamentalValue(event->Header.Class.Version));
-  value->Set("pid",
-             new FundamentalValue(static_cast<int>(event->Header.ProcessId)));
-  value->Set("tid",
-             new FundamentalValue(static_cast<int>(event->Header.ThreadId)));
-  value->Set("cpu", new FundamentalValue(event->BufferContext.ProcessorNumber));
+  value->Set("op", new Value(event->Header.Class.Type));
+  value->Set("ver", new Value(event->Header.Class.Version));
+  value->Set("pid", new Value(static_cast<int>(event->Header.ProcessId)));
+  value->Set("tid", new Value(static_cast<int>(event->Header.ThreadId)));
+  value->Set("cpu", new Value(event->BufferContext.ProcessorNumber));
 
   // Base64 encode the payload bytes.
   base::StringPiece buffer(static_cast<const char*>(event->MofData),
                            event->MofLength);
   std::string payload;
   base::Base64Encode(buffer, &payload);
-  value->Set("payload", new base::StringValue(payload));
+  value->Set("payload", new base::Value(payload));
 
   // Append it to the events buffer.
   events_->Append(value.release());
@@ -230,7 +225,7 @@ void EtwTracingAgent::FlushOnThread(
     const StopAgentTracingCallback& callback) {
   // Add the header information to the stream.
   std::unique_ptr<base::DictionaryValue> header(new base::DictionaryValue());
-  header->Set("name", new base::StringValue("ETW"));
+  header->Set("name", new base::Value("ETW"));
 
   // Release and pass the events buffer.
   header->Set("content", events_.release());

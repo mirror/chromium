@@ -23,13 +23,13 @@
 #include "ash/common/shelf/wm_shelf.h"
 #include "ash/common/shell_delegate.h"
 #include "ash/common/wm/root_window_finder.h"
-#include "ash/common/wm_lookup.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
+#include "ash/shell.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "base/auto_reset.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
-#include "grit/ash_strings.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/models/simple_menu_model.h"
@@ -276,7 +276,8 @@ ShelfView::ShelfView(ShelfModel* model,
       main_shelf_(nullptr),
       dragged_off_from_overflow_to_shelf_(false),
       is_repost_event_on_same_item_(false),
-      last_pressed_index_(-1) {
+      last_pressed_index_(-1),
+      weak_factory_(this) {
   DCHECK(model_);
   DCHECK(delegate_);
   DCHECK(wm_shelf_);
@@ -435,8 +436,8 @@ void ShelfView::ButtonPressed(views::Button* sender,
                               views::InkDrop* ink_drop) {
   if (sender == overflow_button_) {
     ToggleOverflowBubble();
-    shelf_button_pressed_metric_tracker_.ButtonPressed(
-        event, sender, ShelfItemDelegate::kNoAction);
+    shelf_button_pressed_metric_tracker_.ButtonPressed(event, sender,
+                                                       SHELF_ACTION_NONE);
     return;
   }
 
@@ -450,7 +451,7 @@ void ShelfView::ButtonPressed(views::Button* sender,
   DCHECK_LT(-1, last_pressed_index_);
 
   // Place new windows on the same display as the button.
-  WmWindow* window = WmLookup::Get()->GetWindowForWidget(sender->GetWidget());
+  WmWindow* window = WmWindow::Get(sender->GetWidget()->GetNativeWindow());
   scoped_root_window_for_new_windows_.reset(
       new ScopedRootWindowForNewWindows(window->GetRootWindow()));
 
@@ -483,25 +484,15 @@ void ShelfView::ButtonPressed(views::Button* sender,
       break;
   }
 
-  ShelfItemDelegate::PerformedAction performed_action =
-      model_->GetShelfItemDelegate(model_->items()[last_pressed_index_].id)
-          ->ItemSelected(event);
+  const int64_t display_id = window->GetDisplayNearestWindow().id();
 
-  shelf_button_pressed_metric_tracker_.ButtonPressed(event, sender,
-                                                     performed_action);
-
-  // For the app list menu no TRIGGERED ink drop effect is needed and it
-  // handles its own ACTIVATED/DEACTIVATED states.
-  if (performed_action == ShelfItemDelegate::kNewWindowCreated ||
-      (performed_action != ShelfItemDelegate::kAppListMenuShown &&
-       !ShowListMenuForView(model_->items()[last_pressed_index_], sender, event,
-                            ink_drop))) {
-    ink_drop->AnimateToState(views::InkDropState::ACTION_TRIGGERED);
-  }
-  // Allow the menu to clear |scoped_root_window_for_new_windows_| during
-  // OnMenuClosed.
-  if (!IsShowingMenu())
-    scoped_root_window_for_new_windows_.reset();
+  // Notify the item of its selection; handle the result in AfterItemSelected.
+  const ShelfItem& item = model_->items()[last_pressed_index_];
+  model_->GetShelfItemDelegate(item.id)->ItemSelected(
+      ui::Event::Clone(event), display_id, LAUNCH_FROM_UNKNOWN,
+      base::Bind(&ShelfView::AfterItemSelected, weak_factory_.GetWeakPtr(),
+                 item, sender, base::Passed(ui::Event::Clone(event)),
+                 ink_drop));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -527,8 +518,7 @@ void ShelfView::CreateDragIconProxy(
     float scale_factor) {
   drag_replaced_view_ = replaced_view;
   WmWindow* root_window =
-      WmLookup::Get()
-          ->GetWindowForWidget(drag_replaced_view_->GetWidget())
+      WmWindow::Get(drag_replaced_view_->GetWidget()->GetNativeWindow())
           ->GetRootWindow();
   drag_image_.reset(new DragImageView(
       root_window, ui::DragDropTypes::DRAG_EVENT_SOURCE_MOUSE));
@@ -752,9 +742,9 @@ void ShelfView::LayoutToIdealBounds() {
   overflow_button_->SetBoundsRect(ideal_bounds.overflow_bounds);
 }
 
-void ShelfView::UpdateShelfItemBackground(int alpha) {
-  GetAppListButton()->SetBackgroundAlpha(alpha);
-  overflow_button_->SetBackgroundAlpha(alpha);
+void ShelfView::UpdateShelfItemBackground(SkColor color) {
+  GetAppListButton()->UpdateShelfItemBackground(color);
+  overflow_button_->UpdateShelfItemBackground(color);
 }
 
 void ShelfView::UpdateAllButtonsVisibilityInOverflowMode() {
@@ -784,11 +774,9 @@ void ShelfView::CalculateIdealBounds(IdealBounds* bounds) const {
 
   int x = 0;
   int y = 0;
-  int button_size = GetShelfConstant(SHELF_BUTTON_SIZE);
-  int button_spacing = GetShelfConstant(SHELF_BUTTON_SPACING);
 
-  int w = wm_shelf_->PrimaryAxisValue(button_size, width());
-  int h = wm_shelf_->PrimaryAxisValue(height(), button_size);
+  int w = wm_shelf_->PrimaryAxisValue(kShelfButtonSize, width());
+  int h = wm_shelf_->PrimaryAxisValue(height(), kShelfButtonSize);
   for (int i = 0; i < view_model_->view_size(); ++i) {
     if (i < first_visible_index_) {
       view_model_->set_ideal_bounds(i, gfx::Rect(x, y, 0, 0));
@@ -796,8 +784,8 @@ void ShelfView::CalculateIdealBounds(IdealBounds* bounds) const {
     }
 
     view_model_->set_ideal_bounds(i, gfx::Rect(x, y, w, h));
-    x = wm_shelf_->PrimaryAxisValue(x + w + button_spacing, x);
-    y = wm_shelf_->PrimaryAxisValue(y, y + h + button_spacing);
+    x = wm_shelf_->PrimaryAxisValue(x + w + kShelfButtonSpacing, x);
+    y = wm_shelf_->PrimaryAxisValue(y, y + h + kShelfButtonSpacing);
   }
 
   if (is_overflow_mode()) {
@@ -810,8 +798,8 @@ void ShelfView::CalculateIdealBounds(IdealBounds* bounds) const {
   x = wm_shelf_->PrimaryAxisValue(end_position, 0);
   y = wm_shelf_->PrimaryAxisValue(0, end_position);
   for (int i = view_model_->view_size() - 1; i >= first_panel_index; --i) {
-    x = wm_shelf_->PrimaryAxisValue(x - w - button_spacing, x);
-    y = wm_shelf_->PrimaryAxisValue(y, y - h - button_spacing);
+    x = wm_shelf_->PrimaryAxisValue(x - w - kShelfButtonSpacing, x);
+    y = wm_shelf_->PrimaryAxisValue(y, y - h - kShelfButtonSpacing);
     view_model_->set_ideal_bounds(i, gfx::Rect(x, y, w, h));
     end_position = wm_shelf_->PrimaryAxisValue(x, y);
   }
@@ -822,7 +810,7 @@ void ShelfView::CalculateIdealBounds(IdealBounds* bounds) const {
       wm_shelf_->PrimaryAxisValue(
           view_model_->ideal_bounds(last_button_index).right(),
           view_model_->ideal_bounds(last_button_index).bottom()) +
-      button_spacing;
+      kShelfButtonSpacing;
   int reserved_icon_space = available_size * kReservedNonPanelIconProportion;
   if (last_icon_position < reserved_icon_space)
     end_position = last_icon_position;
@@ -834,7 +822,7 @@ void ShelfView::CalculateIdealBounds(IdealBounds* bounds) const {
                 wm_shelf_->PrimaryAxisValue(height(), h)));
 
   last_visible_index_ =
-      DetermineLastVisibleIndex(end_position - button_spacing);
+      DetermineLastVisibleIndex(end_position - kShelfButtonSpacing);
   last_hidden_index_ = DetermineFirstVisiblePanelIndex(end_position) - 1;
   bool show_overflow = last_visible_index_ < last_button_index ||
                        last_hidden_index_ >= first_panel_index;
@@ -890,8 +878,8 @@ void ShelfView::CalculateIdealBounds(IdealBounds* bounds) const {
     if (last_visible_index_ >= 0) {
       // Add more space between last visible item and overflow button.
       // Without this, two buttons look too close compared with other items.
-      x = wm_shelf_->PrimaryAxisValue(x + button_spacing, x);
-      y = wm_shelf_->PrimaryAxisValue(y, y + button_spacing);
+      x = wm_shelf_->PrimaryAxisValue(x + kShelfButtonSpacing, x);
+      y = wm_shelf_->PrimaryAxisValue(y, y + kShelfButtonSpacing);
     }
 
     // Set all hidden panel icon positions to be on the overflow button.
@@ -1082,8 +1070,7 @@ bool ShelfView::HandleRipOffDrag(const ui::LocatedEvent& event) {
       delegate_->GetAppIDForShelfID(model_->items()[current_index].id);
 
   gfx::Point screen_location =
-      WmLookup::Get()
-          ->GetWindowForWidget(GetWidget())
+      WmWindow::Get(GetWidget()->GetNativeWindow())
           ->GetRootWindow()
           ->ConvertPointToScreen(event.root_location());
 
@@ -1607,30 +1594,38 @@ void ShelfView::ShelfItemMoved(int start_index, int target_index) {
     AnimateToIdealBounds();
 }
 
-void ShelfView::OnSetShelfItemDelegate(ShelfID id,
-                                       ShelfItemDelegate* item_delegate) {}
+void ShelfView::OnSetShelfItemDelegate(
+    ShelfID id,
+    mojom::ShelfItemDelegate* item_delegate) {}
 
-bool ShelfView::ShowListMenuForView(const ShelfItem& item,
-                                    views::View* source,
-                                    const ui::Event& event,
-                                    views::InkDrop* ink_drop) {
-  ShelfItemDelegate* item_delegate = model_->GetShelfItemDelegate(item.id);
-  ShelfAppMenuItemList menu_items =
-      item_delegate->GetAppMenuItems(event.flags());
+void ShelfView::AfterItemSelected(
+    const ShelfItem& item,
+    views::Button* sender,
+    std::unique_ptr<ui::Event> event,
+    views::InkDrop* ink_drop,
+    ShelfAction action,
+    base::Optional<std::vector<mojom::MenuItemPtr>> menu_items) {
+  shelf_button_pressed_metric_tracker_.ButtonPressed(*event, sender, action);
 
-  // The application list menu should only show for two or more items; return
-  // false here to ensure that other behavior is triggered (eg. activating or
-  // minimizing a single associated window, or launching a pinned shelf item).
-  if (menu_items.size() < 2)
-    return false;
-
-  ink_drop->AnimateToState(views::InkDropState::ACTIVATED);
-  context_menu_id_ = item.id;
-  ShowMenu(base::MakeUnique<ShelfApplicationMenuModel>(item.title,
-                                                       std::move(menu_items)),
-           source, gfx::Point(), false, ui::GetMenuSourceTypeForEvent(event),
-           ink_drop);
-  return true;
+  // The app list handles its own ink drop effect state changes.
+  if (action != SHELF_ACTION_APP_LIST_SHOWN) {
+    if (action != SHELF_ACTION_NEW_WINDOW_CREATED && menu_items &&
+        menu_items->size() > 1) {
+      // Show the app menu if there are 2 or more items and no window was shown.
+      ink_drop->AnimateToState(views::InkDropState::ACTIVATED);
+      context_menu_id_ = item.id;
+      ShowMenu(base::MakeUnique<ShelfApplicationMenuModel>(
+                   item.title, std::move(*menu_items),
+                   model_->GetShelfItemDelegate(item.id)),
+               sender, gfx::Point(), false,
+               ui::GetMenuSourceTypeForEvent(*event), ink_drop);
+    } else {
+      ink_drop->AnimateToState(views::InkDropState::ACTION_TRIGGERED);
+    }
+  }
+  // The menu clears |scoped_root_window_for_new_windows_| in OnMenuClosed.
+  if (!IsShowingMenu())
+    scoped_root_window_for_new_windows_.reset();
 }
 
 void ShelfView::ShowContextMenuForView(views::View* source,
@@ -1645,7 +1640,7 @@ void ShelfView::ShowContextMenuForView(views::View* source,
   }
 
   std::unique_ptr<ui::MenuModel> context_menu_model(
-      WmShell::Get()->delegate()->CreateContextMenu(wm_shelf_, item));
+      Shell::Get()->shell_delegate()->CreateContextMenu(wm_shelf_, item));
   if (!context_menu_model)
     return;
 
@@ -1673,7 +1668,7 @@ void ShelfView::ShowMenu(std::unique_ptr<ui::MenuModel> menu_model,
       new views::MenuRunner(menu_model_adapter_->CreateMenu(), run_types));
 
   // Place new windows on the same display as the button that spawned the menu.
-  WmWindow* window = WmLookup::Get()->GetWindowForWidget(source->GetWidget());
+  WmWindow* window = WmWindow::Get(source->GetWidget()->GetNativeWindow());
   scoped_root_window_for_new_windows_.reset(
       new ScopedRootWindowForNewWindows(window->GetRootWindow()));
 

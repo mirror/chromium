@@ -78,9 +78,14 @@ class CSSAnimations final {
       const ComputedStyle&,
       const ComputedStyle* parentStyle,
       bool wasViewportChanged);
+
+  // Specifies whether to process custom or standard CSS properties.
+  enum class PropertyPass { Custom, Standard };
   static void calculateTransitionUpdate(CSSAnimationUpdate&,
+                                        PropertyPass,
                                         const Element* animatingElement,
                                         const ComputedStyle&);
+
   static void snapshotCompositorKeyframes(Element&,
                                           CSSAnimationUpdate&,
                                           const ComputedStyle&,
@@ -139,36 +144,52 @@ class CSSAnimations final {
     DEFINE_INLINE_TRACE() { visitor->trace(animation); }
 
     Member<Animation> animation;
-    const AnimatableValue* from;
-    const AnimatableValue* to;
+    RefPtr<AnimatableValue> from;
+    RefPtr<AnimatableValue> to;
     RefPtr<AnimatableValue> reversingAdjustedStartValue;
     double reversingShorteningFactor;
   };
 
   HeapVector<Member<RunningAnimation>> m_runningAnimations;
 
-  using TransitionMap = HeapHashMap<CSSPropertyID, RunningTransition>;
+  using TransitionMap = HeapHashMap<PropertyHandle, RunningTransition>;
   TransitionMap m_transitions;
 
   CSSAnimationUpdate m_pendingUpdate;
 
   ActiveInterpolationsMap m_previousActiveInterpolationsForAnimations;
 
-  static void calculateTransitionUpdateForProperty(
-      CSSPropertyID,
-      const CSSTransitionData&,
-      size_t transitionIndex,
-      const ComputedStyle& oldStyle,
-      const ComputedStyle&,
-      const TransitionMap* activeTransitions,
-      CSSAnimationUpdate&,
-      const Element*);
+  struct TransitionUpdateState {
+    STACK_ALLOCATED();
+    CSSAnimationUpdate& update;
+    Member<const Element> animatingElement;
+    const ComputedStyle& oldStyle;
+    const ComputedStyle& style;
+    const TransitionMap* activeTransitions;
+    HashSet<PropertyHandle>& listedProperties;
+    const CSSTransitionData& transitionData;
+  };
+
+  static void calculateTransitionUpdateForCustomProperty(
+      TransitionUpdateState&,
+      const CSSTransitionData::TransitionProperty&,
+      size_t transitionIndex);
+
+  static void calculateTransitionUpdateForStandardProperty(
+      TransitionUpdateState&,
+      const CSSTransitionData::TransitionProperty&,
+      size_t transitionIndex);
+
+  static void calculateTransitionUpdateForProperty(TransitionUpdateState&,
+                                                   const PropertyHandle&,
+                                                   size_t transitionIndex);
 
   static void calculateAnimationActiveInterpolations(
       CSSAnimationUpdate&,
       const Element* animatingElement);
   static void calculateTransitionActiveInterpolations(
       CSSAnimationUpdate&,
+      PropertyPass,
       const Element* animatingElement);
 
   class AnimationEventDelegate final
@@ -200,7 +221,8 @@ class CSSAnimations final {
   class TransitionEventDelegate final
       : public AnimationEffectReadOnly::EventDelegate {
    public:
-    TransitionEventDelegate(Element* transitionTarget, CSSPropertyID property)
+    TransitionEventDelegate(Element* transitionTarget,
+                            const PropertyHandle& property)
         : m_transitionTarget(transitionTarget),
           m_property(property),
           m_previousPhase(AnimationEffectReadOnly::PhaseNone) {}
@@ -217,7 +239,7 @@ class CSSAnimations final {
     Document& document() const { return m_transitionTarget->document(); }
 
     Member<Element> m_transitionTarget;
-    const CSSPropertyID m_property;
+    PropertyHandle m_property;
     AnimationEffectReadOnly::Phase m_previousPhase;
   };
 };

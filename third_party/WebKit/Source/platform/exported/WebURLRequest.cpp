@@ -30,8 +30,9 @@
 
 #include "public/platform/WebURLRequest.h"
 
+#include <memory>
 #include "platform/RuntimeEnabledFeatures.h"
-#include "platform/network/ResourceRequest.h"
+#include "platform/loader/fetch/ResourceRequest.h"
 #include "public/platform/WebCachePolicy.h"
 #include "public/platform/WebHTTPBody.h"
 #include "public/platform/WebHTTPHeaderVisitor.h"
@@ -40,7 +41,6 @@
 #include "wtf/Allocator.h"
 #include "wtf/Noncopyable.h"
 #include "wtf/PtrUtil.h"
-#include <memory>
 
 namespace blink {
 
@@ -303,13 +303,13 @@ void WebURLRequest::setUseStreamOnResponse(bool useStreamOnResponse) {
   m_resourceRequest->setUseStreamOnResponse(useStreamOnResponse);
 }
 
-WebURLRequest::SkipServiceWorker WebURLRequest::skipServiceWorker() const {
-  return m_resourceRequest->skipServiceWorker();
+WebURLRequest::ServiceWorkerMode WebURLRequest::getServiceWorkerMode() const {
+  return m_resourceRequest->getServiceWorkerMode();
 }
 
-void WebURLRequest::setSkipServiceWorker(
-    WebURLRequest::SkipServiceWorker skipServiceWorker) {
-  m_resourceRequest->setSkipServiceWorker(skipServiceWorker);
+void WebURLRequest::setServiceWorkerMode(
+    WebURLRequest::ServiceWorkerMode serviceWorkerMode) {
+  m_resourceRequest->setServiceWorkerMode(serviceWorkerMode);
 }
 
 bool WebURLRequest::shouldResetAppCache() const {
@@ -364,7 +364,8 @@ WebURLRequest::ExtraData* WebURLRequest::getExtraData() const {
 }
 
 void WebURLRequest::setExtraData(WebURLRequest::ExtraData* extraData) {
-  m_resourceRequest->setExtraData(ExtraDataContainer::create(extraData));
+  if (extraData != getExtraData())
+    m_resourceRequest->setExtraData(ExtraDataContainer::create(extraData));
 }
 
 ResourceRequest& WebURLRequest::toMutableResourceRequest() {

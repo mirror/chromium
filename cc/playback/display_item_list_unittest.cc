@@ -9,8 +9,14 @@
 #include <vector>
 
 #include "base/memory/ptr_util.h"
+#include "base/trace_event/trace_event_argument.h"
 #include "cc/output/filter_operation.h"
 #include "cc/output/filter_operations.h"
+#include "cc/paint/paint_canvas.h"
+#include "cc/paint/paint_flags.h"
+#include "cc/paint/paint_record.h"
+#include "cc/paint/paint_recorder.h"
+#include "cc/paint/paint_surface.h"
 #include "cc/playback/clip_display_item.h"
 #include "cc/playback/clip_path_display_item.h"
 #include "cc/playback/compositing_display_item.h"
@@ -23,14 +29,9 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkBitmap.h"
-#include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkColor.h"
-#include "third_party/skia/include/core/SkPictureRecorder.h"
-#include "third_party/skia/include/core/SkSurface.h"
-
 #include "third_party/skia/include/effects/SkColorMatrixFilter.h"
 #include "third_party/skia/include/effects/SkImageSource.h"
-#include "third_party/skia/include/utils/SkPictureUtils.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/skia_util.h"
@@ -41,27 +42,28 @@ namespace {
 
 const gfx::Rect kVisualRect(0, 0, 42, 42);
 
-sk_sp<const SkPicture> CreateRectPicture(const gfx::Rect& bounds) {
-  SkPictureRecorder recorder;
-  SkCanvas* canvas = recorder.beginRecording(bounds.width(), bounds.height());
+sk_sp<const PaintRecord> CreateRectPicture(const gfx::Rect& bounds) {
+  PaintRecorder recorder;
+  PaintCanvas* canvas =
+      recorder.beginRecording(bounds.width(), bounds.height());
   canvas->drawRect(
       SkRect::MakeXYWH(bounds.x(), bounds.y(), bounds.width(), bounds.height()),
-      SkPaint());
+      PaintFlags());
   return recorder.finishRecordingAsPicture();
 }
 
 void AppendFirstSerializationTestPicture(scoped_refptr<DisplayItemList> list,
                                          const gfx::Size& layer_size) {
   gfx::PointF offset(2.f, 3.f);
-  SkPictureRecorder recorder;
+  PaintRecorder recorder;
 
-  SkPaint red_paint;
+  PaintFlags red_paint;
   red_paint.setColor(SK_ColorRED);
 
-  SkCanvas* canvas = recorder.beginRecording(SkRect::MakeXYWH(
+  PaintCanvas* canvas = recorder.beginRecording(SkRect::MakeXYWH(
       offset.x(), offset.y(), layer_size.width(), layer_size.height()));
   canvas->translate(offset.x(), offset.y());
-  canvas->drawRectCoords(0.f, 0.f, 4.f, 4.f, red_paint);
+  canvas->drawRect(SkRect::MakeWH(4, 4), red_paint);
   list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
       kVisualRect, recorder.finishRecordingAsPicture());
 }
@@ -70,21 +72,21 @@ void AppendFirstSerializationTestPicture(scoped_refptr<DisplayItemList> list,
 
 TEST(DisplayItemListTest, SingleDrawingItem) {
   gfx::Rect layer_rect(100, 100);
-  SkPictureRecorder recorder;
-  SkPaint blue_paint;
-  blue_paint.setColor(SK_ColorBLUE);
-  SkPaint red_paint;
+  PaintRecorder recorder;
+  PaintFlags blue_flags;
+  blue_flags.setColor(SK_ColorBLUE);
+  PaintFlags red_paint;
   red_paint.setColor(SK_ColorRED);
   unsigned char pixels[4 * 100 * 100] = {0};
   auto list = make_scoped_refptr(new DisplayItemList);
 
   gfx::PointF offset(8.f, 9.f);
   gfx::RectF recording_rect(offset, gfx::SizeF(layer_rect.size()));
-  SkCanvas* canvas =
+  PaintCanvas* canvas =
       recorder.beginRecording(gfx::RectFToSkRect(recording_rect));
   canvas->translate(offset.x(), offset.y());
-  canvas->drawRectCoords(0.f, 0.f, 60.f, 60.f, red_paint);
-  canvas->drawRectCoords(50.f, 50.f, 75.f, 75.f, blue_paint);
+  canvas->drawRect(SkRect::MakeLTRB(0.f, 0.f, 60.f, 60.f), red_paint);
+  canvas->drawRect(SkRect::MakeLTRB(50.f, 50.f, 75.f, 75.f), blue_flags);
   list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
       kVisualRect, recorder.finishRecordingAsPicture());
   list->Finalize();
@@ -95,34 +97,36 @@ TEST(DisplayItemListTest, SingleDrawingItem) {
   SkImageInfo info =
       SkImageInfo::MakeN32Premul(layer_rect.width(), layer_rect.height());
   expected_bitmap.installPixels(info, expected_pixels, info.minRowBytes());
-  SkCanvas expected_canvas(expected_bitmap);
+  SkiaPaintCanvas expected_canvas(expected_bitmap);
   expected_canvas.clipRect(gfx::RectToSkRect(layer_rect));
-  expected_canvas.drawRectCoords(0.f + offset.x(), 0.f + offset.y(),
-                                 60.f + offset.x(), 60.f + offset.y(),
-                                 red_paint);
-  expected_canvas.drawRectCoords(50.f + offset.x(), 50.f + offset.y(),
-                                 75.f + offset.x(), 75.f + offset.y(),
-                                 blue_paint);
+  expected_canvas.drawRect(
+      SkRect::MakeLTRB(0.f + offset.x(), 0.f + offset.y(), 60.f + offset.x(),
+                       60.f + offset.y()),
+      red_paint);
+  expected_canvas.drawRect(
+      SkRect::MakeLTRB(50.f + offset.x(), 50.f + offset.y(), 75.f + offset.x(),
+                       75.f + offset.y()),
+      blue_flags);
 
   EXPECT_EQ(0, memcmp(pixels, expected_pixels, 4 * 100 * 100));
 }
 
 TEST(DisplayItemListTest, ClipItem) {
   gfx::Rect layer_rect(100, 100);
-  SkPictureRecorder recorder;
-  SkPaint blue_paint;
-  blue_paint.setColor(SK_ColorBLUE);
-  SkPaint red_paint;
+  PaintRecorder recorder;
+  PaintFlags blue_flags;
+  blue_flags.setColor(SK_ColorBLUE);
+  PaintFlags red_paint;
   red_paint.setColor(SK_ColorRED);
   unsigned char pixels[4 * 100 * 100] = {0};
   auto list = make_scoped_refptr(new DisplayItemList);
 
   gfx::PointF first_offset(8.f, 9.f);
   gfx::RectF first_recording_rect(first_offset, gfx::SizeF(layer_rect.size()));
-  SkCanvas* canvas =
+  PaintCanvas* canvas =
       recorder.beginRecording(gfx::RectFToSkRect(first_recording_rect));
   canvas->translate(first_offset.x(), first_offset.y());
-  canvas->drawRectCoords(0.f, 0.f, 60.f, 60.f, red_paint);
+  canvas->drawRect(SkRect::MakeWH(60, 60), red_paint);
   list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
       kVisualRect, recorder.finishRecordingAsPicture());
 
@@ -135,7 +139,7 @@ TEST(DisplayItemListTest, ClipItem) {
                                    gfx::SizeF(layer_rect.size()));
   canvas = recorder.beginRecording(gfx::RectFToSkRect(second_recording_rect));
   canvas->translate(second_offset.x(), second_offset.y());
-  canvas->drawRectCoords(50.f, 50.f, 75.f, 75.f, blue_paint);
+  canvas->drawRect(SkRect::MakeLTRB(50.f, 50.f, 75.f, 75.f), blue_flags);
   list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
       kVisualRect, recorder.finishRecordingAsPicture());
 
@@ -149,35 +153,37 @@ TEST(DisplayItemListTest, ClipItem) {
   SkImageInfo info =
       SkImageInfo::MakeN32Premul(layer_rect.width(), layer_rect.height());
   expected_bitmap.installPixels(info, expected_pixels, info.minRowBytes());
-  SkCanvas expected_canvas(expected_bitmap);
+  SkiaPaintCanvas expected_canvas(expected_bitmap);
   expected_canvas.clipRect(gfx::RectToSkRect(layer_rect));
-  expected_canvas.drawRectCoords(0.f + first_offset.x(), 0.f + first_offset.y(),
-                                 60.f + first_offset.x(),
-                                 60.f + first_offset.y(), red_paint);
+  expected_canvas.drawRect(
+      SkRect::MakeLTRB(0.f + first_offset.x(), 0.f + first_offset.y(),
+                       60.f + first_offset.x(), 60.f + first_offset.y()),
+      red_paint);
   expected_canvas.clipRect(gfx::RectToSkRect(clip_rect));
-  expected_canvas.drawRectCoords(
-      50.f + second_offset.x(), 50.f + second_offset.y(),
-      75.f + second_offset.x(), 75.f + second_offset.y(), blue_paint);
+  expected_canvas.drawRect(
+      SkRect::MakeLTRB(50.f + second_offset.x(), 50.f + second_offset.y(),
+                       75.f + second_offset.x(), 75.f + second_offset.y()),
+      blue_flags);
 
   EXPECT_EQ(0, memcmp(pixels, expected_pixels, 4 * 100 * 100));
 }
 
 TEST(DisplayItemListTest, TransformItem) {
   gfx::Rect layer_rect(100, 100);
-  SkPictureRecorder recorder;
-  SkPaint blue_paint;
-  blue_paint.setColor(SK_ColorBLUE);
-  SkPaint red_paint;
+  PaintRecorder recorder;
+  PaintFlags blue_flags;
+  blue_flags.setColor(SK_ColorBLUE);
+  PaintFlags red_paint;
   red_paint.setColor(SK_ColorRED);
   unsigned char pixels[4 * 100 * 100] = {0};
   auto list = make_scoped_refptr(new DisplayItemList);
 
   gfx::PointF first_offset(8.f, 9.f);
   gfx::RectF first_recording_rect(first_offset, gfx::SizeF(layer_rect.size()));
-  SkCanvas* canvas =
+  PaintCanvas* canvas =
       recorder.beginRecording(gfx::RectFToSkRect(first_recording_rect));
   canvas->translate(first_offset.x(), first_offset.y());
-  canvas->drawRectCoords(0.f, 0.f, 60.f, 60.f, red_paint);
+  canvas->drawRect(SkRect::MakeWH(60, 60), red_paint);
   list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
       kVisualRect, recorder.finishRecordingAsPicture());
 
@@ -190,7 +196,7 @@ TEST(DisplayItemListTest, TransformItem) {
                                    gfx::SizeF(layer_rect.size()));
   canvas = recorder.beginRecording(gfx::RectFToSkRect(second_recording_rect));
   canvas->translate(second_offset.x(), second_offset.y());
-  canvas->drawRectCoords(50.f, 50.f, 75.f, 75.f, blue_paint);
+  canvas->drawRect(SkRect::MakeLTRB(50.f, 50.f, 75.f, 75.f), blue_flags);
   list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
       kVisualRect, recorder.finishRecordingAsPicture());
 
@@ -204,15 +210,17 @@ TEST(DisplayItemListTest, TransformItem) {
   SkImageInfo info =
       SkImageInfo::MakeN32Premul(layer_rect.width(), layer_rect.height());
   expected_bitmap.installPixels(info, expected_pixels, info.minRowBytes());
-  SkCanvas expected_canvas(expected_bitmap);
+  SkiaPaintCanvas expected_canvas(expected_bitmap);
   expected_canvas.clipRect(gfx::RectToSkRect(layer_rect));
-  expected_canvas.drawRectCoords(0.f + first_offset.x(), 0.f + first_offset.y(),
-                                 60.f + first_offset.x(),
-                                 60.f + first_offset.y(), red_paint);
+  expected_canvas.drawRect(
+      SkRect::MakeLTRB(0.f + first_offset.x(), 0.f + first_offset.y(),
+                       60.f + first_offset.x(), 60.f + first_offset.y()),
+      red_paint);
   expected_canvas.setMatrix(transform.matrix());
-  expected_canvas.drawRectCoords(
-      50.f + second_offset.x(), 50.f + second_offset.y(),
-      75.f + second_offset.x(), 75.f + second_offset.y(), blue_paint);
+  expected_canvas.drawRect(
+      SkRect::MakeLTRB(50.f + second_offset.x(), 50.f + second_offset.y(),
+                       75.f + second_offset.x(), 75.f + second_offset.y()),
+      blue_flags);
 
   EXPECT_EQ(0, memcmp(pixels, expected_pixels, 4 * 100 * 100));
 }
@@ -248,16 +256,17 @@ TEST(DisplayItemListTest, FilterItem) {
 
   // Include a rect drawing so that filter is actually applied to something.
   {
-    SkPictureRecorder recorder;
+    PaintRecorder recorder;
 
-    SkPaint red_paint;
+    PaintFlags red_paint;
     red_paint.setColor(SK_ColorRED);
 
-    SkCanvas* canvas = recorder.beginRecording(
+    PaintCanvas* canvas = recorder.beginRecording(
         SkRect::MakeXYWH(0, 0, layer_rect.width(), layer_rect.height()));
-    canvas->drawRectCoords(filter_bounds.x(), filter_bounds.y(),
-                           filter_bounds.right(), filter_bounds.bottom(),
-                           red_paint);
+    canvas->drawRect(
+        SkRect::MakeLTRB(filter_bounds.x(), filter_bounds.y(),
+                         filter_bounds.right(), filter_bounds.bottom()),
+        red_paint);
     list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
         ToNearestRect(filter_bounds), recorder.finishRecordingAsPicture());
   }
@@ -269,12 +278,12 @@ TEST(DisplayItemListTest, FilterItem) {
 
   SkBitmap expected_bitmap;
   unsigned char expected_pixels[4 * 100 * 100] = {0};
-  SkPaint paint;
+  PaintFlags paint;
   paint.setColor(SkColorSetRGB(64, 64, 64));
   SkImageInfo info =
       SkImageInfo::MakeN32Premul(layer_rect.width(), layer_rect.height());
   expected_bitmap.installPixels(info, expected_pixels, info.minRowBytes());
-  SkCanvas expected_canvas(expected_bitmap);
+  SkiaPaintCanvas expected_canvas(expected_bitmap);
   expected_canvas.drawRect(RectFToSkRect(filter_bounds), paint);
 
   EXPECT_EQ(0, memcmp(pixels, expected_pixels, 4 * 100 * 100));
@@ -284,24 +293,24 @@ TEST(DisplayItemListTest, ApproximateMemoryUsage) {
   const int kNumCommandsInTestSkPicture = 1000;
   size_t memory_usage;
 
-  // Make an SkPicture whose size is known.
+  // Make an PaintRecord whose size is known.
   gfx::Rect layer_rect(100, 100);
-  SkPictureRecorder recorder;
-  SkPaint blue_paint;
-  blue_paint.setColor(SK_ColorBLUE);
-  SkCanvas* canvas = recorder.beginRecording(gfx::RectToSkRect(layer_rect));
+  PaintRecorder recorder;
+  PaintFlags blue_flags;
+  blue_flags.setColor(SK_ColorBLUE);
+  PaintCanvas* canvas = recorder.beginRecording(gfx::RectToSkRect(layer_rect));
   for (int i = 0; i < kNumCommandsInTestSkPicture; i++)
-    canvas->drawPaint(blue_paint);
-  sk_sp<SkPicture> picture = recorder.finishRecordingAsPicture();
-  size_t picture_size = SkPictureUtils::ApproximateBytesUsed(picture.get());
-  ASSERT_GE(picture_size, kNumCommandsInTestSkPicture * sizeof(blue_paint));
+    canvas->drawRect(SkRect(), blue_flags);
+  sk_sp<PaintRecord> record = recorder.finishRecordingAsPicture();
+  size_t record_size = record->approximateBytesUsed();
+  ASSERT_GE(record_size, kNumCommandsInTestSkPicture * sizeof(SkRect));
 
   auto list = make_scoped_refptr(new DisplayItemList);
-  list->CreateAndAppendDrawingItem<DrawingDisplayItem>(kVisualRect, picture);
+  list->CreateAndAppendDrawingItem<DrawingDisplayItem>(kVisualRect, record);
   list->Finalize();
   memory_usage = list->ApproximateMemoryUsage();
-  EXPECT_GE(memory_usage, picture_size);
-  EXPECT_LE(memory_usage, 2 * picture_size);
+  EXPECT_GE(memory_usage, record_size);
+  EXPECT_LE(memory_usage, 2 * record_size);
 }
 
 TEST(DisplayItemListTest, AsValueWithNoItems) {
@@ -309,13 +318,13 @@ TEST(DisplayItemListTest, AsValueWithNoItems) {
   list->SetRetainVisualRectsForTesting(true);
   list->Finalize();
 
-  std::string value = list->AsValue(true)->ToString();
+  std::string value = list->CreateTracedValue(true)->ToString();
   EXPECT_EQ(value.find("\"layer_rect\": [0,0,0,0]"), std::string::npos);
   EXPECT_NE(value.find("\"items\":[]"), std::string::npos);
   EXPECT_EQ(value.find("visualRect: [0,0 42x42]"), std::string::npos);
   EXPECT_NE(value.find("\"skp64\":"), std::string::npos);
 
-  value = list->AsValue(false)->ToString();
+  value = list->CreateTracedValue(false)->ToString();
   EXPECT_EQ(value.find("\"layer_rect\": [0,0,0,0]"), std::string::npos);
   EXPECT_EQ(value.find("\"items\":"), std::string::npos);
   EXPECT_EQ(value.find("visualRect: [0,0 42x42]"), std::string::npos);
@@ -333,14 +342,14 @@ TEST(DisplayItemListTest, AsValueWithItems) {
   list->CreateAndAppendPairedEndItem<EndTransformDisplayItem>();
   list->Finalize();
 
-  std::string value = list->AsValue(true)->ToString();
+  std::string value = list->CreateTracedValue(true)->ToString();
   EXPECT_EQ(value.find("\"layer_rect\": [0,0,42,42]"), std::string::npos);
   EXPECT_NE(value.find("{\"items\":[\"TransformDisplayItem"),
             std::string::npos);
   EXPECT_NE(value.find("visualRect: [0,0 42x42]"), std::string::npos);
   EXPECT_NE(value.find("\"skp64\":"), std::string::npos);
 
-  value = list->AsValue(false)->ToString();
+  value = list->CreateTracedValue(false)->ToString();
   EXPECT_EQ(value.find("\"layer_rect\": [0,0,42,42]"), std::string::npos);
   EXPECT_EQ(value.find("{\"items\":[\"TransformDisplayItem"),
             std::string::npos);

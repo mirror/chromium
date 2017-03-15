@@ -4,6 +4,8 @@
 
 #include "web/WebRemoteFrameImpl.h"
 
+#include "bindings/core/v8/DOMWrapperWorld.h"
+#include "bindings/core/v8/WindowProxy.h"
 #include "core/dom/Fullscreen.h"
 #include "core/dom/RemoteSecurityContext.h"
 #include "core/dom/SecurityContext.h"
@@ -14,6 +16,7 @@
 #include "core/layout/LayoutObject.h"
 #include "core/page/Page.h"
 #include "platform/heap/Handle.h"
+#include "public/platform/WebFeaturePolicy.h"
 #include "public/platform/WebFloatRect.h"
 #include "public/platform/WebRect.h"
 #include "public/web/WebDocument.h"
@@ -21,10 +24,10 @@
 #include "public/web/WebPerformance.h"
 #include "public/web/WebRange.h"
 #include "public/web/WebTreeScopeType.h"
+#include "v8/include/v8.h"
 #include "web/RemoteFrameOwner.h"
 #include "web/WebLocalFrameImpl.h"
 #include "web/WebViewImpl.h"
-#include <v8/include/v8.h>
 
 namespace blink {
 
@@ -47,8 +50,6 @@ WebRemoteFrameImpl::~WebRemoteFrameImpl() {}
 DEFINE_TRACE(WebRemoteFrameImpl) {
   visitor->trace(m_frameClient);
   visitor->trace(m_frame);
-  visitor->template registerWeakMembers<WebFrame, &WebFrame::clearWeakFrames>(
-      this);
   WebFrame::traceFrames(visitor, this);
   WebFrameImplBase::trace(visitor);
 }
@@ -71,6 +72,8 @@ WebRemoteFrame* WebRemoteFrameImpl::toWebRemoteFrame() {
 }
 
 void WebRemoteFrameImpl::close() {
+  WebRemoteFrame::close();
+
   m_selfKeepAlive.clear();
 }
 
@@ -212,11 +215,6 @@ v8::Local<v8::Context> WebRemoteFrameImpl::mainWorldScriptContext() const {
   return v8::Local<v8::Context>();
 }
 
-v8::Local<v8::Context> WebRemoteFrameImpl::deprecatedMainWorldScriptContext()
-    const {
-  return toV8Context(frame(), DOMWrapperWorld::mainWorld());
-}
-
 void WebRemoteFrameImpl::reload(WebFrameLoadType) {
   NOTREACHED();
 }
@@ -263,10 +261,6 @@ bool WebRemoteFrameImpl::isViewSourceModeEnabled() const {
 
 void WebRemoteFrameImpl::setReferrerForRequest(WebURLRequest&,
                                                const WebURL& referrer) {
-  NOTREACHED();
-}
-
-void WebRemoteFrameImpl::dispatchWillSendRequest(WebURLRequest&) {
   NOTREACHED();
 }
 
@@ -430,15 +424,15 @@ void WebRemoteFrameImpl::setReplicatedName(const WebString& name,
 }
 
 void WebRemoteFrameImpl::setReplicatedFeaturePolicyHeader(
-    const WebParsedFeaturePolicyHeader& parsedHeader) const {
+    const WebParsedFeaturePolicy& parsedHeader) const {
   if (RuntimeEnabledFeatures::featurePolicyEnabled()) {
-    FeaturePolicy* parentFeaturePolicy = nullptr;
+    WebFeaturePolicy* parentFeaturePolicy = nullptr;
     if (parent()) {
       Frame* parentFrame = frame()->client()->parent();
       parentFeaturePolicy = parentFrame->securityContext()->getFeaturePolicy();
     }
-    frame()->securityContext()->setFeaturePolicyFromHeader(parsedHeader,
-                                                           parentFeaturePolicy);
+    frame()->securityContext()->initializeFeaturePolicy(parsedHeader,
+                                                        parentFeaturePolicy);
   }
 }
 
@@ -528,6 +522,12 @@ void WebRemoteFrameImpl::willEnterFullscreen() {
 
 void WebRemoteFrameImpl::setHasReceivedUserGesture() {
   frame()->setDocumentHasReceivedUserGesture();
+}
+
+v8::Local<v8::Object> WebRemoteFrameImpl::globalProxy() const {
+  return frame()
+      ->windowProxy(DOMWrapperWorld::mainWorld())
+      ->globalIfNotDetached();
 }
 
 WebRemoteFrameImpl::WebRemoteFrameImpl(WebTreeScopeType scope,

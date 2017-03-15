@@ -19,7 +19,6 @@
 #include "content/public/common/content_client.h"
 #include "content/public/common/frame_navigate_params.h"
 #include "content/public/common/presentation_connection_message.h"
-#include "content/public/common/presentation_constants.h"
 
 namespace content {
 
@@ -30,78 +29,6 @@ const int kInvalidRequestSessionId = -1;
 int GetNextRequestSessionId() {
   static int next_request_session_id = 0;
   return ++next_request_session_id;
-}
-
-// Converts a PresentationConnectionMessage |input| to a ConnectionMessage.
-// |input|: The message to convert.
-// |pass_ownership|: If true, function may reuse strings or buffers from
-//     |input| without copying. |input| can be freely modified.
-blink::mojom::ConnectionMessagePtr ToMojoConnectionMessage(
-    content::PresentationConnectionMessage* input,
-    bool pass_ownership) {
-  DCHECK(input);
-  blink::mojom::ConnectionMessagePtr output(
-      blink::mojom::ConnectionMessage::New());
-  if (input->is_binary()) {
-    // binary data
-    DCHECK(input->data);
-    output->type = blink::mojom::PresentationMessageType::BINARY;
-    if (pass_ownership) {
-      output->data = std::move(*(input->data));
-    } else {
-      output->data = *(input->data);
-    }
-  } else {
-    // string message
-    output->type = blink::mojom::PresentationMessageType::TEXT;
-    if (pass_ownership) {
-      output->message = std::move(input->message);
-    } else {
-      output->message = input->message;
-    }
-  }
-  return output;
-}
-
-std::unique_ptr<PresentationConnectionMessage> GetPresentationConnectionMessage(
-    blink::mojom::ConnectionMessagePtr input) {
-  std::unique_ptr<content::PresentationConnectionMessage> output;
-  if (input.is_null())
-    return output;
-
-  switch (input->type) {
-    case blink::mojom::PresentationMessageType::TEXT: {
-      // Return nullptr PresentationConnectionMessage if invalid (unset
-      // |message|,
-      // set |data|, or size too large).
-      if (input->data || !input->message ||
-          input->message->size() >
-              content::kMaxPresentationConnectionMessageSize)
-        return output;
-
-      output.reset(
-          new PresentationConnectionMessage(PresentationMessageType::TEXT));
-      output->message = std::move(input->message.value());
-      return output;
-    }
-    case blink::mojom::PresentationMessageType::BINARY: {
-      // Return nullptr PresentationConnectionMessage if invalid (unset |data|,
-      // set
-      // |message|, or size too large).
-      if (!input->data || input->message ||
-          input->data->size() > content::kMaxPresentationConnectionMessageSize)
-        return output;
-
-      output.reset(
-          new PresentationConnectionMessage(PresentationMessageType::BINARY));
-      output->data.reset(
-          new std::vector<uint8_t>(std::move(input->data.value())));
-      return output;
-    }
-  }
-
-  NOTREACHED() << "Invalid presentation message type " << input->type;
-  return output;
 }
 
 void InvokeNewSessionCallbackWithError(
@@ -374,36 +301,6 @@ void PresentationServiceImpl::SetDefaultPresentationUrls(
                  weak_factory_.GetWeakPtr()));
 }
 
-void PresentationServiceImpl::SendConnectionMessage(
-    const PresentationSessionInfo& session_info,
-    blink::mojom::ConnectionMessagePtr connection_message,
-    const SendConnectionMessageCallback& callback) {
-  DVLOG(2) << "SendConnectionMessage [id]: " << session_info.presentation_id;
-  DCHECK(!connection_message.is_null());
-  // send_message_callback_ should be null by now, otherwise resetting of
-  // send_message_callback_ with new callback will drop the old callback.
-  if (!controller_delegate_ || send_message_callback_) {
-    callback.Run(false);
-    return;
-  }
-
-  send_message_callback_.reset(new SendConnectionMessageCallback(callback));
-  controller_delegate_->SendMessage(
-      render_process_id_, render_frame_id_, session_info,
-      GetPresentationConnectionMessage(std::move(connection_message)),
-      base::Bind(&PresentationServiceImpl::OnSendMessageCallback,
-                 weak_factory_.GetWeakPtr()));
-}
-
-void PresentationServiceImpl::OnSendMessageCallback(bool sent) {
-  // It is possible that Reset() is invoked before receiving this callback.
-  // So, always check send_message_callback_ for non-null.
-  if (send_message_callback_) {
-    send_message_callback_->Run(sent);
-    send_message_callback_.reset();
-  }
-}
-
 void PresentationServiceImpl::CloseConnection(
     const GURL& presentation_url,
     const std::string& presentation_id) {
@@ -480,21 +377,11 @@ void PresentationServiceImpl::SetPresentationConnection(
 
 void PresentationServiceImpl::OnConnectionMessages(
     const PresentationSessionInfo& session_info,
-    const std::vector<std::unique_ptr<PresentationConnectionMessage>>& messages,
-    bool pass_ownership) {
+    std::vector<PresentationConnectionMessage> messages) {
   DCHECK(client_);
 
   DVLOG(2) << "OnConnectionMessages [id]: " << session_info.presentation_id;
-  std::vector<blink::mojom::ConnectionMessagePtr> mojo_messages(
-      messages.size());
-  std::transform(
-      messages.begin(), messages.end(), mojo_messages.begin(),
-      [pass_ownership](
-          const std::unique_ptr<PresentationConnectionMessage>& message) {
-        return ToMojoConnectionMessage(message.get(), pass_ownership);
-      });
-
-  client_->OnConnectionMessagesReceived(session_info, std::move(mojo_messages));
+  client_->OnConnectionMessagesReceived(session_info, std::move(messages));
 }
 
 void PresentationServiceImpl::OnReceiverConnectionAvailable(
@@ -519,12 +406,12 @@ void PresentationServiceImpl::DidFinishNavigation(
   std::string prev_url_host = navigation_handle->GetPreviousURL().host();
   std::string curr_url_host = navigation_handle->GetURL().host();
 
-  // If a frame navigation is in-page (e.g. navigating to a fragment in
+  // If a frame navigation is same-document (e.g. navigating to a fragment in
   // same page) then we do not unregister listeners.
   DVLOG(2) << "DidNavigateAnyFrame: "
            << "prev host: " << prev_url_host << ", curr host: " << curr_url_host
-           << ", details.is_in_page: " << navigation_handle->IsSamePage();
-  if (navigation_handle->IsSamePage())
+           << ", is_same_document: " << navigation_handle->IsSameDocument();
+  if (navigation_handle->IsSameDocument())
     return;
 
   // Reset if the frame actually navigated.
@@ -565,19 +452,6 @@ void PresentationServiceImpl::Reset() {
   pending_start_session_cb_.reset();
 
   pending_join_session_cbs_.clear();
-
-  if (on_connection_messages_callback_.get()) {
-    on_connection_messages_callback_->Run(
-        std::vector<blink::mojom::ConnectionMessagePtr>());
-    on_connection_messages_callback_.reset();
-  }
-
-  if (send_message_callback_) {
-    // Run the callback with false, indicating the renderer to stop sending
-    // the requests and invalidate all pending requests.
-    send_message_callback_->Run(false);
-    send_message_callback_.reset();
-  }
 }
 
 void PresentationServiceImpl::OnDelegateDestroyed() {

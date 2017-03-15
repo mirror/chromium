@@ -48,7 +48,7 @@ using namespace HTMLNames;
 HitTestResult::HitTestResult()
     : m_hitTestRequest(HitTestRequest::ReadOnly | HitTestRequest::Active),
       m_cacheable(true),
-      m_isOverWidget(false) {}
+      m_isOverFrameViewBase(false) {}
 
 HitTestResult::HitTestResult(const HitTestRequest& request,
                              const LayoutPoint& point)
@@ -56,7 +56,7 @@ HitTestResult::HitTestResult(const HitTestRequest& request,
       m_hitTestRequest(request),
       m_cacheable(true),
       m_pointInInnerNodeFrame(point),
-      m_isOverWidget(false) {}
+      m_isOverFrameViewBase(false) {}
 
 HitTestResult::HitTestResult(const HitTestRequest& request,
                              const LayoutPoint& centerPoint,
@@ -72,7 +72,7 @@ HitTestResult::HitTestResult(const HitTestRequest& request,
       m_hitTestRequest(request),
       m_cacheable(true),
       m_pointInInnerNodeFrame(centerPoint),
-      m_isOverWidget(false) {}
+      m_isOverFrameViewBase(false) {}
 
 HitTestResult::HitTestResult(const HitTestRequest& otherRequest,
                              const HitTestLocation& other)
@@ -80,7 +80,7 @@ HitTestResult::HitTestResult(const HitTestRequest& otherRequest,
       m_hitTestRequest(otherRequest),
       m_cacheable(true),
       m_pointInInnerNodeFrame(m_hitTestLocation.point()),
-      m_isOverWidget(false) {}
+      m_isOverFrameViewBase(false) {}
 
 HitTestResult::HitTestResult(const HitTestResult& other)
     : m_hitTestLocation(other.m_hitTestLocation),
@@ -92,7 +92,7 @@ HitTestResult::HitTestResult(const HitTestResult& other)
       m_localPoint(other.localPoint()),
       m_innerURLElement(other.URLElement()),
       m_scrollbar(other.scrollbar()),
-      m_isOverWidget(other.isOverWidget()),
+      m_isOverFrameViewBase(other.isOverFrameViewBase()),
       m_canvasRegionId(other.canvasRegionId()) {
   // Only copy the NodeSet in case of list hit test.
   m_listBasedTestResult = other.m_listBasedTestResult
@@ -118,7 +118,7 @@ bool HitTestResult::equalForCacheability(const HitTestResult& other) const {
          m_localPoint == other.localPoint() &&
          m_innerURLElement == other.URLElement() &&
          m_scrollbar == other.scrollbar() &&
-         m_isOverWidget == other.isOverWidget();
+         m_isOverFrameViewBase == other.isOverFrameViewBase();
 }
 
 void HitTestResult::cacheValues(const HitTestResult& other) {
@@ -134,7 +134,7 @@ void HitTestResult::populateFromCachedResult(const HitTestResult& other) {
   m_localPoint = other.localPoint();
   m_innerURLElement = other.URLElement();
   m_scrollbar = other.scrollbar();
-  m_isOverWidget = other.isOverWidget();
+  m_isOverFrameViewBase = other.isOverFrameViewBase();
   m_cacheable = other.m_cacheable;
   m_canvasRegionId = other.canvasRegionId();
 
@@ -170,12 +170,21 @@ LayoutObject* HitTestResult::layoutObject() const {
 }
 
 void HitTestResult::setToShadowHostIfInUserAgentShadowRoot() {
-  if (Node* node = innerNode()) {
-    if (ShadowRoot* containingShadowRoot = node->containingShadowRoot()) {
-      if (containingShadowRoot->type() == ShadowRootType::UserAgent)
-        setInnerNode(node->ownerShadowHost());
-    }
+  Node* node = innerNode();
+  if (!node)
+    return;
+
+  ShadowRoot* containingShadowRoot = node->containingShadowRoot();
+  Element* shadowHost = nullptr;
+
+  while (containingShadowRoot &&
+         containingShadowRoot->type() == ShadowRootType::UserAgent) {
+    shadowHost = &containingShadowRoot->host();
+    containingShadowRoot = shadowHost->containingShadowRoot();
   }
+
+  if (shadowHost)
+    setInnerNode(shadowHost);
 }
 
 HTMLAreaElement* HitTestResult::imageAreaForImage() const {
@@ -397,7 +406,7 @@ ListBasedHitTestBehavior HitTestResult::addNodeToListBasedTestResult(
   if (!node)
     return ContinueHitTesting;
 
-  mutableListBasedTestResult().add(node);
+  mutableListBasedTestResult().insert(node);
 
   if (hitTestRequest().penetratingList())
     return ContinueHitTesting;
@@ -417,7 +426,7 @@ ListBasedHitTestBehavior HitTestResult::addNodeToListBasedTestResult(
   if (!node)
     return ContinueHitTesting;
 
-  mutableListBasedTestResult().add(node);
+  mutableListBasedTestResult().insert(node);
 
   if (hitTestRequest().penetratingList())
     return ContinueHitTesting;
@@ -439,7 +448,7 @@ void HitTestResult::append(const HitTestResult& other) {
     m_localPoint = other.localPoint();
     m_pointInInnerNodeFrame = other.m_pointInInnerNodeFrame;
     m_innerURLElement = other.URLElement();
-    m_isOverWidget = other.isOverWidget();
+    m_isOverFrameViewBase = other.isOverFrameViewBase();
     m_canvasRegionId = other.canvasRegionId();
   }
 
@@ -448,7 +457,7 @@ void HitTestResult::append(const HitTestResult& other) {
     for (NodeSet::const_iterator it = other.m_listBasedTestResult->begin(),
                                  last = other.m_listBasedTestResult->end();
          it != last; ++it)
-      set.add(it->get());
+      set.insert(it->get());
   }
 }
 

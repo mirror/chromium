@@ -101,6 +101,7 @@ class CORE_EXPORT InputMethodController final
                                          int end,
                                          size_t textLength) const;
   void deleteSurroundingText(int before, int after);
+  void deleteSurroundingTextInCodePoints(int before, int after);
   WebTextInputInfo textInputInfo() const;
   WebTextInputType textInputType() const;
 
@@ -134,8 +135,8 @@ class CORE_EXPORT InputMethodController final
       FrameSelection::SetSelectionOptions = FrameSelection::CloseTyping);
 
   void addCompositionUnderlines(const Vector<CompositionUnderline>& underlines,
-                                ContainerNode* rootEditableElement,
-                                unsigned offset);
+                                ContainerNode* baseElement,
+                                unsigned offsetInPlainChars);
 
   bool insertText(const String&);
   bool insertTextAndMoveCaret(const String&,

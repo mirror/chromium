@@ -28,6 +28,7 @@
 
 #include "core/CoreExport.h"
 #include "core/editing/EditingBoundary.h"
+#include "core/editing/EphemeralRange.h"
 #include "core/editing/PositionWithAffinity.h"
 #include "core/editing/VisiblePosition.h"
 #include "platform/text/TextDirection.h"
@@ -155,13 +156,28 @@ previousPositionOf(const VisiblePositionInFlatTree&,
                    EditingBoundaryCrossingRule = CanCrossEditingBoundary);
 
 // words
+// TODO(yoichio): Replace |startOfWord| to |startOfWordPosition| because
+// returned Position should be canonicalized with |previousBoundary()| by
+// TextItetator.
+CORE_EXPORT Position startOfWordPosition(const VisiblePosition&,
+                                         EWordSide = RightWordIfOnBoundary);
 CORE_EXPORT VisiblePosition startOfWord(const VisiblePosition&,
                                         EWordSide = RightWordIfOnBoundary);
+CORE_EXPORT PositionInFlatTree
+startOfWordPosition(const VisiblePositionInFlatTree&,
+                    EWordSide = RightWordIfOnBoundary);
 CORE_EXPORT VisiblePositionInFlatTree
 startOfWord(const VisiblePositionInFlatTree&,
             EWordSide = RightWordIfOnBoundary);
+// TODO(yoichio): Replace |endOfWord| to |endOfWordPosition| because returned
+// Position should be canonicalized with |nextBoundary()| by TextItetator.
+CORE_EXPORT Position endOfWordPosition(const VisiblePosition&,
+                                       EWordSide = RightWordIfOnBoundary);
 CORE_EXPORT VisiblePosition endOfWord(const VisiblePosition&,
                                       EWordSide = RightWordIfOnBoundary);
+CORE_EXPORT PositionInFlatTree
+endOfWordPosition(const VisiblePositionInFlatTree&,
+                  EWordSide = RightWordIfOnBoundary);
 CORE_EXPORT VisiblePositionInFlatTree
 endOfWord(const VisiblePositionInFlatTree&, EWordSide = RightWordIfOnBoundary);
 VisiblePosition previousWordPosition(const VisiblePosition&);
@@ -180,6 +196,8 @@ CORE_EXPORT VisiblePositionInFlatTree
 endOfSentence(const VisiblePositionInFlatTree&);
 VisiblePosition previousSentencePosition(const VisiblePosition&);
 VisiblePosition nextSentencePosition(const VisiblePosition&);
+EphemeralRange expandEndToSentenceBoundary(const EphemeralRange&);
+EphemeralRange expandRangeToSentenceBoundary(const EphemeralRange&);
 
 // lines
 // TODO(yosin) Return values of |VisiblePosition| version of |startOfLine()|

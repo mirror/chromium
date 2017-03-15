@@ -5,8 +5,20 @@
 #import "ios/web/public/test/fakes/test_web_state_delegate.h"
 
 #include "base/memory/ptr_util.h"
+#import "ios/web/web_state/web_state_impl.h"
 
 namespace web {
+
+TestOpenURLRequest::TestOpenURLRequest()
+    : params(GURL(),
+             Referrer(),
+             WindowOpenDisposition::UNKNOWN,
+             ui::PAGE_TRANSITION_LINK,
+             false) {}
+
+TestOpenURLRequest::~TestOpenURLRequest() = default;
+
+TestOpenURLRequest::TestOpenURLRequest(const TestOpenURLRequest&) = default;
 
 TestRepostFormRequest::TestRepostFormRequest() {}
 
@@ -25,6 +37,55 @@ TestAuthenticationRequest::TestAuthenticationRequest(
 TestWebStateDelegate::TestWebStateDelegate() {}
 
 TestWebStateDelegate::~TestWebStateDelegate() = default;
+
+WebState* TestWebStateDelegate::CreateNewWebState(WebState* source,
+                                                  const GURL& url,
+                                                  const GURL& opener_url,
+                                                  bool initiated_by_user) {
+  last_create_new_web_state_request_ =
+      base::MakeUnique<TestCreateNewWebStateRequest>();
+  last_create_new_web_state_request_->web_state = source;
+  last_create_new_web_state_request_->url = url;
+  last_create_new_web_state_request_->opener_url = opener_url;
+  last_create_new_web_state_request_->initiated_by_user = initiated_by_user;
+
+  if (!initiated_by_user &&
+      allowed_popups_.find(opener_url) == allowed_popups_.end()) {
+    popups_.push_back(TestPopup(url, opener_url));
+    return nullptr;
+  }
+
+  std::unique_ptr<WebStateImpl> child(
+      base::MakeUnique<WebStateImpl>(source->GetBrowserState()));
+  child->GetNavigationManagerImpl().InitializeSession(YES /*opened_by_dom*/);
+  child->SetWebUsageEnabled(true);
+
+  child_windows_.push_back(std::move(child));
+  return child_windows_.back().get();
+}
+
+void TestWebStateDelegate::CloseWebState(WebState* source) {
+  last_close_web_state_request_ = base::MakeUnique<TestCloseWebStateRequest>();
+  last_close_web_state_request_->web_state = source;
+
+  // Remove WebState from |child_windows_|.
+  for (size_t i = 0; i < child_windows_.size(); i++) {
+    if (child_windows_[i].get() == source) {
+      closed_child_windows_.push_back(std::move(child_windows_[i]));
+      child_windows_.erase(child_windows_.begin() + i);
+      break;
+    }
+  }
+}
+
+WebState* TestWebStateDelegate::OpenURLFromWebState(
+    WebState* web_state,
+    const WebState::OpenURLParams& params) {
+  last_open_url_request_ = base::MakeUnique<TestOpenURLRequest>();
+  last_open_url_request_->web_state = web_state;
+  last_open_url_request_->params = params;
+  return nullptr;
+}
 
 JavaScriptDialogPresenter* TestWebStateDelegate::GetJavaScriptDialogPresenter(
     WebState*) {

@@ -23,6 +23,10 @@
 
 #include "core/loader/resource/ImageResource.h"
 
+#include <stdint.h>
+#include <v8.h>
+#include <memory>
+
 #include "core/loader/resource/ImageResourceContent.h"
 #include "core/loader/resource/ImageResourceInfo.h"
 #include "platform/Histogram.h"
@@ -34,11 +38,12 @@
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/ResourceLoader.h"
 #include "platform/loader/fetch/ResourceLoadingLog.h"
+#include "platform/network/HTTPParsers.h"
+#include "platform/weborigin/SecurityViolationReportingPolicy.h"
 #include "public/platform/Platform.h"
+#include "v8/include/v8.h"
 #include "wtf/CurrentTime.h"
 #include "wtf/StdLibExtras.h"
-#include <memory>
-#include <v8.h>
 
 namespace blink {
 namespace {
@@ -77,7 +82,9 @@ class ImageResource::ImageResourceInfoImpl final
     return m_resource->response();
   }
   ResourceStatus getStatus() const override { return m_resource->getStatus(); }
-  bool isPlaceholder() const override { return m_resource->isPlaceholder(); }
+  bool shouldShowPlaceholder() const override {
+    return m_resource->shouldShowPlaceholder();
+  }
   bool isCacheValidator() const override {
     return m_resource->isCacheValidator();
   }
@@ -99,12 +106,6 @@ class ImageResource::ImageResourceInfoImpl final
     return m_resource->resourceError();
   }
 
-  void decodeError(bool allDataReceived) override {
-    m_resource->decodeError(allDataReceived);
-  }
-  void setIsPlaceholder(bool isPlaceholder) override {
-    m_resource->m_isPlaceholder = isPlaceholder;
-  }
   void setDecodedSize(size_t size) override {
     m_resource->setDecodedSize(size);
   }
@@ -150,8 +151,7 @@ ImageResource* ImageResource::fetch(FetchRequest& request,
                                     ResourceFetcher* fetcher) {
   if (request.resourceRequest().requestContext() ==
       WebURLRequest::RequestContextUnspecified) {
-    request.mutableResourceRequest().setRequestContext(
-        WebURLRequest::RequestContextImage);
+    request.setRequestContext(WebURLRequest::RequestContextImage);
   }
   if (fetcher->context().pageDismissalEventBeingDispatched()) {
     KURL requestURL = request.resourceRequest().url();
@@ -161,9 +161,8 @@ ImageResource* ImageResource::fetch(FetchRequest& request,
           request.options(),
           /* Don't send security violation reports for speculative preloads */
           request.isSpeculativePreload()
-              ? FetchContext::SecurityViolationReportingPolicy::
-                    SuppressReporting
-              : FetchContext::SecurityViolationReportingPolicy::Report,
+              ? SecurityViolationReportingPolicy::SuppressReporting
+              : SecurityViolationReportingPolicy::Report,
           request.getOriginRestriction());
       if (blockReason == ResourceRequestBlockedReason::None)
         fetcher->context().sendImagePing(requestURL);
@@ -171,18 +170,17 @@ ImageResource* ImageResource::fetch(FetchRequest& request,
     return nullptr;
   }
 
-  ImageResource* resource = toImageResource(
+  return toImageResource(
       fetcher->requestResource(request, ImageResourceFactory(request)));
-  if (resource &&
-      request.placeholderImageRequestType() != FetchRequest::AllowPlaceholder &&
-      resource->m_isPlaceholder) {
-    // If the image is a placeholder, but this fetch doesn't allow a
-    // placeholder, then load the original image. Note that the cache is not
-    // bypassed here - it should be fine to use a cached copy if possible.
-    resource->reloadIfLoFiOrPlaceholderImage(
-        fetcher, kReloadAlwaysWithExistingCachePolicy);
-  }
-  return resource;
+}
+
+bool ImageResource::canReuse(const FetchRequest& request) const {
+  // If the image is a placeholder, but this fetch doesn't allow a
+  // placeholder, then do not reuse this resource.
+  if (request.placeholderImageRequestType() != FetchRequest::AllowPlaceholder &&
+      m_placeholderOption != PlaceholderOption::DoNotReloadPlaceholder)
+    return false;
+  return true;
 }
 
 ImageResource* ImageResource::create(const ResourceRequest& request) {
@@ -199,7 +197,9 @@ ImageResource::ImageResource(const ResourceRequest& resourceRequest,
       m_devicePixelRatioHeaderValue(1.0),
       m_hasDevicePixelRatioHeaderValue(false),
       m_isSchedulingReload(false),
-      m_isPlaceholder(isPlaceholder),
+      m_placeholderOption(
+          isPlaceholder ? PlaceholderOption::ShowAndReloadPlaceholderAlways
+                        : PlaceholderOption::DoNotReloadPlaceholder),
       m_flushTimer(this, &ImageResource::flushImageIfNeeded) {
   DCHECK(getContent());
   RESOURCE_LOADING_DVLOG(1) << "new ImageResource(ResourceRequest) " << this;
@@ -322,10 +322,6 @@ void ImageResource::flushImageIfNeeded(TimerBase*) {
   }
 }
 
-bool ImageResource::willPaintBrokenImage() const {
-  return errorOccurred();
-}
-
 void ImageResource::decodeError(bool allDataReceived) {
   size_t size = encodedSize();
 
@@ -334,9 +330,16 @@ void ImageResource::decodeError(bool allDataReceived) {
   if (!errorOccurred())
     setStatus(ResourceStatus::DecodeError);
 
+  // Finishes loading if needed, and notifies observers.
   if (!allDataReceived && loader()) {
+    // Observers are notified via ImageResource::finish().
     // TODO(hiroshige): Do not call didFinishLoading() directly.
     loader()->didFinishLoading(monotonicallyIncreasingTime(), size, size);
+  } else {
+    auto result = getContent()->updateImage(
+        nullptr, ImageResourceContent::ClearImageAndNotifyObservers,
+        allDataReceived);
+    DCHECK_EQ(result, ImageResourceContent::UpdateImageResult::NoDecodeError);
   }
 
   memoryCache()->remove(this);
@@ -375,6 +378,21 @@ void ImageResource::error(const ResourceError& error) {
               true);
 }
 
+// Determines if |response| likely contains the entire resource for the purposes
+// of determining whether or not to show a placeholder, e.g. if the server
+// responded with a full 200 response or if the full image is smaller than the
+// requested range.
+static bool isEntireResource(const ResourceResponse& response) {
+  if (response.httpStatusCode() != 206)
+    return true;
+
+  int64_t firstBytePosition = -1, lastBytePosition = -1, instanceLength = -1;
+  return parseContentRangeHeaderFor206(
+             response.httpHeaderField("Content-Range"), &firstBytePosition,
+             &lastBytePosition, &instanceLength) &&
+         firstBytePosition == 0 && lastBytePosition + 1 == instanceLength;
+}
+
 void ImageResource::responseReceived(
     const ResourceResponse& response,
     std::unique_ptr<WebDataConsumerHandle> handle) {
@@ -397,6 +415,47 @@ void ImageResource::responseReceived(
       m_hasDevicePixelRatioHeaderValue = false;
     }
   }
+
+  if (m_placeholderOption ==
+          PlaceholderOption::ShowAndReloadPlaceholderAlways &&
+      isEntireResource(this->response())) {
+    if (this->response().httpStatusCode() < 400 ||
+        this->response().httpStatusCode() >= 600) {
+      // Don't treat a complete and broken image as a placeholder if the
+      // response code is something other than a 4xx or 5xx error.
+      // This is done to prevent reissuing the request in cases like
+      // "204 No Content" responses to tracking requests triggered by <img>
+      // tags, and <img> tags used to preload non-image resources.
+      m_placeholderOption = PlaceholderOption::DoNotReloadPlaceholder;
+    } else {
+      m_placeholderOption = PlaceholderOption::ReloadPlaceholderOnDecodeError;
+    }
+  }
+}
+
+bool ImageResource::shouldShowPlaceholder() const {
+  switch (m_placeholderOption) {
+    case PlaceholderOption::ShowAndReloadPlaceholderAlways:
+      return true;
+    case PlaceholderOption::ReloadPlaceholderOnDecodeError:
+    case PlaceholderOption::DoNotReloadPlaceholder:
+      return false;
+  }
+  NOTREACHED();
+  return false;
+}
+
+bool ImageResource::shouldReloadBrokenPlaceholder() const {
+  switch (m_placeholderOption) {
+    case PlaceholderOption::ShowAndReloadPlaceholderAlways:
+      return errorOccurred();
+    case PlaceholderOption::ReloadPlaceholderOnDecodeError:
+      return getStatus() == ResourceStatus::DecodeError;
+    case PlaceholderOption::DoNotReloadPlaceholder:
+      return false;
+  }
+  NOTREACHED();
+  return false;
 }
 
 static bool isLoFiImage(const ImageResource& resource) {
@@ -416,7 +475,8 @@ void ImageResource::reloadIfLoFiOrPlaceholderImage(
   if (policy == kReloadIfNeeded && !shouldReloadBrokenPlaceholder())
     return;
 
-  if (!m_isPlaceholder && !isLoFiImage(*this))
+  if (m_placeholderOption == PlaceholderOption::DoNotReloadPlaceholder &&
+      !isLoFiImage(*this))
     return;
 
   // Prevent clients and observers from being notified of completion while the
@@ -426,15 +486,13 @@ void ImageResource::reloadIfLoFiOrPlaceholderImage(
   DCHECK(!m_isSchedulingReload);
   m_isSchedulingReload = true;
 
-  if (policy != kReloadAlwaysWithExistingCachePolicy)
-    setCachePolicyBypassingCache();
+  setCachePolicyBypassingCache();
 
   setPreviewsStateNoTransform();
 
-  if (m_isPlaceholder) {
-    m_isPlaceholder = false;
+  if (m_placeholderOption != PlaceholderOption::DoNotReloadPlaceholder)
     clearRangeRequestHeader();
-  }
+  m_placeholderOption = PlaceholderOption::DoNotReloadPlaceholder;
 
   if (isLoading()) {
     loader()->cancel();
@@ -519,8 +577,25 @@ void ImageResource::updateImage(
     PassRefPtr<SharedBuffer> sharedBuffer,
     ImageResourceContent::UpdateImageOption updateImageOption,
     bool allDataReceived) {
-  getContent()->updateImage(std::move(sharedBuffer), updateImageOption,
-                            allDataReceived);
+  auto result = getContent()->updateImage(std::move(sharedBuffer),
+                                          updateImageOption, allDataReceived);
+  if (result == ImageResourceContent::UpdateImageResult::ShouldDecodeError) {
+    // In case of decode error, we call imageNotifyFinished() iff we don't
+    // initiate reloading:
+    // [(a): when this is in the middle of loading, or (b): otherwise]
+    // 1. The updateImage() call above doesn't call notifyObservers().
+    // 2. notifyObservers(ShouldNotifyFinish) is called
+    //    (a) via updateImage() called in ImageResource::finish()
+    //        called via didFinishLoading() called in decodeError(), or
+    //    (b) via updateImage() called in decodeError().
+    //    imageNotifyFinished() is called here iff we will not initiate
+    //    reloading in Step 3 due to notifyObservers()'s
+    //    schedulingReloadOrShouldReloadBrokenPlaceholder() check.
+    // 3. reloadIfLoFiOrPlaceholderImage() is called via ResourceFetcher
+    //    (a) via didFinishLoading() called in decodeError(), or
+    //    (b) after returning ImageResource::updateImage().
+    decodeError(allDataReceived);
+  }
 }
 
 }  // namespace blink

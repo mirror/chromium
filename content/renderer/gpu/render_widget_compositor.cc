@@ -93,13 +93,13 @@ bool GetSwitchValueAsInt(const base::CommandLine& command_line,
                          int* result) {
   std::string string_value = command_line.GetSwitchValueASCII(switch_string);
   int int_value;
-  if (base::StringToInt(string_value, &int_value) &&
-      int_value >= min_value && int_value <= max_value) {
+  if (base::StringToInt(string_value, &int_value) && int_value >= min_value &&
+      int_value <= max_value) {
     *result = int_value;
     return true;
   } else {
-    LOG(WARNING) << "Failed to parse switch " << switch_string  << ": " <<
-        string_value;
+    LOG(WARNING) << "Failed to parse switch " << switch_string << ": "
+                 << string_value;
     return false;
   }
 }
@@ -134,9 +134,6 @@ cc::LayerSelection ConvertWebSelection(const WebSelection& web_selection) {
   cc::LayerSelection cc_selection;
   cc_selection.start = ConvertWebSelectionBound(web_selection, true);
   cc_selection.end = ConvertWebSelectionBound(web_selection, false);
-  cc_selection.is_editable = web_selection.isEditable();
-  cc_selection.is_empty_text_form_control =
-      web_selection.isEmptyTextFormControl();
   return cc_selection;
 }
 
@@ -243,11 +240,15 @@ std::unique_ptr<cc::LayerTreeHost> RenderWidgetCompositor::CreateLayerTreeHost(
   params.main_task_runner = deps->GetCompositorMainThreadTaskRunner();
   params.mutator_host = mutator_host;
   if (base::TaskScheduler::GetInstance()) {
+    // The image worker thread needs to allow waiting since it makes discardable
+    // shared memory allocations which need to make synchronous calls to the
+    // IO thread.
     params.image_worker_task_runner = base::CreateSequencedTaskRunnerWithTraits(
         base::TaskTraits()
             .WithPriority(base::TaskPriority::BACKGROUND)
             .WithShutdownBehavior(
-                base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN));
+                base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN)
+            .WithBaseSyncPrimitives());
   }
   if (!is_threaded) {
     // Single-threaded layout tests.
@@ -275,6 +276,9 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
 
   settings.main_frame_before_activation_enabled =
       cmd.HasSwitch(cc::switches::kEnableMainFrameBeforeActivation);
+
+  settings.enable_checker_imaging =
+      cmd.HasSwitch(cc::switches::kEnableCheckerImaging);
 
   // TODO(danakj): This should not be a setting O_O; it should change when the
   // device scale factor on LayerTreeHost changes.
@@ -306,8 +310,8 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
                         &max_untiled_layer_height);
   }
 
-  settings.max_untiled_layer_size = gfx::Size(max_untiled_layer_width,
-                                           max_untiled_layer_height);
+  settings.max_untiled_layer_size =
+      gfx::Size(max_untiled_layer_width, max_untiled_layer_height);
 
   settings.gpu_rasterization_msaa_sample_count =
       compositor_deps->GetGpuRasterizationMSAASampleCount();
@@ -325,15 +329,12 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
       compositor_deps->IsElasticOverscrollEnabled();
   settings.renderer_settings.use_gpu_memory_buffer_resources =
       compositor_deps->IsGpuMemoryBufferCompositorResourcesEnabled();
-  settings.enable_color_correct_rendering =
-      cmd.HasSwitch(cc::switches::kEnableColorCorrectRendering) ||
-      cmd.HasSwitch(cc::switches::kEnableTrueColorRendering);
+  settings.enable_color_correct_rasterization =
+      cmd.HasSwitch(cc::switches::kEnableColorCorrectRendering);
   settings.renderer_settings.buffer_to_texture_target_map =
       compositor_deps->GetBufferToTextureTargetMap();
   settings.image_decode_tasks_enabled =
       compositor_deps->AreImageDecodeTasksEnabled();
-  settings.check_tile_priority_inversion =
-      cmd.HasSwitch(cc::switches::kCheckTilePriorityInversion);
 
   // Build LayerTreeSettings from command line args.
   LayerTreeSettingsFactory::SetBrowserControlsSettings(settings, cmd);
@@ -365,6 +366,8 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
 
   settings.initial_debug_state.SetRecordRenderingStats(
       cmd.HasSwitch(cc::switches::kEnableGpuBenchmarking));
+  settings.needs_valid_local_surface_id =
+      cmd.HasSwitch(cc::switches::kEnableSurfaceSynchronization);
 
   if (cmd.HasSwitch(cc::switches::kSlowDownRasterScaleFactor)) {
     const int kMinSlowDownScaleFactor = 0;
@@ -388,11 +391,12 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
     settings.scrollbar_animator = cc::LayerTreeSettings::NO_ANIMATOR;
     settings.solid_color_scrollbar_color = SK_ColorTRANSPARENT;
   } else {
-    settings.scrollbar_animator = cc::LayerTreeSettings::LINEAR_FADE;
-    settings.scrollbar_fade_delay = base::TimeDelta::FromMilliseconds(300);
-    settings.scrollbar_fade_resize_delay =
+    settings.scrollbar_animator = cc::LayerTreeSettings::ANDROID_OVERLAY;
+    settings.scrollbar_fade_out_delay = base::TimeDelta::FromMilliseconds(300);
+    settings.scrollbar_fade_out_resize_delay =
         base::TimeDelta::FromMilliseconds(2000);
-    settings.scrollbar_fade_duration = base::TimeDelta::FromMilliseconds(300);
+    settings.scrollbar_fade_out_duration =
+        base::TimeDelta::FromMilliseconds(300);
     settings.solid_color_scrollbar_color = SkColorSetARGB(128, 128, 128, 128);
   }
   settings.renderer_settings.highp_threshold_min = 2048;
@@ -427,23 +431,24 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
 #else  // defined(OS_ANDROID)
 #if !defined(OS_MACOSX)
   if (ui::IsOverlayScrollbarEnabled()) {
-    settings.scrollbar_animator = cc::LayerTreeSettings::THINNING;
-    settings.scrollbar_fade_delay = ui::kOverlayScrollbarFadeOutDelay;
-    settings.scrollbar_fade_resize_delay =
+    settings.scrollbar_animator = cc::LayerTreeSettings::AURA_OVERLAY;
+    settings.scrollbar_show_delay = ui::kOverlayScrollbarShowDelay;
+    settings.scrollbar_fade_out_delay = ui::kOverlayScrollbarFadeOutDelay;
+    settings.scrollbar_fade_out_resize_delay =
         ui::kOverlayScrollbarFadeOutDelay;
-    settings.scrollbar_fade_duration =
-        ui::kOverlayScrollbarFadeOutDuration;
+    settings.scrollbar_fade_out_duration = ui::kOverlayScrollbarFadeOutDuration;
     settings.scrollbar_thinning_duration =
         ui::kOverlayScrollbarThinningDuration;
   } else {
     // TODO(bokan): This section is probably unneeded? We don't use scrollbar
     // animations for non overlay scrollbars.
-    settings.scrollbar_animator = cc::LayerTreeSettings::LINEAR_FADE;
+    settings.scrollbar_animator = cc::LayerTreeSettings::ANDROID_OVERLAY;
     settings.solid_color_scrollbar_color = SkColorSetARGB(128, 128, 128, 128);
-    settings.scrollbar_fade_delay = base::TimeDelta::FromMilliseconds(500);
-    settings.scrollbar_fade_resize_delay =
+    settings.scrollbar_fade_out_delay = base::TimeDelta::FromMilliseconds(500);
+    settings.scrollbar_fade_out_resize_delay =
         base::TimeDelta::FromMilliseconds(500);
-    settings.scrollbar_fade_duration = base::TimeDelta::FromMilliseconds(300);
+    settings.scrollbar_fade_out_duration =
+        base::TimeDelta::FromMilliseconds(300);
   }
 #endif  // !defined(OS_MACOSX)
 
@@ -696,7 +701,9 @@ void RenderWidgetCompositor::setVisible(bool visible) {
 }
 
 void RenderWidgetCompositor::setPageScaleFactorAndLimits(
-    float page_scale_factor, float minimum, float maximum) {
+    float page_scale_factor,
+    float minimum,
+    float maximum) {
   layer_tree_host_->SetPageScaleFactorAndLimits(page_scale_factor, minimum,
                                                 maximum);
 }
@@ -743,21 +750,16 @@ void RenderWidgetCompositor::registerViewportLayers(
       // TODO(bokan): This check can probably be removed now, but it looks
       // like overscroll elasticity may still be NULL until VisualViewport
       // registers its layers.
-      // The scroll elasticity layer will only exist when using pinch virtual
-      // viewports.
-      overscrollElasticityLayer
-          ? static_cast<const cc_blink::WebLayerImpl*>(
-                overscrollElasticityLayer)
-                ->layer()
-          : NULL,
+      overscrollElasticityLayer ? static_cast<const cc_blink::WebLayerImpl*>(
+                                      overscrollElasticityLayer)
+                                      ->layer()
+                                : NULL,
       static_cast<const cc_blink::WebLayerImpl*>(pageScaleLayer)->layer(),
       static_cast<const cc_blink::WebLayerImpl*>(innerViewportScrollLayer)
           ->layer(),
       // TODO(bokan): This check can probably be removed now, but it looks
       // like overscroll elasticity may still be NULL until VisualViewport
       // registers its layers.
-      // The outer viewport layer will only exist when using pinch virtual
-      // viewports.
       outerViewportScrollLayer
           ? static_cast<const cc_blink::WebLayerImpl*>(outerViewportScrollLayer)
                 ->layer()
@@ -824,7 +826,7 @@ void RenderWidgetCompositor::setEventListenerProperties(
       static_cast<cc::EventListenerProperties>(properties));
 }
 
-void RenderWidgetCompositor::updateTouchRectsForSubframeIfNecessary() {
+void RenderWidgetCompositor::updateEventRectsForSubframeIfNecessary() {
   if (!is_for_oopif_)
     return;
 
@@ -836,9 +838,9 @@ void RenderWidgetCompositor::updateTouchRectsForSubframeIfNecessary() {
   using blink::WebEventListenerProperties;
   using blink::WebEventListenerClass;
 
-  blink::WebEventListenerProperties touch_start_properties =
+  WebEventListenerProperties touch_start_properties =
       eventListenerProperties(WebEventListenerClass::TouchStartOrMove);
-  blink::WebEventListenerProperties touch_end_cancel_properties =
+  WebEventListenerProperties touch_end_cancel_properties =
       eventListenerProperties(WebEventListenerClass::TouchEndOrCancel);
   bool has_touch_handlers =
       touch_start_properties == WebEventListenerProperties::Blocking ||
@@ -848,11 +850,22 @@ void RenderWidgetCompositor::updateTouchRectsForSubframeIfNecessary() {
       touch_end_cancel_properties ==
           WebEventListenerProperties::BlockingAndPassive;
 
+  WebEventListenerProperties wheel_event_properties =
+      eventListenerProperties(WebEventListenerClass::MouseWheel);
+  bool has_wheel_handlers =
+      wheel_event_properties == WebEventListenerProperties::Blocking ||
+      wheel_event_properties == WebEventListenerProperties::BlockingAndPassive;
+
   cc::Layer* root_layer = layer_tree_host_->root_layer();
   cc::Region touch_handler_region;
   if (has_touch_handlers)
     touch_handler_region = gfx::Rect(gfx::Point(), root_layer->bounds());
   root_layer->SetTouchEventHandlerRegion(touch_handler_region);
+
+  cc::Region wheel_handler_region;
+  if (has_wheel_handlers)
+    wheel_handler_region = gfx::Rect(gfx::Point(), root_layer->bounds());
+  root_layer->SetNonFastScrollableRegion(wheel_handler_region);
 }
 
 blink::WebEventListenerProperties
@@ -1012,8 +1025,7 @@ void RenderWidgetCompositor::WillBeginMainFrame() {
   delegate_->WillBeginCompositorFrame();
 }
 
-void RenderWidgetCompositor::DidBeginMainFrame() {
-}
+void RenderWidgetCompositor::DidBeginMainFrame() {}
 
 void RenderWidgetCompositor::BeginMainFrame(const cc::BeginFrameArgs& args) {
   compositor_deps_->GetRendererScheduler()->WillBeginFrame(args);
@@ -1113,18 +1125,26 @@ void RenderWidgetCompositor::SetFrameSinkId(
   layer_tree_host_->SetFrameSinkId(frame_sink_id);
 }
 
-void RenderWidgetCompositor::SetPaintedDeviceScaleFactor(
-    float device_scale) {
+void RenderWidgetCompositor::SetPaintedDeviceScaleFactor(float device_scale) {
   layer_tree_host_->SetPaintedDeviceScaleFactor(device_scale);
 }
 
-void RenderWidgetCompositor::SetDeviceColorSpace(
+void RenderWidgetCompositor::SetRasterColorSpace(
     const gfx::ColorSpace& color_space) {
-  layer_tree_host_->SetDeviceColorSpace(color_space);
+  layer_tree_host_->SetRasterColorSpace(color_space);
 }
 
 void RenderWidgetCompositor::SetIsForOopif(bool is_for_oopif) {
   is_for_oopif_ = is_for_oopif;
+}
+
+void RenderWidgetCompositor::SetContentSourceId(uint32_t id) {
+  layer_tree_host_->SetContentSourceId(id);
+}
+
+void RenderWidgetCompositor::SetLocalSurfaceId(
+    const cc::LocalSurfaceId& local_surface_id) {
+  layer_tree_host_->SetLocalSurfaceId(local_surface_id);
 }
 
 }  // namespace content

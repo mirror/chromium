@@ -49,6 +49,8 @@ Polymer({
 
     /**
      * Dictionary defining page visibility.
+     * This is only set when in guest mode. All pages are visible when not set
+     * because polymer only notifies after a property is set.
      * @private {!GuestModePageVisibility}
      */
     pageVisibility_: Object,
@@ -88,6 +90,8 @@ Polymer({
     }.bind(this));
 
     CrPolicyStrings = {
+      controlledSettingExtension:
+          loadTimeData.getString('controlledSettingExtension'),
       controlledSettingPolicy:
           loadTimeData.getString('controlledSettingPolicy'),
       controlledSettingRecommendedMatches:
@@ -158,6 +162,11 @@ Polymer({
 
   /** @override */
   attached: function() {
+    setTimeout(function() {
+      chrome.send(
+          'metricsHandler:recordTime',
+          ['Settings.TimeUntilInteractive', window.performance.now()]);
+    });
     // Preload bold Roboto so it doesn't load and flicker the first time used.
     document.fonts.load('bold 12px Roboto');
     settings.setGlobalScrollTarget(this.$.headerPanel.scroller);

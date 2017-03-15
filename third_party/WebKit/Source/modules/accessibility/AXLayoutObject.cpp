@@ -216,7 +216,7 @@ LayoutBoxModelObject* AXLayoutObject::getLayoutBoxModelObject() const {
 
 ScrollableArea* AXLayoutObject::getScrollableAreaIfScrollable() const {
   if (isWebArea())
-    return documentFrameView();
+    return documentFrameView()->layoutViewportScrollableArea();
 
   if (!m_layoutObject || !m_layoutObject->isBox())
     return 0;
@@ -896,9 +896,11 @@ String AXLayoutObject::imageDataUrl(const IntSize& maxSize) const {
   if (!imageBitmap)
     return String();
 
-  // TODO(ccameron): AXLayoutObject::imageDataUrl should create sRGB images.
-  sk_sp<SkImage> image = imageBitmap->bitmapImage()->imageForCurrentFrame(
-      ColorBehavior::transformToGlobalTarget());
+  StaticBitmapImage* bitmapImage = imageBitmap->bitmapImage();
+  if (!bitmapImage)
+    return String();
+
+  sk_sp<SkImage> image = bitmapImage->imageForCurrentFrame();
   if (!image || image->width() <= 0 || image->height() <= 0)
     return String();
 
@@ -1713,7 +1715,10 @@ AXObject::AXRange AXLayoutObject::selection() const {
     return AXRange();
 
   VisibleSelection selection =
-      getLayoutObject()->frame()->selection().selection();
+      getLayoutObject()
+          ->frame()
+          ->selection()
+          .computeVisibleSelectionInDOMTreeDeprecated();
   if (selection.isNone())
     return AXRange();
 
@@ -1780,8 +1785,11 @@ AXObject::AXRange AXLayoutObject::selectionUnderObject() const {
     return AXRange();
 
   VisibleSelection selection =
-      getLayoutObject()->frame()->selection().selection();
-  Range* selectionRange = firstRangeOf(selection);
+      getLayoutObject()
+          ->frame()
+          ->selection()
+          .computeVisibleSelectionInDOMTreeDeprecated();
+  Range* selectionRange = createRange(firstEphemeralRangeOf(selection));
   ContainerNode* parentNode = getNode()->parentNode();
   int nodeIndex = getNode()->nodeIndex();
   if (!selectionRange
@@ -1824,7 +1832,8 @@ AXObject::AXRange AXLayoutObject::textControlSelection() const {
   if (!axObject || !axObject->isAXLayoutObject())
     return AXRange();
 
-  VisibleSelection selection = layout->frame()->selection().selection();
+  VisibleSelection selection =
+      layout->frame()->selection().computeVisibleSelectionInDOMTreeDeprecated();
   TextControlElement* textControl =
       toLayoutTextControl(layout)->textControlElement();
   ASSERT(textControl);

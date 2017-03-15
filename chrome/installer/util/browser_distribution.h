@@ -42,7 +42,6 @@ class BrowserDistribution {
 
   // Getter and adaptors for the underlying |app_reg_data_|.
   const AppRegistrationData& GetAppRegistrationData() const;
-  base::string16 GetAppGuid() const;
   base::string16 GetStateKey() const;
   base::string16 GetStateMediumKey() const;
   base::string16 GetVersionKey() const;
@@ -81,12 +80,6 @@ class BrowserDistribution {
   virtual base::string16 GetStartMenuShortcutSubfolder(
       Subfolder subfolder_type);
 
-  // Returns the unsuffixed appid of this program.
-  // The AppUserModelId is a property of Windows programs.
-  // IMPORTANT: This should only be called by ShellUtil::GetAppId as the appid
-  // should be suffixed in all scenarios.
-  virtual base::string16 GetBaseAppId();
-
   // Returns the Browser ProgId prefix (e.g. ChromeHTML, ChromiumHTM, etc...).
   // The full id is of the form |prefix|.|suffix| and is limited to a maximum
   // length of 39 characters including null-terminator.  See
@@ -98,8 +91,6 @@ class BrowserDistribution {
 
   // Returns the Browser ProgId description.
   virtual base::string16 GetBrowserProgIdDesc();
-
-  virtual base::string16 GetInstallSubDir();
 
   virtual base::string16 GetPublisherName();
 
@@ -113,13 +104,6 @@ class BrowserDistribution {
   virtual base::string16 GetDistributionData(HKEY root_key);
 #endif
 
-  // Returns the path "Software\<PRODUCT>". This subkey of HKEY_CURRENT_USER can
-  // be used to save and restore state. With the exception of data that is used
-  // by third parties (e.g., a subkey that specifies the location of a native
-  // messaging host's manifest), state stored in this key is removed during
-  // uninstall when the user chooses to also delete their browsing data.
-  virtual base::string16 GetRegistryPath();
-
   virtual base::string16 GetUninstallRegPath();
 
   // Returns an enum specifying the different ways in which this distribution
@@ -127,8 +111,6 @@ class BrowserDistribution {
   virtual DefaultBrowserControlPolicy GetDefaultBrowserControlPolicy();
 
   virtual bool CanCreateDesktopShortcuts();
-
-  virtual bool GetChromeChannel(base::string16* channel);
 
   // Returns the CommandExecuteImpl class UUID (or empty string if this
   // distribution doesn't include a DelegateExecute verb handler).

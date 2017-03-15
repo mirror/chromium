@@ -56,6 +56,14 @@ public class NotificationConstants {
     public static final int NOTIFICATION_ID_PHYSICAL_WEB = 3;
 
     /**
+     * Unique identifier for the summary notification for downloads.  Using the ID this summary was
+     * going to have before it was migrated here.
+     * TODO(dtrainor): Clean up this ID and make sure it's in line with existing id counters without
+     * tags.
+     */
+    public static final int NOTIFICATION_ID_DOWNLOAD_SUMMARY = 999999;
+
+    /**
      * Separator used to separate the notification origin from additional data such as the
      * developer specified tag.
      */
@@ -77,4 +85,8 @@ public class NotificationConstants {
     // Web notification group names are set dynamically as this prefix + notification origin.
     // For example, 'Web:chromium.org' for a notification from chromium.org.
     static final String GROUP_WEB_PREFIX = "Web:";
+
+    public static final String CATEGORY_ID_BROWSER = "browser";
+    public static final String CATEGORY_ID_SITES = "sites";
+    public static final String CATEGORY_GROUP_ID_GENERAL = "general";
 }

@@ -43,6 +43,7 @@ class Page;
 class LayoutPart;
 class Scrollbar;
 class ScrollingCoordinator;
+class VisualViewport;
 
 enum CompositingUpdateType {
   CompositingUpdateNone,
@@ -122,35 +123,35 @@ class CORE_EXPORT PaintLayerCompositor final : public GraphicsLayerClient {
   void fullyInvalidatePaint();
 
   PaintLayer* rootLayer() const;
-  GraphicsLayer* rootGraphicsLayer() const;
-  GraphicsLayer* frameScrollLayer() const;
-  GraphicsLayer* scrollLayer() const;
-  GraphicsLayer* containerLayer() const;
-  GraphicsLayer* rootContentLayer() const;
 
-  enum RootLayerAttachment {
-    RootLayerUnattached,
-    RootLayerAttachedViaChromeClient,
-    RootLayerAttachedViaEnclosingFrame
-  };
-
-  RootLayerAttachment getRootLayerAttachment() const {
-    return m_rootLayerAttachment;
+  GraphicsLayer* containerLayer() const { return m_containerLayer.get(); }
+  GraphicsLayer* frameScrollLayer() const { return m_scrollLayer.get(); }
+  GraphicsLayer* rootContentLayer() const { return m_rootContentLayer.get(); }
+  GraphicsLayer* layerForHorizontalScrollbar() const {
+    return m_layerForHorizontalScrollbar.get();
   }
-  void updateRootLayerAttachment();
-  void updateRootLayerPosition();
+  GraphicsLayer* layerForVerticalScrollbar() const {
+    return m_layerForVerticalScrollbar.get();
+  }
+  GraphicsLayer* layerForScrollCorner() const {
+    return m_layerForScrollCorner.get();
+  }
 
-  // If the root scroller isn't the root layer then the PaintLayerCompositor
-  // must disable clipping on its layers so that the root scroller can
-  // expand/shrink its clipping layer in response to browser controls and have
-  // the result be visible.
-  void updateClippingOnCompositorLayers();
+  // In root layer scrolling mode, returns the LayoutView's main GraphicsLayer.
+  // In non-RLS mode, returns the outermost PaintLayerCompositor layer.
+  GraphicsLayer* rootGraphicsLayer() const;
+
+  // In root layer scrolling mode, this is the LayoutView's scroll layer.
+  // In non-RLS mode, this is the same as frameScrollLayer().
+  GraphicsLayer* scrollLayer() const;
+
+  void updateRootLayerPosition();
 
   void setIsInWindow(bool);
 
-  static PaintLayerCompositor* frameContentsCompositor(LayoutPart*);
+  static PaintLayerCompositor* frameContentsCompositor(LayoutPart&);
   // Return true if the layers changed.
-  static bool attachFrameContentLayersToIframeLayer(LayoutPart*);
+  static bool attachFrameContentLayersToIframeLayer(LayoutPart&);
 
   // Update the geometry of the layers used for clipping and scrolling in
   // frames.
@@ -163,16 +164,6 @@ class CORE_EXPORT PaintLayerCompositor final : public GraphicsLayerClient {
   bool scrollingLayerDidChange(PaintLayer*);
 
   std::unique_ptr<JSONObject> layerTreeAsJSON(LayerTreeFlags) const;
-
-  GraphicsLayer* layerForHorizontalScrollbar() const {
-    return m_layerForHorizontalScrollbar.get();
-  }
-  GraphicsLayer* layerForVerticalScrollbar() const {
-    return m_layerForVerticalScrollbar.get();
-  }
-  GraphicsLayer* layerForScrollCorner() const {
-    return m_layerForScrollCorner.get();
-  }
 
   void setTracksRasterInvalidations(bool);
 
@@ -217,7 +208,7 @@ class CORE_EXPORT PaintLayerCompositor final : public GraphicsLayerClient {
   void ensureRootLayer();
   void destroyRootLayer();
 
-  void attachRootLayer(RootLayerAttachment);
+  void attachRootLayer();
   void detachRootLayer();
 
   void attachCompositorTimeline();
@@ -244,8 +235,11 @@ class CORE_EXPORT PaintLayerCompositor final : public GraphicsLayerClient {
   // instance if any, else nullptr.
   Scrollbar* graphicsLayerToScrollbar(const GraphicsLayer*) const;
 
+  bool isMainFrame() const;
+  VisualViewport& visualViewport() const;
+  GraphicsLayer* parentForContentLayers() const;
+
   LayoutView& m_layoutView;
-  std::unique_ptr<GraphicsLayer> m_rootContentLayer;
 
   CompositingReasonFinder m_compositingReasonFinder;
 
@@ -266,14 +260,25 @@ class CORE_EXPORT PaintLayerCompositor final : public GraphicsLayerClient {
   bool m_isTrackingRasterInvalidations;  // Used for testing.
   bool m_inOverlayFullscreenVideo;
 
+  enum RootLayerAttachment {
+    RootLayerUnattached,
+    RootLayerPendingAttachViaChromeClient,
+    RootLayerAttachedViaChromeClient,
+    RootLayerAttachedViaEnclosingFrame
+  };
   RootLayerAttachment m_rootLayerAttachment;
 
-  // Enclosing container layer, which clips for iframe content
+  // Outermost layer, holds overflow controls and the container layer
+  std::unique_ptr<GraphicsLayer> m_overflowControlsHostLayer;
+
+  // Clips for iframe content
   std::unique_ptr<GraphicsLayer> m_containerLayer;
+
+  // Scrolls with the FrameView
   std::unique_ptr<GraphicsLayer> m_scrollLayer;
 
-  // Enclosing layer for overflow controls and the clipping layer
-  std::unique_ptr<GraphicsLayer> m_overflowControlsHostLayer;
+  // Innermost layer, parent of LayoutView main GraphicsLayer
+  std::unique_ptr<GraphicsLayer> m_rootContentLayer;
 
   // Layers for overflow controls
   std::unique_ptr<GraphicsLayer> m_layerForHorizontalScrollbar;

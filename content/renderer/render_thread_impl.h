@@ -8,6 +8,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <memory>
 #include <set>
 #include <string>
 #include <vector>
@@ -236,6 +237,7 @@ class CONTENT_EXPORT RenderThreadImpl
   bool AreImageDecodeTasksEnabled() override;
   bool IsThreadedAnimationEnabled() override;
   bool IsScrollAnimatorEnabled() override;
+  bool IsSurfaceSynchronizationEnabled() override;
 
   // blink::scheduler::RendererScheduler::RAILModeObserver implementation.
   void OnRAILModeChanged(v8::RAILMode rail_mode) override;
@@ -515,7 +517,6 @@ class CONTENT_EXPORT RenderThreadImpl
   // ChildThread
   bool OnControlMessageReceived(const IPC::Message& msg) override;
   void OnProcessBackgrounded(bool backgrounded) override;
-  void OnProcessResume() override;
   void OnProcessPurgeAndSuspend() override;
   void RecordAction(const base::UserMetricsAction& action) override;
   void RecordComputedAction(const std::string& action) override;
@@ -666,7 +667,8 @@ class CONTENT_EXPORT RenderThreadImpl
   // TODO(dcastagna): This should be just one scoped_ptr once
   // http://crbug.com/580386 is fixed.
   // NOTE(dcastagna): At worst this accumulates a few bytes per context lost.
-  ScopedVector<content::RendererGpuVideoAcceleratorFactories> gpu_factories_;
+  std::vector<std::unique_ptr<RendererGpuVideoAcceleratorFactories>>
+      gpu_factories_;
 
   // Thread for running multimedia operations (e.g., video decoding).
   std::unique_ptr<base::Thread> media_thread_;
@@ -723,6 +725,7 @@ class CONTENT_EXPORT RenderThreadImpl
   bool are_image_decode_tasks_enabled_;
   bool is_threaded_animation_enabled_;
   bool is_scroll_animator_enabled_;
+  bool is_surface_synchronization_enabled_;
 
   class PendingFrameCreate : public base::RefCounted<PendingFrameCreate> {
    public:

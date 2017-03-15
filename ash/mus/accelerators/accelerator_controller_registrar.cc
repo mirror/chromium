@@ -11,6 +11,7 @@
 #include "ash/common/wm_shell.h"
 #include "ash/mus/accelerators/accelerator_ids.h"
 #include "ash/mus/window_manager.h"
+#include "ash/shell.h"
 #include "base/logging.h"
 #include "services/ui/common/accelerator_util.h"
 #include "ui/base/accelerators/accelerator_history.h"
@@ -83,7 +84,7 @@ ui::mojom::EventResult AcceleratorControllerRegistrar::OnAccelerator(
         accelerator);
     WmWindow* target_window = WmShell::Get()->GetFocusedWindow();
     if (!target_window)
-      target_window = WmShell::Get()->GetRootWindowForNewWindows();
+      target_window = Shell::GetWmRootWindowForNewWindows();
     DCHECK(target_window);
     return router_->ProcessAccelerator(target_window, *(event.AsKeyEvent()),
                                        accelerator)
@@ -99,7 +100,7 @@ ui::mojom::EventResult AcceleratorControllerRegistrar::OnAccelerator(
 
 void AcceleratorControllerRegistrar::OnAcceleratorsRegistered(
     const std::vector<ui::Accelerator>& accelerators) {
-  std::vector<ui::mojom::AcceleratorPtr> accelerator_vector;
+  std::vector<ui::mojom::WmAcceleratorPtr> accelerator_vector;
 
   for (const ui::Accelerator& accelerator : accelerators)
     AddAcceleratorToVector(accelerator, accelerator_vector);
@@ -126,7 +127,7 @@ void AcceleratorControllerRegistrar::OnAcceleratorUnregistered(
 
 void AcceleratorControllerRegistrar::AddAcceleratorToVector(
     const ui::Accelerator& accelerator,
-    std::vector<ui::mojom::AcceleratorPtr>& accelerator_vector) {
+    std::vector<ui::mojom::WmAcceleratorPtr>& accelerator_vector) {
   Ids ids;
   if (!GenerateIds(&ids)) {
     LOG(ERROR) << "max number of accelerators registered, dropping request";

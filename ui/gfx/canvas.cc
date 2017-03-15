@@ -289,14 +289,6 @@ void Canvas::DrawRect(const RectF& rect, const cc::PaintFlags& flags) {
   canvas_->drawRect(RectFToSkRect(rect), flags);
 }
 
-void Canvas::DrawPoint(const Point& p1, const cc::PaintFlags& flags) {
-  DrawPoint(PointF(p1), flags);
-}
-
-void Canvas::DrawPoint(const PointF& p1, const cc::PaintFlags& flags) {
-  canvas_->drawPoint(SkFloatToScalar(p1.x()), SkFloatToScalar(p1.y()), flags);
-}
-
 void Canvas::DrawLine(const Point& p1, const Point& p2, SkColor color) {
   DrawLine(PointF(p1), PointF(p2), color);
 }
@@ -319,6 +311,28 @@ void Canvas::DrawLine(const PointF& p1,
                       const cc::PaintFlags& flags) {
   canvas_->drawLine(SkFloatToScalar(p1.x()), SkFloatToScalar(p1.y()),
                     SkFloatToScalar(p2.x()), SkFloatToScalar(p2.y()), flags);
+}
+
+void Canvas::DrawSharpLine(PointF p1, PointF p2, SkColor color) {
+  ScopedCanvas scoped(this);
+  float dsf = UndoDeviceScaleFactor();
+  p1.Scale(dsf);
+  p2.Scale(dsf);
+
+  cc::PaintFlags flags;
+  flags.setColor(color);
+  flags.setStrokeWidth(SkFloatToScalar(std::floor(dsf)));
+
+  DrawLine(p1, p2, flags);
+}
+
+void Canvas::Draw1pxLine(PointF p1, PointF p2, SkColor color) {
+  ScopedCanvas scoped(this);
+  float dsf = UndoDeviceScaleFactor();
+  p1.Scale(dsf);
+  p2.Scale(dsf);
+
+  DrawLine(p1, p2, color);
 }
 
 void Canvas::DrawCircle(const Point& center_point,
@@ -360,16 +374,15 @@ void Canvas::DrawFocusRect(const RectF& rect) {
   DrawDashedRect(rect, SK_ColorGRAY);
 }
 
-void Canvas::DrawSolidFocusRect(const RectF& rect,
-                                SkColor color,
-                                float thickness) {
+void Canvas::DrawSolidFocusRect(RectF rect, SkColor color, int thickness) {
   cc::PaintFlags flags;
   flags.setColor(color);
-  flags.setStrokeWidth(SkFloatToScalar(thickness));
+  const float adjusted_thickness =
+      std::floor(thickness * image_scale_) / image_scale_;
+  flags.setStrokeWidth(SkFloatToScalar(adjusted_thickness));
   flags.setStyle(cc::PaintFlags::kStroke_Style);
-  gfx::RectF draw_rect = rect;
-  draw_rect.Inset(gfx::InsetsF(thickness / 2));
-  DrawRect(draw_rect, flags);
+  rect.Inset(gfx::InsetsF(adjusted_thickness / 2));
+  DrawRect(rect, flags);
 }
 
 void Canvas::DrawImageInt(const ImageSkia& image, int x, int y) {

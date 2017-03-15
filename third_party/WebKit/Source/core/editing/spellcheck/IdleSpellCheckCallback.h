@@ -6,6 +6,9 @@
 #define IdleSpellCheckCallback_h
 
 #include "core/dom/IdleRequestCallback.h"
+#include "core/dom/SynchronousMutationObserver.h"
+#include "core/editing/EphemeralRange.h"
+#include "core/editing/Position.h"
 #include "platform/Timer.h"
 
 namespace blink {
@@ -13,37 +16,51 @@ namespace blink {
 class LocalFrame;
 class SpellCheckRequester;
 
+#define FOR_EACH_IDLE_SPELL_CHECK_CALLBACK_STATE(V) \
+  V(Inactive)                                       \
+  V(HotModeRequested)                               \
+  V(InHotModeInvocation)                            \
+  V(ColdModeTimerStarted)                           \
+  V(ColdModeRequested)                              \
+  V(InColdModeInvocation)
+
 // Main class for the implementation of idle time spell checker.
-class CORE_EXPORT IdleSpellCheckCallback final : public IdleRequestCallback {
+class CORE_EXPORT IdleSpellCheckCallback final
+    : public IdleRequestCallback,
+      public SynchronousMutationObserver {
+  DISALLOW_COPY_AND_ASSIGN(IdleSpellCheckCallback);
+  USING_GARBAGE_COLLECTED_MIXIN(IdleSpellCheckCallback);
+
  public:
   static IdleSpellCheckCallback* create(LocalFrame&);
   ~IdleSpellCheckCallback() override;
 
+  enum class State {
+#define V(state) k##state,
+    FOR_EACH_IDLE_SPELL_CHECK_CALLBACK_STATE(V)
+#undef V
+  };
+
+  State state() const { return m_state; }
+
   // Transit to HotModeRequested, if possible. Called by operations that need
   // spell checker to follow up.
-  // TODO(xiaochengh): Add proper call sites.
-  void setNeedsHotModeInvocation();
-
-  // Transit to ColdModeTimerStarted, if possible. Sets up a timer, and requests
-  // cold mode invocation if no critical operation occurs before timer firing.
-  // TODO(xiaochengh): Add proper call sites.
-  void setNeedsColdModeInvocation();
+  void setNeedsInvocation();
 
   // Cleans everything up and makes the callback inactive. Should be called when
   // document is detached or spellchecking is globally disabled.
-  // TODO(xiaochengh): Add proper call sites.
   void deactivate();
+
+  void documentAttached(Document*);
 
   // Exposed for testing only.
   SpellCheckRequester& spellCheckRequester() const;
-
-  // The leak detector will report leaks should queued requests be posted
-  // while it GCs repeatedly, as the requests keep their associated element
-  // alive.
-  //
-  // Hence allow the leak detector to effectively stop the spell checker to
-  // ensure leak reporting stability.
-  void prepareForLeakDetection();
+  void forceInvocationForTesting();
+  void setNeedsMoreColdModeInvocationForTesting() {
+    m_needsMoreColdModeInvocationForTesting = true;
+  }
+  void skipColdModeTimerForTesting();
+  int idleCallbackHandle() const { return m_idleCallbackHandle; }
 
   DECLARE_VIRTUAL_TRACE();
 
@@ -53,32 +70,32 @@ class CORE_EXPORT IdleSpellCheckCallback final : public IdleRequestCallback {
 
   LocalFrame& frame() const { return *m_frame; }
 
-  enum class State {
-    kInactive,
-    kHotModeRequested,
-    kInHotModeInvocation,
-    kColdModeTimerStarted,
-    kColdModeRequested,
-    kInColdModeInvocation
-  };
-
   // Returns whether spell checking is globally enabled.
   bool isSpellCheckingEnabled() const;
 
-  // Calls requestIdleCallback with this IdleSpellCheckCallback.
-  void requestInvocation();
-
   // Functions for hot mode.
   void hotModeInvocation(IdleDeadline*);
+
+  // Transit to ColdModeTimerStarted, if possible. Sets up a timer, and requests
+  // cold mode invocation if no critical operation occurs before timer firing.
+  void setNeedsColdModeInvocation();
 
   // Functions for cold mode.
   void coldModeTimerFired(TimerBase*);
   void coldModeInvocation(IdleDeadline*);
   bool coldModeFinishesFullDocument() const;
+  void chunkAndRequestFullCheckingFor(const Element&);
+
+  // Implements |SynchronousMutationObserver|.
+  void contextDestroyed(Document*) final;
 
   State m_state;
+  int m_idleCallbackHandle;
+  mutable bool m_needsMoreColdModeInvocationForTesting;
   const Member<LocalFrame> m_frame;
-
+  uint64_t m_lastProcessedUndoStepSequence;
+  uint64_t m_lastCheckedDOMTreeVersionInColdMode;
+  Member<Node> m_nextNodeInColdMode;
   TaskRunnerTimer<IdleSpellCheckCallback> m_coldModeTimer;
 };
 

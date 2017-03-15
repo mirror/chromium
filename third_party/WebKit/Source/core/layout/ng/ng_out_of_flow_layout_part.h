@@ -10,7 +10,6 @@
 #include "core/layout/ng/ng_absolute_utils.h"
 #include "core/layout/ng/ng_constraint_space.h"
 #include "core/layout/ng/ng_layout_algorithm.h"
-#include "core/layout/ng/ng_units.h"
 #include "platform/heap/Handle.h"
 #include "wtf/Optional.h"
 
@@ -20,6 +19,7 @@ class ComputedStyle;
 class NGBlockNode;
 class NGFragmentBuilder;
 class NGConstraintSpace;
+class NGLayoutResult;
 
 // Helper class for positioning of out-of-flow blocks.
 // It should be used together with NGFragmentBuilder.
@@ -29,16 +29,17 @@ class CORE_EXPORT NGOutOfFlowLayoutPart {
   STACK_ALLOCATED();
 
  public:
-  NGOutOfFlowLayoutPart(const ComputedStyle& container_style,
+  NGOutOfFlowLayoutPart(const NGConstraintSpace& contianer_space,
+                        const ComputedStyle& container_style,
                         NGFragmentBuilder* container_builder);
   void Run();
 
  private:
-  RefPtr<NGPhysicalFragment> LayoutDescendant(NGBlockNode& descendant,
-                                              NGStaticPosition static_position,
-                                              NGLogicalOffset* offset);
+  RefPtr<NGLayoutResult> LayoutDescendant(NGBlockNode& descendant,
+                                          NGStaticPosition static_position,
+                                          NGLogicalOffset* offset);
 
-  RefPtr<NGPhysicalFragment> GenerateFragment(
+  RefPtr<NGLayoutResult> GenerateFragment(
       NGBlockNode& node,
       const Optional<LayoutUnit>& block_estimate,
       const NGAbsolutePhysicalPosition node_position);
@@ -48,7 +49,7 @@ class CORE_EXPORT NGOutOfFlowLayoutPart {
 
   NGLogicalOffset container_border_offset_;
   NGPhysicalOffset container_border_physical_offset_;
-  Member<NGConstraintSpace> container_space_;
+  RefPtr<NGConstraintSpace> container_space_;
 };
 
 }  // namespace blink

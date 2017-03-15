@@ -10,7 +10,6 @@
 #include "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_utils.h"
 #include "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.h"
-#include "chrome/browser/ui/ash/launcher/chrome_launcher_app_menu_item_v2app.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
 #include "chrome/browser/ui/ash/launcher/launcher_controller_helper.h"
 #include "ui/aura/window.h"
@@ -35,34 +34,40 @@ bool ArcAppWindowLauncherItemController::HasAnyTasks() const {
   return !task_ids_.empty();
 }
 
-ash::ShelfItemDelegate::PerformedAction
-ArcAppWindowLauncherItemController::ItemSelected(const ui::Event& event) {
+void ArcAppWindowLauncherItemController::ItemSelected(
+    std::unique_ptr<ui::Event> event,
+    int64_t display_id,
+    ash::ShelfLaunchSource source,
+    const ItemSelectedCallback& callback) {
   if (window_count()) {
-    return AppWindowLauncherItemController::ItemSelected(event);
-  } else {
-    if (task_ids_.empty()) {
-      NOTREACHED();
-      return kNoAction;
-    }
-    arc::SetTaskActive(*task_ids_.begin());
-    return kNewWindowCreated;
+    AppWindowLauncherItemController::ItemSelected(std::move(event), display_id,
+                                                  source, callback);
+    return;
   }
+
+  if (task_ids_.empty()) {
+    NOTREACHED();
+    callback.Run(ash::SHELF_ACTION_NONE, base::nullopt);
+    return;
+  }
+  arc::SetTaskActive(*task_ids_.begin());
+  callback.Run(ash::SHELF_ACTION_NEW_WINDOW_CREATED, base::nullopt);
 }
 
-ash::ShelfAppMenuItemList ArcAppWindowLauncherItemController::GetAppMenuItems(
+MenuItemList ArcAppWindowLauncherItemController::GetAppMenuItems(
     int event_flags) {
-  ash::ShelfAppMenuItemList items;
+  MenuItemList items;
   base::string16 app_title = LauncherControllerHelper::GetAppTitle(
       launcher_controller()->profile(), app_id());
   for (auto it = windows().begin(); it != windows().end(); ++it) {
     // TODO(khmel): resolve correct icon here.
     size_t i = std::distance(windows().begin(), it);
-    gfx::Image image;
     aura::Window* window = (*it)->GetNativeWindow();
-    items.push_back(base::MakeUnique<ChromeLauncherAppMenuItemV2App>(
-        ((window && !window->GetTitle().empty()) ? window->GetTitle()
-                                                 : app_title),
-        &image, app_id(), launcher_controller(), i));
+    ash::mojom::MenuItemPtr item = ash::mojom::MenuItem::New();
+    item->command_id = base::checked_cast<uint32_t>(i);
+    item->label = (window && !window->GetTitle().empty()) ? window->GetTitle()
+                                                          : app_title;
+    items.push_back(std::move(item));
   }
   return items;
 }

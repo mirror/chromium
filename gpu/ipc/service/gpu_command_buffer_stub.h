@@ -37,6 +37,10 @@
 #include "ui/gl/gpu_preference.h"
 #include "url/gurl.h"
 
+namespace gl {
+class GLShareGroup;
+}
+
 namespace gpu {
 struct Mailbox;
 struct SyncToken;
@@ -157,27 +161,23 @@ class GPU_EXPORT GpuCommandBufferStub
                                  IPC::Message* reply_message);
   void OnAsyncFlush(int32_t put_offset,
                     uint32_t flush_count,
-                    const std::vector<ui::LatencyInfo>& latency_info);
+                    const std::vector<ui::LatencyInfo>& latency_info,
+                    const std::vector<SyncToken>& sync_token_fences);
   void OnRegisterTransferBuffer(int32_t id,
                                 base::SharedMemoryHandle transfer_buffer,
                                 uint32_t size);
   void OnDestroyTransferBuffer(int32_t id);
   void OnGetTransferBuffer(int32_t id, IPC::Message* reply_message);
+  bool OnWaitSyncToken(const SyncToken& sync_token);
 
   void OnEnsureBackbuffer();
 
-  void OnWaitSyncToken(const SyncToken& sync_token);
   void OnSignalSyncToken(const SyncToken& sync_token, uint32_t id);
   void OnSignalAck(uint32_t id);
   void OnSignalQuery(uint32_t query, uint32_t id);
 
   void OnFenceSyncRelease(uint64_t release);
-  bool OnWaitFenceSync(CommandBufferNamespace namespace_id,
-                       CommandBufferId command_buffer_id,
-                       uint64_t release);
-  void OnWaitFenceSyncCompleted(CommandBufferNamespace namespace_id,
-                                CommandBufferId command_buffer_id,
-                                uint64_t release);
+  void OnWaitSyncTokenCompleted(const SyncToken& sync_token);
 
   void OnDescheduleUntilFinished();
   void OnRescheduleAfterFinished();
@@ -207,9 +207,6 @@ class GPU_EXPORT GpuCommandBufferStub
 
   bool CheckContextLost();
   void CheckCompleteWaits();
-  void PullTextureUpdates(CommandBufferNamespace namespace_id,
-                          CommandBufferId command_buffer_id,
-                          uint32_t release);
 
   // The lifetime of objects of this class is managed by a GpuChannel. The
   // GpuChannels destroy all the GpuCommandBufferStubs that they own when they
@@ -232,6 +229,7 @@ class GPU_EXPORT GpuCommandBufferStub
   std::unique_ptr<CommandExecutor> executor_;
   std::unique_ptr<SyncPointClient> sync_point_client_;
   scoped_refptr<gl::GLSurface> surface_;
+  scoped_refptr<gl::GLShareGroup> share_group_;
 
   base::ObserverList<DestructionObserver> destruction_observers_;
 

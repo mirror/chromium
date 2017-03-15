@@ -119,6 +119,7 @@
 <translation id="2096368010154057602">자치구</translation>
 <translation id="2113977810652731515">카드</translation>
 <translation id="2114841414352855701"><ph name="POLICY_NAME" />이(가) 우선 적용되었기 때문에 무시됩니다.</translation>
+<translation id="2138201775715568214">주변 피지컬 웹페이지 검색 중</translation>
 <translation id="213826338245044447">모바일 북마크</translation>
 <translation id="2148716181193084225">오늘</translation>
 <translation id="2154054054215849342">도메인에 대해 동기화를 사용할 수 없습니다.</translation>
@@ -189,6 +190,7 @@
 <translation id="2721148159707890343">요청 성공</translation>
 <translation id="2728127805433021124">서버의 인증서가 안전성이 낮은 서명 알고리즘을 사용하여 서명되어 있습니다.</translation>
 <translation id="2730326759066348565"><ph name="BEGIN_LINK" />연결 진단 프로그램 실행<ph name="END_LINK" /></translation>
+<translation id="2740531572673183784">확인</translation>
 <translation id="2742870351467570537">선택한 항목 삭제</translation>
 <translation id="277499241957683684">기기 기록 없음</translation>
 <translation id="2784949926578158345">연결이 재설정되었습니다.</translation>
@@ -270,6 +272,7 @@
 <translation id="348000606199325318">비정상 종료 ID <ph name="CRASH_LOCAL_ID" />(서버 ID: <ph name="CRASH_ID" />)</translation>
 <translation id="3498215018399854026">현재 부모님께 연락할 수 없습니다. 나중에 다시 시도해 주세요.</translation>
 <translation id="3528171143076753409">서버의 인증서를 신뢰할 수 없습니다.</translation>
+<translation id="3538531656504267329">만료 연도가 잘못되었습니다.</translation>
 <translation id="3539171420378717834">카드 사본을 이 기기에 저장</translation>
 <translation id="3542684924769048008">비밀번호 사용 항목:</translation>
 <translation id="3549644494707163724">나만의 동기화 암호로 모든 동기화 데이터 암호화</translation>
@@ -352,6 +355,7 @@
 <translation id="425582637250725228">변경사항이 저장되지 않을 수 있습니다.</translation>
 <translation id="4258748452823770588">잘못된 서명</translation>
 <translation id="4269787794583293679">(사용자 이름 없음)</translation>
+<translation id="4275830172053184480">기기 다시 시작</translation>
 <translation id="4280429058323657511">, 만료일 <ph name="EXPIRATION_DATE_ABBR" /></translation>
 <translation id="4295944351946828969">Google 세이프 브라우징이 최근에 <ph name="SITE" />에서 <ph name="BEGIN_LINK" />유해한 프로그램을 찾았습니다<ph name="END_LINK" />. <ph name="BEGIN_LEARN_MORE_LINK" />자세히 알아보기<ph name="END_LEARN_MORE_LINK" /></translation>
 <translation id="4300246636397505754">상위 추천</translation>
@@ -467,6 +471,7 @@
 <translation id="5544037170328430102"><ph name="SITE" />에 삽입된 페이지 내용:</translation>
 <translation id="5556459405103347317">새로고침</translation>
 <translation id="5565735124758917034">활성</translation>
+<translation id="5572851009514199876">이 사이트에 액세스할 수 있는지 확인할 수 있도록 Chrome을 시작하고 로그인하세요.</translation>
 <translation id="5575380383496039204">지원되지 않는 배송지 주소입니다. 다른 주소를 선택하세요.</translation>
 <translation id="5580958916614886209">유효기간 월을 확인한 후 다시 시도해 주세요.</translation>
 <translation id="560412284261940334">관리가 지원되지 않음</translation>
@@ -551,12 +556,14 @@
 <translation id="6443118737398455446">유효기간이 잘못되었습니다.</translation>
 <translation id="6446608382365791566">자세한 정보 추가</translation>
 <translation id="6451458296329894277">양식 다시 제출 확인</translation>
+<translation id="6456339708790392414">결제</translation>
 <translation id="6458467102616083041">정책에 의해 기본 검색의 사용이 중지되었기 때문에 무시됨</translation>
 <translation id="6462969404041126431">보안 인증서가 취소되었을 수 있어서 서버 도메인이 <ph name="DOMAIN" />임을 증명할 수 없습니다. 설정이 잘못되었거나 해커가 연결을 가로채고 있기 때문일 수 있습니다. <ph name="BEGIN_LEARN_MORE_LINK" />자세히 알아보기<ph name="END_LEARN_MORE_LINK" /></translation>
 <translation id="647261751007945333">기기 정책</translation>
 <translation id="6477321094435799029">Chrome이 이 페이지에서 비정상적인 코드를 감지했으며 개인정보(예: 비밀번호, 전화번호, 신용카드) 보호를 위해 차단했습니다.</translation>
 <translation id="6477460825583319731">잘못된 이메일 주소</translation>
 <translation id="6489534406876378309">비정상 종료 업로드 시작하기</translation>
+<translation id="6525462735697194615">만료 월이 잘못되었습니다.</translation>
 <translation id="6529602333819889595">삭제 다시 실행(&amp;R)</translation>
 <translation id="6534179046333460208">피지컬 웹 제안</translation>
 <translation id="6550675742724504774">옵션</translation>
@@ -591,7 +598,6 @@
 <translation id="6895330447102777224">카드가 확인되었습니다.</translation>
 <translation id="6897140037006041989">사용자 에이전트</translation>
 <translation id="6915804003454593391">사용자:</translation>
-<translation id="6937422995269576720">카드 번호가 잘못됨</translation>
 <translation id="6957887021205513506">서버의 인증서가 위조된 것 같습니다.</translation>
 <translation id="6965382102122355670">확인</translation>
 <translation id="6965978654500191972">기기</translation>
@@ -619,6 +625,7 @@
 <translation id="7210863904660874423"><ph name="HOST_NAME" />에서 보안 기준을 준수하지 않습니다.</translation>
 <translation id="721197778055552897">이 문제에 대해 <ph name="BEGIN_LINK" />자세히 알아보기<ph name="END_LINK" /></translation>
 <translation id="7219179957768738017"><ph name="SSL_VERSION" /> 연결입니다.</translation>
+<translation id="7220786058474068424">처리 중</translation>
 <translation id="724691107663265825">다음 사이트에 멀웨어가 있습니다.</translation>
 <translation id="724975217298816891">카드 세부정보를 업데이트하려면 <ph name="CREDIT_CARD" /> 카드의 만료일과 CVC를 입력하세요. 카드를 확인하면 카드 세부정보가 이 사이트와 공유됩니다.</translation>
 <translation id="725866823122871198">컴퓨터의 날짜와 시간(<ph name="DATE_AND_TIME" />)이 잘못되어 <ph name="BEGIN_BOLD" /><ph name="DOMAIN" /><ph name="END_BOLD" />에 대한 비공개 연결을 설정할 수 없습니다.</translation>
@@ -685,6 +692,7 @@
 <translation id="7755287808199759310">부모님이 차단 해제할 수 있습니다.</translation>
 <translation id="7758069387465995638">방화벽이나 바이러스 백신 소프트웨어가 연결을 차단했을 수 있습니다.</translation>
 <translation id="7761701407923456692">서버의 인증서가 URL과 일치하지 않습니다.</translation>
+<translation id="7764225426217299476">주소 추가</translation>
 <translation id="777702478322588152">도</translation>
 <translation id="7791543448312431591">추가</translation>
 <translation id="7793809570500803535"><ph name="SITE" />의 웹페이지가 일시적으로 다운되었거나 새 웹 주소로 완전히 이동했을 수 있습니다.</translation>
@@ -694,7 +702,6 @@
 <translation id="7812922009395017822">Mir</translation>
 <translation id="7813600968533626083">Chrome에서 추천검색어를 삭제하시겠습니까?</translation>
 <translation id="7815407501681723534">'<ph name="SEARCH_STRING" />'에 대해 <ph name="SEARCH_RESULTS" /> <ph name="NUMBER_OF_RESULTS" />개의 검색 결과를 찾았습니다.</translation>
-<translation id="7837582000577464779">주문을 처리하는 중에 오류가 발생했습니다. 계정을 확인한 후 다시 시도해 주세요.</translation>
 <translation id="785549533363645510">하지만 흔적이 아예 남지 않는 것은 아닙니다. 시크릿 모드로 탐색해도 회사, 인터넷 서비스 제공업체 또는 방문한 웹사이트에 저장된 흔적까지 없앨 수는 없습니다.</translation>
 <translation id="7855695075675558090"><ph name="TOTAL_LABEL" /> <ph name="CURRENCY_CODE" /> <ph name="FORMATTED_TOTAL_AMOUNT" /></translation>
 <translation id="7887683347370398519">CVC를 확인한 후 다시 시도하세요.</translation>
@@ -789,6 +796,7 @@
 <translation id="8932102934695377596">시간이 너무 먼 과거로 설정되어 있습니다.</translation>
 <translation id="8954894007019320973">(계속)</translation>
 <translation id="8971063699422889582">서버 인증서가 만료되었습니다.</translation>
+<translation id="8986494364107987395">사용 통계 및 비정상 종료 보고서를 Google에 자동으로 보내기</translation>
 <translation id="8987927404178983737">월</translation>
 <translation id="8989148748219918422"><ph name="ORGANIZATION" /> [<ph name="COUNTRY" />]</translation>
 <translation id="8996941253935762404">방문하려는 사이트에 유해한 프로그램이 있습니다.</translation>
@@ -807,6 +815,7 @@
 <translation id="9094175695478007090">결제 앱을 실행할 수 없습니다.</translation>
 <translation id="9103872766612412690"><ph name="SITE" />에서는 사용자 정보를 보호하기 위해 일반적으로 암호화를 사용합니다. 이번에 Chromium에서 <ph name="SITE" />에 연결을 시도했을 때 웹사이트에서 비정상적이고 잘못된 사용자 인증 정보를 반환했습니다. 이는 공격자가 <ph name="SITE" />인 것처럼 가장하려고 하거나 Wi-Fi 로그인 화면이 연결을 방해했기 때문일 수 있습니다. 데이터 교환이 발생하기 전에 Chromium에서 연결을 중단했으므로 사용자 정보는 안전합니다.</translation>
 <translation id="9137013805542155359">원본 보기</translation>
+<translation id="9137248913990643158">이 앱을 사용하기 전에 Chrome을 시작하고 로그인하세요.</translation>
 <translation id="9148507642005240123">수정 실행 취소(&amp;U)</translation>
 <translation id="9154194610265714752">업데이트됨</translation>
 <translation id="9157595877708044936">설정 중...</translation>

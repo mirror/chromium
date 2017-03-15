@@ -40,23 +40,13 @@ SDK.Script = class {
    * @param {string} hash
    * @param {boolean} isContentScript
    * @param {boolean} isLiveEdit
-   * @param {string=} sourceMapURL
-   * @param {boolean=} hasSourceURL
+   * @param {string|undefined} sourceMapURL
+   * @param {boolean} hasSourceURL
+   * @param {number} length
    */
   constructor(
-      debuggerModel,
-      scriptId,
-      sourceURL,
-      startLine,
-      startColumn,
-      endLine,
-      endColumn,
-      executionContextId,
-      hash,
-      isContentScript,
-      isLiveEdit,
-      sourceMapURL,
-      hasSourceURL) {
+      debuggerModel, scriptId, sourceURL, startLine, startColumn, endLine, endColumn, executionContextId, hash,
+      isContentScript, isLiveEdit, sourceMapURL, hasSourceURL, length) {
     this.debuggerModel = debuggerModel;
     this.scriptId = scriptId;
     this.sourceURL = sourceURL;
@@ -71,6 +61,9 @@ SDK.Script = class {
     this._isLiveEdit = isLiveEdit;
     this.sourceMapURL = sourceMapURL;
     this.hasSourceURL = hasSourceURL;
+    this.contentLength = length;
+    this._originalContentProvider = null;
+    this._originalSource = null;
   }
 
   /**
@@ -91,35 +84,6 @@ SDK.Script = class {
     if (sourceURLLine.search(SDK.Script.sourceURLRegex) === -1)
       return source;
     return source.substr(0, sourceURLLineIndex) + source.substr(sourceURLLineIndex + sourceURLLine.length + 1);
-  }
-
-  /**
-   * @param {!SDK.Script} script
-   * @param {string} source
-   */
-  static _reportDeprecatedCommentIfNeeded(script, source) {
-    var consoleModel = script.debuggerModel.target().consoleModel;
-    if (!consoleModel)
-      return;
-    var linesToCheck = 5;
-    var offset = source.lastIndexOf('\n');
-    while (linesToCheck && offset !== -1) {
-      offset = source.lastIndexOf('\n', offset - 1);
-      --linesToCheck;
-    }
-    offset = offset !== -1 ? offset : 0;
-    var sourceTail = source.substr(offset);
-    if (sourceTail.length > 5000)
-      return;
-    if (sourceTail.search(/^[\040\t]*\/\/@ source(mapping)?url=/mi) === -1)
-      return;
-    var text = Common.UIString(
-        '\'//@ sourceURL\' and \'//@ sourceMappingURL\' are deprecated, please use \'//# sourceURL=\' and \'//# sourceMappingURL=\' instead.');
-    var msg = new SDK.ConsoleMessage(
-        script.debuggerModel.target(), SDK.ConsoleMessage.MessageSource.JS, SDK.ConsoleMessage.MessageLevel.Warning,
-        text, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined,
-        script.scriptId);
-    consoleModel.addMessage(msg);
   }
 
   /**
@@ -180,14 +144,23 @@ SDK.Script = class {
      * @param {string} source
      */
     function didGetScriptSource(error, source) {
-      if (!error) {
-        SDK.Script._reportDeprecatedCommentIfNeeded(this, source);
-        this._source = SDK.Script._trimSourceURLComment(source);
-      } else {
-        this._source = '';
-      }
+      this._source = error ? '' : SDK.Script._trimSourceURLComment(source);
+      if (this._originalSource === null)
+        this._originalSource = this._source;
       callback(this._source);
     }
+  }
+
+  /**
+   * @return {!Common.ContentProvider}
+   */
+  originalContentProvider() {
+    if (!this._originalContentProvider) {
+      var lazyContent = () => this.requestContent().then(() => this._originalSource);
+      this._originalContentProvider =
+          new Common.StaticContentProvider(this.contentURL(), this.contentType(), lazyContent);
+    }
+    return this._originalContentProvider;
   }
 
   /**
@@ -261,8 +234,9 @@ SDK.Script = class {
     newSource = this._appendSourceURLCommentIfNeeded(newSource);
 
     if (this.scriptId) {
-      this.debuggerModel.target().debuggerAgent().setScriptSource(
-          this.scriptId, newSource, undefined, didEditScriptSource.bind(this));
+      this.requestContent().then(
+          () => this.debuggerModel.target().debuggerAgent().setScriptSource(
+              this.scriptId, newSource, undefined, didEditScriptSource.bind(this)));
     } else {
       callback('Script failed to parse');
     }

@@ -12,6 +12,8 @@
 #include "V8ArrayBuffer.h"
 
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/IDLTypes.h"
+#include "bindings/core/v8/NativeValueTraitsImpl.h"
 #include "bindings/core/v8/V8ArrayBuffer.h"
 #include "bindings/core/v8/V8DOMConfiguration.h"
 #include "bindings/core/v8/V8ObjectConstructor.h"
@@ -64,7 +66,8 @@ TestArrayBuffer* V8ArrayBuffer::toImpl(v8::Local<v8::Object> object) {
   // Transfer the ownership of the allocated memory to an ArrayBuffer without
   // copying.
   v8::ArrayBuffer::Contents v8Contents = v8buffer->Externalize();
-  WTF::ArrayBufferContents contents(v8Contents.Data(), v8Contents.ByteLength(), WTF::ArrayBufferContents::NotShared);
+  WTF::ArrayBufferContents::DataHandle data(v8Contents.Data(), WTF::ArrayBufferContents::freeMemory);
+  WTF::ArrayBufferContents contents(std::move(data), v8Contents.ByteLength(), WTF::ArrayBufferContents::NotShared);
   TestArrayBuffer* buffer = TestArrayBuffer::create(contents);
   v8::Local<v8::Object> associatedWrapper = buffer->associateWithWrapper(v8::Isolate::GetCurrent(), buffer->wrapperTypeInfo(), object);
   DCHECK(associatedWrapper == object);
@@ -74,6 +77,10 @@ TestArrayBuffer* V8ArrayBuffer::toImpl(v8::Local<v8::Object> object) {
 
 TestArrayBuffer* V8ArrayBuffer::toImplWithTypeCheck(v8::Isolate* isolate, v8::Local<v8::Value> value) {
   return value->IsArrayBuffer() ? toImpl(v8::Local<v8::Object>::Cast(value)) : nullptr;
+}
+
+TestArrayBuffer* NativeValueTraits<TestArrayBuffer>::nativeValue(v8::Isolate* isolate, v8::Local<v8::Value> value, ExceptionState& exceptionState) {
+  return V8ArrayBuffer::toImplWithTypeCheck(isolate, value);
 }
 
 }  // namespace blink

@@ -12,6 +12,8 @@
 #include "V8TestException.h"
 
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/IDLTypes.h"
+#include "bindings/core/v8/NativeValueTraitsImpl.h"
 #include "bindings/core/v8/V8DOMConfiguration.h"
 #include "bindings/core/v8/V8ObjectConstructor.h"
 #include "core/dom/Document.h"
@@ -82,8 +84,8 @@ static void constructor(const v8::FunctionCallbackInfo<v8::Value>& info) {
     return;
   }
 
-  unsigned argument;
-  argument = toUInt16(info.GetIsolate(), info[0], NormalConversion, exceptionState);
+  uint16_t argument;
+  argument = NativeValueTraits<IDLUnsignedShort>::nativeValue(info.GetIsolate(), info[0], exceptionState, NormalConversion);
   if (exceptionState.hadException())
     return;
 
@@ -113,7 +115,7 @@ const V8DOMConfiguration::AccessorConfiguration V8TestExceptionAccessors[] = {
 };
 
 const V8DOMConfiguration::MethodConfiguration V8TestExceptionMethods[] = {
-    {"toString", V8TestException::toStringMethodCallback, nullptr, 0, static_cast<v8::PropertyAttribute>(v8::DontEnum), V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder},
+    {"toString", V8TestException::toStringMethodCallback, nullptr, 0, static_cast<v8::PropertyAttribute>(v8::DontEnum), V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess},
 };
 
 void V8TestException::constructorCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
@@ -166,6 +168,10 @@ v8::Local<v8::Object> V8TestException::findInstanceInPrototypeChain(v8::Local<v8
 
 TestException* V8TestException::toImplWithTypeCheck(v8::Isolate* isolate, v8::Local<v8::Value> value) {
   return hasInstance(value, isolate) ? toImpl(v8::Local<v8::Object>::Cast(value)) : nullptr;
+}
+
+TestException* NativeValueTraits<TestException>::nativeValue(v8::Isolate* isolate, v8::Local<v8::Value> value, ExceptionState& exceptionState) {
+  return V8TestException::toImplWithTypeCheck(isolate, value);
 }
 
 }  // namespace blink

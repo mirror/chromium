@@ -36,6 +36,7 @@ class Browser;
 class BrowserWindow;
 class BrowserWindowCocoa;
 @class BrowserWindowFullscreenTransition;
+@class BrowserWindowTouchBar;
 @class DevToolsController;
 @class DownloadShelfController;
 class ExtensionKeybindingRegistryCocoa;
@@ -63,6 +64,9 @@ class WebContents;
 namespace extensions {
 class Command;
 }
+
+constexpr const gfx::Size kMinCocoaTabbedWindowSize(400, 272);
+constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 
 @interface BrowserWindowController
     : TabWindowController<BookmarkBarControllerDelegate,
@@ -92,6 +96,7 @@ class Command;
       fullscreenTransition_;
   std::unique_ptr<FullscreenLowPowerCoordinatorCocoa>
       fullscreenLowPowerCoordinator_;
+  base::scoped_nsobject<BrowserWindowTouchBar> touchBar_;
 
   // Strong. StatusBubble is a special case of a strong reference that
   // we don't wrap in a scoped_ptr because it is acting the same
@@ -384,6 +389,12 @@ class Command;
 // Returns current alert state, determined by the alert state of tabs, set by
 // UpdateAlertState.
 - (TabAlertState)alertState;
+
+// Returns the BrowserWindowTouchBar object associated with the window.
+- (BrowserWindowTouchBar*)browserWindowTouchBar;
+
+// Invalidates the browser's touch bar.
+- (void)invalidateTouchBar;
 
 @end  // @interface BrowserWindowController
 

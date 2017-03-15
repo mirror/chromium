@@ -16,6 +16,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
 #include "build/build_config.h"
+#include "cc/surfaces/frame_sink_id_allocator.h"
 #include "content/browser/compositor/image_transport_factory.h"
 #include "gpu/ipc/client/gpu_channel_host.h"
 #include "ui/compositor/compositor.h"
@@ -64,7 +65,8 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
   void ResizeDisplay(ui::Compositor* compositor,
                      const gfx::Size& size) override;
   void SetDisplayColorSpace(ui::Compositor* compositor,
-                            const gfx::ColorSpace& color_space) override;
+                            const gfx::ColorSpace& blending_color_space,
+                            const gfx::ColorSpace& output_color_space) override;
   void SetAuthoritativeVSyncInterval(ui::Compositor* compositor,
                                      base::TimeDelta interval) override;
   void SetDisplayVSyncParameters(ui::Compositor* compositor,
@@ -103,7 +105,7 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
   SharedVulkanContextProvider();
 
   std::unique_ptr<cc::SurfaceManager> surface_manager_;
-  uint32_t next_sink_id_ = 1u;
+  cc::FrameSinkIdAllocator frame_sink_id_allocator_;
 
 #if defined(OS_WIN)
   // Used by output surface, stored in PerCompositorData.

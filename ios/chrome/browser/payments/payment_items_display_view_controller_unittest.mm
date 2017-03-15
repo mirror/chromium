@@ -7,6 +7,7 @@
 #include "base/mac/foundation_util.h"
 #include "base/memory/ptr_util.h"
 #include "components/autofill/core/browser/test_personal_data_manager.h"
+#include "components/strings/grit/components_strings.h"
 #import "ios/chrome/browser/payments/cells/price_item.h"
 #include "ios/chrome/browser/payments/payment_request.h"
 #import "ios/chrome/browser/payments/payment_request_test_util.h"
@@ -14,6 +15,10 @@
 #include "ios/chrome/grit/ios_strings.h"
 #include "ios/web/public/payments/payment_request.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 class PaymentItemsDisplayViewControllerTest
     : public CollectionViewControllerTest {
@@ -47,7 +52,7 @@ class PaymentItemsDisplayViewControllerTest
 TEST_F(PaymentItemsDisplayViewControllerTest, TestModel) {
   CreateController();
   CheckController();
-  CheckTitleWithId(IDS_IOS_PAYMENT_REQUEST_PAYMENT_ITEMS_TITLE);
+  CheckTitleWithId(IDS_PAYMENTS_ORDER_SUMMARY_LABEL);
 
   [GetPaymentItemsViewController() loadModel];
 

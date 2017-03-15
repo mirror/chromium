@@ -695,7 +695,7 @@ void BaseRenderingContext2D::fillRect(double x,
 static void strokeRectOnCanvas(const FloatRect& rect,
                                PaintCanvas* canvas,
                                const PaintFlags* flags) {
-  DCHECK_EQ(flags->getStyle(), SkPaint::kStroke_Style);
+  DCHECK_EQ(flags->getStyle(), PaintFlags::kStroke_Style);
   if ((rect.width() > 0) != (rect.height() > 0)) {
     // When stroking, we must skip the zero-dimension segments
     SkPath path;
@@ -1082,7 +1082,7 @@ void BaseRenderingContext2D::drawImageInternal(PaintCanvas* c,
   if (!imageSource->isVideoElement()) {
     imageFlags.setAntiAlias(shouldDrawImageAntialiased(dstRect));
     image->draw(c, imageFlags, dstRect, srcRect, DoNotRespectImageOrientation,
-                Image::DoNotClampImageToSourceRect, drawImageColorBehavior());
+                Image::DoNotClampImageToSourceRect);
   } else {
     c->save();
     c->clipRect(dstRect);

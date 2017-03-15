@@ -6,10 +6,12 @@
 
 #include <utility>
 
+#include "base/logging.h"
 #include "base/memory/weak_ptr.h"
 #include "services/service_manager/public/interfaces/connector.mojom.h"
 #include "services/ui/common/accelerator_util.h"
 #include "services/ui/ws/accelerator.h"
+#include "services/ui/ws/cursor_location_manager.h"
 #include "services/ui/ws/display.h"
 #include "services/ui/ws/display_manager.h"
 #include "services/ui/ws/platform_display.h"
@@ -155,7 +157,7 @@ bool WindowManagerState::SetCapture(ServerWindow* window,
       client_id == event_dispatcher_.capture_window_client_id()) {
     return true;
   }
-#if !defined(NDEBUG)
+#if DCHECK_IS_ON()
   if (window) {
     WindowManagerDisplayRoot* display_root =
         display_manager()->GetWindowManagerDisplayRoot(window);
@@ -207,7 +209,6 @@ void WindowManagerState::EndDragDrop() {
 }
 
 void WindowManagerState::AddSystemModalWindow(ServerWindow* window) {
-  DCHECK(!window->transient_parent());
   event_dispatcher_.AddSystemModalWindow(window);
 }
 
@@ -477,7 +478,7 @@ void WindowManagerState::ProcessDebugAccelerator(const ui::Event& event) {
 }
 
 void WindowManagerState::HandleDebugAccelerator(DebugAcceleratorType type) {
-#if !defined(NDEBUG) || defined(DCHECK_ALWAYS_ON)
+#if DCHECK_IS_ON()
   // Error so it will be collected in system logs.
   for (Display* display : display_manager()->displays()) {
     WindowManagerDisplayRoot* display_root =
@@ -571,7 +572,7 @@ void WindowManagerState::OnCaptureChanged(ServerWindow* new_capture,
 void WindowManagerState::OnMouseCursorLocationChanged(const gfx::Point& point) {
   window_server()
       ->display_manager()
-      ->GetUserDisplayManager(user_id())
+      ->GetCursorLocationManager(user_id())
       ->OnMouseCursorLocationChanged(point);
 }
 
@@ -629,9 +630,11 @@ ServerWindow* WindowManagerState::GetRootWindowContaining(
   if (window_manager_display_roots_.empty())
     return nullptr;
 
+  // TODO(riajiang): This is broken for HDPI because it mixes PPs and DIPs. See
+  // http://crbug.com/701036 for details.
   WindowManagerDisplayRoot* target_display_root = nullptr;
   for (auto& display_root_ptr : window_manager_display_roots_) {
-    if (display_root_ptr->display()->platform_display()->GetBounds().Contains(
+    if (display_root_ptr->display()->GetDisplay().bounds().Contains(
             *location)) {
       target_display_root = display_root_ptr.get();
       break;
@@ -648,7 +651,7 @@ ServerWindow* WindowManagerState::GetRootWindowContaining(
   // Translate the location to be relative to the display instead of relative
   // to the screen space.
   gfx::Point origin =
-      target_display_root->display()->platform_display()->GetBounds().origin();
+      target_display_root->display()->GetDisplay().bounds().origin();
   *location -= origin.OffsetFromOrigin();
   return target_display_root->root();
 }

@@ -22,8 +22,9 @@
 #include "chrome/test/base/testing_browser_process.h"
 #include "components/component_updater/mock_component_updater_service.h"
 #include "components/prefs/testing_pref_service.h"
-#include "components/subresource_filter/content/browser/content_ruleset_service_delegate.h"
+#include "components/subresource_filter/content/browser/content_ruleset_service.h"
 #include "components/subresource_filter/core/browser/ruleset_service.h"
+#include "components/subresource_filter/core/browser/subresource_filter_constants.h"
 #include "components/subresource_filter/core/browser/subresource_filter_features.h"
 #include "components/subresource_filter/core/browser/subresource_filter_features_test_support.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -38,13 +39,12 @@ class TestRulesetService : public subresource_filter::RulesetService {
  public:
   TestRulesetService(PrefService* local_state,
                      scoped_refptr<base::SequencedTaskRunner> task_runner,
+                     subresource_filter::ContentRulesetService* content_service,
                      const base::FilePath& base_dir)
-      : subresource_filter::RulesetService(
-            local_state,
-            task_runner,
-            base::MakeUnique<
-                subresource_filter::ContentRulesetServiceDelegate>(),
-            base_dir) {}
+      : subresource_filter::RulesetService(local_state,
+                                           task_runner,
+                                           content_service,
+                                           base_dir) {}
 
   ~TestRulesetService() override {}
 
@@ -102,19 +102,20 @@ class SubresourceFilterComponentInstallerTest : public PlatformTest {
     subresource_filter::IndexedRulesetVersion::RegisterPrefs(
         pref_service_.registry());
 
-    std::unique_ptr<subresource_filter::RulesetService> service(
-        new TestRulesetService(&pref_service_, task_runner_,
-                               ruleset_service_dir_.GetPath()));
+    auto content_service =
+        base::MakeUnique<subresource_filter::ContentRulesetService>();
+    auto test_ruleset_service = base::MakeUnique<TestRulesetService>(
+        &pref_service_, task_runner_, content_service.get(),
+        ruleset_service_dir_.GetPath());
+    test_ruleset_service_ = test_ruleset_service.get();
+    content_service->set_ruleset_service(std::move(test_ruleset_service));
 
-    TestingBrowserProcess::GetGlobal()->SetRulesetService(std::move(service));
+    TestingBrowserProcess::GetGlobal()->SetRulesetService(
+        std::move(content_service));
     traits_.reset(new SubresourceFilterComponentInstallerTraits());
   }
 
-  TestRulesetService* service() {
-    return static_cast<TestRulesetService*>(
-        TestingBrowserProcess::GetGlobal()
-            ->subresource_filter_ruleset_service());
-  }
+  TestRulesetService* service() { return test_ruleset_service_; }
 
   void WriteStringToFile(const std::string data, const base::FilePath& path) {
     ASSERT_EQ(static_cast<int32_t>(data.length()),
@@ -129,12 +130,12 @@ class SubresourceFilterComponentInstallerTest : public PlatformTest {
   void CreateTestSubresourceFilterRuleset(const std::string& ruleset_contents,
                                           const std::string* license_contents) {
     base::FilePath ruleset_data_path = component_install_dir().Append(
-        SubresourceFilterComponentInstallerTraits::kRulesetDataFileName);
+        subresource_filter::kUnindexedRulesetDataFileName);
     ASSERT_NO_FATAL_FAILURE(
         WriteStringToFile(ruleset_contents, ruleset_data_path));
 
     base::FilePath license_path = component_install_dir().Append(
-        SubresourceFilterComponentInstallerTraits::kLicenseFileName);
+        subresource_filter::kUnindexedRulesetLicenseFileName);
     if (license_contents) {
       ASSERT_NO_FATAL_FAILURE(
           WriteStringToFile(*license_contents, license_path));
@@ -177,6 +178,8 @@ class SubresourceFilterComponentInstallerTest : public PlatformTest {
   std::unique_ptr<SubresourceFilterComponentInstallerTraits> traits_;
   scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
   TestingPrefServiceSimple pref_service_;
+
+  TestRulesetService* test_ruleset_service_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(SubresourceFilterComponentInstallerTest);
 };

@@ -31,13 +31,17 @@
 #ifndef WebDataSource_h
 #define WebDataSource_h
 
+#include <memory>
+
 #include "../platform/WebCommon.h"
 #include "WebNavigationType.h"
+#include "WebSourceLocation.h"
 #include "WebTextDirection.h"
 
 namespace blink {
 
 class WebDocumentSubresourceFilter;
+class WebServiceWorkerNetworkProvider;
 class WebURL;
 class WebURLRequest;
 class WebURLResponse;
@@ -112,13 +116,26 @@ class WebDataSource {
   virtual void updateNavigation(double redirectStartTime,
                                 double redirectEndTime,
                                 double fetchStartTime,
-                                const WebVector<WebURL>& redirectChain) = 0;
+                                bool hasRedirect) = 0;
 
   // Allows the embedder to inject a filter that will be consulted for each
   // subsequent subresource load, and gets the final say in deciding whether
   // or not to allow the load. The passed-in filter object is deleted when the
   // datasource is destroyed or when a new filter is set.
   virtual void setSubresourceFilter(WebDocumentSubresourceFilter*) = 0;
+
+  // Allows the embedder to set and return the service worker provider
+  // associated with the data source. The provider may provide the service
+  // worker that controls the resource loading from this data source.
+  virtual void setServiceWorkerNetworkProvider(
+      std::unique_ptr<WebServiceWorkerNetworkProvider>) = 0;
+  virtual WebServiceWorkerNetworkProvider*
+  getServiceWorkerNetworkProvider() = 0;
+
+  // PlzNavigate
+  // Allows to specify the SourceLocation that triggered the navigation.
+  virtual void setSourceLocation(const WebSourceLocation&) = 0;
+  virtual void resetSourceLocation() = 0;
 
  protected:
   ~WebDataSource() {}

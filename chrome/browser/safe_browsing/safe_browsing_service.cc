@@ -18,6 +18,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/path_service.h"
 #include "base/strings/string_util.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/trace_event/trace_event.h"
@@ -37,11 +38,11 @@
 #include "components/prefs/pref_service.h"
 #include "components/safe_browsing/common/safebrowsing_constants.h"
 #include "components/safe_browsing/common/safebrowsing_switches.h"
+#include "components/safe_browsing/password_protection/password_protection_service.h"
 #include "components/safe_browsing_db/database_manager.h"
 #include "components/safe_browsing_db/v4_feature_list.h"
 #include "components/safe_browsing_db/v4_get_hash_protocol_manager.h"
 #include "components/safe_browsing_db/v4_local_database_manager.h"
-#include "components/user_prefs/tracked/tracked_preference_validation_delegate.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/cookie_store_factory.h"
 #include "content/public/browser/notification_service.h"
@@ -56,6 +57,7 @@
 #include "net/ssl/default_channel_id_store.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
+#include "services/preferences/public/interfaces/tracked_preference_validation_delegate.mojom.h"
 
 #if defined(OS_WIN)
 #include "chrome/installer/util/browser_distribution.h"
@@ -77,7 +79,6 @@
 #include "chrome/browser/safe_browsing/incident_reporting/resource_request_detector.h"
 #include "chrome/browser/safe_browsing/incident_reporting/variations_seed_signature_analyzer.h"
 #include "chrome/browser/safe_browsing/protocol_manager.h"
-#include "chrome/browser/safe_browsing/protocol_manager_helper.h"
 #endif
 
 using content::BrowserThread;
@@ -261,7 +262,7 @@ class SafeBrowsingServiceFactoryImpl : public SafeBrowsingServiceFactory {
   }
 
  private:
-  friend struct base::DefaultLazyInstanceTraits<SafeBrowsingServiceFactoryImpl>;
+  friend struct base::LazyInstanceTraitsBase<SafeBrowsingServiceFactoryImpl>;
 
   SafeBrowsingServiceFactoryImpl() { }
 
@@ -330,6 +331,11 @@ void SafeBrowsingService::Initialize() {
 
   services_delegate_->Initialize(v4_enabled_);
   services_delegate_->InitializeCsdService(url_request_context_getter_.get());
+
+  // TODO(jialiul): When PasswordProtectionService does more than reporting UMA,
+  // we need to add finch trial to gate its functionality.
+  password_protection_service_ =
+      base::MakeUnique<PasswordProtectionService>(database_manager());
 
   // Track the safe browsing preference of existing profiles.
   // The SafeBrowsingService will be started if any existing profile has the
@@ -447,7 +453,11 @@ SafeBrowsingService::v4_local_database_manager() const {
   return services_delegate_->v4_local_database_manager();
 }
 
-std::unique_ptr<TrackedPreferenceValidationDelegate>
+PasswordProtectionService* SafeBrowsingService::password_protection_service() {
+  return password_protection_service_.get();
+}
+
+std::unique_ptr<prefs::mojom::TrackedPreferenceValidationDelegate>
 SafeBrowsingService::CreatePreferenceValidationDelegate(
     Profile* profile) const {
   return services_delegate_->CreatePreferenceValidationDelegate(profile);
@@ -521,7 +531,7 @@ SafeBrowsingService::GetV4ProtocolConfig() const {
   return V4ProtocolConfig(
       GetProtocolConfigClientName(),
       cmdline->HasSwitch(::switches::kDisableBackgroundNetworking),
-      google_apis::GetAPIKey(), SafeBrowsingProtocolManagerHelper::Version());
+      google_apis::GetAPIKey(), ProtocolManagerHelper::Version());
 }
 
 std::string SafeBrowsingService::GetProtocolConfigClientName() const {

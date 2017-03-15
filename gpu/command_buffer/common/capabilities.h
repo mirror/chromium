@@ -140,7 +140,7 @@ struct GPU_EXPORT Capabilities {
   bool blend_equation_advanced_coherent = false;
   bool texture_rg = false;
   bool texture_half_float_linear = false;
-  bool color_buffer_float = false;
+  bool color_buffer_half_float_rgba = false;
   bool image_ycbcr_422 = false;
   bool image_ycbcr_420v = false;
   bool render_buffer_format_bgra8888 = false;
@@ -154,6 +154,7 @@ struct GPU_EXPORT Capabilities {
   bool disable_multisampling_color_mask_usage = false;
   bool disable_webgl_rgb_multisampling_usage = false;
   bool gpu_rasterization = false;
+  bool set_draw_rectangle = false;
 
   // When this parameter is true, a CHROMIUM image created with RGB format will
   // actually have RGBA format. The client is responsible for handling most of

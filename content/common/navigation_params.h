@@ -22,6 +22,7 @@
 #include "content/public/common/referrer.h"
 #include "content/public/common/request_context_type.h"
 #include "content/public/common/resource_response.h"
+#include "net/url_request/redirect_info.h"
 #include "third_party/WebKit/public/platform/WebMixedContentContextType.h"
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
@@ -34,6 +35,21 @@ namespace content {
 // to the network stack. A request should not be sent for JavaScript URLs or
 // about:blank. In these cases, no request needs to be sent.
 bool CONTENT_EXPORT ShouldMakeNetworkRequestForURL(const GURL& url);
+
+// PlzNavigate
+// Struct keeping track of the Javascript SourceLocation that triggered the
+// navigation. This is initialized based on information from Blink at the start
+// of navigation, and passed back to Blink when the navigation commits.
+struct CONTENT_EXPORT SourceLocation {
+  SourceLocation();
+  SourceLocation(const std::string& url,
+                 unsigned int line_number,
+                 unsigned int column_number);
+  ~SourceLocation();
+  std::string url;
+  unsigned int line_number;
+  unsigned int column_number;
+};
 
 // The following structures hold parameters used during a navigation. In
 // particular they are used by FrameMsg_Navigate, FrameMsg_CommitNavigation and
@@ -58,7 +74,8 @@ struct CONTENT_EXPORT CommonNavigationParams {
       PreviewsState previews_state,
       const base::TimeTicks& navigation_start,
       std::string method,
-      const scoped_refptr<ResourceRequestBodyImpl>& post_data);
+      const scoped_refptr<ResourceRequestBodyImpl>& post_data,
+      base::Optional<SourceLocation> source_location);
   CommonNavigationParams(const CommonNavigationParams& other);
   ~CommonNavigationParams();
 
@@ -119,6 +136,13 @@ struct CONTENT_EXPORT CommonNavigationParams {
 
   // Body of HTTP POST request.
   scoped_refptr<ResourceRequestBodyImpl> post_data;
+
+  // PlzNavigate
+  // Information about the Javascript source for this navigation. Used for
+  // providing information in console error messages triggered by the
+  // navigation. If the navigation was not caused by Javascript, this should not
+  // be set.
+  base::Optional<SourceLocation> source_location;
 };
 
 // Provided by the renderer ----------------------------------------------------
@@ -228,6 +252,8 @@ struct CONTENT_EXPORT RequestNavigationParams {
   RequestNavigationParams();
   RequestNavigationParams(bool is_overriding_user_agent,
                           const std::vector<GURL>& redirects,
+                          const GURL& original_url,
+                          const std::string& original_method,
                           bool can_load_local_resources,
                           const PageState& page_state,
                           int nav_entry_id,
@@ -253,6 +279,15 @@ struct CONTENT_EXPORT RequestNavigationParams {
 
   // The ResourceResponseInfos received during redirects.
   std::vector<ResourceResponseInfo> redirect_response;
+
+  // PlzNavigate
+  // The RedirectInfos received during redirects.
+  std::vector<net::RedirectInfo> redirect_infos;
+
+  // PlzNavigate
+  // The original URL & method for this navigation.
+  GURL original_url;
+  std::string original_method;
 
   // Whether or not this url should be allowed to access local file://
   // resources.

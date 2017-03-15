@@ -31,7 +31,7 @@ namespace blink {
 class FrameSelectionTest : public EditingTestBase {
  protected:
   const VisibleSelection& visibleSelectionInDOMTree() const {
-    return selection().selection();
+    return selection().computeVisibleSelectionInDOMTreeDeprecated();
   }
   const VisibleSelectionInFlatTree& visibleSelectionInFlatTree() const {
     return selection().selectionInFlatTree();
@@ -56,6 +56,22 @@ Text* FrameSelectionTest::appendTextNode(const String& data) {
   return text;
 }
 
+TEST_F(FrameSelectionTest, FirstRange) {
+  setBodyContent("<div id=sample>0123456789</div>abc");
+  Element* const sample = document().getElementById("sample");
+  Node* const text = sample->firstChild();
+  selection().setSelectedRange(
+      EphemeralRange(Position(text, 3), Position(text, 6)), VP_DEFAULT_AFFINITY,
+      SelectionDirectionalMode::NonDirectional, 0);
+  sample->setAttribute(HTMLNames::styleAttr, "display:none");
+  // Move |VisibleSelection| before "abc".
+  updateAllLifecyclePhases();
+  Range* const range = selection().firstRange();
+  EXPECT_EQ(Position(sample->nextSibling(), 0), range->startPosition())
+      << "firstRagne() should return current selection value";
+  EXPECT_EQ(Position(sample->nextSibling(), 0), range->endPosition());
+}
+
 TEST_F(FrameSelectionTest, SetValidSelection) {
   Text* text = appendTextNode("Hello, World!");
   document().view()->updateAllLifecyclePhases();
@@ -63,7 +79,8 @@ TEST_F(FrameSelectionTest, SetValidSelection) {
       SelectionInDOMTree::Builder()
           .setBaseAndExtent(Position(text, 0), Position(text, 5))
           .build());
-  EXPECT_FALSE(selection().isNone());
+  EXPECT_FALSE(
+      selection().computeVisibleSelectionInDOMTreeDeprecated().isNone());
 }
 
 TEST_F(FrameSelectionTest, PaintCaretShouldNotLayout) {
@@ -78,7 +95,8 @@ TEST_F(FrameSelectionTest, PaintCaretShouldNotLayout) {
   selection().setSelection(
       SelectionInDOMTree::Builder().collapse(Position(text, 0)).build());
   document().view()->updateAllLifecyclePhases();
-  EXPECT_TRUE(selection().isCaret());
+  EXPECT_TRUE(
+      selection().computeVisibleSelectionInDOMTreeDeprecated().isCaret());
   EXPECT_TRUE(toLayoutBlock(document().body()->layoutObject())
                   ->shouldPaintCursorCaret());
 
@@ -125,6 +143,19 @@ TEST_F(FrameSelectionTest, SelectWordAroundPosition) {
   EXPECT_EQ_SELECTED_TEXT("Baz");
 }
 
+// crbug.com/657996
+TEST_F(FrameSelectionTest, SelectWordAroundPosition2) {
+  setBodyContent(
+      "<p style='width:70px; font-size:14px'>foo bar<em>+</em> baz</p>");
+  // "foo bar
+  //  b|az"
+  Node* const baz = document().body()->firstChild()->lastChild();
+  EXPECT_TRUE(selection().selectWordAroundPosition(
+      createVisiblePosition(Position(baz, 2))));
+  // TODO(yoichio): We should select only "baz".
+  EXPECT_EQ_SELECTED_TEXT(" baz");
+}
+
 TEST_F(FrameSelectionTest, ModifyExtendWithFlatTree) {
   setBodyContent("<span id=host></span>one");
   setShadowContent("two<content></content>", "host");
@@ -156,13 +187,17 @@ TEST_F(FrameSelectionTest, ModifyWithUserTriggered) {
                                   NotUserTriggered))
       << "Selection.modify() returns false for non-user-triggered call when "
          "selection isn't modified.";
-  EXPECT_EQ(endOfText, selection().start()) << "Selection isn't modified";
+  EXPECT_EQ(endOfText,
+            selection().computeVisibleSelectionInDOMTreeDeprecated().start())
+      << "Selection isn't modified";
 
   EXPECT_TRUE(selection().modify(FrameSelection::AlterationMove,
                                  DirectionForward, CharacterGranularity,
                                  UserTriggered))
       << "Selection.modify() returns true for user-triggered call";
-  EXPECT_EQ(endOfText, selection().start()) << "Selection isn't modified";
+  EXPECT_EQ(endOfText,
+            selection().computeVisibleSelectionInDOMTreeDeprecated().start())
+      << "Selection isn't modified";
 }
 
 TEST_F(FrameSelectionTest, MoveRangeSelectionTest) {
@@ -199,34 +234,36 @@ TEST_F(FrameSelectionTest, MoveRangeSelectionTest) {
   EXPECT_EQ_SELECTED_TEXT("Foo Bar");
 }
 
-// TODO(yosin): We should move |SelectionControllerTest" to
-// "SelectionControllerTest.cpp"
-class SelectionControllerTest : public EditingTestBase {
- protected:
-  SelectionControllerTest() = default;
-
-  const VisibleSelection& visibleSelectionInDOMTree() const {
-    return selection().selection();
-  }
-
-  const VisibleSelectionInFlatTree& visibleSelectionInFlatTree() const {
-    return selection().selectionInFlatTree();
-  }
-
-  void setNonDirectionalSelectionIfNeeded(const VisibleSelectionInFlatTree&,
-                                          TextGranularity);
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(SelectionControllerTest);
-};
+// For http://crbug.com/695317
+TEST_F(FrameSelectionTest, SelectAllWithInputElement) {
+  setBodyContent("<input>123");
+  Element* const input = document().querySelector("input");
+  Node* const lastChild = document().body()->lastChild();
+  selection().selectAll();
+  const SelectionInDOMTree& resultInDOMTree =
+      selection().computeVisibleSelectionInDOMTree().asSelection();
+  const SelectionInFlatTree& resultInFlatTree =
+      selection().computeVisibleSelectionInFlatTree().asSelection();
+  EXPECT_EQ(SelectionInDOMTree::Builder(resultInDOMTree)
+                .collapse(Position::beforeNode(input))
+                .extend(Position(lastChild, 3))
+                .build(),
+            resultInDOMTree);
+  EXPECT_EQ(SelectionInFlatTree::Builder(resultInFlatTree)
+                .collapse(PositionInFlatTree::beforeNode(input))
+                .extend(PositionInFlatTree(lastChild, 3))
+                .build(),
+            resultInFlatTree);
+}
 
 TEST_F(FrameSelectionTest, SelectAllWithUnselectableRoot) {
   Element* select = document().createElement("select");
   document().replaceChild(select, document().documentElement());
   selection().selectAll();
-  EXPECT_TRUE(selection().isNone()) << "Nothing should be selected if the "
-                                       "content of the documentElement is not "
-                                       "selctable.";
+  EXPECT_TRUE(selection().computeVisibleSelectionInDOMTreeDeprecated().isNone())
+      << "Nothing should be selected if the "
+         "content of the documentElement is not "
+         "selctable.";
 }
 
 TEST_F(FrameSelectionTest, SelectAllPreservesHandle) {
@@ -254,27 +291,6 @@ TEST_F(FrameSelectionTest, SelectAllPreservesHandle) {
       << "If handles were present before"
          "selectAll. Then they should be present"
          "after it.";
-}
-
-TEST_F(FrameSelectionTest, updateIfNeededAndFrameCaret) {
-  setBodyContent("<style id=sample></style>");
-  document().setDesignMode("on");
-  updateAllLifecyclePhases();
-  Element* sample = document().getElementById("sample");
-  selection().setSelection(
-      SelectionInDOMTree::Builder().collapse(Position(sample, 0)).build());
-  EXPECT_EQ(Position(document().body(), 0), selection().start());
-  EXPECT_EQ(selection().start(), caretPosition().position());
-  document().body()->remove();
-  EXPECT_EQ(Position(), selection().start())
-      << "Selection has been removed by BODY.remove().";
-  EXPECT_EQ(selection().start(), caretPosition().position());
-  document().updateStyleAndLayout();
-  selection().updateIfNeeded();
-
-  EXPECT_EQ(Position(), selection().start())
-      << "selection().updateIfNeeded() does nothing.";
-  EXPECT_EQ(selection().start(), caretPosition().position());
 }
 
 }  // namespace blink

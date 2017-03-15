@@ -23,6 +23,7 @@
 
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
 #include "components/toolbar/vector_icons.h"  // nogncheck
+#include "ui/vector_icons/vector_icons.h"     // nogncheck
 #endif
 
 ToolbarModelImpl::ToolbarModelImpl(ToolbarModelDelegate* delegate,
@@ -73,7 +74,7 @@ security_state::SecurityLevel ToolbarModelImpl::GetSecurityLevel(
 
 const gfx::VectorIcon& ToolbarModelImpl::GetVectorIcon() const {
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
-  const auto icon_override = delegate_->GetVectorIconOverride();
+  auto* const icon_override = delegate_->GetVectorIconOverride();
   if (icon_override)
     return *icon_override;
 
@@ -88,7 +89,7 @@ const gfx::VectorIcon& ToolbarModelImpl::GetVectorIcon() const {
       // Surface Dubious as Neutral.
       return toolbar::kHttpIcon;
     case security_state::SECURE_WITH_POLICY_INSTALLED_CERT:
-      return toolbar::kBusinessIcon;
+      return ui::kBusinessIcon;
     case security_state::DANGEROUS:
       return toolbar::kHttpsInvalidIcon;
   }

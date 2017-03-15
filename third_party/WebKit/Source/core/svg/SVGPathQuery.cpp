@@ -79,7 +79,7 @@ void SVGPathTraversalState::emitSegment(const PathSegmentData& segment) {
           segment.point1, segment.point2, segment.targetPoint);
       break;
     default:
-      ASSERT_NOT_REACHED();
+      NOTREACHED();
   }
 }
 
@@ -91,7 +91,7 @@ void executeQuery(const SVGPathByteStream& pathByteStream,
   bool hasMoreData = source.hasMoreData();
   while (hasMoreData) {
     PathSegmentData segment = source.parseSegment();
-    ASSERT(segment.command != PathSegUnknown);
+    DCHECK_NE(segment.command, PathSegUnknown);
 
     normalizer.emitSegment(segment);
 

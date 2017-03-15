@@ -18,7 +18,7 @@
 
 #define TOLERANCE 0.0001
 
-#define EXPECT_VEC3F_NEAR(a, b) \
+#define EXPECT_VEC3F_NEAR(a, b)     \
   EXPECT_NEAR(a.x, b.x, TOLERANCE); \
   EXPECT_NEAR(a.y, b.y, TOLERANCE); \
   EXPECT_NEAR(a.z, b.z, TOLERANCE);
@@ -27,18 +27,20 @@ namespace vr_shell {
 
 namespace {
 
-void addElement(UiScene *scene, int id) {
+void addElement(UiScene* scene, int id) {
   std::unique_ptr<ContentRectangle> element(new ContentRectangle);
   element->id = id;
   scene->AddUiElement(element);
 }
 
-void addAnimation(UiScene *scene, int element_id, int animation_id,
+void addAnimation(UiScene* scene,
+                  int element_id,
+                  int animation_id,
                   Animation::Property property) {
-  std::unique_ptr<Animation> animation(new Animation(
-      animation_id, property,
-      std::unique_ptr<easing::Easing>(new easing::Linear()),
-      {}, {1, 1, 1, 1}, 0, 1));
+  std::unique_ptr<Animation> animation(
+      new Animation(animation_id, property,
+                    std::unique_ptr<easing::Easing>(new easing::Linear()), {},
+                    {1, 1, 1, 1}, 0, 1));
   scene->AddAnimation(element_id, animation);
 }
 
@@ -69,39 +71,10 @@ TEST(UiScene, AddRemoveElements) {
   EXPECT_EQ(scene.GetUiElements().size(), 0u);
 }
 
-TEST(UiScene, AddRemoveContentQuad) {
-  UiScene scene;
-
-  EXPECT_EQ(scene.GetContentQuad(), nullptr);
-
-  base::DictionaryValue dict;
-  dict.SetInteger("id", 0);
-  dict.SetInteger("fillType", Fill::CONTENT);
-  scene.AddUiElementFromDict(dict);
-  EXPECT_NE(scene.GetContentQuad(), nullptr);
-
-  dict.SetInteger("fillType", Fill::SPRITE);
-  std::unique_ptr<base::DictionaryValue> copy_rect(new base::DictionaryValue);
-  copy_rect->SetInteger("x", 100);
-  copy_rect->SetInteger("y", 101);
-  copy_rect->SetInteger("width", 102);
-  copy_rect->SetInteger("height", 103);
-  dict.Set("copyRect", std::move(copy_rect));
-  scene.UpdateUiElementFromDict(dict);
-  EXPECT_EQ(scene.GetContentQuad(), nullptr);
-
-  dict.SetInteger("fillType", Fill::CONTENT);
-  scene.UpdateUiElementFromDict(dict);
-  EXPECT_NE(scene.GetContentQuad(), nullptr);
-
-  scene.RemoveUiElement(0);
-  EXPECT_EQ(scene.GetContentQuad(), nullptr);
-}
-
 TEST(UiScene, AddRemoveAnimations) {
   UiScene scene;
   addElement(&scene, 0);
-  auto *element = scene.GetUiElementById(0);
+  auto* element = scene.GetUiElementById(0);
 
   EXPECT_EQ(element->animations.size(), 0u);
   addAnimation(&scene, 0, 0, Animation::Property::SIZE);
@@ -148,22 +121,15 @@ TEST(UiScene, ParentTransformAppliesToChild) {
   scene.AddUiElement(element);
   const ContentRectangle* child = scene.GetUiElementById(1);
 
-  const gvr::Vec3f origin({0,0,0});
-  const gvr::Vec3f point({1,0,0});
+  const gvr::Vec3f origin({0, 0, 0});
+  const gvr::Vec3f point({1, 0, 0});
 
   // Check resulting transform with no screen tilt.
-  scene.UpdateTransforms(0, 0);
-  auto new_origin = MatrixVectorMul(child->transform.to_world, origin);
-  auto new_point = MatrixVectorMul(child->transform.to_world, point);
+  scene.UpdateTransforms(0);
+  auto new_origin = MatrixVectorMul(child->TransformMatrix(), origin);
+  auto new_point = MatrixVectorMul(child->TransformMatrix(), point);
   EXPECT_VEC3F_NEAR(gvr::Vec3f({6, 10, 0}), new_origin);
   EXPECT_VEC3F_NEAR(gvr::Vec3f({0, 10, 0}), new_point);
-
-  // Check with screen tilt (use 90 degrees for simplicity).
-  scene.UpdateTransforms(M_PI / 2, 0);
-  new_origin = MatrixVectorMul(child->transform.to_world, origin);
-  new_point = MatrixVectorMul(child->transform.to_world, point);
-  EXPECT_VEC3F_NEAR(gvr::Vec3f({6, 0, 10}), new_origin);
-  EXPECT_VEC3F_NEAR(gvr::Vec3f({0, 0, 10}), new_point);
 }
 
 TEST(UiScene, Opacity) {
@@ -181,7 +147,7 @@ TEST(UiScene, Opacity) {
   element->opacity = 0.5;
   scene.AddUiElement(element);
 
-  scene.UpdateTransforms(0, 0);
+  scene.UpdateTransforms(0);
   EXPECT_EQ(scene.GetUiElementById(0)->computed_opacity, 0.5f);
   EXPECT_EQ(scene.GetUiElementById(1)->computed_opacity, 0.25f);
 }
@@ -213,7 +179,7 @@ TEST_P(AnchoringTest, VerifyCorrectPosition) {
   element->y_anchoring = GetParam().y_anchoring;
   scene.AddUiElement(element);
 
-  scene.UpdateTransforms(0, 0);
+  scene.UpdateTransforms(0);
   const ContentRectangle* child = scene.GetUiElementById(1);
   EXPECT_NEAR(child->GetCenter().x, GetParam().expected_x, TOLERANCE);
   EXPECT_NEAR(child->GetCenter().y, GetParam().expected_y, TOLERANCE);
@@ -221,15 +187,16 @@ TEST_P(AnchoringTest, VerifyCorrectPosition) {
 }
 
 const std::vector<AnchoringTestCase> anchoring_test_cases = {
-    { XAnchoring::XNONE, YAnchoring::YNONE, 0, 0},
-    { XAnchoring::XLEFT, YAnchoring::YNONE, -2, 0},
-    { XAnchoring::XRIGHT, YAnchoring::YNONE, 2, 0},
-    { XAnchoring::XNONE, YAnchoring::YTOP, 0, 2},
-    { XAnchoring::XNONE, YAnchoring::YBOTTOM, 0, -2},
-    { XAnchoring::XLEFT, YAnchoring::YTOP, -2, 2},
+    {XAnchoring::XNONE, YAnchoring::YNONE, 0, 0},
+    {XAnchoring::XLEFT, YAnchoring::YNONE, -2, 0},
+    {XAnchoring::XRIGHT, YAnchoring::YNONE, 2, 0},
+    {XAnchoring::XNONE, YAnchoring::YTOP, 0, 2},
+    {XAnchoring::XNONE, YAnchoring::YBOTTOM, 0, -2},
+    {XAnchoring::XLEFT, YAnchoring::YTOP, -2, 2},
 };
 
-INSTANTIATE_TEST_CASE_P(AnchoringTestCases, AnchoringTest,
+INSTANTIATE_TEST_CASE_P(AnchoringTestCases,
+                        AnchoringTest,
                         ::testing::ValuesIn(anchoring_test_cases));
 
 TEST(UiScene, AddUiElementFromDictionary) {
@@ -248,39 +215,29 @@ TEST(UiScene, AddUiElementFromDictionary) {
   dict.SetInteger("yAnchoring", YAnchoring::YTOP);
   dict.SetDouble("opacity", 0.357);
 
-  std::unique_ptr<base::DictionaryValue> copy_rect(new base::DictionaryValue);
-  copy_rect->SetInteger("x", 100);
-  copy_rect->SetInteger("y", 101);
-  copy_rect->SetInteger("width", 102);
-  copy_rect->SetInteger("height", 103);
-  dict.Set("copyRect", std::move(copy_rect));
+  dict.SetInteger("copyRectX", 100);
+  dict.SetInteger("copyRectY", 101);
+  dict.SetInteger("copyRectWidth", 102);
+  dict.SetInteger("copyRectHeight", 103);
 
-  std::unique_ptr<base::DictionaryValue> size(new base::DictionaryValue);
-  size->SetDouble("x", 200);
-  size->SetDouble("y", 201);
-  dict.Set("size", std::move(size));
+  dict.SetDouble("sizeX", 200);
+  dict.SetDouble("sizeY", 201);
 
-  std::unique_ptr<base::DictionaryValue> scale(new base::DictionaryValue);
-  scale->SetDouble("x", 300);
-  scale->SetDouble("y", 301);
-  scale->SetDouble("z", 302);
-  dict.Set("scale", std::move(scale));
+  dict.SetDouble("scaleX", 300);
+  dict.SetDouble("scaleY", 301);
+  dict.SetDouble("scaleZ", 302);
 
-  std::unique_ptr<base::DictionaryValue> rotation(new base::DictionaryValue);
-  rotation->SetDouble("x", 400);
-  rotation->SetDouble("y", 401);
-  rotation->SetDouble("z", 402);
-  rotation->SetDouble("a", 403);
-  dict.Set("rotation", std::move(rotation));
+  dict.SetDouble("rotationX", 400);
+  dict.SetDouble("rotationY", 401);
+  dict.SetDouble("rotationZ", 402);
+  dict.SetDouble("rotationAngle", 403);
 
-  std::unique_ptr<base::DictionaryValue> translation(new base::DictionaryValue);
-  translation->SetDouble("x", 500);
-  translation->SetDouble("y", 501);
-  translation->SetDouble("z", 502);
-  dict.Set("translation", std::move(translation));
+  dict.SetDouble("translationX", 500);
+  dict.SetDouble("translationY", 501);
+  dict.SetDouble("translationZ", 502);
 
   scene.AddUiElementFromDict(dict);
-  const auto *element = scene.GetUiElementById(10);
+  const auto* element = scene.GetUiElementById(10);
   EXPECT_NE(element, nullptr);
 
   EXPECT_EQ(element->id, 10);
@@ -320,11 +277,10 @@ TEST(UiScene, AddUiElementFromDictionary_Fill) {
   UiScene scene;
   base::DictionaryValue dict;
 
-  base::DictionaryValue copy_rect;
-  copy_rect.SetInteger("x", 1);
-  copy_rect.SetInteger("y", 2);
-  copy_rect.SetInteger("width", 3);
-  copy_rect.SetInteger("height", 4);
+  dict.SetInteger("copyRectX", 1);
+  dict.SetInteger("copyRectY", 2);
+  dict.SetInteger("copyRectWidth", 3);
+  dict.SetInteger("copyRectHeight", 4);
 
   base::DictionaryValue edge_color;
   edge_color.SetDouble("r", 0.1);
@@ -341,7 +297,6 @@ TEST(UiScene, AddUiElementFromDictionary_Fill) {
   // Test SPRITE filling.
   dict.SetInteger("id", 9);
   dict.SetInteger("fillType", Fill::SPRITE);
-  dict.Set("copyRect", copy_rect.DeepCopy());
   scene.AddUiElementFromDict(dict);
   const auto* element = scene.GetUiElementById(9);
 
@@ -436,8 +391,8 @@ TEST(UiScene, AddAnimationFromDictionary) {
   dict.Set("from", std::move(from));
 
   scene.AddAnimationFromDict(dict, 10000000);
-  const auto *element = scene.GetUiElementById(0);
-  const auto *animation = element->animations[0].get();
+  const auto* element = scene.GetUiElementById(0);
+  const auto* animation = element->animations[0].get();
   EXPECT_NE(animation, nullptr);
 
   EXPECT_EQ(animation->id, 10);

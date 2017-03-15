@@ -8,9 +8,12 @@
 #include "base/lazy_instance.h"
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_local.h"
+#include "ui/aura/client/aura_constants.h"
 #include "ui/aura/client/focus_client.h"
 #include "ui/aura/env_observer.h"
 #include "ui/aura/input_state_lookup.h"
+#include "ui/aura/mus/mus_types.h"
+#include "ui/aura/mus/os_exchange_data_provider_mus.h"
 #include "ui/aura/mus/window_port_mus.h"
 #include "ui/aura/mus/window_tree_client.h"
 #include "ui/aura/window.h"
@@ -28,7 +31,7 @@ namespace aura {
 namespace {
 
 // Env is thread local so that aura may be used on multiple threads.
-base::LazyInstance<base::ThreadLocalPointer<Env> >::Leaky lazy_tls_ptr =
+base::LazyInstance<base::ThreadLocalPointer<Env>>::Leaky lazy_tls_ptr =
     LAZY_INSTANCE_INITIALIZER;
 
 // Returns true if running inside of mus. Checks for mojo specific flag.
@@ -73,6 +76,9 @@ class Env::ActiveFocusClientWindowObserver : public WindowObserver {
 // Env, public:
 
 Env::~Env() {
+  if (RunningInsideMus())
+    ui::OSExchangeDataProviderFactory::SetFactory(nullptr);
+
   for (EnvObserver& observer : observers_)
     observer.OnWillDestroyEnv();
   DCHECK_EQ(this, lazy_tls_ptr.Pointer()->Get());
@@ -105,9 +111,22 @@ std::unique_ptr<WindowPort> Env::CreateWindowPort(Window* window) {
     return base::MakeUnique<WindowPortLocal>(window);
 
   DCHECK(window_tree_client_);
+  WindowMusType window_mus_type;
+  switch (window->GetProperty(aura::client::kEmbedType)) {
+    case aura::client::WindowEmbedType::NONE:
+      window_mus_type = WindowMusType::LOCAL;
+      break;
+    case aura::client::WindowEmbedType::TOP_LEVEL_IN_WM:
+      window_mus_type = WindowMusType::TOP_LEVEL_IN_WM;
+      break;
+    case aura::client::WindowEmbedType::EMBED_IN_OWNER:
+      window_mus_type = WindowMusType::EMBED_IN_OWNER;
+      break;
+    default:
+      NOTREACHED();
+  }
   // Use LOCAL as all other cases are created by WindowTreeClient explicitly.
-  return base::MakeUnique<WindowPortMus>(window_tree_client_,
-                                         WindowMusType::LOCAL);
+  return base::MakeUnique<WindowPortMus>(window_tree_client_, window_mus_type);
 }
 
 void Env::AddObserver(EnvObserver* observer) {
@@ -177,8 +196,11 @@ Env::Env(Mode mode)
 }
 
 void Env::Init() {
-  if (RunningInsideMus())
+  if (RunningInsideMus()) {
+    ui::OSExchangeDataProviderFactory::SetFactory(this);
     return;
+  }
+
 #if defined(USE_OZONE)
   // The ozone platform can provide its own event source. So initialize the
   // platform before creating the default event source. If running inside mus
@@ -226,6 +248,10 @@ std::unique_ptr<ui::EventTargetIterator> Env::GetChildIterator() const {
 ui::EventTargeter* Env::GetEventTargeter() {
   NOTREACHED();
   return NULL;
+}
+
+std::unique_ptr<ui::OSExchangeData::Provider> Env::BuildProvider() {
+  return base::MakeUnique<aura::OSExchangeDataProviderMus>();
 }
 
 }  // namespace aura

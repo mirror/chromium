@@ -45,6 +45,7 @@ static void SetRuntimeFeatureDefaultsForPlatform() {
   // Android does not yet support SystemMonitor.
   WebRuntimeFeatures::enableOnDeviceChange(false);
   WebRuntimeFeatures::enableMediaSession(true);
+  WebRuntimeFeatures::enableMediaControlsOverlayPlayButton(true);
 #else  // defined(OS_ANDROID)
   WebRuntimeFeatures::enableNavigatorContentUtils(true);
   if (base::FeatureList::IsEnabled(
@@ -209,6 +210,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   if (command_line.HasSwitch(switches::kEnableWebVR))
     WebRuntimeFeatures::enableWebVR(true);
 
+  WebRuntimeFeatures::enableWebVRExperimentalRendering(
+      base::FeatureList::IsEnabled(features::kWebVRExperimentalRendering));
+
   if (command_line.HasSwitch(switches::kDisablePresentationAPI))
     WebRuntimeFeatures::enablePresentationAPI(false);
 
@@ -361,6 +365,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
     WebRuntimeFeatures::enableGamepadExtensions(true);
     WebRuntimeFeatures::enableWebVR(true);
   }
+
+  if (base::FeatureList::IsEnabled(features::kLoadingWithMojo))
+    WebRuntimeFeatures::enableLoadingWithMojo(true);
 
   // Enable explicitly enabled features, and then disable explicitly disabled
   // ones.

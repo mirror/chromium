@@ -4,10 +4,14 @@ recordActionTaken:
 {
     AnimationsPlaybackRateChanged : 11
     AuditsStarted : 7
+    ChangeInspectedNodeInElementsPanel : 26
     CommandEvaluatedInConsolePanel : 15
     ConnectToNodeJSDirectly : 20
     ConnectToNodeJSFromFrontend : 19
     ConsoleEvaluated : 8
+    CpuProfileNodeExcluded : 23
+    CpuProfileNodeFocused : 22
+    CpuThrottlingEnabled : 21
     DOMPropertiesExpanded : 16
     DeviceModeEnabled : 10
     FileSavedInWorkspace : 9
@@ -17,6 +21,9 @@ recordActionTaken:
     ResizedViewInResponsiveMode : 17
     RevisionApplied : 12
     ScriptsBreakpointSet : 3
+    SelectCommandFromCommandMenu : 25
+    SelectFileFromFilePicker : 24
+    StyleRuleCopied : 27
     StyleRuleEdited : 14
     TimelinePageReloadStarted : 18
     TimelineStarted : 4

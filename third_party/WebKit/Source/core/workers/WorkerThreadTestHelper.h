@@ -2,10 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <memory>
+
 #include "bindings/core/v8/SourceLocation.h"
 #include "bindings/core/v8/V8CacheOptions.h"
 #include "bindings/core/v8/V8GCController.h"
-#include "core/dom/ExecutionContextTask.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/workers/ParentFrameTaskRunners.h"
@@ -26,12 +27,11 @@
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/WebAddressSpace.h"
 #include "testing/gmock/include/gmock/gmock.h"
+#include "v8/include/v8.h"
 #include "wtf/CurrentTime.h"
 #include "wtf/Forward.h"
 #include "wtf/PtrUtil.h"
 #include "wtf/Vector.h"
-#include <memory>
-#include <v8.h>
 
 namespace blink {
 
@@ -41,7 +41,7 @@ class MockWorkerLoaderProxyProvider : public WorkerLoaderProxyProvider {
   ~MockWorkerLoaderProxyProvider() override {}
 
   void postTaskToLoader(const WebTraceLocation&,
-                        std::unique_ptr<ExecutionContextTask>) override {
+                        std::unique_ptr<WTF::CrossThreadClosure>) override {
     NOTIMPLEMENTED();
   }
 
@@ -49,6 +49,11 @@ class MockWorkerLoaderProxyProvider : public WorkerLoaderProxyProvider {
       const WebTraceLocation&,
       std::unique_ptr<WTF::CrossThreadClosure>) override {
     NOTIMPLEMENTED();
+  }
+
+  ThreadableLoadingContext* getThreadableLoadingContext() override {
+    NOTIMPLEMENTED();
+    return nullptr;
   }
 };
 
@@ -114,11 +119,9 @@ class MockWorkerThreadLifecycleObserver final
 class WorkerThreadForTest : public WorkerThread {
  public:
   WorkerThreadForTest(WorkerLoaderProxyProvider* mockWorkerLoaderProxyProvider,
-                      WorkerReportingProxy& mockWorkerReportingProxy,
-                      ParentFrameTaskRunners* parentFrameTaskRunners)
+                      WorkerReportingProxy& mockWorkerReportingProxy)
       : WorkerThread(WorkerLoaderProxy::create(mockWorkerLoaderProxyProvider),
-                     mockWorkerReportingProxy,
-                     parentFrameTaskRunners),
+                     mockWorkerReportingProxy),
         m_workerBackingThread(
             WorkerBackingThread::createForTest("Test thread")) {}
 
@@ -133,7 +136,8 @@ class WorkerThreadForTest : public WorkerThread {
       std::unique_ptr<WorkerThreadStartupData>) override;
 
   void startWithSourceCode(SecurityOrigin* securityOrigin,
-                           const String& source) {
+                           const String& source,
+                           ParentFrameTaskRunners* parentFrameTaskRunners) {
     std::unique_ptr<Vector<CSPHeaderAndType>> headers =
         WTF::makeUnique<Vector<CSPHeaderAndType>>();
     CSPHeaderAndType headerAndType("contentSecurityPolicy",
@@ -143,10 +147,11 @@ class WorkerThreadForTest : public WorkerThread {
     WorkerClients* clients = nullptr;
 
     start(WorkerThreadStartupData::create(
-        KURL(ParsedURLString, "http://fake.url/"), "fake user agent", source,
-        nullptr, DontPauseWorkerGlobalScopeOnStart, headers.get(), "",
-        securityOrigin, clients, WebAddressSpaceLocal, nullptr, nullptr,
-        WorkerV8Settings::Default()));
+              KURL(ParsedURLString, "http://fake.url/"), "fake user agent",
+              source, nullptr, DontPauseWorkerGlobalScopeOnStart, headers.get(),
+              "", securityOrigin, clients, WebAddressSpaceLocal, nullptr,
+              nullptr, WorkerV8Settings::Default()),
+          parentFrameTaskRunners);
   }
 
   void waitForInit() {

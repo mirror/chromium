@@ -5,13 +5,11 @@
 #include "chrome/browser/ui/views/toolbar/toolbar_actions_bar_bubble_views.h"
 
 #include "chrome/browser/ui/toolbar/toolbar_actions_bar_bubble_delegate.h"
-#include "chrome/browser/ui/view_ids.h"
 #include "chrome/browser/ui/views/harmony/layout_delegate.h"
 #include "chrome/grit/locale_settings.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/paint_vector_icon.h"
-#include "ui/gfx/vector_icons_public.h"
 #include "ui/views/controls/button/label_button.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/controls/label.h"
@@ -24,13 +22,18 @@ const int kIconSize = 16;
 
 ToolbarActionsBarBubbleViews::ToolbarActionsBarBubbleViews(
     views::View* anchor_view,
+    const gfx::Point& anchor_point,
+    bool anchored_to_action,
     std::unique_ptr<ToolbarActionsBarBubbleDelegate> delegate)
     : views::BubbleDialogDelegateView(anchor_view,
                                       views::BubbleBorder::TOP_RIGHT),
       delegate_(std::move(delegate)),
       item_list_(nullptr),
-      link_(nullptr) {
+      link_(nullptr),
+      anchored_to_action_(anchored_to_action) {
   set_close_on_deactivate(delegate_->ShouldCloseOnDeactivate());
+  if (!anchor_view)
+    SetAnchorRect(gfx::Rect(anchor_point, gfx::Size()));
 }
 
 ToolbarActionsBarBubbleViews::~ToolbarActionsBarBubbleViews() {}
@@ -47,12 +50,11 @@ views::View* ToolbarActionsBarBubbleViews::CreateExtraView() {
   if (!extra_view_info)
     return nullptr;
 
-  gfx::VectorIconId resource_id = extra_view_info->resource_id;
   std::unique_ptr<views::ImageView> icon;
-  if (resource_id != gfx::VectorIconId::VECTOR_ICON_NONE) {
+  if (extra_view_info->resource) {
     icon.reset(new views::ImageView);
-    icon->SetImage(
-        gfx::CreateVectorIcon(resource_id, kIconSize, gfx::kChromeIconGrey));
+    icon->SetImage(gfx::CreateVectorIcon(*extra_view_info->resource, kIconSize,
+                                         gfx::kChromeIconGrey));
   }
 
   std::unique_ptr<views::Label> label;
@@ -113,8 +115,8 @@ void ToolbarActionsBarBubbleViews::Init() {
           LayoutDelegate::Metric::RELATED_CONTROL_VERTICAL_SPACING)));
 
   // Add the content string.
-  views::Label* content_label = new views::Label(
-      delegate_->GetBodyText(GetAnchorView()->id() == VIEW_ID_BROWSER_ACTION));
+  views::Label* content_label =
+      new views::Label(delegate_->GetBodyText(anchored_to_action_));
   content_label->SetMultiLine(true);
   int width = views::Widget::GetLocalizedContentsWidth(
         IDS_EXTENSION_TOOLBAR_REDESIGN_NOTIFICATION_BUBBLE_WIDTH_CHARS);

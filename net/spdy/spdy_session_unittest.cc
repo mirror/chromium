@@ -13,6 +13,7 @@
 #include "base/callback.h"
 #include "base/run_loop.h"
 #include "base/test/histogram_tester.h"
+#include "base/test/scoped_feature_list.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/io_buffer.h"
 #include "net/base/ip_endpoint.h"
@@ -5426,6 +5427,79 @@ TEST_F(SpdySessionTest, RejectInvalidUnknownFrames) {
   EXPECT_FALSE(session_->OnUnknownFrame(8, 0));
 }
 
+enum ReadIfReadySupport {
+  // ReadIfReady() field trial is enabled, and ReadIfReady() is implemented.
+  READ_IF_READY_ENABLED_SUPPORTED,
+  // ReadIfReady() field trial is enabled, but ReadIfReady() is unimplemented.
+  READ_IF_READY_ENABLED_NOT_SUPPORTED,
+  // ReadIfReady() field trial is disabled.
+  READ_IF_READY_DISABLED,
+};
+
+class SpdySessionReadIfReadyTest
+    : public SpdySessionTest,
+      public testing::WithParamInterface<ReadIfReadySupport> {
+ public:
+  void SetUp() override {
+    if (GetParam() != READ_IF_READY_DISABLED)
+      scoped_feature_list_.InitAndEnableFeature(Socket::kReadIfReadyExperiment);
+    if (GetParam() == READ_IF_READY_ENABLED_SUPPORTED)
+      session_deps_.socket_factory->set_enable_read_if_ready(true);
+    SpdySessionTest::SetUp();
+  }
+
+ private:
+  base::test::ScopedFeatureList scoped_feature_list_;
+};
+
+INSTANTIATE_TEST_CASE_P(/* no prefix */,
+                        SpdySessionReadIfReadyTest,
+                        testing::Values(READ_IF_READY_ENABLED_SUPPORTED,
+                                        READ_IF_READY_ENABLED_NOT_SUPPORTED,
+                                        READ_IF_READY_DISABLED));
+
+// Tests basic functionality of ReadIfReady() when it is enabled or disabled.
+TEST_P(SpdySessionReadIfReadyTest, ReadIfReady) {
+  SpdySerializedFrame req(
+      spdy_util_.ConstructSpdyGet(nullptr, 0, 1, HIGHEST, true));
+  MockWrite writes[] = {
+      CreateMockWrite(req, 0),
+  };
+
+  SpdySerializedFrame resp(spdy_util_.ConstructSpdyGetReply(nullptr, 0, 1));
+  SpdySerializedFrame body(spdy_util_.ConstructSpdyDataFrame(1, true));
+  MockRead reads[] = {
+      CreateMockRead(resp, 1), CreateMockRead(body, 2),
+      MockRead(ASYNC, 0, 3)  // EOF
+  };
+
+  session_deps_.host_resolver->set_synchronous_mode(true);
+
+  SequencedSocketData data(reads, arraysize(reads), writes, arraysize(writes));
+  session_deps_.socket_factory->AddSocketDataProvider(&data);
+
+  AddSSLSocketData();
+
+  CreateNetworkSession();
+  CreateSecureSpdySession();
+
+  base::WeakPtr<SpdyStream> spdy_stream =
+      CreateStreamSynchronously(SPDY_REQUEST_RESPONSE_STREAM, session_,
+                                test_url_, HIGHEST, NetLogWithSource());
+  ASSERT_TRUE(spdy_stream);
+  EXPECT_EQ(0u, spdy_stream->stream_id());
+  test::StreamDelegateDoNothing delegate(spdy_stream);
+  spdy_stream->SetDelegate(&delegate);
+
+  SpdyHeaderBlock headers(spdy_util_.ConstructGetHeaderBlock(kDefaultUrl));
+  spdy_stream->SendRequestHeaders(std::move(headers), NO_MORE_DATA_TO_SEND);
+
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_FALSE(spdy_stream);
+  EXPECT_EQ(1u, delegate.stream_id());
+}
+
 class SendInitialSettingsOnNewSpdySessionTest : public SpdySessionTest {
  protected:
   void RunInitialSettingsTest(const SettingsMap expected_settings) {
@@ -5625,9 +5699,34 @@ TEST_F(AltSvcFrameTest, DoNotProcessAltSvcFrameForOriginNotCoveredByCert) {
   ASSERT_TRUE(altsvc_vector.empty());
 }
 
-TEST_F(AltSvcFrameTest, DoNotProcessAltSvcFrameWithEmptyOriginOnZeroStream) {
+// An ALTSVC frame on stream 0 with empty origin MUST be ignored.
+// (RFC 7838 Section 4)
+TEST_F(AltSvcFrameTest, DoNotProcessAltSvcFrameWithEmptyOriginOnStreamZero) {
   SpdyAltSvcIR altsvc_ir(0);
   altsvc_ir.add_altsvc(alternative_service_);
+  AddSocketData(altsvc_ir);
+  AddSSLSocketData();
+
+  CreateNetworkSession();
+  CreateSecureSpdySession();
+
+  base::RunLoop().RunUntilIdle();
+
+  const url::SchemeHostPort session_origin("https", test_url_.host(),
+                                           test_url_.EffectiveIntPort());
+  AlternativeServiceVector altsvc_vector =
+      spdy_session_pool_->http_server_properties()->GetAlternativeServices(
+          session_origin);
+  ASSERT_TRUE(altsvc_vector.empty());
+}
+
+// An ALTSVC frame on a stream other than stream 0 with non-empty origin MUST be
+// ignored.  (RFC 7838 Section 4)
+TEST_F(AltSvcFrameTest,
+       DoNotProcessAltSvcFrameWithNonEmptyOriginOnNonZeroStream) {
+  SpdyAltSvcIR altsvc_ir(1);
+  altsvc_ir.add_altsvc(alternative_service_);
+  altsvc_ir.set_origin("https://mail.example.org");
   AddSocketData(altsvc_ir);
   AddSSLSocketData();
 
@@ -6004,6 +6103,87 @@ TEST(CanPoolTest, CanPoolWithAcceptablePins) {
 
   EXPECT_TRUE(SpdySession::CanPool(
       &tss, ssl_info, "www.example.org", "mail.example.org"));
+}
+
+class SpdySessionCloseIdleConnectionTest
+    : public SpdySessionTest,
+      public ::testing::WithParamInterface<bool> {
+ protected:
+  SpdySessionCloseIdleConnectionTest() : experiment_enabled_(GetParam()) {}
+  void SetUp() override {
+    if (experiment_enabled_) {
+      scoped_feature_list_.InitFromCommandLine("CloseIdleH2SocketsEarly",
+                                               std::string());
+    }
+  }
+
+ protected:
+  const bool experiment_enabled_;
+
+ private:
+  base::test::ScopedFeatureList scoped_feature_list_;
+  HttpRequestInfo request_info_;
+};
+
+INSTANTIATE_TEST_CASE_P(/* no prefix */,
+                        SpdySessionCloseIdleConnectionTest,
+                        ::testing::Bool());
+
+TEST_P(SpdySessionCloseIdleConnectionTest, CloseIdleConnectionsInGroup) {
+  session_deps_.host_resolver->set_synchronous_mode(true);
+
+  const int kNumIdleSockets = 4;
+  MockRead reads[] = {MockRead(ASYNC, 0, 0)};
+  std::vector<std::unique_ptr<SequencedSocketData>> providers;
+  for (int i = 0; i < kNumIdleSockets; i++) {
+    auto provider = base::MakeUnique<SequencedSocketData>(
+        reads, arraysize(reads), nullptr, 0);
+    session_deps_.socket_factory->AddSocketDataProvider(provider.get());
+    providers.push_back(std::move(provider));
+    AddSSLSocketData();
+  }
+
+  CreateNetworkSession();
+
+  // Create some HTTP/2 sockets.
+  std::vector<std::unique_ptr<ClientSocketHandle>> handles;
+  for (size_t i = 0; i < kNumIdleSockets; i++) {
+    scoped_refptr<TransportSocketParams> transport_params(
+        new TransportSocketParams(
+            key_.host_port_pair(), false, OnHostResolutionCallback(),
+            TransportSocketParams::COMBINE_CONNECT_AND_WRITE_DEFAULT));
+
+    auto connection = base::MakeUnique<ClientSocketHandle>();
+    TestCompletionCallback callback;
+
+    SSLConfig ssl_config;
+    scoped_refptr<SSLSocketParams> ssl_params(new SSLSocketParams(
+        transport_params, nullptr, nullptr, key_.host_port_pair(), ssl_config,
+        key_.privacy_mode(), 0, false));
+    int rv = connection->Init(
+        key_.host_port_pair().ToString(), ssl_params, MEDIUM,
+        ClientSocketPool::RespectLimits::ENABLED, callback.callback(),
+        http_session_->GetSSLSocketPool(HttpNetworkSession::NORMAL_SOCKET_POOL),
+        NetLogWithSource());
+    rv = callback.GetResult(rv);
+    handles.push_back(std::move(connection));
+  }
+
+  // Releases handles now, and these sockets should go into the socket pool.
+  handles.clear();
+  EXPECT_EQ(
+      kNumIdleSockets,
+      http_session_->GetSSLSocketPool(HttpNetworkSession::NORMAL_SOCKET_POOL)
+          ->IdleSocketCount());
+
+  // The new SpdySession will reuse one socket from the pool.
+  CreateSecureSpdySession();
+
+  // If the experiment is enabled, the SpdySession will close idle sockets.
+  EXPECT_EQ(
+      experiment_enabled_ ? 0 : kNumIdleSockets - 1,
+      http_session_->GetSSLSocketPool(HttpNetworkSession::NORMAL_SOCKET_POOL)
+          ->IdleSocketCount());
 }
 
 }  // namespace net

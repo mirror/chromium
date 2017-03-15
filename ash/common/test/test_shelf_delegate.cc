@@ -12,9 +12,11 @@
 #include "ash/common/test/test_shelf_item_delegate.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
-#include "ash/common/wm_window_property.h"
 #include "ash/root_window_controller.h"
+#include "ash/shell.h"
+#include "ash/wm/window_properties.h"
 #include "base/memory/ptr_util.h"
+#include "ui/aura/window.h"
 
 namespace ash {
 namespace test {
@@ -25,8 +27,10 @@ TestShelfDelegate* TestShelfDelegate::instance_ = nullptr;
 // shelf is created, to simulate ChromeLauncherController's behavior.
 class ShelfInitializer : public ShellObserver {
  public:
-  ShelfInitializer() { WmShell::Get()->AddShellObserver(this); }
-  ~ShelfInitializer() override { WmShell::Get()->RemoveShellObserver(this); }
+  ShelfInitializer() { Shell::GetInstance()->AddShellObserver(this); }
+  ~ShelfInitializer() override {
+    Shell::GetInstance()->RemoveShellObserver(this);
+  }
 
   // ShellObserver:
   void OnShelfCreatedForRootWindow(WmWindow* root_window) override {
@@ -61,7 +65,7 @@ void TestShelfDelegate::AddShelfItem(WmWindow* window) {
 void TestShelfDelegate::AddShelfItem(WmWindow* window,
                                      const std::string& app_id) {
   AddShelfItem(window, STATUS_CLOSED);
-  ShelfID shelf_id = window->GetIntProperty(WmWindowProperty::SHELF_ID);
+  ShelfID shelf_id = window->aura_window()->GetProperty(kShelfIDKey);
   AddShelfIDToAppIDMapping(shelf_id, app_id);
 }
 
@@ -75,22 +79,22 @@ void TestShelfDelegate::AddShelfItem(WmWindow* window, ShelfItemStatus status) {
   ShelfID id = model->next_id();
   item.status = status;
   model->Add(item);
-  window->AddObserver(this);
+  window->aura_window()->AddObserver(this);
 
   model->SetShelfItemDelegate(id,
                               base::MakeUnique<TestShelfItemDelegate>(window));
-  window->SetIntProperty(WmWindowProperty::SHELF_ID, id);
+  window->aura_window()->SetProperty(kShelfIDKey, id);
 }
 
 void TestShelfDelegate::RemoveShelfItemForWindow(WmWindow* window) {
-  ShelfID shelf_id = window->GetIntProperty(WmWindowProperty::SHELF_ID);
+  ShelfID shelf_id = window->aura_window()->GetProperty(kShelfIDKey);
   if (shelf_id == 0)
     return;
   ShelfModel* model = WmShell::Get()->shelf_model();
   int index = model->ItemIndexByID(shelf_id);
   DCHECK_NE(-1, index);
   model->RemoveItemAt(index);
-  window->RemoveObserver(this);
+  window->aura_window()->RemoveObserver(this);
   if (HasShelfIDToAppIDMapping(shelf_id)) {
     const std::string& app_id = GetAppIDForShelfID(shelf_id);
     if (IsAppPinned(app_id))
@@ -100,17 +104,17 @@ void TestShelfDelegate::RemoveShelfItemForWindow(WmWindow* window) {
   }
 }
 
-void TestShelfDelegate::OnWindowDestroying(WmWindow* window) {
-  RemoveShelfItemForWindow(window);
+void TestShelfDelegate::OnWindowDestroying(aura::Window* window) {
+  RemoveShelfItemForWindow(WmWindow::Get(window));
 }
 
-void TestShelfDelegate::OnWindowTreeChanging(WmWindow* window,
-                                             const TreeChangeParams& params) {
+void TestShelfDelegate::OnWindowHierarchyChanging(
+    const HierarchyChangeParams& params) {
   // The window may be legitimately reparented while staying open if it moves
   // to another display or container. If the window does not have a new parent
   // then remove the shelf item.
   if (!params.new_parent)
-    RemoveShelfItemForWindow(params.target);
+    RemoveShelfItemForWindow(WmWindow::Get(params.target));
 }
 
 ShelfID TestShelfDelegate::GetShelfIDForAppID(const std::string& app_id) {

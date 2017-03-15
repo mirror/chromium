@@ -3434,7 +3434,7 @@ TEST_P(RenderTextHarfBuzzTest, HarfBuzz_SubglyphGraphemeCases) {
     test_api()->EnsureLayout();
     internal::TextRunList* run_list = GetHarfBuzzRunList();
     ASSERT_EQ(1U, run_list->size());
-    internal::TextRunHarfBuzz* run = run_list->runs()[0];
+    internal::TextRunHarfBuzz* run = run_list->runs()[0].get();
 
     auto first_grapheme_bounds = run->GetGraphemeBounds(render_text, 0);
     EXPECT_EQ(first_grapheme_bounds, run->GetGraphemeBounds(render_text, 1));
@@ -3613,7 +3613,7 @@ TEST_P(RenderTextHarfBuzzTest, HarfBuzz_NonExistentFont) {
   test_api()->EnsureLayout();
   internal::TextRunList* run_list = GetHarfBuzzRunList();
   ASSERT_EQ(1U, run_list->size());
-  internal::TextRunHarfBuzz* run = run_list->runs()[0];
+  internal::TextRunHarfBuzz* run = run_list->runs()[0].get();
   ShapeRunWithFont(render_text->text(), Font("TheFontThatDoesntExist", 13),
                    FontRenderParams(), run);
 }
@@ -3759,8 +3759,8 @@ TEST_P(RenderTextTest, TextDoesntClip) {
   const Size kCanvasSize(300, 50);
   const int kTestSize = 10;
 
-  sk_sp<SkSurface> surface =
-      SkSurface::MakeRasterN32Premul(kCanvasSize.width(), kCanvasSize.height());
+  sk_sp<cc::PaintSurface> surface = cc::PaintSurface::MakeRasterN32Premul(
+      kCanvasSize.width(), kCanvasSize.height());
   Canvas canvas(surface->getCanvas(), 1.0f);
   RenderText* render_text = GetRenderText();
   render_text->SetHorizontalAlignment(ALIGN_LEFT);
@@ -3784,7 +3784,7 @@ TEST_P(RenderTextTest, TextDoesntClip) {
     render_text->Draw(&canvas);
     ASSERT_LT(string_size.width() + kTestSize, kCanvasSize.width());
     SkPixmap pixmap;
-    surface->peekPixels(&pixmap);
+    surface->getCanvas()->peekPixels(&pixmap);
     const uint32_t* buffer = static_cast<const uint32_t*>(pixmap.addr());
     ASSERT_NE(nullptr, buffer);
     TestRectangleBuffer rect_buffer(string, buffer, kCanvasSize.width(),
@@ -3852,8 +3852,8 @@ TEST_P(RenderTextTest, TextDoesClip) {
   const Size kCanvasSize(300, 50);
   const int kTestSize = 10;
 
-  sk_sp<SkSurface> surface =
-      SkSurface::MakeRasterN32Premul(kCanvasSize.width(), kCanvasSize.height());
+  sk_sp<cc::PaintSurface> surface = cc::PaintSurface::MakeRasterN32Premul(
+      kCanvasSize.width(), kCanvasSize.height());
   Canvas canvas(surface->getCanvas(), 1.0f);
   RenderText* render_text = GetRenderText();
   render_text->SetHorizontalAlignment(ALIGN_LEFT);
@@ -3871,7 +3871,7 @@ TEST_P(RenderTextTest, TextDoesClip) {
     render_text->Draw(&canvas);
     ASSERT_LT(string_size.width() + kTestSize, kCanvasSize.width());
     SkPixmap pixmap;
-    surface->peekPixels(&pixmap);
+    surface->getCanvas()->peekPixels(&pixmap);
     const uint32_t* buffer = static_cast<const uint32_t*>(pixmap.addr());
     ASSERT_NE(nullptr, buffer);
     TestRectangleBuffer rect_buffer(string, buffer, kCanvasSize.width(),
@@ -4347,6 +4347,23 @@ TEST_P(RenderTextHarfBuzzTest, GetSubstringBoundsMultiline) {
   // Test complete bounds.
   render_text->SelectAll(false);
   EXPECT_EQ(expected_total_bounds, GetSelectionBoundsUnion());
+}
+
+// Tests that RenderText doesn't crash even if it's passed an invalid font. Test
+// for crbug.com/668058.
+TEST_P(RenderTextTest, InvalidFont) {
+// TODO(crbug.com/699820): This crashes with RenderTextHarfBuzz on Mac.
+#if defined(OS_MACOSX)
+  if (GetParam() == RENDER_TEXT_HARFBUZZ)
+    return;
+#endif
+  const std::string font_name = "invalid_font";
+  const int kFontSize = 13;
+  RenderText* render_text = GetRenderText();
+  render_text->SetFontList(FontList(Font(font_name, kFontSize)));
+  render_text->SetText(ASCIIToUTF16("abc"));
+
+  DrawVisualText();
 }
 
 // Prefix for test instantiations intentionally left blank since each test

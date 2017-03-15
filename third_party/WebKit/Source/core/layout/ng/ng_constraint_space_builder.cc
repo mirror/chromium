@@ -23,6 +23,7 @@ NGConstraintSpaceBuilder::NGConstraintSpaceBuilder(
       is_block_direction_triggers_scrollbar_(false),
       fragmentation_type_(parent_space->BlockFragmentationType()),
       is_new_fc_(parent_space->IsNewFormattingContext()),
+      is_anonymous_(false),
       text_direction_(static_cast<unsigned>(parent_space->Direction())),
       bfc_offset_(parent_space->bfc_offset_),
       exclusions_(parent_space->Exclusions()) {}
@@ -38,6 +39,7 @@ NGConstraintSpaceBuilder::NGConstraintSpaceBuilder(NGWritingMode writing_mode)
       is_block_direction_triggers_scrollbar_(false),
       fragmentation_type_(kFragmentNone),
       is_new_fc_(false),
+      is_anonymous_(false),
       text_direction_(static_cast<unsigned>(TextDirection::kLtr)),
       exclusions_(new NGExclusions()) {}
 
@@ -68,6 +70,18 @@ NGConstraintSpaceBuilder& NGConstraintSpaceBuilder::SetTextDirection(
 NGConstraintSpaceBuilder& NGConstraintSpaceBuilder::SetMarginStrut(
     const NGMarginStrut& margin_strut) {
   margin_strut_ = margin_strut;
+  return *this;
+}
+
+NGConstraintSpaceBuilder& NGConstraintSpaceBuilder::SetBfcOffset(
+    const NGLogicalOffset& offset) {
+  bfc_offset_ = offset;
+  return *this;
+}
+
+NGConstraintSpaceBuilder& NGConstraintSpaceBuilder::SetClearanceOffset(
+    const WTF::Optional<LayoutUnit>& clearance_offset) {
+  clearance_offset_ = clearance_offset;
   return *this;
 }
 
@@ -117,12 +131,18 @@ NGConstraintSpaceBuilder& NGConstraintSpaceBuilder::SetIsNewFormattingContext(
   return *this;
 }
 
-NGConstraintSpace* NGConstraintSpaceBuilder::ToConstraintSpace(
+NGConstraintSpaceBuilder& NGConstraintSpaceBuilder::SetIsAnonymous(
+    bool is_anonymous) {
+  is_anonymous_ = is_anonymous;
+  return *this;
+}
+
+RefPtr<NGConstraintSpace> NGConstraintSpaceBuilder::ToConstraintSpace(
     NGWritingMode out_writing_mode) {
   // Whether the child and the containing block are parallel to each other.
   // Example: vertical-rl and vertical-lr
-  bool is_in_parallel_flow = (parent_writing_mode_ == kHorizontalTopBottom) ==
-                             (out_writing_mode == kHorizontalTopBottom);
+  bool is_in_parallel_flow = IsParallelWritingMode(
+      static_cast<NGWritingMode>(parent_writing_mode_), out_writing_mode);
 
   NGLogicalSize available_size = available_size_;
   NGLogicalSize percentage_resolution_size = percentage_resolution_size_;
@@ -153,14 +173,16 @@ NGConstraintSpace* NGConstraintSpaceBuilder::ToConstraintSpace(
     }
   }
 
-  // Exclusions do not pass the formatting context boundary.
+  // Reset things that do not pass the Formatting Context boundary.
   std::shared_ptr<NGExclusions> exclusions(
       is_new_fc_ ? std::make_shared<NGExclusions>() : exclusions_);
   NGLogicalOffset bfc_offset = is_new_fc_ ? NGLogicalOffset() : bfc_offset_;
   NGMarginStrut margin_strut = is_new_fc_ ? NGMarginStrut() : margin_strut_;
+  WTF::Optional<LayoutUnit> clearance_offset =
+      is_new_fc_ ? WTF::nullopt : clearance_offset_;
 
   if (is_in_parallel_flow) {
-    return new NGConstraintSpace(
+    return adoptRef(new NGConstraintSpace(
         static_cast<NGWritingMode>(out_writing_mode),
         static_cast<TextDirection>(text_direction_), available_size,
         percentage_resolution_size, initial_containing_block_size_,
@@ -169,9 +191,9 @@ NGConstraintSpace* NGConstraintSpaceBuilder::ToConstraintSpace(
         is_inline_direction_triggers_scrollbar_,
         is_block_direction_triggers_scrollbar_,
         static_cast<NGFragmentationType>(fragmentation_type_), is_new_fc_,
-        margin_strut, bfc_offset, exclusions);
+        is_anonymous_, margin_strut, bfc_offset, exclusions, clearance_offset));
   }
-  return new NGConstraintSpace(
+  return adoptRef(new NGConstraintSpace(
       out_writing_mode, static_cast<TextDirection>(text_direction_),
       available_size, percentage_resolution_size,
       initial_containing_block_size_, fragmentainer_space_available_,
@@ -179,7 +201,7 @@ NGConstraintSpace* NGConstraintSpaceBuilder::ToConstraintSpace(
       is_block_direction_triggers_scrollbar_,
       is_inline_direction_triggers_scrollbar_,
       static_cast<NGFragmentationType>(fragmentation_type_), is_new_fc_,
-      margin_strut, bfc_offset, exclusions);
+      is_anonymous_, margin_strut, bfc_offset, exclusions, clearance_offset));
 }
 
 }  // namespace blink

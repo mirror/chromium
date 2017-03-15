@@ -145,8 +145,7 @@ View::View()
       previous_focusable_view_(NULL),
       focus_behavior_(FocusBehavior::NEVER),
       context_menu_controller_(NULL),
-      drag_controller_(NULL),
-      native_view_accessibility_(NULL) {
+      drag_controller_(NULL) {
   SetTargetHandler(this);
 }
 
@@ -165,10 +164,8 @@ View::~View() {
     }
   }
 
-  // Release ownership of the native accessibility object, but it's
-  // reference-counted on some platforms, so it may not be deleted right away.
-  if (native_view_accessibility_)
-    native_view_accessibility_->Destroy();
+  for (ViewObserver& observer : observers_)
+    observer.OnViewIsDeleting(this);
 }
 
 // Tree operations -------------------------------------------------------------
@@ -195,9 +192,11 @@ void View::AddChildViewAt(View* view, int index) {
 
   // If |view| has a parent, remove it from its parent.
   View* parent = view->parent_;
-  ui::NativeTheme* old_theme = NULL;
+  ui::NativeTheme* old_theme = nullptr;
+  Widget* old_widget = nullptr;
   if (parent) {
     old_theme = view->GetNativeTheme();
+    old_widget = view->GetWidget();
     if (parent == this) {
       ReorderChildView(view, index);
       return;
@@ -241,7 +240,7 @@ void View::AddChildViewAt(View* view, int index) {
   for (View* v = this; v; v = v->parent_)
     v->ViewHierarchyChangedImpl(false, details);
 
-  view->PropagateAddNotifications(details);
+  view->PropagateAddNotifications(details, widget && widget != old_widget);
 
   UpdateTooltip();
 
@@ -256,7 +255,7 @@ void View::AddChildViewAt(View* view, int index) {
     layout_manager_->ViewAdded(this, view);
 
   for (ViewObserver& observer : observers_)
-    observer.OnChildViewAdded(view);
+    observer.OnChildViewAdded(this, view);
 }
 
 void View::ReorderChildView(View* view, int index) {
@@ -288,7 +287,7 @@ void View::ReorderChildView(View* view, int index) {
   children_.insert(children_.begin() + index, view);
 
   for (ViewObserver& observer : observers_)
-    observer.OnChildViewReordered(view);
+    observer.OnChildViewReordered(this, view);
 
   ReorderLayers();
 }
@@ -1425,7 +1424,7 @@ gfx::NativeViewAccessible View::GetNativeViewAccessible() {
     native_view_accessibility_ = NativeViewAccessibility::Create(this);
   if (native_view_accessibility_)
     return native_view_accessibility_->GetNativeObject();
-  return NULL;
+  return nullptr;
 }
 
 void View::NotifyAccessibilityEvent(
@@ -1515,6 +1514,10 @@ void View::NativeViewHierarchyChanged() {
       RegisterPendingAccelerators();
   }
 }
+
+void View::AddedToWidget() {}
+
+void View::RemovedFromWidget() {}
 
 // Painting --------------------------------------------------------------------
 
@@ -1929,12 +1932,14 @@ void View::DoRemoveChildView(View* view,
   }
 
   Widget* widget = GetWidget();
+  bool is_removed_from_widget = false;
   if (widget) {
     UnregisterChildrenForVisibleBoundsNotification(view);
     if (view->visible())
       view->SchedulePaint();
 
-    if (!new_parent || new_parent->GetWidget() != widget)
+    is_removed_from_widget = !new_parent || new_parent->GetWidget() != widget;
+    if (is_removed_from_widget)
       widget->NotifyWillRemoveView(view);
   }
 
@@ -1944,7 +1949,7 @@ void View::DoRemoveChildView(View* view,
   if (widget)
     widget->LayerTreeChanged();
 
-  view->PropagateRemoveNotifications(this, new_parent);
+  view->PropagateRemoveNotifications(this, new_parent, is_removed_from_widget);
   view->parent_ = nullptr;
 
   if (delete_removed_view && !view->owned_by_client_)
@@ -1962,29 +1967,38 @@ void View::DoRemoveChildView(View* view,
     layout_manager_->ViewRemoved(this, view);
 
   for (ViewObserver& observer : observers_)
-    observer.OnChildViewRemoved(view, this);
+    observer.OnChildViewRemoved(this, view);
 }
 
-void View::PropagateRemoveNotifications(View* old_parent, View* new_parent) {
+void View::PropagateRemoveNotifications(View* old_parent,
+                                        View* new_parent,
+                                        bool is_removed_from_widget) {
   {
     internal::ScopedChildrenLock lock(this);
-    for (auto* child : children_)
-      child->PropagateRemoveNotifications(old_parent, new_parent);
+    for (auto* child : children_) {
+      child->PropagateRemoveNotifications(old_parent, new_parent,
+                                          is_removed_from_widget);
+    }
   }
 
   ViewHierarchyChangedDetails details(false, old_parent, this, new_parent);
   for (View* v = this; v; v = v->parent_)
     v->ViewHierarchyChangedImpl(true, details);
+
+  if (is_removed_from_widget)
+    RemovedFromWidget();
 }
 
-void View::PropagateAddNotifications(
-    const ViewHierarchyChangedDetails& details) {
+void View::PropagateAddNotifications(const ViewHierarchyChangedDetails& details,
+                                     bool is_added_to_widget) {
   {
     internal::ScopedChildrenLock lock(this);
     for (auto* child : children_)
-      child->PropagateAddNotifications(details);
+      child->PropagateAddNotifications(details, is_added_to_widget);
   }
   ViewHierarchyChangedImpl(true, details);
+  if (is_added_to_widget)
+    AddedToWidget();
 }
 
 void View::PropagateNativeViewHierarchyChanged() {

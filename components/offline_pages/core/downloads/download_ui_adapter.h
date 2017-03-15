@@ -1,4 +1,4 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -48,6 +48,10 @@ class DownloadUIAdapter : public OfflinePageModel::Observer,
     // of temporary visibility changes, the Delegate is supposed to call
     // DownloadUIAdapter::TemporarilyHiddenStatusChanged().
     virtual bool IsTemporarilyHiddenInUI(const ClientId& client_id) = 0;
+
+    // Delegates need a reference to the UI adapter in order to notify it about
+    // visibility changes.
+    virtual void SetUIAdapter(DownloadUIAdapter* ui_adapter) = 0;
   };
 
   // Observer, normally implemented by UI or a Bridge.
@@ -77,6 +81,10 @@ class DownloadUIAdapter : public OfflinePageModel::Observer,
                     RequestCoordinator* coordinator,
                     std::unique_ptr<Delegate> delegate);
   ~DownloadUIAdapter() override;
+
+  static DownloadUIAdapter* FromOfflinePageModel(OfflinePageModel* model);
+  static void AttachToOfflinePageModel(DownloadUIAdapter* adapter,
+                                       OfflinePageModel* model);
 
   // This adapter is potentially shared by UI elements, each of which adds
   // itself as an observer.
@@ -108,17 +116,21 @@ class DownloadUIAdapter : public OfflinePageModel::Observer,
   void OnCompleted(const SavePageRequest& request,
                    RequestNotifier::BackgroundSavePageResult status) override;
   void OnChanged(const SavePageRequest& request) override;
+  void OnNetworkProgress(const SavePageRequest& request,
+                         int64_t received_bytes) override;
 
   // For the DownloadUIAdapter::Delegate, to report the temporary hidden status
   // change.
   void TemporaryHiddenStatusChanged(const ClientId& client_id);
 
+  Delegate* delegate() { return delegate_.get(); }
+
  private:
   enum class State { NOT_LOADED, LOADING_PAGES, LOADING_REQUESTS, LOADED };
 
   struct ItemInfo {
-    explicit ItemInfo(const OfflinePageItem& page);
-    explicit ItemInfo(const SavePageRequest& request);
+    ItemInfo(const OfflinePageItem& page, bool temporarily_hidden);
+    ItemInfo(const SavePageRequest& request, bool temporarily_hidden);
     ~ItemInfo();
 
     std::unique_ptr<DownloadUIItem> ui_item;
@@ -158,6 +170,9 @@ class DownloadUIAdapter : public OfflinePageModel::Observer,
   void OnDeletePagesDone(DeletePageResult result);
 
   void AddItemHelper(std::unique_ptr<ItemInfo> item_info);
+  // This function is not re-entrant.  It temporarily sets |deleting_item_|
+  // while it runs, so that functions such as |GetOfflineIdByGuid| will work
+  // during the |ItemDeleted| callback.
   void DeleteItemHelper(const std::string& guid);
 
   // Always valid, this class is a member of the model.
@@ -173,6 +188,8 @@ class DownloadUIAdapter : public OfflinePageModel::Observer,
 
   // The cache of UI items. The key is DownloadUIItem.guid.
   DownloadUIItems items_;
+
+  std::unique_ptr<ItemInfo> deleting_item_;
 
   // The observers.
   base::ObserverList<Observer> observers_;

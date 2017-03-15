@@ -10,6 +10,7 @@
 
 #import "base/mac/foundation_util.h"
 #import "ios/clean/chrome/browser/ui/actions/navigation_actions.h"
+#import "ios/clean/chrome/browser/ui/actions/tab_grid_actions.h"
 #import "ios/clean/chrome/browser/ui/actions/tab_strip_actions.h"
 #import "ios/clean/chrome/browser/ui/actions/tools_menu_actions.h"
 #import "ios/clean/chrome/browser/ui/commands/toolbar_commands.h"
@@ -23,6 +24,8 @@
 namespace {
 // Stackview Vertical Margin.
 CGFloat kVerticalMargin = 5.0f;
+// Stackview Horizontal Margin.
+CGFloat kHorizontalMargin = 8.0f;
 }  // namespace
 
 @interface ToolbarViewController ()<ToolsMenuActions>
@@ -30,7 +33,8 @@ CGFloat kVerticalMargin = 5.0f;
 @property(nonatomic, strong) UIStackView* stackView;
 @property(nonatomic, strong) ToolbarButton* backButton;
 @property(nonatomic, strong) ToolbarButton* forwardButton;
-@property(nonatomic, strong) ToolbarButton* tabSwitcherButton;
+@property(nonatomic, strong) ToolbarButton* tabSwitchStripButton;
+@property(nonatomic, strong) ToolbarButton* tabSwitchGridButton;
 @property(nonatomic, strong) ToolbarButton* toolsMenuButton;
 @property(nonatomic, strong) ToolbarButton* shareButton;
 @property(nonatomic, strong) ToolbarButton* reloadButton;
@@ -43,7 +47,8 @@ CGFloat kVerticalMargin = 5.0f;
 @synthesize omnibox = _omnibox;
 @synthesize backButton = _backButton;
 @synthesize forwardButton = _forwardButton;
-@synthesize tabSwitcherButton = _tabSwitcherButton;
+@synthesize tabSwitchStripButton = _tabSwitchStripButton;
+@synthesize tabSwitchGridButton = _tabSwitchGridButton;
 @synthesize toolsMenuButton = _toolsMenuButton;
 @synthesize shareButton = _shareButton;
 @synthesize reloadButton = _reloadButton;
@@ -64,24 +69,36 @@ CGFloat kVerticalMargin = 5.0f;
   // Stack view to contain toolbar items.
   self.stackView = [[UIStackView alloc] initWithArrangedSubviews:@[
     self.backButton, self.forwardButton, self.reloadButton, self.stopButton,
-    omnibox, self.shareButton, self.tabSwitcherButton, self.toolsMenuButton
+    omnibox, self.shareButton, self.tabSwitchStripButton,
+    self.tabSwitchGridButton, self.toolsMenuButton
   ]];
+  [self updateAllButtonsVisibility];
   self.stackView.translatesAutoresizingMaskIntoConstraints = NO;
   self.stackView.spacing = 16.0;
   self.stackView.distribution = UIStackViewDistributionFillProportionally;
   [self.view addSubview:self.stackView];
 
   // Set constraints.
+  [self.view setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
+                                 UIViewAutoresizingFlexibleHeight];
   [NSLayoutConstraint activateConstraints:@[
     [self.stackView.topAnchor constraintEqualToAnchor:self.view.topAnchor
                                              constant:kVerticalMargin],
     [self.stackView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor
                                                 constant:-kVerticalMargin],
     [self.stackView.leadingAnchor
-        constraintEqualToAnchor:self.view.layoutMarginsGuide.leadingAnchor],
+        constraintEqualToAnchor:self.view.leadingAnchor
+                       constant:kHorizontalMargin],
     [self.stackView.trailingAnchor
-        constraintEqualToAnchor:self.view.layoutMarginsGuide.trailingAnchor],
+        constraintEqualToAnchor:self.view.trailingAnchor
+                       constant:-kHorizontalMargin],
   ]];
+}
+
+- (void)viewWillLayoutSubviews {
+  // This forces the ToolMenu to close whenever a Device Rotation, iPad
+  // Multitasking change, etc. happens.
+  [self.toolbarCommandHandler closeToolsMenu];
 }
 
 #pragma mark - Components Setup
@@ -103,14 +120,24 @@ CGFloat kVerticalMargin = 5.0f;
                          action:@selector(goForward:)
                forControlEvents:UIControlEventTouchUpInside];
 
-  // Tab switcher button.
-  self.tabSwitcherButton = [ToolbarButton tabSwitcherToolbarButton];
-  self.tabSwitcherButton.visibilityMask =
+  // Tab switcher Strip button.
+  self.tabSwitchStripButton = [ToolbarButton tabSwitcherStripToolbarButton];
+  self.tabSwitchStripButton.visibilityMask =
       ToolbarComponentVisibilityCompactWidth |
       ToolbarComponentVisibilityRegularWidth;
-  [self.tabSwitcherButton addTarget:nil
-                             action:@selector(toggleTabStrip:)
-                   forControlEvents:UIControlEventTouchUpInside];
+  [self.tabSwitchStripButton addTarget:nil
+                                action:@selector(showTabStrip:)
+                      forControlEvents:UIControlEventTouchUpInside];
+
+  // Tab switcher Grid button.
+  self.tabSwitchGridButton = [ToolbarButton tabSwitcherGridToolbarButton];
+  self.tabSwitchGridButton.visibilityMask =
+      ToolbarComponentVisibilityCompactWidth |
+      ToolbarComponentVisibilityRegularWidth;
+  [self.tabSwitchGridButton addTarget:nil
+                               action:@selector(showTabGrid:)
+                     forControlEvents:UIControlEventTouchUpInside];
+  self.tabSwitchGridButton.hiddenInCurrentState = YES;
 
   // Tools menu button.
   self.toolsMenuButton = [ToolbarButton toolsMenuToolbarButton];
@@ -159,7 +186,7 @@ CGFloat kVerticalMargin = 5.0f;
   }
 }
 
-#pragma mark - Public API
+#pragma mark - ToolbarWebStateConsumer
 
 - (void)setCurrentPageText:(NSString*)text {
   self.omnibox.text = text;
@@ -180,6 +207,20 @@ CGFloat kVerticalMargin = 5.0f;
 
 - (void)closeToolsMenu:(id)sender {
   [self.toolbarCommandHandler closeToolsMenu];
+}
+
+#pragma mark - TabStripEvents
+
+- (void)tabStripDidShow:(id)sender {
+  self.tabSwitchStripButton.hiddenInCurrentState = YES;
+  self.tabSwitchGridButton.hiddenInCurrentState = NO;
+  [self updateAllButtonsVisibility];
+}
+
+- (void)tabStripDidHide:(id)sender {
+  self.tabSwitchStripButton.hiddenInCurrentState = NO;
+  self.tabSwitchGridButton.hiddenInCurrentState = YES;
+  [self updateAllButtonsVisibility];
 }
 
 #pragma mark - Helper Methods

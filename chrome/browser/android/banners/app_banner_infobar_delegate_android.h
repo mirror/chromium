@@ -126,7 +126,12 @@ class AppBannerInfoBarDelegateAndroid : public ConfirmInfoBarDelegate {
   bool TriggeredFromBanner() const;
   void SendBannerAccepted();
   void OnWebApkInstallFinished(bool success,
+                               bool relax_updates,
                                const std::string& webapk_package_name);
+
+  // Called when a WebAPK install fails.
+  void OnWebApkInstallFailed();
+
   void TrackWebApkInstallationDismissEvents(InstallState install_state);
 
   // ConfirmInfoBarDelegate:

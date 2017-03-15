@@ -14,7 +14,6 @@
 #include "ash/common/wm/maximize_mode/scoped_disable_internal_mouse_and_keyboard.h"
 #include "ash/common/wm/mru_window_tracker.h"
 #include "ash/common/wm/overview/window_selector_controller.h"
-#include "ash/common/wm_activation_observer.h"
 #include "ash/common/wm_display_observer.h"
 #include "ash/common/wm_window.h"
 #include "ash/display/window_tree_host_manager.h"
@@ -48,14 +47,9 @@
 
 namespace ash {
 
-WmShellAura::WmShellAura(std::unique_ptr<ShellDelegate> shell_delegate)
-    : WmShell(std::move(shell_delegate)) {
-  WmShell::Set(this);
-}
+WmShellAura::WmShellAura() {}
 
-WmShellAura::~WmShellAura() {
-  WmShell::Set(nullptr);
-}
+WmShellAura::~WmShellAura() {}
 
 void WmShellAura::Shutdown() {
   if (added_display_observer_)
@@ -70,14 +64,6 @@ void WmShellAura::Shutdown() {
 
 bool WmShellAura::IsRunningInMash() const {
   return false;
-}
-
-WmWindow* WmShellAura::NewWindow(ui::wm::WindowType window_type,
-                                 ui::LayerType layer_type) {
-  aura::Window* aura_window = new aura::Window(nullptr);
-  aura_window->SetType(window_type);
-  aura_window->Init(layer_type);
-  return WmWindow::Get(aura_window);
 }
 
 WmWindow* WmShellAura::GetFocusedWindow() {
@@ -134,14 +120,11 @@ bool WmShellAura::IsInUnifiedModeIgnoreMirroring() const {
          display::DisplayManager::UNIFIED;
 }
 
-bool WmShellAura::IsForceMaximizeOnFirstRun() {
-  return delegate()->IsForceMaximizeOnFirstRun();
-}
-
 void WmShellAura::SetDisplayWorkAreaInsets(WmWindow* window,
                                            const gfx::Insets& insets) {
-  aura::Window* aura_window = WmWindow::GetAuraWindow(window);
-  Shell::GetInstance()->SetDisplayWorkAreaInsets(aura_window, insets);
+  Shell::GetInstance()
+      ->window_tree_host_manager()
+      ->UpdateWorkAreaOfDisplayNearestWindow(window->aura_window(), insets);
 }
 
 bool WmShellAura::IsPinned() {
@@ -226,16 +209,6 @@ WmShellAura::CreateImmersiveFullscreenController() {
 
 std::unique_ptr<KeyEventWatcher> WmShellAura::CreateKeyEventWatcher() {
   return base::MakeUnique<KeyEventWatcherAura>();
-}
-
-void WmShellAura::OnOverviewModeStarting() {
-  for (auto& observer : *shell_observers())
-    observer.OnOverviewModeStarting();
-}
-
-void WmShellAura::OnOverviewModeEnded() {
-  for (auto& observer : *shell_observers())
-    observer.OnOverviewModeEnded();
 }
 
 SessionStateDelegate* WmShellAura::GetSessionStateDelegate() {

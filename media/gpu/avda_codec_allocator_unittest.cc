@@ -42,15 +42,16 @@ void SignalImmediately(base::WaitableEvent* event) {
 }
 }
 
-class MockClient : public AVDACodecAllocatorClient {
+class MockClient : public AVDACodecAllocatorClient,
+                   public AVDASurfaceAllocatorClient {
  public:
   MOCK_METHOD1(OnSurfaceAvailable, void(bool success));
   MOCK_METHOD0(OnSurfaceDestroyed, void());
 
   // Gmock doesn't let us mock methods taking move-only types.
-  MOCK_METHOD1(OnCodecConfiguredMock, void(VideoCodecBridge* media_codec));
+  MOCK_METHOD1(OnCodecConfiguredMock, void(MediaCodecBridge* media_codec));
   void OnCodecConfigured(
-      std::unique_ptr<VideoCodecBridge> media_codec) override {
+      std::unique_ptr<MediaCodecBridge> media_codec) override {
     OnCodecConfiguredMock(media_codec.get());
   }
 };

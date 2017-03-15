@@ -9,13 +9,12 @@
 
 #include "base/memory/weak_ptr.h"
 #include "services/ui/display/screen_manager.h"
-#include "services/ui/display/viewport_metrics.h"
+#include "ui/display/display.h"
 
 namespace display {
 
 // ScreenManagerStubInternal provides the necessary functionality to configure a
-// fixed
-// 1024x768 display for non-ozone platforms.
+// fixed 1024x768 display for non-ozone platforms.
 class ScreenManagerStubInternal : public ScreenManager {
  public:
   ScreenManagerStubInternal();
@@ -29,11 +28,9 @@ class ScreenManagerStubInternal : public ScreenManager {
   void AddInterfaces(service_manager::InterfaceRegistry* registry) override;
   void Init(ScreenManagerDelegate* delegate) override;
   void RequestCloseDisplay(int64_t display_id) override;
-  int64_t GetPrimaryDisplayId() const override;
 
   // Sample display information.
-  int64_t display_id_ = 1;
-  ViewportMetrics display_metrics_;
+  Display display_;
 
   ScreenManagerDelegate* delegate_ = nullptr;
 

@@ -99,9 +99,17 @@ class NativeExtensionBindingsSystemUnittest : public APIBindingTest {
   }
 
   void TearDown() override {
-    for (const auto& context : raw_script_contexts_)
-      script_context_set_->Remove(context);
+    event_change_handler_.reset();
+    // Dispose all contexts now so we call WillReleaseScriptContext() on the
+    // bindings system.
+    DisposeAllContexts();
+
+    // ScriptContexts are deleted asynchronously by the ScriptContextSet, so we
+    // need spin here to ensure we don't leak. See also
+    // ScriptContextSet::Remove().
     base::RunLoop().RunUntilIdle();
+
+    ASSERT_TRUE(raw_script_contexts_.empty());
     script_context_set_.reset();
     bindings_system_.reset();
     APIBindingTest::TearDown();
@@ -137,7 +145,20 @@ class NativeExtensionBindingsSystemUnittest : public APIBindingTest {
     ScriptContext* raw_script_context = script_context.get();
     raw_script_contexts_.push_back(raw_script_context);
     script_context_set_->AddForTesting(std::move(script_context));
+    bindings_system_->DidCreateScriptContext(raw_script_context);
     return raw_script_context;
+  }
+
+  void OnWillDisposeContext(v8::Local<v8::Context> context) override {
+    auto iter =
+        std::find_if(raw_script_contexts_.begin(), raw_script_contexts_.end(),
+                     [context](ScriptContext* script_context) {
+                       return script_context->v8_context() == context;
+                     });
+    ASSERT_TRUE(iter != raw_script_contexts_.end());
+    bindings_system_->WillReleaseScriptContext(*iter);
+    script_context_set_->Remove(*iter);
+    raw_script_contexts_.erase(iter);
   }
 
   void RegisterExtension(const ExtensionId& id) { extension_ids_.insert(id); }
@@ -170,12 +191,12 @@ class NativeExtensionBindingsSystemUnittest : public APIBindingTest {
 };
 
 TEST_F(NativeExtensionBindingsSystemUnittest, Basic) {
-  scoped_refptr<Extension> extension =
-      CreateExtension("foo", ItemType::EXTENSION, {"idle", "power"});
+  scoped_refptr<Extension> extension = CreateExtension(
+      "foo", ItemType::EXTENSION, {"idle", "power", "webRequest"});
   RegisterExtension(extension->id());
 
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
 
   ScriptContext* script_context = CreateScriptContext(
       context, extension.get(), Feature::BLESSED_EXTENSION_CONTEXT);
@@ -260,6 +281,15 @@ TEST_F(NativeExtensionBindingsSystemUnittest, Basic) {
       power_api.As<v8::Object>(), context, "requestKeepAwake");
   ASSERT_FALSE(request_keep_awake.IsEmpty());
   EXPECT_TRUE(request_keep_awake->IsFunction());
+
+  // Test properties exposed on the API object itself.
+  v8::Local<v8::Value> web_request =
+      V8ValueFromScriptSource(context, "chrome.webRequest");
+  ASSERT_FALSE(web_request.IsEmpty());
+  ASSERT_TRUE(web_request->IsObject());
+  EXPECT_EQ("20", GetStringPropertyFromObject(
+                      web_request.As<v8::Object>(), context,
+                      "MAX_HANDLER_BEHAVIOR_CHANGED_CALLS_PER_10_MINUTES"));
 }
 
 TEST_F(NativeExtensionBindingsSystemUnittest, Events) {
@@ -268,7 +298,7 @@ TEST_F(NativeExtensionBindingsSystemUnittest, Events) {
   RegisterExtension(extension->id());
 
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
 
   ScriptContext* script_context = CreateScriptContext(
       context, extension.get(), Feature::BLESSED_EXTENSION_CONTEXT);
@@ -310,7 +340,7 @@ TEST_F(NativeExtensionBindingsSystemUnittest, APIObjectsAreEqual) {
   RegisterExtension(extension->id());
 
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
 
   ScriptContext* script_context = CreateScriptContext(
       context, extension.get(), Feature::BLESSED_EXTENSION_CONTEXT);
@@ -338,7 +368,7 @@ TEST_F(NativeExtensionBindingsSystemUnittest,
   RegisterExtension(extension->id());
 
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
 
   ScriptContext* script_context = CreateScriptContext(
       context, extension.get(), Feature::BLESSED_EXTENSION_CONTEXT);
@@ -351,7 +381,7 @@ TEST_F(NativeExtensionBindingsSystemUnittest,
   ASSERT_FALSE(first_idle_object.IsEmpty());
   EXPECT_TRUE(first_idle_object->IsObject());
 
-  DisposeContext();
+  DisposeContext(context);
 
   // Check an API that was instantiated....
   v8::Local<v8::Value> second_idle_object =
@@ -394,7 +424,7 @@ TEST_F(NativeExtensionBindingsSystemUnittest, TestBridgingToJSCustomBindings) {
   RegisterExtension(extension->id());
 
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
 
   ScriptContext* script_context = CreateScriptContext(
       context, extension.get(), Feature::BLESSED_EXTENSION_CONTEXT);
@@ -465,6 +495,49 @@ TEST_F(NativeExtensionBindingsSystemUnittest, TestBridgingToJSCustomBindings) {
       last_params().arguments.Equals(ListValueFromString("[50]").get()));
 }
 
+TEST_F(NativeExtensionBindingsSystemUnittest, TestSendRequestHook) {
+  // Custom binding code. This basically utilizes the interface in binding.js in
+  // order to test backwards compatibility.
+  const char kCustomBinding[] =
+      "apiBridge.registerCustomHook((api) => {\n"
+      "  api.apiFunctions.setHandleRequest('queryState',\n"
+      "                                    (time, callback) => {\n"
+      "    bindingUtil.sendRequest('idle.queryState', [time, callback]);\n"
+      "  });\n"
+      "});\n";
+
+  source_map()->RegisterModule("idle", kCustomBinding);
+
+  scoped_refptr<Extension> extension =
+      CreateExtension("foo", ItemType::EXTENSION, {"idle"});
+  RegisterExtension(extension->id());
+
+  v8::HandleScope handle_scope(isolate());
+  v8::Local<v8::Context> context = MainContext();
+
+  ScriptContext* script_context = CreateScriptContext(
+      context, extension.get(), Feature::BLESSED_EXTENSION_CONTEXT);
+  script_context->set_url(extension->url());
+
+  bindings_system()->UpdateBindingsForContext(script_context);
+
+  {
+    // Call the function correctly.
+    const char kCallIdleQueryState[] =
+        "(function() { chrome.idle.queryState(30, function() {}); });";
+
+    v8::Local<v8::Function> call_idle_query_state =
+        FunctionFromString(context, kCallIdleQueryState);
+    RunFunctionOnGlobal(call_idle_query_state, context, 0, nullptr);
+  }
+  EXPECT_EQ(extension->id(), last_params().extension_id);
+  EXPECT_EQ("idle.queryState", last_params().name);
+  EXPECT_EQ(extension->url(), last_params().source_url);
+  EXPECT_TRUE(last_params().has_callback);
+  EXPECT_TRUE(
+      last_params().arguments.Equals(ListValueFromString("[30]").get()));
+}
+
 // Tests that we can notify the browser as event listeners are added or removed.
 // Note: the notification logic is tested more thoroughly in the APIEventHandler
 // unittests.
@@ -476,7 +549,7 @@ TEST_F(NativeExtensionBindingsSystemUnittest, TestEventRegistration) {
   RegisterExtension(extension->id());
 
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
 
   ScriptContext* script_context = CreateScriptContext(
       context, extension.get(), Feature::BLESSED_EXTENSION_CONTEXT);
@@ -528,7 +601,7 @@ TEST_F(NativeExtensionBindingsSystemUnittest,
   RegisterExtension(app->id());
 
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
 
   ScriptContext* script_context = CreateScriptContext(
       context, app.get(), Feature::BLESSED_EXTENSION_CONTEXT);
@@ -567,7 +640,7 @@ TEST_F(NativeExtensionBindingsSystemUnittest,
   RegisterExtension(extension->id());
 
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
 
   ScriptContext* script_context = CreateScriptContext(
       context, extension.get(), Feature::BLESSED_EXTENSION_CONTEXT);
@@ -607,7 +680,7 @@ TEST_F(NativeExtensionBindingsSystemUnittest, TestLastError) {
   RegisterExtension(extension->id());
 
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
 
   ScriptContext* script_context = CreateScriptContext(
       context, extension.get(), Feature::BLESSED_EXTENSION_CONTEXT);
@@ -642,6 +715,76 @@ TEST_F(NativeExtensionBindingsSystemUnittest, TestLastError) {
   EXPECT_EQ("\"Some API Error\"",
             GetStringPropertyFromObject(context->Global(), context,
                                         "lastErrorMessage"));
+}
+
+TEST_F(NativeExtensionBindingsSystemUnittest, TestCustomProperties) {
+  scoped_refptr<Extension> extension =
+      CreateExtension("storage extension", ItemType::EXTENSION, {"storage"});
+  RegisterExtension(extension->id());
+
+  v8::HandleScope handle_scope(isolate());
+  v8::Local<v8::Context> context = MainContext();
+
+  ScriptContext* script_context = CreateScriptContext(
+      context, extension.get(), Feature::BLESSED_EXTENSION_CONTEXT);
+  script_context->set_url(extension->url());
+
+  bindings_system()->UpdateBindingsForContext(script_context);
+
+  v8::Local<v8::Value> storage =
+      V8ValueFromScriptSource(context, "chrome.storage");
+  ASSERT_FALSE(storage.IsEmpty());
+  ASSERT_TRUE(storage->IsObject());
+
+  v8::Local<v8::Value> local =
+      GetPropertyFromObject(storage.As<v8::Object>(), context, "local");
+  ASSERT_FALSE(local.IsEmpty());
+  ASSERT_TRUE(local->IsObject());
+
+  v8::Local<v8::Object> local_object = local.As<v8::Object>();
+  const std::vector<std::string> kKeys = {"get", "set", "remove", "clear",
+                                          "getBytesInUse"};
+  for (const auto& key : kKeys) {
+    v8::Local<v8::String> v8_key = gin::StringToV8(isolate(), key);
+    EXPECT_TRUE(local_object->HasOwnProperty(context, v8_key).FromJust())
+        << key;
+  }
+}
+
+// Ensure that different contexts have different API objects.
+TEST_F(NativeExtensionBindingsSystemUnittest,
+       CheckDifferentContextsHaveDifferentAPIObjects) {
+  scoped_refptr<Extension> extension =
+      CreateExtension("extension", ItemType::EXTENSION, {"idle"});
+  RegisterExtension(extension->id());
+
+  v8::HandleScope handle_scope(isolate());
+  v8::Local<v8::Context> context_a = MainContext();
+  v8::Local<v8::Context> context_b = AddContext();
+
+  ScriptContext* script_context_a = CreateScriptContext(
+      context_a, extension.get(), Feature::BLESSED_EXTENSION_CONTEXT);
+  script_context_a->set_url(extension->url());
+  bindings_system()->UpdateBindingsForContext(script_context_a);
+
+  ScriptContext* script_context_b = CreateScriptContext(
+      context_b, extension.get(), Feature::BLESSED_EXTENSION_CONTEXT);
+  script_context_b->set_url(extension->url());
+  bindings_system()->UpdateBindingsForContext(script_context_b);
+
+  auto check_properties_inequal = [](v8::Local<v8::Context> context_a,
+                                     v8::Local<v8::Context> context_b,
+                                     base::StringPiece property) {
+    v8::Local<v8::Value> value_a = V8ValueFromScriptSource(context_a, property);
+    v8::Local<v8::Value> value_b = V8ValueFromScriptSource(context_b, property);
+    EXPECT_FALSE(value_a.IsEmpty()) << property;
+    EXPECT_FALSE(value_b.IsEmpty()) << property;
+    EXPECT_NE(value_a, value_b) << property;
+  };
+
+  check_properties_inequal(context_a, context_b, "chrome");
+  check_properties_inequal(context_a, context_b, "chrome.idle");
+  check_properties_inequal(context_a, context_b, "chrome.idle.onStateChanged");
 }
 
 }  // namespace extensions

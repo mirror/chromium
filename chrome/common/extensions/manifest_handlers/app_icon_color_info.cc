@@ -20,8 +20,8 @@ namespace errors = manifest_errors;
 
 namespace {
 
-static base::LazyInstance<AppIconColorInfo> g_empty_app_icon_color_info =
-    LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<AppIconColorInfo>::DestructorAtExit
+    g_empty_app_icon_color_info = LAZY_INSTANCE_INITIALIZER;
 
 const AppIconColorInfo& GetInfo(const Extension* extension) {
   AppIconColorInfo* info = static_cast<AppIconColorInfo*>(
@@ -75,7 +75,7 @@ bool AppIconColorHandler::Parse(Extension* extension, base::string16* error) {
   }
 
   extension->SetManifestData(keys::kAppIconColor,
-                             app_icon_color_info.release());
+                             std::move(app_icon_color_info));
   return true;
 }
 

@@ -53,7 +53,7 @@ StylePropertySerializer::StylePropertySetForSerializer::
         continue;
       if (static_cast<unsigned>(m_allIndex) >= i)
         continue;
-      if (property.value().equals(allProperty.value()) &&
+      if (property.value() == allProperty.value() &&
           property.isImportant() == allProperty.isImportant())
         continue;
       m_needToExpandAll = true;
@@ -153,6 +153,12 @@ StylePropertySerializer::StylePropertySetForSerializer::getPropertyCSSValue(
   return value.value();
 }
 
+bool StylePropertySerializer::StylePropertySetForSerializer::
+    isDescriptorContext() const {
+  return m_propertySet->cssParserMode() == CSSViewportRuleMode ||
+         m_propertySet->cssParserMode() == CSSFontFaceRuleMode;
+}
+
 StylePropertySerializer::StylePropertySerializer(
     const StylePropertySet& properties)
     : m_propertySet(properties) {}
@@ -220,10 +226,12 @@ String StylePropertySerializer::asText() const {
     CSSPropertyID propertyID = property.id();
     // Only enabled properties should be part of the style.
     DCHECK(CSSPropertyMetadata::isEnabledProperty(propertyID));
-    // Shorthands with variable references are not expanded at parse time
-    // and hence may still be observed during serialization.
-    DCHECK(!isShorthandProperty(propertyID) ||
-           property.value()->isVariableReferenceValue());
+    // All shorthand properties should have been expanded at parse time.
+    DCHECK(m_propertySet.isDescriptorContext() ||
+           (CSSPropertyMetadata::isProperty(propertyID) &&
+            !isShorthandProperty(propertyID)));
+    DCHECK(!m_propertySet.isDescriptorContext() ||
+           CSSPropertyMetadata::isDescriptor(propertyID));
 
     switch (propertyID) {
       case CSSPropertyVariable:
@@ -366,7 +374,7 @@ String StylePropertySerializer::commonShorthandChecks(
       longhands[0]->isPendingSubstitutionValue()) {
     bool success = true;
     for (int i = 1; i < longhandCount; i++) {
-      if (!longhands[i]->equals(*longhands[0])) {
+      if (!dataEquivalent(longhands[i], longhands[0])) {
         // This should just return emptyString but some shorthands currently
         // allow 'initial' for their longhands.
         success = false;
@@ -454,6 +462,8 @@ String StylePropertySerializer::getPropertyValue(
       return getShorthandValue(gridAreaShorthand(), " / ");
     case CSSPropertyGridGap:
       return getShorthandValue(gridGapShorthand());
+    case CSSPropertyPlaceContent:
+      return placeContentPropertyValue();
     case CSSPropertyFont:
       return fontValue();
     case CSSPropertyFontVariant:
@@ -663,9 +673,9 @@ String StylePropertySerializer::get4Values(
       m_propertySet.propertyAt(bottomValueIndex);
   PropertyValueForSerializer left = m_propertySet.propertyAt(leftValueIndex);
 
-  bool showLeft = !right.value()->equals(*left.value());
-  bool showBottom = !top.value()->equals(*bottom.value()) || showLeft;
-  bool showRight = !top.value()->equals(*right.value()) || showBottom;
+  bool showLeft = !dataEquivalent(right.value(), left.value());
+  bool showBottom = !dataEquivalent(top.value(), bottom.value()) || showLeft;
+  bool showRight = !dataEquivalent(top.value(), right.value()) || showBottom;
 
   StringBuilder result;
   result.append(top.value()->cssText());
@@ -846,6 +856,13 @@ String StylePropertySerializer::getCommonValue(
       return String();
   }
   return res;
+}
+
+String StylePropertySerializer::placeContentPropertyValue() const {
+  String value = getCommonValue(placeContentShorthand());
+  if (value.isNull() || value.isEmpty())
+    return getShorthandValue(placeContentShorthand());
+  return value;
 }
 
 String StylePropertySerializer::borderPropertyValue() const {

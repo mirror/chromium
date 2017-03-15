@@ -40,10 +40,10 @@
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
 #include "core/paint/PaintLayer.h"
+#include "core/paint/ViewPaintInvalidator.h"
 #include "core/paint/ViewPainter.h"
 #include "core/svg/SVGDocumentExtensions.h"
 #include "platform/Histogram.h"
-#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/geometry/FloatQuad.h"
 #include "platform/geometry/TransformState.h"
 #include "platform/graphics/paint/PaintController.h"
@@ -189,15 +189,6 @@ bool LayoutView::isChildAllowed(LayoutObject* child,
   return child->isBox();
 }
 
-bool LayoutView::canHaveChildren() const {
-  FrameOwner* owner = frame()->owner();
-  if (!owner)
-    return true;
-  if (!RuntimeEnabledFeatures::displayNoneIFrameCreatesNoLayoutObjectEnabled())
-    return true;
-  return !owner->isDisplayNone();
-}
-
 void LayoutView::layoutContent() {
   ASSERT(needsLayout());
 
@@ -237,6 +228,8 @@ void LayoutView::layout() {
   if (!document().paginated())
     setPageLogicalHeight(LayoutUnit());
 
+  // TODO(wangxianzhu): Move this into ViewPaintInvalidator when
+  // rootLayerScrolling is permanently enabled.
   IncludeScrollbarsInRect includeScrollbars =
       RuntimeEnabledFeatures::rootLayerScrollingEnabled() ? IncludeScrollbars
                                                           : ExcludeScrollbars;
@@ -257,8 +250,6 @@ void LayoutView::layout() {
   }
 
   SubtreeLayoutScope layoutScope(*this);
-
-  LayoutRect oldLayoutOverflowRect = layoutOverflowRect();
 
   // Use calcWidth/Height to get the new width/height, since this will take the
   // full page zoom factor into account.
@@ -293,17 +284,6 @@ void LayoutView::layout() {
   LayoutState rootLayoutState(*this);
 
   layoutContent();
-
-  if (layoutOverflowRect() != oldLayoutOverflowRect) {
-    // The document element paints the viewport background, so we need to
-    // invalidate it when layout overflow changes.
-    // FIXME: Improve viewport background styling/invalidation/painting.
-    // crbug.com/475115
-    if (Element* documentElement = document().documentElement()) {
-      if (LayoutObject* rootObject = documentElement->layoutObject())
-        rootObject->setShouldDoFullPaintInvalidation();
-    }
-  }
 
 #if DCHECK_IS_ON()
   checkLayoutState();
@@ -436,6 +416,16 @@ void LayoutView::computeSelfHitTestRects(Vector<LayoutRect>& rects,
       LayoutRect(LayoutPoint::zero(), LayoutSize(frameView()->contentsSize())));
 }
 
+PaintInvalidationReason LayoutView::invalidatePaintIfNeeded(
+    const PaintInvalidationState& paintInvalidationState) {
+  return LayoutBlockFlow::invalidatePaintIfNeeded(paintInvalidationState);
+}
+
+PaintInvalidationReason LayoutView::invalidatePaintIfNeeded(
+    const PaintInvalidatorContext& context) const {
+  return ViewPaintInvalidator(*this, context).invalidatePaintIfNeeded();
+}
+
 void LayoutView::paint(const PaintInfo& paintInfo,
                        const LayoutPoint& paintOffset) const {
   ViewPainter(*this).paint(paintInfo, paintOffset);
@@ -476,36 +466,62 @@ void LayoutView::invalidatePaintForViewAndCompositedLayers() {
 bool LayoutView::mapToVisualRectInAncestorSpace(
     const LayoutBoxModelObject* ancestor,
     LayoutRect& rect,
+    MapCoordinatesFlags mode,
     VisualRectFlags visualRectFlags) const {
-  return mapToVisualRectInAncestorSpace(ancestor, rect, 0, visualRectFlags);
+  TransformState transformState(TransformState::ApplyTransformDirection,
+                                FloatQuad(FloatRect(rect)));
+  bool retval = mapToVisualRectInAncestorSpaceInternal(ancestor, transformState,
+                                                       mode, visualRectFlags);
+  transformState.flatten();
+  rect = LayoutRect(transformState.lastPlanarQuad().boundingBox());
+  return retval;
 }
 
-bool LayoutView::mapToVisualRectInAncestorSpace(
+bool LayoutView::mapToVisualRectInAncestorSpaceInternal(
     const LayoutBoxModelObject* ancestor,
-    LayoutRect& rect,
+    TransformState& transformState,
+    VisualRectFlags visualRectFlags) const {
+  return mapToVisualRectInAncestorSpaceInternal(ancestor, transformState, 0,
+                                                visualRectFlags);
+}
+
+bool LayoutView::mapToVisualRectInAncestorSpaceInternal(
+    const LayoutBoxModelObject* ancestor,
+    TransformState& transformState,
     MapCoordinatesFlags mode,
     VisualRectFlags visualRectFlags) const {
   if (mode & IsFixed)
-    rect.move(offsetForFixedPosition(true));
+    transformState.move(offsetForFixedPosition(true));
 
   // Apply our transform if we have one (because of full page zooming).
-  if (layer() && layer()->transform())
-    rect = layer()->transform()->mapRect(rect);
+  if (layer() && layer()->transform()) {
+    transformState.applyTransform(layer()->currentTransform(),
+                                  TransformState::FlattenTransform);
+  }
+
+  transformState.flatten();
 
   if (ancestor == this)
     return true;
 
   Element* owner = document().localOwner();
-  if (!owner)
-    return frameView()->mapToVisualRectInTopFrameSpace(rect);
+  if (!owner) {
+    LayoutRect rect(transformState.lastPlanarQuad().boundingBox());
+    bool retval = frameView()->mapToVisualRectInTopFrameSpace(rect);
+    transformState.setQuad(FloatQuad(FloatRect(rect)));
+    return retval;
+  }
 
   if (LayoutBox* obj = owner->layoutBox()) {
+    LayoutRect rect(transformState.lastPlanarQuad().boundingBox());
     if (!(mode & InputIsInFrameCoordinates)) {
       // Intersect the viewport with the visual rect.
       LayoutRect viewRectangle = viewRect();
       if (visualRectFlags & EdgeInclusive) {
-        if (!rect.inclusiveIntersect(viewRectangle))
+        if (!rect.inclusiveIntersect(viewRectangle)) {
+          transformState.setQuad(FloatQuad(FloatRect(rect)));
           return false;
+        }
       } else {
         rect.intersect(viewRectangle);
       }
@@ -521,11 +537,14 @@ bool LayoutView::mapToVisualRectInAncestorSpace(
 
     // Adjust for frame border.
     rect.move(obj->contentBoxOffset());
-    return obj->mapToVisualRectInAncestorSpace(ancestor, rect, visualRectFlags);
+    transformState.setQuad(FloatQuad(FloatRect(rect)));
+
+    return obj->mapToVisualRectInAncestorSpaceInternal(ancestor, transformState,
+                                                       visualRectFlags);
   }
 
   // This can happen, e.g., if the iframe element has display:none.
-  rect = LayoutRect();
+  transformState.setQuad(FloatQuad(FloatRect()));
   return false;
 }
 
@@ -617,8 +636,6 @@ IntRect LayoutView::selectionBounds() {
 }
 
 void LayoutView::invalidatePaintForSelection() {
-  HashSet<LayoutBlock*> processedBlocks;
-
   LayoutObject* end =
       layoutObjectAfterPosition(m_selectionEnd, m_selectionEndPos);
   for (LayoutObject* o = m_selectionStart; o && o != end;

@@ -8,7 +8,10 @@
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
+#include "chrome/browser/chromeos/arc/arc_auth_notification.h"
+#include "chrome/browser/chromeos/arc/arc_play_store_enabled_preference_handler.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
+#include "chrome/browser/chromeos/arc/arc_util.h"
 #include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
@@ -72,8 +75,8 @@ void ArcAppTest::SetUp(Profile* profile) {
   chromeos::ProfileHelper::Get()->SetUserToProfileMappingForTesting(user,
                                                                     profile_);
 
-  // A valid |arc_app_list_prefs_| is needed for the Arc bridge service and the
-  // Arc auth service.
+  // A valid |arc_app_list_prefs_| is needed for the ARC bridge service and the
+  // ARC auth service.
   arc_app_list_pref_ = ArcAppListPrefs::Get(profile_);
   if (!arc_app_list_pref_) {
     ArcAppListPrefsFactory::GetInstance()->RecreateServiceInstanceForTesting(
@@ -85,7 +88,12 @@ void ArcAppTest::SetUp(Profile* profile) {
           base::Bind(arc::FakeArcSession::Create)));
   DCHECK(arc::ArcSessionManager::Get());
   arc::ArcSessionManager::DisableUIForTesting();
-  arc_session_manager_->OnPrimaryUserProfilePrepared(profile_);
+  arc::ArcAuthNotification::DisableForTesting();
+  arc_session_manager_->SetProfile(profile_);
+  arc_play_store_enabled_preference_handler_ =
+      base::MakeUnique<arc::ArcPlayStoreEnabledPreferenceHandler>(
+          profile_, arc_session_manager_.get());
+  arc_play_store_enabled_preference_handler_->Start();
 
   arc_app_list_pref_ = ArcAppListPrefs::Get(profile_);
   DCHECK(arc_app_list_pref_);
@@ -93,9 +101,14 @@ void ArcAppTest::SetUp(Profile* profile) {
   arc_app_list_pref_->SetDefaltAppsReadyCallback(run_loop.QuitClosure());
   run_loop.Run();
 
-  arc_session_manager_->SetArcPlayStoreEnabled(true);
   // Check initial conditions.
-  EXPECT_FALSE(arc_session_manager_->IsSessionRunning());
+  if (arc::ShouldArcAlwaysStart()) {
+    // When ARC first starts, it runs in opt-out mode of Play Store.
+    EXPECT_TRUE(arc_session_manager_->IsSessionRunning());
+  } else {
+    arc::SetArcPlayStoreEnabledForProfile(profile_, true);
+    EXPECT_FALSE(arc_session_manager_->IsSessionRunning());
+  }
 
   app_instance_.reset(new arc::FakeAppInstance(arc_app_list_pref_));
   arc_service_manager_->arc_bridge_service()->app()->SetInstance(
@@ -164,6 +177,7 @@ void ArcAppTest::CreateFakeAppsAndPackages() {
 
 void ArcAppTest::TearDown() {
   app_instance_.reset();
+  arc_play_store_enabled_preference_handler_.reset();
   arc_session_manager_.reset();
   arc_service_manager_.reset();
   if (dbus_thread_manager_initialized_) {

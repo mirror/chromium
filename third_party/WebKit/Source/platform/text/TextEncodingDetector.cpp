@@ -52,21 +52,16 @@ bool detectTextEncoding(const char* data,
       CompactEncDet::WEB_CORPUS,
       false,  // Include 7-bit encodings to detect ISO-2022-JP
       &consumedBytes, &isReliable);
-  if (encoding == UNKNOWN_ENCODING)
+
+  // Should return false if the detected encoding is UTF8. This helps prevent
+  // modern web sites from neglecting proper encoding labelling and simply
+  // relying on browser-side encoding detection. Encoding detection is supposed
+  // to work for web sites with legacy encoding only. Detection failure leads
+  // |TextResourceDecoder| to use its default encoding determined from system
+  // locale or TLD.
+  if (encoding == UNKNOWN_ENCODING || encoding == UTF8)
     return false;
 
-  // 7-bit encodings (except ISO-2022-JP) are not supported in WHATWG encoding
-  // standard. Mark them as ASCII to keep the raw bytes intact.
-  switch (encoding) {
-    case HZ_GB_2312:
-    case ISO_2022_KR:
-    case ISO_2022_CN:
-    case UTF7:
-      encoding = ASCII_7BIT;
-      break;
-    default:
-      break;
-  }
   *detectedEncoding = WTF::TextEncoding(MimeEncodingName(encoding));
   return true;
 }

@@ -4,6 +4,8 @@
 
 #include "core/loader/LinkLoader.h"
 
+#include <base/macros.h>
+#include <memory>
 #include "core/frame/Settings.h"
 #include "core/html/LinkRelAttribute.h"
 #include "core/loader/DocumentLoader.h"
@@ -12,13 +14,11 @@
 #include "core/testing/DummyPageHolder.h"
 #include "platform/loader/fetch/MemoryCache.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
-#include "platform/network/ResourceLoadPriority.h"
+#include "platform/loader/fetch/ResourceLoadPriority.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include <base/macros.h>
-#include <memory>
 
 namespace blink {
 
@@ -105,10 +105,10 @@ TEST(LinkLoaderTest, Preload) {
        true, ReferrerPolicyDefault},
       // TODO(yoav): It doesn't seem like the audio context is ever used. That
       // should probably be fixed (or we can consolidate audio and video).
-      {"http://example.test/cat.wav", "media", "", "", ReferrerPolicyDefault,
+      {"http://example.test/cat.wav", "audio", "", "", ReferrerPolicyDefault,
        ResourceLoadPriorityLow, WebURLRequest::RequestContextVideo, true, true,
        ReferrerPolicyDefault},
-      {"http://example.test/cat.mp4", "media", "", "", ReferrerPolicyDefault,
+      {"http://example.test/cat.mp4", "video", "", "", ReferrerPolicyDefault,
        ResourceLoadPriorityLow, WebURLRequest::RequestContextVideo, true, true,
        ReferrerPolicyDefault},
       {"http://example.test/cat.vtt", "track", "", "", ReferrerPolicyDefault,
@@ -151,16 +151,16 @@ TEST(LinkLoaderTest, Preload) {
       {"http://example.test/cat.css", "style", "text/sass", "",
        ReferrerPolicyDefault, ResourceLoadPriorityUnresolved,
        WebURLRequest::RequestContextStyle, false, false, ReferrerPolicyDefault},
-      {"http://example.test/cat.wav", "media", "audio/wav", "",
+      {"http://example.test/cat.wav", "audio", "audio/wav", "",
        ReferrerPolicyDefault, ResourceLoadPriorityLow,
        WebURLRequest::RequestContextVideo, true, true, ReferrerPolicyDefault},
-      {"http://example.test/cat.wav", "media", "audio/mp57", "",
+      {"http://example.test/cat.wav", "audio", "audio/mp57", "",
        ReferrerPolicyDefault, ResourceLoadPriorityUnresolved,
        WebURLRequest::RequestContextVideo, false, false, ReferrerPolicyDefault},
-      {"http://example.test/cat.webm", "media", "video/webm", "",
+      {"http://example.test/cat.webm", "video", "video/webm", "",
        ReferrerPolicyDefault, ResourceLoadPriorityLow,
        WebURLRequest::RequestContextVideo, true, true, ReferrerPolicyDefault},
-      {"http://example.test/cat.mp199", "media", "video/mp199", "",
+      {"http://example.test/cat.mp199", "video", "video/mp199", "",
        ReferrerPolicyDefault, ResourceLoadPriorityUnresolved,
        WebURLRequest::RequestContextVideo, false, false, ReferrerPolicyDefault},
       {"http://example.test/cat.vtt", "track", "text/vtt", "",

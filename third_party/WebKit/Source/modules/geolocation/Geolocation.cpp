@@ -27,9 +27,11 @@
 
 #include "modules/geolocation/Geolocation.h"
 
+#include "bindings/core/v8/SourceLocation.h"
 #include "core/dom/Document.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/HostsUsingFeatures.h"
+#include "core/frame/PerformanceMonitor.h"
 #include "core/frame/Settings.h"
 #include "core/inspector/InspectorInstrumentation.h"
 #include "modules/geolocation/Coordinates.h"
@@ -44,13 +46,13 @@
 namespace blink {
 namespace {
 
-static const char permissionDeniedErrorMessage[] = "User denied Geolocation";
-static const char failedToStartServiceErrorMessage[] =
+const char permissionDeniedErrorMessage[] = "User denied Geolocation";
+const char failedToStartServiceErrorMessage[] =
     "Failed to start Geolocation service";
-static const char framelessDocumentErrorMessage[] =
+const char framelessDocumentErrorMessage[] =
     "Geolocation cannot be used in frameless documents";
 
-static Geoposition* createGeoposition(
+Geoposition* createGeoposition(
     const device::mojom::blink::Geoposition& position) {
   Coordinates* coordinates = Coordinates::create(
       position.latitude, position.longitude,
@@ -63,7 +65,7 @@ static Geoposition* createGeoposition(
                              convertSecondsToDOMTimeStamp(position.timestamp));
 }
 
-static PositionError* createPositionError(
+PositionError* createPositionError(
     device::mojom::blink::Geoposition::ErrorCode mojomErrorCode,
     const String& error) {
   PositionError::ErrorCode errorCode = PositionError::kPositionUnavailable;
@@ -80,6 +82,15 @@ static PositionError* createPositionError(
       break;
   }
   return PositionError::create(errorCode, error);
+}
+
+static void reportGeolocationViolation(ExecutionContext* context) {
+  if (!UserGestureIndicator::processingUserGesture()) {
+    PerformanceMonitor::reportGenericViolation(
+        context, PerformanceMonitor::kDiscouragedAPIUse,
+        "Only request geolocation information in response to a user gesture.",
+        0, nullptr);
+  }
 }
 
 }  // namespace
@@ -168,8 +179,8 @@ void Geolocation::getCurrentPosition(PositionCallback* successCallback,
   if (!frame())
     return;
 
-  InspectorInstrumentation::NativeBreakpoint nativeBreakpoint(
-      document(), "navigator.geolocation.getCurrentPosition", true, true);
+  reportGeolocationViolation(document());
+  probe::breakableLocation(document(), "Geolocation.getCurrentPosition");
 
   GeoNotifier* notifier =
       GeoNotifier::create(this, successCallback, errorCallback, options);
@@ -184,8 +195,8 @@ int Geolocation::watchPosition(PositionCallback* successCallback,
   if (!frame())
     return 0;
 
-  InspectorInstrumentation::NativeBreakpoint nativeBreakpoint(
-      document(), "navigator.geolocation.watchPosition", true, true);
+  reportGeolocationViolation(document());
+  probe::breakableLocation(document(), "Geolocation.watchPosition");
 
   GeoNotifier* notifier =
       GeoNotifier::create(this, successCallback, errorCallback, options);
@@ -233,7 +244,7 @@ void Geolocation::startRequest(GeoNotifier* notifier) {
 
 void Geolocation::fatalErrorOccurred(GeoNotifier* notifier) {
   // This request has failed fatally. Remove it from our lists.
-  m_oneShots.remove(notifier);
+  m_oneShots.erase(notifier);
   m_watchers.remove(notifier);
 
   if (!hasListeners())
@@ -248,7 +259,7 @@ void Geolocation::requestUsesCachedPosition(GeoNotifier* notifier) {
   // If this is a one-shot request, stop it. Otherwise, if the watch still
   // exists, start the service to get updates.
   if (m_oneShots.contains(notifier)) {
-    m_oneShots.remove(notifier);
+    m_oneShots.erase(notifier);
   } else if (m_watchers.contains(notifier)) {
     if (notifier->options().timeout())
       startUpdating(notifier);
@@ -261,7 +272,7 @@ void Geolocation::requestUsesCachedPosition(GeoNotifier* notifier) {
 
 void Geolocation::requestTimedOut(GeoNotifier* notifier) {
   // If this is a one-shot request, stop it.
-  m_oneShots.remove(notifier);
+  m_oneShots.erase(notifier);
 
   if (!hasListeners())
     stopUpdating();
@@ -282,7 +293,7 @@ void Geolocation::clearWatch(int watchID) {
     return;
 
   if (GeoNotifier* notifier = m_watchers.find(watchID))
-    m_pendingForPermissionNotifiers.remove(notifier);
+    m_pendingForPermissionNotifiers.erase(notifier);
   m_watchers.remove(watchID);
 
   if (!hasListeners())

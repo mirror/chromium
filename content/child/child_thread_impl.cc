@@ -41,7 +41,6 @@
 #include "content/child/fileapi/webfilesystem_impl.h"
 #include "content/child/memory/child_memory_message_filter.h"
 #include "content/child/notifications/notification_dispatcher.h"
-#include "content/child/push_messaging/push_dispatcher.h"
 #include "content/child/quota_dispatcher.h"
 #include "content/child/quota_message_filter.h"
 #include "content/child/resource_dispatcher.h"
@@ -86,8 +85,8 @@ namespace {
 // How long to wait for a connection to the browser process before giving up.
 const int kConnectionTimeoutS = 15;
 
-base::LazyInstance<base::ThreadLocalPointer<ChildThreadImpl> > g_lazy_tls =
-    LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<base::ThreadLocalPointer<ChildThreadImpl>>::DestructorAtExit
+    g_lazy_tls = LAZY_INSTANCE_INITIALIZER;
 
 // This isn't needed on Windows because there the sandbox's job object
 // terminates child processes automatically. For unsandboxed processes (i.e.
@@ -227,7 +226,8 @@ void QuitClosure::PostQuitFromNonMainThread() {
   closure_.Run();
 }
 
-base::LazyInstance<QuitClosure> g_quit_closure = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<QuitClosure>::DestructorAtExit g_quit_closure =
+    LAZY_INSTANCE_INITIALIZER;
 #endif
 
 void InitializeMojoIPCChannel() {
@@ -490,13 +490,11 @@ void ChildThreadImpl::Init(const Options& options) {
                                               quota_message_filter_.get()));
   notification_dispatcher_ =
       new NotificationDispatcher(thread_safe_sender_.get());
-  push_dispatcher_ = new PushDispatcher(thread_safe_sender_.get());
 
   channel_->AddFilter(histogram_message_filter_.get());
   channel_->AddFilter(resource_message_filter_.get());
   channel_->AddFilter(quota_message_filter_->GetFilter());
   channel_->AddFilter(notification_dispatcher_->GetFilter());
-  channel_->AddFilter(push_dispatcher_->GetFilter());
   channel_->AddFilter(service_worker_message_filter_->GetFilter());
 
   if (!IsInBrowserProcess()) {

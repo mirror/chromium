@@ -26,6 +26,7 @@
 #include "platform/geometry/FloatRect.h"
 #include "platform/transforms/AffineTransform.h"
 #include "wtf/text/ParsingUtilities.h"
+#include "wtf/text/StringBuilder.h"
 #include "wtf/text/WTFString.h"
 
 namespace blink {
@@ -290,10 +291,10 @@ AffineTransform SVGPreserveAspectRatio::getCTM(float logicalX,
                                                float logicalHeight,
                                                float physicalWidth,
                                                float physicalHeight) const {
-  ASSERT(logicalWidth);
-  ASSERT(logicalHeight);
-  ASSERT(physicalWidth);
-  ASSERT(physicalHeight);
+  DCHECK(logicalWidth);
+  DCHECK(logicalHeight);
+  DCHECK(physicalWidth);
+  DCHECK(physicalHeight);
 
   AffineTransform transform;
   if (m_align == kSvgPreserveaspectratioUnknown)
@@ -429,7 +430,7 @@ String SVGPreserveAspectRatio::valueAsString() const {
 }
 
 void SVGPreserveAspectRatio::add(SVGPropertyBase* other, SVGElement*) {
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
 }
 
 void SVGPreserveAspectRatio::calculateAnimatedValue(
@@ -440,7 +441,7 @@ void SVGPreserveAspectRatio::calculateAnimatedValue(
     SVGPropertyBase* toValue,
     SVGPropertyBase*,
     SVGElement*) {
-  ASSERT(animationElement);
+  DCHECK(animationElement);
 
   bool useToValue;
   animationElement->animateDiscreteType(percentage, false, true, useToValue);

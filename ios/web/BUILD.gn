@@ -19,9 +19,11 @@ source_set("web_arc") {
   deps = [
     ":core",
     ":js_resources",
+    ":reload_type",
     ":resources",
     ":user_agent",
     "//base",
+    "//components/payments/core",
     "//components/url_formatter",
     "//ios/net",
     "//ios/third_party/blink:html_tokenizer",
@@ -55,8 +57,6 @@ source_set("web_arc") {
     "navigation/crw_session_controller+private_constructors.h",
     "navigation/crw_session_controller.h",
     "navigation/crw_session_controller.mm",
-    "navigation/crw_session_entry.h",
-    "navigation/crw_session_entry.mm",
     "navigation/navigation_item_facade_delegate.h",
     "navigation/navigation_item_impl.h",
     "navigation/navigation_item_impl.mm",
@@ -151,6 +151,7 @@ source_set("web_arc") {
     "public/web_state/js/crw_js_injection_evaluator.h",
     "public/web_state/js/crw_js_injection_manager.h",
     "public/web_state/js/crw_js_injection_receiver.h",
+    "public/web_state/navigation_context.h",
     "public/web_state/page_display_state.h",
     "public/web_state/page_display_state.mm",
     "public/web_state/ui/crw_content_view.h",
@@ -181,8 +182,6 @@ source_set("web_arc") {
     "url_scheme_util.mm",
     "url_util.cc",
     "web_kit_constants.cc",
-    "web_state/blocked_popup_info.h",
-    "web_state/blocked_popup_info.mm",
     "web_state/context_menu_params.mm",
     "web_state/context_menu_params_utils.h",
     "web_state/context_menu_params_utils.mm",
@@ -208,6 +207,8 @@ source_set("web_arc") {
     "web_state/js/crw_js_window_id_manager.mm",
     "web_state/js/page_script_util.h",
     "web_state/js/page_script_util.mm",
+    "web_state/navigation_context_impl.h",
+    "web_state/navigation_context_impl.mm",
     "web_state/page_viewport_state.h",
     "web_state/page_viewport_state.mm",
     "web_state/ui/crw_context_menu_controller.h",
@@ -257,13 +258,13 @@ source_set("web") {
   deps = [
     ":core",
     ":js_resources",
+    ":reload_type",
     ":resources",
     ":user_agent",
     "//base",
     "//components/url_formatter",
     "//ios/net",
     "//ios/third_party/blink:html_tokenizer",
-    "//ios/web/public/image_fetcher",
     "//mojo/public/cpp/system",
     "//mojo/public/js",
     "//net",
@@ -346,6 +347,12 @@ source_set("user_agent") {
   configs += [ "//build/config/compiler:enable_arc" ]
 }
 
+source_set("reload_type") {
+  sources = [
+    "public/reload_type.h",
+  ]
+}
+
 source_set("earl_grey_test_support") {
   testonly = true
 
@@ -380,7 +387,6 @@ source_set("test_support") {
     "//ios/testing:ios_test_support",
     "//ios/testing:ocmock_support",
     "//ios/third_party/gcdwebserver",
-    "//ios/web/public/image_fetcher",
     "//ios/web/test:mojo_bindings",
     "//net:test_support",
     "//testing/gmock",
@@ -410,6 +416,10 @@ source_set("test_support") {
     "public/test/fakes/test_web_state.mm",
     "public/test/fakes/test_web_state_delegate.h",
     "public/test/fakes/test_web_state_delegate.mm",
+    "public/test/fakes/test_web_state_observer.h",
+    "public/test/fakes/test_web_state_observer.mm",
+    "public/test/fakes/test_web_state_observer_util.h",
+    "public/test/fakes/test_web_state_observer_util.mm",
     "public/test/fakes/test_web_view_content_view.h",
     "public/test/fakes/test_web_view_content_view.mm",
     "public/test/http_server.h",
@@ -418,8 +428,6 @@ source_set("test_support") {
     "public/test/http_server_util.mm",
     "public/test/js_test_util.h",
     "public/test/js_test_util.mm",
-    "public/test/mock_image_data_fetcher.h",
-    "public/test/mock_image_data_fetcher.mm",
     "public/test/native_controller_test_util.h",
     "public/test/native_controller_test_util.mm",
     "public/test/navigation_test_util.h",
@@ -450,6 +458,7 @@ source_set("test_support") {
     "public/test/test_redirect_observer.mm",
     "public/test/test_web_thread.h",
     "public/test/test_web_thread_bundle.h",
+    "public/test/url_test_util.h",
     "public/test/web_js_test.h",
     "public/test/web_test.h",
     "public/test/web_test.mm",
@@ -464,6 +473,7 @@ source_set("test_support") {
     "test/test_url_constants.h",
     "test/test_web_thread.cc",
     "test/test_web_thread_bundle.cc",
+    "test/url_test_util.mm",
     "test/web_int_test.h",
     "test/web_int_test.mm",
     "test/web_test_suite.mm",
@@ -507,13 +517,14 @@ test("ios_web_unittests") {
     ":ios_web_unittests_bundle_data",
     ":run_all_unittests",
     ":test_support",
+    ":user_agent",
     ":web",
     "//base",
     "//base/test:test_support",
+    "//components/payments/core",
     "//components/url_formatter",
     "//ios/net",
     "//ios/testing:ocmock_support",
-    "//ios/web/public/image_fetcher:unit_tests",
     "//ios/web/test:mojo_bindings",
     "//net:test_support",
     "//services/service_manager/public/cpp",
@@ -529,7 +540,6 @@ test("ios_web_unittests") {
     "history_state_util_unittest.mm",
     "navigation/crw_navigation_item_storage_unittest.mm",
     "navigation/crw_session_controller_unittest.mm",
-    "navigation/crw_session_entry_unittest.mm",
     "navigation/crw_session_storage_unittest.mm",
     "navigation/navigation_item_impl_unittest.mm",
     "navigation/navigation_item_storage_test_util.h",
@@ -549,6 +559,7 @@ test("ios_web_unittests") {
     "public/serializable_user_data_manager_unittest.mm",
     "public/test/crw_mock_web_state_delegate.h",
     "public/test/crw_mock_web_state_delegate.mm",
+    "public/user_agent_unittest.mm",
     "public/web_state/page_viewport_state_unittest.mm",
     "test/web_test_unittest.mm",
     "url_scheme_util_unittest.mm",
@@ -564,6 +575,7 @@ test("ios_web_unittests") {
     "web_state/js/crw_js_post_request_loader_unittest.mm",
     "web_state/js/crw_js_window_id_manager_unittest.mm",
     "web_state/js/page_script_util_unittest.mm",
+    "web_state/navigation_context_impl_unittest.mm",
     "web_state/page_display_state_unittest.mm",
     "web_state/ui/crw_web_controller_container_view_unittest.mm",
     "web_state/ui/crw_web_controller_observer_unittest.mm",
@@ -576,6 +588,7 @@ test("ios_web_unittests") {
     "web_state/web_state_delegate_bridge_unittest.mm",
     "web_state/web_state_impl_unittest.mm",
     "web_state/web_state_observer_bridge_unittest.mm",
+    "web_state/web_state_unittest.mm",
     "web_state/web_view_internal_creation_util_unittest.mm",
     "web_state/wk_web_view_security_util_unittest.mm",
     "webui/crw_web_ui_manager_unittest.mm",
@@ -593,6 +606,7 @@ test("ios_web_inttests") {
     ":web",
     "//base/test:test_support",
     "//ios/testing:http_server_bundle_data",
+    "//ios/testing:ios_test_support",
     "//ios/web/test:mojo_bindings",
     "//ios/web/test:packed_resources",
     "//ios/web/test:resources",
@@ -609,6 +623,7 @@ test("ios_web_inttests") {
     "public/test/http_server_inttest.mm",
     "test/run_all_unittests.cc",
     "web_state/http_auth_inttest.mm",
+    "web_state/navigation_callbacks_inttest.mm",
     "webui/web_ui_mojo_inttest.mm",
   ]
 
@@ -659,7 +674,6 @@ js_compile_checked("js_resources") {
 
 grit("resources") {
   source = "ios_web_resources.grd"
-  use_qualified_include = true
   outputs = [
     "grit/ios_web_resources.h",
     "ios_web_resources.pak",

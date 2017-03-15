@@ -17,10 +17,10 @@
 #include "cc/surfaces/display_client.h"
 #include "cc/surfaces/display_scheduler.h"
 #include "cc/surfaces/frame_sink_id.h"
+#include "cc/surfaces/local_surface_id_allocator.h"
 #include "cc/surfaces/surface.h"
 #include "cc/surfaces/surface_factory.h"
 #include "cc/surfaces/surface_factory_client.h"
-#include "cc/surfaces/surface_id_allocator.h"
 #include "cc/surfaces/surface_manager.h"
 #include "cc/test/fake_output_surface.h"
 #include "cc/test/scheduler_test_common.h"
@@ -151,7 +151,7 @@ class DisplayTest : public testing::Test {
   SurfaceManager manager_;
   FakeSurfaceFactoryClient surface_factory_client_;
   SurfaceFactory factory_;
-  SurfaceIdAllocator id_allocator_;
+  LocalSurfaceIdAllocator id_allocator_;
   scoped_refptr<base::NullTaskRunner> task_runner_;
   TestSharedBitmapManager shared_bitmap_manager_;
   std::unique_ptr<BeginFrameSource> begin_frame_source_;
@@ -184,7 +184,7 @@ TEST_F(DisplayTest, DisplayDamaged) {
 
   StubDisplayClient client;
   display_->Initialize(&client, &manager_);
-  display_->SetColorSpace(color_space_1);
+  display_->SetColorSpace(color_space_1, color_space_1);
 
   LocalSurfaceId local_surface_id(id_allocator_.GenerateId());
   EXPECT_FALSE(scheduler_->damaged);
@@ -241,7 +241,7 @@ TEST_F(DisplayTest, DisplayDamaged) {
 
     scheduler_->swapped = false;
     EXPECT_EQ(color_space_1, output_surface_->last_reshape_color_space());
-    display_->SetColorSpace(color_space_2);
+    display_->SetColorSpace(color_space_2, color_space_2);
     display_->DrawAndSwap();
     EXPECT_EQ(color_space_2, output_surface_->last_reshape_color_space());
     EXPECT_TRUE(scheduler_->swapped);

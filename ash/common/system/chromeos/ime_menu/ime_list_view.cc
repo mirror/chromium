@@ -16,14 +16,14 @@
 #include "ash/common/system/tray/tray_popup_utils.h"
 #include "ash/common/system/tray/tri_view.h"
 #include "ash/common/wm_shell.h"
-#include "grit/ash_resources.h"
-#include "grit/ash_strings.h"
+#include "ash/resources/grit/ash_resources.h"
+#include "ash/resources/vector_icons/vector_icons.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/paint_vector_icon.h"
-#include "ui/gfx/vector_icons_public.h"
 #include "ui/keyboard/keyboard_util.h"
 #include "ui/views/background.h"
 #include "ui/views/border.h"
@@ -114,7 +114,7 @@ class ImeListItemView : public ActionableView {
     tri_view->AddView(TriView::Container::START, id_label);
 
     // The label shows the IME name.
-    auto label_view = TrayPopupUtils::CreateDefaultLabel();
+    auto* label_view = TrayPopupUtils::CreateDefaultLabel();
     label_view->SetText(label);
     TrayPopupItemStyle style(
         TrayPopupItemStyle::FontStyle::DETAILED_VIEW_LABEL);
@@ -126,8 +126,8 @@ class ImeListItemView : public ActionableView {
     if (selected) {
       // The checked button indicates the IME is selected.
       views::ImageView* checked_image = TrayPopupUtils::CreateMainImageView();
-      checked_image->SetImage(gfx::CreateVectorIcon(
-          gfx::VectorIconId::CHECK_CIRCLE, kMenuIconSize, button_color));
+      checked_image->SetImage(
+          gfx::CreateVectorIcon(kCheckCircleIcon, kMenuIconSize, button_color));
       tri_view->AddView(TriView::Container::END, checked_image);
     }
     SetAccessibleName(label_view->text());
@@ -205,7 +205,7 @@ class MaterialKeyboardStatusRowView : public views::View {
     tri_view->AddView(TriView::Container::START, keyboard_image);
 
     // The on-screen keyboard label ('On-screen keyboard').
-    auto label = TrayPopupUtils::CreateDefaultLabel();
+    auto* label = TrayPopupUtils::CreateDefaultLabel();
     label->SetText(ui::ResourceBundle::GetSharedInstance().GetLocalizedString(
         IDS_ASH_STATUS_TRAY_ACCESSIBILITY_VIRTUAL_KEYBOARD));
     TrayPopupItemStyle style(

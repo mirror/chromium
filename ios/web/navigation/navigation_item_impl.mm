@@ -10,7 +10,10 @@
 #include <utility>
 
 #include "base/logging.h"
+#include "base/strings/utf_string_conversions.h"
 #include "components/url_formatter/url_formatter.h"
+#import "ios/web/navigation/navigation_manager_impl.h"
+#import "ios/web/public/web_client.h"
 #include "ui/base/page_transition_types.h"
 #include "ui/gfx/text_elider.h"
 
@@ -39,12 +42,12 @@ std::unique_ptr<NavigationItem> NavigationItem::Create() {
 NavigationItemImpl::NavigationItemImpl()
     : unique_id_(GetUniqueIDInConstructor()),
       transition_type_(ui::PAGE_TRANSITION_LINK),
-      is_overriding_user_agent_(false),
+      user_agent_type_(UserAgentType::MOBILE),
       is_created_from_push_state_(false),
       has_state_been_replaced_(false),
       is_created_from_hash_change_(false),
       should_skip_repost_form_confirmation_(false),
-      is_renderer_initiated_(false),
+      navigation_initiation_type_(web::NavigationInitiationType::NONE),
       is_unsafe_(false),
       facade_delegate_(nullptr) {}
 
@@ -63,7 +66,7 @@ NavigationItemImpl::NavigationItemImpl(const NavigationItemImpl& item)
       favicon_(item.favicon_),
       ssl_(item.ssl_),
       timestamp_(item.timestamp_),
-      is_overriding_user_agent_(item.is_overriding_user_agent_),
+      user_agent_type_(item.user_agent_type_),
       http_request_headers_([item.http_request_headers_ copy]),
       serialized_state_object_([item.serialized_state_object_ copy]),
       is_created_from_push_state_(item.is_created_from_push_state_),
@@ -72,7 +75,7 @@ NavigationItemImpl::NavigationItemImpl(const NavigationItemImpl& item)
       should_skip_repost_form_confirmation_(
           item.should_skip_repost_form_confirmation_),
       post_data_([item.post_data_ copy]),
-      is_renderer_initiated_(item.is_renderer_initiated_),
+      navigation_initiation_type_(item.navigation_initiation_type_),
       is_unsafe_(item.is_unsafe_),
       cached_display_title_(item.cached_display_title_),
       facade_delegate_(nullptr) {}
@@ -153,23 +156,8 @@ const base::string16& NavigationItemImpl::GetTitleForDisplay() const {
   if (!cached_display_title_.empty())
     return cached_display_title_;
 
-  // Use the virtual URL first if any, and fall back on using the real URL.
-  base::string16 title;
-  if (!virtual_url_.is_empty()) {
-    title = url_formatter::FormatUrl(virtual_url_);
-  } else if (!url_.is_empty()) {
-    title = url_formatter::FormatUrl(url_);
-  }
-
-  // For file:// URLs use the filename as the title, not the full path.
-  if (url_.SchemeIsFile()) {
-    base::string16::size_type slashpos = title.rfind('/');
-    if (slashpos != base::string16::npos)
-      title = title.substr(slashpos + 1);
-  }
-
-  const size_t kMaxTitleChars = 4 * 1024;
-  gfx::ElideString(title, kMaxTitleChars, &cached_display_title_);
+  cached_display_title_ =
+      NavigationItemImpl::GetDisplayTitleForURL(GetVirtualURL());
   return cached_display_title_;
 }
 
@@ -205,13 +193,14 @@ base::Time NavigationItemImpl::GetTimestamp() const {
   return timestamp_;
 }
 
-void NavigationItemImpl::SetIsOverridingUserAgent(
-    bool is_overriding_user_agent) {
-  is_overriding_user_agent_ = is_overriding_user_agent;
+void NavigationItemImpl::SetUserAgentType(UserAgentType type) {
+  user_agent_type_ = type;
+  DCHECK_EQ(GetWebClient()->IsAppSpecificURL(GetVirtualURL()),
+            user_agent_type_ == UserAgentType::NONE);
 }
 
-bool NavigationItemImpl::IsOverridingUserAgent() const {
-  return is_overriding_user_agent_;
+UserAgentType NavigationItemImpl::GetUserAgentType() const {
+  return user_agent_type_;
 }
 
 bool NavigationItemImpl::HasPostData() const {
@@ -248,6 +237,16 @@ void NavigationItemImpl::SetIsCreatedFromPushState(bool push_state) {
 
 bool NavigationItemImpl::IsCreatedFromPushState() const {
   return is_created_from_push_state_;
+}
+
+void NavigationItemImpl::SetNavigationInitiationType(
+    web::NavigationInitiationType navigation_initiation_type) {
+  navigation_initiation_type_ = navigation_initiation_type;
+}
+
+web::NavigationInitiationType NavigationItemImpl::NavigationInitiationType()
+    const {
+  return navigation_initiation_type_;
 }
 
 void NavigationItemImpl::SetHasStateBeenReplaced(bool replace_state) {
@@ -294,9 +293,41 @@ void NavigationItemImpl::ResetHttpRequestHeaders() {
 }
 
 void NavigationItemImpl::ResetForCommit() {
-  // Any state that only matters when a navigation item is pending should be
-  // cleared here.
-  set_is_renderer_initiated(false);
+  // Navigation initiation type is only valid for pending navigations, thus
+  // always reset to NONE after the item is committed.
+  SetNavigationInitiationType(web::NavigationInitiationType::NONE);
 }
+
+// static
+base::string16 NavigationItemImpl::GetDisplayTitleForURL(const GURL& url) {
+  if (url.is_empty())
+    return base::string16();
+
+  base::string16 title = url_formatter::FormatUrl(url);
+
+  // For file:// URLs use the filename as the title, not the full path.
+  if (url.SchemeIsFile()) {
+    base::string16::size_type slashpos = title.rfind('/');
+    if (slashpos != base::string16::npos)
+      title = title.substr(slashpos + 1);
+  }
+
+  const size_t kMaxTitleChars = 4 * 1024;
+  gfx::ElideString(title, kMaxTitleChars, &title);
+  return title;
+}
+
+#ifndef NDEBUG
+NSString* NavigationItemImpl::GetDescription() const {
+  return [NSString
+      stringWithFormat:
+          @"url:%s originalurl:%s title:%s transition:%d displayState:%@ "
+          @"userAgentType:%s",
+          url_.spec().c_str(), original_request_url_.spec().c_str(),
+          base::UTF16ToUTF8(title_).c_str(), transition_type_,
+          page_display_state_.GetDescription(),
+          GetUserAgentTypeDescription(user_agent_type_).c_str()];
+}
+#endif
 
 }  // namespace web

@@ -128,7 +128,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   // WebGL texImage2D, ImageBitmap, printing and capturing capabilities.
   void paint(blink::WebCanvas* canvas,
              const blink::WebRect& rect,
-             SkPaint& paint) override;
+             cc::PaintFlags& flags) override;
 
   // True if the loaded media has a playable video/audio track.
   bool hasVideo() const override;
@@ -184,6 +184,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   void enteredFullscreen() override;
   void exitedFullscreen() override;
   void becameDominantVisibleContent(bool isDominant) override;
+  void setIsEffectivelyFullscreen(bool isEffectivelyFullscreen) override;
 
   void setPoster(const blink::WebURL& poster) override;
 
@@ -241,6 +242,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
 
  private:
   friend class WebMediaPlayerImplTest;
+  friend class WebMediaPlayerImplBackgroundBehaviorTest;
 
   void EnableOverlay();
   void DisableOverlay();
@@ -446,6 +448,10 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   void ReportTimeFromForegroundToFirstFrame(base::TimeTicks foreground_time,
                                             base::TimeTicks new_frame_time);
 
+  // Records |duration| to the appropriate metric based on whether we're
+  // handling a src= or MSE based playback.
+  void RecordUnderflowDuration(base::TimeDelta duration);
+
   blink::WebLocalFrame* frame_;
 
   // The playback state last reported to |delegate_|, to avoid setting duplicate
@@ -473,9 +479,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   scoped_refptr<base::TaskRunner> worker_task_runner_;
   scoped_refptr<MediaLog> media_log_;
 
-  // |pipeline_controller_| references |pipeline_| and therefore must be
-  // constructed after and destructed before |pipeline_|.
-  PipelineImpl pipeline_;
+  // |pipeline_controller_| owns an instance of Pipeline.
   PipelineController pipeline_controller_;
 
   // The LoadType passed in the |load_type| parameter of the load() call.
@@ -659,8 +663,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
   std::unique_ptr<WatchTimeReporter> watch_time_reporter_;
   bool is_encrypted_;
 
-  // Number of times we've reached BUFFERING_HAVE_NOTHING during playback.
-  int underflow_count_;
+  // Elapsed time since we've last reached BUFFERING_HAVE_NOTHING.
   std::unique_ptr<base::ElapsedTimer> underflow_timer_;
 
   // Used to track loading progress, used by IsPrerollAttemptNeeded().
@@ -699,6 +702,13 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
 
   // Pipeline media duration overridden by tests.
   base::Optional<base::TimeDelta> pipeline_media_duration_for_test_;
+
+  // Whether the video requires a user gesture to resume after it was paused in
+  // the background. Affects the value of ShouldPauseVideoWhenHidden().
+  bool video_locked_when_paused_when_hidden_ = false;
+
+  // Whether embedded media experience is currently enabled.
+  bool embedded_media_experience_enabled_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(WebMediaPlayerImpl);
 };

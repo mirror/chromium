@@ -20,6 +20,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/observer_list.h"
 #include "base/strings/string16.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
@@ -56,7 +57,6 @@
 #include "net/base/backoff_entry.h"
 #include "url/gurl.h"
 
-class Profile;
 class ProfileOAuth2TokenService;
 class SigninManagerWrapper;
 
@@ -176,8 +176,8 @@ class ProfileSyncService : public syncer::SyncServiceBase,
                            public SigninManagerBase::Observer,
                            public GaiaCookieManagerService::Observer {
  public:
-  typedef syncer::SyncEngine::Status Status;
-  typedef base::Callback<bool(void)> PlatformSyncAllowedProvider;
+  using Status = syncer::SyncEngine::Status;
+  using PlatformSyncAllowedProvider = base::Callback<bool(void)>;
 
   enum SyncEventCodes {
     MIN_SYNC_EVENT_CODE = 0,
@@ -240,8 +240,6 @@ class ProfileSyncService : public syncer::SyncServiceBase,
     scoped_refptr<net::URLRequestContextGetter> url_request_context;
     std::string debug_identifier;
     version_info::Channel channel = version_info::Channel::UNKNOWN;
-    scoped_refptr<base::SequencedTaskRunner> blocking_task_runner;
-    base::FilePath local_sync_backend_folder;
 
    private:
     DISALLOW_COPY_AND_ASSIGN(InitParams);
@@ -553,9 +551,13 @@ class ProfileSyncService : public syncer::SyncServiceBase,
       const PlatformSyncAllowedProvider& platform_sync_allowed_provider);
 
   // Returns a function for |type| that will create a ModelTypeStore that shares
-  // the sync LevelDB backend.
-  syncer::ModelTypeStoreFactory GetModelTypeStoreFactory(
-      syncer::ModelType type);
+  // the sync LevelDB backend. |base_path| should be set to profile path.
+  // |sequenced_worker_pool| is obtained from content::BrowserThread or
+  // web::WebThread depending on platform.
+  static syncer::ModelTypeStoreFactory GetModelTypeStoreFactory(
+      syncer::ModelType type,
+      const base::FilePath& base_path,
+      base::SequencedWorkerPool* sequenced_worker_pool);
 
   // Needed to test whether the directory is deleted properly.
   base::FilePath GetDirectoryPathForTest() const;
@@ -568,6 +570,10 @@ class ProfileSyncService : public syncer::SyncServiceBase,
 
   // Triggers sync cycle with request to update specified |types|.
   void RefreshTypesForTest(syncer::ModelTypeSet types);
+
+  // Calls sync engine to send ClearServerDataMessage to server. This is used
+  // to start accounts with a clean slate when performing end to end testing.
+  void ClearServerDataForTest(const base::Closure& callback);
 
  protected:
   // SyncServiceBase implementation.
@@ -760,9 +766,6 @@ class ProfileSyncService : public syncer::SyncServiceBase,
   // The request context in which sync should operate.
   scoped_refptr<net::URLRequestContextGetter> url_request_context_;
 
-  // The task runner to use for blocking IO operations.
-  scoped_refptr<base::SequencedTaskRunner> blocking_task_runner_;
-
   // Indicates if this is the first time sync is being configured.  This value
   // is equal to !IsFirstSetupComplete() at the time of OnEngineInitialized().
   bool is_first_time_sync_configure_;
@@ -785,9 +788,6 @@ class ProfileSyncService : public syncer::SyncServiceBase,
   // Set to true if a signin has completed but we're still waiting for the
   // engine to refresh its credentials.
   bool is_auth_in_progress_;
-
-  // The location where the local sync backend stores its data.
-  base::FilePath local_sync_backend_folder_;
 
   // Information describing an unrecoverable error.
   UnrecoverableErrorReason unrecoverable_error_reason_;

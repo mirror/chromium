@@ -9,8 +9,8 @@
 #include "base/memory/ptr_util.h"
 #include "gpu/ipc/common/gpu_memory_buffer_support.h"
 #include "ui/gfx/buffer_format_util.h"
+#include "ui/gfx/native_pixmap.h"
 #include "ui/ozone/public/client_native_pixmap_factory.h"
-#include "ui/ozone/public/native_pixmap.h"
 #include "ui/ozone/public/ozone_platform.h"
 #include "ui/ozone/public/surface_factory_ozone.h"
 
@@ -97,7 +97,7 @@ base::Closure GpuMemoryBufferImplOzoneNativePixmap::AllocateForTesting(
           ->GetSurfaceFactoryOzone()
           ->CreateNativePixmap(gfx::kNullAcceleratedWidget, size, format,
                                usage);
-  handle->type = gfx::OZONE_NATIVE_PIXMAP;
+  handle->type = gfx::NATIVE_PIXMAP;
   handle->native_pixmap_handle = pixmap->ExportHandle();
   return base::Bind(&FreeNativePixmapForTesting, pixmap);
 }
@@ -127,7 +127,7 @@ int GpuMemoryBufferImplOzoneNativePixmap::stride(size_t plane) const {
 gfx::GpuMemoryBufferHandle GpuMemoryBufferImplOzoneNativePixmap::GetHandle()
     const {
   gfx::GpuMemoryBufferHandle handle;
-  handle.type = gfx::OZONE_NATIVE_PIXMAP;
+  handle.type = gfx::NATIVE_PIXMAP;
   handle.id = id_;
   if (fd_.is_valid()) {
     handle.native_pixmap_handle.fds.emplace_back(fd_.get(),

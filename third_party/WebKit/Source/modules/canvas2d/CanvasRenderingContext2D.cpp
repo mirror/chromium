@@ -461,8 +461,8 @@ void CanvasRenderingContext2D::setFont(const String& newFont) {
         m_fontsResolvedUsingCurrentStyle.find(newFont);
     if (i != m_fontsResolvedUsingCurrentStyle.end()) {
       DCHECK(m_fontLRUList.contains(newFont));
-      m_fontLRUList.remove(newFont);
-      m_fontLRUList.add(newFont);
+      m_fontLRUList.erase(newFont);
+      m_fontLRUList.insert(newFont);
       modifiableState().setFont(
           i->value, canvas()->document().styleEngine().fontSelector());
     } else {
@@ -483,7 +483,7 @@ void CanvasRenderingContext2D::setFont(const String& newFont) {
                                                              *parsedStyle);
       m_fontsResolvedUsingCurrentStyle.insert(newFont, fontStyle->font());
       DCHECK(!m_fontLRUList.contains(newFont));
-      m_fontLRUList.add(newFont);
+      m_fontLRUList.insert(newFont);
       pruneLocalFontCache(canvasFontCache->hardMaxFonts());  // hard limit
       m_shouldPruneLocalFontCache = true;                    // apply soft limit
       modifiableState().setFont(
@@ -526,7 +526,7 @@ void CanvasRenderingContext2D::pruneLocalFontCache(size_t targetSize) {
     return;
   }
   while (m_fontLRUList.size() > targetSize) {
-    m_fontsResolvedUsingCurrentStyle.erase(m_fontLRUList.first());
+    m_fontsResolvedUsingCurrentStyle.erase(m_fontLRUList.front());
     m_fontLRUList.removeFirst();
   }
 }
@@ -967,9 +967,11 @@ WebLayer* CanvasRenderingContext2D::platformLayer() const {
 }
 
 void CanvasRenderingContext2D::getContextAttributes(
-    Canvas2DContextAttributes& attrs) const {
-  attrs.setAlpha(creationAttributes().alpha());
-  attrs.setColorSpace(colorSpaceAsString());
+    CanvasRenderingContext2DSettings& settings) const {
+  settings.setAlpha(creationAttributes().alpha());
+  settings.setColorSpace(colorSpaceAsString());
+  settings.setPixelFormat(pixelFormatAsString());
+  settings.setLinearPixelMath(linearPixelMath());
 }
 
 void CanvasRenderingContext2D::drawFocusIfNeeded(Element* element) {

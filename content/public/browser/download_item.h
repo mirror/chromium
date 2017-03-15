@@ -102,6 +102,21 @@ class CONTENT_EXPORT DownloadItem : public base::SupportsUserData {
     virtual ~Observer() {}
   };
 
+  // A slice of the target file that has been received so far, used when
+  // parallel downloading is enabled. Slices should have different offsets
+  // so that they don't overlap.
+  struct CONTENT_EXPORT ReceivedSlice {
+    ReceivedSlice(int64_t offset, int64_t received_bytes)
+        : offset(offset), received_bytes(received_bytes) {}
+
+    bool operator==(const ReceivedSlice& rhs) const {
+      return offset == rhs.offset && received_bytes == rhs.received_bytes;
+    }
+
+    int64_t offset;
+    int64_t received_bytes;
+  };
+
   ~DownloadItem() override {}
 
   // Observation ---------------------------------------------------------------
@@ -349,6 +364,10 @@ class CONTENT_EXPORT DownloadItem : public base::SupportsUserData {
   // file.
   virtual int64_t GetReceivedBytes() const = 0;
 
+  // Return the slices that have been received so far, ordered by their offset.
+  // This is only used when parallel downloading is enabled.
+  virtual const std::vector<ReceivedSlice>& GetReceivedSlices() const = 0;
+
   // Time the download was first started. This timestamp is always valid and
   // doesn't change.
   virtual base::Time GetStartTime() const = 0;
@@ -377,6 +396,10 @@ class CONTENT_EXPORT DownloadItem : public base::SupportsUserData {
   // Returns true if the download has been opened.
   virtual bool GetOpened() const = 0;
 
+  // Time the download was last accessed. Returns NULL if the download has never
+  // been opened.
+  virtual base::Time GetLastAccessTime() const = 0;
+
   //    Misc State accessors ---------------------------------------------------
 
   // BrowserContext that indirectly owns this download. Always valid.
@@ -402,6 +425,9 @@ class CONTENT_EXPORT DownloadItem : public base::SupportsUserData {
 
   // Mark the download as having been opened (without actually opening it).
   virtual void SetOpened(bool opened) = 0;
+
+  // Updates the last access time of the download.
+  virtual void SetLastAccessTime(base::Time last_access_time) = 0;
 
   // Set a display name for the download that will be independent of the target
   // filename. If |name| is not empty, then GetFileNameToReportUser() will

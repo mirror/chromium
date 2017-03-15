@@ -9,6 +9,7 @@
 #include <string>
 
 #include "base/strings/string16.h"
+#include "components/payments/content/payment_request.mojom.h"
 
 namespace autofill {
 class AutofillProfile;
@@ -16,18 +17,26 @@ class AutofillProfile;
 
 namespace views {
 class Border;
+class ImageView;
+class Label;
 class VectorIconButtonDelegate;
 class View;
 }
 
 namespace payments {
 
-constexpr int kPaymentRequestRowHorizontalInsets = 14;
+constexpr int kPaymentRequestRowHorizontalInsets = 16;
 constexpr int kPaymentRequestRowVerticalInsets = 8;
+
+// Extra inset relative to the header when a right edge should line up with the
+// close button's X rather than its invisible right edge.
+constexpr int kPaymentRequestRowExtraRightInset = 8;
+constexpr int kPaymentRequestButtonSpacing = 10;
 
 enum class PaymentRequestCommonTags {
   BACK_BUTTON_TAG = 0,
   CLOSE_BUTTON_TAG,
+  PAY_BUTTON_TAG,
   // This is the max value of tags for controls common to multiple
   // PaymentRequest contexts. Individual screens that handle both common and
   // specific events with tags can start their specific tags at this value.
@@ -36,15 +45,20 @@ enum class PaymentRequestCommonTags {
 
 // Creates and returns a header for all the sheets in the PaymentRequest dialog.
 // The header contains an optional back arrow button (if |show_back_arrow| is
-// true), a |title| label, and a right-aligned X close button. |delegate|
-// becomes the delegate for the back and close buttons.
+// true), a |title| label. |delegate| becomes the delegate for the back and
+// close buttons.
 // +---------------------------+
-// | <- | Title            | X |
+// | <- | Title                |
 // +---------------------------+
 std::unique_ptr<views::View> CreateSheetHeaderView(
     bool show_back_arrow,
     const base::string16& title,
     views::VectorIconButtonDelegate* delegate);
+
+// Returns a card image view for the given |card_type|. Includes a rounded rect
+// border. Callers need to set the size of the resulting ImageView.
+std::unique_ptr<views::ImageView> CreateCardIconView(
+    const std::string& card_type);
 
 // Represents formatting options for each of the different contexts in which an
 // Address label may be displayed.
@@ -65,12 +79,24 @@ std::unique_ptr<views::View> GetContactInfoLabel(
     const std::string& locale,
     const autofill::AutofillProfile& profile,
     bool show_payer_name,
-    bool show_payer_email,
-    bool show_payer_phone);
+    bool show_payer_phone,
+    bool show_payer_email);
 
 // Creates a views::Border object that can paint the gray horizontal ruler used
 // as a separator between items in the Payment Request dialog.
 std::unique_ptr<views::Border> CreatePaymentRequestRowBorder();
+
+// Creates a label with a bold font.
+std::unique_ptr<views::Label> CreateBoldLabel(const base::string16& text);
+
+base::string16 GetShippingAddressSectionString(
+    payments::mojom::PaymentShippingType shipping_type);
+base::string16 GetShippingOptionSectionString(
+    payments::mojom::PaymentShippingType shipping_type);
+
+std::unique_ptr<views::View> CreateShippingOptionLabel(
+    payments::mojom::PaymentShippingOption* shipping_option,
+    const base::string16& formatted_amount);
 
 }  // namespace payments
 

@@ -12,6 +12,8 @@
 #include "V8TestDictionaryDerived.h"
 
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/IDLTypes.h"
+#include "bindings/core/v8/NativeValueTraitsImpl.h"
 #include "bindings/core/v8/V8TestDictionary.h"
 
 namespace blink {
@@ -73,7 +75,7 @@ void V8TestDictionaryDerivedImplementedAs::toImpl(v8::Isolate* isolate, v8::Loca
     exceptionState.throwTypeError("required member requiredLongMember is undefined.");
     return;
   } else {
-    int requiredLongMember = toInt32(isolate, requiredLongMemberValue, NormalConversion, exceptionState);
+    int32_t requiredLongMember = NativeValueTraits<IDLLong>::nativeValue(isolate, requiredLongMemberValue, exceptionState, NormalConversion);
     if (exceptionState.hadException())
       return;
     impl.setRequiredLongMember(requiredLongMember);
@@ -114,7 +116,7 @@ bool toV8TestDictionaryDerivedImplementedAs(const TestDictionaryDerivedImplement
     if (!v8CallBoolean(dictionary->CreateDataProperty(isolate->GetCurrentContext(), v8AtomicString(isolate, "derivedStringMemberWithDefault"), v8String(isolate, impl.derivedStringMemberWithDefault()))))
       return false;
   } else {
-    if (!v8CallBoolean(dictionary->CreateDataProperty(isolate->GetCurrentContext(), v8AtomicString(isolate, "derivedStringMemberWithDefault"), v8String(isolate, String("default string value")))))
+    if (!v8CallBoolean(dictionary->CreateDataProperty(isolate->GetCurrentContext(), v8AtomicString(isolate, "derivedStringMemberWithDefault"), v8String(isolate, "default string value"))))
       return false;
   }
 

@@ -24,11 +24,11 @@ namespace blink {
 
 TestDictionary::TestDictionary() {
   setDoubleOrStringMember(DoubleOrString::fromDouble(3.14));
-  setEnumMember(String("foo"));
+  setEnumMember("foo");
   setLongMember(1);
-  setOtherDoubleOrStringMember(DoubleOrString::fromString(String("default string value")));
+  setOtherDoubleOrStringMember(DoubleOrString::fromString("default string value"));
   setRestrictedDoubleMember(3.14);
-  setStringOrNullMember(String("default string value"));
+  setStringOrNullMember("default string value");
   setStringSequenceMember(Vector<String>());
   setTestInterfaceGarbageCollectedSequenceMember(HeapVector<Member<TestInterfaceGarbageCollected>>());
   setTestInterfaceSequenceMember(HeapVector<Member<TestInterfaceImplementation>>());
@@ -156,6 +156,17 @@ EventTarget* TestDictionary::eventTargetMember() const {
 void TestDictionary::setEventTargetMember(EventTarget* value) {
   m_eventTargetMember = value;
 }
+bool TestDictionary::hasGarbageCollectedRecordMember() const {
+  return m_hasGarbageCollectedRecordMember;
+}
+const HeapVector<std::pair<String, Member<TestObject>>>& TestDictionary::garbageCollectedRecordMember() const {
+  DCHECK(m_hasGarbageCollectedRecordMember);
+  return m_garbageCollectedRecordMember;
+}
+void TestDictionary::setGarbageCollectedRecordMember(const HeapVector<std::pair<String, Member<TestObject>>>& value) {
+  m_garbageCollectedRecordMember = value;
+  m_hasGarbageCollectedRecordMember = true;
+}
 bool TestDictionary::hasInternalDictionarySequenceMember() const {
   return m_hasInternalDictionarySequenceMember;
 }
@@ -170,11 +181,11 @@ void TestDictionary::setInternalDictionarySequenceMember(const HeapVector<Intern
 bool TestDictionary::hasLongMember() const {
   return m_hasLongMember;
 }
-int TestDictionary::longMember() const {
+int32_t TestDictionary::longMember() const {
   DCHECK(m_hasLongMember);
   return m_longMember;
 }
-void TestDictionary::setLongMember(int value) {
+void TestDictionary::setLongMember(int32_t value) {
   m_longMember = value;
   m_hasLongMember = true;
 }
@@ -216,6 +227,17 @@ ScriptValue TestDictionary::getPrefixGetMember() const {
 }
 void TestDictionary::setPrefixGetMember(ScriptValue value) {
   m_prefixGetMember = value;
+}
+bool TestDictionary::hasRecordMember() const {
+  return m_hasRecordMember;
+}
+const Vector<std::pair<String, int8_t>>& TestDictionary::recordMember() const {
+  DCHECK(m_hasRecordMember);
+  return m_recordMember;
+}
+void TestDictionary::setRecordMember(const Vector<std::pair<String, int8_t>>& value) {
+  m_recordMember = value;
+  m_hasRecordMember = true;
 }
 bool TestDictionary::hasRestrictedDoubleMember() const {
   return m_hasRestrictedDoubleMember;
@@ -392,6 +414,7 @@ DEFINE_TRACE(TestDictionary) {
   visitor->trace(m_doubleOrStringSequenceMember);
   visitor->trace(m_elementOrNullMember);
   visitor->trace(m_eventTargetMember);
+  visitor->trace(m_garbageCollectedRecordMember);
   visitor->trace(m_internalDictionarySequenceMember);
   visitor->trace(m_otherDoubleOrStringMember);
   visitor->trace(m_testInterface2OrUint8ArrayMember);

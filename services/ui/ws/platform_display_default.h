@@ -13,11 +13,13 @@
 #include "services/ui/ws/frame_generator_delegate.h"
 #include "services/ui/ws/platform_display.h"
 #include "services/ui/ws/platform_display_delegate.h"
+#include "services/ui/ws/server_window.h"
 #include "ui/platform_window/platform_window_delegate.h"
 
 namespace ui {
 
 class ImageCursors;
+class LocatedEvent;
 class PlatformWindow;
 
 namespace ws {
@@ -26,14 +28,14 @@ namespace ws {
 // FrameGenerator for Chrome OS.
 class PlatformDisplayDefault : public PlatformDisplay,
                                public ui::PlatformWindowDelegate,
-                               private FrameGeneratorDelegate {
+                               public FrameGeneratorDelegate {
  public:
-  explicit PlatformDisplayDefault(const PlatformDisplayInitParams& init_params);
+  PlatformDisplayDefault(ServerWindow* root_window,
+                         const display::ViewportMetrics& metrics);
   ~PlatformDisplayDefault() override;
 
   // PlatformDisplay:
   void Init(PlatformDisplayDelegate* delegate) override;
-  int64_t GetId() const override;
   void SetViewportSize(const gfx::Size& size) override;
   void SetTitle(const base::string16& title) override;
   void SetCapture() override;
@@ -41,9 +43,7 @@ class PlatformDisplayDefault : public PlatformDisplay,
   void SetCursorById(mojom::Cursor cursor) override;
   void UpdateTextInputState(const ui::TextInputState& state) override;
   void SetImeVisibility(bool visible) override;
-  gfx::Rect GetBounds() const override;
   bool UpdateViewportMetrics(const display::ViewportMetrics& metrics) override;
-  const display::ViewportMetrics& GetViewportMetrics() const override;
   gfx::AcceleratedWidget GetAcceleratedWidget() const override;
   FrameGenerator* GetFrameGenerator() override;
 
@@ -71,7 +71,7 @@ class PlatformDisplayDefault : public PlatformDisplay,
   // FrameGeneratorDelegate:
   bool IsInHighContrastMode() override;
 
-  const int64_t display_id_;
+  ServerWindow* root_window_;
 
 #if !defined(OS_ANDROID)
   std::unique_ptr<ui::ImageCursors> image_cursors_;
@@ -83,6 +83,7 @@ class PlatformDisplayDefault : public PlatformDisplay,
   display::ViewportMetrics metrics_;
   std::unique_ptr<ui::PlatformWindow> platform_window_;
   gfx::AcceleratedWidget widget_;
+  float init_device_scale_factor_;
 
   DISALLOW_COPY_AND_ASSIGN(PlatformDisplayDefault);
 };

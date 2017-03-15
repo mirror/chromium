@@ -15,7 +15,7 @@ TestURLLoaderClient::~TestURLLoaderClient() {}
 
 void TestURLLoaderClient::OnReceiveResponse(
     const ResourceResponseHead& response_head,
-    mojom::DownloadedTempFileAssociatedPtrInfo downloaded_file) {
+    mojom::DownloadedTempFilePtr downloaded_file) {
   EXPECT_FALSE(has_received_response_);
   EXPECT_FALSE(has_received_cached_metadata_);
   EXPECT_FALSE(has_received_completion_);
@@ -108,12 +108,10 @@ void TestURLLoaderClient::ClearHasReceivedRedirect() {
   has_received_redirect_ = false;
 }
 
-mojom::URLLoaderClientAssociatedPtrInfo
-TestURLLoaderClient::CreateRemoteAssociatedPtrInfo(
-    mojo::AssociatedGroup* associated_group) {
-  mojom::URLLoaderClientAssociatedPtrInfo client_ptr_info;
-  binding_.Bind(&client_ptr_info, associated_group);
-  return client_ptr_info;
+mojom::URLLoaderClientPtr TestURLLoaderClient::CreateInterfacePtr() {
+  mojom::URLLoaderClientPtr client_ptr;
+  binding_.Bind(&client_ptr);
+  return client_ptr;
 }
 
 void TestURLLoaderClient::Unbind() {

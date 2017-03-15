@@ -182,8 +182,15 @@ class CONTENT_EXPORT RenderViewHostDelegate {
 
   virtual bool IsJavaScriptDialogShowing() const;
 
+  // If a timer for an unresponsive renderer fires, whether it should be
+  // ignored.
+  virtual bool ShouldIgnoreUnresponsiveRenderer();
+
   // Whether download UI should be hidden.
   virtual bool HideDownloadUI() const;
+
+  // Whether the WebContents as a persistent video.
+  virtual bool HasPersistentVideo() const;
 
  protected:
   virtual ~RenderViewHostDelegate() {}

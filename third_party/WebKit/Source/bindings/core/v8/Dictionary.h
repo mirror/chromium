@@ -30,10 +30,10 @@
 #include "bindings/core/v8/Nullable.h"
 #include "bindings/core/v8/V8Binding.h"
 #include "core/CoreExport.h"
+#include "v8/include/v8.h"
 #include "wtf/HashMap.h"
 #include "wtf/Vector.h"
 #include "wtf/text/StringView.h"
-#include <v8.h>
 
 namespace blink {
 
@@ -107,7 +107,8 @@ class CORE_EXPORT Dictionary final {
 };
 
 template <>
-struct NativeValueTraits<Dictionary> {
+struct NativeValueTraits<Dictionary>
+    : public NativeValueTraitsBase<Dictionary> {
   static Dictionary nativeValue(v8::Isolate* isolate,
                                 v8::Local<v8::Value> value,
                                 ExceptionState& exceptionState) {

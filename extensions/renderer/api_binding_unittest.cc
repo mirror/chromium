@@ -25,6 +25,8 @@ namespace extensions {
 
 namespace {
 
+const char kBindingName[] = "test";
+
 // Function spec; we use single quotes for readability and then replace them.
 const char kFunctions[] =
     "[{"
@@ -126,7 +128,7 @@ void OnEventListenersChanged(const std::string& event_name,
 
 class APIBindingUnittest : public APIBindingTest {
  public:
-  void OnFunctionCall(std::unique_ptr<APIBinding::Request> request,
+  void OnFunctionCall(std::unique_ptr<APIRequestHandler::Request> request,
                       v8::Local<v8::Context> context) {
     last_request_ = std::move(request);
   }
@@ -137,6 +139,7 @@ class APIBindingUnittest : public APIBindingTest {
   void SetUp() override {
     APIBindingTest::SetUp();
     request_handler_ = base::MakeUnique<APIRequestHandler>(
+        base::Bind(&APIBindingUnittest::OnFunctionCall, base::Unretained(this)),
         base::Bind(&RunFunctionOnGlobalAndIgnoreResult),
         APILastError(APILastError::GetParent()));
   }
@@ -163,23 +166,31 @@ class APIBindingUnittest : public APIBindingTest {
     ASSERT_TRUE(binding_types_);
   }
 
+  void SetProperties(const char* properties) {
+    binding_properties_ = DictionaryValueFromString(properties);
+    ASSERT_TRUE(binding_properties_);
+  }
+
   void SetHooks(std::unique_ptr<APIBindingHooks> hooks) {
     binding_hooks_ = std::move(hooks);
     ASSERT_TRUE(binding_hooks_);
   }
 
+  void SetCreateCustomType(const APIBinding::CreateCustomType& callback) {
+    create_custom_type_ = callback;
+  }
+
   void InitializeBinding() {
     if (!binding_hooks_) {
-      binding_hooks_ =
-          base::MakeUnique<APIBindingHooks>(binding::RunJSFunctionSync());
+      binding_hooks_ = base::MakeUnique<APIBindingHooks>(
+          kBindingName, binding::RunJSFunctionSync());
     }
     event_handler_ = base::MakeUnique<APIEventHandler>(
         base::Bind(&RunFunctionOnGlobalAndIgnoreResult),
         base::Bind(&OnEventListenersChanged));
     binding_ = base::MakeUnique<APIBinding>(
-        "test", binding_functions_.get(), binding_types_.get(),
-        binding_events_.get(),
-        base::Bind(&APIBindingUnittest::OnFunctionCall, base::Unretained(this)),
+        kBindingName, binding_functions_.get(), binding_types_.get(),
+        binding_events_.get(), binding_properties_.get(), create_custom_type_,
         std::move(binding_hooks_), &type_refs_, request_handler_.get(),
         event_handler_.get());
     EXPECT_EQ(!binding_types_.get(), type_refs_.empty());
@@ -189,7 +200,7 @@ class APIBindingUnittest : public APIBindingTest {
                   const std::string& script_source,
                   const std::string& expected_json_arguments_single_quotes,
                   bool expect_callback) {
-    ExpectPass(ContextLocal(), object, script_source,
+    ExpectPass(MainContext(), object, script_source,
                expected_json_arguments_single_quotes, expect_callback);
   }
 
@@ -206,12 +217,12 @@ class APIBindingUnittest : public APIBindingTest {
   void ExpectFailure(v8::Local<v8::Object> object,
                      const std::string& script_source,
                      const std::string& expected_error) {
-    RunTest(ContextLocal(), object, script_source, false, std::string(), false,
+    RunTest(MainContext(), object, script_source, false, std::string(), false,
             expected_error);
   }
 
   bool HandlerWasInvoked() const { return last_request_ != nullptr; }
-  const APIBinding::Request* last_request() const {
+  const APIRequestHandler::Request* last_request() const {
     return last_request_.get();
   }
   void reset_last_request() { last_request_.reset(); }
@@ -229,7 +240,7 @@ class APIBindingUnittest : public APIBindingTest {
                bool expect_callback,
                const std::string& expected_error);
 
-  std::unique_ptr<APIBinding::Request> last_request_;
+  std::unique_ptr<APIRequestHandler::Request> last_request_;
   std::unique_ptr<APIBinding> binding_;
   std::unique_ptr<APIEventHandler> event_handler_;
   std::unique_ptr<APIRequestHandler> request_handler_;
@@ -238,7 +249,9 @@ class APIBindingUnittest : public APIBindingTest {
   std::unique_ptr<base::ListValue> binding_functions_;
   std::unique_ptr<base::ListValue> binding_events_;
   std::unique_ptr<base::ListValue> binding_types_;
+  std::unique_ptr<base::DictionaryValue> binding_properties_;
   std::unique_ptr<APIBindingHooks> binding_hooks_;
+  APIBinding::CreateCustomType create_custom_type_;
 
   DISALLOW_COPY_AND_ASSIGN(APIBindingUnittest);
 };
@@ -278,7 +291,7 @@ TEST_F(APIBindingUnittest, TestEmptyAPI) {
   InitializeBinding();
 
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
 
   v8::Local<v8::Object> binding_object =
       binding()->CreateInstance(context, isolate(), base::Bind(&AllowAllAPIs));
@@ -294,7 +307,7 @@ TEST_F(APIBindingUnittest, Test) {
   InitializeBinding();
 
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
 
   v8::Local<v8::Object> binding_object =
       binding()->CreateInstance(context, isolate(), base::Bind(&AllowAllAPIs));
@@ -388,7 +401,7 @@ TEST_F(APIBindingUnittest, EnumValues) {
   InitializeBinding();
 
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
 
   v8::Local<v8::Object> binding_object =
       binding()->CreateInstance(context, isolate(), base::Bind(&AllowAllAPIs));
@@ -439,7 +452,7 @@ TEST_F(APIBindingUnittest, TypeRefsTest) {
   EXPECT_TRUE(type_refs().GetSpec("refEnum"));
 
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
 
   v8::Local<v8::Object> binding_object =
       binding()->CreateInstance(context, isolate(), base::Bind(&AllowAllAPIs));
@@ -476,7 +489,7 @@ TEST_F(APIBindingUnittest, RestrictedAPIs) {
   InitializeBinding();
 
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
 
   auto is_available = [](const std::string& name) {
     std::set<std::string> functions = {"test.allowedOne", "test.allowedTwo",
@@ -510,7 +523,7 @@ TEST_F(APIBindingUnittest, TestEventCreation) {
   InitializeBinding();
 
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
 
   v8::Local<v8::Object> binding_object =
       binding()->CreateInstance(context, isolate(), base::Bind(&AllowAllAPIs));
@@ -534,12 +547,84 @@ TEST_F(APIBindingUnittest, TestEventCreation) {
   EXPECT_FALSE(has_on_baz.FromJust());
 }
 
+TEST_F(APIBindingUnittest, TestProperties) {
+  SetProperties(
+      "{"
+      "  'prop1': { 'value': 17, 'type': 'integer' },"
+      "  'prop2': {"
+      "    'type': 'object',"
+      "    'properties': {"
+      "      'subprop1': { 'value': 'some value', 'type': 'string' },"
+      "      'subprop2': { 'value': true, 'type': 'boolean' }"
+      "    }"
+      "  }"
+      "}");
+  InitializeBinding();
+
+  v8::HandleScope handle_scope(isolate());
+  v8::Local<v8::Context> context = MainContext();
+  v8::Local<v8::Object> binding_object =
+      binding()->CreateInstance(context, isolate(), base::Bind(&AllowAllAPIs));
+  EXPECT_EQ("17",
+            GetStringPropertyFromObject(binding_object, context, "prop1"));
+  EXPECT_EQ(R"({"subprop1":"some value","subprop2":true})",
+            GetStringPropertyFromObject(binding_object, context, "prop2"));
+}
+
+TEST_F(APIBindingUnittest, TestRefProperties) {
+  SetProperties(
+      "{"
+      "  'alpha': {"
+      "    '$ref': 'AlphaRef'"
+      "  },"
+      "  'beta': {"
+      "    '$ref': 'BetaRef'"
+      "  }"
+      "}");
+  auto create_custom_type = [](v8::Local<v8::Context> context,
+                               const std::string& type_name,
+                               const std::string& property_name) {
+    v8::Isolate* isolate = context->GetIsolate();
+    v8::Local<v8::Object> result = v8::Object::New(isolate);
+    if (type_name == "AlphaRef") {
+      EXPECT_EQ("alpha", property_name);
+      result
+          ->Set(context, gin::StringToSymbol(isolate, "alphaProp"),
+                gin::StringToV8(isolate, "alphaVal"))
+          .ToChecked();
+    } else if (type_name == "BetaRef") {
+      EXPECT_EQ("beta", property_name);
+      result
+          ->Set(context, gin::StringToSymbol(isolate, "betaProp"),
+                gin::StringToV8(isolate, "betaVal"))
+          .ToChecked();
+    } else {
+      EXPECT_TRUE(false) << type_name;
+    }
+    return result;
+  };
+
+  SetCreateCustomType(base::Bind(create_custom_type));
+
+  InitializeBinding();
+
+  v8::HandleScope handle_scope(isolate());
+  v8::Local<v8::Context> context = MainContext();
+  v8::Local<v8::Object> binding_object =
+      binding()->CreateInstance(context, isolate(), base::Bind(&AllowAllAPIs));
+  EXPECT_EQ(R"({"alphaProp":"alphaVal"})",
+            GetStringPropertyFromObject(binding_object, context, "alpha"));
+  EXPECT_EQ(
+      R"({"betaProp":"betaVal"})",
+      GetStringPropertyFromObject(binding_object, context, "beta"));
+}
+
 TEST_F(APIBindingUnittest, TestDisposedContext) {
   SetFunctions(kFunctions);
   InitializeBinding();
 
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
 
   v8::Local<v8::Object> binding_object =
       binding()->CreateInstance(context, isolate(), base::Bind(&AllowAllAPIs));
@@ -547,7 +632,7 @@ TEST_F(APIBindingUnittest, TestDisposedContext) {
   v8::Local<v8::Function> func =
       FunctionFromString(context, "(function(obj) { obj.oneString('foo'); })");
   v8::Local<v8::Value> argv[] = {binding_object};
-  DisposeContext();
+  DisposeContext(context);
   RunFunction(func, context, arraysize(argv), argv);
   EXPECT_FALSE(HandlerWasInvoked());
   // This test passes if this does not crash, even under AddressSanitizer
@@ -556,10 +641,8 @@ TEST_F(APIBindingUnittest, TestDisposedContext) {
 
 TEST_F(APIBindingUnittest, MultipleContexts) {
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context_a = ContextLocal();
-  v8::Local<v8::Context> context_b = v8::Context::New(isolate());
-  gin::ContextHolder holder_b(isolate());
-  holder_b.SetContext(context_b);
+  v8::Local<v8::Context> context_a = MainContext();
+  v8::Local<v8::Context> context_b = AddContext();
 
   SetFunctions(kFunctions);
   InitializeBinding();
@@ -573,7 +656,7 @@ TEST_F(APIBindingUnittest, MultipleContexts) {
              false);
   ExpectPass(context_b, binding_object_b, "obj.oneString('foo');", "['foo']",
              false);
-  DisposeContext();
+  DisposeContext(context_a);
   ExpectPass(context_b, binding_object_b, "obj.oneString('foo');", "['foo']",
              false);
 }
@@ -584,7 +667,7 @@ TEST_F(APIBindingUnittest, TestCustomHooks) {
 
   // Register a hook for the test.oneString method.
   auto hooks = base::MakeUnique<APIBindingHooks>(
-      base::Bind(&RunFunctionOnGlobalAndReturnHandle));
+      kBindingName, base::Bind(&RunFunctionOnGlobalAndReturnHandle));
   bool did_call = false;
   auto hook = [](bool* did_call, const APISignature* signature,
                  v8::Local<v8::Context> context,
@@ -606,7 +689,7 @@ TEST_F(APIBindingUnittest, TestCustomHooks) {
   InitializeBinding();
 
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
 
   v8::Local<v8::Object> binding_object =
       binding()->CreateInstance(context, isolate(), base::Bind(&AllowAllAPIs));
@@ -627,10 +710,10 @@ TEST_F(APIBindingUnittest, TestCustomHooks) {
 TEST_F(APIBindingUnittest, TestJSCustomHook) {
   // Register a hook for the test.oneString method.
   auto hooks = base::MakeUnique<APIBindingHooks>(
-      base::Bind(&RunFunctionOnGlobalAndReturnHandle));
+      kBindingName, base::Bind(&RunFunctionOnGlobalAndReturnHandle));
 
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
   const char kRegisterHook[] =
       "(function(hooks) {\n"
       "  hooks.setHandleRequest('oneString', function() {\n"
@@ -679,10 +762,10 @@ TEST_F(APIBindingUnittest, TestJSCustomHook) {
 TEST_F(APIBindingUnittest, TestUpdateArgumentsPreValidate) {
   // Register a hook for the test.oneString method.
   auto hooks = base::MakeUnique<APIBindingHooks>(
-      base::Bind(&RunFunctionOnGlobalAndReturnHandle));
+      kBindingName, base::Bind(&RunFunctionOnGlobalAndReturnHandle));
 
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
   const char kRegisterHook[] =
       "(function(hooks) {\n"
       "  hooks.setUpdateArgumentsPreValidate('oneString', function() {\n"
@@ -740,10 +823,10 @@ TEST_F(APIBindingUnittest, TestThrowInUpdateArgumentsPreValidate) {
 
   // Register a hook for the test.oneString method.
   auto hooks = base::MakeUnique<APIBindingHooks>(
-      base::Bind(run_js_and_allow_error));
+      kBindingName, base::Bind(run_js_and_allow_error));
 
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
   const char kRegisterHook[] =
       "(function(hooks) {\n"
       "  hooks.setUpdateArgumentsPreValidate('oneString', function() {\n"
@@ -782,10 +865,10 @@ TEST_F(APIBindingUnittest, TestThrowInUpdateArgumentsPreValidate) {
 TEST_F(APIBindingUnittest, TestReturningResultFromCustomJSHook) {
   // Register a hook for the test.oneString method.
   auto hooks = base::MakeUnique<APIBindingHooks>(
-      base::Bind(&RunFunctionOnGlobalAndReturnHandle));
+      kBindingName, base::Bind(&RunFunctionOnGlobalAndReturnHandle));
 
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
   const char kRegisterHook[] =
       "(function(hooks) {\n"
       "  hooks.setHandleRequest('oneString', str => {\n"
@@ -843,10 +926,10 @@ TEST_F(APIBindingUnittest, TestThrowingFromCustomJSHook) {
   };
   // Register a hook for the test.oneString method.
   auto hooks = base::MakeUnique<APIBindingHooks>(
-      base::Bind(run_js_and_expect_error));
+      kBindingName, base::Bind(run_js_and_expect_error));
 
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
   const char kRegisterHook[] =
       "(function(hooks) {\n"
       "  hooks.setHandleRequest('oneString', str => {\n"
@@ -882,11 +965,11 @@ TEST_F(APIBindingUnittest, TestThrowingFromCustomJSHook) {
 TEST_F(APIBindingUnittest,
        TestReturningResultAndThrowingExceptionFromCustomNativeHook) {
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
 
   // Register a hook for the test.oneString method.
   auto hooks = base::MakeUnique<APIBindingHooks>(
-      base::Bind(&RunFunctionOnGlobalAndReturnHandle));
+      kBindingName, base::Bind(&RunFunctionOnGlobalAndReturnHandle));
   bool did_call = false;
   auto hook = [](bool* did_call, const APISignature* signature,
                  v8::Local<v8::Context> context,
@@ -949,10 +1032,10 @@ TEST_F(APIBindingUnittest,
 TEST_F(APIBindingUnittest, TestUpdateArgumentsPostValidate) {
   // Register a hook for the test.oneString method.
   auto hooks = base::MakeUnique<APIBindingHooks>(
-      base::Bind(&RunFunctionOnGlobalAndReturnHandle));
+      kBindingName, base::Bind(&RunFunctionOnGlobalAndReturnHandle));
 
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
   const char kRegisterHook[] =
       "(function(hooks) {\n"
       "  hooks.setUpdateArgumentsPostValidate('oneString', function() {\n"
@@ -998,7 +1081,7 @@ TEST_F(APIBindingUnittest, TestUserGestures) {
   InitializeBinding();
 
   v8::HandleScope handle_scope(isolate());
-  v8::Local<v8::Context> context = ContextLocal();
+  v8::Local<v8::Context> context = MainContext();
 
   v8::Local<v8::Object> binding_object =
       binding()->CreateInstance(context, isolate(), base::Bind(&AllowAllAPIs));

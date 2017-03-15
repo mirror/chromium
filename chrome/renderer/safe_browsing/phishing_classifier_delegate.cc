@@ -12,11 +12,11 @@
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
-#include "chrome/common/safe_browsing/csd.pb.h"
 #include "chrome/renderer/safe_browsing/feature_extractor_clock.h"
 #include "chrome/renderer/safe_browsing/phishing_classifier.h"
 #include "chrome/renderer/safe_browsing/scorer.h"
 #include "components/safe_browsing/common/safebrowsing_messages.h"
+#include "components/safe_browsing/csd.pb.h"
 #include "content/public/renderer/document_state.h"
 #include "content/public/renderer/navigation_state.h"
 #include "content/public/renderer/render_frame.h"
@@ -39,11 +39,11 @@ static GURL StripRef(const GURL& url) {
 }
 
 typedef std::set<PhishingClassifierDelegate*> PhishingClassifierDelegates;
-static base::LazyInstance<PhishingClassifierDelegates>
+static base::LazyInstance<PhishingClassifierDelegates>::DestructorAtExit
     g_delegates = LAZY_INSTANCE_INITIALIZER;
 
-static base::LazyInstance<std::unique_ptr<const safe_browsing::Scorer>>
-    g_phishing_scorer = LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<std::unique_ptr<const safe_browsing::Scorer>>::
+    DestructorAtExit g_phishing_scorer = LAZY_INSTANCE_INITIALIZER;
 
 // static
 PhishingClassifierFilter* PhishingClassifierFilter::Create() {

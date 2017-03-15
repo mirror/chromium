@@ -50,6 +50,14 @@ android_aar_prebuilt("android_support_design_java") {
   aar_path = "$lib_path/$_lib_name/$lib_version/$_lib_name-$lib_version.aar"
 }
 
+android_aar_prebuilt("android_support_transition_java") {
+  deps = [
+    ":android_support_v7_appcompat_java",
+  ]
+  _lib_name = "transition"
+  aar_path = "$lib_path/$_lib_name/$lib_version/$_lib_name-$lib_version.aar"
+}
+
 android_aar_prebuilt("android_support_multidex_java") {
   # TODO(jbudorick): remove requires_android after crbug.com/522043 is fixed.
   requires_android = false
@@ -186,7 +194,7 @@ android_java_prebuilt("legacy_http_javalib") {
 
 # TODO(dgn): Use the POM files instead of hardcoding the dependencies.
 gms_path = "$default_extras_android_sdk_root/extras/google/m2repository/com/google/android/gms"
-gms_version = "10.0.1"
+gms_version = "10.2.0"
 
 android_aar_prebuilt("google_play_services_basement_java") {
   deps = [

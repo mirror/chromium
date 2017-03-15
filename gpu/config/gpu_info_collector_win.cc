@@ -305,30 +305,6 @@ CollectInfoResult CollectContextGraphicsInfo(GPUInfo* gpu_info) {
   return kCollectInfoSuccess;
 }
 
-CollectInfoResult CollectGpuID(uint32_t* vendor_id, uint32_t* device_id) {
-  DCHECK(vendor_id && device_id);
-  *vendor_id = 0;
-  *device_id = 0;
-
-  // Taken from http://www.nvidia.com/object/device_ids.html
-  DISPLAY_DEVICE dd;
-  dd.cb = sizeof(DISPLAY_DEVICE);
-  std::wstring id;
-  for (int i = 0; EnumDisplayDevices(NULL, i, &dd, 0); ++i) {
-    if (dd.StateFlags & DISPLAY_DEVICE_PRIMARY_DEVICE) {
-      id = dd.DeviceID;
-      break;
-    }
-  }
-
-  if (id.length() > 20) {
-    DeviceIDToVendorAndDevice(id, vendor_id, device_id);
-    if (*vendor_id != 0 && *device_id != 0)
-      return kCollectInfoSuccess;
-  }
-  return kCollectInfoNonFatalFailure;
-}
-
 CollectInfoResult CollectBasicGraphicsInfo(GPUInfo* gpu_info) {
   TRACE_EVENT0("gpu", "CollectPreliminaryGraphicsInfo");
 
@@ -350,8 +326,14 @@ CollectInfoResult CollectBasicGraphicsInfo(GPUInfo* gpu_info) {
   }
 
   if (id.length() <= 20) {
-    // Check if it is the RDP mirror driver "RDPUDD Chained DD"
-    if (wcscmp(dd.DeviceString, L"RDPUDD Chained DD") != 0) {
+    // EnumDisplayDevices returns an empty id when called inside a remote
+    // session (unless that session happens to be attached to the console). In
+    // that case, we do not want to fail, as we should be able to grab the
+    // device/vendor ids from the D3D context, below. Therefore, only fail if
+    // the device string is not one of either the RDP mirror driver "RDPUDD
+    // Chained DD" or the citrix display driver.
+    if (wcscmp(dd.DeviceString, L"RDPUDD Chained DD") != 0 &&
+        wcscmp(dd.DeviceString, L"Citrix Systems Inc. Display Driver") != 0) {
       gpu_info->basic_info_state = kCollectInfoNonFatalFailure;
       return kCollectInfoNonFatalFailure;
     }

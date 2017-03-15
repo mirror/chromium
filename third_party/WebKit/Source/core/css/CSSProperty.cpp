@@ -275,7 +275,7 @@ bool CSSProperty::isAffectedByAllProperty(CSSPropertyID propertyID) {
   if (propertyID == CSSPropertyVariable)
     return false;
 
-  if (CSSPropertyMetadata::isDescriptorOnly(propertyID))
+  if (!CSSPropertyMetadata::isProperty(propertyID))
     return false;
 
   // all shorthand spec says:
@@ -289,7 +289,7 @@ bool CSSProperty::isAffectedByAllProperty(CSSPropertyID propertyID) {
 }
 
 bool CSSProperty::operator==(const CSSProperty& other) const {
-  return m_value->equals(*other.m_value) &&
+  return dataEquivalent(m_value, other.m_value) &&
          isImportant() == other.isImportant();
 }
 

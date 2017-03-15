@@ -5,13 +5,14 @@
 #ifndef ScriptState_h
 #define ScriptState_h
 
+#include <memory>
+
 #include "bindings/core/v8/ScopedPersistent.h"
 #include "bindings/core/v8/V8PerContextData.h"
 #include "core/CoreExport.h"
+#include "v8/include/v8-debug.h"
+#include "v8/include/v8.h"
 #include "wtf/RefCounted.h"
-#include <memory>
-#include <v8-debug.h>
-#include <v8.h>
 
 namespace blink {
 
@@ -155,9 +156,6 @@ class CORE_EXPORT ScriptState : public RefCounted<ScriptState> {
   }
   void detachGlobalObject();
   void clearContext() { return m_context.clear(); }
-#if DCHECK_IS_ON()
-  bool isGlobalObjectDetached() const { return m_globalObjectDetached; }
-#endif
 
   V8PerContextData* perContextData() const { return m_perContextData.get(); }
   void disposePerContextData();
@@ -183,10 +181,6 @@ class CORE_EXPORT ScriptState : public RefCounted<ScriptState> {
   // disposePerContextData() once you no longer need V8PerContextData.
   // Otherwise, the v8::Context will leak.
   std::unique_ptr<V8PerContextData> m_perContextData;
-
-#if DCHECK_IS_ON()
-  bool m_globalObjectDetached = false;
-#endif
 };
 
 // ScriptStateProtectingContext keeps the context associated with the

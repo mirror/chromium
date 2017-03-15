@@ -12,16 +12,20 @@
 
 #include <memory>
 #include <string>
+#include <unordered_map>
+#include <vector>
 
 #include "base/files/file.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/threading/thread_checker.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "content/browser/byte_stream.h"
 #include "content/browser/download/base_file.h"
 #include "content/browser/download/rate_estimator.h"
+#include "content/public/browser/download_item.h"
 #include "content/public/browser/download_save_info.h"
 #include "net/log/net_log_with_source.h"
 
@@ -39,16 +43,23 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
   // Note that the DownloadFileImpl automatically reads from the passed in
   // stream, and sends updates and status of those reads to the
   // DownloadDestinationObserver.
-  DownloadFileImpl(std::unique_ptr<DownloadSaveInfo> save_info,
-                   const base::FilePath& default_downloads_directory,
-                   std::unique_ptr<ByteStreamReader> byte_stream,
-                   const net::NetLogWithSource& net_log,
-                   base::WeakPtr<DownloadDestinationObserver> observer);
+  DownloadFileImpl(
+      std::unique_ptr<DownloadSaveInfo> save_info,
+      const base::FilePath& default_downloads_directory,
+      std::unique_ptr<ByteStreamReader> stream_reader,
+      const std::vector<DownloadItem::ReceivedSlice>& received_slices,
+      const net::NetLogWithSource& net_log,
+      bool is_sparse_file,
+      base::WeakPtr<DownloadDestinationObserver> observer);
 
   ~DownloadFileImpl() override;
 
   // DownloadFile functions.
   void Initialize(const InitializeCallback& callback) override;
+
+  void AddByteStream(std::unique_ptr<ByteStreamReader> stream_reader,
+                     int64_t offset) override;
+
   void RenameAndUniquify(const base::FilePath& full_path,
                          const RenameCompletionCallback& callback) override;
   void RenameAndAnnotate(const base::FilePath& full_path,
@@ -63,8 +74,11 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
 
  protected:
   // For test class overrides.
-  virtual DownloadInterruptReason AppendDataToFile(
-      const char* data, size_t data_len);
+  // Write data from the offset to the file.
+  // On OS level, it will seek to the |offset| and write from there.
+  virtual DownloadInterruptReason WriteDataToFile(int64_t offset,
+                                                  const char* data,
+                                                  size_t data_len);
 
   virtual base::TimeDelta GetRetryDelayForFailedRename(int attempt_number);
 
@@ -72,6 +86,64 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
 
  private:
   friend class DownloadFileTest;
+
+  // Wrapper of a ByteStreamReader, and the meta data needed to write to a
+  // slice of the target file.
+  //
+  // Does not require the stream reader ready when constructor is called.
+  // |stream_reader_| can be set later when the network response is handled.
+  //
+  // Multiple SourceStreams can concurrently write to the same file sink.
+  //
+  // The file IO processing is finished when all SourceStreams are finished.
+  class CONTENT_EXPORT SourceStream {
+   public:
+    SourceStream(int64_t offset, int64_t length);
+    ~SourceStream();
+
+    void SetByteStream(std::unique_ptr<ByteStreamReader> stream_reader);
+
+    // Called after successfully writing a buffer to disk.
+    void OnWriteBytesToDisk(int64_t bytes_write);
+
+    ByteStreamReader* stream_reader() const { return stream_reader_.get(); }
+    int64_t offset() const { return offset_; }
+    int64_t length() const { return length_; }
+    void set_length(int64_t length) { length_ = length; }
+    int64_t bytes_written() const { return bytes_written_; }
+    bool is_finished() const { return finished_; }
+    void set_finished(bool finish) { finished_ = finish; }
+    size_t index() { return index_; }
+    void set_index(size_t index) { index_ = index; }
+
+   private:
+    // Starting position for the stream to write to disk.
+    int64_t offset_;
+
+    // The maximum length to write to the disk. If set to 0, keep writing until
+    // the stream depletes.
+    int64_t length_;
+
+    // Number of bytes written to disk from the stream.
+    // Next write position is (|offset_| + |bytes_written_|).
+    int64_t bytes_written_;
+
+    // If all the data read from the stream has been successfully written to
+    // disk.
+    bool finished_;
+
+    // The slice index in the |received_slices_| vector. A slice was created
+    // once the stream started writing data to the target file.
+    size_t index_;
+
+    // The stream through which data comes.
+    std::unique_ptr<ByteStreamReader> stream_reader_;
+
+    DISALLOW_COPY_AND_ASSIGN(SourceStream);
+  };
+
+  typedef std::unordered_map<int64_t, std::unique_ptr<SourceStream>>
+      SourceStreams;
 
   // Options for RenameWithRetryInternal.
   enum RenameOption {
@@ -108,9 +180,28 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
   // Send an update on our progress.
   void SendUpdate();
 
-  // Called when there's some activity on stream_reader_ that needs to be
+  // Called before the data is written to disk.
+  void WillWriteToDisk(size_t data_len);
+
+  // Called when there's some activity on the byte stream that needs to be
   // handled.
-  void StreamActive();
+  void StreamActive(SourceStream* source_stream);
+
+  // Register callback and start to read data from the stream.
+  void RegisterAndActivateStream(SourceStream* source_stream);
+
+  // Adds a new slice to |received_slices_| and update the existing entries in
+  // |source_streams_| as their lengths will change.
+  // TODO(qinmin): add a test for this function.
+  void AddNewSlice(int64_t offset, int64_t length);
+
+  // Check if download is completed.
+  bool IsDownloadCompleted();
+
+  // Return the total valid bytes received in the target file.
+  // If the file is a sparse file, return the total number of valid bytes.
+  // Otherwise, return the current file size.
+  int64_t TotalBytesReceived() const;
 
   net::NetLogWithSource net_log_;
 
@@ -125,14 +216,23 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
   // The default directory for creating the download file.
   base::FilePath default_download_directory_;
 
-  // The stream through which data comes.
-  // TODO(rdsmith): Move this into BaseFile; requires using the same
-  // stream semantics in SavePackage.  Alternatively, replace SaveFile
-  // with DownloadFile and get rid of BaseFile.
-  std::unique_ptr<ByteStreamReader> stream_reader_;
+  // Map of the offset and the source stream that represents the slice
+  // starting from offset.
+  // Must be created on the same thread that constructs the DownloadFile.
+  // Should not add or remove elements after creation.
+  // Any byte stream should have a SourceStream before added to the download
+  // file.
+  // The disk IO is completed when all source streams are finished.
+  SourceStreams source_streams_;
 
   // Used to trigger progress updates.
   std::unique_ptr<base::RepeatingTimer> update_timer_;
+
+  // Set to true when multiple byte streams write to the same file.
+  // The file may contain null bytes(holes) in between of valid data slices.
+  // TODO(xingliu): Remove this variable. We can use size of |received_slices_|
+  // to determine if the file is sparse
+  bool is_sparse_file_;
 
   // Statistics
   size_t bytes_seen_;
@@ -140,8 +240,9 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
   base::TimeTicks download_start_;
   RateEstimator rate_estimator_;
 
-  base::WeakPtr<DownloadDestinationObserver> observer_;
+  std::vector<DownloadItem::ReceivedSlice> received_slices_;
 
+  base::WeakPtr<DownloadDestinationObserver> observer_;
   base::WeakPtrFactory<DownloadFileImpl> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(DownloadFileImpl);

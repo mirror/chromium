@@ -37,6 +37,7 @@
 #include "chromecast/browser/url_request_context_factory.h"
 #include "chromecast/common/global_descriptors.h"
 #include "chromecast/media/audio/cast_audio_manager.h"
+#include "chromecast/media/cma/backend/media_pipeline_backend_factory.h"
 #include "chromecast/media/cma/backend/media_pipeline_backend_manager.h"
 #include "chromecast/public/media/media_pipeline_backend.h"
 #include "components/crash/content/app/breakpad_linux.h"
@@ -68,6 +69,7 @@
 #endif  // ENABLE_MOJO_MEDIA_IN_BROWSER_PROCESS
 
 #if defined(OS_ANDROID)
+#include "components/cdm/browser/cdm_message_filter_android.h"
 #include "components/crash/content/browser/crash_dump_manager_android.h"
 #else
 #include "chromecast/media/cdm/cast_cdm_factory.h"
@@ -82,8 +84,7 @@ static std::unique_ptr<service_manager::Service> CreateMediaService(
     CastContentBrowserClient* browser_client) {
   std::unique_ptr<media::CastMojoMediaClient> mojo_media_client(
       new media::CastMojoMediaClient(
-          base::Bind(&CastContentBrowserClient::CreateMediaPipelineBackend,
-                     base::Unretained(browser_client)),
+          browser_client->GetMediaPipelineBackendFactory(),
           base::Bind(&CastContentBrowserClient::CreateCdmFactory,
                      base::Unretained(browser_client)),
           browser_client->GetVideoModeSwitcher(),
@@ -109,6 +110,7 @@ CastContentBrowserClient::~CastContentBrowserClient() {
 
 void CastContentBrowserClient::AppendExtraCommandLineSwitches(
     base::CommandLine* command_line) {
+#if defined(USE_AURA)
   std::string process_type =
       command_line->GetSwitchValueNative(switches::kProcessType);
   if (process_type == switches::kGpuProcess) {
@@ -123,6 +125,7 @@ void CastContentBrowserClient::AppendExtraCommandLineSwitches(
                                       base::IntToString(res.height()));
     }
   }
+#endif  // defined(USE_AURA)
 }
 
 void CastContentBrowserClient::PreCreateThreads() {
@@ -155,11 +158,15 @@ CastContentBrowserClient::GetMediaTaskRunner() {
   return cast_browser_main_parts_->GetMediaTaskRunner();
 }
 
-std::unique_ptr<media::MediaPipelineBackend>
-CastContentBrowserClient::CreateMediaPipelineBackend(
-    const media::MediaPipelineDeviceParams& params,
-    const std::string& audio_device_id) {
-  return media_pipeline_backend_manager()->CreateMediaPipelineBackend(params);
+media::MediaPipelineBackendFactory*
+CastContentBrowserClient::GetMediaPipelineBackendFactory() {
+  DCHECK(GetMediaTaskRunner()->BelongsToCurrentThread());
+  if (!media_pipeline_backend_factory_) {
+    media_pipeline_backend_factory_.reset(
+        new media::MediaPipelineBackendFactory(
+            media_pipeline_backend_manager()));
+  }
+  return media_pipeline_backend_factory_.get();
 }
 
 media::MediaResourceTracker*
@@ -227,6 +234,10 @@ void CastContentBrowserClient::RenderProcessWillLaunch(
                     url_request_context_factory_->GetSystemGetter())),
       base::Bind(&CastContentBrowserClient::AddNetworkHintsMessageFilter,
                  base::Unretained(this), host->GetID()));
+
+#if defined(OS_ANDROID)
+  host->AddFilter(new cdm::CdmMessageFilterAndroid());
+#endif  // defined(OS_ANDROID)
 }
 
 void CastContentBrowserClient::AddNetworkHintsMessageFilter(
@@ -331,10 +342,10 @@ void CastContentBrowserClient::OverrideWebkitPrefs(
 }
 
 void CastContentBrowserClient::ResourceDispatcherHostCreated() {
-  CastBrowserProcess::GetInstance()->SetResourceDispatcherHostDelegate(
-      base::WrapUnique(new CastResourceDispatcherHostDelegate));
+  resource_dispatcher_host_delegate_.reset(
+      new CastResourceDispatcherHostDelegate);
   content::ResourceDispatcherHost::Get()->SetDelegate(
-      CastBrowserProcess::GetInstance()->resource_dispatcher_host_delegate());
+      resource_dispatcher_host_delegate_.get());
 }
 
 std::string CastContentBrowserClient::GetApplicationLocale() {
@@ -470,11 +481,15 @@ std::unique_ptr<base::Value>
 CastContentBrowserClient::GetServiceManifestOverlay(
     base::StringPiece service_name) {
   ResourceBundle& rb = ResourceBundle::GetSharedInstance();
-  if (service_name != content::mojom::kBrowserServiceName)
+  int id = -1;
+  if (service_name == content::mojom::kBrowserServiceName)
+    id = IDR_CAST_CONTENT_BROWSER_MANIFEST_OVERLAY;
+  else if (service_name == content::mojom::kPackagedServicesServiceName)
+    id = IDR_CAST_CONTENT_PACKAGED_SERVICES_MANIFEST_OVERLAY;
+  else
     return nullptr;
   base::StringPiece manifest_contents =
-      rb.GetRawDataResourceForScale(IDR_CAST_CONTENT_BROWSER_MANIFEST_OVERLAY,
-                                    ui::ScaleFactor::SCALE_FACTOR_NONE);
+      rb.GetRawDataResourceForScale(id, ui::ScaleFactor::SCALE_FACTOR_NONE);
   return base::JSONReader::Read(manifest_contents);
 }
 

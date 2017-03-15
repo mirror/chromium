@@ -5,42 +5,68 @@
 #ifndef CHROME_BROWSER_UI_VIEWS_PAYMENTS_CREDIT_CARD_EDITOR_VIEW_CONTROLLER_H_
 #define CHROME_BROWSER_UI_VIEWS_PAYMENTS_CREDIT_CARD_EDITOR_VIEW_CONTROLLER_H_
 
+#include <memory>
+#include <set>
+#include <string>
+#include <vector>
+
 #include "base/macros.h"
 #include "chrome/browser/ui/views/payments/editor_view_controller.h"
-#include "chrome/browser/ui/views/payments/validating_textfield.h"
+#include "chrome/browser/ui/views/payments/validation_delegate.h"
+#include "ui/base/models/simple_combobox_model.h"
 
 namespace payments {
 
-class PaymentRequest;
+class PaymentRequestSpec;
+class PaymentRequestState;
 class PaymentRequestDialogView;
 
 // Credit card editor screen of the Payment Request flow.
 class CreditCardEditorViewController : public EditorViewController {
  public:
   // Does not take ownership of the arguments, which should outlive this object.
-  CreditCardEditorViewController(PaymentRequest* request,
+  CreditCardEditorViewController(PaymentRequestSpec* spec,
+                                 PaymentRequestState* state,
                                  PaymentRequestDialogView* dialog);
   ~CreditCardEditorViewController() override;
 
   // EditorViewController:
+  std::unique_ptr<views::View> CreateHeaderView() override;
+  int GetViewHeaderTitleId() const override;
   std::vector<EditorField> GetFieldDefinitions() override;
   bool ValidateModelAndSave() override;
-  std::unique_ptr<ValidatingTextfield::Delegate> CreateValidationDelegate(
+  std::unique_ptr<ValidationDelegate> CreateValidationDelegate(
       const EditorField& field) override;
+  std::unique_ptr<ui::ComboboxModel> GetComboboxModelForType(
+      const autofill::ServerFieldType& type) override;
 
  private:
-  class ValidationDelegate : public ValidatingTextfield::Delegate {
+  class CreditCardValidationDelegate : public ValidationDelegate {
    public:
-    explicit ValidationDelegate(const EditorField& field);
-    ~ValidationDelegate() override;
+    // Used to validate |field| type. A reference to the |controller| should
+    // outlive this delegate, and a list of |supported_card_networks| can be
+    // passed in to validate |field| (the data will be copied to the delegate).
+    CreditCardValidationDelegate(
+        const EditorField& field,
+        EditorViewController* controller,
+        const std::vector<std::string>& supported_card_networks);
+    ~CreditCardValidationDelegate() override;
 
-    // ValidatingTextfield::Delegate:
+    // ValidationDelegate:
     bool ValidateTextfield(views::Textfield* textfield) override;
+    bool ValidateCombobox(views::Combobox* combobox) override;
 
    private:
-    EditorField field_;
+    // Validates a specific |value|.
+    bool ValidateValue(const base::string16& value);
 
-    DISALLOW_COPY_AND_ASSIGN(ValidationDelegate);
+    EditorField field_;
+    // Outlives this class.
+    EditorViewController* controller_;
+    // The list of supported basic card networks.
+    std::set<std::string> supported_card_networks_;
+
+    DISALLOW_COPY_AND_ASSIGN(CreditCardValidationDelegate);
   };
 
   DISALLOW_COPY_AND_ASSIGN(CreditCardEditorViewController);

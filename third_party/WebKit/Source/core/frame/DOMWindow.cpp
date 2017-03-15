@@ -64,7 +64,7 @@ const DOMWindow* DOMWindow::toDOMWindow() const {
 
 Location* DOMWindow::location() const {
   if (!m_location)
-    m_location = Location::create(frame());
+    m_location = Location::create(const_cast<DOMWindow*>(this));
   return m_location.get();
 }
 
@@ -147,15 +147,6 @@ bool DOMWindow::isInsecureScriptAccess(LocalDOMWindow& callingWindow,
   return true;
 }
 
-void DOMWindow::resetLocation() {
-  // Location needs to be reset manually so that it doesn't retain a stale
-  // Frame pointer.
-  if (m_location) {
-    m_location->reset();
-    m_location = nullptr;
-  }
-}
-
 void DOMWindow::postMessage(PassRefPtr<SerializedScriptValue> message,
                             const MessagePortArray& ports,
                             const String& targetOrigin,
@@ -185,9 +176,8 @@ void DOMWindow::postMessage(PassRefPtr<SerializedScriptValue> message,
     }
   }
 
-  std::unique_ptr<MessagePortChannelArray> channels =
-      MessagePort::disentanglePorts(getExecutionContext(), ports,
-                                    exceptionState);
+  MessagePortChannelArray channels = MessagePort::disentanglePorts(
+      getExecutionContext(), ports, exceptionState);
   if (exceptionState.hadException())
     return;
 
@@ -388,8 +378,7 @@ void DOMWindow::close(ExecutionContext* context) {
   if (!frame()->shouldClose())
     return;
 
-  InspectorInstrumentation::NativeBreakpoint nativeBreakpoint(context, "close",
-                                                              true);
+  probe::breakableLocation(context, "DOMWindow.close");
 
   page->closeSoon();
 

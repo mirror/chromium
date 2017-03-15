@@ -33,15 +33,16 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptState.h"
 #include "bindings/core/v8/SerializedScriptValueFactory.h"
+#include "bindings/core/v8/SourceLocation.h"
 #include "bindings/modules/v8/V8NotificationAction.h"
 #include "core/dom/Document.h"
 #include "core/dom/DocumentUserGestureToken.h"
 #include "core/dom/ExecutionContext.h"
-#include "core/dom/ExecutionContextTask.h"
 #include "core/dom/ScopedWindowFocusAllowedIndicator.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/events/Event.h"
 #include "core/frame/Deprecation.h"
+#include "core/frame/PerformanceMonitor.h"
 #include "core/frame/UseCounter.h"
 #include "core/inspector/InspectorInstrumentation.h"
 #include "modules/notifications/NotificationAction.h"
@@ -185,10 +186,9 @@ void Notification::close() {
   // Schedule the "close" event to be fired for non-persistent notifications.
   // Persistent notifications won't get such events for programmatic closes.
   if (m_type == Type::NonPersistent) {
-    getExecutionContext()->postTask(
-        TaskType::UserInteraction, BLINK_FROM_HERE,
-        createSameThreadTask(&Notification::dispatchCloseEvent,
-                             wrapPersistent(this)));
+    TaskRunnerHelper::get(TaskType::UserInteraction, getExecutionContext())
+        ->postTask(BLINK_FROM_HERE, WTF::bind(&Notification::dispatchCloseEvent,
+                                              wrapPersistent(this)));
     m_state = State::Closing;
 
     notificationManager()->close(this);
@@ -353,7 +353,8 @@ String Notification::permissionString(
   return "denied";
 }
 
-String Notification::permission(ExecutionContext* context) {
+String Notification::permission(ScriptState* scriptState) {
+  ExecutionContext* context = scriptState->getExecutionContext();
   return permissionString(
       NotificationManager::from(context)->permissionStatus(context));
 }
@@ -374,8 +375,13 @@ ScriptPromise Notification::requestPermission(
     }
   }
 
-  InspectorInstrumentation::NativeBreakpoint nativeBreakpoint(
-      context, "Notification.requestPermission", true, true);
+  if (!UserGestureIndicator::processingUserGesture()) {
+    PerformanceMonitor::reportGenericViolation(
+        context, PerformanceMonitor::kDiscouragedAPIUse,
+        "Only request notification permission in response to a user gesture.",
+        0, nullptr);
+  }
+  probe::breakableLocation(context, "Notification.requestPermission");
 
   return NotificationManager::from(context)->requestPermission(
       scriptState, deprecatedCallback);

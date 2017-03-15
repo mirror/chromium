@@ -53,6 +53,7 @@ class GPU_EXPORT FeatureInfo : public base::RefCounted<FeatureInfo> {
     bool enable_texture_float_linear = false;
     bool enable_texture_half_float_linear = false;
     bool enable_color_buffer_float = false;
+    bool enable_color_buffer_half_float = false;
     bool angle_translated_shader_source = false;
     bool angle_pack_reverse_row_order = false;
     bool arb_texture_rectangle = false;
@@ -70,6 +71,7 @@ class GPU_EXPORT FeatureInfo : public base::RefCounted<FeatureInfo> {
     bool enable_shader_name_hashing = false;
     bool enable_samplers = false;
     bool ext_draw_buffers = false;
+    bool nv_draw_buffers = false;
     bool ext_frag_depth = false;
     bool ext_shader_texture_lod = false;
     bool use_async_readpixels = false;
@@ -105,6 +107,7 @@ class GPU_EXPORT FeatureInfo : public base::RefCounted<FeatureInfo> {
     bool chromium_copy_compressed_texture = false;
     bool angle_framebuffer_multisample = false;
     bool ext_disjoint_timer_query = false;
+    bool angle_client_arrays = false;
   };
 
   FeatureInfo();
@@ -165,6 +168,7 @@ class GPU_EXPORT FeatureInfo : public base::RefCounted<FeatureInfo> {
   void EnableCHROMIUMColorBufferFloatRGBA();
   void EnableCHROMIUMColorBufferFloatRGB();
   void EnableEXTColorBufferFloat();
+  void EnableEXTColorBufferHalfFloat();
   void EnableOESTextureFloatLinear();
   void EnableOESTextureHalfFloatLinear();
 
@@ -179,12 +183,14 @@ class GPU_EXPORT FeatureInfo : public base::RefCounted<FeatureInfo> {
  private:
   friend class base::RefCounted<FeatureInfo>;
   friend class BufferManagerClientSideArraysTest;
+  class StringSet;
 
   ~FeatureInfo();
 
   void AddExtensionString(const char* s);
   void InitializeBasicState(const base::CommandLine* command_line);
   void InitializeFeatures();
+  void InitializeFloatAndHalfFloatFeatures(const StringSet& extensions);
 
   Validators validators_;
 

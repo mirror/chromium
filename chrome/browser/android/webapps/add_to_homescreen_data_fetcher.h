@@ -5,7 +5,6 @@
 #ifndef CHROME_BROWSER_ANDROID_WEBAPPS_ADD_TO_HOMESCREEN_DATA_FETCHER_H_
 #define CHROME_BROWSER_ANDROID_WEBAPPS_ADD_TO_HOMESCREEN_DATA_FETCHER_H_
 
-#include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/task/cancelable_task_tracker.h"
@@ -13,6 +12,10 @@
 #include "chrome/browser/android/shortcut_info.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "third_party/skia/include/core/SkBitmap.h"
+
+namespace base {
+class TaskRunner;
+}
 
 namespace content {
 class WebContents;
@@ -78,10 +81,6 @@ class AddToHomescreenDataFetcher
                              bool check_webapk_compatible,
                              Observer* observer);
 
-  // Returns a callback which fetches the splash screen image to be stored for
-  // the webapp with the specified |id|.
-  base::Closure FetchSplashScreenImageCallback(const std::string& id);
-
   // IPC message received when the initialization is finished.
   void OnDidGetWebApplicationInfo(const WebApplicationInfo& web_app_info);
 
@@ -114,15 +113,17 @@ class AddToHomescreenDataFetcher
   // Creates the launcher icon from the given bitmap. shortcut_info_.url is
   // used to generate an icon if there is no bitmap in |bitmap_result| or the
   // bitmap is not large enough.
-  void CreateLauncherIconFromFaviconInBackground(
+  SkBitmap CreateLauncherIconFromFaviconInBackground(
       const favicon_base::FaviconRawBitmapResult& bitmap_result);
 
   // Creates the launcher icon from the given |raw_icon|.
   void CreateLauncherIcon(const SkBitmap& raw_icon);
-  void CreateLauncherIconInBackground(const SkBitmap& raw_icon);
+  SkBitmap CreateLauncherIconInBackground(const SkBitmap& raw_icon);
 
   // Notifies the observer that the shortcut data is all available.
   void NotifyObserver(const SkBitmap& icon);
+
+  scoped_refptr<base::TaskRunner> background_task_runner_;
 
   Observer* weak_observer_;
 
@@ -130,7 +131,6 @@ class AddToHomescreenDataFetcher
   SkBitmap badge_icon_;
   SkBitmap primary_icon_;
   ShortcutInfo shortcut_info_;
-  GURL splash_screen_url_;
 
   base::CancelableTaskTracker favicon_task_tracker_;
   base::Timer data_timeout_timer_;

@@ -119,6 +119,7 @@
 <translation id="2096368010154057602">Округ</translation>
 <translation id="2113977810652731515">Карта</translation>
 <translation id="2114841414352855701">Игнорируется, так как правило <ph name="POLICY_NAME" /> имеет приоритет.</translation>
+<translation id="2138201775715568214">Поиск веб-страниц…</translation>
 <translation id="213826338245044447">Закладки на мобильном</translation>
 <translation id="2148716181193084225">Сегодня</translation>
 <translation id="2154054054215849342">В вашем домене синхронизация недоступна</translation>
@@ -189,6 +190,7 @@
 <translation id="2721148159707890343">Запрос выполнен успешно</translation>
 <translation id="2728127805433021124">Сертификат сервера подписан с использованием ненадежного алгоритма.</translation>
 <translation id="2730326759066348565"><ph name="BEGIN_LINK" />Выполните диагностику подключения<ph name="END_LINK" /></translation>
+<translation id="2740531572673183784">ОК</translation>
 <translation id="2742870351467570537">Удалить выбранные элементы</translation>
 <translation id="277499241957683684">Устройство не зарегистрировано</translation>
 <translation id="2784949926578158345">Соединение сброшено.</translation>
@@ -269,6 +271,7 @@
 <translation id="348000606199325318">Идентификатор сбоя: <ph name="CRASH_LOCAL_ID" /> (идентификатор сервера: <ph name="CRASH_ID" />)</translation>
 <translation id="3498215018399854026">Не удалось связаться с вашими родителями. Повторите попытку.</translation>
 <translation id="3528171143076753409">Сертификат сервера не является доверенным.</translation>
+<translation id="3538531656504267329">Недопустимый год окончания срока действия</translation>
 <translation id="3539171420378717834">Хранить данные карты на этом устройстве</translation>
 <translation id="3542684924769048008">Использовать пароль для:</translation>
 <translation id="3549644494707163724">Шифровать все синхронизированные данные с помощью кодовой фразы</translation>
@@ -351,6 +354,7 @@
 <translation id="425582637250725228">Возможно, внесенные изменения не сохранятся.</translation>
 <translation id="4258748452823770588">Подпись недействительна</translation>
 <translation id="4269787794583293679">(Не указано)</translation>
+<translation id="4275830172053184480">Перезапуск устройства</translation>
 <translation id="4280429058323657511">, действует до <ph name="EXPIRATION_DATE_ABBR" /></translation>
 <translation id="4295944351946828969">Система Google по проверке безопасности недавно обнаружила на сайте <ph name="SITE" /> <ph name="BEGIN_LINK" />вредоносное ПО<ph name="END_LINK" />. <ph name="BEGIN_LEARN_MORE_LINK" />Подробнее…<ph name="END_LEARN_MORE_LINK" /></translation>
 <translation id="4300246636397505754">Подсказки для родительских элементов</translation>
@@ -466,6 +470,7 @@
 <translation id="5544037170328430102">Подтвердите действие на <ph name="SITE" />:</translation>
 <translation id="5556459405103347317">Перезагрузить</translation>
 <translation id="5565735124758917034">Активен</translation>
+<translation id="5572851009514199876">Выполните вход, чтобы Chrome определил, разрешен ли вам доступ к этому сайту.</translation>
 <translation id="5575380383496039204">Адрес доставки не поддерживается. Выберите другой вариант.</translation>
 <translation id="5580958916614886209">Проверьте месяц в сроке действия карты и повторите попытку</translation>
 <translation id="560412284261940334">Управление устройствами не поддерживается</translation>
@@ -550,12 +555,14 @@
 <translation id="6443118737398455446">Недопустимый срок действия</translation>
 <translation id="6446608382365791566">Укажите дополнительную информацию</translation>
 <translation id="6451458296329894277">Подтвердите повторную отправку формы</translation>
+<translation id="6456339708790392414">Оплата</translation>
 <translation id="6458467102616083041">Игнорируется, так как поиск по умолчанию запрещен правилами.</translation>
 <translation id="6462969404041126431">Сервер не может подтвердить связь с доменом <ph name="DOMAIN" />. Вероятно, его сертификат был отозван. Проблема также может быть связана с настройками сервера или действиями злоумышленников, которые пытаются перехватить соединение. <ph name="BEGIN_LEARN_MORE_LINK" />Подробнее…<ph name="END_LEARN_MORE_LINK" /></translation>
 <translation id="647261751007945333">Правила устройства</translation>
 <translation id="6477321094435799029">Браузер Chrome обнаружил на этой странице необычный код и заблокировал его, чтобы защитить ваши данные (например, пароли, а также номера телефонов и банковских карт).</translation>
 <translation id="6477460825583319731">Неверный адрес электронной почты</translation>
 <translation id="6489534406876378309">Начать загрузку сведений об ошибках</translation>
+<translation id="6525462735697194615">Недопустимый месяц окончания срока действия</translation>
 <translation id="6529602333819889595">&amp;Повторить удаление</translation>
 <translation id="6534179046333460208">Интернет вокруг нас: рекомендации</translation>
 <translation id="6550675742724504774">Параметры</translation>
@@ -590,7 +597,6 @@
 <translation id="6895330447102777224">Ваша карта подтверждена</translation>
 <translation id="6897140037006041989">User Agent</translation>
 <translation id="6915804003454593391">Пользователь:</translation>
-<translation id="6937422995269576720">Недействительный номер карты</translation>
 <translation id="6957887021205513506">Возможно, сертификат сервера фальсифицирован.</translation>
 <translation id="6965382102122355670">OK</translation>
 <translation id="6965978654500191972">Устройство</translation>
@@ -618,6 +624,7 @@
 <translation id="7210863904660874423">Сайт <ph name="HOST_NAME" /> не соответствует стандартам безопасности.</translation>
 <translation id="721197778055552897"><ph name="BEGIN_LINK" />Подробнее <ph name="END_LINK" /> об этой неполадке.</translation>
 <translation id="7219179957768738017">В этом подключении используется протокол <ph name="SSL_VERSION" />.</translation>
+<translation id="7220786058474068424">Подождите…</translation>
 <translation id="724691107663265825">Осторожно, вредоносное ПО!</translation>
 <translation id="724975217298816891">Введите срок действия и CVC-код карты <ph name="CREDIT_CARD" />. После этого ее данные будут переданы сайту.</translation>
 <translation id="725866823122871198">Не удалось установить защищенное соединение с доменом <ph name="BEGIN_BOLD" /><ph name="DOMAIN" /><ph name="END_BOLD" /> из-за неверных настроек системных часов и календаря (<ph name="DATE_AND_TIME" />).</translation>
@@ -684,6 +691,7 @@
 <translation id="7755287808199759310">Для разблокировки обратитесь к родителю.</translation>
 <translation id="7758069387465995638">Возможно, подключение заблокировано брандмауэром или антивирусным ПО.</translation>
 <translation id="7761701407923456692">Сертификат сервера не соответствует URL.</translation>
+<translation id="7764225426217299476">Добавить адрес</translation>
 <translation id="777702478322588152">Префектура</translation>
 <translation id="7791543448312431591">Добавить</translation>
 <translation id="7793809570500803535">Веб-страница по адресу <ph name="SITE" />, возможно, временно недоступна или перемещена на новый адрес.</translation>
@@ -693,7 +701,6 @@
 <translation id="7812922009395017822">Мир</translation>
 <translation id="7813600968533626083">Удалить подсказку из Chrome?</translation>
 <translation id="7815407501681723534"><ph name="SEARCH_RESULTS" /> по запросу "<ph name="SEARCH_STRING" />" (<ph name="NUMBER_OF_RESULTS" />)</translation>
-<translation id="7837582000577464779">Не удалось обработать заказ. Проверьте аккаунт и повторите попытку.</translation>
 <translation id="785549533363645510">Тем не менее ваши действия будут видны системному администратору и интернет-провайдеру, а также доступны веб-сайтам, которые вы посещаете.</translation>
 <translation id="7855695075675558090"><ph name="TOTAL_LABEL" /> <ph name="FORMATTED_TOTAL_AMOUNT" /> <ph name="CURRENCY_CODE" /></translation>
 <translation id="7887683347370398519">Проверьте CVC-код и повторите попытку</translation>
@@ -788,6 +795,7 @@
 <translation id="8932102934695377596">Часы отстают</translation>
 <translation id="8954894007019320973">(Продолж.)</translation>
 <translation id="8971063699422889582">Сертификат сервера устарел.</translation>
+<translation id="8986494364107987395">Автоматически отправлять в Google статистику использования и отчеты о сбоях</translation>
 <translation id="8987927404178983737">Месяц</translation>
 <translation id="8989148748219918422"><ph name="ORGANIZATION" /> [<ph name="COUNTRY" />]</translation>
 <translation id="8996941253935762404">Сайт содержит нежелательное ПО</translation>
@@ -806,6 +814,7 @@
 <translation id="9094175695478007090">Не удалось запустить платежное приложение.</translation>
 <translation id="9103872766612412690">На сайте <ph name="SITE" /> для защиты ваших данных обычно используется шифрование. Однако учетные данные, которые мы получили от сайта <ph name="SITE" /> сейчас, отличаются от тех, которые он отправляет обычно. Вероятно, вредоносный сайт пытается выдать себя за <ph name="SITE" />, либо страница подключения к сети Wi-Fi прервала соединение. Ваша информация по-прежнему в безопасности, так как браузер Chromium разорвал соединение до того, как произошел обмен данными.</translation>
 <translation id="9137013805542155359">Показать оригинал</translation>
+<translation id="9137248913990643158">Войдите в Chrome, прежде чем использовать это приложение.</translation>
 <translation id="9148507642005240123">&amp;Отменить изменения</translation>
 <translation id="9154194610265714752">Обновлено</translation>
 <translation id="9157595877708044936">Настройка...</translation>

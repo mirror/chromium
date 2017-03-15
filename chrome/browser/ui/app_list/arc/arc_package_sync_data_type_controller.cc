@@ -7,24 +7,13 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/chromeos/arc/arc_util.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/app_list/arc/arc_app_list_prefs_factory.h"
 #include "chrome/common/pref_names.h"
 #include "components/prefs/pref_service.h"
 #include "components/sync/base/pref_names.h"
 #include "components/sync/base/sync_prefs.h"
 #include "components/sync/driver/sync_client.h"
 #include "components/sync/driver/sync_service.h"
-
-// ArcPackage sync service is controlled by apps checkbox in sync settings. Arc
-// apps and regular Chrome apps have same user control.
-namespace {
-
-// Indicates whether ARC is enabled on this machine.
-bool IsArcEnabled(Profile* profile) {
-  return arc::IsArcAllowedForProfile(profile) &&
-         profile->GetPrefs()->GetBoolean(prefs::kArcEnabled);
-}
-
-}  // namespace
 
 ArcPackageSyncDataTypeController::ArcPackageSyncDataTypeController(
     syncer::ModelType type,
@@ -49,7 +38,9 @@ ArcPackageSyncDataTypeController::~ArcPackageSyncDataTypeController() {
 
 bool ArcPackageSyncDataTypeController::ReadyForStart() const {
   DCHECK(CalledOnValidThread());
-  return IsArcEnabled(profile_) && ShouldSyncArc();
+  // In sync integration test, always consider the DTC as ready for start.
+  return ArcAppListPrefsFactory::IsFactorySetForSyncTest() ||
+         (arc::IsArcPlayStoreEnabledForProfile(profile_) && ShouldSyncArc());
 }
 
 bool ArcPackageSyncDataTypeController::StartModels() {
@@ -69,7 +60,7 @@ void ArcPackageSyncDataTypeController::StopModels() {
 
 void ArcPackageSyncDataTypeController::OnPackageListInitialRefreshed() {
   // model_normal_start_ is true by default. Normally,
-  // ArcPackageSyncDataTypeController::StartModels() gets called before Arc
+  // ArcPackageSyncDataTypeController::StartModels() gets called before ARC
   // package list is refreshed. But in integration test, the order can be either
   // way. If OnPackageListInitialRefreshed comes before
   // ArcPackageSyncDataTypeController ::StartModels(), this function is no-op
@@ -85,12 +76,12 @@ void ArcPackageSyncDataTypeController::OnArcEnabledPrefChanged() {
   DCHECK(CalledOnValidThread());
 
   if (!ReadyForStart()) {
-    // If enable Arc in settings is turned off then generate an unrecoverable
+    // If enable ARC in settings is turned off then generate an unrecoverable
     // error.
     if (state() != NOT_RUNNING && state() != STOPPING) {
       syncer::SyncError error(
           FROM_HERE, syncer::SyncError::DATATYPE_POLICY_ERROR,
-          "Arc package sync is now disabled because user disables Arc.",
+          "ARC package sync is now disabled because user disables ARC.",
           type());
       CreateErrorHandler()->OnUnrecoverableError(error);
     }

@@ -111,7 +111,7 @@ class ResultsJSON(object):
 
 class BotTestExpectationsFactory(object):
     RESULTS_URL_PREFIX = (
-        'http://test-results.appspot.com/testfile?master=chromium.webkit&'
+        'https://test-results.appspot.com/testfile?master=chromium.webkit&'
         'testtype=webkit_tests&name=results-small.json&builder=')
 
     def __init__(self, builders):
@@ -170,7 +170,7 @@ class BotTestExpectations(object):
         line.filename = test_path
         line.path = test_path  # FIXME: Should this be normpath?
         line.matching_tests = [test_path]
-        line.bugs = ["crbug.com/FILE_A_BUG_BEFORE_COMMITTING_THIS"]
+        line.bugs = ['crbug.com/FILE_A_BUG_BEFORE_COMMITTING_THIS']
         line.expectations = sorted(flaky_types)
         line.specifiers = self.specifiers
         return line

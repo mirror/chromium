@@ -77,8 +77,7 @@ FontResource* FontResource::fetch(FetchRequest& request,
                                   ResourceFetcher* fetcher) {
   DCHECK_EQ(request.resourceRequest().frameType(),
             WebURLRequest::FrameTypeNone);
-  request.mutableResourceRequest().setRequestContext(
-      WebURLRequest::RequestContextFont);
+  request.setRequestContext(WebURLRequest::RequestContextFont);
   return toFontResource(
       fetcher->requestResource(request, FontResourceFactory()));
 }
@@ -131,7 +130,7 @@ void FontResource::startLoadLimitTimers() {
                                         BLINK_FROM_HERE);
 }
 
-bool FontResource::ensureCustomFontData() {
+PassRefPtr<FontCustomPlatformData> FontResource::getCustomFontData() {
   if (!m_fontData && !errorOccurred() && !isLoading()) {
     if (data())
       m_fontData = FontCustomPlatformData::create(data(), m_otsParsingMessage);
@@ -143,18 +142,7 @@ bool FontResource::ensureCustomFontData() {
       recordPackageFormatHistogram(PackageFormatUnknown);
     }
   }
-  return m_fontData.get();
-}
-
-FontPlatformData FontResource::platformDataFromCustomData(
-    float size,
-    bool bold,
-    bool italic,
-    FontOrientation orientation,
-    FontVariationSettings* fontVariationSettings) {
-  DCHECK(m_fontData);
-  return m_fontData->fontPlatformData(size, bold, italic, orientation,
-                                      fontVariationSettings);
+  return m_fontData;
 }
 
 void FontResource::willReloadAfterDiskCacheMiss() {
@@ -210,7 +198,7 @@ void FontResource::notifyClientsLongLimitExceeded() {
 }
 
 void FontResource::allClientsAndObserversRemoved() {
-  m_fontData.reset();
+  m_fontData.clear();
   Resource::allClientsAndObserversRemoved();
 }
 

@@ -13,6 +13,7 @@
 #include "base/lazy_instance.h"
 #include "base/location.h"
 #include "base/logging.h"
+#include "base/memory/memory_coordinator_client_registry.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/shared_memory.h"
 #include "base/metrics/histogram_macros.h"
@@ -53,15 +54,15 @@
 #include "content/renderer/dom_storage/local_storage_namespace.h"
 #include "content/renderer/dom_storage/webstoragenamespace_impl.h"
 #include "content/renderer/gamepad_shared_memory_reader.h"
+#include "content/renderer/image_capture/image_capture_frame_grabber.h"
 #include "content/renderer/media/audio_decoder.h"
 #include "content/renderer/media/audio_device_factory.h"
-#include "content/renderer/media/capturefromelement/canvas_capture_handler.h"
-#include "content/renderer/media/capturefromelement/html_audio_element_capturer_source.h"
-#include "content/renderer/media/capturefromelement/html_video_element_capturer_source.h"
-#include "content/renderer/media/image_capture_frame_grabber.h"
-#include "content/renderer/media/recorder/media_recorder_handler.h"
 #include "content/renderer/media/renderer_webaudiodevice_impl.h"
 #include "content/renderer/media/renderer_webmidiaccessor_impl.h"
+#include "content/renderer/media_capture_from_element/canvas_capture_handler.h"
+#include "content/renderer/media_capture_from_element/html_audio_element_capturer_source.h"
+#include "content/renderer/media_capture_from_element/html_video_element_capturer_source.h"
+#include "content/renderer/media_recorder/media_recorder_handler.h"
 #include "content/renderer/mojo/blink_interface_provider_impl.h"
 #include "content/renderer/render_thread_impl.h"
 #include "content/renderer/renderer_clipboard_delegate.h"
@@ -77,7 +78,6 @@
 #include "media/audio/audio_output_device.h"
 #include "media/blink/webcontentdecryptionmodule_impl.h"
 #include "media/filters/stream_parser_factory.h"
-#include "mojo/public/cpp/bindings/associated_group.h"
 #include "ppapi/features/features.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
@@ -239,8 +239,7 @@ class RendererBlinkPlatformImpl::SandboxSupport
 
 RendererBlinkPlatformImpl::RendererBlinkPlatformImpl(
     blink::scheduler::RendererScheduler* renderer_scheduler,
-    base::WeakPtr<service_manager::InterfaceProvider> remote_interfaces,
-    content::ChildMemoryCoordinatorImpl* memory_coordinator)
+    base::WeakPtr<service_manager::InterfaceProvider> remote_interfaces)
     : BlinkPlatformImpl(renderer_scheduler->DefaultTaskRunner()),
       main_thread_(renderer_scheduler->CreateMainThread()),
       clipboard_delegate_(new RendererClipboardDelegate),
@@ -252,8 +251,7 @@ RendererBlinkPlatformImpl::RendererBlinkPlatformImpl(
       web_scrollbar_behavior_(new WebScrollbarBehaviorImpl),
       renderer_scheduler_(renderer_scheduler),
       blink_interface_provider_(
-          new BlinkInterfaceProviderImpl(remote_interfaces)),
-      memory_coordinator_(memory_coordinator) {
+          new BlinkInterfaceProviderImpl(remote_interfaces)) {
 #if !defined(OS_ANDROID) && !defined(OS_WIN)
   if (g_sandbox_enabled && sandboxEnabled()) {
     sandbox_support_.reset(new RendererBlinkPlatformImpl::SandboxSupport);
@@ -308,7 +306,7 @@ blink::WebURLLoader* RendererBlinkPlatformImpl::createURLLoader() {
   // data URLs to bypass the ResourceDispatcher.
   return new content::WebURLLoaderImpl(
       child_thread ? child_thread->resource_dispatcher() : nullptr,
-      url_loader_factory_.get(), url_loader_factory_.associated_group());
+      url_loader_factory_.get());
 }
 
 blink::WebThread* RendererBlinkPlatformImpl::currentThread() {
@@ -384,8 +382,7 @@ bool RendererBlinkPlatformImpl::isLinkVisited(unsigned long long link_hash) {
 void RendererBlinkPlatformImpl::createMessageChannel(
     blink::WebMessagePortChannel** channel1,
     blink::WebMessagePortChannel** channel2) {
-  WebMessagePortChannelImpl::CreatePair(
-      default_task_runner_, channel1, channel2);
+  WebMessagePortChannelImpl::CreatePair(channel1, channel2);
 }
 
 blink::WebPrescientNetworking*
@@ -678,49 +675,18 @@ WebAudioDevice* RendererBlinkPlatformImpl::createAudioDevice(
   // The |channels| does not exactly identify the channel layout of the
   // device. The switch statement below assigns a best guess to the channel
   // layout based on number of channels.
-  media::ChannelLayout layout = media::CHANNEL_LAYOUT_UNSUPPORTED;
-  switch (channels) {
-    case 1:
-      layout = media::CHANNEL_LAYOUT_MONO;
-      break;
-    case 2:
-      layout = media::CHANNEL_LAYOUT_STEREO;
-      break;
-    case 3:
-      layout = media::CHANNEL_LAYOUT_2_1;
-      break;
-    case 4:
-      layout = media::CHANNEL_LAYOUT_4_0;
-      break;
-    case 5:
-      layout = media::CHANNEL_LAYOUT_5_0;
-      break;
-    case 6:
-      layout = media::CHANNEL_LAYOUT_5_1;
-      break;
-    case 7:
-      layout = media::CHANNEL_LAYOUT_7_0;
-      break;
-    case 8:
-      layout = media::CHANNEL_LAYOUT_7_1;
-      break;
-    default:
-      // TODO need to also pass 'channels' into RendererWebAudioDeviceImpl for
-      // CHANNEL_LAYOUT_DISCRETE
-      NOTREACHED();
-  }
+  media::ChannelLayout layout = media::GuessChannelLayout(channels);
+  if (layout == media::CHANNEL_LAYOUT_UNSUPPORTED)
+    layout = media::CHANNEL_LAYOUT_DISCRETE;
 
   int session_id = 0;
   if (input_device_id.isNull() ||
       !base::StringToInt(input_device_id.utf8(), &session_id)) {
-    if (input_channels > 0)
-      DLOG(WARNING) << "createAudioDevice(): request for audio input ignored";
-
-    input_channels = 0;
+    session_id = 0;
   }
 
   return RendererWebAudioDeviceImpl::Create(
-      layout, latency_hint, callback, session_id,
+      layout, channels, latency_hint, callback, session_id,
       static_cast<url::Origin>(security_origin));
 }
 
@@ -892,8 +858,6 @@ void RendererBlinkPlatformImpl::createHTMLVideoElementCapturer(
   AddVideoTrackToMediaStream(
       HtmlVideoElementCapturerSource::CreateFromWebMediaPlayerImpl(
           web_media_player, content::RenderThread::Get()->GetIOTaskRunner()),
-      false,  // is_remote
-      false,  // is_readonly
       web_media_stream);
 #endif
 }
@@ -909,10 +873,8 @@ void RendererBlinkPlatformImpl::createHTMLAudioElementCapturer(
   blink::WebMediaStreamTrack web_media_stream_track;
   const WebString track_id = WebString::fromUTF8(base::GenerateGUID());
 
-  web_media_stream_source.initialize(track_id,
-                                     blink::WebMediaStreamSource::TypeAudio,
-                                     track_id,
-                                     false /* is_remote */);
+  web_media_stream_source.initialize(
+      track_id, blink::WebMediaStreamSource::TypeAudio, track_id);
   web_media_stream_track.initialize(web_media_stream_source);
 
   MediaStreamAudioSource* const media_stream_source =
@@ -1016,13 +978,16 @@ RendererBlinkPlatformImpl::createOffscreenGraphicsContext3DProvider(
 
   bool is_software_rendering = gpu_channel_host->gpu_info().software_rendering;
 
-  // This is an offscreen context, which doesn't use the default frame buffer,
-  // so don't request any alpha, depth, stencil, antialiasing.
+  // This is an offscreen context. Generally it won't use the default
+  // frame buffer, in that case don't request any alpha, depth, stencil,
+  // antialiasing. But we do need those attributes for the "own
+  // offscreen surface" optimization which supports directly drawing
+  // to a custom surface backed frame buffer.
   gpu::gles2::ContextCreationAttribHelper attributes;
-  attributes.alpha_size = -1;
-  attributes.depth_size = 0;
-  attributes.stencil_size = 0;
-  attributes.samples = 0;
+  attributes.alpha_size = web_attributes.supportAlpha ? 8 : -1;
+  attributes.depth_size = web_attributes.supportDepth ? 24 : 0;
+  attributes.stencil_size = web_attributes.supportStencil ? 8 : 0;
+  attributes.samples = web_attributes.supportAntialias ? 4 : 0;
   attributes.sample_buffers = 0;
   attributes.bind_generates_resource = false;
   // Prefer discrete GPU for WebGL.
@@ -1293,8 +1258,11 @@ void RendererBlinkPlatformImpl::workerContextCreated(
 
 //------------------------------------------------------------------------------
 void RendererBlinkPlatformImpl::requestPurgeMemory() {
-  DCHECK(memory_coordinator_);
-  memory_coordinator_->PurgeMemory();
+  // TODO(tasak|bashi): We should use ChildMemoryCoordinator here, but
+  // ChildMemoryCoordinator isn't always available as it's only initialized
+  // when kMemoryCoordinatorV0 is enabled.
+  // Use ChildMemoryCoordinator when memory coordinator is always enabled.
+  base::MemoryCoordinatorClientRegistry::GetInstance()->PurgeMemory();
 }
 
 }  // namespace content

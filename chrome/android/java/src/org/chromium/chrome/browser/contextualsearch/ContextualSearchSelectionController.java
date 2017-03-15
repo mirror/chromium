@@ -15,6 +15,7 @@ import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content_public.browser.GestureStateListener;
+import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.touch_selection.SelectionEventType;
 
 import java.util.regex.Matcher;
@@ -355,16 +356,17 @@ public class ContextualSearchSelectionController {
 
     /**
      * Handles an unhandled tap gesture.
+     * @param x The x coordinate in px.
+     * @param y The y coordinate in px.
      */
     void handleShowUnhandledTapUIIfNeeded(int x, int y) {
         mWasTapGestureDetected = false;
-        // TODO(donnd): shouldn't we check == TAP here instead of LONG_PRESS?
         // TODO(donnd): refactor to avoid needing a new handler API method as suggested by Pedro.
         if (mSelectionType != SelectionType.LONG_PRESS) {
             mWasTapGestureDetected = true;
             long tapTimeNanoseconds = System.nanoTime();
             // TODO(donnd): add a policy method to get adjusted tap count.
-            ChromePreferenceManager prefs = ChromePreferenceManager.getInstance(mActivity);
+            ChromePreferenceManager prefs = ChromePreferenceManager.getInstance();
             int adjustedTapsSinceOpen = prefs.getContextualSearchTapCount()
                     - prefs.getContextualSearchTapQuickAnswerCount();
             // Explicitly destroy the old heuristics so native code can dispose data.
@@ -403,11 +405,22 @@ public class ContextualSearchSelectionController {
     }
 
     /**
+     * Gets the base page ContentViewCore.
+     * Deprecated, use getBaseWebContents instead.
      * @return The Base Page's {@link ContentViewCore}, or {@code null} if there is no current tab.
      */
+    @Deprecated
     ContentViewCore getBaseContentView() {
         Tab currentTab = mActivity.getActivityTab();
         return currentTab != null ? currentTab.getContentViewCore() : null;
+    }
+
+    /**
+     * @return The Base Page's {@link WebContents}, or {@code null} if there is no current tab.
+     */
+    WebContents getBaseWebContents() {
+        Tab currentTab = mActivity.getActivityTab();
+        return currentTab != null ? currentTab.getContentViewCore().getWebContents() : null;
     }
 
     /**
@@ -422,10 +435,10 @@ public class ContextualSearchSelectionController {
         // crbug.com/508354
 
         if (selectionStartAdjust == 0 && selectionEndAdjust == 0) return;
-        ContentViewCore basePageContentView = getBaseContentView();
-        if (basePageContentView != null && basePageContentView.getWebContents() != null) {
+        WebContents basePageWebContents = getBaseWebContents();
+        if (basePageWebContents != null) {
             mDidExpandSelection = true;
-            basePageContentView.getWebContents().adjustSelectionByCharacterOffset(
+            basePageWebContents.adjustSelectionByCharacterOffset(
                     selectionStartAdjust, selectionEndAdjust);
         }
     }
@@ -536,6 +549,14 @@ public class ContextualSearchSelectionController {
             // TODO(pedrosimonetti): actually suppress selection once the system supports it.
             if (ContextualSearchFieldTrial.isBlacklistEnabled() && reason != BlacklistReason.NONE) {
                 isValid = false;
+            }
+
+            int minSelectionLength = ContextualSearchFieldTrial.getMinimumSelectionLength();
+            if (selection.length() < minSelectionLength) {
+                isValid = false;
+                ContextualSearchUma.logSelectionLengthSuppression(true);
+            } else if (minSelectionLength > 0) {
+                ContextualSearchUma.logSelectionLengthSuppression(false);
             }
         }
 

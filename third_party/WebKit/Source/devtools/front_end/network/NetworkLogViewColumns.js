@@ -91,6 +91,7 @@ Network.NetworkLogViewColumns = class {
     this._popoverHelper = new UI.PopoverHelper(this._networkLogView.element);
     this._popoverHelper.initializeCallbacks(
         this._getPopoverAnchor.bind(this), this._showPopover.bind(this), this._onHidePopover.bind(this));
+    this._popoverHelper.setHasPadding(true);
 
     /** @type {!DataGrid.SortableDataGrid<!Network.NetworkNode>} */
     this._dataGrid =
@@ -444,9 +445,9 @@ Network.NetworkLogViewColumns = class {
         customHeaders, headerTitle => !!this._addCustomHeader(headerTitle), this._changeCustomHeader.bind(this),
         this._removeCustomHeader.bind(this));
     var dialog = new UI.Dialog();
-    manageCustomHeaders.show(dialog.element);
-    dialog.setWrapsContent(true);
-    dialog.show();
+    manageCustomHeaders.show(dialog.contentElement);
+    dialog.setSizeBehavior(UI.GlassPane.SizeBehavior.MeasureContent);
+    dialog.show(this._networkLogView.element);
   }
 
   /**
@@ -537,16 +538,17 @@ Network.NetworkLogViewColumns = class {
   }
 
   /**
-   * @param {!Element} anchor
-   * @param {!UI.Popover} popover
+   * @param {!Element|!AnchorBox} anchor
+   * @param {!UI.GlassPane} popover
+   * @return {!Promise<boolean>}
    */
   _showPopover(anchor, popover) {
     var request = /** @type {!SDK.NetworkRequest} */ (anchor.request);
     var initiator = /** @type {!Protocol.Network.Initiator} */ (request.initiator());
     var content = Components.DOMPresentationUtils.buildStackTracePreviewContents(
         request.target(), this._popupLinkifier, initiator.stack);
-    popover.setCanShrink(true);
-    popover.showForAnchor(content, anchor);
+    popover.contentElement.appendChild(content);
+    return Promise.resolve(true);
   }
 
   _onHidePopover() {

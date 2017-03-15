@@ -72,10 +72,6 @@ VideoRotation FakeDemuxerStream::video_rotation() {
   return VIDEO_ROTATION_0;
 }
 
-bool FakeDemuxerStream::enabled() const {
-  return false;
-}
-
 void FakeDemuxerStream::CreateFakeFrame(size_t size,
                                         bool key_frame,
                                         int pts_ms) {
@@ -106,10 +102,15 @@ FakeMediaResource::FakeMediaResource()
 
 FakeMediaResource::~FakeMediaResource() {}
 
-DemuxerStream* FakeMediaResource::GetStream(DemuxerStream::Type type) {
-  if (type == DemuxerStream::AUDIO)
-    return reinterpret_cast<DemuxerStream*>(demuxer_stream_.get());
-  return nullptr;
+std::vector<DemuxerStream*> FakeMediaResource::GetAllStreams() {
+  std::vector<DemuxerStream*> streams;
+  streams.push_back(demuxer_stream_.get());
+  return streams;
+}
+
+void FakeMediaResource::SetStreamStatusChangeCB(
+    const StreamStatusChangeCB& cb) {
+  NOTIMPLEMENTED();
 }
 
 }  // namespace remoting

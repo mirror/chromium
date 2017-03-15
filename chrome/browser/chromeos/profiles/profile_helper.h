@@ -18,7 +18,9 @@
 #include "chrome/browser/chromeos/login/signin/oauth2_login_manager.h"
 #include "components/user_manager/user_manager.h"
 
+class ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest;
 class ArcAppTest;
+class SessionControllerClientTest;
 class Profile;
 
 namespace base {
@@ -29,15 +31,15 @@ namespace extensions {
 class ExtensionGarbageCollectorChromeOSUnitTest;
 }
 
-namespace arc {
-class SyncArcPackageHelper;
-}
-
 namespace ash {
 namespace test {
 class MultiUserWindowManagerChromeOSTest;
 }  // namespace test
 }  // namespace ash
+
+namespace policy {
+class DeviceStatusCollectorTest;
+}  // namespace policy
 
 namespace test {
 class BrowserFinderChromeOSTest;
@@ -153,6 +155,7 @@ class ProfileHelper
   // to access private test methods.
   friend class CryptohomeAuthenticatorTest;
   friend class DeviceSettingsTestBase;
+  friend class policy::DeviceStatusCollectorTest;
   friend class ExistingUserControllerTest;
   friend class extensions::ExtensionGarbageCollectorChromeOSUnitTest;
   friend class FakeChromeUserManager;
@@ -162,11 +165,11 @@ class ProfileHelper
   friend class PrinterDetectorAppSearchEnabledTest;
   friend class ProfileHelperTest;
   friend class ProfileListChromeOSTest;
-  friend class SessionStateDelegateChromeOSTest;
   friend class SystemTrayDelegateChromeOSTest;
-  friend class arc::SyncArcPackageHelper;
   friend class ash::test::MultiUserWindowManagerChromeOSTest;
+  friend class ::ArcActiveDirectoryEnrollmentTokenFetcherBrowserTest;
   friend class ::ArcAppTest;
+  friend class ::SessionControllerClientTest;
   friend class ::test::BrowserFinderChromeOSTest;
 
   // Called when signin profile is cleared.

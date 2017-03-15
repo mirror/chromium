@@ -4,6 +4,7 @@
 
 #include "ui/views/widget/widget.h"
 
+#include "base/auto_reset.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
@@ -341,7 +342,12 @@ void Widget::Init(const InitParams& in_params) {
     // NonClientView to the RootView. This will cause everything to be parented.
     non_client_view_->set_client_view(widget_delegate_->CreateClientView(this));
     non_client_view_->SetOverlayView(widget_delegate_->CreateOverlayView());
-    SetContentsView(non_client_view_);
+
+    // Bypass the Layout() that happens in Widget::SetContentsView(). Layout()
+    // will occur after setting the initial bounds below. The RootView's size is
+    // not valid until that happens.
+    root_view_->SetContentsView(non_client_view_);
+
     // Initialize the window's icon and title before setting the window's
     // initial bounds; the frame view's preferred height may depend on the
     // presence of an icon or a title.
@@ -349,6 +355,12 @@ void Widget::Init(const InitParams& in_params) {
     UpdateWindowTitle();
     non_client_view_->ResetWindowControls();
     SetInitialBounds(params.bounds);
+
+    // Perform the initial layout. This handles the case where the size might
+    // not actually change when setting the initial bounds. If it did, child
+    // views won't have a dirty Layout state, so won't do any work.
+    root_view_->Layout();
+
     if (params.show_state == ui::SHOW_STATE_MAXIMIZED) {
       Maximize();
     } else if (params.show_state == ui::SHOW_STATE_MINIMIZED) {
@@ -455,7 +467,15 @@ void Widget::SetContentsView(View* view) {
   // Do not SetContentsView() again if it is already set to the same view.
   if (view == GetContentsView())
     return;
+
   root_view_->SetContentsView(view);
+
+  // Force a layout now, since the attached hierarchy won't be ready for the
+  // containing window's bounds. Note that we call Layout directly rather than
+  // calling the widget's size changed handler, since the RootView's bounds may
+  // not have changed, which will cause the Layout not to be done otherwise.
+  root_view_->Layout();
+
   if (non_client_view_ != view) {
     // |non_client_view_| can only be non-NULL here if RequiresNonClientView()
     // was true when the widget was initialized. Creating widgets with non
@@ -1305,10 +1325,13 @@ bool Widget::SetInitialFocus(ui::WindowShowState show_state) {
   }
   if (v) {
     v->RequestFocus();
-    // If the request for focus was unsuccessful, fall back to using the first
+    // If the Widget is active (thus allowing its child Views to receive focus),
+    // but the request for focus was unsuccessful, fall back to using the first
     // focusable View instead.
-    if (focus_manager && focus_manager->GetFocusedView() == nullptr)
+    if (focus_manager && focus_manager->GetFocusedView() == nullptr &&
+        IsActive()) {
       focus_manager->AdvanceFocus(false);
+    }
   }
   return !!focus_manager->GetFocusedView();
 }

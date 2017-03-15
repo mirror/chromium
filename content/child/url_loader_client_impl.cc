@@ -9,7 +9,6 @@
 #include "content/child/resource_dispatcher.h"
 #include "content/child/url_response_body_consumer.h"
 #include "content/common/resource_messages.h"
-#include "mojo/public/cpp/bindings/associated_group.h"
 #include "net/url_request/redirect_info.h"
 
 namespace content {
@@ -29,10 +28,8 @@ URLLoaderClientImpl::~URLLoaderClientImpl() {
     body_consumer_->Cancel();
 }
 
-void URLLoaderClientImpl::Bind(
-    mojom::URLLoaderClientAssociatedPtrInfo* client_ptr_info,
-    mojo::AssociatedGroup* associated_group) {
-  binding_.Bind(client_ptr_info, associated_group);
+void URLLoaderClientImpl::Bind(mojom::URLLoaderClientPtr* client_ptr) {
+  binding_.Bind(client_ptr, task_runner_);
 }
 
 void URLLoaderClientImpl::SetDefersLoading() {
@@ -112,9 +109,9 @@ void URLLoaderClientImpl::FlushDeferredMessages() {
 
 void URLLoaderClientImpl::OnReceiveResponse(
     const ResourceResponseHead& response_head,
-    mojom::DownloadedTempFileAssociatedPtrInfo downloaded_file) {
+    mojom::DownloadedTempFilePtr downloaded_file) {
   has_received_response_ = true;
-  downloaded_file_.Bind(std::move(downloaded_file));
+  downloaded_file_ = std::move(downloaded_file);
   Dispatch(ResourceMsg_ReceivedResponse(request_id_, response_head));
 }
 

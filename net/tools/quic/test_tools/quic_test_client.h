@@ -14,10 +14,9 @@
 #include "net/quic/core/quic_framer.h"
 #include "net/quic/core/quic_packet_creator.h"
 #include "net/quic/core/quic_packets.h"
+#include "net/quic/platform/api/quic_string_piece.h"
 #include "net/tools/quic/quic_client.h"
 #include "testing/gmock/include/gmock/gmock.h"
-
-using base::StringPiece;
 
 namespace net {
 
@@ -57,16 +56,13 @@ class MockableQuicClient : public QuicClient {
   QuicConnectionId GenerateNewConnectionId() override;
   void UseWriter(QuicPacketWriterWrapper* writer);
   void UseConnectionId(QuicConnectionId connection_id);
-  void SendCachedNetworkParamaters(
-      const CachedNetworkParameters& cached_network_params) {
-    cached_network_paramaters_ = cached_network_params;
-  }
   const QuicReceivedPacket* last_incoming_packet() {
     return last_incoming_packet_.get();
   }
   void set_track_last_incoming_packet(bool track) {
     track_last_incoming_packet_ = track;
   }
+  void set_peer_address(const QuicSocketAddress& address);
 
  private:
   QuicConnectionId override_connection_id_;  // ConnectionId to use, if nonzero
@@ -120,12 +116,12 @@ class QuicTestClient : public QuicSpdyStream::Visitor,
       const std::vector<std::string>& url_list);
   // Sends a request containing |headers| and |body| and returns the number of
   // bytes sent (the size of the serialized request headers and body).
-  ssize_t SendMessage(const SpdyHeaderBlock& headers, base::StringPiece body);
+  ssize_t SendMessage(const SpdyHeaderBlock& headers, QuicStringPiece body);
   // Sends a request containing |headers| and |body| with the fin bit set to
   // |fin| and returns the number of bytes sent (the size of the serialized
   // request headers and body).
   ssize_t SendMessage(const SpdyHeaderBlock& headers,
-                      base::StringPiece body,
+                      QuicStringPiece body,
                       bool fin);
   // Sends a request containing |headers| and |body|, waits for the response,
   // and returns the response body.
@@ -211,7 +207,7 @@ class QuicTestClient : public QuicSpdyStream::Visitor,
   // null, only the body will be sent on the stream.
   ssize_t GetOrCreateStreamAndSendRequest(
       const SpdyHeaderBlock* headers,
-      base::StringPiece body,
+      QuicStringPiece body,
       bool fin,
       QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener);
 
@@ -243,14 +239,16 @@ class QuicTestClient : public QuicSpdyStream::Visitor,
     allow_bidirectional_data_ = value;
   }
 
-  bool allow_bidirectional_data() const { return allow_bidirectional_data_; }
-
   size_t num_requests() const { return num_requests_; }
 
   size_t num_responses() const { return num_responses_; }
 
   void set_server_address(const QuicSocketAddress& server_address) {
     client_->set_server_address(server_address);
+  }
+
+  void set_peer_address(const QuicSocketAddress& address) {
+    client_->set_peer_address(address);
   }
 
   // Explicitly set the SNI value for this client, overriding the default
@@ -272,7 +270,7 @@ class QuicTestClient : public QuicSpdyStream::Visitor,
    public:
     TestClientDataToResend(
         std::unique_ptr<SpdyHeaderBlock> headers,
-        base::StringPiece body,
+        QuicStringPiece body,
         bool fin,
         QuicTestClient* test_client,
         QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener);

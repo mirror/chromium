@@ -48,6 +48,7 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
 
     this._element = this.element;
     this._element.classList.add('elements-tree-outline', 'source-code');
+    UI.ARIAUtils.setAccessibleName(this._element, Common.UIString('Page DOM'));
     this._element.addEventListener('mousedown', this._onmousedown.bind(this), false);
     this._element.addEventListener('mousemove', this._onmousemove.bind(this), false);
     this._element.addEventListener('mouseleave', this._onmouseleave.bind(this), false);
@@ -76,6 +77,7 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
 
     this._popoverHelper = new UI.PopoverHelper(this._element);
     this._popoverHelper.initializeCallbacks(this._getPopoverAnchor.bind(this), this._showPopover.bind(this));
+    this._popoverHelper.setHasPadding(true);
     this._popoverHelper.setTimeout(0, 100);
 
     /** @type {!Map<!SDK.DOMNode, !Elements.ElementsTreeOutline.UpdateRecord>} */
@@ -126,7 +128,7 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
   }
 
   /**
-   * @param {?UI.InplaceEditor.Controller} multilineEditing
+   * @param {?Elements.MultilineEditorController} multilineEditing
    */
   setMultilineEditing(multilineEditing) {
     this._multilineEditing = multilineEditing;
@@ -145,7 +147,7 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
   setVisibleWidth(width) {
     this._visibleWidth = width;
     if (this._multilineEditing)
-      this._multilineEditing.setWidth(this._visibleWidth);
+      this._multilineEditing.resize();
   }
 
   /**
@@ -570,25 +572,28 @@ Elements.ElementsTreeOutline = class extends UI.TreeOutline {
   }
 
   /**
-   * @param {!Element} link
-   * @param {!UI.Popover} popover
+   * @param {!Element|!AnchorBox} link
+   * @param {!UI.GlassPane} popover
+   * @return {!Promise<boolean>}
    */
   _showPopover(link, popover) {
+    var fulfill;
+    var promise = new Promise(x => fulfill = x);
     var listItem = link.enclosingNodeOrSelfWithNodeName('li');
     var node = /** @type {!Elements.ElementsTreeElement} */ (listItem.treeElement).node();
     this._loadDimensionsForNode(
         node, Components.DOMPresentationUtils.buildImagePreviewContents.bind(
                   Components.DOMPresentationUtils, node.target(), link[Elements.ElementsTreeElement.HrefSymbol], true,
                   showPopover));
+    return promise;
 
     /**
      * @param {!Element=} contents
      */
     function showPopover(contents) {
-      if (!contents)
-        return;
-      popover.setCanShrink(false);
-      popover.showForAnchor(contents, link);
+      if (contents)
+        popover.contentElement.appendChild(contents);
+      fulfill(!!contents);
     }
   }
 

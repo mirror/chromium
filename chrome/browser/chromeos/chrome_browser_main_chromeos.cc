@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "ash/shell.h"
+#include "ash/sticky_keys/sticky_keys_controller.h"
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/command_line.h"
@@ -141,9 +142,11 @@
 #include "components/version_info/version_info.h"
 #include "components/wallpaper/wallpaper_manager_base.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/media_capture_devices.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/main_function_params.h"
+#include "dbus/object_path.h"
 #include "device/bluetooth/bluetooth_adapter_factory.h"
 #include "device/bluetooth/dbus/bluez_dbus_manager.h"
 #include "media/audio/sounds/sounds_manager.h"
@@ -152,6 +155,7 @@
 #include "net/url_request/url_request_context_getter.h"
 #include "printing/backend/print_backend.h"
 #include "rlz/features/features.h"
+#include "third_party/cros_system_api/dbus/service_constants.h"
 #include "ui/base/ime/chromeos/ime_keyboard.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
 #include "ui/base/touch/touch_device.h"
@@ -211,8 +215,8 @@ class DBusServices {
   explicit DBusServices(const content::MainFunctionParams& parameters) {
     // Under mash, some D-Bus clients are owned by other processes.
     DBusThreadManager::ProcessMask process_mask =
-        chrome::IsRunningInMash() ? DBusThreadManager::PROCESS_BROWSER
-                                  : DBusThreadManager::PROCESS_ALL;
+        ash_util::IsRunningInMash() ? DBusThreadManager::PROCESS_BROWSER
+                                    : DBusThreadManager::PROCESS_ALL;
 
     // Initialize DBusThreadManager for the browser. This must be done after
     // the main message loop is started, as it uses the message loop.
@@ -229,14 +233,14 @@ class DBusServices {
     service_providers.push_back(
         base::WrapUnique(ProxyResolutionServiceProvider::Create(
             base::MakeUnique<ChromeProxyResolverDelegate>())));
-    if (!chrome::IsRunningInMash()) {
+    if (!ash_util::IsRunningInMash()) {
       // TODO(crbug.com/629707): revisit this with mustash dbus work.
       service_providers.push_back(base::MakeUnique<DisplayPowerServiceProvider>(
           base::MakeUnique<ChromeDisplayPowerServiceProviderDelegate>()));
     }
     service_providers.push_back(base::MakeUnique<LivenessServiceProvider>());
     service_providers.push_back(base::MakeUnique<ScreenLockServiceProvider>());
-    if (chrome::IsRunningInMash()) {
+    if (ash_util::IsRunningInMash()) {
       service_providers.push_back(base::MakeUnique<ConsoleServiceProvider>(
           base::MakeUnique<MusConsoleServiceProviderDelegate>()));
     } else {
@@ -244,7 +248,9 @@ class DBusServices {
           base::MakeUnique<ChromeConsoleServiceProviderDelegate>()));
     }
     service_providers.push_back(base::MakeUnique<KioskInfoService>());
-    CrosDBusService::Initialize(std::move(service_providers));
+    cros_dbus_service_ = CrosDBusService::Create(
+        kLibCrosServiceName, dbus::ObjectPath(kLibCrosServicePath),
+        std::move(service_providers));
 
     // Initialize PowerDataCollector after DBusThreadManager is initialized.
     PowerDataCollector::Initialize();
@@ -294,7 +300,7 @@ class DBusServices {
     LoginState::Shutdown();
     CertLoader::Shutdown();
     TPMTokenLoader::Shutdown();
-    CrosDBusService::Shutdown();
+    cros_dbus_service_.reset();
     PowerDataCollector::Shutdown();
     PowerPolicyController::Shutdown();
     device::BluetoothAdapterFactory::Shutdown();
@@ -305,6 +311,13 @@ class DBusServices {
   }
 
  private:
+  // Hosts providers for the "org.chromium.LibCrosService" D-Bus service owned
+  // by Chrome. The name of this service was chosen for historical reasons that
+  // are irrelevant now.
+  // TODO(derat): Move these providers into more-specific services that are
+  // split between different processes: http://crbug.com/692246
+  std::unique_ptr<CrosDBusService> cros_dbus_service_;
+
   std::unique_ptr<NetworkConnectDelegateChromeOS> network_connect_delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(DBusServices);
@@ -418,6 +431,9 @@ void ChromeBrowserMainPartsChromeos::PreMainMessageLoopRun() {
   CrasAudioHandler::Initialize(
       new AudioDevicesPrefHandlerImpl(g_browser_process->local_state()));
 
+  content::MediaCaptureDevices::GetInstance()->AddVideoCaptureObserver(
+      CrasAudioHandler::Get());
+
   quirks::QuirksManager::Initialize(
       std::unique_ptr<quirks::QuirksManager::Delegate>(
           new quirks::QuirksManagerDelegateImpl()),
@@ -505,7 +521,7 @@ void ChromeBrowserMainPartsChromeos::PreProfileInit() {
 
   AccessibilityManager::Initialize();
 
-  if (!chrome::IsRunningInMash()) {
+  if (!ash_util::IsRunningInMash()) {
     // Initialize magnification manager before ash tray is created. And this
     // must be placed after UserManager::SessionStarted();
     // TODO(sad): These components expects the ash::Shell instance to be
@@ -748,7 +764,7 @@ void ChromeBrowserMainPartsChromeos::PreBrowserStart() {
     SystemKeyEventListener::Initialize();
   }
 
-  if (!chrome::IsRunningInMash()) {
+  if (!ash_util::IsRunningInMash()) {
     // Listen for XI_HierarchyChanged events. Note: if this is moved to
     // PreMainMessageLoopRun() then desktopui_PageCyclerTests fail for unknown
     // reasons, see http://crosbug.com/24833.
@@ -772,7 +788,7 @@ void ChromeBrowserMainPartsChromeos::PreBrowserStart() {
 }
 
 void ChromeBrowserMainPartsChromeos::PostBrowserStart() {
-  if (!chrome::IsRunningInMash()) {
+  if (!ash_util::IsRunningInMash()) {
     system::InputDeviceSettings::Get()->UpdateTouchDevicesStatusFromPrefs();
 
     // These are dependent on the ash::Shell singleton already having been
@@ -852,7 +868,7 @@ void ChromeBrowserMainPartsChromeos::PostMainMessageLoopRun() {
   keyboard_event_rewriters_.reset();
   low_disk_notification_.reset();
 #if defined(USE_X11)
-  if (!chrome::IsRunningInMash()) {
+  if (!ash_util::IsRunningInMash()) {
     // The XInput2 event listener needs to be shut down earlier than when
     // Singletons are finally destroyed in AtExitManager.
     XInputHierarchyChangedEventListener::GetInstance()->Stop();
@@ -869,7 +885,7 @@ void ChromeBrowserMainPartsChromeos::PostMainMessageLoopRun() {
   login_lock_state_notifier_.reset();
   idle_action_warning_observer_.reset();
 
-  if (!chrome::IsRunningInMash())
+  if (!ash_util::IsRunningInMash())
     MagnificationManager::Shutdown();
 
   media::SoundsManager::Shutdown();
@@ -911,13 +927,15 @@ void ChromeBrowserMainPartsChromeos::PostMainMessageLoopRun() {
   // closed above.
   arc_kiosk_app_manager_.reset();
 
-  if (!chrome::IsRunningInMash())
+  if (!ash_util::IsRunningInMash())
     AccessibilityManager::Shutdown();
 
   input_method::Shutdown();
 
   // Stops all in-flight OAuth2 token fetchers before the IO thread stops.
   DeviceOAuth2TokenServiceFactory::Shutdown();
+
+  content::MediaCaptureDevices::GetInstance()->RemoveAllVideoCaptureObservers();
 
   // Shutdown after PostMainMessageLoopRun() which should destroy all observers.
   CrasAudioHandler::Shutdown();

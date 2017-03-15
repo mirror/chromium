@@ -28,8 +28,8 @@ std::unique_ptr<base::DictionaryValue> GetFingerprintsInfo(
 
   DCHECK(int{fingerprints_list.size()} <= kMaxAllowedFingerprints);
   for (auto& fingerprint_name: fingerprints_list) {
-    std::unique_ptr<base::StringValue> str =
-        base::MakeUnique<base::StringValue>(fingerprint_name);
+    std::unique_ptr<base::Value> str =
+        base::MakeUnique<base::Value>(fingerprint_name);
     fingerprints->Append(std::move(str));
   }
 
@@ -49,6 +49,10 @@ void FingerprintHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       "getFingerprintsList",
       base::Bind(&FingerprintHandler::HandleGetFingerprintsList,
+                 base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "getNumFingerprints",
+      base::Bind(&FingerprintHandler::HandleGetNumFingerprints,
                  base::Unretained(this)));
   web_ui()->RegisterMessageCallback(
       "startEnroll",
@@ -98,7 +102,18 @@ void FingerprintHandler::HandleGetFingerprintsList(
 
   std::unique_ptr<base::DictionaryValue> fingerprint_info =
       GetFingerprintsInfo(fingerprints_list_);
-  ResolveJavascriptCallback(base::StringValue(callback_id), *fingerprint_info);
+  ResolveJavascriptCallback(base::Value(callback_id), *fingerprint_info);
+}
+
+void FingerprintHandler::HandleGetNumFingerprints(const base::ListValue* args) {
+  AllowJavascript();
+
+  CHECK_EQ(1U, args->GetSize());
+  std::string callback_id;
+  CHECK(args->GetString(0, &callback_id));
+
+  ResolveJavascriptCallback(base::Value(callback_id),
+                            base::Value(int{fingerprints_list_.size()}));
 }
 
 void FingerprintHandler::HandleStartEnroll(const base::ListValue* args) {
@@ -118,8 +133,8 @@ void FingerprintHandler::HandleGetEnrollmentLabel(const base::ListValue* args) {
   CHECK(args->GetInteger(1, &index));
 
   DCHECK(index < int{fingerprints_list_.size()});
-  ResolveJavascriptCallback(base::StringValue(callback_id),
-                            base::StringValue(fingerprints_list_[index]));
+  ResolveJavascriptCallback(base::Value(callback_id),
+                            base::Value(fingerprints_list_[index]));
 }
 
 void FingerprintHandler::HandleRemoveEnrollment(const base::ListValue* args) {
@@ -134,8 +149,8 @@ void FingerprintHandler::HandleRemoveEnrollment(const base::ListValue* args) {
   DCHECK(index < int{fingerprints_list_.size()});
   bool deleteSucessful = true;
   fingerprints_list_.erase(fingerprints_list_.begin() + index);
-  ResolveJavascriptCallback(base::StringValue(callback_id),
-                            base::FundamentalValue(deleteSucessful));
+  ResolveJavascriptCallback(base::Value(callback_id),
+                            base::Value(deleteSucessful));
 }
 
 void FingerprintHandler::HandleChangeEnrollmentLabel(

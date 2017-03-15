@@ -13,6 +13,8 @@
 
 #include "bindings/core/v8/BindingSecurity.h"
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/IDLTypes.h"
+#include "bindings/core/v8/NativeValueTraitsImpl.h"
 #include "bindings/core/v8/V8CrossOriginSetterInfo.h"
 #include "bindings/core/v8/V8DOMConfiguration.h"
 #include "bindings/core/v8/V8ObjectConstructor.h"
@@ -77,7 +79,7 @@ static void longAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8:
   ExceptionState exceptionState(info.GetIsolate(), ExceptionState::SetterContext, "TestInterfaceCheckSecurity", "longAttribute");
 
   // Prepare the value to be set.
-  int cppValue = toInt32(info.GetIsolate(), v8Value, NormalConversion, exceptionState);
+  int32_t cppValue = NativeValueTraits<IDLLong>::nativeValue(info.GetIsolate(), v8Value, exceptionState, NormalConversion);
   if (exceptionState.hadException())
     return;
 
@@ -99,7 +101,7 @@ static void doNotCheckSecurityLongAttributeAttributeSetter(v8::Local<v8::Value> 
   ExceptionState exceptionState(info.GetIsolate(), ExceptionState::SetterContext, "TestInterfaceCheckSecurity", "doNotCheckSecurityLongAttribute");
 
   // Prepare the value to be set.
-  int cppValue = toInt32(info.GetIsolate(), v8Value, NormalConversion, exceptionState);
+  int32_t cppValue = NativeValueTraits<IDLLong>::nativeValue(info.GetIsolate(), v8Value, exceptionState, NormalConversion);
   if (exceptionState.hadException())
     return;
 
@@ -129,7 +131,7 @@ static void doNotCheckSecurityOnSetterLongAttributeAttributeSetter(v8::Local<v8:
   ExceptionState exceptionState(info.GetIsolate(), ExceptionState::SetterContext, "TestInterfaceCheckSecurity", "doNotCheckSecurityOnSetterLongAttribute");
 
   // Prepare the value to be set.
-  int cppValue = toInt32(info.GetIsolate(), v8Value, NormalConversion, exceptionState);
+  int32_t cppValue = NativeValueTraits<IDLLong>::nativeValue(info.GetIsolate(), v8Value, exceptionState, NormalConversion);
   if (exceptionState.hadException())
     return;
 
@@ -146,11 +148,6 @@ static void doNotCheckSecurityReplaceableReadonlyLongAttributeAttributeGetter(co
 
 static void voidMethodMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
   TestInterfaceCheckSecurity* impl = V8TestInterfaceCheckSecurity::toImpl(info.Holder());
-
-  ExceptionState exceptionState(info.GetIsolate(), ExceptionState::ExecutionContext, "TestInterfaceCheckSecurity", "voidMethod");
-  if (!BindingSecurity::shouldAllowAccessTo(currentDOMWindow(info.GetIsolate()), impl, exceptionState)) {
-    return;
-  }
 
   impl->voidMethod();
 }
@@ -466,7 +463,7 @@ const V8DOMConfiguration::AccessorConfiguration V8TestInterfaceCheckSecurityAcce
 };
 
 const V8DOMConfiguration::MethodConfiguration V8TestInterfaceCheckSecurityMethods[] = {
-    {"voidMethod", V8TestInterfaceCheckSecurity::voidMethodMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnInstance, V8DOMConfiguration::CheckHolder},
+    {"voidMethod", V8TestInterfaceCheckSecurity::voidMethodMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnInstance, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::CheckAccess},
 };
 
 static void installV8TestInterfaceCheckSecurityTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
@@ -522,6 +519,10 @@ v8::Local<v8::Object> V8TestInterfaceCheckSecurity::findInstanceInPrototypeChain
 
 TestInterfaceCheckSecurity* V8TestInterfaceCheckSecurity::toImplWithTypeCheck(v8::Isolate* isolate, v8::Local<v8::Value> value) {
   return hasInstance(value, isolate) ? toImpl(v8::Local<v8::Object>::Cast(value)) : nullptr;
+}
+
+TestInterfaceCheckSecurity* NativeValueTraits<TestInterfaceCheckSecurity>::nativeValue(v8::Isolate* isolate, v8::Local<v8::Value> value, ExceptionState& exceptionState) {
+  return V8TestInterfaceCheckSecurity::toImplWithTypeCheck(isolate, value);
 }
 
 }  // namespace blink

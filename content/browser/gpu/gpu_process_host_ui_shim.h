@@ -31,15 +31,10 @@ namespace IPC {
 class Message;
 }
 
-namespace gpu {
-struct VideoMemoryUsageStats;
-}
-
 namespace content {
 void RouteToGpuProcessHostUIShimTask(int host_id, const IPC::Message& msg);
 
 class GpuProcessHostUIShim : public IPC::Listener,
-                             public IPC::Sender,
                              public base::NonThreadSafe {
  public:
   // Create a GpuProcessHostUIShim with the given ID.  The object can be found
@@ -56,28 +51,11 @@ class GpuProcessHostUIShim : public IPC::Listener,
 
   CONTENT_EXPORT static GpuProcessHostUIShim* FromID(int host_id);
 
-  // Get a GpuProcessHostUIShim instance; it doesn't matter which one.
-  // Return NULL if none has been created.
-  CONTENT_EXPORT static GpuProcessHostUIShim* GetOneInstance();
-
-  // Stops the GPU process.
-  CONTENT_EXPORT void StopGpuProcess(const base::Closure& callback);
-
-  // IPC::Sender implementation.
-  bool Send(IPC::Message* msg) override;
-
   // IPC::Listener implementation.
   // The GpuProcessHost causes this to be called on the UI thread to
   // dispatch the incoming messages from the GPU process, which are
   // actually received on the IO thread.
   bool OnMessageReceived(const IPC::Message& message) override;
-
-  CONTENT_EXPORT void SimulateRemoveAllContext();
-  CONTENT_EXPORT void SimulateCrash();
-  CONTENT_EXPORT void SimulateHang();
-#if defined(OS_ANDROID)
-  CONTENT_EXPORT void SimulateJavaCrash();
-#endif
 
  private:
   explicit GpuProcessHostUIShim(int host_id);
@@ -88,12 +66,9 @@ class GpuProcessHostUIShim : public IPC::Listener,
   void OnLogMessage(int level, const std::string& header,
       const std::string& message);
   void OnGraphicsInfoCollected(const gpu::GPUInfo& gpu_info);
-  void OnVideoMemoryUsageStatsReceived(
-      const gpu::VideoMemoryUsageStats& video_memory_usage_stats);
 
   // The serial number of the GpuProcessHost / GpuProcessHostUIShim pair.
   int host_id_;
-  base::Closure close_callback_;
 };
 
 }  // namespace content

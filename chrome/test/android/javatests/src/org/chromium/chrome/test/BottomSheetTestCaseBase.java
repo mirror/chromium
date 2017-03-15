@@ -6,6 +6,8 @@ package org.chromium.chrome.test;
 
 import static org.chromium.chrome.test.util.ChromeRestriction.RESTRICTION_TYPE_PHONE;
 
+import android.support.v7.widget.RecyclerView;
+
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Restriction;
@@ -20,14 +22,16 @@ import org.chromium.chrome.test.util.browser.RecyclerViewTestUtils;
 @CommandLineFlags.Add({"enable-features=ChromeHome"})
 @Restriction(RESTRICTION_TYPE_PHONE) // ChromeHome is only enabled on phones
 public abstract class BottomSheetTestCaseBase extends ChromeTabbedActivityTestBase {
+    /** A handle to the bottom sheet. */
+    protected BottomSheet mBottomSheet;
+
     private boolean mOldChromeHomeFlagValue;
     @Override
     protected void setUp() throws Exception {
         // TODO(dgn,mdjones): Chrome restarts when the ChromeHome feature flag value changes. That
         // crashes the test so we need to manually set the preference to match the flag before
         // Chrome initialises via super.setUp()
-        ChromePreferenceManager prefManager =
-                ChromePreferenceManager.getInstance(getInstrumentation().getTargetContext());
+        ChromePreferenceManager prefManager = ChromePreferenceManager.getInstance();
         mOldChromeHomeFlagValue = prefManager.isChromeHomeEnabled();
         prefManager.setChromeHomeEnabled(true);
 
@@ -40,8 +44,12 @@ public abstract class BottomSheetTestCaseBase extends ChromeTabbedActivityTestBa
                         BottomSheet.SHEET_STATE_FULL, /* animate = */ false);
             }
         });
+        // The default BottomSheetContent is SuggestionsBottomSheetContent, whose content view is a
+        // RecyclerView.
         RecyclerViewTestUtils.waitForStableRecyclerView(
-                getBottomSheetContent().getScrollingContentView());
+                ((RecyclerView) getBottomSheetContent().getContentView()));
+
+        mBottomSheet = getActivity().getBottomSheet();
     }
 
     @Override
@@ -52,8 +60,34 @@ public abstract class BottomSheetTestCaseBase extends ChromeTabbedActivityTestBa
     @Override
     protected void tearDown() throws Exception {
         super.tearDown();
-        ChromePreferenceManager.getInstance(getInstrumentation().getTargetContext())
-                .setChromeHomeEnabled(mOldChromeHomeFlagValue);
+        ChromePreferenceManager.getInstance().setChromeHomeEnabled(mOldChromeHomeFlagValue);
+    }
+
+    /**
+     * Set the bottom sheet's state on the UI thread.
+     * @param state The state to set the sheet to.
+     * @param animate If the sheet should animate to the provided state.
+     */
+    protected void setSheetState(final int state, final boolean animate) {
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                mBottomSheet.setSheetState(state, animate);
+            }
+        });
+    }
+
+    /**
+     * Set the bottom sheet's offset from the bottom of the screen on the UI thread.
+     * @param offset The offset from the bottom that the sheet should be.
+     */
+    protected void setSheetOffsetFromBottom(final float offset) {
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                mBottomSheet.setSheetOffsetFromBottomForTesting(offset);
+            }
+        });
     }
 
     protected BottomSheetContent getBottomSheetContent() {

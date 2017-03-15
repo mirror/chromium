@@ -11,7 +11,7 @@
 #import "ios/chrome/browser/ui/collection_view/collection_view_controller.h"
 #include "ios/web/public/payments/payment_request.h"
 
-extern NSString* const kPaymentRequestCollectionViewId;
+extern NSString* const kPaymentRequestCollectionViewID;
 
 @class PaymentRequestViewController;
 
@@ -49,13 +49,16 @@ extern NSString* const kPaymentRequestCollectionViewId;
 @interface PaymentRequestViewController : CollectionViewController
 
 // The favicon of the page invoking the Payment Request API.
-@property(nonatomic, retain) UIImage* pageFavicon;
+@property(nonatomic, strong) UIImage* pageFavicon;
 
 // The title of the page invoking the Payment Request API.
 @property(nonatomic, copy) NSString* pageTitle;
 
 // The host of the page invoking the Payment Request API.
 @property(nonatomic, copy) NSString* pageHost;
+
+// Whether or not the view is in a pending state.
+@property(nonatomic, assign, getter=isPending) BOOL pending;
 
 // The delegate to be notified when the user confirms or cancels the request.
 @property(nonatomic, weak) id<PaymentRequestViewControllerDelegate> delegate;

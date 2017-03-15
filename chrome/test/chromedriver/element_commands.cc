@@ -515,7 +515,7 @@ Status ExecuteGetElementValueOfCSSProperty(
       session, web_view, element_id, property_name, &property_value);
   if (status.IsError())
     return status;
-  value->reset(new base::StringValue(property_value));
+  value->reset(new base::Value(property_value));
   return Status(kOk);
 }
 
@@ -527,6 +527,6 @@ Status ExecuteElementEquals(Session* session,
   std::string other_element_id;
   if (!params.GetString("other", &other_element_id))
     return Status(kUnknownError, "'other' must be a string");
-  value->reset(new base::FundamentalValue(element_id == other_element_id));
+  value->reset(new base::Value(element_id == other_element_id));
   return Status(kOk);
 }

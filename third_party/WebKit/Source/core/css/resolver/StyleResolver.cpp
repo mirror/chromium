@@ -41,6 +41,7 @@
 #include "core/animation/InvalidatableInterpolation.h"
 #include "core/animation/KeyframeEffect.h"
 #include "core/animation/LegacyStyleInterpolation.h"
+#include "core/animation/TransitionInterpolation.h"
 #include "core/animation/animatable/AnimatableValue.h"
 #include "core/animation/css/CSSAnimatableValueFactory.h"
 #include "core/animation/css/CSSAnimations.h"
@@ -199,8 +200,8 @@ void StyleResolver::addToStyleSharingList(Element& element) {
                                 1);
   StyleSharingList& list = styleSharingList();
   if (list.size() >= styleSharingListSize)
-    list.removeLast();
-  list.prepend(&element);
+    list.pop_back();
+  list.push_front(&element);
 }
 
 StyleSharingList& StyleResolver::styleSharingList() {
@@ -576,8 +577,11 @@ PassRefPtr<ComputedStyle> StyleResolver::styleForDocument(Document& document) {
 
 void StyleResolver::adjustComputedStyle(StyleResolverState& state,
                                         Element* element) {
+  DCHECK(state.layoutParentStyle());
+  DCHECK(state.parentStyle());
   StyleAdjuster::adjustComputedStyle(state.mutableStyleRef(),
-                                     *state.parentStyle(), element);
+                                     *state.parentStyle(),
+                                     *state.layoutParentStyle(), element);
 }
 
 // Start loading resources referenced by this style.
@@ -619,6 +623,7 @@ static void updateBaseComputedStyle(StyleResolverState& state,
 PassRefPtr<ComputedStyle> StyleResolver::styleForElement(
     Element* element,
     const ComputedStyle* defaultParent,
+    const ComputedStyle* defaultLayoutParent,
     StyleSharingBehavior sharingBehavior,
     RuleMatchingBehavior matchingBehavior) {
   DCHECK(document().frame());
@@ -655,15 +660,18 @@ PassRefPtr<ComputedStyle> StyleResolver::styleForElement(
       return sharedStyle.release();
   }
 
-  StyleResolverState state(document(), elementContext, defaultParent);
+  StyleResolverState state(document(), elementContext, defaultParent,
+                           defaultLayoutParent);
 
   const ComputedStyle* baseComputedStyle =
       calculateBaseComputedStyle(state, element);
 
   if (baseComputedStyle) {
     state.setStyle(ComputedStyle::clone(*baseComputedStyle));
-    if (!state.parentStyle())
+    if (!state.parentStyle()) {
       state.setParentStyle(initialStyleForElement());
+      state.setLayoutParentStyle(state.parentStyle());
+    }
   } else {
     if (state.parentStyle()) {
       RefPtr<ComputedStyle> style = ComputedStyle::create();
@@ -675,6 +683,7 @@ PassRefPtr<ComputedStyle> StyleResolver::styleForElement(
     } else {
       state.setStyle(initialStyleForElement());
       state.setParentStyle(ComputedStyle::clone(*state.style()));
+      state.setLayoutParentStyle(state.parentStyle());
     }
   }
 
@@ -691,8 +700,8 @@ PassRefPtr<ComputedStyle> StyleResolver::styleForElement(
     state.style()->setIsLink();
     EInsideLink linkState = state.elementLinkState();
     if (linkState != EInsideLink::kNotInsideLink) {
-      bool forceVisited = InspectorInstrumentation::forcePseudoState(
-          element, CSSSelector::PseudoVisited);
+      bool forceVisited =
+          probe::forcePseudoState(element, CSSSelector::PseudoVisited);
       if (forceVisited)
         linkState = EInsideLink::kInsideVisitedLink;
     }
@@ -789,14 +798,16 @@ PassRefPtr<AnimatableValue> StyleResolver::createAnimatableValueSnapshot(
     const CSSValue* value) {
   // TODO(alancutter): Avoid creating a StyleResolverState just to apply a
   // single value on a ComputedStyle.
-  StyleResolverState state(element.document(), &element, parentStyle);
+  StyleResolverState state(element.document(), &element, parentStyle,
+                           parentStyle);
   state.setStyle(ComputedStyle::clone(baseStyle));
   if (value) {
     StyleBuilder::applyProperty(property, state, *value);
     state.fontBuilder().createFont(
         state.document().styleEngine().fontSelector(), state.mutableStyleRef());
   }
-  return CSSAnimatableValueFactory::create(property, *state.style());
+  return CSSAnimatableValueFactory::create(PropertyHandle(property),
+                                           *state.style());
 }
 
 PseudoElement* StyleResolver::createPseudoElement(Element* parent,
@@ -837,7 +848,7 @@ PseudoElement* StyleResolver::createPseudoElementIfNeeded(Element& parent,
     return createPseudoElement(&parent, pseudoId);
   }
 
-  StyleResolverState state(document(), &parent, parentStyle);
+  StyleResolverState state(document(), &parent, parentStyle, parentStyle);
   if (!pseudoStyleForElementInternal(parent, pseudoId, parentStyle, state))
     return nullptr;
   RefPtr<ComputedStyle> style = state.takeStyle();
@@ -938,12 +949,14 @@ bool StyleResolver::pseudoStyleForElementInternal(
 PassRefPtr<ComputedStyle> StyleResolver::pseudoStyleForElement(
     Element* element,
     const PseudoStyleRequest& pseudoStyleRequest,
-    const ComputedStyle* parentStyle) {
+    const ComputedStyle* parentStyle,
+    const ComputedStyle* parentLayoutObjectStyle) {
   DCHECK(parentStyle);
   if (!element)
     return nullptr;
 
-  StyleResolverState state(document(), element, parentStyle);
+  StyleResolverState state(document(), element, parentStyle,
+                           parentLayoutObjectStyle);
   if (!pseudoStyleForElementInternal(*element, pseudoStyleRequest, parentStyle,
                                      state)) {
     if (pseudoStyleRequest.type == PseudoStyleRequest::ForRenderer)
@@ -1102,8 +1115,9 @@ bool StyleResolver::applyAnimatedStandardProperties(
   CSSAnimations::calculateCompositorAnimationUpdate(
       state.animationUpdate(), animatingElement, *element, *state.style(),
       state.parentStyle(), wasViewportResized());
-  CSSAnimations::calculateTransitionUpdate(state.animationUpdate(),
-                                           animatingElement, *state.style());
+  CSSAnimations::calculateTransitionUpdate(
+      state.animationUpdate(), CSSAnimations::PropertyPass::Standard,
+      animatingElement, *state.style());
 
   CSSAnimations::snapshotCompositorKeyframes(
       *element, state.animationUpdate(), *state.style(), state.parentStyle());
@@ -1118,20 +1132,20 @@ bool StyleResolver::applyAnimatedStandardProperties(
 
   const ActiveInterpolationsMap& activeInterpolationsMapForAnimations =
       state.animationUpdate().activeInterpolationsForAnimations();
-  const ActiveInterpolationsMap& activeInterpolationsMapForTransitions =
-      state.animationUpdate().activeInterpolationsForTransitions();
+  const ActiveInterpolationsMap& activeInterpolationsMapForStandardTransitions =
+      state.animationUpdate().activeInterpolationsForStandardTransitions();
   // TODO(crbug.com/644148): Apply animations on custom properties.
   applyAnimatedProperties<HighPropertyPriority>(
       state, activeInterpolationsMapForAnimations);
   applyAnimatedProperties<HighPropertyPriority>(
-      state, activeInterpolationsMapForTransitions);
+      state, activeInterpolationsMapForStandardTransitions);
 
   updateFont(state);
 
   applyAnimatedProperties<LowPropertyPriority>(
       state, activeInterpolationsMapForAnimations);
   applyAnimatedProperties<LowPropertyPriority>(
-      state, activeInterpolationsMapForTransitions);
+      state, activeInterpolationsMapForStandardTransitions);
 
   // Start loading resources used by animations.
   loadPendingResources(state);
@@ -1181,9 +1195,10 @@ void StyleResolver::applyAnimatedProperties(
       CSSInterpolationTypesMap map(state.document().propertyRegistry());
       InterpolationEnvironment environment(map, state);
       InvalidatableInterpolation::applyStack(entry.value, environment);
+    } else if (interpolation.isTransitionInterpolation()) {
+      toTransitionInterpolation(interpolation).apply(state);
     } else {
-      // TODO(alancutter): Remove this old code path once animations have
-      // completely migrated to InterpolationTypes.
+      // TODO(alancutter): Move CustomCompositorAnimations off AnimatableValues.
       toLegacyStyleInterpolation(interpolation).apply(state);
     }
   }
@@ -1593,17 +1608,17 @@ void StyleResolver::applyMatchedPropertiesAndCustomPropertyAnimations(
   CacheSuccess cacheSuccess = applyMatchedCache(state, matchResult);
   NeedsApplyPass needsApplyPass;
   if (!cacheSuccess.isFullCacheHit()) {
-    applyCustomProperties(state, matchResult, false, cacheSuccess,
+    applyCustomProperties(state, matchResult, ExcludeAnimations, cacheSuccess,
                           needsApplyPass);
     applyMatchedAnimationProperties(state, matchResult, cacheSuccess,
                                     needsApplyPass);
   }
-  if (state.style()->animations() ||
+  if (state.style()->animations() || state.style()->transitions() ||
       (animatingElement && animatingElement->hasAnimations())) {
     calculateAnimationUpdate(state, animatingElement);
     if (state.isAnimatingCustomProperties()) {
       cacheSuccess.setFailed();
-      applyCustomProperties(state, matchResult, true, cacheSuccess,
+      applyCustomProperties(state, matchResult, IncludeAnimations, cacheSuccess,
                             needsApplyPass);
     }
   }
@@ -1673,7 +1688,7 @@ StyleResolver::CacheSuccess StyleResolver::applyMatchedCache(
 
 void StyleResolver::applyCustomProperties(StyleResolverState& state,
                                           const MatchResult& matchResult,
-                                          bool applyAnimations,
+                                          ApplyAnimations applyAnimations,
                                           const CacheSuccess& cacheSuccess,
                                           NeedsApplyPass& needsApplyPass) {
   DCHECK(!cacheSuccess.isFullCacheHit());
@@ -1687,9 +1702,12 @@ void StyleResolver::applyCustomProperties(StyleResolverState& state,
   applyMatchedProperties<ResolveVariables, CheckNeedsApplyPass>(
       state, matchResult.authorRules(), true, applyInheritedOnly,
       needsApplyPass);
-  if (applyAnimations) {
+  if (applyAnimations == IncludeAnimations) {
     applyAnimatedProperties<ResolveVariables>(
         state, state.animationUpdate().activeInterpolationsForAnimations());
+    applyAnimatedProperties<ResolveVariables>(
+        state,
+        state.animationUpdate().activeInterpolationsForCustomTransitions());
   }
   // TODO(leviw): stop recalculating every time
   CSSVariableResolver::resolveVariableDefinitions(state);
@@ -1703,9 +1721,12 @@ void StyleResolver::applyCustomProperties(StyleResolverState& state,
       applyMatchedProperties<ResolveVariables, CheckNeedsApplyPass>(
           state, matchResult.authorRules(), true, applyInheritedOnly,
           needsApplyPass);
-      if (applyAnimations) {
+      if (applyAnimations == IncludeAnimations) {
         applyAnimatedProperties<ResolveVariables>(
             state, state.animationUpdate().activeInterpolationsForAnimations());
+        applyAnimatedProperties<ResolveVariables>(
+            state,
+            state.animationUpdate().activeInterpolationsForCustomTransitions());
       }
       CSSVariableResolver::resolveVariableDefinitions(state);
     }
@@ -1728,18 +1749,28 @@ void StyleResolver::applyMatchedAnimationProperties(
 
 void StyleResolver::calculateAnimationUpdate(StyleResolverState& state,
                                              const Element* animatingElement) {
-  DCHECK(state.style()->animations() ||
+  DCHECK(state.style()->animations() || state.style()->transitions() ||
          (animatingElement && animatingElement->hasAnimations()));
   DCHECK(!state.isAnimationInterpolationMapReady());
 
   CSSAnimations::calculateAnimationUpdate(
       state.animationUpdate(), animatingElement, *state.element(),
       *state.style(), state.parentStyle(), this);
+  CSSAnimations::calculateTransitionUpdate(state.animationUpdate(),
+                                           CSSAnimations::PropertyPass::Custom,
+                                           animatingElement, *state.style());
 
   state.setIsAnimationInterpolationMapReady();
 
-  if (state.isAnimatingCustomProperties())
+  if (state.isAnimatingCustomProperties()) {
     return;
+  }
+  if (!state.animationUpdate()
+           .activeInterpolationsForCustomTransitions()
+           .isEmpty()) {
+    state.setIsAnimatingCustomProperties(true);
+    return;
+  }
   for (const auto& propertyHandle :
        state.animationUpdate().activeInterpolationsForAnimations().keys()) {
     if (CSSAnimations::isCustomPropertyHandle(propertyHandle)) {
@@ -1909,7 +1940,7 @@ void StyleResolver::computeFont(ComputedStyle* style,
   };
 
   // TODO(timloh): This is weird, the style is being used as its own parent
-  StyleResolverState state(document(), nullptr, style);
+  StyleResolverState state(document(), nullptr, style, style);
   state.setStyle(style);
 
   for (CSSPropertyID property : properties) {

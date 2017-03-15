@@ -266,7 +266,7 @@ class CORE_EXPORT ChromeClient : public HostWindow {
   virtual WebEventListenerProperties eventListenerProperties(
       LocalFrame*,
       WebEventListenerClass) const = 0;
-  virtual void updateTouchRectsForSubframeIfNecessary(LocalFrame*) = 0;
+  virtual void updateEventRectsForSubframeIfNecessary(LocalFrame*) = 0;
   virtual void setHasScrollEventHandlers(LocalFrame*, bool) = 0;
 
   virtual void setTouchAction(LocalFrame*, TouchAction) = 0;
@@ -314,7 +314,7 @@ class CORE_EXPORT ChromeClient : public HostWindow {
   // Input method editor related functions.
   virtual void resetInputMethod() {}
   virtual void didUpdateTextOfFocusedElementByNonUserInput(LocalFrame&) {}
-  virtual void showVirtualKeyboardOnElementFocus() {}
+  virtual void showVirtualKeyboardOnElementFocus(LocalFrame&) {}
 
   virtual void registerViewportLayers() const {}
 

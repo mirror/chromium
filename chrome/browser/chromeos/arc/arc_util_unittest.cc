@@ -10,15 +10,20 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/test/scoped_command_line.h"
+#include "base/values.h"
 #include "chrome/browser/chromeos/login/supervised/supervised_user_creation_flow.h"
 #include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/common/pref_names.h"
 #include "chrome/test/base/testing_profile.h"
+#include "components/prefs/pref_service.h"
 #include "components/signin/core/account_id/account_id.h"
+#include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "components/user_manager/user_manager.h"
+#include "components/user_manager/user_names.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -42,6 +47,9 @@ class ScopedLogIn {
       case user_manager::USER_TYPE_ACTIVE_DIRECTORY:
         LogIn();
         break;
+      case user_manager::USER_TYPE_PUBLIC_ACCOUNT:
+        LogInAsPublicAccount();
+        break;
       case user_manager::USER_TYPE_ARC_KIOSK_APP:
         LogInArcKioskApp();
         break;
@@ -55,6 +63,11 @@ class ScopedLogIn {
  private:
   void LogIn() {
     fake_user_manager_->AddUser(account_id_);
+    fake_user_manager_->LoginUser(account_id_);
+  }
+
+  void LogInAsPublicAccount() {
+    fake_user_manager_->AddPublicAccountUser(account_id_);
     fake_user_manager_->LoginUser(account_id_);
   }
 
@@ -155,6 +168,14 @@ TEST_F(ChromeArcUtilTest, IsArcAllowedForProfile_NonPrimaryProfile) {
   EXPECT_FALSE(IsArcAllowedForProfile(profile()));
 }
 
+// User without GAIA account.
+TEST_F(ChromeArcUtilTest, IsArcAllowedForProfile_PublicAccount) {
+  ScopedLogIn login(GetFakeUserManager(),
+                    AccountId::FromUserEmail("public_user@gmail.com"),
+                    user_manager::USER_TYPE_PUBLIC_ACCOUNT);
+  EXPECT_FALSE(IsArcAllowedForProfile(profile()));
+}
+
 TEST_F(ChromeArcUtilTest, IsArcAllowedForProfile_ActiveDirectoryEnabled) {
   base::CommandLine::ForCurrentProcess()->InitFromArgv(
       {"", "--arc-availability=officially-supported-with-active-directory"});
@@ -179,17 +200,7 @@ TEST_F(ChromeArcUtilTest, IsArcAllowedForProfile_ActiveDirectoryDisabled) {
   EXPECT_FALSE(IsArcAllowedForProfile(profile()));
 }
 
-TEST_F(ChromeArcUtilTest, IsArcAllowedForProfile_KioskArcEnabled) {
-  ScopedLogIn login(GetFakeUserManager(),
-                    AccountId::FromUserEmail(profile()->GetProfileUserName()),
-                    user_manager::USER_TYPE_ARC_KIOSK_APP);
-  EXPECT_FALSE(chromeos::ProfileHelper::Get()
-                   ->GetUserByProfile(profile())
-                   ->HasGaiaAccount());
-  EXPECT_TRUE(IsArcAllowedForProfile(profile()));
-}
-
-TEST_F(ChromeArcUtilTest, IsArcAllowedForProfile_KioskArcDisabled) {
+TEST_F(ChromeArcUtilTest, IsArcAllowedForProfile_KioskArcNotAvailable) {
   base::CommandLine::ForCurrentProcess()->InitFromArgv({""});
   ScopedLogIn login(GetFakeUserManager(),
                     AccountId::FromUserEmail(profile()->GetProfileUserName()),
@@ -200,9 +211,21 @@ TEST_F(ChromeArcUtilTest, IsArcAllowedForProfile_KioskArcDisabled) {
   EXPECT_FALSE(IsArcAllowedForProfile(profile()));
 }
 
-TEST_F(ChromeArcUtilTest, IsArcAllowedForProfile_KioskOnlyEnabled) {
+TEST_F(ChromeArcUtilTest, IsArcAllowedForProfile_KioskArcInstalled) {
   base::CommandLine::ForCurrentProcess()->InitFromArgv(
-      {"", "--arc-availability=installed-only-kiosk-supported"});
+      {"", "--arc-availability=installed"});
+  ScopedLogIn login(GetFakeUserManager(),
+                    AccountId::FromUserEmail(profile()->GetProfileUserName()),
+                    user_manager::USER_TYPE_ARC_KIOSK_APP);
+  EXPECT_FALSE(chromeos::ProfileHelper::Get()
+                   ->GetUserByProfile(profile())
+                   ->HasGaiaAccount());
+  EXPECT_TRUE(IsArcAllowedForProfile(profile()));
+}
+
+TEST_F(ChromeArcUtilTest, IsArcAllowedForProfile_KioskArcSupported) {
+  base::CommandLine::ForCurrentProcess()->InitFromArgv(
+      {"", "--arc-availability=officially-supported"});
   ScopedLogIn login(GetFakeUserManager(),
                     AccountId::FromUserEmail(profile()->GetProfileUserName()),
                     user_manager::USER_TYPE_ARC_KIOSK_APP);
@@ -222,8 +245,119 @@ TEST_F(ChromeArcUtilTest, IsArcAllowedForProfile_SupervisedUserFlow) {
   GetFakeUserManager()->ResetUserFlow(manager_id);
 }
 
-// TODO(hidehiko): Add test for Ephemeral users. There seems no way to easily
-// simulate ephemeral user.
+// Guest account is interpreted as EphemeralDataUser.
+TEST_F(ChromeArcUtilTest, IsArcAllowedForProfile_GuestAccount) {
+  ScopedLogIn login(GetFakeUserManager(),
+                    GetFakeUserManager()->GetGuestAccountId());
+  EXPECT_FALSE(IsArcAllowedForProfile(profile()));
+}
+
+// Demo account is interpreted as EphemeralDataUser.
+TEST_F(ChromeArcUtilTest, IsArcAllowedForProfile_DemoAccount) {
+  ScopedLogIn login(GetFakeUserManager(), user_manager::DemoAccountId());
+  EXPECT_FALSE(IsArcAllowedForProfile(profile()));
+}
+
+TEST_F(ChromeArcUtilTest, ArcPlayStoreEnabledForProfile) {
+  // Ensure IsAllowedForProfile() true.
+  ScopedLogIn login(GetFakeUserManager(),
+                    AccountId::FromUserEmailGaiaId(
+                        profile()->GetProfileUserName(), kTestGaiaId));
+  ASSERT_TRUE(IsArcAllowedForProfile(profile()));
+
+  // By default, Google Play Store is disabled.
+  EXPECT_FALSE(IsArcPlayStoreEnabledForProfile(profile()));
+
+  // Enable Google Play Store.
+  SetArcPlayStoreEnabledForProfile(profile(), true);
+  EXPECT_TRUE(IsArcPlayStoreEnabledForProfile(profile()));
+
+  // Disable Google Play Store.
+  SetArcPlayStoreEnabledForProfile(profile(), false);
+  EXPECT_FALSE(IsArcPlayStoreEnabledForProfile(profile()));
+}
+
+TEST_F(ChromeArcUtilTest, ArcPlayStoreEnabledForProfile_NotAllowed) {
+  ASSERT_FALSE(IsArcAllowedForProfile(profile()));
+
+  // If ARC is not allowed for the profile, always return false.
+  EXPECT_FALSE(IsArcPlayStoreEnabledForProfile(profile()));
+
+  // Directly set the preference value, to avoid DCHECK in
+  // SetArcPlayStoreEnabledForProfile().
+  profile()->GetPrefs()->SetBoolean(prefs::kArcEnabled, true);
+  EXPECT_FALSE(IsArcPlayStoreEnabledForProfile(profile()));
+}
+
+TEST_F(ChromeArcUtilTest, ArcPlayStoreEnabledForProfile_Managed) {
+  // Ensure IsAllowedForProfile() true.
+  ScopedLogIn login(GetFakeUserManager(),
+                    AccountId::FromUserEmailGaiaId(
+                        profile()->GetProfileUserName(), kTestGaiaId));
+  ASSERT_TRUE(IsArcAllowedForProfile(profile()));
+
+  // By default it is not managed.
+  EXPECT_FALSE(IsArcPlayStoreEnabledPreferenceManagedForProfile(profile()));
+  EXPECT_FALSE(IsArcPlayStoreEnabledForProfile(profile()));
+
+  // 1) Set managed preference to true, then try to set the value to false
+  // via SetArcPlayStoreEnabledForProfile().
+  profile()->GetTestingPrefService()->SetManagedPref(prefs::kArcEnabled,
+                                                     new base::Value(true));
+  EXPECT_TRUE(IsArcPlayStoreEnabledPreferenceManagedForProfile(profile()));
+  EXPECT_TRUE(IsArcPlayStoreEnabledForProfile(profile()));
+  SetArcPlayStoreEnabledForProfile(profile(), false);
+  EXPECT_TRUE(IsArcPlayStoreEnabledPreferenceManagedForProfile(profile()));
+  EXPECT_TRUE(IsArcPlayStoreEnabledForProfile(profile()));
+
+  // Remove managed state.
+  profile()->GetTestingPrefService()->RemoveManagedPref(prefs::kArcEnabled);
+  EXPECT_FALSE(IsArcPlayStoreEnabledPreferenceManagedForProfile(profile()));
+
+  // 2) Set managed preference to false, then try to set the value to true
+  // via SetArcPlayStoreEnabledForProfile().
+  profile()->GetTestingPrefService()->SetManagedPref(prefs::kArcEnabled,
+                                                     new base::Value(false));
+  EXPECT_TRUE(IsArcPlayStoreEnabledPreferenceManagedForProfile(profile()));
+  EXPECT_FALSE(IsArcPlayStoreEnabledForProfile(profile()));
+  SetArcPlayStoreEnabledForProfile(profile(), true);
+  EXPECT_TRUE(IsArcPlayStoreEnabledPreferenceManagedForProfile(profile()));
+  EXPECT_FALSE(IsArcPlayStoreEnabledForProfile(profile()));
+
+  // Remove managed state.
+  profile()->GetTestingPrefService()->RemoveManagedPref(prefs::kArcEnabled);
+  EXPECT_FALSE(IsArcPlayStoreEnabledPreferenceManagedForProfile(profile()));
+}
+
+// Test the AreArcAllOptInPreferencesManagedForProfile() function.
+TEST_F(ChromeArcUtilTest, AreArcAllOptInPreferencesManagedForProfile) {
+  // OptIn prefs are unset, the function returns false.
+  EXPECT_FALSE(AreArcAllOptInPreferencesManagedForProfile(profile()));
+
+  // OptIn prefs are set to unmanaged values, and the function returns false.
+  profile()->GetPrefs()->SetBoolean(prefs::kArcBackupRestoreEnabled, false);
+  profile()->GetPrefs()->SetBoolean(prefs::kArcLocationServiceEnabled, false);
+  EXPECT_FALSE(AreArcAllOptInPreferencesManagedForProfile(profile()));
+
+  // Backup-restore pref is managed, while location-service is not, and the
+  // function returns false.
+  profile()->GetTestingPrefService()->SetManagedPref(
+      prefs::kArcBackupRestoreEnabled, new base::Value(false));
+  EXPECT_FALSE(AreArcAllOptInPreferencesManagedForProfile(profile()));
+
+  // Location-service pref is managed, while backup-restore is not, and the
+  // function returns false.
+  profile()->GetTestingPrefService()->RemoveManagedPref(
+      prefs::kArcBackupRestoreEnabled);
+  profile()->GetTestingPrefService()->SetManagedPref(
+      prefs::kArcLocationServiceEnabled, new base::Value(false));
+  EXPECT_FALSE(AreArcAllOptInPreferencesManagedForProfile(profile()));
+
+  // Both OptIn prefs are set to managed values, and the function returns true.
+  profile()->GetTestingPrefService()->SetManagedPref(
+      prefs::kArcBackupRestoreEnabled, new base::Value(false));
+  EXPECT_TRUE(AreArcAllOptInPreferencesManagedForProfile(profile()));
+}
 
 }  // namespace util
 }  // namespace arc

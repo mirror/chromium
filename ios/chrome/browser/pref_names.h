@@ -51,6 +51,8 @@ extern const char kDesktopIOSPromotionSMSEntryPoint[];
 extern const char kDesktopIOSPromotionShownEntryPoints[];
 extern const char kDesktopIOSPromotionLastImpression[];
 extern const char kDesktopIOSPromotionDone[];
+extern const char kDesktopIOSPromotionEligible[];
+extern const char kDesktopIOSPromotionVariationId[];
 
 }  // namespace prefs
 

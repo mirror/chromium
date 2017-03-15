@@ -36,7 +36,6 @@
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_contents.h"
-#include "net/base/crypto_module.h"
 #include "net/base/net_errors.h"
 #include "net/cert/x509_certificate.h"
 #include "net/der/input.h"
@@ -606,11 +605,11 @@ void CertificateManagerHandler::GetCATrust(const base::ListValue* args) {
 
   net::NSSCertDatabase::TrustBits trust_bits =
       certificate_manager_model_->cert_db()->GetCertTrust(cert, net::CA_CERT);
-  base::FundamentalValue ssl_value(
+  base::Value ssl_value(
       static_cast<bool>(trust_bits & net::NSSCertDatabase::TRUSTED_SSL));
-  base::FundamentalValue email_value(
+  base::Value email_value(
       static_cast<bool>(trust_bits & net::NSSCertDatabase::TRUSTED_EMAIL));
-  base::FundamentalValue obj_sign_value(
+  base::Value obj_sign_value(
       static_cast<bool>(trust_bits & net::NSSCertDatabase::TRUSTED_OBJ_SIGN));
   web_ui()->CallJavascriptFunctionUnsafe(
       "CertificateEditCaTrustOverlay.populateTrust", ssl_value, email_value,
@@ -839,11 +838,10 @@ void CertificateManagerHandler::ImportPersonalPasswordSelected(
     slot_ = certificate_manager_model_->cert_db()->GetPublicSlot();
   }
 
-  net::CryptoModuleList modules;
-  modules.push_back(net::CryptoModule::CreateFromHandle(slot_.get()));
+  std::vector<crypto::ScopedPK11Slot> modules;
+  modules.push_back(crypto::ScopedPK11Slot(PK11_ReferenceSlot(slot_.get())));
   chrome::UnlockSlotsIfNecessary(
-      modules,
-      chrome::kCryptoModulePasswordCertImport,
+      std::move(modules), chrome::kCryptoModulePasswordCertImport,
       net::HostPortPair(),  // unused.
       GetParentWindow(),
       base::Bind(&CertificateManagerHandler::ImportPersonalSlotUnlocked,
@@ -1013,7 +1011,7 @@ void CertificateManagerHandler::ImportCAFileRead(const int* read_errno,
 
   // TODO(mattm): check here if root_cert is not a CA cert and show error.
 
-  base::StringValue cert_name(root_cert->subject().GetDisplayName());
+  base::Value cert_name(root_cert->subject().GetDisplayName());
   web_ui()->CallJavascriptFunctionUnsafe(
       "CertificateEditCaTrustOverlay.showImport", cert_name);
 }
@@ -1085,9 +1083,9 @@ void CertificateManagerHandler::OnCertificateManagerModelCreated(
 }
 
 void CertificateManagerHandler::CertificateManagerModelReady() {
-  base::FundamentalValue user_db_available_value(
+  base::Value user_db_available_value(
       certificate_manager_model_->is_user_db_available());
-  base::FundamentalValue tpm_available_value(
+  base::Value tpm_available_value(
       certificate_manager_model_->is_tpm_available());
   web_ui()->CallJavascriptFunctionUnsafe("CertificateManager.onModelReady",
                                          user_db_available_value,
@@ -1193,10 +1191,10 @@ void CertificateManagerHandler::PopulateTree(
 
 void CertificateManagerHandler::ShowError(const std::string& title,
                                           const std::string& error) const {
-  auto title_value = base::MakeUnique<base::StringValue>(title);
-  auto error_value = base::MakeUnique<base::StringValue>(error);
+  auto title_value = base::MakeUnique<base::Value>(title);
+  auto error_value = base::MakeUnique<base::Value>(error);
   auto ok_title_value =
-      base::MakeUnique<base::StringValue>(l10n_util::GetStringUTF8(IDS_OK));
+      base::MakeUnique<base::Value>(l10n_util::GetStringUTF8(IDS_OK));
   auto cancel_title_value = base::Value::CreateNullValue();
   auto ok_callback_value = base::Value::CreateNullValue();
   auto cancel_callback_value = base::Value::CreateNullValue();
@@ -1228,8 +1226,8 @@ void CertificateManagerHandler::ShowImportErrors(
     cert_error_list.Append(std::move(dict));
   }
 
-  base::StringValue title_value(title);
-  base::StringValue error_value(error);
+  base::Value title_value(title);
+  base::Value error_value(error);
   web_ui()->CallJavascriptFunctionUnsafe("CertificateImportErrorOverlay.show",
                                          title_value, error_value,
                                          cert_error_list);

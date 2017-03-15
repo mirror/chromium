@@ -12,17 +12,24 @@
 #include "ash/common/shell_observer.h"
 #include "ash/common/wm/window_state_observer.h"
 #include "ash/common/wm/wm_types.h"
-#include "ash/common/wm_activation_observer.h"
 #include "ash/common/wm_layout_manager.h"
-#include "ash/common/wm_window_observer.h"
 #include "base/macros.h"
+#include "base/scoped_observer.h"
+#include "ui/aura/window_observer.h"
 #include "ui/display/display_observer.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/keyboard/keyboard_controller_observer.h"
+#include "ui/wm/public/activation_change_observer.h"
+
+namespace keyboard {
+class KeyboardController;
+}
 
 namespace ash {
+
 class RootWindowController;
 class WmShell;
+class WmWindow;
 class WorkspaceLayoutManagerBackdropDelegate;
 
 namespace wm {
@@ -32,8 +39,8 @@ class WMEvent;
 // LayoutManager used on the window created for a workspace.
 class ASH_EXPORT WorkspaceLayoutManager
     : public WmLayoutManager,
-      public WmWindowObserver,
-      public WmActivationObserver,
+      public aura::WindowObserver,
+      public aura::client::ActivationChangeObserver,
       public keyboard::KeyboardControllerObserver,
       public display::DisplayObserver,
       public ShellObserver,
@@ -58,21 +65,21 @@ class ASH_EXPORT WorkspaceLayoutManager
   void SetChildBounds(WmWindow* child,
                       const gfx::Rect& requested_bounds) override;
 
-  // Overriden from WmWindowObserver:
-  void OnWindowTreeChanged(
-      WmWindow* window,
-      const WmWindowObserver::TreeChangeParams& params) override;
-  void OnWindowPropertyChanged(WmWindow* window,
-                               WmWindowProperty property) override;
-  void OnWindowStackingChanged(WmWindow* window) override;
-  void OnWindowDestroying(WmWindow* window) override;
-  void OnWindowBoundsChanged(WmWindow* window,
+  // Overriden from aura::WindowObserver:
+  void OnWindowHierarchyChanged(const HierarchyChangeParams& params) override;
+  void OnWindowPropertyChanged(aura::Window* window,
+                               const void* key,
+                               intptr_t old) override;
+  void OnWindowStackingChanged(aura::Window* window) override;
+  void OnWindowDestroying(aura::Window* window) override;
+  void OnWindowBoundsChanged(aura::Window* window,
                              const gfx::Rect& old_bounds,
                              const gfx::Rect& new_bounds) override;
 
-  // WmActivationObserver overrides:
-  void OnWindowActivated(WmWindow* gained_active,
-                         WmWindow* lost_active) override;
+  // aura::client::ActivationChangeObserver overrides:
+  void OnWindowActivated(ActivationReason reason,
+                         aura::Window* gained_active,
+                         aura::Window* lost_active) override;
 
   // keyboard::KeyboardControllerObserver overrides:
   void OnKeyboardBoundsChanging(const gfx::Rect& new_bounds) override;
@@ -90,6 +97,8 @@ class ASH_EXPORT WorkspaceLayoutManager
   void OnFullscreenStateChanged(bool is_fullscreen,
                                 WmWindow* root_window) override;
   void OnPinnedStateChanged(WmWindow* pinned_window) override;
+  void OnVirtualKeyboardStateChanged(bool activated,
+                                     WmWindow* root_window) override;
 
  private:
   typedef std::set<WmWindow*> WindowSet;
@@ -131,6 +140,10 @@ class ASH_EXPORT WorkspaceLayoutManager
   // A window which covers the full container and which gets inserted behind the
   // topmost visible window.
   std::unique_ptr<WorkspaceLayoutManagerBackdropDelegate> backdrop_delegate_;
+
+  ScopedObserver<keyboard::KeyboardController,
+                 keyboard::KeyboardControllerObserver>
+      keyboard_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(WorkspaceLayoutManager);
 };

@@ -16,9 +16,9 @@
 #include "ash/common/system/user/login_status.h"
 #include "ash/common/wm_shell.h"
 #include "ash/public/cpp/shelf_types.h"
+#include "ash/resources/grit/ash_resources.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "base/logging.h"
-#include "grit/ash_resources.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/events/event.h"
 #include "ui/gfx/color_palette.h"
@@ -34,7 +34,7 @@
 namespace ash {
 
 LogoutButtonTray::LogoutButtonTray(WmShelf* wm_shelf)
-    : TrayBackgroundView(wm_shelf),
+    : TrayBackgroundView(wm_shelf, false),
       button_(nullptr),
       login_status_(LoginStatus::NOT_LOGGED_IN),
       show_logout_button_in_tray_(false) {
@@ -48,7 +48,7 @@ LogoutButtonTray::LogoutButtonTray(WmShelf* wm_shelf)
   button->AdjustFontSize(2);
   button_ = button;
 
-  // Since |logout_button_tray| has a red background and it is distinguished
+  // Since LogoutButtonTray has a red background and it is distinguished
   // by itself, no separator is needed on its right side.
   set_separator_visibility(false);
   tray_container()->AddChildView(button_);

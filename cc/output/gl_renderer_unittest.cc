@@ -74,6 +74,7 @@ class GLRendererTest : public testing::Test {
 
 #define EXPECT_PROGRAM_VALID(program_binding)      \
   do {                                             \
+    ASSERT_TRUE(program_binding);                  \
     EXPECT_TRUE((program_binding)->program());     \
     EXPECT_TRUE((program_binding)->initialized()); \
   } while (false)
@@ -134,10 +135,10 @@ class GLRendererShaderPixelTest : public GLRendererPixelTest {
 
   void TestShader(const ProgramKey& program_key) {
     renderer()->SetCurrentFrameForTesting(GLRenderer::DrawingFrame());
-    const size_t kNumSrcColorSpaces = 3;
+    const size_t kNumSrcColorSpaces = 4;
     gfx::ColorSpace src_color_spaces[kNumSrcColorSpaces] = {
         gfx::ColorSpace(), gfx::ColorSpace::CreateSRGB(),
-        gfx::ColorSpace::CreateREC709(),
+        gfx::ColorSpace::CreateREC709(), gfx::ColorSpace::CreateExtendedSRGB(),
     };
     const size_t kNumDstColorSpaces = 3;
     gfx::ColorSpace dst_color_spaces[kNumDstColorSpaces] = {
@@ -157,6 +158,38 @@ class GLRendererShaderPixelTest : public GLRendererPixelTest {
     TestShader(ProgramKey::DebugBorder());
     TestShader(ProgramKey::SolidColor(NO_AA));
     TestShader(ProgramKey::SolidColor(USE_AA));
+  }
+
+  void TestColorShaders() {
+    const size_t kNumTransferFns = 7;
+    SkColorSpaceTransferFn transfer_fns[kNumTransferFns] = {
+        // The identity.
+        {1.f, 1.f, 0.f, 1.f, 0.f, 0.f, 0.f},
+        // The identity, with an if statement.
+        {1.f, 1.f, 0.f, 1.f, 0.5f, 0.f, 0.f},
+        // Just the power function.
+        {1.1f, 1.f, 0.f, 1.f, 0.f, 0.f, 0.f},
+        // Everything but the power function, nonlinear only.
+        {1.f, 0.9f, 0.1f, 0.9f, 0.f, 0.1f, 0.1f},
+        // Everything, nonlinear only.
+        {1.1f, 0.9f, 0.1f, 0.9f, 0.f, 0.1f, 0.1f},
+        // Everything but the power function.
+        {1.f, 0.9f, 0.1f, 0.9f, 0.5f, 0.1f, 0.1f},
+        // Everything.
+        {1.1f, 0.9f, 0.1f, 0.9f, 0.5f, 0.1f, 0.1f},
+    };
+
+    for (size_t i = 0; i < kNumTransferFns; ++i) {
+      SkMatrix44 primaries;
+      gfx::ColorSpace::CreateSRGB().GetPrimaryMatrix(&primaries);
+      gfx::ColorSpace src =
+          gfx::ColorSpace::CreateCustom(primaries, transfer_fns[i]);
+
+      renderer()->SetCurrentFrameForTesting(GLRenderer::DrawingFrame());
+      renderer()->SetUseProgram(ProgramKey::SolidColor(NO_AA), src,
+                                gfx::ColorSpace::CreateXYZD50());
+      EXPECT_TRUE(renderer()->current_program_->initialized());
+    }
   }
 
   void TestShadersWithPrecision(TexCoordPrecision precision) {
@@ -266,6 +299,10 @@ static const SamplerType kSamplerList[] = {
 
 TEST_F(GLRendererShaderPixelTest, BasicShadersCompile) {
   TestBasicShaders();
+}
+
+TEST_F(GLRendererShaderPixelTest, TestColorShadersCompile) {
+  TestColorShaders();
 }
 
 class PrecisionShaderPixelTest
@@ -1016,7 +1053,7 @@ TEST_F(GLRendererTest, ScissorTestWhenClearing) {
   EXPECT_FALSE(renderer.use_partial_swap());
   renderer.SetVisible(true);
 
-  gfx::Size viewport_size(1, 1);
+  gfx::Size viewport_size(100, 100);
 
   gfx::Rect grand_child_rect(25, 25);
   int grand_child_pass_id = 3;
@@ -1195,7 +1232,7 @@ TEST_F(GLRendererTest, DrawFramePreservesFramebuffer) {
 }
 
 TEST_F(GLRendererShaderTest, DrawRenderPassQuadShaderPermutations) {
-  gfx::Size viewport_size(1, 1);
+  gfx::Size viewport_size(60, 75);
 
   gfx::Rect child_rect(50, 50);
   int child_pass_id = 2;
@@ -1407,7 +1444,7 @@ TEST_F(GLRendererShaderTest, DrawRenderPassQuadSkipsAAForClippingTransform) {
   int child_pass_id = 2;
   RenderPass* child_pass;
 
-  gfx::Size viewport_size(1, 1);
+  gfx::Size viewport_size(100, 100);
   int root_pass_id = 1;
   RenderPass* root_pass;
 
@@ -1443,7 +1480,8 @@ TEST_F(GLRendererShaderTest, DrawRenderPassQuadSkipsAAForClippingTransform) {
 }
 
 TEST_F(GLRendererShaderTest, DrawSolidColorShader) {
-  gfx::Size viewport_size(1, 1);
+  gfx::Size viewport_size(30, 30);  // Don't translate out of the viewport.
+  gfx::Size quad_size(3, 3);
   int root_pass_id = 1;
   RenderPass* root_pass;
 
@@ -1454,7 +1492,7 @@ TEST_F(GLRendererShaderTest, DrawSolidColorShader) {
   root_pass = AddRenderPass(&render_passes_in_draw_order_, root_pass_id,
                             gfx::Rect(viewport_size), gfx::Transform(),
                             FilterOperations());
-  AddTransformedQuad(root_pass, gfx::Rect(viewport_size), SK_ColorYELLOW,
+  AddTransformedQuad(root_pass, gfx::Rect(quad_size), SK_ColorYELLOW,
                      pixel_aligned_transform_causing_aa);
 
   renderer_->DecideRenderPassAllocationsForFrame(render_passes_in_draw_order_);
@@ -1495,6 +1533,7 @@ class MockOutputSurface : public OutputSurface {
                     bool has_alpha,
                     bool use_stencil));
   MOCK_METHOD0(BindFramebuffer, void());
+  MOCK_METHOD1(SetDrawRectangle, void(const gfx::Rect&));
   MOCK_METHOD0(GetFramebufferCopyTextureFormat, GLenum());
   MOCK_METHOD1(SwapBuffers_, void(OutputSurfaceFrame& frame));  // NOLINT
   void SwapBuffers(OutputSurfaceFrame frame) override { SwapBuffers_(frame); }
@@ -1589,10 +1628,11 @@ class TestOverlayProcessor : public OverlayProcessor {
    public:
     Strategy() {}
     ~Strategy() override {}
-    MOCK_METHOD3(Attempt,
+    MOCK_METHOD4(Attempt,
                  bool(ResourceProvider* resource_provider,
                       RenderPass* render_pass,
-                      OverlayCandidateList* candidates));
+                      OverlayCandidateList* candidates,
+                      std::vector<gfx::Rect>* content_bounds));
   };
 
   class Validator : public OverlayCandidateValidator {
@@ -1601,6 +1641,8 @@ class TestOverlayProcessor : public OverlayProcessor {
 
     // Returns true if draw quads can be represented as CALayers (Mac only).
     MOCK_METHOD0(AllowCALayerOverlays, bool());
+
+    bool AllowDCLayerOverlays() override { return false; }
 
     // A list of possible overlay candidates is presented to this function.
     // The expected result is that those candidates that can be in a separate
@@ -1689,7 +1731,7 @@ TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
   // added a fake strategy, so checking for Attempt calls checks if there was
   // any attempt to overlay, which there shouldn't be. We can't use the quad
   // list because the render pass is cleaned up by DrawFrame.
-  EXPECT_CALL(*processor->strategy_, Attempt(_, _, _)).Times(0);
+  EXPECT_CALL(*processor->strategy_, Attempt(_, _, _, _)).Times(0);
   EXPECT_CALL(*validator, AllowCALayerOverlays()).Times(0);
   DrawFrame(&renderer, viewport_size);
   Mock::VerifyAndClearExpectations(processor->strategy_);
@@ -1710,7 +1752,7 @@ TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
   EXPECT_CALL(*validator, AllowCALayerOverlays())
       .Times(1)
       .WillOnce(::testing::Return(false));
-  EXPECT_CALL(*processor->strategy_, Attempt(_, _, _)).Times(1);
+  EXPECT_CALL(*processor->strategy_, Attempt(_, _, _, _)).Times(1);
   DrawFrame(&renderer, viewport_size);
 
   // If the CALayerOverlay path is taken, then the ordinary overlay path should
@@ -1729,7 +1771,7 @@ TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
   EXPECT_CALL(*validator, AllowCALayerOverlays())
       .Times(1)
       .WillOnce(::testing::Return(true));
-  EXPECT_CALL(*processor->strategy_, Attempt(_, _, _)).Times(0);
+  EXPECT_CALL(*processor->strategy_, Attempt(_, _, _, _)).Times(0);
   DrawFrame(&renderer, viewport_size);
 }
 
@@ -1743,6 +1785,7 @@ class SingleOverlayOnTopProcessor : public OverlayProcessor {
     }
 
     bool AllowCALayerOverlays() override { return false; }
+    bool AllowDCLayerOverlays() override { return false; }
 
     void CheckOverlaySupport(OverlayCandidateList* surfaces) override {
       ASSERT_EQ(1U, surfaces->size());
@@ -1861,19 +1904,27 @@ TEST_F(GLRendererTest, OverlaySyncTokensAreProcessed) {
 
 class PartialSwapMockGLES2Interface : public TestGLES2Interface {
  public:
+  explicit PartialSwapMockGLES2Interface(bool support_set_draw_rectangle)
+      : support_set_draw_rectangle_(support_set_draw_rectangle) {}
+
   void InitializeTestContext(TestWebGraphicsContext3D* context) override {
     context->set_have_post_sub_buffer(true);
+    context->set_support_set_draw_rectangle(support_set_draw_rectangle_);
   }
 
   MOCK_METHOD1(Enable, void(GLenum cap));
   MOCK_METHOD1(Disable, void(GLenum cap));
   MOCK_METHOD4(Scissor, void(GLint x, GLint y, GLsizei width, GLsizei height));
+
+ private:
+  bool support_set_draw_rectangle_;
 };
 
 class GLRendererPartialSwapTest : public GLRendererTest {
  protected:
-  void RunTest(bool partial_swap) {
-    auto gl_owned = base::MakeUnique<PartialSwapMockGLES2Interface>();
+  void RunTest(bool partial_swap, bool set_draw_rectangle) {
+    auto gl_owned =
+        base::MakeUnique<PartialSwapMockGLES2Interface>(set_draw_rectangle);
     auto* gl = gl_owned.get();
 
     auto provider = TestContextProvider::Create(std::move(gl_owned));
@@ -1917,12 +1968,19 @@ class GLRendererPartialSwapTest : public GLRendererTest {
       // Partial frame, we should use a scissor to swap only that part when
       // partial swap is enabled.
       root_pass->damage_rect = gfx::Rect(2, 2, 3, 3);
+      gfx::Rect output_rectangle =
+          partial_swap ? root_pass->damage_rect : gfx::Rect(viewport_size);
 
-      if (partial_swap) {
+      if (partial_swap || set_draw_rectangle) {
         EXPECT_CALL(*gl, Enable(GL_SCISSOR_TEST)).InSequence(seq);
         // The scissor is flipped, so subtract the y coord and height from the
         // bottom of the GL viewport.
-        EXPECT_CALL(*gl, Scissor(2, viewport_size.height() - 3 - 2, 3, 3))
+        EXPECT_CALL(
+            *gl,
+            Scissor(output_rectangle.x(),
+                    viewport_size.height() - output_rectangle.y() -
+                        output_rectangle.height(),
+                    output_rectangle.width(), output_rectangle.height()))
             .InSequence(seq);
       }
 
@@ -1935,16 +1993,27 @@ class GLRendererPartialSwapTest : public GLRendererTest {
       renderer.DecideRenderPassAllocationsForFrame(
           render_passes_in_draw_order_);
       DrawFrame(&renderer, viewport_size);
+      if (set_draw_rectangle) {
+        EXPECT_EQ(output_rectangle, output_surface->last_set_draw_rectangle());
+      }
     }
   }
 };
 
 TEST_F(GLRendererPartialSwapTest, PartialSwap) {
-  RunTest(true);
+  RunTest(true, false);
 }
 
 TEST_F(GLRendererPartialSwapTest, NoPartialSwap) {
-  RunTest(false);
+  RunTest(false, false);
+}
+
+TEST_F(GLRendererPartialSwapTest, SetDrawRectangle_PartialSwap) {
+  RunTest(true, true);
+}
+
+TEST_F(GLRendererPartialSwapTest, SetDrawRectangle_NoPartialSwap) {
+  RunTest(false, true);
 }
 
 class GLRendererWithMockContextTest : public ::testing::Test {

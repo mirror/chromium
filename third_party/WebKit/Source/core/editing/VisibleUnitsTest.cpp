@@ -4,13 +4,14 @@
 
 #include "core/editing/VisibleUnits.h"
 
+#include <ostream>  // NOLINT
+#include "bindings/core/v8/V8BindingForTesting.h"
 #include "core/dom/Text.h"
 #include "core/editing/EditingTestBase.h"
 #include "core/editing/VisiblePosition.h"
 #include "core/html/TextControlElement.h"
 #include "core/layout/LayoutTextFragment.h"
 #include "core/layout/line/InlineTextBox.h"
-#include <ostream>  // NOLINT
 
 namespace blink {
 
@@ -107,6 +108,8 @@ TEST_F(VisibleUnitsTest, associatedLayoutObjectOfFirstLetterPunctuations) {
 }
 
 TEST_F(VisibleUnitsTest, associatedLayoutObjectOfFirstLetterSplit) {
+  V8TestingScope scope;
+
   const char* bodyContent =
       "<style>p:first-letter {color:red;}</style><p id=sample>abc</p>";
   setBodyContent(bodyContent);
@@ -233,6 +236,20 @@ TEST_F(VisibleUnitsTest, canonicalPositionOfWithHTMLHtmlElement) {
             canonicalPositionOf(Position(two, 0)));
   EXPECT_EQ(Position(two->firstChild(), 2),
             canonicalPositionOf(Position(two, 1)));
+}
+
+// For http://crbug.com/695317
+TEST_F(VisibleUnitsTest, canonicalPositionOfWithInputElement) {
+  setBodyContent("<input>123");
+  Element* const input = document().querySelector("input");
+
+  EXPECT_EQ(Position::beforeNode(input),
+            canonicalPositionOf(
+                Position::firstPositionInNode(document().documentElement())));
+
+  EXPECT_EQ(PositionInFlatTree::beforeNode(input),
+            canonicalPositionOf(PositionInFlatTree::firstPositionInNode(
+                document().documentElement())));
 }
 
 TEST_F(VisibleUnitsTest, characterBefore) {
@@ -1351,6 +1368,8 @@ TEST_F(VisibleUnitsTest, mostBackwardCaretPositionFirstLetter) {
 }
 
 TEST_F(VisibleUnitsTest, mostBackwardCaretPositionFirstLetterSplit) {
+  V8TestingScope scope;
+
   const char* bodyContent =
       "<style>p:first-letter {color:red;}</style><p id=sample>abc</p>";
   setBodyContent(bodyContent);

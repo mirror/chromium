@@ -17,7 +17,6 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/memory/scoped_vector.h"
 #include "content/browser/frame_host/frame_tree_node.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/common/content_export.h"
@@ -25,6 +24,7 @@
 #include "content/public/browser/navigation_data.h"
 #include "content/public/browser/navigation_throttle.h"
 #include "content/public/browser/navigation_type.h"
+#include "content/public/browser/restore_type.h"
 #include "content/public/browser/ssl_status.h"
 #include "content/public/common/request_context_type.h"
 #include "third_party/WebKit/public/platform/WebMixedContentContextType.h"
@@ -94,6 +94,21 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
       bool started_from_context_menu);
   ~NavigationHandleImpl() override;
 
+  // Used to track the state the navigation is currently in.
+  enum State {
+    INITIAL = 0,
+    WILL_SEND_REQUEST,
+    DEFERRING_START,
+    WILL_REDIRECT_REQUEST,
+    DEFERRING_REDIRECT,
+    CANCELING,
+    WILL_PROCESS_RESPONSE,
+    DEFERRING_RESPONSE,
+    READY_TO_COMMIT,
+    DID_COMMIT,
+    DID_COMMIT_ERROR_PAGE,
+  };
+
   // NavigationHandle implementation:
   const GURL& GetURL() override;
   SiteInstance* GetStartingSiteInstance() override;
@@ -112,7 +127,7 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   bool IsExternalProtocol() override;
   net::Error GetNetErrorCode() override;
   RenderFrameHostImpl* GetRenderFrameHost() override;
-  bool IsSamePage() override;
+  bool IsSameDocument() override;
   bool HasCommitted() override;
   bool IsErrorPage() override;
   bool DidReplaceEntry() override;
@@ -145,9 +160,14 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   const GURL& GetSearchableFormURL() override;
   const std::string& GetSearchableFormEncoding() override;
   ReloadType GetReloadType() override;
+  RestoreType GetRestoreType() override;
+  const GURL& GetBaseURLForDataURL() override;
   const GlobalRequestID& GetGlobalRequestID() override;
 
   NavigationData* GetNavigationData() override;
+
+  // Used in tests.
+  State state_for_testing() const { return state_; }
 
   // The NavigatorDelegate to notify/query for various navigation events.
   // Normally this is the WebContents, except if this NavigationHandle was
@@ -326,23 +346,17 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
     response_headers_ = response_headers;
   }
 
+  void set_complete_callback_for_testing(
+      const ThrottleChecksFinishedCallback& callback) {
+    complete_callback_for_testing_ = callback;
+  }
+
+  void set_base_url_for_data_url(const GURL& url) {
+    base_url_for_data_url_ = url;
+  }
+
  private:
   friend class NavigationHandleImplTest;
-
-  // Used to track the state the navigation is currently in.
-  enum State {
-    INITIAL = 0,
-    WILL_SEND_REQUEST,
-    DEFERRING_START,
-    WILL_REDIRECT_REQUEST,
-    DEFERRING_REDIRECT,
-    CANCELING,
-    WILL_PROCESS_RESPONSE,
-    DEFERRING_RESPONSE,
-    READY_TO_COMMIT,
-    DID_COMMIT,
-    DID_COMMIT_ERROR_PAGE,
-  };
 
   NavigationHandleImpl(const GURL& url,
                        const std::vector<GURL>& redirect_chain,
@@ -442,8 +456,15 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   // The mixed content context type for potential mixed content checks.
   blink::WebMixedContentContextType mixed_content_context_type_;
 
-  // This callback will be run when all throttle checks have been performed.
+  // This callback will be run when all throttle checks have been performed. Be
+  // careful about relying on it as the member may be removed as part of the
+  // PlzNavigate refactoring.
   ThrottleChecksFinishedCallback complete_callback_;
+
+  // This test-only callback will be run when all throttle checks have been
+  // performed.
+  // TODO(clamy): Revisit the unit test architecture when PlzNavigate ships.
+  ThrottleChecksFinishedCallback complete_callback_for_testing_;
 
   // PlzNavigate
   // Manages the lifetime of a pre-created ServiceWorkerProviderHost until a
@@ -487,11 +508,15 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   // Stores the reload type, or NONE if it's not a reload.
   ReloadType reload_type_;
 
+  // Stores the restore type, or NONE it it's not a restore.
+  RestoreType restore_type_;
+
   GURL searchable_form_url_;
   std::string searchable_form_encoding_;
 
   GURL previous_url_;
   GURL base_url_;
+  GURL base_url_for_data_url_;
   net::HostPortPair socket_address_;
   NavigationType navigation_type_;
 

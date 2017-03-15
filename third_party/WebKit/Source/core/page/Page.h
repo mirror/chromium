@@ -47,6 +47,7 @@
 namespace blink {
 
 class AutoscrollController;
+class BrowserControls;
 class ChromeClient;
 class ClientRectList;
 class ContextMenuClient;
@@ -55,21 +56,28 @@ class Document;
 class DragCaret;
 class DragController;
 class EditorClient;
+class EventHandlerRegistry;
 class FocusController;
 class Frame;
 class FrameHost;
+class OverscrollController;
+struct PageScaleConstraints;
+class PageScaleConstraintsSet;
 class PluginData;
 class PointerLockController;
 class ScopedPageSuspender;
 class ScrollingCoordinator;
 class Settings;
+class ConsoleMessageStorage;
 class SpellCheckerClient;
+class TopDocumentRootScrollerController;
 class ValidationMessageClient;
+class VisualViewport;
 class WebLayerTreeView;
 
 typedef uint64_t LinkHash;
 
-float deviceScaleFactor(LocalFrame*);
+float deviceScaleFactorDeprecated(LocalFrame*);
 
 class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
                                public Supplementable<Page>,
@@ -119,6 +127,7 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
 
   static void platformColorsChanged();
 
+  // TODO(sashab): Remove this.
   FrameHost& frameHost() const { return *m_frameHost; }
 
   void setNeedsRecalcStyleInAllFrames();
@@ -179,6 +188,26 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
   Deprecation& deprecation() { return m_deprecation; }
   HostsUsingFeatures& hostsUsingFeatures() { return m_hostsUsingFeatures; }
 
+  PageScaleConstraintsSet& pageScaleConstraintsSet();
+  const PageScaleConstraintsSet& pageScaleConstraintsSet() const;
+
+  BrowserControls& browserControls();
+  const BrowserControls& browserControls() const;
+
+  ConsoleMessageStorage& consoleMessageStorage();
+  const ConsoleMessageStorage& consoleMessageStorage() const;
+
+  EventHandlerRegistry& eventHandlerRegistry();
+  const EventHandlerRegistry& eventHandlerRegistry() const;
+
+  TopDocumentRootScrollerController& globalRootScrollerController() const;
+
+  VisualViewport& visualViewport();
+  const VisualViewport& visualViewport() const;
+
+  OverscrollController& overscrollController();
+  const OverscrollController& overscrollController() const;
+
   void setTabKeyCyclesThroughElements(bool b) {
     m_tabKeyCyclesThroughElements = b;
   }
@@ -198,8 +227,18 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
   void setPageScaleFactor(float);
   float pageScaleFactor() const;
 
-  float deviceScaleFactor() const { return m_deviceScaleFactor; }
-  void setDeviceScaleFactor(float);
+  // Corresponds to pixel density of the device where this Page is
+  // being displayed. In multi-monitor setups this can vary between pages.
+  // This value does not account for Page zoom, use LocalFrame::devicePixelRatio
+  // instead.  This is to be deprecated. Use this with caution.
+  // 1) If you need to scale the content per device scale factor, this is still
+  //    valid.  In use-zoom-for-dsf mode, this is always 1, and will be remove
+  //    when transition is complete.
+  // 2) If you want to compute the device related measure (such as device pixel
+  //    height, or the scale factor for drag image), use
+  //    ChromeClient::screenInfo() instead.
+  float deviceScaleFactorDeprecated() const { return m_deviceScaleFactor; }
+  void setDeviceScaleFactorDeprecated(float);
 
   static void allVisitedStateChanged(bool invalidateVisitedLinkHashes);
   static void visitedStateChanged(LinkHash visitedHash);
@@ -211,6 +250,10 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
   bool isCursorVisible() const;
   void setIsCursorVisible(bool isVisible) { m_isCursorVisible = isVisible; }
 
+  void setDefaultPageScaleLimits(float minScale, float maxScale);
+  void setUserAgentPageScaleConstraints(
+      const PageScaleConstraints& newConstraints);
+
 #if DCHECK_IS_ON()
   void setIsPainting(bool painting) { m_isPainting = painting; }
   bool isPainting() const { return m_isPainting; }
@@ -219,8 +262,6 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
   void didCommitLoad(LocalFrame*);
 
   void acceptLanguagesChanged();
-
-  static void networkStateChanged(bool online);
 
   DECLARE_TRACE();
 
@@ -249,8 +290,16 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
   const Member<DragController> m_dragController;
   const Member<FocusController> m_focusController;
   const Member<ContextMenuController> m_contextMenuController;
+  const std::unique_ptr<PageScaleConstraintsSet> m_pageScaleConstraintsSet;
   const Member<PointerLockController> m_pointerLockController;
   Member<ScrollingCoordinator> m_scrollingCoordinator;
+  const Member<BrowserControls> m_browserControls;
+  const Member<ConsoleMessageStorage> m_consoleMessageStorage;
+  const Member<EventHandlerRegistry> m_eventHandlerRegistry;
+  const Member<TopDocumentRootScrollerController>
+      m_globalRootScrollerController;
+  const Member<VisualViewport> m_visualViewport;
+  const Member<OverscrollController> m_overscrollController;
 
   // Typically, the main frame and Page should both be owned by the embedder,
   // which must call Page::willBeDestroyed() prior to destroying Page. This

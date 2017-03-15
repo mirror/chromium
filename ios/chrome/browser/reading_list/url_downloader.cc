@@ -104,7 +104,8 @@ void URLDownloader::DownloadCompletionHandler(
       [](URLDownloader* _this, const GURL& url, const std::string& title,
          const base::FilePath& offline_path, SuccessState success) {
         _this->download_completion_.Run(url, _this->distilled_url_, success,
-                                        offline_path, title);
+                                        offline_path, _this->saved_size_,
+                                        title);
         _this->distiller_.reset();
         _this->working_ = false;
         _this->HandleNextTask();
@@ -112,7 +113,7 @@ void URLDownloader::DownloadCompletionHandler(
       base::Unretained(this), url, title, offline_path, success);
 
   // If downloading failed, clean up any partial download.
-  if (success == ERROR_RETRY || success == ERROR_PERMANENT) {
+  if (success == ERROR) {
     base::FilePath directory_path =
         reading_list::OfflineURLDirectoryAbsolutePath(base_directory_, url);
     task_tracker_.PostTaskAndReply(
@@ -169,6 +170,7 @@ void URLDownloader::DownloadURL(const GURL& url, bool offline_url_exists) {
 
   original_url_ = url;
   distilled_url_ = url;
+  saved_size_ = 0;
   std::unique_ptr<reading_list::ReadingListDistillerPage>
       reading_list_distiller_page =
           distiller_page_factory_->CreateReadingListDistillerPage(this);
@@ -202,7 +204,7 @@ void URLDownloader::OnURLFetchComplete(const net::URLFetcher* source) {
     fetcher_->GetResponseHeaders()->GetMimeType(&mime_type);
   }
   if (!fetcher_->GetStatus().is_success() || mime_type != mime_type_) {
-    return DownloadCompletionHandler(original_url_, "", path, ERROR_RETRY);
+    return DownloadCompletionHandler(original_url_, "", path, ERROR);
   }
   base::FilePath temporary_path;
   // Do not take ownership of the file until the file is moved. This ensures
@@ -238,13 +240,16 @@ URLDownloader::SuccessState URLDownloader::SavePDFFile(
                                                              path);
 
     if (base::Move(temporary_path, absolute_path)) {
+      int64_t pdf_file_size;
+      base::GetFileSize(absolute_path, &pdf_file_size);
+      saved_size_ += pdf_file_size;
       return DOWNLOAD_SUCCESS;
     } else {
-      return ERROR_PERMANENT;
+      return ERROR;
     }
   }
 
-  return ERROR_PERMANENT;
+  return ERROR;
 }
 
 void URLDownloader::DistillerCallback(
@@ -262,8 +267,7 @@ void URLDownloader::DistillerCallback(
       return;
     }
     // This content cannot be processed, return an error value to the client.
-    DownloadCompletionHandler(page_url, std::string(), base::FilePath(),
-                              ERROR_RETRY);
+    DownloadCompletionHandler(page_url, std::string(), base::FilePath(), ERROR);
     return;
   }
 
@@ -288,9 +292,9 @@ URLDownloader::SuccessState URLDownloader::SaveDistilledHTML(
   if (CreateOfflineURLDirectory(url)) {
     return SaveHTMLForURL(SaveAndReplaceImagesInHTML(url, html, images), url)
                ? DOWNLOAD_SUCCESS
-               : ERROR_PERMANENT;
+               : ERROR;
   }
-  return ERROR_PERMANENT;
+  return ERROR;
 }
 
 bool URLDownloader::CreateOfflineURLDirectory(const GURL& url) {
@@ -312,7 +316,12 @@ bool URLDownloader::SaveImage(const GURL& url,
       reading_list::OfflineURLDirectoryAbsolutePath(base_directory_, url);
   base::FilePath path = directory_path.Append(image_hash);
   if (!base::PathExists(path)) {
-    return base::WriteFile(path, data.c_str(), data.length()) > 0;
+    int written = base::WriteFile(path, data.c_str(), data.length());
+    if (written <= 0) {
+      return false;
+    }
+    saved_size_ += written;
+    return true;
   }
   return true;
 }
@@ -363,5 +372,10 @@ bool URLDownloader::SaveHTMLForURL(std::string html, const GURL& url) {
   base::FilePath path = reading_list::OfflineURLAbsolutePathFromRelativePath(
       base_directory_,
       reading_list::OfflinePagePath(url, reading_list::OFFLINE_TYPE_HTML));
-  return base::WriteFile(path, html.c_str(), html.length()) > 0;
+  int written = base::WriteFile(path, html.c_str(), html.length());
+  if (written <= 0) {
+    return false;
+  }
+  saved_size_ += written;
+  return true;
 }

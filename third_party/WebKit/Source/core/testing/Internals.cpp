@@ -26,6 +26,9 @@
 
 #include "core/testing/Internals.h"
 
+#include <deque>
+#include <memory>
+
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptFunction.h"
@@ -105,7 +108,6 @@
 #include "core/loader/HistoryItem.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/FocusController.h"
-#include "core/page/NetworkStateNotifier.h"
 #include "core/page/Page.h"
 #include "core/page/PrintContext.h"
 #include "core/page/scrolling/ScrollState.h"
@@ -120,6 +122,7 @@
 #include "core/testing/LayerRectList.h"
 #include "core/testing/MockHyphenation.h"
 #include "core/testing/OriginTrialsTest.h"
+#include "core/testing/RecordTest.h"
 #include "core/testing/TypeConversions.h"
 #include "core/testing/UnionTypesTest.h"
 #include "core/workers/WorkerThread.h"
@@ -136,7 +139,8 @@
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/MemoryCache.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
-#include "platform/network/ResourceLoadPriority.h"
+#include "platform/loader/fetch/ResourceLoadPriority.h"
+#include "platform/network/NetworkStateNotifier.h"
 #include "platform/scroll/ProgrammaticScrollAnimator.h"
 #include "platform/scroll/ScrollbarTheme.h"
 #include "platform/testing/URLTestHelpers.h"
@@ -146,14 +150,12 @@
 #include "public/platform/WebGraphicsContext3DProvider.h"
 #include "public/platform/WebLayer.h"
 #include "public/platform/modules/remoteplayback/WebRemotePlaybackAvailability.h"
+#include "v8/include/v8.h"
 #include "wtf/InstanceCounter.h"
 #include "wtf/Optional.h"
 #include "wtf/PtrUtil.h"
 #include "wtf/dtoa.h"
 #include "wtf/text/StringBuffer.h"
-#include <deque>
-#include <memory>
-#include <v8.h>
 
 namespace blink {
 
@@ -210,9 +212,7 @@ static WTF::Optional<DocumentMarker::MarkerTypes> markerTypesFrom(
 static SpellCheckRequester* spellCheckRequester(Document* document) {
   if (!document || !document->frame())
     return 0;
-  if (!RuntimeEnabledFeatures::idleTimeSpellCheckingEnabled())
-    return &document->frame()->spellChecker().spellCheckRequester();
-  return &document->frame()->idleSpellCheckCallback().spellCheckRequester();
+  return &document->frame()->spellChecker().spellCheckRequester();
 }
 
 static ScrollableArea* scrollableAreaForNode(Node* node) {
@@ -430,7 +430,7 @@ int Internals::getResourcePriority(const String& url, Document* document) {
   if (!document)
     return ResourceLoadPriority::ResourceLoadPriorityUnresolved;
 
-  Resource* resource = document->fetcher()->allResources().get(
+  Resource* resource = document->fetcher()->allResources().at(
       URLTestHelpers::toKURL(url.utf8().data()));
 
   if (!resource)
@@ -444,7 +444,7 @@ String Internals::getResourceHeader(const String& url,
                                     Document* document) {
   if (!document)
     return String();
-  Resource* resource = document->fetcher()->allResources().get(
+  Resource* resource = document->fetcher()->allResources().at(
       URLTestHelpers::toKURL(url.utf8().data()));
   if (!resource)
     return String();
@@ -814,7 +814,7 @@ String Internals::shadowRootType(const Node* root,
     case ShadowRootType::Closed:
       return String("ClosedShadowRoot");
     default:
-      ASSERT_NOT_REACHED();
+      NOTREACHED();
       return String("Unknown");
   }
 }
@@ -897,8 +897,15 @@ void Internals::setFormControlStateOfHistoryItem(
 DOMWindow* Internals::pagePopupWindow() const {
   if (!m_document)
     return nullptr;
-  if (Page* page = m_document->page())
-    return page->chromeClient().pagePopupWindowForTesting();
+  if (Page* page = m_document->page()) {
+    LocalDOMWindow* popup =
+        toLocalDOMWindow(page->chromeClient().pagePopupWindowForTesting());
+    if (popup) {
+      // We need to make the popup same origin so layout tests can access it.
+      popup->document()->updateSecurityOrigin(m_document->getSecurityOrigin());
+    }
+    return popup;
+  }
   return nullptr;
 }
 
@@ -911,6 +918,19 @@ ClientRect* Internals::absoluteCaretBounds(ExceptionState& exceptionState) {
 
   m_document->updateStyleAndLayoutIgnorePendingStylesheets();
   return ClientRect::create(frame()->selection().absoluteCaretBounds());
+}
+
+String Internals::textAffinity() {
+  if (frame()
+          ->page()
+          ->focusController()
+          .focusedFrame()
+          ->selection()
+          .selectionInDOMTree()
+          .affinity() == TextAffinity::Upstream) {
+    return "Upstream";
+  }
+  return "Downstream";
 }
 
 ClientRect* Internals::boundingBox(Element* element) {
@@ -1028,6 +1048,9 @@ String Internals::markerDescriptionForNode(Node* node,
 
 void Internals::addTextMatchMarker(const Range* range, bool isActive) {
   DCHECK(range);
+  if (!range->ownerDocument().view())
+    return;
+
   range->ownerDocument().updateStyleAndLayoutIgnorePendingStylesheets();
   range->ownerDocument().markers().addTextMatchMarker(EphemeralRange(range),
                                                       isActive);
@@ -1473,6 +1496,44 @@ int Internals::lastSpellCheckProcessedSequence(Document* document,
   return requester->lastProcessedSequence();
 }
 
+String Internals::idleTimeSpellCheckerState(Document* document,
+                                            ExceptionState& exceptionState) {
+  static const char* const texts[] = {
+#define V(state) #state,
+      FOR_EACH_IDLE_SPELL_CHECK_CALLBACK_STATE(V)
+#undef V
+  };
+
+  if (!document || !document->frame()) {
+    exceptionState.throwDOMException(
+        InvalidAccessError,
+        "No frame can be obtained from the provided document.");
+    return String();
+  }
+
+  IdleSpellCheckCallback::State state =
+      document->frame()->spellChecker().idleSpellCheckCallback().state();
+  const auto& it = std::begin(texts) + static_cast<size_t>(state);
+  DCHECK_GE(it, std::begin(texts)) << "Unknown state value";
+  DCHECK_LT(it, std::end(texts)) << "Unknown state value";
+  return *it;
+}
+
+void Internals::runIdleTimeSpellChecker(Document* document,
+                                        ExceptionState& exceptionState) {
+  if (!document || !document->frame()) {
+    exceptionState.throwDOMException(
+        InvalidAccessError,
+        "No frame can be obtained from the provided document.");
+    return;
+  }
+
+  document->frame()
+      ->spellChecker()
+      .idleSpellCheckCallback()
+      .forceInvocationForTesting();
+}
+
 Vector<AtomicString> Internals::userPreferredLanguages() const {
   return blink::userPreferredLanguages();
 }
@@ -1505,8 +1566,7 @@ static unsigned eventHandlerCount(
     EventHandlerRegistry::EventHandlerClass handlerClass) {
   if (!document.frameHost())
     return 0;
-  EventHandlerRegistry* registry =
-      &document.frameHost()->eventHandlerRegistry();
+  EventHandlerRegistry* registry = &document.page()->eventHandlerRegistry();
   unsigned count = 0;
   const EventTargetSet* targets = registry->eventHandlerTargets(handlerClass);
   if (targets) {
@@ -1553,7 +1613,7 @@ static PaintLayer* findLayerForGraphicsLayer(PaintLayer* searchRoot,
     // If the |graphicsLayer| sets the scrollingContent layer as its
     // scroll parent, consider it belongs to the scrolling layer and
     // mark the layer type as "scrolling".
-    if (!searchRoot->layoutObject()->hasTransformRelatedProperty() &&
+    if (!searchRoot->layoutObject().hasTransformRelatedProperty() &&
         searchRoot->scrollParent() &&
         searchRoot->parent() == searchRoot->scrollParent()) {
       *layerType = "scrolling";
@@ -1564,15 +1624,15 @@ static PaintLayer* findLayerForGraphicsLayer(PaintLayer* searchRoot,
       // Only when the element's offsetParent == scroller's offsetParent we
       // can compute the element's relative position to the scrolling content
       // in this way.
-      if (searchRoot->layoutObject()->offsetParent() ==
-          searchRoot->parent()->layoutObject()->offsetParent()) {
-        LayoutBoxModelObject* current = searchRoot->layoutObject();
-        LayoutBoxModelObject* parent = searchRoot->parent()->layoutObject();
-        layerOffset->setWidth((parent->offsetLeft(parent->offsetParent()) -
-                               current->offsetLeft(parent->offsetParent()))
+      if (searchRoot->layoutObject().offsetParent() ==
+          searchRoot->parent()->layoutObject().offsetParent()) {
+        LayoutBoxModelObject& current = searchRoot->layoutObject();
+        LayoutBoxModelObject& parent = searchRoot->parent()->layoutObject();
+        layerOffset->setWidth((parent.offsetLeft(parent.offsetParent()) -
+                               current.offsetLeft(parent.offsetParent()))
                                   .toInt());
-        layerOffset->setHeight((parent->offsetTop(parent->offsetParent()) -
-                                current->offsetTop(parent->offsetParent()))
+        layerOffset->setHeight((parent.offsetTop(parent.offsetParent()) -
+                                current.offsetTop(parent.offsetParent()))
                                    .toInt());
         return searchRoot->parent();
       }
@@ -1580,7 +1640,7 @@ static PaintLayer* findLayerForGraphicsLayer(PaintLayer* searchRoot,
 
     LayoutRect rect;
     PaintLayer::mapRectInPaintInvalidationContainerToBacking(
-        *searchRoot->layoutObject(), rect);
+        searchRoot->layoutObject(), rect);
     rect.move(searchRoot->compositedLayerMapping()
                   ->contentOffsetInCompositingLayer());
 
@@ -1606,7 +1666,7 @@ static PaintLayer* findLayerForGraphicsLayer(PaintLayer* searchRoot,
       *layerType = "squashing";
       LayoutRect rect;
       PaintLayer::mapRectInPaintInvalidationContainerToBacking(
-          *searchRoot->layoutObject(), rect);
+          searchRoot->layoutObject(), rect);
       *layerOffset = IntSize(rect.x().toInt(), rect.y().toInt());
       return searchRoot;
     }
@@ -1708,7 +1768,7 @@ static void accumulateLayerRectList(PaintLayerCompositor* compositor,
     IntSize layerOffset;
     PaintLayer* paintLayer = findLayerForGraphicsLayer(
         compositor->rootLayer(), graphicsLayer, &layerOffset, &layerType);
-    Node* node = paintLayer ? paintLayer->layoutObject()->node() : 0;
+    Node* node = paintLayer ? paintLayer->layoutObject().node() : 0;
     for (size_t i = 0; i < layerRects.size(); ++i) {
       if (!layerRects[i].isEmpty()) {
         rects->append(node, layerType, layerOffset.width(),
@@ -2200,7 +2260,7 @@ float Internals::pageScaleFactor(ExceptionState& exceptionState) {
     return 0;
   }
   Page* page = m_document->page();
-  return page->frameHost().visualViewport().pageScale();
+  return page->visualViewport().pageScale();
 }
 
 void Internals::setPageScaleFactor(float scaleFactor,
@@ -2213,7 +2273,7 @@ void Internals::setPageScaleFactor(float scaleFactor,
     return;
   }
   Page* page = m_document->page();
-  page->frameHost().visualViewport().setScale(scaleFactor);
+  page->visualViewport().setScale(scaleFactor);
 }
 
 void Internals::setPageScaleFactorLimits(float minScaleFactor,
@@ -2226,14 +2286,14 @@ void Internals::setPageScaleFactorLimits(float minScaleFactor,
   }
 
   Page* page = m_document->page();
-  page->frameHost().setDefaultPageScaleLimits(minScaleFactor, maxScaleFactor);
+  page->setDefaultPageScaleLimits(minScaleFactor, maxScaleFactor);
 }
 
 bool Internals::magnifyScaleAroundAnchor(float scaleFactor, float x, float y) {
   if (!frame())
     return false;
 
-  return frame()->host()->visualViewport().magnifyScaleAroundAnchor(
+  return frame()->page()->visualViewport().magnifyScaleAroundAnchor(
       scaleFactor, FloatPoint(x, y));
 }
 
@@ -2304,6 +2364,10 @@ TypeConversions* Internals::typeConversions() const {
 
 DictionaryTest* Internals::dictionaryTest() const {
   return DictionaryTest::create();
+}
+
+RecordTest* Internals::recordTest() const {
+  return RecordTest::create();
 }
 
 UnionTypesTest* Internals::unionTypesTest() const {
@@ -2542,7 +2606,7 @@ static const char* cursorTypeToString(Cursor::Type cursorType) {
       return "Custom";
   }
 
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return "UNKNOWN";
 }
 
@@ -2584,10 +2648,12 @@ bool Internals::cursorUpdatePending() const {
 DOMArrayBuffer* Internals::serializeObject(
     PassRefPtr<SerializedScriptValue> value) const {
   String stringValue = value->toWireString();
-  DOMArrayBuffer* buffer =
-      DOMArrayBuffer::createUninitialized(stringValue.length(), sizeof(UChar));
-  stringValue.copyTo(static_cast<UChar*>(buffer->data()), 0,
-                     stringValue.length());
+  DOMArrayBuffer* buffer = DOMArrayBuffer::createUninitializedOrNull(
+      stringValue.length(), sizeof(UChar));
+  if (buffer) {
+    stringValue.copyTo(static_cast<UChar*>(buffer->data()), 0,
+                       stringValue.length());
+  }
   return buffer;
 }
 
@@ -2605,6 +2671,42 @@ void Internals::forceReload(bool bypassCache) {
   frame()->reload(bypassCache ? FrameLoadTypeReloadBypassingCache
                               : FrameLoadTypeReloadMainResource,
                   ClientRedirectPolicy::NotClientRedirect);
+}
+
+Node* Internals::visibleSelectionAnchorNode() {
+  if (!frame())
+    return nullptr;
+  Position position =
+      frame()->selection().computeVisibleSelectionInDOMTreeDeprecated().base();
+  return position.isNull() ? nullptr : position.computeContainerNode();
+}
+
+unsigned Internals::visibleSelectionAnchorOffset() {
+  if (!frame())
+    return 0;
+  Position position =
+      frame()->selection().computeVisibleSelectionInDOMTreeDeprecated().base();
+  return position.isNull() ? 0 : position.computeOffsetInContainerNode();
+}
+
+Node* Internals::visibleSelectionFocusNode() {
+  if (!frame())
+    return nullptr;
+  Position position = frame()
+                          ->selection()
+                          .computeVisibleSelectionInDOMTreeDeprecated()
+                          .extent();
+  return position.isNull() ? nullptr : position.computeContainerNode();
+}
+
+unsigned Internals::visibleSelectionFocusOffset() {
+  if (!frame())
+    return 0;
+  Position position = frame()
+                          ->selection()
+                          .computeVisibleSelectionInDOMTreeDeprecated()
+                          .extent();
+  return position.isNull() ? 0 : position.computeOffsetInContainerNode();
 }
 
 ClientRect* Internals::selectionBounds(ExceptionState& exceptionState) {
@@ -2970,14 +3072,14 @@ void Internals::setVisualViewportOffset(int x, int y) {
   if (!frame())
     return;
 
-  frame()->host()->visualViewport().setLocation(FloatPoint(x, y));
+  frame()->page()->visualViewport().setLocation(FloatPoint(x, y));
 }
 
 int Internals::visualViewportHeight() {
   if (!frame())
     return 0;
 
-  return expandedIntSize(frame()->host()->visualViewport().visibleRect().size())
+  return expandedIntSize(frame()->page()->visualViewport().visibleRect().size())
       .height();
 }
 
@@ -2985,7 +3087,7 @@ int Internals::visualViewportWidth() {
   if (!frame())
     return 0;
 
-  return expandedIntSize(frame()->host()->visualViewport().visibleRect().size())
+  return expandedIntSize(frame()->page()->visualViewport().visibleRect().size())
       .width();
 }
 
@@ -3015,6 +3117,11 @@ bool Internals::isCSSPropertyUseCounted(Document* document,
   return UseCounter::isCounted(*document, propertyName);
 }
 
+bool Internals::isAnimatedCSSPropertyUseCounted(Document* document,
+                                                const String& propertyName) {
+  return UseCounter::isCountedAnimatedCSS(*document, propertyName);
+}
+
 ScriptPromise Internals::observeUseCounter(ScriptState* scriptState,
                                            Document* document,
                                            uint32_t feature) {
@@ -3032,13 +3139,13 @@ ScriptPromise Internals::observeUseCounter(ScriptState* scriptState,
     return promise;
   }
 
-  Frame* frame = document->frame();
-  if (!frame || !frame->host()) {
+  Page* page = document->page();
+  if (!page) {
     resolver->reject();
     return promise;
   }
 
-  frame->host()->useCounter().addObserver(
+  page->useCounter().addObserver(
       new UseCounterObserverImpl(resolver, useCounterFeature));
   return promise;
 }

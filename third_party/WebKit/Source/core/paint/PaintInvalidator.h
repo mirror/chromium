@@ -20,12 +20,13 @@ struct PaintPropertyTreeBuilderContext;
 struct PaintInvalidatorContext {
   PaintInvalidatorContext(
       const PaintPropertyTreeBuilderContext& treeBuilderContext)
-      : treeBuilderContext(treeBuilderContext) {}
+      : treeBuilderContext(treeBuilderContext), parentContext(nullptr) {}
 
   PaintInvalidatorContext(
       const PaintPropertyTreeBuilderContext& treeBuilderContext,
       const PaintInvalidatorContext& parentContext)
       : treeBuilderContext(treeBuilderContext),
+        parentContext(&parentContext),
         forcedSubtreeInvalidationFlags(
             parentContext.forcedSubtreeInvalidationFlags),
         paintInvalidationContainer(parentContext.paintInvalidationContainer),
@@ -35,10 +36,11 @@ struct PaintInvalidatorContext {
 
   // This method is temporary to adapt PaintInvalidatorContext and the legacy
   // PaintInvalidationState for code shared by old code and new code.
-  virtual void mapLocalRectToPaintInvalidationBacking(const LayoutObject&,
-                                                      LayoutRect&) const;
+  virtual void mapLocalRectToVisualRectInBacking(const LayoutObject&,
+                                                 LayoutRect&) const;
 
   const PaintPropertyTreeBuilderContext& treeBuilderContext;
+  const PaintInvalidatorContext* parentContext;
 
   enum ForcedSubtreeInvalidationFlag {
     ForcedSubtreeInvalidationChecking = 1 << 0,
@@ -69,11 +71,11 @@ struct PaintInvalidatorContext {
 
   PaintLayer* paintingLayer = nullptr;
 
-  // Store the old and new visual rects in the paint invalidation backing's
-  // coordinates. The rects do *not* account for composited scrolling.
+  // Store the old visual rect in the paint invalidation backing's coordinates.
+  // It does *not* account for composited scrolling.
   // See LayoutObject::adjustVisualRectForCompositedScrolling().
   LayoutRect oldVisualRect;
-  LayoutRect newVisualRect;
+  // Use LayoutObject::visualRect() to get the new visual rect.
 
   // Store the origin of the object's local coordinates in the paint
   // invalidation backing's coordinates. They are used to detect layoutObject
@@ -104,8 +106,10 @@ class PaintInvalidator {
   computeLocationInBacking(const LayoutObject&, const PaintInvalidatorContext&);
   ALWAYS_INLINE void updatePaintingLayer(const LayoutObject&,
                                          PaintInvalidatorContext&);
-  ALWAYS_INLINE void updateContext(const LayoutObject&,
-                                   PaintInvalidatorContext&);
+  ALWAYS_INLINE void updatePaintInvalidationContainer(const LayoutObject&,
+                                                      PaintInvalidatorContext&);
+  ALWAYS_INLINE void updateVisualRect(const LayoutObject&,
+                                      PaintInvalidatorContext&);
 
   Vector<const LayoutObject*> m_pendingDelayedPaintInvalidations;
   GeometryMapper& m_geometryMapper;

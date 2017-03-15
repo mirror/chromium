@@ -7,7 +7,9 @@
 #import <UIKit/UIKit.h>
 
 @class CWVWebViewConfiguration;
-@protocol CWVWebViewDelegate;
+@protocol CWVUIDelegate;
+@protocol CWVTranslateDelegate;
+@protocol CWVNavigationDelegate;
 
 // A web view component (like WKWebView) which uses iOS Chromium's web view
 // implementation.
@@ -15,14 +17,20 @@
 // In addition to WKWebView features, it allows Translate, Find In Page,
 // Customizable Context Menus, and maybe more.
 //
-// Concrete instances can be created through CRIWV.
+// Concrete instances can be created through CWV.
 @interface CWVWebView : UIView
 
 // The view used to display web content.
 @property(nonatomic, readonly) UIView* view;
 
-// This web view's delegate.
-@property(nonatomic, weak) id<CWVWebViewDelegate> delegate;
+// This web view's navigation delegate.
+@property(nonatomic, weak) id<CWVNavigationDelegate> navigationDelegate;
+
+// This web view's UI delegate
+@property(nonatomic, weak) id<CWVUIDelegate> UIDelegate;
+
+// A delegate for the translation feature.
+@property(nonatomic, weak) id<CWVTranslateDelegate> translationDelegate;
 
 // Whether or not this web view can go backwards or forwards.
 @property(nonatomic, readonly) BOOL canGoBack;
@@ -37,9 +45,12 @@
 // The current page title.
 @property(nonatomic, readonly) NSString* pageTitle;
 
-// The current load progress, as a fraction between 0 and 1.  This value is
-// undefined if the web view is not currently loading.
-@property(nonatomic, readonly) CGFloat loadProgress;
+// Page loading progress from 0.0 to 1.0. KVO compliant.
+//
+// It is 0.0 initially before the first navigation starts. After a navigation
+// completes, it remains at 1.0 until a new navigation starts, at which point it
+// is reset to 0.0.
+@property(nonatomic, readonly) double estimatedProgress;
 
 // |configuration| must not be null
 - (instancetype)initWithFrame:(CGRect)frame

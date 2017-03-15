@@ -27,11 +27,12 @@
 #include "ash/common/wm_shell.h"
 #include "ash/public/cpp/shelf_types.h"
 #include "ash/public/interfaces/cast_config.mojom.h"
+#include "ash/resources/grit/ash_resources.h"
 #include "ash/resources/vector_icons/vector_icons.h"
+#include "ash/shell.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "base/bind.h"
 #include "base/strings/utf_string_conversions.h"
-#include "grit/ash_resources.h"
-#include "grit/ash_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/image/image.h"
@@ -80,16 +81,15 @@ namespace tray {
 // actually pick the cast receiver.
 class CastSelectDefaultView : public TrayItemMore {
  public:
-  CastSelectDefaultView(SystemTrayItem* owner, bool show_more);
+  explicit CastSelectDefaultView(SystemTrayItem* owner);
   ~CastSelectDefaultView() override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(CastSelectDefaultView);
 };
 
-CastSelectDefaultView::CastSelectDefaultView(SystemTrayItem* owner,
-                                             bool show_more)
-    : TrayItemMore(owner, show_more) {
+CastSelectDefaultView::CastSelectDefaultView(SystemTrayItem* owner)
+    : TrayItemMore(owner) {
   ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
 
   // Update the image and label.
@@ -215,7 +215,7 @@ void CastCastView::ButtonPressed(views::Button* sender,
 class CastDuplexView : public views::View {
  public:
   CastDuplexView(SystemTrayItem* owner,
-                 bool show_more,
+                 bool enabled,
                  const std::vector<mojom::SinkAndRoutePtr>& sinks_routes);
   ~CastDuplexView() override;
 
@@ -243,9 +243,10 @@ class CastDuplexView : public views::View {
 
 CastDuplexView::CastDuplexView(
     SystemTrayItem* owner,
-    bool show_more,
+    bool enabled,
     const std::vector<mojom::SinkAndRoutePtr>& sinks_routes) {
-  select_view_ = new CastSelectDefaultView(owner, show_more);
+  select_view_ = new CastSelectDefaultView(owner);
+  select_view_->SetEnabled(enabled);
   cast_view_ = new CastCastView();
   cast_view_->UpdateLabel(sinks_routes);
   SetLayoutManager(new views::FillLayout());
@@ -456,14 +457,14 @@ void CastDetailedView::HandleViewClicked(views::View* view) {
 
 TrayCast::TrayCast(SystemTray* system_tray)
     : SystemTrayItem(system_tray, UMA_CAST) {
-  WmShell::Get()->AddShellObserver(this);
+  Shell::GetInstance()->AddShellObserver(this);
   WmShell::Get()->cast_config()->AddObserver(this);
   WmShell::Get()->cast_config()->RequestDeviceRefresh();
 }
 
 TrayCast::~TrayCast() {
   WmShell::Get()->cast_config()->RemoveObserver(this);
-  WmShell::Get()->RemoveShellObserver(this);
+  Shell::GetInstance()->RemoveShellObserver(this);
 }
 
 void TrayCast::StartCastForTest(const std::string& receiver_id) {

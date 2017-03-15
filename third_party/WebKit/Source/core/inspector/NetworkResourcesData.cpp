@@ -28,11 +28,11 @@
 
 #include "core/inspector/NetworkResourcesData.h"
 
+#include <memory>
 #include "core/dom/DOMImplementation.h"
 #include "platform/SharedBuffer.h"
 #include "platform/loader/fetch/Resource.h"
-#include "platform/network/ResourceResponse.h"
-#include <memory>
+#include "platform/loader/fetch/ResourceResponse.h"
 
 namespace blink {
 
@@ -264,7 +264,7 @@ void NetworkResourcesData::setResourceContent(const String& requestId,
     // was loading, so remove it, if any.
     if (resourceData->hasContent())
       m_contentSize -= resourceData->removeContent();
-    m_requestIdsDeque.append(requestId);
+    m_requestIdsDeque.push_back(requestId);
     resourceData->setContent(content, base64Encoded);
     m_contentSize += dataLength;
   }
@@ -282,7 +282,7 @@ void NetworkResourcesData::maybeAddResourceData(const String& requestId,
   if (resourceData->isContentEvicted())
     return;
   if (ensureFreeSpace(dataLength) && !resourceData->isContentEvicted()) {
-    m_requestIdsDeque.append(requestId);
+    m_requestIdsDeque.push_back(requestId);
     resourceData->appendData(data, dataLength);
     m_contentSize += dataLength;
   }
@@ -315,7 +315,7 @@ NetworkResourcesData::ResourceData const* NetworkResourcesData::data(
 
 XHRReplayData* NetworkResourcesData::xhrReplayData(const String& requestId) {
   if (m_reusedXHRReplayDataRequestIds.contains(requestId))
-    return xhrReplayData(m_reusedXHRReplayDataRequestIds.get(requestId));
+    return xhrReplayData(m_reusedXHRReplayDataRequestIds.at(requestId));
 
   ResourceData* resourceData = resourceDataForRequestId(requestId);
   if (!resourceData)
@@ -406,7 +406,7 @@ NetworkResourcesData::ResourceData*
 NetworkResourcesData::resourceDataForRequestId(const String& requestId) {
   if (requestId.isNull())
     return 0;
-  return m_requestIdToResourceDataMap.get(requestId);
+  return m_requestIdToResourceDataMap.at(requestId);
 }
 
 void NetworkResourcesData::ensureNoDataForRequestId(const String& requestId) {

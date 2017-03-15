@@ -45,7 +45,9 @@ class CORE_EXPORT HTMLTextAreaElement final : public TextControlElement {
 
   String value() const override;
   void setValue(const String&,
-                TextFieldEventBehavior = DispatchNoEvent) override;
+                TextFieldEventBehavior = DispatchNoEvent,
+                TextControlSetValueSelection =
+                    TextControlSetValueSelection::kSetSelectionToEnd) override;
   String defaultValue() const;
   void setDefaultValue(const String&);
   int textLength() const { return value().length(); }
@@ -68,7 +70,6 @@ class CORE_EXPORT HTMLTextAreaElement final : public TextControlElement {
   explicit HTMLTextAreaElement(Document&);
 
   enum WrapMethod { NoWrap, SoftWrap, HardWrap };
-  enum SetValueCommonOption { NotSetSelection, SetSeletion };
 
   void didAddUserAgentShadowRoot(ShadowRoot&) override;
   // FIXME: Author shadows should be allowed
@@ -82,7 +83,7 @@ class CORE_EXPORT HTMLTextAreaElement final : public TextControlElement {
   void setNonDirtyValue(const String&);
   void setValueCommon(const String&,
                       TextFieldEventBehavior,
-                      SetValueCommonOption = NotSetSelection);
+                      TextControlSetValueSelection);
 
   bool isPlaceholderVisible() const override { return m_isPlaceholderVisible; }
   void setPlaceholderVisibility(bool) override;

@@ -105,10 +105,10 @@ ShaderId GetVertexShaderId(GLenum target) {
 // Returns the correct fragment shader id to evaluate the copy operation for
 // the premultiply alpha pixel store settings and target.
 ShaderId GetFragmentShaderId(bool premultiply_alpha,
-                                     bool unpremultiply_alpha,
-                                     GLenum target,
-                                     GLenum source_format,
-                                     GLenum dest_format) {
+                             bool unpremultiply_alpha,
+                             GLenum target,
+                             GLenum source_format,
+                             GLenum dest_format) {
   unsigned alphaIndex = 0;
   unsigned targetIndex = 0;
   unsigned sourceFormatIndex = 0;
@@ -281,7 +281,11 @@ ShaderId GetFragmentShaderId(bool premultiply_alpha,
 const char* kShaderPrecisionPreamble =
     "#ifdef GL_ES\n"
     "precision mediump float;\n"
+    "#ifdef GL_FRAGMENT_PRECISION_HIGH\n"
+    "#define TexCoordPrecision highp\n"
+    "#else\n"
     "#define TexCoordPrecision mediump\n"
+    "#endif\n"
     "#else\n"
     "#define TexCoordPrecision\n"
     "#endif\n";
@@ -718,16 +722,7 @@ void CopyTextureCHROMIUMResourceManager::DoCopyTexture(
     bool premultiply_alpha,
     bool unpremultiply_alpha,
     CopyTextureMethod method) {
-  bool premultiply_alpha_change = premultiply_alpha ^ unpremultiply_alpha;
-  GLenum dest_binding_target =
-      gpu::gles2::GLES2Util::GLFaceTargetToTextureTarget(dest_target);
-
-  // GL_TEXTURE_RECTANGLE_ARB on FBO is supported by OpenGL, not GLES2,
-  // so restrict this to GL_TEXTURE_2D and GL_TEXTURE_CUBE_MAP.
-  if (source_target == GL_TEXTURE_2D &&
-      (dest_binding_target == GL_TEXTURE_2D ||
-       dest_binding_target == GL_TEXTURE_CUBE_MAP) &&
-      !flip_y && !premultiply_alpha_change && method == DIRECT_COPY) {
+  if (method == DIRECT_COPY) {
     DoCopyTexImage2D(decoder, source_target, source_id, source_level,
                      dest_target, dest_id, dest_level, dest_internal_format,
                      width, height, framebuffer_);
@@ -796,16 +791,7 @@ void CopyTextureCHROMIUMResourceManager::DoCopySubTexture(
     bool premultiply_alpha,
     bool unpremultiply_alpha,
     CopyTextureMethod method) {
-  bool premultiply_alpha_change = premultiply_alpha ^ unpremultiply_alpha;
-  GLenum dest_binding_target =
-      gpu::gles2::GLES2Util::GLFaceTargetToTextureTarget(dest_target);
-
-  // GL_TEXTURE_RECTANGLE_ARB on FBO is supported by OpenGL, not GLES2,
-  // so restrict this to GL_TEXTURE_2D and GL_TEXTURE_CUBE_MAP.
-  if (source_target == GL_TEXTURE_2D &&
-      (dest_binding_target == GL_TEXTURE_2D ||
-       dest_binding_target == GL_TEXTURE_CUBE_MAP) &&
-      !flip_y && !premultiply_alpha_change && method == DIRECT_COPY) {
+  if (method == DIRECT_COPY) {
     DoCopyTexSubImage2D(decoder, source_target, source_id, source_level,
                         dest_target, dest_id, dest_level, xoffset, yoffset, x,
                         y, width, height, framebuffer_);

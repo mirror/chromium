@@ -81,12 +81,7 @@ Profiler.CPUProfileType = class extends Profiler.ProfileType {
     super(Profiler.CPUProfileType.TypeId, Common.UIString('Record JavaScript CPU Profile'));
     this._recording = false;
 
-    this._nextAnonymousConsoleProfileNumber = 1;
-    this._anonymousConsoleProfileIdToTitle = {};
-
     Profiler.CPUProfileType.instance = this;
-    SDK.targetManager.addModelListener(
-        SDK.CPUProfilerModel, SDK.CPUProfilerModel.Events.ConsoleProfileStarted, this._consoleProfileStarted, this);
     SDK.targetManager.addModelListener(
         SDK.CPUProfilerModel, SDK.CPUProfilerModel.Events.ConsoleProfileFinished, this._consoleProfileFinished, this);
   }
@@ -136,69 +131,26 @@ Profiler.CPUProfileType = class extends Profiler.ProfileType {
   /**
    * @param {!Common.Event} event
    */
-  _consoleProfileStarted(event) {
-    var data = /** @type {!SDK.CPUProfilerModel.EventData} */ (event.data);
-    var resolvedTitle = data.title;
-    if (!resolvedTitle) {
-      resolvedTitle = Common.UIString('Profile %s', this._nextAnonymousConsoleProfileNumber++);
-      this._anonymousConsoleProfileIdToTitle[data.id] = resolvedTitle;
-    }
-    this._addMessageToConsole(
-        SDK.ConsoleMessage.MessageType.Profile, data.scriptLocation,
-        Common.UIString('Profile \'%s\' started.', resolvedTitle));
-  }
-
-  /**
-   * @param {!Common.Event} event
-   */
   _consoleProfileFinished(event) {
     var data = /** @type {!SDK.CPUProfilerModel.EventData} */ (event.data);
     var cpuProfile = /** @type {!Protocol.Profiler.Profile} */ (data.cpuProfile);
-    var resolvedTitle = data.title;
-    if (typeof resolvedTitle === 'undefined') {
-      resolvedTitle = this._anonymousConsoleProfileIdToTitle[data.id];
-      delete this._anonymousConsoleProfileIdToTitle[data.id];
-    }
-    var profile = new Profiler.CPUProfileHeader(data.scriptLocation.debuggerModel.target(), this, resolvedTitle);
+    var profile = new Profiler.CPUProfileHeader(data.scriptLocation.debuggerModel.target(), this, data.title);
     profile.setProtocolProfile(cpuProfile);
     this.addProfile(profile);
-    this._addMessageToConsole(
-        SDK.ConsoleMessage.MessageType.ProfileEnd, data.scriptLocation,
-        Common.UIString('Profile \'%s\' finished.', resolvedTitle));
-  }
-
-  /**
-   * @param {string} type
-   * @param {!SDK.DebuggerModel.Location} scriptLocation
-   * @param {string} messageText
-   */
-  _addMessageToConsole(type, scriptLocation, messageText) {
-    var script = scriptLocation.script();
-    var target = scriptLocation.debuggerModel.target();
-    var message = new SDK.ConsoleMessage(
-        target, SDK.ConsoleMessage.MessageSource.ConsoleAPI, SDK.ConsoleMessage.MessageLevel.Verbose, messageText, type,
-        undefined, undefined, undefined, undefined, [{
-          functionName: '',
-          scriptId: scriptLocation.scriptId,
-          url: script ? script.contentURL() : '',
-          lineNumber: scriptLocation.lineNumber,
-          columnNumber: scriptLocation.columnNumber || 0
-        }]);
-
-    target.consoleModel.addMessage(message);
   }
 
   startRecordingProfile() {
-    var target = UI.context.flavor(SDK.Target);
-    if (this.profileBeingRecorded() || !target)
+    var cpuProfilerModel = UI.context.flavor(SDK.CPUProfilerModel);
+    if (this.profileBeingRecorded() || !cpuProfilerModel)
       return;
-    var profile = new Profiler.CPUProfileHeader(target, this);
+    var profile = new Profiler.CPUProfileHeader(cpuProfilerModel.target(), this);
     this.setProfileBeingRecorded(profile);
     SDK.targetManager.suspendAllTargets();
     this.addProfile(profile);
     profile.updateStatus(Common.UIString('Recording\u2026'));
     this._recording = true;
-    target.cpuProfilerModel.startRecording();
+    cpuProfilerModel.startRecording();
+    Host.userMetrics.actionTaken(Host.UserMetrics.Action.ProfilesCPUProfileTaken);
   }
 
   stopRecordingProfile() {
@@ -231,7 +183,8 @@ Profiler.CPUProfileType = class extends Profiler.ProfileType {
 
     this.profileBeingRecorded()
         .target()
-        .cpuProfilerModel.stopRecording()
+        .model(SDK.CPUProfilerModel)
+        .stopRecording()
         .then(didStopProfiling.bind(this))
         .then(SDK.targetManager.resumeAllTargets.bind(SDK.targetManager))
         .then(fireEvent.bind(this));

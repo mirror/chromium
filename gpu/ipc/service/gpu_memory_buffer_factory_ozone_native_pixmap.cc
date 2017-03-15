@@ -4,10 +4,10 @@
 
 #include "gpu/ipc/service/gpu_memory_buffer_factory_ozone_native_pixmap.h"
 
-#include "ui/ozone/gl/gl_image_ozone_native_pixmap.h"
+#include "ui/gfx/native_pixmap.h"
+#include "ui/gl/gl_image_native_pixmap.h"
 #include "ui/ozone/public/client_native_pixmap.h"
 #include "ui/ozone/public/client_native_pixmap_factory.h"
-#include "ui/ozone/public/native_pixmap.h"
 #include "ui/ozone/public/ozone_platform.h"
 #include "ui/ozone/public/surface_factory_ozone.h"
 
@@ -39,7 +39,7 @@ GpuMemoryBufferFactoryOzoneNativePixmap::CreateGpuMemoryBuffer(
   }
 
   gfx::GpuMemoryBufferHandle new_handle;
-  new_handle.type = gfx::OZONE_NATIVE_PIXMAP;
+  new_handle.type = gfx::NATIVE_PIXMAP;
   new_handle.id = id;
   new_handle.native_pixmap_handle = pixmap->ExportHandle();
 
@@ -74,7 +74,7 @@ GpuMemoryBufferFactoryOzoneNativePixmap::CreateImageForGpuMemoryBuffer(
     unsigned internalformat,
     int client_id,
     SurfaceHandle surface_handle) {
-  DCHECK_EQ(handle.type, gfx::OZONE_NATIVE_PIXMAP);
+  DCHECK_EQ(handle.type, gfx::NATIVE_PIXMAP);
 
   scoped_refptr<ui::NativePixmap> pixmap;
 
@@ -106,8 +106,8 @@ GpuMemoryBufferFactoryOzoneNativePixmap::CreateImageForGpuMemoryBuffer(
     }
   }
 
-  scoped_refptr<ui::GLImageOzoneNativePixmap> image(
-      new ui::GLImageOzoneNativePixmap(size, internalformat));
+  scoped_refptr<ui::GLImageNativePixmap> image(
+      new ui::GLImageNativePixmap(size, internalformat));
   if (!image->Initialize(pixmap.get(), format)) {
     LOG(ERROR) << "Failed to create GLImage " << size.ToString() << " format "
                << static_cast<int>(format);
@@ -131,8 +131,8 @@ GpuMemoryBufferFactoryOzoneNativePixmap::CreateAnonymousImage(
                << static_cast<int>(format);
     return nullptr;
   }
-  scoped_refptr<ui::GLImageOzoneNativePixmap> image(
-      new ui::GLImageOzoneNativePixmap(size, internalformat));
+  scoped_refptr<ui::GLImageNativePixmap> image(
+      new ui::GLImageNativePixmap(size, internalformat));
   if (!image->Initialize(pixmap.get(), format)) {
     LOG(ERROR) << "Failed to create GLImage " << size.ToString() << " format "
                << static_cast<int>(format);

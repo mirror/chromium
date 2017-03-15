@@ -19,7 +19,7 @@
 #include "url/gurl.h"
 
 using base::ListValue;
-using base::FundamentalValue;
+using base::Value;
 
 namespace password_manager {
 
@@ -113,6 +113,11 @@ void LogShouldBlockPasswordForSameOriginButDifferentScheme(bool should_block) {
 
 void LogCountHttpMigratedPasswords(int count) {
   UMA_HISTOGRAM_COUNTS_100("PasswordManager.HttpPasswordMigrationCount", count);
+}
+
+void LogHttpPasswordMigrationMode(HttpPasswordMigrationMode mode) {
+  UMA_HISTOGRAM_ENUMERATION("PasswordManager.HttpPasswordMigrationMode", mode,
+                            HTTP_PASSWORD_MIGRATION_MODE_COUNT);
 }
 
 void LogAccountChooserUsability(AccountChooserUsabilityMetric usability,

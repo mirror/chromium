@@ -14,6 +14,7 @@
 
 #include "bindings/core/v8/Dictionary.h"
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/NativeValueTraits.h"
 #include "bindings/core/v8/V8Binding.h"
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
@@ -26,15 +27,15 @@ class CORE_EXPORT UnrestrictedDoubleOrString final {
   UnrestrictedDoubleOrString();
   bool isNull() const { return m_type == SpecificTypeNone; }
 
-  bool isUnrestrictedDouble() const { return m_type == SpecificTypeUnrestrictedDouble; }
-  double getAsUnrestrictedDouble() const;
-  void setUnrestrictedDouble(double);
-  static UnrestrictedDoubleOrString fromUnrestrictedDouble(double);
-
   bool isString() const { return m_type == SpecificTypeString; }
   String getAsString() const;
   void setString(String);
   static UnrestrictedDoubleOrString fromString(String);
+
+  bool isUnrestrictedDouble() const { return m_type == SpecificTypeUnrestrictedDouble; }
+  double getAsUnrestrictedDouble() const;
+  void setUnrestrictedDouble(double);
+  static UnrestrictedDoubleOrString fromUnrestrictedDouble(double);
 
   UnrestrictedDoubleOrString(const UnrestrictedDoubleOrString&);
   ~UnrestrictedDoubleOrString();
@@ -44,13 +45,13 @@ class CORE_EXPORT UnrestrictedDoubleOrString final {
  private:
   enum SpecificTypes {
     SpecificTypeNone,
-    SpecificTypeUnrestrictedDouble,
     SpecificTypeString,
+    SpecificTypeUnrestrictedDouble,
   };
   SpecificTypes m_type;
 
-  double m_unrestrictedDouble;
   String m_string;
+  double m_unrestrictedDouble;
 
   friend CORE_EXPORT v8::Local<v8::Value> ToV8(const UnrestrictedDoubleOrString&, v8::Local<v8::Object>, v8::Isolate*);
 };
@@ -73,8 +74,13 @@ inline void v8SetReturnValue(const CallbackInfo& callbackInfo, UnrestrictedDoubl
 }
 
 template <>
-struct NativeValueTraits<UnrestrictedDoubleOrString> {
+struct NativeValueTraits<UnrestrictedDoubleOrString> : public NativeValueTraitsBase<UnrestrictedDoubleOrString> {
   CORE_EXPORT static UnrestrictedDoubleOrString nativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+};
+
+template <>
+struct V8TypeOf<UnrestrictedDoubleOrString> {
+  typedef V8UnrestrictedDoubleOrString Type;
 };
 
 }  // namespace blink

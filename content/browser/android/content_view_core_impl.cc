@@ -162,17 +162,6 @@ int ToGestureEventType(WebInputEvent::Type type) {
   }
 }
 
-void RecordToolTypeForActionDown(MotionEventAndroid& event) {
-  MotionEventAndroid::Action action = event.GetAction();
-  if (action == MotionEventAndroid::ACTION_DOWN ||
-      action == MotionEventAndroid::ACTION_POINTER_DOWN ||
-      action == MotionEventAndroid::ACTION_BUTTON_PRESS) {
-    UMA_HISTOGRAM_ENUMERATION("Event.AndroidActionDown.ToolType",
-                              event.GetToolType(0),
-                              MotionEventAndroid::TOOL_TYPE_LAST + 1);
-  }
-}
-
 }  // namespace
 
 // Enables a callback when the underlying WebContents is destroyed, to enable
@@ -418,8 +407,6 @@ void ContentViewCoreImpl::UpdateFrameInfo(
     const gfx::SizeF& viewport_size,
     const float top_controls_height,
     const float top_controls_shown_ratio,
-    const float bottom_controls_height,
-    const float bottom_controls_shown_ratio,
     bool is_mobile_optimized_hint,
     const gfx::SelectionBound& selection_start) {
   JNIEnv* env = AttachCurrentThread();
@@ -449,18 +436,9 @@ void ContentViewCoreImpl::UpdateFrameInfo(
       page_scale_factor_limits.x(), page_scale_factor_limits.y(),
       content_size.width(), content_size.height(), viewport_size.width(),
       viewport_size.height(), top_controls_height, top_controls_shown_ratio,
-      bottom_controls_height, bottom_controls_shown_ratio,
       is_mobile_optimized_hint, has_insertion_marker,
       is_insertion_marker_visible, insertion_marker_horizontal,
       insertion_marker_top, insertion_marker_bottom);
-}
-
-void ContentViewCoreImpl::OnBackgroundColorChanged(SkColor color) {
-  JNIEnv* env = AttachCurrentThread();
-  ScopedJavaLocalRef<jobject> obj = java_ref_.get(env);
-  if (obj.is_null())
-    return;
-  Java_ContentViewCore_onBackgroundColorChanged(env, obj, color);
 }
 
 void ContentViewCoreImpl::ShowSelectPopupMenu(
@@ -639,29 +617,22 @@ void ContentViewCoreImpl::OnSelectionEvent(ui::SelectionEventType event,
       selection_rect.bottom());
 }
 
-void ContentViewCoreImpl::ShowPastePopup(int x_dip, int y_dip) {
+bool ContentViewCoreImpl::ShowPastePopup(const ContextMenuParams& params) {
+  // Display paste pop-up only when selection is empty and editable.
+  if (!(params.is_editable && params.selection_text.empty()))
+    return false;
+
   RenderWidgetHostViewAndroid* view = GetRenderWidgetHostViewAndroid();
   if (!view)
-    return;
+    return false;
 
   JNIEnv* env = AttachCurrentThread();
   ScopedJavaLocalRef<jobject> obj = java_ref_.get(env);
   if (obj.is_null())
-    return;
-  Java_ContentViewCore_showPastePopup(env, obj, x_dip,
-                                      y_dip);
-}
-
-void ContentViewCoreImpl::StartContentIntent(const GURL& content_url,
-                                             bool is_main_frame) {
-  JNIEnv* env = AttachCurrentThread();
-  ScopedJavaLocalRef<jobject> j_obj = java_ref_.get(env);
-  if (j_obj.is_null())
-    return;
-  ScopedJavaLocalRef<jstring> jcontent_url =
-      ConvertUTF8ToJavaString(env, content_url.spec());
-  Java_ContentViewCore_startContentIntent(env, j_obj, jcontent_url,
-                                          is_main_frame);
+    return false;
+  Java_ContentViewCore_showPastePopup(env, obj, params.selection_start.x(),
+                                      params.selection_start.y());
+  return true;
 }
 
 void ContentViewCoreImpl::ShowDisambiguationPopup(
@@ -894,129 +865,6 @@ void ContentViewCoreImpl::SendOrientationChangeEvent(
   }
 }
 
-jboolean ContentViewCoreImpl::OnTouchEvent(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    const JavaParamRef<jobject>& motion_event,
-    jlong time_ms,
-    jint android_action,
-    jint pointer_count,
-    jint history_size,
-    jint action_index,
-    jfloat pos_x_0,
-    jfloat pos_y_0,
-    jfloat pos_x_1,
-    jfloat pos_y_1,
-    jint pointer_id_0,
-    jint pointer_id_1,
-    jfloat touch_major_0,
-    jfloat touch_major_1,
-    jfloat touch_minor_0,
-    jfloat touch_minor_1,
-    jfloat orientation_0,
-    jfloat orientation_1,
-    jfloat tilt_0,
-    jfloat tilt_1,
-    jfloat raw_pos_x,
-    jfloat raw_pos_y,
-    jint android_tool_type_0,
-    jint android_tool_type_1,
-    jint android_button_state,
-    jint android_meta_state,
-    jboolean is_touch_handle_event) {
-  RenderWidgetHostViewAndroid* rwhv = GetRenderWidgetHostViewAndroid();
-  // Avoid synthesizing a touch event if it cannot be forwarded.
-  if (!rwhv)
-    return false;
-
-  MotionEventAndroid::Pointer pointer0(pointer_id_0,
-                                       pos_x_0,
-                                       pos_y_0,
-                                       touch_major_0,
-                                       touch_minor_0,
-                                       orientation_0,
-                                       tilt_0,
-                                       android_tool_type_0);
-  MotionEventAndroid::Pointer pointer1(pointer_id_1,
-                                       pos_x_1,
-                                       pos_y_1,
-                                       touch_major_1,
-                                       touch_minor_1,
-                                       orientation_1,
-                                       tilt_1,
-                                       android_tool_type_1);
-  MotionEventAndroid event(1.f / dpi_scale(),
-                           env,
-                           motion_event,
-                           time_ms,
-                           android_action,
-                           pointer_count,
-                           history_size,
-                           action_index,
-                           android_button_state,
-                           android_meta_state,
-                           raw_pos_x - pos_x_0,
-                           raw_pos_y - pos_y_0,
-                           &pointer0,
-                           &pointer1);
-
-  RecordToolTypeForActionDown(event);
-
-  return is_touch_handle_event ? rwhv->OnTouchHandleEvent(event)
-                               : rwhv->OnTouchEvent(event);
-}
-
-jboolean ContentViewCoreImpl::SendMouseEvent(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    jlong time_ms,
-    jint android_action,
-    jfloat x,
-    jfloat y,
-    jint pointer_id,
-    jfloat pressure,
-    jfloat orientation,
-    jfloat tilt,
-    jint android_changed_button,
-    jint android_button_state,
-    jint android_meta_state,
-    jint android_tool_type) {
-
-  RenderWidgetHostViewAndroid* rwhv = GetRenderWidgetHostViewAndroid();
-  if (!rwhv)
-    return false;
-
-  // Construct a motion_event object minimally, only to convert the raw
-  // parameters to ui::MotionEvent values. Since we used only the cached values
-  // at index=0, it is okay to even pass a null event to the constructor.
-  MotionEventAndroid::Pointer pointer0(
-      pointer_id, x, y, 0.0f /* touch_major */, 0.0f /* touch_minor */,
-      orientation, tilt, android_tool_type);
-
-  MotionEventAndroid motion_event(1.f / dpi_scale(),
-      env,
-      nullptr /* event */,
-      time_ms,
-      android_action,
-      1 /* pointer_count */,
-      0 /* history_size */,
-      0 /* action_index */,
-      android_button_state,
-      android_meta_state,
-      0 /* raw_offset_x_pixels */,
-      0 /* raw_offset_y_pixels */,
-      &pointer0,
-      nullptr);
-
-  RecordToolTypeForActionDown(motion_event);
-
-  // Note: This relies on identical button enum values in MotionEvent and
-  // MotionEventAndroid.
-  rwhv->SendMouseEvent(motion_event, android_changed_button);
-
-  return true;
-}
-
 jboolean ContentViewCoreImpl::SendMouseWheelEvent(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
@@ -1240,6 +1088,15 @@ void ContentViewCoreImpl::SetMultiTouchZoomSupportEnabled(
     rwhv->SetMultiTouchZoomSupportEnabled(enabled);
 }
 
+void ContentViewCoreImpl::OnTouchDown(
+    const base::android::ScopedJavaLocalRef<jobject>& event) {
+  JNIEnv* env = AttachCurrentThread();
+  ScopedJavaLocalRef<jobject> obj = java_ref_.get(env);
+  if (obj.is_null())
+    return;
+  Java_ContentViewCore_onTouchDown(env, obj, event);
+}
+
 void ContentViewCoreImpl::SetAllowJavascriptInterfacesInspection(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,
@@ -1381,8 +1238,9 @@ void ContentViewCoreImpl::SetAccessibilityEnabledInternal(bool enabled) {
     // explicitly disallowed by a command-line flag, then enable it for
     // this WebContents if that succeeded.
     accessibility_state->OnScreenReaderDetected();
-    if (accessibility_state->IsAccessibleBrowser() && web_contents_)
-      web_contents_->AddAccessibilityMode(ACCESSIBILITY_MODE_COMPLETE);
+    if (accessibility_state->IsAccessibleBrowser() && web_contents_) {
+      web_contents_->AddAccessibilityMode(kAccessibilityModeComplete);
+    }
   } else {
     accessibility_state->ResetAccessibilityMode();
     if (web_contents_) {
@@ -1526,6 +1384,7 @@ jlong Init(JNIEnv* env,
       "A ContentViewCoreImpl should be created with a valid WebContents.";
   ui::ViewAndroid* view_android = web_contents->GetView()->GetNativeView();
   view_android->SetDelegate(jview_android_delegate);
+  view_android->SetLayout(ui::ViewAndroid::LayoutParams::MatchParent());
 
   ui::WindowAndroid* window_android =
         reinterpret_cast<ui::WindowAndroid*>(jwindow_android);

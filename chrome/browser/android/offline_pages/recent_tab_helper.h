@@ -40,6 +40,11 @@ class RecentTabHelper
   void DocumentOnLoadCompletedInMainFrame() override;
   void WebContentsDestroyed() override;
   void WasHidden() override;
+  void WasShown() override;
+
+  // Notifies that the tab of the associated WebContents will (most probably) be
+  // closed. This call is expected to always happen before the one to WasHidden.
+  void WillCloseTab();
 
   // SnapshotController::Client
   void StartSnapshot() override;
@@ -51,9 +56,9 @@ class RecentTabHelper
     virtual ~Delegate() {}
     virtual std::unique_ptr<OfflinePageArchiver> CreatePageArchiver(
         content::WebContents* web_contents) = 0;
-    virtual scoped_refptr<base::SingleThreadTaskRunner> GetTaskRunner() = 0;
     // There is no expectations that tab_id is always present.
     virtual bool GetTabId(content::WebContents* web_contents, int* tab_id) = 0;
+    virtual bool IsLowEndDevice() = 0;
   };
   void SetDelegate(std::unique_ptr<RecentTabHelper::Delegate> delegate);
 
@@ -132,10 +137,6 @@ class RecentTabHelper
   // If empty, the tab does not have AndroidId and can not capture pages.
   std::string tab_id_;
 
-  // The URL of the page that is currently being snapshotted. Used to check,
-  // during async operations, that WebContents still contains the same page.
-  GURL snapshot_url_;
-
   // Monitors page loads and starts snapshots when a download request exist. It
   // is also used as an initialization flag for EnsureInitialized() to be run
   // only once.
@@ -147,10 +148,9 @@ class RecentTabHelper
   // current page being loaded.
   bool last_n_listen_to_tab_hidden_ = false;
 
-  // Track the page quality status of the last saved snapshot for the current
-  // page. It is generally reset upon new navigations.
-  SnapshotController::PageQuality last_n_latest_saved_quality_ =
-      SnapshotController::PageQuality::POOR;
+  // Set to true when the tab containing the associated WebContents is in the
+  // process of being closed.
+  bool tab_is_closing_ = false;
 
   base::WeakPtrFactory<RecentTabHelper> weak_ptr_factory_;
 

@@ -6,6 +6,7 @@
 #include <utility>
 
 #include "base/run_loop.h"
+#include "content/public/common/presentation_connection_message.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/renderer/presentation/presentation_connection_proxy.h"
 #include "content/renderer/presentation/presentation_dispatcher.h"
@@ -34,8 +35,6 @@ using blink::WebVector;
 using blink::mojom::PresentationConnection;
 using blink::mojom::PresentationService;
 using blink::mojom::PresentationServiceClientPtr;
-using blink::mojom::ConnectionMessage;
-using blink::mojom::ConnectionMessagePtr;
 
 // TODO(crbug.com/576808): Add test cases for the following:
 // - State changes
@@ -75,21 +74,6 @@ class MockPresentationService : public PresentationService {
                void(const std::vector<GURL>& presentation_urls,
                     const base::Optional<std::string>& presentation_id,
                     const JoinSessionCallback& callback));
-
-  // *Internal method is to work around lack of support for move-only types in
-  // GMock.
-  void SendConnectionMessage(
-      const PresentationSessionInfo& session_info,
-      ConnectionMessagePtr message_request,
-      const SendConnectionMessageCallback& callback) override {
-    SendConnectionMessageInternal(session_info, message_request.get(),
-                                  callback);
-  }
-  MOCK_METHOD3(SendConnectionMessageInternal,
-               void(const PresentationSessionInfo& session_info,
-                    ConnectionMessage* message_request,
-                    const SendConnectionMessageCallback& callback));
-
   MOCK_METHOD2(CloseConnection,
                void(const GURL& presentation_url,
                     const std::string& presentation_id));
@@ -117,13 +101,15 @@ class TestPresentationConnectionProxy : public PresentationConnectionProxy {
   TestPresentationConnectionProxy(blink::WebPresentationConnection* connection)
       : PresentationConnectionProxy(connection) {}
 
-  void SendConnectionMessage(blink::mojom::ConnectionMessagePtr session_message,
-                             const OnMessageCallback& callback) const override {
-    SendConnectionMessageInternal(session_message.get(), callback);
+  // PresentationConnectionMessage is move-only.
+  void SendConnectionMessage(PresentationConnectionMessage message,
+                             const OnMessageCallback& cb) const {
+    SendConnectionMessageInternal(message, cb);
   }
   MOCK_CONST_METHOD2(SendConnectionMessageInternal,
-                     void(blink::mojom::ConnectionMessage*,
+                     void(const PresentationConnectionMessage&,
                           const OnMessageCallback&));
+  MOCK_CONST_METHOD0(close, void());
 };
 
 class TestPresentationReceiver : public blink::WebPresentationReceiver {
@@ -132,6 +118,10 @@ class TestPresentationReceiver : public blink::WebPresentationReceiver {
       const blink::WebPresentationSessionInfo&) override {
     return &connection_;
   }
+
+  MOCK_METHOD1(didChangeSessionState,
+               void(blink::WebPresentationConnectionState));
+  MOCK_METHOD0(terminateConnection, void());
 
   TestPresentationConnection connection_;
 };
@@ -422,31 +412,35 @@ TEST_F(PresentationDispatcherTest, TestSendString) {
   TestPresentationConnection connection;
   TestPresentationConnectionProxy connection_proxy(&connection);
 
+  PresentationConnectionMessage expected_message(message.utf8());
+
   base::RunLoop run_loop;
   EXPECT_CALL(connection_proxy, SendConnectionMessageInternal(_, _))
-      .WillOnce(Invoke([this, &message](ConnectionMessage* session_message,
-                                        const OnMessageCallback& callback) {
-        EXPECT_EQ(blink::mojom::PresentationMessageType::TEXT,
-                  session_message->type);
-        EXPECT_EQ(message.utf8(), session_message->message.value());
+      .WillOnce(Invoke([&expected_message](
+                           const PresentationConnectionMessage& message_request,
+                           const OnMessageCallback& callback) {
+        EXPECT_EQ(message_request, expected_message);
+        callback.Run(true);
       }));
+
   dispatcher_.sendString(url1_, presentation_id_, message, &connection_proxy);
   run_loop.RunUntilIdle();
 }
 
 TEST_F(PresentationDispatcherTest, TestSendArrayBuffer) {
+  std::vector<uint8_t> data(array_buffer_data(),
+                            array_buffer_data() + array_buffer_.byteLength());
   TestPresentationConnection connection;
   TestPresentationConnectionProxy connection_proxy(&connection);
+  PresentationConnectionMessage expected_message(data);
 
   base::RunLoop run_loop;
   EXPECT_CALL(connection_proxy, SendConnectionMessageInternal(_, _))
-      .WillOnce(Invoke([this](ConnectionMessage* message_request,
-                              const OnMessageCallback& callback) {
-        std::vector<uint8_t> data(
-            array_buffer_data(),
-            array_buffer_data() + array_buffer_.byteLength());
-        EXPECT_TRUE(message_request->data.has_value());
-        EXPECT_EQ(data, message_request->data.value());
+      .WillOnce(Invoke([&expected_message](
+                           const PresentationConnectionMessage& message_request,
+                           const OnMessageCallback& callback) {
+        EXPECT_EQ(message_request, expected_message);
+        callback.Run(true);
       }));
   dispatcher_.sendArrayBuffer(url1_, presentation_id_, array_buffer_data(),
                               array_buffer_.byteLength(), &connection_proxy);
@@ -454,18 +448,18 @@ TEST_F(PresentationDispatcherTest, TestSendArrayBuffer) {
 }
 
 TEST_F(PresentationDispatcherTest, TestSendBlobData) {
+  std::vector<uint8_t> data(array_buffer_data(),
+                            array_buffer_data() + array_buffer_.byteLength());
   TestPresentationConnection connection;
   TestPresentationConnectionProxy connection_proxy(&connection);
+  PresentationConnectionMessage expected_message(data);
 
   base::RunLoop run_loop;
   EXPECT_CALL(connection_proxy, SendConnectionMessageInternal(_, _))
-      .WillOnce(Invoke([this](ConnectionMessage* message_request,
-                              const OnMessageCallback& callback) {
-        std::vector<uint8_t> data(
-            array_buffer_data(),
-            array_buffer_data() + array_buffer_.byteLength());
-        EXPECT_TRUE(message_request->data.has_value());
-        EXPECT_EQ(data, message_request->data.value());
+      .WillOnce(Invoke([&expected_message](
+                           const PresentationConnectionMessage& message_request,
+                           const OnMessageCallback& callback) {
+        EXPECT_EQ(message_request, expected_message);
         callback.Run(true);
       }));
   dispatcher_.sendBlobData(url1_, presentation_id_, array_buffer_data(),
@@ -506,9 +500,12 @@ TEST_F(PresentationDispatcherTest, TestOnReceiverConnectionAvailable) {
 
 TEST_F(PresentationDispatcherTest, TestCloseSession) {
   base::RunLoop run_loop;
+  TestPresentationConnection connection;
+  TestPresentationConnectionProxy test_proxy(&connection);
+  EXPECT_CALL(test_proxy, close());
   EXPECT_CALL(presentation_service_,
               CloseConnection(gurl1_, presentation_id_.utf8()));
-  dispatcher_.closeSession(url1_, presentation_id_);
+  dispatcher_.closeSession(url1_, presentation_id_, &test_proxy);
   run_loop.RunUntilIdle();
 }
 
@@ -516,7 +513,7 @@ TEST_F(PresentationDispatcherTest, TestTerminateSession) {
   base::RunLoop run_loop;
   EXPECT_CALL(presentation_service_,
               Terminate(gurl1_, presentation_id_.utf8()));
-  dispatcher_.terminateSession(url1_, presentation_id_);
+  dispatcher_.terminateConnection(url1_, presentation_id_);
   run_loop.RunUntilIdle();
 }
 
@@ -716,7 +713,7 @@ TEST_F(PresentationDispatcherTest,
 
   // Set up |availability_set_| and |listening_status_|
   base::RunLoop run_loop;
-  for (auto& mock_observer : mock_observers_) {
+  for (auto* mock_observer : mock_observers_) {
     client()->getAvailability(
         mock_observer->urls(),
         base::MakeUnique<WebPresentationAvailabilityCallbacks>());

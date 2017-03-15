@@ -8,7 +8,6 @@ import android.content.Intent;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.library_loader.LibraryProcessType;
-import org.chromium.chrome.browser.ChromeApplication;
 import org.chromium.chrome.browser.ShortcutHelper;
 import org.chromium.chrome.browser.externalnav.ExternalNavigationParams;
 import org.chromium.chrome.browser.metrics.WebApkUma;
@@ -30,6 +29,12 @@ import org.chromium.webapk.lib.client.WebApkServiceConnectionManager;
 public class WebApkActivity extends WebappActivity {
     /** Manages whether to check update for the WebAPK, and starts update check if needed. */
     private WebApkUpdateManager mUpdateManager;
+
+    /** Indicates whether launching renderer in WebAPK process is enabled. */
+    private boolean mCanLaunchRendererInWebApkProcess;
+
+    private final ChildProcessCreationParams mDefaultParams =
+            ChildProcessCreationParams.getDefault();
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -55,33 +60,6 @@ public class WebApkActivity extends WebappActivity {
     @Override
     protected WebappInfo createWebappInfo(Intent intent) {
         return (intent == null) ? WebApkInfo.createEmpty() : WebApkInfo.create(intent);
-    }
-
-    @Override
-    protected void onStorageIsNull(final int backgroundColor) {
-        // Register the WebAPK. It is possible that a WebAPK's meta data was deleted when user
-        // cleared Chrome's data. When it is launched again, we know that the WebAPK is still
-        // installed, so re-register it.
-        WebappRegistry.getInstance().register(
-                mWebappInfo.id(), new WebappRegistry.FetchWebappDataStorageCallback() {
-                    @Override
-                    public void onWebappDataStorageRetrieved(WebappDataStorage storage) {
-                        updateStorage(storage);
-                        // Initialize the time of the last is-update-needed check with the
-                        // registration time. This prevents checking for updates on the first run.
-                        storage.updateTimeOfLastCheckForUpdatedWebManifest();
-
-                        // The downloading of the splash screen image happens before a WebAPK's
-                        // package name is available. If we want to use the image in the first
-                        // launch, we need to cache the image, register the WebAPK and store the
-                        // image in the SharedPreference when the WebAPK is installed
-                        // (before the first launch), and delete the cached image if it's not
-                        // installed. Therefore, lots of complexity will be introduced. To simplify
-                        // the logic, WebAPKs are registered during the first launch, and don't
-                        // retrieve splash screen image but use app icon for initialization.
-                        initializeSplashScreenWidgets(backgroundColor, null);
-                    }
-                });
     }
 
     @Override
@@ -124,6 +102,7 @@ public class WebApkActivity extends WebappActivity {
         super.finishNativeInitialization();
         if (!isInitialized()) return;
         getActivityTab().setWebappManifestScope(mWebappInfo.scopeUri().toString());
+        mCanLaunchRendererInWebApkProcess = ChromeWebApkHost.canLaunchRendererInWebApkProcess();
     }
 
     @Override
@@ -149,28 +128,43 @@ public class WebApkActivity extends WebappActivity {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        // WebAPK hosts Chrome's renderer processes by declaring the Chrome's renderer service in
-        // its AndroidManifest.xml. We set {@link ChildProcessCreationParams} for WebAPK's renderer
-        // process so the {@link ChildProcessLauncher} knows which application's renderer
-        // service to connect.
-        initializeChildProcessCreationParams(true);
+    public void onResumeWithNative() {
+        super.onResumeWithNative();
+
+        // When launching Chrome renderer in WebAPK process is enabled, WebAPK hosts Chrome's
+        // renderer processes by declaring the Chrome's renderer service in its AndroidManifest.xml
+        // and sets {@link ChildProcessCreationParams} for WebAPK's renderer process so the
+        // {@link ChildProcessLauncher} knows which application's renderer service to connect to.
+        initializeChildProcessCreationParams(mCanLaunchRendererInWebApkProcess);
     }
 
     @Override
-    protected void initializeChildProcessCreationParams() {
-        // TODO(hanxi): crbug.com/611842. Investigates whether this function works for multiple
-        // windows or with --site-per-process enabled.
-        initializeChildProcessCreationParams(true);
+    protected void onDeferredStartupWithStorage(WebappDataStorage storage) {
+        super.onDeferredStartupWithStorage(storage);
+
+        // Initialize the time of the last is-update-needed check with the registration time. This
+        // prevents checking for updates on the first run.
+        storage.updateTimeOfLastCheckForUpdatedWebManifest();
+
+        mUpdateManager = new WebApkUpdateManager(WebApkActivity.this, storage);
+        mUpdateManager.updateIfNeeded(getActivityTab(),
+                (WebApkInfo) mWebappInfo);
     }
 
     @Override
-    public void onDeferredStartup() {
-        super.onDeferredStartup();
+    protected void onDeferredStartupWithNullStorage() {
+        super.onDeferredStartupWithNullStorage();
 
-        mUpdateManager = new WebApkUpdateManager(this);
-        mUpdateManager.updateIfNeeded(getActivityTab(), (WebApkInfo) mWebappInfo);
+        // Register the WebAPK. The WebAPK is not registered when it is created so it has to be
+        // registered now. The WebAPK may also become unregistered after a user clears Chrome's
+        // data.
+        WebappRegistry.getInstance().register(
+                mWebappInfo.id(), new WebappRegistry.FetchWebappDataStorageCallback() {
+                    @Override
+                    public void onWebappDataStorageRetrieved(WebappDataStorage storage) {
+                        onDeferredStartupWithStorage(storage);
+                    }
+                });
     }
 
     @Override
@@ -187,14 +181,13 @@ public class WebApkActivity extends WebappActivity {
      */
     private void initializeChildProcessCreationParams(boolean isForWebApk) {
         // TODO(hanxi): crbug.com/664530. WebAPKs shouldn't use a global ChildProcessCreationParams.
-        ChromeApplication chrome = (ChromeApplication) ContextUtils.getApplicationContext();
-        ChildProcessCreationParams params = chrome.getChildProcessCreationParams();
+        ChildProcessCreationParams params = mDefaultParams;
         if (isForWebApk) {
             boolean isExternalService = false;
             params = new ChildProcessCreationParams(getWebappInfo().webApkPackageName(),
                     isExternalService, LibraryProcessType.PROCESS_CHILD);
         }
-        ChildProcessCreationParams.set(params);
+        ChildProcessCreationParams.registerDefault(params);
     }
 
     @Override

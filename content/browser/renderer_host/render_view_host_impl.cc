@@ -38,6 +38,7 @@
 #include "content/browser/gpu/gpu_process_host.h"
 #include "content/browser/host_zoom_map_impl.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
+#include "content/browser/renderer_host/input/timeout_monitor.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
 #include "content/browser/renderer_host/render_view_host_delegate.h"
 #include "content/browser/renderer_host/render_view_host_delegate_view.h"
@@ -229,6 +230,9 @@ RenderViewHostImpl::RenderViewHostImpl(
                    base::Unretained(ResourceDispatcherHostImpl::Get()),
                    GetProcess()->GetID(), GetRoutingID()));
   }
+
+  close_timeout_.reset(new TimeoutMonitor(base::Bind(
+      &RenderViewHostImpl::ClosePageTimeout, weak_factory_.GetWeakPtr())));
 }
 
 RenderViewHostImpl::~RenderViewHostImpl() {
@@ -492,15 +496,11 @@ WebPreferences RenderViewHostImpl::ComputeWebkitPrefs() {
       command_line.HasSwitch(switches::kMainFrameResizesAreOrientationChanges);
 
   prefs.color_correct_rendering_enabled =
-      command_line.HasSwitch(cc::switches::kEnableColorCorrectRendering) ||
-      command_line.HasSwitch(cc::switches::kEnableTrueColorRendering);
+      command_line.HasSwitch(cc::switches::kEnableColorCorrectRendering);
 
   prefs.color_correct_rendering_default_mode_enabled =
       command_line.HasSwitch(
           switches::kEnableColorCorrectRenderingDefaultMode);
-
-  prefs.true_color_rendering_enabled =
-      command_line.HasSwitch(cc::switches::kEnableTrueColorRendering);
 
   prefs.spatial_navigation_enabled = command_line.HasSwitch(
       switches::kEnableSpatialNavigation);
@@ -531,6 +531,10 @@ WebPreferences RenderViewHostImpl::ComputeWebkitPrefs() {
 
   if (delegate_ && delegate_->HideDownloadUI())
     prefs.hide_download_ui = true;
+
+  // `media_controls_enabled` is `true` by default.
+  if (delegate_ && delegate_->HasPersistentVideo())
+    prefs.media_controls_enabled = false;
 
   prefs.background_video_track_optimization_enabled =
       base::FeatureList::IsEnabled(media::kBackgroundVideoTrackOptimization);
@@ -571,10 +575,6 @@ WebPreferences RenderViewHostImpl::ComputeWebkitPrefs() {
 
 void RenderViewHostImpl::ClosePage() {
   is_waiting_for_close_ack_ = true;
-  GetWidget()->StartHangMonitorTimeout(
-      TimeDelta::FromMilliseconds(kUnloadTimeoutMS),
-      blink::WebInputEvent::Undefined,
-      RendererUnresponsiveType::RENDERER_UNRESPONSIVE_CLOSE_PAGE);
 
   bool is_javascript_dialog_showing = delegate_->IsJavaScriptDialogShowing();
 
@@ -582,10 +582,7 @@ void RenderViewHostImpl::ClosePage() {
   // close event because it is known unresponsive, waiting for the reply from
   // the dialog.
   if (IsRenderViewLive() && !is_javascript_dialog_showing) {
-    // Since we are sending an IPC message to the renderer, increase the event
-    // count to prevent the hang monitor timeout from being stopped by input
-    // event acknowledgments.
-    GetWidget()->increment_in_flight_event_count();
+    close_timeout_->Start(TimeDelta::FromMilliseconds(kUnloadTimeoutMS));
 
     // TODO(creis): Should this be moved to Shutdown?  It may not be called for
     // RenderViewHosts that have been swapped out.
@@ -603,7 +600,7 @@ void RenderViewHostImpl::ClosePage() {
 }
 
 void RenderViewHostImpl::ClosePageIgnoringUnloadEvents() {
-  GetWidget()->StopHangMonitorTimeout();
+  close_timeout_->Stop();
   is_waiting_for_close_ack_ = false;
 
   sudden_termination_allowed_ = true;
@@ -849,7 +846,6 @@ void RenderViewHostImpl::OnTakeFocus(bool reverse) {
 }
 
 void RenderViewHostImpl::OnClosePageACK() {
-  GetWidget()->decrement_in_flight_event_count();
   ClosePageIgnoringUnloadEvents();
 }
 
@@ -953,6 +949,13 @@ void RenderViewHostImpl::PostRenderViewReady() {
 
 void RenderViewHostImpl::RenderViewReady() {
   delegate_->RenderViewReady(this);
+}
+
+void RenderViewHostImpl::ClosePageTimeout() {
+  if (delegate_->ShouldIgnoreUnresponsiveRenderer())
+    return;
+
+  ClosePageIgnoringUnloadEvents();
 }
 
 }  // namespace content

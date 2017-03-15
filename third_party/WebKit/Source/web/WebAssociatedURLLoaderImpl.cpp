@@ -30,17 +30,20 @@
 
 #include "web/WebAssociatedURLLoaderImpl.h"
 
+#include <limits.h>
+#include <memory>
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/loader/DocumentThreadableLoader.h"
 #include "core/loader/DocumentThreadableLoaderClient.h"
+#include "core/loader/ThreadableLoadingContext.h"
 #include "platform/Timer.h"
 #include "platform/exported/WrappedResourceRequest.h"
 #include "platform/exported/WrappedResourceResponse.h"
 #include "platform/loader/fetch/CrossOriginAccessControl.h"
 #include "platform/loader/fetch/FetchUtils.h"
+#include "platform/loader/fetch/ResourceError.h"
 #include "platform/network/HTTPParsers.h"
-#include "platform/network/ResourceError.h"
 #include "public/platform/WebHTTPHeaderVisitor.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURLError.h"
@@ -51,8 +54,6 @@
 #include "wtf/HashSet.h"
 #include "wtf/PtrUtil.h"
 #include "wtf/text/WTFString.h"
-#include <limits.h>
-#include <memory>
 
 namespace blink {
 
@@ -421,7 +422,8 @@ void WebAssociatedURLLoaderImpl::loadAsynchronously(
     Document* document = toDocument(m_observer->lifecycleContext());
     DCHECK(document);
     m_loader = DocumentThreadableLoader::create(
-        *document, m_clientAdapter.get(), options, resourceLoaderOptions);
+        *ThreadableLoadingContext::create(*document), m_clientAdapter.get(),
+        options, resourceLoaderOptions);
     m_loader->start(webcoreRequest);
   }
 

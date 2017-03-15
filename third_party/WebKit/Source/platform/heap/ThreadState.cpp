@@ -105,7 +105,6 @@ ThreadState::ThreadState()
       m_startOfStack(reinterpret_cast<intptr_t*>(WTF::getStackStart())),
       m_endOfStack(reinterpret_cast<intptr_t*>(WTF::getStackStart())),
       m_safePointScopeMarker(nullptr),
-      m_interruptors(),
       m_sweepForbidden(false),
       m_noAllocationCount(0),
       m_gcForbiddenCount(0),
@@ -132,9 +131,7 @@ ThreadState::ThreadState()
   ASSERT(!**s_threadSpecific);
   **s_threadSpecific = this;
 
-  m_heap = new ThreadHeap();
-  ASSERT(m_heap);
-  m_heap->attach(this);
+  m_heap = WTF::wrapUnique(new ThreadHeap(this));
 
   for (int arenaIndex = 0; arenaIndex < BlinkGC::LargeObjectArenaIndex;
        arenaIndex++)
@@ -149,6 +146,10 @@ ThreadState::ThreadState()
 
 ThreadState::~ThreadState() {
   ASSERT(checkThread());
+  if (isMainThread())
+    DCHECK_EQ(heap().heapStats().allocatedSpace(), 0u);
+  CHECK(gcState() == ThreadState::NoGCScheduled);
+
   for (int i = 0; i < BlinkGC::NumberOfArenas; ++i)
     delete m_arenas[i];
 
@@ -162,6 +163,12 @@ void ThreadState::attachMainThread() {
 
 void ThreadState::attachCurrentThread() {
   new ThreadState();
+}
+
+void ThreadState::detachCurrentThread() {
+  ThreadState* state = current();
+  state->runTerminationGC();
+  delete state;
 }
 
 void ThreadState::removeAllPages() {
@@ -207,13 +214,6 @@ void ThreadState::runTerminationGC() {
   RELEASE_ASSERT(gcState() == NoGCScheduled);
 
   removeAllPages();
-}
-
-void ThreadState::detachCurrentThread() {
-  ThreadState* state = current();
-  state->heap().detach(state);
-  RELEASE_ASSERT(state->gcState() == ThreadState::NoGCScheduled);
-  delete state;
 }
 
 NO_SANITIZE_ADDRESS
@@ -1086,6 +1086,15 @@ BasePage* ThreadState::findPageFromAddress(Address address) {
 }
 #endif
 
+bool ThreadState::isAddressInHeapDoesNotContainCache(Address address) {
+  // If the cache has been marked as invalidated, it's cleared prior
+  // to performing the next GC. Hence, consider the cache as being
+  // effectively empty.
+  if (m_shouldFlushHeapDoesNotContainCache)
+    return false;
+  return heap().m_heapDoesNotContainCache->lookup(address);
+}
+
 size_t ThreadState::objectPayloadSizeForTesting() {
   size_t objectPayloadSize = 0;
   for (int i = 0; i < BlinkGC::NumberOfArenas; ++i)
@@ -1126,6 +1135,17 @@ NO_SANITIZE_ADDRESS static void* adjustScopeMarkerForAdressSanitizer(
 }
 #endif
 
+// TODO(haraken): The first void* pointer is unused. Remove it.
+using PushAllRegistersCallback = void (*)(void*, ThreadState*, intptr_t*);
+extern "C" void pushAllRegisters(void*, ThreadState*, PushAllRegistersCallback);
+
+static void enterSafePointAfterPushRegisters(void*,
+                                             ThreadState* state,
+                                             intptr_t* stackEnd) {
+  state->recordStackEnd(stackEnd);
+  state->copyStackUntilSafePointScope();
+}
+
 void ThreadState::enterSafePoint(BlinkGC::StackState stackState,
                                  void* scopeMarker) {
   ASSERT(checkThread());
@@ -1137,12 +1157,11 @@ void ThreadState::enterSafePoint(BlinkGC::StackState stackState,
   runScheduledGC(stackState);
   m_stackState = stackState;
   m_safePointScopeMarker = scopeMarker;
-  m_heap->enterSafePoint(this);
+  pushAllRegisters(nullptr, this, enterSafePointAfterPushRegisters);
 }
 
 void ThreadState::leaveSafePoint() {
   ASSERT(checkThread());
-  m_heap->leaveSafePoint();
   m_stackState = BlinkGC::HeapPointersOnStack;
   clearSafePointScopeMarker();
 }
@@ -1203,16 +1222,6 @@ void ThreadState::copyStackUntilSafePointScope() {
   }
 }
 
-void ThreadState::addInterruptor(
-    std::unique_ptr<BlinkGCInterruptor> interruptor) {
-  ASSERT(checkThread());
-  SafePointScope scope(BlinkGC::HeapPointersOnStack);
-  {
-    MutexLocker locker(m_heap->threadAttachMutex());
-    m_interruptors.push_back(std::move(interruptor));
-  }
-}
-
 void ThreadState::registerStaticPersistentNode(
     PersistentNode* node,
     PersistentClearCallback callback) {
@@ -1257,14 +1266,6 @@ void ThreadState::leaveStaticReferenceRegistrationDisabledScope() {
 }
 #endif
 
-void ThreadState::lockThreadAttachMutex() {
-  m_heap->threadAttachMutex().lock();
-}
-
-void ThreadState::unlockThreadAttachMutex() {
-  m_heap->threadAttachMutex().unlock();
-}
-
 void ThreadState::invokePreFinalizers() {
   ASSERT(checkThread());
   ASSERT(!sweepForbidden());
@@ -1289,7 +1290,7 @@ void ThreadState::invokePreFinalizers() {
       if (!done)
         --it;
       if ((entry->second)(entry->first))
-        m_orderedPreFinalizers.remove(entry);
+        m_orderedPreFinalizers.erase(entry);
     } while (!done);
   }
   if (isMainThread()) {
@@ -1500,7 +1501,7 @@ void ThreadState::collectGarbage(BlinkGC::StackState stackState,
         heap().processMarkingStack(visitor.get());
 
         heap().postMarkingProcessing(visitor.get());
-        heap().globalWeakProcessing(visitor.get());
+        heap().weakProcessing(visitor.get());
       }
 
       double markingTimeInMilliseconds = WTF::currentTimeMS() - startTime;

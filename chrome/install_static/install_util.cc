@@ -10,6 +10,7 @@
 #include <string.h>
 
 #include <algorithm>
+#include <limits>
 #include <memory>
 #include <sstream>
 
@@ -59,9 +60,6 @@ constexpr wchar_t kChromeChannelStableExplicit[] = L"stable";
 constexpr wchar_t kRegValueAp[] = L"ap";
 constexpr wchar_t kRegValueUsageStats[] = L"usagestats";
 constexpr wchar_t kMetricsReportingEnabled[] = L"MetricsReportingEnabled";
-
-constexpr wchar_t kBrowserCrashDumpMetricsSubKey[] =
-    L"\\BrowserCrashDumpAttempts";
 
 void Trace(const wchar_t* format_string, ...) {
   static const int kMaxLogBufferSize = 1024;
@@ -160,12 +158,6 @@ bool DirectoryExists(const std::wstring& path) {
   return (file_attributes & FILE_ATTRIBUTE_DIRECTORY) != 0;
 }
 
-std::wstring GetChromeInstallRegistryPath() {
-  std::wstring registry_path = L"Software\\";
-  return AppendChromeInstallSubDirectory(
-      InstallDetails::Get().mode(), true /* include_suffix */, &registry_path);
-}
-
 // Returns true if the |source| string matches the |pattern|. The pattern
 // may contain wildcards like '?' which matches one character or a '*'
 // which matches 0 or more characters.
@@ -259,7 +251,8 @@ std::vector<StringType> TokenizeStringT(
 }
 
 std::wstring ChannelFromAdditionalParameters(const InstallConstants& mode,
-                                             bool system_level) {
+                                             bool system_level,
+                                             bool from_binaries) {
   assert(kUseGoogleUpdateIntegration);
   // InitChannelInfo in google_update_settings.cc only reports a failure when
   // Chrome's ClientState key exists but that the "ap" value therein cannot be
@@ -268,8 +261,10 @@ std::wstring ChannelFromAdditionalParameters(const InstallConstants& mode,
   // any error whatsoever here.
   std::wstring value;
   nt::QueryRegValueSZ(system_level ? nt::HKLM : nt::HKCU, nt::WOW6432,
-                      GetClientStateKeyPath(mode.app_guid).c_str(), kRegValueAp,
-                      &value);
+                      from_binaries
+                          ? GetBinariesClientStateKeyPath().c_str()
+                          : GetClientStateKeyPath(mode.app_guid).c_str(),
+                      kRegValueAp, &value);
 
   static constexpr wchar_t kChromeChannelBetaPattern[] = L"1?1-*";
   static constexpr wchar_t kChromeChannelBetaX64Pattern[] = L"*x64-beta*";
@@ -307,6 +302,28 @@ bool IsSystemInstall() {
   return InstallDetails::Get().system_level();
 }
 
+std::wstring GetChromeInstallSubDirectory() {
+  std::wstring result;
+  AppendChromeInstallSubDirectory(InstallDetails::Get().mode(),
+                                  true /* include_suffix */, &result);
+  return result;
+}
+
+std::wstring GetRegistryPath() {
+  std::wstring result(L"Software\\");
+  AppendChromeInstallSubDirectory(InstallDetails::Get().mode(),
+                                  true /* include_suffix */, &result);
+  return result;
+}
+
+const wchar_t* GetAppGuid() {
+  return InstallDetails::Get().app_guid();
+}
+
+const wchar_t* GetBaseAppId() {
+  return InstallDetails::Get().base_app_id();
+}
+
 bool GetCollectStatsConsent() {
   bool enabled = true;
 
@@ -335,7 +352,7 @@ bool GetCollectStatsConsent() {
 }
 
 bool GetCollectStatsInSample() {
-  std::wstring registry_path = GetChromeInstallRegistryPath();
+  std::wstring registry_path = GetRegistryPath();
 
   DWORD out_value = 0;
   if (!nt::QueryRegValueDWORD(nt::HKCU, nt::WOW6432, registry_path.c_str(),
@@ -348,7 +365,7 @@ bool GetCollectStatsInSample() {
 }
 
 bool SetCollectStatsInSample(bool in_sample) {
-  std::wstring registry_path = GetChromeInstallRegistryPath();
+  std::wstring registry_path = GetRegistryPath();
 
   HANDLE key_handle = INVALID_HANDLE_VALUE;
   if (!nt::CreateRegKey(nt::HKCU, registry_path.c_str(),
@@ -493,7 +510,7 @@ void GetExecutableVersionDetails(const std::wstring& exe_path,
   DWORD dummy = 0;
   DWORD length = ::GetFileVersionInfoSize(exe_path.c_str(), &dummy);
   if (length) {
-    std::unique_ptr<char> data(new char[length]);
+    std::unique_ptr<char[]> data(new char[length]);
     if (::GetFileVersionInfo(exe_path.c_str(), dummy, length, data.get())) {
       GetValueFromVersionResource(data.get(), L"ProductVersion", version);
 
@@ -512,10 +529,6 @@ void GetExecutableVersionDetails(const std::wstring& exe_path,
 
 std::wstring GetChromeChannelName() {
   return InstallDetails::Get().channel();
-}
-
-std::wstring GetBrowserCrashDumpAttemptsRegistryPath() {
-  return GetChromeInstallRegistryPath().append(kBrowserCrashDumpMetricsSubKey);
 }
 
 bool MatchPattern(const std::wstring& source, const std::wstring& pattern) {
@@ -737,7 +750,9 @@ bool RecursiveDirectoryCreate(const std::wstring& full_path) {
 
 // This function takes these inputs rather than accessing the module's
 // InstallDetails instance since it is used to bootstrap InstallDetails.
-std::wstring DetermineChannel(const InstallConstants& mode, bool system_level) {
+std::wstring DetermineChannel(const InstallConstants& mode,
+                              bool system_level,
+                              bool from_binaries) {
   if (!kUseGoogleUpdateIntegration)
     return std::wstring();
 
@@ -746,7 +761,7 @@ std::wstring DetermineChannel(const InstallConstants& mode, bool system_level) {
       assert(false);
       break;
     case ChannelStrategy::ADDITIONAL_PARAMETERS:
-      return ChannelFromAdditionalParameters(mode, system_level);
+      return ChannelFromAdditionalParameters(mode, system_level, from_binaries);
     case ChannelStrategy::FIXED:
       return mode.default_channel_name;
   }

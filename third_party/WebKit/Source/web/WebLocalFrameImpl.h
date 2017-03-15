@@ -37,7 +37,7 @@
 #include "platform/heap/SelfKeepAlive.h"
 #include "public/platform/WebFileSystemType.h"
 #include "public/web/WebLocalFrame.h"
-#include "web/FrameLoaderClientImpl.h"
+#include "web/LocalFrameClientImpl.h"
 #include "web/UserMediaClientImpl.h"
 #include "web/WebExport.h"
 #include "web/WebFrameImplBase.h"
@@ -45,6 +45,7 @@
 #include "web/WebInputMethodControllerImpl.h"
 #include "wtf/Compiler.h"
 #include "wtf/text/WTFString.h"
+
 #include <memory>
 
 namespace blink {
@@ -160,7 +161,6 @@ class WEB_EXPORT WebLocalFrameImpl final
   void enableViewSourceMode(bool enable) override;
   bool isViewSourceModeEnabled() const override;
   void setReferrerForRequest(WebURLRequest&, const WebURL& referrer) override;
-  void dispatchWillSendRequest(WebURLRequest&) override;
   WebAssociatedURLLoader* createAssociatedURLLoader(
       const WebAssociatedURLLoaderOptions&) override;
   unsigned unloadListenerCount() const override;
@@ -202,6 +202,7 @@ class WEB_EXPORT WebLocalFrameImpl final
       const WebVector<WebCompositionUnderline>& underlines) override;
   void extendSelectionAndDelete(int before, int after) override;
   void deleteSurroundingText(int before, int after) override;
+  void deleteSurroundingTextInCodePoints(int before, int after) override;
   void setCaretVisible(bool) override;
   int printBegin(const WebPrintParams&,
                  const WebNode& constrainToNode) override;
@@ -264,6 +265,12 @@ class WEB_EXPORT WebLocalFrameImpl final
   bool isNavigationScheduledWithin(double interval) const override;
   void setCommittedFirstRealLoad() override;
   void setHasReceivedUserGesture() override;
+  void blinkFeatureUsageReport(const std::set<int>& features) override;
+  void mixedContentFound(const WebURL& mainResourceUrl,
+                         const WebURL& mixedContentUrl,
+                         WebURLRequest::RequestContext,
+                         bool wasAllowed,
+                         bool hadRedirect) override;
   void sendOrientationChangeEvent() override;
   WebSandboxFlags effectiveSandboxFlags() const override;
   void forceSandboxFlags(WebSandboxFlags) override;
@@ -414,7 +421,7 @@ class WEB_EXPORT WebLocalFrameImpl final
   DECLARE_TRACE();
 
  private:
-  friend class FrameLoaderClientImpl;
+  friend class LocalFrameClientImpl;
 
   WebLocalFrameImpl(WebTreeScopeType,
                     WebFrameClient*,
@@ -445,7 +452,7 @@ class WEB_EXPORT WebLocalFrameImpl final
   // Returns true if the frame is focused.
   bool isFocused() const;
 
-  Member<FrameLoaderClientImpl> m_frameLoaderClientImpl;
+  Member<LocalFrameClientImpl> m_localFrameClientImpl;
 
   // The embedder retains a reference to the WebCore LocalFrame while it is
   // active in the DOM. This reference is released when the frame is removed

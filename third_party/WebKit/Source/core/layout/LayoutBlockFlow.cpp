@@ -1344,7 +1344,7 @@ void LayoutBlockFlow::rebuildFloatsFromIntruding() {
            ++it) {
         const FloatingObject& floatingObject = *it->get();
         FloatingObject* oldFloatingObject =
-            floatMap.get(floatingObject.layoutObject());
+            floatMap.at(floatingObject.layoutObject());
         LayoutUnit logicalBottom = logicalBottomForFloat(floatingObject);
         if (oldFloatingObject) {
           LayoutUnit oldLogicalBottom =
@@ -1412,7 +1412,7 @@ void LayoutBlockFlow::rebuildFloatsFromIntruding() {
       FloatingObjectSetIterator end = floatingObjectSet.end();
       for (FloatingObjectSetIterator it = floatingObjectSet.begin();
            it != end && !oldIntrudingFloatSet.isEmpty(); ++it)
-        oldIntrudingFloatSet.remove((*it)->layoutObject());
+        oldIntrudingFloatSet.erase((*it)->layoutObject());
       if (!oldIntrudingFloatSet.isEmpty())
         markAllDescendantsWithFloatsForLayout();
     }
@@ -3471,8 +3471,6 @@ LayoutPoint LayoutBlockFlow::computeLogicalLocationForFloat(
 
   LayoutUnit floatLogicalLeft;
 
-  bool insideFlowThread = flowThreadContainingBlock();
-
   if (childBox->style()->floating() == EFloat::kLeft) {
     LayoutUnit heightRemainingLeft = LayoutUnit(1);
     LayoutUnit heightRemainingRight = LayoutUnit(1);
@@ -3486,15 +3484,6 @@ LayoutPoint LayoutBlockFlow::computeLogicalLocationForFloat(
           std::min<LayoutUnit>(heightRemainingLeft, heightRemainingRight);
       floatLogicalLeft = logicalLeftOffsetForPositioningFloat(
           logicalTopOffset, logicalLeftOffset, &heightRemainingLeft);
-      if (insideFlowThread) {
-        // Have to re-evaluate all of our offsets, since they may have changed.
-        logicalRightOffset =
-            logicalRightOffsetForContent();  // Constant part of right offset.
-        logicalLeftOffset =
-            logicalLeftOffsetForContent();  // Constant part of left offset.
-        floatLogicalWidth = std::min(logicalWidthForFloat(floatingObject),
-                                     logicalRightOffset - logicalLeftOffset);
-      }
     }
     floatLogicalLeft = std::max(
         logicalLeftOffset - borderAndPaddingLogicalLeft(), floatLogicalLeft);
@@ -3510,15 +3499,6 @@ LayoutPoint LayoutBlockFlow::computeLogicalLocationForFloat(
       logicalTopOffset += std::min(heightRemainingLeft, heightRemainingRight);
       floatLogicalLeft = logicalRightOffsetForPositioningFloat(
           logicalTopOffset, logicalRightOffset, &heightRemainingRight);
-      if (insideFlowThread) {
-        // Have to re-evaluate all of our offsets, since they may have changed.
-        logicalRightOffset =
-            logicalRightOffsetForContent();  // Constant part of right offset.
-        logicalLeftOffset =
-            logicalLeftOffsetForContent();  // Constant part of left offset.
-        floatLogicalWidth = std::min(logicalWidthForFloat(floatingObject),
-                                     logicalRightOffset - logicalLeftOffset);
-      }
     }
     // Use the original width of the float here, since the local variable
     // |floatLogicalWidth| was capped to the available line width. See
@@ -3595,13 +3575,13 @@ void LayoutBlockFlow::removeFloatingObjectsBelow(FloatingObject* lastFloat,
     return;
 
   const FloatingObjectSet& floatingObjectSet = m_floatingObjects->set();
-  FloatingObject* curr = floatingObjectSet.last().get();
+  FloatingObject* curr = floatingObjectSet.back().get();
   while (curr != lastFloat &&
          (!curr->isPlaced() || logicalTopForFloat(*curr) >= logicalOffset)) {
     m_floatingObjects->remove(curr);
     if (floatingObjectSet.isEmpty())
       break;
-    curr = floatingObjectSet.last().get();
+    curr = floatingObjectSet.back().get();
   }
 }
 
@@ -3615,7 +3595,7 @@ bool LayoutBlockFlow::placeNewFloats(LayoutUnit logicalTopMarginEdge,
     return false;
 
   // If all floats have already been positioned, then we have no work to do.
-  if (floatingObjectSet.last()->isPlaced())
+  if (floatingObjectSet.back()->isPlaced())
     return false;
 
   // Move backwards through our floating object list until we find a float that
@@ -4353,7 +4333,7 @@ void LayoutBlockFlow::simplifiedNormalFlowInlineLayout() {
       o->layoutIfNeeded();
       if (toLayoutBox(o)->inlineBoxWrapper()) {
         RootInlineBox& box = toLayoutBox(o)->inlineBoxWrapper()->root();
-        lineBoxes.add(&box);
+        lineBoxes.insert(&box);
       }
     } else if (o->isText() ||
                (o->isLayoutInline() && !walker.atEndOfInline())) {
@@ -4382,7 +4362,7 @@ bool LayoutBlockFlow::recalcInlineChildrenOverflowAfterStyleChange() {
       childrenOverflowChanged = true;
       if (InlineBox* inlineBoxWrapper =
               toLayoutBlock(layoutObject)->inlineBoxWrapper())
-        lineBoxes.add(&inlineBoxWrapper->root());
+        lineBoxes.insert(&inlineBoxWrapper->root());
     }
   }
 

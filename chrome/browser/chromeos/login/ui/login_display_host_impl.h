@@ -42,7 +42,6 @@ namespace chromeos {
 class ArcKioskController;
 class DemoAppLauncher;
 class FocusRingController;
-class KeyboardDrivenOobeKeyHandler;
 class WebUILoginDisplay;
 class WebUILoginView;
 
@@ -106,6 +105,8 @@ class LoginDisplayHostImpl : public LoginDisplayHost,
   static void DisableRestrictiveProxyCheckForTest();
 
  protected:
+  class KeyboardDrivenOobeKeyHandler;
+
   // content::NotificationObserver implementation:
   void Observe(int type,
                const content::NotificationSource& source,
@@ -121,7 +122,8 @@ class LoginDisplayHostImpl : public LoginDisplayHost,
   void OnActiveOutputNodeChanged() override;
 
   // ash::ShellObserver:
-  void OnVirtualKeyboardStateChanged(bool activated) override;
+  void OnVirtualKeyboardStateChanged(bool activated,
+                                     ash::WmWindow* root_window) override;
 
   // Overridden from keyboard::KeyboardControllerObserver:
   void OnKeyboardBoundsChanging(const gfx::Rect& new_bounds) override;
@@ -241,6 +243,9 @@ class LoginDisplayHostImpl : public LoginDisplayHost,
 
   // Container of the screen we are displaying.
   views::Widget* login_window_ = nullptr;
+
+  // The delegate of |login_window_|; owned by |login_window_|.
+  LoginWidgetDelegate* login_window_delegate_ = nullptr;
 
   // Container of the view we are displaying.
   WebUILoginView* login_view_ = nullptr;

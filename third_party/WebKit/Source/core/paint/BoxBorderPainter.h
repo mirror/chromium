@@ -76,6 +76,30 @@ class BoxBorderPainter {
                            BoxSide,
                            Color,
                            EBorderStyle) const;
+  void drawDashedDottedBoxSideFromPath(GraphicsContext&,
+                                       const LayoutRect&,
+                                       float thickness,
+                                       float drawThickness,
+                                       Color,
+                                       EBorderStyle) const;
+  void drawWideDottedBoxSideFromPath(GraphicsContext&,
+                                     const Path&,
+                                     float thickness) const;
+  void drawDoubleBoxSideFromPath(GraphicsContext&,
+                                 const LayoutRect&,
+                                 const Path&,
+                                 float thickness,
+                                 float drawThickness,
+                                 BoxSide,
+                                 Color) const;
+  void drawRidgeGrooveBoxSideFromPath(GraphicsContext&,
+                                      const LayoutRect&,
+                                      const Path&,
+                                      float thickness,
+                                      float drawThickness,
+                                      BoxSide,
+                                      Color,
+                                      EBorderStyle) const;
   void clipBorderSidePolygon(GraphicsContext&,
                              BoxSide,
                              MiterType miter1,

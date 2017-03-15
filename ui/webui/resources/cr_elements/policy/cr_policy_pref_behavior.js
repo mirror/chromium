@@ -8,36 +8,35 @@
 
 /** @polymerBehavior */
 var CrPolicyPrefBehavior = {
-  /**
-   * @param {!chrome.settingsPrivate.PrefObject} pref
-   * @return {boolean} True if the pref is controlled by an enforced policy.
-   */
-  isPrefPolicyControlled: function(pref) {
-    return pref.enforcement == chrome.settingsPrivate.Enforcement.ENFORCED &&
-        pref.controlledBy != chrome.settingsPrivate.ControlledBy.EXTENSION;
+  properties: {
+    /**
+     * Showing that an extension is controlling a pref is sometimes done with a
+     * different UI (e.g. extension-controlled-indicator). In  those cases,
+     * avoid showing an (extra) indicator here.
+     * @public
+     */
+    noExtensionIndicator: Boolean,
   },
 
   /**
-   * @param {chrome.settingsPrivate.ControlledBy} controlledBy
-   * @param {chrome.settingsPrivate.Enforcement} enforcement
-   * @return {CrPolicyIndicatorType} The indicator type based on |controlledBy|
-   *     and |enforcement|.
+   * Is the |pref| controlled by something that prevents user control of the
+   * preference.
+   * @return {boolean} True if |this.pref| is controlled by an enforced policy.
    */
-  getIndicatorType: function(controlledBy, enforcement) {
-    if (enforcement == chrome.settingsPrivate.Enforcement.RECOMMENDED)
-      return CrPolicyIndicatorType.RECOMMENDED;
-    if (enforcement == chrome.settingsPrivate.Enforcement.ENFORCED) {
-      switch (controlledBy) {
-        case chrome.settingsPrivate.ControlledBy.PRIMARY_USER:
-          return CrPolicyIndicatorType.PRIMARY_USER;
-        case chrome.settingsPrivate.ControlledBy.OWNER:
-          return CrPolicyIndicatorType.OWNER;
-        case chrome.settingsPrivate.ControlledBy.USER_POLICY:
-          return CrPolicyIndicatorType.USER_POLICY;
-        case chrome.settingsPrivate.ControlledBy.DEVICE_POLICY:
-          return CrPolicyIndicatorType.DEVICE_POLICY;
-      }
+  isPrefEnforced: function() {
+    return this.pref.enforcement == chrome.settingsPrivate.Enforcement.ENFORCED;
+  },
+
+  /**
+   * @return {boolean} True if |this.pref| has a recommended or enforced policy.
+   */
+  hasPrefPolicyIndicator: function() {
+    if (this.noExtensionIndicator &&
+        this.pref.controlledBy ==
+            chrome.settingsPrivate.ControlledBy.EXTENSION) {
+      return false;
     }
-    return CrPolicyIndicatorType.NONE;
+    return this.isPrefEnforced() ||
+        this.pref.enforcement == chrome.settingsPrivate.Enforcement.RECOMMENDED;
   },
 };

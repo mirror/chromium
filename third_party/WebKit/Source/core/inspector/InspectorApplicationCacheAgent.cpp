@@ -31,10 +31,12 @@
 #include "core/inspector/InspectedFrames.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoader.h"
-#include "core/page/NetworkStateNotifier.h"
+#include "platform/network/NetworkStateNotifier.h"
 #include "wtf/text/StringBuilder.h"
 
 namespace blink {
+
+using protocol::Response;
 
 namespace ApplicationCacheAgentState {
 static const char applicationCacheAgentEnabled[] =

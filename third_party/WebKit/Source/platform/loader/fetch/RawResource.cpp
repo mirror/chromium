@@ -46,8 +46,7 @@ RawResource* RawResource::fetchImport(FetchRequest& request,
                                       ResourceFetcher* fetcher) {
   DCHECK_EQ(request.resourceRequest().frameType(),
             WebURLRequest::FrameTypeNone);
-  request.mutableResourceRequest().setRequestContext(
-      WebURLRequest::RequestContextImport);
+  request.setRequestContext(WebURLRequest::RequestContextImport);
   return toRawResource(fetcher->requestResource(
       request, RawResourceFactory(Resource::ImportResource)));
 }
@@ -101,8 +100,7 @@ RawResource* RawResource::fetchTextTrack(FetchRequest& request,
                                          ResourceFetcher* fetcher) {
   DCHECK_EQ(request.resourceRequest().frameType(),
             WebURLRequest::FrameTypeNone);
-  request.mutableResourceRequest().setRequestContext(
-      WebURLRequest::RequestContextTrack);
+  request.setRequestContext(WebURLRequest::RequestContextTrack);
   return toRawResource(fetcher->requestResource(
       request, RawResourceFactory(Resource::TextTrack)));
 }
@@ -247,6 +245,7 @@ static bool shouldIgnoreHeaderForCacheReuse(AtomicString headerName) {
           "Cache-Control", "If-Modified-Since", "If-None-Match", "Origin",
           "Pragma", "Purpose", "Referer", "User-Agent",
           HTTPNames::X_DevTools_Emulate_Network_Conditions_Client_Id,
+          HTTPNames::X_DevTools_Request_Id,
       }));
   return headers.contains(headerName);
 }
@@ -257,7 +256,9 @@ static bool isCacheableHTTPMethod(const AtomicString& method) {
   return method != "POST" && method != "PUT" && method != "DELETE";
 }
 
-bool RawResource::canReuse(const ResourceRequest& newRequest) const {
+bool RawResource::canReuse(const FetchRequest& newFetchRequest) const {
+  const ResourceRequest& newRequest = newFetchRequest.resourceRequest();
+
   if (getDataBufferingPolicy() == DoNotBufferData)
     return false;
 

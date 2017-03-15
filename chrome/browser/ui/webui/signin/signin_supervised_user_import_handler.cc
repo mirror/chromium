@@ -125,8 +125,8 @@ void SigninSupervisedUserImportHandler::OpenUrlInLastActiveProfileBrowser(
     // it doesn't exist.
     Browser* browser = chrome::FindLastActiveWithProfile(last_used_profile);
     if (!browser)
-      browser = new Browser(Browser::CreateParams(Browser::TYPE_TABBED,
-                                                  last_used_profile));
+      browser = new Browser(
+          Browser::CreateParams(Browser::TYPE_TABBED, last_used_profile, true));
     browser->OpenURL(params);
   }
 }
@@ -218,9 +218,7 @@ void SigninSupervisedUserImportHandler::LoadCustodianProfileCallback(
 
 void SigninSupervisedUserImportHandler::RejectCallback(
     const base::string16& error) {
-  RejectJavascriptCallback(
-      base::StringValue(webui_callback_id_),
-      base::StringValue(error));
+  RejectJavascriptCallback(base::Value(webui_callback_id_), base::Value(error));
   webui_callback_id_.clear();
 }
 
@@ -297,9 +295,7 @@ void SigninSupervisedUserImportHandler::SendExistingSupervisedUsers(
   }
 
   // Resolve callback with response.
-  ResolveJavascriptCallback(
-      base::StringValue(webui_callback_id_),
-      supervised_users);
+  ResolveJavascriptCallback(base::Value(webui_callback_id_), supervised_users);
   webui_callback_id_.clear();
 }
 

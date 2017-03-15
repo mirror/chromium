@@ -40,12 +40,20 @@ FakeSyncClient::~FakeSyncClient() {}
 
 void FakeSyncClient::Initialize() {}
 
+base::SequencedWorkerPool* FakeSyncClient::GetBlockingPool() {
+  return nullptr;
+}
+
 SyncService* FakeSyncClient::GetSyncService() {
   return sync_service_.get();
 }
 
 PrefService* FakeSyncClient::GetPrefService() {
   return &pref_service_;
+}
+
+base::FilePath FakeSyncClient::GetLocalSyncBackendFolder() {
+  return base::FilePath();
 }
 
 bookmarks::BookmarkModel* FakeSyncClient::GetBookmarkModel() {

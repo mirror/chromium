@@ -22,10 +22,15 @@
 
 .toolbar-shadow.wrappable {
     flex-wrap: wrap;
+    overflow: visible;
 }
 
 .toolbar-shadow.wrappable-reverse {
     flex-direction: row-reverse;
+}
+
+.toolbar-shadow.toolbar-grow-vertical {
+    height: initial;
 }
 
 .toolbar-shadow.vertical {

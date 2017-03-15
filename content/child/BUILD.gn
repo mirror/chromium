@@ -128,8 +128,6 @@ target(link_target_type, "child") {
     "notifications/notification_dispatcher.h",
     "notifications/notification_manager.cc",
     "notifications/notification_manager.h",
-    "push_messaging/push_dispatcher.cc",
-    "push_messaging/push_dispatcher.h",
     "push_messaging/push_provider.cc",
     "push_messaging/push_provider.h",
     "quota_dispatcher.cc",
@@ -223,6 +221,7 @@ target(link_target_type, "child") {
 
   deps = [
     "//base",
+    "//cc/paint",
     "//components/discardable_memory/client",
     "//components/discardable_memory/public/interfaces",
     "//components/mime_util",
@@ -237,6 +236,7 @@ target(link_target_type, "child") {
     "//gpu/command_buffer/client",
     "//ipc",
     "//media",
+    "//media/blink",
     "//mojo/common",
     "//mojo/edk/system",
     "//net",

@@ -13,6 +13,7 @@ import junit.framework.Assert;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Feature;
+import org.chromium.content.browser.JavaBridgeTestCommon.Controller;
 import org.chromium.content.browser.test.util.TestCallbackHelperContainer;
 import org.chromium.content_public.browser.LoadUrlParams;
 
@@ -39,7 +40,7 @@ import java.util.concurrent.CountDownLatch;
         {"UMAC_UNCALLABLE_METHOD_OF_ANONYMOUS_CLASS", "URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD"})
 public class JavaBridgeBasicsTest extends JavaBridgeTestBase {
     @SuppressFBWarnings("CHROMIUM_SYNCHRONIZED_METHOD")
-    private class TestController extends Controller {
+    private static class TestController extends Controller {
         private int mIntValue;
         private long mLongValue;
         private String mStringValue;
@@ -179,7 +180,7 @@ public class JavaBridgeBasicsTest extends JavaBridgeTestBase {
     @Feature({"AndroidWebView", "Android-JavaBridge"})
     public void testRemoveObjectNotAdded() throws Throwable {
         TestCallbackHelperContainer.OnPageFinishedHelper onPageFinishedHelper =
-                mTestCallbackHelperContainer.getOnPageFinishedHelper();
+                getTestCallBackHelperContainer().getOnPageFinishedHelper();
         int currentCallCount = onPageFinishedHelper.getCallCount();
         runTestOnUiThread(new Runnable() {
             @Override
@@ -863,7 +864,7 @@ public class JavaBridgeBasicsTest extends JavaBridgeTestBase {
         // Manually inject the Test object, making sure to use the
         // ContentViewCore#addJavascriptInterface, not the possibly unsafe version.
         TestCallbackHelperContainer.OnPageFinishedHelper onPageFinishedHelper =
-                mTestCallbackHelperContainer.getOnPageFinishedHelper();
+                getTestCallBackHelperContainer().getOnPageFinishedHelper();
         int currentCallCount = onPageFinishedHelper.getCallCount();
         runTestOnUiThread(new Runnable() {
             @Override

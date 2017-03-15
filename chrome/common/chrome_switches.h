@@ -92,6 +92,7 @@ extern const char kDisablePrintPreview[];
 extern const char kDisablePromptOnRepost[];
 extern const char kDisablePushApiBackgroundMode[];
 extern const char kDisableQuic[];
+extern const char kDisableSearchGeolocationDisclosure[];
 extern const char kDisableSettingsWindow[];
 extern const char kDisableWebNotificationCustomLayouts[];
 extern const char kDisableZeroBrowsersOpenForTests[];
@@ -149,6 +150,7 @@ extern const char kExtensionsUpdateFrequency[];
 extern const char kFastStart[];
 extern const char kForceAndroidAppMode[];
 extern const char kForceAppMode[];
+extern const char kForceDesktopIOSPromotion[];
 extern const char kForceFirstRun[];
 extern const char kForceLocalNtp[];
 extern const char kForceVariationIds[];
@@ -257,7 +259,6 @@ extern const char kAuthAndroidNegotiateAccountType[];
 extern const char kDisableContextualSearch[];
 extern const char kEnableAccessibilityTabSwitcher[];
 extern const char kEnableContextualSearch[];
-extern const char kEnableContextualSearchContextualCardsBarIntegration[];
 extern const char kEnableHostedMode[];
 extern const char kEnableHungRendererInfoBar[];
 extern const char kForceShowUpdateMenuBadge[];
@@ -345,7 +346,7 @@ extern const char kAllowNaClFileHandleAPI[];
 extern const char kAllowNaClSocketAPI[];
 #endif
 
-#if defined(ENABLE_WAYLAND_SERVER)
+#if BUILDFLAG(ENABLE_WAYLAND_SERVER)
 extern const char kEnableWaylandServer[];
 #endif
 

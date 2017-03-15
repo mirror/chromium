@@ -5,12 +5,11 @@
 #include "ash/common/wm/maximize_mode/workspace_backdrop_delegate.h"
 
 #include "ash/common/wm/workspace/workspace_layout_manager_backdrop_delegate.h"
-#include "ash/common/wm_lookup.h"
 #include "ash/common/wm_window.h"
-#include "ash/common/wm_window_observer.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
 #include "base/auto_reset.h"
+#include "ui/aura/window_observer.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
 #include "ui/views/background.h"
@@ -26,15 +25,16 @@ const float kBackdropOpacity = 0.5f;
 
 }  // namespace
 
-class WorkspaceBackdropDelegate::WindowObserverImpl : public WmWindowObserver {
+class WorkspaceBackdropDelegate::WindowObserverImpl
+    : public aura::WindowObserver {
  public:
   explicit WindowObserverImpl(WorkspaceBackdropDelegate* delegate)
       : delegate_(delegate) {}
   ~WindowObserverImpl() override {}
 
  private:
-  // WmWindowObserver overrides:
-  void OnWindowBoundsChanged(WmWindow* window,
+  // aura::WindowObserver overrides:
+  void OnWindowBoundsChanged(aura::Window* window,
                              const gfx::Rect& old_bounds,
                              const gfx::Rect& new_bounds) override {
     // The container size has changed and the layer needs to be adapt to it.
@@ -63,7 +63,7 @@ WorkspaceBackdropDelegate::WorkspaceBackdropDelegate(WmWindow* container)
   container_->GetRootWindowController()->ConfigureWidgetInitParamsForContainer(
       background_, container_->GetShellWindowId(), &params);
   background_->Init(params);
-  background_window_ = WmLookup::Get()->GetWindowForWidget(background_);
+  background_window_ = WmWindow::Get(background_->GetNativeWindow());
   // Do not use the animation system. We don't want the bounds animation and
   // opacity needs to get set to |kBackdropOpacity|.
   background_window_->SetVisibilityAnimationTransition(::wm::ANIMATE_NONE);
@@ -73,11 +73,11 @@ WorkspaceBackdropDelegate::WorkspaceBackdropDelegate(WmWindow* container)
   DCHECK(background_window_->GetBounds() == params.bounds);
   Show();
   RestackBackdrop();
-  container_->AddObserver(container_observer_.get());
+  container_->aura_window()->AddObserver(container_observer_.get());
 }
 
 WorkspaceBackdropDelegate::~WorkspaceBackdropDelegate() {
-  container_->RemoveObserver(container_observer_.get());
+  container_->aura_window()->RemoveObserver(container_observer_.get());
   // TODO: animations won't work right with mus: http://crbug.com/548396.
   ::wm::ScopedHidingAnimationSettings hiding_settings(
       background_->GetNativeView());

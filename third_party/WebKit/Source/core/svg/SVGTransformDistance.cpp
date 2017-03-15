@@ -43,11 +43,11 @@ SVGTransformDistance::SVGTransformDistance(SVGTransform* fromSVGTransform,
                                            SVGTransform* toSVGTransform)
     : m_angle(0), m_cx(0), m_cy(0) {
   m_transformType = fromSVGTransform->transformType();
-  ASSERT(m_transformType == toSVGTransform->transformType());
+  DCHECK_EQ(m_transformType, toSVGTransform->transformType());
 
   switch (m_transformType) {
     case kSvgTransformMatrix:
-      ASSERT_NOT_REACHED();
+      NOTREACHED();
     case kSvgTransformUnknown:
       break;
     case kSvgTransformRotate: {
@@ -84,7 +84,7 @@ SVGTransformDistance SVGTransformDistance::scaledDistance(
     float scaleFactor) const {
   switch (m_transformType) {
     case kSvgTransformMatrix:
-      ASSERT_NOT_REACHED();
+      NOTREACHED();
     case kSvgTransformUnknown:
       return SVGTransformDistance();
     case kSvgTransformRotate:
@@ -108,20 +108,20 @@ SVGTransformDistance SVGTransformDistance::scaledDistance(
                                   AffineTransform());
   }
 
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return SVGTransformDistance();
 }
 
 SVGTransform* SVGTransformDistance::addSVGTransforms(SVGTransform* first,
                                                      SVGTransform* second,
                                                      unsigned repeatCount) {
-  ASSERT(first->transformType() == second->transformType());
+  DCHECK_EQ(first->transformType(), second->transformType());
 
   SVGTransform* transform = SVGTransform::create();
 
   switch (first->transformType()) {
     case kSvgTransformMatrix:
-      ASSERT_NOT_REACHED();
+      NOTREACHED();
     case kSvgTransformUnknown:
       return transform;
     case kSvgTransformRotate: {
@@ -152,7 +152,7 @@ SVGTransform* SVGTransformDistance::addSVGTransforms(SVGTransform* first,
       transform->setSkewY(first->angle() + second->angle() * repeatCount);
       return transform;
   }
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return transform;
 }
 
@@ -165,7 +165,7 @@ SVGTransform* SVGTransformDistance::addToSVGTransform(
 
   switch (m_transformType) {
     case kSvgTransformMatrix:
-      ASSERT_NOT_REACHED();
+      NOTREACHED();
     case kSvgTransformUnknown:
       return SVGTransform::create();
     case kSvgTransformTranslate: {
@@ -195,14 +195,14 @@ SVGTransform* SVGTransformDistance::addToSVGTransform(
       return newTransform;
   }
 
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return newTransform;
 }
 
 float SVGTransformDistance::distance() const {
   switch (m_transformType) {
     case kSvgTransformMatrix:
-      ASSERT_NOT_REACHED();
+      NOTREACHED();
     case kSvgTransformUnknown:
       return 0;
     case kSvgTransformRotate:
@@ -217,7 +217,7 @@ float SVGTransformDistance::distance() const {
     case kSvgTransformSkewy:
       return m_angle;
   }
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return 0;
 }
 

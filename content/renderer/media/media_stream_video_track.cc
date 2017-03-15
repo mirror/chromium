@@ -11,7 +11,7 @@
 #include "base/macros.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "content/renderer/media/media_stream_constraints_util_video_source.h"
+#include "content/renderer/media/media_stream_constraints_util_video_device.h"
 
 namespace content {
 
@@ -302,17 +302,14 @@ void MediaStreamVideoTrack::Stop() {
 
 void MediaStreamVideoTrack::getSettings(
     blink::WebMediaStreamTrack::Settings& settings) {
-  // TODO(hta): Extract the real value.
-  settings.deviceId = blink::WebString("video device ID");
-  if (!source_)
-    return;
-
   const media::VideoCaptureFormat* format = source_->GetCurrentFormat();
   if (format) {
     settings.frameRate = format->frame_rate;
-    settings.width = format->frame_size.width();
-    settings.height = format->frame_size.height();
     settings.videoKind = GetVideoKindForFormat(*format);
+  }
+  if (width_ && height_) {
+    settings.width = width_;
+    settings.height = height_;
   }
   switch (source_->device_info().device.video_facing) {
     case media::MEDIA_VIDEO_FACING_NONE:

@@ -4,6 +4,7 @@
 
 package org.chromium.components.signin;
 
+import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
@@ -13,14 +14,18 @@ import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Process;
 import android.os.SystemClock;
 
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.GooglePlayServicesAvailabilityException;
 
+import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Callback;
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
@@ -109,31 +114,35 @@ public class SystemAccountManagerDelegate implements AccountManagerDelegate {
     }
 
     @Override
-    public void hasFeatures(Account account, String[] features, final Callback<Boolean> callback) {
+    public boolean hasFeatures(Account account, String[] features) {
         if (!hasGetAccountsPermission()) {
-            ThreadUtils.postOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    callback.onResult(false);
-                }
-            });
-            return;
+            return false;
         }
-        mAccountManager.hasFeatures(account, features, new AccountManagerCallback<Boolean>() {
+        try {
+            return mAccountManager.hasFeatures(account, features, null, null).getResult();
+        } catch (AuthenticatorException | IOException e) {
+            Log.e(TAG, "Error while checking features: ", e);
+        } catch (OperationCanceledException e) {
+            Log.e(TAG, "Checking features was cancelled. This should not happen.");
+        }
+        return false;
+    }
+
+    @Override
+    public void hasFeatures(
+            final Account account, final String[] features, final Callback<Boolean> callback) {
+        AsyncTask<Void, Void, Boolean> task = new AsyncTask<Void, Void, Boolean>() {
             @Override
-            public void run(AccountManagerFuture<Boolean> future) {
-                assert future.isDone();
-                boolean hasFeatures = false;
-                try {
-                    hasFeatures = future.getResult();
-                } catch (AuthenticatorException | IOException e) {
-                    Log.e(TAG, "Error while checking features: ", e);
-                } catch (OperationCanceledException e) {
-                    Log.e(TAG, "Checking features was cancelled. This should not happen.");
-                }
-                callback.onResult(hasFeatures);
+            public Boolean doInBackground(Void... params) {
+                return hasFeatures(account, features);
             }
-        }, null /* handler */);
+
+            @Override
+            public void onPostExecute(Boolean value) {
+                callback.onResult(value);
+            }
+        };
+        task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     /**
@@ -153,41 +162,55 @@ public class SystemAccountManagerDelegate implements AccountManagerDelegate {
     public void updateCredentials(
             Account account, Activity activity, final Callback<Boolean> callback) {
         ThreadUtils.assertOnUiThread();
-        if (!hasGetAccountsPermission()) {
-            ThreadUtils.postOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    callback.onResult(false);
-                }
-            });
+        if (!hasManageAccountsPermission()) {
+            if (callback != null) {
+                ThreadUtils.postOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onResult(false);
+                    }
+                });
+            }
             return;
         }
 
+        AccountManagerCallback<Bundle> realCallback = new AccountManagerCallback<Bundle>() {
+            @Override
+            public void run(AccountManagerFuture<Bundle> future) {
+                Bundle bundle = null;
+                try {
+                    bundle = future.getResult();
+                } catch (AuthenticatorException | IOException e) {
+                    Log.e(TAG, "Error while update credentials: ", e);
+                } catch (OperationCanceledException e) {
+                    Log.w(TAG, "Updating credentials was cancelled.");
+                }
+                boolean success = bundle != null
+                        && bundle.getString(AccountManager.KEY_ACCOUNT_NAME) != null
+                        && bundle.getString(AccountManager.KEY_ACCOUNT_TYPE) != null;
+                if (callback != null) {
+                    callback.onResult(success);
+                }
+            }
+        };
+        // Android 4.4 throws NullPointerException if null is passed
+        Bundle emptyOptions = new Bundle();
         mAccountManager.updateCredentials(
-                account, "android", null, activity, new AccountManagerCallback<Bundle>() {
-                    @Override
-                    public void run(AccountManagerFuture<Bundle> future) {
-                        assert future.isDone();
-                        Bundle bundle = null;
-                        try {
-                            bundle = future.getResult();
-                        } catch (AuthenticatorException | IOException e) {
-                            Log.e(TAG, "Error while update credentials: ", e);
-                        } catch (OperationCanceledException e) {
-                            Log.w(TAG, "Updating credentials was cancelled.");
-                        }
-                        if (bundle != null
-                                && bundle.getString(AccountManager.KEY_ACCOUNT_NAME) != null
-                                && bundle.getString(AccountManager.KEY_ACCOUNT_TYPE) != null) {
-                            callback.onResult(true);
-                        } else {
-                            callback.onResult(false);
-                        }
-                    }
-                }, null /* handler */);
+                account, "android", emptyOptions, activity, realCallback, null);
     }
 
     protected boolean hasGetAccountsPermission() {
-        return AccountManagerHelper.get(mApplicationContext).hasGetAccountsPermission();
+        return ApiCompatibilityUtils.checkPermission(mApplicationContext,
+                       Manifest.permission.GET_ACCOUNTS, Process.myPid(), Process.myUid())
+                == PackageManager.PERMISSION_GRANTED;
+    }
+
+    protected boolean hasManageAccountsPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return true;
+        }
+        return ApiCompatibilityUtils.checkPermission(mApplicationContext,
+                       "android.permission.MANAGE_ACCOUNTS", Process.myPid(), Process.myUid())
+                == PackageManager.PERMISSION_GRANTED;
     }
 }

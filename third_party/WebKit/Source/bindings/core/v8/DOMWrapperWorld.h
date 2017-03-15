@@ -31,42 +31,62 @@
 #ifndef DOMWrapperWorld_h
 #define DOMWrapperWorld_h
 
+#include <memory>
+
 #include "bindings/core/v8/ScriptState.h"
 #include "core/CoreExport.h"
 #include "platform/weborigin/SecurityOrigin.h"
+#include "v8/include/v8.h"
 #include "wtf/PassRefPtr.h"
 #include "wtf/RefCounted.h"
 #include "wtf/RefPtr.h"
-#include <memory>
-#include <v8.h>
 
 namespace blink {
 
 class DOMDataStore;
-
-enum WorldIdConstants {
-  MainWorldId = 0,
-  // Embedder isolated worlds can use IDs in [1, 1<<29).
-  EmbedderWorldIdLimit = (1 << 29),
-  DocumentXMLTreeViewerWorldId,
-  IsolatedWorldIdLimit,
-  WorkerWorldId,
-  TestingWorldId,
-};
-
 class DOMObjectHolderBase;
 
-// This class represent a collection of DOM wrappers for a specific world.
+// This class represent a collection of DOM wrappers for a specific world. This
+// is identified by a world id that is a per-thread global identifier (see
+// WorldId enum).
 class CORE_EXPORT DOMWrapperWorld : public RefCounted<DOMWrapperWorld> {
  public:
-  static PassRefPtr<DOMWrapperWorld> create(v8::Isolate*, int worldId = -1);
+  // Per-thread global identifiers for DOMWrapperWorld.
+  enum WorldId {
+    InvalidWorldId = -1,
+    MainWorldId = 0,
 
+    // Embedder isolated worlds can use IDs in [1, 1<<29).
+    EmbedderWorldIdLimit = (1 << 29),
+    DocumentXMLTreeViewerWorldId,
+    IsolatedWorldIdLimit,
+
+    // Other worlds can use IDs after this. Don't manually pick up an ID from
+    // this range. generateWorldIdForType() picks it up on behalf of you.
+    UnspecifiedWorldIdStart,
+  };
+
+  enum class WorldType {
+    Main,
+    Isolated,
+    GarbageCollector,
+    RegExp,
+    Testing,
+    Worker,
+  };
+
+  // Creates a world other than IsolatedWorld.
+  static PassRefPtr<DOMWrapperWorld> create(v8::Isolate*, WorldType);
+
+  // Ensures an IsolatedWorld for |worldId|.
   static PassRefPtr<DOMWrapperWorld> ensureIsolatedWorld(v8::Isolate*,
                                                          int worldId);
   ~DOMWrapperWorld();
   void dispose();
 
-  static bool isolatedWorldsExist() { return isolatedWorldCount; }
+  static bool nonMainWorldsInMainThread() {
+    return s_numberOfNonMainWorldsInMainThread;
+  }
   static void allWorldsInMainThread(Vector<RefPtr<DOMWrapperWorld>>& worlds);
   static void markWrappersInAllWorlds(ScriptWrappable*,
                                       const ScriptWrappableVisitor*);
@@ -105,11 +125,9 @@ class CORE_EXPORT DOMWrapperWorld : public RefCounted<DOMWrapperWorld> {
                                                     const String& policy);
   bool isolatedWorldHasContentSecurityPolicy();
 
-  bool isMainWorld() const { return m_worldId == MainWorldId; }
-  bool isWorkerWorld() const { return m_worldId == WorkerWorldId; }
-  bool isIsolatedWorld() const {
-    return MainWorldId < m_worldId && m_worldId < IsolatedWorldIdLimit;
-  }
+  bool isMainWorld() const { return m_worldType == WorldType::Main; }
+  bool isWorkerWorld() const { return m_worldType == WorldType::Worker; }
+  bool isIsolatedWorld() const { return m_worldType == WorldType::Isolated; }
 
   int worldId() const { return m_worldId; }
   DOMDataStore& domDataStore() const { return *m_domDataStore; }
@@ -119,15 +137,21 @@ class CORE_EXPORT DOMWrapperWorld : public RefCounted<DOMWrapperWorld> {
   void registerDOMObjectHolder(v8::Isolate*, T*, v8::Local<v8::Value>);
 
  private:
-  DOMWrapperWorld(v8::Isolate*, int worldId);
+  DOMWrapperWorld(v8::Isolate*, WorldType, int worldId);
 
   static void weakCallbackForDOMObjectHolder(
       const v8::WeakCallbackInfo<DOMObjectHolderBase>&);
   void registerDOMObjectHolderInternal(std::unique_ptr<DOMObjectHolderBase>);
   void unregisterDOMObjectHolder(DOMObjectHolderBase*);
 
-  static unsigned isolatedWorldCount;
+  static unsigned s_numberOfNonMainWorldsInMainThread;
 
+  // Returns an identifier for a given world type. This must not be called for
+  // WorldType::IsolatedWorld because an identifier for the world is given from
+  // out of DOMWrapperWorld.
+  static int generateWorldIdForType(WorldType);
+
+  const WorldType m_worldType;
   const int m_worldId;
   std::unique_ptr<DOMDataStore> m_domDataStore;
   HashSet<std::unique_ptr<DOMObjectHolderBase>> m_domObjectHolders;

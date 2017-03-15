@@ -12,12 +12,11 @@ import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.ChromeApplication;
+import org.chromium.chrome.browser.AppHooks;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.StateChangeReason;
 import org.chromium.chrome.browser.feedback.FeedbackCollector;
 import org.chromium.chrome.browser.feedback.FeedbackReporter;
 import org.chromium.chrome.browser.profiles.Profile;
-import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.WindowAndroid;
 
@@ -60,8 +59,7 @@ public final class DomDistillerUIUtils {
         if (activity == null) return;
 
         if (sFeedbackReporter == null) {
-            ChromeApplication application = (ChromeApplication) activity.getApplication();
-            sFeedbackReporter = application.createFeedbackReporter();
+            sFeedbackReporter = AppHooks.get().createFeedbackReporter();
         }
         FeedbackCollector.create(activity, Profile.getLastUsedProfile(), url,
                 new FeedbackCollector.FeedbackResult() {
@@ -119,10 +117,7 @@ public final class DomDistillerUIUtils {
     private static Activity getActivityFromWebContents(WebContents webContents) {
         if (webContents == null) return null;
 
-        ContentViewCore contentView = ContentViewCore.fromWebContents(webContents);
-        if (contentView == null) return null;
-
-        WindowAndroid window = contentView.getWindowAndroid();
+        WindowAndroid window = webContents.getTopLevelNativeWindow();
         if (window == null) return null;
 
         return window.getActivity().get();

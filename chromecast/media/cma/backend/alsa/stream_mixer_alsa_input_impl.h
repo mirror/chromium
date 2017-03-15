@@ -7,6 +7,7 @@
 
 #include <deque>
 #include <memory>
+#include <string>
 
 #include "base/callback.h"
 #include "base/macros.h"
@@ -17,6 +18,7 @@
 #include "chromecast/media/cma/backend/alsa/slew_volume.h"
 #include "chromecast/media/cma/backend/alsa/stream_mixer_alsa.h"
 #include "chromecast/media/cma/backend/alsa/stream_mixer_alsa_input.h"
+#include "chromecast/public/volume_control.h"
 
 namespace base {
 class SingleThreadTaskRunner;
@@ -29,6 +31,8 @@ class MultiChannelResampler;
 
 namespace chromecast {
 namespace media {
+
+class FilterGroup;
 
 // Input queue implementation for StreamMixerAlsa. Each input source pushes
 // frames to an instance of StreamMixerAlsaInputImpl; this then signals the
@@ -90,6 +94,8 @@ class StreamMixerAlsaInputImpl : public StreamMixerAlsa::InputQueue {
   StreamMixerAlsaInputImpl(StreamMixerAlsaInput::Delegate* delegate,
                            int input_samples_per_second,
                            bool primary,
+                           const std::string& device_id,
+                           AudioContentType content_type,
                            StreamMixerAlsa* mixer);
 
   ~StreamMixerAlsaInputImpl() override;
@@ -115,9 +121,13 @@ class StreamMixerAlsaInputImpl : public StreamMixerAlsa::InputQueue {
   // StreamMixerAlsa::InputQueue implementation:
   int input_samples_per_second() const override;
   bool primary() const override;
+  std::string device_id() const override;
+  AudioContentType content_type() const override;
   bool IsDeleting() const override;
   void Initialize(const MediaPipelineBackendAlsa::RenderingDelay&
                       mixer_rendering_delay) override;
+  void set_filter_group(FilterGroup* filter_group) override;
+  FilterGroup* filter_group() override;
   int MaxReadSize() override;
   void GetResampledData(::media::AudioBus* dest, int frames) override;
   void OnSkipped() override;
@@ -129,6 +139,8 @@ class StreamMixerAlsaInputImpl : public StreamMixerAlsa::InputQueue {
                             mixer_rendering_delay) override;
   void SignalError(StreamMixerAlsaInput::MixerError error) override;
   void PrepareToDelete(const OnReadyToDeleteCb& delete_cb) override;
+  void SetContentTypeVolume(float volume) override;
+  void SetMuted(bool muted) override;
 
   // Tells the mixer to delete |this|. Makes sure not to call |delete_cb_| more
   // than once for |this|.
@@ -147,13 +159,20 @@ class StreamMixerAlsaInputImpl : public StreamMixerAlsa::InputQueue {
   StreamMixerAlsaInput::Delegate* const delegate_;
   const int input_samples_per_second_;
   const bool primary_;
+  const std::string device_id_;
+  const AudioContentType content_type_;
   StreamMixerAlsa* const mixer_;
+  FilterGroup* filter_group_;
   const scoped_refptr<base::SingleThreadTaskRunner> mixer_task_runner_;
   const scoped_refptr<base::SingleThreadTaskRunner> caller_task_runner_;
 
   double resample_ratio_;
 
   State state_;
+
+  float stream_volume_multiplier_;
+  float type_volume_multiplier_;
+  float mute_volume_multiplier_;
   SlewVolume slew_volume_;
 
   base::Lock queue_lock_;  // Lock for the following queue-related members.

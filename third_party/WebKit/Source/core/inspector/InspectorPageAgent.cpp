@@ -30,13 +30,13 @@
 
 #include "core/inspector/InspectorPageAgent.h"
 
+#include <memory>
 #include "bindings/core/v8/DOMWrapperWorld.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/ScriptRegexp.h"
 #include "core/HTMLNames.h"
 #include "core/dom/DOMImplementation.h"
 #include "core/dom/Document.h"
-#include "core/frame/FrameHost.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
@@ -57,6 +57,7 @@
 #include "core/loader/FrameLoader.h"
 #include "core/loader/resource/CSSStyleSheetResource.h"
 #include "core/loader/resource/ScriptResource.h"
+#include "core/page/Page.h"
 #include "platform/PlatformResourceLoader.h"
 #include "platform/UserGestureIndicator.h"
 #include "platform/loader/fetch/MemoryCache.h"
@@ -69,9 +70,10 @@
 #include "wtf/Vector.h"
 #include "wtf/text/Base64.h"
 #include "wtf/text/TextEncoding.h"
-#include <memory>
 
 namespace blink {
+
+using protocol::Response;
 
 namespace PageAgentState {
 static const char pageAgentEnabled[] = "pageAgentEnabled";
@@ -452,7 +454,9 @@ Response InspectorPageAgent::reload(
   return Response::OK();
 }
 
-Response InspectorPageAgent::navigate(const String& url, String* outFrameId) {
+Response InspectorPageAgent::navigate(const String& url,
+                                      Maybe<String> referrer,
+                                      String* outFrameId) {
   *outFrameId = frameId(m_inspectedFrames->root());
   return Response::OK();
 }
@@ -708,24 +712,34 @@ void InspectorPageAgent::didRunJavaScriptDialog(bool result) {
   frontend()->flush();
 }
 
-void InspectorPageAgent::didUpdateLayout() {
-  if (m_enabled && m_client)
-    m_client->pageLayoutInvalidated(false);
-}
-
 void InspectorPageAgent::didResizeMainFrame() {
   if (!m_inspectedFrames->root()->isMainFrame())
     return;
 #if !OS(ANDROID)
-  if (m_enabled && m_client)
-    m_client->pageLayoutInvalidated(true);
+  pageLayoutInvalidated(true);
 #endif
   frontend()->frameResized();
 }
 
-void InspectorPageAgent::didRecalculateStyle() {
+void InspectorPageAgent::didChangeViewport() {
+  pageLayoutInvalidated(false);
+}
+
+void InspectorPageAgent::will(const probe::UpdateLayout&) {}
+
+void InspectorPageAgent::did(const probe::UpdateLayout&) {
+  pageLayoutInvalidated(false);
+}
+
+void InspectorPageAgent::will(const probe::RecalculateStyle&) {}
+
+void InspectorPageAgent::did(const probe::RecalculateStyle&) {
+  pageLayoutInvalidated(false);
+}
+
+void InspectorPageAgent::pageLayoutInvalidated(bool resized) {
   if (m_enabled && m_client)
-    m_client->pageLayoutInvalidated(false);
+    m_client->pageLayoutInvalidated(resized);
 }
 
 void InspectorPageAgent::windowCreated(LocalFrame* created) {
@@ -775,9 +789,11 @@ InspectorPageAgent::buildObjectForFrameTree(LocalFrame* frame) {
             .setUrl(urlWithoutFragment(cachedResource->url()).getString())
             .setType(cachedResourceTypeJson(*cachedResource))
             .setMimeType(cachedResource->response().mimeType())
-            .setLastModified(cachedResource->response().lastModified())
             .setContentSize(cachedResource->response().decodedBodyLength())
             .build();
+    double lastModified = cachedResource->response().lastModified();
+    if (!std::isnan(lastModified))
+      resourceObject->setLastModified(lastModified);
     if (cachedResource->wasCanceled())
       resourceObject->setCanceled(true);
     else if (cachedResource->getStatus() == ResourceStatus::LoadError)
@@ -846,9 +862,10 @@ Response InspectorPageAgent::configureOverlay(Maybe<bool> suspended,
 
 Response InspectorPageAgent::getLayoutMetrics(
     std::unique_ptr<protocol::Page::LayoutViewport>* outLayoutViewport,
-    std::unique_ptr<protocol::Page::VisualViewport>* outVisualViewport) {
+    std::unique_ptr<protocol::Page::VisualViewport>* outVisualViewport,
+    std::unique_ptr<protocol::DOM::Rect>* outContentSize) {
   LocalFrame* mainFrame = m_inspectedFrames->root();
-  VisualViewport& visualViewport = mainFrame->host()->visualViewport();
+  VisualViewport& visualViewport = mainFrame->page()->visualViewport();
 
   mainFrame->document()->updateStyleAndLayoutIgnorePendingStylesheets();
 
@@ -867,6 +884,14 @@ Response InspectorPageAgent::getLayoutMetrics(
   float scale = visualViewport.scale();
   float scrollbarWidth = frameView->verticalScrollbarWidth() / scale;
   float scrollbarHeight = frameView->horizontalScrollbarHeight() / scale;
+
+  IntSize contentSize = frameView->getScrollableArea()->contentsSize();
+  *outContentSize = protocol::DOM::Rect::create()
+                        .setX(0)
+                        .setY(0)
+                        .setWidth(contentSize.width())
+                        .setHeight(contentSize.height())
+                        .build();
 
   *outVisualViewport =
       protocol::Page::VisualViewport::create()

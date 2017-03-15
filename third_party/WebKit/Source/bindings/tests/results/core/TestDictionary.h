@@ -87,13 +87,17 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
   EventTarget* eventTargetMember() const;
   void setEventTargetMember(EventTarget*);
 
+  bool hasGarbageCollectedRecordMember() const;
+  const HeapVector<std::pair<String, Member<TestObject>>>& garbageCollectedRecordMember() const;
+  void setGarbageCollectedRecordMember(const HeapVector<std::pair<String, Member<TestObject>>>&);
+
   bool hasInternalDictionarySequenceMember() const;
   const HeapVector<InternalDictionary>& internalDictionarySequenceMember() const;
   void setInternalDictionarySequenceMember(const HeapVector<InternalDictionary>&);
 
   bool hasLongMember() const;
-  int longMember() const;
-  void setLongMember(int);
+  int32_t longMember() const;
+  void setLongMember(int32_t);
 
   bool hasObjectMember() const;
   ScriptValue objectMember() const;
@@ -111,6 +115,10 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
   bool hasPrefixGetMember() const;
   ScriptValue getPrefixGetMember() const;
   void setPrefixGetMember(ScriptValue);
+
+  bool hasRecordMember() const;
+  const Vector<std::pair<String, int8_t>>& recordMember() const;
+  void setRecordMember(const Vector<std::pair<String, int8_t>>&);
 
   bool hasRestrictedDoubleMember() const;
   double restrictedDoubleMember() const;
@@ -199,14 +207,18 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
   bool m_hasEnumSequenceMember = false;
   Vector<String> m_enumSequenceMember;
   Member<EventTarget> m_eventTargetMember;
+  bool m_hasGarbageCollectedRecordMember = false;
+  HeapVector<std::pair<String, Member<TestObject>>> m_garbageCollectedRecordMember;
   bool m_hasInternalDictionarySequenceMember = false;
   HeapVector<InternalDictionary> m_internalDictionarySequenceMember;
   bool m_hasLongMember = false;
-  int m_longMember;
+  int32_t m_longMember;
   ScriptValue m_objectMember;
   ScriptValue m_objectOrNullMember;
   DoubleOrString m_otherDoubleOrStringMember;
   ScriptValue m_prefixGetMember;
+  bool m_hasRecordMember = false;
+  Vector<std::pair<String, int8_t>> m_recordMember;
   bool m_hasRestrictedDoubleMember = false;
   double m_restrictedDoubleMember;
   bool m_hasRuntimeMember = false;

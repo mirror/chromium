@@ -5,8 +5,8 @@
 #include "modules/netinfo/NetworkInformation.h"
 
 #include "core/dom/ExecutionContext.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/events/Event.h"
-#include "core/page/NetworkStateNotifier.h"
 #include "modules/EventTargetModules.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "wtf/text/WTFString.h"
@@ -129,14 +129,18 @@ void NetworkInformation::contextDestroyed(ExecutionContext*) {
 void NetworkInformation::startObserving() {
   if (!m_observing && !m_contextStopped) {
     m_type = networkStateNotifier().connectionType();
-    networkStateNotifier().addObserver(this, getExecutionContext());
+    networkStateNotifier().addConnectionObserver(
+        this,
+        TaskRunnerHelper::get(TaskType::Networking, getExecutionContext()));
     m_observing = true;
   }
 }
 
 void NetworkInformation::stopObserving() {
   if (m_observing) {
-    networkStateNotifier().removeObserver(this, getExecutionContext());
+    networkStateNotifier().removeConnectionObserver(
+        this,
+        TaskRunnerHelper::get(TaskType::Networking, getExecutionContext()));
     m_observing = false;
   }
 }

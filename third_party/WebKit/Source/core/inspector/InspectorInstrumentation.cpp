@@ -47,100 +47,87 @@
 #include "core/workers/MainThreadWorkletGlobalScope.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "core/workers/WorkerThread.h"
+#include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/FetchInitiatorInfo.h"
 
 namespace blink {
 
-namespace InspectorInstrumentation {
+namespace probe {
 
-AsyncTask::AsyncTask(ExecutionContext* context, void* task)
-    : AsyncTask(context, task, true) {}
+double ProbeBase::captureStartTime() const {
+  if (!m_startTime)
+    m_startTime = monotonicallyIncreasingTime();
+  return m_startTime;
+}
 
-AsyncTask::AsyncTask(ExecutionContext* context, void* task, bool enabled)
+double ProbeBase::captureEndTime() const {
+  if (!m_endTime)
+    m_endTime = monotonicallyIncreasingTime();
+  return m_endTime;
+}
+
+double ProbeBase::duration() const {
+  DCHECK(m_startTime);
+  return captureEndTime() - m_startTime;
+}
+
+AsyncTask::AsyncTask(ExecutionContext* context,
+                     void* task,
+                     const char* step,
+                     bool enabled)
     : m_debugger(enabled ? ThreadDebugger::from(toIsolate(context)) : nullptr),
-      m_task(task) {
+      m_task(task),
+      m_recurring(step) {
+  if (m_recurring) {
+    TRACE_EVENT_FLOW_STEP0("devtools.timeline.async", "AsyncTask", task,
+                           step ? step : "");
+  } else {
+    TRACE_EVENT_FLOW_END0("devtools.timeline.async", "AsyncTask", task);
+  }
   if (m_debugger)
     m_debugger->asyncTaskStarted(m_task);
 }
 
 AsyncTask::~AsyncTask() {
-  if (m_debugger)
+  if (m_debugger) {
     m_debugger->asyncTaskFinished(m_task);
+    if (!m_recurring)
+      m_debugger->asyncTaskCanceled(m_task);
+  }
 }
 
 void asyncTaskScheduled(ExecutionContext* context,
                         const String& name,
                         void* task) {
+  TRACE_EVENT_FLOW_BEGIN1("devtools.timeline.async", "AsyncTask", task, "data",
+                          InspectorAsyncTask::data(name));
   if (ThreadDebugger* debugger = ThreadDebugger::from(toIsolate(context)))
-    debugger->asyncTaskScheduled(name, task, false);
+    debugger->asyncTaskScheduled(name, task, true);
 }
 
-void asyncTaskScheduled(ExecutionContext* context,
-                        const String& name,
-                        void* task,
-                        bool recurring) {
-  if (ThreadDebugger* debugger = ThreadDebugger::from(toIsolate(context)))
-    debugger->asyncTaskScheduled(name, task, recurring);
+void asyncTaskScheduledBreakable(ExecutionContext* context,
+                                 const char* name,
+                                 void* task) {
+  asyncTaskScheduled(context, name, task);
+  breakableLocation(context, name);
 }
 
 void asyncTaskCanceled(ExecutionContext* context, void* task) {
   if (ThreadDebugger* debugger = ThreadDebugger::from(toIsolate(context)))
     debugger->asyncTaskCanceled(task);
+  TRACE_EVENT_FLOW_END0("devtools.timeline.async", "AsyncTask", task);
+}
+
+void asyncTaskCanceledBreakable(ExecutionContext* context,
+                                const char* name,
+                                void* task) {
+  asyncTaskCanceled(context, task);
+  breakableLocation(context, name);
 }
 
 void allAsyncTasksCanceled(ExecutionContext* context) {
   if (ThreadDebugger* debugger = ThreadDebugger::from(toIsolate(context)))
     debugger->allAsyncTasksCanceled();
-}
-
-NativeBreakpoint::NativeBreakpoint(ExecutionContext* context,
-                                   const char* name,
-                                   bool sync,
-                                   bool trace)
-    : m_instrumentingAgents(instrumentingAgentsFor(context)), m_sync(sync) {
-  if (!m_instrumentingAgents ||
-      !m_instrumentingAgents->hasInspectorDOMDebuggerAgents())
-    return;
-  for (InspectorDOMDebuggerAgent* domDebuggerAgent :
-       m_instrumentingAgents->inspectorDOMDebuggerAgents())
-    domDebuggerAgent->allowNativeBreakpoint(name, nullptr, m_sync);
-  if (trace) {
-    TRACE_EVENT_INSTANT1(TRACE_DISABLED_BY_DEFAULT("devtools.timeline"),
-                         "InstrumentedAPI", TRACE_EVENT_SCOPE_THREAD, "data",
-                         InspectorInstrumentedAPIEvent::data(name));
-  }
-}
-
-NativeBreakpoint::NativeBreakpoint(ExecutionContext* context,
-                                   const char* name,
-                                   bool sync)
-    : NativeBreakpoint(context, name, sync, false) {}
-
-NativeBreakpoint::NativeBreakpoint(ExecutionContext* context,
-                                   EventTarget* eventTarget,
-                                   Event* event)
-    : m_instrumentingAgents(instrumentingAgentsFor(context)), m_sync(false) {
-  if (!m_instrumentingAgents ||
-      !m_instrumentingAgents->hasInspectorDOMDebuggerAgents())
-    return;
-  Node* node = eventTarget->toNode();
-  String targetName = node ? node->nodeName() : eventTarget->interfaceName();
-  for (InspectorDOMDebuggerAgent* domDebuggerAgent :
-       m_instrumentingAgents->inspectorDOMDebuggerAgents())
-    domDebuggerAgent->allowNativeBreakpoint(event->type(), &targetName, m_sync);
-}
-
-NativeBreakpoint::~NativeBreakpoint() {
-  if (m_sync || !m_instrumentingAgents ||
-      !m_instrumentingAgents->hasInspectorDOMDebuggerAgents())
-    return;
-  for (InspectorDOMDebuggerAgent* domDebuggerAgent :
-       m_instrumentingAgents->inspectorDOMDebuggerAgents())
-    domDebuggerAgent->cancelNativeBreakpoint();
-}
-
-bool isDebuggerPaused(LocalFrame*) {
-  return MainThreadDebugger::instance()->isPaused();
 }
 
 void didReceiveResourceResponseButCanceled(LocalFrame* frame,

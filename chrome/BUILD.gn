@@ -213,9 +213,6 @@ if (!is_android && !is_mac) {
         "/DELAYLOAD:ole32.dll",
         "/DELAYLOAD:oleaut32.dll",
       ]
-
-      # Turn on CFG for this project.
-      configs += [ "//build/config/win:win_msvc_cfg" ]
     } else if (use_aura) {
       # Non-Windows aura entrypoint.
       sources += [ "app/chrome_exe_main_aura.cc" ]
@@ -251,6 +248,12 @@ if (!is_android && !is_mac) {
       ]
 
       ldflags = [ "-pie" ]
+
+      # Chrome OS debug builds for arm need to pass --long-plt to the linker.
+      # See https://bugs.chromium.org/p/chromium/issues/detail?id=583532
+      if (is_chromeos && is_debug && target_cpu == "arm") {
+        ldflags += [ "-Wl,--long-plt" ]
+      }
 
       if (use_pango || use_cairo) {
         # Needed for chrome_main.cc initialization of libraries.
@@ -457,10 +460,7 @@ if (is_win) {
 } else if (is_mac) {
   chrome_helper_name = chrome_product_full_name + " Helper"
   chrome_framework_name = chrome_product_full_name + " Framework"
-
-  if (enable_xpc_notifications) {
-    chrome_framework_version = "A"
-  }
+  chrome_framework_version = "A"
 
   group("chrome") {
     deps = [
@@ -655,6 +655,13 @@ if (is_win) {
       # non-component builds, will ensure the export symbol table is correct.
       ":verify_chrome_framework_order",
     ]
+
+    # Only official builds that include Widevine need the widevine
+    # signature file.
+    if (is_chrome_branded && enable_pepper_cdms) {
+      sources += [ "$root_out_dir/$chrome_framework_name.sig" ]
+      public_deps += [ ":sign_chrome_framework_for_widevine" ]
+    }
   }
 
   action("clean_up_old_versions") {
@@ -868,12 +875,25 @@ if (is_win) {
         ":widevine_cdm_library_copy",
         "//third_party/widevine/cdm:widevinecdmadapter",
       ]
+
+      # Signatures are only generated for official chrome.
+      if (is_chrome_branded) {
+        sources += [
+          "$root_out_dir/$widevine_cdm_path/widevinecdmadapter.plugin.sig",
+          "$root_out_dir/libwidevinecdm.dylib.sig",
+        ]
+        public_deps += [ ":sign_cdm_adapter_for_widevine" ]
+      }
     }
 
     copy("widevine_cdm_library_copy") {
       sources = [
         "$root_out_dir/$widevine_cdm_path/libwidevinecdm.dylib",
       ]
+      if (is_chrome_branded) {
+        sources +=
+            [ "$root_out_dir/$widevine_cdm_path/libwidevinecdm.dylib.sig" ]
+      }
       outputs = [
         "$root_out_dir/{{source_file_part}}",
       ]
@@ -891,6 +911,27 @@ if (is_win) {
       ]
       public_deps = [
         "//third_party/widevine/cdm:widevine_cdm_manifest",
+      ]
+    }
+
+    widevine_sign_file("sign_cdm_adapter_for_widevine") {
+      file = "$root_out_dir/$widevine_cdm_path/widevinecdmadapter.plugin"
+      flags = 0
+      deps = [
+        "//third_party/widevine/cdm:widevinecdmadapter",
+      ]
+    }
+
+    widevine_sign_file("sign_chrome_framework_for_widevine") {
+      file = "$root_out_dir/$chrome_framework_name.framework/"
+      if (defined(chrome_framework_version)) {
+        file += "Versions/$chrome_framework_version/"
+      }
+      file += "$chrome_framework_name"
+      flags = 1
+      signature_file = "$root_out_dir/$chrome_framework_name.sig"
+      deps = [
+        ":chrome_framework",
       ]
     }
   }
@@ -985,6 +1026,7 @@ if (is_win) {
       "//components/crash/content/app",
       "//components/policy:generated",
       "//content/public/app:both",
+      "//headless:headless_shell_lib",
       "//pdf",
       "//third_party/cld",
     ]
@@ -1143,6 +1185,10 @@ if (is_win) {
       "$root_out_dir/crashpad_handler",
     ]
 
+    if (enable_xpc_notifications) {
+      _chrome_symbols_sources += [ "$root_out_dir/AlertNotificationService.xpc/Contents/MacOS/AlertNotificationService" ]
+    }
+
     # It is possible to run dump_syms on unstripped products without dSYMs,
     # but doing so isn't logical and won't happen in practice.
     action_foreach("chrome_dump_syms") {
@@ -1171,6 +1217,10 @@ if (is_win) {
         "//breakpad:dump_syms",
         "//third_party/crashpad/crashpad/handler:crashpad_handler",
       ]
+
+      if (enable_xpc_notifications) {
+        deps += [ "//chrome/browser/ui/cocoa/notifications:alert_notification_xpc_service" ]
+      }
     }
 
     action("chrome_dsym_archive") {
@@ -1186,6 +1236,10 @@ if (is_win) {
         "$root_out_dir/$chrome_product_full_name.dSYM",
         "$root_out_dir/crashpad_handler.dSYM",
       ]
+
+      if (enable_xpc_notifications) {
+        _dsyms += [ "$root_out_dir/AlertNotificationService.dSYM" ]
+      }
 
       sources = _chrome_symbols_sources
 
@@ -1204,6 +1258,10 @@ if (is_win) {
         ":chrome_helper_app",
         "//third_party/crashpad/crashpad/handler:crashpad_handler",
       ]
+
+      if (enable_xpc_notifications) {
+        deps += [ "//chrome/browser/ui/cocoa/notifications:alert_notification_xpc_service" ]
+      }
     }
   } else {
     group("chrome_dump_syms") {
@@ -1344,23 +1402,30 @@ group("resources") {
 }
 
 group("extra_resources") {
+  # Deps should be same as those in chrome_extra_paks() within chrome_paks.gni.
   public_deps = [
-    "//chrome/browser/resources:component_extension_resources",
     "//chrome/browser/resources:invalidations_resources",
     "//chrome/browser/resources:net_internals_resources",
-    "//chrome/browser/resources:options_resources",
     "//chrome/browser/resources:password_manager_internals_resources",
     "//chrome/browser/resources:policy_resources",
     "//chrome/browser/resources:quota_internals_resources",
-    "//chrome/browser/resources:settings_resources",
     "//chrome/browser/resources:task_scheduler_internals_resources",
     "//chrome/browser/resources:translate_internals_resources",
     "//chrome/browser/resources:webapks_ui_resources",
   ]
 
+  if (!is_android && !is_ios) {
+    public_deps += [
+      "//chrome/browser/resources:component_extension_resources",
+      "//chrome/browser/resources:options_resources",
+      "//chrome/browser/resources:settings_resources",
+    ]
+  }
+
   if (is_chromeos) {
     public_deps += [ "//chrome/browser/resources/chromeos/chromevox" ]
     public_deps += [ "//chrome/browser/resources/chromeos/select_to_speak" ]
+    public_deps += [ "//chrome/browser/resources/chromeos/switch_access" ]
   }
 
   if (enable_extensions) {
@@ -1432,14 +1497,16 @@ chrome_paks("packed_resources") {
 
 repack("browser_tests_pak") {
   sources = [
-    "$root_gen_dir/chrome/options_test_resources.pak",
     "$root_gen_dir/chrome/webui_test_resources.pak",
   ]
   output = "$root_out_dir/browser_tests.pak"
   deps = [
-    "//chrome/browser/resources:options_test_resources",
     "//chrome/test/data:webui_test_resources",
   ]
+  if (!is_android && !is_ios) {
+    sources += [ "$root_gen_dir/chrome/options_test_resources.pak" ]
+    deps += [ "//chrome/browser/resources:options_test_resources" ]
+  }
 }
 
 group("strings") {
@@ -1484,7 +1551,7 @@ if (is_android) {
 
   java_cpp_enum("website_settings_action_javagen") {
     sources = [
-      "browser/ui/website_settings/website_settings.h",
+      "browser/ui/page_info/website_settings.h",
     ]
   }
 

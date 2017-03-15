@@ -5,7 +5,7 @@
 #import <XCTest/XCTest.h>
 
 #include "components/strings/grit/components_strings.h"
-#import "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.h"
+#include "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/chrome/test/earl_grey/chrome_earl_grey.h"
 #import "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h"
@@ -15,6 +15,7 @@
 
 using chrome_test_util::ButtonWithAccessibilityLabel;
 using chrome_test_util::ButtonWithAccessibilityLabelId;
+using chrome_test_util::NavigationBarDoneButton;
 
 @interface ClearBrowsingDataSettingsTestCase : ChromeTestCase
 @end
@@ -40,8 +41,7 @@ using chrome_test_util::ButtonWithAccessibilityLabelId;
 }
 
 - (void)exitSettingsMenu {
-  [[EarlGrey selectElementWithMatcher:ButtonWithAccessibilityLabelId(
-                                          IDS_IOS_NAVIGATION_BAR_DONE_BUTTON)]
+  [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
       performAction:grey_tap()];
   // Wait for UI components to finish loading.
   [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];

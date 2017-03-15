@@ -25,7 +25,6 @@
 
 #include "core/layout/LayoutMedia.h"
 
-#include "core/frame/FrameHost.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/VisualViewport.h"
 #include "core/html/HTMLMediaElement.h"
@@ -54,8 +53,6 @@ void LayoutMedia::layout() {
 
   LayoutState state(*this);
 
-  Optional<LayoutUnit> newPanelWidth;
-
 // Iterate the children in reverse order so that the media controls are laid
 // out before the text track container. This is to ensure that the text
 // track rendering has an up-to-date position of the media controls for
@@ -83,7 +80,6 @@ void LayoutMedia::layout() {
     LayoutUnit width = newRect.width();
     if (child->node()->isMediaControls()) {
       width = computePanelWidth(newRect);
-      newPanelWidth = width;
     }
 
     LayoutBox* layoutBox = toLayoutBox(child);
@@ -97,25 +93,18 @@ void LayoutMedia::layout() {
   }
 
   clearNeedsLayout();
-
-  // Notify our MediaControls that a layout has happened.
-  if (mediaElement() && mediaElement()->mediaControls() &&
-      newPanelWidth.has_value()) {
-    if (!m_lastReportedPanelWidth.has_value() ||
-        m_lastReportedPanelWidth.value() != newPanelWidth.value()) {
-      mediaElement()->mediaControls()->notifyPanelWidthChanged(
-          newPanelWidth.value());
-      // Store the last value we reported, so we know if it has changed.
-      m_lastReportedPanelWidth = newPanelWidth.value();
-    }
-  }
 }
 
 bool LayoutMedia::isChildAllowed(LayoutObject* child,
-                                 const ComputedStyle&) const {
+                                 const ComputedStyle& style) const {
   // Two types of child layout objects are allowed: media controls
   // and the text track container. Filter children by node type.
   ASSERT(child->node());
+
+  // Out-of-flow positioned or floating child breaks layout hierarchy.
+  // This check can be removed if ::-webkit-media-controls is made internal.
+  if (style.hasOutOfFlowPosition() || style.isFloating())
+    return false;
 
   // The user agent stylesheet (mediaControls.css) has
   // ::-webkit-media-controls { display: flex; }. If author style
@@ -146,17 +135,17 @@ LayoutUnit LayoutMedia::computePanelWidth(const LayoutRect& mediaRect) const {
   if (mediaElement() && mediaElement()->isFullscreen())
     return mediaRect.width();
 
-  FrameHost* frameHost = document().frameHost();
-  LocalFrame* mainFrame = document().page()->deprecatedLocalMainFrame();
+  Page* page = document().page();
+  LocalFrame* mainFrame = page->deprecatedLocalMainFrame();
   FrameView* pageView = mainFrame ? mainFrame->view() : nullptr;
-  if (!frameHost || !mainFrame || !pageView)
+  if (!mainFrame || !pageView)
     return mediaRect.width();
 
   if (pageView->horizontalScrollbarMode() != ScrollbarAlwaysOff)
     return mediaRect.width();
 
   // On desktop, this will include scrollbars when they stay visible.
-  const LayoutUnit visibleWidth(frameHost->visualViewport().visibleWidth());
+  const LayoutUnit visibleWidth(page->visualViewport().visibleWidth());
   const LayoutUnit absoluteXOffset(
       localToAbsolute(
           FloatPoint(mediaRect.location()),

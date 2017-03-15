@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "media/gpu/avda_state_provider.h"
 #include "media/gpu/media_gpu_export.h"
+#include "media/gpu/surface_texture_gl_owner.h"
 
 namespace gpu {
 namespace gles2 {
@@ -26,7 +27,7 @@ class SurfaceTexture;
 namespace media {
 class AVDACodecImage;
 class AVDASharedState;
-class VideoCodecBridge;
+class MediaCodecBridge;
 
 // AVDAPictureBufferManager is used by AVDA to associate its PictureBuffers with
 // MediaCodec output buffers. It attaches AVDACodecImages to the PictureBuffer
@@ -42,14 +43,21 @@ class MEDIA_GPU_EXPORT AVDAPictureBufferManager {
   explicit AVDAPictureBufferManager(AVDAStateProvider* state_provider);
   virtual ~AVDAPictureBufferManager();
 
-  // Must be called before anything else. If |surface_id| is |kNoSurfaceID|
-  // then a new SurfaceTexture will be returned. Otherwise, the corresponding
-  // SurfaceView will be returned.
+  // Call either InitializeForOverlay or InitializeForSurfaceTexture before
+  // anything else.  InitializeForOverlay will set us up to render codec buffers
+  // at the approrpriate time for display, but will assume that consuming the
+  // resulting buffers is handled elsewhere (e.g., SurfaceFlinger).
   //
-  // May be called multiple times to switch to a new |surface_id|. Picture
-  // buffers will be updated to use the new surface during the call to
-  // UseCodecBufferForPictureBuffer().
-  gl::ScopedJavaSurface Initialize(int surface_id);
+  // InitializeForSurfaceTexture will create a SurfaceTexture and return the
+  // surface for it.  We will arrange to consume the buffers at the right time,
+  // in addition to releasing codec buffers for rendering.
+  //
+  // One may call these multiple times to change between overlay and ST.
+  //
+  // Picture buffers will be updated to reflect the new surface during the call
+  // to UseCodecBufferForPicture().
+  void InitializeForOverlay();
+  gl::ScopedJavaSurface InitializeForSurfaceTexture();
 
   void Destroy(const PictureBufferMap& buffers);
 
@@ -74,7 +82,7 @@ class MEDIA_GPU_EXPORT AVDAPictureBufferManager {
   // Called when the MediaCodec instance changes. If |codec| is nullptr the
   // MediaCodec is being destroyed. Previously provided codecs should no longer
   // be referenced.
-  void CodecChanged(VideoCodecBridge* codec);
+  void CodecChanged(MediaCodecBridge* codec);
 
   // Whether the pictures buffers are overlayable.
   bool ArePicturesOverlayable();
@@ -110,9 +118,9 @@ class MEDIA_GPU_EXPORT AVDAPictureBufferManager {
 
   // The SurfaceTexture to render to. Non-null after Initialize() if
   // we're not rendering to a SurfaceView.
-  scoped_refptr<gl::SurfaceTexture> surface_texture_;
+  scoped_refptr<SurfaceTextureGLOwner> surface_texture_;
 
-  VideoCodecBridge* media_codec_;
+  MediaCodecBridge* media_codec_;
 
   // Picture buffer IDs that are out for display. Stored in order of frames as
   // they are returned from the decoder.

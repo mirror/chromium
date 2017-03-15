@@ -28,8 +28,9 @@
 #include "core/html/HTMLCanvasElement.h"
 
 #include <math.h>
-#include <v8.h>
+
 #include <memory>
+
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptController.h"
@@ -41,7 +42,6 @@
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/fileapi/File.h"
-#include "core/frame/FrameHost.h"
 #include "core/frame/ImageBitmap.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
@@ -79,6 +79,7 @@
 #include "platform/transforms/AffineTransform.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebTraceLocation.h"
+#include "v8/include/v8.h"
 #include "wtf/CheckedNumeric.h"
 #include "wtf/PtrUtil.h"
 
@@ -272,7 +273,7 @@ CanvasRenderingContext* HTMLCanvasElement::getCanvasRenderingContext(
   if (!m_context)
     return nullptr;
 
-  InspectorInstrumentation::didCreateCanvasContext(&document());
+  probe::didCreateCanvasContext(&document());
 
   if (m_context->is3d()) {
     updateExternallyAllocatedMemory();
@@ -314,7 +315,7 @@ void HTMLCanvasElement::didDraw(const FloatRect& rect) {
   if (layoutObject())
     layoutObject()->setMayNeedPaintInvalidation();
   if (m_context && m_context->is2d() && m_context->shouldAntialias() &&
-      page() && page()->deviceScaleFactor() > 1.0f) {
+      page() && page()->deviceScaleFactorDeprecated() > 1.0f) {
     FloatRect inflatedRect = rect;
     inflatedRect.inflate(1);
     m_dirtyRect.unite(inflatedRect);
@@ -328,7 +329,6 @@ void HTMLCanvasElement::didDraw(const FloatRect& rect) {
 void HTMLCanvasElement::finalizeFrame() {
   if (hasImageBuffer())
     m_imageBuffer->finalizeFrame();
-  m_context->incrementFrameCount();
   notifyListenersCanvasChanged();
 }
 
@@ -338,7 +338,8 @@ void HTMLCanvasElement::didDisableAcceleration() {
   didDraw(FloatRect(0, 0, size().width(), size().height()));
 }
 
-void HTMLCanvasElement::restoreCanvasMatrixClipStack(SkCanvas* canvas) const {
+void HTMLCanvasElement::restoreCanvasMatrixClipStack(
+    PaintCanvas* canvas) const {
   if (m_context)
     m_context->restoreCanvasMatrixClipStack(canvas);
 }
@@ -517,10 +518,7 @@ void HTMLCanvasElement::notifyListenersCanvasChanged() {
         FloatSize());
     if (status != NormalSourceImageStatus)
       return;
-    // TODO(ccameron): Canvas should produce sRGB images.
-    // https://crbug.com/672299
-    sk_sp<SkImage> image = sourceImage->imageForCurrentFrame(
-        ColorBehavior::transformToGlobalTarget());
+    sk_sp<SkImage> image = sourceImage->imageForCurrentFrame();
     for (CanvasDrawListener* listener : m_listeners) {
       if (listener->needsNewFrame()) {
         listener->sendNewFrame(image);
@@ -651,10 +649,7 @@ ImageData* HTMLCanvasElement::toImageData(SourceDrawingBuffer sourceBuffer,
     snapshot = buffer()->newSkImageSnapshot(PreferNoAcceleration, reason);
   } else if (placeholderFrame()) {
     DCHECK(placeholderFrame()->originClean());
-    // TODO(ccameron): Canvas should produce sRGB images.
-    // https://crbug.com/672299
-    snapshot = placeholderFrame()->imageForCurrentFrame(
-        ColorBehavior::transformToGlobalTarget());
+    snapshot = placeholderFrame()->imageForCurrentFrame();
   }
 
   if (snapshot) {
@@ -781,7 +776,7 @@ void HTMLCanvasElement::addListener(CanvasDrawListener* listener) {
 }
 
 void HTMLCanvasElement::removeListener(CanvasDrawListener* listener) {
-  m_listeners.remove(listener);
+  m_listeners.erase(listener);
 }
 
 SecurityOrigin* HTMLCanvasElement::getSecurityOrigin() const {
@@ -1257,8 +1252,11 @@ PassRefPtr<Image> HTMLCanvasElement::getSourceImageForCanvas(
     return result;
   }
 
-  if (m_context->getContextType() == CanvasRenderingContext::ContextImageBitmap)
+  if (m_context->getContextType() ==
+      CanvasRenderingContext::ContextImageBitmap) {
+    *status = NormalSourceImageStatus;
     return m_context->getImage(hint, reason);
+  }
 
   sk_sp<SkImage> skImage;
   // TODO(ccameron): Canvas should produce sRGB images.
@@ -1283,8 +1281,7 @@ PassRefPtr<Image> HTMLCanvasElement::getSourceImageForCanvas(
     }
     RefPtr<Image> image = renderingContext()->getImage(hint, reason);
     if (image) {
-      skImage =
-          image->imageForCurrentFrame(ColorBehavior::transformToGlobalTarget());
+      skImage = image->imageForCurrentFrame();
     } else {
       skImage = createTransparentSkImage(size());
     }
@@ -1341,6 +1338,17 @@ ScriptPromise HTMLCanvasElement::createImageBitmap(
   return ImageBitmapSource::fulfillImageBitmap(
       scriptState,
       isPaintable() ? ImageBitmap::create(this, cropRect, options) : nullptr);
+}
+
+void HTMLCanvasElement::setPlaceholderFrame(
+    RefPtr<StaticBitmapImage> image,
+    WeakPtr<OffscreenCanvasFrameDispatcher> dispatcher,
+    RefPtr<WebTaskRunner> taskRunner,
+    unsigned resourceId) {
+  OffscreenCanvasPlaceholder::setPlaceholderFrame(
+      std::move(image), std::move(dispatcher), std::move(taskRunner),
+      resourceId);
+  notifyListenersCanvasChanged();
 }
 
 bool HTMLCanvasElement::isOpaque() const {
@@ -1435,7 +1443,7 @@ void HTMLCanvasElement::createLayer() {
   // frame-less HTML canvas's document is reparenting under another frame.
   // See crbug.com/683172.
   if (frame) {
-    layerTreeView = frame->host()->chromeClient().getWebLayerTreeView(frame);
+    layerTreeView = frame->page()->chromeClient().getWebLayerTreeView(frame);
     m_surfaceLayerBridge =
         WTF::wrapUnique(new CanvasSurfaceLayerBridge(this, layerTreeView));
     // Creates a placeholder layer first before Surface is created.

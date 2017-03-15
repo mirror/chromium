@@ -60,6 +60,7 @@ class DownloadUIAdapterDelegate : public DownloadUIAdapter::Delegate {
   bool IsTemporarilyHiddenInUI(const ClientId& client_id) override {
     return is_temporarily_hidden;
   }
+  void SetUIAdapter(DownloadUIAdapter* ui_adapter) override{};
 
   bool is_visible = true;
   bool is_temporarily_hidden = false;
@@ -172,6 +173,7 @@ class DownloadUIAdapterTest : public testing::Test,
 
   bool items_loaded;
   std::vector<std::string> added_guids, updated_guids, deleted_guids;
+  int64_t download_progress_bytes;
   std::unique_ptr<MockOfflinePageModel> model;
   DownloadUIAdapterDelegate* adapter_delegate;
   std::unique_ptr<DownloadUIAdapter> adapter;
@@ -219,6 +221,7 @@ void DownloadUIAdapterTest::ItemAdded(const DownloadUIItem& item) {
 
 void DownloadUIAdapterTest::ItemUpdated(const DownloadUIItem& item) {
   updated_guids.push_back(item.guid);
+  download_progress_bytes += item.download_progress_bytes;
 }
 
 void DownloadUIAdapterTest::ItemDeleted(const std::string& guid) {
@@ -231,9 +234,10 @@ void DownloadUIAdapterTest::PumpLoop() {
 
 int64_t DownloadUIAdapterTest::AddRequest(const GURL& url,
                                           const ClientId& client_id) {
-  return request_coordinator()->SavePageLater(
-      url, client_id, /* user_requested */ true,
-      RequestCoordinator::RequestAvailability::ENABLED_FOR_OFFLINER);
+  RequestCoordinator::SavePageLaterParams params;
+  params.url = url;
+  params.client_id = client_id;
+  return request_coordinator()->SavePageLater(params);
 }
 
 TEST_F(DownloadUIAdapterTest, InitialLoad) {
@@ -437,6 +441,37 @@ TEST_F(DownloadUIAdapterTest, RequestBecomesPage) {
   item = adapter->GetItem(last_updated_guid);
   EXPECT_NE(nullptr, item);
   EXPECT_EQ(DownloadUIItem::DownloadState::COMPLETE, item->download_state);
+}
+
+TEST_F(DownloadUIAdapterTest, RemoveObserversWhenClearingCache) {
+  PumpLoop();
+  EXPECT_TRUE(items_loaded);
+
+  // Remove this from the adapter's observer list.  This should cause the cache
+  // to be cleared.
+  adapter->RemoveObserver(this);
+  items_loaded = false;
+
+  PumpLoop();
+
+  adapter->AddObserver(this);
+  PumpLoop();
+  EXPECT_TRUE(items_loaded);
+}
+
+TEST_F(DownloadUIAdapterTest, UpdateProgress) {
+  offliner_stub->enable_callback(true);
+  AddRequest(GURL(kTestUrl), kTestClientId1);
+  PumpLoop();
+
+  const DownloadUIItem* item = adapter->GetItem(kTestGuid1);
+
+  ASSERT_NE(nullptr, item);
+  EXPECT_GT(item->download_progress_bytes, 0LL);
+  // Updated 2 times - with progress and to 'completed'.
+  EXPECT_EQ(2UL, updated_guids.size());
+  EXPECT_EQ(kTestGuid1, updated_guids[0]);
+  EXPECT_EQ(kTestGuid1, updated_guids[1]);
 }
 
 }  // namespace offline_pages

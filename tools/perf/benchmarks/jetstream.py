@@ -48,8 +48,8 @@ class _JetstreamMeasurement(legacy_page_test.LegacyPageTest):
   def ValidateAndMeasurePage(self, page, tab, results):
     del page  # unused
     tab.WaitForDocumentReadyStateToBeComplete()
-    tab.EvaluateJavaScript2('JetStream.start()')
-    result = tab.WaitForJavaScriptCondition2("""
+    tab.EvaluateJavaScript('JetStream.start()')
+    result = tab.WaitForJavaScriptCondition("""
         (function() {
           for (var i = 0; i < __results.length; i++) {
             if (!__results[i].indexOf('Raw results: ')) return __results[i];
@@ -77,6 +77,7 @@ class _JetstreamMeasurement(legacy_page_test.LegacyPageTest):
 
 
 @benchmark.Disabled('android')
+@benchmark.Owner(emails=['bmeurer@chromium.org', 'mvstanton@chromium.org'])
 class Jetstream(perf_benchmark.PerfBenchmark):
   test = _JetstreamMeasurement
 

@@ -20,6 +20,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
+#include "base/supports_user_data.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
@@ -27,10 +28,12 @@
 #include "content/browser/loader/global_routing_id.h"
 #include "content/browser/site_instance_impl.h"
 #include "content/browser/webui/web_ui_impl.h"
-#include "content/common/accessibility_mode_enums.h"
+#include "content/common/accessibility_mode.h"
 #include "content/common/ax_content_node_data.h"
 #include "content/common/content_export.h"
+#include "content/common/content_security_policy/content_security_policy.h"
 #include "content/common/download/mhtml_save_status.h"
+#include "content/common/features.h"
 #include "content/common/frame.mojom.h"
 #include "content/common/frame_message_enums.h"
 #include "content/common/frame_replication_state.h"
@@ -59,7 +62,7 @@ struct FrameHostMsg_DidCommitProvisionalLoad_Params;
 struct FrameHostMsg_DidFailProvisionalLoadWithError_Params;
 struct FrameHostMsg_OpenURL_Params;
 struct FrameMsg_TextTrackSettings_Params;
-#if defined(USE_EXTERNAL_POPUP_MENU)
+#if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
 struct FrameHostMsg_ShowPopup_Params;
 #endif
 
@@ -78,9 +81,7 @@ class Range;
 }
 
 namespace content {
-class AppWebMessagePortMessageFilter;
 class AssociatedInterfaceProviderImpl;
-class CrossProcessFrameConnector;
 class FeaturePolicy;
 class FrameTree;
 class FrameTreeNode;
@@ -112,6 +113,7 @@ class CreateNewWindowParams;
 
 class CONTENT_EXPORT RenderFrameHostImpl
     : public RenderFrameHost,
+      public base::SupportsUserData,
       NON_EXPORTED_BASE(public mojom::FrameHost),
       public BrowserAccessibilityDelegate,
       public SiteInstanceImpl::Observer,
@@ -131,13 +133,13 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   static RenderFrameHostImpl* FromID(int process_id, int routing_id);
   static RenderFrameHostImpl* FromAXTreeID(
-      AXTreeIDRegistry::AXTreeID ax_tree_id);
+      ui::AXTreeIDRegistry::AXTreeID ax_tree_id);
 
   ~RenderFrameHostImpl() override;
 
   // RenderFrameHost
   int GetRoutingID() override;
-  AXTreeIDRegistry::AXTreeID GetAXTreeID() override;
+  ui::AXTreeIDRegistry::AXTreeID GetAXTreeID() override;
   SiteInstanceImpl* GetSiteInstance() override;
   RenderProcessHost* GetProcess() override;
   RenderWidgetHostView* GetView() override;
@@ -180,7 +182,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void RequestTextSurroundingSelection(
       const TextSurroundingSelectionCallback& callback,
       int max_length) override;
-  void RequestFocusedFormFieldData(FormFieldDataCallback& callback) override;
   void AllowBindings(int binding_flags) override;
   int GetEnabledBindings() const override;
 
@@ -313,27 +314,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   GlobalFrameRoutingId GetGlobalFrameRoutingId();
 
-#if defined(OS_ANDROID)
-  scoped_refptr<AppWebMessagePortMessageFilter>
-  GetAppWebMessagePortMessageFilter(int routing_id);
-#endif
-
-  // This function is called when this is a swapped out RenderFrameHost that
-  // lives in the same process as the parent frame. The
-  // |cross_process_frame_connector| allows the non-swapped-out
-  // RenderFrameHost for a frame to communicate with the parent process
-  // so that it may composite drawing data.
-  //
-  // Ownership is not transfered.
-  void set_cross_process_frame_connector(
-      CrossProcessFrameConnector* cross_process_frame_connector) {
-    cross_process_frame_connector_ = cross_process_frame_connector;
-  }
-
-  void set_render_frame_proxy_host(RenderFrameProxyHost* proxy) {
-    render_frame_proxy_host_ = proxy;
-  }
-
   // The unique ID of the latest NavigationEntry that this RenderFrameHost is
   // showing. This may change even when this frame hasn't committed a page,
   // such as for a new subframe navigation in a different frame.
@@ -464,14 +444,22 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void ExtendSelectionAndDelete(size_t before, size_t after);
 
   // Deletes text before and after the current cursor position, excluding the
-  // selection.
+  // selection. The lengths are supplied in Java chars (UTF-16 Code Unit), not
+  // in code points or in glyphs.
   void DeleteSurroundingText(size_t before, size_t after);
+
+  // Deletes text before and after the current cursor position, excluding the
+  // selection. The lengths are supplied in code points, not in Java chars
+  // (UTF-16 Code Unit) or in glyphs. Do nothing if there are one or more
+  // invalid surrogate pairs in the requested range.
+  void DeleteSurroundingTextInCodePoints(int before, int after);
 
   // Notifies the RenderFrame that the JavaScript message that was shown was
   // closed by the user.
   void JavaScriptDialogClosed(IPC::Message* reply_msg,
                               bool success,
                               const base::string16& user_input,
+                              bool is_before_unload_dialog,
                               bool dialog_was_suppressed);
 
   // Get the accessibility mode from the delegate and Send a message to the
@@ -503,7 +491,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   // Set the AX tree ID of the embedder RFHI, if this is a browser plugin guest.
   void set_browser_plugin_embedder_ax_tree_id(
-      AXTreeIDRegistry::AXTreeID ax_tree_id) {
+      ui::AXTreeIDRegistry::AXTreeID ax_tree_id) {
     browser_plugin_embedder_ax_tree_id_ = ax_tree_id;
   }
 
@@ -529,7 +517,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
     no_create_browser_accessibility_manager_for_testing_ = flag;
   }
 
-#if defined(USE_EXTERNAL_POPUP_MENU)
+#if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
 #if defined(OS_MACOSX)
   // Select popup menu related methods (for external popup menus).
   void DidSelectPopupMenuItem(int selected_index);
@@ -552,6 +540,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // Indicates that a navigation failed and that this RenderFrame should display
   // an error page.
   void FailedNavigation(const CommonNavigationParams& common_params,
+                        const BeginNavigationParams& begin_params,
                         const RequestNavigationParams& request_params,
                         bool has_stale_copy_in_cache,
                         int error_code);
@@ -613,6 +602,11 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   void ClearFocusedElement();
 
+  // Returns whether the given URL is allowed to commit in the current process.
+  // This is a more conservative check than RenderProcessHost::FilterURL, since
+  // it will be used to kill processes that commit unauthorized URLs.
+  bool CanCommitURL(const GURL& url);
+
   // PlzNavigate: returns the PreviewsState of the last successful navigation
   // that made a network request. The PreviewsState is a bitmask of potentially
   // several Previews optimizations.
@@ -623,6 +617,10 @@ class CONTENT_EXPORT RenderFrameHostImpl
   bool has_focused_editable_element() const {
     return has_focused_editable_element_;
   }
+
+#if defined(OS_ANDROID)
+  base::android::ScopedJavaLocalRef<jobject> GetJavaRenderFrameHost();
+#endif
 
  protected:
   friend class RenderFrameHostFactory;
@@ -715,14 +713,14 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void OnTextSurroundingSelectionResponse(const base::string16& content,
                                           uint32_t start_offset,
                                           uint32_t end_offset);
-  void OnFocusedFormFieldDataResponse(int request_id,
-                                      const FormFieldData& field_data);
   void OnDidAccessInitialDocument();
   void OnDidChangeOpener(int32_t opener_routing_id);
   void OnDidChangeName(const std::string& name, const std::string& unique_name);
   void OnDidSetFeaturePolicyHeader(
       const ParsedFeaturePolicyHeader& parsed_header);
-  void OnDidAddContentSecurityPolicy(const ContentSecurityPolicyHeader& header);
+  void OnDidAddContentSecurityPolicy(
+      const ContentSecurityPolicyHeader& header,
+      const std::vector<ContentSecurityPolicy>& policy);
   void OnEnforceInsecureRequestPolicy(blink::WebInsecureRequestPolicy policy);
   void OnUpdateToUniqueOrigin(bool is_potentially_trustworthy_unique_origin);
   void OnDidChangeSandboxFlags(int32_t frame_routing_id,
@@ -767,9 +765,12 @@ class CONTENT_EXPORT RenderFrameHostImpl
                             const gfx::Rect& bounds_in_frame_widget);
   void OnSetHasReceivedUserGesture();
 
-#if defined(USE_EXTERNAL_POPUP_MENU)
+#if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
   void OnShowPopup(const FrameHostMsg_ShowPopup_Params& params);
   void OnHidePopup();
+#endif
+#if defined(OS_ANDROID)
+  void OnNavigationHandledByEmbedder();
 #endif
   void OnShowCreatedWindow(int pending_widget_routing_id,
                            WindowOpenDisposition disposition,
@@ -783,11 +784,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // relevant.
   void ResetWaitingState();
 
-  // Returns whether the given URL is allowed to commit in the current process.
-  // This is a more conservative check than RenderProcessHost::FilterURL, since
-  // it will be used to kill processes that commit unauthorized URLs.
-  bool CanCommitURL(const GURL& url);
-
   // Returns whether the given origin is allowed to commit in the current
   // RenderFrameHost. The |url| is used to ensure it matches the origin in cases
   // where it is applicable. This is a more conservative check than
@@ -799,9 +795,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // context (and crashes if not), then returns whether the given frame is
   // part of the same site instance.
   bool IsSameSiteInstance(RenderFrameHostImpl* other_render_frame_host);
-
-  // Informs the content client that geolocation permissions were used.
-  void DidUseGeolocationPermission();
 
   // Returns whether the current RenderProcessHost has read access to all the
   // files reported in |state|.
@@ -829,11 +822,12 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   // Map a routing ID from a frame in the same frame tree to a globally
   // unique AXTreeID.
-  AXTreeIDRegistry::AXTreeID RoutingIDToAXTreeID(int routing_id);
+  ui::AXTreeIDRegistry::AXTreeID RoutingIDToAXTreeID(int routing_id);
 
   // Map a browser plugin instance ID to the AXTreeID of the plugin's
   // main frame.
-  AXTreeIDRegistry::AXTreeID BrowserPluginInstanceIDToAXTreeID(int routing_id);
+  ui::AXTreeIDRegistry::AXTreeID BrowserPluginInstanceIDToAXTreeID(
+      int routing_id);
 
   // Convert the content-layer-specific AXContentNodeData to a general-purpose
   // AXNodeData structure.
@@ -886,6 +880,10 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void OnRendererConnect(const service_manager::ServiceInfo& local_info,
                          const service_manager::ServiceInfo& remote_info);
 
+  void SendJavaScriptDialogReply(IPC::Message* reply_msg,
+                                 bool success,
+                                 const base::string16& user_input);
+
   // Returns ownership of the NavigationHandle associated with a navigation that
   // just committed.
   std::unique_ptr<NavigationHandleImpl> TakeNavigationHandleForCommit(
@@ -897,46 +895,28 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // we have a RenderViewHost for each RenderFrameHost.
   // TODO(creis): RenderViewHost will eventually go away and be replaced with
   // some form of page context.
-  RenderViewHostImpl* render_view_host_;
+  RenderViewHostImpl* const render_view_host_;
 
-  RenderFrameHostDelegate* delegate_;
+  RenderFrameHostDelegate* const delegate_;
 
   // The SiteInstance associated with this RenderFrameHost. All content drawn
   // in this RenderFrameHost is part of this SiteInstance. Cannot change over
   // time.
-  scoped_refptr<SiteInstanceImpl> site_instance_;
+  const scoped_refptr<SiteInstanceImpl> site_instance_;
 
   // The renderer process this RenderFrameHost is associated with. It is
   // equivalent to the result of site_instance_->GetProcess(), but that
   // method has the side effect of creating the process if it doesn't exist.
   // Cache a pointer to avoid unnecessary process creation.
-  RenderProcessHost* process_;
-
-  // |cross_process_frame_connector_| passes messages from an out-of-process
-  // child frame to the parent process for compositing.
-  //
-  // This is only non-NULL when this is the swapped out RenderFrameHost in
-  // the same site instance as this frame's parent.
-  //
-  // See the class comment above CrossProcessFrameConnector for more
-  // information.
-  //
-  // This will move to RenderFrameProxyHost when that class is created.
-  CrossProcessFrameConnector* cross_process_frame_connector_;
-
-  // The proxy created for this RenderFrameHost. It is used to send and receive
-  // IPC messages while in swapped out state.
-  // TODO(nasko): This can be removed once we don't have a swapped out state on
-  // RenderFrameHosts. See https://crbug.com/357747.
-  RenderFrameProxyHost* render_frame_proxy_host_;
+  RenderProcessHost* const process_;
 
   // Reference to the whole frame tree that this RenderFrameHost belongs to.
   // Allows this RenderFrameHost to add and remove nodes in response to
   // messages from the renderer requesting DOM manipulation.
-  FrameTree* frame_tree_;
+  FrameTree* const frame_tree_;
 
   // The FrameTreeNode which this RenderFrameHostImpl is hosted in.
-  FrameTreeNode* frame_tree_node_;
+  FrameTreeNode* const frame_tree_node_;
 
   // The active parent RenderFrameHost for this frame, if it is a subframe.
   // Null for the main frame.  This is cached because the parent FrameTreeNode
@@ -959,9 +939,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // ExecuteJavaScript and their corresponding callbacks.
   std::map<int, JavaScriptResultCallback> javascript_callbacks_;
   std::map<uint64_t, VisualStateCallback> visual_state_callbacks_;
-
-  // Callbacks for getting text input info.
-  std::map<int, FormFieldDataCallback> form_field_data_callbacks_;
 
   // RenderFrameHosts that need management of the rendering and input events
   // for their frame subtrees require RenderWidgetHosts. This typically
@@ -1045,12 +1022,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   int on_connect_handler_id_ = 0;
 
-#if defined(OS_ANDROID)
-  // The filter for MessagePort messages between an Android apps and web.
-  scoped_refptr<AppWebMessagePortMessageFilter>
-      app_web_message_port_message_filter_;
-#endif
-
   std::list<std::unique_ptr<WebBluetoothServiceImpl>> web_bluetooth_services_;
 
   // The object managing the accessibility tree for this frame.
@@ -1069,7 +1040,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   AXContentTreeData ax_content_tree_data_;
 
   // The AX tree ID of the embedder, if this is a browser plugin guest.
-  AXTreeIDRegistry::AXTreeID browser_plugin_embedder_ax_tree_id_;
+  ui::AXTreeIDRegistry::AXTreeID browser_plugin_embedder_ax_tree_id_;
 
   // The mapping from callback id to corresponding callback for pending
   // accessibility tree snapshot calls created by RequestAXTreeSnapshot.

@@ -17,7 +17,6 @@
 #include "base/threading/thread_checker.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_metrics.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_service_observer.h"
-#include "components/data_reduction_proxy/core/common/data_savings_recorder.h"
 #include "components/prefs/pref_member.h"
 #include "url/gurl.h"
 
@@ -73,19 +72,13 @@ enum DataReductionSettingsEnabledAction {
 // Central point for configuring the data reduction proxy.
 // This object lives on the UI thread and all of its methods are expected to
 // be called from there.
-class DataReductionProxySettings : public DataReductionProxyServiceObserver,
-                                   public DataSavingsRecorder {
+class DataReductionProxySettings : public DataReductionProxyServiceObserver {
  public:
   typedef base::Callback<bool(const std::string&, const std::string&)>
       SyntheticFieldTrialRegistrationCallback;
 
   DataReductionProxySettings();
   virtual ~DataReductionProxySettings();
-
-  // DataSavingsRecorder implementation:
-  bool UpdateDataSavings(const std::string& data_usage_host,
-                         int64_t data_used,
-                         int64_t original_size) override;
 
   // Initializes the Data Reduction Proxy with the name of the preference that
   // controls enabling it, profile prefs and a |DataReductionProxyIOData|. The
@@ -130,20 +123,8 @@ class DataReductionProxySettings : public DataReductionProxyServiceObserver,
   // on main frame requests.
   void SetLoFiModeActiveOnMainFrame(bool lo_fi_mode_active);
 
-  // Returns true if Lo-Fi image replacement was active on the main frame
-  // request. Returns false if the user is using lite pages.
-  bool WasLoFiModeActiveOnMainFrame() const;
-
-  // Returns true if a "Load image" context menu request has not been made since
-  // the last main frame request.
-  bool WasLoFiLoadImageRequestedBefore();
-
   // Increments the number of times the Lo-Fi UI has been shown.
   void IncrementLoFiUIShown();
-
-  // Sets |lo_fi_load_image_requested_| to true, which means a "Load image"
-  // context menu request has been made since the last main frame request.
-  void SetLoFiLoadImageRequested();
 
   // Counts the number of requests to reload the page with images from the Lo-Fi
   // UI. If the user requests the page with images a certain number of times,
@@ -303,13 +284,6 @@ class DataReductionProxySettings : public DataReductionProxyServiceObserver,
   // correct thread.
   bool allowed_;
   bool promo_allowed_;
-
-  // True if Lo-Fi is active.
-  bool lo_fi_mode_active_;
-
-  // True if a "Load image" context menu request has not been made since the
-  // last main frame request.
-  bool lo_fi_load_image_requested_;
 
   // The number of requests to reload the page with images from the Lo-Fi
   // UI until Lo-Fi is disabled for the remainder of the session.

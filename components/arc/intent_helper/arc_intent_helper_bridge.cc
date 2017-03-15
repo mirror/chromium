@@ -74,12 +74,12 @@ void ArcIntentHelperBridge::OnOpenDownloads() {
 
 void ArcIntentHelperBridge::OnOpenUrl(const std::string& url) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  ash::WmShell::Get()->delegate()->OpenUrlFromArc(GURL(url));
+  ash::Shell::Get()->shell_delegate()->OpenUrlFromArc(GURL(url));
 }
 
 void ArcIntentHelperBridge::OpenWallpaperPicker() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  ash::WmShell::Get()->wallpaper_controller()->OpenSetWallpaperPage();
+  ash::Shell::GetInstance()->wallpaper_controller()->OpenSetWallpaperPage();
 }
 
 void ArcIntentHelperBridge::SetWallpaperDeprecated(

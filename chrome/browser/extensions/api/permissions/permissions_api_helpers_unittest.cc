@@ -58,14 +58,13 @@ TEST(ExtensionPermissionsAPIHelpers, Pack) {
   std::string expected_apis[] = {"tabs", "fileBrowserHandler",
                                  "fileBrowserHandlerInternal"};
   for (size_t i = 0; i < arraysize(expected_apis); ++i) {
-    std::unique_ptr<base::Value> value(new base::StringValue(expected_apis[i]));
+    std::unique_ptr<base::Value> value(new base::Value(expected_apis[i]));
     EXPECT_NE(api_list->end(), api_list->Find(*value));
   }
 
   std::string expected_origins[] = { "http://a.com/*", "http://b.com/*" };
   for (size_t i = 0; i < arraysize(expected_origins); ++i) {
-    std::unique_ptr<base::Value> value(
-        new base::StringValue(expected_origins[i]));
+    std::unique_ptr<base::Value> value(new base::Value(expected_origins[i]));
     EXPECT_NE(origin_list->end(), origin_list->Find(*value));
   }
 
@@ -140,14 +139,14 @@ TEST(ExtensionPermissionsAPIHelpers, Unpack) {
   {
     Permissions permissions_object;
     value->Clear();
-    value->Set("origins", new base::FundamentalValue(2));
+    value->Set("origins", new base::Value(2));
     EXPECT_FALSE(Permissions::Populate(*value, &permissions_object));
   }
 
   {
     Permissions permissions_object;
     value->Clear();
-    value->Set("permissions", new base::FundamentalValue(2));
+    value->Set("permissions", new base::Value(2));
     EXPECT_FALSE(Permissions::Populate(*value, &permissions_object));
   }
 
@@ -156,7 +155,7 @@ TEST(ExtensionPermissionsAPIHelpers, Unpack) {
     Permissions permissions_object;
     value->Clear();
     value->Set("origins", origins->DeepCopy());
-    value->Set("random", new base::FundamentalValue(3));
+    value->Set("random", new base::Value(3));
     EXPECT_TRUE(Permissions::Populate(*value, &permissions_object));
     permissions = UnpackPermissionSet(permissions_object, true, &error);
     EXPECT_TRUE(permissions.get());

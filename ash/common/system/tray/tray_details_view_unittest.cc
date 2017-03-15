@@ -12,13 +12,13 @@
 #include "ash/common/system/tray/tray_constants.h"
 #include "ash/common/system/tray/tray_popup_header_button.h"
 #include "ash/common/system/tray/view_click_listener.h"
+#include "ash/resources/grit/ash_resources.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "ash/test/ash_test_base.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/test/scoped_mock_time_message_loop_task_runner.h"
 #include "base/test/test_mock_time_task_runner.h"
-#include "grit/ash_resources.h"
-#include "grit/ash_strings.h"
 #include "ui/events/test/event_generator.h"
 #include "ui/views/controls/button/button.h"
 #include "ui/views/view.h"
@@ -126,17 +126,30 @@ class TrayDetailsViewTest : public AshTestBase {
 
   void TransitionFromDetailedToDefaultView(TestDetailsView* detailed) {
     detailed->TransitionToDefaultView();
-    scoped_task_runner_->FastForwardBy(base::TimeDelta::FromMilliseconds(
-        GetTrayConstant(TRAY_POPUP_TRANSITION_TO_DEFAULT_DELAY)));
+    (*scoped_task_runner_)
+        ->FastForwardBy(base::TimeDelta::FromMilliseconds(
+            kTrayDetailedViewTransitionDelayMs));
   }
 
   void FocusBackButton(TestDetailsView* detailed) {
     detailed->back_button_->RequestFocus();
   }
 
+  void SetUp() override {
+    AshTestBase::SetUp();
+    scoped_task_runner_ =
+        base::MakeUnique<base::ScopedMockTimeMessageLoopTaskRunner>();
+  }
+
+  void TearDown() override {
+    scoped_task_runner_.reset();
+    AshTestBase::TearDown();
+  }
+
  private:
   // Used to control the |transition_delay_timer_|.
-  base::ScopedMockTimeMessageLoopTaskRunner scoped_task_runner_;
+  std::unique_ptr<base::ScopedMockTimeMessageLoopTaskRunner>
+      scoped_task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(TrayDetailsViewTest);
 };

@@ -73,17 +73,6 @@ std::unique_ptr<Value> CopyWithoutEmptyChildren(const Value& node) {
   }
 }
 
-// TODO(crbug.com/646113): Remove this once all types are implemented.
-bool IsAssignmentSafe(Value::Type lhs, Value::Type rhs) {
-  auto IsImplemented = [](Value::Type type) {
-    return type == Value::Type::NONE || type == Value::Type::BOOLEAN ||
-           type == Value::Type::INTEGER || type == Value::Type::DOUBLE ||
-           type == Value::Type::STRING || type == Value::Type::BINARY;
-  };
-
-  return lhs == rhs || (IsImplemented(lhs) && IsImplemented(rhs));
-}
-
 }  // namespace
 
 // static
@@ -129,11 +118,11 @@ Value::Value(Type type) : type_(type) {
     case Type::BINARY:
       binary_value_.Init();
       return;
-
-    // TODO(crbug.com/646113): Implement these once the corresponding derived
-    // classes are removed.
-    case Type::LIST:
     case Type::DICTIONARY:
+      dict_ptr_.Init(MakeUnique<DictStorage>());
+      return;
+    case Type::LIST:
+      list_.Init();
       return;
   }
 }
@@ -185,9 +174,8 @@ Value::Value(std::vector<char>&& in_blob) : type_(Type::BINARY) {
 
 Value& Value::operator=(const Value& that) {
   if (this != &that) {
-    DCHECK(IsAssignmentSafe(type_, that.type_));
     if (type_ == that.type_) {
-      InternalCopyAssignFrom(that);
+      InternalCopyAssignFromSameType(that);
     } else {
       InternalCleanup();
       InternalCopyConstructFrom(that);
@@ -199,9 +187,8 @@ Value& Value::operator=(const Value& that) {
 
 Value& Value::operator=(Value&& that) {
   if (this != &that) {
-    DCHECK(IsAssignmentSafe(type_, that.type_));
     if (type_ == that.type_) {
-      InternalMoveAssignFrom(std::move(that));
+      InternalMoveAssignFromSameType(std::move(that));
     } else {
       InternalCleanup();
       InternalMoveConstructFrom(std::move(that));
@@ -213,6 +200,7 @@ Value& Value::operator=(Value&& that) {
 
 Value::~Value() {
   InternalCleanup();
+  alive_ = false;
 }
 
 // static
@@ -303,9 +291,9 @@ bool Value::GetAsString(string16* out_value) const {
   return is_string();
 }
 
-bool Value::GetAsString(const StringValue** out_value) const {
+bool Value::GetAsString(const Value** out_value) const {
   if (out_value && is_string()) {
-    *out_value = static_cast<const StringValue*>(this);
+    *out_value = static_cast<const Value*>(this);
     return true;
   }
   return is_string();
@@ -328,19 +316,35 @@ bool Value::GetAsBinary(const BinaryValue** out_value) const {
 }
 
 bool Value::GetAsList(ListValue** out_value) {
-  return false;
+  if (out_value && is_list()) {
+    *out_value = static_cast<ListValue*>(this);
+    return true;
+  }
+  return is_list();
 }
 
 bool Value::GetAsList(const ListValue** out_value) const {
-  return false;
+  if (out_value && is_list()) {
+    *out_value = static_cast<const ListValue*>(this);
+    return true;
+  }
+  return is_list();
 }
 
 bool Value::GetAsDictionary(DictionaryValue** out_value) {
-  return false;
+  if (out_value && is_dict()) {
+    *out_value = static_cast<DictionaryValue*>(this);
+    return true;
+  }
+  return is_dict();
 }
 
 bool Value::GetAsDictionary(const DictionaryValue** out_value) const {
-  return false;
+  if (out_value && is_dict()) {
+    *out_value = static_cast<const DictionaryValue*>(this);
+    return true;
+  }
+  return is_dict();
 }
 
 Value* Value::DeepCopy() const {
@@ -350,25 +354,42 @@ Value* Value::DeepCopy() const {
     case Type::NONE:
       return CreateNullValue().release();
 
-    // For now, make FundamentalValues for backward-compatibility. Convert to
-    // Value when that code is deleted.
     case Type::BOOLEAN:
-      return new FundamentalValue(bool_value_);
+      return new Value(bool_value_);
     case Type::INTEGER:
-      return new FundamentalValue(int_value_);
+      return new Value(int_value_);
     case Type::DOUBLE:
-      return new FundamentalValue(double_value_);
-    // For now, make StringValues for backward-compatibility. Convert to
-    // Value when that code is deleted.
+      return new Value(double_value_);
     case Type::STRING:
-      return new StringValue(*string_value_);
+      return new Value(*string_value_);
     // For now, make BinaryValues for backward-compatibility. Convert to
     // Value when that code is deleted.
     case Type::BINARY:
-      return new BinaryValue(*binary_value_);
+      return new Value(*binary_value_);
+
+    // TODO(crbug.com/646113): Clean this up when DictionaryValue and ListValue
+    // are completely inlined.
+    case Type::DICTIONARY: {
+      DictionaryValue* result = new DictionaryValue;
+
+      for (const auto& current_entry : **dict_ptr_) {
+        result->SetWithoutPathExpansion(current_entry.first,
+                                        current_entry.second->CreateDeepCopy());
+      }
+
+      return result;
+    }
+
+    case Type::LIST: {
+      ListValue* result = new ListValue;
+
+      for (const auto& entry : *list_)
+        result->Append(entry->CreateDeepCopy());
+
+      return result;
+    }
 
     default:
-      // All other types should be handled by subclasses.
       NOTREACHED();
       return nullptr;
   }
@@ -395,12 +416,37 @@ bool Value::Equals(const Value* other) const {
       return *string_value_ == *(other->string_value_);
     case Type::BINARY:
       return *binary_value_ == *(other->binary_value_);
-    default:
-      // This method should only be getting called for the above types -- all
-      // subclasses need to provide their own implementation;.
-      NOTREACHED();
-      return false;
+    // TODO(crbug.com/646113): Clean this up when DictionaryValue and ListValue
+    // are completely inlined.
+    case Type::DICTIONARY: {
+      if ((*dict_ptr_)->size() != (*other->dict_ptr_)->size())
+        return false;
+
+      return std::equal(std::begin(**dict_ptr_), std::end(**dict_ptr_),
+                        std::begin(**(other->dict_ptr_)),
+                        [](const DictStorage::value_type& lhs,
+                           const DictStorage::value_type& rhs) {
+                          if (lhs.first != rhs.first)
+                            return false;
+
+                          return lhs.second->Equals(rhs.second.get());
+                        });
+    }
+    case Type::LIST: {
+      if (list_->size() != other->list_->size())
+        return false;
+
+      return std::equal(std::begin(*list_), std::end(*list_),
+                        std::begin(*(other->list_)),
+                        [](const ListStorage::value_type& lhs,
+                           const ListStorage::value_type& rhs) {
+                          return lhs->Equals(rhs.get());
+                        });
+    }
   }
+
+  NOTREACHED();
+  return false;
 }
 
 // static
@@ -448,11 +494,15 @@ void Value::InternalCopyConstructFrom(const Value& that) {
     case Type::BINARY:
       binary_value_.Init(*that.binary_value_);
       return;
-
-    // TODO(crbug.com/646113): Implement these once the corresponding derived
-    // classes are removed.
-    case Type::LIST:
+    // DictStorage and ListStorage are move-only types due to the presence of
+    // unique_ptrs. This is why the call to |CreateDeepCopy| is necessary here.
+    // TODO(crbug.com/646113): Clean this up when DictStorage and ListStorage
+    // can be copied directly.
     case Type::DICTIONARY:
+      dict_ptr_.Init(std::move(*that.CreateDeepCopy()->dict_ptr_));
+      return;
+    case Type::LIST:
+      list_.Init(std::move(*that.CreateDeepCopy()->list_));
       return;
   }
 }
@@ -474,17 +524,17 @@ void Value::InternalMoveConstructFrom(Value&& that) {
     case Type::BINARY:
       binary_value_.InitFromMove(std::move(that.binary_value_));
       return;
-
-    // TODO(crbug.com/646113): Implement these once the corresponding derived
-    // classes are removed.
-    case Type::LIST:
     case Type::DICTIONARY:
+      dict_ptr_.InitFromMove(std::move(that.dict_ptr_));
+      return;
+    case Type::LIST:
+      list_.InitFromMove(std::move(that.list_));
       return;
   }
 }
 
-void Value::InternalCopyAssignFrom(const Value& that) {
-  type_ = that.type_;
+void Value::InternalCopyAssignFromSameType(const Value& that) {
+  CHECK_EQ(type_, that.type_);
 
   switch (type_) {
     case Type::NONE:
@@ -500,17 +550,21 @@ void Value::InternalCopyAssignFrom(const Value& that) {
     case Type::BINARY:
       *binary_value_ = *that.binary_value_;
       return;
-
-    // TODO(crbug.com/646113): Implement these once the corresponding derived
-    // classes are removed.
-    case Type::LIST:
+    // DictStorage and ListStorage are move-only types due to the presence of
+    // unique_ptrs. This is why the call to |CreateDeepCopy| is necessary here.
+    // TODO(crbug.com/646113): Clean this up when DictStorage and ListStorage
+    // can be copied directly.
     case Type::DICTIONARY:
+      *dict_ptr_ = std::move(*that.CreateDeepCopy()->dict_ptr_);
+      return;
+    case Type::LIST:
+      *list_ = std::move(*that.CreateDeepCopy()->list_);
       return;
   }
 }
 
-void Value::InternalMoveAssignFrom(Value&& that) {
-  type_ = that.type_;
+void Value::InternalMoveAssignFromSameType(Value&& that) {
+  CHECK_EQ(type_, that.type_);
 
   switch (type_) {
     case Type::NONE:
@@ -526,16 +580,18 @@ void Value::InternalMoveAssignFrom(Value&& that) {
     case Type::BINARY:
       *binary_value_ = std::move(*that.binary_value_);
       return;
-
-    // TODO(crbug.com/646113): Implement these once the corresponding derived
-    // classes are removed.
-    case Type::LIST:
     case Type::DICTIONARY:
+      *dict_ptr_ = std::move(*that.dict_ptr_);
+      return;
+    case Type::LIST:
+      *list_ = std::move(*that.list_);
       return;
   }
 }
 
 void Value::InternalCleanup() {
+  CHECK(alive_);
+
   switch (type_) {
     case Type::NONE:
     case Type::BOOLEAN:
@@ -550,11 +606,11 @@ void Value::InternalCleanup() {
     case Type::BINARY:
       binary_value_.Destroy();
       return;
-
-    // TODO(crbug.com/646113): Implement these once the corresponding derived
-    // classes are removed.
-    case Type::LIST:
     case Type::DICTIONARY:
+      dict_ptr_.Destroy();
+      return;
+    case Type::LIST:
+      list_.Destroy();
       return;
   }
 }
@@ -574,31 +630,15 @@ std::unique_ptr<DictionaryValue> DictionaryValue::From(
 
 DictionaryValue::DictionaryValue() : Value(Type::DICTIONARY) {}
 
-DictionaryValue::~DictionaryValue() {
-  Clear();
-}
-
-bool DictionaryValue::GetAsDictionary(DictionaryValue** out_value) {
-  if (out_value)
-    *out_value = this;
-  return true;
-}
-
-bool DictionaryValue::GetAsDictionary(const DictionaryValue** out_value) const {
-  if (out_value)
-    *out_value = this;
-  return true;
-}
-
 bool DictionaryValue::HasKey(StringPiece key) const {
   DCHECK(IsStringUTF8(key));
-  auto current_entry = dictionary_.find(key.as_string());
-  DCHECK((current_entry == dictionary_.end()) || current_entry->second);
-  return current_entry != dictionary_.end();
+  auto current_entry = (*dict_ptr_)->find(key.as_string());
+  DCHECK((current_entry == (*dict_ptr_)->end()) || current_entry->second);
+  return current_entry != (*dict_ptr_)->end();
 }
 
 void DictionaryValue::Clear() {
-  dictionary_.clear();
+  (*dict_ptr_)->clear();
 }
 
 void DictionaryValue::Set(StringPiece path, std::unique_ptr<Value> in_value) {
@@ -632,28 +672,28 @@ void DictionaryValue::Set(StringPiece path, Value* in_value) {
 }
 
 void DictionaryValue::SetBoolean(StringPiece path, bool in_value) {
-  Set(path, new FundamentalValue(in_value));
+  Set(path, new Value(in_value));
 }
 
 void DictionaryValue::SetInteger(StringPiece path, int in_value) {
-  Set(path, new FundamentalValue(in_value));
+  Set(path, new Value(in_value));
 }
 
 void DictionaryValue::SetDouble(StringPiece path, double in_value) {
-  Set(path, new FundamentalValue(in_value));
+  Set(path, new Value(in_value));
 }
 
 void DictionaryValue::SetString(StringPiece path, StringPiece in_value) {
-  Set(path, new StringValue(in_value));
+  Set(path, new Value(in_value));
 }
 
 void DictionaryValue::SetString(StringPiece path, const string16& in_value) {
-  Set(path, new StringValue(in_value));
+  Set(path, new Value(in_value));
 }
 
 void DictionaryValue::SetWithoutPathExpansion(StringPiece key,
                                               std::unique_ptr<Value> in_value) {
-  dictionary_[key.as_string()] = std::move(in_value);
+  (**dict_ptr_)[key.as_string()] = std::move(in_value);
 }
 
 void DictionaryValue::SetWithoutPathExpansion(StringPiece key,
@@ -663,30 +703,27 @@ void DictionaryValue::SetWithoutPathExpansion(StringPiece key,
 
 void DictionaryValue::SetBooleanWithoutPathExpansion(StringPiece path,
                                                      bool in_value) {
-  SetWithoutPathExpansion(path,
-                          base::MakeUnique<base::FundamentalValue>(in_value));
+  SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
 }
 
 void DictionaryValue::SetIntegerWithoutPathExpansion(StringPiece path,
                                                      int in_value) {
-  SetWithoutPathExpansion(path,
-                          base::MakeUnique<base::FundamentalValue>(in_value));
+  SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
 }
 
 void DictionaryValue::SetDoubleWithoutPathExpansion(StringPiece path,
                                                     double in_value) {
-  SetWithoutPathExpansion(path,
-                          base::MakeUnique<base::FundamentalValue>(in_value));
+  SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
 }
 
 void DictionaryValue::SetStringWithoutPathExpansion(StringPiece path,
                                                     StringPiece in_value) {
-  SetWithoutPathExpansion(path, base::MakeUnique<base::StringValue>(in_value));
+  SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
 }
 
 void DictionaryValue::SetStringWithoutPathExpansion(StringPiece path,
                                                     const string16& in_value) {
-  SetWithoutPathExpansion(path, base::MakeUnique<base::StringValue>(in_value));
+  SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
 }
 
 bool DictionaryValue::Get(StringPiece path,
@@ -833,8 +870,8 @@ bool DictionaryValue::GetList(StringPiece path, ListValue** out_value) {
 bool DictionaryValue::GetWithoutPathExpansion(StringPiece key,
                                               const Value** out_value) const {
   DCHECK(IsStringUTF8(key));
-  auto entry_iterator = dictionary_.find(key.as_string());
-  if (entry_iterator == dictionary_.end())
+  auto entry_iterator = (*dict_ptr_)->find(key.as_string());
+  if (entry_iterator == (*dict_ptr_)->end())
     return false;
 
   if (out_value)
@@ -962,13 +999,13 @@ bool DictionaryValue::RemoveWithoutPathExpansion(
     StringPiece key,
     std::unique_ptr<Value>* out_value) {
   DCHECK(IsStringUTF8(key));
-  auto entry_iterator = dictionary_.find(key.as_string());
-  if (entry_iterator == dictionary_.end())
+  auto entry_iterator = (*dict_ptr_)->find(key.as_string());
+  if (entry_iterator == (*dict_ptr_)->end())
     return false;
 
   if (out_value)
     *out_value = std::move(entry_iterator->second);
-  dictionary_.erase(entry_iterator);
+  (*dict_ptr_)->erase(entry_iterator);
   return true;
 }
 
@@ -1002,6 +1039,7 @@ std::unique_ptr<DictionaryValue> DictionaryValue::DeepCopyWithoutEmptyChildren()
 }
 
 void DictionaryValue::MergeDictionary(const DictionaryValue* dictionary) {
+  CHECK(dictionary->is_dict());
   for (DictionaryValue::Iterator it(*dictionary); !it.IsAtEnd(); it.Advance()) {
     const Value* merge_value = &it.value();
     // Check whether we have to merge dictionaries.
@@ -1020,52 +1058,23 @@ void DictionaryValue::MergeDictionary(const DictionaryValue* dictionary) {
 }
 
 void DictionaryValue::Swap(DictionaryValue* other) {
-  dictionary_.swap(other->dictionary_);
+  CHECK(other->is_dict());
+  dict_ptr_->swap(*(other->dict_ptr_));
 }
 
 DictionaryValue::Iterator::Iterator(const DictionaryValue& target)
-    : target_(target),
-      it_(target.dictionary_.begin()) {}
+    : target_(target), it_((*target.dict_ptr_)->begin()) {}
 
 DictionaryValue::Iterator::Iterator(const Iterator& other) = default;
 
 DictionaryValue::Iterator::~Iterator() {}
 
 DictionaryValue* DictionaryValue::DeepCopy() const {
-  DictionaryValue* result = new DictionaryValue;
-
-  for (const auto& current_entry : dictionary_) {
-    result->SetWithoutPathExpansion(current_entry.first,
-                                    current_entry.second->CreateDeepCopy());
-  }
-
-  return result;
+  return static_cast<DictionaryValue*>(Value::DeepCopy());
 }
 
 std::unique_ptr<DictionaryValue> DictionaryValue::CreateDeepCopy() const {
   return WrapUnique(DeepCopy());
-}
-
-bool DictionaryValue::Equals(const Value* other) const {
-  if (other->GetType() != GetType())
-    return false;
-
-  const DictionaryValue* other_dict =
-      static_cast<const DictionaryValue*>(other);
-  Iterator lhs_it(*this);
-  Iterator rhs_it(*other_dict);
-  while (!lhs_it.IsAtEnd() && !rhs_it.IsAtEnd()) {
-    if (lhs_it.key() != rhs_it.key() ||
-        !lhs_it.value().Equals(&rhs_it.value())) {
-      return false;
-    }
-    lhs_it.Advance();
-    rhs_it.Advance();
-  }
-  if (!lhs_it.IsAtEnd() || !rhs_it.IsAtEnd())
-    return false;
-
-  return true;
 }
 
 ///////////////////// ListValue ////////////////////
@@ -1082,12 +1091,8 @@ std::unique_ptr<ListValue> ListValue::From(std::unique_ptr<Value> value) {
 
 ListValue::ListValue() : Value(Type::LIST) {}
 
-ListValue::~ListValue() {
-  Clear();
-}
-
 void ListValue::Clear() {
-  list_.clear();
+  list_->clear();
 }
 
 bool ListValue::Set(size_t index, Value* in_value) {
@@ -1098,25 +1103,25 @@ bool ListValue::Set(size_t index, std::unique_ptr<Value> in_value) {
   if (!in_value)
     return false;
 
-  if (index >= list_.size()) {
+  if (index >= list_->size()) {
     // Pad out any intermediate indexes with null settings
-    while (index > list_.size())
+    while (index > list_->size())
       Append(CreateNullValue());
     Append(std::move(in_value));
   } else {
     // TODO(dcheng): remove this DCHECK once the raw pointer version is removed?
-    DCHECK(list_[index] != in_value);
-    list_[index] = std::move(in_value);
+    DCHECK((*list_)[index] != in_value);
+    (*list_)[index] = std::move(in_value);
   }
   return true;
 }
 
 bool ListValue::Get(size_t index, const Value** out_value) const {
-  if (index >= list_.size())
+  if (index >= list_->size())
     return false;
 
   if (out_value)
-    *out_value = list_[index].get();
+    *out_value = (*list_)[index].get();
 
   return true;
 }
@@ -1223,21 +1228,21 @@ bool ListValue::GetList(size_t index, ListValue** out_value) {
 }
 
 bool ListValue::Remove(size_t index, std::unique_ptr<Value>* out_value) {
-  if (index >= list_.size())
+  if (index >= list_->size())
     return false;
 
   if (out_value)
-    *out_value = std::move(list_[index]);
+    *out_value = std::move((*list_)[index]);
 
-  list_.erase(list_.begin() + index);
+  list_->erase(list_->begin() + index);
   return true;
 }
 
 bool ListValue::Remove(const Value& value, size_t* index) {
-  for (auto it = list_.begin(); it != list_.end(); ++it) {
+  for (auto it = list_->begin(); it != list_->end(); ++it) {
     if ((*it)->Equals(&value)) {
-      size_t previous_index = it - list_.begin();
-      list_.erase(it);
+      size_t previous_index = it - list_->begin();
+      list_->erase(it);
 
       if (index)
         *index = previous_index;
@@ -1250,13 +1255,13 @@ bool ListValue::Remove(const Value& value, size_t* index) {
 ListValue::iterator ListValue::Erase(iterator iter,
                                      std::unique_ptr<Value>* out_value) {
   if (out_value)
-    *out_value = std::move(*Storage::iterator(iter));
+    *out_value = std::move(*ListStorage::iterator(iter));
 
-  return list_.erase(iter);
+  return list_->erase(iter);
 }
 
 void ListValue::Append(std::unique_ptr<Value> in_value) {
-  list_.push_back(std::move(in_value));
+  list_->push_back(std::move(in_value));
 }
 
 #if !defined(OS_LINUX)
@@ -1267,23 +1272,23 @@ void ListValue::Append(Value* in_value) {
 #endif
 
 void ListValue::AppendBoolean(bool in_value) {
-  Append(MakeUnique<FundamentalValue>(in_value));
+  Append(MakeUnique<Value>(in_value));
 }
 
 void ListValue::AppendInteger(int in_value) {
-  Append(MakeUnique<FundamentalValue>(in_value));
+  Append(MakeUnique<Value>(in_value));
 }
 
 void ListValue::AppendDouble(double in_value) {
-  Append(MakeUnique<FundamentalValue>(in_value));
+  Append(MakeUnique<Value>(in_value));
 }
 
 void ListValue::AppendString(StringPiece in_value) {
-  Append(MakeUnique<StringValue>(in_value));
+  Append(MakeUnique<Value>(in_value));
 }
 
 void ListValue::AppendString(const string16& in_value) {
-  Append(MakeUnique<StringValue>(in_value));
+  Append(MakeUnique<Value>(in_value));
 }
 
 void ListValue::AppendStrings(const std::vector<std::string>& in_values) {
@@ -1302,77 +1307,42 @@ void ListValue::AppendStrings(const std::vector<string16>& in_values) {
 
 bool ListValue::AppendIfNotPresent(std::unique_ptr<Value> in_value) {
   DCHECK(in_value);
-  for (const auto& entry : list_) {
+  for (const auto& entry : *list_) {
     if (entry->Equals(in_value.get())) {
       return false;
     }
   }
-  list_.push_back(std::move(in_value));
+  list_->push_back(std::move(in_value));
   return true;
 }
 
 bool ListValue::Insert(size_t index, std::unique_ptr<Value> in_value) {
   DCHECK(in_value);
-  if (index > list_.size())
+  if (index > list_->size())
     return false;
 
-  list_.insert(list_.begin() + index, std::move(in_value));
+  list_->insert(list_->begin() + index, std::move(in_value));
   return true;
 }
 
 ListValue::const_iterator ListValue::Find(const Value& value) const {
-  return std::find_if(list_.begin(), list_.end(),
+  return std::find_if(list_->begin(), list_->end(),
                       [&value](const std::unique_ptr<Value>& entry) {
                         return entry->Equals(&value);
                       });
 }
 
 void ListValue::Swap(ListValue* other) {
-  list_.swap(other->list_);
-}
-
-bool ListValue::GetAsList(ListValue** out_value) {
-  if (out_value)
-    *out_value = this;
-  return true;
-}
-
-bool ListValue::GetAsList(const ListValue** out_value) const {
-  if (out_value)
-    *out_value = this;
-  return true;
+  CHECK(other->is_list());
+  list_->swap(*(other->list_));
 }
 
 ListValue* ListValue::DeepCopy() const {
-  ListValue* result = new ListValue;
-
-  for (const auto& entry : list_)
-    result->Append(entry->CreateDeepCopy());
-
-  return result;
+  return static_cast<ListValue*>(Value::DeepCopy());
 }
 
 std::unique_ptr<ListValue> ListValue::CreateDeepCopy() const {
   return WrapUnique(DeepCopy());
-}
-
-bool ListValue::Equals(const Value* other) const {
-  if (other->GetType() != GetType())
-    return false;
-
-  const ListValue* other_list =
-      static_cast<const ListValue*>(other);
-  Storage::const_iterator lhs_it, rhs_it;
-  for (lhs_it = begin(), rhs_it = other_list->begin();
-       lhs_it != end() && rhs_it != other_list->end();
-       ++lhs_it, ++rhs_it) {
-    if (!(*lhs_it)->Equals(rhs_it->get()))
-      return false;
-  }
-  if (lhs_it != end() || rhs_it != other_list->end())
-    return false;
-
-  return true;
 }
 
 ValueSerializer::~ValueSerializer() {

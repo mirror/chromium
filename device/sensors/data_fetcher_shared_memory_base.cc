@@ -64,17 +64,15 @@ class DataFetcherSharedMemoryBase::PollingThread : public base::Thread {
 // --- PollingThread methods
 
 DataFetcherSharedMemoryBase::PollingThread::PollingThread(
-    const char* name, DataFetcherSharedMemoryBase* fetcher)
-    : base::Thread(name),
-      consumers_bitmask_(0),
-      fetcher_(fetcher) {
-}
+    const char* name,
+    DataFetcherSharedMemoryBase* fetcher)
+    : base::Thread(name), consumers_bitmask_(0), fetcher_(fetcher) {}
 
-DataFetcherSharedMemoryBase::PollingThread::~PollingThread() {
-}
+DataFetcherSharedMemoryBase::PollingThread::~PollingThread() {}
 
 void DataFetcherSharedMemoryBase::PollingThread::AddConsumer(
-    ConsumerType consumer_type, void* buffer) {
+    ConsumerType consumer_type,
+    void* buffer) {
   DCHECK(fetcher_);
   if (!fetcher_->Start(consumer_type, buffer))
     return;
@@ -83,9 +81,8 @@ void DataFetcherSharedMemoryBase::PollingThread::AddConsumer(
 
   if (!timer_ && fetcher_->GetType() == FETCHER_TYPE_POLLING_CALLBACK) {
     timer_.reset(new base::RepeatingTimer());
-    timer_->Start(FROM_HERE,
-                  fetcher_->GetInterval(),
-                  this, &PollingThread::DoPoll);
+    timer_->Start(FROM_HERE, fetcher_->GetInterval(), this,
+                  &PollingThread::DoPoll);
   }
 }
 
@@ -110,15 +107,15 @@ void DataFetcherSharedMemoryBase::PollingThread::DoPoll() {
 // --- end of PollingThread methods
 
 DataFetcherSharedMemoryBase::DataFetcherSharedMemoryBase()
-    : started_consumers_(0) {
-}
+    : started_consumers_(0) {}
 
 DataFetcherSharedMemoryBase::~DataFetcherSharedMemoryBase() {
   DCHECK_EQ(0u, started_consumers_);
 
-  // make sure polling thread stops asap.
-  if (polling_thread_)
-    polling_thread_->Stop();
+  // By this point the polling thread should have already been stopped (it's not
+  // safe for it to be running in this class's destructor as tasks are posted to
+  // it that call virtual methods of this class).
+  DCHECK(!polling_thread_ || !polling_thread_->IsRunning());
 }
 
 bool DataFetcherSharedMemoryBase::StartFetchingDeviceData(
@@ -178,6 +175,13 @@ void DataFetcherSharedMemoryBase::Shutdown() {
   StopFetchingDeviceData(CONSUMER_TYPE_ORIENTATION);
   StopFetchingDeviceData(CONSUMER_TYPE_ORIENTATION_ABSOLUTE);
   StopFetchingDeviceData(CONSUMER_TYPE_LIGHT);
+
+  // Ensure that the polling thread stops before entering the destructor of the
+  // subclass, as the stopping of the polling thread causes tasks to execute
+  // that call virtual methods of this class, which can cause crashes if they
+  // execute while (or after) the subclass is being torn down.
+  if (polling_thread_)
+    polling_thread_->Stop();
 }
 
 mojo::ScopedSharedBufferHandle
@@ -204,8 +208,8 @@ void DataFetcherSharedMemoryBase::Fetch(unsigned consumer_bitmask) {
   NOTIMPLEMENTED();
 }
 
-DataFetcherSharedMemoryBase::FetcherType
-DataFetcherSharedMemoryBase::GetType() const {
+DataFetcherSharedMemoryBase::FetcherType DataFetcherSharedMemoryBase::GetType()
+    const {
   return FETCHER_TYPE_DEFAULT;
 }
 

@@ -198,17 +198,6 @@ std::string ReadRegulatoryLabelText(const base::FilePath& path) {
     return contents;
   return std::string();
 }
-
-// Returns messages that applys to this eol status
-base::string16 GetEolMessage(update_engine::EndOfLifeStatus status) {
-  if (status == update_engine::EndOfLifeStatus::kSecurityOnly) {
-    return l10n_util::GetStringUTF16(IDS_ABOUT_PAGE_EOL_SECURITY_ONLY);
-
-  } else {
-    return l10n_util::GetStringUTF16(IDS_ABOUT_PAGE_EOL_EOL);
-  }
-}
-
 #endif  // defined(OS_CHROMEOS)
 
 }  // namespace
@@ -489,28 +478,28 @@ void HelpHandler::OnPageLoaded(const base::ListValue* args) {
 
   web_ui()->CallJavascriptFunctionUnsafe(
       "help.HelpPage.updateEnableReleaseChannel",
-      base::FundamentalValue(CanChangeChannel(Profile::FromWebUI(web_ui()))));
+      base::Value(CanChangeChannel(Profile::FromWebUI(web_ui()))));
 
   base::Time build_time = base::SysInfo::GetLsbReleaseTime();
   base::string16 build_date = base::TimeFormatFriendlyDate(build_time);
   web_ui()->CallJavascriptFunctionUnsafe("help.HelpPage.setBuildDate",
-                                         base::StringValue(build_date));
+                                         base::Value(build_date));
 #endif  // defined(OS_CHROMEOS)
 
   RefreshUpdateStatus();
 
   web_ui()->CallJavascriptFunctionUnsafe(
       "help.HelpPage.setObsoleteSystem",
-      base::FundamentalValue(ObsoleteSystem::IsObsoleteNowOrSoon()));
+      base::Value(ObsoleteSystem::IsObsoleteNowOrSoon()));
   web_ui()->CallJavascriptFunctionUnsafe(
       "help.HelpPage.setObsoleteSystemEndOfTheLine",
-      base::FundamentalValue(ObsoleteSystem::IsObsoleteNowOrSoon() &&
-                             ObsoleteSystem::IsEndOfTheLine()));
+      base::Value(ObsoleteSystem::IsObsoleteNowOrSoon() &&
+                  ObsoleteSystem::IsEndOfTheLine()));
 
 #if defined(OS_CHROMEOS)
   web_ui()->CallJavascriptFunctionUnsafe(
       "help.HelpPage.updateIsEnterpriseManaged",
-      base::FundamentalValue(IsEnterpriseManaged()));
+      base::Value(IsEnterpriseManaged()));
   // First argument to GetChannel() is a flag that indicates whether
   // current channel should be returned (if true) or target channel
   // (otherwise).
@@ -648,12 +637,12 @@ void HelpHandler::SetUpdateStatus(VersionUpdater::Status status,
   }
 
   web_ui()->CallJavascriptFunctionUnsafe("help.HelpPage.setUpdateStatus",
-                                         base::StringValue(status_str),
-                                         base::StringValue(message));
+                                         base::Value(status_str),
+                                         base::Value(message));
 
   if (status == VersionUpdater::UPDATING) {
     web_ui()->CallJavascriptFunctionUnsafe("help.HelpPage.setProgress",
-                                           base::FundamentalValue(progress));
+                                           base::Value(progress));
   }
 
 #if defined(OS_CHROMEOS)
@@ -663,16 +652,14 @@ void HelpHandler::SetUpdateStatus(VersionUpdater::Status status,
     if (!types_msg.empty()) {
       web_ui()->CallJavascriptFunctionUnsafe(
           "help.HelpPage.setAndShowAllowedConnectionTypesMsg",
-          base::StringValue(types_msg));
+          base::Value(types_msg));
     } else {
       web_ui()->CallJavascriptFunctionUnsafe(
-          "help.HelpPage.showAllowedConnectionTypesMsg",
-          base::FundamentalValue(false));
+          "help.HelpPage.showAllowedConnectionTypesMsg", base::Value(false));
     }
   } else {
     web_ui()->CallJavascriptFunctionUnsafe(
-        "help.HelpPage.showAllowedConnectionTypesMsg",
-        base::FundamentalValue(false));
+        "help.HelpPage.showAllowedConnectionTypesMsg", base::Value(false));
   }
 #endif  // defined(OS_CHROMEOS)
 }
@@ -694,34 +681,34 @@ void HelpHandler::SetPromotionState(VersionUpdater::PromotionState state) {
   }
 
   web_ui()->CallJavascriptFunctionUnsafe("help.HelpPage.setPromotionState",
-                                         base::StringValue(state_str));
+                                         base::Value(state_str));
 }
 #endif  // defined(OS_MACOSX)
 
 #if defined(OS_CHROMEOS)
 void HelpHandler::OnOSVersion(const std::string& version) {
   web_ui()->CallJavascriptFunctionUnsafe("help.HelpPage.setOSVersion",
-                                         base::StringValue(version));
+                                         base::Value(version));
 }
 
 void HelpHandler::OnARCVersion(const std::string& firmware) {
   web_ui()->CallJavascriptFunctionUnsafe("help.HelpPage.setARCVersion",
-                                         base::StringValue(firmware));
+                                         base::Value(firmware));
 }
 
 void HelpHandler::OnOSFirmware(const std::string& firmware) {
   web_ui()->CallJavascriptFunctionUnsafe("help.HelpPage.setOSFirmware",
-                                         base::StringValue(firmware));
+                                         base::Value(firmware));
 }
 
 void HelpHandler::OnCurrentChannel(const std::string& channel) {
   web_ui()->CallJavascriptFunctionUnsafe("help.HelpPage.updateCurrentChannel",
-                                         base::StringValue(channel));
+                                         base::Value(channel));
 }
 
 void HelpHandler::OnTargetChannel(const std::string& channel) {
   web_ui()->CallJavascriptFunctionUnsafe("help.HelpPage.updateTargetChannel",
-                                         base::StringValue(channel));
+                                         base::Value(channel));
 }
 
 void HelpHandler::OnRegulatoryLabelDirFound(const base::FilePath& path) {
@@ -743,31 +730,31 @@ void HelpHandler::OnRegulatoryLabelImageFound(const base::FilePath& path) {
   std::string url = std::string("chrome://") + chrome::kChromeOSAssetHost +
       "/" + path.MaybeAsASCII();
   web_ui()->CallJavascriptFunctionUnsafe("help.HelpPage.setRegulatoryLabelPath",
-                                         base::StringValue(url));
+                                         base::Value(url));
 }
 
 void HelpHandler::OnRegulatoryLabelTextRead(const std::string& text) {
   // Remove unnecessary whitespace.
   web_ui()->CallJavascriptFunctionUnsafe(
       "help.HelpPage.setRegulatoryLabelText",
-      base::StringValue(base::CollapseWhitespaceASCII(text, true)));
+      base::Value(base::CollapseWhitespaceASCII(text, true)));
 }
 
 void HelpHandler::OnEolStatus(update_engine::EndOfLifeStatus status) {
-  if (status == update_engine::EndOfLifeStatus::kSupported ||
+  // Security only state is no longer supported.
+  if (status == update_engine::EndOfLifeStatus::kSecurityOnly ||
       IsEnterpriseManaged()) {
     return;
   }
 
   if (status == update_engine::EndOfLifeStatus::kSupported) {
-    web_ui()->CallJavascriptFunctionUnsafe(
-        "help.HelpPage.updateEolMessage", base::StringValue("device_supported"),
-        base::StringValue(""));
+    web_ui()->CallJavascriptFunctionUnsafe("help.HelpPage.updateEolMessage",
+                                           base::Value("device_supported"),
+                                           base::Value(""));
   } else {
-    base::string16 message = GetEolMessage(status);
     web_ui()->CallJavascriptFunctionUnsafe(
-        "help.HelpPage.updateEolMessage", base::StringValue("device_endoflife"),
-        base::StringValue(message));
+        "help.HelpPage.updateEolMessage", base::Value("device_endoflife"),
+        base::Value(l10n_util::GetStringUTF16(IDS_ABOUT_PAGE_EOL_EOL)));
   }
 }
 

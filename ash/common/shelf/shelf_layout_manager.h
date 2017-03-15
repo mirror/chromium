@@ -15,14 +15,19 @@
 #include "ash/common/wm/lock_state_observer.h"
 #include "ash/common/wm/wm_snap_to_pixel_layout_manager.h"
 #include "ash/common/wm/workspace/workspace_types.h"
-#include "ash/common/wm_activation_observer.h"
 #include "ash/public/cpp/shelf_types.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
+#include "base/scoped_observer.h"
 #include "base/timer/timer.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/keyboard/keyboard_controller_observer.h"
+#include "ui/wm/public/activation_change_observer.h"
+
+namespace keyboard {
+class KeyboardController;
+}
 
 namespace ui {
 class ImplicitAnimationObserver;
@@ -47,7 +52,7 @@ class WmShelf;
 // On mus, widget bounds management is handled by the window manager.
 class ASH_EXPORT ShelfLayoutManager
     : public ShellObserver,
-      public WmActivationObserver,
+      public aura::client::ActivationChangeObserver,
       public DockedWindowLayoutManagerObserver,
       public keyboard::KeyboardControllerObserver,
       public LockStateObserver,
@@ -135,10 +140,13 @@ class ASH_EXPORT ShelfLayoutManager
   // Overridden from ShellObserver:
   void OnShelfAutoHideBehaviorChanged(WmWindow* root_window) override;
   void OnPinnedStateChanged(WmWindow* pinned_window) override;
+  void OnVirtualKeyboardStateChanged(bool activated,
+                                     WmWindow* root_window) override;
 
-  // Overridden from WmActivationObserver:
-  void OnWindowActivated(WmWindow* gained_active,
-                         WmWindow* lost_active) override;
+  // Overridden from aura::client::ActivationChangeObserver:
+  void OnWindowActivated(ActivationReason reason,
+                         aura::Window* gained_active,
+                         aura::Window* lost_active) override;
 
   // Overridden from keyboard::KeyboardControllerObserver:
   void OnKeyboardBoundsChanging(const gfx::Rect& new_bounds) override;
@@ -356,6 +364,10 @@ class ASH_EXPORT ShelfLayoutManager
   // The current shelf background. Should not be assigned to directly, use
   // MaybeUpdateShelfBackground() instead.
   ShelfBackgroundType shelf_background_type_;
+
+  ScopedObserver<keyboard::KeyboardController,
+                 keyboard::KeyboardControllerObserver>
+      keyboard_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(ShelfLayoutManager);
 };

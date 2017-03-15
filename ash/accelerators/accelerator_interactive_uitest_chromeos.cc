@@ -62,7 +62,7 @@ class AcceleratorInteractiveUITest : public AshInteractiveUITestBase,
   void SetUp() override {
     AshInteractiveUITestBase::SetUp();
 
-    WmShell::Get()->AddShellObserver(this);
+    Shell::GetInstance()->AddShellObserver(this);
 
     chromeos::NetworkHandler::Initialize();
   }
@@ -70,7 +70,7 @@ class AcceleratorInteractiveUITest : public AshInteractiveUITestBase,
   void TearDown() override {
     chromeos::NetworkHandler::Shutdown();
 
-    WmShell::Get()->RemoveShellObserver(this);
+    Shell::GetInstance()->RemoveShellObserver(this);
 
     AshInteractiveUITestBase::TearDown();
   }
@@ -200,7 +200,7 @@ TEST_F(AcceleratorInteractiveUITest, MAYBE_ChromeOsAccelerators) {
 TEST_F(AcceleratorInteractiveUITest, MAYBE_ToggleAppList) {
   mojo::edk::Init();
   app_list::test::TestAppListPresenter test_app_list_presenter;
-  WmShell::Get()->app_list()->SetAppListPresenter(
+  Shell::Get()->app_list()->SetAppListPresenter(
       test_app_list_presenter.CreateInterfacePtrAndBind());
 
   EXPECT_EQ(0u, test_app_list_presenter.toggle_count());

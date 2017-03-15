@@ -5,14 +5,10 @@
 #ifndef CHROME_BROWSER_UI_ASH_LAUNCHER_CHROME_LAUNCHER_CONTROLLER_MUS_H_
 #define CHROME_BROWSER_UI_ASH_LAUNCHER_CHROME_LAUNCHER_CONTROLLER_MUS_H_
 
-#include <map>
-#include <memory>
 #include <string>
 
 #include "base/macros.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
-
-class ChromeShelfItemDelegate;
 
 class ChromeLauncherControllerMus : public ChromeLauncherController {
  public:
@@ -40,7 +36,7 @@ class ChromeLauncherControllerMus : public ChromeLauncherController {
   bool IsOpen(ash::ShelfID id) override;
   bool IsPlatformApp(ash::ShelfID id) override;
   void ActivateApp(const std::string& app_id,
-                   ash::LaunchSource source,
+                   ash::ShelfLaunchSource source,
                    int event_flags) override;
   void SetLauncherItemImage(ash::ShelfID shelf_id,
                             const gfx::ImageSkia& image) override;
@@ -49,13 +45,12 @@ class ChromeLauncherControllerMus : public ChromeLauncherController {
   ash::ShelfID GetShelfIDForWebContents(
       content::WebContents* contents) override;
   void SetRefocusURLPatternForTest(ash::ShelfID id, const GURL& url) override;
-  ash::ShelfItemDelegate::PerformedAction ActivateWindowOrMinimizeIfActive(
+  ash::ShelfAction ActivateWindowOrMinimizeIfActive(
       ui::BaseWindow* window,
       bool allow_minimize) override;
   void ActiveUserChanged(const std::string& user_email) override;
   void AdditionalUserAddedToSession(Profile* profile) override;
-  ash::ShelfAppMenuItemList GetAppMenuItems(const ash::ShelfItem& item,
-                                            int event_flags) override;
+  MenuItemList GetAppMenuItemsForTesting(const ash::ShelfItem& item) override;
   std::vector<content::WebContents*> GetV1ApplicationsFromAppId(
       const std::string& app_id) override;
   void ActivateShellApp(const std::string& app_id, int window_index) override;
@@ -88,9 +83,6 @@ class ChromeLauncherControllerMus : public ChromeLauncherController {
  private:
   // Pin the items set in the current profile's preferences.
   void PinAppsFromPrefs();
-
-  std::map<std::string, std::unique_ptr<ChromeShelfItemDelegate>>
-      app_id_to_item_delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeLauncherControllerMus);
 };

@@ -557,6 +557,30 @@ TEST_F('CrSettingsAppearanceFontsPageTest', 'All', function() {
   mocha.run();
 });
 
+/**
+ * @constructor
+ * @extends {CrSettingsBrowserTest}
+ */
+function CrSettingsDownloadsPageTest() {}
+
+CrSettingsDownloadsPageTest.prototype = {
+  __proto__: CrSettingsBrowserTest.prototype,
+
+  /** @override */
+  browsePreload: 'chrome://md-settings/downloads_page/downloads_page.html',
+
+  /** @override */
+  extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
+    ROOT_PATH + 'ui/webui/resources/js/promise_resolver.js',
+    'test_browser_proxy.js',
+    'downloads_page_test.js',
+  ]),
+};
+
+TEST_F('CrSettingsDownloadsPageTest', 'All', function() {
+  mocha.run();
+});
+
 GEN('#if !defined(OS_CHROMEOS)');
 /**
  * Test fixture for chrome/browser/resources/settings/default_browser_page/.
@@ -861,6 +885,32 @@ TEST_F('CrSettingsBluetoothPageTest', 'BluetoothPageTest', function() {
   mocha.run();
 });
 
+/**
+ * Test fixture for internet-page.
+ * @constructor
+ * @extends {CrSettingsBrowserTest}
+ */
+function CrSettingsInternetPageTest() {}
+
+CrSettingsInternetPageTest.prototype = {
+  __proto__: CrSettingsBrowserTest.prototype,
+
+  /** @override */
+  browsePreload: 'chrome://md-settings/internet_page/internet_page.html',
+
+  /** @override */
+  extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
+    ROOT_PATH + 'ui/webui/resources/js/assert.js',
+    '../fake_chrome_event.js',
+    'fake_networking_private.js',
+    'internet_page_tests.js',
+  ]),
+};
+
+TEST_F('CrSettingsInternetPageTest', 'InternetPageTest', function() {
+  mocha.run();
+});
+
 GEN('#endif');
 
 /**
@@ -958,6 +1008,35 @@ TEST_F('CrSettingsStartupUrlsPageTest', 'StartupUrlsPage', function() {
   mocha.run();
 });
 
+GEN('#if !defined(OS_MACOSX)');
+/**
+ * @constructor
+ * @extends {CrSettingsBrowserTest}
+ */
+function CrSettingsEditDictionaryPageTest() {}
+
+CrSettingsEditDictionaryPageTest.prototype = {
+  __proto__: CrSettingsBrowserTest.prototype,
+
+  /** @override */
+  browsePreload:
+      'chrome://md-settings/languages_page/edit_dictionary_page.html',
+
+  /** @override */
+  extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
+    '../fake_chrome_event.js',
+    'fake_settings_private.js',
+    'test_browser_proxy.js',
+    'fake_language_settings_private.js',
+    'edit_dictionary_page_test.js',
+  ]),
+};
+
+TEST_F('CrSettingsEditDictionaryPageTest', 'EditDictionaryPage', function() {
+  mocha.run();
+});
+GEN('#endif');
+
 /**
  * @constructor
  * @extends {CrSettingsBrowserTest}
@@ -973,6 +1052,7 @@ CrSettingsLanguagesTest.prototype = {
   /** @override */
   extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
     '../fake_chrome_event.js',
+    'test_browser_proxy.js',
     'fake_language_settings_private.js',
     'fake_settings_private.js',
     'languages_tests.js',
@@ -1236,7 +1316,7 @@ GEN('#endif');
 GEN('#if defined(OS_CHROMEOS)');
 
 /**
- * Test fixture for the Google Play Store (Arc++) page.
+ * Test fixture for the Google Play Store (ARC) page.
  * @constructor
  * @extends {CrSettingsBrowserTest}
  */
@@ -1306,5 +1386,28 @@ CrSettingsExtensionControlledIndicatorTest.prototype = {
 };
 
 TEST_F('CrSettingsExtensionControlledIndicatorTest', 'All', function() {
+  mocha.run();
+});
+
+/**
+ * Test fixture for the Date and Time page.
+ * @constructor
+ * @extends {CrSettingsBrowserTest}
+ */
+function CrSettingsFocusableIronListItemBehavior() {}
+
+CrSettingsFocusableIronListItemBehavior.prototype = {
+  __proto__: CrSettingsBrowserTest.prototype,
+
+  /** @override */
+  browsePreload: 'chrome://md-settings/focusable_iron_list_item_behavior.html',
+
+  /** @override */
+  extraLibraries: CrSettingsBrowserTest.prototype.extraLibraries.concat([
+    'focusable_iron_list_item_behavior_test.js',
+  ]),
+};
+
+TEST_F('CrSettingsFocusableIronListItemBehavior', 'FocusTest', function() {
   mocha.run();
 });

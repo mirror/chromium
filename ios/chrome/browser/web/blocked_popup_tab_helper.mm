@@ -4,6 +4,8 @@
 
 #import "ios/chrome/browser/web/blocked_popup_tab_helper.h"
 
+#include <UIKit/UIKit.h>
+
 #include <memory>
 #include <utility>
 
@@ -31,9 +33,11 @@ namespace {
 // The infobar to display when a popup is blocked.
 class BlockPopupInfoBarDelegate : public ConfirmInfoBarDelegate {
  public:
-  BlockPopupInfoBarDelegate(ios::ChromeBrowserState* browser_state,
-                            const std::vector<web::BlockedPopupInfo>& popups)
-      : browser_state_(browser_state), popups_(popups) {}
+  BlockPopupInfoBarDelegate(
+      ios::ChromeBrowserState* browser_state,
+      web::WebState* web_state,
+      const std::vector<BlockedPopupTabHelper::Popup>& popups)
+      : browser_state_(browser_state), web_state_(web_state), popups_(popups) {}
 
   ~BlockPopupInfoBarDelegate() override {}
 
@@ -64,13 +68,15 @@ class BlockPopupInfoBarDelegate : public ConfirmInfoBarDelegate {
   }
 
   bool Accept() override {
-    std::vector<web::BlockedPopupInfo>::iterator it;
     scoped_refptr<HostContentSettingsMap> host_content_map_settings(
         ios::HostContentSettingsMapFactory::GetForBrowserState(browser_state_));
-    for (auto& it : popups_) {
-      it.ShowPopup();
+    for (auto& popup : popups_) {
+      web::WebState::OpenURLParams params(
+          popup.popup_url, popup.referrer, WindowOpenDisposition::NEW_POPUP,
+          ui::PAGE_TRANSITION_LINK, true /* is_renderer_initiated */);
+      web_state_->OpenURL(params);
       host_content_map_settings->SetContentSettingCustomScope(
-          ContentSettingsPattern::FromURL(it.referrer().url),
+          ContentSettingsPattern::FromURL(popup.referrer.url),
           ContentSettingsPattern::Wildcard(), CONTENT_SETTINGS_TYPE_POPUPS,
           std::string(), CONTENT_SETTING_ALLOW);
     }
@@ -80,10 +86,10 @@ class BlockPopupInfoBarDelegate : public ConfirmInfoBarDelegate {
   int GetButtons() const override { return BUTTON_OK; }
 
  private:
-  // The browser state to access user preferences.
   ios::ChromeBrowserState* browser_state_;
+  web::WebState* web_state_;
   // The popups to open.
-  std::vector<web::BlockedPopupInfo> popups_;
+  std::vector<BlockedPopupTabHelper::Popup> popups_;
   // The icon to display.
   mutable gfx::Image icon_;
 };
@@ -94,9 +100,18 @@ BlockedPopupTabHelper::BlockedPopupTabHelper(web::WebState* web_state)
 
 BlockedPopupTabHelper::~BlockedPopupTabHelper() = default;
 
-void BlockedPopupTabHelper::HandlePopup(
-    const web::BlockedPopupInfo& blocked_popup_info) {
-  popups_.push_back(blocked_popup_info);
+bool BlockedPopupTabHelper::ShouldBlockPopup(const GURL& source_url) {
+  HostContentSettingsMap* settings_map =
+      ios::HostContentSettingsMapFactory::GetForBrowserState(GetBrowserState());
+  ContentSetting setting = settings_map->GetContentSetting(
+      source_url, source_url, CONTENT_SETTINGS_TYPE_POPUPS, std::string());
+  return setting != CONTENT_SETTING_ALLOW;
+}
+
+void BlockedPopupTabHelper::HandlePopup(const GURL& popup_url,
+                                        const web::Referrer& referrer) {
+  DCHECK(ShouldBlockPopup(referrer.url));
+  popups_.push_back(Popup(popup_url, referrer));
   ShowInfoBar();
 }
 
@@ -122,16 +137,21 @@ void BlockedPopupTabHelper::ShowInfoBar() {
 
   RegisterAsInfoBarManagerObserverIfNeeded(infobar_manager);
 
-  ios::ChromeBrowserState* browser_state =
-      ios::ChromeBrowserState::FromBrowserState(web_state_->GetBrowserState());
+  std::unique_ptr<BlockPopupInfoBarDelegate> delegate(
+      base::MakeUnique<BlockPopupInfoBarDelegate>(GetBrowserState(), web_state_,
+                                                  popups_));
   std::unique_ptr<infobars::InfoBar> infobar =
-      infobar_manager->CreateConfirmInfoBar(
-          base::MakeUnique<BlockPopupInfoBarDelegate>(browser_state, popups_));
+      infobar_manager->CreateConfirmInfoBar(std::move(delegate));
   if (infobar_) {
     infobar_ = infobar_manager->ReplaceInfoBar(infobar_, std::move(infobar));
   } else {
     infobar_ = infobar_manager->AddInfoBar(std::move(infobar));
   }
+}
+
+ios::ChromeBrowserState* BlockedPopupTabHelper::GetBrowserState() const {
+  return ios::ChromeBrowserState::FromBrowserState(
+      web_state_->GetBrowserState());
 }
 
 void BlockedPopupTabHelper::RegisterAsInfoBarManagerObserverIfNeeded(

@@ -11,6 +11,8 @@
 #include "media/base/key_system_properties.h"
 #include "media/base/media_export.h"
 #include "media/base/video_codecs.h"
+#include "media/base/video_color_space.h"
+#include "ui/gfx/color_space.h"
 #include "url/gurl.h"
 
 namespace media {
@@ -26,6 +28,13 @@ MEDIA_EXPORT void SetMediaClient(MediaClient* media_client);
 // Getter for the client. Returns NULL if no customized client is needed.
 MEDIA_EXPORT MediaClient* GetMediaClient();
 #endif
+
+struct MEDIA_EXPORT VideoConfig {
+  VideoCodec codec;
+  VideoCodecProfile profile;
+  int level;
+  media::VideoColorSpace color_space;
+};
 
 struct MEDIA_EXPORT KeySystemInfoForUMA {
   KeySystemInfoForUMA(const std::string& key_system,
@@ -68,9 +77,7 @@ class MEDIA_EXPORT MediaClient {
 
   // Returns true if the given combination of video codec, profile and level is
   // supported. The |level| value is codec-specific.
-  virtual bool IsSupportedVideoConfig(VideoCodec codec,
-                                      VideoCodecProfile profile,
-                                      int level) = 0;
+  virtual bool IsSupportedVideoConfig(const VideoConfig& config) = 0;
 };
 
 }  // namespace media

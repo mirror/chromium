@@ -86,6 +86,10 @@
       status: "stable",
     },
     {
+      name: "BackgroundFetch",
+      status: "test",
+    },
+    {
       name: "BackgroundSync",
       status: "stable",
     },
@@ -217,6 +221,10 @@
       status: "experimental",
     },
     {
+      name: "CSSLineBreak",
+      status: "test",
+    },
+    {
       name: "CSSMaskSourceType",
       status: "experimental",
     },
@@ -316,10 +324,6 @@
       status: "stable",
     },
     {
-      name: "DisplayNoneIFrameCreatesNoLayoutObject",
-      status: "experimental",
-    },
-    {
       name: "DocumentCookie",
     },
     {
@@ -409,7 +413,7 @@
     {
       name: "FramebustingNeedsSameOriginOrUserGesture",
       settable_from_internals: true,
-      status: "stable",
+      status: "experimental",
     },
     {
       name: "FullscreenUnprefixed",
@@ -448,6 +452,7 @@
     },
     {
       name: "IdleTimeSpellChecking",
+      status: "test",
     },
     {
       name: "ImageCapture",
@@ -457,10 +462,6 @@
     {
       name: "ImageOrientation",
       status: "test",
-    },
-    {
-      name: "IndexedDBExperimental",
-      status: "experimental",
     },
     {
       name: "InertTopControls",
@@ -538,7 +539,7 @@
     },
     {
       name: "MediaGetSettings",
-      status: "experimental",
+      status: "stable",
     },
     // MediaSession is enabled by default on Android only.
     // TODO(rbyers): Add parameter to specify platform.
@@ -574,7 +575,7 @@
     // "experimental" is the support on other platforms.
     {
       name: "MiddleClickAutoscroll",
-      status: "experimental",
+      status: "test",
     },
     {
       name: "MobileLayoutTheme",
@@ -730,7 +731,7 @@
     },
     {
       name: "PresentationReceiver",
-      status: "test",
+      status: "experimental",
     },
     {
       name: "PushMessaging",
@@ -790,7 +791,6 @@
     },
     {
       name: "SetRootScroller",
-      origin_trial_feature_name: "RootScroller",
       status: "experimental",
     },
     {
@@ -811,7 +811,7 @@
     {
       name: "SlimmingPaintInvalidation",
       implied_by: ["SlimmingPaintV2"],
-      status: "stable",
+      status: "experimental",
     },
     {
       name: "SlimmingPaintV2",
@@ -858,8 +858,8 @@
       status: "stable",
     },
     {
-      name: "TopNavWithUserActivationInSandbox",
-      status: "experimental",
+      name: "TopNavByUserActivationInSandbox",
+      status: "stable",
     },
     // Many websites disable mouse support when touch APIs are available.  We'd
     // like to enable this always but can't until more websites fix this bug.
@@ -875,10 +875,6 @@
     // enabled on all platforms (http://crbug.com/526463).
     {
       name: "TouchpadAndWheelScrollLatching",
-    },
-    {
-      name: "TrueColorRendering",
-      status: "experimental",
     },
     {
       name: "TrustedEventsDefaultAction",
@@ -917,6 +913,12 @@
       name: "WebVR",
       origin_trial_feature_name: "WebVR",
       status: "test",
+    },
+    {
+      name: "WebVRExperimentalRendering",
+      // Don't mark this as depends_on: ["WebVR"], we want to be able to turn
+      // it on for just origin trial sites where the dependency is unset.
+      status: "experimental",
     },
     {
       name: "WebVTTRegions",
@@ -1017,5 +1019,13 @@
       name: "RestrictCompleteURLCharacterSet",
       status: "experimental",
     },
+    {
+      name: "BlockLegacySubresources",
+      status: "experimental",
+    },
+    {
+      name: "MediaControlsOverlayPlayButton",
+      settable_from_internals: true,
+    }
   ],
 }

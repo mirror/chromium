@@ -18,10 +18,10 @@
 #include "cc/quads/surface_draw_quad.h"
 #include "cc/quads/texture_draw_quad.h"
 #include "cc/resources/shared_bitmap_manager.h"
+#include "cc/surfaces/local_surface_id_allocator.h"
 #include "cc/surfaces/surface.h"
 #include "cc/surfaces/surface_factory.h"
 #include "cc/surfaces/surface_factory_client.h"
-#include "cc/surfaces/surface_id_allocator.h"
 #include "cc/surfaces/surface_manager.h"
 #include "cc/test/fake_resource_provider.h"
 #include "cc/test/render_pass_test_utils.h"
@@ -176,10 +176,10 @@ class SurfaceAggregatorValidSurfaceTest : public SurfaceAggregatorTest {
  protected:
   LocalSurfaceId root_local_surface_id_;
   Surface* root_surface_;
-  SurfaceIdAllocator allocator_;
+  LocalSurfaceIdAllocator allocator_;
   EmptySurfaceFactoryClient empty_child_client_;
   SurfaceFactory child_factory_;
-  SurfaceIdAllocator child_allocator_;
+  LocalSurfaceIdAllocator child_allocator_;
 };
 
 // Tests that a very simple frame containing only two solid color quads makes it
@@ -423,6 +423,67 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, FallbackSurfaceReference) {
   fallback_child_factory.EvictSurface();
 }
 
+// This test verifies that in the presence of both primary Surface and fallback
+// Surface, the fallback will not be used.
+TEST_F(SurfaceAggregatorValidSurfaceTest, FallbackSurfaceReferenceWithPrimary) {
+  SurfaceFactory primary_child_factory(kArbitraryChildFrameSinkId1, &manager_,
+                                       &empty_client_);
+  LocalSurfaceId primary_child_local_surface_id = allocator_.GenerateId();
+  SurfaceId primary_child_surface_id(primary_child_factory.frame_sink_id(),
+                                     primary_child_local_surface_id);
+  test::Quad primary_child_quads[] = {
+      test::Quad::SolidColorQuad(SK_ColorGREEN)};
+  test::Pass primary_child_passes[] = {
+      test::Pass(primary_child_quads, arraysize(primary_child_quads))};
+
+  // Submit a CompositorFrame to the primary Surface containing a green
+  // SolidColorDrawQuad.
+  SubmitCompositorFrame(&primary_child_factory, primary_child_passes,
+                        arraysize(primary_child_passes),
+                        primary_child_local_surface_id);
+
+  SurfaceFactory fallback_child_factory(kArbitraryChildFrameSinkId2, &manager_,
+                                        &empty_client_);
+  LocalSurfaceId fallback_child_local_surface_id = allocator_.GenerateId();
+  SurfaceId fallback_child_surface_id(fallback_child_factory.frame_sink_id(),
+                                      fallback_child_local_surface_id);
+
+  test::Quad fallback_child_quads[] = {test::Quad::SolidColorQuad(SK_ColorRED)};
+  test::Pass fallback_child_passes[] = {
+      test::Pass(fallback_child_quads, arraysize(fallback_child_quads))};
+
+  // Submit a CompositorFrame to the fallback Surface containing a red
+  // SolidColorDrawQuad.
+  SubmitCompositorFrame(&fallback_child_factory, fallback_child_passes,
+                        arraysize(fallback_child_passes),
+                        fallback_child_local_surface_id);
+
+  // Try to embed |primary_child_surface_id| and if unavailabe, embed
+  // |fallback_child_surface_id|.
+  test::Quad root_quads[] = {test::Quad::SurfaceQuad(
+      primary_child_surface_id, fallback_child_surface_id, 1.f)};
+  test::Pass root_passes[] = {test::Pass(root_quads, arraysize(root_quads))};
+
+  SubmitCompositorFrame(&factory_, root_passes, arraysize(root_passes),
+                        root_local_surface_id_);
+
+  // The CompositorFrame is submitted to |primary_child_surface_id|, so
+  // |fallback_child_surface_id| will not be used and we should see a green
+  // SolidColorDrawQuad.
+  test::Quad expected_quads1[] = {test::Quad::SolidColorQuad(SK_ColorGREEN)};
+  test::Pass expected_passes1[] = {
+      test::Pass(expected_quads1, arraysize(expected_quads1))};
+
+  SurfaceId root_surface_id(factory_.frame_sink_id(), root_local_surface_id_);
+  SurfaceId ids[] = {root_surface_id, primary_child_surface_id,
+                     fallback_child_surface_id};
+  AggregateAndVerify(expected_passes1, arraysize(expected_passes1), ids,
+                     arraysize(ids));
+
+  primary_child_factory.EvictSurface();
+  fallback_child_factory.EvictSurface();
+}
+
 TEST_F(SurfaceAggregatorValidSurfaceTest, CopyRequest) {
   SurfaceFactory embedded_factory(kArbitraryChildFrameSinkId1, &manager_,
                                   &empty_client_);
@@ -586,9 +647,9 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, UnreferencedSurface) {
                               parent_local_surface_id);
 
   test::Quad parent_quads[] = {
-      test::Quad::SolidColorQuad(SK_ColorWHITE),
+      test::Quad::SolidColorQuad(SK_ColorGRAY),
       test::Quad::SurfaceQuad(embedded_surface_id, InvalidSurfaceId(), 1.f),
-      test::Quad::SolidColorQuad(SK_ColorBLACK)};
+      test::Quad::SolidColorQuad(SK_ColorLTGRAY)};
   test::Pass parent_passes[] = {
       test::Pass(parent_quads, arraysize(parent_quads))};
 
@@ -2181,6 +2242,7 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, ColorSpaceTest) {
                          test::Pass(quads[1], arraysize(quads[1]), 1)};
   gfx::ColorSpace color_space1 = gfx::ColorSpace::CreateXYZD50();
   gfx::ColorSpace color_space2 = gfx::ColorSpace::CreateSRGB();
+  gfx::ColorSpace color_space3 = gfx::ColorSpace::CreateSCRGBLinear();
 
   SubmitCompositorFrame(&factory_, passes, arraysize(passes),
                         root_local_surface_id_);
@@ -2188,17 +2250,24 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, ColorSpaceTest) {
   SurfaceId surface_id(factory_.frame_sink_id(), root_local_surface_id_);
 
   CompositorFrame aggregated_frame;
-  aggregator_.SetOutputColorSpace(color_space1);
+  aggregator_.SetOutputColorSpace(color_space1, color_space1);
   aggregated_frame = aggregator_.Aggregate(surface_id);
   EXPECT_EQ(2u, aggregated_frame.render_pass_list.size());
   EXPECT_EQ(color_space1, aggregated_frame.render_pass_list[0]->color_space);
   EXPECT_EQ(color_space1, aggregated_frame.render_pass_list[1]->color_space);
 
-  aggregator_.SetOutputColorSpace(color_space2);
+  aggregator_.SetOutputColorSpace(color_space2, color_space2);
   aggregated_frame = aggregator_.Aggregate(surface_id);
   EXPECT_EQ(2u, aggregated_frame.render_pass_list.size());
   EXPECT_EQ(color_space2, aggregated_frame.render_pass_list[0]->color_space);
   EXPECT_EQ(color_space2, aggregated_frame.render_pass_list[1]->color_space);
+
+  aggregator_.SetOutputColorSpace(color_space1, color_space3);
+  aggregated_frame = aggregator_.Aggregate(surface_id);
+  EXPECT_EQ(3u, aggregated_frame.render_pass_list.size());
+  EXPECT_EQ(color_space1, aggregated_frame.render_pass_list[0]->color_space);
+  EXPECT_EQ(color_space1, aggregated_frame.render_pass_list[1]->color_space);
+  EXPECT_EQ(color_space3, aggregated_frame.render_pass_list[2]->color_space);
 }
 
 }  // namespace

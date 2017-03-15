@@ -48,19 +48,22 @@ SMILTimeContainer::SMILTimeContainer(SVGSVGElement& owner)
       m_started(false),
       m_paused(false),
       m_documentOrderIndexesDirty(false),
-      m_wakeupTimer(this, &SMILTimeContainer::wakeupTimerFired),
-      m_animationPolicyOnceTimer(this,
-                                 &SMILTimeContainer::animationPolicyTimerFired),
-      m_ownerSVGElement(&owner)
-{
-}
+      m_wakeupTimer(
+          TaskRunnerHelper::get(TaskType::UnspecedTimer, &owner.document()),
+          this,
+          &SMILTimeContainer::wakeupTimerFired),
+      m_animationPolicyOnceTimer(
+          TaskRunnerHelper::get(TaskType::UnspecedTimer, &owner.document()),
+          this,
+          &SMILTimeContainer::animationPolicyTimerFired),
+      m_ownerSVGElement(&owner) {}
 
 SMILTimeContainer::~SMILTimeContainer() {
   cancelAnimationFrame();
   cancelAnimationPolicyTimer();
-  ASSERT(!m_wakeupTimer.isActive());
+  DCHECK(!m_wakeupTimer.isActive());
 #if DCHECK_IS_ON()
-  ASSERT(!m_preventScheduledAnimationsChanges);
+  DCHECK(!m_preventScheduledAnimationsChanges);
 #endif
 }
 
@@ -72,7 +75,7 @@ void SMILTimeContainer::schedule(SVGSMILElement* animation,
   DCHECK(animation->hasValidTarget());
 
 #if DCHECK_IS_ON()
-  ASSERT(!m_preventScheduledAnimationsChanges);
+  DCHECK(!m_preventScheduledAnimationsChanges);
 #endif
 
   ElementAttributePair key(target, attributeName);
@@ -80,8 +83,8 @@ void SMILTimeContainer::schedule(SVGSMILElement* animation,
       m_scheduledAnimations.insert(key, nullptr).storedValue->value;
   if (!scheduled)
     scheduled = new AnimationsLinkedHashSet;
-  ASSERT(!scheduled->contains(animation));
-  scheduled->add(animation);
+  DCHECK(!scheduled->contains(animation));
+  scheduled->insert(animation);
 
   SMILTime nextFireTime = animation->nextProgressTime();
   if (nextFireTime.isFinite())
@@ -91,20 +94,20 @@ void SMILTimeContainer::schedule(SVGSMILElement* animation,
 void SMILTimeContainer::unschedule(SVGSMILElement* animation,
                                    SVGElement* target,
                                    const QualifiedName& attributeName) {
-  ASSERT(animation->timeContainer() == this);
+  DCHECK_EQ(animation->timeContainer(), this);
 
 #if DCHECK_IS_ON()
-  ASSERT(!m_preventScheduledAnimationsChanges);
+  DCHECK(!m_preventScheduledAnimationsChanges);
 #endif
 
   ElementAttributePair key(target, attributeName);
   GroupedAnimationsMap::iterator it = m_scheduledAnimations.find(key);
-  ASSERT(it != m_scheduledAnimations.end());
+  DCHECK_NE(it, m_scheduledAnimations.end());
   AnimationsLinkedHashSet* scheduled = it->value.get();
-  ASSERT(scheduled);
+  DCHECK(scheduled);
   AnimationsLinkedHashSet::iterator itAnimation = scheduled->find(animation);
-  ASSERT(itAnimation != scheduled->end());
-  scheduled->remove(itAnimation);
+  DCHECK(itAnimation != scheduled->end());
+  scheduled->erase(itAnimation);
 
   if (scheduled->isEmpty())
     m_scheduledAnimations.remove(it);
@@ -159,7 +162,7 @@ bool SMILTimeContainer::isTimelineRunning() const {
 }
 
 void SMILTimeContainer::start() {
-  RELEASE_ASSERT(!isStarted());
+  CHECK(!isStarted());
 
   if (!document().isActive())
     return;
@@ -268,17 +271,17 @@ void SMILTimeContainer::cancelAnimationFrame() {
 void SMILTimeContainer::scheduleWakeUp(
     double delayTime,
     FrameSchedulingState frameSchedulingState) {
-  ASSERT(frameSchedulingState == SynchronizeAnimations ||
+  DCHECK(frameSchedulingState == SynchronizeAnimations ||
          frameSchedulingState == FutureAnimationFrame);
   m_wakeupTimer.startOneShot(delayTime, BLINK_FROM_HERE);
   m_frameSchedulingState = frameSchedulingState;
 }
 
 void SMILTimeContainer::wakeupTimerFired(TimerBase*) {
-  ASSERT(m_frameSchedulingState == SynchronizeAnimations ||
+  DCHECK(m_frameSchedulingState == SynchronizeAnimations ||
          m_frameSchedulingState == FutureAnimationFrame);
   if (m_frameSchedulingState == FutureAnimationFrame) {
-    ASSERT(isTimelineRunning());
+    DCHECK(isTimelineRunning());
     m_frameSchedulingState = Idle;
     serviceOnNextFrame();
   } else {
@@ -416,7 +419,7 @@ void SMILTimeContainer::updateAnimationsAndScheduleFrameIfNeeded(
 }
 
 SMILTime SMILTimeContainer::updateAnimations(double elapsed, bool seekToTime) {
-  ASSERT(document().isActive());
+  DCHECK(document().isActive());
   SMILTime earliestFireTime = SMILTime::unresolved();
 
 #if DCHECK_IS_ON()

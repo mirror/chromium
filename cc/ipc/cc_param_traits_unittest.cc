@@ -149,10 +149,11 @@ class CCParamTraitsTest : public testing::Test {
   void Compare(const RenderPassDrawQuad* a, const RenderPassDrawQuad* b) {
     EXPECT_EQ(a->render_pass_id, b->render_pass_id);
     EXPECT_EQ(a->mask_resource_id(), b->mask_resource_id());
-    EXPECT_EQ(a->mask_uv_scale.ToString(), b->mask_uv_scale.ToString());
+    EXPECT_EQ(a->mask_uv_rect.ToString(), b->mask_uv_rect.ToString());
     EXPECT_EQ(a->mask_texture_size.ToString(), b->mask_texture_size.ToString());
     EXPECT_EQ(a->filters_scale, b->filters_scale);
     EXPECT_EQ(a->filters_origin, b->filters_origin);
+    EXPECT_EQ(a->tex_coord_rect, b->tex_coord_rect);
   }
 
   void Compare(const SolidColorDrawQuad* a, const SolidColorDrawQuad* b) {
@@ -349,8 +350,8 @@ TEST_F(CCParamTraitsTest, AllQuads) {
   renderpass_in->SetAll(
       shared_state2_in, arbitrary_rect1, arbitrary_rect2_inside_rect1,
       arbitrary_rect1_inside_rect1, arbitrary_bool1, child_id,
-      arbitrary_resourceid2, arbitrary_vector2df1, arbitrary_size1,
-      arbitrary_vector2df2, arbitrary_pointf2);
+      arbitrary_resourceid2, arbitrary_rectf1, arbitrary_size1,
+      arbitrary_vector2df2, arbitrary_pointf2, arbitrary_rectf1);
   pass_cmp->CopyFromAndAppendRenderPassDrawQuad(
       renderpass_in, renderpass_in->shared_quad_state,
       renderpass_in->render_pass_id);
@@ -629,6 +630,25 @@ TEST_F(CCParamTraitsTest, Resources) {
   ASSERT_EQ(2u, frame_out.resource_list.size());
   Compare(arbitrary_resource1, frame_out.resource_list[0]);
   Compare(arbitrary_resource2, frame_out.resource_list[1]);
+}
+
+TEST_F(CCParamTraitsTest, SurfaceInfo) {
+  IPC::Message msg(1, 2, IPC::Message::PRIORITY_NORMAL);
+  const cc::SurfaceId kArbitrarySurfaceId(
+      kArbitraryFrameSinkId,
+      cc::LocalSurfaceId(3, base::UnguessableToken::Create()));
+  constexpr float kArbitraryDeviceScaleFactor = 0.9f;
+  const gfx::Size kArbitrarySize(65, 321);
+  const cc::SurfaceInfo surface_info_in(
+      kArbitrarySurfaceId, kArbitraryDeviceScaleFactor, kArbitrarySize);
+  IPC::ParamTraits<cc::SurfaceInfo>::Write(&msg, surface_info_in);
+
+  cc::SurfaceInfo surface_info_out;
+  base::PickleIterator iter(msg);
+  EXPECT_TRUE(
+      IPC::ParamTraits<cc::SurfaceInfo>::Read(&msg, &iter, &surface_info_out));
+
+  ASSERT_EQ(surface_info_in, surface_info_out);
 }
 
 }  // namespace

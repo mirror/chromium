@@ -10,6 +10,7 @@
 
 #include "base/bind.h"
 #include "base/location.h"
+#include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
@@ -311,13 +312,15 @@ void InterfaceEndpointClient::NotifyError(
   control_message_proxy_.OnConnectionError();
 
   if (!error_handler_.is_null()) {
-    error_handler_.Run();
+    base::Closure error_handler = std::move(error_handler_);
+    error_handler.Run();
   } else if (!error_with_reason_handler_.is_null()) {
+    ConnectionErrorWithReasonCallback error_with_reason_handler =
+        std::move(error_with_reason_handler_);
     if (reason) {
-      error_with_reason_handler_.Run(reason->custom_reason,
-                                     reason->description);
+      error_with_reason_handler.Run(reason->custom_reason, reason->description);
     } else {
-      error_with_reason_handler_.Run(0, std::string());
+      error_with_reason_handler.Run(0, std::string());
     }
   }
 }
@@ -360,7 +363,16 @@ void InterfaceEndpointClient::OnAssociationEvent(
 
 bool InterfaceEndpointClient::HandleValidatedMessage(Message* message) {
   DCHECK_EQ(handle_.id(), message->interface_id());
-  DCHECK(!encountered_error_);
+
+  if (encountered_error_) {
+    // This message is received after error has been encountered. For associated
+    // interfaces, this means the remote side sends a
+    // PeerAssociatedEndpointClosed event but continues to send more messages
+    // for the same interface. Close the pipe because this shouldn't happen.
+    DVLOG(1) << "A message is received for an interface after it has been "
+             << "disconnected. Closing the pipe.";
+    return false;
+  }
 
   if (message->has_flag(Message::kFlagExpectsResponse)) {
     MessageReceiverWithStatus* responder =

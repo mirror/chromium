@@ -8,6 +8,7 @@
 #include <limits>
 
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "cc/paint/paint_canvas.h"
 #include "cc/paint/paint_flags.h"
 #include "gpu/GLES2/gl2extchromium.h"
@@ -20,10 +21,6 @@
 #include "third_party/skia/include/core/SkImage.h"
 #include "third_party/skia/include/core/SkImageGenerator.h"
 #include "third_party/skia/include/gpu/GrContext.h"
-#include "third_party/skia/include/gpu/GrPaint.h"
-#include "third_party/skia/include/gpu/GrTexture.h"
-#include "third_party/skia/include/gpu/GrTextureProvider.h"
-#include "third_party/skia/include/gpu/SkGr.h"
 #include "third_party/skia/include/gpu/gl/GrGLTypes.h"
 #include "ui/gfx/geometry/rect_f.h"
 #include "ui/gfx/skia_util.h"
@@ -938,8 +935,8 @@ bool SkCanvasVideoRenderer::UpdateLastImage(
             NewSkImageFromVideoFrameNative(video_frame.get(), context_3d);
       }
     } else {
-      auto* video_generator = new VideoImageGenerator(video_frame);
-      last_image_ = SkImage::MakeFromGenerator(video_generator);
+      last_image_ = SkImage::MakeFromGenerator(
+          base::MakeUnique<VideoImageGenerator>(video_frame));
     }
     CorrectLastImageDimensions(gfx::RectToSkIRect(video_frame->visible_rect()));
     if (!last_image_)  // Couldn't create the SkImage.

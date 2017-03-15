@@ -63,6 +63,9 @@ void SingleThreadProxy::Start() {
   DebugScopedSetImplThread impl(task_runner_provider_);
 
   const LayerTreeSettings& settings = layer_tree_host_->GetSettings();
+  DCHECK(settings.single_thread_proxy_scheduler ||
+         !settings.enable_checker_imaging)
+      << "Checker-imaging is not supported in synchronous single threaded mode";
   if (settings.single_thread_proxy_scheduler && !scheduler_on_impl_thread_) {
     SchedulerSettings scheduler_settings(settings.ToSchedulerSettings());
     scheduler_settings.commit_to_active_tree = CommitToActiveTree();
@@ -200,6 +203,12 @@ void SingleThreadProxy::DoCommit() {
 
     if (scheduler_on_impl_thread_)
       scheduler_on_impl_thread_->DidCommit();
+
+    // Issue decode callbacks.
+    auto completed_decode_callbacks =
+        layer_tree_host_impl_->TakeCompletedImageDecodeCallbacks();
+    for (auto& callback : completed_decode_callbacks)
+      callback.Run();
 
     layer_tree_host_impl_->CommitComplete();
 
@@ -424,6 +433,11 @@ void SingleThreadProxy::OnDrawForCompositorFrameSink(
   NOTREACHED() << "Implemented by ThreadProxy for synchronous compositor.";
 }
 
+void SingleThreadProxy::NeedsImplSideInvalidation() {
+  DCHECK(scheduler_on_impl_thread_);
+  scheduler_on_impl_thread_->SetNeedsImplSideInvalidation();
+}
+
 void SingleThreadProxy::CompositeImmediately(base::TimeTicks frame_begin_time) {
   TRACE_EVENT0("cc,benchmark", "SingleThreadProxy::CompositeImmediately");
   DCHECK(task_runner_provider_->IsMainThread());
@@ -441,8 +455,9 @@ void SingleThreadProxy::CompositeImmediately(base::TimeTicks frame_begin_time) {
   }
 
   BeginFrameArgs begin_frame_args(BeginFrameArgs::Create(
-      BEGINFRAME_FROM_HERE, 0, 1, frame_begin_time, base::TimeTicks(),
-      BeginFrameArgs::DefaultInterval(), BeginFrameArgs::NORMAL));
+      BEGINFRAME_FROM_HERE, BeginFrameArgs::kManualSourceId, 1,
+      frame_begin_time, base::TimeTicks(), BeginFrameArgs::DefaultInterval(),
+      BeginFrameArgs::NORMAL));
 
   // Start the impl frame.
   {
@@ -477,6 +492,9 @@ void SingleThreadProxy::CompositeImmediately(base::TimeTicks frame_begin_time) {
     layer_tree_host_impl_->Animate();
 
     LayerTreeHostImpl::FrameData frame;
+    frame.begin_frame_ack = BeginFrameAck(
+        begin_frame_args.source_id, begin_frame_args.sequence_number,
+        begin_frame_args.sequence_number, 0, true);
     DoComposite(&frame);
 
     // DoComposite could abort, but because this is a synchronous composite
@@ -598,6 +616,7 @@ void SingleThreadProxy::ScheduledActionSendBeginMainFrame(
   task_runner_provider_->MainThreadTaskRunner()->PostTask(
       FROM_HERE, base::Bind(&SingleThreadProxy::BeginMainFrame,
                             weak_factory_.GetWeakPtr(), begin_frame_args));
+  layer_tree_host_impl_->DidSendBeginMainFrame();
 }
 
 void SingleThreadProxy::SendBeginMainFrameNotExpectedSoon() {
@@ -683,6 +702,8 @@ void SingleThreadProxy::BeginMainFrameAbortedOnImplThread(
 DrawResult SingleThreadProxy::ScheduledActionDrawIfPossible() {
   DebugScopedSetImplThread impl(task_runner_provider_);
   LayerTreeHostImpl::FrameData frame;
+  frame.begin_frame_ack =
+      scheduler_on_impl_thread_->CurrentBeginFrameAckForActiveTree();
   return DoComposite(&frame);
 }
 
@@ -723,6 +744,22 @@ void SingleThreadProxy::ScheduledActionPrepareTiles() {
 
 void SingleThreadProxy::ScheduledActionInvalidateCompositorFrameSink() {
   NOTREACHED();
+}
+
+void SingleThreadProxy::ScheduledActionPerformImplSideInvalidation() {
+  DCHECK(scheduler_on_impl_thread_);
+
+  DebugScopedSetImplThread impl(task_runner_provider_);
+  commit_blocking_task_runner_.reset(new BlockingTaskRunner::CapturePostTasks(
+      task_runner_provider_->blocking_main_thread_task_runner()));
+  layer_tree_host_impl_->InvalidateContentOnImplSide();
+
+  // Invalidations go directly to the active tree, so we synchronously call
+  // NotifyReadyToActivate to update the scheduler and LTHI state correctly.
+  // Since in single-threaded mode the scheduler will wait for a ready to draw
+  // signal from LTHI, the draw will remain blocked till the invalidated tiles
+  // are ready.
+  NotifyReadyToActivate();
 }
 
 void SingleThreadProxy::UpdateBrowserControlsState(

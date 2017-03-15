@@ -41,6 +41,8 @@ extern const char kHistogramLoadTypeParseStartNewNavigation[];
 
 extern const char kHistogramFailedProvisionalLoad[];
 
+extern const char kHistogramPageTimingForegroundDuration[];
+
 extern const char kRapporMetricsNameCoarseTiming[];
 extern const char kHistogramFirstMeaningfulPaintStatus[];
 
@@ -50,6 +52,18 @@ extern const char kHistogramFirstScrollInputAfterFirstPaint[];
 extern const char kHistogramTotalBytes[];
 extern const char kHistogramNetworkBytes[];
 extern const char kHistogramCacheBytes[];
+
+extern const char kHistogramLoadTypeTotalBytesForwardBack[];
+extern const char kHistogramLoadTypeNetworkBytesForwardBack[];
+extern const char kHistogramLoadTypeCacheBytesForwardBack[];
+
+extern const char kHistogramLoadTypeTotalBytesReload[];
+extern const char kHistogramLoadTypeNetworkBytesReload[];
+extern const char kHistogramLoadTypeCacheBytesReload[];
+
+extern const char kHistogramLoadTypeTotalBytesNewNavigation[];
+extern const char kHistogramLoadTypeNetworkBytesNewNavigation[];
+extern const char kHistogramLoadTypeCacheBytesNewNavigation[];
 
 extern const char kHistogramTotalCompletedResources[];
 extern const char kHistogramNetworkCompletedResources[];
@@ -121,7 +135,8 @@ class CorePageLoadMetricsObserver
 
  private:
   void RecordTimingHistograms(const page_load_metrics::PageLoadTiming& timing,
-                              const page_load_metrics::PageLoadExtraInfo& info);
+                              const page_load_metrics::PageLoadExtraInfo& info,
+                              base::TimeTicks app_background_time);
   void RecordByteAndResourceHistograms(
       const page_load_metrics::PageLoadTiming& timing,
       const page_load_metrics::PageLoadExtraInfo& info);
@@ -149,7 +164,6 @@ class CorePageLoadMetricsObserver
   // True if we've received a scroll input after first paint has happened.
   bool received_scroll_input_after_first_paint_ = false;
 
-  base::TimeTicks navigation_start_;
   base::TimeTicks first_user_interaction_after_first_paint_;
   base::TimeTicks first_paint_;
 

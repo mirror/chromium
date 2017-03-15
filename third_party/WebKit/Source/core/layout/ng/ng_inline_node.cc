@@ -21,25 +21,24 @@
 #include "platform/fonts/CharacterRange.h"
 #include "platform/fonts/shaping/CachingWordShapeIterator.h"
 #include "platform/fonts/shaping/CachingWordShaper.h"
+#include "platform/fonts/shaping/HarfBuzzShaper.h"
 #include "platform/fonts/shaping/ShapeResultBuffer.h"
 #include "wtf/text/CharacterNames.h"
 
 namespace blink {
 
-NGInlineNode::NGInlineNode(LayoutObject* start_inline,
-                           const ComputedStyle* block_style)
+NGInlineNode::NGInlineNode(LayoutObject* start_inline, LayoutBlockFlow* block)
     : NGLayoutInputNode(NGLayoutInputNodeType::kLegacyInline),
       start_inline_(start_inline),
-      last_inline_(nullptr),
-      block_style_(block_style) {
+      block_(block) {
   DCHECK(start_inline);
+  DCHECK(block);
 }
 
 NGInlineNode::NGInlineNode()
     : NGLayoutInputNode(NGLayoutInputNodeType::kLegacyInline),
       start_inline_(nullptr),
-      last_inline_(nullptr),
-      block_style_(nullptr) {}
+      block_(nullptr) {}
 
 NGInlineNode::~NGInlineNode() {}
 
@@ -47,14 +46,15 @@ NGLayoutInlineItemRange NGInlineNode::Items(unsigned start, unsigned end) {
   return NGLayoutInlineItemRange(&items_, start, end);
 }
 
+void NGInlineNode::InvalidatePrepareLayout() {
+  text_content_ = String();
+  items_.clear();
+}
+
 void NGInlineNode::PrepareLayout() {
   // Scan list of siblings collecting all in-flow non-atomic inlines. A single
   // NGInlineNode represent a collection of adjacent non-atomic inlines.
-  last_inline_ = start_inline_;
-  for (LayoutObject* curr = start_inline_; curr; curr = curr->nextSibling())
-    last_inline_ = curr;
-
-  CollectInlines(start_inline_, last_inline_);
+  CollectInlines(start_inline_, block_);
   if (is_bidi_enabled_)
     SegmentText();
   ShapeText();
@@ -64,31 +64,42 @@ void NGInlineNode::PrepareLayout() {
 // NGInlineNode object. Collects LayoutText items, merging them up into the
 // parent LayoutInline where possible, and joining all text content in a single
 // string to allow bidi resolution and shaping of the entire block.
-void NGInlineNode::CollectInlines(LayoutObject* start, LayoutObject* last) {
+void NGInlineNode::CollectInlines(LayoutObject* start, LayoutBlockFlow* block) {
   DCHECK(text_content_.isNull());
   DCHECK(items_.isEmpty());
   NGLayoutInlineItemsBuilder builder(&items_);
-  builder.EnterBlock(block_style_.get());
-  CollectInlines(start, last, &builder);
+  builder.EnterBlock(block->style());
+  LayoutObject* next_sibling = CollectInlines(start, block, &builder);
   builder.ExitBlock();
-  text_content_ = builder.ToString();
 
+  text_content_ = builder.ToString();
+  DCHECK(!next_sibling || !next_sibling->isInline());
+  next_sibling_ = next_sibling ? new NGBlockNode(next_sibling) : nullptr;
   is_bidi_enabled_ = !text_content_.isEmpty() &&
                      !(text_content_.is8Bit() && !builder.HasBidiControls());
 }
 
-void NGInlineNode::CollectInlines(LayoutObject* start,
-                                  LayoutObject* last,
-                                  NGLayoutInlineItemsBuilder* builder) {
+LayoutObject* NGInlineNode::CollectInlines(
+    LayoutObject* start,
+    LayoutBlockFlow* block,
+    NGLayoutInlineItemsBuilder* builder) {
   LayoutObject* node = start;
   while (node) {
     if (node->isText()) {
       builder->SetIsSVGText(node->isSVGInlineText());
       builder->Append(toLayoutText(node)->text(), node->style(), node);
+      node->clearNeedsLayout();
+
     } else if (node->isFloating() || node->isOutOfFlowPositioned()) {
-      // Skip positioned objects.
+      // Add floats and positioned objects in the same way as atomic inlines.
+      // Because these objects need positions, they will be handled in
+      // NGLineBuilder.
+      builder->Append(objectReplacementCharacter, nullptr, node);
+
     } else if (!node->isInline()) {
-      // TODO(kojii): Implement when inline has block children.
+      // A block box found. End inline and transit to block layout.
+      return node;
+
     } else {
       builder->EnterInline(node);
 
@@ -102,11 +113,16 @@ void NGInlineNode::CollectInlines(LayoutObject* start,
       else if (LayoutObject* child = node->slowFirstChild()) {
         node = child;
         continue;
+
+      } else {
+        // An empty inline node.
+        node->clearNeedsLayout();
       }
 
       builder->ExitInline(node);
     }
 
+    // Find the next sibling, or parent, until we reach |block|.
     while (true) {
       if (LayoutObject* next = node->nextSibling()) {
         node = next;
@@ -114,17 +130,20 @@ void NGInlineNode::CollectInlines(LayoutObject* start,
       }
       node = node->parent();
       builder->ExitInline(node);
-      if (node == start || node == start->parent())
-        return;
+      if (node == block)
+        return nullptr;
+      DCHECK(node->isInline());
+      node->clearNeedsLayout();
     }
   }
+  return nullptr;
 }
 
 void NGInlineNode::SegmentText() {
   // TODO(kojii): Move this to caller, this will be used again after line break.
   NGBidiParagraph bidi;
   text_content_.ensure16Bit();
-  if (!bidi.SetParagraph(text_content_, block_style_.get())) {
+  if (!bidi.SetParagraph(text_content_, BlockStyle())) {
     // On failure, give up bidi resolving and reordering.
     is_bidi_enabled_ = false;
     return;
@@ -199,55 +218,56 @@ LayoutUnit NGLayoutInlineItem::InlineSize(unsigned start, unsigned end) const {
   if (start == end)
     return LayoutUnit();
 
-  if (!style_) {
+  if (!style_ || !shape_result_) {
     // Bidi controls do not have widths.
     // TODO(kojii): Atomic inline not supported yet.
     return LayoutUnit();
   }
 
-  float total_width = 0;
-  for (const auto& result : shape_results_)
-    total_width += result->width();
-
   if (start == start_offset_ && end == end_offset_)
-    return LayoutUnit(total_width);
+    return LayoutUnit(shape_result_->width());
 
   return LayoutUnit(ShapeResultBuffer::getCharacterRange(
-                        shape_results_, Direction(), total_width,
+                        shape_result_, Direction(), shape_result_->width(),
                         start - StartOffset(), end - StartOffset())
                         .width());
 }
 
+void NGLayoutInlineItem::GetFallbackFonts(
+    HashSet<const SimpleFontData*>* fallback_fonts,
+    unsigned start,
+    unsigned end) const {
+  DCHECK(start >= StartOffset() && start <= end && end <= EndOffset());
+
+  // TODO(kojii): Implement |start| and |end|.
+  shape_result_->fallbackFonts(fallback_fonts);
+}
+
 void NGInlineNode::ShapeText() {
-  // TODO(layout-dev): Should pass the entire range to the shaper as context
-  // and then shape each item based on the relevant font.
+  // TODO(eae): Add support for shaping latin-1 text?
+  text_content_.ensure16Bit();
+
+  // Shape each item with the full context of the entire node.
+  HarfBuzzShaper shaper(text_content_.characters16(), text_content_.length());
   for (auto& item : items_) {
     // Skip object replacement characters and bidi control characters.
     if (!item.style_)
       continue;
-    StringView item_text(text_content_, item.start_offset_,
-                         item.end_offset_ - item.start_offset_);
-    const Font& item_font = item.style_->font();
-    ShapeCache* shape_cache = item_font.shapeCache();
 
-    TextRun item_run(item_text);
-    item_run.setDirection(item.Direction());
-    CachingWordShapeIterator iterator(shape_cache, item_run, &item_font);
-    RefPtr<const ShapeResult> word_result;
-    while (iterator.next(&word_result)) {
-      item.shape_results_.push_back(std::move(word_result));
-    }
+    item.shape_result_ = shaper.shape(&item.Style()->font(), item.Direction(),
+                                      item.StartOffset(), item.EndOffset());
   }
 }
 
-RefPtr<NGPhysicalFragment> NGInlineNode::Layout(NGConstraintSpace*) {
+RefPtr<NGLayoutResult> NGInlineNode::Layout(NGConstraintSpace*, NGBreakToken*) {
   ASSERT_NOT_REACHED();
   return nullptr;
 }
 
 void NGInlineNode::LayoutInline(NGConstraintSpace* constraint_space,
                                 NGLineBuilder* line_builder) {
-  PrepareLayout();
+  if (!IsPrepareLayoutFinished())
+    PrepareLayout();
 
   if (text_content_.isEmpty())
     return;
@@ -255,30 +275,38 @@ void NGInlineNode::LayoutInline(NGConstraintSpace* constraint_space,
   NGTextLayoutAlgorithm(this, constraint_space).LayoutInline(line_builder);
 }
 
-NGInlineNode* NGInlineNode::NextSibling() {
-  if (!next_sibling_) {
-    LayoutObject* next_sibling =
-        last_inline_ ? last_inline_->nextSibling() : nullptr;
-    next_sibling_ = next_sibling
-                        ? new NGInlineNode(next_sibling, block_style_.get())
-                        : nullptr;
-  }
+MinMaxContentSize NGInlineNode::ComputeMinMaxContentSize() {
+  // Compute the max of inline sizes of all line boxes with 0 available inline
+  // size. This gives the min-content, the width where lines wrap at every break
+  // opportunity.
+  NGWritingMode writing_mode =
+      FromPlatformWritingMode(BlockStyle()->getWritingMode());
+  RefPtr<NGConstraintSpace> constraint_space =
+      NGConstraintSpaceBuilder(writing_mode)
+          .SetTextDirection(BlockStyle()->direction())
+          .SetAvailableSize({LayoutUnit(), NGSizeIndefinite})
+          .ToConstraintSpace(writing_mode);
+  NGLineBuilder line_builder(this, constraint_space.get(), nullptr);
+  LayoutInline(constraint_space.get(), &line_builder);
+  MinMaxContentSize sizes;
+  sizes.min_content = line_builder.MaxInlineSize();
+
+  // max-content is the width without any line wrapping.
+  // TODO(kojii): Implement hard breaks (<br> etc.) to break.
+  for (const auto& item : items_)
+    sizes.max_content += item.InlineSize();
+
+  return sizes;
+}
+
+NGLayoutInputNode* NGInlineNode::NextSibling() {
+  if (!IsPrepareLayoutFinished())
+    PrepareLayout();
   return next_sibling_;
 }
 
 LayoutObject* NGInlineNode::GetLayoutObject() {
   return GetLayoutBlockFlow();
-}
-
-// Find the first LayoutBlockFlow in the ancestor chain of |start_inilne_|.
-LayoutBlockFlow* NGInlineNode::GetLayoutBlockFlow() const {
-  for (LayoutObject* layout_object = start_inline_->parent(); layout_object;
-       layout_object = layout_object->parent()) {
-    if (layout_object->isLayoutBlockFlow())
-      return toLayoutBlockFlow(layout_object);
-  }
-  ASSERT_NOT_REACHED();
-  return nullptr;
 }
 
 // Compute the delta of text offsets between NGInlineNode and LayoutText.
@@ -301,7 +329,8 @@ void NGInlineNode::GetLayoutTextOffsets(
     if (next_text != current_text) {
       if (current_text &&
           current_text->textLength() != item.StartOffset() - current_offset) {
-        current_text->setText(Text(current_offset, item.StartOffset()).impl());
+        current_text->setTextInternal(
+            Text(current_offset, item.StartOffset()).impl());
       }
       current_text = next_text;
       current_offset = item.StartOffset();
@@ -310,7 +339,8 @@ void NGInlineNode::GetLayoutTextOffsets(
   }
   if (current_text &&
       current_text->textLength() != text_content_.length() - current_offset) {
-    current_text->setText(Text(current_offset, text_content_.length()).impl());
+    current_text->setTextInternal(
+        Text(current_offset, text_content_.length()).impl());
   }
 }
 

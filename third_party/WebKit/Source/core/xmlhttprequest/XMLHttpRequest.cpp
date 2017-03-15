@@ -23,7 +23,8 @@
 
 #include "core/xmlhttprequest/XMLHttpRequest.h"
 
-#include "bindings/core/v8/ArrayBufferOrArrayBufferViewOrBlobOrDocumentOrStringOrFormData.h"
+#include <memory>
+#include "bindings/core/v8/ArrayBufferOrArrayBufferViewOrBlobOrDocumentOrStringOrFormDataOrURLSearchParams.h"
 #include "bindings/core/v8/ArrayBufferOrArrayBufferViewOrBlobOrUSVString.h"
 #include "bindings/core/v8/DOMWrapperWorld.h"
 #include "bindings/core/v8/ExceptionState.h"
@@ -37,6 +38,7 @@
 #include "core/dom/DocumentParser.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/dom/URLSearchParams.h"
 #include "core/dom/XMLDocument.h"
 #include "core/editing/serializers/Serialization.h"
 #include "core/events/Event.h"
@@ -67,12 +69,12 @@
 #include "platform/loader/fetch/CrossOriginAccessControl.h"
 #include "platform/loader/fetch/FetchInitiatorTypeNames.h"
 #include "platform/loader/fetch/FetchUtils.h"
+#include "platform/loader/fetch/ResourceError.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
+#include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/network/HTTPParsers.h"
 #include "platform/network/NetworkLog.h"
 #include "platform/network/ParsedContentType.h"
-#include "platform/network/ResourceError.h"
-#include "platform/network/ResourceRequest.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/weborigin/SecurityPolicy.h"
 #include "platform/weborigin/Suborigin.h"
@@ -81,7 +83,6 @@
 #include "wtf/AutoReset.h"
 #include "wtf/StdLibExtras.h"
 #include "wtf/text/CString.h"
-#include <memory>
 
 namespace blink {
 
@@ -250,7 +251,8 @@ XMLHttpRequest::XMLHttpRequest(
       m_sameOriginRequest(true),
       m_downloadingToFile(false),
       m_responseTextOverflow(false),
-      m_sendFlag(false) {}
+      m_sendFlag(false),
+      m_responseArrayBufferFailure(false) {}
 
 XMLHttpRequest::~XMLHttpRequest() {}
 
@@ -385,14 +387,23 @@ DOMArrayBuffer* XMLHttpRequest::responseArrayBuffer() {
   if (m_error || m_state != kDone)
     return nullptr;
 
-  if (!m_responseArrayBuffer) {
+  if (!m_responseArrayBuffer && !m_responseArrayBufferFailure) {
     if (m_binaryResponseBuilder && m_binaryResponseBuilder->size()) {
-      DOMArrayBuffer* buffer = DOMArrayBuffer::createUninitialized(
+      DOMArrayBuffer* buffer = DOMArrayBuffer::createUninitializedOrNull(
           m_binaryResponseBuilder->size(), 1);
-      m_binaryResponseBuilder->getAsBytes(
-          buffer->data(), static_cast<size_t>(buffer->byteLength()));
-      m_responseArrayBuffer = buffer;
+      if (buffer) {
+        m_binaryResponseBuilder->getAsBytes(
+            buffer->data(), static_cast<size_t>(buffer->byteLength()));
+        m_responseArrayBuffer = buffer;
+      }
+      // https://xhr.spec.whatwg.org/#arraybuffer-response allows clearing
+      // of the 'received bytes' payload when the response buffer allocation
+      // fails.
       m_binaryResponseBuilder.clear();
+      // Mark allocation as failed; subsequent calls to the accessor must
+      // continue to report |null|.
+      //
+      m_responseArrayBufferFailure = !buffer;
     } else {
       m_responseArrayBuffer = DOMArrayBuffer::create(nullptr, 0);
     }
@@ -533,9 +544,6 @@ void XMLHttpRequest::dispatchReadyStateChangeEvent() {
     }
     m_progressEventThrottle->dispatchReadyStateChangeEvent(
         Event::create(EventTypeNames::readystatechange), action);
-    TRACE_EVENT_INSTANT1(TRACE_DISABLED_BY_DEFAULT("devtools.timeline"),
-                         "UpdateCounters", TRACE_EVENT_SCOPE_THREAD, "data",
-                         InspectorUpdateCountersEvent::data());
   }
 
   if (m_state == kDone && !m_error) {
@@ -543,9 +551,6 @@ void XMLHttpRequest::dispatchReadyStateChangeEvent() {
                  InspectorXhrLoadEvent::data(getExecutionContext(), this));
     dispatchProgressEventFromSnapshot(EventTypeNames::load);
     dispatchProgressEventFromSnapshot(EventTypeNames::loadend);
-    TRACE_EVENT_INSTANT1(TRACE_DISABLED_BY_DEFAULT("devtools.timeline"),
-                         "UpdateCounters", TRACE_EVENT_SCOPE_THREAD, "data",
-                         InspectorUpdateCountersEvent::data());
   }
 }
 
@@ -704,10 +709,10 @@ bool XMLHttpRequest::initSend(ExceptionState& exceptionState) {
 }
 
 void XMLHttpRequest::send(
-    const ArrayBufferOrArrayBufferViewOrBlobOrDocumentOrStringOrFormData& body,
+    const ArrayBufferOrArrayBufferViewOrBlobOrDocumentOrStringOrFormDataOrURLSearchParams&
+        body,
     ExceptionState& exceptionState) {
-  InspectorInstrumentation::willSendXMLHttpOrFetchNetworkRequest(
-      getExecutionContext(), url());
+  probe::willSendXMLHttpOrFetchNetworkRequest(getExecutionContext(), url());
 
   if (body.isNull()) {
     send(String(), exceptionState);
@@ -736,6 +741,11 @@ void XMLHttpRequest::send(
 
   if (body.isFormData()) {
     send(body.getAsFormData(), exceptionState);
+    return;
+  }
+
+  if (body.isURLSearchParams()) {
+    send(body.getAsURLSearchParams(), exceptionState);
     return;
   }
 
@@ -785,17 +795,9 @@ void XMLHttpRequest::send(const String& body, ExceptionState& exceptionState) {
   RefPtr<EncodedFormData> httpBody;
 
   if (!body.isNull() && areMethodAndURLValidForSend()) {
-    String contentType = getRequestHeader(HTTPNames::Content_Type);
-    if (contentType.isEmpty()) {
-      setRequestHeaderInternal(HTTPNames::Content_Type,
-                               "text/plain;charset=UTF-8");
-    } else {
-      replaceCharsetInMediaType(contentType, "UTF-8");
-      m_requestHeaders.set(HTTPNames::Content_Type, AtomicString(contentType));
-    }
-
     httpBody = EncodedFormData::create(
         UTF8Encoding().encode(body, WTF::EntitiesForUnencodables));
+    updateContentTypeAndCharset("text/plain;charset=UTF-8", "UTF-8");
   }
 
   createRequest(std::move(httpBody), exceptionState);
@@ -812,7 +814,7 @@ void XMLHttpRequest::send(Blob* body, ExceptionState& exceptionState) {
   if (areMethodAndURLValidForSend()) {
     if (getRequestHeader(HTTPNames::Content_Type).isEmpty()) {
       const String& blobType = body->type();
-      if (!blobType.isEmpty() && isValidContentType(blobType)) {
+      if (!blobType.isEmpty() && ParsedContentType(blobType).isValid()) {
         setRequestHeaderInternal(HTTPNames::Content_Type,
                                  AtomicString(blobType));
       }
@@ -847,12 +849,32 @@ void XMLHttpRequest::send(FormData* body, ExceptionState& exceptionState) {
   if (areMethodAndURLValidForSend()) {
     httpBody = body->encodeMultiPartFormData();
 
+    // TODO (sof): override any author-provided charset= in the
+    // content type value to UTF-8 ?
     if (getRequestHeader(HTTPNames::Content_Type).isEmpty()) {
       AtomicString contentType =
           AtomicString("multipart/form-data; boundary=") +
           httpBody->boundary().data();
       setRequestHeaderInternal(HTTPNames::Content_Type, contentType);
     }
+  }
+
+  createRequest(std::move(httpBody), exceptionState);
+}
+
+void XMLHttpRequest::send(URLSearchParams* body,
+                          ExceptionState& exceptionState) {
+  NETWORK_DVLOG(1) << this << " send() URLSearchParams " << body;
+
+  if (!initSend(exceptionState))
+    return;
+
+  RefPtr<EncodedFormData> httpBody;
+
+  if (areMethodAndURLValidForSend()) {
+    httpBody = body->toEncodedFormData();
+    updateContentTypeAndCharset(
+        "application/x-www-form-urlencoded;charset=UTF-8", "UTF-8");
   }
 
   createRequest(std::move(httpBody), exceptionState);
@@ -936,8 +958,7 @@ void XMLHttpRequest::createRequest(PassRefPtr<EncodedFormData> httpBody,
   // Also, only async requests support upload progress events.
   bool uploadEvents = false;
   if (m_async) {
-    InspectorInstrumentation::asyncTaskScheduled(
-        &executionContext, "XMLHttpRequest.send", this, true);
+    probe::asyncTaskScheduled(&executionContext, "XMLHttpRequest.send", this);
     dispatchProgressEvent(EventTypeNames::loadstart, 0, 0);
     // Event handler could have invalidated this send operation,
     // (re)setting the send flag and/or initiating another send
@@ -984,16 +1005,15 @@ void XMLHttpRequest::createRequest(PassRefPtr<EncodedFormData> httpBody,
   request.setFetchCredentialsMode(
       includeCredentials ? WebURLRequest::FetchCredentialsModeInclude
                          : WebURLRequest::FetchCredentialsModeSameOrigin);
-  request.setSkipServiceWorker(m_isIsolatedWorld
-                                   ? WebURLRequest::SkipServiceWorker::All
-                                   : WebURLRequest::SkipServiceWorker::None);
+  request.setServiceWorkerMode(m_isIsolatedWorld
+                                   ? WebURLRequest::ServiceWorkerMode::None
+                                   : WebURLRequest::ServiceWorkerMode::All);
   request.setExternalRequestStateFromRequestorAddressSpace(
       executionContext.securityContext().addressSpace());
 
-  InspectorInstrumentation::willLoadXHR(
-      &executionContext, this, this, m_method, m_url, m_async,
-      httpBody ? httpBody->deepCopy() : nullptr, m_requestHeaders,
-      includeCredentials);
+  probe::willLoadXHR(&executionContext, this, this, m_method, m_url, m_async,
+                     httpBody ? httpBody->deepCopy() : nullptr,
+                     m_requestHeaders, includeCredentials);
 
   if (httpBody) {
     DCHECK_NE(m_method, HTTPNames::GET);
@@ -1094,7 +1114,7 @@ void XMLHttpRequest::abort() {
 }
 
 void XMLHttpRequest::dispose() {
-  InspectorInstrumentation::detachClientRequest(getExecutionContext(), this);
+  probe::detachClientRequest(getExecutionContext(), this);
   m_progressEventThrottle->stop();
   internalAbort();
 }
@@ -1177,6 +1197,7 @@ void XMLHttpRequest::clearResponse() {
   // this only when we clear the response holder variables above.
   m_binaryResponseBuilder.clear();
   m_responseArrayBuffer.clear();
+  m_responseArrayBufferFailure = false;
 }
 
 void XMLHttpRequest::clearRequest() {
@@ -1194,11 +1215,11 @@ void XMLHttpRequest::dispatchProgressEvent(const AtomicString& type,
       lengthComputable ? static_cast<unsigned long long>(expectedLength) : 0;
 
   ExecutionContext* context = getExecutionContext();
-  InspectorInstrumentation::AsyncTask asyncTask(context, this, m_async);
+  probe::AsyncTask asyncTask(
+      context, this, type == EventTypeNames::loadend ? nullptr : "progress",
+      m_async);
   m_progressEventThrottle->dispatchProgressEvent(type, lengthComputable, loaded,
                                                  total);
-  if (m_async && type == EventTypeNames::loadend)
-    InspectorInstrumentation::asyncTaskCanceled(context, this);
 }
 
 void XMLHttpRequest::dispatchProgressEventFromSnapshot(
@@ -1241,8 +1262,7 @@ void XMLHttpRequest::handleRequestError(ExceptionCode exceptionCode,
                                         long long expectedLength) {
   NETWORK_DVLOG(1) << this << " handleRequestError()";
 
-  InspectorInstrumentation::didFailXHRLoading(getExecutionContext(), this, this,
-                                              m_method, m_url);
+  probe::didFailXHRLoading(getExecutionContext(), this, this, m_method, m_url);
 
   m_sendFlag = false;
   if (!m_async) {
@@ -1446,6 +1466,20 @@ AtomicString XMLHttpRequest::finalResponseMIMETypeWithFallback() const {
   return AtomicString("text/xml");
 }
 
+void XMLHttpRequest::updateContentTypeAndCharset(
+    const AtomicString& defaultContentType,
+    const String& charset) {
+  // http://xhr.spec.whatwg.org/#the-send()-method step 4's concilliation of
+  // "charset=" in any author-provided Content-Type: request header.
+  String contentType = getRequestHeader(HTTPNames::Content_Type);
+  if (contentType.isEmpty()) {
+    setRequestHeaderInternal(HTTPNames::Content_Type, defaultContentType);
+    return;
+  }
+  replaceCharsetInMediaType(contentType, charset);
+  m_requestHeaders.set(HTTPNames::Content_Type, AtomicString(contentType));
+}
+
 bool XMLHttpRequest::responseIsXML() const {
   return DOMImplementation::isXMLMIMEType(finalResponseMIMETypeWithFallback());
 }
@@ -1616,8 +1650,8 @@ void XMLHttpRequest::notifyParserStopped() {
 }
 
 void XMLHttpRequest::endLoading() {
-  InspectorInstrumentation::didFinishXHRLoading(getExecutionContext(), this,
-                                                this, m_method, m_url);
+  probe::didFinishXHRLoading(getExecutionContext(), this, this, m_method,
+                             m_url);
 
   if (m_loader) {
     // Set |m_error| in order to suppress the cancel notification (see

@@ -1025,6 +1025,19 @@ void GLES2InterfaceStub::FlushDriverCachesCHROMIUM() {}
 GLuint GLES2InterfaceStub::GetLastFlushIdCHROMIUM() {
   return 0;
 }
+void GLES2InterfaceStub::ScheduleDCLayerSharedStateCHROMIUM(
+    GLfloat /* opacity */,
+    GLboolean /* is_clipped */,
+    const GLfloat* /* clip_rect */,
+    GLint /* z_order */,
+    const GLfloat* /* transform */) {}
+void GLES2InterfaceStub::ScheduleDCLayerCHROMIUM(
+    GLuint /* contents_texture_id */,
+    const GLfloat* /* contents_rect */,
+    GLuint /* background_color */,
+    GLuint /* edge_aa_mask */,
+    const GLfloat* /* bounds_rect */,
+    GLuint /* filter */) {}
 void GLES2InterfaceStub::MatrixLoadfCHROMIUM(GLenum /* matrixMode */,
                                              const GLfloat* /* m */) {}
 void GLES2InterfaceStub::MatrixLoadIdentityCHROMIUM(GLenum /* matrixMode */) {}
@@ -1170,4 +1183,8 @@ void GLES2InterfaceStub::OverlayPromotionHintCHROMIUM(
 void GLES2InterfaceStub::SwapBuffersWithBoundsCHROMIUM(
     GLsizei /* count */,
     const GLint* /* rects */) {}
+void GLES2InterfaceStub::SetDrawRectangleCHROMIUM(GLint /* x */,
+                                                  GLint /* y */,
+                                                  GLint /* width */,
+                                                  GLint /* height */) {}
 #endif  // GPU_COMMAND_BUFFER_CLIENT_GLES2_INTERFACE_STUB_IMPL_AUTOGEN_H_

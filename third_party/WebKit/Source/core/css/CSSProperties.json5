@@ -17,10 +17,16 @@
     runtime_flag: {
     },
 
-    // - descriptor_only
-    // These are actually descriptors and not CSS properties. Properties with
-    // the same name as a descriptor do not get this flag.
-    descriptor_only: {
+    // - is_descriptor
+    // Whether it is the name of a CSS descriptor.
+    // TODO(alancutter): Don't use CSSPropertyID for descriptors.
+    is_descriptor: {
+    },
+
+    // - is_property
+    // Whether it is the name of a CSS property.
+    is_property: {
+      default: true,
     },
 
     // - longhands: "property;other-property"
@@ -30,7 +36,7 @@
     },
 
     // - api_class: true|"classname"
-    // Specifies the existance (and optionally name) of a CSSPropertyAPI
+    // Specifies the existence (and optionally name) of a CSSPropertyAPI
     // implementation for the property to be used by make_css_property_apis.py.
     // See core/css/properties/CSSPropertyAPI.h for API details.
     // * Add this flag if the API has been implemented for this property.
@@ -55,28 +61,31 @@
       valid_values: ["parseSingleValue", "parseShorthand"],
     },
 
-    // - keyword_only
-    // These properties only store keyword values. This is used when
-    // generating the ComputedStyle storage for the property. The initial
-    // value for this property on a ComputedStyle is specified with the
-    // initial_keyword flag below.
-    // TODO(sashab): Rename this to field_type=keyword once we support
-    // multiple types of generatable fields in ComputedStyle
+    // - field_template
+    // Affects how the interface to this field is generated.
     // TODO(sashab, meade): Remove this once TypedOM types are specified for
     // every property, since this value can be inferred from that.
-    keyword_only: {
-      default: false,
-      valid_type: "bool",
+    field_template: {
+      valid_values: [
+        // Field is stored as an enum and has a initial/getter/setter/resetter.
+        "keyword",
+        // Field is stored a packed boolean flag and has a initial/getter/setter/resetter.
+        // TODO(shend): generalise this to "primitive"
+        "flag",
+        // Field is stored as a bool, whose default value is false
+        // and can only be set to true. Has a initial/getter/setter.
+        "monotonic_flag"
+      ],
     },
 
-    // - field_storage_type: "path/to/Type"
+    // - field_type_path: "path/to/Type"
     // For properties that have generated field storage in ComputedStyle,
     // this optional argument will override the field's generated type with
     // an external one specified at the given path. The type must be defined
     // in a header file at that path, and have the same name as the file.
     // Currently, only enum types are supported, and the enum's only values
     // must be CamelCase values of the keywords of the property.
-    field_storage_type: {
+    field_type_path: {
     },
 
     // - keywords: ["keyword1", "keyword2"]
@@ -88,8 +97,7 @@
     },
 
     // - initial_keyword: "keyword-value"
-    // This specifies the initial keyword value for the keyword_only
-    // property.
+    // This specifies the initial keyword value for the keyword fields.
     initial_keyword: {
     },
 
@@ -97,16 +105,16 @@
     // - typedom_types: ["Type", "OtherType"]
     // The property can take types specified in typedom_types for CSS Typed OM.
     // Keyword does not need to be specified as every property can take keywords.
-    // - repeated
-    // The property supports a list of values.
+    // - separator
+    // The property supports a list of values, and when there is more than one,
+    // it is separated with this character.
     // - supports_percentage
     // The property supports percentage types.
     typedom_types: {
       default: [],
     },
-    repeated: {
-      default: false,
-      valid_type: "bool",
+    separator: {
+      valid_values: [",", " ", "/"],
     },
     supports_percentage: {
       default: false,
@@ -261,7 +269,7 @@
       custom_all: true,
       keywords: ["normal", "reverse", "alternate", "alternate-reverse"],
       priority: "Animation",
-      repeated: true,
+      separator: ",",
     },
     {
       name: "animation-duration",
@@ -278,7 +286,7 @@
       custom_all: true,
       keywords: ["infinite"],
       priority: "Animation",
-      repeated: true,
+      separator: ",",
     },
     {
       name: "animation-name",
@@ -328,16 +336,19 @@
     {
       name: "direction",
       custom_value: true,
-      field_storage_type: "platform/text/TextDirection",
+      field_type_path: "platform/text/TextDirection",
       inherited: true,
       initial_keyword: "ltr",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: ["ltr", "rtl"],
       priority: "High",
     },
     {
       name: "font-family",
+      api_class: true,
+      api_methods: ["parseSingleValue"],
       converter: "convertFontFamily",
+      is_descriptor: true,
       font: true,
       inherited: true,
       name_for_methods: "FamilyDescription",
@@ -354,6 +365,8 @@
     },
     {
       name: "font-size",
+      api_class: true,
+      api_methods: ["parseSingleValue"],
       converter: "convertFontSize",
       font: true,
       getter: "getSize",
@@ -376,6 +389,7 @@
     },
     {
       name: "font-stretch",
+      is_descriptor: true,
       font: true,
       inherited: true,
       name_for_methods: "Stretch",
@@ -384,6 +398,7 @@
     },
     {
       name: "font-style",
+      is_descriptor: true,
       font: true,
       inherited: true,
       name_for_methods: "Style",
@@ -424,6 +439,7 @@
     {
       name: "font-weight",
       converter: "convertFontWeight",
+      is_descriptor: true,
       font: true,
       inherited: true,
       interpolable: true,
@@ -434,6 +450,7 @@
     {
       name: "font-feature-settings",
       converter: "convertFontFeatureSettings",
+      is_descriptor: true,
       font: true,
       inherited: true,
       name_for_methods: "FeatureSettings",
@@ -481,10 +498,10 @@
     {
       name: "writing-mode",
       custom_value: true,
-      field_storage_type: "platform/text/WritingMode",
+      field_type_path: "platform/text/WritingMode",
       inherited: true,
       initial_keyword: "horizontal-tb",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: ["horizontal-tb", "vertical-rl", "vertical-lr"],
       priority: "High",
       type_name: "WritingMode",
@@ -508,6 +525,7 @@
       api_class: true,
       api_methods: ["parseSingleValue"],
       custom_all: true,
+      is_descriptor: true,
       priority: "High",
     },
 
@@ -564,7 +582,7 @@
       name: "background-image",
       custom_all: true,
       interpolable: true,
-      keywords: ["auto"],
+      keywords: ["auto", "none"],
       typedom_types: ["Image"],
     },
     {
@@ -628,6 +646,8 @@
       name: "border-bottom-style",
       initial: "initialBorderStyle",
       type_name: "EBorderStyle",
+      keywords: ["none"],
+      typedom_types: ["Image"],
     },
     {
       name: "border-bottom-width",
@@ -635,13 +655,15 @@
       converter: "convertLineWidth<float>",
       initial: "initialBorderWidth",
       interpolable: true,
+      keywords: ["thin", "medium", "thick"],
+      typedom_types: ["Length"],
     },
     {
       name: "border-collapse",
       independent: true,
       inherited: true,
       initial_keyword: "separate",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: ["separate", "collapse"],
     },
     {
@@ -685,6 +707,8 @@
       name: "border-left-style",
       initial: "initialBorderStyle",
       type_name: "EBorderStyle",
+      keywords: ["none"],
+      typedom_types: ["Image"],
     },
     {
       name: "border-left-width",
@@ -692,6 +716,8 @@
       converter: "convertLineWidth<float>",
       initial: "initialBorderWidth",
       interpolable: true,
+      keywords: ["thin", "medium", "thick"],
+      typedom_types: ["Length"],
     },
     {
       name: "border-right-color",
@@ -702,6 +728,8 @@
       name: "border-right-style",
       initial: "initialBorderStyle",
       type_name: "EBorderStyle",
+      keywords: ["none"],
+      typedom_types: ["Image"],
     },
     {
       name: "border-right-width",
@@ -709,6 +737,8 @@
       converter: "convertLineWidth<float>",
       initial: "initialBorderWidth",
       interpolable: true,
+      keywords: ["thin", "medium", "thick"],
+      typedom_types: ["Length"],
     },
     {
       name: "border-top-color",
@@ -735,6 +765,8 @@
       name: "border-top-style",
       initial: "initialBorderStyle",
       type_name: "EBorderStyle",
+      keywords: ["none"],
+      typedom_types: ["Image"],
     },
     {
       name: "border-top-width",
@@ -768,7 +800,7 @@
       // Storage for this property also covers these legacy properties:
       // page-break-after, -webkit-column-break-after
       initial_keyword: "auto",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: [
         "auto", "avoid", "avoid-column", "avoid-page", "column", "left", "page", "recto", "right", "verso"
       ],
@@ -779,7 +811,7 @@
       // Storage for this property also covers these legacy properties:
       // page-break-before, -webkit-column-break-before
       initial_keyword: "auto",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: [
         "auto", "avoid", "avoid-column", "avoid-page", "column", "left", "page", "recto", "right", "verso"
       ],
@@ -790,7 +822,7 @@
       // Storage for this property also covers these legacy properties:
       // page-break-inside, -webkit-column-break-inside
       initial_keyword: "auto",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: ["auto", "avoid", "avoid-column", "avoid-page"],
     },
     {
@@ -802,7 +834,7 @@
       independent: true,
       inherited: true,
       initial_keyword: "top",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: ["top", "bottom", "left", "right"],
     },
     {
@@ -816,7 +848,7 @@
     {
       name: "clear",
       initial_keyword: "none",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: ["none", "left", "right", "both"],
     },
     {
@@ -872,7 +904,7 @@
       api_class: true,
       api_methods: ["parseSingleValue"],
       custom_all: true,
-      repeated: true,
+      separator: ",",
       typedom_types: ["Image"],
     },
     {
@@ -923,7 +955,7 @@
       independent: true,
       inherited: true,
       initial_keyword: "show",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: ["show", "hide"],
       type_name: "EEmptyCells",
     },
@@ -982,7 +1014,7 @@
     {
       name: "float",
       initial_keyword: "none",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: ["none", "left", "right"],
       name_for_methods: "Floating",
       type_name: "EFloat",
@@ -1079,9 +1111,10 @@
       name: "height",
       api_class: "CSSPropertyAPIWidthOrHeight",
       converter: "convertLengthSizing",
+      is_descriptor: true,
       initial: "initialSize",
       interpolable: true,
-      keywords: ["auto"],
+      keywords: ["auto", "fit-content", "min-content", "max-content"],
       supports_percentage: true,
       typedom_types: ["Length"],
     },
@@ -1157,10 +1190,20 @@
     },
     {
       name: "line-height",
+      api_class: true,
+      api_methods: ["parseSingleValue"],
       converter: "convertLineHeight",
       getter: "specifiedLineHeight",
       inherited: true,
       interpolable: true,
+    },
+    {
+      name: "line-height-step",
+      api_class: true,
+      api_methods: ["parseSingleValue"],
+      converter: "convertComputedLength<uint8_t>",
+      inherited: true,
+      runtime_flag: "CSSSnapSize",
     },
     {
       name: "list-style-image",
@@ -1176,14 +1219,14 @@
       independent: true,
       inherited: true,
       initial_keyword: "outside",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: ["outside", "inside"],
     },
     {
       name: "list-style-type",
       inherited: true,
       initial_keyword: "disc",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: [
         "disc", "circle", "square", "decimal", "decimal-leading-zero", "arabic-indic", "bengali", "cambodian", "khmer", "devanagari", "gujarati", "gurmukhi", "kannada", "lao", "malayalam", "mongolian", "myanmar", "oriya", "persian", "urdu", "telugu", "tibetan", "thai", "lower-roman", "upper-roman", "lower-greek", "lower-alpha", "lower-latin", "upper-alpha", "upper-latin", "cjk-earthly-branch", "cjk-heavenly-stem", "ethiopic-halehame", "ethiopic-halehame-am", "ethiopic-halehame-ti-er", "ethiopic-halehame-ti-et", "hangul", "hangul-consonant", "korean-hangul-formal", "korean-hanja-formal", "korean-hanja-informal", "hebrew", "armenian", "lower-armenian", "upper-armenian", "georgian", "cjk-ideographic", "simp-chinese-formal", "simp-chinese-informal", "trad-chinese-formal", "trad-chinese-informal", "hiragana", "katakana", "hiragana-iroha", "katakana-iroha", "none",
       ],
@@ -1263,12 +1306,14 @@
     {
       name: "max-height",
       converter: "convertLengthMaxSizing",
+      is_descriptor: true,
       initial: "initialMaxSize",
       interpolable: true,
     },
     {
       name: "max-width",
       converter: "convertLengthMaxSizing",
+      is_descriptor: true,
       initial: "initialMaxSize",
       interpolable: true,
     },
@@ -1276,6 +1321,7 @@
       name: "min-height",
       api_class: "CSSPropertyAPIWidthOrHeight",
       converter: "convertLengthSizing",
+      is_descriptor: true,
       initial: "initialMinSize",
       interpolable: true,
     },
@@ -1283,6 +1329,7 @@
       name: "min-width",
       api_class: "CSSPropertyAPIWidthOrHeight",
       converter: "convertLengthSizing",
+      is_descriptor: true,
       initial: "initialMinSize",
       interpolable: true,
     },
@@ -1314,6 +1361,8 @@
     },
     {
       name: "offset-anchor",
+      api_class: true,
+      api_methods: ["parseSingleValue"],
       converter: "convertPositionOrAuto",
       interpolable: true,
       runtime_flag: "CSSOffsetPositionAnchor",
@@ -1361,10 +1410,13 @@
       name: "order",
       api_class: true,
       api_methods: ["parseSingleValue"],
+      interpolable: true,
       type_name: "int",
     },
     {
       name: "orphans",
+      api_class: "CSSPropertyAPIFragmentation",
+      api_methods: ["parseSingleValue"],
       inherited: true,
       interpolable: true,
       type_name: "short",
@@ -1399,7 +1451,7 @@
       runtime_flag: "ScrollAnchoring",
       inherited: false,
       initial_keyword: "auto",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: [
         "visible", "none", "auto",
       ],
@@ -1411,7 +1463,7 @@
     {
       name: "overflow-x",
       initial_keyword: "visible",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: [
         "visible", "hidden", "scroll", "auto", "overlay", "-webkit-paged-x", "-webkit-paged-y",
       ],
@@ -1420,7 +1472,7 @@
     {
       name: "overflow-y",
       initial_keyword: "visible",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: [
         "visible", "hidden", "scroll", "auto", "overlay", "-webkit-paged-x", "-webkit-paged-y",
       ],
@@ -1482,7 +1534,7 @@
       independent: true,
       inherited: true,
       initial_keyword: "auto",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: [
         "none", "auto", "stroke", "fill", "painted", "visible", "visibleStroke", "visibleFill", "visiblePainted", "bounding-box", "all",
       ],
@@ -1491,7 +1543,7 @@
       name: "position",
       custom_inherit: true,
       initial_keyword: "static",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: [
         "static", "relative", "absolute", "fixed", "sticky",
       ],
@@ -1607,14 +1659,6 @@
       custom_all: true,
     },
     {
-      name: "snap-height",
-      api_class: true,
-      api_methods: ["parseSingleValue"],
-      custom_all: true,
-      inherited: true,
-      runtime_flag: "CSSSnapSize",
-    },
-    {
       name: "speak",
       inherited: true,
     },
@@ -1707,7 +1751,7 @@
     {
       name: "table-layout",
       initial_keyword: "auto",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: [
         "auto", "fixed"
       ]
@@ -1723,9 +1767,10 @@
     {
       name: "text-align",
       custom_value: true,
+      independent: true,
       inherited: true,
       initial_keyword: "start",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: [
         "left", "right", "center", "justify", "webkitLeft", "webkitRight", "webkitCenter", "start", "end",
       ],
@@ -1821,7 +1866,7 @@
       independent: true,
       inherited: true,
       initial_keyword: "none",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: ["capitalize", "uppercase", "lowercase", "none"],
     },
     {
@@ -1894,9 +1939,9 @@
     },
     {
       name: "unicode-bidi",
-      field_storage_type: "platform/text/UnicodeBidi",
+      field_type_path: "platform/text/UnicodeBidi",
       initial_keyword: "normal",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: [
         "normal", "embed", "bidi-override", "isolate", "plaintext", "isolate-override",
       ],
@@ -1920,7 +1965,7 @@
       inherited: true,
       initial_keyword: "visible",
       interpolable: true,
-      keyword_only: true,
+      field_template: "keyword",
       keywords: ["visible", "hidden", "collapse"],
     },
     {
@@ -1985,7 +2030,7 @@
       independent: true,
       inherited: true,
       initial_keyword: "normal",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: ["normal", "reverse"],
     },
     {
@@ -2002,6 +2047,8 @@
     "-webkit-box-lines",
     {
       name: "-webkit-box-ordinal-group",
+      api_class: "CSSPropertyAPIFragmentation",
+      api_methods: ["parseSingleValue"],
       type_name: "unsigned int",
     },
     "-webkit-box-orient",
@@ -2190,7 +2237,7 @@
       independent: true,
       inherited: true,
       initial_keyword: "economy",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: ["economy", "exact"],
     },
     {
@@ -2199,7 +2246,7 @@
       inherited: true,
       initial: "initialRtlOrdering",
       initial_keyword: "logical",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: ["logical", "visual"],
       setter: "setRtlOrdering",
       type_name: "EOrder",
@@ -2300,11 +2347,13 @@
       independent: true,
       inherited: true,
       initial_keyword: "normal",
-      keyword_only: true,
+      field_template: "keyword",
       keywords: ["normal", "pre", "pre-wrap", "pre-line", "nowrap", "-webkit-nowrap"],
     },
     {
       name: "widows",
+      api_class: "CSSPropertyAPIFragmentation",
+      api_methods: ["parseSingleValue"],
       inherited: true,
       interpolable: true,
       type_name: "short",
@@ -2313,9 +2362,10 @@
       name: "width",
       api_class: "CSSPropertyAPIWidthOrHeight",
       converter: "convertLengthSizing",
+      is_descriptor: true,
       initial: "initialSize",
       interpolable: true,
-      keywords: ["auto"],
+      keywords: ["auto", "fit-content", "min-content", "max-content"],
       supports_percentage: true,
       typedom_types: ["Length"],
     },
@@ -2552,36 +2602,43 @@
       inherited: true,
     },
 
-    // Descriptors
+    // Descriptor only names
 
     {
       name: "font-display",
-      descriptor_only: true,
+      is_descriptor: true,
+      is_property: false,
       runtime_flag: "CSSFontDisplay",
     },
     {
       name: "max-zoom",
-      descriptor_only: true,
+      is_descriptor: true,
+      is_property: false,
     },
     {
       name: "min-zoom",
-      descriptor_only: true,
+      is_descriptor: true,
+      is_property: false,
     },
     {
       name: "orientation",
-      descriptor_only: true,
+      is_descriptor: true,
+      is_property: false,
     },
     {
       name: "src",
-      descriptor_only: true,
+      is_descriptor: true,
+      is_property: false,
     },
     {
       name: "unicode-range",
-      descriptor_only: true,
+      is_descriptor: true,
+      is_property: false,
     },
     {
       name: "user-zoom",
-      descriptor_only: true,
+      is_descriptor: true,
+      is_property: false,
     },
 
     // Shorthands
@@ -2637,6 +2694,8 @@
     {
       name: "border-style",
       longhands: "border-top-style;border-right-style;border-bottom-style;border-left-style",
+      keywords: ["none"],
+      typedom_types: ["Image"],
     },
     {
       name: "border-top",
@@ -2660,11 +2719,17 @@
     },
     {
       name: "font-variant",
+      is_descriptor: true,
       longhands: "font-variant-ligatures;font-variant-caps;font-variant-numeric",
     },
     {
       name: "grid",
       longhands: "grid-template-rows;grid-template-columns;grid-template-areas;grid-auto-flow;grid-auto-rows;grid-auto-columns;grid-column-gap;grid-row-gap",
+      runtime_flag: "CSSGridLayout",
+    },
+    {
+      name: "place-content",
+      longhands: "align-content;justify-content",
       runtime_flag: "CSSGridLayout",
     },
     {
@@ -3009,6 +3074,11 @@
     {
       name: "-webkit-justify-content",
       alias_for: "justify-content",
+    },
+    {
+      name: "line-break",
+      alias_for: "-webkit-line-break",
+      runtime_flag: "CSSLineBreak",
     },
     {
       name: "-webkit-opacity",

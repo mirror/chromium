@@ -22,6 +22,7 @@ namespace web {
 
 class NavigationItemFacadeDelegate;
 class NavigationItemStorageBuilder;
+enum class NavigationInitiationType;
 
 // Implementation of NavigationItem.
 class NavigationItemImpl : public web::NavigationItem {
@@ -64,8 +65,8 @@ class NavigationItemImpl : public web::NavigationItem {
   SSLStatus& GetSSL() override;
   void SetTimestamp(base::Time timestamp) override;
   base::Time GetTimestamp() const override;
-  void SetIsOverridingUserAgent(bool is_overriding_user_agent) override;
-  bool IsOverridingUserAgent() const override;
+  void SetUserAgentType(UserAgentType type) override;
+  UserAgentType GetUserAgentType() const override;
   bool HasPostData() const override;
   NSDictionary* GetHttpRequestHeaders() const override;
   void AddHttpRequestHeaders(NSDictionary* additional_headers) override;
@@ -73,7 +74,7 @@ class NavigationItemImpl : public web::NavigationItem {
   // Serialized representation of the state object that was used in conjunction
   // with a JavaScript window.history.pushState() or
   // window.history.replaceState() call that created or modified this
-  // CRWSessionEntry. Intended to be used for JavaScript history operations and
+  // NavigationItem. Intended to be used for JavaScript history operations and
   // will be nil in most cases.
   void SetSerializedStateObject(NSString* serialized_state_object);
   NSString* GetSerializedStateObject() const;
@@ -94,6 +95,11 @@ class NavigationItemImpl : public web::NavigationItem {
   void SetIsCreatedFromHashChange(bool hash_change);
   bool IsCreatedFromHashChange() const;
 
+  // Initiation type of this pending navigation. Resets to NONE after commit.
+  void SetNavigationInitiationType(
+      web::NavigationInitiationType navigation_initiation_type);
+  web::NavigationInitiationType NavigationInitiationType() const;
+
   // Whether or not to bypass showing the repost form confirmation when loading
   // a POST request. Set to YES for browser-generated POST requests.
   void SetShouldSkipRepostFormConfirmation(bool skip);
@@ -113,12 +119,14 @@ class NavigationItemImpl : public web::NavigationItem {
   // non-persisted state, as documented on the members below.
   void ResetForCommit();
 
-  // Whether this (pending) navigation is renderer-initiated.  Resets to false
-  // for all types of navigations after commit.
-  void set_is_renderer_initiated(bool is_renderer_initiated) {
-    is_renderer_initiated_ = is_renderer_initiated;
-  }
-  bool is_renderer_initiated() const { return is_renderer_initiated_; }
+  // Returns the title string to be used for a page with |url| if that page
+  // doesn't specify a title.
+  static base::string16 GetDisplayTitleForURL(const GURL& url);
+
+#ifndef NDEBUG
+  // Returns a human-readable description of the state for debugging purposes.
+  NSString* GetDescription() const;
+#endif
 
  private:
   // The NavigationManItemStorageBuilder functions require access to
@@ -136,7 +144,7 @@ class NavigationItemImpl : public web::NavigationItem {
   FaviconStatus favicon_;
   SSLStatus ssl_;
   base::Time timestamp_;
-  bool is_overriding_user_agent_;
+  UserAgentType user_agent_type_;
   base::scoped_nsobject<NSMutableDictionary> http_request_headers_;
 
   base::scoped_nsobject<NSString> serialized_state_object_;
@@ -146,10 +154,10 @@ class NavigationItemImpl : public web::NavigationItem {
   bool should_skip_repost_form_confirmation_;
   base::scoped_nsobject<NSData> post_data_;
 
-  // Whether the item, while loading, was created for a renderer-initiated
-  // navigation.  This dictates whether the URL should be displayed before the
-  // navigation commits.  It is cleared in |ResetForCommit| and not persisted.
-  bool is_renderer_initiated_;
+  // The navigation initiation type of the item.  This decides whether the URL
+  // should be displayed before the navigation commits.  It is cleared in
+  // |ResetForCommit| and not persisted.
+  web::NavigationInitiationType navigation_initiation_type_;
 
   // Whether the navigation contains unsafe resources.
   bool is_unsafe_;

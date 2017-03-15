@@ -95,6 +95,10 @@
 
 #if defined(OS_ANDROID)
 #include "ui/android/view_android.h"
+#else
+#include "content/browser/compositor/image_transport_factory.h"
+// nogncheck as dependency of "ui/compositor" is on non-Android platforms only.
+#include "ui/compositor/compositor.h"  // nogncheck
 #endif
 
 #if defined(OS_MACOSX)
@@ -123,8 +127,8 @@ bool g_check_for_pending_resize_ack = true;
 using RenderWidgetHostID = std::pair<int32_t, int32_t>;
 using RoutingIDWidgetMap =
     base::hash_map<RenderWidgetHostID, RenderWidgetHostImpl*>;
-base::LazyInstance<RoutingIDWidgetMap> g_routing_id_widget_map =
-    LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<RoutingIDWidgetMap>::DestructorAtExit
+    g_routing_id_widget_map = LAZY_INSTANCE_INITIALIZER;
 
 // Implements the RenderWidgetHostIterator interface. It keeps a list of
 // RenderWidgetHosts, and makes sure it returns a live RenderWidgetHost at each
@@ -284,12 +288,11 @@ RenderWidgetHostImpl::RenderWidgetHostImpl(RenderWidgetHostDelegate* delegate,
       is_focused_(false),
       hung_renderer_delay_(
           base::TimeDelta::FromMilliseconds(kHungRendererDelayMs)),
-      hang_monitor_reason_(
-          RendererUnresponsiveType::RENDERER_UNRESPONSIVE_UNKNOWN),
       hang_monitor_event_type_(blink::WebInputEvent::Undefined),
       last_event_type_(blink::WebInputEvent::Undefined),
       new_content_rendering_delay_(
           base::TimeDelta::FromMilliseconds(kNewContentRenderingDelayMs)),
+      current_content_source_id_(0),
       weak_factory_(this) {
   CHECK(delegate_);
   CHECK_NE(MSG_ROUTING_NONE, routing_id_);
@@ -423,6 +426,23 @@ int RenderWidgetHostImpl::GetRoutingID() const {
 
 RenderWidgetHostViewBase* RenderWidgetHostImpl::GetView() const {
   return view_.get();
+}
+
+cc::FrameSinkId RenderWidgetHostImpl::AllocateFrameSinkId(
+    bool is_guest_view_hack) {
+// GuestViews have two RenderWidgetHostViews and so we need to make sure
+// we don't have FrameSinkId collisions.
+// The FrameSinkId generated here must not conflict with FrameSinkId allocated
+// in cc::FrameSinkIdAllocator.
+#if !defined(OS_ANDROID)
+  if (is_guest_view_hack) {
+    ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
+    return factory->GetContextFactoryPrivate()->AllocateFrameSinkId();
+  }
+#endif
+  return cc::FrameSinkId(
+      base::checked_cast<uint32_t>(this->GetProcess()->GetID()),
+      base::checked_cast<uint32_t>(this->GetRoutingID()));
 }
 
 void RenderWidgetHostImpl::ResetSizeAndRepaintPendingFlags() {
@@ -810,31 +830,6 @@ void RenderWidgetHostImpl::ViewDestroyed() {
   SetView(NULL);
 }
 
-void RenderWidgetHostImpl::CopyFromBackingStore(
-    const gfx::Rect& src_subrect,
-    const gfx::Size& accelerated_dst_size,
-    const ReadbackRequestCallback& callback,
-    const SkColorType preferred_color_type) {
-  if (view_) {
-    TRACE_EVENT0("browser",
-        "RenderWidgetHostImpl::CopyFromBackingStore::FromCompositingSurface");
-    gfx::Rect accelerated_copy_rect = src_subrect.IsEmpty() ?
-        gfx::Rect(view_->GetViewBounds().size()) : src_subrect;
-    view_->CopyFromCompositingSurface(accelerated_copy_rect,
-                                      accelerated_dst_size, callback,
-                                      preferred_color_type);
-    return;
-  }
-
-  callback.Run(SkBitmap(), content::READBACK_FAILED);
-}
-
-bool RenderWidgetHostImpl::CanCopyFromBackingStore() {
-  if (view_)
-    return view_->IsSurfaceAvailableForCopy();
-  return false;
-}
-
 #if defined(OS_MACOSX)
 void RenderWidgetHostImpl::PauseForPendingResizeOrRepaints() {
   TRACE_EVENT0("browser",
@@ -951,28 +946,20 @@ bool RenderWidgetHostImpl::ScheduleComposite() {
 
 void RenderWidgetHostImpl::StartHangMonitorTimeout(
     base::TimeDelta delay,
-    blink::WebInputEvent::Type event_type,
-    RendererUnresponsiveType hang_monitor_reason) {
+    blink::WebInputEvent::Type event_type) {
   if (!hang_monitor_timeout_)
     return;
   if (!hang_monitor_timeout_->IsRunning())
     hang_monitor_event_type_ = event_type;
   last_event_type_ = event_type;
   hang_monitor_timeout_->Start(delay);
-  hang_monitor_reason_ = hang_monitor_reason;
 }
 
 void RenderWidgetHostImpl::RestartHangMonitorTimeoutIfNecessary() {
   if (!hang_monitor_timeout_)
     return;
-  if (in_flight_event_count_ > 0 && !is_hidden_) {
-    if (hang_monitor_reason_ ==
-        RendererUnresponsiveType::RENDERER_UNRESPONSIVE_UNKNOWN) {
-      hang_monitor_reason_ =
-          RendererUnresponsiveType::RENDERER_UNRESPONSIVE_IN_FLIGHT_EVENTS;
-    }
+  if (in_flight_event_count_ > 0 && !is_hidden_)
     hang_monitor_timeout_->Restart(hung_renderer_delay_);
-  }
 }
 
 void RenderWidgetHostImpl::DisableHangMonitorForTesting() {
@@ -981,15 +968,14 @@ void RenderWidgetHostImpl::DisableHangMonitorForTesting() {
 }
 
 void RenderWidgetHostImpl::StopHangMonitorTimeout() {
-  if (hang_monitor_timeout_) {
+  if (hang_monitor_timeout_)
     hang_monitor_timeout_->Stop();
-    hang_monitor_reason_ =
-        RendererUnresponsiveType::RENDERER_UNRESPONSIVE_UNKNOWN;
-  }
   RendererIsResponsive();
 }
 
-void RenderWidgetHostImpl::StartNewContentRenderingTimeout() {
+void RenderWidgetHostImpl::StartNewContentRenderingTimeout(
+    uint32_t next_source_id) {
+  current_content_source_id_ = next_source_id;
   // It is possible for a compositor frame to arrive before the browser is
   // notified about the page being committed, in which case no timer is
   // necessary.
@@ -1098,10 +1084,12 @@ void RenderWidgetHostImpl::ForwardGestureEventWithLatencyInfo(
     *is_in_gesture_scroll = true;
   } else if (gesture_event.type() == blink::WebInputEvent::GestureScrollEnd ||
              gesture_event.type() == blink::WebInputEvent::GestureFlingStart) {
-    DCHECK(*is_in_gesture_scroll ||
-           (gesture_event.type() == blink::WebInputEvent::GestureFlingStart &&
-            gesture_event.sourceDevice ==
-                blink::WebGestureDevice::WebGestureDeviceTouchpad));
+    // TODO(wjmaclean): Re-enable the following DCHECK once crbug.com/695187
+    // is fixed.
+    // DCHECK(*is_in_gesture_scroll ||
+    //       (gesture_event.type() == blink::WebInputEvent::GestureFlingStart &&
+    //        gesture_event.sourceDevice ==
+    //            blink::WebGestureDevice::WebGestureDeviceTouchpad));
     *is_in_gesture_scroll = false;
   }
 
@@ -1431,8 +1419,17 @@ void RenderWidgetHostImpl::NotifyScreenInfoChanged() {
 }
 
 void RenderWidgetHostImpl::GetSnapshotFromBrowser(
-    const GetSnapshotFromBrowserCallback& callback) {
+    const GetSnapshotFromBrowserCallback& callback,
+    bool from_surface) {
   int id = next_browser_snapshot_id_++;
+  if (from_surface) {
+    pending_surface_browser_snapshots_.insert(std::make_pair(id, callback));
+    ui::LatencyInfo latency_info;
+    latency_info.AddLatencyNumber(ui::WINDOW_SNAPSHOT_FRAME_NUMBER_COMPONENT, 0,
+                                  id);
+    Send(new ViewMsg_ForceRedraw(GetRoutingID(), latency_info));
+    return;
+  }
 
 #if defined(OS_MACOSX)
   // MacOS version of underlying GrabViewSnapshot() blocks while
@@ -1705,12 +1702,9 @@ void RenderWidgetHostImpl::RendererIsUnresponsive() {
       Source<RenderWidgetHost>(this),
       NotificationService::NoDetails());
   is_unresponsive_ = true;
-  RendererUnresponsiveType reason = hang_monitor_reason_;
-  hang_monitor_reason_ =
-      RendererUnresponsiveType::RENDERER_UNRESPONSIVE_UNKNOWN;
 
   if (delegate_)
-    delegate_->RendererUnresponsive(this, reason);
+    delegate_->RendererUnresponsive(this);
 
   // Do not add code after this since the Delegate may delete this
   // RenderWidgetHostImpl in RendererUnresponsive.
@@ -1833,7 +1827,13 @@ bool RenderWidgetHostImpl::OnSwapCompositorFrame(
   if (touch_emulator_)
     touch_emulator_->SetDoubleTapSupportForPageEnabled(!is_mobile_optimized);
 
-  if (view_) {
+  // Ignore this frame if its content has already been unloaded. Source ID
+  // is always zero for an OOPIF because we are only concerned with displaying
+  // stale graphics on top-level frames. We accept frames that have a source ID
+  // greater than |current_content_source_id_| because in some cases the first
+  // compositor frame can arrive before the navigation commit message that
+  // updates that value.
+  if (view_ && frame.metadata.content_source_id >= current_content_source_id_) {
     view_->OnSwapCompositorFrame(compositor_frame_sink_id, std::move(frame));
     view_->DidReceiveRendererFrame();
   } else {
@@ -2107,11 +2107,8 @@ InputEventAckState RenderWidgetHostImpl::FilterInputEvent(
 void RenderWidgetHostImpl::IncrementInFlightEventCount(
     blink::WebInputEvent::Type event_type) {
   increment_in_flight_event_count();
-  if (!is_hidden_) {
-    StartHangMonitorTimeout(
-        hung_renderer_delay_, event_type,
-        RendererUnresponsiveType::RENDERER_UNRESPONSIVE_IN_FLIGHT_EVENTS);
-  }
+  if (!is_hidden_)
+    StartHangMonitorTimeout(hung_renderer_delay_, event_type);
 }
 
 void RenderWidgetHostImpl::DecrementInFlightEventCount(
@@ -2355,26 +2352,67 @@ void RenderWidgetHostImpl::DidReceiveRendererFrame() {
 void RenderWidgetHostImpl::WindowSnapshotReachedScreen(int snapshot_id) {
   DCHECK(base::MessageLoopForUI::IsCurrent());
 
-#if defined(OS_ANDROID)
-  // On Android, call sites should pass in the bounds with correct offset
-  // to capture the intended content area.
-  gfx::Rect snapshot_bounds(GetView()->GetViewBounds());
-  snapshot_bounds.Offset(0, GetView()->GetNativeView()->content_offset().y());
-#else
-  gfx::Rect snapshot_bounds(GetView()->GetViewBounds().size());
-#endif
-
-  gfx::Image image;
-  if (ui::GrabViewSnapshot(GetView()->GetNativeView(), snapshot_bounds,
-                           &image)) {
-    OnSnapshotReceived(snapshot_id, image);
-    return;
+  if (!pending_surface_browser_snapshots_.empty()) {
+    GetView()->CopyFromSurface(
+        gfx::Rect(), gfx::Size(),
+        base::Bind(&RenderWidgetHostImpl::OnSnapshotFromSurfaceReceived,
+                   weak_factory_.GetWeakPtr(), snapshot_id, 0),
+        kN32_SkColorType);
   }
 
-  ui::GrabViewSnapshotAsync(
-      GetView()->GetNativeView(), snapshot_bounds,
-      base::Bind(&RenderWidgetHostImpl::OnSnapshotReceived,
-                 weak_factory_.GetWeakPtr(), snapshot_id));
+  if (!pending_browser_snapshots_.empty()) {
+#if defined(OS_ANDROID)
+    // On Android, call sites should pass in the bounds with correct offset
+    // to capture the intended content area.
+    gfx::Rect snapshot_bounds(GetView()->GetViewBounds());
+    snapshot_bounds.Offset(0, GetView()->GetNativeView()->content_offset().y());
+#else
+    gfx::Rect snapshot_bounds(GetView()->GetViewBounds().size());
+#endif
+
+    gfx::Image image;
+    if (ui::GrabViewSnapshot(GetView()->GetNativeView(), snapshot_bounds,
+                             &image)) {
+      OnSnapshotReceived(snapshot_id, image);
+      return;
+    }
+
+    ui::GrabViewSnapshotAsync(
+        GetView()->GetNativeView(), snapshot_bounds,
+        base::Bind(&RenderWidgetHostImpl::OnSnapshotReceived,
+                   weak_factory_.GetWeakPtr(), snapshot_id));
+  }
+}
+
+void RenderWidgetHostImpl::OnSnapshotFromSurfaceReceived(
+    int snapshot_id,
+    int retry_count,
+    const SkBitmap& bitmap,
+    ReadbackResponse response) {
+  static const int kMaxRetries = 5;
+  if (response != READBACK_SUCCESS && retry_count < kMaxRetries) {
+    GetView()->CopyFromSurface(
+        gfx::Rect(), gfx::Size(),
+        base::Bind(&RenderWidgetHostImpl::OnSnapshotFromSurfaceReceived,
+                   weak_factory_.GetWeakPtr(), snapshot_id, retry_count + 1),
+        kN32_SkColorType);
+    return;
+  }
+  // If all retries have failed, we return an empty image.
+  gfx::Image image;
+  if (response == READBACK_SUCCESS)
+    image = gfx::Image::CreateFrom1xBitmap(bitmap);
+  // Any pending snapshots with a lower ID than the one received are considered
+  // to be implicitly complete, and returned the same snapshot data.
+  PendingSnapshotMap::iterator it = pending_surface_browser_snapshots_.begin();
+  while (it != pending_surface_browser_snapshots_.end()) {
+    if (it->first <= snapshot_id) {
+      it->second.Run(image);
+      pending_surface_browser_snapshots_.erase(it++);
+    } else {
+      ++it;
+    }
+  }
 }
 
 void RenderWidgetHostImpl::OnSnapshotReceived(int snapshot_id,

@@ -4,14 +4,15 @@
 
 #import "ios/chrome/browser/payments/shipping_option_selection_view_controller.h"
 
-#import "base/ios/weak_nsobject.h"
 #include "base/mac/foundation_util.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
-#include "components/payments/currency_formatter.h"
+#include "components/payments/core/currency_formatter.h"
 #include "components/strings/grit/components_strings.h"
 #import "ios/chrome/browser/payments/cells/payments_text_item.h"
 #include "ios/chrome/browser/payments/payment_request.h"
+#import "ios/chrome/browser/payments/payment_request_util.h"
+#import "ios/chrome/browser/payments/shipping_option_selection_view_controller_actions.h"
 #import "ios/chrome/browser/ui/autofill/cells/status_item.h"
 #import "ios/chrome/browser/ui/collection_view/cells/MDCCollectionViewCell+Chrome.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_item.h"
@@ -22,14 +23,18 @@
 #include "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
 #include "ios/chrome/grit/ios_theme_resources.h"
-#import "ios/third_party/material_components_ios/src/components/Palettes/src/MaterialPalettes.h"
 #import "ios/third_party/material_components_ios/src/components/Typography/src/MaterialTypography.h"
 #include "ui/base/l10n/l10n_util.h"
 
-NSString* const kShippingOptionSelectionCollectionViewId =
-    @"kShippingOptionSelectionCollectionViewId";
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 namespace {
+using ::payment_request_util::GetShippingOptionSelectorTitle;
+
+NSString* const kShippingOptionSelectionCollectionViewID =
+    @"kShippingOptionSelectionCollectionViewID";
 
 const CGFloat kSeparatorEdgeInset = 14;
 
@@ -45,10 +50,8 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
 }  // namespace
 
-@interface ShippingOptionSelectionViewController () {
-  base::WeakNSProtocol<id<ShippingOptionSelectionViewControllerDelegate>>
-      _delegate;
-
+@interface ShippingOptionSelectionViewController ()<
+    ShippingOptionSelectionViewControllerActions> {
   // The PaymentRequest object owning an instance of web::PaymentRequest as
   // provided by the page invoking the Payment Request API. This is a weak
   // pointer and should outlive this class.
@@ -58,22 +61,20 @@ typedef NS_ENUM(NSInteger, ItemType) {
   CollectionViewTextItem* _selectedItem;
 }
 
-// Called when the user presses the return button.
-- (void)onReturn;
-
 @end
 
 @implementation ShippingOptionSelectionViewController
 
-@synthesize isLoading = _isLoading;
+@synthesize pending = _pending;
 @synthesize errorMessage = _errorMessage;
+@synthesize delegate = _delegate;
 
 - (instancetype)initWithPaymentRequest:(PaymentRequest*)paymentRequest {
   DCHECK(paymentRequest);
   if ((self = [super initWithStyle:CollectionViewControllerStyleAppBar])) {
-    self.title = l10n_util::GetNSString(
-        IDS_IOS_PAYMENT_REQUEST_SHIPPING_OPTION_SELECTION_TITLE);
+    self.title = GetShippingOptionSelectorTitle(*paymentRequest);
 
+    // Set up leading (return) button.
     UIBarButtonItem* returnButton =
         [ChromeIcon templateBarButtonItemWithImage:[ChromeIcon backIcon]
                                             target:nil
@@ -84,15 +85,6 @@ typedef NS_ENUM(NSInteger, ItemType) {
     _paymentRequest = paymentRequest;
   }
   return self;
-}
-
-- (id<ShippingOptionSelectionViewControllerDelegate>)delegate {
-  return _delegate.get();
-}
-
-- (void)setDelegate:
-    (id<ShippingOptionSelectionViewControllerDelegate>)delegate {
-  _delegate.reset(delegate);
 }
 
 - (void)onReturn {
@@ -108,11 +100,9 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
   [model addSectionWithIdentifier:SectionIdentifierShippingOption];
 
-  if (self.isLoading) {
-    StatusItem* statusItem =
-        [[[StatusItem alloc] initWithType:ItemTypeSpinner] autorelease];
-    statusItem.text =
-        l10n_util::GetNSString(IDS_IOS_PAYMENT_REQUEST_CHECKING_LABEL);
+  if (self.pending) {
+    StatusItem* statusItem = [[StatusItem alloc] initWithType:ItemTypeSpinner];
+    statusItem.text = l10n_util::GetNSString(IDS_PAYMENTS_CHECKING_OPTION);
     [model addItem:statusItem
         toSectionWithIdentifier:SectionIdentifierShippingOption];
     return;
@@ -120,16 +110,16 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
   if (_errorMessage) {
     PaymentsTextItem* messageItem =
-        [[[PaymentsTextItem alloc] initWithType:ItemTypeMessage] autorelease];
+        [[PaymentsTextItem alloc] initWithType:ItemTypeMessage];
     messageItem.text = _errorMessage;
     messageItem.image = NativeImage(IDR_IOS_PAYMENTS_WARNING);
     [model addItem:messageItem
         toSectionWithIdentifier:SectionIdentifierShippingOption];
   }
 
-  for (const auto& shippingOption : _paymentRequest->shipping_options()) {
-    CollectionViewTextItem* item = [[[CollectionViewTextItem alloc]
-        initWithType:ItemTypeShippingOption] autorelease];
+  for (const auto* shippingOption : _paymentRequest->shipping_options()) {
+    CollectionViewTextItem* item =
+        [[CollectionViewTextItem alloc] initWithType:ItemTypeShippingOption];
     item.text = base::SysUTF16ToNSString(shippingOption->label);
     payments::CurrencyFormatter* currencyFormatter =
         _paymentRequest->GetOrCreateCurrencyFormatter();
@@ -155,7 +145,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.collectionView.accessibilityIdentifier =
-      kShippingOptionSelectionCollectionViewId;
+      kShippingOptionSelectionCollectionViewID;
 
   // Customize collection view settings.
   self.styler.cellStyle = MDCCollectionViewCellStyleCard;

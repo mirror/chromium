@@ -173,7 +173,7 @@ class WindowTree : public mojom::WindowTree,
   bool AddTransientWindow(const ClientWindowId& window_id,
                           const ClientWindowId& transient_window_id);
   bool DeleteWindow(const ClientWindowId& window_id);
-  bool SetModal(const ClientWindowId& window_id);
+  bool SetModalType(const ClientWindowId& window_id, ModalType modal_type);
   std::vector<const ServerWindow*> GetWindowTree(
       const ClientWindowId& window_id) const;
   bool SetWindowVisibility(const ClientWindowId& window_id, bool visible);
@@ -211,10 +211,12 @@ class WindowTree : public mojom::WindowTree,
   // The following methods are invoked after the corresponding change has been
   // processed. They do the appropriate bookkeeping and update the client as
   // necessary.
-  void ProcessWindowBoundsChanged(const ServerWindow* window,
-                                  const gfx::Rect& old_bounds,
-                                  const gfx::Rect& new_bounds,
-                                  bool originated_change);
+  void ProcessWindowBoundsChanged(
+      const ServerWindow* window,
+      const gfx::Rect& old_bounds,
+      const gfx::Rect& new_bounds,
+      bool originated_change,
+      const base::Optional<cc::LocalSurfaceId>& local_surface_id);
   void ProcessClientAreaChanged(
       const ServerWindow* window,
       const gfx::Insets& new_client_area,
@@ -389,7 +391,7 @@ class WindowTree : public mojom::WindowTree,
                           Id transient_window) override;
   void RemoveTransientWindowFromParent(uint32_t change_id,
                                        Id transient_window_id) override;
-  void SetModal(uint32_t change_id, Id window_id) override;
+  void SetModalType(uint32_t change_id, Id window_id, ModalType type) override;
   void ReorderWindow(uint32_t change_Id,
                      Id window_id,
                      Id relative_window_id,
@@ -402,9 +404,11 @@ class WindowTree : public mojom::WindowTree,
   void ReleaseCapture(uint32_t change_id, Id window_id) override;
   void StartPointerWatcher(bool want_moves) override;
   void StopPointerWatcher() override;
-  void SetWindowBounds(uint32_t change_id,
-                       Id window_id,
-                       const gfx::Rect& bounds) override;
+  void SetWindowBounds(
+      uint32_t change_id,
+      Id window_id,
+      const gfx::Rect& bounds,
+      const base::Optional<cc::LocalSurfaceId>& local_surface_id) override;
   void SetWindowVisibility(uint32_t change_id,
                            Id window_id,
                            bool visible) override;
@@ -466,7 +470,7 @@ class WindowTree : public mojom::WindowTree,
   void CancelWindowMove(Id window_id) override;
 
   // mojom::WindowManagerClient:
-  void AddAccelerators(std::vector<mojom::AcceleratorPtr> accelerators,
+  void AddAccelerators(std::vector<mojom::WmAcceleratorPtr> accelerators,
                        const AddAcceleratorsCallback& callback) override;
   void RemoveAccelerator(uint32_t id) override;
   void AddActivationParent(Id transport_window_id) override;

@@ -28,6 +28,7 @@ fast/harness/sample-fail-mismatch-reftest.html [ WontFix ]
 [ Win Linux ] editing/pasteboard/emacs-ctrl-k-with-move.html [ WontFix ]
 [ Win Linux ] editing/pasteboard/emacs-ctrl-k-y-001.html [ WontFix ]
 [ Win Linux ] editing/input/emacs-ctrl-o.html [ WontFix ]
+[ Win Linux ] fast/events/inputevents/inputevent-yank.html [ WontFix ]
 
 # Chrome Mac doesn't support Ctrl+Up/Down key-bindings.
 [ Mac ] editing/input/ctrl-up-down.html [ WontFix ]
@@ -176,9 +177,9 @@ crbug.com/551843 [ Linux Win ] fast/text/emoji-font-weight-mac.html [ WontFix ]
 crbug.com/670246 [ Linux Android Win Mac10.9 Mac10.10 ] fast/text/variable-fonts/variable-mac-system-font.html [ WontFix ]
 # OpenType Variations not supported on Windows at the moment
 # Linux disabled until we can ship a statically linked newer version of FreeType
-crbug.com/669453 [ Win Linux Mac10.9 Mac10.10 ] fast/text/variable-fonts/variable-box-font.html [ WontFix ]
-crbug.com/669453 [ Win Linux Mac10.9 Mac10.10 ] http/tests/webfont/variable-box-font-arraybuffer.html [ WontFix ]
-crbug.com/669453 [ Win Linux Mac10.9 Mac10.10 ] virtual/mojo-loading/http/tests/webfont/variable-box-font-arraybuffer.html [ WontFix ]
+crbug.com/669453 [ Win Mac10.9 Mac10.10 ] fast/text/variable-fonts/variable-box-font.html [ WontFix ]
+crbug.com/669453 [ Win Mac10.9 Mac10.10 ] http/tests/webfont/variable-box-font-arraybuffer.html [ WontFix ]
+crbug.com/669453 [ Win Mac10.9 Mac10.10 ] virtual/mojo-loading/http/tests/webfont/variable-box-font-arraybuffer.html [ WontFix ]
 
 # prefer_compositing_to_lcd_text causes things to get composited regardless of their opaqueness, causing the test to fail
 crbug.com/381840 virtual/prefer_compositing_to_lcd_text/compositing/overflow/overflow-scroll-background-opaque-to-transparent.html [ WontFix ]
@@ -216,8 +217,8 @@ external/wpt/clear-site-data [ WontFix ]
 external/wpt/css-values [ WontFix ]
 external/wpt/gyroscope [ WontFix ]
 external/wpt/magnetometer [ WontFix ]
-external/wpt/preload [ WontFix ]
 external/wpt/upgrade-insecure-requests [ WontFix ]
+external/wpt/longtask-timing [ WontFix ]
 
 # WPT manual tests without automation
 external/wpt/html/semantics/forms/constraints/tooShort-input-email-add-manual.html [ WontFix ]

@@ -28,49 +28,22 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "bindings/core/v8/WindowProxy.h"
+#include "bindings/core/v8/RemoteWindowProxy.h"
 
-#include "bindings/core/v8/ConditionalFeatures.h"
+#include <algorithm>
+#include <utility>
+
 #include "bindings/core/v8/DOMWrapperWorld.h"
-#include "bindings/core/v8/ScriptController.h"
-#include "bindings/core/v8/ToV8.h"
-#include "bindings/core/v8/V8Binding.h"
-#include "bindings/core/v8/V8DOMActivityLogger.h"
-#include "bindings/core/v8/V8Document.h"
+#include "bindings/core/v8/V8DOMWrapper.h"
 #include "bindings/core/v8/V8GCForContextDispose.h"
-#include "bindings/core/v8/V8HTMLCollection.h"
-#include "bindings/core/v8/V8HTMLDocument.h"
-#include "bindings/core/v8/V8HiddenValue.h"
 #include "bindings/core/v8/V8Initializer.h"
-#include "bindings/core/v8/V8ObjectConstructor.h"
-#include "bindings/core/v8/V8PagePopupControllerBinding.h"
-#include "bindings/core/v8/V8PrivateProperty.h"
 #include "bindings/core/v8/V8Window.h"
-#include "core/frame/LocalFrame.h"
-#include "core/frame/csp/ContentSecurityPolicy.h"
-#include "core/html/DocumentNameCollection.h"
-#include "core/html/HTMLCollection.h"
-#include "core/html/HTMLIFrameElement.h"
-#include "core/inspector/InspectorInstrumentation.h"
-#include "core/inspector/MainThreadDebugger.h"
-#include "core/loader/DocumentLoader.h"
-#include "core/loader/FrameLoader.h"
-#include "core/loader/FrameLoaderClient.h"
-#include "core/origin_trials/OriginTrialContext.h"
 #include "platform/Histogram.h"
-#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/ScriptForbiddenScope.h"
 #include "platform/heap/Handle.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
-#include "platform/weborigin/SecurityOrigin.h"
-#include "public/platform/Platform.h"
+#include "v8/include/v8.h"
 #include "wtf/Assertions.h"
-#include "wtf/StringExtras.h"
-#include "wtf/text/CString.h"
-#include <algorithm>
-#include <utility>
-#include <v8-debug.h>
-#include <v8.h>
 
 namespace blink {
 
@@ -83,7 +56,34 @@ void RemoteWindowProxy::disposeContext(GlobalDetachmentBehavior behavior) {
   if (m_lifecycle != Lifecycle::ContextInitialized)
     return;
 
-  WindowProxy::disposeContext(behavior);
+  if (behavior == DetachGlobal) {
+    v8::Local<v8::Context> context = m_scriptState->context();
+    // Clean up state on the global proxy, which will be reused.
+    if (!m_globalProxy.isEmpty()) {
+      CHECK(m_globalProxy == context->Global());
+      CHECK_EQ(toScriptWrappable(context->Global()),
+               toScriptWrappable(
+                   context->Global()->GetPrototype().As<v8::Object>()));
+      m_globalProxy.get().SetWrapperClassId(0);
+    }
+    V8DOMWrapper::clearNativeInfo(isolate(), context->Global());
+    m_scriptState->detachGlobalObject();
+
+#if DCHECK_IS_ON()
+    didDetachGlobalObject();
+#endif
+  }
+
+  m_scriptState->disposePerContextData();
+
+  // It's likely that disposing the context has created a lot of
+  // garbage. Notify V8 about this so it'll have a chance of cleaning
+  // it up when idle.
+  V8GCForContextDispose::instance().notifyContextDisposed(
+      frame()->isMainFrame());
+
+  DCHECK(m_lifecycle == Lifecycle::ContextInitialized);
+  m_lifecycle = Lifecycle::ContextDetached;
 }
 
 void RemoteWindowProxy::initialize() {
@@ -114,10 +114,7 @@ void RemoteWindowProxy::initialize() {
 
 void RemoteWindowProxy::createContext() {
   // Create a new v8::Context with the window object as the global object
-  // (aka the inner global).  Reuse the global proxy object (aka the outer
-  // global) if it already exists.  See the comments in
-  // setupWindowPrototypeChain for the structure of the prototype chain of
-  // the global object.
+  // (aka the inner global). Reuse the outer global proxy if it already exists.
   v8::Local<v8::ObjectTemplate> globalTemplate =
       V8Window::domTemplate(isolate(), *m_world)->InstanceTemplate();
   CHECK(!globalTemplate.IsEmpty());
@@ -131,6 +128,10 @@ void RemoteWindowProxy::createContext() {
   }
   CHECK(!context.IsEmpty());
 
+#if DCHECK_IS_ON()
+  didAttachGlobalObject();
+#endif
+
   m_scriptState = ScriptState::create(context, m_world);
 
   // TODO(haraken): Currently we cannot enable the following DCHECK because
@@ -138,6 +139,42 @@ void RemoteWindowProxy::createContext() {
   // DCHECK(m_lifecycle == Lifecycle::ContextUninitialized);
   m_lifecycle = Lifecycle::ContextInitialized;
   DCHECK(m_scriptState->contextIsValid());
+}
+
+void RemoteWindowProxy::setupWindowPrototypeChain() {
+  // Associate the window wrapper object and its prototype chain with the
+  // corresponding native DOMWindow object.
+  DOMWindow* window = frame()->domWindow();
+  const WrapperTypeInfo* wrapperTypeInfo = window->wrapperTypeInfo();
+  v8::Local<v8::Context> context = m_scriptState->context();
+
+  // The global proxy object.  Note this is not the global object.
+  v8::Local<v8::Object> globalProxy = context->Global();
+  CHECK(m_globalProxy == globalProxy);
+  V8DOMWrapper::setNativeInfo(isolate(), globalProxy, wrapperTypeInfo, window);
+  // Mark the handle to be traced by Oilpan, since the global proxy has a
+  // reference to the DOMWindow.
+  m_globalProxy.get().SetWrapperClassId(wrapperTypeInfo->wrapperClassId);
+
+  // The global object, aka window wrapper object.
+  v8::Local<v8::Object> windowWrapper =
+      globalProxy->GetPrototype().As<v8::Object>();
+  windowWrapper = V8DOMWrapper::associateObjectWithWrapper(
+      isolate(), window, wrapperTypeInfo, windowWrapper);
+
+  // The prototype object of Window interface.
+  v8::Local<v8::Object> windowPrototype =
+      windowWrapper->GetPrototype().As<v8::Object>();
+  CHECK(!windowPrototype.IsEmpty());
+  V8DOMWrapper::setNativeInfo(isolate(), windowPrototype, wrapperTypeInfo,
+                              window);
+
+  // The named properties object of Window interface.
+  v8::Local<v8::Object> windowProperties =
+      windowPrototype->GetPrototype().As<v8::Object>();
+  CHECK(!windowProperties.IsEmpty());
+  V8DOMWrapper::setNativeInfo(isolate(), windowProperties, wrapperTypeInfo,
+                              window);
 }
 
 }  // namespace blink

@@ -29,9 +29,13 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/ClientRect.h"
 #include "core/dom/Fullscreen.h"
+#include "core/dom/ResizeObserver.h"
+#include "core/dom/ResizeObserverCallback.h"
+#include "core/dom/ResizeObserverEntry.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/events/MouseEvent.h"
 #include "core/frame/Settings.h"
+#include "core/frame/UseCounter.h"
 #include "core/html/HTMLMediaElement.h"
 #include "core/html/HTMLVideoElement.h"
 #include "core/html/shadow/MediaControlsMediaEventListener.h"
@@ -44,6 +48,23 @@
 #include "platform/EventDispatchForbiddenScope.h"
 
 namespace blink {
+
+namespace {
+
+// TODO(steimel): should have better solution than hard-coding pixel values.
+// Defined in core/css/mediaControls.css, core/css/mediaControlsAndroid.css,
+// and core/paint/MediaControlsPainter.cpp.
+constexpr int kOverlayPlayButtonWidth = 48;
+constexpr int kOverlayPlayButtonHeight = 48;
+constexpr int kOverlayBottomMargin = 10;
+constexpr int kAndroidMediaPanelHeight = 48;
+
+constexpr int kMinWidthForOverlayPlayButton = kOverlayPlayButtonWidth;
+constexpr int kMinHeightForOverlayPlayButton = kOverlayPlayButtonHeight +
+                                               kAndroidMediaPanelHeight +
+                                               (2 * kOverlayBottomMargin);
+
+}  // anonymous namespace
 
 // If you change this value, then also update the corresponding value in
 // LayoutTests/media/media-controls.js.
@@ -67,12 +88,33 @@ static bool shouldShowFullscreenButton(const HTMLMediaElement& mediaElement) {
   if (!Fullscreen::fullscreenEnabled(mediaElement.document()))
     return false;
 
+  if (mediaElement.controlsList()->shouldHideFullscreen()) {
+    UseCounter::count(mediaElement.document(),
+                      UseCounter::HTMLMediaElementControlsListNoFullscreen);
+    return false;
+  }
+
   return true;
 }
 
 static bool shouldShowCastButton(HTMLMediaElement& mediaElement) {
-  return !mediaElement.fastHasAttribute(HTMLNames::disableremoteplaybackAttr) &&
-         mediaElement.hasRemoteRoutes();
+  if (mediaElement.fastHasAttribute(HTMLNames::disableremoteplaybackAttr))
+    return false;
+
+  // Explicitly do not show cast button when the mediaControlsEnabled setting is
+  // false to make sure the overlay does not appear.
+  Document& document = mediaElement.document();
+  if (document.settings() && !document.settings()->getMediaControlsEnabled())
+    return false;
+
+  // The page disabled the button via the attribute.
+  if (mediaElement.controlsList()->shouldHideRemotePlayback()) {
+    UseCounter::count(mediaElement.document(),
+                      UseCounter::HTMLMediaElementControlsListNoRemotePlayback);
+    return false;
+  }
+
+  return mediaElement.hasRemoteRoutes();
 }
 
 static bool preferHiddenVolumeControls(const Document& document) {
@@ -106,6 +148,31 @@ class MediaControls::BatchedControlUpdate {
 // Count of number open batches for controls visibility.
 int MediaControls::BatchedControlUpdate::s_batchDepth = 0;
 
+class MediaControls::MediaControlsResizeObserverCallback final
+    : public ResizeObserverCallback {
+ public:
+  explicit MediaControlsResizeObserverCallback(MediaControls* controls)
+      : m_controls(controls) {
+    DCHECK(controls);
+  }
+  ~MediaControlsResizeObserverCallback() override = default;
+
+  void handleEvent(const HeapVector<Member<ResizeObserverEntry>>& entries,
+                   ResizeObserver* observer) override {
+    DCHECK_EQ(1u, entries.size());
+    DCHECK_EQ(entries[0]->target(), m_controls->m_mediaElement);
+    m_controls->notifyElementSizeChanged(entries[0]->contentRect());
+  }
+
+  DEFINE_INLINE_TRACE() {
+    visitor->trace(m_controls);
+    ResizeObserverCallback::trace(visitor);
+  }
+
+ private:
+  Member<MediaControls> m_controls;
+};
+
 MediaControls::MediaControls(HTMLMediaElement& mediaElement)
     : HTMLDivElement(mediaElement.document()),
       m_mediaElement(&mediaElement),
@@ -138,12 +205,16 @@ MediaControls::MediaControls(HTMLMediaElement& mediaElement)
       m_hideTimerBehaviorFlags(IgnoreNone),
       m_isMouseOverControls(false),
       m_isPausedForScrubbing(false),
-      m_panelWidthChangedTimer(TaskRunnerHelper::get(TaskType::UnspecedTimer,
-                                                     &mediaElement.document()),
-                               this,
-                               &MediaControls::panelWidthChangedTimerFired),
-      m_panelWidth(0),
-      m_keepShowingUntilTimerFires(false) {}
+      m_resizeObserver(ResizeObserver::create(
+          mediaElement.document(),
+          new MediaControlsResizeObserverCallback(this))),
+      m_elementSizeChangedTimer(TaskRunnerHelper::get(TaskType::UnspecedTimer,
+                                                      &mediaElement.document()),
+                                this,
+                                &MediaControls::elementSizeChangedTimerFired),
+      m_keepShowingUntilTimerFires(false) {
+  m_resizeObserver->observe(m_mediaElement);
+}
 
 MediaControls* MediaControls::create(HTMLMediaElement& mediaElement,
                                      ShadowRoot& shadowRoot) {
@@ -214,8 +285,7 @@ void MediaControls::initializeControls() {
   MediaControlOverlayEnclosureElement* overlayEnclosure =
       MediaControlOverlayEnclosureElement::create(*this);
 
-  if (document().settings() &&
-      document().settings()->getMediaControlsOverlayPlayButtonEnabled()) {
+  if (RuntimeEnabledFeatures::mediaControlsOverlayPlayButtonEnabled()) {
     MediaControlOverlayPlayButtonElement* overlayPlayButton =
         MediaControlOverlayPlayButtonElement::create(*this);
     m_overlayPlayButton = overlayPlayButton;
@@ -330,6 +400,44 @@ void MediaControls::initializeControls() {
           *this, MediaControlToggleClosedCaptionsButtonElement::create(*this)));
 }
 
+Node::InsertionNotificationRequest MediaControls::insertedInto(
+    ContainerNode* root) {
+  if (!mediaElement().isConnected())
+    return HTMLDivElement::insertedInto(root);
+
+  // TODO(mlamouri): we should show the controls instead of having
+  // HTMLMediaElement do it.
+
+  // m_windowEventListener doesn't need to be re-attached as it's only needed
+  // when a menu is visible.
+  m_mediaEventListener->attach();
+  if (m_orientationLockDelegate)
+    m_orientationLockDelegate->attach();
+
+  if (!m_resizeObserver) {
+    m_resizeObserver =
+        ResizeObserver::create(m_mediaElement->document(),
+                               new MediaControlsResizeObserverCallback(this));
+    m_resizeObserver->observe(m_mediaElement);
+  }
+
+  return HTMLDivElement::insertedInto(root);
+}
+
+void MediaControls::removedFrom(ContainerNode*) {
+  DCHECK(!mediaElement().isConnected());
+
+  // TODO(mlamouri): we hide show the controls instead of having
+  // HTMLMediaElement do it.
+
+  m_windowEventListener->stop();
+  m_mediaEventListener->detach();
+  if (m_orientationLockDelegate)
+    m_orientationLockDelegate->detach();
+
+  m_resizeObserver.clear();
+}
+
 void MediaControls::reset() {
   EventDispatchForbiddenScope::AllowUserAgentEvents allowEventsInShadow;
   BatchedControlUpdate batch(this);
@@ -360,6 +468,12 @@ void MediaControls::reset() {
 
   onVolumeChange();
   onTextTracksAddedOrRemoved();
+
+  onControlsListUpdated();
+}
+
+void MediaControls::onControlsListUpdated() {
+  BatchedControlUpdate batch(this);
 
   m_fullscreenButton->setIsWanted(shouldShowFullscreenButton(mediaElement()));
 
@@ -780,25 +894,30 @@ void MediaControls::onExitedFullscreen() {
   startHideMediaControlsTimer();
 }
 
-void MediaControls::notifyPanelWidthChanged(const LayoutUnit& newWidth) {
-  // Don't bother to do any work if this matches the most recent panel
-  // width, since we're called after layout.
+void MediaControls::notifyElementSizeChanged(ClientRect* newSize) {
   // Note that this code permits a bad frame on resize, since it is
   // run after the relayout / paint happens.  It would be great to improve
   // this, but it would be even greater to move this code entirely to
   // JS and fix it there.
-  m_panelWidth = newWidth.toInt();
+
+  IntSize oldSize = m_size;
+  m_size.setWidth(newSize->width());
+  m_size.setHeight(newSize->height());
 
   // Adjust for effective zoom.
-  if (!m_panel->layoutObject() || !m_panel->layoutObject()->style())
-    return;
-  m_panelWidth =
-      ceil(m_panelWidth / m_panel->layoutObject()->style()->effectiveZoom());
+  if (m_panel->layoutObject() && m_panel->layoutObject()->style()) {
+    m_size.setWidth(ceil(m_size.width() /
+                         m_panel->layoutObject()->style()->effectiveZoom()));
+    m_size.setHeight(ceil(m_size.height() /
+                          m_panel->layoutObject()->style()->effectiveZoom()));
+  }
 
-  m_panelWidthChangedTimer.startOneShot(0, BLINK_FROM_HERE);
+  // Don't bother to do any work if this matches the most recent size.
+  if (oldSize != m_size)
+    m_elementSizeChangedTimer.startOneShot(0, BLINK_FROM_HERE);
 }
 
-void MediaControls::panelWidthChangedTimerFired(TimerBase*) {
+void MediaControls::elementSizeChangedTimerFired(TimerBase*) {
   computeWhichControlsFit();
 }
 
@@ -822,29 +941,11 @@ void MediaControls::computeWhichControlsFit() {
       m_durationDisplay.get(),
   };
 
-  int usedWidth = 0;
-
   // TODO(mlamouri): we need a more dynamic way to find out the width of an
   // element.
   const int sliderMargin = 36;  // Sliders have 18px margin on each side.
 
-  // Assume that all controls require 48px, unless we can get the computed
-  // style for the play button.  Since the play button or overflow is always
-  // shown, one of the two buttons should be available the first time we're
-  // called after layout.  This will
-  // also be the first time we have m_panelWidth!=0, so it won't matter if
-  // we get this wrong before that.
-  int minimumWidth = 48;
-  if (m_playButton->layoutObject() && m_playButton->layoutObject()->style()) {
-    const ComputedStyle* style = m_playButton->layoutObject()->style();
-    minimumWidth = ceil(style->width().pixels() / style->effectiveZoom());
-  } else if (m_overflowMenu->layoutObject() &&
-             m_overflowMenu->layoutObject()->style()) {
-    const ComputedStyle* style = m_overflowMenu->layoutObject()->style();
-    minimumWidth = ceil(style->width().pixels() / style->effectiveZoom());
-  }
-
-  if (!m_panelWidth) {
+  if (!m_size.width()) {
     // No layout yet -- hide everything, then make them show up later.
     // This prevents the wrong controls from being shown briefly
     // immediately after the first layout and paint, but before we have
@@ -856,12 +957,27 @@ void MediaControls::computeWhichControlsFit() {
     return;
   }
 
+  // Assume that all controls require 48px, unless we can get the computed
+  // style for a button. The minimumWidth is recorded and re-use for future
+  // MediaControls instances and future calls to this method given that at the
+  // moment the controls button width is per plataform.
+  // TODO(mlamouri): improve the mechanism without bandaid.
+  static int minimumWidth = 48;
+  if (m_playButton->layoutObject() && m_playButton->layoutObject()->style()) {
+    const ComputedStyle* style = m_playButton->layoutObject()->style();
+    minimumWidth = ceil(style->width().pixels() / style->effectiveZoom());
+  } else if (m_overflowMenu->layoutObject() &&
+             m_overflowMenu->layoutObject()->style()) {
+    const ComputedStyle* style = m_overflowMenu->layoutObject()->style();
+    minimumWidth = ceil(style->width().pixels() / style->effectiveZoom());
+  }
+
   // Insert an overflow menu. However, if we see that the overflow menu
   // doesn't end up containing at least two elements, we will not display it
   // but instead make place for the first element that was dropped.
   m_overflowMenu->setDoesFit(true);
   m_overflowMenu->setIsWanted(true);
-  usedWidth = minimumWidth;
+  int usedWidth = minimumWidth;
 
   std::list<MediaControlElement*> overflowElements;
   MediaControlElement* firstDisplacedElement = nullptr;
@@ -874,7 +990,7 @@ void MediaControls::computeWhichControlsFit() {
       width += sliderMargin;
     element->shouldShowButtonInOverflowMenu(false);
     if (element->isWanted()) {
-      if (usedWidth + width <= m_panelWidth) {
+      if (usedWidth + width <= m_size.width()) {
         element->setDoesFit(true);
         usedWidth += width;
       } else {
@@ -902,12 +1018,19 @@ void MediaControls::computeWhichControlsFit() {
       if ((firstDisplacedElement == m_timeline.get()) ||
           (firstDisplacedElement == m_volumeSlider.get()))
         width += sliderMargin;
-      if (usedWidth + width <= m_panelWidth)
+      if (usedWidth + width <= m_size.width())
         firstDisplacedElement->setDoesFit(true);
     }
   } else if (overflowElements.size() == 1) {
     m_overflowMenu->setIsWanted(false);
     overflowElements.front()->setDoesFit(true);
+  }
+
+  // Decide if the overlay play button fits.
+  if (m_overlayPlayButton) {
+    bool doesFit = m_size.width() >= kMinWidthForOverlayPlayButton &&
+                   m_size.height() >= kMinHeightForOverlayPlayButton;
+    m_overlayPlayButton->setDoesFit(doesFit);
   }
 }
 
@@ -928,6 +1051,11 @@ void MediaControls::networkStateChanged() {
   invalidate(m_downloadButton);
   invalidate(m_timeline);
   invalidate(m_volumeSlider);
+
+  // Update the display state of the download button in case we now have a
+  // source or no longer have a source.
+  m_downloadButton->setIsWanted(
+      m_downloadButton->shouldDisplayDownloadButton());
 }
 
 bool MediaControls::overflowMenuVisible() {
@@ -952,6 +1080,7 @@ void MediaControls::hideAllMenus() {
 }
 
 DEFINE_TRACE(MediaControls) {
+  visitor->trace(m_resizeObserver);
   visitor->trace(m_mediaElement);
   visitor->trace(m_panel);
   visitor->trace(m_overlayPlayButton);

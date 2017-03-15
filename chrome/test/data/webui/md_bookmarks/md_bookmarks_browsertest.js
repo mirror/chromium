@@ -22,6 +22,7 @@ MaterialBookmarksBrowserTest.prototype = {
                          switchValue: 'MaterialDesignBookmarks'}],
 
   extraLibraries: PolymerTest.getLibraries(ROOT_PATH).concat([
+    'test_store.js',
     'test_util.js',
   ]),
 };
@@ -79,5 +80,36 @@ MaterialBookmarksListTest.prototype = {
 };
 
 TEST_F('MaterialBookmarksListTest', 'All', function() {
+  mocha.run();
+});
+
+function MaterialBookmarksReducersTest() {}
+
+MaterialBookmarksReducersTest.prototype = {
+  __proto__: MaterialBookmarksBrowserTest.prototype,
+
+  extraLibraries: MaterialBookmarksBrowserTest.prototype.extraLibraries.concat([
+    'reducers_test.js',
+  ]),
+};
+
+TEST_F('MaterialBookmarksReducersTest', 'All', function() {
+  mocha.run();
+});
+
+function MaterialBookmarksStoreClientTest() {}
+
+MaterialBookmarksStoreClientTest.prototype = {
+  __proto__: MaterialBookmarksBrowserTest.prototype,
+
+  // TODO(tsergeant): Remove special preload once Client is used in the page.
+  browsePreload: 'chrome://bookmarks/store_client.html',
+
+  extraLibraries: MaterialBookmarksBrowserTest.prototype.extraLibraries.concat([
+    'store_client_test.js',
+  ]),
+};
+
+TEST_F('MaterialBookmarksStoreClientTest', 'All', function() {
   mocha.run();
 });

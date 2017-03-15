@@ -184,6 +184,7 @@ V8ValueConverterImpl::V8ValueConverterImpl()
       reg_exp_allowed_(false),
       function_allowed_(false),
       strip_null_from_objects_(false),
+      convert_negative_zero_to_int_(false),
       avoid_identity_hash_for_testing_(false),
       strategy_(NULL) {}
 
@@ -201,6 +202,10 @@ void V8ValueConverterImpl::SetFunctionAllowed(bool val) {
 
 void V8ValueConverterImpl::SetStripNullFromObjects(bool val) {
   strip_null_from_objects_ = val;
+}
+
+void V8ValueConverterImpl::SetConvertNegativeZeroToInt(bool val) {
+  convert_negative_zero_to_int_ = val;
 }
 
 void V8ValueConverterImpl::SetStrategy(Strategy* strategy) {
@@ -356,8 +361,7 @@ std::unique_ptr<base::Value> V8ValueConverterImpl::FromV8ValueImpl(
     return base::Value::CreateNullValue();
 
   if (val->IsBoolean())
-    return base::MakeUnique<base::FundamentalValue>(
-        val->ToBoolean(isolate)->Value());
+    return base::MakeUnique<base::Value>(val->ToBoolean(isolate)->Value());
 
   if (val->IsNumber() && strategy_) {
     std::unique_ptr<base::Value> out;
@@ -366,20 +370,23 @@ std::unique_ptr<base::Value> V8ValueConverterImpl::FromV8ValueImpl(
   }
 
   if (val->IsInt32())
-    return base::MakeUnique<base::FundamentalValue>(
-        val->ToInt32(isolate)->Value());
+    return base::MakeUnique<base::Value>(val->ToInt32(isolate)->Value());
 
   if (val->IsNumber()) {
     double val_as_double = val.As<v8::Number>()->Value();
     if (!std::isfinite(val_as_double))
       return nullptr;
-    return base::MakeUnique<base::FundamentalValue>(val_as_double);
+    // Normally, this would be an integer, and fall into IsInt32(). But if the
+    // value is -0, it's treated internally as a double. Consumers are allowed
+    // to ignore this esoterica and treat it as an integer.
+    if (convert_negative_zero_to_int_ && val_as_double == 0.0)
+      return base::MakeUnique<base::Value>(0);
+    return base::MakeUnique<base::Value>(val_as_double);
   }
 
   if (val->IsString()) {
     v8::String::Utf8Value utf8(val);
-    return base::MakeUnique<base::StringValue>(
-        std::string(*utf8, utf8.length()));
+    return base::MakeUnique<base::Value>(std::string(*utf8, utf8.length()));
   }
 
   if (val->IsUndefined()) {
@@ -398,14 +405,14 @@ std::unique_ptr<base::Value> V8ValueConverterImpl::FromV8ValueImpl(
       // consistent within this class.
       return FromV8Object(val->ToObject(isolate), state, isolate);
     v8::Date* date = v8::Date::Cast(*val);
-    return base::MakeUnique<base::FundamentalValue>(date->ValueOf() / 1000.0);
+    return base::MakeUnique<base::Value>(date->ValueOf() / 1000.0);
   }
 
   if (val->IsRegExp()) {
     if (!reg_exp_allowed_)
       // JSON.stringify converts to an object.
       return FromV8Object(val.As<v8::Object>(), state, isolate);
-    return base::MakeUnique<base::StringValue>(*v8::String::Utf8Value(val));
+    return base::MakeUnique<base::Value>(*v8::String::Utf8Value(val));
   }
 
   // v8::Value doesn't have a ToArray() method for some reason.

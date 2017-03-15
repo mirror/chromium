@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser.ntp;
 
 import android.app.AlarmManager;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -14,16 +15,18 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.Browser;
-import android.support.v4.app.NotificationCompat;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.library_loader.LibraryLoader;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.AppHooks;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.ShortcutHelper;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
+import org.chromium.chrome.browser.notifications.ChromeNotificationBuilder;
+import org.chromium.chrome.browser.notifications.NotificationConstants;
 import org.chromium.chrome.browser.ntp.snippets.ContentSuggestionsNotificationAction;
 
 import java.util.Collection;
@@ -126,7 +129,7 @@ public class ContentSuggestionsNotificationHelper {
 
     @CalledByNative
     private static boolean showNotification(int category, String idWithinCategory, String url,
-            String title, String text, Bitmap image, long timeoutAtMillis) {
+            String title, String text, Bitmap image, long timeoutAtMillis, int priority) {
         if (findActiveNotification(category, idWithinCategory) != null) return false;
 
         // Post notification.
@@ -146,18 +149,25 @@ public class ContentSuggestionsNotificationHelper {
                         .setData(uri)
                         .putExtra(NOTIFICATION_CATEGORY_EXTRA, category)
                         .putExtra(NOTIFICATION_ID_WITHIN_CATEGORY_EXTRA, idWithinCategory);
-        NotificationCompat.Builder builder =
-                new NotificationCompat.Builder(context)
+        ChromeNotificationBuilder builder =
+                AppHooks.get()
+                        .createChromeNotificationBuilder(true /* preferCompat */,
+                                NotificationConstants.CATEGORY_ID_BROWSER,
+                                context.getString(R.string.notification_category_browser),
+                                NotificationConstants.CATEGORY_GROUP_ID_GENERAL,
+                                context.getString(R.string.notification_category_group_general))
                         .setAutoCancel(true)
                         .setContentIntent(PendingIntent.getBroadcast(context, 0, contentIntent, 0))
                         .setDeleteIntent(PendingIntent.getBroadcast(context, 0, deleteIntent, 0))
                         .setContentTitle(title)
                         .setContentText(text)
                         .setGroup(NOTIFICATION_TAG)
-                        .setDefaults(NotificationCompat.DEFAULT_LIGHTS)
-                        .setPriority(-1)
+                        .setPriority(priority)
                         .setLargeIcon(image)
                         .setSmallIcon(R.drawable.ic_chrome);
+        if (priority >= 0) {
+            builder.setDefaults(Notification.DEFAULT_ALL);
+        }
         manager.notify(NOTIFICATION_TAG, nextId, builder.build());
         addActiveNotification(new ActiveNotification(nextId, category, idWithinCategory, uri));
 

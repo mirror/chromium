@@ -12,6 +12,7 @@
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/browser/media_session.h"
 #include "content/public/browser/media_session_observer.h"
+#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
 #include "media/base/media_content_type.h"
 
@@ -108,6 +109,23 @@ void MediaSessionImpl::WebContentsDestroyed() {
   pepper_players_.clear();
   one_shot_players_.clear();
   AbandonSystemAudioFocusIfNeeded();
+}
+
+void MediaSessionImpl::RenderFrameDeleted(RenderFrameHost* rfh) {
+  if (services_.count(rfh))
+    OnServiceDestroyed(services_[rfh]);
+}
+
+void MediaSessionImpl::DidFinishNavigation(
+    NavigationHandle* navigation_handle) {
+  if (!navigation_handle->HasCommitted() ||
+      navigation_handle->IsSameDocument()) {
+    return;
+  }
+
+  RenderFrameHost* rfh = navigation_handle->GetRenderFrameHost();
+  if (services_.count(rfh))
+    services_[rfh]->DidFinishNavigation();
 }
 
 void MediaSessionImpl::AddObserver(MediaSessionObserver* observer) {
@@ -574,7 +592,11 @@ bool MediaSessionImpl::AddOneShotPlayer(MediaSessionPlayerObserver* observer,
 // MediaSessionService-related methods
 
 void MediaSessionImpl::OnServiceCreated(MediaSessionServiceImpl* service) {
-  services_[service->GetRenderFrameHost()] = service;
+  RenderFrameHost* rfh = service->GetRenderFrameHost();
+  if (!rfh)
+    return;
+
+  services_[rfh] = service;
   UpdateRoutedService();
 }
 
@@ -626,7 +648,7 @@ void MediaSessionImpl::DidReceiveAction(
   // https://crbug.com/596516.
   if (blink::mojom::MediaSessionAction::PAUSE == action) {
     RenderFrameHost* rfh_of_routed_service =
-        routed_service_->GetRenderFrameHost();
+        routed_service_ ? routed_service_->GetRenderFrameHost() : nullptr;
     for (const auto& player : normal_players_) {
       if (player.observer->GetRenderFrameHost() != rfh_of_routed_service)
         player.observer->OnSuspend(player.player_id);

@@ -14,6 +14,7 @@
 #include "base/files/file_path.h"
 #include "base/lazy_instance.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted_memory.h"
 #include "base/message_loop/message_loop.h"
 #include "base/strings/string_util.h"
@@ -191,7 +192,9 @@ IconLoader::IconGroup IconLoader::GroupForFilepath(
 
 // static
 content::BrowserThread::ID IconLoader::ReadIconThreadID() {
-  return content::BrowserThread::FILE;
+  // ReadIcon touches non thread safe ResourceBundle images, so it must be on
+  // the UI thread.
+  return content::BrowserThread::UI;
 }
 
 void IconLoader::ReadIcon() {
@@ -202,8 +205,8 @@ void IconLoader::ReadIcon() {
   gfx::ImageSkia image_skia(ResizeImage(*(rb.GetImageNamed(idr)).ToImageSkia(),
                                         IconSizeToDIPSize(icon_size_)));
   image_skia.MakeThreadSafe();
-  image_.reset(new gfx::Image(image_skia));
+  std::unique_ptr<gfx::Image> image = base::MakeUnique<gfx::Image>(image_skia);
   target_task_runner_->PostTask(
-      FROM_HERE, base::Bind(callback_, base::Passed(&image_), group_));
+      FROM_HERE, base::Bind(callback_, base::Passed(&image), group_));
   delete this;
 }

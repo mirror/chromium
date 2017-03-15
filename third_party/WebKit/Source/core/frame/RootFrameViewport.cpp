@@ -448,8 +448,8 @@ void RootFrameViewport::cancelProgrammaticScrollAnimation() {
   visualViewport().cancelProgrammaticScrollAnimation();
 }
 
-Widget* RootFrameViewport::getWidget() {
-  return visualViewport().getWidget();
+FrameViewBase* RootFrameViewport::getFrameViewBase() {
+  return visualViewport().getFrameViewBase();
 }
 
 void RootFrameViewport::clearScrollableArea() {

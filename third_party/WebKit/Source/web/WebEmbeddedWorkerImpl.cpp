@@ -30,14 +30,15 @@
 
 #include "web/WebEmbeddedWorkerImpl.h"
 
+#include <memory>
 #include "bindings/core/v8/SourceLocation.h"
 #include "core/dom/Document.h"
-#include "core/dom/ExecutionContextTask.h"
 #include "core/dom/SecurityContext.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/InspectorInstrumentation.h"
 #include "core/loader/FrameLoadRequest.h"
+#include "core/loader/ThreadableLoadingContext.h"
 #include "core/workers/ParentFrameTaskRunners.h"
 #include "core/workers/WorkerClients.h"
 #include "core/workers/WorkerGlobalScope.h"
@@ -57,6 +58,7 @@
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebURLRequest.h"
+#include "public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerProvider.h"
 #include "public/web/WebConsoleMessage.h"
 #include "public/web/WebDevToolsAgent.h"
@@ -64,7 +66,6 @@
 #include "public/web/WebView.h"
 #include "public/web/WebWorkerContentSettingsClientProxy.h"
 #include "public/web/modules/serviceworker/WebServiceWorkerContextClient.h"
-#include "public/web/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
 #include "web/IndexedDBClientImpl.h"
 #include "web/ServiceWorkerGlobalScopeClientImpl.h"
 #include "web/ServiceWorkerGlobalScopeProxy.h"
@@ -73,7 +74,6 @@
 #include "web/WorkerContentSettingsClient.h"
 #include "wtf/Functional.h"
 #include "wtf/PtrUtil.h"
-#include <memory>
 
 namespace blink {
 
@@ -112,7 +112,7 @@ WebEmbeddedWorkerImpl::~WebEmbeddedWorkerImpl() {
     m_workerThread->terminateAndWait();
 
   DCHECK(runningWorkerInstances().contains(this));
-  runningWorkerInstances().remove(this);
+  runningWorkerInstances().erase(this);
   DCHECK(m_webView);
 
   // Detach the client before closing the view to avoid getting called back.
@@ -262,14 +262,9 @@ void WebEmbeddedWorkerImpl::postMessageToPageInspector(const String& message) {
 
 void WebEmbeddedWorkerImpl::postTaskToLoader(
     const WebTraceLocation& location,
-    std::unique_ptr<ExecutionContextTask> task) {
+    std::unique_ptr<WTF::CrossThreadClosure> task) {
   m_mainThreadTaskRunners->get(TaskType::Networking)
-      ->postTask(
-          BLINK_FROM_HERE,
-          crossThreadBind(
-              &ExecutionContextTask::performTaskIfContextIsValid,
-              WTF::passed(std::move(task)),
-              wrapCrossThreadWeakPersistent(m_mainFrame->frame()->document())));
+      ->postTask(BLINK_FROM_HERE, std::move(task));
 }
 
 void WebEmbeddedWorkerImpl::postTaskToWorkerGlobalScope(
@@ -278,6 +273,14 @@ void WebEmbeddedWorkerImpl::postTaskToWorkerGlobalScope(
   if (m_askedToTerminate || !m_workerThread)
     return;
   m_workerThread->postTask(location, std::move(task));
+}
+
+ThreadableLoadingContext* WebEmbeddedWorkerImpl::getThreadableLoadingContext() {
+  if (!m_loadingContext) {
+    m_loadingContext =
+        ThreadableLoadingContext::create(*m_mainFrame->frame()->document());
+  }
+  return m_loadingContext;
 }
 
 void WebEmbeddedWorkerImpl::prepareShadowPageForLoader() {
@@ -327,23 +330,15 @@ void WebEmbeddedWorkerImpl::loadShadowPage() {
                        SubstituteData(buffer, "text/html", "UTF-8", KURL())));
 }
 
-void WebEmbeddedWorkerImpl::willSendRequest(WebLocalFrame* frame,
-                                            WebURLRequest& request) {
-  if (m_networkProvider)
-    m_networkProvider->willSendRequest(frame->dataSource(), request);
-}
-
 void WebEmbeddedWorkerImpl::didFinishDocumentLoad(WebLocalFrame* frame) {
   DCHECK(!m_mainScriptLoader);
-  DCHECK(!m_networkProvider);
   DCHECK(m_mainFrame);
   DCHECK(m_workerContextClient);
   DCHECK(m_loadingShadowPage);
   DCHECK(!m_askedToTerminate);
   m_loadingShadowPage = false;
-  m_networkProvider =
-      WTF::wrapUnique(m_workerContextClient->createServiceWorkerNetworkProvider(
-          frame->dataSource()));
+  frame->dataSource()->setServiceWorkerNetworkProvider(WTF::wrapUnique(
+      m_workerContextClient->createServiceWorkerNetworkProvider()));
   m_mainScriptLoader = WorkerScriptLoader::create();
   m_mainScriptLoader->setRequestContext(
       WebURLRequest::RequestContextServiceWorker);
@@ -474,9 +469,9 @@ void WebEmbeddedWorkerImpl::startWorkerThread() {
   m_workerGlobalScopeProxy = ServiceWorkerGlobalScopeProxy::create(
       *this, *document, *m_workerContextClient);
   m_loaderProxy = WorkerLoaderProxy::create(this);
-  m_workerThread = ServiceWorkerThread::create(
-      m_loaderProxy, *m_workerGlobalScopeProxy, m_mainThreadTaskRunners.get());
-  m_workerThread->start(std::move(startupData));
+  m_workerThread =
+      ServiceWorkerThread::create(m_loaderProxy, *m_workerGlobalScopeProxy);
+  m_workerThread->start(std::move(startupData), m_mainThreadTaskRunners.get());
   m_workerInspectorProxy->workerThreadCreated(document, m_workerThread.get(),
                                               scriptURL);
 }

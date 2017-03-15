@@ -36,7 +36,6 @@
 <translation id="1540800554400757039">العنوان 1</translation>
 <translation id="1545749641540134597">فحص رمز الاستجابة السريعة</translation>
 <translation id="1580783302095112590">تم إرسال البريد.</translation>
-<translation id="1634828734222219955">الإجمالي</translation>
 <translation id="1646446875146297738">إن تمكين "عدم التتبع" يعني تضمين طلب في حركة بيانات التصفح. ويعتمد أي تأثير يحدث على ما إذا كان موقع الويب سيستجيب للطلب، وكيفية تفسيره للطلب.
 
 على سبيل المثال، قد تستجيب بعض مواقع الويب لهذا الطلب عبر عرض إعلانات لا تستند إلى مواقع ويب أخرى زرتها. ولكن ستظل العديد من مواقع الويب تجمع بيانات تصفحك وتستخدمها - على سبيل المثال، لتحسين الأمان وتقديم محتوى وخدمات وإعلانات واقتراحات على مواقع الويب ولإعداد تقارير الإحصاءات. <ph name="BEGIN_LINK" />مزيد من المعلومات<ph name="END_LINK" /></translation>
@@ -52,8 +51,6 @@
 <translation id="1809939268435598390">حذف مجلد</translation>
 <translation id="1813414402673211292">محو بيانات التصفح</translation>
 <translation id="1820259098641718022">تمت الإضافة إلى قائمة القراءة</translation>
-<translation id="1826516787628120939">حساب شيكات</translation>
-<translation id="1842969606798536927">الدفع</translation>
 <translation id="1876721852596493031">إرسال بيانات الاستخدام</translation>
 <translation id="1886928167269928266">بدايةَ الوقت</translation>
 <translation id="1894451531427596130">التحكم في كيفية عمل هذا في <ph name="BEGIN_LINK" />الإعدادات<ph name="END_LINK" /></translation>
@@ -62,7 +59,6 @@
 <translation id="1952728750904661634">تسجيل الدخول باستخدام حساب مُدار</translation>
 <translation id="1974060860693918893">إعدادات متقدمة</translation>
 <translation id="1989112275319619282">تصفّح</translation>
-<translation id="2054511809411770085">رمز الاستجابة السريعة أو الرمز الشريطي</translation>
 <translation id="2068952045031577364">الأسبوع الماضي</translation>
 <translation id="2079545284768500474">تراجع</translation>
 <translation id="209018056901015185">طلب موقع سطح المكتب</translation>
@@ -150,7 +146,6 @@
 <translation id="3638472932233958418">تحميل صفحات الويب مسبقًا</translation>
 <translation id="3691593122358196899">أُضيفَت إشارة مرجعية إلى <ph name="FOLDER_TITLE" /></translation>
 <translation id="3692781555820666866">عند التمكين، سوف يتضمن المربّع متعدد الاستخدامات اقتراحات لبث صفحات الويب من الأجهزة القريبة منك.</translation>
-<translation id="3706658020782046159">اختر عنوان شحن للتحقّق من متطلبات وطرق الشحن.</translation>
 <translation id="3738139272394829648">المس للبحث</translation>
 <translation id="3771033907050503522">علامات تبويب التصفح المتخفي</translation>
 <translation id="3783017676699494206">حفظ الصورة</translation>
@@ -193,7 +188,6 @@
 <translation id="4875622588773761625">هل تريد تحديث كلمة مرورك لهذا الموقع من خلال <ph name="PASSWORD_MANAGER_BRAND" />؟</translation>
 <translation id="4881695831933465202">فتح</translation>
 <translation id="4904877109095351937">وضع علامة كمقروءة</translation>
-<translation id="4923459931733593730">الدفع</translation>
 <translation id="4930268273022498155">يمكنك حذف البيانات الحالية. يمكنك استرداد هذه البيانات بالتبديل مرة أخرى إلى <ph name="USER_EMAIL1" />.</translation>
 <translation id="4941089862236492464">عذرًا، حدثت مشكلة أثناء مشاركة العنصر.</translation>
 <translation id="4979397965658815378">‏سجّل الدخول إلى حسابك في Google لمزامنة الإشارات المرجعية وكلمات المرور والسجل والإعدادات الأخرى واستخدامها على جميع أجهزتك</translation>
@@ -209,14 +203,11 @@
 <translation id="5186185447130319458">خاص</translation>
 <translation id="5190835502935405962">شريط الإشارات</translation>
 <translation id="5197255632782567636">الإنترنت</translation>
-<translation id="5198972191746488848">جارٍ إضافة بطاقة...</translation>
 <translation id="5228579091201413441">تمكين المزامنة</translation>
-<translation id="5230733896359313003">عنوان الشحن</translation>
 <translation id="5244474230056479698">المزامنة مع <ph name="EMAIL" /></translation>
 <translation id="5300589172476337783">عرض</translation>
 <translation id="5317780077021120954">حفظ</translation>
 <translation id="5327248766486351172">الاسم</translation>
-<translation id="5332219387342487447">طريقة الشحن</translation>
 <translation id="5388358297987318779">فتح الصورة</translation>
 <translation id="5409365236829784218">لا تتوفر تطبيقات مثبتة يمكن من خلالها فتح هذا الملف.</translation>
 <translation id="54401264925851789">معلومات أمان الصفحة</translation>
@@ -286,7 +277,6 @@
 <translation id="6418346271604475326">‏جارٍ إعداد PDF</translation>
 <translation id="6445051938772793705">البلد</translation>
 <translation id="6445981559479772097">تم إرسال الرسالة.</translation>
-<translation id="6456339708790392414">دفعتك</translation>
 <translation id="6456425917241817154">‏تم إنشاء كلمة المرور من قبل Chrome</translation>
 <translation id="6464071786529933911">فتح في علامة تبويب جديدة للتصفح المتخفي</translation>
 <translation id="6482629121755362506">تم حذف <ph name="NUMBER_OF_SELECTED_BOOKMARKS" /> من العناصر</translation>
@@ -342,11 +332,9 @@
 <translation id="7649070708921625228">مساعدة</translation>
 <translation id="7658239707568436148">إلغاء</translation>
 <translation id="7671141431838911305">تثبيت</translation>
-<translation id="7682287625158474539">الشحن</translation>
 <translation id="7765158879357617694">نقل</translation>
 <translation id="7769602470925380267">قبول وتسجيل الخروج</translation>
 <translation id="7772032839648071052">تأكيد عبارة المرور</translation>
-<translation id="7791543448312431591">إضافة</translation>
 <translation id="780301667611848630">لا، شكرًا</translation>
 <translation id="7851858861565204677">أجهزة أخرى</translation>
 <translation id="7859704718976024901">سجل التصفح</translation>
@@ -387,7 +375,6 @@
 <translation id="8654802032646794042">إلغاء</translation>
 <translation id="8668210798914567634">تم حفظ هذه الصفحة في قائمة القراءة.</translation>
 <translation id="8680787084697685621">تفاصيل تسجيل الدخول إلى الحساب قديمة.</translation>
-<translation id="8699098509676302392">جارٍ إضافة عنوان...</translation>
 <translation id="8721297211384281569">قائمة الأدوات</translation>
 <translation id="8725066075913043281">أعد المحاولة</translation>
 <translation id="8730621377337864115">تم</translation>
@@ -407,7 +394,6 @@
 <translation id="9055772144595778347">تعذر تسجيل الدخول</translation>
 <translation id="9065203028668620118">تحرير</translation>
 <translation id="9079935439869366234">وضع علامة كغير مقروءة على الكل</translation>
-<translation id="9080712759204168376">ملخص الطلبات</translation>
 <translation id="9083392325882095631">عنصر واحد</translation>
 <translation id="9100610230175265781">عبارة المرور مطلوبة</translation>
 <translation id="9148126808321036104">تسجيل الدخول مرة أخرى</translation>

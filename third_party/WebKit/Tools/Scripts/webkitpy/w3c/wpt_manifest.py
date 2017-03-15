@@ -88,17 +88,36 @@ class WPTManifest(object):
         return reftest_list
 
     @staticmethod
+    def ensure_manifest(host):
+        """Checks whether the manifest exists, and then generates it if necessary."""
+        finder = WebKitFinder(host.filesystem)
+        manifest_path = finder.path_from_webkit_base('LayoutTests', 'external', 'wpt', 'MANIFEST.json')
+        base_manifest_path = finder.path_from_webkit_base('LayoutTests', 'external', 'WPT_BASE_MANIFEST.json')
+
+        if not host.filesystem.exists(base_manifest_path):
+            _log.error('Manifest base not found at "%s".', base_manifest_path)
+            host.filesystem.write_text_file(base_manifest_path, '{}')
+
+        if not host.filesystem.exists(manifest_path):
+            _log.debug('Manifest not found, copying from base "%s".', base_manifest_path)
+            host.filesystem.copyfile(base_manifest_path, manifest_path)
+
+        wpt_path = manifest_path = finder.path_from_webkit_base('LayoutTests', 'external', 'wpt')
+        WPTManifest.generate_manifest(host, wpt_path)
+
+    @staticmethod
     def generate_manifest(host, dest_path):
         """Generates MANIFEST.json on the specified directory."""
         executive = host.executive
         finder = WebKitFinder(host.filesystem)
-        cmd = [finder.path_from_webkit_base('Tools', 'Scripts', 'webkitpy', 'thirdparty', 'wpt', 'wpt', 'manifest'),
-               '--work', '--tests-root', dest_path]
+        manifest_exec_path = finder.path_from_webkit_base('Tools', 'Scripts', 'webkitpy', 'thirdparty', 'wpt', 'wpt', 'manifest')
+
+        cmd = ['python', manifest_exec_path, '--work', '--tests-root', dest_path]
         _log.debug('Running command: %s', ' '.join(cmd))
         proc = executive.popen(cmd, stdout=executive.PIPE, stderr=executive.PIPE, stdin=executive.PIPE, cwd=finder.webkit_base())
         out, err = proc.communicate('')
         if proc.returncode:
-            _log.info('# ret> %d' % proc.returncode)
+            _log.info('# ret> %d', proc.returncode)
             if out:
                 _log.info(out)
             if err:

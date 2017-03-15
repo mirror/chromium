@@ -93,8 +93,7 @@ class FileReader::ThrottlingController final
     if (!controller)
       return;
 
-    InspectorInstrumentation::asyncTaskScheduled(context, "FileReader", reader,
-                                                 true);
+    probe::asyncTaskScheduled(context, "FileReader", reader);
     controller->pushReader(reader);
   }
 
@@ -115,7 +114,7 @@ class FileReader::ThrottlingController final
       return;
 
     controller->finishReader(reader, nextStep);
-    InspectorInstrumentation::asyncTaskCanceled(context, reader);
+    probe::asyncTaskCanceled(context, reader);
   }
 
   DEFINE_INLINE_TRACE() {
@@ -137,21 +136,21 @@ class FileReader::ThrottlingController final
       m_runningReaders.insert(reader);
       return;
     }
-    m_pendingReaders.append(reader);
+    m_pendingReaders.push_back(reader);
     executeReaders();
   }
 
   FinishReaderType removeReader(FileReader* reader) {
     FileReaderHashSet::const_iterator hashIter = m_runningReaders.find(reader);
     if (hashIter != m_runningReaders.end()) {
-      m_runningReaders.remove(hashIter);
+      m_runningReaders.erase(hashIter);
       return RunPendingReaders;
     }
     FileReaderDeque::const_iterator dequeEnd = m_pendingReaders.end();
     for (FileReaderDeque::const_iterator it = m_pendingReaders.begin();
          it != dequeEnd; ++it) {
       if (*it == reader) {
-        m_pendingReaders.remove(it);
+        m_pendingReaders.erase(it);
         break;
       }
     }
@@ -453,7 +452,7 @@ void FileReader::didFail(FileError::ErrorCode errorCode) {
 }
 
 void FileReader::fireEvent(const AtomicString& type) {
-  InspectorInstrumentation::AsyncTask asyncTask(getExecutionContext(), this);
+  probe::AsyncTask asyncTask(getExecutionContext(), this, "event");
   if (!m_loader) {
     dispatchEvent(ProgressEvent::create(type, false, 0, 0));
     return;

@@ -44,6 +44,7 @@ class CONTENT_EXPORT GpuDataManagerImplPrivate {
       const gpu::GPUInfo& gpu_info);
   bool IsFeatureBlacklisted(int feature) const;
   bool IsFeatureEnabled(int feature) const;
+  bool IsWebGLEnabled() const;
   bool IsDriverBugWorkaroundActive(int feature) const;
   gpu::GPUInfo GetGPUInfo() const;
   void GetGpuProcessHandles(
@@ -54,7 +55,6 @@ class CONTENT_EXPORT GpuDataManagerImplPrivate {
   bool IsCompleteGpuInfoAvailable() const;
   void RequestVideoMemoryUsageStatsUpdate() const;
   bool ShouldUseSwiftShader() const;
-  void RegisterSwiftShaderPath(const base::FilePath& path);
   void AddObserver(GpuDataManagerObserver* observer);
   void RemoveObserver(GpuDataManagerObserver* observer);
   void UnblockDomainFrom3DAPIs(const GURL& url);
@@ -233,6 +233,8 @@ class CONTENT_EXPORT GpuDataManagerImplPrivate {
 
   std::set<int> blacklisted_features_;
   std::set<int> preliminary_blacklisted_features_;
+  bool preliminary_blacklisted_features_initialized_;
+
   // Eventually |blacklisted_features_| should be folded in to this.
   gpu::GpuFeatureInfo gpu_feature_info_;
 
@@ -248,8 +250,6 @@ class CONTENT_EXPORT GpuDataManagerImplPrivate {
   std::vector<LogMessage> log_messages_;
 
   bool use_swiftshader_;
-
-  base::FilePath swiftshader_path_;
 
   // Current card force-blacklisted due to GPU crashes, or disabled through
   // the --disable-gpu commandline switch.

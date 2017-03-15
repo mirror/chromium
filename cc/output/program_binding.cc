@@ -8,6 +8,7 @@
 #include "cc/output/geometry_binding.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
+#include "ui/gfx/color_transform.h"
 
 using gpu::gles2::GLES2Interface;
 
@@ -29,7 +30,8 @@ bool ProgramKey::operator==(const ProgramKey& other) const {
          has_color_matrix_ == other.has_color_matrix_ &&
          yuv_alpha_texture_mode_ == other.yuv_alpha_texture_mode_ &&
          uv_texture_mode_ == other.uv_texture_mode_ &&
-         color_conversion_mode_ == other.color_conversion_mode_;
+         color_conversion_mode_ == other.color_conversion_mode_ &&
+         color_transform_ == other.color_transform_;
 }
 
 bool ProgramKey::operator!=(const ProgramKey& other) const {
@@ -128,6 +130,18 @@ ProgramKey ProgramKey::YUVVideo(TexCoordPrecision precision,
   return result;
 }
 
+void ProgramKey::SetColorTransform(const gfx::ColorTransform* transform) {
+  color_transform_ = nullptr;
+  if (transform->IsIdentity()) {
+    color_conversion_mode_ = COLOR_CONVERSION_MODE_NONE;
+  } else if (transform->CanGetShaderSource()) {
+    color_conversion_mode_ = COLOR_CONVERSION_MODE_SHADER;
+    color_transform_ = transform;
+  } else {
+    color_conversion_mode_ = COLOR_CONVERSION_MODE_LUT;
+  }
+}
+
 ProgramBindingBase::ProgramBindingBase()
     : program_(0),
       vertex_shader_id_(0),
@@ -163,21 +177,24 @@ bool ProgramBindingBase::Init(GLES2Interface* context,
   return !!program_;
 }
 
-bool ProgramBindingBase::Link(GLES2Interface* context) {
+bool ProgramBindingBase::Link(GLES2Interface* context,
+                              const std::string& vertex_source,
+                              const std::string& fragment_source) {
   context->LinkProgram(program_);
   CleanupShaders(context);
   if (!program_)
     return false;
-#ifndef NDEBUG
   int linked = 0;
   context->GetProgramiv(program_, GL_LINK_STATUS, &linked);
   if (!linked) {
     char buffer[1024] = "";
     context->GetProgramInfoLog(program_, sizeof(buffer), nullptr, buffer);
-    DLOG(ERROR) << "Error compiling shader: " << buffer;
+    LOG(ERROR) << "Error linking shader: " << buffer << "\n"
+               << "Vertex shader:\n"
+               << vertex_source << "Fragment shader:\n"
+               << fragment_source;
     return false;
   }
-#endif
   return true;
 }
 
@@ -207,17 +224,16 @@ unsigned ProgramBindingBase::LoadShader(GLES2Interface* context,
       shader_source_str,
       shader_length);
   context->CompileShader(shader);
-#if DCHECK_IS_ON()
   int compiled = 0;
   context->GetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
   if (!compiled) {
     char buffer[1024] = "";
     context->GetShaderInfoLog(shader, sizeof(buffer), nullptr, buffer);
-    DLOG(ERROR) << "Error compiling shader: " << buffer
-                << "\n shader program: " << shader_source;
+    LOG(ERROR) << "Error compiling shader: " << buffer << "\n"
+               << "Shader program:\n"
+               << shader_source;
     return 0u;
   }
-#endif
   return shader;
 }
 

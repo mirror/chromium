@@ -28,7 +28,6 @@
 
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/TaskRunnerHelper.h"
-#include "core/frame/PerformanceMonitor.h"
 #include "core/inspector/InspectorInstrumentation.h"
 #include "core/inspector/InspectorTraceEvents.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
@@ -60,12 +59,6 @@ int DOMTimer::install(ExecutionContext* context,
                       bool singleShot) {
   int timeoutID = context->timers()->installNewTimeout(context, action, timeout,
                                                        singleShot);
-  TRACE_EVENT_INSTANT1("devtools.timeline", "TimerInstall",
-                       TRACE_EVENT_SCOPE_THREAD, "data",
-                       InspectorTimerInstallEvent::data(context, timeoutID,
-                                                        timeout, singleShot));
-  InspectorInstrumentation::NativeBreakpoint nativeBreakpoint(context,
-                                                              "setTimer", true);
   return timeoutID;
 }
 
@@ -74,8 +67,6 @@ void DOMTimer::removeByID(ExecutionContext* context, int timeoutID) {
   TRACE_EVENT_INSTANT1("devtools.timeline", "TimerRemove",
                        TRACE_EVENT_SCOPE_THREAD, "data",
                        InspectorTimerRemoveEvent::data(context, timeoutID));
-  InspectorInstrumentation::NativeBreakpoint nativeBreakpoint(
-      context, "clearTimer", true);
   // Eagerly unregister as ExecutionContext observer.
   if (timer)
     timer->clearContext();
@@ -97,9 +88,6 @@ DOMTimer::DOMTimer(ExecutionContext* context,
     m_userGestureToken = UserGestureIndicator::currentToken();
   }
 
-  InspectorInstrumentation::asyncTaskScheduled(
-      context, singleShot ? "setTimeout" : "setInterval", this, !singleShot);
-
   double intervalMilliseconds =
       std::max(oneMillisecond, interval * oneMillisecond);
   if (intervalMilliseconds < minimumInterval &&
@@ -109,6 +97,14 @@ DOMTimer::DOMTimer(ExecutionContext* context,
     startOneShot(intervalMilliseconds, BLINK_FROM_HERE);
   else
     startRepeating(intervalMilliseconds, BLINK_FROM_HERE);
+
+  suspendIfNeeded();
+  TRACE_EVENT_INSTANT1("devtools.timeline", "TimerInstall",
+                       TRACE_EVENT_SCOPE_THREAD, "data",
+                       InspectorTimerInstallEvent::data(context, timeoutID,
+                                                        interval, singleShot));
+  probe::asyncTaskScheduledBreakable(
+      context, singleShot ? "setTimeout" : "setInterval", this);
 }
 
 DOMTimer::~DOMTimer() {
@@ -117,7 +113,10 @@ DOMTimer::~DOMTimer() {
 }
 
 void DOMTimer::stop() {
-  InspectorInstrumentation::asyncTaskCanceled(getExecutionContext(), this);
+  probe::asyncTaskCanceledBreakable(
+      getExecutionContext(),
+      repeatInterval() ? "clearInterval" : "clearTimeout", this);
+
   m_userGestureToken = nullptr;
   // Need to release JS objects potentially protected by ScheduledAction
   // because they can form circular references back to the ExecutionContext
@@ -143,11 +142,11 @@ void DOMTimer::fired() {
 
   TRACE_EVENT1("devtools.timeline", "TimerFire", "data",
                InspectorTimerFireEvent::data(context, m_timeoutID));
-  PerformanceMonitor::HandlerCall handlerCall(
-      context, repeatInterval() ? "setInterval" : "setTimeout", true);
-  InspectorInstrumentation::NativeBreakpoint nativeBreakpoint(
-      context, "timerFired", false);
-  InspectorInstrumentation::AsyncTask asyncTask(context, this);
+  probe::UserCallback probe(context,
+                            repeatInterval() ? "setInterval" : "setTimeout",
+                            AtomicString(), true);
+  probe::AsyncTask asyncTask(context, this,
+                             repeatInterval() ? "fired" : nullptr);
 
   // Simple case for non-one-shot timers.
   if (isActive()) {
@@ -171,10 +170,6 @@ void DOMTimer::fired() {
   context->timers()->removeTimeoutByID(m_timeoutID);
 
   action->execute(context);
-
-  TRACE_EVENT_INSTANT1(TRACE_DISABLED_BY_DEFAULT("devtools.timeline"),
-                       "UpdateCounters", TRACE_EVENT_SCOPE_THREAD, "data",
-                       InspectorUpdateCountersEvent::data());
 
   // ExecutionContext might be already gone when we executed action->execute().
   ExecutionContext* executionContext = getExecutionContext();

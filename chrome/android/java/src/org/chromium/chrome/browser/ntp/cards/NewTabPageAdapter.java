@@ -19,6 +19,7 @@ import org.chromium.chrome.browser.ntp.snippets.SectionHeaderViewHolder;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticleViewHolder;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
+import org.chromium.chrome.browser.suggestions.SuggestionsRecyclerView;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
 import org.chromium.chrome.browser.suggestions.TileGrid;
 import org.chromium.chrome.browser.suggestions.TileGroup;
@@ -40,12 +41,14 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
     @Nullable
     private final View mAboveTheFoldView;
     private final UiConfig mUiConfig;
-    private NewTabPageRecyclerView mRecyclerView;
+    private SuggestionsRecyclerView mRecyclerView;
 
     private final InnerNode mRoot;
 
     @Nullable
     private final AboveTheFoldItem mAboveTheFold;
+    @Nullable
+    private final TileGrid mTileGrid;
     private final SectionList mSections;
     private final SignInPromo mSigninPromo;
     private final AllDismissedItem mAllDismissed;
@@ -73,7 +76,7 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
         mUiConfig = uiConfig;
         mRoot = new InnerNode();
 
-        mSections = new SectionList(mUiDelegate, offlinePageBridge, mUiConfig);
+        mSections = new SectionList(mUiDelegate, offlinePageBridge);
         mSigninPromo = new SignInPromo(mUiDelegate);
         mAllDismissed = new AllDismissedItem();
         mFooter = new Footer();
@@ -84,8 +87,12 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
             mAboveTheFold = new AboveTheFoldItem();
             mRoot.addChild(mAboveTheFold);
         }
-        if (tileGroupDelegate != null) {
-            mRoot.addChild(new TileGrid(uiDelegate, mContextMenuManager, tileGroupDelegate));
+        if (tileGroupDelegate == null) {
+            mTileGrid = null;
+        } else {
+            mTileGrid = new TileGrid(
+                    uiDelegate, mContextMenuManager, tileGroupDelegate, offlinePageBridge);
+            mRoot.addChild(mTileGrid);
         }
         mRoot.addChildren(mSections, mSigninPromo, mAllDismissed, mFooter);
         if (mAboveTheFoldView == null
@@ -174,6 +181,14 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
         return mRoot.getItemCount();
     }
 
+    /** Resets suggestions, pulling the current state as known by the backend. */
+    public void refreshSuggestions() {
+        // The NTP Tiles already update when changes occurs, they don't need to be explicitly reset,
+        // unlike the cards.
+        mSections.refreshSuggestions();
+        if (mTileGrid != null) mTileGrid.getTileGroup().onSwitchToForeground();
+    }
+
     public int getAboveTheFoldPosition() {
         if (mAboveTheFoldView == null) return RecyclerView.NO_POSITION;
 
@@ -241,9 +256,9 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
         assert mRecyclerView == null;
 
         // FindBugs chokes on the cast below when not checked, raising BC_UNCONFIRMED_CAST
-        assert recyclerView instanceof NewTabPageRecyclerView;
+        assert recyclerView instanceof SuggestionsRecyclerView;
 
-        mRecyclerView = (NewTabPageRecyclerView) recyclerView;
+        mRecyclerView = (SuggestionsRecyclerView) recyclerView;
     }
 
     /**

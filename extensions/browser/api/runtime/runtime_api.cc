@@ -155,8 +155,8 @@ void DispatchOnStartupEventImpl(BrowserContext* browser_context,
 void SetUninstallURL(ExtensionPrefs* prefs,
                      const std::string& extension_id,
                      const std::string& url_string) {
-  prefs->UpdateExtensionPref(
-      extension_id, kUninstallUrl, new base::StringValue(url_string));
+  prefs->UpdateExtensionPref(extension_id, kUninstallUrl,
+                             new base::Value(url_string));
 }
 
 std::string GetUninstallURL(ExtensionPrefs* prefs,
@@ -170,8 +170,9 @@ std::string GetUninstallURL(ExtensionPrefs* prefs,
 
 ///////////////////////////////////////////////////////////////////////////////
 
-static base::LazyInstance<BrowserContextKeyedAPIFactory<RuntimeAPI> >
-    g_factory = LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<
+    BrowserContextKeyedAPIFactory<RuntimeAPI>>::DestructorAtExit g_factory =
+    LAZY_INSTANCE_INITIALIZER;
 
 // static
 BrowserContextKeyedAPIFactory<RuntimeAPI>* RuntimeAPI::GetFactoryInstance() {
@@ -417,8 +418,9 @@ RuntimeAPI::RestartAfterDelayStatus RuntimeAPI::RestartDeviceAfterDelay(
   return ScheduleDelayedRestart(now, seconds_from_now);
 }
 
-bool RuntimeAPI::OpenOptionsPage(const Extension* extension) {
-  return delegate_->OpenOptionsPage(extension);
+bool RuntimeAPI::OpenOptionsPage(const Extension* extension,
+                                 content::BrowserContext* browser_context) {
+  return delegate_->OpenOptionsPage(extension, browser_context);
 }
 
 void RuntimeAPI::MaybeCancelRunningDelayedRestartTimer() {
@@ -660,7 +662,7 @@ void RuntimeGetBackgroundPageFunction::OnPageLoaded(ExtensionHost* host) {
 
 ExtensionFunction::ResponseAction RuntimeOpenOptionsPageFunction::Run() {
   RuntimeAPI* api = RuntimeAPI::GetFactoryInstance()->Get(browser_context());
-  return RespondNow(api->OpenOptionsPage(extension())
+  return RespondNow(api->OpenOptionsPage(extension(), browser_context())
                         ? NoArguments()
                         : Error(kFailedToCreateOptionsPage));
 }
@@ -700,11 +702,11 @@ void RuntimeRequestUpdateCheckFunction::CheckComplete(
   if (result.success) {
     std::unique_ptr<base::DictionaryValue> details(new base::DictionaryValue);
     details->SetString("version", result.version);
-    Respond(TwoArguments(base::MakeUnique<base::StringValue>(result.response),
+    Respond(TwoArguments(base::MakeUnique<base::Value>(result.response),
                          std::move(details)));
   } else {
     // HMM(kalman): Why does !success not imply Error()?
-    Respond(OneArgument(base::MakeUnique<base::StringValue>(result.response)));
+    Respond(OneArgument(base::MakeUnique<base::Value>(result.response)));
   }
 }
 

@@ -77,7 +77,7 @@ class CORE_EXPORT SVGImage final : public Image {
   void advanceAnimationForTesting() override;
   SVGImageChromeClient& chromeClientForTesting();
 
-  sk_sp<SkImage> imageForCurrentFrame(const ColorBehavior&) override;
+  sk_sp<SkImage> imageForCurrentFrame() override;
 
   // Does the SVG image/document contain any animations?
   bool hasAnimations() const;
@@ -120,14 +120,13 @@ class CORE_EXPORT SVGImage final : public Image {
   }
 
   void draw(PaintCanvas*,
-            const SkPaint&,
+            const PaintFlags&,
             const FloatRect& fromRect,
             const FloatRect& toRect,
             RespectImageOrientationEnum,
-            ImageClampingMode,
-            const ColorBehavior&) override;
+            ImageClampingMode) override;
   void drawForContainer(PaintCanvas*,
-                        const SkPaint&,
+                        const PaintFlags&,
                         const FloatSize,
                         float,
                         const FloatRect&,

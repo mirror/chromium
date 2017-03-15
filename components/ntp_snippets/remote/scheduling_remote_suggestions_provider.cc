@@ -38,6 +38,7 @@ enum class FetchingInterval {
   PERSISTENT_FALLBACK,
   PERSISTENT_WIFI,
   SOFT_ON_USAGE_EVENT,
+  SOFT_ON_NTP_OPENED,
   COUNT
 };
 
@@ -47,25 +48,30 @@ enum class FetchingInterval {
 // The values of each array specify a default time interval for the intervals
 // defined by the enum FetchingInterval. The default time intervals defined in
 // the arrays can be overridden using different variation parameters.
-const double kDefaultFetchingIntervalHoursRareNtpUser[] = {48.0, 24.0, 12.0};
-const double kDefaultFetchingIntervalHoursActiveNtpUser[] = {24.0, 6.0, 2.0};
+const double kDefaultFetchingIntervalHoursRareNtpUser[] = {48.0, 24.0, 12.0,
+                                                           6.0};
+const double kDefaultFetchingIntervalHoursActiveNtpUser[] = {24.0, 6.0, 2.0,
+                                                             2.0};
 const double kDefaultFetchingIntervalHoursActiveSuggestionsConsumer[] = {
-    24.0, 6.0, 2.0};
+    24.0, 6.0, 2.0, 1.0};
 
 // Variation parameters than can be used to override the default fetching
 // intervals.
 const char* kFetchingIntervalParamNameRareNtpUser[] = {
     "fetching_interval_hours-fallback-rare_ntp_user",
     "fetching_interval_hours-wifi-rare_ntp_user",
-    "soft_fetching_interval_hours-active-rare_ntp_user"};
+    "soft_fetching_interval_hours-active-rare_ntp_user",
+    "soft_on_ntp_opened_interval_hours-rare_ntp_user"};
 const char* kFetchingIntervalParamNameActiveNtpUser[] = {
     "fetching_interval_hours-fallback-active_ntp_user",
     "fetching_interval_hours-wifi-active_ntp_user",
-    "soft_fetching_interval_hours-active-active_ntp_user"};
+    "soft_fetching_interval_hours-active-active_ntp_user",
+    "soft_on_ntp_opened_interval_hours-active_ntp_user"};
 const char* kFetchingIntervalParamNameActiveSuggestionsConsumer[] = {
     "fetching_interval_hours-fallback-active_suggestions_consumer",
     "fetching_interval_hours-wifi-active_suggestions_consumer",
-    "soft_fetching_interval_hours-active-active_suggestions_consumer"};
+    "soft_fetching_interval_hours-active-active_suggestions_consumer",
+    "soft_on_ntp_opened_interval_hours-active_suggestions_consumer"};
 
 static_assert(
     static_cast<unsigned int>(FetchingInterval::COUNT) ==
@@ -88,6 +94,8 @@ const char* kTriggerTypeNames[] = {"persistent_scheduler_wake_up", "ntp_opened",
 
 const char* kTriggerTypesParamName = "scheduler_trigger_types";
 const char* kTriggerTypesParamValueForEmptyList = "-";
+
+const int kBlockBackgroundFetchesMinutesAfterClearingHistory = 30;
 
 // Returns the time interval to use for scheduling remote suggestion fetches for
 // the given interval and user_class.
@@ -129,14 +137,15 @@ base::TimeDelta GetDesiredFetchingInterval(
 SchedulingRemoteSuggestionsProvider::FetchingSchedule
 SchedulingRemoteSuggestionsProvider::FetchingSchedule::Empty() {
   return FetchingSchedule{base::TimeDelta(), base::TimeDelta(),
-                          base::TimeDelta()};
+                          base::TimeDelta(), base::TimeDelta()};
 }
 
 bool SchedulingRemoteSuggestionsProvider::FetchingSchedule::operator==(
     const FetchingSchedule& other) const {
   return interval_persistent_wifi == other.interval_persistent_wifi &&
          interval_persistent_fallback == other.interval_persistent_fallback &&
-         interval_soft_on_usage_event == other.interval_soft_on_usage_event;
+         interval_soft_on_usage_event == other.interval_soft_on_usage_event &&
+         interval_soft_on_ntp_opened == other.interval_soft_on_ntp_opened;
 }
 
 bool SchedulingRemoteSuggestionsProvider::FetchingSchedule::operator!=(
@@ -147,7 +156,8 @@ bool SchedulingRemoteSuggestionsProvider::FetchingSchedule::operator!=(
 bool SchedulingRemoteSuggestionsProvider::FetchingSchedule::is_empty() const {
   return interval_persistent_wifi.is_zero() &&
          interval_persistent_fallback.is_zero() &&
-         interval_soft_on_usage_event.is_zero();
+         interval_soft_on_usage_event.is_zero() &&
+         interval_soft_on_ntp_opened.is_zero();
 }
 
 // The TriggerType enum specifies values for the events that can trigger
@@ -176,6 +186,18 @@ SchedulingRemoteSuggestionsProvider::SchedulingRemoteSuggestionsProvider(
       persistent_scheduler_(persistent_scheduler),
       background_fetch_in_progress_(false),
       user_classifier_(user_classifier),
+      request_throttler_rare_ntp_user_(
+          pref_service,
+          RequestThrottler::RequestType::
+              CONTENT_SUGGESTION_FETCHER_RARE_NTP_USER),
+      request_throttler_active_ntp_user_(
+          pref_service,
+          RequestThrottler::RequestType::
+              CONTENT_SUGGESTION_FETCHER_ACTIVE_NTP_USER),
+      request_throttler_active_suggestions_consumer_(
+          pref_service,
+          RequestThrottler::RequestType::
+              CONTENT_SUGGESTION_FETCHER_ACTIVE_SUGGESTIONS_CONSUMER),
       pref_service_(pref_service),
       clock_(std::move(clock)),
       enabled_triggers_(GetEnabledTriggerTypes()) {
@@ -183,12 +205,6 @@ SchedulingRemoteSuggestionsProvider::SchedulingRemoteSuggestionsProvider(
   DCHECK(pref_service);
 
   LoadLastFetchingSchedule();
-
-  provider_->SetProviderStatusCallback(
-      base::MakeUnique<RemoteSuggestionsProvider::ProviderStatusCallback>(
-          base::BindRepeating(
-              &SchedulingRemoteSuggestionsProvider::OnProviderStatusChanged,
-              base::Unretained(this))));
 }
 
 SchedulingRemoteSuggestionsProvider::~SchedulingRemoteSuggestionsProvider() =
@@ -203,6 +219,33 @@ void SchedulingRemoteSuggestionsProvider::RegisterProfilePrefs(
   registry->RegisterInt64Pref(prefs::kSnippetSoftFetchingIntervalOnUsageEvent,
                               0);
   registry->RegisterInt64Pref(prefs::kSnippetLastFetchAttempt, 0);
+  registry->RegisterInt64Pref(prefs::kSnippetSoftFetchingIntervalOnNtpOpened,
+                              0);
+}
+
+void SchedulingRemoteSuggestionsProvider::OnProviderActivated() {
+  StartScheduling();
+}
+
+void SchedulingRemoteSuggestionsProvider::OnProviderDeactivated() {
+  StopScheduling();
+}
+
+void SchedulingRemoteSuggestionsProvider::OnSuggestionsCleared() {
+  // Some user action causes suggestions to be cleared, fetch now (as an
+  // interactive request).
+  ReloadSuggestions();
+}
+
+void SchedulingRemoteSuggestionsProvider::OnHistoryCleared() {
+  // Due to privacy, we should not fetch for a while (unless the user explicitly
+  // asks for new suggestions) to give sync the time to propagate the changes in
+  // history to the server.
+  background_fetches_allowed_after_ =
+      clock_->Now() + base::TimeDelta::FromMinutes(
+                          kBlockBackgroundFetchesMinutesAfterClearingHistory);
+  // After that time elapses, we should fetch as soon as possible.
+  ClearLastFetchAttemptTime();
 }
 
 void SchedulingRemoteSuggestionsProvider::RescheduleFetching() {
@@ -218,7 +261,7 @@ void SchedulingRemoteSuggestionsProvider::OnPersistentSchedulerWakeUp() {
 void SchedulingRemoteSuggestionsProvider::OnBrowserForegrounded() {
   // TODO(jkrcal): Consider that this is called whenever we open or return to an
   // Activity. Therefore, keep work light for fast start up calls.
-  if (!ShouldRefetchInTheBackgroundNow()) {
+  if (!ShouldRefetchInTheBackgroundNow(TriggerType::BROWSER_FOREGROUNDED)) {
     return;
   }
 
@@ -228,7 +271,7 @@ void SchedulingRemoteSuggestionsProvider::OnBrowserForegrounded() {
 void SchedulingRemoteSuggestionsProvider::OnBrowserColdStart() {
   // TODO(fhorschig|jkrcal): Consider that work here must be kept light for fast
   // cold start ups.
-  if (!ShouldRefetchInTheBackgroundNow()) {
+  if (!ShouldRefetchInTheBackgroundNow(TriggerType::BROWSER_COLD_START)) {
     return;
   }
 
@@ -236,16 +279,11 @@ void SchedulingRemoteSuggestionsProvider::OnBrowserColdStart() {
 }
 
 void SchedulingRemoteSuggestionsProvider::OnNTPOpened() {
-  if (!ShouldRefetchInTheBackgroundNow()) {
+  if (!ShouldRefetchInTheBackgroundNow(TriggerType::NTP_OPENED)) {
     return;
   }
 
   RefetchInTheBackgroundIfEnabled(TriggerType::NTP_OPENED);
-}
-
-void SchedulingRemoteSuggestionsProvider::SetProviderStatusCallback(
-    std::unique_ptr<ProviderStatusCallback> callback) {
-  provider_->SetProviderStatusCallback(std::move(callback));
 }
 
 void SchedulingRemoteSuggestionsProvider::RefetchInTheBackground(
@@ -254,6 +292,14 @@ void SchedulingRemoteSuggestionsProvider::RefetchInTheBackground(
     if (callback) {
       callback->Run(
           Status(StatusCode::TEMPORARY_ERROR, "Background fetch in progress"));
+    }
+    return;
+  }
+
+  if (!AcquireQuota(/*interactive_request=*/false)) {
+    if (callback) {
+      callback->Run(Status(StatusCode::TEMPORARY_ERROR,
+                           "Non-interactive quota exceeded"));
     }
     return;
   }
@@ -297,6 +343,15 @@ void SchedulingRemoteSuggestionsProvider::Fetch(
     const Category& category,
     const std::set<std::string>& known_suggestion_ids,
     const FetchDoneCallback& callback) {
+  if (!AcquireQuota(/*interactive_request=*/true)) {
+    if (callback) {
+      callback.Run(
+          Status(StatusCode::TEMPORARY_ERROR, "Interactive quota exceeded"),
+          std::vector<ContentSuggestion>());
+    }
+    return;
+  }
+
   provider_->Fetch(
       category, known_suggestion_ids,
       base::Bind(&SchedulingRemoteSuggestionsProvider::FetchFinished,
@@ -304,6 +359,10 @@ void SchedulingRemoteSuggestionsProvider::Fetch(
 }
 
 void SchedulingRemoteSuggestionsProvider::ReloadSuggestions() {
+  if (!AcquireQuota(/*interactive_request=*/true)) {
+    return;
+  }
+
   provider_->ReloadSuggestions();
 }
 
@@ -332,19 +391,6 @@ void SchedulingRemoteSuggestionsProvider::GetDismissedSuggestionsForDebugging(
 void SchedulingRemoteSuggestionsProvider::ClearDismissedSuggestionsForDebugging(
     Category category) {
   provider_->ClearDismissedSuggestionsForDebugging(category);
-}
-
-void SchedulingRemoteSuggestionsProvider::OnProviderStatusChanged(
-    RemoteSuggestionsProvider::ProviderStatus status) {
-  switch (status) {
-    case RemoteSuggestionsProvider::ProviderStatus::ACTIVE:
-      StartScheduling();
-      return;
-    case RemoteSuggestionsProvider::ProviderStatus::INACTIVE:
-      StopScheduling();
-      return;
-  }
-  NOTREACHED();
 }
 
 void SchedulingRemoteSuggestionsProvider::StartScheduling() {
@@ -394,6 +440,8 @@ SchedulingRemoteSuggestionsProvider::GetDesiredFetchingSchedule() const {
       FetchingInterval::PERSISTENT_FALLBACK, user_class);
   schedule.interval_soft_on_usage_event = GetDesiredFetchingInterval(
       FetchingInterval::SOFT_ON_USAGE_EVENT, user_class);
+  schedule.interval_soft_on_ntp_opened = GetDesiredFetchingInterval(
+      FetchingInterval::SOFT_ON_NTP_OPENED, user_class);
 
   return schedule;
 }
@@ -406,6 +454,8 @@ void SchedulingRemoteSuggestionsProvider::LoadLastFetchingSchedule() {
           prefs::kSnippetPersistentFetchingIntervalFallback));
   schedule_.interval_soft_on_usage_event = base::TimeDelta::FromInternalValue(
       pref_service_->GetInt64(prefs::kSnippetSoftFetchingIntervalOnUsageEvent));
+  schedule_.interval_soft_on_ntp_opened = base::TimeDelta::FromInternalValue(
+      pref_service_->GetInt64(prefs::kSnippetSoftFetchingIntervalOnNtpOpened));
 }
 
 void SchedulingRemoteSuggestionsProvider::StoreFetchingSchedule() {
@@ -417,6 +467,9 @@ void SchedulingRemoteSuggestionsProvider::StoreFetchingSchedule() {
   pref_service_->SetInt64(
       prefs::kSnippetSoftFetchingIntervalOnUsageEvent,
       schedule_.interval_soft_on_usage_event.ToInternalValue());
+  pref_service_->SetInt64(
+      prefs::kSnippetSoftFetchingIntervalOnNtpOpened,
+      schedule_.interval_soft_on_ntp_opened.ToInternalValue());
 }
 
 void SchedulingRemoteSuggestionsProvider::RefetchInTheBackgroundIfEnabled(
@@ -432,12 +485,30 @@ void SchedulingRemoteSuggestionsProvider::RefetchInTheBackgroundIfEnabled(
   RefetchInTheBackground(/*callback=*/nullptr);
 }
 
-bool SchedulingRemoteSuggestionsProvider::ShouldRefetchInTheBackgroundNow() {
-  base::Time first_allowed_fetch_time =
-      base::Time::FromInternalValue(
-          pref_service_->GetInt64(prefs::kSnippetLastFetchAttempt)) +
-      schedule_.interval_soft_on_usage_event;
-  return first_allowed_fetch_time <= clock_->Now();
+bool SchedulingRemoteSuggestionsProvider::ShouldRefetchInTheBackgroundNow(
+    SchedulingRemoteSuggestionsProvider::TriggerType trigger) {
+  const base::Time last_fetch_attempt_time = base::Time::FromInternalValue(
+      pref_service_->GetInt64(prefs::kSnippetLastFetchAttempt));
+  base::Time first_allowed_fetch_time;
+  switch (trigger) {
+    case TriggerType::NTP_OPENED:
+      first_allowed_fetch_time =
+          last_fetch_attempt_time + schedule_.interval_soft_on_ntp_opened;
+      break;
+    case TriggerType::BROWSER_FOREGROUNDED:
+    case TriggerType::BROWSER_COLD_START:
+      first_allowed_fetch_time =
+          last_fetch_attempt_time + schedule_.interval_soft_on_usage_event;
+      break;
+    case TriggerType::PERSISTENT_SCHEDULER_WAKE_UP:
+    case TriggerType::COUNT:
+      NOTREACHED();
+      break;
+  }
+  base::Time now = clock_->Now();
+
+  return background_fetches_allowed_after_ <= now &&
+         first_allowed_fetch_time <= now;
 }
 
 bool SchedulingRemoteSuggestionsProvider::BackgroundFetchesDisabled(
@@ -449,6 +520,23 @@ bool SchedulingRemoteSuggestionsProvider::BackgroundFetchesDisabled(
   if (enabled_triggers_.count(trigger) == 0) {
     return true;  // Background fetches for |trigger| are not enabled.
   }
+  return false;
+}
+
+bool SchedulingRemoteSuggestionsProvider::AcquireQuota(
+    bool interactive_request) {
+  switch (user_classifier_->GetUserClass()) {
+    case UserClassifier::UserClass::RARE_NTP_USER:
+      return request_throttler_rare_ntp_user_.DemandQuotaForRequest(
+          interactive_request);
+    case UserClassifier::UserClass::ACTIVE_NTP_USER:
+      return request_throttler_active_ntp_user_.DemandQuotaForRequest(
+          interactive_request);
+    case UserClassifier::UserClass::ACTIVE_SUGGESTIONS_CONSUMER:
+      return request_throttler_active_suggestions_consumer_
+          .DemandQuotaForRequest(interactive_request);
+  }
+  NOTREACHED();
   return false;
 }
 
@@ -487,6 +575,10 @@ void SchedulingRemoteSuggestionsProvider::OnFetchCompleted(
   ApplyPersistentFetchingSchedule();
 }
 
+void SchedulingRemoteSuggestionsProvider::ClearLastFetchAttemptTime() {
+  pref_service_->ClearPref(prefs::kSnippetLastFetchAttempt);
+}
+
 std::set<SchedulingRemoteSuggestionsProvider::TriggerType>
 SchedulingRemoteSuggestionsProvider::GetEnabledTriggerTypes() {
   static_assert(static_cast<unsigned int>(TriggerType::COUNT) ==
@@ -507,8 +599,8 @@ SchedulingRemoteSuggestionsProvider::GetEnabledTriggerTypes() {
 
   std::set<TriggerType> enabled_types;
   for (const auto& token : tokens) {
-    auto it = std::find(std::begin(kTriggerTypeNames),
-                        std::end(kTriggerTypeNames), token);
+    auto** it = std::find(std::begin(kTriggerTypeNames),
+                          std::end(kTriggerTypeNames), token);
     if (it == std::end(kTriggerTypeNames)) {
       DLOG(WARNING) << "Failed to parse variation param "
                     << kTriggerTypesParamName << " with string value "

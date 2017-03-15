@@ -74,8 +74,8 @@ static const char pathSegmentCharacter[] = {
 };
 
 void SVGPathStringBuilder::emitSegment(const PathSegmentData& segment) {
-  ASSERT(segment.command > PathSegUnknown &&
-         segment.command <= PathSegCurveToQuadraticSmoothRel);
+  DCHECK_GT(segment.command, PathSegUnknown);
+  DCHECK_LE(segment.command, PathSegCurveToQuadraticSmoothRel);
   m_stringBuilder.append(pathSegmentCharacter[segment.command]);
 
   switch (segment.command) {
@@ -122,7 +122,7 @@ void SVGPathStringBuilder::emitSegment(const PathSegmentData& segment) {
       appendPoint(m_stringBuilder, segment.targetPoint);
       break;
     default:
-      ASSERT_NOT_REACHED();
+      NOTREACHED();
   }
   m_stringBuilder.append(' ');
 }

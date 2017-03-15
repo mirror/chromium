@@ -38,7 +38,7 @@
 #include "platform/loader/fetch/FetchContext.h"
 #include "platform/loader/fetch/FetchRequest.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
-#include "platform/network/ResourceRequest.h"
+#include "platform/loader/fetch/ResourceRequest.h"
 #include "wtf/Forward.h"
 
 namespace blink {
@@ -46,7 +46,7 @@ namespace blink {
 class ClientHintsPreferences;
 class Document;
 class DocumentLoader;
-class FrameLoaderClient;
+class LocalFrameClient;
 class LocalFrame;
 class ResourceError;
 class ResourceResponse;
@@ -107,7 +107,8 @@ class CORE_EXPORT FrameFetchContext final : public FetchContext {
                                int encodedDataLength) override;
   void dispatchDidFinishLoading(unsigned long identifier,
                                 double finishTime,
-                                int64_t encodedDataLength) override;
+                                int64_t encodedDataLength,
+                                int64_t decodedBodyLength) override;
   void dispatchDidFail(unsigned long identifier,
                        const ResourceError&,
                        int64_t encodedDataLength,
@@ -172,12 +173,17 @@ class CORE_EXPORT FrameFetchContext final : public FetchContext {
 
  private:
   FrameFetchContext(DocumentLoader*, Document*);
-  inline DocumentLoader* masterDocumentLoader() const;
+
+  // m_documentLoader is null when loading resources from an HTML import
+  // and in such cases we use the document loader of the importing frame.
+  // Convenient accessors below can be used to transparently access the
+  // relevant document loader or frame in either cases without null-checks.
+  // TODO(kinuko): Remove constness, these return non-const members.
+  DocumentLoader* masterDocumentLoader() const;
+  LocalFrame* frame() const;
+  LocalFrameClient* localFrameClient() const;
 
   LocalFrame* frameOfImportsController() const;
-  LocalFrame* frame() const;
-
-  FrameLoaderClient* frameLoaderClient() const;
 
   void printAccessDeniedMessage(const KURL&) const;
   ResourceRequestBlockedReason canRequestInternal(

@@ -1422,12 +1422,6 @@ Press any key to continue exploring.
   <message name="IDS_FLAGS_WAKE_ON_PACKETS_DESCRIPTION" desc="Description for the flag to enable wake on packets.">
     Enables waking the device based on the receipt of some network packets.
   </message>
-  <message name="IDS_FLAGS_FULLSCREEN_APP_LIST_NAME" desc="Description for the flag to enable experimental fullscreen app list.">
-    Enables the fullscreen app-list in touch-view mode.
-  </message>
-  <message name="IDS_FLAGS_FULLSCREEN_APP_LIST_DESCRIPTION" desc="Description for the flag to enable experimental fullscreen app list.">
-    The app-list will appear as fullscreen mode when it's in touch view mode. This flag does nothing outside of the mode.
-  </message>
   <message name="IDS_FLAGS_QUICK_UNLOCK_PIN" desc="Title of the flag used to enable quick unlock pin.">
     Quick Unlock (PIN)
   </message>
@@ -1686,19 +1680,19 @@ Press any key to continue exploring.
   <message name="IDS_KEYBOARD_DROPDOWN_TITLE" desc="Title of keyboard selection dropdown menu" meaning="Small title near keyboard dropdown menu suggesting that this is a keyboard layout selector.">
     Keyboard
   </message>
-  <message name="IDS_OOBE_WELCOME_NEXT_BUTTON_TEXT" desc="Text on 'Start to use ChromeOS' button" meaning="This is the text label displayed on the 'Next' button for the first ChromeOS initial device setup screen ('Welcome screen').">
+  <message name="IDS_OOBE_WELCOME_NEXT_BUTTON_TEXT" desc="Text on 'Start to use Chrome OS' button" meaning="This is the text label displayed on the 'Next' button for the first Chrome OS initial device setup screen ('Welcome screen').">
     Let's go
   </message>
-  <message name="IDS_OOBE_OK_BUTTON_TEXT" desc="Text on 'OK' button" meaning="This is 'OK' text for all 'OK' buttons on ChromeOS initial device setup screens.">
+  <message name="IDS_OOBE_OK_BUTTON_TEXT" desc="Text on 'OK' button" meaning="This is 'OK' text for all 'OK' buttons on Chrome OS initial device setup screens.">
     OK
   </message>
-  <message name="IDS_LANGUAGE_BUTTON_LABEL" desc="Navigation label attached to the 'Select Language' button on ChromeOS initial device setup screen" meaning="The button itself displays only current language name. But for accessibility mode we need full description of this button. So this label suggests that pressing on a button will allow to change current language and input method. And it should also include the name of currently selected language.">
+  <message name="IDS_LANGUAGE_BUTTON_LABEL" desc="Navigation label attached to the 'Select Language' button on Chrome OS initial device setup screen" meaning="The button itself displays only current language name. But for accessibility mode we need full description of this button. So this label suggests that pressing on a button will allow to change current language and input method. And it should also include the name of currently selected language.">
     Select language and keyboard button. Currently selected language is <ph name="LANGUAGE">$1<ex>English (United States)</ex></ph>.
   </message>
-  <message name="IDS_LANGUAGE_SECTION_TITLE" desc="Title of language selection screen" meaning="A title of the dialog where user should select ChromeOS UI language and default keyboard layout during initial device setup.">
+  <message name="IDS_LANGUAGE_SECTION_TITLE" desc="Title of language selection screen" meaning="A title of the dialog where user should select Chrome OS UI language and default keyboard layout during initial device setup.">
     Choose your language &amp; keyboard
   </message>
-  <message name="IDS_ACCESSIBILITY_SECTION_TITLE" desc="Title of accessibility options screen" meaning="A title of the dialog where user can control ChromeOS UI accessibility (like large cursor or screen reader) options during initial device setup.">
+  <message name="IDS_ACCESSIBILITY_SECTION_TITLE" desc="Title of accessibility options screen" meaning="A title of the dialog where user can control Chrome OS UI accessibility (like large cursor or screen reader) options during initial device setup.">
     Accessibility settings
   </message>
   <message name="IDS_ACCESSIBILITY_SECTION_HINT" desc="Under-title line on the accessibility options screen" meaning="A hint to the user what these settings do and how to update them later.">
@@ -1764,11 +1758,11 @@ Press any key to continue exploring.
   <message name="IDS_OOBE_CLOSE_ACCESSIBILITY_MENU" desc="Text to be spoken when focus is set to the close button of accessibility options menu.">
     Close accessibility menu
   </message>
-  <message name="IDS_LANGUAGE_DROPDOWN_LABEL" desc="Navigation label attached to the 'List of languages' dropdown menu on ChromeOS Language and keyboard initial device setup screen" meaning="The menu itself displays only current language name. But for accessibility mode we need full description of this menu. So this label suggests that activating a menu will allow to change current language. And it should also include the name of currently selected language.">
-    Language selection menu. Currently selected language is <ph name="LANGUAGE">$1<ex>English (United States)</ex></ph>.
+  <message name="IDS_LANGUAGE_DROPDOWN_LABEL" desc="Navigation label attached to the 'List of languages' dropdown menu on Chrome OS Language and keyboard initial device setup screen" meaning="The menu itself displays only current language name. But for accessibility mode we need full description of this menu. So this label suggests that activating a menu will allow to change current language.">
+    Select language
   </message>
-  <message name="IDS_KEYBOARD_DROPDOWN_LABEL" desc="Navigation label attached to the 'List of keyboards' dropdown menu on ChromeOS Language and keyboard initial device setup screen" meaning="The menu itself displays only current keyboard layout name. But for accessibility mode we need full description of this menu. So this label suggests that activating a menu will allow to change current input method. And it should also include the name of currently selected input method.">
-    Input method selection menu. Currently selected input method is <ph name="KEYBOARD">$1<ex>English (US)</ex></ph>.
+  <message name="IDS_KEYBOARD_DROPDOWN_LABEL" desc="Navigation label attached to the 'List of keyboards' dropdown menu on Chrome OS Language and keyboard initial device setup screen" meaning="The menu itself displays only current keyboard layout name. But for accessibility mode we need full description of this menu. So this label suggests that activating a menu will allow to change current input method.">
+    Select keyboard
   </message>
   <message name="IDS_OOBE_OTHER_LANGUAGES" desc="Option group name dividing vendor-configured languages from other available languages in out-of-box 'Select language' select control.">
     Other languages
@@ -1785,8 +1779,14 @@ Press any key to continue exploring.
   <message name="IDS_TIMEZONE_DROPDOWN_TITLE" desc="Title of timezone selection dropdown menu" meaning="Small title near timezone dropdown menu suggesting that this is a timezone selector.">
     Timezone
   </message>
+  <message name="IDS_TIMEZONE_DROPDOWN_LABEL" desc="Navigation label attached to the 'List of timezones' dropdown menu on Chrome OS Timezone initial device setup screen" meaning="The menu itself displays only current timezone name. But for accessibility mode we need full description of this menu. So this label suggests that activating a menu will allow to change current timezone.">
+    Select timezone
+  </message>
   <message name="IDS_OOBE_EULA_SECTION_TITLE" desc="Title of Terms of Service screen">
     Google Chrome OS terms
+  </message>
+  <message name="IDS_OOBE_EULA_IFRAME_LABEL" desc="Accessibility label on an iframe with full Chrome OS Terms text">
+    Google Chrome OS Terms contents
   </message>
   <message name="IDS_OOBE_EULA_ACCEPT_AND_CONTINUE_BUTTON_TEXT" desc="Label on a button on the Title of Terms of Service OOBE screen to accept EULA and continue.">
     Accept and continue
@@ -2336,9 +2336,6 @@ Press any key to continue exploring.
   </message>
 
   <!-- Strings used in <cr-network-list>, used in Settings and OOBE -->
-  <message name="IDS_NETWORK_LIST_DISABLED" desc="Text in the network list element when the network type is disabled.">
-    Disabled
-  </message>
   <message name="IDS_NETWORK_LIST_NOT_CONNECTED" desc="Text in the network list element when there is no network for the type.">
     No network
   </message>
@@ -2379,7 +2376,7 @@ Press any key to continue exploring.
     Unrecognized error: <ph name="desc">$1<ex>ShillErrorString</ex></ph>
   </message>
   <message name="IDS_NETWORK_CELLULAR_ACTIVATED_TITLE" desc="Title for cellular activated notification">
-    Cellular Activated
+    Mobile Data Activated
   </message>
   <message name="IDS_NETWORK_CELLULAR_ACTIVATED" desc="Text of the cellular activated notification">
     Congratulations! Your '<ph name="name">$1<ex>Generic Wireless</ex></ph>' data service has been activated and is ready to go.
@@ -2667,27 +2664,6 @@ Press any key to continue exploring.
   </message>
   <message name="IDS_OPTIONS_SETTINGS_BLUETOOTH_CONNECT_UNSUPPORTED_DEVICE">
     Unsupported Bluetooth device: "<ph name="DEVICE_NAME">%1<ex>Nexus 4</ex></ph>".
-  </message>
-  <message name="IDS_OPTIONS_SETTINGS_BLUETOOTH_CONNECT_ATTRIBUTE_LENGTH_INVALID">
-    Write operation exceeds the maximum length of the attribute to: "<ph name="DEVICE_NAME">%1<ex>Nexus 4</ex></ph>".
-  </message>
-  <message name="IDS_OPTIONS_SETTINGS_BLUETOOTH_CONNECT_CONNECTION_CONGESTED">
-    Connection is congested to remote device: "<ph name="DEVICE_NAME">%1<ex>Nexus 4</ex></ph>".
-  </message>
-  <message name="IDS_OPTIONS_SETTINGS_BLUETOOTH_CONNECT_INSUFFICIENT_ENCRYPTION">
-    Insufficient encryption for a given operation on: "<ph name="DEVICE_NAME">%1<ex>Nexus 4</ex></ph>".
-  </message>
-  <message name="IDS_OPTIONS_SETTINGS_BLUETOOTH_CONNECT_OFFSET_INVALID">
-    Read or write operation was requested with an invalid offset on: "<ph name="DEVICE_NAME">%1<ex>Nexus 4</ex></ph>".
-  </message>
-  <message name="IDS_OPTIONS_SETTINGS_BLUETOOTH_CONNECT_READ_NOT_PERMITTED">
-    Read operation is not permitted on: "<ph name="DEVICE_NAME">%1<ex>Nexus 4</ex></ph>".
-  </message>
-  <message name="IDS_OPTIONS_SETTINGS_BLUETOOTH_CONNECT_REQUEST_NOT_SUPPORTED">
-    The given request is not supported to: "<ph name="DEVICE_NAME">%1<ex>Nexus 4</ex></ph>".
-  </message>
-  <message name="IDS_OPTIONS_SETTINGS_BLUETOOTH_CONNECT_WRITE_NOT_PERMITTED">
-    Write operation is not permitted on: "<ph name="DEVICE_NAME">%1<ex>Nexus 4</ex></ph>".
   </message>
   <message name="IDS_OPTIONS_SETTINGS_BLUETOOTH_DISCONNECT_FAILED">
     Failed to disconnect from "<ph name="DEVICE_NAME">%1<ex>Nexus S</ex></ph>".
@@ -3966,10 +3942,13 @@ Press any key to continue exploring.
     Bluetooth
   </message>
   <message name="IDS_NETWORK_TYPE_CELLULAR" desc="The cellular network type.">
-    Cellular
+    Mobile
   </message>
   <message name="IDS_NETWORK_TYPE_VPN" desc="The vpn network type.">
     VPN
+  </message>
+  <message name="IDS_NETWORK_TYPE_VPN_BUILTIN" desc="The built-in VPN types (Open VPN and L2TP/IPSec).">
+    OpenVPN / L2TP
   </message>
   <message name="IDS_STATUSBAR_NETWORK_DEVICE_CONNECTING" desc="The network device status connecting.">
     Connecting...
@@ -4849,6 +4828,9 @@ Battery full
   <message name="IDS_KEYBOARD_OVERLAY_TOGGLE_CHROMEVOX_SPOKEN_FEEDBACK" desc="The text in the keyboard overlay to explain the shortcut (enable or disable spoken feedback).">
     ChromeVox (spoken feedback)
   </message>
+  <message name="IDS_KEYBOARD_OVERLAY_TOGGLE_HIGH_CONTRAST_MODE" desc="The text in the keyboard overlay to explain the shortcut (Toggle high contrast mode).">
+    Toggle High Contrast Mode
+  </message>
   <message name="IDS_KEYBOARD_OVERLAY_TOGGLE_PROJECTION_TOUCH_HUD" desc="The text in the keyboard overlay to explain the shortcut.">
     Projection touch HUD
   </message>
@@ -5489,6 +5471,9 @@ Battery full
   <message name="IDS_ENTERPRISE_LOGIN_ERROR_WHITELIST" desc="Couldn't sign in because user is not whitelisted by the administrator.">
     You are not authorized to use this device. Please contact the administrator for sign-in permission.
   </message>
+  <message name="IDS_LOGIN_ERROR_GOOGLE_ACCOUNT_NOT_ALLOWED" desc="Couldn't sign into Google account on the Active Directory managed device.">
+    Sorry, Google accounts are not allowed on this device.
+  </message>
   <message name="IDS_LOGIN_ERROR_AUTHENTICATING_2ND_TIME" desc="Couldn't sign in because password is invalid for the 2nd time">
     Sorry, your password still could not be verified. Note: if you changed your password recently, your new password will be applied once you sign out, please use the old password here.
   </message>
@@ -5737,7 +5722,7 @@ Battery full
     You are currently offline.
   </message>
   <message name="IDS_UPGRADE_DISALLOWED" desc="Status label: Upgrade disallowed for the current network">
-    You are currently connected to the <ph name="NETWORK_TYPE">$1<ex>cellular</ex></ph> network.
+    You are currently connected to the <ph name="NETWORK_TYPE">$1<ex>mobile</ex></ph> network.
   </message>
   <message name="IDS_UPGRADE_NETWORK_LIST_CELLULAR_ALLOWED" desc="Status label: for updates you need to connect to an Ethernet, Wi-Fi or mobile data">
     To check for updates, please use Ethernet, Wi-Fi or mobile data.
@@ -5747,11 +5732,8 @@ Battery full
   </message>
 
   <!-- EOL Notification Strings -->
-  <message name="IDS_ABOUT_PAGE_EOL_SECURITY_ONLY" desc="The message in the about page to inform the user that software updates for this device are no longer available.">
+  <message name="IDS_ABOUT_PAGE_EOL_EOL" desc="The message in the about page to inform the user that software updates for this device are no longer available.">
     Software updates for this device are no longer available.
-  </message>
-  <message name="IDS_ABOUT_PAGE_EOL_EOL" desc="The message in the about page to inform the user that security updates for this device are no longer available.">
-    Security updates for this device are no longer available.
   </message>
   <message name="IDS_ABOUT_PAGE_EOL_LEARN_MORE" desc="The message in the about page to provide more information of device end of life, containing the URLs.">
      Please consider upgrading. <ph name="BEGIN_LINK_EOL">&lt;a target="_blank" href="$1"&gt;</ph>Learn more<ph name="END_LINK_EOL">&lt;/a&gt;</ph>
@@ -5759,11 +5741,8 @@ Battery full
   <message name="IDS_EOL_NOTIFICATION_TITLE" desc="Notification title shown to inform the user that this device is no longer supported.">
     This device is no longer supported
   </message>
-  <message name="IDS_EOL_NOTIFICATION_SECURITY_ONLY" desc="Notification shown to inform the user that this device will no longer receive software updates.">
+  <message name="IDS_EOL_NOTIFICATION_EOL" desc="Notification shown to inform the user that this device will no longer receive software updates.">
     Software updates for this device are no longer available. Please consider upgrading.
-  </message>
-  <message name="IDS_EOL_NOTIFICATION_EOL" desc="Notification shown to inform the user that this device will no longer receive regular security updates.">
-    Security updates for this device are no longer available. Please consider upgrading.
   </message>
   <message name="IDS_EOL_MORE_INFO_BUTTON" desc="A button label shown in the notification for eol status change to get more information.">
     Learn more
@@ -5920,7 +5899,7 @@ All users must sign out to continue.
     Google Chrome will use cellular data if you're not connected to another network.
   </message>
   <message name="IDS_3G_DATASAVER_TITLE" desc="Title of the 3G data notification prompting user to install Data Saver.">
-    You are using cellular data
+    You are using mobile data
   </message>
   <message name="IDS_3G_DATASAVER_MESSAGE" desc="Text of the 3G data notification prompting user to install Data Saver.">
     Save data and browse faster using Google Data Saver. Click to learn more.

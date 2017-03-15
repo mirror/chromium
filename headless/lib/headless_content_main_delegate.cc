@@ -6,6 +6,7 @@
 
 #include "base/base_switches.h"
 #include "base/command_line.h"
+#include "base/environment.h"
 #include "base/files/file_util.h"
 #include "base/lazy_instance.h"
 #include "base/path_service.h"
@@ -39,6 +40,8 @@ HeadlessContentMainDelegate* g_current_headless_content_main_delegate = nullptr;
 
 base::LazyInstance<HeadlessCrashReporterClient>::Leaky g_headless_crash_client =
     LAZY_INSTANCE_INITIALIZER;
+
+const char kLogFileName[] = "CHROME_LOG_FILE";
 }  // namespace
 
 HeadlessContentMainDelegate::HeadlessContentMainDelegate(
@@ -127,6 +130,12 @@ void HeadlessContentMainDelegate::InitLogging(
     log_path = log_filename;
   }
 
+  std::string filename;
+  std::unique_ptr<base::Environment> env(base::Environment::Create());
+  if (env->GetVar(kLogFileName, &filename) && !filename.empty()) {
+    log_path = base::FilePath::FromUTF8Unsafe(filename);
+  }
+
   const std::string process_type =
       command_line.GetSwitchValueASCII(switches::kProcessType);
 
@@ -147,6 +156,7 @@ void HeadlessContentMainDelegate::InitCrashReporter(
   g_headless_crash_client.Pointer()->set_crash_dumps_dir(
       browser_->options()->crash_dumps_dir);
 
+#if !defined(OS_MACOSX)
   if (!browser_->options()->enable_crash_reporter) {
     DCHECK(!breakpad::IsCrashReporterEnabled());
     return;
@@ -155,15 +165,23 @@ void HeadlessContentMainDelegate::InitCrashReporter(
   if (process_type != switches::kZygoteProcess)
     breakpad::InitCrashReporter(process_type);
 #endif  // defined(HEADLESS_USE_BREAKPAD)
+#endif  // !defined(OS_MACOSX)
 }
 
 void HeadlessContentMainDelegate::PreSandboxStartup() {
   const base::CommandLine& command_line(
       *base::CommandLine::ForCurrentProcess());
-  const std::string process_type =
-      command_line.GetSwitchValueASCII(switches::kProcessType);
+#if defined(OS_WIN)
+  // Windows always needs to initialize logging, otherwise you get a renderer
+  // crash.
   InitLogging(command_line);
+#else
+  if (command_line.HasSwitch(switches::kEnableLogging))
+    InitLogging(command_line);
+#endif
+#if !defined(OS_MACOSX)
   InitCrashReporter(command_line);
+#endif
   InitializeResourceBundle();
 }
 
@@ -193,6 +211,7 @@ int HeadlessContentMainDelegate::RunProcess(
   return 0;
 }
 
+#if !defined(OS_MACOSX) && defined(OS_POSIX) && !defined(OS_ANDROID)
 void HeadlessContentMainDelegate::ZygoteForked() {
   const base::CommandLine& command_line(
       *base::CommandLine::ForCurrentProcess());
@@ -201,8 +220,11 @@ void HeadlessContentMainDelegate::ZygoteForked() {
   // Unconditionally try to turn on crash reporting since we do not have access
   // to the latest browser options at this point when testing. Breakpad will
   // bail out gracefully if the browser process hasn't enabled crash reporting.
+#if defined(HEADLESS_USE_BREAKPAD)
   breakpad::InitCrashReporter(process_type);
+#endif
 }
+#endif
 
 // static
 HeadlessContentMainDelegate* HeadlessContentMainDelegate::GetInstance() {

@@ -6,6 +6,7 @@
 
 #include <string>
 
+#include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 
 namespace arc {
@@ -51,6 +52,18 @@ void UpdateProvisioningTiming(const base::TimeDelta& elapsed_time,
       ->AddTime(elapsed_time);
 }
 
+void UpdateAuthTiming(const char* histogram_name,
+                      base::TimeDelta elapsed_time) {
+  base::UmaHistogramCustomTimes(histogram_name, elapsed_time,
+                                base::TimeDelta::FromSeconds(1) /* minimum */,
+                                base::TimeDelta::FromMinutes(3) /* maximum */,
+                                50 /* bucket_count */);
+}
+
+void UpdateAuthCheckinAttempts(int32_t num_attempts) {
+  UMA_HISTOGRAM_SPARSE_SLOWLY("ArcAuth.CheckinAttempts", num_attempts);
+}
+
 void UpdateSilentAuthCodeUMA(OptInSilentAuthCode state) {
   UMA_HISTOGRAM_ENUMERATION("Arc.OptInSilentAuthCode", static_cast<int>(state),
                             static_cast<int>(OptInSilentAuthCode::SIZE));
@@ -81,6 +94,8 @@ std::ostream& operator<<(std::ostream& os, const ProvisioningResult& result) {
     MAP_PROVISIONING_RESULT(ARC_STOPPED);
     MAP_PROVISIONING_RESULT(OVERALL_SIGN_IN_TIMEOUT);
     MAP_PROVISIONING_RESULT(CHROME_SERVER_COMMUNICATION_ERROR);
+    MAP_PROVISIONING_RESULT(NO_NETWORK_CONNECTION);
+    MAP_PROVISIONING_RESULT(ARC_DISABLED);
     MAP_PROVISIONING_RESULT(SIZE);
   }
 

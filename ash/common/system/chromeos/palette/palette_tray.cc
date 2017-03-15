@@ -18,22 +18,21 @@
 #include "ash/common/system/tray/tray_constants.h"
 #include "ash/common/system/tray/tray_popup_header_button.h"
 #include "ash/common/system/tray/tray_popup_item_style.h"
-#include "ash/common/wm_lookup.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
 #include "ash/public/cpp/shell_window_ids.h"
+#include "ash/resources/grit/ash_resources.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/root_window_controller.h"
+#include "ash/shell.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "base/metrics/histogram_macros.h"
-#include "grit/ash_resources.h"
-#include "grit/ash_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/events/devices/input_device_manager.h"
 #include "ui/events/devices/stylus_state.h"
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/paint_vector_icon.h"
-#include "ui/gfx/vector_icons_public.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/controls/separator.h"
@@ -82,7 +81,7 @@ class TitleView : public views::View, public views::ButtonListener {
         new views::BoxLayout(views::BoxLayout::kHorizontal, 0, 0, 0);
     SetLayoutManager(box_layout);
 
-    auto title_label =
+    auto* title_label =
         new views::Label(l10n_util::GetStringUTF16(IDS_ASH_STYLUS_TOOLS_TITLE));
     title_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
     AddChildView(title_label);
@@ -95,7 +94,7 @@ class TitleView : public views::View, public views::ButtonListener {
                                kSystemMenuHelpIcon, IDS_ASH_STATUS_TRAY_HELP);
       settings_button_ = new SystemMenuButton(
           this, TrayPopupInkDropStyle::HOST_CENTERED, kSystemMenuSettingsIcon,
-          IDS_ASH_STATUS_TRAY_SETTINGS);
+          IDS_ASH_PALETTE_SETTINGS);
     } else {
       gfx::ImageSkia help_icon =
           gfx::CreateVectorIcon(kSystemMenuHelpIcon, kMenuIconColor);
@@ -151,17 +150,13 @@ class TitleView : public views::View, public views::ButtonListener {
 }  // namespace
 
 PaletteTray::PaletteTray(WmShelf* wm_shelf)
-    : TrayBackgroundView(wm_shelf),
+    : TrayBackgroundView(wm_shelf, true),
       palette_tool_manager_(new PaletteToolManager(this)),
       weak_factory_(this) {
   PaletteTool::RegisterToolInstances(palette_tool_manager_.get());
 
-  if (MaterialDesignController::IsShelfMaterial()) {
+  if (MaterialDesignController::IsShelfMaterial())
     SetInkDropMode(InkDropMode::ON);
-    SetContentsBackground(false);
-  } else {
-    SetContentsBackground(true);
-  }
 
   SetLayoutManager(new views::FillLayout());
   icon_ = new views::ImageView();
@@ -170,7 +165,7 @@ PaletteTray::PaletteTray(WmShelf* wm_shelf)
   tray_container()->SetMargin(kTrayIconMainAxisInset, kTrayIconCrossAxisInset);
   tray_container()->AddChildView(icon_);
 
-  WmShell::Get()->AddShellObserver(this);
+  Shell::GetInstance()->AddShellObserver(this);
   WmShell::Get()->GetSessionStateDelegate()->AddSessionStateObserver(this);
   ui::InputDeviceManager::GetInstance()->AddObserver(this);
 }
@@ -180,7 +175,7 @@ PaletteTray::~PaletteTray() {
     bubble_->bubble_view()->reset_delegate();
 
   ui::InputDeviceManager::GetInstance()->RemoveObserver(this);
-  WmShell::Get()->RemoveShellObserver(this);
+  Shell::GetInstance()->RemoveShellObserver(this);
   WmShell::Get()->GetSessionStateDelegate()->RemoveSessionStateObserver(this);
 }
 
@@ -230,8 +225,7 @@ bool PaletteTray::ShowPalette() {
   bubble_view->AddChildView(title_view);
 
   // Add horizontal separator.
-  views::Separator* separator =
-      new views::Separator(views::Separator::HORIZONTAL);
+  views::Separator* separator = new views::Separator();
   separator->SetColor(kPaletteSeparatorColor);
   separator->SetBorder(views::CreateEmptyBorder(gfx::Insets(
       kPaddingBetweenTitleAndSeparator, 0, kMenuSeparatorVerticalPadding, 0)));
@@ -290,7 +284,7 @@ void PaletteTray::OnTouchscreenDeviceConfigurationChanged() {
 }
 
 void PaletteTray::OnStylusStateChanged(ui::StylusState stylus_state) {
-  PaletteDelegate* palette_delegate = WmShell::Get()->palette_delegate();
+  PaletteDelegate* palette_delegate = Shell::GetInstance()->palette_delegate();
 
   // Don't do anything if the palette should not be shown or if the user has
   // disabled it all-together.
@@ -330,8 +324,7 @@ void PaletteTray::OnBeforeBubbleWidgetInit(
     views::Widget* bubble_widget,
     views::Widget::InitParams* params) const {
   // Place the bubble in the same root window as |anchor_widget|.
-  WmLookup::Get()
-      ->GetWindowForWidget(anchor_widget)
+  WmWindow::Get(anchor_widget->GetNativeWindow())
       ->GetRootWindowController()
       ->ConfigureWidgetInitParamsForContainer(
           bubble_widget, kShellWindowId_SettingBubbleContainer, params);
@@ -403,7 +396,7 @@ void PaletteTray::AnchorUpdated() {
 }
 
 void PaletteTray::Initialize() {
-  PaletteDelegate* delegate = WmShell::Get()->palette_delegate();
+  PaletteDelegate* delegate = Shell::GetInstance()->palette_delegate();
   // |delegate| can be null in tests.
   if (!delegate)
     return;

@@ -13,11 +13,11 @@
 #include "components/display_compositor/compositor_overlay_candidate_validator.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/ipc/client/command_buffer_proxy_impl.h"
+#include "services/ui/public/cpp/client_compositor_frame_sink.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
-#include "services/ui/public/cpp/window_compositor_frame_sink.h"
 #include "ui/aura/mus/window_port_mus.h"
 #include "ui/aura/window.h"
-#include "ui/display/screen.h"
+#include "ui/base/layout.h"
 #include "ui/gfx/geometry/dip_util.h"
 
 namespace content {
@@ -50,9 +50,8 @@ cc::BeginFrameSource* MusBrowserCompositorOutputSurface::GetBeginFrameSource() {
 void MusBrowserCompositorOutputSurface::SwapBuffers(
     cc::OutputSurfaceFrame frame) {
   cc::CompositorFrame ui_frame;
-  ui_frame.metadata.device_scale_factor = display::Screen::GetScreen()
-                                              ->GetDisplayNearestWindow(window_)
-                                              .device_scale_factor();
+  ui_frame.metadata.device_scale_factor =
+      ui::GetScaleFactorForNativeView(window_);
   ui_frame.metadata.latency_info = std::move(frame.latency_info);
   // Reset latency_info to known empty state after moving contents.
   frame.latency_info.clear();

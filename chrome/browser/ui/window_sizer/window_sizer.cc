@@ -160,8 +160,8 @@ class DefaultTargetDisplayProvider : public WindowSizer::TargetDisplayProvider {
                                     const gfx::Rect& bounds) const override {
 #if defined(USE_ASH)
     // Use the target display on ash.
-    if (chrome::ShouldOpenAshOnStartup()) {
-      aura::Window* target = ash::Shell::GetTargetRootWindow();
+    if (ash_util::ShouldOpenAshOnStartup()) {
+      aura::Window* target = ash::Shell::GetRootWindowForNewWindows();
       return screen->GetDisplayNearestWindow(target);
     }
 #endif
@@ -301,7 +301,7 @@ void WindowSizer::GetDefaultWindowBounds(const display::Display& display,
   DCHECK(default_bounds);
 #if defined(USE_ASH)
   // TODO(beng): insufficient but currently necessary. http://crbug.com/133312
-  if (chrome::ShouldOpenAshOnStartup()) {
+  if (ash_util::ShouldOpenAshOnStartup()) {
     *default_bounds = ash::WindowPositioner::GetDefaultWindowBounds(display);
     return;
   }

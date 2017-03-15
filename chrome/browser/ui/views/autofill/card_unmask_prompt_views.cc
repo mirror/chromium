@@ -9,7 +9,6 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/ui/autofill/create_card_unmask_prompt_view.h"
-#include "chrome/browser/ui/views/autofill/tooltip_icon.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
 #include "components/autofill/core/browser/ui/card_unmask_prompt_controller.h"
@@ -26,8 +25,10 @@
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/geometry/safe_integer_conversions.h"
 #include "ui/gfx/paint_vector_icon.h"
-#include "ui/gfx/vector_icons_public.h"
+#include "ui/vector_icons/vector_icons.h"
 #include "ui/views/background.h"
+#include "ui/views/border.h"
+#include "ui/views/bubble/tooltip_icon.h"
 #include "ui/views/controls/button/checkbox.h"
 #include "ui/views/controls/combobox/combobox.h"
 #include "ui/views/controls/image_view.h"
@@ -234,8 +235,11 @@ views::View* CardUnmaskPromptViews::CreateFootnoteView() {
   storage_row_->AddChildView(storage_checkbox_);
   storage_row_layout->SetFlexForView(storage_checkbox_, 1);
 
-  storage_row_->AddChildView(new TooltipIcon(l10n_util::GetStringUTF16(
-      IDS_AUTOFILL_CARD_UNMASK_PROMPT_STORAGE_TOOLTIP)));
+  views::TooltipIcon* icon = new views::TooltipIcon(l10n_util::GetStringUTF16(
+      IDS_AUTOFILL_CARD_UNMASK_PROMPT_STORAGE_TOOLTIP));
+  const int kTooltipWidth = 233;
+  icon->set_bubble_width(kTooltipWidth);
+  storage_row_->AddChildView(icon);
 
   return storage_row_;
 }
@@ -455,7 +459,7 @@ void CardUnmaskPromptViews::InitIfNecessary() {
   error_icon_ = new views::ImageView();
   error_icon_->SetVisible(false);
   error_icon_->SetImage(
-      gfx::CreateVectorIcon(gfx::VectorIconId::WARNING, 16, kWarningColor));
+      gfx::CreateVectorIcon(ui::kWarningIcon, 16, kWarningColor));
   temporary_error->AddChildView(error_icon_);
 
   // Reserve vertical space for the error label, assuming it's one line.

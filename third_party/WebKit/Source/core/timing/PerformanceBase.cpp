@@ -31,6 +31,7 @@
 
 #include "core/timing/PerformanceBase.h"
 
+#include <algorithm>
 #include "core/dom/Document.h"
 #include "core/dom/DocumentTiming.h"
 #include "core/events/Event.h"
@@ -43,11 +44,10 @@
 #include "core/timing/PerformanceResourceTiming.h"
 #include "core/timing/PerformanceUserTiming.h"
 #include "platform/RuntimeEnabledFeatures.h"
-#include "platform/network/ResourceResponse.h"
-#include "platform/network/ResourceTimingInfo.h"
+#include "platform/loader/fetch/ResourceResponse.h"
+#include "platform/loader/fetch/ResourceTimingInfo.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "wtf/CurrentTime.h"
-#include <algorithm>
 
 namespace blink {
 
@@ -495,7 +495,7 @@ void PerformanceBase::clearMeasures(const String& measureName) {
 void PerformanceBase::registerPerformanceObserver(
     PerformanceObserver& observer) {
   m_observerFilterOptions |= observer.filterOptions();
-  m_observers.add(&observer);
+  m_observers.insert(&observer);
   updateLongTaskInstrumentation();
 }
 
@@ -506,9 +506,9 @@ void PerformanceBase::unregisterPerformanceObserver(
   if (m_activeObservers.contains(&oldObserver) &&
       !oldObserver.shouldBeSuspended()) {
     oldObserver.deliver();
-    m_activeObservers.remove(&oldObserver);
+    m_activeObservers.erase(&oldObserver);
   }
-  m_observers.remove(&oldObserver);
+  m_observers.erase(&oldObserver);
   updatePerformanceObserverFilterOptions();
   updateLongTaskInstrumentation();
 }
@@ -537,7 +537,7 @@ void PerformanceBase::activateObserver(PerformanceObserver& observer) {
   if (m_activeObservers.isEmpty())
     m_deliverObservationsTimer.startOneShot(0, BLINK_FROM_HERE);
 
-  m_activeObservers.add(&observer);
+  m_activeObservers.insert(&observer);
 }
 
 void PerformanceBase::resumeSuspendedObservers() {
@@ -549,7 +549,7 @@ void PerformanceBase::resumeSuspendedObservers() {
   copyToVector(m_suspendedObservers, suspended);
   for (size_t i = 0; i < suspended.size(); ++i) {
     if (!suspended[i]->shouldBeSuspended()) {
-      m_suspendedObservers.remove(suspended[i]);
+      m_suspendedObservers.erase(suspended[i]);
       activateObserver(*suspended[i]);
     }
   }
@@ -561,7 +561,7 @@ void PerformanceBase::deliverObservationsTimerFired(TimerBase*) {
   m_activeObservers.swap(observers);
   for (const auto& observer : observers) {
     if (observer->shouldBeSuspended())
-      m_suspendedObservers.add(observer);
+      m_suspendedObservers.insert(observer);
     else
       observer->deliver();
   }

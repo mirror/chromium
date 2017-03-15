@@ -216,10 +216,6 @@
     },
 
     {
-      name: "mediaControlsOverlayPlayButtonEnabled",
-      initial: false,
-    },
-    {
       name: "mediaPlaybackRequiresUserGesture",
       initial: false,
     },
@@ -237,6 +233,11 @@
     {
       name: "presentationRequiresUserGesture",
       initial: true,
+    },
+
+    {
+      name: "embeddedMediaExperienceEnabled",
+      initial: false,
     },
 
     {
@@ -915,6 +916,13 @@
     {
       name: "presentationReceiver",
       initial: false,
+    },
+
+    // Whether Blink should show media controls when `controls` attribute is used.
+    {
+      name: "mediaControlsEnabled",
+      initial: true,
+      invalidate: "MediaControls",
     },
   ],
 }

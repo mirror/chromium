@@ -20,6 +20,7 @@
 #include "chrome/common/features.h"
 #include "components/content_settings/core/browser/content_settings_observer.h"
 #include "components/content_settings/core/common/content_settings.h"
+#include "components/content_settings/core/common/content_settings_types.h"
 #include "components/gcm_driver/common/gcm_messages.h"
 #include "components/gcm_driver/gcm_app_handler.h"
 #include "components/gcm_driver/gcm_client.h"
@@ -145,7 +146,7 @@ class PushMessagingServiceImpl : public content::PushMessagingService,
   void DoSubscribe(const PushMessagingAppIdentifier& app_identifier,
                    const content::PushSubscriptionOptions& options,
                    const RegisterCallback& callback,
-                   blink::mojom::PermissionStatus permission_status);
+                   ContentSetting permission_status);
 
   void SubscribeEnd(const RegisterCallback& callback,
                     const std::string& subscription_id,

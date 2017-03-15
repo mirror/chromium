@@ -28,6 +28,7 @@
 #include "ash/common/system/keyboard_brightness_control_delegate.h"
 #include "ash/common/system/status_area_widget.h"
 #include "ash/common/system/system_notifier.h"
+#include "ash/common/system/tray/system_tray.h"
 #include "ash/common/system/tray/system_tray_delegate.h"
 #include "ash/common/system/tray/system_tray_notifier.h"
 #include "ash/common/system/web_notification/web_notification_tray.h"
@@ -41,16 +42,24 @@
 #include "ash/common/wm_window.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/root_window_controller.h"
+#include "ash/rotator/window_rotation.h"
+#include "ash/shell.h"
+#include "ash/strings/grit/ash_strings.h"
+#include "ash/wm/window_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
+#include "base/strings/string_split.h"
+#include "base/strings/utf_string_conversions.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/power_manager_client.h"
-#include "grit/ash_strings.h"
 #include "ui/base/accelerators/accelerator.h"
 #include "ui/base/accelerators/accelerator_manager.h"
 #include "ui/base/ime/chromeos/ime_keyboard.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/compositor/layer.h"
+#include "ui/compositor/layer_animation_sequence.h"
+#include "ui/compositor/layer_animator.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/keyboard/keyboard_controller.h"
 #include "ui/message_center/message_center.h"
@@ -64,6 +73,85 @@ using message_center::Notification;
 // Identifier for the high contrast toggle accelerator notification.
 const char kHighContrastToggleAccelNotificationId[] =
     "chrome://settings/accessibility/highcontrast";
+
+// The notification delegate that will be used to open the keyboard shortcut
+// help page when the notification is clicked.
+class DeprecatedAcceleratorNotificationDelegate
+    : public message_center::NotificationDelegate {
+ public:
+  DeprecatedAcceleratorNotificationDelegate() {}
+
+  // message_center::NotificationDelegate:
+  bool HasClickedListener() override { return true; }
+
+  void Click() override {
+    if (!WmShell::Get()->GetSessionStateDelegate()->IsUserSessionBlocked())
+      Shell::Get()->shell_delegate()->OpenKeyboardShortcutHelpPage();
+  }
+
+ private:
+  // Private destructor since NotificationDelegate is ref-counted.
+  ~DeprecatedAcceleratorNotificationDelegate() override {}
+
+  DISALLOW_COPY_AND_ASSIGN(DeprecatedAcceleratorNotificationDelegate);
+};
+
+// Ensures that there are no word breaks at the "+"s in the shortcut texts such
+// as "Ctrl+Shift+Space".
+void EnsureNoWordBreaks(base::string16* shortcut_text) {
+  std::vector<base::string16> keys =
+      base::SplitString(*shortcut_text, base::ASCIIToUTF16("+"),
+                        base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
+
+  if (keys.size() < 2U)
+    return;
+
+  // The plus sign surrounded by the word joiner to guarantee an non-breaking
+  // shortcut.
+  const base::string16 non_breaking_plus =
+      base::UTF8ToUTF16("\xe2\x81\xa0+\xe2\x81\xa0");
+  shortcut_text->clear();
+  for (size_t i = 0; i < keys.size() - 1; ++i) {
+    *shortcut_text += keys[i];
+    *shortcut_text += non_breaking_plus;
+  }
+
+  *shortcut_text += keys.back();
+}
+
+// Gets the notification message after it formats it in such a way that there
+// are no line breaks in the middle of the shortcut texts.
+base::string16 GetNotificationText(int message_id,
+                                   int old_shortcut_id,
+                                   int new_shortcut_id) {
+  base::string16 old_shortcut = l10n_util::GetStringUTF16(old_shortcut_id);
+  base::string16 new_shortcut = l10n_util::GetStringUTF16(new_shortcut_id);
+  EnsureNoWordBreaks(&old_shortcut);
+  EnsureNoWordBreaks(&new_shortcut);
+
+  return l10n_util::GetStringFUTF16(message_id, new_shortcut, old_shortcut);
+}
+
+// Shows a warning the user is using a deprecated accelerator.
+void ShowDeprecatedAcceleratorNotification(const char* const notification_id,
+                                           int message_id,
+                                           int old_shortcut_id,
+                                           int new_shortcut_id) {
+  const base::string16 message =
+      GetNotificationText(message_id, old_shortcut_id, new_shortcut_id);
+  std::unique_ptr<Notification> notification(new Notification(
+      message_center::NOTIFICATION_TYPE_SIMPLE, notification_id,
+      base::string16(), message,
+      Shell::Get()->shell_delegate()->GetDeprecatedAcceleratorImage(),
+      base::string16(), GURL(),
+      message_center::NotifierId(
+          message_center::NotifierId::SYSTEM_COMPONENT,
+          system_notifier::kNotifierDeprecatedAccelerator),
+      message_center::RichNotificationData(),
+      new DeprecatedAcceleratorNotificationDelegate));
+  message_center::MessageCenter::Get()->AddNotification(
+      std::move(notification));
+}
 
 ui::Accelerator CreateAccelerator(ui::KeyboardCode keycode,
                                   int modifiers,
@@ -115,7 +203,7 @@ void HandleRotatePaneFocus(FocusCycler::Direction direction) {
 
 void HandleFocusShelf() {
   base::RecordAction(UserMetricsAction("Accel_Focus_Shelf"));
-  // TODO(jamescook): Should this be GetRootWindowForNewWindows()?
+  // TODO(jamescook): Should this be GetWmRootWindowForNewWindows()?
   WmShelf* shelf = WmShelf::ForWindow(WmShell::Get()->GetPrimaryRootWindow());
   WmShell::Get()->focus_cycler()->FocusWidget(shelf->shelf_widget());
 }
@@ -143,7 +231,7 @@ void HandleMediaPrevTrack() {
 }
 
 bool CanHandleNewIncognitoWindow() {
-  return WmShell::Get()->delegate()->IsIncognitoAllowed();
+  return Shell::Get()->shell_delegate()->IsIncognitoAllowed();
 }
 
 void HandleNewIncognitoWindow() {
@@ -205,13 +293,30 @@ void HandleRestoreTab() {
   WmShell::Get()->new_window_controller()->RestoreTab();
 }
 
+// Rotate the active window.
+void HandleRotateActiveWindow() {
+  base::RecordAction(UserMetricsAction("Accel_Rotate_Active_Window"));
+  aura::Window* active_window = wm::GetActiveWindow();
+  if (!active_window)
+    return;
+  // The rotation animation bases its target transform on the current
+  // rotation and position. Since there could be an animation in progress
+  // right now, queue this animation so when it starts it picks up a neutral
+  // rotation and position. Use replace so we only enqueue one at a time.
+  active_window->layer()->GetAnimator()->set_preemption_strategy(
+      ui::LayerAnimator::REPLACE_QUEUED_ANIMATIONS);
+  active_window->layer()->GetAnimator()->StartAnimation(
+      new ui::LayerAnimationSequence(
+          base::MakeUnique<WindowRotation>(360, active_window->layer())));
+}
+
 void HandleShowKeyboardOverlay() {
   base::RecordAction(UserMetricsAction("Accel_Show_Keyboard_Overlay"));
   WmShell::Get()->new_window_controller()->ShowKeyboardOverlay();
 }
 
 bool CanHandleShowMessageCenterBubble() {
-  WmWindow* target_root = WmShell::Get()->GetRootWindowForNewWindows();
+  WmWindow* target_root = Shell::GetWmRootWindowForNewWindows();
   StatusAreaWidget* status_area_widget =
       WmShelf::ForWindow(target_root)->shelf_widget()->status_area_widget();
   return status_area_widget &&
@@ -220,7 +325,7 @@ bool CanHandleShowMessageCenterBubble() {
 
 void HandleShowMessageCenterBubble() {
   base::RecordAction(UserMetricsAction("Accel_Show_Message_Center_Bubble"));
-  WmWindow* target_root = WmShell::Get()->GetRootWindowForNewWindows();
+  WmWindow* target_root = Shell::GetWmRootWindowForNewWindows();
   StatusAreaWidget* status_area_widget =
       WmShelf::ForWindow(target_root)->shelf_widget()->status_area_widget();
   if (status_area_widget) {
@@ -228,6 +333,16 @@ void HandleShowMessageCenterBubble() {
         status_area_widget->web_notification_tray();
     if (notification_tray->visible())
       notification_tray->ShowMessageCenterBubble();
+  }
+}
+
+void HandleShowSystemTrayBubble() {
+  base::RecordAction(UserMetricsAction("Accel_Show_System_Tray_Bubble"));
+  WmWindow* target_root = Shell::GetWmRootWindowForNewWindows();
+  SystemTray* tray = target_root->GetRootWindowController()->GetSystemTray();
+  if (!tray->HasSystemBubble()) {
+    tray->ShowDefaultView(BUBBLE_CREATE_NEW);
+    tray->ActivateBubble();
   }
 }
 
@@ -262,7 +377,9 @@ bool CanHandleToggleAppList(const ui::Accelerator& accelerator,
     // When spoken feedback is enabled, we should neither toggle the list nor
     // consume the key since Search+Shift is one of the shortcuts the a11y
     // feature uses. crbug.com/132296
-    if (WmShell::Get()->accessibility_delegate()->IsSpokenFeedbackEnabled())
+    if (Shell::GetInstance()
+            ->accessibility_delegate()
+            ->IsSpokenFeedbackEnabled())
       return false;
   }
   return true;
@@ -271,7 +388,7 @@ bool CanHandleToggleAppList(const ui::Accelerator& accelerator,
 void HandleToggleAppList(const ui::Accelerator& accelerator) {
   if (accelerator.key_code() == ui::VKEY_LWIN)
     base::RecordAction(UserMetricsAction("Accel_Search_LWin"));
-  WmShell::Get()->ToggleAppList();
+  Shell::Get()->ToggleAppList();
 }
 
 void HandleToggleFullscreen(const ui::Accelerator& accelerator) {
@@ -394,15 +511,15 @@ void HandleShowStylusTools() {
   base::RecordAction(UserMetricsAction("Accel_Show_Stylus_Tools"));
 
   RootWindowController* root_window_controller =
-      WmShell::Get()->GetRootWindowForNewWindows()->GetRootWindowController();
+      Shell::GetWmRootWindowForNewWindows()->GetRootWindowController();
   PaletteTray* palette_tray =
       root_window_controller->GetShelf()->GetStatusAreaWidget()->palette_tray();
   palette_tray->ShowPalette();
 }
 
 bool CanHandleShowStylusTools() {
-  return WmShell::Get()->palette_delegate() &&
-         WmShell::Get()->palette_delegate()->ShouldShowPalette();
+  return Shell::GetInstance()->palette_delegate() &&
+         Shell::GetInstance()->palette_delegate()->ShouldShowPalette();
 }
 
 void HandleSuspend() {
@@ -411,22 +528,22 @@ void HandleSuspend() {
 }
 
 bool CanHandleCycleUser() {
-  return WmShell::Get()->delegate()->IsMultiProfilesEnabled() &&
+  return Shell::Get()->shell_delegate()->IsMultiProfilesEnabled() &&
          WmShell::Get()->GetSessionStateDelegate()->NumberOfLoggedInUsers() > 1;
 }
 
-void HandleCycleUser(SessionStateDelegate::CycleUser cycle_user) {
+void HandleCycleUser(CycleUserDirection direction) {
   MultiProfileUMA::RecordSwitchActiveUser(
       MultiProfileUMA::SWITCH_ACTIVE_USER_BY_ACCELERATOR);
-  switch (cycle_user) {
-    case SessionStateDelegate::CYCLE_TO_NEXT_USER:
+  switch (direction) {
+    case CycleUserDirection::NEXT:
       base::RecordAction(UserMetricsAction("Accel_Switch_To_Next_User"));
       break;
-    case SessionStateDelegate::CYCLE_TO_PREVIOUS_USER:
+    case CycleUserDirection::PREVIOUS:
       base::RecordAction(UserMetricsAction("Accel_Switch_To_Previous_User"));
       break;
   }
-  WmShell::Get()->GetSessionStateDelegate()->CycleActiveUser(cycle_user);
+  WmShell::Get()->GetSessionStateDelegate()->CycleActiveUser(direction);
 }
 
 bool CanHandleToggleCapsLock(const ui::Accelerator& accelerator,
@@ -490,13 +607,13 @@ void HandleToggleHighContrast() {
   message_center::MessageCenter::Get()->AddNotification(
       std::move(notification));
 
-  WmShell::Get()->accessibility_delegate()->ToggleHighContrast();
+  Shell::GetInstance()->accessibility_delegate()->ToggleHighContrast();
 }
 
 void HandleToggleSpokenFeedback() {
   base::RecordAction(UserMetricsAction("Accel_Toggle_Spoken_Feedback"));
 
-  WmShell::Get()->accessibility_delegate()->ToggleSpokenFeedback(
+  Shell::GetInstance()->accessibility_delegate()->ToggleSpokenFeedback(
       A11Y_NOTIFICATION_SHOW);
 }
 
@@ -834,8 +951,10 @@ bool AcceleratorController::CanPerformAction(
     case OPEN_GET_HELP:
     case PRINT_UI_HIERARCHIES:
     case RESTORE_TAB:
+    case ROTATE_WINDOW:
     case SHOW_IME_MENU_BUBBLE:
     case SHOW_KEYBOARD_OVERLAY:
+    case SHOW_SYSTEM_TRAY_BUBBLE:
     case SHOW_TASK_MANAGER:
     case SUSPEND:
     case TOGGLE_FULLSCREEN:
@@ -1003,6 +1122,9 @@ void AcceleratorController::PerformAction(AcceleratorAction action,
     case RESTORE_TAB:
       HandleRestoreTab();
       break;
+    case ROTATE_WINDOW:
+      HandleRotateActiveWindow();
+      break;
     case SHOW_IME_MENU_BUBBLE:
       HandleShowImeMenuBubble();
       break;
@@ -1015,6 +1137,9 @@ void AcceleratorController::PerformAction(AcceleratorAction action,
     case SHOW_STYLUS_TOOLS:
       HandleShowStylusTools();
       break;
+    case SHOW_SYSTEM_TRAY_BUBBLE:
+      HandleShowSystemTrayBubble();
+      break;
     case SHOW_TASK_MANAGER:
       HandleShowTaskManager();
       break;
@@ -1025,10 +1150,10 @@ void AcceleratorController::PerformAction(AcceleratorAction action,
       HandleSwitchIme(ime_control_delegate_.get(), accelerator);
       break;
     case SWITCH_TO_NEXT_USER:
-      HandleCycleUser(SessionStateDelegate::CYCLE_TO_NEXT_USER);
+      HandleCycleUser(CycleUserDirection::NEXT);
       break;
     case SWITCH_TO_PREVIOUS_USER:
-      HandleCycleUser(SessionStateDelegate::CYCLE_TO_PREVIOUS_USER);
+      HandleCycleUser(CycleUserDirection::PREVIOUS);
       break;
     case TOGGLE_APP_LIST:
       HandleToggleAppList(accelerator);
@@ -1107,7 +1232,7 @@ AcceleratorController::GetAcceleratorProcessingRestriction(int action) {
           actions_allowed_at_lock_screen_.end()) {
     return RESTRICTION_PREVENT_PROCESSING;
   }
-  if (wm_shell->delegate()->IsRunningInForcedAppMode() &&
+  if (Shell::Get()->shell_delegate()->IsRunningInForcedAppMode() &&
       actions_allowed_in_app_mode_.find(action) ==
           actions_allowed_in_app_mode_.end()) {
     return RESTRICTION_PREVENT_PROCESSING;
@@ -1123,7 +1248,7 @@ AcceleratorController::GetAcceleratorProcessingRestriction(int action) {
   }
   if (wm_shell->mru_window_tracker()->BuildMruWindowList().empty() &&
       actions_needing_window_.find(action) != actions_needing_window_.end()) {
-    wm_shell->accessibility_delegate()->TriggerAccessibilityAlert(
+    Shell::GetInstance()->accessibility_delegate()->TriggerAccessibilityAlert(
         A11Y_ALERT_WINDOW_NEEDED);
     return RESTRICTION_PREVENT_PROCESSING_AND_PROPAGATION;
   }
@@ -1157,12 +1282,10 @@ AcceleratorController::MaybeDeprecatedAcceleratorPressed(
   // Record UMA stats.
   RecordUmaHistogram(data->uma_histogram_name, DEPRECATED_USED);
 
-  if (delegate_) {
-    // We always display the notification as long as this |data| entry exists.
-    delegate_->ShowDeprecatedAcceleratorNotification(
-        data->uma_histogram_name, data->notification_message_id,
-        data->old_shortcut_id, data->new_shortcut_id);
-  }
+  // We always display the notification as long as this |data| entry exists.
+  ShowDeprecatedAcceleratorNotification(
+      data->uma_histogram_name, data->notification_message_id,
+      data->old_shortcut_id, data->new_shortcut_id);
 
   if (!data->deprecated_enabled)
     return AcceleratorProcessingStatus::STOP;

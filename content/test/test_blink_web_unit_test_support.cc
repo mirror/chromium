@@ -29,6 +29,7 @@
 #include "storage/browser/database/vfs_backend.h"
 #include "third_party/WebKit/public/platform/WebConnectionType.h"
 #include "third_party/WebKit/public/platform/WebData.h"
+#include "third_party/WebKit/public/platform/WebNetworkStateNotifier.h"
 #include "third_party/WebKit/public/platform/WebPluginListBuilder.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/WebThread.h"
@@ -36,7 +37,6 @@
 #include "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h"
 #include "third_party/WebKit/public/platform/scheduler/test/renderer_scheduler_test_support.h"
 #include "third_party/WebKit/public/web/WebKit.h"
-#include "third_party/WebKit/public/web/WebNetworkStateNotifier.h"
 #include "third_party/WebKit/public/web/WebRuntimeFeatures.h"
 #include "v8/include/v8.h"
 
@@ -196,8 +196,7 @@ blink::WebIDBFactory* TestBlinkWebUnitTestSupport::idbFactory() {
 blink::WebURLLoader* TestBlinkWebUnitTestSupport::createURLLoader() {
   // This loader should be used only for process-local resources such as
   // data URLs.
-  blink::WebURLLoader* default_loader =
-      new WebURLLoaderImpl(nullptr, nullptr, nullptr);
+  blink::WebURLLoader* default_loader = new WebURLLoaderImpl(nullptr, nullptr);
   return url_loader_factory_->createURLLoader(default_loader);
 }
 

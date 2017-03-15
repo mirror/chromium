@@ -16,8 +16,14 @@ test_support_sources = [
 ]
 
 crypto_test_sources = [
+  "src/crypto/chacha/chacha_test.cc",
+  "src/crypto/curve25519/x25519_test.cc",
   "src/crypto/dh/dh_test.cc",
   "src/crypto/dsa/dsa_test.cc",
+  "src/crypto/ec/ec_test.cc",
+  "src/crypto/err/err_test.cc",
+  "src/crypto/evp/evp_extra_test.cc",
+  "src/crypto/rsa/rsa_test.cc",
   "src/crypto/test/gtest_main.cc",
 ]
 
@@ -99,18 +105,6 @@ template("create_tests") {
     deps = invoker.deps
   }
 
-  executable("boringssl_chacha_test") {
-    sources = [
-      "src/crypto/chacha/chacha_test.cc",
-    ]
-    sources += test_support_sources
-    if (defined(invoker.configs_exclude)) {
-      configs -= invoker.configs_exclude
-    }
-    configs += invoker.configs
-    deps = invoker.deps
-  }
-
   executable("boringssl_aead_test") {
     sources = [
       "src/crypto/cipher/aead_test.cc",
@@ -183,33 +177,9 @@ template("create_tests") {
     deps = invoker.deps
   }
 
-  executable("boringssl_x25519_test") {
-    sources = [
-      "src/crypto/curve25519/x25519_test.cc",
-    ]
-    sources += test_support_sources
-    if (defined(invoker.configs_exclude)) {
-      configs -= invoker.configs_exclude
-    }
-    configs += invoker.configs
-    deps = invoker.deps
-  }
-
   executable("boringssl_digest_test") {
     sources = [
       "src/crypto/digest/digest_test.cc",
-    ]
-    sources += test_support_sources
-    if (defined(invoker.configs_exclude)) {
-      configs -= invoker.configs_exclude
-    }
-    configs += invoker.configs
-    deps = invoker.deps
-  }
-
-  executable("boringssl_ec_test") {
-    sources = [
-      "src/crypto/ec/ec_test.cc",
     ]
     sources += test_support_sources
     if (defined(invoker.configs_exclude)) {
@@ -282,30 +252,6 @@ template("create_tests") {
   executable("boringssl_ecdsa_verify_test") {
     sources = [
       "src/crypto/ecdsa/ecdsa_verify_test.cc",
-    ]
-    sources += test_support_sources
-    if (defined(invoker.configs_exclude)) {
-      configs -= invoker.configs_exclude
-    }
-    configs += invoker.configs
-    deps = invoker.deps
-  }
-
-  executable("boringssl_err_test") {
-    sources = [
-      "src/crypto/err/err_test.cc",
-    ]
-    sources += test_support_sources
-    if (defined(invoker.configs_exclude)) {
-      configs -= invoker.configs_exclude
-    }
-    configs += invoker.configs
-    deps = invoker.deps
-  }
-
-  executable("boringssl_evp_extra_test") {
-    sources = [
-      "src/crypto/evp/evp_extra_test.cc",
     ]
     sources += test_support_sources
     if (defined(invoker.configs_exclude)) {
@@ -459,18 +405,6 @@ template("create_tests") {
     deps = invoker.deps
   }
 
-  executable("boringssl_rsa_test") {
-    sources = [
-      "src/crypto/rsa/rsa_test.cc",
-    ]
-    sources += test_support_sources
-    if (defined(invoker.configs_exclude)) {
-      configs -= invoker.configs_exclude
-    }
-    configs += invoker.configs
-    deps = invoker.deps
-  }
-
   executable("boringssl_thread_test") {
     sources = [
       "src/crypto/thread_test.c",
@@ -540,19 +474,15 @@ template("create_tests") {
       ":boringssl_bio_test",
       ":boringssl_bn_test",
       ":boringssl_bytestring_test",
-      ":boringssl_chacha_test",
       ":boringssl_cipher_test",
       ":boringssl_cmac_test",
       ":boringssl_constant_time_test",
       ":boringssl_digest_test",
-      ":boringssl_ec_test",
       ":boringssl_ecdh_test",
       ":boringssl_ecdsa_sign_test",
       ":boringssl_ecdsa_test",
       ":boringssl_ecdsa_verify_test",
       ":boringssl_ed25519_test",
-      ":boringssl_err_test",
-      ":boringssl_evp_extra_test",
       ":boringssl_evp_test",
       ":boringssl_example_mul",
       ":boringssl_gcm_test",
@@ -568,12 +498,10 @@ template("create_tests") {
       ":boringssl_poly1305_test",
       ":boringssl_pool_test",
       ":boringssl_refcount_test",
-      ":boringssl_rsa_test",
       ":boringssl_spake25519_test",
       ":boringssl_tab_test",
       ":boringssl_thread_test",
       ":boringssl_v3name_test",
-      ":boringssl_x25519_test",
       ":boringssl_x509_test",
     ]
   }

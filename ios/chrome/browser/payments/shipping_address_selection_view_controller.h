@@ -38,16 +38,16 @@ class AutofillProfile;
 // delegate. Also offers a button to add a shipping address.
 @interface ShippingAddressSelectionViewController : CollectionViewController
 
-// Whether or not the view is in a loading state.
-@property(nonatomic, assign) BOOL isLoading;
+// Whether or not the view is in a pending state.
+@property(nonatomic, assign, getter=isPending) BOOL pending;
 
 // The error message to display, if any.
-@property(nonatomic, assign) NSString* errorMessage;
+@property(nonatomic, copy) NSString* errorMessage;
 
 // The delegate to be notified when the user selects a shipping address or
 // returns without selecting one.
-@property(nonatomic, weak) id<ShippingAddressSelectionViewControllerDelegate>
-    delegate;
+@property(nonatomic, weak)
+    id<ShippingAddressSelectionViewControllerDelegate> delegate;
 
 // Initializes this object with an instance of PaymentRequest which owns an
 // instance of web::PaymentRequest as provided by the page invoking the Payment

@@ -9,10 +9,11 @@
 #include "ash/common/wm_window.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
+#include "ash/shell.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
-#include "grit/ash_strings.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -115,7 +116,7 @@ void ExitWarningHandler::HandleAccelerator() {
       CancelTimer();
       Hide();
       WmShell::Get()->RecordUserMetricsAction(UMA_ACCEL_EXIT_SECOND_Q);
-      WmShell::Get()->delegate()->Exit();
+      Shell::Get()->shell_delegate()->Exit();
       break;
     case EXITING:
       break;
@@ -143,7 +144,7 @@ void ExitWarningHandler::CancelTimer() {
 void ExitWarningHandler::Show() {
   if (widget_)
     return;
-  WmWindow* root_window = WmShell::Get()->GetRootWindowForNewWindows();
+  WmWindow* root_window = Shell::GetWmRootWindowForNewWindows();
   ExitWarningWidgetDelegateView* delegate = new ExitWarningWidgetDelegateView;
   gfx::Size rs = root_window->GetBounds().size();
   gfx::Size ps = delegate->GetPreferredSize();

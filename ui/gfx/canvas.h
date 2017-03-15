@@ -266,20 +266,12 @@ class GFX_EXPORT Canvas {
   // Draws the given rectangle with the given |flags| parameters.
   void DrawRect(const RectF& rect, const cc::PaintFlags& flags);
 
-  // Draw the given point with the given |flags| parameters.
-  // DEPRECATED in favor of the RectF version below.
-  // TODO(funkysidd): Remove this (http://crbug.com/553726)
-  void DrawPoint(const Point& p, const cc::PaintFlags& flags);
-
-  // Draw the given point with the given |flags| parameters.
-  void DrawPoint(const PointF& p, const cc::PaintFlags& flags);
-
   // Draws a single pixel line with the specified color.
   // DEPRECATED in favor of the RectF version below.
   // TODO(funkysidd): Remove this (http://crbug.com/553726)
   void DrawLine(const Point& p1, const Point& p2, SkColor color);
 
-  // Draws a single pixel line with the specified color.
+  // Draws a single dip line with the specified color.
   void DrawLine(const PointF& p1, const PointF& p2, SkColor color);
 
   // Draws a line with the given |flags| parameters.
@@ -291,6 +283,13 @@ class GFX_EXPORT Canvas {
   void DrawLine(const PointF& p1,
                 const PointF& p2,
                 const cc::PaintFlags& flags);
+
+  // Draws a line that's a single DIP. At fractional scale factors, this is
+  // floored to the nearest integral number of pixels.
+  void DrawSharpLine(PointF p1, PointF p2, SkColor color);
+
+  // As above, but draws a single pixel at all scale factors.
+  void Draw1pxLine(PointF p1, PointF p2, SkColor color);
 
   // Draws a circle with the given |flags| parameters.
   // DEPRECATED in favor of the RectF version below.
@@ -420,9 +419,10 @@ class GFX_EXPORT Canvas {
   // Draws a dotted gray rectangle used for focus purposes.
   void DrawFocusRect(const RectF& rect);
 
-  // Draws a |rect| in the specified region with the specified |color| with a
-  // with of one logical pixel which might be more device pixels.
-  void DrawSolidFocusRect(const RectF& rect, SkColor color, float thickness);
+  // Draws a |rect| in the specified region with the specified |color|. The
+  // width of the stroke is |thickness| dip, but the actual pixel width will be
+  // floored to ensure an integral value.
+  void DrawSolidFocusRect(RectF rect, SkColor color, int thickness);
 
   // Tiles the image in the specified region.
   // Parameters are specified relative to current canvas scale not in pixels.

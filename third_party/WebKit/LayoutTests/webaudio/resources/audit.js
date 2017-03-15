@@ -80,6 +80,21 @@ window.Audit = (function () {
     return targetString;
   }
 
+  // Return a string suitable for printing one failed element in
+  // |beCloseToArray|.
+  function _formatFailureEntry(index, actual, expected, abserr, threshold) {
+    return '\t[' + index + ']\t'
+      + actual.toExponential(16) + '\t'
+      + expected.toExponential(16) + '\t'
+      + abserr.toExponential(16) + '\t'
+      + (abserr / Math.abs(expected)).toExponential(16) + '\t'
+      + threshold.toExponential(16);
+  }
+
+  // Compute the error threshold criterion for |beCloseToArray|
+  function _closeToThreshold(abserr, relerr, expected) {
+    return Math.max(abserr, relerr * Math.abs(expected));
+  }
 
   /**
    * @class Should
@@ -321,18 +336,23 @@ window.Audit = (function () {
     }
 
     /**
-     * Check if |actual| promise is resolved correctly.
+     * Check if |actual| promise is resolved correctly. Note that the returned
+     * result from promise object will be passed to the following then()
+     * function.
      *
      * @example
-     *   should('My promise', promise).beResolve().then(nextStuff);
+     *   should('My promise', promise).beResolve().then((result) => {
+     *     console.log(result);
+     *   });
      *
      * @result
      *   "PASS   My promise resolved correctly."
      *   "FAIL X My promise rejected *INCORRECTLY* with _ERROR_."
      */
     beResolved () {
-      return this._actual.then(function () {
+      return this._actual.then(function (result) {
           this._assert(true, '${actual} resolved correctly.', null);
+          return result;
         }.bind(this), function (error) {
           this._assert(false, null,
               '${actual} rejected incorrectly with ' + error + '.');
@@ -860,18 +880,21 @@ window.Audit = (function () {
         let counter = 0;
         failDetail += '\tIndex\tActual\t\t\tExpected\t\tAbsError'
             + '\t\tRelError\t\tTest threshold';
+        let printedIndices = [];
         for (let index in errors) {
-          failDetail += '\n\t[' + index + ']\t'
-              + this._actual[index].toExponential(16) + '\t'
-              + this._expected[index].toExponential(16) + '\t'
-              + errors[index].toExponential(16) + '\t'
-              + (errors[index] / Math.abs(this._expected[index]))
-                  .toExponential(16) + '\t'
-              + Math.max(absErrorThreshold,
-                    relErrorThreshold * Math.abs(this._expected[index]))
-                      .toExponential(16);
-          if (++counter > this._options.numberOfErrors)
+          failDetail += '\n' + _formatFailureEntry(
+                                   index, this._actual[index],
+                                   this._expected[index], errors[index],
+                                   _closeToThreshold(
+                                       absErrorThreshold, relErrorThreshold,
+                                       this._expected[index]));
+
+          printedIndices.push(index);
+          if (++counter > this._options.numberOfErrors) {
+            failDetail +=
+                '\n\t...and ' + (numberOfErrors - counter) + ' more errors.';
             break;
+          }
         }
 
         // Finalize the error log: print out the location of both the maxAbs
@@ -879,9 +902,35 @@ window.Audit = (function () {
         // in the test.
         failDetail += '\n'
             + '\tMax AbsError of ' + maxAbsError.toExponential(16)
-            + ' at index of ' + maxAbsErrorIndex + '.\n'
-            + '\tMax RelError of ' + maxRelError.toExponential(16)
-            + ' at index of ' + maxRelErrorIndex + '.';
+            + ' at index of ' + maxAbsErrorIndex + '.\n';
+        if (printedIndices.find(element => {
+              return element == maxAbsErrorIndex;
+            }) === undefined) {
+          // Print an entry for this index if we haven't already.
+          failDetail +=
+              _formatFailureEntry(
+                  maxAbsErrorIndex, this._actual[maxAbsErrorIndex],
+                  this._expected[maxAbsErrorIndex], errors[maxAbsErrorIndex],
+                  _closeToThreshold(
+                      absErrorThreshold, relErrorThreshold,
+                      this._expected[maxAbsErrorIndex])) +
+              '\n';
+        }
+        failDetail += '\tMax RelError of ' + maxRelError.toExponential(16) +
+            ' at index of ' + maxRelErrorIndex + '.\n';
+        if (printedIndices.find(element => {
+              return element == maxRelErrorIndex;
+            }) === undefined) {
+          // Print an entry for this index if we haven't already.
+          failDetail +=
+              _formatFailureEntry(
+                  maxRelErrorIndex, this._actual[maxRelErrorIndex],
+                  this._expected[maxRelErrorIndex], errors[maxRelErrorIndex],
+                  _closeToThreshold(
+                      absErrorThreshold, relErrorThreshold,
+                      this._expected[maxRelErrorIndex])) +
+              '\n';
+        }
       }
 
       return this._assert(passed, passDetail, failDetail);
@@ -921,11 +970,36 @@ window.Audit = (function () {
    */
   class Task {
 
+    /**
+     * Task constructor.
+     * @param  {Object} taskRunner Reference of associated task runner.
+     * @param  {String||Object} taskLabel Task label if a string is given. This
+     *                                    parameter can be a dictionary with the
+     *                                    following fields.
+     * @param  {String} taskLabel.label Task label.
+     * @param  {String} taskLabel.description Description of task.
+     * @param  {Function} taskFunction Task function to be performed.
+     * @return {Object} Task object.
+     */
     constructor (taskRunner, taskLabel, taskFunction) {
       this._taskRunner = taskRunner;
       this._taskFunction = taskFunction;
-      this._label = taskLabel;
-      this._description = '';
+
+      if (typeof taskLabel === 'string') {
+        this._label = taskLabel;
+        this._description = null;
+      } else if (typeof taskLabel === 'object') {
+        if (typeof taskLabel.label !== 'string') {
+          _throwException('Task.constructor:: task label must be string.');
+        }
+        this._label = taskLabel.label;
+        this._description = (typeof taskLabel.description === 'string')
+            ? taskLabel.description : null;
+      } else {
+        _throwException('Task.constructor:: task label must be a string or ' +
+                        'a dictionary.');
+      }
+
       this._state = TaskState.PENDING;
       this._result = true;
 
@@ -933,12 +1007,12 @@ window.Audit = (function () {
       this._failedAssertions = 0;
     }
 
-    // Set the description of this task. This is printed out in the test
-    // result.
-    describe (message) {
-      this._description = message;
-      _logPassed('> [' + this._label + '] '
-          + this._description);
+    // TODO(hongchan): This does not have any effect. Remove this method and fix
+    // layout test files use it.
+    describe (message) {}
+
+    get label () {
+      return this._label;
     }
 
     get state () {
@@ -962,6 +1036,11 @@ window.Audit = (function () {
     // task function.
     run () {
       this._state = TaskState.STARTED;
+
+      // Print out the task entry with label and description.
+      _logPassed('> [' + this._label + '] '
+          + (this._description ? this._description : ''));
+
       this._taskFunction(
           this,
           this.should.bind(this));
@@ -1054,14 +1133,16 @@ window.Audit = (function () {
       done();
     }
 
+    // |taskLabel| can be either a string or a dictionary. See Task constructor
+    // for the detail.
     define (taskLabel, taskFunction) {
-      if (this._tasks.hasOwnProperty(taskLabel)) {
+      let task = new Task(this, taskLabel, taskFunction);
+      if (this._tasks.hasOwnProperty(task.label)) {
         _throwException('Audit.define:: Duplicate task definition.');
         return;
       }
-
-      this._tasks[taskLabel] = new Task(this, taskLabel, taskFunction);
-      this._taskSequence.push(taskLabel);
+      this._tasks[task.label] = task;
+      this._taskSequence.push(task.label);
     }
 
     // Start running all the tasks scheduled. Multiple task names can be passed
@@ -1099,6 +1180,51 @@ window.Audit = (function () {
 
   }
 
+  /**
+   * Load file from a given URL and pass ArrayBuffer to the following promise.
+   * @param  {String} fileUrl file URL.
+   * @return {Promise}
+   *
+   * @example
+   *   Audit.loadFileFromUrl('resources/my-sound.ogg').then((response) => {
+   *       audioContext.decodeAudioData(response).then((audioBuffer) => {
+   *           // Do something with AudioBuffer.
+   *       });
+   *   });
+   */
+  function loadFileFromUrl (fileUrl) {
+    return new Promise((resolve, reject) => {
+      let xhr = new XMLHttpRequest();
+      xhr.open('GET', fileUrl);
+      xhr.responseType = 'arraybuffer';
+
+      xhr.onload = () => {
+        if (xhr.status === 200) {
+          resolve(xhr.response);
+        } else {
+          let errorMessage = 'loadFile: Request failed when loading ' +
+              fileUrl + '. (' + xhr.statusText + ')';
+          if (reject) {
+            reject(errorMessage);
+          } else {
+            new Error(errorMessage);
+          }
+        }
+      };
+
+      xhr.onerror = (event) => {
+        let errorMessage =
+            'loadFile: Network failure when loading ' + fileUrl + '.';
+        if (reject) {
+          reject(errorMessage);
+        } else {
+          new Error(errorMessage);
+        }
+      };
+
+      xhr.send();
+    });
+  }
 
   /**
    * @class Audit
@@ -1129,7 +1255,13 @@ window.Audit = (function () {
       }
 
       return new TaskRunner();
-    }
+    },
+
+    /**
+     * Load file from a given URL and pass ArrayBuffer to the following promise.
+     * See |loadFileFromUrl| method for the detail.
+     */
+    loadFileFromUrl: loadFileFromUrl
 
   };
 

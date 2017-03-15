@@ -22,6 +22,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/optional.h"
 #include "base/sha1.h"
 #include "base/strings/string_piece.h"
 #include "base/task_runner_util.h"
@@ -125,18 +126,38 @@ bool ParseProtoFromFetchResponse(const net::URLFetcher& source,
 }
 
 // Returns the resource selection bitset from the |manifest| for the given
-// |experiment_id|. By default all resource will be selected if the experiment
-// group is not found.
-uint64_t GetResourceBitset(const PrecacheManifest& manifest,
-                           uint32_t experiment_id) {
+// |experiment_id|. If the experiment group is not found, then this returns
+// nullopt, in which case all resources should be selected.
+base::Optional<std::vector<bool>> GetResourceBitset(
+    const PrecacheManifest& manifest,
+    uint32_t experiment_id) {
+  base::Optional<std::vector<bool>> ret;
   if (manifest.has_experiments()) {
     const auto& resource_bitset_map =
         manifest.experiments().resources_by_experiment_group();
-    const auto& resource_bitset_it = resource_bitset_map.find(experiment_id);
-    if (resource_bitset_it != resource_bitset_map.end())
-      return resource_bitset_it->second.bitset();
+    const auto& it = resource_bitset_map.find(experiment_id);
+    if (it != resource_bitset_map.end()) {
+      if (it->second.has_bitset()) {
+        const std::string& bitset = it->second.bitset();
+        ret.emplace(bitset.size() * 8);
+        for (size_t i = 0; i < bitset.size(); ++i) {
+          for (size_t j = 0; j < 8; ++j) {
+            if ((1 << j) & bitset[i])
+              ret.value()[i * 8 + j] = true;
+          }
+        }
+      } else if (it->second.has_deprecated_bitset()) {
+        uint64_t bitset = it->second.deprecated_bitset();
+        ret.emplace(64);
+        for (int i = 0; i < 64; ++i) {
+          if ((0x1ULL << i) & bitset)
+            ret.value()[i] = true;
+        }
+      }
+    }
   }
-  return ~0ULL;
+  // Only return one variable to ensure RVO triggers.
+  return ret;
 }
 
 // URLFetcherResponseWriter that ignores the response body, in order to avoid
@@ -294,8 +315,40 @@ PrecacheFetcher::Fetcher::~Fetcher() {}
 
 void PrecacheFetcher::Fetcher::LoadFromCache() {
   fetch_stage_ = FetchStage::CACHE;
-  cache_url_fetcher_ =
-      net::URLFetcher::Create(url_, net::URLFetcher::GET, this);
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("wifi_prefetch_from_cache", R"(
+        semantics {
+          sender: "Wifi Prefetch"
+          description:
+            "Speeds up mobile web page loads by downloading some common static "
+            "assets (such as JS and CSS) for sites that the user browses "
+            "frequently, in advance of the browser needing them. Only applies "
+            "to users with tab sync enabled."
+          trigger:
+            "Background service that runs when the device is plugged into "
+            "power, on unmetered wifi, and Chromium is not in the foreground."
+          data:
+            "Local cache fetches; no data is sent over the network."
+          destination: OTHER
+        }
+        policy {
+          cookies_allowed: false
+          setting:
+            "Users can disable this feature by several settings: Disabling tab "
+            "sync via unchecking 'Open tabs' in Chromium settings under "
+            "'Advanced sync settings'; Disabling predicting required downloads "
+            "via unchecking 'Use a prediction service to load pages more "
+            "quickly' in Chromium settings under Privacy; Enabling 'Data "
+            "Saver' in Chromium settings on Android."
+          policy {
+            NetworkPredictionOptions {
+              policy_options {mode: MANDATORY}
+              NetworkPredictionOptions: 2
+            }
+          }
+        })");
+  cache_url_fetcher_ = net::URLFetcher::Create(url_, net::URLFetcher::GET, this,
+                                               traffic_annotation);
   data_use_measurement::DataUseUserData::AttachToFetcher(
       cache_url_fetcher_.get(),
       data_use_measurement::DataUseUserData::PRECACHE);
@@ -310,8 +363,80 @@ void PrecacheFetcher::Fetcher::LoadFromCache() {
 
 void PrecacheFetcher::Fetcher::LoadFromNetwork() {
   fetch_stage_ = FetchStage::NETWORK;
-  network_url_fetcher_ =
-      net::URLFetcher::Create(url_, net::URLFetcher::GET, this);
+  if (is_resource_request_) {
+    net::NetworkTrafficAnnotationTag traffic_annotation =
+        net::DefineNetworkTrafficAnnotation(
+            "wifi_prefetch_resource_from_network", R"(
+            semantics {
+              sender: "Wifi Prefetch"
+              description:
+                "Speeds up mobile web page loads by downloading common static "
+                "assets (such as JS and CSS) for sites that the user browses "
+                "frequently, in advance of the browser needing them. Only "
+                "applies to users with tab sync enabled."
+              trigger:
+                "Background service that runs when the device is plugged into "
+                "power, on unmetered wifi, and Chromium is not in the "
+                "foreground."
+              data: "Link to the requested resrouce."
+              destination: WEBSITE
+            }
+            policy {
+              cookies_allowed: false
+              setting:
+                "Users can disable this feature by several settings: Disabling "
+                "tab sync via unchecking 'Open tabs' in Chromium settings "
+                "under 'Advanced sync settings'; Disabling predicting required "
+                "downloads via unchecking 'Use a prediction service to load "
+                "pages more quickly' in Chromium settings under Privacy; "
+                "Enabling 'Data Saver' in Chromium settings on Android."
+              policy {
+                NetworkPredictionOptions {
+                  policy_options {mode: MANDATORY}
+                  NetworkPredictionOptions: 2
+                }
+              }
+            })");
+    network_url_fetcher_ = net::URLFetcher::Create(url_, net::URLFetcher::GET,
+                                                   this, traffic_annotation);
+  } else {
+    net::NetworkTrafficAnnotationTag traffic_annotation =
+        net::DefineNetworkTrafficAnnotation("wifi_prefetch_sites_from_network",
+                                            R"(
+          semantics {
+            sender: "Wifi Prefetch"
+            description:
+              "Speeds up mobile web page loads by downloading common static "
+              "assets (such as JS and CSS) for sites that the user browses "
+              "frequently, in advance of the browser needing them. The first "
+              "step is to download the list of common static assets from "
+              "Google. Only applies to users with tab sync enabled."
+            trigger:
+              "Background service that runs when the device is plugged into "
+              "power, on unmetered wifi, and Chromium is not in the foreground."
+            data: "A list of the top hosts that the user visits."
+            destination: GOOGLE_OWNED_SERVICE
+          }
+          policy {
+            cookies_allowed: false
+            setting:
+              "Users can disable this feature by several settings: Disabling "
+              "tab sync via unchecking 'Open tabs' in Chromium settings under "
+              "'Advanced sync settings'; Disabling predicting required "
+              "downloads via unchecking 'Use a prediction service to load "
+              "pages more quickly' in Chromium settings under Privacy; "
+              "Enabling 'Data Saver' in Chromium settings on Android."
+            policy {
+              NetworkPredictionOptions {
+                policy_options {mode: MANDATORY}
+                NetworkPredictionOptions: 2
+              }
+            }
+          })");
+    network_url_fetcher_ = net::URLFetcher::Create(url_, net::URLFetcher::GET,
+                                                   this, traffic_annotation);
+  }
+
   data_use_measurement::DataUseUserData::AttachToFetcher(
       network_url_fetcher_.get(),
       data_use_measurement::DataUseUserData::PRECACHE);
@@ -419,6 +544,11 @@ void PrecacheFetcher::RecordCompletionStatistics(
   UMA_HISTOGRAM_CUSTOM_COUNTS("Precache.Fetch.ResponseBytes.Network",
                               unfinished_work.network_bytes(), 1,
                               kMaxResponseBytes, 100);
+
+  if (unfinished_work.has_min_weight_fetched()) {
+    UMA_HISTOGRAM_COUNTS_1000("Precache.Fetch.MinWeight",
+                              unfinished_work.min_weight_fetched() * 1000);
+  }
 }
 
 // static
@@ -458,10 +588,8 @@ PrecacheFetcher::PrecacheFetcher(
   // keeping track of the current resource index.
   for (const auto& resource : unfinished_work->resource()) {
     if (resource.has_url() && resource.has_top_host_name()) {
-      // Weight doesn't matter, as the resources have already been sorted by
-      // this point.
-      resources_to_fetch_.emplace_back(GURL(resource.url()),
-                                       resource.top_host_name(), 0);
+      resources_to_fetch_.emplace_back(
+          GURL(resource.url()), resource.top_host_name(), resource.weight());
     }
   }
   unfinished_work_ = std::move(unfinished_work);
@@ -486,14 +614,16 @@ std::unique_ptr<PrecacheUnfinishedWork> PrecacheFetcher::CancelPrecaching() {
       unfinished_work_->add_top_host()->set_hostname(top_host.hostname);
   }
   for (const auto& resource : resources_fetching_) {
-    auto new_resource = unfinished_work_->add_resource();
+    auto* new_resource = unfinished_work_->add_resource();
     new_resource->set_url(resource.url.spec());
     new_resource->set_top_host_name(resource.referrer);
+    new_resource->set_weight(resource.weight);
   }
   for (const auto& resource : resources_to_fetch_) {
-    auto new_resource = unfinished_work_->add_resource();
+    auto* new_resource = unfinished_work_->add_resource();
     new_resource->set_url(resource.url.spec());
     new_resource->set_top_host_name(resource.referrer);
+    new_resource->set_weight(resource.weight);
   }
   top_hosts_fetching_.clear();
   top_hosts_to_fetch_.clear();
@@ -561,9 +691,8 @@ void PrecacheFetcher::StartNextManifestFetches() {
   }
 }
 
-void PrecacheFetcher::NotifyDone(
-    size_t remaining_manifest_urls_to_fetch,
-    size_t remaining_resource_urls_to_fetch) {
+void PrecacheFetcher::NotifyDone(size_t remaining_manifest_urls_to_fetch,
+                                 size_t remaining_resource_urls_to_fetch) {
   RecordCompletionStatistics(*unfinished_work_,
                              remaining_manifest_urls_to_fetch,
                              remaining_resource_urls_to_fetch);
@@ -695,6 +824,16 @@ void PrecacheFetcher::OnQuotaInfoRetrieved(const PrecacheQuota& quota) {
   if (IsQuotaTimeExpired(quota_, time_now)) {
     // This is a new day. Update daily quota, that starts today and expires by
     // end of today.
+
+    // If a previous day existed, report its usage.
+    if (quota_.has_start_time()) {
+      UMA_HISTOGRAM_CUSTOM_COUNTS(
+          "Precache.Fetch.ResponseBytes.Daily",
+          unfinished_work_->config_settings().daily_quota_total() -
+              quota_.remaining(),
+          1, kMaxResponseBytes, 100);
+    }
+
     quota_.set_start_time(time_now.LocalMidnight().ToInternalValue());
     quota_.set_remaining(
         unfinished_work_->config_settings().daily_quota_total());
@@ -743,21 +882,25 @@ void PrecacheFetcher::OnManifestFetchComplete(int64_t host_visits,
     PrecacheManifest manifest;
 
     if (ParseProtoFromFetchResponse(*source.network_url_fetcher(), &manifest)) {
-      const int32_t len =
-          std::min(manifest.resource_size(),
-                   unfinished_work_->config_settings().top_resources_count());
-      const uint64_t resource_bitset =
+      const base::Optional<std::vector<bool>> resource_bitset =
           GetResourceBitset(manifest, experiment_id_);
-      for (int i = 0; i < len; ++i) {
-        if (((0x1ULL << i) & resource_bitset) &&
+      const int32_t included_resources_max =
+          unfinished_work_->config_settings().top_resources_count();
+      int32_t included_resources = 0;
+      for (int i = 0; i < manifest.resource_size() &&
+                      included_resources < included_resources_max;
+           ++i) {
+        if ((!resource_bitset.has_value() || resource_bitset.value()[i]) &&
             manifest.resource(i).has_url()) {
           GURL url(manifest.resource(i).url());
           if (url.is_valid()) {
             double weight = ResourceWeight(
                 unfinished_work_->config_settings().resource_weight_function(),
                 manifest.resource(i).weight_ratio(), host_visits);
-            if (weight >= unfinished_work_->config_settings().min_weight())
+            if (weight >= unfinished_work_->config_settings().min_weight()) {
               resources_to_rank_.emplace_back(url, source.referrer(), weight);
+              ++included_resources;
+            }
           }
         }
       }
@@ -814,9 +957,19 @@ void PrecacheFetcher::OnResourceFetchComplete(const Fetcher& source) {
                  source.url(), source.referrer(), base::Time::Now(),
                  source.was_cached(), source.response_bytes()));
 
-  resources_fetching_.remove_if([&source](const ResourceInfo& resource) {
-    return resource.url == source.url();
-  });
+  auto resource =
+      std::find_if(resources_fetching_.begin(), resources_fetching_.end(),
+                   [&source](const ResourceInfo& resource) {
+                     return resource.url == source.url();
+                   });
+  if (resource != resources_fetching_.end()) {
+    if (unfinished_work_->config_settings().global_ranking() &&
+        (!unfinished_work_->has_min_weight_fetched() ||
+         resource->weight < unfinished_work_->min_weight_fetched()))
+      unfinished_work_->set_min_weight_fetched(resource->weight);
+
+    resources_fetching_.erase(resource);
+  }
 
   pool_.Delete(source);
 

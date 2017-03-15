@@ -110,19 +110,11 @@ GraphicsLayer::GraphicsLayer(GraphicsLayerClient* client)
       m_contentsLayer(0),
       m_contentsLayerId(0),
       m_scrollableArea(nullptr),
-      m_renderingContext3d(0),
-      m_colorBehavior(ColorBehavior::transformToGlobalTarget()),
-      m_hasPreferredRasterBounds(false) {
+      m_renderingContext3d(0) {
 #if DCHECK_IS_ON()
   if (m_client)
     m_client->verifyNotPainting();
 #endif
-
-  // In true color mode, no inputs are adjusted, and all colors are converted
-  // at rasterization time.
-  if (RuntimeEnabledFeatures::trueColorRenderingEnabled())
-    m_colorBehavior = ColorBehavior::tag();
-
   m_contentLayerDelegate = WTF::makeUnique<ContentLayerDelegate>(this);
   m_layer = Platform::current()->compositorSupport()->createContentLayer(
       m_contentLayerDelegate.get());
@@ -155,18 +147,6 @@ LayoutRect GraphicsLayer::visualRect() const {
 
 void GraphicsLayer::setHasWillChangeTransformHint(bool hasWillChangeTransform) {
   m_layer->layer()->setHasWillChangeTransformHint(hasWillChangeTransform);
-}
-
-void GraphicsLayer::setPreferredRasterBounds(const IntSize& bounds) {
-  m_preferredRasterBounds = bounds;
-  m_hasPreferredRasterBounds = true;
-  m_layer->layer()->setPreferredRasterBounds(bounds);
-}
-
-void GraphicsLayer::clearPreferredRasterBounds() {
-  m_preferredRasterBounds = IntSize();
-  m_hasPreferredRasterBounds = false;
-  m_layer->layer()->clearPreferredRasterBounds();
 }
 
 void GraphicsLayer::setParent(GraphicsLayer* layer) {
@@ -334,8 +314,7 @@ bool GraphicsLayer::paintWithoutCommit(
     return false;
   }
 
-  GraphicsContext context(getPaintController(), disabledMode, nullptr,
-                          m_colorBehavior);
+  GraphicsContext context(getPaintController(), disabledMode, nullptr);
 
   m_previousInterestRect = *interestRect;
   m_client->paintContents(this, context, m_paintingPhase, *interestRect);
@@ -417,7 +396,7 @@ void GraphicsLayer::unregisterContentsLayer(WebLayer* layer) {
   DCHECK(s_registeredLayerSet);
   if (!s_registeredLayerSet->contains(layer->id()))
     CRASH();
-  s_registeredLayerSet->remove(layer->id());
+  s_registeredLayerSet->erase(layer->id());
 }
 
 void GraphicsLayer::setContentsTo(WebLayer* layer) {
@@ -685,11 +664,6 @@ std::unique_ptr<JSONObject> GraphicsLayer::layerAsJSONInternal(
   if (!m_backfaceVisibility) {
     json->setString("backfaceVisibility",
                     m_backfaceVisibility ? "visible" : "hidden");
-  }
-
-  if (m_hasPreferredRasterBounds) {
-    json->setArray("preferredRasterBounds",
-                   sizeAsJSONArray(m_preferredRasterBounds));
   }
 
   if (flags & LayerTreeIncludesDebugInfo)
@@ -1072,8 +1046,7 @@ void GraphicsLayer::setContentsRect(const IntRect& rect) {
 void GraphicsLayer::setContentsToImage(
     Image* image,
     RespectImageOrientationEnum respectImageOrientation) {
-  sk_sp<SkImage> skImage =
-      image ? image->imageForCurrentFrame(m_colorBehavior) : nullptr;
+  sk_sp<SkImage> skImage = image ? image->imageForCurrentFrame() : nullptr;
 
   if (image && skImage && image->isBitmapImage()) {
     if (respectImageOrientation == RespectImageOrientation) {
@@ -1208,8 +1181,7 @@ sk_sp<PaintRecord> GraphicsLayer::captureRecord() {
 
   IntSize intSize = expandedIntSize(size());
   GraphicsContext graphicsContext(getPaintController(),
-                                  GraphicsContext::NothingDisabled, nullptr,
-                                  m_colorBehavior);
+                                  GraphicsContext::NothingDisabled, nullptr);
   graphicsContext.beginRecording(IntRect(IntPoint(0, 0), intSize));
   getPaintController().paintArtifact().replay(graphicsContext);
   return graphicsContext.endRecording();
@@ -1250,8 +1222,7 @@ void GraphicsLayer::checkPaintUnderInvalidations(const PaintRecord& newRecord) {
   oldBitmap.allocPixels(
       SkImageInfo::MakeN32Premul(rect.width(), rect.height()));
   {
-    SkCanvas bitmapCanvas(oldBitmap);
-    PaintCanvasPassThrough canvas(&bitmapCanvas);
+    SkiaPaintCanvas canvas(oldBitmap);
     canvas.clear(SK_ColorTRANSPARENT);
     canvas.translate(-rect.x(), -rect.y());
     canvas.drawPicture(tracking->lastPaintedRecord.get());
@@ -1261,8 +1232,7 @@ void GraphicsLayer::checkPaintUnderInvalidations(const PaintRecord& newRecord) {
   newBitmap.allocPixels(
       SkImageInfo::MakeN32Premul(rect.width(), rect.height()));
   {
-    SkCanvas bitmapCanvas(newBitmap);
-    PaintCanvasPassThrough canvas(&bitmapCanvas);
+    SkiaPaintCanvas canvas(newBitmap);
     canvas.clear(SK_ColorTRANSPARENT);
     canvas.translate(-rect.x(), -rect.y());
     canvas.drawPicture(&newRecord);

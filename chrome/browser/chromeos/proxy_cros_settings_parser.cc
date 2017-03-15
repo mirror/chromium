@@ -17,14 +17,14 @@ namespace chromeos {
 namespace {
 
 base::Value* CreateServerHostValue(const UIProxyConfig::ManualProxy& proxy) {
-  return proxy.server.is_valid() ?
-         new base::StringValue(proxy.server.host_port_pair().host()) :
-         NULL;
+  return proxy.server.is_valid()
+             ? new base::Value(proxy.server.host_port_pair().host())
+             : NULL;
 }
 
 base::Value* CreateServerPortValue(const UIProxyConfig::ManualProxy& proxy) {
   return proxy.server.is_valid()
-             ? new base::FundamentalValue(proxy.server.host_port_pair().port())
+             ? new base::Value(proxy.server.host_port_pair().port())
              : NULL;
 }
 
@@ -292,7 +292,7 @@ bool GetProxyPrefValue(const std::string& network_guid,
     // Only show pacurl for pac-script mode.
     if (config.mode == UIProxyConfig::MODE_PAC_SCRIPT &&
         config.automatic_proxy.pac_url.is_valid()) {
-      data = new base::StringValue(config.automatic_proxy.pac_url.spec());
+      data = new base::Value(config.automatic_proxy.pac_url.spec());
     }
   } else if (path == kProxySingleHttp) {
     data = CreateServerHostValue(config.single_proxy);
@@ -305,12 +305,12 @@ bool GetProxyPrefValue(const std::string& network_guid,
   } else if (path == kProxyType) {
     if (config.mode == UIProxyConfig::MODE_AUTO_DETECT ||
         config.mode == UIProxyConfig::MODE_PAC_SCRIPT) {
-      data = new base::FundamentalValue(3);
+      data = new base::Value(3);
     } else if (config.mode == UIProxyConfig::MODE_SINGLE_PROXY ||
                config.mode == UIProxyConfig::MODE_PROXY_PER_SCHEME) {
-      data = new base::FundamentalValue(2);
+      data = new base::Value(2);
     } else {
-      data = new base::FundamentalValue(1);
+      data = new base::Value(1);
     }
     switch (config.state) {
       case ProxyPrefs::CONFIG_POLICY:
@@ -328,11 +328,9 @@ bool GetProxyPrefValue(const std::string& network_guid,
         break;
     }
   } else if (path == kProxySingle) {
-    data = new base::FundamentalValue(config.mode ==
-                                      UIProxyConfig::MODE_SINGLE_PROXY);
+    data = new base::Value(config.mode == UIProxyConfig::MODE_SINGLE_PROXY);
   } else if (path == kProxyUsePacUrl) {
-    data = new base::FundamentalValue(config.mode ==
-                                      UIProxyConfig::MODE_PAC_SCRIPT);
+    data = new base::Value(config.mode == UIProxyConfig::MODE_PAC_SCRIPT);
   } else if (path == kProxyFtpUrl) {
     data = CreateServerHostValue(config.ftp_proxy);
   } else if (path == kProxySocks) {
@@ -359,7 +357,7 @@ bool GetProxyPrefValue(const std::string& network_guid,
   // Decorate pref value as CoreOptionsHandler::CreateValueForPref() does.
   base::DictionaryValue* dict = new base::DictionaryValue;
   if (!data)
-    data = new base::StringValue("");
+    data = new base::Value("");
   dict->Set("value", data);
   if (path == kProxyType) {
     if (!controlled_by.empty())

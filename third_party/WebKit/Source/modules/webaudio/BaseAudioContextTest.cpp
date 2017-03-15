@@ -27,22 +27,22 @@ namespace {
 
 const char* const kCrossOriginMetric = "WebAudio.Autoplay.CrossOrigin";
 
-class MockCrossOriginFrameLoaderClient final : public EmptyFrameLoaderClient {
+class MockCrossOriginLocalFrameClient final : public EmptyLocalFrameClient {
  public:
-  static MockCrossOriginFrameLoaderClient* create(Frame* parent) {
-    return new MockCrossOriginFrameLoaderClient(parent);
+  static MockCrossOriginLocalFrameClient* create(Frame* parent) {
+    return new MockCrossOriginLocalFrameClient(parent);
   }
 
   DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->trace(m_parent);
-    EmptyFrameLoaderClient::trace(visitor);
+    EmptyLocalFrameClient::trace(visitor);
   }
 
   Frame* parent() const override { return m_parent.get(); }
   Frame* top() const override { return m_parent.get(); }
 
  private:
-  explicit MockCrossOriginFrameLoaderClient(Frame* parent) : m_parent(parent) {}
+  explicit MockCrossOriginLocalFrameClient(Frame* parent) : m_parent(parent) {}
 
   Member<Frame> m_parent;
 };
@@ -99,7 +99,7 @@ class BaseAudioContextTest : public ::testing::Test {
 
   void createChildFrame() {
     m_childFrame = LocalFrame::create(
-        MockCrossOriginFrameLoaderClient::create(document().frame()),
+        MockCrossOriginLocalFrameClient::create(document().frame()),
         document().frame()->host(), m_dummyFrameOwner.get());
     m_childFrame->setView(FrameView::create(*m_childFrame, IntSize(500, 500)));
     m_childFrame->init();

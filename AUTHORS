@@ -1,4 +1,4 @@
-# Names should be added to this file with this pattern:
+﻿# Names should be added to this file with this pattern:
 #
 # For individuals:
 #   Name <email address>
@@ -45,6 +45,7 @@ Alfredo Hernandez <ahernandez.miralles@gmail.com>
 Ali Vathi <ali.akbar@gmail.com>
 Allan Sandfeld Jensen <allan.jensen@theqtcompany.com>
 Ambarish Rapte <ambarish.r@samsung.com>
+Amey Jahagirdar <jahagird@amazon.com>
 Amit Sarkar <amit.srkr@samsung.com>
 Amogh Bihani <amogh.bihani@samsung.com>
 Amos Lim <amoseui@gmail.com>
@@ -81,6 +82,7 @@ Arun Mankuzhi <arun.m@samsung.com>
 Arunoday Sarkar <a.sarkar.arun@gmail.com>
 Arunprasad Rajkumar <ararunprasad@gmail.com>
 Arunprasad Rajkumar <arurajku@cisco.com>
+Ashish Kumar Gupta <guptaag@amazon.com>
 Ashlin Joseph <ashlin.j@samsung.com>
 Attila Dusnoki <dati91@gmail.com>
 Avinaash Doreswamy <avi.nitk@samsung.com>
@@ -287,8 +289,10 @@ Isaac Reilly <reillyi@amazon.com>
 Ivan Sham <ivansham@amazon.com>
 J. Ryan Stinnett <jryans@chromium.org>
 Jack Bates <jack@nottheoilrig.com>
+Jacob Clark <jacob.jh.clark@googlemail.com>
 Jacob Mandelson <jacob@mandelson.org>
 Jaehun Lim <ljaehun.lim@samsung.com>
+Jaehyun Lee <j-hyun.lee@samsung.com>
 Jaekyeom Kim <btapiz@gmail.com>
 Jaemin Seo <jaemin86.seo@samsung.com>
 Jaeseok Yoon <yjaeseok@gmail.com>
@@ -449,6 +453,7 @@ Mark Hahnenberg <mhahnenb@andrew.cmu.edu>
 Mark Seaborn <mrs@mythic-beasts.com>
 Martijn Croonen <martijn@martijnc.be>
 Martin Bednorz <m.s.bednorz@gmail.com>
+Martin Rogalla <martin@martinrogalla.com>
 Martina Kollarova <martina.kollarova@intel.com>
 Masahiro Yado <yado.masa@gmail.com>
 Masaru Nishida <msr.i386@gmail.com>
@@ -487,6 +492,7 @@ Milko Leporis <milko.leporis@imgtec.com>
 Milton Chiang <milton.chiang@mediatek.com>
 Minggang Wang <minggang.wang@intel.com>
 Mingmin Xie <melvinxie@gmail.com>
+Minseok Koo <kei98301@gmail.com>
 Minsoo Max Koo <msu.koo@samsung.com>
 Miran Karic <miran.karic@imgtec.com>
 Mirela Budaes <mbudaes@gmail.com>
@@ -505,6 +511,7 @@ Naiem Shaik <naiem.shaik@gmail.com>
 Naoki Takano <takano.naoki@gmail.com>
 Naveen Bobbili <naveenbobbili@motorola.com>
 Naveen Bobbili <qghc36@motorola.com>
+Naveen Kumar Devaraj <devarajn@amazon.com>
 Naveen Kumar S G <naveensg@samsung.com>
 Nayan Kumar K <qtc746@motorola.com>
 Nedeljko Babic <nedeljko.babic@imgtec.com>
@@ -661,6 +668,7 @@ Siba Samal <siba.samal@samsung.com>
 Simon Arlott <simon.arlott@gmail.com>
 Siva Kumar Gunturi <siva.gunturi@samsung.com>
 Sohan Jyoti Ghosh <sohan.jyoti@samsung.com>
+Sohan Jyoti Ghosh <sohan.jyoti@huawei.com>
 Song YeWen <ffmpeg@gmail.com>
 Sooho Park <sooho1000@gmail.com>
 Soorya R <soorya.r@samsung.com>
@@ -690,6 +698,7 @@ Szymon Piechowicz <szymonpiechowicz@o2.pl>
 Taehoon Lee <taylor.hoon@gmail.com>
 Takeshi Kurosawa <taken.spc@gmail.com>
 Tanay Chowdhury <tanay.c@samsung.com>
+Tanvir Rizvi <tanvir.rizvi@samsung.com>
 Tapu Kumar Ghose <ghose.tapu@gmail.com>
 Taylor Price <trprice@gmail.com>
 Ted Kim <neot0000@gmail.com>
@@ -727,6 +736,7 @@ Visa Putkinen <v.putkinen@partner.samsung.com>
 Vivek Galatage <vivek.vg@samsung.com>
 Volker Sorge <volker.sorge@gmail.com>
 Waihung Fu <fufranci@amazon.com>
+Wanchang Ryu <wanchang.ryu@lge.com>
 Wesley Lancel <wesleylancel@gmail.com>
 Wesley Wigham <t-weswig@microsoft.com>
 Wesley Wigham <wwigham@gmail.com>
@@ -762,6 +772,7 @@ Yongsheng Zhu <yongsheng.zhu@intel.com>
 Yoonjae Cho <yoonjae.cho92@gmail.com>
 Yoshinori Sano <yoshinori.sano@gmail.com>
 Youngho Seo <hazivoo@gmail.com>
+Youngho Yoo <youngho33.yoo@lge.com>
 YoungKi Hong <simon.hong81@gmail.com>
 Youngmin Yoo <youngmin.yoo@samsung.com>
 Youngsoo Choi <kenshin.choi@samsung.com>
@@ -806,6 +817,7 @@ Yeol Park <peary2@gmail.com>
 Debug Wang <debugwang@tencent.com>
 Zeqin Chen <talonchen@tencent.com>
 Yong Wang <ccyongwang@tencent.com>
+Charles Vaughn <cvaughn@gmail.com>
 
 BlackBerry Limited <*@blackberry.com>
 Code Aurora Forum <*@codeaurora.org>
@@ -827,3 +839,5 @@ Yandex LLC <*@yandex-team.ru>
 ARM Holdings <*@arm.com>
 Macadamian <*@macadamian.com>
 IBM Inc. <*@*.ibm.com>
+Tableau Software <*@tableau.com>
+Akamai Inc. <*@akamai.com>

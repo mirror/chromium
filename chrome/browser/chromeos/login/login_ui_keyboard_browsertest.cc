@@ -43,15 +43,12 @@ void Append_en_US_InputMethods(std::vector<std::string>* out) {
 class FocusPODWaiter {
  public:
   FocusPODWaiter() : focused_(false), runner_(new content::MessageLoopRunner) {
-    GetOobeUI()
-        ->signin_screen_handler_for_test()
-        ->SetFocusPODCallbackForTesting(
-            base::Bind(&FocusPODWaiter::OnFocusPOD, base::Unretained(this)));
+    GetOobeUI()->signin_screen_handler()->SetFocusPODCallbackForTesting(
+        base::Bind(&FocusPODWaiter::OnFocusPOD, base::Unretained(this)));
   }
   ~FocusPODWaiter() {
-    GetOobeUI()
-        ->signin_screen_handler_for_test()
-        ->SetFocusPODCallbackForTesting(base::Closure());
+    GetOobeUI()->signin_screen_handler()->SetFocusPODCallbackForTesting(
+        base::Closure());
   }
 
   void OnFocusPOD() {
@@ -70,9 +67,8 @@ class FocusPODWaiter {
     if (focused_)
       return;
     runner_->Run();
-    GetOobeUI()
-        ->signin_screen_handler_for_test()
-        ->SetFocusPODCallbackForTesting(base::Closure());
+    GetOobeUI()->signin_screen_handler()->SetFocusPODCallbackForTesting(
+        base::Closure());
     runner_ = NULL;
   }
 
@@ -107,12 +103,12 @@ class LoginUIKeyboardTest : public chromeos::LoginManagerTest {
 
   // Should be called from PRE_ test so that local_state is saved to disk, and
   // reloaded in the main test.
-  void InitUserLRUInputMethod() {
+  void InitUserLastInputMethod() {
     PrefService* local_state = g_browser_process->local_state();
 
-    input_method::SetUserLRUInputMethodPreferenceForTesting(
+    input_method::SetUserLastInputMethodPreferenceForTesting(
         kTestUser1, user_input_methods[0], local_state);
-    input_method::SetUserLRUInputMethodPreferenceForTesting(
+    input_method::SetUserLastInputMethodPreferenceForTesting(
         kTestUser2, user_input_methods[1], local_state);
   }
 
@@ -145,7 +141,7 @@ IN_PROC_BROWSER_TEST_F(LoginUIKeyboardTest, PRE_CheckPODScreenWithUsers) {
   RegisterUser(kTestUser1);
   RegisterUser(kTestUser2);
 
-  InitUserLRUInputMethod();
+  InitUserLastInputMethod();
 
   StartupUtils::MarkOobeCompleted();
 }
@@ -208,14 +204,14 @@ class LoginUIKeyboardTestWithUsersAndOwner : public chromeos::LoginManagerTest {
 
   // Should be called from PRE_ test so that local_state is saved to disk, and
   // reloaded in the main test.
-  void InitUserLRUInputMethod() {
+  void InitUserLastInputMethod() {
     PrefService* local_state = g_browser_process->local_state();
 
-    input_method::SetUserLRUInputMethodPreferenceForTesting(
+    input_method::SetUserLastInputMethodPreferenceForTesting(
         kTestUser1, user_input_methods[0], local_state);
-    input_method::SetUserLRUInputMethodPreferenceForTesting(
+    input_method::SetUserLastInputMethodPreferenceForTesting(
         kTestUser2, user_input_methods[1], local_state);
-    input_method::SetUserLRUInputMethodPreferenceForTesting(
+    input_method::SetUserLastInputMethodPreferenceForTesting(
         kTestUser3, user_input_methods[2], local_state);
 
     local_state->SetString(language_prefs::kPreferredKeyboardLayout,
@@ -247,7 +243,7 @@ IN_PROC_BROWSER_TEST_F(LoginUIKeyboardTestWithUsersAndOwner,
   RegisterUser(kTestUser2);
   RegisterUser(kTestUser3);
 
-  InitUserLRUInputMethod();
+  InitUserLastInputMethod();
 
   StartupUtils::MarkOobeCompleted();
 }

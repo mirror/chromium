@@ -33,8 +33,8 @@
 #include "core/frame/FrameTypes.h"
 #include "core/loader/FrameLoaderTypes.h"
 #include "core/page/FrameTree.h"
-#include "platform/feature_policy/FeaturePolicy.h"
 #include "platform/heap/Handle.h"
+#include "public/platform/WebFeaturePolicy.h"
 #include "wtf/Forward.h"
 
 namespace blink {
@@ -149,6 +149,10 @@ class CORE_EXPORT Frame : public GarbageCollectedFinalized<Frame> {
   bool hasReceivedUserGesture() const { return m_hasReceivedUserGesture; }
 
   bool isDetaching() const { return m_isDetaching; }
+
+  // Tests whether the feature-policy controlled feature is enabled by policy in
+  // the given frame.
+  bool isFeatureEnabled(WebFeaturePolicyFeature) const;
 
  protected:
   Frame(FrameClient*, FrameHost*, FrameOwner*);

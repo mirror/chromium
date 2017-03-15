@@ -6,6 +6,9 @@
 
 #import <Cocoa/Cocoa.h>
 
+#include "base/mac/mac_util.h"
+#import "base/mac/sdk_forward_declarations.h"
+#include "base/strings/stringprintf.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #import "testing/gtest_mac.h"
@@ -418,6 +421,31 @@ TEST_F(NativeWidgetMacAccessibilityTest, TextfieldWritableAttributes) {
   // Make sure the cursor is at the end of the replacement.
   EXPECT_EQ(gfx::Range(front.length() + replacement.length()),
             textfield->GetSelectedRange());
+
+  // Check it's not possible to change the selection range when read-only. Note
+  // that this behavior is inconsistent with Cocoa - selections can be set via
+  // a11y in selectable NSTextfields (unless they are password fields).
+  // https://crbug.com/692362
+  textfield->SetReadOnly(true);
+  EXPECT_FALSE([ax_node accessibilityIsAttributeSettable:
+                            NSAccessibilitySelectedTextRangeAttribute]);
+  textfield->SetReadOnly(false);
+  EXPECT_TRUE([ax_node accessibilityIsAttributeSettable:
+                           NSAccessibilitySelectedTextRangeAttribute]);
+
+  // Change the selection to a valid range within the text.
+  [ax_node accessibilitySetValue:[NSValue valueWithRange:NSMakeRange(2, 5)]
+                    forAttribute:NSAccessibilitySelectedTextRangeAttribute];
+  EXPECT_EQ(gfx::Range(2, 7), textfield->GetSelectedRange());
+  // If the length is longer than the value length, default to the max possible.
+  [ax_node accessibilitySetValue:[NSValue valueWithRange:NSMakeRange(0, 1000)]
+                    forAttribute:NSAccessibilitySelectedTextRangeAttribute];
+  EXPECT_EQ(gfx::Range(0, textfield->text().length()),
+            textfield->GetSelectedRange());
+  // Check just moving the cursor works, too.
+  [ax_node accessibilitySetValue:[NSValue valueWithRange:NSMakeRange(5, 0)]
+                    forAttribute:NSAccessibilitySelectedTextRangeAttribute];
+  EXPECT_EQ(gfx::Range(5, 5), textfield->GetSelectedRange());
 }
 
 // Test performing a 'click' on Views with clickable roles work.
@@ -434,6 +462,62 @@ TEST_F(NativeWidgetMacAccessibilityTest, PressAction) {
       containsObject:NSAccessibilityPressAction]);
   [ax_node accessibilityPerformAction:NSAccessibilityPressAction];
   EXPECT_TRUE(view->mouse_was_pressed());
+}
+
+// Test text-specific attributes that should not be supported for protected
+// textfields.
+TEST_F(NativeWidgetMacAccessibilityTest, ProtectedTextfields) {
+  Textfield* textfield = AddChildTextfield(GetWidgetBounds().size());
+  textfield->SetTextInputType(ui::TEXT_INPUT_TYPE_PASSWORD);
+
+  // Get the Textfield accessibility object.
+  NSPoint midpoint = gfx::ScreenPointToNSPoint(GetWidgetBounds().CenterPoint());
+  id ax_node = [widget()->GetNativeWindow() accessibilityHitTest:midpoint];
+  EXPECT_TRUE(ax_node);
+
+  // Create a native Cocoa NSSecureTextField to compare against.
+  base::scoped_nsobject<NSSecureTextField> cocoa_secure_textfield(
+      [[NSSecureTextField alloc] initWithFrame:NSMakeRect(0, 0, 10, 10)]);
+
+  NSArray* views_attributes = [ax_node accessibilityAttributeNames];
+  NSArray* cocoa_attributes =
+      [cocoa_secure_textfield accessibilityAttributeNames];
+
+  NSArray* const expected_supported_attributes = @[
+    NSAccessibilityValueAttribute, NSAccessibilityPlaceholderValueAttribute
+  ];
+  NSArray* const expected_unsupported_attributes = @[
+    NSAccessibilitySelectedTextAttribute,
+    NSAccessibilitySelectedTextRangeAttribute,
+    NSAccessibilityNumberOfCharactersAttribute,
+    NSAccessibilityVisibleCharacterRangeAttribute,
+    NSAccessibilityInsertionPointLineNumberAttribute
+  ];
+
+  for (NSString* attribute_name in expected_supported_attributes) {
+    SCOPED_TRACE(base::SysNSStringToUTF8([NSString
+        stringWithFormat:@"Missing attribute is: %@", attribute_name]));
+    EXPECT_TRUE([views_attributes containsObject:attribute_name]);
+  }
+  if (base::mac::IsAtLeastOS10_10()) {
+    // Check Cocoa's attribute values for PlaceHolder and Value here separately
+    // - these are using the new NSAccessibility protocol.
+    EXPECT_TRUE([cocoa_secure_textfield
+        isAccessibilitySelectorAllowed:@selector(
+                                           accessibilityPlaceholderValue)]);
+    EXPECT_TRUE([cocoa_secure_textfield
+        isAccessibilitySelectorAllowed:@selector(accessibilityValue)]);
+  }
+
+  EXPECT_FALSE(
+      [ax_node accessibilityIsAttributeSettable:NSAccessibilityValueAttribute]);
+
+  for (NSString* attribute_name in expected_unsupported_attributes) {
+    SCOPED_TRACE(base::SysNSStringToUTF8([NSString
+        stringWithFormat:@"Missing attribute is: %@", attribute_name]));
+    EXPECT_FALSE([views_attributes containsObject:attribute_name]);
+    EXPECT_FALSE([cocoa_attributes containsObject:attribute_name]);
+  }
 }
 
 }  // namespace views

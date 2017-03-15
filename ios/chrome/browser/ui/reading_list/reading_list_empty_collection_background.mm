@@ -29,11 +29,13 @@ NSString* const kOpenShareMarker = @"SHARE_OPENING_ICON";
 // Background view constants.
 const CGFloat kTextImageSpacing = 10;
 const CGFloat kTextHorizontalMinimumMargin = 32;
-const CGFloat kTextMaximalWidth = 270;
+const CGFloat kTextMaximalWidth = 255;
 const CGFloat kImageWidth = 60;
 const CGFloat kImageHeight = 44;
 const CGFloat kFontSize = 16;
-const CGFloat kIconSize = 24;
+const CGFloat kIconHeight = 24;
+const CGFloat kToolbarMenuWidth = 18;
+const CGFloat kShareMenuWidth = 24;
 const CGFloat kLineHeight = 24;
 const CGFloat kPercentageFromTopForPosition = 0.4;
 
@@ -46,11 +48,10 @@ const CGFloat kPercentageFromTopForPosition = 0.4;
 // the color). |spaceBeforeCaret| controls whether a space should be added
 // between the image and the caret.
 - (void)attachIconNamed:(NSString*)iconName
-     accessibilityLabel:(NSString*)accessibilityLabel
                toString:(NSMutableAttributedString*)instructionString
               withCaret:(NSMutableAttributedString*)caret
-       spaceBeforeCaret:(BOOL)spaceBeforeCaret
                  offset:(CGFloat)iconOffset
+                  width:(CGFloat)icondWidth
         imageAttributes:(NSDictionary*)attributes;
 // Sets the constraints for this view, positionning the |imageView| in the X
 // center and at 40% of the top. The |label| is positionned below.
@@ -88,7 +89,7 @@ const CGFloat kPercentageFromTopForPosition = 0.4;
     };
 
     // Offset to vertically center the icons.
-    CGFloat iconOffset = (textFont.xHeight - kIconSize) / 2.0;
+    CGFloat iconOffset = (textFont.xHeight - kIconHeight) / 2.0;
 
     UIFont* instructionFont = [fontLoader boldFontOfSize:kFontSize];
     NSDictionary* instructionAttributes = @{
@@ -106,51 +107,71 @@ const CGFloat kPercentageFromTopForPosition = 0.4;
 
     NSMutableAttributedString* instructionString =
         [[NSMutableAttributedString alloc] init];
+    NSString* accessibilityInstructionString = @":";
 
     // Add the images inside the string.
-    if (IsCompact()) {
+    if (IsCompact() || !IsIPadIdiom()) {
+      // TODO(crbug.com/698726): When the share icon is displayed in the toolbar
+      // for landscape iPhone 6+, remove !IsIPadIdiom().
       // If the device has a compact display the share menu is accessed from the
       // toolbar menu. If it is expanded, the share menu is directly accessible.
       [self attachIconNamed:kToolbarMenuIcon
-          accessibilityLabel:l10n_util::GetNSString(IDS_IOS_TOOLBAR_SETTINGS)
-                    toString:instructionString
-                   withCaret:caret
-            spaceBeforeCaret:NO
-                      offset:iconOffset
-             imageAttributes:textAttributes];
+                   toString:instructionString
+                  withCaret:caret
+                     offset:iconOffset
+                      width:kToolbarMenuWidth
+            imageAttributes:textAttributes];
+
+      accessibilityInstructionString = [[accessibilityInstructionString
+          stringByAppendingString:l10n_util::GetNSString(
+                                      IDS_IOS_TOOLBAR_SETTINGS)]
+          stringByAppendingString:@", "];
+
+      // Add a space before the share icon.
+      [instructionString
+          appendAttributedString:[[NSAttributedString alloc]
+                                     initWithString:@" "
+                                         attributes:instructionAttributes]];
     }
 
-    // Add a space before the share icon.
-    [instructionString
-        appendAttributedString:[[NSAttributedString alloc]
-                                   initWithString:@" "
-                                       attributes:instructionAttributes]];
-
     [self attachIconNamed:kShareMenuIcon
-        accessibilityLabel:l10n_util::GetNSString(IDS_IOS_TOOLS_MENU_SHARE)
-                  toString:instructionString
-                 withCaret:caret
-          spaceBeforeCaret:YES
-                    offset:iconOffset
-           imageAttributes:textAttributes];
+                 toString:instructionString
+                withCaret:caret
+                   offset:iconOffset
+                    width:kShareMenuWidth
+          imageAttributes:textAttributes];
+
+    accessibilityInstructionString = [[accessibilityInstructionString
+        stringByAppendingString:l10n_util::GetNSString(
+                                    IDS_IOS_TOOLS_MENU_SHARE)]
+        stringByAppendingString:@", "];
 
     // Add the "Read Later" string.
     NSAttributedString* shareMenuAction =
         [[NSAttributedString alloc] initWithString:readLater
                                         attributes:instructionAttributes];
     [instructionString appendAttributedString:shareMenuAction];
+    accessibilityInstructionString =
+        [accessibilityInstructionString stringByAppendingString:readLater];
 
+    // Marker
     NSRange iconRange =
         [[baseAttributedString string] rangeOfString:kOpenShareMarker];
     DCHECK(iconRange.location != NSNotFound);
     [baseAttributedString replaceCharactersInRange:iconRange
                               withAttributedString:instructionString];
+    NSString* accessibilityLabel =
+        l10n_util::GetNSString(IDS_IOS_READING_LIST_EMPTY_MESSAGE);
+    accessibilityLabel = [accessibilityLabel
+        stringByReplacingOccurrencesOfString:kOpenShareMarker
+                                  withString:accessibilityInstructionString];
 
     // Attach to the label.
     UILabel* label = [[UILabel alloc] initWithFrame:CGRectZero];
     label.attributedText = baseAttributedString;
     label.numberOfLines = 0;
     label.textAlignment = NSTextAlignmentCenter;
+    label.accessibilityLabel = accessibilityLabel;
     [label setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self addSubview:label];
 
@@ -165,11 +186,10 @@ const CGFloat kPercentageFromTopForPosition = 0.4;
 }
 
 - (void)attachIconNamed:(NSString*)iconName
-     accessibilityLabel:(NSString*)accessibilityLabel
                toString:(NSMutableAttributedString*)instructionString
               withCaret:(NSMutableAttributedString*)caret
-       spaceBeforeCaret:(BOOL)spaceBeforeCaret
                  offset:(CGFloat)iconOffset
+                  width:(CGFloat)iconWidth
         imageAttributes:(NSDictionary*)attributes {
   // Add a zero width space to set the attributes for the image.
   [instructionString appendAttributedString:[[NSAttributedString alloc]
@@ -179,17 +199,14 @@ const CGFloat kPercentageFromTopForPosition = 0.4;
   NSTextAttachment* toolbarIcon = [[NSTextAttachment alloc] init];
   toolbarIcon.image = [[UIImage imageNamed:iconName]
       imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  toolbarIcon.image.accessibilityLabel = accessibilityLabel;
-  toolbarIcon.bounds = CGRectMake(0, iconOffset, kIconSize, kIconSize);
+  toolbarIcon.bounds = CGRectMake(0, iconOffset, iconWidth, kIconHeight);
   [instructionString
       appendAttributedString:[NSAttributedString
                                  attributedStringWithAttachment:toolbarIcon]];
 
-  if (spaceBeforeCaret) {
     [instructionString appendAttributedString:[[NSAttributedString alloc]
                                                   initWithString:@" "
                                                       attributes:attributes]];
-  }
 
   [instructionString appendAttributedString:caret];
 }

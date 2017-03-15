@@ -58,7 +58,7 @@ class NativeExtensionBindingsSystem : public ExtensionBindingsSystem {
  private:
   // Handles sending a given |request|, forwarding it on to the send_ipc_ after
   // adding additional info.
-  void SendRequest(std::unique_ptr<APIBinding::Request> request,
+  void SendRequest(std::unique_ptr<APIRequestHandler::Request> request,
                    v8::Local<v8::Context> context);
 
   // Called when listeners for a given event have changed, and forwards it along
@@ -80,6 +80,13 @@ class NativeExtensionBindingsSystem : public ExtensionBindingsSystem {
 
   // Callback to get an API binding for an internal API.
   static void GetInternalAPI(const v8::FunctionCallbackInfo<v8::Value>& info);
+
+  // Helper method to get a APIBindingJSUtil object for the current context,
+  // and populate |binding_util_out|. We use an out parameter instead of
+  // returning it in order to let us use weak ptrs, which can't be used on a
+  // method with a return value.
+  void GetJSBindingUtil(v8::Local<v8::Context> context,
+                        v8::Local<v8::Value>* binding_util_out);
 
   // Handler to send request IPCs. Abstracted out for testing purposes.
   SendRequestIPCMethod send_request_ipc_;

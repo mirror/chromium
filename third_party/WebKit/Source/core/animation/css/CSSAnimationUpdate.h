@@ -106,8 +106,10 @@ class CSSAnimationUpdate final {
     m_newTransitions = update.newTransitions();
     m_activeInterpolationsForAnimations =
         update.activeInterpolationsForAnimations();
-    m_activeInterpolationsForTransitions =
-        update.activeInterpolationsForTransitions();
+    m_activeInterpolationsForCustomTransitions =
+        update.activeInterpolationsForCustomTransitions();
+    m_activeInterpolationsForStandardTransitions =
+        update.activeInterpolationsForStandardTransitions();
     m_cancelledAnimationIndices = update.cancelledAnimationIndices();
     m_animationIndicesWithPauseToggled =
         update.animationIndicesWithPauseToggled();
@@ -121,7 +123,8 @@ class CSSAnimationUpdate final {
     m_animationsWithUpdates.clear();
     m_newTransitions.clear();
     m_activeInterpolationsForAnimations.clear();
-    m_activeInterpolationsForTransitions.clear();
+    m_activeInterpolationsForCustomTransitions.clear();
+    m_activeInterpolationsForStandardTransitions.clear();
     m_cancelledAnimationIndices.clear();
     m_animationIndicesWithPauseToggled.clear();
     m_cancelledTransitions.clear();
@@ -162,26 +165,33 @@ class CSSAnimationUpdate final {
     m_updatedCompositorKeyframes.push_back(animation);
   }
 
-  void startTransition(CSSPropertyID id,
-                       const AnimatableValue* from,
-                       const AnimatableValue* to,
+  void startTransition(const PropertyHandle& property,
+                       RefPtr<AnimatableValue> from,
+                       RefPtr<AnimatableValue> to,
                        PassRefPtr<AnimatableValue> reversingAdjustedStartValue,
                        double reversingShorteningFactor,
                        const InertEffect& effect) {
     NewTransition newTransition;
-    newTransition.id = id;
-    newTransition.from = from;
-    newTransition.to = to;
+    newTransition.property = property;
+    newTransition.from = std::move(from);
+    newTransition.to = std::move(to);
     newTransition.reversingAdjustedStartValue = reversingAdjustedStartValue;
     newTransition.reversingShorteningFactor = reversingShorteningFactor;
     newTransition.effect = &effect;
-    m_newTransitions.set(id, newTransition);
+    m_newTransitions.set(property, newTransition);
   }
-  bool isCancelledTransition(CSSPropertyID id) const {
-    return m_cancelledTransitions.contains(id);
+  void unstartTransition(const PropertyHandle& property) {
+    m_newTransitions.remove(property);
   }
-  void cancelTransition(CSSPropertyID id) { m_cancelledTransitions.insert(id); }
-  void finishTransition(CSSPropertyID id) { m_finishedTransitions.insert(id); }
+  bool isCancelledTransition(const PropertyHandle& property) const {
+    return m_cancelledTransitions.contains(property);
+  }
+  void cancelTransition(const PropertyHandle& property) {
+    m_cancelledTransitions.insert(property);
+  }
+  void finishTransition(const PropertyHandle& property) {
+    m_finishedTransitions.insert(property);
+  }
 
   const HeapVector<NewCSSAnimation>& newAnimations() const {
     return m_newAnimations;
@@ -208,34 +218,43 @@ class CSSAnimationUpdate final {
    public:
     DEFINE_INLINE_TRACE() { visitor->trace(effect); }
 
-    CSSPropertyID id;
-    const AnimatableValue* from;
-    const AnimatableValue* to;
+    PropertyHandle property = HashTraits<blink::PropertyHandle>::emptyValue();
+    RefPtr<AnimatableValue> from;
+    RefPtr<AnimatableValue> to;
     RefPtr<AnimatableValue> reversingAdjustedStartValue;
     double reversingShorteningFactor;
     Member<const InertEffect> effect;
   };
-  using NewTransitionMap = HeapHashMap<CSSPropertyID, NewTransition>;
+  using NewTransitionMap = HeapHashMap<PropertyHandle, NewTransition>;
   const NewTransitionMap& newTransitions() const { return m_newTransitions; }
-  const HashSet<CSSPropertyID>& cancelledTransitions() const {
+  const HashSet<PropertyHandle>& cancelledTransitions() const {
     return m_cancelledTransitions;
   }
-  const HashSet<CSSPropertyID>& finishedTransitions() const {
+  const HashSet<PropertyHandle>& finishedTransitions() const {
     return m_finishedTransitions;
   }
 
   void adoptActiveInterpolationsForAnimations(ActiveInterpolationsMap& newMap) {
     newMap.swap(m_activeInterpolationsForAnimations);
   }
-  void adoptActiveInterpolationsForTransitions(
+  void adoptActiveInterpolationsForCustomTransitions(
       ActiveInterpolationsMap& newMap) {
-    newMap.swap(m_activeInterpolationsForTransitions);
+    newMap.swap(m_activeInterpolationsForCustomTransitions);
+  }
+  void adoptActiveInterpolationsForStandardTransitions(
+      ActiveInterpolationsMap& newMap) {
+    newMap.swap(m_activeInterpolationsForStandardTransitions);
   }
   const ActiveInterpolationsMap& activeInterpolationsForAnimations() const {
     return m_activeInterpolationsForAnimations;
   }
-  const ActiveInterpolationsMap& activeInterpolationsForTransitions() const {
-    return m_activeInterpolationsForTransitions;
+  const ActiveInterpolationsMap& activeInterpolationsForCustomTransitions()
+      const {
+    return m_activeInterpolationsForCustomTransitions;
+  }
+  const ActiveInterpolationsMap& activeInterpolationsForStandardTransitions()
+      const {
+    return m_activeInterpolationsForStandardTransitions;
   }
   ActiveInterpolationsMap& activeInterpolationsForAnimations() {
     return m_activeInterpolationsForAnimations;
@@ -249,7 +268,8 @@ class CSSAnimationUpdate final {
            m_cancelledTransitions.isEmpty() &&
            m_finishedTransitions.isEmpty() &&
            m_activeInterpolationsForAnimations.isEmpty() &&
-           m_activeInterpolationsForTransitions.isEmpty() &&
+           m_activeInterpolationsForCustomTransitions.isEmpty() &&
+           m_activeInterpolationsForStandardTransitions.isEmpty() &&
            m_updatedCompositorKeyframes.isEmpty();
   }
 
@@ -274,11 +294,12 @@ class CSSAnimationUpdate final {
   HeapVector<Member<Animation>> m_updatedCompositorKeyframes;
 
   NewTransitionMap m_newTransitions;
-  HashSet<CSSPropertyID> m_cancelledTransitions;
-  HashSet<CSSPropertyID> m_finishedTransitions;
+  HashSet<PropertyHandle> m_cancelledTransitions;
+  HashSet<PropertyHandle> m_finishedTransitions;
 
   ActiveInterpolationsMap m_activeInterpolationsForAnimations;
-  ActiveInterpolationsMap m_activeInterpolationsForTransitions;
+  ActiveInterpolationsMap m_activeInterpolationsForCustomTransitions;
+  ActiveInterpolationsMap m_activeInterpolationsForStandardTransitions;
 
   friend class PendingAnimationUpdate;
 };

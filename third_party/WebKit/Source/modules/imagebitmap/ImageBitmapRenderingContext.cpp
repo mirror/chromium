@@ -44,11 +44,7 @@ void ImageBitmapRenderingContext::transferFromImageBitmap(
   if (!m_image)
     return;
 
-  // TODO(ccameron): Determine the correct color behavior here.
-  // ImageBitmapRenderingContext.
-  // https://crbug.com/672306
-  sk_sp<SkImage> skImage =
-      m_image->imageForCurrentFrame(ColorBehavior::transformToGlobalTarget());
+  sk_sp<SkImage> skImage = m_image->imageForCurrentFrame();
   if (skImage->isTextureBacked()) {
     // TODO(junov): crbug.com/585607 Eliminate this readback and use an
     // ExternalTextureLayer
@@ -62,8 +58,7 @@ void ImageBitmapRenderingContext::transferFromImageBitmap(
     surface->getCanvas()->drawImage(skImage, 0, 0);
     m_image = StaticBitmapImage::create(surface->makeImageSnapshot());
   }
-  canvas()->didDraw(
-      FloatRect(FloatPoint(), FloatSize(m_image->width(), m_image->height())));
+  didDraw(skImage->bounds());
   imageBitmap->close();
 }
 
@@ -72,9 +67,7 @@ bool ImageBitmapRenderingContext::paint(GraphicsContext& gc, const IntRect& r) {
     return true;
 
   // With impl-side painting, it is unsafe to use a gpu-backed SkImage
-  DCHECK(
-      !m_image->imageForCurrentFrame(ColorBehavior::transformToGlobalTarget())
-           ->isTextureBacked());
+  DCHECK(!m_image->imageForCurrentFrame()->isTextureBacked());
   gc.drawImage(m_image.get(), r, nullptr, creationAttributes().alpha()
                                               ? SkBlendMode::kSrcOver
                                               : SkBlendMode::kSrc);

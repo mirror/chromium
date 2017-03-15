@@ -35,9 +35,10 @@
 #include "platform/loader/fetch/CrossOriginAccessControl.h"
 #include "platform/loader/fetch/FetchContext.h"
 #include "platform/loader/fetch/Resource.h"
+#include "platform/loader/fetch/ResourceError.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/network/NetworkInstrumentation.h"
-#include "platform/network/ResourceError.h"
+#include "platform/weborigin/SecurityViolationReportingPolicy.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebCachePolicy.h"
 #include "public/platform/WebData.h"
@@ -48,7 +49,6 @@
 #include "wtf/CurrentTime.h"
 #include "wtf/PtrUtil.h"
 #include "wtf/text/StringBuilder.h"
-#include <memory>
 
 namespace blink {
 
@@ -175,8 +175,8 @@ bool ResourceLoader::willFollowRedirect(
         m_resource->options(),
         /* Don't send security violation reports for unused preloads */
         (m_resource->isUnusedPreload()
-             ? FetchContext::SecurityViolationReportingPolicy::SuppressReporting
-             : FetchContext::SecurityViolationReportingPolicy::Report),
+             ? SecurityViolationReportingPolicy::SuppressReporting
+             : SecurityViolationReportingPolicy::Report),
         FetchRequest::UseDefaultOriginRestrictionForType);
     if (blockedReason != ResourceRequestBlockedReason::None) {
       cancelForRedirectAccessCheckError(newRequest.url(), blockedReason);
@@ -267,9 +267,8 @@ ResourceRequestBlockedReason ResourceLoader::canAccessResponse(
       resource->getType(), resource->resourceRequest(), response.url(),
       resource->options(),
       /* Don't send security violation reports for unused preloads */
-      (unusedPreload
-           ? FetchContext::SecurityViolationReportingPolicy::SuppressReporting
-           : FetchContext::SecurityViolationReportingPolicy::Report),
+      (unusedPreload ? SecurityViolationReportingPolicy::SuppressReporting
+                     : SecurityViolationReportingPolicy::Report),
       FetchRequest::UseDefaultOriginRestrictionForType);
   if (blockedReason != ResourceRequestBlockedReason::None)
     return blockedReason;
@@ -326,8 +325,8 @@ void ResourceLoader::didReceiveResponse(
     if (m_resource->options().corsEnabled == IsCORSEnabled &&
         response.wasFallbackRequiredByServiceWorker()) {
       ResourceRequest request = m_resource->lastResourceRequest();
-      DCHECK_EQ(request.skipServiceWorker(),
-                WebURLRequest::SkipServiceWorker::None);
+      DCHECK_EQ(request.getServiceWorkerMode(),
+                WebURLRequest::ServiceWorkerMode::All);
       // This code handles the case when a regular controlling service worker
       // doesn't handle a cross origin request. When this happens we still want
       // to give foreign fetch a chance to handle the request, so only skip the
@@ -340,8 +339,7 @@ void ResourceLoader::didReceiveResponse(
         handleError(ResourceError::cancelledError(response.url()));
         return;
       }
-      request.setSkipServiceWorker(
-          WebURLRequest::SkipServiceWorker::Controlling);
+      request.setServiceWorkerMode(WebURLRequest::ServiceWorkerMode::Foreign);
       restart(request);
       return;
     }

@@ -335,10 +335,7 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
                     new AwNetworkChangeNotifierRegistrationPolicy());
         }
 
-        int targetSdkVersion = applicationContext.getApplicationInfo().targetSdkVersion;
-        // TODO(sgurun) We need to change this to > N_MR1 when we roll N_MR1 sdk or
-        //  >= O when we roll O SDK to upstream. crbug/688556
-        AwContentsStatics.setCheckClearTextPermitted(targetSdkVersion > 25);
+        AwContentsStatics.setCheckClearTextPermitted(BuildInfo.targetsAtLeastO(applicationContext));
     }
 
     private void ensureChromiumStartedLocked(boolean onMainThread) {
@@ -385,7 +382,7 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
     // lives in the ui/ layer. See ui/base/ui_base_paths.h
     private static final int DIR_RESOURCE_PAKS_ANDROID = 3003;
 
-    private void startChromiumLocked() {
+    protected void startChromiumLocked() {
         assert Thread.holdsLock(mLock) && ThreadUtils.runningOnUiThread();
 
         // The post-condition of this method is everything is ready, so notify now to cover all
@@ -592,7 +589,7 @@ public class WebViewChromiumFactoryProvider implements WebViewFactoryProvider {
         final String yahooMailPackageId = "com.yahoo.mobile.client.android.mail";
         if (appName.startsWith(yahooMailPackageId)) {
             if (appTargetSdkVersion > Build.VERSION_CODES.M) return false;
-            if (versionCode > 1315849) return false;
+            if (versionCode > 1315850) return false;
             shouldDisable = true;
         }
 

@@ -22,7 +22,7 @@ using ui::TimeFormat;
 
 namespace ui {
 
-UI_BASE_EXPORT base::LazyInstance<FormatterContainer> g_container =
+UI_BASE_EXPORT base::LazyInstance<FormatterContainer>::Leaky g_container =
     LAZY_INSTANCE_INITIALIZER;
 
 // static

@@ -31,6 +31,7 @@
 #include "components/variations/variations_associated_data.h"
 #include "net/base/load_flags.h"
 #include "net/http/http_status_code.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 #if defined(OS_ANDROID) || defined(OS_IOS)
 #include "base/json/json_reader.h"
@@ -129,21 +130,46 @@ PopularSites::SitesVector ParseSiteList(const base::ListValue& list) {
 
     sites.emplace_back(title, GURL(url), GURL(favicon_url),
                        GURL(large_icon_url), GURL(thumbnail_url));
+    item->GetInteger("default_icon_resource",
+                     &sites.back().default_icon_resource);
   }
   return sites;
 }
 
+#if defined(GOOGLE_CHROME_BUILD) && (defined(OS_ANDROID) || defined(OS_IOS))
+void SetDefaultResourceForSite(int index,
+                               int resource_id,
+                               base::ListValue* sites) {
+  base::DictionaryValue* site;
+  if (!sites->GetDictionary(index, &site)) {
+    return;
+  }
+  site->SetInteger("default_icon_resource", resource_id);
+}
+#endif
+
 // Creates the list of popular sites based on a snapshot available for mobile.
 std::unique_ptr<base::ListValue> DefaultPopularSites() {
-#if defined(OS_ANDROID) || defined(OS_IOS)
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
+  return base::MakeUnique<base::ListValue>();
+#else
   std::unique_ptr<base::ListValue> sites =
-      base::ListValue::From(base::JSONReader().ReadToValue(
+      base::ListValue::From(base::JSONReader::Read(
           ResourceBundle::GetSharedInstance().GetRawDataResource(
               IDR_DEFAULT_POPULAR_SITES_JSON)));
   DCHECK(sites);
+#if defined(GOOGLE_CHROME_BUILD)
+  int index = 0;
+  for (int icon_resource :
+       {IDR_DEFAULT_POPULAR_SITES_ICON0, IDR_DEFAULT_POPULAR_SITES_ICON1,
+        IDR_DEFAULT_POPULAR_SITES_ICON2, IDR_DEFAULT_POPULAR_SITES_ICON3,
+        IDR_DEFAULT_POPULAR_SITES_ICON4, IDR_DEFAULT_POPULAR_SITES_ICON5,
+        IDR_DEFAULT_POPULAR_SITES_ICON6, IDR_DEFAULT_POPULAR_SITES_ICON7}) {
+    SetDefaultResourceForSite(index++, icon_resource, sites.get());
+  }
+#endif  // GOOGLE_CHROME_BUILD
   return sites;
-#endif
-  return base::MakeUnique<base::ListValue>();
+#endif  // OS_ANDROID || OS_IOS
 }
 
 }  // namespace
@@ -157,7 +183,8 @@ PopularSites::Site::Site(const base::string16& title,
       url(url),
       favicon_url(favicon_url),
       large_icon_url(large_icon_url),
-      thumbnail_url(thumbnail_url) {}
+      thumbnail_url(thumbnail_url),
+      default_icon_resource(-1) {}
 
 PopularSites::Site::Site(const Site& other) = default;
 
@@ -306,7 +333,28 @@ void PopularSitesImpl::RegisterProfilePrefs(
 }
 
 void PopularSitesImpl::FetchPopularSites() {
-  fetcher_ = URLFetcher::Create(pending_url_, URLFetcher::GET, this);
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("popular_sites_fetch", R"(
+        semantics {
+          sender: "Popular Sites New Tab Fetch"
+          description:
+            "Google Chrome may display a list of regionally-popular web sites "
+            "on the New Tab Page. This service fetches the list of these sites."
+          trigger:
+            "Once per day, unless no popular web sites are required because "
+            "the New Tab Page is filled with suggestions based on the user's "
+            "browsing history."
+          data: "A two letter country code based on the user's location."
+          destination: GOOGLE_OWNED_SERVICE
+        }
+        policy {
+          cookies_allowed: false
+          setting: "This feature cannot be disabled in settings."
+          policy_exception_justification:
+            "Not implemented, considered not useful."
+        })");
+  fetcher_ = URLFetcher::Create(pending_url_, URLFetcher::GET, this,
+                                traffic_annotation);
   data_use_measurement::DataUseUserData::AttachToFetcher(
       fetcher_.get(), data_use_measurement::DataUseUserData::NTP_TILES);
   fetcher_->SetRequestContext(download_context_);

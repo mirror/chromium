@@ -32,10 +32,7 @@ const base::Feature kIncreasedVisibility{
     "NTPSnippetsIncreasedVisibility", base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kPhysicalWebPageSuggestionsFeature{
-    "NTPPhysicalWebPageSuggestions", base::FEATURE_ENABLED_BY_DEFAULT};
-
-const base::Feature kContentSuggestionsSource{
-    "NTPSnippets", base::FEATURE_ENABLED_BY_DEFAULT};
+    "NTPPhysicalWebPageSuggestions", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kForeignSessionsSuggestionsFeature{
     "NTPForeignSessionsSuggestions", base::FEATURE_DISABLED_BY_DEFAULT};
@@ -57,7 +54,7 @@ CategoryRankerChoice GetSelectedCategoryRanker() {
 
   if (category_ranker_value.empty()) {
     // Default, Enabled or Disabled.
-    return CategoryRankerChoice::CLICK_BASED;
+    return CategoryRankerChoice::CONSTANT;
   }
   if (category_ranker_value == kCategoryRankerConstantRanker) {
     return CategoryRankerChoice::CONSTANT;

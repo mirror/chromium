@@ -25,6 +25,7 @@
 #include "base/rand_util.h"
 #include "base/strings/string16.h"
 #include "base/threading/platform_thread.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
@@ -58,6 +59,7 @@
 #include "components/metrics/drive_metrics_provider.h"
 #include "components/metrics/file_metrics_provider.h"
 #include "components/metrics/gpu/gpu_metrics_provider.h"
+#include "components/metrics/metrics_log_uploader.h"
 #include "components/metrics/metrics_pref_names.h"
 #include "components/metrics/metrics_reporting_default_state.h"
 #include "components/metrics/metrics_service.h"
@@ -115,7 +117,6 @@
 #include "chrome/browser/metrics/google_update_metrics_provider_win.h"
 #include "chrome/common/metrics_constants_util_win.h"
 #include "chrome/install_static/install_util.h"
-#include "chrome/installer/util/browser_distribution.h"
 #include "components/browser_watcher/watcher_metrics_provider_win.h"
 #endif
 
@@ -226,12 +227,13 @@ std::unique_ptr<metrics::FileMetricsProvider> CreateFileMetricsProvider(
       base::GlobalHistogramAllocator::ConstructFilePaths(
           user_data_dir, kCrashpadHistogramAllocatorName, nullptr,
           &active_path);
-      // Register data that will be populated for the current run.
+      // Register data that will be populated for the current run. "Active"
+      // files need an empty "prefs_key" because they update the file itself.
       file_metrics_provider->RegisterSource(
           active_path,
           metrics::FileMetricsProvider::SOURCE_HISTOGRAMS_ACTIVE_FILE,
           metrics::FileMetricsProvider::ASSOCIATE_CURRENT_RUN,
-          kCrashpadHistogramAllocatorName);
+          base::StringPiece());
     }
   }
 
@@ -512,13 +514,14 @@ void ChromeMetricsServiceClient::CollectFinalMetricsForLog(
 
 std::unique_ptr<metrics::MetricsLogUploader>
 ChromeMetricsServiceClient::CreateUploader(
-    const std::string& server_url,
-    const std::string& mime_type,
+    base::StringPiece server_url,
+    base::StringPiece mime_type,
+    metrics::MetricsLogUploader::MetricServiceType service_type,
     const base::Callback<void(int)>& on_upload_complete) {
   return std::unique_ptr<metrics::MetricsLogUploader>(
       new metrics::NetMetricsLogUploader(
-          g_browser_process->system_request_context(),
-          server_url, mime_type, on_upload_complete));
+          g_browser_process->system_request_context(), server_url, mime_type,
+          service_type, on_upload_complete));
 }
 
 base::TimeDelta ChromeMetricsServiceClient::GetStandardUploadInterval() {
@@ -527,8 +530,7 @@ base::TimeDelta ChromeMetricsServiceClient::GetStandardUploadInterval() {
 
 base::string16 ChromeMetricsServiceClient::GetRegistryBackupKey() {
 #if defined(OS_WIN)
-  BrowserDistribution* distribution = BrowserDistribution::GetDistribution();
-  return distribution->GetRegistryPath().append(L"\\StabilityMetrics");
+  return install_static::GetRegistryPath().append(L"\\StabilityMetrics");
 #else
   return base::string16();
 #endif

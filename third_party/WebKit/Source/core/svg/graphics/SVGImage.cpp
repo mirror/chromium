@@ -27,12 +27,15 @@
 
 #include "core/svg/graphics/SVGImage.h"
 
+#include "core/animation/DocumentAnimations.h"
 #include "core/animation/DocumentTimeline.h"
 #include "core/dom/NodeTraversal.h"
 #include "core/dom/shadow/FlatTreeTraversal.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/Settings.h"
+#include "core/layout/LayoutView.h"
 #include "core/layout/svg/LayoutSVGRoot.h"
 #include "core/loader/FrameLoadRequest.h"
 #include "core/paint/FloatClipRecorder.h"
@@ -76,11 +79,11 @@ SVGImage::~SVGImage() {
   }
 
   // Verify that page teardown destroyed the Chrome
-  ASSERT(!m_chromeClient || !m_chromeClient->image());
+  DCHECK(!m_chromeClient || !m_chromeClient->image());
 }
 
 bool SVGImage::isInSVGImage(const Node* node) {
-  ASSERT(node);
+  DCHECK(node);
 
   Page* page = node->document().page();
   if (!page)
@@ -95,7 +98,7 @@ bool SVGImage::currentFrameHasSingleSecurityOrigin() const {
 
   LocalFrame* frame = toLocalFrame(m_page->mainFrame());
 
-  RELEASE_ASSERT(frame->document()->loadEventFinished());
+  CHECK(frame->document()->loadEventFinished());
 
   SVGSVGElement* rootElement =
       frame->document()->accessSVGExtensions().rootElement();
@@ -143,7 +146,7 @@ IntSize SVGImage::containerSize() const {
     return containerSize;
 
   // Assure that a container size is always given for a non-identity zoom level.
-  ASSERT(layoutObject->style()->effectiveZoom() == 1);
+  DCHECK_EQ(layoutObject->style()->effectiveZoom(), 1);
 
   // No set container size; use concrete object size.
   return m_intrinsicSize;
@@ -262,10 +265,7 @@ void SVGImage::drawForContainer(PaintCanvas* canvas,
                ClampImageToSourceRect, url);
 }
 
-sk_sp<SkImage> SVGImage::imageForCurrentFrame(
-    const ColorBehavior& colorBehavior) {
-  // TODO(ccameron): This function should not ignore |colorBehavior|.
-  // https://crbug.com/667431
+sk_sp<SkImage> SVGImage::imageForCurrentFrame() {
   return imageForCurrentFrameForContainer(KURL(), size());
 }
 
@@ -360,10 +360,7 @@ void SVGImage::draw(PaintCanvas* canvas,
                     const FloatRect& dstRect,
                     const FloatRect& srcRect,
                     RespectImageOrientationEnum shouldRespectImageOrientation,
-                    ImageClampingMode clampMode,
-                    const ColorBehavior& colorBehavior) {
-  // TODO(ccameron): This function should not ignore |colorBehavior|.
-  // https://crbug.com/667431
+                    ImageClampingMode clampMode) {
   if (!m_page)
     return;
 
@@ -424,7 +421,7 @@ void SVGImage::drawInternal(PaintCanvas* canvas,
 
     view->updateAllLifecyclePhasesExceptPaint();
     view->paint(builder.context(), CullRect(enclosingIntRect(srcRect)));
-    ASSERT(!view->needsLayout());
+    DCHECK(!view->needsLayout());
   }
 
   {
@@ -523,9 +520,19 @@ void SVGImage::serviceAnimations(double monotonicAnimationStartTime) {
   // actually generating painted output, not only for performance reasons,
   // but to preserve correct coherence of the cache of the output with
   // the needsRepaint bits of the PaintLayers in the image.
-  toLocalFrame(m_page->mainFrame())
-      ->view()
-      ->updateAllLifecyclePhasesExceptPaint();
+  FrameView* frameView = toLocalFrame(m_page->mainFrame())->view();
+  frameView->updateAllLifecyclePhasesExceptPaint();
+
+  // For SPv2 we run updateAnimations after the paint phase, but per above
+  // comment we don't want to run lifecycle through to paint for SVG images.
+  // Since we know SVG images never have composited animations we can update
+  // animations directly without worrying about including
+  // PaintArtifactCompositor analysis of whether animations should be
+  // composited.
+  if (RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
+    DocumentAnimations::updateAnimations(frameView->layoutView()->document(),
+                                         DocumentLifecycle::LayoutClean);
+  }
 }
 
 void SVGImage::advanceAnimationForTesting() {
@@ -567,8 +574,8 @@ Image::SizeAvailability SVGImage::dataChanged(bool allDataReceived) {
     // types.
     EventDispatchForbiddenScope::AllowUserAgentEvents allowUserAgentEvents;
 
-    DEFINE_STATIC_LOCAL(FrameLoaderClient, dummyFrameLoaderClient,
-                        (EmptyFrameLoaderClient::create()));
+    DEFINE_STATIC_LOCAL(LocalFrameClient, dummyLocalFrameClient,
+                        (EmptyLocalFrameClient::create()));
 
     if (m_page) {
       toLocalFrame(m_page->mainFrame())
@@ -622,8 +629,7 @@ Image::SizeAvailability SVGImage::dataChanged(bool allDataReceived) {
     LocalFrame* frame = nullptr;
     {
       TRACE_EVENT0("blink", "SVGImage::dataChanged::createFrame");
-      frame =
-          LocalFrame::create(&dummyFrameLoaderClient, &page->frameHost(), 0);
+      frame = LocalFrame::create(&dummyLocalFrameClient, &page->frameHost(), 0);
       frame->setView(FrameView::create(*frame));
       frame->init();
     }

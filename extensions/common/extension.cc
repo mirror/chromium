@@ -87,11 +87,10 @@ const int Extension::kValidBookmarkAppSchemes = URLPattern::SCHEME_HTTP |
                                                 URLPattern::SCHEME_HTTPS |
                                                 URLPattern::SCHEME_EXTENSION;
 
-const int Extension::kValidHostPermissionSchemes = URLPattern::SCHEME_CHROMEUI |
-                                                   URLPattern::SCHEME_HTTP |
-                                                   URLPattern::SCHEME_HTTPS |
-                                                   URLPattern::SCHEME_FILE |
-                                                   URLPattern::SCHEME_FTP;
+const int Extension::kValidHostPermissionSchemes =
+    URLPattern::SCHEME_CHROMEUI | URLPattern::SCHEME_HTTP |
+    URLPattern::SCHEME_HTTPS | URLPattern::SCHEME_FILE |
+    URLPattern::SCHEME_FTP | URLPattern::SCHEME_WS | URLPattern::SCHEME_WSS;
 
 //
 // Extension
@@ -380,9 +379,9 @@ Extension::ManifestData* Extension::GetManifestData(const std::string& key)
 }
 
 void Extension::SetManifestData(const std::string& key,
-                                Extension::ManifestData* data) {
+                                std::unique_ptr<Extension::ManifestData> data) {
   DCHECK(!finished_parsing_manifest_ && thread_checker_.CalledOnValidThread());
-  manifest_data_[key] = std::unique_ptr<ManifestData>(data);
+  manifest_data_[key] = std::move(data);
 }
 
 Manifest::Location Extension::location() const {

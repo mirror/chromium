@@ -9,12 +9,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
+<!-- TODO(twellington): remove start/end margin when new assets with
+                        correct built in padding are available. The end
+                        padding is set programatically so margin is used
+                        rather than padding to achieve the correct visual
+                        effect. -->
     <LinearLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
+        android:layout_marginStart="@dimen/list_item_lateral_padding"
+        android:layout_marginEnd="@dimen/list_item_lateral_padding"
         android:orientation="horizontal" >
 
         <ImageView

@@ -78,18 +78,17 @@
 #include "content/browser/gpu/gpu_process_host.h"
 #include "content/browser/gpu/shader_cache_factory.h"
 #include "content/browser/histogram_message_filter.h"
+#include "content/browser/image_capture/image_capture_impl.h"
 #include "content/browser/indexed_db/indexed_db_context_impl.h"
 #include "content/browser/indexed_db/indexed_db_dispatcher_host.h"
 #include "content/browser/loader/resource_message_filter.h"
 #include "content/browser/loader/resource_scheduler_filter.h"
 #include "content/browser/loader/url_loader_factory_impl.h"
 #include "content/browser/media/capture/audio_mirroring_manager.h"
-#include "content/browser/media/capture/image_capture_impl.h"
 #include "content/browser/media/media_internals.h"
 #include "content/browser/media/midi_host.h"
 #include "content/browser/memory/memory_coordinator_impl.h"
 #include "content/browser/memory/memory_message_filter.h"
-#include "content/browser/message_port_message_filter.h"
 #include "content/browser/mime_registry_impl.h"
 #include "content/browser/notifications/notification_message_filter.h"
 #include "content/browser/notifications/platform_notification_context_impl.h"
@@ -97,7 +96,7 @@
 #include "content/browser/permissions/permission_service_context.h"
 #include "content/browser/permissions/permission_service_impl.h"
 #include "content/browser/profiler_message_filter.h"
-#include "content/browser/push_messaging/push_messaging_message_filter.h"
+#include "content/browser/push_messaging/push_messaging_manager.h"
 #include "content/browser/quota_dispatcher_host.h"
 #include "content/browser/renderer_host/clipboard_message_filter.h"
 #include "content/browser/renderer_host/database_message_filter.h"
@@ -204,7 +203,6 @@
 #include "ui/native_theme/native_theme_switches.h"
 
 #if defined(OS_ANDROID)
-#include "content/browser/screen_orientation/screen_orientation_listener_android.h"
 #include "content/public/browser/android/java_interfaces.h"
 #include "ipc/ipc_sync_channel.h"
 #include "media/audio/android/audio_manager_android.h"
@@ -334,7 +332,13 @@ class SiteProcessMap : public base::SupportsUserData::Data {
   SiteProcessMap() {}
 
   void RegisterProcess(const std::string& site, RenderProcessHost* process) {
-    map_[site] = process;
+    // There could already exist a site to process mapping due to races between
+    // two WebContents with blank SiteInstances. If that occurs, keeping the
+    // exising entry and not overwriting it is a predictable behavior that is
+    // safe.
+    SiteToProcessMap::iterator i = map_.find(site);
+    if (i == map_.end())
+      map_[site] = process;
   }
 
   RenderProcessHost* FindProcess(const std::string& site) {
@@ -729,6 +733,9 @@ RenderProcessHostImpl::RenderProcessHostImpl(
                                        storage_partition_impl_->GetPath()));
   }
 
+  push_messaging_manager_.reset(new PushMessagingManager(
+      GetID(), storage_partition_impl_->GetServiceWorkerContext()));
+
 #if defined(OS_MACOSX)
   if (BootstrapSandboxManager::ShouldEnable())
     AddObserver(BootstrapSandboxManager::GetInstance());
@@ -1089,8 +1096,8 @@ void RenderProcessHostImpl::CreateMessageFilters() {
       BrowserMainLoop::GetInstance()->user_input_monitor());
   AddFilter(audio_input_renderer_host_.get());
   audio_renderer_host_ = new AudioRendererHost(
-      GetID(), audio_manager, AudioMirroringManager::GetInstance(),
-      media_stream_manager,
+      GetID(), audio_manager, BrowserMainLoop::GetInstance()->audio_system(),
+      AudioMirroringManager::GetInstance(), media_stream_manager,
       browser_context->GetResourceContext()->GetMediaDeviceIDSalt());
   AddFilter(audio_renderer_host_.get());
   AddFilter(
@@ -1137,19 +1144,13 @@ void RenderProcessHostImpl::CreateMessageFilters() {
   channel_->AddFilter(new FontCacheDispatcher());
 #endif
 
-  message_port_message_filter_ = new MessagePortMessageFilter(
-      base::Bind(&RenderWidgetHelper::GetNextRoutingID,
-                 base::Unretained(widget_helper_.get())));
-  AddFilter(message_port_message_filter_.get());
-
   scoped_refptr<CacheStorageDispatcherHost> cache_storage_filter =
       new CacheStorageDispatcherHost();
   cache_storage_filter->Init(storage_partition_impl_->GetCacheStorageContext());
   AddFilter(cache_storage_filter.get());
 
   scoped_refptr<ServiceWorkerDispatcherHost> service_worker_filter =
-      new ServiceWorkerDispatcherHost(
-          GetID(), message_port_message_filter_.get(), resource_context);
+      new ServiceWorkerDispatcherHost(GetID(), resource_context);
   service_worker_filter->Init(
       storage_partition_impl_->GetServiceWorkerContext());
   AddFilter(service_worker_filter.get());
@@ -1165,7 +1166,8 @@ void RenderProcessHostImpl::CreateMessageFilters() {
           storage_partition_impl_->GetDatabaseTracker(),
           storage_partition_impl_->GetIndexedDBContext(),
           storage_partition_impl_->GetServiceWorkerContext()),
-      message_port_message_filter_.get()));
+      base::Bind(&RenderWidgetHelper::GetNextRoutingID,
+                 base::Unretained(widget_helper_.get()))));
 
 #if BUILDFLAG(ENABLE_WEBRTC)
   p2p_socket_dispatcher_host_ = new P2PSocketDispatcherHost(
@@ -1190,10 +1192,7 @@ void RenderProcessHostImpl::CreateMessageFilters() {
   AddFilter(new ProfilerMessageFilter(PROCESS_TYPE_RENDERER));
   AddFilter(new HistogramMessageFilter());
   AddFilter(new MemoryMessageFilter(this));
-  AddFilter(new PushMessagingMessageFilter(
-      GetID(), storage_partition_impl_->GetServiceWorkerContext()));
 #if defined(OS_ANDROID)
-  AddFilter(new ScreenOrientationListenerAndroid());
   synchronous_compositor_filter_ =
       new SynchronousCompositorBrowserFilter(GetID());
   AddFilter(synchronous_compositor_filter_.get());
@@ -1234,6 +1233,10 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
       registry.get(),
       base::Bind(&ForwardShapeDetectionRequest<
                  shape_detection::mojom::FaceDetectionProviderRequest>));
+  AddUIThreadInterface(
+      registry.get(),
+      base::Bind(&ForwardShapeDetectionRequest<
+                 shape_detection::mojom::TextDetectionRequest>));
 #endif
   AddUIThreadInterface(
       registry.get(),
@@ -1313,6 +1316,10 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
 #endif  // defined(OS_ANDROID)
 
   registry->AddInterface(base::Bind(&device::GamepadMonitor::Create));
+
+  registry->AddInterface(
+      base::Bind(&PushMessagingManager::BindRequest,
+                 base::Unretained(push_messaging_manager_.get())));
 
   registry->AddInterface(base::Bind(&RenderProcessHostImpl::CreateMusGpuRequest,
                                     base::Unretained(this)));
@@ -1748,6 +1755,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kEnableDistanceFieldText,
     switches::kEnableExperimentalCanvasFeatures,
     switches::kEnableExperimentalWebPlatformFeatures,
+    switches::kEnableHDROutput,
     switches::kEnableHeapProfiling,
     switches::kEnableGPUClientLogging,
     switches::kEnableGpuClientTracing,
@@ -1760,6 +1768,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kEnableLogging,
     switches::kEnableNetworkInformation,
     switches::kEnableOverlayScrollbar,
+    switches::kEnableNewVp9CodecString,
     switches::kEnablePinch,
     switches::kEnablePluginPlaceholderTesting,
     switches::kEnablePreciseMemoryInfo,
@@ -1836,14 +1845,14 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kVModule,
     // Please keep these in alphabetical order. Compositor switches here should
     // also be added to chrome/browser/chromeos/login/chrome_restart_request.cc.
-    cc::switches::kCheckTilePriorityInversion,
     cc::switches::kDisableCompositedAntialiasing,
     cc::switches::kDisableThreadedAnimation,
+    cc::switches::kEnableCheckerImaging,
     cc::switches::kEnableColorCorrectRendering,
     cc::switches::kEnableGpuBenchmarking,
     cc::switches::kEnableLayerLists,
+    cc::switches::kEnableSurfaceSynchronization,
     cc::switches::kEnableTileCompression,
-    cc::switches::kEnableTrueColorRendering,
     cc::switches::kShowCompositedLayerBorders,
     cc::switches::kShowFPSCounter,
     cc::switches::kShowLayerAnimationBounds,
@@ -2249,9 +2258,6 @@ void RenderProcessHostImpl::Cleanup() {
   // away first, since deleting the channel proxy will post a
   // OnChannelClosed() to IPC::ChannelProxy::Context on the IO thread.
   ResetChannelProxy();
-
-  // The following members should be cleared in ProcessDied() as well!
-  message_port_message_filter_ = NULL;
 
   // Its important to remove the kSessionStorageHolder after the channel
   // has been reset to avoid deleting the underlying namespaces prior
@@ -2739,8 +2745,6 @@ void RenderProcessHostImpl::ProcessDied(bool already_dead,
   for (auto& observer : observers_)
     observer.RenderProcessExited(this, status, exit_code);
   within_process_died_observer_ = false;
-
-  message_port_message_filter_ = NULL;
 
   RemoveUserData(kSessionStorageHolderKey);
 

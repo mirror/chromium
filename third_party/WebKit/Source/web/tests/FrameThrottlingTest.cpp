@@ -82,7 +82,7 @@ class FrameThrottlingTest : public SimTest,
     PaintLayer* layer =
         webView().mainFrameImpl()->frame()->contentLayoutObject()->layer();
     GraphicsLayer* ownGraphicsLayer =
-        layer->graphicsLayerBacking(layer->layoutObject());
+        layer->graphicsLayerBacking(&layer->layoutObject());
     if (ownGraphicsLayer) {
       result +=
           ownGraphicsLayer->platformLayer()->touchEventHandlerRegion().size();
@@ -426,6 +426,44 @@ TEST_P(FrameThrottlingTest, ChangeStyleInThrottledFrame) {
   EXPECT_TRUE(displayItems2.contains(SimCanvas::Rect, "green"));
 }
 
+TEST_P(FrameThrottlingTest, ChangeOriginInThrottledFrame) {
+  // Create a hidden frame which is throttled.
+  SimRequest mainResource("http://example.com/", "text/html");
+  SimRequest frameResource("http://sub.example.com/iframe.html", "text/html");
+  loadURL("http://example.com/");
+  mainResource.complete(
+      "<iframe style='position: absolute; top: 10000px' id=frame "
+      "src=http://sub.example.com/iframe.html></iframe>");
+  frameResource.complete("");
+
+  auto* frameElement = toHTMLIFrameElement(document().getElementById("frame"));
+
+  compositeFrame();
+
+  EXPECT_TRUE(frameElement->contentDocument()->view()->canThrottleRendering());
+  EXPECT_TRUE(
+      frameElement->contentDocument()->frame()->isCrossOriginSubframe());
+  EXPECT_FALSE(frameElement->contentDocument()
+                   ->view()
+                   ->layoutView()
+                   ->needsPaintPropertyUpdate());
+
+  NonThrowableExceptionState exceptionState;
+
+  // Security policy requires setting domain on both frames.
+  document().setDomain(String("example.com"), exceptionState);
+  frameElement->contentDocument()->setDomain(String("example.com"),
+                                             exceptionState);
+
+  EXPECT_FALSE(
+      frameElement->contentDocument()->frame()->isCrossOriginSubframe());
+  EXPECT_FALSE(frameElement->contentDocument()->view()->canThrottleRendering());
+  EXPECT_TRUE(frameElement->contentDocument()
+                  ->view()
+                  ->layoutView()
+                  ->needsPaintPropertyUpdate());
+}
+
 TEST_P(FrameThrottlingTest, ThrottledFrameWithFocus) {
   webView().settings()->setJavaScriptEnabled(true);
   webView().settings()->setAcceleratedCompositingEnabled(true);
@@ -504,7 +542,10 @@ TEST_P(FrameThrottlingTest, ScrollingCoordinatorShouldSkipThrottledFrame) {
             frameElement->contentDocument()->lifecycle().state());
   // The fixed background in the throttled sub frame should not cause main
   // thread scrolling.
-  EXPECT_FALSE(document().view()->shouldScrollOnMainThread());
+  EXPECT_FALSE(document()
+                   .view()
+                   ->layoutViewportScrollableArea()
+                   ->shouldScrollOnMainThread());
 
   // Make the frame visible by changing its transform. This doesn't cause a
   // layout, but should still unthrottle the frame.
@@ -512,9 +553,14 @@ TEST_P(FrameThrottlingTest, ScrollingCoordinatorShouldSkipThrottledFrame) {
   compositeFrame();
   EXPECT_FALSE(frameElement->contentDocument()->view()->canThrottleRendering());
   // The fixed background in the throttled sub frame should be considered.
-  EXPECT_TRUE(
-      frameElement->contentDocument()->view()->shouldScrollOnMainThread());
-  EXPECT_FALSE(document().view()->shouldScrollOnMainThread());
+  EXPECT_TRUE(frameElement->contentDocument()
+                  ->view()
+                  ->layoutViewportScrollableArea()
+                  ->shouldScrollOnMainThread());
+  EXPECT_FALSE(document()
+                   .view()
+                   ->layoutViewportScrollableArea()
+                   ->shouldScrollOnMainThread());
 }
 
 TEST_P(FrameThrottlingTest, ScrollingCoordinatorShouldSkipThrottledLayer) {
@@ -968,7 +1014,7 @@ TEST_P(FrameThrottlingTest, UpdatePaintPropertiesOnUnthrottling) {
                              "transform: translateY(1000px)");
   compositeFrame();
   EXPECT_TRUE(frameDocument->view()->canThrottleRendering());
-  EXPECT_FALSE(innerDivObject->paintProperties()->transform());
+  EXPECT_FALSE(innerDivObject->paintProperties());
 
   // Mutating the throttled frame should not cause paint property update.
   innerDiv->setAttribute(HTMLNames::styleAttr, "transform: translateY(20px)");
@@ -979,7 +1025,7 @@ TEST_P(FrameThrottlingTest, UpdatePaintPropertiesOnUnthrottling) {
         document().lifecycle());
     document().view()->updateAllLifecyclePhases();
   }
-  EXPECT_FALSE(innerDivObject->paintProperties()->transform());
+  EXPECT_FALSE(innerDivObject->paintProperties());
 
   // Move the frame back on screen to unthrottle it.
   frameElement->setAttribute(HTMLNames::styleAttr, "");
@@ -1011,6 +1057,38 @@ TEST_P(FrameThrottlingTest, DisplayNoneNotThrottled) {
   frameElement->setAttribute(styleAttr, "display: none");
   compositeFrame();
   EXPECT_FALSE(frameDocument->view()->canThrottleRendering());
+}
+
+TEST_P(FrameThrottlingTest, DisplayNoneChildrenRemainThrottled) {
+  // Create two nested frames which are throttled.
+  SimRequest mainResource("https://example.com/", "text/html");
+  SimRequest frameResource("https://example.com/iframe.html", "text/html");
+  SimRequest childFrameResource("https://example.com/child-iframe.html",
+                                "text/html");
+
+  loadURL("https://example.com/");
+  mainResource.complete("<iframe id=frame sandbox src=iframe.html></iframe>");
+  frameResource.complete(
+      "<iframe id=child-frame sandbox src=child-iframe.html></iframe>");
+  childFrameResource.complete("");
+
+  // Move both frames offscreen to make them throttled.
+  auto* frameElement = toHTMLIFrameElement(document().getElementById("frame"));
+  auto* childFrameElement = toHTMLIFrameElement(
+      frameElement->contentDocument()->getElementById("child-frame"));
+  frameElement->setAttribute(styleAttr, "transform: translateY(480px)");
+  compositeFrame();
+  EXPECT_TRUE(frameElement->contentDocument()->view()->canThrottleRendering());
+  EXPECT_TRUE(
+      childFrameElement->contentDocument()->view()->canThrottleRendering());
+
+  // Setting display:none for the parent frame unthrottles the parent but not
+  // the child. This behavior matches Safari.
+  frameElement->setAttribute(styleAttr, "display: none");
+  compositeFrame();
+  EXPECT_FALSE(frameElement->contentDocument()->view()->canThrottleRendering());
+  EXPECT_TRUE(
+      childFrameElement->contentDocument()->view()->canThrottleRendering());
 }
 
 }  // namespace blink

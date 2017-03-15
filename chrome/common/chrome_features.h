@@ -18,8 +18,13 @@ namespace features {
 // All features in alphabetical order. The features should be documented
 // alongside the definition of their values in the .cc file.
 
+#if defined(OS_ANDROID)
+extern const base::Feature kAllowAutoplayUnmutedInWebappManifestScope;
+#endif  // defined(OS_ANDROID)
+
 #if defined(OS_MACOSX)
 extern const base::Feature kAppleScriptExecuteJavaScript;
+extern const base::Feature kViewsTaskManager;
 #endif  // defined(OS_MACOSX)
 
 #if defined(OS_CHROMEOS)
@@ -45,6 +50,11 @@ extern const base::Feature kBackspaceGoesBackFeature;
 extern const base::Feature kBlockPromptsIfDismissedOften;
 
 extern const base::Feature kBrowserHangFixesExperiment;
+
+#if defined(OS_MACOSX)
+extern const base::Feature kBrowserTouchBar;
+extern const base::Feature kTabStripKeyboardFocus;
+#endif  // defined(OS_MACOSX)
 
 #if defined(OS_ANDROID)
 extern const base::Feature kConsistentOmniboxGeolocation;
@@ -114,6 +124,8 @@ extern const base::Feature kPostScriptPrinting;
 #if BUILDFLAG(ENABLE_PLUGINS)
 extern const base::Feature kPreferHtmlOverPlugins;
 #endif
+
+extern const base::Feature kPrefService;
 
 #if defined(OS_CHROMEOS)
 extern const base::Feature kPreloadLockScreen;

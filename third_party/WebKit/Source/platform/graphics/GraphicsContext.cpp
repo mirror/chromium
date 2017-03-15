@@ -44,7 +44,6 @@
 #include "third_party/skia/include/core/SkData.h"
 #include "third_party/skia/include/core/SkRRect.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
-#include "third_party/skia/include/core/SkUnPreMultiply.h"
 #include "third_party/skia/include/effects/SkGradientShader.h"
 #include "third_party/skia/include/effects/SkLumaColorFilter.h"
 #include "third_party/skia/include/effects/SkPictureImageFilter.h"
@@ -58,13 +57,11 @@ namespace blink {
 
 GraphicsContext::GraphicsContext(PaintController& paintController,
                                  DisabledMode disableContextOrPainting,
-                                 SkMetaData* metaData,
-                                 ColorBehavior colorBehavior)
+                                 SkMetaData* metaData)
     : m_canvas(nullptr),
       m_paintController(paintController),
       m_paintStateStack(),
       m_paintStateIndex(0),
-      m_colorBehavior(colorBehavior),
 #if DCHECK_IS_ON()
       m_layerCount(0),
       m_disableDestructionChecks(false),
@@ -85,7 +82,7 @@ GraphicsContext::GraphicsContext(PaintController& paintController,
   if (contextDisabled()) {
     DEFINE_STATIC_LOCAL(SkCanvas*, nullSkCanvas,
                         (SkMakeNullCanvas().release()));
-    DEFINE_STATIC_LOCAL(PaintCanvasPassThrough, nullCanvas, (nullSkCanvas));
+    DEFINE_STATIC_LOCAL(SkiaPaintCanvas, nullCanvas, (nullSkCanvas));
     m_canvas = &nullCanvas;
   }
 }
@@ -270,16 +267,16 @@ void GraphicsContext::beginRecording(const FloatRect& bounds) {
     return;
 
   DCHECK(!m_canvas);
-  m_canvas = m_paintRecorder.beginRecording(bounds, nullptr);
+  m_canvas = m_paintRecorder.beginRecording(bounds);
   if (m_hasMetaData)
-    skia::GetMetaData(*m_canvas) = m_metaData;
+    m_canvas->getMetaData() = m_metaData;
 }
 
 namespace {
 
 sk_sp<PaintRecord> createEmptyPaintRecord() {
   PaintRecorder recorder;
-  recorder.beginRecording(SkRect::MakeEmpty(), nullptr);
+  recorder.beginRecording(SkRect::MakeEmpty());
   return recorder.finishRecordingAsPicture();
 }
 
@@ -504,9 +501,9 @@ void GraphicsContext::drawLine(const IntPoint& point1, const IntPoint& point2) {
   int length = SkScalarRoundToInt(disp.width() + disp.height());
   PaintFlags flags(immutableState()->strokeFlags(length));
 
-  if (getStrokeStyle() == DottedStroke || getStrokeStyle() == DashedStroke) {
+  if (StrokeData::strokeIsDashed(width, getStrokeStyle())) {
     // Do a rect fill of our endpoints.  This ensures we always have the
-    // appearance of being a border.  We then draw the actual dotted/dashed
+    // appearance of being a border. We then draw the actual dotted/dashed
     // line.
     SkRect r1, r2;
     r1.set(p1.x(), p1.y(), p1.x() + width, p1.y() + width);
@@ -523,6 +520,17 @@ void GraphicsContext::drawLine(const IntPoint& point1, const IntPoint& point2) {
     fillFlags.setColor(flags.getColor());
     drawRect(r1, fillFlags);
     drawRect(r2, fillFlags);
+  } else if (getStrokeStyle() == DottedStroke) {
+    // We draw thick dotted lines with 0 length dash strokes and round endcaps,
+    // producing circles. The endcaps extend beyond the line's endpoints,
+    // so move the start and end in.
+    if (isVerticalLine) {
+      p1.setY(p1.y() + width / 2.f);
+      p2.setY(p2.y() - width / 2.f);
+    } else {
+      p1.setX(p1.x() + width / 2.f);
+      p2.setX(p2.x() - width / 2.f);
+    }
   }
 
   adjustLineToPixelBoundaries(p1, p2, width, penStyle);
@@ -563,7 +571,7 @@ sk_sp<PaintRecord> recordMarker(
   PaintFlags flags;
   flags.setAntiAlias(true);
   flags.setColor(color);
-  flags.setStyle(SkPaint::kStroke_Style);
+  flags.setStyle(PaintFlags::kStroke_Style);
   flags.setStrokeWidth(kH * 1 / 2);
 
   PaintRecorder recorder;
@@ -648,9 +656,9 @@ void GraphicsContext::drawLineForDocumentMarker(const FloatPoint& pt,
 
   PaintFlags flags;
   flags.setAntiAlias(true);
-  flags.setShader(WrapSkShader(SkShader::MakePictureShader(
-      sk_ref_sp(marker), SkShader::kRepeat_TileMode, SkShader::kClamp_TileMode,
-      &localMatrix, nullptr)));
+  flags.setShader(WrapSkShader(
+      MakePaintShaderRecord(sk_ref_sp(marker), SkShader::kRepeat_TileMode,
+                            SkShader::kClamp_TileMode, &localMatrix, nullptr)));
 
   // Apply the origin translation as a global transform.  This ensures that the
   // shader local matrix depends solely on zoom => Skia can reuse the same
@@ -828,7 +836,7 @@ void GraphicsContext::drawImage(
   imageFlags.setFilterQuality(computeFilterQuality(image, dest, src));
   imageFlags.setAntiAlias(shouldAntialias());
   image->draw(m_canvas, imageFlags, dest, src, shouldRespectImageOrientation,
-              Image::ClampImageToSourceRect, m_colorBehavior);
+              Image::ClampImageToSourceRect);
   m_paintController.setImagePainted();
 }
 
@@ -864,7 +872,7 @@ void GraphicsContext::drawImageRRect(
   if (useShader) {
     const SkMatrix localMatrix = SkMatrix::MakeRectToRect(
         visibleSrc, dest.rect(), SkMatrix::kFill_ScaleToFit);
-    useShader = image->applyShader(imageFlags, localMatrix, m_colorBehavior);
+    useShader = image->applyShader(imageFlags, localMatrix);
   }
 
   if (useShader) {
@@ -875,7 +883,7 @@ void GraphicsContext::drawImageRRect(
     PaintCanvasAutoRestore autoRestore(m_canvas, true);
     m_canvas->clipRRect(dest, imageFlags.isAntiAlias());
     image->draw(m_canvas, imageFlags, dest.rect(), srcRect, respectOrientation,
-                Image::ClampImageToSourceRect, m_colorBehavior);
+                Image::ClampImageToSourceRect);
   }
 
   m_paintController.setImagePainted();
@@ -1252,7 +1260,7 @@ void GraphicsContext::setURLForRect(const KURL& link, const IntRect& destRect) {
   DCHECK(m_canvas);
 
   sk_sp<SkData> url(SkData::MakeWithCString(link.getString().utf8().data()));
-  SkAnnotateRectWithURL(m_canvas, destRect, url.get());
+  PaintCanvasAnnotateRectWithURL(m_canvas, destRect, url.get());
 }
 
 void GraphicsContext::setURLFragmentForRect(const String& destName,
@@ -1262,7 +1270,7 @@ void GraphicsContext::setURLFragmentForRect(const String& destName,
   DCHECK(m_canvas);
 
   sk_sp<SkData> skDestName(SkData::MakeWithCString(destName.utf8().data()));
-  SkAnnotateLinkToDestination(m_canvas, rect, skDestName.get());
+  PaintCanvasAnnotateLinkToDestination(m_canvas, rect, skDestName.get());
 }
 
 void GraphicsContext::setURLDestinationLocation(const String& name,
@@ -1272,7 +1280,7 @@ void GraphicsContext::setURLDestinationLocation(const String& name,
   DCHECK(m_canvas);
 
   sk_sp<SkData> skName(SkData::MakeWithCString(name.utf8().data()));
-  SkAnnotateNamedDestination(
+  PaintCanvasAnnotateNamedDestination(
       m_canvas, SkPoint::Make(location.x(), location.y()), skName.get());
 }
 
@@ -1301,7 +1309,7 @@ void GraphicsContext::adjustLineToPixelBoundaries(FloatPoint& p1,
   // pass us (y1+y2)/2, e.g., (50+53)/2 = 103/2 = 51 when we want 51.5.  It is
   // always true that an even width gave us a perfect position, but an odd width
   // gave us a position that is off by exactly 0.5.
-  if (penStyle == DottedStroke || penStyle == DashedStroke) {
+  if (StrokeData::strokeIsDashed(strokeWidth, penStyle)) {
     if (p1.x() == p2.x()) {
       p1.setY(p1.y() + strokeWidth);
       p2.setY(p2.y() - strokeWidth);

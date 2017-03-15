@@ -51,15 +51,13 @@
 #endif
 
 #if defined(OS_ANDROID)
-#include "base/android/throw_uncaught_exception.h"
 #include "media/base/android/media_client_android.h"
-#include "media/gpu/avda_codec_allocator.h"
 #endif
 
 namespace content {
 namespace {
 
-static base::LazyInstance<scoped_refptr<ThreadSafeSender> >
+static base::LazyInstance<scoped_refptr<ThreadSafeSender>>::DestructorAtExit
     g_thread_safe_sender = LAZY_INSTANCE_INITIALIZER;
 
 bool GpuProcessLogMessageHandler(int severity,
@@ -248,16 +246,7 @@ bool GpuChildThread::Send(IPC::Message* msg) {
 bool GpuChildThread::OnControlMessageReceived(const IPC::Message& msg) {
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(GpuChildThread, msg)
-    IPC_MESSAGE_HANDLER(GpuMsg_Finalize, OnFinalize)
     IPC_MESSAGE_HANDLER(GpuMsg_CollectGraphicsInfo, OnCollectGraphicsInfo)
-    IPC_MESSAGE_HANDLER(GpuMsg_GetVideoMemoryUsageStats,
-                        OnGetVideoMemoryUsageStats)
-    IPC_MESSAGE_HANDLER(GpuMsg_Clean, OnClean)
-    IPC_MESSAGE_HANDLER(GpuMsg_Crash, OnCrash)
-    IPC_MESSAGE_HANDLER(GpuMsg_Hang, OnHang)
-#if defined(OS_ANDROID)
-    IPC_MESSAGE_HANDLER(GpuMsg_JavaCrash, OnJavaCrash)
-#endif
     IPC_MESSAGE_HANDLER(GpuMsg_GpuSwitched, OnGpuSwitched)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
@@ -271,14 +260,7 @@ bool GpuChildThread::OnMessageReceived(const IPC::Message& msg) {
 
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(GpuChildThread, msg)
-    IPC_MESSAGE_HANDLER(GpuMsg_CloseChannel, OnCloseChannel)
     IPC_MESSAGE_HANDLER(GpuMsg_DestroyGpuMemoryBuffer, OnDestroyGpuMemoryBuffer)
-    IPC_MESSAGE_HANDLER(GpuMsg_LoadedShader, OnLoadedShader)
-#if defined(OS_ANDROID)
-    IPC_MESSAGE_HANDLER(GpuMsg_WakeUpGpu, OnWakeUpGpu);
-    IPC_MESSAGE_HANDLER(GpuMsg_DestroyingVideoSurface,
-                        OnDestroyingVideoSurface);
-#endif
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   if (handled)
@@ -364,11 +346,6 @@ void GpuChildThread::CreateDisplayCompositor(
   NOTREACHED();
 }
 
-void GpuChildThread::OnFinalize() {
-  // Quit the GPU process
-  base::MessageLoop::current()->QuitWhenIdle();
-}
-
 void GpuChildThread::OnCollectGraphicsInfo() {
   if (dead_on_arrival_)
     return;
@@ -423,57 +400,11 @@ void GpuChildThread::OnCollectGraphicsInfo() {
 #endif  // OS_WIN
 }
 
-void GpuChildThread::OnGetVideoMemoryUsageStats() {
-  gpu::VideoMemoryUsageStats video_memory_usage_stats;
-  if (gpu_channel_manager()) {
-    gpu_channel_manager()->gpu_memory_manager()->GetVideoMemoryUsageStats(
-        &video_memory_usage_stats);
-  }
-  Send(new GpuHostMsg_VideoMemoryUsageStats(video_memory_usage_stats));
-}
-
-void GpuChildThread::OnClean() {
-  DVLOG(1) << "GPU: Removing all contexts";
-  if (gpu_channel_manager())
-    gpu_channel_manager()->DestroyAllChannels();
-}
-
-void GpuChildThread::OnCrash() {
-  DVLOG(1) << "GPU: Simulating GPU crash";
-  // Good bye, cruel world.
-  volatile int* it_s_the_end_of_the_world_as_we_know_it = NULL;
-  *it_s_the_end_of_the_world_as_we_know_it = 0xdead;
-}
-
-void GpuChildThread::OnHang() {
-  DVLOG(1) << "GPU: Simulating GPU hang";
-  for (;;) {
-    // Do not sleep here. The GPU watchdog timer tracks the amount of user
-    // time this thread is using and it doesn't use much while calling Sleep.
-  }
-}
-
-#if defined(OS_ANDROID)
-void GpuChildThread::OnJavaCrash() {
-  base::android::ThrowUncaughtException();
-}
-#endif
-
 void GpuChildThread::OnGpuSwitched() {
   DVLOG(1) << "GPU: GPU has switched";
   // Notify observers in the GPU process.
   if (!in_browser_process_)
     ui::GpuSwitchingManager::GetInstance()->NotifyGpuSwitched();
-}
-
-void GpuChildThread::OnCloseChannel(int32_t client_id) {
-  if (gpu_channel_manager())
-    gpu_channel_manager()->RemoveChannel(client_id);
-}
-
-void GpuChildThread::OnLoadedShader(const std::string& shader) {
-  if (gpu_channel_manager())
-    gpu_channel_manager()->PopulateShaderCache(shader);
 }
 
 void GpuChildThread::OnDestroyGpuMemoryBuffer(
@@ -483,18 +414,6 @@ void GpuChildThread::OnDestroyGpuMemoryBuffer(
   if (gpu_channel_manager())
     gpu_channel_manager()->DestroyGpuMemoryBuffer(id, client_id, sync_token);
 }
-
-#if defined(OS_ANDROID)
-void GpuChildThread::OnWakeUpGpu() {
-  if (gpu_channel_manager())
-    gpu_channel_manager()->WakeUpGpu();
-}
-
-void GpuChildThread::OnDestroyingVideoSurface(int surface_id) {
-  media::AVDACodecAllocator::Instance()->OnSurfaceDestroyed(surface_id);
-  Send(new GpuHostMsg_DestroyingVideoSurfaceAck(surface_id));
-}
-#endif
 
 void GpuChildThread::BindServiceFactoryRequest(
     service_manager::mojom::ServiceFactoryRequest request) {

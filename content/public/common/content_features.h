@@ -36,6 +36,7 @@ CONTENT_EXPORT extern const base::Feature kGenericSensor;
 CONTENT_EXPORT extern const base::Feature kGuestViewCrossProcessFrames;
 CONTENT_EXPORT extern const base::Feature kHeapCompaction;
 CONTENT_EXPORT extern const base::Feature kLazyParseCSS;
+CONTENT_EXPORT extern const base::Feature kLoadingWithMojo;
 CONTENT_EXPORT extern const base::Feature kMediaDocumentDownloadButton;
 CONTENT_EXPORT extern const base::Feature kMemoryCoordinator;
 CONTENT_EXPORT extern const base::Feature kNotificationContentImage;
@@ -63,10 +64,13 @@ CONTENT_EXPORT extern const base::Feature kTouchpadAndWheelScrollLatching;
 CONTENT_EXPORT extern const base::Feature kVrShell;
 CONTENT_EXPORT extern const base::Feature kWebAssembly;
 CONTENT_EXPORT extern const base::Feature kWebGLImageChromium;
+CONTENT_EXPORT extern const base::Feature kWebPayments;
 CONTENT_EXPORT extern const base::Feature kWebRtcEcdsaDefault;
 CONTENT_EXPORT extern const base::Feature kWebRtcHWH264Encoding;
+CONTENT_EXPORT extern const base::Feature kWebRtcUseEchoCanceller3;
 CONTENT_EXPORT extern const base::Feature kWebRtcUseGpuMemoryBufferVideoFrames;
 CONTENT_EXPORT extern const base::Feature kWebUsb;
+CONTENT_EXPORT extern const base::Feature kWebVRExperimentalRendering;
 CONTENT_EXPORT
 extern const base::Feature kSendBeaconThrowForBlobWithNonSimpleType;
 
@@ -75,7 +79,6 @@ CONTENT_EXPORT extern const base::Feature kNativeAndroidHistoryManager;
 CONTENT_EXPORT extern const base::Feature kImeThread;
 CONTENT_EXPORT extern const base::Feature kSeccompSandboxAndroid;
 CONTENT_EXPORT extern const base::Feature kServiceWorkerPaymentApps;
-CONTENT_EXPORT extern const base::Feature kWebPayments;
 #endif  // defined(OS_ANDROID)
 
 #if !defined(OS_ANDROID)

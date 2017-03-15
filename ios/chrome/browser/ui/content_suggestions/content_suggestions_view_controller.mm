@@ -12,9 +12,9 @@
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_article_item.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_commands.h"
-#import "ios/chrome/browser/ui/content_suggestions/content_suggestions_item_actions.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_stack_item.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_stack_item_actions.h"
+#import "ios/chrome/browser/ui/content_suggestions/content_suggestions_text_item_actions.h"
 #import "ios/chrome/browser/ui/content_suggestions/expandable_item.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -25,8 +25,7 @@ namespace {
 const NSTimeInterval kAnimationDuration = 0.35;
 }  // namespace
 
-@interface ContentSuggestionsViewController ()<SuggestionsItemActions,
-                                               SuggestionsStackItemActions>
+@interface ContentSuggestionsViewController ()<SuggestionsStackItemActions>
 
 @property(nonatomic, strong)
     ContentSuggestionsCollectionUpdater* collectionUpdater;
@@ -41,6 +40,9 @@ const NSTimeInterval kAnimationDuration = 0.35;
 
 @synthesize suggestionCommandHandler = _suggestionCommandHandler;
 @synthesize collectionUpdater = _collectionUpdater;
+@dynamic collectionViewModel;
+
+#pragma mark - Public
 
 - (instancetype)initWithStyle:(CollectionViewControllerStyle)style
                    dataSource:(id<ContentSuggestionsDataSource>)dataSource {
@@ -52,6 +54,61 @@ const NSTimeInterval kAnimationDuration = 0.35;
   return self;
 }
 
+- (void)dismissEntryAtIndexPath:(NSIndexPath*)indexPath {
+  if (!indexPath || ![self.collectionViewModel hasItemAtIndexPath:indexPath]) {
+    return;
+  }
+
+  [self.collectionView performBatchUpdates:^{
+    [self collectionView:self.collectionView
+        willDeleteItemsAtIndexPaths:@[ indexPath ]];
+
+    [self.collectionView deleteItemsAtIndexPaths:@[ indexPath ]];
+  }
+      completion:^(BOOL) {
+        // The context menu could be displayed for the deleted entry.
+        [self.suggestionCommandHandler dismissContextMenu];
+      }];
+}
+
+- (void)dismissSection:(NSInteger)section {
+  if (section >= [self numberOfSectionsInCollectionView:self.collectionView]) {
+    return;
+  }
+
+  NSInteger sectionIdentifier =
+      [self.collectionViewModel sectionIdentifierForSection:section];
+
+  [self.collectionView performBatchUpdates:^{
+    [self.collectionViewModel removeSectionWithIdentifier:sectionIdentifier];
+    [self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:section]];
+  }
+      completion:^(BOOL) {
+        // The context menu could be displayed for the deleted entries.
+        [self.suggestionCommandHandler dismissContextMenu];
+      }];
+}
+
+- (void)addSuggestions:(NSArray<ContentSuggestion*>*)suggestions {
+  if (suggestions.count == 0) {
+    return;
+  }
+
+  [self.collectionView performBatchUpdates:^{
+    NSIndexSet* addedSections =
+        [self.collectionUpdater addSectionsForSuggestionsToModel:suggestions];
+    [self.collectionView insertSections:addedSections];
+  }
+                                completion:nil];
+
+  [self.collectionView performBatchUpdates:^{
+    NSArray<NSIndexPath*>* addedItems =
+        [self.collectionUpdater addSuggestionsToModel:suggestions];
+    [self.collectionView insertItemsAtIndexPaths:addedItems];
+  }
+                                completion:nil];
+}
+
 #pragma mark - UIViewController
 
 - (void)viewDidLoad {
@@ -61,6 +118,13 @@ const NSTimeInterval kAnimationDuration = 0.35;
 
   self.collectionView.delegate = self;
   self.styler.cellStyle = MDCCollectionViewCellStyleCard;
+
+  UILongPressGestureRecognizer* longPressRecognizer =
+      [[UILongPressGestureRecognizer alloc]
+          initWithTarget:self
+                  action:@selector(handleLongPress:)];
+  longPressRecognizer.numberOfTouchesRequired = 1;
+  [self.collectionView addGestureRecognizer:longPressRecognizer];
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -71,14 +135,9 @@ const NSTimeInterval kAnimationDuration = 0.35;
 
   CollectionViewItem* item =
       [self.collectionViewModel itemAtIndexPath:indexPath];
-  switch (item.type) {
-    case ItemTypeStack:
-      [self.suggestionCommandHandler openReadingList];
-      break;
-    case ItemTypeArticle:
+  switch ([self.collectionUpdater contentSuggestionTypeForItem:item]) {
+    case ContentSuggestionTypeArticle:
       [self openArticle:item];
-      break;
-    default:
       break;
   }
 }
@@ -97,22 +156,6 @@ const NSTimeInterval kAnimationDuration = 0.35;
 
 - (void)openFaviconAtIndexPath:(NSIndexPath*)innerIndexPath {
   [self.suggestionCommandHandler openFaviconAtIndex:innerIndexPath.item];
-}
-
-#pragma mark - SuggestionsItemActions
-
-- (void)addNewItem:(id)sender {
-  [self.suggestionCommandHandler addEmptyItem];
-}
-
-#pragma mark - ContentSuggestionsCollectionUpdater forwarding
-
-- (void)addTextItem:(NSString*)title
-           subtitle:(NSString*)subtitle
-          toSection:(NSInteger)inputSection {
-  [self.collectionUpdater addTextItem:title
-                             subtitle:subtitle
-                            toSection:inputSection];
 }
 
 #pragma mark - SuggestionsStackItemActions
@@ -183,6 +226,39 @@ const NSTimeInterval kAnimationDuration = 0.35;
   ContentSuggestionsArticleItem* article =
       base::mac::ObjCCastStrict<ContentSuggestionsArticleItem>(item);
   [self.suggestionCommandHandler openURL:article.articleURL];
+}
+
+- (void)handleLongPress:(UILongPressGestureRecognizer*)gestureRecognizer {
+  if (self.editor.editing ||
+      gestureRecognizer.state != UIGestureRecognizerStateBegan) {
+    return;
+  }
+
+  CGPoint touchLocation =
+      [gestureRecognizer locationOfTouch:0 inView:self.collectionView];
+  NSIndexPath* touchedItemIndexPath =
+      [self.collectionView indexPathForItemAtPoint:touchLocation];
+  if (!touchedItemIndexPath ||
+      ![self.collectionViewModel hasItemAtIndexPath:touchedItemIndexPath]) {
+    // Make sure there is an item at this position.
+    return;
+  }
+  CollectionViewItem* touchedItem =
+      [self.collectionViewModel itemAtIndexPath:touchedItemIndexPath];
+
+  if ([self.collectionUpdater contentSuggestionTypeForItem:touchedItem] !=
+      ContentSuggestionTypeArticle) {
+    // Only trigger context menu on articles.
+    return;
+  }
+
+  ContentSuggestionsArticleItem* articleItem =
+      base::mac::ObjCCastStrict<ContentSuggestionsArticleItem>(touchedItem);
+
+  [self.suggestionCommandHandler
+      displayContextMenuForArticle:articleItem
+                           atPoint:touchLocation
+                       atIndexPath:touchedItemIndexPath];
 }
 
 @end

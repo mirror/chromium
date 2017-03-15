@@ -30,8 +30,6 @@
 #include "wtf/SizeAssertions.h"
 #include "wtf/StdLibExtras.h"
 
-using namespace WTF;
-
 namespace blink {
 
 namespace {
@@ -298,6 +296,13 @@ template <>
 unsigned short CSSPrimitiveValue::computeLength(
     const CSSToLengthConversionData& conversionData) const {
   return roundForImpreciseConversion<unsigned short>(
+      computeLengthDouble(conversionData));
+}
+
+template <>
+uint8_t CSSPrimitiveValue::computeLength(
+    const CSSToLengthConversionData& conversionData) const {
+  return roundForImpreciseConversion<uint8_t>(
       computeLengthDouble(conversionData));
 }
 
@@ -592,7 +597,7 @@ const char* CSSPrimitiveValue::unitTypeToString(UnitType type) {
 String CSSPrimitiveValue::customCSSText() const {
   if (m_hasCachedCSSText) {
     ASSERT(cssTextCache().contains(this));
-    return cssTextCache().get(this);
+    return cssTextCache().at(this);
   }
 
   String text;

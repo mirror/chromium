@@ -42,15 +42,14 @@
 #include "core/inspector/ConsoleMessage.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/NetworkHintsInterface.h"
-#include "core/loader/PrerenderHandle.h"
+#include "core/loader/private/PrerenderHandle.h"
 #include "core/loader/resource/LinkFetchResource.h"
 #include "platform/Prerender.h"
-#include "platform/RuntimeEnabledFeatures.h"
+#include "platform/Timer.h"
+#include "platform/loader/LinkHeader.h"
 #include "platform/loader/fetch/FetchInitiatorTypeNames.h"
 #include "platform/loader/fetch/FetchRequest.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
-#include "platform/network/LinkHeader.h"
-#include "platform/network/NetworkHints.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
 #include "public/platform/WebPrerender.h"
 
@@ -194,8 +193,12 @@ WTF::Optional<Resource::Type> LinkLoader::getResourceTypeFromAsAttribute(
     return Resource::Script;
   } else if (as == "style") {
     return Resource::CSSStyleSheet;
-  } else if (as == "media") {
+  } else if (as == "video") {
     return Resource::Media;
+  } else if (as == "audio") {
+    return Resource::Media;
+  } else if (as == "track") {
+    return Resource::TextTrack;
   } else if (as == "font") {
     return Resource::Font;
   } else if (as == "track") {
@@ -318,8 +321,8 @@ static Resource* preloadIfNeeded(const LinkRelAttribute& relAttribute,
     return nullptr;
   }
   ResourceRequest resourceRequest(document.completeURL(href));
-  ResourceFetcher::determineRequestContext(resourceRequest,
-                                           resourceType.value(), false);
+  resourceRequest.setRequestContext(
+      ResourceFetcher::determineRequestContext(resourceType.value(), false));
 
   if (referrerPolicy != ReferrerPolicyDefault) {
     resourceRequest.setHTTPReferrer(SecurityPolicy::generateReferrer(
@@ -351,13 +354,13 @@ static Resource* prefetchIfNeeded(Document& document,
   if (relAttribute.isLinkPrefetch() && href.isValid() && document.frame()) {
     UseCounter::count(document, UseCounter::LinkRelPrefetch);
 
-    FetchRequest linkRequest(ResourceRequest(document.completeURL(href)),
-                             FetchInitiatorTypeNames::link);
+    ResourceRequest resourceRequest(document.completeURL(href));
     if (referrerPolicy != ReferrerPolicyDefault) {
-      linkRequest.mutableResourceRequest().setHTTPReferrer(
-          SecurityPolicy::generateReferrer(referrerPolicy, href,
-                                           document.outgoingReferrer()));
+      resourceRequest.setHTTPReferrer(SecurityPolicy::generateReferrer(
+          referrerPolicy, href, document.outgoingReferrer()));
     }
+
+    FetchRequest linkRequest(resourceRequest, FetchInitiatorTypeNames::link);
     if (crossOrigin != CrossOriginAttributeNotSet) {
       linkRequest.setCrossOriginAccessControl(document.getSecurityOrigin(),
                                               crossOrigin);

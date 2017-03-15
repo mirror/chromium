@@ -20,6 +20,7 @@
 #include "components/metrics/metrics_log.h"
 #include "components/metrics/metrics_log_uploader.h"
 #include "components/metrics/metrics_pref_names.h"
+#include "components/metrics/metrics_provider.h"
 #include "components/metrics/metrics_service_client.h"
 #include "components/metrics/net/version_utils.h"
 #include "components/prefs/json_pref_store.h"
@@ -68,8 +69,9 @@ class TodayMetricsServiceClient : public metrics::MetricsServiceClient {
       const base::Closure& done_callback) override;
   void CollectFinalMetricsForLog(const base::Closure& done_callback) override;
   std::unique_ptr<metrics::MetricsLogUploader> CreateUploader(
-      const std::string& server_url,
-      const std::string& mime_type,
+      base::StringPiece server_url,
+      base::StringPiece mime_type,
+      metrics::MetricsLogUploader::MetricServiceType service_type,
       const base::Callback<void(int)>& on_upload_complete) override;
   base::TimeDelta GetStandardUploadInterval() override;
 
@@ -148,8 +150,9 @@ void TodayMetricsServiceClient::CollectFinalMetricsForLog(
 
 std::unique_ptr<metrics::MetricsLogUploader>
 TodayMetricsServiceClient::CreateUploader(
-    const std::string& server_url,
-    const std::string& mime_type,
+    base::StringPiece server_url,
+    base::StringPiece mime_type,
+    metrics::MetricsLogUploader::MetricServiceType service_type,
     const base::Callback<void(int)>& on_upload_complete) {
   NOTREACHED();
   return nullptr;
@@ -247,10 +250,10 @@ bool TodayMetricsLogger::CreateNewLog() {
                                  metrics_service_client_.get(),
                                  pref_service_.get()));
 
-  log_->RecordEnvironment(std::vector<metrics::MetricsProvider*>(),
-                          std::vector<variations::ActiveGroupId>(),
-                          [install_date longLongValue],
-                          [enabled_date longLongValue]);
+  log_->RecordEnvironment(
+      std::vector<std::unique_ptr<metrics::MetricsProvider>>(),
+      std::vector<variations::ActiveGroupId>(), [install_date longLongValue],
+      [enabled_date longLongValue]);
 
   return true;
 }

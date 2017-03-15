@@ -24,7 +24,6 @@
 
 #include "core/layout/svg/LayoutSVGResourcePaintServer.h"
 #include "core/svg/SVGGradientElement.h"
-#include "platform/geometry/FloatRect.h"
 #include "platform/graphics/Gradient.h"
 #include "platform/transforms/AffineTransform.h"
 #include "wtf/HashMap.h"
@@ -53,11 +52,9 @@ class LayoutSVGResourceGradient : public LayoutSVGResourcePaintServer {
   bool isChildAllowed(LayoutObject* child, const ComputedStyle&) const final;
 
  protected:
-  void addStops(Gradient&, const Vector<Gradient::ColorStop>&) const;
-
   virtual SVGUnitTypes::SVGUnitType gradientUnits() const = 0;
   virtual AffineTransform calculateGradientTransform() const = 0;
-  virtual bool collectGradientAttributes(SVGGradientElement*) = 0;
+  virtual bool collectGradientAttributes() = 0;
   virtual PassRefPtr<Gradient> buildGradient() const = 0;
 
   static GradientSpreadMethod platformSpreadMethodFromSVGType(

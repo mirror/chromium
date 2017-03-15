@@ -14,6 +14,7 @@
 
 #include "bindings/core/v8/Dictionary.h"
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/NativeValueTraits.h"
 #include "bindings/core/v8/V8Binding.h"
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
@@ -29,11 +30,6 @@ class CORE_EXPORT StringOrArrayBufferOrArrayBufferView final {
   StringOrArrayBufferOrArrayBufferView();
   bool isNull() const { return m_type == SpecificTypeNone; }
 
-  bool isString() const { return m_type == SpecificTypeString; }
-  String getAsString() const;
-  void setString(String);
-  static StringOrArrayBufferOrArrayBufferView fromString(String);
-
   bool isArrayBuffer() const { return m_type == SpecificTypeArrayBuffer; }
   TestArrayBuffer* getAsArrayBuffer() const;
   void setArrayBuffer(TestArrayBuffer*);
@@ -44,6 +40,11 @@ class CORE_EXPORT StringOrArrayBufferOrArrayBufferView final {
   void setArrayBufferView(TestArrayBufferView*);
   static StringOrArrayBufferOrArrayBufferView fromArrayBufferView(TestArrayBufferView*);
 
+  bool isString() const { return m_type == SpecificTypeString; }
+  String getAsString() const;
+  void setString(String);
+  static StringOrArrayBufferOrArrayBufferView fromString(String);
+
   StringOrArrayBufferOrArrayBufferView(const StringOrArrayBufferOrArrayBufferView&);
   ~StringOrArrayBufferOrArrayBufferView();
   StringOrArrayBufferOrArrayBufferView& operator=(const StringOrArrayBufferOrArrayBufferView&);
@@ -52,15 +53,15 @@ class CORE_EXPORT StringOrArrayBufferOrArrayBufferView final {
  private:
   enum SpecificTypes {
     SpecificTypeNone,
-    SpecificTypeString,
     SpecificTypeArrayBuffer,
     SpecificTypeArrayBufferView,
+    SpecificTypeString,
   };
   SpecificTypes m_type;
 
-  String m_string;
   Member<TestArrayBuffer> m_arrayBuffer;
   Member<TestArrayBufferView> m_arrayBufferView;
+  String m_string;
 
   friend CORE_EXPORT v8::Local<v8::Value> ToV8(const StringOrArrayBufferOrArrayBufferView&, v8::Local<v8::Object>, v8::Isolate*);
 };
@@ -83,8 +84,13 @@ inline void v8SetReturnValue(const CallbackInfo& callbackInfo, StringOrArrayBuff
 }
 
 template <>
-struct NativeValueTraits<StringOrArrayBufferOrArrayBufferView> {
+struct NativeValueTraits<StringOrArrayBufferOrArrayBufferView> : public NativeValueTraitsBase<StringOrArrayBufferOrArrayBufferView> {
   CORE_EXPORT static StringOrArrayBufferOrArrayBufferView nativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+};
+
+template <>
+struct V8TypeOf<StringOrArrayBufferOrArrayBufferView> {
+  typedef V8StringOrArrayBufferOrArrayBufferView Type;
 };
 
 }  // namespace blink

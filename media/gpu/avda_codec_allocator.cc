@@ -34,11 +34,16 @@ constexpr base::TimeDelta kHungTaskDetectionTimeout =
     base::TimeDelta::FromMilliseconds(800);
 
 // Delete |codec| and signal |done_event| if it's not null.
-void DeleteMediaCodecAndSignal(std::unique_ptr<VideoCodecBridge> codec,
+void DeleteMediaCodecAndSignal(std::unique_ptr<MediaCodecBridge> codec,
                                base::WaitableEvent* done_event) {
   codec.reset();
   if (done_event)
     done_event->Signal();
+}
+
+void DropReferenceToSurfaceBundle(
+    scoped_refptr<AVDASurfaceBundle> surface_bundle) {
+  // Do nothing.  Let |surface_bundle| go out of scope.
 }
 
 }  // namespace
@@ -137,7 +142,7 @@ scoped_refptr<base::SingleThreadTaskRunner> AVDACodecAllocator::TaskRunnerFor(
   return threads_[task_type]->thread.task_runner();
 }
 
-bool AVDACodecAllocator::AllocateSurface(AVDACodecAllocatorClient* client,
+bool AVDACodecAllocator::AllocateSurface(AVDASurfaceAllocatorClient* client,
                                          int surface_id) {
   DVLOG(1) << __func__ << ": " << surface_id;
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -160,7 +165,7 @@ bool AVDACodecAllocator::AllocateSurface(AVDACodecAllocatorClient* client,
   return false;
 }
 
-void AVDACodecAllocator::DeallocateSurface(AVDACodecAllocatorClient* client,
+void AVDACodecAllocator::DeallocateSurface(AVDASurfaceAllocatorClient* client,
                                            int surface_id) {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (surface_id == SurfaceManager::kNoSurfaceID ||
@@ -234,7 +239,7 @@ void AVDACodecAllocator::OnSurfaceDestroyed(int surface_id) {
     DLOG(WARNING) << __func__ << ": timed out waiting for MediaCodec#release()";
 }
 
-std::unique_ptr<VideoCodecBridge> AVDACodecAllocator::CreateMediaCodecSync(
+std::unique_ptr<MediaCodecBridge> AVDACodecAllocator::CreateMediaCodecSync(
     scoped_refptr<CodecConfig> codec_config) {
   TRACE_EVENT0("media", "AVDA::CreateMediaCodecSync");
 
@@ -245,11 +250,13 @@ std::unique_ptr<VideoCodecBridge> AVDACodecAllocator::CreateMediaCodecSync(
   DCHECK(!codec_config->needs_protected_surface || media_crypto);
 
   const bool require_software_codec = codec_config->task_type == SW_CODEC;
-  std::unique_ptr<VideoCodecBridge> codec(VideoCodecBridge::CreateDecoder(
-      codec_config->codec, codec_config->needs_protected_surface,
-      codec_config->initial_expected_coded_size,
-      codec_config->surface.j_surface().obj(), media_crypto, codec_config->csd0,
-      codec_config->csd1, true, require_software_codec));
+  std::unique_ptr<MediaCodecBridge> codec(
+      MediaCodecBridgeImpl::CreateVideoDecoder(
+          codec_config->codec, codec_config->needs_protected_surface,
+          codec_config->initial_expected_coded_size,
+          codec_config->surface_bundle->j_surface().obj(), media_crypto,
+          codec_config->csd0, codec_config->csd1, true,
+          require_software_codec));
 
   return codec;
 }
@@ -257,55 +264,89 @@ std::unique_ptr<VideoCodecBridge> AVDACodecAllocator::CreateMediaCodecSync(
 void AVDACodecAllocator::CreateMediaCodecAsync(
     base::WeakPtr<AVDACodecAllocatorClient> client,
     scoped_refptr<CodecConfig> codec_config) {
+  // Allocate the codec on the appropriate thread, and reply to this one with
+  // the result.  If |client| is gone by then, we handle cleanup.
   base::PostTaskAndReplyWithResult(
       TaskRunnerFor(codec_config->task_type).get(), FROM_HERE,
       base::Bind(&AVDACodecAllocator::CreateMediaCodecSync,
                  base::Unretained(this), codec_config),
-      base::Bind(&AVDACodecAllocatorClient::OnCodecConfigured, client));
+      base::Bind(&AVDACodecAllocator::ForwardOrDropCodec,
+                 base::Unretained(this), client, codec_config->task_type,
+                 codec_config->surface_bundle));
 }
 
-void AVDACodecAllocator::ReleaseMediaCodec(
-    std::unique_ptr<VideoCodecBridge> media_codec,
+void AVDACodecAllocator::ForwardOrDropCodec(
+    base::WeakPtr<AVDACodecAllocatorClient> client,
     TaskType task_type,
-    int surface_id) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  DCHECK(media_codec);
-
-  // No need to track the release if it's a SurfaceTexture.
-  if (surface_id == SurfaceManager::kNoSurfaceID) {
-    TaskRunnerFor(task_type)->PostTask(
-        FROM_HERE, base::Bind(&DeleteMediaCodecAndSignal,
-                              base::Passed(std::move(media_codec)), nullptr));
+    scoped_refptr<AVDASurfaceBundle> surface_bundle,
+    std::unique_ptr<MediaCodecBridge> media_codec) {
+  if (!client) {
+    // |client| has been destroyed.  Free |media_codec| on the right thread.
+    // Note that this also preserves |surface_bundle| until |media_codec| has
+    // been released, in case our ref to it is the last one.
+    ReleaseMediaCodec(std::move(media_codec), task_type, surface_bundle);
     return;
   }
 
+  client->OnCodecConfigured(std::move(media_codec));
+}
+
+void AVDACodecAllocator::ReleaseMediaCodec(
+    std::unique_ptr<MediaCodecBridge> media_codec,
+    TaskType task_type,
+    const scoped_refptr<AVDASurfaceBundle>& surface_bundle) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(media_codec);
+
+  // No need to track the release if it's a SurfaceTexture.  We still forward
+  // the reference to |surface_bundle|, though, so that the SurfaceTexture
+  // lasts at least as long as the codec.
+  if (surface_bundle->surface_id == SurfaceManager::kNoSurfaceID) {
+    TaskRunnerFor(task_type)->PostTaskAndReply(
+        FROM_HERE,
+        base::Bind(&DeleteMediaCodecAndSignal,
+                   base::Passed(std::move(media_codec)), nullptr),
+        base::Bind(&DropReferenceToSurfaceBundle, surface_bundle));
+    return;
+  }
+
+  DCHECK(!surface_bundle->surface_texture);
   pending_codec_releases_.emplace(
-      std::piecewise_construct, std::forward_as_tuple(surface_id),
+      std::piecewise_construct,
+      std::forward_as_tuple(surface_bundle->surface_id),
       std::forward_as_tuple(base::WaitableEvent::ResetPolicy::MANUAL,
                             base::WaitableEvent::InitialState::NOT_SIGNALED));
   base::WaitableEvent* released =
-      &pending_codec_releases_.find(surface_id)->second;
+      &pending_codec_releases_.find(surface_bundle->surface_id)->second;
 
+  // Note that we forward |surface_bundle|, too, so that the surface outlasts
+  // the codec.  This doesn't matter so much for CVV surfaces, since they don't
+  // auto-release when they're dropped.  However, for surface owners, this will
+  // become important, so we still handle it.  Plus, it makes sense.
   TaskRunnerFor(task_type)->PostTaskAndReply(
-      FROM_HERE, base::Bind(&DeleteMediaCodecAndSignal,
-                            base::Passed(std::move(media_codec)), released),
-      base::Bind(&AVDACodecAllocator::OnMediaCodecAndSurfaceReleased,
-                 base::Unretained(this), surface_id));
+      FROM_HERE,
+      base::Bind(&DeleteMediaCodecAndSignal,
+                 base::Passed(std::move(media_codec)), released),
+      base::Bind(&AVDACodecAllocator::OnMediaCodecReleased,
+                 base::Unretained(this), surface_bundle));
 }
 
-void AVDACodecAllocator::OnMediaCodecAndSurfaceReleased(int surface_id) {
+void AVDACodecAllocator::OnMediaCodecReleased(
+    scoped_refptr<AVDASurfaceBundle> surface_bundle) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  pending_codec_releases_.erase(surface_id);
-  if (!surface_owners_.count(surface_id))
+  pending_codec_releases_.erase(surface_bundle->surface_id);
+  if (!surface_owners_.count(surface_bundle->surface_id))
     return;
 
-  OwnerRecord& record = surface_owners_[surface_id];
+  OwnerRecord& record = surface_owners_[surface_bundle->surface_id];
   if (!record.owner && record.waiter) {
     record.owner = record.waiter;
     record.waiter = nullptr;
     record.owner->OnSurfaceAvailable(true);
   }
+
+  // Also note that |surface_bundle| lasted at least as long as the codec.
 }
 
 // Returns a hint about whether the construction thread has hung for
@@ -339,7 +380,7 @@ AVDACodecAllocator::AVDACodecAllocator(base::TickClock* tick_clock,
                                        base::WaitableEvent* stop_event)
     : stop_event_for_testing_(stop_event), weak_this_factory_(this) {
   // We leak the clock we create, but that's okay because we're a singleton.
-  auto clock = tick_clock ? tick_clock : new base::DefaultTickClock();
+  auto* clock = tick_clock ? tick_clock : new base::DefaultTickClock();
 
   // Create threads with names and indices that match up with TaskType.
   threads_.push_back(new ThreadAndHangDetector("AVDAAutoThread", clock));

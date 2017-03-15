@@ -1276,9 +1276,6 @@ TEST_F(BrowserAccessibilityTest, TestCaretAndSelectionInSimpleFields) {
   hr = combo_box_accessible->get_selection(
       0L /* selection_index */, &selection_start, &selection_end);
   EXPECT_EQ(E_INVALIDARG, hr); // No selections available.
-  // Invalid in_args should not modify out_args.
-  EXPECT_EQ(-2, selection_start);
-  EXPECT_EQ(-2, selection_end);
   hr = text_field_accessible->get_selection(
       0L /* selection_index */, &selection_start, &selection_end);
   EXPECT_EQ(S_OK, hr);
@@ -1861,7 +1858,13 @@ TEST_F(BrowserAccessibilityTest, TestTextAttributesInContentEditables) {
   EXPECT_NE(base::string16::npos,
             base::string16(text_attributes).find(L"font-weight:normal"));
   EXPECT_NE(base::string16::npos,
-            base::string16(text_attributes).find(L"font-style:underline"));
+            base::string16(text_attributes).find(L"font-style:normal"));
+  EXPECT_NE(
+      base::string16::npos,
+      base::string16(text_attributes).find(L"text-underline-style:solid"));
+  EXPECT_NE(
+      base::string16::npos,
+      base::string16(text_attributes).find(L"text-underline-type:single"));
   text_attributes.Reset();
 
   hr = ax_link_text->get_attributes(2, &start_offset, &end_offset,
@@ -1874,7 +1877,13 @@ TEST_F(BrowserAccessibilityTest, TestTextAttributesInContentEditables) {
   EXPECT_NE(base::string16::npos,
             base::string16(text_attributes).find(L"font-weight:normal"));
   EXPECT_NE(base::string16::npos,
-            base::string16(text_attributes).find(L"font-style:underline"));
+            base::string16(text_attributes).find(L"font-style:normal"));
+  EXPECT_NE(
+      base::string16::npos,
+      base::string16(text_attributes).find(L"text-underline-style:solid"));
+  EXPECT_NE(
+      base::string16::npos,
+      base::string16(text_attributes).find(L"text-underline-type:single"));
   EXPECT_NE(base::string16::npos,
             base::string16(text_attributes).find(L"invalid:spelling"));
   text_attributes.Reset();
@@ -1890,6 +1899,12 @@ TEST_F(BrowserAccessibilityTest, TestTextAttributesInContentEditables) {
     EXPECT_NE(base::string16::npos, attributes.find(L"font-family:Helvetica"));
     EXPECT_NE(base::string16::npos, attributes.find(L"font-weight:normal"));
     EXPECT_NE(base::string16::npos, attributes.find(L"font-style:normal"));
+    EXPECT_NE(
+        base::string16::npos,
+        base::string16(text_attributes).find(L"text-underline-style:none"));
+    EXPECT_NE(
+        base::string16::npos,
+        base::string16(text_attributes).find(L"text-underline-type:none"));
     EXPECT_EQ(base::string16::npos, attributes.find(L"invalid:spelling"));
     text_attributes.Reset();
   }
@@ -1921,6 +1936,10 @@ TEST_F(BrowserAccessibilityTest, TestTextAttributesInContentEditables) {
             base::string16(text_attributes).find(L"font-weight:normal"));
   EXPECT_NE(base::string16::npos,
             base::string16(text_attributes).find(L"font-style:normal"));
+  EXPECT_NE(base::string16::npos,
+            base::string16(text_attributes).find(L"text-underline-style:none"));
+  EXPECT_NE(base::string16::npos,
+            base::string16(text_attributes).find(L"text-underline-type:none"));
   EXPECT_EQ(base::string16::npos,
             base::string16(text_attributes).find(L"invalid:spelling"));
   text_attributes.Reset();

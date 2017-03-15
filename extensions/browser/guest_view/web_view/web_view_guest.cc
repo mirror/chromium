@@ -62,6 +62,7 @@
 #include "ipc/ipc_message_macros.h"
 #include "net/base/escape.h"
 #include "net/base/net_errors.h"
+#include "net/cookies/canonical_cookie.h"
 #include "ui/base/models/simple_menu_model.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 #include "url/url_constants.h"
@@ -87,8 +88,12 @@ uint32_t GetStoragePartitionRemovalMask(uint32_t web_view_removal_mask) {
   uint32_t mask = 0;
   if (web_view_removal_mask & webview::WEB_VIEW_REMOVE_DATA_MASK_APPCACHE)
     mask |= StoragePartition::REMOVE_DATA_MASK_APPCACHE;
-  if (web_view_removal_mask & webview::WEB_VIEW_REMOVE_DATA_MASK_COOKIES)
+  if (web_view_removal_mask &
+      (webview::WEB_VIEW_REMOVE_DATA_MASK_COOKIES |
+       webview::WEB_VIEW_REMOVE_DATA_MASK_SESSION_COOKIES |
+       webview::WEB_VIEW_REMOVE_DATA_MASK_PERSISTENT_COOKIES)) {
     mask |= StoragePartition::REMOVE_DATA_MASK_COOKIES;
+  }
   if (web_view_removal_mask & webview::WEB_VIEW_REMOVE_DATA_MASK_FILE_SYSTEMS)
     mask |= StoragePartition::REMOVE_DATA_MASK_FILE_SYSTEMS;
   if (web_view_removal_mask & webview::WEB_VIEW_REMOVE_DATA_MASK_INDEXEDDB)
@@ -207,8 +212,8 @@ double ConvertZoomLevelToZoomFactor(double zoom_level) {
 
 using WebViewKey = std::pair<int, int>;
 using WebViewKeyToIDMap = std::map<WebViewKey, int>;
-static base::LazyInstance<WebViewKeyToIDMap> web_view_key_to_id_map =
-    LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<WebViewKeyToIDMap>::DestructorAtExit
+    web_view_key_to_id_map = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 
@@ -425,15 +430,41 @@ void WebViewGuest::ClearDataInternal(base::Time remove_since,
     callback.Run();
     return;
   }
+
+  content::StoragePartition::CookieMatcherFunction cookie_matcher;
+
+  bool remove_session_cookies =
+      !!(removal_mask & webview::WEB_VIEW_REMOVE_DATA_MASK_SESSION_COOKIES);
+  bool remove_persistent_cookies =
+      !!(removal_mask & webview::WEB_VIEW_REMOVE_DATA_MASK_PERSISTENT_COOKIES);
+  bool remove_all_cookies =
+      (!!(removal_mask & webview::WEB_VIEW_REMOVE_DATA_MASK_COOKIES)) ||
+      (remove_session_cookies && remove_persistent_cookies);
+
+  // Leaving the cookie_matcher unset will cause all cookies to be purged.
+  if (!remove_all_cookies) {
+    if (remove_session_cookies) {
+      cookie_matcher =
+          base::Bind([](const net::CanonicalCookie& cookie) -> bool {
+            return !cookie.IsPersistent();
+          });
+    } else if (remove_persistent_cookies) {
+      cookie_matcher =
+          base::Bind([](const net::CanonicalCookie& cookie) -> bool {
+            return cookie.IsPersistent();
+          });
+    }
+  }
+
   content::StoragePartition* partition =
       content::BrowserContext::GetStoragePartition(
           web_contents()->GetBrowserContext(),
           web_contents()->GetSiteInstance());
   partition->ClearData(
       storage_partition_removal_mask,
-      content::StoragePartition::QUOTA_MANAGED_STORAGE_MASK_ALL, GURL(),
-      content::StoragePartition::OriginMatcherFunction(), remove_since,
-      base::Time::Now(), callback);
+      content::StoragePartition::QUOTA_MANAGED_STORAGE_MASK_ALL,
+      content::StoragePartition::OriginMatcherFunction(), cookie_matcher,
+      remove_since, base::Time::Now(), callback);
 }
 
 void WebViewGuest::GuestViewDidStopLoading() {
@@ -860,8 +891,8 @@ void WebViewGuest::DidFinishNavigation(
 
 void WebViewGuest::DidStartNavigation(
     content::NavigationHandle* navigation_handle) {
-  // loadStart shouldn't be sent for same page navigations.
-  if (navigation_handle->IsSamePage())
+  // loadStart shouldn't be sent for same document navigations.
+  if (navigation_handle->IsSameDocument())
     return;
 
   std::unique_ptr<base::DictionaryValue> args(new base::DictionaryValue());
@@ -1456,16 +1487,15 @@ void WebViewGuest::RequestNewWindowPermission(WindowOpenDisposition disposition,
   request_info.SetInteger(webview::kInitialHeight, initial_bounds.height());
   request_info.SetInteger(webview::kInitialWidth, initial_bounds.width());
   request_info.Set(webview::kTargetURL,
-                   new base::StringValue(new_window_info.url.spec()));
-  request_info.Set(webview::kName, new base::StringValue(new_window_info.name));
+                   new base::Value(new_window_info.url.spec()));
+  request_info.Set(webview::kName, new base::Value(new_window_info.name));
   request_info.SetInteger(webview::kWindowID, guest->guest_instance_id());
   // We pass in partition info so that window-s created through newwindow
   // API can use it to set their partition attribute.
   request_info.Set(webview::kStoragePartitionId,
-                   new base::StringValue(storage_partition_id));
-  request_info.Set(
-      webview::kWindowOpenDisposition,
-      new base::StringValue(WindowOpenDispositionToString(disposition)));
+                   new base::Value(storage_partition_id));
+  request_info.Set(webview::kWindowOpenDisposition,
+                   new base::Value(WindowOpenDispositionToString(disposition)));
 
   web_view_permission_helper_->
       RequestPermission(WEB_VIEW_PERMISSION_TYPE_NEW_WINDOW,
@@ -1499,7 +1529,7 @@ void WebViewGuest::OnWebViewNewWindowResponse(
     return;
 
   if (!allow)
-    guest->Destroy();
+    guest->Destroy(true);
 }
 
 void WebViewGuest::OnFullscreenPermissionDecided(

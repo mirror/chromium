@@ -60,17 +60,23 @@ class ServerWindow {
 
   // Creates a new CompositorFrameSink of the specified type, replacing the
   // existing.
-  void CreateDisplayCompositorFrameSink(
+  void CreateRootCompositorFrameSink(
       gfx::AcceleratedWidget widget,
       cc::mojom::MojoCompositorFrameSinkAssociatedRequest sink_request,
       cc::mojom::MojoCompositorFrameSinkClientPtr client,
       cc::mojom::DisplayPrivateAssociatedRequest display_request);
 
-  void CreateOffscreenCompositorFrameSink(
+  void CreateCompositorFrameSink(
       cc::mojom::MojoCompositorFrameSinkRequest request,
       cc::mojom::MojoCompositorFrameSinkClientPtr client);
 
   const WindowId& id() const { return id_; }
+
+  const cc::FrameSinkId& frame_sink_id() const { return frame_sink_id_; }
+
+  const base::Optional<cc::LocalSurfaceId>& current_local_surface_id() const {
+    return current_local_surface_id_;
+  }
 
   void Add(ServerWindow* child);
   void Remove(ServerWindow* child);
@@ -81,7 +87,9 @@ class ServerWindow {
   const gfx::Rect& bounds() const { return bounds_; }
   // Sets the bounds. If the size changes this implicitly resets the client
   // area to fill the whole bounds.
-  void SetBounds(const gfx::Rect& bounds);
+  void SetBounds(const gfx::Rect& bounds,
+                 const base::Optional<cc::LocalSurfaceId>& local_surface_id =
+                     base::nullopt);
 
   const std::vector<gfx::Rect>& additional_client_areas() const {
     return additional_client_areas_;
@@ -129,8 +137,8 @@ class ServerWindow {
 
   const Windows& transient_children() const { return transient_children_; }
 
-  bool is_modal() const { return is_modal_; }
-  void SetModal();
+  ModalType modal_type() const { return modal_type_; }
+  void SetModalType(ModalType modal_type);
 
   // Returns true if this contains |window| or is |window|.
   bool Contains(const ServerWindow* window) const;
@@ -201,7 +209,7 @@ class ServerWindow {
   // Called when the window is no longer an embed root.
   void OnEmbeddedAppDisconnected();
 
-#if !defined(NDEBUG) || defined(DCHECK_ALWAYS_ON)
+#if DCHECK_IS_ON()
   std::string GetDebugWindowHierarchy() const;
   std::string GetDebugWindowInfo() const;
   void BuildDebugInfo(const std::string& depth, std::string* result) const;
@@ -210,10 +218,6 @@ class ServerWindow {
  private:
   // Implementation of removing a window. Doesn't send any notification.
   void RemoveImpl(ServerWindow* window);
-
-  // Called when the root window changes from |old_root| to |new_root|. This is
-  // called after the window is moved from |old_root| to |new_root|.
-  void ProcessRootChanged(ServerWindow* old_root, ServerWindow* new_root);
 
   // Called when this window's stacking order among its siblings is changed.
   void OnStackingChanged();
@@ -228,6 +232,9 @@ class ServerWindow {
 
   ServerWindowDelegate* delegate_;
   const WindowId id_;
+  cc::FrameSinkId frame_sink_id_;
+  base::Optional<cc::LocalSurfaceId> current_local_surface_id_;
+
   ServerWindow* parent_;
   Windows children_;
 
@@ -238,7 +245,7 @@ class ServerWindow {
   ServerWindow* transient_parent_;
   Windows transient_children_;
 
-  bool is_modal_;
+  ModalType modal_type_;
   bool visible_;
   gfx::Rect bounds_;
   gfx::Insets client_area_;

@@ -234,12 +234,14 @@ class FakeAudioPlayer : public AudioStub {
         ++right;
       }
     }
+
+    const int kMaxErrorHz = 50;
     int left_hz = (left * kAudioSampleRate / (num_samples - skipped_samples));
-    EXPECT_LE(kTestAudioSignalFrequencyLeftHz - 50, left_hz);
-    EXPECT_GE(kTestAudioSignalFrequencyLeftHz + 50, left_hz);
+    EXPECT_LE(kTestAudioSignalFrequencyLeftHz - kMaxErrorHz, left_hz);
+    EXPECT_GE(kTestAudioSignalFrequencyLeftHz + kMaxErrorHz, left_hz);
     int right_hz = (right * kAudioSampleRate / (num_samples - skipped_samples));
-    EXPECT_LE(kTestAudioSignalFrequencyRightHz - 50, right_hz);
-    EXPECT_GE(kTestAudioSignalFrequencyRightHz + 50, right_hz);
+    EXPECT_LE(kTestAudioSignalFrequencyRightHz - kMaxErrorHz, right_hz);
+    EXPECT_GE(kTestAudioSignalFrequencyRightHz + kMaxErrorHz, right_hz);
   }
 
   base::WeakPtr<AudioStub> GetWeakPtr() { return weak_factory_.GetWeakPtr(); }
@@ -622,8 +624,7 @@ TEST_P(ConnectionTest, VideoStats) {
   EXPECT_LE(stats.client_stats.time_rendered, finish_time);
 }
 
-// Disabling due to failures after WebRTC roll http://crbug.com/685910
-TEST_P(ConnectionTest, DISABLED_Audio) {
+TEST_P(ConnectionTest, Audio) {
   Connect();
 
   std::unique_ptr<AudioStream> audio_stream =
@@ -634,6 +635,8 @@ TEST_P(ConnectionTest, DISABLED_Audio) {
   client_audio_player_.Verify();
 }
 
+#if !defined(MEMORY_SANITIZER)
+// Test fails under msan, https://crbug.com/697178
 TEST_P(ConnectionTest, FirstCaptureFailed) {
   Connect();
 
@@ -666,6 +669,7 @@ TEST_P(ConnectionTest, FirstCaptureFailed) {
     EXPECT_EQ(event_timestamp, stats.host_stats.latest_event_timestamp);
   }
 }
+#endif
 
 TEST_P(ConnectionTest, SecondCaptureFailed) {
   Connect();

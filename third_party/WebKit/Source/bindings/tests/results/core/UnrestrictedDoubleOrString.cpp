@@ -11,28 +11,13 @@
 // clang-format off
 #include "UnrestrictedDoubleOrString.h"
 
+#include "bindings/core/v8/IDLTypes.h"
+#include "bindings/core/v8/NativeValueTraitsImpl.h"
 #include "bindings/core/v8/ToV8.h"
 
 namespace blink {
 
 UnrestrictedDoubleOrString::UnrestrictedDoubleOrString() : m_type(SpecificTypeNone) {}
-
-double UnrestrictedDoubleOrString::getAsUnrestrictedDouble() const {
-  DCHECK(isUnrestrictedDouble());
-  return m_unrestrictedDouble;
-}
-
-void UnrestrictedDoubleOrString::setUnrestrictedDouble(double value) {
-  DCHECK(isNull());
-  m_unrestrictedDouble = value;
-  m_type = SpecificTypeUnrestrictedDouble;
-}
-
-UnrestrictedDoubleOrString UnrestrictedDoubleOrString::fromUnrestrictedDouble(double value) {
-  UnrestrictedDoubleOrString container;
-  container.setUnrestrictedDouble(value);
-  return container;
-}
 
 String UnrestrictedDoubleOrString::getAsString() const {
   DCHECK(isString());
@@ -51,6 +36,23 @@ UnrestrictedDoubleOrString UnrestrictedDoubleOrString::fromString(String value) 
   return container;
 }
 
+double UnrestrictedDoubleOrString::getAsUnrestrictedDouble() const {
+  DCHECK(isUnrestrictedDouble());
+  return m_unrestrictedDouble;
+}
+
+void UnrestrictedDoubleOrString::setUnrestrictedDouble(double value) {
+  DCHECK(isNull());
+  m_unrestrictedDouble = value;
+  m_type = SpecificTypeUnrestrictedDouble;
+}
+
+UnrestrictedDoubleOrString UnrestrictedDoubleOrString::fromUnrestrictedDouble(double value) {
+  UnrestrictedDoubleOrString container;
+  container.setUnrestrictedDouble(value);
+  return container;
+}
+
 UnrestrictedDoubleOrString::UnrestrictedDoubleOrString(const UnrestrictedDoubleOrString&) = default;
 UnrestrictedDoubleOrString::~UnrestrictedDoubleOrString() = default;
 UnrestrictedDoubleOrString& UnrestrictedDoubleOrString::operator=(const UnrestrictedDoubleOrString&) = default;
@@ -66,7 +68,7 @@ void V8UnrestrictedDoubleOrString::toImpl(v8::Isolate* isolate, v8::Local<v8::Va
     return;
 
   if (v8Value->IsNumber()) {
-    double cppValue = toDouble(isolate, v8Value, exceptionState);
+    double cppValue = NativeValueTraits<IDLUnrestrictedDouble>::nativeValue(isolate, v8Value, exceptionState);
     if (exceptionState.hadException())
       return;
     impl.setUnrestrictedDouble(cppValue);
@@ -86,10 +88,10 @@ v8::Local<v8::Value> ToV8(const UnrestrictedDoubleOrString& impl, v8::Local<v8::
   switch (impl.m_type) {
     case UnrestrictedDoubleOrString::SpecificTypeNone:
       return v8::Null(isolate);
-    case UnrestrictedDoubleOrString::SpecificTypeUnrestrictedDouble:
-      return v8::Number::New(isolate, impl.getAsUnrestrictedDouble());
     case UnrestrictedDoubleOrString::SpecificTypeString:
       return v8String(isolate, impl.getAsString());
+    case UnrestrictedDoubleOrString::SpecificTypeUnrestrictedDouble:
+      return v8::Number::New(isolate, impl.getAsUnrestrictedDouble());
     default:
       NOTREACHED();
   }

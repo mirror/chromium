@@ -6,6 +6,7 @@
 #define UI_GFX_COLOR_SPACE_H_
 
 #include <stdint.h>
+#include <ostream>
 
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
@@ -28,114 +29,87 @@ class ICCProfile;
 class GFX_EXPORT ColorSpace {
  public:
   enum class PrimaryID : uint16_t {
-    // The first 0-255 values should match the H264 specification (see Table E-3
-    // Colour Primaries in https://www.itu.int/rec/T-REC-H.264/en).
-    RESERVED0 = 0,
-    BT709 = 1,
-    UNSPECIFIED = 2,
-    RESERVED = 3,
-    BT470M = 4,
-    BT470BG = 5,
-    SMPTE170M = 6,
-    SMPTE240M = 7,
-    FILM = 8,
-    BT2020 = 9,
-    SMPTEST428_1 = 10,
-    SMPTEST431_2 = 11,
-    SMPTEST432_1 = 12,
-
-    LAST_STANDARD_VALUE = SMPTEST432_1,
-
-    // Chrome-specific values start at 1000.
-    UNKNOWN = 1000,
+    INVALID,
+    BT709,
+    BT470M,
+    BT470BG,
+    SMPTE170M,
+    SMPTE240M,
+    FILM,
+    BT2020,
+    SMPTEST428_1,
+    SMPTEST431_2,
+    SMPTEST432_1,
     XYZ_D50,
     ADOBE_RGB,
+    // Primaries defined by the primary matrix |custom_primary_matrix_|.
     CUSTOM,
-    LAST = CUSTOM
+    // For color spaces defined by an ICC profile which cannot be represented
+    // parametrically. Any ColorTransform using this color space will use the
+    // ICC profile directly to compute a transform LUT.
+    ICC_BASED,
+    LAST = ICC_BASED,
   };
 
   enum class TransferID : uint16_t {
-    // The first 0-255 values should match the H264 specification (see Table E-4
-    // Transfer Characteristics in https://www.itu.int/rec/T-REC-H.264/en).
-    RESERVED0 = 0,
-    BT709 = 1,
-    UNSPECIFIED = 2,
-    RESERVED = 3,
-    GAMMA22 = 4,
-    GAMMA28 = 5,
-    SMPTE170M = 6,
-    SMPTE240M = 7,
-    LINEAR = 8,
-    LOG = 9,
-    LOG_SQRT = 10,
-    IEC61966_2_4 = 11,
-    BT1361_ECG = 12,
-    IEC61966_2_1 = 13,
-    BT2020_10 = 14,
-    BT2020_12 = 15,
-    SMPTEST2084 = 16,
-    SMPTEST428_1 = 17,
-    ARIB_STD_B67 = 18,  // AKA hybrid-log gamma, HLG.
-
-    LAST_STANDARD_VALUE = SMPTEST428_1,
-
-    // Chrome-specific values start at 1000.
-    UNKNOWN = 1000,
+    INVALID,
+    BT709,
+    GAMMA22,
     GAMMA24,
-
+    GAMMA28,
+    SMPTE170M,
+    SMPTE240M,
+    LINEAR,
+    LOG,
+    LOG_SQRT,
+    IEC61966_2_4,
+    BT1361_ECG,
+    IEC61966_2_1,
+    BT2020_10,
+    BT2020_12,
+    SMPTEST2084,
+    SMPTEST428_1,
+    ARIB_STD_B67,  // AKA hybrid-log gamma, HLG.
     // This is an ad-hoc transfer function that decodes SMPTE 2084 content
-    // into a 0-1 range more or less suitable for viewing on a non-hdr
+    // into a [0, 1] range more or less suitable for viewing on a non-hdr
     // display.
     SMPTEST2084_NON_HDR,
-
-    // Like LINEAR, but intended for HDR. (can go outside of 0-1)
+    // The same as IEC61966_2_1 on the interval [0, 1], with the nonlinear
+    // segment continuing beyond 1 and point symmetry defining values below 0.
+    IEC61966_2_1_HDR,
+    // The same as LINEAR but is defined for all real values.
     LINEAR_HDR,
-    // TODO(hubbe): Need to store an approximation of the gamma function(s).
+    // A parametric transfer function defined by |custom_transfer_params_|.
     CUSTOM,
-    LAST = CUSTOM,
+    // See PrimaryID::ICC_BASED.
+    ICC_BASED,
+    LAST = ICC_BASED,
   };
 
   enum class MatrixID : int16_t {
-    // The first 0-255 values should match the H264 specification (see Table E-5
-    // Matrix Coefficients in https://www.itu.int/rec/T-REC-H.264/en).
-    RGB = 0,
-    BT709 = 1,
-    UNSPECIFIED = 2,
-    RESERVED = 3,
-    FCC = 4,
-    BT470BG = 5,
-    SMPTE170M = 6,
-    SMPTE240M = 7,
-    YCOCG = 8,
-    BT2020_NCL = 9,
-    BT2020_CL = 10,
-    YDZDX = 11,
-
-    LAST_STANDARD_VALUE = YDZDX,
-
-    // Chrome-specific values start at 1000
-    UNKNOWN = 1000,
-    LAST = UNKNOWN,
+    INVALID,
+    RGB,
+    BT709,
+    FCC,
+    BT470BG,
+    SMPTE170M,
+    SMPTE240M,
+    YCOCG,
+    BT2020_NCL,
+    BT2020_CL,
+    YDZDX,
+    LAST = YDZDX,
   };
 
-  // This corresponds to the WebM Range enum which is part of WebM color data
-  // (see http://www.webmproject.org/docs/container/#Range).
-  // H.264 only uses a bool, which corresponds to the LIMITED/FULL values.
-  // Chrome-specific values start at 1000.
   enum class RangeID : int8_t {
-    // Range is not explicitly specified / unknown.
-    UNSPECIFIED = 0,
-
+    INVALID,
     // Limited Rec. 709 color range with RGB values ranging from 16 to 235.
-    LIMITED = 1,
-
+    LIMITED,
     // Full RGB color range with RGB valees from 0 to 255.
-    FULL = 2,
-
+    FULL,
     // Range is defined by TransferID/MatrixID.
-    DERIVED = 3,
-
-    LAST = DERIVED
+    DERIVED,
+    LAST = DERIVED,
   };
 
   ColorSpace();
@@ -145,12 +119,16 @@ class GFX_EXPORT ColorSpace {
              MatrixID matrix,
              RangeID full_range);
   ColorSpace(const ColorSpace& other);
-  ColorSpace(int primaries, int transfer, int matrix, RangeID full_range);
   ~ColorSpace();
 
-  static PrimaryID PrimaryIDFromInt(int primary_id);
-  static TransferID TransferIDFromInt(int transfer_id);
-  static MatrixID MatrixIDFromInt(int matrix_id);
+  // Create a color space with primary, transfer and matrix values from the
+  // H264 specification (Table E-3 Colour Primaries, E-4 Transfer
+  // Characteristics, and E-5 Matrix Coefficients in
+  // https://www.itu.int/rec/T-REC-H.264/en).
+  static ColorSpace CreateVideo(int h264_primary,
+                                int h264_transfer,
+                                int h264_matrix,
+                                RangeID range_id);
 
   // Returns true if this is not the default-constructor object.
   bool IsValid() const;
@@ -158,10 +136,14 @@ class GFX_EXPORT ColorSpace {
   static ColorSpace CreateSRGB();
   static ColorSpace CreateCustom(const SkMatrix44& to_XYZD50,
                                  const SkColorSpaceTransferFn& fn);
-  // scRGB is like RGB, but linear and values outside of 0-1 are allowed.
-  // scRGB is normally used with fp16 textures.
-  static ColorSpace CreateSCRGBLinear();
   static ColorSpace CreateXYZD50();
+
+  // Extended sRGB matches sRGB for values in [0, 1], and extends the transfer
+  // function to all real values.
+  static ColorSpace CreateExtendedSRGB();
+  // scRGB uses the same primaries as sRGB but has a linear transfer function
+  // for all real values.
+  static ColorSpace CreateSCRGBLinear();
 
   // TODO: Remove these, and replace with more generic constructors.
   static ColorSpace CreateJpeg();
@@ -171,12 +153,26 @@ class GFX_EXPORT ColorSpace {
   bool operator==(const ColorSpace& other) const;
   bool operator!=(const ColorSpace& other) const;
   bool operator<(const ColorSpace& other) const;
+  std::string ToString() const;
 
   bool IsHDR() const;
+
+  // Return this color space with any range adjust or YUV to RGB conversion
+  // stripped off.
+  gfx::ColorSpace GetAsFullRangeRGB() const;
 
   // This will return nullptr for non-RGB spaces, spaces with non-FULL
   // range, and unspecified spaces.
   sk_sp<SkColorSpace> ToSkColorSpace() const;
+
+  // Return an SkColorSpace that represents this color space, with output-space
+  // blending (which is only linear for color spaces with a linear tranasfer
+  // function).
+  sk_sp<SkColorSpace> ToNonlinearBlendedSkColorSpace() const;
+
+  // Populate |icc_profile| with an ICC profile that represents this color
+  // space. Returns false if this space is not representable.
+  bool GetICCProfile(ICCProfile* icc_profile) const;
 
   void GetPrimaryMatrix(SkMatrix44* to_XYZD50) const;
   bool GetTransferFunction(SkColorSpaceTransferFn* fn) const;
@@ -187,10 +183,14 @@ class GFX_EXPORT ColorSpace {
   void GetRangeAdjustMatrix(SkMatrix44* matrix) const;
 
  private:
-  PrimaryID primaries_ = PrimaryID::UNSPECIFIED;
-  TransferID transfer_ = TransferID::UNSPECIFIED;
-  MatrixID matrix_ = MatrixID::UNSPECIFIED;
-  RangeID range_ = RangeID::LIMITED;
+  // Returns true if the transfer function is defined by an
+  // SkColorSpaceTransferFn which is extended to all real values.
+  bool HasExtendedSkTransferFn() const;
+
+  PrimaryID primaries_ = PrimaryID::INVALID;
+  TransferID transfer_ = TransferID::INVALID;
+  MatrixID matrix_ = MatrixID::INVALID;
+  RangeID range_ = RangeID::INVALID;
 
   // Only used if primaries_ is PrimaryID::CUSTOM.
   float custom_primary_matrix_[9] = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -212,6 +212,10 @@ class GFX_EXPORT ColorSpace {
   friend struct IPC::ParamTraits<gfx::ColorSpace>;
   FRIEND_TEST_ALL_PREFIXES(SimpleColorSpace, GetColorSpace);
 };
+
+// Stream operator so ColorSpace can be used in assertion statements.
+GFX_EXPORT std::ostream& operator<<(std::ostream& out,
+                                    const ColorSpace& color_space);
 
 }  // namespace gfx
 

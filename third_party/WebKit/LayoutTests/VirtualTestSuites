@@ -90,6 +90,11 @@
   },
   {
     "prefix": "stable",
+    "base": "http/tests/sendbeacon",
+    "args": ["--stable-release-mode"]
+  },
+  {
+    "prefix": "stable",
     "base": "animations-unprefixed",
     "args": ["--stable-release-mode"]
   },
@@ -100,19 +105,18 @@
   },
   {
     "prefix": "disable-spinvalidation",
-    "base": "paint/invalidation",
+    "base": "compositing",
     "args": ["--disable-slimming-paint-invalidation"]
   },
   {
-    "prefix": "stable",
-    "base": "http/tests/origin_trials/webexposed",
-    "args": ["--stable-release-mode"]
+    "prefix": "disable-spinvalidation",
+    "base": "paint",
+    "args": ["--disable-slimming-paint-invalidation"]
   },
   {
-    "prefix": "origin-trials-features-disabled",
+    "prefix": "origin-trials-runtimeflags-disabled",
     "base": "http/tests/origin_trials/webexposed",
-    "args": ["--disable-blink-features=ForeignFetch,ImageCapture,LinkServiceWorker,LongTaskObserver,ServiceWorkerNavigationPreload,SetRootScroller,WebUSB,WebVR,WebShare",
-             "--disable-features=ForeignFetch,ImageCapture,LinkServiceWorker,LongTaskObserver,ServiceWorkerNavigationPreload,SetRootScroller,WebUSB,WebVR,WebShare"]
+    "args": ["--disable-blink-features=ForeignFetch,ImageCapture,LinkServiceWorker,LongTaskObserver,ServiceWorkerNavigationPreload,SetRootScroller,WebUSB,WebVR,WebShare"]
   },
   {
     "prefix": "android",
@@ -329,22 +333,27 @@
   {
     "prefix": "layout_ng",
     "base": "fast/block/basic",
-    "args": ["--enable-blink-features=LayoutNG"]
+    "args": ["--enable-blink-features=LayoutNG, LayoutNGInline"]
   },
   {
     "prefix": "layout_ng",
     "base": "fast/block/margin-collapse",
-    "args": ["--enable-blink-features=LayoutNG"]
+    "args": ["--enable-blink-features=LayoutNG, LayoutNGInline"]
   },
   {
     "prefix": "layout_ng",
     "base": "css2.1/20110323",
-    "args": ["--enable-blink-features=LayoutNG"]
+    "args": ["--enable-blink-features=LayoutNG, LayoutNGInline"]
   },
   {
     "prefix": "layout_ng",
     "base": "fast/block/float",
-    "args": ["--enable-blink-features=LayoutNG"]
+    "args": ["--enable-blink-features=LayoutNG, LayoutNGInline"]
+  },
+  {
+    "prefix": "layout_ng",
+    "base": "external/csswg-test/css21/linebox",
+    "args": ["--enable-blink-features=LayoutNG, LayoutNGInline"]
   },
   {
     "prefix": "feature-policy",

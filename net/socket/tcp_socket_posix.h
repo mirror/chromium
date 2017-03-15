@@ -12,7 +12,6 @@
 #include "base/callback.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
-#include "base/time/time.h"
 #include "net/base/address_family.h"
 #include "net/base/completion_callback.h"
 #include "net/base/net_export.h"
@@ -20,7 +19,7 @@
 #include "net/socket/socket_performance_watcher.h"
 
 namespace base {
-class TickClock;
+class TimeDelta;
 }
 
 namespace net {
@@ -60,6 +59,9 @@ class NET_EXPORT TCPSocketPosix {
   // Multiple outstanding requests are not supported.
   // Full duplex mode (reading and writing at the same time) is supported.
   int Read(IOBuffer* buf, int buf_len, const CompletionCallback& callback);
+  int ReadIfReady(IOBuffer* buf,
+                  int buf_len,
+                  const CompletionCallback& callback);
   int Write(IOBuffer* buf, int buf_len, const CompletionCallback& callback);
 
   int GetLocalAddress(IPEndPoint* address) const;
@@ -107,8 +109,6 @@ class NET_EXPORT TCPSocketPosix {
   // start/end of a series of connect attempts itself.
   void StartLoggingMultipleConnectAttempts(const AddressList& addresses);
   void EndLoggingMultipleConnectAttempts(int net_error);
-
-  void SetTickClockForTesting(std::unique_ptr<base::TickClock> tick_clock);
 
   const NetLogWithSource& net_log() const { return net_log_; }
 
@@ -200,7 +200,9 @@ class NET_EXPORT TCPSocketPosix {
   void ReadCompleted(const scoped_refptr<IOBuffer>& buf,
                      const CompletionCallback& callback,
                      int rv);
+  void ReadIfReadyCompleted(const CompletionCallback& callback, int rv);
   int HandleReadCompleted(IOBuffer* buf, int rv);
+  void HandleReadCompletedHelper(int rv);
 
   void WriteCompleted(const scoped_refptr<IOBuffer>& buf,
                       const CompletionCallback& callback,
@@ -223,16 +225,6 @@ class NET_EXPORT TCPSocketPosix {
   // Socket performance statistics (such as RTT) are reported to the
   // |socket_performance_watcher_|. May be nullptr.
   std::unique_ptr<SocketPerformanceWatcher> socket_performance_watcher_;
-
-  std::unique_ptr<base::TickClock> tick_clock_;
-
-  // Minimum interval betweeen consecutive notifications to
-  // |socket_performance_watcher_|.
-  const base::TimeDelta rtt_notifications_minimum_interval_;
-
-  // Time when the |socket_performance_watcher_| was last notified of updated
-  // RTT.
-  base::TimeTicks last_rtt_notification_;
 
   // Enables experimental TCP FastOpen option.
   bool use_tcp_fastopen_;

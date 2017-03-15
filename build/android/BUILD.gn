@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/android/config.gni")
 import("//build/config/android/rules.gni")
 
 if (enable_java_templates) {
@@ -51,6 +52,7 @@ if (enable_java_templates) {
   _data +=
       "android_sdk_root=" + rebase_path(android_sdk_root, root_build_dir) + CR
   _data += "android_sdk_version=$android_sdk_version$CR"
+  _data += "android_tool_prefix=$android_tool_prefix"
   write_file("$root_build_dir/build_vars.txt", _data)
 }
 
@@ -121,6 +123,16 @@ group("test_runner_py") {
            "//third_party/catapult/devil/devil/devil_dependencies.json",
            "//third_party/proguard/lib/proguard.jar",
          ]
+}
+
+group("logdog_wrapper_py") {
+  _py_files = read_file("test_wrapper/logdog_wrapper.pydeps", "list lines")
+
+  # Filter out comments.
+  set_sources_assignment_filter([ "#*" ])
+  sources = _py_files
+
+  data = sources
 }
 
 # Create wrapper scripts in out/bin that takes care of setting the

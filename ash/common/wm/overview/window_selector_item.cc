@@ -17,18 +17,16 @@
 #include "ash/common/wm/overview/window_selector.h"
 #include "ash/common/wm/overview/window_selector_controller.h"
 #include "ash/common/wm/window_state.h"
-#include "ash/common/wm_lookup.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
-#include "ash/common/wm_window_property.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/root_window_controller.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "base/auto_reset.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
-#include "grit/ash_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/compositor/layer_animation_sequence.h"
 #include "ui/compositor/scoped_animation_duration_scale_mode.h"
@@ -109,7 +107,7 @@ static const float kPreCloseScale = 0.02f;
 // Note: The fade in animation will occur after a delay where the delay is how
 // long the lay out animations take.
 void SetupFadeInAfterLayout(views::Widget* widget) {
-  WmWindow* window = WmLookup::Get()->GetWindowForWidget(widget);
+  WmWindow* window = WmWindow::Get(widget->GetNativeWindow());
   window->SetOpacity(0.0f);
   std::unique_ptr<ScopedOverviewAnimationSettings>
       scoped_overview_animation_settings =
@@ -288,7 +286,7 @@ class WindowSelectorItem::RoundedContainerView
     // during the initial animation. Once the initial fade-in completes and the
     // overview header is fully exposed update stacking to keep the label above
     // the item which prevents input events from reaching the window.
-    WmWindow* widget_window = WmLookup::Get()->GetWindowForWidget(GetWidget());
+    WmWindow* widget_window = WmWindow::Get(GetWidget()->GetNativeWindow());
     if (widget_window && item_window_)
       widget_window->GetParent()->StackChildAbove(widget_window, item_window_);
     item_window_ = nullptr;
@@ -417,11 +415,11 @@ WindowSelectorItem::WindowSelectorItem(WmWindow* window,
       window_selector_(window_selector),
       background_view_(nullptr) {
   CreateWindowLabel(window->GetTitle());
-  GetWindow()->AddObserver(this);
+  GetWindow()->aura_window()->AddObserver(this);
 }
 
 WindowSelectorItem::~WindowSelectorItem() {
-  GetWindow()->RemoveObserver(this);
+  GetWindow()->aura_window()->RemoveObserver(this);
 }
 
 WmWindow* WindowSelectorItem::GetWindow() {
@@ -451,8 +449,7 @@ void WindowSelectorItem::Shutdown() {
     // overview) results in stacking it at the top. Maintain the label window
     // stacking position above the item to make the header transformation more
     // gradual upon exiting the overview mode.
-    WmWindow* widget_window =
-        WmLookup::Get()->GetWindowForWidget(item_widget_.get());
+    WmWindow* widget_window = WmWindow::Get(item_widget_->GetNativeWindow());
 
     // |widget_window| was originally created in the same container as the
     // |transform_window_| but when closing overview the |transform_window_|
@@ -548,12 +545,12 @@ void WindowSelectorItem::ButtonPressed(views::Button* sender,
   window_selector_->SelectWindow(this);
 }
 
-void WindowSelectorItem::OnWindowDestroying(WmWindow* window) {
+void WindowSelectorItem::OnWindowDestroying(aura::Window* window) {
   window->RemoveObserver(this);
   transform_window_.OnWindowDestroyed();
 }
 
-void WindowSelectorItem::OnWindowTitleChanged(WmWindow* window) {
+void WindowSelectorItem::OnWindowTitleChanged(aura::Window* window) {
   // TODO(flackr): Maybe add the new title to a vector of titles so that we can
   // filter any of the titles the window had while in the overview session.
   label_view_->SetText(window->GetTitle());
@@ -626,8 +623,7 @@ void WindowSelectorItem::CreateWindowLabel(const base::string16& title) {
           &params_label);
   item_widget_->set_focus_on_creation(false);
   item_widget_->Init(params_label);
-  WmWindow* widget_window =
-      WmLookup::Get()->GetWindowForWidget(item_widget_.get());
+  WmWindow* widget_window = WmWindow::Get(item_widget_->GetNativeWindow());
   if (transform_window_.GetTopInset()) {
     // For windows with headers the overview header fades in above the
     // original window header.
@@ -692,8 +688,7 @@ void WindowSelectorItem::UpdateHeaderLayout(
     label_view_->SetVisible(true);
     SetupFadeInAfterLayout(item_widget_.get());
   }
-  WmWindow* widget_window =
-      WmLookup::Get()->GetWindowForWidget(item_widget_.get());
+  WmWindow* widget_window = WmWindow::Get(item_widget_->GetNativeWindow());
   std::unique_ptr<ScopedOverviewAnimationSettings> animation_settings =
       ScopedOverviewAnimationSettingsFactory::Get()
           ->CreateOverviewAnimationSettings(animation_type, widget_window);
@@ -721,8 +716,7 @@ void WindowSelectorItem::AnimateOpacity(float opacity,
   transform_window_.SetOpacity(opacity);
 
   const float header_opacity = selected_ ? 0.f : kHeaderOpacity * opacity;
-  WmWindow* widget_window =
-      WmLookup::Get()->GetWindowForWidget(item_widget_.get());
+  WmWindow* widget_window = WmWindow::Get(item_widget_->GetNativeWindow());
   std::unique_ptr<ScopedOverviewAnimationSettings> animation_settings_label =
       ScopedOverviewAnimationSettingsFactory::Get()
           ->CreateOverviewAnimationSettings(animation_type, widget_window);
@@ -738,7 +732,7 @@ void WindowSelectorItem::FadeOut(std::unique_ptr<views::Widget> widget) {
   widget->SetOpacity(1.f);
 
   // Fade out the widget. This animation continues past the lifetime of |this|.
-  WmWindow* widget_window = WmLookup::Get()->GetWindowForWidget(widget.get());
+  WmWindow* widget_window = WmWindow::Get(widget->GetNativeWindow());
   std::unique_ptr<ScopedOverviewAnimationSettings> animation_settings =
       ScopedOverviewAnimationSettingsFactory::Get()
           ->CreateOverviewAnimationSettings(

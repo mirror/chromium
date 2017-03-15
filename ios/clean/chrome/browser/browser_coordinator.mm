@@ -27,7 +27,7 @@
 @implementation BrowserCoordinator
 
 @synthesize context = _context;
-@synthesize browserState = _browserState;
+@synthesize browser = _browser;
 @synthesize childCoordinators = _childCoordinators;
 @synthesize parentCoordinator = _parentCoordinator;
 @synthesize overlaying = _overlaying;
@@ -43,11 +43,11 @@
 #pragma mark - Public API
 
 - (void)start {
-  // Default implementation is a no-op.
+  [self.parentCoordinator childCoordinatorDidStart:self];
 }
 
 - (void)stop {
-  // Default implementation is a no-op.
+  [self.parentCoordinator childCoordinatorWillStop:self];
 }
 
 @end
@@ -66,7 +66,7 @@
          "property.";
   [self.childCoordinators addObject:coordinator];
   coordinator.parentCoordinator = self;
-  coordinator.browserState = self.browserState;
+  coordinator.browser = self.browser;
   coordinator.context.baseViewController = self.viewController;
 }
 
@@ -120,6 +120,14 @@
     return;
   [self.childCoordinators removeObject:coordinator];
   coordinator.parentCoordinator = nil;
+}
+
+- (void)childCoordinatorDidStart:(BrowserCoordinator*)childCoordinator {
+  // Default implementation is a no-op.
+}
+
+- (void)childCoordinatorWillStop:(BrowserCoordinator*)childCoordinator {
+  // Default implementation is a no-op.
 }
 
 @end

@@ -13,15 +13,20 @@
 #include "ash/common/wm/dock/docked_window_layout_manager_observer.h"
 #include "ash/common/wm/window_state_observer.h"
 #include "ash/common/wm/wm_snap_to_pixel_layout_manager.h"
-#include "ash/common/wm_activation_observer.h"
-#include "ash/common/wm_window_observer.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
+#include "base/scoped_observer.h"
 #include "base/time/time.h"
+#include "ui/aura/window_observer.h"
 #include "ui/display/display_observer.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/keyboard/keyboard_controller_observer.h"
+#include "ui/wm/public/activation_change_observer.h"
+
+namespace keyboard {
+class KeyboardController;
+}
 
 namespace ash {
 class DockedBackgroundWidget;
@@ -45,8 +50,8 @@ class WmShelf;
 class ASH_EXPORT DockedWindowLayoutManager
     : public wm::WmSnapToPixelLayoutManager,
       public display::DisplayObserver,
-      public WmWindowObserver,
-      public WmActivationObserver,
+      public aura::WindowObserver,
+      public aura::client::ActivationChangeObserver,
       public ShellObserver,
       public keyboard::KeyboardControllerObserver,
       public wm::WindowStateObserver {
@@ -143,16 +148,17 @@ class ASH_EXPORT DockedWindowLayoutManager
   void OnPreWindowStateTypeChange(wm::WindowState* window_state,
                                   wm::WindowStateType old_type) override;
 
-  // WmWindowObserver:
-  void OnWindowBoundsChanged(WmWindow* window,
+  // aura::WindowObserver:
+  void OnWindowBoundsChanged(aura::Window* window,
                              const gfx::Rect& old_bounds,
                              const gfx::Rect& new_bounds) override;
-  void OnWindowVisibilityChanging(WmWindow* window, bool visible) override;
-  void OnWindowDestroying(WmWindow* window) override;
+  void OnWindowVisibilityChanging(aura::Window* window, bool visible) override;
+  void OnWindowDestroying(aura::Window* window) override;
 
-  // WmActivationObserver:
-  void OnWindowActivated(WmWindow* gained_active,
-                         WmWindow* lost_active) override;
+  // aura::client::ActivationChangeObserver:
+  void OnWindowActivated(ActivationReason reason,
+                         aura::Window* gained_active,
+                         aura::Window* lost_active) override;
 
   // ShellObserver:
   void OnShelfAlignmentChanged(WmWindow* root_window) override;
@@ -160,6 +166,8 @@ class ASH_EXPORT DockedWindowLayoutManager
                                 WmWindow* root_window) override;
   void OnOverviewModeStarting() override;
   void OnOverviewModeEnded() override;
+  void OnVirtualKeyboardStateChanged(bool activated,
+                                     WmWindow* root_window) override;
 
  private:
   struct CompareMinimumHeight;
@@ -313,6 +321,10 @@ class ASH_EXPORT DockedWindowLayoutManager
 
   // Observers of dock bounds changes.
   base::ObserverList<DockedWindowLayoutManagerObserver> observer_list_;
+
+  ScopedObserver<keyboard::KeyboardController,
+                 keyboard::KeyboardControllerObserver>
+      keyboard_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(DockedWindowLayoutManager);
 };

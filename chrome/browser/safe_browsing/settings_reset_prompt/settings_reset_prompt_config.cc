@@ -23,20 +23,16 @@ namespace safe_browsing {
 
 namespace {
 
-constexpr char kSettingsResetPromptFeatureName[] = "SettingsResetPrompt";
+constexpr const char kSettingsResetPromptFeatureName[] = "SettingsResetPrompt";
+
+bool IsPromptEnabled() {
+  return base::FeatureList::IsEnabled(kSettingsResetPrompt);
+}
 
 }  // namespace.
 
 const base::Feature kSettingsResetPrompt{kSettingsResetPromptFeatureName,
                                          base::FEATURE_DISABLED_BY_DEFAULT};
-
-// static
-bool SettingsResetPromptConfig::IsPromptEnabled() {
-  // TODO(alito): Add prefs to local state to track when the user was
-  // last prompted and ensure that we only prompt once per reset prompt
-  // wave.
-  return base::FeatureList::IsEnabled(kSettingsResetPrompt);
-}
 
 // static
 std::unique_ptr<SettingsResetPromptConfig> SettingsResetPromptConfig::Create() {
@@ -105,8 +101,12 @@ base::TimeDelta SettingsResetPromptConfig::delay_before_prompt() const {
   return delay_before_prompt_;
 }
 
-bool SettingsResetPromptConfig::use_modal_dialog() const {
-  return use_modal_dialog_;
+int SettingsResetPromptConfig::prompt_wave() const {
+  return prompt_wave_;
+}
+
+base::TimeDelta SettingsResetPromptConfig::time_between_prompts() const {
+  return time_between_prompts_;
 }
 
 // Implements the hash function for SHA256Hash objects. Simply uses the
@@ -131,7 +131,8 @@ enum SettingsResetPromptConfig::ConfigError : int {
   CONFIG_ERROR_BAD_DOMAIN_ID = 5,
   CONFIG_ERROR_DUPLICATE_DOMAIN_HASH = 6,
   CONFIG_ERROR_BAD_DELAY_BEFORE_PROMPT_SECONDS_PARAM = 7,
-  CONFIG_ERROR_BAD_USE_MODAL_DIALOG_PARAM = 8,
+  CONFIG_ERROR_BAD_PROMPT_WAVE_PARAM = 8,
+  CONFIG_ERROR_BAD_TIME_BETWEEN_PROMPTS_SECONDS_PARAM = 9,
   CONFIG_ERROR_MAX
 };
 
@@ -161,22 +162,27 @@ bool SettingsResetPromptConfig::Init() {
   delay_before_prompt_ =
       base::TimeDelta::FromSeconds(delay_before_prompt_seconds);
 
-  // Get the use_modal_dialog feature parameter. Since
-  // |GetFieldTrialParamByFeatureAsBool| always returns true or false and
-  // ignores any errors that are encountered, the parsing from string to bool is
-  // done explicitly here.
-  std::string use_modal_dialog_string = base::GetFieldTrialParamValueByFeature(
-      kSettingsResetPrompt, "use_modal_dialog");
-  if (use_modal_dialog_string == "true") {
-    use_modal_dialog_ = true;
-  } else if (use_modal_dialog_string == "false") {
-    use_modal_dialog_ = false;
-  } else {
+  // Get the prompt_wave feature paramter.
+  prompt_wave_ = base::GetFieldTrialParamByFeatureAsInt(kSettingsResetPrompt,
+                                                        "prompt_wave", 0);
+  if (prompt_wave_ <= 0) {
     UMA_HISTOGRAM_ENUMERATION("SettingsResetPrompt.ConfigError",
-                              CONFIG_ERROR_BAD_USE_MODAL_DIALOG_PARAM,
+                              CONFIG_ERROR_BAD_PROMPT_WAVE_PARAM,
                               CONFIG_ERROR_MAX);
     return false;
   }
+
+  // Get the time_between_prompts_seconds feature parameter.
+  int time_between_prompts_seconds = base::GetFieldTrialParamByFeatureAsInt(
+      kSettingsResetPrompt, "time_between_prompts_seconds", -1);
+  if (time_between_prompts_seconds < 0) {
+    UMA_HISTOGRAM_ENUMERATION(
+        "SettingsResetPrompt.ConfigError",
+        CONFIG_ERROR_BAD_TIME_BETWEEN_PROMPTS_SECONDS_PARAM, CONFIG_ERROR_MAX);
+    return false;
+  }
+  time_between_prompts_ =
+      base::TimeDelta::FromSeconds(time_between_prompts_seconds);
 
   UMA_HISTOGRAM_ENUMERATION("SettingsResetPrompt.ConfigError", CONFIG_ERROR_OK,
                             CONFIG_ERROR_MAX);

@@ -10,6 +10,7 @@
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutScrollbar.h"
 #include "core/layout/LayoutScrollbarPart.h"
+#include "core/layout/PaintInvalidationState.h"
 #include "core/paint/ObjectPaintInvalidator.h"
 #include "core/paint/PaintInvalidator.h"
 #include "core/paint/PaintLayer.h"
@@ -40,11 +41,11 @@ static LayoutRect scrollControlVisualRect(
   // transform node).
   if (!visualRect.isEmpty() &&
       !RuntimeEnabledFeatures::slimmingPaintV2Enabled()) {
-    context.mapLocalRectToPaintInvalidationBacking(box, visualRect);
-
-    IntSize adjustment = box.scrollAdjustmentForPaintInvalidation(
-        *context.paintInvalidationContainer);
-    visualRect.move(adjustment);
+    // PaintInvalidatorContext::mapLocalRectToPaintInvalidationBacking() treats
+    // the rect as in flipped block direction, but scrollbar controls don't
+    // flip for block direction, so flip here to undo the flip in the function.
+    box.flipForWritingMode(visualRect);
+    context.mapLocalRectToVisualRectInBacking(box, visualRect);
   }
   return visualRect;
 }
@@ -71,11 +72,11 @@ static bool invalidatePaintOfScrollControlIfNeeded(
   return false;
 }
 
-static void invalidatePaintOfScrollbarIfNeeded(
+static LayoutRect invalidatePaintOfScrollbarIfNeeded(
     Scrollbar* scrollbar,
     GraphicsLayer* graphicsLayer,
     bool& previouslyWasOverlay,
-    LayoutRect& previousVisualRect,
+    const LayoutRect& previousVisualRect,
     bool needsPaintInvalidationArg,
     LayoutBox& box,
     const PaintInvalidatorContext& context) {
@@ -128,52 +129,55 @@ static void invalidatePaintOfScrollbarIfNeeded(
       newVisualRect, previousVisualRect, needsPaintInvalidation, box,
       paintInvalidationContainer);
 
-  previousVisualRect = newVisualRect;
   previouslyWasOverlay = isOverlay;
 
   if (!invalidated || !scrollbar || graphicsLayer)
-    return;
+    return newVisualRect;
 
   context.paintingLayer->setNeedsRepaint();
   ObjectPaintInvalidator(box).invalidateDisplayItemClient(
       *scrollbar, PaintInvalidationScroll);
-  if (scrollbar->isCustomScrollbar())
+  if (scrollbar->isCustomScrollbar()) {
     toLayoutScrollbar(scrollbar)
         ->invalidateDisplayItemClientsOfScrollbarParts();
+  }
+
+  return newVisualRect;
 }
 
 void PaintInvalidationCapableScrollableArea::
     invalidatePaintOfScrollControlsIfNeeded(
         const PaintInvalidatorContext& context) {
   LayoutBox& box = *layoutBox();
-  invalidatePaintOfScrollbarIfNeeded(
+  setHorizontalScrollbarVisualRect(invalidatePaintOfScrollbarIfNeeded(
       horizontalScrollbar(), layerForHorizontalScrollbar(),
       m_horizontalScrollbarPreviouslyWasOverlay,
-      m_horizontalScrollbarPreviousVisualRect,
-      horizontalScrollbarNeedsPaintInvalidation(), box, context);
-  invalidatePaintOfScrollbarIfNeeded(
+      m_horizontalScrollbarVisualRect,
+      horizontalScrollbarNeedsPaintInvalidation(), box, context));
+  setVerticalScrollbarVisualRect(invalidatePaintOfScrollbarIfNeeded(
       verticalScrollbar(), layerForVerticalScrollbar(),
-      m_verticalScrollbarPreviouslyWasOverlay,
-      m_verticalScrollbarPreviousVisualRect,
-      verticalScrollbarNeedsPaintInvalidation(), box, context);
+      m_verticalScrollbarPreviouslyWasOverlay, m_verticalScrollbarVisualRect,
+      verticalScrollbarNeedsPaintInvalidation(), box, context));
 
-  LayoutRect scrollCornerVisualRect =
+  LayoutRect scrollCornerAndResizerVisualRect =
       scrollControlVisualRect(scrollCornerAndResizerRect(), box, context);
   const LayoutBoxModelObject& paintInvalidationContainer =
       *context.paintInvalidationContainer;
   if (invalidatePaintOfScrollControlIfNeeded(
-          scrollCornerVisualRect, m_scrollCornerAndResizerPreviousVisualRect,
+          scrollCornerAndResizerVisualRect, m_scrollCornerAndResizerVisualRect,
           scrollCornerNeedsPaintInvalidation(), box,
           paintInvalidationContainer)) {
-    m_scrollCornerAndResizerPreviousVisualRect = scrollCornerVisualRect;
-    if (LayoutScrollbarPart* scrollCorner = this->scrollCorner())
+    setScrollCornerAndResizerVisualRect(scrollCornerAndResizerVisualRect);
+    if (LayoutScrollbarPart* scrollCorner = this->scrollCorner()) {
       ObjectPaintInvalidator(*scrollCorner)
           .invalidateDisplayItemClientsIncludingNonCompositingDescendants(
               PaintInvalidationScroll);
-    if (LayoutScrollbarPart* resizer = this->resizer())
+    }
+    if (LayoutScrollbarPart* resizer = this->resizer()) {
       ObjectPaintInvalidator(*resizer)
           .invalidateDisplayItemClientsIncludingNonCompositingDescendants(
               PaintInvalidationScroll);
+    }
   }
 
   clearNeedsPaintInvalidationForScrollControls();
@@ -187,17 +191,32 @@ void PaintInvalidationCapableScrollableArea::
 }
 
 void PaintInvalidationCapableScrollableArea::clearPreviousVisualRects() {
-  m_horizontalScrollbarPreviousVisualRect = LayoutRect();
-  m_verticalScrollbarPreviousVisualRect = LayoutRect();
-  m_scrollCornerAndResizerPreviousVisualRect = LayoutRect();
+  setHorizontalScrollbarVisualRect(LayoutRect());
+  setVerticalScrollbarVisualRect(LayoutRect());
+  setScrollCornerAndResizerVisualRect(LayoutRect());
 }
 
-LayoutRect PaintInvalidationCapableScrollableArea::visualRectForScrollbarParts()
-    const {
-  LayoutRect fullBounds(m_horizontalScrollbarPreviousVisualRect);
-  fullBounds.unite(m_verticalScrollbarPreviousVisualRect);
-  fullBounds.unite(m_scrollCornerAndResizerPreviousVisualRect);
-  return fullBounds;
+void PaintInvalidationCapableScrollableArea::setHorizontalScrollbarVisualRect(
+    const LayoutRect& rect) {
+  m_horizontalScrollbarVisualRect = rect;
+  if (Scrollbar* scrollbar = horizontalScrollbar())
+    scrollbar->setVisualRect(rect);
+}
+
+void PaintInvalidationCapableScrollableArea::setVerticalScrollbarVisualRect(
+    const LayoutRect& rect) {
+  m_verticalScrollbarVisualRect = rect;
+  if (Scrollbar* scrollbar = verticalScrollbar())
+    scrollbar->setVisualRect(rect);
+}
+
+void PaintInvalidationCapableScrollableArea::
+    setScrollCornerAndResizerVisualRect(const LayoutRect& rect) {
+  m_scrollCornerAndResizerVisualRect = rect;
+  if (LayoutScrollbarPart* scrollCorner = this->scrollCorner())
+    scrollCorner->setVisualRect(rect);
+  if (LayoutScrollbarPart* resizer = this->resizer())
+    resizer->setVisualRect(rect);
 }
 
 void PaintInvalidationCapableScrollableArea::

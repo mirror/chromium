@@ -126,7 +126,7 @@ void IndexedDBInternalsUI::OnOriginsReady(
     const base::FilePath& path) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   web_ui()->CallJavascriptFunctionUnsafe("indexeddb.onOriginsReady", *origins,
-                                         base::StringValue(path.value()));
+                                         base::Value(path.value()));
 }
 
 static void FindContext(const base::FilePath& partition_path,
@@ -270,9 +270,9 @@ void IndexedDBInternalsUI::OnForcedClose(const base::FilePath& partition_path,
                                          const Origin& origin,
                                          size_t connection_count) {
   web_ui()->CallJavascriptFunctionUnsafe(
-      "indexeddb.onForcedClose", base::StringValue(partition_path.value()),
-      base::StringValue(origin.Serialize()),
-      base::FundamentalValue(static_cast<double>(connection_count)));
+      "indexeddb.onForcedClose", base::Value(partition_path.value()),
+      base::Value(origin.Serialize()),
+      base::Value(static_cast<double>(connection_count)));
 }
 
 void IndexedDBInternalsUI::OnDownloadDataReady(
@@ -358,10 +358,9 @@ void IndexedDBInternalsUI::OnDownloadStarted(
 
   item->AddObserver(new FileDeleter(temp_path));
   web_ui()->CallJavascriptFunctionUnsafe(
-      "indexeddb.onOriginDownloadReady",
-      base::StringValue(partition_path.value()),
-      base::StringValue(origin.Serialize()),
-      base::FundamentalValue(static_cast<double>(connection_count)));
+      "indexeddb.onOriginDownloadReady", base::Value(partition_path.value()),
+      base::Value(origin.Serialize()),
+      base::Value(static_cast<double>(connection_count)));
 }
 
 }  // namespace content

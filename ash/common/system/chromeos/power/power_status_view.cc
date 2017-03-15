@@ -11,10 +11,10 @@
 #include "ash/common/system/tray/tray_constants.h"
 #include "ash/common/system/tray/tray_popup_item_style.h"
 #include "ash/common/system/tray/tray_popup_utils.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "base/i18n/number_formatting.h"
 #include "base/i18n/time_formatting.h"
 #include "base/strings/utf_string_conversions.h"
-#include "grit/ash_strings.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/native_theme/native_theme.h"
@@ -124,11 +124,15 @@ void PowerStatusView::UpdateText() {
                                  : status.GetBatteryTimeToEmpty();
       if (PowerStatus::ShouldDisplayBatteryTime(time) &&
           !status.IsBatteryDischargingOnLinePower()) {
+        base::string16 duration;
+        if (!base::TimeDurationFormat(time, base::DURATION_WIDTH_NUMERIC,
+                                      &duration))
+          LOG(ERROR) << "Failed to format duration " << time.ToInternalValue();
         battery_time_status = l10n_util::GetStringFUTF16(
             status.IsBatteryCharging()
                 ? IDS_ASH_STATUS_TRAY_BATTERY_TIME_UNTIL_FULL_SHORT
                 : IDS_ASH_STATUS_TRAY_BATTERY_TIME_LEFT_SHORT,
-            TimeDurationFormat(time, base::DURATION_WIDTH_NUMERIC));
+            duration);
       }
     }
   }

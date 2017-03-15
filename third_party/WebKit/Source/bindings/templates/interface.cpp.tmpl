@@ -1,14 +1,5 @@
 {% extends 'interface_base.cpp.tmpl' %}
 
-{% set has_prepare_prototype_and_interface_object =
-    unscopables or has_conditional_attributes_on_prototype or
-    methods | conditionally_exposed(is_partial) %}
-{% set prepare_prototype_and_interface_object_func =
-    '%s::preparePrototypeAndInterfaceObject' % v8_class
-    if has_prepare_prototype_and_interface_object
-    else 'nullptr' %}
-
-
 {##############################################################################}
 {% block indexed_property_getter %}
 {% if indexed_property_getter and not indexed_property_getter.is_custom %}
@@ -535,7 +526,7 @@ void {{v8_class_or_partial}}::{{cpp_class}}OriginSafeMethodSetterCallback(v8::Lo
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wglobal-constructors"
 #endif
-const WrapperTypeInfo {{v8_class}}Constructor::wrapperTypeInfo = { gin::kEmbedderBlink, {{v8_class}}Constructor::domTemplate, {{v8_class}}::trace, {{v8_class}}::traceWrappers, {{prepare_prototype_and_interface_object_func}}, "{{interface_name}}", 0, WrapperTypeInfo::WrapperTypeObjectPrototype, WrapperTypeInfo::{{wrapper_class_id}}, WrapperTypeInfo::{{active_scriptwrappable_inheritance}}, WrapperTypeInfo::{{lifetime}} };
+const WrapperTypeInfo {{v8_class}}Constructor::wrapperTypeInfo = { gin::kEmbedderBlink, {{v8_class}}Constructor::domTemplate, {{v8_class}}::trace, {{v8_class}}::traceWrappers, {{prepare_prototype_and_interface_object_func or 'nullptr'}}, "{{interface_name}}", 0, WrapperTypeInfo::WrapperTypeObjectPrototype, WrapperTypeInfo::{{wrapper_class_id}}, WrapperTypeInfo::{{active_scriptwrappable_inheritance}}, WrapperTypeInfo::{{lifetime}} };
 #if defined(COMPONENT_BUILD) && defined(WIN32) && COMPILER(CLANG)
 #pragma clang diagnostic pop
 #endif
@@ -551,10 +542,39 @@ v8::Local<v8::FunctionTemplate> {{v8_class}}Constructor::domTemplate(v8::Isolate
   result = v8::FunctionTemplate::New(isolate, {{v8_class}}ConstructorCallback);
   v8::Local<v8::ObjectTemplate> instanceTemplate = result->InstanceTemplate();
   instanceTemplate->SetInternalFieldCount({{v8_class}}::internalFieldCount);
-  result->SetClassName(v8AtomicString(isolate, "{{cpp_class}}"));
+  result->SetClassName(v8AtomicString(isolate, "{{named_constructor.name}}"));
   result->Inherit({{v8_class}}::domTemplate(isolate, world));
   data->setInterfaceTemplate(world, &domTemplateKey, result);
   return result;
+}
+
+void {{v8_class}}Constructor::NamedConstructorAttributeGetter(
+    v8::Local<v8::Name> propertyName,
+    const v8::PropertyCallbackInfo<v8::Value>& info) {
+  v8::Local<v8::Context> creationContext = info.Holder()->CreationContext();
+  V8PerContextData* perContextData = V8PerContextData::from(creationContext);
+  if (!perContextData) {
+    // TODO(yukishiino): Return a valid named constructor even after the context is detached
+    return;
+  }
+
+  v8::Local<v8::Function> namedConstructor = perContextData->constructorForType(&{{v8_class}}Constructor::wrapperTypeInfo);
+
+  // Set the prototype of named constructors to the regular constructor.
+  auto privateProperty = V8PrivateProperty::getNamedConstructorInitialized(info.GetIsolate());
+  v8::Local<v8::Context> currentContext = info.GetIsolate()->GetCurrentContext();
+  v8::Local<v8::Value> privateValue = privateProperty.get(currentContext, namedConstructor);
+
+  if (privateValue.IsEmpty()) {
+    v8::Local<v8::Function> interface = perContextData->constructorForType(&{{v8_class}}::wrapperTypeInfo);
+    v8::Local<v8::Value> interfacePrototype = interface->Get(currentContext, v8AtomicString(info.GetIsolate(), "prototype")).ToLocalChecked();
+    bool result = namedConstructor->Set(currentContext, v8AtomicString(info.GetIsolate(), "prototype"), interfacePrototype).ToChecked();
+    if (!result)
+      return;
+    privateProperty.set(currentContext, namedConstructor, v8::True(info.GetIsolate()));
+  }
+
+  v8SetReturnValue(info, namedConstructor);
 }
 
 {% endif %}
@@ -781,7 +801,8 @@ v8::Local<v8::Object> {{v8_class}}::findInstanceInPrototypeChain(v8::Local<v8::V
   // Transfer the ownership of the allocated memory to an {{interface_name}} without
   // copying.
   v8::{{interface_name}}::Contents v8Contents = v8buffer->Externalize();
-  WTF::ArrayBufferContents contents(v8Contents.Data(), v8Contents.ByteLength(), WTF::ArrayBufferContents::{% if interface_name == 'ArrayBuffer' %}Not{% endif %}Shared);
+  WTF::ArrayBufferContents::DataHandle data(v8Contents.Data(), WTF::ArrayBufferContents::freeMemory);
+  WTF::ArrayBufferContents contents(std::move(data), v8Contents.ByteLength(), WTF::ArrayBufferContents::{% if interface_name == 'ArrayBuffer' %}Not{% endif %}Shared);
   {{cpp_class}}* buffer = {{cpp_class}}::create(contents);
   v8::Local<v8::Object> associatedWrapper = buffer->associateWithWrapper(v8::Isolate::GetCurrent(), buffer->wrapperTypeInfo(), object);
   DCHECK(associatedWrapper == object);
@@ -862,59 +883,12 @@ v8::Local<v8::Object> {{v8_class}}::findInstanceInPrototypeChain(v8::Local<v8::V
 
 
 {##############################################################################}
-{% block prepare_prototype_and_interface_object %}
-{% from 'methods.cpp.tmpl' import install_conditionally_enabled_methods with context %}
-{% if has_prepare_prototype_and_interface_object %}
-void {{v8_class}}::preparePrototypeAndInterfaceObject(v8::Local<v8::Context> context, const DOMWrapperWorld& world, v8::Local<v8::Object> prototypeObject, v8::Local<v8::Function> interfaceObject, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
-  v8::Isolate* isolate = context->GetIsolate();
-{% if unscopables %}
-  {{install_unscopables() | indent(2)}}
-{% endif %}
-{% if has_conditional_attributes_on_prototype %}
-  {{install_conditionally_enabled_attributes_on_prototype() | indent(2)}}
-{% endif %}
-{% if methods | conditionally_exposed(is_partial) %}
-  {{install_conditionally_enabled_methods() | indent(2)}}
-{% endif %}
+{% block native_value_traits %}
+{{cpp_class}}* NativeValueTraits<{{cpp_class}}>::nativeValue(v8::Isolate* isolate, v8::Local<v8::Value> value, ExceptionState& exceptionState) {
+  return {{v8_class}}::toImplWithTypeCheck(isolate, value);
 }
 
-{% endif %}
 {% endblock %}
-
-
-{##############################################################################}
-{% macro install_unscopables() %}
-v8::Local<v8::Name> unscopablesSymbol(v8::Symbol::GetUnscopables(isolate));
-v8::Local<v8::Object> unscopables;
-if (v8CallBoolean(prototypeObject->HasOwnProperty(context, unscopablesSymbol)))
-  unscopables = prototypeObject->Get(context, unscopablesSymbol).ToLocalChecked().As<v8::Object>();
-else
-  unscopables = v8::Object::New(isolate);
-{% for name, runtime_enabled_feature_name in unscopables %}
-{% filter runtime_enabled(runtime_enabled_feature_name) %}
-unscopables->CreateDataProperty(context, v8AtomicString(isolate, "{{name}}"), v8::True(isolate)).FromJust();
-{% endfilter %}
-{% endfor %}
-prototypeObject->CreateDataProperty(context, unscopablesSymbol, unscopables).FromJust();
-{% endmacro %}
-
-
-{##############################################################################}
-{% macro install_conditionally_enabled_attributes_on_prototype() %}
-{% from 'attributes.cpp.tmpl' import attribute_configuration with context %}
-ExecutionContext* executionContext = toExecutionContext(context);
-v8::Local<v8::Signature> signature = v8::Signature::New(isolate, interfaceTemplate);
-{% for attribute in attributes if (attribute.exposed_test or attribute.secure_context_test) and attribute.on_prototype %}
-{% filter exposed(attribute.exposed_test) %}
-{% filter secure_context(attribute.secure_context_test) %}
-{% filter runtime_enabled(attribute.runtime_enabled_feature_name) %}
-const V8DOMConfiguration::AccessorConfiguration accessorConfiguration = {{attribute_configuration(attribute)}};
-V8DOMConfiguration::installAccessor(isolate, world, v8::Local<v8::Object>(), prototypeObject, interfaceObject, signature, accessorConfiguration);
-{% endfilter %}{# runtime_enabled #}
-{% endfilter %}{# secure_context #}
-{% endfilter %}{# exposed #}
-{% endfor %}
-{% endmacro %}
 
 
 {##############################################################################}

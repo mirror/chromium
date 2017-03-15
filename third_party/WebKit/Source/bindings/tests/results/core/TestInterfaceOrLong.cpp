@@ -11,6 +11,8 @@
 // clang-format off
 #include "TestInterfaceOrLong.h"
 
+#include "bindings/core/v8/IDLTypes.h"
+#include "bindings/core/v8/NativeValueTraitsImpl.h"
 #include "bindings/core/v8/ToV8.h"
 #include "bindings/core/v8/V8TestInterface.h"
 #include "bindings/tests/idls/core/TestImplements2.h"
@@ -22,6 +24,23 @@
 namespace blink {
 
 TestInterfaceOrLong::TestInterfaceOrLong() : m_type(SpecificTypeNone) {}
+
+int32_t TestInterfaceOrLong::getAsLong() const {
+  DCHECK(isLong());
+  return m_long;
+}
+
+void TestInterfaceOrLong::setLong(int32_t value) {
+  DCHECK(isNull());
+  m_long = value;
+  m_type = SpecificTypeLong;
+}
+
+TestInterfaceOrLong TestInterfaceOrLong::fromLong(int32_t value) {
+  TestInterfaceOrLong container;
+  container.setLong(value);
+  return container;
+}
 
 TestInterfaceImplementation* TestInterfaceOrLong::getAsTestInterface() const {
   DCHECK(isTestInterface());
@@ -37,23 +56,6 @@ void TestInterfaceOrLong::setTestInterface(TestInterfaceImplementation* value) {
 TestInterfaceOrLong TestInterfaceOrLong::fromTestInterface(TestInterfaceImplementation* value) {
   TestInterfaceOrLong container;
   container.setTestInterface(value);
-  return container;
-}
-
-int TestInterfaceOrLong::getAsLong() const {
-  DCHECK(isLong());
-  return m_long;
-}
-
-void TestInterfaceOrLong::setLong(int value) {
-  DCHECK(isNull());
-  m_long = value;
-  m_type = SpecificTypeLong;
-}
-
-TestInterfaceOrLong TestInterfaceOrLong::fromLong(int value) {
-  TestInterfaceOrLong container;
-  container.setLong(value);
   return container;
 }
 
@@ -79,7 +81,7 @@ void V8TestInterfaceOrLong::toImpl(v8::Isolate* isolate, v8::Local<v8::Value> v8
   }
 
   if (v8Value->IsNumber()) {
-    int cppValue = toInt32(isolate, v8Value, NormalConversion, exceptionState);
+    int32_t cppValue = NativeValueTraits<IDLLong>::nativeValue(isolate, v8Value, exceptionState, NormalConversion);
     if (exceptionState.hadException())
       return;
     impl.setLong(cppValue);
@@ -87,7 +89,7 @@ void V8TestInterfaceOrLong::toImpl(v8::Isolate* isolate, v8::Local<v8::Value> v8
   }
 
   {
-    int cppValue = toInt32(isolate, v8Value, NormalConversion, exceptionState);
+    int32_t cppValue = NativeValueTraits<IDLLong>::nativeValue(isolate, v8Value, exceptionState, NormalConversion);
     if (exceptionState.hadException())
       return;
     impl.setLong(cppValue);
@@ -99,10 +101,10 @@ v8::Local<v8::Value> ToV8(const TestInterfaceOrLong& impl, v8::Local<v8::Object>
   switch (impl.m_type) {
     case TestInterfaceOrLong::SpecificTypeNone:
       return v8::Null(isolate);
-    case TestInterfaceOrLong::SpecificTypeTestInterface:
-      return ToV8(impl.getAsTestInterface(), creationContext, isolate);
     case TestInterfaceOrLong::SpecificTypeLong:
       return v8::Integer::New(isolate, impl.getAsLong());
+    case TestInterfaceOrLong::SpecificTypeTestInterface:
+      return ToV8(impl.getAsTestInterface(), creationContext, isolate);
     default:
       NOTREACHED();
   }

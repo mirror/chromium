@@ -16,7 +16,6 @@
 #include "services/ui/ws/accelerator.h"
 #include "services/ui/ws/event_dispatcher_delegate.h"
 #include "services/ui/ws/server_window.h"
-#include "services/ui/ws/server_window_compositor_frame_sink_manager_test_api.h"
 #include "services/ui/ws/test_server_window_delegate.h"
 #include "services/ui/ws/test_utils.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -1376,7 +1375,7 @@ TEST_F(EventDispatcherTest, ModalWindowEventOnModalParent) {
   w2->SetBounds(gfx::Rect(50, 10, 10, 10));
 
   w1->AddTransientWindow(w2.get());
-  w2->SetModal();
+  w2->SetModalType(MODAL_TYPE_WINDOW);
 
   // Send event that is over |w1|.
   const ui::PointerEvent mouse_pressed(ui::MouseEvent(
@@ -1409,7 +1408,7 @@ TEST_F(EventDispatcherTest, ModalWindowEventOnModalChild) {
   w2->SetBounds(gfx::Rect(50, 10, 10, 10));
 
   w1->AddTransientWindow(w2.get());
-  w2->SetModal();
+  w2->SetModalType(MODAL_TYPE_WINDOW);
 
   // Send event that is over |w2|.
   const ui::PointerEvent mouse_pressed(ui::MouseEvent(
@@ -1445,7 +1444,7 @@ TEST_F(EventDispatcherTest, ModalWindowEventOnUnrelatedWindow) {
   w3->SetBounds(gfx::Rect(70, 10, 10, 10));
 
   w1->AddTransientWindow(w2.get());
-  w2->SetModal();
+  w2->SetModalType(MODAL_TYPE_WINDOW);
 
   // Send event that is over |w3|.
   const ui::PointerEvent mouse_pressed(ui::MouseEvent(
@@ -1482,7 +1481,7 @@ TEST_F(EventDispatcherTest, ModalWindowEventOnDescendantOfModalParent) {
   w2->SetBounds(gfx::Rect(50, 10, 10, 10));
 
   w1->AddTransientWindow(w2.get());
-  w2->SetModal();
+  w2->SetModalType(MODAL_TYPE_WINDOW);
 
   // Send event that is over |w11|.
   const ui::PointerEvent mouse_pressed(ui::MouseEvent(
@@ -1511,7 +1510,7 @@ TEST_F(EventDispatcherTest, ModalWindowEventOnSystemModal) {
 
   root_window()->SetBounds(gfx::Rect(0, 0, 100, 100));
   w1->SetBounds(gfx::Rect(10, 10, 30, 30));
-  w1->SetModal();
+  w1->SetModalType(MODAL_TYPE_SYSTEM);
 
   // Send event that is over |w1|.
   const ui::PointerEvent mouse_pressed(ui::MouseEvent(
@@ -1540,7 +1539,7 @@ TEST_F(EventDispatcherTest, ModalWindowEventOutsideSystemModal) {
 
   root_window()->SetBounds(gfx::Rect(0, 0, 100, 100));
   w1->SetBounds(gfx::Rect(10, 10, 30, 30));
-  w1->SetModal();
+  w1->SetModalType(MODAL_TYPE_SYSTEM);
   event_dispatcher()->AddSystemModalWindow(w1.get());
 
   // Send event that is over |w1|.
@@ -1564,6 +1563,55 @@ TEST_F(EventDispatcherTest, ModalWindowEventOutsideSystemModal) {
   EXPECT_EQ(gfx::Point(35, 5), dispatched_event->location());
 }
 
+// Tests events on a sub-window of system modal window target the window itself.
+TEST_F(EventDispatcherTest, ModalWindowEventSubWindowSystemModal) {
+  std::unique_ptr<ServerWindow> w1 = CreateChildWindow(WindowId(1, 3));
+  w1->SetModalType(MODAL_TYPE_SYSTEM);
+  event_dispatcher()->AddSystemModalWindow(w1.get());
+
+  std::unique_ptr<ServerWindow> w2 =
+      CreateChildWindowWithParent(WindowId(1, 4), w1.get());
+  std::unique_ptr<ServerWindow> w3 = CreateChildWindow(WindowId(1, 5));
+
+  root_window()->SetBounds(gfx::Rect(0, 0, 100, 100));
+  w1->SetBounds(gfx::Rect(10, 10, 30, 30));
+  w2->SetBounds(gfx::Rect(10, 10, 10, 10));
+  w3->SetBounds(gfx::Rect(50, 10, 10, 10));
+
+  struct {
+    gfx::Point location;
+    ServerWindow* expected_target;
+  } kTouchData[] = {
+      // Touch on |w1| should go to |w1|.
+      {gfx::Point(11, 11), w1.get()},
+      // Touch on |w2| should go to |w2|.
+      {gfx::Point(25, 25), w2.get()},
+      // Touch on |w3| should go to |w1|.
+      {gfx::Point(11, 31), w1.get()},
+  };
+
+  for (size_t i = 0; i < arraysize(kTouchData); i++) {
+    // Send touch press and check that the expected target receives it.
+    event_dispatcher()->ProcessEvent(
+        ui::PointerEvent(ui::TouchEvent(ui::ET_TOUCH_PRESSED,
+                                        kTouchData[i].location, 0,
+                                        base::TimeTicks())),
+        EventDispatcher::AcceleratorMatchPhase::ANY);
+    std::unique_ptr<DispatchedEventDetails> details =
+        test_event_dispatcher_delegate()->GetAndAdvanceDispatchedEventDetails();
+    ASSERT_TRUE(details) << " details is nullptr " << i;
+    EXPECT_EQ(kTouchData[i].expected_target, details->window);
+
+    // Release touch.
+    event_dispatcher()->ProcessEvent(
+        ui::PointerEvent(ui::TouchEvent(ui::ET_TOUCH_RELEASED,
+                                        kTouchData[i].location, 0,
+                                        base::TimeTicks())),
+        EventDispatcher::AcceleratorMatchPhase::ANY);
+    test_event_dispatcher_delegate()->GetAndAdvanceDispatchedEventDetails();
+  }
+}
+
 // Tests that setting capture to a descendant of a modal parent fails.
 TEST_F(EventDispatcherTest, ModalWindowSetCaptureDescendantOfModalParent) {
   std::unique_ptr<ServerWindow> w1 = CreateChildWindow(WindowId(1, 3));
@@ -1577,7 +1625,7 @@ TEST_F(EventDispatcherTest, ModalWindowSetCaptureDescendantOfModalParent) {
   w2->SetBounds(gfx::Rect(50, 10, 10, 10));
 
   w1->AddTransientWindow(w2.get());
-  w2->SetModal();
+  w2->SetModalType(MODAL_TYPE_WINDOW);
 
   EXPECT_FALSE(event_dispatcher()->SetCaptureWindow(w11.get(), kClientAreaId));
   EXPECT_EQ(nullptr, event_dispatcher()->capture_window());
@@ -1595,7 +1643,7 @@ TEST_F(EventDispatcherTest, ModalWindowSetCaptureUnrelatedWindow) {
   w3->SetBounds(gfx::Rect(70, 10, 10, 10));
 
   w1->AddTransientWindow(w2.get());
-  w2->SetModal();
+  w2->SetModalType(MODAL_TYPE_WINDOW);
 
   EXPECT_TRUE(event_dispatcher()->SetCaptureWindow(w3.get(), kClientAreaId));
   EXPECT_EQ(w3.get(), event_dispatcher()->capture_window());
@@ -1799,6 +1847,20 @@ TEST_F(EventDispatcherTest, DontSendExitToSameClientWhenCaptureChanges) {
   // client.
   event_dispatcher()->SetCaptureWindow(c1.get(), kClientAreaId);
   EXPECT_FALSE(test_event_dispatcher_delegate()->has_queued_events());
+}
+
+TEST_F(EventDispatcherTest, MousePointerClearedOnDestroy) {
+  root_window()->set_event_targeting_policy(
+      mojom::EventTargetingPolicy::DESCENDANTS_ONLY);
+  std::unique_ptr<ServerWindow> c1 = CreateChildWindow(WindowId(1, 3));
+
+  root_window()->SetBounds(gfx::Rect(0, 0, 100, 100));
+  c1->SetBounds(gfx::Rect(10, 10, 20, 20));
+
+  event_dispatcher()->SetMousePointerScreenLocation(gfx::Point(15, 15));
+  EXPECT_EQ(c1.get(), event_dispatcher()->mouse_cursor_source_window());
+  c1.reset();
+  EXPECT_EQ(nullptr, event_dispatcher()->mouse_cursor_source_window());
 }
 
 }  // namespace test

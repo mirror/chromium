@@ -34,27 +34,16 @@ enum PasswordSyncState {
   SYNCING_WITH_CUSTOM_PASSPHRASE
 };
 
-enum class CredentialSourceType {
-  CREDENTIAL_SOURCE_PASSWORD_MANAGER = 0,
-  CREDENTIAL_SOURCE_API,
-  CREDENTIAL_SOURCE_LAST = CREDENTIAL_SOURCE_API
-};
-
 // An abstraction of operations that depend on the embedders (e.g. Chrome)
 // environment.
 class PasswordManagerClient {
  public:
+  using HSTSCallback = base::Callback<void(bool)>;
   using CredentialsCallback =
       base::Callback<void(const autofill::PasswordForm*)>;
 
   PasswordManagerClient() {}
   virtual ~PasswordManagerClient() {}
-
-  // For automated testing, the save password prompt should sometimes not be
-  // shown, and password immediately saved instead. That can be enforced by
-  // a command-line flag. If auto-saving is enforced, this method returns true.
-  // The default return value is false.
-  virtual bool IsAutomaticPasswordSavingEnabled() const;
 
   // Is saving new data for password autofill and filling of saved data enabled
   // for the current profile and page? For example, saving is disabled in
@@ -65,9 +54,11 @@ class PasswordManagerClient {
   // password manager is disabled, or in the presence of SSL errors on a page.
   virtual bool IsFillingEnabledForCurrentPage() const;
 
-  // Checks whether HTTP Strict Transport Security (HSTS) is active for the host
-  // of the given origin.
-  virtual bool IsHSTSActiveForHost(const GURL& origin) const;
+  // Checks asynchronously whether HTTP Strict Transport Security (HSTS) is
+  // active for the host of the given origin. Notifies |callback| with the
+  // result on the calling thread.
+  virtual void PostHSTSQueryForHost(const GURL& origin,
+                                    const HSTSCallback& callback) const;
 
   // Checks if the Credential Manager API is allowed to run on the page. It's
   // not allowed while prerendering and the pre-rendered WebContents will be
@@ -93,11 +84,8 @@ class PasswordManagerClient {
   // the stored one. In this case form_to_save.password_overridden() == true
   // and form_to_save.pending_credentials() should correspond to the credential
   // that was overidden.
-  // TODO(crbug.com/576747): Analyze usefulness of the |type| parameter, make a
-  // decision if it should be kept or removed.
   virtual bool PromptUserToSaveOrUpdatePassword(
       std::unique_ptr<PasswordFormManager> form_to_save,
-      CredentialSourceType type,
       bool update_password) = 0;
 
   // Informs the embedder of a password forms that the user should choose from.

@@ -15,8 +15,8 @@ source_set("exo") {
     "compositor_frame_sink_holder.h",
     "display.cc",
     "display.h",
-    "gamepad.cc",
-    "gamepad.h",
+    "gaming_seat.cc",
+    "gaming_seat.h",
     "keyboard.cc",
     "keyboard.h",
     "keyboard_delegate.h",
@@ -113,7 +113,7 @@ source_set("unit_tests") {
   sources = [
     "buffer_unittest.cc",
     "display_unittest.cc",
-    "gamepad_unittest.cc",
+    "gaming_seat_unittest.cc",
     "keyboard_unittest.cc",
     "pointer_unittest.cc",
     "shared_memory_unittest.cc",
@@ -131,6 +131,7 @@ source_set("unit_tests") {
     "//base",
     "//base/test:test_support",
     "//cc",
+    "//cc:test_support",
     "//cc/surfaces:surfaces",
     "//components/user_manager",
     "//device/gamepad:test_helpers",
@@ -155,6 +156,8 @@ source_set("unit_tests") {
 
 test("exo_unittests") {
   sources = [
+    "../../ash/test/ash_test_suite.cc",
+    "../../ash/test/ash_test_suite.h",
     "test/run_all_unittests.cc",
   ]
 
@@ -166,10 +169,14 @@ test("exo_unittests") {
     "//base/test:test_support",
     "//device/gamepad:test_helpers",
     "//mojo/edk/embedder:headers",
+    "//testing/gtest",
+    "//ui/aura",
+    "//ui/base",
+    "//ui/gl:test_support",
   ]
 
   data_deps = [
-    "//ash/common/strings:ash_test_strings",
+    "//ash/strings:ash_test_strings",
     "//ash/resources:ash_test_resources_100_percent",
     "//ash/resources:ash_test_resources_200_percent",
   ]

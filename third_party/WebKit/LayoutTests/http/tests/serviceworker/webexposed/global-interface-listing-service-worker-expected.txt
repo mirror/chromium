@@ -1,3 +1,34 @@
+interface BackgroundFetchClickEvent : BackgroundFetchEvent
+    getter state
+    method constructor
+interface BackgroundFetchEvent : ExtendableEvent
+    getter tag
+    method constructor
+interface BackgroundFetchFailEvent : BackgroundFetchEvent
+    getter failedFetches
+    method constructor
+interface BackgroundFetchManager
+    method constructor
+    method fetch
+    method get
+    method getTags
+interface BackgroundFetchRegistration
+    getter icons
+    getter tag
+    getter title
+    getter totalDownloadSize
+    method abort
+    method constructor
+interface BackgroundFetchRequest
+    getter request
+    method constructor
+interface BackgroundFetchSettledRequest : BackgroundFetchRequest
+    getter response
+    method constructor
+interface BackgroundFetchedEvent : BackgroundFetchEvent
+    getter completedFetches
+    method constructor
+    method updateUI
 interface BarcodeDetector
     method constructor
     method detect
@@ -236,6 +267,38 @@ interface DOMPointReadOnly
     method constructor
     method matrixTransform
     method toJSON
+interface DOMQuad
+    static method fromQuad
+    static method fromRect
+    getter p1
+    getter p2
+    getter p3
+    getter p4
+    method constructor
+    method getBounds
+    method toJSON
+interface DOMRect : DOMRectReadOnly
+    getter height
+    getter width
+    getter x
+    getter y
+    method constructor
+    setter height
+    setter width
+    setter x
+    setter y
+interface DOMRectReadOnly
+    static method fromRect
+    getter bottom
+    getter height
+    getter left
+    getter right
+    getter top
+    getter width
+    getter x
+    getter y
+    method constructor
+    method toJSON
 interface DOMStringList
     getter length
     method constructor
@@ -368,12 +431,6 @@ interface FileReaderSync
     method readAsBinaryString
     method readAsDataURL
     method readAsText
-interface Float32ImageData
-    getter colorSpace
-    getter data
-    getter height
-    getter width
-    method constructor
 interface ForeignFetchEvent : ExtendableEvent
     getter origin
     getter request
@@ -540,8 +597,9 @@ interface ImageBitmap
     method close
     method constructor
 interface ImageData
-    getter colorSpace
+    getter colorSettings
     getter data
+    getter dataUnion
     getter height
     getter width
     method constructor
@@ -798,6 +856,7 @@ interface ServiceWorkerGlobalScope : WorkerGlobalScope
     method constructor
 interface ServiceWorkerRegistration : EventTarget
     getter active
+    getter backgroundFetch
     getter installing
     getter onupdatefound
     getter paymentAppManager
@@ -2157,6 +2216,7 @@ interface WorkerGlobalScope : EventTarget
     getter onerror
     getter onrejectionhandled
     getter onunhandledrejection
+    getter origin
     getter performance
     getter self
     method atob
@@ -2172,6 +2232,7 @@ interface WorkerGlobalScope : EventTarget
     setter onerror
     setter onrejectionhandled
     setter onunhandledrejection
+    setter origin
 interface WorkerLocation
     getter hash
     getter host
@@ -2208,6 +2269,10 @@ global object
     attribute internals
     getter clients
     getter onactivate
+    getter onbackgroundfetchabort
+    getter onbackgroundfetchclick
+    getter onbackgroundfetched
+    getter onbackgroundfetchfail
     getter onfetch
     getter onforeignfetch
     getter oninstall
@@ -2222,6 +2287,10 @@ global object
     method gc
     method skipWaiting
     setter onactivate
+    setter onbackgroundfetchabort
+    setter onbackgroundfetchclick
+    setter onbackgroundfetched
+    setter onbackgroundfetchfail
     setter onfetch
     setter onforeignfetch
     setter oninstall

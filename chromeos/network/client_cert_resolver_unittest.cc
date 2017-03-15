@@ -57,7 +57,8 @@ class ClientCertResolverTest : public testing::Test,
       : network_properties_changed_count_(0),
         service_test_(nullptr),
         profile_test_(nullptr),
-        cert_loader_(nullptr) {}
+        cert_loader_(nullptr),
+        scoped_task_scheduler_(&message_loop_) {}
   ~ClientCertResolverTest() override {}
 
   void SetUp() override {
@@ -67,6 +68,7 @@ class ClientCertResolverTest : public testing::Test,
     test_nsscertdb_.reset(new net::NSSCertDatabaseChromeOS(
         crypto::ScopedPK11Slot(PK11_ReferenceSlot(test_nssdb_.slot())),
         crypto::ScopedPK11Slot(PK11_ReferenceSlot(test_nssdb_.slot()))));
+    test_nsscertdb_->SetSlowTaskRunnerForTest(message_loop_.task_runner());
 
     DBusThreadManager::Initialize();
     service_test_ =
@@ -170,8 +172,8 @@ class ClientCertResolverTest : public testing::Test,
                                         true /* visible */);
     // Set an arbitrary cert id, so that we can check afterwards whether we
     // cleared the property or not.
-    service_test_->SetServiceProperty(
-        kWifiStub, shill::kEapCertIdProperty, base::StringValue("invalid id"));
+    service_test_->SetServiceProperty(kWifiStub, shill::kEapCertIdProperty,
+                                      base::Value("invalid id"));
     profile_test_->AddService(kUserProfilePath, kWifiStub);
 
     DBusThreadManager::Get()
@@ -258,7 +260,7 @@ class ClientCertResolverTest : public testing::Test,
 
   void SetWifiState(const std::string& state) {
     ASSERT_TRUE(service_test_->SetServiceProperty(
-        kWifiStub, shill::kStateProperty, base::StringValue(state)));
+        kWifiStub, shill::kStateProperty, base::Value(state)));
   }
 
   void GetServiceProperty(const std::string& prop_name,
@@ -291,6 +293,7 @@ class ClientCertResolverTest : public testing::Test,
   std::unique_ptr<NetworkConfigurationHandler> network_config_handler_;
   std::unique_ptr<ManagedNetworkConfigurationHandlerImpl>
       managed_config_handler_;
+  base::MessageLoop message_loop_;
   base::test::ScopedTaskScheduler scoped_task_scheduler_;
   scoped_refptr<net::X509Certificate> test_client_cert_;
   std::string test_ca_cert_pem_;

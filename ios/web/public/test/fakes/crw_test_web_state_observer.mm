@@ -5,6 +5,9 @@
 #import "ios/web/public/test/fakes/crw_test_web_state_observer.h"
 
 #include "base/memory/ptr_util.h"
+#include "ios/web/public/web_state/navigation_context.h"
+#include "ios/web/web_state/navigation_context_impl.h"
+#include "testing/gtest/include/gtest/gtest.h"
 
 namespace web {
 TestFormActivityInfo::TestFormActivityInfo() {}
@@ -18,19 +21,22 @@ TestUpdateFaviconUrlCandidatesInfo::~TestUpdateFaviconUrlCandidatesInfo() =
   // Arguments passed to |webState:didStartProvisionalNavigationForURL:|.
   std::unique_ptr<web::TestStartProvisionalNavigationInfo>
       _startProvisionalNavigationInfo;
+  // Arguments passed to |webState:didFinishNavigationForURL:|.
+  std::unique_ptr<web::TestDidFinishNavigationInfo> _didFinishNavigationInfo;
   // Arguments passed to |webState:didCommitNavigationWithDetails:|.
   std::unique_ptr<web::TestCommitNavigationInfo> _commitNavigationInfo;
   // Arguments passed to |webState:didLoadPageWithSuccess:|.
   std::unique_ptr<web::TestLoadPageInfo> _loadPageInfo;
   // Arguments passed to |webStateDidDismissInterstitial:|.
   std::unique_ptr<web::TestDismissInterstitialInfo> _dismissInterstitialInfo;
-  // Arguments passed to |webStateDidChangeURLHash:|.
-  std::unique_ptr<web::TestChangeUrlHashInfo> _changeUrlHashInfo;
-  // Arguments passed to |webStateDidChangeHistoryState:|.
-  std::unique_ptr<web::TestChangeHistoryStateInfo> _changeHistoryStateInfo;
   // Arguments passed to |webState:didChangeLoadingProgress:|.
   std::unique_ptr<web::TestChangeLoadingProgressInfo>
       _changeLoadingProgressInfo;
+  // Arguments passed to |webStateDidChangeTitle:|.
+  std::unique_ptr<web::TestTitleWasSetInfo> _titleWasSetInfo;
+  // Arguments passed to |webStateDidChangeVisibleSecurityState:|.
+  std::unique_ptr<web::TestDidChangeVisibleSecurityStateInfo>
+      _didChangeVisibleSecurityStateInfo;
   // Arguments passed to
   // |webState:didSubmitDocumentWithFormNamed:userInitiated:|.
   std::unique_ptr<web::TestSubmitDocumentInfo> _submitDocumentInfo;
@@ -54,6 +60,10 @@ TestUpdateFaviconUrlCandidatesInfo::~TestUpdateFaviconUrlCandidatesInfo() =
   return _startProvisionalNavigationInfo.get();
 }
 
+- (web::TestDidFinishNavigationInfo*)didFinishNavigationInfo {
+  return _didFinishNavigationInfo.get();
+}
+
 - (web::TestCommitNavigationInfo*)commitNavigationInfo {
   return _commitNavigationInfo.get();
 }
@@ -66,16 +76,17 @@ TestUpdateFaviconUrlCandidatesInfo::~TestUpdateFaviconUrlCandidatesInfo() =
   return _dismissInterstitialInfo.get();
 }
 
-- (web::TestChangeUrlHashInfo*)changeUrlHashInfo {
-  return _changeUrlHashInfo.get();
-}
-
-- (web::TestChangeHistoryStateInfo*)changeHistoryStateInfo {
-  return _changeHistoryStateInfo.get();
-}
-
 - (web::TestChangeLoadingProgressInfo*)changeLoadingProgressInfo {
   return _changeLoadingProgressInfo.get();
+}
+
+- (web::TestTitleWasSetInfo*)titleWasSetInfo {
+  return _titleWasSetInfo.get();
+}
+
+- (web::TestDidChangeVisibleSecurityStateInfo*)
+    didChangeVisibleSecurityStateInfo {
+  return _didChangeVisibleSecurityStateInfo.get();
 }
 
 - (web::TestSubmitDocumentInfo*)submitDocumentInfo {
@@ -124,6 +135,28 @@ TestUpdateFaviconUrlCandidatesInfo::~TestUpdateFaviconUrlCandidatesInfo() =
   _commitNavigationInfo->load_details = load_details;
 }
 
+- (void)webState:(web::WebState*)webState
+    didFinishNavigation:(web::NavigationContext*)navigation {
+  _didFinishNavigationInfo =
+      base::MakeUnique<web::TestDidFinishNavigationInfo>();
+  _didFinishNavigationInfo->web_state = webState;
+  if (navigation->IsSameDocument()) {
+    ASSERT_FALSE(navigation->IsErrorPage());
+    _didFinishNavigationInfo->context =
+        web::NavigationContextImpl::CreateSamePageNavigationContext(
+            navigation->GetWebState(), navigation->GetUrl());
+  } else if (navigation->IsErrorPage()) {
+    ASSERT_FALSE(navigation->IsSameDocument());
+    _didFinishNavigationInfo->context =
+        web::NavigationContextImpl::CreateErrorPageNavigationContext(
+            navigation->GetWebState(), navigation->GetUrl());
+  } else {
+    _didFinishNavigationInfo->context =
+        web::NavigationContextImpl::CreateNavigationContext(
+            navigation->GetWebState(), navigation->GetUrl());
+  }
+}
+
 - (void)webState:(web::WebState*)webState didLoadPageWithSuccess:(BOOL)success {
   _loadPageInfo = base::MakeUnique<web::TestLoadPageInfo>();
   _loadPageInfo->web_state = webState;
@@ -136,22 +169,23 @@ TestUpdateFaviconUrlCandidatesInfo::~TestUpdateFaviconUrlCandidatesInfo() =
   _dismissInterstitialInfo->web_state = webState;
 }
 
-- (void)webStateDidChangeURLHash:(web::WebState*)webState {
-  _changeUrlHashInfo = base::MakeUnique<web::TestChangeUrlHashInfo>();
-  _changeUrlHashInfo->web_state = webState;
-}
-
-- (void)webStateDidChangeHistoryState:(web::WebState*)webState {
-  _changeHistoryStateInfo = base::MakeUnique<web::TestChangeHistoryStateInfo>();
-  _changeHistoryStateInfo->web_state = webState;
-}
-
 - (void)webState:(web::WebState*)webState
     didChangeLoadingProgress:(double)progress {
   _changeLoadingProgressInfo =
       base::MakeUnique<web::TestChangeLoadingProgressInfo>();
   _changeLoadingProgressInfo->web_state = webState;
   _changeLoadingProgressInfo->progress = progress;
+}
+
+- (void)webStateDidChangeTitle:(web::WebState*)webState {
+  _titleWasSetInfo = base::MakeUnique<web::TestTitleWasSetInfo>();
+  _titleWasSetInfo->web_state = webState;
+}
+
+- (void)webStateDidChangeVisibleSecurityState:(web::WebState*)webState {
+  _didChangeVisibleSecurityStateInfo =
+      base::MakeUnique<web::TestDidChangeVisibleSecurityStateInfo>();
+  _didChangeVisibleSecurityStateInfo->web_state = webState;
 }
 
 - (void)webState:(web::WebState*)webState

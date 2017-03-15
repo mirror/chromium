@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.payments;
 import static java.util.Arrays.asList;
 
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -182,7 +183,7 @@ abstract class PaymentRequestTestBase extends ChromeActivityTestCaseBase<ChromeT
     protected void clickNodeAndWait(String nodeId, CallbackHelper helper)
             throws InterruptedException, ExecutionException, TimeoutException {
         int callCount = helper.getCallCount();
-        DOMUtils.clickNode(this, mViewCoreRef.get(), nodeId);
+        DOMUtils.clickNode(mViewCoreRef.get(), nodeId);
         helper.waitForCallback(callCount);
     }
 
@@ -276,6 +277,21 @@ abstract class PaymentRequestTestBase extends ChromeActivityTestCaseBase<ChromeT
             @Override
             public void run() {
                 mUI.getEditorView().findViewById(resourceId).performClick();
+            }
+        });
+        helper.waitForCallback(callCount);
+    }
+
+    protected void clickAndroidBackButtonInEditorAndWait(CallbackHelper helper)
+            throws InterruptedException, TimeoutException {
+        int callCount = helper.getCallCount();
+        ThreadUtils.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mUI.getEditorView().dispatchKeyEvent(
+                        new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_BACK));
+                mUI.getEditorView().dispatchKeyEvent(
+                        new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_BACK));
             }
         });
         helper.waitForCallback(callCount);
@@ -421,6 +437,28 @@ abstract class PaymentRequestTestBase extends ChromeActivityTestCaseBase<ChromeT
             public void run() {
                 ((OptionSection) mUI.getPaymentMethodSectionForTest())
                         .getOptionLabelsForTest(suggestionIndex)
+                        .performClick();
+            }
+        });
+        helper.waitForCallback(callCount);
+    }
+
+    /**
+     *  Clicks on the edit icon corresponding to the payment method suggestion at the specified
+     *  |suggestionIndex|.
+     */
+    protected void clickOnPaymentMethodSuggestionEditIconAndWait(
+            final int suggestionIndex, CallbackHelper helper)
+            throws ExecutionException, TimeoutException, InterruptedException {
+        assert (suggestionIndex < getNumberOfPaymentInstruments());
+
+        int callCount = helper.getCallCount();
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                ((OptionSection) mUI.getPaymentMethodSectionForTest())
+                        .getOptionRowAtIndex(suggestionIndex)
+                        .getEditIconForTest()
                         .performClick();
             }
         });

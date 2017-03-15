@@ -461,10 +461,12 @@ const v8::FunctionCallbackInfo<v8::Value>& info
 {% macro attribute_configuration(attribute) %}
 {% from 'utilities.cpp.tmpl' import property_location %}
 {% if attribute.constructor_type %}
-{% set getter_callback =
-       '%s::%sConstructorGetterCallback' % (v8_class_or_partial, attribute.name)
-       if attribute.needs_constructor_getter_callback else
-       'v8ConstructorAttributeGetter' %}
+  {% if attribute.needs_constructor_getter_callback %}
+    {% set getter_callback = '%s::%sConstructorGetterCallback' % (v8_class_or_partial, attribute.name) %}
+  {% else %}
+    {% set getter_callback = 'V8%s::NamedConstructorAttributeGetter' % (attribute.constructor_type)
+       if attribute.is_named_constructor else 'v8ConstructorAttributeGetter' %}
+  {% endif %}
 {% set setter_callback = 'nullptr' %}
 {% else %}{# regular attributes #}
 {% set getter_callback = '%s::%sAttributeGetterCallback' %
@@ -504,3 +506,17 @@ const v8::FunctionCallbackInfo<v8::Value>& info
    ] %}
 {{'{'}}{{attribute_configuration_list | join(', ')}}{{'}'}}
 {%- endmacro %}
+
+{##############################################################################}
+{% macro install_conditionally_enabled_attributes_on_prototype() %}
+{% for attribute in attributes if (attribute.exposed_test or attribute.secure_context_test) and attribute.on_prototype %}
+{% filter exposed(attribute.exposed_test) %}
+{% filter secure_context(attribute.secure_context_test) %}
+{% filter runtime_enabled(attribute.runtime_enabled_feature_name) %}
+const V8DOMConfiguration::AccessorConfiguration accessorConfiguration = {{attribute_configuration(attribute)}};
+V8DOMConfiguration::installAccessor(isolate, world, v8::Local<v8::Object>(), prototypeObject, interfaceObject, signature, accessorConfiguration);
+{% endfilter %}{# runtime_enabled #}
+{% endfilter %}{# secure_context #}
+{% endfilter %}{# exposed #}
+{% endfor %}
+{% endmacro %}

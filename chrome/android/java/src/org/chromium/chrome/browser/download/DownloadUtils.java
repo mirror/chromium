@@ -9,6 +9,7 @@ import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -52,6 +53,8 @@ import org.chromium.ui.widget.Toast;
 import java.io.File;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -72,6 +75,7 @@ public class DownloadUtils {
 
     private static final String DEFAULT_MIME_TYPE = "*/*";
     private static final String MIME_TYPE_DELIMITER = "/";
+    private static final String MIME_TYPE_VIDEO = "video";
 
     private static final String EXTRA_IS_OFF_THE_RECORD =
             "org.chromium.chrome.browser.download.IS_OFF_THE_RECORD";
@@ -419,6 +423,7 @@ public class DownloadUtils {
         intent.setData(contentUri);
         intent.putExtra(CustomTabIntentDataProvider.EXTRA_IS_MEDIA_VIEWER, true);
         intent.putExtra(CustomTabIntentDataProvider.EXTRA_MEDIA_VIEWER_URL, fileUri.toString());
+        intent.putExtra(CustomTabIntentDataProvider.EXTRA_ENABLE_EMBEDDED_MEDIA_EXPERIENCE, true);
         intent.putExtra(
                 CustomTabIntentDataProvider.EXTRA_INITIAL_BACKGROUND_COLOR, mediaColor);
         intent.putExtra(
@@ -463,12 +468,13 @@ public class DownloadUtils {
      * Opens a file in Chrome or in another app if appropriate.
      * @param file path to the file to open.
      * @param mimeType mime type of the file.
+     * @param downloadGuid The associated download GUID.
      * @param isOffTheRecord whether we are in an off the record context.
      * @return whether the file could successfully be opened.
      */
-    public static boolean openFile(File file, String mimeType, boolean isOffTheRecord) {
+    public static boolean openFile(
+            File file, String mimeType, String downloadGuid, boolean isOffTheRecord) {
         Context context = ContextUtils.getApplicationContext();
-        Intent viewIntent = createViewIntentForDownloadItem(getUriForItem(file), mimeType);
         DownloadManagerService service = DownloadManagerService.getDownloadManagerService(context);
 
         // Check if Chrome should open the file itself.
@@ -482,12 +488,15 @@ public class DownloadUtils {
             Intent intent =
                     getMediaViewerIntentForDownloadItem(fileUri, contentUri, normalizedMimeType);
             IntentHandler.startActivityForTrustedIntent(intent);
+            service.updateLastAccessTime(downloadGuid, isOffTheRecord);
             return true;
         }
 
         // Check if any apps can open the file.
         try {
+            Intent viewIntent = createViewIntentForDownloadItem(getUriForItem(file), mimeType);
             context.startActivity(viewIntent);
+            service.updateLastAccessTime(downloadGuid, isOffTheRecord);
             return true;
         } catch (ActivityNotFoundException e) {
             // Can't launch the Intent.
@@ -572,7 +581,7 @@ public class DownloadUtils {
         } else if (item.isIndeterminate()) {
             // Count up the bytes.
             long bytes = info.getBytesReceived();
-            return DownloadUtils.getStringForBytes(context, BYTES_DOWNLOADED_STRINGS, bytes);
+            return DownloadUtils.getStringForDownloadedBytes(context, bytes);
         } else {
             // Count down the time.
             long msRemaining = info.getTimeRemainingInMillis();
@@ -608,6 +617,17 @@ public class DownloadUtils {
 
     /**
      * Format the number of bytes into KB, or MB, or GB and return the corresponding string
+     * resource. Uses default download-related set of strings.
+     * @param context Context to use.
+     * @param bytes Number of bytes.
+     * @return A formatted string to be displayed.
+     */
+    public static String getStringForDownloadedBytes(Context context, long bytes) {
+        return getStringForBytes(context, BYTES_DOWNLOADED_STRINGS, bytes);
+    }
+
+    /**
+     * Format the number of bytes into KB, or MB, or GB and return the corresponding string
      * resource.
      * @param context Context to use.
      * @param stringSet The string resources for displaying bytes in KB, MB and GB.
@@ -634,10 +654,10 @@ public class DownloadUtils {
 
     /**
      * Abbreviate a file name into a given number of characters with ellipses.
-     * e.g. thisisaverylongfilename.txt => thisisave....txt
-     * @param fileName File name to abbreviate
-     * @param limit Character limit
-     * @return Abbreviated file name
+     * e.g. "thisisaverylongfilename.txt" => "thisisave....txt".
+     * @param fileName File name to abbreviate.
+     * @param limit Character limit.
+     * @return Abbreviated file name.
      */
     public static String getAbbreviatedFileName(String fileName, int limit) {
         assert limit >= 1;  // Abbreviated file name should at least be 1 characters (a...)
@@ -656,5 +676,75 @@ public class DownloadUtils {
         }
         int remainingLength = limit - extensionLength;
         return fileName.substring(0, remainingLength) + ELLIPSIS + fileName.substring(index);
+    }
+
+    /**
+     * Return an icon for a given file type.
+     * @param fileType Type of the file as returned by DownloadFilter.
+     */
+    public static int getIconResId(int fileType) {
+        switch (fileType) {
+            case DownloadFilter.FILTER_PAGE:
+                return R.drawable.ic_drive_site_white;
+            case DownloadFilter.FILTER_VIDEO:
+                return R.drawable.ic_play_arrow_white;
+            case DownloadFilter.FILTER_AUDIO:
+                return R.drawable.ic_music_note_white;
+            case DownloadFilter.FILTER_IMAGE:
+                return R.drawable.ic_image_white;
+            case DownloadFilter.FILTER_DOCUMENT:
+                return R.drawable.ic_drive_text_white;
+            default:
+                return R.drawable.ic_drive_file_white;
+        }
+    }
+
+    /**
+     * Return a background color for the file type icon.
+     * @param context Context from which to extract the resources.
+     * @return Background color.
+     */
+    public static int getIconBackgroundColor(Context context) {
+        return ApiCompatibilityUtils.getColor(context.getResources(), R.color.light_active_color);
+    }
+
+    /**
+     * Return a foreground color list for the file type icon.
+     * @param context Context from which to extract the resources.
+     * @return a foreground color list.
+     */
+    public static ColorStateList getIconForegroundColorList(Context context) {
+        return ApiCompatibilityUtils.getColorStateList(
+                context.getResources(), R.color.white_mode_tint);
+    }
+
+    private static boolean isMimeTypeVideo(String mimeType) {
+        if (TextUtils.isEmpty(mimeType)) return false;
+
+        String[] pieces = mimeType.split(MIME_TYPE_DELIMITER);
+        if (pieces.length != 2) return false;
+
+        return MIME_TYPE_VIDEO.equals(pieces[0]);
+    }
+
+    /**
+     * Given two timestamps, calculates if both occur on the same date.
+     * @return True if they belong in the same day. False otherwise.
+     */
+    public static boolean isSameDay(long timestamp1, long timestamp2) {
+        return getDateAtMidnight(timestamp1).equals(getDateAtMidnight(timestamp2));
+    }
+
+    /**
+     * Calculates the {@link Date} for midnight of the date represented by the |timestamp|.
+     */
+    public static Date getDateAtMidnight(long timestamp) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(timestamp);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
     }
 }

@@ -116,18 +116,18 @@ class TestImporterTest(LoggingTestCase):
         host.executive = MockExecutive(output='Last commit message\n\n')
         importer = TestImporter(host)
         description = importer._cl_description(directory_owners={
-            'someone@chromium.org': ['external/wpt/foo', 'external/wpt/bar'],
-            'someone-else@chromium.org': ['external/wpt/baz'],
+            ('someone@chromium.org',): ['external/wpt/foo', 'external/wpt/bar'],
+            ('x@chromium.org', 'y@chromium.org'): ['external/wpt/baz'],
         })
         self.assertEqual(
             description,
             ('Last commit message\n\n'
              'Directory owners for changes in this CL:\n'
-             'someone-else@chromium.org:\n'
-             '  external/wpt/baz\n'
              'someone@chromium.org:\n'
              '  external/wpt/foo\n'
-             '  external/wpt/bar\n\n'
+             '  external/wpt/bar\n'
+             'x@chromium.org, y@chromium.org:\n'
+             '  external/wpt/baz\n\n'
              'TBR=qyearsley@chromium.org\n'
              'NOEXPORT=true'))
 
@@ -145,21 +145,23 @@ class TestImporterTest(LoggingTestCase):
         # asserts that TestImporter._generate_manifest would invoke the script.
         host = MockHost()
         importer = TestImporter(host)
-        importer._generate_manifest(
-            '/mock-checkout/third_party/WebKit/LayoutTests/external/wpt')
+        blink_path = '/mock-checkout/third_party/WebKit'
+        host.filesystem.write_text_file(blink_path + '/LayoutTests/external/wpt/MANIFEST.json', '{}')
+        importer._generate_manifest(blink_path + '/LayoutTests/external/wpt')
         self.assertEqual(
             host.executive.calls,
             [
                 [
-                    '/mock-checkout/third_party/WebKit/Tools/Scripts/webkitpy/thirdparty/wpt/wpt/manifest',
+                    'python',
+                    blink_path + '/Tools/Scripts/webkitpy/thirdparty/wpt/wpt/manifest',
                     '--work',
                     '--tests-root',
-                    '/mock-checkout/third_party/WebKit/LayoutTests/external/wpt'
+                    blink_path + '/LayoutTests/external/wpt',
                 ],
                 [
                     'git',
                     'add',
-                    '/mock-checkout/third_party/WebKit/LayoutTests/external/wpt/MANIFEST.json'
+                    blink_path + '/LayoutTests/external/WPT_BASE_MANIFEST.json',
                 ]
             ])
 
@@ -173,7 +175,7 @@ class TestImporterTest(LoggingTestCase):
         git.changed_files = lambda: ['third_party/WebKit/LayoutTests/external/wpt/foo/x.html']
         host.git = lambda: git
         importer = TestImporter(host)
-        self.assertEqual(importer.get_directory_owners(), {'someone@chromium.org': ['external/wpt/foo']})
+        self.assertEqual(importer.get_directory_owners(), {('someone@chromium.org',): ['external/wpt/foo']})
 
     def test_get_directory_owners_no_changed_files(self):
         host = MockHost()
@@ -183,3 +185,24 @@ class TestImporterTest(LoggingTestCase):
             '# external/wpt/foo [ Pass ]\n')
         importer = TestImporter(host)
         self.assertEqual(importer.get_directory_owners(), {})
+
+    def test_cc_part(self):
+        directory_owners = {
+            ('someone@chromium.org',): ['external/wpt/foo', 'external/wpt/bar'],
+            ('x@chromium.org', 'y@chromium.org'): ['external/wpt/baz'],
+        }
+        self.assertEqual(
+            TestImporter._cc_part(directory_owners),
+            ['--cc=someone@chromium.org', '--cc=x@chromium.org', '--cc=y@chromium.org'])
+
+    def test_delete_orphaned_baselines(self):
+        host = MockHost()
+        dest_path = '/mock-checkout/third_party/WebKit/LayoutTests/external/wpt'
+        host.filesystem.write_text_file(dest_path + '/b-expected.txt', '')
+        host.filesystem.write_text_file(dest_path + '/b.x-expected.txt', '')
+        host.filesystem.write_text_file(dest_path + '/b.x.html', '')
+        importer = TestImporter(host)
+        importer._delete_orphaned_baselines(dest_path)
+        self.assertFalse(host.filesystem.exists(dest_path + '/b-expected.txt'))
+        self.assertTrue(host.filesystem.exists(dest_path + '/b.x-expected.txt'))
+        self.assertTrue(host.filesystem.exists(dest_path + '/b.x.html'))

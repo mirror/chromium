@@ -12,6 +12,8 @@
 #include "V8TestIntegerIndexedPrimaryGlobal.h"
 
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/IDLTypes.h"
+#include "bindings/core/v8/NativeValueTraitsImpl.h"
 #include "bindings/core/v8/V8DOMConfiguration.h"
 #include "bindings/core/v8/V8Document.h"
 #include "bindings/core/v8/V8Node.h"
@@ -68,7 +70,7 @@ static void lengthAttributeSetter(v8::Local<v8::Value> v8Value, const v8::Functi
   ExceptionState exceptionState(info.GetIsolate(), ExceptionState::SetterContext, "TestIntegerIndexedPrimaryGlobal", "length");
 
   // Prepare the value to be set.
-  int cppValue = toInt8(info.GetIsolate(), v8Value, NormalConversion, exceptionState);
+  int8_t cppValue = NativeValueTraits<IDLByte>::nativeValue(info.GetIsolate(), v8Value, exceptionState, NormalConversion);
   if (exceptionState.hadException())
     return;
 
@@ -163,7 +165,7 @@ const V8DOMConfiguration::AccessorConfiguration V8TestIntegerIndexedPrimaryGloba
 };
 
 const V8DOMConfiguration::MethodConfiguration V8TestIntegerIndexedPrimaryGlobalMethods[] = {
-    {"voidMethodDocument", V8TestIntegerIndexedPrimaryGlobal::voidMethodDocumentMethodCallback, nullptr, 1, v8::None, V8DOMConfiguration::OnInstance, V8DOMConfiguration::CheckHolder},
+    {"voidMethodDocument", V8TestIntegerIndexedPrimaryGlobal::voidMethodDocumentMethodCallback, nullptr, 1, v8::None, V8DOMConfiguration::OnInstance, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess},
 };
 
 static void installV8TestIntegerIndexedPrimaryGlobalTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
@@ -227,6 +229,10 @@ v8::Local<v8::Object> V8TestIntegerIndexedPrimaryGlobal::findInstanceInPrototype
 
 TestIntegerIndexedPrimaryGlobal* V8TestIntegerIndexedPrimaryGlobal::toImplWithTypeCheck(v8::Isolate* isolate, v8::Local<v8::Value> value) {
   return hasInstance(value, isolate) ? toImpl(v8::Local<v8::Object>::Cast(value)) : nullptr;
+}
+
+TestIntegerIndexedPrimaryGlobal* NativeValueTraits<TestIntegerIndexedPrimaryGlobal>::nativeValue(v8::Isolate* isolate, v8::Local<v8::Value> value, ExceptionState& exceptionState) {
+  return V8TestIntegerIndexedPrimaryGlobal::toImplWithTypeCheck(isolate, value);
 }
 
 }  // namespace blink

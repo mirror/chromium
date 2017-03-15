@@ -65,8 +65,8 @@ void StylusHandler::UpdateNoteTakingApps() {
   base::ListValue apps_list;
 
   NoteTakingHelper* helper = NoteTakingHelper::Get();
-  if (helper->android_enabled() && !helper->android_apps_received()) {
-    // If Android is enabled but not ready yet, let the JS know so it can
+  if (helper->play_store_enabled() && !helper->android_apps_received()) {
+    // If Play Store is enabled but not ready yet, let the JS know so it can
     // disable the menu and display an explanatory message.
     waiting_for_android = true;
   } else {
@@ -84,9 +84,9 @@ void StylusHandler::UpdateNoteTakingApps() {
   }
 
   AllowJavascript();
-  CallJavascriptFunction(
-      "cr.webUIListenerCallback", base::StringValue("onNoteTakingAppsUpdated"),
-      apps_list, base::FundamentalValue(waiting_for_android));
+  CallJavascriptFunction("cr.webUIListenerCallback",
+                         base::Value("onNoteTakingAppsUpdated"), apps_list,
+                         base::Value(waiting_for_android));
 }
 
 void StylusHandler::RequestApps(const base::ListValue* unused_args) {
@@ -116,9 +116,9 @@ void StylusHandler::HandleInitialize(const base::ListValue* args) {
 void StylusHandler::SendHasStylus() {
   DCHECK(ui::InputDeviceManager::GetInstance()->AreDeviceListsComplete());
   AllowJavascript();
-  CallJavascriptFunction(
-      "cr.webUIListenerCallback", base::StringValue("has-stylus-changed"),
-      base::FundamentalValue(ash::palette_utils::HasStylusInput()));
+  CallJavascriptFunction("cr.webUIListenerCallback",
+                         base::Value("has-stylus-changed"),
+                         base::Value(ash::palette_utils::HasStylusInput()));
 }
 
 void StylusHandler::ShowPlayStoreApps(const base::ListValue* args) {

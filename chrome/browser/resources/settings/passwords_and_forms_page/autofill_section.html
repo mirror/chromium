@@ -77,7 +77,7 @@
             </div>
             <template is="dom-if" if="[[item.metadata.isLocal]]">
               <paper-icon-button id="addressMenu" icon="cr:more-vert"
-                  on-tap="onAddressMenuTap_" alt="$i18n{overflowMenu}">
+                  on-tap="onAddressMenuTap_" title="$i18n{moreActions}">
               </paper-icon-button>
             </template>
             <template is="dom-if" if="[[!item.metadata.isLocal]]">
@@ -94,7 +94,7 @@
     </div>
     <dialog is="cr-action-menu" id="addressSharedMenu">
       <button id="menuEditAddress" class="dropdown-item"
-          on-tap="onMenuEditAddressTap_">$i18n{editAddress}</button>
+          on-tap="onMenuEditAddressTap_">$i18n{edit}</button>
       <button id="menuRemoveAddress" class="dropdown-item"
           on-tap="onMenuRemoveAddressTap_">$i18n{removeAddress}</button>
     </dialog>
@@ -135,7 +135,7 @@
                   class="expiration-date">[[expiration_(item)]]</div>
               <template is="dom-if" if="[[item.metadata.isLocal]]">
                 <paper-icon-button id="creditCardMenu" icon="cr:more-vert"
-                    on-tap="onCreditCardMenuTap_" alt="$i18n{overflowMenu}">
+                    on-tap="onCreditCardMenuTap_" title="$i18n{moreActions}">
                 </paper-icon-button>
               </template>
               <template is="dom-if" if="[[!item.metadata.isLocal]]">
@@ -153,7 +153,7 @@
     </div>
     <dialog is="cr-action-menu" id="creditCardSharedMenu">
       <button id="menuEditCreditCard" class="dropdown-item"
-          on-tap="onMenuEditCreditCardTap_">$i18n{editCreditCard}</button>
+          on-tap="onMenuEditCreditCardTap_">$i18n{edit}</button>
       <button id="menuRemoveCreditCard" class="dropdown-item"
           on-tap="onMenuRemoveCreditCardTap_">$i18n{removeCreditCard}</button>
       <button id="menuClearCreditCard" class="dropdown-item"

@@ -16,8 +16,10 @@
 #include "base/feature_list.h"
 #include "base/files/file_util.h"
 #include "base/metrics/field_trial.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/path_service.h"
+#include "base/time/time.h"
 #include "chrome/browser/features.h"
 #include "chrome/browser/prerender/prerender_field_trial.h"
 #include "chrome/common/chrome_features.h"
@@ -115,6 +117,8 @@ void SetupStabilityDebugging() {
     return;
   }
 
+  SCOPED_UMA_HISTOGRAM_TIMER("ActivityTracker.Record.SetupTime");
+
   // TODO(bcwhite): Adjust these numbers once there is real data to show
   // just how much of an arena is necessary.
   const size_t kMemorySize = 1 << 20;  // 1 MiB
@@ -172,9 +176,23 @@ void SetupStabilityDebugging() {
 #elif defined(ARCH_CPU_X86_64)
     global_data.SetString(browser_watcher::kStabilityPlatform, "Win64");
 #endif
+    global_data.SetInt(browser_watcher::kStabilityStartTimestamp,
+                       base::Time::Now().ToInternalValue());
 
     // Record information about chrome's module. We want this to be done early.
     RecordChromeModuleInfo(global_tracker);
+
+    // Trigger a flush of the memory mapped file to maximize the chances of
+    // having a minimal amount of content in the stability file, even if
+    // the system crashes or loses power. Note: this does not flush the file
+    // metadata nor does it wait for the changes to be flushed to disk before
+    // returning. This is an expensive operation. Run as an experiment to
+    // measure the effect on performance and collection.
+    const bool should_flush = base::GetFieldTrialParamByFeatureAsBool(
+        browser_watcher::kStabilityDebuggingFeature,
+        browser_watcher::kInitFlushParam, false);
+    if (should_flush)
+      ::FlushViewOfFile(global_tracker->allocator()->data(), 0U);
   }
 }
 #endif  // defined(OS_WIN)

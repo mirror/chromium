@@ -33,8 +33,6 @@
 #include <algorithm>
 #include <memory>
 
-using namespace WTF;
-
 namespace blink {
 
 struct SameSizeAsFloatingObject {
@@ -531,7 +529,7 @@ FloatingObject* FloatingObjects::add(
     std::unique_ptr<FloatingObject> floatingObject) {
   FloatingObject* newObject = floatingObject.release();
   increaseObjectsCount(newObject->getType());
-  m_set.add(WTF::wrapUnique(newObject));
+  m_set.insert(WTF::wrapUnique(newObject));
   if (newObject->isPlaced())
     addPlacedObject(*newObject);
   markLowestFloatLogicalBottomCacheAsDirty();

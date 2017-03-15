@@ -133,7 +133,10 @@ PaintInvalidationState::PaintInvalidationState(
     // paintInvalidationContainer.
     m_paintInvalidationContainerForStackedContents =
         m_paintInvalidationContainer;
-  } else if (currentObject.isFloatingWithNonContainingBlockParent()) {
+  } else if (currentObject.isFloatingWithNonContainingBlockParent() ||
+             currentObject.isColumnSpanAll()) {
+    // In these cases, the object may belong to an ancestor of the current
+    // paint invalidation container, in paint order.
     m_paintInvalidationContainer =
         &currentObject.containerForPaintInvalidation();
     m_cachedOffsetsEnabled = false;
@@ -444,6 +447,9 @@ LayoutPoint PaintInvalidationState::computeLocationInBacking(
   PaintLayer::mapPointInPaintInvalidationContainerToBacking(
       *m_paintInvalidationContainer, point);
 
+  point.move(m_currentObject.scrollAdjustmentForPaintInvalidation(
+      *m_paintInvalidationContainer));
+
   return LayoutPoint(point);
 }
 
@@ -456,7 +462,7 @@ LayoutRect PaintInvalidationState::computeVisualRectInBacking() const {
     return computeVisualRectInBackingForSVG();
 
   LayoutRect rect = m_currentObject.localVisualRect();
-  mapLocalRectToPaintInvalidationBacking(rect);
+  mapLocalRectToVisualRectInBacking(rect);
   return rect;
 }
 
@@ -485,6 +491,11 @@ LayoutRect PaintInvalidationState::computeVisualRectInBackingForSVG() const {
   PaintLayer::mapRectInPaintInvalidationContainerToBacking(
       *m_paintInvalidationContainer, rect);
 
+  m_currentObject.adjustVisualRectForRasterEffects(rect);
+
+  rect.move(m_currentObject.scrollAdjustmentForPaintInvalidation(
+      *m_paintInvalidationContainer));
+
   return rect;
 }
 
@@ -499,11 +510,12 @@ static void slowMapToVisualRectInAncestorSpace(
   if (object.isBox())
     toLayoutBox(&object)->flipForWritingMode(rect);
 
-  if (object.isLayoutView())
+  if (object.isLayoutView()) {
     toLayoutView(object).mapToVisualRectInAncestorSpace(
         &ancestor, rect, InputIsInFrameCoordinates, DefaultVisualRectFlags);
-  else
+  } else {
     object.mapToVisualRectInAncestorSpace(&ancestor, rect);
+  }
 }
 
 void PaintInvalidationState::mapLocalRectToPaintInvalidationContainer(
@@ -530,12 +542,17 @@ void PaintInvalidationState::mapLocalRectToPaintInvalidationContainer(
   }
 }
 
-void PaintInvalidationState::mapLocalRectToPaintInvalidationBacking(
+void PaintInvalidationState::mapLocalRectToVisualRectInBacking(
     LayoutRect& rect) const {
   mapLocalRectToPaintInvalidationContainer(rect);
 
   PaintLayer::mapRectInPaintInvalidationContainerToBacking(
       *m_paintInvalidationContainer, rect);
+
+  m_currentObject.adjustVisualRectForRasterEffects(rect);
+
+  rect.move(m_currentObject.scrollAdjustmentForPaintInvalidation(
+      *m_paintInvalidationContainer));
 }
 
 void PaintInvalidationState::addClipRectRelativeToPaintOffset(
@@ -628,11 +645,11 @@ PaintInvalidatorContextAdapter::PaintInvalidatorContextAdapter(
   paintingLayer = &paintInvalidationState.paintingLayer();
 }
 
-void PaintInvalidatorContextAdapter::mapLocalRectToPaintInvalidationBacking(
+void PaintInvalidatorContextAdapter::mapLocalRectToVisualRectInBacking(
     const LayoutObject& object,
     LayoutRect& rect) const {
   DCHECK(&object == &m_paintInvalidationState.currentObject());
-  m_paintInvalidationState.mapLocalRectToPaintInvalidationBacking(rect);
+  m_paintInvalidationState.mapLocalRectToVisualRectInBacking(rect);
 }
 
 }  // namespace blink

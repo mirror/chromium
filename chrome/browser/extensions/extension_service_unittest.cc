@@ -640,16 +640,16 @@ class ExtensionServiceTest
 
   void BlackListWebGL() {
     static const std::string json_blacklist =
-      "{\n"
-      "  \"name\": \"gpu blacklist\",\n"
-      "  \"version\": \"1.0\",\n"
-      "  \"entries\": [\n"
-      "    {\n"
-      "      \"id\": 1,\n"
-      "      \"features\": [\"webgl\"]\n"
-      "    }\n"
-      "  ]\n"
-      "}";
+        "{\n"
+        "  \"name\": \"gpu blacklist\",\n"
+        "  \"version\": \"1.0\",\n"
+        "  \"entries\": [\n"
+        "    {\n"
+        "      \"id\": 1,\n"
+        "      \"features\": [\"accelerated_webgl\"]\n"
+        "    }\n"
+        "  ]\n"
+        "}";
     gpu::GPUInfo gpu_info;
     content::GpuDataManager::GetInstance()->InitializeForTesting(
         json_blacklist, gpu_info);
@@ -740,7 +740,7 @@ class ExtensionServiceTest
     msg += " = ";
     msg += base::IntToString(value);
 
-    SetPref(extension_id, pref_path, new base::FundamentalValue(value), msg);
+    SetPref(extension_id, pref_path, new base::Value(value), msg);
   }
 
   void SetPrefBool(const std::string& extension_id,
@@ -751,7 +751,7 @@ class ExtensionServiceTest
     msg += " = ";
     msg += (value ? "true" : "false");
 
-    SetPref(extension_id, pref_path, new base::FundamentalValue(value), msg);
+    SetPref(extension_id, pref_path, new base::Value(value), msg);
   }
 
   void ClearPref(const std::string& extension_id,

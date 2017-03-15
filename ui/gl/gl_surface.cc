@@ -22,7 +22,7 @@
 namespace gl {
 
 namespace {
-base::LazyInstance<base::ThreadLocalPointer<GLSurface> >::Leaky
+base::LazyInstance<base::ThreadLocalPointer<GLSurface>>::Leaky
     current_surface_ = LAZY_INSTANCE_INITIALIZER;
 }  // namespace
 
@@ -133,11 +133,6 @@ unsigned long GLSurface::GetCompatibilityKey() {
   return 0;
 }
 
-GLSurfaceFormat GLSurface::GetFormat() {
-  NOTIMPLEMENTED();
-  return GLSurfaceFormat();
-}
-
 gfx::VSyncProvider* GLSurface::GetVSyncProvider() {
   return NULL;
 }
@@ -161,6 +156,11 @@ void GLSurface::ScheduleCALayerInUseQuery(
   NOTIMPLEMENTED();
 }
 
+bool GLSurface::ScheduleDCLayer(const ui::DCRendererLayerParams& params) {
+  NOTIMPLEMENTED();
+  return false;
+}
+
 bool GLSurface::IsSurfaceless() const {
   return false;
 }
@@ -171,6 +171,18 @@ bool GLSurface::FlipsVertically() const {
 
 bool GLSurface::BuffersFlipped() const {
   return false;
+}
+
+bool GLSurface::SupportsSetDrawRectangle() const {
+  return false;
+}
+
+bool GLSurface::SetDrawRectangle(const gfx::Rect& rect) {
+  return false;
+}
+
+gfx::Vector2d GLSurface::GetDrawOffset() const {
+  return gfx::Vector2d();
 }
 
 GLSurface* GLSurface::GetCurrent() {
@@ -342,6 +354,11 @@ bool GLSurfaceAdapter::ScheduleOverlayPlane(int z_order,
       z_order, transform, image, bounds_rect, crop_rect);
 }
 
+bool GLSurfaceAdapter::ScheduleDCLayer(
+    const ui::DCRendererLayerParams& params) {
+  return surface_->ScheduleDCLayer(params);
+}
+
 bool GLSurfaceAdapter::IsSurfaceless() const {
   return surface_->IsSurfaceless();
 }
@@ -352,6 +369,22 @@ bool GLSurfaceAdapter::FlipsVertically() const {
 
 bool GLSurfaceAdapter::BuffersFlipped() const {
   return surface_->BuffersFlipped();
+}
+
+bool GLSurfaceAdapter::SupportsSetDrawRectangle() const {
+  return surface_->SupportsSetDrawRectangle();
+}
+
+bool GLSurfaceAdapter::SetDrawRectangle(const gfx::Rect& rect) {
+  return surface_->SetDrawRectangle(rect);
+}
+
+gfx::Vector2d GLSurfaceAdapter::GetDrawOffset() const {
+  return surface_->GetDrawOffset();
+}
+
+void GLSurfaceAdapter::OnSetSwapInterval(int interval) {
+  surface_->OnSetSwapInterval(interval);
 }
 
 GLSurfaceAdapter::~GLSurfaceAdapter() {}

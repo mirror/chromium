@@ -23,6 +23,7 @@
 #ifndef XMLHttpRequest_h
 #define XMLHttpRequest_h
 
+#include <memory>
 #include "bindings/core/v8/ActiveScriptWrappable.h"
 #include "bindings/core/v8/ScriptString.h"
 #include "bindings/core/v8/ScriptWrappable.h"
@@ -34,9 +35,9 @@
 #include "core/xmlhttprequest/XMLHttpRequestEventTarget.h"
 #include "core/xmlhttprequest/XMLHttpRequestProgressEventThrottle.h"
 #include "platform/heap/Handle.h"
+#include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/network/EncodedFormData.h"
 #include "platform/network/HTTPHeaderMap.h"
-#include "platform/network/ResourceResponse.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "wtf/Forward.h"
@@ -44,11 +45,11 @@
 #include "wtf/RefPtr.h"
 #include "wtf/text/AtomicString.h"
 #include "wtf/text/WTFString.h"
-#include <memory>
 
 namespace blink {
 
-class ArrayBufferOrArrayBufferViewOrBlobOrDocumentOrStringOrFormData;
+class
+    ArrayBufferOrArrayBufferViewOrBlobOrDocumentOrStringOrFormDataOrURLSearchParams;
 class Blob;
 class BlobDataHandle;
 class DOMArrayBuffer;
@@ -62,6 +63,7 @@ class ScriptState;
 class SharedBuffer;
 class TextResourceDecoder;
 class ThreadableLoader;
+class URLSearchParams;
 class WebDataConsumerHandle;
 class XMLHttpRequestUpload;
 
@@ -133,7 +135,7 @@ class XMLHttpRequest final : public XMLHttpRequestEventTarget,
             bool async,
             ExceptionState&);
   void send(
-      const ArrayBufferOrArrayBufferViewOrBlobOrDocumentOrStringOrFormData&,
+      const ArrayBufferOrArrayBufferViewOrBlobOrDocumentOrStringOrFormDataOrURLSearchParams&,
       ExceptionState&);
   void abort();
   void dispose();
@@ -234,6 +236,7 @@ class XMLHttpRequest final : public XMLHttpRequestEventTarget,
   void send(const String&, ExceptionState&);
   void send(Blob*, ExceptionState&);
   void send(FormData*, ExceptionState&);
+  void send(URLSearchParams*, ExceptionState&);
   void send(DOMArrayBuffer*, ExceptionState&);
   void send(DOMArrayBufferView*, ExceptionState&);
 
@@ -276,6 +279,9 @@ class XMLHttpRequest final : public XMLHttpRequestEventTarget,
                           const AtomicString&,
                           long long,
                           long long);
+
+  void updateContentTypeAndCharset(const AtomicString& contentType,
+                                   const String& charset);
 
   XMLHttpRequestProgressEventThrottle& progressEventThrottle();
 
@@ -349,6 +355,7 @@ class XMLHttpRequest final : public XMLHttpRequestEventTarget,
   bool m_downloadingToFile;
   bool m_responseTextOverflow;
   bool m_sendFlag;
+  bool m_responseArrayBufferFailure;
 };
 
 std::ostream& operator<<(std::ostream&, const XMLHttpRequest*);

@@ -6,10 +6,14 @@
 
 #include "base/strings/utf_string_conversions.h"
 #include "components/autofill/core/browser/test_personal_data_manager.h"
-#include "components/payments/currency_formatter.h"
+#include "components/payments/core/currency_formatter.h"
 #include "ios/chrome/browser/application_context.h"
 #include "ios/web/public/payments/payment_request.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 // Tests that the payments::CurrencyFormatter is constructed with the correct
 // currency code and currency system.

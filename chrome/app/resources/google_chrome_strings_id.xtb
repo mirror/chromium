@@ -17,6 +17,7 @@
 <translation id="1434626383986940139">Aplikasi Chrome Canary</translation>
 <translation id="1457721931618994305">Memperbarui Google Chrome...</translation>
 <translation id="1469002951682717133">Peluncur Aplikasi Chrome</translation>
+<translation id="1475773083554142432">Chrome akan menyimpan ini dengan <ph name="SAVED_PASSWORD_LINK" /> dan mengingatnya saat Anda membutuhkannya lagi.</translation>
 <translation id="1480489203462860648">Cobalah, ini sudah dipasang</translation>
 <translation id="1553358976309200471">Perbarui browser Chrome</translation>
 <translation id="1587223624401073077">Google Chrome menggunakan kamera Anda.</translation>
@@ -115,7 +116,6 @@ Periksa email Anda di <ph name="ACCOUNT_EMAIL" /> untuk petunjuk lebih lanjut.</
 <translation id="4458285410772214805">Keluar dan masuk lagi agar perubahan ini diterapkan.</translation>
 <translation id="4458462641685292929">Operasi lain di Google Chrome sedang berlangsung. Coba lagi nanti.</translation>
 <translation id="4480040274068703980">Chrome OS tidak dapat menyinkronkan data Anda karena kesalahan saat masuk.</translation>
-<translation id="4519152997629025674">Google Chrome mungkin akan menggunakan <ph name="BEGIN_LINK" />layanan web<ph name="END_LINK" /> untuk meningkatkan pengalaman penjelajahan. Anda dapat menonaktifkan layanan ini kapan saja secara opsional.</translation>
 <translation id="4561051373932531560">Google Chrome memungkinkan Anda mengeklik nomor telepon pada web dan menghubunginya melalui Skype!</translation>
 <translation id="4567424176335768812">Anda masuk sebagai <ph name="USER_EMAIL_ADDRESS" />. Kini Anda dapat mengakses bookmark, riwayat, dan setelan lainnya pada seluruh perangkat yang Anda masuki.</translation>
 <translation id="4631713731678262610">Sembunyikan di menu Chrome</translation>
@@ -129,7 +129,6 @@ Periksa email Anda di <ph name="ACCOUNT_EMAIL" /> untuk petunjuk lebih lanjut.</
 <translation id="4754614261631455953">Google Chrome Canary (mDNS-In)</translation>
 <translation id="4771048833395599659">File ini mungkin berbahaya, jadi Chrome telah memblokirnya.</translation>
 <translation id="4794050651896644714">Simpan detail di Chrome</translation>
-<translation id="4853578032408195113">Anda melihat halaman Google Chrome yang aman</translation>
 <translation id="4891791193823137474">Jalankan Google Chrome di latar belakang</translation>
 <translation id="4921569541910214635">Membagikan komputer? Kini Anda dapat menyiapkan Chrome seperti yang Anda inginkan.</translation>
 <translation id="4953650215774548573">Setel Google Chrome sebagai browser default Anda</translation>
@@ -139,7 +138,6 @@ Periksa email Anda di <ph name="ACCOUNT_EMAIL" /> untuk petunjuk lebih lanjut.</
 <translation id="5028489144783860647">Google Chrome tidak dapat menyinkronkan data Anda. Perbarui frasa sandi Sinkronisasi Anda.</translation>
 <translation id="5037239767309817516">Harap tutup semua jendela Google Chrome dan luncurkan kembali agar perubahan ini berlaku.</translation>
 <translation id="5132929315877954718">Temukan aplikasi, game, ekstensi, dan tema yang hebat untuk Google Chrome.</translation>
-<translation id="5148419164691878332">Chrome akan menyimpan ini di <ph name="SAVED_PASSWORDS_LINK" /> dan mengingatnya saat Anda membutuhkannya lagi.</translation>
 <translation id="5170938038195470297">Profil Anda tidak dapat digunakan karena berasal dari versi terbaru Google Chrome. Beberapa fitur mungkin tidak tersedia. Tentukan direktori profil yang berbeda atau gunakan versi Chrome yang lebih anyar.</translation>
 <translation id="5176234269072261959">Bantu jadikan Chrome lebih baik dengan melaporkan setelan saat ini.</translation>
 <translation id="5193136243808726294">Google Chrome OS tidak dapat membuka laman ini.</translation>
@@ -244,6 +242,7 @@ Periksa email Anda di <ph name="ACCOUNT_EMAIL" /> untuk petunjuk lebih lanjut.</
 <translation id="8030318113982266900">Memperbarui perangkat Anda ke saluran <ph name="CHANNEL_NAME" />...</translation>
 <translation id="8032142183999901390">Setelah membuang akun dari Chrome, Anda mungkin perlu memuat ulang tab terbuka untuk menerapkannya.</translation>
 <translation id="8129812357326543296">Tentang &amp;Google Chrome</translation>
+<translation id="8179874765710681175">Instal Chrome di ponsel. Kami akan mengirimkan SMS ke ponsel Anda.</translation>
 <translation id="8183957050892517584">Chrome akan meyimpan informasi pribadi Anda dengan aman sehingga Anda tidak perlu mengetiknya lagi.</translation>
 <translation id="8211929904040702368">Tindakan ini akan menghapus setidaknya <ph name="TOTAL_COUNT" /> item dari perangkat ini secara permanen. Untuk mengambil data Anda nanti, masuk ke Chrome sebagai $2.</translation>
 <translation id="8255190535488645436">Google Chrome menggunakan kamera dan mikrofon Anda.</translation>
@@ -256,6 +255,7 @@ Periksa email Anda di <ph name="ACCOUNT_EMAIL" /> untuk petunjuk lebih lanjut.</
 <translation id="8547799825197623713">Peluncur Aplikasi Chrome Canary</translation>
 <translation id="8556340503434111824">Tersedia versi Google Chrome yang baru, dan versi ini lebih cepat dari sebelumnya.</translation>
 <translation id="8568392309447938879">Anda perlu masuk ke Chrome untuk menggunakan aplikasi. Ini memungkinkan Chrome menyinkronkan aplikasi, bookmark, riwayat, sandi, dan setelan Anda yang lain di seluruh perangkat.</translation>
+<translation id="8606668294522778825">Google Chrome dapat menggunakan layanan web untuk meningkatkan pengalaman penjelajahan Anda. Anda dapat memilih untuk menonaktifkan layanan ini. <ph name="BEGIN_LINK" />Pelajari lebih lanjut<ph name="END_LINK" /></translation>
 <translation id="8614913330719544658">Google Chrome tidak merespons. Luncurkan ulang sekarang?</translation>
 <translation id="8667808506758191620"><ph name="DEVICE_TYPE" /> Anda sudah diperbarui.</translation>
 <translation id="8669527147644353129">Pembantu Google Chrome</translation>

@@ -167,13 +167,9 @@ class ShellTest : public test::AshTestBase {
     EXPECT_TRUE(lock_widget->GetNativeView()->HasFocus());
 
     // Verify menu is closed.
-    EXPECT_NE(views::MenuController::EXIT_NONE, menu_controller->exit_type());
+    EXPECT_EQ(nullptr, views::MenuController::GetActiveInstance());
     lock_widget->Close();
     delegate->UnlockScreen();
-
-    // In case the menu wasn't closed, cancel the menu to exit the nested menu
-    // run loop so that the test will not time out.
-    menu_controller->CancelAll();
   }
 };
 
@@ -348,20 +344,15 @@ TEST_F(ShellTest, LockScreenClosesActiveMenu) {
                               ->GetRootWindowController()
                               ->wallpaper_widget_controller()
                               ->widget();
-  std::unique_ptr<views::MenuRunner> menu_runner(
-      new views::MenuRunner(menu_model.get(), views::MenuRunner::CONTEXT_MENU));
-
-  // When MenuRunner runs a nested loop the LockScreenAndVerifyMenuClosed
-  // command will fire, check the menu state and ensure the nested menu loop
-  // is exited so that the test will terminate.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(&ShellTest::LockScreenAndVerifyMenuClosed,
-                            base::Unretained(this)));
+  std::unique_ptr<views::MenuRunner> menu_runner(new views::MenuRunner(
+      menu_model.get(),
+      views::MenuRunner::CONTEXT_MENU | views::MenuRunner::ASYNC));
 
   EXPECT_EQ(views::MenuRunner::NORMAL_EXIT,
             menu_runner->RunMenuAt(widget, NULL, gfx::Rect(),
                                    views::MENU_ANCHOR_TOPLEFT,
                                    ui::MENU_SOURCE_MOUSE));
+  LockScreenAndVerifyMenuClosed();
 }
 
 TEST_F(ShellTest, ManagedWindowModeBasics) {
@@ -459,6 +450,10 @@ TEST_F(ShellTest, ToggleAutoHide) {
 // Tests that the cursor-filter is ahead of the drag-drop controller in the
 // pre-target list.
 TEST_F(ShellTest, TestPreTargetHandlerOrder) {
+  // TODO: investigate failure in mash, http://crbug.com/695758.
+  if (WmShell::Get()->IsRunningInMash())
+    return;
+
   Shell* shell = Shell::GetInstance();
   ui::EventTargetTestApi test_api(shell);
   test::ShellTestApi shell_test_api(shell);
@@ -503,6 +498,13 @@ class ShellTest2 : public test::AshTestBase {
 };
 
 TEST_F(ShellTest2, DontCrashWhenWindowDeleted) {
+  // TODO: delete this test when conversion to mash is done. This test isn't
+  // applicable to mash as all windows must be destroyed before ash, that isn't
+  // the case with classic-ash where embedders can separately create
+  // aura::Windows.
+  if (WmShell::Get()->IsRunningInMash())
+    return;
+
   window_.reset(new aura::Window(NULL));
   window_->Init(ui::LAYER_NOT_DRAWN);
 }

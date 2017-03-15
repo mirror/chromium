@@ -9,7 +9,6 @@
 #include "net/quic/platform/api/quic_bug_tracker.h"
 #include "net/quic/platform/api/quic_logging.h"
 
-using base::StringPiece;
 using std::string;
 
 namespace net {
@@ -19,7 +18,7 @@ namespace net {
 
 namespace {
 
-struct iovec MakeIovec(StringPiece data) {
+struct iovec MakeIovec(QuicStringPiece data) {
   struct iovec iov = {const_cast<char*>(data.data()),
                       static_cast<size_t>(data.size())};
   return iov;
@@ -182,7 +181,7 @@ void QuicStream::CloseConnectionWithDetails(QuicErrorCode error,
 }
 
 void QuicStream::WriteOrBufferData(
-    StringPiece data,
+    QuicStringPiece data,
     bool fin,
     QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener) {
   if (data.empty() && !fin) {
@@ -212,7 +211,7 @@ void QuicStream::WriteOrBufferData(
   // If there's unconsumed data or an unconsumed fin, queue it.
   if (consumed_data.bytes_consumed < data.length() ||
       (fin && !consumed_data.fin_consumed)) {
-    StringPiece remainder(data.substr(consumed_data.bytes_consumed));
+    QuicStringPiece remainder(data.substr(consumed_data.bytes_consumed));
     queued_data_bytes_ += remainder.size();
     queued_data_.emplace_back(remainder.as_string(), ack_listener);
   }
@@ -275,8 +274,8 @@ QuicConsumedData QuicStream::WritevData(
     bool fin,
     QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener) {
   if (write_side_closed_) {
-    QUIC_DLOG(ERROR) << ENDPOINT
-                     << "Attempt to write when the write side is closed";
+    QUIC_DLOG(ERROR) << ENDPOINT << "Stream " << id()
+                     << "attempting to write when the write side is closed";
     return QuicConsumedData(0, false);
   }
 
@@ -373,7 +372,7 @@ void QuicStream::CloseReadSide() {
   sequencer_.ReleaseBuffer();
 
   if (write_side_closed_) {
-    QUIC_DLOG(INFO) << ENDPOINT << "Closing stream: " << id();
+    QUIC_DLOG(INFO) << ENDPOINT << "Closing stream " << id();
     session_->CloseStream(id());
   }
 }
@@ -386,7 +385,7 @@ void QuicStream::CloseWriteSide() {
 
   write_side_closed_ = true;
   if (read_side_closed_) {
-    QUIC_DLOG(INFO) << ENDPOINT << "Closing stream: " << id();
+    QUIC_DLOG(INFO) << ENDPOINT << "Closing stream " << id();
     session_->CloseStream(id());
   }
 }

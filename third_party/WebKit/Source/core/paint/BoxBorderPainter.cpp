@@ -976,119 +976,20 @@ void BoxBorderPainter::drawBoxSideFromPath(GraphicsContext& graphicsContext,
       return;
     case BorderStyleDotted:
     case BorderStyleDashed: {
-      graphicsContext.setStrokeColor(color);
-
-      // The stroke is doubled here because the provided path is the
-      // outside edge of the border so half the stroke is clipped off.
-      // The extra multiplier is so that the clipping mask can antialias
-      // the edges to prevent jaggies.
-      graphicsContext.setStrokeThickness(drawThickness * 2 * 1.1f);
-      graphicsContext.setStrokeStyle(
-          borderStyle == BorderStyleDashed ? DashedStroke : DottedStroke);
-
-      // If the number of dashes that fit in the path is odd and non-integral
-      // then we will have an awkwardly-sized dash at the end of the path. To
-      // try to avoid that here, we simply make the whitespace dashes ever so
-      // slightly bigger.
-      // FIXME: This could be even better if we tried to manipulate the dash
-      // offset and possibly the gapLength to get the corners dash-symmetrical.
-      float dashLength =
-          thickness * ((borderStyle == BorderStyleDashed) ? 3.0f : 1.0f);
-      float gapLength = dashLength;
-      float numberOfDashes = borderPath.length() / dashLength;
-      // Don't try to show dashes if we have less than 2 dashes + 2 gaps.
-      // FIXME: should do this test per side.
-      if (numberOfDashes >= 4) {
-        bool evenNumberOfFullDashes = !((int)numberOfDashes % 2);
-        bool integralNumberOfDashes = !(numberOfDashes - (int)numberOfDashes);
-        if (!evenNumberOfFullDashes && !integralNumberOfDashes) {
-          float numberOfGaps = numberOfDashes / 2;
-          gapLength += (dashLength / numberOfGaps);
-        }
-
-        DashArray lineDash;
-        lineDash.push_back(dashLength);
-        lineDash.push_back(gapLength);
-        graphicsContext.setLineDash(lineDash, dashLength);
-      }
-
-      // FIXME: stroking the border path causes issues with tight corners:
-      // https://bugs.webkit.org/show_bug.cgi?id=58711
-      // Also, to get the best appearance we should stroke a path between the
-      // two borders.
-      graphicsContext.strokePath(borderPath);
+      drawDashedDottedBoxSideFromPath(graphicsContext, borderRect, thickness,
+                                      drawThickness, color, borderStyle);
       return;
     }
     case BorderStyleDouble: {
-      // Draw inner border line
-      {
-        GraphicsContextStateSaver stateSaver(graphicsContext);
-        const LayoutRectOutsets innerInsets =
-            doubleStripeInsets(m_edges, BorderEdge::DoubleBorderStripeInner);
-        FloatRoundedRect innerClip = m_style.getRoundedInnerBorderFor(
-            borderRect, innerInsets, m_includeLogicalLeftEdge,
-            m_includeLogicalRightEdge);
-
-        graphicsContext.clipRoundedRect(innerClip);
-        drawBoxSideFromPath(graphicsContext, borderRect, borderPath, thickness,
-                            drawThickness, side, color, BorderStyleSolid);
-      }
-
-      // Draw outer border line
-      {
-        GraphicsContextStateSaver stateSaver(graphicsContext);
-        LayoutRect outerRect = borderRect;
-        LayoutRectOutsets outerInsets =
-            doubleStripeInsets(m_edges, BorderEdge::DoubleBorderStripeOuter);
-
-        if (bleedAvoidanceIsClipping(m_bleedAvoidance)) {
-          outerRect.inflate(1);
-          outerInsets.setTop(outerInsets.top() - 1);
-          outerInsets.setRight(outerInsets.right() - 1);
-          outerInsets.setBottom(outerInsets.bottom() - 1);
-          outerInsets.setLeft(outerInsets.left() - 1);
-        }
-
-        FloatRoundedRect outerClip = m_style.getRoundedInnerBorderFor(
-            outerRect, outerInsets, m_includeLogicalLeftEdge,
-            m_includeLogicalRightEdge);
-        graphicsContext.clipOutRoundedRect(outerClip);
-        drawBoxSideFromPath(graphicsContext, borderRect, borderPath, thickness,
-                            drawThickness, side, color, BorderStyleSolid);
-      }
+      drawDoubleBoxSideFromPath(graphicsContext, borderRect, borderPath,
+                                thickness, drawThickness, side, color);
       return;
     }
     case BorderStyleRidge:
     case BorderStyleGroove: {
-      EBorderStyle s1;
-      EBorderStyle s2;
-      if (borderStyle == BorderStyleGroove) {
-        s1 = BorderStyleInset;
-        s2 = BorderStyleOutset;
-      } else {
-        s1 = BorderStyleOutset;
-        s2 = BorderStyleInset;
-      }
-
-      // Paint full border
-      drawBoxSideFromPath(graphicsContext, borderRect, borderPath, thickness,
-                          drawThickness, side, color, s1);
-
-      // Paint inner only
-      GraphicsContextStateSaver stateSaver(graphicsContext);
-      int topWidth = m_edges[BSTop].usedWidth() / 2;
-      int bottomWidth = m_edges[BSBottom].usedWidth() / 2;
-      int leftWidth = m_edges[BSLeft].usedWidth() / 2;
-      int rightWidth = m_edges[BSRight].usedWidth() / 2;
-
-      FloatRoundedRect clipRect = m_style.getRoundedInnerBorderFor(
-          borderRect,
-          LayoutRectOutsets(-topWidth, -rightWidth, -bottomWidth, -leftWidth),
-          m_includeLogicalLeftEdge, m_includeLogicalRightEdge);
-
-      graphicsContext.clipRoundedRect(clipRect);
-      drawBoxSideFromPath(graphicsContext, borderRect, borderPath, thickness,
-                          drawThickness, side, color, s2);
+      drawRidgeGrooveBoxSideFromPath(graphicsContext, borderRect, borderPath,
+                                     thickness, drawThickness, side, color,
+                                     borderStyle);
       return;
     }
     case BorderStyleInset:
@@ -1108,6 +1009,196 @@ void BoxBorderPainter::drawBoxSideFromPath(GraphicsContext& graphicsContext,
   graphicsContext.drawRect(pixelSnappedIntRect(borderRect));
 }
 
+void BoxBorderPainter::drawDashedDottedBoxSideFromPath(
+    GraphicsContext& graphicsContext,
+    const LayoutRect& borderRect,
+    float thickness,
+    float drawThickness,
+    Color color,
+    EBorderStyle borderStyle) const {
+  // Convert the path to be down the middle of the dots or dashes.
+  const LayoutRectOutsets centerOffsets(
+      -m_edges[BSTop].usedWidth() * 0.5, -m_edges[BSRight].usedWidth() * 0.5,
+      -m_edges[BSBottom].usedWidth() * 0.5, -m_edges[BSLeft].usedWidth() * 0.5);
+  Path centerlinePath;
+  centerlinePath.addRoundedRect(m_style.getRoundedInnerBorderFor(
+      borderRect, centerOffsets, m_includeLogicalLeftEdge,
+      m_includeLogicalRightEdge));
+
+  graphicsContext.setStrokeColor(color);
+
+  if (!StrokeData::strokeIsDashed(thickness, borderStyle == BorderStyleDashed
+                                                 ? DashedStroke
+                                                 : DottedStroke)) {
+    drawWideDottedBoxSideFromPath(graphicsContext, centerlinePath, thickness);
+    return;
+  }
+
+  // The extra multiplier is so that the clipping mask can antialias
+  // the edges to prevent jaggies.
+  graphicsContext.setStrokeThickness(drawThickness * 1.1f);
+  graphicsContext.setStrokeStyle(
+      borderStyle == BorderStyleDashed ? DashedStroke : DottedStroke);
+
+  // TODO(schenney): This code for setting up the dash effect is trying to
+  // do the same thing as StrokeData::setupPaintDashPathEffect and should be
+  // refactored to re-use that code. It would require
+  // GraphicsContext::strokePath to take a length parameter.
+  float dashLength = drawThickness;
+  float gapLength = dashLength;
+  if (borderStyle == BorderStyleDashed) {
+    dashLength *= StrokeData::dashLengthRatio(drawThickness);
+    gapLength *= StrokeData::dashGapRatio(drawThickness);
+  }
+  float pathLength = centerlinePath.length();
+  // Don't try to show dashes if we have less than 2 dashes + 2 gaps.
+  // TODO(schenney): should do this test per side.
+  if (pathLength >= 2 * dashLength + gapLength) {
+    float gap = gapLength;
+    if (borderStyle == BorderStyleDashed)
+      gap = StrokeData::selectBestDashGap(pathLength, dashLength, gapLength);
+    DashArray lineDash;
+    lineDash.push_back(dashLength);
+    lineDash.push_back(gap);
+    graphicsContext.setLineDash(lineDash, dashLength);
+  } else if (pathLength > dashLength) {
+    // Exactly 2 dashes proportionally sized
+    float multiplier = pathLength / (2 * dashLength + gapLength);
+    DashArray lineDash;
+    lineDash.push_back(dashLength * multiplier);
+    lineDash.push_back(gapLength * multiplier);
+    graphicsContext.setLineDash(lineDash, 0);
+  }  // else don't dash at all
+
+  // TODO(schenney): stroking the border path causes issues with tight corners:
+  // https://bugs.chromium.org/p/chromium/issues/detail?id=344234
+  graphicsContext.strokePath(centerlinePath);
+}
+
+void BoxBorderPainter::drawWideDottedBoxSideFromPath(
+    GraphicsContext& graphicsContext,
+    const Path& borderPath,
+    float thickness) const {
+  graphicsContext.setStrokeThickness(thickness);
+  graphicsContext.setStrokeStyle(DottedStroke);
+
+  // TODO(schenney): This code for setting up the dash effect is largely
+  // duplicated from StrokeData::setupPaintDashPathEffect and both this code
+  // and the method above should be refactored to re-use that code. It would
+  // require GraphicsContext::strokePath to take a length parameter.
+  graphicsContext.setLineCap(RoundCap);
+
+  // Adjust the width to get equal dot spacing as much as possible.
+  float perDotLength = thickness * 2;
+  float pathLength = borderPath.length();
+
+  if (pathLength < perDotLength) {
+    // Not enoguh space for 2 dots. Just draw 1 by giving a gap that is
+    // bigger than the length.
+    DashArray lineDash;
+    lineDash.push_back(0);
+    lineDash.push_back(perDotLength);
+    graphicsContext.setLineDash(lineDash, 0);
+  } else {
+    float gap = StrokeData::selectBestDashGap(pathLength, thickness, thickness);
+    static const float epsilon = 1.0e-2f;
+    DashArray lineDash;
+    lineDash.push_back(0);
+    lineDash.push_back(gap + thickness - epsilon);
+    graphicsContext.setLineDash(lineDash, 0);
+  }
+
+  // TODO(schenney): stroking the border path causes issues with tight corners:
+  // https://bugs.webkit.org/show_bug.cgi?id=58711
+  graphicsContext.strokePath(borderPath);
+}
+
+void BoxBorderPainter::drawDoubleBoxSideFromPath(
+    GraphicsContext& graphicsContext,
+    const LayoutRect& borderRect,
+    const Path& borderPath,
+    float thickness,
+    float drawThickness,
+    BoxSide side,
+    Color color) const {
+  // Draw inner border line
+  {
+    GraphicsContextStateSaver stateSaver(graphicsContext);
+    const LayoutRectOutsets innerInsets =
+        doubleStripeInsets(m_edges, BorderEdge::DoubleBorderStripeInner);
+    FloatRoundedRect innerClip = m_style.getRoundedInnerBorderFor(
+        borderRect, innerInsets, m_includeLogicalLeftEdge,
+        m_includeLogicalRightEdge);
+
+    graphicsContext.clipRoundedRect(innerClip);
+    drawBoxSideFromPath(graphicsContext, borderRect, borderPath, thickness,
+                        drawThickness, side, color, BorderStyleSolid);
+  }
+
+  // Draw outer border line
+  {
+    GraphicsContextStateSaver stateSaver(graphicsContext);
+    LayoutRect outerRect = borderRect;
+    LayoutRectOutsets outerInsets =
+        doubleStripeInsets(m_edges, BorderEdge::DoubleBorderStripeOuter);
+
+    if (bleedAvoidanceIsClipping(m_bleedAvoidance)) {
+      outerRect.inflate(1);
+      outerInsets.setTop(outerInsets.top() - 1);
+      outerInsets.setRight(outerInsets.right() - 1);
+      outerInsets.setBottom(outerInsets.bottom() - 1);
+      outerInsets.setLeft(outerInsets.left() - 1);
+    }
+
+    FloatRoundedRect outerClip = m_style.getRoundedInnerBorderFor(
+        outerRect, outerInsets, m_includeLogicalLeftEdge,
+        m_includeLogicalRightEdge);
+    graphicsContext.clipOutRoundedRect(outerClip);
+    drawBoxSideFromPath(graphicsContext, borderRect, borderPath, thickness,
+                        drawThickness, side, color, BorderStyleSolid);
+  }
+}
+
+void BoxBorderPainter::drawRidgeGrooveBoxSideFromPath(
+    GraphicsContext& graphicsContext,
+    const LayoutRect& borderRect,
+    const Path& borderPath,
+    float thickness,
+    float drawThickness,
+    BoxSide side,
+    Color color,
+    EBorderStyle borderStyle) const {
+  EBorderStyle s1;
+  EBorderStyle s2;
+  if (borderStyle == BorderStyleGroove) {
+    s1 = BorderStyleInset;
+    s2 = BorderStyleOutset;
+  } else {
+    s1 = BorderStyleOutset;
+    s2 = BorderStyleInset;
+  }
+
+  // Paint full border
+  drawBoxSideFromPath(graphicsContext, borderRect, borderPath, thickness,
+                      drawThickness, side, color, s1);
+
+  // Paint inner only
+  GraphicsContextStateSaver stateSaver(graphicsContext);
+  int topWidth = m_edges[BSTop].usedWidth() / 2;
+  int bottomWidth = m_edges[BSBottom].usedWidth() / 2;
+  int leftWidth = m_edges[BSLeft].usedWidth() / 2;
+  int rightWidth = m_edges[BSRight].usedWidth() / 2;
+
+  FloatRoundedRect clipRect = m_style.getRoundedInnerBorderFor(
+      borderRect,
+      LayoutRectOutsets(-topWidth, -rightWidth, -bottomWidth, -leftWidth),
+      m_includeLogicalLeftEdge, m_includeLogicalRightEdge);
+
+  graphicsContext.clipRoundedRect(clipRect);
+  drawBoxSideFromPath(graphicsContext, borderRect, borderPath, thickness,
+                      drawThickness, side, color, s2);
+}
+
 void BoxBorderPainter::clipBorderSideForComplexInnerPath(
     GraphicsContext& graphicsContext,
     BoxSide side) const {
@@ -1124,7 +1215,9 @@ void BoxBorderPainter::clipBorderSidePolygon(GraphicsContext& graphicsContext,
                                              MiterType secondMiter) const {
   DCHECK(firstMiter != NoMiter || secondMiter != NoMiter);
 
-  FloatPoint quad[4];
+  FloatPoint edgeQuad[4];  // The boundary of the edge for fill
+  FloatPoint boundQuad1;  // Point 1 of the rectilinear bounding box of EdgeQuad
+  FloatPoint boundQuad2;  // Point 2 of the rectilinear bounding box of EdgeQuad
 
   const LayoutRect outerRect(m_outer.rect());
   const LayoutRect innerRect(m_inner.rect());
@@ -1133,170 +1226,242 @@ void BoxBorderPainter::clipBorderSidePolygon(GraphicsContext& graphicsContext,
   // may draw, including areas inside the innerBorder.
   //
   //         0----------------3
-  //       0  \              /  0
+  //       3  \              /  0
   //       |\  1----------- 2  /|
-  //       | 1                1 |
+  //       | 2                1 |
   //       | |                | |
   //       | |                | |
-  //       | 2                2 |
-  //       |/  1------------2  \|
-  //       3  /              \  3
-  //         0----------------3
-  //
+  //       | 1                2 |
+  //       |/  2------------1  \|
+  //       0  /              \  3
+  //         3----------------0
+
+  // Offset size and direction to expand clipping quad
+  const static float kExtensionLength = 1e-1f;
+  FloatSize extensionOffset;
   switch (side) {
     case BSTop:
-      quad[0] = FloatPoint(outerRect.minXMinYCorner());
-      quad[1] = FloatPoint(innerRect.minXMinYCorner());
-      quad[2] = FloatPoint(innerRect.maxXMinYCorner());
-      quad[3] = FloatPoint(outerRect.maxXMinYCorner());
+      edgeQuad[0] = FloatPoint(outerRect.minXMinYCorner());
+      edgeQuad[1] = FloatPoint(innerRect.minXMinYCorner());
+      edgeQuad[2] = FloatPoint(innerRect.maxXMinYCorner());
+      edgeQuad[3] = FloatPoint(outerRect.maxXMinYCorner());
+
+      DCHECK(edgeQuad[0].y() == edgeQuad[3].y());
+      DCHECK(edgeQuad[1].y() == edgeQuad[2].y());
+
+      boundQuad1 = FloatPoint(edgeQuad[0].x(), edgeQuad[1].y());
+      boundQuad2 = FloatPoint(edgeQuad[3].x(), edgeQuad[2].y());
+
+      extensionOffset.setWidth(-kExtensionLength);
+      extensionOffset.setHeight(0);
 
       if (!m_inner.getRadii().topLeft().isZero()) {
         findIntersection(
-            quad[0], quad[1],
-            FloatPoint(quad[1].x() + m_inner.getRadii().topLeft().width(),
-                       quad[1].y()),
-            FloatPoint(quad[1].x(),
-                       quad[1].y() + m_inner.getRadii().topLeft().height()),
-            quad[1]);
+            edgeQuad[0], edgeQuad[1],
+            FloatPoint(edgeQuad[1].x() + m_inner.getRadii().topLeft().width(),
+                       edgeQuad[1].y()),
+            FloatPoint(edgeQuad[1].x(),
+                       edgeQuad[1].y() + m_inner.getRadii().topLeft().height()),
+            edgeQuad[1]);
+        DCHECK(boundQuad1.y() <= edgeQuad[1].y());
+        boundQuad1.setY(edgeQuad[1].y());
+        boundQuad2.setY(edgeQuad[1].y());
       }
 
       if (!m_inner.getRadii().topRight().isZero()) {
         findIntersection(
-            quad[3], quad[2],
-            FloatPoint(quad[2].x() - m_inner.getRadii().topRight().width(),
-                       quad[2].y()),
-            FloatPoint(quad[2].x(),
-                       quad[2].y() + m_inner.getRadii().topRight().height()),
-            quad[2]);
+            edgeQuad[3], edgeQuad[2],
+            FloatPoint(edgeQuad[2].x() - m_inner.getRadii().topRight().width(),
+                       edgeQuad[2].y()),
+            FloatPoint(
+                edgeQuad[2].x(),
+                edgeQuad[2].y() + m_inner.getRadii().topRight().height()),
+            edgeQuad[2]);
+        if (boundQuad1.y() < edgeQuad[2].y()) {
+          boundQuad1.setY(edgeQuad[2].y());
+          boundQuad2.setY(edgeQuad[2].y());
+        }
       }
       break;
 
     case BSLeft:
-      quad[0] = FloatPoint(outerRect.minXMinYCorner());
-      quad[1] = FloatPoint(innerRect.minXMinYCorner());
-      quad[2] = FloatPoint(innerRect.minXMaxYCorner());
-      quad[3] = FloatPoint(outerRect.minXMaxYCorner());
+      // Swap the order of adjacent edges to allow common code
+      std::swap(firstMiter, secondMiter);
+      edgeQuad[0] = FloatPoint(outerRect.minXMaxYCorner());
+      edgeQuad[1] = FloatPoint(innerRect.minXMaxYCorner());
+      edgeQuad[2] = FloatPoint(innerRect.minXMinYCorner());
+      edgeQuad[3] = FloatPoint(outerRect.minXMinYCorner());
+
+      DCHECK(edgeQuad[0].x() == edgeQuad[3].x());
+      DCHECK(edgeQuad[1].x() == edgeQuad[2].x());
+
+      boundQuad1 = FloatPoint(edgeQuad[1].x(), edgeQuad[0].y());
+      boundQuad2 = FloatPoint(edgeQuad[2].x(), edgeQuad[3].y());
+
+      extensionOffset.setWidth(0);
+      extensionOffset.setHeight(kExtensionLength);
 
       if (!m_inner.getRadii().topLeft().isZero()) {
         findIntersection(
-            quad[0], quad[1],
-            FloatPoint(quad[1].x() + m_inner.getRadii().topLeft().width(),
-                       quad[1].y()),
-            FloatPoint(quad[1].x(),
-                       quad[1].y() + m_inner.getRadii().topLeft().height()),
-            quad[1]);
+            edgeQuad[3], edgeQuad[2],
+            FloatPoint(edgeQuad[2].x() + m_inner.getRadii().topLeft().width(),
+                       edgeQuad[2].y()),
+            FloatPoint(edgeQuad[2].x(),
+                       edgeQuad[2].y() + m_inner.getRadii().topLeft().height()),
+            edgeQuad[2]);
+        DCHECK(boundQuad2.x() <= edgeQuad[2].x());
+        boundQuad1.setX(edgeQuad[2].x());
+        boundQuad2.setX(edgeQuad[2].x());
       }
 
       if (!m_inner.getRadii().bottomLeft().isZero()) {
         findIntersection(
-            quad[3], quad[2],
-            FloatPoint(quad[2].x() + m_inner.getRadii().bottomLeft().width(),
-                       quad[2].y()),
-            FloatPoint(quad[2].x(),
-                       quad[2].y() - m_inner.getRadii().bottomLeft().height()),
-            quad[2]);
+            edgeQuad[0], edgeQuad[1],
+            FloatPoint(
+                edgeQuad[1].x() + m_inner.getRadii().bottomLeft().width(),
+                edgeQuad[1].y()),
+            FloatPoint(
+                edgeQuad[1].x(),
+                edgeQuad[1].y() - m_inner.getRadii().bottomLeft().height()),
+            edgeQuad[1]);
+        if (boundQuad1.x() < edgeQuad[1].x()) {
+          boundQuad1.setX(edgeQuad[1].x());
+          boundQuad2.setX(edgeQuad[1].x());
+        }
       }
       break;
 
     case BSBottom:
-      quad[0] = FloatPoint(outerRect.minXMaxYCorner());
-      quad[1] = FloatPoint(innerRect.minXMaxYCorner());
-      quad[2] = FloatPoint(innerRect.maxXMaxYCorner());
-      quad[3] = FloatPoint(outerRect.maxXMaxYCorner());
+      // Swap the order of adjacent edges to allow common code
+      std::swap(firstMiter, secondMiter);
+      edgeQuad[0] = FloatPoint(outerRect.maxXMaxYCorner());
+      edgeQuad[1] = FloatPoint(innerRect.maxXMaxYCorner());
+      edgeQuad[2] = FloatPoint(innerRect.minXMaxYCorner());
+      edgeQuad[3] = FloatPoint(outerRect.minXMaxYCorner());
+
+      DCHECK(edgeQuad[0].y() == edgeQuad[3].y());
+      DCHECK(edgeQuad[1].y() == edgeQuad[2].y());
+
+      boundQuad1 = FloatPoint(edgeQuad[0].x(), edgeQuad[1].y());
+      boundQuad2 = FloatPoint(edgeQuad[3].x(), edgeQuad[2].y());
+
+      extensionOffset.setWidth(kExtensionLength);
+      extensionOffset.setHeight(0);
 
       if (!m_inner.getRadii().bottomLeft().isZero()) {
         findIntersection(
-            quad[0], quad[1],
-            FloatPoint(quad[1].x() + m_inner.getRadii().bottomLeft().width(),
-                       quad[1].y()),
-            FloatPoint(quad[1].x(),
-                       quad[1].y() - m_inner.getRadii().bottomLeft().height()),
-            quad[1]);
+            edgeQuad[3], edgeQuad[2],
+            FloatPoint(
+                edgeQuad[2].x() + m_inner.getRadii().bottomLeft().width(),
+                edgeQuad[2].y()),
+            FloatPoint(
+                edgeQuad[2].x(),
+                edgeQuad[2].y() - m_inner.getRadii().bottomLeft().height()),
+            edgeQuad[2]);
+        DCHECK(boundQuad2.y() >= edgeQuad[2].y());
+        boundQuad1.setY(edgeQuad[2].y());
+        boundQuad2.setY(edgeQuad[2].y());
       }
 
       if (!m_inner.getRadii().bottomRight().isZero()) {
         findIntersection(
-            quad[3], quad[2],
-            FloatPoint(quad[2].x() - m_inner.getRadii().bottomRight().width(),
-                       quad[2].y()),
-            FloatPoint(quad[2].x(),
-                       quad[2].y() - m_inner.getRadii().bottomRight().height()),
-            quad[2]);
+            edgeQuad[0], edgeQuad[1],
+            FloatPoint(
+                edgeQuad[1].x() - m_inner.getRadii().bottomRight().width(),
+                edgeQuad[1].y()),
+            FloatPoint(
+                edgeQuad[1].x(),
+                edgeQuad[1].y() - m_inner.getRadii().bottomRight().height()),
+            edgeQuad[1]);
+        if (boundQuad1.y() > edgeQuad[1].y()) {
+          boundQuad1.setY(edgeQuad[1].y());
+          boundQuad2.setY(edgeQuad[1].y());
+        }
       }
       break;
 
     case BSRight:
-      quad[0] = FloatPoint(outerRect.maxXMinYCorner());
-      quad[1] = FloatPoint(innerRect.maxXMinYCorner());
-      quad[2] = FloatPoint(innerRect.maxXMaxYCorner());
-      quad[3] = FloatPoint(outerRect.maxXMaxYCorner());
+      edgeQuad[0] = FloatPoint(outerRect.maxXMinYCorner());
+      edgeQuad[1] = FloatPoint(innerRect.maxXMinYCorner());
+      edgeQuad[2] = FloatPoint(innerRect.maxXMaxYCorner());
+      edgeQuad[3] = FloatPoint(outerRect.maxXMaxYCorner());
+
+      DCHECK(edgeQuad[0].x() == edgeQuad[3].x());
+      DCHECK(edgeQuad[1].x() == edgeQuad[2].x());
+
+      boundQuad1 = FloatPoint(edgeQuad[1].x(), edgeQuad[0].y());
+      boundQuad2 = FloatPoint(edgeQuad[2].x(), edgeQuad[3].y());
+
+      extensionOffset.setWidth(0);
+      extensionOffset.setHeight(-kExtensionLength);
 
       if (!m_inner.getRadii().topRight().isZero()) {
         findIntersection(
-            quad[0], quad[1],
-            FloatPoint(quad[1].x() - m_inner.getRadii().topRight().width(),
-                       quad[1].y()),
-            FloatPoint(quad[1].x(),
-                       quad[1].y() + m_inner.getRadii().topRight().height()),
-            quad[1]);
+            edgeQuad[0], edgeQuad[1],
+            FloatPoint(edgeQuad[1].x() - m_inner.getRadii().topRight().width(),
+                       edgeQuad[1].y()),
+            FloatPoint(
+                edgeQuad[1].x(),
+                edgeQuad[1].y() + m_inner.getRadii().topRight().height()),
+            edgeQuad[1]);
+        DCHECK(boundQuad1.x() >= edgeQuad[1].x());
+        boundQuad1.setX(edgeQuad[1].x());
+        boundQuad2.setX(edgeQuad[1].x());
       }
 
       if (!m_inner.getRadii().bottomRight().isZero()) {
         findIntersection(
-            quad[3], quad[2],
-            FloatPoint(quad[2].x() - m_inner.getRadii().bottomRight().width(),
-                       quad[2].y()),
-            FloatPoint(quad[2].x(),
-                       quad[2].y() - m_inner.getRadii().bottomRight().height()),
-            quad[2]);
+            edgeQuad[3], edgeQuad[2],
+            FloatPoint(
+                edgeQuad[2].x() - m_inner.getRadii().bottomRight().width(),
+                edgeQuad[2].y()),
+            FloatPoint(
+                edgeQuad[2].x(),
+                edgeQuad[2].y() - m_inner.getRadii().bottomRight().height()),
+            edgeQuad[2]);
+        if (boundQuad1.x() > edgeQuad[2].x()) {
+          boundQuad1.setX(edgeQuad[2].x());
+          boundQuad2.setX(edgeQuad[2].x());
+        }
       }
       break;
   }
 
   if (firstMiter == secondMiter) {
-    clipQuad(graphicsContext, quad, firstMiter == SoftMiter);
+    clipQuad(graphicsContext, edgeQuad, firstMiter == SoftMiter);
     return;
   }
 
-  // If antialiasing settings for the first edge and second edge is different,
-  // they have to be addressed separately. We do this by breaking the quad into
-  // two parallelograms, made by moving quad[1] and quad[2].
-  float ax = quad[1].x() - quad[0].x();
-  float ay = quad[1].y() - quad[0].y();
-  float bx = quad[2].x() - quad[1].x();
-  float by = quad[2].y() - quad[1].y();
-  float cx = quad[3].x() - quad[2].x();
-  float cy = quad[3].y() - quad[2].y();
-
-  const static float kEpsilon = 1e-2f;
-  float r1, r2;
-  if (fabsf(bx) < kEpsilon && fabsf(by) < kEpsilon) {
-    // The quad was actually a triangle.
-    r1 = r2 = 1.0f;
-  } else {
-    // Extend parallelogram a bit to hide calculation error
-    const static float kExtendFill = 1e-2f;
-
-    r1 = (-ax * by + ay * bx) / (cx * by - cy * bx) + kExtendFill;
-    r2 = (-cx * by + cy * bx) / (ax * by - ay * bx) + kExtendFill;
-  }
-
+  // If antialiasing settings for the first edge and second edge are different,
+  // they have to be addressed separately. We do this by applying 2 clips, one
+  // for each miter, with the appropriate anti-aliasing setting. Each clip uses
+  // 3 sides of the quad rectilinear bounding box and a 4th side aligned with
+  // the miter edge. We extend the clip in the miter direction to ensure overlap
+  // as each edge is drawn.
   if (firstMiter != NoMiter) {
-    FloatPoint firstQuad[4];
-    firstQuad[0] = quad[0];
-    firstQuad[1] = quad[1];
-    firstQuad[2] = FloatPoint(quad[3].x() + r2 * ax, quad[3].y() + r2 * ay);
-    firstQuad[3] = quad[3];
-    clipQuad(graphicsContext, firstQuad, firstMiter == SoftMiter);
+    FloatPoint clippingQuad[4];
+
+    clippingQuad[0] = edgeQuad[0] + extensionOffset;
+    findIntersection(edgeQuad[0], edgeQuad[1], boundQuad1, boundQuad2,
+                     clippingQuad[1]);
+    clippingQuad[1] += extensionOffset;
+    clippingQuad[2] = boundQuad2;
+    clippingQuad[3] = edgeQuad[3];
+
+    clipQuad(graphicsContext, clippingQuad, firstMiter == SoftMiter);
   }
 
   if (secondMiter != NoMiter) {
-    FloatPoint secondQuad[4];
-    secondQuad[0] = quad[0];
-    secondQuad[1] = FloatPoint(quad[0].x() - r1 * cx, quad[0].y() - r1 * cy);
-    secondQuad[2] = quad[2];
-    secondQuad[3] = quad[3];
-    clipQuad(graphicsContext, secondQuad, secondMiter == SoftMiter);
+    FloatPoint clippingQuad[4];
+
+    clippingQuad[0] = edgeQuad[0];
+    clippingQuad[1] = boundQuad1;
+    findIntersection(edgeQuad[2], edgeQuad[3], boundQuad1, boundQuad2,
+                     clippingQuad[2]);
+    clippingQuad[2] -= extensionOffset;
+    clippingQuad[3] = edgeQuad[3] - extensionOffset;
+
+    clipQuad(graphicsContext, clippingQuad, secondMiter == SoftMiter);
   }
 }
 

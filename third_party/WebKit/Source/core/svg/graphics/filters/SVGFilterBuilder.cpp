@@ -70,8 +70,8 @@ void SVGFilterGraphNodeMap::addBuiltinEffect(FilterEffect* effect) {
 void SVGFilterGraphNodeMap::addPrimitive(LayoutObject* object,
                                          FilterEffect* effect) {
   // The effect must be a newly created filter effect.
-  ASSERT(!m_effectReferences.contains(effect));
-  ASSERT(!object || !m_effectRenderer.contains(object));
+  DCHECK(!m_effectReferences.contains(effect));
+  DCHECK(!object || !m_effectRenderer.contains(object));
   m_effectReferences.insert(effect, FilterEffectSet());
 
   unsigned numberOfInputEffects = effect->inputEffects().size();
@@ -107,22 +107,24 @@ DEFINE_TRACE(SVGFilterGraphNodeMap) {
 
 SVGFilterBuilder::SVGFilterBuilder(FilterEffect* sourceGraphic,
                                    SVGFilterGraphNodeMap* nodeMap,
-                                   const PaintFlags* fillPaint,
-                                   const PaintFlags* strokePaint)
+                                   const PaintFlags* fillFlags,
+                                   const PaintFlags* strokeFlags)
     : m_nodeMap(nodeMap) {
   FilterEffect* sourceGraphicRef = sourceGraphic;
   m_builtinEffects.insert(FilterInputKeywords::getSourceGraphic(),
                           sourceGraphicRef);
   m_builtinEffects.insert(FilterInputKeywords::sourceAlpha(),
                           SourceAlpha::create(sourceGraphicRef));
-  if (fillPaint)
+  if (fillFlags) {
     m_builtinEffects.insert(
         FilterInputKeywords::fillPaint(),
-        PaintFilterEffect::create(sourceGraphicRef->getFilter(), *fillPaint));
-  if (strokePaint)
+        PaintFilterEffect::create(sourceGraphicRef->getFilter(), *fillFlags));
+  }
+  if (strokeFlags) {
     m_builtinEffects.insert(
         FilterInputKeywords::strokePaint(),
-        PaintFilterEffect::create(sourceGraphicRef->getFilter(), *strokePaint));
+        PaintFilterEffect::create(sourceGraphicRef->getFilter(), *strokeFlags));
+  }
   addBuiltinEffects();
 }
 
@@ -209,17 +211,17 @@ void SVGFilterBuilder::add(const AtomicString& id, FilterEffect* effect) {
 
 FilterEffect* SVGFilterBuilder::getEffectById(const AtomicString& id) const {
   if (!id.isEmpty()) {
-    if (FilterEffect* builtinEffect = m_builtinEffects.get(id))
+    if (FilterEffect* builtinEffect = m_builtinEffects.at(id))
       return builtinEffect;
 
-    if (FilterEffect* namedEffect = m_namedEffects.get(id))
+    if (FilterEffect* namedEffect = m_namedEffects.at(id))
       return namedEffect;
   }
 
   if (m_lastEffect)
     return m_lastEffect.get();
 
-  return m_builtinEffects.get(FilterInputKeywords::getSourceGraphic());
+  return m_builtinEffects.at(FilterInputKeywords::getSourceGraphic());
 }
 
 }  // namespace blink

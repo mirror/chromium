@@ -28,7 +28,9 @@
 
 #include "modules/indexeddb/IDBRequest.h"
 
+#include <memory>
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/ToV8.h"
 #include "bindings/modules/v8/ToV8ForModules.h"
 #include "bindings/modules/v8/V8BindingForModules.h"
 #include "core/dom/DOMException.h"
@@ -44,7 +46,6 @@
 #include "modules/indexeddb/WebIDBCallbacksImpl.h"
 #include "platform/SharedBuffer.h"
 #include "public/platform/WebBlobInfo.h"
-#include <memory>
 
 using blink::WebIDBCursor;
 
@@ -67,6 +68,7 @@ IDBRequest::IDBRequest(ScriptState* scriptState,
                        IDBTransaction* transaction)
     : SuspendableObject(scriptState->getExecutionContext()),
       m_transaction(transaction),
+      m_isolate(scriptState->isolate()),
       m_source(source) {}
 
 IDBRequest::~IDBRequest() {
@@ -471,6 +473,7 @@ DispatchEventResult IDBRequest::dispatchEventInternal(Event* event) {
   if (setTransactionActive)
     m_transaction->setActive(true);
 
+  m_didThrowInEventHandler = false;
   DispatchEventResult dispatchResult =
       IDBEventDispatcher::dispatch(event, targets);
 
@@ -481,11 +484,16 @@ DispatchEventResult IDBRequest::dispatchEventInternal(Event* event) {
     // Possibly abort the transaction. This must occur after unregistering (so
     // this request doesn't receive a second error) and before deactivating
     // (which might trigger commit).
-    if (event->type() == EventTypeNames::error &&
-        dispatchResult == DispatchEventResult::NotCanceled &&
-        !m_requestAborted) {
-      m_transaction->setError(m_error);
-      m_transaction->abort(IGNORE_EXCEPTION_FOR_TESTING);
+    if (!m_requestAborted) {
+      if (m_didThrowInEventHandler) {
+        m_transaction->setError(DOMException::create(
+            AbortError, "Uncaught exception in event handler."));
+        m_transaction->abort(IGNORE_EXCEPTION_FOR_TESTING);
+      } else if (event->type() == EventTypeNames::error &&
+                 dispatchResult == DispatchEventResult::NotCanceled) {
+        m_transaction->setError(m_error);
+        m_transaction->abort(IGNORE_EXCEPTION_FOR_TESTING);
+      }
     }
 
     // If this was the last request in the transaction's list, it may commit
@@ -506,11 +514,7 @@ DispatchEventResult IDBRequest::dispatchEventInternal(Event* event) {
 }
 
 void IDBRequest::uncaughtExceptionInEventHandler() {
-  if (m_transaction && !m_requestAborted) {
-    m_transaction->setError(DOMException::create(
-        AbortError, "Uncaught exception in event handler."));
-    m_transaction->abort(IGNORE_EXCEPTION_FOR_TESTING);
-  }
+  m_didThrowInEventHandler = true;
 }
 
 void IDBRequest::transactionDidFinishAndDispatch() {

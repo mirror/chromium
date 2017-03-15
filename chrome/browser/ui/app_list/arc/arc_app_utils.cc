@@ -12,6 +12,8 @@
 #include "base/json/json_writer.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/values.h"
+#include "chrome/browser/chromeos/arc/arc_session_manager.h"
+#include "chrome/browser/chromeos/arc/arc_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h"
 #include "chrome/browser/ui/ash/launcher/arc_app_deferred_launcher_controller.h"
@@ -21,6 +23,7 @@
 #include "chromeos/dbus/session_manager_client.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_service_manager.h"
+#include "components/arc/arc_util.h"
 #include "components/arc/common/intent_helper.mojom.h"
 #include "ui/aura/window.h"
 #include "ui/display/display.h"
@@ -74,7 +77,7 @@ void SetArcCpuRestrictionCallback(bool success) {
 // WindowPositioner functionality since we do not have an Aura::Window yet.
 gfx::Rect GetTargetRect(const gfx::Size& size) {
   // Make sure that the window will fit into our workspace.
-  // Note that Arc++ will always be on the primary screen (for now).
+  // Note that ARC will always be on the primary screen (for now).
   // Note that Android's coordinate system is only valid inside the working
   // area. We can therefore ignore the provided left / top offsets.
   aura::Window* root = ash::Shell::GetPrimaryRootWindow();
@@ -265,51 +268,66 @@ bool LaunchApp(content::BrowserContext* context,
   ArcAppListPrefs* prefs = ArcAppListPrefs::Get(context);
   std::unique_ptr<ArcAppListPrefs::AppInfo> app_info = prefs->GetApp(app_id);
   if (app_info && !app_info->ready) {
-    ArcSessionManager* arc_session_manager = ArcSessionManager::Get();
-    DCHECK(arc_session_manager);
+    Profile* profile = Profile::FromBrowserContext(context);
 
-    bool arc_activated = false;
-    if (!arc_session_manager->IsArcPlayStoreEnabled()) {
-      if (!prefs->IsDefault(app_id)) {
-        NOTREACHED();
-        return false;
-      }
+    if (!IsArcPlayStoreEnabledForProfile(profile)) {
+      if (prefs->IsDefault(app_id)) {
+        // The setting can fail if the preference is managed.  However, the
+        // caller is responsible to not call this function in such case.  DCHECK
+        // is here to prevent possible mistake.
+        SetArcPlayStoreEnabledForProfile(profile, true);
+        DCHECK(IsArcPlayStoreEnabledForProfile(profile));
 
-      arc_session_manager->SetArcPlayStoreEnabled(true);
-      if (!arc_session_manager->IsArcPlayStoreEnabled()) {
-        NOTREACHED();
-        return false;
+        // PlayStore item has special handling for shelf controllers. In order
+        // to avoid unwanted initial animation for PlayStore item do not create
+        // deferred launch request when PlayStore item enables Google Play
+        // Store.
+        if (app_id == kPlayStoreAppId) {
+          prefs->SetLastLaunchTime(app_id, base::Time::Now());
+          return true;
+        }
+      } else {
+        // Only reachable when ARC always starts.
+        DCHECK(arc::ShouldArcAlwaysStart());
       }
-      arc_activated = true;
+    } else {
+      // Handle the case when default app tries to re-activate OptIn flow.
+      if (IsArcPlayStoreEnabledPreferenceManagedForProfile(profile) &&
+          !ArcSessionManager::Get()->enable_requested() &&
+          prefs->IsDefault(app_id)) {
+        SetArcPlayStoreEnabledForProfile(profile, true);
+        // PlayStore item has special handling for shelf controllers. In order
+        // to avoid unwanted initial animation for PlayStore item do not create
+        // deferred launch request when PlayStore item enables Google Play
+        // Store.
+        if (app_id == kPlayStoreAppId) {
+          prefs->SetLastLaunchTime(app_id, base::Time::Now());
+          return true;
+        }
+      }
     }
 
-    // PlayStore item has special handling for shelf controllers. In order to
-    // avoid unwanted initial animation for PlayStore item do not create
-    // deferred launch request when PlayStore item enables Arc.
-    if (!arc_activated || app_id != kPlayStoreAppId) {
-      ChromeLauncherController* chrome_controller =
-          ChromeLauncherController::instance();
-      DCHECK(chrome_controller || !ash::Shell::HasInstance());
-      if (chrome_controller) {
-        chrome_controller->GetArcDeferredLauncher()->RegisterDeferredLaunch(
-            app_id, event_flags);
+    ChromeLauncherController* chrome_controller =
+        ChromeLauncherController::instance();
+    DCHECK(chrome_controller || !ash::Shell::HasInstance());
+    if (chrome_controller) {
+      chrome_controller->GetArcDeferredLauncher()->RegisterDeferredLaunch(
+          app_id, event_flags);
 
-        // On some boards, ARC is booted with a restricted set of resources by
-        // default to avoid slowing down Chrome's user session restoration.
-        // However, the restriction should be lifted once the user explicitly
-        // tries to launch an ARC app.
-        VLOG(2) << "Prioritizing the instance";
-        chromeos::SessionManagerClient* session_manager_client =
-            chromeos::DBusThreadManager::Get()->GetSessionManagerClient();
-        session_manager_client->SetArcCpuRestriction(
-            login_manager::CONTAINER_CPU_RESTRICTION_FOREGROUND,
-            base::Bind(SetArcCpuRestrictionCallback));
-      }
+      // On some boards, ARC is booted with a restricted set of resources by
+      // default to avoid slowing down Chrome's user session restoration.
+      // However, the restriction should be lifted once the user explicitly
+      // tries to launch an ARC app.
+      VLOG(2) << "Prioritizing the instance";
+      chromeos::SessionManagerClient* session_manager_client =
+          chromeos::DBusThreadManager::Get()->GetSessionManagerClient();
+      session_manager_client->SetArcCpuRestriction(
+          login_manager::CONTAINER_CPU_RESTRICTION_FOREGROUND,
+          base::Bind(SetArcCpuRestrictionCallback));
     }
     prefs->SetLastLaunchTime(app_id, base::Time::Now());
     return true;
   }
-
   return (new LaunchAppWithoutSize(context, app_id, landscape_layout,
                                    event_flags))
       ->LaunchAndRelease();

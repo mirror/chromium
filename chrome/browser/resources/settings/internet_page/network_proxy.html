@@ -47,10 +47,6 @@
       #exceptionsDiv network-proxy-exclusions {
         margin: 10px 0;
       }
-
-      #proxyDiv paper-toggle-button {
-        padding: 10px 0;
-      }
     </style>
 
     <!-- Policy indicator. Only one dom-if below will be shown. -->
@@ -59,7 +55,8 @@
       <div class="settings-box continuation single-column">
         <div class="layout horizontal center">
           <cr-policy-network-indicator
-              property="[[networkProperties.ProxySettings.Type]]">
+              property="[[networkProperties.ProxySettings.Type]]"
+              no-extension-indicator>
           </cr-policy-network-indicator>
           <div>$i18n{networkProxyEnforcedPolicy}</div>
         </div>
@@ -83,7 +80,7 @@
       <settings-toggle-button id="allowShared" class="start"
           pref="{{prefs.settings.use_shared_proxies}}"
           label="$i18n{networkProxyAllowShared}"
-          on-change="onAllowSharedProxiesChange_"
+          on-settings-boolean-control-change="onAllowSharedProxiesChange_"
           no-set-pref>
       </settings-toggle-button>
     </div>
@@ -123,15 +120,20 @@
     </div>
 
     <!-- Manual -->
-    <div id="proxyDiv" class="settings-box continuation single-column indent"
+    <div class="settings-box continuation indent"
         hidden$="[[!matches_(proxy_.Type, ProxySettingsType_.MANUAL)]]">
-      <div class="flex layout horizontal">
-        <div class="flex">$i18n{networkProxyUseSame}</div>
-        <paper-toggle-button checked="{{useSameProxy_}}"
-            disabled="[[!isEditable_('Type', networkProperties, editable,
-                useSharedProxies_)]]">
-        </paper-toggle-button>
+      <div id="networkProxyToggleLabel" class="flex">
+        $i18n{networkProxyUseSame}
       </div>
+      <paper-toggle-button checked="{{useSameProxy_}}"
+          disabled="[[!isEditable_('Type', networkProperties, editable,
+              useSharedProxies_)]]"
+          aria-labelledby="networkProxyToggleLabel">
+      </paper-toggle-button>
+    </div>
+
+    <div class="settings-box continuation single-column indent"
+        hidden$="[[!matches_(proxy_.Type, ProxySettingsType_.MANUAL)]]">
       <div hidden$="[[!useSameProxy_]]" class="layout vertical">
         <network-proxy-input
             on-proxy-change="onProxyInputChange_"
@@ -202,7 +204,7 @@
 
     <!-- Confirm Allow shared proxies dialog -->
     <dialog is="cr-dialog" id="confirmAllowSharedDialog"
-        on-cancel="onAllowSharedDialogCancel_">
+        close-text="$i18n{close}" on-cancel="onAllowSharedDialogCancel_">
       <div class="title">$i18n{networkProxyAllowSharedWarningTitle}</div>
       <div class="body">$i18n{networkProxyAllowSharedWarningMessage}</div>
       <div class="button-container">

@@ -15,13 +15,14 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "chrome/browser/install_verification/win/module_info.h"
 #include "chrome/browser/install_verification/win/module_verification_common.h"
 #include "chrome/browser/safe_browsing/incident_reporting/incident_receiver.h"
 #include "chrome/browser/safe_browsing/incident_reporting/suspicious_module_incident.h"
 #include "chrome/browser/safe_browsing/path_sanitizer.h"
 #include "chrome/common/safe_browsing/binary_feature_extractor.h"
-#include "chrome/common/safe_browsing/csd.pb.h"
+#include "components/safe_browsing/csd.pb.h"
 #include "content/public/browser/browser_thread.h"
 
 #if defined(SAFE_BROWSING_DB_LOCAL)

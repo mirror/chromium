@@ -40,6 +40,7 @@ class DownloadRequestHandleInterface;
 class ResourceContext;
 
 class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
+                                           public UrlDownloader::Delegate,
                                            private DownloadItemImplDelegate {
  public:
   using DownloadItemImplCreated = base::Callback<void(DownloadItemImpl*)>;
@@ -93,8 +94,8 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
       const GURL& tab_refererr_url,
       const std::string& mime_type,
       const std::string& original_mime_type,
-      const base::Time& start_time,
-      const base::Time& end_time,
+      base::Time start_time,
+      base::Time end_time,
       const std::string& etag,
       const std::string& last_modified,
       int64_t received_bytes,
@@ -103,7 +104,9 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
       content::DownloadItem::DownloadState state,
       DownloadDangerType danger_type,
       DownloadInterruptReason interrupt_reason,
-      bool opened) override;
+      bool opened,
+      base::Time last_access_time,
+      const std::vector<DownloadItem::ReceivedSlice>& received_slices) override;
   int InProgressCount() const override;
   int NonMaliciousInProgressCount() const override;
   BrowserContext* GetBrowserContext() const override;
@@ -111,14 +114,19 @@ class CONTENT_EXPORT DownloadManagerImpl : public DownloadManager,
   DownloadItem* GetDownload(uint32_t id) override;
   DownloadItem* GetDownloadByGuid(const std::string& guid) override;
 
+  // UrlDownloader::Delegate implementation.
+  void OnUrlDownloaderStarted(
+      std::unique_ptr<DownloadCreateInfo> download_create_info,
+      std::unique_ptr<ByteStreamReader> stream_reader,
+      const DownloadUrlParameters::OnStartedCallback& callback) override;
+  void OnUrlDownloaderStopped(UrlDownloader* downloader) override;
+
   // For testing; specifically, accessed from TestFileErrorInjector.
   void SetDownloadItemFactoryForTesting(
       std::unique_ptr<DownloadItemFactory> item_factory);
   void SetDownloadFileFactoryForTesting(
       std::unique_ptr<DownloadFileFactory> file_factory);
   virtual DownloadFileFactory* GetDownloadFileFactoryForTesting();
-
-  void RemoveUrlDownloader(UrlDownloader* downloader);
 
   // Helper function to initiate a download request. This function initiates
   // the download using functionality provided by the

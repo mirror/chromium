@@ -104,10 +104,6 @@ class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin,
                                     const ScrollAlignment& alignY,
                                     ScrollType = ProgrammaticScroll);
 
-  // Returns a rect, in the space of the area's backing graphics layer, that
-  // contains the visual region of all scrollbar parts.
-  virtual LayoutRect visualRectForScrollbarParts() const = 0;
-
   static bool scrollBehaviorFromString(const String&, ScrollBehavior&);
 
   void contentAreaWillPaint() const;
@@ -185,28 +181,32 @@ class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin,
   void setScrollCornerNeedsPaintInvalidation();
   virtual void getTickmarks(Vector<IntRect>&) const {}
 
-  // Convert points and rects between the scrollbar and its containing Widget.
-  // The client needs to implement these in order to be aware of layout effects
-  // like CSS transforms.
-  virtual IntRect convertFromScrollbarToContainingWidget(
+  // Convert points and rects between the scrollbar and its containing
+  // FrameViewBase. The client needs to implement these in order to be aware of
+  // layout effects like CSS transforms.
+  virtual IntRect convertFromScrollbarToContainingFrameViewBase(
       const Scrollbar& scrollbar,
       const IntRect& scrollbarRect) const {
-    return scrollbar.Widget::convertToContainingWidget(scrollbarRect);
+    return scrollbar.FrameViewBase::convertToContainingFrameViewBase(
+        scrollbarRect);
   }
-  virtual IntRect convertFromContainingWidgetToScrollbar(
+  virtual IntRect convertFromContainingFrameViewBaseToScrollbar(
       const Scrollbar& scrollbar,
       const IntRect& parentRect) const {
-    return scrollbar.Widget::convertFromContainingWidget(parentRect);
+    return scrollbar.FrameViewBase::convertFromContainingFrameViewBase(
+        parentRect);
   }
-  virtual IntPoint convertFromScrollbarToContainingWidget(
+  virtual IntPoint convertFromScrollbarToContainingFrameViewBase(
       const Scrollbar& scrollbar,
       const IntPoint& scrollbarPoint) const {
-    return scrollbar.Widget::convertToContainingWidget(scrollbarPoint);
+    return scrollbar.FrameViewBase::convertToContainingFrameViewBase(
+        scrollbarPoint);
   }
-  virtual IntPoint convertFromContainingWidgetToScrollbar(
+  virtual IntPoint convertFromContainingFrameViewBaseToScrollbar(
       const Scrollbar& scrollbar,
       const IntPoint& parentPoint) const {
-    return scrollbar.Widget::convertFromContainingWidget(parentPoint);
+    return scrollbar.FrameViewBase::convertFromContainingFrameViewBase(
+        parentPoint);
   }
 
   virtual Scrollbar* horizontalScrollbar() const { return nullptr; }
@@ -340,7 +340,7 @@ class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin,
       OverlayScrollbarClipBehavior = IgnoreOverlayScrollbarSize) const;
 
   // Returns the widget associated with this ScrollableArea.
-  virtual Widget* getWidget() { return nullptr; }
+  virtual FrameViewBase* getFrameViewBase() { return nullptr; }
 
   virtual LayoutBox* layoutBox() const { return nullptr; }
 
@@ -376,6 +376,8 @@ class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin,
 
   // Callback for compositor-side scrolling.
   void didScroll(const gfx::ScrollOffset&) override;
+
+  virtual void scrollbarFrameRectChanged() {}
 
  protected:
   ScrollableArea();

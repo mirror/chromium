@@ -8,13 +8,12 @@
 #include "ash/common/shelf/shelf_delegate.h"
 #include "ash/common/wm/maximize_mode/maximize_mode_controller.h"
 #include "ash/common/wm/window_state.h"
-#include "ash/common/wm_lookup.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
-#include "ash/common/wm_window_property.h"
 #include "ash/display/screen_orientation_controller_chromeos.h"
 #include "ash/shared/app_types.h"
 #include "ash/shell.h"
+#include "ash/wm/window_properties.h"
 #include "ash/wm/window_state_aura.h"
 #include "ash/wm/window_util.h"
 #include "base/bind.h"
@@ -246,7 +245,7 @@ class ArcAppWindowLauncherController::AppWindow : public ui::BaseWindow {
   views::Widget* const widget_;
   ArcAppWindowLauncherController* owner_;
   ArcAppWindowLauncherItemController* controller_ = nullptr;
-  // Unowned pointer, represents host Arc window.
+  // Unowned pointer, represents host ARC window.
 
   DISALLOW_COPY_AND_ASSIGN(AppWindow);
 };
@@ -265,7 +264,7 @@ ArcAppWindowLauncherController::~ArcAppWindowLauncherController() {
   if (observed_profile_)
     StopObserving(observed_profile_);
   if (observing_shell_)
-    ash::WmShell::Get()->RemoveShellObserver(this);
+    ash::Shell::GetInstance()->RemoveShellObserver(this);
 }
 
 // static
@@ -289,7 +288,7 @@ void ArcAppWindowLauncherController::ActiveUserChanged(
                                               ->GetAccountId()
                                               .GetUserEmail();
   if (user_email == primary_user_email) {
-    // Restore existing Arc window and create controllers for them.
+    // Restore existing ARC window and create controllers for them.
     AttachControllerToWindowsIfNeeded();
 
     // Make sure that we created items for all apps, not only which have a
@@ -300,7 +299,7 @@ void ArcAppWindowLauncherController::ActiveUserChanged(
     // Update active status.
     OnTaskSetActive(active_task_id_);
   } else {
-    // Remove all Arc apps and destroy its controllers. There is no mapping
+    // Remove all ARC apps and destroy its controllers. There is no mapping
     // task id to app window because it is not safe when controller is missing.
     for (auto& it : task_id_to_app_window_info_)
       UnregisterApp(it.second.get());
@@ -334,7 +333,7 @@ void ArcAppWindowLauncherController::OnWindowVisibilityChanged(
     aura::Window* window,
     bool visible) {
   // Attach window to multi-user manager now to let it manage visibility state
-  // of the Arc window correctly.
+  // of the ARC window correctly.
   if (GetWindowTaskId(window) > 0) {
     chrome::MultiUserWindowManager::GetInstance()->SetWindowOwner(
         window,
@@ -399,7 +398,7 @@ void ArcAppWindowLauncherController::AttachControllerToWindowIfNeeded(
   // the layout switch information.
   if (!observing_shell_) {
     observing_shell_ = true;
-    ash::WmShell::Get()->AddShellObserver(this);
+    ash::Shell::GetInstance()->AddShellObserver(this);
   }
 
   // Check if we have controller for this task.
@@ -423,8 +422,7 @@ void ArcAppWindowLauncherController::AttachControllerToWindowIfNeeded(
       base::MakeUnique<AppWindow>(task_id, info->app_shelf_id(), widget, this));
   RegisterApp(info);
   DCHECK(info->app_window()->controller());
-  ash::WmWindow::Get(window)->SetIntProperty(ash::WmWindowProperty::SHELF_ID,
-                                             info->app_window()->shelf_id());
+  window->SetProperty(ash::kShelfIDKey, info->app_window()->shelf_id());
   if (ash::WmShell::Get()
           ->maximize_mode_controller()
           ->IsMaximizeModeWindowManagerEnabled()) {
@@ -688,7 +686,7 @@ void ArcAppWindowLauncherController::UnregisterApp(
 void ArcAppWindowLauncherController::SetOrientationLockForAppWindow(
     AppWindow* app_window) {
   ash::WmWindow* window =
-      ash::WmLookup::Get()->GetWindowForWidget(app_window->widget());
+      ash::WmWindow::Get(app_window->widget()->GetNativeWindow());
   if (!window)
     return;
   AppWindowInfo* info = GetAppWindowInfoForTask(app_window->task_id());

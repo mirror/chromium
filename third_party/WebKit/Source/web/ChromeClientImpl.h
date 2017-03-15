@@ -110,8 +110,8 @@ class WEB_EXPORT ChromeClientImpl final : public ChromeClient {
   void setStatusbarText(const String& message) override;
   bool tabsToLinks() override;
   void invalidateRect(const IntRect&) override;
-  void scheduleAnimation(Widget*) override;
-  IntRect viewportToScreen(const IntRect&, const Widget*) const override;
+  void scheduleAnimation(FrameViewBase*) override;
+  IntRect viewportToScreen(const IntRect&, const FrameViewBase*) const override;
   float windowToViewportScalar(const float) const override;
   WebScreenInfo screenInfo() const override;
   WTF::Optional<IntRect> visibleContentRectForPainting() const override;
@@ -147,7 +147,7 @@ class WEB_EXPORT ChromeClientImpl final : public ChromeClient {
   WebEventListenerProperties eventListenerProperties(
       LocalFrame*,
       WebEventListenerClass) const override;
-  void updateTouchRectsForSubframeIfNecessary(LocalFrame*);
+  void updateEventRectsForSubframeIfNecessary(LocalFrame*);
   // Informs client about the existence of handlers for scroll events so
   // appropriate scroll optimizations can be chosen.
   void setHasScrollEventHandlers(LocalFrame*, bool hasEventHandlers) override;
@@ -205,8 +205,7 @@ class WEB_EXPORT ChromeClientImpl final : public ChromeClient {
   void textFieldDataListChanged(HTMLInputElement&) override;
   void ajaxSucceeded(LocalFrame*) override;
 
-  void resetInputMethod() override;
-  void showVirtualKeyboardOnElementFocus() override;
+  void showVirtualKeyboardOnElementFocus(LocalFrame&) override;
 
   void registerViewportLayers() const override;
 

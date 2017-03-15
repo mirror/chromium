@@ -6,15 +6,15 @@
 #define NGLayoutAlgorithm_h
 
 #include "core/CoreExport.h"
-#include "core/layout/ng/ng_units.h"
+#include "core/layout/ng/ng_min_max_content_size.h"
 #include "wtf/Allocator.h"
 #include "wtf/Noncopyable.h"
 #include "wtf/Optional.h"
 
 namespace blink {
 
-struct MinAndMaxContentSizes;
-class NGPhysicalFragment;
+struct MinMaxContentSize;
+class NGLayoutResult;
 
 // Base class for all LayoutNG algorithms.
 class CORE_EXPORT NGLayoutAlgorithm {
@@ -23,18 +23,18 @@ class CORE_EXPORT NGLayoutAlgorithm {
  public:
   virtual ~NGLayoutAlgorithm() {}
 
-  // Actual layout function. Lays out the children and descendents within the
-  // constraints given by the NGConstraintSpace. Returns a fragment with the
-  // resulting layout information.
+  // Actual layout function. Lays out the children and descendants within the
+  // constraints given by the NGConstraintSpace. Returns a layout result with
+  // the resulting layout information.
   // TODO(layout-dev): attempt to make this function const.
-  virtual RefPtr<NGPhysicalFragment> Layout() = 0;
+  virtual RefPtr<NGLayoutResult> Layout() = 0;
 
   // Computes the min-content and max-content intrinsic sizes for the given box.
   // The result will not take any min-width, max-width or width properties into
   // account. If the return value is empty, the caller is expected to synthesize
   // this value from the overflow rect returned from Layout called with an
   // available width of 0 and LayoutUnit::max(), respectively.
-  virtual Optional<MinAndMaxContentSizes> ComputeMinAndMaxContentSizes() const {
+  virtual Optional<MinMaxContentSize> ComputeMinMaxContentSize() const {
     return WTF::nullopt;
   }
 };

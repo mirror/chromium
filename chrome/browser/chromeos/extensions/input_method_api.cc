@@ -98,7 +98,7 @@ InputMethodPrivateGetCurrentInputMethodFunction::Run() {
 #else
   chromeos::input_method::InputMethodManager* manager =
       chromeos::input_method::InputMethodManager::Get();
-  return RespondNow(OneArgument(base::MakeUnique<base::StringValue>(
+  return RespondNow(OneArgument(base::MakeUnique<base::Value>(
       manager->GetActiveIMEState()->GetCurrentInputMethod().id())));
 #endif
 }
@@ -217,8 +217,8 @@ InputMethodPrivateGetEncryptSyncEnabledFunction::Run() {
           Profile::FromBrowserContext(browser_context()));
   if (!profile_sync_service)
     return RespondNow(Error("Sync service is not ready for current profile."));
-  std::unique_ptr<base::Value> ret(new base::FundamentalValue(
-      profile_sync_service->IsEncryptEverythingEnabled()));
+  std::unique_ptr<base::Value> ret(
+      new base::Value(profile_sync_service->IsEncryptEverythingEnabled()));
   return RespondNow(OneArgument(std::move(ret)));
 #endif
 }
@@ -367,8 +367,9 @@ void InputMethodAPI::OnListenerAdded(
   }
 }
 
-static base::LazyInstance<BrowserContextKeyedAPIFactory<InputMethodAPI> >
-    g_factory = LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<
+    BrowserContextKeyedAPIFactory<InputMethodAPI>>::DestructorAtExit g_factory =
+    LAZY_INSTANCE_INITIALIZER;
 
 // static
 BrowserContextKeyedAPIFactory<InputMethodAPI>*

@@ -13,7 +13,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 #if defined(USE_OZONE)
-#include "ui/ozone/public/native_pixmap.h"
+#include "ui/gfx/native_pixmap.h"
 #include "ui/ozone/public/ozone_platform.h"
 #include "ui/ozone/public/surface_factory_ozone.h"
 #endif
@@ -147,12 +147,13 @@ TEST_F(DisplayTest, CreateRemoteShellSurface) {
   // Create a remote shell surface for surface1.
   std::unique_ptr<ShellSurface> shell_surface1 =
       display->CreateRemoteShellSurface(
-          surface1.get(), ash::kShellWindowId_SystemModalContainer);
+          surface1.get(), gfx::Point(),
+          ash::kShellWindowId_SystemModalContainer);
   EXPECT_TRUE(shell_surface1);
 
   // Create a remote shell surface for surface2.
   std::unique_ptr<ShellSurface> shell_surface2 =
-      display->CreateRemoteShellSurface(surface2.get(),
+      display->CreateRemoteShellSurface(surface2.get(), gfx::Point(),
                                         ash::kShellWindowId_DefaultContainer);
   EXPECT_TRUE(shell_surface2);
 }

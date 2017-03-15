@@ -8,9 +8,13 @@ let presentationServiceMock = loadMojoModules(
     'presentationServiceMock',
     [
       'third_party/WebKit/public/platform/modules/presentation/presentation.mojom',
+      'url/mojo/url.mojom',
       'mojo/public/js/bindings',
     ]).then(mojo => {
-      let [ presentationService, bindings ] = mojo.modules;
+      let [ presentationService, url, bindings ] = mojo.modules;
+
+      class MockPresentationConnection {
+      };
 
       class PresentationServiceMock {
         constructor(interfaceProvider) {
@@ -21,6 +25,17 @@ let presentationServiceMock = loadMojoModules(
           this.pendingResponse_ = null;
           this.bindingSet_ = new bindings.BindingSet(
               presentationService.PresentationService);
+          this.controllerConnectionPtr_ = null;
+          this.receiverConnectionRequest_ = null;
+
+          this.onSetClient = null;
+        }
+
+        setClient(client) {
+          this.client_ = client;
+
+          if (this.onSetClient)
+            this.onSetClient();
         }
 
         startSession(urls) {
@@ -36,6 +51,53 @@ let presentationServiceMock = loadMojoModules(
               error: null,
           });
         }
+
+        terminate(presentationUrl, presentationId) {
+          this.client_.onConnectionStateChanged(
+              { url: presentationUrl, id: presentationId },
+              presentationService.PresentationConnectionState.TERMINATED);
+        }
+
+        setPresentationConnection(
+            seesionInfo, controllerConnectionPtr, receiverConnectionRequest) {
+          this.controllerConnectionPtr_ = controllerConnectionPtr;
+          this.receiverConnectionRequest_ = receiverConnectionRequest;
+          this.client_.onConnectionStateChanged(
+              seesionInfo,
+              presentationService.PresentationConnectionState.CONNECTED);
+        }
+
+        onReceiverConnectionAvailable(
+            strUrl, id, opt_controllerConnectionPtr, opt_receiverConnectionRequest) {
+          const mojoUrl = new url.Url();
+          mojoUrl.url = strUrl;
+          var controllerConnectionPtr = opt_controllerConnectionPtr;
+          if (!controllerConnectionPtr) {
+            controllerConnectionPtr = new presentationService.PresentationConnectionPtr();
+            const connectionBinding = new bindings.Binding(
+                presentationService.PresentationConnection,
+                new MockPresentationConnection(),
+                bindings.makeRequest(controllerConnectionPtr));
+          }
+
+          var receiverConnectionRequest = opt_receiverConnectionRequest;
+          if (!receiverConnectionRequest) {
+            receiverConnectionRequest = bindings.makeRequest(
+                new presentationService.PresentationConnectionPtr());
+          }
+
+          this.client_.onReceiverConnectionAvailable(
+              { url: mojoUrl, id: id },
+              controllerConnectionPtr, receiverConnectionRequest);
+        }
+
+        getControllerConnectionPtr() {
+          return this.controllerConnectionPtr_;
+        }
+
+        getReceiverConnectionRequest() {
+          return this.receiverConnectionRequest_;
+        }
       }
 
       return new PresentationServiceMock(mojo.frameInterfaces);
@@ -47,9 +109,9 @@ function waitForClick(callback, button) {
   if (!('eventSender' in window))
     return;
 
-  var boundingRect = button.getBoundingClientRect();
-  var x = boundingRect.left + boundingRect.width / 2;
-  var y = boundingRect.top + boundingRect.height / 2;
+  const boundingRect = button.getBoundingClientRect();
+  const x = boundingRect.left + boundingRect.width / 2;
+  const y = boundingRect.top + boundingRect.height / 2;
 
   eventSender.mouseMoveTo(x, y);
   eventSender.mouseDown();

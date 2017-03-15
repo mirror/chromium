@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.download;
 
 import android.app.Notification;
 import android.content.Context;
+import android.util.Pair;
 
 import org.chromium.base.ThreadUtils;
 
@@ -27,10 +28,38 @@ public class MockDownloadNotificationService extends DownloadNotificationService
     }
 
     @Override
-    public void pauseAllDownloads() {
-        super.pauseAllDownloads();
+    public void stopForegroundInternal(boolean killNotification) {
+        if (!useForegroundService()) return;
+        if (killNotification) mNotificationIds.clear();
+    }
+
+    @Override
+    public void startForegroundInternal() {}
+
+    @Override
+    public void cancelOffTheRecordDownloads() {
+        super.cancelOffTheRecordDownloads();
         mPaused = true;
     }
+
+    @Override
+    boolean hasDownloadNotifications(Integer notificationIdToIgnore) {
+        if (!useForegroundService()) return false;
+        // Cancelling notifications here is synchronous, so we don't really have to worry about
+        // {@code notificationIdToIgnore}, but address it properly anyway.
+        if (mNotificationIds.size() == 1 && notificationIdToIgnore != null) {
+            return !mNotificationIds.contains(notificationIdToIgnore);
+        }
+
+        return !mNotificationIds.isEmpty();
+    }
+
+    @Override
+    void updateSummaryIcon(
+            int removedNotificationId, Pair<Integer, Notification> addedNotification) {}
+
+    @Override
+    void cancelSummaryNotification() {}
 
     @Override
     void updateNotification(int id, Notification notification) {
@@ -64,15 +93,14 @@ public class MockDownloadNotificationService extends DownloadNotificationService
     }
 
     @Override
-    public int notifyDownloadSuccessful(
-            final String downloadGuid, final String filePath, final String fileName,
-            final long systemDownloadId, final boolean isOfflinePage,
-            final boolean isSupportedMimeType) {
+    public int notifyDownloadSuccessful(final String downloadGuid, final String filePath,
+            final String fileName, final long systemDownloadId, final boolean isOffTheRecord,
+            final boolean isOfflinePage, final boolean isSupportedMimeType) {
         return ThreadUtils.runOnUiThreadBlockingNoException(new Callable<Integer>() {
             @Override
             public Integer call() throws Exception {
-                return MockDownloadNotificationService.super.notifyDownloadSuccessful(
-                        downloadGuid, filePath, fileName, systemDownloadId, isOfflinePage,
+                return MockDownloadNotificationService.super.notifyDownloadSuccessful(downloadGuid,
+                        filePath, fileName, systemDownloadId, isOffTheRecord, isOfflinePage,
                         isSupportedMimeType);
             }
         });
@@ -94,12 +122,13 @@ public class MockDownloadNotificationService extends DownloadNotificationService
     }
 
     @Override
-    public void notifyDownloadFailed(final String downloadGuid, final String fileName) {
+    public void notifyDownloadFailed(
+            final boolean isOfflinePage, final String downloadGuid, final String fileName) {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
                 MockDownloadNotificationService.super.notifyDownloadFailed(
-                        downloadGuid, fileName);
+                        isOfflinePage, downloadGuid, fileName);
             }
         });
     }

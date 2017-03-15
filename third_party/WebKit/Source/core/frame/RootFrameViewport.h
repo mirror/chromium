@@ -64,10 +64,6 @@ class CORE_EXPORT RootFrameViewport final
   IntRect visibleContentRect(
       IncludeScrollbarsInRect = ExcludeScrollbars) const override;
   bool shouldUseIntegerScrollOffset() const override;
-  LayoutRect visualRectForScrollbarParts() const override {
-    ASSERT_NOT_REACHED();
-    return LayoutRect();
-  }
   bool isActive() const override;
   int scrollSize(ScrollbarOrientation) const override;
   bool isScrollCornerVisible() const override;
@@ -100,7 +96,7 @@ class CORE_EXPORT RootFrameViewport final
   void updateCompositorScrollAnimations() override;
   void cancelProgrammaticScrollAnimation() override;
   ScrollBehavior scrollBehaviorStyle() const override;
-  Widget* getWidget() override;
+  FrameViewBase* getFrameViewBase() override;
   void clearScrollableArea() override;
   LayoutBox* layoutBox() const override;
   FloatQuad localToVisibleContentQuad(const FloatQuad&,

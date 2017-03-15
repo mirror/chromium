@@ -4,10 +4,10 @@
 
 package org.chromium.chrome.browser.media;
 
-import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
+import org.chromium.chrome.browser.AppHooks;
 import org.chromium.chrome.browser.ChromeActivity;
-import org.chromium.chrome.browser.ChromeApplication;
+import org.chromium.chrome.browser.tab.Tab;
 
 /**
  * Utilities for persisting fullscreen video on Chrome exit.
@@ -23,13 +23,26 @@ public class VideoPersister {
     public static VideoPersister getInstance() {
         ThreadUtils.assertOnUiThread();
         if (sInstance == null) {
-            ChromeApplication application =
-                    (ChromeApplication) ContextUtils.getApplicationContext();
-            sInstance = application.createVideoPersister();
+            sInstance = AppHooks.get().createVideoPersister();
         }
         return sInstance;
     }
 
-    public void attemptPersist(ChromeActivity activity) { }
-    public void stopPersist(ChromeActivity activity) { }
+    /**
+     * If this method returns true, a tab should not toggle fullscreen. Calling this method queues
+     * a fullscreen toggle at an appropriate later time.
+     */
+    public boolean shouldDelayFullscreenModeChange(Tab tab, boolean fullscreen) {
+        return false;
+    }
+
+    /**
+     * This method will persist a video if possible.
+     */
+    public void attemptPersist(ChromeActivity activity) {}
+
+    /**
+     * If the video has been persisted, perform cleanup.
+     */
+    public void stopIfPersisted(ChromeActivity activity) {}
 }

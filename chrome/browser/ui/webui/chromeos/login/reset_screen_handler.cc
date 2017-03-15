@@ -27,7 +27,9 @@ const char kJsScreenPath[] = "login.ResetScreen";
 
 namespace chromeos {
 
-ResetScreenHandler::ResetScreenHandler() : BaseScreenHandler(kJsScreenPath) {}
+ResetScreenHandler::ResetScreenHandler() : BaseScreenHandler(kScreenId) {
+  set_call_js_prefix(kJsScreenPath);
+}
 
 ResetScreenHandler::~ResetScreenHandler() {
   if (screen_)
@@ -39,7 +41,7 @@ void ResetScreenHandler::Show() {
     show_on_init_ = true;
     return;
   }
-  ShowScreen(OobeScreen::SCREEN_OOBE_RESET);
+  ShowScreen(kScreenId);
 }
 
 void ResetScreenHandler::Hide() {

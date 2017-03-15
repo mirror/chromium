@@ -4,28 +4,40 @@
 
 suite('<bookmarks-list>', function() {
   var list;
-  var TEST_LIST =
-      [createItem('0'), createItem('1'), createFolder('2', [], null)];
+  var store;
 
   setup(function() {
+    store = new bookmarks.TestStore({
+      nodes: testTree(createFolder(
+          '0',
+          [
+            createItem('1'),
+            createFolder('3', []),
+            createItem('5'),
+            createItem('7'),
+          ])),
+      selectedFolder: '0',
+    });
+    bookmarks.Store.instance_ = store;
+
     list = document.createElement('bookmarks-list');
     replaceBody(list);
-    list.displayedList = TEST_LIST;
+    Polymer.dom.flush();
   });
 
   test('folder menu item hides the url field', function() {
     // Bookmark editor shows the url field.
-    list.menuItem_ = TEST_LIST[0];
+    list.menuItem_ = store.data.nodes['1'];
     assertFalse(list.$['url'].hidden);
 
     // Folder editor hides the url field.
-    list.menuItem_ = TEST_LIST[2];
+    list.menuItem_ = store.data.nodes['3'];
     assertTrue(list.$['url'].hidden);
   });
 
   test('saving edit passes correct details to the update', function() {
     // Saving bookmark edit.
-    var menuItem = TEST_LIST[0];
+    var menuItem = store.data.nodes['1'];
     chrome.bookmarks.update = function(id, edit) {
       assertEquals(menuItem.id, id);
       assertEquals(menuItem.url, edit.url);
@@ -36,7 +48,7 @@ suite('<bookmarks-list>', function() {
     MockInteractions.tap(list.$.saveButton);
 
     // Saving folder rename.
-    menuItem = TEST_LIST[2];
+    menuItem = store.data.nodes['3'];
     chrome.bookmarks.update = function(id, edit) {
       assertEquals(menuItem.id, id);
       assertEquals(menuItem.title, edit.title);
@@ -45,5 +57,61 @@ suite('<bookmarks-list>', function() {
     list.menuItem_ = menuItem;
     list.$.editBookmark.showModal();
     MockInteractions.tap(list.$.saveButton);
+  });
+
+  test('renders correct <bookmark-item> elements', function() {
+    var items = list.root.querySelectorAll('bookmarks-item');
+    var ids = Array.from(items).map((item) => item.itemId);
+
+    assertDeepEquals(['1', '3', '5', '7'], ids);
+  });
+
+  test('selects individual items', function() {
+    var items = list.root.querySelectorAll('bookmarks-item');
+
+    customClick(items[0]);
+    var expected = {
+      name: 'select-items',
+      add: false,
+      anchor: '1',
+      items: ['1'],
+    };
+    assertDeepEquals(expected, store.lastAction);
+
+    customClick(items[2], {ctrlKey: true});
+    expected.add = true;
+    expected.anchor = '5';
+    expected.items = ['5'];
+    assertDeepEquals(expected, store.lastAction);
+  });
+
+  test('shift-selects multiple items', function() {
+    var items = list.root.querySelectorAll('bookmarks-item');
+    store.data.selection.anchor = '1';
+
+    customClick(items[2], {shiftKey: true});
+
+    assertEquals('select-items', store.lastAction.name);
+    assertFalse(store.lastAction.add);
+    assertEquals('5', store.lastAction.anchor);
+    assertDeepEquals(['1', '3', '5'], store.lastAction.items);
+  });
+
+  test('selects the item when the anchor is missing', function() {
+    var items = list.root.querySelectorAll('bookmarks-item');
+    // Anchor hasn't been set yet:
+    store.data.selection.anchor = null;
+
+    customClick(items[0], {shiftKey: true});
+    assertEquals('1', store.lastAction.anchor);
+    assertDeepEquals(['1'], store.lastAction.items);
+
+    // Anchor item doesn't exist:
+    store.data.selection.anchor = '42';
+
+    customClick(items[1], {shiftKey: true});
+
+    assertEquals('3', store.lastAction.anchor);
+    assertDeepEquals(['3'], store.lastAction.items);
   });
 });

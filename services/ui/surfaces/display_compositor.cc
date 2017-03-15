@@ -15,8 +15,8 @@
 #include "cc/surfaces/display.h"
 #include "cc/surfaces/display_scheduler.h"
 #include "cc/surfaces/surface.h"
-#include "components/display_compositor/gpu_display_compositor_frame_sink.h"
-#include "components/display_compositor/gpu_offscreen_compositor_frame_sink.h"
+#include "components/display_compositor/gpu_compositor_frame_sink.h"
+#include "components/display_compositor/gpu_root_compositor_frame_sink.h"
 #include "gpu/command_buffer/client/shared_memory_limits.h"
 #include "gpu/ipc/gpu_in_process_thread_service.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
@@ -50,26 +50,7 @@ DisplayCompositor::~DisplayCompositor() {
   manager_.RemoveObserver(this);
 }
 
-void DisplayCompositor::OnClientConnectionLost(
-    const cc::FrameSinkId& frame_sink_id,
-    bool destroy_compositor_frame_sink) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  if (destroy_compositor_frame_sink)
-    DestroyCompositorFrameSink(frame_sink_id);
-  // TODO(fsamuel): Tell the display compositor host that the client connection
-  // has been lost so that it can drop its private connection and allow a new
-  // client instance to create a new CompositorFrameSink.
-}
-
-void DisplayCompositor::OnPrivateConnectionLost(
-    const cc::FrameSinkId& frame_sink_id,
-    bool destroy_compositor_frame_sink) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  if (destroy_compositor_frame_sink)
-    DestroyCompositorFrameSink(frame_sink_id);
-}
-
-void DisplayCompositor::CreateDisplayCompositorFrameSink(
+void DisplayCompositor::CreateRootCompositorFrameSink(
     const cc::FrameSinkId& frame_sink_id,
     gpu::SurfaceHandle surface_handle,
     cc::mojom::MojoCompositorFrameSinkAssociatedRequest request,
@@ -86,15 +67,25 @@ void DisplayCompositor::CreateDisplayCompositorFrameSink(
   std::unique_ptr<cc::Display> display =
       CreateDisplay(frame_sink_id, surface_handle, begin_frame_source.get());
 
+  // Lazily inject a SurfaceDependencyTracker into SurfaceManager if surface
+  // synchronization is enabled.
+  if (!manager_.dependency_tracker() &&
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          cc::switches::kEnableSurfaceSynchronization)) {
+    std::unique_ptr<cc::SurfaceDependencyTracker> dependency_tracker(
+        new cc::SurfaceDependencyTracker(&manager_, begin_frame_source.get()));
+    manager_.SetDependencyTracker(std::move(dependency_tracker));
+  }
+
   compositor_frame_sinks_[frame_sink_id] =
-      base::MakeUnique<display_compositor::GpuDisplayCompositorFrameSink>(
+      base::MakeUnique<display_compositor::GpuRootCompositorFrameSink>(
           this, &manager_, frame_sink_id, std::move(display),
           std::move(begin_frame_source), std::move(request),
           std::move(private_request), std::move(client),
           std::move(display_private_request));
 }
 
-void DisplayCompositor::CreateOffscreenCompositorFrameSink(
+void DisplayCompositor::CreateCompositorFrameSink(
     const cc::FrameSinkId& frame_sink_id,
     cc::mojom::MojoCompositorFrameSinkRequest request,
     cc::mojom::MojoCompositorFrameSinkPrivateRequest private_request,
@@ -103,9 +94,28 @@ void DisplayCompositor::CreateOffscreenCompositorFrameSink(
   DCHECK_EQ(0u, compositor_frame_sinks_.count(frame_sink_id));
 
   compositor_frame_sinks_[frame_sink_id] =
-      base::MakeUnique<display_compositor::GpuOffscreenCompositorFrameSink>(
+      base::MakeUnique<display_compositor::GpuCompositorFrameSink>(
           this, &manager_, frame_sink_id, std::move(request),
           std::move(private_request), std::move(client));
+}
+
+void DisplayCompositor::RegisterFrameSinkHierarchy(
+    const cc::FrameSinkId& parent_frame_sink_id,
+    const cc::FrameSinkId& child_frame_sink_id) {
+  manager_.RegisterFrameSinkHierarchy(parent_frame_sink_id,
+                                      child_frame_sink_id);
+}
+
+void DisplayCompositor::UnregisterFrameSinkHierarchy(
+    const cc::FrameSinkId& parent_frame_sink_id,
+    const cc::FrameSinkId& child_frame_sink_id) {
+  manager_.UnregisterFrameSinkHierarchy(parent_frame_sink_id,
+                                        child_frame_sink_id);
+}
+
+void DisplayCompositor::DropTemporaryReference(
+    const cc::SurfaceId& surface_id) {
+  manager_.DropTemporaryReference(surface_id);
 }
 
 std::unique_ptr<cc::Display> DisplayCompositor::CreateDisplay(
@@ -163,11 +173,35 @@ void DisplayCompositor::OnSurfaceCreated(const cc::SurfaceInfo& surface_info) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_GT(surface_info.device_scale_factor(), 0.0f);
 
+  // TODO(kylechar): |client_| will try to find an owner for the temporary
+  // reference to the new surface. With surface synchronization this might not
+  // be necessary, because a surface reference might already exist and no
+  // temporary reference was created. It could be useful to let |client_| know
+  // if it should find an owner.
   if (client_)
     client_->OnSurfaceCreated(surface_info);
 }
 
 void DisplayCompositor::OnSurfaceDamaged(const cc::SurfaceId& surface_id,
                                          bool* changed) {}
+
+void DisplayCompositor::OnClientConnectionLost(
+    const cc::FrameSinkId& frame_sink_id,
+    bool destroy_compositor_frame_sink) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  if (destroy_compositor_frame_sink)
+    DestroyCompositorFrameSink(frame_sink_id);
+  // TODO(fsamuel): Tell the display compositor host that the client connection
+  // has been lost so that it can drop its private connection and allow a new
+  // client instance to create a new CompositorFrameSink.
+}
+
+void DisplayCompositor::OnPrivateConnectionLost(
+    const cc::FrameSinkId& frame_sink_id,
+    bool destroy_compositor_frame_sink) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  if (destroy_compositor_frame_sink)
+    DestroyCompositorFrameSink(frame_sink_id);
+}
 
 }  // namespace ui

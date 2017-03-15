@@ -140,8 +140,8 @@ class CONTENT_EXPORT DownloadManager : public base::SupportsUserData::Data {
       const GURL& tab_referrer_url,
       const std::string& mime_type,
       const std::string& original_mime_type,
-      const base::Time& start_time,
-      const base::Time& end_time,
+      base::Time start_time,
+      base::Time end_time,
       const std::string& etag,
       const std::string& last_modified,
       int64_t received_bytes,
@@ -150,7 +150,9 @@ class CONTENT_EXPORT DownloadManager : public base::SupportsUserData::Data {
       DownloadItem::DownloadState state,
       DownloadDangerType danger_type,
       DownloadInterruptReason interrupt_reason,
-      bool opened) = 0;
+      bool opened,
+      base::Time last_access_time,
+      const std::vector<DownloadItem::ReceivedSlice>& received_slices) = 0;
 
   // The number of in progress (including paused) downloads.
   // Performance note: this loops over all items. If profiling finds that this

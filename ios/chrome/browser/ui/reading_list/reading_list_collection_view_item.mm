@@ -7,6 +7,7 @@
 #include "base/strings/sys_string_conversions.h"
 #import "ios/chrome/browser/ui/colors/MDCPalette+CrAdditions.h"
 #import "ios/chrome/browser/ui/favicon_view.h"
+#import "ios/chrome/browser/ui/reading_list/reading_list_collection_view_item_accessibility_delegate.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/third_party/material_components_ios/src/components/Palettes/src/MaterialPalettes.h"
@@ -24,6 +25,9 @@ NSString* kFailureImageString = @"distillation_fail";
 
 // Distillation indicator constants.
 const CGFloat kDistillationIndicatorSize = 18;
+
+// Margin for the elements displayed in the cell.
+const CGFloat kMargin = 16;
 }  // namespace
 
 #pragma mark - ReadingListCell Private interface
@@ -56,6 +60,10 @@ const CGFloat kDistillationIndicatorSize = 18;
 // The cell that is displaying this item, if any. Used to reload favicon when
 // the cell is on screen. Backed by WeakNSObject.
 @property(nonatomic, weak) ReadingListCell* displayedCell;
+
+// Returns the accessibility custom actions associated with this item.
+- (NSArray<UIAccessibilityCustomAction*>*)customActions;
+
 @end
 
 @implementation ReadingListCollectionViewItem
@@ -67,6 +75,7 @@ const CGFloat kDistillationIndicatorSize = 18;
 @synthesize faviconPageURL = _faviconPageURL;
 @synthesize displayedCell = _displayedCell;
 @synthesize distillationState = _distillationState;
+@synthesize accessibilityDelegate = _accessibilityDelegate;
 
 - (instancetype)initWithType:(NSInteger)type
           attributesProvider:(FaviconAttributesProvider*)provider
@@ -108,6 +117,7 @@ const CGFloat kDistillationIndicatorSize = 18;
     (ReadingListEntry::DistillationState)distillationState {
   self.displayedCell.distillationState = distillationState;
   self.displayedCell.accessibilityLabel = [self accessibilityLabel];
+  self.displayedCell.accessibilityCustomActions = [self customActions];
   _distillationState = distillationState;
 }
 
@@ -125,6 +135,7 @@ const CGFloat kDistillationIndicatorSize = 18;
   cell.distillationState = _distillationState;
   cell.isAccessibilityElement = YES;
   cell.accessibilityLabel = [self accessibilityLabel];
+  cell.accessibilityCustomActions = [self customActions];
 }
 
 #pragma mark - ReadingListCellDelegate
@@ -149,6 +160,102 @@ const CGFloat kDistillationIndicatorSize = 18;
                                  base::SysNSStringToUTF16(self.text),
                                  base::SysNSStringToUTF16(accessibilityState),
                                  base::SysNSStringToUTF16(self.detailText));
+}
+
+#pragma mark - AccessibilityCustomAction
+
+- (NSArray<UIAccessibilityCustomAction*>*)customActions {
+  UIAccessibilityCustomAction* deleteAction = [
+      [UIAccessibilityCustomAction alloc]
+      initWithName:l10n_util::GetNSString(IDS_IOS_READING_LIST_DELETE_BUTTON)
+            target:self
+          selector:@selector(deleteEntry)];
+  UIAccessibilityCustomAction* toogleReadStatus = nil;
+  if ([self.accessibilityDelegate isEntryRead:self]) {
+    toogleReadStatus = [[UIAccessibilityCustomAction alloc]
+        initWithName:l10n_util::GetNSString(
+                         IDS_IOS_READING_LIST_MARK_UNREAD_BUTTON)
+              target:self
+            selector:@selector(markUnread)];
+  } else {
+    toogleReadStatus = [[UIAccessibilityCustomAction alloc]
+        initWithName:l10n_util::GetNSString(
+                         IDS_IOS_READING_LIST_MARK_READ_BUTTON)
+              target:self
+            selector:@selector(markRead)];
+  }
+
+  UIAccessibilityCustomAction* openInNewTabAction =
+      [[UIAccessibilityCustomAction alloc]
+          initWithName:l10n_util::GetNSString(
+                           IDS_IOS_CONTENT_CONTEXT_OPENLINKNEWTAB)
+                target:self
+              selector:@selector(openInNewTab)];
+  UIAccessibilityCustomAction* openInNewIncognitoTabAction =
+      [[UIAccessibilityCustomAction alloc]
+          initWithName:l10n_util::GetNSString(
+                           IDS_IOS_CONTENT_CONTEXT_OPENLINKNEWINCOGNITOTAB)
+                target:self
+              selector:@selector(openInNewIncognitoTab)];
+  UIAccessibilityCustomAction* copyURLAction =
+      [[UIAccessibilityCustomAction alloc]
+          initWithName:l10n_util::GetNSString(IDS_IOS_CONTENT_CONTEXT_COPY)
+                target:self
+              selector:@selector(copyURL)];
+
+  NSMutableArray* customActions = [NSMutableArray
+      arrayWithObjects:deleteAction, toogleReadStatus, openInNewTabAction,
+                       openInNewIncognitoTabAction, copyURLAction, nil];
+
+  if (self.distillationState == ReadingListEntry::PROCESSED) {
+    // Add the possibility to open offline version only if the entry is
+    // distilled.
+    UIAccessibilityCustomAction* openOfflineAction =
+        [[UIAccessibilityCustomAction alloc]
+            initWithName:l10n_util::GetNSString(
+                             IDS_IOS_READING_LIST_CONTENT_CONTEXT_OFFLINE)
+                  target:self
+                selector:@selector(openOffline)];
+
+    [customActions addObject:openOfflineAction];
+  }
+
+  return customActions;
+}
+
+- (BOOL)deleteEntry {
+  [self.accessibilityDelegate deleteEntry:self];
+  return YES;
+}
+
+- (BOOL)markRead {
+  [self.accessibilityDelegate markEntryRead:self];
+  return YES;
+}
+
+- (BOOL)markUnread {
+  [self.accessibilityDelegate markEntryUnread:self];
+  return YES;
+}
+
+- (BOOL)openInNewTab {
+  [self.accessibilityDelegate openEntryInNewTab:self];
+  return YES;
+}
+
+- (BOOL)openInNewIncognitoTab {
+  [self.accessibilityDelegate openEntryInNewIncognitoTab:self];
+  return YES;
+}
+
+- (BOOL)copyURL {
+  [self.accessibilityDelegate copyEntryURL:self];
+  return YES;
+}
+
+- (BOOL)openOffline {
+  [self.accessibilityDelegate openEntryOffline:self];
+  return YES;
 }
 
 #pragma mark - NSObject
@@ -191,37 +298,45 @@ const CGFloat kDistillationIndicatorSize = 18;
     _textLabel = [[UILabel alloc] init];
     _textLabel.font = [fontLoader mediumFontOfSize:16];
     _textLabel.textColor = [[MDCPalette greyPalette] tint900];
+    _textLabel.translatesAutoresizingMaskIntoConstraints = NO;
 
     _detailTextLabel = [[UILabel alloc] init];
     _detailTextLabel.font = [fontLoader mediumFontOfSize:14];
     _detailTextLabel.textColor = [[MDCPalette greyPalette] tint500];
+    _detailTextLabel.translatesAutoresizingMaskIntoConstraints = NO;
 
     _faviconView = [[FaviconViewNew alloc] init];
     CGFloat fontSize = floorf(faviconSize / 2);
     [_faviconView setFont:[fontLoader regularFontOfSize:fontSize]];
+    _faviconView.translatesAutoresizingMaskIntoConstraints = NO;
 
     _downloadIndicator = [[UIImageView alloc] init];
     [_downloadIndicator setTranslatesAutoresizingMaskIntoConstraints:NO];
     [_faviconView addSubview:_downloadIndicator];
 
-    UIStackView* labelsStack = [[UIStackView alloc]
-        initWithArrangedSubviews:@[ _textLabel, _detailTextLabel ]];
-    labelsStack.axis = UILayoutConstraintAxisVertical;
+    [self.contentView addSubview:_textLabel];
+    [self.contentView addSubview:_detailTextLabel];
+    [self.contentView addSubview:_faviconView];
 
-    UIStackView* stackView = [[UIStackView alloc]
-        initWithArrangedSubviews:@[ _faviconView, labelsStack ]];
-    [self.contentView addSubview:stackView];
-    stackView.layoutMarginsRelativeArrangement = YES;
-    stackView.layoutMargins = UIEdgeInsetsMake(16, 16, 16, 16);
-    stackView.alignment = UIStackViewAlignmentCenter;
-    stackView.spacing = 16;
+    ApplyVisualConstraintsWithMetrics(
+        @[
+          @"V:|-(margin)-[title][text]-(margin)-|",
+          @"H:|-(margin)-[favicon]-(margin)-[title]-(>=margin)-|",
+          @"H:[favicon]-(margin)-[text]-(>=margin)-|"
+        ],
+        @{
+          @"title" : _textLabel,
+          @"text" : _detailTextLabel,
+          @"favicon" : _faviconView
+        },
+        @{ @"margin" : @(kMargin) });
 
-    stackView.translatesAutoresizingMaskIntoConstraints = NO;
-    AddSameSizeConstraint(self.contentView, stackView);
     [NSLayoutConstraint activateConstraints:@[
       // Favicons are always the same size.
       [_faviconView.widthAnchor constraintEqualToConstant:faviconSize],
       [_faviconView.heightAnchor constraintEqualToConstant:faviconSize],
+      [_faviconView.centerYAnchor
+          constraintEqualToAnchor:self.contentView.centerYAnchor],
       // Place the download indicator in the bottom right corner of the favicon.
       [[_downloadIndicator centerXAnchor]
           constraintEqualToAnchor:_faviconView.trailingAnchor],
@@ -270,6 +385,7 @@ const CGFloat kDistillationIndicatorSize = 18;
   self.textLabel.text = nil;
   self.detailTextLabel.text = nil;
   self.distillationState = ReadingListEntry::WAITING;
+  self.accessibilityCustomActions = nil;
   [super prepareForReuse];
 }
 

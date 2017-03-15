@@ -6,6 +6,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/search/search.h"
+#include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/search/instant_test_utils.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/pref_names.h"
@@ -19,6 +20,8 @@
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/test/browser_test_utils.h"
+#include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_utils.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -30,6 +33,8 @@ class LocalNTPTest : public InProcessBrowserTest,
                      public InstantTestBase {
  public:
   LocalNTPTest() {}
+
+  GURL other_url() { return https_test_server().GetURL("/simple.html"); }
 
  protected:
   void SetUpInProcessBrowserTestFixture() override {
@@ -59,6 +64,63 @@ IN_PROC_BROWSER_TEST_F(LocalNTPTest, SimpleJavascriptTests) {
   bool success = false;
   ASSERT_TRUE(GetBoolFromJS(active_tab, "!!runSimpleTests()", &success));
   EXPECT_TRUE(success);
+}
+
+IN_PROC_BROWSER_TEST_F(LocalNTPTest, EmbeddedSearchAPIOnlyAvailableOnNTP) {
+  ASSERT_NO_FATAL_FAILURE(SetupInstant(browser()));
+  FocusOmnibox();
+
+  // Open an NTP.
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), ntp_url(), WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_TAB |
+          ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+  content::WebContents* active_tab =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  ASSERT_TRUE(search::IsInstantNTP(active_tab));
+  // Check that the embeddedSearch API is available.
+  bool result = false;
+  ASSERT_TRUE(
+      GetBoolFromJS(active_tab, "!!window.chrome.embeddedSearch", &result));
+  EXPECT_TRUE(result);
+
+  // Navigate somewhere else in the same tab.
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), other_url(), WindowOpenDisposition::CURRENT_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+  ASSERT_FALSE(search::IsInstantNTP(active_tab));
+  // Now the embeddedSearch API should have gone away.
+  ASSERT_TRUE(
+      GetBoolFromJS(active_tab, "!!window.chrome.embeddedSearch", &result));
+  EXPECT_FALSE(result);
+
+  // Navigate back to the NTP.
+  content::TestNavigationObserver back_observer(active_tab);
+  chrome::GoBack(browser(), WindowOpenDisposition::CURRENT_TAB);
+  back_observer.Wait();
+  // The API should be back.
+  ASSERT_TRUE(
+      GetBoolFromJS(active_tab, "!!window.chrome.embeddedSearch", &result));
+  EXPECT_TRUE(result);
+
+  // Navigate forward to the non-NTP page.
+  content::TestNavigationObserver fwd_observer(active_tab);
+  chrome::GoForward(browser(), WindowOpenDisposition::CURRENT_TAB);
+  fwd_observer.Wait();
+  // The API should be gone.
+  ASSERT_TRUE(
+      GetBoolFromJS(active_tab, "!!window.chrome.embeddedSearch", &result));
+  EXPECT_FALSE(result);
+
+  // Navigate to a new NTP instance.
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), ntp_url(), WindowOpenDisposition::CURRENT_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+  ASSERT_TRUE(search::IsInstantNTP(active_tab));
+  // Now the API should be available again.
+  ASSERT_TRUE(
+      GetBoolFromJS(active_tab, "!!window.chrome.embeddedSearch", &result));
+  EXPECT_TRUE(result);
 }
 
 IN_PROC_BROWSER_TEST_F(LocalNTPTest, FakeboxRedirectsToOmnibox) {
@@ -133,6 +195,81 @@ IN_PROC_BROWSER_TEST_F(LocalNTPTest, FakeboxRedirectsToOmnibox) {
   // On the JS side, the fakebox should have been hidden.
   ASSERT_TRUE(GetBoolFromJS(active_tab, "!!fakeboxIsVisible()", &result));
   EXPECT_FALSE(result);
+}
+
+namespace {
+
+// Returns the RenderFrameHost corresponding to the most visited iframe in the
+// given |tab|. |tab| must correspond to an NTP.
+content::RenderFrameHost* GetMostVisitedIframe(content::WebContents* tab) {
+  CHECK_EQ(2u, tab->GetAllFrames().size());
+  for (content::RenderFrameHost* frame : tab->GetAllFrames()) {
+    if (frame != tab->GetMainFrame()) {
+      return frame;
+    }
+  }
+  NOTREACHED();
+  return nullptr;
+}
+
+}  // namespace
+
+IN_PROC_BROWSER_TEST_F(LocalNTPTest, LoadsIframe) {
+  ASSERT_NO_FATAL_FAILURE(SetupInstant(browser()));
+  FocusOmnibox();
+
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), ntp_url(), WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_TAB |
+          ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+  content::WebContents* active_tab =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  ASSERT_TRUE(search::IsInstantNTP(active_tab));
+
+  content::DOMMessageQueue msg_queue;
+
+  bool result = false;
+  ASSERT_TRUE(GetBoolFromJS(active_tab, "!!setupAdvancedTest(true)", &result));
+  ASSERT_TRUE(result);
+
+  // Wait for the MV iframe to load.
+  std::string message;
+  // First get rid of the "true" message from the GetBoolFromJS call above.
+  ASSERT_TRUE(msg_queue.PopMessage(&message));
+  ASSERT_EQ("true", message);
+  // Now wait for the "loaded" message.
+  ASSERT_TRUE(msg_queue.WaitForMessage(&message));
+  ASSERT_EQ("\"loaded\"", message);
+
+  // Get the iframe and check that the tiles loaded correctly.
+  content::RenderFrameHost* iframe = GetMostVisitedIframe(active_tab);
+
+  // Get the total number of (non-empty) tiles from the iframe.
+  int total_thumbs = 0;
+  ASSERT_TRUE(GetIntFromJS(
+      iframe, "document.querySelectorAll('.mv-thumb').length", &total_thumbs));
+  // Also get how many of the tiles succeeded and failed in loading their
+  // thumbnail images.
+  int succeeded_imgs = 0;
+  ASSERT_TRUE(GetIntFromJS(iframe,
+                           "document.querySelectorAll('.mv-thumb img').length",
+                           &succeeded_imgs));
+  int failed_imgs = 0;
+  ASSERT_TRUE(GetIntFromJS(
+      iframe, "document.querySelectorAll('.mv-thumb.failed-img').length",
+      &failed_imgs));
+
+  // First, sanity check that the numbers line up (none of the css classes was
+  // renamed, etc).
+  EXPECT_EQ(total_thumbs, succeeded_imgs + failed_imgs);
+
+  // Since we're in a non-signed-in, fresh profile with no history, there should
+  // be the default TopSites tiles (see history::PrepopulatedPage).
+  // Check that there is at least one tile, and that all of them loaded their
+  // images successfully.
+  EXPECT_GT(total_thumbs, 0);
+  EXPECT_EQ(total_thumbs, succeeded_imgs);
+  EXPECT_EQ(0, failed_imgs);
 }
 
 IN_PROC_BROWSER_TEST_F(LocalNTPTest,

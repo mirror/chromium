@@ -15,6 +15,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "chrome/browser/devtools/devtools_window.h"
 #include "chrome/browser/extensions/api/developer_private/developer_private_mangle.h"
 #include "chrome/browser/extensions/api/developer_private/entry_picker.h"
@@ -187,8 +188,8 @@ namespace GetItemsInfo = api::developer_private::GetItemsInfo;
 namespace PackDirectory = api::developer_private::PackDirectory;
 namespace Reload = api::developer_private::Reload;
 
-static base::LazyInstance<BrowserContextKeyedAPIFactory<DeveloperPrivateAPI> >
-    g_factory = LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<BrowserContextKeyedAPIFactory<DeveloperPrivateAPI>>::
+    DestructorAtExit g_factory = LAZY_INSTANCE_INITIALIZER;
 
 // static
 BrowserContextKeyedAPIFactory<DeveloperPrivateAPI>*
@@ -978,7 +979,7 @@ void DeveloperPrivateLoadDirectoryFunction::Load() {
 
   // TODO(grv) : The unpacked installer should fire an event when complete
   // and return the extension_id.
-  SetResult(base::MakeUnique<base::StringValue>("-1"));
+  SetResult(base::MakeUnique<base::Value>("-1"));
   SendResponse(true);
 }
 
@@ -1152,8 +1153,7 @@ ExtensionFunction::ResponseAction DeveloperPrivateChoosePathFunction::Run() {
 
 void DeveloperPrivateChoosePathFunction::FileSelected(
     const base::FilePath& path) {
-  Respond(OneArgument(
-      base::MakeUnique<base::StringValue>(path.LossyDisplayName())));
+  Respond(OneArgument(base::MakeUnique<base::Value>(path.LossyDisplayName())));
   Release();
 }
 
@@ -1168,7 +1168,7 @@ DeveloperPrivateChoosePathFunction::~DeveloperPrivateChoosePathFunction() {}
 
 ExtensionFunction::ResponseAction
 DeveloperPrivateIsProfileManagedFunction::Run() {
-  return RespondNow(OneArgument(base::MakeUnique<base::FundamentalValue>(
+  return RespondNow(OneArgument(base::MakeUnique<base::Value>(
       Profile::FromBrowserContext(browser_context())->IsSupervised())));
 }
 
@@ -1203,9 +1203,9 @@ DeveloperPrivateRequestFileSourceFunction::Run() {
   if (properties.path_suffix == kManifestFile && !properties.manifest_key)
     return RespondNow(Error(kManifestKeyIsRequiredError));
 
-  base::PostTaskAndReplyWithResult(
-      content::BrowserThread::GetBlockingPool(),
-      FROM_HERE,
+  base::PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE, base::TaskTraits().MayBlock().WithPriority(
+                     base::TaskPriority::USER_VISIBLE),
       base::Bind(&ReadFileToString, extension->path().Append(path_suffix)),
       base::Bind(&DeveloperPrivateRequestFileSourceFunction::Finish, this));
 

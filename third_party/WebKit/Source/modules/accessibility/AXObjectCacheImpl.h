@@ -116,7 +116,7 @@ class MODULES_EXPORT AXObjectCacheImpl : public AXObjectCache {
   // Returns the root object for the entire document.
   AXObject* rootObject();
 
-  AXObject* objectFromAXID(AXID id) const { return m_objects.get(id); }
+  AXObject* objectFromAXID(AXID id) const { return m_objects.at(id); }
   AXObject* root();
 
   // used for objects without backing elements
@@ -146,7 +146,7 @@ class MODULES_EXPORT AXObjectCacheImpl : public AXObjectCache {
 
   void removeAXID(AXObject*);
 
-  AXID platformGenerateAXID() const;
+  AXID generateAXID() const;
 
   // Counts the number of times the document has been modified. Some attribute
   // values are cached as long as the modification count hasn't changed.
@@ -247,7 +247,7 @@ class MODULES_EXPORT AXObjectCacheImpl : public AXObjectCache {
 
   AXObject* focusedImageMapUIElement(HTMLAreaElement*);
 
-  AXID getAXID(AXObject*);
+  AXID getOrCreateAXID(AXObject*);
 
   void textChanged(Node*);
   bool nodeIsTextControl(const Node*);

@@ -19,28 +19,28 @@
 
 // static
 void PermissionBlacklistClient::CheckSafeBrowsingBlacklist(
-    scoped_refptr<safe_browsing::SafeBrowsingDatabaseManager> db_manager,
-    content::PermissionType permission_type,
-    const GURL& request_origin,
     content::WebContents* web_contents,
+    scoped_refptr<safe_browsing::SafeBrowsingDatabaseManager> db_manager,
+    const GURL& request_origin,
+    ContentSettingsType content_settings_type,
     int timeout,
     base::Callback<void(bool)> callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  new PermissionBlacklistClient(db_manager, permission_type, request_origin,
-                                web_contents, timeout, callback);
+  new PermissionBlacklistClient(web_contents, db_manager, request_origin,
+                                content_settings_type, timeout, callback);
 }
 
 PermissionBlacklistClient::PermissionBlacklistClient(
-    scoped_refptr<safe_browsing::SafeBrowsingDatabaseManager> db_manager,
-    content::PermissionType permission_type,
-    const GURL& request_origin,
     content::WebContents* web_contents,
+    scoped_refptr<safe_browsing::SafeBrowsingDatabaseManager> db_manager,
+    const GURL& request_origin,
+    ContentSettingsType content_settings_type,
     int timeout,
     base::Callback<void(bool)> callback)
     : content::WebContentsObserver(web_contents),
       db_manager_(db_manager),
-      permission_type_(permission_type),
+      content_settings_type_(content_settings_type),
       callback_(callback),
       timeout_(timeout),
       is_active_(true) {
@@ -89,8 +89,8 @@ void PermissionBlacklistClient::OnCheckApiBlacklistUrlResult(
   timer_.reset(nullptr);
   bool permission_blocked =
       metadata.api_permissions.find(
-          PermissionUtil::ConvertPermissionTypeToSafeBrowsingName(
-              permission_type_)) != metadata.api_permissions.end();
+          PermissionUtil::ConvertContentSettingsTypeToSafeBrowsingName(
+              content_settings_type_)) != metadata.api_permissions.end();
   if (permission_blocked)
     response = SafeBrowsingResponse::BLACKLISTED;
 

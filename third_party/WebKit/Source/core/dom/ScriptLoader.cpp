@@ -142,7 +142,7 @@ void ScriptLoader::handleAsyncAttribute() {
   m_nonBlocking = false;
 }
 
-void ScriptLoader::detach() {
+void ScriptLoader::detachPendingScript() {
   if (!m_pendingScript)
     return;
   m_pendingScript->dispose();
@@ -523,9 +523,17 @@ bool ScriptLoader::fetchScript(const String& sourceUrl,
   // 21. "If the element has a src content attribute, run these substeps:"
   if (!stripLeadingAndTrailingHTMLSpaces(sourceUrl).isEmpty()) {
     // 21.4. "Parse src relative to the element's node document."
-    FetchRequest request(
-        ResourceRequest(elementDocument->completeURL(sourceUrl)),
-        m_element->localName());
+    ResourceRequest resourceRequest(elementDocument->completeURL(sourceUrl));
+
+    // [Intervention]
+    if (m_documentWriteIntervention ==
+        DocumentWriteIntervention::FetchDocWrittenScriptDeferIdle) {
+      resourceRequest.setHTTPHeaderField(
+          "Intervention",
+          "<https://www.chromestatus.com/feature/5718547946799104>");
+    }
+
+    FetchRequest request(resourceRequest, m_element->localName());
 
     // 15. "Let CORS setting be the current state of the element's
     //      crossorigin content attribute."
@@ -568,14 +576,6 @@ bool ScriptLoader::fetchScript(const String& sourceUrl,
       SubresourceIntegrity::parseIntegrityAttribute(integrityAttr, metadataSet,
                                                     elementDocument);
       request.setIntegrityMetadata(metadataSet);
-    }
-
-    // [Intervention]
-    if (m_documentWriteIntervention ==
-        DocumentWriteIntervention::FetchDocWrittenScriptDeferIdle) {
-      request.mutableResourceRequest().setHTTPHeaderField(
-          "Intervention",
-          "<https://www.chromestatus.com/feature/5718547946799104>");
     }
 
     // 21.6. "Switch on the script's type:"
@@ -715,41 +715,40 @@ bool ScriptLoader::doExecuteScript(const ScriptSourceCode& sourceCode) {
   }
 
   if (m_isExternalScript) {
-    ScriptResource* resource =
-        m_resource ? m_resource.get() : sourceCode.resource();
-    if (resource) {
-      if (!ScriptResource::mimeTypeAllowedByNosniff(resource->response())) {
-        contextDocument->addConsoleMessage(ConsoleMessage::create(
-            SecurityMessageSource, ErrorMessageLevel,
-            "Refused to execute script from '" +
-                resource->url().elidedString() + "' because its MIME type ('" +
-                resource->httpContentType() + "') is not executable, and "
-                                              "strict MIME type checking is "
-                                              "enabled."));
-        return false;
-      }
-
-      String mimeType = resource->httpContentType();
-      if (mimeType.startsWith("image/") || mimeType == "text/csv" ||
-          mimeType.startsWith("audio/") || mimeType.startsWith("video/")) {
-        contextDocument->addConsoleMessage(ConsoleMessage::create(
-            SecurityMessageSource, ErrorMessageLevel,
-            "Refused to execute script from '" +
-                resource->url().elidedString() + "' because its MIME type ('" +
-                mimeType + "') is not executable."));
-        if (mimeType.startsWith("image/"))
-          UseCounter::count(frame, UseCounter::BlockedSniffingImageToScript);
-        else if (mimeType.startsWith("audio/"))
-          UseCounter::count(frame, UseCounter::BlockedSniffingAudioToScript);
-        else if (mimeType.startsWith("video/"))
-          UseCounter::count(frame, UseCounter::BlockedSniffingVideoToScript);
-        else if (mimeType == "text/csv")
-          UseCounter::count(frame, UseCounter::BlockedSniffingCSVToScript);
-        return false;
-      }
-
-      logScriptMIMEType(frame, resource, mimeType);
+    ScriptResource* resource = sourceCode.resource();
+    CHECK_EQ(resource, m_resource);
+    CHECK(resource);
+    if (!ScriptResource::mimeTypeAllowedByNosniff(resource->response())) {
+      contextDocument->addConsoleMessage(ConsoleMessage::create(
+          SecurityMessageSource, ErrorMessageLevel,
+          "Refused to execute script from '" + resource->url().elidedString() +
+              "' because its MIME type ('" + resource->httpContentType() +
+              "') is not executable, and "
+              "strict MIME type checking is "
+              "enabled."));
+      return false;
     }
+
+    String mimeType = resource->httpContentType();
+    if (mimeType.startsWith("image/") || mimeType == "text/csv" ||
+        mimeType.startsWith("audio/") || mimeType.startsWith("video/")) {
+      contextDocument->addConsoleMessage(ConsoleMessage::create(
+          SecurityMessageSource, ErrorMessageLevel,
+          "Refused to execute script from '" + resource->url().elidedString() +
+              "' because its MIME type ('" + mimeType +
+              "') is not executable."));
+      if (mimeType.startsWith("image/"))
+        UseCounter::count(frame, UseCounter::BlockedSniffingImageToScript);
+      else if (mimeType.startsWith("audio/"))
+        UseCounter::count(frame, UseCounter::BlockedSniffingAudioToScript);
+      else if (mimeType.startsWith("video/"))
+        UseCounter::count(frame, UseCounter::BlockedSniffingVideoToScript);
+      else if (mimeType == "text/csv")
+        UseCounter::count(frame, UseCounter::BlockedSniffingCSVToScript);
+      return false;
+    }
+
+    logScriptMIMEType(frame, resource, mimeType);
   }
 
   AccessControlStatus accessControlStatus = NotSharableCrossOrigin;
@@ -817,7 +816,7 @@ void ScriptLoader::execute() {
   DCHECK(m_pendingScript->resource());
   bool errorOccurred = false;
   ScriptSourceCode source = m_pendingScript->getSource(KURL(), errorOccurred);
-  m_pendingScript->dispose();
+  detachPendingScript();
   if (errorOccurred) {
     dispatchErrorEvent();
   } else if (!m_resource->wasCanceled()) {
@@ -832,6 +831,7 @@ void ScriptLoader::execute() {
 void ScriptLoader::pendingScriptFinished(PendingScript* pendingScript) {
   DCHECK(!m_willBeParserExecuted);
   DCHECK_EQ(m_pendingScript, pendingScript);
+  DCHECK_EQ(pendingScript->resource(), m_resource);
 
   // We do not need this script in the memory cache. The primary goals of
   // sending this fetch request are to let the third party server know
@@ -848,16 +848,14 @@ void ScriptLoader::pendingScriptFinished(PendingScript* pendingScript) {
 
   Document* contextDocument = m_element->document().contextDocument();
   if (!contextDocument) {
-    detach();
+    detachPendingScript();
     return;
   }
 
-  DCHECK_EQ(pendingScript->resource(), m_resource);
-
-  if (m_resource->errorOccurred()) {
+  if (errorOccurred()) {
     contextDocument->scriptRunner()->notifyScriptLoadError(this,
                                                            m_asyncExecType);
-    detach();
+    detachPendingScript();
     dispatchErrorEvent();
     return;
   }

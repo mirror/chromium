@@ -1102,6 +1102,10 @@ void vpx_highbd_idct16x16_256_add_c(const tran_low_t *input, uint8_t *dest, int 
 void vpx_highbd_idct16x16_256_add_sse2(const tran_low_t *input, uint8_t *dest, int stride, int bd);
 #define vpx_highbd_idct16x16_256_add vpx_highbd_idct16x16_256_add_sse2
 
+void vpx_highbd_idct16x16_38_add_c(const tran_low_t *input, uint8_t *dest, int stride, int bd);
+void vpx_highbd_idct16x16_256_add_sse2(const tran_low_t *input, uint8_t *dest, int stride, int bd);
+#define vpx_highbd_idct16x16_38_add vpx_highbd_idct16x16_256_add_sse2
+
 void vpx_highbd_idct32x32_1024_add_c(const tran_low_t *input, uint8_t *dest, int stride, int bd);
 #define vpx_highbd_idct32x32_1024_add vpx_highbd_idct32x32_1024_add_c
 
@@ -1484,7 +1488,8 @@ void vpx_idct8x8_1_add_sse2(const tran_low_t *input, uint8_t *dest, int stride);
 
 void vpx_idct8x8_64_add_c(const tran_low_t *input, uint8_t *dest, int stride);
 void vpx_idct8x8_64_add_sse2(const tran_low_t *input, uint8_t *dest, int stride);
-#define vpx_idct8x8_64_add vpx_idct8x8_64_add_sse2
+void vpx_idct8x8_64_add_ssse3(const tran_low_t *input, uint8_t *dest, int stride);
+RTCD_EXTERN void (*vpx_idct8x8_64_add)(const tran_low_t *input, uint8_t *dest, int stride);
 
 int16_t vpx_int_pro_col_c(const uint8_t *ref, const int width);
 int16_t vpx_int_pro_col_sse2(const uint8_t *ref, const int width);
@@ -2151,6 +2156,8 @@ static void setup_rtcd_internal(void)
     if (flags & HAS_SSSE3) vpx_idct32x32_34_add = vpx_idct32x32_34_add_ssse3;
     vpx_idct8x8_12_add = vpx_idct8x8_12_add_sse2;
     if (flags & HAS_SSSE3) vpx_idct8x8_12_add = vpx_idct8x8_12_add_ssse3;
+    vpx_idct8x8_64_add = vpx_idct8x8_64_add_sse2;
+    if (flags & HAS_SSSE3) vpx_idct8x8_64_add = vpx_idct8x8_64_add_ssse3;
     vpx_lpf_horizontal_16 = vpx_lpf_horizontal_16_sse2;
     if (flags & HAS_AVX2) vpx_lpf_horizontal_16 = vpx_lpf_horizontal_16_avx2;
     vpx_lpf_horizontal_16_dual = vpx_lpf_horizontal_16_dual_sse2;

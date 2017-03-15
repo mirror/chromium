@@ -51,9 +51,6 @@ ScriptState::~ScriptState() {
 void ScriptState::detachGlobalObject() {
   ASSERT(!m_context.isEmpty());
   context()->DetachGlobal();
-#if DCHECK_IS_ON()
-  m_globalObjectDetached = true;
-#endif
 }
 
 void ScriptState::disposePerContextData() {
@@ -82,7 +79,7 @@ void ScriptState::setExecutionContext(ExecutionContext*) {
 
 LocalDOMWindow* ScriptState::domWindow() const {
   v8::HandleScope scope(m_isolate);
-  return toLocalDOMWindow(toDOMWindow(context()));
+  return toLocalDOMWindow(context());
 }
 
 ScriptState* ScriptState::forMainWorld(LocalFrame* frame) {

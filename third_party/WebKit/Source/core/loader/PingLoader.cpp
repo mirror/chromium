@@ -38,13 +38,13 @@
 #include "core/fileapi/File.h"
 #include "core/frame/FrameConsole.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/FormData.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/InspectorInstrumentation.h"
 #include "core/inspector/InspectorTraceEvents.h"
 #include "core/loader/FrameLoader.h"
-#include "core/loader/FrameLoaderClient.h"
 #include "core/loader/MixedContentChecker.h"
 #include "core/page/Page.h"
 #include "platform/WebFrameScheduler.h"
@@ -54,13 +54,13 @@
 #include "platform/loader/fetch/FetchContext.h"
 #include "platform/loader/fetch/FetchInitiatorTypeNames.h"
 #include "platform/loader/fetch/FetchUtils.h"
+#include "platform/loader/fetch/ResourceError.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
+#include "platform/loader/fetch/ResourceRequest.h"
+#include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/loader/fetch/UniqueIdentifier.h"
 #include "platform/network/EncodedFormData.h"
 #include "platform/network/ParsedContentType.h"
-#include "platform/network/ResourceError.h"
-#include "platform/network/ResourceRequest.h"
-#include "platform/network/ResourceResponse.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/weborigin/SecurityPolicy.h"
 #include "public/platform/Platform.h"
@@ -110,7 +110,7 @@ class BeaconBlob final : public Beacon {
  public:
   explicit BeaconBlob(Blob* data) : m_data(data) {
     const String& blobType = m_data->type();
-    if (!blobType.isEmpty() && isValidContentType(blobType))
+    if (!blobType.isEmpty() && ParsedContentType(blobType).isValid())
       m_contentType = AtomicString(blobType);
   }
 
@@ -342,62 +342,45 @@ bool PingLoaderImpl::willFollowRedirect(
 
 void PingLoaderImpl::didReceiveResponse(const WebURLResponse& response) {
   if (frame()) {
-    TRACE_EVENT1("devtools.timeline", "ResourceFinish", "data",
-                 InspectorResourceFinishEvent::data(m_identifier, 0, true, 0));
     const ResourceResponse& resourceResponse = response.toResourceResponse();
-    InspectorInstrumentation::didReceiveResourceResponse(
-        frame(), m_identifier, 0, resourceResponse, 0);
+    probe::didReceiveResourceResponse(frame(), m_identifier, 0,
+                                      resourceResponse, 0);
     didFailLoading(frame());
   }
   dispose();
 }
 
 void PingLoaderImpl::didReceiveData(const char*, int dataLength) {
-  if (frame()) {
-    TRACE_EVENT1(
-        "devtools.timeline", "ResourceFinish", "data",
-        InspectorResourceFinishEvent::data(m_identifier, 0, true, dataLength));
+  if (frame())
     didFailLoading(frame());
-  }
   dispose();
 }
 
 void PingLoaderImpl::didFinishLoading(double,
                                       int64_t,
                                       int64_t encodedDataLength) {
-  if (frame()) {
-    TRACE_EVENT1("devtools.timeline", "ResourceFinish", "data",
-                 InspectorResourceFinishEvent::data(m_identifier, 0, true,
-                                                    encodedDataLength));
+  if (frame())
     didFailLoading(frame());
-  }
   dispose();
 }
 
 void PingLoaderImpl::didFail(const WebURLError& resourceError,
                              int64_t,
                              int64_t encodedDataLength) {
-  if (frame()) {
-    TRACE_EVENT1("devtools.timeline", "ResourceFinish", "data",
-                 InspectorResourceFinishEvent::data(m_identifier, 0, true,
-                                                    encodedDataLength));
+  if (frame())
     didFailLoading(frame());
-  }
   dispose();
 }
 
 void PingLoaderImpl::timeout(TimerBase*) {
-  if (frame()) {
-    TRACE_EVENT1("devtools.timeline", "ResourceFinish", "data",
-                 InspectorResourceFinishEvent::data(m_identifier, 0, true, 0));
+  if (frame())
     didFailLoading(frame());
-  }
   dispose();
 }
 
 void PingLoaderImpl::didFailLoading(LocalFrame* frame) {
-  InspectorInstrumentation::didFailLoading(
-      frame, m_identifier, ResourceError::cancelledError(m_url));
+  probe::didFailLoading(frame, m_identifier,
+                        ResourceError::cancelledError(m_url));
   frame->console().didFailLoading(m_identifier,
                                   ResourceError::cancelledError(m_url));
 }
@@ -443,7 +426,7 @@ bool sendBeaconCommon(LocalFrame* frame,
     return false;
 
   unsigned long long entitySize = beacon.size();
-  if (allowance > 0 && static_cast<unsigned long long>(allowance) < entitySize)
+  if (allowance < 0 || static_cast<unsigned long long>(allowance) < entitySize)
     return false;
 
   payloadLength = entitySize;
@@ -523,12 +506,17 @@ void PingLoader::sendViolationReport(LocalFrame* frame,
                                      ViolationReportType type) {
   ResourceRequest request(reportURL);
   request.setHTTPMethod(HTTPNames::POST);
-  request.setHTTPContentType(type == ContentSecurityPolicyViolationReport
-                                 ? "application/csp-report"
-                                 : "application/json");
+  switch (type) {
+    case ContentSecurityPolicyViolationReport:
+      request.setHTTPContentType("application/csp-report");
+      break;
+    case XSSAuditorViolationReport:
+      request.setHTTPContentType("application/xss-auditor-report");
+      break;
+  }
   request.setHTTPBody(std::move(report));
   finishPingRequestInitialization(request, frame,
-                                  WebURLRequest::RequestContextPing);
+                                  WebURLRequest::RequestContextCSPReport);
 
   StoredCredentials credentialsAllowed =
       SecurityOrigin::create(reportURL)->isSameSchemeHostPort(

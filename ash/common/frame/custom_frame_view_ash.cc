@@ -13,13 +13,13 @@
 #include "ash/common/wm/window_state.h"
 #include "ash/common/wm/window_state_delegate.h"
 #include "ash/common/wm/window_state_observer.h"
-#include "ash/common/wm_lookup.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
-#include "ash/common/wm_window_observer.h"
-#include "ash/common/wm_window_property.h"
 #include "ash/shared/immersive_fullscreen_controller.h"
 #include "ash/shared/immersive_fullscreen_controller_delegate.h"
+#include "ui/aura/client/aura_constants.h"
+#include "ui/aura/window.h"
+#include "ui/aura/window_observer.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/size.h"
@@ -40,7 +40,7 @@ namespace {
 // windows.
 class CustomFrameViewAshWindowStateDelegate : public wm::WindowStateDelegate,
                                               public wm::WindowStateObserver,
-                                              public WmWindowObserver {
+                                              public aura::WindowObserver {
  public:
   CustomFrameViewAshWindowStateDelegate(wm::WindowState* window_state,
                                         CustomFrameViewAsh* custom_frame_view,
@@ -53,7 +53,7 @@ class CustomFrameViewAshWindowStateDelegate : public wm::WindowStateDelegate,
     // TODO(pkotwicz): This is a hack. Remove ASAP. http://crbug.com/319048
     window_state_ = window_state;
     window_state_->AddObserver(this);
-    window_state_->window()->AddObserver(this);
+    window_state_->window()->aura_window()->AddObserver(this);
 
     if (!enable_immersive)
       return;
@@ -68,7 +68,7 @@ class CustomFrameViewAshWindowStateDelegate : public wm::WindowStateDelegate,
   ~CustomFrameViewAshWindowStateDelegate() override {
     if (window_state_) {
       window_state_->RemoveObserver(this);
-      window_state_->window()->RemoveObserver(this);
+      window_state_->window()->aura_window()->RemoveObserver(this);
     }
   }
 
@@ -86,8 +86,8 @@ class CustomFrameViewAshWindowStateDelegate : public wm::WindowStateDelegate,
     }
     return true;
   }
-  // Overridden from WmWindowObserver:
-  void OnWindowDestroying(WmWindow* window) override {
+  // Overridden from aura::WindowObserver:
+  void OnWindowDestroying(aura::Window* window) override {
     window_state_->RemoveObserver(this);
     window->RemoveObserver(this);
     window_state_ = nullptr;
@@ -124,8 +124,11 @@ class CustomFrameViewAsh::OverlayView : public views::View,
   explicit OverlayView(HeaderView* header_view);
   ~OverlayView() override;
 
+  void SetHeaderHeight(base::Optional<int> height);
+
   // views::View:
   void Layout() override;
+  const char* GetClassName() const override { return "OverlayView"; }
 
  private:
   // views::ViewTargeterDelegate:
@@ -133,6 +136,8 @@ class CustomFrameViewAsh::OverlayView : public views::View,
                          const gfx::Rect& rect) const override;
 
   HeaderView* header_view_;
+
+  base::Optional<int> header_height_;
 
   DISALLOW_COPY_AND_ASSIGN(OverlayView);
 };
@@ -146,6 +151,15 @@ CustomFrameViewAsh::OverlayView::OverlayView(HeaderView* header_view)
 
 CustomFrameViewAsh::OverlayView::~OverlayView() {}
 
+void CustomFrameViewAsh::OverlayView::SetHeaderHeight(
+    base::Optional<int> height) {
+  if (header_height_ == height)
+    return;
+
+  header_height_ = height;
+  Layout();
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // CustomFrameViewAsh::OverlayView, views::View overrides:
 
@@ -154,11 +168,14 @@ void CustomFrameViewAsh::OverlayView::Layout() {
   // GetPreferredOnScreenHeight().
   header_view_->Layout();
 
-  int onscreen_height = header_view_->GetPreferredOnScreenHeight();
+  int onscreen_height = header_height_
+                            ? *header_height_
+                            : header_view_->GetPreferredOnScreenHeight();
   if (onscreen_height == 0) {
     header_view_->SetVisible(false);
   } else {
-    int height = header_view_->GetPreferredHeight();
+    const int height =
+        header_height_ ? *header_height_ : header_view_->GetPreferredHeight();
     header_view_->SetBounds(0, onscreen_height - height, width(), height);
     header_view_->SetVisible(true);
   }
@@ -185,18 +202,20 @@ const char CustomFrameViewAsh::kViewClassName[] = "CustomFrameViewAsh";
 CustomFrameViewAsh::CustomFrameViewAsh(
     views::Widget* frame,
     ImmersiveFullscreenControllerDelegate* immersive_delegate,
-    bool enable_immersive)
+    bool enable_immersive,
+    mojom::WindowStyle window_style)
     : frame_(frame),
-      header_view_(new HeaderView(frame)),
+      header_view_(new HeaderView(frame, window_style)),
+      overlay_view_(new OverlayView(header_view_)),
       immersive_delegate_(immersive_delegate ? immersive_delegate
                                              : header_view_) {
-  WmWindow* frame_window = WmLookup::Get()->GetWindowForWidget(frame);
+  WmWindow* frame_window = WmWindow::Get(frame->GetNativeWindow());
   frame_window->InstallResizeHandleWindowTargeter(nullptr);
   // |header_view_| is set as the non client view's overlay view so that it can
   // overlay the web contents in immersive fullscreen.
-  frame->non_client_view()->SetOverlayView(new OverlayView(header_view_));
-  frame_window->SetColorProperty(WmWindowProperty::TOP_VIEW_COLOR,
-                                 header_view_->GetInactiveFrameColor());
+  frame->non_client_view()->SetOverlayView(overlay_view_);
+  frame_window->aura_window()->SetProperty(
+      aura::client::kTopViewColor, header_view_->GetInactiveFrameColor());
 
   // A delegate for a more complex way of fullscreening the window may already
   // be set. This is the case for packaged apps.
@@ -219,9 +238,17 @@ void CustomFrameViewAsh::InitImmersiveFullscreenControllerForView(
 void CustomFrameViewAsh::SetFrameColors(SkColor active_frame_color,
                                         SkColor inactive_frame_color) {
   header_view_->SetFrameColors(active_frame_color, inactive_frame_color);
-  WmWindow* frame_window = WmLookup::Get()->GetWindowForWidget(frame_);
-  frame_window->SetColorProperty(WmWindowProperty::TOP_VIEW_COLOR,
-                                 header_view_->GetInactiveFrameColor());
+  WmWindow* frame_window = WmWindow::Get(frame_->GetNativeWindow());
+  frame_window->aura_window()->SetProperty(
+      aura::client::kTopViewColor, header_view_->GetInactiveFrameColor());
+}
+
+void CustomFrameViewAsh::SetHeaderHeight(base::Optional<int> height) {
+  overlay_view_->SetHeaderHeight(height);
+}
+
+views::View* CustomFrameViewAsh::header_view() {
+  return header_view_;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -282,9 +309,9 @@ gfx::Size CustomFrameViewAsh::GetPreferredSize() const {
 
 void CustomFrameViewAsh::Layout() {
   views::NonClientFrameView::Layout();
-  WmWindow* frame_window = WmLookup::Get()->GetWindowForWidget(frame_);
-  frame_window->SetIntProperty(WmWindowProperty::TOP_VIEW_INSET,
-                               NonClientTopBorderHeight());
+  WmWindow* frame_window = WmWindow::Get(frame_->GetNativeWindow());
+  frame_window->aura_window()->SetProperty(aura::client::kTopViewInset,
+                                           NonClientTopBorderHeight());
 }
 
 const char* CustomFrameViewAsh::GetClassName() const {

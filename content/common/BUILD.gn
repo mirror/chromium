@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("features.gni")
+import("//build/buildflag_header.gni")
 import("//build/config/features.gni")
 import("//build/config/ui.gni")
 import("//media/media_options.gni")
@@ -11,6 +13,14 @@ import("//sandbox/features.gni")
 import("//tools/ipc_fuzzer/ipc_fuzzer.gni")
 if (is_mac) {
   import("//build/config/mac/mac_sdk.gni")
+}
+
+# For feature flags internal to content. See content/public/common:features
+# for feature flags that clients of contents need to know about.
+buildflag_header("features") {
+  header = "features.h"
+
+  flags = [ "USE_EXTERNAL_POPUP_MENU=$use_external_popup_menu" ]
 }
 
 source_set("common") {
@@ -43,7 +53,6 @@ source_set("common") {
     "android/sync_compositor_messages.h",
     "android/sync_compositor_statics.cc",
     "android/sync_compositor_statics.h",
-    "app_web_message_port_messages.h",
     "appcache_interfaces.cc",
     "appcache_interfaces.h",
     "appcache_messages.h",
@@ -77,6 +86,16 @@ source_set("common") {
     "content_param_traits.h",
     "content_param_traits_macros.h",
     "content_paths.cc",
+    "content_security_policy/content_security_policy.cc",
+    "content_security_policy/content_security_policy.h",
+    "content_security_policy/csp_context.cc",
+    "content_security_policy/csp_context.h",
+    "content_security_policy/csp_directive.cc",
+    "content_security_policy/csp_directive.h",
+    "content_security_policy/csp_source.cc",
+    "content_security_policy/csp_source.h",
+    "content_security_policy/csp_source_list.cc",
+    "content_security_policy/csp_source_list.h",
     "content_security_policy_header.h",
     "content_switches_internal.cc",
     "content_switches_internal.h",
@@ -210,7 +229,8 @@ source_set("common") {
     "media/surface_view_manager_messages_android.h",
     "media/video_capture.h",
     "memory_messages.h",
-    "message_port_messages.h",
+    "message_port.cc",
+    "message_port.h",
     "navigation_gesture.h",
     "navigation_params.cc",
     "navigation_params.h",
@@ -237,8 +257,9 @@ source_set("common") {
     "platform_notification_messages.h",
     "plugin_list.cc",
     "plugin_list.h",
+    "presentation/presentation_struct_traits.cc",
+    "presentation/presentation_struct_traits.h",
     "process_type.cc",
-    "push_messaging_messages.h",
     "quarantine/quarantine.cc",
     "quarantine/quarantine_constants_linux.h",
     "quarantine/quarantine_linux.cc",
@@ -298,6 +319,8 @@ source_set("common") {
     "service_worker/service_worker_client_info.cc",
     "service_worker/service_worker_client_info.h",
     "service_worker/service_worker_messages.h",
+    "service_worker/service_worker_provider_host_info.cc",
+    "service_worker/service_worker_provider_host_info.h",
     "service_worker/service_worker_status_code.cc",
     "service_worker/service_worker_status_code.h",
     "service_worker/service_worker_types.cc",
@@ -343,13 +366,13 @@ source_set("common") {
     "//third_party/WebKit/public:blink_headers",
   ]
   deps = [
+    ":features",
     "//base",
     "//base/third_party/dynamic_annotations",
     "//build/util:webkit_version",
     "//cc/ipc",
     "//cc/surfaces",
     "//components/discardable_memory/common",
-    "//components/payments:payment_app",
     "//components/tracing",
     "//components/tracing:startup_tracing",
     "//content:resources",
@@ -392,8 +415,8 @@ source_set("common") {
     "//storage/common",
     "//third_party/boringssl",
     "//third_party/icu",
-    "//third_party/libjingle",
     "//third_party/webrtc/base:rtc_base",
+    "//third_party/webrtc_overrides",
     "//ui/accessibility",
     "//ui/base",
     "//ui/base/ime",
@@ -575,6 +598,7 @@ mojom("mojo_bindings") {
     "media/media_devices.mojom",
     "memory_coordinator.mojom",
     "native_types.mojom",
+    "push_messaging.mojom",
     "render_frame_message_filter.mojom",
     "render_message_filter.mojom",
     "render_widget_window_tree_client_factory.mojom",
@@ -582,6 +606,7 @@ mojom("mojo_bindings") {
     "service_worker/embedded_worker.mojom",
     "service_worker/service_worker.mojom",
     "service_worker/service_worker_event_dispatcher.mojom",
+    "service_worker/service_worker_provider.mojom",
     "service_worker/service_worker_types.mojom",
     "storage_partition_service.mojom",
     "url_loader.mojom",
@@ -593,6 +618,7 @@ mojom("mojo_bindings") {
 
   public_deps = [
     "//components/leveldb/public/interfaces",
+    "//components/payments/content:payment_app",
     "//content/public/common:interfaces",
 
     # TODO(mcasas): remove the following dep after https://crbug.com/653994

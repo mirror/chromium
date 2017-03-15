@@ -282,8 +282,8 @@ void TaskQueueImpl::PushOntoDelayedIncomingQueueFromMainThread(
   base::TimeTicks next_delayed_task =
       main_thread_only().delayed_incoming_queue.top().delayed_run_time;
   if (next_delayed_task == delayed_run_time && IsQueueEnabled()) {
-    main_thread_only().time_domain->ScheduleDelayedWork(this, delayed_run_time,
-                                                        now);
+    main_thread_only().time_domain->ScheduleDelayedWork(
+        this, {delayed_run_time, pending_task.sequence_num}, now);
   }
 
   TraceQueueSize(false);
@@ -414,8 +414,8 @@ base::Optional<base::TimeTicks> TaskQueueImpl::GetNextScheduledWakeUp() {
   return main_thread_only().delayed_incoming_queue.top().delayed_run_time;
 }
 
-base::Optional<base::TimeTicks> TaskQueueImpl::WakeUpForDelayedWork(
-    LazyNow* lazy_now) {
+base::Optional<TaskQueueImpl::DelayedWakeUp>
+TaskQueueImpl::WakeUpForDelayedWork(LazyNow* lazy_now) {
   // Enqueue all delayed tasks that should be running now, skipping any that
   // have been canceled.
   while (!main_thread_only().delayed_incoming_queue.empty()) {
@@ -434,8 +434,11 @@ base::Optional<base::TimeTicks> TaskQueueImpl::WakeUpForDelayedWork(
   }
 
   // Make sure the next wake up is scheduled.
-  if (!main_thread_only().delayed_incoming_queue.empty())
-    return main_thread_only().delayed_incoming_queue.top().delayed_run_time;
+  if (!main_thread_only().delayed_incoming_queue.empty()) {
+    return DelayedWakeUp{
+        main_thread_only().delayed_incoming_queue.top().delayed_run_time,
+        main_thread_only().delayed_incoming_queue.top().sequence_num};
+  }
 
   return base::nullopt;
 }
@@ -585,9 +588,11 @@ void TaskQueueImpl::SetTimeDomain(TimeDomain* time_domain) {
   main_thread_only().time_domain = time_domain;
   time_domain->RegisterQueue(this);
 
-  if (!main_thread_only().delayed_incoming_queue.empty()) {
+  if (IsQueueEnabled() && !main_thread_only().delayed_incoming_queue.empty()) {
     time_domain->ScheduleDelayedWork(
-        this, main_thread_only().delayed_incoming_queue.top().delayed_run_time,
+        this,
+        {main_thread_only().delayed_incoming_queue.top().delayed_run_time,
+         main_thread_only().delayed_incoming_queue.top().sequence_num},
         time_domain->Now());
   }
 }
@@ -803,10 +808,22 @@ void TaskQueueImpl::EnableOrDisableWithSelector(bool enable) {
     return;
 
   if (enable) {
+    // Check if there's any immediate work on either queue.
+    bool immediate_queues_empty =
+        main_thread_only().immediate_work_queue->Empty();
+    if (immediate_queues_empty) {
+      base::AutoLock lock(any_thread_lock_);
+      immediate_queues_empty = any_thread().immediate_incoming_queue.empty();
+    }
+    // Avoid holding the lock while we fire the notification.
+    if (!immediate_queues_empty)
+      main_thread_only().time_domain->OnQueueHasImmediateWork(this);
+
     if (!main_thread_only().delayed_incoming_queue.empty()) {
       main_thread_only().time_domain->ScheduleDelayedWork(
           this,
-          main_thread_only().delayed_incoming_queue.top().delayed_run_time,
+          {main_thread_only().delayed_incoming_queue.top().delayed_run_time,
+           main_thread_only().delayed_incoming_queue.top().sequence_num},
           main_thread_only().time_domain->Now());
     }
     // Note the selector calls TaskQueueManager::OnTaskQueueEnabled which posts
@@ -850,9 +867,13 @@ void TaskQueueImpl::SweepCanceledDelayedTasks(base::TimeTicks now) {
     main_thread_only().time_domain->CancelDelayedWork(this);
   } else if (first_task_runtime !=
              main_thread_only().delayed_incoming_queue.top().delayed_run_time) {
-    main_thread_only().time_domain->ScheduleDelayedWork(
-        this, main_thread_only().delayed_incoming_queue.top().delayed_run_time,
-        main_thread_only().time_domain->Now());
+    if (IsQueueEnabled()) {
+      main_thread_only().time_domain->ScheduleDelayedWork(
+          this,
+          {main_thread_only().delayed_incoming_queue.top().delayed_run_time,
+           main_thread_only().delayed_incoming_queue.top().sequence_num},
+          main_thread_only().time_domain->Now());
+    }
   }
 }
 

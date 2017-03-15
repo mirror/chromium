@@ -8,15 +8,19 @@
 #include "base/memory/ptr_util.h"
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/autofill/core/browser/test_personal_data_manager.h"
+#include "components/strings/grit/components_strings.h"
+#import "ios/chrome/browser/payments/cells/autofill_profile_item.h"
 #import "ios/chrome/browser/payments/cells/payments_text_item.h"
-#import "ios/chrome/browser/payments/cells/shipping_address_item.h"
 #include "ios/chrome/browser/payments/payment_request.h"
 #include "ios/chrome/browser/payments/payment_request_test_util.h"
 #import "ios/chrome/browser/ui/autofill/cells/status_item.h"
 #import "ios/chrome/browser/ui/collection_view/collection_view_controller_test.h"
-#include "ios/chrome/grit/ios_strings.h"
 #include "ios/web/public/payments/payment_request.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 class ShippingAddressSelectionViewControllerTest
     : public CollectionViewControllerTest {
@@ -59,7 +63,7 @@ class ShippingAddressSelectionViewControllerTest
 TEST_F(ShippingAddressSelectionViewControllerTest, TestModel) {
   CreateController();
   CheckController();
-  CheckTitleWithId(IDS_IOS_PAYMENT_REQUEST_SHIPPING_ADDRESS_SELECTION_TITLE);
+  CheckTitleWithId(IDS_PAYMENTS_SHIPPING_ADDRESS_LABEL);
 
   [GetShippingAddressSelectionViewController() loadModel];
 
@@ -72,16 +76,16 @@ TEST_F(ShippingAddressSelectionViewControllerTest, TestModel) {
   id item = GetCollectionViewItem(0, 0);
   EXPECT_TRUE([item isMemberOfClass:[PaymentsTextItem class]]);
 
-  // The next two items should be of type ShippingAddressItem. The first one
+  // The next two items should be of type AutofillProfileItem. The first one
   // should appear to be selected.
   item = GetCollectionViewItem(0, 1);
-  ASSERT_TRUE([item isMemberOfClass:[ShippingAddressItem class]]);
-  ShippingAddressItem* shipping_address_item = item;
+  ASSERT_TRUE([item isMemberOfClass:[AutofillProfileItem class]]);
+  AutofillProfileItem* shipping_address_item = item;
   EXPECT_EQ(MDCCollectionViewCellAccessoryCheckmark,
             shipping_address_item.accessoryType);
 
   item = GetCollectionViewItem(0, 2);
-  EXPECT_TRUE([item isMemberOfClass:[ShippingAddressItem class]]);
+  EXPECT_TRUE([item isMemberOfClass:[AutofillProfileItem class]]);
   shipping_address_item = item;
   EXPECT_EQ(MDCCollectionViewCellAccessoryNone,
             shipping_address_item.accessoryType);
@@ -97,8 +101,8 @@ TEST_F(ShippingAddressSelectionViewControllerTest, TestModel) {
   // There should stil be 4 items in total.
   ASSERT_EQ(4U, static_cast<unsigned int>(NumberOfItemsInSection(0)));
 
-  // Test the loading state.
-  [GetShippingAddressSelectionViewController() setIsLoading:YES];
+  // Test the pending state.
+  [GetShippingAddressSelectionViewController() setPending:YES];
   [GetShippingAddressSelectionViewController() loadModel];
 
   ASSERT_EQ(1, NumberOfSections());

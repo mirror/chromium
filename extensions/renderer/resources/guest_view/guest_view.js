@@ -7,7 +7,8 @@
 
 var CreateEvent = require('guestViewEvents').CreateEvent;
 var EventBindings = require('event_bindings');
-var GuestViewInternal =
+var GuestViewInternal = getInternalApi ?
+    getInternalApi('guestViewInternal') :
     require('binding').Binding.create('guestViewInternal').generate();
 var GuestViewInternalNatives = requireNative('guest_view_internal');
 
@@ -44,6 +45,12 @@ function GuestViewImpl(guestView, viewType, guestInstanceId) {
 
   this.setupOnResize();
 }
+
+// Prevent GuestViewImpl inadvertently inheriting code from the global Object,
+// allowing a pathway for executing unintended user code execution.
+// TODO(wjmaclean): Use utils.expose() here instead? Track down other issues
+// of Object inheritance. https://crbug.com/701034
+GuestViewImpl.prototype.__proto__ = null;
 
 // Possible states.
 GuestViewImpl.GuestState = {
@@ -350,6 +357,8 @@ GuestView.prototype.getId = function() {
 };
 
 // Exports
-exports.$set('GuestView', GuestView);
-exports.$set('GuestViewImpl', GuestViewImpl);
-exports.$set('ResizeEvent', ResizeEvent);
+if (!apiBridge) {
+  exports.$set('GuestView', GuestView);
+  exports.$set('GuestViewImpl', GuestViewImpl);
+  exports.$set('ResizeEvent', ResizeEvent);
+}

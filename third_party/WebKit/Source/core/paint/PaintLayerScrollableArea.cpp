@@ -54,6 +54,7 @@
 #include "core/frame/FrameHost.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/PageScaleConstraintsSet.h"
 #include "core/frame/RootFrameViewport.h"
 #include "core/frame/Settings.h"
@@ -69,7 +70,6 @@
 #include "core/layout/api/LayoutBoxItem.h"
 #include "core/layout/compositing/CompositedLayerMapping.h"
 #include "core/layout/compositing/PaintLayerCompositor.h"
-#include "core/loader/FrameLoaderClient.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
@@ -172,7 +172,7 @@ void PaintLayerScrollableArea::dispose() {
 
   box()
       .document()
-      .frameHost()
+      .page()
       ->globalRootScrollerController()
       .didDisposeScrollableArea(*this);
 
@@ -314,7 +314,7 @@ IntRect PaintLayerScrollableArea::scrollCornerRect() const {
   return IntRect();
 }
 
-IntRect PaintLayerScrollableArea::convertFromScrollbarToContainingWidget(
+IntRect PaintLayerScrollableArea::convertFromScrollbarToContainingFrameViewBase(
     const Scrollbar& scrollbar,
     const IntRect& scrollbarRect) const {
   LayoutView* view = box().view();
@@ -327,7 +327,7 @@ IntRect PaintLayerScrollableArea::convertFromScrollbarToContainingWidget(
   return view->frameView()->convertFromLayoutItem(LayoutBoxItem(&box()), rect);
 }
 
-IntRect PaintLayerScrollableArea::convertFromContainingWidgetToScrollbar(
+IntRect PaintLayerScrollableArea::convertFromContainingFrameViewBaseToScrollbar(
     const Scrollbar& scrollbar,
     const IntRect& parentRect) const {
   LayoutView* view = box().view();
@@ -340,7 +340,8 @@ IntRect PaintLayerScrollableArea::convertFromContainingWidgetToScrollbar(
   return rect;
 }
 
-IntPoint PaintLayerScrollableArea::convertFromScrollbarToContainingWidget(
+IntPoint
+PaintLayerScrollableArea::convertFromScrollbarToContainingFrameViewBase(
     const Scrollbar& scrollbar,
     const IntPoint& scrollbarPoint) const {
   LayoutView* view = box().view();
@@ -352,7 +353,8 @@ IntPoint PaintLayerScrollableArea::convertFromScrollbarToContainingWidget(
   return view->frameView()->convertFromLayoutItem(LayoutBoxItem(&box()), point);
 }
 
-IntPoint PaintLayerScrollableArea::convertFromContainingWidgetToScrollbar(
+IntPoint
+PaintLayerScrollableArea::convertFromContainingFrameViewBaseToScrollbar(
     const Scrollbar& scrollbar,
     const IntPoint& parentPoint) const {
   LayoutView* view = box().view();
@@ -403,15 +405,15 @@ void PaintLayerScrollableArea::updateScrollOffset(const ScrollOffset& newOffset,
     layer()->updateLayerPositionsAfterOverflowScroll();
     // Update regions, scrolling may change the clip of a particular region.
     frameView->updateDocumentAnnotatedRegions();
-    frameView->setNeedsUpdateWidgetGeometries();
+    frameView->setNeedsUpdateGeometries();
     updateCompositingLayersAfterScroll();
   }
 
   const LayoutBoxModelObject& paintInvalidationContainer =
       box().containerForPaintInvalidation();
 
-  FloatQuad quadForFakeMouseMoveEvent = FloatQuad(FloatRect(
-      layer()->layoutObject()->previousVisualRectIncludingCompositedScrolling(
+  FloatQuad quadForFakeMouseMoveEvent = FloatQuad(
+      FloatRect(layer()->layoutObject().visualRectIncludingCompositedScrolling(
           paintInvalidationContainer)));
 
   quadForFakeMouseMoveEvent =
@@ -506,10 +508,10 @@ IntSize PaintLayerScrollableArea::maximumScrollOffsetInt() const {
   IntSize visibleSize =
       pixelSnappedIntRect(box().overflowClipRect(box().location())).size();
 
-  FrameHost* host = layoutBox()->document().frameHost();
-  DCHECK(host);
+  Page* page = layoutBox()->document().page();
+  DCHECK(page);
   TopDocumentRootScrollerController& controller =
-      host->globalRootScrollerController();
+      page->globalRootScrollerController();
 
   // The global root scroller should be clipped by the top FrameView rather
   // than it's overflow clipping box. This is to ensure that content exposed by
@@ -586,6 +588,12 @@ IntSize PaintLayerScrollableArea::contentsSize() const {
   return IntSize(pixelSnappedScrollWidth(), pixelSnappedScrollHeight());
 }
 
+void PaintLayerScrollableArea::contentsResized() {
+  ScrollableArea::contentsResized();
+  // Need to update the bounds of the scroll property.
+  box().setNeedsPaintPropertyUpdate();
+}
+
 bool PaintLayerScrollableArea::isScrollable() const {
   return scrollsOverflow();
 }
@@ -613,6 +621,12 @@ void PaintLayerScrollableArea::scrollbarVisibilityChanged() {
 
   if (LayoutView* view = box().view())
     return view->clearHitTestCache();
+}
+
+void PaintLayerScrollableArea::scrollbarFrameRectChanged() {
+  // Size of non-overlay scrollbar affects overflow clip rect.
+  if (!hasOverlayScrollbars())
+    box().setNeedsPaintPropertyUpdate();
 }
 
 bool PaintLayerScrollableArea::scrollbarsCanBeActive() const {
@@ -1168,8 +1182,10 @@ static inline const LayoutObject& scrollbarStyleSource(
       return layoutObject;
 
     if (ShadowRoot* shadowRoot = node->containingShadowRoot()) {
-      if (shadowRoot->type() == ShadowRootType::UserAgent)
-        return *shadowRoot->host().layoutObject();
+      if (shadowRoot->type() == ShadowRootType::UserAgent) {
+        if (LayoutObject* hostLayoutObject = shadowRoot->host().layoutObject())
+          return *hostLayoutObject;
+      }
     }
   }
 
@@ -1315,10 +1331,12 @@ int PaintLayerScrollableArea::verticalScrollbarWidth(
     OverlayScrollbarClipBehavior overlayScrollbarClipBehavior) const {
   if (!hasVerticalScrollbar())
     return 0;
-  if (verticalScrollbar()->isOverlayScrollbar() &&
+  if ((verticalScrollbar()->isOverlayScrollbar() ||
+       box().style()->overflowY() == EOverflow::kOverlay) &&
       (overlayScrollbarClipBehavior == IgnoreOverlayScrollbarSize ||
-       !verticalScrollbar()->shouldParticipateInHitTesting()))
+       !verticalScrollbar()->shouldParticipateInHitTesting())) {
     return 0;
+  }
   return verticalScrollbar()->scrollbarThickness();
 }
 
@@ -1326,10 +1344,12 @@ int PaintLayerScrollableArea::horizontalScrollbarHeight(
     OverlayScrollbarClipBehavior overlayScrollbarClipBehavior) const {
   if (!hasHorizontalScrollbar())
     return 0;
-  if (horizontalScrollbar()->isOverlayScrollbar() &&
+  if ((horizontalScrollbar()->isOverlayScrollbar() ||
+       box().style()->overflowX() == EOverflow::kOverlay) &&
       (overlayScrollbarClipBehavior == IgnoreOverlayScrollbarSize ||
-       !horizontalScrollbar()->shouldParticipateInHitTesting()))
+       !horizontalScrollbar()->shouldParticipateInHitTesting())) {
     return 0;
+  }
   return horizontalScrollbar()->scrollbarThickness();
 }
 
@@ -1543,8 +1563,7 @@ void PaintLayerScrollableArea::updateResizerStyle() {
 void PaintLayerScrollableArea::invalidateAllStickyConstraints() {
   if (PaintLayerScrollableAreaRareData* d = rareData()) {
     for (PaintLayer* stickyLayer : d->m_stickyConstraintsMap.keys()) {
-      if (stickyLayer->layoutObject()->style()->position() ==
-          EPosition::kSticky)
+      if (stickyLayer->layoutObject().style()->position() == EPosition::kSticky)
         stickyLayer->setNeedsCompositingInputsUpdate();
     }
     d->m_stickyConstraintsMap.clear();
@@ -1557,7 +1576,7 @@ void PaintLayerScrollableArea::invalidateStickyConstraintsFor(
   if (PaintLayerScrollableAreaRareData* d = rareData()) {
     d->m_stickyConstraintsMap.remove(layer);
     if (needsCompositingUpdate &&
-        layer->layoutObject()->style()->position() == EPosition::kSticky)
+        layer->layoutObject().style()->position() == EPosition::kSticky)
       layer->setNeedsCompositingInputsUpdate();
   }
 }
@@ -1783,56 +1802,63 @@ bool PaintLayerScrollableArea::computeNeedsCompositedScrolling(
     return false;
 
   bool needsCompositedScrolling = true;
+  uint32_t mainThreadScrollingReasons = 0;
 
   // TODO(flackr): Allow integer transforms as long as all of the ancestor
   // transforms are also integer.
   bool backgroundSupportsLCDText =
       RuntimeEnabledFeatures::compositeOpaqueScrollersEnabled() &&
-      layer->layoutObject()->style()->isStackingContext() &&
-      layer->backgroundPaintLocation() & BackgroundPaintInScrollingContents &&
+      layer->layoutObject().style()->isStackingContext() &&
+      layer->backgroundPaintLocation(&mainThreadScrollingReasons) &
+          BackgroundPaintInScrollingContents &&
       layer->backgroundIsKnownToBeOpaqueInRect(
-          toLayoutBox(layer->layoutObject())->paddingBoxRect()) &&
+          toLayoutBox(layer->layoutObject()).paddingBoxRect()) &&
       !layer->compositesWithTransform() && !layer->compositesWithOpacity();
 
   if (mode == PaintLayerScrollableArea::ConsiderLCDText &&
       !layer->compositor()->preferCompositingToLCDTextEnabled() &&
       !backgroundSupportsLCDText) {
     if (layer->compositesWithOpacity()) {
-      addStyleRelatedMainThreadScrollingReasons(
-          MainThreadScrollingReason::kHasOpacityAndLCDText);
+      mainThreadScrollingReasons |=
+          MainThreadScrollingReason::kHasOpacityAndLCDText;
     }
     if (layer->compositesWithTransform()) {
-      addStyleRelatedMainThreadScrollingReasons(
-          MainThreadScrollingReason::kHasTransformAndLCDText);
+      mainThreadScrollingReasons |=
+          MainThreadScrollingReason::kHasTransformAndLCDText;
     }
     if (!layer->backgroundIsKnownToBeOpaqueInRect(
-            toLayoutBox(layer->layoutObject())->paddingBoxRect())) {
-      addStyleRelatedMainThreadScrollingReasons(
-          MainThreadScrollingReason::kBackgroundNotOpaqueInRectAndLCDText);
+            toLayoutBox(layer->layoutObject()).paddingBoxRect())) {
+      mainThreadScrollingReasons |=
+          MainThreadScrollingReason::kBackgroundNotOpaqueInRectAndLCDText;
     }
+
     needsCompositedScrolling = false;
   }
 
   // TODO(schenney) Tests fail if we do not also exclude
-  // layer->layoutObject()->style()->hasBorderDecoration() (missing background
+  // layer->layoutObject().style()->hasBorderDecoration() (missing background
   // behind dashed borders). Resolve this case, or not, and update this check
   // with the results.
-  if (layer->layoutObject()->style()->hasBorderRadius()) {
-    addStyleRelatedMainThreadScrollingReasons(
-        MainThreadScrollingReason::kHasBorderRadius);
+  if (layer->layoutObject().style()->hasBorderRadius()) {
+    mainThreadScrollingReasons |= MainThreadScrollingReason::kHasBorderRadius;
     needsCompositedScrolling = false;
   }
-  if (layer->layoutObject()->hasClip() || layer->hasDescendantWithClipPath() ||
+  if (layer->layoutObject().hasClip() || layer->hasDescendantWithClipPath() ||
       layer->hasAncestorWithClipPath()) {
-    addStyleRelatedMainThreadScrollingReasons(
-        MainThreadScrollingReason::kHasClipRelatedProperty);
+    mainThreadScrollingReasons |=
+        MainThreadScrollingReason::kHasClipRelatedProperty;
     needsCompositedScrolling = false;
   }
+
+  if (mainThreadScrollingReasons) {
+    addStyleRelatedMainThreadScrollingReasons(mainThreadScrollingReasons);
+  }
+
   return needsCompositedScrolling;
 }
 
 void PaintLayerScrollableArea::addStyleRelatedMainThreadScrollingReasons(
-    const uint32_t reason) {
+    const uint32_t reasons) {
   LocalFrame* frame = box().frame();
   if (!frame)
     return;
@@ -1840,8 +1866,14 @@ void PaintLayerScrollableArea::addStyleRelatedMainThreadScrollingReasons(
   if (!frameView)
     return;
 
-  frameView->adjustStyleRelatedMainThreadScrollingReasons(reason, true);
-  m_reasons |= reason;
+  for (uint32_t reason = 1;
+       reason < 1 << MainThreadScrollingReason::kMainThreadScrollingReasonCount;
+       reason <<= 1) {
+    if (reasons & reason) {
+      frameView->adjustStyleRelatedMainThreadScrollingReasons(reason, true);
+      m_reasons |= reason;
+    }
+  }
 }
 
 void PaintLayerScrollableArea::removeStyleRelatedMainThreadScrollingReasons() {
@@ -1897,13 +1929,13 @@ bool PaintLayerScrollableArea::visualViewportSuppliesScrollbars() const {
     return false;
 
   const TopDocumentRootScrollerController& controller =
-      layoutBox()->document().frameHost()->globalRootScrollerController();
+      layoutBox()->document().page()->globalRootScrollerController();
 
   return RootScrollerUtil::scrollableAreaForRootScroller(
              controller.globalRootScroller()) == this;
 }
 
-Widget* PaintLayerScrollableArea::getWidget() {
+FrameViewBase* PaintLayerScrollableArea::getFrameViewBase() {
   return box().frame()->view();
 }
 
@@ -1914,12 +1946,12 @@ void PaintLayerScrollableArea::resetRebuildScrollbarLayerFlags() {
 
 CompositorAnimationHost* PaintLayerScrollableArea::compositorAnimationHost()
     const {
-  return m_layer.layoutObject()->frameView()->compositorAnimationHost();
+  return m_layer.layoutObject().frameView()->compositorAnimationHost();
 }
 
 CompositorAnimationTimeline*
 PaintLayerScrollableArea::compositorAnimationTimeline() const {
-  return m_layer.layoutObject()->frameView()->compositorAnimationTimeline();
+  return m_layer.layoutObject().frameView()->compositorAnimationTimeline();
 }
 
 PaintLayerScrollableArea*

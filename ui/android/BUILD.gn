@@ -11,8 +11,6 @@ component("android") {
   output_name = "ui_android"
   sources = [
     "animation_utils.h",
-    "context_provider_factory.cc",
-    "context_provider_factory.h",
     "delegated_frame_host_android.cc",
     "delegated_frame_host_android.h",
     "display_android_manager.cc",
@@ -23,6 +21,8 @@ component("android") {
     "edge_effect_base.h",
     "edge_effect_l.cc",
     "edge_effect_l.h",
+    "event_forwarder.cc",
+    "event_forwarder.h",
     "overscroll_glow.cc",
     "overscroll_glow.h",
     "overscroll_refresh.cc",
@@ -44,8 +44,6 @@ component("android") {
     "view_android.h",
     "view_client.cc",
     "view_client.h",
-    "view_root.cc",
-    "view_root.h",
     "window_android.cc",
     "window_android.h",
     "window_android_compositor.h",
@@ -62,9 +60,12 @@ component("android") {
     "//cc/surfaces",
     "//cc/surfaces:surface_id",
     "//skia",
+    "//ui/base",
     "//ui/display",
+    "//ui/events",
     "//ui/gfx",
     "//ui/gfx/geometry",
+    "//url",
   ]
 }
 
@@ -84,8 +85,8 @@ static_library("test_support") {
 generate_jni("ui_android_jni_headers") {
   sources = [
     "java/src/org/chromium/ui/OverscrollRefreshHandler.java",
+    "java/src/org/chromium/ui/base/EventForwarder.java",
     "java/src/org/chromium/ui/base/ViewAndroidDelegate.java",
-    "java/src/org/chromium/ui/base/ViewRoot.java",
     "java/src/org/chromium/ui/base/WindowAndroid.java",
     "java/src/org/chromium/ui/display/DisplayAndroidManager.java",
     "java/src/org/chromium/ui/resources/ResourceManager.java",
@@ -169,6 +170,7 @@ android_library("ui_java") {
     "java/src/org/chromium/ui/DropdownItem.java",
     "java/src/org/chromium/ui/DropdownItemBase.java",
     "java/src/org/chromium/ui/DropdownPopupWindow.java",
+    "java/src/org/chromium/ui/HorizontalListDividerDrawable.java",
     "java/src/org/chromium/ui/OverscrollRefreshHandler.java",
     "java/src/org/chromium/ui/UiUtils.java",
     "java/src/org/chromium/ui/VSyncMonitor.java",
@@ -176,12 +178,13 @@ android_library("ui_java") {
     "java/src/org/chromium/ui/base/AndroidPermissionDelegate.java",
     "java/src/org/chromium/ui/base/Clipboard.java",
     "java/src/org/chromium/ui/base/DeviceFormFactor.java",
+    "java/src/org/chromium/ui/base/EventForwarder.java",
     "java/src/org/chromium/ui/base/LocalizationUtils.java",
     "java/src/org/chromium/ui/base/ResourceBundle.java",
     "java/src/org/chromium/ui/base/SelectFileDialog.java",
+    "java/src/org/chromium/ui/base/SPenSupport.java",
     "java/src/org/chromium/ui/base/TouchDevice.java",
     "java/src/org/chromium/ui/base/ViewAndroidDelegate.java",
-    "java/src/org/chromium/ui/base/ViewRoot.java",
     "java/src/org/chromium/ui/base/WindowAndroid.java",
     "java/src/org/chromium/ui/display/DisplayAndroid.java",
     "java/src/org/chromium/ui/display/DisplayAndroidManager.java",
@@ -252,7 +255,7 @@ test("ui_android_unittests") {
     "overscroll_refresh_unittest.cc",
     "resources/resource_manager_impl_unittest.cc",
     "run_all_unittests.cc",
-    "view_android_unittest.cc",
+    "view_android_unittests.cc",
   ]
   deps = [
     ":android",
@@ -266,6 +269,7 @@ test("ui_android_unittests") {
     "//testing/gmock",
     "//testing/gtest",
     "//ui/base",
+    "//ui/events",
     "//ui/gfx",
     "//ui/resources:ui_test_pak",
   ]

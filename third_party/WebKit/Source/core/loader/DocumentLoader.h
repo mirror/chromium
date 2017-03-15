@@ -30,6 +30,8 @@
 #ifndef DocumentLoader_h
 #define DocumentLoader_h
 
+#include <memory>
+#include "bindings/core/v8/SourceLocation.h"
 #include "core/CoreExport.h"
 #include "core/dom/ViewportDescription.h"
 #include "core/dom/WeakIdentifierMap.h"
@@ -43,26 +45,28 @@
 #include "platform/SharedBuffer.h"
 #include "platform/loader/fetch/ClientHintsPreferences.h"
 #include "platform/loader/fetch/RawResource.h"
+#include "platform/loader/fetch/ResourceError.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
+#include "platform/loader/fetch/ResourceRequest.h"
+#include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/loader/fetch/SubstituteData.h"
-#include "platform/network/ResourceError.h"
-#include "platform/network/ResourceRequest.h"
-#include "platform/network/ResourceResponse.h"
 #include "public/platform/WebLoadingBehaviorFlag.h"
 #include "wtf/HashSet.h"
 #include "wtf/RefPtr.h"
+
 #include <memory>
 
 namespace blink {
 
 class ApplicationCacheHost;
+class SubresourceFilter;
 class ResourceFetcher;
 class DocumentInit;
 class LocalFrame;
+class LocalFrameClient;
 class FrameLoader;
-class FrameLoaderClient;
 class ResourceTimingInfo;
-class WebDocumentSubresourceFilter;
+class WebServiceWorkerNetworkProvider;
 struct ViewportDescriptionWrapper;
 
 class CORE_EXPORT DocumentLoader
@@ -100,8 +104,8 @@ class CORE_EXPORT DocumentLoader
 
   ResourceFetcher* fetcher() const { return m_fetcher.get(); }
 
-  void setSubresourceFilter(std::unique_ptr<WebDocumentSubresourceFilter>);
-  WebDocumentSubresourceFilter* subresourceFilter() const {
+  void setSubresourceFilter(SubresourceFilter*);
+  SubresourceFilter* subresourceFilter() const {
     return m_subresourceFilter.get();
   }
 
@@ -132,6 +136,12 @@ class CORE_EXPORT DocumentLoader
   bool isCommittedButEmpty() const {
     return m_state >= Committed && !m_dataReceived;
   }
+
+  // Without PlzNavigate, this is only false for a narrow window during
+  // navigation start. For PlzNavigate, a navigation sent to the browser will
+  // leave a dummy DocumentLoader in the NotStarted state until the navigation
+  // is actually handled in the renderer.
+  bool didStart() const { return m_state != NotStarted; }
 
   void setSentDidFinishLoad() { m_state = SentDidFinishLoad; }
   bool sentDidFinishLoad() const { return m_state == SentDidFinishLoad; }
@@ -182,6 +192,19 @@ class CORE_EXPORT DocumentLoader
 
   Resource* startPreload(Resource::Type, FetchRequest&);
 
+  void setServiceWorkerNetworkProvider(
+      std::unique_ptr<WebServiceWorkerNetworkProvider>);
+
+  // May return null before the first HTML tag is inserted by the
+  // parser (before didCreateDataSource is called), after the document
+  // is detached from frame, or in tests.
+  WebServiceWorkerNetworkProvider* getServiceWorkerNetworkProvider() {
+    return m_serviceWorkerNetworkProvider.get();
+  }
+
+  std::unique_ptr<SourceLocation> copySourceLocation() const;
+  void setSourceLocation(std::unique_ptr<SourceLocation>);
+
   DECLARE_VIRTUAL_TRACE();
 
  protected:
@@ -189,8 +212,6 @@ class CORE_EXPORT DocumentLoader
                  const ResourceRequest&,
                  const SubstituteData&,
                  ClientRedirectPolicy);
-
-  void didRedirect(const KURL& oldURL, const KURL& newURL);
 
   Vector<KURL> m_redirectChain;
 
@@ -209,7 +230,7 @@ class CORE_EXPORT DocumentLoader
   // Use these method only where it's guaranteed that |m_frame| hasn't been
   // cleared.
   FrameLoader& frameLoader() const;
-  FrameLoaderClient& frameLoaderClient() const;
+  LocalFrameClient& localFrameClient() const;
 
   void commitIfReady();
   void commitData(const char* bytes, size_t length);
@@ -243,11 +264,12 @@ class CORE_EXPORT DocumentLoader
 
   Member<LocalFrame> m_frame;
   Member<ResourceFetcher> m_fetcher;
-  std::unique_ptr<WebDocumentSubresourceFilter> m_subresourceFilter;
 
   Member<RawResource> m_mainResource;
 
   Member<DocumentWriter> m_writer;
+
+  Member<SubresourceFilter> m_subresourceFilter;
 
   // A reference to actual request used to create the data source.
   // The only part of this request that should change is the url, and
@@ -277,11 +299,19 @@ class CORE_EXPORT DocumentLoader
 
   Member<ApplicationCacheHost> m_applicationCacheHost;
 
+  std::unique_ptr<WebServiceWorkerNetworkProvider>
+      m_serviceWorkerNetworkProvider;
+
   Member<ContentSecurityPolicy> m_contentSecurityPolicy;
   ClientHintsPreferences m_clientHintsPreferences;
   InitialScrollState m_initialScrollState;
 
   bool m_wasBlockedAfterCSP;
+
+  // PlzNavigate: set when committing a navigation. The data has originally been
+  // captured when the navigation was sent to the browser process, and it is
+  // sent back at commit time.
+  std::unique_ptr<SourceLocation> m_sourceLocation;
 
   enum State {
     NotStarted,

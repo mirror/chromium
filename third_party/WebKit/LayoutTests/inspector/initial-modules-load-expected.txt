@@ -9,9 +9,11 @@ Loaded modules:
     dom_extension
     emulation
     extensions
+    help
     host
     main
     network_conditions
+    object_ui
     persistence
     platform
     protocol
@@ -31,10 +33,12 @@ Loaded modules:
     emulation
     event_listeners
     extensions
+    help
     host
     inline_editor
     main
     network_conditions
+    object_ui
     persistence
     platform
     protocol
@@ -59,11 +63,13 @@ Loaded modules:
     emulation
     event_listeners
     extensions
+    help
     host
     inline_editor
     main
     network
     network_conditions
+    object_ui
     perf_ui
     persistence
     platform
@@ -74,6 +80,7 @@ Loaded modules:
     text_editor
     ui
     workspace
+    workspace_diff
 
 Running: testShowSourcesPanel
 Loaded modules:
@@ -91,11 +98,13 @@ Loaded modules:
     emulation
     event_listeners
     extensions
+    help
     host
     inline_editor
     main
     network
     network_conditions
+    object_ui
     perf_ui
     persistence
     platform
@@ -109,6 +118,7 @@ Loaded modules:
     text_editor
     ui
     workspace
+    workspace_diff
 
 Running: testOpenUISourceCode
 Loaded modules:
@@ -126,11 +136,13 @@ Loaded modules:
     emulation
     event_listeners
     extensions
+    help
     host
     inline_editor
     main
     network
     network_conditions
+    object_ui
     perf_ui
     persistence
     platform
@@ -144,4 +156,5 @@ Loaded modules:
     text_editor
     ui
     workspace
+    workspace_diff
 

@@ -4,9 +4,10 @@
 
 import unittest
 
+from webkitpy.common.host_mock import MockHost
+from webkitpy.common.net.buildbot import Build
 from webkitpy.common.net.git_cl import GitCL
 from webkitpy.common.system.executive_mock import MockExecutive
-from webkitpy.common.host_mock import MockHost
 
 
 class GitCLTest(unittest.TestCase):
@@ -23,10 +24,10 @@ class GitCLTest(unittest.TestCase):
         host = MockHost()
         host.executive = MockExecutive(output='mock-output')
         git_cl = GitCL(host, auth_refresh_token_json='token.json')
-        git_cl.run(['upload'])
+        git_cl.run(['try', '-b', 'win10_blink_rel'])
         self.assertEqual(
             host.executive.calls,
-            [['git', 'cl', 'upload', '--auth-refresh-token-json', 'token.json']])
+            [['git', 'cl', 'try', '-b', 'win10_blink_rel', '--auth-refresh-token-json', 'token.json']])
 
     def test_some_commands_not_run_with_auth(self):
         host = MockHost()
@@ -46,18 +47,6 @@ class GitCLTest(unittest.TestCase):
         host.executive = MockExecutive(output='Issue number: None (None)')
         git_cl = GitCL(host)
         self.assertEqual(git_cl.get_issue_number(), 'None')
-
-    def test_is_closed_true(self):
-        host = MockHost()
-        host.executive = MockExecutive(output='closed ')
-        git_cl = GitCL(host)
-        self.assertTrue(git_cl.is_closed())
-
-    def test_is_closed_false(self):
-        host = MockHost()
-        host.executive = MockExecutive(output='waiting')
-        git_cl = GitCL(host)
-        self.assertFalse(git_cl.is_closed())
 
     def test_all_jobs_finished_empty(self):
         self.assertTrue(GitCL.all_jobs_finished([]))
@@ -106,11 +95,13 @@ class GitCLTest(unittest.TestCase):
                 'builder_name': 'some-builder',
                 'status': 'COMPLETED',
                 'result': 'FAILURE',
+                'url': 'http://build.chromium.org/p/master/builders/some-builder/builds/90',
             },
             {
                 'builder_name': 'some-builder',
                 'status': 'STARTED',
                 'result': None,
+                'url': 'http://build.chromium.org/p/master/builders/some-builder/builds/100',
             },
         ]))
 
@@ -120,11 +111,13 @@ class GitCLTest(unittest.TestCase):
                 'builder_name': 'some-builder',
                 'status': 'COMPLETED',
                 'result': 'FAILURE',
+                'url': 'http://build.chromium.org/p/master/builders/some-builder/builds/90',
             },
             {
                 'builder_name': 'some-builder',
                 'status': 'COMPLETED',
                 'result': 'SUCCESS',
+                'url': 'http://build.chromium.org/p/master/builders/some-builder/builds/100',
             },
         ]))
 
@@ -137,11 +130,13 @@ class GitCLTest(unittest.TestCase):
                 'builder_name': 'some-builder',
                 'status': 'COMPLETED',
                 'result': 'SUCCESS',
+                'url': 'http://build.chromium.org/p/master/builders/some-builder/builds/90',
             },
             {
                 'builder_name': 'some-builder',
                 'status': 'STARTED',
                 'result': None,
+                'url': 'http://build.chromium.org/p/master/builders/some-builder/builds/100',
             },
         ]))
 
@@ -153,3 +148,35 @@ class GitCLTest(unittest.TestCase):
                 'result': 'FAILURE',
             },
         ]))
+
+    def test_latest_try_builds(self):
+        git_cl = GitCL(MockHost())
+        git_cl.fetch_try_results = lambda: [
+            {
+                'builder_name': 'builder-b',
+                'status': 'COMPLETED',
+                'result': 'SUCCESS',
+                'url': 'http://build.chromium.org/p/master/builders/some-builder/builds/100',
+            },
+            {
+                'builder_name': 'builder-b',
+                'status': 'COMPLETED',
+                'result': 'SUCCESS',
+                'url': 'http://build.chromium.org/p/master/builders/some-builder/builds/90',
+            },
+            {
+                'builder_name': 'builder-a',
+                'status': 'SCHEDULED',
+                'result': None,
+                'url': None,
+            },
+            {
+                'builder_name': 'builder-c',
+                'status': 'COMPLETED',
+                'result': 'SUCCESS',
+                'url': 'http://build.chromium.org/p/master/builders/some-builder/builds/123',
+            },
+        ]
+        self.assertEqual(
+            git_cl.latest_try_jobs(['builder-a', 'builder-b']),
+            [Build('builder-a'), Build('builder-b', 100)])

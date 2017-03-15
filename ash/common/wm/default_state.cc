@@ -280,6 +280,11 @@ void DefaultState::OnWMEvent(WindowState* window_state, const WMEvent* event) {
     return;
   }
 
+  if (event->type() == WM_EVENT_SNAP_LEFT ||
+      event->type() == WM_EVENT_SNAP_RIGHT) {
+    window_state->set_bounds_changed_by_user(true);
+  }
+
   EnterToNextState(window_state, next_state_type);
 }
 
@@ -696,8 +701,9 @@ void DefaultState::UpdateBoundsFromState(WindowState* window_state,
         WmWindow* docked_container =
             window->GetRootWindow()->GetChildByShellWindowId(
                 kShellWindowId_DockedContainer);
-        ReparentChildWithTransientChildren(window, window->GetParent(),
-                                           docked_container);
+        ReparentChildWithTransientChildren(window->aura_window(),
+                                           window->aura_window()->parent(),
+                                           docked_container->aura_window());
       }
       // Return early because we don't want to update the bounds of the
       // window below; as the bounds are managed by the dock layout.

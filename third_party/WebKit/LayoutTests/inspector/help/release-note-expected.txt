@@ -1,0 +1,18 @@
+Test release note
+
+Last release note version seen:
+0
+
+Dumping release note text:
+Chrome has been updated.
+Here's what's new in DevTools:
+Improved Performance and Memory panels
+Edit cookies directly from the Application panel
+
+Learn moreClose
+Last version of release note seen should be updated:
+99
+
+Click on hide button
+Hiding view: release-note
+

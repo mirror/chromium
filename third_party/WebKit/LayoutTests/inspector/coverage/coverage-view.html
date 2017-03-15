@@ -1,0 +1,39 @@
+<html>
+<head>
+<script src="../../http/tests/inspector/inspector-test.js"></script>
+<script src="../../http/tests/inspector/elements-test.js"></script>
+<script src="coverage-test.js"></script>
+<script src="resources/coverage.js"></script>
+
+<link rel="stylesheet" type="text/css" href="resources/highlight-in-source.css">
+
+<script>
+async function test()
+{
+    InspectorTest.startCoverage();
+    await InspectorTest.evaluateInPagePromise("performActions()");
+    await InspectorTest.stopCoverage();
+
+    var coverageView = self.runtime.sharedInstance(Coverage.CoverageView);
+    var dataGrid = coverageView._listView._dataGrid;
+    for (var child of dataGrid.rootNode().children) {
+        var data = child._coverageInfo;
+        var url = InspectorTest.formatters.formatAsURL(data.url());
+        if (url.endsWith("-test.js") || url.endsWith(".html"))
+            continue;
+        var type = Coverage.CoverageListView._typeToString(data.type());
+        InspectorTest.addResult(`${url} ${type} used: ${data.usedSize()} unused: ${data.unusedSize()} total: ${data.size()}`);
+    }
+    InspectorTest.completeTest();
+}
+
+</script>
+</head>
+
+<body onload="runTest()">
+<p class="class">
+Tests the coverage list view after finishing recording in the Coverage view.
+</p>
+
+</body>
+</html>

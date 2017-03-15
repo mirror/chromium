@@ -45,7 +45,7 @@ ProfileInfoHandler::ProfileInfoHandler(Profile* profile)
       user_manager_observer_(this),
 #endif
       profile_observer_(this),
-      weak_ptr_factory_(this) {
+      callback_weak_ptr_factory_(this) {
 #if defined(OS_CHROMEOS)
   // Set up the chrome://userimage/ source.
   content::URLDataSource::Add(profile,
@@ -88,6 +88,8 @@ void ProfileInfoHandler::OnJavascriptAllowed() {
 }
 
 void ProfileInfoHandler::OnJavascriptDisallowed() {
+  callback_weak_ptr_factory_.InvalidateWeakPtrs();
+
   profile_observer_.Remove(
       &g_browser_process->profile_manager()->GetProfileAttributesStorage());
 
@@ -134,7 +136,7 @@ void ProfileInfoHandler::HandleGetProfileStats(const base::ListValue* args) {
   // (e.g., |item.success| is false). Therefore, query the actual statistics.
   ProfileStatisticsFactory::GetForProfile(profile_)->GatherStatistics(
       base::Bind(&ProfileInfoHandler::PushProfileStatsCount,
-                 weak_ptr_factory_.GetWeakPtr()));
+                 callback_weak_ptr_factory_.GetWeakPtr()));
 }
 
 void ProfileInfoHandler::PushProfileStatsCount(
@@ -152,8 +154,8 @@ void ProfileInfoHandler::PushProfileStatsCount(
   // available. Therefore, webUIListenerCallback mechanism is used instead of
   // the Promise callback approach.
   CallJavascriptFunction("cr.webUIListenerCallback",
-                         base::StringValue(kProfileStatsCountReadyEventName),
-                         base::FundamentalValue(count));
+                         base::Value(kProfileStatsCountReadyEventName),
+                         base::Value(count));
 }
 #endif
 
@@ -165,21 +167,21 @@ void ProfileInfoHandler::HandleGetProfileManagesSupervisedUsers(
   const base::Value* callback_id;
   CHECK(args->Get(0, &callback_id));
 
-  ResolveJavascriptCallback(
-      *callback_id, base::FundamentalValue(IsProfileManagingSupervisedUsers()));
+  ResolveJavascriptCallback(*callback_id,
+                            base::Value(IsProfileManagingSupervisedUsers()));
 }
 
 void ProfileInfoHandler::PushProfileInfo() {
   CallJavascriptFunction("cr.webUIListenerCallback",
-                         base::StringValue(kProfileInfoChangedEventName),
+                         base::Value(kProfileInfoChangedEventName),
                          *GetAccountNameAndIcon());
 }
 
 void ProfileInfoHandler::PushProfileManagesSupervisedUsersStatus() {
   CallJavascriptFunction(
       "cr.webUIListenerCallback",
-      base::StringValue(kProfileManagesSupervisedUsersChangedEventName),
-      base::FundamentalValue(IsProfileManagingSupervisedUsers()));
+      base::Value(kProfileManagesSupervisedUsersChangedEventName),
+      base::Value(IsProfileManagingSupervisedUsers()));
 }
 
 std::unique_ptr<base::DictionaryValue>
@@ -188,19 +190,14 @@ ProfileInfoHandler::GetAccountNameAndIcon() const {
   std::string icon_url;
 
 #if defined(OS_CHROMEOS)
-  name = profile_->GetProfileUserName();
-  std::string user_email;
-  if (name.empty()) {
-    // User is not associated with a gaia account, use the display name.
-    const user_manager::User* user =
-        chromeos::ProfileHelper::Get()->GetUserByProfile(profile_);
-    // Note: We don't show the User section in Guest mode.
-    DCHECK(user && (user->GetType() != user_manager::USER_TYPE_GUEST));
-    name = base::UTF16ToUTF8(user->GetDisplayName());
+  const user_manager::User* user =
+      chromeos::ProfileHelper::Get()->GetUserByProfile(profile_);
+  DCHECK(user);
+  name = base::UTF16ToUTF8(user->GetDisplayName());
+  std::string user_email = profile_->GetProfileUserName();
+  if (user_email.empty()) {
+    // User is not associated with a gaia account.
     user_email = user->GetAccountId().GetUserEmail();
-  } else {
-    name = gaia::SanitizeEmail(gaia::CanonicalizeEmail(name));
-    user_email = name;
   }
 
   // Get image as data URL instead of using chrome://userimage source to avoid

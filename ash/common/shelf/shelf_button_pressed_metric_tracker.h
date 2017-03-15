@@ -8,7 +8,7 @@
 #include <memory>
 
 #include "ash/ash_export.h"
-#include "ash/common/shelf/shelf_item_delegate.h"
+#include "ash/public/interfaces/shelf.mojom.h"
 #include "base/macros.h"
 #include "base/time/tick_clock.h"
 #include "base/time/time.h"
@@ -47,7 +47,7 @@ class ASH_EXPORT ShelfButtonPressedMetricTracker {
   // Records metrics based on the |event|, |sender|, and |performed_action|.
   void ButtonPressed(const ui::Event& event,
                      const views::Button* sender,
-                     ShelfItemDelegate::PerformedAction performed_action);
+                     ShelfAction performed_action);
 
  private:
   friend class test::ShelfButtonPressedMetricTrackerTestAPI;
@@ -56,8 +56,7 @@ class ASH_EXPORT ShelfButtonPressedMetricTracker {
   void RecordButtonPressedSource(const ui::Event& event);
 
   // Records UMA metrics for the action performed when a button is pressed.
-  void RecordButtonPressedAction(
-      ShelfItemDelegate::PerformedAction performed_action);
+  void RecordButtonPressedAction(ShelfAction performed_action);
 
   // Records UMA metrics for the elapsed time since the last window minimize
   // action.

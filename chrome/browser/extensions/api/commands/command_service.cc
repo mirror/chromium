@@ -85,7 +85,7 @@ std::string StripCurrentPlatform(const std::string& key) {
 void SetInitialBindingsHaveBeenAssigned(
     ExtensionPrefs* prefs, const std::string& extension_id) {
   prefs->UpdateExtensionPref(extension_id, kInitialBindingsHaveBeenAssigned,
-                             new base::FundamentalValue(true));
+                             new base::Value(true));
 }
 
 bool InitialBindingsHaveBeenAssigned(
@@ -141,8 +141,9 @@ CommandService::CommandService(content::BrowserContext* context)
 CommandService::~CommandService() {
 }
 
-static base::LazyInstance<BrowserContextKeyedAPIFactory<CommandService> >
-    g_factory = LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<
+    BrowserContextKeyedAPIFactory<CommandService>>::DestructorAtExit g_factory =
+    LAZY_INSTANCE_INITIALIZER;
 
 // static
 BrowserContextKeyedAPIFactory<CommandService>*

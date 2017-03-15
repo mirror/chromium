@@ -17,11 +17,11 @@
 #include "ash/common/shelf/wm_shelf_util.h"
 #include "ash/common/system/status_area_layout_manager.h"
 #include "ash/common/system/status_area_widget.h"
-#include "ash/common/wm_lookup.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
-#include "ash/common/wm_window_property.h"
 #include "ash/root_window_controller.h"
+#include "ash/shell.h"
+#include "ash/wm/window_properties.h"
 #include "base/memory/ptr_util.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
@@ -62,7 +62,7 @@ class ShelfWidget::DelegateView : public views::WidgetDelegate,
   void OnBoundsChanged(const gfx::Rect& old_bounds) override;
 
   // ShelfBackgroundAnimatorObserver:
-  void UpdateShelfBackground(int alpha) override;
+  void UpdateShelfBackground(SkColor color) override;
 
  private:
   ShelfWidget* shelf_widget_;
@@ -89,7 +89,6 @@ ShelfWidget::DelegateView::DelegateView(ShelfWidget* shelf_widget)
   set_allow_deactivate_on_esc(true);
   opaque_background_.SetColor(SK_ColorBLACK);
   opaque_background_.SetBounds(GetLocalBounds());
-  opaque_background_.SetOpacity(0.0f);
   opaque_foreground_.SetColor(SK_ColorBLACK);
   opaque_foreground_.SetBounds(GetLocalBounds());
   opaque_foreground_.SetOpacity(0.0f);
@@ -125,9 +124,8 @@ void ShelfWidget::DelegateView::OnBoundsChanged(const gfx::Rect& old_bounds) {
   opaque_foreground_.SetBounds(GetLocalBounds());
 }
 
-void ShelfWidget::DelegateView::UpdateShelfBackground(int alpha) {
-  const float kMaxAlpha = 255.0f;
-  opaque_background_.SetOpacity(alpha / kMaxAlpha);
+void ShelfWidget::DelegateView::UpdateShelfBackground(SkColor color) {
+  opaque_background_.SetColor(color);
 }
 
 ShelfWidget::ShelfWidget(WmWindow* shelf_container, WmShelf* wm_shelf)
@@ -135,7 +133,9 @@ ShelfWidget::ShelfWidget(WmWindow* shelf_container, WmShelf* wm_shelf)
       status_area_widget_(nullptr),
       delegate_view_(new DelegateView(this)),
       shelf_view_(nullptr),
-      background_animator_(SHELF_BACKGROUND_DEFAULT, wm_shelf_),
+      background_animator_(SHELF_BACKGROUND_DEFAULT,
+                           wm_shelf_,
+                           Shell::GetInstance()->wallpaper_controller()),
       activating_as_fallback_(false) {
   DCHECK(wm_shelf_);
   background_animator_.AddObserver(this);
@@ -306,9 +306,9 @@ void ShelfWidget::UpdateIconPositionForPanel(WmWindow* panel) {
   if (!shelf_view_)
     return;
 
-  WmWindow* shelf_window = WmLookup::Get()->GetWindowForWidget(this);
+  WmWindow* shelf_window = WmWindow::Get(this->GetNativeWindow());
   shelf_view_->UpdatePanelIconPosition(
-      panel->GetIntProperty(WmWindowProperty::SHELF_ID),
+      panel->aura_window()->GetProperty(kShelfIDKey),
       shelf_window->ConvertRectFromScreen(panel->GetBoundsInScreen())
           .CenterPoint());
 }
@@ -319,7 +319,7 @@ gfx::Rect ShelfWidget::GetScreenBoundsOfItemIconForWindow(WmWindow* window) {
   if (!shelf_view_)
     return gfx::Rect();
 
-  ShelfID id = window->GetIntProperty(WmWindowProperty::SHELF_ID);
+  ShelfID id = window->aura_window()->GetProperty(kShelfIDKey);
   gfx::Rect bounds(shelf_view_->GetIdealBoundsOfItemIcon(id));
   gfx::Point screen_origin;
   views::View::ConvertPointToScreen(shelf_view_, &screen_origin);
@@ -346,9 +346,9 @@ void ShelfWidget::OnWidgetActivationChanged(views::Widget* widget,
     delegate_view_->GetFocusManager()->ClearFocus();
 }
 
-void ShelfWidget::UpdateShelfItemBackground(int alpha) {
+void ShelfWidget::UpdateShelfItemBackground(SkColor color) {
   if (shelf_view_)
-    shelf_view_->UpdateShelfItemBackground(alpha);
+    shelf_view_->UpdateShelfItemBackground(color);
 }
 
 void ShelfWidget::WillDeleteShelfLayoutManager() {

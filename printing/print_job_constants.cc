@@ -172,7 +172,7 @@ const char kSettingPrintWithExtension[] = "printWithExtension";
 // Scaling factor
 const char kSettingScaleFactor[] = "scaleFactor";
 
-// Scaling factor
+// Whether to rasterize the PDF for printing.
 const char kSettingRasterizePdf[] = "rasterizePDF";
 
 // Ticket option. Contains the ticket in CJT format.
@@ -203,9 +203,11 @@ const char kKCMY[] = "KCMY";
 const char kCMY_K[] = "CMY+K";
 const char kCMY[] = "CMY";
 const char kColor[] = "Color";
+const char kFullColor[] = "FullColor";
 const char kGray[] = "Gray";
 const char kGrayscale[] = "Grayscale";
 const char kGreyscale[] = "Greyscale";
+const char kMono[] = "Mono";
 const char kMonochrome[] = "Monochrome";
 const char kNormal[] = "Normal";
 const char kNormalGray[] = "Normal.Gray";

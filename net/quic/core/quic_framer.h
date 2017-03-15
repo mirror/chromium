@@ -9,13 +9,11 @@
 #include <cstdint>
 #include <memory>
 #include <string>
-#include <unordered_map>
-#include <unordered_set>
 
 #include "base/macros.h"
-#include "base/strings/string_piece.h"
 #include "net/quic/core/quic_packets.h"
 #include "net/quic/platform/api/quic_export.h"
+#include "net/quic/platform/api/quic_string_piece.h"
 
 namespace net {
 
@@ -136,9 +134,6 @@ class QUIC_EXPORT_PRIVATE QuicFramerVisitorInterface {
   // Called when a BlockedFrame has been parsed.
   virtual bool OnBlockedFrame(const QuicBlockedFrame& frame) = 0;
 
-  // Called when a PathCloseFrame has been parsed.
-  virtual bool OnPathCloseFrame(const QuicPathCloseFrame& frame) = 0;
-
   // Called when a packet has been completely processed.
   virtual void OnPacketComplete() = 0;
 };
@@ -213,8 +208,6 @@ class QUIC_EXPORT_PRIVATE QuicFramer {
   static size_t GetWindowUpdateFrameSize();
   // Size in bytes of all Blocked frame fields.
   static size_t GetBlockedFrameSize();
-  // Size in bytes of all PathClose frame fields.
-  static size_t GetPathCloseFrameSize();
   // Size in bytes required to serialize the stream id.
   static size_t GetStreamIdSize(QuicStreamId stream_id);
   // Size in bytes required to serialize the stream offset.
@@ -233,12 +226,11 @@ class QUIC_EXPORT_PRIVATE QuicFramer {
 
   // Returns the associated data from the encrypted packet |encrypted| as a
   // stringpiece.
-  static base::StringPiece GetAssociatedDataFromEncryptedPacket(
+  static QuicStringPiece GetAssociatedDataFromEncryptedPacket(
       QuicVersion version,
       const QuicEncryptedPacket& encrypted,
       QuicConnectionIdLength connection_id_length,
       bool includes_version,
-      bool includes_path_id,
       bool includes_diversification_nonce,
       QuicPacketNumberLength packet_number_length);
 
@@ -299,7 +291,6 @@ class QUIC_EXPORT_PRIVATE QuicFramer {
   // data. |total_len| is the length of the associated data plus plaintext.
   // |buffer_len| is the full length of the allocated buffer.
   size_t EncryptInPlace(EncryptionLevel level,
-                        QuicPathId path_id,
                         QuicPacketNumber packet_number,
                         size_t ad_len,
                         size_t total_len,
@@ -332,9 +323,6 @@ class QUIC_EXPORT_PRIVATE QuicFramer {
   void set_validate_flags(bool value) { validate_flags_ = value; }
 
   Perspective perspective() const { return perspective_; }
-
-  // Called when a PATH_CLOSED frame has been sent/received on |path_id|.
-  void OnPathClosed(QuicPathId path_id);
 
   QuicTag last_version_tag() { return last_version_tag_; }
 
@@ -376,7 +364,6 @@ class QUIC_EXPORT_PRIVATE QuicFramer {
   bool ProcessUnauthenticatedHeader(QuicDataReader* encrypted_reader,
                                     QuicPacketHeader* header);
 
-  bool ProcessPathId(QuicDataReader* reader, QuicPathId* path_id);
   bool ProcessPacketSequenceNumber(QuicDataReader* reader,
                                    QuicPacketNumberLength packet_number_length,
                                    QuicPacketNumber base_packet_number,
@@ -399,7 +386,6 @@ class QUIC_EXPORT_PRIVATE QuicFramer {
   bool ProcessWindowUpdateFrame(QuicDataReader* reader,
                                 QuicWindowUpdateFrame* frame);
   bool ProcessBlockedFrame(QuicDataReader* reader, QuicBlockedFrame* frame);
-  bool ProcessPathCloseFrame(QuicDataReader* reader, QuicPathCloseFrame* frame);
 
   bool DecryptPayload(QuicDataReader* encrypted_reader,
                       const QuicPacketHeader& header,
@@ -407,12 +393,6 @@ class QUIC_EXPORT_PRIVATE QuicFramer {
                       char* decrypted_buffer,
                       size_t buffer_length,
                       size_t* decrypted_length);
-
-  // Checks if |path_id| is a viable path to receive packets on. Returns true
-  // and sets |base_packet_number| to the packet number to calculate the
-  // incoming packet number from if the path is not closed. Returns false
-  // otherwise.
-  bool IsValidPath(QuicPathId path_id, QuicPacketNumber* base_packet_number);
 
   // Sets last_packet_number_. This can only be called after the packet is
   // successfully decrypted.
@@ -480,8 +460,6 @@ class QUIC_EXPORT_PRIVATE QuicFramer {
                                QuicDataWriter* writer);
   bool AppendBlockedFrame(const QuicBlockedFrame& frame,
                           QuicDataWriter* writer);
-  bool AppendPathCloseFrame(const QuicPathCloseFrame& frame,
-                            QuicDataWriter* writer);
 
   bool RaiseError(QuicErrorCode error);
 
@@ -492,20 +470,10 @@ class QUIC_EXPORT_PRIVATE QuicFramer {
   std::string detailed_error_;
   QuicFramerVisitorInterface* visitor_;
   QuicErrorCode error_;
-  // Set of closed paths. A path is considered as closed if a PATH_CLOSED frame
-  // has been sent/received.
-  // TODO(fayang): this set is never cleaned up. A possible improvement is to
-  // use intervals.
-  std::unordered_set<QuicPathId> closed_paths_;
   // Updated by ProcessPacketHeader when it succeeds.
   QuicPacketNumber last_packet_number_;
-  // Map mapping path id to packet number of largest successfully decrypted
-  // received packet.
-  std::unordered_map<QuicPathId, QuicPacketNumber> largest_packet_numbers_;
   // Updated by ProcessPacketHeader when it succeeds decrypting a larger packet.
   QuicPacketNumber largest_packet_number_;
-  // The path on which last successfully decrypted packet was received.
-  QuicPathId last_path_id_;
   // Updated by WritePacketHeader.
   QuicConnectionId last_serialized_connection_id_;
   // The last QUIC version tag received.

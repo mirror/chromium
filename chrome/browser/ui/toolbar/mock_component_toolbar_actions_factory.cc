@@ -4,30 +4,23 @@
 
 #include "chrome/browser/ui/toolbar/mock_component_toolbar_actions_factory.h"
 
-#include "chrome/browser/ui/browser.h"
+#include "base/memory/ptr_util.h"
 #include "chrome/browser/ui/toolbar/test_toolbar_action_view_controller.h"
 #include "chrome/browser/ui/toolbar/toolbar_action_view_controller.h"
-#include "extensions/common/feature_switch.h"
 
 // static
 const char MockComponentToolbarActionsFactory::kActionIdForTesting[] =
     "mock_action";
 
 MockComponentToolbarActionsFactory::MockComponentToolbarActionsFactory(
-    Browser* browser) {
-  ComponentToolbarActionsFactory::SetTestingFactory(this);
-}
+    Profile* profile)
+    : ComponentToolbarActionsFactory(profile) {}
 
-MockComponentToolbarActionsFactory::~MockComponentToolbarActionsFactory() {
-  ComponentToolbarActionsFactory::SetTestingFactory(nullptr);
-}
+MockComponentToolbarActionsFactory::~MockComponentToolbarActionsFactory() {}
 
 std::set<std::string>
-MockComponentToolbarActionsFactory::GetInitialComponentIds(Profile* profile) {
-  std::set<std::string> ids;
-  if (extensions::FeatureSwitch::extension_action_redesign()->IsEnabled())
-    ids.insert(kActionIdForTesting);
-  return ids;
+MockComponentToolbarActionsFactory::GetInitialComponentIds() {
+  return {kActionIdForTesting};
 }
 
 std::unique_ptr<ToolbarActionViewController>

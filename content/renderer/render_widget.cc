@@ -91,6 +91,7 @@
 #include "third_party/skia/include/core/SkShader.h"
 #include "ui/base/clipboard/clipboard.h"
 #include "ui/base/ui_base_switches.h"
+#include "ui/events/base_event_utils.h"
 #include "ui/gfx/geometry/point_conversions.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/size_conversions.h"
@@ -377,6 +378,7 @@ RenderWidget::RenderWidget(int32_t widget_routing_id,
       focused_pepper_plugin_(nullptr),
       time_to_first_active_paint_recorded_(true),
       was_shown_time_(base::TimeTicks::Now()),
+      current_content_source_id_(0),
       weak_ptr_factory_(this) {
   DCHECK_NE(routing_id_, MSG_ROUTING_NONE);
   if (!swapped_out)
@@ -575,7 +577,7 @@ gfx::Rect RenderWidget::AdjustValidationMessageAnchor(const gfx::Rect& anchor) {
   return anchor;
 }
 
-#if defined(USE_EXTERNAL_POPUP_MENU)
+#if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
 void RenderWidget::SetExternalPopupOriginAdjustmentsForEmulation(
     ExternalPopupMenu* popup,
     RenderWidgetScreenMetricsEmulator* emulator) {
@@ -874,7 +876,8 @@ void RenderWidget::BeginMainFrame(double frame_time_sec) {
   InputHandlerManager* input_handler_manager =
       render_thread ? render_thread->input_handler_manager() : NULL;
   if (input_handler_manager)
-    input_handler_manager->ProcessRafAlignedInputOnMainThread(routing_id_);
+    input_handler_manager->ProcessRafAlignedInputOnMainThread(
+        routing_id_, ui::EventTimeStampFromSeconds(frame_time_sec));
 
   GetWebWidget()->beginFrame(frame_time_sec);
 }
@@ -1055,6 +1058,14 @@ void RenderWidget::ShowVirtualKeyboard() {
   UpdateTextInputStateInternal(true, false);
 }
 
+void RenderWidget::ClearTextInputState() {
+  text_input_info_ = blink::WebTextInputInfo();
+  text_input_type_ = ui::TextInputType::TEXT_INPUT_TYPE_NONE;
+  text_input_mode_ = ui::TextInputMode::TEXT_INPUT_MODE_DEFAULT;
+  can_compose_inline_ = false;
+  text_input_flags_ = 0;
+}
+
 void RenderWidget::UpdateTextInputState() {
   UpdateTextInputStateInternal(false, false);
 }
@@ -1185,7 +1196,8 @@ void RenderWidget::Resize(const ResizeParams& params) {
   if (compositor_) {
     compositor_->setViewportSize(params.physical_backing_size);
     compositor_->setBottomControlsHeight(params.bottom_controls_height);
-    compositor_->SetDeviceColorSpace(screen_info_.icc_profile.GetColorSpace());
+    compositor_->SetRasterColorSpace(
+        screen_info_.icc_profile.GetParametricColorSpace());
   }
 
   visible_viewport_size_ = params.visible_viewport_size;
@@ -1275,7 +1287,8 @@ blink::WebLayerTreeView* RenderWidget::initializeLayerTreeView() {
   compositor_->SetIsForOopif(for_oopif_);
   compositor_->setViewportSize(physical_backing_size_);
   OnDeviceScaleFactorChanged();
-  compositor_->SetDeviceColorSpace(screen_info_.icc_profile.GetColorSpace());
+  compositor_->SetRasterColorSpace(screen_info_.icc_profile.GetColorSpace());
+  compositor_->SetContentSourceId(current_content_source_id_);
   // For background pages and certain tests, we don't want to trigger
   // CompositorFrameSink creation.
   if (compositor_never_visible_ || !RenderThreadImpl::current())
@@ -2130,13 +2143,6 @@ blink::WebScreenInfo RenderWidget::screenInfo() {
   return web_screen_info;
 }
 
-void RenderWidget::resetInputMethod() {
-  ImeEventGuard guard(this);
-  Send(new InputHostMsg_ImeCancelComposition(routing_id()));
-
-  UpdateCompositionInfo(false /* not an immediate request */);
-}
-
 #if defined(OS_ANDROID)
 void RenderWidget::showUnhandledTapUIIfNeeded(
     const WebPoint& tapped_position,
@@ -2295,6 +2301,15 @@ void RenderWidget::startDragging(blink::WebReferrerPolicy policy,
   Send(new DragHostMsg_StartDragging(routing_id(), drop_data, mask,
                                      image.getSkBitmap(), imageOffset,
                                      possible_drag_event_info_));
+}
+
+uint32_t RenderWidget::GetContentSourceId() {
+  return current_content_source_id_;
+}
+
+void RenderWidget::IncrementContentSourceId() {
+  if (compositor_)
+    compositor_->SetContentSourceId(++current_content_source_id_);
 }
 
 blink::WebWidget* RenderWidget::GetWebWidget() const {

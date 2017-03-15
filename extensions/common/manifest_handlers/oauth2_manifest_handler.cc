@@ -31,7 +31,7 @@ namespace errors = manifest_errors;
 OAuth2Info::OAuth2Info() : auto_approve(false) {}
 OAuth2Info::~OAuth2Info() {}
 
-static base::LazyInstance<OAuth2Info> g_empty_oauth2_info =
+static base::LazyInstance<OAuth2Info>::DestructorAtExit g_empty_oauth2_info =
     LAZY_INSTANCE_INITIALIZER;
 
 // static
@@ -90,7 +90,7 @@ bool OAuth2ManifestHandler::Parse(Extension* extension,
     info->scopes.push_back(scope);
   }
 
-  extension->SetManifestData(keys::kOAuth2, info.release());
+  extension->SetManifestData(keys::kOAuth2, std::move(info));
   return true;
 }
 

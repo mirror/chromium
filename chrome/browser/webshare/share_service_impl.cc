@@ -29,26 +29,9 @@ bool IsIdentifier(char c) {
   return base::IsAsciiAlpha(c) || base::IsAsciiDigit(c) || c == '-' || c == '_';
 }
 
-// Joins a std::vector<base::StringPiece> into a single std::string.
-// TODO(constantina): Implement a base::JoinString() that takes StringPieces.
-// i.e. move this to base/strings/string_util.h, and thoroughly test.
-std::string JoinString(const std::vector<base::StringPiece>& pieces) {
-  size_t total_size = 0;
-  for (const auto& piece : pieces) {
-    total_size += piece.size();
-  }
-  std::string joined_pieces;
-  joined_pieces.reserve(total_size);
-
-  for (const auto& piece : pieces) {
-    piece.AppendToString(&joined_pieces);
-  }
-  return joined_pieces;
-}
-
 }  // namespace
 
-ShareServiceImpl::ShareServiceImpl() = default;
+ShareServiceImpl::ShareServiceImpl() : weak_factory_(this) {}
 ShareServiceImpl::~ShareServiceImpl() = default;
 
 // static
@@ -115,7 +98,7 @@ bool ShareServiceImpl::ReplacePlaceholders(base::StringPiece url_template,
   split_template.push_back(url_template.substr(
       start_index_to_copy, url_template.size() - start_index_to_copy));
 
-  *url_template_filled = JoinString(split_template);
+  *url_template_filled = base::JoinString(split_template, base::StringPiece());
   return true;
 }
 
@@ -203,7 +186,7 @@ void ShareServiceImpl::Share(const std::string& title,
 
   ShowPickerDialog(
       sufficiently_engaged_targets,
-      base::Bind(&ShareServiceImpl::OnPickerClosed, base::Unretained(this),
+      base::Bind(&ShareServiceImpl::OnPickerClosed, weak_factory_.GetWeakPtr(),
                  base::Passed(&share_targets), title, text, share_url,
                  callback));
 }
@@ -216,7 +199,7 @@ void ShareServiceImpl::OnPickerClosed(
     const ShareCallback& callback,
     base::Optional<std::string> result) {
   if (!result.has_value()) {
-    callback.Run(base::Optional<std::string>("Share was cancelled"));
+    callback.Run(blink::mojom::ShareError::CANCELED);
     return;
   }
 
@@ -226,8 +209,10 @@ void ShareServiceImpl::OnPickerClosed(
   std::string url_template_filled;
   if (!ReplacePlaceholders(url_template, title, text, share_url,
                            &url_template_filled)) {
-    callback.Run(base::Optional<std::string>(
-        "Error: unable to replace placeholders in url template"));
+    // TODO(mgiuca): This error should not be possible at share time, because
+    // targets with invalid templates should not be chooseable. Fix
+    // https://crbug.com/694380 and replace this with a DCHECK.
+    callback.Run(blink::mojom::ShareError::INTERNAL_ERROR);
     return;
   }
 
@@ -237,12 +222,14 @@ void ShareServiceImpl::OnPickerClosed(
       chosen_target.data(),
       chosen_target.size() - GURL(chosen_target).ExtractFileName().size());
   const GURL target(url_base.as_string() + url_template_filled);
-  if (!target.is_valid()) {
-    callback.Run(base::Optional<std::string>(
-        "Error: url of share target is not a valid url."));
-    return;
-  }
+  // User should not be able to cause an invalid target URL. Possibilities are:
+  // - The base URL: can't be invalid since it's derived from the manifest URL.
+  // - The template: can only be invalid if it contains a NUL character or
+  //   invalid UTF-8 sequence (which it can't have).
+  // - The replaced pieces: these are escaped.
+  // If somehow we slip through this DCHECK, it will just open about:blank.
+  DCHECK(target.is_valid());
   OpenTargetURL(target);
 
-  callback.Run(base::nullopt);
+  callback.Run(blink::mojom::ShareError::OK);
 }

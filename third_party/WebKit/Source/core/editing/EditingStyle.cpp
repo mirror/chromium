@@ -311,7 +311,7 @@ bool HTMLAttributeEquivalent::valueIsPresentInStyle(
   const CSSValue* value = attributeValueAsCSSValue(element);
   const CSSValue* styleValue = style->getPropertyCSSValue(m_propertyID);
 
-  return compareCSSValuePtr(value, styleValue);
+  return dataEquivalent(value, styleValue);
 }
 
 void HTMLAttributeEquivalent::addToStyle(Element* element,
@@ -1063,9 +1063,6 @@ bool EditingStyle::elementIsStyledSpanOrHTMLEquivalent(
     // element is not a span, a html element equivalent, or font element.
     return false;
   }
-
-  if (element->getAttribute(HTMLNames::classAttr) == AppleStyleSpanClass)
-    matchedAttributes++;
 
   if (element->hasAttribute(HTMLNames::styleAttr)) {
     if (const StylePropertySet* style = element->inlineStyle()) {

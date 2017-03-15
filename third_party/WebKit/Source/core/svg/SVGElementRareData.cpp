@@ -21,7 +21,7 @@ SVGElementRareData::ensureAnimatedSMILStyleProperties() {
 ComputedStyle* SVGElementRareData::overrideComputedStyle(
     Element* element,
     const ComputedStyle* parentStyle) {
-  ASSERT(element);
+  DCHECK(element);
   if (!m_useOverrideComputedStyle)
     return nullptr;
   if (!m_overrideComputedStyle || m_needsOverrideComputedStyleUpdate) {
@@ -30,11 +30,11 @@ ComputedStyle* SVGElementRareData::overrideComputedStyle(
     // animation sandwhich model.
     m_overrideComputedStyle =
         element->document().ensureStyleResolver().styleForElement(
-            element, parentStyle, DisallowStyleSharing,
+            element, parentStyle, parentStyle, DisallowStyleSharing,
             MatchAllRulesExcludingSMIL);
     m_needsOverrideComputedStyleUpdate = false;
   }
-  ASSERT(m_overrideComputedStyle);
+  DCHECK(m_overrideComputedStyle);
   return m_overrideComputedStyle.get();
 }
 

@@ -10,18 +10,20 @@
 #include "ash/common/wm/window_state.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
-#include "ash/common/wm_window_property.h"
 #include "ash/public/cpp/shell_window_ids.h"
+#include "ash/public/cpp/window_properties.h"
 #include "ash/root_window_controller.h"
+#include "ash/shell.h"
+#include "ui/aura/window.h"
 #include "ui/gfx/geometry/rect.h"
 
 namespace ash {
 namespace wm {
 namespace {
 
-WmWindow* FindContainerRoot(WmShell* shell, const gfx::Rect& bounds) {
+WmWindow* FindContainerRoot(const gfx::Rect& bounds) {
   if (bounds == gfx::Rect())
-    return shell->GetRootWindowForNewWindows();
+    return Shell::GetWmRootWindowForNewWindows();
   return GetRootWindowMatching(bounds);
 }
 
@@ -77,7 +79,7 @@ WmWindow* GetDefaultParent(WmWindow* context,
     // Transient window should use the same root as its transient parent.
     target_root = transient_parent->GetRootWindow();
   } else {
-    target_root = FindContainerRoot(context->GetShell(), bounds);
+    target_root = FindContainerRoot(bounds);
   }
 
   switch (window->GetType()) {
@@ -92,7 +94,7 @@ WmWindow* GetDefaultParent(WmWindow* context,
       return target_root->GetChildByShellWindowId(
           kShellWindowId_UnparentedControlContainer);
     case ui::wm::WINDOW_TYPE_PANEL:
-      if (window->GetBoolProperty(WmWindowProperty::PANEL_ATTACHED))
+      if (window->aura_window()->GetProperty(kPanelAttachedKey))
         return target_root->GetChildByShellWindowId(
             kShellWindowId_PanelContainer);
       return GetContainerFromAlwaysOnTopController(target_root, window);
@@ -109,12 +111,12 @@ WmWindow* GetDefaultParent(WmWindow* context,
   return nullptr;
 }
 
-std::vector<WmWindow*> GetContainersFromAllRootWindows(
+aura::Window::Windows GetContainersFromAllRootWindows(
     int container_id,
-    WmWindow* priority_root) {
-  std::vector<WmWindow*> containers;
-  for (WmWindow* root : WmShell::Get()->GetAllRootWindows()) {
-    WmWindow* container = root->GetChildByShellWindowId(container_id);
+    aura::Window* priority_root) {
+  aura::Window::Windows containers;
+  for (aura::Window* root : Shell::GetAllRootWindows()) {
+    aura::Window* container = root->GetChildById(container_id);
     if (!container)
       continue;
 

@@ -37,8 +37,8 @@ class HardwareAcceleratedFeatureIntegrationTest(
     return 'hardware_accelerated_feature'
 
   @classmethod
-  def setUpClass(cls):
-    super(cls, HardwareAcceleratedFeatureIntegrationTest).setUpClass()
+  def SetUpProcess(cls):
+    super(cls, HardwareAcceleratedFeatureIntegrationTest).SetUpProcess()
     cls.SetBrowserOptions(cls._finder_options)
     cls.StartBrowser()
     cls.SetStaticServerDirs([])
@@ -68,10 +68,10 @@ class HardwareAcceleratedFeatureIntegrationTest(
     feature = args[0]
     self._Navigate(test_path)
     tab = self.tab
-    if not tab.EvaluateJavaScript2(
+    if not tab.EvaluateJavaScript(
         'VerifyHardwareAccelerated({{ feature }})', feature=feature):
       print 'Test failed. Printing page contents:'
-      print tab.EvaluateJavaScript2('document.body.innerHTML')
+      print tab.EvaluateJavaScript('document.body.innerHTML')
       self.fail('%s not hardware accelerated' % feature)
 
 def load_tests(loader, tests, pattern):

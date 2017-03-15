@@ -260,7 +260,8 @@ Polymer({
 
 // <if expr="chromeos">
         if (this.currentChannel_ != this.targetChannel_) {
-          return this.i18n('aboutUpgradeUpdatingChannelSwitch',
+          return this.i18n(
+              'aboutUpgradeUpdatingChannelSwitch',
               this.i18n(settings.browserChannelToI18nId(this.targetChannel_)),
               progressPercent);
         }
@@ -275,10 +276,18 @@ Polymer({
         }
         return this.i18n('aboutUpgradeUpdating');
       default:
+        function formatMessage(msg) {
+          return parseHtmlSubset(
+              '<b>' + msg + '</b>', ['br', 'pre']).firstChild.innerHTML;
+        }
+        var result = '';
         var message = this.currentUpdateStatusEvent_.message;
-        return message ?
-            parseHtmlSubset('<b>' + message + '</b>').firstChild.innerHTML :
-            '';
+        if (message)
+          result += formatMessage(message);
+        var connectMessage = this.currentUpdateStatusEvent_.connectionTypes;
+        if (connectMessage)
+          result += '<div>' + formatMessage(connectMessage) + '</div>';
+        return result;
     }
   },
 
@@ -299,9 +308,9 @@ Polymer({
         return 'settings:error';
       case UpdateStatus.UPDATED:
       case UpdateStatus.NEARLY_UPDATED:
-          return 'settings:check-circle';
+        return 'settings:check-circle';
       default:
-          return null;
+        return null;
     }
   },
 

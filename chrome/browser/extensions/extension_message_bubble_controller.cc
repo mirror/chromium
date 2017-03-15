@@ -33,7 +33,7 @@ const int kMaxExtensionsToShow = 7;
 bool g_should_ignore_learn_more_for_testing = false;
 
 using ProfileSetMap = std::map<std::string, std::set<Profile*>>;
-base::LazyInstance<ProfileSetMap> g_shown_for_profiles =
+base::LazyInstance<ProfileSetMap>::DestructorAtExit g_shown_for_profiles =
     LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
@@ -77,9 +77,8 @@ void ExtensionMessageBubbleController::Delegate::SetBubbleInfoBeenAcknowledged(
   if (pref_name.empty())
     return;
   extensions::ExtensionPrefs* prefs = extensions::ExtensionPrefs::Get(profile_);
-  prefs->UpdateExtensionPref(extension_id,
-                             pref_name,
-                             value ? new base::FundamentalValue(value) : NULL);
+  prefs->UpdateExtensionPref(extension_id, pref_name,
+                             value ? new base::Value(value) : NULL);
 }
 
 std::string

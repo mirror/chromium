@@ -19,7 +19,8 @@ ReadingListModelImpl::ReadingListModelImpl()
 ReadingListModelImpl::ReadingListModelImpl(
     std::unique_ptr<ReadingListModelStorage> storage,
     PrefService* pref_service)
-    : unread_entry_count_(0),
+    : entries_(base::MakeUnique<ReadingListEntries>()),
+      unread_entry_count_(0),
       read_entry_count_(0),
       unseen_entry_count_(0),
       pref_service_(pref_service),
@@ -32,7 +33,6 @@ ReadingListModelImpl::ReadingListModelImpl(
     storage_layer_->SetReadingListModel(this, this);
   } else {
     loaded_ = true;
-    entries_ = base::MakeUnique<ReadingListEntries>();
   }
   has_unseen_ = GetPersistentHasUnseen();
 }
@@ -42,6 +42,7 @@ ReadingListModelImpl::~ReadingListModelImpl() {}
 void ReadingListModelImpl::StoreLoaded(
     std::unique_ptr<ReadingListEntries> entries) {
   DCHECK(CalledOnValidThread());
+  DCHECK(entries);
   entries_ = std::move(entries);
   for (auto& iterator : *entries_) {
     UpdateEntryStateCountersOnEntryInsertion(iterator.second);
@@ -108,7 +109,9 @@ bool ReadingListModelImpl::GetLocalUnseenFlag() const {
 
 void ReadingListModelImpl::ResetLocalUnseenFlag() {
   DCHECK(CalledOnValidThread());
-  DCHECK(loaded());
+  if (!loaded()) {
+    return;
+  }
   has_unseen_ = false;
   if (!IsPerformingBatchUpdates())
     SetPersistentHasUnseen(false);
@@ -391,7 +394,9 @@ void ReadingListModelImpl::SetEntryTitle(const GURL& url,
 void ReadingListModelImpl::SetEntryDistilledInfo(
     const GURL& url,
     const base::FilePath& distilled_path,
-    const GURL& distilled_url) {
+    const GURL& distilled_url,
+    int64_t distillation_size,
+    int64_t distillation_date) {
   DCHECK(CalledOnValidThread());
   DCHECK(loaded());
   auto iterator = entries_->find(url);
@@ -407,7 +412,8 @@ void ReadingListModelImpl::SetEntryDistilledInfo(
   for (ReadingListModelObserver& observer : observers_) {
     observer.ReadingListWillUpdateEntry(this, url);
   }
-  entry.SetDistilledInfo(distilled_path, distilled_url);
+  entry.SetDistilledInfo(distilled_path, distilled_url, distillation_size,
+                         distillation_date);
   if (storage_layer_) {
     storage_layer_->SaveEntry(entry);
   }
@@ -494,7 +500,6 @@ bool ReadingListModelImpl::GetPersistentHasUnseen() {
 }
 
 syncer::ModelTypeSyncBridge* ReadingListModelImpl::GetModelTypeSyncBridge() {
-  DCHECK(loaded());
   if (!storage_layer_)
     return nullptr;
   return storage_layer_.get();

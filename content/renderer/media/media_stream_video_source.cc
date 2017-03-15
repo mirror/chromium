@@ -13,7 +13,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/trace_event/trace_event.h"
 #include "content/child/child_process.h"
-#include "content/renderer/media/media_stream_constraints_util_video_source.h"
+#include "content/renderer/media/media_stream_constraints_util_video_device.h"
 #include "content/renderer/media/media_stream_video_track.h"
 #include "content/renderer/media/video_track_adapter.h"
 
@@ -582,6 +582,13 @@ void MediaStreamVideoSource::FinalizeAddTrack() {
       track_adapter_->AddTrack(track.track, track.frame_callback, max_width,
                                max_height, min_aspect_ratio, max_aspect_ratio,
                                max_frame_rate);
+      // Calculate resulting frame size if the source delivers frames
+      // according to the current format. Note: Format may change later.
+      gfx::Size desired_size;
+      VideoTrackAdapter::CalculateTargetSize(
+          current_format_.frame_size, gfx::Size(max_width, max_height),
+          min_aspect_ratio, max_aspect_ratio, &desired_size);
+      track.track->SetTargetSize(desired_size.width(), desired_size.height());
     }
 
     DVLOG(3) << "FinalizeAddTrack() result " << result;

@@ -38,6 +38,7 @@ namespace blink {
 
 class ConditionEventListener;
 class SMILTimeContainer;
+class IdTargetObserver;
 class SVGSMILElement;
 
 // This class implements SMIL interval timing model as needed for SVG animation.
@@ -127,13 +128,11 @@ class CORE_EXPORT SVGSMILElement : public SVGElement, public SVGTests {
   DECLARE_VIRTUAL_TRACE();
 
  protected:
-  void addBeginTime(
-      SMILTime eventTime,
-      SMILTime endTime,
-      SMILTimeWithOrigin::Origin = SMILTimeWithOrigin::ParserOrigin);
-  void addEndTime(
-      SMILTime eventTime,
-      SMILTime endTime,
+  enum BeginOrEnd { Begin, End };
+
+  void addInstanceTime(
+      BeginOrEnd,
+      SMILTime,
       SMILTimeWithOrigin::Origin = SMILTimeWithOrigin::ParserOrigin);
 
   void setInactive() { m_activeState = Inactive; }
@@ -158,8 +157,6 @@ class CORE_EXPORT SVGSMILElement : public SVGElement, public SVGTests {
                                SVGSMILElement* resultElement) = 0;
 
   bool layoutObjectIsNeeded(const ComputedStyle&) override { return false; }
-
-  enum BeginOrEnd { Begin, End };
 
   SMILTime findInstanceTime(BeginOrEnd,
                             SMILTime minimumTime,
@@ -186,16 +183,10 @@ class CORE_EXPORT SVGSMILElement : public SVGElement, public SVGTests {
    public:
     enum Type { EventBase, Syncbase, AccessKey };
 
-    Condition(Type,
-              BeginOrEnd,
-              const String& baseID,
-              const String& name,
-              SMILTime offset,
-              int repeat = -1);
     static Condition* create(Type type,
                              BeginOrEnd beginOrEnd,
-                             const String& baseID,
-                             const String& name,
+                             const AtomicString& baseID,
+                             const AtomicString& name,
                              SMILTime offset,
                              int repeat = -1) {
       return new Condition(type, beginOrEnd, baseID, name, offset, repeat);
@@ -205,41 +196,47 @@ class CORE_EXPORT SVGSMILElement : public SVGElement, public SVGTests {
 
     Type getType() const { return m_type; }
     BeginOrEnd getBeginOrEnd() const { return m_beginOrEnd; }
-    String baseID() const { return m_baseID; }
-    String name() const { return m_name; }
+    const AtomicString& name() const { return m_name; }
     SMILTime offset() const { return m_offset; }
     int repeat() const { return m_repeat; }
-    SVGSMILElement* syncBase() const { return m_syncBase.get(); }
-    void setSyncBase(SVGSMILElement* element) { m_syncBase = element; }
-    ConditionEventListener* eventListener() const {
-      return m_eventListener.get();
+
+    void connectSyncBase(SVGSMILElement&);
+    void disconnectSyncBase(SVGSMILElement&);
+    bool syncBaseEquals(SVGSMILElement& timedElement) const {
+      return m_baseElement == timedElement;
     }
-    void setEventListener(ConditionEventListener*);
+
+    void connectEventBase(SVGSMILElement&);
+    void disconnectEventBase(SVGSMILElement&);
 
    private:
+    Condition(Type,
+              BeginOrEnd,
+              const AtomicString& baseID,
+              const AtomicString& name,
+              SMILTime offset,
+              int repeat);
+
     Type m_type;
     BeginOrEnd m_beginOrEnd;
-    String m_baseID;
-    String m_name;
+    AtomicString m_baseID;
+    AtomicString m_name;
     SMILTime m_offset;
     int m_repeat;
-    Member<SVGSMILElement> m_syncBase;
+    Member<SVGElement> m_baseElement;
+    Member<IdTargetObserver> m_baseIdObserver;
     Member<ConditionEventListener> m_eventListener;
   };
   bool parseCondition(const String&, BeginOrEnd beginOrEnd);
   void parseBeginOrEnd(const String&, BeginOrEnd beginOrEnd);
-  SVGElement* eventBaseFor(const Condition&);
 
   void disconnectSyncBaseConditions();
   void disconnectEventBaseConditions();
 
-  // Event base timing
-  void handleConditionEvent(Event*, Condition*);
-
   void notifyDependentsIntervalChanged();
-  void createInstanceTimesFromSyncbase(SVGSMILElement* syncbase);
-  void addSyncBaseDependent(SVGSMILElement*);
-  void removeSyncBaseDependent(SVGSMILElement*);
+  void createInstanceTimesFromSyncbase(SVGSMILElement& syncbase);
+  void addSyncBaseDependent(SVGSMILElement&);
+  void removeSyncBaseDependent(SVGSMILElement&);
 
   enum ActiveState { Inactive, Active, Frozen };
 
@@ -249,6 +246,7 @@ class CORE_EXPORT SVGSMILElement : public SVGElement, public SVGTests {
   SMILTime calculateNextProgressTime(double elapsed) const;
 
   Member<SVGElement> m_targetElement;
+  Member<IdTargetObserver> m_targetIdObserver;
 
   HeapVector<Member<Condition>> m_conditions;
   bool m_syncBaseConditionsConnected;

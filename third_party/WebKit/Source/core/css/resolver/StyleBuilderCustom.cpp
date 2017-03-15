@@ -38,6 +38,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <memory>
 #include "core/CSSPropertyNames.h"
 #include "core/CSSValueKeywords.h"
 #include "core/StyleBuilderFunctions.h"
@@ -53,6 +54,7 @@
 #include "core/css/CSSPendingSubstitutionValue.h"
 #include "core/css/CSSPrimitiveValueMappings.h"
 #include "core/css/CSSPropertyMetadata.h"
+#include "core/css/CSSValueIDMappings.h"
 #include "core/css/CSSVariableReferenceValue.h"
 #include "core/css/PropertyRegistration.h"
 #include "core/css/PropertyRegistry.h"
@@ -79,7 +81,6 @@
 #include "wtf/PtrUtil.h"
 #include "wtf/StdLibExtras.h"
 #include "wtf/Vector.h"
-#include <memory>
 
 namespace blink {
 
@@ -425,42 +426,6 @@ void StyleBuilderFunctions::applyValueCSSPropertySize(StyleResolverState& state,
   state.style()->setPageSize(size);
 }
 
-void StyleBuilderFunctions::applyInitialCSSPropertySnapHeight(
-    StyleResolverState& state) {
-  state.style()->setSnapHeightUnit(0);
-  state.style()->setSnapHeightPosition(0);
-}
-
-void StyleBuilderFunctions::applyInheritCSSPropertySnapHeight(
-    StyleResolverState& state) {
-  state.style()->setSnapHeightUnit(state.parentStyle()->snapHeightUnit());
-  state.style()->setSnapHeightPosition(
-      state.parentStyle()->snapHeightPosition());
-}
-
-void StyleBuilderFunctions::applyValueCSSPropertySnapHeight(
-    StyleResolverState& state,
-    const CSSValue& value) {
-  const CSSValueList& list = toCSSValueList(value);
-  const CSSPrimitiveValue& first = toCSSPrimitiveValue(list.item(0));
-  DCHECK(first.isLength());
-  int unit = first.computeLength<int>(state.cssToLengthConversionData());
-  DCHECK_GE(unit, 0);
-  state.style()->setSnapHeightUnit(clampTo<uint8_t>(unit));
-
-  if (list.length() == 1) {
-    state.style()->setSnapHeightPosition(0);
-    return;
-  }
-
-  DCHECK_EQ(list.length(), 2U);
-  const CSSPrimitiveValue& second = toCSSPrimitiveValue(list.item(1));
-  DCHECK(second.isNumber());
-  int position = second.getIntValue();
-  DCHECK(position > 0 && position <= 100);
-  state.style()->setSnapHeightPosition(position);
-}
-
 void StyleBuilderFunctions::applyValueCSSPropertyTextAlign(
     StyleResolverState& state,
     const CSSValue& value) {
@@ -486,6 +451,7 @@ void StyleBuilderFunctions::applyValueCSSPropertyTextAlign(
   } else {
     state.style()->setTextAlign(state.parentStyle()->textAlign());
   }
+  state.style()->setTextAlignIsInherited(false);
 }
 
 void StyleBuilderFunctions::applyInheritCSSPropertyTextIndent(
@@ -758,11 +724,8 @@ void StyleBuilderFunctions::applyValueCSSPropertyContent(
           ContentData::create(state.styleImage(CSSPropertyContent, *item));
     } else if (item->isCounterValue()) {
       const CSSCounterValue* counterValue = toCSSCounterValue(item.get());
-      EListStyleType listStyleType = EListStyleType::kNone;
-      CSSValueID listStyleIdent = counterValue->listStyle();
-      if (listStyleIdent != CSSValueNone)
-        listStyleType =
-            static_cast<EListStyleType>(listStyleIdent - CSSValueDisc);
+      const auto listStyleType =
+          cssValueIDToPlatformEnum<EListStyleType>(counterValue->listStyle());
       std::unique_ptr<CounterContent> counter =
           WTF::wrapUnique(new CounterContent(
               AtomicString(counterValue->identifier()), listStyleType,

@@ -41,14 +41,14 @@ class AnimatableUnknown final : public AnimatableValue {
  public:
   ~AnimatableUnknown() override {}
 
-  static PassRefPtr<AnimatableUnknown> create(CSSValue* value) {
+  static PassRefPtr<AnimatableUnknown> create(const CSSValue* value) {
     return adoptRef(new AnimatableUnknown(value));
   }
   static PassRefPtr<AnimatableUnknown> create(CSSValueID value) {
     return adoptRef(new AnimatableUnknown(CSSIdentifierValue::create(value)));
   }
 
-  CSSValue* toCSSValue() const { return m_value; }
+  const CSSValue* toCSSValue() const { return m_value; }
   CSSValueID toCSSValueID() const {
     return toCSSIdentifierValue(m_value.get())->getValueID();
   }
@@ -62,26 +62,23 @@ class AnimatableUnknown final : public AnimatableValue {
   bool usesDefaultInterpolationWith(const AnimatableValue*) const override;
 
  private:
-  explicit AnimatableUnknown(CSSValue* value) : m_value(value) {
-    DCHECK(m_value);
-  }
+  explicit AnimatableUnknown(const CSSValue* value) : m_value(value) {}
   AnimatableType type() const override { return TypeUnknown; }
   bool equalTo(const AnimatableValue*) const override;
 
-  const Persistent<CSSValue> m_value;
+  const Persistent<const CSSValue> m_value;
 };
 
 DEFINE_ANIMATABLE_VALUE_TYPE_CASTS(AnimatableUnknown, isUnknown());
 
 inline bool AnimatableUnknown::equalTo(const AnimatableValue* value) const {
   const AnimatableUnknown* unknown = toAnimatableUnknown(value);
-  return m_value == unknown->m_value || m_value->equals(*unknown->m_value);
+  return dataEquivalent(m_value, unknown->m_value);
 }
 
 inline bool AnimatableUnknown::usesDefaultInterpolationWith(
     const AnimatableValue* value) const {
-  const AnimatableUnknown& unknown = toAnimatableUnknown(*value);
-  return !m_value->equals(*unknown.m_value);
+  return !equalTo(value);
 }
 
 }  // namespace blink

@@ -40,36 +40,39 @@
 namespace blink {
 
 class InstrumentingAgents;
+class Resource;
 class ThreadDebugger;
 class WorkerGlobalScope;
 
-namespace InspectorInstrumentation {
+namespace probe {
+
+class CORE_EXPORT ProbeBase {
+  STACK_ALLOCATED()
+
+ public:
+  double captureStartTime() const;
+  double captureEndTime() const;
+  double duration() const;
+
+ private:
+  mutable double m_startTime = 0;
+  mutable double m_endTime = 0;
+};
 
 class CORE_EXPORT AsyncTask {
   STACK_ALLOCATED();
 
  public:
-  AsyncTask(ExecutionContext*, void* task);
-  AsyncTask(ExecutionContext*, void* task, bool enabled);
+  AsyncTask(ExecutionContext*,
+            void* task,
+            const char* step = nullptr,
+            bool enabled = true);
   ~AsyncTask();
 
  private:
   ThreadDebugger* m_debugger;
   void* m_task;
-};
-
-class CORE_EXPORT NativeBreakpoint {
-  STACK_ALLOCATED();
-
- public:
-  NativeBreakpoint(ExecutionContext*, const char* name, bool sync, bool trace);
-  NativeBreakpoint(ExecutionContext*, const char* name, bool sync);
-  NativeBreakpoint(ExecutionContext*, EventTarget*, Event*);
-  ~NativeBreakpoint();
-
- private:
-  Member<InstrumentingAgents> m_instrumentingAgents;
-  bool m_sync;
+  bool m_recurring;
 };
 
 // Called from generated instrumentation code.
@@ -110,12 +113,33 @@ inline InstrumentingAgents* instrumentingAgentsFor(EventTarget* eventTarget) {
              : nullptr;
 }
 
+CORE_EXPORT void asyncTaskScheduled(ExecutionContext*,
+                                    const String& name,
+                                    void*);
+CORE_EXPORT void asyncTaskScheduledBreakable(ExecutionContext*,
+                                             const char* name,
+                                             void*);
+CORE_EXPORT void asyncTaskCanceled(ExecutionContext*, void*);
+CORE_EXPORT void asyncTaskCanceledBreakable(ExecutionContext*,
+                                            const char* name,
+                                            void*);
+
+CORE_EXPORT void allAsyncTasksCanceled(ExecutionContext*);
+CORE_EXPORT void canceledAfterReceivedResourceResponse(LocalFrame*,
+                                                       DocumentLoader*,
+                                                       unsigned long identifier,
+                                                       const ResourceResponse&,
+                                                       Resource*);
+CORE_EXPORT void continueWithPolicyIgnore(LocalFrame*,
+                                          DocumentLoader*,
+                                          unsigned long identifier,
+                                          const ResourceResponse&,
+                                          Resource*);
+
 }  // namespace InspectorInstrumentation
 }  // namespace blink
 
 #include "core/InspectorInstrumentationInl.h"
-
-#include "core/inspector/InspectorInstrumentationCustomInl.h"
 
 #include "core/InspectorOverridesInl.h"
 

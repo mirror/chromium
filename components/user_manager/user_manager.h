@@ -55,7 +55,7 @@ class USER_MANAGER_EXPORT UserManager {
     virtual ~Observer();
   };
 
-  // TODO(nkostylev): Refactor and move this observer out of UserManager.
+  // TODO(xiyuan): Refactor and move this observer out of UserManager.
   // Observer interface that defines methods used to notify on user session /
   // active user state changes. Default implementation is empty.
   class UserSessionStateObserver {
@@ -174,6 +174,14 @@ class USER_MANAGER_EXPORT UserManager {
 
   // Invoked by session manager to inform session start.
   virtual void OnSessionStarted() = 0;
+
+  // Invoked once profile initialization has been completed. This allows various
+  // subsystems (for example, policy framework) to skip an expensive online
+  // initialization process, and also allows the signin screen to force an
+  // online signin if it knows that profile initialization has not yet
+  // completed. |user| is the User associated with the profile that has
+  // completed initialization.
+  virtual void OnProfileInitialized(User* user) = 0;
 
   // Removes the user from the device. Note, it will verify that the given user
   // isn't the owner, so calling this method for the owner will take no effect.
@@ -393,6 +401,19 @@ class USER_MANAGER_EXPORT UserManager {
   // Sets UserManager instance to the given |user_manager|.
   // Returns the previous value of the instance.
   static UserManager* SetForTesting(UserManager* user_manager);
+};
+
+// TODO(xiyuan): Move this along with UserSessionStateObserver
+class USER_MANAGER_EXPORT ScopedUserSessionStateObserver {
+ public:
+  explicit ScopedUserSessionStateObserver(
+      UserManager::UserSessionStateObserver* observer);
+  ~ScopedUserSessionStateObserver();
+
+ private:
+  UserManager::UserSessionStateObserver* const observer_;
+
+  DISALLOW_COPY_AND_ASSIGN(ScopedUserSessionStateObserver);
 };
 
 }  // namespace user_manager

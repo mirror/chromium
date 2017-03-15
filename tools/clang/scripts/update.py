@@ -27,14 +27,14 @@ import zipfile
 # Do NOT CHANGE this if you don't know what you're doing -- see
 # https://chromium.googlesource.com/chromium/src/+/master/docs/updating_clang.md
 # Reverting problematic clang rolls is safe, though.
-CLANG_REVISION = '289944'
+CLANG_REVISION = '296321'
 
 use_head_revision = 'LLVM_FORCE_HEAD_REVISION' in os.environ
 if use_head_revision:
   CLANG_REVISION = 'HEAD'
 
 # This is incremented when pushing a new build of Clang at the same revision.
-CLANG_SUB_REVISION=2
+CLANG_SUB_REVISION=1
 
 PACKAGE_VERSION = "%s-%s" % (CLANG_REVISION, CLANG_SUB_REVISION)
 
@@ -71,7 +71,7 @@ BINUTILS_BIN_DIR = os.path.join(BINUTILS_DIR, BINUTILS_DIR,
                                 'Linux_x64', 'Release', 'bin')
 BFD_PLUGINS_DIR = os.path.join(BINUTILS_DIR, 'Linux_x64', 'Release',
                                'lib', 'bfd-plugins')
-VERSION = '4.0.0'
+VERSION = '5.0.0'
 ANDROID_NDK_DIR = os.path.join(
     CHROMIUM_DIR, 'third_party', 'android_tools', 'ndk')
 
@@ -336,7 +336,7 @@ def AddGnuWinToPath():
     return
 
   gnuwin_dir = os.path.join(LLVM_BUILD_TOOLS_DIR, 'gnuwin')
-  GNUWIN_VERSION = '5'
+  GNUWIN_VERSION = '6'
   GNUWIN_STAMP = os.path.join(gnuwin_dir, 'stamp')
   if ReadStampFile(GNUWIN_STAMP) == GNUWIN_VERSION:
     print 'GNU Win tools already up to date.'
@@ -458,7 +458,7 @@ def UpdateClang(args):
 
   Checkout('LLVM', LLVM_REPO_URL + '/llvm/trunk', LLVM_DIR)
   Checkout('Clang', LLVM_REPO_URL + '/cfe/trunk', CLANG_DIR)
-  if sys.platform == 'win32' or use_head_revision:
+  if sys.platform != 'darwin':
     Checkout('LLD', LLVM_REPO_URL + '/lld/trunk', LLD_DIR)
   elif os.path.exists(LLD_DIR):
     # In case someone sends a tryjob that temporary adds lld to the checkout,
@@ -498,7 +498,6 @@ def UpdateClang(args):
   base_cmake_args = ['-GNinja',
                      '-DCMAKE_BUILD_TYPE=Release',
                      '-DLLVM_ENABLE_ASSERTIONS=ON',
-                     '-DLLVM_ENABLE_THREADS=OFF',
                      # Statically link MSVCRT to avoid DLL dependencies.
                      '-DLLVM_USE_CRT_RELEASE=MT',
                      ]
@@ -567,8 +566,8 @@ def UpdateClang(args):
                 os.path.join(LLVM_BOOTSTRAP_INSTALL_DIR, 'lib', 'LLVMgold.so'),
                 os.path.join(BFD_PLUGINS_DIR, 'LLVMgold.so')])
 
-    lto_cflags = ['-flto']
-    lto_ldflags = ['-fuse-ld=gold']
+    lto_cflags = ['-flto=thin']
+    lto_ldflags = ['-fuse-ld=lld']
     if args.gcc_toolchain:
       # Tell the bootstrap compiler to use a specific gcc prefix to search
       # for standard library headers and shared object files.
@@ -589,7 +588,7 @@ def UpdateClang(args):
 
     RmCmakeCache('.')
     RunCommand(['cmake'] + lto_cmake_args + [LLVM_DIR], env=lto_env)
-    RunCommand(['ninja', 'LLVMgold'], env=lto_env)
+    RunCommand(['ninja', 'LLVMgold', 'lld'], env=lto_env)
 
 
   # LLVM uses C++11 starting in llvm 3.5. On Linux, this means libstdc++4.7+ is
@@ -619,6 +618,13 @@ def UpdateClang(args):
     cflags += ['-DLLVM_FORCE_HEAD_REVISION']
     cxxflags += ['-DLLVM_FORCE_HEAD_REVISION']
 
+  # Build PDBs for archival on Windows.  Don't use RelWithDebInfo since it
+  # has different optimization defaults than Release.
+  if sys.platform == 'win32' and args.bootstrap:
+    cflags += ['/Zi']
+    cxxflags += ['/Zi']
+    ldflags += ['/DEBUG', '/OPT:REF', '/OPT:ICF']
+
   CreateChromeToolsShim()
 
   deployment_env = None
@@ -634,6 +640,7 @@ def UpdateClang(args):
   if cxx is not None: cc_args.append('-DCMAKE_CXX_COMPILER=' + cxx)
   chrome_tools = list(set(['plugins', 'blink_gc_plugin'] + args.extra_tools))
   cmake_args += base_cmake_args + [
+      '-DLLVM_ENABLE_THREADS=OFF',
       '-DLLVM_BINUTILS_INCDIR=' + binutils_incdir,
       '-DCMAKE_C_FLAGS=' + ' '.join(cflags),
       '-DCMAKE_CXX_FLAGS=' + ' '.join(cxxflags),
@@ -663,6 +670,11 @@ def UpdateClang(args):
 
   RunCommand(['ninja'], msvc_arch='x64')
 
+  # Copy LTO-optimized lld, if any.
+  if args.bootstrap and args.lto_gold_plugin:
+    CopyFile(os.path.join(LLVM_LTO_GOLD_PLUGIN_DIR, 'bin', 'lld'),
+             os.path.join(LLVM_BUILD_DIR, 'bin'))
+
   if chrome_tools:
     # If any Chromium tools were built, install those now.
     RunCommand(['ninja', 'cr-install'], msvc_arch='x64')
@@ -691,6 +703,7 @@ def UpdateClang(args):
     #cflags += ['-m32']
     #cxxflags += ['-m32']
   compiler_rt_args = base_cmake_args + [
+      '-DLLVM_ENABLE_THREADS=OFF',
       '-DCMAKE_C_FLAGS=' + ' '.join(cflags),
       '-DCMAKE_CXX_FLAGS=' + ' '.join(cxxflags)]
   if sys.platform == 'darwin':
@@ -793,6 +806,7 @@ def UpdateClang(args):
                 '--sysroot=%s/sysroot' % toolchain_dir,
                 '-B%s' % toolchain_dir]
       android_args = base_cmake_args + [
+        '-DLLVM_ENABLE_THREADS=OFF',
         '-DCMAKE_C_COMPILER=' + os.path.join(LLVM_BUILD_DIR, 'bin/clang'),
         '-DCMAKE_CXX_COMPILER=' + os.path.join(LLVM_BUILD_DIR, 'bin/clang++'),
         '-DLLVM_CONFIG_PATH=' + os.path.join(LLVM_BUILD_DIR, 'bin/llvm-config'),
@@ -862,28 +876,10 @@ def main():
     args.lto_gold_plugin = False
 
   if args.if_needed:
-    is_clang_required = False
-    # clang is always used on Mac and Linux.
-    if sys.platform == 'darwin' or sys.platform.startswith('linux'):
-      is_clang_required = True
-    # clang requested via $GYP_DEFINES.
-    if re.search(r'\b(clang|asan|lsan|msan|tsan)=1',
-                 os.environ.get('GYP_DEFINES', '')):
-      is_clang_required = True
-    # clang previously downloaded, keep it up to date.
-    # If you don't want this, delete third_party/llvm-build on your machine.
-    if os.path.isdir(LLVM_BUILD_DIR):
-      is_clang_required = True
-    if not is_clang_required:
-      return 0
+    # TODO(thakis): Can probably remove this and --if-needed altogether.
     if re.search(r'\b(make_clang_dir)=', os.environ.get('GYP_DEFINES', '')):
       print 'Skipping Clang update (make_clang_dir= was set in GYP_DEFINES).'
       return 0
-
-  if use_head_revision:
-    # TODO(hans): Trunk was updated; remove after the next roll.
-    global VERSION
-    VERSION = '5.0.0'
 
   global CLANG_REVISION, PACKAGE_VERSION
   if args.print_revision:

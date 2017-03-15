@@ -14,9 +14,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
-#include "chrome/browser/autocomplete/chrome_autocomplete_scheme_classifier.h"
 #include "chrome/browser/command_updater.h"
-#include "chrome/browser/ui/omnibox/chrome_omnibox_client.h"
 #include "chrome/browser/ui/omnibox/clipboard_utils.h"
 #include "chrome/browser/ui/view_ids.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_view.h"
@@ -24,6 +22,7 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/omnibox/browser/autocomplete_input.h"
 #include "components/omnibox/browser/autocomplete_match.h"
+#include "components/omnibox/browser/omnibox_client.h"
 #include "components/omnibox/browser/omnibox_edit_controller.h"
 #include "components/omnibox/browser/omnibox_edit_model.h"
 #include "components/omnibox/browser/omnibox_field_trial.h"
@@ -31,7 +30,6 @@
 #include "components/strings/grit/components_strings.h"
 #include "components/toolbar/toolbar_model.h"
 #include "content/public/browser/web_contents.h"
-#include "extensions/common/constants.h"
 #include "net/base/escape.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/accessibility/ax_action_data.h"
@@ -107,15 +105,12 @@ OmniboxState::~OmniboxState() {
 const char OmniboxViewViews::kViewClassName[] = "OmniboxViewViews";
 
 OmniboxViewViews::OmniboxViewViews(OmniboxEditController* controller,
-                                   Profile* profile,
+                                   std::unique_ptr<OmniboxClient> client,
                                    CommandUpdater* command_updater,
                                    bool popup_window_mode,
                                    LocationBarView* location_bar,
                                    const gfx::FontList& font_list)
-    : OmniboxView(
-          controller,
-          base::WrapUnique(new ChromeOmniboxClient(controller, profile))),
-      profile_(profile),
+    : OmniboxView(controller, std::move(client)),
       popup_window_mode_(popup_window_mode),
       security_level_(security_state::NONE),
       saved_selection_for_focus_change_(gfx::Range::InvalidRange()),
@@ -564,6 +559,29 @@ int OmniboxViewViews::GetOmniboxTextLength() const {
   return static_cast<int>(text().length());
 }
 
+void OmniboxViewViews::SetEmphasis(bool emphasize, const gfx::Range& range) {
+  SkColor color = location_bar_view_->GetColor(
+      emphasize ? LocationBarView::TEXT : LocationBarView::DEEMPHASIZED_TEXT);
+  if (range.IsValid())
+    ApplyColor(color, range);
+  else
+    SetColor(color);
+}
+
+void OmniboxViewViews::UpdateSchemeStyle(const gfx::Range& range) {
+  DCHECK(range.IsValid());
+  // Only SECURE and DANGEROUS levels (pages served over HTTPS or flagged by
+  // SafeBrowsing) get a special scheme color treatment. If the security level
+  // is NONE or HTTP_SHOW_WARNING, we do not override the text style previously
+  // applied to the scheme text range by SetEmphasis().
+  if (security_level_ == security_state::NONE ||
+      security_level_ == security_state::HTTP_SHOW_WARNING)
+    return;
+  ApplyColor(location_bar_view_->GetSecureTextColor(security_level_), range);
+  if (security_level_ == security_state::DANGEROUS)
+    ApplyStyle(gfx::DIAGONAL_STRIKE, true, range);
+}
+
 void OmniboxViewViews::EmphasizeURLComponents() {
   if (!location_bar_view_)
     return;
@@ -576,41 +594,8 @@ void OmniboxViewViews::EmphasizeURLComponents() {
   GetRenderText()->SetDirectionalityMode(text_is_url
                                              ? gfx::DIRECTIONALITY_FORCE_LTR
                                              : gfx::DIRECTIONALITY_FROM_TEXT);
-
-  // See whether the contents are a URL with a non-empty host portion, which we
-  // should emphasize.  To check for a URL, rather than using the type returned
-  // by Parse(), ask the model, which will check the desired page transition for
-  // this input.  This can tell us whether an UNKNOWN input string is going to
-  // be treated as a search or a navigation, and is the same method the Paste
-  // And Go system uses.
-  url::Component scheme, host;
-  AutocompleteInput::ParseForEmphasizeComponents(
-      text(), ChromeAutocompleteSchemeClassifier(profile_), &scheme, &host);
-  bool grey_out_url = text().substr(scheme.begin, scheme.len) ==
-      base::UTF8ToUTF16(extensions::kExtensionScheme);
-  bool grey_base = text_is_url && (host.is_nonempty() || grey_out_url);
-  SetColor(location_bar_view_->GetColor(
-      grey_base ? LocationBarView::DEEMPHASIZED_TEXT : LocationBarView::TEXT));
-  if (grey_base && !grey_out_url) {
-    ApplyColor(location_bar_view_->GetColor(LocationBarView::TEXT),
-               gfx::Range(host.begin, host.end()));
-  }
-
-  // Emphasize the scheme for security UI display purposes (if necessary).
-  // Note that we check CurrentTextIsURL() because if we're replacing search
-  // URLs with search terms, we may have a non-URL even when the user is not
-  // editing; and in some cases, e.g. for "site:foo.com" searches, the parser
-  // may have incorrectly identified a qualifier as a scheme.
   SetStyle(gfx::DIAGONAL_STRIKE, false);
-  if (!model()->user_input_in_progress() && text_is_url &&
-      scheme.is_nonempty() && (security_level_ != security_state::NONE)) {
-    SkColor security_color =
-        location_bar_view_->GetSecureTextColor(security_level_);
-    const bool strike = (security_level_ == security_state::DANGEROUS);
-    const gfx::Range scheme_range(scheme.begin, scheme.end());
-    ApplyColor(security_color, scheme_range);
-    ApplyStyle(gfx::DIAGONAL_STRIKE, strike, scheme_range);
-  }
+  UpdateTextStyle(text(), model()->client()->GetSchemeClassifier());
 }
 
 bool OmniboxViewViews::IsItemForCommandIdDynamic(int command_id) const {
@@ -774,6 +759,10 @@ void OmniboxViewViews::OnFocus() {
     SelectRange(saved_selection_for_focus_change_);
     saved_selection_for_focus_change_ = gfx::Range::InvalidRange();
   }
+
+  // Focus changes can affect the visibility of any keyword hint.
+  if (model()->is_keyword_hint())
+    location_bar_view_->Layout();
 }
 
 void OmniboxViewViews::OnBlur() {
@@ -798,6 +787,10 @@ void OmniboxViewViews::OnBlur() {
 
   // Make sure the beginning of the text is visible.
   SelectRange(gfx::Range(0));
+
+  // Focus changes can affect the visibility of any keyword hint.
+  if (model()->is_keyword_hint())
+    location_bar_view_->Layout();
 
   // The location bar needs to repaint without a focus ring.
   location_bar_view_->SchedulePaint();

@@ -289,9 +289,9 @@ int ResponseWriter::Write(net::IOBuffer* buffer,
     base::Base64Encode(chunk, &chunk);
   }
 
-  base::FundamentalValue* id = new base::FundamentalValue(stream_id_);
-  base::StringValue* chunkValue = new base::StringValue(chunk);
-  base::FundamentalValue* encodedValue = new base::FundamentalValue(encoded);
+  base::Value* id = new base::Value(stream_id_);
+  base::Value* chunkValue = new base::Value(chunk);
+  base::Value* encodedValue = new base::Value(encoded);
 
   content::BrowserThread::PostTask(
       content::BrowserThread::UI, FROM_HERE,
@@ -631,9 +631,9 @@ void DevToolsUIBindings::DispatchProtocolMessage(
     return;
   }
 
-  base::FundamentalValue total_size(static_cast<int>(message.length()));
+  base::Value total_size(static_cast<int>(message.length()));
   for (size_t pos = 0; pos < message.length(); pos += kMaxMessageChunkSize) {
-    base::StringValue message_value(message.substr(pos, kMaxMessageChunkSize));
+    base::Value message_value(message.substr(pos, kMaxMessageChunkSize));
     CallClientFunction("DevToolsAPI.dispatchMessageChunk",
                        &message_value, pos ? NULL : &total_size, NULL);
   }
@@ -649,7 +649,7 @@ void DevToolsUIBindings::AgentHostClosed(
 
 void DevToolsUIBindings::SendMessageAck(int request_id,
                                         const base::Value* arg) {
-  base::FundamentalValue id_value(request_id);
+  base::Value id_value(request_id);
   CallClientFunction("DevToolsAPI.embedderMessageAck",
                      &id_value, arg, nullptr);
 }
@@ -1090,7 +1090,7 @@ void DevToolsUIBindings::JsonReceived(const DispatchCallback& callback,
     callback.Run(nullptr);
     return;
   }
-  base::StringValue message_value(message);
+  base::Value message_value(message);
   callback.Run(&message_value);
 }
 
@@ -1117,7 +1117,7 @@ void DevToolsUIBindings::OnURLFetchComplete(const net::URLFetcher* source) {
 }
 
 void DevToolsUIBindings::DeviceCountChanged(int count) {
-  base::FundamentalValue value(count);
+  base::Value value(count);
   CallClientFunction("DevToolsAPI.deviceCountUpdated", &value, NULL,
                      NULL);
 }
@@ -1130,18 +1130,18 @@ void DevToolsUIBindings::DevicesUpdated(
 }
 
 void DevToolsUIBindings::FileSavedAs(const std::string& url) {
-  base::StringValue url_value(url);
+  base::Value url_value(url);
   CallClientFunction("DevToolsAPI.savedURL", &url_value, NULL, NULL);
 }
 
 void DevToolsUIBindings::CanceledFileSaveAs(const std::string& url) {
-  base::StringValue url_value(url);
+  base::Value url_value(url);
   CallClientFunction("DevToolsAPI.canceledSaveURL",
                      &url_value, NULL, NULL);
 }
 
 void DevToolsUIBindings::AppendedTo(const std::string& url) {
-  base::StringValue url_value(url);
+  base::Value url_value(url);
   CallClientFunction("DevToolsAPI.appendedToURL", &url_value, NULL,
                      NULL);
 }
@@ -1156,7 +1156,7 @@ void DevToolsUIBindings::FileSystemAdded(
 
 void DevToolsUIBindings::FileSystemRemoved(
     const std::string& file_system_path) {
-  base::StringValue file_system_path_value(file_system_path);
+  base::Value file_system_path_value(file_system_path);
   CallClientFunction("DevToolsAPI.fileSystemRemoved",
                      &file_system_path_value, NULL, NULL);
 }
@@ -1179,9 +1179,9 @@ void DevToolsUIBindings::IndexingTotalWorkCalculated(
     const std::string& file_system_path,
     int total_work) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  base::FundamentalValue request_id_value(request_id);
-  base::StringValue file_system_path_value(file_system_path);
-  base::FundamentalValue total_work_value(total_work);
+  base::Value request_id_value(request_id);
+  base::Value file_system_path_value(file_system_path);
+  base::Value total_work_value(total_work);
   CallClientFunction("DevToolsAPI.indexingTotalWorkCalculated",
                      &request_id_value, &file_system_path_value,
                      &total_work_value);
@@ -1191,9 +1191,9 @@ void DevToolsUIBindings::IndexingWorked(int request_id,
                                         const std::string& file_system_path,
                                         int worked) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  base::FundamentalValue request_id_value(request_id);
-  base::StringValue file_system_path_value(file_system_path);
-  base::FundamentalValue worked_value(worked);
+  base::Value request_id_value(request_id);
+  base::Value file_system_path_value(file_system_path);
+  base::Value worked_value(worked);
   CallClientFunction("DevToolsAPI.indexingWorked", &request_id_value,
                      &file_system_path_value, &worked_value);
 }
@@ -1202,8 +1202,8 @@ void DevToolsUIBindings::IndexingDone(int request_id,
                                       const std::string& file_system_path) {
   indexing_jobs_.erase(request_id);
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  base::FundamentalValue request_id_value(request_id);
-  base::StringValue file_system_path_value(file_system_path);
+  base::Value request_id_value(request_id);
+  base::Value file_system_path_value(file_system_path);
   CallClientFunction("DevToolsAPI.indexingDone", &request_id_value,
                      &file_system_path_value, NULL);
 }
@@ -1218,8 +1218,8 @@ void DevToolsUIBindings::SearchCompleted(
        it != file_paths.end(); ++it) {
     file_paths_value.AppendString(*it);
   }
-  base::FundamentalValue request_id_value(request_id);
-  base::StringValue file_system_path_value(file_system_path);
+  base::Value request_id_value(request_id);
+  base::Value file_system_path_value(file_system_path);
   CallClientFunction("DevToolsAPI.searchCompleted", &request_id_value,
                      &file_system_path_value, &file_paths_value);
 }
@@ -1262,26 +1262,27 @@ void DevToolsUIBindings::AddDevToolsExtensionsToClient() {
     if (extensions::chrome_manifest_urls::GetDevToolsPage(extension.get())
             .is_empty())
       continue;
+
+    // Each devtools extension will need to be able to run in the devtools
+    // process. Grant each specific extension's origin permission to load
+    // documents.
+    content::ChildProcessSecurityPolicy::GetInstance()->GrantOrigin(
+        web_contents_->GetMainFrame()->GetProcess()->GetID(),
+        url::Origin(extension->url()));
+
     std::unique_ptr<base::DictionaryValue> extension_info(
         new base::DictionaryValue());
     extension_info->Set(
         "startPage",
-        new base::StringValue(extensions::chrome_manifest_urls::GetDevToolsPage(
-                                  extension.get()).spec()));
-    extension_info->Set("name", new base::StringValue(extension->name()));
-    extension_info->Set("exposeExperimentalAPIs",
-                        new base::FundamentalValue(
-                            extension->permissions_data()->HasAPIPermission(
-                                extensions::APIPermission::kExperimental)));
+        new base::Value(
+            extensions::chrome_manifest_urls::GetDevToolsPage(extension.get())
+                .spec()));
+    extension_info->Set("name", new base::Value(extension->name()));
+    extension_info->Set(
+        "exposeExperimentalAPIs",
+        new base::Value(extension->permissions_data()->HasAPIPermission(
+            extensions::APIPermission::kExperimental)));
     results.Append(std::move(extension_info));
-  }
-  if (!results.empty()) {
-    // At least one devtools extension exists; it will need to run in the
-    // devtools process. Grant it permission to load documents with
-    // chrome-extension:// origins.
-    content::ChildProcessSecurityPolicy::GetInstance()->GrantScheme(
-        web_contents_->GetMainFrame()->GetProcess()->GetID(),
-        extensions::kExtensionScheme);
   }
 
   CallClientFunction("DevToolsAPI.addExtensions",

@@ -8,7 +8,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.MainDex;
 
-import java.util.Set;
+import java.util.Map;
 
 /**
  * Java accessor for base/feature_list.h state.
@@ -17,21 +17,21 @@ import java.util.Set;
 @MainDex
 public abstract class ChromeFeatureList {
     /** Map that stores substitution feature flags for tests. */
-    private static Set<String> sTestEnabledFeatures;
+    private static Map<String, Boolean> sTestFeatures;
 
     // Prevent instantiation.
     private ChromeFeatureList() {}
 
     /**
      * Sets the feature flags to use in JUnit tests, since native calls are not available there.
-     * Do not use directly, prefer using the {@link EnableFeatures} annotation.
+     * Do not use directly, prefer using the {@link Features} annotation.
      *
-     * @see EnableFeatures
-     * @see EnableFeatures.Processor
+     * @see Features
+     * @see Features.Processor
      */
     @VisibleForTesting
-    public static void setTestEnabledFeatures(Set<String> featureList) {
-        sTestEnabledFeatures = featureList;
+    public static void setTestFeatures(Map<String, Boolean> features) {
+        sTestFeatures = features;
     }
 
     /**
@@ -44,8 +44,9 @@ public abstract class ChromeFeatureList {
      * @return Whether the feature is enabled or not.
      */
     public static boolean isEnabled(String featureName) {
-        if (sTestEnabledFeatures == null) return nativeIsEnabled(featureName);
-        return sTestEnabledFeatures.contains(featureName);
+        if (sTestFeatures == null) return nativeIsEnabled(featureName);
+        if (sTestFeatures.containsKey(featureName)) return sTestFeatures.get(featureName);
+        throw new IllegalArgumentException(featureName);
     }
 
     /**
@@ -75,7 +76,7 @@ public abstract class ChromeFeatureList {
      * @return The parameter value as an int. Default value if the feature does not exist or the
      *         specified parameter does not exist or its string value does not represent an int.
      */
-    public static long getFieldTrialParamByFeatureAsInt(
+    public static int getFieldTrialParamByFeatureAsInt(
             String featureName, String paramName, int defaultValue) {
         return nativeGetFieldTrialParamByFeatureAsInt(featureName, paramName, defaultValue);
     }
@@ -118,6 +119,7 @@ public abstract class ChromeFeatureList {
     public static final String ANDROID_PAY_INTEGRATION_V1 = "AndroidPayIntegrationV1";
     public static final String ANDROID_PAY_INTEGRATION_V2 = "AndroidPayIntegrationV2";
     public static final String ANDROID_PAYMENT_APPS = "AndroidPaymentApps";
+    public static final String ANDROID_PAYMENT_APPS_FILTER = "AndroidPaymentAppsFilter";
     public static final String AUTOFILL_SCAN_CARDHOLDER_NAME = "AutofillScanCardholderName";
     public static final String CCT_EXTERNAL_LINK_HANDLING = "CCTExternalLinkHandling";
     public static final String CCT_POST_MESSAGE_API = "CCTPostMessageAPI";
@@ -132,14 +134,15 @@ public abstract class ChromeFeatureList {
     public static final String IMPROVED_A2HS = "ImprovedA2HS";
     public static final String NO_CREDIT_CARD_ABORT = "NoCreditCardAbort";
     public static final String NTP_CONDENSED_LAYOUT = "NTPCondensedLayout";
+    public static final String NTP_CONDENSED_TILE_LAYOUT = "NTPCondensedTileLayout";
     public static final String NTP_FAKE_OMNIBOX_TEXT = "NTPFakeOmniboxText";
     public static final String NTP_FOREIGN_SESSIONS_SUGGESTIONS = "NTPForeignSessionsSuggestions";
+    public static final String NTP_LAUNCH_AFTER_INACTIVITY = "NTPLaunchAfterInactivity";
     public static final String NTP_OFFLINE_PAGES_FEATURE_NAME = "NTPOfflinePages";
     public static final String NTP_SHOW_GOOGLE_G_IN_OMNIBOX = "NTPShowGoogleGInOmnibox";
     public static final String NTP_SNIPPETS_INCREASED_VISIBILITY = "NTPSnippetsIncreasedVisibility";
     public static final String NTP_SNIPPETS_SAVE_TO_OFFLINE = "NTPSaveToOffline";
     public static final String NTP_SNIPPETS_OFFLINE_BADGE = "NTPOfflineBadge";
-    public static final String NTP_SUGGESTIONS_STANDALONE_UI = "NTPSuggestionsStandaloneUI";
     public static final String SERVICE_WORKER_PAYMENT_APPS = "ServiceWorkerPaymentApps";
     public static final String TAB_REPARENTING = "TabReparenting";
     public static final String VR_SHELL = "VrShell";

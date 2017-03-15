@@ -51,12 +51,18 @@ static WebVector<WebMediaKeySystemMediaCapability> convertCapabilities(
   for (size_t i = 0; i < capabilities.size(); ++i) {
     const WebString& contentType = capabilities[i].contentType();
     result[i].contentType = contentType;
-    if (isValidContentType(contentType)) {
-      // FIXME: Fail if there are unrecognized parameters.
-      // http://crbug.com/690131
-      ContentType type(capabilities[i].contentType());
-      result[i].mimeType = type.type();
-      result[i].codecs = type.parameter("codecs");
+    ParsedContentType type(contentType, ParsedContentType::Mode::Strict);
+    if (type.isValid()) {
+      // From
+      // http://w3c.github.io/encrypted-media/#get-supported-capabilities-for-audio-video-type
+      // "If the user agent does not recognize one or more parameters,
+      // continue to the next iteration." There is no way to enumerate the
+      // parameters, so only look up "codecs" if a single parameter is
+      // present. Chromium expects "codecs" to be provided, so this capability
+      // will be skipped if codecs is not the only parameter specified.
+      result[i].mimeType = type.mimeType();
+      if (type.parameterCount() == 1u)
+        result[i].codecs = type.parameterValueForName("codecs");
     }
     result[i].robustness = capabilities[i].robustness();
   }

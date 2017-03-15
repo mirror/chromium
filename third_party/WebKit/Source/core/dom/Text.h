@@ -53,7 +53,7 @@ class CORE_EXPORT Text : public CharacterData {
   String wholeText() const;
   Text* replaceWholeText(const String&);
 
-  void recalcTextStyle(StyleRecalcChange, Text* nextTextSibling);
+  void recalcTextStyle(StyleRecalcChange);
   void rebuildTextLayoutTree(Text* nextTextSibling);
   bool textLayoutObjectIsNeeded(const ComputedStyle&,
                                 const LayoutObject& parent) const;
@@ -75,7 +75,7 @@ class CORE_EXPORT Text : public CharacterData {
 
  private:
   String nodeName() const override;
-  Node* cloneNode(bool deep) final;
+  Node* cloneNode(bool deep, ExceptionState&) final;
 
   bool isTextNode() const =
       delete;  // This will catch anyone doing an unnecessary check.

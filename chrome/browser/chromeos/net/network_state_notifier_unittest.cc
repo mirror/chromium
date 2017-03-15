@@ -103,13 +103,11 @@ class NetworkStateNotifierTest : public testing::Test {
                              add_to_visible);
     service_test->SetServiceProperty(kWiFi1ServicePath,
                                      shill::kSecurityClassProperty,
-                                     base::StringValue(shill::kSecurityWep));
-    service_test->SetServiceProperty(kWiFi1ServicePath,
-                                     shill::kConnectableProperty,
-                                     base::FundamentalValue(true));
-    service_test->SetServiceProperty(kWiFi1ServicePath,
-                                     shill::kPassphraseProperty,
-                                     base::StringValue("failure"));
+                                     base::Value(shill::kSecurityWep));
+    service_test->SetServiceProperty(
+        kWiFi1ServicePath, shill::kConnectableProperty, base::Value(true));
+    service_test->SetServiceProperty(
+        kWiFi1ServicePath, shill::kPassphraseProperty, base::Value("failure"));
     base::RunLoop().RunUntilIdle();
   }
 

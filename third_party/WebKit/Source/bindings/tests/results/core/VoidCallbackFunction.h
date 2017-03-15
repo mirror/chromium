@@ -13,6 +13,7 @@
 #ifndef VoidCallbackFunction_h
 #define VoidCallbackFunction_h
 
+#include "bindings/core/v8/NativeValueTraits.h"
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "bindings/core/v8/TraceWrapperV8Reference.h"
 #include "core/CoreExport.h"
@@ -25,11 +26,11 @@ class ScriptState;
 
 class CORE_EXPORT VoidCallbackFunction final : public GarbageCollectedFinalized<VoidCallbackFunction>, public TraceWrapperBase {
  public:
-  static VoidCallbackFunction* create(ScriptState* scriptState, v8::Local<v8::Value> callback);
+  static VoidCallbackFunction* create(ScriptState*, v8::Local<v8::Value> callback);
 
   ~VoidCallbackFunction() = default;
 
-  DECLARE_TRACE();
+  DEFINE_INLINE_TRACE() {}
   DECLARE_TRACE_WRAPPERS();
 
   bool call(ScriptWrappable* scriptWrappable);
@@ -43,6 +44,11 @@ class CORE_EXPORT VoidCallbackFunction final : public GarbageCollectedFinalized<
 
   RefPtr<ScriptState> m_scriptState;
   TraceWrapperV8Reference<v8::Function> m_callback;
+};
+
+template <>
+struct NativeValueTraits<VoidCallbackFunction> : public NativeValueTraitsBase<VoidCallbackFunction> {
+  CORE_EXPORT static VoidCallbackFunction* nativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 }  // namespace blink

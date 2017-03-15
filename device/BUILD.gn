@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("vr/features.gni")
 import("//build/config/features.gni")
 import("//testing/test.gni")
 
@@ -170,6 +171,7 @@ test("device_unittests") {
       "//device/usb:test_support",
       "//device/usb/mojo",
       "//device/usb/public/interfaces",
+      "//net:test_support",
     ]
   }
 

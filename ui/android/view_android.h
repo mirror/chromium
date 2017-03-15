@@ -8,23 +8,30 @@
 #include <list>
 
 #include "base/android/jni_weak_ref.h"
+#include "base/bind.h"
 #include "base/memory/ref_counted.h"
 #include "ui/android/ui_android_export.h"
-#include "ui/android/view_client.h"
 #include "ui/gfx/geometry/rect_f.h"
+
+class GURL;
 
 namespace cc {
 class Layer;
 }
 
 namespace ui {
-
+class EventForwarder;
+class MotionEventAndroid;
+class ViewClient;
 class WindowAndroid;
 
 // A simple container for a UI layer.
 // At the root of the hierarchy is a WindowAndroid, when attached.
-// TODO(jinsukkim): Replace WindowAndroid with ViewRoot for the root of the
-//     view hierarchy. See https://crbug.com/671401
+// Dispatches input/view events coming from Java layer. Hit testing against
+// those events is implemented so that the |ViewClient| will be invoked
+// when the event got hit on the area defined by |layout_params_|.
+// Hit testing is done in the order of parent -> child, and from top
+// of the stack to back among siblings.
 class UI_ANDROID_EXPORT ViewAndroid {
  public:
   // Stores an anchored view to delete itself at the end of its lifetime
@@ -57,7 +64,32 @@ class UI_ANDROID_EXPORT ViewAndroid {
     // Default copy/assign disabled by move constructor.
   };
 
-  explicit ViewAndroid(ViewClient* client);
+  // Layout parameters used to set the view's position and size.
+  // Position is in parent's coordinate space.
+  struct LayoutParams {
+    static LayoutParams MatchParent() { return {true, 0, 0, 0, 0}; }
+    static LayoutParams Normal(int x, int y, int width, int height) {
+      return {false, x, y, width, height};
+    };
+
+    bool match_parent;  // Bounds matches that of the parent if true.
+    int x;
+    int y;
+    int width;
+    int height;
+
+    LayoutParams(const LayoutParams& p) = default;
+
+   private:
+    LayoutParams(bool match_parent, int x, int y, int width, int height)
+        : match_parent(match_parent),
+          x(x),
+          y(y),
+          width(width),
+          height(height) {}
+  };
+
+  explicit ViewAndroid(ViewClient* view_client);
 
   ViewAndroid();
   virtual ~ViewAndroid();
@@ -76,31 +108,39 @@ class UI_ANDROID_EXPORT ViewAndroid {
   // if disconnected.
   virtual WindowAndroid* GetWindowAndroid() const;
 
-  // Returns |ViewRoot| of this hierarchy. |null| if the hierarchy isn't
-  // attached to a |ViewRoot|.
-  virtual ViewAndroid* GetViewRoot();
-
   // Used to return and set the layer for this view. May be |null|.
   cc::Layer* GetLayer() const;
   void SetLayer(scoped_refptr<cc::Layer> layer);
 
   void SetDelegate(const base::android::JavaRef<jobject>& delegate);
 
+  // Gets (creates one if not present) Java object of the EventForwarder
+  // for a view tree in the view hierarchy including this node.
+  // Only one instance per the view tree is allowed.
+  base::android::ScopedJavaLocalRef<jobject> GetEventForwarder();
+
   // Adds a child to this view.
   void AddChild(ViewAndroid* child);
 
-  // Move the give child ViewAndroid to the top of the list
-  // so that it can be the first responder of events.
-  void MoveToTop(ViewAndroid* child);
+  // Moves the give child ViewAndroid to the front of the list so that it can be
+  // the first responder of events.
+  void MoveToFront(ViewAndroid* child);
 
   // Detaches this view from its parent.
   void RemoveFromParent();
 
-  // Set the layout relative to parent. Used to do hit testing against events.
-  void SetLayout(int x, int y, int width, int height, bool match_parent);
+  // Sets the layout relative to parent. Used to do hit testing against events.
+  void SetLayout(LayoutParams params);
 
   bool StartDragAndDrop(const base::android::JavaRef<jstring>& jtext,
                         const base::android::JavaRef<jobject>& jimage);
+
+  void OnBackgroundColorChanged(unsigned int color);
+  void OnTopControlsChanged(float top_controls_offset,
+                            float top_content_offset);
+  void OnBottomControlsChanged(float bottom_controls_offset,
+                               float bottom_content_offset);
+  void StartContentIntent(const GURL& content_url, bool is_main_frame);
 
   ScopedAnchorView AcquireAnchorView();
   void SetAnchorRect(const base::android::JavaRef<jobject>& anchor,
@@ -109,20 +149,40 @@ class UI_ANDROID_EXPORT ViewAndroid {
   // This may return null.
   base::android::ScopedJavaLocalRef<jobject> GetContainerView();
 
+  float GetDipScale();
+
  protected:
-  // Internal implementation of ViewClient forwarding calls to the interface.
-  bool OnTouchEventInternal(const MotionEventData& event);
-
-  // Virtual for testing.
-  virtual float GetDipScale();
-
   ViewAndroid* parent_;
 
  private:
-  // Returns true only if this is of type |ViewRoot|.
-  bool IsViewRoot();
+  friend class EventForwarder;
+  friend class ViewAndroidBoundsTest;
+
+  using ViewClientCallback =
+      const base::Callback<bool(ViewClient*, const MotionEventAndroid&)>;
+
+  bool OnTouchEvent(const MotionEventAndroid& event, bool for_touch_handle);
+  bool OnMouseEvent(const MotionEventAndroid& event);
 
   void RemoveChild(ViewAndroid* child);
+
+  bool HitTest(ViewClientCallback send_to_client,
+               const MotionEventAndroid& event);
+
+  static bool SendTouchEventToClient(bool for_touch_handle,
+                                     ViewClient* client,
+                                     const MotionEventAndroid& event);
+  static bool SendMouseEventToClient(ViewClient* client,
+                                     const MotionEventAndroid& event);
+
+  bool has_event_forwarder() const { return !!event_forwarder_; }
+
+  // Returns true if any node of the tree along the hierarchy (view's children
+  // and parents) already has |EventForwarder| attached to it.
+  static bool ViewTreeHasEventForwarder(ViewAndroid* view);
+
+  // Returns true if any children node (or self) has |EventForwarder|.
+  static bool SubtreeHasEventForwarder(ViewAndroid* view);
 
   // Returns the Java delegate for this view. This is used to delegate work
   // up to the embedding view (or the embedder that can deal with the
@@ -130,19 +190,18 @@ class UI_ANDROID_EXPORT ViewAndroid {
   const base::android::ScopedJavaLocalRef<jobject>
       GetViewAndroidDelegate() const;
 
-  // The child view at the back of the list receives event first.
   std::list<ViewAndroid*> children_;
   scoped_refptr<cc::Layer> layer_;
   JavaObjectWeakGlobalRef delegate_;
+
   ViewClient* const client_;
 
   // Basic view layout information. Used to do hit testing deciding whether
   // the passed events should be processed by the view.
-  gfx::Point origin_;  // In parent's coordinate space.
-  gfx::Size size_;
-  bool match_parent_;  // Bounds matches that of the parent if true.
+  LayoutParams layout_params_;
 
-  gfx::Vector2dF content_offset_;  // In CSS pixel.
+  gfx::Vector2dF content_offset_;  // in CSS pixel.
+  std::unique_ptr<EventForwarder> event_forwarder_;
 
   DISALLOW_COPY_AND_ASSIGN(ViewAndroid);
 };

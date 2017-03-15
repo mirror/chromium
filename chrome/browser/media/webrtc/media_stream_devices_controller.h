@@ -11,7 +11,6 @@
 #include "base/macros.h"
 #include "chrome/browser/permissions/permission_request.h"
 #include "components/content_settings/core/common/content_settings.h"
-#include "content/public/browser/permission_type.h"
 #include "content/public/browser/web_contents_delegate.h"
 
 class Profile;
@@ -25,27 +24,25 @@ namespace user_prefs {
 class PrefRegistrySyncable;
 }
 
+namespace policy {
+class MediaStreamDevicesControllerBrowserTest;
+}
+
 class MediaStreamDevicesController : public PermissionRequest {
  public:
-  MediaStreamDevicesController(content::WebContents* web_contents,
-                               const content::MediaStreamRequest& request,
-                               const content::MediaResponseCallback& callback);
-
-  ~MediaStreamDevicesController() override;
+  static void RequestPermissions(
+      content::WebContents* web_contents,
+      const content::MediaStreamRequest& request,
+      const content::MediaResponseCallback& callback);
 
   // Registers the prefs backing the audio and video policies.
   static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
 
-  bool IsAllowedForAudio() const;
-  bool IsAllowedForVideo() const;
+  ~MediaStreamDevicesController() override;
+
   bool IsAskingForAudio() const;
   bool IsAskingForVideo() const;
   base::string16 GetMessageText() const;
-
-  // Returns the PermissionsType associated with the provided
-  // ContentSettingsType. |content_type| must be a media stream type.
-  content::PermissionType GetPermissionTypeForContentSettingsType(
-      ContentSettingsType content_type) const;
 
   // Forces the permissions to be denied (without being persisted) regardless
   // of what the previous state was.  If the user had previously allowed the
@@ -69,6 +66,35 @@ class MediaStreamDevicesController : public PermissionRequest {
   PermissionRequestType GetPermissionRequestType() const override;
 
  private:
+  friend class MediaStreamDevicesControllerTest;
+  friend class policy::MediaStreamDevicesControllerBrowserTest;
+
+  // Delegate showing permission prompts.
+  class PermissionPromptDelegate {
+   public:
+    virtual void ShowPrompt(
+        bool user_gesture,
+        content::WebContents* web_contents,
+        std::unique_ptr<MediaStreamDevicesController> controller) = 0;
+  };
+
+  class MediaPermissionStatus;
+  class PermissionPromptDelegateImpl;
+
+  static void RequestPermissionsWithDelegate(
+      content::WebContents* web_contents,
+      const content::MediaStreamRequest& request,
+      const content::MediaResponseCallback& callback,
+      PermissionPromptDelegate* delegate);
+
+  MediaStreamDevicesController(content::WebContents* web_contents,
+                               const content::MediaStreamRequest& request,
+                               const content::MediaResponseCallback& callback,
+                               const MediaPermissionStatus& initial_permission);
+
+  bool IsAllowedForAudio() const;
+  bool IsAllowedForVideo() const;
+
   // Returns a list of devices available for the request for the given
   // audio/video permission settings.
   content::MediaStreamDevices GetDevices(ContentSetting audio_setting,
@@ -95,6 +121,8 @@ class MediaStreamDevicesController : public PermissionRequest {
   ContentSetting GetContentSetting(
       ContentSettingsType content_type,
       const content::MediaStreamRequest& request,
+      bool was_requested,
+      bool was_initially_blocked,
       content::MediaStreamRequestResult* denial_reason) const;
 
   // Returns the content setting that should apply given an old content setting
@@ -131,6 +159,8 @@ class MediaStreamDevicesController : public PermissionRequest {
   // The callback that needs to be Run to notify WebRTC of whether access to
   // audio/video devices was granted or not.
   content::MediaResponseCallback callback_;
+
+  std::unique_ptr<PermissionPromptDelegate> delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(MediaStreamDevicesController);
 };

@@ -10,6 +10,7 @@
 #import "ios/web/public/test/fakes/crw_test_web_state_observer.h"
 #import "ios/web/public/test/fakes/test_web_state.h"
 #import "ios/web/public/web_state/web_state_observer_bridge.h"
+#include "ios/web/web_state/navigation_context_impl.h"
 #include "testing/platform_test.h"
 
 namespace web {
@@ -38,6 +39,27 @@ TEST_F(WebStateObserverBridgeTest, ProvisionalNavigationStarted) {
   EXPECT_EQ(&test_web_state_,
             [observer_ startProvisionalNavigationInfo]->web_state);
   EXPECT_EQ(url, [observer_ startProvisionalNavigationInfo]->url);
+}
+
+// Tests |webState:didFinishNavigation:| forwarding.
+TEST_F(WebStateObserverBridgeTest, DidFinishNavigation) {
+  ASSERT_FALSE([observer_ didFinishNavigationInfo]);
+
+  GURL url("https://chromium.test/");
+  std::unique_ptr<web::NavigationContext> context =
+      web::NavigationContextImpl::CreateNavigationContext(&test_web_state_,
+                                                          url);
+  bridge_->DidFinishNavigation(context.get());
+
+  ASSERT_TRUE([observer_ didFinishNavigationInfo]);
+  EXPECT_EQ(&test_web_state_, [observer_ didFinishNavigationInfo]->web_state);
+  web::NavigationContext* actual_context =
+      [observer_ didFinishNavigationInfo]->context.get();
+  ASSERT_TRUE(actual_context);
+  EXPECT_EQ(&test_web_state_, actual_context->GetWebState());
+  EXPECT_EQ(context->IsSameDocument(), actual_context->IsSameDocument());
+  EXPECT_EQ(context->IsErrorPage(), actual_context->IsErrorPage());
+  EXPECT_EQ(context->GetUrl(), actual_context->GetUrl());
 }
 
 // Tests |webState:didCommitNavigationWithDetails:| forwarding.
@@ -90,24 +112,6 @@ TEST_F(WebStateObserverBridgeTest, InterstitialDismissed) {
   EXPECT_EQ(&test_web_state_, [observer_ dismissInterstitialInfo]->web_state);
 }
 
-// Tests |webState:webStateDidChangeURLHash:| forwarding.
-TEST_F(WebStateObserverBridgeTest, UrlHashChanged) {
-  ASSERT_FALSE([observer_ changeUrlHashInfo]);
-
-  bridge_->UrlHashChanged();
-  ASSERT_TRUE([observer_ changeUrlHashInfo]);
-  EXPECT_EQ(&test_web_state_, [observer_ changeUrlHashInfo]->web_state);
-}
-
-// Tests |webState:webStateDidChangeHistoryState:| forwarding.
-TEST_F(WebStateObserverBridgeTest, HistoryStateChanged) {
-  ASSERT_FALSE([observer_ changeHistoryStateInfo]);
-
-  bridge_->HistoryStateChanged();
-  ASSERT_TRUE([observer_ changeHistoryStateInfo]);
-  EXPECT_EQ(&test_web_state_, [observer_ changeHistoryStateInfo]->web_state);
-}
-
 // Tests |webState:didChangeLoadingProgress:| forwarding.
 TEST_F(WebStateObserverBridgeTest, LoadProgressChanged) {
   ASSERT_FALSE([observer_ changeLoadingProgressInfo]);
@@ -117,6 +121,25 @@ TEST_F(WebStateObserverBridgeTest, LoadProgressChanged) {
   ASSERT_TRUE([observer_ changeLoadingProgressInfo]);
   EXPECT_EQ(&test_web_state_, [observer_ changeLoadingProgressInfo]->web_state);
   EXPECT_EQ(kTestLoadProgress, [observer_ changeLoadingProgressInfo]->progress);
+}
+
+// Tests |webStateDidChangeTitle:| forwarding.
+TEST_F(WebStateObserverBridgeTest, TitleWasSet) {
+  ASSERT_FALSE([observer_ titleWasSetInfo]);
+
+  bridge_->TitleWasSet();
+  ASSERT_TRUE([observer_ titleWasSetInfo]);
+  EXPECT_EQ(&test_web_state_, [observer_ titleWasSetInfo]->web_state);
+}
+
+// Tests |webStateDidChangeVisibleSecurityState:| forwarding.
+TEST_F(WebStateObserverBridgeTest, DidChangeVisibleSecurityState) {
+  ASSERT_FALSE([observer_ didChangeVisibleSecurityStateInfo]);
+
+  bridge_->DidChangeVisibleSecurityState();
+  ASSERT_TRUE([observer_ didChangeVisibleSecurityStateInfo]);
+  EXPECT_EQ(&test_web_state_,
+            [observer_ didChangeVisibleSecurityStateInfo]->web_state);
 }
 
 // Tests |webState:didSubmitDocumentWithFormNamed:userInitiated:| forwarding.

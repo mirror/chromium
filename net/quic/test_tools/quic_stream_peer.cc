@@ -8,8 +8,6 @@
 
 #include "net/quic/core/quic_stream.h"
 
-using base::StringPiece;
-
 namespace net {
 namespace test {
 
@@ -41,28 +39,8 @@ bool QuicStreamPeer::FinSent(QuicStream* stream) {
 }
 
 // static
-bool QuicStreamPeer::FinReceived(QuicStream* stream) {
-  return stream->fin_received_;
-}
-
-// static
 bool QuicStreamPeer::RstSent(QuicStream* stream) {
   return stream->rst_sent_;
-}
-
-// static
-bool QuicStreamPeer::RstReceived(QuicStream* stream) {
-  return stream->rst_received_;
-}
-
-// static
-bool QuicStreamPeer::ReadSideClosed(QuicStream* stream) {
-  return stream->read_side_closed_;
-}
-
-// static
-bool QuicStreamPeer::WriteSideClosed(QuicStream* stream) {
-  return stream->write_side_closed_;
 }
 
 // static
@@ -86,7 +64,7 @@ bool QuicStreamPeer::StreamContributesToConnectionFlowControl(
 // static
 void QuicStreamPeer::WriteOrBufferData(
     QuicStream* stream,
-    StringPiece data,
+    QuicStringPiece data,
     bool fin,
     QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener) {
   stream->WriteOrBufferData(data, fin, std::move(ack_listener));

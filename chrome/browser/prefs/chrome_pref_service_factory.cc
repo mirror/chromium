@@ -8,6 +8,7 @@
 #include <stddef.h>
 
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "base/bind.h"
@@ -220,6 +221,32 @@ const PrefHashFilter::TrackedPreferenceMetadata kTrackedPrefs[] = {
     PrefHashFilter::TRACKING_STRATEGY_ATOMIC,
     PrefHashFilter::VALUE_PERSONAL
   },
+#if defined(OS_WIN)
+  {
+    25, prefs::kSettingsResetPromptPromptWave,
+    PrefHashFilter::ENFORCE_ON_LOAD,
+    PrefHashFilter::TRACKING_STRATEGY_ATOMIC,
+    PrefHashFilter::VALUE_IMPERSONAL
+  },
+  {
+    26, prefs::kSettingsResetPromptLastTriggeredForDefaultSearch,
+    PrefHashFilter::ENFORCE_ON_LOAD,
+    PrefHashFilter::TRACKING_STRATEGY_ATOMIC,
+    PrefHashFilter::VALUE_IMPERSONAL
+  },
+  {
+    27, prefs::kSettingsResetPromptLastTriggeredForStartupUrls,
+    PrefHashFilter::ENFORCE_ON_LOAD,
+    PrefHashFilter::TRACKING_STRATEGY_ATOMIC,
+    PrefHashFilter::VALUE_IMPERSONAL
+  },
+  {
+    28, prefs::kSettingsResetPromptLastTriggeredForHomepage,
+    PrefHashFilter::ENFORCE_ON_LOAD,
+    PrefHashFilter::TRACKING_STRATEGY_ATOMIC,
+    PrefHashFilter::VALUE_IMPERSONAL
+  },
+#endif  // defined(OS_WIN)
   // See note at top, new items added here also need to be added to
   // histograms.xml's TrackedPreference enum.
 };
@@ -246,13 +273,13 @@ SettingsEnforcementGroup GetSettingsEnforcementGroup() {
 # if defined(OS_WIN)
   if (!g_disable_domain_check_for_testing) {
     static bool first_call = true;
-    static const bool is_enrolled_to_domain = base::win::IsEnrolledToDomain();
+    static const bool is_managed = base::win::IsEnterpriseManaged();
     if (first_call) {
       UMA_HISTOGRAM_BOOLEAN("Settings.TrackedPreferencesNoEnforcementOnDomain",
-                            is_enrolled_to_domain);
+                            is_managed);
       first_call = false;
     }
-    if (is_enrolled_to_domain)
+    if (is_managed)
       return GROUP_NO_ENFORCEMENT;
   }
 #endif
@@ -471,12 +498,13 @@ std::unique_ptr<PrefService> CreateLocalState(
 std::unique_ptr<sync_preferences::PrefServiceSyncable> CreateProfilePrefs(
     const base::FilePath& profile_path,
     base::SequencedTaskRunner* pref_io_task_runner,
-    TrackedPreferenceValidationDelegate* validation_delegate,
+    prefs::mojom::TrackedPreferenceValidationDelegate* validation_delegate,
     policy::PolicyService* policy_service,
     SupervisedUserSettingsService* supervised_user_settings,
     const scoped_refptr<PrefStore>& extension_prefs,
     const scoped_refptr<user_prefs::PrefRegistrySyncable>& pref_registry,
-    bool async) {
+    bool async,
+    service_manager::Connector* connector) {
   TRACE_EVENT0("browser", "chrome_prefs::CreateProfilePrefs");
   SCOPED_UMA_HISTOGRAM_TIMER("PrefService.CreateProfilePrefsTime");
 
@@ -500,7 +528,7 @@ std::unique_ptr<sync_preferences::PrefServiceSyncable> CreateProfilePrefs(
                  supervised_user_settings, user_pref_store, extension_prefs,
                  async);
   std::unique_ptr<sync_preferences::PrefServiceSyncable> pref_service =
-      factory.CreateSyncable(pref_registry.get());
+      factory.CreateSyncable(pref_registry.get(), connector);
 
   return pref_service;
 }
@@ -513,9 +541,9 @@ void DisableDomainCheckForTesting() {
 
 bool InitializePrefsFromMasterPrefs(
     const base::FilePath& profile_path,
-    const base::DictionaryValue& master_prefs) {
+    std::unique_ptr<base::DictionaryValue> master_prefs) {
   return CreateProfilePrefStoreManager(profile_path)
-      ->InitializePrefsFromMasterPrefs(master_prefs);
+      ->InitializePrefsFromMasterPrefs(std::move(master_prefs));
 }
 
 base::Time GetResetTime(Profile* profile) {

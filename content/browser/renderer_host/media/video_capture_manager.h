@@ -21,6 +21,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/message_loop/message_loop.h"
+#include "base/observer_list.h"
 #include "base/process/process_handle.h"
 #include "base/threading/thread_checker.h"
 #include "base/timer/elapsed_timer.h"
@@ -29,6 +30,7 @@
 #include "content/browser/renderer_host/media/video_capture_controller_event_handler.h"
 #include "content/common/content_export.h"
 #include "content/common/media/media_stream_options.h"
+#include "media/base/video_facing.h"
 #include "media/capture/video/video_capture_device.h"
 #include "media/capture/video/video_capture_device_factory.h"
 #include "media/capture/video_capture_types.h"
@@ -54,10 +56,20 @@ class CONTENT_EXPORT VideoCaptureManager : public MediaStreamProvider {
       std::unique_ptr<media::VideoCaptureDeviceFactory> factory,
       scoped_refptr<base::SingleThreadTaskRunner> device_task_runner);
 
+  // AddVideoCaptureObserver() can be called only before any devices are opened.
+  // RemoveAllVideoCaptureObservers() can be called only after all devices
+  // are closed.
+  // They can be called more than once and it's ok to not call at all if the
+  // client is not interested in receiving media::VideoCaptureObserver callacks.
+  // This methods can be called on whatever thread. The callbacks of
+  // media::VideoCaptureObserver arrive on browser IO thread.
+  void AddVideoCaptureObserver(media::VideoCaptureObserver* observer);
+  void RemoveAllVideoCaptureObservers();
+
   // Implements MediaStreamProvider.
   void RegisterListener(MediaStreamProviderListener* listener) override;
-  void UnregisterListener() override;
-  int Open(const StreamDeviceInfo& device) override;
+  void UnregisterListener(MediaStreamProviderListener* listener) override;
+  int Open(const MediaStreamDevice& device) override;
   void Close(int capture_session_id) override;
 
   // Called by VideoCaptureHost to locate a capture device for |capture_params|,
@@ -71,7 +83,8 @@ class CONTENT_EXPORT VideoCaptureManager : public MediaStreamProvider {
   //
   // On success, the controller is returned via calling |done_cb|, indicating
   // that the client was successfully added. A NULL controller is passed to
-  // the callback on failure.
+  // the callback on failure. |done_cb| is not allowed to synchronously call
+  // StopCaptureForClient().
   void StartCaptureForClient(media::VideoCaptureSessionId session_id,
                              const media::VideoCaptureParams& capture_params,
                              VideoCaptureControllerID client_id,
@@ -259,7 +272,6 @@ class CONTENT_EXPORT VideoCaptureManager : public MediaStreamProvider {
                         const media::VideoCaptureParams& params);
   void OnDeviceStarted(
       int serial_id,
-      std::unique_ptr<media::FrameBufferPool> frame_buffer_pool,
       std::unique_ptr<VideoCaptureDevice> device);
   void DoStopDevice(DeviceEntry* entry);
   void HandleQueuedStartRequest();
@@ -315,7 +327,7 @@ class CONTENT_EXPORT VideoCaptureManager : public MediaStreamProvider {
   scoped_refptr<base::SingleThreadTaskRunner> device_task_runner_;
 
   // Only accessed on Browser::IO thread.
-  MediaStreamProviderListener* listener_;
+  base::ObserverList<MediaStreamProviderListener> listeners_;
   media::VideoCaptureSessionId new_capture_session_id_;
 
   // An entry is kept in this map for every session that has been created via
@@ -340,6 +352,8 @@ class CONTENT_EXPORT VideoCaptureManager : public MediaStreamProvider {
   // from the test harness.
   std::unique_ptr<media::VideoCaptureDeviceFactory>
       video_capture_device_factory_;
+
+  base::ObserverList<media::VideoCaptureObserver> capture_observers_;
 
   // Local cache of the enumerated video capture devices' names and capture
   // supported formats. A snapshot of the current devices and their capabilities

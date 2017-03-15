@@ -55,6 +55,7 @@ class BuildBot(object):
     for more information about the layout test result format, see:
         https://www.chromium.org/developers/the-json-test-results-format
     """
+
     def results_url(self, builder_name, build_number=None):
         """Returns a URL for one set of archived layout test results.
 
@@ -64,7 +65,7 @@ class BuildBot(object):
         """
         if build_number:
             url_base = self.builder_results_url_base(builder_name)
-            return "%s/%s/layout-test-results" % (url_base, build_number)
+            return '%s/%s/layout-test-results' % (url_base, build_number)
         return self.accumulated_results_url_base(builder_name)
 
     def builder_results_url_base(self, builder_name):
@@ -85,12 +86,12 @@ class BuildBot(object):
         that failed only with the patch ("failures"), and tests that failed
         both with and without ("ignored").
         """
-        url_base = "%s/%s" % (self.builder_results_url_base(build.builder_name), build.build_number)
+        url_base = '%s/%s' % (self.builder_results_url_base(build.builder_name), build.build_number)
         return NetworkTransaction(return_none_on_404=True).run(
-            lambda: self._fetch_file(url_base, "retry_summary.json"))
+            lambda: self._fetch_file(url_base, 'retry_summary.json'))
 
     def accumulated_results_url_base(self, builder_name):
-        return self.builder_results_url_base(builder_name) + "/results/layout-test-results"
+        return self.builder_results_url_base(builder_name) + '/results/layout-test-results'
 
     @memoized
     def latest_layout_test_results(self, builder_name):
@@ -104,9 +105,9 @@ class BuildBot(object):
     def fetch_layout_test_results(self, results_url):
         """Returns a LayoutTestResults object for results fetched from a given URL."""
         results_file = NetworkTransaction(return_none_on_404=True).run(
-            lambda: self._fetch_file(results_url, "failing_results.json"))
+            lambda: self._fetch_file(results_url, 'failing_results.json'))
         revision = NetworkTransaction(return_none_on_404=True).run(
-            lambda: self._fetch_file(results_url, "LAST_CHANGE"))
+            lambda: self._fetch_file(results_url, 'LAST_CHANGE'))
         if not revision:
             results_file = None
         return LayoutTestResults.results_from_string(results_file, revision)
@@ -114,7 +115,7 @@ class BuildBot(object):
     def _fetch_file(self, url_base, file_name):
         # It seems this can return None if the url redirects and then returns 404.
         # FIXME: This could use Web instead of using urllib2 directly.
-        result = urllib2.urlopen("%s/%s" % (url_base, file_name))
+        result = urllib2.urlopen('%s/%s' % (url_base, file_name))
         if not result:
             return None
         # urlopen returns a file-like object which sometimes works fine with str()
@@ -130,3 +131,23 @@ def current_build_link(host):
     if not (master_name and builder_name and build_number):
         return None
     return 'https://build.chromium.org/p/%s/builders/%s/builds/%s' % (master_name, builder_name, build_number)
+
+
+def filter_latest_builds(builds):
+    """Filters Build objects to include only the latest for each builder.
+
+    Args:
+        builds: A collection of Build objects.
+
+    Returns:
+        A list of Build objects; only one Build object per builder name. If
+        there are only Builds with no build number, then one is kept; if there
+        are Builds with build numbers, then the one with the highest build
+        number is kept.
+    """
+    latest_builds = {}
+    for build in builds:
+        builder = build.builder_name
+        if builder not in latest_builds or build.build_number > latest_builds[builder].build_number:
+            latest_builds[builder] = build
+    return sorted(latest_builds.values())

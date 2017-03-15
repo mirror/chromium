@@ -94,6 +94,9 @@ class WrappedDeviceFactory : public media::FakeVideoCaptureDeviceFactory {
     DISALLOW_COPY_AND_ASSIGN(WrappedDevice);
   };
 
+  static const media::VideoFacingMode DEFAULT_FACING =
+      media::VideoFacingMode::MEDIA_VIDEO_FACING_USER;
+
   WrappedDeviceFactory() : FakeVideoCaptureDeviceFactory() {}
   ~WrappedDeviceFactory() final {}
 
@@ -101,6 +104,16 @@ class WrappedDeviceFactory : public media::FakeVideoCaptureDeviceFactory {
       const media::VideoCaptureDeviceDescriptor& device_descriptor) final {
     return base::MakeUnique<WrappedDevice>(
         FakeVideoCaptureDeviceFactory::CreateDevice(device_descriptor), this);
+  }
+
+  void GetDeviceDescriptors(
+      media::VideoCaptureDeviceDescriptors* device_descriptors) override {
+    media::FakeVideoCaptureDeviceFactory::GetDeviceDescriptors(
+        device_descriptors);
+    for (auto& descriptor : *device_descriptors) {
+      if (descriptor.facing == media::VideoFacingMode::MEDIA_VIDEO_FACING_NONE)
+        descriptor.facing = DEFAULT_FACING;
+    }
   }
 
   MOCK_METHOD0(WillSuspendDevice, void());
@@ -137,17 +150,26 @@ class MockMediaStreamProviderListener : public MediaStreamProviderListener {
 class MockFrameObserver : public VideoCaptureControllerEventHandler {
  public:
   MOCK_METHOD1(OnError, void(VideoCaptureControllerID id));
+  MOCK_METHOD1(OnStarted, void(VideoCaptureControllerID id));
 
   void OnBufferCreated(VideoCaptureControllerID id,
                        mojo::ScopedSharedBufferHandle handle,
                        int length, int buffer_id) override {}
   void OnBufferDestroyed(VideoCaptureControllerID id, int buffer_id) override {}
-  void OnBufferReady(VideoCaptureControllerID id,
-                     int buffer_id,
-                     const scoped_refptr<media::VideoFrame>& frame) override {}
+  void OnBufferReady(
+      VideoCaptureControllerID id,
+      int buffer_id,
+      const media::mojom::VideoFrameInfoPtr& frame_info) override {}
   void OnEnded(VideoCaptureControllerID id) override {}
 
   void OnGotControllerCallback(VideoCaptureControllerID) {}
+};
+
+// Input argument for testing AddVideoCaptureObserver().
+class MockVideoCaptureObserver : public media::VideoCaptureObserver {
+ public:
+  MOCK_METHOD1(OnVideoCaptureStarted, void(media::VideoFacingMode));
+  MOCK_METHOD1(OnVideoCaptureStopped, void(media::VideoFacingMode));
 };
 
 }  // namespace
@@ -180,7 +202,8 @@ class VideoCaptureManagerTest : public testing::Test {
     video_capture_device_factory_ = static_cast<WrappedDeviceFactory*>(
         vcm_->video_capture_device_factory());
     const int32_t kNumberOfFakeDevices = 2;
-    video_capture_device_factory_->set_number_of_devices(kNumberOfFakeDevices);
+    video_capture_device_factory_->SetToDefaultDevicesConfig(
+        kNumberOfFakeDevices);
     vcm_->RegisterListener(listener_.get());
     frame_observer_.reset(new MockFrameObserver());
 
@@ -281,9 +304,10 @@ class VideoCaptureManagerTest : public testing::Test {
 TEST_F(VideoCaptureManagerTest, CreateAndClose) {
   InSequence s;
   EXPECT_CALL(*listener_, Opened(MEDIA_DEVICE_VIDEO_CAPTURE, _));
+  EXPECT_CALL(*frame_observer_, OnStarted(_));
   EXPECT_CALL(*listener_, Closed(MEDIA_DEVICE_VIDEO_CAPTURE, _));
 
-  int video_session_id = vcm_->Open(devices_.front());
+  int video_session_id = vcm_->Open(devices_.front().device);
   VideoCaptureControllerID client_id = StartClient(video_session_id, true);
 
   StopClient(client_id);
@@ -291,15 +315,16 @@ TEST_F(VideoCaptureManagerTest, CreateAndClose) {
 
   // Wait to check callbacks before removing the listener.
   base::RunLoop().RunUntilIdle();
-  vcm_->UnregisterListener();
+  vcm_->UnregisterListener(listener_.get());
 }
 
 TEST_F(VideoCaptureManagerTest, CreateAndCloseMultipleTimes) {
   InSequence s;
   for (int i = 1 ; i < 3 ; ++i) {
     EXPECT_CALL(*listener_, Opened(MEDIA_DEVICE_VIDEO_CAPTURE, i));
+    EXPECT_CALL(*frame_observer_, OnStarted(_));
     EXPECT_CALL(*listener_, Closed(MEDIA_DEVICE_VIDEO_CAPTURE, i));
-    int video_session_id = vcm_->Open(devices_.front());
+    int video_session_id = vcm_->Open(devices_.front().device);
     VideoCaptureControllerID client_id = StartClient(video_session_id, true);
 
     StopClient(client_id);
@@ -308,16 +333,17 @@ TEST_F(VideoCaptureManagerTest, CreateAndCloseMultipleTimes) {
 
   // Wait to check callbacks before removing the listener.
   base::RunLoop().RunUntilIdle();
-  vcm_->UnregisterListener();
+  vcm_->UnregisterListener(listener_.get());
 }
 
 // Try to open, start, and abort a device.
 TEST_F(VideoCaptureManagerTest, CreateAndAbort) {
   InSequence s;
   EXPECT_CALL(*listener_, Opened(MEDIA_DEVICE_VIDEO_CAPTURE, _));
+  EXPECT_CALL(*frame_observer_, OnStarted(_));
   EXPECT_CALL(*listener_, Aborted(MEDIA_DEVICE_VIDEO_CAPTURE, _));
 
-  int video_session_id = vcm_->Open(devices_.front());
+  int video_session_id = vcm_->Open(devices_.front().device);
   VideoCaptureControllerID client_id = StartClient(video_session_id, true);
 
   // Wait for device opened.
@@ -328,7 +354,28 @@ TEST_F(VideoCaptureManagerTest, CreateAndAbort) {
 
   // Wait to check callbacks before removing the listener.
   base::RunLoop().RunUntilIdle();
-  vcm_->UnregisterListener();
+  vcm_->UnregisterListener(listener_.get());
+}
+
+TEST_F(VideoCaptureManagerTest, AddObserver) {
+  InSequence s;
+  MockVideoCaptureObserver observer;
+  vcm_->AddVideoCaptureObserver(&observer);
+
+  EXPECT_CALL(observer,
+              OnVideoCaptureStarted(WrappedDeviceFactory::DEFAULT_FACING));
+  EXPECT_CALL(observer,
+              OnVideoCaptureStopped(WrappedDeviceFactory::DEFAULT_FACING));
+
+  int video_session_id = vcm_->Open(devices_.front().device);
+  VideoCaptureControllerID client_id = StartClient(video_session_id, true);
+
+  StopClient(client_id);
+  vcm_->Close(video_session_id);
+
+  // Wait to check callbacks before removing the listener.
+  base::RunLoop().RunUntilIdle();
+  vcm_->UnregisterListener(listener_.get());
 }
 
 // Open the same device twice.
@@ -337,11 +384,11 @@ TEST_F(VideoCaptureManagerTest, OpenTwice) {
   EXPECT_CALL(*listener_, Opened(MEDIA_DEVICE_VIDEO_CAPTURE, _)).Times(2);
   EXPECT_CALL(*listener_, Closed(MEDIA_DEVICE_VIDEO_CAPTURE, _)).Times(2);
 
-  int video_session_id_first = vcm_->Open(devices_.front());
+  int video_session_id_first = vcm_->Open(devices_.front().device);
 
   // This should trigger an error callback with error code
   // 'kDeviceAlreadyInUse'.
-  int video_session_id_second = vcm_->Open(devices_.front());
+  int video_session_id_second = vcm_->Open(devices_.front().device);
   EXPECT_NE(video_session_id_first, video_session_id_second);
 
   vcm_->Close(video_session_id_first);
@@ -349,7 +396,7 @@ TEST_F(VideoCaptureManagerTest, OpenTwice) {
 
   // Wait to check callbacks before removing the listener.
   base::RunLoop().RunUntilIdle();
-  vcm_->UnregisterListener();
+  vcm_->UnregisterListener(listener_.get());
 }
 
 // Connect and disconnect devices.
@@ -358,7 +405,7 @@ TEST_F(VideoCaptureManagerTest, ConnectAndDisconnectDevices) {
     video_capture_device_factory_->number_of_devices();
 
   // Simulate we remove 1 fake device.
-  video_capture_device_factory_->set_number_of_devices(1);
+  video_capture_device_factory_->SetToDefaultDevicesConfig(1);
   base::RunLoop run_loop;
   vcm_->EnumerateDevices(
       base::Bind(&VideoCaptureManagerTest::HandleEnumerationResult,
@@ -367,7 +414,7 @@ TEST_F(VideoCaptureManagerTest, ConnectAndDisconnectDevices) {
   ASSERT_EQ(devices_.size(), 1u);
 
   // Simulate we add 2 fake devices.
-  video_capture_device_factory_->set_number_of_devices(3);
+  video_capture_device_factory_->SetToDefaultDevicesConfig(3);
   base::RunLoop run_loop2;
   vcm_->EnumerateDevices(
       base::Bind(&VideoCaptureManagerTest::HandleEnumerationResult,
@@ -375,8 +422,9 @@ TEST_F(VideoCaptureManagerTest, ConnectAndDisconnectDevices) {
   run_loop2.Run();
   ASSERT_EQ(devices_.size(), 3u);
 
-  vcm_->UnregisterListener();
-  video_capture_device_factory_->set_number_of_devices(number_of_devices_keep);
+  vcm_->UnregisterListener(listener_.get());
+  video_capture_device_factory_->SetToDefaultDevicesConfig(
+      number_of_devices_keep);
 }
 
 // Enumerate devices and open the first, then check the list of supported
@@ -392,7 +440,7 @@ TEST_F(VideoCaptureManagerTest, ManipulateDeviceAndCheckCapabilities) {
 
   InSequence s;
   EXPECT_CALL(*listener_, Opened(MEDIA_DEVICE_VIDEO_CAPTURE, _));
-  video_session_id = vcm_->Open(devices_.front());
+  video_session_id = vcm_->Open(devices_.front().device);
   base::RunLoop().RunUntilIdle();
 
   // Right after opening the device, we should see all its formats.
@@ -407,6 +455,7 @@ TEST_F(VideoCaptureManagerTest, ManipulateDeviceAndCheckCapabilities) {
   EXPECT_GT(supported_formats[1].frame_size.height(), 1);
   EXPECT_GT(supported_formats[1].frame_rate, 1);
 
+  EXPECT_CALL(*frame_observer_, OnStarted(_));
   VideoCaptureControllerID client_id = StartClient(video_session_id, true);
   base::RunLoop().RunUntilIdle();
   // After StartClient(), device's supported formats should stay the same.
@@ -436,7 +485,7 @@ TEST_F(VideoCaptureManagerTest, ManipulateDeviceAndCheckCapabilities) {
 
   vcm_->Close(video_session_id);
   base::RunLoop().RunUntilIdle();
-  vcm_->UnregisterListener();
+  vcm_->UnregisterListener(listener_.get());
 }
 
 // Enumerate devices, then check the list of supported formats. Then open and
@@ -459,7 +508,7 @@ TEST_F(VideoCaptureManagerTest,
 
   InSequence s;
   EXPECT_CALL(*listener_, Opened(MEDIA_DEVICE_VIDEO_CAPTURE, _));
-  int video_session_id = vcm_->Open(devices_.front());
+  int video_session_id = vcm_->Open(devices_.front().device);
   base::RunLoop().RunUntilIdle();
 
   // Right after opening the device, we should see all its formats.
@@ -473,6 +522,7 @@ TEST_F(VideoCaptureManagerTest,
   EXPECT_GT(supported_formats[1].frame_size.height(), 1);
   EXPECT_GT(supported_formats[1].frame_rate, 1);
 
+  EXPECT_CALL(*frame_observer_, OnStarted(_));
   VideoCaptureControllerID client_id = StartClient(video_session_id, true);
   base::RunLoop().RunUntilIdle();
   // After StartClient(), device's supported formats should stay the same.
@@ -500,7 +550,7 @@ TEST_F(VideoCaptureManagerTest,
 
   vcm_->Close(video_session_id);
   base::RunLoop().RunUntilIdle();
-  vcm_->UnregisterListener();
+  vcm_->UnregisterListener(listener_.get());
 }
 
 // Enumerate devices and open the first, then check the formats currently in
@@ -511,7 +561,7 @@ TEST_F(VideoCaptureManagerTest,
 TEST_F(VideoCaptureManagerTest, StartDeviceAndGetDeviceFormatInUse) {
   InSequence s;
   EXPECT_CALL(*listener_, Opened(MEDIA_DEVICE_VIDEO_CAPTURE, _));
-  int video_session_id = vcm_->Open(devices_.front());
+  int video_session_id = vcm_->Open(devices_.front().device);
   base::RunLoop().RunUntilIdle();
 
   // Right after opening the device, we should see no format in use.
@@ -519,6 +569,7 @@ TEST_F(VideoCaptureManagerTest, StartDeviceAndGetDeviceFormatInUse) {
   EXPECT_TRUE(vcm_->GetDeviceFormatsInUse(video_session_id, &formats_in_use));
   EXPECT_TRUE(formats_in_use.empty());
 
+  EXPECT_CALL(*frame_observer_, OnStarted(_));
   VideoCaptureControllerID client_id = StartClient(video_session_id, true);
   base::RunLoop().RunUntilIdle();
   // After StartClient(), |formats_in_use| should contain one valid format.
@@ -542,7 +593,7 @@ TEST_F(VideoCaptureManagerTest, StartDeviceAndGetDeviceFormatInUse) {
 
   vcm_->Close(video_session_id);
   base::RunLoop().RunUntilIdle();
-  vcm_->UnregisterListener();
+  vcm_->UnregisterListener(listener_.get());
 }
 
 // Enumerate devices and open the first, then check the formats currently in
@@ -555,7 +606,7 @@ TEST_F(VideoCaptureManagerTest,
   std::string device_id = devices_.front().device.id;
   InSequence s;
   EXPECT_CALL(*listener_, Opened(MEDIA_DEVICE_VIDEO_CAPTURE, _));
-  int video_session_id = vcm_->Open(devices_.front());
+  int video_session_id = vcm_->Open(devices_.front().device);
   base::RunLoop().RunUntilIdle();
 
   // Right after opening the device, we should see no format in use.
@@ -564,6 +615,7 @@ TEST_F(VideoCaptureManagerTest,
                                           &formats_in_use));
   EXPECT_TRUE(formats_in_use.empty());
 
+  EXPECT_CALL(*frame_observer_, OnStarted(_));
   VideoCaptureControllerID client_id = StartClient(video_session_id, true);
   base::RunLoop().RunUntilIdle();
   // After StartClient(), |formats_in_use| should contain one valid format.
@@ -589,7 +641,7 @@ TEST_F(VideoCaptureManagerTest,
 
   vcm_->Close(video_session_id);
   base::RunLoop().RunUntilIdle();
-  vcm_->UnregisterListener();
+  vcm_->UnregisterListener(listener_.get());
 }
 
 // Open two different devices.
@@ -600,16 +652,16 @@ TEST_F(VideoCaptureManagerTest, OpenTwo) {
 
   StreamDeviceInfoArray::iterator it = devices_.begin();
 
-  int video_session_id_first = vcm_->Open(*it);
+  int video_session_id_first = vcm_->Open(it->device);
   ++it;
-  int video_session_id_second = vcm_->Open(*it);
+  int video_session_id_second = vcm_->Open(it->device);
 
   vcm_->Close(video_session_id_first);
   vcm_->Close(video_session_id_second);
 
   // Wait to check callbacks before removing the listener.
   base::RunLoop().RunUntilIdle();
-  vcm_->UnregisterListener();
+  vcm_->UnregisterListener(listener_.get());
 }
 
 // Try open a non-existing device.
@@ -622,7 +674,7 @@ TEST_F(VideoCaptureManagerTest, OpenNotExisting) {
   MediaStreamType stream_type = MEDIA_DEVICE_VIDEO_CAPTURE;
   std::string device_name("device_doesnt_exist");
   std::string device_id("id_doesnt_exist");
-  StreamDeviceInfo dummy_device(stream_type, device_name, device_id);
+  MediaStreamDevice dummy_device(stream_type, device_id, device_name);
 
   // This should fail with an error to the controller.
   int session_id = vcm_->Open(dummy_device);
@@ -633,7 +685,7 @@ TEST_F(VideoCaptureManagerTest, OpenNotExisting) {
   vcm_->Close(session_id);
   base::RunLoop().RunUntilIdle();
 
-  vcm_->UnregisterListener();
+  vcm_->UnregisterListener(listener_.get());
 }
 
 // Start a device without calling Open, using a non-magic ID.
@@ -642,16 +694,17 @@ TEST_F(VideoCaptureManagerTest, StartInvalidSession) {
 
   // Wait to check callbacks before removing the listener.
   base::RunLoop().RunUntilIdle();
-  vcm_->UnregisterListener();
+  vcm_->UnregisterListener(listener_.get());
 }
 
 // Open and start a device, close it before calling Stop.
 TEST_F(VideoCaptureManagerTest, CloseWithoutStop) {
   InSequence s;
   EXPECT_CALL(*listener_, Opened(MEDIA_DEVICE_VIDEO_CAPTURE, _));
+  EXPECT_CALL(*frame_observer_, OnStarted(_));
   EXPECT_CALL(*listener_, Closed(MEDIA_DEVICE_VIDEO_CAPTURE, _));
 
-  int video_session_id = vcm_->Open(devices_.front());
+  int video_session_id = vcm_->Open(devices_.front().device);
 
   VideoCaptureControllerID client_id = StartClient(video_session_id, true);
 
@@ -662,7 +715,7 @@ TEST_F(VideoCaptureManagerTest, CloseWithoutStop) {
 
   // Wait to check callbacks before removing the listener
   base::RunLoop().RunUntilIdle();
-  vcm_->UnregisterListener();
+  vcm_->UnregisterListener(listener_.get());
 }
 
 // Try to open, start, pause and resume a device. Confirm the device is
@@ -670,8 +723,9 @@ TEST_F(VideoCaptureManagerTest, CloseWithoutStop) {
 // scenarios.
 TEST_F(VideoCaptureManagerTest, PauseAndResumeClient) {
   EXPECT_CALL(*listener_, Opened(MEDIA_DEVICE_VIDEO_CAPTURE, _));
+  EXPECT_CALL(*frame_observer_, OnStarted(_));
 
-  const int video_session_id = vcm_->Open(devices_.front());
+  const int video_session_id = vcm_->Open(devices_.front().device);
   const VideoCaptureControllerID client_id =
       StartClient(video_session_id, true);
 
@@ -688,6 +742,7 @@ TEST_F(VideoCaptureManagerTest, PauseAndResumeClient) {
   // Add a second client that is never paused, then pause/resume the first
   // client, and no calls to VideoCaptureDevice::MaybeSuspend() or Resume() are
   // made.
+  EXPECT_CALL(*frame_observer_, OnStarted(_));
   const VideoCaptureControllerID client_id2 =
       StartClient(video_session_id, true);
   PauseClient(client_id);
@@ -701,7 +756,7 @@ TEST_F(VideoCaptureManagerTest, PauseAndResumeClient) {
 
   // Wait to check callbacks before removing the listener.
   base::RunLoop().RunUntilIdle();
-  vcm_->UnregisterListener();
+  vcm_->UnregisterListener(listener_.get());
 }
 
 #if defined(OS_ANDROID)
@@ -709,9 +764,10 @@ TEST_F(VideoCaptureManagerTest, PauseAndResumeClient) {
 TEST_F(VideoCaptureManagerTest, PauseAndResumeDevice) {
   InSequence s;
   EXPECT_CALL(*listener_, Opened(MEDIA_DEVICE_VIDEO_CAPTURE, _));
+  EXPECT_CALL(*frame_observer_, OnStarted(_));
   EXPECT_CALL(*listener_, Closed(MEDIA_DEVICE_VIDEO_CAPTURE, _));
 
-  int video_session_id = vcm_->Open(devices_.front());
+  int video_session_id = vcm_->Open(devices_.front().device);
   VideoCaptureControllerID client_id = StartClient(video_session_id, true);
 
   // Release/ResumeDevices according to ApplicationStatus. Should cause no
@@ -732,7 +788,7 @@ TEST_F(VideoCaptureManagerTest, PauseAndResumeDevice) {
 
   // Wait to check callbacks before removing the listener.
   base::RunLoop().RunUntilIdle();
-  vcm_->UnregisterListener();
+  vcm_->UnregisterListener(listener_.get());
 }
 #endif
 

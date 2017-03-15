@@ -17,7 +17,7 @@
 #import "ios/chrome/browser/ui/settings/privacy_collection_view_controller.h"
 #import "ios/chrome/browser/ui/settings/settings_collection_view_controller.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_controller.h"
-#import "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.h"
+#include "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_strings.h"
@@ -43,6 +43,8 @@
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
+
+using chrome_test_util::OpenLinkInNewTabButton;
 
 namespace {
 
@@ -179,16 +181,14 @@ void SwitchToNormalMode() {
     // Leave the tab switcher.
     CloseTabSwitcher();
   } else {
-    [[EarlGrey selectElementWithMatcher:
-                   chrome_test_util::ButtonWithAccessibilityLabelId(
-                       IDS_IOS_TOOLBAR_SHOW_TABS)] performAction:grey_tap()];
+    [[EarlGrey selectElementWithMatcher:chrome_test_util::ShowTabsButton()]
+        performAction:grey_tap()];
     [[EarlGrey selectElementWithMatcher:
                    chrome_test_util::ButtonWithAccessibilityLabelId(
                        IDS_IOS_TOOLS_MENU_NEW_INCOGNITO_TAB)]
         performAction:grey_swipeSlowInDirection(kGREYDirectionRight)];
-    [[EarlGrey selectElementWithMatcher:
-                   chrome_test_util::ButtonWithAccessibilityLabelId(
-                       IDS_IOS_TOOLBAR_SHOW_TABS)] performAction:grey_tap()];
+    [[EarlGrey selectElementWithMatcher:chrome_test_util::ShowTabsButton()]
+        performAction:grey_tap()];
   }
   ConditionBlock condition = ^bool {
     return !chrome_test_util::IsIncognitoMode();
@@ -235,9 +235,7 @@ void OpenSettingsMenuUnsynced() {
 // iPhone).
 void SelectTabUsingUI(NSString* title) {
   if (IsCompact()) {
-    WaitAndTap(chrome_test_util::ButtonWithAccessibilityLabelId(
-                   IDS_IOS_TOOLBAR_SHOW_TABS),
-               @"Tab switcher");
+    WaitAndTap(chrome_test_util::ShowTabsButton(), @"Tab switcher");
   }
   WaitAndTap(grey_text(title),
              [NSString stringWithFormat:@"tab with title %@", title]);
@@ -641,9 +639,7 @@ void SelectTabUsingUI(NSString* title) {
   Wait(grey_accessibilityID(kPrivacyCollectionViewId),
        @"Privacy settings view.");
 
-  WaitAndTap(grey_accessibilityLabel(
-                 l10n_util::GetNSString(IDS_IOS_NAVIGATION_BAR_DONE_BUTTON)),
-             @"Close settings");
+  WaitAndTap(chrome_test_util::NavigationBarDoneButton(), @"Close settings");
   [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
   [[EarlGrey selectElementWithMatcher:chrome_test_util::WebViewContainingText(
                                           responses[slowURL])]
@@ -859,9 +855,7 @@ void SelectTabUsingUI(NSString* title) {
       selectElementWithMatcher:chrome_test_util::WebViewContainingText("link")]
       performAction:grey_longPress()];
 
-  [[EarlGrey
-      selectElementWithMatcher:grey_text(l10n_util::GetNSString(
-                                   IDS_IOS_CONTENT_CONTEXT_OPENLINKNEWTAB))]
+  [[EarlGrey selectElementWithMatcher:OpenLinkInNewTabButton()]
       performAction:grey_tap()];
   chrome_test_util::AssertMainTabCount(numberOfTabs + 1);
 

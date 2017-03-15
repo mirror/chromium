@@ -86,8 +86,7 @@ void StartupPagesHandler::OnModelChanged() {
   }
 
   CallJavascriptFunction("cr.webUIListenerCallback",
-                         base::StringValue("update-startup-pages"),
-                         startup_pages);
+                         base::Value("update-startup-pages"), startup_pages);
 }
 
 void StartupPagesHandler::OnItemsChanged(int start, int length) {
@@ -113,7 +112,7 @@ void StartupPagesHandler::HandleAddStartupPage(const base::ListValue* args) {
 
   GURL url;
   if (!settings_utils::FixupAndValidateStartupPage(url_string, &url)) {
-    ResolveJavascriptCallback(*callback_id, base::FundamentalValue(false));
+    ResolveJavascriptCallback(*callback_id, base::Value(false));
     return;
   }
 
@@ -124,7 +123,7 @@ void StartupPagesHandler::HandleAddStartupPage(const base::ListValue* args) {
 
   startup_custom_pages_table_model_.Add(index, url);
   SaveStartupPagesPref();
-  ResolveJavascriptCallback(*callback_id, base::FundamentalValue(true));
+  ResolveJavascriptCallback(*callback_id, base::Value(true));
 }
 
 void StartupPagesHandler::HandleEditStartupPage(const base::ListValue* args) {
@@ -149,9 +148,9 @@ void StartupPagesHandler::HandleEditStartupPage(const base::ListValue* args) {
     urls[index] = fixed_url;
     startup_custom_pages_table_model_.SetURLs(urls);
     SaveStartupPagesPref();
-    ResolveJavascriptCallback(*callback_id, base::FundamentalValue(true));
+    ResolveJavascriptCallback(*callback_id, base::Value(true));
   } else {
-    ResolveJavascriptCallback(*callback_id, base::FundamentalValue(false));
+    ResolveJavascriptCallback(*callback_id, base::Value(false));
   }
 }
 
@@ -194,7 +193,7 @@ void StartupPagesHandler::HandleValidateStartupPage(
   CHECK(args->GetString(1, &url_string));
 
   bool valid = settings_utils::FixupAndValidateStartupPage(url_string, nullptr);
-  ResolveJavascriptCallback(*callback_id, base::FundamentalValue(valid));
+  ResolveJavascriptCallback(*callback_id, base::Value(valid));
 }
 
 void StartupPagesHandler::SaveStartupPagesPref() {

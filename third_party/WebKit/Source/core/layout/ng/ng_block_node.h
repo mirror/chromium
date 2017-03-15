@@ -8,6 +8,7 @@
 #include "core/CoreExport.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/ng/ng_layout_input_node.h"
+#include "core/layout/ng/ng_layout_result.h"
 #include "core/layout/ng/ng_physical_box_fragment.h"
 #include "platform/heap/Handle.h"
 
@@ -17,9 +18,9 @@ class ComputedStyle;
 class LayoutObject;
 class NGBreakToken;
 class NGConstraintSpace;
+class NGLayoutResult;
 struct NGLogicalOffset;
-class NGPhysicalFragment;
-struct MinAndMaxContentSizes;
+struct MinMaxContentSize;
 
 // Represents a node to be laid out.
 class CORE_EXPORT NGBlockNode final : public NGLayoutInputNode {
@@ -28,42 +29,30 @@ class CORE_EXPORT NGBlockNode final : public NGLayoutInputNode {
  public:
   explicit NGBlockNode(LayoutObject*);
 
-  // TODO(layout-ng): make it private and declare a friend class to use in tests
-  explicit NGBlockNode(ComputedStyle*);
-
   ~NGBlockNode() override;
 
-  RefPtr<NGPhysicalFragment> Layout(
-      NGConstraintSpace* constraint_space) override;
-  NGBlockNode* NextSibling() override;
+  RefPtr<NGLayoutResult> Layout(NGConstraintSpace* constraint_space,
+                                NGBreakToken* break_token = nullptr) override;
+  NGLayoutInputNode* NextSibling() override;
   LayoutObject* GetLayoutObject() override;
 
   // Computes the value of min-content and max-content for this box.
-  // If the underlying layout algorithm's ComputeMinAndMaxContentSizes returns
+  // If the underlying layout algorithm's ComputeMinMaxContentSize returns
   // no value, this function will synthesize these sizes using Layout with
   // special constraint spaces -- infinite available size for max content, zero
   // available size for min content, and percentage resolution size zero for
   // both.
-  MinAndMaxContentSizes ComputeMinAndMaxContentSizes();
+  MinMaxContentSize ComputeMinMaxContentSize();
 
   const ComputedStyle& Style() const;
 
   NGLayoutInputNode* FirstChild();
 
-  void SetNextSibling(NGBlockNode*);
-  void SetFirstChild(NGLayoutInputNode*);
-
-  void SetFragment(NGPhysicalBoxFragment* fragment) { fragment_ = fragment; }
-  NGBreakToken* CurrentBreakToken() const;
-  bool IsLayoutFinished() const {
-    return fragment_ && !fragment_->BreakToken();
-  }
-
   DECLARE_VIRTUAL_TRACE();
 
   // Runs layout on layout_box_ and creates a fragment for the resulting
   // geometry.
-  RefPtr<NGPhysicalBoxFragment> RunOldLayout(const NGConstraintSpace&);
+  RefPtr<NGLayoutResult> RunOldLayout(const NGConstraintSpace&);
 
   // Called if this is an out-of-flow block which needs to be
   // positioned with legacy layout.
@@ -78,18 +67,13 @@ class CORE_EXPORT NGBlockNode final : public NGLayoutInputNode {
 
   // After we run the layout algorithm, this function copies back the geometry
   // data to the layout box.
-  void CopyFragmentDataToLayoutBox(const NGConstraintSpace&);
+  void CopyFragmentDataToLayoutBox(const NGConstraintSpace&, NGLayoutResult*);
 
-  // We can either wrap a layout_box_ or a style_/next_sibling_/first_child_
+  // We can either wrap a layout_box_ or a next_sibling_/first_child_
   // combination.
   LayoutBox* layout_box_;
-  RefPtr<ComputedStyle> style_;
-  Member<NGBlockNode> next_sibling_;
+  Member<NGLayoutInputNode> next_sibling_;
   Member<NGLayoutInputNode> first_child_;
-  // TODO(mstensho): An input node may produce multiple fragments, so this
-  // should probably be renamed to last_fragment_ or something like that, since
-  // the last fragment is all we care about when resuming layout.
-  RefPtr<NGPhysicalBoxFragment> fragment_;
 };
 
 DEFINE_TYPE_CASTS(NGBlockNode,

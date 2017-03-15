@@ -24,6 +24,7 @@
 #include "ui/views/controls/menu/menu_controller_delegate.h"
 #include "ui/views/controls/menu/menu_delegate.h"
 #include "ui/views/controls/menu/menu_host.h"
+#include "ui/views/controls/menu/menu_host_root_view.h"
 #include "ui/views/controls/menu/menu_item_view.h"
 #include "ui/views/controls/menu/menu_message_loop.h"
 #include "ui/views/controls/menu/menu_scroll_view_container.h"
@@ -31,6 +32,7 @@
 #include "ui/views/test/menu_test_utils.h"
 #include "ui/views/test/test_views_delegate.h"
 #include "ui/views/test/views_test_base.h"
+#include "ui/views/widget/root_view.h"
 
 #if defined(USE_AURA)
 #include "ui/aura/client/drag_drop_client.h"
@@ -327,8 +329,16 @@ class MenuControllerTest : public ViewsTestBase {
     // Now that the targeter has been destroyed, expect to exit the menu
     // normally when hitting escape.
     event_generator_->PressKey(ui::VKEY_ESCAPE, 0);
-    EXPECT_EQ(MenuController::EXIT_OUTERMOST, menu_exit_type());
+    EXPECT_EQ(MenuController::EXIT_ALL, menu_exit_type());
   }
+
+  // Verifies that a non-nested menu fully closes when receiving an escape key.
+  void TestAsyncEscapeKey() {
+    ui::KeyEvent event(ui::EventType::ET_KEY_PRESSED, ui::VKEY_ESCAPE, 0);
+    menu_controller_->OnWillDispatchKeyEvent(&event);
+    EXPECT_EQ(MenuController::EXIT_ALL, menu_exit_type());
+  }
+
 #endif  // defined(OS_LINUX) && defined(USE_X11)
 
 #if defined(USE_AURA)
@@ -506,6 +516,10 @@ class MenuControllerTest : public ViewsTestBase {
 
   MenuHost* GetMenuHost(SubmenuView* submenu) { return submenu->host_; }
 
+  MenuHostRootView* CreateMenuHostRootView(MenuHost* host) {
+    return static_cast<MenuHostRootView*>(host->CreateRootView());
+  }
+
   void MenuHostOnDragWillStart(MenuHost* host) { host->OnDragWillStart(); }
 
   void MenuHostOnDragComplete(MenuHost* host) { host->OnDragComplete(); }
@@ -607,7 +621,6 @@ class MenuControllerTest : public ViewsTestBase {
     menu_controller_->ExitMenuRun();
   }
 
- private:
   void DestroyMenuController() {
     if (!menu_controller_)
       return;
@@ -621,6 +634,7 @@ class MenuControllerTest : public ViewsTestBase {
     menu_controller_ = nullptr;
   }
 
+ private:
   void Init() {
     owner_.reset(new Widget);
     Widget::InitParams params = CreateParams(Widget::InitParams::TYPE_POPUP);
@@ -677,6 +691,14 @@ TEST_F(MenuControllerTest, EventTargeter) {
                             base::Unretained(this)));
   RunMenu();
 }
+
+// Tests that an non-nested menu receiving an escape key will fully shut. This
+// should not crash by attempting to retarget the key to an inner menu.
+TEST_F(MenuControllerTest, AsyncEscapeKey) {
+  menu_controller()->SetAsyncRun(true);
+  TestAsyncEscapeKey();
+}
+
 #endif  // defined(OS_LINUX) && defined(USE_X11)
 
 #if defined(USE_X11)
@@ -705,7 +727,7 @@ TEST_F(MenuControllerTest, TouchIdsReleasedCorrectly) {
 
   RunMenu();
 
-  EXPECT_EQ(MenuController::EXIT_OUTERMOST, menu_exit_type());
+  EXPECT_EQ(MenuController::EXIT_ALL, menu_exit_type());
   EXPECT_EQ(0, test_event_handler.outstanding_touches());
 
   owner()->GetNativeWindow()->GetRootWindow()->RemovePreTargetHandler(
@@ -1192,6 +1214,32 @@ TEST_F(MenuControllerTest, AsynchronousDragHostDeleted) {
   MenuHostOnDragComplete(host);
 }
 
+// Widget destruction and cleanup occurs on the MessageLoop after the
+// MenuController has been destroyed. A MenuHostRootView should not attempt to
+// access a destroyed MenuController. This test should not cause a crash.
+TEST_F(MenuControllerTest, HostReceivesInputBeforeDestruction) {
+  MenuController* controller = menu_controller();
+  controller->SetAsyncRun(true);
+
+  SubmenuView* submenu = menu_item()->GetSubmenu();
+  submenu->ShowAt(owner(), menu_item()->bounds(), false);
+  gfx::Point location(submenu->bounds().bottom_right());
+  location.Offset(1, 1);
+
+  MenuHost* host = GetMenuHost(submenu);
+  // Normally created as the full Widget is brought up. Explicitly created here
+  // for testing.
+  std::unique_ptr<MenuHostRootView> root_view(CreateMenuHostRootView(host));
+  DestroyMenuController();
+
+  ui::MouseEvent event(ui::ET_MOUSE_MOVED, location, location,
+                       ui::EventTimeForNow(), ui::EF_LEFT_MOUSE_BUTTON, 0);
+
+  // This should not attempt to access the destroyed MenuController and should
+  // not crash.
+  root_view->OnMouseMoved(event);
+}
+
 // Tets that an asynchronous menu nested within an asynchronous menu closes both
 // menus, and notifies both delegates.
 TEST_F(MenuControllerTest, DoubleAsynchronousNested) {
@@ -1470,16 +1518,18 @@ TEST_F(MenuControllerTest, RunWithoutWidgetDoesntCrash) {
 // MenuController becomes active, that the exiting of drag does not cause a
 // crash.
 TEST_F(MenuControllerTest, MenuControllerReplacedDuringDrag) {
-  // TODO: this test wedges with aura-mus-client. http://crbug.com/664280.
-  if (IsMus())
-    return;
-
+  // Build the menu so that the appropriate root window is available to set the
+  // drag drop client on.
+  AddButtonMenuItems();
   TestDragDropClient drag_drop_client(
       base::Bind(&MenuControllerTest::TestMenuControllerReplacementDuringDrag,
                  base::Unretained(this)));
-  aura::client::SetDragDropClient(owner()->GetNativeWindow()->GetRootWindow(),
+  aura::client::SetDragDropClient(menu_item()
+                                      ->GetSubmenu()
+                                      ->GetWidget()
+                                      ->GetNativeWindow()
+                                      ->GetRootWindow(),
                                   &drag_drop_client);
-  AddButtonMenuItems();
   StartDrag();
 }
 
@@ -1487,18 +1537,20 @@ TEST_F(MenuControllerTest, MenuControllerReplacedDuringDrag) {
 // destroy the MenuController. On Windows and Linux this destruction also
 // destroys the Widget used for drag-and-drop, thereby ending the drag.
 TEST_F(MenuControllerTest, CancelAllDuringDrag) {
-  // TODO: this test wedges with aura-mus-client. http://crbug.com/664280.
-  if (IsMus())
-    return;
-
   MenuController* controller = menu_controller();
   controller->SetAsyncRun(true);
 
+  // Build the menu so that the appropriate root window is available to set the
+  // drag drop client on.
+  AddButtonMenuItems();
   TestDragDropClient drag_drop_client(base::Bind(
       &MenuControllerTest::TestCancelAllDuringDrag, base::Unretained(this)));
-  aura::client::SetDragDropClient(owner()->GetNativeWindow()->GetRootWindow(),
+  aura::client::SetDragDropClient(menu_item()
+                                      ->GetSubmenu()
+                                      ->GetWidget()
+                                      ->GetNativeWindow()
+                                      ->GetRootWindow(),
                                   &drag_drop_client);
-  AddButtonMenuItems();
   StartDrag();
 }
 

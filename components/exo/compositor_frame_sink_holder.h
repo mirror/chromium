@@ -28,7 +28,6 @@ class CompositorFrameSinkHolder
     : public base::RefCounted<CompositorFrameSinkHolder>,
       public cc::ExternalBeginFrameSourceClient,
       public cc::mojom::MojoCompositorFrameSinkClient,
-      public cc::BeginFrameObserver,
       public SurfaceObserver {
  public:
   CompositorFrameSinkHolder(Surface* surface,
@@ -45,23 +44,16 @@ class CompositorFrameSinkHolder
     return weak_factory_.GetWeakPtr();
   }
 
-  void SetNeedsBeginFrame(bool needs_begin_frame);
-
-  void Satisfy(const cc::SurfaceSequence& sequence);
-  void Require(const cc::SurfaceId& id, const cc::SurfaceSequence& sequence);
-
   // Overridden from cc::mojom::MojoCompositorFrameSinkClient:
   void DidReceiveCompositorFrameAck() override;
   void OnBeginFrame(const cc::BeginFrameArgs& args) override;
   void ReclaimResources(const cc::ReturnedResourceArray& resources) override;
-  void WillDrawSurface() override;
+  void WillDrawSurface(const cc::LocalSurfaceId& local_surface_id,
+                       const gfx::Rect& damage_rect) override;
 
-  // Overridden from cc::BeginFrameObserver:
-  const cc::BeginFrameArgs& LastUsedBeginFrameArgs() const override;
-  void OnBeginFrameSourcePausedChanged(bool paused) override;
-
-  // Overridden from cc::ExternalBeginFrameSouceClient:
+  // Overridden from cc::ExternalBeginFrameSourceClient:
   void OnNeedsBeginFrames(bool needs_begin_frames) override;
+  void OnDidFinishFrame(const cc::BeginFrameAck& ack) override;
 
   // Overridden from SurfaceObserver:
   void OnSurfaceDestroying(Surface* surface) override;
@@ -71,18 +63,13 @@ class CompositorFrameSinkHolder
 
   ~CompositorFrameSinkHolder() override;
 
-  void UpdateNeedsBeginFrame();
-
   // A collection of callbacks used to release resources.
   using ResourceReleaseCallbackMap = std::map<int, cc::ReleaseCallback>;
   ResourceReleaseCallbackMap release_callbacks_;
 
   Surface* surface_;
   std::unique_ptr<CompositorFrameSink> frame_sink_;
-
   std::unique_ptr<cc::ExternalBeginFrameSource> begin_frame_source_;
-  bool needs_begin_frame_ = false;
-  cc::BeginFrameArgs last_begin_frame_args_;
 
   base::WeakPtrFactory<CompositorFrameSinkHolder> weak_factory_;
 

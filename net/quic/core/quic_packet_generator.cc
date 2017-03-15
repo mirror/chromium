@@ -10,8 +10,6 @@
 #include "net/quic/platform/api/quic_bug_tracker.h"
 #include "net/quic/platform/api/quic_logging.h"
 
-using base::StringPiece;
-
 namespace net {
 
 QuicPacketGenerator::QuicPacketGenerator(QuicConnectionId connection_id,
@@ -327,14 +325,6 @@ void QuicPacketGenerator::set_encryption_level(EncryptionLevel level) {
 void QuicPacketGenerator::SetEncrypter(EncryptionLevel level,
                                        QuicEncrypter* encrypter) {
   packet_creator_.SetEncrypter(level, encrypter);
-}
-
-void QuicPacketGenerator::SetCurrentPath(
-    QuicPathId path_id,
-    QuicPacketNumber least_packet_awaited_by_peer,
-    QuicPacketCount max_packets_in_flight) {
-  packet_creator_.SetCurrentPath(path_id, least_packet_awaited_by_peer,
-                                 max_packets_in_flight);
 }
 
 }  // namespace net

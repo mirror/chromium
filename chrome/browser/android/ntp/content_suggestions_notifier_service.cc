@@ -29,6 +29,15 @@ using ntp_snippets::ContentSuggestion;
 using ntp_snippets::ContentSuggestionsNotificationHelper;
 using ntp_snippets::ContentSuggestionsService;
 using ntp_snippets::KnownCategories;
+using params::ntp_snippets::kNotificationsAlwaysNotifyParam;
+using params::ntp_snippets::kNotificationsDailyLimit;
+using params::ntp_snippets::kNotificationsDefaultDailyLimit;
+using params::ntp_snippets::kNotificationsDefaultPriority;
+using params::ntp_snippets::kNotificationsFeature;
+using params::ntp_snippets::kNotificationsKeepWhenFrontmostParam;
+using params::ntp_snippets::kNotificationsOpenToNTPParam;
+using params::ntp_snippets::kNotificationsPriorityParam;
+using params::ntp_snippets::kNotificationsUseSnippetAsTextParam;
 
 namespace {
 
@@ -70,9 +79,8 @@ int DayAsYYYYMMDD() {
 bool HaveQuotaForToday(PrefService* prefs) {
   int today = DayAsYYYYMMDD();
   int limit = variations::GetVariationParamByFeatureAsInt(
-      kContentSuggestionsNotificationsFeature,
-      kContentSuggestionsNotificationsDailyLimit,
-      kContentSuggestionsNotificationsDefaultDailyLimit);
+      kNotificationsFeature, kNotificationsDailyLimit,
+      kNotificationsDefaultDailyLimit);
   int sent =
       prefs->GetInteger(prefs::kContentSuggestionsNotificationsSentDay) == today
           ? prefs->GetInteger(prefs::kContentSuggestionsNotificationsSentCount)
@@ -125,13 +133,15 @@ class ContentSuggestionsNotifierService::NotifyingObserver
                                 ? suggestion->notification_extra()->deadline
                                 : base::Time::Max();
     bool use_snippet = variations::GetVariationParamByFeatureAsBool(
-        kContentSuggestionsNotificationsFeature,
-        kContentSuggestionsNotificationsUseSnippetAsTextParam, false);
+        kNotificationsFeature, kNotificationsUseSnippetAsTextParam, false);
+    bool open_to_ntp = variations::GetVariationParamByFeatureAsBool(
+        kNotificationsFeature, kNotificationsOpenToNTPParam, false);
     service_->FetchSuggestionImage(
         suggestion->id(),
         base::Bind(&NotifyingObserver::ImageFetched,
                    weak_ptr_factory_.GetWeakPtr(), suggestion->id(),
-                   suggestion->url(), suggestion->title(),
+                   open_to_ntp ? GURL("chrome://newtab") : suggestion->url(),
+                   suggestion->title(),
                    use_snippet ? suggestion->snippet_text()
                                : suggestion->publisher_name(),
                    timeout_at));
@@ -142,19 +152,9 @@ class ContentSuggestionsNotifierService::NotifyingObserver
     if (!category.IsKnownCategory(KnownCategories::ARTICLES)) {
       return;
     }
-    switch (new_status) {
-      case CategoryStatus::AVAILABLE:
-      case CategoryStatus::AVAILABLE_LOADING:
-        break;  // nothing to do
-      case CategoryStatus::INITIALIZING:
-      case CategoryStatus::ALL_SUGGESTIONS_EXPLICITLY_DISABLED:
-      case CategoryStatus::CATEGORY_EXPLICITLY_DISABLED:
-      case CategoryStatus::LOADING_ERROR:
-      case CategoryStatus::NOT_PROVIDED:
-      case CategoryStatus::SIGNED_OUT:
-        ContentSuggestionsNotificationHelper::HideAllNotifications(
-            CONTENT_SUGGESTIONS_HIDE_DISABLED);
-        break;
+    if (!ntp_snippets::IsCategoryStatusAvailable(new_status)) {
+      ContentSuggestionsNotificationHelper::HideAllNotifications(
+          CONTENT_SUGGESTIONS_HIDE_DISABLED);
     }
   }
 
@@ -179,8 +179,7 @@ class ContentSuggestionsNotifierService::NotifyingObserver
     const auto& suggestions = service_->GetSuggestionsForCategory(category);
     // TODO(sfiera): replace with AlwaysNotifyAboutContentSuggestions().
     if (variations::GetVariationParamByFeatureAsBool(
-             kContentSuggestionsNotificationsFeature,
-             kContentSuggestionsNotificationsAlwaysNotifyParam, false)) {
+            kNotificationsFeature, kNotificationsAlwaysNotifyParam, false)) {
       if (category.IsKnownCategory(KnownCategories::ARTICLES) &&
           !suggestions.empty()) {
         return &suggestions[0];
@@ -198,8 +197,7 @@ class ContentSuggestionsNotifierService::NotifyingObserver
 
   void AppStatusChanged(base::android::ApplicationState state) {
     if (variations::GetVariationParamByFeatureAsBool(
-            kContentSuggestionsNotificationsFeature,
-            kContentSuggestionsNotificationsKeepNotificationWhenFrontmostParam,
+            kNotificationsFeature, kNotificationsKeepWhenFrontmostParam,
             false)) {
       return;
     }
@@ -222,8 +220,11 @@ class ContentSuggestionsNotifierService::NotifyingObserver
     DVLOG(1) << "Fetched " << image.Size().width() << "x"
              << image.Size().height() << " image for " << url.spec();
     ConsumeQuota(profile_->GetPrefs());
+    int priority = variations::GetVariationParamByFeatureAsInt(
+        kNotificationsFeature, kNotificationsPriorityParam,
+        kNotificationsDefaultPriority);
     if (ContentSuggestionsNotificationHelper::SendNotification(
-            id, url, title, text, CropSquare(image), timeout_at)) {
+            id, url, title, text, CropSquare(image), timeout_at, priority)) {
       RecordContentSuggestionsNotificationImpression(
           id.category().IsKnownCategory(KnownCategories::ARTICLES)
               ? CONTENT_SUGGESTIONS_ARTICLE

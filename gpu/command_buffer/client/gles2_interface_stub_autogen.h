@@ -754,6 +754,17 @@ void CommitOverlayPlanesCHROMIUM() override;
 void SwapInterval(GLint interval) override;
 void FlushDriverCachesCHROMIUM() override;
 GLuint GetLastFlushIdCHROMIUM() override;
+void ScheduleDCLayerSharedStateCHROMIUM(GLfloat opacity,
+                                        GLboolean is_clipped,
+                                        const GLfloat* clip_rect,
+                                        GLint z_order,
+                                        const GLfloat* transform) override;
+void ScheduleDCLayerCHROMIUM(GLuint contents_texture_id,
+                             const GLfloat* contents_rect,
+                             GLuint background_color,
+                             GLuint edge_aa_mask,
+                             const GLfloat* bounds_rect,
+                             GLuint filter) override;
 void MatrixLoadfCHROMIUM(GLenum matrixMode, const GLfloat* m) override;
 void MatrixLoadIdentityCHROMIUM(GLenum matrixMode) override;
 GLuint GenPathsCHROMIUM(GLsizei range) override;
@@ -867,4 +878,8 @@ void OverlayPromotionHintCHROMIUM(GLuint texture,
                                   GLint display_x,
                                   GLint display_y) override;
 void SwapBuffersWithBoundsCHROMIUM(GLsizei count, const GLint* rects) override;
+void SetDrawRectangleCHROMIUM(GLint x,
+                              GLint y,
+                              GLint width,
+                              GLint height) override;
 #endif  // GPU_COMMAND_BUFFER_CLIENT_GLES2_INTERFACE_STUB_AUTOGEN_H_

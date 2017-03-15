@@ -120,10 +120,10 @@ class WEB_EXPORT WebSettingsImpl final : NON_EXPORTED_BASE(public WebSettings) {
   void setMainFrameClipsContent(bool) override;
   void setMainFrameResizesAreOrientationChanges(bool) override;
   void setMaxTouchPoints(int) override;
-  void setMediaControlsOverlayPlayButtonEnabled(bool) override;
   void setMediaPlaybackRequiresUserGesture(bool) override;
   void setMediaPlaybackGestureWhitelistScope(const WebString&) override;
   void setPresentationRequiresUserGesture(bool) override;
+  void setEmbeddedMediaExperienceEnabled(bool) override;
   void setMinimumAccelerated2dCanvasSize(int) override;
   void setMinimumFontSize(int) override;
   void setMinimumLogicalFontSize(int) override;
@@ -208,6 +208,7 @@ class WEB_EXPORT WebSettingsImpl final : NON_EXPORTED_BASE(public WebSettings) {
   void setExpensiveBackgroundThrottlingInitialBudget(float) override;
   void setExpensiveBackgroundThrottlingMaxBudget(float) override;
   void setExpensiveBackgroundThrottlingMaxDelay(float) override;
+  void setMediaControlsEnabled(bool) override;
 
   bool showFPSCounter() const { return m_showFPSCounter; }
   bool showPaintRects() const { return m_showPaintRects; }

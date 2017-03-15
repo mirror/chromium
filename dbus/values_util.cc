@@ -98,38 +98,37 @@ std::unique_ptr<base::Value> PopDataAsValue(MessageReader* reader) {
     case Message::BYTE: {
       uint8_t value = 0;
       if (reader->PopByte(&value))
-        result = base::MakeUnique<base::FundamentalValue>(value);
+        result = base::MakeUnique<base::Value>(value);
       break;
     }
     case Message::BOOL: {
       bool value = false;
       if (reader->PopBool(&value))
-        result = base::MakeUnique<base::FundamentalValue>(value);
+        result = base::MakeUnique<base::Value>(value);
       break;
     }
     case Message::INT16: {
       int16_t value = 0;
       if (reader->PopInt16(&value))
-        result = base::MakeUnique<base::FundamentalValue>(value);
+        result = base::MakeUnique<base::Value>(value);
       break;
     }
     case Message::UINT16: {
       uint16_t value = 0;
       if (reader->PopUint16(&value))
-        result = base::MakeUnique<base::FundamentalValue>(value);
+        result = base::MakeUnique<base::Value>(value);
       break;
     }
     case Message::INT32: {
       int32_t value = 0;
       if (reader->PopInt32(&value))
-        result = base::MakeUnique<base::FundamentalValue>(value);
+        result = base::MakeUnique<base::Value>(value);
       break;
     }
     case Message::UINT32: {
       uint32_t value = 0;
       if (reader->PopUint32(&value)) {
-        result = base::MakeUnique<base::FundamentalValue>(
-            static_cast<double>(value));
+        result = base::MakeUnique<base::Value>(static_cast<double>(value));
       }
       break;
     }
@@ -138,8 +137,7 @@ std::unique_ptr<base::Value> PopDataAsValue(MessageReader* reader) {
       if (reader->PopInt64(&value)) {
         DLOG_IF(WARNING, !IsExactlyRepresentableByDouble(value)) <<
             value << " is not exactly representable by double";
-        result = base::MakeUnique<base::FundamentalValue>(
-            static_cast<double>(value));
+        result = base::MakeUnique<base::Value>(static_cast<double>(value));
       }
       break;
     }
@@ -148,27 +146,26 @@ std::unique_ptr<base::Value> PopDataAsValue(MessageReader* reader) {
       if (reader->PopUint64(&value)) {
         DLOG_IF(WARNING, !IsExactlyRepresentableByDouble(value)) <<
             value << " is not exactly representable by double";
-        result = base::MakeUnique<base::FundamentalValue>(
-            static_cast<double>(value));
+        result = base::MakeUnique<base::Value>(static_cast<double>(value));
       }
       break;
     }
     case Message::DOUBLE: {
       double value = 0;
       if (reader->PopDouble(&value))
-        result = base::MakeUnique<base::FundamentalValue>(value);
+        result = base::MakeUnique<base::Value>(value);
       break;
     }
     case Message::STRING: {
       std::string value;
       if (reader->PopString(&value))
-        result = base::MakeUnique<base::StringValue>(value);
+        result = base::MakeUnique<base::Value>(value);
       break;
     }
     case Message::OBJECT_PATH: {
       ObjectPath value;
       if (reader->PopObjectPath(&value))
-        result = base::MakeUnique<base::StringValue>(value.value());
+        result = base::MakeUnique<base::Value>(value.value());
       break;
     }
     case Message::UNIX_FD: {

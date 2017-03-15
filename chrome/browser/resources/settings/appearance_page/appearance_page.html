@@ -22,13 +22,6 @@
 <dom-module id="settings-appearance-page">
   <template>
     <style include="settings-shared md-select">
-      :host {
-        --paper-input-container-label: {
-          font-size: inherit;
-          font-weight: inherit;
-        };
-      }
-
       .secondary-button ~ .secondary-button {
         -webkit-margin-start: 12px;
       }
@@ -111,19 +104,19 @@
               hidden="[[!pageVisibility.homeButton]]">
             <settings-radio-group pref="{{prefs.homepage_is_newtabpage}}">
               <controlled-radio-button class="list-item" name="true"
-                  pref="[[prefs.homepage_is_newtabpage]]">
-                $i18n{homePageNtp}
+                  pref="[[prefs.homepage_is_newtabpage]]"
+                  label="$i18n{homePageNtp}" no-extension-indicator>
               </controlled-radio-button>
               <controlled-radio-button class="list-item" name="false"
-                  pref="[[prefs.homepage_is_newtabpage]]">
-                $i18n{other}
+                  pref="[[prefs.homepage_is_newtabpage]]" label="$i18n{other}"
+                  no-extension-indicator>
                 <!-- TODO(dbeam): this can show double indicators when both
                      homepage and whether to use the NTP as the homepage are
                      managed. -->
                 <settings-input no-label-float pref="{{prefs.homepage}}"
                     label="$i18n{exampleDotCom}"
                     can-tab="[[!prefs.homepage_is_newtabpage.value]]"
-                    stop-keyboard-event-propagation>
+                    stop-keyboard-event-propagation no-extension-indicator>
                 </settings-input>
               </controlled-radio-button>
               <template is="dom-if" if="[[prefs.homepage.extensionId]]">
@@ -161,15 +154,13 @@
               menu-options="[[fontSizeOptions_]]">
           </settings-dropdown-menu>
         </div>
-        <div id="customize-fonts-subpage-trigger" class="settings-box two-line"
+        <div id="customize-fonts-subpage-trigger" class="settings-box"
             on-tap="onCustomizeFontsTap_" actionable>
           <div class="start">
             $i18n{customizeFonts}
-            <div class="secondary" id="fontsSecondary">$i18n{chooseFonts}</div>
           </div>
           <button class="subpage-arrow" is="paper-icon-button-light"
-              aria-label="$i18n{customizeFonts}"
-              aria-describedby="fontsSecondary"></button>
+              aria-label="$i18n{customizeFonts}"></button>
         </div>
         <div class="settings-box"
             hidden="[[!pageVisibility.pageZoom]]">
@@ -179,7 +170,7 @@
                 on-change="onZoomLevelChange_">
               <template is="dom-repeat" items="[[pageZoomLevels_]]">
                 <option value="[[item]]"
-                    selected$="[[zoomValuesEqual_(item, defaultZoom_)]]">
+                    selected="[[zoomValuesEqual_(item, defaultZoom_)]]">
                   [[formatZoom_(item)]]%
                 </option>
               </template>

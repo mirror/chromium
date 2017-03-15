@@ -264,6 +264,7 @@ Starting worker: resources/global-interface-listing.js
 [Worker]     method advance
 [Worker]     method constructor
 [Worker]     method continue
+[Worker]     method continuePrimaryKey
 [Worker]     method delete
 [Worker]     method update
 [Worker] interface IDBCursorWithValue : IDBCursor
@@ -340,6 +341,7 @@ Starting worker: resources/global-interface-listing.js
 [Worker]     method get
 [Worker]     method getAll
 [Worker]     method getAllKeys
+[Worker]     method getKey
 [Worker]     method index
 [Worker]     method openCursor
 [Worker]     method openKeyCursor
@@ -394,7 +396,6 @@ Starting worker: resources/global-interface-listing.js
 [Worker]     method constructor
 [Worker] interface ImageData
 [Worker]     attribute @@toStringTag
-[Worker]     getter colorSpace
 [Worker]     getter data
 [Worker]     getter height
 [Worker]     getter width
@@ -644,6 +645,7 @@ Starting worker: resources/global-interface-listing.js
 [Worker]     getter onerror
 [Worker]     getter onrejectionhandled
 [Worker]     getter onunhandledrejection
+[Worker]     getter origin
 [Worker]     getter performance
 [Worker]     getter self
 [Worker]     method atob
@@ -659,6 +661,7 @@ Starting worker: resources/global-interface-listing.js
 [Worker]     setter onerror
 [Worker]     setter onrejectionhandled
 [Worker]     setter onunhandledrejection
+[Worker]     setter origin
 [Worker] interface WorkerLocation
 [Worker]     attribute @@toStringTag
 [Worker]     getter hash

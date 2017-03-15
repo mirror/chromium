@@ -176,10 +176,11 @@ class CC_EXPORT LayerTreeImpl {
 
   LayerImpl* InnerViewportContainerLayer() const;
   LayerImpl* OuterViewportContainerLayer() const;
-  LayerImpl* CurrentlyScrollingLayer() const;
-  int LastScrolledLayerId() const;
-  void SetCurrentlyScrollingLayer(LayerImpl* layer);
-  void ClearCurrentlyScrollingLayer();
+  ScrollNode* CurrentlyScrollingNode();
+  const ScrollNode* CurrentlyScrollingNode() const;
+  int LastScrolledScrollNodeIndex() const;
+  void SetCurrentlyScrollingNode(ScrollNode* node);
+  void ClearCurrentlyScrollingNode();
 
   void SetViewportLayersFromIds(int overscroll_elasticity_layer,
                                 int page_scale_layer_id,
@@ -228,9 +229,17 @@ class CC_EXPORT LayerTreeImpl {
     return painted_device_scale_factor_;
   }
 
-  void SetDeviceColorSpace(const gfx::ColorSpace& device_color_space);
-  const gfx::ColorSpace& device_color_space() const {
-    return device_color_space_;
+  void set_content_source_id(uint32_t id) { content_source_id_ = id; }
+  uint32_t content_source_id() { return content_source_id_; }
+
+  void set_local_surface_id(const LocalSurfaceId& id) {
+    local_surface_id_ = id;
+  }
+  const LocalSurfaceId& local_surface_id() const { return local_surface_id_; }
+
+  void SetRasterColorSpace(const gfx::ColorSpace& raster_color_space);
+  const gfx::ColorSpace& raster_color_space() const {
+    return raster_color_space_;
   }
 
   SyncedElasticOverscroll* elastic_overscroll() {
@@ -392,7 +401,7 @@ class CC_EXPORT LayerTreeImpl {
   void RemoveSurfaceLayer(LayerImpl* layer);
   const LayerImplList& SurfaceLayers() const { return surface_layers_; }
 
-  LayerImpl* FindFirstScrollingLayerOrScrollbarLayerThatIsHitByPoint(
+  LayerImpl* FindFirstScrollingLayerOrDrawnScrollbarThatIsHitByPoint(
       const gfx::PointF& screen_space_point);
 
   LayerImpl* FindLayerThatIsHitByPoint(const gfx::PointF& screen_space_point);
@@ -454,6 +463,8 @@ class CC_EXPORT LayerTreeImpl {
 
   void BuildLayerListForTesting();
 
+  void InvalidateRegionForImages(const ImageIdFlatSet& images_to_invalidate);
+
  protected:
   float ClampPageScaleFactorToLimits(float page_scale_factor) const;
   void PushPageScaleFactorAndLimits(const float* page_scale_factor,
@@ -476,7 +487,7 @@ class CC_EXPORT LayerTreeImpl {
   SkColor background_color_;
   bool has_transparent_background_;
 
-  int last_scrolled_layer_id_;
+  int last_scrolled_scroll_node_index_;
   int overscroll_elasticity_layer_id_;
   int page_scale_layer_id_;
   int inner_viewport_scroll_layer_id_;
@@ -490,7 +501,10 @@ class CC_EXPORT LayerTreeImpl {
 
   float device_scale_factor_;
   float painted_device_scale_factor_;
-  gfx::ColorSpace device_color_space_;
+  gfx::ColorSpace raster_color_space_;
+
+  uint32_t content_source_id_;
+  LocalSurfaceId local_surface_id_;
 
   scoped_refptr<SyncedElasticOverscroll> elastic_overscroll_;
 

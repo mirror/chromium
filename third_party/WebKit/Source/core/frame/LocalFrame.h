@@ -58,7 +58,6 @@ class FloatSize;
 class FrameConsole;
 class FrameSelection;
 class FrameView;
-class IdleSpellCheckCallback;
 class InputMethodController;
 class InstrumentingAgents;
 class InterfaceProvider;
@@ -68,6 +67,7 @@ class IntSize;
 class LayoutView;
 class LayoutViewItem;
 class LocalDOMWindow;
+class LocalFrameClient;
 class NavigationScheduler;
 class Node;
 class NodeTraversal;
@@ -88,7 +88,7 @@ class CORE_EXPORT LocalFrame final : public Frame,
   friend class LocalFrameTest;
 
  public:
-  static LocalFrame* create(FrameLoaderClient*,
+  static LocalFrame* create(LocalFrameClient*,
                             FrameHost*,
                             FrameOwner*,
                             InterfaceProvider* = nullptr,
@@ -145,7 +145,6 @@ class CORE_EXPORT LocalFrame final : public Frame,
   ScriptController& script() const;
   SpellChecker& spellChecker() const;
   FrameConsole& console() const;
-  IdleSpellCheckCallback& idleSpellCheckCallback() const;
 
   // This method is used to get the highest level LocalFrame in this
   // frame's in-process subtree.
@@ -218,7 +217,7 @@ class CORE_EXPORT LocalFrame final : public Frame,
   InterfaceProvider* interfaceProvider() { return m_interfaceProvider; }
   InterfaceRegistry* interfaceRegistry() { return m_interfaceRegistry; }
 
-  FrameLoaderClient* client() const;
+  LocalFrameClient* client() const;
 
   PluginData* pluginData() const;
 
@@ -227,7 +226,7 @@ class CORE_EXPORT LocalFrame final : public Frame,
  private:
   friend class FrameNavigationDisabler;
 
-  LocalFrame(FrameLoaderClient*,
+  LocalFrame(LocalFrameClient*,
              FrameHost*,
              FrameOwner*,
              InterfaceProvider*,
@@ -261,7 +260,6 @@ class CORE_EXPORT LocalFrame final : public Frame,
   const Member<EventHandler> m_eventHandler;
   const Member<FrameConsole> m_console;
   const Member<InputMethodController> m_inputMethodController;
-  const Member<IdleSpellCheckCallback> m_idleSpellCheckCallback;
 
   int m_navigationDisableCount;
 
@@ -329,11 +327,6 @@ inline void LocalFrame::setInViewSourceMode(bool mode) {
 inline EventHandler& LocalFrame::eventHandler() const {
   ASSERT(m_eventHandler);
   return *m_eventHandler;
-}
-
-inline IdleSpellCheckCallback& LocalFrame::idleSpellCheckCallback() const {
-  DCHECK(m_idleSpellCheckCallback);
-  return *m_idleSpellCheckCallback;
 }
 
 DEFINE_TYPE_CASTS(LocalFrame,

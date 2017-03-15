@@ -32,8 +32,8 @@
 #include "components/autofill/core/common/autofill_l10n_util.h"
 #include "components/autofill/core/common/autofill_regexes.h"
 #include "components/autofill/core/common/form_field_data.h"
-#include "grit/components_scaled_resources.h"
-#include "grit/components_strings.h"
+#include "components/grit/components_scaled_resources.h"
+#include "components/strings/grit/components_strings.h"
 #include "third_party/icu/source/common/unicode/uloc.h"
 #include "third_party/icu/source/i18n/unicode/dtfmtsym.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -566,7 +566,7 @@ base::string16 CreditCard::GetLastUsedDateForDisplay(
   // use_count() > 1 when the card has been used in autofill.
 
   // If the card was last used in autofill more than a year ago,
-  // display "last used > 1 year ago" without showing date detail.
+  // display "last used over a year ago" without showing date detail.
   if ((AutofillClock::Now() - use_date()).InDays() > 365) {
     return show_expiration_date
                ? l10n_util::GetStringFUTF16(

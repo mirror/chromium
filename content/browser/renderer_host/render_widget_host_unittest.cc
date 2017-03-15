@@ -14,6 +14,7 @@
 #include "base/macros.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/timer/timer.h"
 #include "build/build_config.h"
@@ -26,6 +27,7 @@
 #include "content/common/input_messages.h"
 #include "content/common/resize_params.h"
 #include "content/common/view_messages.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/test/mock_render_process_host.h"
 #include "content/public/test/test_browser_context.h"
@@ -39,9 +41,7 @@
 #include "ui/gfx/canvas.h"
 
 #if defined(OS_ANDROID)
-#include "content/browser/renderer_host/context_provider_factory_impl_android.h"
 #include "content/browser/renderer_host/render_widget_host_view_android.h"
-#include "content/test/mock_gpu_channel_establish_factory.h"
 #include "ui/android/screen_android.h"
 #endif
 
@@ -413,8 +413,7 @@ class MockRenderWidgetHostDelegate : public RenderWidgetHostDelegate {
     return handle_wheel_event_;
   }
 
-  void RendererUnresponsive(RenderWidgetHostImpl* render_widget_host,
-                            RendererUnresponsiveType type) override {
+  void RendererUnresponsive(RenderWidgetHostImpl* render_widget_host) override {
     unresponsive_timer_fired_ = true;
   }
 
@@ -466,6 +465,8 @@ class RenderWidgetHostTest : public testing::Test {
   void SetUp() override {
     base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
     command_line->AppendSwitch(switches::kValidateInputEventStream);
+    feature_list_.InitFromCommandLine(
+        features::kRafAlignedTouchInputEvents.name, "");
 
     browser_context_.reset(new TestBrowserContext());
     delegate_.reset(new MockRenderWidgetHostDelegate());
@@ -476,9 +477,6 @@ class RenderWidgetHostTest : public testing::Test {
             new NoTransportImageTransportFactory));
 #endif
 #if defined(OS_ANDROID)
-    ContextProviderFactoryImpl::Initialize(&gpu_channel_factory_);
-    ui::ContextProviderFactory::SetInstance(
-        ContextProviderFactoryImpl::GetInstance());
     ui::SetScreenAndroid();  // calls display::Screen::SetScreenInstance().
 #endif
 #if defined(USE_AURA)
@@ -511,8 +509,6 @@ class RenderWidgetHostTest : public testing::Test {
 #endif
 #if defined(OS_ANDROID)
     display::Screen::SetScreenInstance(nullptr);
-    ui::ContextProviderFactory::SetInstance(nullptr);
-    ContextProviderFactoryImpl::Terminate();
 #endif
 
     // Process all pending tasks to avoid leaks.
@@ -663,14 +659,11 @@ class RenderWidgetHostTest : public testing::Test {
   double last_simulated_event_time_seconds_;
   double simulated_event_time_delta_seconds_;
 
-#if defined(OS_ANDROID)
-  MockGpuChannelEstablishFactory gpu_channel_factory_;
-#endif
-
  private:
   SyntheticWebTouchEvent touch_event_;
 
   TestBrowserThreadBundle thread_bundle_;
+  base::test::ScopedFeatureList feature_list_;
 
   DISALLOW_COPY_AND_ASSIGN(RenderWidgetHostTest);
 };
@@ -814,7 +807,7 @@ TEST_F(RenderWidgetHostTest, ResizeScreenInfo) {
   screen_info.orientation_angle = 0;
   screen_info.orientation_type = SCREEN_ORIENTATION_VALUES_PORTRAIT_PRIMARY;
 
-  auto host_delegate =
+  auto* host_delegate =
       static_cast<MockRenderWidgetHostDelegate*>(host_->delegate());
 
   host_delegate->SetScreenInfo(screen_info);
@@ -1126,15 +1119,13 @@ TEST_F(RenderWidgetHostTest, UnhandledGestureEvent) {
 // while one is in progress (see crbug.com/11007).
 TEST_F(RenderWidgetHostTest, DontPostponeHangMonitorTimeout) {
   // Start with a short timeout.
-  host_->StartHangMonitorTimeout(
-      TimeDelta::FromMilliseconds(10), WebInputEvent::Undefined,
-      RendererUnresponsiveType::RENDERER_UNRESPONSIVE_UNKNOWN);
+  host_->StartHangMonitorTimeout(TimeDelta::FromMilliseconds(10),
+                                 WebInputEvent::Undefined);
 
   // Immediately try to add a long 30 second timeout.
   EXPECT_FALSE(delegate_->unresponsive_timer_fired());
-  host_->StartHangMonitorTimeout(
-      TimeDelta::FromSeconds(30), WebInputEvent::Undefined,
-      RendererUnresponsiveType::RENDERER_UNRESPONSIVE_UNKNOWN);
+  host_->StartHangMonitorTimeout(TimeDelta::FromSeconds(30),
+                                 WebInputEvent::Undefined);
 
   // Wait long enough for first timeout and see if it fired.
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
@@ -1148,16 +1139,14 @@ TEST_F(RenderWidgetHostTest, DontPostponeHangMonitorTimeout) {
 // and then started again.
 TEST_F(RenderWidgetHostTest, StopAndStartHangMonitorTimeout) {
   // Start with a short timeout, then stop it.
-  host_->StartHangMonitorTimeout(
-      TimeDelta::FromMilliseconds(10), WebInputEvent::Undefined,
-      RendererUnresponsiveType::RENDERER_UNRESPONSIVE_UNKNOWN);
+  host_->StartHangMonitorTimeout(TimeDelta::FromMilliseconds(10),
+                                 WebInputEvent::Undefined);
   host_->StopHangMonitorTimeout();
 
   // Start it again to ensure it still works.
   EXPECT_FALSE(delegate_->unresponsive_timer_fired());
-  host_->StartHangMonitorTimeout(
-      TimeDelta::FromMilliseconds(10), WebInputEvent::Undefined,
-      RendererUnresponsiveType::RENDERER_UNRESPONSIVE_UNKNOWN);
+  host_->StartHangMonitorTimeout(TimeDelta::FromMilliseconds(10),
+                                 WebInputEvent::Undefined);
 
   // Wait long enough for first timeout and see if it fired.
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
@@ -1171,15 +1160,13 @@ TEST_F(RenderWidgetHostTest, StopAndStartHangMonitorTimeout) {
 // updated to a shorter duration.
 TEST_F(RenderWidgetHostTest, ShorterDelayHangMonitorTimeout) {
   // Start with a timeout.
-  host_->StartHangMonitorTimeout(
-      TimeDelta::FromMilliseconds(100), WebInputEvent::Undefined,
-      RendererUnresponsiveType::RENDERER_UNRESPONSIVE_UNKNOWN);
+  host_->StartHangMonitorTimeout(TimeDelta::FromMilliseconds(100),
+                                 WebInputEvent::Undefined);
 
   // Start it again with shorter delay.
   EXPECT_FALSE(delegate_->unresponsive_timer_fired());
-  host_->StartHangMonitorTimeout(
-      TimeDelta::FromMilliseconds(20), WebInputEvent::Undefined,
-      RendererUnresponsiveType::RENDERER_UNRESPONSIVE_UNKNOWN);
+  host_->StartHangMonitorTimeout(TimeDelta::FromMilliseconds(20),
+                                 WebInputEvent::Undefined);
 
   // Wait long enough for the second timeout and see if it fired.
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
@@ -1253,7 +1240,7 @@ TEST_F(RenderWidgetHostTest, NewContentRenderingTimeout) {
       base::TimeDelta::FromMicroseconds(10));
 
   // Test immediate start and stop, ensuring that the timeout doesn't fire.
-  host_->StartNewContentRenderingTimeout();
+  host_->StartNewContentRenderingTimeout(0);
   host_->OnFirstPaintAfterLoad();
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
@@ -1265,7 +1252,7 @@ TEST_F(RenderWidgetHostTest, NewContentRenderingTimeout) {
   // Test that the timer doesn't fire if it receives a stop before
   // a start.
   host_->OnFirstPaintAfterLoad();
-  host_->StartNewContentRenderingTimeout();
+  host_->StartNewContentRenderingTimeout(0);
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       TimeDelta::FromMicroseconds(20));
@@ -1274,12 +1261,45 @@ TEST_F(RenderWidgetHostTest, NewContentRenderingTimeout) {
   EXPECT_FALSE(host_->new_content_rendering_timeout_fired());
 
   // Test with a long delay to ensure that it does fire this time.
-  host_->StartNewContentRenderingTimeout();
+  host_->StartNewContentRenderingTimeout(0);
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE, base::MessageLoop::QuitWhenIdleClosure(),
       TimeDelta::FromMicroseconds(20));
   base::RunLoop().Run();
   EXPECT_TRUE(host_->new_content_rendering_timeout_fired());
+}
+
+// This tests that a compositor frame received with a stale content source ID
+// in its metadata is properly discarded.
+TEST_F(RenderWidgetHostTest, SwapCompositorFrameWithBadSourceId) {
+  host_->StartNewContentRenderingTimeout(100);
+  host_->OnFirstPaintAfterLoad();
+
+  // First swap a frame with an invalid ID.
+  cc::CompositorFrame frame;
+  frame.metadata.content_source_id = 99;
+  host_->OnMessageReceived(ViewHostMsg_SwapCompositorFrame(
+      0, 0, frame, std::vector<IPC::Message>()));
+  EXPECT_FALSE(
+      static_cast<TestView*>(host_->GetView())->did_swap_compositor_frame());
+  static_cast<TestView*>(host_->GetView())->reset_did_swap_compositor_frame();
+
+  // Test with a valid content ID as a control.
+  frame.metadata.content_source_id = 100;
+  host_->OnMessageReceived(ViewHostMsg_SwapCompositorFrame(
+      0, 0, frame, std::vector<IPC::Message>()));
+  EXPECT_TRUE(
+      static_cast<TestView*>(host_->GetView())->did_swap_compositor_frame());
+  static_cast<TestView*>(host_->GetView())->reset_did_swap_compositor_frame();
+
+  // We also accept frames with higher content IDs, to cover the case where
+  // the browser process receives a compositor frame for a new page before
+  // the corresponding DidCommitProvisionalLoad (it's a race).
+  frame.metadata.content_source_id = 101;
+  host_->OnMessageReceived(ViewHostMsg_SwapCompositorFrame(
+      0, 0, frame, std::vector<IPC::Message>()));
+  EXPECT_TRUE(
+      static_cast<TestView*>(host_->GetView())->did_swap_compositor_frame());
 }
 
 TEST_F(RenderWidgetHostTest, TouchEmulator) {
@@ -1304,7 +1324,8 @@ TEST_F(RenderWidgetHostTest, TouchEmulator) {
   SimulateMouseEvent(WebInputEvent::MouseMove, 10, 30, 0, true);
   EXPECT_EQ(WebInputEvent::TouchMove, host_->acked_touch_event_type());
   EXPECT_EQ(
-      "GestureTapCancel GestureScrollBegin GestureScrollUpdate",
+      "GestureTapCancel GestureScrollBegin TouchScrollStarted "
+      "GestureScrollUpdate",
       GetInputMessageTypes(process_));
   SendInputEventACK(WebInputEvent::GestureScrollUpdate,
                     INPUT_EVENT_ACK_STATE_CONSUMED);
@@ -1362,7 +1383,8 @@ TEST_F(RenderWidgetHostTest, TouchEmulator) {
   SimulateMouseEvent(WebInputEvent::MouseMove, 10, 100, 0, true);
   EXPECT_EQ(WebInputEvent::TouchMove, host_->acked_touch_event_type());
   EXPECT_EQ(
-      "GestureTapCancel GestureScrollBegin GestureScrollUpdate",
+      "GestureTapCancel GestureScrollBegin TouchScrollStarted "
+      "GestureScrollUpdate",
       GetInputMessageTypes(process_));
   SendInputEventACK(WebInputEvent::GestureScrollUpdate,
                     INPUT_EVENT_ACK_STATE_CONSUMED);
@@ -1416,7 +1438,8 @@ TEST_F(RenderWidgetHostTest, TouchEmulator) {
   SimulateMouseEvent(WebInputEvent::MouseMove, 10, 30, 0, true);
   EXPECT_EQ(WebInputEvent::TouchMove, host_->acked_touch_event_type());
   EXPECT_EQ(
-      "GestureTapCancel GestureScrollBegin GestureScrollUpdate",
+      "GestureTapCancel GestureScrollBegin TouchScrollStarted "
+      "GestureScrollUpdate",
       GetInputMessageTypes(process_));
   SendInputEventACK(WebInputEvent::GestureScrollUpdate,
                     INPUT_EVENT_ACK_STATE_CONSUMED);
@@ -1461,7 +1484,7 @@ TEST_InputRouterRoutes_NOARGS_FromRFH(InputMsg_Paste);
 TEST_InputRouterRoutes_NOARGS_FromRFH(InputMsg_PasteAndMatchStyle);
 TEST_InputRouterRoutes_NOARGS_FromRFH(InputMsg_Delete);
 TEST_InputRouterRoutes_NOARGS_FromRFH(InputMsg_SelectAll);
-TEST_InputRouterRoutes_NOARGS_FromRFH(InputMsg_Unselect);
+TEST_InputRouterRoutes_NOARGS_FromRFH(InputMsg_CollapseSelection);
 
 #undef TEST_InputRouterRoutes_NOARGS_FromRFH
 
@@ -1612,6 +1635,34 @@ void CheckLatencyInfoComponentInMessage(RenderWidgetHostProcess* process,
   process->sink().ClearMessages();
 }
 
+void CheckLatencyInfoComponentInGestureScrollUpdate(
+    RenderWidgetHostProcess* process,
+    int64_t component_id) {
+  EXPECT_EQ(process->sink().message_count(), 2U);
+  const IPC::Message* message = process->sink().GetMessageAt(0);
+  EXPECT_EQ(InputMsg_HandleInputEvent::ID, message->type());
+  InputMsg_HandleInputEvent::Param params;
+  EXPECT_TRUE(InputMsg_HandleInputEvent::Read(message, &params));
+
+  const WebInputEvent* event = std::get<0>(params);
+  ui::LatencyInfo latency_info = std::get<2>(params);
+
+  EXPECT_TRUE(event->type() == WebInputEvent::TouchScrollStarted);
+
+  message = process->sink().GetMessageAt(1);
+  EXPECT_EQ(InputMsg_HandleInputEvent::ID, message->type());
+  EXPECT_TRUE(InputMsg_HandleInputEvent::Read(message, &params));
+
+  event = std::get<0>(params);
+  latency_info = std::get<2>(params);
+
+  EXPECT_TRUE(event->type() == WebInputEvent::GestureScrollUpdate);
+  EXPECT_TRUE(latency_info.FindLatency(
+      ui::INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT, component_id, NULL));
+
+  process->sink().ClearMessages();
+}
+
 // Tests that after input event passes through RWHI through ForwardXXXEvent()
 // or ForwardXXXEventWithLatencyInfo(), LatencyInfo component
 // ui::INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT will always present in the
@@ -1655,8 +1706,8 @@ TEST_F(RenderWidgetHostTest, InputEventRWHLatencyComponent) {
   SimulateGestureEventWithLatencyInfo(WebInputEvent::GestureScrollUpdate,
                                       blink::WebGestureDeviceTouchscreen,
                                       ui::LatencyInfo());
-  CheckLatencyInfoComponentInMessage(
-      process_, GetLatencyComponentId(), WebInputEvent::GestureScrollUpdate);
+  CheckLatencyInfoComponentInGestureScrollUpdate(process_,
+                                                 GetLatencyComponentId());
   SendInputEventACK(WebInputEvent::GestureScrollUpdate,
                     INPUT_EVENT_ACK_STATE_CONSUMED);
 

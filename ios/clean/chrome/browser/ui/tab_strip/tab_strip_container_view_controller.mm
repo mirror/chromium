@@ -36,8 +36,9 @@ CGFloat kStripHeight = 200.0;
 
 @property(nonatomic, strong) NSLayoutConstraint* stripHeightConstraint;
 
-// Contained view controller utility methods.
-- (void)removeChildViewController:(UIViewController*)viewController;
+// Contained view controller utility methods. This method cannot be named
+//-removeChildViewController:, as that is a private superclass method.
+- (void)detachChildViewController:(UIViewController*)viewController;
 
 // Called after a new content view controller is set, but before
 // |-didMoveToParentViewController:| is called on that view controller.
@@ -76,7 +77,7 @@ CGFloat kStripHeight = 200.0;
   [NSLayoutConstraint
       deactivateConstraints:self.contentConstraintsWithoutStrip];
   [NSLayoutConstraint deactivateConstraints:self.contentConstraintsWithStrip];
-  [self removeChildViewController:self.contentViewController];
+  [self detachChildViewController:self.contentViewController];
 
   // Add the new content view controller.
   [self addChildViewController:contentViewController];
@@ -95,7 +96,7 @@ CGFloat kStripHeight = 200.0;
   // Remove the current strip view controller, if any.
   [NSLayoutConstraint deactivateConstraints:self.stripConstraints];
   [NSLayoutConstraint deactivateConstraints:self.contentConstraintsWithStrip];
-  [self removeChildViewController:self.tabStripViewController];
+  [self detachChildViewController:self.tabStripViewController];
 
   // Add the new strip view controller.
   [self addChildViewController:tabStripViewController];
@@ -158,9 +159,12 @@ CGFloat kStripHeight = 200.0;
 #pragma mark - TabStripActions
 
 // Action to toggle visibility of tab strip.
-- (void)toggleTabStrip:(id)sender {
-  self.stripHeightConstraint.constant =
-      self.stripHeightConstraint.constant > 0 ? 0.0 : kStripHeight;
+- (void)showTabStrip:(id)sender {
+  self.stripHeightConstraint.constant = kStripHeight;
+}
+
+- (void)hideTabStrip:(id)sender {
+  self.stripHeightConstraint.constant = 0.0f;
 }
 
 #pragma mark - MenuPresentationDelegate
@@ -212,7 +216,7 @@ CGFloat kStripHeight = 200.0;
 
 #pragma mark - Private methods
 
-- (void)removeChildViewController:(UIViewController*)viewController {
+- (void)detachChildViewController:(UIViewController*)viewController {
   if (viewController.parentViewController != self)
     return;
   [viewController willMoveToParentViewController:nil];

@@ -20,8 +20,6 @@ class LayoutObject;
 class LayoutView;
 class PaintLayer;
 
-enum VisualRectFlags { DefaultVisualRectFlags = 0, EdgeInclusive = 1 };
-
 // PaintInvalidationState is an optimization used during the paint
 // invalidation phase.
 //
@@ -98,7 +96,7 @@ class CORE_EXPORT PaintInvalidationState {
   // in the space of paint invalidation backing.
   LayoutRect computeVisualRectInBacking() const;
 
-  void mapLocalRectToPaintInvalidationBacking(LayoutRect&) const;
+  void mapLocalRectToVisualRectInBacking(LayoutRect&) const;
 
   PaintLayer& paintingLayer() const;
 
@@ -191,8 +189,8 @@ class CORE_EXPORT PaintInvalidationState {
 class PaintInvalidatorContextAdapter : public PaintInvalidatorContext {
  public:
   PaintInvalidatorContextAdapter(const PaintInvalidationState&);
-  void mapLocalRectToPaintInvalidationBacking(const LayoutObject&,
-                                              LayoutRect&) const override;
+  void mapLocalRectToVisualRectInBacking(const LayoutObject&,
+                                         LayoutRect&) const override;
 
  private:
   const PaintInvalidationState& m_paintInvalidationState;

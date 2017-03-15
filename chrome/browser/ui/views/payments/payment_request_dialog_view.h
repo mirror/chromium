@@ -10,7 +10,7 @@
 
 #include "base/macros.h"
 #include "chrome/browser/ui/views/payments/view_stack.h"
-#include "components/payments/payment_request_dialog.h"
+#include "components/payments/content/payment_request_dialog.h"
 #include "ui/views/window/dialog_delegate.h"
 
 namespace payments {
@@ -33,6 +33,8 @@ class PaymentRequestDialogView : public views::DialogDelegateView,
   class ObserverForTest {
    public:
     virtual void OnDialogOpened() = 0;
+
+    virtual void OnContactInfoOpened() = 0;
 
     virtual void OnOrderSummaryOpened() = 0;
 
@@ -62,10 +64,13 @@ class PaymentRequestDialogView : public views::DialogDelegateView,
   void ShowDialog() override;
   void CloseDialog() override;
 
+  void Pay();
   void GoBack();
+  void ShowContactProfileSheet();
   void ShowOrderSummary();
-  void ShowShippingListSheet();
+  void ShowShippingProfileSheet();
   void ShowPaymentMethodSheet();
+  void ShowShippingOptionSheet();
   void ShowCreditCardEditor();
 
   ViewStack* view_stack_for_testing() { return &view_stack_; }
@@ -88,6 +93,10 @@ class PaymentRequestDialogView : public views::DialogDelegateView,
 
   // May be null.
   ObserverForTest* observer_for_testing_;
+
+  // Used when the dialog is being closed to avoid re-entrancy into the
+  // controller_map_.
+  bool being_closed_;
 
   DISALLOW_COPY_AND_ASSIGN(PaymentRequestDialogView);
 };

@@ -20,7 +20,11 @@ const int kPointLifeDurationMs = 200;
 // When no move events are being received we add a new point every
 // |kAddStationaryPointsDelayMs| so that points older than
 // |kPointLifeDurationMs| can get removed.
-const int kAddStationaryPointsDelayMs = 5;
+// Note: Using a delay less than the screen refresh interval will not
+// provide a visual benefit but instead just waste time performing
+// unnecessary updates. 16ms is the refresh interval on most devices.
+// TODO(reveman): Use real VSYNC interval instead of a hard-coded delay.
+const int kAddStationaryPointsDelayMs = 16;
 
 }  // namespace
 
@@ -72,20 +76,20 @@ void LaserPointerController::OnTouchEvent(ui::TouchEvent* event) {
   if (event->type() == ui::ET_TOUCH_PRESSED &&
       !palette_utils::PaletteContainsPointInScreen(event_location)) {
     DestroyLaserPointerView();
-    UpdateLaserPointerView(current_window, event_location, event);
+    UpdateLaserPointerView(current_window, event->root_location_f(), event);
   }
 
   // Do not update laser if it is in the process of fading away.
   if (event->type() == ui::ET_TOUCH_MOVED && laser_pointer_view_ &&
       !is_fading_away_) {
-    UpdateLaserPointerView(current_window, event_location, event);
+    UpdateLaserPointerView(current_window, event->root_location_f(), event);
     RestartTimer();
   }
 
   if (event->type() == ui::ET_TOUCH_RELEASED && laser_pointer_view_ &&
       !is_fading_away_) {
     is_fading_away_ = true;
-    UpdateLaserPointerView(current_window, event_location, event);
+    UpdateLaserPointerView(current_window, event->root_location_f(), event);
     RestartTimer();
   }
 }
@@ -108,7 +112,7 @@ void LaserPointerController::SwitchTargetRootWindowIfNeeded(
 
 void LaserPointerController::UpdateLaserPointerView(
     aura::Window* current_window,
-    const gfx::Point& event_location,
+    const gfx::PointF& event_location,
     ui::Event* event) {
   SwitchTargetRootWindowIfNeeded(current_window);
   current_stylus_location_ = event_location;
@@ -128,8 +132,7 @@ void LaserPointerController::DestroyLaserPointerView() {
 
 void LaserPointerController::RestartTimer() {
   stationary_timer_repeat_count_ = 0;
-  if (!stationary_timer_->IsRunning())
-    stationary_timer_->Reset();
+  stationary_timer_->Reset();
 }
 
 void LaserPointerController::AddStationaryPoint() {

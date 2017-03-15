@@ -251,6 +251,7 @@
             "title": "Disable JavaScript",
             "settingName": "javaScriptDisabled",
             "settingType": "boolean",
+            "storageType": "session",
             "order": 1,
             "defaultValue": false,
             "options": [
@@ -373,6 +374,13 @@
             "order": 80
         },
         {
+            "type": "context-menu-item",
+            "location": "mainMenu/footer",
+            "title": "Help",
+            "subMenuId": "mainMenuHelp",
+            "order": 30
+        },
+        {
             "type": "view",
             "location": "drawer-view",
             "id": "rendering",
@@ -427,7 +435,8 @@
         "host",
         "platform",
         "sdk",
-        "persistence"
+        "persistence",
+        "help"
     ],
     "scripts": [
         "RenderingOptions.js",

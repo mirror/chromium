@@ -12,6 +12,8 @@
 #include "V8TestInterface5.h"
 
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/IDLTypes.h"
+#include "bindings/core/v8/NativeValueTraitsImpl.h"
 #include "bindings/core/v8/V8DOMConfiguration.h"
 #include "bindings/core/v8/V8ObjectConstructor.h"
 #include "bindings/core/v8/V8TestInterfaceEmpty.h"
@@ -98,7 +100,7 @@ static void doubleAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v
   ExceptionState exceptionState(info.GetIsolate(), ExceptionState::SetterContext, "TestInterface5", "doubleAttribute");
 
   // Prepare the value to be set.
-  double cppValue = toRestrictedDouble(info.GetIsolate(), v8Value, exceptionState);
+  double cppValue = NativeValueTraits<IDLDouble>::nativeValue(info.GetIsolate(), v8Value, exceptionState);
   if (exceptionState.hadException())
     return;
 
@@ -120,7 +122,7 @@ static void floatAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8
   ExceptionState exceptionState(info.GetIsolate(), ExceptionState::SetterContext, "TestInterface5", "floatAttribute");
 
   // Prepare the value to be set.
-  float cppValue = toRestrictedFloat(info.GetIsolate(), v8Value, exceptionState);
+  float cppValue = NativeValueTraits<IDLFloat>::nativeValue(info.GetIsolate(), v8Value, exceptionState);
   if (exceptionState.hadException())
     return;
 
@@ -142,7 +144,7 @@ static void unrestrictedDoubleAttributeAttributeSetter(v8::Local<v8::Value> v8Va
   ExceptionState exceptionState(info.GetIsolate(), ExceptionState::SetterContext, "TestInterface5", "unrestrictedDoubleAttribute");
 
   // Prepare the value to be set.
-  double cppValue = toDouble(info.GetIsolate(), v8Value, exceptionState);
+  double cppValue = NativeValueTraits<IDLUnrestrictedDouble>::nativeValue(info.GetIsolate(), v8Value, exceptionState);
   if (exceptionState.hadException())
     return;
 
@@ -164,7 +166,7 @@ static void unrestrictedFloatAttributeAttributeSetter(v8::Local<v8::Value> v8Val
   ExceptionState exceptionState(info.GetIsolate(), ExceptionState::SetterContext, "TestInterface5", "unrestrictedFloatAttribute");
 
   // Prepare the value to be set.
-  float cppValue = toFloat(info.GetIsolate(), v8Value, exceptionState);
+  float cppValue = NativeValueTraits<IDLUnrestrictedFloat>::nativeValue(info.GetIsolate(), v8Value, exceptionState);
   if (exceptionState.hadException())
     return;
 
@@ -207,7 +209,7 @@ static void alwaysExposedAttributeAttributeSetter(v8::Local<v8::Value> v8Value, 
   ExceptionState exceptionState(info.GetIsolate(), ExceptionState::SetterContext, "TestInterface5", "alwaysExposedAttribute");
 
   // Prepare the value to be set.
-  int cppValue = toInt32(info.GetIsolate(), v8Value, NormalConversion, exceptionState);
+  int32_t cppValue = NativeValueTraits<IDLLong>::nativeValue(info.GetIsolate(), v8Value, exceptionState, NormalConversion);
   if (exceptionState.hadException())
     return;
 
@@ -229,7 +231,7 @@ static void workerExposedAttributeAttributeSetter(v8::Local<v8::Value> v8Value, 
   ExceptionState exceptionState(info.GetIsolate(), ExceptionState::SetterContext, "TestInterface5", "workerExposedAttribute");
 
   // Prepare the value to be set.
-  int cppValue = toInt32(info.GetIsolate(), v8Value, NormalConversion, exceptionState);
+  int32_t cppValue = NativeValueTraits<IDLLong>::nativeValue(info.GetIsolate(), v8Value, exceptionState, NormalConversion);
   if (exceptionState.hadException())
     return;
 
@@ -251,7 +253,7 @@ static void windowExposedAttributeAttributeSetter(v8::Local<v8::Value> v8Value, 
   ExceptionState exceptionState(info.GetIsolate(), ExceptionState::SetterContext, "TestInterface5", "windowExposedAttribute");
 
   // Prepare the value to be set.
-  int cppValue = toInt32(info.GetIsolate(), v8Value, NormalConversion, exceptionState);
+  int32_t cppValue = NativeValueTraits<IDLLong>::nativeValue(info.GetIsolate(), v8Value, exceptionState, NormalConversion);
   if (exceptionState.hadException())
     return;
 
@@ -289,11 +291,11 @@ static void voidMethodDoubleArgFloatArgMethod(const v8::FunctionCallbackInfo<v8:
 
   double doubleArg;
   float floatArg;
-  doubleArg = toRestrictedDouble(info.GetIsolate(), info[0], exceptionState);
+  doubleArg = NativeValueTraits<IDLDouble>::nativeValue(info.GetIsolate(), info[0], exceptionState);
   if (exceptionState.hadException())
     return;
 
-  floatArg = toRestrictedFloat(info.GetIsolate(), info[1], exceptionState);
+  floatArg = NativeValueTraits<IDLFloat>::nativeValue(info.GetIsolate(), info[1], exceptionState);
   if (exceptionState.hadException())
     return;
 
@@ -312,11 +314,11 @@ static void voidMethodUnrestrictedDoubleArgUnrestrictedFloatArgMethod(const v8::
 
   double unrestrictedDoubleArg;
   float unrestrictedFloatArg;
-  unrestrictedDoubleArg = toDouble(info.GetIsolate(), info[0], exceptionState);
+  unrestrictedDoubleArg = NativeValueTraits<IDLUnrestrictedDouble>::nativeValue(info.GetIsolate(), info[0], exceptionState);
   if (exceptionState.hadException())
     return;
 
-  unrestrictedFloatArg = toFloat(info.GetIsolate(), info[1], exceptionState);
+  unrestrictedFloatArg = NativeValueTraits<IDLUnrestrictedFloat>::nativeValue(info.GetIsolate(), info[1], exceptionState);
   if (exceptionState.hadException())
     return;
 
@@ -776,17 +778,17 @@ const V8DOMConfiguration::AccessorConfiguration V8TestInterface5Accessors[] = {
 };
 
 const V8DOMConfiguration::MethodConfiguration V8TestInterface5Methods[] = {
-    {"voidMethodTestInterfaceEmptyArg", V8TestInterface5::voidMethodTestInterfaceEmptyArgMethodCallback, nullptr, 1, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder},
-    {"voidMethodDoubleArgFloatArg", V8TestInterface5::voidMethodDoubleArgFloatArgMethodCallback, nullptr, 2, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder},
-    {"voidMethodUnrestrictedDoubleArgUnrestrictedFloatArg", V8TestInterface5::voidMethodUnrestrictedDoubleArgUnrestrictedFloatArgMethodCallback, nullptr, 2, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder},
-    {"voidMethod", V8TestInterface5::voidMethodMethodCallback, V8TestInterface5::voidMethodMethodCallbackForMainWorld, 0, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder},
-    {"alwaysExposedMethod", V8TestInterface5::alwaysExposedMethodMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder},
-    {"alwaysExposedStaticMethod", V8TestInterface5::alwaysExposedStaticMethodMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnInterface, V8DOMConfiguration::CheckHolder},
-    {"voidMethodBooleanOrDOMStringArg", V8TestInterface5::voidMethodBooleanOrDOMStringArgMethodCallback, nullptr, 1, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder},
-    {"voidMethodDoubleOrDOMStringArg", V8TestInterface5::voidMethodDoubleOrDOMStringArgMethodCallback, nullptr, 1, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder},
-    {"voidMethodVoidExperimentalCallbackFunction", V8TestInterface5::voidMethodVoidExperimentalCallbackFunctionMethodCallback, nullptr, 1, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder},
-    {"voidMethodVoidCallbackFunctionModulesArg", V8TestInterface5::voidMethodVoidCallbackFunctionModulesArgMethodCallback, nullptr, 1, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder},
-    {"toString", V8TestInterface5::toStringMethodCallback, nullptr, 0, static_cast<v8::PropertyAttribute>(v8::DontEnum), V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder},
+    {"voidMethodTestInterfaceEmptyArg", V8TestInterface5::voidMethodTestInterfaceEmptyArgMethodCallback, nullptr, 1, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess},
+    {"voidMethodDoubleArgFloatArg", V8TestInterface5::voidMethodDoubleArgFloatArgMethodCallback, nullptr, 2, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess},
+    {"voidMethodUnrestrictedDoubleArgUnrestrictedFloatArg", V8TestInterface5::voidMethodUnrestrictedDoubleArgUnrestrictedFloatArgMethodCallback, nullptr, 2, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess},
+    {"voidMethod", V8TestInterface5::voidMethodMethodCallback, V8TestInterface5::voidMethodMethodCallbackForMainWorld, 0, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess},
+    {"alwaysExposedMethod", V8TestInterface5::alwaysExposedMethodMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess},
+    {"alwaysExposedStaticMethod", V8TestInterface5::alwaysExposedStaticMethodMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnInterface, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess},
+    {"voidMethodBooleanOrDOMStringArg", V8TestInterface5::voidMethodBooleanOrDOMStringArgMethodCallback, nullptr, 1, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess},
+    {"voidMethodDoubleOrDOMStringArg", V8TestInterface5::voidMethodDoubleOrDOMStringArgMethodCallback, nullptr, 1, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess},
+    {"voidMethodVoidExperimentalCallbackFunction", V8TestInterface5::voidMethodVoidExperimentalCallbackFunctionMethodCallback, nullptr, 1, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess},
+    {"voidMethodVoidCallbackFunctionModulesArg", V8TestInterface5::voidMethodVoidCallbackFunctionModulesArgMethodCallback, nullptr, 1, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess},
+    {"toString", V8TestInterface5::toStringMethodCallback, nullptr, 0, static_cast<v8::PropertyAttribute>(v8::DontEnum), V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess},
 };
 
 static void installV8TestInterface5Template(v8::Isolate* isolate, const DOMWrapperWorld& world, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
@@ -849,10 +851,16 @@ TestInterface5Implementation* V8TestInterface5::toImplWithTypeCheck(v8::Isolate*
   return hasInstance(value, isolate) ? toImpl(v8::Local<v8::Object>::Cast(value)) : nullptr;
 }
 
+TestInterface5Implementation* NativeValueTraits<TestInterface5Implementation>::nativeValue(v8::Isolate* isolate, v8::Local<v8::Value> value, ExceptionState& exceptionState) {
+  return V8TestInterface5::toImplWithTypeCheck(isolate, value);
+}
+
 void V8TestInterface5::preparePrototypeAndInterfaceObject(v8::Local<v8::Context> context, const DOMWrapperWorld& world, v8::Local<v8::Object> prototypeObject, v8::Local<v8::Function> interfaceObject, v8::Local<v8::FunctionTemplate> interfaceTemplate) {
   v8::Isolate* isolate = context->GetIsolate();
-  ExecutionContext* executionContext = toExecutionContext(context);
   v8::Local<v8::Signature> signature = v8::Signature::New(isolate, interfaceTemplate);
+  ExecutionContext* executionContext = toExecutionContext(context);
+  DCHECK(executionContext);
+
   if (executionContext && (executionContext->isWorkerGlobalScope())) {
     const V8DOMConfiguration::AccessorConfiguration accessorConfiguration = {"workerExposedAttribute", V8TestInterface5::workerExposedAttributeAttributeGetterCallback, V8TestInterface5::workerExposedAttributeAttributeSetterCallback, nullptr, nullptr, nullptr, nullptr, static_cast<v8::PropertyAttribute>(v8::None), V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder};
     V8DOMConfiguration::installAccessor(isolate, world, v8::Local<v8::Object>(), prototypeObject, interfaceObject, signature, accessorConfiguration);
@@ -861,27 +869,24 @@ void V8TestInterface5::preparePrototypeAndInterfaceObject(v8::Local<v8::Context>
     const V8DOMConfiguration::AccessorConfiguration accessorConfiguration = {"windowExposedAttribute", V8TestInterface5::windowExposedAttributeAttributeGetterCallback, V8TestInterface5::windowExposedAttributeAttributeSetterCallback, nullptr, nullptr, nullptr, nullptr, static_cast<v8::PropertyAttribute>(v8::None), V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder};
     V8DOMConfiguration::installAccessor(isolate, world, v8::Local<v8::Object>(), prototypeObject, interfaceObject, signature, accessorConfiguration);
   }
-  v8::Local<v8::Signature> signature = v8::Signature::New(isolate, interfaceTemplate);
-  ExecutionContext* executionContext = toExecutionContext(prototypeObject->CreationContext());
-  DCHECK(executionContext);
   if (executionContext && (executionContext->isWorkerGlobalScope())) {
-    const V8DOMConfiguration::MethodConfiguration workerExposedMethodMethodConfiguration = {"workerExposedMethod", V8TestInterface5::workerExposedMethodMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder};
+    const V8DOMConfiguration::MethodConfiguration workerExposedMethodMethodConfiguration = {"workerExposedMethod", V8TestInterface5::workerExposedMethodMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess};
     V8DOMConfiguration::installMethod(isolate, world, v8::Local<v8::Object>(), prototypeObject, interfaceObject, signature, workerExposedMethodMethodConfiguration);
   }
   if (executionContext && (executionContext->isDocument())) {
-    const V8DOMConfiguration::MethodConfiguration windowExposedMethodMethodConfiguration = {"windowExposedMethod", V8TestInterface5::windowExposedMethodMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder};
+    const V8DOMConfiguration::MethodConfiguration windowExposedMethodMethodConfiguration = {"windowExposedMethod", V8TestInterface5::windowExposedMethodMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess};
     V8DOMConfiguration::installMethod(isolate, world, v8::Local<v8::Object>(), prototypeObject, interfaceObject, signature, windowExposedMethodMethodConfiguration);
   }
   if (executionContext && (executionContext->isWorkerGlobalScope())) {
-    const V8DOMConfiguration::MethodConfiguration workerExposedStaticMethodMethodConfiguration = {"workerExposedStaticMethod", V8TestInterface5::workerExposedStaticMethodMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnInterface, V8DOMConfiguration::CheckHolder};
+    const V8DOMConfiguration::MethodConfiguration workerExposedStaticMethodMethodConfiguration = {"workerExposedStaticMethod", V8TestInterface5::workerExposedStaticMethodMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnInterface, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess};
     V8DOMConfiguration::installMethod(isolate, world, v8::Local<v8::Object>(), prototypeObject, interfaceObject, signature, workerExposedStaticMethodMethodConfiguration);
   }
   if (executionContext && (executionContext->isDocument())) {
-    const V8DOMConfiguration::MethodConfiguration windowExposedStaticMethodMethodConfiguration = {"windowExposedStaticMethod", V8TestInterface5::windowExposedStaticMethodMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnInterface, V8DOMConfiguration::CheckHolder};
+    const V8DOMConfiguration::MethodConfiguration windowExposedStaticMethodMethodConfiguration = {"windowExposedStaticMethod", V8TestInterface5::windowExposedStaticMethodMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnInterface, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess};
     V8DOMConfiguration::installMethod(isolate, world, v8::Local<v8::Object>(), prototypeObject, interfaceObject, signature, windowExposedStaticMethodMethodConfiguration);
   }
   if (executionContext && (executionContext->isDocument() || executionContext->isServiceWorkerGlobalScope())) {
-    const V8DOMConfiguration::MethodConfiguration windowAndServiceWorkerExposedMethodMethodConfiguration = {"windowAndServiceWorkerExposedMethod", V8TestInterface5::windowAndServiceWorkerExposedMethodMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder};
+    const V8DOMConfiguration::MethodConfiguration windowAndServiceWorkerExposedMethodMethodConfiguration = {"windowAndServiceWorkerExposedMethod", V8TestInterface5::windowAndServiceWorkerExposedMethodMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess};
     V8DOMConfiguration::installMethod(isolate, world, v8::Local<v8::Object>(), prototypeObject, interfaceObject, signature, windowAndServiceWorkerExposedMethodMethodConfiguration);
   }
 }

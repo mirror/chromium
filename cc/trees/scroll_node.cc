@@ -19,10 +19,9 @@ ScrollNode::ScrollNode()
       scrollable(false),
       main_thread_scrolling_reasons(
           MainThreadScrollingReason::kNotScrollingOnMain),
-      contains_non_fast_scrollable_region(false),
       max_scroll_offset_affected_by_page_scale(false),
-      is_inner_viewport_scroll_layer(false),
-      is_outer_viewport_scroll_layer(false),
+      scrolls_inner_viewport(false),
+      scrolls_outer_viewport(false),
       should_flatten(false),
       user_scrollable_horizontal(false),
       user_scrollable_vertical(false),
@@ -35,16 +34,13 @@ bool ScrollNode::operator==(const ScrollNode& other) const {
          owning_layer_id == other.owning_layer_id &&
          scrollable == other.scrollable &&
          main_thread_scrolling_reasons == other.main_thread_scrolling_reasons &&
-         contains_non_fast_scrollable_region ==
-             other.contains_non_fast_scrollable_region &&
+         non_fast_scrollable_region == other.non_fast_scrollable_region &&
          scroll_clip_layer_bounds == other.scroll_clip_layer_bounds &&
          bounds == other.bounds &&
          max_scroll_offset_affected_by_page_scale ==
              other.max_scroll_offset_affected_by_page_scale &&
-         is_inner_viewport_scroll_layer ==
-             other.is_inner_viewport_scroll_layer &&
-         is_outer_viewport_scroll_layer ==
-             other.is_outer_viewport_scroll_layer &&
+         scrolls_inner_viewport == other.scrolls_inner_viewport &&
+         scrolls_outer_viewport == other.scrolls_outer_viewport &&
          offset_to_transform_parent == other.offset_to_transform_parent &&
          should_flatten == other.should_flatten &&
          user_scrollable_horizontal == other.user_scrollable_horizontal &&

@@ -237,7 +237,6 @@ namespace http://www.w3.org/1999/xhtml
     property webkitMatchesSelector
     property webkitRequestFullScreen
     property webkitRequestFullscreen
-    property webkitdropzone
 html element a
     property charset
     property coords
@@ -305,6 +304,7 @@ html element audio
     property buffered
     property canPlayType
     property controls
+    property controlsList
     property crossOrigin
     property currentSrc
     property currentTime
@@ -1020,6 +1020,7 @@ html element video
     property buffered
     property canPlayType
     property controls
+    property controlsList
     property crossOrigin
     property currentSrc
     property currentTime
@@ -1305,7 +1306,6 @@ namespace http://www.w3.org/2000/svg
     property webkitMatchesSelector
     property webkitRequestFullScreen
     property webkitRequestFullscreen
-    property webkitdropzone
 svg element a
     property charset
     property coords

@@ -9,12 +9,12 @@
 
 #include <algorithm>
 
-#include "cc/base/container_util.h"
+#include "base/stl_util.h"
 #include "cc/output/compositor_frame.h"
 #include "cc/output/copy_output_request.h"
+#include "cc/surfaces/local_surface_id_allocator.h"
 #include "cc/surfaces/pending_frame_observer.h"
 #include "cc/surfaces/surface_factory.h"
-#include "cc/surfaces/surface_id_allocator.h"
 #include "cc/surfaces/surface_manager.h"
 
 namespace cc {
@@ -50,9 +50,14 @@ void Surface::SetPreviousFrameSurface(Surface* surface) {
   DCHECK(surface);
   frame_index_ = surface->frame_index() + 1;
   previous_frame_surface_id_ = surface->surface_id();
+  CompositorFrame& frame = active_frame_ ? *active_frame_ : *pending_frame_;
+  surface->TakeLatencyInfo(&frame.metadata.latency_info);
+  surface->TakeLatencyInfoFromPendingFrame(&frame.metadata.latency_info);
 }
 
 void Surface::QueueFrame(CompositorFrame frame, const DrawCallback& callback) {
+  TakeLatencyInfoFromPendingFrame(&frame.metadata.latency_info);
+
   base::Optional<CompositorFrame> previous_pending_frame =
       std::move(pending_frame_);
   pending_frame_.reset();
@@ -108,12 +113,10 @@ void Surface::RequestCopyOfOutput(
     const base::UnguessableToken& source = copy_request->source();
     // Remove existing CopyOutputRequests made on the Surface by the same
     // source.
-    auto to_remove =
-        std::remove_if(copy_requests.begin(), copy_requests.end(),
-                       [&source](const std::unique_ptr<CopyOutputRequest>& x) {
-                         return x->has_source() && x->source() == source;
-                       });
-    copy_requests.erase(to_remove, copy_requests.end());
+    base::EraseIf(copy_requests,
+                  [&source](const std::unique_ptr<CopyOutputRequest>& x) {
+                    return x->has_source() && x->source() == source;
+                  });
   }
   copy_requests.push_back(std::move(copy_request));
 }
@@ -164,12 +167,23 @@ void Surface::ActivatePendingFrame() {
 // compositor.
 void Surface::ActivateFrame(CompositorFrame frame) {
   DCHECK(factory_);
+
+  // Save root pass copy requests.
+  std::vector<std::unique_ptr<CopyOutputRequest>> old_copy_requests;
+  if (active_frame_ && !active_frame_->render_pass_list.empty()) {
+    std::swap(old_copy_requests,
+              active_frame_->render_pass_list.back()->copy_requests);
+  }
+
   ClearCopyRequests();
 
   TakeLatencyInfo(&frame.metadata.latency_info);
 
   base::Optional<CompositorFrame> previous_frame = std::move(active_frame_);
   active_frame_ = std::move(frame);
+
+  for (auto& copy_request : old_copy_requests)
+    RequestCopyOfOutput(std::move(copy_request));
 
   // Empty frames shouldn't be drawn and shouldn't contribute damage, so don't
   // increment frame index for them.
@@ -267,14 +281,7 @@ const CompositorFrame& Surface::GetPendingFrame() {
 void Surface::TakeLatencyInfo(std::vector<ui::LatencyInfo>* latency_info) {
   if (!active_frame_)
     return;
-  if (latency_info->empty()) {
-    active_frame_->metadata.latency_info.swap(*latency_info);
-    return;
-  }
-  std::copy(active_frame_->metadata.latency_info.begin(),
-            active_frame_->metadata.latency_info.end(),
-            std::back_inserter(*latency_info));
-  active_frame_->metadata.latency_info.clear();
+  TakeLatencyInfoFromFrame(&active_frame_.value(), latency_info);
 }
 
 void Surface::RunDrawCallbacks() {
@@ -292,14 +299,11 @@ void Surface::AddDestructionDependency(SurfaceSequence sequence) {
 void Surface::SatisfyDestructionDependencies(
     std::unordered_set<SurfaceSequence, SurfaceSequenceHash>* sequences,
     std::unordered_set<FrameSinkId, FrameSinkIdHash>* valid_frame_sink_ids) {
-  destruction_dependencies_.erase(
-      std::remove_if(destruction_dependencies_.begin(),
-                     destruction_dependencies_.end(),
-                     [sequences, valid_frame_sink_ids](SurfaceSequence seq) {
-                       return (!!sequences->erase(seq) ||
-                               !valid_frame_sink_ids->count(seq.frame_sink_id));
-                     }),
-      destruction_dependencies_.end());
+  base::EraseIf(destruction_dependencies_,
+                [sequences, valid_frame_sink_ids](SurfaceSequence seq) {
+                  return (!!sequences->erase(seq) ||
+                          !valid_frame_sink_ids->count(seq.frame_sink_id));
+                });
 }
 
 void Surface::UnrefFrameResources(const CompositorFrame& frame) {
@@ -318,6 +322,27 @@ void Surface::ClearCopyRequests() {
         copy_request->SendEmptyResult();
     }
   }
+}
+
+void Surface::TakeLatencyInfoFromPendingFrame(
+    std::vector<ui::LatencyInfo>* latency_info) {
+  if (!pending_frame_)
+    return;
+  TakeLatencyInfoFromFrame(&pending_frame_.value(), latency_info);
+}
+
+// static
+void Surface::TakeLatencyInfoFromFrame(
+    CompositorFrame* frame,
+    std::vector<ui::LatencyInfo>* latency_info) {
+  if (latency_info->empty()) {
+    frame->metadata.latency_info.swap(*latency_info);
+    return;
+  }
+  std::copy(frame->metadata.latency_info.begin(),
+            frame->metadata.latency_info.end(),
+            std::back_inserter(*latency_info));
+  frame->metadata.latency_info.clear();
 }
 
 }  // namespace cc

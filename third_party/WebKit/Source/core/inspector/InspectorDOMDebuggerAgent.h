@@ -47,6 +47,11 @@ class Element;
 class InspectorDOMAgent;
 class Node;
 
+namespace probe {
+class ExecuteScript;
+class UserCallback;
+}
+
 namespace protocol {
 class DictionaryValue;
 }
@@ -67,20 +72,25 @@ class CORE_EXPORT InspectorDOMDebuggerAgent final
   DECLARE_VIRTUAL_TRACE();
 
   // DOMDebugger API for frontend
-  Response setDOMBreakpoint(int nodeId, const String& type) override;
-  Response removeDOMBreakpoint(int nodeId, const String& type) override;
-  Response setEventListenerBreakpoint(const String& eventName,
-                                      Maybe<String> targetName) override;
-  Response removeEventListenerBreakpoint(const String& eventName,
-                                         Maybe<String> targetName) override;
-  Response setInstrumentationBreakpoint(const String& eventName) override;
-  Response removeInstrumentationBreakpoint(const String& eventName) override;
-  Response setXHRBreakpoint(const String& url) override;
-  Response removeXHRBreakpoint(const String& url) override;
-  Response getEventListeners(
+  protocol::Response setDOMBreakpoint(int nodeId, const String& type) override;
+  protocol::Response removeDOMBreakpoint(int nodeId,
+                                         const String& type) override;
+  protocol::Response setEventListenerBreakpoint(
+      const String& eventName,
+      protocol::Maybe<String> targetName) override;
+  protocol::Response removeEventListenerBreakpoint(
+      const String& eventName,
+      protocol::Maybe<String> targetName) override;
+  protocol::Response setInstrumentationBreakpoint(
+      const String& eventName) override;
+  protocol::Response removeInstrumentationBreakpoint(
+      const String& eventName) override;
+  protocol::Response setXHRBreakpoint(const String& url) override;
+  protocol::Response removeXHRBreakpoint(const String& url) override;
+  protocol::Response getEventListeners(
       const String& objectId,
-      Maybe<int> depth,
-      Maybe<bool> pierce,
+      protocol::Maybe<int> depth,
+      protocol::Maybe<bool> pierce,
       std::unique_ptr<protocol::Array<protocol::DOMDebugger::EventListener>>*
           listeners) override;
 
@@ -96,13 +106,14 @@ class CORE_EXPORT InspectorDOMDebuggerAgent final
   void didFireWebGLError(const String& errorName);
   void didFireWebGLWarning();
   void didFireWebGLErrorOrWarning(const String& message);
-  void allowNativeBreakpoint(const String& breakpointName,
-                             const String* targetName,
-                             bool sync);
-  void cancelNativeBreakpoint();
   void scriptExecutionBlockedByCSP(const String& directiveText);
+  void will(const probe::ExecuteScript&);
+  void did(const probe::ExecuteScript&);
+  void will(const probe::UserCallback&);
+  void did(const probe::UserCallback&);
+  void breakableLocation(const char* name);
 
-  Response disable() override;
+  protocol::Response disable() override;
   void restore() override;
   void didCommitLoadForLocalFrame(LocalFrame*) override;
 
@@ -112,6 +123,10 @@ class CORE_EXPORT InspectorDOMDebuggerAgent final
                                           int depth,
                                           bool pierce,
                                           V8EventListenerInfoList* listeners);
+  void allowNativeBreakpoint(const String& breakpointName,
+                             const String* targetName,
+                             bool sync);
+  void cancelNativeBreakpoint();
   void pauseOnNativeEventIfNeeded(
       std::unique_ptr<protocol::DictionaryValue> eventData,
       bool synchronous);
@@ -125,8 +140,10 @@ class CORE_EXPORT InspectorDOMDebuggerAgent final
   void breakProgramOnDOMEvent(Node* target, int breakpointType, bool insertion);
   void updateSubtreeBreakpoints(Node*, uint32_t rootMask, bool set);
   bool hasBreakpoint(Node*, int type);
-  Response setBreakpoint(const String& eventName, const String& targetName);
-  Response removeBreakpoint(const String& eventName, const String& targetName);
+  protocol::Response setBreakpoint(const String& eventName,
+                                   const String& targetName);
+  protocol::Response removeBreakpoint(const String& eventName,
+                                      const String& targetName);
 
   void didAddBreakpoint();
   void didRemoveBreakpoint();

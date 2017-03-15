@@ -44,6 +44,7 @@ import sys
 import time
 
 from webkitpy.common.net.file_uploader import FileUploader
+from webkitpy.common.webkit_finder import WebKitFinder
 from webkitpy.layout_tests.controllers.layout_test_finder import LayoutTestFinder
 from webkitpy.layout_tests.controllers.layout_test_runner import LayoutTestRunner
 from webkitpy.layout_tests.controllers.test_result_writer import TestResultWriter
@@ -53,6 +54,7 @@ from webkitpy.layout_tests.models import test_failures
 from webkitpy.layout_tests.models import test_run_results
 from webkitpy.layout_tests.models.test_input import TestInput
 from webkitpy.tool import grammar
+from webkitpy.w3c.wpt_manifest import WPTManifest
 
 _log = logging.getLogger(__name__)
 
@@ -88,6 +90,7 @@ class Manager(object):
 
         self._results_directory = self._port.results_directory()
         self._finder = LayoutTestFinder(self._port, self._options)
+        self._webkit_finder = WebKitFinder(port.host.filesystem)
         self._runner = LayoutTestRunner(self._options, self._port, self._printer, self._results_directory, self._test_is_slow)
 
     def run(self, args):
@@ -95,6 +98,10 @@ class Manager(object):
         start_time = time.time()
         self._printer.write_update("Collecting tests ...")
         running_all_tests = False
+
+        self._printer.write_update('Generating MANIFEST.json for web-platform-tests ...')
+        WPTManifest.ensure_manifest(self._port.host)
+
         try:
             paths, all_test_names, running_all_tests = self._collect_tests(args)
         except IOError:

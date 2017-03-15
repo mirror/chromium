@@ -8,10 +8,11 @@
 
 #include "ash/common/shelf/shelf_model.h"
 #include "ash/common/shelf/wm_shelf.h"
-#include "ash/common/strings/grit/ash_strings.h"
 #include "ash/common/wallpaper/wallpaper_delegate.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
+#include "ash/shell.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "build/build_config.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/fullscreen.h"
@@ -50,7 +51,7 @@ LauncherContextMenu* LauncherContextMenu::Create(
   if (!item || item->id == 0)
     return new DesktopShellLauncherContextMenu(controller, item, wm_shelf);
 
-  // Create ArcLauncherContextMenu if the item is an Arc app.
+  // Create ArcLauncherContextMenu if the item is an ARC app.
   const std::string& app_id = controller->GetAppIDForShelfID(item->id);
   if (arc::IsArcItem(controller->profile(), app_id))
     return new ArcLauncherContextMenu(controller, item, wm_shelf);
@@ -98,9 +99,7 @@ bool LauncherContextMenu::IsCommandIdEnabled(int command_id) const {
       return !item_.pinned_by_policy && (item_.type == ash::TYPE_APP_SHORTCUT ||
                                          item_.type == ash::TYPE_APP);
     case MENU_CHANGE_WALLPAPER:
-      return ash::WmShell::Get()
-          ->wallpaper_delegate()
-          ->CanOpenSetWallpaperPage();
+      return ash::Shell::Get()->wallpaper_delegate()->CanOpenSetWallpaperPage();
     case MENU_AUTO_HIDE:
       return CanUserModifyShelfAutoHideBehavior(controller_->profile());
     default:
@@ -116,7 +115,7 @@ void LauncherContextMenu::ExecuteCommand(int command_id, int event_flags) {
       break;
     case MENU_CLOSE:
       if (item_.type == ash::TYPE_DIALOG) {
-        ash::ShelfItemDelegate* item_delegate =
+        ash::mojom::ShelfItemDelegate* item_delegate =
             ash::WmShell::Get()->shelf_model()->GetShelfItemDelegate(item_.id);
         DCHECK(item_delegate);
         item_delegate->Close();

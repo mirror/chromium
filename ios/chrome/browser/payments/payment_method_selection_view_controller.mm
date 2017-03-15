@@ -4,15 +4,14 @@
 
 #import "ios/chrome/browser/payments/payment_method_selection_view_controller.h"
 
-#import "base/ios/weak_nsobject.h"
 #include "base/mac/foundation_util.h"
-#include "base/mac/scoped_nsobject.h"
 #include "base/strings/sys_string_conversions.h"
 #include "components/autofill/core/browser/autofill_data_util.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/strings/grit/components_strings.h"
 #import "ios/chrome/browser/payments/cells/payment_method_item.h"
 #import "ios/chrome/browser/payments/cells/payments_text_item.h"
+#import "ios/chrome/browser/payments/payment_method_selection_view_controller_actions.h"
 #include "ios/chrome/browser/payments/payment_request.h"
 #import "ios/chrome/browser/ui/collection_view/cells/MDCCollectionViewCell+Chrome.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_detail_item.h"
@@ -27,8 +26,12 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 
-NSString* const kPaymentMethodSelectionCollectionViewId =
-    @"kPaymentMethodSelectionCollectionViewId";
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
+
+NSString* const kPaymentMethodSelectionCollectionViewID =
+    @"kPaymentMethodSelectionCollectionViewID";
 
 namespace {
 
@@ -45,32 +48,29 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
 }  // namespace
 
-@interface PaymentMethodSelectionViewController () {
-  base::WeakNSProtocol<id<PaymentMethodSelectionViewControllerDelegate>>
-      _delegate;
-
+@interface PaymentMethodSelectionViewController ()<
+    PaymentMethodSelectionViewControllerActions> {
   // The PaymentRequest object owning an instance of web::PaymentRequest as
   // provided by the page invoking the Payment Request API. This is a weak
   // pointer and should outlive this class.
   PaymentRequest* _paymentRequest;
 
   // The currently selected item. May be nil.
-  PaymentMethodItem* _selectedItem;
+  __weak PaymentMethodItem* _selectedItem;
 }
-
-// Called when the user presses the return button.
-- (void)onReturn;
 
 @end
 
 @implementation PaymentMethodSelectionViewController
+@synthesize delegate = _delegate;
 
 - (instancetype)initWithPaymentRequest:(PaymentRequest*)paymentRequest {
   DCHECK(paymentRequest);
   if ((self = [super initWithStyle:CollectionViewControllerStyleAppBar])) {
-    [self setTitle:l10n_util::GetNSString(
-                       IDS_IOS_PAYMENT_REQUEST_METHOD_SELECTION_TITLE)];
+    [self
+        setTitle:l10n_util::GetNSString(IDS_PAYMENTS_METHOD_OF_PAYMENT_LABEL)];
 
+    // Set up leading (return) button.
     UIBarButtonItem* returnButton =
         [ChromeIcon templateBarButtonItemWithImage:[ChromeIcon backIcon]
                                             target:nil
@@ -81,14 +81,6 @@ typedef NS_ENUM(NSInteger, ItemType) {
     _paymentRequest = paymentRequest;
   }
   return self;
-}
-
-- (id<PaymentMethodSelectionViewControllerDelegate>)delegate {
-  return _delegate.get();
-}
-
-- (void)setDelegate:(id<PaymentMethodSelectionViewControllerDelegate>)delegate {
-  _delegate.reset(delegate);
 }
 
 - (void)onReturn {
@@ -104,9 +96,9 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
   [model addSectionWithIdentifier:SectionIdentifierPayment];
 
-  for (const auto& paymentMethod : _paymentRequest->credit_cards()) {
-    PaymentMethodItem* paymentMethodItem = [[[PaymentMethodItem alloc]
-        initWithType:ItemTypePaymentMethod] autorelease];
+  for (const auto* paymentMethod : _paymentRequest->credit_cards()) {
+    PaymentMethodItem* paymentMethodItem =
+        [[PaymentMethodItem alloc] initWithType:ItemTypePaymentMethod];
     paymentMethodItem.accessibilityTraits |= UIAccessibilityTraitButton;
     paymentMethodItem.methodID =
         base::SysUTF16ToNSString(paymentMethod->TypeAndLastFourDigits());
@@ -126,9 +118,8 @@ typedef NS_ENUM(NSInteger, ItemType) {
   }
 
   PaymentsTextItem* addPaymentMethod =
-      [[[PaymentsTextItem alloc] initWithType:ItemTypeAddMethod] autorelease];
-  addPaymentMethod.text =
-      l10n_util::GetNSString(IDS_IOS_PAYMENT_REQUEST_ADD_METHOD_BUTTON);
+      [[PaymentsTextItem alloc] initWithType:ItemTypeAddMethod];
+  addPaymentMethod.text = l10n_util::GetNSString(IDS_PAYMENTS_ADD_CARD);
   addPaymentMethod.image = NativeImage(IDR_IOS_PAYMENTS_ADD);
   addPaymentMethod.accessibilityTraits |= UIAccessibilityTraitButton;
   [model addItem:addPaymentMethod
@@ -138,7 +129,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.collectionView.accessibilityIdentifier =
-      kPaymentMethodSelectionCollectionViewId;
+      kPaymentMethodSelectionCollectionViewID;
 
   // Customize collection view settings.
   self.styler.cellStyle = MDCCollectionViewCellStyleCard;

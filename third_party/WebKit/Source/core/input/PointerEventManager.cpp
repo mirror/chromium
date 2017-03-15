@@ -150,7 +150,7 @@ WebInputEventResult PointerEventManager::dispatchPointerEvent(
   if ((eventType == EventTypeNames::pointerout ||
        eventType == EventTypeNames::pointerover) &&
       m_nodeUnderPointer.contains(pointerId)) {
-    EventTarget* targetUnderPointer = m_nodeUnderPointer.get(pointerId).target;
+    EventTarget* targetUnderPointer = m_nodeUnderPointer.at(pointerId).target;
     if (targetUnderPointer == target) {
       m_nodeUnderPointer.set(
           pointerId,
@@ -169,6 +169,7 @@ WebInputEventResult PointerEventManager::dispatchPointerEvent(
     DCHECK(!m_dispatchingPointerId);
     AutoReset<int> dispatchHolder(&m_dispatchingPointerId, pointerId);
     DispatchEventResult dispatchResult = target->dispatchEvent(pointerEvent);
+
     return EventHandlingUtil::toWebInputEventResult(dispatchResult);
   }
   return WebInputEventResult::NotHandled;
@@ -219,11 +220,11 @@ void PointerEventManager::setNodeUnderPointer(PointerEvent* pointerEvent,
                                               EventTarget* target) {
   if (m_nodeUnderPointer.contains(pointerEvent->pointerId())) {
     EventTargetAttributes node =
-        m_nodeUnderPointer.get(pointerEvent->pointerId());
+        m_nodeUnderPointer.at(pointerEvent->pointerId());
     if (!target) {
       m_nodeUnderPointer.erase(pointerEvent->pointerId());
     } else if (target !=
-               m_nodeUnderPointer.get(pointerEvent->pointerId()).target) {
+               m_nodeUnderPointer.at(pointerEvent->pointerId()).target) {
       m_nodeUnderPointer.set(pointerEvent->pointerId(),
                              EventTargetAttributes(target, false));
     }
@@ -248,7 +249,7 @@ void PointerEventManager::blockTouchPointers() {
         pointerId, WebPointerProperties::PointerType::Touch);
 
     DCHECK(m_nodeUnderPointer.contains(pointerId));
-    EventTarget* target = m_nodeUnderPointer.get(pointerId).target;
+    EventTarget* target = m_nodeUnderPointer.at(pointerId).target;
 
     processCaptureAndPositionOfPointerEvent(pointerEvent, target);
 
@@ -367,7 +368,7 @@ void PointerEventManager::computeTouchTargets(
       // pointer is captured otherwise it would have gone to the if block
       // and perform a hit-test.
       touchInfo.touchNode =
-          m_pendingPointerCaptureTarget.get(pointerId)->toNode();
+          m_pendingPointerCaptureTarget.at(pointerId)->toNode();
       touchInfo.targetFrame = touchInfo.touchNode->document().frame();
     }
 
@@ -406,7 +407,7 @@ void PointerEventManager::dispatchTouchPointerEvents(
       if (result != WebInputEventResult::NotHandled &&
           pointerEvent->type() == EventTypeNames::pointerdown &&
           pointerEvent->isPrimary()) {
-        m_touchIdsForCanceledPointerdowns.append(event.uniqueTouchEventId);
+        m_touchIdsForCanceledPointerdowns.push_back(event.uniqueTouchEventId);
       }
     }
   }
@@ -447,7 +448,8 @@ WebInputEventResult PointerEventManager::sendMousePointerEvent(
     const String& canvasRegionId,
     const AtomicString& mouseEventType,
     const WebMouseEvent& mouseEvent,
-    const Vector<WebMouseEvent>& coalescedEvents) {
+    const Vector<WebMouseEvent>& coalescedEvents,
+    bool selectionOverLink) {
   PointerEvent* pointerEvent =
       m_pointerEventFactory.create(mouseEventType, mouseEvent, coalescedEvents,
                                    m_frame->document()->domWindow());
@@ -500,6 +502,14 @@ WebInputEventResult PointerEventManager::sendMousePointerEvent(
         result,
         m_mouseEventManager->dispatchMouseEvent(
             mouseTarget, mouseEventType, mouseEvent, canvasRegionId, nullptr));
+
+    if (selectionOverLink && mouseTarget &&
+        mouseEventType == EventTypeNames::mouseup) {
+      WebInputEventResult clickEventResult =
+          m_mouseEventManager->dispatchMouseClickIfNeeded(
+              mouseTarget->toNode(), mouseEvent, canvasRegionId, target);
+      result = EventHandlingUtil::mergeEventResult(clickEventResult, result);
+    }
   }
 
   if (pointerEvent->type() == EventTypeNames::pointerup ||
@@ -613,7 +623,7 @@ void PointerEventManager::removeTargetFromPointerCapturingMapping(
 
 EventTarget* PointerEventManager::getCapturingNode(int pointerId) {
   if (m_pointerCaptureTarget.contains(pointerId))
-    return m_pointerCaptureTarget.get(pointerId);
+    return m_pointerCaptureTarget.at(pointerId);
   return nullptr;
 }
 
@@ -652,19 +662,19 @@ void PointerEventManager::releasePointerCapture(int pointerId,
   // but |m_pendingPointerCaptureTarget| indicated the element that gets the
   // very next pointer event. They will be the same if there was no change in
   // capturing of a particular |pointerId|. See crbug.com/614481.
-  if (m_pendingPointerCaptureTarget.get(pointerId) == target)
+  if (m_pendingPointerCaptureTarget.at(pointerId) == target)
     releasePointerCapture(pointerId);
 }
 
 bool PointerEventManager::hasPointerCapture(int pointerId,
                                             const EventTarget* target) const {
-  return m_pendingPointerCaptureTarget.get(pointerId) == target;
+  return m_pendingPointerCaptureTarget.at(pointerId) == target;
 }
 
 bool PointerEventManager::hasProcessedPointerCapture(
     int pointerId,
     const EventTarget* target) const {
-  return m_pointerCaptureTarget.get(pointerId) == target;
+  return m_pointerCaptureTarget.at(pointerId) == target;
 }
 
 void PointerEventManager::releasePointerCapture(int pointerId) {
@@ -687,7 +697,7 @@ bool PointerEventManager::isTouchPointerIdActiveOnFrame(
     return false;
   Node* lastNodeReceivingEvent =
       m_nodeUnderPointer.contains(pointerId)
-          ? m_nodeUnderPointer.get(pointerId).target->toNode()
+          ? m_nodeUnderPointer.at(pointerId).target->toNode()
           : nullptr;
   return lastNodeReceivingEvent &&
          lastNodeReceivingEvent->document().frame() == frame;
@@ -703,7 +713,7 @@ bool PointerEventManager::primaryPointerdownCanceled(
   // 2^32-1 (>4.2 billion): even with a generous 100 unique ids per touch
   // sequence & one sequence per 10 second, it takes 13+ years to wrap back.
   while (!m_touchIdsForCanceledPointerdowns.isEmpty()) {
-    uint32_t firstId = m_touchIdsForCanceledPointerdowns.first();
+    uint32_t firstId = m_touchIdsForCanceledPointerdowns.front();
     if (firstId > uniqueTouchEventId)
       return false;
     m_touchIdsForCanceledPointerdowns.takeFirst();

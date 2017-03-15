@@ -39,7 +39,6 @@ class Image;
 }  // namespace gfx
 
 namespace image_fetcher {
-class ImageDecoder;
 class ImageFetcher;
 }  // namespace image_fetcher
 
@@ -47,6 +46,7 @@ namespace ntp_snippets {
 
 class CategoryRanker;
 class RemoteSuggestionsDatabase;
+class RemoteSuggestionsScheduler;
 
 // CachedImageFetcher takes care of fetching images from the network and caching
 // them in the database.
@@ -59,7 +59,6 @@ class CachedImageFetcher : public image_fetcher::ImageFetcherDelegate {
   // |pref_service| and |database| need to outlive the created image fetcher
   // instance.
   CachedImageFetcher(std::unique_ptr<image_fetcher::ImageFetcher> image_fetcher,
-                     std::unique_ptr<image_fetcher::ImageDecoder> image_decoder,
                      PrefService* pref_service,
                      RemoteSuggestionsDatabase* database);
   ~CachedImageFetcher() override;
@@ -93,7 +92,6 @@ class CachedImageFetcher : public image_fetcher::ImageFetcherDelegate {
                              const ImageFetchedCallback& callback);
 
   std::unique_ptr<image_fetcher::ImageFetcher> image_fetcher_;
-  std::unique_ptr<image_fetcher::ImageDecoder> image_decoder_;
   RemoteSuggestionsDatabase* database_;
   // Request throttler for limiting requests to thumbnail images.
   RequestThrottler thumbnail_requests_throttler_;
@@ -119,7 +117,6 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
       CategoryRanker* category_ranker,
       std::unique_ptr<RemoteSuggestionsFetcher> suggestions_fetcher,
       std::unique_ptr<image_fetcher::ImageFetcher> image_fetcher,
-      std::unique_ptr<image_fetcher::ImageDecoder> image_decoder,
       std::unique_ptr<RemoteSuggestionsDatabase> database,
       std::unique_ptr<RemoteSuggestionsStatusService> status_service);
 
@@ -136,9 +133,13 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
   // false, some calls may trigger DCHECKs.
   bool initialized() const { return ready() || state_ == State::DISABLED; }
 
+  // Set the scheduler to be notified whenever the provider becomes active /
+  // in-active and whenever history is deleted. The initial change is also
+  // notified (switching from an initial undecided status). If the scheduler is
+  // set after the first change, it is called back immediately.
+  void SetRemoteSuggestionsScheduler(RemoteSuggestionsScheduler* scheduler);
+
   // RemoteSuggestionsProvider implementation.
-  void SetProviderStatusCallback(
-      std::unique_ptr<ProviderStatusCallback> callback) override;
   void RefetchInTheBackground(
       std::unique_ptr<FetchStatusCallback> callback) override;
 
@@ -196,21 +197,19 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
  private:
   friend class RemoteSuggestionsProviderImplTest;
 
+  // TODO(jkrcal): Mock the database to trigger the error naturally (or remove
+  // the error state and get rid of the test).
   FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsProviderImplTest,
-                           CallsProviderStatusCallbackWhenReady);
+                           CallsSchedulerOnError);
+  // TODO(jkrcal): Mock the status service and remove these friend declarations.
   FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsProviderImplTest,
-                           CallsProviderStatusCallbackOnError);
-  FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsProviderImplTest,
-                           CallsProviderStatusCallbackWhenDisabled);
-  FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsProviderImplTest,
-                           ShouldNotCrashWhenCallingEmptyCallback);
+                           CallsSchedulerWhenDisabled);
   FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsProviderImplTest,
                            DontNotifyIfNotAvailable);
   FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsProviderImplTest,
-                           RemoveExpiredDismissedContent);
-  FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsProviderImplTest, StatusChanges);
+                           CallsSchedulerWhenSignedIn);
   FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsProviderImplTest,
-                           SuggestionsFetchedOnSignInAndSignOut);
+                           CallsSchedulerWhenSignedOut);
 
   // Possible state transitions:
   //       NOT_INITED --------+
@@ -220,6 +219,8 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
   //       \       /          |
   //        v     v           |
   //     ERROR_OCCURRED <-----+
+  // TODO(jkrcal): Do we need to keep the distinction between states DISABLED
+  // and ERROR_OCCURED?
   enum class State {
     // The service has just been created. Can change to states:
     // - DISABLED: After the database is done loading,
@@ -352,6 +353,13 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
   // the file system.
   void ClearOrphanedImages();
 
+  // Clears suggestions because any history item has been removed.
+  void ClearHistoryDependentState();
+
+  // Clears suggestions for any non-history related reason (e.g., sign-in status
+  // change, etc.).
+  void ClearSuggestions();
+
   // Clears all stored suggestions and updates the observer.
   void NukeAllSuggestions();
 
@@ -442,12 +450,12 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
   bool fetch_when_ready_interactive_;
   std::unique_ptr<FetchStatusCallback> fetch_when_ready_callback_;
 
-  std::unique_ptr<ProviderStatusCallback> provider_status_callback_;
+  RemoteSuggestionsScheduler* remote_suggestions_scheduler_;
 
-  // Set to true if NukeAllSuggestions is called while the service isn't ready.
-  // The nuke will be executed once the service finishes initialization or
-  // enters the READY state.
-  bool nuke_when_initialized_;
+  // Set to true if ClearHistoryDependentState is called while the service isn't
+  // ready. The nuke will be executed once the service finishes initialization
+  // or enters the READY state.
+  bool clear_history_dependent_state_when_initialized_;
 
   // A clock for getting the time. This allows to inject a clock in tests.
   std::unique_ptr<base::Clock> clock_;

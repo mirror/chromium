@@ -11,14 +11,12 @@ promise_test(() => {
         .then(error_characteristic => {
           let promise = assert_promise_rejects_with_message(
             error_characteristic.CALLS([
-              getDescriptor(user_description.name)|
-              getDescriptors(user_description.name)[UUID]|
-              getDescriptors()|
               readValue()|
               writeValue(val)|
               startNotifications()]),
             new DOMException(
-              'GATT Server disconnected while performing a GATT operation.',
+              'GATT Server is disconnected. Cannot perform GATT operations. ' +
+              '(Re)connect first with `device.gatt.connect`.',
               'NetworkError'));
           gattServer.disconnect();
           return promise;

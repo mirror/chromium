@@ -545,9 +545,9 @@ void ChromeClientImpl::invalidateRect(const IntRect& updateRect) {
     m_webView->invalidateRect(updateRect);
 }
 
-void ChromeClientImpl::scheduleAnimation(Widget* widget) {
-  DCHECK(widget->isFrameView());
-  FrameView* view = toFrameView(widget);
+void ChromeClientImpl::scheduleAnimation(FrameViewBase* frameViewBase) {
+  DCHECK(frameViewBase->isFrameView());
+  FrameView* view = toFrameView(frameViewBase);
   LocalFrame* frame = view->frame().localFrameRoot();
 
   // If the frame is still being created, it might not yet have a WebWidget.
@@ -559,12 +559,13 @@ void ChromeClientImpl::scheduleAnimation(Widget* widget) {
     WebLocalFrameImpl::fromFrame(frame)->frameWidget()->scheduleAnimation();
 }
 
-IntRect ChromeClientImpl::viewportToScreen(const IntRect& rectInViewport,
-                                           const Widget* widget) const {
+IntRect ChromeClientImpl::viewportToScreen(
+    const IntRect& rectInViewport,
+    const FrameViewBase* frameViewBase) const {
   WebRect screenRect(rectInViewport);
 
-  DCHECK(widget->isFrameView());
-  const FrameView* view = toFrameView(widget);
+  DCHECK(frameViewBase->isFrameView());
+  const FrameView* view = toFrameView(frameViewBase);
   LocalFrame* frame = view->frame().localFrameRoot();
 
   WebWidgetClient* client =
@@ -643,9 +644,10 @@ void ChromeClientImpl::showMouseOverURL(const HitTestResult& result) {
                 isHTMLEmbedElement(*result.innerNode()))) {
       LayoutObject* object = result.innerNode()->layoutObject();
       if (object && object->isLayoutPart()) {
-        Widget* widget = toLayoutPart(object)->widget();
-        if (widget && widget->isPluginContainer()) {
-          WebPluginContainerImpl* plugin = toWebPluginContainerImpl(widget);
+        FrameViewBase* frameViewBase = toLayoutPart(object)->frameViewBase();
+        if (frameViewBase && frameViewBase->isPluginContainer()) {
+          WebPluginContainerImpl* plugin =
+              toWebPluginContainerImpl(frameViewBase);
           url = plugin->plugin()->linkAtPosition(
               result.roundedPointInInnerNodeFrame());
         }
@@ -985,12 +987,12 @@ void ChromeClientImpl::setEventListenerProperties(
   }
 }
 
-void ChromeClientImpl::updateTouchRectsForSubframeIfNecessary(
+void ChromeClientImpl::updateEventRectsForSubframeIfNecessary(
     LocalFrame* frame) {
   WebLocalFrameImpl* webFrame = WebLocalFrameImpl::fromFrame(frame);
   WebFrameWidgetBase* widget = webFrame->localRoot()->frameWidget();
   if (WebLayerTreeView* treeView = widget->getLayerTreeView())
-    treeView->updateTouchRectsForSubframeIfNecessary();
+    treeView->updateEventRectsForSubframeIfNecessary();
 }
 
 void ChromeClientImpl::beginLifecycleUpdates() {
@@ -1071,14 +1073,11 @@ void ChromeClientImpl::didAssociateFormControlsAfterLoad(LocalFrame* frame) {
     webframe->autofillClient()->didAssociateFormControlsDynamically();
 }
 
-void ChromeClientImpl::resetInputMethod() {
-  if (m_webView->client())
-    m_webView->client()->resetInputMethod();
-}
-
-void ChromeClientImpl::showVirtualKeyboardOnElementFocus() {
-  if (m_webView->client())
-    m_webView->client()->showVirtualKeyboardOnElementFocus();
+void ChromeClientImpl::showVirtualKeyboardOnElementFocus(LocalFrame& frame) {
+  WebLocalFrameImpl::fromFrame(frame.localFrameRoot())
+      ->frameWidget()
+      ->client()
+      ->showVirtualKeyboardOnElementFocus();
 }
 
 void ChromeClientImpl::showUnhandledTapUIIfNeeded(
@@ -1231,7 +1230,7 @@ void ChromeClientImpl::installSupplements(LocalFrame& frame) {
                                      new AudioOutputDeviceClientImpl(frame));
   }
   if (RuntimeEnabledFeatures::installedAppEnabled())
-    InstalledAppController::provideTo(frame, client->installedAppClient());
+    InstalledAppController::provideTo(frame, client->relatedAppsFetcher());
 }
 
 }  // namespace blink

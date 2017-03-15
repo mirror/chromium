@@ -19,15 +19,12 @@ class GURL;
 
 namespace safe_browsing {
 
-// Exposed for testing.
 extern const base::Feature kSettingsResetPrompt;
 
 // Encapsulates the state of the reset prompt experiment as well as
 // associated data.
 class SettingsResetPromptConfig {
  public:
-  // Returns true if the settings reset prompt study is enabled.
-  static bool IsPromptEnabled();
   // Factory method for creating instances of SettingsResetPromptConfig.
   // Returns nullptr if |IsPromptEnabled()| is false or if something is wrong
   // with the config parameters.
@@ -43,12 +40,14 @@ class SettingsResetPromptConfig {
 
   // The delay before showing the reset prompt after Chrome startup.
   base::TimeDelta delay_before_prompt() const;
-  // Whether the prompt dialog should be modal.
-  bool use_modal_dialog() const;
+  // Integer that identifies the current prompt wave. This number will increase
+  // with each new prompt wave.
+  int prompt_wave() const;
+  // The minimum time that must pass since the last time the prompt was shown
+  // before a new prompt can be shown. Applies only to prompts shown during the
+  // same prompt wave.
+  base::TimeDelta time_between_prompts() const;
 
-  // TODO(alito): parameterize the set of things that we want to reset
-  // for so that we can control it from the finch config. For example,
-  // with functions like HomepageResetAllowed() etc.
  protected:
   SettingsResetPromptConfig();
 
@@ -66,8 +65,13 @@ class SettingsResetPromptConfig {
   std::unordered_map<SHA256Hash, int, SHA256HashHasher> domain_hashes_;
 
   // Other feature parameters.
+  //
+  // If you add any required feature parameters, make sure to update the field
+  // trial testing configuration for the "SettingsResetPrompt" feature in
+  // src/testing/variations/fieldtrial_testing_config.json
   base::TimeDelta delay_before_prompt_;
-  bool use_modal_dialog_;
+  int prompt_wave_ = 0;
+  base::TimeDelta time_between_prompts_;
 
   DISALLOW_COPY_AND_ASSIGN(SettingsResetPromptConfig);
 };

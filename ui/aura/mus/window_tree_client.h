@@ -30,6 +30,14 @@
 #include "ui/aura/mus/window_manager_delegate.h"
 #include "ui/aura/mus/window_tree_host_mus_delegate.h"
 
+namespace base {
+class Thread;
+}
+
+namespace discardable_memory {
+class ClientDiscardableSharedMemoryManager;
+}
+
 namespace display {
 class Display;
 }
@@ -38,16 +46,14 @@ namespace gfx {
 class Insets;
 }
 
-namespace ui {
-struct PropertyData;
-}
-
 namespace service_manager {
 class Connector;
 }
 
 namespace ui {
+class ContextFactory;
 class Gpu;
+struct PropertyData;
 }
 
 namespace aura {
@@ -88,12 +94,17 @@ class AURA_EXPORT WindowTreeClient
       public WindowTreeHostMusDelegate,
       public client::TransientWindowClientObserver {
  public:
-  explicit WindowTreeClient(
+  // |create_discardable_memory| If it is true, WindowTreeClient will setup the
+  // dicardable shared memory manager for this process. In some test, more than
+  // one WindowTreeClient will be created, so we need pass false to avoid
+  // setup the discardable shared memory manager more than once.
+  WindowTreeClient(
       service_manager::Connector* connector,
       WindowTreeClientDelegate* delegate,
       WindowManagerDelegate* window_manager_delegate = nullptr,
       ui::mojom::WindowTreeClientRequest request = nullptr,
-      scoped_refptr<base::SingleThreadTaskRunner> io_task_runner = nullptr);
+      scoped_refptr<base::SingleThreadTaskRunner> io_task_runner = nullptr,
+      bool create_discardable_memory = true);
   ~WindowTreeClient() override;
 
   // Establishes the connection by way of the WindowTreeFactory.
@@ -112,7 +123,7 @@ class AURA_EXPORT WindowTreeClient
   ClientSpecificId client_id() const { return client_id_; }
 
   void SetCanFocus(Window* window, bool can_focus);
-  void SetCanAcceptDrops(Id window_id, bool can_accept_drops);
+  void SetCanAcceptDrops(WindowMus* window, bool can_accept_drops);
   void SetEventTargetingPolicy(WindowMus* window,
                                ui::mojom::EventTargetingPolicy policy);
   void SetPredefinedCursor(WindowMus* window,
@@ -235,7 +246,9 @@ class AURA_EXPORT WindowTreeClient
 
   // Called when a Window property changes. If |key| is handled internally
   // (maps to a function on WindowTree) returns true.
-  bool HandleInternalPropertyChanged(WindowMus* window, const void* key);
+  bool HandleInternalPropertyChanged(WindowMus* window,
+                                     const void* key,
+                                     int64_t old_value);
 
   // OnEmbed() calls into this. Exposed as a separate function for testing.
   void OnEmbedImpl(ui::mojom::WindowTree* window_tree,
@@ -283,6 +296,7 @@ class AURA_EXPORT WindowTreeClient
       const void* key);
   void OnWindowMusPropertyChanged(WindowMus* window,
                                   const void* key,
+                                  int64_t old_value,
                                   std::unique_ptr<ui::PropertyData> data);
 
   // Callback passed from WmPerformMoveLoop().
@@ -303,9 +317,11 @@ class AURA_EXPORT WindowTreeClient
                          ui::mojom::WindowDataPtr data,
                          int64_t display_id,
                          bool drawn) override;
-  void OnWindowBoundsChanged(Id window_id,
-                             const gfx::Rect& old_bounds,
-                             const gfx::Rect& new_bounds) override;
+  void OnWindowBoundsChanged(
+      Id window_id,
+      const gfx::Rect& old_bounds,
+      const gfx::Rect& new_bounds,
+      const base::Optional<cc::LocalSurfaceId>& local_surface_id) override;
   void OnClientAreaChanged(
       uint32_t window_id,
       const gfx::Insets& new_client_area,
@@ -412,7 +428,7 @@ class AURA_EXPORT WindowTreeClient
   void SetFrameDecorationValues(
       ui::mojom::FrameDecorationValuesPtr values) override;
   void SetNonClientCursor(Window* window, ui::mojom::Cursor cursor_id) override;
-  void AddAccelerators(std::vector<ui::mojom::AcceleratorPtr> accelerators,
+  void AddAccelerators(std::vector<ui::mojom::WmAcceleratorPtr> accelerators,
                        const base::Callback<void(bool)>& callback) override;
   void RemoveAccelerator(uint32_t id) override;
   void AddActivationParent(Window* window) override;
@@ -540,8 +556,18 @@ class AURA_EXPORT WindowTreeClient
 
   base::ObserverList<WindowTreeClientTestObserver> test_observers_;
 
+  // IO thread for GPU and discardable shared memory IPC.
+  std::unique_ptr<base::Thread> io_thread_;
+
   std::unique_ptr<ui::Gpu> gpu_;
   std::unique_ptr<MusContextFactory> compositor_context_factory_;
+
+  std::unique_ptr<discardable_memory::ClientDiscardableSharedMemoryManager>
+      discardable_shared_memory_manager_;
+
+  // If |compositor_context_factory_| is installed on Env, then this is the
+  // ContextFactory that was set on Env originally.
+  ui::ContextFactory* initial_context_factory_ = nullptr;
   base::WeakPtrFactory<WindowTreeClient> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(WindowTreeClient);

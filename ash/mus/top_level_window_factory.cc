@@ -6,7 +6,6 @@
 
 #include "ash/common/wm/container_finder.h"
 #include "ash/common/wm/window_state.h"
-#include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
 #include "ash/mus/disconnected_app_handler.h"
 #include "ash/mus/frame/detached_title_area_renderer.h"
@@ -16,10 +15,12 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
 #include "ash/root_window_settings.h"
+#include "ash/shell.h"
 #include "mojo/public/cpp/bindings/type_converter.h"
 #include "services/ui/public/cpp/property_type_converters.h"
 #include "services/ui/public/interfaces/window_manager.mojom.h"
 #include "services/ui/public/interfaces/window_manager_constants.mojom.h"
+#include "ui/aura/client/aura_constants.h"
 #include "ui/aura/mus/property_converter.h"
 #include "ui/aura/mus/property_utils.h"
 #include "ui/aura/mus/window_tree_client.h"
@@ -72,7 +73,7 @@ RootWindowController* GetRootWindowControllerForNewTopLevelWindow(
     }
   }
   return RootWindowController::ForWindow(
-      WmShell::Get()->GetRootWindowForNewWindows()->aura_window());
+      Shell::GetWmRootWindowForNewWindows()->aura_window());
 }
 
 // Returns the bounds for the new window.
@@ -171,6 +172,8 @@ aura::Window* CreateAndParentTopLevelWindowInRoot(
 
   aura::Window* window = new aura::Window(nullptr);
   aura::SetWindowType(window, window_type);
+  window->SetProperty(aura::client::kEmbedType,
+                      aura::client::WindowEmbedType::TOP_LEVEL_IN_WM);
   ApplyProperties(window, property_converter, *properties);
   window->Init(ui::LAYER_TEXTURED);
   window->SetBounds(bounds);
@@ -205,25 +208,28 @@ aura::Window* CreateAndParentTopLevelWindow(
   aura::Window* window = CreateAndParentTopLevelWindowInRoot(
       window_manager, root_window_controller, window_type, properties);
   DisconnectedAppHandler::Create(window);
-  if (properties->count(
-          ui::mojom::WindowManager::kWindowIgnoredByShelf_Property)) {
+
+  auto ignored_by_shelf_iter = properties->find(
+      ui::mojom::WindowManager::kWindowIgnoredByShelf_InitProperty);
+  if (ignored_by_shelf_iter != properties->end()) {
     wm::WindowState* window_state = WmWindow::Get(window)->GetWindowState();
-    window_state->set_ignored_by_shelf(mojo::ConvertTo<bool>(
-        (*properties)
-            [ui::mojom::WindowManager::kWindowIgnoredByShelf_Property]));
+    window_state->set_ignored_by_shelf(
+        mojo::ConvertTo<bool>(ignored_by_shelf_iter->second));
     // No need to persist this value.
-    properties->erase(ui::mojom::WindowManager::kWindowIgnoredByShelf_Property);
+    properties->erase(ignored_by_shelf_iter);
   }
-  if (properties->count(ui::mojom::WindowManager::kFocusable_InitProperty)) {
-    bool can_focus = mojo::ConvertTo<bool>(
-        (*properties)[ui::mojom::WindowManager::kFocusable_InitProperty]);
+
+  auto focusable_iter =
+      properties->find(ui::mojom::WindowManager::kFocusable_InitProperty);
+  if (focusable_iter != properties->end()) {
+    bool can_focus = mojo::ConvertTo<bool>(focusable_iter->second);
     window_manager->window_tree_client()->SetCanFocus(window, can_focus);
     NonClientFrameController* non_client_frame_controller =
         NonClientFrameController::Get(window);
     if (non_client_frame_controller)
       non_client_frame_controller->set_can_activate(can_focus);
     // No need to persist this value.
-    properties->erase(ui::mojom::WindowManager::kFocusable_InitProperty);
+    properties->erase(focusable_iter);
   }
   return window;
 }

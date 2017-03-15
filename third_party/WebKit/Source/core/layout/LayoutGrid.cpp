@@ -53,11 +53,6 @@ struct ContentAlignmentData {
   LayoutUnit distributionOffset = LayoutUnit(-1);
 };
 
-enum TrackSizeRestriction {
-  AllowInfinity,
-  ForbidInfinity,
-};
-
 LayoutGrid::LayoutGrid(Element* element)
     : LayoutBlock(element), m_grid(this), m_trackSizingAlgorithm(this, m_grid) {
   ASSERT(!childrenInline());
@@ -76,6 +71,12 @@ LayoutGrid* LayoutGrid::createAnonymous(Document* document) {
 void LayoutGrid::addChild(LayoutObject* newChild, LayoutObject* beforeChild) {
   LayoutBlock::addChild(newChild, beforeChild);
 
+  // Positioned grid items do not take up space or otherwise participate in the
+  // layout of the grid, for that reason we don't need to mark the grid as dirty
+  // when they are added.
+  if (newChild->isOutOfFlowPositioned())
+    return;
+
   // The grid needs to be recomputed as it might contain auto-placed items that
   // will change their position.
   dirtyGrid();
@@ -83,6 +84,12 @@ void LayoutGrid::addChild(LayoutObject* newChild, LayoutObject* beforeChild) {
 
 void LayoutGrid::removeChild(LayoutObject* child) {
   LayoutBlock::removeChild(child);
+
+  // Positioned grid items do not take up space or otherwise participate in the
+  // layout of the grid, for that reason we don't need to mark the grid as dirty
+  // when they are removed.
+  if (child->isOutOfFlowPositioned())
+    return;
 
   // The grid needs to be recomputed as it might contain auto-placed items that
   // will change their position.
@@ -571,7 +578,7 @@ LayoutGrid::computeEmptyTracksForAutoRepeat(
     emptyTrackIndexes = WTF::wrapUnique(new OrderedTrackIndexSet);
     for (size_t trackIndex = firstAutoRepeatTrack;
          trackIndex < lastAutoRepeatTrack; ++trackIndex)
-      emptyTrackIndexes->add(trackIndex);
+      emptyTrackIndexes->insert(trackIndex);
   } else {
     for (size_t trackIndex = firstAutoRepeatTrack;
          trackIndex < lastAutoRepeatTrack; ++trackIndex) {
@@ -579,7 +586,7 @@ LayoutGrid::computeEmptyTracksForAutoRepeat(
       if (!iterator.nextGridItem()) {
         if (!emptyTrackIndexes)
           emptyTrackIndexes = WTF::wrapUnique(new OrderedTrackIndexSet);
-        emptyTrackIndexes->add(trackIndex);
+        emptyTrackIndexes->insert(trackIndex);
       }
     }
   }
@@ -806,7 +813,7 @@ void LayoutGrid::placeSpecifiedMajorAxisItemsOnGrid(
     GridIterator iterator(
         grid, autoPlacementMajorAxisDirection(), majorAxisPositions.startLine(),
         isGridAutoFlowDense ? 0
-                            : minorAxisCursors.get(majorAxisInitialPosition));
+                            : minorAxisCursors.at(majorAxisInitialPosition));
     std::unique_ptr<GridArea> emptyGridArea = iterator.nextEmptyGridArea(
         majorAxisPositions.integerSpan(), minorAxisSpanSize);
     if (!emptyGridArea) {
@@ -1417,24 +1424,28 @@ LayoutUnit LayoutGrid::availableAlignmentSpaceForChildBeforeStretching(
 
 StyleSelfAlignmentData LayoutGrid::alignSelfForChild(
     const LayoutBox& child) const {
-  if (!child.isAnonymous())
-    return child.styleRef().resolvedAlignSelf(selfAlignmentNormalBehavior());
+  if (!child.isAnonymous()) {
+    return child.styleRef().resolvedAlignSelf(
+        selfAlignmentNormalBehavior(&child));
+  }
   // All the 'auto' values has been solved by the StyleAdjuster, but it's
   // possible that some grid items generate Anonymous boxes, which need to be
   // solved during layout.
-  return child.styleRef().resolvedAlignSelf(selfAlignmentNormalBehavior(),
+  return child.styleRef().resolvedAlignSelf(selfAlignmentNormalBehavior(&child),
                                             style());
 }
 
 StyleSelfAlignmentData LayoutGrid::justifySelfForChild(
     const LayoutBox& child) const {
-  if (!child.isAnonymous())
-    return child.styleRef().resolvedJustifySelf(ItemPositionStretch);
+  if (!child.isAnonymous()) {
+    return child.styleRef().resolvedJustifySelf(
+        selfAlignmentNormalBehavior(&child));
+  }
   // All the 'auto' values has been solved by the StyleAdjuster, but it's
   // possible that some grid items generate Anonymous boxes, which need to be
   // solved during layout.
-  return child.styleRef().resolvedJustifySelf(selfAlignmentNormalBehavior(),
-                                              style());
+  return child.styleRef().resolvedJustifySelf(
+      selfAlignmentNormalBehavior(&child), style());
 }
 
 GridTrackSizingDirection LayoutGrid::flowAwareDirectionForChild(
@@ -1468,7 +1479,8 @@ void LayoutGrid::applyStretchAlignmentToChildIfNeeded(LayoutBox& child) {
     LayoutUnit desiredLogicalHeight = child.constrainLogicalHeightByMinMax(
         stretchedLogicalHeight, LayoutUnit(-1));
     child.setOverrideLogicalContentHeight(
-        desiredLogicalHeight - child.borderAndPaddingLogicalHeight());
+        (desiredLogicalHeight - child.borderAndPaddingLogicalHeight())
+            .clampNegativeToZero());
     if (desiredLogicalHeight != child.logicalHeight()) {
       // TODO (lajava): Can avoid laying out here in some cases. See
       // https://webkit.org/b/87905.

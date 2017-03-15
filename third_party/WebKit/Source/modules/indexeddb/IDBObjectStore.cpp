@@ -27,11 +27,10 @@
 
 #include <memory>
 
-#include <v8.h>
-
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptState.h"
 #include "bindings/core/v8/SerializedScriptValueFactory.h"
+#include "bindings/core/v8/ToV8.h"
 #include "bindings/modules/v8/ToV8ForModules.h"
 #include "bindings/modules/v8/V8BindingForModules.h"
 #include "core/dom/DOMStringList.h"
@@ -49,6 +48,7 @@
 #include "public/platform/WebVector.h"
 #include "public/platform/modules/indexeddb/WebIDBKey.h"
 #include "public/platform/modules/indexeddb/WebIDBKeyRange.h"
+#include "v8/include/v8.h"
 
 using blink::WebBlobInfo;
 using blink::WebIDBCallbacks;
@@ -77,9 +77,6 @@ DEFINE_TRACE(IDBObjectStore) {
 
 void IDBObjectStore::setName(const String& name,
                              ExceptionState& exceptionState) {
-  if (!RuntimeEnabledFeatures::indexedDBExperimentalEnabled())
-    return;
-
   IDB_TRACE("IDBObjectStore::setName");
   if (!m_transaction->isVersionChange()) {
     exceptionState.throwDOMException(
@@ -823,7 +820,7 @@ IDBIndex* IDBObjectStore::index(const String& name,
   }
 
   DCHECK(metadata().indexes.contains(indexId));
-  RefPtr<IDBIndexMetadata> indexMetadata = metadata().indexes.get(indexId);
+  RefPtr<IDBIndexMetadata> indexMetadata = metadata().indexes.at(indexId);
   DCHECK(indexMetadata.get());
   IDBIndex* index =
       IDBIndex::create(std::move(indexMetadata), this, m_transaction.get());
@@ -1062,7 +1059,7 @@ void IDBObjectStore::revertMetadata(
     // unconditionally reset the deletion marker.
     DCHECK(oldMetadata->indexes.contains(indexId));
     RefPtr<IDBIndexMetadata> oldIndexMetadata =
-        oldMetadata->indexes.get(indexId);
+        oldMetadata->indexes.at(indexId);
     index->revertMetadata(std::move(oldIndexMetadata));
   }
   m_metadata = std::move(oldMetadata);
@@ -1081,7 +1078,7 @@ void IDBObjectStore::revertDeletedIndexMetadata(IDBIndex& deletedIndex) {
   const int64_t indexId = deletedIndex.id();
   DCHECK(m_metadata->indexes.contains(indexId))
       << "The object store's metadata was not correctly reverted";
-  RefPtr<IDBIndexMetadata> oldIndexMetadata = m_metadata->indexes.get(indexId);
+  RefPtr<IDBIndexMetadata> oldIndexMetadata = m_metadata->indexes.at(indexId);
   deletedIndex.revertMetadata(std::move(oldIndexMetadata));
 }
 

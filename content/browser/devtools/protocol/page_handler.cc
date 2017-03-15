@@ -4,7 +4,11 @@
 
 #include "content/browser/devtools/protocol/page_handler.h"
 
+#include <algorithm>
+#include <memory>
 #include <string>
+#include <utility>
+#include <vector>
 
 #include "base/base64.h"
 #include "base/bind.h"
@@ -228,6 +232,7 @@ Response PageHandler::Reload(Maybe<bool> bypassCache,
 }
 
 Response PageHandler::Navigate(const std::string& url,
+                               Maybe<std::string> referrer,
                                Page::FrameId* frame_id) {
   GURL gurl(url);
   if (!gurl.is_valid())
@@ -237,8 +242,10 @@ Response PageHandler::Navigate(const std::string& url,
   if (!web_contents)
     return Response::InternalError();
 
-  web_contents->GetController()
-      .LoadURL(gurl, Referrer(), ui::PAGE_TRANSITION_TYPED, std::string());
+  web_contents->GetController().LoadURL(
+      gurl,
+      Referrer(GURL(referrer.fromMaybe("")), blink::WebReferrerPolicyDefault),
+      ui::PAGE_TRANSITION_TYPED, std::string());
   return Response::FallThrough();
 }
 
@@ -281,6 +288,7 @@ Response PageHandler::NavigateToHistoryEntry(int entry_id) {
 void PageHandler::CaptureScreenshot(
     Maybe<std::string> format,
     Maybe<int> quality,
+    Maybe<bool> from_surface,
     std::unique_ptr<CaptureScreenshotCallback> callback) {
   if (!host_ || !host_->GetRenderWidgetHost()) {
     callback->sendFailure(Response::InternalError());
@@ -293,7 +301,13 @@ void PageHandler::CaptureScreenshot(
   host_->GetRenderWidgetHost()->GetSnapshotFromBrowser(
       base::Bind(&PageHandler::ScreenshotCaptured, weak_factory_.GetWeakPtr(),
                  base::Passed(std::move(callback)), screenshot_format,
-                 screenshot_quality));
+                 screenshot_quality),
+      from_surface.fromMaybe(false));
+}
+
+void PageHandler::PrintToPDF(std::unique_ptr<PrintToPDFCallback> callback) {
+  callback->sendFailure(Response::Error("PrintToPDF is not implemented"));
+  return;
 }
 
 Response PageHandler::StartScreencast(Maybe<std::string> format,
@@ -462,6 +476,8 @@ void PageHandler::InnerSwapCompositorFrame() {
   RenderWidgetHostViewBase* view = static_cast<RenderWidgetHostViewBase*>(
       host_->GetView());
   // TODO(vkuzkokov): do not use previous frame metadata.
+  // TODO(miu): RWHV to provide an API to provide actual rendering size.
+  // http://crbug.com/73362
   cc::CompositorFrameMetadata& metadata = last_compositor_frame_metadata_;
 
   gfx::SizeF viewport_size_dip = gfx::ScaleSize(
@@ -491,9 +507,8 @@ void PageHandler::InnerSwapCompositorFrame() {
       gfx::ScaleSize(viewport_size_dip, scale)));
 
   if (snapshot_size_dip.width() > 0 && snapshot_size_dip.height() > 0) {
-    gfx::Rect viewport_bounds_dip(gfx::ToRoundedSize(viewport_size_dip));
-    view->CopyFromCompositingSurface(
-        viewport_bounds_dip, snapshot_size_dip,
+    view->CopyFromSurface(
+        gfx::Rect(), snapshot_size_dip,
         base::Bind(&PageHandler::ScreencastFrameCaptured,
                    weak_factory_.GetWeakPtr(),
                    base::Passed(last_compositor_frame_metadata_.Clone())),

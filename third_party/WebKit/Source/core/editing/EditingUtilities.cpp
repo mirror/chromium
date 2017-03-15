@@ -27,6 +27,7 @@
 
 #include "core/HTMLElementFactory.h"
 #include "core/HTMLNames.h"
+#include "core/InputTypeNames.h"
 #include "core/clipboard/DataObject.h"
 #include "core/dom/Document.h"
 #include "core/dom/ElementTraversal.h"
@@ -51,6 +52,7 @@
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLBRElement.h"
 #include "core/html/HTMLDivElement.h"
+#include "core/html/HTMLInputElement.h"
 #include "core/html/HTMLLIElement.h"
 #include "core/html/HTMLParagraphElement.h"
 #include "core/html/HTMLSpanElement.h"
@@ -77,6 +79,27 @@ std::ostream& operator<<(std::ostream& os, PositionMoveType type) {
   DCHECK_GE(it, std::begin(texts)) << "Unknown PositionMoveType value";
   DCHECK_LT(it, std::end(texts)) << "Unknown PositionMoveType value";
   return os << *it;
+}
+
+InputEvent::EventCancelable inputTypeIsCancelable(
+    InputEvent::InputType inputType) {
+  using InputType = InputEvent::InputType;
+  switch (inputType) {
+    case InputType::InsertText:
+    case InputType::InsertLineBreak:
+    case InputType::InsertParagraph:
+    case InputType::InsertCompositionText:
+    case InputType::InsertReplacementText:
+    case InputType::DeleteWordBackward:
+    case InputType::DeleteWordForward:
+    case InputType::DeleteLineBackward:
+    case InputType::DeleteLineForward:
+    case InputType::DeleteContentBackward:
+    case InputType::DeleteContentForward:
+      return InputEvent::EventCancelable::NotCancelable;
+    default:
+      return InputEvent::EventCancelable::IsCancelable;
+  }
 }
 
 }  // namespace
@@ -268,6 +291,15 @@ int comparePositions(const PositionWithAffinity& a,
 
 int comparePositions(const VisiblePosition& a, const VisiblePosition& b) {
   return comparePositions(a.deepEquivalent(), b.deepEquivalent());
+}
+
+// TODO(editing-dev): We should implement real version which refers
+// "user-select" CSS property.
+// TODO(editing-dev): We should make |SelectionAdjuster| to use this funciton
+// instead of |isSelectionBondary()|.
+bool isUserSelectContain(const Node& node) {
+  return isHTMLTextAreaElement(node) || isHTMLInputElement(node) ||
+         isHTMLSelectElement(node);
 }
 
 enum EditableLevel { Editable, RichlyEditable };
@@ -1540,11 +1572,12 @@ HTMLElement* createHTMLElement(Document& document, const QualifiedName& name) {
 }
 
 bool isTabHTMLSpanElement(const Node* node) {
-  if (!isHTMLSpanElement(node) ||
-      toHTMLSpanElement(node)->getAttribute(classAttr) != AppleTabSpanClass)
+  if (!isHTMLSpanElement(node) || !node->firstChild())
     return false;
-  UseCounter::count(node->document(), UseCounter::EditingAppleTabSpanClass);
-  return true;
+  if (node->firstChild()->isCharacterDataNode() &&
+      toCharacterData(node->firstChild())->data().contains('\t'))
+    return true;
+  return false;
 }
 
 bool isTabHTMLSpanElementTextNode(const Node* node) {
@@ -1562,7 +1595,6 @@ static HTMLSpanElement* createTabSpanElement(Document& document,
                                              Text* tabTextNode) {
   // Make the span to hold the tab.
   HTMLSpanElement* spanElement = HTMLSpanElement::create(document);
-  spanElement->setAttribute(classAttr, AppleTabSpanClass);
   spanElement->setAttribute(styleAttr, "white-space:pre");
 
   // Add tab text to that span.
@@ -1718,39 +1750,45 @@ PositionWithAffinity positionRespectingEditingBoundary(
   return targetNode->layoutObject()->positionForPoint(selectionEndPoint);
 }
 
-void updatePositionForNodeRemoval(Position& position, Node& node) {
+Position computePositionForNodeRemoval(const Position& position, Node& node) {
   if (position.isNull())
-    return;
+    return position;
   switch (position.anchorType()) {
     case PositionAnchorType::BeforeChildren:
-      if (node.isShadowIncludingInclusiveAncestorOf(
-              position.computeContainerNode()))
-        position = Position::inParentBeforeNode(node);
-      break;
+      if (!node.isShadowIncludingInclusiveAncestorOf(
+              position.computeContainerNode())) {
+        return position;
+      }
+      return Position::inParentBeforeNode(node);
     case PositionAnchorType::AfterChildren:
-      if (node.isShadowIncludingInclusiveAncestorOf(
-              position.computeContainerNode()))
-        position = Position::inParentAfterNode(node);
-      break;
+      if (!node.isShadowIncludingInclusiveAncestorOf(
+              position.computeContainerNode())) {
+        return position;
+      }
+      return Position::inParentAfterNode(node);
     case PositionAnchorType::OffsetInAnchor:
       if (position.computeContainerNode() == node.parentNode() &&
           static_cast<unsigned>(position.offsetInContainerNode()) >
-              node.nodeIndex())
-        position = Position(position.computeContainerNode(),
-                            position.offsetInContainerNode() - 1);
-      else if (node.isShadowIncludingInclusiveAncestorOf(
-                   position.computeContainerNode()))
-        position = Position::inParentBeforeNode(node);
-      break;
+              node.nodeIndex()) {
+        return Position(position.computeContainerNode(),
+                        position.offsetInContainerNode() - 1);
+      }
+      if (!node.isShadowIncludingInclusiveAncestorOf(
+              position.computeContainerNode())) {
+        return position;
+      }
+      return Position::inParentBeforeNode(node);
     case PositionAnchorType::AfterAnchor:
-      if (node.isShadowIncludingInclusiveAncestorOf(position.anchorNode()))
-        position = Position::inParentAfterNode(node);
-      break;
+      if (!node.isShadowIncludingInclusiveAncestorOf(position.anchorNode()))
+        return position;
+      return Position::inParentAfterNode(node);
     case PositionAnchorType::BeforeAnchor:
-      if (node.isShadowIncludingInclusiveAncestorOf(position.anchorNode()))
-        position = Position::inParentBeforeNode(node);
-      break;
+      if (!node.isShadowIncludingInclusiveAncestorOf(position.anchorNode()))
+        return position;
+      return Position::inParentBeforeNode(node);
   }
+  NOTREACHED() << "We should handle all PositionAnchorType";
+  return position;
 }
 
 bool isMailHTMLBlockquoteElement(const Node* node) {
@@ -2010,22 +2048,16 @@ bool isBlockFlowElement(const Node& node) {
          layoutObject->isLayoutBlockFlow();
 }
 
-Position adjustedSelectionStartForStyleComputation(
-    const VisibleSelection& selection) {
+Position adjustedSelectionStartForStyleComputation(const Position& position) {
   // This function is used by range style computations to avoid bugs like:
   // <rdar://problem/4017641> REGRESSION (Mail): you can only bold/unbold a
   // selection starting from end of line once
   // It is important to skip certain irrelevant content at the start of the
   // selection, so we do not wind up with a spurious "mixed" style.
 
-  VisiblePosition visiblePosition = createVisiblePosition(selection.start());
+  VisiblePosition visiblePosition = createVisiblePosition(position);
   if (visiblePosition.isNull())
     return Position();
-
-  // if the selection is a caret, just return the position, since the style
-  // behind us is relevant
-  if (selection.isCaret())
-    return visiblePosition.deepEquivalent();
 
   // if the selection starts just before a paragraph break, skip over it
   if (isEndOfParagraph(visiblePosition))
@@ -2037,44 +2069,60 @@ Position adjustedSelectionStartForStyleComputation(
   return mostForwardCaretPosition(visiblePosition.deepEquivalent());
 }
 
+bool isInPasswordField(const Position& position) {
+  TextControlElement* textControl = enclosingTextControl(position);
+  return isHTMLInputElement(textControl) &&
+         toHTMLInputElement(textControl)->type() == InputTypeNames::password;
+}
+
 bool isTextSecurityNode(const Node* node) {
   return node && node->layoutObject() &&
          node->layoutObject()->style()->textSecurity() != TSNONE;
 }
 
-const RangeVector* targetRangesForInputEvent(const Node& node) {
+const StaticRangeVector* targetRangesForInputEvent(const Node& node) {
+  // TODO(xiaochengh): The use of updateStyleAndLayoutIgnorePendingStylesheets
+  // needs to be audited. see http://crbug.com/590369 for more details.
+  node.document().updateStyleAndLayoutIgnorePendingStylesheets();
   if (!hasRichlyEditableStyle(node))
     return nullptr;
-  return new RangeVector(
-      1, firstRangeOf(node.document().frame()->selection().selection()));
+  const EphemeralRange& range =
+      firstEphemeralRangeOf(node.document()
+                                .frame()
+                                ->selection()
+                                .computeVisibleSelectionInDOMTreeDeprecated());
+  if (range.isNull())
+    return nullptr;
+  return new StaticRangeVector(1, StaticRange::create(range));
 }
 
-DispatchEventResult dispatchBeforeInputInsertText(Node* target,
-                                                  const String& data) {
+DispatchEventResult dispatchBeforeInputInsertText(
+    Node* target,
+    const String& data,
+    InputEvent::InputType inputType) {
   if (!RuntimeEnabledFeatures::inputEventEnabled())
     return DispatchEventResult::NotCanceled;
   if (!target)
     return DispatchEventResult::NotCanceled;
   // TODO(chongz): Pass appropriate |ranges| after it's defined on spec.
   // http://w3c.github.io/editing/input-events.html#dom-inputevent-inputtype
-  InputEvent* beforeInputEvent =
-      InputEvent::createBeforeInput(InputEvent::InputType::InsertText, data,
-                                    InputEvent::EventCancelable::IsCancelable,
-                                    InputEvent::EventIsComposing::NotComposing,
-                                    targetRangesForInputEvent(*target));
+  InputEvent* beforeInputEvent = InputEvent::createBeforeInput(
+      inputType, data, inputTypeIsCancelable(inputType),
+      InputEvent::EventIsComposing::NotComposing,
+      targetRangesForInputEvent(*target));
   return target->dispatchEvent(beforeInputEvent);
 }
 
 DispatchEventResult dispatchBeforeInputEditorCommand(
     Node* target,
     InputEvent::InputType inputType,
-    const RangeVector* ranges) {
+    const StaticRangeVector* ranges) {
   if (!RuntimeEnabledFeatures::inputEventEnabled())
     return DispatchEventResult::NotCanceled;
   if (!target)
     return DispatchEventResult::NotCanceled;
   InputEvent* beforeInputEvent = InputEvent::createBeforeInput(
-      inputType, nullAtom, InputEvent::EventCancelable::IsCancelable,
+      inputType, nullAtom, inputTypeIsCancelable(inputType),
       InputEvent::EventIsComposing::NotComposing, ranges);
   return target->dispatchEvent(beforeInputEvent);
 }
@@ -2098,7 +2146,7 @@ DispatchEventResult dispatchBeforeInputDataTransfer(
 
   if (hasRichlyEditableStyle(*(target->toNode())) || !dataTransfer) {
     beforeInputEvent = InputEvent::createBeforeInput(
-        inputType, dataTransfer, InputEvent::EventCancelable::IsCancelable,
+        inputType, dataTransfer, inputTypeIsCancelable(inputType),
         InputEvent::EventIsComposing::NotComposing,
         targetRangesForInputEvent(*target));
   } else {
@@ -2106,7 +2154,7 @@ DispatchEventResult dispatchBeforeInputDataTransfer(
     // TODO(chongz): Pass appropriate |ranges| after it's defined on spec.
     // http://w3c.github.io/editing/input-events.html#dom-inputevent-inputtype
     beforeInputEvent = InputEvent::createBeforeInput(
-        inputType, data, InputEvent::EventCancelable::IsCancelable,
+        inputType, data, inputTypeIsCancelable(inputType),
         InputEvent::EventIsComposing::NotComposing,
         targetRangesForInputEvent(*target));
   }

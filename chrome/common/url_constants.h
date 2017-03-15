@@ -15,7 +15,9 @@
 #include "build/build_config.h"
 #include "chrome/common/features.h"
 #include "content/public/common/url_constants.h"
+#include "device/vr/features.h"
 #include "media/media_features.h"
+#include "ppapi/features/features.h"
 #include "printing/features/features.h"
 
 namespace chrome {
@@ -191,7 +193,6 @@ extern const char kChromeUIHelpFrameHost[];
 extern const char kChromeUIHelpHost[];
 extern const char kChromeUIHangHost[];
 extern const char kChromeUIHangUIHost[];
-extern const char kChromeUIHistoryHost[];
 extern const char kChromeUIHistoryFrameHost[];
 extern const char kChromeUIIdentityInternalsHost[];
 extern const char kChromeUIInspectHost[];
@@ -269,7 +270,7 @@ extern const char kChromeUISnippetsInternalsHost[];
 extern const char kChromeUIWebApksHost[];
 #endif
 
-#if defined(ENABLE_WEBVR)
+#if BUILDFLAG(ENABLE_WEBVR)
 extern const char kChromeUIVrShellUIHost[];
 #endif
 
@@ -335,7 +336,7 @@ extern const char kClearBrowserDataSubPage[];
 extern const char kContentSettingsSubPage[];
 extern const char kCreateProfileSubPage[];
 extern const char kDeprecatedOptionsContentSettingsExceptionsSubPage[];
-extern const char kExtensionsSubPage[];
+extern const char kDeprecatedExtensionsSubPage[];
 extern const char kHandlerSettingsSubPage[];
 extern const char kImportDataSubPage[];
 extern const char kLanguageOptionsSubPage[];
@@ -350,9 +351,12 @@ extern const char kTriggeredResetProfileSettingsSubPage[];
 extern const char kAccessibilitySubPage[];
 extern const char kBluetoothSubPage[];
 extern const char kDateTimeSubPage[];
+extern const char kDisplaySubPage[];
 extern const char kDeprecatedOptionsSearchSubPage[];
-extern const char kInternetOptionsSubPage[];
-extern const char kPowerOptionsSubPage[];
+extern const char kInternetSubPage[];
+extern const char kNetworkDetailSubPage[];
+extern const char kPowerSubPage[];
+extern const char kStylusSubPage[];
 #endif
 
 // Extensions sub pages.
@@ -366,6 +370,7 @@ extern const char kSyncGoogleDashboardURL[];
 // URL of the 'Activity controls' section of the privacy settings page.
 extern const char kGoogleAccountActivityControlsURL[];
 
+extern const char kContentSettingsExceptionsLearnMoreURL[];
 extern const char kPasswordManagerLearnMoreURL[];
 extern const char kUpgradeHelpCenterBaseURL[];
 extern const char kSmartLockHelpPage[];
@@ -456,7 +461,7 @@ extern const char kChromiumProjectURL[];
 // first run dialog.
 extern const char kLearnMoreReportingURL[];
 
-#if BUILDFLAG(ENABLE_PLUGIN_INSTALLATION)
+#if BUILDFLAG(ENABLE_PLUGINS)
 // The URL for the "Learn more" page for the outdated plugin infobar.
 extern const char kOutdatedPluginLearnMoreURL[];
 #endif
@@ -502,7 +507,7 @@ extern const char kNaturalScrollHelpURL[];
 // The URL for the Learn More page about enterprise enrolled devices.
 extern const char kLearnMoreEnterpriseURL[];
 
-// The URL fo the "learn more" link for Google Play Store (Arc++) settings.
+// The URL fo the "learn more" link for Google Play Store (ARC) settings.
 extern const char kAndroidAppsLearnMoreURL[];
 #endif
 

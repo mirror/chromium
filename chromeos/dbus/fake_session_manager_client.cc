@@ -5,13 +5,46 @@
 #include "chromeos/dbus/fake_session_manager_client.h"
 
 #include "base/bind.h"
+#include "base/files/file_path.h"
+#include "base/files/file_util.h"
 #include "base/location.h"
+#include "base/numerics/safe_conversions.h"
+#include "base/path_service.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_util.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "chromeos/chromeos_paths.h"
 #include "chromeos/dbus/cryptohome_client.h"
+#include "components/policy/proto/device_management_backend.pb.h"
 
 namespace chromeos {
+
+namespace {
+
+// Store the owner key in a file on the disk, so that it can be loaded by
+// DeviceSettingsService and used e.g. for validating policy signatures in the
+// integration tests. This is done on behalf of the real session manager, that
+// would be managing the owner key file on Chrome OS.
+bool StoreOwnerKey(const std::string& public_key) {
+  base::FilePath owner_key_path;
+  if (!base::PathService::Get(FILE_OWNER_KEY, &owner_key_path)) {
+    LOG(ERROR) << "Failed to obtain the path to the owner key file";
+    return false;
+  }
+  if (!base::CreateDirectory(owner_key_path.DirName())) {
+    LOG(ERROR) << "Failed to create the directory for the owner key file";
+    return false;
+  }
+  if (base::WriteFile(owner_key_path, public_key.c_str(),
+                      public_key.length()) !=
+      base::checked_cast<int>(public_key.length())) {
+    LOG(ERROR) << "Failed to store the owner key file";
+    return false;
+  }
+  return true;
+}
+
+}  // namespace
 
 FakeSessionManagerClient::FakeSessionManagerClient()
     : start_device_wipe_call_count_(0),
@@ -98,6 +131,10 @@ void FakeSessionManagerClient::RetrieveDevicePolicy(
       FROM_HERE, base::Bind(callback, device_policy_));
 }
 
+std::string FakeSessionManagerClient::BlockingRetrieveDevicePolicy() {
+  return device_policy_;
+}
+
 void FakeSessionManagerClient::RetrievePolicyForUser(
     const cryptohome::Identification& cryptohome_id,
     const RetrievePolicyCallback& callback) {
@@ -118,14 +155,35 @@ void FakeSessionManagerClient::RetrieveDeviceLocalAccountPolicy(
       base::Bind(callback, device_local_account_policy_[account_id]));
 }
 
+std::string FakeSessionManagerClient::BlockingRetrieveDeviceLocalAccountPolicy(
+    const std::string& account_id) {
+  return device_local_account_policy_[account_id];
+}
+
 void FakeSessionManagerClient::StoreDevicePolicy(
     const std::string& policy_blob,
     const StorePolicyCallback& callback) {
+  enterprise_management::PolicyFetchResponse policy;
+  if (!policy.ParseFromString(policy_blob)) {
+    LOG(ERROR) << "Unable to parse policy protobuf";
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::Bind(callback, false /* success */));
+    return;
+  }
+
+  bool owner_key_store_success = false;
+  if (policy.has_new_public_key())
+    owner_key_store_success = StoreOwnerKey(policy.new_public_key());
   device_policy_ = policy_blob;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                base::Bind(callback, true));
+
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(callback, true /* success */));
+  if (policy.has_new_public_key()) {
+    for (auto& observer : observers_)
+      observer.OwnerKeySet(owner_key_store_success);
+  }
   for (auto& observer : observers_)
-    observer.PropertyChangeComplete(true);
+    observer.PropertyChangeComplete(true /* success */);
 }
 
 void FakeSessionManagerClient::StorePolicyForUser(
@@ -189,7 +247,12 @@ void FakeSessionManagerClient::SetArcCpuRestriction(
       FROM_HERE, base::Bind(callback, arc_available_));
 }
 
-void FakeSessionManagerClient::EmitArcBooted() {}
+void FakeSessionManagerClient::EmitArcBooted(
+    const cryptohome::Identification& cryptohome_id,
+    const ArcCallback& callback) {
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(callback, arc_available_));
+}
 
 void FakeSessionManagerClient::GetArcStartTime(
     const GetArcStartTimeCallback& callback) {

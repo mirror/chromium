@@ -10,14 +10,24 @@ import json5_generator
 import template_expander
 import make_style_builder
 
-from name_utilities import camel_case, lower_first, upper_first_letter
+from name_utilities import camel_case, lower_first, upper_first_letter, enum_for_css_keyword
 
 
 # Temporary hard-coded list of fields that are not CSS properties.
 # Ideally these would be specified in a .in or .json5 file.
 NONPROPERTY_FIELDS = set([
+    'isLink',
     # Style can not be shared.
     'unique',
+    # Whether this style is affected by these pseudo-classes.
+    'affectedByFocus',
+    'affectedByHover',
+    'affectedByActive',
+    'affectedByDrag',
+    # A non-inherited property references a variable or @apply is used
+    'hasVariableReferenceFromNonInheritedProperty',
+    # Explicitly inherits a non-inherited property
+    'hasExplicitlyInheritedProperties',
 ])
 
 
@@ -31,23 +41,26 @@ class Field(object):
     regular member variables, or more complex storage like vectors or hashmaps.
     Almost all properties will have at least one Field, often more than one.
 
-    Fields also fall into various families, which determine the logic that is
-    used to generate them. The available field families are:
+    Fields also fall into various roles, which determine the logic that is
+    used to generate them. The available field roles are:
       - 'property', for fields that store CSS properties
       - 'inherited_flag', for single-bit flags that store whether a property is
                           inherited by this style or set explicitly
+      - 'nonproperty', for fields that are not CSS properties
     """
 
     # List of required attributes for a field which need to be passed in by
-    # keyword arguments
+    # keyword arguments. See CSSProperties.json5 for an explanation of each
+    # attribute.
     REQUIRED_ATTRIBUTES = set([
         # Name of field
         'name',
         # Name of property field is for
         'property_name',
-        # Internal field storage type (storage_type_path can be None)
-        'storage_type',
-        'storage_type_path',
+        # Name of the type (e.g. EClear, int)
+        'type_name',
+        # Affects how the field is generated (keyword, flag, monotonic_flag)
+        'field_template',
         # Bits needed for storage
         'size',
         # Default value for field
@@ -59,18 +72,18 @@ class Field(object):
         'resetter_method_name',
     ])
 
-    def __init__(self, field_family, **kwargs):
+    def __init__(self, field_role, **kwargs):
         # Values common to all fields
         # Set attributes from the keyword arguments
         for attrib in Field.REQUIRED_ATTRIBUTES:
             setattr(self, attrib, kwargs.pop(attrib))
 
-        # Field family: one of these must be true
-        self.is_property = field_family == 'property'
-        self.is_inherited_flag = field_family == 'inherited_flag'
-        self.is_nonproperty = field_family == 'nonproperty'
+        # Field role: one of these must be true
+        self.is_property = field_role == 'property'
+        self.is_inherited_flag = field_role == 'inherited_flag'
+        self.is_nonproperty = field_role == 'nonproperty'
         assert (self.is_property, self.is_inherited_flag, self.is_nonproperty).count(True) == 1, \
-            'Field family has to be exactly one of: property, inherited_flag, nonproperty'
+            'Field role has to be exactly one of: property, inherited_flag, nonproperty'
 
         if self.is_property:
             self.is_inherited = kwargs.pop('inherited')
@@ -85,14 +98,25 @@ class Field(object):
         assert len(kwargs) == 0, 'Unexpected arguments provided to Field: ' + str(kwargs)
 
 
+def _get_include_paths(properties):
+    """
+    Get a list of paths that need to be included for ComputedStyleBase.
+    """
+    include_paths = set()
+    for property_ in properties:
+        if property_['field_type_path'] is not None:
+            include_paths.add(property_['field_type_path'] + '.h')
+    return list(sorted(include_paths))
+
+
 def _create_enums(properties):
     """
     Returns a dictionary of enums to be generated, enum name -> [list of enum values]
     """
     enums = {}
     for property_ in properties:
-        # Only generate enums for keyword properties that use the default field_storage_type.
-        if property_['keyword_only'] and property_['field_storage_type'] is None:
+        # Only generate enums for keyword properties that use the default field_type_path.
+        if property_['field_template'] == 'keyword' and property_['field_type_path'] is None:
             enum_name = property_['type_name']
             # From the Blink style guide: Enum members should use InterCaps with an initial capital letter. [names-enum-members]
             enum_values = [('k' + camel_case(k)) for k in property_['keywords']]
@@ -118,15 +142,8 @@ def _create_property_field(property_):
 
     # From the Blink style guide: Other data members should be prefixed by "m_". [names-data-members]
     field_name = 'm_' + property_name_lower
-    bits_needed = math.log(len(property_['keywords']), 2)
-
-    # Separate the type path from the type name, if specified.
-    if property_['field_storage_type']:
-        type_path = property_['field_storage_type']
-        type_name = type_path.split('/')[-1]
-    else:
-        type_name = property_['type_name']
-        type_path = None
+    bits_needed = math.log(len(property_['keywords']), 2)  # TODO: implement for non-enums
+    type_name = property_['type_name']
 
     # For now, the getter name should match the field name. Later, getter names
     # will start with an uppercase letter, so if they conflict with the type name,
@@ -136,19 +153,18 @@ def _create_property_field(property_):
         getter_method_name = 'get' + property_name
 
     assert property_['initial_keyword'] is not None, \
-        ('MakeComputedStyleBase requires an initial keyword for keyword_only values, none specified '
+        ('MakeComputedStyleBase requires an initial keyword for keyword fields, none specified '
          'for property ' + property_['name'])
     default_value = type_name + '::k' + camel_case(property_['initial_keyword'])
 
-    # Add the property itself as a member variable.
     return Field(
         'property',
         name=field_name,
         property_name=property_['name'],
         inherited=property_['inherited'],
         independent=property_['independent'],
-        storage_type=type_name,
-        storage_type_path=type_path,
+        type_name=type_name,
+        field_template=property_['field_template'],
         size=int(math.ceil(bits_needed)),
         default_value=default_value,
         getter_method_name=getter_method_name,
@@ -174,8 +190,8 @@ def _create_inherited_flag_field(property_):
         'inherited_flag',
         name='m_' + field_name_suffix_lower,
         property_name=property_['name'],
-        storage_type='bool',
-        storage_type_path=None,
+        type_name='bool',
+        field_template='flag',
         size=1,
         default_value='true',
         getter_method_name=field_name_suffix_lower,
@@ -196,8 +212,8 @@ def _create_nonproperty_field(field_name):
         'nonproperty',
         name=member_name,
         property_name=field_name,
-        storage_type='bool',
-        storage_type_path=None,
+        type_name='bool',
+        field_template='monotonic_flag',
         size=1,
         default_value='false',
         getter_method_name=field_name,
@@ -213,8 +229,8 @@ def _create_fields(properties):
     """
     fields = []
     for property_ in properties:
-        # Keywords only means we generate an enum field.
-        if property_['keyword_only']:
+        # Only generate properties that have a field template
+        if property_['field_template'] is not None:
             # If the property is independent, add the single-bit sized isInherited flag
             # to the list of Fields as well.
             if property_['independent']:
@@ -268,7 +284,15 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
             'ComputedStyleBase.h': self.generate_base_computed_style_h,
             'ComputedStyleBase.cpp': self.generate_base_computed_style_cpp,
             'ComputedStyleBaseConstants.h': self.generate_base_computed_style_constants,
+            'CSSValueIDMappingsGenerated.h': self.generate_css_value_mappings,
         }
+
+        property_values = self._properties.values()
+
+        # Override the type name when field_type_path is specified
+        for property_ in property_values:
+            if property_['field_type_path']:
+                property_['type_name'] = property_['field_type_path'].split('/')[-1]
 
         # Create all the enums used by properties
         self._generated_enums = _create_enums(self._properties.values())
@@ -305,12 +329,15 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
             for field in bucket:
                 self._fields.append(field)
 
+        self._include_paths = _get_include_paths(self._properties.values())
+
 
     @template_expander.use_jinja('ComputedStyleBase.h.tmpl')
     def generate_base_computed_style_h(self):
         return {
             'properties': self._properties,
             'enums': self._generated_enums,
+            'include_paths': self._include_paths,
             'fields': self._fields,
             'expected_total_field_bytes': self._expected_total_field_bytes,
         }
@@ -331,6 +358,22 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
             'enums': self._generated_enums,
             'fields': self._fields,
             'expected_total_field_bytes': self._expected_total_field_bytes,
+        }
+
+    @template_expander.use_jinja('CSSValueIDMappingsGenerated.h.tmpl')
+    def generate_css_value_mappings(self):
+        mappings = {}
+
+        for property_ in self._properties.values():
+            if property_['field_template'] == 'keyword':
+                mappings[property_['type_name']] = {
+                    'default_value': 'k' + camel_case(property_['initial_keyword']),
+                    'mapping': [('k' + camel_case(k), enum_for_css_keyword(k)) for k in property_['keywords']],
+                }
+
+        return {
+            'include_paths': self._include_paths,
+            'mappings': mappings,
         }
 
 if __name__ == '__main__':

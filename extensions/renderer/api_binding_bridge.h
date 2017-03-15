@@ -13,15 +13,16 @@
 #include "v8/include/v8.h"
 
 namespace extensions {
+class APIBindingHooks;
 
 // An object that serves as a bridge between the current JS-centric bindings and
 // the new native bindings system. This basically needs to conform to the public
 // methods of the Binding prototype in binding.js.
 class APIBindingBridge final : public gin::Wrappable<APIBindingBridge> {
  public:
-  APIBindingBridge(v8::Local<v8::Context> context,
+  APIBindingBridge(APIBindingHooks* hooks,
+                   v8::Local<v8::Context> context,
                    v8::Local<v8::Value> api_object,
-                   v8::Local<v8::Value> js_hook_interface,
                    const std::string& extension_id,
                    const std::string& context_type,
                    const binding::RunJSFunction& run_js);

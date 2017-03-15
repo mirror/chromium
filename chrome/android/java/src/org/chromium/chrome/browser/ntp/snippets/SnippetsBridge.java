@@ -8,12 +8,12 @@ import android.graphics.Bitmap;
 
 import org.chromium.base.Callback;
 import org.chromium.base.annotations.CalledByNative;
-import org.chromium.chrome.browser.ntp.NewTabPage.DestructionObserver;
 import org.chromium.chrome.browser.ntp.NewTabPageUma;
 import org.chromium.chrome.browser.ntp.cards.ActionItem;
 import org.chromium.chrome.browser.ntp.cards.SuggestionsCategoryInfo;
 import org.chromium.chrome.browser.ntp.snippets.CategoryStatus.CategoryStatusEnum;
 import org.chromium.chrome.browser.profiles.Profile;
+import org.chromium.chrome.browser.suggestions.DestructionObserver;
 import org.chromium.chrome.browser.suggestions.SuggestionsMetricsReporter;
 import org.chromium.chrome.browser.suggestions.SuggestionsRanker;
 
@@ -42,7 +42,6 @@ public class SnippetsBridge
             case CategoryStatus.INITIALIZING:
             case CategoryStatus.AVAILABLE:
             case CategoryStatus.AVAILABLE_LOADING:
-            case CategoryStatus.SIGNED_OUT:
                 return true;
         }
         return false;
@@ -272,8 +271,8 @@ public class SnippetsBridge
 
     @CalledByNative
     private static void setAssetDownloadDataForSuggestion(
-            SnippetArticle suggestion, String filePath, String mimeType) {
-        suggestion.setAssetDownloadData(filePath, mimeType);
+            SnippetArticle suggestion, String downloadGuid, String filePath, String mimeType) {
+        suggestion.setAssetDownloadData(downloadGuid, filePath, mimeType);
     }
 
     @CalledByNative

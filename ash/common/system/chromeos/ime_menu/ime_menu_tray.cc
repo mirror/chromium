@@ -20,15 +20,15 @@
 #include "ash/common/system/tray/tray_popup_item_style.h"
 #include "ash/common/system/tray/tray_popup_utils.h"
 #include "ash/common/system/tray/tray_utils.h"
-#include "ash/common/wm_lookup.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
 #include "ash/public/cpp/shell_window_ids.h"
+#include "ash/resources/grit/ash_resources.h"
 #include "ash/root_window_controller.h"
+#include "ash/shell.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
-#include "grit/ash_resources.h"
-#include "grit/ash_strings.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
 #include "ui/base/ime/ime_bridge.h"
 #include "ui/base/ime/text_input_client.h"
@@ -36,7 +36,6 @@
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/range/range.h"
-#include "ui/gfx/vector_icons_public.h"
 #include "ui/keyboard/keyboard_controller.h"
 #include "ui/keyboard/keyboard_util.h"
 #include "ui/views/controls/button/button.h"
@@ -54,7 +53,7 @@ namespace {
 gfx::Range GetImeListViewRange() {
   const int max_items = 5;
   const int min_items = 1;
-  const int tray_item_height = GetTrayConstant(TRAY_POPUP_ITEM_MIN_HEIGHT);
+  const int tray_item_height = kTrayPopupItemMinHeight;
   return gfx::Range(tray_item_height * min_items, tray_item_height * max_items);
 }
 
@@ -113,12 +112,9 @@ class ImeMenuLabel : public views::Label {
 
   // views:Label:
   gfx::Size GetPreferredSize() const override {
-    const int tray_constant = GetTrayConstant(TRAY_IME_MENU_ICON);
-    return gfx::Size(tray_constant, tray_constant);
+    return gfx::Size(kTrayItemSize, kTrayItemSize);
   }
-  int GetHeightForWidth(int width) const override {
-    return GetTrayConstant(TRAY_IME_MENU_ICON);
-  }
+  int GetHeightForWidth(int width) const override { return kTrayItemSize; }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ImeMenuLabel);
@@ -143,14 +139,13 @@ class ImeTitleView : public views::View, public views::ButtonListener {
   explicit ImeTitleView(bool show_settings_button) : settings_button_(nullptr) {
     SetBorder(views::CreatePaddedBorder(
         views::CreateSolidSidedBorder(0, 0, kSeparatorWidth, 0,
-                                      kHorizontalSeparatorColor),
+                                      kMenuSeparatorColor),
         gfx::Insets(kMenuSeparatorVerticalPadding - kSeparatorWidth, 0)));
     auto* box_layout =
         new views::BoxLayout(views::BoxLayout::kHorizontal, 0, 0, 0);
-    box_layout->set_minimum_cross_axis_size(
-        GetTrayConstant(TRAY_POPUP_ITEM_MIN_HEIGHT));
+    box_layout->set_minimum_cross_axis_size(kTrayPopupItemMinHeight);
     SetLayoutManager(box_layout);
-    auto title_label =
+    auto* title_label =
         new views::Label(l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_IME));
     title_label->SetBorder(
         views::CreateEmptyBorder(0, kMenuEdgeEffectivePadding, 1, 0));
@@ -277,14 +272,13 @@ class ImeButtonsView : public views::View,
     if (MaterialDesignController::IsSystemTrayMenuMaterial()) {
       auto* box_layout =
           new views::BoxLayout(views::BoxLayout::kHorizontal, 0, 0, 0);
-      box_layout->set_minimum_cross_axis_size(
-          GetTrayConstant(TRAY_POPUP_ITEM_MIN_HEIGHT));
+      box_layout->set_minimum_cross_axis_size(kTrayPopupItemMinHeight);
       SetLayoutManager(box_layout);
       SetBorder(views::CreatePaddedBorder(
           views::CreateSolidSidedBorder(kSeparatorWidth, 0, 0, 0,
-                                        kHorizontalSeparatorColor),
+                                        kMenuSeparatorColor),
           gfx::Insets(kMenuSeparatorVerticalPadding - kSeparatorWidth,
-                      GetTrayConstant(TRAY_POPUP_ITEM_LEFT_INSET))));
+                      kMenuExtraMarginFromLeftEdge)));
     } else {
       auto* box_layout =
           new views::BoxLayout(views::BoxLayout::kHorizontal, 4, 4, 0);
@@ -355,19 +349,15 @@ class ImeMenuListView : public ImeListView {
 }  // namespace
 
 ImeMenuTray::ImeMenuTray(WmShelf* wm_shelf)
-    : TrayBackgroundView(wm_shelf),
+    : TrayBackgroundView(wm_shelf, true),
       label_(new ImeMenuLabel()),
       show_keyboard_(false),
       force_show_keyboard_(false),
       should_block_shelf_auto_hide_(false),
       keyboard_suppressed_(false),
       show_bubble_after_keyboard_hidden_(false) {
-  if (MaterialDesignController::IsShelfMaterial()) {
+  if (MaterialDesignController::IsShelfMaterial())
     SetInkDropMode(InkDropMode::ON);
-    SetContentsBackground(false);
-  } else {
-    SetContentsBackground(true);
-  }
   SetupLabelForTray(label_);
   tray_container()->AddChildView(label_);
   SystemTrayNotifier* tray_notifier = WmShell::Get()->system_tray_notifier();
@@ -477,7 +467,7 @@ void ImeMenuTray::ShowKeyboardWithKeyset(const std::string& keyset) {
   }
 
   AccessibilityDelegate* accessibility_delegate =
-      WmShell::Get()->accessibility_delegate();
+      Shell::GetInstance()->accessibility_delegate();
   // Fails to show the keyboard.
   if (accessibility_delegate->IsVirtualKeyboardEnabled())
     return;
@@ -510,8 +500,9 @@ bool ImeMenuTray::ShouldShowEmojiHandwritingVoiceButtons() const {
 }
 
 bool ImeMenuTray::ShouldShowKeyboardToggle() const {
-  return keyboard_suppressed_ &&
-         !WmShell::Get()->accessibility_delegate()->IsVirtualKeyboardEnabled();
+  return keyboard_suppressed_ && !Shell::GetInstance()
+                                      ->accessibility_delegate()
+                                      ->IsVirtualKeyboardEnabled();
 }
 
 void ImeMenuTray::SetShelfAlignment(ShelfAlignment alignment) {
@@ -578,8 +569,7 @@ void ImeMenuTray::OnBeforeBubbleWidgetInit(
     views::Widget* bubble_widget,
     views::Widget::InitParams* params) const {
   // Place the bubble in the same root window as |anchor_widget|.
-  WmLookup::Get()
-      ->GetWindowForWidget(anchor_widget)
+  WmWindow::Get(anchor_widget->GetNativeWindow())
       ->GetRootWindowController()
       ->ConfigureWidgetInitParamsForContainer(
           bubble_widget, kShellWindowId_SettingBubbleContainer, params);
@@ -634,7 +624,8 @@ void ImeMenuTray::OnKeyboardHidden() {
   if (!force_show_keyboard_)
     return;
 
-  WmShell::Get()->accessibility_delegate()->SetVirtualKeyboardEnabled(false);
+  Shell::GetInstance()->accessibility_delegate()->SetVirtualKeyboardEnabled(
+      false);
   force_show_keyboard_ = false;
 }
 

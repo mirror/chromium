@@ -1090,9 +1090,11 @@ class ResourceDispatcherHostTest : public testing::TestWithParam<TestConfig>,
                                     false, false, -1, false, false,
                                     blink::WebPageVisibilityStateVisible));
       std::unique_ptr<NavigationURLLoader> test_loader =
-          NavigationURLLoader::Create(browser_context_.get(),
-                                      std::move(request_info), nullptr, nullptr,
-                                      nullptr, &delegate);
+          NavigationURLLoader::Create(
+              browser_context_->GetResourceContext(),
+              BrowserContext::GetDefaultStoragePartition(
+                  browser_context_.get()),
+              std::move(request_info), nullptr, nullptr, nullptr, &delegate);
 
       // The navigation should fail with the expected error code.
       delegate.WaitForRequestFailed();
@@ -2427,15 +2429,14 @@ TEST_P(ResourceDispatcherHostTest, TooManyOutstandingRequests) {
   for (size_t i = 0; i < kMaxRequestsPerProcess; ++i)
     CheckSuccessfulRequest(msgs[i], net::URLRequestTestJob::test_data_2());
 
-  // TODO(mmenke):  These should be failing with ERR_INSUFFICIENT_RESOURCES.
-  // Update OnWillRead to use a ResourceController so it can fail with different
-  // error codes.
   CheckFailedRequest(msgs[kMaxRequestsPerProcess + 0],
-                     net::URLRequestTestJob::test_data_2(), net::ERR_ABORTED);
+                     net::URLRequestTestJob::test_data_2(),
+                     net::ERR_INSUFFICIENT_RESOURCES);
   CheckSuccessfulRequest(msgs[kMaxRequestsPerProcess + 1],
                          net::URLRequestTestJob::test_data_2());
   CheckFailedRequest(msgs[kMaxRequestsPerProcess + 2],
-                     net::URLRequestTestJob::test_data_2(), net::ERR_ABORTED);
+                     net::URLRequestTestJob::test_data_2(),
+                     net::ERR_INSUFFICIENT_RESOURCES);
 
   second_filter->OnChannelClosing();
   third_filter->OnChannelClosing();
@@ -2651,8 +2652,9 @@ TEST_P(ResourceDispatcherHostTest, CancelRequestsForContext) {
                                   true, false, false, -1, false, false,
                                   blink::WebPageVisibilityStateVisible));
     std::unique_ptr<NavigationURLLoader> loader = NavigationURLLoader::Create(
-        browser_context_.get(), std::move(request_info), nullptr, nullptr,
-        nullptr, &delegate);
+        browser_context_->GetResourceContext(),
+        BrowserContext::GetDefaultStoragePartition(browser_context_.get()),
+        std::move(request_info), nullptr, nullptr, nullptr, &delegate);
 
     // Wait until a response has been received and proceed with the response.
     KickOffRequest();
@@ -3428,9 +3430,9 @@ TEST_P(ResourceDispatcherHostTest, RegisterDownloadedTempFileWithMojo) {
 
   // Register it for a resource request.
   auto downloaded_file =
-      DownloadedTempFileImpl::CreateForTesting(filter_->child_id(), kRequestID);
+      DownloadedTempFileImpl::Create(filter_->child_id(), kRequestID);
   mojom::DownloadedTempFilePtr downloaded_file_ptr =
-      DownloadedTempFileImpl::CreateForTesting(filter_->child_id(), kRequestID);
+      DownloadedTempFileImpl::Create(filter_->child_id(), kRequestID);
   host_.RegisterDownloadedTempFile(filter_->child_id(), kRequestID, file_path);
 
   // Should be readable now.

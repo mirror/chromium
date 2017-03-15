@@ -12,17 +12,13 @@ function replaceBody(element) {
 }
 
 /**
- * Initialize a tree for UI testing. This performs the same initialization as
- * `setUpStore_` in <bookmarks-store>, but without the need for a store element
- * in the test.
- * @param {BookmarkTreeNode} rootNode
+ * Convert a list of top-level bookmark nodes into a normalized lookup table of
+ * nodes.
+ * @param {...BookmarkTreeNode} nodes
  */
-function setupTreeForUITests(rootNode){
-  if (!rootNode.path)
-    rootNode.path = 'rootNode';
-
-  BookmarksStore.generatePaths(rootNode, 0);
-  BookmarksStore.initNodes(rootNode);
+function testTree(nodes) {
+  return bookmarks.util.normalizeNodes(
+      createFolder('0', Array.from(arguments)));
 }
 
 /**

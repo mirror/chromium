@@ -17,15 +17,14 @@ class PLATFORM_EXPORT UnacceleratedStaticBitmapImage final
 
   bool currentFrameKnownToBeOpaque(MetadataMode = UseCurrentMetadata) override;
   IntSize size() const override;
-  sk_sp<SkImage> imageForCurrentFrame(const ColorBehavior&) override;
+  sk_sp<SkImage> imageForCurrentFrame() override;
 
   void draw(PaintCanvas*,
             const PaintFlags&,
             const FloatRect& dstRect,
             const FloatRect& srcRect,
             RespectImageOrientationEnum,
-            ImageClampingMode,
-            const ColorBehavior&) override;
+            ImageClampingMode) override;
 
  private:
   UnacceleratedStaticBitmapImage(sk_sp<SkImage>);

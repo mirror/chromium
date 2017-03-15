@@ -162,7 +162,7 @@ TEST_P(ScrollingCoordinatorTest, fastScrollingByDefault) {
                 WebEventListenerClass::MouseWheel));
 
   WebLayer* innerViewportScrollLayer =
-      page->frameHost().visualViewport().scrollLayer()->platformLayer();
+      page->visualViewport().scrollLayer()->platformLayer();
   ASSERT_TRUE(innerViewportScrollLayer->scrollable());
   ASSERT_FALSE(innerViewportScrollLayer->shouldScrollOnMainThread());
 }
@@ -188,7 +188,7 @@ TEST_P(ScrollingCoordinatorTest, fastScrollingCanBeDisabledWithSetting) {
 
   // Main scrolling should also propagate to inner viewport layer.
   WebLayer* innerViewportScrollLayer =
-      page->frameHost().visualViewport().scrollLayer()->platformLayer();
+      page->visualViewport().scrollLayer()->platformLayer();
   ASSERT_TRUE(innerViewportScrollLayer->scrollable());
   ASSERT_TRUE(innerViewportScrollLayer->shouldScrollOnMainThread());
 }
@@ -665,10 +665,10 @@ TEST_P(ScrollingCoordinatorTest, iframeScrolling) {
 
   LayoutPart* layoutPart = toLayoutPart(layoutObject);
   ASSERT_TRUE(layoutPart);
-  ASSERT_TRUE(layoutPart->widget());
-  ASSERT_TRUE(layoutPart->widget()->isFrameView());
+  ASSERT_TRUE(layoutPart->frameViewBase());
+  ASSERT_TRUE(layoutPart->frameViewBase()->isFrameView());
 
-  FrameView* innerFrameView = toFrameView(layoutPart->widget());
+  FrameView* innerFrameView = toFrameView(layoutPart->frameViewBase());
   LayoutViewItem innerLayoutViewItem = innerFrameView->layoutViewItem();
   ASSERT_FALSE(innerLayoutViewItem.isNull());
 
@@ -716,10 +716,10 @@ TEST_P(ScrollingCoordinatorTest, rtlIframe) {
 
   LayoutPart* layoutPart = toLayoutPart(layoutObject);
   ASSERT_TRUE(layoutPart);
-  ASSERT_TRUE(layoutPart->widget());
-  ASSERT_TRUE(layoutPart->widget()->isFrameView());
+  ASSERT_TRUE(layoutPart->frameViewBase());
+  ASSERT_TRUE(layoutPart->frameViewBase()->isFrameView());
 
-  FrameView* innerFrameView = toFrameView(layoutPart->widget());
+  FrameView* innerFrameView = toFrameView(layoutPart->frameViewBase());
   LayoutViewItem innerLayoutViewItem = innerFrameView->layoutViewItem();
   ASSERT_FALSE(innerLayoutViewItem.isNull());
 
@@ -893,10 +893,10 @@ TEST_P(ScrollingCoordinatorTest,
 
   LayoutPart* layoutPart = toLayoutPart(layoutObject);
   ASSERT_TRUE(layoutPart);
-  ASSERT_TRUE(layoutPart->widget());
-  ASSERT_TRUE(layoutPart->widget()->isFrameView());
+  ASSERT_TRUE(layoutPart->frameViewBase());
+  ASSERT_TRUE(layoutPart->frameViewBase()->isFrameView());
 
-  FrameView* innerFrameView = toFrameView(layoutPart->widget());
+  FrameView* innerFrameView = toFrameView(layoutPart->frameViewBase());
   LayoutViewItem innerLayoutViewItem = innerFrameView->layoutViewItem();
   ASSERT_FALSE(innerLayoutViewItem.isNull());
 
@@ -1164,6 +1164,11 @@ TEST_P(StyleRelatedMainThreadScrollingReasonTest, LCDTextEnabledTest) {
   testStyle("transparent border-radius",
             MainThreadScrollingReason::kHasOpacityAndLCDText |
                 MainThreadScrollingReason::kHasBorderRadius);
+}
+
+TEST_P(StyleRelatedMainThreadScrollingReasonTest, BoxShadowTest) {
+  testStyle("box-shadow",
+            MainThreadScrollingReason::kHasBoxShadowFromNonRootLayer);
 }
 
 }  // namespace blink

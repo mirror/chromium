@@ -8,10 +8,10 @@
 
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
+#include "base/time/time.h"
 #include "chrome/browser/chromeos/arc/arc_optin_uma.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.h"
-#include "chrome/browser/chromeos/arc/auth/arc_auth_info_fetcher.h"
 #include "chrome/browser/chromeos/arc/auth/arc_background_auth_code_fetcher.h"
 #include "chrome/browser/chromeos/arc/auth/arc_manual_auth_code_fetcher.h"
 #include "chrome/browser/chromeos/arc/auth/arc_robot_auth_code_fetcher.h"
@@ -55,6 +55,7 @@ ProvisioningResult ConvertArcSignInFailureReasonToProvisioningResult(
     MAP_PROVISIONING_RESULT(CLOUD_PROVISION_FLOW_FAILED);
     MAP_PROVISIONING_RESULT(CLOUD_PROVISION_FLOW_TIMEOUT);
     MAP_PROVISIONING_RESULT(CLOUD_PROVISION_FLOW_INTERNAL_ERROR);
+    MAP_PROVISIONING_RESULT(NO_NETWORK_CONNECTION);
   }
 #undef MAP_PROVISIONING_RESULT
 
@@ -176,6 +177,27 @@ void ArcAuthService::RequestAccountInfo() {
                      weak_ptr_factory_.GetWeakPtr())));
 }
 
+void ArcAuthService::ReportMetrics(mojom::MetricsType metrics_type,
+                                   int32_t value) {
+  switch (metrics_type) {
+    case mojom::MetricsType::NETWORK_WAITING_TIME_MILLISECONDS:
+      UpdateAuthTiming("ArcAuth.NetworkWaitTime",
+                       base::TimeDelta::FromMilliseconds(value));
+      break;
+    case mojom::MetricsType::CHECKIN_ATTEMPTS:
+      UpdateAuthCheckinAttempts(value);
+      break;
+    case mojom::MetricsType::CHECKIN_TIME_MILLISECONDS:
+      UpdateAuthTiming("ArcAuth.CheckinTime",
+                       base::TimeDelta::FromMilliseconds(value));
+      break;
+    case mojom::MetricsType::SIGNIN_TIME_MILLISECONDS:
+      UpdateAuthTiming("ArcAuth.SignInTime",
+                       base::TimeDelta::FromMilliseconds(value));
+      break;
+  }
+}
+
 void ArcAuthService::OnAccountInfoReady(mojom::AccountInfoPtr account_info) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   auto* instance = ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service()->auth(),
@@ -267,26 +289,35 @@ void ArcAuthService::RequestAccountInfoInternal(
 }
 
 void ArcAuthService::OnEnrollmentTokenFetched(
+    ArcAuthInfoFetcher::Status status,
     const std::string& enrollment_token) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   fetcher_.reset();
 
-  if (enrollment_token.empty()) {
-    ArcSessionManager::Get()->OnProvisioningFinished(
-        ProvisioningResult::CHROME_SERVER_COMMUNICATION_ERROR);
-    return;
+  switch (status) {
+    case ArcAuthInfoFetcher::Status::SUCCESS:
+      notifier_->Notify(true /*is_enforced*/, enrollment_token,
+                        mojom::ChromeAccountType::ACTIVE_DIRECTORY_ACCOUNT,
+                        true);
+      notifier_.reset();
+      return;
+    case ArcAuthInfoFetcher::Status::FAILURE:
+      ArcSessionManager::Get()->OnProvisioningFinished(
+          ProvisioningResult::CHROME_SERVER_COMMUNICATION_ERROR);
+      return;
+    case ArcAuthInfoFetcher::Status::ARC_DISABLED:
+      ArcSessionManager::Get()->OnProvisioningFinished(
+          ProvisioningResult::ARC_DISABLED);
+      return;
   }
-
-  notifier_->Notify(true /*is_enforced*/, enrollment_token,
-                    mojom::ChromeAccountType::ACTIVE_DIRECTORY_ACCOUNT, true);
-  notifier_.reset();
 }
 
-void ArcAuthService::OnAuthCodeFetched(const std::string& auth_code) {
+void ArcAuthService::OnAuthCodeFetched(ArcAuthInfoFetcher::Status status,
+                                       const std::string& auth_code) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   fetcher_.reset();
 
-  if (auth_code.empty()) {
+  if (status != ArcAuthInfoFetcher::Status::SUCCESS) {
     ArcSessionManager::Get()->OnProvisioningFinished(
         ProvisioningResult::CHROME_SERVER_COMMUNICATION_ERROR);
     return;

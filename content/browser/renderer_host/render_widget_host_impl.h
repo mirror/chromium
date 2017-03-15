@@ -25,6 +25,7 @@
 #include "base/timer/elapsed_timer.h"
 #include "build/build_config.h"
 #include "cc/resources/shared_bitmap.h"
+#include "cc/surfaces/frame_sink_id.h"
 #include "content/browser/renderer_host/event_with_latency_info.h"
 #include "content/browser/renderer_host/input/input_ack_handler.h"
 #include "content/browser/renderer_host/input/input_router_client.h"
@@ -37,7 +38,6 @@
 #include "content/common/input/input_event_ack_state.h"
 #include "content/common/input/synthetic_gesture_packet.h"
 #include "content/common/view_message_enums.h"
-#include "content/public/browser/readback_types.h"
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/common/page_zoom.h"
 #include "content/public/common/url_constants.h"
@@ -49,6 +49,7 @@
 #include "ui/events/latency_info.h"
 #include "ui/gfx/native_widget_types.h"
 
+class SkBitmap;
 struct FrameHostMsg_HittestData_Params;
 struct ViewHostMsg_SelectionBounds_Params;
 struct ViewHostMsg_UpdateRect_Params;
@@ -135,17 +136,14 @@ class CONTENT_EXPORT RenderWidgetHostImpl : public RenderWidgetHost,
 
   RenderWidgetHostOwnerDelegate* owner_delegate() { return owner_delegate_; }
 
+  cc::FrameSinkId AllocateFrameSinkId(bool is_guest_view_hack);
+
   // RenderWidgetHost implementation.
   void UpdateTextDirection(blink::WebTextDirection direction) override;
   void NotifyTextDirection() override;
   void Focus() override;
   void Blur() override;
   void SetActive(bool active) override;
-  void CopyFromBackingStore(const gfx::Rect& src_rect,
-                            const gfx::Size& accelerated_dst_size,
-                            const ReadbackRequestCallback& callback,
-                            const SkColorType preferred_color_type) override;
-  bool CanCopyFromBackingStore() override;
   void ForwardMouseEvent(const blink::WebMouseEvent& mouse_event) override;
   void ForwardWheelEvent(const blink::WebMouseWheelEvent& wheel_event) override;
   void ForwardKeyboardEvent(const NativeWebKeyboardEvent& key_event) override;
@@ -203,14 +201,19 @@ class CONTENT_EXPORT RenderWidgetHostImpl : public RenderWidgetHost,
   // Notification that the screen info has changed.
   void NotifyScreenInfoChanged();
 
-  // Forces redraw in the renderer and when the update reaches the browser
-  // grabs snapshot from the compositor. On MacOS, the snapshot is taken from
-  // the Cocoa view for end-to-end testing purposes. Returns a gfx::Image that
-  // is backed by an NSImage on MacOS or by an SkBitmap otherwise. The
-  // gfx::Image may be empty if the snapshot failed.
+  // Forces redraw in the renderer and when the update reaches the browser.
+  // grabs snapshot from the compositor.
+  // If |from_surface| is false, it will obtain the snapshot directly from the
+  // view (On MacOS, the snapshot is taken from the Cocoa view for end-to-end
+  // testing  purposes).
+  // Otherwise, the snapshot is obtained from the view's surface, with no bounds
+  // defined.
+  // Returns a gfx::Image that is backed by an NSImage on MacOS or by an
+  // SkBitmap otherwise. The gfx::Image may be empty if the snapshot failed.
   using GetSnapshotFromBrowserCallback =
       base::Callback<void(const gfx::Image&)>;
-  void GetSnapshotFromBrowser(const GetSnapshotFromBrowserCallback& callback);
+  void GetSnapshotFromBrowser(const GetSnapshotFromBrowserCallback& callback,
+                              bool from_surface);
 
   const NativeWebKeyboardEvent* GetLastKeyboardEvent() const;
 
@@ -320,16 +323,17 @@ class CONTENT_EXPORT RenderWidgetHostImpl : public RenderWidgetHost,
   // the new one will only fire if it has a shorter delay than the time
   // left on the existing timeouts.
   void StartHangMonitorTimeout(base::TimeDelta delay,
-                               blink::WebInputEvent::Type event_type,
-                               RendererUnresponsiveType hang_monitor_reason);
+                               blink::WebInputEvent::Type event_type);
 
   // Stops all existing hang monitor timeouts and assumes the renderer is
   // responsive.
   void StopHangMonitorTimeout();
 
   // Starts the rendering timeout, which will clear displayed graphics if
-  // a new compositor frame is not received before it expires.
-  void StartNewContentRenderingTimeout();
+  // a new compositor frame is not received before it expires. This also causes
+  // any new compositor frames received with content_source_id less than
+  // |next_source_id| to be discarded.
+  void StartNewContentRenderingTimeout(uint32_t next_source_id);
 
   // Notification that a new compositor frame has been generated following
   // a page load. This stops |new_content_rendering_timeout_|, or prevents
@@ -696,6 +700,11 @@ class CONTENT_EXPORT RenderWidgetHostImpl : public RenderWidgetHost,
 
   void WindowSnapshotReachedScreen(int snapshot_id);
 
+  void OnSnapshotFromSurfaceReceived(int snapshot_id,
+                                     int retry_count,
+                                     const SkBitmap& bitmap,
+                                     ReadbackResponse response);
+
   void OnSnapshotReceived(int snapshot_id, const gfx::Image& image);
 
   // 1. Grants permissions to URL (if any)
@@ -859,6 +868,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl : public RenderWidgetHost,
   int next_browser_snapshot_id_;
   using PendingSnapshotMap = std::map<int, GetSnapshotFromBrowserCallback>;
   PendingSnapshotMap pending_browser_snapshots_;
+  PendingSnapshotMap pending_surface_browser_snapshots_;
 
   // Indicates whether a RenderFramehost has ownership, in which case this
   // object does not self destroy.
@@ -878,10 +888,6 @@ class CONTENT_EXPORT RenderWidgetHostImpl : public RenderWidgetHost,
   // This value indicates how long to wait before we consider a renderer hung.
   base::TimeDelta hung_renderer_delay_;
 
-  // Stores the reason the hang_monitor_timeout_ has been started. Used to
-  // report histograms if the renderer is hung.
-  RendererUnresponsiveType hang_monitor_reason_;
-
   // Type of the last blocking event that started the hang monitor.
   blink::WebInputEvent::Type hang_monitor_event_type_;
 
@@ -891,6 +897,14 @@ class CONTENT_EXPORT RenderWidgetHostImpl : public RenderWidgetHost,
   // This value indicates how long to wait for a new compositor frame from a
   // renderer process before clearing any previously displayed content.
   base::TimeDelta new_content_rendering_delay_;
+
+  // This identifier tags compositor frames according to the page load with
+  // which they are associated, to prevent an unloaded web page from being
+  // drawn after a navigation to a new page has already committed. This is
+  // a no-op for non-top-level RenderWidgets, as that should always be zero.
+  // TODO(kenrb, fsamuel): We should use SurfaceIDs for this purpose when they
+  // are available in the renderer process. See https://crbug.com/695579.
+  uint32_t current_content_source_id_;
 
 #if defined(OS_MACOSX)
   std::unique_ptr<device::PowerSaveBlocker> power_save_blocker_;

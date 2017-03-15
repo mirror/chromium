@@ -34,7 +34,7 @@
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/image/image.h"
 #include "ui/gfx/paint_vector_icon.h"
-#include "ui/gfx/vector_icons_public.h"
+#include "ui/vector_icons/vector_icons.h"
 #include "ui/views/controls/button/md_text_button.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/layout/fill_layout.h"
@@ -55,7 +55,7 @@ gfx::NativeWindow GetParentForUnhostedDialog() {
     // TODO(jamescook): LoginDisplayHost has the wrong native window in mash.
     // This will fix itself when mash converts from ui::Window to aura::Window.
     // http://crbug.com/659155
-    if (!chrome::IsRunningInMash())
+    if (!ash_util::IsRunningInMash())
       return LoginDisplayHost::default_host()->GetNativeWindow();
   } else {
     Browser* browser = chrome::FindTabbedBrowser(
@@ -327,8 +327,8 @@ ControlledSettingIndicatorView::ControlledSettingIndicatorView(
   image_view_ = new views::ImageView();
   // Disable |image_view_| so mouse events propagate to the parent.
   image_view_->SetEnabled(false);
-  image_view_->SetImage(gfx::CreateVectorIcon(gfx::VectorIconId::BUSINESS, 16,
-                                              gfx::kChromeIconGrey));
+  image_view_->SetImage(
+      gfx::CreateVectorIcon(ui::kBusinessIcon, 16, gfx::kChromeIconGrey));
   image_view_->SetTooltipText(
       l10n_util::GetStringUTF16(IDS_OPTIONS_CONTROLLED_SETTING_POLICY));
   AddChildView(image_view_);

@@ -26,9 +26,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 using base::DictionaryValue;
-using base::FundamentalValue;
 using base::ListValue;
-using base::StringValue;
 using base::Value;
 
 namespace extensions {
@@ -50,7 +48,7 @@ TEST(WebRequestConditionAttributeTest, CreateConditionAttribute) {
 
   std::string error;
   scoped_refptr<const WebRequestConditionAttribute> result;
-  base::StringValue string_value("main_frame");
+  base::Value string_value("main_frame");
   base::ListValue resource_types;
   resource_types.AppendString("main_frame");
 
@@ -208,7 +206,7 @@ TEST(WebRequestConditionAttributeTest, ThirdParty) {
   base::MessageLoopForIO message_loop;
 
   std::string error;
-  const FundamentalValue value_true(true);
+  const Value value_true(true);
   // This attribute matches only third party requests.
   scoped_refptr<const WebRequestConditionAttribute> third_party_attribute =
       WebRequestConditionAttribute::Create(keys::kThirdPartyKey,
@@ -218,7 +216,7 @@ TEST(WebRequestConditionAttributeTest, ThirdParty) {
   ASSERT_TRUE(third_party_attribute.get());
   EXPECT_EQ(std::string(keys::kThirdPartyKey),
             third_party_attribute->GetName());
-  const FundamentalValue value_false(false);
+  const Value value_false(false);
   // This attribute matches only first party requests.
   scoped_refptr<const WebRequestConditionAttribute> first_party_attribute =
       WebRequestConditionAttribute::Create(keys::kThirdPartyKey,

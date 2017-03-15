@@ -30,6 +30,7 @@
 #include "core/inspector/DevToolsHost.h"
 
 #include "bindings/core/v8/ScriptState.h"
+#include "bindings/core/v8/V8Binding.h"
 #include "bindings/core/v8/V8ScriptRunner.h"
 #include "core/clipboard/Pasteboard.h"
 #include "core/dom/DocumentUserGestureToken.h"
@@ -52,10 +53,10 @@
 #include "platform/ScriptForbiddenScope.h"
 #include "platform/SharedBuffer.h"
 #include "platform/UserGestureIndicator.h"
+#include "platform/loader/fetch/ResourceError.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
-#include "platform/network/ResourceError.h"
-#include "platform/network/ResourceRequest.h"
-#include "platform/network/ResourceResponse.h"
+#include "platform/loader/fetch/ResourceRequest.h"
+#include "platform/loader/fetch/ResourceResponse.h"
 
 namespace blink {
 

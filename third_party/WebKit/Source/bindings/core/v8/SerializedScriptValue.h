@@ -31,15 +31,17 @@
 #ifndef SerializedScriptValue_h
 #define SerializedScriptValue_h
 
+#include <memory>
+
+#include "bindings/core/v8/NativeValueTraits.h"
 #include "bindings/core/v8/ScriptValue.h"
 #include "bindings/core/v8/Transferables.h"
 #include "core/CoreExport.h"
+#include "v8/include/v8.h"
 #include "wtf/HashMap.h"
 #include "wtf/ThreadSafeRefCounted.h"
 #include "wtf/allocator/Partitions.h"
 #include "wtf/typed_arrays/ArrayBufferContents.h"
-#include <memory>
-#include <v8.h>
 
 namespace blink {
 
@@ -97,7 +99,6 @@ class CORE_EXPORT SerializedScriptValue
 
   // Deserializes the value (in the current context). Returns a null value in
   // case of failure.
-  v8::Local<v8::Value> deserialize(MessagePortArray* = 0);
   v8::Local<v8::Value> deserialize(v8::Isolate*,
                                    MessagePortArray* = 0,
                                    const WebBlobInfoArray* = 0);
@@ -127,34 +128,23 @@ class CORE_EXPORT SerializedScriptValue
       const ImageBitmapArray&,
       ExceptionState&);
 
-  // Informs the V8 about external memory allocated and owned by this object.
+  // Informs V8 about external memory allocated and owned by this object.
   // Large values should contribute to GC counters to eventually trigger a GC,
   // otherwise flood of postMessage() can cause OOM.
   // Ok to invoke multiple times (only adds memory once).
   // The memory registration is revoked automatically in destructor.
   void registerMemoryAllocatedWithCurrentScriptContext();
 
-  // Provides access to the data and its attributes, regardless of whether the
-  // data was created as a string or as a vector.
-  // TODO(jbroman): Remove the 16-bit string representation, and simplify.
-  const uint8_t* data() {
-    if (!m_dataString.isNull()) {
-      DCHECK(!m_dataBuffer);
-      m_dataString.ensure16Bit();
-      return reinterpret_cast<const uint8_t*>(m_dataString.characters16());
-    }
-    return m_dataBuffer.get();
-  }
-  size_t dataLengthInBytes() const {
-    if (!m_dataString.isNull())
-      return m_dataString.length() * 2;
-    return m_dataBufferSize;
-  }
-  bool dataHasOneRef() const {
-    if (!m_dataString.isNull())
-      return m_dataString.impl()->hasOneRef();
-    return true;
-  }
+  // The dual, unregistering / subtracting the external memory allocation costs
+  // of this SerializedScriptValue with the current context. This includes
+  // discounting the cost of the transferables.
+  //
+  // The value is updated and marked as having no allocations registered,
+  // hence subsequent calls will be no-ops.
+  void unregisterMemoryAllocatedWithCurrentScriptContext();
+
+  const uint8_t* data() const { return m_dataBuffer.get(); }
+  size_t dataLengthInBytes() const { return m_dataBufferSize; }
 
   BlobDataHandleMap& blobDataHandles() { return m_blobDataHandles; }
   ArrayBufferContentsArray* getArrayBufferContentsArray() {
@@ -176,13 +166,7 @@ class CORE_EXPORT SerializedScriptValue
   SerializedScriptValue();
   explicit SerializedScriptValue(const String& wireData);
 
-  void setData(const String& data) {
-    m_dataString = data;
-    m_dataBuffer.reset();
-    m_dataBufferSize = 0;
-  }
   void setData(DataBufferPtr data, size_t size) {
-    m_dataString = String();
     m_dataBuffer = std::move(data);
     m_dataBufferSize = size;
   }
@@ -197,21 +181,27 @@ class CORE_EXPORT SerializedScriptValue
                                const OffscreenCanvasArray&,
                                ExceptionState&);
 
-  // Either:
-  // - |m_dataString| is non-null, and contains the data as a WTF::String which,
-  //   when made 16-bit, is the serialized data (padded to a two-byte boundary),
-  // or
-  // - |m_dataBuffer| is non-null, and |m_dataBufferSize| contains its size;
-  //   unlike |m_dataString|, that size is not guaranteed to be padded to a
-  //   two-byte boundary
-  String m_dataString;
   DataBufferPtr m_dataBuffer;
   size_t m_dataBufferSize = 0;
 
   std::unique_ptr<ArrayBufferContentsArray> m_arrayBufferContentsArray;
   std::unique_ptr<ImageBitmapContentsArray> m_imageBitmapContentsArray;
   BlobDataHandleMap m_blobDataHandles;
-  intptr_t m_externallyAllocatedMemory;
+
+  bool m_hasRegisteredExternalAllocation;
+  bool m_transferablesNeedExternalAllocationRegistration;
+};
+
+template <>
+struct NativeValueTraits<SerializedScriptValue>
+    : public NativeValueTraitsBase<SerializedScriptValue> {
+  CORE_EXPORT static inline PassRefPtr<SerializedScriptValue> nativeValue(
+      v8::Isolate* isolate,
+      v8::Local<v8::Value> value,
+      ExceptionState& exceptionState) {
+    return SerializedScriptValue::serialize(isolate, value, nullptr, nullptr,
+                                            exceptionState);
+  }
 };
 
 }  // namespace blink

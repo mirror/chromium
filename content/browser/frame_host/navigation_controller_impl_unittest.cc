@@ -114,10 +114,6 @@ class MockScreenshotManager : public content::NavigationEntryScreenshotManager {
   }
 
  private:
-  // Overridden from content::NavigationEntryScreenshotManager:
-  void TakeScreenshotImpl(content::RenderViewHost* host,
-                          content::NavigationEntryImpl* entry) override {}
-
   void OnScreenshotSet(content::NavigationEntryImpl* entry) override {
     encoding_screenshot_in_progress_ = false;
     NavigationEntryScreenshotManager::OnScreenshotSet(entry);
@@ -331,7 +327,7 @@ class LoadCommittedDetailsObserver : public WebContentsObserver {
     navigation_type_ = static_cast<NavigationHandleImpl*>(navigation_handle)
                            ->navigation_type();
     previous_url_ = navigation_handle->GetPreviousURL();
-    is_in_page_ = navigation_handle->IsSamePage();
+    is_in_page_ = navigation_handle->IsSameDocument();
     is_main_frame_ = navigation_handle->IsInMainFrame();
     did_replace_entry_ = navigation_handle->DidReplaceEntry();
   }

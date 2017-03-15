@@ -242,35 +242,10 @@ void IntersectionObserver::observe(Element* target,
   if (target->ensureIntersectionObserverData().getObservationFor(*this))
     return;
 
-  bool isDOMDescendant = true;
-  bool shouldReportRootBounds = false;
-  if (rootIsImplicit()) {
-    Frame* rootFrame = targetFrame->tree().top();
-    DCHECK(rootFrame);
-    if (rootFrame == targetFrame) {
-      shouldReportRootBounds = true;
-    } else {
-      shouldReportRootBounds =
-          targetFrame->securityContext()->getSecurityOrigin()->canAccess(
-              rootFrame->securityContext()->getSecurityOrigin());
-    }
-  } else {
-    shouldReportRootBounds = true;
-    isDOMDescendant = root()->isShadowIncludingInclusiveAncestorOf(target);
-  }
-
   IntersectionObservation* observation =
-      new IntersectionObservation(*this, *target, shouldReportRootBounds);
+      new IntersectionObservation(*this, *target);
   target->ensureIntersectionObserverData().addObservation(*observation);
-  m_observations.add(observation);
-
-  if (!isDOMDescendant) {
-    root()->document().addConsoleMessage(
-        ConsoleMessage::create(JSMessageSource, WarningMessageLevel,
-                               "IntersectionObserver.observe(target): target "
-                               "element is not a descendant of root."));
-  }
-
+  m_observations.insert(observation);
   if (FrameView* frameView = targetFrame->view())
     frameView->scheduleAnimation();
 }
@@ -283,7 +258,7 @@ void IntersectionObserver::unobserve(Element* target,
   if (IntersectionObservation* observation =
           target->intersectionObserverData()->getObservationFor(*this)) {
     observation->disconnect();
-    m_observations.remove(observation);
+    m_observations.erase(observation);
   }
 }
 

@@ -26,8 +26,13 @@ PaintInvalidationReason TablePaintInvalidator::invalidatePaintIfNeeded() {
   // If any col changed background, we'll check all cells for background
   // changes.
   bool hasColChangedBackground = false;
+  bool visualRectChanged = m_context.oldVisualRect != m_table.visualRect();
   for (LayoutTableCol* col = m_table.firstColumn(); col;
        col = col->nextColumn()) {
+    // LayoutTableCol uses the table's localVisualRect(). Should check column
+    // for paint invalidation when table's visual rect changed.
+    if (visualRectChanged)
+      col->setMayNeedPaintInvalidation();
     // This ensures that the backgroundChangedSinceLastPaintInvalidation flag
     // is up-to-date.
     col->ensureIsReadyForPaintInvalidation();
@@ -43,9 +48,7 @@ PaintInvalidationReason TablePaintInvalidator::invalidatePaintIfNeeded() {
     LayoutTableSection* section = toLayoutTableSection(child);
     section->ensureIsReadyForPaintInvalidation();
     ObjectPaintInvalidator sectionInvalidator(*section);
-    if (!hasColChangedBackground &&
-        !section
-             ->shouldCheckForPaintInvalidationRegardlessOfPaintInvalidationState())
+    if (!hasColChangedBackground && !section->shouldCheckForPaintInvalidation())
       continue;
     for (LayoutTableRow* row = section->firstRow(); row; row = row->nextRow()) {
       row->ensureIsReadyForPaintInvalidation();

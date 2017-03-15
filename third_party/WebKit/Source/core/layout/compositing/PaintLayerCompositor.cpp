@@ -34,6 +34,7 @@
 #include "core/frame/FrameHost.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
 #include "core/html/HTMLIFrameElement.h"
@@ -48,7 +49,6 @@
 #include "core/layout/compositing/CompositingRequirementsUpdater.h"
 #include "core/layout/compositing/GraphicsLayerTreeBuilder.h"
 #include "core/layout/compositing/GraphicsLayerUpdater.h"
-#include "core/loader/FrameLoaderClient.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
 #include "core/page/scrolling/ScrollingCoordinator.h"
@@ -228,7 +228,8 @@ void PaintLayerCompositor::updateIfNeededRecursiveInternal() {
   updateIfNeeded();
   lifecycle().advanceTo(DocumentLifecycle::CompositingClean);
 
-  DocumentAnimations::updateAnimations(m_layoutView.document());
+  DocumentAnimations::updateAnimations(m_layoutView.document(),
+                                       DocumentLifecycle::CompositingClean);
 
   m_layoutView.frameView()
       ->getScrollableArea()
@@ -337,19 +338,29 @@ void PaintLayerCompositor::updateWithoutAcceleratedCompositing(
 }
 
 static void forceRecomputeVisualRectsIncludingNonCompositingDescendants(
-    LayoutObject* layoutObject) {
+    LayoutObject& layoutObject) {
   // We clear the previous visual rect as it's wrong (paint invalidation
   // container changed, ...). Forcing a full invalidation will make us recompute
   // it. Also we are not changing the previous position from our paint
   // invalidation container, which is fine as we want a full paint invalidation
   // anyway.
-  layoutObject->clearPreviousVisualRects();
+  layoutObject.clearPreviousVisualRects();
 
-  for (LayoutObject* child = layoutObject->slowFirstChild(); child;
+  for (LayoutObject* child = layoutObject.slowFirstChild(); child;
        child = child->nextSibling()) {
     if (!child->isPaintInvalidationContainer())
-      forceRecomputeVisualRectsIncludingNonCompositingDescendants(child);
+      forceRecomputeVisualRectsIncludingNonCompositingDescendants(*child);
   }
+}
+
+GraphicsLayer* PaintLayerCompositor::parentForContentLayers() const {
+  if (m_rootContentLayer)
+    return m_rootContentLayer.get();
+
+  DCHECK(RuntimeEnabledFeatures::rootLayerScrollingEnabled());
+  // Iframe content layers will be connected by the parent frame using
+  // attachFrameContentLayersToIframeLayer.
+  return isMainFrame() ? visualViewport().scrollLayer() : nullptr;
 }
 
 void PaintLayerCompositor::updateIfNeeded() {
@@ -420,8 +431,6 @@ void PaintLayerCompositor::updateIfNeeded() {
       }
     }
 
-    updateClippingOnCompositorLayers();
-
     GraphicsLayerUpdater updater;
     updater.update(*updateRoot, layersNeedingPaintInvalidation);
 
@@ -443,8 +452,9 @@ void PaintLayerCompositor::updateIfNeeded() {
     }
 
     if (!childList.isEmpty()) {
-      CHECK(m_rootContentLayer && m_compositing);
-      m_rootContentLayer->setChildren(childList);
+      CHECK(m_compositing);
+      if (GraphicsLayer* contentParent = parentForContentLayers())
+        contentParent->setChildren(childList);
     }
 
     applyOverlayFullscreenVideoAdjustmentIfNeeded();
@@ -460,38 +470,17 @@ void PaintLayerCompositor::updateIfNeeded() {
         layersNeedingPaintInvalidation[i]->layoutObject());
   }
 
-  // Inform the inspector that the layer tree has changed.
-  if (m_layoutView.frame()->isMainFrame())
-    InspectorInstrumentation::layerTreeDidChange(m_layoutView.frame());
-}
-
-void PaintLayerCompositor::updateClippingOnCompositorLayers() {
-  bool shouldClip = !rootLayer()->hasRootScrollerAsDescendant();
-  if (m_rootContentLayer) {
-    // FIXME: with rootLayerScrolls, we probably don't even need
-    // m_rootContentLayer?
-    m_rootContentLayer->setMasksToBounds(
-        !RuntimeEnabledFeatures::rootLayerScrollingEnabled() && shouldClip);
+  if (m_rootLayerAttachment == RootLayerPendingAttachViaChromeClient) {
+    if (Page* page = m_layoutView.frame()->page()) {
+      page->chromeClient().attachRootGraphicsLayer(rootGraphicsLayer(),
+                                                   m_layoutView.frame());
+      m_rootLayerAttachment = RootLayerAttachedViaChromeClient;
+    }
   }
 
-  const TopDocumentRootScrollerController& globalRootScrollerController =
-      m_layoutView.document().frameHost()->globalRootScrollerController();
-
-  Element* documentElement = m_layoutView.document().documentElement();
-  bool frameIsRootScroller =
-      documentElement &&
-      documentElement->isSameNode(
-          globalRootScrollerController.globalRootScroller());
-
-  // We normally clip iframes' (but not the root frame) overflow controls
-  // host and container layers but if the root scroller is the iframe itself
-  // we want it to behave like the root frame.
-  shouldClip &= !frameIsRootScroller && !m_layoutView.frame()->isLocalRoot();
-
-  if (m_containerLayer)
-    m_containerLayer->setMasksToBounds(shouldClip);
-  if (m_overflowControlsHostLayer)
-    m_overflowControlsHostLayer->setMasksToBounds(shouldClip);
+  // Inform the inspector that the layer tree has changed.
+  if (isMainFrame())
+    probe::layerTreeDidChange(m_layoutView.frame());
 }
 
 static void restartAnimationOnCompositor(const LayoutObject& layoutObject) {
@@ -534,7 +523,7 @@ bool PaintLayerCompositor::allocateOrClearCompositedLayerMapping(
       layer->ensureCompositedLayerMapping();
       compositedLayerMappingChanged = true;
 
-      restartAnimationOnCompositor(*layer->layoutObject());
+      restartAnimationOnCompositor(layer->layoutObject());
 
       // At this time, the ScrollingCoordinator only supports the top-level
       // frame.
@@ -561,11 +550,11 @@ bool PaintLayerCompositor::allocateOrClearCompositedLayerMapping(
       break;
   }
 
-  if (compositedLayerMappingChanged && layer->layoutObject()->isLayoutPart()) {
+  if (compositedLayerMappingChanged && layer->layoutObject().isLayoutPart()) {
     PaintLayerCompositor* innerCompositor =
         frameContentsCompositor(toLayoutPart(layer->layoutObject()));
     if (innerCompositor && innerCompositor->staleInCompositingMode())
-      innerCompositor->updateRootLayerAttachment();
+      innerCompositor->ensureRootLayer();
   }
 
   if (compositedLayerMappingChanged) {
@@ -590,8 +579,8 @@ void PaintLayerCompositor::paintInvalidationOnCompositingChange(
     PaintLayer* layer) {
   // If the layoutObject is not attached yet, no need to issue paint
   // invalidations.
-  if (layer->layoutObject() != &m_layoutView &&
-      !layer->layoutObject()->parent())
+  if (&layer->layoutObject() != &m_layoutView &&
+      !layer->layoutObject().parent())
     return;
 
   // For querying Layer::compositingState()
@@ -603,7 +592,7 @@ void PaintLayerCompositor::paintInvalidationOnCompositingChange(
   // state. crbug.com/457415
   DisablePaintInvalidationStateAsserts paintInvalidationAssertisabler;
 
-  ObjectPaintInvalidator(*layer->layoutObject())
+  ObjectPaintInvalidator(layer->layoutObject())
       .invalidatePaintIncludingNonCompositingDescendants();
 }
 
@@ -620,7 +609,7 @@ void PaintLayerCompositor::updateContainerSizes() {
   FrameView* frameView = m_layoutView.frameView();
 
   const TopDocumentRootScrollerController& globalRootScrollerController =
-      m_layoutView.document().frameHost()->globalRootScrollerController();
+      m_layoutView.document().page()->globalRootScrollerController();
 
   // The global root scroller must always size to the root FrameView.
   if (rootLayer() &&
@@ -682,7 +671,7 @@ void PaintLayerCompositor::frameViewScrollbarsExistenceDidChange() {
 }
 
 void PaintLayerCompositor::rootFixedBackgroundsChanged() {
-  if (!supportsFixedRootBackgroundCompositing())
+  if (!supportsFixedRootBackgroundCompositing() || !m_containerLayer)
     return;
 
   // To avoid having to make the fixed root background layer fixed positioned to
@@ -714,15 +703,18 @@ std::unique_ptr<JSONObject> PaintLayerCompositor::layerTreeAsJSON(
   ASSERT(lifecycle().state() >= DocumentLifecycle::PaintInvalidationClean ||
          m_layoutView.frameView()->shouldThrottleRendering());
 
-  if (!m_rootContentLayer)
-    return nullptr;
-
   // We skip dumping the scroll and clip layers to keep layerTreeAsText output
   // similar between platforms (unless we explicitly request dumping from the
   // root.
   GraphicsLayer* rootLayer = m_rootContentLayer.get();
+  if (!rootLayer)
+    rootLayer = rootGraphicsLayer();
+
+  if (!rootLayer)
+    return nullptr;
+
   if (flags & LayerTreeIncludesRootLayer) {
-    if (m_layoutView.frame()->isMainFrame()) {
+    if (isMainFrame()) {
       while (rootLayer->parent())
         rootLayer = rootLayer->parent();
     } else {
@@ -734,12 +726,11 @@ std::unique_ptr<JSONObject> PaintLayerCompositor::layerTreeAsJSON(
 }
 
 PaintLayerCompositor* PaintLayerCompositor::frameContentsCompositor(
-    LayoutPart* layoutObject) {
-  if (!layoutObject->node()->isFrameOwnerElement())
+    LayoutPart& layoutObject) {
+  if (!layoutObject.node()->isFrameOwnerElement())
     return nullptr;
 
-  HTMLFrameOwnerElement* element =
-      toHTMLFrameOwnerElement(layoutObject->node());
+  HTMLFrameOwnerElement* element = toHTMLFrameOwnerElement(layoutObject.node());
   if (Document* contentDocument = element->contentDocument()) {
     if (LayoutViewItem view = contentDocument->layoutViewItem())
       return view.compositor();
@@ -748,17 +739,18 @@ PaintLayerCompositor* PaintLayerCompositor::frameContentsCompositor(
 }
 
 bool PaintLayerCompositor::attachFrameContentLayersToIframeLayer(
-    LayoutPart* layoutObject) {
+    LayoutPart& layoutObject) {
   PaintLayerCompositor* innerCompositor = frameContentsCompositor(layoutObject);
   if (!innerCompositor || !innerCompositor->staleInCompositingMode() ||
-      innerCompositor->getRootLayerAttachment() !=
+      innerCompositor->m_rootLayerAttachment !=
           RootLayerAttachedViaEnclosingFrame)
     return false;
 
-  PaintLayer* layer = layoutObject->layer();
+  PaintLayer* layer = layoutObject.layer();
   if (!layer->hasCompositedLayerMapping())
     return false;
 
+  DisableCompositingQueryAsserts disabler;
   layer->compositedLayerMapping()->setSublayers(
       GraphicsLayerVector(1, innerCompositor->rootGraphicsLayer()));
   return true;
@@ -787,11 +779,11 @@ PaintLayer* PaintLayerCompositor::rootLayer() const {
 }
 
 GraphicsLayer* PaintLayerCompositor::rootGraphicsLayer() const {
-  return m_overflowControlsHostLayer.get();
-}
-
-GraphicsLayer* PaintLayerCompositor::frameScrollLayer() const {
-  return m_scrollLayer.get();
+  if (m_overflowControlsHostLayer)
+    return m_overflowControlsHostLayer.get();
+  if (CompositedLayerMapping* clm = rootLayer()->compositedLayerMapping())
+    return clm->childForSuperlayers();
+  return nullptr;
 }
 
 GraphicsLayer* PaintLayerCompositor::scrollLayer() const {
@@ -799,14 +791,6 @@ GraphicsLayer* PaintLayerCompositor::scrollLayer() const {
           m_layoutView.frameView()->getScrollableArea())
     return scrollableArea->layerForScrolling();
   return nullptr;
-}
-
-GraphicsLayer* PaintLayerCompositor::containerLayer() const {
-  return m_containerLayer.get();
-}
-
-GraphicsLayer* PaintLayerCompositor::rootContentLayer() const {
-  return m_rootContentLayer.get();
 }
 
 void PaintLayerCompositor::setIsInWindow(bool isInWindow) {
@@ -817,11 +801,8 @@ void PaintLayerCompositor::setIsInWindow(bool isInWindow) {
     if (m_rootLayerAttachment != RootLayerUnattached)
       return;
 
-    RootLayerAttachment attachment = m_layoutView.frame()->isLocalRoot()
-                                         ? RootLayerAttachedViaChromeClient
-                                         : RootLayerAttachedViaEnclosingFrame;
     attachCompositorTimeline();
-    attachRootLayer(attachment);
+    attachRootLayer();
   } else {
     if (m_rootLayerAttachment == RootLayerUnattached)
       return;
@@ -856,7 +837,7 @@ void PaintLayerCompositor::updatePotentialCompositingReasonsFromStyle(
 }
 
 bool PaintLayerCompositor::canBeComposited(const PaintLayer* layer) const {
-  FrameView* frameView = layer->layoutObject()->frameView();
+  FrameView* frameView = layer->layoutObject().frameView();
   // Elements within an invisible frame must not be composited because they are
   // not drawn.
   if (frameView && !frameView->isVisible())
@@ -864,11 +845,11 @@ bool PaintLayerCompositor::canBeComposited(const PaintLayer* layer) const {
 
   const bool hasCompositorAnimation =
       m_compositingReasonFinder.requiresCompositingForAnimation(
-          *layer->layoutObject()->style());
+          *layer->layoutObject().style());
   return m_hasAcceleratedCompositing &&
          (hasCompositorAnimation || !layer->subtreeIsInvisible()) &&
          layer->isSelfPaintingLayer() &&
-         !layer->layoutObject()->isLayoutFlowThread();
+         !layer->layoutObject().isLayoutFlowThread();
 }
 
 // Return true if the given layer is a stacking context and has compositing
@@ -878,7 +859,7 @@ bool PaintLayerCompositor::canBeComposited(const PaintLayer* layer) const {
 bool PaintLayerCompositor::clipsCompositingDescendants(
     const PaintLayer* layer) const {
   return layer->hasCompositingDescendant() &&
-         layer->layoutObject()->hasClipRelatedProperty();
+         layer->layoutObject().hasClipRelatedProperty();
 }
 
 // If an element has composited negative z-index children, those children paint
@@ -945,7 +926,7 @@ void PaintLayerCompositor::paintContents(const GraphicsLayer* graphicsLayer,
   DrawingRecorder drawingRecorder(context, *graphicsLayer,
                                   DisplayItem::kScrollbarCompositedScrollbar,
                                   layerBounds);
-  builder.endRecording()->playback(context.canvas());
+  context.canvas()->drawPicture(builder.endRecording());
 }
 
 Scrollbar* PaintLayerCompositor::graphicsLayerToScrollbar(
@@ -1046,11 +1027,8 @@ void PaintLayerCompositor::updateOverflowControlsLayers() {
   // Main frame scrollbars should always be stuck to the sides of the screen (in
   // overscroll and in pinch-zoom), so make the parent for the scrollbars be the
   // viewport container layer.
-  if (m_layoutView.frame()->isMainFrame()) {
-    VisualViewport& visualViewport =
-        m_layoutView.frameView()->page()->frameHost().visualViewport();
-    controlsParent = visualViewport.containerLayer();
-  }
+  if (isMainFrame())
+    controlsParent = visualViewport().containerLayer();
 
   if (requiresHorizontalScrollbarLayer()) {
     if (!m_layerForHorizontalScrollbar) {
@@ -1113,13 +1091,17 @@ void PaintLayerCompositor::updateOverflowControlsLayers() {
 }
 
 void PaintLayerCompositor::ensureRootLayer() {
-  RootLayerAttachment expectedAttachment =
-      m_layoutView.frame()->isLocalRoot() ? RootLayerAttachedViaChromeClient
-                                          : RootLayerAttachedViaEnclosingFrame;
-  if (expectedAttachment == m_rootLayerAttachment)
+  if (m_rootLayerAttachment != RootLayerUnattached)
     return;
 
-  if (!m_rootContentLayer) {
+  if (isMainFrame())
+    visualViewport().createLayerTree();
+
+  // When RLS is enabled, none of the PLC GraphicsLayers exist.
+  bool shouldCreateOwnLayers =
+      !RuntimeEnabledFeatures::rootLayerScrollingEnabled();
+
+  if (shouldCreateOwnLayers && !m_rootContentLayer) {
     m_rootContentLayer = GraphicsLayer::create(this);
     IntRect overflowRect = m_layoutView.pixelSnappedLayoutOverflowRect();
     m_rootContentLayer->setSize(
@@ -1127,20 +1109,29 @@ void PaintLayerCompositor::ensureRootLayer() {
     m_rootContentLayer->setPosition(FloatPoint());
     m_rootContentLayer->setOwnerNodeId(
         DOMNodeIds::idForNode(m_layoutView.node()));
+
+    // FIXME: with rootLayerScrolls, we probably don't even need
+    // m_rootContentLayer?
+    if (!RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
+      // Need to clip to prevent transformed content showing outside this frame
+      m_rootContentLayer->setMasksToBounds(true);
+    }
   }
 
-  if (!m_overflowControlsHostLayer) {
+  if (shouldCreateOwnLayers && !m_overflowControlsHostLayer) {
     ASSERT(!m_scrollLayer);
     ASSERT(!m_containerLayer);
 
     // Create a layer to host the clipping layer and the overflow controls
-    // layers.  Whether these layers mask the content below is determined
-    // in updateClippingOnCompositorLayers.
+    // layers.
     m_overflowControlsHostLayer = GraphicsLayer::create(this);
-    m_containerLayer = GraphicsLayer::create(this);
 
-    // TODO(skobes): When root layer scrolling is enabled, we should not even
-    // create m_scrollLayer or most of the layers in PLC.
+    // Clip iframe's overflow controls layer.
+    bool containerMasksToBounds = !m_layoutView.frame()->isLocalRoot();
+    m_overflowControlsHostLayer->setMasksToBounds(containerMasksToBounds);
+
+    // Create a clipping layer if this is an iframe or settings require to clip.
+    m_containerLayer = GraphicsLayer::create(this);
     m_scrollLayer = GraphicsLayer::create(this);
     if (ScrollingCoordinator* scrollingCoordinator =
             this->scrollingCoordinator())
@@ -1163,20 +1154,11 @@ void PaintLayerCompositor::ensureRootLayer() {
     frameViewDidChangeSize();
   }
 
-  // Check to see if we have to change the attachment
-  if (m_rootLayerAttachment != RootLayerUnattached) {
-    detachRootLayer();
-    detachCompositorTimeline();
-  }
-
   attachCompositorTimeline();
-  attachRootLayer(expectedAttachment);
+  attachRootLayer();
 }
 
 void PaintLayerCompositor::destroyRootLayer() {
-  if (!m_rootContentLayer)
-    return;
-
   detachRootLayer();
 
   if (m_layerForHorizontalScrollbar) {
@@ -1215,44 +1197,27 @@ void PaintLayerCompositor::destroyRootLayer() {
   m_rootContentLayer = nullptr;
 }
 
-void PaintLayerCompositor::attachRootLayer(RootLayerAttachment attachment) {
-  if (!m_rootContentLayer)
-    return;
-
+void PaintLayerCompositor::attachRootLayer() {
   // In Slimming Paint v2, PaintArtifactCompositor is responsible for the root
   // layer.
   if (RuntimeEnabledFeatures::slimmingPaintV2Enabled())
     return;
 
-  switch (attachment) {
-    case RootLayerUnattached:
-      ASSERT_NOT_REACHED();
-      break;
-    case RootLayerAttachedViaChromeClient: {
-      LocalFrame& frame = m_layoutView.frameView()->frame();
-      Page* page = frame.page();
-      if (!page)
-        return;
-      page->chromeClient().attachRootGraphicsLayer(rootGraphicsLayer(), &frame);
-      break;
-    }
-    case RootLayerAttachedViaEnclosingFrame: {
-      HTMLFrameOwnerElement* ownerElement =
-          m_layoutView.document().localOwner();
-      ASSERT(ownerElement);
-      // The layer will get hooked up via
-      // CompositedLayerMapping::updateGraphicsLayerConfiguration() for the
-      // frame's layoutObject in the parent document.
-      ownerElement->setNeedsCompositingUpdate();
-      break;
-    }
+  if (m_layoutView.frame()->isLocalRoot()) {
+    m_rootLayerAttachment = RootLayerPendingAttachViaChromeClient;
+  } else {
+    HTMLFrameOwnerElement* ownerElement = m_layoutView.document().localOwner();
+    DCHECK(ownerElement);
+    // The layer will get hooked up via
+    // CompositedLayerMapping::updateGraphicsLayerConfiguration() for the
+    // frame's layoutObject in the parent document.
+    ownerElement->setNeedsCompositingUpdate();
+    m_rootLayerAttachment = RootLayerAttachedViaEnclosingFrame;
   }
-
-  m_rootLayerAttachment = attachment;
 }
 
 void PaintLayerCompositor::detachRootLayer() {
-  if (!m_rootContentLayer || m_rootLayerAttachment == RootLayerUnattached)
+  if (m_rootLayerAttachment == RootLayerUnattached)
     return;
 
   switch (m_rootLayerAttachment) {
@@ -1262,8 +1227,6 @@ void PaintLayerCompositor::detachRootLayer() {
       // frame's layoutObject in the parent document.
       if (m_overflowControlsHostLayer)
         m_overflowControlsHostLayer->removeFromParent();
-      else
-        m_rootContentLayer->removeFromParent();
 
       if (HTMLFrameOwnerElement* ownerElement =
               m_layoutView.document().localOwner())
@@ -1278,15 +1241,12 @@ void PaintLayerCompositor::detachRootLayer() {
       page->chromeClient().attachRootGraphicsLayer(0, &frame);
       break;
     }
+    case RootLayerPendingAttachViaChromeClient:
     case RootLayerUnattached:
       break;
   }
 
   m_rootLayerAttachment = RootLayerUnattached;
-}
-
-void PaintLayerCompositor::updateRootLayerAttachment() {
-  ensureRootLayer();
 }
 
 void PaintLayerCompositor::attachCompositorTimeline() {
@@ -1328,6 +1288,14 @@ Page* PaintLayerCompositor::page() const {
 
 DocumentLifecycle& PaintLayerCompositor::lifecycle() const {
   return m_layoutView.document().lifecycle();
+}
+
+bool PaintLayerCompositor::isMainFrame() const {
+  return m_layoutView.frame()->isMainFrame();
+}
+
+VisualViewport& PaintLayerCompositor::visualViewport() const {
+  return m_layoutView.frameView()->page()->visualViewport();
 }
 
 String PaintLayerCompositor::debugName(

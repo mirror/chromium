@@ -7,11 +7,6 @@
       "drawsContent": true,
       "paintInvalidations": [
         {
-          "object": "LayoutBlockFlow HTML",
-          "rect": [0, 0, 785, 836],
-          "reason": "forced by layout"
-        },
-        {
           "object": "LayoutView #document",
           "rect": [0, 742, 785, 94],
           "reason": "incremental"
@@ -32,19 +27,9 @@
           "reason": "layoutObject insertion"
         },
         {
-          "object": "LayoutBlockFlow HTML",
-          "rect": [10, 94, 728, 90],
-          "reason": "layoutObject insertion"
-        },
-        {
           "object": "LayoutView #document",
           "rect": [10, 94, 728, 90],
-          "reason": "style change"
-        },
-        {
-          "object": "LayoutBlockFlow BODY",
-          "rect": [18, 102, 712, 74],
-          "reason": "layoutObject insertion"
+          "reason": "layout overflow box change"
         },
         {
           "object": "LayoutImage IMG",
@@ -63,10 +48,6 @@
     {
       "object": "LayoutView #document",
       "reason": "incremental"
-    },
-    {
-      "object": "LayoutBlockFlow HTML",
-      "reason": "forced by layout"
     },
     {
       "object": "LayoutIFrame IFRAME id='iframe'",
@@ -89,16 +70,24 @@
       "reason": "location change"
     },
     {
+      "object": "VerticalScrollbar",
+      "reason": "scroll"
+    },
+    {
       "object": "LayoutView #document",
-      "reason": "style change"
+      "reason": "scroll"
+    },
+    {
+      "object": "LayoutView #document",
+      "reason": "layout overflow box change"
     },
     {
       "object": "LayoutBlockFlow HTML",
-      "reason": "layoutObject insertion"
+      "reason": "location change"
     },
     {
       "object": "LayoutBlockFlow BODY",
-      "reason": "layoutObject insertion"
+      "reason": "location change"
     }
   ]
 }

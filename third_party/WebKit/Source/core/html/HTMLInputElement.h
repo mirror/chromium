@@ -25,6 +25,7 @@
 #ifndef HTMLInputElement_h
 #define HTMLInputElement_h
 
+#include "base/gtest_prod_util.h"
 #include "core/CoreExport.h"
 #include "core/html/TextControlElement.h"
 #include "core/html/forms/StepRange.h"
@@ -122,7 +123,9 @@ class CORE_EXPORT HTMLInputElement : public TextControlElement {
                 ExceptionState&,
                 TextFieldEventBehavior = DispatchNoEvent);
   void setValue(const String&,
-                TextFieldEventBehavior = DispatchNoEvent) override;
+                TextFieldEventBehavior = DispatchNoEvent,
+                TextControlSetValueSelection =
+                    TextControlSetValueSelection::kSetSelectionToEnd) override;
   void setValueForUser(const String&);
   // Update the value, and clear hasDirtyValue() flag.
   void setNonDirtyValue(const String&);
@@ -156,8 +159,8 @@ class CORE_EXPORT HTMLInputElement : public TextControlElement {
   // delay the 'input' event with EventQueueScope.
   void setValueFromRenderer(const String&);
 
-  unsigned selectionStartForBinding(ExceptionState&) const;
-  unsigned selectionEndForBinding(ExceptionState&) const;
+  unsigned selectionStartForBinding(bool&, ExceptionState&) const;
+  unsigned selectionEndForBinding(bool&, ExceptionState&) const;
   String selectionDirectionForBinding(ExceptionState&) const;
   void setSelectionStartForBinding(unsigned, ExceptionState&);
   void setSelectionEndForBinding(unsigned, ExceptionState&);
@@ -427,6 +430,8 @@ class CORE_EXPORT HTMLInputElement : public TextControlElement {
   // element lives on.
   Member<HTMLImageLoader> m_imageLoader;
   Member<ListAttributeTargetObserver> m_listAttributeTargetObserver;
+
+  FRIEND_TEST_ALL_PREFIXES(HTMLInputElementTest, RadioKeyDownDCHECKFailure);
 };
 
 }  // namespace blink

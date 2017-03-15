@@ -5,6 +5,7 @@
 #ifndef WebFeaturePolicy_h
 #define WebFeaturePolicy_h
 
+#include "WebCommon.h"
 #include "WebSecurityOrigin.h"
 #include "WebString.h"
 #include "WebVector.h"
@@ -47,7 +48,7 @@ enum class WebFeaturePolicyFeature {
   LAST_FEATURE = WebRTC
 };
 
-struct WebParsedFeaturePolicyDeclaration {
+struct BLINK_PLATFORM_EXPORT WebParsedFeaturePolicyDeclaration {
   WebParsedFeaturePolicyDeclaration() : matchesAllOrigins(false) {}
   WebString featureName;
   bool matchesAllOrigins;
@@ -56,8 +57,18 @@ struct WebParsedFeaturePolicyDeclaration {
 
 // Used in Blink code to represent parsed headers. Used for IPC between renderer
 // and browser.
-using WebParsedFeaturePolicyHeader =
-    WebVector<WebParsedFeaturePolicyDeclaration>;
+using WebParsedFeaturePolicy = WebVector<WebParsedFeaturePolicyDeclaration>;
+
+// Composed full policy for a document. Stored in SecurityContext for each
+// document. This is essentially an opaque handle to an object in the embedder.
+class BLINK_PLATFORM_EXPORT WebFeaturePolicy {
+ public:
+  virtual ~WebFeaturePolicy() {}
+
+  // Returns whether or not the given feature is enabled for the origin of the
+  // document that owns the policy.
+  virtual bool IsFeatureEnabled(blink::WebFeaturePolicyFeature) const = 0;
+};
 
 }  // namespace blink
 

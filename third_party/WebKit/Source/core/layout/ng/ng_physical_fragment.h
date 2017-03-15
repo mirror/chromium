@@ -6,19 +6,20 @@
 #define NGPhysicalFragment_h
 
 #include "core/CoreExport.h"
-#include "core/layout/ng/ng_units.h"
+#include "core/layout/ng/geometry/ng_physical_offset.h"
+#include "core/layout/ng/geometry/ng_physical_size.h"
+#include "core/layout/ng/ng_break_token.h"
 #include "platform/LayoutUnit.h"
 #include "platform/heap/Handle.h"
+#include "wtf/RefPtr.h"
 #include "wtf/Vector.h"
 
 namespace blink {
 
+class ComputedStyle;
 class LayoutObject;
-class NGBlockNode;
-class NGBreakToken;
-struct NGFloatingObject;
 
-// The NGPhysicalFragment contains the output information from layout. The
+// The NGPhysicalFragment contains the output geometry from layout. The
 // fragment stores all of its information in the physical coordinate system for
 // use by paint, hit-testing etc.
 //
@@ -26,14 +27,16 @@ struct NGFloatingObject;
 // Once we have transitioned fully to LayoutNG it should be a const pointer
 // such that paint/hit-testing/etc don't modify it.
 //
-// Layout code should only access output layout information through the
-// NGFragmentBase classes which transforms information into the logical
+// Layout code should only access geometry information through the
+// NGFragment wrapper classes which transforms information into the logical
 // coordinate system.
 class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment> {
  public:
   enum NGFragmentType { kFragmentBox = 0, kFragmentText = 1 };
 
   NGFragmentType Type() const { return static_cast<NGFragmentType>(type_); }
+  bool IsBox() const { return Type() == NGFragmentType::kFragmentBox; }
+  bool IsText() const { return Type() == NGFragmentType::kFragmentText; }
 
   // Override RefCounted's deref() to ensure operator delete is called on the
   // appropriate subclass type.
@@ -55,7 +58,7 @@ class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment> {
   LayoutUnit WidthOverflow() const { return overflow_.width; }
   LayoutUnit HeightOverflow() const { return overflow_.height; }
 
-  // Returns the offset relative to the parent fragement's content-box.
+  // Returns the offset relative to the parent fragment's content-box.
   LayoutUnit LeftOffset() const {
     DCHECK(is_placed_);
     return offset_.left;
@@ -66,68 +69,40 @@ class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment> {
     return offset_.top;
   }
 
-  // Should only be used by the parent fragement's layout.
+  NGPhysicalOffset Offset() const {
+    DCHECK(is_placed_);
+    return offset_;
+  }
+
+  // Should only be used by the parent fragment's layout.
   void SetOffset(NGPhysicalOffset offset) {
     DCHECK(!is_placed_);
     offset_ = offset;
     is_placed_ = true;
   }
 
-  NGBreakToken* BreakToken() const { return break_token_; }
+  NGBreakToken* BreakToken() const { return break_token_.get(); }
 
+  const ComputedStyle& Style() const;
+
+  // GetLayoutObject should only be used when necessary for compatibility
+  // with LegacyLayout.
   LayoutObject* GetLayoutObject() const { return layout_object_; }
 
-  const HeapLinkedHashSet<WeakMember<NGBlockNode>>& OutOfFlowDescendants()
-      const {
-    return out_of_flow_descendants_;
-  }
-
-  const Vector<NGStaticPosition>& OutOfFlowPositions() const {
-    return out_of_flow_positions_;
-  }
-
   bool IsPlaced() const { return is_placed_; }
-
-  // List of floats that need to be positioned by the next in-flow child that
-  // can determine its position in space.
-  // Use case example where it may be needed:
-  //    <div><float></div>
-  //    <div style="margin-top: 10px; height: 20px"></div>
-  // The float cannot be positioned right away inside of the 1st div because
-  // the vertical position is not known at that moment. It will be known only
-  // after the 2nd div collapses its margin with its parent.
-  const Vector<Persistent<NGFloatingObject>>& UnpositionedFloats() const {
-    return unpositioned_floats_;
-  }
-
-  // List of positioned float that need to be copied to the old layout tree.
-  // TODO(layout-ng): remove this once we change painting code to handle floats
-  // differently.
-  const Vector<Persistent<NGFloatingObject>>& PositionedFloats() const {
-    return positioned_floats_;
-  }
 
  protected:
   NGPhysicalFragment(LayoutObject* layout_object,
                      NGPhysicalSize size,
                      NGPhysicalSize overflow,
                      NGFragmentType type,
-                     PersistentHeapLinkedHashSet<WeakMember<NGBlockNode>>&
-                         out_of_flow_descendants,
-                     Vector<NGStaticPosition> out_of_flow_positions,
-                     Vector<Persistent<NGFloatingObject>>& unpositioned_floats,
-                     Vector<Persistent<NGFloatingObject>>& positioned_floats,
-                     NGBreakToken* break_token = nullptr);
+                     RefPtr<NGBreakToken> break_token = nullptr);
 
   LayoutObject* layout_object_;
   NGPhysicalSize size_;
   NGPhysicalSize overflow_;
   NGPhysicalOffset offset_;
-  Persistent<NGBreakToken> break_token_;
-  PersistentHeapLinkedHashSet<WeakMember<NGBlockNode>> out_of_flow_descendants_;
-  Vector<NGStaticPosition> out_of_flow_positions_;
-  Vector<Persistent<NGFloatingObject>> unpositioned_floats_;
-  Vector<Persistent<NGFloatingObject>> positioned_floats_;
+  RefPtr<NGBreakToken> break_token_;
 
   unsigned type_ : 1;
   unsigned is_placed_ : 1;

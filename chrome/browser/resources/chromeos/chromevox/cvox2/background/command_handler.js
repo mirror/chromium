@@ -9,10 +9,12 @@
 goog.provide('CommandHandler');
 
 goog.require('ChromeVoxState');
+goog.require('CustomAutomationEvent');
 goog.require('Output');
 goog.require('cvox.ChromeVoxBackground');
 
 goog.scope(function() {
+var AutomationEvent = chrome.automation.AutomationEvent;
 var AutomationNode = chrome.automation.AutomationNode;
 var Dir = constants.Dir;
 var EventType = chrome.automation.EventType;
@@ -199,8 +201,7 @@ CommandHandler.onCommand = function(command) {
     return true;
 
   // Next/classic compat commands hereafter.
-  if (ChromeVoxState.instance.mode == ChromeVoxMode.CLASSIC ||
-      ChromeVoxState.instance.mode == ChromeVoxMode.NEXT_COMPAT)
+  if (ChromeVoxState.instance.mode == ChromeVoxMode.CLASSIC)
     return true;
 
   var current = ChromeVoxState.instance.currentRange_;
@@ -578,7 +579,9 @@ CommandHandler.onCommand = function(command) {
           .withRichSpeechAndBraille(current, null, Output.EventType.NAVIGATE)
           .go();
       return false;
-
+    case 'viewGraphicAsBraille':
+      CommandHandler.viewGraphicAsBraille_(current);
+      return false;
     // Table commands.
     case 'previousRow':
       dir = Dir.BACKWARD;
@@ -771,6 +774,71 @@ CommandHandler.increaseOrDecreaseSpeechProperty_ =
     cvox.ChromeVox.tts.speak(
         announcement, cvox.QueueMode.FLUSH,
         cvox.AbstractTts.PERSONALITY_ANNOTATION);
+  }
+};
+
+/**
+ * To support viewGraphicAsBraille_(), the current image node.
+ * @type {AutomationNode?};
+ */
+CommandHandler.imageNode_;
+
+/**
+ * Called when an image frame is received on a node.
+ * @param {!(AutomationEvent|CustomAutomationEvent)} event The event.
+ * @private
+ */
+CommandHandler.onImageFrameUpdated_ = function(event) {
+  var target = event.target;
+  if (target != CommandHandler.imageNode_)
+    return;
+
+  if (!AutomationUtil.isDescendantOf(
+      ChromeVoxState.instance.currentRange.start.node,
+      CommandHandler.imageNode_)) {
+    CommandHandler.imageNode_.removeEventListener(
+        EventType.IMAGE_FRAME_UPDATED,
+        CommandHandler.onImageFrameUpdated_, false);
+    CommandHandler.imageNode_ = null;
+    return;
+  }
+
+  if (target.imageDataUrl) {
+    cvox.ChromeVox.braille.writeRawImage(target.imageDataUrl);
+    cvox.ChromeVox.braille.freeze();
+  }
+};
+
+/**
+ * Handle the command to view the first graphic within the current range
+ * as braille.
+ * @param {!AutomationNode} current The current range.
+ * @private
+ */
+CommandHandler.viewGraphicAsBraille_ = function(current) {
+  if (CommandHandler.imageNode_) {
+    CommandHandler.imageNode_.removeEventListener(
+        EventType.IMAGE_FRAME_UPDATED,
+        CommandHandler.onImageFrameUpdated_, false);
+    CommandHandler.imageNode_ = null;
+  }
+
+  // Find the first node within the current range that supports image data.
+  var imageNode = AutomationUtil.findNodePost(
+      current.start.node, Dir.FORWARD,
+      AutomationPredicate.supportsImageData);
+  if (!imageNode)
+    return;
+
+  imageNode.addEventListener(EventType.IMAGE_FRAME_UPDATED,
+                             this.onImageFrameUpdated_, false);
+  CommandHandler.imageNode_ = imageNode;
+  if (imageNode.imageDataUrl) {
+    var event = new CustomAutomationEvent(
+        EventType.IMAGE_FRAME_UPDATED, imageNode, 'page');
+    CommandHandler.onImageFrameUpdated_(event);
+  } else {
+    imageNode.getImageData(0, 0);
   }
 };
 

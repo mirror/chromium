@@ -16,6 +16,7 @@
 #include "android_webview/common/aw_paths.h"
 #include "android_webview/common/aw_switches.h"
 #include "android_webview/common/crash_reporter/aw_microdump_crash_reporter.h"
+#include "android_webview/common/crash_reporter/crash_keys.h"
 #include "android_webview/gpu/aw_content_gpu_client.h"
 #include "android_webview/native/aw_locale_manager_impl.h"
 #include "android_webview/native/aw_media_url_interceptor.h"
@@ -24,11 +25,14 @@
 #include "android_webview/native/aw_web_preferences_populater_impl.h"
 #include "android_webview/renderer/aw_content_renderer_client.h"
 #include "base/android/apk_assets.h"
+#include "base/android/build_info.h"
 #include "base/command_line.h"
 #include "base/cpu.h"
+#include "base/debug/crash_logging.h"
 #include "base/i18n/icu_util.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/threading/thread_restrictions.h"
 #include "cc/base/switches.h"
 #include "components/crash/content/app/breakpad_linux.h"
@@ -37,7 +41,7 @@
 #include "content/public/browser/android/browser_media_player_manager_register.h"
 #include "content/public/browser/browser_main_runner.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/common/content_descriptors.h"
+#include "content/public/common/content_descriptor_keys.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "gin/public/isolate_holder.h"
@@ -55,8 +59,8 @@ namespace {
 
 // TODO(boliu): Remove this global Allow once the underlying issues are
 // resolved - http://crbug.com/240453. See AwMainDelegate::RunProcess below.
-base::LazyInstance<std::unique_ptr<ScopedAllowWaitForLegacyWebViewApi>>
-    g_allow_wait_in_ui_thread = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<std::unique_ptr<ScopedAllowWaitForLegacyWebViewApi>>::
+    DestructorAtExit g_allow_wait_in_ui_thread = LAZY_INSTANCE_INITIALIZER;
 }
 
 AwMainDelegate::AwMainDelegate() {
@@ -132,15 +136,15 @@ bool AwMainDelegate::BasicStartupComplete(int* exit_code) {
     ui::GestureConfiguration::GetInstance()
         ->set_fling_touchscreen_tap_suppression_enabled(false);
 
-    base::android::RegisterApkAssetWithGlobalDescriptors(
-        kV8NativesDataDescriptor,
-        gin::V8Initializer::GetNativesFilePath().AsUTF8Unsafe());
-    base::android::RegisterApkAssetWithGlobalDescriptors(
-        kV8SnapshotDataDescriptor32,
-        gin::V8Initializer::GetSnapshotFilePath(true).AsUTF8Unsafe());
-    base::android::RegisterApkAssetWithGlobalDescriptors(
-        kV8SnapshotDataDescriptor64,
-        gin::V8Initializer::GetSnapshotFilePath(false).AsUTF8Unsafe());
+    base::android::RegisterApkAssetWithFileDescriptorStore(
+        content::kV8NativesDataDescriptor,
+        gin::V8Initializer::GetNativesFilePath());
+    base::android::RegisterApkAssetWithFileDescriptorStore(
+        content::kV8Snapshot32DataDescriptor,
+        gin::V8Initializer::GetSnapshotFilePath(true));
+    base::android::RegisterApkAssetWithFileDescriptorStore(
+        content::kV8Snapshot64DataDescriptor,
+        gin::V8Initializer::GetSnapshotFilePath(false));
   }
 #endif  // V8_USE_EXTERNAL_STARTUP_DATA
 
@@ -210,6 +214,16 @@ void AwMainDelegate::PreSandboxStartup() {
   }
 
   crash_reporter::EnableCrashReporter(process_type, crash_signal_fd);
+
+  base::android::BuildInfo* android_build_info =
+      base::android::BuildInfo::GetInstance();
+  base::debug::SetCrashKeyValue(crash_keys::kAppPackageName,
+                                android_build_info->package_name());
+  base::debug::SetCrashKeyValue(crash_keys::kAppPackageVersionCode,
+                                android_build_info->package_version_code());
+  base::debug::SetCrashKeyValue(
+      crash_keys::kAndroidSdkInt,
+      base::IntToString(android_build_info->sdk_int()));
 }
 
 int AwMainDelegate::RunProcess(

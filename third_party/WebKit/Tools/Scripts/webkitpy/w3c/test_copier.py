@@ -33,18 +33,12 @@ a local W3C repository source directory into a destination directory.
 
 import logging
 import mimetypes
-import os
 import re
 
 from webkitpy.common.webkit_finder import WebKitFinder
 from webkitpy.layout_tests.models.test_expectations import TestExpectationParser
 from webkitpy.w3c.test_parser import TestParser
 from webkitpy.w3c.test_converter import convert_for_webkit
-
-# Maximum length of import path starting from top of source repository.
-# This limit is here because the Windows builders cannot create paths that are
-# longer than the Windows max path length (260). See http://crbug.com/609871.
-MAX_PATH_LENGTH = 140
 
 _log = logging.getLogger(__name__)
 
@@ -57,7 +51,7 @@ class TestCopier(object):
         Args:
             host: An instance of Host.
             source_repo_path: Path to the local checkout of a
-            web-platform-tests or csswg-test repository.
+                web-platform-tests or csswg-test repository.
             dest_dir_name: The name of the directory under the layout tests
                 directory where imported tests should be copied to.
                 TODO(qyearsley): This can be made into a constant.
@@ -88,7 +82,7 @@ class TestCopier(object):
         self._prefixed_properties = {}
 
     def do_import(self):
-        _log.info("Importing %s into %s", self.source_repo_path, self.destination_directory)
+        _log.info('Importing %s into %s', self.source_repo_path, self.destination_directory)
         self.find_importable_tests()
         self.import_tests()
 
@@ -108,11 +102,11 @@ class TestCopier(object):
             jstests = 0
 
             # Files in 'tools' are not for browser testing, so we skip them.
-            # See: http://testthewebforward.org/docs/test-format-guidelines.html#tools
+            # See: http://web-platform-tests.org/writing-tests/general-guidelines.html#tools
             dirs_to_skip = ('.git', 'test-plan', 'tools')
 
             # We copy all files in 'support', including HTML without metadata.
-            # See: http://testthewebforward.org/docs/test-format-guidelines.html#support-files
+            # See: http://web-platform-tests.org/writing-tests/general-guidelines.html#support-files
             dirs_to_include = ('resources', 'support')
 
             if dirs:
@@ -145,18 +139,16 @@ class TestCopier(object):
                         continue
                 # FIXME: This block should really be a separate function, but the early-continues make that difficult.
 
-                if filename.startswith('.') or filename.endswith('.pl'):
+                # TODO(qyearsley): Remove the below block.
+                if filename != '.gitignore' and (filename.startswith('.') or filename.endswith('.pl')):
                     _log.debug('Skipping: %s', path_full)
                     _log.debug('  Reason: Hidden files and perl scripts are not necessary.')
                     continue
+
                 if filename == 'OWNERS' or filename == 'reftest.list':
                     # See http://crbug.com/584660 and http://crbug.com/582838.
                     _log.debug('Skipping: %s', path_full)
                     _log.debug('  Reason: This file may cause Chromium presubmit to fail.')
-                    continue
-                if self.path_too_long(path_full):
-                    _log.warning('Skipping: %s', path_full)
-                    _log.warning('  Reason: Long path. Max length %d; see http://crbug.com/609871.', MAX_PATH_LENGTH)
                     continue
 
                 mimetype = mimetypes.guess_type(path_full)
@@ -183,37 +175,18 @@ class TestCopier(object):
                         _log.warning('  Reason: Ref file "%s" was not found.', ref_path_full)
                         continue
 
-                    if self.is_wpt:
-                        if self.path_too_long(ref_path_full):
-                            _log.warning('Skipping: %s', path_full)
-                            _log.warning('  Reason: Ref file path length would be too long: %s.', ref_path_full)
-                            _log.warning('  Max length %d; see http://crbug.com/609871.', MAX_PATH_LENGTH)
-                            continue
-                        # For WPT, we don't need to rename the reference file to
-                        # WebKit style name.
-                        # We don't ask to copy ref_path_full here because this
-                        # filesystem walk will find the reference file, and copy
-                        # it as a non-test file.
-                    else:
+                    if not self.is_wpt:
+                        # For csswg-test, we still need to add a ref file
+                        # using WebKit naming conventions. See crbug.com/268729.
+                        # FIXME: Remove this when csswg-test is merged into wpt.
                         test_basename = self.filesystem.basename(test_info['test'])
-                        # Add the ref file, following WebKit style.
-                        # FIXME: Ideally we'd support reading the metadata
-                        # directly rather than relying on a naming convention.
-                        # Using a naming convention creates duplicate copies of the
-                        # reference files (http://crrev.com/268729).
                         ref_file = self.filesystem.splitext(test_basename)[0] + '-expected'
-                        # Make sure to use the extension from the *reference*, not
-                        # from the test, because at least flexbox tests use XHTML
-                        # references but HTML tests.
                         ref_file += self.filesystem.splitext(ref_path_full)[1]
-
-                        if self.path_too_long(path_full.replace(filename, ref_file)):
-                            _log.warning('Skipping: %s', path_full)
-                            _log.warning('  Reason: Ref file path length would be too long: %s.', ref_file)
-                            _log.warning('  Max length %d; see http://crbug.com/609871.', MAX_PATH_LENGTH)
-                            continue
-                        copy_list.append({'src': test_info['reference'], 'dest': ref_file,
-                                          'reference_support_info': test_info['reference_support_info']})
+                        copy_list.append({
+                            'src': test_info['reference'],
+                            'dest': ref_file,
+                            'reference_support_info': test_info['reference_support_info'],
+                        })
 
                     reftests += 1
                     total_tests += 1
@@ -239,7 +212,7 @@ class TestCopier(object):
         for line in expectation_lines:
             if 'SKIP' in line.expectations:
                 if line.specifiers:
-                    _log.warning("W3CImportExpectations:%s should not have any specifiers", line.line_numbers)
+                    _log.warning('W3CImportExpectations:%s should not have any specifiers', line.line_numbers)
                     continue
                 paths_to_skip.add(line.name)
         return paths_to_skip
@@ -357,15 +330,3 @@ class TestCopier(object):
         # Only HTML, XHTML and CSS files should be converted.
         mimetype, _ = mimetypes.guess_type(source_path)
         return mimetype in ('text/html', 'application/xhtml+xml', 'text/css')
-
-    def path_too_long(self, source_path):
-        """Checks whether a source path is too long to import.
-
-        Args:
-            Absolute path of file to be imported.
-
-        Returns:
-            True if the path is too long to import, False if it's OK.
-        """
-        path_from_repo_base = os.path.relpath(source_path, self.source_repo_path)
-        return len(path_from_repo_base) > MAX_PATH_LENGTH

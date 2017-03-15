@@ -103,7 +103,7 @@ void SessionLengthLimiterTest::TearDown() {
 void SessionLengthLimiterTest::SetSessionUserActivitySeenPref(
     bool user_activity_seen) {
   local_state_.SetUserPref(prefs::kSessionUserActivitySeen,
-                           new base::FundamentalValue(user_activity_seen));
+                           new base::Value(user_activity_seen));
 }
 
 void SessionLengthLimiterTest::ClearSessionUserActivitySeenPref() {
@@ -121,10 +121,9 @@ bool SessionLengthLimiterTest::GetSessionUserActivitySeenPref() {
 
 void SessionLengthLimiterTest::SetSessionStartTimePref(
     const base::TimeTicks& session_start_time) {
-  local_state_.SetUserPref(
-      prefs::kSessionStartTime,
-      new base::StringValue(
-          base::Int64ToString(session_start_time.ToInternalValue())));
+  local_state_.SetUserPref(prefs::kSessionStartTime,
+                           new base::Value(base::Int64ToString(
+                               session_start_time.ToInternalValue())));
 }
 
 void SessionLengthLimiterTest::ClearSessionStartTimePref() {
@@ -143,9 +142,9 @@ base::TimeTicks SessionLengthLimiterTest::GetSessionStartTimePref() {
 
 void SessionLengthLimiterTest::SetSessionLengthLimitPref(
     const base::TimeDelta& session_length_limit) {
-  local_state_.SetUserPref(prefs::kSessionLengthLimit,
-      new base::FundamentalValue(
-          static_cast<int>(session_length_limit.InMilliseconds())));
+  local_state_.SetUserPref(
+      prefs::kSessionLengthLimit,
+      new base::Value(static_cast<int>(session_length_limit.InMilliseconds())));
   UpdateSessionStartTimeIfWaitingForUserActivity();
 }
 
@@ -157,9 +156,8 @@ void SessionLengthLimiterTest::ClearSessionLengthLimitPref() {
 void SessionLengthLimiterTest::SetWaitForInitialUserActivityPref(
     bool wait_for_initial_user_activity) {
   UpdateSessionStartTimeIfWaitingForUserActivity();
-  local_state_.SetUserPref(
-      prefs::kSessionWaitForInitialUserActivity,
-      new base::FundamentalValue(wait_for_initial_user_activity));
+  local_state_.SetUserPref(prefs::kSessionWaitForInitialUserActivity,
+                           new base::Value(wait_for_initial_user_activity));
 }
 
 void SessionLengthLimiterTest::SimulateUserActivity() {

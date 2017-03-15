@@ -37,6 +37,8 @@ namespace autofill {
 
 namespace {
 
+using Logger = autofill::SavePasswordProgressLogger;
+
 // Returns true if we think that this form is for account creation. |passwords|
 // is filled with the password field(s) in the form.
 bool GetAccountCreationPasswordFields(
@@ -75,21 +77,30 @@ const PasswordFormGenerationData* FindFormGenerationData(
 // than 2 elements.
 std::vector<blink::WebInputElement> FindPasswordElementsForGeneration(
     const std::vector<blink::WebInputElement>& all_password_elements,
-    const FieldSignature field_signature) {
-  auto iter = std::find_if(
-      all_password_elements.begin(), all_password_elements.end(),
-      [&field_signature](const blink::WebInputElement& input) {
-        FieldSignature signature = CalculateFieldSignatureByNameAndType(
-            input.nameForAutofill().utf16(), input.formControlType().utf8());
-        return signature == field_signature;
-      });
-  std::vector<blink::WebInputElement> passwords;
+    const PasswordFormGenerationData& generation_data) {
+  auto generation_field_iter = all_password_elements.end();
+  auto confirmation_field_iter = all_password_elements.end();
+  for (auto iter = all_password_elements.begin();
+       iter != all_password_elements.end(); ++iter) {
+    const blink::WebInputElement& input = *iter;
+    FieldSignature signature = CalculateFieldSignatureByNameAndType(
+        input.nameForAutofill().utf16(), input.formControlType().utf8());
+    if (signature == generation_data.field_signature)
+      generation_field_iter = iter;
+    else if (generation_data.confirmation_field_signature &&
+             signature == *generation_data.confirmation_field_signature)
+      confirmation_field_iter = iter;
+  }
 
-  // We copy not more than 2 fields because occasionally there are forms where
-  // the security question answers are put in password fields and we don't want
-  // to fill those.
-  for (; iter != all_password_elements.end() && passwords.size() < 2; ++iter)
-    passwords.push_back(*iter);
+  std::vector<blink::WebInputElement> passwords;
+  if (generation_field_iter != all_password_elements.end()) {
+    passwords.push_back(*generation_field_iter);
+
+    if (confirmation_field_iter == all_password_elements.end())
+      confirmation_field_iter = generation_field_iter + 1;
+    if (confirmation_field_iter != all_password_elements.end())
+      passwords.push_back(*confirmation_field_iter);
+  }
   return passwords;
 }
 
@@ -133,7 +144,7 @@ PasswordGenerationAgent::PasswordGenerationAgent(
       form_classifier_enabled_(false),
       password_agent_(password_agent),
       binding_(this) {
-  VLOG(2) << "Password Generation is " << (enabled_ ? "Enabled" : "Disabled");
+  LogBoolean(Logger::STRING_GENERATION_RENDERER_ENABLED, enabled_);
   // PasswordGenerationAgent is guaranteed to outlive |render_frame|.
   render_frame->GetInterfaceRegistry()->AddInterface(base::Bind(
       &PasswordGenerationAgent::BindRequest, base::Unretained(this)));
@@ -249,7 +260,7 @@ void PasswordGenerationAgent::FindPossibleGenerationForm() {
     std::unique_ptr<PasswordForm> password_form(
         CreatePasswordFormFromWebForm(forms[i], nullptr, nullptr));
     if (!password_form.get()) {
-      VLOG(2) << "Skipping form as it would not be saved";
+      LogMessage(Logger::STRING_GENERATION_RENDERER_INVALID_PASSWORD_FORM);
       continue;
     }
 
@@ -272,13 +283,14 @@ void PasswordGenerationAgent::FindPossibleGenerationForm() {
   }
 
   if (!possible_account_creation_forms_.empty()) {
-    VLOG(2) << possible_account_creation_forms_.size()
-            << " possible account creation forms deteceted";
+    LogNumber(
+        Logger::STRING_GENERATION_RENDERER_POSSIBLE_ACCOUNT_CREATION_FORMS,
+        possible_account_creation_forms_.size());
     DetermineGenerationElement();
   }
 }
 
-bool PasswordGenerationAgent::ShouldAnalyzeDocument() const {
+bool PasswordGenerationAgent::ShouldAnalyzeDocument() {
   // Make sure that this security origin is allowed to use password manager.
   // Generating a password that can't be saved is a bad idea.
   if (!render_frame() ||
@@ -287,7 +299,7 @@ bool PasswordGenerationAgent::ShouldAnalyzeDocument() const {
            ->document()
            .getSecurityOrigin()
            .canAccessPasswordManager()) {
-    VLOG(1) << "No PasswordManager access";
+    LogMessage(Logger::STRING_GENERATION_RENDERER_NO_PASSWORD_MANAGER_ACCESS);
     return false;
   }
 
@@ -304,6 +316,7 @@ void PasswordGenerationAgent::GeneratedPasswordAccepted(
   password_is_generated_ = true;
   password_generation::LogPasswordGenerationEvent(
       password_generation::PASSWORD_ACCEPTED);
+  LogMessage(Logger::STRING_GENERATION_RENDERER_GENERATED_PASSWORD_ACCEPTED);
   for (auto& password_element : generation_form_data_->password_elements) {
     password_element.setValue(blink::WebString::fromUTF16(password),
                               true /* sendEvents */);
@@ -359,15 +372,14 @@ void PasswordGenerationAgent::FoundFormsEligibleForGeneration(
 
 void PasswordGenerationAgent::DetermineGenerationElement() {
   if (generation_form_data_) {
-    VLOG(2) << "Account creation form already found";
+    LogMessage(Logger::STRING_GENERATION_RENDERER_FORM_ALREADY_FOUND);
     return;
   }
 
   // Make sure local heuristics have identified a possible account creation
   // form.
   if (possible_account_creation_forms_.empty()) {
-    VLOG(2) << "Local hueristics have not detected a possible account "
-             << "creation form";
+    LogMessage(Logger::STRING_GENERATION_RENDERER_NO_POSSIBLE_CREATION_FORMS);
     return;
   }
 
@@ -381,36 +393,31 @@ void PasswordGenerationAgent::DetermineGenerationElement() {
       VLOG(2) << "Bypassing additional checks.";
     } else if (!ContainsURL(not_blacklisted_password_form_origins_,
                             possible_password_form->origin)) {
-      VLOG(2) << "Have not received confirmation that password form isn't "
-               << "blacklisted";
+      LogMessage(Logger::STRING_GENERATION_RENDERER_NOT_BLACKLISTED);
       continue;
     } else {
       generation_data = FindFormGenerationData(generation_enabled_forms_,
                                                *possible_password_form);
       if (!generation_data) {
         if (AutocompleteAttributesSetForGeneration(*possible_password_form)) {
-          VLOG(2) << "Ignoring lack of Autofill signal due to Autocomplete "
-                  << "attributes";
+          LogMessage(Logger::STRING_GENERATION_RENDERER_AUTOCOMPLETE_ATTRIBUTE);
           password_generation::LogPasswordGenerationEvent(
               password_generation::AUTOCOMPLETE_ATTRIBUTES_ENABLED_GENERATION);
         } else {
-          VLOG(2)
-              << "Have not received confirmation from Autofill that form is "
-              << "used for account creation";
+          LogMessage(Logger::STRING_GENERATION_RENDERER_NO_SERVER_SIGNAL);
           continue;
         }
       }
     }
-
-    VLOG(2) << "Password generation eligible form found";
+    LogMessage(Logger::STRING_GENERATION_RENDERER_ELIGIBLE_FORM_FOUND);
     std::vector<blink::WebInputElement> password_elements =
-        generation_data ? FindPasswordElementsForGeneration(
-                              possible_form_data.password_elements,
-                              generation_data->field_signature)
-                        : possible_form_data.password_elements;
+        generation_data
+            ? FindPasswordElementsForGeneration(
+                  possible_form_data.password_elements, *generation_data)
+            : possible_form_data.password_elements;
     if (password_elements.empty()) {
       // It might be if JavaScript changes field names.
-      VLOG(2) << "Fields for generation are not found";
+      LogMessage(Logger::STRING_GENERATION_RENDERER_NO_FIELD_FOUND);
       return;
     }
     generation_form_data_.reset(new AccountCreationFormData(
@@ -513,6 +520,7 @@ bool PasswordGenerationAgent::TextDidChangeInTextField(
 void PasswordGenerationAgent::ShowGenerationPopup() {
   if (!render_frame())
     return;
+  LogMessage(Logger::STRING_GENERATION_RENDERER_SHOW_GENERATION_POPUP);
   GetPasswordManagerClient()->ShowPasswordGenerationPopup(
       render_frame()->GetRenderView()->ElementBoundsInWindow(
           generation_element_),
@@ -565,9 +573,11 @@ void PasswordGenerationAgent::UserTriggeredGeneratePassword() {
   GetAccountCreationPasswordFields(control_elements, &password_elements);
   password_elements = FindPasswordElementsForGeneration(
       password_elements,
-      CalculateFieldSignatureByNameAndType(
-          last_focused_password_element_.nameForAutofill().utf16(),
-          last_focused_password_element_.formControlType().utf8()));
+      PasswordFormGenerationData(
+          0, /* form_signature */
+          CalculateFieldSignatureByNameAndType(
+              last_focused_password_element_.nameForAutofill().utf16(),
+              last_focused_password_element_.formControlType().utf8())));
   generation_form_data_.reset(new AccountCreationFormData(
       make_linked_ptr(password_form.release()), password_elements));
   is_manually_triggered_ = true;
@@ -588,6 +598,29 @@ PasswordGenerationAgent::GetPasswordManagerClient() {
   }
 
   return password_manager_client_;
+}
+
+void PasswordGenerationAgent::LogMessage(Logger::StringID message_id) {
+  if (!password_agent_->logging_state_active())
+    return;
+  RendererSavePasswordProgressLogger logger(GetPasswordManagerDriver().get());
+  logger.LogMessage(message_id);
+}
+
+void PasswordGenerationAgent::LogBoolean(Logger::StringID message_id,
+                                         bool truth_value) {
+  if (!password_agent_->logging_state_active())
+    return;
+  RendererSavePasswordProgressLogger logger(GetPasswordManagerDriver().get());
+  logger.LogBoolean(message_id, truth_value);
+}
+
+void PasswordGenerationAgent::LogNumber(Logger::StringID message_id,
+                                        int number) {
+  if (!password_agent_->logging_state_active())
+    return;
+  RendererSavePasswordProgressLogger logger(GetPasswordManagerDriver().get());
+  logger.LogNumber(message_id, number);
 }
 
 }  // namespace autofill

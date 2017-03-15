@@ -48,12 +48,22 @@
 
 // Adds |coordinator| as a child, taking ownership of it, setting the receiver's
 // viewController (if any) as the child's baseViewController, and setting
-// the receiver's browserState as the child's browserState.
+// the receiver's |browser| as the child's |browser|.
 - (void)addChildCoordinator:(BrowserCoordinator*)coordinator;
 
 // Removes |coordinator| as a child, relinquishing ownership of it. If
 // |coordinator| isn't a child of the receiver, this method does nothing.
 - (void)removeChildCoordinator:(BrowserCoordinator*)coordinator;
+
+// Called when a child coordinator did start. This is a blank template method.
+// Subclasses can override this method when they need to know when their
+// children start.
+- (void)childCoordinatorDidStart:(BrowserCoordinator*)childCoordinator;
+
+// Called when a child coordinator will stop. This is a blank template method.
+// Subclasses can override this method when they need to know when their
+// children start.
+- (void)childCoordinatorWillStop:(BrowserCoordinator*)childCoordinator;
 
 // Methods for adding overlay coordinators.
 

@@ -170,6 +170,7 @@ length
 letterSpacing
 lightingColor
 lineHeight
+lineHeightStep
 listStyle
 listStyleImage
 listStylePosition
@@ -234,6 +235,7 @@ paintOrder
 parentRule
 perspective
 perspectiveOrigin
+placeContent
 pointerEvents
 position
 quotes
@@ -257,7 +259,6 @@ shapeMargin
 shapeOutside
 shapeRendering
 size
-snapHeight
 speak
 src
 stopColor

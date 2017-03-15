@@ -55,10 +55,10 @@ void DragCaret::updateStyleAndLayoutIfNeeded() {
                                                    : PositionWithAffinity());
 }
 
-void DragCaret::invalidatePaintIfNeeded(const LayoutBlock& block,
-                                        const PaintInvalidatorContext& context,
-                                        PaintInvalidationReason reason) {
-  m_displayItemClient->invalidatePaintIfNeeded(block, context, reason);
+void DragCaret::invalidatePaintIfNeeded(
+    const LayoutBlock& block,
+    const PaintInvalidatorContext& context) {
+  m_displayItemClient->invalidatePaintIfNeeded(block, context);
 }
 
 bool DragCaret::isContentRichlyEditable() const {
@@ -71,10 +71,6 @@ void DragCaret::setCaretPosition(const PositionWithAffinity& position) {
   if (Node* node = m_position.anchorNode()) {
     document = &node->document();
     setContext(document);
-  }
-  if (!m_position.isNull()) {
-    DCHECK(!m_position.isOrphan());
-    document->updateStyleAndLayoutTree();
   }
 }
 

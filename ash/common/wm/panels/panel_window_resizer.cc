@@ -8,11 +8,11 @@
 #include "ash/common/wm/panels/panel_layout_manager.h"
 #include "ash/common/wm/window_parenting_utils.h"
 #include "ash/common/wm/window_state.h"
-#include "ash/common/wm_lookup.h"
 #include "ash/common/wm_window.h"
-#include "ash/common/wm_window_property.h"
 #include "ash/public/cpp/shell_window_ids.h"
+#include "ash/public/cpp/window_properties.h"
 #include "ash/root_window_controller.h"
+#include "ash/shell.h"
 #include "ui/base/hit_test.h"
 #include "ui/base/ui_base_types.h"
 #include "ui/display/display.h"
@@ -56,8 +56,7 @@ void PanelWindowResizer::Drag(const gfx::Point& location, int event_flags) {
     if (GetTarget()->GetParent() != panel_container_)
       PanelLayoutManager::Get(panel_container_)->FinishDragging();
     WmWindow* dst_root =
-        WmLookup::Get()
-            ->GetRootWindowControllerWithDisplayId(dst_display.id())
+        Shell::GetRootWindowControllerWithDisplayId(dst_display.id())
             ->GetWindow();
     panel_container_ =
         dst_root->GetChildByShellWindowId(kShellWindowId_PanelContainer);
@@ -106,8 +105,7 @@ PanelWindowResizer::PanelWindowResizer(WindowResizer* next_window_resizer,
       panel_container_(NULL),
       initial_panel_container_(NULL),
       did_move_or_resize_(false),
-      was_attached_(
-          GetTarget()->GetBoolProperty(WmWindowProperty::PANEL_ATTACHED)),
+      was_attached_(GetTarget()->aura_window()->GetProperty(kPanelAttachedKey)),
       weak_ptr_factory_(this) {
   DCHECK(details().is_resizable);
   panel_container_ = GetTarget()->GetRootWindow()->GetChildByShellWindowId(
@@ -159,34 +157,34 @@ void PanelWindowResizer::StartedDragging() {
   if (!was_attached_) {
     // Attach the panel while dragging, placing it in front of other panels.
     WmWindow* target = GetTarget();
-    target->SetBoolProperty(WmWindowProperty::PANEL_ATTACHED, true);
+    target->aura_window()->SetProperty(kPanelAttachedKey, true);
     // We use root window coordinates to ensure that during the drag the panel
     // is reparented to a container in the root window that has that window.
     WmWindow* target_root = target->GetRootWindow();
-    WmWindow* old_parent = target->GetParent();
+    aura::Window* old_parent = target->aura_window()->parent();
     target->SetParentUsingContext(target_root,
                                   target_root->GetBoundsInScreen());
-    wm::ReparentTransientChildrenOfChild(target, old_parent,
-                                         target->GetParent());
+    wm::ReparentTransientChildrenOfChild(target->aura_window(), old_parent,
+                                         target->aura_window()->parent());
   }
 }
 
 void PanelWindowResizer::FinishDragging() {
   if (!did_move_or_resize_)
     return;
-  if (GetTarget()->GetBoolProperty(WmWindowProperty::PANEL_ATTACHED) !=
+  if (GetTarget()->aura_window()->GetProperty(kPanelAttachedKey) !=
       details().should_attach_to_shelf) {
-    GetTarget()->SetBoolProperty(WmWindowProperty::PANEL_ATTACHED,
-                                 details().should_attach_to_shelf);
+    GetTarget()->aura_window()->SetProperty(kPanelAttachedKey,
+                                            details().should_attach_to_shelf);
     // We use last known location to ensure that after the drag the panel
     // is reparented to a container in the root window that has that location.
     WmWindow* target = GetTarget();
     WmWindow* target_root = target->GetRootWindow();
-    WmWindow* old_parent = target->GetParent();
+    aura::Window* old_parent = target->aura_window()->parent();
     target->SetParentUsingContext(target_root,
-                                  gfx::Rect(last_location_, gfx::Size()));
-    wm::ReparentTransientChildrenOfChild(target, old_parent,
-                                         target->GetParent());
+                                  target_root->GetBoundsInScreen());
+    wm::ReparentTransientChildrenOfChild(target->aura_window(), old_parent,
+                                         target->aura_window()->parent());
   }
 
   // If we started the drag in one root window and moved into another root

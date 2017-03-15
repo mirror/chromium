@@ -1381,7 +1381,6 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
       [strongSelf logMostVisitedClick:index tileType:cell.tileType];
       [[strongSelf loader] webPageOrderedOpen:url
                                      referrer:web::Referrer()
-                                   windowName:nil
                                  inBackground:YES
                                      appendTo:kCurrentTab];
     };
@@ -1401,7 +1400,6 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
         [strongSelf logMostVisitedClick:index tileType:cell.tileType];
         [[strongSelf loader] webPageOrderedOpen:url
                                        referrer:web::Referrer()
-                                     windowName:nil
                                     inIncognito:YES
                                    inBackground:NO
                                        appendTo:kCurrentTab];
@@ -1450,6 +1448,7 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
   action.title = l10n_util::GetNSString(IDS_NEW_TAB_UNDO_THUMBNAIL_REMOVE);
   action.accessibilityIdentifier = @"Undo";
 
+  TriggerHapticFeedbackForNotification(UINotificationFeedbackTypeSuccess);
   MDCSnackbarMessage* message = [MDCSnackbarMessage
       messageWithText:l10n_util::GetNSString(
                           IDS_IOS_NEW_TAB_MOST_VISITED_ITEM_REMOVED)];
@@ -1467,7 +1466,6 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
   if (_notification_promo->IsURLPromo()) {
     [_loader webPageOrderedOpen:_notification_promo->url()
                        referrer:web::Referrer()
-                     windowName:nil
                    inBackground:NO
                        appendTo:kCurrentTab];
     _notification_promo.reset();

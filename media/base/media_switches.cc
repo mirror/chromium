@@ -22,6 +22,9 @@ const char kDisableMediaSuspend[] = "disable-media-suspend";
 const char kReportVp9AsAnUnsupportedMimeType[] =
     "report-vp9-as-an-unsupported-mime-type";
 
+// Enable parsing of new multi-part VP9 string for webm.
+const char kEnableNewVp9CodecString[] = "enable-new-vp9-codec-string";
+
 #if defined(OS_LINUX) || defined(OS_FREEBSD) || defined(OS_SOLARIS)
 // The Alsa device to use when opening an audio input stream.
 const char kAlsaInputDevice[] = "alsa-input-device";
@@ -144,7 +147,7 @@ const base::Feature kD3D11VideoDecoding{"D3D11VideoDecoding",
 
 // Enables H264 HW encode acceleration using Media Foundation for Windows.
 const base::Feature kMediaFoundationH264Encoding{
-    "MediaFoundationH264Encoding", base::FEATURE_DISABLED_BY_DEFAULT};
+    "MediaFoundationH264Encoding", base::FEATURE_ENABLED_BY_DEFAULT};
 #endif  // defined(OS_WIN)
 
 // Use new audio rendering mixer.

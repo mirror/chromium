@@ -45,16 +45,14 @@ public class CrashFileManager {
     @VisibleForTesting
     public static final String CRASH_DUMP_LOGFILE = "uploads.log";
 
-    private static final Pattern MINIDUMP_FIRST_TRY_PATTERN =
-            Pattern.compile("\\.dmp([0-9]*)$\\z");
-
     private static final Pattern MINIDUMP_MIME_FIRST_TRY_PATTERN =
             Pattern.compile("\\.dmp([0-9]+)$\\z");
 
     private static final Pattern MINIDUMP_PATTERN =
             Pattern.compile("\\.dmp([0-9]*)(\\.try([0-9]+))?\\z");
 
-    private static final Pattern UPLOADED_MINIDUMP_PATTERN = Pattern.compile("\\.up([0-9]*)\\z");
+    private static final Pattern UPLOADED_MINIDUMP_PATTERN =
+            Pattern.compile("\\.up([0-9]*)(\\.try([0-9]+))?\\z");
 
     private static final String NOT_YET_UPLOADED_MINIDUMP_SUFFIX = ".dmp";
 
@@ -102,7 +100,7 @@ public class CrashFileManager {
      * @return Comparator for prioritizing the more recently modified file
      */
     @VisibleForTesting
-    protected static final Comparator<File> sFileComparator =  new Comparator<File>() {
+    protected static final Comparator<File> sFileComparator = new Comparator<File>() {
         @Override
         public int compare(File lhs, File rhs) {
             if (lhs.lastModified() == rhs.lastModified()) {
@@ -124,10 +122,6 @@ public class CrashFileManager {
             Log.w(TAG, "Unable to delete " + fileToDelete.getAbsolutePath());
         }
         return isSuccess;
-    }
-
-    public File[] getMinidumpWithoutLogcat() {
-        return listCrashFiles(MINIDUMP_FIRST_TRY_PATTERN);
     }
 
     public static boolean isMinidumpMIMEFirstTry(String path) {
@@ -265,8 +259,7 @@ public class CrashFileManager {
         if (cacheDir == null) {
             throw new NullPointerException("Specified context cannot be null.");
         } else if (!cacheDir.isDirectory()) {
-            throw new IllegalArgumentException(cacheDir.getAbsolutePath()
-                    + " is not a directory.");
+            throw new IllegalArgumentException(cacheDir.getAbsolutePath() + " is not a directory.");
         }
         mCacheDir = cacheDir;
     }
@@ -277,8 +270,9 @@ public class CrashFileManager {
      */
     public boolean ensureCrashDirExists() {
         File crashDir = getCrashDirectory();
-        if (crashDir.exists()) return true;
-        return crashDir.mkdir();
+        // Call mkdir before isDirectory to ensure that if another thread created the directory
+        // just before the call to mkdir, the current thread fails mkdir, but passes isDirectory.
+        return crashDir.mkdir() || crashDir.isDirectory();
     }
 
     /**
@@ -404,8 +398,7 @@ public class CrashFileManager {
             if (f.delete()) {
                 f = new File(getCrashDirectory(), name);
             } else {
-                Log.w(TAG, "Unable to delete previous logfile"
-                        + f.getAbsolutePath());
+                Log.w(TAG, "Unable to delete previous logfile" + f.getAbsolutePath());
             }
         }
         return f;
@@ -495,16 +488,21 @@ public class CrashFileManager {
      * @return The new minidump file copied with the contents of the File Descriptor, or null if the
      *         copying failed.
      */
-    public File copyMinidumpFromFD(FileDescriptor fd, File tmpDir, int uid)
-            throws IOException {
+    public File copyMinidumpFromFD(FileDescriptor fd, File tmpDir, int uid) throws IOException {
         File crashDirectory = getCrashDirectory();
-        if (!crashDirectory.isDirectory() && !crashDirectory.mkdir()) {
-            throw new RuntimeException("Couldn't create " + crashDirectory.getAbsolutePath());
+        if (!ensureCrashDirExists()) {
+            Log.e(TAG, "Crash directory doesn't exist");
+            return null;
         }
+        // Only threads copying minidumps will be touching this tmp-directory. Since these threads
+        // are synchronized to avoid copying several minidumps simultaneously we don't need
+        // synchronization explicitly for creating this tmp-directory.
         if (!tmpDir.isDirectory() && !tmpDir.mkdir()) {
-            throw new RuntimeException("Couldn't create " + tmpDir.getAbsolutePath());
+            Log.e(TAG, "Couldn't create " + tmpDir.getAbsolutePath());
+            return null;
         }
         if (tmpDir.getCanonicalPath().equals(crashDirectory.getCanonicalPath())) {
+            // Cause a hard failure since this should never happen in the wild.
             throw new RuntimeException("The tmp-dir and the crash dir can't have the same paths.");
         }
 
@@ -547,7 +545,6 @@ public class CrashFileManager {
             } catch (IOException e) {
                 Log.w(TAG, "Couldn't close minidump input stream ", e);
             }
-
         }
         File minidumpFile = new File(crashDirectory, createUniqueMinidumpNameForUid(uid));
         if (tmpFile.renameTo(minidumpFile)) {

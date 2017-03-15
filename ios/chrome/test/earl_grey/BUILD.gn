@@ -153,8 +153,6 @@ source_set("test_support") {
     "chrome_matchers.mm",
     "chrome_test_case.h",
     "chrome_test_case.mm",
-    "chrome_util.h",
-    "chrome_util.mm",
   ]
 
   deps = [
@@ -175,6 +173,7 @@ source_set("test_support") {
     "//ios/web:earl_grey_test_support",
     "//ios/web:test_support",
     "//ui/base",
+    "//ui/base:test_support",
     "//url",
   ]
 

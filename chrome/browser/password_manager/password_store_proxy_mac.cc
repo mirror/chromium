@@ -46,12 +46,12 @@ bool PasswordStoreProxyMac::Init(
     return false;
   }
 
-  if (!password_manager::PasswordStore::Init(flare))
+  if (!ScheduleTask(base::Bind(
+          &PasswordStoreProxyMac::InitOnBackgroundThread, this,
+          static_cast<MigrationStatus>(migration_status_.GetValue()))))
     return false;
 
-  return ScheduleTask(
-      base::Bind(&PasswordStoreProxyMac::InitOnBackgroundThread, this,
-                 static_cast<MigrationStatus>(migration_status_.GetValue())));
+  return password_manager::PasswordStore::Init(flare);
 }
 
 void PasswordStoreProxyMac::ShutdownOnUIThread() {
@@ -87,18 +87,10 @@ void PasswordStoreProxyMac::InitOnBackgroundThread(MigrationStatus status) {
   if (login_metadata_db_ && (status == MigrationStatus::NOT_STARTED ||
                              status == MigrationStatus::FAILED_ONCE ||
                              status == MigrationStatus::FAILED_TWICE)) {
-    // Let's try to migrate the passwords.
-    login_metadata_db_->set_clear_password_values(true);
-    auto import_status =
-        PasswordStoreMac::ImportFromKeychain(login_metadata_db_.get(),
-                                             keychain_.get());
-    if (import_status == PasswordStoreMac::MIGRATION_OK) {
-      status = MigrationStatus::MIGRATED;
-    } else if (import_status == PasswordStoreMac::MIGRATION_PARTIAL) {
-      status = MigrationStatus::MIGRATED_PARTIALLY;
-    } else {
-      login_metadata_db_.reset();
-    }
+    // Migration isn't possible due to Chrome changing the certificate. Just
+    // drop the entries in the DB because they don't have passwords anyway.
+    login_metadata_db_->RemoveLoginsCreatedBetween(base::Time(), base::Time());
+    status = MigrationStatus::MIGRATION_STOPPED;
     pending_ui_tasks_.push_back(
         base::Bind(&PasswordStoreProxyMac::UpdateStatusPref, this, status));
   } else if (login_metadata_db_ && status == MigrationStatus::MIGRATED) {
@@ -213,6 +205,11 @@ void PasswordStoreProxyMac::AddSiteStatsImpl(
 
 void PasswordStoreProxyMac::RemoveSiteStatsImpl(const GURL& origin_domain) {
   GetBackend()->RemoveSiteStatsImpl(origin_domain);
+}
+
+std::vector<password_manager::InteractionsStats>
+PasswordStoreProxyMac::GetAllSiteStatsImpl() {
+  return GetBackend()->GetAllSiteStatsImpl();
 }
 
 std::vector<password_manager::InteractionsStats>

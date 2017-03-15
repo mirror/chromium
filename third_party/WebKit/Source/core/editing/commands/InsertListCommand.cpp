@@ -96,18 +96,20 @@ HTMLElement* InsertListCommand::mergeWithNeighboringLists(
 }
 
 bool InsertListCommand::selectionHasListOfType(
-    const VisibleSelection& selection,
+    const Position& selectionStart,
+    const Position& selectionEnd,
     const HTMLQualifiedName& listTag) {
+  DCHECK_LE(selectionStart, selectionEnd);
   DCHECK(!document().needsLayoutTreeUpdate());
   DocumentLifecycle::DisallowTransitionScope disallowTransition(
       document().lifecycle());
 
-  VisiblePosition start = selection.visibleStart();
+  VisiblePosition start = createVisiblePosition(selectionStart);
 
   if (!enclosingList(start.deepEquivalent().anchorNode()))
     return false;
 
-  VisiblePosition end = startOfParagraph(selection.visibleEnd());
+  VisiblePosition end = startOfParagraph(createVisiblePosition(selectionEnd));
   while (start.isNotNull() && start.deepEquivalent() != end.deepEquivalent()) {
     HTMLElement* listElement =
         enclosingList(start.deepEquivalent().anchorNode());
@@ -184,7 +186,8 @@ void InsertListCommand::doApply(EditingState* editingState) {
         startOfParagraph(visibleEndOfSelection, CanSkipOverEditingBoundary)
             .deepEquivalent();
 
-    Range* currentSelection = firstRangeOf(endingSelection());
+    Range* currentSelection =
+        createRange(firstEphemeralRangeOf(endingSelection()));
     ContainerNode* scopeForStartOfSelection = nullptr;
     ContainerNode* scopeForEndOfSelection = nullptr;
     // FIXME: This is an inefficient way to keep selection alive because
@@ -199,7 +202,8 @@ void InsertListCommand::doApply(EditingState* editingState) {
 
     if (startOfParagraph(visibleStartOfSelection, CanSkipOverEditingBoundary)
             .deepEquivalent() != startOfLastParagraph) {
-      forceListCreation = !selectionHasListOfType(selection, listTag);
+      forceListCreation =
+          !selectionHasListOfType(selection.start(), selection.end(), listTag);
 
       VisiblePosition startOfCurrentParagraph = visibleStartOfSelection;
       while (inSameTreeAndOrdered(startOfCurrentParagraph.deepEquivalent(),
@@ -296,9 +300,9 @@ void InsertListCommand::doApply(EditingState* editingState) {
     return;
   }
 
-  DCHECK(firstRangeOf(endingSelection()));
-  doApplyForSingleParagraph(false, listTag, *firstRangeOf(endingSelection()),
-                            editingState);
+  Range* const range = createRange(firstEphemeralRangeOf(endingSelection()));
+  DCHECK(range);
+  doApplyForSingleParagraph(false, listTag, *range, editingState);
 }
 
 InputEvent::InputType InsertListCommand::inputType() const {

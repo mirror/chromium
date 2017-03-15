@@ -35,10 +35,26 @@ Polymer({
     },
 
     /**
+     * Some content types (like Location) do not allow the user to manually
+     * edit the exception list from within Settings.
+     * @private
+     */
+    readOnlyList: {
+      type: Boolean,
+      value: false,
+    },
+
+    /**
      * The site serving as the model for the currently open action menu.
      * @private {?SiteException}
      */
     actionMenuSite_: Object,
+
+    /**
+     * Whether the "edit exception" dialog should be shown.
+     * @private
+     */
+    showEditExceptionDialog_: Boolean,
 
     /**
      * Array of sites to display in the widget.
@@ -69,23 +85,33 @@ Polymer({
 
     /**
      * Whether to show the Allow action in the action menu.
+     * @private
      */
     showAllowAction_: Boolean,
 
     /**
      * Whether to show the Block action in the action menu.
+     * @private
      */
     showBlockAction_: Boolean,
 
     /**
      * Whether to show the 'Clear on exit' action in the action
      * menu.
+     * @private
      */
     showSessionOnlyAction_: Boolean,
 
     /**
+     * Whether to show the 'edit' action in the action menu.
+     * @private
+     */
+    showEditAction_: Boolean,
+
+    /**
      * Keeps track of the incognito status of the current profile (whether one
      * exists).
+     * @private
      */
     incognitoProfileActive_: {
       type: Boolean,
@@ -94,6 +120,7 @@ Polymer({
 
     /**
      * All possible actions in the action menu.
+     * @private
      */
     actions_: {
       readOnly: true,
@@ -189,11 +216,12 @@ Polymer({
 
   /**
    * @param {string} source Where the setting came from.
+   * @param {boolean} readOnlyList Whether the site exception list is read-only.
    * @return {boolean}
    * @private
    */
-  isActionMenuHidden_: function(source) {
-    return this.isExceptionControlled_(source) || this.allSites;
+  isActionMenuHidden_: function(source, readOnlyList) {
+    return this.isExceptionControlled_(source) || this.allSites || readOnlyList;
   },
 
   /**
@@ -202,6 +230,7 @@ Polymer({
    * @private
    */
   onAddSiteTap_: function(e) {
+    assert(!this.readOnlyList);
     e.preventDefault();
     var dialog = document.createElement('add-site-dialog');
     dialog.category = this.category;
@@ -362,6 +391,8 @@ Polymer({
     this.showSessionOnlyAction_ =
         this.categorySubtype != settings.PermissionValues.SESSION_ONLY &&
         this.category == settings.ContentSettingsTypes.COOKIES;
+    this.showEditAction_ =
+        this.category == settings.ContentSettingsTypes.COOKIES;
   },
 
   /**
@@ -426,6 +457,21 @@ Polymer({
   onSessionOnlyTap_: function() {
     this.onActionMenuActivate_(settings.PermissionValues.SESSION_ONLY);
     this.closeActionMenu_();
+  },
+
+  /** @private */
+  onEditTap_: function() {
+    // Close action menu without resetting |this.actionMenuSite_| since it is
+    // bound to the dialog.
+    /** @type {!CrActionMenuElement} */ (
+        this.$$('dialog[is=cr-action-menu]')).close();
+    this.showEditExceptionDialog_ = true;
+  },
+
+  /** @private */
+  onEditExceptionDialogClosed_: function() {
+    this.showEditExceptionDialog_ = false;
+    this.actionMenuSite_ = null;
   },
 
   /** @private */

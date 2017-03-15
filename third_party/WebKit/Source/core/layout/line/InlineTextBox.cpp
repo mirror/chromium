@@ -57,20 +57,15 @@ void InlineTextBox::destroy() {
 
   if (!knownToHaveNoOverflow() && gTextBoxesWithOverflow)
     gTextBoxesWithOverflow->erase(this);
-  InlineTextBoxPainter::removeFromTextBlobCache(*this);
   InlineBox::destroy();
 }
 
 void InlineTextBox::offsetRun(int delta) {
   ASSERT(!isDirty());
-  InlineTextBoxPainter::removeFromTextBlobCache(*this);
   m_start += delta;
 }
 
 void InlineTextBox::markDirty() {
-  // FIXME: Is it actually possible to try and paint a dirty InlineTextBox?
-  InlineTextBoxPainter::removeFromTextBlobCache(*this);
-
   m_len = 0;
   m_start = 0;
   InlineBox::markDirty();
@@ -192,24 +187,40 @@ SelectionState InlineTextBox::getSelectionState() const {
 }
 
 bool InlineTextBox::hasWrappedSelectionNewline() const {
-  // TODO(wkorman): We shouldn't need layout at this point and it should be
-  // enforced by DocumentLifecycle. http://crbug.com/537821
-  // Bail out as currently looking up selection state can cause the editing code
-  // can force a re-layout while scrutinizing the editing position, and
-  // InlineTextBox instances are not guaranteed to survive a re-layout.
-  if (getLineLayoutItem().needsLayout())
-    return false;
+  DCHECK(!getLineLayoutItem().needsLayout());
 
   SelectionState state = getSelectionState();
-  return (state == SelectionStart || state == SelectionInside)
-         // Checking last leaf child can be slow, so we make sure to do this
-         // only after the other simple conditionals.
-         && (root().lastLeafChild() == this)
-         // It's possible to have mixed LTR/RTL on a single line, and we only
-         // want to paint a newline when we're the last leaf child and we make
-         // sure there isn't a differently-directioned box following us.
-         && ((!isLeftToRightDirection() && root().firstSelectedBox() == this) ||
-             (isLeftToRightDirection() && root().lastSelectedBox() == this));
+  if (state != SelectionStart && state != SelectionInside)
+    return false;
+
+  // Checking last leaf child can be slow, so we make sure to do this
+  // only after checking selection state.
+  if (root().lastLeafChild() != this)
+    return false;
+
+  // It's possible to have mixed LTR/RTL on a single line, and we only
+  // want to paint a newline when we're the last leaf child and we make
+  // sure there isn't a differently-directioned box following us.
+  bool isLTR = isLeftToRightDirection();
+  if ((!isLTR && root().firstSelectedBox() != this) ||
+      (isLTR && root().lastSelectedBox() != this))
+    return false;
+
+  // If we're the last inline text box in containing block, our containing block
+  // is inline, and the selection continues into that block, then rely on the
+  // next inline text box (if any) to paint a wrapped new line as needed.
+  if (nextTextBox())
+    return true;
+  auto rootBlock = root().block();
+  if (rootBlock.isInline() && rootBlock.getSelectionState() != SelectionEnd &&
+      rootBlock.getSelectionState() != SelectionBoth &&
+      rootBlock.inlineBoxWrapper() &&
+      ((isLTR && rootBlock.inlineBoxWrapper()->nextOnLine()) ||
+       (!isLTR && rootBlock.inlineBoxWrapper()->prevOnLine()))) {
+    return false;
+  }
+
+  return true;
 }
 
 float InlineTextBox::newlineSpaceWidth() const {
@@ -305,7 +316,6 @@ void InlineTextBox::setTruncation(unsigned truncation) {
     return;
 
   m_truncation = truncation;
-  InlineTextBoxPainter::removeFromTextBlobCache(*this);
 }
 
 void InlineTextBox::clearTruncation() {
@@ -317,23 +327,31 @@ LayoutUnit InlineTextBox::placeEllipsisBox(bool flowIsLTR,
                                            LayoutUnit visibleRightEdge,
                                            LayoutUnit ellipsisWidth,
                                            LayoutUnit& truncatedWidth,
-                                           bool& foundBox) {
+                                           bool& foundBox,
+                                           LayoutUnit logicalLeftOffset) {
   if (foundBox) {
     setTruncation(cFullTruncation);
     return LayoutUnit(-1);
   }
+
+  // Criteria for full truncation:
+  // LTR: the left edge of the ellipsis is to the left of our text run.
+  // RTL: the right edge of the ellipsis is to the right of our text run.
+  LayoutUnit adjustedLogicalLeft = logicalLeftOffset + logicalLeft();
 
   // For LTR this is the left edge of the box, for RTL, the right edge in parent
   // coordinates.
   LayoutUnit ellipsisX = flowIsLTR ? visibleRightEdge - ellipsisWidth
                                    : visibleLeftEdge + ellipsisWidth;
 
-  // Criteria for full truncation:
-  // LTR: the left edge of the ellipsis is to the left of our text run.
-  // RTL: the right edge of the ellipsis is to the right of our text run.
-  bool ltrFullTruncation = flowIsLTR && ellipsisX <= logicalLeft();
+  if (isLeftToRightDirection() == flowIsLTR && !flowIsLTR &&
+      logicalLeftOffset < 0)
+    ellipsisX -= logicalLeftOffset;
+
+  bool ltrFullTruncation = flowIsLTR && ellipsisX <= adjustedLogicalLeft;
   bool rtlFullTruncation =
-      !flowIsLTR && ellipsisX >= logicalLeft() + logicalWidth();
+      !flowIsLTR &&
+      ellipsisX > adjustedLogicalLeft + logicalWidth() + ellipsisWidth;
   if (ltrFullTruncation || rtlFullTruncation) {
     // Too far.  Just set full truncation, but return -1 and let the ellipsis
     // just be placed at the edge of the box.
@@ -342,8 +360,9 @@ LayoutUnit InlineTextBox::placeEllipsisBox(bool flowIsLTR,
     return LayoutUnit(-1);
   }
 
-  bool ltrEllipsisWithinBox = flowIsLTR && (ellipsisX < logicalRight());
-  bool rtlEllipsisWithinBox = !flowIsLTR && (ellipsisX > logicalLeft());
+  bool ltrEllipsisWithinBox =
+      flowIsLTR && ellipsisX < adjustedLogicalLeft + logicalWidth();
+  bool rtlEllipsisWithinBox = !flowIsLTR && ellipsisX > adjustedLogicalLeft;
   if (ltrEllipsisWithinBox || rtlEllipsisWithinBox) {
     foundBox = true;
 
@@ -354,22 +373,31 @@ LayoutUnit InlineTextBox::placeEllipsisBox(bool flowIsLTR,
     if (ltr != flowIsLTR) {
       // Width in pixels of the visible portion of the box, excluding the
       // ellipsis.
-      int visibleBoxWidth =
-          (visibleRightEdge - visibleLeftEdge - ellipsisWidth).toInt();
-      ellipsisX = flowIsLTR ? logicalLeft() + visibleBoxWidth
+      LayoutUnit visibleBoxWidth =
+          visibleRightEdge - visibleLeftEdge - ellipsisWidth;
+      ellipsisX = flowIsLTR ? adjustedLogicalLeft + visibleBoxWidth
                             : logicalRight() - visibleBoxWidth;
     }
 
-    // The box's width includes partial glyphs, so respect that when placing
-    // the ellipsis.
-    int offset = offsetForPosition(ellipsisX);
-    if (offset == 0 && ltr == flowIsLTR) {
+    // We measure the text using the second half of the previous character and
+    // the first half of the current one when the text is rtl. This gives a
+    // more accurate position in rtl text.
+    int offset = offsetForPosition(ellipsisX, !ltr);
+    // Full truncation is only necessary when we're flowing left-to-right.
+    if (flowIsLTR && offset == 0 && ltr == flowIsLTR) {
       // No characters should be laid out.  Set ourselves to full truncation and
       // place the ellipsis at the min of our start and the ellipsis edge.
       setTruncation(cFullTruncation);
       truncatedWidth += ellipsisWidth;
       return std::min(ellipsisX, logicalLeft());
     }
+
+    // When the text's direction doesn't match the flow's direction we can
+    // choose an offset that starts outside the visible box: compensate for that
+    // if necessary.
+    if (flowIsLTR != ltr && logicalLeft() < 0 && offset >= m_start &&
+        positionForOffset(offset) < logicalLeft().abs())
+      offset++;
 
     // Set the truncation index on the text run.
     setTruncation(offset);
@@ -392,7 +420,8 @@ LayoutUnit InlineTextBox::placeEllipsisBox(bool flowIsLTR,
     truncatedWidth += widthOfVisibleText + ellipsisWidth;
     if (flowIsLTR)
       return logicalLeft() + widthOfVisibleText;
-    return logicalRight() - widthOfVisibleText - ellipsisWidth;
+    LayoutUnit result = logicalRight() - widthOfVisibleText - ellipsisWidth;
+    return result;
   }
   truncatedWidth += logicalWidth();
   return LayoutUnit(-1);

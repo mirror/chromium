@@ -29,6 +29,8 @@ CHROMEOS_EXPORT extern const char
     kAccountsPrefDeviceLocalAccountsKeyArcKioskClass[];
 CHROMEOS_EXPORT extern const char
     kAccountsPrefDeviceLocalAccountsKeyArcKioskAction[];
+CHROMEOS_EXPORT extern const char
+    kAccountsPrefDeviceLocalAccountsKeyArcKioskDisplayName[];
 CHROMEOS_EXPORT extern const char kAccountsPrefDeviceLocalAccountAutoLoginId[];
 CHROMEOS_EXPORT extern const char
     kAccountsPrefDeviceLocalAccountAutoLoginDelay[];
@@ -110,7 +112,7 @@ CHROMEOS_EXPORT extern const char kDeviceQuirksDownloadEnabled[];
 
 CHROMEOS_EXPORT extern const char kLoginVideoCaptureAllowedUrls[];
 
-CHROMEOS_EXPORT extern const char kLoginApps[];
+CHROMEOS_EXPORT extern const char kDeviceLoginScreenAppInstallList[];
 
 CHROMEOS_EXPORT extern const char kDeviceWallpaperImage[];
 

@@ -6,7 +6,6 @@ package org.chromium.chrome.browser.ntp.cards;
 
 import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
-import org.chromium.chrome.browser.ntp.NewTabPage.DestructionObserver;
 import org.chromium.chrome.browser.ntp.snippets.CategoryInt;
 import org.chromium.chrome.browser.ntp.snippets.CategoryStatus;
 import org.chromium.chrome.browser.ntp.snippets.CategoryStatus.CategoryStatusEnum;
@@ -15,9 +14,9 @@ import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
 import org.chromium.chrome.browser.ntp.snippets.SnippetsBridge;
 import org.chromium.chrome.browser.ntp.snippets.SuggestionsSource;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
+import org.chromium.chrome.browser.suggestions.DestructionObserver;
 import org.chromium.chrome.browser.suggestions.SuggestionsRanker;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
-import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -36,17 +35,13 @@ public class SectionList
     private final SuggestionsUiDelegate mUiDelegate;
     private final OfflinePageBridge mOfflinePageBridge;
     private final SuggestionsRanker mSuggestionsRanker;
-    private final UiConfig mUiConfig;
 
-    public SectionList(SuggestionsUiDelegate uiDelegate, OfflinePageBridge offlinePageBridge,
-            UiConfig uiConfig) {
+    public SectionList(SuggestionsUiDelegate uiDelegate, OfflinePageBridge offlinePageBridge) {
         mSuggestionsRanker = new SuggestionsRanker();
-        mUiConfig = uiConfig;
         mUiDelegate = uiDelegate;
         mUiDelegate.getSuggestionsSource().setObserver(this);
         mUiDelegate.getMetricsReporter().setRanker(mSuggestionsRanker);
         mOfflinePageBridge = offlinePageBridge;
-        resetSections(/* alwaysAllowEmptySections = */ false);
 
         mUiDelegate.addDestructionObserver(new DestructionObserver() {
             @Override
@@ -169,10 +164,6 @@ public class SectionList
                 removeSection(mSections.get(category));
                 return;
 
-            case CategoryStatus.SIGNED_OUT:
-                resetSection(category, status, /* alwaysAllowEmptySections = */ false);
-                return;
-
             default:
                 mSections.get(category).setStatus(status);
                 return;
@@ -187,6 +178,14 @@ public class SectionList
 
     @Override
     public void onFullRefreshRequired() {
+        refreshSuggestions();
+    }
+
+    /**
+     * Resets all the sections, getting the current list of categories and the associated
+     * suggestions from the backend.
+     */
+    public void refreshSuggestions() {
         resetSections(/* alwaysAllowEmptySections = */false);
     }
 
@@ -246,9 +245,6 @@ public class SectionList
     private void maybeHideArticlesHeader() {
         // If there is more than a section we want to show the headers for disambiguation purposes.
         if (mSections.size() != 1) return;
-
-        // On larger screens there is no need to hide the header and showing it is more consistent.
-        if (!mUiConfig.getCurrentDisplayStyle().isSmall()) return;
 
         SuggestionsSection articlesSection = mSections.get(KnownCategories.ARTICLES);
         if (articlesSection == null) return;

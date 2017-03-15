@@ -61,7 +61,9 @@ class WebContentsObserverSanityChecker : public WebContentsObserver,
                            const GURL& url,
                            const Referrer& referrer,
                            WindowOpenDisposition disposition,
-                           ui::PageTransition transition) override;
+                           ui::PageTransition transition,
+                           bool started_from_context_menu,
+                           bool renderer_initiated) override;
   void MediaStartedPlaying(const MediaPlayerInfo& media_info,
                            const MediaPlayerId& id) override;
   void MediaStoppedPlaying(const MediaPlayerInfo& media_info,

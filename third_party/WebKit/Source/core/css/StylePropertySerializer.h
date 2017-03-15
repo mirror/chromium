@@ -44,6 +44,7 @@ class StylePropertySerializer {
 
  private:
   String getCommonValue(const StylePropertyShorthand&) const;
+  String placeContentPropertyValue() const;
   String borderPropertyValue() const;
   String getLayeredShorthandValue(const StylePropertyShorthand&) const;
   String get4Values(const StylePropertyShorthand&) const;
@@ -121,6 +122,7 @@ class StylePropertySerializer {
     bool shouldProcessPropertyAt(unsigned index) const;
     int findPropertyIndex(CSSPropertyID) const;
     const CSSValue* getPropertyCSSValue(CSSPropertyID) const;
+    bool isDescriptorContext() const;
 
     DECLARE_TRACE();
 

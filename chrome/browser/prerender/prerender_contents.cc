@@ -553,8 +553,10 @@ void PrerenderContents::DocumentLoadedInFrame(
 
 void PrerenderContents::DidStartNavigation(
     content::NavigationHandle* navigation_handle) {
-  if (!navigation_handle->IsInMainFrame() || navigation_handle->IsSamePage())
+  if (!navigation_handle->IsInMainFrame() ||
+      navigation_handle->IsSameDocument()) {
     return;
+  }
 
   if (!CheckURL(navigation_handle->GetURL()))
     return;
@@ -778,6 +780,8 @@ void PrerenderContents::AddResourceThrottle(
 
 void PrerenderContents::AddNetworkBytes(int64_t bytes) {
   network_bytes_ += bytes;
+  for (Observer& observer : observer_list_)
+    observer.OnPrerenderNetworkBytesChanged(this);
 }
 
 }  // namespace prerender

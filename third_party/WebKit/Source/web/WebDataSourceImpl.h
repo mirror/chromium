@@ -71,8 +71,13 @@ class WebDataSourceImpl final : public DocumentLoader, public WebDataSource {
   void updateNavigation(double redirectStartTime,
                         double redirectEndTime,
                         double fetchStartTime,
-                        const WebVector<WebURL>& redirectChain) override;
+                        bool hasRedirect) override;
   void setSubresourceFilter(WebDocumentSubresourceFilter*) override;
+  void setServiceWorkerNetworkProvider(
+      std::unique_ptr<WebServiceWorkerNetworkProvider>) override;
+  WebServiceWorkerNetworkProvider* getServiceWorkerNetworkProvider() override;
+  void setSourceLocation(const WebSourceLocation&) override;
+  void resetSourceLocation() override;
 
   static WebNavigationType toWebNavigationType(NavigationType);
 

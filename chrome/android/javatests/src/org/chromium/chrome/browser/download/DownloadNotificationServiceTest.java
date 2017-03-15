@@ -77,7 +77,6 @@ public class DownloadNotificationServiceTest extends
 
     @Override
     protected void tearDown() throws Exception {
-        super.setupService();
         SharedPreferences sharedPrefs = ContextUtils.getAppSharedPreferences();
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.remove(DownloadSharedPreferenceHelper.KEY_PENDING_DOWNLOAD_NOTIFICATIONS);
@@ -125,6 +124,12 @@ public class DownloadNotificationServiceTest extends
     public void testPausingWithoutOngoingDownloads() {
         setupService();
         startNotificationService();
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                getService().updateNotificationsForShutdown();
+            }
+        });
         assertTrue(getService().isPaused());
         assertTrue(getService().getNotificationIds().isEmpty());
     }
@@ -151,6 +156,7 @@ public class DownloadNotificationServiceTest extends
                 DownloadSharedPreferenceHelper.KEY_PENDING_DOWNLOAD_NOTIFICATIONS, notifications);
         editor.apply();
         startNotificationService();
+        shutdownService();
         assertTrue(scheduler.mScheduled);
     }
 
@@ -226,6 +232,12 @@ public class DownloadNotificationServiceTest extends
                 DownloadSharedPreferenceHelper.KEY_PENDING_DOWNLOAD_NOTIFICATIONS, notifications);
         editor.apply();
         startNotificationService();
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                getService().updateNotificationsForShutdown();
+            }
+        });
         assertTrue(getService().isPaused());
         assertEquals(2, getService().getNotificationIds().size());
         assertTrue(getService().getNotificationIds().contains(1));
@@ -258,6 +270,12 @@ public class DownloadNotificationServiceTest extends
                 DownloadSharedPreferenceHelper.KEY_PENDING_DOWNLOAD_NOTIFICATIONS, notifications);
         editor.apply();
         startNotificationService();
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                getService().updateNotificationsForShutdown();
+            }
+        });
         assertEquals(2, getService().getNotificationIds().size());
         assertTrue(getService().getNotificationIds().contains(3));
         assertTrue(getService().getNotificationIds().contains(4));
@@ -271,12 +289,13 @@ public class DownloadNotificationServiceTest extends
                 sharedPrefs, DownloadSharedPreferenceHelper.KEY_PENDING_DOWNLOAD_NOTIFICATIONS);
         assertEquals(3, entries.size());
 
-        service.notifyDownloadSuccessful(guid1, "/path/to/success", "success", 100L, false, false);
+        service.notifyDownloadSuccessful(
+                guid1, "/path/to/success", "success", 100L, false, false, false);
         entries = DownloadManagerService.getStoredDownloadInfo(
                 sharedPrefs, DownloadSharedPreferenceHelper.KEY_PENDING_DOWNLOAD_NOTIFICATIONS);
         assertEquals(2, entries.size());
 
-        service.notifyDownloadFailed(guid2, "failed");
+        service.notifyDownloadFailed(false, guid2, "failed");
         entries = DownloadManagerService.getStoredDownloadInfo(
                 sharedPrefs, DownloadSharedPreferenceHelper.KEY_PENDING_DOWNLOAD_NOTIFICATIONS);
         assertEquals(1, entries.size());
@@ -297,7 +316,7 @@ public class DownloadNotificationServiceTest extends
         startNotificationService();
         DownloadNotificationService service = bindNotificationService();
         String guid = UUID.randomUUID().toString();
-        service.notifyDownloadSuccessful(guid, "/path/to/test", "test", 100L, false, false);
+        service.notifyDownloadSuccessful(guid, "/path/to/test", "test", 100L, false, false, false);
         assertEquals(1, getService().getNotificationIds().size());
     }
 
@@ -306,6 +325,7 @@ public class DownloadNotificationServiceTest extends
      */
     @SmallTest
     @Feature({"Download"})
+    @RetryOnFailure
     public void testResumeAllPendingDownloads() throws Exception {
         setupService();
         Context mockContext = new AdvancedMockContext(getSystemContext());
@@ -357,7 +377,7 @@ public class DownloadNotificationServiceTest extends
      */
     @SmallTest
     @Feature({"Download"})
-    public void testIncognitoDownloadCanceledOnBrowserKill() throws Exception {
+    public void testIncognitoDownloadCanceledOnServiceShutdown() throws Exception {
         setupService();
         Context mockContext = new AdvancedMockContext(getSystemContext());
         getService().setContext(mockContext);
@@ -373,6 +393,7 @@ public class DownloadNotificationServiceTest extends
                 DownloadSharedPreferenceHelper.KEY_PENDING_DOWNLOAD_NOTIFICATIONS, notifications);
         editor.apply();
         startNotificationService();
+        getService().onTaskRemoved(new Intent());
         assertTrue(getService().isPaused());
         assertFalse(sharedPrefs.contains(
                 DownloadSharedPreferenceHelper.KEY_PENDING_DOWNLOAD_NOTIFICATIONS));

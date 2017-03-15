@@ -14,6 +14,7 @@
 
 #include "bindings/core/v8/Dictionary.h"
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/NativeValueTraits.h"
 #include "bindings/core/v8/V8Binding.h"
 #include "bindings/core/v8/V8TestDictionary.h"
 #include "core/CoreExport.h"
@@ -28,9 +29,9 @@ class CORE_EXPORT LongOrTestDictionary final {
   bool isNull() const { return m_type == SpecificTypeNone; }
 
   bool isLong() const { return m_type == SpecificTypeLong; }
-  int getAsLong() const;
-  void setLong(int);
-  static LongOrTestDictionary fromLong(int);
+  int32_t getAsLong() const;
+  void setLong(int32_t);
+  static LongOrTestDictionary fromLong(int32_t);
 
   bool isTestDictionary() const { return m_type == SpecificTypeTestDictionary; }
   const TestDictionary& getAsTestDictionary() const;
@@ -50,7 +51,7 @@ class CORE_EXPORT LongOrTestDictionary final {
   };
   SpecificTypes m_type;
 
-  int m_long;
+  int32_t m_long;
   TestDictionary m_testDictionary;
 
   friend CORE_EXPORT v8::Local<v8::Value> ToV8(const LongOrTestDictionary&, v8::Local<v8::Object>, v8::Isolate*);
@@ -74,8 +75,13 @@ inline void v8SetReturnValue(const CallbackInfo& callbackInfo, LongOrTestDiction
 }
 
 template <>
-struct NativeValueTraits<LongOrTestDictionary> {
+struct NativeValueTraits<LongOrTestDictionary> : public NativeValueTraitsBase<LongOrTestDictionary> {
   CORE_EXPORT static LongOrTestDictionary nativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+};
+
+template <>
+struct V8TypeOf<LongOrTestDictionary> {
+  typedef V8LongOrTestDictionary Type;
 };
 
 }  // namespace blink

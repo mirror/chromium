@@ -54,6 +54,32 @@ template <typename T> inline void IgnoreUnused(T) {}
 // Returns true if Chrome is running at system level.
 bool IsSystemInstall();
 
+// Returns the string "[kCompanyPathName\]kProductPathName[install_suffix]"
+std::wstring GetChromeInstallSubDirectory();
+
+// Returns the path
+// "Software\[kCompanyPathName\]kProductPathName[install_suffix]". This subkey
+// of HKEY_CURRENT_USER can be used to save and restore state. With the
+// exception of data that is used by third parties (e.g., a subkey that
+// specifies the location of a native messaging host's manifest), state stored
+// in this key is removed during uninstall when the user chooses to also delete
+// their browsing data.
+std::wstring GetRegistryPath();
+
+// Returns the app GUID with which Chrome is registered with Google Update, or
+// an empty string if this brand does not integrate with Google Update. This is
+// a simple convenience wrapper around InstallDetails.
+const wchar_t* GetAppGuid();
+
+// Returns the unsuffixed portion of the AppUserModelId. The AppUserModelId is
+// used to group an app's windows together on the Windows taskbar along with its
+// corresponding shortcuts; see
+// https://msdn.microsoft.com/library/windows/desktop/dd378459.aspx for more
+// information. Use ShellUtil::GetBrowserModelId to get the suffixed value -- it
+// is almost never correct to use the unsuffixed (base) portion of this id
+// directly.
+const wchar_t* GetBaseAppId();
+
 // Returns true if usage stats collecting is enabled for this user for the
 // current executable.
 bool GetCollectStatsConsent();
@@ -123,18 +149,7 @@ void GetExecutableVersionDetails(const std::wstring& exe_path,
                                  std::wstring* channel_name);
 
 // Gets the channel name for the current Chrome process.
-// TODO(ananta)
-// http://crbug.com/604923
-// Unify this with the Browser Distribution code.
 std::wstring GetChromeChannelName();
-
-// Returns the registry path where the browser crash dumps metrics need to be
-// written to.
-// TODO(ananta)
-// http://crbug.com/604923
-// Unify this with the version in
-// chrome\common\metrics_constants_util_win.cc
-std::wstring GetBrowserCrashDumpAttemptsRegistryPath();
 
 // Returns true if the |source| string matches the |pattern|. The pattern
 // may contain wildcards like '?', which matches one character or a '*'
@@ -178,8 +193,12 @@ std::wstring GetSwitchValueFromCommandLine(const std::wstring& command_line,
 bool RecursiveDirectoryCreate(const std::wstring& full_path);
 
 // Returns the unadorned channel name based on the channel strategy for the
-// install mode.
-std::wstring DetermineChannel(const InstallConstants& mode, bool system_level);
+// install mode. |from_binaries| forces the registry locations corresponding to
+// the now-deprecated multi-install binaries to be read, and is only for use by
+// the installer.
+std::wstring DetermineChannel(const InstallConstants& mode,
+                              bool system_level,
+                              bool from_binaries = false);
 
 // Caches the |ProcessType| of the current process.
 extern ProcessType g_process_type;

@@ -112,7 +112,7 @@ namespace blink {
 // Public methods --------------------------------------------------------------
 
 void WebPluginContainerImpl::setFrameRect(const IntRect& frameRect) {
-  Widget::setFrameRect(frameRect);
+  FrameViewBase::setFrameRect(frameRect);
 }
 
 void WebPluginContainerImpl::updateAllLifecyclePhases() {
@@ -185,7 +185,7 @@ void WebPluginContainerImpl::invalidateRect(const IntRect& rect) {
 }
 
 void WebPluginContainerImpl::setFocused(bool focused, WebFocusType focusType) {
-  Widget::setFocused(focused, focusType);
+  FrameViewBase::setFocused(focused, focusType);
   m_webPlugin->updateFocus(focused, focusType);
 }
 
@@ -193,14 +193,14 @@ void WebPluginContainerImpl::show() {
   setSelfVisible(true);
   m_webPlugin->updateVisibility(true);
 
-  Widget::show();
+  FrameViewBase::show();
 }
 
 void WebPluginContainerImpl::hide() {
   setSelfVisible(false);
   m_webPlugin->updateVisibility(false);
 
-  Widget::hide();
+  FrameViewBase::hide();
 }
 
 void WebPluginContainerImpl::handleEvent(Event* event) {
@@ -221,19 +221,20 @@ void WebPluginContainerImpl::handleEvent(Event* event) {
   else if (event->isDragEvent() && m_webPlugin->canProcessDrag())
     handleDragEvent(toDragEvent(event));
 
-  // FIXME: it would be cleaner if Widget::handleEvent returned true/false and
-  // HTMLPluginElement called setDefaultHandled or defaultEventHandler.
+  // FIXME: it would be cleaner if FrameViewBase::handleEvent returned
+  // true/false and HTMLPluginElement called setDefaultHandled or
+  // defaultEventHandler.
   if (!event->defaultHandled())
     m_element->Node::defaultEventHandler(event);
 }
 
 void WebPluginContainerImpl::frameRectsChanged() {
-  Widget::frameRectsChanged();
+  FrameViewBase::frameRectsChanged();
   reportGeometry();
 }
 
-void WebPluginContainerImpl::widgetGeometryMayHaveChanged() {
-  Widget::widgetGeometryMayHaveChanged();
+void WebPluginContainerImpl::geometryMayHaveChanged() {
+  FrameViewBase::geometryMayHaveChanged();
   reportGeometry();
 }
 
@@ -253,7 +254,7 @@ void WebPluginContainerImpl::setParentVisible(bool parentVisible) {
   if (isParentVisible() == parentVisible)
     return;  // No change.
 
-  Widget::setParentVisible(parentVisible);
+  FrameViewBase::setParentVisible(parentVisible);
   if (!isSelfVisible())
     return;  // This widget has explicitely been marked as not visible.
 
@@ -274,7 +275,7 @@ float WebPluginContainerImpl::deviceScaleFactor() {
   Page* page = m_element->document().page();
   if (!page)
     return 1.0;
-  return page->deviceScaleFactor();
+  return page->deviceScaleFactorDeprecated();
 }
 
 float WebPluginContainerImpl::pageScaleFactor() {
@@ -411,7 +412,7 @@ void WebPluginContainerImpl::enqueueMessageEvent(
 }
 
 void WebPluginContainerImpl::invalidate() {
-  Widget::invalidate();
+  FrameViewBase::invalidate();
 }
 
 void WebPluginContainerImpl::invalidateRect(const WebRect& rect) {
@@ -467,16 +468,16 @@ WebString WebPluginContainerImpl::executeScriptURL(const WebURL& url,
   if (!frame)
     return WebString();
 
-  if (!m_element->document().contentSecurityPolicy()->allowJavaScriptURLs(
-          m_element, m_element->document().url(), OrdinalNumber())) {
-    return WebString();
-  }
-
   const KURL& kurl = url;
   DCHECK(kurl.protocolIs("javascript"));
 
   String script = decodeURLEscapeSequences(
       kurl.getString().substring(strlen("javascript:")));
+
+  if (!m_element->document().contentSecurityPolicy()->allowJavaScriptURLs(
+          m_element, script, m_element->document().url(), OrdinalNumber())) {
+    return WebString();
+  }
 
   UserGestureIndicator gestureIndicator(
       popupsAllowed ? DocumentUserGestureToken::create(
@@ -532,7 +533,7 @@ bool WebPluginContainerImpl::isRectTopmost(const WebRect& rect) {
   const HitTestResult::NodeSet& nodes = result.listBasedTestResult();
   if (nodes.size() != 1)
     return false;
-  return nodes.first().get() == m_element;
+  return nodes.front().get() == m_element;
 }
 
 void WebPluginContainerImpl::requestTouchEventType(
@@ -540,8 +541,8 @@ void WebPluginContainerImpl::requestTouchEventType(
   if (m_touchEventRequestType == requestType || !m_element)
     return;
 
-  if (FrameHost* frameHost = m_element->document().frameHost()) {
-    EventHandlerRegistry& registry = frameHost->eventHandlerRegistry();
+  if (Page* page = m_element->document().page()) {
+    EventHandlerRegistry& registry = page->eventHandlerRegistry();
     if (requestType != TouchEventRequestTypeNone &&
         m_touchEventRequestType == TouchEventRequestTypeNone)
       registry.didAddEventHandler(
@@ -557,8 +558,8 @@ void WebPluginContainerImpl::requestTouchEventType(
 void WebPluginContainerImpl::setWantsWheelEvents(bool wantsWheelEvents) {
   if (m_wantsWheelEvents == wantsWheelEvents)
     return;
-  if (FrameHost* frameHost = m_element->document().frameHost()) {
-    EventHandlerRegistry& registry = frameHost->eventHandlerRegistry();
+  if (Page* page = m_element->document().page()) {
+    EventHandlerRegistry& registry = page->eventHandlerRegistry();
     if (wantsWheelEvents)
       registry.didAddEventHandler(*m_element,
                                   EventHandlerRegistry::WheelEventBlocking);
@@ -932,7 +933,7 @@ void WebPluginContainerImpl::computeClipRectsForPlugin(
 
   // Note: frameRect() for this plugin is equal to contentBoxRect, mapped to the
   // containing view space, and rounded off.
-  // See LayoutPart.cpp::updateWidgetGeometryInternal. To remove the lossy
+  // See LayoutPart.cpp::updateGeometryInternal. To remove the lossy
   // effect of rounding off, use contentBoxRect directly.
   LayoutRect unclippedAbsoluteRect(box->contentBoxRect());
   box->mapToVisualRectInAncestorSpace(rootView, unclippedAbsoluteRect);

@@ -28,9 +28,7 @@
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/editing/CaretDisplayItemClient.h"
 #include "core/editing/EditingUtilities.h"
-#include "core/editing/Editor.h"
 #include "core/editing/SelectionEditor.h"
-#include "core/editing/commands/CompositeEditCommand.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
@@ -49,9 +47,10 @@ FrameCaret::FrameCaret(LocalFrame& frame,
       m_frame(frame),
       m_displayItemClient(new CaretDisplayItemClient()),
       m_caretVisibility(CaretVisibility::Hidden),
-      m_caretBlinkTimer(TaskRunnerHelper::get(TaskType::UnspecedTimer, &frame),
-                        this,
-                        &FrameCaret::caretBlinkTimerFired),
+      m_caretBlinkTimer(new TaskRunnerTimer<FrameCaret>(
+          TaskRunnerHelper::get(TaskType::UnspecedTimer, &frame),
+          this,
+          &FrameCaret::caretBlinkTimerFired)),
       m_shouldPaintCaret(true),
       m_isCaretBlinkingSuspended(false),
       m_shouldShowBlockCursor(false) {}
@@ -69,15 +68,10 @@ const DisplayItemClient& FrameCaret::displayItemClient() const {
 
 const PositionWithAffinity FrameCaret::caretPosition() const {
   const VisibleSelection& selection =
-      m_selectionEditor->visibleSelection<EditingStrategy>();
+      m_selectionEditor->computeVisibleSelectionInDOMTree();
   if (!selection.isCaret())
     return PositionWithAffinity();
   return PositionWithAffinity(selection.start(), selection.affinity());
-}
-
-inline static bool shouldStopBlinkingDueToTypingCommand(LocalFrame* frame) {
-  return frame->editor().lastEditCommand() &&
-         frame->editor().lastEditCommand()->shouldStopCaretBlinking();
 }
 
 void FrameCaret::updateAppearance() {
@@ -91,33 +85,30 @@ void FrameCaret::updateAppearance() {
       !isLogicalEndOfLine(createVisiblePosition(caretPosition()));
 
   bool shouldBlink = !paintBlockCursor && shouldBlinkCaret();
-
-  // If the caret moved, stop the blink timer so we can restart with a
-  // black caret in the new location.
-  if (!shouldBlink || shouldStopBlinkingDueToTypingCommand(m_frame))
+  if (!shouldBlink) {
     stopCaretBlinkTimer();
-
+    return;
+  }
   // Start blinking with a black caret. Be sure not to restart if we're
   // already blinking in the right location.
-  if (shouldBlink)
-    startBlinkCaret();
+  startBlinkCaret();
 }
 
 void FrameCaret::stopCaretBlinkTimer() {
-  if (m_caretBlinkTimer.isActive() || m_shouldPaintCaret)
+  if (m_caretBlinkTimer->isActive() || m_shouldPaintCaret)
     scheduleVisualUpdateForPaintInvalidationIfNeeded();
   m_shouldPaintCaret = false;
-  m_caretBlinkTimer.stop();
+  m_caretBlinkTimer->stop();
 }
 
 void FrameCaret::startBlinkCaret() {
   // Start blinking with a black caret. Be sure not to restart if we're
   // already blinking in the right location.
-  if (m_caretBlinkTimer.isActive())
+  if (m_caretBlinkTimer->isActive())
     return;
 
   if (double blinkInterval = LayoutTheme::theme().caretBlinkInterval())
-    m_caretBlinkTimer.startRepeating(blinkInterval, BLINK_FROM_HERE);
+    m_caretBlinkTimer->startRepeating(blinkInterval, BLINK_FROM_HERE);
 
   m_shouldPaintCaret = true;
   scheduleVisualUpdateForPaintInvalidationIfNeeded();
@@ -149,16 +140,16 @@ void FrameCaret::updateStyleAndLayoutIfNeeded() {
   bool shouldPaintCaret =
       m_shouldPaintCaret && isActive() &&
       m_caretVisibility == CaretVisibility::Visible &&
-      m_selectionEditor->visibleSelection<EditingStrategy>().hasEditableStyle();
+      m_selectionEditor->computeVisibleSelectionInDOMTree().hasEditableStyle();
 
   m_displayItemClient->updateStyleAndLayoutIfNeeded(
       shouldPaintCaret ? caretPosition() : PositionWithAffinity());
 }
 
-void FrameCaret::invalidatePaintIfNeeded(const LayoutBlock& block,
-                                         const PaintInvalidatorContext& context,
-                                         PaintInvalidationReason reason) {
-  m_displayItemClient->invalidatePaintIfNeeded(block, context, reason);
+void FrameCaret::invalidatePaintIfNeeded(
+    const LayoutBlock& block,
+    const PaintInvalidatorContext& context) {
+  m_displayItemClient->invalidatePaintIfNeeded(block, context);
 }
 
 bool FrameCaret::caretPositionIsValidForDocument(
@@ -236,6 +227,12 @@ void FrameCaret::caretBlinkTimerFired(TimerBase*) {
 void FrameCaret::scheduleVisualUpdateForPaintInvalidationIfNeeded() {
   if (FrameView* frameView = m_frame->view())
     frameView->scheduleVisualUpdateForPaintInvalidationIfNeeded();
+}
+
+void FrameCaret::recreateCaretBlinkTimerForTesting(
+    RefPtr<WebTaskRunner> taskRunner) {
+  m_caretBlinkTimer.reset(new TaskRunnerTimer<FrameCaret>(
+      std::move(taskRunner), this, &FrameCaret::caretBlinkTimerFired));
 }
 
 }  // namespace blink

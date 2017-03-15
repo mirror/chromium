@@ -101,6 +101,8 @@ class CORE_EXPORT WorkerGlobalScope
     return ExecutionContext::isSecureContext(StandardSecureContextCheck);
   }
 
+  String origin() const;
+
   DEFINE_ATTRIBUTE_EVENT_LISTENER(error);
   DEFINE_ATTRIBUTE_EVENT_LISTENER(rejectionhandled);
   DEFINE_ATTRIBUTE_EVENT_LISTENER(unhandledrejection);
@@ -148,7 +150,8 @@ class CORE_EXPORT WorkerGlobalScope
   WorkerOrWorkletScriptController* scriptController() final {
     return m_scriptController.get();
   }
-  WorkerClients* clients() { return m_workerClients.get(); }
+
+  WorkerClients* clients() const { return m_workerClients.get(); }
 
   DECLARE_VIRTUAL_TRACE();
 

@@ -9,6 +9,7 @@
 #include "base/macros.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "cc/paint/skia_paint_canvas.h"
 #include "content/public/common/web_preferences.h"
 #include "ppapi/proxy/connection.h"
 #include "ppapi/shared_impl/ppapi_preferences.h"
@@ -341,11 +342,12 @@ PP_Bool BrowserFontResource_Trusted::DrawTextAt(
       return result;
 
     SkSurfaceProps props(0, kUnknown_SkPixelGeometry);
-    SkCanvas temp_canvas(bm, props);
+    cc::SkiaPaintCanvas temp_canvas(bm, props);
 
     DrawTextToCanvas(&temp_canvas, *text, position, color, clip);
   } else {
-    DrawTextToCanvas(canvas, *text, position, color, clip);
+    cc::SkiaPaintCanvas temp_canvas(canvas);
+    DrawTextToCanvas(&temp_canvas, *text, position, color, clip);
   }
 
   if (needs_unmapping)
@@ -414,7 +416,7 @@ int32_t BrowserFontResource_Trusted::PixelOffsetForCharacter(
 }
 
 void BrowserFontResource_Trusted::DrawTextToCanvas(
-    SkCanvas* destination,
+    cc::PaintCanvas* destination,
     const PP_BrowserFont_Trusted_TextRun& text,
     const PP_Point* position,
     uint32_t color,
@@ -424,7 +426,7 @@ void BrowserFontResource_Trusted::DrawTextToCanvas(
                              static_cast<float>(position->y));
   WebRect web_clip;
   if (!clip) {
-    // Use entire canvas. SkCanvas doesn't have a size on it, so we just use
+    // Use entire canvas. PaintCanvas doesn't have a size on it, so we just use
     // the current clip bounds.
     SkRect skclip = destination->getLocalClipBounds();
     web_clip = WebRect(skclip.fLeft, skclip.fTop, skclip.fRight - skclip.fLeft,

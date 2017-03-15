@@ -33,48 +33,36 @@
  */
 CookieTable.CookiesTable = class extends UI.VBox {
   /**
-   * @param {boolean} readOnly
+   * @param {function(!SDK.Cookie, ?SDK.Cookie, function(?string))=} saveCallback
    * @param {function()=} refreshCallback
    * @param {function()=} selectedCallback
-   * @param {string=} cookieDomain
+   * @param {function(!SDK.Cookie, function())=} deleteCallback
    */
-  constructor(readOnly, refreshCallback, selectedCallback, cookieDomain) {
+  constructor(saveCallback, refreshCallback, selectedCallback, deleteCallback) {
     super();
 
-    this._readOnly = readOnly;
+    this._saveCallback = saveCallback;
     this._refreshCallback = refreshCallback;
-    this._cookieDomain = cookieDomain;
+    this._deleteCallback = deleteCallback;
+
+    var editable = !!saveCallback;
 
     var columns = /** @type {!Array<!DataGrid.DataGrid.ColumnDescriptor>} */ ([
       {
         id: 'name',
         title: Common.UIString('Name'),
         sortable: true,
-        disclosure: !this._readOnly,
+        disclosure: editable,
         sort: DataGrid.DataGrid.Order.Ascending,
         longText: true,
         weight: 24,
-        editable: !this._readOnly
+        editable: editable
       },
-      {
-        id: 'value',
-        title: Common.UIString('Value'),
-        sortable: true,
-        longText: true,
-        weight: 34,
-        editable: !this._readOnly
-      },
-      {id: 'domain', title: Common.UIString('Domain'), sortable: true, weight: 7, editable: !this._readOnly},
-      {id: 'path', title: Common.UIString('Path'), sortable: true, weight: 7, editable: !this._readOnly},
-      {
-        id: 'expires',
-        title: Common.UIString('Expires / Max-Age'),
-        sortable: true,
-        weight: 7,
-        editable: !this._readOnly
-      },
-      {id: 'size', title: Common.UIString('Size'), sortable: true, align: DataGrid.DataGrid.Align.Right, weight: 7},
-      {
+      {id: 'value', title: Common.UIString('Value'), sortable: true, longText: true, weight: 34, editable: editable},
+      {id: 'domain', title: Common.UIString('Domain'), sortable: true, weight: 7, editable: editable},
+      {id: 'path', title: Common.UIString('Path'), sortable: true, weight: 7, editable: editable},
+      {id: 'expires', title: Common.UIString('Expires / Max-Age'), sortable: true, weight: 7, editable: editable},
+      {id: 'size', title: Common.UIString('Size'), sortable: true, align: DataGrid.DataGrid.Align.Right, weight: 7}, {
         id: 'httpOnly',
         title: Common.UIString('HTTP'),
         sortable: true,
@@ -97,11 +85,11 @@ CookieTable.CookiesTable = class extends UI.VBox {
       }
     ]);
 
-    if (this._readOnly) {
-      this._dataGrid = new DataGrid.DataGrid(columns);
+    if (editable) {
+      this._dataGrid = new DataGrid.DataGrid(
+          columns, this._onUpdateCookie.bind(this), this._onDeleteCookie.bind(this), refreshCallback);
     } else {
-      this._dataGrid = new DataGrid.DataGrid(columns, this._onUpdateCookie.bind(this), this._onDeleteCookie.bind(this), refreshCallback);
-      this._dataGrid.setRowContextMenuCallback(this._onRowContextMenu.bind(this));
+      this._dataGrid = new DataGrid.DataGrid(columns);
     }
 
     this._dataGrid.setName('cookiesTable');
@@ -110,37 +98,14 @@ CookieTable.CookiesTable = class extends UI.VBox {
     if (selectedCallback)
       this._dataGrid.addEventListener(DataGrid.DataGrid.Events.SelectedNode, selectedCallback, this);
 
-    this._nextSelectedCookie = /** @type {?SDK.Cookie} */ (null);
     /** @type {?string} */
     this._lastEditedColumnId = null;
 
     this._dataGrid.asWidget().show(this.element);
     this._data = [];
-  }
 
-  /**
-   * @param {?string} domain
-   */
-  _clearAndRefresh(domain) {
-    this.clear(domain);
-    this._refresh();
-  }
-
-  /**
-   * @param {!UI.ContextMenu} contextMenu
-   * @param {!DataGrid.DataGridNode} node
-   */
-  _onRowContextMenu(contextMenu, node) {
-    if (node.isCreationNode)
-      return;
-
-    const cookie = node.cookie;
-    const domain = cookie.domain();
-    if (domain) {
-      contextMenu.appendItem(
-          Common.UIString.capitalize('Clear ^all from "%s"', domain), this._clearAndRefresh.bind(this, domain));
-    }
-    contextMenu.appendItem(Common.UIString.capitalize('Clear ^all'), this._clearAndRefresh.bind(this, null));
+    /** @type {string} */
+    this._cookieDomain = '';
   }
 
   /**
@@ -159,6 +124,13 @@ CookieTable.CookiesTable = class extends UI.VBox {
   }
 
   /**
+   * @param {string} cookieDomain
+   */
+  setCookieDomain(cookieDomain) {
+    this._cookieDomain = cookieDomain;
+  }
+
+  /**
    * @return {?SDK.Cookie}
    */
   selectedCookie() {
@@ -167,16 +139,17 @@ CookieTable.CookiesTable = class extends UI.VBox {
   }
 
   /**
-   * @param {?string=} domain
+   * @return {{current: ?SDK.Cookie, neighbor: ?SDK.Cookie}}
    */
-  clear(domain) {
-    for (var i = 0, length = this._data.length; i < length; ++i) {
-      var cookies = this._data[i].cookies;
-      for (var j = 0, cookieCount = cookies.length; j < cookieCount; ++j) {
-        if (!domain || cookies[j].domain() === domain)
-          cookies[j].remove();
-      }
-    }
+  _getSelectionCookies() {
+    var node = this._dataGrid.selectedNode;
+    var nextNeighbor = node && node.traverseNextNode(true);
+    var previousNeighbor = node && node.traversePreviousNode(true);
+
+    return {
+      current: node && node.cookie,
+      neighbor: (nextNeighbor && nextNeighbor.cookie) || (previousNeighbor && previousNeighbor.cookie)
+    };
   }
 
   /**
@@ -186,14 +159,43 @@ CookieTable.CookiesTable = class extends UI.VBox {
     this._lastEditedColumnId = null;
   }
 
+  /**
+   * @param {{current: ?SDK.Cookie, neighbor: ?SDK.Cookie}} selectionCookies
+   * @param {!Array<!SDK.Cookie>} cookies
+   * @return {?SDK.Cookie}
+   */
+  _findSelectedCookie(selectionCookies, cookies) {
+    var current = selectionCookies.current;
+    var foundCurrent = cookies.find(cookie => this._isSameCookie(cookie, current));
+    if (foundCurrent)
+      return foundCurrent;
+
+    var neighbor = selectionCookies.neighbor;
+    var foundNeighbor = cookies.find(cookie => this._isSameCookie(cookie, neighbor));
+    if (foundNeighbor)
+      return foundNeighbor;
+
+    return null;
+  }
+
+  /**
+   * @param {!SDK.Cookie} cookieA
+   * @param {?SDK.Cookie} cookieB
+   * @return {boolean}
+   */
+  _isSameCookie(cookieA, cookieB) {
+    return !!cookieB && cookieB.name() === cookieA.name() && cookieB.domain() === cookieA.domain() &&
+        cookieB.path() === cookieA.path();
+  }
+
   _rebuildTable() {
-    var selectedCookie = this._nextSelectedCookie || this.selectedCookie();
+    var selectionCookies = this._getSelectionCookies();
     var lastEditedColumnId = this._lastEditedColumnId;
-    this._nextSelectedCookie = null;
     this._lastEditedColumnId = null;
     this._dataGrid.rootNode().removeChildren();
     for (var i = 0; i < this._data.length; ++i) {
       var item = this._data[i];
+      var selectedCookie = this._findSelectedCookie(selectionCookies, item.cookies);
       if (item.folderName) {
         var groupData = {
           name: item.folderName,
@@ -216,9 +218,9 @@ CookieTable.CookiesTable = class extends UI.VBox {
         this._populateNode(this._dataGrid.rootNode(), item.cookies, selectedCookie, lastEditedColumnId);
       }
     }
-    if (selectedCookie && lastEditedColumnId && !this._dataGrid.selectedNode)
-      this._addInactiveNode(this._dataGrid.rootNode(), selectedCookie, lastEditedColumnId);
-    if (!this._readOnly)
+    if (selectionCookies.current && lastEditedColumnId && !this._dataGrid.selectedNode)
+      this._addInactiveNode(this._dataGrid.rootNode(), selectionCookies.current, lastEditedColumnId);
+    if (this._saveCallback)
       this._dataGrid.addCreationNode(false);
   }
 
@@ -238,8 +240,7 @@ CookieTable.CookiesTable = class extends UI.VBox {
       var cookie = cookies[i];
       var cookieNode = this._createGridNode(cookie);
       parentNode.appendChild(cookieNode);
-      if (selectedCookie && selectedCookie.name() === cookie.name() && selectedCookie.domain() === cookie.domain() &&
-          selectedCookie.path() === cookie.path()) {
+      if (this._isSameCookie(cookie, selectedCookie)) {
         cookieNode.select();
         if (lastEditedColumnId !== null)
           this._dataGrid.startEditingNextEditableColumnOfDataGridNode(cookieNode, lastEditedColumnId);
@@ -363,13 +364,12 @@ CookieTable.CookiesTable = class extends UI.VBox {
     return node;
   }
 
+  /**
+   * @param {!DataGrid.DataGridNode} node
+   */
   _onDeleteCookie(node) {
-    var cookie = node.cookie;
-    var neighbour = node.traverseNextNode() || node.traversePreviousNode();
-    if (neighbour)
-      this._nextSelectedCookie = neighbour.cookie;
-    cookie.remove();
-    this._refresh();
+    if (node.cookie && this._deleteCallback)
+      this._deleteCallback(node.cookie, () => this._refresh());
   }
 
   /**
@@ -409,25 +409,21 @@ CookieTable.CookiesTable = class extends UI.VBox {
   _saveNode(node) {
     var oldCookie = node.cookie;
     var newCookie = this._createCookieFromData(node.data);
-    if (oldCookie && (newCookie.name() !== oldCookie.name() || newCookie.url() !== oldCookie.url()))
-      oldCookie.remove();
     node.cookie = newCookie;
-    newCookie.save(success => {
-      if (success)
+    this._saveCallback(newCookie, oldCookie, error => {
+      if (!error)
         this._refresh();
       else
         node.setDirty(true);
     });
-    this._nextSelectedCookie = newCookie;
   }
 
   /**
    * @param {!Object.<string, *>} data
-   * @returns {SDK.Cookie}
+   * @returns {!SDK.Cookie}
    */
   _createCookieFromData(data) {
-    var target = SDK.targetManager.targets(SDK.Target.Capability.Network)[0];
-    var cookie = new SDK.Cookie(target, data.name, data.value, null);
+    var cookie = new SDK.Cookie(data.name, data.value, null);
     cookie.addAttribute('domain', data.domain);
     cookie.addAttribute('path', data.path);
     if (data.expires && data.expires !== CookieTable.CookiesTable._expiresSessionValue)
@@ -447,7 +443,8 @@ CookieTable.CookiesTable = class extends UI.VBox {
    * @returns {boolean}
    */
   _isValidCookieData(data) {
-    return (data.name || data.value) && this._isValidDomain(data.domain) && this._isValidPath(data.path) && this._isValidDate(data.expires);
+    return (data.name || data.value) && this._isValidDomain(data.domain) && this._isValidPath(data.path) &&
+        this._isValidDate(data.expires);
   }
 
   /**

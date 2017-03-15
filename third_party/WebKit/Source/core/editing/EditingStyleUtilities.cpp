@@ -101,7 +101,12 @@ EditingStyle* EditingStyleUtilities::createStyleAtSelectionStart(
   DocumentLifecycle::DisallowTransitionScope disallowTransition(
       document.lifecycle());
 
-  Position position = adjustedSelectionStartForStyleComputation(selection);
+  // TODO(editing-dev): We should make |position| to |const Position&| by
+  // integrating this expression and if-statement below.
+  Position position =
+      selection.isCaret()
+          ? createVisiblePosition(selection.start()).deepEquivalent()
+          : adjustedSelectionStartForStyleComputation(selection.start());
 
   // If the pos is at the end of a text node, then this node is not fully
   // selected. Move it to the next deep equivalent position to avoid removing
@@ -148,124 +153,11 @@ EditingStyle* EditingStyleUtilities::createStyleAtSelectionStart(
       (selection.isRange() || hasTransparentBackgroundColor(style->style()))) {
     const EphemeralRange range(selection.toNormalizedEphemeralRange());
     if (const CSSValue* value =
-            backgroundColorValueInEffect(Range::commonAncestorContainer(
-                range.startPosition().computeContainerNode(),
-                range.endPosition().computeContainerNode())))
+            backgroundColorValueInEffect(range.commonAncestorContainer()))
       style->setProperty(CSSPropertyBackgroundColor, value->cssText());
   }
 
   return style;
-}
-
-static bool isUnicodeBidiNestedOrMultipleEmbeddings(CSSValueID valueID) {
-  return valueID == CSSValueEmbed || valueID == CSSValueBidiOverride ||
-         valueID == CSSValueWebkitIsolate ||
-         valueID == CSSValueWebkitIsolateOverride ||
-         valueID == CSSValueWebkitPlaintext || valueID == CSSValueIsolate ||
-         valueID == CSSValueIsolateOverride || valueID == CSSValuePlaintext;
-}
-
-WritingDirection EditingStyleUtilities::textDirectionForSelection(
-    const VisibleSelection& selection,
-    EditingStyle* typingStyle,
-    bool& hasNestedOrMultipleEmbeddings) {
-  hasNestedOrMultipleEmbeddings = true;
-
-  if (selection.isNone())
-    return NaturalWritingDirection;
-
-  Position position = mostForwardCaretPosition(selection.start());
-
-  Node* node = position.anchorNode();
-  if (!node)
-    return NaturalWritingDirection;
-
-  Position end;
-  if (selection.isRange()) {
-    end = mostBackwardCaretPosition(selection.end());
-
-    DCHECK(end.document());
-    const EphemeralRange caretRange(position.parentAnchoredEquivalent(),
-                                    end.parentAnchoredEquivalent());
-    for (Node& n : caretRange.nodes()) {
-      if (!n.isStyledElement())
-        continue;
-
-      CSSComputedStyleDeclaration* style =
-          CSSComputedStyleDeclaration::create(&n);
-      const CSSValue* unicodeBidi =
-          style->getPropertyCSSValue(CSSPropertyUnicodeBidi);
-      if (!unicodeBidi || !unicodeBidi->isIdentifierValue())
-        continue;
-
-      CSSValueID unicodeBidiValue =
-          toCSSIdentifierValue(unicodeBidi)->getValueID();
-      if (isUnicodeBidiNestedOrMultipleEmbeddings(unicodeBidiValue))
-        return NaturalWritingDirection;
-    }
-  }
-
-  if (selection.isCaret()) {
-    WritingDirection direction;
-    if (typingStyle && typingStyle->textDirection(direction)) {
-      hasNestedOrMultipleEmbeddings = false;
-      return direction;
-    }
-    node = selection.visibleStart().deepEquivalent().anchorNode();
-  }
-  DCHECK(node);
-
-  // The selection is either a caret with no typing attributes or a range in
-  // which no embedding is added, so just use the start position to decide.
-  Node* block = enclosingBlock(node);
-  WritingDirection foundDirection = NaturalWritingDirection;
-
-  for (Node& runner : NodeTraversal::inclusiveAncestorsOf(*node)) {
-    if (runner == block)
-      break;
-    if (!runner.isStyledElement())
-      continue;
-
-    Element* element = &toElement(runner);
-    CSSComputedStyleDeclaration* style =
-        CSSComputedStyleDeclaration::create(element);
-    const CSSValue* unicodeBidi =
-        style->getPropertyCSSValue(CSSPropertyUnicodeBidi);
-    if (!unicodeBidi || !unicodeBidi->isIdentifierValue())
-      continue;
-
-    CSSValueID unicodeBidiValue =
-        toCSSIdentifierValue(unicodeBidi)->getValueID();
-    if (unicodeBidiValue == CSSValueNormal)
-      continue;
-
-    if (unicodeBidiValue == CSSValueBidiOverride)
-      return NaturalWritingDirection;
-
-    DCHECK(isEmbedOrIsolate(unicodeBidiValue)) << unicodeBidiValue;
-    const CSSValue* direction =
-        style->getPropertyCSSValue(CSSPropertyDirection);
-    if (!direction || !direction->isIdentifierValue())
-      continue;
-
-    int directionValue = toCSSIdentifierValue(direction)->getValueID();
-    if (directionValue != CSSValueLtr && directionValue != CSSValueRtl)
-      continue;
-
-    if (foundDirection != NaturalWritingDirection)
-      return NaturalWritingDirection;
-
-    // In the range case, make sure that the embedding element persists until
-    // the end of the range.
-    if (selection.isRange() && !end.anchorNode()->isDescendantOf(element))
-      return NaturalWritingDirection;
-
-    foundDirection = directionValue == CSSValueLtr
-                         ? LeftToRightWritingDirection
-                         : RightToLeftWritingDirection;
-  }
-  hasNestedOrMultipleEmbeddings = false;
-  return foundDirection;
 }
 
 bool EditingStyleUtilities::isTransparentColorValue(const CSSValue* cssValue) {

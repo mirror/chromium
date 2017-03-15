@@ -25,7 +25,7 @@
 
 #include "core/CoreExport.h"
 #include "core/layout/LayoutReplaced.h"
-#include "platform/Widget.h"
+#include "platform/FrameViewBase.h"
 
 namespace blink {
 
@@ -48,12 +48,12 @@ class CORE_EXPORT LayoutPart : public LayoutReplaced {
   void ref() { ++m_refCount; }
   void deref();
 
-  Widget* widget() const;
+  FrameViewBase* frameViewBase() const;
 
   LayoutRect replacedContentRect() const final;
 
   void updateOnWidgetChange();
-  void updateWidgetGeometry();
+  void updateGeometry();
 
   bool isLayoutPart() const final { return true; }
   virtual void paintContents(const PaintInfo&, const LayoutPoint&) const;
@@ -73,16 +73,16 @@ class CORE_EXPORT LayoutPart : public LayoutReplaced {
       const PaintInvalidationState&) override;
 
  private:
-  void updateWidgetGeometryInternal();
+  void updateGeometryInternal();
   CompositingReasons additionalCompositingReasons() const override;
 
   void willBeDestroyed() final;
   void destroy() final;
 
-  bool nodeAtPointOverWidget(HitTestResult&,
-                             const HitTestLocation& locationInContainer,
-                             const LayoutPoint& accumulatedOffset,
-                             HitTestAction);
+  bool nodeAtPointOverFrameViewBase(HitTestResult&,
+                                    const HitTestLocation& locationInContainer,
+                                    const LayoutPoint& accumulatedOffset,
+                                    HitTestAction);
 
   int m_refCount;
 };

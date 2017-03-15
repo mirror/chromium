@@ -25,9 +25,8 @@
 
 #include "bindings/core/v8/V8Initializer.h"
 
-#include <v8-debug.h>
-#include <v8-profiler.h>
 #include <memory>
+
 #include "bindings/core/v8/DOMWrapperWorld.h"
 #include "bindings/core/v8/RejectedPromises.h"
 #include "bindings/core/v8/RetainedDOMInfo.h"
@@ -58,10 +57,14 @@
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/AccessControlStatus.h"
+#include "platform/weborigin/SecurityViolationReportingPolicy.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebScheduler.h"
 #include "public/platform/WebThread.h"
+#include "v8/include/v8-debug.h"
+#include "v8/include/v8-profiler.h"
 #include "wtf/AddressSanitizer.h"
+#include "wtf/Assertions.h"
 #include "wtf/PtrUtil.h"
 #include "wtf/RefPtr.h"
 #include "wtf/text/WTFString.h"
@@ -142,6 +145,9 @@ MessageLevel MessageLevelFromNonFatalErrorLevel(int errorLevel) {
   }
   return level;
 }
+
+const size_t kWasmWireBytesLimit = 1 << 12;
+
 }  // namespace
 
 void V8Initializer::messageHandlerInMainThread(v8::Local<v8::Message> message,
@@ -313,10 +319,52 @@ static bool codeGenerationCheckCallbackInMainThread(
     if (ContentSecurityPolicy* policy =
             toDocument(executionContext)->contentSecurityPolicy())
       return policy->allowEval(ScriptState::from(context),
-                               ContentSecurityPolicy::SendReport,
+                               SecurityViolationReportingPolicy::Report,
                                ContentSecurityPolicy::WillThrowException);
   }
   return false;
+}
+
+static bool allowWasmCompileCallbackInMainThread(v8::Isolate* isolate,
+                                                 v8::Local<v8::Value> source,
+                                                 bool asPromise) {
+  // We allow async compilation irrespective of buffer size.
+  if (asPromise)
+    return true;
+  if (source->IsArrayBuffer() &&
+      v8::Local<v8::ArrayBuffer>::Cast(source)->ByteLength() >
+          kWasmWireBytesLimit) {
+    return false;
+  }
+  if (source->IsArrayBufferView() &&
+      v8::Local<v8::ArrayBufferView>::Cast(source)->ByteLength() >
+          kWasmWireBytesLimit) {
+    return false;
+  }
+  return true;
+}
+
+static bool allowWasmInstantiateCallbackInMainThread(
+    v8::Isolate* isolate,
+    v8::Local<v8::Value> source,
+    v8::MaybeLocal<v8::Value> ffi,
+    bool asPromise) {
+  // Async cases are allowed, regardless of the size of the
+  // wire bytes. Note that, for instantiation, we use the wire
+  // bytes size as a proxy for instantiation time. We may
+  // consider using the size of the ffi (nr of properties)
+  // instead, or, even more directly, number of imports.
+  if (asPromise)
+    return true;
+  // If it's not a promise, the source should be a wasm module
+  DCHECK(source->IsWebAssemblyCompiledModule());
+  v8::Local<v8::WasmCompiledModule> module =
+      v8::Local<v8::WasmCompiledModule>::Cast(source);
+  if (static_cast<size_t>(module->GetWasmWireBytes()->Length()) >
+      kWasmWireBytesLimit) {
+    return false;
+  }
+  return true;
 }
 
 static void initializeV8Common(v8::Isolate* isolate) {
@@ -328,8 +376,6 @@ static void initializeV8Common(v8::Isolate* isolate) {
       std::move(visitor));
   isolate->SetEmbedderHeapTracer(
       V8PerIsolateData::from(isolate)->scriptWrappableVisitor());
-
-  v8::Debug::SetLiveEditEnabled(isolate, false);
 
   isolate->SetMicrotasksPolicy(v8::MicrotasksPolicy::kScoped);
 
@@ -343,21 +389,17 @@ class ArrayBufferAllocator : public v8::ArrayBuffer::Allocator {
   // should respond by throwing a RangeError, per
   // http://www.ecma-international.org/ecma-262/6.0/#sec-createbytedatablock.
   void* Allocate(size_t size) override {
-    void* data;
-    WTF::ArrayBufferContents::allocateMemoryOrNull(
-        size, WTF::ArrayBufferContents::ZeroInitialize, data);
-    return data;
+    return WTF::ArrayBufferContents::allocateMemoryOrNull(
+        size, WTF::ArrayBufferContents::ZeroInitialize);
   }
 
   void* AllocateUninitialized(size_t size) override {
-    void* data;
-    WTF::ArrayBufferContents::allocateMemoryOrNull(
-        size, WTF::ArrayBufferContents::DontInitialize, data);
-    return data;
+    return WTF::ArrayBufferContents::allocateMemoryOrNull(
+        size, WTF::ArrayBufferContents::DontInitialize);
   }
 
   void Free(void* data, size_t size) override {
-    WTF::ArrayBufferContents::freeMemory(data, size);
+    WTF::ArrayBufferContents::freeMemory(data);
   }
 };
 
@@ -414,7 +456,9 @@ void V8Initializer::initializeMainThread() {
       failedAccessCheckCallbackInMainThread);
   isolate->SetAllowCodeGenerationFromStringsCallback(
       codeGenerationCheckCallbackInMainThread);
-
+  isolate->SetAllowWasmCompileCallback(allowWasmCompileCallbackInMainThread);
+  isolate->SetAllowWasmInstantiateCallback(
+      allowWasmInstantiateCallbackInMainThread);
   if (RuntimeEnabledFeatures::v8IdleTasksEnabled()) {
     V8PerIsolateData::enableIdleTasks(
         isolate, WTF::makeUnique<V8IdleTaskRunner>(scheduler));

@@ -13,7 +13,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.Nullable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
-import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -23,14 +22,15 @@ import android.view.View.OnCreateContextMenuListener;
 import android.view.ViewGroup;
 
 import org.chromium.base.ApiCompatibilityUtils;
-import org.chromium.base.Callback;
-import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.favicon.LargeIconBridge.LargeIconCallback;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.ntp.ContextMenuManager.ContextMenuItemId;
 import org.chromium.chrome.browser.ntp.MostVisitedTileType;
+import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.widget.RoundedIconGenerator;
 import org.chromium.ui.mojom.WindowOpenDisposition;
 
@@ -78,7 +78,8 @@ public class TileGroup implements MostVisitedSites.Observer {
      */
     public interface Observer {
         /**
-         * Called when any of the tile data has changed, such as an icon, url, or title.
+         * Called when the tile group is initialised and when any of the tile data has changed,
+         * such as an icon, url, or title.
          */
         void onTileDataChanged();
 
@@ -92,6 +93,12 @@ public class TileGroup implements MostVisitedSites.Observer {
          * @param tile The tile for which the icon has changed.
          */
         void onTileIconChanged(Tile tile);
+
+        /**
+         * Called when the visibility of a tile's offline badge has changed.
+         * @param tile The tile for which the visibility of the offline badge has changed.
+         */
+        void onTileOfflineBadgeVisibilityChanged(Tile tile);
 
         /**
          * Called when an asynchronous loading task has started.
@@ -115,20 +122,56 @@ public class TileGroup implements MostVisitedSites.Observer {
     private final ContextMenuManager mContextMenuManager;
     private final Delegate mTileGroupDelegate;
     private final Observer mObserver;
+    private final int mTitleLinesCount;
+    private final int mMinIconSize;
+    private final int mDesiredIconSize;
     private final RoundedIconGenerator mIconGenerator;
 
-    private Tile[] mTiles;
-    private int mMinIconSize;
-    private int mDesiredIconSize;
-    boolean mHasReceivedData;
+    /**
+     * Access point to offline related features. Will be {@code null} when the badges are disabled.
+     * @see ChromeFeatureList#NTP_OFFLINE_PAGES_FEATURE_NAME
+     */
+    @Nullable
+    private final OfflineModelObserver mOfflineModelObserver;
 
-    public TileGroup(SuggestionsUiDelegate uiDelegate, ContextMenuManager contextMenuManager,
-            Delegate tileGroupDelegate, Observer observer) {
-        mContext = ContextUtils.getApplicationContext();
+    /**
+     * Source of truth for the tile data. Since the objects can change when the data is updated,
+     * other objects should not hold references to them but keep track of the URL instead, and use
+     * it to retrieve a {@link Tile}.
+     * @see #getTile(String)
+     */
+    private Tile[] mTiles = new Tile[0];
+
+    /** Most recently received tile data that has not been displayed yet. */
+    @Nullable
+    private Tile[] mPendingTileData;
+
+    /**
+     * URL of the most recently removed tile. Used to identify when a tile removal is confirmed by
+     * the tile backend.
+     */
+    @Nullable
+    private String mPendingRemovalUrl;
+
+    private boolean mHasReceivedData;
+
+    /**
+     * @param context Used for initialisation and resolving resources.
+     * @param uiDelegate Delegate used to interact with the rest of the system.
+     * @param contextMenuManager Used to handle context menu invocations on the tiles.
+     * @param tileGroupDelegate Used for interactions with the Most Visited backend.
+     * @param observer Will be notified of changes to the tile data.
+     * @param titleLines The number of text lines to use for each tile title.
+     */
+    public TileGroup(Context context, SuggestionsUiDelegate uiDelegate,
+            ContextMenuManager contextMenuManager, Delegate tileGroupDelegate, Observer observer,
+            OfflinePageBridge offlinePageBridge, int titleLines) {
+        mContext = context;
         mUiDelegate = uiDelegate;
         mContextMenuManager = contextMenuManager;
         mTileGroupDelegate = tileGroupDelegate;
         mObserver = observer;
+        mTitleLinesCount = titleLines;
 
         Resources resources = mContext.getResources();
         mDesiredIconSize = resources.getDimensionPixelSize(R.dimen.tile_view_icon_size);
@@ -140,42 +183,50 @@ public class TileGroup implements MostVisitedSites.Observer {
                 ApiCompatibilityUtils.getColor(resources, R.color.default_favicon_background_color);
         mIconGenerator = new RoundedIconGenerator(mContext, desiredIconSizeDp, desiredIconSizeDp,
                 ICON_CORNER_RADIUS_DP, iconColor, ICON_TEXT_SIZE_DP);
+
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_OFFLINE_PAGES_FEATURE_NAME)) {
+            mOfflineModelObserver = new OfflineModelObserver(offlinePageBridge);
+            mUiDelegate.addDestructionObserver(mOfflineModelObserver);
+        } else {
+            mOfflineModelObserver = null;
+        }
     }
 
     @Override
     public void onMostVisitedURLsAvailable(final String[] titles, final String[] urls,
             final String[] whitelistIconPaths, final int[] sources) {
-        // If no tiles have been built yet, this is the initial load. Build the tiles immediately so
-        // the layout is stable during initial rendering. They can be
-        // replaced later if there are offline urls, but that will not affect the layout widths and
-        // heights. A stable layout enables reliable scroll position initialization.
-        if (!mHasReceivedData) {
-            buildTiles(titles, urls, whitelistIconPaths, null, sources);
+        boolean removalCompleted = mPendingRemovalUrl != null;
+        Set<String> addedUrls = new HashSet<>();
+        mPendingTileData = new Tile[titles.length];
+        for (int i = 0; i < titles.length; i++) {
+            assert urls[i] != null; // We assume everywhere that the url is not null.
+
+            // TODO(dgn): Add UMA to track the cause of https://crbug.com/690926. Checking this
+            // should not even be necessary as the backend is supposed to send non dupes URLs.
+            if (addedUrls.contains(urls[i])) {
+                assert false : "Incoming NTP Tiles are not unique. Dupe on " + urls[i];
+                continue;
+            }
+
+            mPendingTileData[i] =
+                    new Tile(titles[i], urls[i], whitelistIconPaths[i], i, sources[i]);
+            addedUrls.add(urls[i]);
+
+            if (urls[i].equals(mPendingRemovalUrl)) removalCompleted = false;
         }
 
-        // TODO(https://crbug.com/607573): We should show offline-available content in a nonblocking
-        // way so that responsiveness of the NTP does not depend on ready availability of offline
-        // pages.
-        Set<String> urlSet = new HashSet<>(Arrays.asList(urls));
-        mUiDelegate.getUrlsAvailableOffline(urlSet, new Callback<Set<String>>() {
-            @Override
-            public void onResult(Set<String> offlineUrls) {
-                buildTiles(titles, urls, whitelistIconPaths, offlineUrls, sources);
-            }
-        });
+        if (removalCompleted) mPendingRemovalUrl = null;
+        if (!mHasReceivedData || !mUiDelegate.isVisible() || removalCompleted) loadTiles();
     }
 
     @Override
     public void onIconMadeAvailable(String siteUrl) {
-        // Get a large icon for the matching tile.
-        for (Tile tile : mTiles) {
-            if (tile.getUrl().equals(siteUrl)) {
-                LargeIconCallback iconCallback =
-                        new LargeIconCallbackImpl(tile, /* trackLoadTask = */ false);
-                mUiDelegate.getLargeIconForUrl(siteUrl, mMinIconSize, iconCallback);
-                break;
-            }
-        }
+        Tile tile = getTile(siteUrl);
+        if (tile == null) return; // The tile might have been removed.
+
+        LargeIconCallback iconCallback =
+                new LargeIconCallbackImpl(siteUrl, /* trackLoadTask = */ false);
+        mUiDelegate.getLargeIconForUrl(siteUrl, mMinIconSize, iconCallback);
     }
 
     /**
@@ -184,90 +235,39 @@ public class TileGroup implements MostVisitedSites.Observer {
      * @param maxResults The maximum number of sites to retrieve.
      */
     public void startObserving(int maxResults) {
+        mObserver.onLoadTaskAdded();
         mTileGroupDelegate.setMostVisitedSitesObserver(this, maxResults);
     }
 
     /**
      * Renders tile views in the given {@link TileGridLayout}, reusing existing tile views where
      * possible because view inflation and icon loading are slow.
-     * @param tileGridLayout The layout to render the tile views into.
+     * @param parent The layout to render the tile views into.
      * @param trackLoadTasks Whether to track load tasks.
+     * @param condensed Whether to use a condensed layout.
      */
-    public void renderTileViews(TileGridLayout tileGridLayout, boolean trackLoadTasks) {
+    public void renderTileViews(ViewGroup parent, boolean trackLoadTasks, boolean condensed) {
         // Map the old tile views by url so they can be reused later.
         Map<String, TileView> oldTileViews = new HashMap<>();
-        int childCount = tileGridLayout.getChildCount();
+        int childCount = parent.getChildCount();
         for (int i = 0; i < childCount; i++) {
-            TileView tileView = (TileView) tileGridLayout.getChildAt(i);
-            oldTileViews.put(tileView.getTile().getUrl(), tileView);
+            TileView tileView = (TileView) parent.getChildAt(i);
+            oldTileViews.put(tileView.getUrl(), tileView);
         }
 
         // Remove all views from the layout because even if they are reused later they'll have to be
         // added back in the correct order.
-        tileGridLayout.removeAllViews();
+        parent.removeAllViews();
 
-        for (final Tile tile : mTiles) {
-            // First see if an old view can be reused.
-            if (oldTileViews.containsKey(tile.getUrl())) {
-                TileView oldTileView = oldTileViews.get(tile.getUrl());
-                if (TextUtils.equals(tile.getTitle(), oldTileView.getTile().getTitle())
-                        && tile.isOfflineAvailable() == oldTileView.getTile().isOfflineAvailable()
-                        && TextUtils.equals(tile.getWhitelistIconPath(),
-                                   oldTileView.getTile().getWhitelistIconPath())) {
-                    // Prevent further reuse. https://crbug.com/690926
-                    assert oldTileView.getParent() == null;
-                    oldTileViews.remove(tile.getUrl());
-
-                    tileGridLayout.addView(oldTileView);
-
-                    // Re-render the icon because it may not have been painted when re-added.
-                    oldTileView.renderIcon();
-                    continue;
-                }
+        for (Tile tile : mTiles) {
+            TileView tileView = oldTileViews.get(tile.getUrl());
+            if (tileView == null) {
+                tileView = buildTileView(tile, parent, trackLoadTasks, condensed);
+            } else {
+                tileView.updateIfDataChanged(tile);
             }
 
-            // No view was reused, create a new one.
-            TileView tileView = buildTileView(tile, tileGridLayout, trackLoadTasks);
-
-            tileView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mTileGroupDelegate.openMostVisitedItem(WindowOpenDisposition.CURRENT_TAB, tile);
-                }
-            });
-
-            tileView.setOnCreateContextMenuListener(new OnCreateContextMenuListener() {
-                @Override
-                public void onCreateContextMenu(
-                        ContextMenu menu, View view, ContextMenuInfo menuInfo) {
-                    mContextMenuManager.createContextMenu(
-                            menu, view, new ContextMenuManager.Delegate() {
-                                @Override
-                                public void openItem(int windowDisposition) {
-                                    mTileGroupDelegate.openMostVisitedItem(windowDisposition, tile);
-                                }
-
-                                @Override
-                                public void removeItem() {
-                                    mTileGroupDelegate.removeMostVisitedItem(tile);
-                                }
-
-                                @Override
-                                public String getUrl() {
-                                    return tile.getUrl();
-                                }
-
-                                @Override
-                                public boolean isItemSupported(@ContextMenuItemId int menuItemId) {
-                                    return true;
-                                }
-
-                                @Override
-                                public void onContextMenuCreated() {}
-                            });
-                }
-            });
-            tileGridLayout.addView(tileView);
+            parent.addView(tileView);
         }
     }
 
@@ -279,23 +279,9 @@ public class TileGroup implements MostVisitedSites.Observer {
         return mHasReceivedData;
     }
 
-    private void buildTiles(String[] titles, String[] urls, String[] whitelistIconPaths,
-            @Nullable Set<String> offlineUrls, int[] sources) {
-        int oldTileCount = mTiles == null ? 0 : mTiles.length;
-        mTiles = new Tile[titles.length];
-
-        boolean isInitialLoad = !mHasReceivedData;
-        mHasReceivedData = true;
-
-        for (int i = 0; i < titles.length; i++) {
-            boolean offlineAvailable = offlineUrls != null && offlineUrls.contains(urls[i]);
-            mTiles[i] = new Tile(
-                    titles[i], urls[i], whitelistIconPaths[i], offlineAvailable, i, sources[i]);
-        }
-
-        if (oldTileCount != mTiles.length) mObserver.onTileCountChanged();
-        if (isInitialLoad) mObserver.onLoadTaskCompleted();
-        mObserver.onTileDataChanged();
+    /** To be called when the view displaying the tile group becomes visible. */
+    public void onSwitchToForeground() {
+        if (mPendingTileData != null) loadTiles();
     }
 
     /**
@@ -303,18 +289,27 @@ public class TileGroup implements MostVisitedSites.Observer {
      * @param tile The tile that holds the data to populate the new tile view.
      * @param parentView The parent of the new tile view.
      * @param trackLoadTask Whether to track a load task.
+     * @param condensed Whether to use a condensed layout.
      * @return The new tile view.
      */
-    private TileView buildTileView(Tile tile, ViewGroup parentView, boolean trackLoadTask) {
+    @VisibleForTesting
+    TileView buildTileView(
+            Tile tile, ViewGroup parentView, boolean trackLoadTask, boolean condensed) {
         TileView tileView = (TileView) LayoutInflater.from(parentView.getContext())
                                     .inflate(R.layout.tile_view, parentView, false);
-        tileView.initialize(tile);
+        tileView.initialize(tile, mTitleLinesCount, condensed);
 
-        LargeIconCallback iconCallback = new LargeIconCallbackImpl(tile, trackLoadTask);
+        // Note: It is important that the callbacks below don't keep a reference to the tile or
+        // modify them as there is no guarantee that the same tile would be used to update the view.
+        LargeIconCallback iconCallback = new LargeIconCallbackImpl(tile.getUrl(), trackLoadTask);
         if (trackLoadTask) mObserver.onLoadTaskAdded();
         if (!loadWhitelistIcon(tile, iconCallback)) {
             mUiDelegate.getLargeIconForUrl(tile.getUrl(), mMinIconSize, iconCallback);
         }
+
+        TileInteractionDelegate delegate = new TileInteractionDelegate(tile.getUrl());
+        tileView.setOnClickListener(delegate);
+        tileView.setOnCreateContextMenuListener(delegate);
 
         return tileView;
     }
@@ -332,24 +327,65 @@ public class TileGroup implements MostVisitedSites.Observer {
         return true;
     }
 
+    /** Loads tile data from {@link #mPendingTileData} and clears it afterwards. */
+    private void loadTiles() {
+        assert mPendingTileData != null;
+
+        boolean isInitialLoad = !mHasReceivedData;
+        mHasReceivedData = true;
+
+        boolean countChanged = isInitialLoad || mTiles.length != mPendingTileData.length;
+        boolean dataChanged = countChanged;
+        for (Tile newTile : mPendingTileData) {
+            if (newTile.importData(getTile(newTile.getUrl()))) dataChanged = true;
+        }
+
+        mTiles = mPendingTileData;
+        mPendingTileData = null;
+
+        if (!dataChanged) return;
+
+        if (mOfflineModelObserver != null) {
+            mOfflineModelObserver.updateOfflinableSuggestionsAvailability();
+        }
+
+        if (countChanged) mObserver.onTileCountChanged();
+        if (isInitialLoad) mObserver.onLoadTaskCompleted();
+        mObserver.onTileDataChanged();
+    }
+
+    /** @return A tile matching the provided URL, or {@code null} if none is found. */
+    @Nullable
+    private Tile getTile(String url) {
+        for (Tile tile : mTiles) {
+            if (tile.getUrl().equals(url)) return tile;
+        }
+        return null;
+    }
+
     private class LargeIconCallbackImpl implements LargeIconCallback {
-        private final Tile mTile;
+        private final String mUrl;
         private final boolean mTrackLoadTask;
 
-        private LargeIconCallbackImpl(Tile tile, boolean trackLoadTask) {
-            mTile = tile;
+        private LargeIconCallbackImpl(String url, boolean trackLoadTask) {
+            mUrl = url;
             mTrackLoadTask = trackLoadTask;
         }
 
         @Override
         public void onLargeIconAvailable(
                 @Nullable Bitmap icon, int fallbackColor, boolean isFallbackColorDefault) {
+            if (mTrackLoadTask) mObserver.onLoadTaskCompleted();
+
+            Tile tile = getTile(mUrl);
+            if (tile == null) return; // The tile might have been removed.
+
             if (icon == null) {
                 mIconGenerator.setBackgroundColor(fallbackColor);
-                icon = mIconGenerator.generateIconForUrl(mTile.getUrl());
-                mTile.setIcon(new BitmapDrawable(mContext.getResources(), icon));
-                mTile.setType(isFallbackColorDefault ? MostVisitedTileType.ICON_DEFAULT
-                                                     : MostVisitedTileType.ICON_COLOR);
+                icon = mIconGenerator.generateIconForUrl(mUrl);
+                tile.setIcon(new BitmapDrawable(mContext.getResources(), icon));
+                tile.setType(isFallbackColorDefault ? MostVisitedTileType.ICON_DEFAULT
+                                                    : MostVisitedTileType.ICON_COLOR);
             } else {
                 RoundedBitmapDrawable roundedIcon =
                         RoundedBitmapDrawableFactory.create(mContext.getResources(), icon);
@@ -359,11 +395,92 @@ public class TileGroup implements MostVisitedSites.Observer {
                 roundedIcon.setCornerRadius(cornerRadius);
                 roundedIcon.setAntiAlias(true);
                 roundedIcon.setFilterBitmap(true);
-                mTile.setIcon(roundedIcon);
-                mTile.setType(MostVisitedTileType.ICON_REAL);
+
+                tile.setIcon(roundedIcon);
+                tile.setType(MostVisitedTileType.ICON_REAL);
             }
-            mObserver.onTileIconChanged(mTile);
-            if (mTrackLoadTask) mObserver.onLoadTaskCompleted();
+
+            mObserver.onTileIconChanged(tile);
+        }
+    }
+
+    private class TileInteractionDelegate
+            implements ContextMenuManager.Delegate, OnClickListener, OnCreateContextMenuListener {
+        private final String mUrl;
+
+        public TileInteractionDelegate(String url) {
+            mUrl = url;
+        }
+
+        @Override
+        public void onClick(View view) {
+            Tile tile = getTile(mUrl);
+            if (tile == null) return;
+
+            mTileGroupDelegate.openMostVisitedItem(WindowOpenDisposition.CURRENT_TAB, tile);
+        }
+
+        @Override
+        public void openItem(int windowDisposition) {
+            Tile tile = getTile(mUrl);
+            if (tile == null) return;
+
+            mTileGroupDelegate.openMostVisitedItem(windowDisposition, tile);
+        }
+
+        @Override
+        public void removeItem() {
+            Tile tile = getTile(mUrl);
+            if (tile == null) return;
+
+            // Note: This does not track all the removals, but will track the most recent one. If
+            // that removal is committed, it's good enough for change detection.
+            mPendingRemovalUrl = mUrl;
+            mTileGroupDelegate.removeMostVisitedItem(tile);
+        }
+
+        @Override
+        public String getUrl() {
+            return mUrl;
+        }
+
+        @Override
+        public boolean isItemSupported(@ContextMenuItemId int menuItemId) {
+            return true;
+        }
+
+        @Override
+        public void onContextMenuCreated() {}
+
+        @Override
+        public void onCreateContextMenu(
+                ContextMenu contextMenu, View view, ContextMenuInfo contextMenuInfo) {
+            mContextMenuManager.createContextMenu(contextMenu, view, this);
+        }
+    }
+
+    private class OfflineModelObserver extends SuggestionsOfflineModelObserver<Tile> {
+        public OfflineModelObserver(OfflinePageBridge bridge) {
+            super(bridge);
+        }
+
+        @Override
+        public void onSuggestionOfflineIdChanged(Tile suggestion, @Nullable Long id) {
+            // Retrieve a tile from the internal data, to make sure we don't update a stale object.
+            Tile tile = getTile(suggestion.getUrl());
+            if (tile == null) return;
+
+            boolean oldOfflineAvailable = tile.isOfflineAvailable();
+            tile.setOfflinePageOfflineId(id);
+
+            // Only notify to update the view if there will be a visible change.
+            if (oldOfflineAvailable == tile.isOfflineAvailable()) return;
+            mObserver.onTileOfflineBadgeVisibilityChanged(tile);
+        }
+
+        @Override
+        public Iterable<Tile> getOfflinableSuggestions() {
+            return Arrays.asList(mTiles);
         }
     }
 }

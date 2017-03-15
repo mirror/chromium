@@ -88,11 +88,11 @@ class ComponentCloudPolicyStoreTest : public testing::Test {
 
     PolicyMap& policy = expected_bundle_.Get(kTestPolicyNS);
     policy.Set("Name", POLICY_LEVEL_MANDATORY, POLICY_SCOPE_USER,
-               POLICY_SOURCE_CLOUD,
-               base::MakeUnique<base::StringValue>("disabled"), nullptr);
+               POLICY_SOURCE_CLOUD, base::MakeUnique<base::Value>("disabled"),
+               nullptr);
     policy.Set("Second", POLICY_LEVEL_RECOMMENDED, POLICY_SCOPE_USER,
-               POLICY_SOURCE_CLOUD,
-               base::MakeUnique<base::StringValue>("maybe"), nullptr);
+               POLICY_SOURCE_CLOUD, base::MakeUnique<base::Value>("maybe"),
+               nullptr);
   }
 
   void SetUp() override {
@@ -239,6 +239,13 @@ TEST_F(ComponentCloudPolicyStoreTest, ValidatePolicyBadSignature) {
   EXPECT_FALSE(store_->ValidatePolicy(kTestPolicyNS, std::move(response),
                                       nullptr /* policy_data */,
                                       nullptr /* payload */));
+}
+
+TEST_F(ComponentCloudPolicyStoreTest, ValidatePolicyEmptyComponentId) {
+  builder_.policy_data().set_settings_entity_id(std::string());
+  EXPECT_FALSE(store_->ValidatePolicy(
+      PolicyNamespace(POLICY_DOMAIN_EXTENSIONS, std::string()),
+      CreateResponse(), nullptr /* policy_data */, nullptr /* payload */));
 }
 
 TEST_F(ComponentCloudPolicyStoreTest, ValidatePolicyWrongPublicKey) {

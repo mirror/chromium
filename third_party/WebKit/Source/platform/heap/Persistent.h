@@ -109,11 +109,21 @@ class PersistentBase {
   }
 
   void clear() { assign(nullptr); }
-  T& operator*() const { return *m_raw; }
+  T& operator*() const {
+    checkPointer();
+    return *m_raw;
+  }
   explicit operator bool() const { return m_raw; }
-  operator T*() const { return m_raw; }
+  operator T*() const {
+    checkPointer();
+    return m_raw;
+  }
   T* operator->() const { return *this; }
-  T* get() const { return m_raw; }
+
+  T* get() const {
+    checkPointer();
+    return m_raw;
+  }
 
   template <typename U>
   PersistentBase& operator=(U* other) {
@@ -243,7 +253,7 @@ class PersistentBase {
     m_persistentNode = nullptr;
   }
 
-  void checkPointer() {
+  void checkPointer() const {
 #if DCHECK_IS_ON()
     if (!m_raw || isHashTableDeletedValue())
       return;
@@ -262,18 +272,6 @@ class PersistentBase {
         DCHECK_EQ(&current->heap(), &m_creationThreadState->heap());
       }
     }
-
-#if defined(ADDRESS_SANITIZER)
-    // ThreadHeap::isHeapObjectAlive(m_raw) checks that m_raw is a traceable
-    // object. In other words, it checks that the pointer is either of:
-    //
-    //   (a) a pointer to the head of an on-heap object.
-    //   (b) a pointer to the head of an on-heap mixin object.
-    //
-    // Otherwise, ThreadHeap::isHeapObjectAlive will crash when it calls
-    // header->checkHeader().
-    ThreadHeap::isHeapObjectAlive(m_raw);
-#endif
 #endif
   }
 

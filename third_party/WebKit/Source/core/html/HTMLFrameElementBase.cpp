@@ -26,17 +26,18 @@
 #include "bindings/core/v8/BindingSecurity.h"
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/ScriptEventListener.h"
+#include "bindings/core/v8/V8Binding.h"
 #include "core/HTMLNames.h"
 #include "core/dom/Attribute.h"
 #include "core/dom/Document.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/RemoteFrame.h"
 #include "core/frame/RemoteFrameView.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/loader/FrameLoader.h"
-#include "core/loader/FrameLoaderClient.h"
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
 
@@ -97,7 +98,7 @@ void HTMLFrameElementBase::openURL(bool replaceCurrentItem) {
     // so that the frame is populated with something reasonable.
     if (ContentSecurityPolicy::shouldBypassMainWorld(&document()) ||
         document().contentSecurityPolicy()->allowJavaScriptURLs(
-            this, document().url(), OrdinalNumber::first())) {
+            this, url.getString(), document().url(), OrdinalNumber::first())) {
       scriptURL = url;
     } else {
       if (contentFrame())
@@ -116,6 +117,13 @@ void HTMLFrameElementBase::openURL(bool replaceCurrentItem) {
   toLocalFrame(contentFrame())
       ->script()
       .executeScriptIfJavaScriptURL(scriptURL, this);
+}
+
+void HTMLFrameElementBase::frameOwnerPropertiesChanged() {
+  // Don't notify about updates if contentFrame() is null, for example when
+  // the subframe hasn't been created yet.
+  if (contentFrame())
+    document().frame()->loader().client()->didChangeFrameOwnerProperties(this);
 }
 
 void HTMLFrameElementBase::parseAttribute(
@@ -253,7 +261,7 @@ void HTMLFrameElementBase::setScrollingMode(ScrollbarMode scrollbarMode) {
 
   if (contentDocument()) {
     contentDocument()->willChangeFrameOwnerProperties(
-        m_marginWidth, m_marginHeight, scrollbarMode, isDisplayNone());
+        m_marginWidth, m_marginHeight, scrollbarMode);
   }
   m_scrollingMode = scrollbarMode;
   frameOwnerPropertiesChanged();
@@ -265,7 +273,7 @@ void HTMLFrameElementBase::setMarginWidth(int marginWidth) {
 
   if (contentDocument()) {
     contentDocument()->willChangeFrameOwnerProperties(
-        marginWidth, m_marginHeight, m_scrollingMode, isDisplayNone());
+        marginWidth, m_marginHeight, m_scrollingMode);
   }
   m_marginWidth = marginWidth;
   frameOwnerPropertiesChanged();
@@ -277,7 +285,7 @@ void HTMLFrameElementBase::setMarginHeight(int marginHeight) {
 
   if (contentDocument()) {
     contentDocument()->willChangeFrameOwnerProperties(
-        m_marginWidth, marginHeight, m_scrollingMode, isDisplayNone());
+        m_marginWidth, marginHeight, m_scrollingMode);
   }
   m_marginHeight = marginHeight;
   frameOwnerPropertiesChanged();

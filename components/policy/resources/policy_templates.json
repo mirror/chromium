@@ -139,7 +139,7 @@
 #   persistent IDs for all fields (but not for groups!) are needed. These are
 #   specified by the 'id' keys of each policy. NEVER CHANGE EXISTING IDs,
 #   because doing so would break the deployed wire format!
-#   For your editing convenience: highest ID currently used: 365
+#   For your editing convenience: highest ID currently used: 366
 #   And don't forget to also update the EnterprisePolicies enum of
 #   histograms.xml (run tools/metrics/histograms/update_policies.py).
 #
@@ -1378,7 +1378,7 @@
       'id': 19,
       'caption': '''Specify a list of disabled plugins''',
       'tags': [],
-      'desc': '''This policy is deprecated. Please use the <ph name="DEFAULT_PLUGINS_SETTING_POLICY">$1<ex>DefaultPluginsSetting</ex></ph> to control the avalability of the Flash plugin and <ph name="ALWAYS_OPEN_PDF_EXTERNALLY_POLICY">$1<ex>AlwaysOpenPdfExternally</ex></ph> to control whether the integrated PDF viewer should be used for opening PDF files.
+      'desc': '''This policy is deprecated. Please use the <ph name="DEFAULT_PLUGINS_SETTING_POLICY">DefaultPluginsSetting</ph> to control the avalability of the Flash plugin and <ph name="ALWAYS_OPEN_PDF_EXTERNALLY_POLICY">AlwaysOpenPdfExternally</ph> to control whether the integrated PDF viewer should be used for opening PDF files.
 
       Specifies a list of plugins that are disabled in <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> and prevents users from changing this setting.
 
@@ -1408,7 +1408,7 @@
       'id': 78,
       'caption': '''Specify a list of enabled plugins''',
       'tags': ['system-security'],
-      'desc': '''This policy is deprecated. Please use the <ph name="DEFAULT_PLUGINS_SETTING_POLICY">$1<ex>DefaultPluginsSetting</ex></ph> to control the avalability of the Flash plugin and <ph name="ALWAYS_OPEN_PDF_EXTERNALLY_POLICY">$1<ex>AlwaysOpenPdfExternally</ex></ph> to control whether the integrated PDF viewer should be used for opening PDF files.
+      'desc': '''This policy is deprecated. Please use the <ph name="DEFAULT_PLUGINS_SETTING_POLICY">DefaultPluginsSetting</ph> to control the avalability of the Flash plugin and <ph name="ALWAYS_OPEN_PDF_EXTERNALLY_POLICY">AlwaysOpenPdfExternally</ph> to control whether the integrated PDF viewer should be used for opening PDF files.
 
       Specifies a list of plugins that are enabled in <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> and prevents users from changing this setting.
 
@@ -1438,7 +1438,7 @@
       'id': 79,
       'caption': '''Specify a list of plugins that the user can enable or disable''',
       'tags': [],
-      'desc': '''This policy is deprecated. Please use the <ph name="DEFAULT_PLUGINS_SETTING_POLICY">$1<ex>DefaultPluginsSetting</ex></ph> to control the avalability of the Flash plugin and <ph name="ALWAYS_OPEN_PDF_EXTERNALLY_POLICY">$1<ex>AlwaysOpenPdfExternally</ex></ph> to control whether the integrated PDF viewer should be used for opening PDF files.
+      'desc': '''This policy is deprecated. Please use the <ph name="DEFAULT_PLUGINS_SETTING_POLICY">DefaultPluginsSetting</ph> to control the avalability of the Flash plugin and <ph name="ALWAYS_OPEN_PDF_EXTERNALLY_POLICY">AlwaysOpenPdfExternally</ph> to control whether the integrated PDF viewer should be used for opening PDF files.
 
       Specifies a list of plugins that user can enable or disable in <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph>.
 
@@ -4850,6 +4850,25 @@
       If this policy is not set, or it is set to false, then <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> follows the publicly announced SHA-1 deprecation schedule.''',
     },
     {
+      'name': 'EnableCommonNameFallbackForLocalAnchors',
+      'type': 'main',
+      'schema': { 'type': 'boolean' },
+      'supported_on': ['chrome.*:58-65', 'chrome_os:58-65', 'android:58-65'],
+      'features': {
+        'dynamic_refresh': True,
+        'per_profile': False,
+      },
+      'example_value': False,
+      'id': 366,
+      'caption': '''Whether to allow certificates issued by local trust anchors that are missing the subjectAlternativeName extension''',
+      'tags': ['system-security'],
+      'desc': '''When this setting is enabled, <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> will use the commonName of a server certificate to match a hostname if the certificate is missing a subjectAlternativeName extension, as long as it successfully validates and chains to a locally-installed CA certificates.
+
+      Note that this is not recommended, as this may allow bypassing the nameConstraints extension that restricts the hostnames that a given certificate can be authorized for.
+
+      If this policy is not set, or is set to false, server certificates that lack a subjectAlternativeName extension containing either a DNS name or IP address will not be trusted.''',
+    },
+    {
       'name': 'ForceEphemeralProfiles',
       'type': 'main',
       'schema': { 'type': 'boolean' },
@@ -5109,17 +5128,17 @@
       'supported_on': ['chrome_os:55-'],
       'features': {
         'dynamic_refresh': True,
-        'per_profile': False,
+        'per_profile': True,
       },
-      'example_value': False,
+      'example_value': True,
       'id': 349,
       'caption': '''Report information about status of Android''',
       'tags': ['admin-sharing'],
       'desc': '''Information about the status of Android is sent back to the
       server.
 
-      If the policy is set to false, no status information is reported.
-      If set to true or left unset, status information is reported.
+      If the policy is set to false or left unset, no status information is reported.
+      If set to true, status information is reported.
 
       This policy only applies if Android apps are enabled.''',
     },
@@ -8276,10 +8295,10 @@
         },
       ],
       'supported_on': [
-        'chrome.*:57-',
-        'chrome_os:57-',
-        'android:57-',
-        'ios:57-',
+        'chrome.*:58-',
+        'chrome_os:58-',
+        'android:58-',
+        'ios:58-',
       ],
       'features': {
         'dynamic_refresh': True,
@@ -8291,7 +8310,7 @@
       'tags': ['system-security'],
       'desc': '''Warning: The max TLS version policy will be entirely removed from <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> around version 66 (around February 2018).
 
-      If this policy is not configured then <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> uses a default maximum version which is TLSv1.3.
+      If this policy is not configured then <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> uses the default maximum version.
 
       Otherwise it may be set to one of the following values: "tls1.2" or "tls1.3". When set, <ph name="PRODUCT_NAME">$1<ex>Google Chrome</ex></ph> will not use SSL/TLS versions greater than the specified version. An unrecognized value will be ignored.''',
     },
@@ -8983,13 +9002,14 @@
       allowed.'''
     },
     {
-      'name': 'LoginApps',
+      'name': 'DeviceLoginScreenAppInstallList',
       'type': 'list',
       'schema': {
         'type': 'array',
         'items': { 'type': 'string' },
       },
-      'supported_on': ['chrome_os:54-'],
+      'supported_on': ['chrome_os:58-'],
+      'future': True,
       'device_only': True,
       'features': {
         'dynamic_refresh': True,
@@ -9595,7 +9615,7 @@
       'tags': [],
       'desc': '''Configures which keyboard layouts are allowed on the <ph name="PRODUCT_OS_NAME">$2<ex>Google Chrome OS</ex></ph> sign-in screen.
 
-      If this policy is set to a list of input method identifiers, the given input methods will be available on the sign-in screen. The first given input method will be preselected. While a user pod is focused on the sign-in screen, the user's least recently used input method will be available in addition to the input methods given by this policy.  If this policy is not set, the input methods on the sign-in screen will be derived from the locale in which the sign-in screen is displayed.  Values which are not valid input method identifiers will be ignored.''',
+      If this policy is set to a list of input method identifiers, the given input methods will be available on the sign-in screen. The first given input method will be preselected. While a user pod is focused on the sign-in screen, the user's last used input method will be available in addition to the input methods given by this policy. If this policy is not set, the input methods on the sign-in screen will be derived from the locale in which the sign-in screen is displayed. Values which are not valid input method identifiers will be ignored.''',
     },
   ],
   'messages': {

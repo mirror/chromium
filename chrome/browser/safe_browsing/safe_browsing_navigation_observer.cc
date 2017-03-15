@@ -13,6 +13,7 @@
 #include "chrome/browser/sessions/session_tab_helper.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_process_host.h"
 #include "content/public/browser/resource_request_details.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/resource_type.h"
@@ -177,7 +178,6 @@ void SafeBrowsingNavigationObserver::DidRedirectNavigation(
   // We should have already seen this navigation_handle in DidStartNavigation.
   if (navigation_handle_map_.find(navigation_handle) ==
       navigation_handle_map_.end()) {
-    NOTREACHED();
     return;
   }
   NavigationEvent* nav_event = navigation_handle_map_[navigation_handle].get();
@@ -191,7 +191,6 @@ void SafeBrowsingNavigationObserver::DidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
   if (navigation_handle_map_.find(navigation_handle) ==
       navigation_handle_map_.end()) {
-    NOTREACHED();
     return;
   }
 
@@ -208,7 +207,6 @@ void SafeBrowsingNavigationObserver::DidFinishNavigation(
   nav_event->last_updated = base::Time::Now();
 
   manager_->RecordNavigationEvent(
-      nav_event->GetDestinationUrl(),
       std::move(navigation_handle_map_[navigation_handle]));
   navigation_handle_map_.erase(navigation_handle);
 }
@@ -240,6 +238,21 @@ void SafeBrowsingNavigationObserver::WebContentsDestroyed() {
   manager_->OnWebContentDestroyed(web_contents());
   web_contents()->RemoveUserData(kWebContentsUserDataKey);
   // web_contents is null after this function.
+}
+
+void SafeBrowsingNavigationObserver::DidOpenRequestedURL(
+    content::WebContents* new_contents,
+    content::RenderFrameHost* source_render_frame_host,
+    const GURL& url,
+    const content::Referrer& referrer,
+    WindowOpenDisposition disposition,
+    ui::PageTransition transition,
+    bool started_from_context_menu,
+    bool renderer_initiated) {
+  manager_->RecordNewWebContents(
+      web_contents(), source_render_frame_host->GetProcess()->GetID(),
+      source_render_frame_host->GetRoutingID(), url, new_contents,
+      renderer_initiated);
 }
 
 }  // namespace safe_browsing

@@ -38,7 +38,7 @@ class OfflinePageEvaluationBridge : public OfflinePageModel::Observer,
                               RequestCoordinator* request_coordinator);
 
   ~OfflinePageEvaluationBridge() override;
-  void Destory(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
+  void Destroy(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
 
   // OfflinePageModel::Observer implementation.
   void OfflinePageModelLoaded(OfflinePageModel* model) override;
@@ -52,6 +52,8 @@ class OfflinePageEvaluationBridge : public OfflinePageModel::Observer,
   void OnCompleted(const SavePageRequest& request,
                    RequestNotifier::BackgroundSavePageResult status) override;
   void OnChanged(const SavePageRequest& request) override;
+  void OnNetworkProgress(const SavePageRequest& request,
+                         int64_t received_bytes) override;
 
   // OfflineEventLogger::Client implementation.
   void CustomLog(const std::string& message) override;

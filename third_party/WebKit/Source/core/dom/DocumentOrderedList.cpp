@@ -35,7 +35,7 @@ namespace blink {
 
 void DocumentOrderedList::add(Node* node) {
   if (m_nodes.isEmpty()) {
-    m_nodes.add(node);
+    m_nodes.insert(node);
     return;
   }
 
@@ -60,7 +60,7 @@ void DocumentOrderedList::add(Node* node) {
 }
 
 void DocumentOrderedList::remove(const Node* node) {
-  m_nodes.remove(const_cast<Node*>(node));
+  m_nodes.erase(const_cast<Node*>(node));
 }
 
 DEFINE_TRACE(DocumentOrderedList) {

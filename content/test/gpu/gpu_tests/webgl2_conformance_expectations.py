@@ -52,153 +52,154 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
         'integer-cubemap-specification-order-bug.html',
         bug=483282) # owner:cwallez, test might be buggy
 
-    # Win and Mac
-    self.Fail('deqp/functional/gles3/sync.html', ['win', 'mac'], bug=676848)
-
     # Windows only.
     self.Fail('conformance2/rendering/blitframebuffer-outside-readbuffer.html',
-        ['win'], bug=644740)
+        ['win', 'd3d11'], bug=644740)
+    self.Fail('deqp/functional/gles3/sync.html', ['win', 'd3d11'], bug=676848)
 
     # Win / NVidia
     self.Flaky('deqp/functional/gles3/fbomultisample*',
-        ['win', 'nvidia'], bug=631317)
+        ['win', 'nvidia', 'd3d11'], bug=631317)
     self.Fail('conformance2/rendering/' +
         'draw-with-integer-texture-base-level.html',
-        ['win', 'nvidia'], bug=679639)
+        ['win', 'nvidia', 'd3d11'], bug=679639)
 
     # Win10 / NVIDIA Quadro M2000 failures
     self.Fail('deqp/functional/gles3/transformfeedback/' +
         'basic_types_interleaved_lines.html',
-        ['win10', ('nvidia', 0x1430)], bug=680754)
+        ['win10', ('nvidia', 0x1430), 'd3d11'], bug=680754)
     self.Fail('deqp/functional/gles3/transformfeedback/' +
         'basic_types_interleaved_triangles.html',
-        ['win10', ('nvidia', 0x1430)], bug=680754)
+        ['win10', ('nvidia', 0x1430), 'd3d11'], bug=680754)
     self.Fail('deqp/functional/gles3/transformfeedback/' +
         'basic_types_separate_lines.html',
-        ['win10', ('nvidia', 0x1430)], bug=680754)
+        ['win10', ('nvidia', 0x1430), 'd3d11'], bug=680754)
     self.Fail('deqp/functional/gles3/transformfeedback/' +
         'basic_types_separate_triangles.html',
-        ['win10', ('nvidia', 0x1430)], bug=680754)
+        ['win10', ('nvidia', 0x1430), 'd3d11'], bug=680754)
     self.Fail('deqp/functional/gles3/transformfeedback/' +
         'random_interleaved_lines.html',
-        ['win10', ('nvidia', 0x1430)], bug=680754)
+        ['win10', ('nvidia', 0x1430), 'd3d11'], bug=680754)
     self.Fail('deqp/functional/gles3/transformfeedback/' +
         'random_interleaved_triangles.html',
-        ['win10', ('nvidia', 0x1430)], bug=680754)
+        ['win10', ('nvidia', 0x1430), 'd3d11'], bug=680754)
     self.Fail('deqp/functional/gles3/transformfeedback/' +
         'random_separate_lines.html',
-        ['win10', ('nvidia', 0x1430)], bug=680754)
+        ['win10', ('nvidia', 0x1430), 'd3d11'], bug=680754)
     self.Fail('deqp/functional/gles3/transformfeedback/' +
         'random_separate_triangles.html',
-        ['win10', ('nvidia', 0x1430)], bug=680754)
+        ['win10', ('nvidia', 0x1430), 'd3d11'], bug=680754)
     self.Fail('deqp/functional/gles3/transformfeedback/interpolation_flat.html',
-        ['win10', ('nvidia', 0x1430)], bug=680754)
+        ['win10', ('nvidia', 0x1430), 'd3d11'], bug=680754)
+
+    # Win / NVIDIA / OpenGL
+    self.Fail('conformance2/rendering/framebuffer-texture-level1.html',
+        ['win', 'nvidia', 'opengl'], bug=693090)
+    self.Fail('conformance2/glsl3/vector-dynamic-indexing-nv-driver-bug.html',
+        ['win', 'nvidia', 'opengl'], bug=693090)
+    self.Fail('conformance2/textures/misc/tex-srgb-mipmap.html',
+        ['win', 'nvidia', 'opengl'], bug=693090)
 
     # Win / AMD
     self.Fail('conformance2/rendering/blitframebuffer-stencil-only.html',
-        ['win', 'amd'], bug=483282) # owner:jmadill
+        ['win', 'amd', 'd3d11'], bug=483282) # owner:jmadill
 
     # Failing on old R5 230 configuration.
     self.Fail('deqp/functional/gles3/shadertexturefunction/' +
         'texelfetchoffset.html',
-        ['win', ('amd', 0x6779)], bug=483282)
+        ['win', ('amd', 0x6779), 'd3d11'], bug=483282)
 
     self.Fail('deqp/functional/gles3/transformfeedback/*',
-        ['win', ('amd', 0x6779)], bug=626068)
+        ['win', ('amd', 0x6779, 'd3d11')], bug=626068)
 
     self.Fail('deqp/functional/gles3/shadercommonfunction.html',
-        ['win', ('amd', 0x6779)], bug=483282)
+        ['win', ('amd', 0x6779), 'd3d11'], bug=483282)
     self.Fail('deqp/functional/gles3/multisample.html',
-        ['win', ('amd', 0x6779)], bug=617290)
+        ['win', ('amd', 0x6779), 'd3d11'], bug=617290)
 
     # Keep a separate set of failures for the R7 240, since it can use a new
     # and updated driver. The older drivers won't ever get fixes from AMD.
     # Use ['win', ('amd', 0x6613)] for the R7 240 devices.
 
+    # Have seen this time out. Think it may be because it's currently
+    # the first test that runs in the shard, and the browser might not
+    # be coming up correctly.
+    self.Flaky('deqp/functional/gles3/multisample.html',
+        ['win', ('amd', 0x6613)], bug=687374)
+
     # It's unfortunate that these suppressions need to be so broad, but
     # basically any test that uses readPixels is potentially flaky, and
     # it's infeasible to suppress individual failures one by one.
-    self.Flaky('conformance/*', ['win', ('amd', 0x6779)], bug=491419)
-    self.Flaky('conformance2/*', ['win', ('amd', 0x6779)], bug=491419)
-    self.Flaky('deqp/*', ['win', ('amd', 0x6779)], bug=491419)
+    self.Flaky('conformance/*', ['win', ('amd', 0x6779), 'd3d11'], bug=491419)
+    self.Flaky('conformance2/*', ['win', ('amd', 0x6779), 'd3d11'], bug=491419)
+    self.Flaky('deqp/*', ['win', ('amd', 0x6779), 'd3d11'], bug=491419)
 
     # Win / Intel
     self.Fail('conformance2/glsl3/' +
         'texture-offset-uniform-texture-coordinate.html',
-        ['win', 'intel'], bug=662644) # WebGL 2.0.1
+        ['win', 'intel', 'd3d11'], bug=662644) # WebGL 2.0.1
     self.Fail('conformance2/glsl3/unary-minus-operator-in-dynamic-loop.html',
-        ['win', 'intel'], bug=662644) # WebGL 2.0.1
+        ['win', 'intel', 'd3d11'], bug=662644) # WebGL 2.0.1
     self.Skip('conformance2/textures/misc/copy-texture-image.html',
-        ['win', 'intel'], bug=617449)
+        ['win', 'intel', 'd3d11'], bug=617449)
     # Seems to cause the harness to fail immediately afterward
     self.Skip('conformance2/textures/video/tex-2d-rgba16f-rgba-half_float.html',
-        ['win', 'intel'], bug=648337)
+        ['win', 'intel', 'd3d11'], bug=648337)
     self.Flaky('deqp/functional/gles3/lifetime.html',
-        ['win', 'intel'], bug=620379)
+        ['win', 'intel', 'd3d11'], bug=620379)
     self.Skip('deqp/functional/gles3/texturespecification/' +
         'teximage3d_depth_pbo.html',
-        ['win', 'intel'], bug=617449)
+        ['win', 'intel', 'd3d11'], bug=617449)
     self.Fail('deqp/functional/gles3/textureformat/sized_color_3d_pot_00.html',
-        ['win', 'intel'], bug=614418)
+        ['win', 'intel', 'd3d11'], bug=614418)
     self.Fail('deqp/functional/gles3/textureformat/sized_color_3d_pot_01.html',
-        ['win', 'intel'], bug=614418)
+        ['win', 'intel', 'd3d11'], bug=614418)
     self.Fail('deqp/functional/gles3/textureformat/sized_color_3d_pot_02.html',
-        ['win', 'intel'], bug=614418)
+        ['win', 'intel', 'd3d11'], bug=614418)
     self.Fail('deqp/functional/gles3/textureformat/sized_color_3d_pot_03.html',
-        ['win', 'intel'], bug=614418)
+        ['win', 'intel', 'd3d11'], bug=614418)
     self.Fail('deqp/functional/gles3/textureformat/sized_depth_stencil.html',
-        ['win', 'intel'], bug=614418)
+        ['win', 'intel', 'd3d11'], bug=614418)
     self.Flaky('deqp/functional/gles3/textureformat/unsized_3d.html',
-        ['win', 'intel'], bug=614418)
+        ['win', 'intel', 'd3d11'], bug=614418)
 
     self.Fail('deqp/functional/gles3/fbomultisample*',
-        ['win', 'intel'], bug=483282)
+        ['win', 'intel', 'd3d11'], bug=483282)
 
     # These tests seem to crash flakily. It's best to leave them as skip
     # until we can run them without GPU hangs and crashes.
     self.Skip('deqp/functional/gles3/textureshadow/2d_array_*.html',
-        ['win', 'intel'], bug=666392)
+        ['win', 'intel', 'd3d11'], bug=666392)
+
+    # Win 10 / Intel
+    self.Fail('deqp/functional/gles3/fbocolorbuffer/clear.html',
+        ['win10', 'intel', 'd3d11'], bug=483282)
 
     # Intel HD 530
-    self.Fail('conformance/canvas/to-data-url-test.html',
-        ['win', 'intel'], bug=680797)
     self.Fail('conformance2/textures/misc/angle-stuck-depth-textures.html',
-        ['win', 'intel'], bug=680797)
+        ['win', 'intel', 'd3d11'], bug=680797)
     self.Fail('deqp/functional/gles3/fboinvalidate/format_00.html',
-        ['win', 'intel'], bug=680797)
+        ['win', 'intel', 'd3d11'], bug=680797)
     self.Fail('deqp/functional/gles3/fboinvalidate/format_01.html',
-        ['win', 'intel'], bug=680797)
+        ['win', 'intel', 'd3d11'], bug=680797)
     self.Fail('deqp/functional/gles3/fboinvalidate/format_02.html',
-        ['win', 'intel'], bug=680797)
-    self.Fail('deqp/functional/gles3/fborender/shared_colorbuffer_01.html',
-        ['win', 'intel'], bug=680797)
-    self.Fail('deqp/functional/gles3/framebufferblit/' +
-        'default_framebuffer_00.html',
-        ['win', 'intel'], bug=680797)
-    self.Fail('deqp/functional/gles3/framebufferblit/' +
-        'default_framebuffer_01.html',
-        ['win', 'intel'], bug=680797)
-    self.Fail('deqp/functional/gles3/framebufferblit/' +
-        'default_framebuffer_02.html',
-        ['win', 'intel'], bug=680797)
+        ['win', 'intel', 'd3d11'], bug=680797)
     self.Fail('deqp/functional/gles3/framebufferblit/' +
         'default_framebuffer_03.html',
-        ['win', 'intel'], bug=680797)
+        ['win', 'intel', 'd3d11'], bug=680797)
     self.Fail('deqp/functional/gles3/framebufferblit/' +
         'default_framebuffer_04.html',
-        ['win', 'intel'], bug=680797)
+        ['win', 'intel', 'd3d11'], bug=680797)
     self.Fail('deqp/functional/gles3/framebufferblit/' +
         'default_framebuffer_06.html',
-        ['win', 'intel'], bug=680797)
-    self.Fail('deqp/functional/gles3/fbocolorbuffer/clear.html',
-        ['win', 'intel'], bug=680797)
+        ['win', 'intel', 'd3d11'], bug=680797)
 
     # It's unfortunate that these suppressions need to be so broad, but it
     # looks like the D3D11 device can be lost spontaneously on this
     # configuration while running basically any test.
-    self.Flaky('conformance/*', ['win', 'intel'], bug=628395)
-    self.Flaky('conformance2/*', ['win', 'intel'], bug=628395)
-    self.Flaky('deqp/*', ['win', 'intel'], bug=628395)
+    self.Flaky('conformance/*', ['win', 'intel', 'd3d11'], bug=628395)
+    self.Flaky('conformance2/*', ['win', 'intel', 'd3d11'], bug=628395)
+    self.Flaky('deqp/*', ['win', 'intel', 'd3d11'], bug=628395)
 
     # Mac only.
 
@@ -207,11 +208,14 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
         ['mac'], bug=630800)
     self.Fail('deqp/functional/gles3/fbocompleteness.html',
         ['mac'], bug=630800)
+    self.Fail('deqp/functional/gles3/sync.html', ['mac'], bug=676848)
     # self.Fail('deqp/functional/gles3/fbocompleteness.html',
     #     ['mac', ('nvidia', 0xfe9)], bug=616562)
 
     self.Fail('conformance2/renderbuffers/framebuffer-test.html',
         ['mac'], bug=641149)
+    self.Fail('conformance2/rendering/framebuffer-texture-level1.html',
+        ['mac'], bug=680278)
 
     self.Fail('deqp/functional/gles3/framebufferblit/conversion_28.html',
         ['mac'], bug=654187)
@@ -503,6 +507,10 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
         ['mac', 'amd'], bug=645298)
 
     # Mac Pro with AMD GPU
+    self.Fail('deqp/functional/gles3/fborender/recreate_color_02.html',
+        ['mac', ('amd', 0x679e)], bug=679682)
+    self.Fail('deqp/functional/gles3/fborender/resize_01.html',
+        ['mac', ('amd', 0x679e)], bug=679682)
     self.Flaky('deqp/functional/gles3/shaderindexing/mat_01.html',
         ['mac', ('amd', 0x679e)], bug=636648)
     self.Flaky('deqp/functional/gles3/shaderindexing/tmp.html',
@@ -513,10 +521,6 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
         ['mac', ('amd', 0x679e)], bug=483282)
 
     # Mac Multi-vendor failures.
-    self.Fail('deqp/functional/gles3/fborender/recreate_color_02.html',
-        ['mac', 'nvidia', 'amd'], bug=679682)
-    self.Fail('deqp/functional/gles3/fborender/resize_01.html',
-        ['mac', 'nvidia', 'amd'], bug=679682)
     self.Fail('deqp/functional/gles3/fragmentoutput/basic.float.html',
         ['mac', 'nvidia', 'amd'], bug=679684)
     self.Fail('deqp/functional/gles3/fragmentoutput/array.float.html',
@@ -690,19 +694,20 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
         ['linux', 'nvidia'], bug=618447)
     self.Fail('conformance/glsl/bugs/unary-minus-operator-float-bug.html',
         ['linux', 'nvidia'], bug=672380)
+    self.Fail('conformance2/textures/canvas_sub_rectangle/' +
+        'tex-2d-r11f_g11f_b10f-rgb-half_float.html',
+        ['linux', 'nvidia'], bug=694359)
     self.Fail('conformance2/textures/image_bitmap_from_canvas/' +
         'tex-3d-srgb8_alpha8-rgba-unsigned_byte.html',
         ['linux', 'nvidia'], bug=679677)
-    self.Fail('conformance2/renderbuffers/framebuffer-test.html',
+    self.Fail('conformance2/rendering/framebuffer-texture-level1.html',
         ['linux', 'nvidia', 'opengl'], bug=680278)
     self.Fail('conformance2/textures/image/' +
         'tex-3d-rg8ui-rg_integer-unsigned_byte.html',
         ['linux', ('nvidia', 0xf02)], bug=680282)
-    self.Fail('conformance2/textures/image_data/tex-2d-rg16f-rg-half_float.html',
-        ['linux', 'nvidia'], bug=684399)
-    self.Fail('conformance2/textures/image_bitmap_from_blob/' +
-        'tex-2d-rgb565-rgb-unsigned_byte.html',
-        ['linux', 'nvidia'], bug=684399)
+    self.Flaky('conformance2/textures/image_bitmap_from_image_data/' +
+        'tex-2d-srgb8-rgb-unsigned_byte.html',
+        ['linux', 'nvidia'], bug=694354)
 
     # Linux Intel
     self.Fail('conformance2/extensions/ext-color-buffer-float.html',
@@ -811,6 +816,9 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
     self.Fail('deqp/functional/gles3/shadertexturefunction/' +
         'texelfetchoffset.html',
         ['linux', 'amd'], bug=483282)
+    self.Fail('deqp/functional/gles3/vertexarrays/' +
+        'single_attribute.first.html',
+        ['linux', 'amd'], bug=694877)
 
     self.Fail('deqp/functional/gles3/negativetextureapi.html',
         ['linux', 'amd'], bug=483282)
@@ -991,6 +999,14 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
         ['linux', 'amd'], bug=658842)
     self.Fail('conformance2/rendering/uniform-block-buffer-size.html',
         ['linux', 'amd'], bug=658844)
+
+    # Linux AMD R7 240
+    self.Fail('conformance2/textures/image_bitmap_from_video/' +
+        'tex-2d-rgba16f-rgba-half_float.html',
+        ['linux', ('amd', 0x6613)], bug=701138)
+    self.Fail('conformance2/textures/image_bitmap_from_video/' +
+        'tex-2d-rgba32f-rgba-float.html',
+        ['linux', ('amd', 0x6613)], bug=701138)
 
     # Conflicting expectations to test that the
     # "Expectations have no collisions" unittest works.

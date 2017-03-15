@@ -6,10 +6,9 @@
 
 #include "ash/ash_export.h"
 #include "ash/common/wallpaper/wallpaper_delegate.h"
-#include "ash/common/wm_lookup.h"
-#include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
 #include "ash/root_window_controller.h"
+#include "ash/shell.h"
 #include "ui/compositor/layer_animation_observer.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
 #include "ui/views/widget/widget.h"
@@ -64,10 +63,10 @@ class ShowWallpaperAnimationObserver : public ui::ImplicitAnimationObserver,
 
 WallpaperWidgetController::WallpaperWidgetController(views::Widget* widget)
     : widget_(widget),
-      widget_parent_(WmLookup::Get()->GetWindowForWidget(widget)->GetParent()) {
+      widget_parent_(WmWindow::Get(widget->GetNativeWindow())->GetParent()) {
   DCHECK(widget_);
   widget_->AddObserver(this);
-  widget_parent_->AddObserver(this);
+  widget_parent_->aura_window()->AddObserver(this);
 }
 
 WallpaperWidgetController::~WallpaperWidgetController() {
@@ -89,11 +88,11 @@ void WallpaperWidgetController::SetBounds(const gfx::Rect& bounds) {
 
 bool WallpaperWidgetController::Reparent(WmWindow* root_window, int container) {
   if (widget_) {
-    widget_parent_->RemoveObserver(this);
-    WmWindow* window = WmLookup::Get()->GetWindowForWidget(widget_);
+    widget_parent_->aura_window()->RemoveObserver(this);
+    WmWindow* window = WmWindow::Get(widget_->GetNativeWindow());
     root_window->GetChildByShellWindowId(container)->AddChild(window);
-    widget_parent_ = WmLookup::Get()->GetWindowForWidget(widget_)->GetParent();
-    widget_parent_->AddObserver(this);
+    widget_parent_ = WmWindow::Get(widget_->GetNativeWindow())->GetParent();
+    widget_parent_->aura_window()->AddObserver(this);
     return true;
   }
   // Nothing to reparent.
@@ -101,13 +100,13 @@ bool WallpaperWidgetController::Reparent(WmWindow* root_window, int container) {
 }
 
 void WallpaperWidgetController::RemoveObservers() {
-  widget_parent_->RemoveObserver(this);
+  widget_parent_->aura_window()->RemoveObserver(this);
   widget_->RemoveObserver(this);
   widget_ = nullptr;
 }
 
 void WallpaperWidgetController::OnWindowBoundsChanged(
-    WmWindow* window,
+    aura::Window* window,
     const gfx::Rect& old_bounds,
     const gfx::Rect& new_bounds) {
   SetBounds(new_bounds);
@@ -120,7 +119,7 @@ void WallpaperWidgetController::StartAnimating(
         widget_->GetLayer()->GetAnimator());
     settings.AddObserver(new ShowWallpaperAnimationObserver(
         root_window_controller, widget_,
-        WmShell::Get()->wallpaper_delegate()->ShouldShowInitialAnimation()));
+        Shell::Get()->wallpaper_delegate()->ShouldShowInitialAnimation()));
     // When |widget_| shows, AnimateShowWindowCommon() is called to do the
     // animation. Sets transition duration to 0 to avoid animating to the
     // show animation's initial values.

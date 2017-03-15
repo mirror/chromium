@@ -9,15 +9,73 @@
 
 namespace blink {
 
-DOMException* BluetoothError::take(ScriptPromiseResolver*,
-                                   mojom::blink::WebBluetoothResult error) {
+namespace {
+
+const char kGATTServerNotConnectedBase[] =
+    "GATT Server is disconnected. "
+    "Cannot %s. (Re)connect first with `device.gatt.connect`.";
+
+}  // namespace
+
+// static
+DOMException* BluetoothError::CreateNotConnectedException(
+    BluetoothOperation operation) {
+  const char* operationString = nullptr;
+  switch (operation) {
+    case BluetoothOperation::ServicesRetrieval:
+      operationString = "retrieve services";
+      break;
+    case BluetoothOperation::CharacteristicsRetrieval:
+      operationString = "retrieve characteristics";
+      break;
+    case BluetoothOperation::DescriptorsRetrieval:
+      operationString = "retrieve descriptors";
+      break;
+    case BluetoothOperation::GATT:
+      operationString = "perform GATT operations";
+      break;
+  }
+
+  return DOMException::create(
+      NetworkError,
+      String::format(kGATTServerNotConnectedBase, operationString));
+}
+
+// static
+DOMException* BluetoothError::CreateDOMException(
+    BluetoothErrorCode error,
+    const String& detailedMessage) {
+  switch (error) {
+    case BluetoothErrorCode::InvalidService:
+    case BluetoothErrorCode::InvalidCharacteristic:
+    case BluetoothErrorCode::InvalidDescriptor:
+      return DOMException::create(InvalidStateError, detailedMessage);
+    case BluetoothErrorCode::ServiceNotFound:
+    case BluetoothErrorCode::CharacteristicNotFound:
+    case BluetoothErrorCode::DescriptorNotFound:
+      return DOMException::create(NotFoundError, detailedMessage);
+  }
+  NOTREACHED();
+  return DOMException::create(UnknownError);
+}
+
+// static
+DOMException* BluetoothError::CreateDOMException(
+    mojom::blink::WebBluetoothResult error) {
   switch (error) {
     case mojom::blink::WebBluetoothResult::SUCCESS:
-      ASSERT_NOT_REACHED();
+    case mojom::blink::WebBluetoothResult::SERVICE_NOT_FOUND:
+    case mojom::blink::WebBluetoothResult::CHARACTERISTIC_NOT_FOUND:
+    case mojom::blink::WebBluetoothResult::DESCRIPTOR_NOT_FOUND:
+      // The above result codes are not expected here. SUCCESS is not
+      // an error and the others have a detailed message and are
+      // expected to be redirected to the switch above that handles
+      // BluetoothErrorCode.
+      NOTREACHED();
       return DOMException::create(UnknownError);
 #define MAP_ERROR(enumeration, name, message)         \
   case mojom::blink::WebBluetoothResult::enumeration: \
-    return DOMException::create(name, message)
+    return DOMException::create(name, message);
 
       // InvalidModificationErrors:
       MAP_ERROR(GATT_INVALID_ATTRIBUTE_LENGTH, InvalidModificationError,
@@ -34,40 +92,23 @@ DOMException* BluetoothError::take(ScriptPromiseResolver*,
       // NetworkErrors:
       MAP_ERROR(CONNECT_ALREADY_IN_PROGRESS, NetworkError,
                 "Connection already in progress.");
-      MAP_ERROR(CONNECT_ATTRIBUTE_LENGTH_INVALID, NetworkError,
-                "Write operation exceeds the maximum length of the attribute.");
       MAP_ERROR(CONNECT_AUTH_CANCELED, NetworkError,
                 "Authentication canceled.");
       MAP_ERROR(CONNECT_AUTH_FAILED, NetworkError, "Authentication failed.");
       MAP_ERROR(CONNECT_AUTH_REJECTED, NetworkError,
                 "Authentication rejected.");
       MAP_ERROR(CONNECT_AUTH_TIMEOUT, NetworkError, "Authentication timeout.");
-      MAP_ERROR(CONNECT_CONNECTION_CONGESTED, NetworkError,
-                "Remote device connection is congested.");
-      MAP_ERROR(CONNECT_INSUFFICIENT_ENCRYPTION, NetworkError,
-                "Insufficient encryption for a given operation");
-      MAP_ERROR(
-          CONNECT_OFFSET_INVALID, NetworkError,
-          "Read or write operation was requested with an invalid offset.");
-      MAP_ERROR(CONNECT_READ_NOT_PERMITTED, NetworkError,
-                "GATT read operation is not permitted.");
-      MAP_ERROR(CONNECT_REQUEST_NOT_SUPPORTED, NetworkError,
-                "The given request is not supported.");
       MAP_ERROR(CONNECT_UNKNOWN_ERROR, NetworkError,
                 "Unknown error when connecting to the device.");
       MAP_ERROR(CONNECT_UNKNOWN_FAILURE, NetworkError,
                 "Connection failed for unknown reason.");
       MAP_ERROR(CONNECT_UNSUPPORTED_DEVICE, NetworkError,
                 "Unsupported device.");
-      MAP_ERROR(CONNECT_WRITE_NOT_PERMITTED, NetworkError,
-                "GATT write operation is not permitted.");
       MAP_ERROR(DEVICE_NO_LONGER_IN_RANGE, NetworkError,
                 "Bluetooth Device is no longer in range.");
       MAP_ERROR(GATT_NOT_PAIRED, NetworkError, "GATT Error: Not paired.");
       MAP_ERROR(GATT_OPERATION_IN_PROGRESS, NetworkError,
                 "GATT operation already in progress.");
-      MAP_ERROR(UNTRANSLATED_CONNECT_ERROR_CODE, NetworkError,
-                "Unknown ConnectErrorCode.");
 
       // NotFoundErrors:
       MAP_ERROR(WEB_BLUETOOTH_NOT_SUPPORTED, NotFoundError,
@@ -86,16 +127,10 @@ DOMException* BluetoothError::take(ScriptPromiseResolver*,
       MAP_ERROR(
           CHOOSER_NOT_SHOWN_USER_DENIED_PERMISSION_TO_SCAN, NotFoundError,
           "User denied the browser permission to scan for Bluetooth devices.");
-      MAP_ERROR(SERVICE_NOT_FOUND, NotFoundError,
-                "No Services with specified UUID found in Device.");
       MAP_ERROR(NO_SERVICES_FOUND, NotFoundError,
                 "No Services found in device.");
-      MAP_ERROR(CHARACTERISTIC_NOT_FOUND, NotFoundError,
-                "No Characteristics with specified UUID found in Service.");
       MAP_ERROR(NO_CHARACTERISTICS_FOUND, NotFoundError,
                 "No Characteristics found in service.");
-      MAP_ERROR(DESCRIPTOR_NOT_FOUND, NotFoundError,
-                "No Descriptors with specified UUID found in Characteristic.");
       MAP_ERROR(NO_DESCRIPTORS_FOUND, NotFoundError,
                 "No Descriptors found in Characteristic.");
       MAP_ERROR(BLUETOOTH_LOW_ENERGY_NOT_AVAILABLE, NotFoundError,
@@ -140,13 +175,11 @@ DOMException* BluetoothError::take(ScriptPromiseResolver*,
                 "UUID. https://goo.gl/4NeimX");
       MAP_ERROR(REQUEST_DEVICE_FROM_CROSS_ORIGIN_IFRAME, SecurityError,
                 "requestDevice() called from cross-origin iframe.");
-      MAP_ERROR(REQUEST_DEVICE_WITHOUT_FRAME, SecurityError,
-                "No window to show the requestDevice() dialog.");
 
 #undef MAP_ERROR
   }
 
-  ASSERT_NOT_REACHED();
+  NOTREACHED();
   return DOMException::create(UnknownError);
 }
 

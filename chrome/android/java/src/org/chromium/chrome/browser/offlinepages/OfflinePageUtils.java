@@ -6,15 +6,12 @@ package org.chromium.chrome.browser.offlinepages;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.BatteryManager;
 import android.os.Environment;
 
+import org.chromium.base.ActivityState;
+import org.chromium.base.ApplicationStatus;
 import org.chromium.base.Callback;
 import org.chromium.base.FileUtils;
 import org.chromium.base.Log;
@@ -31,7 +28,9 @@ import org.chromium.chrome.browser.snackbar.Snackbar;
 import org.chromium.chrome.browser.snackbar.SnackbarManager;
 import org.chromium.chrome.browser.snackbar.SnackbarManager.SnackbarController;
 import org.chromium.chrome.browser.tab.Tab;
+import org.chromium.chrome.browser.tabmodel.TabModel;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
+import org.chromium.chrome.browser.tabmodel.TabModelSelectorTabModelObserver;
 import org.chromium.components.bookmarks.BookmarkId;
 import org.chromium.components.offlinepages.SavePageResult;
 import org.chromium.content_public.browser.LoadUrlParams;
@@ -45,7 +44,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -69,6 +70,13 @@ public class OfflinePageUtils {
     private static OfflinePageUtils sInstance;
 
     private static File sOfflineSharingDirectory;
+
+    /**
+     * Tracks the observers of ChromeActivity's TabModelSelectors. This is weak so the activity can
+     * be garbage collected without worrying about this map.  The RecentTabTracker is held here so
+     * that it can be destroyed when the ChromeActivity gets a new TabModelSelector.
+     */
+    private static Map<ChromeActivity, RecentTabTracker> sTabModelObservers = new HashMap<>();
 
     private static OfflinePageUtils getInstance() {
         if (sInstance == null) {
@@ -238,41 +246,11 @@ public class OfflinePageUtils {
     }
 
     /**
-     * Returns a class encapsulating the current power, battery, and network conditions.
-     */
-    public static DeviceConditions getDeviceConditions(Context context) {
-        return getInstance().getDeviceConditionsImpl(context);
-    }
-
-    /**
-     * Return true if the device is plugged into wall power.
-     */
-    public static boolean getPowerConditions(Context context) {
-        // TODO(petewil): refactor to get power, network, and battery directly from both here and
-        // getDeviceConditionsImpl instead of always making a DeviceConditions object.
-        return getInstance().getDeviceConditionsImpl(context).isPowerConnected();
-    }
-
-    /**
-     * Get the percentage of battery remaining
-     */
-    public static int getBatteryConditions(Context context) {
-        return getInstance().getDeviceConditionsImpl(context).getBatteryPercentage();
-    }
-
-    /**
-     * Returns an enum representing the type of the network connection.
-     */
-    public static int getNetworkConditions(Context context) {
-        return getInstance().getDeviceConditionsImpl(context).getNetConnectionType();
-    }
-
-    /**
      * Records UMA data when the Offline Pages Background Load service awakens.
      * @param context android context
      */
     public static void recordWakeupUMA(Context context, long taskScheduledTimeMillis) {
-        DeviceConditions deviceConditions = getDeviceConditions(context);
+        DeviceConditions deviceConditions = DeviceConditions.getCurrentConditions(context);
         if (deviceConditions == null) return;
 
         // Report charging state.
@@ -636,71 +614,92 @@ public class OfflinePageUtils {
         tab.loadUrl(params);
     }
 
-    private static boolean isPowerConnected(Intent batteryStatus) {
-        int status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
-        boolean isConnected = (status == BatteryManager.BATTERY_STATUS_CHARGING
-                || status == BatteryManager.BATTERY_STATUS_FULL);
-        Log.d(TAG, "Power connected is " + isConnected);
-        return isConnected;
-    }
-
-    private static int batteryPercentage(Intent batteryStatus) {
-        int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-        int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-        if (scale == 0) return 0;
-
-        int percentage = Math.round(100 * level / (float) scale);
-        Log.d(TAG, "Battery Percentage is " + percentage);
-        return percentage;
-    }
-
     protected OfflinePageBridge getOfflinePageBridge(Profile profile) {
         return OfflinePageBridge.getForProfile(profile);
     }
 
-    /** Returns the current device conditions. May be overridden for testing. */
-    protected DeviceConditions getDeviceConditionsImpl(Context context) {
-        IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        // Note this is a sticky intent, so we aren't really registering a receiver, just getting
-        // the sticky intent.  That means that we don't need to unregister the filter later.
-        Intent batteryStatus = context.registerReceiver(null, filter);
-        if (batteryStatus == null) return null;
+    /**
+     * Tracks tab creation and closure for the Recent Tabs feature.  UI needs to stop showing
+     * recent offline pages as soon as the tab is closed.  The TabModel is used to get profile
+     * information because Tab's profile is tied to the native WebContents, which may not exist at
+     * tab adding or tab closing time.
+     */
+    private static class RecentTabTracker extends TabModelSelectorTabModelObserver {
+        private TabModelSelector mTabModelSelector;
 
-        // Get the connection type from chromium's internal object.
-        int connectionType = NetworkChangeNotifier.getInstance().getCurrentConnectionType();
-
-        // Sometimes the NetworkConnectionNotifier lags the actual connection type, especially when
-        // the GCM NM wakes us from doze state.  If we are really connected, report the connection
-        // type from android.
-        if (connectionType == ConnectionType.CONNECTION_NONE) {
-            // Get the connection type from android in case chromium's type is not yet set.
-            ConnectivityManager cm =
-                    (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-            boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-            if (isConnected) {
-                connectionType = convertAndroidNetworkTypeToConnectionType(activeNetwork.getType());
-            }
+        public RecentTabTracker(TabModelSelector selector) {
+            super(selector);
+            mTabModelSelector = selector;
         }
 
-        return new DeviceConditions(
-                isPowerConnected(batteryStatus), batteryPercentage(batteryStatus), connectionType);
+        @Override
+        public void didAddTab(Tab tab, TabModel.TabLaunchType type) {
+            Profile profile = mTabModelSelector.getModel(tab.isIncognito()).getProfile();
+            OfflinePageBridge bridge = OfflinePageBridge.getForProfile(profile);
+            if (bridge == null) return;
+            bridge.registerRecentTab(tab.getId());
+        }
+
+        @Override
+        public void willCloseTab(Tab tab, boolean animate) {
+            Profile profile = mTabModelSelector.getModel(tab.isIncognito()).getProfile();
+            OfflinePageBridge bridge = OfflinePageBridge.getForProfile(profile);
+            if (bridge == null) return;
+
+            WebContents webContents = tab.getWebContents();
+            if (webContents != null) bridge.willCloseTab(webContents);
+        }
+
+        @Override
+        public void didCloseTab(int tabId, boolean incognito) {
+            Profile profile = mTabModelSelector.getModel(incognito).getProfile();
+            OfflinePageBridge bridge = OfflinePageBridge.getForProfile(profile);
+            if (bridge == null) return;
+
+            // First, unregister the tab with the UI.
+            bridge.unregisterRecentTab(tabId);
+
+            // Then, delete any "Last N" offline pages as well.  This is an optimization because
+            // the UI will no longer show the page, and the page would also be cleaned up by GC
+            // given enough time.
+            ClientId clientId =
+                    new ClientId(OfflinePageBridge.LAST_N_NAMESPACE, Integer.toString(tabId));
+            List<ClientId> clientIds = new ArrayList<>();
+            clientIds.add(clientId);
+
+            bridge.deletePagesByClientId(clientIds, new Callback<Integer>() {
+                @Override
+                public void onResult(Integer result) {
+                    // Result is ignored.
+                }
+            });
+        }
     }
 
-    /** Returns the NCN network type corresponding to the connectivity manager network type */
-    protected int convertAndroidNetworkTypeToConnectionType(int connectivityManagerNetworkType) {
-        if (connectivityManagerNetworkType == ConnectivityManager.TYPE_WIFI) {
-            return ConnectionType.CONNECTION_WIFI;
+    /**
+     * Starts tracking the tab models in the given selector for tab addition and closure,
+     * destroying obsolete observers as necessary.
+     */
+    public static void observeTabModelSelector(
+            ChromeActivity activity, TabModelSelector tabModelSelector) {
+        RecentTabTracker previousObserver =
+                sTabModelObservers.put(activity, new RecentTabTracker(tabModelSelector));
+        if (previousObserver != null) {
+            previousObserver.destroy();
+        } else {
+            // This is the 1st time we see this activity so register a state listener with it.
+            ApplicationStatus.registerStateListenerForActivity(
+                    new ApplicationStatus.ActivityStateListener() {
+                        @Override
+                        public void onActivityStateChange(Activity activity, int newState) {
+                            if (newState == ActivityState.DESTROYED) {
+                                sTabModelObservers.remove(activity).destroy();
+                                ApplicationStatus.unregisterActivityStateListener(this);
+                            }
+                        }
+                    },
+                    activity);
         }
-        // for mobile, we don't know if it is 2G, 3G, or 4G, default to worst case of 2G.
-        if (connectivityManagerNetworkType == ConnectivityManager.TYPE_MOBILE) {
-            return ConnectionType.CONNECTION_2G;
-        }
-        if (connectivityManagerNetworkType == ConnectivityManager.TYPE_BLUETOOTH) {
-            return ConnectionType.CONNECTION_BLUETOOTH;
-        }
-        // Since NetworkConnectivityManager doesn't understand the other types, call them UNKNOWN.
-        return ConnectionType.CONNECTION_UNKNOWN;
     }
 
     @VisibleForTesting

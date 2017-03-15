@@ -34,7 +34,7 @@
 #include "url/url_util.h"
 
 #if defined(OS_CHROMEOS)
-#include "chrome/browser/chromeos/arc/arc_session_manager.h"
+#include "chrome/browser/chromeos/arc/arc_util.h"
 #endif  // defined(OS_CHROMEOS)
 
 #if defined(OS_WIN)
@@ -77,8 +77,8 @@ using feedback_private::FeedbackFlow;
 using SystemInformationList =
     std::vector<api::feedback_private::SystemInformation>;
 
-static base::LazyInstance<BrowserContextKeyedAPIFactory<FeedbackPrivateAPI> >
-    g_factory = LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<BrowserContextKeyedAPIFactory<FeedbackPrivateAPI>>::
+    DestructorAtExit g_factory = LAZY_INSTANCE_INITIALIZER;
 
 // static
 BrowserContextKeyedAPIFactory<FeedbackPrivateAPI>*
@@ -166,13 +166,15 @@ ExtensionFunction::ResponseAction FeedbackPrivateGetStringsFunction::Run() {
   dict->SetString(id, l10n_util::GetStringUTF16(idr))
   SET_STRING("page-title", IDS_FEEDBACK_REPORT_PAGE_TITLE);
   SET_STRING("additionalInfo", IDS_FEEDBACK_ADDITIONAL_INFO_LABEL);
+  SET_STRING("minimize-btn-label", IDS_FEEDBACK_MINIMIZE_BUTTON_LABEL);
+  SET_STRING("close-btn-label", IDS_FEEDBACK_CLOSE_BUTTON_LABEL);
   SET_STRING("page-url", IDS_FEEDBACK_REPORT_URL_LABEL);
   SET_STRING("screenshot", IDS_FEEDBACK_SCREENSHOT_LABEL);
   SET_STRING("user-email", IDS_FEEDBACK_USER_EMAIL_LABEL);
+  SET_STRING("anonymous-user", IDS_FEEDBACK_ANONYMOUS_EMAIL_OPTION);
 #if defined(OS_CHROMEOS)
-  const arc::ArcSessionManager* arc_session_manager =
-      arc::ArcSessionManager::Get();
-  if (arc_session_manager && arc_session_manager->IsArcPlayStoreEnabled()) {
+  if (arc::IsArcPlayStoreEnabledForProfile(
+          Profile::FromBrowserContext(browser_context()))) {
     SET_STRING("sys-info",
                IDS_FEEDBACK_INCLUDE_SYSTEM_INFORMATION_AND_METRICS_CHKBOX_ARC);
   } else {
@@ -221,7 +223,7 @@ ExtensionFunction::ResponseAction FeedbackPrivateGetStringsFunction::Run() {
 ExtensionFunction::ResponseAction FeedbackPrivateGetUserEmailFunction::Run() {
   SigninManagerBase* signin_manager = SigninManagerFactory::GetForProfile(
       Profile::FromBrowserContext(browser_context()));
-  return RespondNow(OneArgument(base::MakeUnique<base::StringValue>(
+  return RespondNow(OneArgument(base::MakeUnique<base::Value>(
       signin_manager ? signin_manager->GetAuthenticatedAccountInfo().email
                      : std::string())));
 }

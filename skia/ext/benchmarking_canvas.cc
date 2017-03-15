@@ -47,14 +47,13 @@ private:
 };
 
 std::unique_ptr<base::Value> AsValue(bool b) {
-  std::unique_ptr<base::FundamentalValue> val(new base::FundamentalValue(b));
+  std::unique_ptr<base::Value> val(new base::Value(b));
 
   return val;
 }
 
 std::unique_ptr<base::Value> AsValue(SkScalar scalar) {
-  std::unique_ptr<base::FundamentalValue> val(
-      new base::FundamentalValue(scalar));
+  std::unique_ptr<base::Value> val(new base::Value(scalar));
 
   return val;
 }
@@ -118,8 +117,7 @@ std::unique_ptr<base::Value> AsValue(SkColor color) {
 }
 
 std::unique_ptr<base::Value> AsValue(SkBlendMode mode) {
-  std::unique_ptr<base::StringValue> val(
-      new base::StringValue(SkBlendMode_Name(mode)));
+  std::unique_ptr<base::Value> val(new base::Value(SkBlendMode_Name(mode)));
 
   return val;
 }
@@ -128,8 +126,7 @@ std::unique_ptr<base::Value> AsValue(SkCanvas::PointMode mode) {
   static const char* gModeStrings[] = { "Points", "Lines", "Polygon" };
   DCHECK_LT(static_cast<size_t>(mode), SK_ARRAY_COUNT(gModeStrings));
 
-  std::unique_ptr<base::StringValue> val(
-      new base::StringValue(gModeStrings[mode]));
+  std::unique_ptr<base::Value> val(new base::Value(gModeStrings[mode]));
 
   return val;
 }
@@ -210,8 +207,6 @@ std::unique_ptr<base::Value> AsValue(const SkPaint& paint) {
     FlagsBuilder builder('|');
     builder.addFlag(paint.isAntiAlias(), "AntiAlias");
     builder.addFlag(paint.isDither(), "Dither");
-    builder.addFlag(paint.isUnderlineText(), "UnderlineText");
-    builder.addFlag(paint.isStrikeThruText(), "StrikeThruText");
     builder.addFlag(paint.isFakeBoldText(), "FakeBoldText");
     builder.addFlag(paint.isLinearText(), "LinearText");
     builder.addFlag(paint.isSubpixelText(), "SubpixelText");
@@ -259,7 +254,7 @@ std::unique_ptr<base::Value> SaveLayerFlagsAsValue(
   builder.addFlag(flags & SkCanvas::kPreserveLCDText_SaveLayerFlag,
                   "kPreserveLCDText");
 
-  std::unique_ptr<base::StringValue> val(new base::StringValue(builder.str()));
+  std::unique_ptr<base::Value> val(new base::Value(builder.str()));
 
   return val;
 }
@@ -274,8 +269,7 @@ std::unique_ptr<base::Value> AsValue(SkClipOp op) {
                                     };
   size_t index = static_cast<size_t>(op);
   DCHECK_LT(index, SK_ARRAY_COUNT(gOpStrings));
-  std::unique_ptr<base::StringValue> val(
-      new base::StringValue(gOpStrings[index]));
+  std::unique_ptr<base::Value> val(new base::Value(gOpStrings[index]));
   return val;
 }
 

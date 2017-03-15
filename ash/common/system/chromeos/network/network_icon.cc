@@ -7,7 +7,9 @@
 #include "ash/common/system/chromeos/network/network_icon_animation.h"
 #include "ash/common/system/chromeos/network/network_icon_animation_observer.h"
 #include "ash/common/system/tray/tray_constants.h"
+#include "ash/resources/grit/ash_resources.h"
 #include "ash/resources/vector_icons/vector_icons.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chromeos/network/device_state.h"
@@ -15,8 +17,6 @@
 #include "chromeos/network/network_state.h"
 #include "chromeos/network/network_state_handler.h"
 #include "chromeos/network/portal_detector/network_portal_detector.h"
-#include "grit/ash_resources.h"
-#include "grit/ash_strings.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
 #include "third_party/skia/include/core/SkPaint.h"
 #include "third_party/skia/include/core/SkPath.h"
@@ -202,7 +202,7 @@ class NetworkIconImageSource : public gfx::CanvasImageSource {
  public:
   static gfx::ImageSkia CreateImage(const gfx::ImageSkia& icon,
                                     const Badges& badges) {
-    auto source = new NetworkIconImageSource(icon, badges);
+    auto* source = new NetworkIconImageSource(icon, badges);
     return gfx::ImageSkia(source, source->size());
   }
 
@@ -309,18 +309,18 @@ class SignalStrengthImageSource : public gfx::CanvasImageSource {
     const SkScalar kStartAngle = 180.f + kAngleAboveHorizontal;
     const SkScalar kSweepAngle = 180.f - 2 * kAngleAboveHorizontal;
 
-    SkPaint paint;
-    paint.setAntiAlias(true);
-    paint.setStyle(SkPaint::kFill_Style);
+    cc::PaintFlags flags;
+    flags.setAntiAlias(true);
+    flags.setStyle(cc::PaintFlags::kFill_Style);
     // Background. Skip drawing for full signal.
     if (signal_strength_ != kNumNetworkImages - 1) {
-      paint.setColor(SkColorSetA(color_, kBgAlpha));
+      flags.setColor(SkColorSetA(color_, kBgAlpha));
       canvas->sk_canvas()->drawArc(gfx::RectFToSkRect(oval_bounds), kStartAngle,
-                                   kSweepAngle, true, paint);
+                                   kSweepAngle, true, flags);
     }
     // Foreground (signal strength).
     if (signal_strength_ != 0) {
-      paint.setColor(color_);
+      flags.setColor(color_);
       // Percent of the height of the background wedge that we draw the
       // foreground wedge, indexed by signal strength.
       static const float kWedgeHeightPercentages[] = {0.f, 0.375f, 0.5833f,
@@ -329,7 +329,7 @@ class SignalStrengthImageSource : public gfx::CanvasImageSource {
       oval_bounds.Inset(
           gfx::InsetsF((oval_bounds.height() / 2) * (1.f - wedge_percent)));
       canvas->sk_canvas()->drawArc(gfx::RectFToSkRect(oval_bounds), kStartAngle,
-                                   kSweepAngle, true, paint);
+                                   kSweepAngle, true, flags);
     }
   }
 
@@ -526,7 +526,8 @@ gfx::ImageSkia GetIcon(const NetworkState* network,
                             strength_index);
   } else if (network->Matches(NetworkTypePattern::VPN())) {
     DCHECK_NE(ICON_TYPE_TRAY, icon_type);
-    return GetVpnImage();
+    return gfx::CreateVectorIcon(kNetworkVpnIcon,
+                                 GetDefaultColorForIconType(ICON_TYPE_LIST));
   }
 
   NOTREACHED() << "Request for icon for unsupported type: " << network->type();
@@ -779,11 +780,6 @@ gfx::ImageSkia GetImageForNewWifiNetwork(SkColor icon_color,
   return NetworkIconImageSource::CreateImage(icon, badges);
 }
 
-gfx::ImageSkia GetVpnImage() {
-  return gfx::CreateVectorIcon(kNetworkVpnIcon,
-                               GetDefaultColorForIconType(ICON_TYPE_LIST));
-}
-
 base::string16 GetLabelForNetwork(const chromeos::NetworkState* network,
                                   IconType icon_type) {
   DCHECK(network);
@@ -856,7 +852,7 @@ int GetCellularUninitializedMsg() {
     s_uninitialized_state_time = base::Time::Now();
     return s_uninitialized_msg;
   } else if (handler->GetScanningByType(NetworkTypePattern::Mobile())) {
-    s_uninitialized_msg = IDS_ASH_STATUS_TRAY_CELLULAR_SCANNING;
+    s_uninitialized_msg = IDS_ASH_STATUS_TRAY_MOBILE_SCANNING;
     s_uninitialized_state_time = base::Time::Now();
     return s_uninitialized_msg;
   }

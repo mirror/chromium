@@ -6,6 +6,7 @@ import("//build/config/chrome_build.gni")
 import("//build/config/chromecast_build.gni")
 import("//build/config/compiler/compiler.gni")
 import("//build/config/features.gni")
+import("//device/vr/features.gni")
 import("//extensions/features/features.gni")
 import("//media/media_options.gni")
 import("//net/features.gni")
@@ -46,8 +47,6 @@ declare_args() {
   # Specify --mash to chrome to have chrome start the mash environment.
   enable_package_mash_services = is_chromeos
 
-  enable_plugin_installation = is_win || is_mac
-
   enable_service_discovery = enable_mdns || is_mac
 
   # Enables use of the session service, which is enabled by default.
@@ -59,15 +58,21 @@ declare_args() {
   # Enables vr shell UI development on local or remote page.
   enable_vr_shell_ui_dev = false
 
+  # Indicates if Wayland display server support is enabled.
+  enable_wayland_server = is_chromeos
+
   # Enable native notifications via XPC services (mac only).
-  enable_xpc_notifications = false
+  # TODO(miguelg): remove this.
+  enable_xpc_notifications = true
 
   # Indicates if the build is using PGO.
   pgo_build = chrome_pgo_phase > 0
 
-  # Use vulcanized HTML/CSS/JS resources to speed up WebUI (chrome://)
-  # pages. https://github.com/polymer/vulcanize
-  use_vulcanize = true
+  # Optimize parts of Chrome's UI written with web technologies (HTML/CSS/JS)
+  # for runtime performance purposes. This does more work at compile time for
+  # speed benefits at runtime (so we skip in debug builds). TODO(dbeam): rename
+  # this flag "optimize_web_uis" because we run more than vulcanize these days.
+  use_vulcanize = !is_debug
 }
 
 # Use brlapi from brltty for braille display support.

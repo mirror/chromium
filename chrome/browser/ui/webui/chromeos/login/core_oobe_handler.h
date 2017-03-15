@@ -14,9 +14,9 @@
 #include "base/values.h"
 #include "chrome/browser/chromeos/accessibility/accessibility_manager.h"
 #include "chrome/browser/chromeos/login/demo_mode/demo_mode_detector.h"
-#include "chrome/browser/chromeos/login/screens/core_oobe_actor.h"
+#include "chrome/browser/chromeos/login/screens/core_oobe_view.h"
 #include "chrome/browser/chromeos/login/version_info_updater.h"
-#include "chrome/browser/ui/webui/chromeos/login/base_screen_handler.h"
+#include "chrome/browser/ui/webui/chromeos/login/base_webui_handler.h"
 #include "ui/events/event_source.h"
 #include "ui/keyboard/scoped_keyboard_disabler.h"
 
@@ -34,21 +34,14 @@ class HelpAppLauncher;
 class OobeUI;
 
 // The core handler for Javascript messages related to the "oobe" view.
-class CoreOobeHandler : public BaseScreenHandler,
+class CoreOobeHandler : public BaseWebUIHandler,
                         public VersionInfoUpdater::Delegate,
-                        public CoreOobeActor,
+                        public CoreOobeView,
                         public ui::EventSource {
  public:
-  class Delegate {
-   public:
-    // Called when current screen is changed.
-    virtual void OnCurrentScreenChanged(OobeScreen screen) = 0;
-  };
-
-  explicit CoreOobeHandler(OobeUI* oobe_ui);
+  explicit CoreOobeHandler(OobeUI* oobe_ui,
+                           JSCallsContainer* js_calls_container);
   ~CoreOobeHandler() override;
-
-  void SetDelegate(Delegate* delegate);
 
   // BaseScreenHandler implementation:
   void DeclareLocalizedValues(
@@ -80,24 +73,7 @@ class CoreOobeHandler : public BaseScreenHandler,
   void UpdateShutdownAndRebootVisibility(bool reboot_on_shutdown);
 
  private:
-  // Calls javascript method.
-  //
-  // Note that the Args template parameter pack should consist of types
-  // convertible to base::Value.
-  template <typename... Args>
-  void ExecuteDeferredJSCall(const std::string& function_name,
-                             std::unique_ptr<Args>... args);
-
-  // Calls javascript method if the instance is already initialized, or defers
-  // the call until it gets initialized.
-  template <typename... Args>
-  void CallJSOrDefer(const std::string& function_name, const Args&... args);
-
-  // Executes javascript calls that were deferred while the instance was not
-  // initialized yet.
-  void ExecuteDeferredJSCalls();
-
-  // CoreOobeActor implementation:
+  // CoreOobeView implementation:
   void ShowSignInError(int login_attempts,
                        const std::string& error_text,
                        const std::string& help_link_text,
@@ -168,16 +144,6 @@ class CoreOobeHandler : public BaseScreenHandler,
   void OnAccessibilityStatusChanged(
       const AccessibilityStatusEventDetails& details);
 
-  // Whether the instance is initialized.
-  //
-  // The instance becomes initialized after the corresponding message is
-  // received from javascript side.
-  bool is_initialized_ = false;
-
-  // Javascript calls that have been deferred while the instance was not
-  // initialized yet.
-  std::vector<base::Closure> deferred_js_calls_;
-
   // Owner of this handler.
   OobeUI* oobe_ui_ = nullptr;
 
@@ -189,8 +155,6 @@ class CoreOobeHandler : public BaseScreenHandler,
 
   // Help application used for help dialogs.
   scoped_refptr<HelpAppLauncher> help_app_;
-
-  Delegate* delegate_ = nullptr;
 
   std::unique_ptr<AccessibilityStatusSubscription> accessibility_subscription_;
 

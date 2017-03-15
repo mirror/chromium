@@ -12,11 +12,6 @@ function test()
     }
 
     TestTimelineControllerClient.prototype = {
-        recordingStarted: function()
-        {
-            InspectorTest.addResult("TimelineControllerClient.recordingStarted");
-        },
-
         recordingProgress: function()
         {
             if (!controller)
@@ -51,8 +46,10 @@ function test()
         }
     };
     var performanceModel = new Timeline.PerformanceModel();
-    var controller = new Timeline.TimelineController(SDK.targetManager.mainTarget(), performanceModel, new TestTimelineControllerClient());
-    controller.startRecording({}, []);
+    var controller = new Timeline.TimelineController(InspectorTest.tracingManager, performanceModel, new TestTimelineControllerClient());
+    controller.startRecording({}, []).then(() => {
+        InspectorTest.addResult("TimelineControllerClient.recordingStarted");
+    });
 }
 
 </script>

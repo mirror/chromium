@@ -8,6 +8,7 @@
 #include <memory>
 #include <vector>
 
+#include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "components/sync/driver/sync_client.h"
@@ -37,8 +38,10 @@ class IOSChromeSyncClient : public syncer::SyncClient {
 
   // SyncClient implementation.
   void Initialize() override;
+  base::SequencedWorkerPool* GetBlockingPool() override;
   syncer::SyncService* GetSyncService() override;
   PrefService* GetPrefService() override;
+  base::FilePath GetLocalSyncBackendFolder() override;
   bookmarks::BookmarkModel* GetBookmarkModel() override;
   favicon::FaviconService* GetFaviconService() override;
   history::HistoryService* GetHistoryService() override;

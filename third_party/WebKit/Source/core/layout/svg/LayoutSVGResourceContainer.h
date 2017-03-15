@@ -62,7 +62,8 @@ class LayoutSVGResourceContainer : public LayoutSVGHiddenContainer {
            resourceType == RadialGradientResourceType;
   }
 
-  void idChanged();
+  void idChanged(const AtomicString& oldId, const AtomicString& newId);
+  void detachAllClients(const AtomicString& toId);
 
   void invalidateCacheAndMarkForLayout(SubtreeLayoutScope* = nullptr);
 
@@ -94,14 +95,16 @@ class LayoutSVGResourceContainer : public LayoutSVGHiddenContainer {
   bool m_isInLayout;
 
  private:
+  friend class SVGTreeScopeResources;
+  // The m_registered flag is updated by SVGTreeScopeResources, and indicates
+  // that this resource is the one that is resident in the id->resource map.
+  void setRegistered(bool registered) { m_registered = registered; }
+  bool isRegistered() const { return m_registered; }
+
   friend class SVGResourcesCache;
   void addClient(LayoutObject*);
   void removeClient(LayoutObject*);
-  void detachAllClients();
 
-  void registerResource();
-
-  AtomicString m_id;
   // Track global (markAllClientsForInvalidation) invals to avoid redundant
   // crawls.
   unsigned m_invalidationMask : 8;
@@ -113,23 +116,11 @@ class LayoutSVGResourceContainer : public LayoutSVGHiddenContainer {
   HashSet<LayoutObject*> m_clients;
 };
 
-inline LayoutSVGResourceContainer* getLayoutSVGResourceContainerById(
-    TreeScope& treeScope,
-    const AtomicString& id) {
-  if (id.isEmpty())
-    return nullptr;
-
-  if (LayoutSVGResourceContainer* layoutResource =
-          treeScope.ensureSVGTreeScopedResources().resourceById(id))
-    return layoutResource;
-
-  return nullptr;
-}
-
 template <typename Layout>
-Layout* getLayoutSVGResourceById(TreeScope& treeScope, const AtomicString& id) {
+Layout* getLayoutSVGResourceById(SVGTreeScopeResources& treeScopeResources,
+                                 const AtomicString& id) {
   if (LayoutSVGResourceContainer* container =
-          getLayoutSVGResourceContainerById(treeScope, id)) {
+          treeScopeResources.resourceById(id)) {
     if (container->resourceType() == Layout::s_resourceType)
       return static_cast<Layout*>(container);
   }

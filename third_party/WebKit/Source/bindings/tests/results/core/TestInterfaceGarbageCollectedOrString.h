@@ -14,6 +14,7 @@
 
 #include "bindings/core/v8/Dictionary.h"
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/NativeValueTraits.h"
 #include "bindings/core/v8/V8Binding.h"
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
@@ -28,15 +29,15 @@ class CORE_EXPORT TestInterfaceGarbageCollectedOrString final {
   TestInterfaceGarbageCollectedOrString();
   bool isNull() const { return m_type == SpecificTypeNone; }
 
-  bool isTestInterfaceGarbageCollected() const { return m_type == SpecificTypeTestInterfaceGarbageCollected; }
-  TestInterfaceGarbageCollected* getAsTestInterfaceGarbageCollected() const;
-  void setTestInterfaceGarbageCollected(TestInterfaceGarbageCollected*);
-  static TestInterfaceGarbageCollectedOrString fromTestInterfaceGarbageCollected(TestInterfaceGarbageCollected*);
-
   bool isString() const { return m_type == SpecificTypeString; }
   String getAsString() const;
   void setString(String);
   static TestInterfaceGarbageCollectedOrString fromString(String);
+
+  bool isTestInterfaceGarbageCollected() const { return m_type == SpecificTypeTestInterfaceGarbageCollected; }
+  TestInterfaceGarbageCollected* getAsTestInterfaceGarbageCollected() const;
+  void setTestInterfaceGarbageCollected(TestInterfaceGarbageCollected*);
+  static TestInterfaceGarbageCollectedOrString fromTestInterfaceGarbageCollected(TestInterfaceGarbageCollected*);
 
   TestInterfaceGarbageCollectedOrString(const TestInterfaceGarbageCollectedOrString&);
   ~TestInterfaceGarbageCollectedOrString();
@@ -46,13 +47,13 @@ class CORE_EXPORT TestInterfaceGarbageCollectedOrString final {
  private:
   enum SpecificTypes {
     SpecificTypeNone,
-    SpecificTypeTestInterfaceGarbageCollected,
     SpecificTypeString,
+    SpecificTypeTestInterfaceGarbageCollected,
   };
   SpecificTypes m_type;
 
-  Member<TestInterfaceGarbageCollected> m_testInterfaceGarbageCollected;
   String m_string;
+  Member<TestInterfaceGarbageCollected> m_testInterfaceGarbageCollected;
 
   friend CORE_EXPORT v8::Local<v8::Value> ToV8(const TestInterfaceGarbageCollectedOrString&, v8::Local<v8::Object>, v8::Isolate*);
 };
@@ -75,8 +76,13 @@ inline void v8SetReturnValue(const CallbackInfo& callbackInfo, TestInterfaceGarb
 }
 
 template <>
-struct NativeValueTraits<TestInterfaceGarbageCollectedOrString> {
+struct NativeValueTraits<TestInterfaceGarbageCollectedOrString> : public NativeValueTraitsBase<TestInterfaceGarbageCollectedOrString> {
   CORE_EXPORT static TestInterfaceGarbageCollectedOrString nativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
+};
+
+template <>
+struct V8TypeOf<TestInterfaceGarbageCollectedOrString> {
+  typedef V8TestInterfaceGarbageCollectedOrString Type;
 };
 
 }  // namespace blink

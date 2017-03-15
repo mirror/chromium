@@ -4,22 +4,31 @@
 
 #include "components/display_compositor/gpu_compositor_frame_sink.h"
 
-#include "cc/surfaces/surface_reference.h"
-
 namespace display_compositor {
 
 GpuCompositorFrameSink::GpuCompositorFrameSink(
     GpuCompositorFrameSinkDelegate* delegate,
-    std::unique_ptr<cc::CompositorFrameSinkSupport> support,
+    cc::SurfaceManager* surface_manager,
+    const cc::FrameSinkId& frame_sink_id,
+    cc::mojom::MojoCompositorFrameSinkRequest request,
     cc::mojom::MojoCompositorFrameSinkPrivateRequest
         compositor_frame_sink_private_request,
     cc::mojom::MojoCompositorFrameSinkClientPtr client)
     : delegate_(delegate),
-      support_(std::move(support)),
+      support_(base::MakeUnique<cc::CompositorFrameSinkSupport>(
+          this,
+          surface_manager,
+          frame_sink_id,
+          false /* is_root */,
+          true /* handles_frame_sink_id_invalidation */,
+          true /* needs_sync_points */)),
       client_(std::move(client)),
+      compositor_frame_sink_binding_(this, std::move(request)),
       compositor_frame_sink_private_binding_(
           this,
           std::move(compositor_frame_sink_private_request)) {
+  compositor_frame_sink_binding_.set_connection_error_handler(base::Bind(
+      &GpuCompositorFrameSink::OnClientConnectionLost, base::Unretained(this)));
   compositor_frame_sink_private_binding_.set_connection_error_handler(
       base::Bind(&GpuCompositorFrameSink::OnPrivateConnectionLost,
                  base::Unretained(this)));
@@ -41,28 +50,19 @@ void GpuCompositorFrameSink::SubmitCompositorFrame(
   support_->SubmitCompositorFrame(local_surface_id, std::move(frame));
 }
 
-void GpuCompositorFrameSink::Require(const cc::LocalSurfaceId& local_surface_id,
-                                     const cc::SurfaceSequence& sequence) {
-  support_->Require(local_surface_id, sequence);
-}
-
-void GpuCompositorFrameSink::Satisfy(const cc::SurfaceSequence& sequence) {
-  support_->Satisfy(sequence);
-}
-
 void GpuCompositorFrameSink::DidReceiveCompositorFrameAck() {
   if (client_)
     client_->DidReceiveCompositorFrameAck();
 }
 
-void GpuCompositorFrameSink::AddChildFrameSink(
-    const cc::FrameSinkId& child_frame_sink_id) {
-  support_->AddChildFrameSink(child_frame_sink_id);
+void GpuCompositorFrameSink::ClaimTemporaryReference(
+    const cc::SurfaceId& surface_id) {
+  support_->ClaimTemporaryReference(surface_id);
 }
 
-void GpuCompositorFrameSink::RemoveChildFrameSink(
-    const cc::FrameSinkId& child_frame_sink_id) {
-  support_->RemoveChildFrameSink(child_frame_sink_id);
+void GpuCompositorFrameSink::RequestCopyOfSurface(
+    std::unique_ptr<cc::CopyOutputRequest> request) {
+  support_->RequestCopyOfSurface(std::move(request));
 }
 
 void GpuCompositorFrameSink::OnBeginFrame(const cc::BeginFrameArgs& args) {
@@ -76,9 +76,11 @@ void GpuCompositorFrameSink::ReclaimResources(
     client_->ReclaimResources(resources);
 }
 
-void GpuCompositorFrameSink::WillDrawSurface() {
+void GpuCompositorFrameSink::WillDrawSurface(
+    const cc::LocalSurfaceId& local_surface_id,
+    const gfx::Rect& damage_rect) {
   if (client_)
-    client_->WillDrawSurface();
+    client_->WillDrawSurface(local_surface_id, damage_rect);
 }
 
 void GpuCompositorFrameSink::OnClientConnectionLost() {

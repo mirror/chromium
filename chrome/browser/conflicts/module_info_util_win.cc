@@ -4,6 +4,8 @@
 
 #include "chrome/browser/conflicts/module_info_util_win.h"
 
+#include <windows.h>
+
 #include <tlhelp32.h>
 #include <wincrypt.h>
 #include <wintrust.h>
@@ -11,7 +13,15 @@
 // This must be after wincrypt and wintrust.
 #include <mscat.h>
 
+#include <limits>
+#include <memory>
+#include <string>
+
+#include "base/environment.h"
+#include "base/i18n/case_conversion.h"
 #include "base/scoped_generic.h"
+#include "base/strings/string_util.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/win/scoped_handle.h"
 
 namespace {
@@ -146,7 +156,7 @@ using ScopedCryptCATCatalogContext =
 // Extracts the subject name and catalog path if the provided file is present in
 // a catalog file.
 void GetCatalogCertificateInfo(const base::FilePath& filename,
-                               ModuleDatabase::CertificateInfo* cert_info) {
+                               CertificateInfo* certificate_info) {
   // Get a crypt context for signature verification.
   ScopedCryptCATContext context;
   {
@@ -202,30 +212,80 @@ void GetCatalogCertificateInfo(const base::FilePath& filename,
   if (subject.empty())
     return;
 
-  cert_info->type = ModuleDatabase::CERTIFICATE_IN_CATALOG;
-  cert_info->path = catalog_path;
-  cert_info->subject = subject;
+  certificate_info->type = CertificateType::CERTIFICATE_IN_CATALOG;
+  certificate_info->path = catalog_path;
+  certificate_info->subject = subject;
 }
 
 }  // namespace
 
+// ModuleDatabase::CertificateInfo ---------------------------------------------
+
+CertificateInfo::CertificateInfo() : type(CertificateType::NO_CERTIFICATE) {}
+
 // Extracts information about the certificate of the given file, if any is
 // found.
 void GetCertificateInfo(const base::FilePath& filename,
-                        ModuleDatabase::CertificateInfo* cert_info) {
-  DCHECK_EQ(ModuleDatabase::NO_CERTIFICATE, cert_info->type);
-  DCHECK(cert_info->path.empty());
-  DCHECK(cert_info->subject.empty());
+                        CertificateInfo* certificate_info) {
+  DCHECK_EQ(CertificateType::NO_CERTIFICATE, certificate_info->type);
+  DCHECK(certificate_info->path.empty());
+  DCHECK(certificate_info->subject.empty());
 
-  GetCatalogCertificateInfo(filename, cert_info);
-  if (cert_info->type == ModuleDatabase::CERTIFICATE_IN_CATALOG)
+  GetCatalogCertificateInfo(filename, certificate_info);
+  if (certificate_info->type == CertificateType::CERTIFICATE_IN_CATALOG)
     return;
 
   base::string16 subject = GetSubjectNameInFile(filename);
   if (subject.empty())
     return;
 
-  cert_info->type = ModuleDatabase::CERTIFICATE_IN_FILE;
-  cert_info->path = filename;
-  cert_info->subject = subject;
+  certificate_info->type = CertificateType::CERTIFICATE_IN_FILE;
+  certificate_info->path = filename;
+  certificate_info->subject = subject;
+}
+
+StringMapping GetEnvironmentVariablesMapping(
+    const std::vector<base::string16>& environment_variables) {
+  std::unique_ptr<base::Environment> environment(base::Environment::Create());
+
+  StringMapping string_mapping;
+  for (const base::string16& variable : environment_variables) {
+    std::string value;
+    if (environment->GetVar(base::UTF16ToASCII(variable).c_str(), &value)) {
+      value = base::TrimString(value, "\\", base::TRIM_TRAILING).as_string();
+      string_mapping.push_back(
+          std::make_pair(base::i18n::ToLower(base::UTF8ToUTF16(value)),
+                         L"%" + base::i18n::ToLower(variable) + L"%"));
+    }
+  }
+
+  return string_mapping;
+}
+
+void CollapseMatchingPrefixInPath(const StringMapping& prefix_mapping,
+                                  base::string16* path) {
+  const base::string16 path_copy = *path;
+  DCHECK_EQ(base::i18n::ToLower(path_copy), path_copy);
+
+  size_t min_length = std::numeric_limits<size_t>::max();
+  for (const auto& mapping : prefix_mapping) {
+    DCHECK_EQ(base::i18n::ToLower(mapping.first), mapping.first);
+    if (base::StartsWith(path_copy, mapping.first,
+                         base::CompareCase::SENSITIVE)) {
+      // Make sure the matching prefix is a full path component.
+      if (path_copy[mapping.first.length()] != '\\' &&
+          path_copy[mapping.first.length()] != '\0') {
+        continue;
+      }
+
+      base::string16 collapsed_path = path_copy;
+      base::ReplaceFirstSubstringAfterOffset(&collapsed_path, 0, mapping.first,
+                                             mapping.second);
+      size_t length = collapsed_path.length() - mapping.second.length();
+      if (length < min_length) {
+        *path = collapsed_path;
+        min_length = length;
+      }
+    }
+  }
 }

@@ -92,10 +92,6 @@ const AppRegistrationData& BrowserDistribution::GetAppRegistrationData() const {
   return *app_reg_data_;
 }
 
-base::string16 BrowserDistribution::GetAppGuid() const {
-  return app_reg_data_->GetAppGuid();
-}
-
 base::string16 BrowserDistribution::GetStateKey() const {
   return app_reg_data_->GetStateKey();
 }
@@ -148,10 +144,6 @@ base::string16 BrowserDistribution::GetStartMenuShortcutSubfolder(
   }
 }
 
-base::string16 BrowserDistribution::GetBaseAppId() {
-  return L"Chromium";
-}
-
 base::string16 BrowserDistribution::GetBrowserProgIdPrefix() {
   // This used to be "ChromiumHTML", but was forced to become "ChromiumHTM"
   // because of http://crbug.com/153349.  See the declaration of this function
@@ -163,10 +155,6 @@ base::string16 BrowserDistribution::GetBrowserProgIdDesc() {
   return L"Chromium HTML Document";
 }
 
-
-base::string16 BrowserDistribution::GetInstallSubDir() {
-  return L"Chromium";
-}
 
 base::string16 BrowserDistribution::GetPublisherName() {
   return L"Chromium";
@@ -190,10 +178,6 @@ base::string16 BrowserDistribution::GetDistributionData(HKEY root_key) {
   return L"";
 }
 
-base::string16 BrowserDistribution::GetRegistryPath() {
-  return base::string16(L"Software\\").append(GetInstallSubDir());
-}
-
 base::string16 BrowserDistribution::GetUninstallRegPath() {
   return L"Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Chromium";
 }
@@ -205,10 +189,6 @@ BrowserDistribution::DefaultBrowserControlPolicy
 
 bool BrowserDistribution::CanCreateDesktopShortcuts() {
   return true;
-}
-
-bool BrowserDistribution::GetChromeChannel(base::string16* channel) {
-  return false;
 }
 
 base::string16 BrowserDistribution::GetCommandExecuteImplClsid() {

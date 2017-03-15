@@ -1,0 +1,17 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+// https://wicg.github.io/background-fetch/#background-fetch-manager
+
+[
+    Exposed=(Window,Worker),
+    RuntimeEnabled=BackgroundFetch
+] interface BackgroundFetchManager {
+    // TODO(peter): The `requests` argument of `fetch()` should accept either an
+    // individual RequestInfo, or a sequence of them.
+    [CallWith=ScriptState] Promise<BackgroundFetchRegistration> fetch(DOMString tag, sequence<RequestInfo> requests, optional BackgroundFetchOptions options);
+
+    [CallWith=ScriptState] Promise<BackgroundFetchRegistration?> get(DOMString tag);
+    [CallWith=ScriptState] Promise<FrozenArray<DOMString>> getTags();
+};

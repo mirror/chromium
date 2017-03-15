@@ -25,7 +25,6 @@ class Display;
 }
 
 namespace gfx {
-class ImageSkia;
 class Point;
 class Rect;
 class Size;
@@ -49,7 +48,6 @@ class RootWindowController;
 class WmLayoutManager;
 class WmShell;
 class WmTransientWindowObserver;
-class WmWindowObserver;
 class WmWindowTestApi;
 enum class WmWindowProperty;
 
@@ -168,18 +166,6 @@ class ASH_EXPORT WmWindow : public aura::WindowObserver,
   gfx::Transform GetTargetTransform() const;
 
   bool IsSystemModal() const;
-
-  bool GetBoolProperty(WmWindowProperty key);
-  void SetBoolProperty(WmWindowProperty key, bool value);
-  SkColor GetColorProperty(WmWindowProperty key);
-  void SetColorProperty(WmWindowProperty key, SkColor value);
-  int GetIntProperty(WmWindowProperty key);
-  void SetIntProperty(WmWindowProperty key, int value);
-  std::string GetStringProperty(WmWindowProperty key);
-  void SetStringProperty(WmWindowProperty key, const std::string& value);
-
-  gfx::ImageSkia GetWindowIcon();
-  gfx::ImageSkia GetAppIcon();
 
   wm::WindowState* GetWindowState() {
     return const_cast<wm::WindowState*>(
@@ -354,10 +340,6 @@ class ASH_EXPORT WmWindow : public aura::WindowObserver,
   // Returns a View that renders the contents of this window's layers.
   std::unique_ptr<views::View> CreateViewWithRecreatedLayers();
 
-  void AddObserver(WmWindowObserver* observer);
-  void RemoveObserver(WmWindowObserver* observer);
-  bool HasObserver(const WmWindowObserver* observer) const;
-
   void AddTransientWindowObserver(WmTransientWindowObserver* observer);
   void RemoveTransientWindowObserver(WmTransientWindowObserver* observer);
 
@@ -376,20 +358,9 @@ class ASH_EXPORT WmWindow : public aura::WindowObserver,
   explicit WmWindow(aura::Window* window);
 
   // aura::WindowObserver:
-  void OnWindowHierarchyChanging(const HierarchyChangeParams& params) override;
-  void OnWindowHierarchyChanged(const HierarchyChangeParams& params) override;
-  void OnWindowStackingChanged(aura::Window* window) override;
   void OnWindowPropertyChanged(aura::Window* window,
                                const void* key,
                                intptr_t old) override;
-  void OnWindowBoundsChanged(aura::Window* window,
-                             const gfx::Rect& old_bounds,
-                             const gfx::Rect& new_bounds) override;
-  void OnWindowDestroying(aura::Window* window) override;
-  void OnWindowDestroyed(aura::Window* window) override;
-  void OnWindowVisibilityChanging(aura::Window* window, bool visible) override;
-  void OnWindowVisibilityChanged(aura::Window* window, bool visible) override;
-  void OnWindowTitleChanged(aura::Window* window) override;
 
   // ::wm::TransientWindowObserver overrides:
   void OnTransientChildAdded(aura::Window* window,
@@ -398,8 +369,6 @@ class ASH_EXPORT WmWindow : public aura::WindowObserver,
                                aura::Window* transient) override;
 
   aura::Window* window_;
-
-  base::ObserverList<WmWindowObserver> observers_;
 
   bool added_transient_observer_ = false;
   base::ObserverList<WmTransientWindowObserver> transient_observers_;

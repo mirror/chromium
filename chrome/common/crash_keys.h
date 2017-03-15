@@ -100,8 +100,8 @@ extern const char kHungRendererReason[];
 extern const char kThirdPartyModulesLoaded[];
 extern const char kThirdPartyModulesNotLoaded[];
 
-// Whether the machine is domain joined is only sent on Windows.
-extern const char kEnrolledToDomain[];
+// Whether the machine is enterprise managed (only sent on Windows).
+extern const char kIsEnterpriseManaged[];
 #endif
 
 // Number of input event send IPC failures. Added to debug
@@ -143,6 +143,10 @@ extern const char kSendAction[];
 
 // In the CrApplication, records information about the current event.
 extern const char kNSEvent[];
+
+// TEMPORARY: Information about Toolbar.nib, stored right after it's supposed
+// to have loaded.  https://crbug.com/685985
+extern const char kToolbarNibInfo[];
 
 }  // namespace mac
 #endif

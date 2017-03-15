@@ -8,10 +8,11 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/trace_event/trace_event.h"
+#include "services/ui/display/viewport_metrics.h"
+#include "services/ui/ws/cursor_location_manager.h"
 #include "services/ui/ws/display.h"
 #include "services/ui/ws/display_binding.h"
 #include "services/ui/ws/event_dispatcher.h"
-#include "services/ui/ws/platform_display_init_params.h"
 #include "services/ui/ws/server_window.h"
 #include "services/ui/ws/user_display_manager.h"
 #include "services/ui/ws/user_display_manager_delegate.h"
@@ -44,9 +45,18 @@ UserDisplayManager* DisplayManager::GetUserDisplayManager(
     const UserId& user_id) {
   if (!user_display_managers_.count(user_id)) {
     user_display_managers_[user_id] =
-        base::MakeUnique<UserDisplayManager>(this, window_server_, user_id);
+        base::MakeUnique<UserDisplayManager>(window_server_, user_id);
   }
   return user_display_managers_[user_id].get();
+}
+
+CursorLocationManager* DisplayManager::GetCursorLocationManager(
+    const UserId& user_id) {
+  if (!cursor_location_managers_.count(user_id)) {
+    cursor_location_managers_[user_id] =
+        base::MakeUnique<CursorLocationManager>();
+  }
+  return cursor_location_managers_[user_id].get();
 }
 
 void DisplayManager::AddDisplay(Display* display) {
@@ -59,7 +69,7 @@ void DisplayManager::DestroyDisplay(Display* display) {
     pending_displays_.erase(display);
   } else {
     for (const auto& pair : user_display_managers_)
-      pair.second->OnWillDestroyDisplay(display);
+      pair.second->OnWillDestroyDisplay(display->GetId());
 
     DCHECK(displays_.count(display));
     displays_.erase(display);
@@ -88,7 +98,7 @@ std::set<const Display*> DisplayManager::displays() const {
   return ret_value;
 }
 
-void DisplayManager::OnDisplayUpdate(Display* display) {
+void DisplayManager::OnDisplayUpdate(const display::Display& display) {
   for (const auto& pair : user_display_managers_)
     pair.second->OnDisplayUpdate(display);
 }
@@ -171,34 +181,33 @@ void DisplayManager::OnActiveUserIdChanged(const UserId& previously_active_id,
     current_window_manager_state->Activate(mouse_location_on_screen);
 }
 
-void DisplayManager::OnDisplayAdded(int64_t id,
+void DisplayManager::OnDisplayAdded(const display::Display& display,
                                     const display::ViewportMetrics& metrics) {
-  TRACE_EVENT1("mus-ws", "OnDisplayAdded", "id", id);
-  PlatformDisplayInitParams params;
-  params.display_id = id;
-  params.metrics = metrics;
+  DVLOG(3) << "OnDisplayAdded: " << display.ToString();
 
-  ws::Display* display = new ws::Display(window_server_);
-  display->Init(params, nullptr);
+  ws::Display* ws_display = new ws::Display(window_server_);
+  ws_display->SetDisplay(display);
+  ws_display->Init(metrics, nullptr);
 }
 
-void DisplayManager::OnDisplayRemoved(int64_t id) {
-  TRACE_EVENT1("mus-ws", "OnDisplayRemoved", "id", id);
-  Display* display = GetDisplayById(id);
+void DisplayManager::OnDisplayRemoved(int64_t display_id) {
+  DVLOG(3) << "OnDisplayRemoved: " << display_id;
+  Display* display = GetDisplayById(display_id);
   if (display)
     DestroyDisplay(display);
 }
 
 void DisplayManager::OnDisplayModified(
-    int64_t id,
+    const display::Display& display,
     const display::ViewportMetrics& metrics) {
-  TRACE_EVENT1("mus-ws", "OnDisplayModified", "id", id);
+  DVLOG(3) << "OnDisplayModified: " << display.ToString();
 
-  Display* display = GetDisplayById(id);
-  DCHECK(display);
+  Display* ws_display = GetDisplayById(display.id());
+  DCHECK(ws_display);
 
+  ws_display->SetDisplay(display);
   // Update the platform display and check if anything has actually changed.
-  if (!display->platform_display()->UpdateViewportMetrics(metrics))
+  if (!ws_display->platform_display()->UpdateViewportMetrics(metrics))
     return;
 
   // Send IPCs to WM clients first with new display information.
@@ -206,15 +215,16 @@ void DisplayManager::OnDisplayModified(
       window_server_->window_manager_window_tree_factory_set()->GetFactories();
   for (WindowManagerWindowTreeFactory* factory : factories) {
     if (factory->window_tree())
-      factory->window_tree()->OnWmDisplayModified(display->ToDisplay());
+      factory->window_tree()->OnWmDisplayModified(display);
   }
 
   // Change the root ServerWindow size after sending IPC to WM.
-  display->OnViewportMetricsChanged(metrics);
+  ws_display->OnViewportMetricsChanged(metrics);
   OnDisplayUpdate(display);
 }
 
 void DisplayManager::OnPrimaryDisplayChanged(int64_t primary_display_id) {
+  DVLOG(3) << "OnPrimaryDisplayChanged: " << primary_display_id;
   // TODO(kylechar): Send IPCs to WM clients first.
 
   // Send IPCs to any DisplayManagerObservers.

@@ -244,6 +244,7 @@ class CC_EXPORT GLRenderer : public DirectRenderer {
   void RestoreGLState();
 
   void ScheduleCALayers();
+  void ScheduleDCLayers();
   void ScheduleOverlays();
 
   // Copies the contents of the render pass draw quad, including filter effects,
@@ -298,6 +299,12 @@ class CC_EXPORT GLRenderer : public DirectRenderer {
   std::unordered_map<ProgramKey, std::unique_ptr<Program>, ProgramKeyHash>
       program_cache_;
 
+  const gfx::ColorTransform* GetColorTransform(const gfx::ColorSpace& src,
+                                               const gfx::ColorSpace& dst);
+  std::map<gfx::ColorSpace,
+           std::map<gfx::ColorSpace, std::unique_ptr<gfx::ColorTransform>>>
+      color_transform_cache_;
+
   gpu::gles2::GLES2Interface* gl_;
   gpu::ContextSupport* context_support_;
   std::unique_ptr<ContextCacheController::ScopedVisibility> context_visibility_;
@@ -331,6 +338,8 @@ class CC_EXPORT GLRenderer : public DirectRenderer {
   bool use_sync_query_ = false;
   bool use_blend_equation_advanced_ = false;
   bool use_blend_equation_advanced_coherent_ = false;
+  bool use_occlusion_query_ = false;
+  bool use_swap_with_bounds_ = false;
 
   // Some overlays require that content is copied from a render pass into an
   // overlay resource. This means the GLRenderer needs its own ResourcePool.
@@ -349,7 +358,6 @@ class CC_EXPORT GLRenderer : public DirectRenderer {
   BoundGeometry bound_geometry_;
   ColorLUTCache color_lut_cache_;
 
-  bool use_occlusion_query_;
   unsigned offscreen_stencil_renderbuffer_id_ = 0;
   gfx::Size offscreen_stencil_renderbuffer_size_;
 

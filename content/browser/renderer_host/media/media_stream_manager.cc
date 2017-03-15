@@ -450,6 +450,21 @@ MediaDevicesManager* MediaStreamManager::media_devices_manager() {
   return media_devices_manager_.get();
 }
 
+void MediaStreamManager::AddVideoCaptureObserver(
+    media::VideoCaptureObserver* capture_observer) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (video_capture_manager_) {
+    video_capture_manager_->AddVideoCaptureObserver(capture_observer);
+  }
+}
+
+void MediaStreamManager::RemoveAllVideoCaptureObservers() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (video_capture_manager_) {
+    video_capture_manager_->RemoveAllVideoCaptureObservers();
+  }
+}
+
 std::string MediaStreamManager::MakeMediaAccessRequest(
     int render_process_id,
     int render_frame_id,
@@ -611,8 +626,8 @@ int MediaStreamManager::VideoDeviceIdToSessionId(
 
   for (const LabeledDeviceRequest& device_request : requests_) {
     for (const StreamDeviceInfo& info : device_request.second->devices) {
-      if (info.device.id == device_id) {
-        DCHECK_EQ(MEDIA_DEVICE_VIDEO_CAPTURE, info.device.type);
+      if (info.device.id == device_id &&
+          info.device.type == MEDIA_DEVICE_VIDEO_CAPTURE) {
         return info.session_id;
       }
     }
@@ -1323,6 +1338,7 @@ void MediaStreamManager::HandleRequestDone(const std::string& label,
   switch (request->request_type) {
     case MEDIA_OPEN_DEVICE_PEPPER_ONLY:
       FinalizeOpenDevice(label, request);
+      OnStreamStarted(label);
       break;
     case MEDIA_GENERATE_STREAM: {
       FinalizeGenerateStream(label, request);
@@ -1331,17 +1347,6 @@ void MediaStreamManager::HandleRequestDone(const std::string& label,
     default:
       NOTREACHED();
       break;
-  }
-
-  if (request->ui_proxy.get()) {
-    request->ui_proxy->OnStarted(
-        base::Bind(&MediaStreamManager::StopMediaStreamFromBrowser,
-                   base::Unretained(this),
-                   label),
-        base::Bind(&MediaStreamManager::OnMediaStreamUIWindowId,
-                   base::Unretained(this),
-                   request->video_type(),
-                   request->devices));
   }
 }
 
@@ -1502,7 +1507,7 @@ void MediaStreamManager::HandleAccessRequestResponse(
       }
     }
     device_info.session_id =
-        GetDeviceManager(device_info.device.type)->Open(device_info);
+        GetDeviceManager(device_info.device.type)->Open(device_info.device);
     TranslateDeviceIdToSourceId(request, &device_info.device);
     request->devices.push_back(device_info);
 
@@ -1551,9 +1556,9 @@ void MediaStreamManager::WillDestroyCurrentMessageLoop() {
   if (media_devices_manager_)
     media_devices_manager_->StopMonitoring();
   if (video_capture_manager_)
-    video_capture_manager_->UnregisterListener();
+    video_capture_manager_->UnregisterListener(this);
   if (audio_input_device_manager_)
-    audio_input_device_manager_->UnregisterListener();
+    audio_input_device_manager_->UnregisterListener(this);
 
   device_task_runner_ = nullptr;
   audio_input_device_manager_ = nullptr;
@@ -1747,7 +1752,8 @@ MediaStreamDevices MediaStreamManager::ConvertToMediaStreamDevices(
     const MediaDeviceInfoArray& device_infos) {
   MediaStreamDevices devices;
   for (const auto& info : device_infos)
-    devices.emplace_back(stream_type, info.device_id, info.label);
+    devices.emplace_back(stream_type, info.device_id, info.label,
+                         info.video_facing);
 
   if (stream_type != MEDIA_DEVICE_VIDEO_CAPTURE)
     return devices;
@@ -1757,6 +1763,21 @@ MediaStreamDevices MediaStreamManager::ConvertToMediaStreamDevices(
         video_capture_manager()->GetCameraCalibration(device.id);
   }
   return devices;
+}
+
+void MediaStreamManager::OnStreamStarted(const std::string& label) {
+  DeviceRequest* const request = FindRequest(label);
+  if (!request)
+    return;
+
+  if (request->ui_proxy) {
+    request->ui_proxy->OnStarted(
+        base::Bind(&MediaStreamManager::StopMediaStreamFromBrowser,
+                   base::Unretained(this), label),
+        base::Bind(&MediaStreamManager::OnMediaStreamUIWindowId,
+                   base::Unretained(this), request->video_type(),
+                   request->devices));
+  }
 }
 
 }  // namespace content

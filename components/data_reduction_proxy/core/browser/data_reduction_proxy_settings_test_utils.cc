@@ -62,9 +62,9 @@ void DataReductionProxySettingsTestBase::SetUp() {
                                  prefs::kDailyHttpReceivedContentLength);
   for (int64_t i = 0; i < kNumDaysInHistory; i++) {
     original_update->Insert(
-        0, base::MakeUnique<base::StringValue>(base::Int64ToString(2 * i)));
+        0, base::MakeUnique<base::Value>(base::Int64ToString(2 * i)));
     received_update->Insert(
-        0, base::MakeUnique<base::StringValue>(base::Int64ToString(i)));
+        0, base::MakeUnique<base::Value>(base::Int64ToString(i)));
   }
   last_update_time_ = base::Time::Now().LocalMidnight();
   pref_service->SetInt64(prefs::kDailyHttpContentLengthLastUpdateDate,
@@ -124,7 +124,7 @@ void DataReductionProxySettingsTestBase::CheckOnPrefChange(
   if (managed) {
     test_context_->pref_service()->SetManagedPref(
         test_context_->GetDataReductionProxyEnabledPrefName(),
-        new base::FundamentalValue(enabled));
+        new base::Value(enabled));
   } else {
     test_context_->SetDataReductionProxyEnabled(enabled);
   }

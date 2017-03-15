@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "cc/base/cc_export.h"
 #include "cc/output/ca_layer_overlay.h"
+#include "cc/output/dc_layer_overlay.h"
 #include "cc/output/overlay_candidate.h"
 #include "cc/quads/render_pass.h"
 
@@ -28,7 +29,8 @@ class CC_EXPORT OverlayProcessor {
     // |render_passes|.
     virtual bool Attempt(ResourceProvider* resource_provider,
                          RenderPass* render_pass,
-                         OverlayCandidateList* candidates) = 0;
+                         OverlayCandidateList* candidates,
+                         std::vector<gfx::Rect>* content_bounds) = 0;
   };
   using StrategyList = std::vector<std::unique_ptr<Strategy>>;
 
@@ -48,7 +50,9 @@ class CC_EXPORT OverlayProcessor {
       const RenderPassFilterList& render_pass_background_filters,
       OverlayCandidateList* overlay_candidates,
       CALayerOverlayList* ca_layer_overlays,
-      gfx::Rect* damage_rect);
+      DCLayerOverlayList* dc_layer_overlays,
+      gfx::Rect* damage_rect,
+      std::vector<gfx::Rect>* content_bounds);
 
  protected:
   StrategyList strategies_;
@@ -65,9 +69,19 @@ class CC_EXPORT OverlayProcessor {
       OverlayCandidateList* overlay_candidates,
       CALayerOverlayList* ca_layer_overlays,
       gfx::Rect* damage_rect);
+  bool ProcessForDCLayers(
+      ResourceProvider* resource_provider,
+      RenderPass* render_pass,
+      const RenderPassFilterList& render_pass_filters,
+      const RenderPassFilterList& render_pass_background_filters,
+      OverlayCandidateList* overlay_candidates,
+      DCLayerOverlayList* dc_layer_overlays,
+      gfx::Rect* damage_rect);
   // Update |damage_rect| by removing damage casued by |candidates|.
   void UpdateDamageRect(OverlayCandidateList* candidates,
                         gfx::Rect* damage_rect);
+
+  DCLayerOverlayProcessor dc_processor_;
 
   DISALLOW_COPY_AND_ASSIGN(OverlayProcessor);
 };

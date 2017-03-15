@@ -54,7 +54,6 @@
 using web::WebStateImpl;
 
 static const char kNewTabUrl[] = "chrome://newtab/";
-static NSString* const kNewTabTitle = @"New Tab";
 static const char kGoogleUserUrl[] = "http://google.com";
 static const char kGoogleRedirectUrl[] = "http://www.google.fr/";
 static NSString* const kGoogleTitle = @"Google";
@@ -196,8 +195,7 @@ class TabTest : public BlockCleanupTest {
         [OCMockObject niceMockForClass:[CRWWebController class]];
     auto web_state_impl = base::MakeUnique<WebStateImpl>(browser_state);
     web_state_impl->SetWebController(mock_web_controller_);
-    web_state_impl->GetNavigationManagerImpl().InitializeSession(
-        @"window1", @"opener", NO, 0);
+    web_state_impl->GetNavigationManagerImpl().InitializeSession(NO);
     web_state_impl_ = web_state_impl.get();
     [[[static_cast<OCMockObject*>(mock_web_controller_) stub]
         andReturnValue:OCMOCK_VALUE(web_state_impl_)] webStateImpl];
@@ -228,23 +226,26 @@ class TabTest : public BlockCleanupTest {
 
   void BrowseTo(const GURL& userUrl, const GURL& redirectUrl, NSString* title) {
     DCHECK_EQ(tab_.get().webState, web_state_impl_);
-    web::Referrer empty_referrer;
+
     [tab_ webWillAddPendingURL:userUrl transition:ui::PAGE_TRANSITION_TYPED];
     web_state_impl_->OnProvisionalNavigationStarted(userUrl);
     [tab_ webWillAddPendingURL:redirectUrl
                     transition:ui::PAGE_TRANSITION_CLIENT_REDIRECT];
-    [[tab_ navigationManager]->GetSessionController()
-           addPendingItem:redirectUrl
-                 referrer:empty_referrer
-               transition:ui::PAGE_TRANSITION_CLIENT_REDIRECT
-        rendererInitiated:YES];
+
+    web::Referrer empty_referrer;
+    [tab_ navigationManagerImpl]->AddPendingItem(
+        redirectUrl, empty_referrer, ui::PAGE_TRANSITION_CLIENT_REDIRECT,
+        web::NavigationInitiationType::RENDERER_INITIATED);
+
     web_state_impl_->OnProvisionalNavigationStarted(redirectUrl);
-    [[tab_ navigationManager]->GetSessionController() commitPendingItem];
+    [[tab_ navigationManagerImpl]->GetSessionController() commitPendingItem];
+    [[tab_ webController] webStateImpl]->UpdateHttpResponseHeaders(redirectUrl);
     [[tab_ webController] webStateImpl]->OnNavigationCommitted(redirectUrl);
-    [tab_ webDidStartLoadingURL:redirectUrl shouldUpdateHistory:YES];
+
     base::string16 new_title = base::SysNSStringToUTF16(title);
     [tab_ navigationManager]->GetLastCommittedItem()->SetTitle(new_title);
-    [tab_ webController:mock_web_controller_ titleDidChange:title];
+
+    web_state_impl_->OnTitleChanged();
     [[[(id)mock_web_controller_ expect]
         andReturnValue:OCMOCK_VALUE(kPageLoaded)] loadPhase];
     web_state_impl_->OnPageLoaded(redirectUrl, true);
@@ -260,11 +261,10 @@ class TabTest : public BlockCleanupTest {
     [[tab_ webController] loadWithParams:params];
     [[[(id)mock_web_controller_ expect]
         andReturnValue:OCMOCK_VALUE(kPageLoading)] loadPhase];
-    [tab_ webDidStartLoadingURL:url shouldUpdateHistory:YES];
     [[[(id)mock_web_controller_ expect]
         andReturnValue:OCMOCK_VALUE(kPageLoaded)] loadPhase];
     web_state_impl_->OnPageLoaded(url, true);
-    [tab_ webController:mock_web_controller_ titleDidChange:kNewTabTitle];
+    web_state_impl_->OnTitleChanged();
   }
 
   void QueryAllHistory(history::QueryResults* results) {

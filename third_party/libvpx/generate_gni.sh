@@ -112,6 +112,9 @@ function convert_srcs_to_project_files {
   # Not sure why vpx_config.c is not included.
   source_list=$(echo "$source_list" | grep -v 'vpx_config\.c')
 
+  # Ignore include files.
+  source_list=$(echo "$source_list" | grep -v 'x86_abi_support\.asm')
+
   # The actual ARM files end in .asm. We have rules to translate them to .S
   source_list=$(echo "$source_list" | sed s/\.asm\.s$/.asm/)
 
@@ -268,7 +271,8 @@ function gen_config_files {
 
   # Disable HAVE_UNISTD_H as it causes vp8 to try to detect how many cpus
   # available, which doesn't work from inside a sandbox on linux.
-  ( echo '/HAVE_UNISTD_H/s/[01]/0/' ; echo 'w' ; echo 'q' ) | ed -s vpx_config.h
+  sed -i.bak -e 's/\(HAVE_UNISTD_H\s\+\)1/\10/' vpx_config.h
+  rm vpx_config.h.bak
 
   # Use the correct ads2gas script.
   if [[ "$1" == linux* ]]; then

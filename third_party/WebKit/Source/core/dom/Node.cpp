@@ -29,6 +29,7 @@
 #include "bindings/core/v8/DOMDataStore.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/Microtask.h"
+#include "bindings/core/v8/NodeOrString.h"
 #include "bindings/core/v8/ScriptWrappableVisitor.h"
 #include "bindings/core/v8/V8DOMWrapper.h"
 #include "core/HTMLNames.h"
@@ -296,7 +297,7 @@ Node::Node(TreeScope* treeScope, ConstructionType type)
 Node::~Node() {
   // With Oilpan, the rare data finalizer also asserts for
   // this condition (we cannot directly access it here.)
-  RELEASE_ASSERT(hasRareData() || !layoutObject());
+  CHECK(hasRareData() || !layoutObject());
   InstanceCounters::decrementNodeCounter();
 }
 
@@ -684,7 +685,7 @@ void Node::setIsLink(bool isLink) {
 }
 
 void Node::setNeedsStyleInvalidation() {
-  DCHECK(isElementNode() || isShadowRoot());
+  DCHECK(isContainerNode());
   setFlag(NeedsStyleInvalidationFlag);
   markAncestorsWithChildNeedsStyleInvalidation();
 }
@@ -931,6 +932,7 @@ void Node::detachLayoutTree(const AttachContext& context) {
     layoutObject()->destroyAndCleanupAnonymousWrappers();
   setLayoutObject(nullptr);
   setStyleChange(NeedsReattachStyleChange);
+  setFlag(NeedsReattachLayoutTree);
   clearChildNeedsStyleInvalidation();
 }
 
@@ -1164,45 +1166,19 @@ bool Node::isEqualNode(Node* other) const {
 
 bool Node::isDefaultNamespace(
     const AtomicString& namespaceURIMaybeEmpty) const {
+  // https://dom.spec.whatwg.org/#dom-node-isdefaultnamespace
+
+  // 1. If namespace is the empty string, then set it to null.
   const AtomicString& namespaceURI =
       namespaceURIMaybeEmpty.isEmpty() ? nullAtom : namespaceURIMaybeEmpty;
 
-  switch (getNodeType()) {
-    case kElementNode: {
-      const Element& element = toElement(*this);
+  // 2. Let defaultNamespace be the result of running locate a namespace for
+  // context object using null.
+  const AtomicString& defaultNamespace = lookupNamespaceURI(String());
 
-      if (element.prefix().isNull())
-        return element.namespaceURI() == namespaceURI;
-
-      AttributeCollection attributes = element.attributes();
-      for (const Attribute& attr : attributes) {
-        if (attr.localName() == xmlnsAtom)
-          return attr.value() == namespaceURI;
-      }
-
-      if (Element* parent = parentElement())
-        return parent->isDefaultNamespace(namespaceURI);
-
-      return false;
-    }
-    case kDocumentNode:
-      if (Element* de = toDocument(this)->documentElement())
-        return de->isDefaultNamespace(namespaceURI);
-      return false;
-    case kDocumentTypeNode:
-    case kDocumentFragmentNode:
-      return false;
-    case kAttributeNode: {
-      const Attr* attr = toAttr(this);
-      if (attr->ownerElement())
-        return attr->ownerElement()->isDefaultNamespace(namespaceURI);
-      return false;
-    }
-    default:
-      if (Element* parent = parentElement())
-        return parent->isDefaultNamespace(namespaceURI);
-      return false;
-  }
+  // 3. Return true if defaultNamespace is the same as namespace, and false
+  // otherwise.
+  return namespaceURI == defaultNamespace;
 }
 
 const AtomicString& Node::lookupPrefix(const AtomicString& namespaceURI) const {
@@ -1239,20 +1215,34 @@ const AtomicString& Node::lookupPrefix(const AtomicString& namespaceURI) const {
   return context->locateNamespacePrefix(namespaceURI);
 }
 
-const AtomicString& Node::lookupNamespaceURI(const String& prefix) const {
+const AtomicString& Node::lookupNamespaceURI(
+    const String& specifiedPrefix) const {
   // Implemented according to
-  // http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/namespaces-algorithms.html#lookupNamespaceURIAlgo
+  // https://dom.spec.whatwg.org/#dom-node-lookupnamespaceuri
 
-  if (!prefix.isNull() && prefix.isEmpty())
-    return nullAtom;
+  // 1. If prefix is the empty string, then set it to null.
+  String prefix = specifiedPrefix;
+  if (!specifiedPrefix.isNull() && specifiedPrefix.isEmpty())
+    prefix = String();
 
+  // 2. Return the result of running locate a namespace for the context object
+  // using prefix.
+
+  // https://dom.spec.whatwg.org/#locate-a-namespace
   switch (getNodeType()) {
     case kElementNode: {
       const Element& element = toElement(*this);
 
+      // 1. If its namespace is not null and its namespace prefix is prefix,
+      // then return namespace.
       if (!element.namespaceURI().isNull() && element.prefix() == prefix)
         return element.namespaceURI();
 
+      // 2. If it has an attribute whose namespace is the XMLNS namespace,
+      // namespace prefix is "xmlns", and local name is prefix, or if prefix is
+      // null and it has an attribute whose namespace is the XMLNS namespace,
+      // namespace prefix is null, and local name is "xmlns", then return its
+      // value if it is not the empty string, and null otherwise.
       AttributeCollection attributes = element.attributes();
       for (const Attribute& attr : attributes) {
         if (attr.prefix() == xmlnsAtom && attr.localName() == prefix) {
@@ -1267,6 +1257,9 @@ const AtomicString& Node::lookupNamespaceURI(const String& prefix) const {
         }
       }
 
+      // 3. If its parent element is null, then return null.
+      // 4. Return the result of running locate a namespace on its parent
+      // element using prefix.
       if (Element* parent = parentElement())
         return parent->lookupNamespaceURI(prefix);
       return nullAtom;
@@ -1827,11 +1820,10 @@ ExecutionContext* Node::getExecutionContext() const {
 }
 
 void Node::willMoveToNewDocument(Document& oldDocument, Document& newDocument) {
-  if (!oldDocument.frameHost() ||
-      oldDocument.frameHost() == newDocument.frameHost())
+  if (!oldDocument.page() || oldDocument.page() == newDocument.page())
     return;
 
-  oldDocument.frameHost()->eventHandlerRegistry().didMoveOutOfFrameHost(*this);
+  oldDocument.page()->eventHandlerRegistry().didMoveOutOfPage(*this);
 }
 
 void Node::didMoveToNewDocument(Document& oldDocument) {
@@ -1846,9 +1838,8 @@ void Node::didMoveToNewDocument(Document& oldDocument) {
   }
 
   oldDocument.markers().removeMarkers(this);
-  if (document().frameHost() &&
-      document().frameHost() != oldDocument.frameHost()) {
-    document().frameHost()->eventHandlerRegistry().didMoveIntoFrameHost(*this);
+  if (document().page() && document().page() != oldDocument.page()) {
+    document().page()->eventHandlerRegistry().didMoveIntoPage(*this);
   }
 
   if (const HeapVector<TraceWrapperMember<MutationObserverRegistration>>*
@@ -1869,8 +1860,8 @@ void Node::addedEventListener(const AtomicString& eventType,
                               RegisteredEventListener& registeredListener) {
   EventTarget::addedEventListener(eventType, registeredListener);
   document().addListenerTypeIfNeeded(eventType);
-  if (FrameHost* frameHost = document().frameHost())
-    frameHost->eventHandlerRegistry().didAddEventHandler(
+  if (Page* page = document().page())
+    page->eventHandlerRegistry().didAddEventHandler(
         *this, eventType, registeredListener.options());
 }
 
@@ -1881,15 +1872,14 @@ void Node::removedEventListener(
   // FIXME: Notify Document that the listener has vanished. We need to keep
   // track of a number of listeners for each type, not just a bool - see
   // https://bugs.webkit.org/show_bug.cgi?id=33861
-  if (FrameHost* frameHost = document().frameHost())
-    frameHost->eventHandlerRegistry().didRemoveEventHandler(
+  if (Page* page = document().page())
+    page->eventHandlerRegistry().didRemoveEventHandler(
         *this, eventType, registeredListener.options());
 }
 
 void Node::removeAllEventListeners() {
-  if (hasEventListeners() && document().frameHost())
-    document().frameHost()->eventHandlerRegistry().didRemoveAllEventHandlers(
-        *this);
+  if (hasEventListeners() && document().page())
+    document().page()->eventHandlerRegistry().didRemoveAllEventHandlers(*this);
   EventTarget::removeAllEventListeners();
 }
 
@@ -1911,12 +1901,12 @@ static EventTargetDataMap& eventTargetDataMap() {
 }
 
 EventTargetData* Node::eventTargetData() {
-  return hasEventTargetData() ? eventTargetDataMap().get(this) : nullptr;
+  return hasEventTargetData() ? eventTargetDataMap().at(this) : nullptr;
 }
 
 EventTargetData& Node::ensureEventTargetData() {
   if (hasEventTargetData())
-    return *eventTargetDataMap().get(this);
+    return *eventTargetDataMap().at(this);
   DCHECK(!eventTargetDataMap().contains(this));
   setHasEventTargetData(true);
   EventTargetData* data = new EventTargetData;
@@ -2521,27 +2511,6 @@ unsigned Node::lengthOfContents() const {
   }
   NOTREACHED();
   return 0;
-}
-
-DISABLE_CFI_PERF
-v8::Local<v8::Object> Node::wrap(v8::Isolate* isolate,
-                                 v8::Local<v8::Object> creationContext) {
-  DCHECK(!DOMDataStore::containsWrapper(this, isolate));
-
-  const WrapperTypeInfo* wrapperType = wrapperTypeInfo();
-
-  v8::Local<v8::Object> wrapper =
-      V8DOMWrapper::createWrapper(isolate, creationContext, wrapperType);
-  DCHECK(!wrapper.IsEmpty());
-  return associateWithWrapper(isolate, wrapperType, wrapper);
-}
-
-v8::Local<v8::Object> Node::associateWithWrapper(
-    v8::Isolate* isolate,
-    const WrapperTypeInfo* wrapperType,
-    v8::Local<v8::Object> wrapper) {
-  return V8DOMWrapper::associateObjectWithWrapper(isolate, this, wrapperType,
-                                                  wrapper);
 }
 
 }  // namespace blink

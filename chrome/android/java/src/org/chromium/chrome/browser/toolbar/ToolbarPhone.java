@@ -28,6 +28,7 @@ import android.os.SystemClock;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.AttributeSet;
 import android.util.Property;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -114,7 +115,7 @@ public class ToolbarPhone extends ToolbarLayout
     private LocationBarPhone mLocationBar;
 
     private ViewGroup mToolbarButtonsContainer;
-    private ImageView mToggleTabStackButton;
+    protected ImageView mToggleTabStackButton;
     private NewTabButton mNewTabButton;
     private TintedImageButton mHomeButton;
     private TextView mUrlBar;
@@ -625,8 +626,9 @@ public class ToolbarPhone extends ToolbarLayout
         if (visualState == VisualState.NEW_TAB_NORMAL) {
             return 0;
         } else if (ApiCompatibilityUtils.isLayoutRtl(this)) {
-            return Math.max(
-                    mToolbarSidePadding, mToolbarButtonsContainer.getMeasuredWidth());
+            return Math.max(mToolbarSidePadding,
+                    shouldHideEndToolbarButtons() ? 0
+                                                  : mToolbarButtonsContainer.getMeasuredWidth());
         } else {
             return getBoundsAfterAccountingForLeftButton();
         }
@@ -646,8 +648,9 @@ public class ToolbarPhone extends ToolbarLayout
         } else if (ApiCompatibilityUtils.isLayoutRtl(this)) {
             return getMeasuredWidth() - getBoundsAfterAccountingForLeftButton();
         } else {
-            int margin = Math.max(
-                    mToolbarSidePadding, mToolbarButtonsContainer.getMeasuredWidth());
+            int margin = Math.max(mToolbarSidePadding,
+                    shouldHideEndToolbarButtons() ? 0
+                                                  : mToolbarButtonsContainer.getMeasuredWidth());
             return getMeasuredWidth() - margin;
         }
     }
@@ -781,7 +784,7 @@ public class ToolbarPhone extends ToolbarLayout
      * Updates the parameters relating to expanding the location bar, as the result of either a
      * focus change or scrolling the New Tab Page.
      */
-    private void updateUrlExpansionAnimation() {
+    protected void updateUrlExpansionAnimation() {
         if (mTabSwitcherState != STATIC_TAB) {
             mToolbarButtonsContainer.setVisibility(VISIBLE);
             return;
@@ -844,6 +847,24 @@ public class ToolbarPhone extends ToolbarLayout
         } else {
             urlActionsTranslationX += mLocationBarNtpOffsetRight - mLocationBarNtpOffsetLeft;
         }
+
+        if (shouldHideEndToolbarButtons()) {
+            // When the end toolbar buttons are not hidden, url actions are shown and hidden due to
+            // a change in location bar's width. When the end toolbar buttons are hidden, the
+            // location bar's width does not change by as much, causing the end location for the url
+            // actions to be immediately visible. Translate the url action container so that their
+            // appearance is animated.
+            // TODO(twellington): polish the url action button animation when end toolbar buttons
+            //                    are hidden.
+            float urlActionsTranslationXOffset =
+                    mUrlActionContainer.getWidth() * (1 - mUrlExpansionPercent);
+            if (isLocationBarRtl) {
+                urlActionsTranslationX -= urlActionsTranslationXOffset;
+            } else {
+                urlActionsTranslationX += urlActionsTranslationXOffset;
+            }
+        }
+
         mUrlActionContainer.setTranslationX(urlActionsTranslationX);
 
         mLocationBar.setUrlFocusChangePercent(mUrlExpansionPercent);
@@ -851,7 +872,8 @@ public class ToolbarPhone extends ToolbarLayout
         // Ensure the buttons are invisible after focusing the omnibox to prevent them from
         // accepting click events.
         int toolbarButtonVisibility = mUrlExpansionPercent == 1f ? INVISIBLE : VISIBLE;
-        mToolbarButtonsContainer.setVisibility(toolbarButtonVisibility);
+        mToolbarButtonsContainer.setVisibility(
+                shouldHideEndToolbarButtons() ? GONE : toolbarButtonVisibility);
         if (mHomeButton.getVisibility() != GONE) {
             mHomeButton.setVisibility(toolbarButtonVisibility);
         }
@@ -1336,6 +1358,15 @@ public class ToolbarPhone extends ToolbarLayout
         }
     }
 
+    /**
+     * @return Whether the end toolbar buttons (tab switcher and menu) are currently hidden
+     *         regardless of URL bar focus. Sub-classes that hide these buttons should override
+     *         this method.
+     */
+    protected boolean shouldHideEndToolbarButtons() {
+        return false;
+    }
+
     private ObjectAnimator createEnterTabSwitcherModeAnimation() {
         ObjectAnimator enterAnimation =
                 ObjectAnimator.ofFloat(this, mTabSwitcherModePercentProperty, 1.f);
@@ -1435,6 +1466,7 @@ public class ToolbarPhone extends ToolbarLayout
 
         updateProgressBarVisibility();
         updateVisualsForToolbarState();
+        updateTabSwitcherButtonRipple();
     }
 
     private void updateProgressBarVisibility() {
@@ -1495,6 +1527,22 @@ public class ToolbarPhone extends ToolbarLayout
         if (SysUtils.isLowEndDevice()) finishAnimations();
 
         postInvalidateOnAnimation();
+    }
+
+    /**
+     * Enables or disables the tab switcher ripple depending on whether we are in or out of the tab
+     * switcher mode.
+     */
+    private void updateTabSwitcherButtonRipple() {
+        if (mTabSwitcherState == ENTERING_TAB_SWITCHER) {
+            mToggleTabStackButton.setBackgroundColor(
+                    ApiCompatibilityUtils.getColor(getResources(), android.R.color.transparent));
+        } else {
+            TypedValue outValue = new TypedValue();
+            // the linked style here will have to be changed if it is updated in the XML.
+            getContext().getTheme().resolveAttribute(R.style.ToolbarButton, outValue, true);
+            mToggleTabStackButton.setBackgroundResource(outValue.resourceId);
+        }
     }
 
     @Override

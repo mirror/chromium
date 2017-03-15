@@ -151,6 +151,15 @@ class CHROMEOS_EXPORT SessionManagerClient : public DBusClient {
   // completion of the retrieve attempt, we will call the provided callback.
   virtual void RetrieveDevicePolicy(const RetrievePolicyCallback& callback) = 0;
 
+  // Same as RetrieveDevicePolicy() but blocks until a reply is received, and
+  // returns the policy synchronously. Returns an empty string if the method
+  // call fails.
+  // This may only be called in situations where blocking the UI thread is
+  // considered acceptable (e.g. restarting the browser after a crash or after
+  // a flag change).
+  // TODO: Get rid of blocking calls (crbug.com/160522).
+  virtual std::string BlockingRetrieveDevicePolicy() = 0;
+
   // Fetches the user policy blob stored by the session manager for the given
   // |cryptohome_id|. Upon completion of the retrieve attempt, we will call the
   // provided callback.
@@ -164,6 +173,7 @@ class CHROMEOS_EXPORT SessionManagerClient : public DBusClient {
   // This may only be called in situations where blocking the UI thread is
   // considered acceptable (e.g. restarting the browser after a crash or after
   // a flag change).
+  // TODO: Get rid of blocking calls (crbug.com/160522).
   virtual std::string BlockingRetrievePolicyForUser(
       const cryptohome::Identification& cryptohome_id) = 0;
 
@@ -172,6 +182,16 @@ class CHROMEOS_EXPORT SessionManagerClient : public DBusClient {
   virtual void RetrieveDeviceLocalAccountPolicy(
       const std::string& account_id,
       const RetrievePolicyCallback& callback) = 0;
+
+  // Same as RetrieveDeviceLocalAccountPolicy() but blocks until a reply is
+  // received, and returns the policy synchronously.
+  // Returns an empty string if the method call fails.
+  // This may only be called in situations where blocking the UI thread is
+  // considered acceptable (e.g. restarting the browser after a crash or after
+  // a flag change).
+  // TODO: Get rid of blocking calls (crbug.com/160522).
+  virtual std::string BlockingRetrieveDeviceLocalAccountPolicy(
+      const std::string& account_id) = 0;
 
   // Used for StoreDevicePolicy, StorePolicyForUser and
   // StoreDeviceLocalAccountPolicy. Takes a boolean indicating whether the
@@ -270,7 +290,8 @@ class CHROMEOS_EXPORT SessionManagerClient : public DBusClient {
       const ArcCallback& callback) = 0;
 
   // Emits the "arc-booted" upstart signal.
-  virtual void EmitArcBooted() = 0;
+  virtual void EmitArcBooted(const cryptohome::Identification& cryptohome_id,
+                             const ArcCallback& callback) = 0;
 
   // Asynchronously retrieves the timestamp which ARC instance is invoked or
   // returns false if there is no ARC instance or ARC is not available.

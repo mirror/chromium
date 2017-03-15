@@ -9,6 +9,7 @@
 #include "components/autofill/core/browser/autofill_test_utils.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/test_personal_data_manager.h"
+#include "components/strings/grit/components_strings.h"
 #import "ios/chrome/browser/payments/cells/payment_method_item.h"
 #import "ios/chrome/browser/payments/cells/payments_text_item.h"
 #include "ios/chrome/browser/payments/payment_request.h"
@@ -17,6 +18,10 @@
 #include "ios/chrome/grit/ios_strings.h"
 #include "ios/web/public/payments/payment_request.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 class PaymentMethodSelectionViewControllerTest
     : public CollectionViewControllerTest {
@@ -59,7 +64,7 @@ class PaymentMethodSelectionViewControllerTest
 TEST_F(PaymentMethodSelectionViewControllerTest, TestModel) {
   CreateController();
   CheckController();
-  CheckTitleWithId(IDS_IOS_PAYMENT_REQUEST_METHOD_SELECTION_TITLE);
+  CheckTitleWithId(IDS_PAYMENTS_METHOD_OF_PAYMENT_LABEL);
 
   [GetPaymentMethodSelectionViewController() loadModel];
 

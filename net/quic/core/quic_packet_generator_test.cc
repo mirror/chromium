@@ -16,6 +16,7 @@
 #include "net/quic/core/quic_simple_buffer_allocator.h"
 #include "net/quic/core/quic_utils.h"
 #include "net/quic/platform/api/quic_socket_address.h"
+#include "net/quic/platform/api/quic_string_piece.h"
 #include "net/quic/test_tools/quic_packet_creator_peer.h"
 #include "net/quic/test_tools/quic_packet_generator_peer.h"
 #include "net/quic/test_tools/quic_test_utils.h"
@@ -23,7 +24,6 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-using base::StringPiece;
 using std::string;
 using testing::InSequence;
 using testing::Return;
@@ -202,7 +202,7 @@ class QuicPacketGeneratorTest : public ::testing::Test {
     return QuicIOVector(&iov_, 1, len);
   }
 
-  QuicIOVector MakeIOVectorFromStringPiece(StringPiece s) {
+  QuicIOVector MakeIOVectorFromStringPiece(QuicStringPiece s) {
     return MakeIOVector(s, &iov_);
   }
 
@@ -449,7 +449,7 @@ TEST_F(QuicPacketGeneratorTest, ConsumeData_FramesPreviouslyQueued) {
       NullEncrypter(Perspective::IS_CLIENT).GetCiphertextSize(0) +
       GetPacketHeaderSize(
           framer_.version(), creator_->connection_id_length(), kIncludeVersion,
-          !kIncludePathId, !kIncludeDiversificationNonce,
+          !kIncludeDiversificationNonce,
           QuicPacketCreatorPeer::GetPacketNumberLength(creator_)) +
       // Add an extra 3 bytes for the payload and 1 byte so BytesFree is larger
       // than the GetMinStreamFrameSize.
@@ -847,42 +847,13 @@ TEST_F(QuicPacketGeneratorTest, DontCrashOnInvalidStopWaiting) {
                   "for least_unacked_delta: 1001");
 }
 
-TEST_F(QuicPacketGeneratorTest, SetCurrentPath) {
-  delegate_.SetCanWriteAnything();
-  generator_.StartBatchOperations();
-
-  QuicConsumedData consumed = generator_.ConsumeData(
-      kHeadersStreamId, MakeIOVectorFromStringPiece("foo"), 2, true, nullptr);
-  EXPECT_EQ(3u, consumed.bytes_consumed);
-  EXPECT_TRUE(consumed.fin_consumed);
-  EXPECT_TRUE(generator_.HasQueuedFrames());
-  EXPECT_EQ(kDefaultPathId, QuicPacketCreatorPeer::GetCurrentPath(creator_));
-  // Does not change current path.
-  generator_.SetCurrentPath(kDefaultPathId, 1, 0);
-  EXPECT_EQ(kDefaultPathId, QuicPacketCreatorPeer::GetCurrentPath(creator_));
-
-  // Try to switch path when a packet is under construction.
-  QuicPathId kTestPathId1 = 1;
-  EXPECT_QUIC_BUG(generator_.SetCurrentPath(kTestPathId1, 1, 0),
-                  "Unable to change paths when a packet is under construction");
-  EXPECT_EQ(kDefaultPathId, QuicPacketCreatorPeer::GetCurrentPath(creator_));
-
-  // Try to switch path after current open packet gets serialized.
-  EXPECT_CALL(delegate_, OnSerializedPacket(_))
-      .WillOnce(Invoke(this, &QuicPacketGeneratorTest::SavePacket));
-  generator_.FlushAllQueuedFrames();
-  EXPECT_FALSE(generator_.HasQueuedFrames());
-  generator_.SetCurrentPath(kTestPathId1, 1, 0);
-  EXPECT_EQ(kTestPathId1, QuicPacketCreatorPeer::GetCurrentPath(creator_));
-}
-
 // Regression test for b/31486443.
 TEST_F(QuicPacketGeneratorTest, ConnectionCloseFrameLargerThanPacketSize) {
   delegate_.SetCanWriteAnything();
   QuicConnectionCloseFrame* frame = new QuicConnectionCloseFrame();
   frame->error_code = QUIC_PACKET_WRITE_ERROR;
   char buf[2000];
-  StringPiece error_details(buf, 2000);
+  QuicStringPiece error_details(buf, 2000);
   frame->error_details = error_details.as_string();
   EXPECT_CALL(delegate_,
               OnUnrecoverableError(QUIC_FAILED_TO_SERIALIZE_PACKET,

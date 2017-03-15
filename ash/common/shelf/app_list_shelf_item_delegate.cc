@@ -5,9 +5,9 @@
 #include "ash/common/shelf/app_list_shelf_item_delegate.h"
 
 #include "ash/common/shelf/shelf_model.h"
-#include "ash/common/wm_shell.h"
+#include "ash/shell.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "base/memory/ptr_util.h"
-#include "grit/ash_strings.h"
 #include "ui/app_list/app_list_switches.h"
 #include "ui/base/l10n/l10n_util.h"
 
@@ -32,16 +32,19 @@ AppListShelfItemDelegate::AppListShelfItemDelegate() {}
 
 AppListShelfItemDelegate::~AppListShelfItemDelegate() {}
 
-ShelfItemDelegate::PerformedAction AppListShelfItemDelegate::ItemSelected(
-    const ui::Event& event) {
-  WmShell::Get()->ToggleAppList();
-  return ShelfItemDelegate::kAppListMenuShown;
+void AppListShelfItemDelegate::ItemSelected(
+    std::unique_ptr<ui::Event> event,
+    int64_t display_id,
+    ShelfLaunchSource source,
+    const ItemSelectedCallback& callback) {
+  Shell::Get()->ToggleAppList();
+  callback.Run(SHELF_ACTION_APP_LIST_SHOWN, base::nullopt);
 }
 
-ShelfAppMenuItemList AppListShelfItemDelegate::GetAppMenuItems(
-    int event_flags) {
-  // AppList does not show an application menu.
-  return ShelfAppMenuItemList();
+void AppListShelfItemDelegate::ExecuteCommand(uint32_t command_id,
+                                              int32_t event_flags) {
+  // This delegate does not support showing an application menu.
+  NOTIMPLEMENTED();
 }
 
 void AppListShelfItemDelegate::Close() {}

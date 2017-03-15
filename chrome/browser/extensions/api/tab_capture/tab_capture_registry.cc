@@ -106,8 +106,8 @@ class WindowAdoptionAgent : protected aura::WindowObserver {
                << " adopts the content window " << content_window_ << '.';
       root_window->AddChild(content_window_);
     } else {
-      LOG(DFATAL) << "Unable to find an aura root window.  "
-                     "Compositing of the content may be halted!";
+      LOG(WARNING) << "Unable to find an aura root window.  "
+                      "Compositing of the content may be halted!";
     }
   }
 
@@ -258,8 +258,8 @@ TabCaptureRegistry* TabCaptureRegistry::Get(content::BrowserContext* context) {
   return BrowserContextKeyedAPIFactory<TabCaptureRegistry>::Get(context);
 }
 
-static base::LazyInstance<BrowserContextKeyedAPIFactory<TabCaptureRegistry> >
-    g_factory = LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<BrowserContextKeyedAPIFactory<TabCaptureRegistry>>::
+    DestructorAtExit g_factory = LAZY_INSTANCE_INITIALIZER;
 
 // static
 BrowserContextKeyedAPIFactory<TabCaptureRegistry>*

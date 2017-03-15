@@ -30,22 +30,26 @@ namespace {
 // A class that performs file operations and injects errors.
 class DownloadFileWithError: public DownloadFileImpl {
  public:
-  DownloadFileWithError(std::unique_ptr<DownloadSaveInfo> save_info,
-                        const base::FilePath& default_download_directory,
-                        std::unique_ptr<ByteStreamReader> byte_stream,
-                        const net::NetLogWithSource& net_log,
-                        base::WeakPtr<DownloadDestinationObserver> observer,
-                        const TestFileErrorInjector::FileErrorInfo& error_info,
-                        const base::Closure& ctor_callback,
-                        const base::Closure& dtor_callback);
+  DownloadFileWithError(
+      std::unique_ptr<DownloadSaveInfo> save_info,
+      const base::FilePath& default_download_directory,
+      std::unique_ptr<ByteStreamReader> byte_stream,
+      const std::vector<DownloadItem::ReceivedSlice>& received_slices,
+      const net::NetLogWithSource& net_log,
+      base::WeakPtr<DownloadDestinationObserver> observer,
+      const TestFileErrorInjector::FileErrorInfo& error_info,
+      const base::Closure& ctor_callback,
+      const base::Closure& dtor_callback);
 
   ~DownloadFileWithError() override;
 
   void Initialize(const InitializeCallback& callback) override;
 
   // DownloadFile interface.
-  DownloadInterruptReason AppendDataToFile(const char* data,
-                                           size_t data_len) override;
+  DownloadInterruptReason WriteDataToFile(int64_t offset,
+                                          const char* data,
+                                          size_t data_len) override;
+
   void RenameAndUniquify(const base::FilePath& full_path,
                          const RenameCompletionCallback& callback) override;
   void RenameAndAnnotate(const base::FilePath& full_path,
@@ -102,6 +106,7 @@ DownloadFileWithError::DownloadFileWithError(
     std::unique_ptr<DownloadSaveInfo> save_info,
     const base::FilePath& default_download_directory,
     std::unique_ptr<ByteStreamReader> byte_stream,
+    const std::vector<DownloadItem::ReceivedSlice>& received_slices,
     const net::NetLogWithSource& net_log,
     base::WeakPtr<DownloadDestinationObserver> observer,
     const TestFileErrorInjector::FileErrorInfo& error_info,
@@ -110,7 +115,9 @@ DownloadFileWithError::DownloadFileWithError(
     : DownloadFileImpl(std::move(save_info),
                        default_download_directory,
                        std::move(byte_stream),
+                       received_slices,
                        net_log,
+                       false, /* is_sparse_file */
                        observer),
       error_info_(error_info),
       destruction_callback_(dtor_callback) {
@@ -154,11 +161,13 @@ void DownloadFileWithError::Initialize(
   DownloadFileImpl::Initialize(callback_to_use);
 }
 
-DownloadInterruptReason DownloadFileWithError::AppendDataToFile(
-    const char* data, size_t data_len) {
+DownloadInterruptReason DownloadFileWithError::WriteDataToFile(
+    int64_t offset,
+    const char* data,
+    size_t data_len) {
   return ShouldReturnError(
       TestFileErrorInjector::FILE_OPERATION_WRITE,
-      DownloadFileImpl::AppendDataToFile(data, data_len));
+      DownloadFileImpl::WriteDataToFile(offset, data, data_len));
 }
 
 void DownloadFileWithError::RenameAndUniquify(
@@ -256,6 +265,7 @@ class DownloadFileWithErrorFactory : public DownloadFileFactory {
       std::unique_ptr<DownloadSaveInfo> save_info,
       const base::FilePath& default_download_directory,
       std::unique_ptr<ByteStreamReader> byte_stream,
+      const std::vector<DownloadItem::ReceivedSlice>& received_slices,
       const net::NetLogWithSource& net_log,
       base::WeakPtr<DownloadDestinationObserver> observer) override;
 
@@ -286,11 +296,13 @@ DownloadFile* DownloadFileWithErrorFactory::CreateFile(
     std::unique_ptr<DownloadSaveInfo> save_info,
     const base::FilePath& default_download_directory,
     std::unique_ptr<ByteStreamReader> byte_stream,
+    const std::vector<DownloadItem::ReceivedSlice>& received_slices,
     const net::NetLogWithSource& net_log,
     base::WeakPtr<DownloadDestinationObserver> observer) {
   return new DownloadFileWithError(std::move(save_info),
                                    default_download_directory,
                                    std::move(byte_stream),
+                                   received_slices,
                                    net_log,
                                    observer,
                                    injected_error_,

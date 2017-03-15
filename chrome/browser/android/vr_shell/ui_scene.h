@@ -20,7 +20,7 @@ namespace vr_shell {
 
 class Animation;
 struct ContentRectangle;
-struct ReversibleTransform;
+struct Transform;
 
 class UiScene {
  public:
@@ -59,9 +59,9 @@ class UiScene {
   void UpdateBackgroundFromDict(const base::DictionaryValue& dict);
 
   // Update the positions of all elements in the scene, according to active
-  // animations, desired screen tilt and time.  The units of time are
-  // arbitrary, but must match the unit used in animations.
-  void UpdateTransforms(float screen_tilt, int64_t time_in_micro);
+  // animations and time.  The units of time are arbitrary, but must match the
+  // unit used in animations.
+  void UpdateTransforms(int64_t time_in_micro);
 
   // Handle a batch of commands passed from the UI HTML.
   void HandleCommands(std::unique_ptr<base::ListValue> commands,
@@ -71,20 +71,20 @@ class UiScene {
 
   ContentRectangle* GetUiElementById(int element_id);
 
-  ContentRectangle* GetContentQuad();
-
   const Colorf& GetBackgroundColor();
+  float GetBackgroundDistance();
 
  private:
   void ApplyRecursiveTransforms(const ContentRectangle& element,
-                                ReversibleTransform* transform,
+                                Transform* transform,
                                 float* opacity);
   void ApplyDictToElement(const base::DictionaryValue& dict,
-                          ContentRectangle *element);
+                          ContentRectangle* element);
 
   std::vector<std::unique_ptr<ContentRectangle>> ui_elements_;
   ContentRectangle* content_element_ = nullptr;
   Colorf background_color_ = {0.1f, 0.1f, 0.1f, 1.0f};
+  float background_distance_ = 10.0f;
 
   DISALLOW_COPY_AND_ASSIGN(UiScene);
 };

@@ -43,7 +43,9 @@ class WebApkInstaller : public net::URLFetcherDelegate {
   // Parameters:
   // - whether the process succeeds.
   // - the package name of the WebAPK.
-  using FinishCallback = base::Callback<void(bool, const std::string&)>;
+  // - true if Chrome received a "request updates less frequently" directive
+  //   from the WebAPK server.
+  using FinishCallback = base::Callback<void(bool, bool, const std::string&)>;
 
   ~WebApkInstaller() override;
 
@@ -108,31 +110,26 @@ class WebApkInstaller : public net::URLFetcherDelegate {
                   const ShortcutInfo& shortcut_info,
                   const SkBitmap& shortcut_icon);
 
-  // Starts installation of the downloaded WebAPK. Returns whether the install
-  // could be started. The installation may still fail if true is returned.
+  // Starts installion of the downloaded WebAPK.
   // |file_path| is the file path that the WebAPK was downloaded to.
-  // |package_name| is the package name that the WebAPK should be installed at.
-  virtual bool StartInstallingDownloadedWebApk(
+  // |package_name| is the package name of the WebAPK.
+  virtual void InstallDownloadedWebApk(
       JNIEnv* env,
       const base::android::ScopedJavaLocalRef<jstring>& java_file_path,
       const base::android::ScopedJavaLocalRef<jstring>& java_package_name);
 
-  // Starts update using the downloaded WebAPK. Returns whether the updating
-  // could be started. The updating may still fail if true is returned.
+  // Starts update using the downloaded WebAPK.
   // |file_path| is the file path that the WebAPK was downloaded to.
-  virtual bool StartUpdateUsingDownloadedWebApk(
+  virtual void UpdateUsingDownloadedWebApk(
       JNIEnv* env,
       const base::android::ScopedJavaLocalRef<jstring>& java_file_path);
 
-  // Returns whether Google Play Services can be used and the install delegate
-  // is available.
-  // Note: it is possible that this delegate is null even when installing
-  // WebAPKs using Google Play is enabled.
+  // Returns whether Google Play supports installing WebAPKs.
   virtual bool CanUseGooglePlayInstallService();
 
   // Called when the package name of the WebAPK is available and the install
   // or update request is handled by Google Play.
-  virtual bool InstallOrUpdateWebApkFromGooglePlay(
+  virtual void InstallOrUpdateWebApkFromGooglePlay(
       const std::string& package_name,
       int version,
       const std::string& token);
@@ -269,6 +266,9 @@ class WebApkInstaller : public net::URLFetcherDelegate {
 
   // WebAPK package name.
   std::string webapk_package_;
+
+  // Whether the server wants the WebAPK to request updates less frequently.
+  bool relax_updates_;
 
   // WebAPK version code.
   int webapk_version_;

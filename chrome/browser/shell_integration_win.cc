@@ -47,6 +47,7 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/shell_handler_win.mojom.h"
 #include "chrome/grit/generated_resources.h"
+#include "chrome/install_static/install_util.h"
 #include "chrome/installer/setup/setup_util.h"
 #include "chrome/installer/util/browser_distribution.h"
 #include "chrome/installer/util/create_reg_key_work_item.h"
@@ -106,8 +107,7 @@ base::string16 GetProfileIdFromPath(const base::FilePath& profile_path) {
 
 base::string16 GetAppListAppName() {
   static const base::char16 kAppListAppNameSuffix[] = L"AppList";
-  BrowserDistribution* dist = BrowserDistribution::GetDistribution();
-  base::string16 app_name(dist->GetBaseAppId());
+  base::string16 app_name(install_static::GetBaseAppId());
   app_name.append(kAppListAppNameSuffix);
   return app_name;
 }
@@ -147,8 +147,7 @@ base::string16 GetExpectedAppId(const base::CommandLine& command_line,
   } else if (command_line.HasSwitch(switches::kShowAppList)) {
     app_name = GetAppListAppName();
   } else {
-    BrowserDistribution* dist = BrowserDistribution::GetDistribution();
-    app_name = ShellUtil::GetBrowserModelId(dist, is_per_user_install);
+    app_name = ShellUtil::GetBrowserModelId(is_per_user_install);
   }
   DCHECK(!app_name.empty());
 
@@ -730,15 +729,8 @@ base::string16 GetAppModelIdForProfile(const base::string16& app_name,
 
 base::string16 GetChromiumModelIdForProfile(
     const base::FilePath& profile_path) {
-  BrowserDistribution* dist = BrowserDistribution::GetDistribution();
-  base::FilePath chrome_exe;
-  if (!PathService::Get(base::FILE_EXE, &chrome_exe)) {
-    NOTREACHED();
-    return dist->GetBaseAppId();
-  }
   return GetAppModelIdForProfile(
-      ShellUtil::GetBrowserModelId(dist,
-                                   InstallUtil::IsPerUserInstall(chrome_exe)),
+      ShellUtil::GetBrowserModelId(InstallUtil::IsPerUserInstall()),
       profile_path);
 }
 
@@ -771,7 +763,7 @@ int MigrateShortcutsInPathInternal(const base::FilePath& chrome_exe,
       path, false,  // not recursive
       base::FileEnumerator::FILES, FILE_PATH_LITERAL("*.lnk"));
 
-  bool is_per_user_install = InstallUtil::IsPerUserInstall(chrome_exe);
+  bool is_per_user_install = InstallUtil::IsPerUserInstall();
 
   int shortcuts_migrated = 0;
   base::FilePath target_path;
@@ -839,9 +831,8 @@ int MigrateShortcutsInPathInternal(const base::FilePath& chrome_exe,
     // Clear dual_mode property from any shortcuts that previously had it (it
     // was only ever installed on shortcuts with the
     // |default_chromium_model_id|).
-    BrowserDistribution* dist = BrowserDistribution::GetDistribution();
     base::string16 default_chromium_model_id(
-        ShellUtil::GetBrowserModelId(dist, is_per_user_install));
+        ShellUtil::GetBrowserModelId(is_per_user_install));
     if (expected_app_id == default_chromium_model_id) {
       propvariant.Reset();
       if (property_store->GetValue(PKEY_AppUserModel_IsDualMode,
@@ -868,34 +859,6 @@ int MigrateShortcutsInPathInternal(const base::FilePath& chrome_exe,
     }
   }
   return shortcuts_migrated;
-}
-
-base::FilePath GetStartMenuShortcut(const base::FilePath& chrome_exe) {
-  static const int kFolderIds[] = {
-    base::DIR_COMMON_START_MENU,
-    base::DIR_START_MENU,
-  };
-  BrowserDistribution* dist = BrowserDistribution::GetDistribution();
-  const base::string16 shortcut_name(dist->GetShortcutName() +
-                                     installer::kLnkExt);
-  base::FilePath programs_folder;
-  base::FilePath shortcut;
-
-  // Check both the common and the per-user Start Menu folders for system-level
-  // installs.
-  size_t folder = InstallUtil::IsPerUserInstall(chrome_exe) ? 1 : 0;
-  for (; folder < arraysize(kFolderIds); ++folder) {
-    if (!PathService::Get(kFolderIds[folder], &programs_folder)) {
-      NOTREACHED();
-      continue;
-    }
-
-    shortcut = programs_folder.Append(shortcut_name);
-    if (base::PathExists(shortcut))
-      return shortcut;
-  }
-
-  return base::FilePath();
 }
 
 }  // namespace win

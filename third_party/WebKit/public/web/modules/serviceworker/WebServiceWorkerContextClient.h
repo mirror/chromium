@@ -31,6 +31,8 @@
 #ifndef WebServiceWorkerContextClient_h
 #define WebServiceWorkerContextClient_h
 
+#include <memory>
+
 #include "public/platform/WebMessagePortChannel.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerClientsClaimCallbacks.h"
@@ -38,13 +40,11 @@
 #include "public/platform/modules/serviceworker/WebServiceWorkerEventResult.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerSkipWaitingCallbacks.h"
 #include "public/web/WebDevToolsAgentClient.h"
-#include <memory>
-#include <v8.h>
+#include "v8/include/v8.h"
 
 namespace blink {
 
 struct WebServiceWorkerClientQueryOptions;
-class WebDataSource;
 class WebServiceWorkerContextProxy;
 class WebServiceWorkerNetworkProvider;
 class WebServiceWorkerProvider;
@@ -202,8 +202,8 @@ class WebServiceWorkerContextClient {
 
   // Ownership of the returned object is transferred to the caller.
   // This is called on the main thread.
-  virtual WebServiceWorkerNetworkProvider* createServiceWorkerNetworkProvider(
-      WebDataSource*) {
+  virtual WebServiceWorkerNetworkProvider*
+  createServiceWorkerNetworkProvider() {
     return nullptr;
   }
 
@@ -247,7 +247,7 @@ class WebServiceWorkerContextClient {
   // FIXME: Blob refs should be passed to maintain ref counts. crbug.com/351753
   virtual void postMessageToClient(const WebString& uuid,
                                    const WebString&,
-                                   WebMessagePortChannelArray*) = 0;
+                                   WebMessagePortChannelArray) = 0;
 
   // Ownership of the passed callbacks is transferred to the callee, callee
   // should delete the callbacks after run.

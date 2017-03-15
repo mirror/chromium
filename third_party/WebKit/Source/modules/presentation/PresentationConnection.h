@@ -89,8 +89,10 @@ class PresentationConnection final : public EventTargetWithInlineData,
   void didReceiveTextMessage(const WebString& message) override;
   void didReceiveBinaryMessage(const uint8_t* data, size_t length) override;
   void didChangeState(WebPresentationConnectionState) override;
+  void didClose() override;
 
   WebPresentationConnectionState getState();
+  void didChangeState(WebPresentationConnectionState, bool shouldDispatchEvent);
 
  protected:
   // EventTarget implementation.

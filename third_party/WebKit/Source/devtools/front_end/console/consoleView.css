@@ -45,6 +45,15 @@
     overflow: hidden;
 }
 
+.console-settings-pane {
+    flex: none;
+    border-bottom: 1px solid #dadada;
+}
+
+.console-settings-pane .toolbar {
+    flex: 1 1;
+}
+
 #console-messages {
     flex: 1 1;
     padding: 2px 0;
@@ -365,4 +374,8 @@
 
 .console-message-stack-trace-wrapper > * {
     flex: none;
+}
+
+.console-message-expand-icon {
+    margin-bottom: -2px;
 }

@@ -26,6 +26,7 @@ import org.chromium.chrome.browser.widget.DateDividedAdapter;
 import org.chromium.chrome.browser.widget.DateDividedAdapter.DateViewHolder;
 import org.chromium.chrome.browser.widget.displaystyle.MarginResizer;
 import org.chromium.chrome.browser.widget.selection.SelectableItemViewHolder;
+import org.chromium.chrome.browser.widget.selection.SelectableListLayout;
 import org.chromium.chrome.browser.widget.selection.SelectionDelegate;
 import org.chromium.chrome.browser.widget.selection.SelectionDelegate.SelectionObserver;
 import org.chromium.components.signin.ChromeSigninController;
@@ -52,6 +53,7 @@ public class HistoryAdapter extends DateDividedAdapter implements BrowsingHistor
     private final ArrayList<HistoryItemView> mItemViews;
     private RecyclerView mRecyclerView;
 
+    private ViewGroup mPrivacyDisclaimers;
     private TextView mSignedInNotSyncedTextView;
     private TextView mSignedInSyncedTextView;
     private TextView mOtherFormsOfBrowsingHistoryTextView;
@@ -310,8 +312,10 @@ public class HistoryAdapter extends DateDividedAdapter implements BrowsingHistor
         mClearBrowsingDataButtonContainer = (FrameLayout) mClearBrowsingDataButton.getParent();
         MarginResizer.createWithViewAdapter(mClearBrowsingDataButtonContainer,
                 mHistoryManager.getSelectableListLayout().getUiConfig(),
-                mHistoryManager.getDefaultLateralListItemMarginPx(), 0);
+                SelectableListLayout.getDefaultListItemLateralMarginPx(resources), 0);
         updateClearBrowsingDataButtonVisibility();
+
+        mPrivacyDisclaimers = (ViewGroup) v.findViewById(R.id.privacy_disclaimers);
 
         mSignedInNotSyncedTextView = (TextView) v.findViewById(R.id.signed_in_not_synced);
         setPrivacyDisclaimerText(mSignedInNotSyncedTextView,
@@ -380,9 +384,17 @@ public class HistoryAdapter extends DateDividedAdapter implements BrowsingHistor
         mSignedInSyncedTextView.setVisibility(mHasSyncedData ? View.VISIBLE : View.GONE);
         mOtherFormsOfBrowsingHistoryTextView.setVisibility(
                 mHasOtherFormsOfBrowsingData ? View.VISIBLE : View.GONE);
+
+        boolean arePrivacyDisclaimersVisible =
+                isSignedIn || mHasSyncedData || mHasOtherFormsOfBrowsingData;
+        mPrivacyDisclaimers.setVisibility(arePrivacyDisclaimersVisible ? View.VISIBLE : View.GONE);
     }
 
     private void updateClearBrowsingDataButtonVisibility() {
+        // If the history header is not showing (e.g. when there is no browsing history),
+        // mClearBrowsingDataButton will be null.
+        if (mClearBrowsingDataButton == null) return;
+
         mClearBrowsingDataButtonContainer.setVisibility(
                 !PrefServiceBridge.getInstance().canDeleteBrowsingHistory() ? View.GONE :
                     View.VISIBLE);

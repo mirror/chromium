@@ -211,7 +211,13 @@ String Locale::validationMessageTooLongText(unsigned valueLength,
 
 String Locale::validationMessageTooShortText(unsigned valueLength,
                                              int minLength) {
-  return queryString(WebLocalizedString::ValidationTooShort,
+  if (valueLength == 1) {
+    return queryString(WebLocalizedString::ValidationTooShort,
+                       convertToLocalizedNumber(String::number(valueLength)),
+                       convertToLocalizedNumber(String::number(minLength)));
+  }
+
+  return queryString(WebLocalizedString::ValidationTooShortPlural,
                      convertToLocalizedNumber(String::number(valueLength)),
                      convertToLocalizedNumber(String::number(minLength)));
 }
@@ -412,7 +418,8 @@ String Locale::convertFromLocalizedNumber(const String& localized) {
 }
 
 String Locale::stripInvalidNumberCharacters(const String& input,
-                                            const String& standardChars) const {
+                                            const String& standardChars) {
+  initializeLocaleData();
   StringBuilder builder;
   builder.reserveCapacity(input.length());
   for (unsigned i = 0; i < input.length(); ++i) {

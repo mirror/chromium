@@ -6,10 +6,8 @@
 
 #include <algorithm>
 
-#include "ash/common/material_design/material_design_controller.h"
 #include "ash/common/shelf/shelf_constants.h"
 #include "ash/common/shelf/wm_shelf.h"
-#include "ash/common/wm_lookup.h"
 #include "ash/common/wm_window.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
@@ -49,11 +47,8 @@ void OverflowBubbleView::InitOverflowBubble(views::View* anchor,
   SetAnchorView(anchor);
   set_arrow(GetBubbleArrow());
   set_mirror_arrow_in_rtl(false);
-  set_background(NULL);
-  SkColor color = MaterialDesignController::IsShelfMaterial()
-                      ? kShelfBaseColor
-                      : SkColorSetA(kShelfBaseColor, kShelfTranslucentAlpha);
-  set_color(color);
+  set_background(nullptr);
+  set_color(kShelfDefaultBaseColor);
   set_margins(gfx::Insets(kPadding, kPadding, kPadding, kPadding));
   // Overflow bubble should not get focus. If it get focus when it is shown,
   // active state item is changed to running state.
@@ -179,8 +174,7 @@ void OverflowBubbleView::OnBeforeBubbleWidgetInit(
     views::Widget::InitParams* params,
     views::Widget* bubble_widget) const {
   // Place the bubble in the same root window as the anchor.
-  WmLookup::Get()
-      ->GetWindowForWidget(anchor_widget())
+  WmWindow::Get(anchor_widget()->GetNativeWindow())
       ->GetRootWindowController()
       ->ConfigureWidgetInitParamsForContainer(
           bubble_widget, kShellWindowId_ShelfBubbleContainer, params);

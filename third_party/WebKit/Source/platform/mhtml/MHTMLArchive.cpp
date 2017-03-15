@@ -246,8 +246,8 @@ void MHTMLArchive::generateMHTMLPart(const String& boundary,
   }
 }
 
-void MHTMLArchive::generateMHTMLFooter(const String& boundary,
-                                       Vector<char>& outputBuffer) {
+void MHTMLArchive::generateMHTMLFooterForTesting(const String& boundary,
+                                                 Vector<char>& outputBuffer) {
   ASSERT(!boundary.isEmpty());
   CString asciiString = String("--" + boundary + "--\r\n").utf8();
   outputBuffer.append(asciiString.data(), asciiString.length());
@@ -266,7 +266,7 @@ void MHTMLArchive::addSubresource(ArchiveResource* resource) {
 }
 
 ArchiveResource* MHTMLArchive::subresourceForURL(const KURL& url) const {
-  return m_subresources.get(url.getString());
+  return m_subresources.at(url.getString());
 }
 
 DEFINE_TRACE(MHTMLArchive) {

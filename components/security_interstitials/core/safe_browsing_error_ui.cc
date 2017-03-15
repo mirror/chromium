@@ -11,7 +11,7 @@
 #include "components/google/core/browser/google_util.h"
 #include "components/security_interstitials/core/common_string_util.h"
 #include "components/security_interstitials/core/metrics_helper.h"
-#include "grit/components_strings.h"
+#include "components/strings/grit/components_strings.h"
 #include "net/base/escape.h"
 #include "ui/base/l10n/l10n_util.h"
 
@@ -95,8 +95,6 @@ void SafeBrowsingErrorUI::PopulateStringsForHTML(
       l10n_util::GetStringUTF16(IDS_SAFEBROWSING_OVERRIDABLE_SAFETY_BUTTON));
   load_time_data->SetBoolean("overridable",
                              !display_options_.is_proceed_anyway_disabled);
-  security_interstitials::common_string_util::PopulateNewIconStrings(
-      load_time_data);
 
   switch (interstitial_reason_) {
     case SB_REASON_MALWARE:

@@ -54,7 +54,7 @@ namespace content {
 
 namespace {
 
-base::LazyInstance<std::map<std::string, BrowserContext*>>
+base::LazyInstance<std::map<std::string, BrowserContext*>>::DestructorAtExit
     g_user_id_to_context = LAZY_INSTANCE_INITIALIZER;
 
 class ServiceUserIdHolder : public base::SupportsUserData::Data {
@@ -450,7 +450,6 @@ void BrowserContext::Initialize(
 
     ServiceManagerConnection* connection =
         connection_holder->service_manager_connection();
-    connection->Start();
 
     // New embedded service factories should be added to |connection| here.
 
@@ -463,6 +462,13 @@ void BrowserContext::Initialize(
                      BrowserThread::GetTaskRunnerForThread(BrowserThread::DB));
       connection->AddEmbeddedService(file::mojom::kServiceName, info);
     }
+
+    ContentBrowserClient::StaticServiceMap services;
+    browser_context->RegisterInProcessServices(&services);
+    for (const auto& entry : services) {
+      connection->AddEmbeddedService(entry.first, entry.second);
+    }
+    connection->Start();
   }
 }
 

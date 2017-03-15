@@ -41,6 +41,10 @@ source_set("mash") {
     deps += [ "//ash/resources" ]
   }
 
+  if (is_posix) {
+    deps += [ "//chrome/app:shutdown_signal_handlers" ]
+  }
+
   if (is_linux && !is_android) {
     deps += [ "//components/font_service:lib" ]
   }
@@ -78,7 +82,10 @@ service_manifest("mash_manifest") {
 catalog("catalog") {
   embedded_services = [ ":mash_manifest" ]
   catalog_deps = [ "//chrome/app:catalog_for_mash" ]
-  standalone_services = [ "//mash/example/views_examples:manifest" ]
+  standalone_services = [
+    "//mash/example/views_examples:manifest",
+    "//mash/simple_wm:manifest",
+  ]
 }
 
 catalog_cpp_source("chrome_mash_catalog") {

@@ -5,6 +5,7 @@
 #include <memory>
 #include <string>
 
+#include "base/auto_reset.h"
 #include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/files/scoped_temp_dir.h"
@@ -13,8 +14,10 @@
 #include "base/run_loop.h"
 #include "base/time/time.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/chromeos/arc/arc_auth_notification.h"
 #include "chrome/browser/chromeos/arc/arc_service_launcher.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
+#include "chrome/browser/chromeos/arc/arc_util.h"
 #include "chrome/browser/chromeos/arc/test/arc_data_removed_waiter.h"
 #include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
@@ -64,34 +67,33 @@ constexpr char kFakeGaiaId[] = "1234567890";
 
 namespace arc {
 
-// Observer of ARC bridge shutdown.
-class ArcSessionManagerShutdownObserver : public ArcSessionManager::Observer {
+// Waits for the "arc.enabled" preference value from true to false.
+class ArcPlayStoreDisabledWaiter : public ArcSessionManager::Observer {
  public:
-  ArcSessionManagerShutdownObserver() {
-    ArcSessionManager::Get()->AddObserver(this);
-  }
+  ArcPlayStoreDisabledWaiter() { ArcSessionManager::Get()->AddObserver(this); }
 
-  ~ArcSessionManagerShutdownObserver() override {
+  ~ArcPlayStoreDisabledWaiter() override {
     ArcSessionManager::Get()->RemoveObserver(this);
   }
 
   void Wait() {
-    run_loop_.reset(new base::RunLoop);
-    run_loop_->Run();
-    run_loop_.reset();
-  }
-
-  // ArcSessionManager::Observer:
-  void OnArcBridgeShutdown() override {
-    if (!run_loop_)
-      return;
-    run_loop_->Quit();
+    base::RunLoop run_loop;
+    base::AutoReset<base::RunLoop*> reset(&run_loop_, &run_loop);
+    run_loop.Run();
   }
 
  private:
-  std::unique_ptr<base::RunLoop> run_loop_;
+  // ArcSessionManager::Observer override:
+  void OnArcPlayStoreEnabledChanged(bool enabled) override {
+    if (!enabled) {
+      DCHECK(run_loop_);
+      run_loop_->Quit();
+    }
+  }
 
-  DISALLOW_COPY_AND_ASSIGN(ArcSessionManagerShutdownObserver);
+  base::RunLoop* run_loop_ = nullptr;
+
+  DISALLOW_COPY_AND_ASSIGN(ArcPlayStoreDisabledWaiter);
 };
 
 class ArcSessionManagerTest : public InProcessBrowserTest {
@@ -124,6 +126,7 @@ class ArcSessionManagerTest : public InProcessBrowserTest {
         new chromeos::FakeChromeUserManager));
     // Init ArcSessionManager for testing.
     ArcSessionManager::DisableUIForTesting();
+    ArcAuthNotification::DisableForTesting();
     ArcSessionManager::EnableCheckAndroidManagementForTesting();
     ArcSessionManager::Get()->SetArcSessionRunnerForTesting(
         base::MakeUnique<ArcSessionRunner>(base::Bind(FakeArcSession::Create)));
@@ -151,6 +154,12 @@ class ArcSessionManagerTest : public InProcessBrowserTest {
     GetFakeUserManager()->LoginUser(account_id);
 
     // Set up ARC for test profile.
+    // Currently, ArcSessionManager is singleton and set up with the original
+    // Profile instance. This re-initializes the ArcServiceLauncher by
+    // overwriting Profile with profile().
+    // TODO(hidehiko): This way several ArcService instances created with
+    // the original Profile instance on Browser creatuion are kept in the
+    // ArcServiceManager. For proper overwriting, those should be removed.
     ArcServiceLauncher::Get()->OnPrimaryUserProfilePrepared(profile());
   }
 
@@ -162,8 +171,13 @@ class ArcSessionManagerTest : public InProcessBrowserTest {
     const AccountId account_id(
         AccountId::FromUserEmailGaiaId(kFakeUserName, kFakeGaiaId));
     GetFakeUserManager()->RemoveUserFromList(account_id);
-    ArcSessionManager::Get()->Shutdown();
-    ArcServiceManager::Get()->Shutdown();
+    // Since ArcServiceLauncher is (re-)set up with profile() in
+    // SetUpOnMainThread() it is necessary to Shutdown() before the profile()
+    // is destroyed. ArcServiceLauncher::Shutdown() will be called again on
+    // fixture destruction (because it is initialized with the original Profile
+    // instance in fixture, once), but it should be no op.
+    // TODO(hidehiko): Think about a way to test the code cleanly.
+    ArcServiceLauncher::Get()->Shutdown();
     profile_.reset();
     user_manager_enabler_.reset();
     test_server_.reset();
@@ -227,12 +241,8 @@ IN_PROC_BROWSER_TEST_F(ArcSessionManagerTest, ManagedAndroidAccount) {
   EnableArc();
   token_service()->IssueTokenForAllPendingRequests(kManagedAuthToken,
                                                    base::Time::Max());
-  ArcSessionManagerShutdownObserver().Wait();
-  ASSERT_EQ(ArcSessionManager::State::REMOVING_DATA_DIR,
-            ArcSessionManager::Get()->state());
-  ArcDataRemovedWaiter().Wait();
-  ASSERT_EQ(ArcSessionManager::State::STOPPED,
-            ArcSessionManager::Get()->state());
+  ArcPlayStoreDisabledWaiter().Wait();
+  EXPECT_FALSE(IsArcPlayStoreEnabledForProfile(profile()));
 }
 
 }  // namespace arc

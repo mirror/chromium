@@ -231,6 +231,7 @@ source_set("blink_headers") {
     "platform/WebMouseWheelEvent.h",
     "platform/WebNativeScrollBehavior.h",
     "platform/WebNavigationHintType.h",
+    "platform/WebNetworkStateNotifier.h",
     "platform/WebNonCopyable.h",
     "platform/WebOriginTrialTokenStatus.h",
     "platform/WebPageVisibilityState.h",
@@ -338,7 +339,7 @@ source_set("blink_headers") {
     "platform/modules/indexeddb/WebIDBObservation.h",
     "platform/modules/indexeddb/WebIDBTypes.h",
     "platform/modules/indexeddb/WebIDBValue.h",
-    "platform/modules/installedapp/WebInstalledAppClient.h",
+    "platform/modules/installedapp/WebRelatedAppsFetcher.h",
     "platform/modules/notifications/WebNotificationAction.h",
     "platform/modules/notifications/WebNotificationData.h",
     "platform/modules/notifications/WebNotificationDelegate.h",
@@ -383,6 +384,7 @@ source_set("blink_headers") {
     "platform/modules/serviceworker/WebServiceWorkerClientsInfo.h",
     "platform/modules/serviceworker/WebServiceWorkerError.h",
     "platform/modules/serviceworker/WebServiceWorkerEventResult.h",
+    "platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h",
     "platform/modules/serviceworker/WebServiceWorkerProvider.h",
     "platform/modules/serviceworker/WebServiceWorkerProviderClient.h",
     "platform/modules/serviceworker/WebServiceWorkerProxy.h",
@@ -498,7 +500,6 @@ source_set("blink_headers") {
     "web/WebNavigationPolicy.h",
     "web/WebNavigationType.h",
     "web/WebNavigatorContentUtilsClient.h",
-    "web/WebNetworkStateNotifier.h",
     "web/WebNode.h",
     "web/WebOptionElement.h",
     "web/WebPagePopup.h",
@@ -572,7 +573,6 @@ source_set("blink_headers") {
     "web/mac/WebSubstringUtil.h",
     "web/modules/serviceworker/WebServiceWorkerContextClient.h",
     "web/modules/serviceworker/WebServiceWorkerContextProxy.h",
-    "web/modules/serviceworker/WebServiceWorkerNetworkProvider.h",
     "web/win/WebFontRendering.h",
   ]
 
@@ -599,6 +599,12 @@ group("blink_devtools_frontend_resources") {
   ]
 }
 
+group("blink_devtools_frontend_resources_files") {
+  data_deps = [
+    "//third_party/WebKit/Source/devtools:devtools_all_files",
+  ]
+}
+
 group("blink_generate_devtools_grd") {
   public_deps = [
     "//third_party/WebKit/Source/devtools:generate_devtools_grd",
@@ -607,7 +613,6 @@ group("blink_generate_devtools_grd") {
 
 grit("resources") {
   output_dir = "$root_gen_dir/blink/public/resources"
-  use_qualified_include = true
   source = "blink_resources.grd"
   outputs = [
     "grit/blink_resources.h",
@@ -631,7 +636,6 @@ grit("resources") {
 
 grit("image_resources") {
   output_dir = "$root_gen_dir/blink/public/resources"
-  use_qualified_include = true
   source = "blink_image_resources.grd"
   outputs = [
     "grit/blink_image_resources.h",
@@ -696,10 +700,12 @@ mojom("android_mojo_bindings") {
   visibility_blink = [ ":mojo_bindings_blink" ]
   sources = [
     "platform/modules/installation/installation.mojom",
+    "platform/modules/installedapp/installed_app_provider.mojom",
+    "platform/modules/installedapp/related_application.mojom",
     "platform/modules/webshare/webshare.mojom",
   ]
   public_deps = [
-    "//components/payments:payment_request",
+    "//components/payments/content:payment_request",
     "//url/mojo:url_mojom_gurl",
   ]
 

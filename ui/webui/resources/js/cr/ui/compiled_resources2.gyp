@@ -28,6 +28,13 @@
       'includes': ['../../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
     {
+      'target_name': 'dialogs',
+      'dependencies': [
+        '../../compiled_resources2.gyp:cr',
+      ],
+      'includes': ['../../../../../../third_party/closure_compiler/compile_js2.gypi'],
+    },
+    {
       'target_name': 'drag_wrapper',
       'dependencies': [
         '../../compiled_resources2.gyp:assert',
@@ -62,6 +69,14 @@
         '../../compiled_resources2.gyp:cr',
         '../../compiled_resources2.gyp:event_tracker',
         '../../compiled_resources2.gyp:util',
+      ],
+      'includes': ['../../../../../../third_party/closure_compiler/compile_js2.gypi'],
+    },
+    {
+      'target_name': 'list_selection_model',
+      'dependencies': [
+        '../../compiled_resources2.gyp:cr',
+        '../compiled_resources2.gyp:event_target',
       ],
       'includes': ['../../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },

@@ -50,7 +50,6 @@
 #include "core/events/MouseEvent.h"
 #include "core/events/ScopedEventQueue.h"
 #include "core/frame/Deprecation.h"
-#include "core/frame/FrameHost.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/UseCounter.h"
@@ -70,6 +69,7 @@
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutTheme.h"
 #include "core/page/ChromeClient.h"
+#include "core/page/Page.h"
 #include "platform/Language.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/text/PlatformLocale.h"
@@ -338,7 +338,7 @@ void HTMLInputElement::endEditing() {
 
   LocalFrame* frame = document().frame();
   frame->spellChecker().didEndEditingOnTextField(this);
-  frame->host()->chromeClient().didEndEditingOnTextField(*this);
+  frame->page()->chromeClient().didEndEditingOnTextField(*this);
 }
 
 void HTMLInputElement::handleFocusEvent(Element* oldFocusedElement,
@@ -549,26 +549,20 @@ bool HTMLInputElement::canStartSelection() const {
 }
 
 unsigned HTMLInputElement::selectionStartForBinding(
+    bool& isNull,
     ExceptionState& exceptionState) const {
   if (!m_inputType->supportsSelectionAPI()) {
-    UseCounter::count(document(), UseCounter::InputSelectionGettersThrow);
-    exceptionState.throwDOMException(InvalidStateError,
-                                     "The input element's type ('" +
-                                         m_inputType->formControlType() +
-                                         "') does not support selection.");
+    isNull = true;
     return 0;
   }
   return TextControlElement::selectionStart();
 }
 
 unsigned HTMLInputElement::selectionEndForBinding(
+    bool& isNull,
     ExceptionState& exceptionState) const {
   if (!m_inputType->supportsSelectionAPI()) {
-    UseCounter::count(document(), UseCounter::InputSelectionGettersThrow);
-    exceptionState.throwDOMException(InvalidStateError,
-                                     "The input element's type ('" +
-                                         m_inputType->formControlType() +
-                                         "') does not support selection.");
+    isNull = true;
     return 0;
   }
   return TextControlElement::selectionEnd();
@@ -577,11 +571,6 @@ unsigned HTMLInputElement::selectionEndForBinding(
 String HTMLInputElement::selectionDirectionForBinding(
     ExceptionState& exceptionState) const {
   if (!m_inputType->supportsSelectionAPI()) {
-    UseCounter::count(document(), UseCounter::InputSelectionGettersThrow);
-    exceptionState.throwDOMException(InvalidStateError,
-                                     "The input element's type ('" +
-                                         m_inputType->formControlType() +
-                                         "') does not support selection.");
     return String();
   }
   return TextControlElement::selectionDirection();
@@ -1082,7 +1071,8 @@ void HTMLInputElement::setValue(const String& value,
 }
 
 void HTMLInputElement::setValue(const String& value,
-                                TextFieldEventBehavior eventBehavior) {
+                                TextFieldEventBehavior eventBehavior,
+                                TextControlSetValueSelection selection) {
   m_inputType->warnIfValueIsInvalidAndElementIsVisible(value);
   if (!m_inputType->canSetValue(value))
     return;
@@ -1096,7 +1086,7 @@ void HTMLInputElement::setValue(const String& value,
   // Prevent TextFieldInputType::setValue from using the suggested value.
   m_suggestedValue = String();
 
-  m_inputType->setValue(sanitizedValue, valueChanged, eventBehavior);
+  m_inputType->setValue(sanitizedValue, valueChanged, eventBehavior, selection);
   m_inputTypeView->didSetValue(sanitizedValue, valueChanged);
 
   if (valueChanged)
@@ -1278,6 +1268,10 @@ void HTMLInputElement::defaultEventHandler(Event* evt) {
     // responding to the change event.
     if (formForSubmission)
       formForSubmission->submitImplicitly(evt, canTriggerImplicitSubmission());
+
+    // We treat implicit submission is something like blur()-then-focus(). So
+    // we reset the last value. crbug.com/695349 and crbug.com/700842.
+    setTextAsOfLastFormControlChangeEvent(value());
 
     evt->setDefaultHandled();
     return;
@@ -1564,7 +1558,8 @@ bool HTMLInputElement::hasValidDataListOptions() const {
     return false;
   HTMLDataListOptionsCollection* options = dataList->options();
   for (unsigned i = 0; HTMLOptionElement* option = options->item(i); ++i) {
-    if (isValidValue(option->value()))
+    if (!option->value().isEmpty() && !option->isDisabledFormControl() &&
+        isValidValue(option->value()))
       return true;
   }
   return false;
@@ -1599,7 +1594,8 @@ HTMLInputElement::filteredDataListOptions() const {
         continue;
     }
     // TODO(tkent): Should allow invalid strings. crbug.com/607097.
-    if (!isValidValue(option->value()))
+    if (option->value().isEmpty() || option->isDisabledFormControl() ||
+        !isValidValue(option->value()))
       continue;
     filtered.push_back(option);
   }
@@ -1822,7 +1818,8 @@ bool HTMLInputElement::setupDateTimeChooserParameters(
   if (HTMLDataListElement* dataList = this->dataList()) {
     HTMLDataListOptionsCollection* options = dataList->options();
     for (unsigned i = 0; HTMLOptionElement* option = options->item(i); ++i) {
-      if (!isValidValue(option->value()))
+      if (option->value().isEmpty() || option->isDisabledFormControl() ||
+          !isValidValue(option->value()))
         continue;
       DateTimeSuggestion suggestion;
       suggestion.value =

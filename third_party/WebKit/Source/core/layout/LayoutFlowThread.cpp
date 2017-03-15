@@ -40,7 +40,8 @@ LayoutFlowThread::LayoutFlowThread()
       m_pageLogicalSizeChanged(false) {}
 
 LayoutFlowThread* LayoutFlowThread::locateFlowThreadContainingBlockOf(
-    const LayoutObject& descendant) {
+    const LayoutObject& descendant,
+    AncestorSearchConstraint constraint) {
   ASSERT(descendant.isInsideFlowThread());
   LayoutObject* curr = const_cast<LayoutObject*>(&descendant);
   while (curr) {
@@ -49,6 +50,15 @@ LayoutFlowThread* LayoutFlowThread::locateFlowThreadContainingBlockOf(
     if (curr->isLayoutFlowThread())
       return toLayoutFlowThread(curr);
     LayoutObject* container = curr->container();
+    // If we're inside something strictly unbreakable (due to having scrollbars
+    // or being writing mode roots, for instance), it's also strictly
+    // unbreakable in any outer fragmentation context. As such, what goes on
+    // inside any fragmentation context on the inside of this is completely
+    // opaque to ancestor fragmentation contexts.
+    if (constraint == IsolateUnbreakableContainers && container &&
+        container->isBox() &&
+        toLayoutBox(container)->getPaginationBreakability() == ForbidBreaks)
+      return nullptr;
     curr = curr->parent();
     while (curr != container) {
       if (curr->isLayoutFlowThread()) {
@@ -67,7 +77,7 @@ LayoutFlowThread* LayoutFlowThread::locateFlowThreadContainingBlockOf(
 void LayoutFlowThread::removeColumnSetFromThread(
     LayoutMultiColumnSet* columnSet) {
   ASSERT(columnSet);
-  m_multiColumnSetList.remove(columnSet);
+  m_multiColumnSetList.erase(columnSet);
   invalidateColumnSets();
   // Clear the interval tree right away, instead of leaving it around with dead
   // objects. Not that anyone _should_ try to access the interval tree when the
@@ -85,15 +95,18 @@ void LayoutFlowThread::validateColumnSets() {
   generateColumnSetIntervalTree();
 }
 
-bool LayoutFlowThread::mapToVisualRectInAncestorSpace(
+bool LayoutFlowThread::mapToVisualRectInAncestorSpaceInternal(
     const LayoutBoxModelObject* ancestor,
-    LayoutRect& rect,
+    TransformState& transformState,
     VisualRectFlags visualRectFlags) const {
   // A flow thread should never be an invalidation container.
   DCHECK(ancestor != this);
+  transformState.flatten();
+  LayoutRect rect(transformState.lastPlanarQuad().boundingBox());
   rect = fragmentsBoundingBox(rect);
-  return LayoutBlockFlow::mapToVisualRectInAncestorSpace(ancestor, rect,
-                                                         visualRectFlags);
+  transformState.setQuad(FloatQuad(FloatRect(rect)));
+  return LayoutBlockFlow::mapToVisualRectInAncestorSpaceInternal(
+      ancestor, transformState, visualRectFlags);
 }
 
 void LayoutFlowThread::layout() {

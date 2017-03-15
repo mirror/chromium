@@ -30,23 +30,22 @@
 
 #include "core/loader/WorkerThreadableLoader.h"
 
-#include "core/dom/Document.h"
-#include "core/dom/ExecutionContextTask.h"
+#include <memory>
 #include "core/loader/DocumentThreadableLoader.h"
+#include "core/loader/ThreadableLoadingContext.h"
 #include "core/timing/WorkerGlobalScopePerformance.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "core/workers/WorkerLoaderProxy.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/heap/SafePoint.h"
-#include "platform/network/ResourceError.h"
-#include "platform/network/ResourceRequest.h"
-#include "platform/network/ResourceResponse.h"
-#include "platform/network/ResourceTimingInfo.h"
+#include "platform/loader/fetch/ResourceError.h"
+#include "platform/loader/fetch/ResourceRequest.h"
+#include "platform/loader/fetch/ResourceResponse.h"
+#include "platform/loader/fetch/ResourceTimingInfo.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityPolicy.h"
 #include "wtf/Functional.h"
 #include "wtf/debug/Alias.h"
-#include <memory>
 
 namespace blink {
 
@@ -236,7 +235,7 @@ void WorkerThreadableLoader::start(const ResourceRequest& originalRequest) {
 
   m_workerLoaderProxy->postTaskToLoader(
       BLINK_FROM_HERE,
-      createCrossThreadTask(
+      crossThreadBind(
           &MainThreadLoaderHolder::createAndStart,
           wrapCrossThreadPersistent(this), m_workerLoaderProxy,
           wrapCrossThreadPersistent(
@@ -272,16 +271,17 @@ void WorkerThreadableLoader::overrideTimeout(
     return;
   m_workerLoaderProxy->postTaskToLoader(
       BLINK_FROM_HERE,
-      createCrossThreadTask(&MainThreadLoaderHolder::overrideTimeout,
-                            m_mainThreadLoaderHolder, timeoutMilliseconds));
+      crossThreadBind(&MainThreadLoaderHolder::overrideTimeout,
+                      m_mainThreadLoaderHolder, timeoutMilliseconds));
 }
 
 void WorkerThreadableLoader::cancel() {
   DCHECK(!isMainThread());
   if (m_mainThreadLoaderHolder) {
     m_workerLoaderProxy->postTaskToLoader(
-        BLINK_FROM_HERE, createCrossThreadTask(&MainThreadLoaderHolder::cancel,
-                                               m_mainThreadLoaderHolder));
+        BLINK_FROM_HERE,
+        crossThreadBind(&MainThreadLoaderHolder::cancel,
+                        m_mainThreadLoaderHolder));
     m_mainThreadLoaderHolder = nullptr;
   }
 
@@ -306,9 +306,9 @@ void WorkerThreadableLoader::didStart(
   if (!m_client) {
     // The thread is terminating.
     m_workerLoaderProxy->postTaskToLoader(
-        BLINK_FROM_HERE, createCrossThreadTask(&MainThreadLoaderHolder::cancel,
-                                               wrapCrossThreadPersistent(
-                                                   mainThreadLoaderHolder)));
+        BLINK_FROM_HERE,
+        crossThreadBind(&MainThreadLoaderHolder::cancel,
+                        wrapCrossThreadPersistent(mainThreadLoaderHolder)));
     return;
   }
 
@@ -413,7 +413,7 @@ void WorkerThreadableLoader::didReceiveResourceTiming(
   DCHECK(!isMainThread());
   if (!m_client)
     return;
-  std::unique_ptr<ResourceTimingInfo> info(
+  RefPtr<ResourceTimingInfo> info(
       ResourceTimingInfo::adopt(std::move(timingData)));
   WorkerGlobalScopePerformance::performance(*m_workerGlobalScope)
       ->addResourceTiming(*info);
@@ -432,11 +432,14 @@ void WorkerThreadableLoader::MainThreadLoaderHolder::createAndStart(
     std::unique_ptr<CrossThreadResourceRequestData> request,
     const ThreadableLoaderOptions& options,
     const ResourceLoaderOptions& resourceLoaderOptions,
-    PassRefPtr<WaitableEventWithTasks> eventWithTasks,
-    ExecutionContext* executionContext) {
+    PassRefPtr<WaitableEventWithTasks> eventWithTasks) {
   DCHECK(isMainThread());
   TaskForwarder* forwarder;
   RefPtr<WorkerLoaderProxy> loaderProxy = passLoaderProxy;
+  ThreadableLoadingContext* loadingContext =
+      loaderProxy->getThreadableLoadingContext();
+  if (!loadingContext)
+    return;
   if (eventWithTasks)
     forwarder = new SyncTaskForwarder(std::move(eventWithTasks));
   else
@@ -456,8 +459,7 @@ void WorkerThreadableLoader::MainThreadLoaderHolder::createAndStart(
       crossThreadBind(&WorkerThreadableLoader::didStart,
                       wrapCrossThreadPersistent(workerLoader),
                       wrapCrossThreadPersistent(mainThreadLoaderHolder)));
-  mainThreadLoaderHolder->start(*toDocument(executionContext),
-                                std::move(request), options,
+  mainThreadLoaderHolder->start(*loadingContext, std::move(request), options,
                                 resourceLoaderOptions);
 }
 
@@ -659,15 +661,15 @@ WorkerThreadableLoader::MainThreadLoaderHolder::MainThreadLoaderHolder(
 }
 
 void WorkerThreadableLoader::MainThreadLoaderHolder::start(
-    Document& document,
+    ThreadableLoadingContext& loadingContext,
     std::unique_ptr<CrossThreadResourceRequestData> request,
     const ThreadableLoaderOptions& options,
     const ResourceLoaderOptions& originalResourceLoaderOptions) {
   DCHECK(isMainThread());
   ResourceLoaderOptions resourceLoaderOptions = originalResourceLoaderOptions;
   resourceLoaderOptions.requestInitiatorContext = WorkerContext;
-  m_mainThreadLoader = DocumentThreadableLoader::create(document, this, options,
-                                                        resourceLoaderOptions);
+  m_mainThreadLoader = DocumentThreadableLoader::create(
+      loadingContext, this, options, resourceLoaderOptions);
   m_mainThreadLoader->start(ResourceRequest(request.get()));
 }
 

@@ -7,7 +7,7 @@
 #include "base/i18n/time_formatting.h"
 #include "components/security_interstitials/core/common_string_util.h"
 #include "components/security_interstitials/core/metrics_helper.h"
-#include "grit/components_strings.h"
+#include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 
 namespace security_interstitials {
@@ -42,7 +42,6 @@ void BadClockUI::PopulateStringsForHTML(base::DictionaryValue* load_time_data) {
   common_string_util::PopulateSSLLayoutStrings(cert_error_, load_time_data);
   common_string_util::PopulateSSLDebuggingStrings(ssl_info_, time_triggered_,
                                                   load_time_data);
-  common_string_util::PopulateNewIconStrings(load_time_data);
 
   // Clock-specific strings.
   PopulateClockStrings(load_time_data);

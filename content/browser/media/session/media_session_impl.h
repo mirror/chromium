@@ -44,6 +44,7 @@ class MediaSessionImplVisibilityBrowserTest;
 class MediaSessionObserver;
 class MediaSessionPlayerObserver;
 class MediaSessionServiceImpl;
+class MediaSessionServiceImplBrowserTest;
 
 #if defined(OS_ANDROID)
 class MediaSessionAndroid;
@@ -166,6 +167,8 @@ class MediaSessionImpl : public MediaSession,
 
   // WebContentsObserver implementation
   void WebContentsDestroyed() override;
+  void RenderFrameDeleted(RenderFrameHost* rfh) override;
+  void DidFinishNavigation(NavigationHandle* navigation_handle) override;
 
   // MediaSessionService-related methods
 
@@ -198,6 +201,7 @@ class MediaSessionImpl : public MediaSession,
   friend class content::AudioFocusManagerTest;
   friend class content::MediaSessionImplServiceRoutingTest;
   friend class content::MediaSessionImplStateObserver;
+  friend class content::MediaSessionServiceImplBrowserTest;
 
   CONTENT_EXPORT void SetDelegateForTests(
       std::unique_ptr<AudioFocusDelegate> delegate);

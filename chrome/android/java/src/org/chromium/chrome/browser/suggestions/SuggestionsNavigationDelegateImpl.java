@@ -72,7 +72,7 @@ public class SuggestionsNavigationDelegateImpl implements SuggestionsNavigationD
     @Override
     public void navigateToRecentTabs() {
         RecordUserAction.record("MobileNTPSwitchToOpenTabs");
-        mHost.loadUrl(new LoadUrlParams(UrlConstants.RECENT_TABS_URL));
+        mHost.loadUrl(new LoadUrlParams(UrlConstants.RECENT_TABS_URL), /* incognito = */ false);
     }
 
     @Override
@@ -93,20 +93,19 @@ public class SuggestionsNavigationDelegateImpl implements SuggestionsNavigationD
     public void openSnippet(int windowOpenDisposition, SnippetArticle article) {
         NewTabPageUma.recordAction(NewTabPageUma.ACTION_OPENED_SNIPPET);
 
-        if (article.mIsAssetDownload) {
+        if (article.isAssetDownload()) {
             assert windowOpenDisposition == WindowOpenDisposition.CURRENT_TAB
                     || windowOpenDisposition == WindowOpenDisposition.NEW_WINDOW
-                    || windowOpenDisposition == WindowOpenDisposition.NEW_FOREGROUND_TAB;
-            DownloadUtils.openFile(
-                    article.getAssetDownloadFile(), article.getAssetDownloadMimeType(), false);
+                    || windowOpenDisposition == WindowOpenDisposition.NEW_BACKGROUND_TAB;
+            DownloadUtils.openFile(article.getAssetDownloadFile(),
+                    article.getAssetDownloadMimeType(), article.getAssetDownloadGuid(), false);
             return;
         }
 
         if (article.isRecentTab()) {
             assert windowOpenDisposition == WindowOpenDisposition.CURRENT_TAB;
-            // TODO(vitaliii): Add a debug check that the result is true after crbug.com/662924
-            // is resolved.
-            openRecentTabSnippet(article);
+            boolean success = openRecentTabSnippet(article);
+            assert success;
             return;
         }
 
@@ -119,11 +118,11 @@ public class SuggestionsNavigationDelegateImpl implements SuggestionsNavigationD
         // We explicitly open an offline page only for offline page downloads. For all other
         // sections the URL is opened and it is up to Offline Pages whether to open its offline
         // page (e.g. when offline).
-        if (article.isDownload() && !article.mIsAssetDownload) {
+        if (article.isDownload() && !article.isAssetDownload()) {
             assert article.getOfflinePageOfflineId() != null;
             assert windowOpenDisposition == WindowOpenDisposition.CURRENT_TAB
                     || windowOpenDisposition == WindowOpenDisposition.NEW_WINDOW
-                    || windowOpenDisposition == WindowOpenDisposition.NEW_FOREGROUND_TAB;
+                    || windowOpenDisposition == WindowOpenDisposition.NEW_BACKGROUND_TAB;
             loadUrlParams = OfflinePageUtils.getLoadUrlParamsForOpeningOfflineVersion(
                     article.mUrl, article.getOfflinePageOfflineId());
             // Extra headers are not read in loadUrl, but verbatim headers are.
@@ -147,13 +146,13 @@ public class SuggestionsNavigationDelegateImpl implements SuggestionsNavigationD
     public void openUrl(int windowOpenDisposition, LoadUrlParams loadUrlParams) {
         switch (windowOpenDisposition) {
             case WindowOpenDisposition.CURRENT_TAB:
-                mHost.loadUrl(loadUrlParams);
+                mHost.loadUrl(loadUrlParams, mTabModelSelector.getCurrentTab().isIncognito());
                 break;
-            case WindowOpenDisposition.NEW_FOREGROUND_TAB:
-                openUrlInNewTab(loadUrlParams, false);
+            case WindowOpenDisposition.NEW_BACKGROUND_TAB:
+                openUrlInNewTab(loadUrlParams);
                 break;
             case WindowOpenDisposition.OFF_THE_RECORD:
-                openUrlInNewTab(loadUrlParams, true);
+                mHost.loadUrl(loadUrlParams, true);
                 break;
             case WindowOpenDisposition.NEW_WINDOW:
                 openUrlInNewWindow(loadUrlParams);
@@ -180,9 +179,9 @@ public class SuggestionsNavigationDelegateImpl implements SuggestionsNavigationD
         tabDelegate.createTabInOtherWindow(loadUrlParams, mActivity, mHost.getParentId());
     }
 
-    private void openUrlInNewTab(LoadUrlParams loadUrlParams, boolean incognito) {
+    private void openUrlInNewTab(LoadUrlParams loadUrlParams) {
         mTabModelSelector.openNewTab(loadUrlParams, TabLaunchType.FROM_LONGPRESS_BACKGROUND,
-                mHost.getActiveTab(), incognito);
+                mHost.getActiveTab(), /* incognito = */ false);
     }
 
     private void saveUrlForOffline(String url) {

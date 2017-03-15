@@ -265,6 +265,12 @@ void PasswordStore::RemoveSiteStats(const GURL& origin_domain) {
       base::Bind(&PasswordStore::RemoveSiteStatsImpl, this, origin_domain));
 }
 
+void PasswordStore::GetAllSiteStats(PasswordStoreConsumer* consumer) {
+  std::unique_ptr<GetLoginsRequest> request(new GetLoginsRequest(consumer));
+  ScheduleTask(base::Bind(&PasswordStore::NotifyAllSiteStats, this,
+                          base::Passed(&request)));
+}
+
 void PasswordStore::GetSiteStats(const GURL& origin_domain,
                                  PasswordStoreConsumer* consumer) {
   std::unique_ptr<GetLoginsRequest> request(new GetLoginsRequest(consumer));
@@ -520,6 +526,11 @@ void PasswordStore::GetBlacklistLoginsWithAffiliatedRealmsImpl(
                  base::Passed(&obtained_forms), base::Passed(&request)));
 }
 
+void PasswordStore::NotifyAllSiteStats(
+    std::unique_ptr<GetLoginsRequest> request) {
+  request->NotifyWithSiteStatistics(GetAllSiteStatsImpl());
+}
+
 void PasswordStore::NotifySiteStats(const GURL& origin_domain,
                                     std::unique_ptr<GetLoginsRequest> request) {
   request->NotifyWithSiteStatistics(GetSiteStatsImpl(origin_domain));
@@ -694,12 +705,8 @@ void PasswordStore::InitOnBackgroundThread(
   syncable_service_.reset(new PasswordSyncableService(this));
   syncable_service_->InjectStartSyncFlare(flare);
   reuse_detector_.reset(new PasswordReuseDetector);
-#if !defined(OS_MACOSX)
-  // TODO(crbug.com/668155): For non-migrated keychain users it can lead to
-  // hundreds of requests to unlock keychain.
   GetAutofillableLoginsImpl(
       base::MakeUnique<GetLoginsRequest>(reuse_detector_.get()));
-#endif
 }
 
 void PasswordStore::DestroyOnBackgroundThread() {

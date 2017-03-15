@@ -178,12 +178,11 @@ class PLATFORM_EXPORT Font {
                          const GlyphData* emphasisData = nullptr) const;
   void drawGlyphBuffer(PaintCanvas*,
                        const PaintFlags&,
-                       const TextRunPaintInfo&,
                        const GlyphBuffer&,
                        const FloatPoint&,
                        float deviceScaleFactor) const;
 
-  bool getEmphasisMarkGlyphData(const AtomicString&, GlyphData&) const;
+  GlyphData getEmphasisMarkGlyphData(const AtomicString&) const;
 
   bool computeCanShapeWordByWord() const;
 
@@ -209,9 +208,8 @@ class PLATFORM_EXPORT Font {
   mutable unsigned m_canShapeWordByWord : 1;
   mutable unsigned m_shapeWordByWordComputed : 1;
 
-  // For accessing buildGlyphBuffer and retrieving fonts used in rendering a
-  // node.
-  friend class InspectorCSSAgent;
+  // For m_fontDescription & m_fontFallbackList access.
+  friend class CachingWordShaper;
 };
 
 inline Font::~Font() {}

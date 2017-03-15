@@ -13,10 +13,9 @@
 #include "ash/common/system/tray/tray_popup_item_style.h"
 #include "ash/common/system/tray/tray_popup_utils.h"
 #include "ash/common/system/tray/tri_view.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "base/containers/adapters.h"
 #include "base/memory/ptr_util.h"
-#include "base/timer/timer.h"
-#include "grit/ash_strings.h"
 #include "third_party/skia/include/core/SkDrawLooper.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/compositor/paint_context.h"
@@ -132,7 +131,6 @@ class ScrollContentsView : public views::View {
   }
 
  private:
-  const SkColor kSeparatorColor = SkColorSetA(SK_ColorBLACK, 0x1F);
   const int kShadowOffsetY = 2;
   const int kShadowBlur = 2;
   // TODO(fukino): Remove this constant once we stop maintaining pre-MD design.
@@ -218,8 +216,8 @@ class ScrollContentsView : public views::View {
     cc::PaintFlags flags;
     gfx::ShadowValues shadow;
     shadow.emplace_back(gfx::Vector2d(0, kShadowOffsetY), kShadowBlur,
-                        kSeparatorColor);
-    flags.setLooper(gfx::CreateShadowDrawLooperCorrectBlur(shadow));
+                        kMenuSeparatorColor);
+    flags.setLooper(gfx::CreateShadowDrawLooper(shadow));
     flags.setAntiAlias(true);
     canvas->ClipRect(shadowed_area, SkClipOp::kDifference);
     canvas->DrawRect(shadowed_area, flags);
@@ -331,7 +329,7 @@ void TrayDetailsView::CreateTitleRow(int string_id) {
     tri_view_->AddView(TriView::Container::START, back_button_);
 
     ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
-    auto label = TrayPopupUtils::CreateDefaultLabel();
+    auto* label = TrayPopupUtils::CreateDefaultLabel();
     label->SetText(rb.GetLocalizedString(string_id));
     TrayPopupItemStyle style(TrayPopupItemStyle::FontStyle::TITLE);
     style.SetupLabel(label);
@@ -342,12 +340,10 @@ void TrayDetailsView::CreateTitleRow(int string_id) {
     tri_view_->SetBorder(views::CreateEmptyBorder(kTitleRowPaddingTop, 0,
                                                   kTitleRowPaddingBottom, 0));
     AddChildViewAt(tri_view_, 0);
-    views::Separator* separator =
-        new views::Separator(views::Separator::HORIZONTAL);
-    separator->SetColor(kHorizontalSeparatorColor);
-    separator->SetPreferredSize(kSeparatorWidth);
+    views::Separator* separator = new views::Separator();
+    separator->SetColor(kMenuSeparatorColor);
     separator->SetBorder(views::CreateEmptyBorder(
-        kTitleRowProgressBarHeight - kSeparatorWidth, 0, 0, 0));
+        kTitleRowProgressBarHeight - views::Separator::kThickness, 0, 0, 0));
     AddChildViewAt(separator, kTitleRowSeparatorIndex);
   } else {
     title_row_ = new SpecialPopupRow();
@@ -415,11 +411,13 @@ void TrayDetailsView::ShowProgress(double value, bool visible) {
   child_at(kTitleRowSeparatorIndex)->SetVisible(!visible);
 }
 
-views::CustomButton* TrayDetailsView::CreateSettingsButton(LoginStatus status) {
+views::CustomButton* TrayDetailsView::CreateSettingsButton(
+    LoginStatus status,
+    int setting_accessible_name_id) {
   DCHECK(UseMd());
-  SystemMenuButton* button = new SystemMenuButton(
-      this, TrayPopupInkDropStyle::HOST_CENTERED, kSystemMenuSettingsIcon,
-      IDS_ASH_STATUS_TRAY_SETTINGS);
+  SystemMenuButton* button =
+      new SystemMenuButton(this, TrayPopupInkDropStyle::HOST_CENTERED,
+                           kSystemMenuSettingsIcon, setting_accessible_name_id);
   if (!TrayPopupUtils::CanOpenWebUISettings(status))
     button->SetEnabled(false);
   return button;
@@ -459,22 +457,13 @@ void TrayDetailsView::TransitionToDefaultView() {
     return;
   }
 
-  const int transition_delay =
-      GetTrayConstant(TRAY_POPUP_TRANSITION_TO_DEFAULT_DELAY);
-  if (transition_delay <= 0) {
-    DoTransitionToDefaultView();
-    return;
-  }
-
-  transition_delay_timer_.reset(new base::OneShotTimer());
-  transition_delay_timer_->Start(
-      FROM_HERE, base::TimeDelta::FromMilliseconds(transition_delay), this,
-      &TrayDetailsView::DoTransitionToDefaultView);
+  transition_delay_timer_.Start(
+      FROM_HERE,
+      base::TimeDelta::FromMilliseconds(kTrayDetailedViewTransitionDelayMs),
+      this, &TrayDetailsView::DoTransitionToDefaultView);
 }
 
 void TrayDetailsView::DoTransitionToDefaultView() {
-  transition_delay_timer_.reset();
-
   // Cache pointer to owner in this function scope. TrayDetailsView will be
   // deleted after called ShowDefaultView.
   SystemTrayItem* owner = owner_;

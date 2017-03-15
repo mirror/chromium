@@ -6,7 +6,6 @@ Polymer({
   is: 'controlled-button',
 
   behaviors: [
-    CrPolicyIndicatorBehavior,
     CrPolicyPrefBehavior,
     PrefControlBehavior,
   ],
@@ -17,6 +16,8 @@ Polymer({
       value: false,
       reflectToAttribute: true,
     },
+
+    label: String,
 
     /** @private */
     controlled_: {
@@ -42,17 +43,5 @@ Polymer({
     // Disallow <controlled-button on-tap="..."> when controlled.
     e.preventDefault();
     e.stopPropagation();
-  },
-
-  /**
-   * @param {!chrome.settingsPrivate.PrefObject} pref
-   * @return {boolean} Whether to show a controlled by indicator.
-   * @private
-   */
-  showIndicator_: function(pref) {
-    if (!pref.controlledBy || !pref.enforcement)
-      return false;
-    var indicator = this.getIndicatorType(pref.controlledBy, pref.enforcement);
-    return this.isIndicatorVisible(indicator);
   },
 });

@@ -25,7 +25,6 @@
 #include "chrome/browser/media/router/mock_media_router.h"
 #include "chrome/browser/media/router/mojo/media_router_mojo_metrics.h"
 #include "chrome/browser/media/router/mojo/media_router_mojo_test.h"
-#include "chrome/browser/media/router/mojo/media_router_type_converters.h"
 #include "chrome/browser/media/router/route_message.h"
 #include "chrome/browser/media/router/route_message_observer.h"
 #include "chrome/browser/media/router/test_helper.h"
@@ -57,13 +56,9 @@ using testing::Pointee;
 using testing::Return;
 using testing::ReturnRef;
 using testing::SaveArg;
+using testing::Sequence;
 
 namespace media_router {
-
-using PresentationConnectionState =
-    mojom::MediaRouter::PresentationConnectionState;
-using PresentationConnectionCloseReason =
-    mojom::MediaRouter::PresentationConnectionCloseReason;
 
 namespace {
 
@@ -94,16 +89,9 @@ IssueInfo CreateIssueInfo(const std::string& title) {
   return issue_info;
 }
 
-mojom::MediaRoutePtr CreateMojoRoute() {
-  mojom::MediaRoutePtr route = mojom::MediaRoute::New();
-  route->media_source = std::string(kSource);
-  route->media_sink_id = kSinkId;
-  route->media_route_id = kRouteId;
-  route->description = kDescription;
-  route->is_local = true;
-  route->for_display = true;
-  route->is_incognito = false;
-  return route;
+MediaRoute CreateMediaRoute() {
+  return MediaRoute(kRouteId, MediaSource(kSource), kSinkId, kDescription, true,
+                    std::string(), true);
 }
 
 }  // namespace
@@ -203,8 +191,7 @@ TEST_F(MediaRouterMojoImplTest, CreateRoute) {
              const std::string& presentation_id, const url::Origin& origin,
              int tab_id, base::TimeDelta timeout, bool incognito,
              const mojom::MediaRouteProvider::CreateRouteCallback& cb) {
-            cb.Run(CreateMojoRoute(), std::string(),
-                   mojom::RouteRequestResultCode::OK);
+            cb.Run(CreateMediaRoute(), std::string(), RouteRequestResult::OK);
           }));
 
   base::RunLoop run_loop;
@@ -220,7 +207,7 @@ TEST_F(MediaRouterMojoImplTest, CreateRoute) {
                         base::TimeDelta::FromMilliseconds(kTimeoutMillis),
                         false);
   run_loop.Run();
-  ExpectResultBucketCount("CreateRoute", RouteRequestResult::ResultCode::OK, 1);
+  ExpectResultBucketCount("CreateRoute", RouteRequestResult::OK, 1);
 }
 
 TEST_F(MediaRouterMojoImplTest, CreateIncognitoRoute) {
@@ -235,18 +222,13 @@ TEST_F(MediaRouterMojoImplTest, CreateIncognitoRoute) {
   EXPECT_CALL(mock_media_route_provider_,
               CreateRoute(kSource, kSinkId, _, url::Origin(GURL(kOrigin)),
                           kInvalidTabId, _, _, _))
-      .WillOnce(Invoke(
-          [](const std::string& source, const std::string& sink,
-             const std::string& presentation_id, const url::Origin& origin,
-             int tab_id, base::TimeDelta timeout, bool incognito,
-             const mojom::MediaRouteProvider::CreateRouteCallback& cb) {
-            mojom::MediaRoutePtr route = CreateMojoRoute();
-            route->custom_controller_path =
-                std::string("custom/controller/path");
-            route->is_incognito = true;
-            cb.Run(std::move(route), std::string(),
-                   mojom::RouteRequestResultCode::OK);
-          }));
+      .WillOnce(Invoke([&expected_route](
+          const std::string& source, const std::string& sink,
+          const std::string& presentation_id, const url::Origin& origin,
+          int tab_id, base::TimeDelta timeout, bool incognito,
+          const mojom::MediaRouteProvider::CreateRouteCallback& cb) {
+        cb.Run(expected_route, std::string(), RouteRequestResult::OK);
+      }));
 
   base::RunLoop run_loop;
   RouteResponseCallbackHandler handler;
@@ -261,7 +243,7 @@ TEST_F(MediaRouterMojoImplTest, CreateIncognitoRoute) {
                         base::TimeDelta::FromMilliseconds(kTimeoutMillis),
                         true);
   run_loop.Run();
-  ExpectResultBucketCount("CreateRoute", RouteRequestResult::ResultCode::OK, 1);
+  ExpectResultBucketCount("CreateRoute", RouteRequestResult::OK, 1);
 }
 
 TEST_F(MediaRouterMojoImplTest, CreateRouteFails) {
@@ -275,8 +257,8 @@ TEST_F(MediaRouterMojoImplTest, CreateRouteFails) {
              const std::string& presentation_id, const url::Origin& origin,
              int tab_id, base::TimeDelta timeout, bool incognito,
              const mojom::MediaRouteProvider::CreateRouteCallback& cb) {
-            cb.Run(mojom::MediaRoutePtr(), std::string(kError),
-                   mojom::RouteRequestResultCode::TIMED_OUT);
+            cb.Run(base::nullopt, std::string(kError),
+                   RouteRequestResult::TIMED_OUT);
           }));
 
   RouteResponseCallbackHandler handler;
@@ -292,8 +274,7 @@ TEST_F(MediaRouterMojoImplTest, CreateRouteFails) {
                         base::TimeDelta::FromMilliseconds(kTimeoutMillis),
                         false);
   run_loop.Run();
-  ExpectResultBucketCount("CreateRoute",
-                          RouteRequestResult::ResultCode::TIMED_OUT, 1);
+  ExpectResultBucketCount("CreateRoute", RouteRequestResult::TIMED_OUT, 1);
 }
 
 TEST_F(MediaRouterMojoImplTest, CreateRouteIncognitoMismatchFails) {
@@ -307,8 +288,7 @@ TEST_F(MediaRouterMojoImplTest, CreateRouteIncognitoMismatchFails) {
              const std::string& presentation_id, const url::Origin& origin,
              int tab_id, base::TimeDelta timeout, bool incognito,
              const mojom::MediaRouteProvider::CreateRouteCallback& cb) {
-            cb.Run(CreateMojoRoute(), std::string(),
-                   mojom::RouteRequestResultCode::OK);
+            cb.Run(CreateMediaRoute(), std::string(), RouteRequestResult::OK);
           }));
 
   RouteResponseCallbackHandler handler;
@@ -325,49 +305,45 @@ TEST_F(MediaRouterMojoImplTest, CreateRouteIncognitoMismatchFails) {
                         base::TimeDelta::FromMilliseconds(kTimeoutMillis),
                         true);
   run_loop.Run();
-  ExpectResultBucketCount(
-      "CreateRoute", RouteRequestResult::ResultCode::INCOGNITO_MISMATCH, 1);
+  ExpectResultBucketCount("CreateRoute", RouteRequestResult::INCOGNITO_MISMATCH,
+                          1);
 }
 
 TEST_F(MediaRouterMojoImplTest, IncognitoRoutesTerminatedOnProfileShutdown) {
-  mojom::MediaRoutePtr route = CreateMojoRoute();
-  route->is_incognito = true;
+  MediaRoute route = CreateMediaRoute();
+  route.set_incognito(true);
 
   EXPECT_CALL(
       mock_media_route_provider_,
       CreateRoute(kSource, kSinkId, _, url::Origin(GURL(kOrigin)),
                   kInvalidTabId,
                   base::TimeDelta::FromMilliseconds(kTimeoutMillis), true, _))
-      .WillOnce(Invoke(
-          [](const std::string& source, const std::string& sink,
-             const std::string& presentation_id, const url::Origin& origin,
-             int tab_id, base::TimeDelta timeout, bool incognito,
-             const mojom::MediaRouteProvider::CreateRouteCallback& cb) {
-            mojom::MediaRoutePtr route = CreateMojoRoute();
-            route->is_incognito = true;
-            cb.Run(std::move(route), std::string(),
-                   mojom::RouteRequestResultCode::OK);
-          }));
+      .WillOnce(Invoke([&route](
+          const std::string& source, const std::string& sink,
+          const std::string& presentation_id, const url::Origin& origin,
+          int tab_id, base::TimeDelta timeout, bool incognito,
+          const mojom::MediaRouteProvider::CreateRouteCallback& cb) {
+        cb.Run(route, std::string(), RouteRequestResult::OK);
+      }));
   base::RunLoop run_loop;
   router()->CreateRoute(kSource, kSinkId, url::Origin(GURL(kOrigin)), nullptr,
                         std::vector<MediaRouteResponseCallback>(),
                         base::TimeDelta::FromMilliseconds(kTimeoutMillis),
                         true);
-  std::vector<mojom::MediaRoutePtr> mojo_routes(1);
-  mojo_routes[0] = route->Clone();
-  router()->OnRoutesUpdated(std::move(mojo_routes), std::string(),
-                            std::vector<std::string>());
+  std::vector<MediaRoute> routes;
+  routes.push_back(route);
+  router()->OnRoutesUpdated(routes, std::string(), std::vector<std::string>());
 
   // TODO(mfoltz): Where possible, convert other tests to use RunUntilIdle
   // instead of manually calling Run/Quit on the run loop.
   run_loop.RunUntilIdle();
 
   EXPECT_CALL(mock_media_route_provider_, TerminateRoute(kRouteId, _))
-      .WillOnce(Invoke([](
-          const std::string& route_id,
-          const mojom::MediaRouteProvider::TerminateRouteCallback& cb) {
-         cb.Run(base::nullopt, mojom::RouteRequestResultCode::OK);
-       }));
+      .WillOnce(Invoke(
+          [](const std::string& route_id,
+             const mojom::MediaRouteProvider::TerminateRouteCallback& cb) {
+            cb.Run(base::nullopt, RouteRequestResult::OK);
+          }));
 
   base::RunLoop run_loop2;
   router()->OnIncognitoProfileShutdown();
@@ -379,13 +355,12 @@ TEST_F(MediaRouterMojoImplTest, JoinRoute) {
   MediaRoute expected_route(kRouteId, media_source, kSinkId, "", false, "",
                             false);
 
-  mojom::MediaRoutePtr route = CreateMojoRoute();
+  MediaRoute route = CreateMediaRoute();
   // Make sure the MR has received an update with the route, so it knows there
   // is a route to join.
-  std::vector<mojom::MediaRoutePtr> mojo_routes(1);
-  mojo_routes[0] = route->Clone();
-  router()->OnRoutesUpdated(std::move(mojo_routes), std::string(),
-                            std::vector<std::string>());
+  std::vector<MediaRoute> routes;
+  routes.push_back(route);
+  router()->OnRoutesUpdated(routes, std::string(), std::vector<std::string>());
   EXPECT_TRUE(router()->HasJoinableRoute());
 
   // Use a lambda function as an invocation target here to work around
@@ -401,8 +376,7 @@ TEST_F(MediaRouterMojoImplTest, JoinRoute) {
           const url::Origin& origin, int tab_id, base::TimeDelta timeout,
           bool incognito,
           const mojom::MediaRouteProvider::JoinRouteCallback& cb) {
-        cb.Run(std::move(route), std::string(),
-               mojom::RouteRequestResultCode::OK);
+        cb.Run(route, std::string(), RouteRequestResult::OK);
       }));
 
   RouteResponseCallbackHandler handler;
@@ -417,7 +391,7 @@ TEST_F(MediaRouterMojoImplTest, JoinRoute) {
                       nullptr, route_response_callbacks,
                       base::TimeDelta::FromMilliseconds(kTimeoutMillis), false);
   run_loop.Run();
-  ExpectResultBucketCount("JoinRoute", RouteRequestResult::ResultCode::OK, 1);
+  ExpectResultBucketCount("JoinRoute", RouteRequestResult::OK, 1);
 }
 
 TEST_F(MediaRouterMojoImplTest, JoinRouteNotFoundFails) {
@@ -433,17 +407,15 @@ TEST_F(MediaRouterMojoImplTest, JoinRouteNotFoundFails) {
                       nullptr, route_response_callbacks,
                       base::TimeDelta::FromMilliseconds(kTimeoutMillis), false);
   run_loop.Run();
-  ExpectResultBucketCount("JoinRoute",
-                          RouteRequestResult::ResultCode::ROUTE_NOT_FOUND, 1);
+  ExpectResultBucketCount("JoinRoute", RouteRequestResult::ROUTE_NOT_FOUND, 1);
 }
 
 TEST_F(MediaRouterMojoImplTest, JoinRouteTimedOutFails) {
   // Make sure the MR has received an update with the route, so it knows there
   // is a route to join.
-  std::vector<mojom::MediaRoutePtr> mojo_routes(1);
-  mojo_routes[0] = CreateMojoRoute();
-  router()->OnRoutesUpdated(std::move(mojo_routes), std::string(),
-                            std::vector<std::string>());
+  std::vector<MediaRoute> routes;
+  routes.push_back(CreateMediaRoute());
+  router()->OnRoutesUpdated(routes, std::string(), std::vector<std::string>());
   EXPECT_TRUE(router()->HasJoinableRoute());
 
   EXPECT_CALL(
@@ -456,8 +428,8 @@ TEST_F(MediaRouterMojoImplTest, JoinRouteTimedOutFails) {
              const url::Origin& origin, int tab_id, base::TimeDelta timeout,
              bool incognito,
              const mojom::MediaRouteProvider::JoinRouteCallback& cb) {
-            cb.Run(mojom::MediaRoutePtr(), std::string(kError),
-                   mojom::RouteRequestResultCode::TIMED_OUT);
+            cb.Run(base::nullopt, std::string(kError),
+                   RouteRequestResult::TIMED_OUT);
           }));
 
   RouteResponseCallbackHandler handler;
@@ -472,19 +444,17 @@ TEST_F(MediaRouterMojoImplTest, JoinRouteTimedOutFails) {
                       nullptr, route_response_callbacks,
                       base::TimeDelta::FromMilliseconds(kTimeoutMillis), false);
   run_loop.Run();
-  ExpectResultBucketCount("JoinRoute",
-                          RouteRequestResult::ResultCode::TIMED_OUT, 1);
+  ExpectResultBucketCount("JoinRoute", RouteRequestResult::TIMED_OUT, 1);
 }
 
 TEST_F(MediaRouterMojoImplTest, JoinRouteIncognitoMismatchFails) {
-  mojom::MediaRoutePtr route = CreateMojoRoute();
+  MediaRoute route = CreateMediaRoute();
 
   // Make sure the MR has received an update with the route, so it knows there
   // is a route to join.
-  std::vector<mojom::MediaRoutePtr> mojo_routes(1);
-  mojo_routes[0] = route->Clone();
-  router()->OnRoutesUpdated(std::move(mojo_routes), std::string(),
-                            std::vector<std::string>());
+  std::vector<MediaRoute> routes;
+  routes.push_back(route);
+  router()->OnRoutesUpdated(routes, std::string(), std::vector<std::string>());
   EXPECT_TRUE(router()->HasJoinableRoute());
 
   // Use a lambda function as an invocation target here to work around
@@ -500,8 +470,7 @@ TEST_F(MediaRouterMojoImplTest, JoinRouteIncognitoMismatchFails) {
           const url::Origin& origin, int tab_id, base::TimeDelta timeout,
           bool incognito,
           const mojom::MediaRouteProvider::JoinRouteCallback& cb) {
-        cb.Run(std::move(route), std::string(),
-               mojom::RouteRequestResultCode::OK);
+        cb.Run(route, std::string(), RouteRequestResult::OK);
       }));
 
   RouteResponseCallbackHandler handler;
@@ -517,8 +486,8 @@ TEST_F(MediaRouterMojoImplTest, JoinRouteIncognitoMismatchFails) {
                       nullptr, route_response_callbacks,
                       base::TimeDelta::FromMilliseconds(kTimeoutMillis), true);
   run_loop.Run();
-  ExpectResultBucketCount(
-      "JoinRoute", RouteRequestResult::ResultCode::INCOGNITO_MISMATCH, 1);
+  ExpectResultBucketCount("JoinRoute", RouteRequestResult::INCOGNITO_MISMATCH,
+                          1);
 }
 
 TEST_F(MediaRouterMojoImplTest, ConnectRouteByRouteId) {
@@ -526,7 +495,7 @@ TEST_F(MediaRouterMojoImplTest, ConnectRouteByRouteId) {
   MediaRoute expected_route(kRouteId, media_source, kSinkId, "", false, "",
                             false);
   expected_route.set_incognito(false);
-  mojom::MediaRoutePtr route = CreateMojoRoute();
+  MediaRoute route = CreateMediaRoute();
 
   // Use a lambda function as an invocation target here to work around
   // a limitation with GMock::Invoke that prevents it from using move-only types
@@ -541,8 +510,7 @@ TEST_F(MediaRouterMojoImplTest, ConnectRouteByRouteId) {
           const std::string& presentation_id, const url::Origin& origin,
           int tab_id, base::TimeDelta timeout, bool incognito,
           const mojom::MediaRouteProvider::JoinRouteCallback& cb) {
-        cb.Run(std::move(route), std::string(),
-               mojom::RouteRequestResultCode::OK);
+        cb.Run(route, std::string(), RouteRequestResult::OK);
       }));
 
   RouteResponseCallbackHandler handler;
@@ -558,7 +526,7 @@ TEST_F(MediaRouterMojoImplTest, ConnectRouteByRouteId) {
       route_response_callbacks,
       base::TimeDelta::FromMilliseconds(kTimeoutMillis), false);
   run_loop.Run();
-  ExpectResultBucketCount("JoinRoute", RouteRequestResult::ResultCode::OK, 1);
+  ExpectResultBucketCount("JoinRoute", RouteRequestResult::OK, 1);
 }
 
 TEST_F(MediaRouterMojoImplTest, ConnectRouteByRouteIdFails) {
@@ -572,8 +540,8 @@ TEST_F(MediaRouterMojoImplTest, ConnectRouteByRouteIdFails) {
              const std::string& presentation_id, const url::Origin& origin,
              int tab_id, base::TimeDelta timeout, bool incognito,
              const mojom::MediaRouteProvider::JoinRouteCallback& cb) {
-            cb.Run(mojom::MediaRoutePtr(), std::string(kError),
-                   mojom::RouteRequestResultCode::TIMED_OUT);
+            cb.Run(base::nullopt, std::string(kError),
+                   RouteRequestResult::TIMED_OUT);
           }));
 
   RouteResponseCallbackHandler handler;
@@ -589,12 +557,11 @@ TEST_F(MediaRouterMojoImplTest, ConnectRouteByRouteIdFails) {
       route_response_callbacks,
       base::TimeDelta::FromMilliseconds(kTimeoutMillis), true);
   run_loop.Run();
-  ExpectResultBucketCount("JoinRoute",
-                          RouteRequestResult::ResultCode::TIMED_OUT, 1);
+  ExpectResultBucketCount("JoinRoute", RouteRequestResult::TIMED_OUT, 1);
 }
 
 TEST_F(MediaRouterMojoImplTest, ConnectRouteByIdIncognitoMismatchFails) {
-  mojom::MediaRoutePtr route = CreateMojoRoute();
+  MediaRoute route = CreateMediaRoute();
 
   // Use a lambda function as an invocation target here to work around
   // a limitation with GMock::Invoke that prevents it from using move-only types
@@ -609,8 +576,7 @@ TEST_F(MediaRouterMojoImplTest, ConnectRouteByIdIncognitoMismatchFails) {
           const std::string& presentation_id, const url::Origin& origin,
           int tab_id, base::TimeDelta timeout, bool incognito,
           const mojom::MediaRouteProvider::JoinRouteCallback& cb) {
-        cb.Run(std::move(route), std::string(),
-               mojom::RouteRequestResultCode::OK);
+        cb.Run(route, std::string(), RouteRequestResult::OK);
       }));
 
   RouteResponseCallbackHandler handler;
@@ -627,8 +593,8 @@ TEST_F(MediaRouterMojoImplTest, ConnectRouteByIdIncognitoMismatchFails) {
       route_response_callbacks,
       base::TimeDelta::FromMilliseconds(kTimeoutMillis), true);
   run_loop.Run();
-  ExpectResultBucketCount(
-      "JoinRoute", RouteRequestResult::ResultCode::INCOGNITO_MISMATCH, 1);
+  ExpectResultBucketCount("JoinRoute", RouteRequestResult::INCOGNITO_MISMATCH,
+                          1);
 }
 
 TEST_F(MediaRouterMojoImplTest, DetachRoute) {
@@ -642,35 +608,28 @@ TEST_F(MediaRouterMojoImplTest, DetachRoute) {
 TEST_F(MediaRouterMojoImplTest, TerminateRoute) {
   base::RunLoop run_loop;
   EXPECT_CALL(mock_media_route_provider_, TerminateRoute(kRouteId, _))
-      .WillOnce(Invoke([](
-          const std::string& route_id,
-          const mojom::MediaRouteProvider::TerminateRouteCallback& cb) {
-         cb.Run(base::nullopt, mojom::RouteRequestResultCode::OK);
-      }));
+      .WillOnce(Invoke(
+          [](const std::string& route_id,
+             const mojom::MediaRouteProvider::TerminateRouteCallback& cb) {
+            cb.Run(base::nullopt, RouteRequestResult::OK);
+          }));
   router()->TerminateRoute(kRouteId);
   run_loop.RunUntilIdle();
-  ExpectResultBucketCount("TerminateRoute",
-                          RouteRequestResult::ResultCode::OK,
-                          1);
+  ExpectResultBucketCount("TerminateRoute", RouteRequestResult::OK, 1);
 }
 
 TEST_F(MediaRouterMojoImplTest, TerminateRouteFails) {
   base::RunLoop run_loop;
   EXPECT_CALL(mock_media_route_provider_, TerminateRoute(kRouteId, _))
-      .WillOnce(Invoke([](
-          const std::string& route_id,
-          const mojom::MediaRouteProvider::TerminateRouteCallback& cb) {
-        cb.Run(std::string("timed out"),
-               mojom::RouteRequestResultCode::TIMED_OUT);
-      }));
+      .WillOnce(Invoke(
+          [](const std::string& route_id,
+             const mojom::MediaRouteProvider::TerminateRouteCallback& cb) {
+            cb.Run(std::string("timed out"), RouteRequestResult::TIMED_OUT);
+          }));
   router()->TerminateRoute(kRouteId);
   run_loop.RunUntilIdle();
-  ExpectResultBucketCount("TerminateRoute",
-                          RouteRequestResult::ResultCode::OK,
-                          0);
-  ExpectResultBucketCount("TerminateRoute",
-                          RouteRequestResult::ResultCode::TIMED_OUT,
-                          1);
+  ExpectResultBucketCount("TerminateRoute", RouteRequestResult::OK, 0);
+  ExpectResultBucketCount("TerminateRoute", RouteRequestResult::TIMED_OUT, 1);
 }
 
 TEST_F(MediaRouterMojoImplTest, HandleIssue) {
@@ -738,17 +697,12 @@ TEST_F(MediaRouterMojoImplTest, RegisterAndUnregisterMediaSinksObserver) {
   expected_sinks.push_back(
       MediaSink(kSinkId2, kSinkName, MediaSink::IconType::CAST));
 
-  std::vector<mojom::MediaSinkPtr> mojo_sinks(2);
-  mojo_sinks[0] = mojom::MediaSink::New();
-  mojo_sinks[0]->sink_id = kSinkId;
-  mojo_sinks[0]->name = kSinkName;
-  mojo_sinks[0]->icon_type =
-      media_router::mojom::MediaSink::IconType::CAST;
-  mojo_sinks[1] = mojom::MediaSink::New();
-  mojo_sinks[1]->sink_id = kSinkId2;
-  mojo_sinks[1]->name = kSinkName;
-  mojo_sinks[1]->icon_type =
-      media_router::mojom::MediaSink::IconType::CAST;
+  std::vector<MediaSinkInternal> sinks;
+  for (const auto& expected_sink : expected_sinks) {
+    MediaSinkInternal sink_internal;
+    sink_internal.set_sink(expected_sink);
+    sinks.push_back(sink_internal);
+  }
 
   base::RunLoop run_loop;
   EXPECT_CALL(*sinks_observer, OnSinksReceived(SequenceEquals(expected_sinks)));
@@ -756,7 +710,7 @@ TEST_F(MediaRouterMojoImplTest, RegisterAndUnregisterMediaSinksObserver) {
               OnSinksReceived(SequenceEquals(expected_sinks)))
       .WillOnce(InvokeWithoutArgs([&run_loop]() { run_loop.Quit(); }));
   media_router_proxy_->OnSinksReceived(
-      media_source.id(), std::move(mojo_sinks),
+      media_source.id(), sinks,
       std::vector<url::Origin>(1, url::Origin(GURL(kOrigin))));
   run_loop.Run();
 
@@ -860,7 +814,7 @@ TEST_F(MediaRouterMojoImplTest, RegisterAndUnregisterMediaRoutesObserver) {
   MediaSource different_media_source(kSource2);
   EXPECT_CALL(mock_media_route_provider_,
               StartObservingMediaRoutes(media_source.id()))
-      .Times(2);
+      .Times(1);
   EXPECT_CALL(
       mock_media_route_provider_,
       StartObservingMediaRoutes(different_media_source.id()))
@@ -893,16 +847,6 @@ TEST_F(MediaRouterMojoImplTest, RegisterAndUnregisterMediaRoutesObserver) {
   expected_joinable_route_ids.push_back(kJoinableRouteId);
   expected_joinable_route_ids.push_back(kJoinableRouteId2);
 
-  std::vector<std::string> mojo_joinable_routes(2);
-  mojo_joinable_routes[0] = kJoinableRouteId;
-  mojo_joinable_routes[1] = kJoinableRouteId2;
-
-  std::vector<mojom::MediaRoutePtr> mojo_routes(2);
-  mojo_routes[0] = CreateMojoRoute();
-  mojo_routes[1] = CreateMojoRoute();
-  mojo_routes[1]->media_route_id = kRouteId2;
-  mojo_routes[1]->is_incognito = true;
-
   EXPECT_CALL(routes_observer, OnRoutesUpdated(SequenceEquals(expected_routes),
                                                expected_joinable_route_ids));
   EXPECT_CALL(extra_routes_observer,
@@ -912,9 +856,8 @@ TEST_F(MediaRouterMojoImplTest, RegisterAndUnregisterMediaRoutesObserver) {
               OnRoutesUpdated(SequenceEquals(expected_routes),
                               expected_joinable_route_ids))
       .Times(0);
-  media_router_proxy_->OnRoutesUpdated(std::move(mojo_routes),
-                                       media_source.id(),
-                                       std::move(mojo_joinable_routes));
+  media_router_proxy_->OnRoutesUpdated(expected_routes, media_source.id(),
+                                       expected_joinable_route_ids);
   ProcessEventLoop();
 
   EXPECT_CALL(mock_router, UnregisterMediaRoutesObserver(&routes_observer));
@@ -931,6 +874,62 @@ TEST_F(MediaRouterMojoImplTest, RegisterAndUnregisterMediaRoutesObserver) {
   EXPECT_CALL(
       mock_media_route_provider_,
       StopObservingMediaRoutes(different_media_source.id()));
+  ProcessEventLoop();
+}
+
+// Tests that multiple MediaRoutesObservers having the same query do not cause
+// extra extension wake-ups because the OnRoutesUpdated() results are cached.
+TEST_F(MediaRouterMojoImplTest, RegisterMediaRoutesObserver_DedupingWithCache) {
+  const MediaSource media_source = MediaSource(kSource);
+  std::vector<MediaRoute> expected_routes;
+  expected_routes.push_back(MediaRoute(kRouteId, media_source, kSinkId,
+                                       kDescription, false, "", false));
+  std::vector<MediaRoute::Id> expected_joinable_route_ids;
+  expected_joinable_route_ids.push_back(kJoinableRouteId);
+
+  Sequence sequence;
+
+  // Creating the first observer will wake-up the provider and ask it to start
+  // observing routes having source |kSource|. The provider will respond with
+  // the existing route.
+  EXPECT_CALL(mock_media_route_provider_,
+              StartObservingMediaRoutes(media_source.id()))
+      .Times(1);
+  std::unique_ptr<MockMediaRoutesObserver> observer1(
+      new MockMediaRoutesObserver(router(), media_source.id()));
+  ProcessEventLoop();
+  EXPECT_CALL(*observer1, OnRoutesUpdated(SequenceEquals(expected_routes),
+                                          expected_joinable_route_ids))
+      .Times(1);
+  media_router_proxy_->OnRoutesUpdated(expected_routes, media_source.id(),
+                                       expected_joinable_route_ids);
+  ProcessEventLoop();
+
+  // Creating two more observers will not wake up the provider. Instead, the
+  // cached route list will be returned.
+  std::unique_ptr<MockMediaRoutesObserver> observer2(
+      new MockMediaRoutesObserver(router(), media_source.id()));
+  std::unique_ptr<MockMediaRoutesObserver> observer3(
+      new MockMediaRoutesObserver(router(), media_source.id()));
+  EXPECT_CALL(*observer2, OnRoutesUpdated(SequenceEquals(expected_routes),
+                                          expected_joinable_route_ids))
+      .Times(1);
+  EXPECT_CALL(*observer3, OnRoutesUpdated(SequenceEquals(expected_routes),
+                                          expected_joinable_route_ids))
+      .Times(1);
+  ProcessEventLoop();
+
+  // Kill 2 of three observers, and expect nothing happens at the provider.
+  observer1.reset();
+  observer2.reset();
+  ProcessEventLoop();
+
+  // Kill the final observer, and expect the provider to be woken-up and called
+  // with the "stop observing" notification.
+  EXPECT_CALL(mock_media_route_provider_,
+              StopObservingMediaRoutes(media_source.id()))
+      .Times(1);
+  observer3.reset();
   ProcessEventLoop();
 }
 
@@ -1118,7 +1117,8 @@ TEST_F(MediaRouterMojoImplTest, PresentationConnectionStateChangedCallback) {
     EXPECT_CALL(callback, Run(StateChangeInfoEquals(closed_info)))
         .WillOnce(InvokeWithoutArgs([&run_loop]() { run_loop.Quit(); }));
     media_router_proxy_->OnPresentationConnectionClosed(
-        route_id, PresentationConnectionCloseReason::WENT_AWAY, "Foo");
+        route_id, content::PRESENTATION_CONNECTION_CLOSE_REASON_WENT_AWAY,
+        "Foo");
     run_loop.Run();
     EXPECT_TRUE(Mock::VerifyAndClearExpectations(&callback));
   }
@@ -1130,7 +1130,7 @@ TEST_F(MediaRouterMojoImplTest, PresentationConnectionStateChangedCallback) {
     EXPECT_CALL(callback, Run(StateChangeInfoEquals(terminated_info)))
         .WillOnce(InvokeWithoutArgs([&run_loop]() { run_loop.Quit(); }));
     media_router_proxy_->OnPresentationConnectionStateChanged(
-        route_id, PresentationConnectionState::TERMINATED);
+        route_id, content::PRESENTATION_CONNECTION_STATE_TERMINATED);
     run_loop.Run();
 
     EXPECT_TRUE(Mock::VerifyAndClearExpectations(&callback));
@@ -1152,7 +1152,7 @@ TEST_F(MediaRouterMojoImplTest,
 
   EXPECT_CALL(callback, Run(_)).Times(0);
   media_router_proxy_->OnPresentationConnectionStateChanged(
-      route_id, PresentationConnectionState::TERMINATED);
+      route_id, content::PRESENTATION_CONNECTION_STATE_TERMINATED);
   ProcessEventLoop();
 }
 

@@ -7,9 +7,11 @@ Loaded modules:
     dom_extension
     emulation
     extensions
+    help
     host
     main
     network_conditions
+    object_ui
     persistence
     platform
     protocol

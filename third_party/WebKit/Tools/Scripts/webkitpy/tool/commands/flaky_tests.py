@@ -38,8 +38,8 @@ _log = logging.getLogger(__name__)
 
 
 class FlakyTests(Command):
-    name = "print-flaky-tests"
-    help_text = "Print out flaky tests based on results from the flakiness dashboard"
+    name = 'print-flaky-tests'
+    help_text = 'Print out flaky tests based on results from the flakiness dashboard'
     show_in_main_help = True
 
     FLAKINESS_DASHBOARD_URL = 'https://test-results.appspot.com/dashboards/flakiness_dashboard.html#testType=webkit_tests&tests=%s'
@@ -53,7 +53,7 @@ class FlakyTests(Command):
         '%20If%20not%20fixed%20in%203%20months,%20it%20will%20be%20deleted%20'
         'or%20perma-skipped.%0A%0AIn%20the%20flakiness%20dashboard,%20the%20'
         'turquoise%20boxes%20are%20runs%20where%20the%20test%20failed%20and%20'
-        'then%20passed%20on%20retry.%0A%0Ahttp://test-results.appspot.com'
+        'then%20passed%20on%20retry.%0A%0Ahttps://test-results.appspot.com'
         '/dashboards/flakiness_dashboard.html%23tests=XXXXXXX')
 
     HEADER = (

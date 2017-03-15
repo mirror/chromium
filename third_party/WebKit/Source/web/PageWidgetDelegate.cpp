@@ -74,7 +74,7 @@ static void paintInternal(Page& page,
 
     // FIXME: device scale factor settings are layering violations and should
     // not be used within Blink paint code.
-    float scaleFactor = page.deviceScaleFactor();
+    float scaleFactor = page.deviceScaleFactorDeprecated();
     paintContext.setDeviceScaleFactor(scaleFactor);
 
     AffineTransform scale;
@@ -96,7 +96,8 @@ static void paintInternal(Page& page,
       paintContext.fillRect(dirtyRect, Color::white);
     }
   }
-  builder.endRecording()->playback(canvas);
+
+  canvas->drawPicture(builder.endRecording());
 }
 
 void PageWidgetDelegate::paint(Page& page,

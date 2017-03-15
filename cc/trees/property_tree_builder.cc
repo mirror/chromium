@@ -751,10 +751,10 @@ bool AddTransformNodeIfNeeded(
       // need to have their local transform updated when the inner / outer
       // viewport bounds change, but do not unconditionally move by that delta
       // like fixed position nodes.
-      if (scroll_ancestor->is_inner_viewport_scroll_layer) {
+      if (scroll_ancestor->scrolls_inner_viewport) {
         data_for_children->property_trees->transform_tree
             .AddNodeAffectedByInnerViewportBoundsDelta(node->id);
-      } else if (scroll_ancestor->is_outer_viewport_scroll_layer) {
+      } else if (scroll_ancestor->scrolls_outer_viewport) {
         data_for_children->property_trees->transform_tree
             .AddNodeAffectedByOuterViewportBoundsDelta(node->id);
       }
@@ -1163,8 +1163,7 @@ void AddScrollNodeIfNeeded(
     node.owning_layer_id = layer->id();
     node.scrollable = scrollable;
     node.main_thread_scrolling_reasons = main_thread_scrolling_reasons;
-    node.contains_non_fast_scrollable_region =
-        contains_non_fast_scrollable_region;
+    node.non_fast_scrollable_region = layer->non_fast_scrollable_region();
     gfx::Size clip_bounds;
     if (layer->scroll_clip_layer()) {
       clip_bounds = layer->scroll_clip_layer()->bounds();
@@ -1178,9 +1177,9 @@ void AddScrollNodeIfNeeded(
     }
 
     node.scroll_clip_layer_bounds = clip_bounds;
-    node.is_inner_viewport_scroll_layer =
+    node.scrolls_inner_viewport =
         layer == data_from_ancestor.inner_viewport_scroll_layer;
-    node.is_outer_viewport_scroll_layer =
+    node.scrolls_outer_viewport =
         layer == data_from_ancestor.outer_viewport_scroll_layer;
 
     node.bounds = layer->bounds();
@@ -1536,6 +1535,9 @@ void PropertyTreeBuilder::BuildPropertyTrees(
     const gfx::Rect& viewport,
     const gfx::Transform& device_transform,
     PropertyTrees* property_trees) {
+  // Preserve render surfaces when rebuilding.
+  std::vector<std::unique_ptr<RenderSurfaceImpl>> render_surfaces;
+  property_trees->effect_tree.TakeRenderSurfaces(&render_surfaces);
   property_trees->is_main_thread = false;
   property_trees->is_active = root_layer->IsActive();
   SkColor color = root_layer->layer_tree_impl()->background_color();
@@ -1546,6 +1548,8 @@ void PropertyTreeBuilder::BuildPropertyTrees(
       outer_viewport_scroll_layer, overscroll_elasticity_layer,
       elastic_overscroll, page_scale_factor, device_scale_factor, viewport,
       device_transform, property_trees, color);
+  property_trees->effect_tree.CreateOrReuseRenderSurfaces(
+      &render_surfaces, root_layer->layer_tree_impl());
   property_trees->ResetCachedData();
 }
 

@@ -22,7 +22,6 @@ import org.chromium.chrome.browser.util.UrlUtilities;
 import org.chromium.webapk.lib.client.WebApkVersion;
 
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * WebApkUpdateManager manages when to check for updates to the WebAPK's Web Manifest, and sends
@@ -31,20 +30,14 @@ import java.util.concurrent.TimeUnit;
 public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
     private static final String TAG = "WebApkUpdateManager";
 
-    /** Number of milliseconds between checks for whether the WebAPK's Web Manifest has changed. */
-    public static final long FULL_CHECK_UPDATE_INTERVAL = TimeUnit.DAYS.toMillis(3L);
-
-    /**
-     * Number of milliseconds to wait before re-requesting an updated WebAPK from the WebAPK
-     * server if the previous update attempt failed.
-     */
-    public static final long RETRY_UPDATE_DURATION = TimeUnit.HOURS.toMillis(12L);
-
     /**
      * Number of times to wait for updating the WebAPK after it is moved to the background prior
      * to doing the update while the WebAPK is in the foreground.
      */
     private static final int MAX_UPDATE_ATTEMPTS = 3;
+
+    /** Whether updates are enabled. Some tests disable updates. */
+    private static boolean sUpdatesEnabled = true;
 
     /** Data extracted from the WebAPK's launch intent and from the WebAPK's Android Manifest. */
     private WebApkInfo mInfo;
@@ -58,10 +51,8 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
     /** The WebApkActivity which owns the WebApkUpdateManager. */
     private final WebApkActivity mActivity;
 
-    /**
-     * Whether the previous WebAPK update succeeded. True if there has not been any update attempts.
-     */
-    private boolean mPreviousUpdateSucceeded;
+    /** The WebappDataStorage with cached data about prior update requests. */
+    private WebappDataStorage mStorage;
 
     private WebApkUpdateDataFetcher mFetcher;
 
@@ -81,23 +72,21 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
         }
     }
 
-    public WebApkUpdateManager(WebApkActivity activity) {
+    public WebApkUpdateManager(WebApkActivity activity, WebappDataStorage storage) {
         mActivity = activity;
+        mStorage = storage;
     }
 
     /**
-     * Checks whether the WebAPK's Web Manifest has changed. Requests an updated WebAPK if the
-     * Web Manifest has changed. Skips the check if the check was done recently.
+     * Checks whether the WebAPK's Web Manifest has changed. Requests an updated WebAPK if the Web
+     * Manifest has changed. Skips the check if the check was done recently.
      * @param tab  The tab of the WebAPK.
      * @param info The WebApkInfo of the WebAPK.
      */
     public void updateIfNeeded(Tab tab, WebApkInfo info) {
         mInfo = info;
 
-        WebappDataStorage storage = WebappRegistry.getInstance().getWebappDataStorage(mInfo.id());
-        mPreviousUpdateSucceeded = didPreviousUpdateSucceed(storage);
-
-        if (!shouldCheckIfWebManifestUpdated(storage, mInfo, mPreviousUpdateSucceeded)) return;
+        if (!shouldCheckIfWebManifestUpdated(mInfo)) return;
 
         mFetcher = buildFetcher();
         mFetcher.start(tab, mInfo, this);
@@ -124,6 +113,10 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
         return mPendingUpdate != null;
     }
 
+    public static void setUpdatesEnabledForTesting(boolean enabled) {
+        sUpdatesEnabled = enabled;
+    }
+
     @Override
     public void onWebManifestForInitialUrlNotWebApkCompatible() {
         onGotManifestData(null, null);
@@ -131,8 +124,7 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
 
     @Override
     public void onGotManifestData(WebApkInfo fetchedInfo, String bestIconUrl) {
-        WebappDataStorage storage = WebappRegistry.getInstance().getWebappDataStorage(mInfo.id());
-        storage.updateTimeOfLastCheckForUpdatedWebManifest();
+        mStorage.updateTimeOfLastCheckForUpdatedWebManifest();
 
         boolean gotManifest = (fetchedInfo != null);
         boolean needsUpgrade = isShellApkVersionOutOfDate(mInfo)
@@ -157,15 +149,15 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
         }
 
         if (!needsUpgrade) {
-            if (!mPreviousUpdateSucceeded) {
-                recordUpdate(storage, true);
+            if (!mStorage.didPreviousUpdateSucceed()) {
+                recordUpdate(mStorage, true /* success */, false /* relaxUpdates */);
             }
             return;
         }
 
         // Set WebAPK update as having failed in case that Chrome is killed prior to
         // {@link onBuiltWebApk} being called.
-        recordUpdate(storage, false);
+        recordUpdate(mStorage, false /* success */, false /* relaxUpdates*/);
 
         if (fetchedInfo != null) {
             scheduleUpdate(fetchedInfo, bestIconUrl, false /* isManifestStale */);
@@ -175,7 +167,7 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
         // Tell the server that the our version of the Web Manifest might be stale and to ignore
         // our Web Manifest data if the server's Web Manifest data is newer. This scenario can
         // occur if the Web Manifest is temporarily unreachable.
-        scheduleUpdate(mInfo, "", true /* isManifestStale */);
+        scheduleUpdate(mInfo, "" /* bestIconUrl */, true /* isManifestStale */);
     }
 
     /**
@@ -190,9 +182,7 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
      * fetched WebApkInfo otherwise.
      */
     protected void scheduleUpdate(WebApkInfo info, String bestIconUrl, boolean isManifestStale) {
-        WebappDataStorage storage =
-                WebappRegistry.getInstance().getWebappDataStorage(info.id());
-        int numberOfUpdateRequests = storage.getUpdateRequests();
+        int numberOfUpdateRequests = mStorage.getUpdateRequests();
         boolean forceUpdateNow =  numberOfUpdateRequests >= MAX_UPDATE_ATTEMPTS;
         if (!isInForeground() || forceUpdateNow) {
             updateAsync(info, bestIconUrl, isManifestStale);
@@ -200,7 +190,7 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
             return;
         }
 
-        storage.recordUpdateRequest();
+        mStorage.recordUpdateRequest();
         // The {@link numberOfUpdateRequests} can never exceed 2 here (otherwise we'll have taken
         // the branch above and have returned before reaching this statement).
         WebApkUma.recordUpdateRequestQueued(numberOfUpdateRequests);
@@ -218,8 +208,7 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
      */
     private void updateAsync(WebApkInfo info, String bestIconUrl, boolean isManifestStale) {
         updateAsyncImpl(info, bestIconUrl, isManifestStale);
-        WebappDataStorage storage = WebappRegistry.getInstance().getWebappDataStorage(mInfo.id());
-        storage.resetUpdateRequests();
+        mStorage.resetUpdateRequests();
         mPendingUpdate = null;
     }
 
@@ -258,11 +247,6 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
         mFetcher = null;
     }
 
-    /** Returns the current time. In a separate function for the sake of testing. */
-    protected long currentTimeMillis() {
-        return System.currentTimeMillis();
-    }
-
     /**
      * Reads the WebAPK's version code. Returns 0 on failure.
      */
@@ -279,19 +263,6 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
     }
 
     /**
-     * Returns whether the previous WebAPK update attempt succeeded. Returns true if there has not
-     * been any update attempts.
-     */
-    private static boolean didPreviousUpdateSucceed(WebappDataStorage storage) {
-        long lastUpdateCompletionTime = storage.getLastWebApkUpdateRequestCompletionTime();
-        if (lastUpdateCompletionTime == WebappDataStorage.LAST_USED_INVALID
-                || lastUpdateCompletionTime == WebappDataStorage.LAST_USED_UNSET) {
-            return true;
-        }
-        return storage.getDidLastWebApkUpdateRequestSucceed();
-    }
-
-    /**
      * Whether there is a new version of the //chrome/android/webapk/shell_apk code.
      */
     private static boolean isShellApkVersionOutOfDate(WebApkInfo info) {
@@ -301,13 +272,14 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
     /**
      * Returns whether the Web Manifest should be refetched to check whether it has been updated.
      * TODO: Make this method static once there is a static global clock class.
-     * @param storage WebappDataStorage with the WebAPK's cached data.
      * @param info Meta data from WebAPK's Android Manifest.
-     * @param previousUpdateSucceeded Whether the previous update attempt succeeded.
      * True if there has not been any update attempts.
      */
-    private boolean shouldCheckIfWebManifestUpdated(
-            WebappDataStorage storage, WebApkInfo info, boolean previousUpdateSucceeded) {
+    private boolean shouldCheckIfWebManifestUpdated(WebApkInfo info) {
+        if (!sUpdatesEnabled) {
+            return false;
+        }
+
         if (CommandLine.getInstance().hasSwitch(
                     ChromeSwitches.CHECK_FOR_WEB_MANIFEST_UPDATE_ON_STARTUP)) {
             return true;
@@ -317,25 +289,20 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
 
         if (isShellApkVersionOutOfDate(info)) return true;
 
-        long now = currentTimeMillis();
-        long sinceLastCheckDurationMs = now - storage.getLastCheckForWebManifestUpdateTime();
-        if (sinceLastCheckDurationMs >= FULL_CHECK_UPDATE_INTERVAL) return true;
-
-        long sinceLastUpdateRequestDurationMs =
-                now - storage.getLastWebApkUpdateRequestCompletionTime();
-        return sinceLastUpdateRequestDurationMs >= RETRY_UPDATE_DURATION
-                && !previousUpdateSucceeded;
+        return mStorage.shouldCheckForUpdate();
     }
 
     /**
      * Updates {@link WebappDataStorage} with the time of the latest WebAPK update and whether the
      * WebAPK update succeeded.
      */
-    private static void recordUpdate(WebappDataStorage storage, boolean success) {
+    private static void recordUpdate(
+            WebappDataStorage storage, boolean success, boolean relaxUpdates) {
         // Update the request time and result together. It prevents getting a correct request time
         // but a result from the previous request.
         storage.updateTimeOfLastWebApkUpdateRequestCompletion();
         storage.updateDidLastWebApkUpdateRequestSucceed(success);
+        storage.setRelaxedUpdates(relaxUpdates);
     }
 
     /**
@@ -392,9 +359,11 @@ public class WebApkUpdateManager implements WebApkUpdateDataFetcher.Observer {
      * fails.
      */
     @CalledByNative
-    private static void onBuiltWebApk(String id, boolean success) {
+    private static void onBuiltWebApk(String id, boolean success, boolean relaxUpdates) {
         WebappDataStorage storage = WebappRegistry.getInstance().getWebappDataStorage(id);
-        recordUpdate(storage, success);
+        if (storage == null) return;
+
+        recordUpdate(storage, success, relaxUpdates);
     }
 
     private static native void nativeUpdateAsync(String id, String startUrl, String scope,

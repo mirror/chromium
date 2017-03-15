@@ -4,34 +4,18 @@
 
 #include "net/quic/platform/api/quic_url_utils.h"
 
-using base::StringPiece;
 using std::string;
 
 namespace net {
 
 // static
-string QuicUrlUtils::HostName(StringPiece url) {
+string QuicUrlUtils::HostName(QuicStringPiece url) {
   return QuicUrlUtilsImpl::HostName(url);
 }
 
 // static
-bool QuicUrlUtils::IsValidUrl(StringPiece url) {
+bool QuicUrlUtils::IsValidUrl(QuicStringPiece url) {
   return QuicUrlUtilsImpl::IsValidUrl(url);
-}
-
-// static
-bool QuicUrlUtils::IsValidSNI(StringPiece sni) {
-  return QuicUrlUtilsImpl::IsValidSNI(sni);
-}
-
-// static
-char* QuicUrlUtils::NormalizeHostname(char* hostname) {
-  return QuicUrlUtilsImpl::NormalizeHostname(hostname);
-}
-
-// static
-void QuicUrlUtils::StringToQuicServerId(const string& str, QuicServerId* out) {
-  QuicUrlUtilsImpl::StringToQuicServerId(str, out);
 }
 
 }  // namespace net

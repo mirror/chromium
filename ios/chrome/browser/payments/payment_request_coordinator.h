@@ -7,13 +7,24 @@
 
 #import <UIKit/UIKit.h>
 
+#include "base/ios/block_types.h"
+#include "components/autofill/core/browser/autofill_manager.h"
 #import "ios/chrome/browser/chrome_coordinator.h"
 #import "ios/chrome/browser/payments/payment_items_display_coordinator.h"
 #import "ios/chrome/browser/payments/payment_method_selection_coordinator.h"
 #include "ios/chrome/browser/payments/payment_request.h"
+#include "ios/chrome/browser/payments/payment_request_error_coordinator.h"
 #import "ios/chrome/browser/payments/payment_request_view_controller.h"
 #import "ios/chrome/browser/payments/shipping_address_selection_coordinator.h"
 #import "ios/chrome/browser/payments/shipping_option_selection_coordinator.h"
+
+namespace ios {
+class ChromeBrowserState;
+}
+
+namespace payments {
+struct PaymentAddress;
+}
 
 @class PaymentRequestCoordinator;
 
@@ -30,7 +41,7 @@
 
 // Notifies the delegate that the user has selected a shipping address.
 - (void)paymentRequestCoordinator:(PaymentRequestCoordinator*)coordinator
-         didSelectShippingAddress:(web::PaymentAddress)shippingAddress;
+         didSelectShippingAddress:(payments::PaymentAddress)shippingAddress;
 
 // Notifies the delegate that the user has selected a shipping option.
 - (void)paymentRequestCoordinator:(PaymentRequestCoordinator*)coordinator
@@ -43,24 +54,28 @@
 // provided in the initializer.
 @interface PaymentRequestCoordinator
     : ChromeCoordinator<PaymentRequestViewControllerDelegate,
+                        PaymentRequestErrorCoordinatorDelegate,
                         PaymentItemsDisplayCoordinatorDelegate,
                         PaymentMethodSelectionCoordinatorDelegate,
                         ShippingAddressSelectionCoordinatorDelegate,
                         ShippingOptionSelectionCoordinatorDelegate>
-
-// Creates a Payment Request coordinator that will present UI on
-// |viewController| using data available from |personalDataManager|.
-- (instancetype)initWithBaseViewController:(UIViewController*)viewController
-    NS_DESIGNATED_INITIALIZER;
 
 // The PaymentRequest object owning an instance of web::PaymentRequest as
 // provided by the page invoking the Payment Request API. This pointer is not
 // owned by this class and should outlive it.
 @property(nonatomic, assign) PaymentRequest* paymentRequest;
 
+// An instance of autofill::AutofillManager used for credit card unmasking. This
+// reference is not owned by this class.
+@property(nonatomic, assign) autofill::AutofillManager* autofillManager;
+
+// An ios::ChromeBrowserState instance. This reference is not owned by this
+// class.
+@property(nonatomic, assign) ios::ChromeBrowserState* browserState;
+
 // The favicon of the page invoking the PaymentRequest API. Should be set before
 // calling |start|.
-@property(nonatomic, retain) UIImage* pageFavicon;
+@property(nonatomic, strong) UIImage* pageFavicon;
 
 // The title of the page invoking the Payment Request API. Should be set before
 // calling |start|.
@@ -75,6 +90,16 @@
 
 // Updates the payment details of the PaymentRequest and updates the UI.
 - (void)updatePaymentDetails:(web::PaymentDetails)paymentDetails;
+
+// Displays an error message. Invokes |callback| when the message is dismissed.
+- (void)displayErrorWithCallback:(ProceduralBlock)callback;
+
+// Called when a credit card has been successfully unmasked. Note that |card|
+// may be different from what's returned by the selected_credit_card() method of
+// |paymentRequest|, because CVC unmasking process may update the credit card
+// number and expiration date.
+- (void)fullCardRequestDidSucceedWithCard:(const autofill::CreditCard&)card
+                                      CVC:(const base::string16&)cvc;
 
 @end
 

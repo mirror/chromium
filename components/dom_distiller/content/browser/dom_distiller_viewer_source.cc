@@ -30,13 +30,13 @@
 #include "components/dom_distiller/core/url_constants.h"
 #include "components/dom_distiller/core/url_utils.h"
 #include "components/dom_distiller/core/viewer.h"
+#include "components/strings/grit/components_strings.h"
 #include "content/public/browser/navigation_details.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
-#include "grit/components_strings.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/base/url_util.h"
 #include "net/url_request/url_request.h"
@@ -138,7 +138,7 @@ void DomDistillerViewerSource::RequestViewerHandle::DidFinishNavigation(
   bool expected_main_view_request =
       navigation.SchemeIs(expected_scheme_.c_str()) &&
       expected_request_path_ == navigation.query();
-  if (navigation_handle->IsSamePage() || expected_main_view_request) {
+  if (navigation_handle->IsSameDocument() || expected_main_view_request) {
     // In-page navigations, as well as the main view request can be ignored.
     if (expected_main_view_request) {
       content::RenderFrameHost* render_frame_host =

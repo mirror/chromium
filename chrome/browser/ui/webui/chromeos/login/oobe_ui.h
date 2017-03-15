@@ -16,6 +16,7 @@
 #include "base/observer_list.h"
 #include "chrome/browser/chromeos/login/oobe_screen.h"
 #include "chrome/browser/chromeos/settings/shutdown_policy_handler.h"
+#include "chrome/browser/ui/webui/chromeos/login/base_screen_handler.h"
 #include "chrome/browser/ui/webui/chromeos/login/core_oobe_handler.h"
 #include "content/public/browser/web_ui_controller.h"
 
@@ -28,25 +29,24 @@ class DictionaryValue;
 }  // namespace base
 
 namespace chromeos {
-class AppLaunchSplashScreenActor;
-class ArcKioskSplashScreenActor;
-class ArcTermsOfServiceScreenActor;
-class AutoEnrollmentCheckScreenActor;
+class AppLaunchSplashScreenView;
+class ArcKioskSplashScreenView;
+class ArcTermsOfServiceScreenView;
+class AutoEnrollmentCheckScreenView;
 class BaseScreenHandler;
-class ControllerPairingScreenActor;
-class CoreOobeActor;
-class DeviceDisabledScreenActor;
-class EnableDebuggingScreenActor;
-class EnrollmentScreenActor;
+class ControllerPairingScreenView;
+class CoreOobeView;
+class DeviceDisabledScreenView;
+class EnableDebuggingScreenView;
+class EnrollmentScreenView;
 class EulaView;
 class ErrorScreen;
-class ErrorScreenHandler;
-class GaiaScreenHandler;
+class GaiaView;
 class HIDDetectionView;
-class HostPairingScreenActor;
+class HostPairingScreenView;
 class KioskAppMenuHandler;
-class KioskAutolaunchScreenActor;
-class KioskEnableScreenActor;
+class KioskAutolaunchScreenView;
+class KioskEnableScreenView;
 class LoginScreenContext;
 class NativeWindowDelegate;
 class NetworkDropdownHandler;
@@ -56,19 +56,17 @@ class SigninScreenHandler;
 class SigninScreenHandlerDelegate;
 class SupervisedUserCreationScreenHandler;
 class ResetView;
-class TermsOfServiceScreenActor;
-class UserBoardScreenHandler;
+class TermsOfServiceScreenView;
 class UserBoardView;
 class UserImageView;
 class UpdateView;
-class WrongHWIDScreenActor;
+class WrongHWIDScreenView;
 
 // A custom WebUI that defines datasource for out-of-box-experience (OOBE) UI:
 // - welcome screen (setup language/keyboard/network).
 // - eula screen (CrOS (+ OEM) EULA content/TPM password/crash reporting).
 // - update screen.
 class OobeUI : public content::WebUIController,
-               public CoreOobeHandler::Delegate,
                public ShutdownPolicyHandler::Delegate {
  public:
   // List of known types of OobeUI. Type added as path in chrome://oobe url, for
@@ -94,31 +92,30 @@ class OobeUI : public content::WebUIController,
   OobeUI(content::WebUI* web_ui, const GURL& url);
   ~OobeUI() override;
 
-  CoreOobeActor* GetCoreOobeActor();
+  CoreOobeView* GetCoreOobeView();
   NetworkView* GetNetworkView();
   EulaView* GetEulaView();
   UpdateView* GetUpdateView();
-  EnableDebuggingScreenActor* GetEnableDebuggingScreenActor();
-  EnrollmentScreenActor* GetEnrollmentScreenActor();
+  EnableDebuggingScreenView* GetEnableDebuggingScreenView();
+  EnrollmentScreenView* GetEnrollmentScreenView();
   ResetView* GetResetView();
-  KioskAutolaunchScreenActor* GetKioskAutolaunchScreenActor();
-  KioskEnableScreenActor* GetKioskEnableScreenActor();
-  TermsOfServiceScreenActor* GetTermsOfServiceScreenActor();
-  ArcTermsOfServiceScreenActor* GetArcTermsOfServiceScreenActor();
+  KioskAutolaunchScreenView* GetKioskAutolaunchScreenView();
+  KioskEnableScreenView* GetKioskEnableScreenView();
+  TermsOfServiceScreenView* GetTermsOfServiceScreenView();
+  ArcTermsOfServiceScreenView* GetArcTermsOfServiceScreenView();
   UserImageView* GetUserImageView();
   ErrorScreen* GetErrorScreen();
-  WrongHWIDScreenActor* GetWrongHWIDScreenActor();
-  AutoEnrollmentCheckScreenActor* GetAutoEnrollmentCheckScreenActor();
-  SupervisedUserCreationScreenHandler* GetSupervisedUserCreationScreenActor();
-  AppLaunchSplashScreenActor* GetAppLaunchSplashScreenActor();
-  ArcKioskSplashScreenActor* GetArcKioskSplashScreenActor();
-  bool IsJSReady(const base::Closure& display_is_ready_callback);
+  WrongHWIDScreenView* GetWrongHWIDScreenView();
+  AutoEnrollmentCheckScreenView* GetAutoEnrollmentCheckScreenView();
+  SupervisedUserCreationScreenHandler* GetSupervisedUserCreationScreenView();
+  AppLaunchSplashScreenView* GetAppLaunchSplashScreenView();
+  ArcKioskSplashScreenView* GetArcKioskSplashScreenView();
   HIDDetectionView* GetHIDDetectionView();
-  ControllerPairingScreenActor* GetControllerPairingScreenActor();
-  HostPairingScreenActor* GetHostPairingScreenActor();
-  DeviceDisabledScreenActor* GetDeviceDisabledScreenActor();
-  GaiaScreenHandler* GetGaiaScreenActor();
-  UserBoardView* GetUserBoardScreenActor();
+  ControllerPairingScreenView* GetControllerPairingScreenView();
+  HostPairingScreenView* GetHostPairingScreenView();
+  DeviceDisabledScreenView* GetDeviceDisabledScreenView();
+  GaiaView* GetGaiaScreenView();
+  UserBoardView* GetUserBoardView();
 
   // ShutdownPolicyHandler::Delegate
   void OnShutdownPolicyChanged(bool reboot_on_shutdown) override;
@@ -129,9 +126,14 @@ class OobeUI : public content::WebUIController,
   // Initializes the handlers.
   void InitializeHandlers();
 
+  // Called when the screen has changed.
+  void CurrentScreenChanged(OobeScreen screen);
+
   // Invoked after the async assets load. The screen handler that has the same
   // async assets load id will be initialized.
   void OnScreenAssetsLoaded(const std::string& async_assets_load_id);
+
+  bool IsJSReady(const base::Closure& display_is_ready_callback);
 
   // Shows or hides OOBE UI elements.
   void ShowOobeUI(bool show);
@@ -154,7 +156,7 @@ class OobeUI : public content::WebUIController,
 
   const std::string& display_type() const { return display_type_; }
 
-  SigninScreenHandler* signin_screen_handler_for_test() {
+  SigninScreenHandler* signin_screen_handler() {
     return signin_screen_handler_;
   }
 
@@ -167,10 +169,22 @@ class OobeUI : public content::WebUIController,
   void UpdateLocalizedStringsIfNeeded();
 
  private:
-  void AddScreenHandler(std::unique_ptr<BaseScreenHandler> handler);
+  // Lookup a view by its statically registered OobeScreen.
+  template <typename TView>
+  TView* GetView() {
+    OobeScreen expected_screen = TView::kScreenId;
+    for (BaseScreenHandler* handler : screen_handlers_) {
+      if (expected_screen == handler->oobe_screen())
+        return static_cast<TView*>(handler);
+    }
 
-  // CoreOobeHandler::Delegate implementation:
-  void OnCurrentScreenChanged(OobeScreen screen) override;
+    NOTREACHED() << "Unable to find handler for screen "
+                 << GetOobeScreenName(expected_screen);
+    return nullptr;
+  }
+
+  void AddWebUIHandler(std::unique_ptr<BaseWebUIHandler> handler);
+  void AddScreenHandler(std::unique_ptr<BaseScreenHandler> handler);
 
   // Type of UI.
   std::string display_type_;
@@ -186,47 +200,14 @@ class OobeUI : public content::WebUIController,
   // network dropdown.
   NetworkDropdownHandler* network_dropdown_handler_ = nullptr;
 
-  // Screens actors. Note, OobeUI owns them via |handlers_|, not directly here.
-  UpdateView* update_view_ = nullptr;
-  NetworkView* network_view_ = nullptr;
-  EnableDebuggingScreenActor* debugging_screen_actor_ = nullptr;
-  EulaView* eula_view_ = nullptr;
-  EnrollmentScreenActor* enrollment_screen_actor_ = nullptr;
-  ResetView* reset_view_ = nullptr;
-  HIDDetectionView* hid_detection_view_ = nullptr;
-  KioskAutolaunchScreenActor* autolaunch_screen_actor_ = nullptr;
-  KioskEnableScreenActor* kiosk_enable_screen_actor_ = nullptr;
-  WrongHWIDScreenActor* wrong_hwid_screen_actor_ = nullptr;
-  AutoEnrollmentCheckScreenActor* auto_enrollment_check_screen_actor_ = nullptr;
-  SupervisedUserCreationScreenHandler* supervised_user_creation_screen_actor_ =
+  SupervisedUserCreationScreenHandler* supervised_user_creation_screen_view_ =
       nullptr;
-  AppLaunchSplashScreenActor* app_launch_splash_screen_actor_ = nullptr;
-  ArcKioskSplashScreenActor* arc_kiosk_splash_screen_actor_ = nullptr;
-  ControllerPairingScreenActor* controller_pairing_screen_actor_ = nullptr;
-  HostPairingScreenActor* host_pairing_screen_actor_ = nullptr;
-  DeviceDisabledScreenActor* device_disabled_screen_actor_ = nullptr;
-
-  // Reference to ErrorScreenHandler that handles error screen
-  // requests and forward calls from native code to JS side.
-  ErrorScreenHandler* error_screen_handler_ = nullptr;
-
-  // Reference to GaiaScreenHandler that handles gaia screen requests and
-  // forwards calls from native code to JS side.
-  GaiaScreenHandler* gaia_screen_handler_ = nullptr;
-
-  // Reference to UserBoardScreenHandler, that allows to pick user on device
-  // and attempt authentication.
-  UserBoardScreenHandler* user_board_screen_handler_ = nullptr;
-
   // Reference to SigninScreenHandler that handles sign-in screen requests and
   // forwards calls from native code to JS side.
   SigninScreenHandler* signin_screen_handler_ = nullptr;
 
-  TermsOfServiceScreenActor* terms_of_service_screen_actor_ = nullptr;
-  ArcTermsOfServiceScreenActor* arc_terms_of_service_screen_actor_ = nullptr;
-  UserImageView* user_image_view_ = nullptr;
-
-  std::vector<BaseScreenHandler*> handlers_;  // Non-owning pointers.
+  std::vector<BaseWebUIHandler*> webui_handlers_;    // Non-owning pointers.
+  std::vector<BaseScreenHandler*> screen_handlers_;  // Non-owning pointers.
 
   KioskAppMenuHandler* kiosk_app_menu_handler_ =
       nullptr;  // Non-owning pointers.
@@ -257,6 +238,10 @@ class OobeUI : public content::WebUIController,
   std::unique_ptr<ShutdownPolicyHandler> shutdown_policy_handler_;
 
   std::unique_ptr<ash::ScreenDimmer> screen_dimmer_;
+
+  // Store the deferred JS calls before the screen handler instance is
+  // initialized.
+  std::unique_ptr<JSCallsContainer> js_calls_container;
 
   DISALLOW_COPY_AND_ASSIGN(OobeUI);
 };

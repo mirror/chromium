@@ -14,7 +14,6 @@
 #include "base/values.h"
 #include "cc/debug/picture_debug_util.h"
 #include "third_party/skia/include/core/SkCanvas.h"
-#include "third_party/skia/include/utils/SkPictureUtils.h"
 #include "ui/gfx/skia_util.h"
 
 namespace cc {
@@ -46,36 +45,12 @@ void DrawingDisplayItem::Raster(SkCanvas* canvas,
 
   // SkPicture always does a wrapping save/restore on the canvas, so it is not
   // necessary here.
-  if (callback)
+  if (callback) {
     picture_->playback(canvas, callback);
-  else
-    canvas->drawPicture(picture_.get());
-}
-
-void DrawingDisplayItem::AsValueInto(
-    const gfx::Rect& visual_rect,
-    base::trace_event::TracedValue* array) const {
-  array->BeginDictionary();
-  array->SetString("name", "DrawingDisplayItem");
-
-  array->BeginArray("visualRect");
-  array->AppendInteger(visual_rect.x());
-  array->AppendInteger(visual_rect.y());
-  array->AppendInteger(visual_rect.width());
-  array->AppendInteger(visual_rect.height());
-  array->EndArray();
-
-  array->BeginArray("cullRect");
-  array->AppendInteger(picture_->cullRect().x());
-  array->AppendInteger(picture_->cullRect().y());
-  array->AppendInteger(picture_->cullRect().width());
-  array->AppendInteger(picture_->cullRect().height());
-  array->EndArray();
-
-  std::string b64_picture;
-  PictureDebugUtil::SerializeAsBase64(picture_.get(), &b64_picture);
-  array->SetString("skp64", b64_picture);
-  array->EndDictionary();
+  } else {
+    // TODO(enne): switch this to playback once PaintRecord is real.
+    canvas->drawPicture(ToSkPicture(picture_.get()));
+  }
 }
 
 void DrawingDisplayItem::CloneTo(DrawingDisplayItem* item) const {
@@ -83,7 +58,7 @@ void DrawingDisplayItem::CloneTo(DrawingDisplayItem* item) const {
 }
 
 size_t DrawingDisplayItem::ExternalMemoryUsage() const {
-  return SkPictureUtils::ApproximateBytesUsed(ToSkPicture(picture_.get()));
+  return picture_->approximateBytesUsed();
 }
 
 DISABLE_CFI_PERF

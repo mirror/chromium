@@ -5,6 +5,7 @@
 #include "core/animation/CSSInterpolationTypesMap.h"
 
 #include <memory>
+#include "core/animation/CSSAngleInterpolationType.h"
 #include "core/animation/CSSBasicShapeInterpolationType.h"
 #include "core/animation/CSSBorderImageLengthBoxInterpolationType.h"
 #include "core/animation/CSSClipInterpolationType.h"
@@ -29,6 +30,7 @@
 #include "core/animation/CSSShadowListInterpolationType.h"
 #include "core/animation/CSSSizeListInterpolationType.h"
 #include "core/animation/CSSTextIndentInterpolationType.h"
+#include "core/animation/CSSTimeInterpolationType.h"
 #include "core/animation/CSSTransformInterpolationType.h"
 #include "core/animation/CSSTransformOriginInterpolationType.h"
 #include "core/animation/CSSTranslateInterpolationType.h"
@@ -146,6 +148,7 @@ const InterpolationTypes& CSSInterpolationTypesMap::get(
     case CSSPropertyFloodOpacity:
     case CSSPropertyFontSizeAdjust:
     case CSSPropertyOpacity:
+    case CSSPropertyOrder:
     case CSSPropertyOrphans:
     case CSSPropertyShapeImageThreshold:
     case CSSPropertyStopOpacity:
@@ -339,20 +342,26 @@ CSSInterpolationTypesMap::createCSSInterpolationTypesForSyntax(
     }
 
     switch (component.m_type) {
+      case CSSSyntaxType::Angle:
+        result.push_back(WTF::makeUnique<CSSAngleInterpolationType>(property));
+        break;
       case CSSSyntaxType::Color:
         result.push_back(WTF::makeUnique<CSSColorInterpolationType>(property));
         break;
       case CSSSyntaxType::Length:
+      case CSSSyntaxType::LengthPercentage:
+      case CSSSyntaxType::Percentage:
         result.push_back(WTF::makeUnique<CSSLengthInterpolationType>(property));
         break;
       case CSSSyntaxType::Number:
-      case CSSSyntaxType::Percentage:
-      case CSSSyntaxType::LengthPercentage:
+        result.push_back(WTF::makeUnique<CSSNumberInterpolationType>(property));
+        break;
+      case CSSSyntaxType::Time:
+        result.push_back(WTF::makeUnique<CSSTimeInterpolationType>(property));
+        break;
       case CSSSyntaxType::Image:
       case CSSSyntaxType::Url:
       case CSSSyntaxType::Integer:
-      case CSSSyntaxType::Angle:
-      case CSSSyntaxType::Time:
       case CSSSyntaxType::Resolution:
       case CSSSyntaxType::TransformFunction:
         // TODO(alancutter): Support smooth interpolation of these types.

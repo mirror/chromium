@@ -31,7 +31,7 @@ DEFINE_TRACE(HitRegion) {
 }
 
 void HitRegionManager::addHitRegion(HitRegion* hitRegion) {
-  m_hitRegionList.add(hitRegion);
+  m_hitRegionList.insert(hitRegion);
 
   if (!hitRegion->id().isEmpty())
     m_hitRegionIdMap.set(hitRegion->id(), hitRegion);
@@ -50,7 +50,7 @@ void HitRegionManager::removeHitRegion(HitRegion* hitRegion) {
   if (hitRegion->control())
     m_hitRegionControlMap.erase(hitRegion->control());
 
-  m_hitRegionList.remove(hitRegion);
+  m_hitRegionList.erase(hitRegion);
 }
 
 void HitRegionManager::removeHitRegionById(const String& id) {
@@ -75,7 +75,7 @@ void HitRegionManager::removeHitRegionsInRect(const FloatRect& rect,
     HitRegion* hitRegion = *it;
     hitRegion->removePixels(clearArea);
     if (hitRegion->path().isEmpty())
-      toBeRemoved.add(hitRegion);
+      toBeRemoved.insert(hitRegion);
   }
 
   itEnd = toBeRemoved.rend();
@@ -90,13 +90,13 @@ void HitRegionManager::removeAllHitRegions() {
 }
 
 HitRegion* HitRegionManager::getHitRegionById(const String& id) const {
-  return m_hitRegionIdMap.get(id);
+  return m_hitRegionIdMap.at(id);
 }
 
 HitRegion* HitRegionManager::getHitRegionByControl(
     const Element* control) const {
   if (control)
-    return m_hitRegionControlMap.get(control);
+    return m_hitRegionControlMap.at(control);
 
   return nullptr;
 }

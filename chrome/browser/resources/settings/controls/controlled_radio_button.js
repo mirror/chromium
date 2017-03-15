@@ -8,6 +8,8 @@ Polymer({
   behaviors: [PrefControlBehavior],
 
   properties: {
+    label: String,
+
     name: {
       type: String,
       notify: true,
@@ -36,12 +38,12 @@ Polymer({
   /**
    * @param {boolean} controlled
    * @param {string} name
-   * @param {chrome.settingsPrivate.PrefObject} pref
    * @return {boolean}
    * @private
    */
-  showIndicator_: function(controlled, name, pref) {
-    return controlled && name == Settings.PrefUtil.prefToString(pref);
+  showIndicator_: function(controlled, name) {
+    return controlled &&
+        name == Settings.PrefUtil.prefToString(assert(this.pref));
   },
 
   /**

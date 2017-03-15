@@ -6,14 +6,15 @@ package org.chromium.chrome.browser.preferences;
 
 import android.Manifest;
 
-import org.chromium.base.ContextUtils;
+import org.chromium.base.Callback;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.SuppressFBWarnings;
-import org.chromium.chrome.browser.ChromeApplication;
+import org.chromium.chrome.browser.AppHooks;
+import org.chromium.components.location.LocationSettingsDialogContext.LocationSettingsDialogContextEnum;
+import org.chromium.components.location.LocationSettingsDialogOutcome;
 import org.chromium.components.location.LocationUtils;
-import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.WindowAndroid;
 
@@ -41,25 +42,51 @@ public class LocationSettings {
     public static LocationSettings getInstance() {
         ThreadUtils.assertOnUiThread();
         if (sInstance == null) {
-            ChromeApplication application =
-                    (ChromeApplication) ContextUtils.getApplicationContext();
-            sInstance = application.createLocationSettings();
+            sInstance = AppHooks.get().createLocationSettings();
         }
         return sInstance;
     }
 
     @CalledByNative
-    private static boolean canSitesRequestLocationPermission(WebContents webContents) {
-        ContentViewCore cvc = ContentViewCore.fromWebContents(webContents);
-        if (cvc == null) return false;
-        WindowAndroid windowAndroid = cvc.getWindowAndroid();
+    private static boolean hasAndroidLocationPermission() {
+        return LocationUtils.getInstance().hasAndroidLocationPermission();
+    }
+
+    @CalledByNative
+    private static boolean canPromptForAndroidLocationPermission(WebContents webContents) {
+        WindowAndroid windowAndroid = webContents.getTopLevelNativeWindow();
         if (windowAndroid == null) return false;
 
-        LocationUtils locationUtils = LocationUtils.getInstance();
-        if (!locationUtils.isSystemLocationSettingEnabled()) return false;
+        return windowAndroid.canRequestPermission(Manifest.permission.ACCESS_FINE_LOCATION);
+    }
 
-        return locationUtils.hasAndroidLocationPermission()
-                || windowAndroid.canRequestPermission(Manifest.permission.ACCESS_FINE_LOCATION);
+    @CalledByNative
+    private static boolean isSystemLocationSettingEnabled() {
+        return LocationUtils.getInstance().isSystemLocationSettingEnabled();
+    }
+
+    @CalledByNative
+    private static boolean canPromptToEnableSystemLocationSetting() {
+        return LocationUtils.getInstance().canPromptToEnableSystemLocationSetting();
+    }
+
+    @CalledByNative
+    private static void promptToEnableSystemLocationSetting(
+            @LocationSettingsDialogContextEnum int promptContext, WebContents webContents,
+            final long nativeCallback) {
+        WindowAndroid window = webContents.getTopLevelNativeWindow();
+        if (window == null) {
+            nativeOnLocationSettingsDialogOutcome(
+                    nativeCallback, LocationSettingsDialogOutcome.NO_PROMPT);
+            return;
+        }
+        LocationUtils.getInstance().promptToEnableSystemLocationSetting(
+                promptContext, window, new Callback<Integer>() {
+                    @Override
+                    public void onResult(Integer result) {
+                        nativeOnLocationSettingsDialogOutcome(nativeCallback, result);
+                    }
+                });
     }
 
     /**
@@ -81,4 +108,6 @@ public class LocationSettings {
     public static void setInstanceForTesting(LocationSettings instance) {
         sInstance = instance;
     }
+
+    private static native void nativeOnLocationSettingsDialogOutcome(long callback, int result);
 }

@@ -117,7 +117,7 @@ class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
   template <typename T>
   T* cached(CollectionType collectionType) {
     return static_cast<T*>(
-        m_atomicNameCaches.get(namedNodeListKey(collectionType, starAtom)));
+        m_atomicNameCaches.at(namedNodeListKey(collectionType, starAtom)));
   }
 
   TagCollection* addCache(ContainerNode& node,
@@ -167,7 +167,6 @@ class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
       list->didMoveToDocument(oldDocument, newDocument);
     }
   }
-
   DECLARE_TRACE();
 
   DECLARE_TRACE_WRAPPERS();
@@ -189,6 +188,8 @@ class NodeListsNodeData final : public GarbageCollected<NodeListsNodeData> {
   NodeListAtomicNameCacheMap m_atomicNameCaches;
   TagCollectionCacheNS m_tagCollectionCacheNS;
 };
+
+DEFINE_TRAIT_FOR_TRACE_WRAPPERS(NodeListsNodeData);
 
 template <typename Collection>
 inline Collection* ContainerNode::ensureCachedCollection(CollectionType type) {

@@ -38,7 +38,7 @@ from code_generator_v8 import CodeGeneratorDictionaryImpl
 from code_generator_v8 import CodeGeneratorV8
 from code_generator_v8 import CodeGeneratorUnionType
 from code_generator_v8 import CodeGeneratorCallbackFunction
-from code_generator_web_module import CodeGeneratorWebModule
+from code_generator_web_agent_api import CodeGeneratorWebAgentAPI
 from compute_interfaces_info_individual import InterfaceInfoCollector
 from compute_interfaces_info_overall import (compute_interfaces_info_overall,
                                              interfaces_info)
@@ -196,6 +196,7 @@ class IdlCompilerOptions(object):
         self.impl_output_directory = impl_output_directory
         self.target_component = target_component
 
+
 def bindings_tests(output_directory, verbose):
     executive = Executive()
 
@@ -337,7 +338,7 @@ def bindings_tests(output_directory, verbose):
                 options,
                 idl_filenames)
             generate_bindings(
-                CodeGeneratorWebModule,
+                CodeGeneratorWebAgentAPI,
                 info_provider,
                 options,
                 idl_filenames)

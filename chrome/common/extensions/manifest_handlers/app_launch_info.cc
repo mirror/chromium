@@ -51,8 +51,8 @@ bool ReadLaunchDimension(const extensions::Manifest* manifest,
   return true;
 }
 
-static base::LazyInstance<AppLaunchInfo> g_empty_app_launch_info =
-    LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<AppLaunchInfo>::DestructorAtExit
+    g_empty_app_launch_info = LAZY_INSTANCE_INITIALIZER;
 
 const AppLaunchInfo& GetAppLaunchInfo(const Extension* extension) {
   AppLaunchInfo* info = static_cast<AppLaunchInfo*>(
@@ -305,7 +305,7 @@ bool AppLaunchManifestHandler::Parse(Extension* extension,
   std::unique_ptr<AppLaunchInfo> info(new AppLaunchInfo);
   if (!info->Parse(extension, error))
     return false;
-  extension->SetManifestData(keys::kLaunch, info.release());
+  extension->SetManifestData(keys::kLaunch, std::move(info));
   return true;
 }
 

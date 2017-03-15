@@ -39,7 +39,8 @@ const char kJsScreenPath[] = "login.UserImageScreen";
 namespace chromeos {
 
 UserImageScreenHandler::UserImageScreenHandler()
-    : BaseScreenHandler(kJsScreenPath) {
+    : BaseScreenHandler(kScreenId) {
+  set_call_js_prefix(kJsScreenPath);
   ui::ResourceBundle& bundle = ui::ResourceBundle::GetSharedInstance();
   media::SoundsManager* manager = media::SoundsManager::Get();
   manager->Initialize(SOUND_OBJECT_DELETE,
@@ -76,7 +77,7 @@ void UserImageScreenHandler::Show() {
     return;
   }
   screen_show_time_ = base::Time::Now();
-  ShowScreen(OobeScreen::SCREEN_USER_IMAGE_PICKER);
+  ShowScreen(kScreenId);
 
   // When shown, query camera presence.
   if (screen_ && is_ready_)

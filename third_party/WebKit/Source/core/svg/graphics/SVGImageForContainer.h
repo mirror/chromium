@@ -80,15 +80,14 @@ class SVGImageForContainer final : public Image {
             const FloatRect&,
             const FloatRect&,
             RespectImageOrientationEnum,
-            ImageClampingMode,
-            const ColorBehavior&) override;
+            ImageClampingMode) override;
 
   // FIXME: Implement this to be less conservative.
   bool currentFrameKnownToBeOpaque(MetadataMode = UseCurrentMetadata) override {
     return false;
   }
 
-  sk_sp<SkImage> imageForCurrentFrame(const ColorBehavior&) override;
+  sk_sp<SkImage> imageForCurrentFrame() override;
 
  protected:
   void drawPattern(GraphicsContext&,

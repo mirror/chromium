@@ -10,11 +10,11 @@
 #include "ash/common/wm/window_state.h"
 #include "ash/common/wm/wm_event.h"
 #include "ash/common/wm/wm_screen_util.h"
-#include "ash/common/wm_lookup.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
-#include "ash/common/wm_window_tracker.h"
 #include "ash/root_window_controller.h"
+#include "ash/shell.h"
+#include "ui/aura/window_tracker.h"
 #include "ui/display/display.h"
 #include "ui/display/types/display_constants.h"
 #include "ui/gfx/geometry/rect.h"
@@ -47,9 +47,8 @@ bool IsWindowOrAncestorLockedToRoot(const WmWindow* window) {
 // the child windows and transient children of the transient children.
 void MoveAllTransientChildrenToNewRoot(const display::Display& display,
                                        WmWindow* window) {
-  WmWindow* dst_root = WmLookup::Get()
-                           ->GetRootWindowControllerWithDisplayId(display.id())
-                           ->GetWindow();
+  WmWindow* dst_root =
+      Shell::GetRootWindowControllerWithDisplayId(display.id())->GetWindow();
   for (WmWindow* transient_child : window->GetTransientChildren()) {
     const int container_id = transient_child->GetParent()->GetShellWindowId();
     DCHECK_GE(container_id, 0);
@@ -139,7 +138,7 @@ void SetBoundsInScreen(WmWindow* window,
   if (!window->GetTransientParent() &&
       !IsWindowOrAncestorLockedToRoot(window)) {
     RootWindowController* dst_root_window_controller =
-        WmLookup::Get()->GetRootWindowControllerWithDisplayId(display.id());
+        Shell::GetRootWindowControllerWithDisplayId(display.id());
     DCHECK(dst_root_window_controller);
     WmWindow* dst_root = dst_root_window_controller->GetWindow();
     DCHECK(dst_root);
@@ -157,11 +156,11 @@ void SetBoundsInScreen(WmWindow* window,
       WmWindow* focused = WmShell::Get()->GetFocusedWindow();
       WmWindow* active = WmShell::Get()->GetActiveWindow();
 
-      WmWindowTracker tracker;
+      aura::WindowTracker tracker;
       if (focused)
-        tracker.Add(focused);
+        tracker.Add(focused->aura_window());
       if (active && focused != active)
-        tracker.Add(active);
+        tracker.Add(active->aura_window());
 
       gfx::Point origin = bounds_in_screen.origin();
       const gfx::Point display_origin = display.bounds().origin();
@@ -177,11 +176,11 @@ void SetBoundsInScreen(WmWindow* window,
       MoveAllTransientChildrenToNewRoot(display, window);
 
       // Restore focused/active window.
-      if (tracker.Contains(focused)) {
+      if (focused && tracker.Contains(focused->aura_window())) {
         focused->SetFocused();
-        WmShell::Get()->set_root_window_for_new_windows(
+        Shell::GetInstance()->set_root_window_for_new_windows(
             focused->GetRootWindow());
-      } else if (tracker.Contains(active)) {
+      } else if (active && tracker.Contains(active->aura_window())) {
         active->Activate();
       }
       // TODO(oshima): We should not have to update the bounds again

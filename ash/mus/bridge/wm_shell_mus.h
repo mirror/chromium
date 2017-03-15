@@ -36,10 +36,12 @@ class WmShellMusTestApi;
 // WmShell implementation for mus.
 class WmShellMus : public WmShell {
  public:
+  // If |create_session_state_delegate_stub| is true SessionStateDelegateStub is
+  // created. If false, the SessionStateDelegate from Shell is used.
   WmShellMus(WmWindow* primary_root_window,
-             std::unique_ptr<ShellDelegate> shell_delegate,
              WindowManager* window_manager,
-             views::PointerWatcherEventRouter* pointer_watcher_event_router);
+             views::PointerWatcherEventRouter* pointer_watcher_event_router,
+             bool create_session_state_delegate_stub);
   ~WmShellMus() override;
 
   static WmShellMus* Get();
@@ -55,12 +57,8 @@ class WmShellMus : public WmShell {
   WindowManager* window_manager() { return window_manager_; }
 
   // WmShell:
-  void Initialize(
-      const scoped_refptr<base::SequencedWorkerPool>& pool) override;
   void Shutdown() override;
   bool IsRunningInMash() const override;
-  WmWindow* NewWindow(ui::wm::WindowType window_type,
-                      ui::LayerType layer_type) override;
   WmWindow* GetFocusedWindow() override;
   WmWindow* GetActiveWindow() override;
   WmWindow* GetCaptureWindow() override;
@@ -72,7 +70,6 @@ class WmShellMus : public WmShell {
   display::Display GetFirstDisplay() const override;
   bool IsInUnifiedMode() const override;
   bool IsInUnifiedModeIgnoreMirroring() const override;
-  bool IsForceMaximizeOnFirstRun() override;
   void SetDisplayWorkAreaInsets(WmWindow* window,
                                 const gfx::Insets& insets) override;
   bool IsPinned() override;
@@ -98,8 +95,6 @@ class WmShellMus : public WmShell {
   std::unique_ptr<ImmersiveFullscreenController>
   CreateImmersiveFullscreenController() override;
   std::unique_ptr<KeyEventWatcher> CreateKeyEventWatcher() override;
-  void OnOverviewModeStarting() override;
-  void OnOverviewModeEnded() override;
   SessionStateDelegate* GetSessionStateDelegate() override;
   void AddDisplayObserver(WmDisplayObserver* observer) override;
   void RemoveDisplayObserver(WmDisplayObserver* observer) override;

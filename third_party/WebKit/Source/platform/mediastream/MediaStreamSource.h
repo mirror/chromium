@@ -71,14 +71,14 @@ class PLATFORM_EXPORT MediaStreamSource final
   static MediaStreamSource* create(const String& id,
                                    StreamType,
                                    const String& name,
-                                   bool remote,
                                    ReadyState = ReadyStateLive,
                                    bool requiresConsumer = false);
+
+  ~MediaStreamSource();
 
   const String& id() const { return m_id; }
   StreamType type() const { return m_type; }
   const String& name() const { return m_name; }
-  bool remote() const { return m_remote; }
 
   void setReadyState(ReadyState);
   ReadyState getReadyState() const { return m_readyState; }
@@ -102,7 +102,7 @@ class PLATFORM_EXPORT MediaStreamSource final
   bool requiresAudioConsumer() const { return m_requiresConsumer; }
   void addAudioConsumer(AudioDestinationConsumer*);
   bool removeAudioConsumer(AudioDestinationConsumer*);
-  const HeapHashSet<Member<AudioDestinationConsumer>>& audioConsumers() {
+  const HashSet<AudioDestinationConsumer*>& audioConsumers() {
     return m_audioConsumers;
   }
 
@@ -116,19 +116,17 @@ class PLATFORM_EXPORT MediaStreamSource final
   MediaStreamSource(const String& id,
                     StreamType,
                     const String& name,
-                    bool remote,
                     ReadyState,
                     bool requiresConsumer);
 
   String m_id;
   StreamType m_type;
   String m_name;
-  bool m_remote;
   ReadyState m_readyState;
   bool m_requiresConsumer;
   HeapHashSet<WeakMember<Observer>> m_observers;
   Mutex m_audioConsumersLock;
-  HeapHashSet<Member<AudioDestinationConsumer>> m_audioConsumers;
+  HashSet<AudioDestinationConsumer*> m_audioConsumers;
   std::unique_ptr<ExtraData> m_extraData;
   WebMediaConstraints m_constraints;
 };

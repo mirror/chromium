@@ -497,13 +497,25 @@ static CSSValueList* valueForItemPositionWithOverflowAlignment(
   CSSValueList* result = CSSValueList::createSpaceSeparated();
   if (data.positionType() == LegacyPosition)
     result->append(*CSSIdentifierValue::create(CSSValueLegacy));
-  // To avoid needing to copy the RareNonInheritedData, we repurpose the 'auto'
-  // flag to not just mean 'auto' prior to running the StyleAdjuster but also
-  // mean 'normal' after running it.
-  result->append(*CSSIdentifierValue::create(
-      data.position() == ItemPositionAuto
-          ? ComputedStyle::initialDefaultAlignment().position()
-          : data.position()));
+  if (data.position() == ItemPositionAuto) {
+    // To avoid needing to copy the RareNonInheritedData, we repurpose the
+    // 'auto' flag to not just mean 'auto' prior to running the StyleAdjuster
+    // but also mean 'normal' after running it.
+    result->append(*CSSIdentifierValue::create(
+        ComputedStyle::initialDefaultAlignment().position()));
+  } else if (data.position() == ItemPositionBaseline) {
+    result->append(
+        *CSSValuePair::create(CSSIdentifierValue::create(CSSValueBaseline),
+                              CSSIdentifierValue::create(CSSValueBaseline),
+                              CSSValuePair::DropIdenticalValues));
+  } else if (data.position() == ItemPositionLastBaseline) {
+    result->append(
+        *CSSValuePair::create(CSSIdentifierValue::create(CSSValueLast),
+                              CSSIdentifierValue::create(CSSValueBaseline),
+                              CSSValuePair::DropIdenticalValues));
+  } else {
+    result->append(*CSSIdentifierValue::create(data.position()));
+  }
   if (data.position() >= ItemPositionCenter &&
       data.overflow() != OverflowAlignmentDefault)
     result->append(*CSSIdentifierValue::create(data.overflow()));
@@ -1341,7 +1353,7 @@ static CSSValueList* valuesForBorderRadiusCorner(LengthSize radius,
 static const CSSValue& valueForBorderRadiusCorner(LengthSize radius,
                                                   const ComputedStyle& style) {
   CSSValueList& list = *valuesForBorderRadiusCorner(radius, style);
-  if (list.item(0).equals(list.item(1)))
+  if (list.item(0) == list.item(1))
     return list.item(0);
   return list;
 }
@@ -1582,9 +1594,9 @@ static CSSValueList* valuesForSidesShorthand(
   if (!topValue || !rightValue || !bottomValue || !leftValue)
     return nullptr;
 
-  bool showLeft = !compareCSSValuePtr(rightValue, leftValue);
-  bool showBottom = !compareCSSValuePtr(topValue, bottomValue) || showLeft;
-  bool showRight = !compareCSSValuePtr(topValue, rightValue) || showBottom;
+  bool showLeft = !dataEquivalent(rightValue, leftValue);
+  bool showBottom = !dataEquivalent(topValue, bottomValue) || showLeft;
+  bool showRight = !dataEquivalent(topValue, rightValue) || showBottom;
 
   list->append(*topValue);
   if (showRight)
@@ -1850,8 +1862,10 @@ CSSValue* ComputedStyleCSSValueMapping::valueForFont(
   // this serialization.
   CSSValue* ligaturesValue = valueForFontVariantLigatures(style);
   CSSValue* numericValue = valueForFontVariantNumeric(style);
-  if (!ligaturesValue->equals(*CSSIdentifierValue::create(CSSValueNormal)) ||
-      !numericValue->equals(*CSSIdentifierValue::create(CSSValueNormal)))
+  if (!dataEquivalent<CSSValue>(ligaturesValue,
+                                CSSIdentifierValue::create(CSSValueNormal)) ||
+      !dataEquivalent<CSSValue>(numericValue,
+                                CSSIdentifierValue::create(CSSValueNormal)))
     return nullptr;
 
   CSSIdentifierValue* capsValue = valueForFontVariantCaps(style);
@@ -2314,6 +2328,13 @@ const CSSValue* ComputedStyleCSSValueMapping::get(
       return CSSIdentifierValue::create(style.display());
     case CSSPropertyEmptyCells:
       return CSSIdentifierValue::create(style.emptyCells());
+    case CSSPropertyPlaceContent: {
+      // TODO (jfernandez): The spec states that we should return the specified
+      // value.
+      return valuesForShorthandProperty(placeContentShorthand(), style,
+                                        layoutObject, styledNode,
+                                        allowVisitedStyle);
+    }
     case CSSPropertyAlignContent:
       return valueForContentPositionAndDistributionWithOverflowAlignment(
           style.alignContent(), CSSValueStretch);
@@ -2532,6 +2553,8 @@ const CSSValue* ComputedStyleCSSValueMapping::get(
               : CSSPrimitiveValue::UnitType::Number);
     case CSSPropertyLineHeight:
       return valueForLineHeight(style);
+    case CSSPropertyLineHeightStep:
+      return zoomAdjustedPixelValue(style.lineHeightStep(), style);
     case CSSPropertyListStyleImage:
       if (style.listStyleImage())
         return style.listStyleImage()->computedCSSValue();
@@ -3258,9 +3281,8 @@ const CSSValue* ComputedStyleCSSValueMapping::get(
                                           CSSPropertyBorderBottom,
                                           CSSPropertyBorderLeft};
       for (size_t i = 0; i < WTF_ARRAY_LENGTH(properties); ++i) {
-        if (!compareCSSValuePtr<CSSValue>(
-                value, get(properties[i], style, layoutObject, styledNode,
-                           allowVisitedStyle)))
+        if (!dataEquivalent(value, get(properties[i], style, layoutObject,
+                                       styledNode, allowVisitedStyle)))
           return nullptr;
       }
       return value;
@@ -3644,18 +3666,6 @@ const CSSValue* ComputedStyleCSSValueMapping::get(
       if (style.containsSize())
         list->append(*CSSIdentifierValue::create(CSSValueSize));
       ASSERT(list->length());
-      return list;
-    }
-    case CSSPropertySnapHeight: {
-      if (!style.snapHeightUnit())
-        return CSSPrimitiveValue::create(0,
-                                         CSSPrimitiveValue::UnitType::Pixels);
-      CSSValueList* list = CSSValueList::createSpaceSeparated();
-      list->append(*CSSPrimitiveValue::create(
-          style.snapHeightUnit(), CSSPrimitiveValue::UnitType::Pixels));
-      if (style.snapHeightPosition())
-        list->append(*CSSPrimitiveValue::create(
-            style.snapHeightPosition(), CSSPrimitiveValue::UnitType::Integer));
       return list;
     }
     case CSSPropertyVariable:

@@ -8,12 +8,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.MailTo;
 import android.net.Uri;
+import android.provider.Browser;
 import android.provider.ContactsContract;
 
 import org.chromium.base.metrics.RecordUserAction;
+import org.chromium.chrome.browser.DefaultBrowserInfo;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.contextmenu.ContextMenuItemDelegate;
+import org.chromium.chrome.browser.document.ChromeLauncherActivity;
 import org.chromium.chrome.browser.multiwindow.MultiWindowUtils;
 import org.chromium.chrome.browser.net.spdyproxy.DataReductionProxySettings;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
@@ -38,6 +41,8 @@ public class TabContextMenuItemDelegate implements ContextMenuItemDelegate {
 
     private final Clipboard mClipboard;
     private final Tab mTab;
+    private boolean mLoadOriginalImageRequestedForPageLoad;
+    private EmptyTabObserver mDataReductionProxyContextMenuTabObserver;
 
     /**
      * Builds a {@link TabContextMenuItemDelegate} instance.
@@ -45,6 +50,18 @@ public class TabContextMenuItemDelegate implements ContextMenuItemDelegate {
     public TabContextMenuItemDelegate(Tab tab) {
         mTab = tab;
         mClipboard = new Clipboard(mTab.getApplicationContext());
+        mDataReductionProxyContextMenuTabObserver = new EmptyTabObserver() {
+            @Override
+            public void onPageLoadStarted(Tab tab, String url) {
+                mLoadOriginalImageRequestedForPageLoad = false;
+            }
+        };
+        mTab.addObserver(mDataReductionProxyContextMenuTabObserver);
+    }
+
+    @Override
+    public void onDestroy() {
+        mTab.removeObserver(mDataReductionProxyContextMenuTabObserver);
     }
 
     @Override
@@ -165,13 +182,14 @@ public class TabContextMenuItemDelegate implements ContextMenuItemDelegate {
     }
 
     @Override
-    public void onReloadLoFiImages() {
-        mTab.reloadLoFiImages();
+    public void onLoadOriginalImage() {
+        mLoadOriginalImageRequestedForPageLoad = true;
+        mTab.loadOriginalImage();
     }
 
     @Override
-    public void onLoadOriginalImage() {
-        mTab.loadOriginalImage();
+    public boolean wasLoadOriginalImageRequestedForPageLoad() {
+        return mLoadOriginalImageRequestedForPageLoad;
     }
 
     @Override
@@ -230,6 +248,33 @@ public class TabContextMenuItemDelegate implements ContextMenuItemDelegate {
             context.startActivity(chromeIntent);
             activityStarted = true;
         }
+    }
+
+    @Override
+    public void onOpenInNewChromeTabFromCCT(String linkUrl, boolean isIncognito) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(linkUrl));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setPackage(mTab.getApplicationContext().getPackageName());
+        intent.putExtra(ChromeLauncherActivity.EXTRA_IS_ALLOWED_TO_RETURN_TO_PARENT, false);
+        if (isIncognito) {
+            intent.putExtra(IntentHandler.EXTRA_OPEN_NEW_INCOGNITO_TAB, true);
+            intent.putExtra(
+                    Browser.EXTRA_APPLICATION_ID, mTab.getApplicationContext().getPackageName());
+            IntentHandler.addTrustedIntentExtras(intent);
+        }
+        IntentUtils.safeStartActivity(mTab.getActivity(), intent);
+    }
+
+    @Override
+    public String getTitleForOpenTabInExternalApp() {
+        return DefaultBrowserInfo.getTitleOpenInDefaultBrowser(false);
+    }
+
+    @Override
+    public void onOpenInDefaultBrowser(String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        IntentUtils.safeStartActivity(mTab.getActivity(), intent);
     }
 
     /**

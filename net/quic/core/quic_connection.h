@@ -27,7 +27,6 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "base/strings/string_piece.h"
 #include "net/quic/core/crypto/quic_decrypter.h"
 #include "net/quic/core/quic_alarm.h"
 #include "net/quic/core/quic_alarm_factory.h"
@@ -45,6 +44,7 @@
 #include "net/quic/core/quic_types.h"
 #include "net/quic/platform/api/quic_export.h"
 #include "net/quic/platform/api/quic_socket_address.h"
+#include "net/quic/platform/api/quic_string_piece.h"
 
 namespace net {
 
@@ -229,9 +229,6 @@ class QUIC_EXPORT_PRIVATE QuicConnectionDebugVisitor
   // Called when a BlockedFrame has been parsed.
   virtual void OnBlockedFrame(const QuicBlockedFrame& frame) {}
 
-  // Called when a PathCloseFrame has been parsed.
-  virtual void OnPathCloseFrame(const QuicPathCloseFrame& frame) {}
-
   // Called when a public reset packet has been received.
   virtual void OnPublicResetPacket(const QuicPublicResetPacket& packet) {}
 
@@ -362,9 +359,6 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   // Send a WINDOW_UPDATE frame to the peer.
   virtual void SendWindowUpdate(QuicStreamId id, QuicStreamOffset byte_offset);
 
-  // Send a PATH_CLOSE frame to the peer.
-  virtual void SendPathClose(QuicPathId path_id);
-
   // Closes the connection.
   // |connection_close_behavior| determines whether or not a connection close
   // packet is sent to the peer.
@@ -448,7 +442,6 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   bool OnGoAwayFrame(const QuicGoAwayFrame& frame) override;
   bool OnWindowUpdateFrame(const QuicWindowUpdateFrame& frame) override;
   bool OnBlockedFrame(const QuicBlockedFrame& frame) override;
-  bool OnPathCloseFrame(const QuicPathCloseFrame& frame) override;
   void OnPacketComplete() override;
 
   // QuicConnectionCloseDelegateInterface
@@ -676,7 +669,7 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   QuicConnectionHelperInterface* helper() { return helper_; }
   QuicAlarmFactory* alarm_factory() { return alarm_factory_; }
 
-  base::StringPiece GetCurrentPacket();
+  QuicStringPiece GetCurrentPacket();
 
   const QuicPacketGenerator& packet_generator() const {
     return packet_generator_;
@@ -741,6 +734,12 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   // Returns true if the packet should be discarded and not sent.
   virtual bool ShouldDiscardPacket(const SerializedPacket& packet);
 
+  // Returns true if this connection allows self address change.
+  virtual bool AllowSelfAddressChange() const;
+
+  // Called when a self address change is observed.
+  virtual void OnSelfAddressChange() {}
+
  private:
   friend class test::QuicConnectionPeer;
   friend class test::PacketSavingConnection;
@@ -794,10 +793,6 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   // Attempts to process any queued undecryptable packets.
   void MaybeProcessUndecryptablePackets();
 
-  void ProcessAckFrame(const QuicAckFrame& incoming_ack);
-
-  void ProcessStopWaitingFrame(const QuicStopWaitingFrame& stop_waiting);
-
   // Sends any packets which are a response to the last packet, including both
   // acks and pending writes if an ack opened the congestion window.
   void MaybeSendInResponseToPacket();
@@ -833,15 +828,6 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   // underlying writer, connection, or protocol.
   QuicByteCount GetLimitedMaxPacketSize(
       QuicByteCount suggested_max_packet_size);
-
-  // Called when |path_id| is considered as closed because either a PATH_CLOSE
-  // frame is sent or received. Stops receiving packets on closed path. Drops
-  // receive side of a closed path, and packets with retransmittable frames on a
-  // closed path are marked as retransmissions which will be transmitted on
-  // other paths.
-  // TODO(fayang): complete OnPathClosed once QuicMultipathSentPacketManager and
-  // QuicMultipathReceivedPacketManager are landed in QuicConnection.
-  void OnPathClosed(QuicPathId path_id);
 
   // Do any work which logically would be done in OnPacket but can not be
   // safely done until the packet is validated. Returns true if packet can be
@@ -1089,12 +1075,12 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   // Whether a GoAway has been received.
   bool goaway_received_;
 
-  // If true, multipath is enabled for this connection.
-  bool multipath_enabled_;
-
   // Indicates whether a write error is encountered currently. This is used to
   // avoid infinite write errors.
   bool write_error_occured_;
+
+  // Indicates not to send or process stop waiting frames.
+  bool no_stop_waiting_frames_;
 
   DISALLOW_COPY_AND_ASSIGN(QuicConnection);
 };

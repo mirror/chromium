@@ -65,6 +65,7 @@ struct LayoutBoxRareData {
         m_overrideLogicalContentHeight(-1),
         m_hasOverrideContainingBlockContentLogicalWidth(false),
         m_hasOverrideContainingBlockContentLogicalHeight(false),
+        m_hasPreviousContentBoxSizeAndLayoutOverflowRect(false),
         m_percentHeightContainer(nullptr),
         m_snapContainer(nullptr),
         m_snapAreas(nullptr) {}
@@ -76,8 +77,10 @@ struct LayoutBoxRareData {
   LayoutUnit m_overrideLogicalContentWidth;
   LayoutUnit m_overrideLogicalContentHeight;
 
-  bool m_hasOverrideContainingBlockContentLogicalWidth;
-  bool m_hasOverrideContainingBlockContentLogicalHeight;
+  bool m_hasOverrideContainingBlockContentLogicalWidth : 1;
+  bool m_hasOverrideContainingBlockContentLogicalHeight : 1;
+  bool m_hasPreviousContentBoxSizeAndLayoutOverflowRect : 1;
+
   LayoutUnit m_overrideContainingBlockContentLogicalWidth;
   LayoutUnit m_overrideContainingBlockContentLogicalHeight;
 
@@ -98,6 +101,12 @@ struct LayoutBoxRareData {
 
     return *m_snapAreas;
   }
+
+  // Used by BoxPaintInvalidator. Stores the previous content box size and
+  // layout overflow rect after the last paint invalidation. They are valid if
+  // m_hasPreviousContentBoxSizeAndLayoutOverflowRect is true.
+  LayoutSize m_previousContentBoxSize;
+  LayoutRect m_previousLayoutOverflowRect;
 };
 
 // LayoutBox implements the full CSS box model.
@@ -490,10 +499,24 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   virtual void updateAfterLayout();
 
   DISABLE_CFI_PERF LayoutUnit contentWidth() const {
-    return clientWidth() - paddingLeft() - paddingRight();
+    // We're dealing with LayoutUnit and saturated arithmetic here, so we need
+    // to guard against negative results. The value returned from clientWidth()
+    // may in itself be a victim of saturated arithmetic; e.g. if both border
+    // sides were sufficiently wide (close to LayoutUnit::max()).  Here we
+    // subtract two padding values from that result, which is another source of
+    // saturated arithmetic.
+    return (clientWidth() - paddingLeft() - paddingRight())
+        .clampNegativeToZero();
   }
   DISABLE_CFI_PERF LayoutUnit contentHeight() const {
-    return clientHeight() - paddingTop() - paddingBottom();
+    // We're dealing with LayoutUnit and saturated arithmetic here, so we need
+    // to guard against negative results. The value returned from clientHeight()
+    // may in itself be a victim of saturated arithmetic; e.g. if both border
+    // sides were sufficiently wide (close to LayoutUnit::max()).  Here we
+    // subtract two padding values from that result, which is another source of
+    // saturated arithmetic.
+    return (clientHeight() - paddingTop() - paddingBottom())
+        .clampNegativeToZero();
   }
   LayoutSize contentSize() const {
     return LayoutSize(contentWidth(), contentHeight());
@@ -869,9 +892,9 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
 
   bool paintedOutputOfObjectHasNoEffectRegardlessOfSize() const override;
   LayoutRect localVisualRect() const override;
-  bool mapToVisualRectInAncestorSpace(
+  bool mapToVisualRectInAncestorSpaceInternal(
       const LayoutBoxModelObject* ancestor,
-      LayoutRect&,
+      TransformState&,
       VisualRectFlags = DefaultVisualRectFlags) const override;
 
   LayoutUnit containingBlockLogicalHeightForGetComputedStyle() const;
@@ -1212,12 +1235,16 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   virtual IntSize originAdjustmentForScrollbars() const;
   IntSize scrolledContentOffset() const;
 
-  // Maps a rect in scrolling contents space to box space and apply overflow
-  // clip if needed. Returns true if no clipping applied or the rect actually
-  // intersects the clipping region. If edgeInclusive is true, then this method
-  // may return true even if the resulting rect has zero area.
+  // Maps from scrolling contents space to box space and apply overflow
+  // clip if needed. Returns true if no clipping applied or the flattened quad
+  // bounds actually intersects the clipping region. If edgeInclusive is true,
+  // then this method may return true even if the resulting rect has zero area.
+  //
+  // When applying offsets and not clips, the TransformAccumulation is
+  // respected. If there is a clip, the TransformState is flattened first.
   bool mapScrollingContentsRectToBoxSpace(
-      LayoutRect&,
+      TransformState&,
+      TransformState::TransformAccumulation,
       VisualRectFlags = DefaultVisualRectFlags) const;
 
   virtual bool hasRelativeLogicalWidth() const;
@@ -1308,6 +1335,42 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
 
   virtual bool hasControlClip() const { return false; }
 
+  class MutableForPainting : public LayoutObject::MutableForPainting {
+   public:
+    void savePreviousSize() { layoutBox().m_previousSize = layoutBox().size(); }
+    void savePreviousContentBoxSizeAndLayoutOverflowRect();
+    void clearPreviousContentBoxSizeAndLayoutOverflowRect() {
+      if (!layoutBox().m_rareData)
+        return;
+      layoutBox().m_rareData->m_hasPreviousContentBoxSizeAndLayoutOverflowRect =
+          false;
+    }
+
+   protected:
+    friend class LayoutBox;
+    MutableForPainting(const LayoutBox& box)
+        : LayoutObject::MutableForPainting(box) {}
+    LayoutBox& layoutBox() { return static_cast<LayoutBox&>(m_layoutObject); }
+  };
+
+  MutableForPainting getMutableForPainting() const {
+    return MutableForPainting(*this);
+  }
+
+  LayoutSize previousSize() const { return m_previousSize; }
+  LayoutSize previousContentBoxSize() const {
+    return m_rareData &&
+                   m_rareData->m_hasPreviousContentBoxSizeAndLayoutOverflowRect
+               ? m_rareData->m_previousContentBoxSize
+               : previousSize();
+  }
+  LayoutRect previousLayoutOverflowRect() const {
+    return m_rareData &&
+                   m_rareData->m_hasPreviousContentBoxSizeAndLayoutOverflowRect
+               ? m_rareData->m_previousLayoutOverflowRect
+               : LayoutRect(LayoutPoint(), previousSize());
+  }
+
  protected:
   virtual LayoutRect controlClipRect(const LayoutPoint&) const {
     return LayoutRect();
@@ -1322,7 +1385,9 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   void styleDidChange(StyleDifference, const ComputedStyle* oldStyle) override;
   void updateFromStyle() override;
 
-  virtual ItemPosition selfAlignmentNormalBehavior() const {
+  virtual ItemPosition selfAlignmentNormalBehavior(
+      const LayoutBox* child = nullptr) const {
+    DCHECK(!child);
     return ItemPositionStretch;
   }
 
@@ -1507,6 +1572,19 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
 
   void updateBackgroundAttachmentFixedStatusAfterStyleChange();
 
+  void inflateVisualRectForFilter(TransformState&) const;
+  void inflateVisualRectForFilterUnderContainer(
+      TransformState&,
+      const LayoutObject& container,
+      const LayoutBoxModelObject* ancestorToStopAt) const;
+
+  LayoutRectOutsets m_marginBoxOutsets;
+
+  void addSnapArea(const LayoutBox&);
+  void removeSnapArea(const LayoutBox&);
+
+  LayoutRect debugRect() const override;
+
   // The CSS border box rect for this box.
   //
   // The rectangle is in this box's physical coordinates but with a
@@ -1517,23 +1595,13 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   // with this box's margins.
   LayoutRect m_frameRect;
 
+  // Previous size of m_frameRect, updated after paint invalidation.
+  LayoutSize m_previousSize;
+
   // Our intrinsic height, used for min-height: min-content etc. Maintained by
   // updateLogicalHeight. This is logicalHeight() before it is clamped to
   // min/max.
   mutable LayoutUnit m_intrinsicContentLogicalHeight;
-
-  void inflateVisualRectForFilter(LayoutRect&) const;
-  void inflateVisualRectForFilterUnderContainer(
-      LayoutRect&,
-      const LayoutObject& container,
-      const LayoutBoxModelObject* ancestorToStopAt) const;
-
-  LayoutRectOutsets m_marginBoxOutsets;
-
-  void addSnapArea(const LayoutBox&);
-  void removeSnapArea(const LayoutBox&);
-
-  LayoutRect debugRect() const override;
 
  protected:
   // The logical width of the element if it were to break its lines at every

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Media Capture from DOM Elements (video/audio) Browser Test</title>
+<title>Media Capture from Canvas Browser Test</title>
 </head>
 <body>
-  <div> Capture and playback from video/audio elements.</div>
+  <div> Capture and playback from canvas elements.</div>
 </body>
 <script type="text/javascript" src="webrtc_test_utilities.js"></script>
 <script>
@@ -33,9 +33,27 @@ function drawWebGL(canvas, drawCounter) {
   checkForRedraw(canvas, drawCounter, drawWebGL);
 };
 
+function drawOffscreenCanvasCommit(canvas, drawCounter) {
+  var ctx = canvas.getContext('2d');
+  ctx.fillStyle = 'green';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.commit();
+  checkForRedraw(canvas, drawCounter, drawOffscreenCanvasCommit);
+};
+
+function drawBitmapRenderer(canvas, drawCounter) {
+  var gl = canvas.getContext('bitmaprenderer');
+  var offscreen = new OffscreenCanvas(canvas.width, canvas.height);
+  var ctx = offscreen.getContext('2d');
+  ctx.fillStyle = 'green';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  gl.transferFromImageBitmap(offscreen.transferToImageBitmap());
+  checkForRedraw(canvas, drawCounter, drawBitmapRenderer);
+};
+
 function testCanvasCapture(drawFunction) {
   var canvas = document.createElement('canvas');
-  document.body.appendChild(canvas);
+  canvas.width = canvas.height = 64;
 
   var stream = canvas.captureStream();
   assertTrue(stream, 'Error creating MediaStream');
@@ -54,7 +72,12 @@ function testCanvasCapture(drawFunction) {
   };
 
   recorder.start(0);
-  drawFunction(canvas, 0);
+  if (drawFunction.toString() == drawOffscreenCanvasCommit.toString()) {
+    var offscreen = canvas.transferControlToOffscreen();
+    drawFunction(offscreen, 0);
+  } else {
+    drawFunction(canvas, 0);
+  }
 }
 
 </script>

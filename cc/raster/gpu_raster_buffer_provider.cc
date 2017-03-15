@@ -13,6 +13,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/trace_event/trace_event.h"
 #include "cc/base/histograms.h"
+#include "cc/paint/paint_canvas.h"
 #include "cc/playback/image_hijack_canvas.h"
 #include "cc/playback/raster_source.h"
 #include "cc/raster/scoped_gpu_raster.h"
@@ -45,7 +46,7 @@ static void RasterizeSource(
   ResourceProvider::ScopedSkSurfaceProvider scoped_surface(
       context_provider, resource_lock, async_worker_context_enabled,
       use_distance_field_text, raster_source->CanUseLCDText(),
-      raster_source->HasImpliedColorSpace(), msaa_sample_count);
+      msaa_sample_count);
   SkSurface* sk_surface = scoped_surface.sk_surface();
   // Allocating an SkSurface will fail after a lost context.  Pretend we
   // rasterized, as the contents of the resource don't matter anymore.
@@ -199,8 +200,8 @@ bool GpuRasterBufferProvider::IsResourceReadyToDraw(
   if (!sync_token.HasData())
     return true;
 
-  // IsSyncTokenSignalled is threadsafe, no need for worker context lock.
-  return worker_context_provider_->ContextSupport()->IsSyncTokenSignalled(
+  // IsSyncTokenSignaled is thread-safe, no need for worker context lock.
+  return worker_context_provider_->ContextSupport()->IsSyncTokenSignaled(
       sync_token);
 }
 

@@ -25,9 +25,9 @@ cr.define('extension_item_tests', function() {
     {selector: '#version', text: extensionData.version},
     {selector: '#extension-id', text: 'ID:' + extensionData.id},
     {selector: '#inspect-views'},
-    {selector: '#inspect-views paper-button', text: 'foo.html'},
-    {selector: '#inspect-views paper-button:nth-of-type(0n + 2)',
-     text: 'bar.html'},
+    {selector: '#inspect-views paper-button', text: 'foo.html,'},
+    {selector: '#inspect-views paper-button:nth-of-type(2)',
+     text: '1 more…'},
   ];
 
   /**
@@ -112,6 +112,11 @@ cr.define('extension_item_tests', function() {
 
         testNormalElementsAreVisible(item);
         testDeveloperElementsAreVisible(item);
+
+        extension_test_util.testVisible(item, '#dev-reload-button', false);
+        item.set('data.location', chrome.developerPrivate.Location.UNPACKED);
+        Polymer.dom.flush();
+        extension_test_util.testVisible(item, '#dev-reload-button', true);
       });
 
       /** Tests that the delegate methods are correctly called. */
@@ -125,20 +130,34 @@ cr.define('extension_item_tests', function() {
         mockDelegate.testClickingCalls(
             item.$$('#inspect-views paper-button'),
             'inspectItemView', [item.data.id, item.data.views[0]]);
-        mockDelegate.testClickingCalls(
-            item.$$('#inspect-views paper-button:nth-of-type(0n + 2)'),
-            'inspectItemView', [item.data.id, item.data.views[1]]);
 
-        var listener = new extension_test_util.ListenerMock();
-        listener.addListener(item, 'extension-item-show-details',
+        var listener1 = new extension_test_util.ListenerMock();
+        listener1.addListener(item, 'extension-item-show-details',
                              {data: item.data});
         MockInteractions.tap(item.$$('#details-button'));
-        listener.verify();
+        listener1.verify();
+
+        var listener2 = new extension_test_util.ListenerMock();
+        listener2.addListener(item, 'extension-item-show-details',
+                             {data: item.data});
+        MockInteractions.tap(
+            item.$$('#inspect-views paper-button:nth-of-type(2)'));
+        listener2.verify();
 
         item.set('data.disableReasons.corruptInstall', true);
         Polymer.dom.flush();
         mockDelegate.testClickingCalls(
             item.$$('#repair-button'), 'repairItem', [item.data.id]);
+
+        item.set('data.disableReasons.corruptInstall', false);
+        Polymer.dom.flush();
+        mockDelegate.testClickingCalls(
+            item.$$('#terminated-reload-button'), 'reloadItem', [item.data.id]);
+
+        item.set('data.location', chrome.developerPrivate.Location.UNPACKED);
+        Polymer.dom.flush();
+        mockDelegate.testClickingCalls(
+            item.$$('#dev-reload-button'), 'reloadItem', [item.data.id]);
       });
 
       test(assert(TestNames.Warnings), function() {

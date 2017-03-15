@@ -35,7 +35,7 @@ public class PaymentRequestMetricsTest extends PaymentRequestTestBase {
         // The user has a shipping address and a credit card associated with that address on disk.
         String mBillingAddressId = mHelper.setProfile(new AutofillProfile("", "https://example.com",
                 true, "Jon Doe", "Google", "340 Main St", "CA", "Los Angeles", "", "90291", "",
-                "US", "555-555-5555", "", "en-US"));
+                "US", "650-253-0000", "", "en-US"));
         mHelper.setCreditCard(new CreditCard("", "https://example.com", true, true, "Jon Doe",
                 "4111111111111111", "1111", "12", "2050", "visa", R.drawable.pr_visa,
                 mBillingAddressId, "" /* serverId */));
@@ -260,6 +260,34 @@ public class PaymentRequestMetricsTest extends PaymentRequestTestBase {
 
         assertOnlySpecificSelectedPaymentMethodMetricLogged(
                 PaymentRequestMetrics.SELECTED_METHOD_ANDROID_PAY);
+    }
+
+    /**
+     * Expect that the "Shown" event is recorded only once.
+     */
+    @MediumTest
+    @Feature({"Payments"})
+    public void testShownLoggedOnlyOnce()
+            throws InterruptedException, ExecutionException, TimeoutException {
+        // Initiate a payment request.
+        triggerUIAndWait("ccBuy", mReadyToPay);
+
+        // Make sure sure that the "Shown" event was logged.
+        assertEquals(1,
+                RecordHistogram.getHistogramValueCountForTesting(
+                        "PaymentRequest.CheckoutFunnel.Shown", 1));
+
+        // Add a shipping address, which triggers a second "Show".
+        clickInShippingSummaryAndWait(R.id.payments_section, mReadyForInput);
+        clickInShippingAddressAndWait(R.id.payments_add_option_button, mReadyToEdit);
+        setTextInEditorAndWait(new String[] {"Seb Doe", "Google", "340 Main St", "Los Angeles",
+                "CA", "90291", "650-253-0000"}, mEditorTextUpdate);
+        clickInEditorAndWait(R.id.payments_edit_done_button, mReadyToPay);
+
+        // Make sure "Shown" is still logged only once.
+        assertEquals(1,
+                RecordHistogram.getHistogramValueCountForTesting(
+                        "PaymentRequest.CheckoutFunnel.Shown", 1));
     }
 
     /**

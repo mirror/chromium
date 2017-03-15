@@ -60,13 +60,14 @@
 #include "components/autofill/core/common/form_data_predictions.h"
 #include "components/autofill/core/common/form_field_data.h"
 #include "components/autofill/core/common/password_form_fill_data.h"
+#include "components/autofill/core/common/signatures_util.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
 #include "components/rappor/public/rappor_utils.h"
 #include "components/rappor/rappor_service_impl.h"
 #include "components/security_state/core/security_state.h"
+#include "components/strings/grit/components_strings.h"
 #include "google_apis/gaia/identity_provider.h"
-#include "grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/geometry/rect.h"
 #include "url/gurl.h"
@@ -1039,6 +1040,7 @@ void AutofillManager::OnDidGetUploadDetails(
                                      weak_ptr_factory_.GetWeakPtr()));
     AutofillMetrics::LogCardUploadDecisionMetric(
         AutofillMetrics::UPLOAD_OFFERED);
+    LogCardUploadDecisionUkm(AutofillMetrics::UPLOAD_OFFERED);
   } else {
     // If the upload details request failed, fall back to a local save. The
     // reasoning here is as follows:
@@ -1058,7 +1060,10 @@ void AutofillManager::OnDidGetUploadDetails(
             base::Unretained(personal_data_), upload_request_.card));
     AutofillMetrics::LogCardUploadDecisionMetric(
         AutofillMetrics::UPLOAD_NOT_OFFERED_GET_UPLOAD_DETAILS_FAILED);
+    LogCardUploadDecisionUkm(
+        AutofillMetrics::UPLOAD_NOT_OFFERED_GET_UPLOAD_DETAILS_FAILED);
   }
+  pending_upload_request_url_ = GURL();
 }
 
 void AutofillManager::OnDidUploadCard(
@@ -1218,11 +1223,15 @@ void AutofillManager::ImportFormData(const FormStructure& submitted_form) {
                                        &get_profiles_decision_metric,
                                        &rappor_metric_name);
 
+    pending_upload_request_url_ = GURL(submitted_form.source_url());
+
     // Both the CVC and address checks are done.  Conform to the legacy order of
     // reporting on CVC then address.
     if (upload_request_.cvc.empty()) {
       AutofillMetrics::LogCardUploadDecisionMetric(
           AutofillMetrics::UPLOAD_NOT_OFFERED_NO_CVC);
+      LogCardUploadDecisionUkm(AutofillMetrics::UPLOAD_NOT_OFFERED_NO_CVC);
+      pending_upload_request_url_ = GURL();
       CollectRapportSample(submitted_form.source_url(),
                            "Autofill.CardUploadNotOfferedNoCvc");
       return;
@@ -1231,6 +1240,8 @@ void AutofillManager::ImportFormData(const FormStructure& submitted_form) {
       DCHECK(get_profiles_decision_metric != AutofillMetrics::UPLOAD_OFFERED);
       AutofillMetrics::LogCardUploadDecisionMetric(
           get_profiles_decision_metric);
+      LogCardUploadDecisionUkm(get_profiles_decision_metric);
+      pending_upload_request_url_ = GURL();
       if (!rappor_metric_name.empty()) {
         CollectRapportSample(submitted_form.source_url(), rappor_metric_name);
       }
@@ -1679,7 +1690,7 @@ std::unique_ptr<FormStructure> AutofillManager::ValidateSubmittedForm(
   if (!FindCachedForm(form, &cached_submitted_form))
     return std::unique_ptr<FormStructure>();
 
-  submitted_form->UpdateFromCache(*cached_submitted_form);
+  submitted_form->UpdateFromCache(*cached_submitted_form, false);
   return submitted_form;
 }
 
@@ -1692,8 +1703,9 @@ bool AutofillManager::FindCachedForm(const FormData& form,
   // protocol with the crowdsourcing server does not permit us to discard the
   // original versions of the forms.
   *form_structure = NULL;
+  const auto& form_signature = autofill::CalculateFormSignature(form);
   for (auto& cur_form : base::Reversed(form_structures_)) {
-    if (*cur_form == form) {
+    if (cur_form->form_signature() == form_signature || *cur_form == form) {
       *form_structure = cur_form.get();
 
       // The same form might be cached with multiple field counts: in some
@@ -1775,41 +1787,17 @@ bool AutofillManager::UpdateCachedForm(const FormData& live_form,
   if (!needs_update)
     return true;
 
-  if (form_structures_.size() >= kMaxFormCacheSize)
+  // Note: We _must not_ remove the original version of the cached form from
+  // the list of |form_structures_|. Otherwise, we break parsing of the
+  // crowdsourcing server's response to our query.
+  if (!ParseForm(live_form, updated_form))
     return false;
 
-  // Add the new or updated form to our cache.
-  form_structures_.push_back(base::MakeUnique<FormStructure>(live_form));
-  *updated_form = form_structures_.rbegin()->get();
-  (*updated_form)->DetermineHeuristicTypes();
-
-  // If we have cached data, propagate it to the updated form.
-  if (cached_form) {
-    std::map<base::string16, const AutofillField*> cached_fields;
-    for (size_t i = 0; i < cached_form->field_count(); ++i) {
-      const AutofillField* field = cached_form->field(i);
-      cached_fields[field->unique_name()] = field;
-    }
-
-    for (size_t i = 0; i < (*updated_form)->field_count(); ++i) {
-      AutofillField* field = (*updated_form)->field(i);
-      auto cached_field = cached_fields.find(field->unique_name());
-      if (cached_field != cached_fields.end()) {
-        field->set_server_type(cached_field->second->server_type());
-        field->is_autofilled = cached_field->second->is_autofilled;
-        field->set_previously_autofilled(
-            cached_field->second->previously_autofilled());
-      }
-    }
-
-    // Note: We _must not_ remove the original version of the cached form from
-    // the list of |form_structures_|.  Otherwise, we break parsing of the
-    // crowdsourcing server's response to our query.
-  }
+  if (cached_form)
+    (*updated_form)->UpdateFromCache(*cached_form, true);
 
   // Annotate the updated form with its predicted types.
-  std::vector<FormStructure*> forms(1, *updated_form);
-  driver_->SendAutofillTypePredictionsToRenderer(forms);
+  driver_->SendAutofillTypePredictionsToRenderer({*updated_form});
 
   return true;
 }
@@ -1870,23 +1858,17 @@ void AutofillManager::ParseForms(const std::vector<FormData>& forms) {
   for (const FormData& form : forms) {
     const auto parse_form_start_time = base::TimeTicks::Now();
 
-    std::unique_ptr<FormStructure> form_structure =
-        base::MakeUnique<FormStructure>(form);
-    form_structure->ParseFieldTypesFromAutocompleteAttributes();
-    if (!form_structure->ShouldBeParsed())
+    FormStructure* form_structure = nullptr;
+    if (!ParseForm(form, &form_structure))
       continue;
+    DCHECK(form_structure);
 
-    form_structure->DetermineHeuristicTypes();
-
-    // Ownership is transferred to |form_structures_| which maintains it until
-    // the manager is Reset() or destroyed. It is safe to use references below
-    // as long as receivers don't take ownership.
-    form_structures_.push_back(std::move(form_structure));
-
-    if (form_structures_.back()->ShouldBeCrowdsourced())
-      queryable_forms.push_back(form_structures_.back().get());
+    // Set aside forms with method GET or author-specified types, so that they
+    // are not included in the query to the server.
+    if (form_structure->ShouldBeCrowdsourced())
+      queryable_forms.push_back(form_structure);
     else
-      non_queryable_forms.push_back(form_structures_.back().get());
+      non_queryable_forms.push_back(form_structure);
 
     AutofillMetrics::LogParseFormTiming(base::TimeTicks::Now() -
                                         parse_form_start_time);
@@ -1926,6 +1908,26 @@ void AutofillManager::ParseForms(const std::vector<FormData>& forms) {
   // going to get about them.  For the other forms, we'll wait until we get a
   // response from the server.
   driver_->SendAutofillTypePredictionsToRenderer(non_queryable_forms);
+}
+
+bool AutofillManager::ParseForm(const FormData& form,
+                                FormStructure** parsed_form_structure) {
+  DCHECK(parsed_form_structure);
+  if (form_structures_.size() >= kMaxFormCacheSize)
+    return false;
+
+  auto form_structure = base::MakeUnique<FormStructure>(form);
+  form_structure->ParseFieldTypesFromAutocompleteAttributes();
+  if (!form_structure->ShouldBeParsed())
+    return false;
+
+  // Ownership is transferred to |form_structures_| which maintains it until
+  // the manager is Reset() or destroyed. It is safe to use references below
+  // as long as receivers don't take ownership.
+  form_structures_.push_back(std::move(form_structure));
+  *parsed_form_structure = form_structures_.back().get();
+  (*parsed_form_structure)->DetermineHeuristicTypes();
+  return true;
 }
 
 int AutofillManager::BackendIDToInt(const std::string& backend_id) const {
@@ -2196,5 +2198,11 @@ void AutofillManager::DumpAutofillData(bool imported_cc) const {
   fclose(file);
 }
 #endif  // ENABLE_FORM_DEBUG_DUMP
+
+void AutofillManager::LogCardUploadDecisionUkm(
+    AutofillMetrics::CardUploadDecisionMetric upload_decision) {
+  AutofillMetrics::LogCardUploadDecisionUkm(
+      client_->GetUkmService(), pending_upload_request_url_, upload_decision);
+}
 
 }  // namespace autofill

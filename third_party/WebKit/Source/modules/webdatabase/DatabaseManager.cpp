@@ -29,9 +29,9 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
-#include "core/dom/ExecutionContextTask.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/inspector/ConsoleMessage.h"
+#include "core/inspector/InspectorInstrumentation.h"
 #include "modules/webdatabase/Database.h"
 #include "modules/webdatabase/DatabaseCallback.h"
 #include "modules/webdatabase/DatabaseClient.h"
@@ -63,6 +63,7 @@ DatabaseManager::~DatabaseManager() {}
 // This is just for ignoring DatabaseCallback::handleEvent()'s return value.
 static void databaseCallbackHandleEvent(DatabaseCallback* callback,
                                         Database* database) {
+  probe::AsyncTask asyncTask(database->getExecutionContext(), callback);
   callback->handleEvent(database);
 }
 
@@ -71,7 +72,7 @@ DatabaseContext* DatabaseManager::existingDatabaseContextFor(
   ASSERT(m_databaseContextRegisteredCount >= 0);
   ASSERT(m_databaseContextInstanceCount >= 0);
   ASSERT(m_databaseContextRegisteredCount <= m_databaseContextInstanceCount);
-  return m_contextMap.get(context);
+  return m_contextMap.at(context);
 }
 
 DatabaseContext* DatabaseManager::databaseContextFor(
@@ -93,7 +94,7 @@ void DatabaseManager::registerDatabaseContext(
 void DatabaseManager::unregisterDatabaseContext(
     DatabaseContext* databaseContext) {
   ExecutionContext* context = databaseContext->getExecutionContext();
-  ASSERT(m_contextMap.get(context));
+  ASSERT(m_contextMap.at(context));
 #if DCHECK_IS_ON()
   m_databaseContextRegisteredCount--;
 #endif
@@ -196,12 +197,13 @@ Database* DatabaseManager::openDatabase(ExecutionContext* context,
   if (database->isNew() && creationCallback) {
     STORAGE_DVLOG(1) << "Scheduling DatabaseCreationCallbackTask for database "
                      << database;
-    database->getExecutionContext()->postTask(
-        TaskType::DatabaseAccess, BLINK_FROM_HERE,
-        createSameThreadTask(&databaseCallbackHandleEvent,
-                             wrapPersistent(creationCallback),
-                             wrapPersistent(database)),
-        "openDatabase");
+    probe::asyncTaskScheduled(database->getExecutionContext(), "openDatabase",
+                              creationCallback);
+    TaskRunnerHelper::get(TaskType::DatabaseAccess,
+                          database->getExecutionContext())
+        ->postTask(BLINK_FROM_HERE, WTF::bind(&databaseCallbackHandleEvent,
+                                              wrapPersistent(creationCallback),
+                                              wrapPersistent(database)));
   }
 
   ASSERT(database);

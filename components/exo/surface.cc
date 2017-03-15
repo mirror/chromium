@@ -17,9 +17,9 @@
 #include "cc/quads/solid_color_draw_quad.h"
 #include "cc/quads/texture_draw_quad.h"
 #include "cc/resources/single_release_callback.h"
+#include "cc/surfaces/local_surface_id_allocator.h"
 #include "cc/surfaces/sequence_surface_reference_factory.h"
 #include "cc/surfaces/surface.h"
-#include "cc/surfaces/surface_id_allocator.h"
 #include "cc/surfaces/surface_manager.h"
 #include "components/exo/buffer.h"
 #include "components/exo/pointer.h"
@@ -432,6 +432,13 @@ void Surface::Commit() {
     CheckIfSurfaceHierarchyNeedsCommitToNewSurfaces();
     CommitSurfaceHierarchy();
   }
+
+  if (begin_frame_source_ && current_begin_frame_ack_.sequence_number !=
+                                 cc::BeginFrameArgs::kInvalidFrameNumber) {
+    begin_frame_source_->DidFinishFrame(this, current_begin_frame_ack_);
+    current_begin_frame_ack_.sequence_number =
+        cc::BeginFrameArgs::kInvalidFrameNumber;
+  }
 }
 
 void Surface::CommitSurfaceHierarchy() {
@@ -467,7 +474,7 @@ void Surface::CommitSurfaceHierarchy() {
     window_->layer()->SetBounds(
         gfx::Rect(window_->layer()->bounds().origin(), content_size_));
     cc::SurfaceId surface_id(frame_sink_id_, local_surface_id_);
-    window_->layer()->SetShowSurface(
+    window_->layer()->SetShowPrimarySurface(
         cc::SurfaceInfo(surface_id, contents_surface_to_layer_scale,
                         content_size_),
         surface_reference_factory_);
@@ -562,7 +569,7 @@ void Surface::UnregisterCursorProvider(Pointer* provider) {
 gfx::NativeCursor Surface::GetCursor() {
   // What cursor we display when we have multiple cursor providers is not
   // important. Return the first non-null cursor.
-  for (const auto& cursor_provider : cursor_providers_) {
+  for (auto* cursor_provider : cursor_providers_) {
     gfx::NativeCursor cursor = cursor_provider->GetCursor();
     if (cursor != ui::kCursorNull)
       return cursor;
@@ -603,17 +610,42 @@ void Surface::WillDraw() {
                                  frame_callbacks_);
   swapping_presentation_callbacks_.splice(
       swapping_presentation_callbacks_.end(), presentation_callbacks_);
+  UpdateNeedsBeginFrame();
 }
 
-bool Surface::NeedsBeginFrame() const {
-  return !active_frame_callbacks_.empty();
+void Surface::SetBeginFrameSource(cc::BeginFrameSource* begin_frame_source) {
+  if (needs_begin_frame_) {
+    DCHECK(begin_frame_source_);
+    begin_frame_source_->RemoveObserver(this);
+    needs_begin_frame_ = false;
+  }
+  begin_frame_source_ = begin_frame_source;
+  UpdateNeedsBeginFrame();
 }
 
-void Surface::BeginFrame(base::TimeTicks frame_time) {
+void Surface::UpdateNeedsBeginFrame() {
+  if (!begin_frame_source_)
+    return;
+
+  bool needs_begin_frame = !active_frame_callbacks_.empty();
+  if (needs_begin_frame == needs_begin_frame_)
+    return;
+
+  needs_begin_frame_ = needs_begin_frame;
+  if (needs_begin_frame_)
+    begin_frame_source_->AddObserver(this);
+  else
+    begin_frame_source_->RemoveObserver(this);
+}
+
+bool Surface::OnBeginFrameDerivedImpl(const cc::BeginFrameArgs& args) {
+  current_begin_frame_ack_ = cc::BeginFrameAck(
+      args.source_id, args.sequence_number, args.sequence_number, 0, false);
   while (!active_frame_callbacks_.empty()) {
-    active_frame_callbacks_.front().Run(frame_time);
+    active_frame_callbacks_.front().Run(args.frame_time);
     active_frame_callbacks_.pop_front();
   }
+  return true;
 }
 
 void Surface::CheckIfSurfaceHierarchyNeedsCommitToNewSurfaces() {
@@ -783,17 +815,22 @@ void Surface::UpdateSurface(bool full_damage) {
                           1.f / scaled_buffer_size.height());
   }
 
-  // pending_damage_ is in Surface coordinates.
-  gfx::Rect damage_rect = full_damage
-                              ? gfx::Rect(contents_surface_size)
-                              : gfx::SkIRectToRect(pending_damage_.getBounds());
+  gfx::Rect damage_rect;
+  gfx::Rect output_rect = gfx::Rect(contents_surface_size);
+  if (full_damage) {
+    damage_rect = output_rect;
+  } else {
+    // pending_damage_ is in Surface coordinates.
+    damage_rect = gfx::SkIRectToRect(pending_damage_.getBounds());
+    damage_rect.Intersect(output_rect);
+  }
 
   const int kRenderPassId = 1;
   std::unique_ptr<cc::RenderPass> render_pass = cc::RenderPass::Create();
-  render_pass->SetNew(kRenderPassId, gfx::Rect(contents_surface_size),
-                      damage_rect, gfx::Transform());
+  render_pass->SetNew(kRenderPassId, output_rect, damage_rect,
+                      gfx::Transform());
 
-  gfx::Rect quad_rect = gfx::Rect(contents_surface_size);
+  gfx::Rect quad_rect = output_rect;
   cc::SharedQuadState* quad_state =
       render_pass->CreateAndAppendSharedQuadState();
   quad_state->quad_layer_bounds = contents_surface_size;
@@ -801,6 +838,9 @@ void Surface::UpdateSurface(bool full_damage) {
   quad_state->opacity = state_.alpha;
 
   cc::CompositorFrame frame;
+  current_begin_frame_ack_.has_damage = true;
+  frame.metadata.begin_frame_ack = current_begin_frame_ack_;
+
   if (current_resource_.id) {
     // Texture quad is only needed if buffer is not fully transparent.
     if (state_.alpha) {

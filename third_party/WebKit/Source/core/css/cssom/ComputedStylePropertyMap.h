@@ -6,13 +6,21 @@
 #define ComputedStylePropertyMap_h
 
 #include "core/css/CSSComputedStyleDeclaration.h"
-#include "core/css/cssom/ImmutableStylePropertyMap.h"
+#include "core/css/cssom/StylePropertyMapReadonly.h"
 #include "core/dom/Node.h"
 #include "core/layout/LayoutObject.h"
 
 namespace blink {
 
-class CORE_EXPORT ComputedStylePropertyMap : public ImmutableStylePropertyMap {
+// This class implements computed StylePropertMapReadOnly in the Typed CSSOM
+// API. The specification is here:
+// https://drafts.css-houdini.org/css-typed-om-1/#computed-stylepropertymapreadonly-objects
+//
+// The computed StylePropertyMapReadOnly retrieves computed styles and returns
+// them as CSSStyleValues. The IDL for this class is in StylePropertyMap.idl.
+// The computed StylePropertyMapReadOnly for an element is accessed via
+// window.getComputedStyleMap(element) (see WindowGetComputedStyle.idl/h)
+class CORE_EXPORT ComputedStylePropertyMap : public StylePropertyMapReadonly {
   WTF_MAKE_NONCOPYABLE(ComputedStylePropertyMap);
 
  public:
@@ -26,7 +34,7 @@ class CORE_EXPORT ComputedStylePropertyMap : public ImmutableStylePropertyMap {
   DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->trace(m_computedStyleDeclaration);
     visitor->trace(m_node);
-    ImmutableStylePropertyMap::trace(visitor);
+    StylePropertyMapReadonly::trace(visitor);
   }
 
  private:
@@ -34,7 +42,7 @@ class CORE_EXPORT ComputedStylePropertyMap : public ImmutableStylePropertyMap {
 
  protected:
   ComputedStylePropertyMap(Node* node, const String& pseudoElement = String())
-      : ImmutableStylePropertyMap(),
+      : StylePropertyMapReadonly(),
         m_computedStyleDeclaration(
             CSSComputedStyleDeclaration::create(node, false, pseudoElement)),
         m_pseudoId(CSSSelector::parsePseudoId(pseudoElement)),

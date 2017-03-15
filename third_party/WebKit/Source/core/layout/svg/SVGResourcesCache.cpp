@@ -81,7 +81,7 @@ static inline SVGResourcesCache& resourcesCache(Document& document) {
 SVGResources* SVGResourcesCache::cachedResourcesForLayoutObject(
     const LayoutObject* layoutObject) {
   ASSERT(layoutObject);
-  return resourcesCache(layoutObject->document()).m_cache.get(layoutObject);
+  return resourcesCache(layoutObject->document()).m_cache.at(layoutObject);
 }
 
 void SVGResourcesCache::clientLayoutChanged(LayoutObject* object) {
@@ -99,6 +99,17 @@ static inline bool layoutObjectCanHaveResources(LayoutObject* layoutObject) {
   ASSERT(layoutObject);
   return layoutObject->node() && layoutObject->node()->isSVGElement() &&
          !layoutObject->isSVGInlineText();
+}
+
+static inline bool isLayoutObjectOfResourceContainer(LayoutObject* layoutObject) {
+  LayoutObject* current = layoutObject;
+  while (current) {
+    if (current->isSVGResourceContainer()) {
+      return true;
+    }
+    current = current->parent();
+  }
+  return false;
 }
 
 void SVGResourcesCache::clientStyleChanged(LayoutObject* layoutObject,
@@ -128,8 +139,14 @@ void SVGResourcesCache::clientStyleChanged(LayoutObject* layoutObject,
     cache.addResourcesFromLayoutObject(layoutObject, newStyle);
   }
 
+  // If this layoutObject is the child of ResourceContainer and it require
+  // repainting that changes of CSS properties such as 'visibility',
+  // request repainting.
+  bool needsLayout = diff.needsFullPaintInvalidation() &&
+                     isLayoutObjectOfResourceContainer(layoutObject);
+
   LayoutSVGResourceContainer::markForLayoutAndParentResourceInvalidation(
-      layoutObject, false);
+      layoutObject, needsLayout);
 }
 
 void SVGResourcesCache::clientWasAddedToTree(LayoutObject* layoutObject,

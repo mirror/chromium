@@ -10,19 +10,20 @@
 SDK.Target = class extends Protocol.TargetBase {
   /**
    * @param {!SDK.TargetManager} targetManager
+   * @param {string} id
    * @param {string} name
    * @param {number} capabilitiesMask
    * @param {!Protocol.InspectorBackend.Connection.Factory} connectionFactory
    * @param {?SDK.Target} parentTarget
    */
-  constructor(targetManager, name, capabilitiesMask, connectionFactory, parentTarget) {
+  constructor(targetManager, id, name, capabilitiesMask, connectionFactory, parentTarget) {
     super(connectionFactory);
     this._targetManager = targetManager;
     this._name = name;
     this._inspectedURL = '';
     this._capabilitiesMask = capabilitiesMask;
     this._parentTarget = parentTarget;
-    this._id = SDK.Target._nextId++;
+    this._id = id;
     this._modelByConstructor = new Map();
   }
 
@@ -39,7 +40,7 @@ SDK.Target = class extends Protocol.TargetBase {
   }
 
   /**
-   * @return {number}
+   * @return {string}
    */
   id() {
     return this._id;
@@ -185,20 +186,20 @@ SDK.Target = class extends Protocol.TargetBase {
  * @enum {number}
  */
 SDK.Target.Capability = {
-  Browser: 1,
-  DOM: 2,
-  JS: 4,
-  Log: 8,
-  Network: 16,
-  Target: 32,
-  ScreenCapture: 64,
+  Browser: 1 << 0,
+  DOM: 1 << 1,
+  JS: 1 << 2,
+  Log: 1 << 3,
+  Network: 1 << 4,
+  Target: 1 << 5,
+  ScreenCapture: 1 << 6,
+  Tracing: 1 << 7,
+  TouchEmulation: 1 << 8,
 
   None: 0,
 
-  AllForTests: 127
+  AllForTests: (1 << 9) - 1
 };
-
-SDK.Target._nextId = 1;
 
 /**
  * @unrestricted

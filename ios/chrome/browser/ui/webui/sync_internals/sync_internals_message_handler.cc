@@ -125,20 +125,19 @@ void SyncInternalsMessageHandler::HandleRequestListOfTypes(
   ModelTypeSet protocol_types = syncer::ProtocolTypes();
   for (ModelTypeSet::Iterator it = protocol_types.First(); it.Good();
        it.Inc()) {
-    type_list->Append(new base::StringValue(ModelTypeToString(it.Get())));
+    type_list->Append(new base::Value(ModelTypeToString(it.Get())));
   }
   event_details.Set(syncer::sync_ui_util::kTypes, type_list.release());
   web_ui()->CallJavascriptFunction(
       syncer::sync_ui_util::kDispatchEvent,
-      base::StringValue(syncer::sync_ui_util::kOnReceivedListOfTypes),
-      event_details);
+      base::Value(syncer::sync_ui_util::kOnReceivedListOfTypes), event_details);
 }
 
 void SyncInternalsMessageHandler::HandleGetAllNodes(
     const base::ListValue* args) {
   DCHECK_EQ(1U, args->GetSize());
   int request_id = 0;
-  bool success = args->GetInteger(0, &request_id);
+  bool success = ExtractIntegerValue(args, &request_id);
   DCHECK(success);
 
   syncer::SyncService* service = GetSyncService();
@@ -152,7 +151,7 @@ void SyncInternalsMessageHandler::HandleGetAllNodes(
 void SyncInternalsMessageHandler::OnReceivedAllNodes(
     int request_id,
     std::unique_ptr<base::ListValue> nodes) {
-  base::FundamentalValue id(request_id);
+  base::Value id(request_id);
   web_ui()->CallJavascriptFunction(syncer::sync_ui_util::kGetAllNodesCallback,
                                    id, *nodes);
 }
@@ -167,7 +166,7 @@ void SyncInternalsMessageHandler::OnProtocolEvent(
       syncer::ProtocolEvent::ToValue(event));
   web_ui()->CallJavascriptFunction(
       syncer::sync_ui_util::kDispatchEvent,
-      base::StringValue(syncer::sync_ui_util::kOnProtocolEvent), *value);
+      base::Value(syncer::sync_ui_util::kOnProtocolEvent), *value);
 }
 
 void SyncInternalsMessageHandler::OnCommitCountersUpdated(
@@ -198,7 +197,7 @@ void SyncInternalsMessageHandler::EmitCounterUpdate(
   details->Set(syncer::sync_ui_util::kCounters, value.release());
   web_ui()->CallJavascriptFunction(
       syncer::sync_ui_util::kDispatchEvent,
-      base::StringValue(syncer::sync_ui_util::kOnCountersUpdated), *details);
+      base::Value(syncer::sync_ui_util::kOnCountersUpdated), *details);
 }
 
 void SyncInternalsMessageHandler::HandleJsEvent(const std::string& name,
@@ -206,7 +205,7 @@ void SyncInternalsMessageHandler::HandleJsEvent(const std::string& name,
   DVLOG(1) << "Handling event: " << name << " with details "
            << details.ToString();
   web_ui()->CallJavascriptFunction(syncer::sync_ui_util::kDispatchEvent,
-                                   base::StringValue(name), details.Get());
+                                   base::Value(name), details.Get());
 }
 
 void SyncInternalsMessageHandler::SendAboutInfo() {
@@ -220,7 +219,7 @@ void SyncInternalsMessageHandler::SendAboutInfo() {
           sync_service, signin_manager, GetChannel());
   web_ui()->CallJavascriptFunction(
       syncer::sync_ui_util::kDispatchEvent,
-      base::StringValue(syncer::sync_ui_util::kOnAboutInfoUpdated), *value);
+      base::Value(syncer::sync_ui_util::kOnAboutInfoUpdated), *value);
 }
 
 // Gets the SyncService of the underlying original profile. May return null.

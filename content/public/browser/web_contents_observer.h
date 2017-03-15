@@ -140,9 +140,9 @@ class CONTENT_EXPORT WebContentsObserver : public IPC::Listener,
   // Note that this is fired by navigations in any frame of the WebContents,
   // not just the main frame.
   //
-  // Note that this is fired by same-page navigations, such as fragment
+  // Note that this is fired by same-document navigations, such as fragment
   // navigations or pushState/replaceState, which will not result in a document
-  // change. To filter these out, use NavigationHandle::IsSamePage.
+  // change. To filter these out, use NavigationHandle::IsSameDocument.
   //
   // Note that more than one navigation can be ongoing in the same frame at the
   // same time (including the main frame). Each will get its own
@@ -179,9 +179,9 @@ class CONTENT_EXPORT WebContentsObserver : public IPC::Listener,
   // and related methods to listen for continued events from this
   // RenderFrameHost.
   //
-  // Note that this is fired by same-page navigations, such as fragment
+  // Note that this is fired by same-document navigations, such as fragment
   // navigations or pushState/replaceState, which will not result in a document
-  // change. To filter these out, use NavigationHandle::IsSamePage.
+  // change. To filter these out, use NavigationHandle::IsSameDocument.
   //
   // Note that |navigation_handle| will be destroyed at the end of this call,
   // so do not keep a reference to it afterward.
@@ -274,7 +274,9 @@ class CONTENT_EXPORT WebContentsObserver : public IPC::Listener,
                                    const GURL& url,
                                    const Referrer& referrer,
                                    WindowOpenDisposition disposition,
-                                   ui::PageTransition transition) {}
+                                   ui::PageTransition transition,
+                                   bool started_from_context_menu,
+                                   bool renderer_initiated) {}
 
   // This method is invoked when the renderer process has completed its first
   // paint after a non-empty layout.
@@ -391,7 +393,7 @@ class CONTENT_EXPORT WebContentsObserver : public IPC::Listener,
 
   // Called when accessibility events or location changes are received
   // from a render frame, but only when the accessibility mode has the
-  // ACCESSIBILITY_MODE_FLAG_WEB_CONTENTS flag set.
+  // AccessibilityMode::kWebContents flag set.
   virtual void AccessibilityEventReceived(
       const std::vector<AXEventNotificationDetails>& details) {}
   virtual void AccessibilityLocationChangesReceived(

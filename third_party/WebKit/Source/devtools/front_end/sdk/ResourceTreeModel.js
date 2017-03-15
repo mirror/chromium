@@ -176,11 +176,8 @@ SDK.ResourceTreeModel = class extends SDK.SDKModel {
     frame._navigate(framePayload);
     this.dispatchEventToListeners(SDK.ResourceTreeModel.Events.FrameNavigated, frame);
 
-    if (frame.isMainFrame()) {
+    if (frame.isMainFrame())
       this.dispatchEventToListeners(SDK.ResourceTreeModel.Events.MainFrameNavigated, frame);
-      if (Common.moduleSetting('preserveConsoleLog').get())
-        Common.console.log(Common.UIString('Navigated to %s', frame.url));
-    }
 
     // Fill frame with retained resources (the ones loaded using new loader).
     var resources = frame.resources();
@@ -220,10 +217,8 @@ SDK.ResourceTreeModel = class extends SDK.SDKModel {
       return;
 
     var frame = this._frames.get(frameId);
-    if (frame && !frame.isMainFrame())
-      return;
-    if (!Common.moduleSetting('preserveConsoleLog').get())
-      this.target().consoleModel.clear();
+    if (!frame || frame.isMainFrame())
+      this.dispatchEventToListeners(SDK.ResourceTreeModel.Events.MainFrameStartedLoading);
   }
 
   /**
@@ -356,7 +351,7 @@ SDK.ResourceTreeModel = class extends SDK.SDKModel {
   reloadPage(bypassCache, scriptToEvaluateOnLoad) {
     // Only dispatch PageReloadRequested upon first reload request to simplify client logic.
     if (!this._pendingReloadOptions)
-      this.dispatchEventToListeners(SDK.ResourceTreeModel.Events.PageReloadRequested);
+      this.dispatchEventToListeners(SDK.ResourceTreeModel.Events.PageReloadRequested, this);
     if (this._reloadSuspensionCount) {
       this._pendingReloadOptions = [bypassCache, scriptToEvaluateOnLoad];
       return;
@@ -456,6 +451,7 @@ SDK.ResourceTreeModel.Events = {
   FrameResized: Symbol('FrameResized'),
   FrameWillNavigate: Symbol('FrameWillNavigate'),
   MainFrameNavigated: Symbol('MainFrameNavigated'),
+  MainFrameStartedLoading: Symbol('MainFrameStartedLoading'),
   ResourceAdded: Symbol('ResourceAdded'),
   WillLoadCachedResources: Symbol('WillLoadCachedResources'),
   CachedResourcesLoaded: Symbol('CachedResourcesLoaded'),

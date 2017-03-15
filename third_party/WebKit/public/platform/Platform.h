@@ -41,6 +41,7 @@
 #include "WebCommon.h"
 #include "WebData.h"
 #include "WebDeviceLightListener.h"
+#include "WebFeaturePolicy.h"
 #include "WebGamepadListener.h"
 #include "WebGamepads.h"
 #include "WebGestureDevice.h"
@@ -91,6 +92,7 @@ class WebIDBFactory;
 class WebImageCaptureFrameGrabber;
 class WebMIDIAccessor;
 class WebMIDIAccessorClient;
+class WebMediaCapabilitiesClient;
 class WebMediaPlayer;
 class WebMediaRecorderHandler;
 class WebMediaStream;
@@ -460,6 +462,13 @@ class BLINK_PLATFORM_EXPORT Platform {
   struct ContextAttributes {
     bool failIfMajorPerformanceCaveat = false;
     unsigned webGLVersion = 0;
+    // Offscreen contexts usually share a surface for the default frame buffer
+    // since they aren't rendering to it. Setting any of the following
+    // attributes causes creation of a custom surface owned by the context.
+    bool supportAlpha = false;
+    bool supportDepth = false;
+    bool supportAntialias = false;
+    bool supportStencil = false;
   };
   struct GraphicsInfo {
     unsigned vendorId = 0;
@@ -669,11 +678,39 @@ class BLINK_PLATFORM_EXPORT Platform {
 
   virtual WebTrialTokenValidator* trialTokenValidator() { return nullptr; }
 
+  // Media Capabilities --------------------------------------------------
+
+  virtual WebMediaCapabilitiesClient* mediaCapabilitiesClient() {
+    return nullptr;
+  }
+
   // Memory ------------------------------------------------------------
 
   // Requests purging memory. The platform may or may not purge memory,
   // depending on memory pressure.
   virtual void requestPurgeMemory() {}
+
+  // Feature Policy -----------------------------------------------------
+
+  // Create a new feature policy object for a document, given its parent
+  // document's policy (may be nullptr), its container policy (may be empty),
+  // the header policy with which it was delivered (may be empty), and the
+  // document's origin.
+  virtual WebFeaturePolicy* createFeaturePolicy(
+      const WebFeaturePolicy* parentPolicy,
+      const WebParsedFeaturePolicy& containerPolicy,
+      const WebParsedFeaturePolicy& policyHeader,
+      const WebSecurityOrigin&) {
+    return nullptr;
+  }
+
+  // Create a new feature policy for a document whose origin has changed, given
+  // the previous policy object and the new origin.
+  virtual WebFeaturePolicy* duplicateFeaturePolicyWithOrigin(
+      const WebFeaturePolicy&,
+      const WebSecurityOrigin&) {
+    return nullptr;
+  }
 
  protected:
   Platform();

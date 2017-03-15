@@ -10,6 +10,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <initializer_list>
 #include <memory>
 #include <string>
 #include <vector>
@@ -31,6 +32,7 @@
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_result_codes.h"
+#include "chrome/install_static/install_util.h"
 #include "chrome/installer/setup/install.h"
 #include "chrome/installer/setup/install_worker.h"
 #include "chrome/installer/setup/installer_state.h"
@@ -588,20 +590,15 @@ void RemoveBlacklistState() {
                                  0);  // wow64_access
 }
 
-// Removes the persistent state for |distribution| for the current user. Note:
-// this will not remove the state for users other than the one uninstalling
-// Chrome on a system-level install; see RemoveBlacklistState for details.
-void RemoveDistributionRegistryState(BrowserDistribution* distribution) {
-  static const base::char16* const kKeysToPreserve[] = {
-      L"Extensions", L"NativeMessagingHosts",
-  };
+// Removes the browser's persistent state in the Windows registry for the
+// current user. Note: this will not remove the state for users other than the
+// one uninstalling Chrome on a system-level install; see RemoveBlacklistState
+// for details.
+void RemoveDistributionRegistryState() {
   // Delete the contents of the distribution key except for those parts used by
   // outsiders to configure Chrome.
-  DeleteRegistryKeyPartial(
-      HKEY_CURRENT_USER, distribution->GetRegistryPath(),
-      std::vector<base::string16>(
-          &kKeysToPreserve[0],
-          &kKeysToPreserve[arraysize(kKeysToPreserve) - 1]));
+  DeleteRegistryKeyPartial(HKEY_CURRENT_USER, install_static::GetRegistryPath(),
+                           {L"Extensions", L"NativeMessagingHosts"});
 }
 
 }  // namespace
@@ -654,7 +651,8 @@ bool DeleteChromeRegistrationKeys(const InstallerState& installer_state,
   reg_app_id.push_back(base::FilePath::kSeparators[0]);
   // Append the requested suffix manually here (as ShellUtil::GetBrowserModelId
   // would otherwise try to figure out the currently installed suffix).
-  reg_app_id.append(dist->GetBaseAppId() + browser_entry_suffix);
+  DCHECK_EQ(BrowserDistribution::GetDistribution(), dist);
+  reg_app_id.append(install_static::GetBaseAppId() + browser_entry_suffix);
   InstallUtil::DeleteRegistryKey(root, reg_app_id, WorkItem::kWow64Default);
 
   // Delete all Start Menu Internet registrations that refer to this Chrome.
@@ -823,6 +821,7 @@ InstallStatus UninstallProduct(const InstallationState& original_state,
                                const base::CommandLine& cmd_line) {
   InstallStatus status = installer::UNINSTALL_CONFIRMED;
   BrowserDistribution* browser_dist = product.distribution();
+  DCHECK_EQ(BrowserDistribution::GetDistribution(), browser_dist);
   const base::FilePath chrome_exe(
       installer_state.target_path().Append(installer::kChromeExe));
 
@@ -883,7 +882,7 @@ InstallStatus UninstallProduct(const InstallationState& original_state,
   if (cmd_line.HasSwitch(installer::switches::kSelfDestruct) &&
       !installer_state.system_install()) {
     const base::FilePath system_chrome_path(
-        GetChromeInstallPath(true, browser_dist).Append(installer::kChromeExe));
+        GetChromeInstallPath(true).Append(installer::kChromeExe));
     VLOG(1) << "Retargeting user-generated Chrome shortcuts.";
     if (base::PathExists(system_chrome_path)) {
       RetargetUserShortcutsWithArgs(installer_state, product, chrome_exe,
@@ -995,9 +994,8 @@ InstallStatus UninstallProduct(const InstallationState& original_state,
   // Delete shared registry keys as well (these require admin rights) if
   // remove_all option is specified.
   if (remove_all) {
-    if (!InstallUtil::IsChromeSxSProcess()) {
-      // Delete media player registry key that exists only in HKLM. We don't
-      // delete this key in SxS uninstall as we never set the key for it.
+    if (installer_state.system_install()) {
+      // Delete media player registry key that exists only in HKLM.
       base::string16 reg_path(installer::kMediaPlayerRegPath);
       reg_path.push_back(base::FilePath::kSeparators[0]);
       reg_path.append(installer::kChromeExe);
@@ -1030,7 +1028,7 @@ InstallStatus UninstallProduct(const InstallationState& original_state,
 
   if (delete_profile) {
     DeleteUserDataDir(user_data_dir);
-    RemoveDistributionRegistryState(browser_dist);
+    RemoveDistributionRegistryState();
   }
 
   if (!force_uninstall && product_state) {

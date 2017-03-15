@@ -432,7 +432,9 @@ class DownloadExtensionTest : public ExtensionApiTest {
           (history_info[i].state != content::DownloadItem::CANCELLED
                ? content::DOWNLOAD_INTERRUPT_REASON_NONE
                : content::DOWNLOAD_INTERRUPT_REASON_USER_CANCELED),
-          false);  // opened
+          false,    // opened
+          current,  // last_access_time
+          std::vector<DownloadItem::ReceivedSlice>());
       items->push_back(item);
     }
 
@@ -3997,8 +3999,9 @@ IN_PROC_BROWSER_TEST_F(
                           result_id)));
 }
 
-#if defined(OS_WIN)
+#if defined(OS_WIN) || defined(OS_CHROMEOS) || defined(OS_LINUX)
 // This test is very flaky on Win XP and Aura. http://crbug.com/248438
+// Also flaky on Linux. http://crbug.com/700382
 #define MAYBE_DownloadExtensionTest_OnDeterminingFilename_InterruptedResume \
     DISABLED_DownloadExtensionTest_OnDeterminingFilename_InterruptedResume
 #else

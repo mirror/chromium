@@ -10,6 +10,10 @@ import("//build/config/linux/pkg_config.gni")
 import("//media/media_options.gni")
 import("//testing/libfuzzer/fuzzer_test.gni")
 
+if (is_android) {
+  import("//build/config/android/rules.gni")
+}
+
 config("base_config") {
   configs = [
     # This target uses the ALLOCATOR_SHIM define.
@@ -36,9 +40,6 @@ target(link_target_type, "base") {
     # TODO(xhwang): Clean up the dependency graph within "media" target.
     "//media/audio",
     "//media/ffmpeg",
-
-    # TODO(xhwang): Remove this dependency.
-    "//media/capture",
   ]
   sources = [
     "audio_block_fifo.cc",
@@ -240,6 +241,8 @@ target(link_target_type, "base") {
     "user_input_monitor.h",
     "video_codecs.cc",
     "video_codecs.h",
+    "video_color_space.cc",
+    "video_color_space.h",
     "video_decoder.cc",
     "video_decoder.h",
     "video_decoder_config.cc",
@@ -264,6 +267,7 @@ target(link_target_type, "base") {
   allow_circular_includes_from = []
   defines = []
   public_deps = [
+    "//media/base:video_facing",
     "//ppapi/features",
     "//ui/gfx:color_space",
   ]
@@ -333,6 +337,29 @@ target(link_target_type, "base") {
     sources += [
       "keyboard_event_counter.cc",
       "keyboard_event_counter.h",
+    ]
+  }
+}
+
+source_set("video_facing") {
+  visibility = [
+    "//chromeos",
+    "//chromeos:chromeos_unittests",
+    "//content/browser",
+    "//content/public/common:common_sources",
+    "//media/base",
+    "//media/capture",
+  ]
+  sources = [
+    "video_facing.h",
+  ]
+}
+
+if (is_android) {
+  java_cpp_enum("java_enums") {
+    sources = [
+      "encryption_scheme.h",
+      "video_codecs.h",
     ]
   }
 }

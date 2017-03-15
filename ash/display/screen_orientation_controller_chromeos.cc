@@ -19,6 +19,7 @@
 #include "ui/display/manager/display_manager.h"
 #include "ui/display/manager/managed_display_info.h"
 #include "ui/gfx/geometry/size.h"
+#include "ui/wm/public/activation_client.h"
 
 namespace ash {
 
@@ -67,16 +68,16 @@ ScreenOrientationController::ScreenOrientationController()
       rotation_locked_orientation_(blink::WebScreenOrientationLockAny),
       user_rotation_(display::Display::ROTATE_0),
       current_rotation_(display::Display::ROTATE_0) {
-  WmShell::Get()->AddShellObserver(this);
+  Shell::GetInstance()->AddShellObserver(this);
 }
 
 ScreenOrientationController::~ScreenOrientationController() {
-  WmShell::Get()->RemoveShellObserver(this);
+  Shell::GetInstance()->RemoveShellObserver(this);
   chromeos::AccelerometerReader::GetInstance()->RemoveObserver(this);
   WmShell::Get()->RemoveDisplayObserver(this);
-  WmShell::Get()->RemoveActivationObserver(this);
+  Shell::GetInstance()->activation_client()->RemoveObserver(this);
   for (auto& windows : locking_windows_)
-    windows.first->RemoveObserver(this);
+    windows.first->aura_window()->RemoveObserver(this);
 }
 
 void ScreenOrientationController::AddObserver(Observer* observer) {
@@ -91,10 +92,10 @@ void ScreenOrientationController::LockOrientationForWindow(
     WmWindow* requesting_window,
     blink::WebScreenOrientationLockType lock_orientation) {
   if (locking_windows_.empty())
-    WmShell::Get()->AddActivationObserver(this);
+    Shell::GetInstance()->activation_client()->AddObserver(this);
 
-  if (!requesting_window->HasObserver(this))
-    requesting_window->AddObserver(this);
+  if (!requesting_window->aura_window()->HasObserver(this))
+    requesting_window->aura_window()->AddObserver(this);
   locking_windows_[requesting_window] = lock_orientation;
 
   ApplyLockForActiveWindow();
@@ -103,16 +104,16 @@ void ScreenOrientationController::LockOrientationForWindow(
 void ScreenOrientationController::UnlockOrientationForWindow(WmWindow* window) {
   locking_windows_.erase(window);
   if (locking_windows_.empty())
-    WmShell::Get()->RemoveActivationObserver(this);
-  window->RemoveObserver(this);
+    Shell::GetInstance()->activation_client()->RemoveObserver(this);
+  window->aura_window()->RemoveObserver(this);
   ApplyLockForActiveWindow();
 }
 
 void ScreenOrientationController::UnlockAll() {
   for (auto pair : locking_windows_)
-    pair.first->RemoveObserver(this);
+    pair.first->aura_window()->RemoveObserver(this);
   locking_windows_.clear();
-  WmShell::Get()->RemoveActivationObserver(this);
+  Shell::GetInstance()->activation_client()->RemoveObserver(this);
   SetRotationLocked(false);
   if (user_rotation_ != current_rotation_)
     SetDisplayRotation(user_rotation_, display::Display::ROTATION_SOURCE_USER);
@@ -152,17 +153,17 @@ void ScreenOrientationController::SetDisplayRotation(
       &ignore_display_configuration_updates_, true);
 
   Shell::GetInstance()->display_configuration_controller()->SetDisplayRotation(
-      display::Display::InternalDisplayId(), rotation, source,
-      true /* user_action */);
+      display::Display::InternalDisplayId(), rotation, source);
 }
 
-void ScreenOrientationController::OnWindowActivated(WmWindow* gained_active,
-                                                    WmWindow* lost_active) {
+void ScreenOrientationController::OnWindowActivated(ActivationReason reason,
+                                                    aura::Window* gained_active,
+                                                    aura::Window* lost_active) {
   ApplyLockForActiveWindow();
 }
 
-void ScreenOrientationController::OnWindowDestroying(WmWindow* window) {
-  UnlockOrientationForWindow(window);
+void ScreenOrientationController::OnWindowDestroying(aura::Window* window) {
+  UnlockOrientationForWindow(WmWindow::Get(window));
 }
 
 // Currently contents::WebContents will only be able to lock rotation while
@@ -172,9 +173,10 @@ void ScreenOrientationController::OnWindowDestroying(WmWindow* window) {
 // down and mouse up. The rotation this triggers leads to a coordinate space
 // change in the middle of an event. Causes the tab to separate from the tab
 // strip.
-void ScreenOrientationController::OnWindowVisibilityChanged(WmWindow* window,
-                                                            bool visible) {
-  if (locking_windows_.find(window) == locking_windows_.end())
+void ScreenOrientationController::OnWindowVisibilityChanged(
+    aura::Window* window,
+    bool visible) {
+  if (locking_windows_.find(WmWindow::Get(window)) == locking_windows_.end())
     return;
   ApplyLockForActiveWindow();
 }

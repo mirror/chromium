@@ -30,6 +30,8 @@
 
 #include "core/imagebitmap/ImageBitmapFactories.h"
 
+#include <memory>
+
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/ExecutionContext.h"
@@ -52,8 +54,7 @@
 #include "public/platform/Platform.h"
 #include "public/platform/WebThread.h"
 #include "public/platform/WebTraceLocation.h"
-#include <memory>
-#include <v8.h>
+#include "v8/include/v8.h"
 
 namespace blink {
 
@@ -204,7 +205,7 @@ void ImageBitmapFactories::addLoader(ImageBitmapLoader* loader) {
 
 void ImageBitmapFactories::didFinishLoading(ImageBitmapLoader* loader) {
   ASSERT(m_pendingLoaders.contains(loader));
-  m_pendingLoaders.remove(loader);
+  m_pendingLoaders.erase(loader);
 }
 
 ImageBitmapFactories::ImageBitmapLoader::ImageBitmapLoader(

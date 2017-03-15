@@ -19,7 +19,6 @@
 
 #include "modules/vibration/NavigatorVibration.h"
 
-#include "bindings/core/v8/ConditionalFeatures.h"
 #include "core/dom/Document.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
@@ -82,7 +81,7 @@ bool NavigatorVibration::vibrate(Navigator& navigator,
   // TODO(lunalu): When FeaturePolicy is ready, take out the check for the
   // runtime flag. Please pay attention to the user gesture code below.
   if (RuntimeEnabledFeatures::featurePolicyEnabled() &&
-      !isFeatureEnabledInFrame(blink::kVibrateFeature, frame)) {
+      !frame->isFeatureEnabled(blink::WebFeaturePolicyFeature::Vibrate)) {
     frame->domWindow()->printErrorMessage(
         "Navigator.vibrate() is not enabled in feature policy for this "
         "frame.");

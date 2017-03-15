@@ -49,7 +49,7 @@ static WebBlendMode toWebBlendMode(SVGFEBlendElement::Mode mode) {
     MAP_BLEND_MODE(Color);
     MAP_BLEND_MODE(Luminosity);
     default:
-      ASSERT_NOT_REACHED();
+      NOTREACHED();
       return WebBlendModeNormal;
   }
 #undef MAP_BLEND_MODE
@@ -152,7 +152,8 @@ FilterEffect* SVGFEBlendElement::build(SVGFilterBuilder* filterBuilder,
       AtomicString(m_in1->currentValue()->value()));
   FilterEffect* input2 = filterBuilder->getEffectById(
       AtomicString(m_in2->currentValue()->value()));
-  ASSERT(input1 && input2);
+  DCHECK(input1);
+  DCHECK(input2);
 
   FilterEffect* effect = FEBlend::create(
       filter, toWebBlendMode(m_mode->currentValue()->enumValue()));

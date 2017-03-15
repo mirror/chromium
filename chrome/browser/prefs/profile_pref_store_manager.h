@@ -20,12 +20,17 @@ class HashStoreContents;
 class PersistentPrefStore;
 class PrefHashStore;
 class PrefService;
-class TrackedPreferenceValidationDelegate;
 
 namespace base {
 class DictionaryValue;
 class SequencedTaskRunner;
 }  // namespace base
+
+namespace prefs {
+namespace mojom {
+class TrackedPreferenceValidationDelegate;
+}
+}
 
 namespace user_prefs {
 class PrefRegistrySyncable;
@@ -86,13 +91,13 @@ class ProfilePrefStoreManager {
   PersistentPrefStore* CreateProfilePrefStore(
       const scoped_refptr<base::SequencedTaskRunner>& io_task_runner,
       const base::Closure& on_reset_on_load,
-      TrackedPreferenceValidationDelegate* validation_delegate);
+      prefs::mojom::TrackedPreferenceValidationDelegate* validation_delegate);
 
   // Initializes the preferences for the managed profile with the preference
   // values in |master_prefs|. Acts synchronously, including blocking IO.
   // Returns true on success.
   bool InitializePrefsFromMasterPrefs(
-      const base::DictionaryValue& master_prefs);
+      std::unique_ptr<base::DictionaryValue> master_prefs);
 
   // Creates a single-file PrefStore as was used in M34 and earlier. Used only
   // for testing migration.

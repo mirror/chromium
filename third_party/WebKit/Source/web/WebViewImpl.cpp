@@ -30,6 +30,7 @@
 
 #include "web/WebViewImpl.h"
 
+#include <memory>
 #include "core/CSSValueKeywords.h"
 #include "core/HTMLNames.h"
 #include "core/clipboard/DataObject.h"
@@ -54,6 +55,7 @@
 #include "core/frame/FrameHost.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/PageScaleConstraintsSet.h"
 #include "core/frame/RemoteFrame.h"
 #include "core/frame/Settings.h"
@@ -70,7 +72,6 @@
 #include "core/layout/compositing/PaintLayerCompositor.h"
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/FrameLoader.h"
-#include "core/loader/FrameLoaderClient.h"
 #include "core/loader/FrameLoaderStateMachine.h"
 #include "core/page/ContextMenuController.h"
 #include "core/page/ContextMenuProvider.h"
@@ -178,7 +179,6 @@
 #include "wtf/CurrentTime.h"
 #include "wtf/PtrUtil.h"
 #include "wtf/RefPtr.h"
-#include <memory>
 
 #if USE(DEFAULT_RENDER_THEME)
 #include "core/layout/LayoutThemeDefault.h"
@@ -372,6 +372,7 @@ WebViewImpl::WebViewImpl(WebViewClient* client,
       m_flingSourceDevice(WebGestureDeviceUninitialized),
       m_fullscreenController(FullscreenController::create(this)),
       m_baseBackgroundColor(Color::white),
+      m_baseBackgroundColorOverrideEnabled(false),
       m_baseBackgroundColorOverride(Color::transparent),
       m_backgroundColorOverride(Color::transparent),
       m_zoomFactorOverride(0),
@@ -835,7 +836,7 @@ WebInputEventResult WebViewImpl::handleGestureEvent(
       // and is not being screencasted itself. This leads to bad user
       // experience.
       WebDevToolsAgentImpl* devTools = mainFrameDevToolsAgentImpl();
-      VisualViewport& visualViewport = page()->frameHost().visualViewport();
+      VisualViewport& visualViewport = page()->visualViewport();
       bool screencastEnabled = devTools && devTools->screencastEnabled();
       if (event.data.tap.width > 0 &&
           !visualViewport.shouldDisableDesktopWorkarounds() &&
@@ -1007,7 +1008,7 @@ bool WebViewImpl::startPageScaleAnimation(const IntPoint& targetPosition,
                                           bool useAnchor,
                                           float newScale,
                                           double durationInSeconds) {
-  VisualViewport& visualViewport = page()->frameHost().visualViewport();
+  VisualViewport& visualViewport = page()->visualViewport();
   WebPoint clampedPoint = targetPosition;
   if (!useAnchor) {
     clampedPoint =
@@ -1156,9 +1157,11 @@ WebInputEventResult WebViewImpl::handleKeyEvent(const WebKeyboardEvent& event) {
         if (event.windowsKeyCode == VKEY_TAB) {
           // If the plugin supports keyboard focus then we should not send a tab
           // keypress event.
-          Widget* widget = toLayoutPart(element->layoutObject())->widget();
-          if (widget && widget->isPluginContainer()) {
-            WebPluginContainerImpl* plugin = toWebPluginContainerImpl(widget);
+          FrameViewBase* frameViewBase =
+              toLayoutPart(element->layoutObject())->frameViewBase();
+          if (frameViewBase && frameViewBase->isPluginContainer()) {
+            WebPluginContainerImpl* plugin =
+                toWebPluginContainerImpl(frameViewBase);
             if (plugin && plugin->supportsKeyboardFocus())
               m_suppressNextKeypressEvent = true;
           }
@@ -1392,8 +1395,7 @@ void WebViewImpl::computeScaleAndScrollForBlockRect(
 
   scale = clampPageScaleFactorToLimits(scale);
   scroll = mainFrameImpl()->frameView()->rootFrameToContents(scroll);
-  scroll = page()->frameHost().visualViewport().clampDocumentOffsetAtScale(
-      scroll, scale);
+  scroll = page()->visualViewport().clampDocumentOffsetAtScale(scroll, scale);
 }
 
 static Node* findCursorDefiningAncestor(Node* node, LocalFrame* frame) {
@@ -1749,7 +1751,7 @@ WebViewImpl* WebViewImpl::fromPage(Page* page) {
 
 void WebViewImpl::close() {
   DCHECK(allInstances().contains(this));
-  allInstances().remove(this);
+  allInstances().erase(this);
 
   if (m_page) {
     // Initiate shutdown for the entire frameset.  This will cause a lot of
@@ -1770,8 +1772,8 @@ WebSize WebViewImpl::size() {
 }
 
 void WebViewImpl::resizeVisualViewport(const WebSize& newSize) {
-  page()->frameHost().visualViewport().setSize(newSize);
-  page()->frameHost().visualViewport().clampToBoundaries();
+  page()->visualViewport().setSize(newSize);
+  page()->visualViewport().clampToBoundaries();
 }
 
 void WebViewImpl::performResize() {
@@ -1790,7 +1792,7 @@ void WebViewImpl::performResize() {
       mainFrameImpl()->frame()->document()->viewportDescription());
   updateMainFrameLayoutSize();
 
-  page()->frameHost().visualViewport().setSize(m_size);
+  page()->visualViewport().setSize(m_size);
 
   if (mainFrameImpl()->frameView()) {
     mainFrameImpl()->frameView()->setInitialViewportSize(ICBSize);
@@ -1838,7 +1840,7 @@ void WebViewImpl::didUpdateBrowserControls() {
   if (!view)
     return;
 
-  VisualViewport& visualViewport = page()->frameHost().visualViewport();
+  VisualViewport& visualViewport = page()->visualViewport();
 
   {
     // This object will save the current visual viewport offset w.r.t. the
@@ -1856,7 +1858,7 @@ void WebViewImpl::didUpdateBrowserControls() {
 }
 
 BrowserControls& WebViewImpl::browserControls() {
-  return page()->frameHost().browserControls();
+  return page()->browserControls();
 }
 
 void WebViewImpl::resizeViewWhileAnchored(float browserControlsHeight,
@@ -1905,7 +1907,7 @@ void WebViewImpl::resizeWithBrowserControls(const WebSize& newSize,
     // swapped to a LocalFrame at a later time.
     m_size = newSize;
     pageScaleConstraintsSet().didChangeInitialContainingBlockSize(m_size);
-    page()->frameHost().visualViewport().setSize(m_size);
+    page()->visualViewport().setSize(m_size);
     return;
   }
 
@@ -1917,12 +1919,12 @@ void WebViewImpl::resizeWithBrowserControls(const WebSize& newSize,
   if (!view)
     return;
 
-  VisualViewport& visualViewport = page()->frameHost().visualViewport();
+  VisualViewport& visualViewport = page()->visualViewport();
 
   bool isRotation =
       page()->settings().getMainFrameResizesAreOrientationChanges() &&
       m_size.width && contentsSize().width() && newSize.width != m_size.width &&
-      !m_fullscreenController->isFullscreen();
+      !m_fullscreenController->isFullscreenOrTransitioning();
   m_size = newSize;
 
   FloatSize viewportAnchorCoords(viewportAnchorCoordX, viewportAnchorCoordY);
@@ -2143,7 +2145,7 @@ WebInputEventResult WebViewImpl::handleInputEvent(
     autofillClient->firstUserGestureObserved();
   }
 
-  page()->frameHost().visualViewport().startTrackingPinchStats();
+  page()->visualViewport().startTrackingPinchStats();
 
   TRACE_EVENT1("input,rail", "WebViewImpl::handleInputEvent", "type",
                WebInputEvent::GetName(inputEvent.type()));
@@ -2247,7 +2249,7 @@ WebInputEventResult WebViewImpl::handleInputEvent(
     if (pinchEvent.data.pinchUpdate.zoomDisabled)
       return WebInputEventResult::NotHandled;
 
-    if (page()->frameHost().visualViewport().magnifyScaleAroundAnchor(
+    if (page()->visualViewport().magnifyScaleAroundAnchor(
             pinchEvent.data.pinchUpdate.scale,
             FloatPoint(pinchEvent.x, pinchEvent.y)))
       return WebInputEventResult::HandledSystem;
@@ -2273,7 +2275,10 @@ void WebViewImpl::setFocus(bool enable) {
     LocalFrame* focusedFrame = m_page->focusController().focusedFrame();
     if (focusedFrame) {
       Element* element = focusedFrame->document()->focusedElement();
-      if (element && focusedFrame->selection().selection().isNone()) {
+      if (element &&
+          focusedFrame->selection()
+              .computeVisibleSelectionInDOMTreeDeprecated()
+              .isNone()) {
         // If the selection was cleared while the WebView was not
         // focused, then the focus element shows with a focus ring but
         // no caret and does respond to keyboard inputs.
@@ -2358,7 +2363,8 @@ bool WebViewImpl::selectionBounds(WebRect& anchor, WebRect& focus) const {
   if (!localFrame)
     return false;
   FrameSelection& selection = localFrame->selection();
-  if (!selection.isAvailable() || selection.isNone()) {
+  if (!selection.isAvailable() ||
+      selection.computeVisibleSelectionInDOMTreeDeprecated().isNone()) {
     // plugins/mouse-capture-inside-shadow.html reaches here.
     return false;
   }
@@ -2370,11 +2376,12 @@ bool WebViewImpl::selectionBounds(WebRect& anchor, WebRect& focus) const {
   DocumentLifecycle::DisallowTransitionScope disallowTransition(
       localFrame->document()->lifecycle());
 
-  if (selection.isCaret()) {
+  if (selection.computeVisibleSelectionInDOMTreeDeprecated().isCaret()) {
     anchor = focus = selection.absoluteCaretBounds();
   } else {
     const EphemeralRange selectedRange =
-        selection.selection().toNormalizedEphemeralRange();
+        selection.computeVisibleSelectionInDOMTreeDeprecated()
+            .toNormalizedEphemeralRange();
     if (selectedRange.isNull())
       return false;
     anchor = localFrame->editor().firstRectForRange(
@@ -2386,7 +2393,7 @@ bool WebViewImpl::selectionBounds(WebRect& anchor, WebRect& focus) const {
   anchor = localFrame->view()->contentsToViewport(anchor);
   focus = localFrame->view()->contentsToViewport(focus);
 
-  if (!selection.selection().isBaseFirst())
+  if (!selection.computeVisibleSelectionInDOMTreeDeprecated().isBaseFirst())
     std::swap(anchor, focus);
   return true;
 }
@@ -2419,11 +2426,18 @@ bool WebViewImpl::selectionTextDirection(WebTextDirection& start,
   // needs to be audited.  See http://crbug.com/590369 for more details.
   frame->document()->updateStyleAndLayoutIgnorePendingStylesheets();
 
-  if (selection.selection().toNormalizedEphemeralRange().isNull())
+  if (selection.computeVisibleSelectionInDOMTree()
+          .toNormalizedEphemeralRange()
+          .isNull())
     return false;
-  start =
-      toWebTextDirection(primaryDirectionOf(*selection.start().anchorNode()));
-  end = toWebTextDirection(primaryDirectionOf(*selection.end().anchorNode()));
+  start = toWebTextDirection(
+      primaryDirectionOf(*selection.computeVisibleSelectionInDOMTreeDeprecated()
+                              .start()
+                              .anchorNode()));
+  end = toWebTextDirection(
+      primaryDirectionOf(*selection.computeVisibleSelectionInDOMTreeDeprecated()
+                              .end()
+                              .anchorNode()));
   return true;
 }
 
@@ -2439,18 +2453,18 @@ bool WebViewImpl::isSelectionAnchorFirst() const {
     // plugins/mouse-capture-inside-shadow.html reaches here.
     return false;
   }
-  return selection.selection().isBaseFirst();
+  return selection.computeVisibleSelectionInDOMTreeDeprecated().isBaseFirst();
 }
 
 WebColor WebViewImpl::backgroundColor() const {
   if (isTransparent())
     return Color::transparent;
   if (!m_page)
-    return m_baseBackgroundColor;
+    return baseBackgroundColor().rgb();
   if (!m_page->mainFrame())
-    return m_baseBackgroundColor;
+    return baseBackgroundColor().rgb();
   if (!m_page->mainFrame()->isLocalFrame())
-    return m_baseBackgroundColor;
+    return baseBackgroundColor().rgb();
   FrameView* view = m_page->deprecatedLocalMainFrame()->view();
   return view->documentBackgroundColor().rgb();
 }
@@ -2529,15 +2543,23 @@ void WebViewImpl::willCloseLayerTreeView() {
 }
 
 void WebViewImpl::didAcquirePointerLock() {
-  mainFrameImpl()->frameWidget()->didAcquirePointerLock();
+  if (mainFrameImpl())
+    mainFrameImpl()->frameWidget()->didAcquirePointerLock();
 }
 
 void WebViewImpl::didNotAcquirePointerLock() {
-  mainFrameImpl()->frameWidget()->didNotAcquirePointerLock();
+  if (mainFrameImpl())
+    mainFrameImpl()->frameWidget()->didNotAcquirePointerLock();
 }
 
 void WebViewImpl::didLosePointerLock() {
-  mainFrameImpl()->frameWidget()->didLosePointerLock();
+  // Make sure that the main frame wasn't swapped-out when the pointer lock is
+  // lost. There's a race that can happen when a pointer lock is requested, but
+  // the browser swaps out the main frame while the pointer lock request is in
+  // progress. This won't be needed once the main frame is refactored to not use
+  // the WebViewImpl as its WebWidget.
+  if (mainFrameImpl())
+    mainFrameImpl()->frameWidget()->didLosePointerLock();
 }
 
 // TODO(ekaramad):This method is almost duplicated in WebFrameWidgetImpl as
@@ -2716,7 +2738,7 @@ bool WebViewImpl::scrollFocusedEditableElementIntoRect(
 
   bool zoomInToLegibleScale =
       m_webSettings->autoZoomFocusedNodeToLegibleScale() &&
-      !page()->frameHost().visualViewport().shouldDisableDesktopWorkarounds();
+      !page()->visualViewport().shouldDisableDesktopWorkarounds();
 
   if (zoomInToLegibleScale) {
     // When deciding whether to zoom in on a focused text box, we should decide
@@ -2750,7 +2772,7 @@ void WebViewImpl::computeScaleAndScrollForFocusedNode(Node* focusedNode,
                                                       float& newScale,
                                                       IntPoint& newScroll,
                                                       bool& needAnimation) {
-  VisualViewport& visualViewport = page()->frameHost().visualViewport();
+  VisualViewport& visualViewport = page()->visualViewport();
 
   WebRect caretInViewport, unusedEnd;
   selectionBounds(caretInViewport, unusedEnd);
@@ -2885,11 +2907,12 @@ double WebViewImpl::setZoomLevel(double zoomLevel) {
     if (m_compositorDeviceScaleFactorOverride) {
       // Adjust the page's DSF so that DevicePixelRatio becomes
       // m_zoomFactorForDeviceScaleFactor.
-      page()->setDeviceScaleFactor(m_zoomFactorForDeviceScaleFactor /
-                                   m_compositorDeviceScaleFactorOverride);
+      page()->setDeviceScaleFactorDeprecated(
+          m_zoomFactorForDeviceScaleFactor /
+          m_compositorDeviceScaleFactorOverride);
       zoomFactor *= m_compositorDeviceScaleFactorOverride;
     } else {
-      page()->setDeviceScaleFactor(1.f);
+      page()->setDeviceScaleFactorDeprecated(1.f);
       zoomFactor *= m_zoomFactorForDeviceScaleFactor;
     }
   }
@@ -2932,7 +2955,7 @@ float WebViewImpl::pageScaleFactor() const {
   if (!page())
     return 1;
 
-  return page()->frameHost().visualViewport().scale();
+  return page()->visualViewport().scale();
 }
 
 float WebViewImpl::clampPageScaleFactorToLimits(float scaleFactor) const {
@@ -2942,17 +2965,17 @@ float WebViewImpl::clampPageScaleFactorToLimits(float scaleFactor) const {
 
 void WebViewImpl::setVisualViewportOffset(const WebFloatPoint& offset) {
   DCHECK(page());
-  page()->frameHost().visualViewport().setLocation(offset);
+  page()->visualViewport().setLocation(offset);
 }
 
 WebFloatPoint WebViewImpl::visualViewportOffset() const {
   DCHECK(page());
-  return page()->frameHost().visualViewport().visibleRect().location();
+  return page()->visualViewport().visibleRect().location();
 }
 
 WebFloatSize WebViewImpl::visualViewportSize() const {
   DCHECK(page());
-  return page()->frameHost().visualViewport().visibleRect().size();
+  return page()->visualViewport().visibleRect().size();
 }
 
 void WebViewImpl::scrollAndRescaleViewports(
@@ -2976,14 +2999,14 @@ void WebViewImpl::scrollAndRescaleViewports(
 
   setPageScaleFactor(scaleFactor);
 
-  page()->frameHost().visualViewport().setLocation(visualViewportOrigin);
+  page()->visualViewport().setLocation(visualViewportOrigin);
 }
 
 void WebViewImpl::setPageScaleFactorAndLocation(float scaleFactor,
                                                 const FloatPoint& location) {
   DCHECK(page());
 
-  page()->frameHost().visualViewport().setScaleAndLocation(
+  page()->visualViewport().setScaleAndLocation(
       clampPageScaleFactorToLimits(scaleFactor), location);
 }
 
@@ -2994,14 +3017,14 @@ void WebViewImpl::setPageScaleFactor(float scaleFactor) {
   if (scaleFactor == pageScaleFactor())
     return;
 
-  page()->frameHost().visualViewport().setScale(scaleFactor);
+  page()->visualViewport().setScale(scaleFactor);
 }
 
 void WebViewImpl::setDeviceScaleFactor(float scaleFactor) {
   if (!page())
     return;
 
-  page()->setDeviceScaleFactor(scaleFactor);
+  page()->setDeviceScaleFactorDeprecated(scaleFactor);
 
   if (m_layerTreeView)
     updateLayerTreeDeviceScaleFactor();
@@ -3033,7 +3056,7 @@ void WebViewImpl::disableAutoResizeMode() {
 }
 
 void WebViewImpl::setDefaultPageScaleLimits(float minScale, float maxScale) {
-  return page()->frameHost().setDefaultPageScaleLimits(minScale, maxScale);
+  return page()->setDefaultPageScaleLimits(minScale, maxScale);
 }
 
 void WebViewImpl::setInitialPageScaleOverride(
@@ -3046,7 +3069,7 @@ void WebViewImpl::setInitialPageScaleOverride(
     return;
 
   pageScaleConstraintsSet().setNeedsReset(true);
-  page()->frameHost().setUserAgentPageScaleConstraints(constraints);
+  page()->setUserAgentPageScaleConstraints(constraints);
 }
 
 void WebViewImpl::setMaximumLegibleScale(float maximumLegibleScale) {
@@ -3065,7 +3088,7 @@ void WebViewImpl::setIgnoreViewportTagScaleLimits(bool ignore) {
     constraints.minimumScale = -1;
     constraints.maximumScale = -1;
   }
-  page()->frameHost().setUserAgentPageScaleConstraints(constraints);
+  page()->setUserAgentPageScaleConstraints(constraints);
 }
 
 IntSize WebViewImpl::mainFrameSize() {
@@ -3077,7 +3100,7 @@ IntSize WebViewImpl::mainFrameSize() {
 }
 
 PageScaleConstraintsSet& WebViewImpl::pageScaleConstraintsSet() const {
-  return page()->frameHost().pageScaleConstraintsSet();
+  return page()->pageScaleConstraintsSet();
 }
 
 void WebViewImpl::refreshPageScaleFactorAfterLayout() {
@@ -3266,7 +3289,7 @@ void WebViewImpl::resetScaleStateImmediately() {
 }
 
 void WebViewImpl::resetScrollAndScaleState() {
-  page()->frameHost().visualViewport().reset();
+  page()->visualViewport().reset();
 
   if (!page()->mainFrame()->isLocalFrame())
     return;
@@ -3320,9 +3343,10 @@ void WebViewImpl::performPluginAction(const WebPluginAction& action,
 
   LayoutObject* object = node->layoutObject();
   if (object && object->isLayoutPart()) {
-    Widget* widget = toLayoutPart(object)->widget();
-    if (widget && widget->isPluginContainer()) {
-      WebPluginContainerImpl* plugin = toWebPluginContainerImpl(widget);
+    FrameViewBase* frameViewWidget = toLayoutPart(object)->frameViewBase();
+    if (frameViewWidget && frameViewWidget->isPluginContainer()) {
+      WebPluginContainerImpl* plugin =
+          toWebPluginContainerImpl(frameViewWidget);
       switch (action.type) {
         case WebPluginAction::Rotate90Clockwise:
           plugin->plugin()->rotateView(WebPlugin::RotationType90Clockwise);
@@ -3356,8 +3380,8 @@ HitTestResult WebViewImpl::coreHitTestResultAt(
   return hitTestResultForRootFramePos(pointInRootFrame);
 }
 
-void WebViewImpl::spellingMarkers(WebVector<uint32_t>* markers) {
-  Vector<uint32_t> result;
+void WebViewImpl::spellingMarkerOffsetsForTest(WebVector<unsigned>* offsets) {
+  Vector<unsigned> result;
   for (Frame* frame = m_page->mainFrame(); frame;
        frame = frame->tree().traverseNext()) {
     if (!frame->isLocalFrame())
@@ -3365,9 +3389,9 @@ void WebViewImpl::spellingMarkers(WebVector<uint32_t>* markers) {
     const DocumentMarkerVector& documentMarkers =
         toLocalFrame(frame)->document()->markers().markers();
     for (size_t i = 0; i < documentMarkers.size(); ++i)
-      result.push_back(documentMarkers[i]->hash());
+      result.push_back(documentMarkers[i]->startOffset());
   }
-  markers->assign(result);
+  offsets->assign(result);
 }
 
 void WebViewImpl::removeSpellingMarkersUnderWords(
@@ -3522,9 +3546,8 @@ WebInputMethodControllerImpl* WebViewImpl::getActiveWebInputMethodController()
 }
 
 Color WebViewImpl::baseBackgroundColor() const {
-  return alphaChannel(m_baseBackgroundColorOverride)
-             ? m_baseBackgroundColorOverride
-             : m_baseBackgroundColor;
+  return m_baseBackgroundColorOverrideEnabled ? m_baseBackgroundColorOverride
+                                              : m_baseBackgroundColor;
 }
 
 void WebViewImpl::setBaseBackgroundColor(WebColor color) {
@@ -3536,7 +3559,21 @@ void WebViewImpl::setBaseBackgroundColor(WebColor color) {
 }
 
 void WebViewImpl::setBaseBackgroundColorOverride(WebColor color) {
+  m_baseBackgroundColorOverrideEnabled = true;
   m_baseBackgroundColorOverride = color;
+  if (mainFrameImpl()) {
+    // Force lifecycle update to ensure we're good to call
+    // FrameView::setBaseBackgroundColor().
+    mainFrameImpl()
+        ->frame()
+        ->view()
+        ->updateLifecycleToCompositingCleanPlusScrolling();
+  }
+  updateBaseBackgroundColor();
+}
+
+void WebViewImpl::clearBaseBackgroundColorOverride() {
+  m_baseBackgroundColorOverrideEnabled = false;
   if (mainFrameImpl()) {
     // Force lifecycle update to ensure we're good to call
     // FrameView::setBaseBackgroundColor().
@@ -3603,7 +3640,7 @@ void WebViewImpl::didCommitLoad(bool isNewNavigation,
   }
 
   // Give the visual viewport's scroll layer its initial size.
-  page()->frameHost().visualViewport().mainFrameDidChangeSize();
+  page()->visualViewport().mainFrameDidChangeSize();
 
   // Make sure link highlight from previous page is cleared.
   m_linkHighlights.clear();
@@ -3618,7 +3655,7 @@ void WebViewImpl::postLayoutResize(WebLocalFrameImpl* webframe) {
 
 void WebViewImpl::resizeAfterLayout(WebLocalFrameImpl* webframe) {
   LocalFrame* frame = webframe->frame();
-  if (!m_client || !frame->isLocalRoot())
+  if (!m_client || !frame->isMainFrame())
     return;
 
   if (m_shouldAutoResize) {
@@ -3626,7 +3663,7 @@ void WebViewImpl::resizeAfterLayout(WebLocalFrameImpl* webframe) {
     if (frameSize != m_size) {
       m_size = frameSize;
 
-      page()->frameHost().visualViewport().setSize(m_size);
+      page()->visualViewport().setSize(m_size);
       pageScaleConstraintsSet().didChangeInitialContainingBlockSize(m_size);
       frame->view()->setInitialViewportSize(m_size);
 
@@ -3695,7 +3732,13 @@ void WebViewImpl::setPageOverlayColor(WebColor color) {
 
   m_pageColorOverlay = PageOverlay::create(
       mainFrameImpl(), WTF::makeUnique<ColorOverlay>(color));
-  m_pageColorOverlay->update();
+
+  // Run compositing update before calling updatePageOverlays.
+  mainFrameImpl()
+      ->frameView()
+      ->updateLifecycleToCompositingCleanPlusScrolling();
+
+  updatePageOverlays();
 }
 
 WebPageImportanceSignals* WebViewImpl::pageImportanceSignals() {
@@ -3717,7 +3760,7 @@ Element* WebViewImpl::focusedElement() const {
 HitTestResult WebViewImpl::hitTestResultForViewportPos(
     const IntPoint& posInViewport) {
   IntPoint rootFramePoint(
-      m_page->frameHost().visualViewport().viewportToRootFrame(posInViewport));
+      m_page->visualViewport().viewportToRootFrame(posInViewport));
   return hitTestResultForRootFramePos(rootFramePoint);
 }
 
@@ -3786,12 +3829,12 @@ void WebViewImpl::registerViewportLayersWithCompositor() {
 
   // Get the outer viewport scroll layer.
   GraphicsLayer* layoutViewportScrollLayer =
-      page()->frameHost().globalRootScrollerController().rootScrollerLayer();
+      page()->globalRootScrollerController().rootScrollerLayer();
   WebLayer* layoutViewportWebLayer =
       layoutViewportScrollLayer ? layoutViewportScrollLayer->platformLayer()
                                 : nullptr;
 
-  VisualViewport& visualViewport = page()->frameHost().visualViewport();
+  VisualViewport& visualViewport = page()->visualViewport();
 
   // TODO(bokan): This was moved here from when registerViewportLayers was a
   // part of VisualViewport and maybe doesn't belong here. See comment inside
@@ -3811,8 +3854,8 @@ void WebViewImpl::setRootGraphicsLayer(GraphicsLayer* graphicsLayer) {
   // In SPv2, setRootLayer is used instead.
   DCHECK(!RuntimeEnabledFeatures::slimmingPaintV2Enabled());
 
-  VisualViewport& visualViewport = page()->frameHost().visualViewport();
-  visualViewport.attachToLayerTree(graphicsLayer);
+  VisualViewport& visualViewport = page()->visualViewport();
+  visualViewport.attachLayerTree(graphicsLayer);
   if (graphicsLayer) {
     m_rootGraphicsLayer = visualViewport.rootGraphicsLayer();
     m_visualViewportContainerLayer = visualViewport.containerLayer();
@@ -3946,7 +3989,7 @@ void WebViewImpl::applyViewportDeltas(
     const WebFloatSize& elasticOverscrollDelta,
     float pageScaleDelta,
     float browserControlsShownRatioDelta) {
-  VisualViewport& visualViewport = page()->frameHost().visualViewport();
+  VisualViewport& visualViewport = page()->visualViewport();
 
   // Store the desired offsets the visual viewport before setting the top
   // controls ratio since doing so will change the bounds and move the
@@ -3996,7 +4039,7 @@ void WebViewImpl::updateLayerTreeDeviceScaleFactor() {
 
   float deviceScaleFactor = m_compositorDeviceScaleFactorOverride
                                 ? m_compositorDeviceScaleFactorOverride
-                                : page()->deviceScaleFactor();
+                                : page()->deviceScaleFactorDeprecated();
   m_layerTreeView->setDeviceScaleFactor(deviceScaleFactor);
 }
 
@@ -4123,7 +4166,7 @@ float WebViewImpl::deviceScaleFactor() const {
   if (!page())
     return 1;
 
-  return page()->deviceScaleFactor();
+  return page()->deviceScaleFactorDeprecated();
 }
 
 LocalFrame* WebViewImpl::focusedLocalFrameInWidget() const {

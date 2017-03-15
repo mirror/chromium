@@ -67,7 +67,7 @@ void SegmentedString::append(const SegmentedSubstring& s) {
     m_currentString = s;
     updateAdvanceFunctionPointers();
   } else {
-    m_substrings.append(s);
+    m_substrings.push_back(s);
   }
   m_empty = false;
 }
@@ -104,7 +104,7 @@ void SegmentedString::prepend(const SegmentedSubstring& s, PrependType type) {
     updateAdvanceFunctionPointers();
   } else {
     // Shift our m_currentString into our list.
-    m_substrings.prepend(m_currentString);
+    m_substrings.push_front(m_currentString);
     m_currentString = s;
     updateAdvanceFunctionPointers();
   }

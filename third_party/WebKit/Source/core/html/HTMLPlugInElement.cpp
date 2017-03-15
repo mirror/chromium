@@ -31,6 +31,7 @@
 #include "core/events/Event.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/Settings.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/HTMLContentElement.h"
@@ -41,14 +42,13 @@
 #include "core/layout/LayoutImage.h"
 #include "core/layout/LayoutPart.h"
 #include "core/layout/api/LayoutEmbeddedItem.h"
-#include "core/loader/FrameLoaderClient.h"
 #include "core/loader/MixedContentChecker.h"
 #include "core/page/Page.h"
 #include "core/page/scrolling/ScrollingCoordinator.h"
 #include "core/plugins/PluginView.h"
+#include "platform/FrameViewBase.h"
 #include "platform/Histogram.h"
-#include "platform/Widget.h"
-#include "platform/network/ResourceRequest.h"
+#include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/network/mime/MIMETypeFromURL.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
 #include "platform/plugins/PluginData.h"
@@ -77,11 +77,11 @@ HTMLPlugInElement::HTMLPlugInElement(
     PreferPlugInsForImagesOption preferPlugInsForImagesOption)
     : HTMLFrameOwnerElement(tagName, doc),
       m_isDelayingLoadEvent(false),
-      // m_needsWidgetUpdate(!createdByParser) allows HTMLObjectElement to delay
-      // widget updates until after all children are parsed. For
+      // m_needsPluginUpdate(!createdByParser) allows HTMLObjectElement to delay
+      // FrameViewBase updates until after all children are parsed. For
       // HTMLEmbedElement this delay is unnecessary, but it is simpler to make
       // both classes share the same codepath in this class.
-      m_needsWidgetUpdate(!createdByParser),
+      m_needsPluginUpdate(!createdByParser),
       m_shouldPreferPlugInsForImages(preferPlugInsForImagesOption ==
                                      ShouldPreferPlugInsForImages) {}
 
@@ -96,8 +96,8 @@ DEFINE_TRACE(HTMLPlugInElement) {
   HTMLFrameOwnerElement::trace(visitor);
 }
 
-void HTMLPlugInElement::setPersistedPluginWidget(Widget* widget) {
-  if (m_persistedPluginWidget == widget)
+void HTMLPlugInElement::setPersistedPluginWidget(FrameViewBase* frameViewBase) {
+  if (m_persistedPluginWidget == frameViewBase)
     return;
   if (m_persistedPluginWidget) {
     if (m_persistedPluginWidget->isPluginView()) {
@@ -108,7 +108,7 @@ void HTMLPlugInElement::setPersistedPluginWidget(Widget* widget) {
              m_persistedPluginWidget->isRemoteFrameView());
     }
   }
-  m_persistedPluginWidget = widget;
+  m_persistedPluginWidget = frameViewBase;
 }
 
 bool HTMLPlugInElement::requestObjectInternal(
@@ -131,8 +131,8 @@ bool HTMLPlugInElement::requestObjectInternal(
                        useFallback)) {
     // If the plugin element already contains a subframe,
     // loadOrRedirectSubframe will re-use it. Otherwise, it will create a
-    // new frame and set it as the LayoutPart's widget, causing what was
-    // previously in the widget to be torn down.
+    // new frame and set it as the LayoutPart's FrameViewBase, causing what was
+    // previously in the FrameViewBase to be torn down.
     return loadOrRedirectSubframe(completedURL, getNameAttribute(), true);
   }
 
@@ -159,8 +159,8 @@ bool HTMLPlugInElement::willRespondToMouseClickEvents() {
 void HTMLPlugInElement::removeAllEventListeners() {
   HTMLFrameOwnerElement::removeAllEventListeners();
   if (LayoutPart* layoutObject = existingLayoutPart()) {
-    if (Widget* widget = layoutObject->widget())
-      widget->eventListenersRemoved();
+    if (FrameViewBase* frameViewBase = layoutObject->frameViewBase())
+      frameViewBase->eventListenersRemoved();
   }
 }
 
@@ -187,7 +187,7 @@ void HTMLPlugInElement::attachLayoutTree(const AttachContext& context) {
     if (!m_imageLoader)
       m_imageLoader = HTMLImageLoader::create(this);
     m_imageLoader->updateFromElement();
-  } else if (needsWidgetUpdate() && !layoutEmbeddedItem().isNull() &&
+  } else if (needsPluginUpdate() && !layoutEmbeddedItem().isNull() &&
              !layoutEmbeddedItem().showsUnavailablePluginIndicator() &&
              !wouldLoadAsNetscapePlugin(m_url, m_serviceType) &&
              !m_isDelayingLoadEvent) {
@@ -197,8 +197,8 @@ void HTMLPlugInElement::attachLayoutTree(const AttachContext& context) {
   }
 }
 
-void HTMLPlugInElement::updateWidget() {
-  updateWidgetInternal();
+void HTMLPlugInElement::updatePlugin() {
+  updatePluginInternal();
   if (m_isDelayingLoadEvent) {
     m_isDelayingLoadEvent = false;
     document().decrementLoadEventDelayCount();
@@ -252,27 +252,31 @@ void HTMLPlugInElement::createPluginWithoutLayoutObject() {
 }
 
 bool HTMLPlugInElement::shouldAccelerate() const {
-  if (Widget* widget = ownedWidget())
-    return widget->isPluginView() && toPluginView(widget)->platformLayer();
+  if (FrameViewBase* frameViewBase = ownedWidget()) {
+    return frameViewBase->isPluginView() &&
+           toPluginView(frameViewBase)->platformLayer();
+  }
   return false;
 }
 
 void HTMLPlugInElement::detachLayoutTree(const AttachContext& context) {
-  // Update the widget the next time we attach (detaching destroys the plugin).
-  // FIXME: None of this "needsWidgetUpdate" related code looks right.
+  // Update the FrameViewBase the next time we attach (detaching destroys the
+  // plugin).
+  // FIXME: None of this "needsPluginUpdate" related code looks right.
   if (layoutObject() && !useFallbackContent())
-    setNeedsWidgetUpdate(true);
+    setNeedsPluginUpdate(true);
+
   if (m_isDelayingLoadEvent) {
     m_isDelayingLoadEvent = false;
     document().decrementLoadEventDelayCount();
   }
 
-  // Only try to persist a plugin widget we actually own.
-  Widget* plugin = ownedWidget();
+  // Only try to persist a plugin FrameViewBase we actually own.
+  FrameViewBase* plugin = ownedWidget();
   if (plugin && context.performingReattach) {
     setPersistedPluginWidget(releaseWidget());
   } else {
-    // Clear the widget; will trigger disposal of it with Oilpan.
+    // Clear the FrameViewBase; will trigger disposal of it with Oilpan.
     setWidget(nullptr);
   }
 
@@ -304,7 +308,7 @@ void HTMLPlugInElement::finishParsingChildren() {
   if (useFallbackContent())
     return;
 
-  setNeedsWidgetUpdate(true);
+  setNeedsPluginUpdate(true);
   if (isConnected())
     lazyReattachIfNeeded();
 }
@@ -322,7 +326,7 @@ SharedPersistent<v8::Object>* HTMLPlugInElement::pluginWrapper() {
   // return the cached allocated Bindings::Instance. Not supporting this
   // edge-case is OK.
   if (!m_pluginWrapper) {
-    Widget* plugin;
+    FrameViewBase* plugin;
 
     if (m_persistedPluginWidget)
       plugin = m_persistedPluginWidget.get();
@@ -335,9 +339,9 @@ SharedPersistent<v8::Object>* HTMLPlugInElement::pluginWrapper() {
   return m_pluginWrapper.get();
 }
 
-Widget* HTMLPlugInElement::pluginWidget() const {
+FrameViewBase* HTMLPlugInElement::pluginWidget() const {
   if (LayoutPart* layoutPart = layoutPartForJSBindings())
-    return layoutPart->widget();
+    return layoutPart->frameViewBase();
   return nullptr;
 }
 
@@ -390,10 +394,10 @@ void HTMLPlugInElement::defaultEventHandler(Event* event) {
             .showsUnavailablePluginIndicator())
       return;
   }
-  Widget* widget = toLayoutPart(r)->widget();
-  if (!widget)
+  FrameViewBase* frameViewBase = toLayoutPart(r)->frameViewBase();
+  if (!frameViewBase)
     return;
-  widget->handleEvent(event);
+  frameViewBase->handleEvent(event);
   if (event->defaultHandled())
     return;
   HTMLFrameOwnerElement::defaultEventHandler(event);
@@ -525,12 +529,12 @@ bool HTMLPlugInElement::loadPlugin(const KURL& url,
   } else {
     bool loadManually =
         document().isPluginDocument() && !document().containsPlugins();
-    FrameLoaderClient::DetachedPluginPolicy policy =
-        requireLayoutObject ? FrameLoaderClient::FailOnDetachedPlugin
-                            : FrameLoaderClient::AllowDetachedPlugin;
-    Widget* widget = frame->loader().client()->createPlugin(
+    LocalFrameClient::DetachedPluginPolicy policy =
+        requireLayoutObject ? LocalFrameClient::FailOnDetachedPlugin
+                            : LocalFrameClient::AllowDetachedPlugin;
+    FrameViewBase* frameViewBase = frame->loader().client()->createPlugin(
         this, url, paramNames, paramValues, mimeType, loadManually, policy);
-    if (!widget) {
+    if (!frameViewBase) {
       if (!layoutItem.isNull() &&
           !layoutItem.showsUnavailablePluginIndicator()) {
         m_pluginIsAvailable = false;
@@ -540,9 +544,9 @@ bool HTMLPlugInElement::loadPlugin(const KURL& url,
     }
 
     if (!layoutItem.isNull())
-      setWidget(widget);
+      setWidget(frameViewBase);
     else
-      setPersistedPluginWidget(widget);
+      setPersistedPluginWidget(frameViewBase);
   }
 
   document().setContainsPlugins();
@@ -645,7 +649,7 @@ bool HTMLPlugInElement::useFallbackContent() const {
 }
 
 void HTMLPlugInElement::lazyReattachIfNeeded() {
-  if (!useFallbackContent() && needsWidgetUpdate() && layoutObject() &&
+  if (!useFallbackContent() && needsPluginUpdate() && layoutObject() &&
       !isImageType()) {
     lazyReattachIfAttached();
     setPersistedPluginWidget(nullptr);

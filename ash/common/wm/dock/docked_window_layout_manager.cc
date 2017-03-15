@@ -5,6 +5,7 @@
 #include "ash/common/wm/dock/docked_window_layout_manager.h"
 
 #include "ash/animation/animation_change_type.h"
+#include "ash/common/keyboard/keyboard_observer_register.h"
 #include "ash/common/shelf/shelf_background_animator.h"
 #include "ash/common/shelf/shelf_background_animator_observer.h"
 #include "ash/common/shelf/shelf_constants.h"
@@ -15,20 +16,26 @@
 #include "ash/common/wm/window_parenting_utils.h"
 #include "ash/common/wm/window_resizer.h"
 #include "ash/common/wm/window_state.h"
-#include "ash/common/wm_lookup.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
 #include "ash/public/cpp/shell_window_ids.h"
+#include "ash/resources/grit/ash_resources.h"
 #include "ash/root_window_controller.h"
+#include "ash/shell.h"
+#include "ash/wm/window_state_aura.h"
 #include "base/auto_reset.h"
 #include "base/metrics/histogram_macros.h"
-#include "grit/ash_resources.h"
 #include "third_party/skia/include/core/SkColor.h"
+#include "ui/aura/window.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
+#include "ui/keyboard/keyboard_controller.h"
 #include "ui/views/background.h"
+#include "ui/wm/core/coordinate_conversion.h"
+#include "ui/wm/core/window_animations.h"
+#include "ui/wm/public/activation_client.h"
 
 namespace ash {
 
@@ -53,7 +60,9 @@ class DockedBackgroundWidget : public views::Widget,
   explicit DockedBackgroundWidget(DockedWindowLayoutManager* manager)
       : manager_(manager),
         alignment_(DOCKED_ALIGNMENT_NONE),
-        background_animator_(SHELF_BACKGROUND_DEFAULT, nullptr),
+        background_animator_(SHELF_BACKGROUND_DEFAULT,
+                             nullptr,
+                             Shell::GetInstance()->wallpaper_controller()),
         opaque_background_(ui::LAYER_SOLID_COLOR),
         visible_background_type_(manager_->shelf()->GetBackgroundType()),
         visible_background_change_type_(AnimationChangeType::IMMEDIATE) {
@@ -83,9 +92,8 @@ class DockedBackgroundWidget : public views::Widget,
   }
 
   // ShelfBackgroundAnimatorObserver:
-  void UpdateShelfBackground(int alpha) override {
-    const float kMaxAlpha = 255.0f;
-    opaque_background_.SetOpacity(alpha / kMaxAlpha);
+  void UpdateShelfBackground(SkColor color) override {
+    opaque_background_.SetColor(color);
   }
 
   // WmShelfObserver:
@@ -112,7 +120,7 @@ class DockedBackgroundWidget : public views::Widget,
         this, parent->GetShellWindowId(), &params);
     Init(params);
     SetVisibilityChangedAnimationsEnabled(false);
-    WmWindow* wm_window = WmLookup::Get()->GetWindowForWidget(this);
+    WmWindow* wm_window = WmWindow::Get(this->GetNativeWindow());
     wm_window->SetLockedToRoot(true);
     opaque_background_.SetColor(SK_ColorBLACK);
     opaque_background_.SetBounds(gfx::Rect(GetWindowBoundsInScreen().size()));
@@ -176,11 +184,11 @@ bool IsWindowDocked(const WmWindow* window) {
 
 void UndockWindow(WmWindow* window) {
   gfx::Rect previous_bounds = window->GetBounds();
-  WmWindow* old_parent = window->GetParent();
+  aura::Window* old_parent = window->aura_window()->parent();
   window->SetParentUsingContext(window, gfx::Rect());
-  if (window->GetParent() != old_parent) {
-    wm::ReparentTransientChildrenOfChild(window, old_parent,
-                                         window->GetParent());
+  if (window->aura_window()->parent() != old_parent) {
+    wm::ReparentTransientChildrenOfChild(window->aura_window(), old_parent,
+                                         window->aura_window()->parent());
   }
   // Start maximize or fullscreen (affecting packaged apps) animation from
   // previous window bounds.
@@ -306,27 +314,32 @@ struct DockedWindowLayoutManager::CompareWindowPos {
 
 ////////////////////////////////////////////////////////////////////////////////
 // A class that observes shelf for bounds changes.
-class DockedWindowLayoutManager::ShelfWindowObserver : public WmWindowObserver {
+class DockedWindowLayoutManager::ShelfWindowObserver
+    : public aura::WindowObserver {
  public:
   explicit ShelfWindowObserver(DockedWindowLayoutManager* docked_layout_manager)
       : docked_layout_manager_(docked_layout_manager) {
     DCHECK(docked_layout_manager_->shelf()->GetWindow());
-    docked_layout_manager_->shelf()->GetWindow()->AddObserver(this);
+    docked_layout_manager_->shelf()->GetWindow()->aura_window()->AddObserver(
+        this);
   }
 
   ~ShelfWindowObserver() override {
     if (docked_layout_manager_->shelf() &&
         docked_layout_manager_->shelf()->GetWindow()) {
-      docked_layout_manager_->shelf()->GetWindow()->RemoveObserver(this);
+      docked_layout_manager_->shelf()
+          ->GetWindow()
+          ->aura_window()
+          ->RemoveObserver(this);
     }
   }
 
-  // WmWindowObserver:
-  void OnWindowBoundsChanged(WmWindow* window,
+  // aura::WindowObserver:
+  void OnWindowBoundsChanged(aura::Window* window,
                              const gfx::Rect& old_bounds,
                              const gfx::Rect& new_bounds) override {
-    shelf_bounds_in_screen_ =
-        window->GetParent()->ConvertRectToScreen(new_bounds);
+    shelf_bounds_in_screen_ = new_bounds;
+    ::wm::ConvertRectToScreen(window->parent(), &shelf_bounds_in_screen_);
 
     // When the shelf is auto-hidden, it has an invisible height of 3px used
     // as a hit region which is specific to Chrome OS MD (for non-MD, the 3
@@ -370,10 +383,11 @@ DockedWindowLayoutManager::DockedWindowLayoutManager(WmWindow* dock_container)
       event_source_(DOCKED_ACTION_SOURCE_UNKNOWN),
       last_active_window_(nullptr),
       last_action_time_(base::Time::Now()),
-      background_widget_(nullptr) {
+      background_widget_(nullptr),
+      keyboard_observer_(this) {
   DCHECK(dock_container);
-  dock_container_->GetShell()->AddShellObserver(this);
-  dock_container->GetShell()->AddActivationObserver(this);
+  Shell::GetInstance()->AddShellObserver(this);
+  Shell::GetInstance()->activation_client()->AddObserver(this);
   display::Screen::GetScreen()->AddObserver(this);
 }
 
@@ -397,11 +411,11 @@ void DockedWindowLayoutManager::Shutdown() {
   shelf_observer_.reset();
   shelf_ = nullptr;
   for (WmWindow* child : dock_container_->GetChildren()) {
-    child->RemoveObserver(this);
+    child->aura_window()->RemoveObserver(this);
     child->GetWindowState()->RemoveObserver(this);
   }
-  dock_container_->GetShell()->RemoveActivationObserver(this);
-  dock_container_->GetShell()->RemoveShellObserver(this);
+  Shell::GetInstance()->activation_client()->RemoveObserver(this);
+  Shell::GetInstance()->RemoveShellObserver(this);
   display::Screen::GetScreen()->RemoveObserver(this);
 }
 
@@ -423,7 +437,7 @@ void DockedWindowLayoutManager::StartDragging(WmWindow* window) {
   // case it is already observed.
   wm::WindowState* dragged_state = dragged_window_->GetWindowState();
   if (dragged_window_->GetParent() != dock_container_) {
-    dragged_window_->AddObserver(this);
+    dragged_window_->aura_window()->AddObserver(this);
     dragged_state->AddObserver(this);
   } else if (!IsAnyWindowDocked() && dragged_state->drag_details() &&
              !(dragged_state->drag_details()->bounds_change &
@@ -476,7 +490,7 @@ void DockedWindowLayoutManager::FinishDragging(DockedAction action,
   // Stop observing a window unless it is docked container's child in which
   // case it needs to keep being observed after the drag completes.
   if (dragged_window_->GetParent() != dock_container_) {
-    dragged_window_->RemoveObserver(this);
+    dragged_window_->aura_window()->RemoveObserver(this);
     dragged_window_->GetWindowState()->RemoveObserver(this);
     if (last_active_window_ == dragged_window_)
       last_active_window_ = nullptr;
@@ -645,7 +659,7 @@ void DockedWindowLayoutManager::OnWindowAddedToLayout(WmWindow* child) {
                      : GetEdgeNearestWindow(child);
   }
   MaybeMinimizeChildrenExcept(child);
-  child->AddObserver(this);
+  child->aura_window()->AddObserver(this);
   child->GetWindowState()->AddObserver(this);
   Relayout();
   UpdateDockBounds(DockedWindowLayoutManagerObserver::CHILD_CHANGED);
@@ -671,7 +685,7 @@ void DockedWindowLayoutManager::OnWindowRemovedFromLayout(WmWindow* child) {
   }
   if (last_active_window_ == child)
     last_active_window_ = nullptr;
-  child->RemoveObserver(this);
+  child->aura_window()->RemoveObserver(this);
   child->GetWindowState()->RemoveObserver(this);
   Relayout();
   UpdateDockBounds(DockedWindowLayoutManagerObserver::CHILD_CHANGED);
@@ -759,50 +773,53 @@ void DockedWindowLayoutManager::OnPreWindowStateTypeChange(
 // DockedWindowLayoutManager, WindowObserver implementation:
 
 void DockedWindowLayoutManager::OnWindowBoundsChanged(
-    WmWindow* window,
+    aura::Window* window,
     const gfx::Rect& old_bounds,
     const gfx::Rect& new_bounds) {
   // Only relayout if the dragged window would get docked.
-  if (window == dragged_window_ && is_dragged_window_docked_)
+  if (WmWindow::Get(window) == dragged_window_ && is_dragged_window_docked_)
     Relayout();
 }
 
-void DockedWindowLayoutManager::OnWindowVisibilityChanging(WmWindow* window,
+void DockedWindowLayoutManager::OnWindowVisibilityChanging(aura::Window* window,
                                                            bool visible) {
-  if (IsPopupOrTransient(window))
+  if (IsPopupOrTransient(WmWindow::Get(window)))
     return;
   int animation_type = ::wm::WINDOW_VISIBILITY_ANIMATION_TYPE_DEFAULT;
   if (visible) {
     animation_type = ::wm::WINDOW_VISIBILITY_ANIMATION_TYPE_DROP;
-    window->SetVisibilityAnimationDuration(
-        base::TimeDelta::FromMilliseconds(kFadeDurationMs));
-  } else if (window->GetWindowState()->IsMinimized()) {
+    ::wm::SetWindowVisibilityAnimationDuration(
+        window, base::TimeDelta::FromMilliseconds(kFadeDurationMs));
+  } else if (wm::GetWindowState(window)->IsMinimized()) {
     animation_type = wm::WINDOW_VISIBILITY_ANIMATION_TYPE_MINIMIZE;
   }
-  window->SetVisibilityAnimationType(animation_type);
+  ::wm::SetWindowVisibilityAnimationType(window, animation_type);
 }
 
-void DockedWindowLayoutManager::OnWindowDestroying(WmWindow* window) {
-  if (dragged_window_ == window) {
+void DockedWindowLayoutManager::OnWindowDestroying(aura::Window* window) {
+  if (dragged_window_ == WmWindow::Get(window)) {
     FinishDragging(DOCKED_ACTION_NONE, DOCKED_ACTION_SOURCE_UNKNOWN);
     DCHECK(!dragged_window_);
     DCHECK(!is_dragged_window_docked_);
   }
-  if (window == last_active_window_)
+  if (WmWindow::Get(window) == last_active_window_)
     last_active_window_ = nullptr;
   RecordUmaAction(DOCKED_ACTION_CLOSE, event_source_);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// DockedWindowLayoutManager, WmActivationObserver implementation:
+// DockedWindowLayoutManager, ActivationChangeObserver implementation:
 
-void DockedWindowLayoutManager::OnWindowActivated(WmWindow* gained_active,
-                                                  WmWindow* lost_active) {
-  if (gained_active && IsPopupOrTransient(gained_active))
+void DockedWindowLayoutManager::OnWindowActivated(ActivationReason reason,
+                                                  aura::Window* gained_active,
+                                                  aura::Window* lost_active) {
+  WmWindow* wm_gained_active = WmWindow::Get(gained_active);
+  if (wm_gained_active && IsPopupOrTransient(wm_gained_active))
     return;
   // Ignore if the window that is not managed by this was activated.
   WmWindow* ancestor = nullptr;
-  for (WmWindow* parent = gained_active; parent; parent = parent->GetParent()) {
+  for (WmWindow* parent = wm_gained_active; parent;
+       parent = parent->GetParent()) {
     if (parent->GetParent() == dock_container_) {
       ancestor = parent;
       break;
@@ -811,7 +828,7 @@ void DockedWindowLayoutManager::OnWindowActivated(WmWindow* gained_active,
   if (ancestor) {
     // Window activation from overview mode may unminimize a window and require
     // layout update.
-    MaybeMinimizeChildrenExcept(gained_active);
+    MaybeMinimizeChildrenExcept(wm_gained_active);
     Relayout();
     UpdateStacking(ancestor);
   }
@@ -879,6 +896,14 @@ void DockedWindowLayoutManager::OnOverviewModeStarting() {
 void DockedWindowLayoutManager::OnOverviewModeEnded() {
   in_overview_ = false;
   UpdateDockBounds(DockedWindowLayoutManagerObserver::CHILD_CHANGED);
+}
+
+void DockedWindowLayoutManager::OnVirtualKeyboardStateChanged(
+    bool activated,
+    WmWindow* root_window) {
+  UpdateKeyboardObserverFromStateChanged(activated, root_window,
+                                         dock_container_->GetRootWindow(),
+                                         &keyboard_observer_);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1323,6 +1348,8 @@ void DockedWindowLayoutManager::OnKeyboardBoundsChanging(
   UpdateDockBounds(DockedWindowLayoutManagerObserver::KEYBOARD_BOUNDS_CHANGING);
 }
 
-void DockedWindowLayoutManager::OnKeyboardClosed() {}
+void DockedWindowLayoutManager::OnKeyboardClosed() {
+  keyboard_observer_.RemoveAll();
+}
 
 }  // namespace ash

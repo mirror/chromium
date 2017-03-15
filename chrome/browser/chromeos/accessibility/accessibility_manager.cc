@@ -12,7 +12,7 @@
 
 #include "ash/autoclick/autoclick_controller.h"
 #include "ash/autoclick/mus/public/interfaces/autoclick.mojom.h"
-#include "ash/common/session/session_state_delegate.h"
+#include "ash/common/ash_constants.h"
 #include "ash/common/shelf/shelf_layout_manager.h"
 #include "ash/common/shelf/wm_shelf.h"
 #include "ash/common/wm_shell.h"
@@ -40,6 +40,7 @@
 #include "chrome/browser/chromeos/accessibility/accessibility_highlight_manager.h"
 #include "chrome/browser/chromeos/accessibility/magnification_manager.h"
 #include "chrome/browser/chromeos/accessibility/select_to_speak_event_handler.h"
+#include "chrome/browser/chromeos/accessibility/switch_access_event_handler.h"
 #include "chrome/browser/chromeos/app_mode/kiosk_app_manager.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
@@ -57,10 +58,8 @@
 #include "chrome/grit/browser_resources.h"
 #include "chromeos/audio/audio_a11y_controller.h"
 #include "chromeos/audio/chromeos_sounds.h"
-#include "chromeos/login/login_state.h"
 #include "components/prefs/pref_member.h"
 #include "components/prefs/pref_service.h"
-#include "components/user_manager/user_manager.h"
 #include "content/public/browser/browser_accessibility_state.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_details.h"
@@ -247,6 +246,7 @@ AccessibilityManager::AccessibilityManager()
       select_to_speak_pref_handler_(prefs::kAccessibilitySelectToSpeakEnabled),
       switch_access_pref_handler_(prefs::kAccessibilitySwitchAccessEnabled),
       large_cursor_enabled_(false),
+      large_cursor_size_in_dip_(ash::kDefaultLargeCursorSize),
       sticky_keys_enabled_(false),
       spoken_feedback_enabled_(false),
       high_contrast_enabled_(false),
@@ -313,6 +313,10 @@ AccessibilityManager::AccessibilityManager()
   select_to_speak_loader_ = base::WrapUnique(new AccessibilityExtensionLoader(
       extension_misc::kSelectToSpeakExtensionId,
       resources_path.Append(extension_misc::kSelectToSpeakExtensionPath),
+      base::Closure()));
+  switch_access_loader_ = base::WrapUnique(new AccessibilityExtensionLoader(
+      extension_misc::kSwitchAccessExtensionId,
+      resources_path.Append(extension_misc::kSwitchAccessExtensionPath),
       base::Closure()));
 }
 
@@ -381,10 +385,16 @@ void AccessibilityManager::UpdateLargeCursorFromPref() {
   const bool enabled =
       profile_->GetPrefs()->GetBoolean(prefs::kAccessibilityLargeCursorEnabled);
 
-  if (large_cursor_enabled_ == enabled)
+  const int large_cursor_size_in_dip =
+      profile_->GetPrefs()->GetInteger(prefs::kAccessibilityLargeCursorDipSize);
+
+  if (large_cursor_enabled_ == enabled &&
+      large_cursor_size_in_dip_ == large_cursor_size_in_dip) {
     return;
+  }
 
   large_cursor_enabled_ = enabled;
+  large_cursor_size_in_dip_ = large_cursor_size_in_dip;
 
   AccessibilityStatusEventDetails details(ACCESSIBILITY_TOGGLE_LARGE_CURSOR,
                                           enabled, ash::A11Y_NOTIFICATION_NONE);
@@ -393,6 +403,7 @@ void AccessibilityManager::UpdateLargeCursorFromPref() {
 
   ash::Shell::GetInstance()->cursor_manager()->SetCursorSet(
       enabled ? ui::CURSOR_SET_LARGE : ui::CURSOR_SET_NORMAL);
+  ash::Shell::GetInstance()->SetLargeCursorSizeInDip(large_cursor_size_in_dip);
   ash::Shell::GetInstance()->SetCursorCompositingEnabled(
       ShouldEnableCursorCompositing());
 }
@@ -648,7 +659,7 @@ void AccessibilityManager::UpdateAutoclickFromPref() {
     return;
   autoclick_enabled_ = enabled;
 
-  if (chrome::IsRunningInMash()) {
+  if (ash_util::IsRunningInMash()) {
     service_manager::Connector* connector =
         content::ServiceManagerConnection::GetForProcess()->GetConnector();
     mash::mojom::LaunchablePtr launchable;
@@ -685,7 +696,7 @@ void AccessibilityManager::UpdateAutoclickDelayFromPref() {
     return;
   autoclick_delay_ms_ = autoclick_delay_ms;
 
-  if (chrome::IsRunningInMash()) {
+  if (ash_util::IsRunningInMash()) {
     service_manager::Connector* connector =
         content::ServiceManagerConnection::GetForProcess()->GetConnector();
     ash::autoclick::mojom::AutoclickControllerPtr autoclick_controller;
@@ -725,7 +736,7 @@ void AccessibilityManager::UpdateVirtualKeyboardFromPref() {
   virtual_keyboard_enabled_ = enabled;
 
   keyboard::SetAccessibilityKeyboardEnabled(enabled);
-  if (!chrome::IsRunningInMash()) {
+  if (!ash_util::IsRunningInMash()) {
     // Note that there are two versions of the on-screen keyboard. A full layout
     // is provided for accessibility, which includes sticky modifier keys to
     // enable typing of hotkeys. A compact version is used in touchview mode
@@ -925,7 +936,14 @@ void AccessibilityManager::UpdateSwitchAccessFromPref() {
     return;
   switch_access_enabled_ = enabled;
 
-  // TODO(dmazzoni): implement feature here.
+  if (enabled) {
+    switch_access_loader_->Load(profile_, base::Closure() /* done_cb */);
+    switch_access_event_handler_.reset(
+        new chromeos::SwitchAccessEventHandler());
+  } else {
+    switch_access_loader_->Unload();
+    switch_access_event_handler_.reset(nullptr);
+  }
 }
 
 void AccessibilityManager::UpdateAccessibilityHighlightingFromPrefs() {
@@ -1001,7 +1019,7 @@ void AccessibilityManager::InputMethodChanged(
     bool show_message) {
   // Sticky keys is implemented only in ash.
   // TODO(dpolukhin): support Athena, crbug.com/408733.
-  if (!chrome::IsRunningInMash()) {
+  if (!ash_util::IsRunningInMash()) {
     ash::Shell::GetInstance()->sticky_keys_controller()->SetModifiersEnabled(
         manager->IsISOLevel5ShiftUsedByCurrentInputMethod(),
         manager->IsAltGrUsedByCurrentInputMethod());
@@ -1022,6 +1040,10 @@ void AccessibilityManager::SetProfile(Profile* profile) {
     pref_change_registrar_->Init(profile->GetPrefs());
     pref_change_registrar_->Add(
         prefs::kAccessibilityLargeCursorEnabled,
+        base::Bind(&AccessibilityManager::UpdateLargeCursorFromPref,
+                   base::Unretained(this)));
+    pref_change_registrar_->Add(
+        prefs::kAccessibilityLargeCursorDipSize,
         base::Bind(&AccessibilityManager::UpdateLargeCursorFromPref,
                    base::Unretained(this)));
     pref_change_registrar_->Add(
@@ -1131,12 +1153,9 @@ void AccessibilityManager::SetProfile(Profile* profile) {
     chromevox_panel_->UpdatePanelHeight();
 }
 
-void AccessibilityManager::ActiveUserChanged(const AccountId& account_id) {
+void AccessibilityManager::ActiveUserChanged(
+    const user_manager::User* active_user) {
   SetProfile(ProfileManager::GetActiveUserProfile());
-}
-
-void AccessibilityManager::OnAppTerminating() {
-  session_state_observer_.reset();
 }
 
 void AccessibilityManager::OnFullscreenStateChanged(
@@ -1247,9 +1266,9 @@ void AccessibilityManager::Observe(
       SetProfile(ProfileManager::GetActiveUserProfile());
 
       // Add a session state observer to be able to monitor session changes.
-      if (!session_state_observer_.get() && ash::Shell::HasInstance())
+      if (!session_state_observer_.get())
         session_state_observer_.reset(
-            new ash::ScopedSessionStateObserver(this));
+            new user_manager::ScopedUserSessionStateObserver(this));
       break;
     case chrome::NOTIFICATION_PROFILE_DESTROYED: {
       // Update |profile_| when exiting a session or shutting down.

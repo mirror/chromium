@@ -42,19 +42,31 @@ Resources.DOMStorageItemsView = class extends Resources.StorageItemsView {
     this._dataGrid = new DataGrid.DataGrid(columns, this._editingCallback.bind(this), this._deleteCallback.bind(this));
     this._dataGrid.setName('DOMStorageItemsView');
     this._dataGrid.asWidget().show(this.element);
-    this._domStorage.addEventListener(
-        Resources.DOMStorage.Events.DOMStorageItemsCleared, this._domStorageItemsCleared, this);
-    this._domStorage.addEventListener(
-        Resources.DOMStorage.Events.DOMStorageItemRemoved, this._domStorageItemRemoved, this);
-    this._domStorage.addEventListener(Resources.DOMStorage.Events.DOMStorageItemAdded, this._domStorageItemAdded, this);
-    this._domStorage.addEventListener(
-        Resources.DOMStorage.Events.DOMStorageItemUpdated, this._domStorageItemUpdated, this);
+    /** @type {!Array<!Common.EventTarget.EventDescriptorStruct>} */
+    this._listeners = [];
+    this.setStorage(domStorage);
   }
 
   /**
-   * @param {!Common.Event} event
+   * @param {!Resources.DOMStorage} domStorage
    */
-  _domStorageItemsCleared(event) {
+  setStorage(domStorage) {
+    Common.EventTarget.removeEventListeners(this._listeners);
+    this._domStorage = domStorage;
+    this._listeners = [
+      this._domStorage.addEventListener(
+          Resources.DOMStorage.Events.DOMStorageItemsCleared, this._domStorageItemsCleared, this),
+      this._domStorage.addEventListener(
+          Resources.DOMStorage.Events.DOMStorageItemRemoved, this._domStorageItemRemoved, this),
+      this._domStorage.addEventListener(
+          Resources.DOMStorage.Events.DOMStorageItemAdded, this._domStorageItemAdded, this),
+      this._domStorage.addEventListener(
+          Resources.DOMStorage.Events.DOMStorageItemUpdated, this._domStorageItemUpdated, this),
+    ];
+    this.refreshItems();
+  }
+
+  _domStorageItemsCleared() {
     if (!this.isShowing() || !this._dataGrid)
       return;
 
@@ -192,6 +204,8 @@ Resources.DOMStorageItemsView = class extends Resources.StorageItemsView {
    */
   deleteAllItems() {
     this._domStorage.clear();
+    // explicitly clear the view because the event won't be fired when it has no items
+    this._domStorageItemsCleared();
   }
 
   _editingCallback(editingNode, columnIdentifier, oldText, newText) {

@@ -25,14 +25,13 @@
 
 #include "core/svg/SVGUseElement.h"
 
-#include "bindings/core/v8/ExceptionState.h"
 #include "core/SVGNames.h"
 #include "core/XLinkNames.h"
 #include "core/dom/Document.h"
 #include "core/dom/ElementTraversal.h"
+#include "core/dom/IdTargetObserver.h"
 #include "core/dom/StyleChangeReason.h"
 #include "core/dom/TaskRunnerHelper.h"
-#include "core/dom/shadow/ElementShadow.h"
 #include "core/dom/shadow/ShadowRoot.h"
 #include "core/events/Event.h"
 #include "core/layout/svg/LayoutSVGTransformableContainer.h"
@@ -40,7 +39,7 @@
 #include "core/svg/SVGLengthContext.h"
 #include "core/svg/SVGSVGElement.h"
 #include "core/svg/SVGSymbolElement.h"
-#include "core/svg/SVGTreeScopeResources.h"
+#include "core/svg/SVGTitleElement.h"
 #include "core/xml/parser/XMLDocumentParser.h"
 #include "platform/loader/fetch/FetchRequest.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
@@ -70,7 +69,7 @@ inline SVGUseElement::SVGUseElement(Document& document)
       m_elementIdentifierIsLocal(true),
       m_haveFiredLoadEvent(false),
       m_needsShadowTreeRecreation(false) {
-  ASSERT(hasCustomStyleCallbacks());
+  DCHECK(hasCustomStyleCallbacks());
 
   addToPropertyMap(m_x);
   addToPropertyMap(m_y);
@@ -97,6 +96,7 @@ DEFINE_TRACE(SVGUseElement) {
   visitor->trace(m_width);
   visitor->trace(m_height);
   visitor->trace(m_targetElementInstance);
+  visitor->trace(m_targetIdObserver);
   visitor->trace(m_resource);
   SVGGraphicsElement::trace(visitor);
   SVGURIReference::trace(visitor);
@@ -118,8 +118,10 @@ Node::InsertionNotificationRequest SVGUseElement::insertedInto(
   SVGGraphicsElement::insertedInto(rootParent);
   if (!rootParent->isConnected())
     return InsertionDone;
-  ASSERT(!m_targetElementInstance || !isWellFormedDocument(&document()));
-  ASSERT(!hasPendingResources() || !isWellFormedDocument(&document()));
+#if DCHECK_IS_ON()
+  DCHECK(!m_targetElementInstance || !isWellFormedDocument(&document()));
+  DCHECK(!hasPendingResources() || !isWellFormedDocument(&document()));
+#endif
   invalidateShadowTree();
   return InsertionDone;
 }
@@ -127,8 +129,7 @@ Node::InsertionNotificationRequest SVGUseElement::insertedInto(
 void SVGUseElement::removedFrom(ContainerNode* rootParent) {
   SVGGraphicsElement::removedFrom(rootParent);
   if (rootParent->isConnected()) {
-    clearInstanceRoot();
-    removeAllOutgoingReferences();
+    clearResourceReference();
     cancelShadowTreeRecreation();
   }
 }
@@ -180,10 +181,10 @@ void SVGUseElement::collectStyleForPresentationAttribute(
     MutableStylePropertySet* style) {
   SVGAnimatedPropertyBase* property = propertyFromAttribute(name);
   if (property == m_x) {
-    addPropertyToPresentationAttributeStyle(style, CSSPropertyX,
+    addPropertyToPresentationAttributeStyle(style, property->cssPropertyId(),
                                             m_x->cssValue());
   } else if (property == m_y) {
-    addPropertyToPresentationAttributeStyle(style, CSSPropertyY,
+    addPropertyToPresentationAttributeStyle(style, property->cssPropertyId(),
                                             m_y->cssValue());
   } else {
     SVGGraphicsElement::collectStyleForPresentationAttribute(name, value,
@@ -226,7 +227,7 @@ void SVGUseElement::svgAttributeChanged(const QualifiedName& attrName) {
 
     updateRelativeLengthsInformation();
     if (m_targetElementInstance) {
-      ASSERT(m_targetElementInstance->correspondingElement());
+      DCHECK(m_targetElementInstance->correspondingElement());
       transferUseWidthAndHeightIfNeeded(
           *this, *m_targetElementInstance,
           *m_targetElementInstance->correspondingElement());
@@ -286,57 +287,61 @@ void SVGUseElement::cancelShadowTreeRecreation() {
 }
 
 void SVGUseElement::clearInstanceRoot() {
-  if (m_targetElementInstance)
-    m_targetElementInstance = nullptr;
+  m_targetElementInstance = nullptr;
 }
 
-void SVGUseElement::clearShadowTree() {
+void SVGUseElement::clearResourceReference() {
+  unobserveTarget(m_targetIdObserver);
   clearInstanceRoot();
-
-  // FIXME: We should try to optimize this, to at least allow partial reclones.
-  if (ShadowRoot* shadowTreeRootElement = userAgentShadowRoot())
-    shadowTreeRootElement->removeChildren(OmitSubtreeModifiedEvent);
-
   removeAllOutgoingReferences();
 }
 
 Element* SVGUseElement::resolveTargetElement() {
   if (m_elementIdentifier.isEmpty())
     return nullptr;
-  const TreeScope* lookupScope = nullptr;
-  if (m_elementIdentifierIsLocal)
-    lookupScope = &treeScope();
-  else if (resourceIsValid())
-    lookupScope = m_resource->document();
-  else
-    return nullptr;
-  Element* target = lookupScope->getElementById(m_elementIdentifier);
-  // TODO(fs): Why would the Element not be "connected" at this point?
-  if (target && target->isConnected())
-    return target;
-  // Don't record any pending references for external resources.
-  if (!m_resource) {
-    treeScope().ensureSVGTreeScopedResources().addPendingResource(
-        m_elementIdentifier, this);
-    DCHECK(hasPendingResources());
+  if (m_elementIdentifierIsLocal) {
+    return observeTarget(m_targetIdObserver, treeScope(), m_elementIdentifier,
+                         WTF::bind(&SVGUseElement::invalidateShadowTree,
+                                   wrapWeakPersistent(this)));
   }
-  return nullptr;
+  if (!resourceIsValid())
+    return nullptr;
+  return m_resource->document()->getElementById(m_elementIdentifier);
 }
 
 void SVGUseElement::buildPendingResource() {
   if (inUseShadowTree())
     return;
-  clearShadowTree();
+  // FIXME: We should try to optimize this, to at least allow partial reclones.
+  userAgentShadowRoot()->removeChildren(OmitSubtreeModifiedEvent);
+  clearResourceReference();
   cancelShadowTreeRecreation();
   if (!isConnected())
     return;
   Element* target = resolveTargetElement();
-  if (target && target->isSVGElement()) {
+  // TODO(fs): Why would the Element not be "connected" at this point?
+  if (target && target->isConnected() && target->isSVGElement()) {
     buildShadowAndInstanceTree(toSVGElement(*target));
     invalidateDependentShadowTrees();
   }
 
-  ASSERT(!m_needsShadowTreeRecreation);
+  DCHECK(!m_needsShadowTreeRecreation);
+}
+
+String SVGUseElement::title() const {
+  // Find the first <title> child in <use> which doesn't cover shadow tree.
+  if (Element* titleElement = Traversal<SVGTitleElement>::firstChild(*this))
+    return titleElement->innerText();
+
+  // If there is no <title> child in <use>, we lookup first <title> child in
+  // shadow tree.
+  if (m_targetElementInstance) {
+    if (Element* titleElement =
+            Traversal<SVGTitleElement>::firstChild(*m_targetElementInstance))
+      return titleElement->innerText();
+  }
+  // Otherwise return a null string.
+  return String();
 }
 
 static void associateCorrespondingElements(SVGElement& targetRoot,
@@ -345,11 +350,11 @@ static void associateCorrespondingElements(SVGElement& targetRoot,
   auto targetIterator = targetRange.begin();
   for (SVGElement& instance :
        Traversal<SVGElement>::inclusiveDescendantsOf(instanceRoot)) {
-    ASSERT(!instance.correspondingElement());
+    DCHECK(!instance.correspondingElement());
     instance.setCorrespondingElement(&*targetIterator);
     ++targetIterator;
   }
-  ASSERT(!(targetIterator != targetRange.end()));
+  DCHECK(!(targetIterator != targetRange.end()));
 }
 
 // We don't walk the target tree element-by-element, and clone each element,
@@ -359,7 +364,7 @@ static void associateCorrespondingElements(SVGElement& targetRoot,
 // them.  For instance: <use> on <g> containing <foreignObject> (indirect
 // case).
 static inline void removeDisallowedElementsFromSubtree(SVGElement& subtree) {
-  ASSERT(!subtree.isConnected());
+  DCHECK(!subtree.isConnected());
   Element* element = ElementTraversal::firstWithin(subtree);
   while (element) {
     if (isDisallowedElement(*element)) {
@@ -386,7 +391,7 @@ static void moveChildrenToReplacementElement(ContainerNode& sourceRoot,
 
 Element* SVGUseElement::createInstanceTree(SVGElement& targetRoot) const {
   Element* instanceRoot = targetRoot.cloneElementWithChildren();
-  ASSERT(instanceRoot->isSVGElement());
+  DCHECK(instanceRoot->isSVGElement());
   if (isSVGSymbolElement(targetRoot)) {
     // Spec: The referenced 'symbol' and its contents are deep-cloned into
     // the generated tree, with the exception that the 'symbol' is replaced
@@ -412,8 +417,8 @@ Element* SVGUseElement::createInstanceTree(SVGElement& targetRoot) const {
 }
 
 void SVGUseElement::buildShadowAndInstanceTree(SVGElement& target) {
-  ASSERT(!m_targetElementInstance);
-  ASSERT(!m_needsShadowTreeRecreation);
+  DCHECK(!m_targetElementInstance);
+  DCHECK(!m_needsShadowTreeRecreation);
 
   // <use> creates a "user agent" shadow root. Do not build the shadow/instance
   // tree for <use> elements living in a user agent shadow tree because they
@@ -439,14 +444,15 @@ void SVGUseElement::buildShadowAndInstanceTree(SVGElement& target) {
     return;
 
   // Assure shadow tree building was successful.
-  ASSERT(m_targetElementInstance);
-  ASSERT(m_targetElementInstance->correspondingUseElement() == this);
-  ASSERT(m_targetElementInstance->correspondingElement() == &target);
+  DCHECK(m_targetElementInstance);
+  DCHECK_EQ(m_targetElementInstance->correspondingUseElement(), this);
+  DCHECK_EQ(m_targetElementInstance->correspondingElement(), &target);
 
   // Expand all <use> elements in the shadow tree.
   // Expand means: replace the actual <use> element by what it references.
   if (!expandUseElementsInShadowTree()) {
-    clearShadowTree();
+    shadowTreeRootElement->removeChildren(OmitSubtreeModifiedEvent);
+    clearResourceReference();
     return;
   }
 
@@ -454,7 +460,7 @@ void SVGUseElement::buildShadowAndInstanceTree(SVGElement& target) {
   // reset |m_targetElementInstance|.
   m_targetElementInstance =
       toSVGElementOrDie(shadowTreeRootElement->firstChild());
-  ASSERT(m_targetElementInstance->parentNode() == shadowTreeRootElement);
+  DCHECK_EQ(m_targetElementInstance->parentNode(), shadowTreeRootElement);
 
   // Update relative length information.
   updateRelativeLengthsInformation();
@@ -472,7 +478,7 @@ static bool isDirectReference(const SVGElement& element) {
 }
 
 void SVGUseElement::toClipPath(Path& path) const {
-  ASSERT(path.isEmpty());
+  DCHECK(path.isEmpty());
 
   const SVGGraphicsElement* element = visibleTargetGraphicsElementForClipping();
 
@@ -582,7 +588,7 @@ bool SVGUseElement::expandUseElementsInShadowTree() {
   ShadowRoot* shadowRoot = userAgentShadowRoot();
   for (SVGUseElement* use = Traversal<SVGUseElement>::firstWithin(*shadowRoot);
        use;) {
-    ASSERT(!use->resourceIsStillLoading());
+    DCHECK(!use->resourceIsStillLoading());
 
     SVGUseElement& originalUse = toSVGUseElement(*use->correspondingElement());
     SVGElement* target = nullptr;
@@ -591,7 +597,7 @@ bool SVGUseElement::expandUseElementsInShadowTree() {
 
     if (target && isDisallowedElement(*target))
       return false;
-    // Don't ASSERT(target) here, it may be "pending", too.
+    // Don't DCHECK(target) here, it may be "pending", too.
     // Setup sub-shadow tree root node
     SVGGElement* cloneParent = SVGGElement::create(originalUse.document());
     // Transfer all data (attributes, etc.) from <use> to the new <g> element.
@@ -632,7 +638,7 @@ void SVGUseElement::invalidateDependentShadowTrees() {
   instances.appendRange(rawInstances.begin(), rawInstances.end());
   for (auto& instance : instances) {
     if (SVGUseElement* element = instance->correspondingUseElement()) {
-      ASSERT(element->isConnected());
+      DCHECK(element->isConnected());
       element->invalidateShadowTree();
     }
   }
@@ -674,12 +680,13 @@ FloatRect SVGUseElement::getBBox() {
 }
 
 void SVGUseElement::dispatchPendingEvent() {
-  ASSERT(isStructurallyExternal() && m_haveFiredLoadEvent);
+  DCHECK(isStructurallyExternal());
+  DCHECK(m_haveFiredLoadEvent);
   dispatchEvent(Event::create(EventTypeNames::load));
 }
 
 void SVGUseElement::notifyFinished(Resource* resource) {
-  ASSERT(m_resource == resource);
+  DCHECK_EQ(m_resource, resource);
   if (!isConnected())
     return;
 
@@ -691,7 +698,7 @@ void SVGUseElement::notifyFinished(Resource* resource) {
       return;
     if (!isStructurallyExternal())
       return;
-    ASSERT(!m_haveFiredLoadEvent);
+    DCHECK(!m_haveFiredLoadEvent);
     m_haveFiredLoadEvent = true;
     TaskRunnerHelper::get(TaskType::DOMManipulation, &document())
         ->postTask(BLINK_FROM_HERE,

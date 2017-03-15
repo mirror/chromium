@@ -119,6 +119,7 @@
 <translation id="2096368010154057602">Департамент</translation>
 <translation id="2113977810652731515">Карта</translation>
 <translation id="2114841414352855701">Бе пренебрегнато, защото бе отменено от <ph name="POLICY_NAME" />.</translation>
+<translation id="2138201775715568214">Търсят се намиращи се в близост страници във Физическата мрежа</translation>
 <translation id="213826338245044447">Мобилни отметки</translation>
 <translation id="2148716181193084225">Днес</translation>
 <translation id="2154054054215849342">Синхронизирането не е налице за въведения от вас домейн</translation>
@@ -189,6 +190,7 @@
 <translation id="2721148159707890343">Заявката е успешна</translation>
 <translation id="2728127805433021124">Сертификатът на сървъра е подписан със слаб алгоритъм.</translation>
 <translation id="2730326759066348565"><ph name="BEGIN_LINK" />Стартирайте диагностика на свързаността<ph name="END_LINK" /></translation>
+<translation id="2740531572673183784">OK</translation>
 <translation id="2742870351467570537">Премахване на избраните елементи</translation>
 <translation id="277499241957683684">Липсващ запис за устройството</translation>
 <translation id="2784949926578158345">Връзката бе възстановена.</translation>
@@ -270,6 +272,7 @@
 <translation id="348000606199325318">Идентификатор на срива: <ph name="CRASH_LOCAL_ID" /> (Идентификатор на сървъра: <ph name="CRASH_ID" />)</translation>
 <translation id="3498215018399854026">Не можахме да се свържем с родителя ви. Моля, опитайте отново.</translation>
 <translation id="3528171143076753409">Сертификатът на сървъра не е надежден.</translation>
+<translation id="3538531656504267329">Неправилна година на валидност</translation>
 <translation id="3539171420378717834">Съхраняване на копие на картата на това устройство</translation>
 <translation id="3542684924769048008">Използване на паролата за:</translation>
 <translation id="3549644494707163724">Всички синхронизирани данни да се шифроват със собствения ви пропуск за синхронизиране</translation>
@@ -352,6 +355,7 @@
 <translation id="425582637250725228">Направените от вас промени може да не се запазят.</translation>
 <translation id="4258748452823770588">Невалиден подпис</translation>
 <translation id="4269787794583293679">(Няма потребителско име)</translation>
+<translation id="4275830172053184480">Рестартиране на устройството ви</translation>
 <translation id="4280429058323657511">, изтича: <ph name="EXPIRATION_DATE_ABBR" /></translation>
 <translation id="4295944351946828969">Google Безопасно сърфиране наскоро <ph name="BEGIN_LINK" />намери опасни програми<ph name="END_LINK" /> на <ph name="SITE" />. <ph name="BEGIN_LEARN_MORE_LINK" />Научете повече<ph name="END_LEARN_MORE_LINK" />.</translation>
 <translation id="4300246636397505754">Основни предложения</translation>
@@ -467,6 +471,7 @@
 <translation id="5544037170328430102">Вградена страница на адрес <ph name="SITE" /> изпраща подкана:</translation>
 <translation id="5556459405103347317">Повторно зареждане</translation>
 <translation id="5565735124758917034">Активно</translation>
+<translation id="5572851009514199876">Моля, стартирайте браузъра Chrome и влезте в него, за да се провери дали имате достъп до този сайт.</translation>
 <translation id="5575380383496039204">Адресът за бърза доставка не се поддържа. Изберете друг.</translation>
 <translation id="5580958916614886209">Проверете месеца на валидност и опитайте отново</translation>
 <translation id="560412284261940334">Управлението не се поддържа</translation>
@@ -551,12 +556,14 @@
 <translation id="6443118737398455446">Датата на валидност е недействителна</translation>
 <translation id="6446608382365791566">Добавяне на още информация</translation>
 <translation id="6451458296329894277">Потвърдете повторното изпращане на формуляра</translation>
+<translation id="6456339708790392414">Вашето плащане</translation>
 <translation id="6458467102616083041">Бе пренебрегнато, защото основното търсене е деактивирано от правило.</translation>
 <translation id="6462969404041126431">Сървърът не можа да докаже, че е <ph name="DOMAIN" />. Възможно е сертификатът му за сигурност да е анулиран. Това може да се дължи на неправилно конфигуриране или на прехващане на връзката ви от извършител на атака. <ph name="BEGIN_LEARN_MORE_LINK" />Научете повече<ph name="END_LEARN_MORE_LINK" />.</translation>
 <translation id="647261751007945333">Правила за устройството</translation>
 <translation id="6477321094435799029">Chrome откри необичаен код на тази страница и я блокира, за да защити личната ви информация (например пароли, телефонни номера и номера на кредитни карти).</translation>
 <translation id="6477460825583319731">Имейл адресът е невалиден</translation>
 <translation id="6489534406876378309">Стартиране на качването на сривове</translation>
+<translation id="6525462735697194615">Неправилен месец на валидност</translation>
 <translation id="6529602333819889595">&amp;Възстановяване на изтриването</translation>
 <translation id="6534179046333460208">Предложения от Физическата мрежа</translation>
 <translation id="6550675742724504774">Опции</translation>
@@ -591,7 +598,6 @@
 <translation id="6895330447102777224">Картата ви е потвърдена</translation>
 <translation id="6897140037006041989">Потребителски агент</translation>
 <translation id="6915804003454593391">Потребител:</translation>
-<translation id="6937422995269576720">Номерът на картата е невалиден</translation>
 <translation id="6957887021205513506">Изглежда, че сертификатът на сървъра е подправен.</translation>
 <translation id="6965382102122355670">OK</translation>
 <translation id="6965978654500191972">Устройство</translation>
@@ -619,6 +625,7 @@
 <translation id="7210863904660874423"><ph name="HOST_NAME" /> не се придържа към стандартите за сигурност.</translation>
 <translation id="721197778055552897"><ph name="BEGIN_LINK" />Научете повече<ph name="END_LINK" /> за този проблем.</translation>
 <translation id="7219179957768738017">Връзката използва <ph name="SSL_VERSION" />.</translation>
+<translation id="7220786058474068424">Обработва се</translation>
 <translation id="724691107663265825">На хоризонта се задава сайт със злонамерен софтуер</translation>
 <translation id="724975217298816891">Въведете датата на валидност и кода за проверка за <ph name="CREDIT_CARD" />, за да актуализирате данните за картата си. След като я потвърдите, те ще бъдат споделени с този сайт.</translation>
 <translation id="725866823122871198">Не може да се установи частна връзка с/ъс <ph name="BEGIN_BOLD" /><ph name="DOMAIN" /><ph name="END_BOLD" />, тъй като датата и часът на компютъра ви (<ph name="DATE_AND_TIME" />) са неправилни.</translation>
@@ -685,6 +692,7 @@
 <translation id="7755287808199759310">Родителят ви може да го отблокира за вас</translation>
 <translation id="7758069387465995638">Възможно е връзката да е блокирана от защитна стена или антивирусен софтуер.</translation>
 <translation id="7761701407923456692">Сертификатът на сървъра не съответства на URL адреса.</translation>
+<translation id="7764225426217299476">Добавяне на адрес</translation>
 <translation id="777702478322588152">Префектура</translation>
 <translation id="7791543448312431591">Добавяне</translation>
 <translation id="7793809570500803535">До уеб страницата на адрес <ph name="SITE" /> може временно да няма достъп или да е преместена за постоянно на нов уеб адрес.</translation>
@@ -694,7 +702,6 @@
 <translation id="7812922009395017822">Mir</translation>
 <translation id="7813600968533626083">Предложението за формуляри да се премахне ли от Chrome?</translation>
 <translation id="7815407501681723534"><ph name="NUMBER_OF_RESULTS" /> <ph name="SEARCH_RESULTS" /> за „<ph name="SEARCH_STRING" />“</translation>
-<translation id="7837582000577464779">При обработването на поръчката ви възникна грешка. Моля, проверете профила си и опитайте отново.</translation>
 <translation id="785549533363645510">Сърфирането ви обаче не е невидимо. При преминаване в режим „инкогнито“ то не се скрива от работодателя ви и от доставчика ви на интернет услуги, нито от уебсайтовете, които посещавате.</translation>
 <translation id="7855695075675558090"><ph name="TOTAL_LABEL" /> <ph name="FORMATTED_TOTAL_AMOUNT" /> <ph name="CURRENCY_CODE" /></translation>
 <translation id="7887683347370398519">Прегледайте кода за проверка и опитайте отново</translation>
@@ -789,6 +796,7 @@
 <translation id="8932102934695377596">Часовникът ви е назад</translation>
 <translation id="8954894007019320973">(Прод.)</translation>
 <translation id="8971063699422889582">Сертификатът на сървъра е с изтекла валидност.</translation>
+<translation id="8986494364107987395">Автоматично изпращане до Google на статистически данни за използването на Chrome и сигнали за сривове</translation>
 <translation id="8987927404178983737">Месец</translation>
 <translation id="8989148748219918422"><ph name="ORGANIZATION" /> [<ph name="COUNTRY" />]</translation>
 <translation id="8996941253935762404">На хоризонта се задава сайт с опасни програми</translation>
@@ -807,6 +815,7 @@
 <translation id="9094175695478007090">Приложението за плащане не може да се стартира.</translation>
 <translation id="9103872766612412690">Обикновено <ph name="SITE" /> използва шифроване за защита на информацията ви. Когато Chromium опита да установи връзка с/ъс <ph name="SITE" /> този път, уебсайтът върна необичайни и неправилни идентификационни данни. Това може да се случи, когато извършител на атака пробва да се представи за <ph name="SITE" /> или връзката е прекъсната от екран за вход в Wi-Fi. Информацията ви продължава да е защитена, тъй като Chromium спря връзката, преди да бъдат обменени данни.</translation>
 <translation id="9137013805542155359">Показване на оригинала</translation>
+<translation id="9137248913990643158">Моля, стартирайте браузъра Chrome и влезте в него, преди да използвате това приложение.</translation>
 <translation id="9148507642005240123">&amp;Отмяна на редактирането</translation>
 <translation id="9154194610265714752">Актуализирано</translation>
 <translation id="9157595877708044936">Настройва се...</translation>

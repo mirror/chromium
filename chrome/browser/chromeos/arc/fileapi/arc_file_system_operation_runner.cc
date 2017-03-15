@@ -4,11 +4,14 @@
 
 #include "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.h"
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
 #include "base/optional.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "chrome/browser/chromeos/arc/arc_util.h"
 #include "components/arc/arc_bridge_service.h"
 #include "content/public/browser/browser_thread.h"
 #include "url/gurl.h"
@@ -28,36 +31,57 @@ ArcFileSystemOperationRunner::CreateForTesting(
   // We can't use base::MakeUnique() here because we are calling a private
   // constructor.
   return base::WrapUnique<ArcFileSystemOperationRunner>(
-      new ArcFileSystemOperationRunner(bridge_service, false));
+      new ArcFileSystemOperationRunner(bridge_service, nullptr, false));
 }
 
 ArcFileSystemOperationRunner::ArcFileSystemOperationRunner(
-    ArcBridgeService* bridge_service)
-    : ArcFileSystemOperationRunner(bridge_service, true) {}
+    ArcBridgeService* bridge_service,
+    const Profile* profile)
+    : ArcFileSystemOperationRunner(bridge_service, profile, true) {
+  DCHECK(profile);
+}
 
 ArcFileSystemOperationRunner::ArcFileSystemOperationRunner(
     ArcBridgeService* bridge_service,
-    bool observe_events)
+    const Profile* profile,
+    bool set_should_defer_by_events)
     : ArcService(bridge_service),
-      observe_events_(observe_events),
+      profile_(profile),
+      set_should_defer_by_events_(set_should_defer_by_events),
+      binding_(this),
       weak_ptr_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  if (observe_events_) {
-    ArcSessionManager::Get()->AddObserver(this);
-    arc_bridge_service()->file_system()->AddObserver(this);
-    OnStateChanged();
-  }
+  // We need to observe FileSystemInstance even in unit tests to call Init().
+  arc_bridge_service()->file_system()->AddObserver(this);
+
+  // ArcSessionManager may not exist in unit tests.
+  auto* arc_session_manager = ArcSessionManager::Get();
+  if (arc_session_manager)
+    arc_session_manager->AddObserver(this);
+
+  OnStateChanged();
 }
 
 ArcFileSystemOperationRunner::~ArcFileSystemOperationRunner() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  if (observe_events_) {
-    ArcSessionManager::Get()->RemoveObserver(this);
-    arc_bridge_service()->file_system()->RemoveObserver(this);
-  }
+  auto* arc_session_manager = ArcSessionManager::Get();
+  if (arc_session_manager)
+    arc_session_manager->RemoveObserver(this);
+
+  arc_bridge_service()->file_system()->RemoveObserver(this);
   // On destruction, deferred operations are discarded.
+}
+
+void ArcFileSystemOperationRunner::AddObserver(Observer* observer) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  observer_list_.AddObserver(observer);
+}
+
+void ArcFileSystemOperationRunner::RemoveObserver(Observer* observer) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  observer_list_.RemoveObserver(observer);
 }
 
 void ArcFileSystemOperationRunner::GetFileSize(
@@ -144,6 +168,78 @@ void ArcFileSystemOperationRunner::GetChildDocuments(
                                           callback);
 }
 
+void ArcFileSystemOperationRunner::AddWatcher(
+    const std::string& authority,
+    const std::string& document_id,
+    const WatcherCallback& watcher_callback,
+    const AddWatcherCallback& callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  if (should_defer_) {
+    deferred_operations_.emplace_back(
+        base::Bind(&ArcFileSystemOperationRunner::AddWatcher,
+                   weak_ptr_factory_.GetWeakPtr(), authority, document_id,
+                   watcher_callback, callback));
+    return;
+  }
+  auto* file_system_instance = ARC_GET_INSTANCE_FOR_METHOD(
+      arc_bridge_service()->file_system(), AddWatcher);
+  if (!file_system_instance) {
+    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                  base::Bind(callback, -1));
+    return;
+  }
+  file_system_instance->AddWatcher(
+      authority, document_id,
+      base::Bind(&ArcFileSystemOperationRunner::OnWatcherAdded,
+                 weak_ptr_factory_.GetWeakPtr(), watcher_callback, callback));
+}
+
+void ArcFileSystemOperationRunner::RemoveWatcher(
+    int64_t watcher_id,
+    const RemoveWatcherCallback& callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  // RemoveWatcher() is never deferred since watchers do not persist across
+  // container reboots.
+  if (should_defer_) {
+    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                  base::Bind(callback, false));
+    return;
+  }
+
+  // Unregister from |watcher_callbacks_| now because we will do it even if
+  // the remote method fails anyway. This is an implementation detail, so
+  // users must not assume registered callbacks are immediately invalidated.
+  auto iter = watcher_callbacks_.find(watcher_id);
+  if (iter == watcher_callbacks_.end()) {
+    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                  base::Bind(callback, false));
+    return;
+  }
+  watcher_callbacks_.erase(iter);
+
+  auto* file_system_instance = ARC_GET_INSTANCE_FOR_METHOD(
+      arc_bridge_service()->file_system(), AddWatcher);
+  if (!file_system_instance) {
+    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                  base::Bind(callback, false));
+    return;
+  }
+  file_system_instance->RemoveWatcher(watcher_id, callback);
+}
+
+void ArcFileSystemOperationRunner::OnDocumentChanged(int64_t watcher_id,
+                                                     ChangeType type) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  auto iter = watcher_callbacks_.find(watcher_id);
+  if (iter == watcher_callbacks_.end()) {
+    // This may happen in a race condition with documents changes and
+    // RemoveWatcher().
+    return;
+  }
+  WatcherCallback watcher_callback = iter->second;
+  watcher_callback.Run(type);
+}
+
 void ArcFileSystemOperationRunner::OnArcPlayStoreEnabledChanged(bool enabled) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   OnStateChanged();
@@ -151,18 +247,46 @@ void ArcFileSystemOperationRunner::OnArcPlayStoreEnabledChanged(bool enabled) {
 
 void ArcFileSystemOperationRunner::OnInstanceReady() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  auto* file_system_instance =
+      ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service()->file_system(), Init);
+  if (file_system_instance)
+    file_system_instance->Init(binding_.CreateInterfacePtrAndBind());
   OnStateChanged();
 }
 
 void ArcFileSystemOperationRunner::OnInstanceClosed() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  // ArcFileSystemService and watchers are gone.
+  watcher_callbacks_.clear();
+  for (auto& observer : observer_list_)
+    observer.OnWatchersCleared();
   OnStateChanged();
+}
+
+void ArcFileSystemOperationRunner::OnWatcherAdded(
+    const WatcherCallback& watcher_callback,
+    const AddWatcherCallback& callback,
+    int64_t watcher_id) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  if (watcher_id < 0) {
+    callback.Run(-1);
+    return;
+  }
+  if (watcher_callbacks_.count(watcher_id)) {
+    NOTREACHED();
+    callback.Run(-1);
+    return;
+  }
+  watcher_callbacks_.insert(std::make_pair(watcher_id, watcher_callback));
+  callback.Run(watcher_id);
 }
 
 void ArcFileSystemOperationRunner::OnStateChanged() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  SetShouldDefer(ArcSessionManager::Get()->IsArcPlayStoreEnabled() &&
-                 !arc_bridge_service()->file_system()->has_instance());
+  if (set_should_defer_by_events_) {
+    SetShouldDefer(IsArcPlayStoreEnabledForProfile(profile_) &&
+                   !arc_bridge_service()->file_system()->has_instance());
+  }
 }
 
 void ArcFileSystemOperationRunner::SetShouldDefer(bool should_defer) {

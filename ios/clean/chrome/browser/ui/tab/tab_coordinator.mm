@@ -13,11 +13,15 @@
 #include "base/mac/foundation_util.h"
 #include "base/memory/ptr_util.h"
 #import "ios/clean/chrome/browser/browser_coordinator+internal.h"
+#import "ios/clean/chrome/browser/ui/actions/tab_grid_actions.h"
+#import "ios/clean/chrome/browser/ui/actions/tab_strip_actions.h"
 #import "ios/clean/chrome/browser/ui/animators/zoom_transition_animator.h"
+#import "ios/clean/chrome/browser/ui/ntp/new_tab_page_coordinator.h"
 #import "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.h"
 #import "ios/clean/chrome/browser/ui/web_contents/web_coordinator.h"
 #import "ios/shared/chrome/browser/coordinator_context/coordinator_context.h"
+#import "ios/web/public/web_state/web_state.h"
 #import "ios/web/public/web_state/web_state_observer_bridge.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -30,7 +34,8 @@ namespace {
 const BOOL kUseBottomToolbar = NO;
 }  // namespace
 
-@interface TabCoordinator ()<UIViewControllerTransitioningDelegate>
+@interface TabCoordinator ()<CRWWebStateObserver,
+                             UIViewControllerTransitioningDelegate>
 @property(nonatomic, strong) TabContainerViewController* viewController;
 @end
 
@@ -46,6 +51,8 @@ const BOOL kUseBottomToolbar = NO;
   self.viewController = [self newTabContainer];
   self.viewController.transitioningDelegate = self;
   self.viewController.modalPresentationStyle = UIModalPresentationCustom;
+  _webStateObserver =
+      base::MakeUnique<web::WebStateObserverBridge>(self.webState, self);
 
   WebCoordinator* webCoordinator = [[WebCoordinator alloc] init];
   webCoordinator.webState = self.webState;
@@ -56,29 +63,48 @@ const BOOL kUseBottomToolbar = NO;
   [webCoordinator start];
 
   ToolbarCoordinator* toolbarCoordinator = [[ToolbarCoordinator alloc] init];
+  toolbarCoordinator.webState = self.webState;
   [self addChildCoordinator:toolbarCoordinator];
-  // PLACEHOLDER : Pass the WebState into the toolbar coordinator and let it
-  // create a mediator (or whatever) that observes the webState.
-  _webStateObserver = base::MakeUnique<web::WebStateObserverBridge>(
-      self.webState, toolbarCoordinator);
+
   // Unset the base view controller, so |toolbarCoordinator| doesn't present
   // its view controller.
   toolbarCoordinator.context.baseViewController = nil;
   [toolbarCoordinator start];
 
-  self.viewController.toolbarViewController = toolbarCoordinator.viewController;
-  self.viewController.contentViewController = webCoordinator.viewController;
+  // PLACEHOLDER: Replace this placeholder with an actual tab strip view
+  // controller.
+  UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
+  [button addTarget:nil
+                action:@selector(hideTabStrip:)
+      forControlEvents:UIControlEventTouchUpInside];
+  [button setTitle:@"Hide Strip" forState:UIControlStateNormal];
+  button.frame = CGRectMake(10, 10, 100, 100);
+
+  UIViewController* tabStripViewController = [[UIViewController alloc] init];
+  tabStripViewController.view.backgroundColor = [UIColor blackColor];
+  [tabStripViewController.view addSubview:button];
+  self.viewController.tabStripViewController = tabStripViewController;
 
   [self.context.baseViewController presentViewController:self.viewController
                                                 animated:self.context.animated
                                               completion:nil];
+  [super start];
 }
 
 - (void)stop {
+  [super stop];
   [self.viewController.presentingViewController
       dismissViewControllerAnimated:self.context.animated
                          completion:nil];
   _webStateObserver.reset();
+}
+
+- (void)childCoordinatorDidStart:(BrowserCoordinator*)coordinator {
+  if ([coordinator isKindOfClass:[ToolbarCoordinator class]]) {
+    self.viewController.toolbarViewController = coordinator.viewController;
+  } else if ([coordinator isKindOfClass:[WebCoordinator class]]) {
+    self.viewController.contentViewController = coordinator.viewController;
+  }
 }
 
 - (BOOL)canAddOverlayCoordinator:(BrowserCoordinator*)overlayCoordinator {
@@ -96,6 +122,21 @@ const BOOL kUseBottomToolbar = NO;
     return [[BottomToolbarTabViewController alloc] init];
   }
   return [[TopToolbarTabViewController alloc] init];
+}
+
+#pragma mark - CRWWebStateObserver
+
+// This will eventually be called in -didFinishNavigation and perhaps as an
+// optimization in some equivalent to loadURL.
+- (void)webState:(web::WebState*)webState
+    didCommitNavigationWithDetails:(const web::LoadCommittedDetails&)details {
+  if (webState->GetLastCommittedURL() == GURL("chrome://newtab/")) {
+    NTPCoordinator* ntpCoordinator = [[NTPCoordinator alloc] init];
+    [self addChildCoordinator:ntpCoordinator];
+    ntpCoordinator.context.baseViewController = nil;
+    [ntpCoordinator start];
+    self.viewController.contentViewController = ntpCoordinator.viewController;
+  }
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate

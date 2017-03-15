@@ -40,12 +40,16 @@
 
 #pragma mark - TabGridDataSource
 
-- (NSUInteger)numberOfTabsInTabGrid {
+- (int)numberOfTabsInTabGrid {
   return 3;
 }
 
-- (NSString*)titleAtIndex:(NSInteger)index {
-  return [NSString stringWithFormat:@"Tab %" PRIdNS, index];
+- (NSString*)titleAtIndex:(int)index {
+  return [NSString stringWithFormat:@"Tab %d", index];
+}
+
+- (int)indexOfActiveTab {
+  return kTabGridDataSourceInvalidIndex;
 }
 
 @end

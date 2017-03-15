@@ -10,6 +10,7 @@
 #include "ash/common/wm/maximize_mode/maximize_mode_window_manager.h"
 #include "ash/common/wm/maximize_mode/scoped_disable_internal_mouse_and_keyboard.h"
 #include "ash/common/wm_shell.h"
+#include "ash/shell.h"
 #include "base/command_line.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/time/default_tick_clock.h"
@@ -87,11 +88,12 @@ bool IsEnabled() {
 
 MaximizeModeController::MaximizeModeController()
     : have_seen_accelerometer_data_(false),
+      can_detect_lid_angle_(false),
       touchview_usage_interval_start_time_(base::Time::Now()),
       tick_clock_(new base::DefaultTickClock()),
       tablet_mode_switch_is_on_(false),
       lid_is_closed_(false) {
-  WmShell::Get()->AddShellObserver(this);
+  Shell::GetInstance()->AddShellObserver(this);
   WmShell::Get()->RecordUserMetricsAction(UMA_MAXIMIZE_MODE_INITIALLY_DISABLED);
 
   // TODO(jonross): Do not create MaximizeModeController if the flag is
@@ -107,7 +109,7 @@ MaximizeModeController::MaximizeModeController()
 }
 
 MaximizeModeController::~MaximizeModeController() {
-  WmShell::Get()->RemoveShellObserver(this);
+  Shell::GetInstance()->RemoveShellObserver(this);
 
   if (IsEnabled()) {
     WmShell::Get()->RemoveDisplayObserver(this);
@@ -139,16 +141,17 @@ void MaximizeModeController::EnableMaximizeModeWindowManager(
     // TODO(jonross): Move the maximize mode notifications from ShellObserver
     // to MaximizeModeController::Observer
     shell->RecordUserMetricsAction(UMA_MAXIMIZE_MODE_ENABLED);
-    shell->OnMaximizeModeStarted();
+    Shell::GetInstance()->NotifyMaximizeModeStarted();
 
     observers_.ForAllPtrs([](mojom::TouchViewObserver* observer) {
       observer->OnTouchViewToggled(true);
     });
 
   } else {
+    Shell::GetInstance()->NotifyMaximizeModeEnding();
     maximize_mode_window_manager_.reset();
     shell->RecordUserMetricsAction(UMA_MAXIMIZE_MODE_DISABLED);
-    shell->OnMaximizeModeEnded();
+    Shell::GetInstance()->NotifyMaximizeModeEnded();
 
     observers_.ForAllPtrs([](mojom::TouchViewObserver* observer) {
       observer->OnTouchViewToggled(false);
@@ -172,10 +175,12 @@ void MaximizeModeController::BindRequest(
 
 void MaximizeModeController::OnAccelerometerUpdated(
     scoped_refptr<const chromeos::AccelerometerUpdate> update) {
-  bool first_accelerometer_update = !have_seen_accelerometer_data_;
   have_seen_accelerometer_data_ = true;
+  can_detect_lid_angle_ =
+      update->has(chromeos::ACCELEROMETER_SOURCE_SCREEN) &&
+      update->has(chromeos::ACCELEROMETER_SOURCE_ATTACHED_KEYBOARD);
 
-  if (!update->has(chromeos::ACCELEROMETER_SOURCE_SCREEN))
+  if (!can_detect_lid_angle_)
     return;
 
   if (!display::Display::HasInternalDisplay())
@@ -188,14 +193,11 @@ void MaximizeModeController::OnAccelerometerUpdated(
 
   // Whether or not we enter maximize mode affects whether we handle screen
   // rotation, so determine whether to enter maximize mode first.
-  if (!update->has(chromeos::ACCELEROMETER_SOURCE_ATTACHED_KEYBOARD)) {
-    if (first_accelerometer_update)
-      EnterMaximizeMode();
-  } else if (ui::IsAccelerometerReadingStable(
-                 *update, chromeos::ACCELEROMETER_SOURCE_SCREEN) &&
-             ui::IsAccelerometerReadingStable(
-                 *update, chromeos::ACCELEROMETER_SOURCE_ATTACHED_KEYBOARD) &&
-             IsAngleBetweenAccelerometerReadingsStable(*update)) {
+  if (ui::IsAccelerometerReadingStable(*update,
+                                       chromeos::ACCELEROMETER_SOURCE_SCREEN) &&
+      ui::IsAccelerometerReadingStable(
+          *update, chromeos::ACCELEROMETER_SOURCE_ATTACHED_KEYBOARD) &&
+      IsAngleBetweenAccelerometerReadingsStable(*update)) {
     // update.has(chromeos::ACCELEROMETER_SOURCE_ATTACHED_KEYBOARD)
     // Ignore the reading if it appears unstable. The reading is considered
     // unstable if it deviates too much from gravity and/or the magnitude of the
@@ -222,8 +224,15 @@ void MaximizeModeController::TabletModeEventReceived(
           display::Display::InternalDisplayId())) {
     return;
   }
-  if (on && !IsMaximizeModeWindowManagerEnabled())
+  // The tablet mode switch activates at 300 degrees, so it is always reliable
+  // when |on|. However we wish to exit maximize mode at a smaller angle, so
+  // when |on| is false we ignore if it is possible to calculate the lid angle.
+  if (on && !IsMaximizeModeWindowManagerEnabled()) {
     EnterMaximizeMode();
+  } else if (!on && IsMaximizeModeWindowManagerEnabled() &&
+             !can_detect_lid_angle_) {
+    LeaveMaximizeMode();
+  }
 }
 
 void MaximizeModeController::SuspendImminent() {

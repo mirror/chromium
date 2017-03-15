@@ -13,12 +13,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.widget.Toolbar.OnMenuItemClickListener;
-import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextWatcher;
@@ -40,6 +38,7 @@ import android.widget.TextView;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.autofill.PhoneNumberUtil;
 import org.chromium.chrome.browser.customtabs.CustomTabActivity;
 import org.chromium.chrome.browser.payments.ui.PaymentRequestUI.PaymentRequestObserverForTest;
 import org.chromium.chrome.browser.preferences.autofill.CreditCardNumberFormattingTextWatcher;
@@ -59,8 +58,9 @@ import javax.annotation.Nullable;
  * The PaymentRequest editor dialog. Can be used for editing contact information, shipping address,
  * billing address, and credit cards.
  */
-public class EditorView
-        extends AlwaysDismissedDialog implements OnClickListener, DialogInterface.OnShowListener {
+public class EditorView extends AlwaysDismissedDialog implements OnClickListener,
+                                                                 DialogInterface.OnShowListener,
+                                                                 DialogInterface.OnDismissListener {
     /** The indicator for input fields that are required. */
     public static final String REQUIRED_FIELD_INDICATOR = "*";
 
@@ -150,20 +150,7 @@ public class EditorView
         };
 
         mCardNumberFormatter = new CreditCardNumberFormattingTextWatcher();
-        new AsyncTask<Void, Void, PhoneNumberFormattingTextWatcher>() {
-            @Override
-            protected PhoneNumberFormattingTextWatcher doInBackground(Void... unused) {
-                return new PhoneNumberFormattingTextWatcher();
-            }
-
-            @Override
-            protected void onPostExecute(PhoneNumberFormattingTextWatcher result) {
-                mPhoneFormatter = result;
-                if (mPhoneInput != null) {
-                    mPhoneInput.addTextChangedListener(mPhoneFormatter);
-                }
-            }
-        }.execute();
+        mPhoneFormatter = new PhoneNumberUtil.FormatTextWatcher();
     }
 
     /** Launches the Autofill help page on top of the current Context. */
@@ -198,7 +185,7 @@ public class EditorView
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cancelEdit();
+                dismissDialog();
             }
         });
 
@@ -262,25 +249,19 @@ public class EditorView
         if (view.getId() == R.id.payments_edit_done_button) {
             if (validateForm()) {
                 mEditorModel.done();
+                mEditorModel = null;
                 dismissDialog();
                 return;
             }
 
             if (mObserverForTest != null) mObserverForTest.onPaymentRequestEditorValidationError();
         } else if (view.getId() == R.id.payments_edit_cancel_button) {
-            cancelEdit();
+            dismissDialog();
         }
-    }
-
-    private void cancelEdit() {
-        mEditorModel.cancel();
-        dismissDialog();
     }
 
     private void dismissDialog() {
         if (mDialogInOutAnimator != null || !isShowing()) return;
-
-        removeTextChangedListenersAndInputFilters();
 
         Animator dropDown =
                 ObjectAnimator.ofFloat(mLayout, View.TRANSLATION_Y, 0f, mLayout.getHeight());
@@ -300,6 +281,12 @@ public class EditorView
         });
 
         mDialogInOutAnimator.start();
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        if (mEditorModel != null) mEditorModel.cancel();
+        removeTextChangedListenersAndInputFilters();
     }
 
     private void prepareButtons() {
@@ -369,6 +356,19 @@ public class EditorView
 
         // Add the footer.
         mDataView.addView(mFooter);
+    }
+
+    private void removeTextChangedListenersAndInputFilters() {
+        if (mCardInput != null) {
+            mCardInput.removeTextChangedListener(mCardNumberFormatter);
+            mCardInput.setFilters(new InputFilter[0]); // Null is not allowed.
+            mCardInput = null;
+        }
+
+        if (mPhoneInput != null) {
+            mPhoneInput.removeTextChangedListener(mPhoneFormatter);
+            mPhoneInput = null;
+        }
     }
 
     private View addFieldViewToEditor(ViewGroup parent, final EditorFieldModel fieldModel) {
@@ -446,6 +446,7 @@ public class EditorView
      */
     public void show(final EditorModel editorModel) {
         setOnShowListener(this);
+        setOnDismissListener(this);
         mEditorModel = editorModel;
 
         mLayout = LayoutInflater.from(mContext).inflate(R.layout.payment_request_editor, null);
@@ -519,19 +520,6 @@ public class EditorView
         } else {
             // The first field will be focused, we are ready to edit.
             if (mObserverForTest != null) mObserverForTest.onPaymentRequestReadyToEdit();
-        }
-    }
-
-    private void removeTextChangedListenersAndInputFilters() {
-        if (mCardInput != null) {
-            mCardInput.removeTextChangedListener(mCardNumberFormatter);
-            mCardInput.setFilters(new InputFilter[0]); // Null is not allowed.
-            mCardInput = null;
-        }
-
-        if (mPhoneInput != null) {
-            mPhoneInput.removeTextChangedListener(mPhoneFormatter);
-            mPhoneInput = null;
         }
     }
 

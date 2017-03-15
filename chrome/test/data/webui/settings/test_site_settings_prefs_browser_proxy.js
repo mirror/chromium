@@ -15,6 +15,7 @@ var prefsEmpty = {
     geolocation: '',
     javascript: '',
     mic: '',
+    midiDevices: '',
     notifications: '',
     plugins: '',
     popups: '',
@@ -28,6 +29,7 @@ var prefsEmpty = {
     geolocation: [],
     javascript: [],
     mic: [],
+    midiDevices: [],
     notifications: [],
     plugins: [],
     popups: [],
@@ -51,6 +53,7 @@ var TestSiteSettingsPrefsBrowserProxy = function() {
     'getCookieDetails',
     'getDefaultValueForContentType',
     'getExceptionList',
+    'isPatternValid',
     'observeProtocolHandlers',
     'observeProtocolHandlersEnabledState',
     'reloadCookies',
@@ -78,6 +81,9 @@ var TestSiteSettingsPrefsBrowserProxy = function() {
 
   /** @private {?CookieList} */
   this.cookieDetails_ = null;
+
+  /** @private {boolean} */
+  this.isPatternValid_ = true;
 };
 
 TestSiteSettingsPrefsBrowserProxy.prototype = {
@@ -165,6 +171,8 @@ TestSiteSettingsPrefsBrowserProxy.prototype = {
       pref = this.prefs_.defaults.javascript;
     } else if (contentType == settings.ContentSettingsTypes.MIC) {
       pref = this.prefs_.defaults.mic;
+    } else if (contentType == settings.ContentSettingsTypes.MIDI_DEVICES) {
+      pref = this.prefs_.defaults.midiDevices;
     } else if (contentType == settings.ContentSettingsTypes.NOTIFICATIONS) {
       pref = this.prefs_.defaults.notifications;
     } else if (contentType == settings.ContentSettingsTypes.PDF_DOCUMENTS) {
@@ -205,6 +213,8 @@ TestSiteSettingsPrefsBrowserProxy.prototype = {
       pref = this.prefs_.exceptions.javascript;
     else if (contentType == settings.ContentSettingsTypes.MIC)
       pref = this.prefs_.exceptions.mic;
+    else if (contentType == settings.ContentSettingsTypes.MIDI_DEVICES)
+      pref = this.prefs_.exceptions.midiDevices;
     else if (contentType == settings.ContentSettingsTypes.NOTIFICATIONS)
       pref = this.prefs_.exceptions.notifications;
     else if (contentType == settings.ContentSettingsTypes.PDF_DOCUMENTS)
@@ -225,6 +235,19 @@ TestSiteSettingsPrefsBrowserProxy.prototype = {
   },
 
   /** @override */
+  isPatternValid: function(pattern) {
+    this.methodCalled('isPatternValid', pattern);
+    return Promise.resolve(this.isPatternValid_);
+  },
+
+  /**
+   * Specify whether isPatternValid should succeed or fail.
+   */
+  setIsPatternValid: function(isValid) {
+    this.isPatternValid_ = isValid;
+  },
+
+  /** @override */
   resetCategoryPermissionForOrigin: function(
       primaryPattern, secondaryPattern, contentType, incognito) {
     this.methodCalled('resetCategoryPermissionForOrigin',
@@ -236,7 +259,7 @@ TestSiteSettingsPrefsBrowserProxy.prototype = {
   setCategoryPermissionForOrigin: function(
       primaryPattern, secondaryPattern, contentType, value, incognito) {
     this.methodCalled('setCategoryPermissionForOrigin',
-        [primaryPattern, secondaryPattern, contentType, value]);
+        [primaryPattern, secondaryPattern, contentType, value, incognito]);
     return Promise.resolve();
   },
 

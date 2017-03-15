@@ -4,6 +4,7 @@
 
 #include "core/input/EventHandler.h"
 
+#include <memory>
 #include "core/dom/Document.h"
 #include "core/dom/Range.h"
 #include "core/editing/Editor.h"
@@ -11,11 +12,11 @@
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
+#include "core/loader/EmptyClients.h"
 #include "core/page/AutoscrollController.h"
 #include "core/page/Page.h"
 #include "core/testing/DummyPageHolder.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include <memory>
 
 namespace blink {
 
@@ -29,7 +30,7 @@ class EventHandlerTest : public ::testing::Test {
 
   void setHtmlInnerHTML(const char* htmlContent);
 
- private:
+ protected:
   std::unique_ptr<DummyPageHolder> m_dummyPageHolder;
 };
 
@@ -134,9 +135,11 @@ TEST_F(EventHandlerTest, dragSelectionAfterScroll) {
   mouseUpEvent.setFrameScale(1);
   document().frame()->eventHandler().handleMouseReleaseEvent(mouseUpEvent);
 
-  ASSERT_TRUE(selection().isRange());
-  Range* range =
-      createRange(selection().selection().toNormalizedEphemeralRange());
+  ASSERT_TRUE(
+      selection().computeVisibleSelectionInDOMTreeDeprecated().isRange());
+  Range* range = createRange(selection()
+                                 .computeVisibleSelectionInDOMTreeDeprecated()
+                                 .toNormalizedEphemeralRange());
   ASSERT_TRUE(range);
   EXPECT_EQ("Line 1\nLine 2", range->text());
 }
@@ -152,28 +155,37 @@ TEST_F(EventHandlerTest, multiClickSelectionFromTap) {
 
   TapEventBuilder singleTapEvent(IntPoint(0, 0), 1);
   document().frame()->eventHandler().handleGestureEvent(singleTapEvent);
-  ASSERT_TRUE(selection().isCaret());
-  EXPECT_EQ(Position(line, 0), selection().start());
+  ASSERT_TRUE(
+      selection().computeVisibleSelectionInDOMTreeDeprecated().isCaret());
+  EXPECT_EQ(Position(line, 0),
+            selection().computeVisibleSelectionInDOMTreeDeprecated().start());
 
   // Multi-tap events on editable elements should trigger selection, just
   // like multi-click events.
   TapEventBuilder doubleTapEvent(IntPoint(0, 0), 2);
   document().frame()->eventHandler().handleGestureEvent(doubleTapEvent);
-  ASSERT_TRUE(selection().isRange());
-  EXPECT_EQ(Position(line, 0), selection().start());
+  ASSERT_TRUE(
+      selection().computeVisibleSelectionInDOMTreeDeprecated().isRange());
+  EXPECT_EQ(Position(line, 0),
+            selection().computeVisibleSelectionInDOMTreeDeprecated().start());
   if (document().frame()->editor().isSelectTrailingWhitespaceEnabled()) {
-    EXPECT_EQ(Position(line, 4), selection().end());
+    EXPECT_EQ(Position(line, 4),
+              selection().computeVisibleSelectionInDOMTreeDeprecated().end());
     EXPECT_EQ("One ", WebString(selection().selectedText()).utf8());
   } else {
-    EXPECT_EQ(Position(line, 3), selection().end());
+    EXPECT_EQ(Position(line, 3),
+              selection().computeVisibleSelectionInDOMTreeDeprecated().end());
     EXPECT_EQ("One", WebString(selection().selectedText()).utf8());
   }
 
   TapEventBuilder tripleTapEvent(IntPoint(0, 0), 3);
   document().frame()->eventHandler().handleGestureEvent(tripleTapEvent);
-  ASSERT_TRUE(selection().isRange());
-  EXPECT_EQ(Position(line, 0), selection().start());
-  EXPECT_EQ(Position(line, 13), selection().end());
+  ASSERT_TRUE(
+      selection().computeVisibleSelectionInDOMTreeDeprecated().isRange());
+  EXPECT_EQ(Position(line, 0),
+            selection().computeVisibleSelectionInDOMTreeDeprecated().start());
+  EXPECT_EQ(Position(line, 13),
+            selection().computeVisibleSelectionInDOMTreeDeprecated().end());
   EXPECT_EQ("One Two Three", WebString(selection().selectedText()).utf8());
 }
 
@@ -187,19 +199,25 @@ TEST_F(EventHandlerTest, multiClickSelectionFromTapDisabledIfNotEditable) {
 
   TapEventBuilder singleTapEvent(IntPoint(0, 0), 1);
   document().frame()->eventHandler().handleGestureEvent(singleTapEvent);
-  ASSERT_TRUE(selection().isCaret());
-  EXPECT_EQ(Position(line, 0), selection().start());
+  ASSERT_TRUE(
+      selection().computeVisibleSelectionInDOMTreeDeprecated().isCaret());
+  EXPECT_EQ(Position(line, 0),
+            selection().computeVisibleSelectionInDOMTreeDeprecated().start());
 
   // As the text is readonly, multi-tap events should not trigger selection.
   TapEventBuilder doubleTapEvent(IntPoint(0, 0), 2);
   document().frame()->eventHandler().handleGestureEvent(doubleTapEvent);
-  ASSERT_TRUE(selection().isCaret());
-  EXPECT_EQ(Position(line, 0), selection().start());
+  ASSERT_TRUE(
+      selection().computeVisibleSelectionInDOMTreeDeprecated().isCaret());
+  EXPECT_EQ(Position(line, 0),
+            selection().computeVisibleSelectionInDOMTreeDeprecated().start());
 
   TapEventBuilder tripleTapEvent(IntPoint(0, 0), 3);
   document().frame()->eventHandler().handleGestureEvent(tripleTapEvent);
-  ASSERT_TRUE(selection().isCaret());
-  EXPECT_EQ(Position(line, 0), selection().start());
+  ASSERT_TRUE(
+      selection().computeVisibleSelectionInDOMTreeDeprecated().isCaret());
+  EXPECT_EQ(Position(line, 0),
+            selection().computeVisibleSelectionInDOMTreeDeprecated().start());
 }
 
 TEST_F(EventHandlerTest, draggedInlinePositionTest) {
@@ -303,7 +321,8 @@ TEST_F(EventHandlerTest, EmptyTextfieldInsertionOnTap) {
   TapEventBuilder singleTapEvent(IntPoint(200, 200), 1);
   document().frame()->eventHandler().handleGestureEvent(singleTapEvent);
 
-  ASSERT_TRUE(selection().isCaret());
+  ASSERT_TRUE(
+      selection().computeVisibleSelectionInDOMTreeDeprecated().isCaret());
   ASSERT_FALSE(selection().isHandleVisible());
 }
 
@@ -313,7 +332,8 @@ TEST_F(EventHandlerTest, NonEmptyTextfieldInsertionOnTap) {
   TapEventBuilder singleTapEvent(IntPoint(200, 200), 1);
   document().frame()->eventHandler().handleGestureEvent(singleTapEvent);
 
-  ASSERT_TRUE(selection().isCaret());
+  ASSERT_TRUE(
+      selection().computeVisibleSelectionInDOMTreeDeprecated().isCaret());
   ASSERT_TRUE(selection().isHandleVisible());
 }
 
@@ -323,14 +343,16 @@ TEST_F(EventHandlerTest, EmptyTextfieldInsertionOnLongPress) {
   LongPressEventBuilder longPressEvent(IntPoint(200, 200));
   document().frame()->eventHandler().handleGestureEvent(longPressEvent);
 
-  ASSERT_TRUE(selection().isCaret());
+  ASSERT_TRUE(
+      selection().computeVisibleSelectionInDOMTreeDeprecated().isCaret());
   ASSERT_TRUE(selection().isHandleVisible());
 
   // Single Tap on an empty edit field should clear insertion handle
   TapEventBuilder singleTapEvent(IntPoint(200, 200), 1);
   document().frame()->eventHandler().handleGestureEvent(singleTapEvent);
 
-  ASSERT_TRUE(selection().isCaret());
+  ASSERT_TRUE(
+      selection().computeVisibleSelectionInDOMTreeDeprecated().isCaret());
   ASSERT_FALSE(selection().isHandleVisible());
 }
 
@@ -340,7 +362,8 @@ TEST_F(EventHandlerTest, NonEmptyTextfieldInsertionOnLongPress) {
   LongPressEventBuilder longPressEvent(IntPoint(200, 200));
   document().frame()->eventHandler().handleGestureEvent(longPressEvent);
 
-  ASSERT_TRUE(selection().isCaret());
+  ASSERT_TRUE(
+      selection().computeVisibleSelectionInDOMTreeDeprecated().isCaret());
   ASSERT_TRUE(selection().isHandleVisible());
 }
 
@@ -351,14 +374,16 @@ TEST_F(EventHandlerTest, ClearHandleAfterTap) {
   LongPressEventBuilder longPressEvent(IntPoint(200, 200));
   document().frame()->eventHandler().handleGestureEvent(longPressEvent);
 
-  ASSERT_TRUE(selection().isCaret());
+  ASSERT_TRUE(
+      selection().computeVisibleSelectionInDOMTreeDeprecated().isCaret());
   ASSERT_TRUE(selection().isHandleVisible());
 
   // Tap away from text area should clear handle
   TapEventBuilder singleTapEvent(IntPoint(700, 700), 1);
   document().frame()->eventHandler().handleGestureEvent(singleTapEvent);
 
-  ASSERT_TRUE(selection().isNone());
+  ASSERT_TRUE(
+      selection().computeVisibleSelectionInDOMTreeDeprecated().isNone());
   ASSERT_FALSE(selection().isHandleVisible());
 }
 
@@ -369,7 +394,8 @@ TEST_F(EventHandlerTest, HandleNotShownOnMouseEvents) {
       IntPoint(200, 200), 1, WebPointerProperties::Button::Left);
   document().frame()->eventHandler().handleMousePressEvent(leftMousePressEvent);
 
-  ASSERT_TRUE(selection().isCaret());
+  ASSERT_TRUE(
+      selection().computeVisibleSelectionInDOMTreeDeprecated().isCaret());
   ASSERT_FALSE(selection().isHandleVisible());
 
   MousePressEventBuilder rightMousePressEvent(
@@ -377,7 +403,8 @@ TEST_F(EventHandlerTest, HandleNotShownOnMouseEvents) {
   document().frame()->eventHandler().handleMousePressEvent(
       rightMousePressEvent);
 
-  ASSERT_TRUE(selection().isCaret());
+  ASSERT_TRUE(
+      selection().computeVisibleSelectionInDOMTreeDeprecated().isCaret());
   ASSERT_FALSE(selection().isHandleVisible());
 
   MousePressEventBuilder doubleClickMousePressEvent(
@@ -385,7 +412,8 @@ TEST_F(EventHandlerTest, HandleNotShownOnMouseEvents) {
   document().frame()->eventHandler().handleMousePressEvent(
       doubleClickMousePressEvent);
 
-  ASSERT_TRUE(selection().isRange());
+  ASSERT_TRUE(
+      selection().computeVisibleSelectionInDOMTreeDeprecated().isRange());
   ASSERT_FALSE(selection().isHandleVisible());
 
   MousePressEventBuilder tripleClickMousePressEvent(
@@ -393,7 +421,8 @@ TEST_F(EventHandlerTest, HandleNotShownOnMouseEvents) {
   document().frame()->eventHandler().handleMousePressEvent(
       tripleClickMousePressEvent);
 
-  ASSERT_TRUE(selection().isRange());
+  ASSERT_TRUE(
+      selection().computeVisibleSelectionInDOMTreeDeprecated().isRange());
   ASSERT_FALSE(selection().isHandleVisible());
 }
 
@@ -432,6 +461,65 @@ TEST_F(EventHandlerTest, dragEndInNewDrag) {
                                                        DragOperationNone);
 
   // This test passes if it doesn't crash.
+}
+
+class TooltipCapturingChromeClient : public EmptyChromeClient {
+ public:
+  TooltipCapturingChromeClient() {}
+
+  void setToolTip(LocalFrame&, const String& str, TextDirection) override {
+    m_lastToolTip = str;
+  }
+
+  String& lastToolTip() { return m_lastToolTip; }
+
+ private:
+  String m_lastToolTip;
+};
+
+class EventHandlerTooltipTest : public EventHandlerTest {
+ public:
+  EventHandlerTooltipTest() {}
+
+  void SetUp() override {
+    m_chromeClient = new TooltipCapturingChromeClient();
+    Page::PageClients clients;
+    fillWithEmptyClients(clients);
+    clients.chromeClient = m_chromeClient.get();
+    m_dummyPageHolder = DummyPageHolder::create(IntSize(800, 600), &clients);
+  }
+
+  String& lastToolTip() { return m_chromeClient->lastToolTip(); }
+
+ private:
+  Persistent<TooltipCapturingChromeClient> m_chromeClient;
+};
+
+TEST_F(EventHandlerTooltipTest, mouseLeaveClearsTooltip) {
+  setHtmlInnerHTML(
+      "<style>.box { width: 100%; height: 100%; }</style>"
+      "<img src='image.png' class='box' title='tooltip'>link</img>");
+
+  EXPECT_EQ(WTF::String(), lastToolTip());
+
+  WebMouseEvent mouseMoveEvent(
+      WebInputEvent::MouseMove, WebFloatPoint(51, 50), WebFloatPoint(51, 50),
+      WebPointerProperties::Button::NoButton, 0, WebInputEvent::NoModifiers,
+      TimeTicks::Now().InSeconds());
+  mouseMoveEvent.setFrameScale(1);
+  document().frame()->eventHandler().handleMouseMoveEvent(
+      mouseMoveEvent, Vector<WebMouseEvent>());
+
+  EXPECT_EQ("tooltip", lastToolTip());
+
+  WebMouseEvent mouseLeaveEvent(
+      WebInputEvent::MouseLeave, WebFloatPoint(0, 0), WebFloatPoint(0, 0),
+      WebPointerProperties::Button::NoButton, 0, WebInputEvent::NoModifiers,
+      TimeTicks::Now().InSeconds());
+  mouseLeaveEvent.setFrameScale(1);
+  document().frame()->eventHandler().handleMouseLeaveEvent(mouseLeaveEvent);
+
+  EXPECT_EQ(WTF::String(), lastToolTip());
 }
 
 }  // namespace blink

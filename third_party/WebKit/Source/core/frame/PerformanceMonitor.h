@@ -9,10 +9,18 @@
 #include "platform/heap/Handle.h"
 #include "public/platform/WebThread.h"
 #include "public/platform/scheduler/base/task_time_observer.h"
+#include "v8/include/v8.h"
 #include "wtf/text/AtomicString.h"
-#include <v8.h>
 
 namespace blink {
+
+namespace probe {
+class CallFunction;
+class ExecuteScript;
+class RecalculateStyle;
+class UpdateLayout;
+class UserCallback;
+}
 
 class DOMWindow;
 class Document;
@@ -37,21 +45,10 @@ class CORE_EXPORT PerformanceMonitor final
     kLongLayout,
     kBlockedEvent,
     kBlockedParser,
+    kDiscouragedAPIUse,
     kHandler,
     kRecurringHandler,
     kAfterLast
-  };
-
-  class CORE_EXPORT HandlerCall {
-    STACK_ALLOCATED();
-   public:
-    HandlerCall(ExecutionContext*, bool recurring);
-    HandlerCall(ExecutionContext*, const char* name, bool recurring);
-    HandlerCall(ExecutionContext*, const AtomicString& name, bool recurring);
-    ~HandlerCall();
-
-   private:
-    Member<PerformanceMonitor> m_performanceMonitor;
   };
 
   class CORE_EXPORT Client : public GarbageCollectedMixin {
@@ -68,22 +65,30 @@ class CORE_EXPORT PerformanceMonitor final
     DEFINE_INLINE_VIRTUAL_TRACE() {}
   };
 
-  // Instrumenting methods.
-  static void willExecuteScript(ExecutionContext*);
-  static void didExecuteScript(ExecutionContext*);
-  static void willCallFunction(ExecutionContext*);
-  static void didCallFunction(ExecutionContext*, v8::Local<v8::Function>);
-  static void willUpdateLayout(Document*);
-  static void didUpdateLayout(Document*);
-  static void willRecalculateStyle(Document*);
-  static void didRecalculateStyle(Document*);
-  static void documentWriteFetchScript(Document*);
   static void reportGenericViolation(ExecutionContext*,
                                      Violation,
                                      const String& text,
                                      double time,
-                                     SourceLocation*);
+                                     std::unique_ptr<SourceLocation>);
   static double threshold(ExecutionContext*, Violation);
+
+  // Instrumenting methods.
+  void will(const probe::RecalculateStyle&);
+  void did(const probe::RecalculateStyle&);
+
+  void will(const probe::UpdateLayout&);
+  void did(const probe::UpdateLayout&);
+
+  void will(const probe::ExecuteScript&);
+  void did(const probe::ExecuteScript&);
+
+  void will(const probe::CallFunction&);
+  void did(const probe::CallFunction&);
+
+  void will(const probe::UserCallback&);
+  void did(const probe::UserCallback&);
+
+  void documentWriteFetchScript(Document*);
 
   // Direct API for core.
   void subscribe(Violation, double threshold, Client*);
@@ -104,41 +109,30 @@ class CORE_EXPORT PerformanceMonitor final
 
   void updateInstrumentation();
 
-  void alwaysWillExecuteScript(ExecutionContext*);
-  void alwaysDidExecuteScript();
-  void alwaysWillCallFunction(ExecutionContext*);
-  void alwaysDidCallFunction(v8::Local<v8::Function>);
-  void willUpdateLayout();
-  void didUpdateLayout();
-  void willRecalculateStyle();
-  void didRecalculateStyle();
-  void reportGenericViolation(Violation,
-                              const String& text,
-                              double time,
-                              SourceLocation*);
+  void innerReportGenericViolation(ExecutionContext*,
+                                   Violation,
+                                   const String& text,
+                                   double time,
+                                   std::unique_ptr<SourceLocation>);
 
   // scheduler::TaskTimeObserver implementation
   void willProcessTask(scheduler::TaskQueue*, double startTime) override;
   void didProcessTask(scheduler::TaskQueue*,
                       double startTime,
                       double endTime) override;
+  void willExecuteScript(ExecutionContext*);
+  void didExecuteScript();
 
   std::pair<String, DOMWindow*> sanitizedAttribution(
       const HeapHashSet<Member<Frame>>& frameContexts,
       Frame* observerFrame);
 
   bool m_enabled = false;
-  double m_scriptStartTime = 0;
-  double m_layoutStartTime = 0;
-  double m_styleStartTime = 0;
   double m_perTaskStyleAndLayoutTime = 0;
   unsigned m_scriptDepth = 0;
   unsigned m_layoutDepth = 0;
-  unsigned m_handlerDepth = 0;
-  Violation m_handlerType = Violation::kAfterLast;
-
-  const char* m_handlerName = nullptr;
-  AtomicString m_handlerAtomicName;
+  unsigned m_userCallbackDepth = 0;
+  const void* m_userCallback;
 
   double m_thresholds[kAfterLast];
 

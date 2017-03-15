@@ -45,19 +45,19 @@ void SharedContextRateLimiter::tick() {
   if (!gl || gl->GetGraphicsResetStatusKHR() != GL_NO_ERROR)
     return;
 
-  m_queries.append(0);
+  m_queries.push_back(0);
   if (m_canUseSyncQueries)
-    gl->GenQueriesEXT(1, &m_queries.last());
+    gl->GenQueriesEXT(1, &m_queries.back());
   if (m_canUseSyncQueries) {
-    gl->BeginQueryEXT(GL_COMMANDS_COMPLETED_CHROMIUM, m_queries.last());
+    gl->BeginQueryEXT(GL_COMMANDS_COMPLETED_CHROMIUM, m_queries.back());
     gl->EndQueryEXT(GL_COMMANDS_COMPLETED_CHROMIUM);
   }
   if (m_queries.size() > m_maxPendingTicks) {
     if (m_canUseSyncQueries) {
       GLuint result;
-      gl->GetQueryObjectuivEXT(m_queries.first(), GL_QUERY_RESULT_EXT, &result);
-      gl->DeleteQueriesEXT(1, &m_queries.first());
-      m_queries.removeFirst();
+      gl->GetQueryObjectuivEXT(m_queries.front(), GL_QUERY_RESULT_EXT, &result);
+      gl->DeleteQueriesEXT(1, &m_queries.front());
+      m_queries.pop_front();
     } else {
       gl->Finish();
       reset();
@@ -72,8 +72,8 @@ void SharedContextRateLimiter::reset() {
   gpu::gles2::GLES2Interface* gl = m_contextProvider->contextGL();
   if (gl && gl->GetGraphicsResetStatusKHR() == GL_NO_ERROR) {
     while (m_queries.size() > 0) {
-      gl->DeleteQueriesEXT(1, &m_queries.first());
-      m_queries.removeFirst();
+      gl->DeleteQueriesEXT(1, &m_queries.front());
+      m_queries.pop_front();
     }
   } else {
     m_queries.clear();

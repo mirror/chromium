@@ -66,29 +66,27 @@ class TestWebApkInstaller : public WebApkInstaller {
         can_use_google_play_install_service_(
             can_use_google_play_install_service) {}
 
-  bool StartInstallingDownloadedWebApk(
+  void InstallDownloadedWebApk(
       JNIEnv* env,
       const base::android::ScopedJavaLocalRef<jstring>& file_path,
       const base::android::ScopedJavaLocalRef<jstring>& package_name) override {
     PostTaskToRunSuccessCallback();
-    return true;
   }
 
-  bool StartUpdateUsingDownloadedWebApk(
+  void UpdateUsingDownloadedWebApk(
       JNIEnv* env,
       const base::android::ScopedJavaLocalRef<jstring>& file_path) override {
-    return true;
+    PostTaskToRunSuccessCallback();
   }
 
   bool CanUseGooglePlayInstallService() override {
     return can_use_google_play_install_service_;
   }
 
-  bool InstallOrUpdateWebApkFromGooglePlay(const std::string& package_name,
+  void InstallOrUpdateWebApkFromGooglePlay(const std::string& package_name,
                                            int version,
                                            const std::string& token) override {
     PostTaskToRunSuccessCallback();
-    return true;
   }
 
   void PostTaskToRunSuccessCallback() {
@@ -163,7 +161,9 @@ class WebApkInstallerRunner {
   bool success() { return success_; }
 
  private:
-  void OnCompleted(bool success, const std::string& webapk_package) {
+  void OnCompleted(bool success,
+                   bool relax_updates,
+                   const std::string& webapk_package) {
     success_ = success;
     on_completed_callback_.Run();
   }

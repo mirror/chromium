@@ -7,6 +7,7 @@
 #include "base/bind.h"
 #include "base/single_thread_task_runner.h"
 #include "chromecast/base/task_runner_impl.h"
+#include "chromecast/media/base/audio_device_ids.h"
 #include "chromecast/media/base/video_mode_switcher.h"
 #include "chromecast/media/base/video_resolution_policy.h"
 #include "chromecast/media/cdm/cast_cdm_context.h"
@@ -17,6 +18,8 @@
 #include "chromecast/media/cma/pipeline/video_pipeline_client.h"
 #include "chromecast/public/media/media_pipeline_backend.h"
 #include "chromecast/public/media/media_pipeline_device_params.h"
+#include "chromecast/public/volume_control.h"
+#include "media/audio/audio_device_description.h"
 #include "media/base/audio_decoder_config.h"
 #include "media/base/demuxer_stream.h"
 #include "media/base/media_log.h"
@@ -44,13 +47,13 @@ void VideoModeSwitchCompletionCb(const ::media::PipelineStatusCB& init_cb,
 }  // namespace
 
 CastRenderer::CastRenderer(
-    const CreateMediaPipelineBackendCB& create_backend_cb,
+    MediaPipelineBackendFactory* backend_factory,
     const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
     const std::string& audio_device_id,
     VideoModeSwitcher* video_mode_switcher,
     VideoResolutionPolicy* video_resolution_policy,
     MediaResourceTracker* media_resource_tracker)
-    : create_backend_cb_(create_backend_cb),
+    : backend_factory_(backend_factory),
       task_runner_(task_runner),
       audio_device_id_(audio_device_id),
       video_mode_switcher_(video_mode_switcher),
@@ -61,6 +64,7 @@ CastRenderer::CastRenderer(
       media_task_runner_factory_(
           new BalancedMediaTaskRunnerFactory(kMaxDeltaFetcher)),
       weak_factory_(this) {
+  DCHECK(backend_factory_);
   CMALOG(kLogControl) << __FUNCTION__ << ": " << this;
 
   if (video_resolution_policy_)
@@ -91,9 +95,29 @@ void CastRenderer::Initialize(::media::MediaResource* media_resource,
       (load_type == kLoadTypeMediaStream)
           ? MediaPipelineDeviceParams::kModeIgnorePts
           : MediaPipelineDeviceParams::kModeSyncPts;
-  MediaPipelineDeviceParams params(sync_type, backend_task_runner_.get());
+  std::string device_id = audio_device_id_;
+  if (device_id == "")
+    device_id = ::media::AudioDeviceDescription::kDefaultDeviceId;
+
+  AudioContentType content_type;
+  if (device_id == kAlarmAudioDeviceId) {
+    content_type = AudioContentType::kAlarm;
+  } else if (audio_device_id_ == kTtsAudioDeviceId) {
+    content_type = AudioContentType::kCommunication;
+  } else {
+    content_type = AudioContentType::kMedia;
+  }
+  MediaPipelineDeviceParams params(sync_type, backend_task_runner_.get(),
+                                   content_type, audio_device_id_);
+
+  if (audio_device_id_ == kTtsAudioDeviceId ||
+      audio_device_id_ ==
+          ::media::AudioDeviceDescription::kCommunicationsDeviceId) {
+    load_type = kLoadTypeCommunication;
+  }
+
   std::unique_ptr<MediaPipelineBackend> backend =
-      create_backend_cb_.Run(params, audio_device_id_);
+      backend_factory_->CreateBackend(params);
 
   // Create pipeline.
   MediaPipelineClient pipeline_client;
@@ -105,9 +129,14 @@ void CastRenderer::Initialize(::media::MediaResource* media_resource,
   pipeline_->SetClient(pipeline_client);
   pipeline_->Initialize(load_type, std::move(backend));
 
-  // Initialize audio.
+  // TODO(servolk): Implement support for multiple streams. For now use the
+  // first enabled audio and video streams to preserve the existing behavior.
   ::media::DemuxerStream* audio_stream =
-      media_resource->GetStream(::media::DemuxerStream::AUDIO);
+      media_resource->GetFirstStream(::media::DemuxerStream::AUDIO);
+  ::media::DemuxerStream* video_stream =
+      media_resource->GetFirstStream(::media::DemuxerStream::VIDEO);
+
+  // Initialize audio.
   if (audio_stream) {
     AvPipelineClient audio_client;
     audio_client.wait_for_key_cb = base::Bind(
@@ -132,8 +161,6 @@ void CastRenderer::Initialize(::media::MediaResource* media_resource,
   }
 
   // Initialize video.
-  ::media::DemuxerStream* video_stream =
-      media_resource->GetStream(::media::DemuxerStream::VIDEO);
   if (video_stream) {
     VideoPipelineClient video_client;
     video_client.av_pipeline_client.wait_for_key_cb = base::Bind(
@@ -201,7 +228,7 @@ void CastRenderer::SetCdm(::media::CdmContext* cdm_context,
   DCHECK(task_runner_->BelongsToCurrentThread());
   DCHECK(cdm_context);
 
-  auto cast_cdm_context = static_cast<CastCdmContext*>(cdm_context);
+  auto* cast_cdm_context = static_cast<CastCdmContext*>(cdm_context);
 
   if (!pipeline_) {
     // If the pipeline has not yet been created in Initialize(), cache

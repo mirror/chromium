@@ -62,19 +62,19 @@
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
-#include "chrome/common/safe_browsing/csd.pb.h"
 #include "chrome/common/safe_browsing/download_file_types.pb.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
-#include "components/history/content/browser/download_constants_utils.h"
+#include "components/history/content/browser/download_conversions.h"
 #include "components/history/core/browser/download_constants.h"
 #include "components/history/core/browser/download_row.h"
 #include "components/history/core/browser/history_service.h"
 #include "components/infobars/core/confirm_infobar_delegate.h"
 #include "components/infobars/core/infobar.h"
 #include "components/prefs/pref_service.h"
+#include "components/safe_browsing/csd.pb.h"
 #include "components/safe_browsing_db/safe_browsing_prefs.h"
 #include "content/public/browser/download_danger_type.h"
 #include "content/public/browser/download_interrupt_reasons.h"
@@ -1357,7 +1357,7 @@ IN_PROC_BROWSER_TEST_F(DownloadTest, DownloadResourceThrottleCancels) {
       g_browser_process->download_request_limiter()->GetDownloadState(
           web_contents, web_contents, true);
   ASSERT_TRUE(tab_download_state);
-  tab_download_state->set_download_status(
+  tab_download_state->SetDownloadStatusAndNotify(
       DownloadRequestLimiter::DOWNLOADS_NOT_ALLOWED);
 
   // Try to start the download via Javascript and wait for the corresponding
@@ -3425,9 +3425,7 @@ IN_PROC_BROWSER_TEST_F(DownloadTest, FeedbackServiceDiscardDownload) {
       sb_service->download_protection_service();
   download_protection_service->feedback_service()->MaybeStorePingsForDownload(
       safe_browsing::DownloadProtectionService::UNCOMMON,
-      downloads[0],
-      ping_request,
-      ping_response);
+      true /* upload_requested */, downloads[0], ping_request, ping_response);
   ASSERT_TRUE(safe_browsing::DownloadFeedbackService::IsEnabledForDownload(
       *(downloads[0])));
 
@@ -3478,8 +3476,8 @@ IN_PROC_BROWSER_TEST_F(DownloadTest, FeedbackServiceKeepDownload) {
   safe_browsing::DownloadProtectionService* download_protection_service =
       sb_service->download_protection_service();
   download_protection_service->feedback_service()->MaybeStorePingsForDownload(
-      safe_browsing::DownloadProtectionService::UNCOMMON, downloads[0],
-      ping_request, ping_response);
+      safe_browsing::DownloadProtectionService::UNCOMMON,
+      true /* upload_requested */, downloads[0], ping_request, ping_response);
   ASSERT_TRUE(safe_browsing::DownloadFeedbackService::IsEnabledForDownload(
       *(downloads[0])));
 

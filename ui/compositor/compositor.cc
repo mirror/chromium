@@ -28,11 +28,12 @@
 #include "cc/output/context_provider.h"
 #include "cc/output/latency_info_swap_promise.h"
 #include "cc/scheduler/begin_frame_source.h"
-#include "cc/surfaces/surface_id_allocator.h"
+#include "cc/surfaces/local_surface_id_allocator.h"
 #include "cc/surfaces/surface_manager.h"
 #include "cc/trees/layer_tree_host.h"
 #include "cc/trees/layer_tree_settings.h"
 #include "third_party/skia/include/core/SkBitmap.h"
+#include "ui/base/ui_base_switches.h"
 #include "ui/compositor/compositor_observer.h"
 #include "ui/compositor/compositor_switches.h"
 #include "ui/compositor/compositor_vsync_manager.h"
@@ -40,6 +41,7 @@
 #include "ui/compositor/layer.h"
 #include "ui/compositor/layer_animator_collection.h"
 #include "ui/compositor/scoped_animation_duration_scale_mode.h"
+#include "ui/gfx/icc_profile.h"
 #include "ui/gl/gl_switches.h"
 
 namespace {
@@ -151,6 +153,8 @@ Compositor::Compositor(const cc::FrameSinkId& frame_sink_id,
 
   settings.initial_debug_state.SetRecordRenderingStats(
       command_line->HasSwitch(cc::switches::kEnableGpuBenchmarking));
+  settings.needs_valid_local_surface_id =
+      command_line->HasSwitch(cc::switches::kEnableSurfaceSynchronization);
 
   settings.use_zero_copy = IsUIZeroCopyEnabled();
 
@@ -160,11 +164,11 @@ Compositor::Compositor(const cc::FrameSinkId& frame_sink_id,
   settings.use_layer_lists =
       command_line->HasSwitch(cc::switches::kUIEnableLayerLists);
 
-  settings.enable_color_correct_rendering =
-      command_line->HasSwitch(cc::switches::kEnableColorCorrectRendering) ||
-      command_line->HasSwitch(cc::switches::kEnableTrueColorRendering);
+  settings.enable_color_correct_rasterization =
+      command_line->HasSwitch(cc::switches::kEnableColorCorrectRendering);
   settings.renderer_settings.enable_color_correct_rendering =
-      settings.enable_color_correct_rendering;
+      settings.enable_color_correct_rasterization ||
+      command_line->HasSwitch(switches::kEnableHDROutput);
 
   // UI compositor always uses partial raster if not using zero-copy. Zero copy
   // doesn't currently support partial raster.
@@ -184,9 +188,10 @@ Compositor::Compositor(const cc::FrameSinkId& frame_sink_id,
     }
   }
 
-  // Note: Only enable image decode tasks if we have more than one worker
-  // thread.
-  settings.image_decode_tasks_enabled = false;
+  // Note: Although there is only one image decode thread, we should still get a
+  // benefit from locking images across several raster tasks. At worst, this
+  // should do as much work as it would anyway.
+  settings.image_decode_tasks_enabled = true;
 
   settings.gpu_memory_policy.bytes_limit_when_visible = 512 * 1024 * 1024;
   settings.gpu_memory_policy.priority_cutoff_when_visible =
@@ -272,6 +277,10 @@ void Compositor::RemoveFrameSink(const cc::FrameSinkId& frame_sink_id) {
   child_frame_sinks_.erase(it);
 }
 
+void Compositor::SetLocalSurfaceId(const cc::LocalSurfaceId& local_surface_id) {
+  host_->SetLocalSurfaceId(local_surface_id);
+}
+
 void Compositor::SetCompositorFrameSink(
     std::unique_ptr<cc::CompositorFrameSink> compositor_frame_sink) {
   compositor_frame_sink_requested_ = false;
@@ -280,7 +289,8 @@ void Compositor::SetCompositorFrameSink(
   // to match the Compositor's.
   if (context_factory_private_) {
     context_factory_private_->SetDisplayVisible(this, host_->IsVisible());
-    context_factory_private_->SetDisplayColorSpace(this, color_space_);
+    context_factory_private_->SetDisplayColorSpace(this, blending_color_space_,
+                                                   output_color_space_);
   }
 }
 
@@ -351,14 +361,22 @@ void Compositor::SetScaleAndSize(float scale, const gfx::Size& size_in_pixel) {
   }
 }
 
-void Compositor::SetDisplayColorSpace(const gfx::ColorSpace& color_space) {
-  host_->SetDeviceColorSpace(color_space);
-  color_space_ = color_space;
+void Compositor::SetDisplayColorProfile(const gfx::ICCProfile& icc_profile) {
+  blending_color_space_ = icc_profile.GetColorSpace();
+  output_color_space_ = blending_color_space_;
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnableHDROutput)) {
+    blending_color_space_ = gfx::ColorSpace::CreateExtendedSRGB();
+    output_color_space_ = gfx::ColorSpace::CreateSCRGBLinear();
+  }
+  host_->SetRasterColorSpace(icc_profile.GetParametricColorSpace());
   // Color space is reset when the output surface is lost, so this must also be
   // updated then.
   // TODO(fsamuel): Get rid of this.
-  if (context_factory_private_)
-    context_factory_private_->SetDisplayColorSpace(this, color_space_);
+  if (context_factory_private_) {
+    context_factory_private_->SetDisplayColorSpace(this, blending_color_space_,
+                                                   output_color_space_);
+  }
 }
 
 void Compositor::SetBackgroundColor(SkColor color) {

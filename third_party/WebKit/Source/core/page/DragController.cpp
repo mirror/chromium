@@ -26,6 +26,7 @@
 
 #include "core/page/DragController.h"
 
+#include <memory>
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/HTMLNames.h"
 #include "core/InputTypeNames.h"
@@ -46,7 +47,6 @@
 #include "core/editing/commands/DragAndDropCommand.h"
 #include "core/editing/serializers/Serialization.h"
 #include "core/events/TextEvent.h"
-#include "core/frame/FrameHost.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
@@ -77,7 +77,7 @@
 #include "platform/graphics/Image.h"
 #include "platform/graphics/ImageOrientation.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
-#include "platform/network/ResourceRequest.h"
+#include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/WebCommon.h"
 #include "public/platform/WebDragData.h"
@@ -89,7 +89,6 @@
 #include "wtf/CurrentTime.h"
 #include "wtf/PassRefPtr.h"
 #include "wtf/RefPtr.h"
-#include <memory>
 
 #if OS(WIN)
 #include <windows.h>
@@ -199,7 +198,9 @@ static DocumentFragment* documentFragmentFromDragData(
 
 bool DragController::dragIsMove(FrameSelection& selection, DragData* dragData) {
   return m_documentUnderMouse == m_dragInitiator &&
-         selection.isContentEditable() && selection.isRange() &&
+         selection.computeVisibleSelectionInDOMTreeDeprecated()
+             .isContentEditable() &&
+         selection.computeVisibleSelectionInDOMTreeDeprecated().isRange() &&
          !isCopyKeyDown(dragData);
 }
 
@@ -462,8 +463,10 @@ static bool setSelectionToDragCaret(LocalFrame* frame,
                                     VisibleSelection& dragCaret,
                                     Range*& range,
                                     const IntPoint& point) {
-  frame->selection().setSelection(dragCaret);
-  if (frame->selection().isNone()) {
+  frame->selection().setSelection(dragCaret.asSelection());
+  if (frame->selection()
+          .computeVisibleSelectionInDOMTreeDeprecated()
+          .isNone()) {
     // TODO(editing-dev): The use of
     // updateStyleAndLayoutIgnorePendingStylesheets
     // needs to be audited.  See http://crbug.com/590369 for more details.
@@ -475,10 +478,15 @@ static bool setSelectionToDragCaret(LocalFrame* frame,
 
     frame->selection().setSelection(
         SelectionInDOMTree::Builder().collapse(position).build());
-    dragCaret = frame->selection().selection();
+    dragCaret = frame->selection().computeVisibleSelectionInDOMTreeDeprecated();
     range = createRange(dragCaret.toNormalizedEphemeralRange());
   }
-  return !frame->selection().isNone() && frame->selection().isContentEditable();
+  return !frame->selection()
+              .computeVisibleSelectionInDOMTreeDeprecated()
+              .isNone() &&
+         frame->selection()
+             .computeVisibleSelectionInDOMTreeDeprecated()
+             .isContentEditable();
 }
 
 DispatchEventResult DragController::dispatchTextInputEventFor(
@@ -572,7 +580,10 @@ bool DragController::concludeEditDrag(DragData* dragData) {
     return false;
   }
   Range* range = createRange(dragCaret.toNormalizedEphemeralRange());
-  Element* rootEditableElement = innerFrame->selection().rootEditableElement();
+  Element* rootEditableElement =
+      innerFrame->selection()
+          .computeVisibleSelectionInDOMTreeDeprecated()
+          .rootEditableElement();
 
   // For range to be null a WebKit client must have done something bad while
   // manually controlling drag behaviour
@@ -1118,9 +1129,8 @@ bool DragController::startDrag(LocalFrame* src,
       const IntRect& imageRect = hitTestResult.imageRect();
       IntSize imageSizeInPixels = imageRect.size();
       // TODO(oshima): Remove this scaling and simply pass imageRect to
-      // dragImageForImage
-      // once all platforms are migrated to use zoom for dsf.
-      imageSizeInPixels.scale(src->host()->deviceScaleFactorDeprecated());
+      // dragImageForImage once all platforms are migrated to use zoom for dsf.
+      imageSizeInPixels.scale(src->page()->deviceScaleFactorDeprecated());
 
       float screenDeviceScaleFactor =
           src->page()->chromeClient().screenInfo().deviceScaleFactor;
@@ -1139,11 +1149,19 @@ bool DragController::startDrag(LocalFrame* src,
   } else if (state.m_dragType == DragSourceActionLink) {
     if (linkURL.isEmpty())
       return false;
-    if (src->selection().isCaret() && src->selection().isContentEditable()) {
+    if (src->selection()
+            .computeVisibleSelectionInDOMTreeDeprecated()
+            .isCaret() &&
+        src->selection()
+            .computeVisibleSelectionInDOMTreeDeprecated()
+            .isContentEditable()) {
       // a user can initiate a drag on a link without having any text
       // selected.  In this case, we should expand the selection to
       // the enclosing anchor element
-      if (Node* node = enclosingAnchorElement(src->selection().base())) {
+      if (Node* node = enclosingAnchorElement(
+              src->selection()
+                  .computeVisibleSelectionInDOMTreeDeprecated()
+                  .base())) {
         src->selection().setSelection(
             SelectionInDOMTree::Builder().selectAllChildren(*node).build());
       }

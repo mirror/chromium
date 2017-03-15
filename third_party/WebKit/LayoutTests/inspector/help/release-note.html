@@ -1,0 +1,77 @@
+<html>
+<head>
+<script src="../../http/tests/inspector/inspector-test.js"></script>
+<script>
+function test() {
+     Help.releaseNoteText = [
+         {
+             version: 99,
+             highlights: [
+                 {
+                     contents: [
+                         {
+                             text: 'Improved',
+                         },
+                         {
+                             text: 'Performance and Memory panels',
+                             link: 'https://developers.google.com/web/tools/chrome-devtools/',
+                         }
+                     ],
+                     featured: true,
+                 },
+                 {
+                     contents: [
+                         {
+                             text: 'Edit cookies directly',
+                             link: 'https://developers.google.com/web/tools/chrome-devtools/',
+                         },
+                         {
+                             text: 'from the Application panel',
+                         },
+                     ],
+                 },
+             ],
+             link: 'https://developers.google.com/web/tools/chrome-devtools/',
+             image: {
+                 src: './resources/test.png',
+             },
+         },
+    ];
+
+    InspectorTest.addSniffer(UI.viewManager, "showView", onShowView);
+
+    InspectorTest.addResult("Last release note version seen:");
+    InspectorTest.addResult(Help.releaseNoteVersionSetting().get() + "\n");
+    Help.showReleaseNoteIfNeeded();
+
+    function onShowView(viewId, isUserGesture, viewPromise) {
+      viewPromise.then(() => {
+            var releaseNoteView = UI.viewManager.view("release-note");
+            var releaseNoteElement = releaseNoteView[UI.View._widgetSymbol].contentElement;
+            InspectorTest.addResult("Dumping release note text:");
+            InspectorTest.addResult(releaseNoteElement.innerText);
+            InspectorTest.addResult("Last version of release note seen should be updated:");
+            InspectorTest.addResult(Help.releaseNoteVersionSetting().get() + "\n");
+
+            InspectorTest.addSniffer(UI.InspectorView.prototype, "closeDrawerTab", onClose);
+            InspectorTest.addResult("Click on hide button");
+            var closeButton = releaseNoteElement.querySelector(".close-release-note");
+            closeButton.click();
+        });
+    }
+
+    function onClose(view) {
+        InspectorTest.addResult(`Hiding view: ${view}`);
+        InspectorTest.completeTest();
+    }
+}
+
+</script>
+</head>
+<body onload="runTest()">
+<p>
+Test release note
+</p>
+
+</body>
+</html>

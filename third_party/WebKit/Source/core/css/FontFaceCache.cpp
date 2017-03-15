@@ -70,7 +70,7 @@ void FontFaceCache::addFontFace(CSSFontSelector* cssFontSelector,
   segmentedFontFaceResult.storedValue->value->addFontFace(fontFace,
                                                           cssConnected);
   if (cssConnected)
-    m_cssConnectedFontFaces.add(fontFace);
+    m_cssConnectedFontFaces.insert(fontFace);
 
   m_fonts.erase(fontFace->family());
   incrementVersion();
@@ -105,7 +105,7 @@ void FontFaceCache::removeFontFace(FontFace* fontFace, bool cssConnected) {
   }
   m_fonts.erase(fontFace->family());
   if (cssConnected)
-    m_cssConnectedFontFaces.remove(fontFace);
+    m_cssConnectedFontFaces.erase(fontFace);
 
   incrementVersion();
 }
@@ -133,7 +133,7 @@ void FontFaceCache::incrementVersion() {
 
 CSSSegmentedFontFace* FontFaceCache::get(const FontDescription& fontDescription,
                                          const AtomicString& family) {
-  TraitsMap* familyFontFaces = m_fontFaces.get(family);
+  TraitsMap* familyFontFaces = m_fontFaces.at(family);
   if (!familyFontFaces || familyFontFaces->isEmpty())
     return nullptr;
 

@@ -22,6 +22,10 @@ const char kTrialName[] = "trial";
 const char kDomainHash[] =
     "0a79eaf6adb7b1e60d3fa548aa63105f525a00448efbb59ee965b9351a90ac31";
 
+bool IsPromptEnabled() {
+  return base::FeatureList::IsEnabled(kSettingsResetPrompt);
+}
+
 // Test class that initializes a ScopedFeatureList so that all tests
 // start off with all features disabled.
 class SettingsResetPromptConfigTest : public ::testing::Test {
@@ -42,22 +46,16 @@ class SettingsResetPromptConfigTest : public ::testing::Test {
     return {
         {"domain_hashes", base::StringPrintf("{\"%s\": \"1\"}", kDomainHash)},
         {"delay_before_prompt_seconds", "42"},
-        {"use_modal_dialog", "true"}};
+        {"prompt_wave", "20170101"},
+        {"time_between_prompts_seconds", "3600"}};
   }
 
   variations::testing::VariationParamsManager params_manager_;
   base::test::ScopedFeatureList scoped_feature_list_;
 };
 
-TEST_F(SettingsResetPromptConfigTest, IsPromptEnabled) {
-  EXPECT_FALSE(SettingsResetPromptConfig::IsPromptEnabled());
-
-  SetFeatureParams(GetDefaultFeatureParams());
-  EXPECT_TRUE(SettingsResetPromptConfig::IsPromptEnabled());
-}
-
 TEST_F(SettingsResetPromptConfigTest, Create) {
-  ASSERT_FALSE(SettingsResetPromptConfig::IsPromptEnabled());
+  ASSERT_FALSE(IsPromptEnabled());
 
   // |Create()| should return nullptr when feature is not enabled.
   EXPECT_FALSE(SettingsResetPromptConfig::Create());
@@ -65,7 +63,7 @@ TEST_F(SettingsResetPromptConfigTest, Create) {
   // |Create()| should return false when feature is enabled, but parameters are
   // |missing.
   scoped_feature_list_.InitAndEnableFeature(kSettingsResetPrompt);
-  ASSERT_TRUE(SettingsResetPromptConfig::IsPromptEnabled());
+  ASSERT_TRUE(IsPromptEnabled());
   EXPECT_FALSE(SettingsResetPromptConfig::Create());
   SetFeatureParams(Parameters());
   EXPECT_FALSE(SettingsResetPromptConfig::Create());
@@ -209,7 +207,7 @@ TEST_F(SettingsResetPromptConfigTest, UrlToResetDomainIdTLDs) {
 }
 
 TEST_F(SettingsResetPromptConfigTest, DelayBeforePromptSecondsParam) {
-  constexpr char kDelayParam[] = "delay_before_prompt_seconds";
+  constexpr const char kDelayParam[] = "delay_before_prompt_seconds";
 
   Parameters params = GetDefaultFeatureParams();
 
@@ -252,41 +250,74 @@ TEST_F(SettingsResetPromptConfigTest, DelayBeforePromptSecondsParam) {
   }
 }
 
-TEST_F(SettingsResetPromptConfigTest, UseModalDialogParam) {
-  constexpr char kModalParam[] = "use_modal_dialog";
+TEST_F(SettingsResetPromptConfigTest, PromptWaveParam) {
+  constexpr const char kPromptWaveParam[] = "prompt_wave";
 
   Parameters params = GetDefaultFeatureParams();
 
   // Missing parameter.
-  ASSERT_EQ(params.erase(kModalParam), 1U);
+  ASSERT_EQ(params.erase(kPromptWaveParam), 1U);
   SetFeatureParams(params);
   EXPECT_FALSE(SettingsResetPromptConfig::Create());
 
   // Empty parameter.
-  params[kModalParam] = "";
+  params[kPromptWaveParam] = "";
   SetFeatureParams(params);
   EXPECT_FALSE(SettingsResetPromptConfig::Create());
 
   // Bad parameter value.
-  params[kModalParam] = "not-a-boolean-value";
+  params[kPromptWaveParam] = "not-a-number";
+  SetFeatureParams(params);
+  EXPECT_FALSE(SettingsResetPromptConfig::Create());
+
+  // Negative parameter value.
+  params[kPromptWaveParam] = "-3";
   SetFeatureParams(params);
   EXPECT_FALSE(SettingsResetPromptConfig::Create());
 
   // Correct parameter value.
-  params[kModalParam] = "true";
+  params[kPromptWaveParam] = "20170202";
   SetFeatureParams(params);
   {
     auto config = SettingsResetPromptConfig::Create();
     ASSERT_TRUE(config);
-    EXPECT_TRUE(config->use_modal_dialog());
+    EXPECT_EQ(config->prompt_wave(), 20170202);
   }
+}
 
-  params[kModalParam] = "false";
+TEST_F(SettingsResetPromptConfigTest, TimeBetweenPromptsParam) {
+  constexpr const char kParamName[] = "time_between_prompts_seconds";
+
+  Parameters params = GetDefaultFeatureParams();
+
+  // Missing parameter.
+  ASSERT_EQ(params.erase(kParamName), 1U);
+  SetFeatureParams(params);
+  EXPECT_FALSE(SettingsResetPromptConfig::Create());
+
+  // Empty parameter.
+  params[kParamName] = "";
+  SetFeatureParams(params);
+  EXPECT_FALSE(SettingsResetPromptConfig::Create());
+
+  // Bad parameter value.
+  params[kParamName] = "not-a-number";
+  SetFeatureParams(params);
+  EXPECT_FALSE(SettingsResetPromptConfig::Create());
+
+  // Negative parameter value.
+  params[kParamName] = "-3";
+  SetFeatureParams(params);
+  EXPECT_FALSE(SettingsResetPromptConfig::Create());
+
+  // Correct parameter value.
+  params[kParamName] = "3600";
   SetFeatureParams(params);
   {
     auto config = SettingsResetPromptConfig::Create();
     ASSERT_TRUE(config);
-    EXPECT_FALSE(config->use_modal_dialog());
+    EXPECT_EQ(config->time_between_prompts(),
+              base::TimeDelta::FromSeconds(3600));
   }
 }
 

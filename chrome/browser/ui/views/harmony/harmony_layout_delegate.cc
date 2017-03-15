@@ -7,8 +7,8 @@
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 
-static base::LazyInstance<HarmonyLayoutDelegate> harmony_layout_delegate_ =
-    LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<HarmonyLayoutDelegate>::DestructorAtExit
+    harmony_layout_delegate_ = LAZY_INSTANCE_INITIALIZER;
 
 // static
 HarmonyLayoutDelegate* HarmonyLayoutDelegate::Get() {
@@ -17,8 +17,17 @@ HarmonyLayoutDelegate* HarmonyLayoutDelegate::Get() {
 
 int HarmonyLayoutDelegate::GetMetric(Metric metric) const {
   switch (metric) {
+    case Metric::BUTTON_HORIZONTAL_PADDING:
+      return kHarmonyLayoutUnit;
     case Metric::DIALOG_BUTTON_MARGIN:
       return kHarmonyLayoutUnit;
+    case Metric::BUTTON_MAX_LINKABLE_WIDTH:
+      return kHarmonyLayoutUnit * 8;
+    case Metric::BUTTON_MINIMUM_WIDTH:
+    case Metric::DIALOG_BUTTON_MINIMUM_WIDTH:
+      // Minimum label size plus padding.
+      return 2 * kHarmonyLayoutUnit +
+             2 * GetMetric(Metric::BUTTON_HORIZONTAL_PADDING);
     case Metric::DIALOG_BUTTON_TOP_SPACING:
       return kHarmonyLayoutUnit;
     case Metric::DIALOG_CLOSE_BUTTON_MARGIN:
@@ -37,6 +46,10 @@ int HarmonyLayoutDelegate::GetMetric(Metric metric) const {
       return kHarmonyLayoutUnit;
     case Metric::SUBSECTION_HORIZONTAL_INDENT:
       return 0;
+    case Metric::UNRELATED_CONTROL_HORIZONTAL_SPACING:
+      return kHarmonyLayoutUnit;
+    case Metric::UNRELATED_CONTROL_HORIZONTAL_SPACING_LARGE:
+      return kHarmonyLayoutUnit;
     case Metric::UNRELATED_CONTROL_VERTICAL_SPACING:
       return kHarmonyLayoutUnit;
     case Metric::UNRELATED_CONTROL_VERTICAL_SPACING_LARGE:

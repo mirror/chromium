@@ -56,9 +56,9 @@
 
 #if defined(OS_CHROMEOS)
 #include "ash/common/multi_profile_uma.h"
-#include "ash/common/session/session_state_delegate.h"
 #include "ash/common/wm_shell.h"
 #include "chrome/browser/memory/tab_manager_delegate_chromeos.h"
+#include "components/user_manager/user_manager.h"
 #endif
 
 using base::TimeDelta;
@@ -139,6 +139,8 @@ void NotifyRendererProcess(
 ////////////////////////////////////////////////////////////////////////////////
 // TabManager
 
+constexpr base::TimeDelta TabManager::kDefaultTimeToFirstPurge;
+
 TabManager::TabManager()
     : discard_count_(0),
       recent_tab_discard_(false),
@@ -153,8 +155,7 @@ TabManager::TabManager()
 #if defined(OS_CHROMEOS)
   delegate_.reset(new TabManagerDelegate(weak_ptr_factory_.GetWeakPtr()));
 #endif
-  browser_tab_strip_tracker_.Init(
-      BrowserTabStripTracker::InitWith::ALL_BROWERS);
+  browser_tab_strip_tracker_.Init();
 
   // Set up default callbacks. These may be overridden post-construction as
   // testing seams.
@@ -226,13 +227,13 @@ void TabManager::Start() {
   // https://docs.google.com/document/d/1hPHkKtXXBTlsZx9s-9U17XC-ofEIzPo9FYbBEc7PPbk/edit?usp=sharing
   std::string purge_and_suspend_time = variations::GetVariationParamValue(
       "PurgeAndSuspend", "purge-and-suspend-time");
-  unsigned time_to_first_suspension_sec;
+  unsigned int time_to_first_purge_sec = 0;
   if (purge_and_suspend_time.empty() ||
-      !base::StringToUint(purge_and_suspend_time,
-                          &time_to_first_suspension_sec))
-    time_to_first_suspension_sec = 108000;
-  time_to_first_suspension_ =
-      base::TimeDelta::FromSeconds(time_to_first_suspension_sec);
+      !base::StringToUint(purge_and_suspend_time, &time_to_first_purge_sec))
+    time_to_first_suspension_ = kDefaultTimeToFirstPurge;
+  else
+    time_to_first_suspension_ =
+        base::TimeDelta::FromSeconds(time_to_first_purge_sec);
 }
 
 void TabManager::Stop() {
@@ -565,9 +566,8 @@ void TabManager::RecordDiscardStatistics() {
   // Record the discarded tab in relation to the amount of simultaneously
   // logged in users.
   if (ash::WmShell::HasInstance()) {
-    ash::MultiProfileUMA::RecordDiscardedTab(ash::WmShell::Get()
-                                                 ->GetSessionStateDelegate()
-                                                 ->NumberOfLoggedInUsers());
+    ash::MultiProfileUMA::RecordDiscardedTab(
+        user_manager::UserManager::Get()->GetLoggedInUsers().size());
   }
 #endif
   // TODO(jamescook): If the time stats prove too noisy, then divide up users

@@ -23,7 +23,7 @@ HashMap<const void*, HashMap<const DisplayItemClient*, String>>*
 
 DisplayItemClient::DisplayItemClient() {
   if (displayItemClientsShouldKeepAlive) {
-    for (auto item : *displayItemClientsShouldKeepAlive)
+    for (const auto& item : *displayItemClientsShouldKeepAlive)
       CHECK(!item.value.contains(this));
   }
   if (!liveDisplayItemClients)
@@ -33,13 +33,13 @@ DisplayItemClient::DisplayItemClient() {
 
 DisplayItemClient::~DisplayItemClient() {
   if (displayItemClientsShouldKeepAlive) {
-    for (auto& item : *displayItemClientsShouldKeepAlive) {
+    for (const auto& item : *displayItemClientsShouldKeepAlive) {
       CHECK(!item.value.contains(this))
-          << "Short-lived DisplayItemClient: " << item.value.get(this)
+          << "Short-lived DisplayItemClient: " << item.value.at(this)
           << ". See crbug.com/609218.";
     }
   }
-  liveDisplayItemClients->remove(this);
+  liveDisplayItemClients->erase(this);
   // In case this object is a subsequence owner.
   endShouldKeepAliveAllClients(this);
 }

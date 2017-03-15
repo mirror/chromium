@@ -22,6 +22,7 @@ include_rules = [
   "+device/media_transfer_protocol",
   "+device/power_save_blocker",
   "+device/usb",
+  "+device/vr/features.h",
   "+extensions/browser",
   "+extensions/common",
   "+extensions/components/javascript_dialog_extensions_client",
@@ -48,6 +49,7 @@ include_rules = [
   "+sandbox/win/src",  # The path doesn't say it, but this is the Windows sandbox.
   "+services/image_decoder/public/cpp",
   "+services/image_decoder/public/interfaces",
+  "+services/preferences/public/cpp",
   "+services/preferences/public/interfaces",
   "+services/service_manager",
   "+services/shape_detection/public/interfaces",
@@ -72,6 +74,11 @@ include_rules = [
   "+chrome/browser/ui/views/chrome_browser_main_extra_parts_views.h",
   "+chrome/browser/ui/views/chrome_browser_main_extra_parts_views_linux.h",
   "+chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.h",
+
+  # Code in chrome should not use ash::SessionStateDelegate and friends.
+  # Instead, use SessionManager/UserManager/SessionControllerClient directly
+  # since they are part of chrome.
+  "-ash/common/session",
 
   # Explicitly disallow using SyncMessageFilter to prevent browser from
   # sending synchronous IPC messages on non-UI threads.

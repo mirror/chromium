@@ -19,7 +19,7 @@
 #include "cc/surfaces/compositor_frame_sink_support.h"
 #include "cc/surfaces/display.h"
 #include "cc/surfaces/display_scheduler.h"
-#include "cc/surfaces/surface_id_allocator.h"
+#include "cc/surfaces/local_surface_id_allocator.h"
 #include "cc/surfaces/surface_manager.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
@@ -28,6 +28,9 @@
 namespace android_webview {
 
 namespace {
+// The client_id used here should not conflict with the client_id generated
+// from RenderWidgetHostImpl.
+constexpr uint32_t kDefaultClientId = 0u;
 SurfacesInstance* g_surfaces_instance = nullptr;
 }  // namespace
 
@@ -39,7 +42,8 @@ scoped_refptr<SurfacesInstance> SurfacesInstance::GetOrCreateInstance() {
 }
 
 SurfacesInstance::SurfacesInstance()
-    : next_client_id_(1u), frame_sink_id_(AllocateFrameSinkId()) {
+    : frame_sink_id_allocator_(kDefaultClientId),
+      frame_sink_id_(AllocateFrameSinkId()) {
   cc::RendererSettings settings;
 
   // Should be kept in sync with compositor_impl_android.cc.
@@ -50,7 +54,7 @@ SurfacesInstance::SurfacesInstance()
   settings.should_clear_root_render_pass = false;
 
   surface_manager_.reset(new cc::SurfaceManager);
-  surface_id_allocator_.reset(new cc::SurfaceIdAllocator());
+  local_surface_id_allocator_.reset(new cc::LocalSurfaceIdAllocator());
 
   constexpr bool is_root = true;
   constexpr bool handles_frame_sink_id_invalidation = true;
@@ -93,7 +97,7 @@ void SurfacesInstance::DisplayOutputSurfaceLost() {
 }
 
 cc::FrameSinkId SurfacesInstance::AllocateFrameSinkId() {
-  return cc::FrameSinkId(next_client_id_++, 0 /* sink_id */);
+  return frame_sink_id_allocator_.NextFrameSinkId();
 }
 
 cc::SurfaceManager* SurfacesInstance::GetSurfaceManager() {
@@ -134,7 +138,7 @@ void SurfacesInstance::DrawAndSwap(const gfx::Size& viewport,
   frame.metadata.referenced_surfaces = child_ids_;
 
   if (!root_id_.is_valid()) {
-    root_id_ = surface_id_allocator_->GenerateId();
+    root_id_ = local_surface_id_allocator_->GenerateId();
     display_->SetLocalSurfaceId(root_id_, 1.f);
   }
   support_->SubmitCompositorFrame(root_id_, std::move(frame));
@@ -169,7 +173,9 @@ void SurfacesInstance::DidReceiveCompositorFrameAck() {}
 
 void SurfacesInstance::OnBeginFrame(const cc::BeginFrameArgs& args) {}
 
-void SurfacesInstance::WillDrawSurface() {}
+void SurfacesInstance::WillDrawSurface(
+    const cc::LocalSurfaceId& local_surface_id,
+    const gfx::Rect& damage_rect) {}
 
 void SurfacesInstance::ReclaimResources(
     const cc::ReturnedResourceArray& resources) {

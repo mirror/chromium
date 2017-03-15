@@ -26,7 +26,6 @@
 #include "net/quic/platform/api/quic_map_util.h"
 #include "net/quic/platform/api/quic_ptr_util.h"
 
-using base::StringPiece;
 using std::string;
 
 namespace net {
@@ -136,8 +135,8 @@ QuicFramer::QuicFramer(const QuicVersionVector& supported_versions,
       error_(QUIC_NO_ERROR),
       last_packet_number_(0),
       largest_packet_number_(0),
-      last_path_id_(kInvalidPathId),
       last_serialized_connection_id_(0),
+      last_version_tag_(0),
       supported_versions_(supported_versions),
       decrypter_level_(ENCRYPTION_NONE),
       alternative_decrypter_level_(ENCRYPTION_NONE),
@@ -205,11 +204,6 @@ size_t QuicFramer::GetWindowUpdateFrameSize() {
 // static
 size_t QuicFramer::GetBlockedFrameSize() {
   return kQuicFrameTypeSize + kQuicMaxStreamIdSize;
-}
-
-// static
-size_t QuicFramer::GetPathCloseFrameSize() {
-  return kQuicFrameTypeSize + kQuicPathIdSize;
 }
 
 // static
@@ -396,12 +390,6 @@ size_t QuicFramer::BuildDataPacket(const QuicPacketHeader& header,
       case BLOCKED_FRAME:
         if (!AppendBlockedFrame(*frame.blocked_frame, &writer)) {
           QUIC_BUG << "AppendBlockedFrame failed";
-          return 0;
-        }
-        break;
-      case PATH_CLOSE_FRAME:
-        if (!AppendPathCloseFrame(*frame.path_close_frame, &writer)) {
-          QUIC_BUG << "AppendPathCloseFrame failed";
           return 0;
         }
         break;
@@ -636,7 +624,7 @@ bool QuicFramer::ProcessPublicResetPacket(
   }
   // TODO(satyamshekhar): validate nonce to protect against DoS.
 
-  StringPiece address;
+  QuicStringPiece address;
   if (reset->GetStringPiece(kCADR, &address)) {
     QuicSocketAddressCoder address_coder;
     if (address_coder.Decode(address.data(), address.length())) {
@@ -696,14 +684,11 @@ bool QuicFramer::AppendPacketHeader(const QuicPacketHeader& header,
   if (header.public_header.version_flag) {
     DCHECK_EQ(Perspective::IS_CLIENT, perspective_);
     QuicTag tag = QuicVersionToQuicTag(quic_version_);
-    writer->WriteUInt32(tag);
+    if (!writer->WriteUInt32(tag)) {
+      return false;
+    }
     QUIC_DVLOG(1) << ENDPOINT << "version = " << quic_version_ << ", tag = '"
                   << QuicTagToString(tag) << "'";
-  }
-
-  if (header.public_header.multipath_flag &&
-      !writer->WriteUInt8(header.path_id)) {
-    return false;
   }
 
   if (header.public_header.nonce != nullptr &&
@@ -743,44 +728,10 @@ const QuicTime::Delta QuicFramer::CalculateTimestampFromWire(
   return QuicTime::Delta::FromMicroseconds(time);
 }
 
-bool QuicFramer::IsValidPath(QuicPathId path_id,
-                             QuicPacketNumber* base_packet_number) {
-  if (QuicContainsKey(closed_paths_, path_id)) {
-    // Path is closed.
-    return false;
-  }
-
-  if (path_id == last_path_id_) {
-    *base_packet_number = largest_packet_number_;
-    return true;
-  }
-
-  if (QuicContainsKey(largest_packet_numbers_, path_id)) {
-    *base_packet_number = largest_packet_numbers_[path_id];
-  } else {
-    *base_packet_number = 0;
-  }
-
-  return true;
-}
-
 void QuicFramer::SetLastPacketNumber(const QuicPacketHeader& header) {
-  if (header.public_header.multipath_flag && header.path_id != last_path_id_) {
-    if (last_path_id_ != kInvalidPathId) {
-      // Save current last packet number before changing path.
-      largest_packet_numbers_[last_path_id_] = largest_packet_number_;
-    }
-    // Change path.
-    last_path_id_ = header.path_id;
-  }
   last_packet_number_ = header.packet_number;
   largest_packet_number_ =
       std::max(header.packet_number, largest_packet_number_);
-}
-
-void QuicFramer::OnPathClosed(QuicPathId path_id) {
-  closed_paths_.insert(path_id);
-  largest_packet_numbers_.erase(path_id);
 }
 
 QuicPacketNumber QuicFramer::CalculatePacketNumberFromWire(
@@ -822,7 +773,9 @@ bool QuicFramer::ProcessPublicHeader(QuicDataReader* reader,
       (public_flags & PACKET_PUBLIC_FLAGS_VERSION) != 0;
 
   if (validate_flags_ && !public_header->version_flag &&
-      public_flags > PACKET_PUBLIC_FLAGS_MAX) {
+      public_flags > (FLAGS_quic_reloadable_flag_quic_remove_multipath_bit
+                          ? PACKET_PUBLIC_FLAGS_MAX_WITHOUT_MULTIPATH_FLAG
+                          : PACKET_PUBLIC_FLAGS_MAX)) {
     set_detailed_error("Illegal public flags value.");
     return false;
   }
@@ -863,7 +816,10 @@ bool QuicFramer::ProcessPublicHeader(QuicDataReader* reader,
     // If not, this raises an error.
     last_version_tag_ = version_tag;
     QuicVersion version = QuicTagToQuicVersion(version_tag);
-    if (version == quic_version_ && public_flags > PACKET_PUBLIC_FLAGS_MAX) {
+    if (version == quic_version_ &&
+        public_flags > (FLAGS_quic_reloadable_flag_quic_remove_multipath_bit
+                            ? PACKET_PUBLIC_FLAGS_MAX_WITHOUT_MULTIPATH_FLAG
+                            : PACKET_PUBLIC_FLAGS_MAX)) {
       set_detailed_error("Illegal public flags value.");
       return false;
     }
@@ -956,20 +912,7 @@ QuicFramer::AckFrameInfo QuicFramer::GetAckFrameInfo(
 
 bool QuicFramer::ProcessUnauthenticatedHeader(QuicDataReader* encrypted_reader,
                                               QuicPacketHeader* header) {
-  header->path_id = kDefaultPathId;
-  if (header->public_header.multipath_flag &&
-      !ProcessPathId(encrypted_reader, &header->path_id)) {
-    set_detailed_error("Unable to read path id.");
-    return RaiseError(QUIC_INVALID_PACKET_HEADER);
-  }
-
   QuicPacketNumber base_packet_number = largest_packet_number_;
-  if (header->public_header.multipath_flag &&
-      !IsValidPath(header->path_id, &base_packet_number)) {
-    // Stop processing because path is closed.
-    set_detailed_error("Path is closed.");
-    return false;
-  }
 
   if (!ProcessPacketSequenceNumber(
           encrypted_reader, header->public_header.packet_number_length,
@@ -988,14 +931,6 @@ bool QuicFramer::ProcessUnauthenticatedHeader(QuicDataReader* encrypted_reader,
         "Visitor asked to stop processing of unauthenticated header.");
     return false;
   }
-  return true;
-}
-
-bool QuicFramer::ProcessPathId(QuicDataReader* reader, QuicPathId* path_id) {
-  if (!reader->ReadBytes(path_id, 1)) {
-    return false;
-  }
-
   return true;
 }
 
@@ -1172,19 +1107,6 @@ bool QuicFramer::ProcessFrameData(QuicDataReader* reader,
         }
         continue;
       }
-      case PATH_CLOSE_FRAME: {
-        QuicPathCloseFrame path_close_frame;
-        if (!ProcessPathCloseFrame(reader, &path_close_frame)) {
-          return RaiseError(QUIC_INVALID_PATH_CLOSE_DATA);
-        }
-        if (!visitor_->OnPathCloseFrame(path_close_frame)) {
-          QUIC_DVLOG(1) << ENDPOINT
-                        << "Visitor asked to stop further processing.";
-          // Returning true since there was no parsing error.
-          return true;
-        }
-        continue;
-      }
 
       default:
         set_detailed_error("Illegal frame type.");
@@ -1233,8 +1155,8 @@ bool QuicFramer::ProcessStreamFrame(QuicDataReader* reader,
     return false;
   }
 
-  // TODO(ianswett): Don't use StringPiece as an intermediary.
-  StringPiece data;
+  // TODO(ianswett): Don't use QuicStringPiece as an intermediary.
+  QuicStringPiece data;
   if (has_data_length) {
     if (!reader->ReadStringPiece16(&data)) {
       set_detailed_error("Unable to read frame data.");
@@ -1442,7 +1364,7 @@ bool QuicFramer::ProcessConnectionCloseFrame(QuicDataReader* reader,
 
   frame->error_code = static_cast<QuicErrorCode>(error_code);
 
-  StringPiece error_details;
+  QuicStringPiece error_details;
   if (!reader->ReadStringPiece16(&error_details)) {
     set_detailed_error("Unable to read connection close error details.");
     return false;
@@ -1473,7 +1395,7 @@ bool QuicFramer::ProcessGoAwayFrame(QuicDataReader* reader,
   }
   frame->last_good_stream_id = static_cast<QuicStreamId>(stream_id);
 
-  StringPiece reason_phrase;
+  QuicStringPiece reason_phrase;
   if (!reader->ReadStringPiece16(&reason_phrase)) {
     set_detailed_error("Unable to read goaway reason.");
     return false;
@@ -1508,30 +1430,19 @@ bool QuicFramer::ProcessBlockedFrame(QuicDataReader* reader,
   return true;
 }
 
-bool QuicFramer::ProcessPathCloseFrame(QuicDataReader* reader,
-                                       QuicPathCloseFrame* frame) {
-  if (!reader->ReadBytes(&frame->path_id, 1)) {
-    set_detailed_error("Unable to read path_id.");
-    return false;
-  }
-
-  return true;
-}
-
 // static
-StringPiece QuicFramer::GetAssociatedDataFromEncryptedPacket(
+QuicStringPiece QuicFramer::GetAssociatedDataFromEncryptedPacket(
     QuicVersion version,
     const QuicEncryptedPacket& encrypted,
     QuicConnectionIdLength connection_id_length,
     bool includes_version,
-    bool includes_path_id,
     bool includes_diversification_nonce,
     QuicPacketNumberLength packet_number_length) {
   // TODO(ianswett): This is identical to QuicData::AssociatedData.
-  return StringPiece(
+  return QuicStringPiece(
       encrypted.data(),
       GetStartOfEncryptedData(version, connection_id_length, includes_version,
-                              includes_path_id, includes_diversification_nonce,
+                              includes_diversification_nonce,
                               packet_number_length));
 }
 
@@ -1565,7 +1476,6 @@ void QuicFramer::SetEncrypter(EncryptionLevel level, QuicEncrypter* encrypter) {
 }
 
 size_t QuicFramer::EncryptInPlace(EncryptionLevel level,
-                                  QuicPathId path_id,
                                   QuicPacketNumber packet_number,
                                   size_t ad_len,
                                   size_t total_len,
@@ -1574,8 +1484,8 @@ size_t QuicFramer::EncryptInPlace(EncryptionLevel level,
   size_t output_length = 0;
   if (!encrypter_[level]->EncryptPacket(
           quic_version_, packet_number,
-          StringPiece(buffer, ad_len),                       // Associated data
-          StringPiece(buffer + ad_len, total_len - ad_len),  // Plaintext
+          QuicStringPiece(buffer, ad_len),  // Associated data
+          QuicStringPiece(buffer + ad_len, total_len - ad_len),  // Plaintext
           buffer + ad_len,  // Destination buffer
           &output_length, buffer_len - ad_len)) {
     RaiseError(QUIC_ENCRYPTION_FAILURE);
@@ -1592,7 +1502,7 @@ size_t QuicFramer::EncryptPayload(EncryptionLevel level,
                                   size_t buffer_len) {
   DCHECK(encrypter_[level].get() != nullptr);
 
-  StringPiece associated_data = packet.AssociatedData(quic_version_);
+  QuicStringPiece associated_data = packet.AssociatedData(quic_version_);
   // Copy in the header, because the encrypter only populates the encrypted
   // plaintext content.
   const size_t ad_len = associated_data.length();
@@ -1633,12 +1543,11 @@ bool QuicFramer::DecryptPayload(QuicDataReader* encrypted_reader,
                                 char* decrypted_buffer,
                                 size_t buffer_length,
                                 size_t* decrypted_length) {
-  StringPiece encrypted = encrypted_reader->ReadRemainingPayload();
+  QuicStringPiece encrypted = encrypted_reader->ReadRemainingPayload();
   DCHECK(decrypter_.get() != nullptr);
-  StringPiece associated_data = GetAssociatedDataFromEncryptedPacket(
+  QuicStringPiece associated_data = GetAssociatedDataFromEncryptedPacket(
       quic_version_, packet, header.public_header.connection_id_length,
-      header.public_header.version_flag, header.public_header.multipath_flag,
-      header.public_header.nonce != nullptr,
+      header.public_header.version_flag, header.public_header.nonce != nullptr,
       header.public_header.packet_number_length);
 
   bool success = decrypter_->DecryptPacket(
@@ -1761,8 +1670,6 @@ size_t QuicFramer::ComputeFrameLength(
       return GetWindowUpdateFrameSize();
     case BLOCKED_FRAME:
       return GetBlockedFrameSize();
-    case PATH_CLOSE_FRAME:
-      return GetPathCloseFrameSize();
     case PADDING_FRAME:
       DCHECK(false);
       return 0;
@@ -2191,15 +2098,6 @@ bool QuicFramer::AppendBlockedFrame(const QuicBlockedFrame& frame,
                                     QuicDataWriter* writer) {
   uint32_t stream_id = static_cast<uint32_t>(frame.stream_id);
   if (!writer->WriteUInt32(stream_id)) {
-    return false;
-  }
-  return true;
-}
-
-bool QuicFramer::AppendPathCloseFrame(const QuicPathCloseFrame& frame,
-                                      QuicDataWriter* writer) {
-  uint8_t path_id = static_cast<uint8_t>(frame.path_id);
-  if (!writer->WriteUInt8(path_id)) {
     return false;
   }
   return true;

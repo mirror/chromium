@@ -27,6 +27,7 @@
 #define LayoutMedia_h
 
 #include "core/layout/LayoutImage.h"
+#include "wtf/Optional.h"
 
 namespace blink {
 
@@ -82,7 +83,6 @@ class LayoutMedia : public LayoutImage {
 
   LayoutUnit computePanelWidth(const LayoutRect& mediaWidth) const;
 
-  Optional<LayoutUnit> m_lastReportedPanelWidth;
   LayoutObjectChildList m_children;
 };
 

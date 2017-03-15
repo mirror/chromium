@@ -18,11 +18,9 @@ import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnLayoutChangeListener;
-import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -35,25 +33,24 @@ import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ntp.LogoBridge.Logo;
 import org.chromium.chrome.browser.ntp.LogoBridge.LogoObserver;
-import org.chromium.chrome.browser.ntp.NewTabPage.DestructionObserver;
 import org.chromium.chrome.browser.ntp.NewTabPage.OnSearchBoxScrollListener;
 import org.chromium.chrome.browser.ntp.cards.CardsVariationParameters;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageAdapter;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageRecyclerView;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.profiles.Profile;
+import org.chromium.chrome.browser.suggestions.DestructionObserver;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
 import org.chromium.chrome.browser.suggestions.Tile;
 import org.chromium.chrome.browser.suggestions.TileGridLayout;
 import org.chromium.chrome.browser.suggestions.TileGroup;
+import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.MathUtils;
 import org.chromium.chrome.browser.util.ViewUtils;
 import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
 import org.chromium.ui.base.DeviceFormFactor;
-
-import jp.tomorrowkey.android.gifplayer.BaseGifImage;
 
 /**
  * The native new tab page, represented by some basic data such as title and url, and an Android
@@ -65,9 +62,27 @@ public class NewTabPageView
 
     private static final long SNAP_SCROLL_DELAY_MS = 30;
 
-    private static final int MAX_TILES = 12;
-    private static final int MAX_TILE_ROWS_WITH_LOGO = 2;
-    private static final int MAX_TILE_ROWS_WITHOUT_LOGO = 3;
+    /**
+     * Experiment parameter for the maximum number of tile suggestion rows to show.
+     */
+    private static final String PARAM_NTP_MAX_TILE_ROWS = "ntp_max_tile_rows";
+
+    /**
+     * Experiment parameter for the number of tile title lines to show.
+     */
+    private static final String PARAM_NTP_TILE_TITLE_LINES = "ntp_tile_title_lines";
+
+    /**
+     * Experiment parameter for whether to use the condensed tile layout on small screens.
+     */
+    private static final String PARAM_CONDENSED_TILE_LAYOUT_FOR_SMALL_SCREENS_ENABLED =
+            "condensed_tile_layout_for_small_screens_enabled";
+
+    /**
+     * Experiment parameter for whether to use the condensed tile layout on large screens.
+     */
+    private static final String PARAM_CONDENSED_TILE_LAYOUT_FOR_LARGE_SCREENS_ENABLED =
+            "condensed_tile_layout_for_large_screens_enabled";
 
     private NewTabPageRecyclerView mRecyclerView;
 
@@ -83,6 +98,7 @@ public class NewTabPageView
 
     private ChromeActivity mActivity;
     private NewTabPageManager mManager;
+    private LogoView.Delegate mLogoDelegate;
     private TileGroup.Delegate mTileGroupDelegate;
     private TileGroup mTileGroup;
     private UiConfig mUiConfig;
@@ -131,18 +147,6 @@ public class NewTabPageView
         void focusSearchBox(boolean beginVoiceSearch, String pastedText);
 
         /**
-         * Called when the user clicks on the logo.
-         * @param isAnimatedLogoShowing Whether the animated GIF logo is playing.
-         */
-        void onLogoClicked(boolean isAnimatedLogoShowing);
-
-        /**
-         * Gets the default search provider's logo and calls logoObserver with the result.
-         * @param logoObserver The callback to notify when the logo is available.
-         */
-        void getSearchProviderLogo(LogoObserver logoObserver);
-
-        /**
          * @return whether the {@link NewTabPage} associated with this manager is the current page
          * displayed to the user.
          */
@@ -183,17 +187,12 @@ public class NewTabPageView
 
         assert manager.getSuggestionsSource() != null;
 
-        mRecyclerView = (NewTabPageRecyclerView) findViewById(R.id.new_tab_page_recycler_view);
-        // Don't attach now, the recyclerView itself will determine when to do it.
-        mNewTabPageLayout =
-                (NewTabPageLayout) LayoutInflater.from(getContext())
-                        .inflate(R.layout.new_tab_page_layout, mRecyclerView, false);
-        mRecyclerView.setAboveTheFoldView(mNewTabPageLayout);
+        mRecyclerView = new NewTabPageRecyclerView(getContext());
+        mRecyclerView.setContainsLocationBar(manager.isLocationBarShownInNTP());
+        addView(mRecyclerView);
 
-        // Tailor the LayoutParams for the snippets UI, as the configuration in the XML is
-        // made for the ScrollView UI.
-        ViewGroup.LayoutParams params = mNewTabPageLayout.getLayoutParams();
-        params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        // Don't attach now, the recyclerView itself will determine when to do it.
+        mNewTabPageLayout = mRecyclerView.getAboveTheFoldView();
 
         mRecyclerView.setItemAnimator(new DefaultItemAnimator() {
             @Override
@@ -216,14 +215,18 @@ public class NewTabPageView
             }
         });
 
+        OfflinePageBridge offlinePageBridge =
+                OfflinePageBridge.getForProfile(Profile.getLastUsedProfile());
+
         mTileGridLayout = (TileGridLayout) mNewTabPageLayout.findViewById(R.id.tile_grid_layout);
-        mTileGridLayout.setMaxRows(
-                searchProviderHasLogo ? MAX_TILE_ROWS_WITH_LOGO : MAX_TILE_ROWS_WITHOUT_LOGO);
-        mTileGroup = new TileGroup(
-                mManager, mContextMenuManager, mTileGroupDelegate, /* observer = */ this);
+        mTileGridLayout.setMaxRows(getMaxTileRows(searchProviderHasLogo));
+        mTileGridLayout.setMaxColumns(getMaxTileColumns());
+        mTileGroup = new TileGroup(mActivity, mManager, mContextMenuManager, mTileGroupDelegate,
+                /* observer = */ this, offlinePageBridge, getTileTitleLines());
 
         mSearchProviderLogoView =
                 (LogoView) mNewTabPageLayout.findViewById(R.id.search_provider_logo);
+        mLogoDelegate = new LogoDelegateImpl(tab, mSearchProviderLogoView);
         mSearchBoxView = mNewTabPageLayout.findViewById(R.id.search_box);
         mNoSearchLogoSpacer = mNewTabPageLayout.findViewById(R.id.no_search_logo_spacer);
 
@@ -233,13 +236,18 @@ public class NewTabPageView
         mNewTabPageLayout.addOnLayoutChangeListener(this);
         setSearchProviderHasLogo(searchProviderHasLogo);
 
-        mPendingLoadTasks++;
-        mTileGroup.startObserving(MAX_TILES);
+        tab.addObserver(new EmptyTabObserver() {
+            @Override
+            public void onShown(Tab tab) {
+                mTileGroup.onSwitchToForeground();
+            }
+        });
+        mTileGroup.startObserving(getMaxTileRows(searchProviderHasLogo) * getMaxTileColumns());
 
         // Set up snippets
         NewTabPageAdapter newTabPageAdapter = new NewTabPageAdapter(mManager, mNewTabPageLayout,
-                mUiConfig, OfflinePageBridge.getForProfile(Profile.getLastUsedProfile()),
-                mContextMenuManager, /* tileGroupDelegate = */ null);
+                mUiConfig, offlinePageBridge, mContextMenuManager, /* tileGroupDelegate = */ null);
+        newTabPageAdapter.refreshSuggestions();
         mRecyclerView.setAdapter(newTabPageAdapter);
 
         int scrollOffset;
@@ -251,8 +259,6 @@ public class NewTabPageView
         }
         mRecyclerView.getLinearLayoutManager().scrollToPositionWithOffset(
                 scrollPosition, scrollOffset);
-
-        mRecyclerView.setUpSwipeToDismiss();
 
         setupScrollHandling();
 
@@ -298,7 +304,11 @@ public class NewTabPageView
         final TextView searchBoxTextView = (TextView) mSearchBoxView
                 .findViewById(R.id.search_box_text);
 
-        if (!ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_SHOW_GOOGLE_G_IN_OMNIBOX)) {
+        boolean isTablet = DeviceFormFactor.isTablet(getContext());
+
+        // If the Google G should not be shown then clear it because it is shown by default in xml.
+        if (isTablet
+                || !ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_SHOW_GOOGLE_G_IN_OMNIBOX)) {
             searchBoxTextView.setCompoundDrawablePadding(0);
 
             // Not using the relative version of this call because we only want to clear
@@ -307,7 +317,7 @@ public class NewTabPageView
         }
 
         String hintText = getResources().getString(R.string.search_or_type_url);
-        if (!DeviceFormFactor.isTablet(getContext()) || mManager.isFakeOmniboxTextEnabledTablet()) {
+        if (!isTablet || mManager.isFakeOmniboxTextEnabledTablet()) {
             searchBoxTextView.setHint(hintText);
         } else {
             searchBoxTextView.setContentDescription(hintText);
@@ -418,6 +428,11 @@ public class NewTabPageView
         return mTileGridPlaceholder;
     }
 
+    @VisibleForTesting
+    public TileGroup getTileGroup() {
+        return mTileGroup;
+    }
+
     /**
      * Adds listeners to scrolling to take care of snap scrolling and updating the search box on
      * scroll.
@@ -430,8 +445,7 @@ public class NewTabPageView
                 assert mPendingSnapScroll;
                 mPendingSnapScroll = false;
 
-                mRecyclerView.snapScroll(mSearchBoxView,
-                        mRecyclerView.computeVerticalScrollOffset(), getHeight());
+                mRecyclerView.snapScroll(mSearchBoxView, getHeight());
             }
         };
 
@@ -489,11 +503,11 @@ public class NewTabPageView
      * Loads the search provider logo (e.g. Google doodle), if any.
      */
     private void loadSearchProviderLogo() {
-        mManager.getSearchProviderLogo(new LogoObserver() {
+        mLogoDelegate.getSearchProviderLogo(new LogoObserver() {
             @Override
             public void onLogoAvailable(Logo logo, boolean fromCache) {
                 if (logo == null && fromCache) return;
-                mSearchProviderLogoView.setMananger(mManager);
+                mSearchProviderLogoView.setDelegate(mLogoDelegate);
                 mSearchProviderLogoView.updateLogo(logo);
                 mSnapshotTileGridChanged = true;
             }
@@ -509,7 +523,8 @@ public class NewTabPageView
         if (hasLogo == mSearchProviderHasLogo && mInitialized) return;
         mSearchProviderHasLogo = hasLogo;
         boolean showLogo = mSearchProviderHasLogo
-                && !ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_CONDENSED_LAYOUT);
+                && (DeviceFormFactor.isTablet(getContext())
+                           || !ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_CONDENSED_LAYOUT));
 
         // Set a bit more top padding on the tile grid if there is no logo.
         int paddingTop = getResources().getDimensionPixelSize(showLogo
@@ -534,6 +549,9 @@ public class NewTabPageView
             }
         }
 
+        // Update snap scrolling for the fakebox.
+        mRecyclerView.setContainsLocationBar(mManager.isLocationBarShownInNTP());
+
         updateTileGridPlaceholderVisibility();
 
         onUrlFocusAnimationChanged();
@@ -549,20 +567,6 @@ public class NewTabPageView
         if (disable == mDisableUrlFocusChangeAnimations) return;
         mDisableUrlFocusChangeAnimations = disable;
         if (!disable) onUrlFocusAnimationChanged();
-    }
-
-    /**
-     * Shows a progressbar indicating the animated logo is being downloaded.
-     */
-    void showLogoLoadingView() {
-        mSearchProviderLogoView.showLoadingView();
-    }
-
-    /**
-     * Starts playing the given animated GIF logo.
-     */
-    void playAnimatedLogo(BaseGifImage gifImage) {
-        mSearchProviderLogoView.playAnimatedLogo(gifImage);
     }
 
     /**
@@ -756,8 +760,7 @@ public class NewTabPageView
         mRecyclerView.updatePeekingCardAndHeader();
         // The positioning of elements may have been changed (since the elements expand to fill
         // the available vertical space), so adjust the scroll.
-        mRecyclerView.snapScroll(mSearchBoxView,
-                mRecyclerView.computeVerticalScrollOffset(), getHeight());
+        mRecyclerView.snapScroll(mSearchBoxView, getHeight());
     }
 
     /**
@@ -784,6 +787,50 @@ public class NewTabPageView
             mTileGridLayout.setVisibility(VISIBLE);
             mTileGridPlaceholder.setVisibility(GONE);
         }
+    }
+
+    private static int getMaxTileRows(boolean searchProviderHasLogo) {
+        int defaultValue = 2;
+        if (!ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_CONDENSED_LAYOUT)
+                && !searchProviderHasLogo) {
+            defaultValue = 3;
+        }
+        return ChromeFeatureList.getFieldTrialParamByFeatureAsInt(
+                ChromeFeatureList.NTP_CONDENSED_LAYOUT, PARAM_NTP_MAX_TILE_ROWS, defaultValue);
+    }
+
+    /**
+     * Determines The maximum number of tiles to try and fit in a row. On smaller screens, there
+     * may not be enough space to fit all of them.
+     */
+    private int getMaxTileColumns() {
+        if (!mUiConfig.getCurrentDisplayStyle().isSmall()
+                && ChromeFeatureList.getFieldTrialParamByFeatureAsBoolean(
+                           ChromeFeatureList.NTP_CONDENSED_TILE_LAYOUT,
+                           PARAM_CONDENSED_TILE_LAYOUT_FOR_LARGE_SCREENS_ENABLED, false)) {
+            return 5;
+        }
+        return 4;
+    }
+
+    private static int getTileTitleLines() {
+        int defaultValue = 2;
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.NTP_CONDENSED_LAYOUT)) {
+            defaultValue = 1;
+        }
+        return ChromeFeatureList.getFieldTrialParamByFeatureAsInt(
+                ChromeFeatureList.NTP_CONDENSED_LAYOUT, PARAM_NTP_TILE_TITLE_LINES, defaultValue);
+    }
+
+    private boolean shouldUseCondensedTileLayout() {
+        if (mUiConfig.getCurrentDisplayStyle().isSmall()) {
+            return ChromeFeatureList.getFieldTrialParamByFeatureAsBoolean(
+                    ChromeFeatureList.NTP_CONDENSED_TILE_LAYOUT,
+                    PARAM_CONDENSED_TILE_LAYOUT_FOR_SMALL_SCREENS_ENABLED, false);
+        }
+        return ChromeFeatureList.getFieldTrialParamByFeatureAsBoolean(
+                ChromeFeatureList.NTP_CONDENSED_TILE_LAYOUT,
+                PARAM_CONDENSED_TILE_LAYOUT_FOR_LARGE_SCREENS_ENABLED, false);
     }
 
     @Override
@@ -827,7 +874,8 @@ public class NewTabPageView
 
     @Override
     public void onTileDataChanged() {
-        mTileGroup.renderTileViews(mTileGridLayout, !mLoadHasCompleted);
+        mTileGroup.renderTileViews(
+                mTileGridLayout, !mLoadHasCompleted, shouldUseCondensedTileLayout());
         mSnapshotTileGridChanged = true;
 
         // The page contents are initially hidden; otherwise they'll be drawn centered on the page
@@ -849,6 +897,12 @@ public class NewTabPageView
     @Override
     public void onTileIconChanged(Tile tile) {
         mTileGridLayout.updateIconView(tile);
+        mSnapshotTileGridChanged = true;
+    }
+
+    @Override
+    public void onTileOfflineBadgeVisibilityChanged(Tile tile) {
+        mTileGridLayout.updateOfflineBadge(tile);
         mSnapshotTileGridChanged = true;
     }
 

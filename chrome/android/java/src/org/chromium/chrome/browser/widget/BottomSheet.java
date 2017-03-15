@@ -11,7 +11,6 @@ import android.content.Context;
 import android.graphics.Region;
 import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -29,7 +28,6 @@ import org.chromium.chrome.browser.NativePageHost;
 import org.chromium.chrome.browser.TabLoadStatus;
 import org.chromium.chrome.browser.fullscreen.ChromeFullscreenManager;
 import org.chromium.chrome.browser.ntp.NativePageFactory;
-import org.chromium.chrome.browser.suggestions.SuggestionsBottomSheetContent;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModel;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
@@ -125,9 +123,6 @@ public class BottomSheet
     /** A handle to the content being shown by the sheet. */
     private BottomSheetContent mSheetContent;
 
-    /** This is the default {@link BottomSheetContent} to show when the bottom sheet is opened. */
-    private BottomSheetContent mSuggestionsContent;
-
     /** A handle to the toolbar control container. */
     private View mControlContainer;
 
@@ -149,11 +144,11 @@ public class BottomSheet
      */
     public interface BottomSheetContent {
         /**
-         * Gets the {@link RecyclerView} that holds the content to be displayed in the Chrome Home
-         * bottom sheet.
-         * @return The scrolling content view.
+         * Gets the {@link View} that holds the content to be displayed in the Chrome Home bottom
+         * sheet.
+         * @return The content view.
          */
-        RecyclerView getScrollingContentView();
+        View getContentView();
 
         /**
          * Get the {@link View} that contains the toolbar specific to the content being displayed.
@@ -164,6 +159,16 @@ public class BottomSheet
          */
         @Nullable
         View getToolbarView();
+
+        /**
+         * @return The vertical scroll offset of the content view.
+         */
+        int getVerticalScrollOffset();
+
+        /**
+         * Called to destroy the BottomSheetContent when it is no longer in use.
+         */
+        void destroy();
     }
 
     /**
@@ -198,12 +203,9 @@ public class BottomSheet
             boolean isSheetInMaxPosition =
                     MathUtils.areFloatsEqual(currentShownRatio, getFullRatio());
 
-            RecyclerView scrollingView = null;
-            if (mSheetContent != null) scrollingView = mSheetContent.getScrollingContentView();
-
             // Allow the bottom sheet's content to be scrolled up without dragging the sheet down.
-            if (!isTouchEventInToolbar(e2) && isSheetInMaxPosition && scrollingView != null
-                    && scrollingView.computeVerticalScrollOffset() > 0) {
+            if (!isTouchEventInToolbar(e2) && isSheetInMaxPosition && mSheetContent != null
+                    && mSheetContent.getVerticalScrollOffset() > 0) {
                 mIsScrolling = false;
                 return false;
             }
@@ -262,7 +264,7 @@ public class BottomSheet
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent e) {
-        if (isToolbarAndroidViewHidden()) return false;
+        if (!canMoveSheet()) return false;
 
         // The incoming motion event may have been adjusted by the view sending it down. Create a
         // motion event with the raw (x, y) coordinates of the original so the gesture detector
@@ -329,14 +331,14 @@ public class BottomSheet
      * @return Whether or not the toolbar Android View is hidden due to being scrolled off-screen.
      */
     private boolean isToolbarAndroidViewHidden() {
-        return mFullscreenManager == null || mFullscreenManager.getBottomControlOffset() > 0;
+        return mFullscreenManager == null || mFullscreenManager.getBottomControlOffset() > 0
+                || mControlContainer.getVisibility() != VISIBLE;
     }
 
     /**
      * Adds layout change listeners to the views that the bottom sheet depends on. Namely the
      * heights of the root view and control container are important as they are used in many of the
      * calculations in this class.
-     * @param activity An activity for loading native pages.
      * @param root The container of the bottom sheet.
      * @param controlContainer The container for the toolbar.
      */
@@ -392,9 +394,11 @@ public class BottomSheet
     }
 
     @Override
-    public int loadUrl(LoadUrlParams params) {
+    public int loadUrl(LoadUrlParams params, boolean incognito) {
+        for (BottomSheetObserver o : mObservers) o.onLoadUrl(params.getUrl());
+
         // Native page URLs in this context do not need to communicate with the tab.
-        if (NativePageFactory.isNativePageUrl(params.getUrl(), isIncognito())) {
+        if (NativePageFactory.isNativePageUrl(params.getUrl(), incognito)) {
             return TabLoadStatus.PAGE_LOAD_FAILED;
         }
 
@@ -404,13 +408,13 @@ public class BottomSheet
         assert mTabModelSelector != null;
 
         // First try to get the tab behind the sheet.
-        if (mTabModelSelector.getCurrentTab() != null) {
-            return mTabModelSelector.getCurrentTab().loadUrl(params);
+        if (getActiveTab() != null && getActiveTab().isIncognito() == incognito) {
+            return getActiveTab().loadUrl(params);
         }
 
-        // If no tab is active behind the sheet, open a new one.
+        // If no compatible tab is active behind the sheet, open a new one.
         mTabModelSelector.openNewTab(
-                params, TabModel.TabLaunchType.FROM_CHROME_UI, null, isIncognito());
+                params, TabModel.TabLaunchType.FROM_CHROME_UI, getActiveTab(), incognito);
         return TabLoadStatus.DEFAULT_PAGE_LOAD;
     }
 
@@ -430,6 +434,50 @@ public class BottomSheet
         return mTabModelSelector.getCurrentTab();
     }
 
+    @Override
+    public boolean isVisible() {
+        return mCurrentState != SHEET_STATE_PEEK;
+    }
+
+    /**
+     * Gets the minimum offset of the bottom sheet.
+     * @return The min offset.
+     */
+    public float getMinOffset() {
+        return getPeekRatio() * mContainerHeight;
+    }
+
+    /**
+     * Gets the sheet's offset from the bottom of the screen.
+     * @return The sheet's distance from the bottom of the screen.
+     */
+    public float getSheetOffsetFromBottom() {
+        return mContainerHeight - getTranslationY();
+    }
+
+    /**
+     * Show content in the bottom sheet's content area.
+     * @param content The {@link BottomSheetContent} to show.
+     */
+    public void showContent(BottomSheetContent content) {
+        // If the desired content is already showing, do nothing.
+        if (mSheetContent == content) return;
+
+        if (mSheetContent != null) {
+            mBottomSheetContentContainer.removeView(mSheetContent.getContentView());
+            mSheetContent = null;
+        }
+
+        if (content == null) {
+            mBottomSheetContentContainer.addView(mPlaceholder);
+            return;
+        }
+
+        mBottomSheetContentContainer.removeView(mPlaceholder);
+        mSheetContent = content;
+        mBottomSheetContentContainer.addView(mSheetContent.getContentView());
+    }
+
     /**
      * Determines if a touch event is inside the toolbar. This assumes the toolbar is the full
      * width of the screen and that the toolbar is at the top of the bottom sheet.
@@ -447,36 +495,15 @@ public class BottomSheet
     /**
      * A notification that the sheet is exiting the peek state into one that shows content.
      */
-    private void onExitPeekState() {
-        if (mSuggestionsContent == null) {
-            mSuggestionsContent = new SuggestionsBottomSheetContent(
-                    mTabModelSelector.getCurrentTab().getActivity(), this, mTabModelSelector);
-        }
-
-        showContent(mSuggestionsContent);
+    private void onSheetOpened() {
+        for (BottomSheetObserver o : mObservers) o.onSheetOpened();
     }
 
     /**
-     * Show content in the bottom sheet's content area.
-     * @param content The {@link BottomSheetContent} to show.
+     * A notification that the sheet has returned to the peeking state.
      */
-    private void showContent(BottomSheetContent content) {
-        // If the desired content is already showing, do nothing.
-        if (mSheetContent == content) return;
-
-        if (mSheetContent != null) {
-            mBottomSheetContentContainer.removeView(mSheetContent.getScrollingContentView());
-            mSheetContent = null;
-        }
-
-        if (content == null) {
-            mBottomSheetContentContainer.addView(mPlaceholder);
-            return;
-        }
-
-        mBottomSheetContentContainer.removeView(mPlaceholder);
-        mSheetContent = content;
-        mBottomSheetContentContainer.addView(mSheetContent.getScrollingContentView());
+    private void onSheetClosed() {
+        for (BottomSheetObserver o : mObservers) o.onSheetClosed();
     }
 
     /**
@@ -576,75 +603,90 @@ public class BottomSheet
     }
 
     /**
-     * Gets the minimum offset of the bottom sheet.
-     * @return The min offset.
-     */
-    private float getMinOffset() {
-        return getPeekRatio() * mContainerHeight;
-    }
-
-    /**
-     * Gets the sheet's offset from the bottom of the screen.
-     * @return The sheet's distance from the bottom of the screen.
-     */
-    private float getSheetOffsetFromBottom() {
-        return mContainerHeight - getTranslationY();
-    }
-
-    /**
      * Sets the sheet's offset relative to the bottom of the screen.
      * @param offset The offset that the sheet should be.
      */
     private void setSheetOffsetFromBottom(float offset) {
         if (MathUtils.areFloatsEqual(getSheetOffsetFromBottom(), getMinOffset())
                 && offset > getMinOffset()) {
-            onExitPeekState();
+            onSheetOpened();
+        } else if (MathUtils.areFloatsEqual(offset, getMinOffset())
+                && getSheetOffsetFromBottom() > getMinOffset()) {
+            onSheetClosed();
         }
 
         setTranslationY(mContainerHeight - offset);
-        sendUpdatePeekToHalfEvent();
+        sendOffsetChangeEvents();
+    }
+
+    /**
+     * This is the same as {@link #setSheetOffsetFromBottom(float)} but exclusively for testing.
+     * @param offset The offset to set the sheet to.
+     */
+    @VisibleForTesting
+    public void setSheetOffsetFromBottomForTesting(float offset) {
+        setSheetOffsetFromBottom(offset);
     }
 
     /**
      * @return The ratio of the height of the screen that the peeking state is.
      */
-    private float getPeekRatio() {
+    @VisibleForTesting
+    public float getPeekRatio() {
         return mStateRatios[0];
     }
 
     /**
      * @return The ratio of the height of the screen that the half expanded state is.
      */
-    private float getHalfRatio() {
+    @VisibleForTesting
+    public float getHalfRatio() {
         return mStateRatios[1];
     }
 
     /**
      * @return The ratio of the height of the screen that the fully expanded state is.
      */
-    private float getFullRatio() {
+    @VisibleForTesting
+    public float getFullRatio() {
         return mStateRatios[2];
     }
 
     /**
-     * Sends a notification if the sheet is transitioning from the peeking to half expanded state.
-     * This method only sends events when the sheet is between the peeking and half states.
+     * @return The height of the container that the bottom sheet exists in.
      */
-    private void sendUpdatePeekToHalfEvent() {
+    @VisibleForTesting
+    public float getSheetContainerHeight() {
+        return mContainerHeight;
+    }
+
+    /**
+     * Sends notifications if the sheet is transitioning from the peeking to half expanded state and
+     * from the peeking to fully expanded state. The peek to half events are only sent when the
+     * sheet is between the peeking and half states.
+     */
+    private void sendOffsetChangeEvents() {
         float screenRatio =
                 mContainerHeight > 0 ? getSheetOffsetFromBottom() / mContainerHeight : 0;
 
-        // This ratio is relative to the peek and half positions of the sheet rather than the height
-        // of the screen.
+        // This ratio is relative to the peek and full positions of the sheet.
+        float peekFullRatio = MathUtils.clamp(
+                (screenRatio - getPeekRatio()) / (getFullRatio() - getPeekRatio()), 0, 1);
+
+        for (BottomSheetObserver o : mObservers) {
+            o.onSheetOffsetChanged(MathUtils.areFloatsEqual(peekFullRatio, 0) ? 0 : peekFullRatio);
+        }
+
+        // This ratio is relative to the peek and half positions of the sheet.
         float peekHalfRatio = MathUtils.clamp(
                 (screenRatio - getPeekRatio()) / (getHalfRatio() - getPeekRatio()), 0, 1);
 
         // If the ratio is close enough to zero, just set it to zero.
         if (MathUtils.areFloatsEqual(peekHalfRatio, 0f)) peekHalfRatio = 0f;
 
-        for (BottomSheetObserver o : mObservers) {
-            if (mLastPeekToHalfRatioSent < 1f || peekHalfRatio < 1f) {
-                mLastPeekToHalfRatioSent = peekHalfRatio;
+        if (mLastPeekToHalfRatioSent < 1f || peekHalfRatio < 1f) {
+            mLastPeekToHalfRatioSent = peekHalfRatio;
+            for (BottomSheetObserver o : mObservers) {
                 o.onTransitionPeekToHalf(peekHalfRatio);
             }
         }
@@ -753,5 +795,12 @@ public class BottomSheet
     }
 
     @Override
-    public void onFadingViewHidden() {}
+    public void onFadingViewVisibilityChanged(boolean visible) {}
+
+    private boolean canMoveSheet() {
+        boolean isInOverviewMode = mTabModelSelector != null
+                && (mTabModelSelector.getCurrentTab() == null
+                           || mTabModelSelector.getCurrentTab().getActivity().isInOverviewMode());
+        return !isToolbarAndroidViewHidden() && !isInOverviewMode;
+    }
 }

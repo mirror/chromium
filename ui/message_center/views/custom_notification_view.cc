@@ -19,6 +19,9 @@
 
 namespace message_center {
 
+// static
+const char CustomNotificationView::kViewClassName[] = "CustomNotificationView";
+
 CustomNotificationView::CustomNotificationView(
     MessageCenterController* controller,
     const Notification& notification)
@@ -38,8 +41,6 @@ CustomNotificationView::CustomNotificationView(
     background_view()->background()->SetNativeControlColor(
         contents_view_->background()->get_color());
   }
-
-  AddChildView(small_image());
 
   focus_painter_ = views::Painter::CreateSolidFocusPainter(
       kFocusBorderColor, gfx::Insets(0, 1, 3, 2));
@@ -80,18 +81,20 @@ bool CustomNotificationView::IsPinned() const {
   return contents_view_delegate_->IsPinned();
 }
 
+const char* CustomNotificationView::GetClassName() const {
+  return kViewClassName;
+}
+
+void CustomNotificationView::UpdateControlButtonsVisibility() {
+  if (contents_view_delegate_)
+    contents_view_delegate_->UpdateControlButtonsVisibility();
+}
+
 gfx::Size CustomNotificationView::GetPreferredSize() const {
   const gfx::Insets insets = GetInsets();
   const int contents_width = kNotificationWidth - insets.width();
   const int contents_height = contents_view_->GetHeightForWidth(contents_width);
-
-  // This is union of max/min height for M (256-64) and N (284-92).
-  constexpr int kMaxContentHeight = 284;
-  constexpr int kMinContentHeight = 64;
-  return gfx::Size(kNotificationWidth,
-                   std::max(kMinContentHeight + insets.height(),
-                            std::min(kMaxContentHeight + insets.height(),
-                                     contents_height + insets.height())));
+  return gfx::Size(kNotificationWidth, contents_height + insets.height());
 }
 
 void CustomNotificationView::Layout() {
@@ -149,7 +152,8 @@ bool CustomNotificationView::OnKeyPressed(const ui::KeyEvent& event) {
 void CustomNotificationView::ChildPreferredSizeChanged(View* child) {
   // Notify MessageCenterController when the custom content changes size,
   // as it may need to relayout.
-  controller()->UpdateNotificationSize(notification_id());
+  if (controller())
+    controller()->UpdateNotificationSize(notification_id());
 }
 
 }  // namespace message_center

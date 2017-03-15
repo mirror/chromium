@@ -7,9 +7,9 @@
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/FrameConsole.h"
-#include "core/frame/FrameHost.h"
 #include "core/frame/LocalFrame.h"
 #include "core/inspector/ConsoleMessage.h"
+#include "core/page/Page.h"
 #include "core/workers/WorkerOrWorkletGlobalScope.h"
 
 namespace {
@@ -72,7 +72,7 @@ String replacedWillBeRemoved(const char* feature,
 namespace blink {
 
 Deprecation::Deprecation() : m_muteCount(0) {
-  m_cssPropertyDeprecationBits.ensureSize(lastUnresolvedCSSProperty + 1);
+  m_cssPropertyDeprecationBits.ensureSize(numCSSPropertyIDs);
 }
 
 Deprecation::~Deprecation() {}
@@ -101,14 +101,14 @@ bool Deprecation::isSuppressed(CSSPropertyID unresolvedProperty) {
 
 void Deprecation::warnOnDeprecatedProperties(const LocalFrame* frame,
                                              CSSPropertyID unresolvedProperty) {
-  FrameHost* host = frame ? frame->host() : nullptr;
-  if (!host || host->deprecation().m_muteCount ||
-      host->deprecation().isSuppressed(unresolvedProperty))
+  Page* page = frame ? frame->page() : nullptr;
+  if (!page || page->deprecation().m_muteCount ||
+      page->deprecation().isSuppressed(unresolvedProperty))
     return;
 
   String message = deprecationMessage(unresolvedProperty);
   if (!message.isEmpty()) {
-    host->deprecation().suppress(unresolvedProperty);
+    page->deprecation().suppress(unresolvedProperty);
     ConsoleMessage* consoleMessage = ConsoleMessage::create(
         DeprecationMessageSource, WarningMessageLevel, message);
     frame->console().addMessage(consoleMessage);
@@ -141,12 +141,12 @@ void Deprecation::countDeprecation(const LocalFrame* frame,
                                    UseCounter::Feature feature) {
   if (!frame)
     return;
-  FrameHost* host = frame->host();
-  if (!host || host->deprecation().m_muteCount)
+  Page* page = frame->page();
+  if (!page || page->deprecation().m_muteCount)
     return;
 
-  if (!host->useCounter().hasRecordedMeasurement(feature)) {
-    host->useCounter().recordMeasurement(feature);
+  if (!page->useCounter().hasRecordedMeasurement(feature)) {
+    page->useCounter().recordMeasurement(feature);
     ASSERT(!deprecationMessage(feature).isEmpty());
     ConsoleMessage* consoleMessage =
         ConsoleMessage::create(DeprecationMessageSource, WarningMessageLevel,
@@ -389,27 +389,45 @@ String Deprecation::deprecationMessage(UseCounter::Feature feature) {
           "redirected response. This will result in an error in %s.",
           milestoneString(M59));
 
-    case UseCounter::CSSSelectorInternalMediaControlsCastButton:
-      return willBeRemoved("-internal-media-controls-cast-button selector", M59,
-                           "5734009183141888");
-
     case UseCounter::CSSSelectorInternalMediaControlsOverlayCastButton:
       return willBeRemoved(
           "-internal-media-controls-overlay-cast-button selector", M59,
           "5714245488476160");
 
-    case UseCounter::CSSSelectorInternalMediaControlsTextTrackList:
-    case UseCounter::CSSSelectorInternalMediaControlsTextTrackListItem:
-    case UseCounter::CSSSelectorInternalMediaControlsTextTrackListItemInput:
-    case UseCounter::CSSSelectorInternalMediaControlsTextTrackListKindCaptions:
-    case UseCounter::CSSSelectorInternalMediaControlsTextTrackListKindSubtitles:
-      return willBeRemoved(
-          "-internal-media-controls-text-track-list* selectors", M59,
-          "5661431349379072");
-
     case UseCounter::FileReaderSyncInServiceWorker:
       return willBeRemoved("FileReaderSync in service workers", M59,
                            "5739144722513920");
+
+    case UseCounter::CSSZoomReset:
+      return willBeRemoved("\"zoom: reset\"", M59, "4997605029314560");
+
+    case UseCounter::CSSZoomDocument:
+      return willBeRemoved("\"zoom: document\"", M59, "4997605029314560");
+
+    case UseCounter::SelectionAddRangeIntersect:
+      return "The behavior that Selection.addRange() merges existing Range and "
+             "the specified Range was removed. See "
+             "https://www.chromestatus.com/features/6680566019653632 for more "
+             "details.";
+
+    case UseCounter::SubtleCryptoOnlyStrictSecureContextCheckFailed:
+      return String::format(
+          "Web Crypto API usage inside secure frames with non-secure ancestors "
+          "is deprecated. The API will no longer be exposed in these contexts "
+          "as of %s. See https://www.chromestatus.com/features/5030265697075200"
+          " for more details.", milestoneString(M59));
+
+    case UseCounter::RtcpMuxPolicyNegotiate:
+      return String::format(
+          "The rtcpMuxPolicy option is being considered for "
+          "removal and may be removed no earlier than %s. If you depend on it, "
+          "please see https://www.chromestatus.com/features/5654810086866944 "
+          "for more details.",
+          milestoneString(M60));
+
+    case UseCounter::V8IDBFactory_WebkitGetDatabaseNames_Method:
+      return willBeRemoved("indexedDB.webkitGetDatabaseNames()", M60,
+                           "5725741740195840");
 
     // Features that aren't deprecated don't have a deprecation message.
     default:

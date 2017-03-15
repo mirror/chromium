@@ -28,6 +28,7 @@
 #include "content/public/renderer/render_view.h"
 #include "extensions/common/constants.h"
 #include "printing/features/features.h"
+#include "services/service_manager/public/cpp/interface_registry.h"
 #include "skia/ext/image_operations.h"
 #include "third_party/WebKit/public/platform/WebImage.h"
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
@@ -112,7 +113,14 @@ ChromeRenderFrameObserver::ChromeRenderFrameObserver(
     : content::RenderFrameObserver(render_frame),
       translate_helper_(nullptr),
       phishing_classifier_(nullptr) {
-  // Don't do anything for subframes.
+  render_frame->GetInterfaceRegistry()->AddInterface(
+      base::Bind(&ChromeRenderFrameObserver::OnImageContextMenuRendererRequest,
+                 base::Unretained(this)));
+  render_frame->GetInterfaceRegistry()->AddInterface(
+      base::Bind(&ChromeRenderFrameObserver::OnThumbnailCapturerRequest,
+                 base::Unretained(this)));
+
+  // Don't do anything else for subframes.
   if (!render_frame->IsMainFrame())
     return;
 
@@ -139,10 +147,11 @@ bool ChromeRenderFrameObserver::OnMessageReceived(const IPC::Message& message) {
     return false;
 
   IPC_BEGIN_MESSAGE_MAP(ChromeRenderFrameObserver, message)
+    // TODO(nigeltao): delete the
+    // ChromeViewMsg_RequestReloadImageForContextNode handler when
+    // tab_android.cc's use is converted to Mojo.
     IPC_MESSAGE_HANDLER(ChromeViewMsg_RequestReloadImageForContextNode,
-                        OnRequestReloadImageForContextNode)
-    IPC_MESSAGE_HANDLER(ChromeViewMsg_RequestThumbnailForContextNode,
-                        OnRequestThumbnailForContextNode)
+                        RequestReloadImageForContextNode)
     IPC_MESSAGE_HANDLER(ChromeViewMsg_SetClientSidePhishingDetection,
                         OnSetClientSidePhishingDetection)
 #if BUILDFLAG(ENABLE_PRINTING)
@@ -171,7 +180,7 @@ void ChromeRenderFrameObserver::OnSetIsPrerendering(
   }
 }
 
-void ChromeRenderFrameObserver::OnRequestReloadImageForContextNode() {
+void ChromeRenderFrameObserver::RequestReloadImageForContextNode() {
   WebLocalFrame* frame = render_frame()->GetWebFrame();
   // TODO(dglazkov): This code is clearly in the wrong place. Need
   // to investigate what it is doing and fix (http://crbug.com/606164).
@@ -181,19 +190,18 @@ void ChromeRenderFrameObserver::OnRequestReloadImageForContextNode() {
   }
 }
 
-void ChromeRenderFrameObserver::OnRequestThumbnailForContextNode(
-    int thumbnail_min_area_pixels,
+void ChromeRenderFrameObserver::RequestThumbnailForContextNode(
+    int32_t thumbnail_min_area_pixels,
     const gfx::Size& thumbnail_max_size_pixels,
-    int callback_id) {
+    const RequestThumbnailForContextNodeCallback& callback) {
   WebNode context_node = render_frame()->GetWebFrame()->contextMenuNode();
   SkBitmap thumbnail;
   gfx::Size original_size;
   if (!context_node.isNull() && context_node.isElementNode()) {
     blink::WebImage image = context_node.to<WebElement>().imageContents();
     original_size = image.size();
-    thumbnail = Downscale(image,
-                          thumbnail_min_area_pixels,
-                          thumbnail_max_size_pixels);
+    thumbnail =
+        Downscale(image, thumbnail_min_area_pixels, thumbnail_max_size_pixels);
   }
 
   SkBitmap bitmap;
@@ -202,7 +210,7 @@ void ChromeRenderFrameObserver::OnRequestThumbnailForContextNode(
   else
     thumbnail.copyTo(&bitmap, kN32_SkColorType);
 
-  std::string thumbnail_data;
+  std::vector<uint8_t> thumbnail_data;
   SkAutoLockPixels lock(bitmap);
   if (bitmap.getPixels()) {
     const int kDefaultQuality = 90;
@@ -210,12 +218,12 @@ void ChromeRenderFrameObserver::OnRequestThumbnailForContextNode(
     if (gfx::JPEGCodec::Encode(
             reinterpret_cast<unsigned char*>(bitmap.getAddr32(0, 0)),
             gfx::JPEGCodec::FORMAT_SkBitmap, bitmap.width(), bitmap.height(),
-            static_cast<int>(bitmap.rowBytes()), kDefaultQuality, &data))
-      thumbnail_data = std::string(data.begin(), data.end());
+            static_cast<int>(bitmap.rowBytes()), kDefaultQuality, &data)) {
+      thumbnail_data.swap(data);
+    }
   }
 
-  Send(new ChromeViewHostMsg_RequestThumbnailForContextNode_ACK(
-      routing_id(), thumbnail_data, original_size, callback_id));
+  callback.Run(thumbnail_data, original_size);
 }
 
 void ChromeRenderFrameObserver::OnPrintNodeUnderContextMenu() {
@@ -346,4 +354,14 @@ void ChromeRenderFrameObserver::DidMeaningfulLayout(
 
 void ChromeRenderFrameObserver::OnDestruct() {
   delete this;
+}
+
+void ChromeRenderFrameObserver::OnImageContextMenuRendererRequest(
+    chrome::mojom::ImageContextMenuRendererRequest request) {
+  image_context_menu_renderer_bindings_.AddBinding(this, std::move(request));
+}
+
+void ChromeRenderFrameObserver::OnThumbnailCapturerRequest(
+    chrome::mojom::ThumbnailCapturerRequest request) {
+  thumbnail_capturer_bindings_.AddBinding(this, std::move(request));
 }

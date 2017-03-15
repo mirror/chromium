@@ -266,14 +266,15 @@ class InlineFlowBox : public InlineBox {
   SelectionState getSelectionState() const override;
 
   bool canAccommodateEllipsis(bool ltr,
-                              int blockEdge,
-                              int ellipsisWidth) const final;
+                              LayoutUnit blockEdge,
+                              LayoutUnit ellipsisWidth) const final;
   LayoutUnit placeEllipsisBox(bool ltr,
                               LayoutUnit blockLeftEdge,
                               LayoutUnit blockRightEdge,
                               LayoutUnit ellipsisWidth,
                               LayoutUnit& truncatedWidth,
-                              bool&) override;
+                              bool&,
+                              LayoutUnit logicalLeftOffset) override;
 
   bool hasTextChildren() const { return m_hasTextChildren; }
   bool hasTextDescendants() const { return m_hasTextDescendants; }

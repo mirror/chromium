@@ -20,6 +20,7 @@ class AccountId;
 
 namespace ash {
 
+enum class LoginStatus;
 class SessionStateObserver;
 
 // Implements mojom::SessionController to cache session related info such as
@@ -80,10 +81,15 @@ class ASH_EXPORT SessionController
 
   // Switches the active user to the next or previous user, with the same
   // ordering as user sessions are created.
-  void CycleActiveUser(bool next_user);
+  void CycleActiveUser(CycleUserDirection direction);
 
   void AddSessionStateObserver(SessionStateObserver* observer);
   void RemoveSessionStateObserver(SessionStateObserver* observer);
+
+  // Returns the ash notion of login status.
+  // NOTE: Prefer GetSessionState() in new code because the concept of
+  // SessionState more closes matches the state in chrome.
+  LoginStatus GetLoginStatus() const;
 
   // mojom::SessionController
   void SetClient(mojom::SessionControllerClientPtr client) override;
@@ -95,6 +101,9 @@ class ASH_EXPORT SessionController
  private:
   void SetSessionState(session_manager::SessionState state);
   void AddUserSession(mojom::UserSessionPtr user_session);
+
+  // Helper that returns login status when the session state is ACTIVE.
+  LoginStatus GetLoginStatusForActiveSession() const;
 
   // Bindings for mojom::SessionController interface.
   mojo::BindingSet<mojom::SessionController> bindings_;

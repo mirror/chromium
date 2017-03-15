@@ -37,6 +37,7 @@
 #include "net/http/http_byte_range.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_util.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_request_status.h"
 
@@ -95,18 +96,14 @@ void ParseJsonOnBlockingPool(
 // Returns response headers as a string. Returns a warning message if
 // |url_fetcher| does not contain a valid response. Used only for debugging.
 std::string GetResponseHeadersAsString(const URLFetcher* url_fetcher) {
-  // net::HttpResponseHeaders::raw_headers(), as the name implies, stores
-  // all headers in their raw format, i.e each header is null-terminated.
-  // So logging raw_headers() only shows the first header, which is probably
-  // the status line.  GetNormalizedHeaders, on the other hand, will show all
-  // the headers, one per line, which is probably what we want.
   std::string headers;
   // Check that response code indicates response headers are valid (i.e. not
   // malformed) before we retrieve the headers.
   if (url_fetcher->GetResponseCode() == URLFetcher::RESPONSE_CODE_INVALID) {
     headers.assign("Response headers are malformed!!");
   } else {
-    url_fetcher->GetResponseHeaders()->GetNormalizedHeaders(&headers);
+    headers = net::HttpUtil::ConvertHeadersBackToHTTPResponse(
+        url_fetcher->GetResponseHeaders()->raw_headers());
   }
   return headers;
 }
@@ -403,7 +400,8 @@ void UrlFetchRequestBase::StartAfterPrepare(
   DVLOG(1) << "URL: " << url.spec();
 
   URLFetcher::RequestType request_type = GetRequestType();
-  url_fetcher_ = URLFetcher::Create(url, request_type, this);
+  url_fetcher_ = URLFetcher::Create(url, request_type, this,
+                                    sender_->get_traffic_annotation_tag());
   url_fetcher_->SetRequestContext(sender_->url_request_context_getter());
   // Always set flags to neither send nor save cookies.
   url_fetcher_->SetLoadFlags(

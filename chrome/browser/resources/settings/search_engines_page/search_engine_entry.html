@@ -4,6 +4,7 @@
 <link rel="import" href="chrome://resources/html/icon.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../controls/extension_controlled_indicator.html">
+<link rel="import" href="../focusable_iron_list_item_behavior.html">
 <link rel="import" href="search_engine_dialog.html">
 <link rel="import" href="search_engine_entry_css.html">
 <link rel="import" href="search_engines_browser_proxy.html">
@@ -24,6 +25,7 @@
       #name-column,
       #keyword-column {
         flex: 3;
+        word-break: break-word;
       }
 
       .favicon-image + div {
@@ -37,6 +39,10 @@
       :host(:not([show-dots_])) paper-icon-button {
         pointer-events: none;
         visibility: hidden;
+      }
+
+      :host(.no-outline) {
+        outline: none;
       }
     </style>
 
@@ -53,7 +59,7 @@
       <div id="keyword-column">[[engine.keyword]]</div>
       <div id="url-column" class="text-elide">[[engine.url]]</div>
       <paper-icon-button icon="cr:more-vert" tabindex$="[[tabindex]]"
-          on-tap="onDotsTap_">
+          on-tap="onDotsTap_" title="$i18n{moreActions}">
       </paper-icon-button>
       <dialog is="cr-action-menu">
         <button class="dropdown-item" role="option" on-tap="onMakeDefaultTap_"
@@ -62,7 +68,7 @@
         </button>
         <button class="dropdown-item" role="option" on-tap="onEditTap_"
             hidden$="[[!engine.canBeEdited]]"
-            id="edit">$i18n{searchEnginesEdit}</button>
+            id="edit">$i18n{edit}</button>
         <button class="dropdown-item" role="option" on-tap="onDeleteTap_"
             hidden$="[[!engine.canBeRemoved]]"
             id="delete">$i18n{searchEnginesRemoveFromList}</button>

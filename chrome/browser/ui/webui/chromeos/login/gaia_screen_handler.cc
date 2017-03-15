@@ -226,18 +226,46 @@ struct GaiaScreenHandler::GaiaContext {
 GaiaScreenHandler::GaiaContext::GaiaContext() {}
 
 GaiaScreenHandler::GaiaScreenHandler(
-    CoreOobeActor* core_oobe_actor,
+    CoreOobeView* core_oobe_view,
     const scoped_refptr<NetworkStateInformer>& network_state_informer)
-    : BaseScreenHandler(kJsScreenPath),
+    : BaseScreenHandler(kScreenId),
       network_state_informer_(network_state_informer),
-      core_oobe_actor_(core_oobe_actor),
+      core_oobe_view_(core_oobe_view),
       weak_factory_(this) {
   DCHECK(network_state_informer_.get());
+  set_call_js_prefix(kJsScreenPath);
 }
 
 GaiaScreenHandler::~GaiaScreenHandler() {
   if (network_portal_detector_)
     network_portal_detector_->RemoveObserver(this);
+}
+
+void GaiaScreenHandler::MaybePreloadAuthExtension() {
+  VLOG(1) << "MaybePreloadAuthExtension";
+
+  if (!network_portal_detector_) {
+    NetworkPortalDetectorImpl* detector = new NetworkPortalDetectorImpl(
+        g_browser_process->system_request_context(), false);
+    detector->set_portal_test_url(GURL(kRestrictiveProxyURL));
+    network_portal_detector_.reset(detector);
+    network_portal_detector_->AddObserver(this);
+    network_portal_detector_->Enable(true);
+  }
+
+  // If cookies clearing was initiated or |dns_clear_task_running_| then auth
+  // extension showing has already been initiated and preloading is pointless.
+  if (signin_screen_handler_->ShouldLoadGaia() && !gaia_silent_load_ &&
+      !cookies_cleared_ && !dns_clear_task_running_ &&
+      network_state_informer_->state() == NetworkStateInformer::ONLINE) {
+    gaia_silent_load_ = true;
+    gaia_silent_load_network_ = network_state_informer_->network_path();
+    LoadAuthExtension(true /* force */, false /* offline */);
+  }
+}
+
+void GaiaScreenHandler::DisableRestrictiveProxyCheckForTest() {
+  disable_restrictive_proxy_check_for_test_ = true;
 }
 
 void GaiaScreenHandler::LoadGaia(const GaiaContext& context) {
@@ -434,7 +462,7 @@ void GaiaScreenHandler::OnPortalDetectionCompleted(
   if (offline_login_is_active() ||
       IsOnline(captive_portal_status_) == IsOnline(previous_status) ||
       disable_restrictive_proxy_check_for_test_ ||
-      GetCurrentScreen() != OobeScreen::SCREEN_GAIA_SIGNIN)
+      GetCurrentScreen() != kScreenId)
     return;
 
   LoadAuthExtension(true /* force */, false /* offline */);
@@ -526,7 +554,7 @@ void GaiaScreenHandler::DoAdAuth(
       break;
     }
     case authpolicy::ERROR_PASSWORD_EXPIRED:
-      core_oobe_actor_->ShowActiveDirectoryPasswordChangeScreen(username);
+      core_oobe_view_->ShowActiveDirectoryPasswordChangeScreen(username);
       break;
     case authpolicy::ERROR_PARSE_UPN_FAILED:
     case authpolicy::ERROR_BAD_USER_NAME:
@@ -853,7 +881,7 @@ void GaiaScreenHandler::ShowGaiaScreenIfReady() {
   } else {
     std::vector<std::string> input_methods =
         imm->GetInputMethodUtil()->GetHardwareLoginInputMethodIds();
-    const std::string owner_im = SigninScreenHandler::GetUserLRUInputMethod(
+    const std::string owner_im = SigninScreenHandler::GetUserLastInputMethod(
         user_manager::UserManager::Get()->GetOwnerAccountId().GetUserEmail());
     const std::string system_im = g_browser_process->local_state()->GetString(
         language_prefs::kPreferredKeyboardLayout);
@@ -874,7 +902,7 @@ void GaiaScreenHandler::ShowGaiaScreenIfReady() {
   LoadAuthExtension(!gaia_silent_load_ /* force */, false /* offline */);
   signin_screen_handler_->UpdateUIState(
       SigninScreenHandler::UI_STATE_GAIA_SIGNIN, nullptr);
-  core_oobe_actor_->UpdateKeyboardState();
+  core_oobe_view_->UpdateKeyboardState();
 
   if (gaia_silent_load_) {
     // The variable is assigned to false because silently loaded Gaia page was
@@ -883,38 +911,13 @@ void GaiaScreenHandler::ShowGaiaScreenIfReady() {
   }
   UpdateState(NetworkError::ERROR_REASON_UPDATE);
 
-  if (core_oobe_actor_) {
+  if (core_oobe_view_) {
     PrefService* prefs = g_browser_process->local_state();
     if (prefs->GetBoolean(prefs::kFactoryResetRequested)) {
-      core_oobe_actor_->ShowDeviceResetScreen();
+      core_oobe_view_->ShowDeviceResetScreen();
     } else if (prefs->GetBoolean(prefs::kDebuggingFeaturesRequested)) {
-      core_oobe_actor_->ShowEnableDebuggingScreen();
+      core_oobe_view_->ShowEnableDebuggingScreen();
     }
-  }
-}
-
-void GaiaScreenHandler::MaybePreloadAuthExtension() {
-  VLOG(1) << "MaybePreloadAuthExtension";
-
-  if (!network_portal_detector_) {
-    NetworkPortalDetectorImpl* detector = new NetworkPortalDetectorImpl(
-        g_browser_process->system_request_context(), false);
-    detector->set_portal_test_url(GURL(kRestrictiveProxyURL));
-    network_portal_detector_.reset(detector);
-    network_portal_detector_->AddObserver(this);
-    network_portal_detector_->Enable(true);
-  }
-
-  // If cookies clearing was initiated or |dns_clear_task_running_| then auth
-  // extension showing has already been initiated and preloading is pointless.
-  if (signin_screen_handler_->ShouldLoadGaia() &&
-      !gaia_silent_load_ &&
-      !cookies_cleared_ &&
-      !dns_clear_task_running_ &&
-      network_state_informer_->state() == NetworkStateInformer::ONLINE) {
-    gaia_silent_load_ = true;
-    gaia_silent_load_network_ = network_state_informer_->network_path();
-    LoadAuthExtension(true /* force */, false /* offline */);
   }
 }
 
@@ -972,10 +975,6 @@ SigninScreenHandlerDelegate* GaiaScreenHandler::Delegate() {
 bool GaiaScreenHandler::IsRestrictiveProxy() const {
   return !disable_restrictive_proxy_check_for_test_ &&
          !IsOnline(captive_portal_status_);
-}
-
-void GaiaScreenHandler::DisableRestrictiveProxyCheckForTest() {
-  disable_restrictive_proxy_check_for_test_ = true;
 }
 
 }  // namespace chromeos

@@ -15,10 +15,6 @@
 // Values below IDC_MinimumLabelValue are reserved for dynamic menu items.
 #define IDC_MinimumLabelValue           4000
 
-#define IDC_Messages                    4000
-#define IDC_MessagesAll                 4007
-#define IDC_MessagesNone                4008
-
 // NOTE: Within each of the following sections, the IDs are ordered roughly by
 // how they appear in the GUI/menus (left to right, top to bottom, etc.).
 
@@ -33,10 +29,6 @@
 #define IDC_RELOAD_BYPASSING_CACHE      33007
 #define IDC_LOAD_NEW_TAB_PAGE           33008
 #define IDC_RELOAD_CLEARING_CACHE       33009
-// Temporary commands to capture the old Back/Forward shortcuts and tell users
-// the new shortcut. May also trigger Back/Forward action if the
-// BackspaceGoesBack field trial is enabled.
-// TODO(mgiuca): Remove these in M54 (https://crbug.com/610039).
 #define IDC_BACKSPACE_BACK              33010
 #define IDC_BACKSPACE_FORWARD           33011
 
@@ -336,6 +328,7 @@
 #define IDC_MEDIA_ROUTER_CLOUD_SERVICES_TOGGLE 51205
 #define IDC_MEDIA_ROUTER_MANAGE_DEVICES 51206
 #define IDC_MEDIA_ROUTER_SHOWN_BY_POLICY 51207
+#define IDC_MEDIA_ROUTER_SHOW_IN_TOOLBAR 51208
 
 // Context menu items for media stream status tray
 #define IDC_MEDIA_STREAM_DEVICE_STATUS_TRAY 51300

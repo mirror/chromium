@@ -45,6 +45,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kAndroidPayIntegrationV1,
     &kAndroidPayIntegrationV2,
     &kAndroidPaymentApps,
+    &kAndroidPaymentAppsFilter,
     &kCCTExternalLinkHandling,
     &kCCTPostMessageAPI,
     &kChromeHomeFeature,
@@ -55,11 +56,13 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kImprovedA2HS,
     &kNoCreditCardAbort,
     &kNTPCondensedLayoutFeature,
+    &kNTPCondensedTileLayoutFeature,
     &kNTPFakeOmniboxTextFeature,
+    &kNTPLaunchAfterInactivity,
     &kNTPOfflinePagesFeature,
     &NTPShowGoogleGInOmniboxFeature,
-    &kNTPSuggestionsStandaloneUIFeature,
     &kPhysicalWebFeature,
+    &kPhysicalWebSharing,
     &kSpecialLocaleFeature,
     &kSpecialLocaleWrapper,
     &kTabsInCBD,
@@ -94,10 +97,13 @@ const base::Feature kAndroidPayIntegrationV1{"AndroidPayIntegrationV1",
                                              base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kAndroidPayIntegrationV2{"AndroidPayIntegrationV2",
-                                             base::FEATURE_DISABLED_BY_DEFAULT};
+                                             base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kAndroidPaymentApps{"AndroidPaymentApps",
                                         base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kAndroidPaymentAppsFilter{
+    "AndroidPaymentAppsFilter", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kCCTExternalLinkHandling{"CCTExternalLinkHandling",
                                              base::FEATURE_ENABLED_BY_DEFAULT};
@@ -109,7 +115,7 @@ const base::Feature kChromeHomeFeature{"ChromeHome",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kContextualSearchSingleActions{
-    "ContextualSearchSingleActions", base::FEATURE_DISABLED_BY_DEFAULT};
+    "ContextualSearchSingleActions", base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kCustomFeedbackUi{"CustomFeedbackUi",
                                       base::FEATURE_DISABLED_BY_DEFAULT};
@@ -131,11 +137,17 @@ const base::Feature kImprovedA2HS{"ImprovedA2HS",
 const base::Feature kNoCreditCardAbort{"NoCreditCardAbort",
                                        base::FEATURE_DISABLED_BY_DEFAULT};
 
+const base::Feature kNTPCondensedLayoutFeature{
+    "NTPCondensedLayout", base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kNTPCondensedTileLayoutFeature{
+    "NTPCondensedTileLayout", base::FEATURE_DISABLED_BY_DEFAULT};
+
 const base::Feature kNTPFakeOmniboxTextFeature{
     "NTPFakeOmniboxText", base::FEATURE_DISABLED_BY_DEFAULT};
 
-const base::Feature kNTPCondensedLayoutFeature{
-    "NTPCondensedLayout", base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kNTPLaunchAfterInactivity{
+    "NTPLaunchAfterInactivity", base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kNTPOfflinePagesFeature{"NTPOfflinePages",
                                             base::FEATURE_ENABLED_BY_DEFAULT};
@@ -143,11 +155,11 @@ const base::Feature kNTPOfflinePagesFeature{"NTPOfflinePages",
 const base::Feature NTPShowGoogleGInOmniboxFeature{
     "NTPShowGoogleGInOmnibox", base::FEATURE_DISABLED_BY_DEFAULT};
 
-const base::Feature kNTPSuggestionsStandaloneUIFeature{
-    "NTPSuggestionsStandaloneUI", base::FEATURE_DISABLED_BY_DEFAULT};
-
 const base::Feature kPhysicalWebFeature{"PhysicalWeb",
                                         base::FEATURE_ENABLED_BY_DEFAULT};
+
+const base::Feature kPhysicalWebSharing{"PhysicalWebSharing",
+                                        base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kSpecialLocaleFeature{"SpecialLocale",
                                           base::FEATURE_DISABLED_BY_DEFAULT};

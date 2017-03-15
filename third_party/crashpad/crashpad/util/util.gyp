@@ -23,6 +23,7 @@
       'dependencies': [
         '../compat/compat.gyp:crashpad_compat',
         '../third_party/mini_chromium/mini_chromium.gyp:base',
+        '../third_party/zlib/zlib.gyp:zlib',
       ],
       'include_dirs': [
         '..',
@@ -106,14 +107,19 @@
         'misc/tri_state.h',
         'misc/uuid.cc',
         'misc/uuid.h',
+        'misc/zlib.cc',
+        'misc/zlib.h',
         'net/http_body.cc',
         'net/http_body.h',
+        'net/http_body_gzip.cc',
+        'net/http_body_gzip.h',
         'net/http_headers.cc',
         'net/http_headers.h',
         'net/http_multipart_builder.cc',
         'net/http_multipart_builder.h',
         'net/http_transport.cc',
         'net/http_transport.h',
+        'net/http_transport_libcurl.cc',
         'net/http_transport_mac.mm',
         'net/http_transport_win.cc',
         'numeric/checked_address_range.cc',
@@ -130,6 +136,8 @@
         'posix/drop_privileges.h',
         'posix/process_info.h',
         'posix/process_info_mac.cc',
+        'posix/signals.cc',
+        'posix/signals.h',
         'posix/symbolic_constants_posix.cc',
         'posix/symbolic_constants_posix.h',
         'stdlib/aligned_allocator.cc',
@@ -193,6 +201,8 @@
         'win/scoped_local_alloc.h',
         'win/scoped_process_suspend.cc',
         'win/scoped_process_suspend.h',
+        'win/session_end_watcher.cc',
+        'win/session_end_watcher.h',
         'win/termination_codes.h',
         'win/time.cc',
         'win/time.h',
@@ -263,6 +273,8 @@
         ['OS=="win"', {
           'link_settings': {
             'libraries': [
+              '-luser32.lib',
+              '-lversion.lib',
               '-lwinhttp.lib',
             ],
           },
@@ -287,6 +299,17 @@
         }, {  # else: OS!="win"
           'sources!': [
             'win/capture_context.asm',
+          ],
+        }],
+        ['OS=="linux"', {
+          'link_settings': {
+            'libraries': [
+              '-lcurl',
+            ],
+          },
+        }, {  # else: OS!="linux"
+          'sources!': [
+            'net/http_transport_libcurl.cc',
           ],
         }],
       ],

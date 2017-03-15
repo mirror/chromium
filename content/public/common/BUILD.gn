@@ -47,6 +47,13 @@ source_set("content_descriptors") {
   ]
 }
 
+source_set("content_descriptor_keys") {
+  sources = [
+    "content_descriptor_keys.cc",
+    "content_descriptor_keys.h",
+  ]
+}
+
 # Forces static linking for targets using the static_switches constants, even
 # in the component build. This config makes it impossible to use the static
 # switches target and use the rest of content at the same time, because the
@@ -140,8 +147,6 @@ source_set("common_sources") {
     "file_chooser_file_info.h",
     "file_chooser_params.cc",
     "file_chooser_params.h",
-    "form_field_data.cc",
-    "form_field_data.h",
     "frame_navigate_params.cc",
     "frame_navigate_params.h",
     "injection_test_mac.h",
@@ -164,6 +169,8 @@ source_set("common_sources") {
     "mojo_channel_switches.h",
     "notification_resources.cc",
     "notification_resources.h",
+    "origin_trial_policy.cc",
+    "origin_trial_policy.h",
     "origin_util.h",
     "page_state.cc",
     "page_state.h",
@@ -176,14 +183,13 @@ source_set("common_sources") {
     "platform_notification_data.h",
     "presentation_connection_message.cc",
     "presentation_connection_message.h",
-    "presentation_constants.cc",
-    "presentation_constants.h",
     "presentation_session.cc",
     "presentation_session.h",
     "previews_state.h",
     "process_type.h",
     "push_messaging_status.cc",
     "push_messaging_status.h",
+    "push_subscription_options.h",
     "quarantine.h",
     "referrer.cc",
     "referrer.h",
@@ -256,6 +262,8 @@ source_set("common_sources") {
     "//url/ipc:url_ipc",
   ]
   deps = [
+    ":content_descriptor_keys",
+
     # This looks needless as we have //content/common in public_deps, but it's
     # needed because of allow_circular_includes_from.
     "//components/mime_util",

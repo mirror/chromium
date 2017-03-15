@@ -55,6 +55,7 @@ class Pasteboard;
 class SpellChecker;
 class StylePropertySet;
 class TextEvent;
+class TypingCommand;
 class UndoStack;
 class UndoStep;
 
@@ -79,6 +80,7 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
   EditorClient& client() const;
 
   CompositeEditCommand* lastEditCommand() { return m_lastEditCommand.get(); }
+  TypingCommand* lastTypingCommandIfStillOpenForTyping() const;
 
   void handleKeyboardEvent(KeyboardEvent*);
   bool handleTextEvent(TextEvent*);
@@ -106,7 +108,7 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
 
   void transpose();
 
-  void respondToChangedContents(const VisibleSelection& endingSelection);
+  void respondToChangedContents(const Position&);
 
   bool selectionStartHasStyle(CSSPropertyID, const String& value) const;
   TriState selectionHasStyle(CSSPropertyID, const String& value) const;
@@ -115,7 +117,6 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
   void removeFormattingAndStyle();
 
   void registerCommandGroup(CompositeEditCommand* commandGroupWrapper);
-  void clearLastEditCommand();
 
   bool deleteWithDirection(DeleteDirection,
                            TextGranularity,
@@ -168,7 +169,7 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
 
     // Returns target ranges for the command, currently only supports delete
     // related commands. Used by InputEvent.
-    const RangeVector* getTargetRanges() const;
+    const StaticRangeVector* getTargetRanges() const;
 
     const EditorInternalCommand* m_command;
     EditorCommandSource m_source;
@@ -185,9 +186,11 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
   bool executeCommand(const String& commandName, const String& value);
 
   bool insertText(const String&, KeyboardEvent* triggeringEvent);
-  bool insertTextWithoutSendingTextEvent(const String&,
-                                         bool selectInsertedText,
-                                         TextEvent* triggeringEvent);
+  bool insertTextWithoutSendingTextEvent(
+      const String&,
+      bool selectInsertedText,
+      TextEvent* triggeringEvent,
+      InputEvent::InputType = InputEvent::InputType::InsertText);
   bool insertLineBreak();
   bool insertParagraphSeparator();
 
@@ -198,6 +201,10 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
   void undo();
   bool canRedo();
   void redo();
+
+  // Exposed for IdleSpellCheckCallback only.
+  // Supposed to be used as |const UndoStack&|.
+  UndoStack& undoStack() const { return *m_undoStack; }
 
   void setBaseWritingDirection(WritingDirection);
 
@@ -350,7 +357,7 @@ class CORE_EXPORT Editor final : public GarbageCollectedFinalized<Editor> {
   void revealSelectionAfterEditingOperation(
       const ScrollAlignment& = ScrollAlignment::alignCenterIfNeeded,
       RevealExtentOption = DoNotRevealExtent);
-  void changeSelectionAfterCommand(const VisibleSelection& newSelection,
+  void changeSelectionAfterCommand(const SelectionInDOMTree&,
                                    FrameSelection::SetSelectionOptions);
 
   SpellChecker& spellChecker() const;

@@ -4,16 +4,16 @@
 
 #import "ios/chrome/browser/payments/shipping_address_selection_view_controller.h"
 
-#import "base/ios/weak_nsobject.h"
 #include "base/mac/foundation_util.h"
-#include "base/mac/scoped_nsobject.h"
+
 #include "base/strings/sys_string_conversions.h"
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/application_context.h"
+#import "ios/chrome/browser/payments/cells/autofill_profile_item.h"
 #import "ios/chrome/browser/payments/cells/payments_text_item.h"
-#import "ios/chrome/browser/payments/cells/shipping_address_item.h"
 #import "ios/chrome/browser/payments/payment_request_util.h"
+#import "ios/chrome/browser/payments/shipping_address_selection_view_controller_actions.h"
 #import "ios/chrome/browser/ui/autofill/cells/status_item.h"
 #import "ios/chrome/browser/ui/collection_view/cells/MDCCollectionViewCell+Chrome.h"
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_item.h"
@@ -26,14 +26,19 @@
 #include "ios/chrome/grit/ios_theme_resources.h"
 #include "ui/base/l10n/l10n_util.h"
 
-using payment_request_util::NameLabelFromAutofillProfile;
-using payment_request_util::AddressLabelFromAutofillProfile;
-using payment_request_util::PhoneNumberLabelFromAutofillProfile;
-
-NSString* const kShippingAddressSelectionCollectionViewId =
-    @"kShippingAddressSelectionCollectionViewId";
+#if !defined(__has_feature) || !__has_feature(objc_arc)
+#error "This file requires ARC support."
+#endif
 
 namespace {
+using ::payment_request_util::GetNameLabelFromAutofillProfile;
+using ::payment_request_util::GetAddressLabelFromAutofillProfile;
+using ::payment_request_util::GetPhoneNumberLabelFromAutofillProfile;
+using ::payment_request_util::GetShippingAddressSelectorTitle;
+using ::payment_request_util::GetShippingAddressSelectorInfoMessage;
+
+NSString* const kShippingAddressSelectionCollectionViewID =
+    @"kShippingAddressSelectionCollectionViewID";
 
 const CGFloat kSeparatorEdgeInset = 14;
 
@@ -50,35 +55,31 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
 }  // namespace
 
-@interface ShippingAddressSelectionViewController () {
-  base::WeakNSProtocol<id<ShippingAddressSelectionViewControllerDelegate>>
-      _delegate;
-
+@interface ShippingAddressSelectionViewController ()<
+    ShippingAddressSelectionViewControllerActions> {
   // The PaymentRequest object owning an instance of web::PaymentRequest as
   // provided by the page invoking the Payment Request API. This is a weak
   // pointer and should outlive this class.
   PaymentRequest* _paymentRequest;
 
   // The currently selected item. May be nil.
-  ShippingAddressItem* _selectedItem;
+  __weak AutofillProfileItem* _selectedItem;
 }
-
-// Called when the user presses the return button.
-- (void)onReturn;
 
 @end
 
 @implementation ShippingAddressSelectionViewController
 
-@synthesize isLoading = _isLoading;
+@synthesize pending = _pending;
 @synthesize errorMessage = _errorMessage;
+@synthesize delegate = _delegate;
 
 - (instancetype)initWithPaymentRequest:(PaymentRequest*)paymentRequest {
   DCHECK(paymentRequest);
   if ((self = [super initWithStyle:CollectionViewControllerStyleAppBar])) {
-    self.title = l10n_util::GetNSString(
-        IDS_IOS_PAYMENT_REQUEST_SHIPPING_ADDRESS_SELECTION_TITLE);
+    self.title = GetShippingAddressSelectorTitle(*paymentRequest);
 
+    // Set up leading (return) button.
     UIBarButtonItem* returnButton =
         [ChromeIcon templateBarButtonItemWithImage:[ChromeIcon backIcon]
                                             target:nil
@@ -89,15 +90,6 @@ typedef NS_ENUM(NSInteger, ItemType) {
     _paymentRequest = paymentRequest;
   }
   return self;
-}
-
-- (id<ShippingAddressSelectionViewControllerDelegate>)delegate {
-  return _delegate.get();
-}
-
-- (void)setDelegate:
-    (id<ShippingAddressSelectionViewControllerDelegate>)delegate {
-  _delegate.reset(delegate);
 }
 
 - (void)onReturn {
@@ -113,35 +105,33 @@ typedef NS_ENUM(NSInteger, ItemType) {
 
   [model addSectionWithIdentifier:SectionIdentifierShippingAddress];
 
-  if (_isLoading) {
-    StatusItem* statusItem =
-        [[[StatusItem alloc] initWithType:ItemTypeSpinner] autorelease];
-    statusItem.text =
-        l10n_util::GetNSString(IDS_IOS_PAYMENT_REQUEST_CHECKING_LABEL);
+  if (_pending) {
+    StatusItem* statusItem = [[StatusItem alloc] initWithType:ItemTypeSpinner];
+    statusItem.text = l10n_util::GetNSString(IDS_PAYMENTS_CHECKING_OPTION);
     [model addItem:statusItem
         toSectionWithIdentifier:SectionIdentifierShippingAddress];
     return;
   }
 
   PaymentsTextItem* messageItem =
-      [[[PaymentsTextItem alloc] initWithType:ItemTypeMessage] autorelease];
+      [[PaymentsTextItem alloc] initWithType:ItemTypeMessage];
   if (_errorMessage) {
     messageItem.text = _errorMessage;
     messageItem.image = NativeImage(IDR_IOS_PAYMENTS_WARNING);
   } else {
-    messageItem.text = l10n_util::GetNSString(
-        IDS_IOS_PAYMENT_REQUEST_SHIPPING_ADDRESS_SELECTION_MESSAGE);
+    messageItem.text = GetShippingAddressSelectorInfoMessage(*_paymentRequest);
   }
   [model addItem:messageItem
       toSectionWithIdentifier:SectionIdentifierShippingAddress];
 
-  for (const auto& shippingAddress : _paymentRequest->shipping_profiles()) {
-    ShippingAddressItem* item = [[[ShippingAddressItem alloc]
-        initWithType:ItemTypeShippingAddress] autorelease];
+  for (auto* shippingAddress : _paymentRequest->shipping_profiles()) {
+    DCHECK(shippingAddress);
+    AutofillProfileItem* item =
+        [[AutofillProfileItem alloc] initWithType:ItemTypeShippingAddress];
     item.accessibilityTraits |= UIAccessibilityTraitButton;
-    item.name = NameLabelFromAutofillProfile(shippingAddress);
-    item.address = AddressLabelFromAutofillProfile(shippingAddress);
-    item.phoneNumber = PhoneNumberLabelFromAutofillProfile(shippingAddress);
+    item.name = GetNameLabelFromAutofillProfile(*shippingAddress);
+    item.address = GetAddressLabelFromAutofillProfile(*shippingAddress);
+    item.phoneNumber = GetPhoneNumberLabelFromAutofillProfile(*shippingAddress);
     if (_paymentRequest->selected_shipping_profile() == shippingAddress) {
       item.accessoryType = MDCCollectionViewCellAccessoryCheckmark;
       _selectedItem = item;
@@ -150,10 +140,9 @@ typedef NS_ENUM(NSInteger, ItemType) {
         toSectionWithIdentifier:SectionIdentifierShippingAddress];
   }
 
-  PaymentsTextItem* addShippingAddress = [[[PaymentsTextItem alloc]
-      initWithType:ItemTypeAddShippingAddress] autorelease];
-  addShippingAddress.text = l10n_util::GetNSString(
-      IDS_IOS_PAYMENT_REQUEST_SHIPPING_ADDRESS_SELECTION_ADD_BUTTON);
+  PaymentsTextItem* addShippingAddress =
+      [[PaymentsTextItem alloc] initWithType:ItemTypeAddShippingAddress];
+  addShippingAddress.text = l10n_util::GetNSString(IDS_PAYMENTS_ADD_ADDRESS);
   addShippingAddress.image = NativeImage(IDR_IOS_PAYMENTS_ADD);
   addShippingAddress.accessibilityTraits |= UIAccessibilityTraitButton;
   [model addItem:addShippingAddress
@@ -163,7 +152,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.collectionView.accessibilityIdentifier =
-      kShippingAddressSelectionCollectionViewId;
+      kShippingAddressSelectionCollectionViewID;
 
   // Customize collection view settings.
   self.styler.cellStyle = MDCCollectionViewCellStyleCard;
@@ -219,8 +208,8 @@ typedef NS_ENUM(NSInteger, ItemType) {
     }
 
     // Update the newly selected cell.
-    ShippingAddressItem* newlySelectedItem =
-        base::mac::ObjCCastStrict<ShippingAddressItem>(item);
+    AutofillProfileItem* newlySelectedItem =
+        base::mac::ObjCCastStrict<AutofillProfileItem>(item);
     newlySelectedItem.accessoryType = MDCCollectionViewCellAccessoryCheckmark;
     [self reconfigureCellsForItems:@[ newlySelectedItem ]
            inSectionWithIdentifier:SectionIdentifierShippingAddress];

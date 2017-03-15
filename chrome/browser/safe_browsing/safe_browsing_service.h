@@ -34,7 +34,6 @@
 class PrefChangeRegistrar;
 class PrefService;
 class Profile;
-class TrackedPreferenceValidationDelegate;
 
 namespace content {
 class DownloadManager;
@@ -45,9 +44,16 @@ class URLRequest;
 class URLRequestContextGetter;
 }
 
+namespace prefs {
+namespace mojom {
+class TrackedPreferenceValidationDelegate;
+}
+}
+
 namespace safe_browsing {
 class ClientSideDetectionService;
 class DownloadProtectionService;
+class PasswordProtectionService;
 struct ResourceRequestInfo;
 struct SafeBrowsingProtocolConfig;
 class SafeBrowsingDatabaseManager;
@@ -157,10 +163,12 @@ class SafeBrowsingService : public base::RefCountedThreadSafe<
   const scoped_refptr<SafeBrowsingDatabaseManager>& v4_local_database_manager()
       const;
 
+  PasswordProtectionService* password_protection_service();
+
   // Returns a preference validation delegate that adds incidents to the
   // incident reporting service for validation failures. Returns NULL if the
   // service is not applicable for the given profile.
-  std::unique_ptr<TrackedPreferenceValidationDelegate>
+  std::unique_ptr<prefs::mojom::TrackedPreferenceValidationDelegate>
   CreatePreferenceValidationDelegate(Profile* profile) const;
 
   // Registers |callback| to be run after some delay following process launch.
@@ -333,6 +341,10 @@ class SafeBrowsingService : public base::RefCountedThreadSafe<
   // The navigation observer manager handles download attribution.
   scoped_refptr<SafeBrowsingNavigationObserverManager>
   navigation_observer_manager_;
+
+  // The password protection service detects and handles password related
+  // incidents.
+  std::unique_ptr<PasswordProtectionService> password_protection_service_;
 
   DISALLOW_COPY_AND_ASSIGN(SafeBrowsingService);
 };

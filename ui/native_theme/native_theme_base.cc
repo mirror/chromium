@@ -251,6 +251,20 @@ void NativeThemeBase::Paint(cc::PaintCanvas* canvas,
   canvas->restore();
 }
 
+bool NativeThemeBase::SupportsNinePatch(Part part) const {
+  return false;
+}
+
+gfx::Size NativeThemeBase::GetNinePatchCanvasSize(Part part) const {
+  NOTREACHED() << "NativeThemeBase doesn't support nine-patch resources.";
+  return gfx::Size();
+}
+
+gfx::Rect NativeThemeBase::GetNinePatchAperture(Part part) const {
+  NOTREACHED() << "NativeThemeBase doesn't support nine-patch resources.";
+  return gfx::Rect();
+}
+
 NativeThemeBase::NativeThemeBase()
     : scrollbar_width_(kDefaultScrollbarWidth),
       scrollbar_button_length_(kDefaultScrollbarButtonLength) {
@@ -899,11 +913,11 @@ void NativeThemeBase::PaintProgressBar(
 }
 
 void NativeThemeBase::PaintFrameTopArea(
-    SkCanvas* canvas,
+    cc::PaintCanvas* canvas,
     State state,
     const gfx::Rect& rect,
     const FrameTopAreaExtraParams& frame_top_area) const {
-  SkPaint flags;
+  cc::PaintFlags flags;
   flags.setColor(frame_top_area.default_background_color);
   canvas->drawRect(gfx::RectToSkRect(rect), flags);
 }

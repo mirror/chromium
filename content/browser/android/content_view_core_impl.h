@@ -38,6 +38,7 @@ namespace content {
 class GinJavaBridgeDispatcherHost;
 class RenderFrameHost;
 class RenderWidgetHostViewAndroid;
+struct ContextMenuParams;
 struct MenuItem;
 
 class ContentViewCoreImpl : public ContentViewCore,
@@ -55,7 +56,7 @@ class ContentViewCoreImpl : public ContentViewCore,
   base::android::ScopedJavaLocalRef<jobject> GetJavaObject() override;
   WebContents* GetWebContents() const override;
   ui::WindowAndroid* GetWindowAndroid() const override;
-  void ShowPastePopup(int x, int y) override;
+  bool ShowPastePopup(const ContextMenuParams& params) override;
 
   void AddObserver(ContentViewCoreImplObserver* observer);
   void RemoveObserver(ContentViewCoreImplObserver* observer);
@@ -90,50 +91,6 @@ class ContentViewCoreImpl : public ContentViewCore,
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj,
       jint orientation);
-  jboolean OnTouchEvent(
-      JNIEnv* env,
-      const base::android::JavaParamRef<jobject>& obj,
-      const base::android::JavaParamRef<jobject>& motion_event,
-      jlong time_ms,
-      jint android_action,
-      jint pointer_count,
-      jint history_size,
-      jint action_index,
-      jfloat pos_x_0,
-      jfloat pos_y_0,
-      jfloat pos_x_1,
-      jfloat pos_y_1,
-      jint pointer_id_0,
-      jint pointer_id_1,
-      jfloat touch_major_0,
-      jfloat touch_major_1,
-      jfloat touch_minor_0,
-      jfloat touch_minor_1,
-      jfloat orientation_0,
-      jfloat orientation_1,
-      jfloat tilt_0,
-      jfloat tilt_1,
-      jfloat raw_pos_x,
-      jfloat raw_pos_y,
-      jint android_tool_type_0,
-      jint android_tool_type_1,
-      jint android_button_state,
-      jint android_meta_state,
-      jboolean is_touch_handle_event);
-  jboolean SendMouseEvent(JNIEnv* env,
-                          const base::android::JavaParamRef<jobject>& obj,
-                          jlong time_ms,
-                          jint android_action,
-                          jfloat x,
-                          jfloat y,
-                          jint pointer_id,
-                          jfloat pressure,
-                          jfloat orientation,
-                          jfloat tilt,
-                          jint android_changed_button,
-                          jint android_button_state,
-                          jint android_meta_state,
-                          jint tool_type);
   jboolean SendMouseWheelEvent(JNIEnv* env,
                                const base::android::JavaParamRef<jobject>& obj,
                                jlong time_ms,
@@ -307,8 +264,6 @@ class ContentViewCoreImpl : public ContentViewCore,
                        const gfx::SizeF& viewport_size,
                        const float top_controls_height,
                        const float top_controls_shown_ratio,
-                       const float bottom_controls_height,
-                       const float bottom_controls_shown_ratio,
                        bool is_mobile_optimized_hint,
                        const gfx::SelectionBound& selection_start);
 
@@ -324,7 +279,6 @@ class ContentViewCoreImpl : public ContentViewCore,
                         int composition_end,
                         bool show_ime_if_needed,
                         bool reply_to_request);
-  void OnBackgroundColorChanged(SkColor color);
 
   bool HasFocus();
   void RequestDisallowInterceptTouchEvent();
@@ -335,8 +289,6 @@ class ContentViewCoreImpl : public ContentViewCore,
   void OnSelectionEvent(ui::SelectionEventType event,
                         const gfx::PointF& selection_anchor,
                         const gfx::RectF& selection_rect);
-
-  void StartContentIntent(const GURL& content_url, bool is_main_frame);
 
   // Shows the disambiguation popup
   // |rect_pixels|   --> window coordinates which |zoomed_bitmap| represents
@@ -379,6 +331,7 @@ class ContentViewCoreImpl : public ContentViewCore,
                                 const gfx::PointF& extent);
 
   void OnShowUnhandledTapUIIfNeeded(int x_dip, int y_dip);
+  void OnTouchDown(const base::android::ScopedJavaLocalRef<jobject>& event);
 
   ui::ViewAndroid* GetViewAndroid() const;
 

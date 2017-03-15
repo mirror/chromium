@@ -22,6 +22,7 @@ from webkitpy.common.net.git_cl import GitCL
 from webkitpy.common.webkit_finder import WebKitFinder
 from webkitpy.common.net.buildbot import current_build_link
 from webkitpy.layout_tests.models.test_expectations import TestExpectations, TestExpectationParser
+from webkitpy.layout_tests.port.base import Port
 from webkitpy.w3c.common import WPT_REPO_URL, CSS_REPO_URL, WPT_DEST_NAME, CSS_DEST_NAME, exportable_commits_since
 from webkitpy.w3c.directory_owners_extractor import DirectoryOwnersExtractor
 from webkitpy.w3c.local_wpt import LocalWPT
@@ -124,7 +125,9 @@ class TestImporter(object):
         parser.add_argument('--auto-update', action='store_true',
                             help='uploads CL and initiates commit queue.')
         parser.add_argument('--auth-refresh-token-json',
-                            help='Rietveld auth refresh JSON token.')
+                            help='authentication refresh token JSON file, '
+                                 'used for authentication for try jobs, '
+                                 'generally not necessary on developer machines')
         parser.add_argument('--ignore-exportable-commits', action='store_true',
                             help='Continue even if there are exportable commits that may be overwritten.')
         return parser.parse_args(argv)
@@ -202,7 +205,12 @@ class TestImporter(object):
             return
         _log.info('Generating MANIFEST.json')
         WPTManifest.generate_manifest(self.host, dest_path)
-        self.run(['git', 'add', self.fs.join(dest_path, 'MANIFEST.json')])
+        manifest_path = self.fs.join(dest_path, 'MANIFEST.json')
+        assert self.fs.exists(manifest_path)
+        manifest_base_path = self.fs.normpath(
+            self.fs.join(dest_path, '..', 'WPT_BASE_MANIFEST.json'))
+        self.copyfile(manifest_path, manifest_base_path)
+        self.run(['git', 'add', manifest_base_path])
 
     def update(self, dest_dir_name, temp_repo_path, revision):
         """Updates an imported repository.
@@ -238,15 +246,7 @@ class TestImporter(object):
 
         self.run(['git', 'add', '--all', 'LayoutTests/external/%s' % dest_dir_name])
 
-        _log.info('Deleting any orphaned baselines.')
-
-        is_baseline_filter = lambda fs, dirname, basename: self.is_baseline(basename)
-        previous_baselines = self.fs.files_under(dest_path, file_filter=is_baseline_filter)
-
-        for subpath in previous_baselines:
-            full_path = self.fs.join(dest_path, subpath)
-            if self.fs.glob(full_path.replace('-expected.txt', '*')) == [full_path]:
-                self.fs.remove(full_path)
+        self._delete_orphaned_baselines(dest_path)
 
         self._generate_manifest(dest_path)
 
@@ -269,9 +269,23 @@ class TestImporter(object):
                 'NOEXPORT=true' %
                 (import_commit, chromium_commit))
 
+    def _delete_orphaned_baselines(self, dest_path):
+        _log.info('Deleting any orphaned baselines.')
+        is_baseline_filter = lambda fs, dirname, basename: self.is_baseline(basename)
+        previous_baselines = self.fs.files_under(dest_path, file_filter=is_baseline_filter)
+        for sub_path in previous_baselines:
+            full_baseline_path = self.fs.join(dest_path, sub_path)
+            if not self._has_corresponding_test(full_baseline_path):
+                self.fs.remove(full_baseline_path)
+
+    def _has_corresponding_test(self, full_baseline_path):
+        base = full_baseline_path.replace('-expected.txt', '')
+        return any(self.fs.exists(base + ext) for ext in Port.supported_file_extensions)
+
     @staticmethod
     def is_baseline(basename):
         # TODO(qyearsley): Find a better, centralized place for this.
+        # Also, the name for this method should be is_text_baseline.
         return basename.endswith('-expected.txt')
 
     def run(self, cmd, exit_on_failure=True, cwd=None, stdin=''):
@@ -330,9 +344,10 @@ class TestImporter(object):
         _log.info('Issue: %s', self.git_cl.run(['issue']).strip())
 
         # First, try on Blink try bots in order to get any new baselines.
+        # TODO(qyearsley): Make this faster by triggering all try jobs in
+        # one invocation.
         _log.info('Triggering try jobs.')
-        for try_bot in self.host.builders.all_try_builder_names():
-            self.git_cl.run(['try', '-b', try_bot])
+        self.git_cl.trigger_try_jobs()
         try_results = self.git_cl.wait_for_try_jobs(
             poll_delay_seconds=POLL_DELAY_SECONDS, timeout_seconds=TIMEOUT_SECONDS)
 
@@ -344,7 +359,7 @@ class TestImporter(object):
             self.fetch_new_expectations_and_baselines()
 
         # Trigger CQ and wait for CQ try jobs to finish.
-        self.git_cl.run(['set-commit', '--rietveld'])
+        self.git_cl.run(['set-commit', '--gerrit'])
         try_results = self.git_cl.wait_for_try_jobs(
             poll_delay_seconds=POLL_DELAY_SECONDS, timeout_seconds=TIMEOUT_SECONDS)
 
@@ -354,7 +369,9 @@ class TestImporter(object):
             return False
 
         # If the CQ passes, then the issue will be closed.
-        if not self.git_cl.is_closed():
+        status = self.git_cl.run(['status' '--field', 'status']).strip()
+        _log.info('CL status: "%s"', status)
+        if status not in ('lgtm', 'closed'):
             _log.error('CQ appears to have failed; aborting.')
             self.git_cl.run(['set-close'])
             return False
@@ -369,13 +386,20 @@ class TestImporter(object):
         self.git_cl.run([
             'upload',
             '-f',
-            '--rietveld',
+            '--gerrit',
             '-m',
             description,
-        ] + ['--cc=' + email_address for email_address in directory_owners])
+        ] + self._cc_part(directory_owners))
+
+    @staticmethod
+    def _cc_part(directory_owners):
+        cc_part = []
+        for owner_tuple in sorted(directory_owners):
+            cc_part.extend('--cc=' + owner for owner in owner_tuple)
+        return cc_part
 
     def get_directory_owners(self):
-        """Returns a list of email addresses of owners of changed tests."""
+        """Returns a mapping of email addresses to owners of changed tests."""
         _log.info('Gathering directory owners emails to CC.')
         changed_files = self.host.git().changed_files()
         extractor = DirectoryOwnersExtractor(self.fs)
@@ -383,6 +407,11 @@ class TestImporter(object):
         return extractor.list_owners(changed_files)
 
     def _cl_description(self, directory_owners):
+        """Returns a CL description string.
+
+        Args:
+            directory_owners: A dict of tuples of owner names to lists of directories.
+        """
         description = self.check_run(['git', 'log', '-1', '--format=%B'])
         build_link = current_build_link(self.host)
         if build_link:
@@ -401,9 +430,9 @@ class TestImporter(object):
     @staticmethod
     def _format_directory_owners(directory_owners):
         message_lines = ['Directory owners for changes in this CL:']
-        for owner, directories in sorted(directory_owners.items()):
-            message_lines.append(owner + ':')
-            message_lines.extend(['  ' + d for d in directories])
+        for owner_tuple, directories in sorted(directory_owners.items()):
+            message_lines.append(', '.join(owner_tuple) + ':')
+            message_lines.extend('  ' + d for d in directories)
         return '\n'.join(message_lines)
 
     def fetch_new_expectations_and_baselines(self):
@@ -413,7 +442,7 @@ class TestImporter(object):
         expectation_updater.run(args=[])
         message = 'Update test expectations and baselines.'
         self.check_run(['git', 'commit', '-a', '-m', message])
-        self.git_cl.run(['upload', '-m', message, '--rietveld'])
+        self.git_cl.run(['upload', '-t', message, '--gerrit'])
 
     def update_all_test_expectations_files(self, deleted_tests, renamed_tests):
         """Updates all test expectations files for tests that have been deleted or renamed."""

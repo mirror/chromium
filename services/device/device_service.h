@@ -6,25 +6,36 @@
 #define SERVICES_DEVICE_DEVICE_SERVICE_H_
 
 #include "base/memory/ref_counted.h"
-#include "mojo/public/cpp/bindings/binding_set.h"
+#include "device/screen_orientation/public/interfaces/screen_orientation.mojom.h"
+#include "services/device/public/interfaces/fingerprint.mojom.h"
 #include "services/device/public/interfaces/power_monitor.mojom.h"
 #include "services/device/public/interfaces/time_zone_monitor.mojom.h"
 #include "services/service_manager/public/cpp/interface_factory.h"
 #include "services/service_manager/public/cpp/service.h"
 
+namespace base {
+class SingleThreadTaskRunner;
+}
+
 namespace device {
 
+class PowerMonitorMessageBroadcaster;
 class TimeZoneMonitor;
 
 std::unique_ptr<service_manager::Service> CreateDeviceService(
-    scoped_refptr<base::SingleThreadTaskRunner> file_task_runner);
+    scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> io_task_runner);
 
 class DeviceService
     : public service_manager::Service,
+      public service_manager::InterfaceFactory<mojom::Fingerprint>,
       public service_manager::InterfaceFactory<mojom::PowerMonitor>,
+      public service_manager::InterfaceFactory<
+          mojom::ScreenOrientationListener>,
       public service_manager::InterfaceFactory<mojom::TimeZoneMonitor> {
  public:
-  DeviceService(scoped_refptr<base::SingleThreadTaskRunner> file_task_runner);
+  DeviceService(scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
+                scoped_refptr<base::SingleThreadTaskRunner> io_task_runner);
   ~DeviceService() override;
 
  private:
@@ -33,17 +44,28 @@ class DeviceService
   bool OnConnect(const service_manager::ServiceInfo& remote_info,
                  service_manager::InterfaceRegistry* registry) override;
 
+  // InterfaceFactory<mojom::Fingerprint>:
+  void Create(const service_manager::Identity& remote_identity,
+              mojom::FingerprintRequest request) override;
+
   // InterfaceFactory<mojom::PowerMonitor>:
   void Create(const service_manager::Identity& remote_identity,
               mojom::PowerMonitorRequest request) override;
+
+  // InterfaceFactory<mojom::ScreenOrientationListener>:
+  void Create(const service_manager::Identity& remote_identity,
+              mojom::ScreenOrientationListenerRequest request) override;
 
   // InterfaceFactory<mojom::TimeZoneMonitor>:
   void Create(const service_manager::Identity& remote_identity,
               mojom::TimeZoneMonitorRequest request) override;
 
-  std::unique_ptr<device::TimeZoneMonitor> time_zone_monitor_;
+  std::unique_ptr<PowerMonitorMessageBroadcaster>
+      power_monitor_message_broadcaster_;
+  std::unique_ptr<TimeZoneMonitor> time_zone_monitor_;
 
   scoped_refptr<base::SingleThreadTaskRunner> file_task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(DeviceService);
 };

@@ -23,6 +23,7 @@
 #include "cc/trees/layer_tree_host.h"
 #include "content/child/request_extra_data.h"
 #include "content/child/service_worker/service_worker_network_provider.h"
+#include "content/common/accessibility_mode.h"
 #include "content/common/content_switches_internal.h"
 #include "content/common/frame_messages.h"
 #include "content/common/frame_owner_properties.h"
@@ -66,6 +67,7 @@
 #include "third_party/WebKit/public/platform/WebHTTPBody.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
+#include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
 #include "third_party/WebKit/public/web/WebDataSource.h"
 #include "third_party/WebKit/public/web/WebDeviceEmulationParams.h"
 #include "third_party/WebKit/public/web/WebFrameContentDumper.h"
@@ -1589,10 +1591,10 @@ TEST_F(RenderViewImplTest, SetEditableSelectionAndComposition) {
   EXPECT_EQ(8, info.selectionEnd);
   EXPECT_EQ(7, info.compositionStart);
   EXPECT_EQ(10, info.compositionEnd);
-  frame()->Unselect();
+  frame()->CollapseSelection();
   info = controller->textInputInfo();
-  EXPECT_EQ(0, info.selectionStart);
-  EXPECT_EQ(0, info.selectionEnd);
+  EXPECT_EQ(8, info.selectionStart);
+  EXPECT_EQ(8, info.selectionEnd);
 }
 
 TEST_F(RenderViewImplTest, OnExtendSelectionAndDelete) {
@@ -1668,6 +1670,31 @@ TEST_F(RenderViewImplTest, OnDeleteSurroundingText) {
 
   EXPECT_EQ(0, info.selectionStart);
   EXPECT_EQ(0, info.selectionEnd);
+}
+
+TEST_F(RenderViewImplTest, OnDeleteSurroundingTextInCodePoints) {
+  // Load an HTML page consisting of an input field.
+  LoadHTML(
+      // "ab" + trophy + space + "cdef" + trophy + space + "gh".
+      "<input id=\"test1\" value=\"ab&#x1f3c6; cdef&#x1f3c6; gh\">");
+  ExecuteJavaScriptForTests("document.getElementById('test1').focus();");
+
+  frame()->SetEditableSelectionOffsets(4, 4);
+  frame()->DeleteSurroundingTextInCodePoints(2, 2);
+  blink::WebInputMethodController* controller =
+      frame()->GetWebFrame()->inputMethodController();
+  blink::WebTextInputInfo info = controller->textInputInfo();
+  // "a" + "def" + trophy + space + "gh".
+  EXPECT_EQ(WebString::fromUTF8("adef\xF0\x9F\x8F\x86 gh"), info.value);
+  EXPECT_EQ(1, info.selectionStart);
+  EXPECT_EQ(1, info.selectionEnd);
+
+  frame()->SetEditableSelectionOffsets(1, 3);
+  frame()->DeleteSurroundingTextInCodePoints(1, 4);
+  info = controller->textInputInfo();
+  EXPECT_EQ("deh", info.value);
+  EXPECT_EQ(0, info.selectionStart);
+  EXPECT_EQ(2, info.selectionEnd);
 }
 
 // Test that the navigating specific frames works correctly.
@@ -1931,62 +1958,64 @@ TEST_F(RenderViewImplTest, FocusElementCallsFocusedNodeChanged) {
 }
 
 TEST_F(RenderViewImplTest, ServiceWorkerNetworkProviderSetup) {
-  ServiceWorkerNetworkProvider* provider = NULL;
-  RequestExtraData* extra_data = NULL;
+  blink::WebServiceWorkerNetworkProvider* webprovider = nullptr;
+  ServiceWorkerNetworkProvider* provider = nullptr;
+  RequestExtraData* extra_data = nullptr;
 
   // Make sure each new document has a new provider and
   // that the main request is tagged with the provider's id.
   LoadHTML("<b>A Document</b>");
   ASSERT_TRUE(GetMainFrame()->dataSource());
-  provider = ServiceWorkerNetworkProvider::FromDocumentState(
-      DocumentState::FromDataSource(GetMainFrame()->dataSource()));
-  ASSERT_TRUE(provider);
+  webprovider = GetMainFrame()->dataSource()->getServiceWorkerNetworkProvider();
+  ASSERT_TRUE(webprovider);
   extra_data = static_cast<RequestExtraData*>(
       GetMainFrame()->dataSource()->getRequest().getExtraData());
   ASSERT_TRUE(extra_data);
-  EXPECT_EQ(extra_data->service_worker_provider_id(),
-            provider->provider_id());
+  provider = ServiceWorkerNetworkProvider::FromWebServiceWorkerNetworkProvider(
+      webprovider);
+  ASSERT_TRUE(provider);
+  EXPECT_EQ(extra_data->service_worker_provider_id(), provider->provider_id());
   int provider1_id = provider->provider_id();
 
   LoadHTML("<b>New Document B Goes Here</b>");
   ASSERT_TRUE(GetMainFrame()->dataSource());
-  provider = ServiceWorkerNetworkProvider::FromDocumentState(
-      DocumentState::FromDataSource(GetMainFrame()->dataSource()));
+  webprovider = GetMainFrame()->dataSource()->getServiceWorkerNetworkProvider();
+  ASSERT_TRUE(provider);
+  provider = ServiceWorkerNetworkProvider::FromWebServiceWorkerNetworkProvider(
+      webprovider);
   ASSERT_TRUE(provider);
   EXPECT_NE(provider1_id, provider->provider_id());
   extra_data = static_cast<RequestExtraData*>(
       GetMainFrame()->dataSource()->getRequest().getExtraData());
   ASSERT_TRUE(extra_data);
-  EXPECT_EQ(extra_data->service_worker_provider_id(),
-            provider->provider_id());
+  EXPECT_EQ(extra_data->service_worker_provider_id(), provider->provider_id());
 
   // See that subresource requests are also tagged with the provider's id.
   EXPECT_EQ(frame(), RenderFrameImpl::FromWebFrame(GetMainFrame()));
   blink::WebURLRequest request(GURL("http://foo.com"));
   request.setRequestContext(blink::WebURLRequest::RequestContextSubresource);
   blink::WebURLResponse redirect_response;
-  frame()->willSendRequest(GetMainFrame(), request);
+  webprovider->willSendRequest(request);
   extra_data = static_cast<RequestExtraData*>(request.getExtraData());
   ASSERT_TRUE(extra_data);
-  EXPECT_EQ(extra_data->service_worker_provider_id(),
-            provider->provider_id());
+  EXPECT_EQ(extra_data->service_worker_provider_id(), provider->provider_id());
 }
 
 TEST_F(RenderViewImplTest, OnSetAccessibilityMode) {
-  ASSERT_EQ(AccessibilityModeOff, frame()->accessibility_mode());
+  ASSERT_TRUE(frame()->accessibility_mode().is_mode_off());
   ASSERT_FALSE(frame()->render_accessibility());
 
-  frame()->SetAccessibilityMode(ACCESSIBILITY_MODE_WEB_CONTENTS_ONLY);
-  ASSERT_EQ(ACCESSIBILITY_MODE_WEB_CONTENTS_ONLY,
-            frame()->accessibility_mode());
+  frame()->SetAccessibilityMode(kAccessibilityModeWebContentsOnly);
+  ASSERT_TRUE(frame()->accessibility_mode() ==
+              kAccessibilityModeWebContentsOnly);
   ASSERT_TRUE(frame()->render_accessibility());
 
-  frame()->SetAccessibilityMode(AccessibilityModeOff);
-  ASSERT_EQ(AccessibilityModeOff, frame()->accessibility_mode());
+  frame()->SetAccessibilityMode(AccessibilityMode());
+  ASSERT_TRUE(frame()->accessibility_mode().is_mode_off());
   ASSERT_FALSE(frame()->render_accessibility());
 
-  frame()->SetAccessibilityMode(ACCESSIBILITY_MODE_COMPLETE);
-  ASSERT_EQ(ACCESSIBILITY_MODE_COMPLETE, frame()->accessibility_mode());
+  frame()->SetAccessibilityMode(kAccessibilityModeComplete);
+  ASSERT_TRUE(frame()->accessibility_mode() == kAccessibilityModeComplete);
   ASSERT_TRUE(frame()->render_accessibility());
 }
 

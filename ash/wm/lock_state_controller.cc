@@ -188,7 +188,7 @@ void LockStateController::SetLockScreenDisplayedCallback(
 
 void LockStateController::OnHostCloseRequested(
     const aura::WindowTreeHost* host) {
-  WmShell::Get()->delegate()->Exit();
+  Shell::Get()->shell_delegate()->Exit();
 }
 
 void LockStateController::OnLoginStateChanged(LoginStatus status) {
@@ -292,7 +292,7 @@ void LockStateController::StartRealShutdownTimer(bool with_animation_time) {
   }
 
   base::TimeDelta sound_duration =
-      WmShell::Get()->accessibility_delegate()->PlayShutdownSound();
+      Shell::GetInstance()->accessibility_delegate()->PlayShutdownSound();
   sound_duration =
       std::min(sound_duration,
                base::TimeDelta::FromMilliseconds(kMaxShutdownSoundDurationMs));

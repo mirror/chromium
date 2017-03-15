@@ -66,7 +66,7 @@ int EventFlagsFromGdkState(guint state);
 void TurnButtonBlue(GtkWidget* button);
 
 // Sets |dialog| as transient for |parent|, which will keep it on top and center
-// it above |parent|. Do nothing if |parent| is NULL.
+// it above |parent|. Do nothing if |parent| is nullptr.
 void SetGtkTransientForAura(GtkWidget* dialog, aura::Window* parent);
 
 // Gets the transient parent aura window for |dialog|.
@@ -177,7 +177,10 @@ inline void ScopedGObject<GtkStyleContext>::Unref() {
 typedef ScopedGObject<GtkStyleContext> ScopedStyleContext;
 typedef ScopedGObject<GtkCssProvider> ScopedCssProvider;
 
-// If |context| is NULL, creates a new top-level style context
+// Converts ui::NativeTheme::State to GtkStateFlags.
+GtkStateFlags StateToStateFlags(ui::NativeTheme::State state);
+
+// If |context| is nullptr, creates a new top-level style context
 // specified by parsing |css_node|.  Otherwise, creates the child
 // context with |context| as the parent.
 ScopedStyleContext AppendCssNodeToStyleContext(GtkStyleContext* context,
@@ -217,8 +220,9 @@ SkColor GetBgColor(const char* css_selector);
 // returns the average color.
 SkColor GetBorderColor(const char* css_selector);
 
-SkColor GetSelectedTextColor(const char* css_selector);
-SkColor GetSelectedBgColor(const char* css_selector);
+// On Gtk3.20 or later, behaves like GetBgColor.  Otherwise, returns
+// the background-color property.
+SkColor GetSelectionBgColor(const char* css_selector);
 
 // Get the color of the GtkSeparator specified by |css_selector|.
 SkColor GetSeparatorColor(const char* css_selector);

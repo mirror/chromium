@@ -7,12 +7,12 @@
 #include "core/frame/Settings.h"
 #include "core/loader/EmptyClients.h"
 #include "core/testing/DummyPageHolder.h"
-#include "platform/network/ResourceResponse.h"
+#include "platform/loader/fetch/ResourceResponse.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
 
-class ProgressClient : public EmptyFrameLoaderClient {
+class ProgressClient : public EmptyLocalFrameClient {
  public:
   ProgressClient() : m_lastProgress(0.0) {}
 

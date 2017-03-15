@@ -269,8 +269,8 @@ void PeopleHandler::DisplayGaiaLoginInNewTabOrWindow(
   bool force_new_tab = false;
   if (!browser) {
     // Settings is not displayed in a browser window. Open a new window.
-    browser =
-        new Browser(Browser::CreateParams(Browser::TYPE_TABBED, profile_));
+    browser = new Browser(
+        Browser::CreateParams(Browser::TYPE_TABBED, profile_, true));
     force_new_tab = true;
   }
 
@@ -290,7 +290,7 @@ void PeopleHandler::DisplayGaiaLoginInNewTabOrWindow(
     if (!force_new_tab) {
       browser->window()->ShowAvatarBubbleFromAvatarButton(
           BrowserWindow::AVATAR_BUBBLE_MODE_REAUTH,
-          signin::ManageAccountsParams(), access_point);
+          signin::ManageAccountsParams(), access_point, false);
     } else {
       url = signin::GetReauthURL(
           access_point, signin_metrics::Reason::REASON_REAUTHENTICATION,
@@ -300,7 +300,7 @@ void PeopleHandler::DisplayGaiaLoginInNewTabOrWindow(
     if (!force_new_tab) {
       browser->window()->ShowAvatarBubbleFromAvatarButton(
           BrowserWindow::AVATAR_BUBBLE_MODE_SIGNIN,
-          signin::ManageAccountsParams(), access_point);
+          signin::ManageAccountsParams(), access_point, false);
     } else {
       url = signin::GetPromoURL(
           access_point, signin_metrics::Reason::REASON_SIGNIN_PRIMARY_ACCOUNT,
@@ -324,8 +324,8 @@ void PeopleHandler::DisplaySpinner() {
                              &PeopleHandler::DisplayTimeout);
 
   CallJavascriptFunction("cr.webUIListenerCallback",
-                         base::StringValue("page-status-changed"),
-                         base::StringValue(kSpinnerPageStatus));
+                         base::Value("page-status-changed"),
+                         base::Value(kSpinnerPageStatus));
 }
 
 void PeopleHandler::DisplayTimeout() {
@@ -336,8 +336,8 @@ void PeopleHandler::DisplayTimeout() {
   sync_startup_tracker_.reset();
 
   CallJavascriptFunction("cr.webUIListenerCallback",
-                         base::StringValue("page-status-changed"),
-                         base::StringValue(kTimeoutPageStatus));
+                         base::Value("page-status-changed"),
+                         base::Value(kTimeoutPageStatus));
 }
 
 void PeopleHandler::OnDidClosePage(const base::ListValue* args) {
@@ -391,7 +391,7 @@ void PeopleHandler::HandleSetDatatypes(const base::ListValue* args) {
   // dialog.
   if (!service || !service->IsEngineInitialized()) {
     CloseSyncSetup();
-    ResolveJavascriptCallback(*callback_id, base::StringValue(kDonePageStatus));
+    ResolveJavascriptCallback(*callback_id, base::Value(kDonePageStatus));
     return;
   }
 
@@ -399,8 +399,7 @@ void PeopleHandler::HandleSetDatatypes(const base::ListValue* args) {
                                 configuration.data_types);
 
   // Choosing data types to sync never fails.
-  ResolveJavascriptCallback(*callback_id,
-                            base::StringValue(kConfigurePageStatus));
+  ResolveJavascriptCallback(*callback_id, base::Value(kConfigurePageStatus));
 
   ProfileMetrics::LogProfileSyncInfo(ProfileMetrics::SYNC_CUSTOMIZE);
   if (!configuration.sync_everything)
@@ -422,7 +421,7 @@ void PeopleHandler::HandleSetEncryption(const base::ListValue* args) {
   // dialog.
   if (!service || !service->IsEngineInitialized()) {
     CloseSyncSetup();
-    ResolveJavascriptCallback(*callback_id, base::StringValue(kDonePageStatus));
+    ResolveJavascriptCallback(*callback_id, base::Value(kDonePageStatus));
     return;
   }
 
@@ -473,10 +472,9 @@ void PeopleHandler::HandleSetEncryption(const base::ListValue* args) {
     // TODO(tommycli): Switch this to RejectJavascriptCallback once the
     // Sync page JavaScript has been further refactored.
     ResolveJavascriptCallback(*callback_id,
-                              base::StringValue(kPassphraseFailedPageStatus));
+                              base::Value(kPassphraseFailedPageStatus));
   } else {
-    ResolveJavascriptCallback(*callback_id,
-                              base::StringValue(kConfigurePageStatus));
+    ResolveJavascriptCallback(*callback_id, base::Value(kConfigurePageStatus));
   }
 
   if (configuration.encrypt_all)
@@ -662,6 +660,28 @@ void PeopleHandler::OpenSyncSetup() {
     return;
   }
 
+  // Early exit if there is already a preferences push pending sync startup.
+  if (sync_startup_tracker_)
+    return;
+
+  if (!service->IsEngineInitialized()) {
+    // Requesting the sync service to start may trigger call to PushSyncPrefs.
+    // Setting up the startup tracker beforehand correctly signals the
+    // re-entrant call to early exit.
+    sync_startup_tracker_.reset(new SyncStartupTracker(profile_, this));
+    service->RequestStart();
+
+    // See if it's even possible to bring up the sync engine - if not
+    // (unrecoverable error?), don't bother displaying a spinner that will be
+    // immediately closed because this leads to some ugly infinite UI loop (see
+    // http://crbug.com/244769).
+    if (SyncStartupTracker::GetSyncServiceState(profile_) !=
+        SyncStartupTracker::SYNC_STARTUP_ERROR) {
+      DisplaySpinner();
+    }
+    return;
+  }
+
   // User is already logged in. They must have brought up the config wizard
   // via the "Advanced..." button or through One-Click signin (cases 4-6), or
   // they are re-enabling sync after having disabled it (case 7).
@@ -676,8 +696,8 @@ void PeopleHandler::FocusUI() {
 void PeopleHandler::CloseUI() {
   CloseSyncSetup();
   CallJavascriptFunction("cr.webUIListenerCallback",
-                         base::StringValue("page-status-changed"),
-                         base::StringValue(kDonePageStatus));
+                         base::Value("page-status-changed"),
+                         base::Value(kDonePageStatus));
 }
 
 void PeopleHandler::GoogleSigninSucceeded(const std::string& /* account_id */,
@@ -770,30 +790,9 @@ void PeopleHandler::PushSyncPrefs() {
   }
 #endif
 
-  // Early exit if there is already a preferences push pending sync startup.
-  if (sync_startup_tracker_)
-    return;
-
   ProfileSyncService* service = GetSyncService();
   // The sync service may be nullptr if it has been just disabled by policy.
-  if (!service)
-    return;
-
-  if (!service->IsEngineInitialized()) {
-    // Requesting the sync service to start may trigger another reentrant call
-    // to PushSyncPrefs. Setting up the startup tracker beforehand correctly
-    // signals the re-entrant call to early exit.
-    sync_startup_tracker_.reset(new SyncStartupTracker(profile_, this));
-    service->RequestStart();
-
-    // See if it's even possible to bring up the sync engine - if not
-    // (unrecoverable error?), don't bother displaying a spinner that will be
-    // immediately closed because this leads to some ugly infinite UI loop (see
-    // http://crbug.com/244769).
-    if (SyncStartupTracker::GetSyncServiceState(profile_) !=
-        SyncStartupTracker::SYNC_STARTUP_ERROR) {
-      DisplaySpinner();
-    }
+  if (!service || !service->IsEngineInitialized()) {
     return;
   }
 
@@ -887,7 +886,7 @@ void PeopleHandler::PushSyncPrefs() {
   }
 
   CallJavascriptFunction("cr.webUIListenerCallback",
-                         base::StringValue("sync-prefs-changed"), args);
+                         base::Value("sync-prefs-changed"), args);
 }
 
 LoginUIService* PeopleHandler::GetLoginUIService() const {
@@ -896,7 +895,7 @@ LoginUIService* PeopleHandler::GetLoginUIService() const {
 
 void PeopleHandler::UpdateSyncStatus() {
   CallJavascriptFunction("cr.webUIListenerCallback",
-                         base::StringValue("sync-status-changed"),
+                         base::Value("sync-status-changed"),
                          *GetSyncStatusDictionary());
 }
 

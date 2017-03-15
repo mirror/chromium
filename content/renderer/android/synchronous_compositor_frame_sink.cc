@@ -25,7 +25,7 @@
 #include "cc/quads/surface_draw_quad.h"
 #include "cc/surfaces/compositor_frame_sink_support.h"
 #include "cc/surfaces/display.h"
-#include "cc/surfaces/surface_id_allocator.h"
+#include "cc/surfaces/local_surface_id_allocator.h"
 #include "cc/surfaces/surface_manager.h"
 #include "content/common/android/sync_compositor_messages.h"
 #include "content/renderer/android/synchronous_compositor_filter.h"
@@ -86,6 +86,7 @@ class SynchronousCompositorFrameSink::SoftwareOutputSurface
   void EnsureBackbuffer() override {}
   void DiscardBackbuffer() override {}
   void BindFramebuffer() override {}
+  void SetDrawRectangle(const gfx::Rect& rect) override {}
   void SwapBuffers(cc::OutputSurfaceFrame frame) override {}
   void Reshape(const gfx::Size& size,
                float scale_factor,
@@ -107,6 +108,7 @@ SynchronousCompositorFrameSink::SynchronousCompositorFrameSink(
     scoped_refptr<cc::ContextProvider> context_provider,
     scoped_refptr<cc::ContextProvider> worker_context_provider,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
+    cc::SharedBitmapManager* shared_bitmap_manager,
     int routing_id,
     uint32_t compositor_frame_sink_id,
     std::unique_ptr<cc::BeginFrameSource> begin_frame_source,
@@ -119,11 +121,12 @@ SynchronousCompositorFrameSink::SynchronousCompositorFrameSink(
       routing_id_(routing_id),
       compositor_frame_sink_id_(compositor_frame_sink_id),
       registry_(registry),
+      shared_bitmap_manager_(shared_bitmap_manager),
       sender_(RenderThreadImpl::current()->sync_compositor_message_filter()),
       memory_policy_(0u),
       frame_swap_message_queue_(frame_swap_message_queue),
       surface_manager_(new cc::SurfaceManager),
-      surface_id_allocator_(new cc::SurfaceIdAllocator()),
+      local_surface_id_allocator_(new cc::LocalSurfaceIdAllocator()),
       begin_frame_source_(std::move(begin_frame_source)) {
   DCHECK(registry_);
   DCHECK(sender_);
@@ -185,16 +188,18 @@ bool SynchronousCompositorFrameSink::BindToClient(
       base::MakeUnique<SoftwareDevice>(&current_sw_canvas_));
   software_output_surface_ = output_surface.get();
 
-  // The shared_bitmap_manager and gpu_memory_buffer_manager here are null as
-  // this Display is only used for resourcesless software draws, where no
-  // resources are included in the frame swapped from the compositor. So there
-  // is no need for these.
+  // The gpu_memory_buffer_manager here is null as the Display is only used for
+  // resourcesless software draws, where no resources are included in the frame
+  // swapped from the compositor. So there is no need for it.
+  // The shared_bitmap_manager_ is provided for the Display to allocate
+  // resources.
+  // TODO(crbug.com/692814): The Display never sends its resources out of
+  // process so there is no reason for it to use a SharedBitmapManager.
   display_.reset(new cc::Display(
-      nullptr /* shared_bitmap_manager */,
-      nullptr /* gpu_memory_buffer_manager */, software_renderer_settings,
-      kRootFrameSinkId, nullptr /* begin_frame_source */,
-      std::move(output_surface), nullptr /* scheduler */,
-      nullptr /* texture_mailbox_deleter */));
+      shared_bitmap_manager_, nullptr /* gpu_memory_buffer_manager */,
+      software_renderer_settings, kRootFrameSinkId,
+      nullptr /* begin_frame_source */, std::move(output_surface),
+      nullptr /* scheduler */, nullptr /* texture_mailbox_deleter */));
   display_->Initialize(&display_client_, surface_manager_.get());
   display_->SetVisible(true);
   return true;
@@ -211,7 +216,7 @@ void SynchronousCompositorFrameSink::DetachFromClient() {
   child_support_.reset();
   software_output_surface_ = nullptr;
   display_ = nullptr;
-  surface_id_allocator_ = nullptr;
+  local_surface_id_allocator_ = nullptr;
   surface_manager_ = nullptr;
   cc::CompositorFrameSink::DetachFromClient();
   CancelFallbackTick();
@@ -238,8 +243,8 @@ void SynchronousCompositorFrameSink::SubmitCompositorFrame(
     submit_frame.metadata = frame.metadata.Clone();
 
     if (!root_local_surface_id_.is_valid()) {
-      root_local_surface_id_ = surface_id_allocator_->GenerateId();
-      child_local_surface_id_ = surface_id_allocator_->GenerateId();
+      root_local_surface_id_ = local_surface_id_allocator_->GenerateId();
+      child_local_surface_id_ = local_surface_id_allocator_->GenerateId();
     }
 
     display_->SetLocalSurfaceId(root_local_surface_id_,
@@ -467,6 +472,8 @@ void SynchronousCompositorFrameSink::ReclaimResources(
   client_->ReclaimResources(resources);
 }
 
-void SynchronousCompositorFrameSink::WillDrawSurface() {}
+void SynchronousCompositorFrameSink::WillDrawSurface(
+    const cc::LocalSurfaceId& local_surface_id,
+    const gfx::Rect& damage_rect) {}
 
 }  // namespace content

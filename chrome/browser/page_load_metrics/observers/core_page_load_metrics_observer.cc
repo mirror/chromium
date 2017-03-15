@@ -157,6 +157,11 @@ const char kHistogramLoadTypeFirstContentfulPaintNewNavigation[] =
     "PageLoad.PaintTiming.NavigationToFirstContentfulPaint.LoadType."
     "NewNavigation";
 
+const char kHistogramPageTimingForegroundDuration[] =
+    "PageLoad.PageTiming.ForegroundDuration";
+const char kHistogramPageTimingForegroundDurationAfterPaint[] =
+    "PageLoad.PageTiming.ForegroundDuration.AfterPaint";
+
 const char kHistogramLoadTypeParseStartReload[] =
     "PageLoad.ParseTiming.NavigationToParseStart.LoadType.Reload";
 const char kHistogramLoadTypeParseStartForwardBack[] =
@@ -169,10 +174,10 @@ const char kHistogramLoadTypeParseStartNewNavigation[] =
     "PageLoad.ParseTiming.NavigationToParseStart.LoadType.NewNavigation";
 
 const char kHistogramFirstForeground[] =
-    "PageLoad.Timing2.NavigationToFirstForeground";
+    "PageLoad.PageTiming.NavigationToFirstForeground";
 
 const char kHistogramFailedProvisionalLoad[] =
-    "PageLoad.Timing2.NavigationToFailedProvisionalLoad";
+    "PageLoad.PageTiming.NavigationToFailedProvisionalLoad";
 
 const char kHistogramForegroundToFirstPaint[] =
     "PageLoad.PaintTiming.ForegroundToFirstPaint";
@@ -207,6 +212,27 @@ const char kHistogramTotalBytes[] = "PageLoad.Experimental.Bytes.Total";
 const char kHistogramNetworkBytes[] = "PageLoad.Experimental.Bytes.Network";
 const char kHistogramCacheBytes[] = "PageLoad.Experimental.Bytes.Cache";
 
+const char kHistogramLoadTypeTotalBytesForwardBack[] =
+    "PageLoad.Experimental.Bytes.Total.LoadType.ForwardBackNavigation";
+const char kHistogramLoadTypeNetworkBytesForwardBack[] =
+    "PageLoad.Experimental.Bytes.Network.LoadType.ForwardBackNavigation";
+const char kHistogramLoadTypeCacheBytesForwardBack[] =
+    "PageLoad.Experimental.Bytes.Cache.LoadType.ForwardBackNavigation";
+
+const char kHistogramLoadTypeTotalBytesReload[] =
+    "PageLoad.Experimental.Bytes.Total.LoadType.Reload";
+const char kHistogramLoadTypeNetworkBytesReload[] =
+    "PageLoad.Experimental.Bytes.Network.LoadType.Reload";
+const char kHistogramLoadTypeCacheBytesReload[] =
+    "PageLoad.Experimental.Bytes.Cache.LoadType.Reload";
+
+const char kHistogramLoadTypeTotalBytesNewNavigation[] =
+    "PageLoad.Experimental.Bytes.Total.LoadType.NewNavigation";
+const char kHistogramLoadTypeNetworkBytesNewNavigation[] =
+    "PageLoad.Experimental.Bytes.Network.LoadType.NewNavigation";
+const char kHistogramLoadTypeCacheBytesNewNavigation[] =
+    "PageLoad.Experimental.Bytes.Cache.LoadType.NewNavigation";
+
 const char kHistogramTotalCompletedResources[] =
     "PageLoad.Experimental.CompletedResources.Total";
 const char kHistogramNetworkCompletedResources[] =
@@ -230,7 +256,6 @@ page_load_metrics::PageLoadMetricsObserver::ObservePolicy
 CorePageLoadMetricsObserver::OnCommit(
     content::NavigationHandle* navigation_handle) {
   transition_ = navigation_handle->GetPageTransition();
-  navigation_start_ = navigation_handle->NavigationStart();
   const net::HttpResponseHeaders* headers =
       navigation_handle->GetResponseHeaders();
   if (headers) {
@@ -282,7 +307,7 @@ void CorePageLoadMetricsObserver::OnFirstLayout(
 void CorePageLoadMetricsObserver::OnFirstPaint(
     const page_load_metrics::PageLoadTiming& timing,
     const page_load_metrics::PageLoadExtraInfo& info) {
-  first_paint_ = navigation_start_ + timing.first_paint.value();
+  first_paint_ = info.navigation_start + timing.first_paint.value();
   if (WasStartedInForegroundOptionalEventInForeground(timing.first_paint,
                                                       info)) {
     PAGE_LOAD_HISTOGRAM(internal::kHistogramFirstPaint,
@@ -426,7 +451,7 @@ void CorePageLoadMetricsObserver::OnFirstMeaningfulPaint(
     const page_load_metrics::PageLoadTiming& timing,
     const page_load_metrics::PageLoadExtraInfo& info) {
   base::TimeTicks paint =
-      navigation_start_ + timing.first_meaningful_paint.value();
+      info.navigation_start + timing.first_meaningful_paint.value();
   if (first_user_interaction_after_first_paint_.is_null() ||
       paint < first_user_interaction_after_first_paint_) {
     if (WasStartedInForegroundOptionalEventInForeground(
@@ -545,7 +570,7 @@ void CorePageLoadMetricsObserver::OnParseStop(
 void CorePageLoadMetricsObserver::OnComplete(
     const page_load_metrics::PageLoadTiming& timing,
     const page_load_metrics::PageLoadExtraInfo& info) {
-  RecordTimingHistograms(timing, info);
+  RecordTimingHistograms(timing, info, base::TimeTicks());
   RecordByteAndResourceHistograms(timing, info);
   RecordRappor(timing, info);
 }
@@ -558,8 +583,8 @@ CorePageLoadMetricsObserver::FlushMetricsOnAppEnterBackground(
   // app is about to be backgrounded, as part of the Activity.onPause()
   // flow. After this method is invoked, Chrome may be killed without further
   // notification, so we record final metrics collected up to this point.
-  if (!info.committed_url.is_empty()) {
-    RecordTimingHistograms(timing, info);
+  if (info.did_commit) {
+    RecordTimingHistograms(timing, info, base::TimeTicks::Now());
     RecordByteAndResourceHistograms(timing, info);
   }
   return STOP_OBSERVING;
@@ -629,13 +654,13 @@ void CorePageLoadMetricsObserver::OnLoadedResource(
 
 void CorePageLoadMetricsObserver::RecordTimingHistograms(
     const page_load_metrics::PageLoadTiming& timing,
-    const page_load_metrics::PageLoadExtraInfo& info) {
+    const page_load_metrics::PageLoadExtraInfo& info,
+    base::TimeTicks app_background_time) {
   // Log time to first foreground / time to first background. Log counts that we
   // started a relevant page load in the foreground / background.
-  if (!info.started_in_foreground) {
-    if (info.first_foreground_time)
-      PAGE_LOAD_HISTOGRAM(internal::kHistogramFirstForeground,
-                          info.first_foreground_time.value());
+  if (!info.started_in_foreground && info.first_foreground_time) {
+    PAGE_LOAD_HISTOGRAM(internal::kHistogramFirstForeground,
+                        info.first_foreground_time.value());
   }
 
   if (timing.first_paint && !timing.first_meaningful_paint) {
@@ -668,6 +693,18 @@ void CorePageLoadMetricsObserver::RecordTimingHistograms(
                           timing.first_meaningful_paint.value());
     }
   }
+
+  base::Optional<base::TimeDelta> foreground_duration =
+      GetInitialForegroundDuration(info, app_background_time);
+  if (foreground_duration) {
+    PAGE_LOAD_LONG_HISTOGRAM(internal::kHistogramPageTimingForegroundDuration,
+                             foreground_duration.value());
+    if (timing.first_paint && timing.first_paint < foreground_duration) {
+      PAGE_LOAD_LONG_HISTOGRAM(
+          internal::kHistogramPageTimingForegroundDurationAfterPaint,
+          foreground_duration.value() - timing.first_paint.value());
+    }
+  }
 }
 
 void CorePageLoadMetricsObserver::RecordByteAndResourceHistograms(
@@ -680,6 +717,37 @@ void CorePageLoadMetricsObserver::RecordByteAndResourceHistograms(
   PAGE_BYTES_HISTOGRAM(internal::kHistogramNetworkBytes, network_bytes_);
   PAGE_BYTES_HISTOGRAM(internal::kHistogramCacheBytes, cache_bytes_);
   PAGE_BYTES_HISTOGRAM(internal::kHistogramTotalBytes, total_bytes);
+
+  switch (GetPageLoadType(transition_)) {
+    case LOAD_TYPE_RELOAD:
+      PAGE_BYTES_HISTOGRAM(internal::kHistogramLoadTypeNetworkBytesReload,
+                           network_bytes_);
+      PAGE_BYTES_HISTOGRAM(internal::kHistogramLoadTypeCacheBytesReload,
+                           cache_bytes_);
+      PAGE_BYTES_HISTOGRAM(internal::kHistogramLoadTypeTotalBytesReload,
+                           total_bytes);
+      break;
+    case LOAD_TYPE_FORWARD_BACK:
+      PAGE_BYTES_HISTOGRAM(internal::kHistogramLoadTypeNetworkBytesForwardBack,
+                           network_bytes_);
+      PAGE_BYTES_HISTOGRAM(internal::kHistogramLoadTypeCacheBytesForwardBack,
+                           cache_bytes_);
+      PAGE_BYTES_HISTOGRAM(internal::kHistogramLoadTypeTotalBytesForwardBack,
+                           total_bytes);
+      break;
+    case LOAD_TYPE_NEW_NAVIGATION:
+      PAGE_BYTES_HISTOGRAM(
+          internal::kHistogramLoadTypeNetworkBytesNewNavigation,
+          network_bytes_);
+      PAGE_BYTES_HISTOGRAM(internal::kHistogramLoadTypeCacheBytesNewNavigation,
+                           cache_bytes_);
+      PAGE_BYTES_HISTOGRAM(internal::kHistogramLoadTypeTotalBytesNewNavigation,
+                           total_bytes);
+      break;
+    case LOAD_TYPE_NONE:
+      NOTREACHED();
+      break;
+  }
 
   PAGE_RESOURCE_COUNT_HISTOGRAM(internal::kHistogramNetworkCompletedResources,
                                 num_network_resources_);
@@ -702,7 +770,7 @@ void CorePageLoadMetricsObserver::RecordRappor(
       g_browser_process->rappor_service();
   if (!rappor_service)
     return;
-  if (info.committed_url.is_empty())
+  if (!info.did_commit)
     return;
 
   // Log the eTLD+1 of sites that show poor loading performance.
@@ -711,8 +779,7 @@ void CorePageLoadMetricsObserver::RecordRappor(
     std::unique_ptr<rappor::Sample> sample =
         rappor_service->CreateSample(rappor::UMA_RAPPOR_TYPE);
     sample->SetStringField(
-        "Domain",
-        rappor::GetDomainAndRegistrySampleFromGURL(info.committed_url));
+        "Domain", rappor::GetDomainAndRegistrySampleFromGURL(info.url));
     uint64_t bucket_index =
         RapporHistogramBucketIndex(timing.first_contentful_paint.value());
     sample->SetFlagsField("Bucket", uint64_t(1) << bucket_index,
@@ -729,7 +796,6 @@ void CorePageLoadMetricsObserver::RecordRappor(
   if (timing.first_paint && !timing.first_meaningful_paint) {
     rappor::SampleDomainAndRegistryFromGURL(
         rappor_service,
-        internal::kRapporMetricsNameFirstMeaningfulPaintNotRecorded,
-        info.committed_url);
+        internal::kRapporMetricsNameFirstMeaningfulPaintNotRecorded, info.url);
   }
 }

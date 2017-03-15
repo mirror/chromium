@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "cc/surfaces/display.h"
+#include "cc/surfaces/frame_sink_id_allocator.h"
 #include "cc/test/test_gpu_memory_buffer_manager.h"
 #include "cc/test/test_image_factory.h"
 #include "cc/test/test_shared_bitmap_manager.h"
@@ -62,8 +63,10 @@ class InProcessContextFactory : public ContextFactory,
   void SetDisplayVisible(ui::Compositor* compositor, bool visible) override;
   void ResizeDisplay(ui::Compositor* compositor,
                      const gfx::Size& size) override;
-  void SetDisplayColorSpace(ui::Compositor* compositor,
-                            const gfx::ColorSpace& color_space) override {}
+  void SetDisplayColorSpace(
+      ui::Compositor* compositor,
+      const gfx::ColorSpace& blending_color_space,
+      const gfx::ColorSpace& output_color_space) override {}
   void SetAuthoritativeVSyncInterval(ui::Compositor* compositor,
                                      base::TimeDelta interval) override {}
   void SetDisplayVSyncParameters(ui::Compositor* compositor,
@@ -84,7 +87,7 @@ class InProcessContextFactory : public ContextFactory,
   cc::TestGpuMemoryBufferManager gpu_memory_buffer_manager_;
   cc::TestImageFactory image_factory_;
   cc::TestTaskGraphRunner task_graph_runner_;
-  uint32_t next_surface_sink_id_;
+  cc::FrameSinkIdAllocator frame_sink_id_allocator_;
   bool use_test_surface_;
   bool context_factory_for_test_;
   cc::SurfaceManager* surface_manager_;

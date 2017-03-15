@@ -42,7 +42,6 @@
 #include "core/editing/FrameSelection.h"
 #include "core/editing/InputMethodController.h"
 #include "core/editing/serializers/Serialization.h"
-#include "core/editing/spellcheck/IdleSpellCheckCallback.h"
 #include "core/editing/spellcheck/SpellChecker.h"
 #include "core/events/Event.h"
 #include "core/frame/EventHandlerRegistry.h"
@@ -50,6 +49,7 @@
 #include "core/frame/FrameHost.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalDOMWindow.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/PerformanceMonitor.h"
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
@@ -64,7 +64,6 @@
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/layout/compositing/PaintLayerCompositor.h"
 #include "core/loader/FrameLoadRequest.h"
-#include "core/loader/FrameLoaderClient.h"
 #include "core/loader/NavigationScheduler.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/FocusController.h"
@@ -88,6 +87,7 @@
 #include "platform/graphics/paint/PaintCanvas.h"
 #include "platform/graphics/paint/PaintController.h"
 #include "platform/graphics/paint/PaintRecordBuilder.h"
+#include "platform/graphics/paint/PaintSurface.h"
 #include "platform/graphics/paint/TransformDisplayItem.h"
 #include "platform/json/JSONValues.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
@@ -98,7 +98,6 @@
 #include "public/platform/WebScreenInfo.h"
 #include "public/platform/WebViewScheduler.h"
 #include "third_party/skia/include/core/SkImage.h"
-#include "third_party/skia/include/core/SkSurface.h"
 #include "wtf/PtrUtil.h"
 #include "wtf/StdLibExtras.h"
 
@@ -121,8 +120,8 @@ class DragImageBuilder {
     // TODO(oshima): Remove this when all platforms are migrated to
     // use-zoom-for-dsf.
     float deviceScaleFactor =
-        m_localFrame->host()->deviceScaleFactorDeprecated();
-    float pageScaleFactor = m_localFrame->host()->visualViewport().scale();
+        m_localFrame->page()->deviceScaleFactorDeprecated();
+    float pageScaleFactor = m_localFrame->page()->visualViewport().scale();
     m_bounds.setWidth(m_bounds.width() * deviceScaleFactor * pageScaleFactor);
     m_bounds.setHeight(m_bounds.height() * deviceScaleFactor * pageScaleFactor);
     m_builder = WTF::wrapUnique(new PaintRecordBuilder(
@@ -144,7 +143,7 @@ class DragImageBuilder {
           DoNotRespectImageOrientation) {
     context().getPaintController().endItem<EndTransformDisplayItem>(*m_builder);
     // TODO(fmalita): endRecording() should return a non-const SKP.
-    sk_sp<PaintRecord> recording(
+    sk_sp<PaintRecord> record(
         const_cast<PaintRecord*>(m_builder->endRecording().release()));
 
     // Rasterize upfront, since DragImage::create() is going to do it anyway
@@ -155,7 +154,7 @@ class DragImageBuilder {
     if (!surface)
       return nullptr;
 
-    surface->getCanvas()->drawPicture(recording);
+    record->playback(surface->getCanvas());
     RefPtr<Image> image =
         StaticBitmapImage::create(surface->makeImageSnapshot());
 
@@ -217,7 +216,7 @@ class DraggedNodeImageBuilder {
         draggedLayoutObject->absoluteBoundingBoxRectIncludingDescendants();
     FloatRect boundingBox =
         layer->layoutObject()
-            ->absoluteToLocalQuad(FloatQuad(absoluteBoundingBox), UseTransforms)
+            .absoluteToLocalQuad(FloatQuad(absoluteBoundingBox), UseTransforms)
             .boundingBox();
     DragImageBuilder dragImageBuilder(*m_localFrame, boundingBox);
     {
@@ -260,7 +259,7 @@ inline float parentTextZoomFactor(LocalFrame* frame) {
 
 template class CORE_TEMPLATE_EXPORT Supplement<LocalFrame>;
 
-LocalFrame* LocalFrame::create(FrameLoaderClient* client,
+LocalFrame* LocalFrame::create(LocalFrameClient* client,
                                FrameHost* host,
                                FrameOwner* owner,
                                InterfaceProvider* interfaceProvider,
@@ -271,7 +270,7 @@ LocalFrame* LocalFrame::create(FrameLoaderClient* client,
                         : InterfaceProvider::getEmptyInterfaceProvider(),
       interfaceRegistry ? interfaceRegistry
                         : InterfaceRegistry::getEmptyInterfaceRegistry());
-  InspectorInstrumentation::frameAttachedToParent(frame);
+  probe::frameAttachedToParent(frame);
   return frame;
 }
 
@@ -358,7 +357,6 @@ DEFINE_TRACE(LocalFrame) {
   visitor->trace(m_eventHandler);
   visitor->trace(m_console);
   visitor->trace(m_inputMethodController);
-  visitor->trace(m_idleSpellCheckCallback);
   Frame::trace(visitor);
   Supplementable<LocalFrame>::trace(visitor);
 }
@@ -438,11 +436,11 @@ void LocalFrame::detach(FrameDetachType type) {
 
   client()->willBeDetached();
   // Notify ScriptController that the frame is closing, since its cleanup ends
-  // up calling back to FrameLoaderClient via WindowProxy.
+  // up calling back to LocalFrameClient via WindowProxy.
   script().clearForClose();
   setView(nullptr);
 
-  m_host->eventHandlerRegistry().didRemoveAllEventHandlers(*domWindow());
+  m_host->page().eventHandlerRegistry().didRemoveAllEventHandlers(*domWindow());
 
   domWindow()->frameDestroyed();
 
@@ -455,7 +453,7 @@ void LocalFrame::detach(FrameDetachType type) {
   if (page() && page()->scrollingCoordinator() && m_view)
     page()->scrollingCoordinator()->willDestroyScrollableArea(m_view.get());
 
-  InspectorInstrumentation::frameDetachedFromParent(this);
+  probe::frameDetachedFromParent(this);
   Frame::detach(type);
 
   m_supplements.clear();
@@ -516,6 +514,9 @@ void LocalFrame::documentAttached() {
   DCHECK(document());
   selection().documentAttached(document());
   inputMethodController().documentAttached(document());
+  spellChecker().documentAttached(document());
+  if (isMainFrame())
+    m_hasReceivedUserGesture = false;
 }
 
 LocalDOMWindow* LocalFrame::domWindow() const {
@@ -672,9 +673,10 @@ void LocalFrame::setPageAndTextZoomFactors(float pageZoomFactor,
     if (FrameView* view = this->view()) {
       // Update the scroll position when doing a full page zoom, so the content
       // stays in relatively the same position.
-      ScrollOffset scrollOffset = view->getScrollOffset();
+      ScrollableArea* scrollableArea = view->layoutViewportScrollableArea();
+      ScrollOffset scrollOffset = scrollableArea->getScrollOffset();
       float percentDifference = (pageZoomFactor / m_pageZoomFactor);
-      view->setScrollOffset(
+      scrollableArea->setScrollOffset(
           ScrollOffset(scrollOffset.width() * percentDifference,
                        scrollOffset.height() * percentDifference),
           ProgrammaticScroll);
@@ -714,7 +716,7 @@ double LocalFrame::devicePixelRatio() const {
   if (!m_host)
     return 0;
 
-  double ratio = m_host->deviceScaleFactorDeprecated();
+  double ratio = m_host->page().deviceScaleFactorDeprecated();
   ratio *= pageZoomFactor();
   return ratio;
 }
@@ -725,7 +727,7 @@ std::unique_ptr<DragImage> LocalFrame::nodeImage(Node& node) {
 }
 
 std::unique_ptr<DragImage> LocalFrame::dragImageForSelection(float opacity) {
-  if (!selection().isRange())
+  if (!selection().computeVisibleSelectionInDOMTreeDeprecated().isRange())
     return nullptr;
 
   m_view->updateAllLifecyclePhasesExceptPaint();
@@ -848,7 +850,7 @@ bool LocalFrame::shouldThrottleRendering() const {
   return view() && view()->shouldThrottleRendering();
 }
 
-inline LocalFrame::LocalFrame(FrameLoaderClient* client,
+inline LocalFrame::LocalFrame(LocalFrameClient* client,
                               FrameHost* host,
                               FrameOwner* owner,
                               InterfaceProvider* interfaceProvider,
@@ -865,7 +867,6 @@ inline LocalFrame::LocalFrame(FrameLoaderClient* client,
       m_eventHandler(new EventHandler(*this)),
       m_console(FrameConsole::create(*this)),
       m_inputMethodController(InputMethodController::create(*this)),
-      m_idleSpellCheckCallback(IdleSpellCheckCallback::create(*this)),
       m_navigationDisableCount(0),
       m_pageZoomFactor(parentPageZoomFactor(this)),
       m_textZoomFactor(parentTextZoomFactor(this)),
@@ -891,8 +892,8 @@ void LocalFrame::scheduleVisualUpdateUnlessThrottled() {
   page()->animator().scheduleVisualUpdate(this);
 }
 
-FrameLoaderClient* LocalFrame::client() const {
-  return static_cast<FrameLoaderClient*>(Frame::client());
+LocalFrameClient* LocalFrame::client() const {
+  return static_cast<LocalFrameClient*>(Frame::client());
 }
 
 PluginData* LocalFrame::pluginData() const {

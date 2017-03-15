@@ -46,14 +46,13 @@ class ChromePasswordManagerClient
   ~ChromePasswordManagerClient() override;
 
   // PasswordManagerClient implementation.
-  bool IsAutomaticPasswordSavingEnabled() const override;
   bool IsSavingAndFillingEnabledForCurrentPage() const override;
   bool IsFillingEnabledForCurrentPage() const override;
-  bool IsHSTSActiveForHost(const GURL& origin) const override;
+  void PostHSTSQueryForHost(const GURL& origin,
+                            const HSTSCallback& callback) const override;
   bool OnCredentialManagerUsed() override;
   bool PromptUserToSaveOrUpdatePassword(
       std::unique_ptr<password_manager::PasswordFormManager> form_to_save,
-      password_manager::CredentialSourceType type,
       bool update_password) override;
   bool PromptUserToChooseCredentials(
       std::vector<std::unique_ptr<autofill::PasswordForm>> local_forms,
@@ -161,6 +160,12 @@ class ChromePasswordManagerClient
   // Returns true if this profile has metrics reporting and active sync
   // without custom sync passphrase.
   static bool ShouldAnnotateNavigationEntries(Profile* profile);
+
+#if defined(SAFE_BROWSING_DB_LOCAL) || defined(SAFE_BROWSING_DB_REMOTE)
+  // Return true if we can set PasswordProtectionService in
+  // |password_reuse_detection_manager_|.
+  static bool CanSetPasswordProtectionService();
+#endif
 
   Profile* const profile_;
 

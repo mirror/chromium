@@ -26,7 +26,7 @@
 #include "content/renderer/media/local_media_stream_audio_source.h"
 #include "content/renderer/media/media_stream.h"
 #include "content/renderer/media/media_stream_constraints_util.h"
-#include "content/renderer/media/media_stream_constraints_util_video_source.h"
+#include "content/renderer/media/media_stream_constraints_util_video_device.h"
 #include "content/renderer/media/media_stream_dispatcher.h"
 #include "content/renderer/media/media_stream_video_capturer_source.h"
 #include "content/renderer/media/media_stream_video_track.h"
@@ -366,16 +366,20 @@ void UserMediaClientImpl::SelectVideoDeviceSourceSettings(
   DCHECK(controls->video.requested);
   DCHECK(IsDeviceSource(controls->video.stream_source));
 
-  VideoCaptureCapabilities capabilities;
+  VideoDeviceCaptureCapabilities capabilities;
   capabilities.device_capabilities = std::move(video_input_capabilities);
   capabilities.power_line_capabilities = {
       media::PowerLineFrequency::FREQUENCY_DEFAULT,
       media::PowerLineFrequency::FREQUENCY_50HZ,
       media::PowerLineFrequency::FREQUENCY_60HZ};
+  capabilities.noise_reduction_capabilities = {rtc::Optional<bool>(),
+                                               rtc::Optional<bool>(true),
+                                               rtc::Optional<bool>(false)};
 
   base::PostTaskAndReplyWithResult(
       worker_task_runner_.get(), FROM_HERE,
-      base::Bind(&SelectVideoCaptureSourceSettings, std::move(capabilities),
+      base::Bind(&SelectVideoDeviceCaptureSourceSettings,
+                 std::move(capabilities),
                  user_media_request.videoConstraints()),
       base::Bind(&UserMediaClientImpl::FinalizeSelectVideoDeviceSourceSettings,
                  weak_factory_.GetWeakPtr(), request_id, user_media_request,
@@ -387,21 +391,28 @@ void UserMediaClientImpl::FinalizeSelectVideoDeviceSourceSettings(
     const blink::WebUserMediaRequest& user_media_request,
     std::unique_ptr<StreamControls> controls,
     const RequestSettings& request_settings,
-    const VideoCaptureSourceSelectionResult& selection_result) {
+    const VideoDeviceCaptureSourceSelectionResult& selection_result) {
   DCHECK(CalledOnValidThread());
-  // Select video device.
-  if (!selection_result.has_value()) {
+  if (selection_result.HasValue()) {
+    controls->video.device_id = selection_result.device_id;
+  } else {
+    // TODO(guidou): Abort the request in all cases where |selection_result|
+    // has no value, as the spec mandates.
+    // Currently, some applications rely on the nonstandard behavior of asking
+    // for permission even if constraints cannot be satisfied or there are no
+    // devices. Fix once the standard behavior ceases to be disruptive.
+    // See http://crbug.com/690491.
     blink::WebString failed_constraint_name =
         blink::WebString::fromASCII(selection_result.failed_constraint_name);
-    MediaStreamRequestResult result =
-        failed_constraint_name.isEmpty()
-            ? MEDIA_DEVICE_NO_HARDWARE
-            : MEDIA_DEVICE_CONSTRAINT_NOT_SATISFIED;
-    GetUserMediaRequestFailed(user_media_request, result,
-                              failed_constraint_name);
-    return;
+    blink::WebString device_id_constraint_name = blink::WebString::fromASCII(
+        user_media_request.videoConstraints().basic().deviceId.name());
+    if (failed_constraint_name.equals(device_id_constraint_name)) {
+      GetUserMediaRequestFailed(user_media_request,
+                                MEDIA_DEVICE_CONSTRAINT_NOT_SATISFIED,
+                                failed_constraint_name);
+      return;
+    }
   }
-  controls->video.device_id = selection_result.settings.device_id();
   FinalizeRequestUserMedia(request_id, user_media_request, std::move(controls),
                            request_settings);
 }
@@ -537,7 +548,7 @@ void UserMediaClientImpl::OnStreamGenerated(
   // Wait for the tracks to be started successfully or to fail.
   request_info->CallbackOnTracksStarted(
       base::Bind(&UserMediaClientImpl::OnCreateNativeTracksCompleted,
-                 weak_factory_.GetWeakPtr()));
+                 weak_factory_.GetWeakPtr(), label));
 }
 
 void UserMediaClientImpl::OnStreamGeneratedForCancelledRequest(
@@ -806,6 +817,7 @@ void UserMediaClientImpl::CreateAudioTracks(
 }
 
 void UserMediaClientImpl::OnCreateNativeTracksCompleted(
+    const std::string& label,
     UserMediaRequestInfo* request,
     MediaStreamRequestResult result,
     const blink::WebString& result_name) {
@@ -816,6 +828,7 @@ void UserMediaClientImpl::OnCreateNativeTracksCompleted(
 
   if (result == content::MEDIA_DEVICE_OK) {
     GetUserMediaRequestSucceeded(request->web_stream, request->request);
+    media_stream_dispatcher_->OnStreamStarted(label);
   } else {
     GetUserMediaRequestFailed(request->request, result, result_name);
 
@@ -984,8 +997,7 @@ blink::WebMediaStreamSource UserMediaClientImpl::FindOrInitializeSourceObject(
 
   blink::WebMediaStreamSource source;
   source.initialize(blink::WebString::fromUTF8(device.device.id), type,
-                    blink::WebString::fromUTF8(device.device.name),
-                    false /* remote */);
+                    blink::WebString::fromUTF8(device.device.name));
 
   DVLOG(1) << "Initialize source object :"
            << "id = " << source.id().utf8()

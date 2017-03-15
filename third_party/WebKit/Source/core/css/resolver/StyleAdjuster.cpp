@@ -75,6 +75,7 @@ static EDisplay equivalentBlockDisplay(EDisplay display) {
     case EDisplay::InlineGrid:
       return EDisplay::Grid;
 
+    case EDisplay::Contents:
     case EDisplay::Inline:
     case EDisplay::InlineBlock:
     case EDisplay::TableRowGroup:
@@ -87,7 +88,6 @@ static EDisplay equivalentBlockDisplay(EDisplay display) {
     case EDisplay::TableCaption:
       return EDisplay::Block;
     case EDisplay::None:
-    case EDisplay::Contents:
       ASSERT_NOT_REACHED();
       return display;
   }
@@ -131,9 +131,9 @@ static bool isInTopLayer(const Element* element, const ComputedStyle& style) {
          style.styleType() == PseudoIdBackdrop;
 }
 
-static bool parentStyleForcesZIndexToCreateStackingContext(
-    const ComputedStyle& parentStyle) {
-  return parentStyle.isDisplayFlexibleOrGridBox();
+static bool layoutParentStyleForcesZIndexToCreateStackingContext(
+    const ComputedStyle& layoutParentStyle) {
+  return layoutParentStyle.isDisplayFlexibleOrGridBox();
 }
 
 void StyleAdjuster::adjustStyleForEditing(ComputedStyle& style) {
@@ -159,8 +159,9 @@ static void adjustStyleForFirstLetter(ComputedStyle& style) {
   style.setPosition(EPosition::kStatic);
 }
 
-void StyleAdjuster::adjustStyleForAlignment(ComputedStyle& style,
-                                            const ComputedStyle& parentStyle) {
+void StyleAdjuster::adjustStyleForAlignment(
+    ComputedStyle& style,
+    const ComputedStyle& layoutParentStyle) {
   // To avoid needing to copy the RareNonInheritedData, we repurpose the 'auto'
   // flag to not just mean 'auto' prior to running the StyleAdjuster but also
   // mean 'normal' after running it.
@@ -169,25 +170,25 @@ void StyleAdjuster::adjustStyleForAlignment(ComputedStyle& style,
   // 'auto' computes to the the inherited value.  Otherwise, 'auto' computes to
   // 'normal'.
   if (style.justifyItemsPosition() == ItemPositionAuto) {
-    if (parentStyle.justifyItemsPositionType() == LegacyPosition)
-      style.setJustifyItems(parentStyle.justifyItems());
+    if (layoutParentStyle.justifyItemsPositionType() == LegacyPosition)
+      style.setJustifyItems(layoutParentStyle.justifyItems());
   }
 
   // The 'auto' keyword computes the computed value of justify-items on the
   // parent (minus any legacy keywords), or 'normal' if the box has no parent.
   if (style.justifySelfPosition() == ItemPositionAuto) {
-    if (parentStyle.justifyItemsPositionType() == LegacyPosition)
-      style.setJustifySelfPosition(parentStyle.justifyItemsPosition());
-    else if (parentStyle.justifyItemsPosition() != ItemPositionAuto)
-      style.setJustifySelf(parentStyle.justifyItems());
+    if (layoutParentStyle.justifyItemsPositionType() == LegacyPosition)
+      style.setJustifySelfPosition(layoutParentStyle.justifyItemsPosition());
+    else if (layoutParentStyle.justifyItemsPosition() != ItemPositionAuto)
+      style.setJustifySelf(layoutParentStyle.justifyItems());
   }
 
   // The 'auto' keyword computes the computed value of align-items on the parent
   // or 'normal' if the box has no parent.
   if (style.alignSelfPosition() == ItemPositionAuto &&
-      parentStyle.alignItemsPosition() !=
+      layoutParentStyle.alignItemsPosition() !=
           ComputedStyle::initialDefaultAlignment().position())
-    style.setAlignSelf(parentStyle.alignItems());
+    style.setAlignSelf(layoutParentStyle.alignItems());
 }
 
 static void adjustStyleForHTMLElement(ComputedStyle& style,
@@ -324,26 +325,31 @@ static void adjustOverflow(ComputedStyle& style) {
 }
 
 static void adjustStyleForDisplay(ComputedStyle& style,
-                                  const ComputedStyle& parentStyle,
+                                  const ComputedStyle& layoutParentStyle,
                                   Document* document) {
   if (style.display() == EDisplay::Block && !style.isFloating())
+    return;
+
+  if (style.display() == EDisplay::Contents)
     return;
 
   // FIXME: Don't support this mutation for pseudo styles like first-letter or
   // first-line, since it's not completely clear how that should work.
   if (style.display() == EDisplay::Inline &&
       style.styleType() == PseudoIdNone &&
-      style.getWritingMode() != parentStyle.getWritingMode())
+      style.getWritingMode() != layoutParentStyle.getWritingMode())
     style.setDisplay(EDisplay::InlineBlock);
 
-  // After performing the display mutation, check table rows. We do not honor
-  // position: relative table rows. This has been established for position:
-  // relative in CSS2.1 (and caused a crash in containingBlock() on some sites).
+  // We do not honor position: relative or sticky for table rows, headers, and
+  // footers. This is correct for position: relative in CSS2.1 (and caused a
+  // crash in containingBlock() on some sites) and position: sticky is defined
+  // as following position: relative behavior for table elements. It is
+  // incorrect for CSS3.
   if ((style.display() == EDisplay::TableHeaderGroup ||
        style.display() == EDisplay::TableRowGroup ||
        style.display() == EDisplay::TableFooterGroup ||
        style.display() == EDisplay::TableRow) &&
-      style.position() == EPosition::kRelative)
+      style.hasInFlowPosition())
     style.setPosition(EPosition::kStatic);
 
   // Cannot support position: sticky for table columns and column groups because
@@ -365,7 +371,7 @@ static void adjustStyleForDisplay(ComputedStyle& style,
       style.display() == EDisplay::TableRow ||
       style.display() == EDisplay::TableRowGroup ||
       style.display() == EDisplay::TableCell)
-    style.setWritingMode(parentStyle.getWritingMode());
+    style.setWritingMode(layoutParentStyle.getWritingMode());
 
   // FIXME: Since we don't support block-flow on flexible boxes yet, disallow
   // setting of block-flow to anything other than TopToBottomWritingMode.
@@ -375,7 +381,7 @@ static void adjustStyleForDisplay(ComputedStyle& style,
        style.display() == EDisplay::WebkitInlineBox))
     style.setWritingMode(WritingMode::kHorizontalTb);
 
-  if (parentStyle.isDisplayFlexibleOrGridBox()) {
+  if (layoutParentStyle.isDisplayFlexibleOrGridBox()) {
     style.setFloating(EFloat::kNone);
     style.setDisplay(equivalentBlockDisplay(style.display()));
 
@@ -393,9 +399,9 @@ static void adjustStyleForDisplay(ComputedStyle& style,
 
 void StyleAdjuster::adjustComputedStyle(ComputedStyle& style,
                                         const ComputedStyle& parentStyle,
+                                        const ComputedStyle& layoutParentStyle,
                                         Element* element) {
-  if (style.display() != EDisplay::None &&
-      style.display() != EDisplay::Contents) {
+  if (style.display() != EDisplay::None) {
     if (element && element->isHTMLElement())
       adjustStyleForHTMLElement(style, toHTMLElement(*element));
 
@@ -408,15 +414,18 @@ void StyleAdjuster::adjustComputedStyle(ComputedStyle& style,
 
     // Absolute/fixed positioned elements, floating elements and the document
     // element need block-like outside display.
-    if (style.hasOutOfFlowPosition() || style.isFloating() ||
-        (element && element->document().documentElement() == element))
+    if (style.display() != EDisplay::Contents &&
+        (style.hasOutOfFlowPosition() || style.isFloating()))
+      style.setDisplay(equivalentBlockDisplay(style.display()));
+
+    if (element && element->document().documentElement() == element)
       style.setDisplay(equivalentBlockDisplay(style.display()));
 
     // We don't adjust the first letter style earlier because we may change the
     // display setting in adjustStyeForTagName() above.
     adjustStyleForFirstLetter(style);
 
-    adjustStyleForDisplay(style, parentStyle,
+    adjustStyleForDisplay(style, layoutParentStyle,
                           element ? &element->document() : 0);
 
     // Paint containment forces a block formatting context, so we must coerce
@@ -432,7 +441,8 @@ void StyleAdjuster::adjustComputedStyle(ComputedStyle& style,
 
   // Make sure our z-index value is only applied if the object is positioned.
   if (style.position() == EPosition::kStatic &&
-      !parentStyleForcesZIndexToCreateStackingContext(parentStyle)) {
+      !layoutParentStyleForcesZIndexToCreateStackingContext(
+          layoutParentStyle)) {
     style.setIsStackingContext(false);
     // TODO(alancutter): Avoid altering z-index here.
     if (!style.hasAutoZIndex())
@@ -499,7 +509,7 @@ void StyleAdjuster::adjustComputedStyle(ComputedStyle& style,
     if (isSVGTextElement(*element))
       style.clearMultiCol();
   }
-  adjustStyleForAlignment(style, parentStyle);
+  adjustStyleForAlignment(style, layoutParentStyle);
 }
 
 }  // namespace blink

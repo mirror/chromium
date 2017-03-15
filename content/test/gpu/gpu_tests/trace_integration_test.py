@@ -93,7 +93,7 @@ class TraceIntegrationTest(gpu_integration_test.GpuIntegrationTest):
     # Perform page navigation.
     url = self.UrlOfStaticFilePath(test_path)
     tab.Navigate(url, script_to_evaluate_on_commit=test_harness_script)
-    tab.action_runner.WaitForJavaScriptCondition2(
+    tab.action_runner.WaitForJavaScriptCondition(
       'domAutomationController._finished', timeout=30)
 
     # Stop tracing.
@@ -120,8 +120,8 @@ class TraceIntegrationTest(gpu_integration_test.GpuIntegrationTest):
     return trace_test_expectations.TraceTestExpectations()
 
   @classmethod
-  def setUpClass(cls):
-    super(cls, TraceIntegrationTest).setUpClass()
+  def SetUpProcess(cls):
+    super(cls, TraceIntegrationTest).SetUpProcess()
     path_util.SetupTelemetryPaths()
     cls.CustomizeOptions()
     cls.SetBrowserOptions(cls._finder_options)

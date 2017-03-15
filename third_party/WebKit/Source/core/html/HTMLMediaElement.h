@@ -27,7 +27,9 @@
 #ifndef HTMLMediaElement_h
 #define HTMLMediaElement_h
 
+#include <memory>
 #include "bindings/core/v8/ActiveScriptWrappable.h"
+#include "bindings/core/v8/Nullable.h"
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/TraceWrapperMember.h"
 #include "core/CoreExport.h"
@@ -35,6 +37,7 @@
 #include "core/dom/SuspendableObject.h"
 #include "core/events/GenericEventQueue.h"
 #include "core/html/HTMLElement.h"
+#include "core/html/HTMLMediaElementControlsList.h"
 #include "core/html/track/TextTrack.h"
 #include "platform/Supplementable.h"
 #include "platform/WebTaskRunner.h"
@@ -42,7 +45,6 @@
 #include "platform/network/mime/MIMETypeRegistry.h"
 #include "public/platform/WebAudioSourceProviderClient.h"
 #include "public/platform/WebMediaPlayerClient.h"
-#include <memory>
 
 namespace blink {
 
@@ -97,6 +99,10 @@ class CORE_EXPORT HTMLMediaElement
   // If HTMLMediaElement is using MediaTracks (either placeholder or provided
   // by the page).
   static bool mediaTracksEnabledInternally();
+
+  // Notify the HTMLMediaElement that the media controls settings have changed
+  // for the given document.
+  static void onMediaControlsEnabledChange(Document*);
 
   DECLARE_VIRTUAL_TRACE();
 
@@ -198,6 +204,8 @@ class CORE_EXPORT HTMLMediaElement
   // controls
   bool shouldShowControls(
       const RecordMetricsBehavior = RecordMetricsBehavior::DoNotRecord) const;
+  HTMLMediaElementControlsList* controlsList() const;
+  void controlsListValueWasSet();
   double volume() const;
   void setVolume(double, ExceptionState& = ASSERT_NO_EXCEPTION);
   bool muted() const;
@@ -355,7 +363,7 @@ class CORE_EXPORT HTMLMediaElement
   bool isInteractiveContent() const final;
 
   // SuspendableObject functions.
-  void contextDestroyed(ExecutionContext*) final;
+  void contextDestroyed(ExecutionContext*) override;
 
   virtual void updateDisplayState() {}
 
@@ -611,7 +619,7 @@ class CORE_EXPORT HTMLMediaElement
     ExecuteOnStopDelayingLoadEventTask
   };
   DeferredLoadState m_deferredLoadState;
-  Timer<HTMLMediaElement> m_deferredLoadTimer;
+  TaskRunnerTimer<HTMLMediaElement> m_deferredLoadTimer;
 
   std::unique_ptr<WebMediaPlayer> m_webMediaPlayer;
   WebLayer* m_webLayer;
@@ -731,6 +739,8 @@ class CORE_EXPORT HTMLMediaElement
   friend class TrackDisplayUpdateScope;
   friend class MediaControlsTest;
   friend class HTMLMediaElementTest;
+  friend class HTMLMediaElementEventListenersTest;
+  friend class HTMLVideoElement;
   friend class HTMLVideoElementTest;
   friend class MediaControlsOrientationLockDelegateTest;
 
@@ -744,6 +754,7 @@ class CORE_EXPORT HTMLMediaElement
   IntRect m_currentIntersectRect;
 
   Member<MediaControls> m_mediaControls;
+  Member<HTMLMediaElementControlsList> m_controlsList;
 
   static URLRegistry* s_mediaStreamRegistry;
 };

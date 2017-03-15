@@ -227,8 +227,12 @@ DefaultCommandLineSwitch g_default_switches[] = {
   { switches::kEnableDefaultMediaSession, "" },
 #endif
 #if BUILDFLAG(IS_CAST_AUDIO_ONLY)
+#if defined(OS_ANDROID)
+  { switches::kDisableGLDrawingForTests, "" },
+#else
   { switches::kDisableGpu, "" },
-#endif
+#endif  // defined(OS_ANDROID)
+#endif  // BUILDFLAG(IS_CAST_AUDIO_ONLY)
 #if defined(OS_LINUX)
 #if defined(ARCH_CPU_X86_FAMILY)
   // This is needed for now to enable the x11 Ozone platform to work with
@@ -236,7 +240,7 @@ DefaultCommandLineSwitch g_default_switches[] = {
   { switches::kIgnoreGpuBlacklist, ""},
 #elif defined(ARCH_CPU_ARM_FAMILY)
 #if !BUILDFLAG(IS_CAST_AUDIO_ONLY)
-  { switches::kEnableHardwareOverlays, "" },
+  {switches::kEnableHardwareOverlays, "cast"},
 #endif
 #endif
 #endif  // defined(OS_LINUX)
@@ -251,6 +255,8 @@ DefaultCommandLineSwitch g_default_switches[] = {
   // Enable navigator.connection API.
   // TODO(derekjchow): Remove this switch when enabled by default.
   { switches::kEnableNetworkInformation, "" },
+  // TODO(halliwell): Remove after fixing b/35422666.
+  { switches::kEnableUseZoomForDSF, "false" },
   { NULL, NULL },  // Termination
 };
 
@@ -437,14 +443,13 @@ void CastBrowserMainParts::PreMainMessageLoopRun() {
   memory_pressure_monitor_.reset(new CastMemoryPressureMonitor());
 #endif  // defined(OS_ANDROID)
 
+  cast_browser_process_->SetNetLog(net_log_.get());
+  url_request_context_factory_->InitializeOnUIThread(net_log_.get());
+
   cast_browser_process_->SetConnectivityChecker(ConnectivityChecker::Create(
       content::BrowserThread::GetTaskRunnerForThread(
           content::BrowserThread::IO),
       url_request_context_factory_->GetSystemGetter()));
-
-  cast_browser_process_->SetNetLog(net_log_.get());
-
-  url_request_context_factory_->InitializeOnUIThread(net_log_.get());
 
   cast_browser_process_->SetBrowserContext(
       base::MakeUnique<CastBrowserContext>(url_request_context_factory_));

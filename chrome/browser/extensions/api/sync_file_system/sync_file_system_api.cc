@@ -108,12 +108,12 @@ void SyncFileSystemDeleteFileSystemFunction::DidDeleteFileSystem(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (error != base::File::FILE_OK) {
     error_ = ErrorToString(sync_file_system::FileErrorToSyncStatusCode(error));
-    SetResult(base::MakeUnique<base::FundamentalValue>(false));
+    SetResult(base::MakeUnique<base::Value>(false));
     SendResponse(false);
     return;
   }
 
-  SetResult(base::MakeUnique<base::FundamentalValue>(true));
+  SetResult(base::MakeUnique<base::Value>(true));
   SendResponse(true);
 }
 
@@ -371,8 +371,8 @@ SyncFileSystemSetConflictResolutionPolicyFunction::Run() {
 
 ExtensionFunction::ResponseAction
 SyncFileSystemGetConflictResolutionPolicyFunction::Run() {
-  return RespondNow(OneArgument(
-      base::MakeUnique<base::StringValue>(api::sync_file_system::ToString(
+  return RespondNow(
+      OneArgument(base::MakeUnique<base::Value>(api::sync_file_system::ToString(
           api::sync_file_system::CONFLICT_RESOLUTION_POLICY_LAST_WRITE_WIN))));
 }
 

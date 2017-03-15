@@ -4,13 +4,14 @@
 
 #include "ash/common/wm/screen_dimmer.h"
 
+#include "ash/common/window_user_data.h"
 #include "ash/common/wm/container_finder.h"
 #include "ash/common/wm/window_dimmer.h"
-#include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
-#include "ash/common/wm_window_user_data.h"
 #include "ash/public/cpp/shell_window_ids.h"
+#include "ash/shell.h"
 #include "base/memory/ptr_util.h"
+#include "ui/aura/window.h"
 
 namespace ash {
 namespace {
@@ -27,14 +28,14 @@ ScreenDimmer::ScreenDimmer(Container container)
     : container_(container),
       is_dimming_(false),
       at_bottom_(false),
-      window_dimmers_(base::MakeUnique<WmWindowUserData<WindowDimmer>>()) {
-  WmShell::Get()->AddShellObserver(this);
+      window_dimmers_(base::MakeUnique<WindowUserData<WindowDimmer>>()) {
+  Shell::GetInstance()->AddShellObserver(this);
 }
 
 ScreenDimmer::~ScreenDimmer() {
   // Usage in chrome results in ScreenDimmer outliving the shell.
-  if (WmShell::HasInstance())
-    WmShell::Get()->RemoveShellObserver(this);
+  if (Shell::HasInstance())
+    Shell::GetInstance()->RemoveShellObserver(this);
 }
 
 void ScreenDimmer::SetDimming(bool should_dim) {
@@ -45,9 +46,9 @@ void ScreenDimmer::SetDimming(bool should_dim) {
   Update(should_dim);
 }
 
-std::vector<WmWindow*> ScreenDimmer::GetAllContainers() {
+aura::Window::Windows ScreenDimmer::GetAllContainers() {
   return container_ == Container::ROOT
-             ? WmShell::Get()->GetAllRootWindows()
+             ? Shell::GetAllRootWindows()
              : wm::GetContainersFromAllRootWindows(
                    ash::kShellWindowId_LockScreenContainersContainer);
 }
@@ -57,7 +58,7 @@ void ScreenDimmer::OnRootWindowAdded(WmWindow* root_window) {
 }
 
 void ScreenDimmer::Update(bool should_dim) {
-  for (WmWindow* container : GetAllContainers()) {
+  for (aura::Window* container : GetAllContainers()) {
     WindowDimmer* window_dimmer = window_dimmers_->Get(container);
     if (should_dim) {
       if (!window_dimmer) {

@@ -95,10 +95,10 @@ class AppListOverlayView : public views::View {
 
   // Overridden from views::View:
   void OnPaint(gfx::Canvas* canvas) override {
-    SkPaint paint;
-    paint.setStyle(SkPaint::kFill_Style);
-    paint.setColor(SK_ColorWHITE);
-    canvas->DrawRoundRect(GetContentsBounds(), corner_radius_, paint);
+    cc::PaintFlags flags;
+    flags.setStyle(cc::PaintFlags::kFill_Style);
+    flags.setColor(SK_ColorWHITE);
+    canvas->DrawRoundRect(GetContentsBounds(), corner_radius_, flags);
   }
 
  private:
@@ -227,25 +227,6 @@ void AppListView::InitAsBubble(gfx::NativeView parent, int initial_apps_page) {
 
   UMA_HISTOGRAM_TIMES("Apps.AppListCreationTime",
                       base::Time::Now() - start_time);
-}
-
-void AppListView::InitAsFramelessWindow(gfx::NativeView parent,
-                                        int initial_apps_page,
-                                        gfx::Rect bounds) {
-  set_color(kContentsBackgroundColor);
-  InitContents(parent, initial_apps_page);
-  overlay_view_ = new AppListOverlayView(0 /* no corners */);
-  AddChildView(overlay_view_);
-
-  views::Widget* widget = new views::Widget();
-  views::Widget::InitParams params(
-      views::Widget::InitParams::TYPE_WINDOW_FRAMELESS);
-  params.parent = parent;
-  params.delegate = this;
-  widget->Init(params);
-  widget->SetBounds(bounds);
-
-  InitChildWidgets();
 }
 
 void AppListView::SetBubbleArrow(views::BubbleBorder::Arrow arrow) {

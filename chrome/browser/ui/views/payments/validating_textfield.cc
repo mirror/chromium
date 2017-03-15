@@ -9,8 +9,8 @@
 namespace payments {
 
 ValidatingTextfield::ValidatingTextfield(
-    std::unique_ptr<ValidatingTextfield::Delegate> delegate)
-    : Textfield(), delegate_(std::move(delegate)) {}
+    std::unique_ptr<ValidationDelegate> delegate)
+    : Textfield(), delegate_(std::move(delegate)), was_blurred_(false) {}
 
 ValidatingTextfield::~ValidatingTextfield() {}
 
@@ -19,8 +19,8 @@ void ValidatingTextfield::OnBlur() {
 
   // The first validation should be on a blur. The subsequent validations will
   // occur when the content changes.
-  if (!was_validated_) {
-    was_validated_ = true;
+  if (!was_blurred_) {
+    was_blurred_ = true;
     Validate();
   }
 }
@@ -28,7 +28,7 @@ void ValidatingTextfield::OnBlur() {
 void ValidatingTextfield::OnContentsChanged() {
   // Validation on every keystroke only happens if the field has been validated
   // before as part of a blur.
-  if (!was_validated_)
+  if (!was_blurred_)
     return;
 
   Validate();

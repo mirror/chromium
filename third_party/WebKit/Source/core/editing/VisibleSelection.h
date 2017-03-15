@@ -63,16 +63,7 @@ class CORE_TEMPLATE_CLASS_EXPORT VisibleSelectionTemplate {
 
   SelectionType getSelectionType() const { return m_selectionType; }
 
-  void setAffinity(TextAffinity affinity) { m_affinity = affinity; }
   TextAffinity affinity() const { return m_affinity; }
-
-  // TODO(yosin): To make |VisibleSelection| as immutable object, we should
-  // get rid of |setBase()| and |setExtent()| by replacing them with
-  // |createVisibleSelection()|.
-  void setBase(const PositionTemplate<Strategy>&);
-  void setBase(const VisiblePositionTemplate<Strategy>&);
-  void setExtent(const PositionTemplate<Strategy>&);
-  void setExtent(const VisiblePositionTemplate<Strategy>&);
 
   SelectionTemplate<Strategy> asSelection() const;
   PositionTemplate<Strategy> base() const { return m_base; }
@@ -119,7 +110,6 @@ class CORE_TEMPLATE_CLASS_EXPORT VisibleSelectionTemplate {
   // True if base() <= extent().
   bool isBaseFirst() const { return m_baseIsFirst; }
   bool isDirectional() const { return m_isDirectional; }
-  void setIsDirectional(bool isDirectional) { m_isDirectional = isDirectional; }
 
   void appendTrailingWhitespace();
 
@@ -139,8 +129,6 @@ class CORE_TEMPLATE_CLASS_EXPORT VisibleSelectionTemplate {
                             const PositionTemplate<Strategy>&);
 
   DECLARE_TRACE();
-
-  void updateIfNeeded();
 
 #ifndef NDEBUG
   void showTreeForThis() const;
@@ -207,9 +195,6 @@ createVisibleSelection(const SelectionInFlatTree&);
 // We don't yet support multi-range selections, so we only ever have one range
 // to return.
 CORE_EXPORT EphemeralRange firstEphemeralRangeOf(const VisibleSelection&);
-
-// TODO(sof): move more firstRangeOf() uses to be over EphemeralRange instead.
-CORE_EXPORT Range* firstRangeOf(const VisibleSelection&);
 
 CORE_EXPORT std::ostream& operator<<(std::ostream&, const VisibleSelection&);
 CORE_EXPORT std::ostream& operator<<(std::ostream&,

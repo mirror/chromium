@@ -7,17 +7,19 @@
 #include "ash/common/frame/caption_buttons/frame_caption_button_container_view.h"
 #include "ash/common/frame/default_header_painter.h"
 #include "ash/common/session/session_state_delegate.h"
-#include "ash/common/wm_lookup.h"
 #include "ash/common/wm_shell.h"
+#include "ash/common/wm_window.h"
+#include "ash/shell.h"
 #include "ui/gfx/canvas.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/widget/widget.h"
 
 namespace ash {
 
-HeaderView::HeaderView(views::Widget* target_widget)
+HeaderView::HeaderView(views::Widget* target_widget,
+                       mojom::WindowStyle window_style)
     : target_widget_(target_widget),
-      header_painter_(new DefaultHeaderPainter),
+      header_painter_(base::MakeUnique<DefaultHeaderPainter>(window_style)),
       avatar_icon_(nullptr),
       caption_button_container_(nullptr),
       fullscreen_visible_fraction_(0) {
@@ -29,11 +31,11 @@ HeaderView::HeaderView(views::Widget* target_widget)
   header_painter_->Init(target_widget_, this, caption_button_container_);
   UpdateAvatarIcon();
 
-  WmShell::Get()->AddShellObserver(this);
+  Shell::GetInstance()->AddShellObserver(this);
 }
 
 HeaderView::~HeaderView() {
-  WmShell::Get()->RemoveShellObserver(this);
+  Shell::GetInstance()->RemoveShellObserver(this);
 }
 
 void HeaderView::SchedulePaintForTitle() {
@@ -65,7 +67,7 @@ int HeaderView::GetMinimumWidth() const {
 
 void HeaderView::UpdateAvatarIcon() {
   SessionStateDelegate* delegate = WmShell::Get()->GetSessionStateDelegate();
-  WmWindow* window = WmLookup::Get()->GetWindowForWidget(target_widget_);
+  WmWindow* window = WmWindow::Get(target_widget_->GetNativeWindow());
   bool show = delegate->ShouldShowAvatar(window);
   if (!show) {
     if (!avatar_icon_)

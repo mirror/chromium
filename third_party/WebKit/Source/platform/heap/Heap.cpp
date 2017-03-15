@@ -145,14 +145,14 @@ void ThreadHeapStats::decreaseAllocatedSpace(size_t delta) {
   ProcessHeap::decreaseTotalAllocatedSpace(delta);
 }
 
-ThreadHeap::ThreadHeap()
-    : m_regionTree(WTF::makeUnique<RegionTree>()),
+ThreadHeap::ThreadHeap(ThreadState* threadState)
+    : m_threadState(threadState),
+      m_regionTree(WTF::makeUnique<RegionTree>()),
       m_heapDoesNotContainCache(WTF::wrapUnique(new HeapDoesNotContainCache)),
-      m_safePointBarrier(WTF::makeUnique<SafePointBarrier>()),
       m_freePagePool(WTF::wrapUnique(new PagePool)),
       m_markingStack(CallbackStack::create()),
       m_postMarkingCallbackStack(CallbackStack::create()),
-      m_globalWeakCallbackStack(CallbackStack::create()),
+      m_weakCallbackStack(CallbackStack::create()),
       m_ephemeronStack(CallbackStack::create()) {
   if (ThreadState::current()->isMainThread())
     s_mainThreadHeap = this;
@@ -161,41 +161,9 @@ ThreadHeap::ThreadHeap()
 ThreadHeap::~ThreadHeap() {
 }
 
-void ThreadHeap::attach(ThreadState* thread) {
-  MutexLocker locker(m_threadAttachMutex);
-  m_threads.insert(thread);
-}
-
-void ThreadHeap::detach(ThreadState* thread) {
-  ASSERT(ThreadState::current() == thread);
-  bool isLastThread = false;
-  {
-    // Grab the threadAttachMutex to ensure only one thread can shutdown at
-    // a time and that no other thread can do a global GC. It also allows
-    // safe iteration of the m_threads set which happens as part of
-    // thread local GC asserts. We enter a safepoint while waiting for the
-    // lock to avoid a dead-lock where another thread has already requested
-    // GC.
-    MutexLocker locker(m_threadAttachMutex);
-    thread->runTerminationGC();
-    ASSERT(m_threads.contains(thread));
-    m_threads.remove(thread);
-    isLastThread = m_threads.isEmpty();
-  }
-  if (thread->isMainThread())
-    DCHECK_EQ(heapStats().allocatedSpace(), 0u);
-  if (isLastThread)
-    delete this;
-}
-
 #if DCHECK_IS_ON()
 BasePage* ThreadHeap::findPageFromAddress(Address address) {
-  MutexLocker locker(m_threadAttachMutex);
-  for (ThreadState* state : m_threads) {
-    if (BasePage* page = state->findPageFromAddress(address))
-      return page;
-  }
-  return nullptr;
+  return m_threadState->findPageFromAddress(address);
 }
 #endif
 
@@ -280,12 +248,12 @@ bool ThreadHeap::popAndInvokePostMarkingCallback(Visitor* visitor) {
 void ThreadHeap::pushWeakCallback(void* closure, WeakCallback callback) {
   ASSERT(ThreadState::current()->isInGC());
 
-  CallbackStack::Item* slot = m_globalWeakCallbackStack->allocateEntry();
+  CallbackStack::Item* slot = m_weakCallbackStack->allocateEntry();
   *slot = CallbackStack::Item(closure, callback);
 }
 
-bool ThreadHeap::popAndInvokeGlobalWeakCallback(Visitor* visitor) {
-  if (CallbackStack::Item* item = m_globalWeakCallbackStack->pop()) {
+bool ThreadHeap::popAndInvokeWeakCallback(Visitor* visitor) {
+  if (CallbackStack::Item* item = m_weakCallbackStack->pop()) {
     item->call(visitor);
     return true;
   }
@@ -315,7 +283,7 @@ bool ThreadHeap::weakTableRegistered(const void* table) {
 void ThreadHeap::commitCallbackStacks() {
   m_markingStack->commit();
   m_postMarkingCallbackStack->commit();
-  m_globalWeakCallbackStack->commit();
+  m_weakCallbackStack->commit();
   m_ephemeronStack->commit();
 }
 
@@ -341,25 +309,22 @@ void ThreadHeap::registerMovingObjectCallback(MovableReference reference,
 void ThreadHeap::decommitCallbackStacks() {
   m_markingStack->decommit();
   m_postMarkingCallbackStack->decommit();
-  m_globalWeakCallbackStack->decommit();
+  m_weakCallbackStack->decommit();
   m_ephemeronStack->decommit();
 }
 
 void ThreadHeap::preGC() {
   ASSERT(!ThreadState::current()->isInGC());
-  for (ThreadState* state : m_threads)
-    state->preGC();
+  m_threadState->preGC();
 }
 
 void ThreadHeap::postGC(BlinkGC::GCType gcType) {
   ASSERT(ThreadState::current()->isInGC());
-  for (ThreadState* state : m_threads)
-    state->postGC(gcType);
+  m_threadState->postGC(gcType);
 }
 
 void ThreadHeap::preSweep(BlinkGC::GCType gcType) {
-  for (ThreadState* state : m_threads)
-    state->preSweep(gcType);
+  m_threadState->preSweep(gcType);
 }
 
 void ThreadHeap::processMarkingStack(Visitor* visitor) {
@@ -400,24 +365,24 @@ void ThreadHeap::postMarkingProcessing(Visitor* visitor) {
   ASSERT(m_markingStack->isEmpty());
 }
 
-void ThreadHeap::globalWeakProcessing(Visitor* visitor) {
-  TRACE_EVENT0("blink_gc", "ThreadHeap::globalWeakProcessing");
+void ThreadHeap::weakProcessing(Visitor* visitor) {
+  TRACE_EVENT0("blink_gc", "ThreadHeap::weakProcessing");
   double startTime = WTF::currentTimeMS();
 
   // Call weak callbacks on objects that may now be pointing to dead objects.
-  while (popAndInvokeGlobalWeakCallback(visitor)) {
+  while (popAndInvokeWeakCallback(visitor)) {
   }
 
   // It is not permitted to trace pointers of live objects in the weak
   // callback phase, so the marking stack should still be empty here.
   ASSERT(m_markingStack->isEmpty());
 
-  double timeForGlobalWeakProcessing = WTF::currentTimeMS() - startTime;
+  double timeForWeakProcessing = WTF::currentTimeMS() - startTime;
   DEFINE_THREAD_SAFE_STATIC_LOCAL(
-      CustomCountHistogram, globalWeakTimeHistogram,
+      CustomCountHistogram, weakProcessingTimeHistogram,
       new CustomCountHistogram("BlinkGC.TimeForGlobalWeakProcessing", 1,
                                10 * 1000, 50));
-  globalWeakTimeHistogram.count(timeForGlobalWeakProcessing);
+  weakProcessingTimeHistogram.count(timeForWeakProcessing);
 }
 
 void ThreadHeap::reportMemoryUsageHistogram() {
@@ -511,15 +476,12 @@ void ThreadHeap::reportMemoryUsageForTracing() {
 }
 
 size_t ThreadHeap::objectPayloadSizeForTesting() {
-  // MEMO: is threadAttachMutex locked?
   size_t objectPayloadSize = 0;
-  for (ThreadState* state : m_threads) {
-    state->setGCState(ThreadState::GCRunning);
-    state->makeConsistentForGC();
-    objectPayloadSize += state->objectPayloadSizeForTesting();
-    state->setGCState(ThreadState::Sweeping);
-    state->setGCState(ThreadState::NoGCScheduled);
-  }
+  m_threadState->setGCState(ThreadState::GCRunning);
+  m_threadState->makeConsistentForGC();
+  objectPayloadSize += m_threadState->objectPayloadSizeForTesting();
+  m_threadState->setGCState(ThreadState::Sweeping);
+  m_threadState->setGCState(ThreadState::NoGCScheduled);
   return objectPayloadSize;
 }
 
@@ -528,23 +490,13 @@ void ThreadHeap::visitPersistentRoots(Visitor* visitor) {
   TRACE_EVENT0("blink_gc", "ThreadHeap::visitPersistentRoots");
   ProcessHeap::crossThreadPersistentRegion().tracePersistentNodes(visitor);
 
-  for (ThreadState* state : m_threads)
-    state->visitPersistents(visitor);
+  m_threadState->visitPersistents(visitor);
 }
 
 void ThreadHeap::visitStackRoots(Visitor* visitor) {
   ASSERT(ThreadState::current()->isInGC());
   TRACE_EVENT0("blink_gc", "ThreadHeap::visitStackRoots");
-  for (ThreadState* state : m_threads)
-    state->visitStack(visitor);
-}
-
-void ThreadHeap::enterSafePoint(ThreadState* threadState) {
-  m_safePointBarrier->enterSafePoint(threadState);
-}
-
-void ThreadHeap::leaveSafePoint() {
-  m_safePointBarrier->leaveSafePoint();
+  m_threadState->visitStack(visitor);
 }
 
 BasePage* ThreadHeap::lookupPageForAddress(Address address) {
@@ -564,8 +516,7 @@ void ThreadHeap::resetHeapCounters() {
   ProcessHeap::decreaseTotalMarkedObjectSize(m_stats.markedObjectSize());
 
   m_stats.reset();
-  for (ThreadState* state : m_threads)
-    state->resetHeapCounters();
+  m_threadState->resetHeapCounters();
 }
 
 ThreadHeap* ThreadHeap::s_mainThreadHeap = nullptr;

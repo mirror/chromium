@@ -4,8 +4,9 @@
 
 module media.mojom;
 
-import "ui/gfx/geometry/mojo/geometry.mojom";
+import "gpu/ipc/common/mailbox_holder.mojom";
 import "mojo/common/time.mojom";
+import "ui/gfx/geometry/mojo/geometry.mojom";
 
 // See media/base/buffering_state.h for descriptions.
 [Native]
@@ -22,6 +23,10 @@ enum AudioCodec;
 // See media/base/channel_layout.h for descriptions.
 [Native]
 enum ChannelLayout;
+
+// See media/base/output_device_info.h for descriptions.
+[Native]
+enum OutputDeviceStatus;
 
 // See media/base/sample_format.h for descriptions.
 [Native]
@@ -125,9 +130,6 @@ struct DecoderBuffer {
   // These fields indicate the amount of data to discard after decoding.
   mojo.common.mojom.TimeDelta front_discard;
   mojo.common.mojom.TimeDelta back_discard;
-
-  // Indicates this buffer is part of a splice around |splice_timestamp|.
-  mojo.common.mojom.TimeDelta splice_timestamp;
 };
 
 // This defines a mojo transport format for media::AudioBuffer.
@@ -177,6 +179,18 @@ struct VideoFrame {
   // Timestamp in microseconds of the associated frame.
   mojo.common.mojom.TimeDelta timestamp;
 
+  // Contents of the video frame. Will be null for end of stream frames.
+  VideoFrameData? data;
+};
+
+// Possible choices for storing VideoFrame data.
+union VideoFrameData {
+  SharedBufferVideoFrameData shared_buffer_data;
+  MailboxVideoFrameData mailbox_data;
+};
+
+// This defines video frame data stored in a Mojo shared buffer.
+struct SharedBufferVideoFrameData {
   // Reference to the shared memory containing the frame's data.
   handle<shared_buffer> frame_data;
   uint64 frame_data_size;
@@ -189,6 +203,11 @@ struct VideoFrame {
   uint64 y_offset;
   uint64 u_offset;
   uint64 v_offset;
+};
+
+// This defines video frame data stored in texture mailboxes.
+struct MailboxVideoFrameData {
+  array<gpu.mojom.MailboxHolder> mailbox_holder;
 };
 
 struct PipelineStatistics {

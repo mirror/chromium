@@ -12,7 +12,6 @@
 #include "chrome/common/pref_names.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/browser/permission_type.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/user_metrics.h"
 #include "content/public/browser/web_contents.h"
@@ -37,7 +36,6 @@ using chromeos::attestation::PlatformVerificationDialog;
 ProtectedMediaIdentifierPermissionContext::
     ProtectedMediaIdentifierPermissionContext(Profile* profile)
     : PermissionContextBase(profile,
-                            content::PermissionType::PROTECTED_MEDIA_IDENTIFIER,
                             CONTENT_SETTINGS_TYPE_PROTECTED_MEDIA_IDENTIFIER)
 #if defined(OS_CHROMEOS)
       ,
@@ -85,6 +83,7 @@ void ProtectedMediaIdentifierPermissionContext::DecidePermission(
 
 ContentSetting
 ProtectedMediaIdentifierPermissionContext::GetPermissionStatusInternal(
+    content::RenderFrameHost* render_frame_host,
     const GURL& requesting_origin,
     const GURL& embedding_origin) const {
   DVLOG(1) << __func__ << ": (" << requesting_origin.spec() << ", "
@@ -96,8 +95,8 @@ ProtectedMediaIdentifierPermissionContext::GetPermissionStatusInternal(
   }
 
   ContentSetting content_setting =
-      PermissionContextBase::GetPermissionStatusInternal(requesting_origin,
-                                                         embedding_origin);
+      PermissionContextBase::GetPermissionStatusInternal(
+          render_frame_host, requesting_origin, embedding_origin);
   DCHECK(content_setting == CONTENT_SETTING_ALLOW ||
          content_setting == CONTENT_SETTING_BLOCK ||
          content_setting == CONTENT_SETTING_ASK);

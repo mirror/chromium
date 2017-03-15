@@ -59,13 +59,15 @@ using namespace Unicode;
 // As of Jan 2017, StringImpl needs 2 * sizeof(int) + 29 bits of data, and
 // sizeof(ThreadRestrictionVerifier) is 16 bytes. Thus, in DCHECK mode the
 // class may be padded to 32 bytes.
-#if DCHECK_IS_ON()
+// TODO(meade): Revert this by 17 Mar 17.
+// This is for investigating crbug.com/694520
+// #if DCHECK_IS_ON()
 static_assert(sizeof(StringImpl) <= 8 * sizeof(int),
               "StringImpl should stay small");
-#else
-static_assert(sizeof(StringImpl) <= 3 * sizeof(int),
-              "StringImpl should stay small");
-#endif
+// #else
+// static_assert(sizeof(StringImpl) <= 3 * sizeof(int),
+//               "StringImpl should stay small");
+// #endif
 
 #ifdef STRING_STATS
 
@@ -334,12 +336,14 @@ bool StringImpl::isSafeToSendToAnotherThread() const {
   return false;
 }
 
-#if DCHECK_IS_ON()
+// TODO(meade): Revert this by 17 Mar 17.
+// This is for investigating crbug.com/694520
+// #if DCHECK_IS_ON()
 std::string StringImpl::asciiForDebugging() const {
   CString ascii = String(isolatedCopy()->substring(0, 128)).ascii();
   return std::string(ascii.data(), ascii.length());
 }
-#endif
+// #endif
 
 PassRefPtr<StringImpl> StringImpl::createUninitialized(unsigned length,
                                                        LChar*& data) {
@@ -800,6 +804,28 @@ upconvert:
   Unicode::toUpper(data16, realLength, source16, m_length, &error);
   if (error)
     return this;
+  return newImpl.release();
+}
+
+PassRefPtr<StringImpl> StringImpl::upperASCII() {
+  if (is8Bit()) {
+    LChar* data8;
+    RefPtr<StringImpl> newImpl = createUninitialized(m_length, data8);
+
+    for (unsigned i = 0; i < m_length; ++i) {
+      LChar c = characters8()[i];
+      data8[i] = isASCIILower(c) ? toASCIIUpper(c) : c;
+    }
+    return newImpl.release();
+  }
+
+  UChar* data16;
+  RefPtr<StringImpl> newImpl = createUninitialized(m_length, data16);
+
+  for (unsigned i = 0; i < m_length; ++i) {
+    UChar c = characters16()[i];
+    data16[i] = isASCIILower(c) ? toASCIIUpper(c) : c;
+  }
   return newImpl.release();
 }
 

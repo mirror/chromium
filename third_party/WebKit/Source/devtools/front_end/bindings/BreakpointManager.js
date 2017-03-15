@@ -278,13 +278,14 @@ Bindings.BreakpointManager = class extends Common.Object {
           debuggerModel, uiSourceCode, textRange.endLine, textRange.endColumn);
       if (!endLocation)
         continue;
-      return debuggerModel.getPossibleBreakpoints(startLocation, endLocation).then(toUILocations.bind(this));
+      return debuggerModel.getPossibleBreakpoints(startLocation, endLocation, /* restrictToFunction */ false)
+          .then(toUILocations.bind(this));
     }
     return Promise.resolve([]);
 
     /**
      * @this {!Bindings.BreakpointManager}
-     * @param {!Array<!SDK.DebuggerModel.Location>} locations
+     * @param {!Array<!SDK.DebuggerModel.BreakLocation>} locations
      * @return {!Array<!Workspace.UILocation>}
      */
     function toUILocations(locations) {

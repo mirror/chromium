@@ -7,11 +7,9 @@ package org.chromium.chrome.browser.ntp.snippets;
 import android.graphics.BitmapFactory;
 import android.support.test.filters.MediumTest;
 import android.util.TypedValue;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import org.chromium.base.Callback;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.RetryOnFailure;
@@ -20,14 +18,14 @@ import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.favicon.FaviconHelper.FaviconImageCallback;
 import org.chromium.chrome.browser.favicon.FaviconHelper.IconAvailabilityCallback;
 import org.chromium.chrome.browser.favicon.LargeIconBridge.LargeIconCallback;
-import org.chromium.chrome.browser.ntp.NewTabPage.DestructionObserver;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageAdapter;
-import org.chromium.chrome.browser.ntp.cards.NewTabPageRecyclerView;
 import org.chromium.chrome.browser.ntp.cards.SuggestionsCategoryInfo;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.profiles.Profile;
+import org.chromium.chrome.browser.suggestions.DestructionObserver;
 import org.chromium.chrome.browser.suggestions.SuggestionsMetricsReporter;
 import org.chromium.chrome.browser.suggestions.SuggestionsNavigationDelegate;
+import org.chromium.chrome.browser.suggestions.SuggestionsRecyclerView;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
 import org.chromium.chrome.browser.widget.displaystyle.HorizontalDisplayStyle;
 import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
@@ -39,7 +37,6 @@ import org.chromium.chrome.test.util.browser.suggestions.FakeSuggestionsSource;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Set;
 
 /**
  * Tests for the appearance of Article Snippets.
@@ -49,7 +46,7 @@ public class ArticleSnippetsTest extends ChromeActivityTestCaseBase<ChromeActivi
 
     private SuggestionsUiDelegate mUiDelegate;
     private FakeSuggestionsSource mSnippetsSource;
-    private NewTabPageRecyclerView mRecyclerView;
+    private SuggestionsRecyclerView mRecyclerView;
     private NewTabPageAdapter mAdapter;
 
     private FrameLayout mContentView;
@@ -73,16 +70,13 @@ public class ArticleSnippetsTest extends ChromeActivityTestCaseBase<ChromeActivi
 
                 getActivity().setContentView(mContentView);
 
-                mRecyclerView = (NewTabPageRecyclerView) getActivity().getLayoutInflater()
-                        .inflate(R.layout.new_tab_page_recycler_view, mContentView, false);
+                mRecyclerView = new SuggestionsRecyclerView(getActivity());
                 mContentView.addView(mRecyclerView);
 
-                View aboveTheFold = new View(getActivity());
-
-                mRecyclerView.setAboveTheFoldView(aboveTheFold);
-                mAdapter = new NewTabPageAdapter(mUiDelegate, aboveTheFold, mUiConfig,
+                mAdapter = new NewTabPageAdapter(mUiDelegate, /* aboveTheFold = */ null, mUiConfig,
                         OfflinePageBridge.getForProfile(Profile.getLastUsedProfile()),
                         /* contextMenuManager = */ null, /* tileGroupDelegate = */ null);
+                mAdapter.refreshSuggestions();
                 mRecyclerView.setAdapter(mAdapter);
             }
         });
@@ -231,17 +225,17 @@ public class ArticleSnippetsTest extends ChromeActivityTestCaseBase<ChromeActivi
         }
 
         @Override
-        public void getUrlsAvailableOffline(Set<String> pageUrls, Callback<Set<String>> callback) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
         public SuggestionsSource getSuggestionsSource() {
             return mSnippetsSource;
         }
 
         @Override
         public void addDestructionObserver(DestructionObserver destructionObserver) {}
+
+        @Override
+        public boolean isVisible() {
+            return true;
+        }
 
         @Override
         public SuggestionsMetricsReporter getMetricsReporter() {

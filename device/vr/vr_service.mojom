@@ -5,6 +5,8 @@
 module device.mojom;
 
 import "mojo/common/time.mojom";
+import "gpu/ipc/common/mailbox_holder.mojom";
+import "gpu/ipc/common/sync_token.mojom";
 
 // A field of view, given by 4 degrees describing the view from a center point.
 struct VRFieldOfView {
@@ -17,7 +19,6 @@ struct VRFieldOfView {
 // A display's position, orientation, velocity, and acceleration state at the
 // given timestamp.
 struct VRPose {
-  double timestamp;
   array<float, 4>? orientation;
   array<float, 3>? position;
   array<float, 3>? angularVelocity;
@@ -85,22 +86,31 @@ interface VRServiceClient {
                      VRDisplayInfo displayInfo);
 };
 
+interface VRSubmitFrameClient {
+  OnSubmitFrameTransferred();
+  OnSubmitFrameRendered();
+};
+
 interface VRDisplay {
   ResetPose();
 
-  RequestPresent(bool secureOrigin) => (bool success);
+  RequestPresent(bool secureOrigin, VRSubmitFrameClient client) => (bool success);
   ExitPresent();
-  SubmitFrame(VRPose? pose);
+  SubmitFrame(int16 frameId, gpu.mojom.MailboxHolder mailboxHolder);
   UpdateLayerBounds(int16 frameId, VRLayerBounds leftBounds,
-                    VRLayerBounds rightBounds);
+                    VRLayerBounds rightBounds, int16 sourceWidth,
+                    int16 sourceHeight);
   GetVRVSyncProvider(VRVSyncProvider& request);
 };
 
 interface VRVSyncProvider {
+  enum Status { SUCCESS, CLOSING };
+
   // The frameId maps a VSync to a frame arriving from the compositor. IDs will
   // be reused after the frame arrives from the compositor. Negative IDs imply
   // no mapping.
-  GetVSync() => (VRPose? pose, mojo.common.mojom.TimeDelta time, int16 frameId);
+  GetVSync() => (VRPose? pose, mojo.common.mojom.TimeDelta time, int16 frameId,
+                 Status status);
 };
 
 interface VRDisplayClient {

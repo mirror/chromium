@@ -23,7 +23,6 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/resource_context.h"
 #include "crypto/nss_util.h"
-#include "net/base/crypto_module.h"
 #include "net/base/net_errors.h"
 #include "net/cert/x509_certificate.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -115,14 +114,13 @@ CertificateManagerModel::~CertificateManagerModel() {
 
 void CertificateManagerModel::Refresh() {
   DVLOG(1) << "refresh started";
-  net::CryptoModuleList modules;
+  std::vector<crypto::ScopedPK11Slot> modules;
   cert_db_->ListModules(&modules, false);
   DVLOG(1) << "refresh waiting for unlocking...";
   chrome::UnlockSlotsIfNecessary(
-      modules,
-      chrome::kCryptoModulePasswordListCerts,
+      std::move(modules), chrome::kCryptoModulePasswordListCerts,
       net::HostPortPair(),  // unused.
-      NULL, // TODO(mattm): supply parent window.
+      NULL,                 // TODO(mattm): supply parent window.
       base::Bind(&CertificateManagerModel::RefreshSlotsUnlocked,
                  base::Unretained(this)));
 

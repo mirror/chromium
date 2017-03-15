@@ -11,7 +11,6 @@
 #include "ash/common/system/tray/system_tray_delegate.h"
 #include "ash/common/wm/system_modal_container_layout_manager.h"
 #include "ash/common/wm/window_state.h"
-#include "ash/common/wm_lookup.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
 #include "ash/public/cpp/shell_window_ids.h"
@@ -153,12 +152,17 @@ TEST_F(RootWindowControllerTest, MoveWindows_Basic) {
   EXPECT_EQ(gfx::Rect(0, 0, 300, 252).ToString(),
             maximized->GetNativeView()->GetBoundsInRootWindow().ToString());
 
-  views::Widget* minimized = CreateTestWidget(gfx::Rect(800, 10, 100, 100));
+  views::Widget* minimized = CreateTestWidget(gfx::Rect(550, 10, 200, 200));
   minimized->Minimize();
   EXPECT_EQ(root_windows[1], minimized->GetNativeView()->GetRootWindow());
-  EXPECT_EQ("800,10 100x100", minimized->GetWindowBoundsInScreen().ToString());
+  EXPECT_EQ("550,10 200x200", minimized->GetWindowBoundsInScreen().ToString());
 
-  views::Widget* fullscreen = CreateTestWidget(gfx::Rect(850, 10, 100, 100));
+  views::Widget* fullscreen = CreateTestWidget(gfx::Rect(850, 10, 200, 200));
+  display::Display secondary_display = GetSecondaryDisplay();
+  gfx::Rect orig_bounds = fullscreen->GetWindowBoundsInScreen();
+  EXPECT_TRUE(secondary_display.work_area().Intersects(orig_bounds));
+  EXPECT_FALSE(secondary_display.work_area().Contains(orig_bounds));
+
   fullscreen->SetFullscreen(true);
   EXPECT_EQ(root_windows[1], fullscreen->GetNativeView()->GetRootWindow());
 
@@ -182,20 +186,32 @@ TEST_F(RootWindowControllerTest, MoveWindows_Basic) {
   EXPECT_EQ(root_windows[1], panel->GetRootWindow());
   EXPECT_EQ(kShellWindowId_PanelContainer, panel->parent()->id());
 
-  // Make sure a window that will delete itself when losing focus
-  // will not crash.
-  aura::WindowTracker tracker;
-  DeleteOnBlurDelegate delete_on_blur_delegate;
-  aura::Window* d2 = CreateTestWindowInShellWithDelegate(
-      &delete_on_blur_delegate, 0, gfx::Rect(50, 50, 100, 100));
-  delete_on_blur_delegate.SetWindow(d2);
-  aura::client::GetFocusClient(root_windows[0])->FocusWindow(d2);
-  tracker.Add(d2);
+  if (WmShell::Get()->IsRunningInMash()) {
+    // TODO(erg): Ignore this one part of the test when running mash. We would
+    // crash because the aura::Window |d2| created in the other block doesn't
+    // get deleted, and thus continues to contain a reference to its delegate,
+    // |delete_on_blur_delegate|, which is declared on the stack.
+    //
+    // Making this work requires building out enough of the display management
+    // system; notably the part where updating the display may cause focus
+    // changes. http://crbug.com/695632.
+    UpdateDisplay("600x600");
+  } else {
+    // Make sure a window that will delete itself when losing focus
+    // will not crash.
+    aura::WindowTracker tracker;
+    DeleteOnBlurDelegate delete_on_blur_delegate;
+    aura::Window* d2 = CreateTestWindowInShellWithDelegate(
+        &delete_on_blur_delegate, 0, gfx::Rect(50, 50, 100, 100));
+    delete_on_blur_delegate.SetWindow(d2);
+    aura::client::GetFocusClient(root_windows[0])->FocusWindow(d2);
+    tracker.Add(d2);
 
-  UpdateDisplay("600x600");
+    UpdateDisplay("600x600");
 
-  // d2 must have been deleted.
-  EXPECT_FALSE(tracker.Contains(d2));
+    // d2 must have been deleted.
+    EXPECT_FALSE(tracker.Contains(d2));
+  }
 
   EXPECT_EQ(root_windows[0], normal->GetNativeView()->GetRootWindow());
   EXPECT_EQ("100,20 100x100", normal->GetWindowBoundsInScreen().ToString());
@@ -224,7 +240,7 @@ TEST_F(RootWindowControllerTest, MoveWindows_Basic) {
             maximized->GetNativeView()->GetBoundsInRootWindow().ToString());
 
   EXPECT_EQ(root_windows[0], minimized->GetNativeView()->GetRootWindow());
-  EXPECT_EQ("400,20 100x100", minimized->GetWindowBoundsInScreen().ToString());
+  EXPECT_EQ("0,20 200x200", minimized->GetWindowBoundsInScreen().ToString());
 
   EXPECT_EQ(root_windows[0], fullscreen->GetNativeView()->GetRootWindow());
   EXPECT_TRUE(fullscreen->IsFullscreen());
@@ -239,8 +255,8 @@ TEST_F(RootWindowControllerTest, MoveWindows_Basic) {
             maximized->GetNativeView()->GetBoundsInRootWindow().ToString());
 
   fullscreen->SetFullscreen(false);
-  EXPECT_EQ("500,20 100x100", fullscreen->GetWindowBoundsInScreen().ToString());
-  EXPECT_EQ("500,20 100x100",
+  EXPECT_EQ("400,20 200x200", fullscreen->GetWindowBoundsInScreen().ToString());
+  EXPECT_EQ("400,20 200x200",
             fullscreen->GetNativeView()->GetBoundsInRootWindow().ToString());
 
   // Test if the unparented widget has moved.
@@ -285,6 +301,10 @@ TEST_F(RootWindowControllerTest, MoveWindows_Modal) {
 
 // Make sure lock related windows moves.
 TEST_F(RootWindowControllerTest, MoveWindows_LockWindowsInUnified) {
+  // TODO: requires unified desktop mode. http://crbug.com/581462.
+  if (WmShell::Get()->IsRunningInMash())
+    return;
+
   display_manager()->SetUnifiedDesktopEnabled(true);
 
   UpdateDisplay("500x500");
@@ -375,7 +395,7 @@ TEST_F(RootWindowControllerTest, ModalContainer) {
       CreateModalWidget(gfx::Rect(300, 10, 100, 100));
   EXPECT_EQ(GetLayoutManager(controller, kShellWindowId_SystemModalContainer),
             controller->GetSystemModalLayoutManager(
-                WmLookup::Get()->GetWindowForWidget(session_modal_widget)));
+                WmWindow::Get(session_modal_widget->GetNativeWindow())));
 
   wm_shell->GetSessionStateDelegate()->LockScreen();
   EXPECT_EQ(LoginStatus::LOCKED,
@@ -391,10 +411,10 @@ TEST_F(RootWindowControllerTest, ModalContainer) {
   EXPECT_EQ(
       GetLayoutManager(controller, kShellWindowId_LockSystemModalContainer),
       controller->GetSystemModalLayoutManager(
-          WmLookup::Get()->GetWindowForWidget(lock_modal_widget)));
+          WmWindow::Get(lock_modal_widget->GetNativeWindow())));
   EXPECT_EQ(GetLayoutManager(controller, kShellWindowId_SystemModalContainer),
             controller->GetSystemModalLayoutManager(
-                WmLookup::Get()->GetWindowForWidget(session_modal_widget)));
+                WmWindow::Get(session_modal_widget->GetNativeWindow())));
 
   wm_shell->GetSessionStateDelegate()->UnlockScreen();
 }
@@ -424,7 +444,7 @@ TEST_F(RootWindowControllerTest, ModalContainerNotLoggedInLoggedIn) {
   EXPECT_EQ(
       GetLayoutManager(controller, kShellWindowId_LockSystemModalContainer),
       controller->GetSystemModalLayoutManager(
-          WmLookup::Get()->GetWindowForWidget(login_modal_widget)));
+          WmWindow::Get(login_modal_widget->GetNativeWindow())));
   login_modal_widget->Close();
 
   // Configure user session environment.
@@ -441,7 +461,7 @@ TEST_F(RootWindowControllerTest, ModalContainerNotLoggedInLoggedIn) {
       CreateModalWidget(gfx::Rect(300, 10, 100, 100));
   EXPECT_EQ(GetLayoutManager(controller, kShellWindowId_SystemModalContainer),
             controller->GetSystemModalLayoutManager(
-                WmLookup::Get()->GetWindowForWidget(session_modal_widget)));
+                WmWindow::Get(session_modal_widget->GetNativeWindow())));
 }
 
 TEST_F(RootWindowControllerTest, ModalContainerBlockedSession) {
@@ -456,7 +476,7 @@ TEST_F(RootWindowControllerTest, ModalContainerBlockedSession) {
         CreateModalWidget(gfx::Rect(300, 10, 100, 100));
     EXPECT_EQ(GetLayoutManager(controller, kShellWindowId_SystemModalContainer),
               controller->GetSystemModalLayoutManager(
-                  WmLookup::Get()->GetWindowForWidget(session_modal_widget)));
+                  WmWindow::Get(session_modal_widget->GetNativeWindow())));
     EXPECT_EQ(GetLayoutManager(controller, kShellWindowId_SystemModalContainer),
               controller->GetSystemModalLayoutManager(NULL));
     session_modal_widget->Close();
@@ -472,12 +492,12 @@ TEST_F(RootWindowControllerTest, ModalContainerBlockedSession) {
     EXPECT_EQ(
         GetLayoutManager(controller, kShellWindowId_LockSystemModalContainer),
         controller->GetSystemModalLayoutManager(
-            WmLookup::Get()->GetWindowForWidget(lock_modal_widget)));
+            WmWindow::Get(lock_modal_widget->GetNativeWindow())));
 
     session_modal_widget = CreateModalWidget(gfx::Rect(300, 10, 100, 100));
     EXPECT_EQ(GetLayoutManager(controller, kShellWindowId_SystemModalContainer),
               controller->GetSystemModalLayoutManager(
-                  WmLookup::Get()->GetWindowForWidget(session_modal_widget)));
+                  WmWindow::Get(session_modal_widget->GetNativeWindow())));
     session_modal_widget->Close();
 
     lock_modal_widget->Close();
@@ -743,6 +763,10 @@ TEST_F(VirtualKeyboardRootWindowControllerTest,
 // a display which has touch capability.
 TEST_F(VirtualKeyboardRootWindowControllerTest,
        VirtualKeyboardOnTouchableDisplayOnly) {
+  // TODO: investigate failure in mash. http://crbug.com/695640.
+  if (WmShell::Get()->IsRunningInMash())
+    return;
+
   UpdateDisplay("500x500,500x500");
   display::Display secondary_display =
       Shell::GetInstance()->display_manager()->GetSecondaryDisplay();
@@ -793,6 +817,10 @@ TEST_F(VirtualKeyboardRootWindowControllerTest,
 // Test for http://crbug.com/303429. If both of displays have touch capability,
 // virtual keyboard follows the input focus.
 TEST_F(VirtualKeyboardRootWindowControllerTest, FollowInputFocus) {
+  // TODO: investigate failure in mash. http://crbug.com/695640.
+  if (WmShell::Get()->IsRunningInMash())
+    return;
+
   UpdateDisplay("500x500,500x500");
   const int64_t primary_display_id =
       display::Screen::GetScreen()->GetPrimaryDisplay().id();
@@ -861,9 +889,12 @@ TEST_F(VirtualKeyboardRootWindowControllerTest, FollowInputFocus) {
 // capability, the virtual keyboard shows up on the specified display.
 TEST_F(VirtualKeyboardRootWindowControllerTest,
        VirtualKeyboardShowOnSpecifiedDisplay) {
+  // TODO: fails in mash. http://crbug.com/695640.
+  if (WmShell::Get()->IsRunningInMash())
+    return;
+
   UpdateDisplay("500x500,500x500");
-  display::Display secondary_display =
-      Shell::GetInstance()->display_manager()->GetSecondaryDisplay();
+  display::Display secondary_display = GetSecondaryDisplay();
 
   aura::Window::Windows root_windows = Shell::GetAllRootWindows();
   aura::Window* primary_root_window = Shell::GetPrimaryRootWindow();
@@ -1052,11 +1083,14 @@ TEST_F(VirtualKeyboardRootWindowControllerTest, EnsureCaretInWorkArea) {
 
 TEST_F(VirtualKeyboardRootWindowControllerTest,
        EnsureCaretInWorkAreaWithMultipleDisplays) {
+  // TODO: fails in mash. http://crbug.com/695640.
+  if (WmShell::Get()->IsRunningInMash())
+    return;
+
   UpdateDisplay("500x500,600x600");
   const int64_t primary_display_id =
       display::Screen::GetScreen()->GetPrimaryDisplay().id();
-  const int64_t secondary_display_id =
-      Shell::GetInstance()->display_manager()->GetSecondaryDisplay().id();
+  const int64_t secondary_display_id = GetSecondaryDisplay().id();
   ASSERT_NE(primary_display_id, secondary_display_id);
 
   aura::Window::Windows root_windows = Shell::GetAllRootWindows();

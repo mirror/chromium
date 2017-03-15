@@ -76,6 +76,7 @@
 #include "chrome/browser/ssl/chrome_ssl_host_state_delegate_factory.h"
 #include "chrome/browser/ui/startup/startup_browser_creator.h"
 #include "chrome/common/chrome_constants.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_paths_internal.h"
 #include "chrome/common/chrome_switches.h"
@@ -102,7 +103,6 @@
 #include "components/ssl_config/ssl_config_service_manager.h"
 #include "components/sync_preferences/pref_service_syncable.h"
 #include "components/url_formatter/url_fixer.h"
-#include "components/user_prefs/tracked/tracked_preference_validation_delegate.h"
 #include "components/user_prefs/user_prefs.h"
 #include "components/zoom/zoom_event_manager.h"
 #include "content/public/browser/browser_thread.h"
@@ -117,12 +117,16 @@
 #include "extensions/features/features.h"
 #include "ppapi/features/features.h"
 #include "printing/features/features.h"
+#include "services/preferences/public/cpp/pref_store_manager_impl.h"
+#include "services/preferences/public/interfaces/preferences.mojom.h"
+#include "services/preferences/public/interfaces/tracked_preference_validation_delegate.mojom.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/locale_change_guard.h"
 #include "chrome/browser/chromeos/preferences.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
+#include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "components/user_manager/user_manager.h"
 #endif
 
@@ -439,6 +443,8 @@ ProfileImpl::ProfileImpl(
       policy::SchemaRegistryServiceFactory::CreateForContext(
           this, connector->GetChromeSchema(), connector->GetSchemaRegistry());
 #if defined(OS_CHROMEOS)
+  if (force_immediate_policy_load)
+    chromeos::DeviceSettingsService::Get()->LoadImmediately();
   configuration_policy_provider_ =
       policy::UserPolicyManagerFactoryChromeOS::CreateForProfile(
           this, force_immediate_policy_load, sequenced_task_runner);
@@ -485,10 +491,15 @@ ProfileImpl::ProfileImpl(
   content::BrowserContext::Initialize(this, path_);
 
   {
+    service_manager::Connector* connector = nullptr;
+    if (base::FeatureList::IsEnabled(features::kPrefService)) {
+      connector = content::BrowserContext::GetConnectorFor(this);
+    }
     prefs_ = chrome_prefs::CreateProfilePrefs(
         path_, sequenced_task_runner, pref_validation_delegate_.get(),
         profile_policy_connector_->policy_service(), supervised_user_settings,
-        CreateExtensionPrefStore(this, false), pref_registry_, async_prefs);
+        CreateExtensionPrefStore(this, false), pref_registry_, async_prefs,
+        connector);
     // Register on BrowserContext.
     user_prefs::UserPrefs::Set(this, prefs_.get());
   }
@@ -641,6 +652,16 @@ void ProfileImpl::DoFinalInit() {
   dom_distiller::RegisterViewerSource(this);
 
 #if defined(OS_CHROMEOS)
+  // Finished profile initialization - let the UserManager know so it can
+  // mark the session as initialized. Need to do this before we restart below
+  // so we don't get in a weird state where we restart before the session is
+  // marked as initialized and so try to initialize it again.
+  if (!chromeos::ProfileHelper::IsSigninProfile(this)) {
+    chromeos::ProfileHelper* profile_helper = chromeos::ProfileHelper::Get();
+    user_manager::UserManager::Get()->OnProfileInitialized(
+        profile_helper->GetUserByProfile(this));
+  }
+
   if (chromeos::UserSessionManager::GetInstance()
           ->RestartToApplyPerSessionFlagsIfNeed(this, true)) {
     return;
@@ -1038,6 +1059,19 @@ ProfileImpl::CreateMediaRequestContextForStoragePartition(
     bool in_memory) {
   return io_data_
       .GetIsolatedMediaRequestContextGetter(partition_path, in_memory).get();
+}
+
+void ProfileImpl::RegisterInProcessServices(StaticServiceMap* services) {
+  if (base::FeatureList::IsEnabled(features::kPrefService)) {
+    content::ServiceInfo info;
+    info.factory =
+        base::Bind([]() -> std::unique_ptr<service_manager::Service> {
+          return base::MakeUnique<prefs::PrefStoreManagerImpl>(
+              prefs::PrefStoreManagerImpl::PrefStoreTypes(),
+              content::BrowserThread::GetBlockingPool());
+        });
+    services->insert(std::make_pair(prefs::mojom::kPrefStoreServiceName, info));
+  }
 }
 
 bool ProfileImpl::IsSameProfile(Profile* profile) {

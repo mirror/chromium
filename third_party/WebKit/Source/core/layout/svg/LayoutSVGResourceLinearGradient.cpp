@@ -31,11 +31,11 @@ LayoutSVGResourceLinearGradient::LayoutSVGResourceLinearGradient(
 
 LayoutSVGResourceLinearGradient::~LayoutSVGResourceLinearGradient() {}
 
-bool LayoutSVGResourceLinearGradient::collectGradientAttributes(
-    SVGGradientElement* gradientElement) {
+bool LayoutSVGResourceLinearGradient::collectGradientAttributes() {
+  DCHECK(element());
   m_attributesWrapper->set(LinearGradientAttributes());
-  return toSVGLinearGradientElement(gradientElement)
-      ->collectGradientAttributes(mutableAttributes());
+  return toSVGLinearGradientElement(element())->collectGradientAttributes(
+      mutableAttributes());
 }
 
 FloatPoint LayoutSVGResourceLinearGradient::startPoint(
@@ -56,7 +56,7 @@ PassRefPtr<Gradient> LayoutSVGResourceLinearGradient::buildGradient() const {
       Gradient::create(startPoint(attributes), endPoint(attributes));
   gradient->setSpreadMethod(
       platformSpreadMethodFromSVGType(attributes.spreadMethod()));
-  addStops(*gradient, attributes.stops());
+  gradient->addColorStops(attributes.stops());
   return gradient.release();
 }
 

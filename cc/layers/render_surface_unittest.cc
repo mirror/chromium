@@ -4,7 +4,6 @@
 
 #include "cc/layers/append_quads_data.h"
 #include "cc/layers/layer_impl.h"
-#include "cc/layers/render_pass_sink.h"
 #include "cc/layers/render_surface_impl.h"
 #include "cc/quads/shared_quad_state.h"
 #include "cc/test/fake_compositor_frame_sink.h"
@@ -54,7 +53,7 @@ TEST(RenderSurfaceTest, VerifySurfaceChangesAreTrackedProperly) {
   host_impl.active_tree()->UpdateDrawProperties(false /* update_lcd_text */);
 
   RenderSurfaceImpl* render_surface =
-      host_impl.active_tree()->root_layer_for_testing()->render_surface();
+      host_impl.active_tree()->root_layer_for_testing()->GetRenderSurface();
   ASSERT_TRUE(render_surface);
 
   // Currently, the content_rect, clip_rect, and
@@ -117,9 +116,9 @@ TEST(RenderSurfaceTest, SanityCheckSurfaceCreatesCorrectSharedQuadState) {
   host_impl.active_tree()->UpdateDrawProperties(false /* update_lcd_text */);
 
   ASSERT_TRUE(
-      host_impl.active_tree()->LayerById(owning_layer_id)->render_surface());
+      host_impl.active_tree()->LayerById(owning_layer_id)->GetRenderSurface());
   RenderSurfaceImpl* render_surface =
-      host_impl.active_tree()->LayerById(owning_layer_id)->render_surface();
+      host_impl.active_tree()->LayerById(owning_layer_id)->GetRenderSurface();
 
   gfx::Rect content_rect(0, 0, 50, 50);
   gfx::Rect clip_rect(5, 5, 40, 40);
@@ -152,19 +151,6 @@ TEST(RenderSurfaceTest, SanityCheckSurfaceCreatesCorrectSharedQuadState) {
   EXPECT_EQ(blend_mode, shared_quad_state->blend_mode);
 }
 
-class TestRenderPassSink : public RenderPassSink {
- public:
-  void AppendRenderPass(std::unique_ptr<RenderPass> render_pass) override {
-    render_passes_.push_back(std::move(render_pass));
-  }
-
-  const RenderPassList& RenderPasses() const {
-    return render_passes_;
-  }
-
- private:
-  RenderPassList render_passes_;
-};
 
 TEST(RenderSurfaceTest, SanityCheckSurfaceCreatesCorrectRenderPass) {
   FakeImplTaskRunnerProvider task_runner_provider;
@@ -188,9 +174,9 @@ TEST(RenderSurfaceTest, SanityCheckSurfaceCreatesCorrectRenderPass) {
   host_impl.active_tree()->UpdateDrawProperties(false /* update_lcd_text */);
 
   ASSERT_TRUE(
-      host_impl.active_tree()->LayerById(owning_layer_id)->render_surface());
+      host_impl.active_tree()->LayerById(owning_layer_id)->GetRenderSurface());
   RenderSurfaceImpl* render_surface =
-      host_impl.active_tree()->LayerById(owning_layer_id)->render_surface();
+      host_impl.active_tree()->LayerById(owning_layer_id)->GetRenderSurface();
 
   gfx::Rect content_rect(0, 0, 50, 50);
   gfx::Transform origin;
@@ -199,12 +185,7 @@ TEST(RenderSurfaceTest, SanityCheckSurfaceCreatesCorrectRenderPass) {
   render_surface->SetScreenSpaceTransform(origin);
   render_surface->SetContentRectForTesting(content_rect);
 
-  TestRenderPassSink pass_sink;
-
-  render_surface->AppendRenderPasses(&pass_sink);
-
-  ASSERT_EQ(1u, pass_sink.RenderPasses().size());
-  RenderPass* pass = pass_sink.RenderPasses()[0].get();
+  auto pass = render_surface->CreateRenderPass();
 
   EXPECT_EQ(2, pass->id);
   EXPECT_EQ(content_rect, pass->output_rect);

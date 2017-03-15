@@ -50,6 +50,7 @@
 #include "core/page/FocusController.h"
 #include "core/page/Page.h"
 #include "core/svg/SVGTreeScopeResources.h"
+#include "platform/ScriptForbiddenScope.h"
 #include "wtf/Vector.h"
 
 namespace blink {
@@ -74,6 +75,10 @@ TreeScope::TreeScope(Document& document)
 }
 
 TreeScope::~TreeScope() {}
+
+void TreeScope::resetTreeScope() {
+  m_selection = nullptr;
+}
 
 TreeScope* TreeScope::olderShadowRootOrParentTreeScope() const {
   if (rootNode().isShadowRoot()) {
@@ -103,7 +108,7 @@ void TreeScope::setParentTreeScope(TreeScope& newParentScope) {
 }
 
 ScopedStyleResolver& TreeScope::ensureScopedStyleResolver() {
-  RELEASE_ASSERT(this);
+  CHECK(this);
   if (!m_scopedStyleResolver)
     m_scopedStyleResolver = ScopedStyleResolver::create(*this);
   return *m_scopedStyleResolver;

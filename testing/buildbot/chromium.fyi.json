@@ -222,6 +222,78 @@
   "Android VR Tests": {
     "gtest_tests": [
       {
+        "args": [
+          "--shared-prefs-file=../../chrome/android/shared_preference_files/test/vr_cardboard_skipdon_setupcomplete.json",
+          "--additional-apk=../../third_party/gvr-android-sdk/test-apks/vr_services/vr_services_current.apk",
+          "--strict-mode=off"
+        ],
+        "name": "chrome_public_test_vr_apk-nonddready-cardboard-current-kitkat",
+        "override_compile_targets": [
+          "chrome_public_test_vr_apk"
+        ],
+        "override_isolate_target": "chrome_public_test_vr_apk",
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "android_devices": "4",
+              "device_os": "KTU84P",
+              "device_type": "hammerhead"
+            }
+          ],
+          "hard_timeout": 960
+        },
+        "test": "chrome_public_test_vr_apk"
+      },
+      {
+        "args": [
+          "--shared-prefs-file=../../chrome/android/shared_preference_files/test/vr_cardboard_skipdon_setupcomplete.json",
+          "--additional-apk=../../third_party/gvr-android-sdk/test-apks/vr_services/vr_services_current.apk",
+          "--strict-mode=off"
+        ],
+        "name": "chrome_public_test_vr_apk-nonddready-cardboard-current-lollipop",
+        "override_compile_targets": [
+          "chrome_public_test_vr_apk"
+        ],
+        "override_isolate_target": "chrome_public_test_vr_apk",
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "android_devices": "4",
+              "device_os": "LMY48I",
+              "device_type": "hammerhead"
+            }
+          ],
+          "hard_timeout": 960
+        },
+        "test": "chrome_public_test_vr_apk"
+      },
+      {
+        "args": [
+          "--shared-prefs-file=../../chrome/android/shared_preference_files/test/vr_cardboard_skipdon_setupcomplete.json",
+          "--additional-apk=../../third_party/gvr-android-sdk/test-apks/vr_services/vr_services_current.apk",
+          "--strict-mode=off"
+        ],
+        "name": "chrome_public_test_vr_apk-nonddready-cardboard-current-marshmallow",
+        "override_compile_targets": [
+          "chrome_public_test_vr_apk"
+        ],
+        "override_isolate_target": "chrome_public_test_vr_apk",
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "android_devices": "4",
+              "device_os": "MMB29Q",
+              "device_type": "bullhead"
+            }
+          ],
+          "hard_timeout": 960
+        },
+        "test": "chrome_public_test_vr_apk"
+      },
+      {
         "swarming": {
           "can_use_on_swarming_builders": false
         },
@@ -230,6 +302,20 @@
     ],
     "instrumentation_tests": [
       {
+        "args": [
+          "--shared-prefs-file=src/chrome/android/shared_preference_files/test/vr_cardboard_skipdon_setupcomplete.json",
+          "--additional-apk=src/third_party/gvr-android-sdk/test-apks/vr_services/vr_services_current.apk",
+          "--strict-mode=off"
+        ],
+        "test": "chrome_public_test_vr_apk"
+      },
+      {
+        "args": [
+          "--shared-prefs-file=src/chrome/android/shared_preference_files/test/vr_ddview_skipdon_setupcomplete.json",
+          "--additional-apk=src/third_party/gvr-android-sdk/test-apks/vr_services/vr_services_current.apk",
+          "--additional-apk=src/third_party/gvr-android-sdk/test-apks/daydream_home/daydream_home_current.apk",
+          "--strict-mode=off"
+        ],
         "test": "chrome_public_test_vr_apk"
       }
     ]
@@ -273,15 +359,6 @@
           "can_use_on_swarming_builders": true
         },
         "test": "unit_tests"
-      }
-    ],
-    "scripts": [
-      {
-        "args": [
-          "content_browsertests"
-        ],
-        "name": "count_filtered_tests_content_browsertests",
-        "script": "count_filtered_tests.py"
       }
     ]
   },
@@ -10222,6 +10299,11 @@
       }
     ]
   },
+  "Linux Clang Analyzer": {
+    "additional_compile_targets": [
+      "all"
+    ]
+  },
   "Linux Trusty": {
     "gtest_tests": [
       {
@@ -11355,6 +11437,7 @@
     "gtest_tests": [
       {
         "args": [
+          "--override-use-software-gl-for-tests",
           "--test-launcher-filter-file=../../testing/buildbot/filters/mojo.fyi.browser_tests.filter"
         ],
         "hard_timeout": 60,
@@ -12441,6 +12524,47 @@
           "can_use_on_swarming_builders": false
         },
         "test": "wtf_unittests"
+      }
+    ]
+  },
+  "WebKit Linux - RandomOrder": {
+    "isolated_scripts": [
+      {
+        "isolate_name": "webkit_layout_tests_exparchive",
+        "name": "webkit_layout_tests_exparchive",
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "os": "Ubuntu-14.04"
+            }
+          ],
+          "shards": 1
+        }
+      }
+    ]
+  },
+  "WebKit Mac - RandomOrder": {
+    "isolated_scripts": [
+      {
+        "isolate_name": "webkit_layout_tests_exparchive",
+        "name": "webkit_layout_tests_exparchive",
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "shards": 1
+        }
+      }
+    ]
+  },
+  "WebKit Win - RandomOrder": {
+    "isolated_scripts": [
+      {
+        "isolate_name": "webkit_layout_tests_exparchive",
+        "name": "webkit_layout_tests_exparchive",
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "shards": 1
+        }
       }
     ]
   },

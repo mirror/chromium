@@ -31,6 +31,7 @@
 #include "chrome/browser/android/compositor/scene_layer/tab_strip_scene_layer.h"
 #include "chrome/browser/android/compositor/scene_layer/toolbar_scene_layer.h"
 #include "chrome/browser/android/compositor/tab_content_manager.h"
+#include "chrome/browser/android/contextualsearch/contextual_search_context.h"
 #include "chrome/browser/android/contextualsearch/contextual_search_manager.h"
 #include "chrome/browser/android/contextualsearch/contextual_search_tab_helper.h"
 #include "chrome/browser/android/contextualsearch/ctr_suppression.h"
@@ -56,6 +57,7 @@
 #include "chrome/browser/android/instantapps/instant_apps_settings.h"
 #include "chrome/browser/android/large_icon_bridge.h"
 #include "chrome/browser/android/locale/special_locale_handler.h"
+#include "chrome/browser/android/location_settings_impl.h"
 #include "chrome/browser/android/logo_bridge.h"
 #include "chrome/browser/android/metrics/launch_metrics.h"
 #include "chrome/browser/android/metrics/uma_session_stats.h"
@@ -106,6 +108,7 @@
 #include "chrome/browser/android/webapk/webapk_update_manager.h"
 #include "chrome/browser/android/webapps/add_to_homescreen_manager.h"
 #include "chrome/browser/autofill/android/personal_data_manager_android.h"
+#include "chrome/browser/autofill/android/phone_number_util_android.h"
 #include "chrome/browser/dom_distiller/dom_distiller_service_factory_android.h"
 #include "chrome/browser/dom_distiller/tab_utils_android.h"
 #include "chrome/browser/engagement/site_engagement_service_android.h"
@@ -168,8 +171,10 @@
 #include "components/gcm_driver/android/component_jni_registrar.h"
 #include "components/gcm_driver/instance_id/android/component_jni_registrar.h"
 #include "components/invalidation/impl/android/component_jni_registrar.h"
-#include "components/payments/android/currency_formatter_android.h"
-#include "components/payments/android/payments_jni_registrar.h"
+#include "components/payments/content/android/currency_formatter_android.h"
+#include "components/payments/content/android/payment_details_validation_android.h"
+#include "components/payments/content/android/payment_manifest_downloader_android.h"
+#include "components/payments/content/android/payment_manifest_parser_android.h"
 #include "components/policy/core/browser/android/component_jni_registrar.h"
 #include "components/safe_browsing_db/android/jni_registrar.h"
 #include "components/safe_json/android/component_jni_registrar.h"
@@ -180,13 +185,14 @@
 #include "components/url_formatter/android/component_jni_registrar.h"
 #include "components/variations/android/component_jni_registrar.h"
 #include "components/web_contents_delegate_android/component_jni_registrar.h"
+#include "device/vr/features.h"
 #include "printing/features/features.h"
 
 #if BUILDFLAG(ENABLE_PRINTING) && !BUILDFLAG(ENABLE_PRINT_PREVIEW)
 #include "printing/printing_context_android.h"
 #endif
 
-#if defined(ENABLE_WEBVR)
+#if BUILDFLAG(ENABLE_WEBVR)
 #include "chrome/browser/android/vr_shell/vr_shell.h"
 #include "chrome/browser/android/vr_shell/vr_shell_delegate.h"
 #include "third_party/gvr-android-sdk/display_synchronizer_jni.h"
@@ -266,6 +272,7 @@ static base::android::RegistrationMethod kChromeRegisteredMethods[] = {
     {"ContentSuggestionsNotificationHelper",
      ntp_snippets::ContentSuggestionsNotificationHelper::Register},
     {"ContextMenuHelper", RegisterContextMenuHelper},
+    {"ContextualSearchContext", RegisterContextualSearchContext},
     {"ContextualSearchManager", RegisterContextualSearchManager},
     {"ContextualSearchSceneLayer", RegisterContextualSearchSceneLayer},
     {"ContextualSearchTabHelper", RegisterContextualSearchTabHelper},
@@ -312,6 +319,7 @@ static base::android::RegistrationMethod kChromeRegisteredMethods[] = {
     {"LaunchMetrics", metrics::RegisterLaunchMetrics},
     {"LayerTitleCache", RegisterLayerTitleCache},
     {"SpecialLocaleHandler", RegisterSpecialLocaleHandler},
+    {"LocationSettingsImpl", LocationSettingsImpl::Register},
     {"LogoBridge", RegisterLogoBridge},
     {"MediaDrmCredentialManager",
      MediaDrmCredentialManager::RegisterMediaDrmCredentialManager},
@@ -343,13 +351,16 @@ static base::android::RegistrationMethod kChromeRegisteredMethods[] = {
      autofill::PasswordGenerationPopupViewAndroid::Register},
     {"PasswordUIViewAndroid",
      PasswordUIViewAndroid::RegisterPasswordUIViewAndroid},
-    {"PaymentValidator", RegisterPaymentValidator},
+    {"PaymentManifestDownloader", payments::RegisterPaymentManifestDownloader},
+    {"PaymentManifestParser", payments::RegisterPaymentManifestParser},
+    {"PaymentValidator", payments::RegisterPaymentValidator},
     {"PermissionDialogDelegate",
      PermissionDialogDelegate::RegisterPermissionDialogDelegate},
     {"PermissionUpdateInfoBarDelegate",
      PermissionUpdateInfoBarDelegate::RegisterPermissionUpdateInfoBarDelegate},
     {"PersonalDataManagerAndroid",
      autofill::PersonalDataManagerAndroid::Register},
+    {"PhoneNumberUtil", RegisterPhoneNumberUtil},
     {"PhysicalWebDataSourceAndroid",
      PhysicalWebDataSourceAndroid::RegisterPhysicalWebDataSource},
     {"PolicyAuditor", RegisterPolicyAuditor},
@@ -410,7 +421,7 @@ static base::android::RegistrationMethod kChromeRegisteredMethods[] = {
     {"UsbChooserDialogAndroid", UsbChooserDialogAndroid::Register},
     {"Variations", variations::android::RegisterVariations},
     {"VariationsSession", chrome::android::RegisterVariationsSession},
-#if defined(ENABLE_WEBVR)
+#if BUILDFLAG(ENABLE_WEBVR)
     {"VrShell", vr_shell::RegisterVrShell},
     {"VrShellDelegate", vr_shell::RegisterVrShellDelegate},
     {"DisplaySynchronizer",

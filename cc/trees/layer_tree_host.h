@@ -45,6 +45,8 @@
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/geometry/rect.h"
 
+class SkImage;
+
 namespace cc {
 class HeadsUpDisplayLayer;
 class Layer;
@@ -73,6 +75,10 @@ class CC_EXPORT LayerTreeHost : public NON_EXPORTED_BASE(SurfaceReferenceOwner),
     LayerTreeSettings const* settings = nullptr;
     scoped_refptr<base::SingleThreadTaskRunner> main_task_runner;
     MutatorHost* mutator_host = nullptr;
+
+    // The image worker task runner is used to schedule image decodes. The
+    // compositor thread may make sync calls to this thread, analogous to the
+    // raster worker threads.
     scoped_refptr<base::SequencedTaskRunner> image_worker_task_runner;
 
     InitParams();
@@ -305,9 +311,17 @@ class CC_EXPORT LayerTreeHost : public NON_EXPORTED_BASE(SurfaceReferenceOwner),
     return painted_device_scale_factor_;
   }
 
-  void SetDeviceColorSpace(const gfx::ColorSpace& device_color_space);
-  const gfx::ColorSpace& device_color_space() const {
-    return device_color_space_;
+  void SetContentSourceId(uint32_t);
+  uint32_t content_source_id() const { return content_source_id_; }
+
+  // If this LayerTreeHost needs a valid LocalSurfaceId then commits will be
+  // deferred until a valid LocalSurfaceId is provided.
+  void SetLocalSurfaceId(const LocalSurfaceId& local_surface_id);
+  const LocalSurfaceId& local_surface_id() const { return local_surface_id_; }
+
+  void SetRasterColorSpace(const gfx::ColorSpace& raster_color_space);
+  const gfx::ColorSpace& raster_color_space() const {
+    return raster_color_space_;
   }
 
   // Used externally by blink for setting the PropertyTrees when
@@ -322,7 +336,8 @@ class CC_EXPORT LayerTreeHost : public NON_EXPORTED_BASE(SurfaceReferenceOwner),
 
   size_t NumLayers() const;
 
-  bool UpdateLayers(const LayerList& update_layer_list,
+  bool in_update_property_trees() const { return in_update_property_trees_; }
+  bool PaintContent(const LayerList& update_layer_list,
                     bool* content_is_suitable_for_gpu);
   bool in_paint_layer_contents() const { return in_paint_layer_contents_; }
 
@@ -449,6 +464,9 @@ class CC_EXPORT LayerTreeHost : public NON_EXPORTED_BASE(SurfaceReferenceOwner),
   gfx::ScrollOffset GetScrollOffsetForAnimation(
       ElementId element_id) const override;
 
+  void QueueImageDecode(sk_sp<const SkImage> image,
+                        const base::Callback<void(bool)>& callback);
+
  protected:
   LayerTreeHost(InitParams* params, CompositorMode mode);
 
@@ -478,6 +496,8 @@ class CC_EXPORT LayerTreeHost : public NON_EXPORTED_BASE(SurfaceReferenceOwner),
 
   base::WeakPtr<InputHandler> input_handler_weak_ptr_;
 
+  scoped_refptr<base::SequencedTaskRunner> image_worker_task_runner_;
+
  private:
   friend class LayerTreeHostSerializationTest;
 
@@ -490,11 +510,8 @@ class CC_EXPORT LayerTreeHost : public NON_EXPORTED_BASE(SurfaceReferenceOwner),
   void InitializeProxy(std::unique_ptr<Proxy> proxy);
 
   bool DoUpdateLayers(Layer* root_layer);
-  void UpdateHudLayer();
 
-  bool AnimateLayersRecursive(Layer* current, base::TimeTicks time);
-
-  void CalculateLCDTextMetricsCallback(Layer* layer);
+  void UpdateDeferCommitsInternal();
 
   const CompositorMode compositor_mode_;
 
@@ -561,7 +578,11 @@ class CC_EXPORT LayerTreeHost : public NON_EXPORTED_BASE(SurfaceReferenceOwner),
   float page_scale_factor_ = 1.f;
   float min_page_scale_factor_ = 1.f;
   float max_page_scale_factor_ = 1.f;
-  gfx::ColorSpace device_color_space_;
+  gfx::ColorSpace raster_color_space_;
+
+  uint32_t content_source_id_;
+  LocalSurfaceId local_surface_id_;
+  bool defer_commits_ = false;
 
   SkColor background_color_ = SK_ColorWHITE;
   bool has_transparent_background_ = false;
@@ -594,10 +615,12 @@ class CC_EXPORT LayerTreeHost : public NON_EXPORTED_BASE(SurfaceReferenceOwner),
   std::unordered_map<ElementId, Layer*, ElementIdHash> element_layers_map_;
 
   bool in_paint_layer_contents_ = false;
+  bool in_update_property_trees_ = false;
 
   MutatorHost* mutator_host_;
 
-  scoped_refptr<base::SequencedTaskRunner> image_worker_task_runner_;
+  std::vector<std::pair<sk_sp<const SkImage>, base::Callback<void(bool)>>>
+      queued_image_decodes_;
 
   DISALLOW_COPY_AND_ASSIGN(LayerTreeHost);
 };

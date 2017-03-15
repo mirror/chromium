@@ -143,6 +143,15 @@ public class CustomTabActivity extends ChromeActivity {
             mConnection.notifyPageLoadMetric(mSession, PageLoadMetrics.FIRST_CONTENTFUL_PAINT,
                     navigationStartTick, firstContentfulPaintMs);
         }
+
+        @Override
+        public void onLoadEventStart(
+                WebContents webContents, long navigationStartTick, long loadEventStartMs) {
+            if (webContents != mTab.getWebContents()) return;
+
+            mConnection.notifyPageLoadMetric(mSession, PageLoadMetrics.LOAD_EVENT_START,
+                    navigationStartTick, loadEventStartMs);
+        }
     }
 
     private static class CustomTabCreator extends ChromeTabCreator {
@@ -432,6 +441,9 @@ public class CustomTabActivity extends ChromeActivity {
                     @Override
                     public void onClick(View v) {
                         RecordUserAction.record("CustomTabs.CloseButtonClicked");
+                        if (mIntentDataProvider.shouldEnableEmbeddedMediaExperience()) {
+                            RecordUserAction.record("CustomTabs.CloseButtonClicked.DownloadsUI");
+                        }
                         finishAndClose(false);
                     }
                 });
@@ -529,7 +541,9 @@ public class CustomTabActivity extends ChromeActivity {
         }
         RecordHistogram.recordEnumeratedHistogram("CustomTabs.WebContentsStateOnLaunch",
                 webContentsStateOnLaunch, WEBCONTENTS_STATE_MAX);
-        if (webContents == null) webContents = WebContentsFactory.createWebContents(false, false);
+        if (webContents == null) {
+            webContents = WebContentsFactory.createWebContentsWithWarmRenderer(false, false);
+        }
         if (!mHasPrerendered) {
             customTabsConnection.resetPostMessageHandlerForSession(mSession, webContents);
         }
@@ -540,6 +554,11 @@ public class CustomTabActivity extends ChromeActivity {
                         mIntentDataProvider.isOpenedByChrome(),
                         getFullscreenManager().getBrowserVisibilityDelegate()),
                 false, false);
+
+        if (mIntentDataProvider.shouldEnableEmbeddedMediaExperience()) {
+            tab.enableEmbeddedMediaExperience(true);
+        }
+
         initializeMainTab(tab);
         return tab;
     }
@@ -806,6 +825,12 @@ public class CustomTabActivity extends ChromeActivity {
                         mIntentDataProvider.sendButtonPendingIntentWithUrl(
                                 getApplicationContext(), getActivityTab().getUrl());
                         RecordUserAction.record("CustomTabsCustomActionButtonClick");
+                        if (mIntentDataProvider.shouldEnableEmbeddedMediaExperience()
+                                && TextUtils.equals(
+                                           params.getDescription(), getString(R.string.share))) {
+                            RecordUserAction.record(
+                                    "CustomTabsCustomActionButtonClick.DownloadsUI.Share");
+                        }
                     }
                 });
     }

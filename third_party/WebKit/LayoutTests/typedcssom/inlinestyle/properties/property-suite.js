@@ -1,5 +1,5 @@
 /**
- * @fileoverview A standard set of tests for using a single property in an
+ * A standard set of tests for using a single property in an
  *     inline StylePropertyMap
  *     (https://www.w3.org/TR/css-typed-om-1/#the-stylepropertymap).
  *
@@ -28,6 +28,11 @@
 
 function runInlineStylePropertyMapTests(config) {
   let element = document.createElement('div');
+  document.documentElement.appendChild(element);
+  if (!config.validKeywords) {
+    throw new Error('Must specify valid keywords (may be the empty list if ' +
+          'only css-wide keywords apply)');
+  }
   let validKeywords = config.validKeywords.concat([
     // CSS-wide keywords
     'initial',
@@ -78,13 +83,18 @@ function runSetterTests(
       element.style = '';
       element.styleMap.set(propertyName, new CSSKeywordValue(keyword));
       assert_equals(element.style[propertyName], keyword);
+      // Force a style recalc to check for crashes in style recalculation.
+      getComputedStyle(element)[propertyName];
+      assert_equals(element.style[propertyName], keyword);
     }, 'Setting ' + propertyName + ' to ' + keyword);
   }
   for (let validObject of validObjects) {
     test(function() {
       element.style = '';
-
       element.styleMap.set(propertyName, validObject);
+      assert_equals(element.style[propertyName], validObject.cssText);
+      // Force a style recalc to check for crashes in style recalculation.
+      getComputedStyle(element)[propertyName];
       assert_equals(element.style[propertyName], validObject.cssText);
     }, 'Setting ' + propertyName + ' to ' + validObject.constructor.name +
         ' with value ' +  validObject.cssText);
@@ -143,8 +153,12 @@ function runSequenceSetterTests(
     propertyName, validObject, invalidObject, element) {
   test(function() {
     element.style = '';
-
     element.styleMap.set(propertyName, [validObject, validObject]);
+    assert_equals(
+        element.style[propertyName], validObject.cssText + ', ' +
+        validObject.cssText);
+    // Force a style recalc to check for crashes in style recalculation.
+    getComputedStyle(element)[propertyName];
     assert_equals(
         element.style[propertyName], validObject.cssText + ', ' +
         validObject.cssText);
@@ -170,12 +184,22 @@ function runAppendTests(
     assert_equals(
         element.style[propertyName], validObject.cssText + ', ' +
         validObject.cssText);
+    // Force a style recalc to check for crashes in style recalculation.
+    getComputedStyle(element)[propertyName];
+    assert_equals(
+        element.style[propertyName], validObject.cssText + ', ' +
+        validObject.cssText);
   }, 'Appending a ' + validObject.constructor.name + ' to ' + propertyName);
 
   test(function() {
     element.style = '';
 
     element.styleMap.append(propertyName, [validObject, validObject]);
+    assert_equals(
+        element.style[propertyName], validObject.cssText + ', ' +
+        validObject.cssText);
+    // Force a style recalc to check for crashes in style recalculation.
+    getComputedStyle(element)[propertyName];
     assert_equals(
         element.style[propertyName], validObject.cssText + ', ' +
         validObject.cssText);
@@ -237,6 +261,10 @@ function runDeletionTests(propertyName, validObject, element) {
     element.styleMap.delete(propertyName);
     assert_equals(element.style[propertyName], '');
     assert_equals(element.styleMap.get(propertyName), null);
+    // Force a style recalc to check for crashes in style recalculation.
+    getComputedStyle(element)[propertyName];
+    assert_equals(element.style[propertyName], '');
+    assert_equals(element.styleMap.get(propertyName), null);
   }, 'Delete ' + propertyName + ' removes the value from the styleMap');
 }
 
@@ -244,9 +272,10 @@ function runGetPropertiesTests(propertyName, validObject, element) {
   test(function() {
     element.style = '';
     assert_array_equals(element.styleMap.getProperties(), []);
-
     element.styleMap.set(propertyName, validObject);
-
+    assert_array_equals(element.styleMap.getProperties(), [propertyName]);
+    // Force a style recalc to check for crashes in style recalculation.
+    getComputedStyle(element)[propertyName];
     assert_array_equals(element.styleMap.getProperties(), [propertyName]);
   }, propertyName + ' shows up in getProperties');
 }

@@ -15,7 +15,6 @@ import logging
 
 from webkitpy.common.memoized import memoized
 from webkitpy.common.net.git_cl import GitCL
-from webkitpy.common.net.rietveld import Rietveld
 from webkitpy.common.webkit_finder import WebKitFinder
 from webkitpy.layout_tests.models.test_expectations import TestExpectationLine, TestExpectations
 from webkitpy.w3c.test_parser import TestParser
@@ -45,8 +44,7 @@ class WPTExpectationsUpdater(object):
             _log.error('No issue on current branch.')
             return 1
 
-        rietveld = Rietveld(self.host.web)
-        builds = rietveld.latest_try_jobs(issue_number, self.get_try_bots())
+        builds = self.get_latest_try_jobs()
         _log.debug('Latest try jobs: %r', builds)
         if not builds:
             _log.error('No try job information was collected.')
@@ -72,11 +70,9 @@ class WPTExpectationsUpdater(object):
         """Returns current CL number. Can be replaced in unit tests."""
         return GitCL(self.host).get_issue_number()
 
-    def get_try_bots(self):
-        """Returns try bot names. Can be replaced in unit tests."""
-        # TODO(qyearsley): This method is unnecessary; unit tests can set up
-        # a BuilderList with try builder names, instead of overriding this.
-        return self.host.builders.all_try_builder_names()
+    def get_latest_try_jobs(self):
+        """Returns the latest finished try jobs as Build objects."""
+        return GitCL(self.host).latest_try_jobs(self._get_try_bots())
 
     def get_failing_results_dict(self, build):
         """Returns a nested dict of failing test results.
@@ -256,7 +252,7 @@ class WPTExpectationsUpdater(object):
             ['BUG_URL [PLATFORM(S)] TEST_NAME [EXPECTATION(S)]']
         """
         line_list = []
-        for test_name, port_results in merged_results.iteritems():
+        for test_name, port_results in sorted(merged_results.iteritems()):
             for port_names in sorted(port_results):
                 if test_name.startswith('external'):
                     line_parts = [port_results[port_names]['bug']]
@@ -283,8 +279,8 @@ class WPTExpectationsUpdater(object):
         for name in sorted(port_names):
             specifiers.append(self.host.builders.version_specifier_for_port_name(name))
         port = self.host.port_factory.get()
-        specifiers = self.simplify_specifiers(specifiers, port.configuration_specifier_macros())
         specifiers.extend(self.skipped_specifiers(test_name))
+        specifiers = self.simplify_specifiers(specifiers, port.configuration_specifier_macros())
         if not specifiers:
             return ''
         return '[ %s ]' % ' '.join(specifiers)
@@ -310,7 +306,7 @@ class WPTExpectationsUpdater(object):
     @memoized
     def all_try_builder_ports(self):
         """Returns a list of Port objects for all try builders."""
-        return [self.host.port_factory.get_from_builder_name(name) for name in self.get_try_bots()]
+        return [self.host.port_factory.get_from_builder_name(name) for name in self._get_try_bots()]
 
     @staticmethod
     def simplify_specifiers(specifiers, configuration_specifier_macros):  # pylint: disable=unused-argument
@@ -339,7 +335,7 @@ class WPTExpectationsUpdater(object):
             if version_specifiers.issubset(specifiers):
                 specifiers -= version_specifiers
                 specifiers.add(macro_specifier)
-        if specifiers == set(configuration_specifier_macros):
+        if specifiers == {macro.lower() for macro in configuration_specifier_macros.keys()}:
             return []
         return sorted(specifier.capitalize() for specifier in specifiers)
 
@@ -446,3 +442,6 @@ class WPTExpectationsUpdater(object):
         if not test_parser.test_doc:
             return False
         return test_parser.is_jstest()
+
+    def _get_try_bots(self):
+        return self.host.builders.all_try_builder_names()

@@ -77,7 +77,7 @@ class EnrollmentScreenUnitTest : public testing::Test {
   // Creates the EnrollmentScreen and sets required parameters.
   void SetUpEnrollmentScreen() {
     enrollment_screen_.reset(
-        new EnrollmentScreen(&mock_delegate_, &mock_actor_));
+        new EnrollmentScreen(&mock_delegate_, &mock_view_));
     enrollment_screen_->SetParameters(enrollment_config_, &fake_controller_);
   }
 
@@ -116,7 +116,7 @@ class EnrollmentScreenUnitTest : public testing::Test {
   policy::EnrollmentConfig enrollment_config_;
   pairing_chromeos::FakeControllerPairingController fake_controller_;
   MockBaseScreenDelegate mock_delegate_;
-  MockEnrollmentScreenActor mock_actor_;
+  MockEnrollmentScreenView mock_view_;
 
   DISALLOW_COPY_AND_ASSIGN(EnrollmentScreenUnitTest);
 };
@@ -198,7 +198,7 @@ TEST_F(EnrollmentScreenUnitTest, FinishesEnrollmentFlow) {
   // This is how we check that the code finishes and cleanly exits
   // the enterprise enrollment flow.
   EXPECT_CALL(*GetBaseScreenDelegate(),
-              OnExit(_, BaseScreenDelegate::ENTERPRISE_ENROLLMENT_COMPLETED, _))
+              OnExit(_, ScreenExitCode::ENTERPRISE_ENROLLMENT_COMPLETED, _))
       .Times(1);
 
   // Start zero-touch enrollment.

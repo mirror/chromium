@@ -1,0 +1,19 @@
+{
+  "name": "preferences2",
+  "display_name": "Preferences",
+  "interface_provider_specs": {
+    "service_manager:connector": {
+      "provides": {
+        "pref_client": [
+          "prefs::mojom::PrefStoreRegistry",
+          "prefs::mojom::PersistentPrefStoreConnector"
+        ],
+        "pref_control": [
+          "prefs::mojom::PrefServiceControl"
+        ]
+      },
+      "requires": {
+      }
+    }
+  }
+}

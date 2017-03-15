@@ -70,6 +70,7 @@ class CC_EXPORT SingleThreadProxy : public Proxy,
   void ScheduledActionBeginCompositorFrameSinkCreation() override;
   void ScheduledActionPrepareTiles() override;
   void ScheduledActionInvalidateCompositorFrameSink() override;
+  void ScheduledActionPerformImplSideInvalidation() override;
   void SendBeginMainFrameNotExpectedSoon() override;
 
   // LayerTreeHostImplClient implementation
@@ -95,6 +96,7 @@ class CC_EXPORT SingleThreadProxy : public Proxy,
   void DidPrepareTiles() override;
   void DidCompletePageScaleAnimationOnImplThread() override;
   void OnDrawForCompositorFrameSink(bool resourceless_software_draw) override;
+  void NeedsImplSideInvalidation() override;
 
   void RequestNewCompositorFrameSink();
 

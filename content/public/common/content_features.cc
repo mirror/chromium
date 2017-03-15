@@ -78,7 +78,7 @@ const base::Feature kFontCacheScaling{"FontCacheScaling",
 // same-origin to the top frame, or if a user gesture is being processed.
 const base::Feature kFramebustingNeedsSameOriginOrUserGesture{
     "FramebustingNeedsSameOriginOrUserGesture",
-    base::FEATURE_ENABLED_BY_DEFAULT};
+    base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Enables extended Gamepad API features like motion tracking and haptics.
 const base::Feature kGamepadExtensions{"GamepadExtensions",
@@ -101,6 +101,10 @@ const base::Feature kHeapCompaction{"HeapCompaction",
 // Enables lazily parsing css properties for performance.
 const base::Feature kLazyParseCSS{"LazyParseCSS",
                                   base::FEATURE_DISABLED_BY_DEFAULT};
+
+// Use Mojo IPC for resource loading.
+const base::Feature kLoadingWithMojo{"LoadingWithMojo",
+                                     base::FEATURE_DISABLED_BY_DEFAULT};
 
 // FeatureList definition for trials to enable the download button on
 // MediaDocument.
@@ -162,7 +166,7 @@ const base::Feature kRafAlignedMouseInputEvents{
 
 // RAF aligned touch input events support.
 const base::Feature kRafAlignedTouchInputEvents{
-    "RafAlignedTouchInput", base::FEATURE_DISABLED_BY_DEFAULT};
+    "RafAlignedTouchInput", base::FEATURE_ENABLED_BY_DEFAULT};
 
 // If Pepper 3D Image Chromium is allowed, this feature controls whether it is
 // enabled.
@@ -249,9 +253,19 @@ const base::Feature kWebRtcUseGpuMemoryBufferVideoFrames{
 const base::Feature kWebRtcHWH264Encoding{
     "WebRtcHWH264Encoding", base::FEATURE_ENABLED_BY_DEFAULT};
 
+// Enables the WebRTC Echo Canceller version 3 (AEC3). Feature for
+// http://crbug.com/688388. This value is sent to WebRTC's echo canceller to
+// toggle which echo canceller should be used.
+const base::Feature kWebRtcUseEchoCanceller3{"WebRtcUseEchoCanceller3",
+                                             base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Controls whether the WebUSB API is enabled:
 // https://wicg.github.io/webusb
 const base::Feature kWebUsb{"WebUSB", base::FEATURE_ENABLED_BY_DEFAULT};
+
+// Enables WebVR experimental rendering optimizations.
+const base::Feature kWebVRExperimentalRendering{
+    "WebVRExperimentalRendering", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Make sendBeacon throw for a Blob with a non simple type.
 const base::Feature kSendBeaconThrowForBlobWithNonSimpleType{
@@ -276,7 +290,10 @@ const base::Feature kServiceWorkerPaymentApps{
 // The JavaScript API for payments on the web.
 const base::Feature kWebPayments{"WebPayments",
                                  base::FEATURE_ENABLED_BY_DEFAULT};
-
+#else
+// The JavaScript API for payments on the web.
+const base::Feature kWebPayments{"WebPayments",
+                                 base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
 
 #if !defined(OS_ANDROID)

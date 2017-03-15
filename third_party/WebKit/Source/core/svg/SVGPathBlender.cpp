@@ -76,7 +76,7 @@ float SVGPathBlender::BlendState::blendAnimatedDimensonalFloat(
     float to,
     FloatBlendMode blendMode) {
   if (m_addTypesCount) {
-    ASSERT(m_typesAreEqual);
+    DCHECK(m_typesAreEqual);
     return from + to * m_addTypesCount;
   }
 
@@ -205,7 +205,7 @@ static void updateCurrentPoint(FloatPoint& subPathPoint,
       currentPoint = subPathPoint;
       break;
     default:
-      ASSERT_NOT_REACHED();
+      NOTREACHED();
   }
 }
 
@@ -277,7 +277,7 @@ bool SVGPathBlender::BlendState::blendSegments(
       }
       break;
     default:
-      ASSERT_NOT_REACHED();
+      NOTREACHED();
   }
 
   updateCurrentPoint(m_fromSubPathPoint, m_fromCurrentPoint, fromSeg);
@@ -290,9 +290,9 @@ SVGPathBlender::SVGPathBlender(SVGPathByteStreamSource* fromSource,
                                SVGPathByteStreamSource* toSource,
                                SVGPathConsumer* consumer)
     : m_fromSource(fromSource), m_toSource(toSource), m_consumer(consumer) {
-  ASSERT(m_fromSource);
-  ASSERT(m_toSource);
-  ASSERT(m_consumer);
+  DCHECK(m_fromSource);
+  DCHECK(m_toSource);
+  DCHECK(m_consumer);
 }
 
 bool SVGPathBlender::addAnimatedPath(unsigned repeatCount) {

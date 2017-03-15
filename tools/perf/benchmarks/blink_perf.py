@@ -13,8 +13,10 @@ from telemetry.page import legacy_page_test
 from telemetry.page import shared_page_state
 from telemetry import story
 from telemetry.value import list_of_scalar_values
+from telemetry.value import scalar
 
 from benchmarks import pywebsocket_server
+from measurements import timeline_controller
 from page_sets import webgl_supported_shared_state
 
 
@@ -97,9 +99,9 @@ class _BlinkPerfMeasurement(legacy_page_test.LegacyPageTest):
       options.AppendExtraBrowserArgs('--expose-internals-for-testing')
 
   def ValidateAndMeasurePage(self, page, tab, results):
-    tab.WaitForJavaScriptCondition2('testRunner.isDone', timeout=600)
+    tab.WaitForJavaScriptCondition('testRunner.isDone', timeout=600)
 
-    log = tab.EvaluateJavaScript2('document.getElementById("log").innerHTML')
+    log = tab.EvaluateJavaScript('document.getElementById("log").innerHTML')
 
     for line in log.splitlines():
       if line.startswith("FATAL: "):
@@ -117,6 +119,48 @@ class _BlinkPerfMeasurement(legacy_page_test.LegacyPageTest):
       break
 
     print log
+
+
+# TODO(wangxianzhu): Convert the paint benchmarks to use the new blink_perf
+# tracing once it's ready.
+class _BlinkPerfPaintMeasurement(_BlinkPerfMeasurement):
+  """Also collects prePaint and paint timing from traces."""
+
+  def __init__(self):
+    super(_BlinkPerfPaintMeasurement, self).__init__()
+    self._controller = None
+
+  def WillNavigateToPage(self, page, tab):
+    super(_BlinkPerfPaintMeasurement, self).WillNavigateToPage(page, tab)
+    self._controller = timeline_controller.TimelineController()
+    self._controller.trace_categories = 'blink,blink.console'
+    self._controller.SetUp(page, tab)
+    self._controller.Start(tab)
+
+  def DidRunPage(self, platform):
+    if self._controller:
+      self._controller.CleanUp(platform)
+
+  def ValidateAndMeasurePage(self, page, tab, results):
+    super(_BlinkPerfPaintMeasurement, self).ValidateAndMeasurePage(
+        page, tab, results)
+    self._controller.Stop(tab, results)
+    renderer = self._controller.model.GetRendererThreadFromTabId(tab.id)
+    # The marker marks the beginning and ending of the measured runs.
+    marker = next(event for event in renderer.async_slices
+                  if event.name == 'blink_perf'
+                  and event.category == 'blink.console')
+    assert marker
+
+    for event in renderer.all_slices:
+      if event.start < marker.start or event.end > marker.end:
+        continue
+      if event.name == 'FrameView::prePaint':
+        results.AddValue(
+            scalar.ScalarValue(page, 'prePaint', 'ms', event.duration))
+      if event.name == 'FrameView::paintTree':
+        results.AddValue(
+            scalar.ScalarValue(page, 'paint', 'ms', event.duration))
 
 
 class _BlinkPerfBenchmark(perf_benchmark.PerfBenchmark):
@@ -140,6 +184,9 @@ class _SharedPywebsocketPageState(shared_page_state.SharedPageState):
     self.platform.StartLocalServer(pywebsocket_server.PywebsocketServer())
 
 
+@benchmark.Owner(emails=['yukishiino@chromium.org',
+                         'bashi@chromium.org',
+                         'haraken@chromium.org'])
 class BlinkPerfBindings(_BlinkPerfBenchmark):
   tag = 'bindings'
   subdir = 'Bindings'
@@ -159,6 +206,7 @@ class BlinkPerfBlinkGC(_BlinkPerfBenchmark):
   subdir = 'BlinkGC'
 
 
+@benchmark.Owner(emails=['rune@opera.com'])
 class BlinkPerfCSS(_BlinkPerfBenchmark):
   tag = 'css'
   subdir = 'CSS'
@@ -167,6 +215,7 @@ class BlinkPerfCSS(_BlinkPerfBenchmark):
 @benchmark.Disabled('android', # http://crbug.com/685320
                     'android-webview', # http://crbug.com/593200
                     'reference')  # http://crbug.com/576779
+@benchmark.Owner(emails=['junov@chromium.org'])
 class BlinkPerfCanvas(_BlinkPerfBenchmark):
   tag = 'canvas'
   subdir = 'Canvas'
@@ -188,19 +237,22 @@ class BlinkPerfCanvas(_BlinkPerfBenchmark):
     return story_set
 
 
+@benchmark.Owner(emails=['yukishiino@chromium.org',
+                         'bashi@chromium.org',
+                         'haraken@chromium.org'])
 class BlinkPerfDOM(_BlinkPerfBenchmark):
   tag = 'dom'
   subdir = 'DOM'
 
 
-@benchmark.Disabled('win')  # http://crbug.com/588819
+@benchmark.Owner(emails=['hayato@chromium.org'])
 class BlinkPerfEvents(_BlinkPerfBenchmark):
   tag = 'events'
   subdir = 'Events'
 
 
 @benchmark.Disabled('win8')  # http://crbug.com/462350
-@benchmark.Disabled('win-reference')  # http://crbug.com/642884
+@benchmark.Owner(emails=['eae@chromium.org'])
 class BlinkPerfLayout(_BlinkPerfBenchmark):
   tag = 'layout'
   subdir = 'Layout'
@@ -210,7 +262,9 @@ class BlinkPerfLayout(_BlinkPerfBenchmark):
     return cls.IsSvelte(possible_browser)  # http://crbug.com/551950
 
 
+@benchmark.Owner(emails=['wangxianzhu@chromium.org'])
 class BlinkPerfPaint(_BlinkPerfBenchmark):
+  test = _BlinkPerfPaintMeasurement
   tag = 'paint'
   subdir = 'Paint'
 
@@ -220,16 +274,21 @@ class BlinkPerfPaint(_BlinkPerfBenchmark):
 
 
 @benchmark.Disabled('win')  # crbug.com/488493
+@benchmark.Owner(emails=['yukishiino@chromium.org',
+                         'bashi@chromium.org',
+                         'haraken@chromium.org'])
 class BlinkPerfParser(_BlinkPerfBenchmark):
   tag = 'parser'
   subdir = 'Parser'
 
 
+@benchmark.Owner(emails=['kouhei@chromium.org', 'fs@opera.com'])
 class BlinkPerfSVG(_BlinkPerfBenchmark):
   tag = 'svg'
   subdir = 'SVG'
 
 
+@benchmark.Owner(emails=['hayato@chromium.org'])
 class BlinkPerfShadowDOM(_BlinkPerfBenchmark):
   tag = 'shadow_dom'
   subdir = 'ShadowDOM'
@@ -237,6 +296,7 @@ class BlinkPerfShadowDOM(_BlinkPerfBenchmark):
 
 # This benchmark is for local testing, doesn't need to run on bots.
 @benchmark.Disabled('all')
+@benchmark.Owner(emails=['tyoshino@chromium.org', 'hiroshige@chromium.org'])
 class BlinkPerfXMLHttpRequest(_BlinkPerfBenchmark):
   tag = 'xml_http_request'
   subdir = 'XMLHttpRequest'
@@ -246,6 +306,7 @@ class BlinkPerfXMLHttpRequest(_BlinkPerfBenchmark):
 #@benchmark.Disabled('win', 'chromeos')
 # Disabling on remaining platforms due to heavy flake https://crbug.com/646938
 @benchmark.Disabled('all')
+@benchmark.Owner(emails=['tyoshino@chromium.org', 'yhirano@chromium.org'])
 class BlinkPerfPywebsocket(_BlinkPerfBenchmark):
   """The blink_perf.pywebsocket tests measure turn-around-time of 10MB
   send/receive for XHR, Fetch API and WebSocket. We might ignore < 10%

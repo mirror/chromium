@@ -97,7 +97,7 @@ const struct {
 };
 
 // This class maintains the maps between the extension id and its equivalent
-// Arc package name.
+// ARC package name.
 class AppDualBadgeMap {
  public:
   using ArcAppToExtensionsMap =
@@ -135,7 +135,7 @@ class AppDualBadgeMap {
   DISALLOW_COPY_AND_ASSIGN(AppDualBadgeMap);
 };
 
-base::LazyInstance<AppDualBadgeMap> g_dual_badge_map =
+base::LazyInstance<AppDualBadgeMap>::DestructorAtExit g_dual_badge_map =
     LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace

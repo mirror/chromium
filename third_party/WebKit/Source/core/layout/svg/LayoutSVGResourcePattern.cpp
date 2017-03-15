@@ -75,7 +75,7 @@ PatternData* LayoutSVGResourcePattern::patternForLayoutObject(
   // invalidation (painting animated images may trigger layout invals which
   // delete our map entry). Hopefully that will be addressed at some point, and
   // then we can optimize the lookup.
-  if (PatternData* currentData = m_patternMap.get(&object))
+  if (PatternData* currentData = m_patternMap.at(&object))
     return currentData;
 
   return m_patternMap.set(&object, buildPatternData(object))
@@ -136,6 +136,10 @@ SVGPaintServer LayoutSVGResourcePattern::preparePaintServer(
   if (!patternElement)
     return SVGPaintServer::invalid();
 
+  // Validate patter DOM state before building the actual
+  // pattern. This should avoid tearing down the pattern we're
+  // currently working on. Preferably the state validation should have
+  // no side-effects though.
   if (m_shouldCollectPatternAttributes) {
     patternElement->synchronizeAnimatedSVGAttribute(anyQName());
 
@@ -212,7 +216,7 @@ sk_sp<PaintRecord> LayoutSVGResourcePattern::asPaintRecord(
                                         tileTransform);
     for (LayoutObject* child = patternLayoutObject->firstChild(); child;
          child = child->nextSibling())
-      SVGPaintContext::paintSubtree(builder.context(), child);
+      SVGPaintContext::paintResourceSubtree(builder.context(), child);
   }
 
   return builder.endRecording();

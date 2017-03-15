@@ -2,12 +2,15 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-
 import sys
 import os
-import exceptions
 import itertools
 import re
+
+try:
+  from exceptions import RuntimeError
+except ImportError:
+  pass
 
 
 def GetNinjaOutputDirectory(chrome_root):
@@ -62,10 +65,10 @@ def GetNinjaOutputDirectory(chrome_root):
   try:
     return max(generate_paths(), key=approx_directory_mtime)
   except ValueError:
-    raise exceptions.RuntimeError(
-      'Unable to find a valid ninja output directory.')
+    raise RuntimeError('Unable to find a valid ninja output directory.')
+
 
 if __name__ == '__main__':
   if len(sys.argv) != 2:
-    raise exceptions.RuntimeError('Expected a single path argument.')
-  print GetNinjaOutputDirectory(sys.argv[1])
+    raise RuntimeError('Expected a single path argument.')
+  print(GetNinjaOutputDirectory(sys.argv[1]))

@@ -87,10 +87,7 @@ class CORE_EXPORT FrameSelection final
     CloseTyping = 1 << 1,
     ClearTypingStyle = 1 << 2,
     DoNotSetFocus = 1 << 3,
-    DoNotUpdateAppearance = 1 << 4,
-    DoNotClearStrategy = 1 << 5,
-    // TODO(yosin): We should get rid of |DoNotAdjustInFlatTree|.
-    DoNotAdjustInFlatTree = 1 << 6,
+    DoNotClearStrategy = 1 << 4,
   };
   // Union of values in SetSelectionOption and EUserTriggered
   typedef unsigned SetSelectionOptions;
@@ -103,27 +100,19 @@ class CORE_EXPORT FrameSelection final
   // You should not call |document()| when |!isAvailable()|.
   Document& document() const;
   LocalFrame* frame() const { return m_frame; }
-  Element* rootEditableElement() const {
-    return selection().rootEditableElement();
-  }
   Element* rootEditableElementOrDocumentElement() const;
-  ContainerNode* rootEditableElementOrTreeScopeRootNode() const;
-
-  bool hasEditableStyle() const { return selection().hasEditableStyle(); }
-  bool isContentEditable() const { return selection().isContentEditable(); }
-  bool isContentRichlyEditable() const {
-    return selection().isContentRichlyEditable();
-  }
 
   // An implementation of |WebFrame::moveCaretSelection()|
   void moveCaretSelection(const IntPoint&);
 
-  template <typename Strategy>
-  const VisibleSelectionTemplate<Strategy>& visibleSelection() const;
   const VisibleSelection& computeVisibleSelectionInDOMTree() const;
   const VisibleSelectionInFlatTree& computeVisibleSelectionInFlatTree() const;
 
-  const VisibleSelection& selection() const;
+  // TODO(editing-dev): We should replace
+  // |computeVisibleSelectionInDOMTreeDeprecated()| with update layout and
+  // |computeVisibleSelectionInDOMTree()| to increase places hoisting update
+  // layout.
+  const VisibleSelection& computeVisibleSelectionInDOMTreeDeprecated() const;
 
   void setSelection(const SelectionInDOMTree&,
                     SetSelectionOptions = CloseTyping | ClearTypingStyle,
@@ -134,23 +123,6 @@ class CORE_EXPORT FrameSelection final
                     SetSelectionOptions = CloseTyping | ClearTypingStyle,
                     CursorAlignOnScroll = CursorAlignOnScroll::IfNeeded,
                     TextGranularity = CharacterGranularity);
-
-  // TODO(yosin): We should use |SelectionInDOMTree| version instead of
-  // |VisibleSelection| version.
-  void setSelection(const VisibleSelection&,
-                    HandleVisibility = HandleVisibility::NotVisible,
-                    SetSelectionOptions = CloseTyping | ClearTypingStyle,
-                    CursorAlignOnScroll = CursorAlignOnScroll::IfNeeded,
-                    TextGranularity = CharacterGranularity);
-  void setSelection(const VisibleSelection&, SetSelectionOptions);
-  // TODO(yosin): We should use |SelectionInFlatTree| version instead of
-  // |VisibleSelectionInFlatTree| version.
-  void setSelection(const VisibleSelectionInFlatTree&,
-                    HandleVisibility = HandleVisibility::NotVisible,
-                    SetSelectionOptions = CloseTyping | ClearTypingStyle,
-                    CursorAlignOnScroll = CursorAlignOnScroll::IfNeeded,
-                    TextGranularity = CharacterGranularity);
-  void setSelection(const VisibleSelectionInFlatTree&, SetSelectionOptions);
   bool setSelectedRange(
       const EphemeralRange&,
       TextAffinity,
@@ -159,17 +131,24 @@ class CORE_EXPORT FrameSelection final
   void selectAll();
   void clear();
 
+  // TODO(tkent): These two functions were added to fix crbug.com/695211 without
+  // changing focus behavior. Once we fix crbug.com/690272, we can remove these
+  // functions.
+  // setSelectionDeprecated() returns true if didSetSelectionDeprecated() should
+  // be called.
+  bool setSelectionDeprecated(const SelectionInDOMTree&,
+                              SetSelectionOptions = CloseTyping |
+                                                    ClearTypingStyle,
+                              TextGranularity = CharacterGranularity);
+  void didSetSelectionDeprecated(
+      SetSelectionOptions = CloseTyping | ClearTypingStyle,
+      CursorAlignOnScroll = CursorAlignOnScroll::IfNeeded);
+
   // Call this after doing user-triggered selections to make it easy to delete
   // the frame you entirely selected.
   void selectFrameElementInParentIfFullySelected();
 
   bool contains(const LayoutPoint&);
-
-  SelectionType getSelectionType() const {
-    return selection().getSelectionType();
-  }
-
-  TextAffinity affinity() const { return selection().affinity(); }
 
   bool modify(EAlteration,
               SelectionDirection,
@@ -189,11 +168,6 @@ class CORE_EXPORT FrameSelection final
 
   TextGranularity granularity() const { return m_granularity; }
 
-  Position base() const { return selection().base(); }
-  Position extent() const { return selection().extent(); }
-  Position start() const { return selection().start(); }
-  Position end() const { return selection().end(); }
-
   // Returns true if specified layout block should paint caret. This function is
   // called during painting only.
   bool shouldPaintCaret(const LayoutBlock&) const;
@@ -204,11 +178,6 @@ class CORE_EXPORT FrameSelection final
   void didChangeFocus();
 
   const SelectionInDOMTree& selectionInDOMTree() const;
-  // TODO(yosin): We should rename |isNone()| to |isVisibleNone()|.
-  bool isNone() const { return selection().isNone(); }
-  bool isCaret() const { return selection().isCaret(); }
-  bool isRange() const { return selection().isRange(); }
-  bool isInPasswordField() const;
   bool isDirectional() const { return selectionInDOMTree().isDirectional(); }
 
   // If this FrameSelection has a logical range which is still valid, this
@@ -230,8 +199,7 @@ class CORE_EXPORT FrameSelection final
   void layoutBlockWillBeDestroyed(const LayoutBlock&);
   void updateStyleAndLayoutIfNeeded();
   void invalidatePaintIfNeeded(const LayoutBlock&,
-                               const PaintInvalidatorContext&,
-                               PaintInvalidationReason);
+                               const PaintInvalidatorContext&);
 
   void paintCaret(GraphicsContext&, const LayoutPoint&);
 
@@ -283,20 +251,16 @@ class CORE_EXPORT FrameSelection final
   bool shouldShowBlockCursor() const;
   void setShouldShowBlockCursor(bool);
 
-  // TODO(yosin): We should check DOM tree version and style version in
-  // |FrameSelection::selection()| to make sure we use updated selection,
-  // rather than having |updateIfNeeded()|. Once, we update all layout tests
-  // to use updated selection, we should make |updateIfNeeded()| private.
-  void updateIfNeeded();
-
   void cacheRangeOfDocument(Range*);
   Range* documentCachedRange() const;
   void clearDocumentCachedRange();
 
+  FrameCaret& frameCaretForTesting() const { return *m_frameCaret; }
+
   DECLARE_TRACE();
 
  private:
-  friend class BlockPaintInvalidatorTest;
+  friend class CaretDisplayItemClientTest;
   friend class FrameSelectionTest;
   friend class PaintControllerPaintTestForSlimmingPaintV1AndV2;
   friend class SelectionControllerTest;

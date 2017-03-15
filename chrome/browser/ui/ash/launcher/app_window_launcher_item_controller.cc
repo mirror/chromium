@@ -69,40 +69,40 @@ void AppWindowLauncherItemController::SetActiveWindow(aura::Window* window) {
     last_active_window_ = app_window;
 }
 
-ash::ShelfItemDelegate::PerformedAction
-AppWindowLauncherItemController::Activate(ash::LaunchSource source) {
-  DCHECK(!windows_.empty());
-  ui::BaseWindow* window_to_activate =
-      last_active_window_ ? last_active_window_ : windows_.back();
-  window_to_activate->Activate();
-  return kExistingWindowActivated;
-}
-
 AppWindowLauncherItemController*
 AppWindowLauncherItemController::AsAppWindowLauncherItemController() {
   return this;
 }
 
-ash::ShelfItemDelegate::PerformedAction
-AppWindowLauncherItemController::ItemSelected(const ui::Event& event) {
-  if (windows_.empty())
-    return kNoAction;
+void AppWindowLauncherItemController::ItemSelected(
+    std::unique_ptr<ui::Event> event,
+    int64_t display_id,
+    ash::ShelfLaunchSource source,
+    const ItemSelectedCallback& callback) {
+  if (windows_.empty()) {
+    callback.Run(ash::SHELF_ACTION_NONE, base::nullopt);
+    return;
+  }
 
   ui::BaseWindow* window_to_show =
       last_active_window_ ? last_active_window_ : windows_.front();
   // If the event was triggered by a keystroke, we try to advance to the next
   // item if the window we are trying to activate is already active.
-  if (windows_.size() >= 1 && window_to_show->IsActive() &&
-      event.type() == ui::ET_KEY_RELEASED) {
-    return ActivateOrAdvanceToNextAppWindow(window_to_show);
+  ash::ShelfAction action = ash::SHELF_ACTION_NONE;
+  if (windows_.size() >= 1 && window_to_show->IsActive() && event &&
+      event->type() == ui::ET_KEY_RELEASED) {
+    action = ActivateOrAdvanceToNextAppWindow(window_to_show);
+  } else {
+    action = ShowAndActivateOrMinimize(window_to_show);
   }
 
-  return ShowAndActivateOrMinimize(window_to_show);
+  callback.Run(action, GetAppMenuItems(event ? event->flags() : ui::EF_NONE));
 }
 
-ash::ShelfAppMenuItemList AppWindowLauncherItemController::GetAppMenuItems(
-    int event_flags) {
-  return ash::ShelfAppMenuItemList();
+void AppWindowLauncherItemController::ExecuteCommand(uint32_t command_id,
+                                                     int32_t event_flags) {
+  // This delegate does not support showing an application menu.
+  NOTIMPLEMENTED();
 }
 
 void AppWindowLauncherItemController::Close() {
@@ -137,15 +137,14 @@ void AppWindowLauncherItemController::OnWindowPropertyChanged(
   }
 }
 
-ash::ShelfItemDelegate::PerformedAction
-AppWindowLauncherItemController::ShowAndActivateOrMinimize(
+ash::ShelfAction AppWindowLauncherItemController::ShowAndActivateOrMinimize(
     ui::BaseWindow* app_window) {
   // Either show or minimize windows when shown from the launcher.
   return launcher_controller()->ActivateWindowOrMinimizeIfActive(
-      app_window, GetAppMenuItems(0).size() == 1);
+      app_window, GetAppMenuItems(ui::EF_NONE).size() == 1);
 }
 
-ash::ShelfItemDelegate::PerformedAction
+ash::ShelfAction
 AppWindowLauncherItemController::ActivateOrAdvanceToNextAppWindow(
     ui::BaseWindow* window_to_show) {
   WindowList::iterator i(
@@ -164,5 +163,5 @@ AppWindowLauncherItemController::ActivateOrAdvanceToNextAppWindow(
   } else {
     return ShowAndActivateOrMinimize(window_to_show);
   }
-  return kNoAction;
+  return ash::SHELF_ACTION_NONE;
 }

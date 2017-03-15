@@ -24,8 +24,7 @@ SensorProxy::SensorProxy(SensorType sensorType,
       m_provider(provider),
       m_clientBinding(this),
       m_state(SensorProxy::Uninitialized),
-      m_suspended(false),
-      m_maximumFrequency(0.0) {}
+      m_suspended(false) {}
 
 SensorProxy::~SensorProxy() {}
 
@@ -46,7 +45,7 @@ void SensorProxy::addObserver(Observer* observer) {
 }
 
 void SensorProxy::removeObserver(Observer* observer) {
-  m_observers.remove(observer);
+  m_observers.erase(observer);
 }
 
 void SensorProxy::initialize() {
@@ -211,9 +210,14 @@ void SensorProxy::onSensorCreated(SensorInitParamsPtr params,
     handleSensorError();
     return;
   }
+  m_frequencyLimits.first = params->minimum_frequency;
+  m_frequencyLimits.second = params->maximum_frequency;
 
-  m_maximumFrequency = params->maximum_frequency;
-  DCHECK(m_maximumFrequency <= SensorConfiguration::kMaxAllowedFrequency);
+  DCHECK_GT(m_frequencyLimits.first, 0.0);
+  DCHECK_GE(m_frequencyLimits.second, m_frequencyLimits.first);
+  constexpr double kMaxAllowedFrequency =
+      SensorConfiguration::kMaxAllowedFrequency;
+  DCHECK_GE(kMaxAllowedFrequency, m_frequencyLimits.second);
 
   auto errorCallback =
       WTF::bind(&SensorProxy::handleSensorError, wrapWeakPersistent(this));

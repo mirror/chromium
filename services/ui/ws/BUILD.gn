@@ -9,6 +9,10 @@ import("//services/service_manager/public/cpp/service.gni")
 import("//services/service_manager/public/service_manifest.gni")
 import("//services/service_manager/public/tools/test/service_test.gni")
 
+# In external window mode, top-level windows are native platform windows i.e.
+# not children of a Chrome OS window manager's root window.
+is_external_mode = use_ozone && !is_chromeos
+
 static_library("lib") {
   sources = [
     "accelerator.cc",
@@ -17,12 +21,16 @@ static_library("lib") {
     "access_policy_delegate.h",
     "accessibility_manager.cc",
     "accessibility_manager.h",
+    "cursor_location_manager.cc",
+    "cursor_location_manager.h",
     "default_access_policy.cc",
     "default_access_policy.h",
     "display.cc",
     "display.h",
     "display_binding.cc",
     "display_binding.h",
+    "display_client_compositor_frame_sink.cc",
+    "display_client_compositor_frame_sink.h",
     "display_manager.cc",
     "display_manager.h",
     "drag_controller.cc",
@@ -54,8 +62,6 @@ static_library("lib") {
     "platform_display_default.h",
     "platform_display_delegate.h",
     "platform_display_factory.h",
-    "platform_display_init_params.cc",
-    "platform_display_init_params.h",
     "server_window.cc",
     "server_window.h",
     "server_window_compositor_frame_sink_manager.cc",
@@ -169,9 +175,17 @@ static_library("test_support") {
     "test_change_tracker.h",
     "window_server_service_test_base.cc",
     "window_server_service_test_base.h",
-    "window_server_test_base.cc",
-    "window_server_test_base.h",
   ]
+
+  if (!is_external_mode) {
+    # WindowServerTestBase assumes an initial display (and root) is provided
+    # at startup, which is not the case on platforms running external window
+    # mode.
+    sources += [
+      "window_server_test_base.cc",
+      "window_server_test_base.h",
+    ]
+  }
 
   deps = [
     "//base",
@@ -204,15 +218,13 @@ group("tests") {
 
 service_test("mus_ws_unittests") {
   sources = [
+    "cursor_location_manager_unittest.cc",
     "cursor_unittest.cc",
     "display_unittest.cc",
     "drag_controller_unittest.cc",
     "event_dispatcher_unittest.cc",
     "event_matcher_unittest.cc",
     "focus_controller_unittest.cc",
-    "frame_generator_unittest.cc",
-    "server_window_compositor_frame_sink_manager_test_api.cc",
-    "server_window_compositor_frame_sink_manager_test_api.h",
     "server_window_drawn_tracker_unittest.cc",
     "test_server_window_delegate.cc",
     "test_server_window_delegate.h",
@@ -223,11 +235,16 @@ service_test("mus_ws_unittests") {
     "user_display_manager_unittest.cc",
     "window_coordinate_conversions_unittest.cc",
     "window_finder_unittest.cc",
-    "window_manager_client_unittest.cc",
     "window_manager_state_unittest.cc",
     "window_tree_client_unittest.cc",
     "window_tree_unittest.cc",
   ]
+
+  if (!is_external_mode) {
+    # A window manager client is not needed on platforms running external
+    # window mode, since the host system is always the window manager.
+    sources += [ "window_manager_client_unittest.cc" ]
+  }
 
   catalog = ":mus_ws_unittests_catalog"
 

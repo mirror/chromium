@@ -5,6 +5,7 @@
 package org.chromium.chrome.test;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 
@@ -73,11 +74,10 @@ public class ChromeInstrumentationTestRunner extends BaseChromiumInstrumentation
                             (Class<? extends VrClassesWrapper>) Class.forName(
                                     "org.chromium.chrome.browser.vr_shell.VrClassesWrapperImpl");
                     Constructor<?> vrClassesBuilderConstructor =
-                            vrClassesBuilderClass.getConstructor(Context.class);
+                            vrClassesBuilderClass.getConstructor();
                     VrClassesWrapper vrClassesBuilder =
-                            (VrClassesWrapper) vrClassesBuilderConstructor.newInstance(
-                                    getTargetContext());
-                    mDaydreamApi = vrClassesBuilder.createVrDaydreamApi();
+                            (VrClassesWrapper) vrClassesBuilderConstructor.newInstance();
+                    mDaydreamApi = vrClassesBuilder.createVrDaydreamApi(getTargetContext());
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
                         | IllegalArgumentException | InvocationTargetException
                         | NoSuchMethodException e) {
@@ -98,7 +98,7 @@ public class ChromeInstrumentationTestRunner extends BaseChromiumInstrumentation
             }
             // isDaydreamCurrentViewer() creates a concrete instance of DaydreamApi,
             // which can only be done on the main thread
-            FutureTask<Boolean> checker = new FutureTask<Boolean>(new Callable<Boolean>() {
+            FutureTask<Boolean> checker = new FutureTask<>(new Callable<Boolean>() {
                 @Override
                 public Boolean call() {
                     return getDaydreamApi().isDaydreamCurrentViewer();
@@ -111,6 +111,11 @@ public class ChromeInstrumentationTestRunner extends BaseChromiumInstrumentation
                     | IllegalArgumentException e) {
                 return false;
             }
+        }
+
+        private boolean supportsWebVr() {
+            // WebVR support is tied to VR Services support, which is only on K+
+            return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
         }
 
         @Override
@@ -153,6 +158,20 @@ public class ChromeInstrumentationTestRunner extends BaseChromiumInstrumentation
                     ChromeRestriction.RESTRICTION_TYPE_DAYDREAM_VIEW)
                     && !isDaydreamViewPaired()) {
                 return true;
+            }
+            if (TextUtils.equals(restriction, ChromeRestriction.RESTRICTION_TYPE_WEBVR_SUPPORTED)
+                    || TextUtils.equals(
+                               restriction, ChromeRestriction.RESTRICTION_TYPE_WEBVR_UNSUPPORTED)) {
+                boolean webvrSupported = supportsWebVr();
+                if (TextUtils.equals(
+                            restriction, ChromeRestriction.RESTRICTION_TYPE_WEBVR_SUPPORTED)
+                        && !webvrSupported) {
+                    return true;
+                } else if (TextUtils.equals(restriction,
+                                   ChromeRestriction.RESTRICTION_TYPE_WEBVR_UNSUPPORTED)
+                        && webvrSupported) {
+                    return true;
+                }
             }
             return false;
         }

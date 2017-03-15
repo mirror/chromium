@@ -2,16 +2,15 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-import json
 import copy
 
 from webkitpy.common.host_mock import MockHost
 from webkitpy.common.net.buildbot import Build
 from webkitpy.common.net.buildbot_mock import MockBuildBot
 from webkitpy.common.net.layout_test_results import LayoutTestResult, LayoutTestResults
-from webkitpy.common.net.web_mock import MockWeb
 from webkitpy.common.system.log_testing import LoggingTestCase
 from webkitpy.layout_tests.builder_list import BuilderList
+from webkitpy.layout_tests.port.factory_mock import MockPortFactory
 from webkitpy.w3c.wpt_expectations_updater import WPTExpectationsUpdater, MARKER_COMMENT
 
 
@@ -20,6 +19,7 @@ class WPTExpectationsUpdaterTest(LoggingTestCase):
     def mock_host(self):
         super(WPTExpectationsUpdaterTest, self).setUp()
         host = MockHost()
+        host.port_factory = MockPortFactory(host)
         host.builders = BuilderList({
             'MOCK Try Mac10.10': {
                 'port_name': 'test-mac-mac10.10',
@@ -34,6 +34,11 @@ class WPTExpectationsUpdaterTest(LoggingTestCase):
             'MOCK Try Trusty': {
                 'port_name': 'test-linux-trusty',
                 'specifiers': ['Trusty', 'Release'],
+                'is_try_builder': True,
+            },
+            'MOCK Try Precise': {
+                'port_name': 'test-linux-precise',
+                'specifiers': ['Precise', 'Release'],
                 'is_try_builder': True,
             },
             'MOCK Try Win10': {
@@ -150,26 +155,30 @@ class WPTExpectationsUpdaterTest(LoggingTestCase):
         self.assertEqual(updater.create_line_list(results), [])
 
     def test_create_line_list_new_tests(self):
-        # In this example, there are unexpected non-fail results in w3c tests.
+        # In this example, there are three unexpected results. The new
+        # test expectation lines are sorted by test, and then specifier.
         updater = WPTExpectationsUpdater(self.mock_host())
         results = {
+            'external/fake/test/zzzz.html': {
+                'test-mac-mac10.10': {'expected': 'PASS', 'actual': 'FAIL', 'bug': 'crbug.com/test'},
+            },
             'external/fake/test/path.html': {
                 'test-linux-trusty': {'expected': 'FAIL', 'actual': 'PASS', 'bug': 'crbug.com/test'},
-                'test-mac-mac10.10': {'expected': 'FAIL', 'actual': 'PASS', 'bug': 'crbug.com/test'},
                 'test-mac-mac10.11': {'expected': 'FAIL', 'actual': 'TIMEOUT', 'bug': 'crbug.com/test'},
-            }
+            },
         }
         self.assertEqual(
             updater.create_line_list(results),
             [
-                'crbug.com/test [ Linux ] external/fake/test/path.html [ Pass ]',
-                'crbug.com/test [ Mac10.10 ] external/fake/test/path.html [ Pass ]',
+                'crbug.com/test [ Trusty ] external/fake/test/path.html [ Pass ]',
                 'crbug.com/test [ Mac10.11 ] external/fake/test/path.html [ Timeout ]',
+                'crbug.com/test [ Mac10.10 ] external/fake/test/zzzz.html [ Failure ]',
             ])
 
     def test_specifier_part(self):
         updater = WPTExpectationsUpdater(self.mock_host())
         self.assertEqual(updater.specifier_part(['test-mac-mac10.10'], 'x/y.html'), '[ Mac10.10 ]')
+        self.assertEqual(updater.specifier_part([], 'x/y.html'), '')
 
     def test_skipped_specifiers_when_test_is_wontfix(self):
         host = self.mock_host()
@@ -183,13 +192,25 @@ class WPTExpectationsUpdaterTest(LoggingTestCase):
         macros = {
             'mac': ['Mac10.10', 'mac10.11'],
             'win': ['Win7', 'win10'],
-            'linux': ['Trusty'],
+            'Linux': ['Trusty'],
         }
         self.assertEqual(WPTExpectationsUpdater.simplify_specifiers(['mac10.10', 'mac10.11'], macros), ['Mac'])
         self.assertEqual(WPTExpectationsUpdater.simplify_specifiers(['Mac10.10', 'Mac10.11', 'Trusty'], macros), ['Linux', 'Mac'])
         self.assertEqual(
             WPTExpectationsUpdater.simplify_specifiers(['Mac10.10', 'Mac10.11', 'Trusty', 'Win7', 'Win10'], macros), [])
         self.assertEqual(WPTExpectationsUpdater.simplify_specifiers(['a', 'b', 'c'], {}), ['A', 'B', 'C'])
+        self.assertEqual(WPTExpectationsUpdater.simplify_specifiers(['Mac', 'Win', 'Linux'], macros), [])
+
+    def test_specifier_part_with_skipped_test(self):
+        host = self.mock_host()
+        expectations_path = '/test.checkout/LayoutTests/NeverFixTests'
+        host.filesystem.files[expectations_path] = 'crbug.com/111 [ Linux Mac10.11 ] external/wpt/test.html [ WontFix ]\n'
+        host.filesystem.files['/test.checkout/LayoutTests/external/wpt/test.html'] = ''
+        updater = WPTExpectationsUpdater(host)
+        self.assertEqual(
+            updater.specifier_part(['test-mac-mac10.10', 'test-win-win7', 'test-win-win10'], 'external/wpt/test.html'), '')
+        self.assertEqual(
+            updater.specifier_part(['test-win-win7', 'test-win-win10'], 'external/wpt/another.html'), '[ Win ]')
 
     def test_merge_dicts_with_conflict_raise_exception(self):
         updater = WPTExpectationsUpdater(self.mock_host())
@@ -258,7 +279,8 @@ class WPTExpectationsUpdaterTest(LoggingTestCase):
 
     def test_write_to_test_expectations_with_marker_comment(self):
         host = self.mock_host()
-        expectations_path = '/mock-checkout/third_party/WebKit/LayoutTests/TestExpectations'
+
+        expectations_path = host.port_factory.get().path_to_generic_test_expectations_file()
         host.filesystem.files[expectations_path] = MARKER_COMMENT + '\n'
         updater = WPTExpectationsUpdater(host)
         line_list = ['crbug.com/123 [ Trusty ] fake/file/path.html [ Pass ]']
@@ -271,21 +293,21 @@ class WPTExpectationsUpdaterTest(LoggingTestCase):
 
     def test_write_to_test_expectations_with_no_marker_comment(self):
         host = self.mock_host()
-        expectations_path = '/mock-checkout/third_party/WebKit/LayoutTests/TestExpectations'
-        host.filesystem.files[expectations_path] = 'crbug.com/111 [ Trusty ]\n'
+        expectations_path = host.port_factory.get().path_to_generic_test_expectations_file()
+        host.filesystem.files[expectations_path] = 'crbug.com/111 [ Trusty ] foo/bar.html [ Failure ]\n'
         updater = WPTExpectationsUpdater(host)
         line_list = ['crbug.com/123 [ Trusty ] fake/file/path.html [ Pass ]']
         updater.write_to_test_expectations(line_list)
         value = host.filesystem.read_text_file(expectations_path)
         self.assertMultiLineEqual(
             value,
-            ('crbug.com/111 [ Trusty ]\n'
+            ('crbug.com/111 [ Trusty ] foo/bar.html [ Failure ]\n'
              '\n' + MARKER_COMMENT + '\n'
              'crbug.com/123 [ Trusty ] fake/file/path.html [ Pass ]'))
 
     def test_write_to_test_expectations_skips_existing_lines(self):
         host = self.mock_host()
-        expectations_path = '/mock-checkout/third_party/WebKit/LayoutTests/TestExpectations'
+        expectations_path = host.port_factory.get().path_to_generic_test_expectations_file()
         host.filesystem.files[expectations_path] = 'crbug.com/111 dont/copy/me.html [ Failure ]\n'
         updater = WPTExpectationsUpdater(host)
         line_list = [
@@ -302,7 +324,7 @@ class WPTExpectationsUpdaterTest(LoggingTestCase):
 
     def test_write_to_test_expectations_with_marker_and_no_lines(self):
         host = self.mock_host()
-        expectations_path = '/mock-checkout/third_party/WebKit/LayoutTests/TestExpectations'
+        expectations_path = host.port_factory.get().path_to_generic_test_expectations_file()
         host.filesystem.files[expectations_path] = (
             MARKER_COMMENT + '\n'
             'crbug.com/123 [ Trusty ] fake/file/path.html [ Pass ]\n')
@@ -416,29 +438,15 @@ class WPTExpectationsUpdaterTest(LoggingTestCase):
         self.assertEqual(test_results_dict, test_results_dict_copy)
 
     def test_run_no_issue_number(self):
+        # TODO(qyearsley): For testing: Consider making a MockGitCL class
+        # and use that class to set fake return values when using git cl.
         updater = WPTExpectationsUpdater(self.mock_host())
         updater.get_issue_number = lambda: 'None'
         self.assertEqual(1, updater.run(args=[]))
         self.assertLog(['ERROR: No issue on current branch.\n'])
 
     def test_run_no_try_results(self):
-        host = self.mock_host()
-        host.web = MockWeb(urls={
-            'https://codereview.chromium.org/api/11112222': json.dumps({
-                'patchsets': [1],
-            }),
-            'https://codereview.chromium.org/api/11112222/1': json.dumps({
-                'try_job_results': []
-            })
-        })
-        updater = WPTExpectationsUpdater(host)
-        updater.get_issue_number = lambda: '11112222'
-        updater.get_try_bots = lambda: ['test-builder-name']
+        updater = WPTExpectationsUpdater(self.mock_host())
+        updater.get_latest_try_jobs = lambda: []
         self.assertEqual(1, updater.run(args=[]))
-        self.assertEqual(
-            host.web.urls_fetched,
-            [
-                'https://codereview.chromium.org/api/11112222',
-                'https://codereview.chromium.org/api/11112222/1'
-            ])
         self.assertLog(['ERROR: No try job information was collected.\n'])

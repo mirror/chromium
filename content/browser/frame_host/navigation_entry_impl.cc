@@ -9,7 +9,6 @@
 #include <queue>
 #include <utility>
 
-#include "base/debug/dump_without_crashing.h"
 #include "base/i18n/rtl.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
@@ -66,11 +65,7 @@ void RecursivelyGenerateFrameEntries(
   page_state.top = state;
   std::string data;
   EncodePageState(page_state, &data);
-  if (data.empty()) {
-    // Temporarily generate a minidump to diagnose https://crbug.com/568703.
-    base::debug::DumpWithoutCrashing();
-    NOTREACHED() << "Shouldn't generate an empty PageState.";
-  }
+  DCHECK(!data.empty()) << "Shouldn't generate an empty PageState.";
   node->frame_entry->SetPageState(PageState::CreateFromEncodedData(data));
 
   // Don't pass the file list to subframes, since that would result in multiple
@@ -79,10 +74,10 @@ void RecursivelyGenerateFrameEntries(
   std::vector<base::NullableString16> empty_file_list;
 
   for (const ExplodedFrameState& child_state : state.children) {
-    NavigationEntryImpl::TreeNode* child_node =
-        new NavigationEntryImpl::TreeNode(node, nullptr);
-    node->children.push_back(child_node);
-    RecursivelyGenerateFrameEntries(child_state, empty_file_list, child_node);
+    node->children.push_back(
+        base::MakeUnique<NavigationEntryImpl::TreeNode>(node, nullptr));
+    RecursivelyGenerateFrameEntries(child_state, empty_file_list,
+                                    node->children.back().get());
   }
 }
 
@@ -111,7 +106,7 @@ void RecursivelyGenerateFrameState(
 
   state->children.resize(node->children.size());
   for (size_t i = 0; i < node->children.size(); ++i) {
-    RecursivelyGenerateFrameState(node->children[i], &state->children[i],
+    RecursivelyGenerateFrameState(node->children[i].get(), &state->children[i],
                                   referenced_files);
   }
 }
@@ -179,7 +174,7 @@ NavigationEntryImpl::TreeNode::CloneAndReplace(
   // Recursively clone the children if needed.
   if (!is_target_frame || clone_children_of_target) {
     for (size_t i = 0; i < children.size(); i++) {
-      NavigationEntryImpl::TreeNode* child = children[i];
+      const auto& child = children[i];
 
       // Don't check whether it's still in the tree if |current_frame_tree_node|
       // is null.
@@ -690,7 +685,8 @@ CommonNavigationParams NavigationEntryImpl::ConstructCommonNavigationParams(
       dest_url, dest_referrer, GetTransitionType(), navigation_type,
       !IsViewSourceMode(), should_replace_entry(), ui_timestamp, report_type,
       GetBaseURLForDataURL(), GetHistoryURLForDataURL(), previews_state,
-      navigation_start, method, post_body ? post_body : post_data_);
+      navigation_start, method, post_body ? post_body : post_data_,
+      base::Optional<SourceLocation>());
 }
 
 StartNavigationParams NavigationEntryImpl::ConstructStartNavigationParams()
@@ -702,6 +698,8 @@ StartNavigationParams NavigationEntryImpl::ConstructStartNavigationParams()
 
 RequestNavigationParams NavigationEntryImpl::ConstructRequestNavigationParams(
     const FrameNavigationEntry& frame_entry,
+    const GURL& original_url,
+    const std::string& original_method,
     bool is_history_navigation_in_new_child,
     const std::map<std::string, bool>& subframe_unique_names,
     bool has_committed_real_load,
@@ -733,8 +731,8 @@ RequestNavigationParams NavigationEntryImpl::ConstructRequestNavigationParams(
   user_gesture = has_user_gesture();
 #endif
   RequestNavigationParams request_params(
-      GetIsOverridingUserAgent(), redirects, GetCanLoadLocalResources(),
-      frame_entry.page_state(), GetUniqueID(),
+      GetIsOverridingUserAgent(), redirects, original_url, original_method,
+      GetCanLoadLocalResources(), frame_entry.page_state(), GetUniqueID(),
       is_history_navigation_in_new_child, subframe_unique_names,
       has_committed_real_load, intended_as_new_entry, pending_offset_to_send,
       current_offset_to_send, current_length_to_send, IsViewSourceMode(),
@@ -822,7 +820,7 @@ void NavigationEntryImpl::AddOrUpdateFrameEntry(
 
   // Now check whether we have a TreeNode for the node itself.
   const std::string& unique_name = frame_tree_node->unique_name();
-  for (TreeNode* child : parent_node->children) {
+  for (const auto& child : parent_node->children) {
     if (child->frame_entry->frame_unique_name() == unique_name) {
       // If the document of the FrameNavigationEntry is changing, we must clear
       // any child FrameNavigationEntries.
@@ -849,7 +847,8 @@ void NavigationEntryImpl::AddOrUpdateFrameEntry(
   frame_entry->SetPageState(page_state);
   frame_entry->set_redirect_chain(redirect_chain);
   parent_node->children.push_back(
-      new NavigationEntryImpl::TreeNode(parent_node, frame_entry));
+      base::MakeUnique<NavigationEntryImpl::TreeNode>(parent_node,
+                                                      frame_entry));
 }
 
 FrameNavigationEntry* NavigationEntryImpl::GetFrameEntry(
@@ -864,7 +863,7 @@ std::map<std::string, bool> NavigationEntryImpl::GetSubframeUniqueNames(
   NavigationEntryImpl::TreeNode* tree_node = FindFrameEntry(frame_tree_node);
   if (tree_node) {
     // Return the names of all immediate children.
-    for (TreeNode* child : tree_node->children) {
+    for (const auto& child : tree_node->children) {
       // Keep track of whether we would be loading about:blank, since the
       // renderer should be allowed to just commit the initial blank frame if
       // that was the default URL.  PageState doesn't matter there, because
@@ -905,8 +904,8 @@ void NavigationEntryImpl::ClearStaleFrameEntriesForNewFrame(
 
     // Enqueue any children and keep looking if the current node doesn't match.
     if (!node->MatchesFrame(frame_tree_node)) {
-      for (auto* child : node->children) {
-        work_queue.push(child);
+      for (const auto& child : node->children) {
+        work_queue.push(child.get());
       }
       continue;
     }
@@ -915,8 +914,11 @@ void NavigationEntryImpl::ClearStaleFrameEntriesForNewFrame(
     // tree of FrameNavigationEntries and the FrameTree.
     if (!InSameTreePosition(frame_tree_node, node)) {
       NavigationEntryImpl::TreeNode* parent_node = node->parent;
-      auto it = std::find(parent_node->children.begin(),
-                          parent_node->children.end(), node);
+      auto it = std::find_if(
+          parent_node->children.begin(), parent_node->children.end(),
+          [node](const std::unique_ptr<NavigationEntryImpl::TreeNode>& item) {
+            return item.get() == node;
+          });
       CHECK(it != parent_node->children.end());
       parent_node->children.erase(it);
     }
@@ -950,8 +952,8 @@ NavigationEntryImpl::TreeNode* NavigationEntryImpl::FindFrameEntry(
       return node;
 
     // Enqueue any children and keep looking.
-    for (auto* child : node->children)
-      work_queue.push(child);
+    for (const auto& child : node->children)
+      work_queue.push(child.get());
   }
   return nullptr;
 }

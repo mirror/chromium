@@ -18,10 +18,6 @@
 #include "skia/ext/analysis_canvas.h"
 #include "third_party/skia/include/core/SkPicture.h"
 
-namespace gfx {
-class ColorSpace;
-}
-
 namespace cc {
 class DisplayItemList;
 class DrawImage;
@@ -31,6 +27,9 @@ class CC_EXPORT RasterSource : public base::RefCountedThreadSafe<RasterSource> {
  public:
   struct CC_EXPORT PlaybackSettings {
     PlaybackSettings();
+    PlaybackSettings(const PlaybackSettings&);
+    PlaybackSettings(PlaybackSettings&&);
+    ~PlaybackSettings();
 
     // If set to true, this indicates that the canvas has already been
     // rasterized into. This means that the canvas cannot be cleared safely.
@@ -42,6 +41,12 @@ class CC_EXPORT RasterSource : public base::RefCountedThreadSafe<RasterSource> {
     // If set to true, we will use an image hijack canvas, which enables
     // compositor image caching.
     bool use_image_hijack_canvas;
+
+    // If non-empty, an image hijack canvas will be used to skip these images
+    // during raster.
+    // TODO(khushalsagar): Consolidate more settings for playback here? See
+    // crbug.com/691076.
+    ImageIdFlatSet images_to_skip;
   };
 
   static scoped_refptr<RasterSource> CreateFromRecordingSource(
@@ -82,14 +87,6 @@ class CC_EXPORT RasterSource : public base::RefCountedThreadSafe<RasterSource> {
 
   // Returns the size of this raster source.
   gfx::Size GetSize() const;
-
-  // Returns whether or not there was a color space implied by the raster source
-  // when it was created. If this returns true then no color correction is
-  // to be applied at rasterization time, and the result of rasterization is to
-  // be interpreted as being in this color space. If this returns falce, then
-  // then a destination color space must be specified at raster time.
-  bool HasImpliedColorSpace() const;
-  const gfx::ColorSpace& GetImpliedColorSpace() const;
 
   // Populate the given list with all images that may overlap the given
   // rect in layer space. The returned draw images' matrices are modified as if

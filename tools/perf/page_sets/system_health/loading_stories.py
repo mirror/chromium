@@ -31,6 +31,7 @@ class LoadGoogleStory(_LoadingStory):
 class LoadBaiduStory(_LoadingStory):
   NAME = 'load:search:baidu'
   URL = 'https://www.baidu.com/s?word=google'
+  TAGS = [story_tags.INTERNATIONAL]
 
 
 class LoadYahooStory(_LoadingStory):
@@ -47,6 +48,7 @@ class LoadTaobaoDesktopStory(_LoadingStory):
   NAME = 'load:search:taobao'
   URL = 'https://world.taobao.com/'
   SUPPORTED_PLATFORMS = platforms.DESKTOP_ONLY
+  TAGS = [story_tags.INTERNATIONAL]
 
 
 class LoadTaobaoMobileStory(_LoadingStory):
@@ -54,11 +56,13 @@ class LoadTaobaoMobileStory(_LoadingStory):
   # "ali_trackid" in the URL suppresses "Download app" interstitial.
   URL = 'http://m.intl.taobao.com/?ali_trackid'
   SUPPORTED_PLATFORMS = platforms.MOBILE_ONLY
+  TAGS = [story_tags.INTERNATIONAL]
 
 
 class LoadYandexStory(_LoadingStory):
   NAME = 'load:search:yandex'
   URL = 'https://yandex.ru/touchsearch?text=science'
+  TAGS = [story_tags.INTERNATIONAL]
 
 
 class LoadEbayStory(_LoadingStory):
@@ -91,6 +95,7 @@ class LoadVkStory(_LoadingStory):
   # indefinitely on mobile
   # (see https://github.com/chromium/web-page-replay/issues/71).
   SUPPORTED_PLATFORMS = platforms.DESKTOP_ONLY
+  TAGS = [story_tags.INTERNATIONAL]
 
 
 class LoadInstagramStory(_LoadingStory):
@@ -155,6 +160,7 @@ class LoadQqMobileStory(_LoadingStory):
   NAME = 'load:news:qq'
   # Using "https://" hangs and shows "This site can't be reached".
   URL = 'http://news.qq.com'
+  TAGS = [story_tags.INTERNATIONAL]
 
 
 class LoadRedditDesktopStory(_LoadingStory):
@@ -178,6 +184,7 @@ class LoadSohuMobileStory(_LoadingStory):
   # always fails to completely load due to
   # https://github.com/chromium/web-page-replay/issues/74.
   SUPPORTED_PLATFORMS = platforms.MOBILE_ONLY
+  TAGS = [story_tags.INTERNATIONAL]
 
 
 class LoadWashingtonPostMobileStory(_LoadingStory):
@@ -191,7 +198,7 @@ class LoadWashingtonPostMobileStory(_LoadingStory):
     # window does not have a "Close" button, instead it has only a "Send link
     # to phone" button. So on tablets we run with the popup window open. The
     # popup is transparent, so this is mostly an aesthetical issue.
-    has_button = action_runner.EvaluateJavaScript2(
+    has_button = action_runner.EvaluateJavaScript(
         '!!document.querySelector({{ selector }})',
         selector=self._CLOSE_BUTTON_SELECTOR)
     if has_button:
@@ -246,7 +253,7 @@ class LoadFlickrStory(_LoadingStory):
 
   def _DidLoadDocument(self, action_runner):
     # Wait until the 'Recently tagged' view loads.
-    action_runner.WaitForJavaScriptCondition2('''
+    action_runner.WaitForJavaScriptCondition('''
         document.querySelector(
             '.search-photos-everyone-trending-view .photo-list-view')
                 !== null''')
@@ -310,7 +317,7 @@ class LoadGmailDesktopStory(_LoadGmailBaseStory):
 
   def _DidLoadDocument(self, action_runner):
     # Wait until the UI loads.
-    action_runner.WaitForJavaScriptCondition2(
+    action_runner.WaitForJavaScriptCondition(
         'document.getElementById("loading").style.display === "none"')
 
 
@@ -321,7 +328,7 @@ class LoadGmailMobileStory(_LoadGmailBaseStory):
   def _DidLoadDocument(self, action_runner):
     # Wait until the UI loads.
     action_runner.WaitForElement('#apploadingdiv')
-    action_runner.WaitForJavaScriptCondition2(
+    action_runner.WaitForJavaScriptCondition(
         'document.getElementById("apploadingdiv").style.height === "0px"')
 
 class LoadMapsStory(_LoadingStory):
@@ -371,7 +378,7 @@ class LoadBubblesStory(_LoadingStory):
 
   def _DidLoadDocument(self, action_runner):
     # The #logo element is removed right before the main menu is displayed.
-    action_runner.WaitForJavaScriptCondition2(
+    action_runner.WaitForJavaScriptCondition(
         'document.getElementById("logo") === null')
 
 
@@ -389,7 +396,7 @@ class LoadSpyChaseStory(_LoadingStory):
   def _DidLoadDocument(self, action_runner):
     # The background of the game canvas is set when the "Tap screen to play"
     # caption is displayed.
-    action_runner.WaitForJavaScriptCondition2(
+    action_runner.WaitForJavaScriptCondition(
         'document.querySelector("#game canvas").style.background !== ""')
 
 

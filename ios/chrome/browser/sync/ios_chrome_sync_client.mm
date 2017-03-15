@@ -176,6 +176,10 @@ void IOSChromeSyncClient::Initialize() {
   }
 }
 
+base::SequencedWorkerPool* IOSChromeSyncClient::GetBlockingPool() {
+  return web::WebThread::GetBlockingPool();
+}
+
 syncer::SyncService* IOSChromeSyncClient::GetSyncService() {
   DCHECK_CURRENTLY_ON(web::WebThread::UI);
   return IOSChromeProfileSyncServiceFactory::GetForBrowserState(browser_state_);
@@ -184,6 +188,10 @@ syncer::SyncService* IOSChromeSyncClient::GetSyncService() {
 PrefService* IOSChromeSyncClient::GetPrefService() {
   DCHECK_CURRENTLY_ON(web::WebThread::UI);
   return browser_state_->GetPrefs();
+}
+
+base::FilePath IOSChromeSyncClient::GetLocalSyncBackendFolder() {
+  return base::FilePath();
 }
 
 bookmarks::BookmarkModel* IOSChromeSyncClient::GetBookmarkModel() {

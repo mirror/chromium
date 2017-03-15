@@ -22,14 +22,14 @@
 #import "chrome/browser/ui/cocoa/info_bubble_view.h"
 #import "chrome/browser/ui/cocoa/info_bubble_window.h"
 #import "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h"
+#include "chrome/browser/ui/cocoa/page_info/permission_selector_button.h"
+#include "chrome/browser/ui/cocoa/page_info/split_block_button.h"
+#include "chrome/browser/ui/cocoa/page_info/website_settings_utils_cocoa.h"
 #include "chrome/browser/ui/cocoa/website_settings/permission_bubble_cocoa.h"
-#include "chrome/browser/ui/cocoa/website_settings/permission_selector_button.h"
-#include "chrome/browser/ui/cocoa/website_settings/split_block_button.h"
-#include "chrome/browser/ui/cocoa/website_settings/website_settings_utils_cocoa.h"
 #include "chrome/browser/ui/exclusive_access/exclusive_access_context.h"
 #include "chrome/browser/ui/exclusive_access/exclusive_access_manager.h"
 #include "chrome/browser/ui/exclusive_access/fullscreen_controller.h"
-#include "chrome/browser/ui/website_settings/permission_menu_model.h"
+#include "chrome/browser/ui/page_info/permission_menu_model.h"
 #include "chrome/browser/ui/website_settings/permission_prompt.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/grit/generated_resources.h"
@@ -479,7 +479,7 @@ const NSInteger kFullscreenLeftOffset = 40;
 }
 
 - (info_bubble::BubbleArrowLocation)getExpectedArrowLocation {
-  return info_bubble::kTopLeft;
+  return info_bubble::kTopLeading;
 }
 
 - (NSWindow*)getExpectedParentWindow {
@@ -597,23 +597,23 @@ const NSInteger kFullscreenLeftOffset = 40;
 }
 
 - (void)ok:(id)sender {
-  DCHECK(delegate_);
-  delegate_->Accept();
+  if (delegate_)
+    delegate_->Accept();
 }
 
 - (void)onAllow:(id)sender {
-  DCHECK(delegate_);
-  delegate_->Accept();
+  if (delegate_)
+    delegate_->Accept();
 }
 
 - (void)onBlock:(id)sender {
-  DCHECK(delegate_);
-  delegate_->Deny();
+  if (delegate_)
+    delegate_->Deny();
 }
 
 - (void)onClose:(id)sender {
-  DCHECK(delegate_);
-  delegate_->Closing();
+  if (delegate_)
+    delegate_->Closing();
 }
 
 + (NSInteger)getFullscreenLeftOffset {
@@ -647,8 +647,8 @@ const NSInteger kFullscreenLeftOffset = 40;
 
 - (IBAction)cancel:(id)sender {
   // This is triggered by ESC when the bubble has focus.
-  DCHECK(delegate_);
-  delegate_->Closing();
+  if (delegate_)
+    delegate_->Closing();
   [super cancel:sender];
 }
 

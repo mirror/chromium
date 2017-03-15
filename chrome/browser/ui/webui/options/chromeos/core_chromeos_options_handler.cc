@@ -8,8 +8,6 @@
 #include <string>
 #include <utility>
 
-#include "ash/common/session/session_state_delegate.h"
-#include "ash/common/wm_shell.h"
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/macros.h"
@@ -29,6 +27,7 @@
 #include "chrome/browser/chromeos/proxy_cros_settings_parser.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/ash/session_controller_client.h"
 #include "chrome/browser/ui/webui/chromeos/ui_account_tweaks.h"
 #include "chrome/browser/ui/webui/options/chromeos/accounts_options_handler.h"
 #include "chrome/common/pref_names.h"
@@ -255,7 +254,7 @@ void CoreChromeOSOptionsHandler::SetPref(const std::string& pref_name,
   if (proxy_cros_settings_parser::IsProxyPref(pref_name)) {
     proxy_cros_settings_parser::SetProxyPrefValue(
         network_guid_, pref_name, value, GetUiProxyConfigService());
-    base::StringValue proxy_type(pref_name);
+    base::Value proxy_type(pref_name);
     web_ui()->CallJavascriptFunctionUnsafe(
         "options.internet.DetailsInternetPage.updateProxySettings", proxy_type);
     ProcessUserMetric(value, metric);
@@ -295,10 +294,8 @@ base::Value* CoreChromeOSOptionsHandler::CreateValueForPref(
     const PrefService::Preference* pref =
         user_prefs->FindPreference(prefs::kEnableAutoScreenLock);
 
-    ash::SessionStateDelegate* delegate =
-        ash::WmShell::Get()->GetSessionStateDelegate();
     if (pref && pref->IsUserModifiable() &&
-        delegate->ShouldLockScreenAutomatically()) {
+        SessionControllerClient::ShouldLockScreenAutomatically()) {
       bool screen_lock = false;
       bool success = pref->GetValue()->GetAsBoolean(&screen_lock);
       DCHECK(success);

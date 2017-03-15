@@ -13,6 +13,7 @@
 #include "ash/display/window_tree_host_manager.h"
 #include "ash/screen_util.h"
 #include "ash/shell.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test/mirror_window_test_api.h"
 #include "ash/wm/window_state_aura.h"
@@ -21,7 +22,6 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "build/build_config.h"
-#include "grit/ash_strings.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/env.h"
 #include "ui/aura/window_observer.h"
@@ -968,7 +968,7 @@ TEST_F(DisplayManagerTest, NoOverlappedDisplaysWithDetachedDisplays) {
 TEST_F(DisplayManagerTest, NoMirrorInThreeDisplays) {
   UpdateDisplay("640x480,320x200,400x300");
   ash::Shell::GetInstance()->display_configuration_controller()->SetMirrorMode(
-      true, true);
+      true);
   EXPECT_FALSE(display_manager()->IsInMirrorMode());
   EXPECT_EQ(3u, display_manager()->GetNumDisplays());
   EXPECT_EQ(l10n_util::GetStringUTF16(IDS_ASH_DISPLAY_MIRRORING_NOT_SUPPORTED),

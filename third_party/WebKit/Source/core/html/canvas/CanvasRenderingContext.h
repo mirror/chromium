@@ -50,10 +50,26 @@ class WebLayer;
 enum CanvasColorSpace {
   kLegacyCanvasColorSpace,
   kSRGBCanvasColorSpace,
-  kLinearRGBCanvasColorSpace,
   kRec2020CanvasColorSpace,
   kP3CanvasColorSpace,
 };
+
+enum CanvasPixelFormat {
+  kRGBA8CanvasPixelFormat,
+  kRGB10A2CanvasPixelFormat,
+  kRGBA12CanvasPixelFormat,
+  kF16CanvasPixelFormat,
+};
+
+constexpr const char* kLegacyCanvasColorSpaceName = "legacy-srgb";
+constexpr const char* kSRGBCanvasColorSpaceName = "srgb";
+constexpr const char* kRec2020CanvasColorSpaceName = "rec2020";
+constexpr const char* kP3CanvasColorSpaceName = "p3";
+
+constexpr const char* kRGBA8CanvasPixelFormatName = "8-8-8-8";
+constexpr const char* kRGB10A2CanvasPixelFormatName = "10-10-10-2";
+constexpr const char* kRGBA12CanvasPixelFormatName = "12-12-12-12";
+constexpr const char* kF16CanvasPixelFormatName = "float16";
 
 class CORE_EXPORT CanvasRenderingContext
     : public GarbageCollectedFinalized<CanvasRenderingContext>,
@@ -88,6 +104,10 @@ class CORE_EXPORT CanvasRenderingContext
 
   CanvasColorSpace colorSpace() const { return m_colorSpace; };
   WTF::String colorSpaceAsString() const;
+  CanvasPixelFormat pixelFormat() const { return m_pixelFormat; };
+  WTF::String pixelFormatAsString() const;
+  bool linearPixelMath() const { return m_linearPixelMath; };
+
   // The color space in which the the content should be interpreted by the
   // compositor. This is always defined.
   gfx::ColorSpace gfxColorSpace() const;
@@ -134,6 +154,11 @@ class CORE_EXPORT CanvasRenderingContext
   };
   virtual void loseContext(LostContextMode) {}
 
+  // This method gets called at the end of script tasks that modified
+  // the contents of the canvas (called didDraw). It marks the completion
+  // of a presentable frame.
+  virtual void finalizeFrame() {}
+
   // WebThread::TaskObserver implementation
   void didProcessTask() override;
   void willProcessTask() final {}
@@ -157,7 +182,6 @@ class CORE_EXPORT CanvasRenderingContext
   virtual String getIdFromControl(const Element* element) { return String(); }
   virtual bool isAccelerationOptimalForCanvasContent() const { return true; }
   virtual void resetUsageTracking(){};
-  virtual void incrementFrameCount(){};
 
   // WebGL-specific interface
   virtual bool is3d() const { return false; }
@@ -205,6 +229,8 @@ class CORE_EXPORT CanvasRenderingContext
   HashSet<String> m_cleanURLs;
   HashSet<String> m_dirtyURLs;
   CanvasColorSpace m_colorSpace;
+  CanvasPixelFormat m_pixelFormat;
+  bool m_linearPixelMath = false;
   CanvasContextCreationAttributes m_creationAttributes;
   bool m_finalizeFrameScheduled = false;
 };

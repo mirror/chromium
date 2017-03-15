@@ -12,10 +12,10 @@
 #include "base/memory/weak_ptr.h"
 #include "build/build_config.h"
 #include "chrome/browser/permissions/permission_request.h"
+#include "chrome/browser/permissions/permission_result.h"
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "components/keyed_service/core/keyed_service.h"
-#include "content/public/browser/permission_type.h"
 
 #if defined(OS_ANDROID)
 class PermissionQueueController;
@@ -25,36 +25,11 @@ class PermissionRequestID;
 class Profile;
 
 namespace content {
+class RenderFrameHost;
 class WebContents;
 }
 
 using BrowserPermissionCallback = base::Callback<void(ContentSetting)>;
-
-// Identifies the source or reason for a permission status being returned.
-// TODO(raymes): Add more reasons here and return them correctly.
-enum class PermissionStatusSource {
-  // The status is the result of being blocked due to the user dismissing a
-  // permission prompt multiple times.
-  MULTIPLE_DISMISSALS,
-
-  // The status is the resultof being blocked because the permission is on the
-  // safe browsing blacklist.
-  SAFE_BROWSING_BLACKLIST,
-
-  // The reason for the status is not specified. Avoid returning this value. It
-  // only exists until code has been added to correctly return a source in all
-  // cases.
-  UNSPECIFIED
-};
-
-struct PermissionResult {
-  PermissionResult(ContentSetting content_setting,
-                   PermissionStatusSource source);
-  ~PermissionResult();
-
-  ContentSetting content_setting;
-  PermissionStatusSource source;
-};
 
 // This base class contains common operations for granting permissions.
 // It offers the following functionality:
@@ -83,7 +58,6 @@ struct PermissionResult {
 class PermissionContextBase : public KeyedService {
  public:
   PermissionContextBase(Profile* profile,
-                        const content::PermissionType permission_type,
                         const ContentSettingsType content_settings_type);
   ~PermissionContextBase() override;
 
@@ -107,10 +81,22 @@ class PermissionContextBase : public KeyedService {
                                  const BrowserPermissionCallback& callback);
 
   // Returns whether the permission has been granted, denied etc.
+  // |render_frame_host| may be nullptr if the call is coming from a context
+  // other than a specific frame.
   // TODO(meredithl): Ensure that the result accurately reflects whether the
   // origin is blacklisted for this permission.
-  PermissionResult GetPermissionStatus(const GURL& requesting_origin,
-                                       const GURL& embedding_origin) const;
+  PermissionResult GetPermissionStatus(
+      content::RenderFrameHost* render_frame_host,
+      const GURL& requesting_origin,
+      const GURL& embedding_origin) const;
+
+  // Update |result| with any modifications based on the device state. For
+  // example, if |result| is ALLOW but Chrome does not have the relevant
+  // permission at the device level, but will prompt the user, return ASK.
+  virtual PermissionResult UpdatePermissionStatusWithDeviceStatus(
+      PermissionResult result,
+      const GURL& requesting_origin,
+      const GURL& embedding_origin) const;
 
   // Resets the permission to its default value.
   virtual void ResetPermission(const GURL& requesting_origin,
@@ -128,6 +114,7 @@ class PermissionContextBase : public KeyedService {
 
  protected:
   virtual ContentSetting GetPermissionStatusInternal(
+      content::RenderFrameHost* render_frame_host,
       const GURL& requesting_origin,
       const GURL& embedding_origin) const;
 
@@ -181,10 +168,14 @@ class PermissionContextBase : public KeyedService {
   // Whether the permission should be restricted to secure origins.
   virtual bool IsRestrictedToSecureOrigins() const = 0;
 
-  content::PermissionType permission_type() const { return permission_type_; }
   ContentSettingsType content_settings_type() const {
     return content_settings_type_;
   }
+
+  // TODO(timloh): The CONTENT_SETTINGS_TYPE_NOTIFICATIONS type is used to
+  // store both push messaging and notifications permissions. Remove this
+  // once we've unified these types (crbug.com/563297).
+  ContentSettingsType content_settings_storage_type() const;
 
  private:
   friend class PermissionContextBaseTests;
@@ -204,7 +195,6 @@ class PermissionContextBase : public KeyedService {
                                  bool permission_blocked);
 
   Profile* profile_;
-  const content::PermissionType permission_type_;
   const ContentSettingsType content_settings_type_;
 #if defined(OS_ANDROID)
   std::unique_ptr<PermissionQueueController> permission_queue_controller_;

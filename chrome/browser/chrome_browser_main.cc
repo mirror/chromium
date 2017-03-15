@@ -57,7 +57,6 @@
 #include "chrome/browser/component_updater/sth_set_component_installer.h"
 #include "chrome/browser/component_updater/subresource_filter_component_installer.h"
 #include "chrome/browser/component_updater/supervised_user_whitelist_installer.h"
-#include "chrome/browser/component_updater/swiftshader_component_installer.h"
 #include "chrome/browser/component_updater/widevine_cdm_component_installer.h"
 #include "chrome/browser/defaults.h"
 #include "chrome/browser/first_run/first_run.h"
@@ -68,6 +67,7 @@
 #include "chrome/browser/memory/tab_manager.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 #include "chrome/browser/metrics/field_trial_synchronizer.h"
+#include "chrome/browser/metrics/renderer_uptime_tracker.h"
 #include "chrome/browser/metrics/thread_watcher.h"
 #include "chrome/browser/nacl_host/nacl_browser_delegate_impl.h"
 #include "chrome/browser/net/crl_set_fetcher.h"
@@ -209,11 +209,7 @@
 #include "chrome/browser/ui/network_profile_bubble.h"
 #include "chrome/browser/win/browser_util.h"
 #include "chrome/browser/win/chrome_select_file_dialog_factory.h"
-#include "chrome/installer/util/browser_distribution.h"
-#include "chrome/installer/util/helper.h"
-#include "chrome/installer/util/install_util.h"
-#include "chrome/installer/util/shell_util.h"
-#include "components/crash/content/app/crashpad.h"
+#include "chrome/install_static/install_util.h"
 #include "ui/base/l10n/l10n_util_win.h"
 #include "ui/shell_dialogs/select_file_dialog.h"
 #endif  // defined(OS_WIN)
@@ -481,7 +477,6 @@ void RegisterComponentsForUpdate() {
 #if !defined(OS_ANDROID)
   RegisterPepperFlashComponent(cus);
 #if !defined(OS_CHROMEOS)
-  RegisterSwiftShaderComponent(cus);
   RegisterWidevineCdmComponent(cus);
 #endif  // !defined(OS_CHROMEOS)
 #endif  // !defined(OS_ANDROID)
@@ -768,13 +763,13 @@ void ChromeBrowserMainParts::SetupFieldTrials() {
     (defined(OS_LINUX) && !defined(OS_CHROMEOS))
   metrics::DesktopSessionDurationTracker::Initialize();
 #endif
+  metrics::RendererUptimeTracker::Initialize();
 
 #if defined(OS_WIN)
   // Cleanup the PreRead field trial registry key.
   // TODO(fdoray): Remove this when M56 hits stable.
   const base::string16 pre_read_field_trial_registry_path =
-      BrowserDistribution::GetDistribution()->GetRegistryPath() +
-      L"\\PreReadFieldTrial";
+      install_static::GetRegistryPath() + L"\\PreReadFieldTrial";
   base::win::RegKey(HKEY_CURRENT_USER,
                     pre_read_field_trial_registry_path.c_str(), KEY_SET_VALUE)
       .DeleteKey(L"");
@@ -1419,18 +1414,6 @@ void ChromeBrowserMainParts::PostBrowserStart() {
 int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
   TRACE_EVENT0("startup", "ChromeBrowserMainParts::PreMainMessageLoopRunImpl");
 
-#if defined(OS_WIN)
-  HMODULE chrome_elf = GetModuleHandle(chrome::kChromeElfDllName);
-  if (chrome_elf) {
-    auto block_until_handler_started = reinterpret_cast<void (*)()>(
-        GetProcAddress(chrome_elf, "BlockUntilHandlerStartedImpl"));
-    if (block_until_handler_started) {
-      SCOPED_UMA_HISTOGRAM_TIMER("Startup.BlockForCrashpadHandlerStartupTime");
-      block_until_handler_started();
-    }
-  }
-#endif
-
   SCOPED_UMA_HISTOGRAM_LONG_TIMER("Startup.PreMainMessageLoopRunImplLongTime");
   const base::TimeTicks start_time_step1 = base::TimeTicks::Now();
 
@@ -1662,12 +1645,11 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
   content::WebUIControllerFactory::RegisterFactory(
       ChromeWebUIControllerFactory::GetInstance());
 
+#if !defined(DISABLE_NACL)
   // NaClBrowserDelegateImpl is accessed inside PostProfileInit().
   // So make sure to create it before that.
-#if !defined(DISABLE_NACL)
-  NaClBrowserDelegateImpl* delegate =
-      new NaClBrowserDelegateImpl(browser_process_->profile_manager());
-  nacl::NaClBrowser::SetDelegate(delegate);
+  nacl::NaClBrowser::SetDelegate(base::MakeUnique<NaClBrowserDelegateImpl>(
+      browser_process_->profile_manager()));
 #endif  // !defined(DISABLE_NACL)
 
   // TODO(stevenjb): Move WIN and MACOSX specific code to appropriate Parts.
@@ -1688,7 +1670,7 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
     // Auto Import might be disabled via a field trial.  However, this field
     // trial is not intended to affect enterprise users.
     auto_import =
-        base::win::IsEnrolledToDomain() ||
+        base::win::IsEnterpriseManaged() ||
         !base::FeatureList::IsEnabled(features::kDisableFirstRunAutoImportWin);
 #endif  // defined(OS_WIN)
 
@@ -1742,16 +1724,15 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
   // Init the RLZ library. This just binds the dll and schedules a task on the
   // file thread to be run sometime later. If this is the first run we record
   // the installation event.
-  PrefService* pref_service = profile_->GetPrefs();
-  int ping_delay = first_run::IsChromeFirstRun() ? master_prefs_->ping_delay :
-      pref_service->GetInteger(first_run::GetPingDelayPrefName().c_str());
+  int ping_delay =
+      profile_->GetPrefs()->GetInteger(prefs::kRlzPingDelaySeconds);
   // Negative ping delay means to send ping immediately after a first search is
   // recorded.
   rlz::RLZTracker::SetRlzDelegate(
       base::WrapUnique(new ChromeRLZTrackerDelegate));
   rlz::RLZTracker::InitRlzDelayed(
       first_run::IsChromeFirstRun(), ping_delay < 0,
-      base::TimeDelta::FromMilliseconds(abs(ping_delay)),
+      base::TimeDelta::FromSeconds(abs(ping_delay)),
       ChromeRLZTrackerDelegate::IsGoogleDefaultSearch(profile_),
       ChromeRLZTrackerDelegate::IsGoogleHomepage(profile_),
       ChromeRLZTrackerDelegate::IsGoogleInStartpages(profile_));
@@ -1931,14 +1912,6 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
   }
   run_message_loop_ = started;
   browser_creator_.reset();
-
-#if !defined(OS_LINUX) || defined(OS_CHROMEOS)
-  // Collects power-related UMA stats for Windows, Mac, and ChromeOS.
-  // Linux is not supported (crbug.com/426393).
-  power_usage_monitor_.reset(new PowerUsageMonitor());
-  power_usage_monitor_->Start();
-#endif  // !defined(OS_LINUX) || defined(OS_CHROMEOS)
-
 #endif  // !defined(OS_ANDROID)
 
   PostBrowserStart();

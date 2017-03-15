@@ -72,13 +72,13 @@ PassRefPtr<SimpleFontData> FontDataCache::get(
     // by SimpleFontData.
     m_cache.set(&newValue.first->platformData(), newValue);
     if (shouldRetain == DoNotRetain)
-      m_inactiveFontData.add(newValue.first);
+      m_inactiveFontData.insert(newValue.first);
     return newValue.first.release();
   }
 
   if (!result.get()->value.second) {
     ASSERT(m_inactiveFontData.contains(result.get()->value.first));
-    m_inactiveFontData.remove(result.get()->value.first);
+    m_inactiveFontData.erase(result.get()->value.first);
   }
 
   if (shouldRetain == Retain) {
@@ -87,7 +87,7 @@ PassRefPtr<SimpleFontData> FontDataCache::get(
     // If shouldRetain is DoNotRetain and count is 0, we want to remove the
     // fontData from m_inactiveFontData (above) and re-add here to update LRU
     // position.
-    m_inactiveFontData.add(result.get()->value.first);
+    m_inactiveFontData.insert(result.get()->value.first);
   }
 
   return result.get()->value.first;
@@ -107,7 +107,7 @@ void FontDataCache::release(const SimpleFontData* fontData) {
 
   ASSERT(it->value.second);
   if (!--it->value.second)
-    m_inactiveFontData.add(it->value.first);
+    m_inactiveFontData.insert(it->value.first);
 }
 
 void FontDataCache::markAllVerticalData() {
@@ -157,7 +157,7 @@ bool FontDataCache::purgeLeastRecentlyUsed(int count) {
     m_inactiveFontData.clear();
   } else {
     for (int i = 0; i < count; ++i)
-      m_inactiveFontData.remove(m_inactiveFontData.begin());
+      m_inactiveFontData.erase(m_inactiveFontData.begin());
   }
 
   bool didWork = fontDataToDelete.size();

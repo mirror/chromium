@@ -22,7 +22,15 @@ Polymer({
 
     /**
      * ARIA-label for the button.
+     *
+     * Note that we are not using "aria-label" property here, because
+     * we want to pass the label value but not actually declare it as an
+     * ARIA property anywhere but the actual target element.
      */
-    ariaLabel: String,
+    labelForAria: String,
+  },
+
+  focus: function() {
+    this.$.button.focus();
   },
 });

@@ -201,8 +201,8 @@ FontSettingsAPI::FontSettingsAPI(content::BrowserContext* context)
 FontSettingsAPI::~FontSettingsAPI() {
 }
 
-static base::LazyInstance<BrowserContextKeyedAPIFactory<FontSettingsAPI> >
-    g_factory = LAZY_INSTANCE_INITIALIZER;
+static base::LazyInstance<BrowserContextKeyedAPIFactory<FontSettingsAPI>>::
+    DestructorAtExit g_factory = LAZY_INSTANCE_INITIALIZER;
 
 // static
 BrowserContextKeyedAPIFactory<FontSettingsAPI>*
@@ -278,7 +278,7 @@ ExtensionFunction::ResponseAction FontSettingsSetFontFunction::Run() {
 
   PreferenceAPI::Get(profile)->SetExtensionControlledPref(
       extension_id(), pref_path, kExtensionPrefsScopeRegular,
-      new base::StringValue(params->details.font_id));
+      new base::Value(params->details.font_id));
   return RespondNow(NoArguments());
 }
 
@@ -319,8 +319,8 @@ bool FontSettingsGetFontListFunction::CopyFontsToResult(
 
     std::unique_ptr<base::DictionaryValue> font_name(
         new base::DictionaryValue());
-    font_name->Set(kFontIdKey, new base::StringValue(name));
-    font_name->Set(kDisplayNameKey, new base::StringValue(localized_name));
+    font_name->Set(kFontIdKey, new base::Value(name));
+    font_name->Set(kDisplayNameKey, new base::Value(localized_name));
     result->Append(std::move(font_name));
   }
 

@@ -235,7 +235,7 @@ void ScrollingCoordinator::updateAfterCompositingChangeIfNeeded() {
     Element* fullscreenElement =
         Fullscreen::fullscreenElementFrom(*mainFrameDocument);
     WebLayer* visualViewportScrollLayer =
-        toWebLayer(m_page->frameHost().visualViewport().scrollLayer());
+        toWebLayer(m_page->visualViewport().scrollLayer());
 
     if (visualViewportScrollLayer) {
       if (fullscreenElement &&
@@ -284,10 +284,10 @@ static WebLayerPositionConstraint computePositionConstraint(
     const PaintLayer* layer) {
   DCHECK(layer->hasCompositedLayerMapping());
   do {
-    if (layer->layoutObject()->style()->position() == EPosition::kFixed) {
-      const LayoutObject* fixedPositionObject = layer->layoutObject();
-      bool fixedToRight = !fixedPositionObject->style()->right().isAuto();
-      bool fixedToBottom = !fixedPositionObject->style()->bottom().isAuto();
+    if (layer->layoutObject().style()->position() == EPosition::kFixed) {
+      const LayoutObject& fixedPositionObject = layer->layoutObject();
+      bool fixedToRight = !fixedPositionObject.style()->right().isAuto();
+      bool fixedToBottom = !fixedPositionObject.style()->bottom().isAuto();
       return WebLayerPositionConstraint::fixedPosition(fixedToRight,
                                                        fixedToBottom);
     }
@@ -345,9 +345,16 @@ static std::unique_ptr<WebScrollbarLayer> createScrollbarLayer(
   std::unique_ptr<WebScrollbarThemeGeometry> geometry(
       WebScrollbarThemeGeometryNative::create(theme));
 
-  std::unique_ptr<WebScrollbarLayer> scrollbarLayer =
-      Platform::current()->compositorSupport()->createScrollbarLayer(
-          WebScrollbarImpl::create(&scrollbar), painter, std::move(geometry));
+  std::unique_ptr<WebScrollbarLayer> scrollbarLayer;
+  if (theme.usesOverlayScrollbars() && theme.usesNinePatchThumbResource()) {
+    scrollbarLayer =
+        Platform::current()->compositorSupport()->createOverlayScrollbarLayer(
+            WebScrollbarImpl::create(&scrollbar), painter, std::move(geometry));
+  } else {
+    scrollbarLayer =
+        Platform::current()->compositorSupport()->createScrollbarLayer(
+            WebScrollbarImpl::create(&scrollbar), painter, std::move(geometry));
+  }
   GraphicsLayer::registerContentsLayer(scrollbarLayer->layer());
   return scrollbarLayer;
 }
@@ -408,7 +415,7 @@ WebScrollbarLayer* ScrollingCoordinator::getWebScrollbarLayer(
   ScrollbarMap& scrollbars = orientation == HorizontalScrollbar
                                  ? m_horizontalScrollbars
                                  : m_verticalScrollbars;
-  return scrollbars.get(scrollableArea);
+  return scrollbars.at(scrollableArea);
 }
 
 void ScrollingCoordinator::scrollableAreaScrollbarLayerDidChange(
@@ -451,8 +458,8 @@ void ScrollingCoordinator::scrollableAreaScrollbarLayerDidChange(
             scrollbar.theme().trackPosition(scrollbar),
             scrollableArea->shouldPlaceVerticalScrollbarOnLeft());
       } else {
-        webScrollbarLayer =
-            createScrollbarLayer(scrollbar, m_page->deviceScaleFactor());
+        webScrollbarLayer = createScrollbarLayer(
+            scrollbar, m_page->deviceScaleFactorDeprecated());
       }
       scrollbarLayer = addWebScrollbarLayer(scrollableArea, orientation,
                                             std::move(webScrollbarLayer));
@@ -478,8 +485,7 @@ bool ScrollingCoordinator::scrollableAreaScrollLayerDidChange(
   GraphicsLayer* scrollLayer = scrollableArea->layerForScrolling();
 
   if (scrollLayer) {
-    bool isForVisualViewport =
-        scrollableArea == &m_page->frameHost().visualViewport();
+    bool isForVisualViewport = scrollableArea == &m_page->visualViewport();
     scrollLayer->setScrollableArea(scrollableArea, isForVisualViewport);
   }
 
@@ -573,8 +579,8 @@ static void projectRectsToGraphicsLayerSpaceRecursive(
     HashSet<const PaintLayer*>& layersWithRects,
     LayerFrameMap& layerChildFrameMap) {
   // If this layer is throttled, ignore it.
-  if (curLayer->layoutObject()->frameView() &&
-      curLayer->layoutObject()->frameView()->shouldThrottleRendering())
+  if (curLayer->layoutObject().frameView() &&
+      curLayer->layoutObject().frameView()->shouldThrottleRendering())
     return;
   // Project any rects for the current layer
   LayerHitTestRects::const_iterator layerIter = layerRects.find(curLayer);
@@ -588,7 +594,7 @@ static void projectRectsToGraphicsLayerSpaceRecursive(
 
     // Find the appropriate GraphicsLayer for the composited Layer.
     GraphicsLayer* graphicsLayer =
-        compositedLayer->graphicsLayerBacking(curLayer->layoutObject());
+        compositedLayer->graphicsLayerBacking(&curLayer->layoutObject());
 
     GraphicsLayerHitTestRects::iterator glIter =
         graphicsRects.find(graphicsLayer);
@@ -604,16 +610,16 @@ static void projectRectsToGraphicsLayerSpaceRecursive(
       LayoutRect rect = layerIter->value[i];
       if (compositedLayer != curLayer) {
         FloatQuad compositorQuad = geometryMap.mapToAncestor(
-            FloatRect(rect), compositedLayer->layoutObject());
+            FloatRect(rect), &compositedLayer->layoutObject());
         rect = LayoutRect(compositorQuad.boundingBox());
         // If the enclosing composited layer itself is scrolled, we have to undo
         // the subtraction of its scroll offset since we want the offset
         // relative to the scrolling content, not the element itself.
-        if (compositedLayer->layoutObject()->hasOverflowClip())
+        if (compositedLayer->layoutObject().hasOverflowClip())
           rect.move(compositedLayer->layoutBox()->scrolledContentOffset());
       }
       PaintLayer::mapRectInPaintInvalidationContainerToBacking(
-          *compositedLayer->layoutObject(), rect);
+          compositedLayer->layoutObject(), rect);
       rect.move(-graphicsLayer->offsetFromLayoutObject());
 
       glRects->push_back(rect);
@@ -677,7 +683,7 @@ static void projectRectsToGraphicsLayerSpace(
         layer = layer->parent();
       } else {
         LayoutItem parentDocLayoutItem =
-            layer->layoutObject()->frame()->ownerLayoutItem();
+            layer->layoutObject().frame()->ownerLayoutItem();
         if (!parentDocLayoutItem.isNull()) {
           layer = parentDocLayoutItem.enclosingLayer();
           touchHandlerInChildFrame = true;
@@ -742,12 +748,12 @@ void ScrollingCoordinator::setTouchEventTargetRects(
   // lifetime of a GraphicsLayer.
   GraphicsLayerHitTestRects graphicsLayerRects;
   for (const PaintLayer* layer : m_layersWithTouchRects) {
-    if (layer->layoutObject()->frameView() &&
-        layer->layoutObject()->frameView()->shouldThrottleRendering()) {
+    if (layer->layoutObject().frameView() &&
+        layer->layoutObject().frameView()->shouldThrottleRendering()) {
       continue;
     }
     GraphicsLayer* mainGraphicsLayer =
-        layer->graphicsLayerBacking(layer->layoutObject());
+        layer->graphicsLayerBacking(&layer->layoutObject());
     if (mainGraphicsLayer)
       graphicsLayerRects.insert(mainGraphicsLayer, Vector<LayoutRect>());
     GraphicsLayer* scrollingContentsLayer = layer->graphicsLayerBacking();
@@ -824,7 +830,7 @@ void ScrollingCoordinator::updateClipParentForGraphicsLayer(
 }
 
 void ScrollingCoordinator::willDestroyLayer(PaintLayer* layer) {
-  m_layersWithTouchRects.remove(layer);
+  m_layersWithTouchRects.erase(layer);
 }
 
 void ScrollingCoordinator::setShouldUpdateScrollLayerPositionOnMainThread(
@@ -833,8 +839,7 @@ void ScrollingCoordinator::setShouldUpdateScrollLayerPositionOnMainThread(
       !m_page->deprecatedLocalMainFrame()->view())
     return;
 
-  GraphicsLayer* visualViewportLayer =
-      m_page->frameHost().visualViewport().scrollLayer();
+  GraphicsLayer* visualViewportLayer = m_page->visualViewport().scrollLayer();
   WebLayer* visualViewportScrollLayer = toWebLayer(visualViewportLayer);
   GraphicsLayer* layer = m_page->deprecatedLocalMainFrame()
                              ->view()
@@ -989,8 +994,8 @@ Region ScrollingCoordinator::computeShouldHandleScrollGestureOnMainThreadRegion(
     }
   }
 
-  if (const FrameView::ChildrenWidgetSet* children = frameView->children()) {
-    for (const Member<Widget>& child : *children) {
+  if (const FrameView::ChildrenSet* children = frameView->children()) {
+    for (const Member<FrameViewBase>& child : *children) {
       if (!(*child).isPluginView())
         continue;
 
@@ -1019,7 +1024,7 @@ static void accumulateDocumentTouchEventTargetRects(LayerHitTestRects& rects,
                                                     const Document* document) {
   DCHECK(document);
   const EventTargetSet* targets =
-      document->frameHost()->eventHandlerRegistry().eventHandlerTargets(
+      document->page()->eventHandlerRegistry().eventHandlerTargets(
           EventHandlerRegistry::TouchStartOrMoveEventBlocking);
   if (!targets)
     return;

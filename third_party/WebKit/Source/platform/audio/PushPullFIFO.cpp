@@ -83,6 +83,33 @@ void PushPullFIFO::push(const AudioBus* inputBus) {
 // Pull the data out of FIFO to |outputBus|. If remaining frame in the FIFO
 // is less than the frames to pull, provides remaining frame plus the silence.
 void PushPullFIFO::pull(AudioBus* outputBus, size_t framesRequested) {
+#if OS(ANDROID)
+  if (!outputBus) {
+    // Log when outputBus or FIFO object is invalid. (crbug.com/692423)
+    LOG(WARNING) << "[WebAudio/PushPullFIFO::pull <" << static_cast<void*>(this)
+                 << ">] |outputBus| is invalid.";
+    // Silently return to avoid crash.
+    return;
+  }
+
+  // The following checks are in place to catch the inexplicable crash.
+  // (crbug.com/692423)
+  if (framesRequested > outputBus->length()) {
+    LOG(WARNING) << "[WebAudio/PushPullFIFO::pull <" << static_cast<void*>(this)
+                 << ">] framesRequested > outputBus->length() ("
+                 << framesRequested << " > " << outputBus->length() << ")";
+  }
+  if (framesRequested > m_fifoLength) {
+    LOG(WARNING) << "[WebAudio/PushPullFIFO::pull <" << static_cast<void*>(this)
+                 << ">] framesRequested > m_fifoLength (" << framesRequested
+                 << " > " << m_fifoLength << ")";
+  }
+  if (m_indexRead >= m_fifoLength) {
+    LOG(WARNING) << "[WebAudio/PushPullFIFO::pull <" << static_cast<void*>(this)
+                 << ">] m_indexRead >= m_fifoLength (" << m_indexRead
+                 << " >= " << m_fifoLength << ")";
+  }
+#endif
   CHECK(outputBus);
   SECURITY_CHECK(framesRequested <= outputBus->length());
   SECURITY_CHECK(framesRequested <= m_fifoLength);

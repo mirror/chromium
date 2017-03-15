@@ -51,7 +51,7 @@ class StyleDifference {
            !(m_propertySpecificDifferences & ~propertyDifferences);
   }
 
-  bool needsPaintInvalidation() const {
+  bool needsFullPaintInvalidation() const {
     return m_paintInvalidationType != NoPaintInvalidation;
   }
 
@@ -60,7 +60,7 @@ class StyleDifference {
     return m_paintInvalidationType == PaintInvalidationObject;
   }
   void setNeedsPaintInvalidationObject() {
-    ASSERT(!needsPaintInvalidationSubtree());
+    DCHECK(!needsPaintInvalidationSubtree());
     m_paintInvalidationType = PaintInvalidationObject;
   }
 
@@ -140,9 +140,9 @@ class StyleDifference {
 
  private:
   enum PaintInvalidationType {
-    NoPaintInvalidation = 0,
+    NoPaintInvalidation,
     PaintInvalidationObject,
-    PaintInvalidationSubtree
+    PaintInvalidationSubtree,
   };
   unsigned m_paintInvalidationType : 2;
 

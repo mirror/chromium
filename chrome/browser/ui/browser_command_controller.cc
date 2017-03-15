@@ -187,22 +187,11 @@ bool BrowserCommandController::IsReservedCommandOrKey(
   }
 #endif
 
-  const bool is_tab_or_window_command =
-      command_id == IDC_CLOSE_TAB ||
-      command_id == IDC_CLOSE_WINDOW ||
-      command_id == IDC_NEW_INCOGNITO_WINDOW ||
-      command_id == IDC_NEW_TAB ||
-      command_id == IDC_NEW_WINDOW ||
-      command_id == IDC_RESTORE_TAB ||
-      command_id == IDC_SELECT_NEXT_TAB ||
-      command_id == IDC_SELECT_PREVIOUS_TAB;
   if (window()->IsFullscreen()) {
     // In fullscreen, all commands except for IDC_FULLSCREEN and IDC_EXIT should
-    // be delivered to the web page. See https://goo.gl/4tJ32G.
-    if (command_id == IDC_FULLSCREEN)
-      return true;
-    if (is_tab_or_window_command)
-      return false;
+    // be delivered to the web page. See, intent to implement,
+    // https://goo.gl/4tJ32G.
+    return command_id == IDC_EXIT || command_id == IDC_FULLSCREEN;
   }
 
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)
@@ -214,7 +203,15 @@ bool BrowserCommandController::IsReservedCommandOrKey(
     return false;
 #endif
 
-  return is_tab_or_window_command || command_id == IDC_EXIT;
+  return command_id == IDC_CLOSE_TAB ||
+         command_id == IDC_CLOSE_WINDOW ||
+         command_id == IDC_NEW_INCOGNITO_WINDOW ||
+         command_id == IDC_NEW_TAB ||
+         command_id == IDC_NEW_WINDOW ||
+         command_id == IDC_RESTORE_TAB ||
+         command_id == IDC_SELECT_NEXT_TAB ||
+         command_id == IDC_SELECT_PREVIOUS_TAB ||
+         command_id == IDC_EXIT;
 }
 
 void BrowserCommandController::SetBlockCommandExecution(bool block) {
@@ -375,9 +372,11 @@ void BrowserCommandController::ExecuteCommandWithDisposition(
     case IDC_SELECT_TAB_5:
     case IDC_SELECT_TAB_6:
     case IDC_SELECT_TAB_7:
+      content::RecordAction(base::UserMetricsAction("Accel_SelectNumberedTab"));
       SelectNumberedTab(browser_, id - IDC_SELECT_TAB_0);
       break;
     case IDC_SELECT_LAST_TAB:
+      content::RecordAction(base::UserMetricsAction("Accel_SelectNumberedTab"));
       SelectLastTab(browser_);
       break;
     case IDC_DUPLICATE_TAB:
@@ -624,7 +623,7 @@ void BrowserCommandController::ExecuteCommandWithDisposition(
       break;
 #if defined(OS_CHROMEOS)
     case IDC_TOUCH_HUD_PROJECTION_TOGGLE:
-      if (chrome::IsRunningInMash()) {
+      if (ash_util::IsRunningInMash()) {
         service_manager::Connector* connector =
             content::ServiceManagerConnection::GetForProcess()->GetConnector();
         mash::mojom::LaunchablePtr launchable;
@@ -1049,16 +1048,6 @@ void BrowserCommandController::UpdateCommandsForFullscreenMode() {
 #endif
   UpdateShowSyncState(show_main_ui);
 
-  // Settings page/subpages are forced to open in normal mode. We disable these
-  // commands for guest sessions and when incognito is forced.
-  const bool options_enabled = show_main_ui &&
-      IncognitoModePrefs::GetAvailability(
-          profile()->GetPrefs()) != IncognitoModePrefs::FORCED;
-  const bool guest_session = profile()->IsGuestSession();
-  command_updater_.UpdateCommandEnabled(IDC_OPTIONS, options_enabled);
-  command_updater_.UpdateCommandEnabled(IDC_IMPORT_SETTINGS,
-                                        options_enabled && !guest_session);
-
   command_updater_.UpdateCommandEnabled(IDC_EDIT_SEARCH_ENGINES, show_main_ui);
   command_updater_.UpdateCommandEnabled(IDC_VIEW_PASSWORDS, show_main_ui);
   command_updater_.UpdateCommandEnabled(IDC_ABOUT, show_main_ui);
@@ -1079,18 +1068,8 @@ void BrowserCommandController::UpdateCommandsForFullscreenMode() {
   command_updater_.UpdateCommandEnabled(IDC_TOGGLE_FULLSCREEN_TOOLBAR,
                                         fullscreen_enabled);
 
-  command_updater_.UpdateCommandEnabled(IDC_CLOSE_TAB, !is_fullscreen);
-  command_updater_.UpdateCommandEnabled(IDC_CLOSE_WINDOW, !is_fullscreen);
-  command_updater_.UpdateCommandEnabled(IDC_NEW_INCOGNITO_WINDOW,
-                                        !is_fullscreen);
-  command_updater_.UpdateCommandEnabled(IDC_NEW_TAB, !is_fullscreen);
-  command_updater_.UpdateCommandEnabled(IDC_NEW_WINDOW, !is_fullscreen);
-  command_updater_.UpdateCommandEnabled(IDC_RESTORE_TAB, !is_fullscreen);
-  command_updater_.UpdateCommandEnabled(IDC_SELECT_NEXT_TAB, !is_fullscreen);
-  command_updater_.UpdateCommandEnabled(IDC_SELECT_PREVIOUS_TAB,
-                                        !is_fullscreen);
-
   UpdateCommandsForBookmarkBar();
+  UpdateCommandsForIncognitoAvailability();
 }
 
 void BrowserCommandController::UpdatePrintingState() {

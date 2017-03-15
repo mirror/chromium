@@ -246,11 +246,12 @@ DataGrid.DataGrid = class extends Common.Object {
    * @protected
    */
   setVerticalPadding(top, bottom) {
-    this._topFillerRow.style.height = top + 'px';
-    if (top || bottom)
-      this._bottomFillerRow.style.height = bottom + 'px';
-    else
-      this._bottomFillerRow.style.height = 'auto';
+    var topPx = top + 'px';
+    var bottomPx = (top || bottom) ? bottom + 'px' : 'auto';
+    if (this._topFillerRow.style.height === topPx && this._bottomFillerRow.style.height === bottomPx)
+      return;
+    this._topFillerRow.style.height = topPx;
+    this._bottomFillerRow.style.height = bottomPx;
     this.dispatchEventToListeners(DataGrid.DataGrid.Events.PaddingChanged);
   }
 
@@ -1217,7 +1218,6 @@ DataGrid.DataGrid.ResizeMethod = {
 
 /**
  * @unrestricted
- * @this {NODE_TYPE}
  * @template NODE_TYPE
  */
 DataGrid.DataGridNode = class extends Common.Object {

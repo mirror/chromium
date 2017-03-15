@@ -31,12 +31,13 @@ bool IsBootstrappingMaster() {
 }  // namespace
 
 ControllerPairingScreenHandler::ControllerPairingScreenHandler()
-    : BaseScreenHandler(kJsScreenPath), delegate_(NULL), show_on_init_(false) {
+    : BaseScreenHandler(kScreenId) {
+  set_call_js_prefix(kJsScreenPath);
 }
 
 ControllerPairingScreenHandler::~ControllerPairingScreenHandler() {
   if (delegate_)
-    delegate_->OnActorDestroyed(this);
+    delegate_->OnViewDestroyed(this);
 }
 
 void ControllerPairingScreenHandler::HandleUserActed(
@@ -150,7 +151,7 @@ void ControllerPairingScreenHandler::Show() {
     show_on_init_ = true;
     return;
   }
-  ShowScreen(OobeScreen::SCREEN_OOBE_CONTROLLER_PAIRING);
+  ShowScreen(kScreenId);
 }
 
 void ControllerPairingScreenHandler::Hide() {

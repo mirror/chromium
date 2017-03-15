@@ -19,6 +19,7 @@ namespace switches {
 CC_EXPORT extern const char kDisableThreadedAnimation[];
 CC_EXPORT extern const char kDisableCompositedAntialiasing[];
 CC_EXPORT extern const char kDisableMainFrameBeforeActivation[];
+CC_EXPORT extern const char kEnableCheckerImaging[];
 CC_EXPORT extern const char kEnableMainFrameBeforeActivation[];
 CC_EXPORT extern const char kBrowserControlsHideThreshold[];
 CC_EXPORT extern const char kBrowserControlsShowThreshold[];
@@ -29,8 +30,7 @@ CC_EXPORT extern const char kEnableTileCompression[];
 // Switches for both the renderer and ui compositors.
 CC_EXPORT extern const char kEnableColorCorrectRendering[];
 CC_EXPORT extern const char kEnableGpuBenchmarking[];
-CC_EXPORT extern const char kEnableTrueColorRendering[];
-CC_EXPORT extern const char kCheckTilePriorityInversion[];
+CC_EXPORT extern const char kEnableSurfaceSynchronization[];
 
 // Debug visualizations.
 CC_EXPORT extern const char kShowCompositedLayerBorders[];

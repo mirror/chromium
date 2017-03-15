@@ -7,6 +7,7 @@
 #include <stddef.h>
 
 #include <memory>
+#include <utility>
 #include <vector>
 
 #include "base/compiler_specific.h"
@@ -98,6 +99,9 @@ class ProfilePrefStoreManagerTest : public testing::Test {
         reset_recorded_(false) {}
 
   void SetUp() override {
+    mock_validation_delegate_record_ = new MockValidationDelegateRecord;
+    mock_validation_delegate_ = base::MakeUnique<MockValidationDelegate>(
+        mock_validation_delegate_record_);
     ProfilePrefStoreManager::RegisterProfilePrefs(profile_pref_registry_.get());
     for (const PrefHashFilter::TrackedPreferenceMetadata* it = kConfiguration;
          it != kConfiguration + arraysize(kConfiguration);
@@ -171,7 +175,7 @@ class ProfilePrefStoreManagerTest : public testing::Test {
             main_message_loop_.task_runner(),
             base::Bind(&ProfilePrefStoreManagerTest::RecordReset,
                        base::Unretained(this)),
-            &mock_validation_delegate_);
+            mock_validation_delegate_.get());
     InitializePrefStore(pref_store.get());
     pref_store = NULL;
     base::RunLoop().RunUntilIdle();
@@ -197,14 +201,13 @@ class ProfilePrefStoreManagerTest : public testing::Test {
     pref_store->AddObserver(&registry_verifier_);
     PersistentPrefStore::PrefReadError error = pref_store->ReadPrefs();
     EXPECT_EQ(PersistentPrefStore::PREF_READ_ERROR_NO_FILE, error);
-    pref_store->SetValue(kTrackedAtomic,
-                         base::MakeUnique<base::StringValue>(kFoobar),
+    pref_store->SetValue(kTrackedAtomic, base::MakeUnique<base::Value>(kFoobar),
                          WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
     pref_store->SetValue(kProtectedAtomic,
-                         base::MakeUnique<base::StringValue>(kHelloWorld),
+                         base::MakeUnique<base::Value>(kHelloWorld),
                          WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
     pref_store->SetValue(kUnprotectedPref,
-                         base::MakeUnique<base::StringValue>(kFoobar),
+                         base::MakeUnique<base::Value>(kFoobar),
                          WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
     pref_store->RemoveObserver(&registry_verifier_);
     pref_store->CommitPendingWrite();
@@ -255,7 +258,7 @@ class ProfilePrefStoreManagerTest : public testing::Test {
     // No validations are expected for platforms that do not support tracking.
     if (!ProfilePrefStoreManager::kPlatformSupportsPreferenceTracking)
       return;
-    if (!mock_validation_delegate_.GetEventForPath(pref_path))
+    if (!mock_validation_delegate_record_->GetEventForPath(pref_path))
       ADD_FAILURE() << "No validation observed for preference: " << pref_path;
   }
 
@@ -265,7 +268,8 @@ class ProfilePrefStoreManagerTest : public testing::Test {
   TestingPrefServiceSimple local_state_;
   scoped_refptr<user_prefs::PrefRegistrySyncable> profile_pref_registry_;
   RegistryVerifier registry_verifier_;
-  MockValidationDelegate mock_validation_delegate_;
+  scoped_refptr<MockValidationDelegateRecord> mock_validation_delegate_record_;
+  std::unique_ptr<MockValidationDelegate> mock_validation_delegate_;
   std::unique_ptr<ProfilePrefStoreManager> manager_;
   scoped_refptr<PersistentPrefStore> pref_store_;
 
@@ -319,10 +323,11 @@ TEST_F(ProfilePrefStoreManagerTest, ProtectValues) {
 }
 
 TEST_F(ProfilePrefStoreManagerTest, InitializePrefsFromMasterPrefs) {
-  base::DictionaryValue master_prefs;
-  master_prefs.Set(kTrackedAtomic, new base::StringValue(kFoobar));
-  master_prefs.Set(kProtectedAtomic, new base::StringValue(kHelloWorld));
-  EXPECT_TRUE(manager_->InitializePrefsFromMasterPrefs(master_prefs));
+  auto master_prefs = base::MakeUnique<base::DictionaryValue>();
+  master_prefs->Set(kTrackedAtomic, new base::Value(kFoobar));
+  master_prefs->Set(kProtectedAtomic, new base::Value(kHelloWorld));
+  EXPECT_TRUE(
+      manager_->InitializePrefsFromMasterPrefs(std::move(master_prefs)));
 
   LoadExistingPrefs();
 
@@ -481,7 +486,7 @@ TEST_F(ProfilePrefStoreManagerTest, ProtectedToUnprotected) {
   // Trigger the logic that migrates it back to the unprotected preferences
   // file.
   pref_store_->SetValue(kProtectedAtomic,
-                        base::WrapUnique(new base::StringValue(kGoodbyeWorld)),
+                        base::WrapUnique(new base::Value(kGoodbyeWorld)),
                         WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
   LoadExistingPrefs();
   ExpectStringValueEquals(kProtectedAtomic, kGoodbyeWorld);

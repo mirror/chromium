@@ -25,6 +25,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/scoped_tabbed_browser_displayer.h"
+#include "chrome/browser/ui/views/harmony/layout_delegate.h"
 #include "chrome/common/extensions/extension_constants.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/constrained_window/constrained_window_views.h"
@@ -249,12 +250,14 @@ void ExtensionInstallDialogView::InitView() {
   if (prompt_->ShouldShowPermissions()) {
     layout->AddPaddingRow(0, views::kRelatedControlVerticalSpacing);
     layout->StartRow(0, column_set_id);
-    layout->AddView(new views::Separator(views::Separator::HORIZONTAL), 3, 1,
-                    views::GridLayout::FILL, views::GridLayout::FILL);
+    layout->AddView(new views::Separator(), 3, 1, views::GridLayout::FILL,
+                    views::GridLayout::FILL);
   }
 
-  const int content_width =
-      left_column_width + views::kPanelHorizMargin + kIconSize;
+  const int content_width = left_column_width +
+                            LayoutDelegate::Get()->GetMetric(
+                                LayoutDelegate::Metric::PANEL_CONTENT_MARGIN) +
+                            kIconSize;
 
   // Create the scrollable view which will contain the permissions and retained
   // files/devices. It will span the full content width.
@@ -415,7 +418,9 @@ views::GridLayout* ExtensionInstallDialogView::CreateLayout(
   // right margin (we effectively get a top margin anyway from the empty dialog
   // title, and we add an explicit padding column as a right margin below).
   views::GridLayout* layout = new views::GridLayout(container_);
-  layout->SetInsets(0, views::kButtonHEdgeMarginNew, views::kPanelVertMargin,
+  layout->SetInsets(0, views::kButtonHEdgeMarginNew,
+                    LayoutDelegate::Get()->GetMetric(
+                        LayoutDelegate::Metric::PANEL_CONTENT_MARGIN),
                     0);
   container_->SetLayoutManager(layout);
   AddChildView(container_);
@@ -426,7 +431,9 @@ views::GridLayout* ExtensionInstallDialogView::CreateLayout(
                         views::GridLayout::USE_PREF,
                         0,  // no fixed width
                         left_column_width);
-  column_set->AddPaddingColumn(0, views::kPanelHorizMargin);
+  column_set->AddPaddingColumn(
+      0, LayoutDelegate::Get()->GetMetric(
+             LayoutDelegate::Metric::PANEL_CONTENT_MARGIN));
   column_set->AddColumn(views::GridLayout::TRAILING, views::GridLayout::LEADING,
                         0,  // no resizing
                         views::GridLayout::USE_PREF,

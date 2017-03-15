@@ -32,13 +32,13 @@
 
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
-#include "core/dom/ExecutionContextTask.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "modules/webdatabase/Database.h"
 #include "modules/webdatabase/DatabaseClient.h"
 #include "modules/webdatabase/DatabaseContext.h"
 #include "modules/webdatabase/QuotaTracker.h"
 #include "modules/webdatabase/sqlite/SQLiteFileSystem.h"
+#include "platform/CrossThreadFunctional.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/weborigin/SecurityOriginHash.h"
 #include "public/platform/Platform.h"
@@ -98,14 +98,14 @@ void DatabaseTracker::addOpenDatabase(Database* database) {
     m_openDatabaseMap = WTF::wrapUnique(new DatabaseOriginMap);
 
   String originString = database->getSecurityOrigin()->toRawString();
-  DatabaseNameMap* nameMap = m_openDatabaseMap->get(originString);
+  DatabaseNameMap* nameMap = m_openDatabaseMap->at(originString);
   if (!nameMap) {
     nameMap = new DatabaseNameMap();
     m_openDatabaseMap->set(originString, nameMap);
   }
 
   String name(database->stringIdentifier());
-  DatabaseSet* databaseSet = nameMap->get(name);
+  DatabaseSet* databaseSet = nameMap->at(name);
   if (!databaseSet) {
     databaseSet = new DatabaseSet();
     nameMap->set(name, databaseSet);
@@ -119,12 +119,12 @@ void DatabaseTracker::removeOpenDatabase(Database* database) {
     MutexLocker openDatabaseMapLock(m_openDatabaseMapGuard);
     String originString = database->getSecurityOrigin()->toRawString();
     ASSERT(m_openDatabaseMap);
-    DatabaseNameMap* nameMap = m_openDatabaseMap->get(originString);
+    DatabaseNameMap* nameMap = m_openDatabaseMap->at(originString);
     if (!nameMap)
       return;
 
     String name(database->stringIdentifier());
-    DatabaseSet* databaseSet = nameMap->get(name);
+    DatabaseSet* databaseSet = nameMap->at(name);
     if (!databaseSet)
       return;
 
@@ -132,7 +132,7 @@ void DatabaseTracker::removeOpenDatabase(Database* database) {
     if (found == databaseSet->end())
       return;
 
-    databaseSet->remove(found);
+    databaseSet->erase(found);
     if (databaseSet->isEmpty()) {
       nameMap->erase(name);
       delete databaseSet;
@@ -177,22 +177,22 @@ void DatabaseTracker::closeDatabasesImmediately(SecurityOrigin* origin,
   if (!m_openDatabaseMap)
     return;
 
-  DatabaseNameMap* nameMap = m_openDatabaseMap->get(originString);
+  DatabaseNameMap* nameMap = m_openDatabaseMap->at(originString);
   if (!nameMap)
     return;
 
-  DatabaseSet* databaseSet = nameMap->get(name);
+  DatabaseSet* databaseSet = nameMap->at(name);
   if (!databaseSet)
     return;
 
   // We have to call closeImmediately() on the context thread.
   for (DatabaseSet::iterator it = databaseSet->begin();
-       it != databaseSet->end(); ++it)
-    (*it)->getDatabaseContext()->getExecutionContext()->postTask(
-        TaskType::DatabaseAccess, BLINK_FROM_HERE,
-        createCrossThreadTask(&DatabaseTracker::closeOneDatabaseImmediately,
-                              crossThreadUnretained(this), originString, name,
-                              *it));
+       it != databaseSet->end(); ++it) {
+    (*it)->getDatabaseTaskRunner()->postTask(
+        BLINK_FROM_HERE,
+        crossThreadBind(&DatabaseTracker::closeOneDatabaseImmediately,
+                        crossThreadUnretained(this), originString, name, *it));
+  }
 }
 
 void DatabaseTracker::forEachOpenDatabaseInPage(
@@ -222,11 +222,11 @@ void DatabaseTracker::closeOneDatabaseImmediately(const String& originString,
     if (!m_openDatabaseMap)
       return;
 
-    DatabaseNameMap* nameMap = m_openDatabaseMap->get(originString);
+    DatabaseNameMap* nameMap = m_openDatabaseMap->at(originString);
     if (!nameMap)
       return;
 
-    DatabaseSet* databaseSet = nameMap->get(name);
+    DatabaseSet* databaseSet = nameMap->at(name);
     if (!databaseSet)
       return;
 

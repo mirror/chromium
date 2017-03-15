@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/memory/ptr_util.h"
+#include "base/stl_util.h"
 #include "base/trace_event/trace_event.h"
 #include "cc/playback/raster_source.h"
 #include "ui/gfx/geometry/rect_conversions.h"
@@ -195,6 +196,15 @@ void PictureLayerTilingSet::UpdateRasterSourceDueToLCDChange(
   }
 }
 
+void PictureLayerTilingSet::UpdateTilingsForImplSideInvalidation(
+    const Region& layer_invalidation) {
+  for (const auto& tiling : tilings_) {
+    tiling->Invalidate(layer_invalidation);
+    tiling->CreateMissingTilesInLiveTilesRect();
+  }
+  state_since_last_tile_priority_update_.invalidated = true;
+}
+
 void PictureLayerTilingSet::VerifyTilings(
     const PictureLayerTilingSet* pending_twin_set) const {
 #if DCHECK_IS_ON()
@@ -256,12 +266,9 @@ void PictureLayerTilingSet::CleanUpTilings(
 }
 
 void PictureLayerTilingSet::RemoveNonIdealTilings() {
-  auto to_remove =
-      std::remove_if(tilings_.begin(), tilings_.end(),
-                     [](const std::unique_ptr<PictureLayerTiling>& t) {
-                       return t->resolution() == NON_IDEAL_RESOLUTION;
-                     });
-  tilings_.erase(to_remove, tilings_.end());
+  base::EraseIf(tilings_, [](const std::unique_ptr<PictureLayerTiling>& t) {
+    return t->resolution() == NON_IDEAL_RESOLUTION;
+  });
 }
 
 void PictureLayerTilingSet::MarkAllTilingsNonIdeal() {
@@ -322,22 +329,20 @@ PictureLayerTiling* PictureLayerTilingSet::FindTilingWithResolution(
 
 void PictureLayerTilingSet::RemoveTilingsBelowScaleKey(
     float minimum_scale_key) {
-  auto to_remove = std::remove_if(
-      tilings_.begin(), tilings_.end(),
+  base::EraseIf(
+      tilings_,
       [minimum_scale_key](const std::unique_ptr<PictureLayerTiling>& tiling) {
         return tiling->contents_scale() < minimum_scale_key;
       });
-  tilings_.erase(to_remove, tilings_.end());
 }
 
 void PictureLayerTilingSet::RemoveTilingsAboveScaleKey(
     float maximum_scale_key) {
-  auto to_remove = std::remove_if(
-      tilings_.begin(), tilings_.end(),
+  base::EraseIf(
+      tilings_,
       [maximum_scale_key](const std::unique_ptr<PictureLayerTiling>& tiling) {
         return tiling->contents_scale() > maximum_scale_key;
       });
-  tilings_.erase(to_remove, tilings_.end());
 }
 
 void PictureLayerTilingSet::RemoveAllTilings() {

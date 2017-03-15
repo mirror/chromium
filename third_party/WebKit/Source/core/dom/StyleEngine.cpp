@@ -337,10 +337,10 @@ void StyleEngine::updateActiveStyleSheets() {
         updateActiveStyleSheetsInShadow(treeScope, treeScopesRemoved);
     }
     for (TreeScope* treeScope : treeScopesRemoved)
-      m_activeTreeScopes.remove(treeScope);
+      m_activeTreeScopes.erase(treeScope);
   }
 
-  InspectorInstrumentation::activeStyleSheetsUpdated(m_document);
+  probe::activeStyleSheetsUpdated(m_document);
 
   m_dirtyTreeScopes.clear();
   m_documentScopeDirty = false;
@@ -377,7 +377,7 @@ const ActiveStyleSheetVector StyleEngine::activeStyleSheetsForInspector() {
       documentStyleSheetCollection().activeAuthorStyleSheets());
   for (TreeScope* treeScope : m_activeTreeScopes) {
     if (TreeScopeStyleSheetCollection* collection =
-            m_styleSheetCollectionMap.get(treeScope))
+            m_styleSheetCollectionMap.at(treeScope))
       activeStyleSheets.appendVector(collection->activeAuthorStyleSheets());
   }
 
@@ -389,8 +389,8 @@ const ActiveStyleSheetVector StyleEngine::activeStyleSheetsForInspector() {
 
 void StyleEngine::shadowRootRemovedFromDocument(ShadowRoot* shadowRoot) {
   m_styleSheetCollectionMap.erase(shadowRoot);
-  m_activeTreeScopes.remove(shadowRoot);
-  m_dirtyTreeScopes.remove(shadowRoot);
+  m_activeTreeScopes.erase(shadowRoot);
+  m_dirtyTreeScopes.erase(shadowRoot);
   resetAuthorStyle(*shadowRoot);
 }
 
@@ -572,11 +572,6 @@ void StyleEngine::collectScopedStyleFeaturesTo(RuleFeatureSet& features) const {
     document().scopedStyleResolver()->collectFeaturesTo(
         features, visitedSharedStyleSheetContents);
   for (TreeScope* treeScope : m_activeTreeScopes) {
-    // When creating StyleResolver, dirty treescopes might not be processed.
-    // So some active treescopes might not have a scoped style resolver.
-    // In this case, we should skip collectFeatures for the treescopes without
-    // scoped style resolvers. When invoking updateActiveStyleSheets,
-    // the treescope's features will be processed.
     if (ScopedStyleResolver* resolver = treeScope->scopedStyleResolver())
       resolver->collectFeaturesTo(features, visitedSharedStyleSheetContents);
   }
@@ -591,7 +586,7 @@ void StyleEngine::fontsNeedUpdate(CSSFontSelector*) {
   document().setNeedsStyleRecalc(
       SubtreeStyleChange,
       StyleChangeReasonForTracing::create(StyleChangeReason::Fonts));
-  InspectorInstrumentation::fontsUpdated(m_document);
+  probe::fontsUpdated(m_document);
 }
 
 void StyleEngine::setFontSelector(CSSFontSelector* fontSelector) {
@@ -832,13 +827,19 @@ void StyleEngine::scheduleRuleSetInvalidationsForElement(
     for (const Attribute& attribute : element.attributes())
       ruleSet->features().collectInvalidationSetsForAttribute(
           invalidationLists, element, attribute.name());
-    if (ruleSet->tagRules(element.localNameForSelectorMatching()))
-      element.setNeedsStyleRecalc(LocalStyleChange,
-                                  StyleChangeReasonForTracing::create(
-                                      StyleChangeReason::StyleSheetChange));
   }
   m_styleInvalidator.scheduleInvalidationSetsForNode(invalidationLists,
                                                      element);
+}
+
+void StyleEngine::scheduleTypeRuleSetInvalidations(
+    ContainerNode& node,
+    const HeapHashSet<Member<RuleSet>>& ruleSets) {
+  InvalidationLists invalidationLists;
+  for (const auto& ruleSet : ruleSets)
+    ruleSet->features().collectTypeRuleInvalidationSet(invalidationLists, node);
+  DCHECK(invalidationLists.siblings.isEmpty());
+  m_styleInvalidator.scheduleInvalidationSetsForNode(invalidationLists, node);
 }
 
 void StyleEngine::invalidateSlottedElements(HTMLSlotElement& slot) {
@@ -862,6 +863,8 @@ void StyleEngine::scheduleInvalidationsForRuleSets(
 
   TRACE_EVENT0("blink,blink_style",
                "StyleEngine::scheduleInvalidationsForRuleSets");
+
+  scheduleTypeRuleSetInvalidations(treeScope.rootNode(), ruleSets);
 
   bool invalidateSlotted = false;
   if (treeScope.rootNode().isShadowRoot()) {

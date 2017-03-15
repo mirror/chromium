@@ -239,10 +239,11 @@ void RenderWidgetHostViewGuest::RenderProcessGone(
 }
 
 void RenderWidgetHostViewGuest::Destroy() {
-  RenderWidgetHostViewChildFrame::Destroy();
-
   if (platform_view_)  // The platform view might have been destroyed already.
     platform_view_->Destroy();
+
+  // RenderWidgetHostViewChildFrame::Destroy destroys this object.
+  RenderWidgetHostViewChildFrame::Destroy();
 }
 
 gfx::Size RenderWidgetHostViewGuest::GetPhysicalBackingSize() const {
@@ -269,14 +270,6 @@ void RenderWidgetHostViewGuest::SetTooltipText(
     const base::string16& tooltip_text) {
   if (guest_)
     guest_->SetTooltipText(tooltip_text);
-}
-
-bool RenderWidgetHostViewGuest::ShouldCreateNewSurfaceId(
-    uint32_t compositor_frame_sink_id,
-    const cc::CompositorFrame& frame) {
-  return (guest_ && guest_->has_attached_since_surface_set()) ||
-         RenderWidgetHostViewChildFrame::ShouldCreateNewSurfaceId(
-             compositor_frame_sink_id, frame);
 }
 
 void RenderWidgetHostViewGuest::SendSurfaceInfoToEmbedderImpl(
@@ -643,6 +636,10 @@ void RenderWidgetHostViewGuest::OnHandleInputEvent(
     host_->ForwardGestureEvent(gesture_event);
     return;
   }
+}
+
+bool RenderWidgetHostViewGuest::HasEmbedderChanged() {
+  return guest_ && guest_->has_attached_since_surface_set();
 }
 
 }  // namespace content

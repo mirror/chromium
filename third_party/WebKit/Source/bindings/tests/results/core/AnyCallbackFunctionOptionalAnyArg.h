@@ -13,6 +13,7 @@
 #ifndef AnyCallbackFunctionOptionalAnyArg_h
 #define AnyCallbackFunctionOptionalAnyArg_h
 
+#include "bindings/core/v8/NativeValueTraits.h"
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "bindings/core/v8/TraceWrapperV8Reference.h"
 #include "core/CoreExport.h"
@@ -25,11 +26,11 @@ class ScriptState;
 
 class CORE_EXPORT AnyCallbackFunctionOptionalAnyArg final : public GarbageCollectedFinalized<AnyCallbackFunctionOptionalAnyArg>, public TraceWrapperBase {
  public:
-  static AnyCallbackFunctionOptionalAnyArg* create(ScriptState* scriptState, v8::Local<v8::Value> callback);
+  static AnyCallbackFunctionOptionalAnyArg* create(ScriptState*, v8::Local<v8::Value> callback);
 
   ~AnyCallbackFunctionOptionalAnyArg() = default;
 
-  DECLARE_TRACE();
+  DEFINE_INLINE_TRACE() {}
   DECLARE_TRACE_WRAPPERS();
 
   bool call(ScriptWrappable* scriptWrappable, ScriptValue optionalAnyArg, ScriptValue& returnValue);
@@ -43,6 +44,11 @@ class CORE_EXPORT AnyCallbackFunctionOptionalAnyArg final : public GarbageCollec
 
   RefPtr<ScriptState> m_scriptState;
   TraceWrapperV8Reference<v8::Function> m_callback;
+};
+
+template <>
+struct NativeValueTraits<AnyCallbackFunctionOptionalAnyArg> : public NativeValueTraitsBase<AnyCallbackFunctionOptionalAnyArg> {
+  CORE_EXPORT static AnyCallbackFunctionOptionalAnyArg* nativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 }  // namespace blink

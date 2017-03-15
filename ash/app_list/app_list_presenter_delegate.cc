@@ -11,7 +11,6 @@
 #include "ash/common/shelf/wm_shelf.h"
 #include "ash/common/wm/maximize_mode/maximize_mode_controller.h"
 #include "ash/common/wm/wm_screen_util.h"
-#include "ash/common/wm_lookup.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
 #include "ash/display/window_tree_host_manager.h"
@@ -59,11 +58,6 @@ gfx::Point GetCenterOfDisplayForWindow(WmWindow* window, int minimum_height) {
   return bounds.CenterPoint();
 }
 
-bool IsFullscreenAppListEnabled() {
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(
-      switches::kAshEnableFullscreenAppList);
-}
-
 }  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -73,7 +67,7 @@ AppListPresenterDelegate::AppListPresenterDelegate(
     app_list::AppListPresenterImpl* presenter,
     app_list::AppListViewDelegateFactory* view_delegate_factory)
     : presenter_(presenter), view_delegate_factory_(view_delegate_factory) {
-  WmShell::Get()->AddShellObserver(this);
+  Shell::GetInstance()->AddShellObserver(this);
 }
 
 AppListPresenterDelegate::~AppListPresenterDelegate() {
@@ -83,9 +77,9 @@ AppListPresenterDelegate::~AppListPresenterDelegate() {
   if (keyboard_controller)
     keyboard_controller->RemoveObserver(this);
   Shell::GetInstance()->RemovePreTargetHandler(this);
-  WmWindow* window = WmLookup::Get()->GetWindowForWidget(view_->GetWidget());
+  WmWindow* window = WmWindow::Get(view_->GetWidget()->GetNativeWindow());
   window->GetRootWindowController()->GetShelf()->RemoveObserver(this);
-  WmShell::Get()->RemoveShellObserver(this);
+  Shell::GetInstance()->RemoveShellObserver(this);
 }
 
 app_list::AppListViewDelegate* AppListPresenterDelegate::GetViewDelegate() {
@@ -107,20 +101,10 @@ void AppListPresenterDelegate::Init(app_list::AppListView* view,
   WmWindow* wm_root_window = WmWindow::Get(root_window);
   aura::Window* container = GetRootWindowController(root_window)
                                 ->GetContainer(kShellWindowId_AppListContainer);
-  bool is_fullscreen = IsFullscreenAppListEnabled() &&
-                       WmShell::Get()
-                           ->maximize_mode_controller()
-                           ->IsMaximizeModeWindowManagerEnabled();
-  if (is_fullscreen) {
-    view->InitAsFramelessWindow(
-        container, current_apps_page,
-        ScreenUtil::GetDisplayWorkAreaBoundsInParent(container));
-  } else {
-    view->InitAsBubble(container, current_apps_page);
-    // The app list is centered over the display.
-    view->SetAnchorPoint(GetCenterOfDisplayForWindow(
-        wm_root_window, GetMinimumBoundsHeightForAppList(view)));
-  }
+  view->InitAsBubble(container, current_apps_page);
+  // The app list is centered over the display.
+  view->SetAnchorPoint(GetCenterOfDisplayForWindow(
+      wm_root_window, GetMinimumBoundsHeightForAppList(view)));
 
   keyboard::KeyboardController* keyboard_controller =
       keyboard::KeyboardController::GetInstance();
@@ -153,7 +137,7 @@ void AppListPresenterDelegate::OnDismissed() {
   is_visible_ = false;
 
   // Update applist button status when app list visibility is changed.
-  WmWindow* window = WmLookup::Get()->GetWindowForWidget(view_->GetWidget());
+  WmWindow* window = WmWindow::Get(view_->GetWidget()->GetNativeWindow());
   AppListButton* app_list_button =
       WmShelf::ForWindow(window)->shelf_widget()->GetAppListButton();
   if (app_list_button)
@@ -166,7 +150,7 @@ void AppListPresenterDelegate::UpdateBounds() {
 
   view_->UpdateBounds();
   view_->SetAnchorPoint(GetCenterOfDisplayForWindow(
-      WmLookup::Get()->GetWindowForWidget(view_->GetWidget()),
+      WmWindow::Get(view_->GetWidget()->GetNativeWindow()),
       GetMinimumBoundsHeightForAppList(view_)));
 }
 
@@ -252,22 +236,6 @@ void AppListPresenterDelegate::OnKeyboardClosed() {}
 // AppListPresenterDelegate, ShellObserver implementation:
 void AppListPresenterDelegate::OnOverviewModeStarting() {
   if (is_visible_)
-    presenter_->Dismiss();
-}
-
-void AppListPresenterDelegate::OnMaximizeModeStarted() {
-  // The "fullscreen" app-list is initialized as in a different type of window,
-  // therefore we can't switch between the fullscreen status and the normal
-  // app-list bubble. App-list should be dismissed for the transition between
-  // maximize mode (touch-view mode) and non-maximize mode, otherwise the app
-  // list tries to behave as a bubble which leads to a crash. crbug.com/510062
-  if (IsFullscreenAppListEnabled() && is_visible_)
-    presenter_->Dismiss();
-}
-
-void AppListPresenterDelegate::OnMaximizeModeEnded() {
-  // See the comments of OnMaximizeModeStarted().
-  if (IsFullscreenAppListEnabled() && is_visible_)
     presenter_->Dismiss();
 }
 

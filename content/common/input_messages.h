@@ -163,8 +163,17 @@ IPC_MESSAGE_ROUTED2(InputMsg_ExtendSelectionAndDelete,
                     int /* after */)
 
 // Deletes text before and after the current cursor position, excluding the
-// selection.
+// selection. The lengths are supplied in Java chars (UTF-16 Code Unit), not in
+// code points or in glyphs.
 IPC_MESSAGE_ROUTED2(InputMsg_DeleteSurroundingText,
+                    int /* before */,
+                    int /* after */)
+
+// Deletes text before and after the current cursor position, excluding the
+// selection. The lengths are supplied in code points, not in Java chars (UTF-16
+// Code Unit) or in glyphs. Does nothing if there are one or more invalid
+// surrogate pairs in the requested range
+IPC_MESSAGE_ROUTED2(InputMsg_DeleteSurroundingTextInCodePoints,
                     int /* before */,
                     int /* after */)
 
@@ -249,7 +258,7 @@ IPC_MESSAGE_ROUTED1(InputMsg_ReplaceMisspelling,
 IPC_MESSAGE_ROUTED0(InputMsg_Delete)
 IPC_MESSAGE_ROUTED0(InputMsg_SelectAll)
 
-IPC_MESSAGE_ROUTED0(InputMsg_Unselect)
+IPC_MESSAGE_ROUTED0(InputMsg_CollapseSelection)
 
 // Requests the renderer to select the region between two points.
 // Expects a SelectRange_ACK message when finished.

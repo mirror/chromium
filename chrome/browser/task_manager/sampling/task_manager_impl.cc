@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/containers/adapters.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "build/build_config.h"
 #include "chrome/browser/task_manager/providers/browser_process_task_provider.h"
 #include "chrome/browser/task_manager/providers/child_process_task_provider.h"
@@ -38,8 +39,8 @@ scoped_refptr<base::SequencedTaskRunner> GetBlockingPoolRunner() {
       blocking_pool->GetSequenceToken());
 }
 
-base::LazyInstance<TaskManagerImpl> lazy_task_manager_instance =
-    LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<TaskManagerImpl>::DestructorAtExit
+    lazy_task_manager_instance = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 

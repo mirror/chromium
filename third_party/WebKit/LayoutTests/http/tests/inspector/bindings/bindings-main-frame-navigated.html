@@ -1,0 +1,41 @@
+<html>
+<head>
+<script src="../inspector-test.js"></script>
+<script src="./bindings-test.js"></script>
+
+<script>
+
+async function test()
+{
+    InspectorTest.markStep('dumpInitialWorkspace');
+    var snapshot = InspectorTest.dumpWorkspace();
+
+    InspectorTest.markStep('attachFrame');
+    await Promise.all([
+        InspectorTest.attachFrame('frame', './resources/sourcemap-frame.html', '_test_attachFrame.js'),
+        InspectorTest.waitForSourceMap('sourcemap-script.js.map'),
+        InspectorTest.waitForSourceMap('sourcemap-style.css.map'),
+    ]);
+    snapshot = InspectorTest.dumpWorkspace(snapshot);
+
+    InspectorTest.markStep('navigateMainFrame');
+    var url = "http://127.0.0.1:8000/inspector/bindings/resources/empty-page.html";
+    await InspectorTest.navigatePromise(url);
+    snapshot = InspectorTest.dumpWorkspace(snapshot);
+
+    InspectorTest.markStep('navigateBack');
+    var originalUrl = "http://127.0.0.1:8000/inspector/bindings/bindings-main-frame-navigated.html";
+    await InspectorTest.navigatePromise(originalUrl);
+
+    InspectorTest.completeTest();
+}
+
+</script>
+
+</head>
+<body onload="runTest()">
+<p>
+Verify that UISourceCodes are removed as main frame gets navigated.
+</p>
+</body>
+</html>

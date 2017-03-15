@@ -14,6 +14,7 @@
 
 #include <algorithm>
 #include <set>
+#include <string>
 
 #include "base/bind.h"
 #include "base/command_line.h"
@@ -28,6 +29,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/time/time.h"
 #include "base/values.h"
 #include "base/version.h"
@@ -162,10 +164,15 @@ void ModuleEnumerator::NormalizeModule(Module* module) {
 }
 
 ModuleEnumerator::ModuleEnumerator(EnumerateModulesModel* observer)
-    : enumerated_modules_(nullptr),
+    : background_task_runner_(base::CreateTaskRunnerWithTraits(
+          base::TaskTraits()
+              .MayBlock()
+              .WithPriority(base::TaskPriority::BACKGROUND)
+              .WithShutdownBehavior(
+                  base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN))),
+      enumerated_modules_(nullptr),
       observer_(observer),
-      per_module_delay_(kDefaultPerModuleDelay) {
-}
+      per_module_delay_(kDefaultPerModuleDelay) {}
 
 ModuleEnumerator::~ModuleEnumerator() {
 }
@@ -177,11 +184,9 @@ void ModuleEnumerator::ScanNow(ModulesVector* list) {
   // This object can't be reaped until it has finished scanning, so its safe
   // to post a raw pointer to another thread. It will simply be leaked if the
   // scanning has not been finished before shutdown.
-  BrowserThread::GetBlockingPool()->PostWorkerTaskWithShutdownBehavior(
+  background_task_runner_->PostTask(
       FROM_HERE,
-      base::Bind(&ModuleEnumerator::ScanImplStart,
-                 base::Unretained(this)),
-      base::SequencedWorkerPool::CONTINUE_ON_SHUTDOWN);
+      base::Bind(&ModuleEnumerator::ScanImplStart, base::Unretained(this)));
 }
 
 void ModuleEnumerator::SetPerModuleDelayToZero() {
@@ -224,23 +229,10 @@ void ModuleEnumerator::ScanImplStart() {
 
   // Post a delayed task to scan the first module. This forwards directly to
   // ScanImplFinish if there are no modules to scan.
-  BrowserThread::GetBlockingPool()->PostDelayedWorkerTask(
+  background_task_runner_->PostDelayedTask(
       FROM_HERE,
-      base::Bind(&ModuleEnumerator::ScanImplModule,
-                 base::Unretained(this),
-                 0),
+      base::Bind(&ModuleEnumerator::ScanImplModule, base::Unretained(this), 0),
       per_module_delay_);
-}
-
-void ModuleEnumerator::ScanImplDelay(size_t index) {
-  // Bounce this over to a CONTINUE_ON_SHUTDOWN task in the same pool. This is
-  // necessary to prevent shutdown hangs while inspecting a module.
-  BrowserThread::GetBlockingPool()->PostWorkerTaskWithShutdownBehavior(
-      FROM_HERE,
-      base::Bind(&ModuleEnumerator::ScanImplModule,
-                 base::Unretained(this),
-                 index),
-      base::SequencedWorkerPool::CONTINUE_ON_SHUTDOWN);
 }
 
 void ModuleEnumerator::ScanImplModule(size_t index) {
@@ -249,19 +241,17 @@ void ModuleEnumerator::ScanImplModule(size_t index) {
     Module& entry = enumerated_modules_->at(index);
     PopulateModuleInformation(&entry);
     NormalizeModule(&entry);
-    CollapsePath(&entry);
+    CollapseMatchingPrefixInPath(path_mapping_, &entry.location);
     base::TimeDelta elapsed = base::TimeTicks::Now() - start_time;
     enumeration_inspection_time_ += elapsed;
     enumeration_total_time_ += elapsed;
 
-    // With a non-zero delay, bounce back over to ScanImplDelay, which will
-    // bounce back to this function and inspect the next module.
+    // If |per_module_delay_| is non-zero, post a task to scan the next module
+    // when the delay expires.
     if (!per_module_delay_.is_zero()) {
-      BrowserThread::GetBlockingPool()->PostDelayedWorkerTask(
-          FROM_HERE,
-          base::Bind(&ModuleEnumerator::ScanImplDelay,
-                     base::Unretained(this),
-                     index + 1),
+      background_task_runner_->PostDelayedTask(
+          FROM_HERE, base::Bind(&ModuleEnumerator::ScanImplModule,
+                                base::Unretained(this), index + 1),
           per_module_delay_);
       return;
     }
@@ -406,51 +396,10 @@ void ModuleEnumerator::AddToListWithoutDuplicating(const Module& module) {
 }
 
 void ModuleEnumerator::PreparePathMappings() {
-  path_mapping_.clear();
-
-  std::unique_ptr<base::Environment> environment(base::Environment::Create());
-  std::vector<base::string16> env_vars;
-  env_vars.push_back(L"LOCALAPPDATA");
-  env_vars.push_back(L"ProgramFiles");
-  env_vars.push_back(L"ProgramData");
-  env_vars.push_back(L"USERPROFILE");
-  env_vars.push_back(L"SystemRoot");
-  env_vars.push_back(L"TEMP");
-  env_vars.push_back(L"TMP");
-  env_vars.push_back(L"CommonProgramFiles");
-  for (std::vector<base::string16>::const_iterator variable = env_vars.begin();
-       variable != env_vars.end(); ++variable) {
-    std::string path;
-    if (environment->GetVar(base::UTF16ToASCII(*variable).c_str(), &path)) {
-      path_mapping_.push_back(
-          std::make_pair(base::i18n::ToLower(base::UTF8ToUTF16(path)) + L"\\",
-                         L"%" + base::i18n::ToLower(*variable) + L"%"));
-    }
-  }
-}
-
-void ModuleEnumerator::CollapsePath(Module* entry) {
-  // Take the path and see if we can use any of the substitution values
-  // from the vector constructed above to replace c:\windows with, for
-  // example, %systemroot%. The most collapsed path (the one with the
-  // minimum length) wins.
-  size_t min_length = MAXINT;
-  base::string16 location = entry->location;
-  for (PathMapping::const_iterator mapping = path_mapping_.begin();
-       mapping != path_mapping_.end(); ++mapping) {
-    const base::string16& prefix = mapping->first;
-    if (base::StartsWith(base::i18n::ToLower(location),
-                         base::i18n::ToLower(prefix),
-                         base::CompareCase::SENSITIVE)) {
-      base::string16 new_location = mapping->second +
-                              location.substr(prefix.length() - 1);
-      size_t length = new_location.length() - mapping->second.length();
-      if (length < min_length) {
-        entry->location = new_location;
-        min_length = length;
-      }
-    }
-  }
+  path_mapping_ = GetEnvironmentVariablesMapping({
+      L"LOCALAPPDATA", L"ProgramFiles", L"ProgramData", L"USERPROFILE",
+      L"SystemRoot", L"TEMP", L"TMP", L"CommonProgramFiles",
+  });
 }
 
 void ModuleEnumerator::ReportThirdPartyMetrics() {
@@ -468,10 +417,10 @@ void ModuleEnumerator::ReportThirdPartyMetrics() {
   size_t third_party_loaded = 0;
   size_t third_party_not_loaded = 0;
   for (const auto& module : *enumerated_modules_) {
-    if (module.cert_info.type != ModuleDatabase::NO_CERTIFICATE) {
+    if (module.cert_info.type != CertificateType::NO_CERTIFICATE) {
       ++signed_modules;
 
-      if (module.cert_info.type == ModuleDatabase::CERTIFICATE_IN_CATALOG)
+      if (module.cert_info.type == CertificateType::CERTIFICATE_IN_CATALOG)
         ++catalog_modules;
 
       // The first time this certificate is encountered it will be inserted
@@ -612,9 +561,9 @@ void EnumerateModulesModel::ScanNow(bool background_mode) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   // |module_enumerator_| is used as a lock to know whether or not there are
-  // active/pending blocking pool tasks. If a module enumerator exists then a
-  // scan is already underway. Otherwise, either no scan has been completed or
-  // a scan has terminated.
+  // active/pending background tasks. If a module enumerator exists then a scan
+  // is already underway. Otherwise, either no scan has been completed or a scan
+  // has terminated.
   if (module_enumerator_) {
     // If a scan is in progress and this request is for immediate results, then
     // inform the background scan. This is done without any locks because the
@@ -627,7 +576,7 @@ void EnumerateModulesModel::ScanNow(bool background_mode) {
 
   // Only allow a single scan per process lifetime. Immediately notify any
   // observers that the scan is complete. At this point |enumerated_modules_| is
-  // safe to access as no potentially racing blocking pool task can exist.
+  // safe to access as no potentially racing background task can exist.
   if (!enumerated_modules_.empty()) {
     for (Observer& observer : observers_)
       observer.OnScanCompleted();

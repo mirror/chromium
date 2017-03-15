@@ -32,6 +32,7 @@
 #include "core/CSSValueKeywords.h"
 #include "core/HTMLNames.h"
 #include "core/clipboard/Pasteboard.h"
+#include "core/css/CSSComputedStyleDeclaration.h"
 #include "core/css/CSSIdentifierValue.h"
 #include "core/css/CSSValueList.h"
 #include "core/css/StylePropertySet.h"
@@ -52,7 +53,6 @@
 #include "core/editing/serializers/Serialization.h"
 #include "core/editing/spellcheck/SpellChecker.h"
 #include "core/events/Event.h"
-#include "core/frame/FrameHost.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
@@ -63,6 +63,7 @@
 #include "core/layout/LayoutBox.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/EditorClient.h"
+#include "core/page/Page.h"
 #include "platform/Histogram.h"
 #include "platform/KillRing.h"
 #include "platform/UserGestureIndicator.h"
@@ -191,20 +192,22 @@ InputEvent::InputType InputTypeFromCommandType(
   }
 }
 
-RangeVector* RangesFromCurrentSelectionOrExtendCaret(
+StaticRangeVector* RangesFromCurrentSelectionOrExtendCaret(
     const LocalFrame& frame,
     SelectionDirection direction,
     TextGranularity granularity) {
   frame.document()->updateStyleAndLayoutIgnorePendingStylesheets();
-  SelectionModifier selectionModifier(frame, frame.selection().selection());
+  SelectionModifier selectionModifier(
+      frame, frame.selection().computeVisibleSelectionInDOMTreeDeprecated());
   if (selectionModifier.selection().isCaret())
     selectionModifier.modify(FrameSelection::AlterationExtend, direction,
                              granularity);
-  RangeVector* ranges = new RangeVector;
+  StaticRangeVector* ranges = new StaticRangeVector;
   // We only supports single selections.
   if (selectionModifier.selection().isNone())
     return ranges;
-  ranges->push_back(firstRangeOf(selectionModifier.selection()));
+  ranges->push_back(StaticRange::create(
+      firstEphemeralRangeOf(selectionModifier.selection())));
   return ranges;
 }
 
@@ -293,7 +296,7 @@ static bool executeToggleStyleInList(LocalFrame& frame,
                                      CSSValue* value) {
   EditingStyle* selectionStyle =
       EditingStyleUtilities::createStyleAtSelectionStart(
-          frame.selection().selection());
+          frame.selection().computeVisibleSelectionInDOMTreeDeprecated());
   if (!selectionStyle || !selectionStyle->style())
     return false;
 
@@ -388,8 +391,12 @@ static bool expandSelectionToGranularity(LocalFrame& frame,
                                          TextGranularity granularity) {
   const VisibleSelection& selection = createVisibleSelection(
       SelectionInDOMTree::Builder()
-          .setBaseAndExtent(frame.selection().selection().base(),
-                            frame.selection().selection().extent())
+          .setBaseAndExtent(frame.selection()
+                                .computeVisibleSelectionInDOMTreeDeprecated()
+                                .base(),
+                            frame.selection()
+                                .computeVisibleSelectionInDOMTreeDeprecated()
+                                .extent())
           .setGranularity(granularity)
           .build());
   const EphemeralRange newRange = selection.toNormalizedEphemeralRange();
@@ -397,7 +404,7 @@ static bool expandSelectionToGranularity(LocalFrame& frame,
     return false;
   if (newRange.isCollapsed())
     return false;
-  TextAffinity affinity = frame.selection().affinity();
+  TextAffinity affinity = frame.selection().selectionInDOMTree().affinity();
   frame.selection().setSelectedRange(newRange, affinity,
                                      SelectionDirectionalMode::NonDirectional,
                                      FrameSelection::CloseTyping);
@@ -410,14 +417,17 @@ static bool hasChildTags(Element& element, const QualifiedName& tagName) {
 
 static TriState selectionListState(const FrameSelection& selection,
                                    const QualifiedName& tagName) {
-  if (selection.isCaret()) {
-    if (enclosingElementWithTag(selection.selection().start(), tagName))
+  if (selection.computeVisibleSelectionInDOMTreeDeprecated().isCaret()) {
+    if (enclosingElementWithTag(
+            selection.computeVisibleSelectionInDOMTreeDeprecated().start(),
+            tagName))
       return TrueTriState;
-  } else if (selection.isRange()) {
-    Element* startElement =
-        enclosingElementWithTag(selection.selection().start(), tagName);
-    Element* endElement =
-        enclosingElementWithTag(selection.selection().end(), tagName);
+  } else if (selection.computeVisibleSelectionInDOMTreeDeprecated().isRange()) {
+    Element* startElement = enclosingElementWithTag(
+        selection.computeVisibleSelectionInDOMTreeDeprecated().start(),
+        tagName);
+    Element* endElement = enclosingElementWithTag(
+        selection.computeVisibleSelectionInDOMTreeDeprecated().end(), tagName);
 
     if (startElement && endElement && startElement == endElement) {
       // If the selected list has the different type of list as child, return
@@ -452,15 +462,128 @@ static String valueStyle(LocalFrame& frame, CSSPropertyID propertyID) {
   return frame.editor().selectionStartCSSPropertyValue(propertyID);
 }
 
+static bool isUnicodeBidiNestedOrMultipleEmbeddings(CSSValueID valueID) {
+  return valueID == CSSValueEmbed || valueID == CSSValueBidiOverride ||
+         valueID == CSSValueWebkitIsolate ||
+         valueID == CSSValueWebkitIsolateOverride ||
+         valueID == CSSValueWebkitPlaintext || valueID == CSSValueIsolate ||
+         valueID == CSSValueIsolateOverride || valueID == CSSValuePlaintext;
+}
+
+// TODO(editing-dev): We should make |textDirectionForSelection()| to take
+// |selectionInDOMTree|.
+static WritingDirection textDirectionForSelection(
+    const VisibleSelection& selection,
+    EditingStyle* typingStyle,
+    bool& hasNestedOrMultipleEmbeddings) {
+  hasNestedOrMultipleEmbeddings = true;
+
+  if (selection.isNone())
+    return NaturalWritingDirection;
+
+  Position position = mostForwardCaretPosition(selection.start());
+
+  Node* node = position.anchorNode();
+  if (!node)
+    return NaturalWritingDirection;
+
+  Position end;
+  if (selection.isRange()) {
+    end = mostBackwardCaretPosition(selection.end());
+
+    DCHECK(end.document());
+    const EphemeralRange caretRange(position.parentAnchoredEquivalent(),
+                                    end.parentAnchoredEquivalent());
+    for (Node& n : caretRange.nodes()) {
+      if (!n.isStyledElement())
+        continue;
+
+      CSSComputedStyleDeclaration* style =
+          CSSComputedStyleDeclaration::create(&n);
+      const CSSValue* unicodeBidi =
+          style->getPropertyCSSValue(CSSPropertyUnicodeBidi);
+      if (!unicodeBidi || !unicodeBidi->isIdentifierValue())
+        continue;
+
+      CSSValueID unicodeBidiValue =
+          toCSSIdentifierValue(unicodeBidi)->getValueID();
+      if (isUnicodeBidiNestedOrMultipleEmbeddings(unicodeBidiValue))
+        return NaturalWritingDirection;
+    }
+  }
+
+  if (selection.isCaret()) {
+    WritingDirection direction;
+    if (typingStyle && typingStyle->textDirection(direction)) {
+      hasNestedOrMultipleEmbeddings = false;
+      return direction;
+    }
+    node = selection.visibleStart().deepEquivalent().anchorNode();
+  }
+  DCHECK(node);
+
+  // The selection is either a caret with no typing attributes or a range in
+  // which no embedding is added, so just use the start position to decide.
+  Node* block = enclosingBlock(node);
+  WritingDirection foundDirection = NaturalWritingDirection;
+
+  for (Node& runner : NodeTraversal::inclusiveAncestorsOf(*node)) {
+    if (runner == block)
+      break;
+    if (!runner.isStyledElement())
+      continue;
+
+    Element* element = &toElement(runner);
+    CSSComputedStyleDeclaration* style =
+        CSSComputedStyleDeclaration::create(element);
+    const CSSValue* unicodeBidi =
+        style->getPropertyCSSValue(CSSPropertyUnicodeBidi);
+    if (!unicodeBidi || !unicodeBidi->isIdentifierValue())
+      continue;
+
+    CSSValueID unicodeBidiValue =
+        toCSSIdentifierValue(unicodeBidi)->getValueID();
+    if (unicodeBidiValue == CSSValueNormal)
+      continue;
+
+    if (unicodeBidiValue == CSSValueBidiOverride)
+      return NaturalWritingDirection;
+
+    DCHECK(EditingStyleUtilities::isEmbedOrIsolate(unicodeBidiValue))
+        << unicodeBidiValue;
+    const CSSValue* direction =
+        style->getPropertyCSSValue(CSSPropertyDirection);
+    if (!direction || !direction->isIdentifierValue())
+      continue;
+
+    int directionValue = toCSSIdentifierValue(direction)->getValueID();
+    if (directionValue != CSSValueLtr && directionValue != CSSValueRtl)
+      continue;
+
+    if (foundDirection != NaturalWritingDirection)
+      return NaturalWritingDirection;
+
+    // In the range case, make sure that the embedding element persists until
+    // the end of the range.
+    if (selection.isRange() && !end.anchorNode()->isDescendantOf(element))
+      return NaturalWritingDirection;
+
+    foundDirection = directionValue == CSSValueLtr
+                         ? LeftToRightWritingDirection
+                         : RightToLeftWritingDirection;
+  }
+  hasNestedOrMultipleEmbeddings = false;
+  return foundDirection;
+}
+
 static TriState stateTextWritingDirection(LocalFrame& frame,
                                           WritingDirection direction) {
   frame.document()->updateStyleAndLayoutIgnorePendingStylesheets();
 
   bool hasNestedOrMultipleEmbeddings;
-  WritingDirection selectionDirection =
-      EditingStyleUtilities::textDirectionForSelection(
-          frame.selection().selection(), frame.editor().typingStyle(),
-          hasNestedOrMultipleEmbeddings);
+  WritingDirection selectionDirection = textDirectionForSelection(
+      frame.selection().computeVisibleSelectionInDOMTreeDeprecated(),
+      frame.editor().typingStyle(), hasNestedOrMultipleEmbeddings);
   // FXIME: We should be returning MixedTriState when selectionDirection ==
   // direction && hasNestedOrMultipleEmbeddings
   return (selectionDirection == direction && !hasNestedOrMultipleEmbeddings)
@@ -689,7 +812,8 @@ static bool executeDeleteToMark(LocalFrame& frame,
       return false;
   }
   frame.editor().performDelete();
-  frame.editor().setMark(frame.selection().selection());
+  frame.editor().setMark(
+      frame.selection().computeVisibleSelectionInDOMTreeDeprecated());
   return true;
 }
 
@@ -823,7 +947,7 @@ static bool executeInsertBacktab(LocalFrame& frame,
                                  const String&) {
   return targetFrame(frame, event)
       ->eventHandler()
-      .handleTextInputEvent("\t", event, TextEventInputBackTab);
+      .handleTextInputEvent("\t", event);
 }
 
 static bool executeInsertHorizontalRule(LocalFrame& frame,
@@ -1536,10 +1660,10 @@ static bool executePrint(LocalFrame& frame,
                          Event*,
                          EditorCommandSource,
                          const String&) {
-  FrameHost* host = frame.host();
-  if (!host)
+  Page* page = frame.page();
+  if (!page)
     return false;
-  return host->chromeClient().print(&frame);
+  return page->chromeClient().print(&frame);
 }
 
 static bool executeRedo(LocalFrame& frame,
@@ -1661,7 +1785,8 @@ static bool executeSetMark(LocalFrame& frame,
                            Event*,
                            EditorCommandSource,
                            const String&) {
-  frame.editor().setMark(frame.selection().selection());
+  frame.editor().setMark(
+      frame.selection().computeVisibleSelectionInDOMTreeDeprecated());
   return true;
 }
 
@@ -1715,10 +1840,11 @@ static bool executeSwapWithMark(LocalFrame& frame,
                                 EditorCommandSource,
                                 const String&) {
   const VisibleSelection& mark = frame.editor().mark();
-  const VisibleSelection& selection = frame.selection().selection();
+  const VisibleSelection& selection =
+      frame.selection().computeVisibleSelectionInDOMTreeDeprecated();
   if (mark.isNone() || selection.isNone())
     return false;
-  frame.selection().setSelection(mark);
+  frame.selection().setSelection(mark.asSelection());
   frame.editor().setMark(selection);
   return true;
 }
@@ -1793,8 +1919,23 @@ static bool executeYank(LocalFrame& frame,
                         Event*,
                         EditorCommandSource,
                         const String&) {
+  const String& yankString = frame.editor().killRing().yank();
+  if (dispatchBeforeInputInsertText(
+          eventTargetNodeForDocument(frame.document()), yankString,
+          InputEvent::InputType::InsertFromYank) !=
+      DispatchEventResult::NotCanceled)
+    return true;
+
+  // 'beforeinput' event handler may destroy document.
+  if (frame.document()->frame() != &frame)
+    return false;
+
+  // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
+  // needs to be audited. see http://crbug.com/590369 for more details.
+  frame.document()->updateStyleAndLayoutIgnorePendingStylesheets();
+
   frame.editor().insertTextWithoutSendingTextEvent(
-      frame.editor().killRing().yank(), false, 0);
+      yankString, false, 0, InputEvent::InputType::InsertFromYank);
   frame.editor().killRing().setToYankedState();
   return true;
 }
@@ -1803,8 +1944,24 @@ static bool executeYankAndSelect(LocalFrame& frame,
                                  Event*,
                                  EditorCommandSource,
                                  const String&) {
+  const String& yankString = frame.editor().killRing().yank();
+  if (dispatchBeforeInputInsertText(
+          eventTargetNodeForDocument(frame.document()), yankString,
+          InputEvent::InputType::InsertFromYank) !=
+      DispatchEventResult::NotCanceled)
+    return true;
+
+  // 'beforeinput' event handler may destroy document.
+  if (frame.document()->frame() != &frame)
+    return false;
+
+  // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
+  // needs to be audited. see http://crbug.com/590369 for more details.
+  frame.document()->updateStyleAndLayoutIgnorePendingStylesheets();
+
   frame.editor().insertTextWithoutSendingTextEvent(
-      frame.editor().killRing().yank(), true, 0);
+      frame.editor().killRing().yank(), true, 0,
+      InputEvent::InputType::InsertFromYank);
   frame.editor().killRing().setToYankedState();
   return true;
 }
@@ -1873,10 +2030,6 @@ static bool enabledInEditableText(LocalFrame& frame,
                                   Event* event,
                                   EditorCommandSource) {
   frame.document()->updateStyleAndLayoutIgnorePendingStylesheets();
-
-  // We should update selection to canonicalize with current layout and style,
-  // before accessing |FrameSelection::selection()|.
-  frame.selection().updateIfNeeded();
   return frame.editor().selectionForCommand(event).rootEditableElement();
 }
 
@@ -1899,13 +2052,15 @@ static bool enabledInRichlyEditableText(LocalFrame& frame,
                                         Event*,
                                         EditorCommandSource) {
   frame.document()->updateStyleAndLayoutIgnorePendingStylesheets();
-
-  // We should update selection to canonicalize with current layout and style,
-  // before accessing |FrameSelection::selection()|.
-  frame.selection().updateIfNeeded();
-  return !frame.selection().isNone() &&
-         frame.selection().isContentRichlyEditable() &&
-         frame.selection().rootEditableElement();
+  return !frame.selection()
+              .computeVisibleSelectionInDOMTreeDeprecated()
+              .isNone() &&
+         frame.selection()
+             .computeVisibleSelectionInDOMTreeDeprecated()
+             .isContentRichlyEditable() &&
+         frame.selection()
+             .computeVisibleSelectionInDOMTreeDeprecated()
+             .rootEditableElement();
 }
 
 static bool enabledPaste(LocalFrame& frame,
@@ -1920,23 +2075,24 @@ static bool enabledRangeInEditableText(LocalFrame& frame,
                                        Event*,
                                        EditorCommandSource) {
   frame.document()->updateStyleAndLayoutIgnorePendingStylesheets();
-
-  // We should update selection to canonicalize with current layout and style,
-  // before accessing |FrameSelection::selection()|.
-  frame.selection().updateIfNeeded();
-  return frame.selection().isRange() && frame.selection().isContentEditable();
+  return frame.selection()
+             .computeVisibleSelectionInDOMTreeDeprecated()
+             .isRange() &&
+         frame.selection()
+             .computeVisibleSelectionInDOMTreeDeprecated()
+             .isContentEditable();
 }
 
 static bool enabledRangeInRichlyEditableText(LocalFrame& frame,
                                              Event*,
                                              EditorCommandSource) {
   frame.document()->updateStyleAndLayoutIgnorePendingStylesheets();
-
-  // We should update selection to canonicalize with current layout and style,
-  // before accessing |FrameSelection::selection()|.
-  frame.selection().updateIfNeeded();
-  return frame.selection().isRange() &&
-         frame.selection().isContentRichlyEditable();
+  return frame.selection()
+             .computeVisibleSelectionInDOMTreeDeprecated()
+             .isRange() &&
+         frame.selection()
+             .computeVisibleSelectionInDOMTreeDeprecated()
+             .isContentRichlyEditable();
 }
 
 static bool enabledRedo(LocalFrame& frame, Event*, EditorCommandSource) {
@@ -2060,11 +2216,13 @@ static String valueForeColor(LocalFrame& frame, Event*) {
 }
 
 static String valueFormatBlock(LocalFrame& frame, Event*) {
-  const VisibleSelection& selection = frame.selection().selection();
+  const VisibleSelection& selection =
+      frame.selection().computeVisibleSelectionInDOMTreeDeprecated();
   if (!selection.isNonOrphanedCaretOrRange() || !selection.isContentEditable())
     return "";
   Element* formatBlockElement =
-      FormatBlockCommand::elementForFormatBlockCommand(firstRangeOf(selection));
+      FormatBlockCommand::elementForFormatBlockCommand(
+          firstEphemeralRangeOf(selection));
   if (!formatBlockElement)
     return "";
   return formatBlockElement->localName();
@@ -2709,7 +2867,7 @@ int Editor::Command::idForHistogram() const {
   return isSupported() ? static_cast<int>(m_command->commandType) : 0;
 }
 
-const RangeVector* Editor::Command::getTargetRanges() const {
+const StaticRangeVector* Editor::Command::getTargetRanges() const {
   const Node* target = eventTargetNodeForDocument(m_frame->document());
   if (!isSupported() || !m_frame || !target || !hasRichlyEditableStyle(*target))
     return nullptr;

@@ -40,7 +40,6 @@ import org.robolectric.annotation.Config;
 import org.chromium.base.Callback;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.browser.DisableHistogramsRule;
-import org.chromium.chrome.browser.EnableFeatures;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageViewHolder.UpdateLayoutParamsCallback;
 import org.chromium.chrome.browser.ntp.snippets.CategoryStatus;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
@@ -67,9 +66,6 @@ import java.util.TreeSet;
 @RunWith(LocalRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 public class SuggestionsSectionTest {
-    @Rule
-    public EnableFeatures.Processor mEnableFeatureProcessor = new EnableFeatures.Processor();
-
     @Rule
     public DisableHistogramsRule mDisableHistogramsRule = new DisableHistogramsRule();
 
@@ -118,6 +114,38 @@ public class SuggestionsSectionTest {
 
     @Test
     @Feature({"Ntp"})
+    public void testGetDismissalGroupWithoutHeader() {
+        SuggestionsSection section = createSectionWithFetchAction(true);
+        section.setHeaderVisibility(false);
+
+        assertEquals(ItemViewType.STATUS, section.getItemViewType(0));
+        assertEquals(setOf(0, 1), section.getItemDismissalGroup(0));
+
+        assertEquals(ItemViewType.ACTION, section.getItemViewType(1));
+        assertEquals(setOf(0, 1), section.getItemDismissalGroup(1));
+    }
+
+    @Test
+    @Feature({"Ntp"})
+    public void testGetDismissalGroupWithoutAction() {
+        SuggestionsSection section = createSectionWithFetchAction(false);
+
+        assertEquals(ItemViewType.STATUS, section.getItemViewType(1));
+        assertEquals(Collections.singleton(1), section.getItemDismissalGroup(1));
+    }
+
+    @Test
+    @Feature({"Ntp"})
+    public void testGetDismissalGroupActionAndHeader() {
+        SuggestionsSection section = createSectionWithFetchAction(false);
+        section.setHeaderVisibility(false);
+
+        assertEquals(ItemViewType.STATUS, section.getItemViewType(0));
+        assertEquals(Collections.singleton(0), section.getItemDismissalGroup(0));
+    }
+
+    @Test
+    @Feature({"Ntp"})
     public void testAddSuggestionsNotification() {
         final int suggestionCount = 5;
         List<SnippetArticle> snippets = createDummySuggestions(suggestionCount,
@@ -155,7 +183,7 @@ public class SuggestionsSectionTest {
         verifyNoMoreInteractions(mParent);
 
         // We clear existing suggestions when the status is not AVAILABLE, and show the status card.
-        section.setStatus(CategoryStatus.SIGNED_OUT);
+        section.setStatus(CategoryStatus.CATEGORY_EXPLICITLY_DISABLED);
         verify(mParent).onItemRangeRemoved(section, 1, suggestionCount);
         verify(mParent).onItemRangeInserted(section, 1, 1);
 

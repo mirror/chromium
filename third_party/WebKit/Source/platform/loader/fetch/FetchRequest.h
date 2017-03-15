@@ -32,7 +32,7 @@
 #include "platform/loader/fetch/FetchInitiatorInfo.h"
 #include "platform/loader/fetch/IntegrityMetadata.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
-#include "platform/network/ResourceRequest.h"
+#include "platform/loader/fetch/ResourceRequest.h"
 #include "wtf/Allocator.h"
 #include "wtf/text/AtomicString.h"
 
@@ -80,6 +80,10 @@ class PLATFORM_EXPORT FetchRequest {
   ResourceRequest& mutableResourceRequest() { return m_resourceRequest; }
   const ResourceRequest& resourceRequest() const { return m_resourceRequest; }
   const KURL& url() const { return m_resourceRequest.url(); }
+
+  void setRequestContext(WebURLRequest::RequestContext context) {
+    m_resourceRequest.setRequestContext(context);
+  }
 
   const String& charset() const { return m_charset; }
   void setCharset(const String& charset) { m_charset = charset; }

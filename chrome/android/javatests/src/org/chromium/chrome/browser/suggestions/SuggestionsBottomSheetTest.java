@@ -11,8 +11,9 @@ import android.support.test.filters.MediumTest;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.MotionEvent;
 
+import org.chromium.base.ThreadUtils;
+import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.browser.ntp.cards.ItemViewType;
-import org.chromium.chrome.browser.ntp.cards.NewTabPageRecyclerView;
 import org.chromium.chrome.test.BottomSheetTestCaseBase;
 import org.chromium.chrome.test.util.browser.RecyclerViewTestUtils;
 import org.chromium.chrome.test.util.browser.suggestions.DummySuggestionsMetricsReporter;
@@ -42,10 +43,11 @@ public class SuggestionsBottomSheetTest extends BottomSheetTestCaseBase {
         super.tearDown();
     }
 
+    @RetryOnFailure
     @MediumTest
     public void testContextMenu() throws InterruptedException {
-        NewTabPageRecyclerView recyclerView =
-                (NewTabPageRecyclerView) getBottomSheetContent().getScrollingContentView();
+        SuggestionsRecyclerView recyclerView =
+                (SuggestionsRecyclerView) getBottomSheetContent().getContentView();
 
         ViewHolder firstCardViewHolder = RecyclerViewTestUtils.waitForView(recyclerView, 2);
         assertEquals(firstCardViewHolder.getItemViewType(), ItemViewType.SNIPPET);
@@ -55,7 +57,13 @@ public class SuggestionsBottomSheetTest extends BottomSheetTestCaseBase {
         TestTouchUtils.longClickView(getInstrumentation(), firstCardViewHolder.itemView);
         assertTrue(recyclerView.onInterceptTouchEvent(createTapEvent()));
 
-        getActivity().closeContextMenu();
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                getActivity().closeContextMenu();
+            }
+        });
+
         assertFalse(recyclerView.onInterceptTouchEvent(createTapEvent()));
     }
 

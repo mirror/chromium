@@ -11,11 +11,30 @@
 // clang-format off
 #include "TestEnumOrDouble.h"
 
+#include "bindings/core/v8/IDLTypes.h"
+#include "bindings/core/v8/NativeValueTraitsImpl.h"
 #include "bindings/core/v8/ToV8.h"
 
 namespace blink {
 
 TestEnumOrDouble::TestEnumOrDouble() : m_type(SpecificTypeNone) {}
+
+double TestEnumOrDouble::getAsDouble() const {
+  DCHECK(isDouble());
+  return m_double;
+}
+
+void TestEnumOrDouble::setDouble(double value) {
+  DCHECK(isNull());
+  m_double = value;
+  m_type = SpecificTypeDouble;
+}
+
+TestEnumOrDouble TestEnumOrDouble::fromDouble(double value) {
+  TestEnumOrDouble container;
+  container.setDouble(value);
+  return container;
+}
 
 String TestEnumOrDouble::getAsTestEnum() const {
   DCHECK(isTestEnum());
@@ -45,23 +64,6 @@ TestEnumOrDouble TestEnumOrDouble::fromTestEnum(String value) {
   return container;
 }
 
-double TestEnumOrDouble::getAsDouble() const {
-  DCHECK(isDouble());
-  return m_double;
-}
-
-void TestEnumOrDouble::setDouble(double value) {
-  DCHECK(isNull());
-  m_double = value;
-  m_type = SpecificTypeDouble;
-}
-
-TestEnumOrDouble TestEnumOrDouble::fromDouble(double value) {
-  TestEnumOrDouble container;
-  container.setDouble(value);
-  return container;
-}
-
 TestEnumOrDouble::TestEnumOrDouble(const TestEnumOrDouble&) = default;
 TestEnumOrDouble::~TestEnumOrDouble() = default;
 TestEnumOrDouble& TestEnumOrDouble::operator=(const TestEnumOrDouble&) = default;
@@ -77,7 +79,7 @@ void V8TestEnumOrDouble::toImpl(v8::Isolate* isolate, v8::Local<v8::Value> v8Val
     return;
 
   if (v8Value->IsNumber()) {
-    double cppValue = toRestrictedDouble(isolate, v8Value, exceptionState);
+    double cppValue = NativeValueTraits<IDLDouble>::nativeValue(isolate, v8Value, exceptionState);
     if (exceptionState.hadException())
       return;
     impl.setDouble(cppValue);
@@ -105,10 +107,10 @@ v8::Local<v8::Value> ToV8(const TestEnumOrDouble& impl, v8::Local<v8::Object> cr
   switch (impl.m_type) {
     case TestEnumOrDouble::SpecificTypeNone:
       return v8::Null(isolate);
-    case TestEnumOrDouble::SpecificTypeTestEnum:
-      return v8String(isolate, impl.getAsTestEnum());
     case TestEnumOrDouble::SpecificTypeDouble:
       return v8::Number::New(isolate, impl.getAsDouble());
+    case TestEnumOrDouble::SpecificTypeTestEnum:
+      return v8String(isolate, impl.getAsTestEnum());
     default:
       NOTREACHED();
   }

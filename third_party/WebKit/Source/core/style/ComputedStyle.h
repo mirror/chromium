@@ -265,22 +265,10 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
     unsigned m_styleType : 6;  // PseudoId
     unsigned m_pseudoBits : 8;
-    unsigned m_explicitInheritance : 1;  // Explicitly inherits a non-inherited
-                                         // property
-    unsigned m_variableReference : 1;  // A non-inherited property references a
-                                       // variable or @apply is used.
-    unsigned m_unique : 1;             // Style can not be shared.
 
     unsigned m_emptyState : 1;
 
-    unsigned m_affectedByFocus : 1;
-    unsigned m_affectedByHover : 1;
-    unsigned m_affectedByActive : 1;
-    unsigned m_affectedByDrag : 1;
-
     // 64 bits
-
-    unsigned m_isLink : 1;
 
     mutable unsigned m_hasRemUnits : 1;
 
@@ -290,9 +278,9 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   // !END SYNC!
 
-  void setBitDefaults() {
-    // Generated properties are updated in ComputedStyleBase
-    ComputedStyleBase::setBitDefaults();
+  // Only call inside the constructor. Generated properties in the base class
+  // are not initialized in this method.
+  void initializeBitDefaults() {
     m_inheritedData.m_hasSimpleUnderline = false;
     m_inheritedData.m_cursorStyle = static_cast<unsigned>(initialCursor());
     m_inheritedData.m_insideLink =
@@ -305,28 +293,19 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
         static_cast<unsigned>(initialVerticalAlign());
     m_nonInheritedData.m_styleType = PseudoIdNone;
     m_nonInheritedData.m_pseudoBits = 0;
-    m_nonInheritedData.m_explicitInheritance = false;
-    m_nonInheritedData.m_variableReference = false;
-    m_nonInheritedData.m_unique = false;
     m_nonInheritedData.m_emptyState = false;
     m_nonInheritedData.m_hasViewportUnits = false;
-    m_nonInheritedData.m_affectedByFocus = false;
-    m_nonInheritedData.m_affectedByHover = false;
-    m_nonInheritedData.m_affectedByActive = false;
-    m_nonInheritedData.m_affectedByDrag = false;
-    m_nonInheritedData.m_isLink = false;
     m_nonInheritedData.m_hasRemUnits = false;
   }
 
  private:
-  // TODO(sashab): Move these to the bottom of ComputedStyle.
-  ALWAYS_INLINE ComputedStyle();
-
+  // TODO(sashab): Move these private members to the bottom of ComputedStyle.
   enum InitialStyleTag { InitialStyle };
   ALWAYS_INLINE explicit ComputedStyle(InitialStyleTag);
   ALWAYS_INLINE ComputedStyle(const ComputedStyle&);
 
   static PassRefPtr<ComputedStyle> createInitialStyle();
+  // TODO(shend): Remove this. Initial style should not be mutable.
   static inline ComputedStyle& mutableInitialStyle() {
     LEAK_SANITIZER_DISABLED_SCOPE;
     DEFINE_STATIC_REF(ComputedStyle, s_initialStyle,
@@ -1959,18 +1938,13 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   QuotesData* quotes() const { return m_rareInheritedData->quotes.get(); }
   void setQuotes(PassRefPtr<QuotesData>);
 
-  // snap-height
-  uint8_t snapHeightPosition() const {
-    return m_rareInheritedData->m_snapHeightPosition;
+  // line-height-step
+  static uint8_t initialLineHeightStep() { return 0; }
+  uint8_t lineHeightStep() const {
+    return m_rareInheritedData->m_lineHeightStep;
   }
-  uint8_t snapHeightUnit() const {
-    return m_rareInheritedData->m_snapHeightUnit;
-  }
-  void setSnapHeightPosition(uint8_t position) {
-    SET_VAR(m_rareInheritedData, m_snapHeightPosition, position);
-  }
-  void setSnapHeightUnit(uint8_t unit) {
-    SET_VAR(m_rareInheritedData, m_snapHeightUnit, unit);
+  void setLineHeightStep(uint8_t unit) {
+    SET_VAR(m_rareInheritedData, m_lineHeightStep, unit);
   }
 
   // speak
@@ -2360,6 +2334,8 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   }
 
   // Comparison operators
+  // TODO(shend): Replace callers of operator== wth a named method instead, e.g.
+  // inheritedEquals().
   bool operator==(const ComputedStyle& other) const;
   bool operator!=(const ComputedStyle& other) const {
     return !(*this == other);
@@ -2421,12 +2397,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   const CSSValue* getRegisteredVariable(const AtomicString&,
                                         bool isInheritedProperty) const;
 
-  void setHasVariableReferenceFromNonInheritedProperty() {
-    m_nonInheritedData.m_variableReference = true;
-  }
-  bool hasVariableReferenceFromNonInheritedProperty() const {
-    return m_nonInheritedData.m_variableReference;
-  }
+  const CSSValue* getRegisteredVariable(const AtomicString&) const;
 
   // Animations.
   CSSAnimationData& accessAnimations();
@@ -2457,20 +2428,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   bool hasRemUnits() const { return m_nonInheritedData.m_hasRemUnits; }
   void setHasRemUnits() const { m_nonInheritedData.m_hasRemUnits = true; }
 
-  bool affectedByFocus() const { return m_nonInheritedData.m_affectedByFocus; }
-  void setAffectedByFocus() { m_nonInheritedData.m_affectedByFocus = true; }
-
-  bool affectedByHover() const { return m_nonInheritedData.m_affectedByHover; }
-  void setAffectedByHover() { m_nonInheritedData.m_affectedByHover = true; }
-
-  bool affectedByActive() const {
-    return m_nonInheritedData.m_affectedByActive;
-  }
-  void setAffectedByActive() { m_nonInheritedData.m_affectedByActive = true; }
-
-  bool affectedByDrag() const { return m_nonInheritedData.m_affectedByDrag; }
-  void setAffectedByDrag() { m_nonInheritedData.m_affectedByDrag = true; }
-
   bool emptyState() const { return m_nonInheritedData.m_emptyState; }
   void setEmptyState(bool b) {
     setUnique();
@@ -2491,21 +2448,11 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     SET_VAR(m_rareNonInheritedData, m_hasCompositorProxy, b);
   }
 
-  bool isLink() const { return m_nonInheritedData.m_isLink; }
-  void setIsLink() { m_nonInheritedData.m_isLink = true; }
-
   EInsideLink insideLink() const {
     return static_cast<EInsideLink>(m_inheritedData.m_insideLink);
   }
   void setInsideLink(EInsideLink insideLink) {
     m_inheritedData.m_insideLink = static_cast<unsigned>(insideLink);
-  }
-
-  bool hasExplicitlyInheritedProperties() const {
-    return m_nonInheritedData.m_explicitInheritance;
-  }
-  void setHasExplicitlyInheritedProperties() {
-    m_nonInheritedData.m_explicitInheritance = true;
   }
 
   bool requiresAcceleratedCompositingForExternalReasons(bool b) {
@@ -2956,6 +2903,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   // Line-height utility functions.
   const Length& specifiedLineHeight() const;
   int computedLineHeight() const;
+  float computedLineHeightInFloat() const;
 
   // Width/height utility functions.
   const Length& logicalWidth() const {
@@ -3574,6 +3522,9 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   bool isStyleAvailable() const;
   bool isSharable() const;
 
+  bool requireTransformOrigin(ApplyTransformOrigin applyOrigin,
+                              ApplyMotionPath) const;
+
  private:
   void setVisitedLinkColor(const Color&);
   void setVisitedLinkBackgroundColor(const StyleColor& v) {
@@ -3754,8 +3705,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   void updatePropertySpecificDifferences(const ComputedStyle& other,
                                          StyleDifference&) const;
 
-  bool requireTransformOrigin(ApplyTransformOrigin applyOrigin,
-                              ApplyMotionPath) const;
   static bool shadowListHasCurrentColor(const ShadowList*);
 
   StyleInheritedVariables& mutableInheritedVariables();
@@ -3832,19 +3781,20 @@ inline bool ComputedStyle::setTextOrientation(TextOrientation textOrientation) {
 }
 
 inline bool ComputedStyle::hasAnyPublicPseudoStyles() const {
-  return PublicPseudoIdMask & m_nonInheritedData.m_pseudoBits;
+  return m_nonInheritedData.m_pseudoBits;
 }
 
 inline bool ComputedStyle::hasPseudoStyle(PseudoId pseudo) const {
-  ASSERT(pseudo > PseudoIdNone);
-  ASSERT(pseudo < FirstInternalPseudoId);
-  return (1 << (pseudo - 1)) & m_nonInheritedData.m_pseudoBits;
+  DCHECK(pseudo >= FirstPublicPseudoId);
+  DCHECK(pseudo < FirstInternalPseudoId);
+  return (1 << (pseudo - FirstPublicPseudoId)) &
+         m_nonInheritedData.m_pseudoBits;
 }
 
 inline void ComputedStyle::setHasPseudoStyle(PseudoId pseudo) {
-  ASSERT(pseudo > PseudoIdNone);
-  ASSERT(pseudo < FirstInternalPseudoId);
-  m_nonInheritedData.m_pseudoBits |= 1 << (pseudo - 1);
+  DCHECK(pseudo >= FirstPublicPseudoId);
+  DCHECK(pseudo < FirstInternalPseudoId);
+  m_nonInheritedData.m_pseudoBits |= 1 << (pseudo - FirstPublicPseudoId);
 }
 
 inline bool ComputedStyle::hasPseudoElementStyle() const {

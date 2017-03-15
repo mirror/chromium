@@ -32,7 +32,7 @@
 #include "core/html/parser/HTMLEntityParser.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/html/parser/HTMLTreeBuilder.h"
-#include "core/xml/parser/MarkupTokenizerInlines.h"
+#include "core/html/parser/MarkupTokenizerInlines.h"
 #include "wtf/ASCIICType.h"
 #include "wtf/text/Unicode.h"
 
@@ -59,22 +59,6 @@ static inline bool vectorEqualsString(const Vector<LChar, 32>& vector,
     return true;
 
   return equal(string.impl(), vector.data(), vector.size());
-}
-
-static inline bool isEndTagBufferingState(HTMLTokenizer::State state) {
-  switch (state) {
-    case HTMLTokenizer::RCDATAEndTagOpenState:
-    case HTMLTokenizer::RCDATAEndTagNameState:
-    case HTMLTokenizer::RAWTEXTEndTagOpenState:
-    case HTMLTokenizer::RAWTEXTEndTagNameState:
-    case HTMLTokenizer::ScriptDataEndTagOpenState:
-    case HTMLTokenizer::ScriptDataEndTagNameState:
-    case HTMLTokenizer::ScriptDataEscapedEndTagOpenState:
-    case HTMLTokenizer::ScriptDataEscapedEndTagNameState:
-      return true;
-    default:
-      return false;
-  }
 }
 
 #define HTML_BEGIN_STATE(stateName) BEGIN_STATE(HTMLTokenizer, stateName)
@@ -1584,7 +1568,9 @@ inline bool HTMLTokenizer::isAppropriateEndTag() {
 }
 
 inline void HTMLTokenizer::parseError() {
+#if DCHECK_IS_ON()
   DVLOG(1) << "Not implemented.";
+#endif
 }
 
 }  // namespace blink

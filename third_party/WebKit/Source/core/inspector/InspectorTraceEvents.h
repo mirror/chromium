@@ -5,14 +5,16 @@
 #ifndef InspectorTraceEvents_h
 #define InspectorTraceEvents_h
 
+#include <memory>
+
 #include "core/CoreExport.h"
 #include "core/css/CSSSelector.h"
+#include "core/inspector/InspectorBaseAgent.h"
 #include "platform/heap/Handle.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/instrumentation/tracing/TracedValue.h"
 #include "wtf/Forward.h"
 #include "wtf/Functional.h"
-#include <memory>
 
 namespace v8 {
 class Function;
@@ -29,9 +31,11 @@ class Animation;
 class CSSStyleSheetResource;
 class ContainerNode;
 class Document;
+class DocumentLoader;
 class Element;
 class Event;
 class ExecutionContext;
+struct FetchInitiatorInfo;
 class FrameView;
 class GraphicsLayer;
 class HitTestLocation;
@@ -39,13 +43,15 @@ class HitTestRequest;
 class HitTestResult;
 class ImageResourceContent;
 class InvalidationSet;
-class PaintLayer;
+class LayoutImage;
+class LayoutObject;
 class LayoutRect;
 class LocalFrame;
 class Node;
+class PaintLayer;
 class QualifiedName;
-class LayoutImage;
-class LayoutObject;
+class Resource;
+class ResourceError;
 class ResourceRequest;
 class ResourceResponse;
 class StyleChangeReasonForTracing;
@@ -53,7 +59,61 @@ class StyleImage;
 class WorkerThread;
 class XMLHttpRequest;
 
+namespace probe {
+class CallFunction;
+class ExecuteScript;
+class ParseHTML;
+}
+
 enum ResourceLoadPriority : int;
+
+class CORE_EXPORT InspectorTraceEvents : public InspectorAgent {
+  WTF_MAKE_NONCOPYABLE(InspectorTraceEvents);
+
+ public:
+  InspectorTraceEvents() {}
+
+  void init(InstrumentingAgents*,
+            protocol::UberDispatcher*,
+            protocol::DictionaryValue*) override;
+  void dispose() override;
+
+  void willSendRequest(LocalFrame*,
+                       unsigned long identifier,
+                       DocumentLoader*,
+                       ResourceRequest&,
+                       const ResourceResponse& redirectResponse,
+                       const FetchInitiatorInfo&);
+  void didReceiveResourceResponse(LocalFrame*,
+                                  unsigned long identifier,
+                                  DocumentLoader*,
+                                  const ResourceResponse&,
+                                  Resource*);
+  void didReceiveData(LocalFrame*,
+                      unsigned long identifier,
+                      const char* data,
+                      int dataLength);
+  void didFinishLoading(LocalFrame*,
+                        unsigned long identifier,
+                        double monotonicFinishTime,
+                        int64_t encodedDataLength,
+                        int64_t decodedBodyLength);
+  void didFailLoading(unsigned long identifier, const ResourceError&);
+
+  void will(const probe::ExecuteScript&);
+  void did(const probe::ExecuteScript&);
+
+  void will(const probe::ParseHTML&);
+  void did(const probe::ParseHTML&);
+
+  void will(const probe::CallFunction&);
+  void did(const probe::CallFunction&);
+
+  DECLARE_VIRTUAL_TRACE();
+
+ private:
+  Member<InstrumentingAgents> m_instrumentingAgents;
+};
 
 namespace InspectorLayoutEvent {
 std::unique_ptr<TracedValue> beginData(FrameView*);
@@ -65,6 +125,7 @@ extern const char Attribute[];
 extern const char Class[];
 extern const char Id[];
 extern const char Pseudo[];
+extern const char RuleSet[];
 
 std::unique_ptr<TracedValue> attributeChange(Element&,
                                              const InvalidationSet&,
@@ -78,6 +139,8 @@ std::unique_ptr<TracedValue> idChange(Element&,
 std::unique_ptr<TracedValue> pseudoChange(Element&,
                                           const InvalidationSet&,
                                           CSSSelector::PseudoType);
+std::unique_ptr<TracedValue> ruleSetInvalidation(ContainerNode&,
+                                                 const InvalidationSet&);
 }  // namespace InspectorScheduleStyleInvalidationTrackingEvent
 
 #define TRACE_SCHEDULE_STYLE_INVALIDATION(element, invalidationSet,          \
@@ -86,7 +149,7 @@ std::unique_ptr<TracedValue> pseudoChange(Element&,
       TRACE_DISABLED_BY_DEFAULT("devtools.timeline.invalidationTracking"),   \
       "ScheduleStyleInvalidationTracking", TRACE_EVENT_SCOPE_THREAD, "data", \
       InspectorScheduleStyleInvalidationTrackingEvent::changeType(           \
-          (element), (invalidationSet), __VA_ARGS__));
+          (element), (invalidationSet), ##__VA_ARGS__));
 
 namespace InspectorStyleRecalcInvalidationTrackingEvent {
 std::unique_ptr<TracedValue> data(Node*, const StyleChangeReasonForTracing&);
@@ -215,7 +278,8 @@ namespace InspectorResourceFinishEvent {
 std::unique_ptr<TracedValue> data(unsigned long identifier,
                                   double finishTime,
                                   bool didFail,
-                                  int64_t encodedDataLength);
+                                  int64_t encodedDataLength,
+                                  int64_t decodedBodyLength);
 }
 
 namespace InspectorTimerInstallEvent {
@@ -381,7 +445,7 @@ std::unique_ptr<TracedValue> endData(const HitTestRequest&,
                                      const HitTestResult&);
 }
 
-namespace InspectorInstrumentedAPIEvent {
+namespace InspectorAsyncTask {
 std::unique_ptr<TracedValue> data(const String&);
 }
 

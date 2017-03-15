@@ -148,6 +148,10 @@ rappor::RapporServiceImpl* ChromeAutofillClient::GetRapporServiceImpl() {
   return g_browser_process->rappor_service();
 }
 
+ukm::UkmService* ChromeAutofillClient::GetUkmService() {
+  return g_browser_process->ukm_service();
+}
+
 void ChromeAutofillClient::ShowAutofillSettings() {
 #if defined(OS_ANDROID)
   chrome::android::ChromeApplication::ShowAutofillSettings();
@@ -331,15 +335,7 @@ void ChromeAutofillClient::OnFirstUserGestureObserved() {
       ContentAutofillDriverFactory::FromWebContents(web_contents());
   DCHECK(factory);
 
-  for (content::RenderFrameHost* frame : web_contents()->GetAllFrames()) {
-    // No need to notify non-live frames.
-    // And actually they have no corresponding drivers in the factory's map.
-    if (!frame->IsRenderFrameLive())
-      continue;
-    ContentAutofillDriver* driver = factory->DriverForFrame(frame);
-    DCHECK(driver);
-    driver->NotifyFirstUserGestureObservedInTab();
-  }
+  factory->OnFirstUserGestureObserved();
 }
 
 bool ChromeAutofillClient::IsContextSecure() {

@@ -70,6 +70,9 @@ api.Action = {
   'LOAD_URL': 6,
   'OMNIBOX_CONTENT': 7,
   'SET_CONTENT_PAUSED': 8,
+  'SHOW_TAB': 9,
+  'OPEN_NEW_TAB': 10,
+  'KEY_EVENT': 11,
 };
 
 /**
@@ -128,20 +131,32 @@ api.FillType = {
   'CONTENT': 4
 };
 
+/**
+ * Abstract fill base class.
+ * @abstract
+ */
 api.Fill = class {
   constructor(type) {
     this.properties = {};
     this.properties['fillType'] = type;
+  }
+};
+
+api.NoFill = class extends api.Fill {
+  constructor() {
+    super(api.FillType.NONE);
   }
 }
 
 api.Sprite = class extends api.Fill {
   constructor(pixelX, pixelY, pixelWidth, pixelHeight) {
     super(api.FillType.SPRITE);
-    this.properties.copyRect =
-        {x: pixelX, y: pixelY, width: pixelWidth, height: pixelHeight};
+    this.properties['copyRectX'] = pixelX;
+    this.properties['copyRectY'] = pixelY;
+    this.properties['copyRectWidth'] = pixelWidth;
+    this.properties['copyRectHeight'] = pixelHeight;
   }
-}
+};
 
 api.OpaqueGradient = class extends api.Fill {
   constructor(edgeColor, centerColor) {
@@ -149,7 +164,7 @@ api.OpaqueGradient = class extends api.Fill {
     this.properties.edgeColor = edgeColor;
     this.properties.centerColor = centerColor;
   }
-}
+};
 
 api.GridGradient = class extends api.Fill {
   constructor(edgeColor, centerColor, gridlineCount) {
@@ -158,13 +173,13 @@ api.GridGradient = class extends api.Fill {
     this.properties.centerColor = centerColor;
     this.properties.gridlineCount = gridlineCount;
   }
-}
+};
 
 api.Content = class extends api.Fill {
   constructor() {
     super(api.FillType.CONTENT);
   }
-}
+};
 
 /**
  * Represents updates to UI element properties. Any properties set on this
@@ -202,7 +217,8 @@ api.UiElementUpdate = class {
    * @param {number} y
    */
   setSize(x, y) {
-    this.properties['size'] = {x: x, y: y};
+    this.properties['sizeX'] = x;
+    this.properties['sizeY'] = y;
   }
 
   /**
@@ -212,7 +228,9 @@ api.UiElementUpdate = class {
    * @param {number} z
    */
   setScale(x, y, z) {
-    this.properties['scale'] = {x: x, y: y, z: z};
+    this.properties['scaleX'] = x;
+    this.properties['scaleY'] = y;
+    this.properties['scaleZ'] = z;
   }
 
   /**
@@ -224,7 +242,10 @@ api.UiElementUpdate = class {
    * @param {number} a
    */
   setRotation(x, y, z, a) {
-    this.properties['rotation'] = {x: x, y: y, z: z, a: a};
+    this.properties['rotationX'] = x;
+    this.properties['rotationY'] = y;
+    this.properties['rotationZ'] = z;
+    this.properties['rotationAngle'] = a;
   }
 
   /**
@@ -236,7 +257,9 @@ api.UiElementUpdate = class {
    * @param {number} z
    */
   setTranslation(x, y, z) {
-    this.properties['translation'] = {x: x, y: y, z: z};
+    this.properties['translationX'] = x;
+    this.properties['translationY'] = y;
+    this.properties['translationZ'] = z;
   }
 
   /**
@@ -321,6 +344,9 @@ api.UiElement = class extends api.UiElementUpdate {
   constructor(pixelX, pixelY, pixelWidth, pixelHeight) {
     super();
 
+    // Apply defaults to new elements.
+    this.setVisible(true);
+    this.setHitTestable(true);
     this.setFill(new api.Sprite(pixelX, pixelY, pixelWidth, pixelHeight));
   }
 };
@@ -344,12 +370,70 @@ api.Property = {
  * @enum {number}
  * @const
  */
-api.Easing = {
+api.EasingType = {
   'LINEAR': 0,
   'CUBICBEZIER': 1,
   'EASEIN': 2,
-  'EASEOUT': 3
+  'EASEOUT': 3,
+  'EASEINOUT': 4
 };
+
+/** @const */ var DEFAULT_EASING_POW = 2;
+/** @const */ var DEFAULT_CUBIC_BEZIER_P1X = 0.25;
+/** @const */ var DEFAULT_CUBIC_BEZIER_P1Y = 0;
+/** @const */ var DEFAULT_CUBIC_BEZIER_P2X = 0.75;
+/** @const */ var DEFAULT_CUBIC_BEZIER_P2Y = 1;
+
+/**
+ * Abstract easing base class.
+ * @abstract
+ */
+api.Easing = class {
+  constructor(type) {
+    this.type = type;
+  }
+};
+
+api.LinearEasing = class extends api.Easing {
+  constructor() {
+    super(api.EasingType.LINEAR);
+  }
+};
+
+api.CubicBezierEasing = class extends api.Easing {
+  constructor(
+      p1x = DEFAULT_CUBIC_BEZIER_P1X,
+      p1y = DEFAULT_CUBIC_BEZIER_P1Y,
+      p2x = DEFAULT_CUBIC_BEZIER_P2X,
+      p2y = DEFAULT_CUBIC_BEZIER_P2Y) {
+    super(api.EasingType.CUBICBEZIER);
+    this.p1x = p1x;
+    this.p1y = p1y;
+    this.p2x = p2x;
+    this.p2y = p2y;
+  }
+};
+
+api.InEasing = class extends api.Easing {
+  constructor(pow = DEFAULT_EASING_POW) {
+    super(api.EasingType.EASEIN);
+    this.pow = pow;
+  }
+};
+
+api.OutEasing = class extends api.Easing {
+  constructor(pow = DEFAULT_EASING_POW) {
+    super(api.EasingType.EASEOUT);
+    this.pow = pow;
+  }
+};
+
+api.InOutEasing = class extends api.Easing {
+  constructor(pow = DEFAULT_EASING_POW) {
+    super(api.EasingType.EASEINOUT);
+    this.pow = pow;
+  }
+}
 
 /**
  * Base animation class. An animation can vary only one object property.
@@ -366,7 +450,7 @@ api.Animation = class {
     /** @private {Object} */
     this.to = {};
     /** @private {Object} */
-    this.easing = {};
+    this.easing = new api.LinearEasing();
 
     // How many milliseconds in the future to start the animation.
     /** @private {number} */
@@ -375,8 +459,6 @@ api.Animation = class {
     // Duration of the animation (milliseconds).
     /** @private {number} */
     this.durationMillis = durationMs;
-
-    this.easing.type = api.Easing.LINEAR;
   }
 
   /**
@@ -447,11 +529,20 @@ api.Animation = class {
     this.property = api.Property.OPACITY;
     this.to.x = opacity;
   }
+
+  /**
+   * Set the animation's easing.
+   * @param {api.Easing} easing
+   */
+  setEasing(easing) {
+    this.easing = easing;
+  }
 };
 
 /**
  * Abstract class handling webui command calls from native.  The UI must
  * subclass this and override the handlers.
+ * @abstract
  */
 api.NativeCommandHandler = class {
   /**
@@ -536,6 +627,13 @@ api.NativeCommandHandler = class {
   onRemoveTab(tab) {}
 
   /**
+   * Set back/forward history buttons to enabled/disabled.
+   * @param {boolean} canGoBack
+   * @param {boolean} canGoForward
+   */
+  onSetHistoryButtonsEnabled(canGoBack, canGoForward) {}
+
+  /**
    * This function is executed after command parsing completes.
    */
   onCommandHandlerFinished() {}
@@ -577,10 +675,13 @@ api.NativeCommandHandler = class {
       this.onSetTabs(dict['setTabs']);
     }
     if ('updateTab' in dict) {
-      this.onUpdateTab(dict['updateTabs']);
+      this.onUpdateTab(dict['updateTab']);
     }
     if ('removeTab' in dict) {
       this.onRemoveTab(dict['removeTab']);
+    }
+    if ('canGoBack' in dict) {
+      this.onSetHistoryButtonsEnabled(dict['canGoBack'], dict['canGoForward']);
     }
 
     this.onCommandHandlerFinished()

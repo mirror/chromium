@@ -28,20 +28,21 @@ if (is_android) {
     widevine_cdm_binary_files = [ "chromeos/$widevine_arch/libwidevinecdm.so" ]
   } else if (is_linux) {
     widevine_cdm_version_h_file = "linux/$widevine_arch/widevine_cdm_version.h"
-    widevine_cdm_binary_files = [
-      "linux/$widevine_arch/libwidevinecdm.so",
-      "linux/$widevine_arch/libwidevinecdm.so.sig",
-    ]
+    widevine_cdm_binary_files = [ "linux/$widevine_arch/libwidevinecdm.so" ]
   } else if (is_win) {
     widevine_cdm_version_h_file = "win/$widevine_arch/widevine_cdm_version.h"
     widevine_cdm_binary_files = [
       "win/$widevine_arch/widevinecdm.dll",
       "win/$widevine_arch/widevinecdm.dll.lib",
+      "win/$widevine_arch/widevinecdm.dll.sig",
     ]
     widevine_cdm_manifest_file = [ "win/$widevine_arch/manifest.json" ]
   } else if (is_mac) {
     widevine_cdm_version_h_file = "mac/$widevine_arch/widevine_cdm_version.h"
-    widevine_cdm_binary_files = [ "mac/$widevine_arch/libwidevinecdm.dylib" ]
+    widevine_cdm_binary_files = [
+      "mac/$widevine_arch/libwidevinecdm.dylib",
+      "mac/$widevine_arch/libwidevinecdm.dylib.sig",
+    ]
     widevine_cdm_manifest_file = [ "mac/$widevine_arch/manifest.json" ]
   } else {
     # Other platforms, use the default one.

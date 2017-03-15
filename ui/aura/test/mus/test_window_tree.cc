@@ -133,9 +133,11 @@ void TestWindowTree::DeleteWindow(uint32_t change_id, uint32_t window_id) {
   OnChangeReceived(change_id);
 }
 
-void TestWindowTree::SetWindowBounds(uint32_t change_id,
-                                     uint32_t window_id,
-                                     const gfx::Rect& bounds) {
+void TestWindowTree::SetWindowBounds(
+    uint32_t change_id,
+    uint32_t window_id,
+    const gfx::Rect& bounds,
+    const base::Optional<cc::LocalSurfaceId>& local_surface_id) {
   OnChangeReceived(change_id, WindowTreeChangeType::BOUNDS);
 }
 
@@ -207,7 +209,9 @@ void TestWindowTree::RemoveTransientWindowFromParent(
   OnChangeReceived(change_id, WindowTreeChangeType::REMOVE_TRANSIENT);
 }
 
-void TestWindowTree::SetModal(uint32_t change_id, uint32_t window_id) {
+void TestWindowTree::SetModalType(uint32_t change_id,
+                                  uint32_t window_id,
+                                  ui::ModalType modal_type) {
   OnChangeReceived(change_id, WindowTreeChangeType::MODAL);
 }
 

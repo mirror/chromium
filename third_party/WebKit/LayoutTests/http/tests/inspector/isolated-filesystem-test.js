@@ -14,6 +14,24 @@ InspectorTest.TestFileSystem = function(fileSystemPath)
 InspectorTest.TestFileSystem._instances = {};
 
 InspectorTest.TestFileSystem.prototype = {
+    dumpAsText: function() {
+        var result = [];
+        dfs(this.root, '');
+        result[0] = this.fileSystemPath;
+        return result.join('\n');
+
+        function dfs(node, indent) {
+            result.push(indent + node.name);
+            var newIndent = indent + '    ';
+            for (var child of node._children)
+                dfs(child, newIndent);
+        }
+    },
+
+    reportCreatedPromise: function() {
+        return new Promise(fulfill => this.reportCreated(fulfill));
+    },
+
     reportCreated: function(callback)
     {
         var fileSystemPath = this.fileSystemPath;

@@ -18,6 +18,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
 #include "chrome/browser/android/tab_android.h"
+#include "chrome/browser/android/vr_shell/android_ui_gesture_target.h"
 #include "chrome/browser/android/vr_shell/ui_interface.h"
 #include "chrome/browser/android/vr_shell/vr_compositor.h"
 #include "chrome/browser/android/vr_shell/vr_gl_thread.h"
@@ -35,6 +36,7 @@
 #include "content/public/common/referrer.h"
 #include "device/vr/android/gvr/gvr_device.h"
 #include "device/vr/android/gvr/gvr_device_provider.h"
+#include "gpu/command_buffer/common/mailbox.h"
 #include "jni/VrShellImpl_jni.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "ui/android/view_android.h"
@@ -54,6 +56,13 @@ namespace {
 vr_shell::VrShell* g_instance;
 
 static const char kVrShellUIURL[] = "chrome://vr-shell-ui";
+
+// Default downscale factor for computing the recommended WebVR
+// renderWidth/Height from the 1:1 pixel mapped size. Using a rather
+// aggressive downscale due to the high overhead of copying pixels
+// twice before handing off to GVR. For comparison, the polyfill
+// uses approximately 0.55 on a Pixel XL.
+static constexpr float kWebVrRecommendedResolutionScale = 0.5;
 
 void SetIsInVR(content::WebContents* contents, bool is_in_vr) {
   if (contents && contents->GetRenderWidgetHostView())
@@ -106,15 +115,19 @@ void VrShell::Destroy(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   delete this;
 }
 
-void VrShell::SwapContents(JNIEnv* env, const JavaParamRef<jobject>& obj,
-                           const JavaParamRef<jobject>& web_contents) {
+void VrShell::SwapContents(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    const JavaParamRef<jobject>& web_contents,
+    const JavaParamRef<jobject>& touch_event_synthesizer) {
   content::WebContents* contents =
       content::WebContents::FromJavaWebContents(web_contents);
-  if (contents == main_contents_)
+  if (contents == main_contents_ &&
+      touch_event_synthesizer.obj() == j_motion_event_synthesizer_.obj())
     return;
 
   SetIsInVR(main_contents_, false);
-
+  j_motion_event_synthesizer_.Reset(env, touch_event_synthesizer);
   main_contents_ = contents;
   content_compositor_->SetLayer(main_contents_);
   SetIsInVR(main_contents_, true);
@@ -122,6 +135,9 @@ void VrShell::SwapContents(JNIEnv* env, const JavaParamRef<jobject>& obj,
   SetUiState();
 
   if (!main_contents_) {
+    android_ui_gesture_target_ = base::MakeUnique<AndroidUiGestureTarget>(
+        j_motion_event_synthesizer_.obj(),
+        Java_VrShellImpl_getNativePageScrollRatio(env, j_vr_shell_.obj()));
     content_input_manager_ = nullptr;
     vr_web_contents_observer_ = nullptr;
     metrics_helper_ = nullptr;
@@ -162,6 +178,7 @@ bool RegisterVrShell(JNIEnv* env) {
 }
 
 VrShell::~VrShell() {
+  delegate_provider_->RemoveDelegate();
   {
     // The GvrLayout is, and must always be, used only on the UI thread, and the
     // GvrApi used for rendering should only be used from the GL thread as it's
@@ -177,7 +194,6 @@ VrShell::~VrShell() {
     base::ThreadRestrictions::ScopedAllowIO allow_io;
     gl_thread_.reset();
   }
-  delegate_provider_->RemoveDelegate();
   g_instance = nullptr;
 }
 
@@ -205,8 +221,7 @@ void VrShell::SetContentPaused(bool paused) {
   }
 }
 
-void VrShell::OnTriggerEvent(JNIEnv* env,
-                             const JavaParamRef<jobject>& obj) {
+void VrShell::OnTriggerEvent(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   gl_thread_->task_runner()->PostTask(
       FROM_HERE,
       base::Bind(&VrShellGl::OnTriggerEvent, gl_thread_->GetVrShellGl()));
@@ -264,8 +279,9 @@ void VrShell::SetWebVrMode(JNIEnv* env,
     metrics_helper_->SetWebVREnabled(enabled);
   PostToGlThreadWhenReady(base::Bind(&VrShellGl::SetWebVrMode,
                                      gl_thread_->GetVrShellGl(), enabled));
-  html_interface_->SetMode(
-      enabled ? UiInterface::Mode::WEB_VR : UiInterface::Mode::STANDARD);
+
+  html_interface_->SetMode(enabled ? UiInterface::Mode::WEB_VR
+                                   : UiInterface::Mode::STANDARD);
 }
 
 void VrShell::OnLoadProgressChanged(JNIEnv* env,
@@ -291,13 +307,15 @@ void VrShell::ProcessTabArray(JNIEnv* env, jobjectArray tabs, bool incognito) {
     TabAndroid* tab =
         TabAndroid::GetNativeTab(env, JavaParamRef<jobject>(env, jtab));
     html_interface_->AppendToTabList(incognito, tab->GetAndroidId(),
-                                           tab->GetTitle());
+                                     tab->GetTitle());
   }
 }
 
 void VrShell::OnTabUpdated(JNIEnv* env,
                            const JavaParamRef<jobject>& obj,
-                           jboolean incognito, jint id, jstring jtitle) {
+                           jboolean incognito,
+                           jint id,
+                           jstring jtitle) {
   std::string title;
   base::android::ConvertJavaStringToUTF8(env, jtitle, &title);
   html_interface_->UpdateTab(incognito, id, title);
@@ -305,7 +323,8 @@ void VrShell::OnTabUpdated(JNIEnv* env,
 
 void VrShell::OnTabRemoved(JNIEnv* env,
                            const JavaParamRef<jobject>& obj,
-                           jboolean incognito, jint id) {
+                           jboolean incognito,
+                           jint id) {
   html_interface_->RemoveTab(incognito, id);
 }
 
@@ -314,14 +333,22 @@ void VrShell::SetWebVRSecureOrigin(bool secure_origin) {
   html_interface_->SetWebVRSecureOrigin(secure_origin);
 }
 
-void VrShell::SubmitWebVRFrame() {}
+void VrShell::SubmitWebVRFrame(int16_t frame_index,
+                               const gpu::MailboxHolder& mailbox) {
+  TRACE_EVENT1("gpu", "SubmitWebVRFrame", "frame", frame_index);
+
+  PostToGlThreadWhenReady(base::Bind(&VrShellGl::SubmitWebVRFrame,
+                                     gl_thread_->GetVrShellGl(), frame_index,
+                                     mailbox));
+}
 
 void VrShell::UpdateWebVRTextureBounds(int16_t frame_index,
                                        const gvr::Rectf& left_bounds,
-                                       const gvr::Rectf& right_bounds) {
+                                       const gvr::Rectf& right_bounds,
+                                       const gvr::Sizei& source_size) {
   PostToGlThreadWhenReady(base::Bind(&VrShellGl::UpdateWebVRTextureBounds,
                                      gl_thread_->GetVrShellGl(), frame_index,
-                                     left_bounds, right_bounds));
+                                     left_bounds, right_bounds, source_size));
 }
 
 bool VrShell::SupportsPresentation() {
@@ -337,8 +364,8 @@ void VrShell::CreateVRDisplayInfo(
     const base::Callback<void(device::mojom::VRDisplayInfoPtr)>& callback,
     uint32_t device_id) {
   PostToGlThreadWhenReady(base::Bind(&VrShellGl::CreateVRDisplayInfo,
-                                     gl_thread_->GetVrShellGl(),
-                                     callback, device_id));
+                                     gl_thread_->GetVrShellGl(), callback,
+                                     device_id));
 }
 
 base::android::ScopedJavaGlobalRef<jobject> VrShell::TakeContentSurface(
@@ -356,6 +383,13 @@ void VrShell::RestoreContentSurface(JNIEnv* env,
       base::Bind(&VrShellGl::CreateContentSurface, gl_thread_->GetVrShellGl()));
 }
 
+void VrShell::SetHistoryButtonsEnabled(JNIEnv* env,
+                                       const JavaParamRef<jobject>& obj,
+                                       jboolean can_go_back,
+                                       jboolean can_go_forward) {
+  html_interface_->SetHistoryButtonsEnabled(can_go_back, can_go_forward);
+}
+
 void VrShell::UiSurfaceChanged(jobject surface) {
   ui_compositor_->SurfaceChanged(surface);
 }
@@ -368,6 +402,10 @@ void VrShell::ContentSurfaceChanged(jobject surface) {
 }
 
 void VrShell::GvrDelegateReady() {
+  PostToGlThreadWhenReady(base::Bind(
+      &VrShellGl::SetSubmitClient, gl_thread_->GetVrShellGl(),
+      base::Passed(
+          delegate_provider_->TakeSubmitFrameClient().PassInterface())));
   delegate_provider_->SetDelegate(this, gvr_api_);
 }
 
@@ -378,7 +416,8 @@ void VrShell::AppButtonPressed() {
 
 void VrShell::ContentPhysicalBoundsChanged(JNIEnv* env,
                                            const JavaParamRef<jobject>& object,
-                                           jint width, jint height,
+                                           jint width,
+                                           jint height,
                                            jfloat dpr) {
   TRACE_EVENT0("gpu", "VrShell::ContentPhysicalBoundsChanged");
   PostToGlThreadWhenReady(base::Bind(&VrShellGl::ContentPhysicalBoundsChanged,
@@ -389,7 +428,9 @@ void VrShell::ContentPhysicalBoundsChanged(JNIEnv* env,
 
 void VrShell::UIPhysicalBoundsChanged(JNIEnv* env,
                                       const JavaParamRef<jobject>& object,
-                                      jint width, jint height, jfloat dpr) {
+                                      jint width,
+                                      jint height,
+                                      jfloat dpr) {
   PostToGlThreadWhenReady(base::Bind(&VrShellGl::UIPhysicalBoundsChanged,
                                      gl_thread_->GetVrShellGl(), width,
                                      height));
@@ -429,6 +470,26 @@ void VrShell::DoUiAction(const UiAction action,
     case ZOOM_OUT:  // Not handled yet.
     case ZOOM_IN:   // Not handled yet.
       return;
+    case SHOW_TAB: {
+      int id;
+      CHECK(arguments->GetInteger("id", &id));
+      delegate_provider_->ShowTab(id);
+      return;
+    }
+    case OPEN_NEW_TAB: {
+      bool incognito;
+      CHECK(arguments->GetBoolean("incognito", &incognito));
+      delegate_provider_->OpenNewTab(incognito);
+      return;
+    }
+    case KEY_EVENT: {
+      int char_value;
+      int modifiers = 0;
+      arguments->GetInteger("modifiers", &modifiers);
+      CHECK(arguments->GetInteger("charValue", &char_value));
+      ui_input_manager_->GenerateKeyboardEvent(char_value, modifiers);
+      return;
+    }
 #if defined(ENABLE_VR_SHELL_UI_DEV)
     case RELOAD_UI:
       ui_contents_->GetController().Reload(content::ReloadType::NORMAL, false);
@@ -468,12 +529,15 @@ void VrShell::DoUiAction(const UiAction action,
 
 void VrShell::RenderViewHostChanged(content::RenderViewHost* old_host,
                                     content::RenderViewHost* new_host) {
-  new_host->GetWidget()->GetView()->SetBackgroundColor(SK_ColorTRANSPARENT);
+  content::RenderWidgetHostView* view = new_host->GetWidget()->GetView();
+  view->SetBackgroundColor(SK_ColorTRANSPARENT);
+  view->SetIsInVR(true);
 }
 
 void VrShell::MainFrameWasResized(bool width_changed) {
-  display::Display display = display::Screen::GetScreen()
-      ->GetDisplayNearestWindow(ui_contents_->GetNativeView());
+  display::Display display =
+      display::Screen::GetScreen()->GetDisplayNearestWindow(
+          ui_contents_->GetNativeView());
   PostToGlThreadWhenReady(
       base::Bind(&VrShellGl::UIBoundsChanged, gl_thread_->GetVrShellGl(),
                  display.size().width(), display.size().height()));
@@ -525,9 +589,9 @@ void VrShell::OnVRVsyncProviderRequest(
 
 void VrShell::UpdateVSyncInterval(int64_t timebase_nanos,
                                   double interval_seconds) {
-  PostToGlThreadWhenReady(
-      base::Bind(&VrShellGl::UpdateVSyncInterval,
-                 gl_thread_->GetVrShellGl(), timebase_nanos, interval_seconds));
+  PostToGlThreadWhenReady(base::Bind(&VrShellGl::UpdateVSyncInterval,
+                                     gl_thread_->GetVrShellGl(), timebase_nanos,
+                                     interval_seconds));
 }
 
 void VrShell::SetContentCssSize(float width, float height, float dpr) {
@@ -545,20 +609,21 @@ void VrShell::ProcessUIGesture(std::unique_ptr<blink::WebInputEvent> event) {
   if (ui_input_manager_) {
     ui_input_manager_->ProcessUpdatedGesture(std::move(event));
   }
-
 }
 
 void VrShell::ProcessContentGesture(
     std::unique_ptr<blink::WebInputEvent> event) {
   if (content_input_manager_) {
     content_input_manager_->ProcessUpdatedGesture(std::move(event));
+  } else if (android_ui_gesture_target_) {
+    android_ui_gesture_target_->DispatchWebInputEvent(std::move(event));
   }
 }
 
+/* static */
 device::mojom::VRPosePtr VrShell::VRPosePtrFromGvrPose(gvr::Mat4f head_mat) {
   device::mojom::VRPosePtr pose = device::mojom::VRPose::New();
 
-  pose->timestamp = base::Time::Now().ToJsTime();
   pose->orientation.emplace(4);
 
   gfx::Transform inv_transform(
@@ -586,8 +651,38 @@ device::mojom::VRPosePtr VrShell::VRPosePtrFromGvrPose(gvr::Mat4f head_mat) {
   return pose;
 }
 
+/* static */
+gvr::Sizei VrShell::GetRecommendedWebVrSize(gvr::GvrApi* gvr_api) {
+  // Pick a reasonable default size for the WebVR transfer surface
+  // based on a downscaled 1:1 render resolution. This size will also
+  // be reported to the client via CreateVRDisplayInfo as the
+  // client-recommended renderWidth/renderHeight and for the GVR
+  // framebuffer. If the client chooses a different size or resizes it
+  // while presenting, we'll resize the transfer surface and GVR
+  // framebuffer to match.
+  gvr::Sizei render_target_size =
+      gvr_api->GetMaximumEffectiveRenderTargetSize();
+  gvr::Sizei webvr_size = {static_cast<int>(render_target_size.width *
+                                            kWebVrRecommendedResolutionScale),
+                           static_cast<int>(render_target_size.height *
+                                            kWebVrRecommendedResolutionScale)};
+  // Ensure that the width is an even number so that the eyes each
+  // get the same size, the recommended renderWidth is per eye
+  // and the client will use the sum of the left and right width.
+  //
+  // TODO(klausw,crbug.com/699350): should we round the recommended
+  // size to a multiple of 2^N pixels to be friendlier to the GPU? The
+  // exact size doesn't matter, and it might be more efficient.
+  webvr_size.width &= ~1;
+
+  return webvr_size;
+}
+
+/* static */
 device::mojom::VRDisplayInfoPtr VrShell::CreateVRDisplayInfo(
-    gvr::GvrApi* gvr_api, gvr::Sizei compositor_size, uint32_t device_id) {
+    gvr::GvrApi* gvr_api,
+    gvr::Sizei recommended_size,
+    uint32_t device_id) {
   TRACE_EVENT0("input", "GvrDevice::GetVRDevice");
 
   device::mojom::VRDisplayInfoPtr device = device::mojom::VRDisplayInfo::New();
@@ -615,8 +710,8 @@ device::mojom::VRDisplayInfoPtr VrShell::CreateVRDisplayInfo(
         (eye == GVR_LEFT_EYE) ? device->leftEye : device->rightEye;
     eye_params->fieldOfView = device::mojom::VRFieldOfView::New();
     eye_params->offset.resize(3);
-    eye_params->renderWidth = compositor_size.width / 2;
-    eye_params->renderHeight = compositor_size.height;
+    eye_params->renderWidth = recommended_size.width / 2;
+    eye_params->renderHeight = recommended_size.height;
 
     gvr::BufferViewport eye_viewport = gvr_api->CreateBufferViewport();
     gvr_buffer_viewports.GetBufferViewport(eye, &eye_viewport);

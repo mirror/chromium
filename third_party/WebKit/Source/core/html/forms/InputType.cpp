@@ -28,6 +28,8 @@
 
 #include "core/html/forms/InputType.h"
 
+#include <memory>
+
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/InputTypeNames.h"
@@ -37,7 +39,6 @@
 #include "core/events/KeyboardEvent.h"
 #include "core/events/ScopedEventQueue.h"
 #include "core/fileapi/FileList.h"
-#include "core/frame/FrameHost.h"
 #include "core/html/FormData.h"
 #include "core/html/HTMLFormElement.h"
 #include "core/html/HTMLInputElement.h"
@@ -68,12 +69,12 @@
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/layout/LayoutTheme.h"
+#include "core/page/Page.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/json/JSONValues.h"
 #include "platform/text/PlatformLocale.h"
 #include "platform/text/TextBreakIterator.h"
 #include "wtf/PtrUtil.h"
-#include <memory>
 
 namespace blink {
 
@@ -121,7 +122,7 @@ static const InputTypeFactoryMap* factoryMap() {
 InputType* InputType::create(HTMLInputElement& element,
                              const AtomicString& typeName) {
   InputTypeFactoryFunction factory =
-      typeName.isEmpty() ? 0 : factoryMap()->get(typeName);
+      typeName.isEmpty() ? 0 : factoryMap()->at(typeName);
   if (!factory)
     factory = TextInputType::create;
   return factory(element);
@@ -430,8 +431,8 @@ String InputType::serialize(const Decimal&) const {
 }
 
 ChromeClient* InputType::chromeClient() const {
-  if (FrameHost* host = element().document().frameHost())
-    return &host->chromeClient();
+  if (Page* page = element().document().page())
+    return &page->chromeClient();
   return nullptr;
 }
 
@@ -509,7 +510,8 @@ void InputType::dispatchSearchEvent() {}
 
 void InputType::setValue(const String& sanitizedValue,
                          bool valueChanged,
-                         TextFieldEventBehavior eventBehavior) {
+                         TextFieldEventBehavior eventBehavior,
+                         TextControlSetValueSelection) {
   // This setValue() implementation is used only for ValueMode::kValue except
   // TextFieldInputType. That is to say, type=color, type=range, and temporal
   // input types.
@@ -736,18 +738,19 @@ void InputType::applyStep(const Decimal& current,
   // then set value to the smallest value that, when subtracted from the step
   // base, is an integral multiple of the allowed value step, and that is more
   // than or equal to minimum.
-  // 8. If the element has a maximum, and value is greater than that maximum,
-  // then set value to the largest value that, when subtracted from the step
-  // base, is an integral multiple of the allowed value step, and that is less
-  // than or equal to maximum.
-  if (newValue > stepRange.maximum()) {
-    newValue = alignedMaximum;
-  } else if (newValue < stepRange.minimum()) {
+  if (newValue < stepRange.minimum()) {
     const Decimal alignedMinimum =
         base + ((stepRange.minimum() - base) / step).ceil() * step;
     DCHECK_GE(alignedMinimum, stepRange.minimum());
     newValue = alignedMinimum;
   }
+
+  // 8. If the element has a maximum, and value is greater than that maximum,
+  // then set value to the largest value that, when subtracted from the step
+  // base, is an integral multiple of the allowed value step, and that is less
+  // than or equal to maximum.
+  if (newValue > stepRange.maximum())
+    newValue = alignedMaximum;
 
   // 9. Let value as string be the result of running the algorithm to convert
   // a number to a string, as defined for the input element's type attribute's

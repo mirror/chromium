@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
+#include "base/memory/ref_counted.h"
 #include "base/memory/singleton.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/histogram_macros.h"
@@ -50,6 +51,7 @@
 #include "components/sessions/content/content_record_password_state.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/version_info/version_info.h"
+#include "content/public/browser/browser_thread.h"
 #include "content/public/browser/child_process_security_policy.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/navigation_handle.h"
@@ -63,6 +65,12 @@
 #include "net/http/transport_security_state.h"
 #include "net/url_request/url_request_context.h"
 #include "third_party/re2/src/re2/re2.h"
+
+#if defined(SAFE_BROWSING_DB_LOCAL) || defined(SAFE_BROWSING_DB_REMOTE)
+#include "chrome/browser/browser_process.h"
+#include "chrome/browser/safe_browsing/safe_browsing_service.h"
+#include "components/safe_browsing/password_protection/password_protection_service.h"
+#endif
 
 #if defined(OS_ANDROID)
 #include "chrome/browser/android/tab_android.h"
@@ -133,6 +141,22 @@ void ReportMetrics(bool password_manager_enabled,
           profile->GetPrefs()));
 }
 
+bool IsHSTSActiveForHostAndRequestContext(
+    const GURL& origin,
+    const scoped_refptr<net::URLRequestContextGetter>& request_context) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  if (!origin.is_valid())
+    return false;
+
+  net::TransportSecurityState* security_state =
+      request_context->GetURLRequestContext()->transport_security_state();
+
+  if (!security_state)
+    return false;
+
+  return security_state->ShouldUpgradeToSSL(origin.host());
+}
+
 }  // namespace
 
 // static
@@ -176,15 +200,18 @@ ChromePasswordManagerClient::ChromePasswordManagerClient(
       password_manager::prefs::kCredentialsEnableService, GetPrefs());
   ReportMetrics(*saving_and_filling_passwords_enabled_, this, profile_);
   driver_factory_->RequestSendLoggingAvailability();
+
+#if defined(SAFE_BROWSING_DB_LOCAL) || defined(SAFE_BROWSING_DB_REMOTE)
+  if (CanSetPasswordProtectionService()) {
+    password_reuse_detection_manager_.SetPasswordProtectionService(
+        g_browser_process->safe_browsing_service()
+            ->password_protection_service()
+            ->GetWeakPtr());
+  }
+#endif
 }
 
 ChromePasswordManagerClient::~ChromePasswordManagerClient() {}
-
-bool ChromePasswordManagerClient::IsAutomaticPasswordSavingEnabled() const {
-  return base::FeatureList::IsEnabled(
-             password_manager::features::kEnableAutomaticPasswordSaving) &&
-         chrome::GetChannel() == version_info::Channel::UNKNOWN;
-}
 
 bool ChromePasswordManagerClient::IsPasswordManagementEnabledForCurrentPage()
     const {
@@ -214,6 +241,12 @@ bool ChromePasswordManagerClient::IsPasswordManagementEnabledForCurrentPage()
 
 bool ChromePasswordManagerClient::IsSavingAndFillingEnabledForCurrentPage()
     const {
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnableAutomation)) {
+    // Disable the password saving UI for automated tests. It obscures the
+    // page, and there is no API to access (or dismiss) UI bubbles/infobars.
+    return false;
+  }
   // TODO(melandory): remove saving_and_filling_passwords_enabled_ check from
   // here once we decide to switch to new settings behavior for everyone.
   return *saving_and_filling_passwords_enabled_ && !IsOffTheRecord() &&
@@ -225,20 +258,14 @@ bool ChromePasswordManagerClient::IsFillingEnabledForCurrentPage() const {
          IsPasswordManagementEnabledForCurrentPage();
 }
 
-bool ChromePasswordManagerClient::IsHSTSActiveForHost(
-    const GURL& origin) const {
-  if (!origin.is_valid())
-    return false;
-
-  net::TransportSecurityState* security_state =
-      profile_->GetRequestContext()
-          ->GetURLRequestContext()
-          ->transport_security_state();
-
-  if (!security_state)
-    return false;
-
-  return security_state->ShouldUpgradeToSSL(origin.host());
+void ChromePasswordManagerClient::PostHSTSQueryForHost(
+    const GURL& origin,
+    const HSTSCallback& callback) const {
+  content::BrowserThread::PostTaskAndReplyWithResult(
+      content::BrowserThread::IO, FROM_HERE,
+      base::Bind(&IsHSTSActiveForHostAndRequestContext, origin,
+                 make_scoped_refptr(profile_->GetRequestContext())),
+      callback);
 }
 
 bool ChromePasswordManagerClient::OnCredentialManagerUsed() {
@@ -253,7 +280,6 @@ bool ChromePasswordManagerClient::OnCredentialManagerUsed() {
 
 bool ChromePasswordManagerClient::PromptUserToSaveOrUpdatePassword(
     std::unique_ptr<password_manager::PasswordFormManager> form_to_save,
-    password_manager::CredentialSourceType type,
     bool update_password) {
   // Save password infobar and the password bubble prompts in case of
   // "webby" URLs and do not prompt in case of "non-webby" URLS (e.g. file://).
@@ -620,6 +646,14 @@ bool ChromePasswordManagerClient::ShouldAnnotateNavigationEntries(
 
   return true;
 }
+
+#if defined(SAFE_BROWSING_DB_LOCAL) || defined(SAFE_BROWSING_DB_REMOTE)
+bool ChromePasswordManagerClient::CanSetPasswordProtectionService() {
+  return g_browser_process && g_browser_process->safe_browsing_service() &&
+         g_browser_process->safe_browsing_service()
+             ->password_protection_service();
+}
+#endif
 
 void ChromePasswordManagerClient::AnnotateNavigationEntry(
     bool has_password_field) {

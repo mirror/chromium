@@ -44,8 +44,7 @@ public class AppBannerManager {
      */
     public static boolean isSupported() {
         if (sIsSupported == null) {
-            Context context = ContextUtils.getApplicationContext();
-            sIsSupported = ShortcutHelper.isAddToHomeIntentSupported(context);
+            sIsSupported = ShortcutHelper.isAddToHomeIntentSupported();
         }
         return sIsSupported;
     }
@@ -132,9 +131,7 @@ public class AppBannerManager {
     /** Returns the language option to use for the add to homescreen dialog and menu item. */
     public static int getHomescreenLanguageOption() {
         int languageOption = nativeGetHomescreenLanguageOption();
-        if (languageOption == LanguageOption.ADD) {
-            return R.string.menu_add_to_homescreen_add;
-        } else if (languageOption == LanguageOption.INSTALL) {
+        if (languageOption == LanguageOption.INSTALL) {
             return R.string.menu_add_to_homescreen_install;
         }
         return R.string.menu_add_to_homescreen;

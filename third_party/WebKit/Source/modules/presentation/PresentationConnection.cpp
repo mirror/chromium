@@ -9,7 +9,6 @@
 #include "core/dom/DOMArrayBufferView.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
-#include "core/dom/ExecutionContextTask.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/events/Event.h"
 #include "core/events/MessageEvent.h"
@@ -163,8 +162,6 @@ PresentationConnection::~PresentationConnection() {
 void PresentationConnection::bindProxy(
     std::unique_ptr<WebPresentationConnectionProxy> proxy) {
   DCHECK(proxy);
-  // TODO(zhaobin): Restore to DCHECK(!m_proxy) when reconnect() is properly
-  // implemented.
   m_proxy = std::move(proxy);
 }
 
@@ -204,9 +201,9 @@ PresentationConnection* PresentationConnection::take(
   // Fire onconnectionavailable event asynchronously.
   auto* event = PresentationConnectionAvailableEvent::create(
       EventTypeNames::connectionavailable, connection);
-  request->getExecutionContext()->postTask(
-      TaskType::Presentation, BLINK_FROM_HERE,
-      createSameThreadTask(&PresentationConnection::dispatchEventAsync,
+  TaskRunnerHelper::get(TaskType::Presentation, request->getExecutionContext())
+      ->postTask(BLINK_FROM_HERE,
+                 WTF::bind(&PresentationConnection::dispatchEventAsync,
                            wrapPersistent(request), wrapPersistent(event)));
 
   return connection;
@@ -269,7 +266,7 @@ void PresentationConnection::send(const String& message,
   if (!canSendMessage(exceptionState))
     return;
 
-  m_messages.append(new Message(message));
+  m_messages.push_back(new Message(message));
   handleMessageQueue();
 }
 
@@ -279,7 +276,7 @@ void PresentationConnection::send(DOMArrayBuffer* arrayBuffer,
   if (!canSendMessage(exceptionState))
     return;
 
-  m_messages.append(new Message(arrayBuffer));
+  m_messages.push_back(new Message(arrayBuffer));
   handleMessageQueue();
 }
 
@@ -289,7 +286,7 @@ void PresentationConnection::send(DOMArrayBufferView* arrayBufferView,
   if (!canSendMessage(exceptionState))
     return;
 
-  m_messages.append(new Message(arrayBufferView->buffer()));
+  m_messages.push_back(new Message(arrayBufferView->buffer()));
   handleMessageQueue();
 }
 
@@ -298,7 +295,7 @@ void PresentationConnection::send(Blob* data, ExceptionState& exceptionState) {
   if (!canSendMessage(exceptionState))
     return;
 
-  m_messages.append(new Message(data->blobDataHandle()));
+  m_messages.push_back(new Message(data->blobDataHandle()));
   handleMessageQueue();
 }
 
@@ -318,18 +315,18 @@ void PresentationConnection::handleMessageQueue() {
     return;
 
   while (!m_messages.isEmpty() && !m_blobLoader) {
-    Message* message = m_messages.first().get();
+    Message* message = m_messages.front().get();
     switch (message->type) {
       case MessageTypeText:
         client->sendString(m_url, m_id, message->text, m_proxy.get());
-        m_messages.removeFirst();
+        m_messages.pop_front();
         break;
       case MessageTypeArrayBuffer:
         client->sendArrayBuffer(
             m_url, m_id,
             static_cast<const uint8_t*>(message->arrayBuffer->data()),
             message->arrayBuffer->byteLength(), m_proxy.get());
-        m_messages.removeFirst();
+        m_messages.pop_front();
         break;
       case MessageTypeBlob:
         ASSERT(!m_blobLoader);
@@ -402,7 +399,7 @@ void PresentationConnection::close() {
   }
   WebPresentationClient* client = presentationClient(getExecutionContext());
   if (client)
-    client->closeSession(m_url, m_id);
+    client->closeSession(m_url, m_id, m_proxy.get());
 
   tearDown();
 }
@@ -412,7 +409,7 @@ void PresentationConnection::terminate() {
     return;
   WebPresentationClient* client = presentationClient(getExecutionContext());
   if (client)
-    client->terminateSession(m_url, m_id);
+    client->terminateConnection(m_url, m_id);
 
   tearDown();
 }
@@ -428,10 +425,20 @@ bool PresentationConnection::matches(const String& id, const KURL& url) const {
 
 void PresentationConnection::didChangeState(
     WebPresentationConnectionState state) {
+  didChangeState(state, true /* shouldDispatchEvent */);
+}
+
+void PresentationConnection::didChangeState(
+    WebPresentationConnectionState state,
+    bool shouldDispatchEvent) {
   if (m_state == state)
     return;
 
   m_state = state;
+
+  if (!shouldDispatchEvent)
+    return;
+
   switch (m_state) {
     case WebPresentationConnectionState::Connecting:
       NOTREACHED();
@@ -461,8 +468,12 @@ void PresentationConnection::didClose(
       EventTypeNames::close, connectionCloseReasonToString(reason), message));
 }
 
+void PresentationConnection::didClose() {
+  didClose(WebPresentationConnectionCloseReason::Closed, "");
+}
+
 void PresentationConnection::didFinishLoadingBlob(DOMArrayBuffer* buffer) {
-  ASSERT(!m_messages.isEmpty() && m_messages.first()->type == MessageTypeBlob);
+  ASSERT(!m_messages.isEmpty() && m_messages.front()->type == MessageTypeBlob);
   ASSERT(buffer && buffer->buffer());
   // Send the loaded blob immediately here and continue processing the queue.
   WebPresentationClient* client = presentationClient(getExecutionContext());
@@ -472,25 +483,25 @@ void PresentationConnection::didFinishLoadingBlob(DOMArrayBuffer* buffer) {
                          buffer->byteLength(), m_proxy.get());
   }
 
-  m_messages.removeFirst();
+  m_messages.pop_front();
   m_blobLoader.clear();
   handleMessageQueue();
 }
 
 void PresentationConnection::didFailLoadingBlob(
     FileError::ErrorCode errorCode) {
-  ASSERT(!m_messages.isEmpty() && m_messages.first()->type == MessageTypeBlob);
+  ASSERT(!m_messages.isEmpty() && m_messages.front()->type == MessageTypeBlob);
   // FIXME: generate error message?
   // Ignore the current failed blob item and continue with next items.
-  m_messages.removeFirst();
+  m_messages.pop_front();
   m_blobLoader.clear();
   handleMessageQueue();
 }
 
 void PresentationConnection::dispatchStateChangeEvent(Event* event) {
-  getExecutionContext()->postTask(
-      TaskType::Presentation, BLINK_FROM_HERE,
-      createSameThreadTask(&PresentationConnection::dispatchEventAsync,
+  TaskRunnerHelper::get(TaskType::Presentation, getExecutionContext())
+      ->postTask(BLINK_FROM_HERE,
+                 WTF::bind(&PresentationConnection::dispatchEventAsync,
                            wrapPersistent(this), wrapPersistent(event)));
 }
 

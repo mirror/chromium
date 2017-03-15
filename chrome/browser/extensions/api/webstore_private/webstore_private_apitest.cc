@@ -110,18 +110,14 @@ class ExtensionWebstorePrivateApiTest : public ExtensionApiTest {
         "http://www.example.com/extensions/api_test");
   }
 
-  void SetUpInProcessBrowserTestFixture() override {
-    ExtensionApiTest::SetUpInProcessBrowserTestFixture();
+  void SetUpOnMainThread() override {
+    ExtensionApiTest::SetUpOnMainThread();
 
     // Start up the test server and get us ready for calling the install
     // API functions.
     host_resolver()->AddRule("www.example.com", "127.0.0.1");
     ASSERT_TRUE(StartEmbeddedTestServer());
     extensions::ExtensionInstallUI::set_disable_failure_ui_for_tests();
-  }
-
-  void SetUpOnMainThread() override {
-    ExtensionApiTest::SetUpOnMainThread();
 
     auto_confirm_install_.reset(
         new ScopedTestDialogAutoConfirm(ScopedTestDialogAutoConfirm::ACCEPT));
@@ -426,7 +422,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebstoreGetWebGLStatusTest, Blocked) {
       "    {\n"
       "      \"id\": 1,\n"
       "      \"features\": [\n"
-      "        \"webgl\"\n"
+      "        \"accelerated_webgl\"\n"
       "      ]\n"
       "    }\n"
       "  ]\n"
@@ -435,7 +431,7 @@ IN_PROC_BROWSER_TEST_F(ExtensionWebstoreGetWebGLStatusTest, Blocked) {
   content::GpuDataManager::GetInstance()->InitializeForTesting(
       json_blacklist, gpu_info);
   EXPECT_TRUE(content::GpuDataManager::GetInstance()->IsFeatureBlacklisted(
-      gpu::GPU_FEATURE_TYPE_WEBGL));
+      gpu::GPU_FEATURE_TYPE_ACCELERATED_WEBGL));
 
   bool webgl_allowed = false;
   RunTest(webgl_allowed);

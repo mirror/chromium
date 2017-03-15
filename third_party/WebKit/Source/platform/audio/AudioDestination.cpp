@@ -70,6 +70,8 @@ AudioDestination::AudioDestination(AudioIOCallback& callback,
                                    false)),
       m_renderBus(AudioBus::create(numberOfOutputChannels,
                                    AudioUtilities::kRenderQuantumFrames)),
+      m_fifo(
+          WTF::wrapUnique(new PushPullFIFO(numberOfOutputChannels, kFIFOSize))),
       m_framesElapsed(0) {
   // Create WebAudioDevice. blink::WebAudioDevice is designed to support the
   // local input (e.g. loopback from OS audio system), but Chromium's media
@@ -81,13 +83,9 @@ AudioDestination::AudioDestination(AudioIOCallback& callback,
   DCHECK(m_webAudioDevice);
 
   m_callbackBufferSize = m_webAudioDevice->framesPerBuffer();
-
   if (!checkBufferSize()) {
     NOTREACHED();
   }
-
-  // Create a FIFO.
-  m_fifo = WTF::wrapUnique(new PushPullFIFO(numberOfOutputChannels, kFIFOSize));
 }
 
 AudioDestination::~AudioDestination() {
@@ -101,6 +99,12 @@ void AudioDestination::render(const WebVector<float*>& destinationData,
                               size_t priorFramesSkipped) {
   CHECK_EQ(destinationData.size(), m_numberOfOutputChannels);
   CHECK_EQ(numberOfFrames, m_callbackBufferSize);
+
+  // Note that this method is called by AudioDeviceThread. If FIFO is not ready,
+  // or the requested render size is greater than FIFO size return here.
+  // (crbug.com/692423)
+  if (!m_fifo || m_fifo->length() < numberOfFrames)
+    return;
 
   m_framesElapsed -= std::min(m_framesElapsed, priorFramesSkipped);
   double outputPosition =

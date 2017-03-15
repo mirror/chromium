@@ -13,9 +13,8 @@
 
 MediaStreamDevicePermissionContext::MediaStreamDevicePermissionContext(
     Profile* profile,
-    const content::PermissionType permission_type,
     const ContentSettingsType content_settings_type)
-    : PermissionContextBase(profile, permission_type, content_settings_type),
+    : PermissionContextBase(profile, content_settings_type),
       content_settings_type_(content_settings_type) {
   DCHECK(content_settings_type_ == CONTENT_SETTINGS_TYPE_MEDIASTREAM_MIC ||
          content_settings_type_ == CONTENT_SETTINGS_TYPE_MEDIASTREAM_CAMERA);
@@ -34,6 +33,7 @@ void MediaStreamDevicePermissionContext::RequestPermission(
 }
 
 ContentSetting MediaStreamDevicePermissionContext::GetPermissionStatusInternal(
+    content::RenderFrameHost* render_frame_host,
     const GURL& requesting_origin,
     const GURL& embedding_origin) const {
   // TODO(raymes): Merge this policy check into content settings
@@ -64,7 +64,7 @@ ContentSetting MediaStreamDevicePermissionContext::GetPermissionStatusInternal(
   // Check the content setting. TODO(raymes): currently mic/camera permission
   // doesn't consider the embedder.
   ContentSetting setting = PermissionContextBase::GetPermissionStatusInternal(
-      requesting_origin, requesting_origin);
+      render_frame_host, requesting_origin, requesting_origin);
 
   if (setting == CONTENT_SETTING_DEFAULT)
     setting = CONTENT_SETTING_ASK;

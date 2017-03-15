@@ -43,13 +43,14 @@
 #include "core/fileapi/FileError.h"
 #include "core/frame/Frame.h"
 #include "core/frame/FrameTypes.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/Settings.h"
+#include "core/frame/csp/CSPSource.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/HTMLInputElement.h"
 #include "core/html/HTMLMediaElement.h"
 #include "core/html/shadow/TextControlInnerElements.h"
 #include "core/layout/compositing/CompositedSelectionBound.h"
-#include "core/loader/FrameLoaderClient.h"
 #include "core/loader/FrameLoaderTypes.h"
 #include "core/loader/NavigationPolicy.h"
 #include "core/loader/appcache/ApplicationCacheHost.h"
@@ -68,10 +69,10 @@
 #include "platform/FileSystemType.h"
 #include "platform/fonts/FontDescription.h"
 #include "platform/fonts/FontSmoothingMode.h"
+#include "platform/loader/fetch/ResourceLoadPriority.h"
+#include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/mediastream/MediaStreamSource.h"
 #include "platform/network/ContentSecurityPolicyParsers.h"
-#include "platform/network/ResourceLoadPriority.h"
-#include "platform/network/ResourceResponse.h"
 #include "platform/scroll/ScrollTypes.h"
 #include "platform/text/TextChecking.h"
 #include "platform/text/TextDecoration.h"
@@ -79,6 +80,8 @@
 #include "platform/weborigin/SchemeRegistry.h"
 #include "public/platform/WebApplicationCacheHost.h"
 #include "public/platform/WebClipboard.h"
+#include "public/platform/WebContentSecurityPolicy.h"
+#include "public/platform/WebContentSecurityPolicyStruct.h"
 #include "public/platform/WebCursorInfo.h"
 #include "public/platform/WebFileError.h"
 #include "public/platform/WebFileInfo.h"
@@ -112,7 +115,6 @@
 #include "public/web/WebAXObject.h"
 #include "public/web/WebClientRedirectPolicy.h"
 #include "public/web/WebConsoleMessage.h"
-#include "public/web/WebContentSecurityPolicy.h"
 #include "public/web/WebFrameClient.h"
 #include "public/web/WebFrameLoadType.h"
 #include "public/web/WebHistoryCommitType.h"
@@ -651,8 +653,6 @@ STATIC_ASSERT_ENUM(WebFileErrorPathExists, FileError::kPathExistsErr);
 
 STATIC_ASSERT_ENUM(WebTextDecorationTypeSpelling, TextDecorationTypeSpelling);
 STATIC_ASSERT_ENUM(WebTextDecorationTypeGrammar, TextDecorationTypeGrammar);
-STATIC_ASSERT_ENUM(WebTextDecorationTypeInvisibleSpellcheck,
-                   TextDecorationTypeInvisibleSpellcheck);
 
 STATIC_ASSERT_ENUM(WebStorageQuotaErrorNotSupported, NotSupportedError);
 STATIC_ASSERT_ENUM(WebStorageQuotaErrorInvalidModification,
@@ -721,6 +721,9 @@ STATIC_ASSERT_ENUM(WebContentSecurityPolicySourceHTTP,
                    ContentSecurityPolicyHeaderSourceHTTP);
 STATIC_ASSERT_ENUM(WebContentSecurityPolicySourceMeta,
                    ContentSecurityPolicyHeaderSourceMeta);
+
+STATIC_ASSERT_ENUM(WebWildcardDispositionNoWildcard, CSPSource::NoWildcard);
+STATIC_ASSERT_ENUM(WebWildcardDispositionHasWildcard, CSPSource::HasWildcard);
 
 STATIC_ASSERT_ENUM(WebURLResponse::HTTPVersionUnknown,
                    ResourceResponse::HTTPVersionUnknown);
@@ -831,9 +834,9 @@ STATIC_ASSERT_ENUM(WebSandboxFlags::PropagatesToAuxiliaryBrowsingContexts,
                    SandboxPropagatesToAuxiliaryBrowsingContexts);
 STATIC_ASSERT_ENUM(WebSandboxFlags::Modals, SandboxModals);
 
-STATIC_ASSERT_ENUM(FrameLoaderClient::BeforeUnloadHandler,
+STATIC_ASSERT_ENUM(LocalFrameClient::BeforeUnloadHandler,
                    WebFrameClient::BeforeUnloadHandler);
-STATIC_ASSERT_ENUM(FrameLoaderClient::UnloadHandler,
+STATIC_ASSERT_ENUM(LocalFrameClient::UnloadHandler,
                    WebFrameClient::UnloadHandler);
 
 STATIC_ASSERT_ENUM(WebFrameLoadType::Standard, FrameLoadTypeStandard);

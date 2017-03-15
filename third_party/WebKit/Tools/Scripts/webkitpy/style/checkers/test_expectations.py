@@ -30,9 +30,9 @@
 
 import logging
 
-from common import TabChecker
 from webkitpy.common.host import Host
 from webkitpy.layout_tests.models.test_expectations import TestExpectationParser
+from webkitpy.style.checkers.common import TabChecker
 
 
 class TestExpectationsChecker(object):
@@ -51,7 +51,7 @@ class TestExpectationsChecker(object):
         self._port_obj = host.port_factory.get()
 
         # Suppress error messages of test_expectations module since they will be reported later.
-        log = logging.getLogger("webkitpy.layout_tests.layout_package.test_expectations")
+        log = logging.getLogger('webkitpy.layout_tests.layout_package.test_expectations')
         log.setLevel(logging.CRITICAL)
 
     def _handle_error_message(self, lineno, message, confidence):

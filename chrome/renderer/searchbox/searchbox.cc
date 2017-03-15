@@ -244,14 +244,16 @@ SearchBox::SearchBox(content::RenderFrame* render_frame)
       most_visited_items_cache_(kMaxInstantMostVisitedItemCacheSize),
       query_(),
       binding_(this) {
-  render_frame->GetRemoteAssociatedInterfaces()->GetInterface(
-      &instant_service_);
-  render_frame->GetAssociatedInterfaceRegistry()->AddInterface(
-      base::Bind(&SearchBox::Bind, base::Unretained(this)));
+  // Connect to the embedded search interface in the browser.
+  chrome::mojom::EmbeddedSearchConnectorAssociatedPtr connector;
+  render_frame->GetRemoteAssociatedInterfaces()->GetInterface(&connector);
+  chrome::mojom::SearchBoxAssociatedPtrInfo search_box;
+  binding_.Bind(&search_box);
+  connector->Connect(mojo::MakeRequest(&instant_service_),
+                     std::move(search_box));
 }
 
-SearchBox::~SearchBox() {
-}
+SearchBox::~SearchBox() = default;
 
 void SearchBox::LogEvent(NTPLoggingEventType event) {
   // navigation_start in ms.
@@ -286,8 +288,10 @@ void SearchBox::CheckIsUserSyncingHistory() {
 
 void SearchBox::DeleteMostVisitedItem(
     InstantRestrictedID most_visited_item_id) {
-  instant_service_->DeleteMostVisitedItem(
-      page_seq_no_, GetURLForMostVisitedItem(most_visited_item_id));
+  GURL url = GetURLForMostVisitedItem(most_visited_item_id);
+  if (!url.is_valid())
+    return;
+  instant_service_->DeleteMostVisitedItem(page_seq_no_, url);
 }
 
 bool SearchBox::GenerateImageURLFromTransientURL(const GURL& transient_url,
@@ -335,8 +339,10 @@ void SearchBox::UndoAllMostVisitedDeletions() {
 
 void SearchBox::UndoMostVisitedDeletion(
     InstantRestrictedID most_visited_item_id) {
-  instant_service_->UndoMostVisitedDeletion(
-      page_seq_no_, GetURLForMostVisitedItem(most_visited_item_id));
+  GURL url = GetURLForMostVisitedItem(most_visited_item_id);
+  if (!url.is_valid())
+    return;
+  instant_service_->UndoMostVisitedDeletion(page_seq_no_, url);
 }
 
 void SearchBox::SetPageSequenceNumber(int page_seq_no) {

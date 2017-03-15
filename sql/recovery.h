@@ -25,8 +25,8 @@ namespace sql {
 // either case, the original handle is poisoned so that operations on the stack
 // do not accidentally disrupt the restored data.
 //
-// RecoverDatabaseOrRaze() automates this, including recoverying the schema of
-// from the suspect database.  If a database requires special handling, such as
+// RecoverDatabase() automates this, including recoverying the schema of from
+// the suspect database.  If a database requires special handling, such as
 // recovering between different schema, or tables requiring post-processing,
 // then the module can be used manually like:
 //
@@ -164,6 +164,8 @@ class SQL_EXPORT Recovery {
   // table may contain duplication.  If this is not acceptable, the client
   // should use the manual process as described in the example at the top of the
   // file, cleaning up data at the appropriate points.
+  //
+  // In case of SQLITE_NOTADB, the database is deemed unrecoverable and deleted.
   static void RecoverDatabase(Connection* db, const base::FilePath& db_path);
 
   // Returns true for SQLite errors which RecoverDatabase() can plausibly fix.

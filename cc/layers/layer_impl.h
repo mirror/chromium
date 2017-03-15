@@ -59,7 +59,6 @@ class RenderPass;
 class ScrollbarLayerImplBase;
 class SimpleEnclosedRegion;
 class Tile;
-class ScrollState;
 
 struct AppendQuadsData;
 
@@ -89,8 +88,6 @@ class CC_EXPORT LayerImpl {
   void OnIsAnimatingChanged(const PropertyAnimationState& mask,
                             const PropertyAnimationState& state);
   bool IsActive() const;
-
-  void DistributeScroll(ScrollState* scroll_state);
 
   void set_property_tree_sequence_number(int sequence_number) {}
 
@@ -125,9 +122,6 @@ class CC_EXPORT LayerImpl {
 
   void UpdatePropertyTreeTransformIsAnimated(bool is_animated);
   void UpdatePropertyTreeScrollOffset();
-
-  // For compatibility with Layer.
-  bool has_render_surface() const { return !!render_surface(); }
 
   LayerTreeImpl* layer_tree_impl() const { return layer_tree_impl_; }
 
@@ -233,13 +227,10 @@ class CC_EXPORT LayerImpl {
 
   bool ShowDebugBorders() const;
 
-  // These invalidate the host's render surface layer list.  The caller
-  // is responsible for calling set_needs_update_draw_properties on the tree
-  // so that its list can be recreated.
-  void ClearRenderSurfaceLayerList();
-  void SetHasRenderSurface(bool has_render_surface);
-
-  RenderSurfaceImpl* render_surface() const { return render_surface_.get(); }
+  // TODO(http://crbug.com/557160): Currently SPv2 creates dummy layers for the
+  // sole purpose of representing a render surface. Once that dependency is
+  // removed, also remove dummy layers from PaintArtifactCompositor.
+  RenderSurfaceImpl* GetRenderSurface() const;
 
   // The render surface which this layer draws into. This can be either owned by
   // the same layer or an ancestor of this layer.
@@ -406,6 +397,10 @@ class CC_EXPORT LayerImpl {
     return is_drawn_render_surface_layer_list_member_;
   }
 
+  bool IsDrawnScrollbar() {
+    return ToScrollbarLayer() && is_drawn_render_surface_layer_list_member_;
+  }
+
   void set_may_contain_video(bool yes) { may_contain_video_ = yes; }
   bool may_contain_video() const { return may_contain_video_; }
 
@@ -442,15 +437,6 @@ class CC_EXPORT LayerImpl {
   bool has_will_change_transform_hint() const {
     return has_will_change_transform_hint_;
   }
-
-  void SetPreferredRasterBounds(const gfx::Size& preferred_raster_bounds);
-  bool has_preferred_raster_bounds() const {
-    return has_preferred_raster_bounds_;
-  }
-  const gfx::Size& preferred_raster_scale() const {
-    return preferred_raster_bounds_;
-  }
-  void ClearPreferredRasterBounds();
 
   MutatorHost* GetMutatorHost() const;
 
@@ -567,14 +553,7 @@ class CC_EXPORT LayerImpl {
   std::unique_ptr<base::trace_event::ConvertableToTraceFormat>
       owned_debug_info_;
   base::trace_event::ConvertableToTraceFormat* debug_info_;
-  // TODO(http://crbug.com/557160): EffectNode instead of LayerImpl should
-  // own RenderSurfaceImpl. Currently SPv2 creates dummy layers for the sole
-  // purpose of holding a render surface. Once done, remember to remove dummy
-  // layers from PaintArtifactCompositor as well
-  std::unique_ptr<RenderSurfaceImpl> render_surface_;
-  gfx::Size preferred_raster_bounds_;
 
-  bool has_preferred_raster_bounds_ : 1;
   bool has_will_change_transform_hint_ : 1;
   bool needs_push_properties_ : 1;
   bool scrollbars_hidden_ : 1;

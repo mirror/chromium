@@ -15,13 +15,14 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
-import org.chromium.chrome.browser.ntp.NewTabPage.DestructionObserver;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.signin.AccountSigninActivity;
 import org.chromium.chrome.browser.signin.SigninAccessPoint;
 import org.chromium.chrome.browser.signin.SigninManager;
 import org.chromium.chrome.browser.signin.SigninManager.SignInAllowedObserver;
 import org.chromium.chrome.browser.signin.SigninManager.SignInStateObserver;
+import org.chromium.chrome.browser.suggestions.DestructionObserver;
+import org.chromium.chrome.browser.suggestions.SuggestionsRecyclerView;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
 import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
 
@@ -44,8 +45,7 @@ public class SignInPromo extends OptionalLeaf
     private final SigninObserver mObserver;
 
     public SignInPromo(SuggestionsUiDelegate uiDelegate) {
-        mDismissed = ChromePreferenceManager.getInstance(ContextUtils.getApplicationContext())
-                             .getNewTabPageSigninPromoDismissed();
+        mDismissed = ChromePreferenceManager.getInstance().getNewTabPageSigninPromoDismissed();
 
         SigninManager signinManager = SigninManager.get(ContextUtils.getApplicationContext());
         if (mDismissed) {
@@ -65,7 +65,7 @@ public class SignInPromo extends OptionalLeaf
     }
 
     /**
-     * @returns a {@link DestructionObserver} observer that updates the visibility of the signin
+     * @return a {@link DestructionObserver} observer that updates the visibility of the signin
      * promo and unregisters itself when the New Tab Page is destroyed.
      */
     @Nullable
@@ -125,8 +125,7 @@ public class SignInPromo extends OptionalLeaf
         mDismissed = true;
         setVisible(false);
 
-        ChromePreferenceManager.getInstance(ContextUtils.getApplicationContext())
-                .setNewTabPageSigninPromoDismissed(true);
+        ChromePreferenceManager.getInstance().setNewTabPageSigninPromoDismissed(true);
         mObserver.unregister();
         itemRemovedCallback.onResult(ContextUtils.getApplicationContext().getString(getHeader()));
     }
@@ -181,7 +180,7 @@ public class SignInPromo extends OptionalLeaf
      * View Holder for {@link SignInPromo}.
      */
     public static class ViewHolder extends StatusCardViewHolder {
-        public ViewHolder(NewTabPageRecyclerView parent, ContextMenuManager contextMenuManager,
+        public ViewHolder(SuggestionsRecyclerView parent, ContextMenuManager contextMenuManager,
                 UiConfig config) {
             super(parent, contextMenuManager, config);
             getParams().topMargin = parent.getResources().getDimensionPixelSize(

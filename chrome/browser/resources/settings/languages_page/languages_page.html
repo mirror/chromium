@@ -122,7 +122,8 @@
                 </template>
 </if>
                 <paper-icon-button id="more-[[item.language.code]]"
-                    icon="cr:more-vert" on-tap="onDotsTap_">
+                    icon="cr:more-vert" on-tap="onDotsTap_"
+                    title="$i18n{moreActions}">
                 </paper-icon-button>
               </div>
             </template>
@@ -171,7 +172,7 @@
                     $i18n{inputMethodEnabled}
                   </div>
                 </div>
-                <paper-icon-button icon="cr:settings"
+                <paper-icon-button icon="cr:settings_icon"
                     on-tap="onInputMethodOptionsTap_"
                     hidden="[[!item.hasOptionsPage]]">
                 </paper-icon-button>
@@ -184,6 +185,12 @@
                 $i18n{manageInputMethods}
               </a>
             </div>
+          </div>
+          <div class="settings-box">
+            <settings-toggle-button class="start"
+                pref="{{prefs.settings.language.ime_menu_activated}}"
+                label="$i18n{showImeMenu}">
+            </settings-toggle-button>
           </div>
         </iron-collapse>
 </if>
@@ -210,7 +217,8 @@
                 </div>
                 <paper-toggle-button on-change="onSpellCheckChange_"
                     disabled="[[!item.language.supportsSpellcheck]]"
-                    checked="[[item.spellCheckEnabled]]">
+                    checked="[[item.spellCheckEnabled]]"
+                    aria-label$="[[item.language.displayName]]">
                 </paper-toggle-button>
               </div>
             </template>

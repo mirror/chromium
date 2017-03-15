@@ -37,8 +37,9 @@
 #include "platform/loader/fetch/FetchInitiatorInfo.h"
 #include "platform/loader/fetch/FetchRequest.h"
 #include "platform/loader/fetch/Resource.h"
-#include "platform/network/ResourceLoadPriority.h"
-#include "platform/network/ResourceRequest.h"
+#include "platform/loader/fetch/ResourceLoadPriority.h"
+#include "platform/loader/fetch/ResourceRequest.h"
+#include "platform/weborigin/SecurityViolationReportingPolicy.h"
 #include "wtf/Forward.h"
 #include "wtf/Noncopyable.h"
 
@@ -115,7 +116,8 @@ class PLATFORM_EXPORT FetchContext
                                        int encodedDataLength);
   virtual void dispatchDidFinishLoading(unsigned long identifier,
                                         double finishTime,
-                                        int64_t encodedDataLength);
+                                        int64_t encodedDataLength,
+                                        int64_t decodedBodyLength);
   virtual void dispatchDidFail(unsigned long identifier,
                                const ResourceError&,
                                int64_t encodedDataLength,
@@ -134,7 +136,6 @@ class PLATFORM_EXPORT FetchContext
 
   virtual void addResourceTiming(const ResourceTimingInfo&);
   virtual bool allowImage(bool, const KURL&) const { return false; }
-  enum class SecurityViolationReportingPolicy { SuppressReporting, Report };
   virtual ResourceRequestBlockedReason canRequest(
       Resource::Type,
       const ResourceRequest&,

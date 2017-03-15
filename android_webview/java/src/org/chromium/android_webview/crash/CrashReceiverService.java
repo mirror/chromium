@@ -22,7 +22,6 @@ import org.chromium.components.minidump_uploader.CrashFileManager;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Service that is responsible for receiving crash dumps from an application, for upload.
@@ -41,7 +40,7 @@ public class CrashReceiverService extends Service {
     // Back-off policy for upload-job.
     private static final int JOB_BACKOFF_POLICY = JobInfo.BACKOFF_POLICY_EXPONENTIAL;
 
-    private Object mCopyingLock = new Object();
+    private final Object mCopyingLock = new Object();
     private boolean mIsCopying = false;
 
     @Override
@@ -76,7 +75,7 @@ public class CrashReceiverService extends Service {
             boolean copySucceeded = copyMinidumps(context, uid, fileDescriptors);
             if (copySucceeded && scheduleUploads) {
                 // Only schedule a new job if there actually are any files to upload.
-                scheduleNewJobIfNoJobsActive();
+                scheduleNewJob();
             }
         } finally {
             synchronized (mCopyingLock) {
@@ -105,32 +104,18 @@ public class CrashReceiverService extends Service {
         }
     }
 
-    /**
-     * @return the currently pending job with ID MINIDUMP_UPLOADING_JOB_ID, or null if no such job
-     * exists.
-     */
-    private static JobInfo getCurrentPendingJob(JobScheduler jobScheduler) {
-        List<JobInfo> pendingJobs = jobScheduler.getAllPendingJobs();
-        for (JobInfo job : pendingJobs) {
-            if (job.getId() == MINIDUMP_UPLOADING_JOB_ID) return job;
-        }
-        return null;
-    }
-
-    private void scheduleNewJobIfNoJobsActive() {
+    private void scheduleNewJob() {
         JobScheduler jobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        if (getCurrentPendingJob(jobScheduler) != null) {
-            return;
-        }
         JobInfo newJob = new JobInfo
-                .Builder(MINIDUMP_UPLOADING_JOB_ID /* jobId */,
-                    new ComponentName(this, MinidumpUploadJobService.class))
-                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
-                // Minimum delay when a job is retried (a retry will happen when there are minidumps
-                // left after trying to upload all minidumps - this could e.g. happen if we add more
-                // minidumps at the same time as uploading old ones).
-                .setBackoffCriteria(JOB_BACKOFF_TIME_IN_MS, JOB_BACKOFF_POLICY)
-                .build();
+                                 .Builder(MINIDUMP_UPLOADING_JOB_ID /* jobId */,
+                                         new ComponentName(this, AwMinidumpUploadJobService.class))
+                                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
+                                 // Minimum delay when a job is retried (a retry will happen when
+                                 // there are minidumps left after trying to upload all minidumps -
+                                 // this could e.g. happen if we add more minidumps at the same time
+                                 // as uploading old ones).
+                                 .setBackoffCriteria(JOB_BACKOFF_TIME_IN_MS, JOB_BACKOFF_POLICY)
+                                 .build();
         if (jobScheduler.schedule(newJob) == JobScheduler.RESULT_FAILURE) {
             throw new RuntimeException("couldn't schedule " + newJob);
         }
@@ -193,7 +178,7 @@ public class CrashReceiverService extends Service {
     }
 
     /**
-     * Create the directory in which WebView wlll store its minidumps.
+     * Create the directory in which WebView will store its minidumps.
      * WebView needs a crash directory different from Chrome's to ensure Chrome's and WebView's
      * minidump handling won't clash in cases where both Chrome and WebView are provided by the
      * same app (Monochrome).
@@ -203,7 +188,9 @@ public class CrashReceiverService extends Service {
     @VisibleForTesting
     public static File createWebViewCrashDir(Context context) {
         File dir = getWebViewCrashDir(context);
-        if (dir.isDirectory() || dir.mkdirs()) {
+        // Call mkdir before isDirectory to ensure that if another thread created the directory
+        // just before the call to mkdir, the current thread fails mkdir, but passes isDirectory.
+        if (dir.mkdir() || dir.isDirectory()) {
             return dir;
         }
         return null;

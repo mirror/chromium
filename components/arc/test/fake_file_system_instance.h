@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <map>
+#include <set>
 #include <string>
 #include <utility>
 #include <vector>
@@ -16,6 +17,7 @@
 #include "base/macros.h"
 #include "base/threading/thread_checker.h"
 #include "components/arc/common/file_system.mojom.h"
+#include "storage/browser/fileapi/watcher_manager.h"
 
 namespace arc {
 
@@ -102,13 +104,24 @@ class FakeFileSystemInstance : public mojom::FileSystemInstance {
   FakeFileSystemInstance();
   ~FakeFileSystemInstance() override;
 
+  // Returns true if Init() has been called.
+  bool InitCalled();
+
   // Adds a file accessible by content URL based methods.
   void AddFile(const File& file);
 
   // Adds a document accessible by document provider based methods.
   void AddDocument(const Document& document);
 
+  // Triggers watchers installed to a document.
+  void TriggerWatchers(const std::string& authority,
+                       const std::string& document_id,
+                       storage::WatcherManager::ChangeType type);
+
   // mojom::FileSystemInstance:
+  void AddWatcher(const std::string& authority,
+                  const std::string& document_id,
+                  const AddWatcherCallback& callback) override;
   void GetChildDocuments(const std::string& authority,
                          const std::string& document_id,
                          const GetChildDocumentsCallback& callback) override;
@@ -117,8 +130,11 @@ class FakeFileSystemInstance : public mojom::FileSystemInstance {
                    const GetDocumentCallback& callback) override;
   void GetFileSize(const std::string& url,
                    const GetFileSizeCallback& callback) override;
+  void Init(mojom::FileSystemHostPtr host) override;
   void OpenFileToRead(const std::string& url,
                       const OpenFileToReadCallback& callback) override;
+  void RemoveWatcher(int64_t watcher_id,
+                     const RemoveWatcherCallback& callback) override;
   void RequestMediaScan(const std::vector<std::string>& paths) override;
 
  private:
@@ -130,6 +146,8 @@ class FakeFileSystemInstance : public mojom::FileSystemInstance {
 
   base::ScopedTempDir temp_dir_;
 
+  mojom::FileSystemHostPtr host_;
+
   // Mapping from a content URL to a file.
   std::map<std::string, File> files_;
 
@@ -138,6 +156,14 @@ class FakeFileSystemInstance : public mojom::FileSystemInstance {
 
   // Mapping from a document key to its child documents.
   std::map<DocumentKey, std::vector<DocumentKey>> child_documents_;
+
+  // Mapping from a document key to its watchers.
+  std::map<DocumentKey, std::set<int64_t>> document_to_watchers_;
+
+  // Mapping from a watcher ID to a document key.
+  std::map<int64_t, DocumentKey> watcher_to_document_;
+
+  int64_t next_watcher_id_ = 1;
 
   DISALLOW_COPY_AND_ASSIGN(FakeFileSystemInstance);
 };

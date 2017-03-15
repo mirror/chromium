@@ -337,12 +337,20 @@ void ManagePasswordsUIController::NavigateToPasswordManagerSettingsPage() {
       chrome::kPasswordManagerSubPage);
 }
 
+void ManagePasswordsUIController::NavigateToPasswordManagerAccountDashboard() {
+  chrome::NavigateParams params(
+      chrome::FindBrowserWithWebContents(web_contents()),
+      GURL(password_manager::kPasswordManagerAccountDashboardURL),
+      ui::PAGE_TRANSITION_LINK);
+  params.disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
+  chrome::Navigate(&params);
+}
+
 void ManagePasswordsUIController::NavigateToChromeSignIn() {
   Browser* browser = chrome::FindBrowserWithWebContents(web_contents());
   browser->window()->ShowAvatarBubbleFromAvatarButton(
-      BrowserWindow::AVATAR_BUBBLE_MODE_SIGNIN,
-      signin::ManageAccountsParams(),
-      signin_metrics::AccessPoint::ACCESS_POINT_PASSWORD_BUBBLE);
+      BrowserWindow::AVATAR_BUBBLE_MODE_SIGNIN, signin::ManageAccountsParams(),
+      signin_metrics::AccessPoint::ACCESS_POINT_PASSWORD_BUBBLE, false);
 }
 
 void ManagePasswordsUIController::OnDialogHidden() {
@@ -413,8 +421,8 @@ void ManagePasswordsUIController::DidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
   if (!navigation_handle->IsInMainFrame() ||
       !navigation_handle->HasCommitted() ||
-      // Don't react to in-page (fragment) navigations.
-      navigation_handle->IsSamePage()) {
+      // Don't react to same-document (fragment) navigations.
+      navigation_handle->IsSameDocument()) {
     return;
   }
 

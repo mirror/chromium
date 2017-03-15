@@ -4,6 +4,7 @@
 
 #include "core/css/CSSPropertyEquality.h"
 
+#include "core/css/CSSValue.h"
 #include "core/style/ComputedStyle.h"
 #include "core/style/DataEquivalency.h"
 #include "core/style/ShadowList.h"
@@ -203,6 +204,8 @@ bool CSSPropertyEquality::propertiesEqual(CSSPropertyID prop,
       return a.offsetRotation() == b.offsetRotation();
     case CSSPropertyOpacity:
       return a.opacity() == b.opacity();
+    case CSSPropertyOrder:
+      return a.order() == b.order();
     case CSSPropertyOrphans:
       return a.orphans() == b.orphans();
     case CSSPropertyOutlineColor:
@@ -371,6 +374,14 @@ bool CSSPropertyEquality::propertiesEqual(CSSPropertyID prop,
       NOTREACHED();
       return true;
   }
+}
+
+bool CSSPropertyEquality::registeredCustomPropertiesEqual(
+    const AtomicString& propertyName,
+    const ComputedStyle& a,
+    const ComputedStyle& b) {
+  return dataEquivalent(a.getRegisteredVariable(propertyName),
+                        b.getRegisteredVariable(propertyName));
 }
 
 }  // namespace blink

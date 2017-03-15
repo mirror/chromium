@@ -252,7 +252,7 @@ void MockInputMethod::ClearComposition() {
   result_text_.clear();
 }
 
-// A Textfield wrapper to intercept OnKey[Pressed|Released]() ressults.
+// A Textfield wrapper to intercept OnKey[Pressed|Released]() results.
 class TestTextfield : public views::Textfield {
  public:
   TestTextfield()
@@ -2397,6 +2397,37 @@ TEST_F(TextfieldTest, TextCursorDisplayInRTLTest) {
   base::i18n::SetICUDefaultLocale(locale);
 }
 
+TEST_F(TextfieldTest, TextCursorPositionInRTLTest) {
+  std::string locale = base::i18n::GetConfiguredLocale();
+  base::i18n::SetICUDefaultLocale("he");
+
+  InitTextfield();
+  // LTR-RTL string in RTL context.
+  int text_cursor_position_prev = test_api_->GetCursorViewOrigin().x();
+  SendKeyEvent('a');
+  SendKeyEvent('b');
+  EXPECT_STR_EQ("ab", textfield_->text());
+  int text_cursor_position_new = test_api_->GetCursorViewOrigin().x();
+  // Text cursor stays at same place after inserting new charactors in RTL mode.
+  EXPECT_EQ(text_cursor_position_prev, text_cursor_position_new);
+
+  // Reset locale.
+  base::i18n::SetICUDefaultLocale(locale);
+}
+
+TEST_F(TextfieldTest, TextCursorPositionInLTRTest) {
+  InitTextfield();
+
+  // LTR-RTL string in LTR context.
+  int text_cursor_position_prev = test_api_->GetCursorViewOrigin().x();
+  SendKeyEvent('a');
+  SendKeyEvent('b');
+  EXPECT_STR_EQ("ab", textfield_->text());
+  int text_cursor_position_new = test_api_->GetCursorViewOrigin().x();
+  // Text cursor moves to right after inserting new charactors in LTR mode.
+  EXPECT_LT(text_cursor_position_prev, text_cursor_position_new);
+}
+
 TEST_F(TextfieldTest, HitInsideTextAreaTest) {
   InitTextfield();
   textfield_->SetText(WideToUTF16(L"ab\x05E1\x5E2"));
@@ -3079,6 +3110,17 @@ TEST_F(TextfieldTest, AccessiblePasswordTest) {
   EXPECT_EQ(ASCIIToUTF16("********"),
             node_data_protected.GetString16Attribute(ui::AX_ATTR_VALUE));
   EXPECT_TRUE(node_data_protected.HasStateFlag(ui::AX_STATE_PROTECTED));
+}
+
+// Verify that cursor visibility is controlled by SetCursorEnabled.
+TEST_F(TextfieldTest, CursorVisibility) {
+  InitTextfield();
+
+  textfield_->SetCursorEnabled(false);
+  EXPECT_FALSE(test_api_->IsCursorVisible());
+
+  textfield_->SetCursorEnabled(true);
+  EXPECT_TRUE(test_api_->IsCursorVisible());
 }
 
 }  // namespace views

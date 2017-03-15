@@ -4,6 +4,7 @@
 
 #include "chrome/browser/chromeos/eol_notification.h"
 
+#include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_ui_manager.h"
@@ -18,7 +19,7 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/paint_vector_icon.h"
-#include "ui/gfx/vector_icons_public.h"
+#include "ui/vector_icons/vector_icons.h"
 
 using message_center::MessageCenter;
 
@@ -116,8 +117,11 @@ void EolNotification::OnEolStatus(update_engine::EndOfLifeStatus status) {
       profile_->GetPrefs()->GetInteger(prefs::kEolStatus);
   profile_->GetPrefs()->SetInteger(prefs::kEolStatus, status_);
 
-  if (status_ == update_engine::EndOfLifeStatus::kSupported)
+  // Security only state is no longer supported.
+  if (status_ == update_engine::EndOfLifeStatus::kSupported ||
+      status_ == update_engine::EndOfLifeStatus::kSecurityOnly) {
     return;
+  }
 
   if (pre_eol_status != status_) {
     // If Eol status has changed, we should reset
@@ -130,23 +134,18 @@ void EolNotification::OnEolStatus(update_engine::EndOfLifeStatus status) {
   if (user_dismissed_eol_notification)
     return;
 
-  // When device is in Security-Only state, only show notification the first
-  // time.
-  if (status_ == update_engine::EndOfLifeStatus::kSecurityOnly)
-    profile_->GetPrefs()->SetBoolean(prefs::kEolNotificationDismissed, true);
-
   Update();
 }
 
 void EolNotification::Update() {
   message_center::ButtonInfo learn_more(
       l10n_util::GetStringUTF16(IDS_EOL_MORE_INFO_BUTTON));
-  learn_more.icon = gfx::Image(
-      CreateVectorIcon(gfx::VectorIconId::INFO_OUTLINE, kButtonIconColor));
+  learn_more.icon =
+      gfx::Image(CreateVectorIcon(ui::kInfoOutlineIcon, kButtonIconColor));
   message_center::ButtonInfo dismiss(
       l10n_util::GetStringUTF16(IDS_EOL_DISMISS_BUTTON));
-  dismiss.icon = gfx::Image(
-      CreateVectorIcon(gfx::VectorIconId::NOTIFICATIONS_OFF, kButtonIconColor));
+  dismiss.icon =
+      gfx::Image(CreateVectorIcon(ui::kNotificationsOffIcon, kButtonIconColor));
 
   message_center::RichNotificationData data;
   data.buttons.push_back(learn_more);
@@ -154,22 +153,14 @@ void EolNotification::Update() {
 
   Notification notification(
       message_center::NOTIFICATION_TYPE_SIMPLE,
-      l10n_util::GetStringUTF16(IDS_EOL_NOTIFICATION_TITLE), GetEolMessage(),
-      gfx::Image(
-          CreateVectorIcon(gfx::VectorIconId::EOL, kNotificationIconColor)),
+      l10n_util::GetStringUTF16(IDS_EOL_NOTIFICATION_TITLE),
+      l10n_util::GetStringUTF16(IDS_EOL_NOTIFICATION_EOL),
+      gfx::Image(CreateVectorIcon(kEolIcon, kNotificationIconColor)),
       message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
                                  kEolNotificationId),
       base::string16(),  // display_source
       GURL(), kEolNotificationId, data, new EolNotificationDelegate(profile_));
   g_browser_process->notification_ui_manager()->Add(notification, profile_);
-}
-
-base::string16 EolNotification::GetEolMessage() {
-  if (status_ == update_engine::EndOfLifeStatus::kSecurityOnly) {
-    return l10n_util::GetStringUTF16(IDS_EOL_NOTIFICATION_SECURITY_ONLY);
-  } else {
-    return l10n_util::GetStringUTF16(IDS_EOL_NOTIFICATION_EOL);
-  }
 }
 
 }  // namespace chromeos

@@ -4,6 +4,8 @@
 
 #include "core/loader/resource/ImageResourceContent.h"
 
+#include <memory>
+
 #include "core/loader/resource/ImageResource.h"
 #include "core/loader/resource/ImageResourceInfo.h"
 #include "core/loader/resource/ImageResourceObserver.h"
@@ -15,10 +17,9 @@
 #include "platform/graphics/BitmapImage.h"
 #include "platform/graphics/PlaceholderImage.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
+#include "v8/include/v8.h"
 #include "wtf/StdLibExtras.h"
 #include "wtf/Vector.h"
-#include <memory>
-#include <v8.h>
 
 namespace blink {
 namespace {
@@ -39,7 +40,7 @@ class NullImageResourceInfo final
   float devicePixelRatioHeaderValue() const override { return 1.0; }
   const ResourceResponse& response() const override { return m_response; }
   ResourceStatus getStatus() const override { return ResourceStatus::Cached; }
-  bool isPlaceholder() const override { return false; }
+  bool shouldShowPlaceholder() const override { return false; }
   bool isCacheValidator() const override { return false; }
   bool schedulingReloadOrShouldReloadBrokenPlaceholder() const override {
     return false;
@@ -52,9 +53,7 @@ class NullImageResourceInfo final
   bool hasCacheControlNoStoreHeader() const override { return false; }
   const ResourceError& resourceError() const override { return m_error; }
 
-  void decodeError(bool allDataReceived) override {}
   void setDecodedSize(size_t) override {}
-  void setIsPlaceholder(bool) override {}
   void willAddClientOrObserver() override {}
   void didRemoveClientOrObserver() override {}
   void emulateLoadStartedForInspector(
@@ -298,10 +297,16 @@ void ImageResourceContent::clearImage() {
   m_sizeAvailable = Image::SizeUnavailable;
 }
 
-void ImageResourceContent::updateImage(PassRefPtr<SharedBuffer> data,
-                                       UpdateImageOption updateImageOption,
-                                       bool allDataReceived) {
+ImageResourceContent::UpdateImageResult ImageResourceContent::updateImage(
+    PassRefPtr<SharedBuffer> data,
+    UpdateImageOption updateImageOption,
+    bool allDataReceived) {
   TRACE_EVENT0("blink", "ImageResourceContent::updateImage");
+
+#if DCHECK_IS_ON()
+  DCHECK(!m_isUpdateImageBeingCalled);
+  AutoReset<bool> scope(&m_isUpdateImageBeingCalled, true);
+#endif
 
   // Clears the existing image, if instructed by |updateImageOption|.
   switch (updateImageOption) {
@@ -335,27 +340,19 @@ void ImageResourceContent::updateImage(PassRefPtr<SharedBuffer> data,
       // received all the data or the size is known. Each chunk from the network
       // causes observers to repaint, which will force that chunk to decode.
       if (m_sizeAvailable == Image::SizeUnavailable && !allDataReceived)
-        return;
+        return UpdateImageResult::NoDecodeError;
 
-      if (m_info->isPlaceholder() && allDataReceived && m_image &&
-          !m_image->isNull()) {
-        if (m_sizeAvailable == Image::SizeAvailable) {
-          // TODO(sclittle): Show the original image if the response consists of
-          // the entire image, such as if the entire image response body is
-          // smaller than the requested range.
+      if (m_info->shouldShowPlaceholder() && allDataReceived) {
+        if (m_image && !m_image->isNull()) {
           IntSize dimensions = m_image->size();
-
           clearImage();
           m_image = PlaceholderImage::create(this, dimensions);
-        } else {
-          // Clear the image so that it gets treated like a decoding error,
-          // since the attempt to build a placeholder image failed.
-          clearImage();
         }
       }
+
       if (!m_image || m_image->isNull()) {
         clearImage();
-        m_info->decodeError(allDataReceived);
+        return UpdateImageResult::ShouldDecodeError;
       }
       break;
   }
@@ -364,6 +361,7 @@ void ImageResourceContent::updateImage(PassRefPtr<SharedBuffer> data,
   // It would be nice to only redraw the decoded band of the image, but with the
   // current design (decoding delayed until painting) that seems hard.
   notifyObservers(allDataReceived ? ShouldNotifyFinish : DoNotNotifyFinish);
+  return UpdateImageResult::NoDecodeError;
 }
 
 void ImageResourceContent::decodedSizeChangedTo(const blink::Image* image,

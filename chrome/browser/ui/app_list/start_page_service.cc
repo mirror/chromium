@@ -163,9 +163,8 @@ class StartPageService::StartPageWebContentsDelegate
       content::WebContents* web_contents,
       const content::MediaStreamRequest& request,
       const content::MediaResponseCallback& callback) override {
-    MediaStreamDevicesController controller(web_contents, request, callback);
-    if (controller.IsAskingForVideo() || controller.IsAskingForAudio())
-      NOTREACHED() << "Media stream not allowed for WebUI";
+    MediaStreamDevicesController::RequestPermissions(web_contents, request,
+                                                     callback);
   }
 
   bool CheckMediaAccessPermission(content::WebContents* web_contents,
@@ -677,8 +676,7 @@ void StartPageService::OnURLFetchComplete(const net::URLFetcher* source) {
     if (contents_ && contents_->GetWebUI()) {
       contents_->GetWebUI()->CallJavascriptFunctionUnsafe(
           "appList.startPage.onAppListDoodleUpdated", *doodle_json,
-          base::StringValue(
-              UIThreadSearchTermsData(profile_).GoogleBaseURLValue()));
+          base::Value(UIThreadSearchTermsData(profile_).GoogleBaseURLValue()));
     }
   }
 

@@ -589,13 +589,15 @@ ExtensionFunction::ResponseAction WindowsCreateFunction::Run() {
 #endif  // defined(USE_ASH)
 
   // Create a new BrowserWindow.
-  Browser::CreateParams create_params(window_type, window_profile);
+  Browser::CreateParams create_params(window_type, window_profile,
+                                      user_gesture());
   if (extension_id.empty()) {
     create_params.initial_bounds = window_bounds;
   } else {
     create_params = Browser::CreateParams::CreateForApp(
         web_app::GenerateApplicationNameFromExtensionId(extension_id),
-        false /* trusted_source */, window_bounds, window_profile);
+        false /* trusted_source */, window_bounds, window_profile,
+        user_gesture());
   }
   create_params.initial_show_state = ui::SHOW_STATE_NORMAL;
   if (create_data && create_data->state) {
@@ -1004,7 +1006,7 @@ ExtensionFunction::ResponseAction TabsCreateFunction::Run() {
 
   std::string error;
   std::unique_ptr<base::DictionaryValue> result(
-      ExtensionTabUtil::OpenTab(this, options, &error));
+      ExtensionTabUtil::OpenTab(this, options, user_gesture(), &error));
   if (!result)
     return RespondNow(Error(error));
 
@@ -1260,6 +1262,11 @@ bool TabsUpdateFunction::RunAsync() {
                                       &opener_contents, nullptr))
       return false;
 
+    if (tab_strip->GetIndexOfWebContents(opener_contents) ==
+        TabStripModel::kNoTab) {
+      error_ = "Tab opener must be in the same window as the updated tab.";
+      return false;
+    }
     tab_strip->SetOpenerOfWebContentsAt(tab_index, opener_contents);
   }
 
@@ -1661,7 +1668,7 @@ bool TabsCaptureVisibleTabFunction::RunAsync() {
 
   return CaptureAsync(
       contents, image_details.get(),
-      base::Bind(&TabsCaptureVisibleTabFunction::CopyFromBackingStoreComplete,
+      base::Bind(&TabsCaptureVisibleTabFunction::CopyFromSurfaceComplete,
                  this));
 }
 
@@ -1672,7 +1679,7 @@ void TabsCaptureVisibleTabFunction::OnCaptureSuccess(const SkBitmap& bitmap) {
     return;
   }
 
-  SetResult(base::MakeUnique<base::StringValue>(base64_result));
+  SetResult(base::MakeUnique<base::Value>(base64_result));
   SendResponse(true);
 }
 
@@ -1782,7 +1789,7 @@ void TabsDetectLanguageFunction::Observe(
 }
 
 void TabsDetectLanguageFunction::GotLanguage(const std::string& language) {
-  SetResult(base::MakeUnique<base::StringValue>(language.c_str()));
+  SetResult(base::MakeUnique<base::Value>(language.c_str()));
   SendResponse(true);
 
   Release();  // Balanced in Run()

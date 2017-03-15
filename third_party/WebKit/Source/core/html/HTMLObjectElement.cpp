@@ -33,15 +33,15 @@
 #include "core/dom/Text.h"
 #include "core/dom/shadow/ShadowRoot.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLImageLoader.h"
 #include "core/html/HTMLMetaElement.h"
 #include "core/html/HTMLParamElement.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/layout/api/LayoutEmbeddedItem.h"
-#include "core/loader/FrameLoaderClient.h"
 #include "core/plugins/PluginView.h"
-#include "platform/Widget.h"
+#include "platform/FrameViewBase.h"
 #include "platform/network/mime/MIMETypeRegistry.h"
 
 namespace blink {
@@ -112,7 +112,7 @@ void HTMLObjectElement::parseAttribute(
   } else if (name == dataAttr) {
     m_url = stripLeadingAndTrailingHTMLSpaces(params.newValue);
     if (layoutObject() && isImageType()) {
-      setNeedsWidgetUpdate(true);
+      setNeedsPluginUpdate(true);
       if (!m_imageLoader)
         m_imageLoader = HTMLImageLoader::create(this);
       m_imageLoader->updateFromElement(ImageLoader::UpdateIgnorePreviousError);
@@ -264,17 +264,17 @@ void HTMLObjectElement::reloadPluginOnAttributeChange(
     NOTREACHED();
     needsInvalidation = false;
   }
-  setNeedsWidgetUpdate(true);
+  setNeedsPluginUpdate(true);
   if (needsInvalidation)
     lazyReattachIfNeeded();
 }
 
 // TODO(schenney): crbug.com/572908 This should be unified with
-// HTMLEmbedElement::updateWidget and moved down into HTMLPluginElement.cpp
-void HTMLObjectElement::updateWidgetInternal() {
+// HTMLEmbedElement::updatePlugin and moved down into HTMLPluginElement.cpp
+void HTMLObjectElement::updatePluginInternal() {
   DCHECK(!layoutEmbeddedItem().showsUnavailablePluginIndicator());
-  DCHECK(needsWidgetUpdate());
-  setNeedsWidgetUpdate(false);
+  DCHECK(needsPluginUpdate());
+  setNeedsPluginUpdate(false);
   // TODO(schenney): crbug.com/572908 This should ASSERT
   // isFinishedParsingChildren() instead.
   if (!isFinishedParsingChildren()) {
@@ -342,7 +342,7 @@ void HTMLObjectElement::removedFrom(ContainerNode* insertionPoint) {
 
 void HTMLObjectElement::childrenChanged(const ChildrenChange& change) {
   if (isConnected() && !useFallbackContent()) {
-    setNeedsWidgetUpdate(true);
+    setNeedsPluginUpdate(true);
     lazyReattachIfNeeded();
   }
   HTMLPlugInElement::childrenChanged(change);

@@ -30,9 +30,9 @@ namespace {
 
 using SearchKeyToPredicateMap =
     base::hash_map<base::string16, AccessibilityMatchPredicate>;
-base::LazyInstance<SearchKeyToPredicateMap> g_search_key_to_predicate_map =
-    LAZY_INSTANCE_INITIALIZER;
-base::LazyInstance<base::string16> g_all_search_keys =
+base::LazyInstance<SearchKeyToPredicateMap>::DestructorAtExit
+    g_search_key_to_predicate_map = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<base::string16>::DestructorAtExit g_all_search_keys =
     LAZY_INSTANCE_INITIALIZER;
 
 bool SectionPredicate(
@@ -654,8 +654,10 @@ void BrowserAccessibilityManagerAndroid::SetSelection(
     jint start,
     jint end) {
   BrowserAccessibilityAndroid* node = GetFromUniqueID(id);
-  if (node)
-    node->manager()->SetTextSelection(*node, start, end);
+  if (node) {
+    node->manager()->SetSelection(AXPlatformRange(node->CreatePositionAt(start),
+                                                  node->CreatePositionAt(end)));
+  }
 }
 
 jboolean BrowserAccessibilityManagerAndroid::AdjustSlider(

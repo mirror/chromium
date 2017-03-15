@@ -125,8 +125,6 @@ typedef struct tagTHREADNAME_INFO {
 } THREADNAME_INFO;
 #pragma pack(pop)
 
-static Mutex* atomicallyInitializedStaticMutex;
-
 namespace internal {
 
 ThreadIdentifier currentThreadSyscall() {
@@ -135,30 +133,47 @@ ThreadIdentifier currentThreadSyscall() {
 
 }  // namespace internal
 
-void lockAtomicallyInitializedStaticMutex() {
-  DCHECK(atomicallyInitializedStaticMutex);
-  atomicallyInitializedStaticMutex->lock();
-}
-
-void unlockAtomicallyInitializedStaticMutex() {
-  atomicallyInitializedStaticMutex->unlock();
-}
-
 void initializeThreading() {
   // This should only be called once.
-  DCHECK(!atomicallyInitializedStaticMutex);
-
   WTFThreadData::initialize();
 
-  atomicallyInitializedStaticMutex = new Mutex;
   initializeDates();
   // Force initialization of static DoubleToStringConverter converter variable
   // inside EcmaScriptConverter function while we are in single thread mode.
   double_conversion::DoubleToStringConverter::EcmaScriptConverter();
 }
 
+namespace {
+ThreadSpecificKey s_currentThreadKey;
+bool s_currentThreadKeyInitialized = false;
+}  // namespace
+
+void initializeCurrentThread() {
+  DCHECK(!s_currentThreadKeyInitialized);
+  threadSpecificKeyCreate(&s_currentThreadKey, [](void*) {});
+  s_currentThreadKeyInitialized = true;
+}
+
 ThreadIdentifier currentThread() {
-  return wtfThreadData().threadId();
+  // This doesn't use WTF::ThreadSpecific (e.g. WTFThreadData) because
+  // ThreadSpecific now depends on currentThread. It is necessary to avoid this
+  // or a similar loop:
+  //
+  // currentThread
+  // -> wtfThreadData
+  // -> ThreadSpecific::operator*
+  // -> isMainThread
+  // -> currentThread
+  static_assert(sizeof(ThreadIdentifier) <= sizeof(void*),
+                "ThreadIdentifier must fit in a void*.");
+  DCHECK(s_currentThreadKeyInitialized);
+  void* value = threadSpecificGet(s_currentThreadKey);
+  if (UNLIKELY(!value)) {
+    value = reinterpret_cast<void*>(internal::currentThreadSyscall());
+    DCHECK(value);
+    threadSpecificSet(s_currentThreadKey, value);
+  }
+  return reinterpret_cast<intptr_t>(threadSpecificGet(s_currentThreadKey));
 }
 
 MutexBase::MutexBase(bool recursive) {
@@ -396,11 +411,6 @@ DWORD absoluteTimeToWaitTimeoutInterval(double absoluteTime) {
 
 #if DCHECK_IS_ON()
 static bool s_threadCreated = false;
-
-bool isAtomicallyInitializedStaticMutexLockHeld() {
-  return atomicallyInitializedStaticMutex &&
-         atomicallyInitializedStaticMutex->locked();
-}
 
 bool isBeforeThreadCreated() {
   return !s_threadCreated;

@@ -13,6 +13,7 @@
 #define V8TestInterfaceEventTarget_h
 
 #include "bindings/core/v8/GeneratedCodeHelper.h"
+#include "bindings/core/v8/NativeValueTraits.h"
 #include "bindings/core/v8/ScriptWrappable.h"
 #include "bindings/core/v8/ToV8.h"
 #include "bindings/core/v8/V8Binding.h"
@@ -29,6 +30,7 @@ class V8TestInterfaceEventTargetConstructor {
   STATIC_ONLY(V8TestInterfaceEventTargetConstructor);
  public:
   static v8::Local<v8::FunctionTemplate> domTemplate(v8::Isolate*, const DOMWrapperWorld&);
+  CORE_EXPORT static void NamedConstructorAttributeGetter(v8::Local<v8::Name> propertyName, const v8::PropertyCallbackInfo<v8::Value>& info);
   CORE_EXPORT static const WrapperTypeInfo wrapperTypeInfo;
 };
 
@@ -53,6 +55,11 @@ class V8TestInterfaceEventTarget {
   static const int internalFieldCount = v8DefaultWrapperInternalFieldCount + 1;
 
   // Callback functions
+};
+
+template <>
+struct NativeValueTraits<TestInterfaceEventTarget> : public NativeValueTraitsBase<TestInterfaceEventTarget> {
+  CORE_EXPORT static TestInterfaceEventTarget* nativeValue(v8::Isolate*, v8::Local<v8::Value>, ExceptionState&);
 };
 
 template <>

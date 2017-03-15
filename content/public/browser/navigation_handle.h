@@ -11,6 +11,7 @@
 #include "content/common/content_export.h"
 #include "content/public/browser/navigation_throttle.h"
 #include "content/public/browser/reload_type.h"
+#include "content/public/browser/restore_type.h"
 #include "content/public/common/referrer.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/net_errors.h"
@@ -105,6 +106,13 @@ class CONTENT_EXPORT NavigationHandle {
   // ReloadType::NONE.
   virtual ReloadType GetReloadType() = 0;
 
+  // Returns the restore type for this navigation. RestoreType::NONE is returned
+  // if the navigation is not a restore.
+  virtual RestoreType GetRestoreType() = 0;
+
+  // Used for specifying a base URL for pages loaded via data URLs.
+  virtual const GURL& GetBaseURLForDataURL() = 0;
+
   // Parameters available at network request start time ------------------------
   //
   // The following parameters are only available when the network request is
@@ -152,12 +160,12 @@ class CONTENT_EXPORT NavigationHandle {
   // called.
   virtual RenderFrameHost* GetRenderFrameHost() = 0;
 
-  // Whether the navigation happened in the same page. Examples of same page
-  // navigations are:
+  // Whether the navigation happened without changing document. Examples of
+  // same document navigations are:
   // * reference fragment navigations
   // * pushState/replaceState
   // * same page history navigation
-  virtual bool IsSamePage() = 0;
+  virtual bool IsSameDocument() = 0;
 
   // Whether the navigation has encountered a server redirect or not.
   virtual bool WasServerRedirect() = 0;

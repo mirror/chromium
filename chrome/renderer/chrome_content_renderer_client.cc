@@ -366,6 +366,10 @@ void ChromeContentRendererClient::RenderThreadStarted() {
   if (base::FeatureList::IsEnabled(features::kModuleDatabase)) {
     thread->GetRemoteInterfaces()->GetInterface(&module_event_sink_);
 
+    // Rebind the ModuleEventSink so that it can be accessed on the IO thread.
+    module_event_sink_.Bind(module_event_sink_.PassInterface(),
+                            thread->GetIOTaskRunner());
+
     // It is safe to pass an unretained pointer to |module_event_sink_|, as it
     // is owned by the process singleton ChromeContentRendererClient, which is
     // leaked.
@@ -515,17 +519,14 @@ void ChromeContentRendererClient::RenderFrameCreated(
 
   new NetErrorHelper(render_frame);
 
-  if (render_frame->IsMainFrame()) {
-    // Only attach MetricsRenderFrameObserver to the main frame, since
-    // we only want to log page load metrics for the main frame.
-    new page_load_metrics::MetricsRenderFrameObserver(render_frame);
-  } else {
+  new page_load_metrics::MetricsRenderFrameObserver(render_frame);
+
+  if (!render_frame->IsMainFrame() &&
+      prerender::PrerenderHelper::IsPrerendering(
+          render_frame->GetRenderView()->GetMainRenderFrame())) {
     // Avoid any race conditions from having the browser tell subframes that
     // they're prerendering.
-    if (prerender::PrerenderHelper::IsPrerendering(
-            render_frame->GetRenderView()->GetMainRenderFrame())) {
-      new prerender::PrerenderHelper(render_frame);
-    }
+    new prerender::PrerenderHelper(render_frame);
   }
 
   // Set up a mojo service to test if this page is a distiller page.
@@ -831,7 +832,6 @@ WebPlugin* ChromeContentRendererClient::CreatePlugin(
         break;
       }
       case ChromeViewHostMsg_GetPluginInfo_Status::kOutdatedBlocked: {
-#if BUILDFLAG(ENABLE_PLUGIN_INSTALLATION)
         placeholder = create_blocked_plugin(
             IDR_BLOCKED_PLUGIN_HTML,
             l10n_util::GetStringFUTF16(IDS_PLUGIN_OUTDATED, group_name));
@@ -839,9 +839,6 @@ WebPlugin* ChromeContentRendererClient::CreatePlugin(
         render_frame->Send(new ChromeViewHostMsg_BlockedOutdatedPlugin(
             render_frame->GetRoutingID(), placeholder->CreateRoutingId(),
             identifier));
-#else
-        NOTREACHED();
-#endif
         break;
       }
       case ChromeViewHostMsg_GetPluginInfo_Status::kOutdatedDisallowed: {

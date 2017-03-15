@@ -4,10 +4,12 @@
 
 #include "core/loader/MixedContentChecker.h"
 
+#include <base/macros.h>
+#include <memory>
 #include "core/frame/Settings.h"
 #include "core/loader/EmptyClients.h"
 #include "core/testing/DummyPageHolder.h"
-#include "platform/network/ResourceResponse.h"
+#include "platform/loader/fetch/ResourceResponse.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/WebMixedContent.h"
@@ -15,11 +17,14 @@
 #include "testing/gmock/include/gmock/gmock-generated-function-mockers.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "wtf/RefPtr.h"
-#include <base/macros.h>
-#include <memory>
 
 namespace blink {
 
+// Tests that MixedContentChecker::isMixedContent correctly detects or ignores
+// many cases where there is or there is not mixed content, respectively.
+// Note: Renderer side version of
+// MixedContentNavigationThrottleTest.IsMixedContent. Must be kept in sync
+// manually!
 TEST(MixedContentCheckerTest, IsMixedContent) {
   struct TestCase {
     const char* origin;
@@ -98,9 +103,9 @@ TEST(MixedContentCheckerTest, ContextTypeForInspector) {
 
 namespace {
 
-class MockFrameLoaderClient : public EmptyFrameLoaderClient {
+class MockLocalFrameClient : public EmptyLocalFrameClient {
  public:
-  MockFrameLoaderClient() : EmptyFrameLoaderClient() {}
+  MockLocalFrameClient() : EmptyLocalFrameClient() {}
   MOCK_METHOD1(didDisplayContentWithCertificateErrors, void(const KURL&));
   MOCK_METHOD1(didRunContentWithCertificateErrors, void(const KURL&));
 };
@@ -108,7 +113,7 @@ class MockFrameLoaderClient : public EmptyFrameLoaderClient {
 }  // namespace
 
 TEST(MixedContentCheckerTest, HandleCertificateError) {
-  MockFrameLoaderClient* client = new MockFrameLoaderClient;
+  MockLocalFrameClient* client = new MockLocalFrameClient;
   std::unique_ptr<DummyPageHolder> dummyPageHolder =
       DummyPageHolder::create(IntSize(1, 1), nullptr, client);
 

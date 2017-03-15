@@ -41,6 +41,7 @@
 #include "core/events/Event.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLElement.h"
+#include "core/inspector/ConsoleMessage.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/svg/LayoutSVGResourceContainer.h"
 #include "core/svg/SVGDocumentExtensions.h"
@@ -70,7 +71,7 @@ SVGElement::SVGElement(const QualifiedName& tagName,
 }
 
 SVGElement::~SVGElement() {
-  ASSERT(isConnected() || !hasRelativeLengths());
+  DCHECK(isConnected() || !hasRelativeLengths());
 }
 
 void SVGElement::detachLayoutTree(const AttachContext& context) {
@@ -111,36 +112,8 @@ void SVGElement::willRecalcStyle(StyleRecalcChange change) {
 void SVGElement::buildPendingResourcesIfNeeded() {
   if (!needsPendingResourceHandling() || !isConnected() || inUseShadowTree())
     return;
-
-  SVGTreeScopeResources& treeScopeResources =
-      treeScope().ensureSVGTreeScopedResources();
-  AtomicString resourceId = getIdAttribute();
-  if (!treeScopeResources.hasPendingResource(resourceId))
-    return;
-  // Guaranteed by hasPendingResource.
-  DCHECK(!resourceId.isEmpty());
-
-  // Get pending elements for this id.
-  SVGTreeScopeResources::SVGPendingElements* pendingElements =
-      treeScopeResources.removePendingResource(resourceId);
-  if (!pendingElements || pendingElements->isEmpty())
-    return;
-
-  // Rebuild pending resources for each client of a pending resource that is
-  // being removed.
-  for (Element* clientElement : *pendingElements) {
-    DCHECK(clientElement->hasPendingResources());
-    if (!clientElement->hasPendingResources())
-      continue;
-    // TODO(fs): Ideally we'd always resolve pending resources async instead of
-    // inside insertedInto and svgAttributeChanged. For now we only do it for
-    // <use> since that would stamp out DOM.
-    if (isSVGUseElement(clientElement))
-      toSVGUseElement(clientElement)->invalidateShadowTree();
-    else
-      clientElement->buildPendingResource();
-    treeScopeResources.clearHasPendingResourcesIfPossible(clientElement);
-  }
+  treeScope().ensureSVGTreeScopedResources().notifyResourceAvailable(
+      getIdAttribute());
 }
 
 SVGElementRareData* SVGElement::ensureSVGRareData() {
@@ -185,8 +158,9 @@ void SVGElement::reportAttributeParsingError(SVGParsingError error,
   // Don't report any errors on attribute removal.
   if (value.isNull())
     return;
-  document().accessSVGExtensions().reportError(
-      error.format(tagName(), name, value));
+  document().addConsoleMessage(
+      ConsoleMessage::create(RenderingMessageSource, ErrorMessageLevel,
+                             "Error: " + error.format(tagName(), name, value)));
 }
 
 String SVGElement::title() const {
@@ -313,7 +287,7 @@ void SVGElement::clearAnimatedAttribute(const QualifiedName& attribute) {
   });
 }
 
-AffineTransform SVGElement::localCoordinateSpaceTransform(CTMScope) const {
+AffineTransform SVGElement::localCoordinateSpaceTransform() const {
   // To be overriden by SVGGraphicsElement (or as special case SVGTextElement
   // and SVGPatternElement)
   return AffineTransform();
@@ -322,6 +296,24 @@ AffineTransform SVGElement::localCoordinateSpaceTransform(CTMScope) const {
 bool SVGElement::hasTransform(ApplyMotionTransform applyMotionTransform) const {
   return (layoutObject() && layoutObject()->styleRef().hasTransform()) ||
          (applyMotionTransform == IncludeMotionTransform && hasSVGRareData());
+}
+
+static inline bool transformUsesBoxSize(
+    const ComputedStyle& style,
+    ComputedStyle::ApplyTransformOrigin applyTransformOrigin) {
+  if (applyTransformOrigin == ComputedStyle::IncludeTransformOrigin &&
+      (style.transformOriginX().type() == Percent ||
+       style.transformOriginY().type() == Percent) &&
+      style.requireTransformOrigin(ComputedStyle::IncludeTransformOrigin,
+                                   ComputedStyle::ExcludeMotionPath))
+    return true;
+  if (style.transform().dependsOnBoxSize())
+    return true;
+  if (style.translate() && style.translate()->dependsOnBoxSize())
+    return true;
+  if (style.hasOffset())
+    return true;
+  return false;
 }
 
 AffineTransform SVGElement::calculateTransform(
@@ -345,6 +337,9 @@ AffineTransform SVGElement::calculateTransform(
       boundingBox = FloatRect();
       applyTransformOrigin = ComputedStyle::ExcludeTransformOrigin;
     }
+
+    if (transformUsesBoxSize(*style, applyTransformOrigin))
+      UseCounter::count(document(), UseCounter::TransformUsesBoxSizeOnSVG);
 
     // CSS transforms operate with pre-scaled lengths. To make this work with
     // SVG (which applies the zoom factor globally, at the root level) we
@@ -399,7 +394,7 @@ void SVGElement::removedFrom(ContainerNode* rootParent) {
     // need to do anything: they will get their own removedFrom() notification
     // and just clear their sets.
     if (rootParent->isSVGElement() && !parentNode()) {
-      ASSERT(toSVGElement(rootParent)
+      DCHECK(toSVGElement(rootParent)
                  ->m_elementsWithRelativeLengths.contains(this));
       toSVGElement(rootParent)->updateRelativeLengthsInformation(false, this);
     }
@@ -501,17 +496,17 @@ CSSPropertyID SVGElement::cssPropertyIdForSVGAttributeName(
     };
     for (size_t i = 0; i < WTF_ARRAY_LENGTH(attrNames); i++) {
       CSSPropertyID propertyId = cssPropertyID(attrNames[i]->localName());
-      ASSERT(propertyId > 0);
+      DCHECK_GT(propertyId, 0);
       propertyNameToIdMap->set(attrNames[i]->localName().impl(), propertyId);
     }
   }
 
-  return propertyNameToIdMap->get(attrName.localName().impl());
+  return propertyNameToIdMap->at(attrName.localName().impl());
 }
 
 void SVGElement::updateRelativeLengthsInformation(bool clientHasRelativeLengths,
                                                   SVGElement* clientElement) {
-  ASSERT(clientElement);
+  DCHECK(clientElement);
 
   // If we're not yet in a document, this function will be called again from
   // insertedInto(). Do nothing now.
@@ -526,13 +521,15 @@ void SVGElement::updateRelativeLengthsInformation(bool clientHasRelativeLengths,
     if (!currentNode.isSVGElement())
       break;
     SVGElement& currentElement = toSVGElement(currentNode);
-    ASSERT(!currentElement.m_inRelativeLengthClientsInvalidation);
+#if DCHECK_IS_ON()
+    DCHECK(!currentElement.m_inRelativeLengthClientsInvalidation);
+#endif
 
     bool hadRelativeLengths = currentElement.hasRelativeLengths();
     if (clientHasRelativeLengths)
       currentElement.m_elementsWithRelativeLengths.insert(clientElement);
     else
-      currentElement.m_elementsWithRelativeLengths.remove(clientElement);
+      currentElement.m_elementsWithRelativeLengths.erase(clientElement);
 
     // If the relative length state hasn't changed, we can stop propagating the
     // notification.
@@ -560,8 +557,8 @@ void SVGElement::invalidateRelativeLengthClients(
   if (!isConnected())
     return;
 
-  ASSERT(!m_inRelativeLengthClientsInvalidation);
 #if DCHECK_IS_ON()
+  DCHECK(!m_inRelativeLengthClientsInvalidation);
   AutoReset<bool> inRelativeLengthClientsInvalidationChange(
       &m_inRelativeLengthClientsInvalidation, true);
 #endif
@@ -609,19 +606,19 @@ SVGElement* SVGElement::viewportElement() const {
 }
 
 void SVGElement::mapInstanceToElement(SVGElement* instance) {
-  ASSERT(instance);
-  ASSERT(instance->inUseShadowTree());
+  DCHECK(instance);
+  DCHECK(instance->inUseShadowTree());
 
   HeapHashSet<WeakMember<SVGElement>>& instances =
       ensureSVGRareData()->elementInstances();
-  ASSERT(!instances.contains(instance));
+  DCHECK(!instances.contains(instance));
 
   instances.insert(instance);
 }
 
 void SVGElement::removeInstanceMapping(SVGElement* instance) {
-  ASSERT(instance);
-  ASSERT(instance->inUseShadowTree());
+  DCHECK(instance);
+  DCHECK(instance->inUseShadowTree());
 
   if (!hasSVGRareData())
     return;
@@ -629,7 +626,7 @@ void SVGElement::removeInstanceMapping(SVGElement* instance) {
   HeapHashSet<WeakMember<SVGElement>>& instances =
       svgRareData()->elementInstances();
 
-  instances.remove(instance);
+  instances.erase(instance);
 }
 
 static HeapHashSet<WeakMember<SVGElement>>& emptyInstances() {
@@ -646,7 +643,7 @@ const HeapHashSet<WeakMember<SVGElement>>& SVGElement::instancesForElement()
 }
 
 SVGElement* SVGElement::correspondingElement() const {
-  ASSERT(!hasSVGRareData() || !svgRareData()->correspondingElement() ||
+  DCHECK(!hasSVGRareData() || !svgRareData()->correspondingElement() ||
          containingShadowRoot());
   return hasSVGRareData() ? svgRareData()->correspondingElement() : 0;
 }
@@ -773,7 +770,7 @@ AnimatedPropertyType SVGElement::animatedPropertyTypeForCSSAttribute(
   // If the attribute is not present in the map, this will return the "empty
   // value" per HashTraits - which is AnimatedUnknown.
   DCHECK_EQ(HashTraits<AnimatedPropertyType>::emptyValue(), AnimatedUnknown);
-  return cssPropertyMap.get(attributeName);
+  return cssPropertyMap.at(attributeName);
 }
 
 void SVGElement::addToPropertyMap(SVGAnimatedPropertyBase* property) {
@@ -827,11 +824,11 @@ bool SVGElement::haveLoadedRequiredResources() {
 static inline void collectInstancesForSVGElement(
     SVGElement* element,
     HeapHashSet<WeakMember<SVGElement>>& instances) {
-  ASSERT(element);
+  DCHECK(element);
   if (element->containingShadowRoot())
     return;
 
-  ASSERT(!element->instanceUpdatesBlocked());
+  DCHECK(!element->instanceUpdatesBlocked());
 
   instances = element->instancesForElement();
 }
@@ -865,7 +862,7 @@ void SVGElement::removedEventListener(
   EventListenerOptions options = registeredListener.options();
   const EventListener* listener = registeredListener.listener();
   for (SVGElement* shadowTreeElement : instances) {
-    ASSERT(shadowTreeElement);
+    DCHECK(shadowTreeElement);
 
     shadowTreeElement->Node::removeEventListenerInternal(eventType, listener,
                                                          options);
@@ -932,8 +929,10 @@ void SVGElement::attributeChanged(const AttributeModificationParams& params) {
     LayoutObject* object = layoutObject();
     // Notify resources about id changes, this is important as we cache
     // resources by id in SVGDocumentExtensions
-    if (object && object->isSVGResourceContainer())
-      toLayoutSVGResourceContainer(object)->idChanged();
+    if (object && object->isSVGResourceContainer()) {
+      toLayoutSVGResourceContainer(object)->idChanged(params.oldValue,
+                                                      params.newValue);
+    }
     if (isConnected())
       buildPendingResourcesIfNeeded();
     invalidateInstances();
@@ -1008,7 +1007,7 @@ void SVGElement::synchronizeAnimatedSVGAttribute(
 
     elementData()->m_animatedSVGAttributesAreDirty = false;
   } else {
-    SVGAnimatedPropertyBase* property = m_attributeToPropertyMap.get(name);
+    SVGAnimatedPropertyBase* property = m_attributeToPropertyMap.at(name);
     if (property && property->needsSynchronizeAttribute())
       property->synchronizeAttribute();
   }
@@ -1025,7 +1024,7 @@ PassRefPtr<ComputedStyle> SVGElement::customStyleForLayoutObject() {
   }
 
   return document().ensureStyleResolver().styleForElement(
-      correspondingElement(), style, DisallowStyleSharing);
+      correspondingElement(), style, style, DisallowStyleSharing);
 }
 
 bool SVGElement::layoutObjectIsNeeded(const ComputedStyle& style) {
@@ -1077,7 +1076,7 @@ bool SVGElement::hasFocusEventListeners() const {
 
 void SVGElement::markForLayoutAndParentResourceInvalidation(
     LayoutObject* layoutObject) {
-  ASSERT(layoutObject);
+  DCHECK(layoutObject);
   LayoutSVGResourceContainer::markForLayoutAndParentResourceInvalidation(
       layoutObject, true);
 }
@@ -1246,7 +1245,7 @@ SVGElementSet* SVGElement::setOfIncomingReferences() const {
 }
 
 void SVGElement::addReferenceTo(SVGElement* targetElement) {
-  ASSERT(targetElement);
+  DCHECK(targetElement);
 
   ensureSVGRareData()->outgoingReferences().insert(targetElement);
   targetElement->ensureSVGRareData()->incomingReferences().insert(this);
@@ -1277,8 +1276,8 @@ void SVGElement::removeAllIncomingReferences() {
 
   SVGElementSet& incomingReferences = svgRareData()->incomingReferences();
   for (SVGElement* sourceElement : incomingReferences) {
-    ASSERT(sourceElement->hasSVGRareData());
-    sourceElement->ensureSVGRareData()->outgoingReferences().remove(this);
+    DCHECK(sourceElement->hasSVGRareData());
+    sourceElement->ensureSVGRareData()->outgoingReferences().erase(this);
   }
   incomingReferences.clear();
 }
@@ -1289,8 +1288,8 @@ void SVGElement::removeAllOutgoingReferences() {
 
   SVGElementSet& outgoingReferences = svgRareData()->outgoingReferences();
   for (SVGElement* targetElement : outgoingReferences) {
-    ASSERT(targetElement->hasSVGRareData());
-    targetElement->ensureSVGRareData()->incomingReferences().remove(this);
+    DCHECK(targetElement->hasSVGRareData());
+    targetElement->ensureSVGRareData()->incomingReferences().erase(this);
   }
   outgoingReferences.clear();
 }

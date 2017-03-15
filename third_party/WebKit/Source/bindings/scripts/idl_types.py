@@ -298,11 +298,52 @@ class IdlUnionType(IdlTypeBase):
         self.member_types = state['member_types']
 
     @property
+    def flattened_member_types(self):
+        """Returns the set of the union's flattened member types.
+
+        https://heycam.github.io/webidl/#dfn-flattened-union-member-types
+        """
+        # We cannot use a set directly because each member is an IdlTypeBase-derived class, and
+        # comparing two objects of the same type is not the same as comparing their names. In
+        # other words:
+        #   x = IdlType('ByteString')
+        #   y = IdlType('ByteString')
+        #   x == y  # False
+        #   x.name == y.name  # True
+        # |flattened_members|'s keys are type names, the values are type |objects.
+        # We assume we can use two IDL objects of the same type interchangeably.
+        flattened_members = {}
+        for member in self.member_types:
+            if member.is_nullable:
+                member = member.inner_type
+            if member.is_union_type:
+                for inner_member in member.flattened_member_types:
+                    flattened_members[inner_member.name] = inner_member
+            else:
+                flattened_members[member.name] = member
+        return set(flattened_members.values())
+
+    @property
+    def number_of_nullable_member_types(self):
+        """Returns the union's number of nullable types.
+
+        http://heycam.github.io/webidl/#dfn-number-of-nullable-member-types
+        """
+        count = 0
+        for member in self.member_types:
+            if member.is_nullable:
+                count += 1
+                member = member.inner_type
+            if member.is_union_type:
+                count += member.number_of_nullable_member_types
+        return count
+
+    @property
     def is_union_type(self):
         return True
 
     def single_matching_member_type(self, predicate):
-        matching_types = filter(predicate, self.member_types)
+        matching_types = filter(predicate, self.flattened_member_types)
         if len(matching_types) > 1:
             raise "%s is ambigious." % self.name
         return matching_types[0] if matching_types else None
@@ -449,6 +490,50 @@ class IdlFrozenArrayType(IdlArrayOrSequenceType):
     @property
     def is_frozen_array(self):
         return True
+
+
+################################################################################
+# IdlRecordType
+################################################################################
+
+class IdlRecordType(IdlTypeBase):
+    def __init__(self, key_type, value_type):
+        super(IdlRecordType, self).__init__()
+        self.key_type = key_type
+        self.value_type = value_type
+
+    def __str__(self):
+        return 'record<%s, %s>' % (self.key_type, self.value_type)
+
+    def __getstate__(self):
+        return {
+            'key_type': self.key_type,
+            'value_type': self.value_type,
+        }
+
+    def __setstate__(self, state):
+        self.key_type = state['key_type']
+        self.value_type = state['value_type']
+
+    def idl_types(self):
+        yield self
+        for idl_type in self.key_type.idl_types():
+            yield idl_type
+        for idl_type in self.value_type.idl_types():
+            yield idl_type
+
+    def resolve_typedefs(self, typedefs):
+        self.key_type = self.key_type.resolve_typedefs(typedefs)
+        self.value_type = self.value_type.resolve_typedefs(typedefs)
+        return self
+
+    @property
+    def is_record_type(self):
+        return True
+
+    @property
+    def name(self):
+        return self.key_type.name + self.value_type.name + 'Record'
 
 
 ################################################################################

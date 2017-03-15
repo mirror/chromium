@@ -30,13 +30,12 @@ class SVGImageTest : public ::testing::Test {
   void pumpFrame() {
     Image* image = m_image.get();
     std::unique_ptr<SkCanvas> nullCanvas = SkMakeNullCanvas();
-    PaintCanvasPassThrough canvas(nullCanvas.get());
+    SkiaPaintCanvas canvas(nullCanvas.get());
     PaintFlags flags;
     FloatRect dummyRect(0, 0, 100, 100);
     image->draw(&canvas, flags, dummyRect, dummyRect,
                 DoNotRespectImageOrientation,
-                Image::DoNotClampImageToSourceRect,
-                ColorBehavior::transformToGlobalTarget());
+                Image::DoNotClampImageToSourceRect);
   }
 
  private:

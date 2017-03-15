@@ -273,7 +273,10 @@ PointerEvent* PointerEventFactory::create(
   if (pointerEventName == EventTypeNames::pointermove) {
     HeapVector<Member<PointerEvent>> coalescedPointerEvents;
     for (const auto& coalescedMouseEvent : coalescedMouseEvents) {
-      DCHECK_EQ(mouseEvent.id, coalescedMouseEvent.id);
+      // TODO(crbug.com/694742): We will set the id from low-level OS events
+      // and enable this DCHECK again.
+      // DCHECK_EQ(mouseEvent.id, coalescedMouseEvent.id);
+
       DCHECK_EQ(mouseEvent.pointerType, coalescedMouseEvent.pointerType);
       PointerEventInit coalescedEventInit = pointerEventInit;
       updateMousePointerEventInit(coalescedMouseEvent, view,
@@ -344,7 +347,7 @@ PointerEvent* PointerEventFactory::createPointerCancelEvent(
   DCHECK(m_pointerIdMapping.contains(pointerId));
   m_pointerIdMapping.set(
       pointerId,
-      PointerAttributes(m_pointerIdMapping.get(pointerId).incomingId, false));
+      PointerAttributes(m_pointerIdMapping.at(pointerId).incomingId, false));
 
   PointerEventInit pointerEventInit;
 
@@ -450,7 +453,7 @@ int PointerEventFactory::addIdAndActiveButtons(const IncomingId p,
   }
 
   if (m_pointerIncomingIdMapping.contains(p)) {
-    int mappedId = m_pointerIncomingIdMapping.get(p);
+    int mappedId = m_pointerIncomingIdMapping.at(p);
     m_pointerIdMapping.set(mappedId, PointerAttributes(p, isActiveButtons));
     return mappedId;
   }
@@ -470,7 +473,7 @@ bool PointerEventFactory::remove(const int mappedId) {
   if (mappedId == s_mouseId || !m_pointerIdMapping.contains(mappedId))
     return false;
 
-  IncomingId p = m_pointerIdMapping.get(mappedId).incomingId;
+  IncomingId p = m_pointerIdMapping.at(mappedId).incomingId;
   int typeInt = p.pointerTypeInt();
   m_pointerIdMapping.erase(mappedId);
   m_pointerIncomingIdMapping.erase(p);
@@ -500,7 +503,7 @@ bool PointerEventFactory::isPrimary(int mappedId) const {
   if (!m_pointerIdMapping.contains(mappedId))
     return false;
 
-  IncomingId p = m_pointerIdMapping.get(mappedId).incomingId;
+  IncomingId p = m_pointerIdMapping.at(mappedId).incomingId;
   return m_primaryId[p.pointerTypeInt()] == mappedId;
 }
 
@@ -510,14 +513,14 @@ bool PointerEventFactory::isActive(const int pointerId) const {
 
 bool PointerEventFactory::isActiveButtonsState(const int pointerId) const {
   return m_pointerIdMapping.contains(pointerId) &&
-         m_pointerIdMapping.get(pointerId).isActiveButtons;
+         m_pointerIdMapping.at(pointerId).isActiveButtons;
 }
 
 WebPointerProperties::PointerType PointerEventFactory::getPointerType(
     int pointerId) const {
   if (!isActive(pointerId))
     return WebPointerProperties::PointerType::Unknown;
-  return m_pointerIdMapping.get(pointerId).incomingId.pointerType();
+  return m_pointerIdMapping.at(pointerId).incomingId.pointerType();
 }
 
 int PointerEventFactory::getPointerEventId(
@@ -526,7 +529,7 @@ int PointerEventFactory::getPointerEventId(
     return PointerEventFactory::s_mouseId;
   IncomingId id(properties.pointerType, properties.id);
   if (m_pointerIncomingIdMapping.contains(id))
-    return m_pointerIncomingIdMapping.get(id);
+    return m_pointerIncomingIdMapping.at(id);
   return PointerEventFactory::s_invalidId;
 }
 

@@ -25,14 +25,13 @@
 #include "ui/views/animation/square_ink_drop_ripple.h"
 #include "ui/views/background.h"
 #include "ui/views/controls/button/label_button_border.h"
+#include "ui/views/layout/layout_constants.h"
 #include "ui/views/painter.h"
 #include "ui/views/style/platform_style.h"
+#include "ui/views/views_delegate.h"
 #include "ui/views/window/dialog_delegate.h"
 
 namespace {
-
-// The default spacing between the icon and text.
-const int kSpacing = 5;
 
 gfx::Font::Weight GetValueBolderThan(gfx::Font::Weight weight) {
   if (weight < gfx::Font::Weight::BOLD)
@@ -93,7 +92,8 @@ LabelButton::LabelButton(ButtonListener* listener, const base::string16& text)
       is_default_(false),
       style_(STYLE_TEXTBUTTON),
       border_is_themed_border_(true),
-      image_label_spacing_(kSpacing),
+      image_label_spacing_(ViewsDelegate::GetInstance()->GetDistanceMetric(
+          DistanceMetric::RELATED_CONTROL_HORIZONTAL)),
       horizontal_alignment_(gfx::ALIGN_LEFT) {
   SetAnimationDuration(kHoverAnimationDurationMs);
   SetTextInternal(text);
@@ -104,7 +104,7 @@ LabelButton::LabelButton(ButtonListener* listener, const base::string16& text)
   ink_drop_container_->SetVisible(false);
 
   AddChildView(image_);
-  image_->set_interactive(false);
+  image_->set_can_process_events_within_subtree(false);
 
   AddChildView(label_);
   label_->SetFontList(cached_normal_font_list_);

@@ -79,6 +79,8 @@ class CORE_EXPORT ImageResource final
 
   void allClientsAndObserversRemoved() override;
 
+  bool canReuse(const FetchRequest&) const override;
+
   PassRefPtr<const SharedBuffer> resourceBuffer() const override;
   void appendData(const char*, size_t) override;
   void error(const ResourceError&) override;
@@ -95,8 +97,7 @@ class CORE_EXPORT ImageResource final
   void onePartInMultipartReceived(const ResourceResponse&) final;
   void multipartDataReceived(const char*, size_t) final;
 
-  // Used by tests.
-  bool isPlaceholder() const { return m_isPlaceholder; }
+  bool shouldShowPlaceholder() const;
 
   DECLARE_VIRTUAL_TRACE();
 
@@ -135,11 +136,7 @@ class CORE_EXPORT ImageResource final
 
   void flushImageIfNeeded(TimerBase*);
 
-  bool shouldReloadBrokenPlaceholder() const {
-    return m_isPlaceholder && willPaintBrokenImage();
-  }
-
-  bool willPaintBrokenImage() const;
+  bool shouldReloadBrokenPlaceholder() const;
 
   Member<ImageResourceContent> m_content;
 
@@ -159,7 +156,17 @@ class CORE_EXPORT ImageResource final
 
   // Indicates if this ImageResource is either attempting to load a placeholder
   // image, or is a (possibly broken) placeholder image.
-  bool m_isPlaceholder;
+  enum class PlaceholderOption {
+    // Do not show or reload placeholder.
+    DoNotReloadPlaceholder,
+
+    // Do not show placeholder, reload only when decode error occurs.
+    ReloadPlaceholderOnDecodeError,
+
+    // Show placeholder and reload.
+    ShowAndReloadPlaceholderAlways,
+  };
+  PlaceholderOption m_placeholderOption;
 
   Timer<ImageResource> m_flushTimer;
   double m_lastFlushTime = 0.;

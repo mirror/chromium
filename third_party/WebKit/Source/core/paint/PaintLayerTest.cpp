@@ -23,7 +23,7 @@ class PaintLayerTest
   PaintLayerTest()
       : ScopedSlimmingPaintV2ForTest(GetParam().first),
         ScopedRootLayerScrollingForTest(GetParam().second),
-        RenderingTest(SingleChildFrameLoaderClient::create()) {}
+        RenderingTest(SingleChildLocalFrameClient::create()) {}
 };
 
 SlimmingPaintAndRootLayerScrolling foo[] = {
@@ -33,6 +33,19 @@ SlimmingPaintAndRootLayerScrolling foo[] = {
     SlimmingPaintAndRootLayerScrolling(true, true)};
 
 INSTANTIATE_TEST_CASE_P(All, PaintLayerTest, ::testing::ValuesIn(foo));
+
+TEST_P(PaintLayerTest, ChildWithoutPaintLayer) {
+  setBodyInnerHTML(
+      "<div id='target' style='width: 200px; height: 200px;'></div>");
+
+  Element* element = document().getElementById("target");
+  PaintLayer* paintLayer =
+      toLayoutBoxModelObject(element->layoutObject())->layer();
+  PaintLayer* rootLayer = layoutView().layer();
+
+  EXPECT_EQ(nullptr, paintLayer);
+  EXPECT_NE(nullptr, rootLayer);
+}
 
 TEST_P(PaintLayerTest, CompositedBoundsAbsPosGrandchild) {
   setBodyInnerHTML(
@@ -72,6 +85,15 @@ TEST_P(PaintLayerTest, CompositedBoundsTransformedChild) {
       toLayoutBoxModelObject(getLayoutObjectByElementId("parent"))->layer();
   EXPECT_EQ(LayoutRect(0, 0, 784, 500),
             parentLayer->boundingBoxForCompositing());
+}
+
+TEST_P(PaintLayerTest, RootLayerCompositedBounds) {
+  setBodyInnerHTML(
+      "<style> body { width: 1000px; height: 1000px; margin: 0 } </style>");
+  EXPECT_EQ(RuntimeEnabledFeatures::rootLayerScrollingEnabled()
+                ? LayoutRect(0, 0, 800, 600)
+                : LayoutRect(0, 0, 1000, 1000),
+            layoutView().layer()->boundingBoxForCompositing());
 }
 
 TEST_P(PaintLayerTest, PaintingExtentReflection) {

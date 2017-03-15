@@ -32,18 +32,18 @@
 #ifndef DocumentThreadableLoader_h
 #define DocumentThreadableLoader_h
 
+#include <memory>
 #include "core/CoreExport.h"
 #include "core/loader/ThreadableLoader.h"
 #include "platform/Timer.h"
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/RawResource.h"
+#include "platform/loader/fetch/ResourceError.h"
 #include "platform/loader/fetch/ResourceOwner.h"
 #include "platform/network/HTTPHeaderMap.h"
-#include "platform/network/ResourceError.h"
 #include "platform/weborigin/Referrer.h"
 #include "wtf/Forward.h"
 #include "wtf/text/WTFString.h"
-#include <memory>
 
 namespace blink {
 
@@ -52,6 +52,7 @@ class KURL;
 class ResourceRequest;
 class SecurityOrigin;
 class ThreadableLoaderClient;
+class ThreadableLoadingContext;
 
 class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
                                                    private RawResourceClient {
@@ -63,7 +64,7 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
                                         ThreadableLoaderClient&,
                                         const ThreadableLoaderOptions&,
                                         const ResourceLoaderOptions&);
-  static DocumentThreadableLoader* create(Document&,
+  static DocumentThreadableLoader* create(ThreadableLoadingContext&,
                                           ThreadableLoaderClient*,
                                           const ThreadableLoaderOptions&,
                                           const ResourceLoaderOptions&);
@@ -81,7 +82,7 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
  private:
   enum BlockingBehavior { LoadSynchronously, LoadAsynchronously };
 
-  DocumentThreadableLoader(Document&,
+  DocumentThreadableLoader(ThreadableLoadingContext&,
                            ThreadableLoaderClient*,
                            BlockingBehavior,
                            const ThreadableLoaderOptions&,
@@ -182,10 +183,12 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
   // End of ResourceOwner re-implementation, see above.
 
   const SecurityOrigin* getSecurityOrigin() const;
-  Document& document() const;
+
+  // TODO(kinuko): Remove dependency to document.
+  Document* document() const;
 
   ThreadableLoaderClient* m_client;
-  Member<Document> m_document;
+  Member<ThreadableLoadingContext> m_loadingContext;
 
   const ThreadableLoaderOptions m_options;
   // Some items may be overridden by m_forceDoNotAllowStoredCredentials and

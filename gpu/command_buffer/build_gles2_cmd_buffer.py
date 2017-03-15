@@ -4005,6 +4005,7 @@ _FUNCTION_INFO = {
   'Scissor': {
     'type': 'StateSet',
     'state': 'Scissor',
+    'decoder_func': 'DoScissor',
   },
   'Viewport': {
     'impl_func': False,
@@ -4386,6 +4387,23 @@ _FUNCTION_INFO = {
     'extension': 'CHROMIUM_schedule_ca_layer',
     'unit_test': False,
   },
+  'ScheduleDCLayerSharedStateCHROMIUM': {
+    'type': 'Custom',
+    'impl_func': False,
+    'client_test': False,
+    'cmd_args': 'GLfloat opacity, GLboolean is_clipped, '
+                'GLint z_order, GLuint shm_id, GLuint shm_offset',
+    'extension': 'CHROMIUM_schedule_ca_layer',
+  },
+  'ScheduleDCLayerCHROMIUM': {
+    'type': 'Custom',
+    'impl_func': False,
+    'client_test': False,
+    'cmd_args': 'GLuint contents_texture_id, GLuint background_color, '
+                'GLuint edge_aa_mask, GLuint filter, GLuint shm_id, '
+                'GLuint shm_offset',
+    'extension': 'CHROMIUM_schedule_ca_layer',
+  },
   'CommitOverlayPlanesCHROMIUM': {
     'impl_func': False,
     'decoder_func': 'DoCommitOverlayPlanes',
@@ -4525,6 +4543,10 @@ _FUNCTION_INFO = {
     'data_transfer_methods': ['shm'],
     'extension': 'CHROMIUM_path_rendering',
     'extension_flag': 'chromium_path_rendering',
+  },
+  'SetDrawRectangleCHROMIUM': {
+    'decoder_func': 'DoSetDrawRectangleCHROMIUM',
+    'extension': 'CHROMIUM_set_draw_rectangle',
   },
 }
 
