@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f8767e09_ff4bc93a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-15T22:48:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c2ac813_32cd5feb",
+      "revId": "f9ef9475fcb5a52d81826f1163934d2385780a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "444ed4c7_987465cc",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-03-15T22:02:42Z",
       "side": 1,
       "message": "These pull requests are dicts parsed from JSON returned from GitHub, right?\n\nDo you think it would be unnecessary complication to make a namedtuple class (https://docs.python.org/2/library/collections.html#collections.namedtuple) called PullRequest, just to help express that a PullRequest is a type of thing which always must have a title and number (and maybe id)?",
+      "revId": "f9ef9475fcb5a52d81826f1163934d2385780a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c079e34f_787d2353",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-15T22:48:34Z",
+      "side": 1,
+      "message": "Sort of like the way ChromiumCommits are returned from exportable_commits_since? I like that.",
+      "parentUuid": "444ed4c7_987465cc",
       "revId": "f9ef9475fcb5a52d81826f1163934d2385780a55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1de7ae9e_645a11bb",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-15T22:48:34Z",
+      "side": 1,
+      "message": "MergeErrors should only be thrown if the status code is 405, so I don\u0027t think it would make any difference.",
+      "parentUuid": "e87db030_f94e0dfa",
+      "revId": "f9ef9475fcb5a52d81826f1163934d2385780a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50049354_54fae278",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "921ab359_02d00bb0",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-15T22:48:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "50049354_54fae278",
+      "revId": "f9ef9475fcb5a52d81826f1163934d2385780a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6daa61e1_2a09ab15",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter_unittest.py",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2017-03-15T22:02:42Z",
       "side": 1,
       "message": "What is id here?\n\nAlso, would it make sense for MockWPTGitHub to take a dict mapping PR numbers to dicts?",
+      "revId": "f9ef9475fcb5a52d81826f1163934d2385780a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ca0ca1a_76e7f842",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter_unittest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-15T22:48:34Z",
+      "side": 1,
+      "message": "Each GitHub PR has an ID that\u0027s separate from the PR number.\nSee https://api.github.com/repos/w3c/web-platform-tests/pulls/5147\n\nHowever, the ID isn\u0027t used anywhere so I\u0027m going to take it out.",
+      "parentUuid": "6daa61e1_2a09ab15",
       "revId": "f9ef9475fcb5a52d81826f1163934d2385780a55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "4378c87d_e1976c87",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-15T22:48:34Z",
+      "side": 1,
+      "message": "This code path as it is right now is incorrect - after testing it looks like if GitHub replies with a 405 status code, urllib2 will throw a urllib2.HTTPError. To answer your question, I\u0027d like to keep MergeError to be specifically only for when the 405 status is returned, indicating that nothing was wrong with the request but something is wrong with the PR itself.",
+      "parentUuid": "d2d1c4d2_b1f3d033",
+      "revId": "f9ef9475fcb5a52d81826f1163934d2385780a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8d17c57_80aee8ec",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
         "patchSetId": 3
@@ -115,6 +223,24 @@
       "writtenOn": "2017-03-15T22:02:42Z",
       "side": 1,
       "message": "Do we also want to have different exceptions for other types of failure response from GitHub?\n\nOptionally if you think it\u0027s helpful, you could add a docstring describing more specifically what this exception represents.",
+      "revId": "f9ef9475fcb5a52d81826f1163934d2385780a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac627fdf_4f293274",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-15T22:48:34Z",
+      "side": 1,
+      "message": "\u003e Do we also want to have different exceptions for other types of failure response from GitHub?\n\nIn the future I think that might be helpful when we need them (I don\u0027t have another error class in mind for this CL)",
+      "parentUuid": "d8d17c57_80aee8ec",
       "revId": "f9ef9475fcb5a52d81826f1163934d2385780a55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
