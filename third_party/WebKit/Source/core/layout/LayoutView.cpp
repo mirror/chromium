@@ -959,23 +959,16 @@ void LayoutView::updateAfterLayout() {
   // Unlike every other layer, the root PaintLayer takes its size from the
   // layout viewport size.  The call to adjustViewSize() will update the
   // frame's contents size, which will also update the page's minimum scale
-  // factor.  The call to layoutUpdated() will calculate the layout viewport
+  // factor.  The call to resizeAfterLayout() will calculate the layout viewport
   // size based on the page minimum scale factor, and then update the FrameView
   // with the new size.
-  bool rls = RuntimeEnabledFeatures::rootLayerScrollingEnabled();
-  if (hasOverflowClip()) {
-    DCHECK(rls);
+  if (hasOverflowClip())
     getScrollableArea()->clampScrollOffsetAfterOverflowChange();
-  }
   LocalFrame& frame = frameView()->frame();
-  if (rls) {
-    if (!document().printing())
-      frameView()->adjustViewSize();
-    frame.chromeClient().resizeAfterLayout(&frame);
-  }
+  if (!document().printing())
+    frameView()->adjustViewSize();
+  frame.chromeClient().resizeAfterLayout(&frame);
   LayoutBlock::updateAfterLayout();
-  if (rls)
-    frame.chromeClient().layoutUpdated(&frame);
 }
 
 void LayoutView::updateHitTestResult(HitTestResult& result,

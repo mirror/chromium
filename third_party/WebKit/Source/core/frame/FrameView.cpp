@@ -1273,15 +1273,25 @@ void FrameView::layout() {
         TRACE_DISABLED_BY_DEFAULT("blink.debug.layout.trees"), "LayoutTree",
         this, TracedLayoutObject::create(*layoutView(), false));
 
-    IntSize previousContentsSize = contentsSize();
+    bool hadHorizontalScrollbar = horizontalScrollbar();
+    bool hadVerticalScrollbar = verticalScrollbar();
+    IntRect oldRect = frameRect();
     performLayout(inSubtreeLayout);
-    if (contentsSize() != previousContentsSize) {
+    //if (!RuntimeEnabledFeatures::rootLayerScrollingEnabled())
+    //frame().page()->chromeClient().resizeAfterLayout(&frame());
+    bool hasHorizontalScrollbar = horizontalScrollbar();
+    bool hasVerticalScrollbar = verticalScrollbar();
+    IntRect newRect = frameRect();
+    if (hadHorizontalScrollbar != hasHorizontalScrollbar ||
+        hadVerticalScrollbar != hasVerticalScrollbar) {
+      setNeedsLayout();
+    }
+    if (newRect != oldRect) {
       markViewportConstrainedObjectsForLayout(
-          contentsSize().width() != previousContentsSize.width(),
-          contentsSize().height() != previousContentsSize.height());
+          newRect.width() != oldRect.width(),
+          newRect.height() != oldRect.height());
       if (m_frame->isMainFrame())
         m_frame->host()->visualViewport().mainFrameDidChangeSize();
-
       frame().loader().restoreScrollPositionAndViewState();
     }
 
@@ -1289,9 +1299,6 @@ void FrameView::layout() {
       AutoReset<bool> suppressAdjustViewSize(&m_suppressAdjustViewSize, true);
       layout();
     }
-
-    if (!inSubtreeLayout && !document->printing() && !RuntimeEnabledFeatures::rootLayerScrollingEnabled())
-      adjustViewSizeAndLayout();
 
     ASSERT(m_layoutSubtreeRootList.isEmpty());
   }  // Reset m_layoutSchedulingEnabled to its previous value.
@@ -1634,9 +1641,6 @@ void FrameView::viewportSizeChanged(bool widthChanged, bool heightChanged) {
 
   showOverlayScrollbars();
 
-  bool rootLayerScrollingEnabled =
-      RuntimeEnabledFeatures::rootLayerScrollingEnabled();
-
   if (RuntimeEnabledFeatures::inertTopControlsEnabled() && layoutView() &&
       m_frame->isMainFrame() && m_frame->host()->browserControls().height()) {
     if (layoutView()->style()->hasFixedBackgroundImage()) {
@@ -1647,13 +1651,13 @@ void FrameView::viewportSizeChanged(bool widthChanged, bool heightChanged) {
       PaintLayer* layer = layoutView()->layer();
       if (layoutView()->compositor()->needsFixedRootBackgroundLayer(layer)) {
         setNeedsLayout();
-      } else if (!rootLayerScrollingEnabled) {
+      } else {
         // If root layer scrolls is on, we've already issued a full invalidation
         // above.
         layoutView()->setShouldDoFullPaintInvalidationOnResizeIfNeeded(
             widthChanged, heightChanged);
       }
-    } else if (heightChanged && !rootLayerScrollingEnabled) {
+    } else if (heightChanged) {
       // If the document rect doesn't fill the full view height, hiding the
       // URL bar will expose area outside the current LayoutView so we need to
       // paint additional background. If RLS is on, we've already invalidated
@@ -1664,14 +1668,15 @@ void FrameView::viewportSizeChanged(bool widthChanged, bool heightChanged) {
         lvi.setShouldDoFullPaintInvalidation();
     }
   }
+
+  if (frame().document() && !isInPerformLayout())
+    markViewportConstrainedObjectsForLayout(widthChanged, heightChanged);
 }
 
 void FrameView::markViewportConstrainedObjectsForLayout(bool widthChanged,
                                                         bool heightChanged) {
-  if (!hasViewportConstrainedObjects() ||
-      !(widthChanged || heightChanged)) {
+  if (!hasViewportConstrainedObjects() || !(widthChanged || heightChanged))
     return;
-  }
 
   for (const auto& viewportConstrainedObject : *m_viewportConstrainedObjects) {
     LayoutObject* layoutObject = viewportConstrainedObject;
@@ -2100,12 +2105,6 @@ void FrameView::scrollbarExistenceDidChange() {
     return;
 
   bool usesOverlayScrollbars = ScrollbarTheme::theme().usesOverlayScrollbars();
-
-  // FIXME: this call to layout() could be called within FrameView::layout(),
-  // but before performLayout(), causing double-layout. See also
-  // crbug.com/429242.
-  if (!usesOverlayScrollbars && needsLayout())
-    layout();
 
   if (!layoutViewItem().isNull() && layoutViewItem().usesCompositing()) {
     layoutViewItem().compositor()->frameViewScrollbarsExistenceDidChange();

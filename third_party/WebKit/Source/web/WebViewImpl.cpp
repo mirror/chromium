@@ -1870,7 +1870,13 @@ void WebViewImpl::resizeViewWhileAnchored(float browserControlsHeight,
     // Avoids unnecessary invalidations while various bits of state in
     // TextAutosizer are updated.
     TextAutosizer::DeferUpdatePageInfo deferUpdatePageInfo(page());
+    FrameView* frameView = mainFrameImpl()->frameView();
+    IntRect oldRect = frameView->frameRect();
     performResize();
+    IntRect newRect = frameView->frameRect();
+    frameView->markViewportConstrainedObjectsForLayout(
+        oldRect.width() != newRect.width(),
+        oldRect.height() != newRect.height());
   }
 
   m_fullscreenController->updateSize();
@@ -3636,6 +3642,9 @@ void WebViewImpl::resizeAfterLayout(WebLocalFrameImpl* webframe) {
 }
 
 void WebViewImpl::layoutUpdated(WebLocalFrameImpl* webframe) {
+  LocalFrame* frame = webframe->frame();
+  if (!m_client || !frame->isLocalRoot())
+    return;
   // Relayout immediately to avoid violating the rule that needsLayout()
   // isn't set at the end of a layout.
   FrameView* view = webframe->frame()->view();

@@ -386,6 +386,12 @@ void TestSuite::Initialize() {
   // redirection experiment concludes https://crbug.com/622400.
   SequencedWorkerPool::EnableForProcess();
 
+  if (debug::BeingDebugged()) {
+    testing::TestEventListeners& listeners =
+        testing::UnitTest::GetInstance()->listeners();
+    listeners.Release(listeners.default_result_printer());
+  }
+
   CatchMaybeTests();
   ResetCommandLine();
   AddTestLauncherResultPrinter();
