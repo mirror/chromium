@@ -33,3 +33,7 @@ class MockWPTGitHub(object):
 
     def delete_remote_branch(self, _):
         self.calls.append('delete_remote_branch')
+
+    def get_pr_branch(self, number):
+        self.calls.append('get_pr_branch')
+        return 'fake branch for PR {}'.format(number)

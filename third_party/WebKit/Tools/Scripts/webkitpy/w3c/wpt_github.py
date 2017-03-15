@@ -79,6 +79,14 @@ class WPTGitHub(object):
         else:
             raise Exception('Non-200 status code (%s): %s' % (status_code, data))
 
+    def get_pr_branch(self, pr_number):
+        path = '/repos/w3c/web-platform-tests/pulls/{}'.format(pr_number)
+        data, status_code = self.request(path, method='GET')
+        if status_code == 200:
+            return data['head']['ref']
+        else:
+            raise Exception('Non-200 status code (%s): %s' % (status_code, data))
+
     def merge_pull_request(self, pull_request_number):
         path = '/repos/w3c/web-platform-tests/pulls/%d/merge' % pull_request_number
         body = {
@@ -87,7 +95,7 @@ class WPTGitHub(object):
         data, status_code = self.request(path, method='PUT', body=body)
 
         if status_code == 405:
-            raise Exception('PR did not passed necessary checks to merge: %d' % pull_request_number)
+            raise MergeError()
         elif status_code == 200:
             return data
         else:
@@ -103,3 +111,7 @@ class WPTGitHub(object):
             raise Exception('Received non-204 status code attempting to delete remote branch: {}'.format(status_code))
 
         return data
+
+
+class MergeError(Exception):
+    pass
