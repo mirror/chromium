@@ -16,6 +16,149 @@
       "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24ff4cb3_319f0f5c",
+        "filename": "tools/directory_component_mapping/compo_info/__init__.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-15T22:58:24Z",
+      "side": 1,
+      "message": "s/compo_info/component_info/ in path name.",
+      "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1326d5e7_770f6641",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-15T22:58:24Z",
+      "side": 1,
+      "message": "Similar to the path name, s/compo/component/ everywhere.\n\nFWIW, if you really want to shorten something, \"directory component mapping\" is a bit of a mouthful. Why not just \"component mapper\", or something like that? (The obvious reason not to shorten that is if it could be confused with some other type of \"component mapper\" that we have, or might have, but I doubt there\u0027s any conflict there.)",
+      "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aae8f555_39de9e4b",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-15T22:58:24Z",
+      "side": 1,
+      "message": "This should have some sort of high-level description, either for the module, or since it\u0027s basically just the one class, at the class-level.",
+      "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff4cde8b_518ff3ac",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-15T22:58:24Z",
+      "side": 1,
+      "message": "Can this use a hostname instead of IP address? How stable is that address?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 13
+      },
+      "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e90b45c_86cda9bb",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-15T22:58:24Z",
+      "side": 1,
+      "message": "Do you need to get a real account still or something? That probably should have a TODO and a bug.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 9
+      },
+      "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0cf65a7_cdc0b5b0",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-15T22:58:24Z",
+      "side": 1,
+      "message": "Size of what?",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 13
+      },
+      "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1cb485b_5589b8b5",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-15T22:58:24Z",
+      "side": 1,
+      "message": "As noted in other CL, these should be \"function_name\" format. Definitely don\u0027t mix formats, like you have with this and table_to_dataframe.",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 20
+      },
+      "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
