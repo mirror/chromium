@@ -128,6 +128,29 @@
     },
     {
       "key": {
+        "uuid": "68927472_baf1603a",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-15T20:19:49Z",
+      "side": 1,
+      "message": "This is not terribly consistent within Chromium code, but the public Google style guide (and PEP-8) uses \"this_is_a_method\" format, so we probably should too. \"ThisIsAMethod\" used to be required by the internal Google style guide, which I think is why a lot of our code uses that, but that hasn\u0027t been required, even internally, for many years now. (Note that \"CamelCase\" is still appropriate if you are modifying existing code that uses it, since consistency usually trumps style recommendations, especially ones like this which have changed.)",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 14
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33d34f5b_50f87b7e",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 1
@@ -165,6 +188,29 @@
       "range": {
         "startLine": 27,
         "startChar": 11,
+        "endLine": 27,
+        "endChar": 16
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a39fc40d_ce5b678a",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-15T20:19:49Z",
+      "side": 1,
+      "message": "This description is not helpful, since it just repeats the name of the method. It doesn\u0027t need to be a dissertation on machine learning, but should provide some guidance and context for people whose only understanding of \"train model\" is a type of toy or something.\n\nSee also the recent go/tott-465 blog post for some general guidelines on writing comments.",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
         "endLine": 27,
         "endChar": 16
       },
@@ -289,6 +335,29 @@
     },
     {
       "key": {
+        "uuid": "3f007d25_0643e8f8",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-15T20:19:49Z",
+      "side": 1,
+      "message": "Multiple return values should be listed in the order in which they are returned:\ntfidf_transformer, bigram_vectorizer, compo_classes, clf",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 9
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a2512ca_32acc6dd",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 1
@@ -305,6 +374,75 @@
         "startChar": 2,
         "endLine": 45,
         "endChar": 5
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f540a9f_f34bbda6",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-15T20:19:49Z",
+      "side": 1,
+      "message": "Similar to previous comments. \"tfidf transformer\" doesn\u0027t really elaborate on a variable called \"tfidf_transformer\". Same for bigram_vectorizer.",
+      "range": {
+        "startLine": 46,
+        "startChar": 21,
+        "endLine": 46,
+        "endChar": 38
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0904ba5d_e14cded2",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-15T20:19:49Z",
+      "side": 1,
+      "message": "keys() and values() already return list type.",
+      "range": {
+        "startLine": 50,
+        "startChar": 9,
+        "endLine": 50,
+        "endChar": 13
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a91d3653_ef54fd0c",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-15T20:19:49Z",
+      "side": 1,
+      "message": "This should check that data_path exists, and create it if it doesn\u0027t. Or mention in the docstring that it must exist (and be writable), and then \u0027assert\u0027 that at the beginning of the method. Probably also worth making it explicit that saving will overwrite any existing data files.",
+      "range": {
+        "startLine": 79,
+        "startChar": 34,
+        "endLine": 79,
+        "endChar": 43
       },
       "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -404,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "9ae4ea89_33f6ddf7",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-15T20:19:49Z",
+      "side": 1,
+      "message": "Yeah, although even just saying \"a tuple of component predictions\" isn\u0027t clear. Each return value should be defined, like you did for TrainModel().",
+      "parentUuid": "faf7151b_48317019",
+      "range": {
+        "startLine": 103,
+        "startChar": 4,
+        "endLine": 103,
+        "endChar": 8
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d733bb42_1e828b00",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 1
@@ -443,6 +605,29 @@
         "startChar": 44,
         "endLine": 120,
         "endChar": 47
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf2007e3_13b0f81c",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-15T20:19:49Z",
+      "side": 1,
+      "message": "What does \"evaluate\" mean here? Is this an automatic thing, like just seeing if it works? Or does it require some sort of manual check to see if the results make sense? Should it be a unittest? (note, most scripts should have unittests)",
+      "range": {
+        "startLine": 120,
+        "startChar": 5,
+        "endLine": 120,
+        "endChar": 13
       },
       "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -490,6 +675,23 @@
         "endLine": 170,
         "endChar": 11
       },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af0b92e_b343782a",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-15T20:19:49Z",
+      "side": 1,
+      "message": "I have no idea what this method is for.",
       "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
