@@ -2,63 +2,81 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import json
 import logging
+import re
+import urllib2
 
 from webkitpy.w3c.local_wpt import LocalWPT
 from webkitpy.w3c.common import exportable_commits_since
-from webkitpy.w3c.wpt_github import WPTGitHub
+from webkitpy.w3c.wpt_github import WPTGitHub, MergeError
 
 _log = logging.getLogger(__name__)
 
 
 class TestExporter(object):
 
-    def __init__(self, host, gh_user, gh_token, dry_run=False):
+    def __init__(self, host, gh_user, gh_token, dry_run=False, firebase_auth_token=None):
         self.host = host
         self.wpt_github = WPTGitHub(host, gh_user, gh_token)
         self.dry_run = dry_run
         self.local_wpt = LocalWPT(self.host, gh_token)
         self.local_wpt.fetch()
+        self.firebase_auth_token = firebase_auth_token
 
     def run(self):
-        """Query in-flight pull requests, then merge PR or create one.
+        """Query in-flight pull requests, then merges PR or creates one.
 
         This script assumes it will be run on a regular interval. On
         each invocation, it will either attempt to merge or attempt to
         create a PR, never both.
         """
         pull_requests = self.wpt_github.in_flight_pull_requests()
+        self.merge_all_pull_requests(pull_requests)
 
-        if len(pull_requests) == 1:
-            self.merge_in_flight_pull_request(pull_requests.pop())
-        elif len(pull_requests) > 1:
-            _log.error(pull_requests)
-            # TODO(jeffcarp): Print links to PRs
-            raise Exception('More than two in-flight PRs!')
-        else:
+        # TODO(jeffcarp): The below line will enforce draining all open PRs before
+        # adding any more to the queue, which mirrors current behavior. After this
+        # change lands, modify the following to:
+        # - for each exportable commit
+        #   - check if there's a corresponding PR
+        #   - if not, create one
+        if not pull_requests:
+            _log.info('No in-flight PRs found, looking for exportable commits.')
             self.export_first_exportable_commit()
 
-    def merge_in_flight_pull_request(self, pull_request):
-        """Attempt to merge an in-flight PR.
+    def merge_all_pull_requests(self, pull_requests):
+        for pr in pull_requests:
+            self.merge_pull_request(pr)
 
-        Args:
-            pull_request: a PR object returned from the GitHub API.
-        """
-
-        _log.info('In-flight PR found: #%d', pull_request['number'])
-        _log.info(pull_request['title'])
-
-        # TODO(jeffcarp): Check the PR status here (for Travis CI, etc.)
+    def merge_pull_request(self, pull_request):
+        _log.info('In-flight PR found: %s', pull_request.title)
+        _log.info('https://github.com/w3c/web-platform-tests/pull/%d', pull_request.number)
+        _log.info('Attempting to merge...')
 
         if self.dry_run:
             _log.info('[dry_run] Would have attempted to merge PR')
             return
 
-        _log.info('Merging...')
-        self.wpt_github.merge_pull_request(pull_request['number'])
-        _log.info('PR merged! Deleting branch.')
-        self.wpt_github.delete_remote_branch('chromium-export-try')
-        _log.info('Branch deleted!')
+        pr_data = self.wpt_github.get_pr(pull_request['number'])
+        branch = pr_data['head']['ref']
+
+        try:
+            self.wpt_github.merge_pull_request(pull_request.number)
+            self.wpt_github.delete_remote_branch(branch)
+        except MergeError:
+            _log.info('Could not merge PR.')
+
+        commit_position_line = [l for l in pr_data['body'].splitlines() if 'Cr-Commit-Position' in l][0]
+        commit_position = re.sub('[^0-9]', '', commit_position_line)
+        assert commit_position
+
+        put_status(self.firebase_auth_token, commit_position, {
+            'chromium_commit_position': commit_position,
+            'github_pr_number': pull_request['number'],
+            'github_pr_state': pr_data['state'],
+            'wpt_sha': pr_data['head']['sha'],
+            'wpt_merge_commit_sha': pr_data['merge_commit_sha'],
+        })
 
     def export_first_exportable_commit(self):
         """Looks for exportable commits in Chromium, creates PR if found."""
@@ -85,6 +103,12 @@ class TestExporter(object):
         _log.info('Found %d exportable commits in Chromium:', len(exportable_commits))
         for commit in exportable_commits:
             _log.info('- %s %s', commit, commit.subject())
+
+            # Update export status dashboard
+            put_status(self.firebase_auth_token, commit.position_number(), {
+                'chromium_commit_position': commit.position_number(),
+                'chromium_commit_subject': commit.subject(),
+            })
 
         outbound_commit = exportable_commits[0]
         _log.info('Picking the earliest commit and creating a PR')
@@ -114,3 +138,22 @@ class TestExporter(object):
         if response_data:
             data, status_code = self.wpt_github.add_label(response_data['number'])
             _log.info('Add label response (status %s): %s', status_code, data)
+
+
+# TODO: Move this to a nicer place
+def put_status(auth_token, change_key, data):
+    url = 'https://wptdashboard.firebaseio.com/changes/{change_key}.json?auth={secret}'.format(
+        change_key=change_key,
+        secret=auth_token,
+    )
+    body = json.dumps(data)
+
+    method = 'PUT'
+    opener = urllib2.build_opener(urllib2.HTTPHandler)
+    request = urllib2.Request(url=url, data=body)
+    request.get_method = lambda: method
+    response = opener.open(request)
+
+    status_code = response.getcode()
+    print status_code
+    print response

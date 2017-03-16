@@ -41,6 +41,9 @@ def main():
         '--github-credentials-json',
         help='A JSON file with schema {"GH_USER": "", "GH_TOKEN": ""}. '
              'This will override credentials that were passed via command line or env var.')
+
+    parser.add_argument('--firebase-auth-token', help='todo')
+
     args = parser.parse_args()
     host = Host()
     gh_user = args.gh_user
@@ -59,7 +62,7 @@ def main():
     if not (gh_user and gh_token):
         parser.error('Must provide both gh_user and gh_token for GitHub.')
 
-    TestExporter(host, gh_user, gh_token, dry_run=args.dry_run).run()
+    TestExporter(host, gh_user, gh_token, dry_run=args.dry_run, firebase_auth_token=args.firebase_auth_token).run()
 
 
 if __name__ == '__main__':
