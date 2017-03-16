@@ -1,0 +1,398 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b877665_e29767be",
+        "filename": "tools/directory_component_mapping/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-16T19:09:43Z",
+      "side": 1,
+      "message": "Ideally, OWNERS should have at least two people listed. Is there anyone else you could include?",
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c6ca317_79448dea",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-16T19:09:43Z",
+      "side": 1,
+      "message": "I\u0027m not really sure what this means, so it could probably use a bit more clarification. Is this just saying that the results could include multiple labels per directory? And what\u0027s the distinction, if any, between a label and a component?",
+      "range": {
+        "startLine": 6,
+        "startChar": 53,
+        "endLine": 7,
+        "endChar": 14
+      },
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "087af8a0_015458c9",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-16T19:09:43Z",
+      "side": 1,
+      "message": "Probably can just refer to this in the README, so these lines could just be something like:\n\nPlease see README.md for usage, test, and general project information.",
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf27abe3_c25f3748",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-16T19:09:43Z",
+      "side": 1,
+      "message": "Probably don\u0027t need to refer to bugs outside of TODOs. Or if the bug discussion is somehow really relevant to the product, it could be referred to, or captured in, the design doc or README.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1418a67_6f6c28ef",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-16T19:09:43Z",
+      "side": 1,
+      "message": "You should include at least a skelton README in this CL, otherwise it\u0027s kind of weird to point people to something that doesn\u0027t exist.",
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d4515f_c5780ae5",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-16T19:09:43Z",
+      "side": 1,
+      "message": "The cPickle -\u003e pickle renaming was fine, and I think pretty typical. It was just the other renamings that were questionable.",
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a9fe1dd_058f8774",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-16T19:09:43Z",
+      "side": 1,
+      "message": "Alphabetical, should be first.",
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fde968e_e1f902db",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-16T19:09:43Z",
+      "side": 1,
+      "message": "Alphabetical, before .preprocessing.",
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db675ec6_8e8c7789",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-16T19:09:43Z",
+      "side": 1,
+      "message": "Nit: \"mappings, using \"",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 17
+      },
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f22f0d0_b3649813",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-16T19:09:43Z",
+      "side": 1,
+      "message": "s/dirtory/directory/",
+      "range": {
+        "startLine": 46,
+        "startChar": 31,
+        "endLine": 46,
+        "endChar": 43
+      },
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c99078c_6a73d945",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-16T19:09:43Z",
+      "side": 1,
+      "message": "Nit: Add space between vars and types, like:\n\nmappings (dict):",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5912c6a_0253be3d",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-16T19:09:43Z",
+      "side": 1,
+      "message": "Is it expected that there\u0027s a 1:1 relationship between elements in component_data and elements in component_label? If so, this should make that explicit (and the code should maybe assert that, like by making sure they\u0027re at least the same length).",
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83db039b_248e6eeb",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-16T19:09:43Z",
+      "side": 1,
+      "message": "I don\u0027t think the tfidf comment is really useful here. It might make sense if there were multiple prediction methods, some of which use tfidf and some which didn\u0027t, but otherwise, it\u0027s probably not crucial to understanding the purpose of the method. Maybe just:\n\nGenerate a list of components that best match each of the given directories.",
+      "range": {
+        "startLine": 102,
+        "startChar": 39,
+        "endLine": 103,
+        "endChar": 13
+      },
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9ba0e4e_557dd8fb",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-16T19:09:43Z",
+      "side": 1,
+      "message": "s/defination/definition/",
+      "range": {
+        "startLine": 110,
+        "startChar": 14,
+        "endLine": 110,
+        "endChar": 24
+      },
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3abb6c1f_b090d29a",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-16T19:09:43Z",
+      "side": 1,
+      "message": "s/defination/definition/",
+      "range": {
+        "startLine": 120,
+        "startChar": 18,
+        "endLine": 120,
+        "endChar": 28
+      },
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd201462_3b16ffc7",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-16T19:09:43Z",
+      "side": 1,
+      "message": "Long docstring descriptions should be split into a one-line summary and then a longer detail part, so something like:\n\n\"\"\"Evaluate model performance on training set.\n\nThis will compute recall and accuracy ...\n\"\"\"\n\nAlthough in this case, the summary part is already provided by the descriptive method name, so maybe just get rid of that, and either shorten the detail part a bit to make it just a summary, or split it up into different summary/detail parts.",
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e4b6adc_d0d74e14",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-16T19:09:43Z",
+      "side": 1,
+      "message": "This is already fully described in the evaluate_prediction method, so you can just refer to that rather that repeating it all everywhere it\u0027s used.",
+      "range": {
+        "startLine": 146,
+        "startChar": 4,
+        "endLine": 146,
+        "endChar": 16
+      },
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e22373f3_e42d03c4",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-16T19:09:43Z",
+      "side": 1,
+      "message": "This is redundant with the method name.",
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6616ca48_50330509",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-16T19:09:43Z",
+      "side": 1,
+      "message": "Nit: blank line between the one-line summary and the detailed description.",
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4503069_e53aec1f",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-16T19:09:43Z",
+      "side": 1,
+      "message": "Split into summary and detail. The summary can leave out \"Evaluate prediction\", which just repeats the method name, so just:\n\nCompare the prediction result with the \"preferred\" label.\n\nNote, \"preferred\" could be something like \"actual\" or \"approved\" or \"manually assigned\" or \"expected\" or whatever, although I\u0027m not sure I would use \"ground truth\". Unless that\u0027s a common phrase, with a specific meaning, in the ML world, it might be a bit unclear.",
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
