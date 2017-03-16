@@ -143,6 +143,7 @@ class TestRunnerBindings : public gin::Wrappable<TestRunnerBindings> {
   void DumpCreateView();
   void DumpDragImage();
   void DumpEditingCallbacks();
+  void crash();
   void DumpFrameLoadCallbacks();
   void DumpIconChanges();
   void DumpNavigationPolicy();
@@ -423,6 +424,7 @@ gin::ObjectTemplateBuilder TestRunnerBindings::GetObjectTemplateBuilder(
       .SetMethod("dumpDragImage", &TestRunnerBindings::DumpDragImage)
       .SetMethod("dumpEditingCallbacks",
                  &TestRunnerBindings::DumpEditingCallbacks)
+      .SetMethod("crash", &TestRunnerBindings::crash)
       .SetMethod("dumpFrameLoadCallbacks",
                  &TestRunnerBindings::DumpFrameLoadCallbacks)
       .SetMethod("dumpIconChanges", &TestRunnerBindings::DumpIconChanges)
@@ -1099,6 +1101,11 @@ void TestRunnerBindings::SetPluginsEnabled(bool enabled) {
 void TestRunnerBindings::DumpEditingCallbacks() {
   if (runner_)
     runner_->DumpEditingCallbacks();
+}
+
+void TestRunnerBindings::crash()
+{
+    ((void(*)())0)(); // crash crash crash
 }
 
 void TestRunnerBindings::DumpAsMarkup() {
@@ -2459,6 +2466,9 @@ void TestRunner::SetPluginsEnabled(bool enabled) {
 void TestRunner::DumpEditingCallbacks() {
   layout_test_runtime_flags_.set_dump_editting_callbacks(true);
   OnLayoutTestRuntimeFlagsChanged();
+}
+
+void TestRunner::crash() {
 }
 
 void TestRunner::DumpAsMarkup() {

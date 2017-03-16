@@ -1,0 +1,11 @@
+This test passes, questionably, if it does not crash.
+<script>
+testRunner.waitUntilDone();
+testRunner.dumpAsText();
+onload = function() {
+  testRunner.notifyDone();
+  setTimeout(function() {
+    testRunner.crash();
+  }, 0);
+};
+</script>

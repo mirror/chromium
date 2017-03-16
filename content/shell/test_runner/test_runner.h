@@ -341,6 +341,7 @@ class TestRunner : public WebTestRunner {
   // descriptive text for each editing command. It takes no arguments, and
   // ignores any that may be present.
   void DumpEditingCallbacks();
+  void crash();
 
   // This function sets a flag that tells the test_shell to dump pages as
   // plain text, rather than as a text representation of the renderer's state.
