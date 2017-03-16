@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "920a6cf9_72486350",
+        "filename": "tools/directory_component_mapping/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:13:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb09ead4_5bac04a8",
+      "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24ff4cb3_319f0f5c",
         "filename": "tools/directory_component_mapping/compo_info/__init__.py",
         "patchSetId": 1
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a24f9f42_2a2e01d9",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:13:47Z",
+      "side": 1,
+      "message": "+1 component mapper sounds better. Thanks for the suggestion!",
+      "parentUuid": "7fe4974e_a6be5b90",
+      "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aae8f555_39de9e4b",
         "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
         "patchSetId": 1
@@ -85,6 +121,24 @@
       "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "839bf2bb_953d5e04",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:13:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aae8f555_39de9e4b",
+      "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "d171a8a6_0d1a7893",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:13:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1178f80_0a7a67d4",
+      "range": {
+        "startLine": 5,
+        "startChar": 7,
+        "endLine": 5,
+        "endChar": 14
+      },
+      "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff4cde8b_518ff3ac",
         "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
         "patchSetId": 1
@@ -122,6 +200,30 @@
       "writtenOn": "2017-03-15T22:58:24Z",
       "side": 1,
       "message": "Can this use a hostname instead of IP address? How stable is that address?",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 13
+      },
+      "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1089959_488cc671",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:13:47Z",
+      "side": 1,
+      "message": "I\u0027ll double check and replace if there\u0027s a hostname.",
+      "parentUuid": "ff4cde8b_518ff3ac",
       "range": {
         "startLine": 9,
         "startChar": 0,
@@ -181,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "7247560e_21106107",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:13:47Z",
+      "side": 1,
+      "message": "I\u0027m using my id when I run it locally. It might not good to put personal id in a public script. I wanted to indicate that one need to ask for permission if they would like to query monorail database.",
+      "parentUuid": "c47755ee_b1427be3",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 9
+      },
+      "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f199e7f_3e285403",
         "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
         "patchSetId": 1
@@ -227,6 +353,54 @@
     },
     {
       "key": {
+        "uuid": "3692ff67_d6a3d737",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:13:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f199e7f_3e285403",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 15
+      },
+      "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b847ce55_fd2a3c46",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:13:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef13fa71_1d1c14ec",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 5
+      },
+      "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0cf65a7_cdc0b5b0",
         "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
         "patchSetId": 1
@@ -250,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "35e28998_1786e327",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:13:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0cf65a7_cdc0b5b0",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 13
+      },
+      "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1cb485b_5589b8b5",
         "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
         "patchSetId": 1
@@ -270,6 +468,30 @@
       "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d004cc59_ea41be34",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:13:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1cb485b_5589b8b5",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 20
+      },
+      "revId": "21eb1802dfeb52c1cc7039afa492a9bcfe205e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
