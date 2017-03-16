@@ -308,9 +308,10 @@ IntRect PaintLayerScrollableArea::scrollCornerRect() const {
   bool hasVerticalBar = verticalScrollbar();
   bool hasResizer = box().style()->resize() != RESIZE_NONE;
   if ((hasHorizontalBar && hasVerticalBar) ||
-      (hasResizer && (hasHorizontalBar || hasVerticalBar)))
+      (hasResizer && (hasHorizontalBar || hasVerticalBar))) {
     return cornerRect(box(), horizontalScrollbar(), verticalScrollbar(),
                       IntRect(IntPoint(), m_layer.size()));
+  }
   return IntRect();
 }
 
@@ -1381,9 +1382,10 @@ void PaintLayerScrollableArea::positionOverflowControls() {
   if (m_scrollCorner)
     m_scrollCorner->setFrameRect(LayoutRect(scrollCorner));
 
-  if (m_resizer)
+  if (m_resizer) {
     m_resizer->setFrameRect(
         LayoutRect(resizerCornerRect(layerBounds, ResizerForPointer)));
+  }
 
   // FIXME, this should eventually be removed, once we are certain that
   // composited controls get correctly positioned on a compositor update. For
