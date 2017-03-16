@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "95b5f0ac_6089116d",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:52:34Z",
+      "side": 1,
+      "message": "Yes. It means the prediction results could be multiple component labels. Here component is used same as label. I\u0027ll use component label to make things clear.",
+      "parentUuid": "3c6ca317_79448dea",
+      "range": {
+        "startLine": 6,
+        "startChar": 53,
+        "endLine": 7,
+        "endChar": 14
+      },
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "087af8a0_015458c9",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 5
@@ -56,6 +80,24 @@
       "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d64841_236fce8a",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "087af8a0_015458c9",
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +124,30 @@
     },
     {
       "key": {
+        "uuid": "9fa69554_e73c8e89",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf27abe3_c25f3748",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1418a67_6f6c28ef",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 5
@@ -96,6 +162,24 @@
       "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f2dcef9_fc342ce9",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1418a67_6f6c28ef",
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +200,24 @@
     },
     {
       "key": {
+        "uuid": "bf12e02e_401704f9",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09d4515f_c5780ae5",
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a9fe1dd_058f8774",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 5
@@ -133,6 +235,24 @@
     },
     {
       "key": {
+        "uuid": "60e5baa4_08169ffa",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a9fe1dd_058f8774",
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fde968e_e1f902db",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 5
@@ -147,6 +267,24 @@
       "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7e2b594_c12e6261",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fde968e_e1f902db",
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -170,6 +308,30 @@
       "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b242a9_80bfbfcf",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db675ec6_8e8c7789",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 17
+      },
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -219,6 +381,54 @@
     },
     {
       "key": {
+        "uuid": "8ff04769_bd42a03b",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f22f0d0_b3649813",
+      "range": {
+        "startLine": 46,
+        "startChar": 31,
+        "endLine": 46,
+        "endChar": 43
+      },
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b4e6d06_b21bc579",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c99078c_6a73d945",
+      "range": {
+        "startLine": 46,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5912c6a_0253be3d",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 5
@@ -233,6 +443,24 @@
       "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c39ad762_60a7e58e",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5912c6a_0253be3d",
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -259,6 +487,30 @@
     },
     {
       "key": {
+        "uuid": "7edcce88_96f5a806",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83db039b_248e6eeb",
+      "range": {
+        "startLine": 102,
+        "startChar": 39,
+        "endLine": 103,
+        "endChar": 13
+      },
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9ba0e4e_557dd8fb",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 5
@@ -282,6 +534,30 @@
     },
     {
       "key": {
+        "uuid": "a483436d_baedc7a8",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9ba0e4e_557dd8fb",
+      "range": {
+        "startLine": 110,
+        "startChar": 14,
+        "endLine": 110,
+        "endChar": 24
+      },
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3abb6c1f_b090d29a",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 5
@@ -302,6 +578,30 @@
       "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcb5d8b5_5c2e60ed",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3abb6c1f_b090d29a",
+      "range": {
+        "startLine": 120,
+        "startChar": 18,
+        "endLine": 120,
+        "endChar": 28
+      },
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -362,6 +662,24 @@
     },
     {
       "key": {
+        "uuid": "f990ba47_5107721f",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e22373f3_e42d03c4",
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6616ca48_50330509",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 5
@@ -379,6 +697,24 @@
     },
     {
       "key": {
+        "uuid": "2047bcf0_90d2cd43",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6616ca48_50330509",
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4503069_e53aec1f",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 5
@@ -393,6 +729,24 @@
       "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7e4164d_97912be3",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T23:52:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4503069_e53aec1f",
+      "revId": "c804742462cb53c5841b980727972c9d1b59a83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
