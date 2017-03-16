@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3bf49eda_68e95085",
+        "filename": "tools/directory_component_mapping/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "769fb60a_f55a0054",
+      "range": {
+        "startLine": 3,
+        "startChar": 23,
+        "endLine": 3,
+        "endChar": 24
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eae66d51_54160a7d",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 1
@@ -65,6 +89,48 @@
     },
     {
       "key": {
+        "uuid": "8901f35b_f2acff36",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9903558_2f4792cc",
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4cafa0b8_dd74e289",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eae66d51_54160a7d",
+      "range": {
+        "startLine": 5,
+        "startChar": 2,
+        "endLine": 5,
+        "endChar": 11
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7dfd661d_dcbe705d",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 1
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "1a8237cc_ec4ae30c",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dfd661d_dcbe705d",
+      "range": {
+        "startLine": 6,
+        "startChar": 2,
+        "endLine": 6,
+        "endChar": 7
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "749a84c7_fe9d6e94",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 1
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "3b9ac06c_dddfef07",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "749a84c7_fe9d6e94",
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f736102_357ca8a4",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 1
@@ -116,6 +224,30 @@
       "writtenOn": "2017-03-15T00:10:54Z",
       "side": 1,
       "message": "Where is sklearn coming from? Is it expected to be installed on the user system, or is it in the chromium codebase? Either way, it sounds like it will require some setup or usage instructions (or maybe even a wrapper script, to make sure PATHs and such are set correctly). This is more info that would be appropriate for a README.md.",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 12
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b040016_84566466",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "It\u0027s a public library and is expected to be installed on the user system. I will add a README.md and address this.",
+      "parentUuid": "5f736102_357ca8a4",
       "range": {
         "startLine": 14,
         "startChar": 5,
@@ -148,6 +280,30 @@
       "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91bcd2d1_69bf81d3",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68927472_baf1603a",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 14
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -220,6 +376,54 @@
     },
     {
       "key": {
+        "uuid": "8db6cf25_ab387791",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6eae5faf_4df15493",
+      "range": {
+        "startLine": 27,
+        "startChar": 11,
+        "endLine": 27,
+        "endChar": 16
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2a04a02_c89d3675",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33d34f5b_50f87b7e",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 10
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f187b578_d8dba9e3",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 1
@@ -266,6 +470,54 @@
     },
     {
       "key": {
+        "uuid": "95fc524e_20e16a02",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f187b578_d8dba9e3",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 10
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f2976f7_3ca8e17e",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "082d10fe_a03c729b",
+      "range": {
+        "startLine": 30,
+        "startChar": 23,
+        "endLine": 30,
+        "endChar": 30
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d6eaf21_ed44d509",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 1
@@ -286,6 +538,30 @@
       "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "facbc942_382f4446",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d6eaf21_ed44d509",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 17
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -312,6 +588,30 @@
     },
     {
       "key": {
+        "uuid": "f84ca9f1_97930353",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd339d39_0c1c48a4",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 8
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88872b03_351ccab9",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 1
@@ -332,6 +632,30 @@
       "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d916043_af0d95ad",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88872b03_351ccab9",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 11
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -358,6 +682,30 @@
     },
     {
       "key": {
+        "uuid": "0ef6ad51_4b874589",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f007d25_0643e8f8",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 9
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a2512ca_32acc6dd",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 1
@@ -378,6 +726,30 @@
       "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49e82e48_c3bec09c",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a2512ca_32acc6dd",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 5
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -404,6 +776,30 @@
     },
     {
       "key": {
+        "uuid": "f33ab974_589afb6e",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f540a9f_f34bbda6",
+      "range": {
+        "startLine": 46,
+        "startChar": 21,
+        "endLine": 46,
+        "endChar": 38
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0904ba5d_e14cded2",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 1
@@ -424,6 +820,30 @@
       "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58366939_08abd9e0",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0904ba5d_e14cded2",
+      "range": {
+        "startLine": 50,
+        "startChar": 9,
+        "endLine": 50,
+        "endChar": 13
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -450,6 +870,30 @@
     },
     {
       "key": {
+        "uuid": "b2f77bf2_9552d75b",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a91d3653_ef54fd0c",
+      "range": {
+        "startLine": 79,
+        "startChar": 34,
+        "endLine": 79,
+        "endChar": 43
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bbd5cb4_d607ec47",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 1
@@ -470,6 +914,30 @@
       "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8caee8e6_bda50760",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bbd5cb4_d607ec47",
+      "range": {
+        "startLine": 90,
+        "startChar": 4,
+        "endLine": 90,
+        "endChar": 25
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -496,6 +964,30 @@
     },
     {
       "key": {
+        "uuid": "ebc9bd6d_942a475c",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5169701_f3e97f95",
+      "range": {
+        "startLine": 91,
+        "startChar": 45,
+        "endLine": 91,
+        "endChar": 51
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f0a1828_a1ea84a2",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 1
@@ -516,6 +1008,30 @@
       "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dea98a0_517d130c",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f0a1828_a1ea84a2",
+      "range": {
+        "startLine": 95,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 11
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -566,6 +1082,30 @@
     },
     {
       "key": {
+        "uuid": "e76a5ec0_366b4743",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ae4ea89_33f6ddf7",
+      "range": {
+        "startLine": 103,
+        "startChar": 4,
+        "endLine": 103,
+        "endChar": 8
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d733bb42_1e828b00",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 1
@@ -586,6 +1126,30 @@
       "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa4648db_bb1b3e35",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d733bb42_1e828b00",
+      "range": {
+        "startLine": 109,
+        "startChar": 24,
+        "endLine": 109,
+        "endChar": 37
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -635,6 +1199,54 @@
     },
     {
       "key": {
+        "uuid": "86298c23_9499449a",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cde78bb3_7f81f450",
+      "range": {
+        "startLine": 120,
+        "startChar": 44,
+        "endLine": 120,
+        "endChar": 47
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f59e49e2_a962eafc",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Thanks for the suggestions! I have a ipython script to test this script together with the other cl for data preprocessing. I will upload this script together with README.md.",
+      "parentUuid": "cf2007e3_13b0f81c",
+      "range": {
+        "startLine": 120,
+        "startChar": 5,
+        "endLine": 120,
+        "endChar": 13
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "025d9fbe_3ea23bcd",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 1
@@ -655,6 +1267,30 @@
       "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4642068e_2c619789",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "025d9fbe_3ea23bcd",
+      "range": {
+        "startLine": 151,
+        "startChar": 24,
+        "endLine": 151,
+        "endChar": 33
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -698,6 +1334,30 @@
     },
     {
       "key": {
+        "uuid": "62b7a982_c5357a7e",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ccd0347_6ea8401c",
+      "range": {
+        "startLine": 170,
+        "startChar": 6,
+        "endLine": 170,
+        "endChar": 11
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f62bfca2_780b2ef1",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 1
@@ -721,6 +1381,30 @@
     },
     {
       "key": {
+        "uuid": "fc8922a6_826a3f14",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f62bfca2_780b2ef1",
+      "range": {
+        "startLine": 192,
+        "startChar": 54,
+        "endLine": 192,
+        "endChar": 64
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e8a2950_722832d3",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 1
@@ -741,6 +1425,30 @@
       "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d9dd76b_dc3a240e",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-16T00:10:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e8a2950_722832d3",
+      "range": {
+        "startLine": 208,
+        "startChar": 24,
+        "endLine": 208,
+        "endChar": 33
+      },
+      "revId": "79aaa8fa00045b234a8f460d5759ce37a76015c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
