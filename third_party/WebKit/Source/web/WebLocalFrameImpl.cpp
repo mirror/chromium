@@ -1638,7 +1638,7 @@ LocalFrame* WebLocalFrameImpl::createChildFrame(
       ownerElement->scrollingMode(), ownerElement->marginWidth(),
       ownerElement->marginHeight(), ownerElement->allowFullscreen(),
       ownerElement->allowPaymentRequest(), ownerElement->csp(),
-      ownerElement->delegatedPermissions(), ownerElement->allowedFeatures());
+      ownerElement->allowedFeatures());
   // FIXME: Using subResourceAttributeName as fallback is not a perfect
   // solution. subResourceAttributeName returns just one attribute name. The
   // element might not have the attribute, and there might be other attributes
@@ -1927,7 +1927,7 @@ HitTestResult WebLocalFrameImpl::hitTestResultForVisualViewportPos(
   IntPoint docPoint(frame()->view()->rootFrameToContents(rootFramePoint));
   HitTestResult result = frame()->eventHandler().hitTestResultAtPoint(
       docPoint, HitTestRequest::ReadOnly | HitTestRequest::Active);
-  result.setToShadowHostIfInUserAgentShadowRoot();
+  result.setToShadowHostIfInRestrictedShadowRoot();
   return result;
 }
 

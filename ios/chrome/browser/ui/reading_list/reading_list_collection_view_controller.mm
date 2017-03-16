@@ -120,7 +120,7 @@ using ItemsMapByDate = std::multimap<int64_t, ReadingListCollectionViewItem*>;
 // Stops observing the ReadingListModel.
 - (void)stopObservingReadingListModel;
 // Returns the ReadingListEntry associated with the |item|. If there is not such
-// an entry, returns nullptr and reloads the UI.
+// an entry, returns nullptr.
 - (const ReadingListEntry*)readingListEntryForItem:
     (ReadingListCollectionViewItem*)item;
 // Updates the toolbar state according to the selected items.
@@ -619,9 +619,12 @@ using ItemsMapByDate = std::multimap<int64_t, ReadingListCollectionViewItem*>;
       attributesProvider:self.attributesProvider
                      url:url
        distillationState:entry.DistilledState()];
-  NSString* urlString = base::SysUTF16ToNSString(url_formatter::FormatUrl(url));
+  NSString* fullUrlString =
+      base::SysUTF16ToNSString(url_formatter::FormatUrl(url));
+  NSString* urlString =
+      base::SysUTF16ToNSString(url_formatter::FormatUrl(url.GetOrigin()));
   NSString* title = base::SysUTF8ToNSString(entry.Title());
-  item.text = [title length] ? title : urlString;
+  item.text = [title length] ? title : fullUrlString;
   item.detailText = urlString;
   item.faviconPageURL =
       entry.DistilledURL().is_valid() ? entry.DistilledURL() : url;
@@ -694,12 +697,6 @@ using ItemsMapByDate = std::multimap<int64_t, ReadingListCollectionViewItem*>;
     (ReadingListCollectionViewItem*)item {
   const ReadingListEntry* readingListEntry =
       self.readingListModel->GetEntryByURL(item.url);
-
-  if (!readingListEntry) {
-    // The entry has been removed from the model, reload all data to synchronize
-    // the UI with the model.
-    [self reloadData];
-  }
 
   return readingListEntry;
 }

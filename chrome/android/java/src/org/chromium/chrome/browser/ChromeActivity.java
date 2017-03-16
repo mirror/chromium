@@ -531,6 +531,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         mIncognitoTabCreator = tabCreators.second;
 
         OfflinePageUtils.observeTabModelSelector(this, mTabModelSelector);
+        NewTabPageUma.monitorNTPCreation(mTabModelSelector);
 
         if (mTabModelSelectorTabObserver != null) mTabModelSelectorTabObserver.destroy();
 
@@ -824,7 +825,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         FeatureUtilities.setIsInMultiWindowMode(
                 MultiWindowUtils.getInstance().isInMultiWindowMode(this));
 
-        VideoPersister.getInstance().stopIfPersisted(this);
+        VideoPersister.getInstance().cleanup(this);
     }
 
     @Override
@@ -1351,6 +1352,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
      * @return The resource id that contains how large the browser controls are.
      */
     public int getControlContainerHeightResource() {
+        if (mBottomSheet != null) return R.dimen.bottom_control_container_height;
         return R.dimen.control_container_height;
     }
 
@@ -1668,6 +1670,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
      * and visa-versa.
      * @param isInMultiWindowMode True if the activity is in multi-window mode.
      */
+    @Override
     public void onMultiWindowModeChanged(boolean isInMultiWindowMode) {
         recordMultiWindowModeChangedUserAction(isInMultiWindowMode);
 

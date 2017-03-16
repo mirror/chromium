@@ -388,7 +388,7 @@ if (!is_android) {
       "../browser/ui/browser_focus_uitest.cc",
       "../browser/ui/cocoa/apps/app_shim_menu_controller_mac_interactive_uitest.mm",
       "../browser/ui/cocoa/apps/quit_with_apps_controller_mac_interactive_uitest.mm",
-      "../browser/ui/cocoa/website_settings/permission_bubble_cocoa_interactive_uitest.mm",
+      "../browser/ui/cocoa/permission_bubble/permission_bubble_cocoa_interactive_uitest.mm",
       "../browser/ui/exclusive_access/flash_fullscreen_interactive_browsertest.cc",
       "../browser/ui/exclusive_access/fullscreen_controller_interactive_browsertest.cc",
       "../browser/ui/exclusive_access/fullscreen_controller_state_interactive_browsertest.cc",
@@ -1776,6 +1776,12 @@ test("browser_tests") {
       "../browser/ui/login/login_handler_browsertest.cc",
       "../browser/ui/native_window_tracker_browsertest.cc",
       "../browser/ui/passwords/manage_passwords_test.cc",
+      "../browser/ui/permission_bubble/mock_permission_prompt.cc",
+      "../browser/ui/permission_bubble/mock_permission_prompt.h",
+      "../browser/ui/permission_bubble/mock_permission_prompt_factory.cc",
+      "../browser/ui/permission_bubble/mock_permission_prompt_factory.h",
+      "../browser/ui/permission_bubble/permission_bubble_browser_test_util.cc",
+      "../browser/ui/permission_bubble/permission_bubble_browser_test_util.h",
       "../browser/ui/prefs/prefs_tab_helper_browsertest.cc",
       "../browser/ui/profile_error_browsertest.cc",
       "../browser/ui/search/new_tab_page_interceptor_browsertest.cc",
@@ -1798,12 +1804,6 @@ test("browser_tests") {
       "../browser/ui/toolbar/mock_component_toolbar_actions_factory.h",
       "../browser/ui/update_chrome_dialog_browsertest.cc",
       "../browser/ui/views/hung_renderer_view_browsertest.cc",
-      "../browser/ui/website_settings/mock_permission_prompt.cc",
-      "../browser/ui/website_settings/mock_permission_prompt.h",
-      "../browser/ui/website_settings/mock_permission_prompt_factory.cc",
-      "../browser/ui/website_settings/mock_permission_prompt_factory.h",
-      "../browser/ui/website_settings/permission_bubble_browser_test_util.cc",
-      "../browser/ui/website_settings/permission_bubble_browser_test_util.h",
       "../browser/ui/webui/bidi_checker_web_ui_test.cc",
       "../browser/ui/webui/bidi_checker_web_ui_test.h",
       "../browser/ui/webui/bookmarks_ui_browsertest.cc",
@@ -2553,13 +2553,13 @@ test("browser_tests") {
           "../browser/ui/cocoa/location_bar/zoom_decoration_browsertest.mm",
           "../browser/ui/cocoa/omnibox/omnibox_view_mac_browsertest.mm",
           "../browser/ui/cocoa/passwords/passwords_bubble_browsertest.mm",
+          "../browser/ui/cocoa/permission_bubble/permission_bubble_cocoa_browser_test.mm",
           "../browser/ui/cocoa/profiles/profile_signin_confirmation_view_controller_browsertest.mm",
           "../browser/ui/cocoa/renderer_context_menu/render_view_context_menu_mac_browsertest.mm",
           "../browser/ui/cocoa/ssl_client_certificate_selector_cocoa_browsertest.mm",
           "../browser/ui/cocoa/task_manager_mac_browsertest.mm",
           "../browser/ui/cocoa/view_id_util_browsertest.mm",
           "../browser/ui/cocoa/web_contents_modal_dialog_manager_views_mac_browsertest.mm",
-          "../browser/ui/cocoa/website_settings/permission_bubble_cocoa_browser_test.mm",
         ]
       }
     }
@@ -2602,6 +2602,9 @@ test("browser_tests") {
         "../browser/metrics/desktop_session_duration/chrome_visibility_observer_browsertest.cc",
         "../browser/profiles/profile_statistics_browsertest.cc",
       ]
+    }
+    if (is_mac || is_win || is_chromeos) {
+      sources += [ "../browser/extensions/api/networking_cast_private/networking_cast_private_apitest.cc" ]
     }
     if (enable_app_list) {
       sources += [
@@ -3252,6 +3255,7 @@ test("unit_tests") {
     "../browser/page_load_metrics/observers/document_write_page_load_metrics_observer_unittest.cc",
     "../browser/page_load_metrics/observers/from_gws_page_load_metrics_observer_unittest.cc",
     "../browser/page_load_metrics/observers/google_captcha_observer_unittest.cc",
+    "../browser/page_load_metrics/observers/media_page_load_metrics_observer_unittest.cc",
     "../browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.cc",
     "../browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h",
     "../browser/page_load_metrics/observers/previews_page_load_metrics_observer_unittest.cc",
@@ -3270,7 +3274,6 @@ test("unit_tests") {
     "../browser/password_manager/password_store_x_unittest.cc",
     "../browser/password_manager/simple_password_store_mac_unittest.cc",
     "../browser/permissions/chooser_context_base_unittest.cc",
-    "../browser/permissions/delegation_tracker_unittest.cc",
     "../browser/permissions/permission_context_base_unittest.cc",
     "../browser/permissions/permission_decision_auto_blocker_unittest.cc",
     "../browser/permissions/permission_manager_unittest.cc",
@@ -3376,15 +3379,15 @@ test("unit_tests") {
     "../browser/ui/passwords/manage_passwords_state_unittest.cc",
     "../browser/ui/passwords/manage_passwords_view_utils_unittest.cc",
     "../browser/ui/passwords/password_manager_presenter_unittest.cc",
+    "../browser/ui/permission_bubble/mock_permission_prompt.cc",
+    "../browser/ui/permission_bubble/mock_permission_prompt.h",
+    "../browser/ui/permission_bubble/mock_permission_prompt_factory.cc",
+    "../browser/ui/permission_bubble/mock_permission_prompt_factory.h",
     "../browser/ui/search_engines/keyword_editor_controller_unittest.cc",
     "../browser/ui/sync/profile_signin_confirmation_helper_unittest.cc",
     "../browser/ui/sync/sync_promo_ui_unittest.cc",
     "../browser/ui/tests/ui_gfx_image_unittest.cc",
     "../browser/ui/tests/ui_gfx_image_unittest.mm",
-    "../browser/ui/website_settings/mock_permission_prompt.cc",
-    "../browser/ui/website_settings/mock_permission_prompt.h",
-    "../browser/ui/website_settings/mock_permission_prompt_factory.cc",
-    "../browser/ui/website_settings/mock_permission_prompt_factory.h",
     "../browser/ui/webui/browsing_history_handler_unittest.cc",
     "../browser/ui/webui/fileicon_source_unittest.cc",
     "../browser/ui/webui/local_state/local_state_ui_unittest.cc",
@@ -4127,6 +4130,7 @@ test("unit_tests") {
     deps += [
       "//chrome/common/extensions/api",
       "//extensions:extensions_resources",
+      "//extensions/common",
       "//extensions/strings",
       "//media/cast:test_support",
 
@@ -4358,6 +4362,7 @@ test("unit_tests") {
       "../browser/printing/print_preview_dialog_controller_unittest.cc",
       "../browser/printing/print_preview_test.cc",
       "../browser/printing/print_preview_test.h",
+      "../browser/printing/print_view_manager_unittest.cc",
       "../browser/ui/webui/print_preview/extension_printer_handler_unittest.cc",
       "../browser/ui/webui/print_preview/print_preview_ui_unittest.cc",
       "../browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
@@ -4663,6 +4668,7 @@ test("unit_tests") {
         "../browser/ui/cocoa/passwords/save_pending_password_view_controller_unittest.mm",
         "../browser/ui/cocoa/passwords/signin_promo_view_controller_unittest.mm",
         "../browser/ui/cocoa/passwords/update_pending_password_view_controller_unittest.mm",
+        "../browser/ui/cocoa/permission_bubble/permission_bubble_controller_unittest.mm",
         "../browser/ui/cocoa/profiles/avatar_button_controller_unittest.mm",
         "../browser/ui/cocoa/profiles/avatar_button_unittest.mm",
         "../browser/ui/cocoa/profiles/avatar_icon_controller_unittest.mm",
@@ -4698,7 +4704,6 @@ test("unit_tests") {
         "../browser/ui/cocoa/vertical_gradient_view_unittest.mm",
         "../browser/ui/cocoa/view_resizer_pong.h",
         "../browser/ui/cocoa/view_resizer_pong.mm",
-        "../browser/ui/cocoa/website_settings/permission_bubble_controller_unittest.mm",
         "../browser/ui/cocoa/window_size_autosaver_unittest.mm",
       ]
     }
@@ -4790,6 +4795,7 @@ test("unit_tests") {
       "../browser/media/webrtc/native_desktop_media_list_unittest.cc",
       "../browser/metrics/desktop_session_duration/desktop_session_duration_tracker_unittest.cc",
       "../browser/signin/signin_global_error_unittest.cc",
+      "../browser/signin/signin_util_unittest.cc",
       "../browser/ui/webui/signin/signin_create_profile_handler_unittest.cc",
       "../browser/ui/webui/signin/sync_confirmation_handler_unittest.cc",
       "../browser/upgrade_detector_impl_unittest.cc",

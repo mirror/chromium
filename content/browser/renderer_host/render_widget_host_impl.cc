@@ -82,6 +82,7 @@
 #include "storage/browser/fileapi/isolated_context.h"
 #include "third_party/WebKit/public/web/WebCompositionUnderline.h"
 #include "ui/base/clipboard/clipboard.h"
+#include "ui/base/ui_base_switches.h"
 #include "ui/events/blink/web_input_event_traits.h"
 #include "ui/events/event.h"
 #include "ui/events/keycodes/keyboard_codes.h"
@@ -667,6 +668,16 @@ bool RenderWidgetHostImpl::GetResizeParams(ResizeParams* resize_params) {
   *resize_params = ResizeParams();
 
   GetScreenInfo(&resize_params->screen_info);
+
+  // Pretend that HDR displays are sRGB so that we do not have inconsistent
+  // coloring.
+  // TODO(ccameron): Disable this once color correct rasterization is functional
+  // https://crbug.com/701942
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kEnableHDR)) {
+    gfx::ColorSpace::CreateSRGB().GetICCProfile(
+        &resize_params->screen_info.icc_profile);
+  }
+
   if (delegate_) {
     resize_params->is_fullscreen_granted =
         delegate_->IsFullscreenForCurrentTab();
@@ -2106,14 +2117,15 @@ InputEventAckState RenderWidgetHostImpl::FilterInputEvent(
 
 void RenderWidgetHostImpl::IncrementInFlightEventCount(
     blink::WebInputEvent::Type event_type) {
-  increment_in_flight_event_count();
+  ++in_flight_event_count_;
   if (!is_hidden_)
     StartHangMonitorTimeout(hung_renderer_delay_, event_type);
 }
 
 void RenderWidgetHostImpl::DecrementInFlightEventCount(
     InputEventAckSource ack_source) {
-  if (decrement_in_flight_event_count() <= 0) {
+  --in_flight_event_count_;
+  if (in_flight_event_count_ <= 0) {
     // Cancel pending hung renderer checks since the renderer is responsive.
     StopHangMonitorTimeout();
   } else {

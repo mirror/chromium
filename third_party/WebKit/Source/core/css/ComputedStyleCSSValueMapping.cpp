@@ -659,16 +659,32 @@ valueForContentPositionAndDistributionWithOverflowAlignment(
     const StyleContentAlignmentData& data,
     CSSValueID normalBehaviorValueID) {
   CSSValueList* result = CSSValueList::createSpaceSeparated();
+  // Handle content-distribution values
   if (data.distribution() != ContentDistributionDefault)
     result->append(*CSSIdentifierValue::create(data.distribution()));
-  if (data.distribution() == ContentDistributionDefault ||
-      data.position() != ContentPositionNormal) {
-    if (!RuntimeEnabledFeatures::cssGridLayoutEnabled() &&
-        data.position() == ContentPositionNormal)
-      result->append(*CSSIdentifierValue::create(normalBehaviorValueID));
-    else
+
+  // Handle content-position values (either as fallback or actual value)
+  switch (data.position()) {
+    case ContentPositionNormal:
+      // Handle 'normal' value, not valid as content-distribution fallback.
+      if (data.distribution() == ContentDistributionDefault) {
+        result->append(*CSSIdentifierValue::create(
+            RuntimeEnabledFeatures::cssGridLayoutEnabled()
+                ? CSSValueNormal
+                : normalBehaviorValueID));
+      }
+      break;
+    case ContentPositionLastBaseline:
+      result->append(
+          *CSSValuePair::create(CSSIdentifierValue::create(CSSValueLast),
+                                CSSIdentifierValue::create(CSSValueBaseline),
+                                CSSValuePair::DropIdenticalValues));
+      break;
+    default:
       result->append(*CSSIdentifierValue::create(data.position()));
   }
+
+  // Handle overflow-alignment (only allowed for content-position values)
   if ((data.position() >= ContentPositionCenter ||
        data.distribution() != ContentDistributionDefault) &&
       data.overflow() != OverflowAlignmentDefault)
@@ -2368,7 +2384,7 @@ const CSSValue* ComputedStyleCSSValueMapping::get(
       return CSSPrimitiveValue::create(style.order(),
                                        CSSPrimitiveValue::UnitType::Number);
     case CSSPropertyFloat:
-      if (style.display() != EDisplay::None && style.hasOutOfFlowPosition())
+      if (style.display() != EDisplay::kNone && style.hasOutOfFlowPosition())
         return CSSIdentifierValue::create(CSSValueNone);
       return CSSIdentifierValue::create(style.floating());
     case CSSPropertyFont:
@@ -2582,7 +2598,7 @@ const CSSValue* ComputedStyleCSSValueMapping::get(
       if (marginRight.isPercentOrCalc()) {
         // LayoutBox gives a marginRight() that is the distance between the
         // right-edge of the child box and the right-edge of the containing box,
-        // when display == EDisplay::Block. Let's calculate the absolute value
+        // when display == EDisplay::kBlock. Let's calculate the absolute value
         // of the specified margin-right % instead of relying on LayoutBox's
         // marginRight() value.
         value = minimumValueForLength(

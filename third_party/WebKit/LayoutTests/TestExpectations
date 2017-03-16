@@ -7,9 +7,6 @@ Bug(intentional) harness-tests/timeout.html [ Timeout ]
 # failure. Expected outputs will be adjusted for the better once Oilpan
 # has been well and truly enabled always.
 
-crbug.com/420008 inspector/tracing/worker-js-frames.html [ Pass Timeout Failure ]
-crbug.com/420008 virtual/threaded/inspector/tracing/worker-js-frames.html [ Pass Timeout Failure ]
-
 crbug.com/569901 crbug.com/24182 [ Debug ] jquery/manipulation.html [ Timeout Pass ]
 
 # ====== Oilpan-only failures until here ======
@@ -136,26 +133,20 @@ crbug.com/664852 virtual/gpu/fast/canvas/OffscreenCanvas-2d-drawImage.html [ Pas
 
 crbug.com/671048 virtual/color_space/fast/canvas/color-space/display_linear-rgb.html [ Failure ]
 
-# Added 2016-12-14
-crbug.com/674396 [ Win ] compositing/reflections/nested-reflection-transition.html [ Pass Failure ]
-crbug.com/674396 [ Win ] virtual/disable-spinvalidation/compositing/reflections/nested-reflection-transition.html [ Pass Failure ]
-
-# Added 2016-12-15
-crbug.com/674468 [ Trusty ] compositing/reflections/nested-reflection-transition.html [ Pass Failure ]
-crbug.com/674468 [ Trusty ] virtual/disable-spinvalidation/compositing/reflections/nested-reflection-transition.html [ Pass Failure ]
-
 # Added 2016-12-16
 crbug.com/674858 [ Linux ] virtual/threaded/printing/offscreencanvas-2d-printing.html [ Pass Failure Crash ]
 crbug.com/674858 [ Linux ] virtual/threaded/printing/offscreencanvas-webgl-printing.html [ Pass Failure Crash ]
 
-# Added 2017-02-20
-crbug.com/693510 compositing/reflections/nested-reflection-anchor-point.html [ Failure Pass ]
-crbug.com/693510 compositing/reflections/nested-reflection-animated.html [ Failure Pass ]
-crbug.com/693510 virtual/disable-spinvalidation/compositing/reflections/nested-reflection-anchor-point.html [ Failure Pass ]
-crbug.com/693510 virtual/disable-spinvalidation/compositing/reflections/nested-reflection-animated.html [ Failure Pass ]
-
 crbug.com/667045 paint/invalidation/table/composited-cell-collapsed-border-add-anonymous.html [ Crash ]
 crbug.com/667045 virtual/disable-spinvalidation/paint/invalidation/table/composited-cell-collapsed-border-add-anonymous.html [ Crash ]
+
+# These are genuinely flaky.
+crbug.com/653722 compositing/reflections/nested-reflection-anchor-point.html [ Pass Failure ]
+crbug.com/653722 compositing/reflections/nested-reflection-animated.html [ Pass Failure ]
+crbug.com/653722 compositing/reflections/nested-reflection-transition.html [ Pass Failure ]
+crbug.com/653722 virtual/disable-spinvalidation/compositing/reflections/nested-reflection-anchor-point.html [ Pass Failure ]
+crbug.com/653722 virtual/disable-spinvalidation/compositing/reflections/nested-reflection-animated.html [ Pass Failure ]
+crbug.com/653722 virtual/disable-spinvalidation/compositing/reflections/nested-reflection-transition.html [ Pass Failure ]
 
 crbug.com/701800 [ Win7 ] virtual/disable-spinvalidation/compositing/perpendicular-layer-sorting.html [ Pass Failure ]
 
@@ -2828,10 +2819,14 @@ crbug.com/698520 external/wpt/preload/fetch-destination.https.html [ Failure Pas
 crbug.com/698521 external/wpt/preload/preload-with-type.html [ Failure Pass ]
 
 # Sheriff failures 2017-03-10
-crbug.com/402805 [ Mac10.10 Mac10.11 ] inspector-protocol/input/emulateTouchFromMouseEvent.html [ Timeout ]
+crbug.com/402805 [ Mac10.10 Mac10.11 Mac10.12 Win10 ] inspector-protocol/input/emulateTouchFromMouseEvent.html [ Timeout ]
 crbug.com/700374 [ Win ] virtual/mojo-loading/http/tests/inspector/workers-on-navigation.html [ Failure Pass ]
 crbug.com/700374 [ Win ] http/tests/inspector/workers-on-navigation.html [ Failure Pass ]
 crbug.com/700387 [ Win7 ] external/wpt/fullscreen/api/document-exit-fullscreen-nested-in-iframe-manual.html [ Timeout Pass ]
 
 # Sheriff failures 2017-03-13
 crbug.com/701140 inspector-protocol/css/css-get-rule-list.html [ Failure Pass ]
+
+# Sheriff failures 2017-03-16
+crbug.com/701718 [ Win7 ] fast/table/border-collapsing/001-vertical.html [ Failure Pass ]
+crbug.com/701718 [ Win7 ] fast/table/border-collapsing/001.html [ Failure Pass ]

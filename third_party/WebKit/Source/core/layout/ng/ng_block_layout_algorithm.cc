@@ -36,7 +36,7 @@ bool ShouldShrinkToFit(const NGConstraintSpace& parent_space,
   bool is_in_parallel_flow =
       IsParallelWritingMode(parent_space.WritingMode(), child_writing_mode);
 
-  return child_style.display() == EDisplay::InlineBlock ||
+  return child_style.display() == EDisplay::kInlineBlock ||
          child_style.isFloating() || !is_in_parallel_flow;
 }
 
@@ -163,6 +163,7 @@ NGLogicalOffset CalculateLogicalOffsetForOpportunity(
     const LayoutUnit float_offset,
     const NGLogicalOffset& from_offset,
     NGFloatingObject* floating_object) {
+  DCHECK(floating_object);
   auto margins = floating_object->margins;
   // Adjust to child's margin.
   LayoutUnit inline_offset = margins.inline_start;
@@ -187,6 +188,7 @@ NGLogicalOffset PositionFloat(const NGLogicalOffset& origin_point,
                               const NGLogicalOffset& from_offset,
                               NGFloatingObject* floating_object,
                               NGConstraintSpace* new_parent_space) {
+  DCHECK(floating_object);
   const auto* float_space = floating_object->space.get();
   DCHECK(floating_object->fragment) << "Fragment cannot be null here";
 
@@ -220,10 +222,10 @@ NGLogicalOffset PositionFloat(const NGLogicalOffset& origin_point,
 
 // Updates the Floating Object's left offset from the provided parent_space
 // and {@code floating_object}'s space and margins.
-void UpdateFloatingObjectLeftOffset(
-    const NGConstraintSpace& new_parent_space,
-    const Persistent<NGFloatingObject>& floating_object,
-    const NGLogicalOffset& float_logical_offset) {
+void UpdateFloatingObjectLeftOffset(const NGConstraintSpace& new_parent_space,
+                                    const NGLogicalOffset& float_logical_offset,
+                                    NGFloatingObject* floating_object) {
+  DCHECK(floating_object);
   // TODO(glebl): We should use physical offset here.
   floating_object->left_offset =
       floating_object->original_parent_space->BfcOffset().inline_offset -
@@ -250,10 +252,10 @@ void PositionPendingFloats(const LayoutUnit origin_point_block_offset,
         original_parent_space->BfcOffset().inline_offset, bfc_block_offset};
 
     NGLogicalOffset float_fragment_offset = PositionFloat(
-        origin_point, from_offset, floating_object, new_parent_space);
+        origin_point, from_offset, floating_object.get(), new_parent_space);
     builder->AddFloatingObject(floating_object, float_fragment_offset);
-    UpdateFloatingObjectLeftOffset(*new_parent_space, floating_object,
-                                   float_fragment_offset);
+    UpdateFloatingObjectLeftOffset(*new_parent_space, float_fragment_offset,
+                                   floating_object.get());
   }
   builder->MutableUnpositionedFloats().clear();
 }
@@ -283,8 +285,8 @@ bool IsNewFormattingContextForInFlowBlockLevelChild(
     return true;
 
   EDisplay display = style.display();
-  if (display == EDisplay::Grid || display == EDisplay::Flex ||
-      display == EDisplay::WebkitBox)
+  if (display == EDisplay::kGrid || display == EDisplay::kFlex ||
+      display == EDisplay::kWebkitBox)
     return true;
 
   if (space.WritingMode() != FromPlatformWritingMode(style.getWritingMode()))
@@ -457,15 +459,14 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
     RefPtr<NGConstraintSpace> child_space =
         CreateConstraintSpaceForChild(child);
 
+    RefPtr<NGLayoutResult> layout_result;
     if (child->Type() == NGLayoutInputNode::kLegacyInline) {
-      LayoutInlineChild(toNGInlineNode(child), child_space.get());
-
+      layout_result = toNGInlineNode(child)->Layout(
+          child_space.get(), &builder_, child_break_token);
     } else {
-      RefPtr<NGLayoutResult> layout_result =
-          child->Layout(child_space.get(), child_break_token);
-
-      FinishChildLayout(child, child_space.get(), layout_result);
+      layout_result = child->Layout(child_space.get(), child_break_token);
     }
+    FinishChildLayout(child, child_space.get(), layout_result);
 
     entry = child_iterator.NextChild();
     child = entry.node;
@@ -519,21 +520,6 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
   return builder_.ToBoxFragment();
 }
 
-void NGBlockLayoutAlgorithm::LayoutInlineChild(NGInlineNode* inline_child,
-                                               NGConstraintSpace* child_space) {
-  // TODO(kojii): This logic does not handle when children are mix of
-  // inline/block. We need to detect the case and setup appropriately; e.g.,
-  // constraint space, margin collapsing, next siblings, etc.
-  NGLineBuilder line_builder(inline_child, child_space, &builder_);
-  // TODO(kojii): Need to determine when to invalidate PrepareLayout() more
-  // efficiently than "everytime".
-  inline_child->InvalidatePrepareLayout();
-  inline_child->LayoutInline(child_space, &line_builder);
-  RefPtr<NGLayoutResult> child_result = line_builder.CreateFragments();
-  line_builder.CopyFragmentDataToLayoutBlockFlow();
-  FinishChildLayout(inline_child, child_space, child_result);
-}
-
 void NGBlockLayoutAlgorithm::FinishChildLayout(
     NGLayoutInputNode* child,
     NGConstraintSpace* child_space,
@@ -550,7 +536,7 @@ void NGBlockLayoutAlgorithm::FinishChildLayout(
 
   if (child->Type() == NGLayoutInputNode::kLegacyBlock &&
       toNGBlockNode(child)->Style().isFloating()) {
-    NGFloatingObject* floating_object = new NGFloatingObject(
+    RefPtr<NGFloatingObject> floating_object = NGFloatingObject::Create(
         child_space, constraint_space_, toNGBlockNode(child)->Style(),
         curr_child_margins_, layout_result->PhysicalFragment().get());
     builder_.AddUnpositionedFloat(floating_object);

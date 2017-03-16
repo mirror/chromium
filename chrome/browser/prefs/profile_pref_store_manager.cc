@@ -120,7 +120,8 @@ PersistentPrefStore* ProfilePrefStoreManager::CreateProfilePrefStore(
            it = tracking_configuration_.begin();
        it != tracking_configuration_.end();
        ++it) {
-    if (it->enforcement_level > PrefHashFilter::NO_ENFORCEMENT) {
+    if (it->enforcement_level >
+        PrefHashFilter::EnforcementLevel::NO_ENFORCEMENT) {
       protected_configuration.push_back(*it);
       protected_pref_names.insert(it->name);
     } else {
@@ -147,11 +148,8 @@ PersistentPrefStore* ProfilePrefStoreManager::CreateProfilePrefStore(
   scoped_refptr<JsonPrefStore> unprotected_pref_store(new JsonPrefStore(
       profile_path_.Append(chrome::kPreferencesFilename), io_task_runner.get(),
       std::move(unprotected_pref_hash_filter)));
-  // TODO(gab): Remove kDeprecatedProtectedPreferencesFilename as an alternate
-  // file in M40+.
   scoped_refptr<JsonPrefStore> protected_pref_store(new JsonPrefStore(
       profile_path_.Append(chrome::kSecurePreferencesFilename),
-      profile_path_.Append(chrome::kProtectedPreferencesFilenameDeprecated),
       io_task_runner.get(), std::move(protected_pref_hash_filter)));
 
   SetupTrackedPreferencesMigration(

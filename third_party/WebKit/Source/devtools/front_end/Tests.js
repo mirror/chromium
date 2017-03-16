@@ -514,22 +514,23 @@
   TestSuite.prototype.testConsoleOnNavigateBack = function() {
 
     function filteredMessages() {
-      return SDK.multitargetConsoleModel.messages().filter(
-          a => a.source !== SDK.ConsoleMessage.MessageSource.Violation);
+      return ConsoleModel.consoleModel.messages().filter(
+          a => a.source !== ConsoleModel.ConsoleMessage.MessageSource.Violation);
     }
 
     if (filteredMessages().length === 1) {
       firstConsoleMessageReceived.call(this, null);
     } else {
-      SDK.multitargetConsoleModel.addEventListener(
-          SDK.ConsoleModel.Events.MessageAdded, firstConsoleMessageReceived, this);
+      ConsoleModel.consoleModel.addEventListener(
+          ConsoleModel.ConsoleModel.Events.MessageAdded, firstConsoleMessageReceived, this);
     }
 
+
     function firstConsoleMessageReceived(event) {
-      if (event && event.data.source === SDK.ConsoleMessage.MessageSource.Violation)
+      if (event && event.data.source === ConsoleModel.ConsoleMessage.MessageSource.Violation)
         return;
-      SDK.multitargetConsoleModel.removeEventListener(
-          SDK.ConsoleModel.Events.MessageAdded, firstConsoleMessageReceived, this);
+      ConsoleModel.consoleModel.removeEventListener(
+          ConsoleModel.ConsoleModel.Events.MessageAdded, firstConsoleMessageReceived, this);
       this.evaluateInConsole_('clickLink();', didClickLink.bind(this));
     }
 
@@ -685,12 +686,13 @@
 
         messages.splice(index, 1);
         if (!messages.length) {
-          SDK.multitargetConsoleModel.removeEventListener(SDK.ConsoleModel.Events.MessageAdded, onConsoleMessage, this);
+          ConsoleModel.consoleModel.removeEventListener(
+              ConsoleModel.ConsoleModel.Events.MessageAdded, onConsoleMessage, this);
           next();
         }
       }
 
-      SDK.multitargetConsoleModel.addEventListener(SDK.ConsoleModel.Events.MessageAdded, onConsoleMessage, this);
+      ConsoleModel.consoleModel.addEventListener(ConsoleModel.ConsoleModel.Events.MessageAdded, onConsoleMessage, this);
       SDK.multitargetNetworkManager.setNetworkConditions(preset);
     }
 
@@ -835,7 +837,7 @@
   };
 
   TestSuite.prototype.testWindowInitializedOnNavigateBack = function() {
-    var messages = SDK.multitargetConsoleModel.messages();
+    var messages = ConsoleModel.consoleModel.messages();
     this.assertEquals(1, messages.length);
     var text = messages[0].messageText;
     if (text.indexOf('Uncaught') !== -1)
@@ -870,7 +872,7 @@
   };
 
   TestSuite.prototype.waitForTestResultsInConsole = function() {
-    var messages = SDK.multitargetConsoleModel.messages();
+    var messages = ConsoleModel.consoleModel.messages();
     for (var i = 0; i < messages.length; ++i) {
       var text = messages[i].messageText;
       if (text === 'PASS')
@@ -887,7 +889,7 @@
         this.fail(text);
     }
 
-    SDK.multitargetConsoleModel.addEventListener(SDK.ConsoleModel.Events.MessageAdded, onConsoleMessage, this);
+    ConsoleModel.consoleModel.addEventListener(ConsoleModel.ConsoleModel.Events.MessageAdded, onConsoleMessage, this);
     this.takeControl();
   };
 
@@ -931,12 +933,12 @@
         Array.prototype.slice.call(arguments, 1, -1).map(arg => JSON.stringify(arg)).join(',') + ',';
     this.evaluateInConsole_(
         `${functionName}(${argsString} function() { console.log('${doneMessage}'); });`, function() {});
-    SDK.multitargetConsoleModel.addEventListener(SDK.ConsoleModel.Events.MessageAdded, onConsoleMessage);
+    ConsoleModel.consoleModel.addEventListener(ConsoleModel.ConsoleModel.Events.MessageAdded, onConsoleMessage);
 
     function onConsoleMessage(event) {
       var text = event.data.messageText;
       if (text === doneMessage) {
-        SDK.multitargetConsoleModel.removeEventListener(SDK.ConsoleModel.Events.MessageAdded, onConsoleMessage);
+        ConsoleModel.consoleModel.removeEventListener(ConsoleModel.ConsoleModel.Events.MessageAdded, onConsoleMessage);
         callback();
       }
     }

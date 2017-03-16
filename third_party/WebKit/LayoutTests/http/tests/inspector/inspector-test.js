@@ -668,7 +668,7 @@ InspectorTest.addSnifferPromise = function(receiver, methodName)
 
 InspectorTest.addConsoleSniffer = function(override, opt_sticky)
 {
-    InspectorTest.addSniffer(SDK.ConsoleModel.prototype, "addMessage", override, opt_sticky);
+    InspectorTest.addSniffer(ConsoleModel.ConsoleModel.prototype, "addMessage", override, opt_sticky);
 }
 
 InspectorTest.override = function(receiver, methodName, override, opt_sticky)
@@ -971,7 +971,6 @@ SDK.targetManager.observeTargets({
         InspectorTest.RuntimeAgent = target.runtimeAgent();
         InspectorTest.TargetAgent = target.targetAgent();
 
-        InspectorTest.consoleModel = target.consoleModel;
         InspectorTest.networkManager = SDK.NetworkManager.fromTarget(target);
         InspectorTest.securityOriginManager = SDK.SecurityOriginManager.fromTarget(target);
         InspectorTest.resourceTreeModel = SDK.ResourceTreeModel.fromTarget(target);
@@ -988,6 +987,7 @@ SDK.targetManager.observeTargets({
         InspectorTest.serviceWorkerManager = target.model(SDK.ServiceWorkerManager);
         InspectorTest.tracingManager = target.model(SDK.TracingManager);
         InspectorTest.mainTarget = target;
+        InspectorTest.consoleModel = ConsoleModel.consoleModel;
     },
 
     targetRemoved: function(target) { }

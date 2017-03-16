@@ -68,6 +68,7 @@
 #include "chrome/browser/pepper_broker_infobar_delegate.h"
 #include "chrome/browser/permissions/permission_request_manager.h"
 #include "chrome/browser/prefs/incognito_mode_prefs.h"
+#include "chrome/browser/printing/background_printing_manager.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_destroyer.h"
 #include "chrome/browser/profiles/profile_metrics.h"
@@ -123,6 +124,7 @@
 #include "chrome/browser/ui/global_error/global_error_service_factory.h"
 #include "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.h"
 #include "chrome/browser/ui/location_bar/location_bar.h"
+#include "chrome/browser/ui/permission_bubble/chooser_bubble_delegate.h"
 #include "chrome/browser/ui/search/search_delegate.h"
 #include "chrome/browser/ui/search/search_model.h"
 #include "chrome/browser/ui/search/search_tab_helper.h"
@@ -139,7 +141,6 @@
 #include "chrome/browser/ui/tabs/tab_utils.h"
 #include "chrome/browser/ui/unload_controller.h"
 #include "chrome/browser/ui/validation_message_bubble.h"
-#include "chrome/browser/ui/website_settings/chooser_bubble_delegate.h"
 #include "chrome/browser/ui/webui/signin/login_ui_service.h"
 #include "chrome/browser/ui/webui/signin/login_ui_service_factory.h"
 #include "chrome/browser/ui/window_sizer/window_sizer.h"
@@ -536,6 +537,14 @@ Browser::~Browser() {
       profiles::RemoveBrowsingDataForProfile(profile_->GetPath());
 #endif
     } else {
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
+      // The Printing Background Manager holds onto preview dialog WebContents
+      // whose corresponding print jobs have not yet fully spooled. Make sure
+      // these get destroyed before tearing down the incognito profile so that
+      // their render frame hosts can exit in time - see crbug.com/579155
+      g_browser_process->background_printing_manager()
+          ->DeletePreviewContentsForBrowserContext(profile_);
+#endif
       // An incognito profile is no longer needed, this indirectly frees
       // its cache and cookies once it gets destroyed at the appropriate time.
       ProfileDestroyer::DestroyProfileWhenAppropriate(profile_);
@@ -656,28 +665,29 @@ void Browser::FormatTitleForDisplay(base::string16* title) {
 bool Browser::ShouldCloseWindow() {
   if (!CanCloseWithInProgressDownloads())
     return false;
-
   if (IsFastTabUnloadEnabled())
     return fast_unload_controller_->ShouldCloseWindow();
   return unload_controller_->ShouldCloseWindow();
 }
 
-bool Browser::CallBeforeUnloadHandlers(
+bool Browser::TryToCloseWindow(
+    bool skip_beforeunload,
     const base::Callback<void(bool)>& on_close_confirmed) {
   cancel_download_confirmation_state_ = RESPONSE_RECEIVED;
   if (IsFastTabUnloadEnabled()) {
-    return fast_unload_controller_->CallBeforeUnloadHandlers(
-        on_close_confirmed);
+    return fast_unload_controller_->TryToCloseWindow(skip_beforeunload,
+                                                     on_close_confirmed);
   }
-  return unload_controller_->CallBeforeUnloadHandlers(on_close_confirmed);
+  return unload_controller_->TryToCloseWindow(skip_beforeunload,
+                                              on_close_confirmed);
 }
 
-void Browser::ResetBeforeUnloadHandlers() {
+void Browser::ResetTryToCloseWindow() {
   cancel_download_confirmation_state_ = NOT_PROMPTED;
   if (IsFastTabUnloadEnabled())
-    fast_unload_controller_->ResetBeforeUnloadHandlers();
+    fast_unload_controller_->ResetTryToCloseWindow();
   else
-    unload_controller_->ResetBeforeUnloadHandlers();
+    unload_controller_->ResetTryToCloseWindow();
 }
 
 bool Browser::HasCompletedUnloadProcessing() const {

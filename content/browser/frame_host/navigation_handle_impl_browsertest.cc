@@ -7,6 +7,8 @@
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
+#include "content/public/common/browser_side_navigation_policy.h"
+#include "content/public/common/content_switches.h"
 #include "content/public/common/request_context_type.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/content_browser_test.h"
@@ -16,6 +18,7 @@
 #include "content/shell/browser/shell.h"
 #include "content/test/content_browser_test_utils_internal.h"
 #include "net/dns/mock_host_resolver.h"
+#include "net/test/url_request/url_request_failed_job.h"
 #include "ui/base/page_transition_types.h"
 #include "url/url_constants.h"
 
@@ -902,6 +905,21 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
     EXPECT_FALSE(NavigateToURL(shell(), kUrl));
     EXPECT_EQ(net::ERR_BLOCKED_BY_CLIENT, observer.net_error_code());
   }
+
+  // Using BLOCK_REQUEST on redirect is available only with PlzNavigate.
+  if (IsBrowserSideNavigationEnabled()) {
+    // Set up a NavigationThrottle that will block the navigation in
+    // WillRedirectRequest.
+    TestNavigationThrottleInstaller installer(
+        shell()->web_contents(), NavigationThrottle::PROCEED,
+        NavigationThrottle::BLOCK_REQUEST, NavigationThrottle::PROCEED);
+    NavigationHandleObserver observer(shell()->web_contents(), kRedirectingUrl);
+
+    // Try to navigate to the url. The navigation should be canceled and the
+    // NavigationHandle should have the right error code.
+    EXPECT_FALSE(NavigateToURL(shell(), kRedirectingUrl));
+    EXPECT_EQ(net::ERR_BLOCKED_BY_CLIENT, observer.net_error_code());
+  }
 }
 
 // Specialized test that verifies the NavigationHandle gets the HTTPS upgraded
@@ -1033,6 +1051,154 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest,
     EXPECT_EQ(1, installer.will_start_called());
     EXPECT_EQ(1, installer.will_process_called());
     EXPECT_FALSE(observer.is_same_document());
+  }
+}
+
+// Record and list the navigations that are started and finished.
+class NavigationLogger : public WebContentsObserver {
+ public:
+  NavigationLogger(WebContents* web_contents)
+      : WebContentsObserver(web_contents) {}
+
+  void DidStartNavigation(NavigationHandle* navigation_handle) override {
+    started_navigation_urls_.push_back(navigation_handle->GetURL());
+  }
+
+  void DidFinishNavigation(NavigationHandle* navigation_handle) override {
+    finished_navigation_urls_.push_back(navigation_handle->GetURL());
+  }
+
+  const std::vector<GURL>& started_navigation_urls() const {
+    return started_navigation_urls_;
+  }
+  const std::vector<GURL>& finished_navigation_urls() const {
+    return finished_navigation_urls_;
+  }
+
+ private:
+  std::vector<GURL> started_navigation_urls_;
+  std::vector<GURL> finished_navigation_urls_;
+};
+
+// There was a bug without PlzNavigate that happened when a navigation was
+// blocked after a redirect. Blink didn't know about the redirect and tried
+// to commit an error page to the pre-redirect URL. The result was that the
+// NavigationHandle was not found on the browser-side and a new NavigationHandle
+// created for committing the error page. This test makes sure that only one
+// NavigationHandle is used for committing the error page.
+// See https://crbug.com/695421
+IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest, BlockedOnRedirect) {
+  // Returning BLOCK_REQUEST is not supported yet without PlzNavigate. It will
+  // call a CHECK(false).
+  // TODO(arthursonzogni) Provide support for BLOCK_REQUEST without PlzNavigate
+  // once https://crbug.com/695421 is fixed.
+  if (!IsBrowserSideNavigationEnabled())
+    return;
+
+  const GURL kUrl = embedded_test_server()->GetURL("/title1.html");
+  const GURL kRedirectingUrl =
+      embedded_test_server()->GetURL("/server-redirect?" + kUrl.spec());
+
+  // Set up a NavigationThrottle that will block the navigation in
+  // WillRedirectRequest.
+  TestNavigationThrottleInstaller installer(
+      shell()->web_contents(), NavigationThrottle::PROCEED,
+      NavigationThrottle::BLOCK_REQUEST, NavigationThrottle::PROCEED);
+  NavigationHandleObserver observer(shell()->web_contents(), kRedirectingUrl);
+  NavigationLogger logger(shell()->web_contents());
+
+  // Try to navigate to the url. The navigation should be canceled and the
+  // NavigationHandle should have the right error code.
+  EXPECT_FALSE(NavigateToURL(shell(), kRedirectingUrl));
+  // EXPECT_EQ(net::ERR_BLOCKED_BY_CLIENT, observer.net_error_code());
+
+  // Only one navigation is expected to happen.
+  std::vector<GURL> started_navigation = {kRedirectingUrl};
+  EXPECT_EQ(started_navigation, logger.started_navigation_urls());
+
+  std::vector<GURL> finished_navigation = {kUrl};
+  EXPECT_EQ(finished_navigation, logger.finished_navigation_urls());
+}
+
+// This class allows running tests with PlzNavigate enabled, regardless of
+// default test configuration.
+class PlzNavigateNavigationHandleImplBrowserTest : public ContentBrowserTest {
+ public:
+  PlzNavigateNavigationHandleImplBrowserTest() {}
+
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    command_line->AppendSwitch(switches::kEnableBrowserSideNavigation);
+  }
+};
+
+// Test to verify that error pages caused by NavigationThrottle blocking a
+// request from being made are properly committed in the original process
+// that requested the navigation.
+IN_PROC_BROWSER_TEST_F(PlzNavigateNavigationHandleImplBrowserTest,
+                       ErrorPageBlockedNavigation) {
+  host_resolver()->AddRule("*", "127.0.0.1");
+  SetupCrossSiteRedirector(embedded_test_server());
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  GURL start_url(embedded_test_server()->GetURL("foo.com", "/title1.html"));
+  GURL blocked_url(embedded_test_server()->GetURL("bar.com", "/title2.html"));
+
+  {
+    NavigationHandleObserver observer(shell()->web_contents(), start_url);
+    EXPECT_TRUE(NavigateToURL(shell(), start_url));
+    EXPECT_TRUE(observer.has_committed());
+    EXPECT_FALSE(observer.is_error());
+  }
+
+  scoped_refptr<SiteInstance> site_instance =
+      shell()->web_contents()->GetMainFrame()->GetSiteInstance();
+
+  TestNavigationThrottleInstaller installer(
+      shell()->web_contents(), NavigationThrottle::BLOCK_REQUEST,
+      NavigationThrottle::PROCEED, NavigationThrottle::PROCEED);
+
+  {
+    NavigationHandleObserver observer(shell()->web_contents(), blocked_url);
+    EXPECT_FALSE(NavigateToURL(shell(), blocked_url));
+    EXPECT_TRUE(observer.has_committed());
+    EXPECT_TRUE(observer.is_error());
+    EXPECT_EQ(site_instance,
+              shell()->web_contents()->GetMainFrame()->GetSiteInstance());
+  }
+}
+
+// Test to verify that error pages caused by network error or other
+// recoverable error are properly committed in the process for the
+// destination URL.
+IN_PROC_BROWSER_TEST_F(PlzNavigateNavigationHandleImplBrowserTest,
+                       ErrorPageNetworkError) {
+  host_resolver()->AddRule("*", "127.0.0.1");
+  SetupCrossSiteRedirector(embedded_test_server());
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  GURL start_url(embedded_test_server()->GetURL("foo.com", "/title1.html"));
+  GURL error_url(
+      net::URLRequestFailedJob::GetMockHttpUrl(net::ERR_CONNECTION_RESET));
+  EXPECT_NE(start_url.host(), error_url.host());
+  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                          base::Bind(&net::URLRequestFailedJob::AddUrlHandler));
+
+  {
+    NavigationHandleObserver observer(shell()->web_contents(), start_url);
+    EXPECT_TRUE(NavigateToURL(shell(), start_url));
+    EXPECT_TRUE(observer.has_committed());
+    EXPECT_FALSE(observer.is_error());
+  }
+
+  scoped_refptr<SiteInstance> site_instance =
+      shell()->web_contents()->GetMainFrame()->GetSiteInstance();
+  {
+    NavigationHandleObserver observer(shell()->web_contents(), error_url);
+    EXPECT_FALSE(NavigateToURL(shell(), error_url));
+    EXPECT_TRUE(observer.has_committed());
+    EXPECT_TRUE(observer.is_error());
+    EXPECT_NE(site_instance,
+              shell()->web_contents()->GetMainFrame()->GetSiteInstance());
   }
 }
 

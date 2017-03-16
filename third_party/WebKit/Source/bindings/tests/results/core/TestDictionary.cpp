@@ -11,8 +11,6 @@
 // clang-format off
 #include "TestDictionary.h"
 
-#include "bindings/core/v8/DoubleOrString.h"
-#include "bindings/core/v8/TestInterface2OrUint8Array.h"
 #include "bindings/tests/idls/core/TestInterfaceGarbageCollected.h"
 #include "bindings/tests/idls/core/TestInterfaceImplementation.h"
 #include "bindings/tests/idls/core/TestObject.h"
@@ -397,6 +395,26 @@ DOMUint8Array* TestDictionary::uint8ArrayMember() const {
 void TestDictionary::setUint8ArrayMember(DOMUint8Array* value) {
   m_uint8ArrayMember = value;
 }
+bool TestDictionary::hasUnionInRecordMember() const {
+  return m_hasUnionInRecordMember;
+}
+const HeapVector<std::pair<String, LongOrBoolean>>& TestDictionary::unionInRecordMember() const {
+  DCHECK(m_hasUnionInRecordMember);
+  return m_unionInRecordMember;
+}
+void TestDictionary::setUnionInRecordMember(const HeapVector<std::pair<String, LongOrBoolean>>& value) {
+  m_unionInRecordMember = value;
+  m_hasUnionInRecordMember = true;
+}
+bool TestDictionary::hasUnionWithTypedefs() const {
+  return !m_unionWithTypedefs.isNull();
+}
+const FloatOrBoolean& TestDictionary::unionWithTypedefs() const {
+  return m_unionWithTypedefs;
+}
+void TestDictionary::setUnionWithTypedefs(const FloatOrBoolean& value) {
+  m_unionWithTypedefs = value;
+}
 bool TestDictionary::hasUnrestrictedDoubleMember() const {
   return m_hasUnrestrictedDoubleMember;
 }
@@ -426,6 +444,8 @@ DEFINE_TRACE(TestDictionary) {
   visitor->trace(m_testInterfaceSequenceMember);
   visitor->trace(m_testObjectSequenceMember);
   visitor->trace(m_uint8ArrayMember);
+  visitor->trace(m_unionInRecordMember);
+  visitor->trace(m_unionWithTypedefs);
   IDLDictionaryBase::trace(visitor);
 }
 

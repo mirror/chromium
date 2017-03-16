@@ -33,6 +33,7 @@
 #include "core/layout/api/LayoutPartItem.h"
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/FrameLoader.h"
+#include "core/page/Page.h"
 #include "core/plugins/PluginView.h"
 #include "platform/weborigin/SecurityOrigin.h"
 
@@ -227,12 +228,6 @@ void HTMLFrameOwnerElement::dispatchLoad() {
   dispatchScopedEvent(Event::create(EventTypeNames::load));
 }
 
-const WebVector<mojom::blink::PermissionName>&
-HTMLFrameOwnerElement::delegatedPermissions() const {
-  DEFINE_STATIC_LOCAL(WebVector<mojom::blink::PermissionName>, permissions, ());
-  return permissions;
-}
-
 const WebVector<WebFeaturePolicyFeature>&
 HTMLFrameOwnerElement::allowedFeatures() const {
   DEFINE_STATIC_LOCAL(WebVector<WebFeaturePolicyFeature>, features, ());
@@ -312,8 +307,7 @@ bool HTMLFrameOwnerElement::loadOrRedirectSubframe(
   if (!SubframeLoadingDisabler::canLoadFrame(*this))
     return false;
 
-  if (document().frame()->host()->subframeCount() >=
-      FrameHost::maxNumberOfFrames)
+  if (document().frame()->host()->subframeCount() >= Page::maxNumberOfFrames)
     return false;
 
   FrameLoadRequest frameLoadRequest(&document(), url, "_self",

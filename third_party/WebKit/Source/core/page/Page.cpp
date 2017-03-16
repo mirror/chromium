@@ -128,6 +128,7 @@ Page::Page(PageClients& pageClients)
       m_deviceScaleFactor(1),
       m_visibilityState(PageVisibilityStateVisible),
       m_isCursorVisible(true),
+      m_subframeCount(0),
       m_frameHost(FrameHost::create(*this)) {
   ASSERT(m_editorClient);
 
@@ -424,6 +425,25 @@ bool Page::isCursorVisible() const {
   return m_isCursorVisible;
 }
 
+#if DCHECK_IS_ON()
+void checkFrameCountConsistency(int expectedFrameCount, Frame* frame) {
+  DCHECK_GE(expectedFrameCount, 0);
+
+  int actualFrameCount = 0;
+  for (; frame; frame = frame->tree().traverseNext())
+    ++actualFrameCount;
+
+  DCHECK_EQ(expectedFrameCount, actualFrameCount);
+}
+#endif
+
+int Page::subframeCount() const {
+#if DCHECK_IS_ON()
+  checkFrameCountConsistency(m_subframeCount + 1, mainFrame());
+#endif
+  return m_subframeCount;
+}
+
 void Page::settingsChanged(SettingsDelegate::ChangeType changeType) {
   switch (changeType) {
     case SettingsDelegate::StyleChange:
@@ -555,7 +575,7 @@ void Page::didCommitLoad(LocalFrame* frame) {
 
     // TODO(rbyers): Most of this doesn't appear to take into account that each
     // SVGImage gets it's own Page instance.
-    frameHost().consoleMessageStorage().clear();
+    consoleMessageStorage().clear();
     useCounter().didCommitLoad(url);
     deprecation().clearSuppression();
     visualViewport().sendUMAMetrics();

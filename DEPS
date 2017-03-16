@@ -40,11 +40,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling Skia
   # and whatever else without interference from each other.
-  'skia_revision': 'd222ec492f5d0229986f529134d083e589bcc4a9',
+  'skia_revision': 'be4eed2ef77d5e8c3e3920664fdc787e196ac6b0',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling V8
   # and whatever else without interference from each other.
-  'v8_revision': '06d36330e481d098c19fe047809d45955837ee46',
+  'v8_revision': 'f7036b132f6bcce9312b52a9ba386ae487280713',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling swarming_client
   # and whatever else without interference from each other.
@@ -52,7 +52,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling ANGLE
   # and whatever else without interference from each other.
-  'angle_revision': '6445ddf8408c4ba1ce91192c555cbd7d0e49543f',
+  'angle_revision': '8aeeed6ef9a430bc5bd8dfd7ef25bc137bc1fb90',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling build tools
   # and whatever else without interference from each other.
@@ -60,11 +60,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling SwiftShader
   # and whatever else without interference from each other.
-  'swiftshader_revision': '2ddef8858e5015140f374d5c06d1a68b7c78af10',
+  'swiftshader_revision': '38182314999cc26c6510fbb5d6372fda8847c1b8',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling PDFium
   # and whatever else without interference from each other.
-  'pdfium_revision': '0029fb25b9b69f2e4465164282eb1040b60437dd',
+  'pdfium_revision': 'c9819a972830e9d1210d9d8f5c81d9f03f7c90a9',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling openmax_dl
   # and whatever else without interference from each other.
@@ -96,11 +96,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': '4226576b1dc7ef7ff04804e62d526d48d0e883e2',
+  'catapult_revision': 'efbc9db2ef8f9f7bd11583374b96e4810b79733e',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling libFuzzer
   # and whatever else without interference from each other.
-  'libfuzzer_revision': 'eebc6eb55995a29173f269baf071046fcd2e0f4b',
+  'libfuzzer_revision': 'a746f0ef810637b40784e808bad49aa2ef1bde8b',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling devtools-node-modules
   # and whatever else without interference from each other.
@@ -232,7 +232,7 @@ deps = {
     Var('chromium_git') + '/native_client/src/third_party/scons-2.0.1.git' + '@' + '1c1550e17fc26355d08627fbdec13d8291227067',
 
   'src/third_party/webrtc':
-    Var('chromium_git') + '/external/webrtc/trunk/webrtc.git' + '@' + '7867a4ee6b46931789aae005f33823ed250ae52d', # commit position 17226
+    Var('chromium_git') + '/external/webrtc/trunk/webrtc.git' + '@' + 'c0a0f8d5f2d5b837b4c6ea447b0cdce86723e0d6', # commit position 17267
 
   'src/third_party/openmax_dl':
     Var('chromium_git') + '/external/webrtc/deps/third_party/openmax.git' + '@' +  Var('openmax_dl_revision'),

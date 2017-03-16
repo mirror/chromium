@@ -183,8 +183,8 @@
 #include "ios/web/public/user_agent.h"
 #include "ios/web/public/web_client.h"
 #import "ios/web/public/web_state/context_menu_params.h"
-#import "ios/web/public/web_state/crw_web_view_proxy.h"
 #import "ios/web/public/web_state/ui/crw_native_content_provider.h"
+#import "ios/web/public/web_state/ui/crw_web_view_proxy.h"
 #include "ios/web/public/web_state/web_state.h"
 #import "ios/web/public/web_state/web_state_delegate_bridge.h"
 #include "ios/web/public/web_thread.h"
@@ -1515,7 +1515,7 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
   Tab* tab = notify.userInfo[kTabModelTabKey];
   DCHECK(tab);
   [tab wasHidden];
-  [_toolbarController dismissTabHistoryPopup];
+  [self dismissPopups];
 }
 
 - (void)tabWasAdded:(NSNotification*)notify {
@@ -3678,15 +3678,12 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
     Tab* newTab = [_preloadController releasePrerenderContents];
     DCHECK(oldTab);
     DCHECK(newTab);
-    if (oldTab && newTab) {
+    bool canPruneItems =
+        [newTab navigationManager]->CanPruneAllButLastCommittedItem();
+    if (oldTab && newTab && canPruneItems) {
       [oldTab recordStateInHistory];
-      DCHECK([newTab navigationManager]);
-      CRWSessionController* newHistory =
-          [newTab navigationManagerImpl]->GetSessionController();
-      DCHECK([oldTab navigationManager]);
-      CRWSessionController* oldHistory =
-          [oldTab navigationManagerImpl]->GetSessionController();
-      [newHistory insertStateFromSessionController:oldHistory];
+      [newTab navigationManager]->CopyStateFromAndPrune(
+          [oldTab navigationManager]);
       [[newTab nativeAppNavigationController]
           copyStateFrom:[oldTab nativeAppNavigationController]];
       [_model replaceTab:oldTab withTab:newTab];
@@ -4942,7 +4939,7 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
 #pragma mark - ShareToDelegate methods
 
 - (void)shareDidComplete:(ShareTo::ShareResult)shareStatus
-          successMessage:(NSString*)message {
+       completionMessage:(NSString*)message {
   // The shareTo dialog dismisses itself instead of through
   // |-dismissViewControllerAnimated:completion:| so we must reset the
   // presenting state here.
@@ -4977,7 +4974,7 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
 - (void)passwordAppExDidFinish:(ShareTo::ShareResult)shareStatus
                       username:(NSString*)username
                       password:(NSString*)password
-                successMessage:(NSString*)message {
+             completionMessage:(NSString*)message {
   switch (shareStatus) {
     case ShareTo::SHARE_SUCCESS: {
       PasswordController* passwordController =

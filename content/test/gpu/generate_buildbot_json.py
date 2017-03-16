@@ -1619,6 +1619,15 @@ TELEMETRY_GPU_INTEGRATION_TESTS = {
         'disabled_instrumentation_types': ['tsan'],
       }
     ],
+    'disabled_tester_configs': [
+      {
+        # The Mac ASAN swarming runs on two different GPU types so we can't
+        # have one expected vendor ID / device ID
+        'names': [
+          'Mac GPU ASAN Release',
+        ],
+      },
+    ],
   },
   'maps_pixel_test': {
     'target_name': 'maps',
@@ -1728,6 +1737,7 @@ TELEMETRY_GPU_INTEGRATION_TESTS = {
         # Run this on the FYI waterfall and optional tryservers.
         'predicate': Predicates.FYI_AND_OPTIONAL,
         'os_types': ['win'],
+        'disabled_instrumentation_types': ['tsan'],
       }
     ],
     'disabled_tester_configs': [
@@ -1749,6 +1759,7 @@ TELEMETRY_GPU_INTEGRATION_TESTS = {
         # Run this on the FYI waterfall and optional tryservers.
         'predicate': Predicates.FYI_AND_OPTIONAL,
         'os_types': ['win'],
+        'disabled_instrumentation_types': ['tsan'],
       }
     ],
     'disabled_tester_configs': [
@@ -1818,6 +1829,7 @@ TELEMETRY_GPU_INTEGRATION_TESTS = {
         # Run this on the FYI waterfall and optional tryservers.
         'predicate': Predicates.FYI_AND_OPTIONAL,
         'os_types': ['win'],
+        'disabled_instrumentation_types': ['tsan'],
       }
     ],
     'disabled_tester_configs': [
@@ -1846,6 +1858,7 @@ TELEMETRY_GPU_INTEGRATION_TESTS = {
         # Run this on the FYI waterfall and optional tryservers.
         'predicate': Predicates.FYI_AND_OPTIONAL,
         'os_types': ['linux'],
+        'disabled_instrumentation_types': ['tsan'],
       }
     ],
     'disabled_tester_configs': [
@@ -1967,6 +1980,7 @@ TELEMETRY_GPU_INTEGRATION_TESTS = {
             'os': 'Windows-2008ServerR2-SP1'
           },
         ],
+        'disabled_instrumentation_types': ['tsan'],
       },
     ],
     'disabled_tester_configs': [

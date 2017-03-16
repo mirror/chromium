@@ -3214,7 +3214,7 @@ bool LayoutBox::skipContainingBlockForPercentHeightCalculation(
   // non-anonymous.
   if (containingBlock->isAnonymous()) {
     EDisplay display = containingBlock->styleRef().display();
-    return display == EDisplay::Block || display == EDisplay::InlineBlock;
+    return display == EDisplay::kBlock || display == EDisplay::kInlineBlock;
   }
 
   // For quirks mode, we skip most auto-height containing blocks when computing
@@ -4759,7 +4759,7 @@ bool LayoutBox::avoidsFloats() const {
   return shouldBeConsideredAsReplaced() || hasOverflowClip() || isHR() ||
          isLegend() || isWritingModeRoot() || isFlexItemIncludingDeprecated() ||
          style()->containsPaint() || style()->containsLayout() ||
-         style()->display() == EDisplay::FlowRoot;
+         style()->display() == EDisplay::kFlowRoot;
 }
 
 bool LayoutBox::hasNonCompositedScrollbars() const {

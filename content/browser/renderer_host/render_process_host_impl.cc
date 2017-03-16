@@ -55,6 +55,7 @@
 #include "components/tracing/common/tracing_switches.h"
 #include "content/browser/appcache/appcache_dispatcher_host.h"
 #include "content/browser/appcache/chrome_appcache_service.h"
+#include "content/browser/background_fetch/background_fetch_service_impl.h"
 #include "content/browser/background_sync/background_sync_service_impl.h"
 #include "content/browser/bad_message.h"
 #include "content/browser/blob_storage/blob_dispatcher_host.h"
@@ -332,13 +333,7 @@ class SiteProcessMap : public base::SupportsUserData::Data {
   SiteProcessMap() {}
 
   void RegisterProcess(const std::string& site, RenderProcessHost* process) {
-    // There could already exist a site to process mapping due to races between
-    // two WebContents with blank SiteInstances. If that occurs, keeping the
-    // exising entry and not overwriting it is a predictable behavior that is
-    // safe.
-    SiteToProcessMap::iterator i = map_.find(site);
-    if (i == map_.end())
-      map_[site] = process;
+    map_[site] = process;
   }
 
   RenderProcessHost* FindProcess(const std::string& site) {
@@ -1321,6 +1316,11 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
       base::Bind(&PushMessagingManager::BindRequest,
                  base::Unretained(push_messaging_manager_.get())));
 
+  registry->AddInterface(base::Bind(
+      &BackgroundFetchServiceImpl::Create,
+      make_scoped_refptr(storage_partition_impl_->GetBackgroundFetchContext()),
+      make_scoped_refptr(storage_partition_impl_->GetServiceWorkerContext())));
+
   registry->AddInterface(base::Bind(&RenderProcessHostImpl::CreateMusGpuRequest,
                                     base::Unretained(this)));
 
@@ -1755,7 +1755,7 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kEnableDistanceFieldText,
     switches::kEnableExperimentalCanvasFeatures,
     switches::kEnableExperimentalWebPlatformFeatures,
-    switches::kEnableHDROutput,
+    switches::kEnableHDR,
     switches::kEnableHeapProfiling,
     switches::kEnableGPUClientLogging,
     switches::kEnableGpuClientTracing,

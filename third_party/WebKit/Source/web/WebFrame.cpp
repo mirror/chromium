@@ -74,7 +74,7 @@ bool WebFrame::swap(WebFrame* frame) {
   FrameOwner* owner = oldFrame->owner();
 
   v8::HandleScope handleScope(v8::Isolate::GetCurrent());
-  WindowProxyManagerBase::GlobalsVector globals;
+  WindowProxyManager::GlobalsVector globals;
   oldFrame->getWindowProxyManager()->clearForNavigation();
   oldFrame->getWindowProxyManager()->releaseGlobals(globals);
 
@@ -164,7 +164,6 @@ void WebFrame::setFrameOwnerProperties(
   owner->setAllowFullscreen(properties.allowFullscreen);
   owner->setAllowPaymentRequest(properties.allowPaymentRequest);
   owner->setCsp(properties.requiredCsp);
-  owner->setDelegatedpermissions(properties.delegatedPermissions);
   owner->setAllowedFeatures(properties.allowedFeatures);
 }
 

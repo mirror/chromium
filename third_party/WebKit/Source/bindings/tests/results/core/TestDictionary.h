@@ -14,7 +14,9 @@
 
 #include "bindings/core/v8/Dictionary.h"
 #include "bindings/core/v8/DoubleOrString.h"
+#include "bindings/core/v8/FloatOrBoolean.h"
 #include "bindings/core/v8/IDLDictionaryBase.h"
+#include "bindings/core/v8/LongOrBoolean.h"
 #include "bindings/core/v8/ScriptValue.h"
 #include "bindings/core/v8/TestInterface2OrUint8Array.h"
 #include "bindings/tests/idls/core/TestInterface2.h"
@@ -183,6 +185,14 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
   DOMUint8Array* uint8ArrayMember() const;
   void setUint8ArrayMember(DOMUint8Array*);
 
+  bool hasUnionInRecordMember() const;
+  const HeapVector<std::pair<String, LongOrBoolean>>& unionInRecordMember() const;
+  void setUnionInRecordMember(const HeapVector<std::pair<String, LongOrBoolean>>&);
+
+  bool hasUnionWithTypedefs() const;
+  const FloatOrBoolean& unionWithTypedefs() const;
+  void setUnionWithTypedefs(const FloatOrBoolean&);
+
   bool hasUnrestrictedDoubleMember() const;
   double unrestrictedDoubleMember() const;
   void setUnrestrictedDoubleMember(double);
@@ -241,6 +251,9 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
   bool m_hasTestObjectSequenceMember = false;
   HeapVector<Member<TestObject>> m_testObjectSequenceMember;
   Member<DOMUint8Array> m_uint8ArrayMember;
+  bool m_hasUnionInRecordMember = false;
+  HeapVector<std::pair<String, LongOrBoolean>> m_unionInRecordMember;
+  FloatOrBoolean m_unionWithTypedefs;
   bool m_hasUnrestrictedDoubleMember = false;
   double m_unrestrictedDoubleMember;
 

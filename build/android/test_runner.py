@@ -12,7 +12,6 @@ import contextlib
 import itertools
 import logging
 import os
-import shutil
 import signal
 import sys
 import threading
@@ -35,7 +34,6 @@ from pylib.base import test_instance_factory
 from pylib.base import test_run_factory
 from pylib.results import json_results
 from pylib.results import report_results
-from pylib.utils import logdog_helper
 
 from py_utils import contextlib_ext
 
@@ -44,7 +42,7 @@ _DEVIL_STATIC_CONFIG_FILE = os.path.abspath(os.path.join(
     host_paths.DIR_SOURCE_ROOT, 'build', 'android', 'devil_config.json'))
 
 
-def AddTestLauncherArgs(parser):
+def AddTestLauncherOptions(parser):
   """Adds arguments mirroring //base/test/launcher.
 
   Args:
@@ -75,6 +73,23 @@ def AddTestLauncherArgs(parser):
       help='Total number of external shards.')
 
   return parser
+
+
+def AddCommandLineOptions(parser):
+  """Adds arguments to support passing command-line flags to the device."""
+  parser.add_argument(
+      '--device-flags-file',
+      type=os.path.realpath,
+      help='The relative filepath to a file containing '
+           'command-line flags to set on the device')
+  # TODO(jbudorick): This is deprecated. Remove once clients have switched
+  # to passing command-line flags directly.
+  parser.add_argument(
+      '-a', '--test-arguments',
+      dest='test_arguments', default='',
+      help=argparse.SUPPRESS)
+  parser.set_defaults(allow_unknown=True)
+  parser.set_defaults(command_line_flags=None)
 
 
 def AddTracingOptions(parser):
@@ -162,7 +177,7 @@ def AddCommonOptions(parser):
       dest='verbose_count', default=0, action='count',
       help='Verbose level (multiple times for more)')
 
-  AddTestLauncherArgs(parser)
+  AddTestLauncherOptions(parser)
 
 
 def ProcessCommonOptions(args):
@@ -217,12 +232,6 @@ def AddDeviceOptions(parser):
       dest='tool',
       help='Run the test under a tool '
            '(use --tool help to list them)')
-
-  parser.add_argument(
-      '--upload-logcats-file',
-      action='store_true',
-      dest='upload_logcats_file',
-      help='Whether to upload logcat file to logdog.')
 
   logcat_output_group = parser.add_mutually_exclusive_group()
   logcat_output_group.add_argument(
@@ -293,10 +302,6 @@ def AddGTestOptions(parser):
       '--test-apk-incremental-install-script',
       type=os.path.realpath,
       help='Path to install script for the test apk.')
-  parser.add_argument(
-      '-a', '--test-arguments',
-      dest='test_arguments', default='',
-      help='Additional arguments to pass to the test.')
 
   filter_group = parser.add_mutually_exclusive_group()
   filter_group.add_argument(
@@ -342,17 +347,6 @@ def AddInstrumentationTestOptions(parser):
       '--delete-stale-data',
       action='store_true', dest='delete_stale_data',
       help='Delete stale test data on the device.')
-  parser.add_argument(
-      '--device-flags',
-      dest='device_flags',
-      type=os.path.realpath,
-      help='The relative filepath to a file containing '
-           'command-line flags to set on the device')
-  parser.add_argument(
-      '--device-flags-file',
-      type=os.path.realpath,
-      help='The relative filepath to a file containing '
-           'command-line flags to set on the device')
   parser.add_argument(
       '--disable-dalvik-asserts',
       dest='set_asserts', action='store_false', default=True,
@@ -741,24 +735,6 @@ def RunTestsInPlatformMode(args):
       write_json_file(),
       args.json_results_file)
 
-  @contextlib.contextmanager
-  def upload_logcats_file():
-    try:
-      yield
-    finally:
-      if not args.logcat_output_file:
-        logging.critical('Cannot upload logcats file. '
-                        'File to save logcat is not specified.')
-      else:
-        with open(args.logcat_output_file) as src:
-          dst = logdog_helper.open_text('unified_logcats')
-          if dst:
-            shutil.copyfileobj(src, dst)
-
-  logcats_uploader = contextlib_ext.Optional(
-      upload_logcats_file(),
-      'upload_logcats_file' in args and args.upload_logcats_file)
-
   ### Set up test objects.
 
   env = environment_factory.CreateEnvironment(args, infra_error)
@@ -768,7 +744,7 @@ def RunTestsInPlatformMode(args):
 
   ### Run.
 
-  with json_writer, logcats_uploader, env, test_instance, test_run:
+  with json_writer, env, test_instance, test_run:
 
     repetitions = (xrange(args.repeat + 1) if args.repeat >= 0
                    else itertools.count())
@@ -851,6 +827,7 @@ def main():
   AddDeviceOptions(subp)
   AddGTestOptions(subp)
   AddTracingOptions(subp)
+  AddCommandLineOptions(subp)
 
   subp = command_parsers.add_parser(
       'instrumentation',
@@ -859,6 +836,7 @@ def main():
   AddDeviceOptions(subp)
   AddInstrumentationTestOptions(subp)
   AddTracingOptions(subp)
+  AddCommandLineOptions(subp)
 
   subp = command_parsers.add_parser(
       'junit',
@@ -894,7 +872,12 @@ def main():
   AddCommonOptions(subp)
   AddPythonTestOptions(subp)
 
-  args = parser.parse_args()
+  args, unknown_args = parser.parse_known_args()
+  if unknown_args:
+    if hasattr(args, 'allow_unknown') and args.allow_unknown:
+      args.command_line_flags = unknown_args
+    else:
+      parser.error('unrecognized arguments: %s' % ' '.join(unknown_args))
 
   try:
     return RunTestsCommand(args)
