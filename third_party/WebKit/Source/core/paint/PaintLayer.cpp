@@ -67,7 +67,6 @@
 #include "core/layout/compositing/PaintLayerCompositor.h"
 #include "core/layout/svg/LayoutSVGResourceClipper.h"
 #include "core/layout/svg/LayoutSVGRoot.h"
-#include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
 #include "core/page/scrolling/ScrollingCoordinator.h"
 #include "core/paint/BoxReflectionUtils.h"

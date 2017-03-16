@@ -138,12 +138,12 @@
 // If arg evaluates to true, the program will continue. If arg evaluates to
 // false, program will crash if DCHECK_IS_ON() or return false from the current
 // function.
-#define CHECK_FOR_DIRTY_LAYOUT(arg)             \
-  do {                                          \
-    if (!(arg)) {                               \
-      NOTREACHED();                             \
-      return false;                             \
-    }                                           \
+#define CHECK_FOR_DIRTY_LAYOUT(arg) \
+  do {                              \
+    if (!(arg)) {                   \
+      NOTREACHED();                 \
+      return false;                 \
+    }                               \
   } while (false)
 
 namespace blink {
@@ -253,7 +253,7 @@ void FrameView::reset() {
   // throttle it here or it seems the root compositor doesn't get setup
   // properly.
   if (RuntimeEnabledFeatures::
-      renderingPipelineThrottlingLoadingIframesEnabled())
+          renderingPipelineThrottlingLoadingIframesEnabled())
     m_lifecycleUpdatesThrottled = !frame().isMainFrame();
   m_hasPendingLayout = false;
   m_layoutSchedulingEnabled = true;
@@ -268,7 +268,7 @@ void FrameView::reset() {
   m_lastZoomFactor = 1.0f;
   m_trackedObjectPaintInvalidations = WTF::wrapUnique(
       s_initialTrackAllPaintInvalidations ? new Vector<ObjectPaintInvalidation>
-      : nullptr);
+                                          : nullptr);
   m_visuallyNonEmptyCharacterCount = 0;
   m_visuallyNonEmptyPixelCount = 0;
   m_isVisuallyNonEmpty = false;
@@ -324,13 +324,13 @@ void FrameView::setupRenderThrottling() {
 
   m_visibilityObserver = new ElementVisibilityObserver(
       targetElement, WTF::bind(
-          [](FrameView* frameView, bool isVisible) {
-            if (!frameView)
-              return;
-            frameView->updateRenderThrottlingStatus(
-                !isVisible, frameView->m_subtreeThrottled);
-          },
-          wrapWeakPersistent(this)));
+                         [](FrameView* frameView, bool isVisible) {
+                           if (!frameView)
+                             return;
+                           frameView->updateRenderThrottlingStatus(
+                               !isVisible, frameView->m_subtreeThrottled);
+                         },
+                         wrapWeakPersistent(this)));
   m_visibilityObserver->start();
 }
 
@@ -458,7 +458,7 @@ void FrameView::ScrollbarManager::destroyScrollbar(
   Member<Scrollbar>& scrollbar =
       orientation == HorizontalScrollbar ? m_hBar : m_vBar;
   DCHECK(orientation == HorizontalScrollbar ? !m_hBarIsAttached
-         : !m_vBarIsAttached);
+                                            : !m_vBarIsAttached);
   if (!scrollbar)
     return;
 
@@ -530,7 +530,7 @@ void FrameView::invalidateRect(const IntRect& rect) {
 }
 
 void FrameView::setFrameRect(const IntRect& newRect) {
-  bool rls = RuntimeEnabledFeatures::rootLayerScrollingEnabled();
+  bool rootLayerScrolls = RuntimeEnabledFeatures::rootLayerScrollingEnabled();
   IntRect oldRect = frameRect();
   if (newRect == oldRect)
     return;
@@ -544,7 +544,7 @@ void FrameView::setFrameRect(const IntRect& newRect) {
   // subframes after changing the zoom level. For now always calling
   // updateScrollbarsIfNeeded() here fixes the issue, but it would be good to
   // discover the deeper cause of this. http://crbug.com/607987.
-  if (rls) {
+  if (rootLayerScrolls) {
     if (LayoutView* lv = layoutView())
       lv->getScrollableArea()->clampScrollOffsetAfterOverflowChange();
   } else {
@@ -555,7 +555,7 @@ void FrameView::setFrameRect(const IntRect& newRect) {
 
   updateParentScrollableAreaSet();
 
-  if (RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled() && !rls) {
+  if (RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled() && !rootLayerScrolls) {
     // The overflow clip property depends on the frame size and the pre
     // translation property depends on the frame location.
     setNeedsPaintPropertyUpdate();
@@ -567,6 +567,7 @@ void FrameView::setFrameRect(const IntRect& newRect) {
   if (frameSizeChanged) {
     viewportSizeChanged(newRect.width() != oldRect.width(),
                         newRect.height() != oldRect.height());
+
     if (m_frame->isMainFrame())
       m_frame->page()->visualViewport().mainFrameDidChangeSize();
 
@@ -775,10 +776,10 @@ void FrameView::calculateScrollbarModes(
     ScrollbarMode& hMode,
     ScrollbarMode& vMode,
     ScrollbarModesCalculationStrategy strategy) const {
-#define RETURN_SCROLLBAR_MODE(mode)             \
-  {                                             \
-    hMode = vMode = mode;                       \
-    return;                                     \
+#define RETURN_SCROLLBAR_MODE(mode) \
+  {                                 \
+    hMode = vMode = mode;           \
+    return;                         \
   }
 
   // Setting scrolling="no" on an iframe element disables scrolling.
@@ -809,7 +810,7 @@ void FrameView::calculateScrollbarModes(
     // FIXME: evaluate if we can allow overflow for these cases too.
     // Overflow is always hidden when stand-alone SVG documents are embedded.
     if (toLayoutSVGRoot(viewport)
-        ->isEmbeddedThroughFrameContainingSVGDocument())
+            ->isEmbeddedThroughFrameContainingSVGDocument())
       RETURN_SCROLLBAR_MODE(ScrollbarAlwaysOff);
   }
 
@@ -926,8 +927,8 @@ bool FrameView::isEnclosedInCompositingLayer() const {
 
   LayoutItem frameOwnerLayoutItem = m_frame->ownerLayoutItem();
   return !frameOwnerLayoutItem.isNull() &&
-      frameOwnerLayoutItem.enclosingLayer()
-      ->enclosingLayerForPaintInvalidationCrossingFrameBoundaries();
+         frameOwnerLayoutItem.enclosingLayer()
+             ->enclosingLayerForPaintInvalidationCrossingFrameBoundaries();
 }
 
 void FrameView::countObjectsNeedingLayout(unsigned& needsLayoutObjects,
@@ -1026,10 +1027,10 @@ void FrameView::performPreLayoutTasks() {
 
 bool FrameView::shouldPerformScrollAnchoring() const {
   return RuntimeEnabledFeatures::scrollAnchoringEnabled() &&
-      !RuntimeEnabledFeatures::rootLayerScrollingEnabled() &&
-      m_scrollAnchor.hasScroller() &&
-      layoutBox()->style()->overflowAnchor() != EOverflowAnchor::kNone &&
-      !m_frame->document()->finishingOrIsPrinting();
+         !RuntimeEnabledFeatures::rootLayerScrollingEnabled() &&
+         m_scrollAnchor.hasScroller() &&
+         layoutBox()->style()->overflowAnchor() != EOverflowAnchor::kNone &&
+         !m_frame->document()->finishingOrIsPrinting();
 }
 
 static inline void layoutFromRootObject(LayoutObject& root) {
@@ -1067,7 +1068,7 @@ std::unique_ptr<TracedValue> FrameView::analyzerCounters() {
   return value;
 }
 
-#define PERFORM_LAYOUT_TRACE_CATEGORIES                                 \
+#define PERFORM_LAYOUT_TRACE_CATEGORIES \
   "blink,benchmark,rail," TRACE_DISABLED_BY_DEFAULT("blink.debug.layout")
 
 void FrameView::performLayout(bool inSubtreeLayout) {
@@ -1273,11 +1274,11 @@ void FrameView::layout() {
       if (oldSize != m_size && !m_firstLayout) {
         LayoutBox* rootLayoutObject =
             document->documentElement()
-            ? document->documentElement()->layoutBox()
-            : 0;
+                ? document->documentElement()->layoutBox()
+                : 0;
         LayoutBox* bodyLayoutObject = rootLayoutObject && document->body()
-            ? document->body()->layoutBox()
-            : 0;
+                                          ? document->body()->layoutBox()
+                                          : 0;
         if (bodyLayoutObject && bodyLayoutObject->stretchesToViewport())
           bodyLayoutObject->setChildNeedsLayout();
         else if (rootLayoutObject && rootLayoutObject->stretchesToViewport())
@@ -1293,8 +1294,6 @@ void FrameView::layout() {
     bool hadVerticalScrollbar = verticalScrollbar();
     IntRect oldRect = frameRect();
     performLayout(inSubtreeLayout);
-    //if (!RuntimeEnabledFeatures::rootLayerScrollingEnabled())
-    //frame().page()->chromeClient().resizeAfterLayout(&frame());
     bool hasHorizontalScrollbar = horizontalScrollbar();
     bool hasVerticalScrollbar = verticalScrollbar();
     IntRect newRect = frameRect();

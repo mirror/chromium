@@ -2228,7 +2228,6 @@ void Document::layoutUpdated() {
   // Plugins can run script inside layout which can detach the page.
   // TODO(esprehn): Can this still happen now that all plugins are out of
   // process?
-  //if (!RuntimeEnabledFeatures::rootLayerScrollingEnabled() && frame() && frame()->page())
   if (frame() && frame()->page())
     frame()->page()->chromeClient().layoutUpdated(frame());
 
