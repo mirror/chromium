@@ -1,0 +1,27 @@
+Component Mapper
+===========
+
+#TODO(ymzhang): complete details in README.md
+
+
+### Overview
+
+
+### Dependencies
+
+Install sklearn (http://scikit-learn.org/stable/)
+Install jupyter
+
+### Documentation
+
+Proposal about how to predict suggested component for directory.
+https://goo.gl/xtSMpV
+
+### Test
+
+Run component_mapper_test.ipynb with jupyter
+
+
+
+
+
