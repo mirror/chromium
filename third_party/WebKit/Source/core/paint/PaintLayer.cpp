@@ -771,7 +771,7 @@ void PaintLayer::updateLayerPosition() {
   // LayoutBox'es will call updateSizeAndScrollingAfterLayout() from
   // LayoutBox::updateAfterLayout, but LayoutInline's will still need to update
   // their size.
-  if (layoutObject()->isInline() && layoutObject()->isLayoutInline())
+  if (layoutObject().isInline() && layoutObject().isLayoutInline())
     updateSizeAndScrollingAfterLayout();
   LayoutPoint localPoint;
   if (LayoutBox* box = layoutBox())
@@ -831,19 +831,19 @@ void PaintLayer::updateLayerPosition() {
 void PaintLayer::updateSizeAndScrollingAfterLayout() {
   bool didResize = false;
   if (isRootLayer() && RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
-    const IntSize newSize = layoutObject()->document().view()->size();
+    const IntSize newSize = layoutObject().document().view()->size();
     didResize = newSize != m_size;
     m_size = newSize;
-  } else if (layoutObject()->isInline() && layoutObject()->isLayoutInline()) {
-    LayoutInline* inlineFlow = toLayoutInline(layoutObject());
-    IntRect lineBox = enclosingIntRect(inlineFlow->linesBoundingBox());
+  } else if (layoutObject().isInline() && layoutObject().isLayoutInline()) {
+    LayoutInline& inlineFlow = toLayoutInline(layoutObject());
+    IntRect lineBox = enclosingIntRect(inlineFlow.linesBoundingBox());
     m_size = lineBox.size();
   } else if (LayoutBox* box = layoutBox()) {
     IntSize newSize = pixelSnappedIntSize(box->size(), box->location());
     didResize = newSize != m_size;
     m_size = newSize;
   }
-  if (layoutObject()->hasOverflowClip()) {
+  if (layoutObject().hasOverflowClip()) {
     m_scrollableArea->updateAfterLayout();
     if (didResize)
       m_scrollableArea->visibleSizeChanged();

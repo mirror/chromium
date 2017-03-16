@@ -428,7 +428,7 @@ TEST_P(BoxPaintInvalidatorTest, NonCompositedLayoutViewGradientResize) {
   EXPECT_EQ(static_cast<const DisplayItemClient*>(frameLayoutView),
             (*rasterInvalidations)[1].client);
   EXPECT_EQ(IntRect(0, 0, 100, 200), (*rasterInvalidations)[1].rect);
-  EXPECT_EQ(PaintInvalidationBorderBoxChange, (*rasterInvalidations)[1].reason);
+  EXPECT_EQ(PaintInvalidationViewBackground, (*rasterInvalidations)[1].reason);
   document().view()->setTracksPaintInvalidations(false);
 }
 

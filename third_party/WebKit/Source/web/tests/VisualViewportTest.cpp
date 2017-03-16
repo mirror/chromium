@@ -2354,12 +2354,10 @@ TEST_P(VisualViewportTest, ResizeNonFixedBackgroundNoLayoutOrInvalidation) {
   // root-layer-scrolls is on, an invalidation is necessary for now, see the
   // comment and TODO in FrameView::viewportSizeChanged.
   // http://crbug.com/568847.
-  /*
   bool rootLayerScrolling = GetParam();
   if (rootLayerScrolling)
     EXPECT_TRUE(invalidationTracking);
   else
-  */
     EXPECT_FALSE(invalidationTracking);
 
   document->view()->setTracksPaintInvalidations(false);

@@ -1307,7 +1307,7 @@ void FrameView::layout() {
           newRect.width() != oldRect.width(),
           newRect.height() != oldRect.height());
       if (m_frame->isMainFrame())
-        m_frame->host()->visualViewport().mainFrameDidChangeSize();
+        m_frame->page()->visualViewport().mainFrameDidChangeSize();
       frame().loader().restoreScrollPositionAndViewState();
     }
 
