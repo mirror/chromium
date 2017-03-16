@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import re
+
 from webkitpy.w3c.chromium_finder import absolute_chromium_dir, absolute_chromium_wpt_dir
 
 CHROMIUM_WPT_DIR = 'third_party/WebKit/LayoutTests/external/wpt/'
@@ -34,7 +36,11 @@ class ChromiumCommit(object):
 
         assert len(sha) == 40, 'Expected SHA-1 hash, got {}'.format(sha)
         self.sha = sha
-        self.position = position
+
+        if position:
+            self.position = position
+        else:
+            self.position = self.get_position()
 
     def num_behind_master(self):
         """Returns the number of commits this commit is behind origin/master.
@@ -48,6 +54,14 @@ class ChromiumCommit(object):
         return self.host.executive.run_command([
             'git', 'crrev-parse', commit_position
         ], cwd=self.absolute_chromium_dir).strip()
+
+    def get_position(self):
+        return self.host.executive.run_command([
+            'git', 'footers', '--position', self.sha
+        ], cwd=self.absolute_chromium_dir).strip()
+
+    def position_number(self):
+        return re.sub('[^0-9]', '', self.position)
 
     def subject(self):
         return self.host.executive.run_command([
