@@ -555,7 +555,8 @@ void FrameView::setFrameRect(const IntRect& newRect) {
 
   updateParentScrollableAreaSet();
 
-  if (RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled() && !rootLayerScrolls) {
+  if (RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled() &&
+      !rootLayerScrolls) {
     // The overflow clip property depends on the frame size and the pre
     // translation property depends on the frame location.
     setNeedsPaintPropertyUpdate();

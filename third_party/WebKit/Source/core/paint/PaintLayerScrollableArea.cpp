@@ -564,8 +564,7 @@ int PaintLayerScrollableArea::visibleWidth() const {
 int PaintLayerScrollableArea::pixelSnappedVisibleClientWidth() const {
   if (RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
     bool isMainFrameRootLayer =
-        m_layer.isRootLayer()
-        && box().document().frame()->isMainFrame();
+        m_layer.isRootLayer() && box().document().frame()->isMainFrame();
     if (isMainFrameRootLayer) {
       return box().frameView()->width();
     }
@@ -576,8 +575,7 @@ int PaintLayerScrollableArea::pixelSnappedVisibleClientWidth() const {
 int PaintLayerScrollableArea::pixelSnappedVisibleClientHeight() const {
   if (RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
     bool isMainFrameRootLayer =
-        m_layer.isRootLayer()
-        && box().document().frame()->isMainFrame();
+        m_layer.isRootLayer() && box().document().frame()->isMainFrame();
     if (isMainFrameRootLayer)
       return box().frameView()->height();
   }
@@ -1144,9 +1142,9 @@ IntSize PaintLayerScrollableArea::scrollbarOffset(
   }
 
   if (&scrollbar == horizontalScrollbar()) {
-    return IntSize(
-        horizontalScrollbarStart(0),
-        m_layer.size().height() - box().borderBottom().toInt() - scrollbar.height());
+    return IntSize(horizontalScrollbarStart(0),
+                   m_layer.size().height() - box().borderBottom().toInt() -
+                       scrollbar.height());
   }
 
   ASSERT_NOT_REACHED();
@@ -1413,8 +1411,8 @@ bool PaintLayerScrollableArea::hitTestOverflowControls(
 
   IntRect resizeControlRect;
   if (box().style()->resize() != RESIZE_NONE) {
-    resizeControlRect =
-        resizerCornerRect(IntRect(IntPoint(), m_layer.size()), ResizerForPointer);
+    resizeControlRect = resizerCornerRect(IntRect(IntPoint(), m_layer.size()),
+                                          ResizerForPointer);
     if (resizeControlRect.contains(localPoint))
       return true;
   }
