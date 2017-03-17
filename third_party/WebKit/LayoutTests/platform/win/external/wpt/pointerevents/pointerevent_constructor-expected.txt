@@ -1,0 +1,29 @@
+This is a testharness.js-based test.
+PASS PointerEvent: Constructor test 
+PASS custom bubbles 
+PASS custom cancelable 
+PASS custom pointerId 
+PASS custom pointerType 
+PASS custom button 
+PASS custom buttons 
+PASS custom width 
+PASS custom height 
+PASS custom clientX 
+PASS custom clientY 
+PASS custom tiltX 
+PASS custom tiltY 
+PASS custom twist 
+PASS custom isPrimary 
+PASS custom pressure:  
+PASS default pointerId 
+PASS default pointerType 
+PASS default width 
+PASS default height 
+PASS default tiltX 
+PASS default tiltY 
+PASS default pressure 
+PASS default tangentialPressure 
+PASS default twist 
+PASS default isPrimary 
+Harness: the test ran to completion.
+

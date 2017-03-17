@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS PointerEvent: Verifies that chorded buttons fire appropriate events 
+PASS LM button sequence A 
+PASS LM button sequence B 
+PASS LM button sequence C 
+PASS LMR button sequence 
+PASS Move with & without button 
+PASS Off-the-page button changes 
+PASS LM button with preventDefault on pointerdown 
+Harness: the test ran to completion.
+

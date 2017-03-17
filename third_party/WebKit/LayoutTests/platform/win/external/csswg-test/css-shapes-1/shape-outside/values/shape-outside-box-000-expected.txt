@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS content-box - inline 
+PASS padding-box - inline 
+PASS border-box - inline 
+PASS margin-box - inline 
+PASS content-box - computed 
+PASS padding-box - computed 
+PASS border-box - computed 
+PASS margin-box - computed 
+Harness: the test ran to completion.
+

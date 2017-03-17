@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS SVGAnimatedInteger interface - utilizing the targetX property of SVGFEConvolveMatrix 
+Harness: the test ran to completion.
+

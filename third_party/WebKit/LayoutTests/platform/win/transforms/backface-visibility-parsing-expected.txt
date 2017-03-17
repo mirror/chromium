@@ -1,0 +1,12 @@
+This is a testharness.js-based test.
+PASS "backface-visibility: initial;" should parse as "initial" 
+PASS "backface-visibility: initial;" should be computed to "visible" 
+PASS "backface-visibility: inherit;" should parse as "inherit" 
+PASS "backface-visibility: visible;" should parse as "visible" 
+PASS "backface-visibility: visible;" should be computed to "visible" 
+PASS "backface-visibility: hidden;" should parse as "hidden" 
+PASS "backface-visibility: hidden;" should be computed to "hidden" 
+PASS "backface-visibility: none;" should be invalid 
+PASS "backface-visibility: 0;" should be invalid 
+Harness: the test ran to completion.
+

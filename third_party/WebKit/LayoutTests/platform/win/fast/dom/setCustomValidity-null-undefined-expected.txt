@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS button element test for setCustomValidity(), null and undefined arguments. 
+PASS input element test for setCustomValidity(), null and undefined arguments. 
+PASS textarea element test for setCustomValidity(), null and undefined arguments. 
+PASS select element test for setCustomValidity(), null and undefined arguments. 
+PASS output element test for setCustomValidity(), null and undefined arguments. 
+PASS fieldset element test for setCustomValidity(), null and undefined arguments. 
+PASS object element test for setCustomValidity(), null and undefined arguments. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Resources whose URLs are not disallowed are still loaded. 
+PASS Resources whose initial URL (not after redirects) are disallowed are not loaded. 
+Harness: the test ran to completion.
+

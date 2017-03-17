@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS sessionStorage storage events fire even when only the case of the value changes. 
+PASS localStorage storage events fire even when only the case of the value changes. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,5 @@
+CONSOLE ERROR: line 8: Refused to load the script 'http://127.0.0.1:8000/security/contentSecurityPolicy/require-sri-for/sri-worker.js' because 'require-sri-for' directive requires integrity attribute be present for all scripts.
+This is a testharness.js-based test.
+PASS Test that a worker can be created, but execution is blocked. 
+Harness: the test ran to completion.
+

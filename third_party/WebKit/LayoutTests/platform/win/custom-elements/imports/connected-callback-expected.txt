@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS connectedCallback and disconnectedCallback should be invoked for elements in import 
+Harness: the test ran to completion.
+

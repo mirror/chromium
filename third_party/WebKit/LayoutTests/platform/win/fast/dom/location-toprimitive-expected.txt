@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Location objects must have Symbol.toPrimitive property defined. 
+Harness: the test ran to completion.
+

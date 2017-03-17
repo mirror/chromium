@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Verify drawing video frames to canvas using media stream. 
+Harness: the test ran to completion.
+

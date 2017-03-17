@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS 'connected' is set to false after disconnect is called. 
+Harness: the test ran to completion.
+

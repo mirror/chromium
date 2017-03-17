@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS Change an out-of-range number input value to be in-range through DOM property. 
+PASS Change an in-range number input value to be out-of-range through DOM property. 
+PASS Change an out-of-range number input value to be in-range with keyboard input. 
+PASS Change an in-range number input value to be out-of-range with keyboard input. 
+PASS Change an out-of-range number input value to be in-range with setAttribute. 
+PASS Change an in-range number input value to be out-of-range with setAttribute. 
+PASS Change an out-of-range number input value to be in-range by changing max attribute. 
+PASS Change an in-range number input value to be out-of-range by changing min attribute. 
+Harness: the test ran to completion.
+

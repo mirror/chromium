@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS search type support on input element 
+PASS placeholder attribute support on input element 
+Harness: the test ran to completion.
+

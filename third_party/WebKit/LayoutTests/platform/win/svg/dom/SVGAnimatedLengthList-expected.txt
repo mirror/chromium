@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS SVGAnimatedLengthList interface - utilizing the dx property of SVGTextElement 
+Harness: the test ran to completion.
+

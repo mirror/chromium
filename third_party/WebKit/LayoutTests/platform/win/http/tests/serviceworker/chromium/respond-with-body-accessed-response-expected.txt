@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Service Worker responds with .body accessed response. 
+Harness: the test ran to completion.
+

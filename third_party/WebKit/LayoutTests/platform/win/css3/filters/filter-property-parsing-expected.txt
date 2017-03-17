@@ -1,0 +1,258 @@
+This is a testharness.js-based test.
+PASS CSS.supports('filter', "url('#a')") should return true 
+PASS e.style['filter'] = "url('#a')" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "url('#a')" 
+PASS CSS.supports('filter', "url(#a)") should return true 
+PASS e.style['filter'] = "url(#a)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "url(#a)" 
+PASS CSS.supports('filter', "url('#a') url('#b')") should return true 
+PASS e.style['filter'] = "url('#a') url('#b')" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "url('#a') url('#b')" 
+PASS CSS.supports('filter', "grayscale(1) url('#a')") should return true 
+PASS e.style['filter'] = "grayscale(1) url('#a')" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "grayscale(1) url('#a')" 
+PASS CSS.supports('filter', "grayscale(1)") should return true 
+PASS e.style['filter'] = "grayscale(1)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "grayscale(1)" 
+PASS CSS.supports('filter', "grayscale(50%)") should return true 
+PASS e.style['filter'] = "grayscale(50%)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "grayscale(50%)" 
+PASS CSS.supports('filter', "grayscale(1.0)") should return true 
+PASS e.style['filter'] = "grayscale(1.0)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "grayscale(1.0)" 
+PASS CSS.supports('filter', "grayscale(0)") should return true 
+PASS e.style['filter'] = "grayscale(0)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "grayscale(0)" 
+PASS CSS.supports('filter', "grayscale()") should return true 
+PASS e.style['filter'] = "grayscale()" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "grayscale()" 
+PASS CSS.supports('filter', "grayscale(1.5)") should return true 
+PASS e.style['filter'] = "grayscale(1.5)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "grayscale(1.5)" 
+PASS CSS.supports('filter', "grayscale(150%)") should return true 
+PASS e.style['filter'] = "grayscale(150%)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "grayscale(150%)" 
+PASS CSS.supports('filter', "grayscale(0.5) grayscale(0.25)") should return true 
+PASS e.style['filter'] = "grayscale(0.5) grayscale(0.25)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "grayscale(0.5) grayscale(0.25)" 
+PASS CSS.supports('filter', "sepia(1)") should return true 
+PASS e.style['filter'] = "sepia(1)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "sepia(1)" 
+PASS CSS.supports('filter', "sepia(50%)") should return true 
+PASS e.style['filter'] = "sepia(50%)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "sepia(50%)" 
+PASS CSS.supports('filter', "sepia(1.0)") should return true 
+PASS e.style['filter'] = "sepia(1.0)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "sepia(1.0)" 
+PASS CSS.supports('filter', "sepia(0)") should return true 
+PASS e.style['filter'] = "sepia(0)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "sepia(0)" 
+PASS CSS.supports('filter', "sepia()") should return true 
+PASS e.style['filter'] = "sepia()" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "sepia()" 
+PASS CSS.supports('filter', "sepia(10000)") should return true 
+PASS e.style['filter'] = "sepia(10000)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "sepia(10000)" 
+PASS CSS.supports('filter', "sepia(1000%)") should return true 
+PASS e.style['filter'] = "sepia(1000%)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "sepia(1000%)" 
+PASS CSS.supports('filter', "sepia(0.5) sepia(0.25)") should return true 
+PASS e.style['filter'] = "sepia(0.5) sepia(0.25)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "sepia(0.5) sepia(0.25)" 
+PASS CSS.supports('filter', "saturate(1)") should return true 
+PASS e.style['filter'] = "saturate(1)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "saturate(1)" 
+PASS CSS.supports('filter', "saturate(50%)") should return true 
+PASS e.style['filter'] = "saturate(50%)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "saturate(50%)" 
+PASS CSS.supports('filter', "saturate(250%)") should return true 
+PASS e.style['filter'] = "saturate(250%)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "saturate(250%)" 
+PASS CSS.supports('filter', "saturate(1.0)") should return true 
+PASS e.style['filter'] = "saturate(1.0)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "saturate(1.0)" 
+PASS CSS.supports('filter', "saturate(5.5)") should return true 
+PASS e.style['filter'] = "saturate(5.5)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "saturate(5.5)" 
+PASS CSS.supports('filter', "saturate(0)") should return true 
+PASS e.style['filter'] = "saturate(0)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "saturate(0)" 
+PASS CSS.supports('filter', "saturate()") should return true 
+PASS e.style['filter'] = "saturate()" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "saturate()" 
+PASS CSS.supports('filter', "saturate(0.5) saturate(0.25)") should return true 
+PASS e.style['filter'] = "saturate(0.5) saturate(0.25)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "saturate(0.5) saturate(0.25)" 
+PASS CSS.supports('filter', "hue-rotate(10deg)") should return true 
+PASS e.style['filter'] = "hue-rotate(10deg)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "hue-rotate(10deg)" 
+PASS CSS.supports('filter', "hue-rotate(10.0deg)") should return true 
+PASS e.style['filter'] = "hue-rotate(10.0deg)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "hue-rotate(10.0deg)" 
+PASS CSS.supports('filter', "hue-rotate(10rad)") should return true 
+PASS e.style['filter'] = "hue-rotate(10rad)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "hue-rotate(10rad)" 
+PASS CSS.supports('filter', "hue-rotate(10grad)") should return true 
+PASS e.style['filter'] = "hue-rotate(10grad)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "hue-rotate(10grad)" 
+PASS CSS.supports('filter', "hue-rotate(0.5turn)") should return true 
+PASS e.style['filter'] = "hue-rotate(0.5turn)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "hue-rotate(0.5turn)" 
+PASS CSS.supports('filter', "hue-rotate(0)") should return true 
+PASS e.style['filter'] = "hue-rotate(0)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "hue-rotate(0)" 
+PASS CSS.supports('filter', "hue-rotate()") should return true 
+PASS e.style['filter'] = "hue-rotate()" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "hue-rotate()" 
+PASS CSS.supports('filter', "invert(1)") should return true 
+PASS e.style['filter'] = "invert(1)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "invert(1)" 
+PASS CSS.supports('filter', "invert(50%)") should return true 
+PASS e.style['filter'] = "invert(50%)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "invert(50%)" 
+PASS CSS.supports('filter', "invert(1.0)") should return true 
+PASS e.style['filter'] = "invert(1.0)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "invert(1.0)" 
+PASS CSS.supports('filter', "invert(0)") should return true 
+PASS e.style['filter'] = "invert(0)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "invert(0)" 
+PASS CSS.supports('filter', "invert()") should return true 
+PASS e.style['filter'] = "invert()" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "invert()" 
+PASS CSS.supports('filter', "invert(1.5)") should return true 
+PASS e.style['filter'] = "invert(1.5)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "invert(1.5)" 
+PASS CSS.supports('filter', "invert(150%)") should return true 
+PASS e.style['filter'] = "invert(150%)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "invert(150%)" 
+PASS CSS.supports('filter', "invert(0.5) invert(0.25)") should return true 
+PASS e.style['filter'] = "invert(0.5) invert(0.25)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "invert(0.5) invert(0.25)" 
+PASS CSS.supports('filter', "opacity(1)") should return true 
+PASS e.style['filter'] = "opacity(1)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "opacity(1)" 
+PASS CSS.supports('filter', "opacity(50%)") should return true 
+PASS e.style['filter'] = "opacity(50%)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "opacity(50%)" 
+PASS CSS.supports('filter', "opacity(1.0)") should return true 
+PASS e.style['filter'] = "opacity(1.0)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "opacity(1.0)" 
+PASS CSS.supports('filter', "opacity(0)") should return true 
+PASS e.style['filter'] = "opacity(0)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "opacity(0)" 
+PASS CSS.supports('filter', "opacity()") should return true 
+PASS e.style['filter'] = "opacity()" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "opacity()" 
+PASS CSS.supports('filter', "opacity(1.5)") should return true 
+PASS e.style['filter'] = "opacity(1.5)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "opacity(1.5)" 
+PASS CSS.supports('filter', "opacity(150%)") should return true 
+PASS e.style['filter'] = "opacity(150%)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "opacity(150%)" 
+PASS CSS.supports('filter', "opacity(0.5) opacity(0.25)") should return true 
+PASS e.style['filter'] = "opacity(0.5) opacity(0.25)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "opacity(0.5) opacity(0.25)" 
+PASS CSS.supports('filter', "brightness(1)") should return true 
+PASS e.style['filter'] = "brightness(1)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "brightness(1)" 
+PASS CSS.supports('filter', "brightness(50%)") should return true 
+PASS e.style['filter'] = "brightness(50%)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "brightness(50%)" 
+PASS CSS.supports('filter', "brightness(1.0)") should return true 
+PASS e.style['filter'] = "brightness(1.0)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "brightness(1.0)" 
+PASS CSS.supports('filter', "brightness(0)") should return true 
+PASS e.style['filter'] = "brightness(0)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "brightness(0)" 
+PASS CSS.supports('filter', "brightness()") should return true 
+PASS e.style['filter'] = "brightness()" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "brightness()" 
+PASS CSS.supports('filter', "brightness(0.5) brightness(0.25)") should return true 
+PASS e.style['filter'] = "brightness(0.5) brightness(0.25)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "brightness(0.5) brightness(0.25)" 
+PASS CSS.supports('filter', "brightness(-1.1)") should return true 
+PASS e.style['filter'] = "brightness(-1.1)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "brightness(-1.1)" 
+PASS CSS.supports('filter', "brightness(101%)") should return true 
+PASS e.style['filter'] = "brightness(101%)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "brightness(101%)" 
+PASS CSS.supports('filter', "contrast(1)") should return true 
+PASS e.style['filter'] = "contrast(1)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "contrast(1)" 
+PASS CSS.supports('filter', "contrast(50%)") should return true 
+PASS e.style['filter'] = "contrast(50%)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "contrast(50%)" 
+PASS CSS.supports('filter', "contrast(250%)") should return true 
+PASS e.style['filter'] = "contrast(250%)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "contrast(250%)" 
+PASS CSS.supports('filter', "contrast(1.0)") should return true 
+PASS e.style['filter'] = "contrast(1.0)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "contrast(1.0)" 
+PASS CSS.supports('filter', "contrast(0)") should return true 
+PASS e.style['filter'] = "contrast(0)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "contrast(0)" 
+PASS CSS.supports('filter', "contrast()") should return true 
+PASS e.style['filter'] = "contrast()" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "contrast()" 
+PASS CSS.supports('filter', "contrast(2)") should return true 
+PASS e.style['filter'] = "contrast(2)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "contrast(2)" 
+PASS CSS.supports('filter', "contrast(0.5) contrast(0.25)") should return true 
+PASS e.style['filter'] = "contrast(0.5) contrast(0.25)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "contrast(0.5) contrast(0.25)" 
+PASS CSS.supports('filter', "blur(0)") should return true 
+PASS e.style['filter'] = "blur(0)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "blur(0)" 
+PASS CSS.supports('filter', "blur(10px)") should return true 
+PASS e.style['filter'] = "blur(10px)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "blur(10px)" 
+PASS CSS.supports('filter', "blur()") should return true 
+PASS e.style['filter'] = "blur()" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "blur()" 
+PASS CSS.supports('filter', "drop-shadow(red 1px 2px 3px)") should return true 
+PASS e.style['filter'] = "drop-shadow(red 1px 2px 3px)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "drop-shadow(red 1px 2px 3px)" 
+PASS CSS.supports('filter', "drop-shadow(1px 2px 3px red)") should return true 
+PASS e.style['filter'] = "drop-shadow(1px 2px 3px red)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "drop-shadow(1px 2px 3px red)" 
+PASS CSS.supports('filter', "drop-shadow(#abc 0 0 0)") should return true 
+PASS e.style['filter'] = "drop-shadow(#abc 0 0 0)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "drop-shadow(#abc 0 0 0)" 
+PASS CSS.supports('filter', "drop-shadow(0 0 0)") should return true 
+PASS e.style['filter'] = "drop-shadow(0 0 0)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "drop-shadow(0 0 0)" 
+PASS CSS.supports('filter', "drop-shadow(1px 2px)") should return true 
+PASS e.style['filter'] = "drop-shadow(1px 2px)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "drop-shadow(1px 2px)" 
+PASS CSS.supports('filter', "sepia(0.5) grayscale(0.25)") should return true 
+PASS e.style['filter'] = "sepia(0.5) grayscale(0.25)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "sepia(0.5) grayscale(0.25)" 
+PASS CSS.supports('filter', "saturate(0.5) grayscale(0.25)") should return true 
+PASS e.style['filter'] = "saturate(0.5) grayscale(0.25)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "saturate(0.5) grayscale(0.25)" 
+PASS CSS.supports('filter', "hue-rotate(10deg) grayscale(0.25)") should return true 
+PASS e.style['filter'] = "hue-rotate(10deg) grayscale(0.25)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "hue-rotate(10deg) grayscale(0.25)" 
+PASS CSS.supports('filter', "invert(0.5) grayscale(0.25)") should return true 
+PASS e.style['filter'] = "invert(0.5) grayscale(0.25)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "invert(0.5) grayscale(0.25)" 
+PASS CSS.supports('filter', "opacity(0.5) grayscale(0.25)") should return true 
+PASS e.style['filter'] = "opacity(0.5) grayscale(0.25)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "opacity(0.5) grayscale(0.25)" 
+PASS CSS.supports('filter', "brightness(0.5) grayscale(0.25)") should return true 
+PASS e.style['filter'] = "brightness(0.5) grayscale(0.25)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "brightness(0.5) grayscale(0.25)" 
+PASS CSS.supports('filter', "grayscale(0.25) brightness(0.5)") should return true 
+PASS e.style['filter'] = "grayscale(0.25) brightness(0.5)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "grayscale(0.25) brightness(0.5)" 
+PASS CSS.supports('filter', "contrast(0.5) grayscale(0.25)") should return true 
+PASS e.style['filter'] = "contrast(0.5) grayscale(0.25)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "contrast(0.5) grayscale(0.25)" 
+PASS CSS.supports('filter', "grayscale(0.25) contrast(0.5)") should return true 
+PASS e.style['filter'] = "grayscale(0.25) contrast(0.5)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "grayscale(0.25) contrast(0.5)" 
+PASS CSS.supports('filter', "grayscale(0.5) sepia(0.25) saturate(0.75) hue-rotate(35deg) invert(0.2) opacity(0.9) blur(5px) drop-shadow(green 1px 2px 3px)") should return true 
+PASS e.style['filter'] = "grayscale(0.5) sepia(0.25) saturate(0.75) hue-rotate(35deg) invert(0.2) opacity(0.9) blur(5px) drop-shadow(green 1px 2px 3px)" should set the value 
+PASS Serialization should round-trip after setting e.style['filter'] = "grayscale(0.5) sepia(0.25) saturate(0.75) hue-rotate(35deg) invert(0.2) opacity(0.9) blur(5px) drop-shadow(green 1px 2px 3px)" 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS RequestDeviceOptions should have exactly one of 'filters' or 'acceptAllDevices:true'. Reject with TypeError if not. 
+Harness: the test ran to completion.
+

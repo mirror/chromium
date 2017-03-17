@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS postMessage results in correct event 
+PASS messages are delivered in port creation order 
+PASS messages aren't delivered to a closed port 
+PASS closing and creating channels during message delivery works correctly 
+PASS Closing a channel in onmessage doesn't cancel already queued events 
+Harness: the test ran to completion.
+

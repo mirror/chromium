@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that canvas does not crash when large negative dimensions is asked for the image data. 
+Harness: the test ran to completion.
+

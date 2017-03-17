@@ -1,0 +1,13 @@
+This is a testharness.js-based test.
+PASS # AUDIT TASK RUNNER STARTED. 
+PASS > [loadfiles] Load HRTF database files 
+PASS   Number of buffers loaded is equal to 2. 
+PASS < [loadfiles] All assertions passed. (total 1 assertions) 
+PASS > [verify-flac] Verify FLAC-encoded HRTF database matches original 
+PASS   Number of FLAC channels is equal to 2. 
+PASS   FLAC-encoded HRTF database channel 0 is identical to the array [0.000030518509447574615,-0.000030517578125,0.000030518509447574615,-0.000030517578125,0,0,0,0,0,0.000030518509447574615,-0.000030517578125,0.00006103701889514923,-0.00006103515625,0.00006103701889514923,-0.000091552734375,0.00012207403779029846...]. 
+PASS   FLAC-encoded HRTF database channel 1 is identical to the array [0.000030518509447574615,-0.000030517578125,0.000030518509447574615,-0.000030517578125,0,0,0,0,0,0.000030518509447574615,-0.000030517578125,0.00006103701889514923,-0.00006103515625,0.00006103701889514923,-0.000091552734375,0.00012207403779029846...]. 
+PASS < [verify-flac] All assertions passed. (total 3 assertions) 
+PASS # AUDIT TASK RUNNER FINISHED: 2 tasks ran successfully. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that strokeText() doesn't produce a filled shadow. 
+Harness: the test ran to completion.
+

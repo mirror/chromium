@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Transfer and structured-clone an ImageBitmap should preserve the originClean flag. 
+Harness: the test ran to completion.
+

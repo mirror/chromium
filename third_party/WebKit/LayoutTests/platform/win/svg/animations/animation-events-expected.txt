@@ -1,0 +1,42 @@
+This is a testharness.js-based test.
+PASS Set SVGAnimateElement.onbegin 
+PASS Enumerate SVGAnimateElement.onbegin 
+PASS Reflect SVGAnimateElement.onbegin 
+PASS Set SVGAnimateMotionElement.onbegin 
+PASS Enumerate SVGAnimateMotionElement.onbegin 
+PASS Reflect SVGAnimateMotionElement.onbegin 
+PASS Set SVGAnimateTransformElement.onbegin 
+PASS Enumerate SVGAnimateTransformElement.onbegin 
+PASS Reflect SVGAnimateTransformElement.onbegin 
+PASS Set SVGSetElement.onbegin 
+PASS Enumerate SVGSetElement.onbegin 
+PASS Reflect SVGSetElement.onbegin 
+PASS Event beginEvent maps to onbegin 
+PASS Set SVGAnimateElement.onend 
+PASS Enumerate SVGAnimateElement.onend 
+PASS Reflect SVGAnimateElement.onend 
+PASS Set SVGAnimateMotionElement.onend 
+PASS Enumerate SVGAnimateMotionElement.onend 
+PASS Reflect SVGAnimateMotionElement.onend 
+PASS Set SVGAnimateTransformElement.onend 
+PASS Enumerate SVGAnimateTransformElement.onend 
+PASS Reflect SVGAnimateTransformElement.onend 
+PASS Set SVGSetElement.onend 
+PASS Enumerate SVGSetElement.onend 
+PASS Reflect SVGSetElement.onend 
+PASS Event endEvent maps to onend 
+PASS Set SVGAnimateElement.onrepeat 
+PASS Enumerate SVGAnimateElement.onrepeat 
+PASS Reflect SVGAnimateElement.onrepeat 
+PASS Set SVGAnimateMotionElement.onrepeat 
+PASS Enumerate SVGAnimateMotionElement.onrepeat 
+PASS Reflect SVGAnimateMotionElement.onrepeat 
+PASS Set SVGAnimateTransformElement.onrepeat 
+PASS Enumerate SVGAnimateTransformElement.onrepeat 
+PASS Reflect SVGAnimateTransformElement.onrepeat 
+PASS Set SVGSetElement.onrepeat 
+PASS Enumerate SVGSetElement.onrepeat 
+PASS Reflect SVGSetElement.onrepeat 
+PASS Event repeatEvent maps to onrepeat 
+Harness: the test ran to completion.
+

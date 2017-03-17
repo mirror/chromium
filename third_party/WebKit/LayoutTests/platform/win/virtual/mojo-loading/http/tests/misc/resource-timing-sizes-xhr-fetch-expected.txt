@@ -1,0 +1,5 @@
+CONSOLE WARNING: line 54: Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/.
+This is a testharness.js-based test.
+PASS PerformanceResourceTiming sizes XHR and Fetch test 
+Harness: the test ran to completion.
+

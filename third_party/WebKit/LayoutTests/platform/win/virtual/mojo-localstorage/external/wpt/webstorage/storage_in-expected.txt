@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS The in operator in localStorage: property access 
+PASS The in operator in localStorage: method access 
+PASS The in operator in sessionStorage: property access 
+PASS The in operator in sessionStorage: method access 
+Harness: the test ran to completion.
+

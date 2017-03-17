@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS 1 deleting line break before H6 
+PASS 2 deleting line break before H6+FONT 
+PASS 3 deleting line break before H6 with style 
+Harness: the test ran to completion.
+

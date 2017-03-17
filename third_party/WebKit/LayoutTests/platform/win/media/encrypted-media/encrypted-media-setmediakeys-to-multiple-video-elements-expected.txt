@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS setMediaKeys() on multiple video elements. 
+Harness: the test ran to completion.
+

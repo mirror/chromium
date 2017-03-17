@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Context should initially not be lost 
+PASS Context should be lost when size is set to an extremely large number and then restored when set to a reasonable number 
+PASS contextlost event should fire after size is set to extremely large number 
+PASS contextrestored event should fire after size is restored to a reasonable number 
+Harness: the test ran to completion.
+

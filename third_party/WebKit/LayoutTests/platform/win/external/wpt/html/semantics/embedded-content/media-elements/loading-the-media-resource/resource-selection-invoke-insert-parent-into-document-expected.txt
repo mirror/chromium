@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS NOT invoking resource selection by inserting parent into a document 
+Harness: the test ran to completion.
+

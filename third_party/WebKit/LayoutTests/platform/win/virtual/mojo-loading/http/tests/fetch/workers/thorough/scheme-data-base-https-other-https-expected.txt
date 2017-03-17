@@ -1,0 +1,18 @@
+CONSOLE WARNING: line 14: Subresource requests whose URLs contain embedded credentials (e.g. `https://user:pass@host/`) are deprecated, and will be blocked in M59, around June 2017. See https://www.chromestatus.com/feature/5669008342777856 for more details.
+CONSOLE ERROR: Fetch API cannot load https://127.0.0.1:8443/serviceworker/resources/redirect.php?Redirect=data%3Aapplication%2Fjson%2Creport(%7BjsonpResult%3A%20%27success%27%7D)%3B&mode=same-origin&method=GET. Redirect failed.
+CONSOLE ERROR: Fetch API cannot load https://127.0.0.1:8443/serviceworker/resources/redirect.php?Redirect=data%3Aapplication%2Fjson%2Creport(%7BjsonpResult%3A%20%27success%27%7D)%3B&mode=cors&method=GET. Redirects to data: URL are allowed only when mode is "no-cors".
+CONSOLE ERROR: line 368: Fetch API cannot load https://localhost:8443/serviceworker/resources/redirect.php?Redirect=data%3Aapplication%2Fjson%2Creport(%7BjsonpResult%3A%20%27success%27%7D)%3B&mode=same-origin&method=GET&ACAOrigin=*. Request mode is "same-origin" but the URL's origin is not same as the request origin https://127.0.0.1:8443.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/redirect.php?Redirect=data%3Aapplication%2Fjson%2Creport(%7BjsonpResult%3A%20%27success%27%7D)%3B&mode=cors&method=GET&ACAOrigin=*. Redirects to data: URL are allowed only when mode is "no-cors".
+This is a testharness.js-based test.
+PASS Startup 
+PASS executeTest-0 
+PASS executeTest-1 
+PASS executeTest-2 
+PASS executeTest-3 
+PASS executeTest-4 
+PASS executeTest-5 
+PASS executeTest-6 
+PASS executeTest-7 
+PASS executeTest-8 
+Harness: the test ran to completion.
+

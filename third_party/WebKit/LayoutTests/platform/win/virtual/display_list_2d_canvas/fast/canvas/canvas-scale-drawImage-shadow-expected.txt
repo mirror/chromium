@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Ensure correct behavior of canvas with drawImage+shadow after scaling. A blue and red checkered pattern should be displayed. 
+Harness: the test ran to completion.
+

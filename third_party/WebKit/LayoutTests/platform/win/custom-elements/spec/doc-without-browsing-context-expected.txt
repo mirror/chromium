@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS An element should not upgraded in a document without browsing context 
+PASS Custom element should not be created in a document without browsing context 
+PASS Inserting an already defined custom element into a document without browsing context should not change its state 
+Harness: the test ran to completion.
+

@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Setup subframe 1. 
+PASS Setup subframe 2. 
+PASS Marker in subframe 1 disappear when disabling spell checker. 
+PASS Marker in subframe 2 disappear when disabling spell checker. 
+PASS Marker in subframe 1 is restored due to focus. 
+PASS Marker in subframe 2 is not restored without focus. 
+Harness: the test ran to completion.
+

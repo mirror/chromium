@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Observing a zero-area target. 
+PASS First rAF 
+PASS document.scrollingElement.scrollTop = 300 
+PASS document.scrollingElement.scrollTop = 100 
+Harness: the test ran to completion.
+

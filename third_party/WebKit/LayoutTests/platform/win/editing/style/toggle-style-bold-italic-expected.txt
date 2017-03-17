@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS bold 
+PASS bold+italic 
+PASS bold+italic+bold 
+PASS bold+italic+bold+italic 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Calling cssText() on an @font-face rule serializes the contents. 
+Harness: the test ran to completion.
+

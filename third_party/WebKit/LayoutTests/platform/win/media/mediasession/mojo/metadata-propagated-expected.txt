@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS test that MediaMetadata is correctly propagated 
+Harness: the test ran to completion.
+

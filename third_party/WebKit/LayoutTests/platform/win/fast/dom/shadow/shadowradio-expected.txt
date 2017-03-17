@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Radio buttons should not be grouped together across the shadow border. 
+PASS Radio buttons in a shadow tree should be grouped together. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Verifies that mouse activites on an object fire pointerevents 
+PASS Click on object 
+PASS Drag from object 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Attempt to call readValue on a blocked descriptor must generate a SecurityError 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Check that reversing a transition mid-way adjusts the duration 
+Harness: the test ran to completion.
+

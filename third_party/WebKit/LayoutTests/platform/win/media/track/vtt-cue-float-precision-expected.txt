@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Float precision of VTTCue attributes line, position and size, stored as floats 
+Harness: the test ran to completion.
+

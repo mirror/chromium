@@ -1,0 +1,68 @@
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=frame-src%20http://b.com:*&id=0' because it has not opted-into the following policy required by its embedder: 'frame-src http://c.com:* http://b.com:80'.
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=frame-src%20http://*.b.com:80&id=2' because it has not opted-into the following policy required by its embedder: 'frame-src http://c.com:* http://b.com:80'.
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=img-src%20http://*.b.com:*&id=4' because it has not opted-into the following policy required by its embedder: 'img-src http://c.com:* http://b.com:80'.
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=img-src%20http://b.com:*&id=8' because it has not opted-into the following policy required by its embedder: 'img-src http://c.com:* http://d.com:*'.
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=img-src%20http://*.b.com:80&id=9' because it has not opted-into the following policy required by its embedder: 'img-src http://c.com:* http://b.com:*'.
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=img-src%20http://b.com:*&id=10' because it has not opted-into the following policy required by its embedder: 'img-src http://c.com:* http://*.b.com:80'.
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=img-src%20http://*.b.com:*&id=13' because it has not opted-into the following policy required by its embedder: 'img-src http://c.com:* http://*.b.com:80'.
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=img-src%20http://*.b.com:*&id=14' because it has not opted-into the following policy required by its embedder: 'img-src http://c.com:* http://b.com:*'.
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=img-src%20http://*.b.com:*&id=16' because it has not opted-into the following policy required by its embedder: 'img-src http://c.com:* https://*.b.com:*'.
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=img-src%20https://*.b.com:*&id=17' because it has not opted-into the following policy required by its embedder: 'img-src http://c.com:* http://*.d.com:*'.
+CONSOLE ERROR: The source list for Content Security Policy directive 'frame-src' contains an invalid source: 'http://b.com:*?csp2=frame-src'. It will be ignored.
+CONSOLE ERROR: Ignoring duplicate Content-Security-Policy directive 'img-src'.
+
+CONSOLE ERROR: line 19: Refused to frame 'http://localhost:8000/cross-site/b.com/title2.html' because it violates the following Content Security Policy directive: "frame-src http://b.com:80".
+
+CONSOLE ERROR: line 19: Refused to frame 'http://localhost:8000/cross-site/b.com/title2.html' because it violates the following Content Security Policy directive: "frame-src http://b.com:80".
+
+CONSOLE ERROR: line 20: Refused to load the image 'http://localhost:8000/security/contentSecurityPolicy/resources/green250x50.png' because it violates the following Content Security Policy directive: "img-src http://b.com:80".
+
+CONSOLE ERROR: line 20: Refused to load the image 'http://localhost:8000/security/contentSecurityPolicy/resources/green250x50.png' because it violates the following Content Security Policy directive: "img-src http://*.b.com:80".
+
+CONSOLE ERROR: line 20: Refused to load the image 'http://localhost:8000/security/contentSecurityPolicy/resources/green250x50.png' because it violates the following Content Security Policy directive: "img-src http://b.com:*".
+
+CONSOLE ERROR: line 20: Refused to load the image 'http://localhost:8000/security/contentSecurityPolicy/resources/green250x50.png' because it violates the following Content Security Policy directive: "img-src http://b.com:*".
+
+CONSOLE ERROR: line 20: Refused to load the image 'http://localhost:8000/security/contentSecurityPolicy/resources/green250x50.png' because it violates the following Content Security Policy directive: "img-src http://*.b.com:80".
+
+CONSOLE ERROR: line 20: Refused to load the image 'http://localhost:8000/security/contentSecurityPolicy/resources/green250x50.png' because it violates the following Content Security Policy directive: "img-src http://*.b.com:*".
+
+CONSOLE ERROR: line 20: Refused to load the image 'http://localhost:8000/security/contentSecurityPolicy/resources/green250x50.png' because it violates the following Content Security Policy directive: "img-src https://*.b.com:*".
+
+CONSOLE ERROR: line 20: Refused to load the image 'http://localhost:8000/security/contentSecurityPolicy/resources/green250x50.png' because it violates the following Content Security Policy directive: "img-src http://b.com".
+
+CONSOLE ERROR: line 20: Refused to load the image 'http://localhost:8000/security/contentSecurityPolicy/resources/green250x50.png' because it violates the following Content Security Policy directive: "img-src https://b.com".
+
+CONSOLE ERROR: The source list for Content Security Policy directive 'frame-src' contains an invalid source: 'http://b.com:*?csp2=frame-src'. It will be ignored.
+CONSOLE ERROR: Ignoring duplicate Content-Security-Policy directive 'img-src'.
+
+CONSOLE ERROR: line 19: Refused to frame 'http://localhost:8000/cross-site/b.com/title2.html' because it violates the following Content Security Policy directive: "frame-src http://b.com:*?csp2=frame-src http://b.com".
+
+CONSOLE ERROR: line 20: Refused to load the image 'http://localhost:8000/security/contentSecurityPolicy/resources/green250x50.png' because it violates the following Content Security Policy directive: "img-src http://c.com".
+
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = 1 duplicate test name: "Exact match in https."
+PASS Wildcard in port in returned_csp vs no wildcard in port in required_csp should be 'Blocked'. 
+PASS Wildcard in port in returned_csp vs a wildcard in port in required_csp should be 'Allowed'. 
+PASS Wildcard in host in returned_csp vs no wildcard in host in required_csp should be 'Blocked'. 
+PASS Wildcard in host in returned_csp vs a wildcard in port in required_csp should be 'Allowed'. 
+PASS Wildcards in returned_csp are less restrictive. 
+PASS Returned csp with no wildcards should be 'Allowed'. 
+PASS 'Allowed' if exact match of wildcards in hosts. 
+PASS 'Allowed' if exact match of wildcards in ports. 
+PASS 'Blocked' if exact match of wildcards in ports but not matching hosts. 
+PASS Cross wildcards so the iframe should be 'Blocked'. 
+PASS Cross wildcards again so the iframe should be 'Blocked'. 
+PASS Two out of three wildcards in required_csp should correspond to iframe being 'Allowed'. 
+PASS Two out of three wildcards in required_csp again should correspond to iframe being 'Allowed'. 
+PASS Two out of three wildcards in returned_csp should correspond to iframe being 'Blocked'. 
+PASS Two out of three wildcards in returned_csp again should correspond to iframe being 'Blocked'. 
+PASS Origins with wildcards in hosts and ports should be matched. 
+PASS Origins with wildcards in hosts and ports should be matched but also protocols. 
+PASS Not matching four wildcards. 
+PASS Four wildcards and https in returned_csp should be 'Allowed'. 
+PASS Exact match. 
+PASS Exact match in https. 
+PASS Exact match in https. 
+Harness: the test ran to completion.
+

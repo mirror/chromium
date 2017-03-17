@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Selection API can edit in -webkit-user-select:all contenteditable element 
+PASS Execcommand inserttext in -webkit-user-select:all contenteditable element 
+PASS -webkit-user-select:all contenteditable element is HTMLElement.isContentEditable == true 
+Harness: the test ran to completion.
+

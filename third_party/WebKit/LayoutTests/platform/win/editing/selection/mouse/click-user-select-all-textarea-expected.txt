@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS User can ipnut in -webkit-user-select:all textarea 
+Harness: the test ran to completion.
+

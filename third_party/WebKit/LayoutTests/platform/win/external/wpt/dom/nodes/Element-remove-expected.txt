@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS element should support remove() 
+PASS remove() should work if element doesn't have a parent 
+PASS remove() should work if element does have a parent 
+PASS remove() should work if element does have a parent and siblings 
+Harness: the test ran to completion.
+

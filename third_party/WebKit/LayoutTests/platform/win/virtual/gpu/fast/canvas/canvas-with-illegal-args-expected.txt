@@ -1,0 +1,13 @@
+This is a testharness.js-based test.
+PASS Test scale(NaN, 1) 
+PASS Test scale(1, NaN) 
+PASS Test scale(Infinity, 1) 
+PASS Test scale(1, Infinity) 
+PASS Test translate(NaN, 1) 
+PASS Test translate(1, NaN) 
+PASS Test translate(Infinity, 1) 
+PASS Test translate(1, Infinity) 
+PASS Test rotate(NaN) 
+PASS Test translate(Infinity) 
+Harness: the test ran to completion.
+

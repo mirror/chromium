@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Delayed service discovery, request for present service without permission for that service. Reject with NotFoundError. 
+Harness: the test ran to completion.
+

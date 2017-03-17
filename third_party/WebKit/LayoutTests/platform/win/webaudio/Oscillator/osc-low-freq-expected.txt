@@ -1,0 +1,5 @@
+CONSOLE ERROR: line 56: Uncaught (in promise) ReferenceError: testPassed is not defined
+This is a testharness.js-based test.
+PASS SNR of 1 Hz sine wave is greater than or equal to 130. 
+Harness: the test ran to completion.
+

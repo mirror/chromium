@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that the css string for CSSNumberValue is correct. 
+Harness: the test ran to completion.
+

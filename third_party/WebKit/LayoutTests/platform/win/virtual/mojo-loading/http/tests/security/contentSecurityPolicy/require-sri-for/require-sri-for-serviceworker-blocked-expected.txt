@@ -1,0 +1,5 @@
+CONSOLE ERROR: line 7: Refused to load the service worker 'http://127.0.0.1:8000/security/contentSecurityPolicy/require-sri-for/resources/service-worker.js' because 'require-sri-for' directive requires integrity attribute be present for all service workers.
+This is a testharness.js-based test.
+PASS Test that a service worker can not be registered. 
+Harness: the test ran to completion.
+

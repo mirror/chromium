@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS document.execCommand("insertImage", false, undefined) 
+PASS document.execCommand("insertImage", false, null) 
+PASS document.execCommand("insertImage", false, ) 
+PASS document.execCommand("insertImage", false,  ) 
+PASS document.execCommand("insertImage", false, image) 
+Harness: the test ran to completion.
+

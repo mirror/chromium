@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS No arguments - inline 
+PASS Radial argument only - inline 
+PASS Position argument only - inline 
+PASS Radial and position argument - inline 
+PASS No arguments - computed 
+PASS Radial argument only - computed 
+PASS Position argument only - computed 
+PASS Radial and position argument - computed 
+Harness: the test ran to completion.
+

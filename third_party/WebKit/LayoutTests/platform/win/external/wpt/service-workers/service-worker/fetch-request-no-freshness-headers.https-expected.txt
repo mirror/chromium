@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS The headers of FetchEvent shouldn't contain freshness headers. 
+Harness: the test ran to completion.
+

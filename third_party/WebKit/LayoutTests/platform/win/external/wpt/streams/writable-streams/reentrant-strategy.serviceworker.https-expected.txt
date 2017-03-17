@@ -1,0 +1,119 @@
+Assertion failed: controller.[[queue]] is empty.
+
+==== JS stack trace =========================================
+
+Security context: 0000033229AB0D39 <ServiceWorkerGlobalScope map = 000002D81FF0CD31>#0#
+    2: logStackTrace [native prologue.js:1] [bytecode=000003B6AE208611 offset=4](this=0000033229AA1A41 <Object map = 000002D81FF07C11>#1#)
+    4: TEMP_ASSERT(aka TEMP_ASSERT) [native WritableStream.js:114] [bytecode=0000033229AEB3B9 offset=55](this=000001BD8B502311 <undefined>,predicate=000001BD8B502421 <false>,message=000003B6AE2079D9 <String[30]: controller.[[queue]] is empty.>)
+    6: WritableStreamDefaultControllerProcessClose(aka WritableStreamDefaultControllerProcessClose) [native WritableStream.js:635] [bytecode=000003B6AE207CF9 offset=169](this=000001BD8B502311 <undefined>,controller=000002E6881CD951 <WritableStreamDefaultController map = 000002D81FF15601>#2#)
+    8: WritableStreamDefaultControllerAdvanceQueueIfNeeded(aka WritableStreamDefaultControllerAdvanceQueueIfNeeded) [native WritableStream.js:618] [bytecode=0000033229AEE4A1 offset=206](this=000001BD8B502311 <undefined>,controller=000002E6881CD951 <WritableStreamDefaultController map = 000002D81FF15601>#2#)
+   10: onFulfilled(aka onFulfilled) [native WritableStream.js:534] [bytecode=0000033229AEF8D9 offset=58](this=000001BD8B502311 <undefined>)
+   11: arguments adaptor frame: 1->0
+   12: /* anonymous */(aka /* anonymous */)(this=000001BD8B502311 <undefined>)
+
+==== Details ================================================
+
+[2]: logStackTrace [native prologue.js:1] [bytecode=000003B6AE208611 offset=4](this=0000033229AA1A41 <Object map = 000002D81FF07C11>#1#) {
+  // expression stack (top to bottom)
+  [00] : 0000033229AA1DD1 <JSFunction logStackTrace (sfi = 000001BD8B509909)>#3#
+--------- s o u r c e   c o d e ---------
+function logStackTrace(){\x0a%DebugTrace();\x0a}
+-----------------------------------------
+}
+
+[4]: TEMP_ASSERT(aka TEMP_ASSERT) [native WritableStream.js:114] [bytecode=0000033229AEB3B9 offset=55](this=000001BD8B502311 <undefined>,predicate=000001BD8B502421 <false>,message=000003B6AE2079D9 <String[30]: controller.[[queue]] is empty.>) {
+  // stack-allocated locals
+  var /* anonymous */ = 000001BD8B502311 <undefined>
+  var WritableStreamInternalError = 000001BD8B502311 <undefined>
+  // expression stack (top to bottom)
+  [07] : 000001BD8B502311 <undefined>
+  [06] : 000001BD8B502311 <undefined>
+  [05] : 000002E6881CEE21 <String[49]\: Assertion failed: controller.[[queue]] is empty.\n>
+  [04] : 0000033229AA1A41 <Object map = 000002D81FF07C11>#1#
+  [03] : 0000033229AA1DD1 <JSFunction logStackTrace (sfi = 000001BD8B509909)>#3#
+  [02] : 000001BD8B502351 <the_hole>
+--------- s o u r c e   c o d e ---------
+function TEMP_ASSERT(predicate, message) {\x0a    if (predicate) {\x0a      return;\x0a    }\x0a    v8.log(`Assertion failed: ${message}\n`);\x0a    v8.logStackTrace();\x0a    class WritableStreamInternalError extends Error {\x0a      constructor(message) {\x0a        super(message);\x0a      }\x0a    }\x0a    throw new WritableStreamInternalError(mes...
+
+-----------------------------------------
+}
+
+[6]: WritableStreamDefaultControllerProcessClose(aka WritableStreamDefaultControllerProcessClose) [native WritableStream.js:635] [bytecode=000003B6AE207CF9 offset=169](this=000001BD8B502311 <undefined>,controller=000002E6881CD951 <WritableStreamDefaultController map = 000002D81FF15601>#2#) {
+  // stack-allocated locals
+  var sinkClosePromise = 000001BD8B502351 <the_hole>
+  // heap-allocated locals
+  var controller = 000002E6881CD951 <WritableStreamDefaultController map = 000002D81FF15601>#2#
+  var stream = 000002E6881CD861 <WritableStream map = 000002D81FF14B59>#4#
+  // expression stack (top to bottom)
+  [07] : 000001BD8B502311 <undefined>
+  [06] : 000001BD8B502311 <undefined>
+  [05] : 000003B6AE2079D9 <String[30]: controller.[[queue]] is empty.>
+  [04] : 000001BD8B502421 <false>
+  [03] : 000001BD8B502311 <undefined>
+  [02] : 000002E688194A19 <JSFunction TEMP_ASSERT (sfi = 0000033229AB84F1)>#5#
+  [01] : 000002E6881943B1 <FixedArray[104]>#6#
+--------- s o u r c e   c o d e ---------
+function WritableStreamDefaultControllerProcessClose(controller) {\x0a    const stream = controller[_controlledWritableStream];\x0a    TEMP_ASSERT(stream[_state] === CLOSING,\x0a                'stream.[[state]] is "closing".');\x0a    DequeueValueForController(controller);\x0a    TEMP_ASSERT(controller[_queue].length === 0,\x0a                'controller.[[queue]] is...
+
+-----------------------------------------
+}
+
+[8]: WritableStreamDefaultControllerAdvanceQueueIfNeeded(aka WritableStreamDefaultControllerAdvanceQueueIfNeeded) [native WritableStream.js:618] [bytecode=0000033229AEE4A1 offset=206](this=000001BD8B502311 <undefined>,controller=000002E6881CD951 <WritableStreamDefaultController map = 000002D81FF15601>#2#) {
+  // stack-allocated locals
+  var state = 1
+  var writeRecord = 000001BD8B526A19 <String[5]: close>
+  // expression stack (top to bottom)
+  [05] : 000001BD8B502311 <undefined>
+  [04] : 000002E6881CDA51 <JSArray[1]>#7#
+  [03] : 000001BD8B502311 <undefined>
+  [02] : 000002E688195241 <JSFunction WritableStreamDefaultControllerProcessClose (sfi = 0000033229AB9D69)>#8#
+--------- s o u r c e   c o d e ---------
+function WritableStreamDefaultControllerAdvanceQueueIfNeeded(controller) {\x0a    const state = controller[_controlledWritableStream][_state];\x0a    if (state === CLOSED || state === ERRORED) {\x0a      return;\x0a    }\x0a    if (!getDefaultControllerStartedFlag(controller)) {\x0a      return;\x0a    }\x0a    if (getDefaultControllerWritingFlag(controller)) {\x0a      return;\x0a    }\x0a...
+
+-----------------------------------------
+}
+
+[10]: onFulfilled(aka onFulfilled) [native WritableStream.js:534] [bytecode=0000033229AEF8D9 offset=58](this=000001BD8B502311 <undefined>) {
+  // expression stack (top to bottom)
+  [03] : 000001BD8B5023B1 <true>
+  [02] : 000002E6881CD951 <WritableStreamDefaultController map = 000002D81FF15601>#2#
+  [01] : 000001BD8B502311 <undefined>
+  [00] : 000002E6881951B1 <JSFunction WritableStreamDefaultControllerAdvanceQueueIfNeeded (sfi = 0000033229AB9BB9)>#9#
+--------- s o u r c e   c o d e ---------
+function onFulfilled() => {\x0a        setDefaultControllerStartedFlag(controller, true);\x0a        WritableStreamDefaultControllerAdvanceQueueIfNeeded(controller);\x0a      }
+-----------------------------------------
+}
+
+[11]: arguments adaptor frame: 1->0 {
+  // actual arguments
+  [00] : 000001BD8B502311 <undefined>  // not passed to callee
+}
+
+[12]: /* anonymous */(aka /* anonymous */)(this=000001BD8B502311 <undefined>) {
+// optimized frame
+--------- s o u r c e   c o d e ---------
+<No Source>
+-----------------------------------------
+}
+==== Key         ============================================
+
+ #0# 0000033229AB0D39: 0000033229AB0D39 <ServiceWorkerGlobalScope map = 000002D81FF0CD31>
+ #1# 0000033229AA1A41: 0000033229AA1A41 <Object map = 000002D81FF07C11>
+ #2# 000002E6881CD951: 000002E6881CD951 <WritableStreamDefaultController map = 000002D81FF15601>
+ #3# 0000033229AA1DD1: 0000033229AA1DD1 <JSFunction logStackTrace (sfi = 000001BD8B509909)>
+ #4# 000002E6881CD861: 000002E6881CD861 <WritableStream map = 000002D81FF14B59>
+        controller: 000002E6881CD951 <WritableStreamDefaultController map = 000002D81FF15601>#2#
+            events: 000002E6881CDDD1 <JSArray[0]>#10#
+ #5# 000002E688194A19: 000002E688194A19 <JSFunction TEMP_ASSERT (sfi = 0000033229AB84F1)>
+ #6# 000002E6881943B1: 000002E6881943B1 <FixedArray[104]>
+                 0: 000002E688194369 <JSFunction (sfi = 0000033229AB7AD1)>#11#
+                 1: 0000033229A88391 <FixedArray[254]>#12#
+                 3: 0000033229A88391 <FixedArray[254]>#12#
+                 4: 0000033229AA1A41 <Object map = 000002D81FF07C11>#1#
+                 5: 0000033229ABD301 <Symbol: [[pendingWriteRequest]]>#13#
+                 6: 0000033229ABD339 <Symbol: [[pendingCloseRequest]]>#14#
+                 7: 0000033229ABD371 <Symbol: [[pendingAbortRequest]]>#15#
+                 8: 0000033229ABD3A9 <Symbol: [[state]]>#16#
+                 9: 0000033229ABD3E1 <Symbol: [[storedError]]>#17#
+                  ...
+ #7# 000002E6

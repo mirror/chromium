@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test for WebKit bug 12565. (parsing of animateTransform values). This test passes if it does not crash. 
+Harness: the test ran to completion.
+

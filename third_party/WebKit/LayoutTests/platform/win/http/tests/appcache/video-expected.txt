@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that "video" can be loaded from the application cache. 
+Harness: the test ran to completion.
+

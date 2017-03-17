@@ -1319,10 +1319,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   return NO;
 }
 
-- (void)webWillFinishHistoryNavigation {
-  [parentTabModel_ notifyTabChanged:self];
-}
-
 - (void)webState:(web::WebState*)webState
     didFinishNavigation:(web::NavigationContext*)navigation {
   if (navigation->IsSameDocument()) {
@@ -1900,7 +1896,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   [self.webController setWebUsageEnabled:webUsageEnabled];
 }
 
-- (void)webControllerDidSuppressDialog:(id)webController {
+- (void)webStateDidSuppressDialog:(web::WebState*)webState {
   DCHECK(isPrerenderTab_);
   [delegate_ discardPrerender];
 }

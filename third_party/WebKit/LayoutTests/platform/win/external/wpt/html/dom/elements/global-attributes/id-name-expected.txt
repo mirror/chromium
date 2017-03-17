@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS id and name attributes and getElementById 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test background properties obtained by using cssText when the properties are set by using style element's textContent. 
+Harness: the test ran to completion.
+

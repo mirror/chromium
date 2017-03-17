@@ -1,0 +1,17 @@
+This is a testharness.js-based test.
+PASS 1) Setup for the initial markers. 
+PASS 2) Setup for the initial markers. 
+PASS 3) Setup for the initial markers. 
+PASS 4) Setup for the initial markers. 
+PASS 5) Setup for the initial markers. 
+PASS 6) Setup for the initial markers. 
+PASS 7) Setup for the initial markers. 
+PASS Removing "contenteditable" attribute removes spelling markers. 
+PASS Setting "contenteditable" attribute to "false" removes spelling markers. 
+PASS Removing "contenteditable" attribute from parent removes spelling markers. 
+PASS Setting "contenteditable" attribute to "false" on parent removes spelling markers. 
+PASS Setting "contenteditable" attribute to "false" on child removes spelling markers. 
+PASS Removing "contenteditable" attribute on parent still keeps the spelling markers on child. 
+PASS Removing "contenteditable" attribute on child still keeps the spelling markers. 
+Harness: the test ran to completion.
+

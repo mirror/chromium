@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS offset-position default is auto 
+PASS offset-position can be two percentages 
+PASS offset-position can explicitly inherited 
+PASS offset-position is not inherited by default 
+PASS offset-position can be auto 
+PASS offset-position can be two lengths 
+PASS offset-position can be a length and a keyword 
+PASS offset-position can be a keyword and a length 
+PASS offset-position can be supplied with a single keyword 
+PASS offset-position can be supplied with center 
+PASS offset-position can be supplied with em 
+Harness: the test ran to completion.
+

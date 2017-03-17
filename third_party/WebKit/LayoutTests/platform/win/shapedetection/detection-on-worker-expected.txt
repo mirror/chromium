@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Face 
+PASS FaceDetector detect(ImageBitmap) on worker 
+PASS Barcode 
+PASS BarcodeDetector detect(ImageBitmap) on worker 
+PASS Text 
+PASS TextDetector detect(ImageBitmap) on worker 
+Harness: the test ran to completion.
+

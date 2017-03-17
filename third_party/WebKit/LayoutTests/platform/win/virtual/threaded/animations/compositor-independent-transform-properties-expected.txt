@@ -1,0 +1,20 @@
+This is a testharness.js-based test.
+PASS Animation on transform is composited 
+PASS Animation on opacity is composited 
+PASS Animation on translate is composited 
+PASS Animation on rotate is composited 
+PASS Animation on scale is composited 
+PASS Animation on transform, opacity is composited 
+PASS Animation on translate, opacity is composited 
+PASS Animation on rotate, opacity is composited 
+PASS Animation on scale, opacity is composited 
+PASS Animation on transform, translate is not composited 
+PASS Animation on transform, scale is not composited 
+PASS Animation on transform, rotate is not composited 
+PASS Animation on translate, scale is not composited 
+PASS Animation on translate, rotate is not composited 
+PASS Animation on rotate, scale is not composited 
+PASS Animation on translate, rotate, scale is not composited 
+PASS Animation on transform, translate, rotate, scale is not composited 
+Harness: the test ran to completion.
+

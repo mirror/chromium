@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Text input and IME related input types are non-cancelable. 
+Harness: the test ran to completion.
+

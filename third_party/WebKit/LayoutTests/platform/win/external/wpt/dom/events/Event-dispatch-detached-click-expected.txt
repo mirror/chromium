@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Click event on an element not in the document 
+PASS Click event can be dispatched to an element that is not in the document. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS IntersectionObserver in iframe with explicit root. 
+PASS First rAF. 
+PASS scroller.scrollTop = 250 
+Harness: the test ran to completion.
+

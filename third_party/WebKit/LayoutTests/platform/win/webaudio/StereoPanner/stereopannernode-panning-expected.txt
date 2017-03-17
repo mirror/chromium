@@ -1,0 +1,26 @@
+CONSOLE WARNING: line 125: StereoPanner.pan.value -1.0625 outside nominal range [-1, 1]; value will be clamped.
+CONSOLE WARNING: line 125: StereoPanner.pan.value -1.04104 outside nominal range [-1, 1]; value will be clamped.
+CONSOLE WARNING: line 125: StereoPanner.pan.value -1.01957 outside nominal range [-1, 1]; value will be clamped.
+CONSOLE WARNING: line 125: StereoPanner.pan.value 1.01957 outside nominal range [-1, 1]; value will be clamped.
+CONSOLE WARNING: line 125: StereoPanner.pan.value 1.04104 outside nominal range [-1, 1]; value will be clamped.
+CONSOLE WARNING: line 125: StereoPanner.pan.value 1.0625 outside nominal range [-1, 1]; value will be clamped.
+CONSOLE WARNING: line 125: StereoPanner.pan.value -1.0625 outside nominal range [-1, 1]; value will be clamped.
+CONSOLE WARNING: line 125: StereoPanner.pan.value -1.04104 outside nominal range [-1, 1]; value will be clamped.
+CONSOLE WARNING: line 125: StereoPanner.pan.value -1.01957 outside nominal range [-1, 1]; value will be clamped.
+CONSOLE WARNING: line 125: StereoPanner.pan.value 1.01957 outside nominal range [-1, 1]; value will be clamped.
+CONSOLE WARNING: line 125: StereoPanner.pan.value 1.04104 outside nominal range [-1, 1]; value will be clamped.
+CONSOLE WARNING: line 125: StereoPanner.pan.value 1.0625 outside nominal range [-1, 1]; value will be clamped.
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = 2 duplicate test names: "Number of impulses found is equal to 100.", "Number of impulse at the wrong offset is equal to 0."
+PASS Number of impulses found is equal to 100. 
+PASS Number of impulse at the wrong offset is equal to 0. 
+PASS Left channel error magnitude (3.1556682378308665e-8) is less than or equal to 0.0000013. 
+PASS Right channel error magnitude (3.1556682378308665e-8) is less than or equal to 0.0000013. 
+PASS Test for mono input passed. 
+PASS Number of impulses found is equal to 100. 
+PASS Number of impulse at the wrong offset is equal to 0. 
+PASS Left channel error magnitude (6.994598145126929e-8) is less than or equal to 0.0000013. 
+PASS Right channel error magnitude (6.994598145126929e-8) is less than or equal to 0.0000013. 
+PASS Test for stereo input passed. 
+Harness: the test ran to completion.
+

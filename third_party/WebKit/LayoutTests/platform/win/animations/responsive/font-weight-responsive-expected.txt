@@ -1,0 +1,28 @@
+This is a testharness.js-based test.
+PASS This test uses responsive-test.js. 
+PASS Untitled 
+PASS Untitled 1 
+PASS Untitled 2 
+PASS Untitled 3 
+PASS Untitled 4 
+PASS Untitled 5 
+PASS Untitled 6 
+PASS Untitled 7 
+PASS Untitled 8 
+PASS Animation on property <fontWeight> from [inherit] to [500] with {"inherited":"100"} changed to {"inherited":"900"} at (0.25) is [800] 
+PASS Untitled 9 
+PASS Animation on property <fontWeight> from [inherit] to [500] with {"inherited":"100"} changed to {"inherited":"900"} at (0.75) is [600] 
+PASS Untitled 10 
+PASS Animation on property <fontWeight> from [inherit] to [500] with {"inherited":"900"} changed to {"inherited":"100"} at (0.25) is [200] 
+PASS Untitled 11 
+PASS Animation on property <fontWeight> from [inherit] to [500] with {"inherited":"900"} changed to {"inherited":"100"} at (0.75) is [400] 
+PASS Untitled 12 
+PASS Animation on property <fontWeight> from [bolder] to [lighter] with {"inherited":"300"} changed to {"inherited":"500"} at (0.25) is [600] 
+PASS Untitled 13 
+PASS Animation on property <fontWeight> from [bolder] to [lighter] with {"inherited":"300"} changed to {"inherited":"500"} at (0.75) is [300] 
+PASS Untitled 14 
+PASS Animation on property <fontWeight> from [bolder] to [lighter] with {"inherited":"500"} changed to {"inherited":"300"} at (0.25) is [300] 
+PASS Untitled 15 
+PASS Animation on property <fontWeight> from [bolder] to [lighter] with {"inherited":"500"} changed to {"inherited":"300"} at (0.75) is [200] 
+Harness: the test ran to completion.
+

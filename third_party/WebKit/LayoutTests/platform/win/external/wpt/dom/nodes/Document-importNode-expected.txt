@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS No 'deep' argument. 
+PASS Undefined 'deep' argument. 
+PASS True 'deep' argument. 
+PASS False 'deep' argument. 
+Harness: the test ran to completion.
+

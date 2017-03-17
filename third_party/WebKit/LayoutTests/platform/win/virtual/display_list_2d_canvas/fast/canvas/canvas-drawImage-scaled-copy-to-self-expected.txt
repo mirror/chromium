@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests drawImage with self as source image, copy composite operation, and downsized destination rect. Regression test for issue crbug.com/330711 
+Harness: the test ran to completion.
+

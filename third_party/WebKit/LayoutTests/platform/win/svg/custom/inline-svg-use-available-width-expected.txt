@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Use available width and use intrinsic ratio to compute height 
+Harness: the test ran to completion.
+

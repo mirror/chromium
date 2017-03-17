@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS seekable() ranges contain zero when server doesn't support range requests. 
+Harness: the test ran to completion.
+

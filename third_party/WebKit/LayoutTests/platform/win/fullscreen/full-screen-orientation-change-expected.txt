@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that full screen requests are allowed when inside an orientation change handler. 
+Harness: the test ran to completion.
+

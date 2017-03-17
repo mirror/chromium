@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This verifies that the browser does not crash when drawing text to a canvas in a frame-less document. 
+Harness: the test ran to completion.
+

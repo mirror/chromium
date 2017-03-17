@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that a preload with a crossorigin=anonymous loads a CORS enabled resource. 
+Harness: the test ran to completion.
+

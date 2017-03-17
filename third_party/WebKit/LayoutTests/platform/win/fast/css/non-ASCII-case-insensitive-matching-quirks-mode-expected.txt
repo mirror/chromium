@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Ensure that case folding only happens in the ASCII range when in quirks mode 
+Harness: the test ran to completion.
+

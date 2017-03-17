@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Empty ArrayBuffer 
+PASS ArrayBuffer 
+PASS DataView 
+PASS TypedArray(Int8Array) 
+PASS Array of TypedArray(Int8Array) 
+Harness: the test ran to completion.
+

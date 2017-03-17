@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS CSS Animations on custom properties should be reflected in @apply references 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that an element with the maximum tabIndex value can be focused. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS The close event should be dispatched asynchronously. 
+Harness: the test ran to completion.
+

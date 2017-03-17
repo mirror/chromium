@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that calling cancelWatchAvailability() when disableRemotePlayback attribute is set throws an exception. 
+Harness: the test ran to completion.
+

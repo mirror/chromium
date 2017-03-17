@@ -1,0 +1,12 @@
+This is a testharness.js-based test.
+PASS internals are exposed 
+PASS Negated class without combinators 
+PASS Id descendant of negated class 
+PASS Negated class descendant of negated class 
+PASS Negated class descendant of class 
+PASS Id descendant of negated class in :-webkit-any 
+PASS Negated class with id descendant of class 
+PASS Id descendant of negated sibling class 
+PASS Negated class descendant of sibling class 
+Harness: the test ran to completion.
+

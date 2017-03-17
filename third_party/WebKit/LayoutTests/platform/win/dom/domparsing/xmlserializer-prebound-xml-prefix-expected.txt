@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS XMLSerializer does not emit a namespace declaration for the 'xml' prefix. 
+Harness: the test ran to completion.
+

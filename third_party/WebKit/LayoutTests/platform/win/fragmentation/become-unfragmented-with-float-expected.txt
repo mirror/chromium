@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Become unfragmented with float at fragmentainer boundary 
+Harness: the test ran to completion.
+

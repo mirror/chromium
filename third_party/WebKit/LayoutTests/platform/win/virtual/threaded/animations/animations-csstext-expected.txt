@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS cssText serializes animation properties sanely 
+Harness: the test ran to completion.
+

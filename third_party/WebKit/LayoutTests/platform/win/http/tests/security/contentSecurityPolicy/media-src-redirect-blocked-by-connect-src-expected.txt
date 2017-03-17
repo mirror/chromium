@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS video source redirects to location disallowed by connect-src 
+Harness: the test ran to completion.
+

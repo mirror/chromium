@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Bolding a selection from end of line should not change unselected text on starting line. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS This test uses responsive-test.js. 
+PASS Animation on property <svg-transform> from neutral to [translate(30 70)] with {"underlying":"translate(10 10)"} changed to {"underlying":"translate(20 30) skewX(10)"} at (0.25) is [translate(20 30) skewX(10)] 
+PASS Animation on property <svg-transform> from neutral to [translate(30 70)] with {"underlying":"translate(10 10)"} changed to {"underlying":"translate(20 30) skewX(10)"} at (0.75) is [translate(30 70)] 
+PASS Animation on property <svg-transform> from neutral to [translate(30 70)] with {"underlying":"translate(20 30) skewX(10)"} changed to {"underlying":"translate(10 10)"} at (0.25) is [translate(15 25)] 
+PASS Animation on property <svg-transform> from neutral to [translate(30 70)] with {"underlying":"translate(20 30) skewX(10)"} changed to {"underlying":"translate(10 10)"} at (0.75) is [translate(25 55)] 
+Harness: the test ran to completion.
+

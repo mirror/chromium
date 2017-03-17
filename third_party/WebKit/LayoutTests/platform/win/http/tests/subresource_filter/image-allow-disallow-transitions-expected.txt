@@ -1,0 +1,12 @@
+This is a testharness.js-based test.
+PASS State transition primary to primary.  
+PASS State transition primary to fallback.  
+PASS State transition primary to collapsed.  
+PASS State transition fallback to primary.  
+PASS State transition fallback to fallback.  
+PASS State transition fallback to collapsed.  
+PASS State transition collapsed to primary.  
+PASS State transition collapsed to fallback.  
+PASS State transition collapsed to collapsed.  
+Harness: the test ran to completion.
+

@@ -1,0 +1,8 @@
+CONSOLE MESSAGE: line 58: verifying #4
+CONSOLE MESSAGE: line 58: verifying #3
+CONSOLE MESSAGE: line 58: verifying #2
+CONSOLE MESSAGE: line 58: verifying #1
+This is a testharness.js-based test.
+PASS history.{push,replace}State retain and respect history.scrollRestoration 
+Harness: the test ran to completion.
+

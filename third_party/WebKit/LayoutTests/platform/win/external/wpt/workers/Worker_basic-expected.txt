@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Worker constructor 
+PASS MessageEvent.data 
+PASS MessageEvent.type 
+Harness: the test ran to completion.
+

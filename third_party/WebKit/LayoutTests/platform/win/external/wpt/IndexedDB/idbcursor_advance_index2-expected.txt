@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBCursor.advance() - attempt to pass a count parameter that is not a number 
+Harness: the test ran to completion.
+

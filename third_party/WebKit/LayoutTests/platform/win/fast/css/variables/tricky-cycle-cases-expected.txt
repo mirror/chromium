@@ -1,0 +1,12 @@
+This is a testharness.js-based test.
+PASS A cycle is still invalid if it uses fallbacks (fallback forced) 
+PASS A cycle is still invalid if it uses fallbacks (fallback not taken) 
+PASS A cycle is still invalid if it uses chains (A) 
+PASS A cycle is still invalid if it uses chains (B) 
+PASS Secondary cycles need to be detected too (secondary cycle in chain) 
+PASS Secondary cycles need to be detected too (secondary cycle in fallback) 
+PASS A cycle is not affected by other variable references with fallbacks 
+PASS Cycles which are linked are invalid 
+PASS A self-reference in a fallback is invalid 
+Harness: the test ran to completion.
+

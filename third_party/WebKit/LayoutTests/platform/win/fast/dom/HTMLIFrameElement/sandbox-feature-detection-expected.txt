@@ -1,0 +1,6 @@
+CONSOLE ERROR: line 8: Error while parsing the 'sandbox' attribute: 'whatever' is an invalid sandbox flag.
+CONSOLE ERROR: line 13: Error while parsing the 'sandbox' attribute: 'allow-formssss' is an invalid sandbox flag.
+This is a testharness.js-based test.
+PASS Make sure that sandbox based feature detection is working 
+Harness: the test ran to completion.
+

@@ -1,0 +1,9 @@
+CONSOLE MESSAGE: line 23: 17:29:11.173: starting
+CONSOLE MESSAGE: line 23: 17:29:11.256: setting src
+CONSOLE MESSAGE: line 23: 17:29:11.379: onEncrypted
+CONSOLE MESSAGE: line 23: 17:29:11.384: onEncrypted
+CONSOLE MESSAGE: line 23: 17:29:11.385: done
+This is a testharness.js-based test.
+PASS Initialization Data not returned when using different origin. 
+Harness: the test ran to completion.
+

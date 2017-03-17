@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Test that XMLHttpRequest.response returns an empty ArrayBuffer when received a response with zero content length. 
+PASS Test that XMLHttpRequest.response returns an empty ArrayBuffer when received status is '304 not modified'. 
+Harness: the test ran to completion.
+

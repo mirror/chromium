@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that removing valid "src" attribute doesn't trigger load of "source" elements. 
+Harness: the test ran to completion.
+

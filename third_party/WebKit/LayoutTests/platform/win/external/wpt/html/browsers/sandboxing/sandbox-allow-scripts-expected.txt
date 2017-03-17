@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Running script from sandbox='allow-scripts' iframe is allowed 
+Harness: the test ran to completion.
+

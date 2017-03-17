@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Test setting and reading css properties 
+PASS Test setting a shorthand and reading longhand 
+PASS Test that properties with invalid values aren't counted 
+PASS Test that properties specified in UA stylesheet aren't counted 
+PASS Test properties with aliases 
+Harness: the test ran to completion.
+

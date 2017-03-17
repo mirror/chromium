@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Setup the frame 
+PASS parent performance.now() > 0 
+PASS child performance.now() > 0 
+PASS Child created at least 1 second after parent 
+PASS Child and parent time bases are correct 
+Harness: the test ran to completion.
+

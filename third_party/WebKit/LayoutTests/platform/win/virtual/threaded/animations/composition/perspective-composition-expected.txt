@@ -1,0 +1,24 @@
+This is a testharness.js-based test.
+PASS This test uses interpolation-test.js. 
+PASS Compositing: property <perspective> underlying [50px] from add [100px] to add [200px] at (-0.3) is [120px] 
+PASS Compositing: property <perspective> underlying [50px] from add [100px] to add [200px] at (0) is [150px] 
+PASS Compositing: property <perspective> underlying [50px] from add [100px] to add [200px] at (0.5) is [200px] 
+PASS Compositing: property <perspective> underlying [50px] from add [100px] to add [200px] at (1) is [250px] 
+PASS Compositing: property <perspective> underlying [50px] from add [100px] to add [200px] at (1.5) is [300px] 
+PASS Compositing: property <perspective> underlying [100px] from add [10px] to add [2px] at (-0.5) is [114px] 
+PASS Compositing: property <perspective> underlying [100px] from add [10px] to add [2px] at (0) is [110px] 
+PASS Compositing: property <perspective> underlying [100px] from add [10px] to add [2px] at (0.5) is [106px] 
+PASS Compositing: property <perspective> underlying [100px] from add [10px] to add [2px] at (1) is [102px] 
+PASS Compositing: property <perspective> underlying [100px] from add [10px] to add [2px] at (1.5) is [98px] 
+PASS Compositing: property <perspective> underlying [50px] from add [100px] to replace [200px] at (-0.3) is [135px] 
+PASS Compositing: property <perspective> underlying [50px] from add [100px] to replace [200px] at (0) is [150px] 
+PASS Compositing: property <perspective> underlying [50px] from add [100px] to replace [200px] at (0.5) is [175px] 
+PASS Compositing: property <perspective> underlying [50px] from add [100px] to replace [200px] at (1) is [200px] 
+PASS Compositing: property <perspective> underlying [50px] from add [100px] to replace [200px] at (1.5) is [225px] 
+PASS Compositing: property <perspective> underlying [100px] from add [100px] to add [none] at (-0.3) is [200px] 
+PASS Compositing: property <perspective> underlying [100px] from add [100px] to add [none] at (0) is [200px] 
+PASS Compositing: property <perspective> underlying [100px] from add [100px] to add [none] at (0.5) is [none] 
+PASS Compositing: property <perspective> underlying [100px] from add [100px] to add [none] at (1) is [none] 
+PASS Compositing: property <perspective> underlying [100px] from add [100px] to add [none] at (1.5) is [none] 
+Harness: the test ran to completion.
+

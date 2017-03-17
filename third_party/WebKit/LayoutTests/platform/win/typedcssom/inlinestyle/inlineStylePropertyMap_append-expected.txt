@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Attempting to append to a property that doesn't support multiple values throws 
+PASS Appending an invalid type to a property throws 
+PASS Attempting to append to an invalid property throws 
+Harness: the test ran to completion.
+

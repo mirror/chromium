@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Test table with ARIA grid role on just table element. 
+PASS Test table with ARIA grid role on table and row role on rows. 
+PASS Test table with ARIA grid roles on all elements. 
+Harness: the test ran to completion.
+

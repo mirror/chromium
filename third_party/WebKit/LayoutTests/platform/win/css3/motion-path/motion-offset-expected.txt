@@ -1,0 +1,12 @@
+CONSOLE WARNING: motion-offset is deprecated and will be removed in M58, around April 2017. Please use offset-distance instead. See https://www.chromestatus.com/features/6390764217040896 for more details.
+This is a testharness.js-based test.
+PASS motion-offset default is 0px 
+PASS motion-offset 0 is 0px 
+PASS motion-offset can be positive 
+PASS motion-offset allows negative values 
+PASS motion-offset can be a percentage 
+PASS motion-offset can be explicitly inherited 
+PASS motion-offset is not inherited by default 
+PASS motion-offset style can be set inline 
+Harness: the test ran to completion.
+

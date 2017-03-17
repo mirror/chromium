@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS This test uses interpolation-test.js. 
+PASS SMIL: Interpolate attribute <markerUnits> from replace [userSpaceOnUse] to replace [strokeWidth] at (0) is [userSpaceOnUse] 
+PASS SMIL: Interpolate attribute <markerUnits> from replace [userSpaceOnUse] to replace [strokeWidth] at (0.2) is [userSpaceOnUse] 
+PASS SMIL: Interpolate attribute <markerUnits> from replace [userSpaceOnUse] to replace [strokeWidth] at (0.6) is [strokeWidth] 
+PASS SMIL: Interpolate attribute <markerUnits> from replace [userSpaceOnUse] to replace [strokeWidth] at (1) is [strokeWidth] 
+PASS Web Animations: Interpolate attribute <markerUnits> from replace [userSpaceOnUse] to replace [strokeWidth] at (-2.4) is [userSpaceOnUse] 
+PASS Web Animations: Interpolate attribute <markerUnits> from replace [userSpaceOnUse] to replace [strokeWidth] at (0) is [userSpaceOnUse] 
+PASS Web Animations: Interpolate attribute <markerUnits> from replace [userSpaceOnUse] to replace [strokeWidth] at (0.2) is [userSpaceOnUse] 
+PASS Web Animations: Interpolate attribute <markerUnits> from replace [userSpaceOnUse] to replace [strokeWidth] at (0.6) is [strokeWidth] 
+PASS Web Animations: Interpolate attribute <markerUnits> from replace [userSpaceOnUse] to replace [strokeWidth] at (1) is [strokeWidth] 
+PASS Web Animations: Interpolate attribute <markerUnits> from replace [userSpaceOnUse] to replace [strokeWidth] at (3.4) is [strokeWidth] 
+Harness: the test ran to completion.
+

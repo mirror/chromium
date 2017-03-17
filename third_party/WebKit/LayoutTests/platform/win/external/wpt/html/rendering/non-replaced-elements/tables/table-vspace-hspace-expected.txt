@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS table vspace hspace (quirks mode) 
+Harness: the test ran to completion.
+

@@ -1,0 +1,12 @@
+This is a testharness.js-based test.
+PASS Delete <textarea> with pending spell check request. 
+PASS Move <textarea> with pending spell check request. 
+PASS Mutate content of <textarea> with pending spell check request. 
+PASS Delete <input> with pending spell check request. 
+PASS Move <input> with pending spell check request. 
+PASS Mutate content of <input> with pending spell check request. 
+PASS Delete <div> with pending spell check request. 
+PASS Move <div> with pending spell check request. 
+PASS Mutate content of <div> with pending spell check request. 
+Harness: the test ran to completion.
+

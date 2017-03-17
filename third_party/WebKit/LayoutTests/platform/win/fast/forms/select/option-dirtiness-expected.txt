@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS |selected| setter should not make an option dirty if it doesn't change its selectedness and the option is owned by a select element 
+Harness: the test ran to completion.
+

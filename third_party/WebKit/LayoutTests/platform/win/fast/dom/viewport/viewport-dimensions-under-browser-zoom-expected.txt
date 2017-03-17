@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Verify viewport dimensions under bowser zoom. 
+Harness: the test ran to completion.
+

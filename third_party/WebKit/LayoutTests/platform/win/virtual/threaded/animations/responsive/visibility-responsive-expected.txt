@@ -1,0 +1,32 @@
+This is a testharness.js-based test.
+PASS This test uses responsive-test.js. 
+PASS Untitled 
+PASS Untitled 1 
+PASS Untitled 2 
+PASS Untitled 3 
+PASS Untitled 4 
+PASS Untitled 5 
+PASS Untitled 6 
+PASS Untitled 7 
+PASS Untitled 8 
+PASS Untitled 9 
+PASS Untitled 10 
+PASS Untitled 11 
+PASS Untitled 12 
+PASS Animation on property <visibility> from [inherit] to [hidden] with {"inherited":"collapse"} changed to {"inherited":"visible"} at (0.25) is [visible] 
+PASS Untitled 13 
+PASS Animation on property <visibility> from [inherit] to [hidden] with {"inherited":"collapse"} changed to {"inherited":"visible"} at (0.75) is [visible] 
+PASS Untitled 14 
+PASS Animation on property <visibility> from [inherit] to [hidden] with {"inherited":"visible"} changed to {"inherited":"collapse"} at (0.25) is [collapse] 
+PASS Untitled 15 
+PASS Animation on property <visibility> from [inherit] to [hidden] with {"inherited":"visible"} changed to {"inherited":"collapse"} at (0.75) is [hidden] 
+PASS Untitled 16 
+PASS Animation on property <visibility> from neutral to [hidden] with {"underlying":"collapse"} changed to {"underlying":"visible"} at (0.25) is [visible] 
+PASS Untitled 17 
+PASS Animation on property <visibility> from neutral to [hidden] with {"underlying":"collapse"} changed to {"underlying":"visible"} at (0.75) is [visible] 
+PASS Untitled 18 
+PASS Animation on property <visibility> from neutral to [hidden] with {"underlying":"visible"} changed to {"underlying":"collapse"} at (0.25) is [collapse] 
+PASS Untitled 19 
+PASS Animation on property <visibility> from neutral to [hidden] with {"underlying":"visible"} changed to {"underlying":"collapse"} at (0.75) is [hidden] 
+Harness: the test ran to completion.
+

@@ -1,0 +1,5 @@
+CONSOLE WARNING: line 16: Failed to execute 'play' on 'HTMLMediaElement': API can only be initiated by a user gesture.
+This is a testharness.js-based test.
+PASS Test that the rejected promise returned by play() doesn't lead to a crash at dtor. 
+Harness: the test ran to completion.
+

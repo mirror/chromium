@@ -1,0 +1,6 @@
+CONSOLE ERROR: line 24: Refused to load the script 'blob:http://127.0.0.1:8000/1746d788-ba96-422c-b6d4-34e4738e18af' because it violates the following Content Security Policy directive: "script-src 'unsafe-inline' 'self'".
+
+This is a testharness.js-based test.
+PASS blob: does not match 'self' (see step 2 of http://www.w3.org/TR/CSP2/#match-source-expression) 
+Harness: the test ran to completion.
+

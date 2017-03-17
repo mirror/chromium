@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS ready returns the same Promise object 
+PASS ready returns a Promise object in the context of the related document 
+PASS ready on a controlled document 
+PASS ready on a potential controlled document 
+PASS ready after a longer matched registration registered 
+PASS access ready after it has been resolved 
+Harness: the test ran to completion.
+

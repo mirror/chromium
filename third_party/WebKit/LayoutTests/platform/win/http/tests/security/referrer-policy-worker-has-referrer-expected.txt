@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Worker with no referrer policy does not inherit document's policy 
+PASS Shared worker with no referrer policy does not inherit document's policy 
+Harness: the test ran to completion.
+

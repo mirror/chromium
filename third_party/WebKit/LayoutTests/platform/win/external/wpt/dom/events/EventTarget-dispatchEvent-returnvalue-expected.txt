@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Return value of EventTarget.dispatchEvent. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS custom property cycles are marked invalid in the same way, independent of ordering. 
+Harness: the test ran to completion.
+

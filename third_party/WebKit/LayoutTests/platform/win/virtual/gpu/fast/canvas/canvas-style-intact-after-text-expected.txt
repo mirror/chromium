@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that the rendering context's strokeStyle and fillStyle are intact after calling strokeText() and fillText() 
+Harness: the test ran to completion.
+

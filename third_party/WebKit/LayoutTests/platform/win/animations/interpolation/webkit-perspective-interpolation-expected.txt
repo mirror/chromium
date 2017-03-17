@@ -1,0 +1,18 @@
+This is a testharness.js-based test.
+PASS This test uses interpolation-test.js. 
+PASS CSS Transitions: property <-webkit-perspective> from [50px] to [100px] at (-20) is [none] 
+PASS CSS Transitions: property <-webkit-perspective> from [50px] to [100px] at (-0.3) is [35px] 
+PASS CSS Transitions: property <-webkit-perspective> from [50px] to [100px] at (0) is [50px] 
+PASS CSS Transitions: property <-webkit-perspective> from [50px] to [100px] at (0.3) is [65px] 
+PASS CSS Transitions: property <-webkit-perspective> from [50px] to [100px] at (0.6) is [80px] 
+PASS CSS Transitions: property <-webkit-perspective> from [50px] to [100px] at (1) is [100px] 
+PASS CSS Transitions: property <-webkit-perspective> from [50px] to [100px] at (1.5) is [125px] 
+PASS CSS Animations: property <-webkit-perspective> from [50px] to [100px] at (-20) is [none] 
+PASS CSS Animations: property <-webkit-perspective> from [50px] to [100px] at (-0.3) is [35px] 
+PASS CSS Animations: property <-webkit-perspective> from [50px] to [100px] at (0) is [50px] 
+PASS CSS Animations: property <-webkit-perspective> from [50px] to [100px] at (0.3) is [65px] 
+PASS CSS Animations: property <-webkit-perspective> from [50px] to [100px] at (0.6) is [80px] 
+PASS CSS Animations: property <-webkit-perspective> from [50px] to [100px] at (1) is [100px] 
+PASS CSS Animations: property <-webkit-perspective> from [50px] to [100px] at (1.5) is [125px] 
+Harness: the test ran to completion.
+

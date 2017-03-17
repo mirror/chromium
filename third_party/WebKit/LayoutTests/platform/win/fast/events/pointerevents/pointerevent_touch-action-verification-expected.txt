@@ -1,0 +1,44 @@
+This is a testharness.js-based test.
+PASS default 
+PASS stylesheet-none 
+PASS explicit-auto 
+PASS explicit-pan-x 
+PASS explicit-pan-left 
+PASS explicit-pan-right 
+PASS explicit-pan-y 
+PASS explicit-pan-up 
+PASS explicit-pan-down 
+PASS explicit-pinch-zoom 
+PASS explicit-pan-x-pan-y 
+PASS explicit-pan-y-pan-x 
+PASS explicit-pan-left-pan-up 
+PASS explicit-pan-left-pan-down 
+PASS explicit-pan-right-pan-up 
+PASS explicit-pan-right-pan-down 
+PASS explicit-pan-up-pan-left 
+PASS explicit-pan-up-pan-right 
+PASS explicit-pan-down-pan-left 
+PASS explicit-pan-down-pan-right 
+PASS explicit-pinch-zoom-pan-x-pan-up 
+PASS explicit-pinch-zoom-pan-x-pan-y 
+PASS explicit-manipulation 
+PASS explicit-none 
+PASS explicit-invalid-1 
+PASS explicit-invalid-2 
+PASS explicit-invalid-3 
+PASS explicit-invalid-4 
+PASS explicit-invalid-5 
+PASS explicit-invalid-6 
+PASS explicit-invalid-7 
+PASS explicit-invalid-8 
+PASS explicit-invalid-9 
+PASS explicit-invalid-10 
+PASS explicit-invalid-11 
+PASS explicit-invalid-12 
+PASS explicit-invalid-13 
+PASS explicit-invalid-14 
+PASS not-inherited 
+PASS inherit 
+PASS initial 
+Harness: the test ran to completion.
+

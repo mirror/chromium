@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS These tests only work with scroll customization enabled. 
+PASS distributeToScrollChainDescendant propagates correctly. 
+PASS distributeToScrollChainDescendant with empty scroll chain does nothing. 
+Harness: the test ran to completion.
+

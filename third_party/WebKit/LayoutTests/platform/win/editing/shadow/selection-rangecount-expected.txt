@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS rangeCount in ShadowRoot should be 0 if the selection can't be represented in the ShadowRoot. 
+Harness: the test ran to completion.
+

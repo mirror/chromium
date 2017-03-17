@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Makes sure that dynamically removed preloaded resource stop downloading 
+Harness: the test ran to completion.
+

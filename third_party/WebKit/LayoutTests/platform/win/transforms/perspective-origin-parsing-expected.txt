@@ -1,0 +1,69 @@
+This is a testharness.js-based test.
+PASS "perspective-origin: initial;" should parse as "initial" 
+PASS "perspective-origin: initial;" should be computed to "100px 50px" 
+PASS "perspective-origin: inherit;" should parse as "inherit" 
+PASS "perspective-origin: left;" should parse as "left center" 
+PASS "perspective-origin: left;" should be computed to "0px 50px" 
+PASS "perspective-origin: center;" should parse as "center center" 
+PASS "perspective-origin: center;" should be computed to "100px 50px" 
+PASS "perspective-origin: right;" should parse as "right center" 
+PASS "perspective-origin: right;" should be computed to "200px 50px" 
+PASS "perspective-origin: top;" should parse as "center top" 
+PASS "perspective-origin: bottom;" should parse as "center bottom" 
+PASS "perspective-origin: 0;" should parse as "0px center" 
+PASS "perspective-origin: 10%;" should parse as "10% center" 
+PASS "perspective-origin: 10%;" should be computed to "20px 50px" 
+PASS "perspective-origin: 10px;" should parse as "10px center" 
+PASS "perspective-origin: 10px;" should be computed to "10px 50px" 
+PASS "perspective-origin: left top;" should parse as "left top" 
+PASS "perspective-origin: right bottom;" should parse as "right bottom" 
+PASS "perspective-origin: center center;" should parse as "center center" 
+PASS "perspective-origin: center center;" should be computed to "100px 50px" 
+PASS "perspective-origin: center top;" should parse as "center top" 
+PASS "perspective-origin: center left;" should parse as "left center" 
+PASS "perspective-origin: center 10%;" should parse as "center 10%" 
+PASS "perspective-origin: center 10%;" should be computed to "100px 10px" 
+PASS "perspective-origin: top right;" should parse as "right top" 
+PASS "perspective-origin: left 10%;" should parse as "left 10%" 
+PASS "perspective-origin: left 10px;" should parse as "left 10px" 
+PASS "perspective-origin: left 10% center;" should parse as "left 10% center" 
+PASS "perspective-origin: 10% top;" should parse as "10% top" 
+PASS "perspective-origin: 10px top;" should parse as "10px top" 
+PASS "perspective-origin: 10px 20%;" should parse as "10px 20%" 
+PASS "perspective-origin: 0 0;" should parse as "0px 0px" 
+PASS "perspective-origin: 0px 10%;" should parse as "0px 10%" 
+PASS "perspective-origin: 0px 10%;" should be computed to "0px 10px" 
+PASS "perspective-origin: 0px 20px;" should parse as "0px 20px" 
+PASS "perspective-origin: 0px 20px;" should be computed to "0px 20px" 
+PASS "perspective-origin: 0px top;" should parse as "0px top" 
+PASS "perspective-origin: 0px top;" should be computed to "0px 0px" 
+PASS "perspective-origin: 0px bottom;" should parse as "0px bottom" 
+PASS "perspective-origin: 0px bottom;" should be computed to "0px 100px" 
+PASS "perspective-origin: 0px center;" should parse as "0px center" 
+PASS "perspective-origin: 0px center;" should be computed to "0px 50px" 
+PASS "perspective-origin: center right 20%;" should parse as "right 20% center" 
+PASS "perspective-origin: left bottom 30px;" should parse as "left bottom 30px" 
+PASS "perspective-origin: top right 30px;" should parse as "right 30px top" 
+PASS "perspective-origin: left 30px bottom 20px;" should parse as "left 30px bottom 20px" 
+PASS "perspective-origin: top 10px left 20px;" should parse as "left 20px top 10px" 
+PASS "perspective-origin: top 40px right 15%;" should parse as "right 15% top 40px" 
+PASS "perspective-origin: top center;" should parse as "center top" 
+PASS "perspective-origin: left right;" should be invalid 
+PASS "perspective-origin: top bottom;" should be invalid 
+PASS "perspective-origin: none;" should be invalid 
+PASS "perspective-origin: 20;" should be invalid 
+PASS "perspective-origin: 10% 20% 30%;" should be invalid 
+PASS "perspective-origin: top 10%;" should be invalid 
+PASS "perspective-origin: bottom 10%;" should be invalid 
+PASS "perspective-origin: 50% 50% 0px;" should be invalid 
+PASS "perspective-origin: left center top;" should be invalid 
+PASS "perspective-origin: left center 10%;" should be invalid 
+PASS "perspective-origin: left top center;" should be invalid 
+PASS "perspective-origin: left 10% right;" should be invalid 
+PASS "perspective-origin: left 10% 20%;" should be invalid 
+PASS "perspective-origin: center center left;" should be invalid 
+PASS "perspective-origin: center center 10%;" should be invalid 
+PASS "perspective-origin: 10% left;" should be invalid 
+PASS "perspective-origin: 10% top 20%;" should be invalid 
+Harness: the test ran to completion.
+

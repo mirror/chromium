@@ -1,0 +1,12 @@
+This is a testharness.js-based test.
+PASS Paste plain text into editable <div>. 
+PASS Paste decorated text into editable <div>. 
+PASS Paste text with multiple errors into editable <div>. 
+PASS Paste plain text into <input>. 
+PASS Paste decorated text into <input>. 
+PASS Paste text with multiple errors into <input>. 
+PASS Paste plain text into <textarea>. 
+PASS Paste decorated text into <textarea>. 
+PASS Paste text with multiple errors into <textarea>. 
+Harness: the test ran to completion.
+

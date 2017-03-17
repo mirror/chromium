@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Closing } can be omitted in custom property sets 
+Harness: the test ran to completion.
+

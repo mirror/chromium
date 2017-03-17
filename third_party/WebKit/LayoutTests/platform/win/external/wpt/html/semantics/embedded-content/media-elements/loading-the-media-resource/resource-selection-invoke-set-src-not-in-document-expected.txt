@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS invoking load by setting src on video not in a document 
+Harness: the test ran to completion.
+

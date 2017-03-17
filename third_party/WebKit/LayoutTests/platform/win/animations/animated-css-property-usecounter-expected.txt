@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Animating properties via CSS causes UseCounter to be incremented. 
+PASS Animating custom CSS properties causes UseCounter to be incremented. 
+Harness: the test ran to completion.
+

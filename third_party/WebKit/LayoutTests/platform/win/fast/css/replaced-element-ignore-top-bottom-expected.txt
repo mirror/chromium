@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Inapplicable |top| and |bottom| specified style shouldn't affect height calculation 
+Harness: the test ran to completion.
+

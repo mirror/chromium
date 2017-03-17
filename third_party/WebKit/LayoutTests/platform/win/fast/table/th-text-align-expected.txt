@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS setting "text-align: start" on th element results in textAlign == "start" 
+PASS setting "text-align: inherit" on th element results in textAlign == "start" 
+PASS setting "text-align: initial" on th element results in textAlign == "start" 
+PASS setting text-align on th element overrides the inherited value 
+Harness: the test ran to completion.
+

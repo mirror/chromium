@@ -1,0 +1,5 @@
+CONSOLE ERROR: line 63: This test requires window.internals and the orientationchange event to be enabled.
+This is a testharness.js-based test.
+PASS Test subframes receive window orientationchange events (includes window.onorientationchange and an event listener for orientationchange) 
+Harness: the test ran to completion.
+

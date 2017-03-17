@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS insertion points should be inert in v1 
+Harness: the test ran to completion.
+

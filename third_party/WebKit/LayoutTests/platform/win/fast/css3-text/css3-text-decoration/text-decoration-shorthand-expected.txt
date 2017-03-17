@@ -1,0 +1,34 @@
+This is a testharness.js-based test.
+PASS Sub properties set from longhand value:  
+PASS Sub properties set from longhand value: underline 
+PASS Sub properties set from longhand value: underline overline 
+PASS Sub properties set from longhand value: underline double 
+PASS Sub properties set from longhand value: underline double red 
+PASS Sub properties set from longhand value: red underline double 
+PASS Sub properties set from longhand value: double 
+PASS Sub properties set from longhand value: red 
+PASS Sub properties set from longhand value: double red 
+PASS Shorthand from written subproperties: none solid rgb(0, 0, 0) 
+PASS Shorthand from written subproperties: underline solid rgb(0, 0, 0) 
+PASS Shorthand from written subproperties: underline overline line-through solid rgb(0, 0, 0) 
+PASS Shorthand from written subproperties: none dashed rgb(0, 0, 0) 
+PASS Shorthand from written subproperties: none solid rgb(255, 0, 0) 
+PASS Shorthand from written subproperties: none solid rgb(102, 102, 102) 
+PASS Shorthand from written subproperties: none solid rgba(1, 1, 1, 0.4) 
+PASS Shorthand from written subproperties: overline double rgb(0, 128, 0) 
+PASS Invalid writes: Value underlineTYPO invalid for property text-decoration. 
+PASS Invalid writes: Value underlineTYPO red invalid for property text-decoration. 
+PASS Invalid writes: Value more than three values invalid for property text-decoration. 
+PASS Invalid writes: Value underline 2px invalid for property text-decoration. 
+PASS Invalid writes: Value 100% invalid for property text-decoration. 
+PASS Invalid writes: Value solid invalid for property text-decoration-line. 
+PASS Invalid writes: Value typo invalid for property text-decoration-line. 
+PASS Invalid writes: Value two values invalid for property text-decoration-line. 
+PASS Invalid writes: Value blue invalid for property text-decoration-style. 
+PASS Invalid writes: Value typo invalid for property text-decoration-style. 
+PASS Invalid writes: Value two values invalid for property text-decoration-style. 
+PASS Invalid writes: Value solid invalid for property text-decoration-color. 
+PASS Invalid writes: Value typo invalid for property text-decoration-color. 
+PASS Invalid writes: Value two values invalid for property text-decoration-color. 
+Harness: the test ran to completion.
+

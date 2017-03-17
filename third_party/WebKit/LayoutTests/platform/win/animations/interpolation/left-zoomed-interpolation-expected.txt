@@ -1,0 +1,24 @@
+This is a testharness.js-based test.
+PASS This test uses interpolation-test.js. 
+PASS CSS Transitions: property <left> from [inherit] to [10px] at (-0.5) is [-20px] 
+PASS CSS Transitions: property <left> from [inherit] to [10px] at (0) is [-10px] 
+PASS CSS Transitions: property <left> from [inherit] to [10px] at (0.5) is [0px] 
+PASS CSS Transitions: property <left> from [inherit] to [10px] at (1) is [10px] 
+PASS CSS Transitions: property <left> from [inherit] to [10px] at (1.5) is [20px] 
+PASS CSS Animations: property <left> from neutral to [10px] at (-0.5) is [25px] 
+PASS CSS Animations: property <left> from neutral to [10px] at (0) is [20px] 
+PASS CSS Animations: property <left> from neutral to [10px] at (0.5) is [15px] 
+PASS CSS Animations: property <left> from neutral to [10px] at (1) is [10px] 
+PASS CSS Animations: property <left> from neutral to [10px] at (1.5) is [5px] 
+PASS CSS Animations: property <left> from [inherit] to [10px] at (-0.5) is [-20px] 
+PASS CSS Animations: property <left> from [inherit] to [10px] at (0) is [-10px] 
+PASS CSS Animations: property <left> from [inherit] to [10px] at (0.5) is [0px] 
+PASS CSS Animations: property <left> from [inherit] to [10px] at (1) is [10px] 
+PASS CSS Animations: property <left> from [inherit] to [10px] at (1.5) is [20px] 
+PASS Web Animations: property <left> from [inherit] to [10px] at (-0.5) is [-20px] 
+PASS Web Animations: property <left> from [inherit] to [10px] at (0) is [-10px] 
+PASS Web Animations: property <left> from [inherit] to [10px] at (0.5) is [0px] 
+PASS Web Animations: property <left> from [inherit] to [10px] at (1) is [10px] 
+PASS Web Animations: property <left> from [inherit] to [10px] at (1.5) is [20px] 
+Harness: the test ran to completion.
+

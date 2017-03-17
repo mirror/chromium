@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Testing display:list-item wont crash. 
+Harness: the test ran to completion.
+

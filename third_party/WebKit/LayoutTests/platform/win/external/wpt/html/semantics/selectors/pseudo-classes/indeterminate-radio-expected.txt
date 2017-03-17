@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS :indeterminate and input type=radio 
+Harness: the test ran to completion.
+

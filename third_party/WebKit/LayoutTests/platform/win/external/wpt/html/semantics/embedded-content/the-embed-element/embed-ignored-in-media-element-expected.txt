@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test embed being ignored inside media element 
+Harness: the test ran to completion.
+

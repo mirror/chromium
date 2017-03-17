@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that a media document can open a media URL with an ambiguous extension. 
+Harness: the test ran to completion.
+

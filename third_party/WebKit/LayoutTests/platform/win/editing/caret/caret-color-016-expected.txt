@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS The computed value of a visited link should be the same than a non-visited link 
+Harness: the test ran to completion.
+

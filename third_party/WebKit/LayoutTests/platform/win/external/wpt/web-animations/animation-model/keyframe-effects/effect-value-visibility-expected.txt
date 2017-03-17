@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Visibility clamping behavior 
+PASS Visibility clamping behavior with an easing that has a negative component 
+Harness: the test ran to completion.
+

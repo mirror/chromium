@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that "sourceopen" event fires even if garbage collection happens between setting "video.src" and the "sourceopen" event. 
+Harness: the test ran to completion.
+

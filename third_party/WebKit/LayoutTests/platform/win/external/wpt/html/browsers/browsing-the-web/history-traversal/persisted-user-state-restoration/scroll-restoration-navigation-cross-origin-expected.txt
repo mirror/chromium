@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Navigating to new page should reset to "auto" and navigating back should restore and respect scroll restoration mode 
+Harness: the test ran to completion.
+

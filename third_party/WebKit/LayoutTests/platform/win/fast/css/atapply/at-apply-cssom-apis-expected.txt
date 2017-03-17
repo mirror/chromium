@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS @apply should serialize correctly in cssText 
+PASS CSSStyleDeclaration.item should work with @apply 
+Harness: the test ran to completion.
+

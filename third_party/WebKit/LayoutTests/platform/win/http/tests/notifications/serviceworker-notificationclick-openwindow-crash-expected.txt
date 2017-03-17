@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Opening a window in a Service Worker should not trigger a DCHECK. 
+Harness: the test ran to completion.
+

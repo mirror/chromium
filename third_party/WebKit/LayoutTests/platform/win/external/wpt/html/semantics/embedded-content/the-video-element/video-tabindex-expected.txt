@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Attributes shouldn't magically appear 
+Harness: the test ran to completion.
+

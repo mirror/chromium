@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Verifies if the browser survives the attempted creation of an excessively large canvas. 
+Harness: the test ran to completion.
+

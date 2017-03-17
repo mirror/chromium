@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Test that the PresentationConnectionAvailableEvent interface is present. 
+PASS Test that the PresentationConnectionAvailableEvent ctor requires connection parameter. 
+Harness: the test ran to completion.
+

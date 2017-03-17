@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS text on HTMLOptionElement must enqueue disconnectedCallback when removing a custom element 
+Harness: the test ran to completion.
+

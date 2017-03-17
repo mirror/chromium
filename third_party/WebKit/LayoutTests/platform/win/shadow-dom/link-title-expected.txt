@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS <link rel="stylesheet" title="xxx"> in a document tree should work without interference from a shadow tree. 
+PASS <link rel="stylesheet" title="xxx"> shoule behave as <link rel="stylesheet"> (always enabled because title is ignored) in a connected shadow tree. 
+PASS <link rel="alternate stylesheet" title="xxx"> shoule behave as <link rel="alternate stylesheet"> (never enabled because title is ignored) in a connected shadow tree. 
+PASS StyleSheet.title should always be null in shadow trees. 
+Harness: the test ran to completion.
+

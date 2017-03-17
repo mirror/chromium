@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Inline violations have a blockedURI of 'inline' 
+Harness: the test ran to completion.
+

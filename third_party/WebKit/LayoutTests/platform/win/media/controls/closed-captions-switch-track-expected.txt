@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that we can add multiple tracks and select between them from the track selection menu. 
+Harness: the test ran to completion.
+

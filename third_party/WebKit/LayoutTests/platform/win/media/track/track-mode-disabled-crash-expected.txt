@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that cues are properly removed from the active cue list when their track changes mode to disabled. 
+Harness: the test ran to completion.
+

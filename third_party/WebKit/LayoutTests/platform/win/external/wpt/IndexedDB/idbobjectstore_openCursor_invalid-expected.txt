@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBObjectStore.openCursor() - invalid - pass something other than number 
+Harness: the test ran to completion.
+

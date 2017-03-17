@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Async script element execution delays the window's load event 
+Harness: the test ran to completion.
+

@@ -1,0 +1,24 @@
+This is a testharness.js-based test.
+PASS foreign fetch registration 
+PASS Invalid options 
+PASS Scopes not an array 
+PASS Scopes not a string in array 
+PASS Relative url not under scope 
+PASS Absolute url not under scope 
+PASS Empty scope array 
+PASS Call after event returned 
+PASS Valid scopes with wildcard origin string 
+PASS Absolute urls 
+PASS Relative urls 
+PASS No origins specified 
+PASS Origins not a string or array 
+PASS Origins contains something not a string 
+PASS Origin not an absolute URL 
+PASS Wildcard origin string in array 
+PASS Origin string 
+PASS Origin string in array 
+PASS Array with multiple origins 
+PASS Origins includes wildcard and other strings 
+PASS Origins includes other strings and wildcard 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+CONSOLE ERROR: line 127: Refused to create a worker from 'http://127.0.0.1:8000/security/contentSecurityPolicy/resources/ping.js' because it violates the following Content Security Policy directive: "worker-src 'none'".
+
+This is a testharness.js-based test.
+PASS Same-origin service worker blocked by 'none'. 
+Harness: the test ran to completion.
+

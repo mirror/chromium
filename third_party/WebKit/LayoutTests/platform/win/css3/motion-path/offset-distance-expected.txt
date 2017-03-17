@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS offset-distance default is 0px 
+PASS offset-distance 0 is 0px 
+PASS offset-distance can be positive 
+PASS offset-distance allows negative values 
+PASS offset-distance can be a percentage 
+PASS offset-distance can be explicitly inherited 
+PASS offset-distance is not inherited by default 
+PASS offset-distance style can be set inline 
+Harness: the test ran to completion.
+

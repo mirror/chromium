@@ -1,0 +1,12 @@
+This is a testharness.js-based test.
+PASS document.all.item with no arguments 
+PASS document.all.item with name 
+PASS document.all.item with index 
+PASS document.all.item with index as string 
+PASS document.all legacy call with no arguments 
+PASS document.all legacy call with name 
+PASS document.all legacy call with index 
+PASS document.all legacy call with index as a non-number (string) 
+PASS document.all legacy call with two arguments 
+Harness: the test ran to completion.
+

@@ -1,0 +1,15 @@
+This is a testharness.js-based test.
+PASS prompt-accept-access-userchoice-first 
+PASS prompt-accept-no-access-userchoice-first 
+PASS prompt-dismiss-access-userchoice-first 
+PASS prompt-dismiss-no-access-userchoice-first 
+PASS prompt-before-preventDefault-access-userchoice-first 
+PASS prompt-before-preventDefault-no-access-userchoice-first 
+PASS prompt-late-accept-access-userchoice-first 
+PASS prompt-late-accept-no-access-userchoice-first 
+PASS prompt-late-dismiss-access-userchoice-first 
+PASS prompt-late-dismiss-no-access-userchoice-first 
+PASS prompt-late-without-preventDefault-access-userchoice-first 
+PASS prompt-late-without-preventDefault-no-access-userchoice-first 
+Harness: the test ran to completion.
+

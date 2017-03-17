@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Multiple same animation names should start multiple animations. 
+PASS Multiple same animation names should persist with animation timing updates. 
+PASS Mixed multiple same animation names should persist based on their same name relative position 
+PASS Removing same animation names should cancel animations from the end of the name list. 
+PASS Adding same animation names should start additional animations from the end of the name list. 
+Harness: the test ran to completion.
+

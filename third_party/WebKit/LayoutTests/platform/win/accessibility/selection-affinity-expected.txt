@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test upstream and downstream affinity of text selection. 
+Harness: the test ran to completion.
+

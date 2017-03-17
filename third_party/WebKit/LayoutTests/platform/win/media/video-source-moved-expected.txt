@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS Test to make sure a "source" moved after the media element begins processing is handled correctly. 
+PASS Test to make sure a "source" moved after the media element begins processing is handled correctly. 1 
+PASS Test to make sure a "source" moved after the media element begins processing is handled correctly. 2 
+PASS Test to make sure a "source" moved after the media element begins processing is handled correctly. 3 
+PASS Test to make sure a "source" moved after the media element begins processing is handled correctly. 4 
+PASS Test to make sure a "source" moved after the media element begins processing is handled correctly. 5 
+PASS Test to make sure a "source" moved after the media element begins processing is handled correctly. 6 
+Harness: the test ran to completion.
+

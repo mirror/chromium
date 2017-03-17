@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBObjectStore.clear() - Verify clear removes all records  
+Harness: the test ran to completion.
+

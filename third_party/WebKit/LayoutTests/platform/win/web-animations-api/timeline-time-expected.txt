@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS document.timeline.currentTime should not change within a script block. 
+PASS document.timeline.currentTime time should change after a script timeout 
+PASS document.timeline.currentTime time should be the same for all RAF callbacks in a frame 
+PASS document.timeline.currentTime time should use the same reference as performance.now() 
+Harness: the test ran to completion.
+

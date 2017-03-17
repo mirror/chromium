@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS deleteFromDocument should not leak a UA shadow element in TEXTAREA. 
+Harness: the test ran to completion.
+

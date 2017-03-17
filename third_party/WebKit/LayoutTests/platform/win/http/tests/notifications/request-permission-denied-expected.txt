@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Notification creation fails when no permission has been granted. 
+Harness: the test ran to completion.
+

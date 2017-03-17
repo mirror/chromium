@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS bold+insertText 
+PASS add bold 
+PASS remove bold fully 
+PASS remove bold partially 
+Harness: the test ran to completion.
+

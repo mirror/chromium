@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Changing the input type before dispatching a search event should not crash. 
+Harness: the test ran to completion.
+

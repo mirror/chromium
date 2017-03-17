@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Changing active descendant on a content editable. 
+PASS Changing active descendant on an input with role=textbox. 
+PASS Changing active descendant on an input of type=search with role=combobox. 
+PASS Changing active descendant on a textarea with role=searchbox. 
+Harness: the test ran to completion.
+

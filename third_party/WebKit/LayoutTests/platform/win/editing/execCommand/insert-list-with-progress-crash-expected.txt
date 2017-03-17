@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS position-at-middle-of-editing-ignore-content 
+Harness: the test ran to completion.
+

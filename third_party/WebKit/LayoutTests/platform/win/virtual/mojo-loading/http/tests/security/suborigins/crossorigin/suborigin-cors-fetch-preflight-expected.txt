@@ -1,0 +1,16 @@
+CONSOLE ERROR: Fetch API cannot load http://127.0.0.1:8000/security/resources/cors-script.php?cors=http-so://foobar.127.0.0.1:8000. Request header field x-custom-header is not allowed by Access-Control-Allow-Headers in preflight response.
+CONSOLE ERROR: Fetch API cannot load http://127.0.0.1:8000/security/resources/cors-script.php?cors=*. Request header field x-custom-header is not allowed by Access-Control-Allow-Headers in preflight response.
+CONSOLE ERROR: Fetch API cannot load http://127.0.0.1:8000/security/resources/cors-script.php?cors=http-so://foobar.127.0.0.1:8000&credentials=true. Request header field x-custom-header is not allowed by Access-Control-Allow-Headers in preflight response.
+CONSOLE ERROR: Fetch API cannot load http://127.0.0.1:8000/security/resources/cors-script.php?cors=*&credentials=true. Response to preflight request doesn't pass access control check: The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'. Origin 'http-so://foobar.127.0.0.1:8000' is therefore not allowed access.
+CONSOLE ERROR: Fetch API cannot load http://127.0.0.1:8000/security/resources/cors-script.php?cors=*&credentials=true&custom=x-custom-header. Response to preflight request doesn't pass access control check: The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'. Origin 'http-so://foobar.127.0.0.1:8000' is therefore not allowed access.
+This is a testharness.js-based test.
+PASS Fetch: Complex anonymous Fetch preflight, no AC for custom header 
+PASS Fetch: Complex anonymous Fetch preflight, has AC for custom header 
+PASS Fetch: Complex anonymous Fetch preflight with '*' ACAO, no AC for custom header 
+PASS Fetch: Complex anonymous Fetch preflight with '*' ACAO, has AC for custom header 
+PASS Fetch: Complex Fetch with credentials preflight, no AC for custom header 
+PASS Fetch: Complex Fetch with credentials preflight, has AC for custom header 
+PASS Fetch: Complex Fetch with credentials preflight with '*' ACAO, no AC for custom header 
+PASS Fetch: Complex Fetch with credentials preflight with '*' ACAO, has AC for custom header 
+Harness: the test ran to completion.
+

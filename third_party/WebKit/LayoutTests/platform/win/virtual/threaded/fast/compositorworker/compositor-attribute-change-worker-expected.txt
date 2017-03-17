@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This test checks that a compositor proxy can be mutated from the compositor worker thread. 
+Harness: the test ran to completion.
+

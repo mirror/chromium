@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS If a site disconnects from a device while the platform is disconnecting that device, only one gattserverdisconnected event should fire. 
+Harness: the test ran to completion.
+

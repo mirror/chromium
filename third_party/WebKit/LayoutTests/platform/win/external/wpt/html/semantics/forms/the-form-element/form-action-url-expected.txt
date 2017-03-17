@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Submit a form from an iframe with a base url 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+CONSOLE WARNING: line 17: Invalid keyframe value for property color: -webkit-text
+CONSOLE WARNING: line 17: Invalid keyframe value for property color: -webkit-text
+This is a testharness.js-based test.
+PASS Tests keyframes with property values which are unsupported are removed 
+Harness: the test ran to completion.
+

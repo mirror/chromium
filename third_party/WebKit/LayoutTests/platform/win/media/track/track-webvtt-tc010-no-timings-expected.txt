@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests cue without timings are ignored. 
+Harness: the test ran to completion.
+

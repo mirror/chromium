@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that setting MediaSession callbacks are alive after garbage-collection 
+Harness: the test ran to completion.
+

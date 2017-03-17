@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Exposure of interfaces in a Service Worker. 
+PASS PaymentAppManager should be exposed and have the expected interface in a Document. 
+PASS PaymentAppManager should be exposed and have the expected interface. 
+Harness: the test ran to completion.
+

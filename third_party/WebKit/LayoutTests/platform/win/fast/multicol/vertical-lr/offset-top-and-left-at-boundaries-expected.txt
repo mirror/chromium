@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS offsetLeft and offsetTop in vertical-lr at column boundaries, first element 
+PASS offsetLeft and offsetTop in vertical-lr at column boundaries, second element 
+PASS offsetLeft and offsetTop in vertical-lr at column boundaries, third element 
+PASS offsetLeft and offsetTop in vertical-lr, spanner 
+PASS offsetLeft and offsetTop in vertical-lr at column boundaries, fifth element 
+PASS offsetLeft and offsetTop in vertical-lr at column boundaries, sixth element 
+PASS offsetLeft and offsetTop in vertical-lr at column boundaries, seventh element 
+Harness: the test ran to completion.
+

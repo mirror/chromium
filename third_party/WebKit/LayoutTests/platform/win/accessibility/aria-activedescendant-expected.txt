@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Changing active descendant on a content editable. 
+FAIL Changing active descendant on an input with role=textbox. assert_true: list2.isFocusable expected true got false
+FAIL Changing active descendant on an input of type=search with role=combobox. assert_true: list3.isFocusable expected true got false
+FAIL Changing active descendant on a textarea with role=searchbox. assert_true: list4.isFocusable expected true got false
+Harness: the test ran to completion.
+

@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Pressing an arrow key moves checked state in a radio button group. 
+PASS Pressing an arrow key doesn't move checked state in a radio button group if click events are prevented. 
+PASS Right arrow key should move checked state backward in RTL. 
+PASS Down arrow key should move checked state forward regardless of RTL. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBIndex.getKey() - attempt to retrieve the primary key of a record that doesn't exist 
+Harness: the test ran to completion.
+

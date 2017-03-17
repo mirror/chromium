@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that removing track nodes while their parent is being deleted doesn't crash 
+Harness: the test ran to completion.
+

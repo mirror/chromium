@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that WebNFC API is not accessible from iframe context. 
+Harness: the test ran to completion.
+

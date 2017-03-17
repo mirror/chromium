@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Canceling the imported style sheet load should not cause a crash. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,17 @@
+This is a testharness.js-based test.
+PASS Index 0 
+PASS Index 1 
+PASS Index 2 
+PASS Index 3 
+PASS Index 4 
+PASS Index 5 
+PASS Index 6 
+PASS Index 7 
+PASS Index 8 
+PASS Index 9 
+PASS Index 10 
+PASS Index 11 
+PASS Index 12 
+PASS Index 13 
+Harness: the test ran to completion.
+

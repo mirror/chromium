@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS NOT invoking resource selection with implicit pause() when networkState is not NETWORK_EMPTY 
+Harness: the test ran to completion.
+

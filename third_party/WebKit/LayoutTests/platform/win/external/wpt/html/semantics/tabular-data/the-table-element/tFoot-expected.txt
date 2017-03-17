@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS tFoot tests 
+PASS tFoot tests 1 
+Harness: the test ran to completion.
+

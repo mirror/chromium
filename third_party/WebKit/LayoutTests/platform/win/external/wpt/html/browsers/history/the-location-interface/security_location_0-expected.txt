@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Accessing location object from different origins doesn't raise SECURITY_ERR exception 
+Harness: the test ran to completion.
+

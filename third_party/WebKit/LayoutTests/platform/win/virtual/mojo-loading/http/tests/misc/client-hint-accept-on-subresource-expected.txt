@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Client-Hints not sent when Accept-CH header is present only in subresource 
+Harness: the test ran to completion.
+

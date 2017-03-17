@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Garbage Collection ran during getCharacteristic call that fails. Should not crash 
+Harness: the test ran to completion.
+

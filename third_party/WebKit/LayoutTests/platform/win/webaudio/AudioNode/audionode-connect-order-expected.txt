@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS # AUDIT TASK RUNNER STARTED. 
+PASS > [Test connections] AudioNode connection order doesn't trigger assertion errors 
+PASS   Connecting nodes did not throw an exception. 
+PASS   OfflineContext startRendering() resolved correctly. 
+PASS < [Test connections] All assertions passed. (total 2 assertions) 
+PASS # AUDIT TASK RUNNER FINISHED: 1 tasks ran successfully. 
+Harness: the test ran to completion.
+

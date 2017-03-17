@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Verify smooth scroll interaction with scroll anchoring on page with vertical-lr writing mode 
+Harness: the test ran to completion.
+

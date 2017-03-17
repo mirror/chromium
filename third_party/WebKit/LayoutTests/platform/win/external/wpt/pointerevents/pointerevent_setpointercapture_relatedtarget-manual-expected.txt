@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS PointerEvent Automation 
+PASS pointerover shouldn't trigger for the purple rectangle while the black rectangle has capture 
+PASS relatedTarget should not be null even when the capture is set. 
+Harness: the test ran to completion.
+

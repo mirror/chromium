@@ -1,0 +1,24 @@
+This is a testharness.js-based test.
+PASS window.performance is defined 
+PASS connectEnd is the same after document open. 
+PASS connectStart is the same after document open. 
+PASS domComplete is the same after document open. 
+PASS domContentLoadedEventEnd is the same after document open. 
+PASS domContentLoadedEventStart is the same after document open. 
+PASS domInteractive is the same after document open. 
+PASS domLoading is the same after document open. 
+PASS domainLookupEnd is the same after document open. 
+PASS domainLookupStart is the same after document open. 
+PASS fetchStart is the same after document open. 
+PASS loadEventEnd is the same after document open. 
+PASS loadEventStart is the same after document open. 
+PASS navigationStart is the same after document open. 
+PASS redirectEnd is the same after document open. 
+PASS redirectStart is the same after document open. 
+PASS requestStart is the same after document open. 
+PASS responseEnd is the same after document open. 
+PASS responseStart is the same after document open. 
+PASS unloadEventEnd is the same after document open. 
+PASS unloadEventStart is the same after document open. 
+Harness: the test ran to completion.
+

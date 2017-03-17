@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test for supporting setTransform on canvas patterns 
+Harness: the test ran to completion.
+

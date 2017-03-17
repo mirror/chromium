@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS MouseEvent.offsetX/offsetY for an SVG element is always relative to the outermost <svg> CSS layout box 
+Harness: the test ran to completion.
+

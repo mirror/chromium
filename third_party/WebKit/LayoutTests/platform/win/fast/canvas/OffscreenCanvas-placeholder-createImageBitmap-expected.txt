@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test whether createImageBitmap on a placeholder canvas captures the image committed to the associated OffscreenCanvas. 
+Harness: the test ran to completion.
+

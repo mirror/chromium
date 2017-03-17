@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Service worker test setup 
+PASS Closing a writable stream with in-flight writes below the high water mark delays the close call properly 
+Harness: the test ran to completion.
+

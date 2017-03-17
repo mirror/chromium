@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Check that both style rules were parsed. 
+PASS Check that outline-color:invert is dropped. 
+PASS Check that outline shorthand with invert is dropped. 
+Harness: the test ran to completion.
+

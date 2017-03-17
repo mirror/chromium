@@ -1,0 +1,13 @@
+This is a testharness.js-based test.
+PASS INPUT without spellcheck attribute is checked when spellcheck is enabled by default. 
+PASS INPUT with spellcheck=true is checked when spellcheck is enabled by default. 
+PASS INPUT with spellcheck=false is not checked when spellcheck is enabled by default. 
+PASS INPUT with invalid spellcheck attribute value is checked when spellcheck is enabled by default. 
+PASS INPUT with empty spellcheck attribute is checked when spellcheck is enabled by default. 
+PASS INPUT without spellcheck attribute is not checked when spellcheck is disabled by default. 
+PASS INPUT with spellcheck=true is checked when spellcheck is disabled by default. 
+PASS INPUT with spellcheck=false is not checked when spellcheck is disabled by default. 
+PASS INPUT with invalid spellcheck attribute value is not checked when spellcheck is disabled by default. 
+PASS INPUT with empty spellcheck attribute is checked when spellcheck is disabled by default. 
+Harness: the test ran to completion.
+

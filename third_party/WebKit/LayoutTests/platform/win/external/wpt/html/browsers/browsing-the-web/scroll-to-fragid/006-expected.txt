@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Fragment Navigation: hashchange event multiple changes old/newURL 
+Harness: the test ran to completion.
+

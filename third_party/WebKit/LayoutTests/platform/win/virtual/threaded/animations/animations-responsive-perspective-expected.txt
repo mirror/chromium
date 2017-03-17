@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS perspective responsive to style changes 
+PASS perspective clamped to none 
+Harness: the test ran to completion.
+

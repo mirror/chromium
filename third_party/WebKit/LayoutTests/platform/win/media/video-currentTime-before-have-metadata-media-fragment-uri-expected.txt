@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test currentTime values when setting while readystate is HAVE_NOTHING for media fragment URI. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This tests that a mouse click event will not cause a media element to gain focus. 
+Harness: the test ran to completion.
+

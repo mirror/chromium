@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Check cues from captions-webvtt/tc013-settings.vtt 
+PASS Check cues from captions-webvtt/tc013-settings-bad-separation.vtt 
+Harness: the test ran to completion.
+

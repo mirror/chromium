@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Filter with 2 services returns a matching device. 
+Harness: the test ran to completion.
+

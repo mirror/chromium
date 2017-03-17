@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IntersectionObserver target moved from a top-level document to a cross-origin iframe does not report root bounds. 
+Harness: the test ran to completion.
+

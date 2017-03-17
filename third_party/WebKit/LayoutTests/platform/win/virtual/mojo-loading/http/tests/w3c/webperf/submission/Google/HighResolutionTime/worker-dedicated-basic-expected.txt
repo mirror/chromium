@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS workerStart not defined on the Worker object 
+PASS self.performance is defined 
+PASS self.performance.now is defined 
+PASS Time in the worker should be after the startTime in the main document 
+PASS Time in the worker should be before the current time in the main document 
+Harness: the test ran to completion.
+

@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS CSSConditionRule protype chain. 
+PASS @media inherited from CSSConditionRule. 
+PASS @media inherited from CSSConditionRule, empty media. 
+PASS @supports inherited from CSSConditionRule. 
+Harness: the test ran to completion.
+

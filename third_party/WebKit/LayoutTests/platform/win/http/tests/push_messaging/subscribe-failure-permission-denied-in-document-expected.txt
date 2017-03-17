@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS subscribe() is rejected when permission has been denied 
+Harness: the test ran to completion.
+

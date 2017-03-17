@@ -1,0 +1,10 @@
+CONSOLE WARNING: motion-path is deprecated and will be removed in M58, around April 2017. Please use offset-path instead. See https://www.chromestatus.com/features/6390764217040896 for more details.
+This is a testharness.js-based test.
+PASS motion-path default is none 
+PASS motion-path can be explicitly none 
+PASS motion-path can be an SVG Path data string 
+PASS motion-path can be explicitly inherited 
+PASS motion-path is not inherited by default 
+PASS motion-path style can be set inline 
+Harness: the test ran to completion.
+

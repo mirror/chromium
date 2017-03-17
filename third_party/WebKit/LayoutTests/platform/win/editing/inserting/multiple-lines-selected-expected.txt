@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Insert a paragraph separator into a selection that spans multiple paragraphs 
+Harness: the test ran to completion.
+

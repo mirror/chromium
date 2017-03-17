@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBTransaction.objectStore exception order: InvalidStateError vs. NotFoundError 
+Harness: the test ran to completion.
+

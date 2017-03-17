@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS background-color property, color value 
+PASS property value, accordionColor, foo 
+PASS border-width property, border-style = none 
+PASS border-width property, border-style = solid, floating point pixel value 
+PASS font-size property, em value 
+PASS width property, percentage value 
+PASS custom property, forced style recalc 
+Harness: the test ran to completion.
+

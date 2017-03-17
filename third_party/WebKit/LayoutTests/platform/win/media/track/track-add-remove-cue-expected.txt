@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests TextTrack's addCue and removeCue. 
+Harness: the test ran to completion.
+

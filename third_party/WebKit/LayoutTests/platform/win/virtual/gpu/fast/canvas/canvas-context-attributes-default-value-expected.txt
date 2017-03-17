@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Test default value 
+PASS Test undfined value 
+PASS Test null value 
+Harness: the test ran to completion.
+

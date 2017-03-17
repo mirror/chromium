@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS 8: Shrink-to-fit inline-block with a child of orthogonal inline with borders in inline-block 
+Harness: the test ran to completion.
+

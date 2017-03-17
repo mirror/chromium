@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS The caret height should be the same in every line 
+PASS The caret height at the front of word(150%) should be the same as the caret height in other words(100%). 
+PASS The caret height at the end of word should be the same as the caret height in the word. 
+PASS In case of RTL, the caret height at the front of word(150%) should be the same as the caret height in other words(100%). 
+PASS In case of RTL, the caret height at the end of word should be the same as the caret height in the word. 
+Harness: the test ran to completion.
+

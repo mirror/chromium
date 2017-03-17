@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS animation directions work with fill modes 
+Harness: the test ran to completion.
+

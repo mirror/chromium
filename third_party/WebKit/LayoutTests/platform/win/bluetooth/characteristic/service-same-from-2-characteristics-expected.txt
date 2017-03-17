@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Same parent service returned from multiple characteristics. 
+Harness: the test ran to completion.
+

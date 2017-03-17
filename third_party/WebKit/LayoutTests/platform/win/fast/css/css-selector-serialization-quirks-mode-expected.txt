@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that the CSS rule should serialize to the same case as the one inside the stylesheet when in quirks mode. 
+Harness: the test ran to completion.
+

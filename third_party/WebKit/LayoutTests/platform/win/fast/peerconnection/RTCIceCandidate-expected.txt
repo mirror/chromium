@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Constructor can be initialized with output from another constructor 
+PASS Constructor throws on invalid input 
+PASS Constructor does not throw on valid input 
+PASS candidate, sdpMid, and sdpMLineIndex properties can be modified 
+Harness: the test ran to completion.
+

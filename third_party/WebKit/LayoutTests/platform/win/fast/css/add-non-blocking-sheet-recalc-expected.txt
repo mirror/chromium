@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Check that adding a non-blocking stylesheet does not cause a full document recalc. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS SVGAnimatedNumber interface - utilizing the surfaceScale property of SVGFESpecularLightingElement 
+Harness: the test ran to completion.
+

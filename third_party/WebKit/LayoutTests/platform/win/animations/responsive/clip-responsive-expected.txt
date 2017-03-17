@@ -1,0 +1,88 @@
+This is a testharness.js-based test.
+PASS This test uses responsive-test.js. 
+PASS Untitled 
+PASS Untitled 1 
+PASS Untitled 2 
+PASS Untitled 3 
+PASS Untitled 4 
+PASS Untitled 5 
+PASS Untitled 6 
+PASS Untitled 7 
+PASS Untitled 8 
+PASS Untitled 9 
+PASS Untitled 10 
+PASS Untitled 11 
+PASS Untitled 12 
+PASS Untitled 13 
+PASS Untitled 14 
+PASS Untitled 15 
+PASS Untitled 16 
+PASS Untitled 17 
+PASS Untitled 18 
+PASS Untitled 19 
+PASS Untitled 20 
+PASS Untitled 21 
+PASS Untitled 22 
+PASS Untitled 23 
+PASS Untitled 24 
+PASS Untitled 25 
+PASS Untitled 26 
+PASS Untitled 27 
+PASS Untitled 28 
+PASS Untitled 29 
+PASS Untitled 30 
+PASS Untitled 31 
+PASS Untitled 32 
+PASS Untitled 33 
+PASS Untitled 34 
+PASS Untitled 35 
+PASS Untitled 36 
+PASS Animation on property <clip> from [inherit] to [rect(200px auto auto auto)] with {"inherited":"auto"} changed to {"inherited":"rect(100px 100px auto auto)"} at (0.25) is [rect(100px 100px auto auto)] 
+PASS Untitled 37 
+PASS Animation on property <clip> from [inherit] to [rect(200px auto auto auto)] with {"inherited":"auto"} changed to {"inherited":"rect(100px 100px auto auto)"} at (0.75) is [rect(200px auto auto auto)] 
+PASS Untitled 38 
+PASS Animation on property <clip> from [inherit] to [rect(200px auto auto auto)] with {"inherited":"auto"} changed to {"inherited":"rect(100px auto auto auto)"} at (0.25) is [rect(125px auto auto auto)] 
+PASS Untitled 39 
+PASS Animation on property <clip> from [inherit] to [rect(200px auto auto auto)] with {"inherited":"auto"} changed to {"inherited":"rect(100px auto auto auto)"} at (0.75) is [rect(175px auto auto auto)] 
+PASS Untitled 40 
+PASS Animation on property <clip> from [inherit] to [rect(200px auto auto auto)] with {"inherited":"rect(100px 100px auto auto)"} changed to {"inherited":"auto"} at (0.25) is [auto] 
+PASS Untitled 41 
+PASS Animation on property <clip> from [inherit] to [rect(200px auto auto auto)] with {"inherited":"rect(100px 100px auto auto)"} changed to {"inherited":"auto"} at (0.75) is [rect(200px auto auto auto)] 
+PASS Untitled 42 
+PASS Animation on property <clip> from [inherit] to [rect(200px auto auto auto)] with {"inherited":"rect(100px 100px auto auto)"} changed to {"inherited":"rect(100px auto auto auto)"} at (0.25) is [rect(125px auto auto auto)] 
+PASS Untitled 43 
+PASS Animation on property <clip> from [inherit] to [rect(200px auto auto auto)] with {"inherited":"rect(100px 100px auto auto)"} changed to {"inherited":"rect(100px auto auto auto)"} at (0.75) is [rect(175px auto auto auto)] 
+PASS Untitled 44 
+PASS Animation on property <clip> from [inherit] to [rect(200px auto auto auto)] with {"inherited":"rect(100px auto auto auto)"} changed to {"inherited":"auto"} at (0.25) is [auto] 
+PASS Untitled 45 
+PASS Animation on property <clip> from [inherit] to [rect(200px auto auto auto)] with {"inherited":"rect(100px auto auto auto)"} changed to {"inherited":"auto"} at (0.75) is [rect(200px auto auto auto)] 
+PASS Untitled 46 
+PASS Animation on property <clip> from [inherit] to [rect(200px auto auto auto)] with {"inherited":"rect(100px auto auto auto)"} changed to {"inherited":"rect(100px 100px auto auto)"} at (0.25) is [rect(100px 100px auto auto)] 
+PASS Untitled 47 
+PASS Animation on property <clip> from [inherit] to [rect(200px auto auto auto)] with {"inherited":"rect(100px auto auto auto)"} changed to {"inherited":"rect(100px 100px auto auto)"} at (0.75) is [rect(200px auto auto auto)] 
+PASS Untitled 48 
+PASS Animation on property <clip> from neutral to [rect(200px auto auto auto)] with {"underlying":"auto"} changed to {"underlying":"rect(100px 100px auto auto)"} at (0.25) is [rect(100px 100px auto auto)] 
+PASS Untitled 49 
+PASS Animation on property <clip> from neutral to [rect(200px auto auto auto)] with {"underlying":"auto"} changed to {"underlying":"rect(100px 100px auto auto)"} at (0.75) is [rect(200px auto auto auto)] 
+PASS Untitled 50 
+PASS Animation on property <clip> from neutral to [rect(200px auto auto auto)] with {"underlying":"auto"} changed to {"underlying":"rect(100px auto auto auto)"} at (0.25) is [rect(125px auto auto auto)] 
+PASS Untitled 51 
+PASS Animation on property <clip> from neutral to [rect(200px auto auto auto)] with {"underlying":"auto"} changed to {"underlying":"rect(100px auto auto auto)"} at (0.75) is [rect(175px auto auto auto)] 
+PASS Untitled 52 
+PASS Animation on property <clip> from neutral to [rect(200px auto auto auto)] with {"underlying":"rect(100px 100px auto auto)"} changed to {"underlying":"auto"} at (0.25) is [auto] 
+PASS Untitled 53 
+PASS Animation on property <clip> from neutral to [rect(200px auto auto auto)] with {"underlying":"rect(100px 100px auto auto)"} changed to {"underlying":"auto"} at (0.75) is [rect(200px auto auto auto)] 
+PASS Untitled 54 
+PASS Animation on property <clip> from neutral to [rect(200px auto auto auto)] with {"underlying":"rect(100px 100px auto auto)"} changed to {"underlying":"rect(100px auto auto auto)"} at (0.25) is [rect(125px auto auto auto)] 
+PASS Untitled 55 
+PASS Animation on property <clip> from neutral to [rect(200px auto auto auto)] with {"underlying":"rect(100px 100px auto auto)"} changed to {"underlying":"rect(100px auto auto auto)"} at (0.75) is [rect(175px auto auto auto)] 
+PASS Untitled 56 
+PASS Animation on property <clip> from neutral to [rect(200px auto auto auto)] with {"underlying":"rect(100px auto auto auto)"} changed to {"underlying":"auto"} at (0.25) is [auto] 
+PASS Untitled 57 
+PASS Animation on property <clip> from neutral to [rect(200px auto auto auto)] with {"underlying":"rect(100px auto auto auto)"} changed to {"underlying":"auto"} at (0.75) is [rect(200px auto auto auto)] 
+PASS Untitled 58 
+PASS Animation on property <clip> from neutral to [rect(200px auto auto auto)] with {"underlying":"rect(100px auto auto auto)"} changed to {"underlying":"rect(100px 100px auto auto)"} at (0.25) is [rect(100px 100px auto auto)] 
+PASS Untitled 59 
+PASS Animation on property <clip> from neutral to [rect(200px auto auto auto)] with {"underlying":"rect(100px auto auto auto)"} changed to {"underlying":"rect(100px 100px auto auto)"} at (0.75) is [rect(200px auto auto auto)] 
+Harness: the test ran to completion.
+

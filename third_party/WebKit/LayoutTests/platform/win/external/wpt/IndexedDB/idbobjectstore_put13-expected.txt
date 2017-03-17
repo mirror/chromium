@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBObjectStore.put() - Attempt to put a record where the out of line key provided does not meet the constraints of a valid key  
+Harness: the test ran to completion.
+

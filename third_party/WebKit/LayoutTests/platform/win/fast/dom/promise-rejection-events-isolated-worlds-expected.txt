@@ -1,0 +1,5 @@
+CONSOLE ERROR: line 1: Uncaught (in promise) Error
+This is a testharness.js-based test.
+PASS promise rejection events should not be fired for content scripts 
+Harness: the test ran to completion.
+

@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS audio.networkState - default state 
+PASS video.networkState - default state 
+Harness: the test ran to completion.
+

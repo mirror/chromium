@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Check that animations missing 'from' keyframes are responsive to underlying style changes 
+PASS Check that animations missing 'to' keyframes are responsive to underlying style changes 
+PASS Check that animations missing both 'from' and 'to' keyframes are responsive to underlying style changes 
+PASS Check that animations with neutral keyframes are responsive to font size changes 
+PASS Check that composited animations with neutral keyframes are responsive to underlying style changes 
+PASS Check that running animations with neutral keyframes are responsive to style changes 
+Harness: the test ran to completion.
+

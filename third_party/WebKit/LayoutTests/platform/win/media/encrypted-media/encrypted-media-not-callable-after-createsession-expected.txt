@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Update() immediately after CreateSession(). 
+PASS Close() immediately after CreateSession(). 
+PASS Remove() immediately after CreateSession(). 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS No plugins 
+PASS One plugin 
+PASS Two plugins 
+Harness: the test ran to completion.
+

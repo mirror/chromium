@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Check that media tracks and their properties are populated properly 
+PASS Media tracks must be removed when the SourceBuffer is removed from the MediaSource 
+PASS Media tracks must be removed when the HTMLMediaElement.src is changed 
+PASS Media tracks must be removed when the HTMLMediaElement.load() is called 
+PASS Change events must be fired on MediaElement and SourceBuffer track lists when enabling/disabling or selecting/deselecting tracks 
+Harness: the test ran to completion.
+

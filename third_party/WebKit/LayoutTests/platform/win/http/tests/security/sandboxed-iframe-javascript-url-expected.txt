@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS JavaScript URLs in sandboxed iframes should not execute, as the origin is distinct from its opener. 
+Harness: the test ran to completion.
+

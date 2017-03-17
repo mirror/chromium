@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS EventTarget#dispatchEvent(): redispatching a native event 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test Description: event.origin returns the origin of the message. 
+Harness: the test ran to completion.
+

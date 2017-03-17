@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS pre test setup 
+PASS Whitelisted properties should get applied to first-letter pseudo elements. 
+PASS Non-whitelisted properties should not get applied to first-letter pseudo elements. 
+Harness: the test ran to completion.
+

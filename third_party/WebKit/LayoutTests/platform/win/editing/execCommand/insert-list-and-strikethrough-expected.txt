@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS insertOrderedList with STRIKE, DL, and HR 
+Harness: the test ran to completion.
+

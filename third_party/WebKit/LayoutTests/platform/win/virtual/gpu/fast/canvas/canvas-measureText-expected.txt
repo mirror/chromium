@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Regression test for bug http://webkit.org/b/106244. Test passes by not crashing. 
+Harness: the test ran to completion.
+

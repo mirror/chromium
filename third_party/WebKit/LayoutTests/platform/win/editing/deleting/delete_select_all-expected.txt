@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS 1 Delete TABLE 
+PASS 2-1 Delete visibility:hidden 
+PASS 2-2 Delete display:none 
+PASS 3 Delete UL 
+Harness: the test ran to completion.
+

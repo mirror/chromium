@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Test the constructor for ExtendableMessageEvent 
+PASS Post an extendable message from a top-level client 
+PASS Post an extendable message from a nested client 
+PASS Post loopback extendable messages 
+PASS Post extendable messages among service workers 
+Harness: the test ran to completion.
+

@@ -1,0 +1,10 @@
+CONSOLE ERROR: line 2487: Uncaught Error: assert_true: expected true got false
+This is a testharness.js-based test.
+PASS workerStart is defined on the SharedWorker object 
+PASS Time of worker start was after the navigation start for the document 
+PASS self.performance is defined 
+PASS self.performance.now is defined 
+PASS Time since origin time should be greater in the main document than the worker 
+PASS Time since origin time should be greater in the worker than the iframe 
+Harness: the test ran to completion.
+

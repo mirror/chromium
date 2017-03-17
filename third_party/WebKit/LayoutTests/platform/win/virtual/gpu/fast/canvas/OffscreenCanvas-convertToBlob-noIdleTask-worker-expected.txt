@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Check if the image loaded from blob returned by OffscreenCanvas.convertToBlob() have expected image data values. 
+Harness: the test ran to completion.
+

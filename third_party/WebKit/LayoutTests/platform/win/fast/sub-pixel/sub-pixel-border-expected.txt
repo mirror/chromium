@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Size of all elements are correct. 
+PASS All elements should have correctly sized borders. 
+Harness: the test ran to completion.
+

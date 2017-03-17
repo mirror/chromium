@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Changing visibility, an independent inherited property, is not propagated when using the 'initial' keyword. 
+Harness: the test ran to completion.
+

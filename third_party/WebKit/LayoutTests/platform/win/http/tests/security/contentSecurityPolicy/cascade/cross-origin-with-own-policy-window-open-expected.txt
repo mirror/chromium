@@ -1,0 +1,8 @@
+CONSOLE WARNING: Upcoming versions will block content-initiated top frame navigations to data: URLs. For more information, see https://goo.gl/BaZAea.
+CONSOLE ERROR: Refused to load the image 'http://example.test:8000/resources/square.png?data-frame' because it violates the following Content Security Policy directive: "img-src http://127.0.0.1:8000".
+
+This is a testharness.js-based test.
+PASS Image loaded in top-level blocked. 
+PASS Image loaded via data: frame blocked. 
+Harness: the test ran to completion.
+

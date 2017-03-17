@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS window.performance is defined 
+PASS window.performance.timing is defined 
+PASS window.performance.navigation is defined 
+Harness: the test ran to completion.
+

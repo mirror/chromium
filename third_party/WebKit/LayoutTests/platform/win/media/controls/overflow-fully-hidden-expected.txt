@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that overflow-x: hidden with a large viewport doesn't clip the controls 
+Harness: the test ran to completion.
+

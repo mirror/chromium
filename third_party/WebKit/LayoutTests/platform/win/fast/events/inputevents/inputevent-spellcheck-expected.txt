@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS spellcheck-replace-in-contenteditable 
+PASS spellcheck-replace-in-textarea 
+Harness: the test ran to completion.
+

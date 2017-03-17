@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Delete selected editable nodes that are not in both the start and end editable roots 
+Harness: the test ran to completion.
+

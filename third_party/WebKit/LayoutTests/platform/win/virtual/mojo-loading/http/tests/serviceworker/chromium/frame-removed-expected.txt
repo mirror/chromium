@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS navigator.serviceWorker should return null when frame is removed 
+Harness: the test ran to completion.
+

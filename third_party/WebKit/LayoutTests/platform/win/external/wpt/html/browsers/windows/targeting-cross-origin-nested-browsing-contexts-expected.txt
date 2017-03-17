@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Targeting nested browsing contexts 
+Harness: the test ran to completion.
+

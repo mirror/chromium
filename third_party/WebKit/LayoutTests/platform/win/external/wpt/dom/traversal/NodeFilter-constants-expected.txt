@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Constants for acceptNode on NodeFilter interface object. 
+PASS Constants for whatToShow on NodeFilter interface object. 
+Harness: the test ran to completion.
+

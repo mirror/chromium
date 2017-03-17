@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Bug 91756: Test if the widths of RTL elements are the same as the widths of the LTR elements when they include absolutely-positioned children. 
+Harness: the test ran to completion.
+

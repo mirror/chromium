@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Images whose URLs are not disallowed should still be displayed as normal. 
+PASS Images whose initial URL is disallowed should not be loaded and should be collapsed in the layout. 
+Harness: the test ran to completion.
+

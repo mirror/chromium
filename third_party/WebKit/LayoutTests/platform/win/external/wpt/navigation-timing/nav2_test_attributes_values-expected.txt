@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Performance navigation timing instance's value is reasonable. 
+Harness: the test ran to completion.
+

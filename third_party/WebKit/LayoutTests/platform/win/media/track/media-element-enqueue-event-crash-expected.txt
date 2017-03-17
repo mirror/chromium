@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that appending events for dispatching doesn't crash. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS IDBObjectStore.deleteIndex exception order: InvalidStateError #1 vs. TransactionInactiveError 
+PASS IDBObjectStore.deleteIndex exception order: InvalidStateError #2 vs. TransactionInactiveError 
+PASS IDBObjectStore.deleteIndex exception order: TransactionInactiveError vs. NotFoundError 
+Harness: the test ran to completion.
+

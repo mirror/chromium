@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that getVRDisplays always resolves with at least an empty sequence. 
+Harness: the test ran to completion.
+

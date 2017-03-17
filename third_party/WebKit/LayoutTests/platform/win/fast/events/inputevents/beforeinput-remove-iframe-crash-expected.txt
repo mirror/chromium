@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Testing beforeinput in removed iframe 
+PASS Testing beforeinput for Drag&Drop in removed iframe 
+Harness: the test ran to completion.
+

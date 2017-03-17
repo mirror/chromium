@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS IDBDatabase.createObjectStore exception order: InvalidStateError vs. TransactionInactiveError 
+PASS IDBDatabase.createObjectStore exception order: TransactionInactiveError vs. SyntaxError 
+PASS IDBDatabase.createObjectStore exception order: SyntaxError vs. ConstraintError 
+PASS IDBDatabase.createObjectStore exception order: ConstraintError vs. InvalidAccessError 
+Harness: the test ran to completion.
+

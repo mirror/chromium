@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Backward move by word should work with underscore. 
+PASS Forward move by word should work with underscore in mac 
+PASS Forward move by word should work with underscore in unix 
+PASS Forward move by word should work with underscore in android 
+PASS Forward move by word should work with underscore in win 
+Harness: the test ran to completion.
+

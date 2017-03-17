@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS A filter must restrict the devices in some way. 
+Harness: the test ran to completion.
+

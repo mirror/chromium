@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS content element test for select attribute, null and undefined arguments 
+Harness: the test ran to completion.
+

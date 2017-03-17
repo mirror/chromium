@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL event.composedPath() cross the shadow boundary assert_equals: composedPath().length expected 7 but got 2
+Harness: the test ran to completion.
+

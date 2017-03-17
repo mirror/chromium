@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS lastModified should return the last modified date and time 
+Harness: the test ran to completion.
+

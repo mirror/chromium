@@ -1,0 +1,5 @@
+CONSOLE WARNING: line 19: VRDisplay.getPose() is deprecated. Please use VRDisplay.getFrameData() instead.
+This is a testharness.js-based test.
+PASS getPose returns the same data within a single frame 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+CONSOLE WARNING: line 9: Mixed Content: The page at 'https://127.0.0.1:8443/security/mixedContent/websocket/resources/expect-successful-construction.html' was loaded over HTTPS, but attempted to connect to the insecure WebSocket endpoint 'ws://example.test:8880/echo'. This endpoint should be available via WSS. Insecure access is deprecated.
+CONSOLE WARNING: line 9: Connecting to a non-secure WebSocket server from a secure origin is deprecated.
+This is a testharness.js-based test.
+PASS Test that an insecure WebSocket connection is blocked when created in an HTTPS resource. 
+Harness: the test ran to completion.
+

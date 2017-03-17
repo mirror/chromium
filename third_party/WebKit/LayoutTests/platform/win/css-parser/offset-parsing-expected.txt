@@ -1,0 +1,41 @@
+This is a testharness.js-based test.
+PASS CSS.supports('offset', "path('M 0 0 H 1') -200% auto") should return true 
+PASS e.style['offset'] = "path('M 0 0 H 1') -200% auto" should set the value 
+PASS Serialization should round-trip after setting e.style['offset'] = "path('M 0 0 H 1') -200% auto" 
+PASS CSS.supports('offset', "none 50px reverse 30deg") should return true 
+PASS e.style['offset'] = "none 50px reverse 30deg" should set the value 
+PASS Serialization should round-trip after setting e.style['offset'] = "none 50px reverse 30deg" 
+PASS CSS.supports('offset', "path('M 0 0 H 1') reverse 30deg 50px") should return false 
+PASS e.style['offset'] = "path('M 0 0 H 1') reverse 30deg 50px" should not set the value 
+PASS CSS.supports('offset', "path('M 0 0 H 1') auto") should return false 
+PASS e.style['offset'] = "path('M 0 0 H 1') auto" should not set the value 
+PASS CSS.supports('offset', "none 30deg reverse") should return false 
+PASS e.style['offset'] = "none 30deg reverse" should not set the value 
+PASS CSS.supports('offset', "path('M 0 0 H 1') -200%") should return false 
+PASS e.style['offset'] = "path('M 0 0 H 1') -200%" should not set the value 
+PASS CSS.supports('offset', "path('M 0 0 H 1') 50px") should return false 
+PASS e.style['offset'] = "path('M 0 0 H 1') 50px" should not set the value 
+PASS CSS.supports('offset', "path('M 0 0 H 1')") should return false 
+PASS e.style['offset'] = "path('M 0 0 H 1')" should not set the value 
+PASS CSS.supports('offset', "center center path('M 0 0 L 100 100 M 100 200 L 200 200 Z L 300 300 Z') 100% 90deg/left bottom") should return false 
+PASS e.style['offset'] = "center center path('M 0 0 L 100 100 M 100 200 L 200 200 Z L 300 300 Z') 100% 90deg/left bottom" should not set the value 
+PASS CSS.supports('offset', "100px") should return false 
+PASS e.style['offset'] = "100px" should not set the value 
+PASS CSS.supports('offset', "100px none auto 90deg") should return false 
+PASS e.style['offset'] = "100px none auto 90deg" should not set the value 
+PASS CSS.supports('offset', "auto") should return false 
+PASS e.style['offset'] = "auto" should not set the value 
+PASS CSS.supports('offset', "30deg") should return false 
+PASS e.style['offset'] = "30deg" should not set the value 
+PASS CSS.supports('offset', "30deg path('M 20 30 A 60 70 80')") should return false 
+PASS e.style['offset'] = "30deg path('M 20 30 A 60 70 80')" should not set the value 
+PASS CSS.supports('offset', "auto 30deg 90px") should return false 
+PASS e.style['offset'] = "auto 30deg 90px" should not set the value 
+PASS CSS.supports('offset', "none /") should return false 
+PASS e.style['offset'] = "none /" should not set the value 
+PASS CSS.supports('offset', "none / 10px 20px 30deg") should return false 
+PASS e.style['offset'] = "none / 10px 20px 30deg" should not set the value 
+PASS CSS.supports('offset', "path('M 20 30 A 60 70 80') bottom") should return false 
+PASS e.style['offset'] = "path('M 20 30 A 60 70 80') bottom" should not set the value 
+Harness: the test ran to completion.
+

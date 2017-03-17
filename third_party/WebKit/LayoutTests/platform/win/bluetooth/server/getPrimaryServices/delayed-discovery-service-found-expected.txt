@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Request for service. Must return even when the services are not immediately discovered 
+Harness: the test ran to completion.
+

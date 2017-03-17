@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS beforeunload event fires on history navigation back 
+Harness: the test ran to completion.
+

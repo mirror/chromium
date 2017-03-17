@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS getFrameData returns the same data within a single frame 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test behavior when document.body.dir changes dynamically 
+Harness: the test ran to completion.
+

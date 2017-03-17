@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Makes sure that in case of an invalid src, the invalid string is displayed as currentSrc 
+Harness: the test ran to completion.
+

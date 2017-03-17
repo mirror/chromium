@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS window.performance is defined 
+PASS window.performance.mark is defined. 
+PASS window.performance.clearMarks is defined. 
+PASS window.performance.measure is defined. 
+PASS window.performance.clearMeasures is defined. 
+Harness: the test ran to completion.
+

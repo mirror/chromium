@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS shape-outside can be assigned 'none' value 
+PASS 'none' value computes to none 
+Harness: the test ran to completion.
+

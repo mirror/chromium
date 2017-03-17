@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Clicking on a notification enables it to focus the window it was created from. 
+Harness: the test ran to completion.
+

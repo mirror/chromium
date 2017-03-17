@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that setting currentTime changes the time, and setting invalid values throw exceptions. 
+Harness: the test ran to completion.
+

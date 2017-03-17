@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS The href attribute of the base element is specified 
+PASS The src attribute of the img element must relative to the href attribute of the base element 
+Harness: the test ran to completion.
+

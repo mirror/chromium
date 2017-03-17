@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS adopting a custom element to the different document should enqueue an adoptedCallback reaction 
+PASS shadow-including inclusive descendants should be adopted in shadow-including tree order 
+Harness: the test ran to completion.
+

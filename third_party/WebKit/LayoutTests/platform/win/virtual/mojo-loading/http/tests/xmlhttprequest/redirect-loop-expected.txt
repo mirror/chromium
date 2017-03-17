@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Redirect count should be limited (same-origin) 
+PASS Redirect count should be limited (cross-origin) 
+PASS Two XHRs both redirects 20 time should success (same-origin) 
+PASS Two XHRs both redirects 20 time should success (cross-origin) 
+Harness: the test ran to completion.
+

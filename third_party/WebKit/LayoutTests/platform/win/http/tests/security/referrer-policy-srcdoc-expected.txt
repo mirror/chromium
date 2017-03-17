@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS srcdoc iframe uses parent's referrer policy 
+PASS srcdoc iframe can have its own referrer policy 
+PASS srcdoc iframe within srcdoc iframe uses root's referrer policy 
+PASS srcdoc iframe within srcdoc iframe with its own policy 
+Harness: the test ran to completion.
+

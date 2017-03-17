@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that line height of cue element isn't overridden by author CSS. 
+Harness: the test ran to completion.
+

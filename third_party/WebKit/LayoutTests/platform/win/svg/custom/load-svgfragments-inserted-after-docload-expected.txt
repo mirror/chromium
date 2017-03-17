@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS No 'load' event fired after document load for outer SVG root. 
+PASS No 'load' event fired after document load for outer SVG root w/ image. 
+PASS No 'load' event fired after document load for inner SVG root. 
+PASS No 'load' event fired after document load for inner SVG root w/ image. 
+Harness: the test ran to completion.
+

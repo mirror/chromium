@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This test ensures that accessing the context of a zero sized canvas does not crash. 
+Harness: the test ran to completion.
+

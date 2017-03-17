@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS navigator.sendBeacon() to a cross-origin target with a Blob body with non-simple type should throw. 
+Harness: the test ran to completion.
+

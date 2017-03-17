@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Same-host frames are upgraded. 
+PASS Cross-host frames are upgraded. 
+PASS Upgrade policy cascades to nested, same-host frames. 
+PASS Upgrade policy cascades to nested, cross-host frames. 
+Harness: the test ran to completion.
+

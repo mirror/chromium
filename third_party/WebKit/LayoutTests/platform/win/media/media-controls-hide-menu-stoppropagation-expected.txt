@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Overflow menu hides when clicking on the page even when propagation is stopped. 
+Harness: the test ran to completion.
+

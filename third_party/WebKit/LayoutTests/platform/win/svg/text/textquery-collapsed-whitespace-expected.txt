@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Text queries on elements with collapsed whitespace 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that seeking video with no "src" attribute, sets default playback start position to that time. 
+Harness: the test ran to completion.
+

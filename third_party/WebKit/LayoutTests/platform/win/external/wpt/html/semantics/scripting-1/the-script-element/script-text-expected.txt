@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Getter 
+PASS Setter (non-empty string) 
+PASS Setter (empty string) 
+PASS Setter (null) 
+PASS Setter (undefined) 
+PASS Setter (text node reuse) 
+Harness: the test ran to completion.
+

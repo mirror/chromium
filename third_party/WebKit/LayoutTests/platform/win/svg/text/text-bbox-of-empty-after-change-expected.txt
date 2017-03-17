@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Bounding box of <text> changes to empty when text content is changed to empty. 
+Harness: the test ran to completion.
+

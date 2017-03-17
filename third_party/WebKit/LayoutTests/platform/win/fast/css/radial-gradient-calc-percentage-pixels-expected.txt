@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS radial-gradient with calcs using percentage and pixels. 
+Harness: the test ran to completion.
+

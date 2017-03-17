@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that TouchMoves are not suppressed if a secondary pointer is present during any movement. 
+Harness: the test ran to completion.
+

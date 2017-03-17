@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that when the anchor's layoutbox is empty, we can still jump to it by hashtag 
+Harness: the test ran to completion.
+

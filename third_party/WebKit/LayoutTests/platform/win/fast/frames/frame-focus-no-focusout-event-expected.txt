@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that calling focus() on an iframe does not cause a focusout event to be fired 
+Harness: the test ran to completion.
+

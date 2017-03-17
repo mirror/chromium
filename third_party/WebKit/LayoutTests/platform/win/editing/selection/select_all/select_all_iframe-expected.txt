@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS SelectAll command in IFRAME selects only content of IFRAME 
+Harness: the test ran to completion.
+

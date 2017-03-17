@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Same parent characteristic returned from multiple descriptors. 
+Harness: the test ran to completion.
+

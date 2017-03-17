@@ -1,0 +1,61 @@
+This is a testharness.js-based test.
+PASS Setting left to auto 
+PASS Setting left to initial 
+PASS Setting left to inherit 
+PASS Setting left to unset 
+PASS Setting left to CSSSimpleLength with value 1px 
+PASS Setting left to CSSSimpleLength with value 3em 
+PASS Setting left to CSSSimpleLength with value 4ex 
+PASS Setting left to CSSSimpleLength with value 5ch 
+PASS Setting left to CSSSimpleLength with value 6rem 
+PASS Setting left to CSSSimpleLength with value 7vw 
+PASS Setting left to CSSSimpleLength with value 8vh 
+PASS Setting left to CSSSimpleLength with value 9vmin 
+PASS Setting left to CSSSimpleLength with value 10vmax 
+PASS Setting left to CSSSimpleLength with value 11cm 
+PASS Setting left to CSSSimpleLength with value 12mm 
+PASS Setting left to CSSSimpleLength with value 13in 
+PASS Setting left to CSSSimpleLength with value 14pc 
+PASS Setting left to CSSSimpleLength with value 15pt 
+PASS Setting left to CSSCalcLength with value calc(((((((((((((4.5em - 6.7ex) + 1200px) + 1.56cm) - 1.7mm) + 1.8in) + 2.1pt) - 1.9pc) + 1.1vw) - 1.2vh) + 1.3vmin) - 1.4vmax) - 10rem) + 8.9ch) 
+PASS Setting left to CSSCalcLength with value calc(10px) 
+PASS Setting left to CSSCalcLength with value calc(10in + 5vmin) 
+PASS Setting left to invalid value CSSNumberValue throws 
+PASS Setting left to invalid value null throws 
+PASS Setting left to invalid value undefined throws 
+PASS Setting left to invalid value true throws 
+PASS Setting left to invalid value false throws 
+PASS Setting left to invalid value 1 throws 
+PASS Setting left to invalid value hello throws 
+PASS Setting left to invalid value [object Object] throws 
+PASS Setting left to invalid value CSSKeywordValue throws 
+PASS Getting left when it is set to auto 
+PASS Getting left when it is set to initial 
+PASS Getting left when it is set to inherit 
+PASS Getting left when it is set to unset 
+PASS Getting left with a CSSSimpleLength whose value is 1px 
+PASS Getting left with a CSSSimpleLength whose value is 3em 
+PASS Getting left with a CSSSimpleLength whose value is 4ex 
+PASS Getting left with a CSSSimpleLength whose value is 5ch 
+PASS Getting left with a CSSSimpleLength whose value is 6rem 
+PASS Getting left with a CSSSimpleLength whose value is 7vw 
+PASS Getting left with a CSSSimpleLength whose value is 8vh 
+PASS Getting left with a CSSSimpleLength whose value is 9vmin 
+PASS Getting left with a CSSSimpleLength whose value is 10vmax 
+PASS Getting left with a CSSSimpleLength whose value is 11cm 
+PASS Getting left with a CSSSimpleLength whose value is 12mm 
+PASS Getting left with a CSSSimpleLength whose value is 13in 
+PASS Getting left with a CSSSimpleLength whose value is 14pc 
+PASS Getting left with a CSSSimpleLength whose value is 15pt 
+PASS Getting left with a CSSCalcLength whose value is calc(((((((((((((4.5em - 6.7ex) + 1200px) + 1.56cm) - 1.7mm) + 1.8in) + 2.1pt) - 1.9pc) + 1.1vw) - 1.2vh) + 1.3vmin) - 1.4vmax) - 10rem) + 8.9ch) 
+PASS Getting left with a CSSCalcLength whose value is calc(10px) 
+PASS Getting left with a CSSCalcLength whose value is calc(10in + 5vmin) 
+PASS Getting left when it is set to "calc(3 * (5px - 3em))" via a string 
+PASS Getting left when it is set to "calc((5vmin + 1mm) / 2)" via a string 
+PASS getAll for single-valued left 
+PASS Delete left removes the value from the styleMap 
+PASS left shows up in getProperties 
+PASS Setting left to a sequence throws 
+PASS Appending to left throws 
+Harness: the test ran to completion.
+

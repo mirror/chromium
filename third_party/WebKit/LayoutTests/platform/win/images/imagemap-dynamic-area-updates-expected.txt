@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that when image map areas have their shape or coordinate dynamically altered, the test region changes. 
+Harness: the test ran to completion.
+

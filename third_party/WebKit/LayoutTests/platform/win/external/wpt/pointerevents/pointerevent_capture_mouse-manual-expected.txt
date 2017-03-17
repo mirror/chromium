@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS gotpointercapture event received 
+PASS lostpointercapture event received 
+PASS pointerover event for black rectangle received 
+PASS pointerover event for purple rectangle received 
+PASS PointerEvent Automation 
+PASS relatedTarget is null when the capture is set. relatedTarget is null 
+PASS pointermove received for captured element while out of it 
+PASS pointermove received for captured element while inside of it 
+Harness: the test ran to completion.
+

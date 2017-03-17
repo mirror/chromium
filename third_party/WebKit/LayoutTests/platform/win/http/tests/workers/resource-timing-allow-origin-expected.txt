@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS No timing-allow-origin 
+PASS timing-allow-origin: * 
+PASS timing-allow-origin: page origin 
+PASS timing-allow-origin: other origin 
+Harness: the test ran to completion.
+

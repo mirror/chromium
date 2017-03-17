@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that keepAwake state is independent in main and nested frames 
+Harness: the test ran to completion.
+

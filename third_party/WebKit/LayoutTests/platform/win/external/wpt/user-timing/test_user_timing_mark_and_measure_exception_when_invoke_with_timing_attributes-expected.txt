@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS window.performance is defined 
+FAIL performance.mark and performance.measure should throw if used with timing attribute values assert_throws: function "function () { window.performance.measure(timingAttributes[i]); }" did not throw
+FAIL performance.mark and performance.measure should not throw if used with timing attribute values in workers Failed to execute 'mark' on 'WorkerPerformance': 'connectEnd' is part of the PerformanceTiming interface, and cannot be used as a mark name.
+Harness: the test ran to completion.
+

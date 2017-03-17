@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Verify that two sibling cross-origin iframes both correctly scroll on MouseWheel events, as per https://crbug.com/675695. 
+Harness: the test ran to completion.
+

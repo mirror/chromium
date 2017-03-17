@@ -1,0 +1,44 @@
+This is a testharness.js-based test.
+PASS # AUDIT TASK RUNNER STARTED. 
+PASS > [FFT size test] Test that re-sizing the FFT arrays does not fail. 
+PASS   Setting fftSize to -1 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The FFT size provided (4294967295) is outside the range [32, 32768].". 
+PASS   Setting fftSize to 0 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The FFT size provided (0) is outside the range [32, 32768].". 
+PASS   Setting fftSize to 1 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The FFT size provided (1) is outside the range [32, 32768].". 
+PASS   Setting fftSize to 2 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The FFT size provided (2) is outside the range [32, 32768].". 
+PASS   Setting fftSize to 3 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The FFT size provided (3) is outside the range [32, 32768].". 
+PASS   Setting fftSize to 4 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The FFT size provided (4) is outside the range [32, 32768].". 
+PASS   Setting fftSize to 5 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The FFT size provided (5) is outside the range [32, 32768].". 
+PASS   Setting fftSize to 8 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The FFT size provided (8) is outside the range [32, 32768].". 
+PASS   Setting fftSize to 9 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The FFT size provided (9) is outside the range [32, 32768].". 
+PASS   Setting fftSize to 16 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The FFT size provided (16) is outside the range [32, 32768].". 
+PASS   Setting fftSize to 17 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The FFT size provided (17) is outside the range [32, 32768].". 
+PASS   Setting fftSize to 32 did not throw an exception. 
+PASS   Setting fftSize to 33 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The value provided (33) is not a power of two.". 
+PASS   Setting fftSize to 64 did not throw an exception. 
+PASS   Setting fftSize to 65 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The value provided (65) is not a power of two.". 
+PASS   Setting fftSize to 128 did not throw an exception. 
+PASS   Setting fftSize to 129 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The value provided (129) is not a power of two.". 
+PASS   Setting fftSize to 256 did not throw an exception. 
+PASS   Setting fftSize to 257 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The value provided (257) is not a power of two.". 
+PASS   Setting fftSize to 512 did not throw an exception. 
+PASS   Setting fftSize to 513 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The value provided (513) is not a power of two.". 
+PASS   Setting fftSize to 1024 did not throw an exception. 
+PASS   Setting fftSize to 1025 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The value provided (1025) is not a power of two.". 
+PASS   Setting fftSize to 2048 did not throw an exception. 
+PASS   Setting fftSize to 2049 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The value provided (2049) is not a power of two.". 
+PASS   Setting fftSize to 4096 did not throw an exception. 
+PASS   Setting fftSize to 4097 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The value provided (4097) is not a power of two.". 
+PASS   Setting fftSize to 8192 did not throw an exception. 
+PASS   Setting fftSize to 8193 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The value provided (8193) is not a power of two.". 
+PASS   Setting fftSize to 16384 did not throw an exception. 
+PASS   Setting fftSize to 16385 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The value provided (16385) is not a power of two.". 
+PASS   Setting fftSize to 32768 did not throw an exception. 
+PASS   Setting fftSize to 32769 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The FFT size provided (32769) is outside the range [32, 32768].". 
+PASS   Setting fftSize to 65536 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The FFT size provided (65536) is outside the range [32, 32768].". 
+PASS   Setting fftSize to 65537 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The FFT size provided (65537) is outside the range [32, 32768].". 
+PASS   Setting fftSize to 131072 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The FFT size provided (131072) is outside the range [32, 32768].". 
+PASS   Setting fftSize to 131073 threw IndexSizeError: "Failed to set the 'fftSize' property on 'AnalyserNode': The FFT size provided (131073) is outside the range [32, 32768].". 
+PASS < [FFT size test] All assertions passed. (total 37 assertions) 
+PASS # AUDIT TASK RUNNER FINISHED: 1 tasks ran successfully. 
+Harness: the test ran to completion.
+

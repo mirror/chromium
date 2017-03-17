@@ -1,0 +1,5 @@
+CONSOLE WARNING: line 26: <link rel=preload> must have a valid `as` value
+This is a testharness.js-based test.
+PASS Makes sure that preloaded resources trigger the onerror event 
+Harness: the test ran to completion.
+

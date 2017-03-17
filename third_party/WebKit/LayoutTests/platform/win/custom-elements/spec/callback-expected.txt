@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS upgrade should enqueue connectedCallback 
+PASS upgrade should enqueue attributeChangedCallback and connectedCallback 
+PASS setAttribute should enqueue attributeChangedCallback 
+PASS style.color should enqueue attributeChangedCallback for style attribute 
+PASS style.cssText should enqueue attributeChangedCallback for style attribute 
+PASS style.setProperty/removeProperty should enqueue attributeChangedCallback for style attribute 
+PASS style.cssFloat should enqueue attributeChangedCallback for style attribute 
+PASS lang property setter should enqueue attributeChangedCallback for lang attribute 
+PASS removeAttribute should enqueue attributeChangedCallback 
+PASS attributeChangedCallback should transmit namespaces 
+PASS remove should enqueue disconnectedCallback 
+Harness: the test ran to completion.
+

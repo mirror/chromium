@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS mouse pointerevent attributes 
+PASS PointerEvent Automation 
+PASS touch pointerevent attributes 
+PASS pen pointerevent attributes 
+Harness: the test ran to completion.
+

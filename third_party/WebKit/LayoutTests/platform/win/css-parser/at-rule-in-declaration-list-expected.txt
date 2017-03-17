@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Declarations allowed after semicolon-terminated at-rules in declaration list 
+PASS Declarations allowed after at-rules with an associated block in declaration list 
+PASS Error recovery looks for semicolon and not block end 
+Harness: the test ran to completion.
+

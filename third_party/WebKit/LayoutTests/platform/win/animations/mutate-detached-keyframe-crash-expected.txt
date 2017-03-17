@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Don't crash when mutating @keyframes rules that have been detached from the document. 
+Harness: the test ran to completion.
+

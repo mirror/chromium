@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS These tests should not fail. 
+PASS Inline violations target the right element. 
+PASS Correct targeting inside shadow tree (inline handler). 
+PASS Correct targeting inside shadow tree (style). 
+PASS Elements created in this document, but pushed into a same-origin frame trigger on that frame's document, not on this frame's document. 
+PASS Inline event handlers for disconnected elements target the document. 
+PASS Inline event handlers for elements disconnected after triggering target the document. 
+PASS Inline event handlers for elements in a DocumentFragment target the document. 
+Harness: the test ran to completion.
+

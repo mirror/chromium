@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that server-side image maps with zooms and transforms produce the right click coordinates. 
+Harness: the test ran to completion.
+

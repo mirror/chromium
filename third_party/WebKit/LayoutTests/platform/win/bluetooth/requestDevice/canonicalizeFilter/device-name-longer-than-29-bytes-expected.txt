@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS A device name between 29 and 248 bytes is valid. 
+Harness: the test ran to completion.
+

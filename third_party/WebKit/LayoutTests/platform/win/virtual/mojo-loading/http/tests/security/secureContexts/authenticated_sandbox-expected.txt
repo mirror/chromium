@@ -1,0 +1,6 @@
+CONSOLE ERROR: line 16: Content Security Policies delivered via a <meta> element may not contain the sandbox directive.
+This is a testharness.js-based test.
+PASS authenticated origin is secure. 
+PASS Frames inside sandboxed frames are secure 
+Harness: the test ran to completion.
+

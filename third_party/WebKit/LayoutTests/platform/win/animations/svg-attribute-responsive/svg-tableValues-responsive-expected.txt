@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS This test uses responsive-test.js. 
+PASS Animation on property <svg-tableValues> from neutral to [10, 20] with {"underlying":"50, 60"} changed to {"underlying":"50, 60, 80"} at (0.25) is [50, 60, 80] 
+PASS Animation on property <svg-tableValues> from neutral to [10, 20] with {"underlying":"50, 60"} changed to {"underlying":"50, 60, 80"} at (0.75) is [10, 20] 
+PASS Animation on property <svg-tableValues> from neutral to [10, 20] with {"underlying":"50, 60, 80"} changed to {"underlying":"50, 60"} at (0.25) is [40, 50] 
+PASS Animation on property <svg-tableValues> from neutral to [10, 20] with {"underlying":"50, 60, 80"} changed to {"underlying":"50, 60"} at (0.75) is [20, 30] 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS disconnect() and connect() called during a readValue call that succeeds. Reject with NetworkError. 
+Harness: the test ran to completion.
+

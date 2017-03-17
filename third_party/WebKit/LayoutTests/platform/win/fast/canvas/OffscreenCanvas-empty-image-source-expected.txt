@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS CreatePattern using OffcreenCanvas as image source silently fails when offscreenCanvas has zero size 
+Harness: the test ran to completion.
+

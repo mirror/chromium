@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that the optional comment area under the "WEBVTT" file header is properly ignored.  Also, default settings and styling are currently ignored (treated as faulty cues). 
+Harness: the test ran to completion.
+

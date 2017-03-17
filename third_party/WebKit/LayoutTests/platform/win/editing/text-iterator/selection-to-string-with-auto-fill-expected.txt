@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS select input inner whole 
+PASS select textarea inner whole 
+PASS select input inner 
+PASS select textarea inner 
+PASS select input outer 
+PASS select textarea outer 
+Harness: the test ran to completion.
+

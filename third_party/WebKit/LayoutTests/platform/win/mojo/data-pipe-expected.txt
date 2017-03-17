@@ -1,0 +1,12 @@
+This is a testharness.js-based test.
+PASS Create data pipe 
+PASS Write data 
+PASS Write data all or none 
+PASS Query data 
+PASS Discard data 
+PASS Discard data all or none 
+PASS Read data 
+PASS Read data all or none 
+PASS Peek data 
+Harness: the test ran to completion.
+

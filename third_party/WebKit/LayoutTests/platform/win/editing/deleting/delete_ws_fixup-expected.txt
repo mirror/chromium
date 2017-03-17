@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Delete a character also removes redundant whitespaces 
+PASS Delete characters and fix up whitespaces 
+PASS Delete characters and convert SPACEs to NBSP 
+PASS Delete characters and convert NBSP+SPACEs to NBSPs+SPACE 
+Harness: the test ran to completion.
+

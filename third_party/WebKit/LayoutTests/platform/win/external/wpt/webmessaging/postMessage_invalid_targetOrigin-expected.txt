@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test Description: If the value of the targetOrigin argument is neither a single U+002A ASTERISK character (*), a single U+002F SOLIDUS character (/), nor an absolute URL, then throw a SyntaxError exception and abort the overall set of steps. 
+Harness: the test ran to completion.
+

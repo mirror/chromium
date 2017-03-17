@@ -1,0 +1,35 @@
+CONSOLE WARNING: line 18: Clamping calculated video bitrate (1000bps) to the minimum (100000bps)
+CONSOLE WARNING: line 18: Clamping calculated video bitrate (0bps) to the minimum (100000bps)
+CONSOLE WARNING: line 18: Clamping calculated audio bitrate (1000bps) to the minimum (6000bps)
+CONSOLE WARNING: line 18: Clamping calculated audio bitrate (1000000000bps) to the maximum (128000bps)
+CONSOLE WARNING: line 18: Clamping calculated audio bitrate (0bps) to the minimum (6000bps)
+CONSOLE WARNING: line 18: Clamping calculated audio bitrate (1000000bps) to the maximum (128000bps)
+CONSOLE WARNING: line 18: Clamping calculated video bitrate (89100bps) to the minimum (100000bps)
+CONSOLE WARNING: line 18: Clamping calculated audio bitrate (100bps) to the minimum (6000bps)
+CONSOLE WARNING: line 18: Clamping calculated video bitrate (-5000bps) to the minimum (100000bps)
+CONSOLE WARNING: line 18: Clamping calculated audio bitrate (0bps) to the minimum (6000bps)
+CONSOLE WARNING: line 18: Clamping calculated video bitrate (-6000bps) to the minimum (100000bps)
+CONSOLE WARNING: line 18: Clamping calculated audio bitrate (0bps) to the minimum (6000bps)
+CONSOLE WARNING: line 18: Clamping calculated video bitrate (-6000bps) to the minimum (100000bps)
+CONSOLE WARNING: line 18: Clamping calculated audio bitrate (214748364bps) to the maximum (128000bps)
+This is a testharness.js-based test.
+PASS Video bitrate OK 
+PASS Video bitrate clamped to minimum 
+PASS Video bitrate explicitly set to 0 is clamped 
+PASS Audio bitrate OK 
+PASS Audio bitrate clamped to minimum 
+PASS Audio bitrate clamped to maximum 
+PASS Audio bitrate explicitly 0 is clamped 
+PASS Unspecified bitrates are not clamped 
+PASS Video and audio bitrates OK 
+PASS Overall bitrate OK (divided 90/10 video/audio) 
+PASS Overall bitrate OK, w/ explicit video bitrate ignored 
+PASS Overall bitrate OK, w/ explicit audio bitrate ignored 
+PASS Overall bitrate leads to audio clamped to its maximum 
+PASS Overall bitrate leads to video clamped to its minimum 
+PASS Overall bitrate leads to both audio and video clamped to min 
+PASS Overall bitrate 0 overrides specified video bitrate 
+PASS Overall bitrate 0 overrides specified audio bitrate 
+PASS Overall bitrate too large is clamped 
+Harness: the test ran to completion.
+

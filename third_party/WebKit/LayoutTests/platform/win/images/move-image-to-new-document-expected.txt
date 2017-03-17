@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Test that when images are moved to a new document, a new load fires., img 
+PASS Test that when images are moved to a new document, a new load fires., input 
+PASS Test that when images are moved to a new document, a new load fires., object 
+PASS Test that when images are moved to a new document, a new load fires., embed 
+Harness: the test ran to completion.
+

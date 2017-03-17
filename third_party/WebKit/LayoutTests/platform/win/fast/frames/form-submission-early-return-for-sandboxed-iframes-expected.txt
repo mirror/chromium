@@ -1,0 +1,5 @@
+CONSOLE ERROR: line 10: Blocked form submission to '' because the form's frame is sandboxed and the 'allow-forms' permission is not set.
+This is a testharness.js-based test.
+PASS Tests early return of sandboxed form without the need to check for validity. 
+Harness: the test ran to completion.
+

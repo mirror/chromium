@@ -1,0 +1,22 @@
+This is a testharness.js-based test.
+PASS This test uses interpolation-test.js. 
+PASS CSS Transitions: property <width> from [1em] to [10vw] at (-0.3) is [0px] 
+PASS CSS Transitions: property <width> from [1em] to [10vw] at (0) is [16px] 
+PASS CSS Transitions: property <width> from [1em] to [10vw] at (0.3) is [35.1875px] 
+PASS CSS Transitions: property <width> from [1em] to [10vw] at (0.6) is [54.3906px] 
+PASS CSS Transitions: property <width> from [1em] to [10vw] at (1) is [80px] 
+PASS CSS Transitions: property <width> from [1em] to [10vw] at (1.5) is [112px] 
+PASS CSS Animations: property <width> from [1em] to [10vw] at (-0.3) is [0px] 
+PASS CSS Animations: property <width> from [1em] to [10vw] at (0) is [16px] 
+PASS CSS Animations: property <width> from [1em] to [10vw] at (0.3) is [35.1875px] 
+PASS CSS Animations: property <width> from [1em] to [10vw] at (0.6) is [54.3906px] 
+PASS CSS Animations: property <width> from [1em] to [10vw] at (1) is [80px] 
+PASS CSS Animations: property <width> from [1em] to [10vw] at (1.5) is [112px] 
+PASS Web Animations: property <width> from [1em] to [10vw] at (-0.3) is [0px] 
+PASS Web Animations: property <width> from [1em] to [10vw] at (0) is [16px] 
+PASS Web Animations: property <width> from [1em] to [10vw] at (0.3) is [35.1875px] 
+PASS Web Animations: property <width> from [1em] to [10vw] at (0.6) is [54.3906px] 
+PASS Web Animations: property <width> from [1em] to [10vw] at (1) is [80px] 
+PASS Web Animations: property <width> from [1em] to [10vw] at (1.5) is [112px] 
+Harness: the test ran to completion.
+

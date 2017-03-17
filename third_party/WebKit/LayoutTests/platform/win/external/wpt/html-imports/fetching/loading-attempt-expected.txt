@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS The loading attempt must be considered successful if IMPORT is not null on the algorithm completion, and failed otherwise. (1) 
+PASS The loading attempt must be considered successful if IMPORT is not null on the algorithm completion, and failed otherwise. (2) 
+PASS The loading attempt must be considered successful if IMPORT is not null on the algorithm completion, and failed otherwise. (3) 
+PASS Every import that is not marked as async delays the load event in the Document. 
+Harness: the test ran to completion.
+

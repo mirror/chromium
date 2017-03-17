@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS exnted forward line should not crash with OBJECT element 
+Harness: the test ran to completion.
+

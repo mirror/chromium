@@ -1,0 +1,12 @@
+This is a testharness.js-based test.
+PASS These tests only work with scroll customization enabled. 
+PASS Overconsumed X 
+PASS Overconsumed Y 
+PASS Can't increase X delta 
+PASS Can't increase Y delta 
+PASS Overconsumed X with negative delta 
+PASS Overconsumed Y with negative delta 
+PASS Can't increase X delta magnitude 
+PASS Can't increase Y delta magnitude 
+Harness: the test ran to completion.
+

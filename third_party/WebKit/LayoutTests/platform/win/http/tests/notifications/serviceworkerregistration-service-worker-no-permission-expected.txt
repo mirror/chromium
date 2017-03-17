@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS showNotification() must reject if no Web Notification permission has been granted. 
+Harness: the test ran to completion.
+

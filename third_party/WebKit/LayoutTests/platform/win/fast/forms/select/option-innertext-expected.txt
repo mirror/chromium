@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS option.innerText should not return an empty string if it has non-empty text child. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that we don't crash when a media element that has text tracks is destructed. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test to ensure that canvas-to-canvas drawImage after a stroked rect works correctly. 
+Harness: the test ran to completion.
+

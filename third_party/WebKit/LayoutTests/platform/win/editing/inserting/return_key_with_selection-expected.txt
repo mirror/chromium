@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS insertParagraph until end of DIV 
+PASS insertParagraph until start of following DIV 
+PASS insertParagraph crossing end of DIV 
+PASS insertParagraph on fully selected line 
+Harness: the test ran to completion.
+

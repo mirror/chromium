@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS has SVGHrefBaseVal UseCounter 
+PASS has SVGHrefAnimVal UseCounter 
+Harness: the test ran to completion.
+

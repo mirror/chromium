@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBIndex.count() - returns the number of records that have keys with the key 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that the media player does not include authorization information. 
+Harness: the test ran to completion.
+

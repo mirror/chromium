@@ -1,0 +1,13 @@
+This is a testharness.js-based test.
+PASS # AUDIT TASK RUNNER STARTED. 
+PASS > [test]  
+PASS   Number of channels is equal to 2. 
+PASS   Decoded number of frames is equal to 42335. 
+PASS   SNR between actual expected channel 0 is greater than or equal to 109.56. 
+PASS   Decoded channel 0 equals [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0...] with an element-wise tolerance of {"absoluteThreshold":0.000040234,"relativeThreshold":0}. 
+PASS   SNR between actual expected channel 1 is greater than or equal to 109.56. 
+PASS   Decoded channel 1 equals [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0...] with an element-wise tolerance of {"absoluteThreshold":0.000040234,"relativeThreshold":0}. 
+PASS < [test] All assertions passed. (total 6 assertions) 
+PASS # AUDIT TASK RUNNER FINISHED: 1 tasks ran successfully. 
+Harness: the test ran to completion.
+

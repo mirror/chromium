@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS window.performance is defined 
+PASS window.performance.navigation is defined 
+PASS timing.redirectStart on an non-redirected navigation 
+PASS timing.redirectEnd on an non-redirected navigation 
+PASS navigation.redirectCount on an non-redirected navigation 
+Harness: the test ran to completion.
+

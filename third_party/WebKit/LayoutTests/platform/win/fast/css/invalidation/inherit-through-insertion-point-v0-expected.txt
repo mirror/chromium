@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Inheritance propagation should not cause full subtree recalcs in flat-tree. 
+Harness: the test ran to completion.
+

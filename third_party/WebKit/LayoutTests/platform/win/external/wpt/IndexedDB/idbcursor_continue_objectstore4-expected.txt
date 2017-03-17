@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBCursor.continue() - object store - attempt to iterate to the next record when the direction is set for the previous record  
+Harness: the test ran to completion.
+

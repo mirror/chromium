@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Mutation of Range after adding it to Selection should update Selection attributes. 
+PASS Mutation of Range after adding it to Selection should not focus on editable anchor. 
+PASS Switching Range document should clear registered Selection. 
+PASS Updating Range for another root should clear registered Selection. 
+Harness: the test ran to completion.
+

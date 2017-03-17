@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS outerHTML and string conversion: null. 
+PASS outerHTML and string conversion: undefined. 
+PASS outerHTML and string conversion: number. 
+PASS outerHTML and string conversion: toString. 
+PASS outerHTML and string conversion: valueOf. 
+Harness: the test ran to completion.
+

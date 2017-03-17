@@ -1,0 +1,13 @@
+CONSOLE ERROR: line 10: Ignored call to 'alert()'. The document is sandboxed, and the 'allow-modals' keyword is not set.
+CONSOLE ERROR: line 20: Ignored call to 'print()'. The document is sandboxed, and the 'allow-modals' keyword is not set.
+CONSOLE ERROR: line 25: Ignored call to 'confirm()'. The document is sandboxed, and the 'allow-modals' keyword is not set.
+CONSOLE ERROR: line 30: Ignored call to 'prompt()'. The document is sandboxed, and the 'allow-modals' keyword is not set.
+CONSOLE ERROR: Ignored call to 'print()'. The document is sandboxed, and the 'allow-modals' keyword is not set.
+This is a testharness.js-based test.
+PASS alert() returns synchronously in a sandboxed page without blocking on user input. 
+PASS print() returns synchronously in a sandboxed page without blocking on user input. 
+PASS execCommand('print', ...) returns synchronously in a sandboxed page without blocking on user input. 
+PASS confirm() returns 'false' synchronously in a sandboxed page without blocking on user input. 
+PASS prompt() returns 'null' synchronously in a sandboxed page without blocking on user input. 
+Harness: the test ran to completion.
+

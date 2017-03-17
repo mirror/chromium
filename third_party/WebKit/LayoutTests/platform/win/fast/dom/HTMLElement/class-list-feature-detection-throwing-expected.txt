@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Make sure that classList throws when supports() is called 
+Harness: the test ran to completion.
+

@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Testing ContextMenu key should reveal focused input. 
+PASS Testing ContextMenu key should reveal focused anchor. 
+Harness: the test ran to completion.
+

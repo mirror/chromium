@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Test that TreeWalker.parent() doesn't set the currentNode to a node not under the root. 
+PASS Test that we handle setting the currentNode to arbitrary nodes not under the root element. 
+PASS Test how we handle the case when the traversed to node is within the root, but the currentElement is not. 
+Harness: the test ran to completion.
+

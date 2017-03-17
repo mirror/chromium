@@ -1,0 +1,15 @@
+This is a testharness.js-based test.
+PASS context = new AudioContext() did not throw an exception. 
+PASS default baseLatency is greater than 0. 
+PASS context = new AudioContext({'latencyHint': 0.05}) did not throw an exception. 
+PASS double-constructor baseLatency is equal to 0.005804988662131519. 
+PASS context = new AudioContext({'latencyHint': 'interactive'}) did not throw an exception. 
+PASS interactive baseLatency is equal to 0.005804988662131519. 
+PASS context = new AudioContext({'latencyHint': 'balanced'}) did not throw an exception. 
+PASS balanced baseLatency (0.005804988662131519) is greater than or equal to 0.005804988662131519. 
+PASS context = new AudioContext({'latencyHint': 'playback'}) did not throw an exception. 
+PASS playback baseLatency (0.005804988662131519) is greater than or equal to 0.005804988662131519. 
+PASS context = new AudioContext({'latencyHint': 'foo'}) threw TypeError: Failed to construct 'AudioContext': The provided value 'foo' is not a valid enum value of type AudioContextLatencyCategory.. 
+PASS context = new AudioContext('latencyHint') threw TypeError: Failed to construct 'AudioContext': parameter 1 ('contextOptions') is not an object.. 
+Harness: the test ran to completion.
+

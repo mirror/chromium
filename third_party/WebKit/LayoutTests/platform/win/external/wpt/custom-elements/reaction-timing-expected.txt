@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS setAttribute and removeAttribute must enqueue and invoke attributeChangedCallback 
+PASS Calling Node.prototype.cloneNode(false) must push a new element queue to the processing stack 
+Harness: the test ran to completion.
+

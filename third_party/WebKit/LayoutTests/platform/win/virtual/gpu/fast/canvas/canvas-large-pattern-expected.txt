@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests createPattern using a source image that is a canvas 40k pixels wide. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBDatabase.createObjectStore() - returns an instance of IDBObjectStore 
+Harness: the test ran to completion.
+

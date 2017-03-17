@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Showing a notification with an image that has a redirect loop still succeeds. 
+Harness: the test ran to completion.
+

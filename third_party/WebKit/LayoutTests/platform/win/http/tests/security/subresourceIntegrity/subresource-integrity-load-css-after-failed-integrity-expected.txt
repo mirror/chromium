@@ -1,0 +1,5 @@
+CONSOLE ERROR: Failed to find a valid digest in the 'integrity' attribute for resource 'http://127.0.0.1:8000/security/subresourceIntegrity/resources/mark-result-red.css' with computed SHA-256 integrity 'FBhipJ4G7K7QRp/i6D0HQUEKdtKzcEXlfnLtJM/SoCs='. The resource has been blocked.
+This is a testharness.js-based test.
+PASS Link element should still load another CSS after SRI check failed. 
+Harness: the test ran to completion.
+

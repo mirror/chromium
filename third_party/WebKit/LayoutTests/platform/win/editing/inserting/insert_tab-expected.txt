@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Insert a tab character before text 
+PASS Insert a tab character after text 
+PASS Insert a tab character in text 
+PASS Insert BR and a tab character before text 
+Harness: the test ran to completion.
+

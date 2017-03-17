@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Do not preload for document.write for long scripts or scripts that contain non-determinism 
+Harness: the test ran to completion.
+

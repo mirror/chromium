@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS showNotification() must reject If options's silent is true, and options's vibrate is presenteded. 
+Harness: the test ran to completion.
+

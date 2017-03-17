@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS SVGStyleElement implements LinkStyle 
+PASS document.styleSheets contains style.sheet 
+PASS sheet has correct ownerNode #1 
+PASS sheet has correct ownerNode #2 
+Harness: the test ran to completion.
+

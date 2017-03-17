@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Mark misspelled word "wellcome". 
+PASS Spelling marker on "wellcome" stores replacement text "welcome". 
+Harness: the test ran to completion.
+

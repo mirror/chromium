@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Read from a blob as a binary string 
+PASS Read from a blob as a text 
+PASS Read from a blob as a data URL 
+Harness: the test ran to completion.
+

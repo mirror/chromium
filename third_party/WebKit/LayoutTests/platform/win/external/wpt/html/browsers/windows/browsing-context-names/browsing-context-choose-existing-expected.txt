@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS The browsing context must be chosen if the given name is same as its name 
+Harness: the test ran to completion.
+

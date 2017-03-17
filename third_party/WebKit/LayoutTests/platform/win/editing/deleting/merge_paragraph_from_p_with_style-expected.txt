@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS 1 deleting line break before P with style 
+PASS 2-1 deleting line break before P+I+style 
+PASS 2-2 deleting line break before P+I 
+PASS 3 deleting line break before P+FONT+style 
+Harness: the test ran to completion.
+

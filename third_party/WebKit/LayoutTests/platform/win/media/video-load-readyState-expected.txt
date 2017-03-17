@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test media element readystate value on load. 
+Harness: the test ran to completion.
+

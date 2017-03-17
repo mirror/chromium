@@ -1,0 +1,28 @@
+This is a testharness.js-based test.
+PASS This test uses interpolation-test.js. 
+PASS Web Animations: Interpolate attribute <transform> with underlying [skewX(10)] from add [translate(10 20)] to add [rotate(30 40 50)] at (-0.4) is [skewX(10) translate(10 20)] 
+PASS Web Animations: Interpolate attribute <transform> with underlying [skewX(10)] from add [translate(10 20)] to add [rotate(30 40 50)] at (0) is [skewX(10) translate(10 20)] 
+PASS Web Animations: Interpolate attribute <transform> with underlying [skewX(10)] from add [translate(10 20)] to add [rotate(30 40 50)] at (0.2) is [skewX(10) translate(10 20)] 
+PASS Web Animations: Interpolate attribute <transform> with underlying [skewX(10)] from add [translate(10 20)] to add [rotate(30 40 50)] at (0.6) is [skewX(10) rotate(30 40 50)] 
+PASS Web Animations: Interpolate attribute <transform> with underlying [skewX(10)] from add [translate(10 20)] to add [rotate(30 40 50)] at (1) is [skewX(10) rotate(30 40 50)] 
+PASS Web Animations: Interpolate attribute <transform> with underlying [skewX(10)] from add [translate(10 20)] to add [rotate(30 40 50)] at (1.4) is [skewX(10) rotate(30 40 50)] 
+PASS Web Animations: Interpolate attribute <transform> with underlying [translate(5 5)] from add [translate(5 15)] to add [rotate(30 40 50)] at (-0.4) is [translate(5 5) translate(5 15)] 
+PASS Web Animations: Interpolate attribute <transform> with underlying [translate(5 5)] from add [translate(5 15)] to add [rotate(30 40 50)] at (0) is [translate(5 5) translate(5 15)] 
+PASS Web Animations: Interpolate attribute <transform> with underlying [translate(5 5)] from add [translate(5 15)] to add [rotate(30 40 50)] at (0.2) is [translate(5 5) translate(5 15)] 
+PASS Web Animations: Interpolate attribute <transform> with underlying [translate(5 5)] from add [translate(5 15)] to add [rotate(30 40 50)] at (0.6) is [translate(5 5) rotate(30 40 50)] 
+PASS Web Animations: Interpolate attribute <transform> with underlying [translate(5 5)] from add [translate(5 15)] to add [rotate(30 40 50)] at (1) is [translate(5 5) rotate(30 40 50)] 
+PASS Web Animations: Interpolate attribute <transform> with underlying [translate(5 5)] from add [translate(5 15)] to add [rotate(30 40 50)] at (1.4) is [translate(5 5) rotate(30 40 50)] 
+PASS Web Animations: Interpolate attribute <transform> with underlying [skewY(5)] from add [skewX(10)] to add [skewY(15)] at (-0.4) is [skewY(5) skewX(10)] 
+PASS Web Animations: Interpolate attribute <transform> with underlying [skewY(5)] from add [skewX(10)] to add [skewY(15)] at (0) is [skewY(5) skewX(10)] 
+PASS Web Animations: Interpolate attribute <transform> with underlying [skewY(5)] from add [skewX(10)] to add [skewY(15)] at (0.2) is [skewY(5) skewX(10)] 
+PASS Web Animations: Interpolate attribute <transform> with underlying [skewY(5)] from add [skewX(10)] to add [skewY(15)] at (0.6) is [skewY(5) skewY(15)] 
+PASS Web Animations: Interpolate attribute <transform> with underlying [skewY(5)] from add [skewX(10)] to add [skewY(15)] at (1) is [skewY(5) skewY(15)] 
+PASS Web Animations: Interpolate attribute <transform> with underlying [skewY(5)] from add [skewX(10)] to add [skewY(15)] at (1.4) is [skewY(5) skewY(15)] 
+PASS Web Animations: Interpolate attribute <transform> with underlying [translate(5 5)] from neutral to add [skewY(20)] at (-0.4) is [translate(5 5)] 
+PASS Web Animations: Interpolate attribute <transform> with underlying [translate(5 5)] from neutral to add [skewY(20)] at (0) is [translate(5 5)] 
+PASS Web Animations: Interpolate attribute <transform> with underlying [translate(5 5)] from neutral to add [skewY(20)] at (0.2) is [translate(5 5)] 
+PASS Web Animations: Interpolate attribute <transform> with underlying [translate(5 5)] from neutral to add [skewY(20)] at (0.6) is [translate(5 5) skewY(20)] 
+PASS Web Animations: Interpolate attribute <transform> with underlying [translate(5 5)] from neutral to add [skewY(20)] at (1) is [translate(5 5) skewY(20)] 
+PASS Web Animations: Interpolate attribute <transform> with underlying [translate(5 5)] from neutral to add [skewY(20)] at (1.4) is [translate(5 5) skewY(20)] 
+Harness: the test ran to completion.
+

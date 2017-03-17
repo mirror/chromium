@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Inline style applies when animation completes 
+Harness: the test ran to completion.
+

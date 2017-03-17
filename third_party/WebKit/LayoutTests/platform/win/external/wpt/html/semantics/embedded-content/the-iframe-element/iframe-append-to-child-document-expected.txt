@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Append iframe element to its own child document 
+Harness: the test ran to completion.
+

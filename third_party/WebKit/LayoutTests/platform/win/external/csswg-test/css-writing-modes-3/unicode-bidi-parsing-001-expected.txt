@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Initial value of unicode-bidi 
+PASS unicode-bidi: embed; unicode-bidi: normal 
+PASS unicode-bidi: embed 
+PASS unicode-bidi: bidi-override 
+PASS unicode-bidi should not inherit 
+Harness: the test ran to completion.
+

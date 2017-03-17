@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Navigator interface: operation share(ShareData) 
+PASS Navigator must be primary interface of navigator 
+PASS Stringification of navigator 
+PASS Navigator interface: navigator must inherit property "share" with the proper type (0) 
+PASS Navigator interface: calling share(ShareData) on navigator with too few arguments must throw TypeError 
+Harness: the test ran to completion.
+

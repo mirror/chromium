@@ -1,0 +1,15 @@
+This is a testharness.js-based test.
+PASS Check initial computed styles 
+PASS Insert element before first child. 
+PASS Remove first child. 
+PASS Insert element before after last child. 
+PASS Remove last child. 
+PASS Insert element before only child. 
+PASS Remove element before only child. 
+PASS Insert element after only child. 
+PASS Remove element after only child. 
+PASS No first-child mutation. 
+PASS No last-child mutation. 
+PASS Inserting sibling before text-node should not update for :first-child if text-node has element predecessor. 
+Harness: the test ran to completion.
+

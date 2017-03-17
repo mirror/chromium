@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Form control elements inside templates should not be associated with forms outside the template. 
+PASS (Nested) form elements inside templates should be parsed correctly. 
+Harness: the test ran to completion.
+

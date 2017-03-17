@@ -1,0 +1,16 @@
+This is a testharness.js-based test.
+PASS This test uses responsive-test.js. 
+PASS Animation on property <svg-d> from [m 10 10 h 100] to neutral with {"underlying":"M 30 30 H 250"} changed to {"underlying":"m 30 30 h 200"} at (0.25) is [m 15 15 h 125] 
+PASS Animation on property <svg-d> from [m 10 10 h 100] to neutral with {"underlying":"M 30 30 H 250"} changed to {"underlying":"m 30 30 h 200"} at (0.75) is [m 25 25 h 175] 
+PASS Animation on property <svg-d> from [m 10 10 h 100] to neutral with {"underlying":"M 30 30 H 250"} changed to {"underlying":"M 30 30 L 100 100"} at (0.25) is [m 10 10 h 100] 
+PASS Animation on property <svg-d> from [m 10 10 h 100] to neutral with {"underlying":"M 30 30 H 250"} changed to {"underlying":"M 30 30 L 100 100"} at (0.75) is [M 30 30 L 100 100] 
+PASS Animation on property <svg-d> from [m 10 10 h 100] to neutral with {"underlying":"m 30 30 h 200"} changed to {"underlying":"M 30 30 H 250"} at (0.25) is [M 15 15 H 145] 
+PASS Animation on property <svg-d> from [m 10 10 h 100] to neutral with {"underlying":"m 30 30 h 200"} changed to {"underlying":"M 30 30 H 250"} at (0.75) is [M 25 25 H 215] 
+PASS Animation on property <svg-d> from [m 10 10 h 100] to neutral with {"underlying":"m 30 30 h 200"} changed to {"underlying":"M 30 30 L 100 100"} at (0.25) is [m 10 10 h 100] 
+PASS Animation on property <svg-d> from [m 10 10 h 100] to neutral with {"underlying":"m 30 30 h 200"} changed to {"underlying":"M 30 30 L 100 100"} at (0.75) is [M 30 30 L 100 100] 
+PASS Animation on property <svg-d> from [m 10 10 h 100] to neutral with {"underlying":"M 30 30 L 100 100"} changed to {"underlying":"M 30 30 H 250"} at (0.25) is [M 15 15 H 145] 
+PASS Animation on property <svg-d> from [m 10 10 h 100] to neutral with {"underlying":"M 30 30 L 100 100"} changed to {"underlying":"M 30 30 H 250"} at (0.75) is [M 25 25 H 215] 
+PASS Animation on property <svg-d> from [m 10 10 h 100] to neutral with {"underlying":"M 30 30 L 100 100"} changed to {"underlying":"m 30 30 h 200"} at (0.25) is [m 15 15 h 125] 
+PASS Animation on property <svg-d> from [m 10 10 h 100] to neutral with {"underlying":"M 30 30 L 100 100"} changed to {"underlying":"m 30 30 h 200"} at (0.75) is [m 25 25 h 175] 
+Harness: the test ran to completion.
+

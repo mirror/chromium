@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Don't crash when animating background with implicit longhand values and more than one bg-layer. 
+Harness: the test ran to completion.
+

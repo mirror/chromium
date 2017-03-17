@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS mouse Event sequence at implicit release on click 
+PASS PointerEvent Automation 
+PASS touch Event sequence at implicit release on click 
+PASS pen Event sequence at implicit release on click 
+Harness: the test ran to completion.
+

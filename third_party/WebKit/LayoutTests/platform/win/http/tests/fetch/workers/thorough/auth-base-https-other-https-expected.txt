@@ -1,0 +1,65 @@
+CONSOLE WARNING: line 14: Subresource requests whose URLs contain embedded credentials (e.g. `https://user:pass@host/`) are deprecated, and will be blocked in M59, around June 2017. See https://www.chromestatus.com/feature/5669008342777856 for more details.
+CONSOLE ERROR: line 368: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=same-origin&credentials=omit. Request mode is "same-origin" but the URL's origin is not same as the request origin https://127.0.0.1:8443.
+CONSOLE ERROR: line 368: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=same-origin&credentials=include. Request mode is "same-origin" but the URL's origin is not same as the request origin https://127.0.0.1:8443.
+CONSOLE ERROR: line 368: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=same-origin&credentials=same-origin. Request mode is "same-origin" but the URL's origin is not same as the request origin https://127.0.0.1:8443.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=omit. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://127.0.0.1:8443' is therefore not allowed access. The response had HTTP status code 401. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=include. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://127.0.0.1:8443' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=same-origin. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://127.0.0.1:8443' is therefore not allowed access. The response had HTTP status code 401. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=omit&ACAOrigin=http://www.example.com. The 'Access-Control-Allow-Origin' header has a value 'http://www.example.com' that is not equal to the supplied origin. Origin 'https://127.0.0.1:8443' is therefore not allowed access. Have the server send the header with a valid value, or, if an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=include&ACAOrigin=*. The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'. Origin 'https://127.0.0.1:8443' is therefore not allowed access.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=include&ACAOrigin=https://127.0.0.1:8443. The value of the 'Access-Control-Allow-Credentials' header in the response is '' which must be 'true' when the request's credentials mode is 'include'. Origin 'https://127.0.0.1:8443' is therefore not allowed access.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=include&ACAOrigin=http://www.example.com. The 'Access-Control-Allow-Origin' header has a value 'http://www.example.com' that is not equal to the supplied origin. Origin 'https://127.0.0.1:8443' is therefore not allowed access. Have the server send the header with a valid value, or, if an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=include&ACAOrigin=*&ACACredentials=true. The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'. Origin 'https://127.0.0.1:8443' is therefore not allowed access.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=include&ACAOrigin=http://www.example.com&ACACredentials=true. The 'Access-Control-Allow-Origin' header has a value 'http://www.example.com' that is not equal to the supplied origin. Origin 'https://127.0.0.1:8443' is therefore not allowed access. Have the server send the header with a valid value, or, if an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=include&ACAOrigin=https://127.0.0.1:8443&ACACredentials=True. The value of the 'Access-Control-Allow-Credentials' header in the response is 'True' which must be 'true' when the request's credentials mode is 'include'. Origin 'https://127.0.0.1:8443' is therefore not allowed access.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=same-origin&ACAOrigin=http://www.example.com. The 'Access-Control-Allow-Origin' header has a value 'http://www.example.com' that is not equal to the supplied origin. Origin 'https://127.0.0.1:8443' is therefore not allowed access. Have the server send the header with a valid value, or, if an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?PAuth&mode=cors&credentials=omit&ACAOrigin=*&PACAOrigin=*&method=PUT&PACAMethods=PUT&PreflightTest=200. Response for preflight has invalid HTTP status code 401
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?PAuth&mode=cors&credentials=same-origin&ACAOrigin=*&pACAOrigin=*&method=PUT&PACAMethods=PUT&PreflightTest=200. Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://127.0.0.1:8443' is therefore not allowed access. The response had HTTP status code 401. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?PAuth&mode=cors&credentials=include&ACAOrigin=https://127.0.0.1:8443&PACAOrigin=https://127.0.0.1:8443&ACACredentials=true&PACACredentials=true&method=PUT&PACAMethods=PUT&PreflightTest=200. Response for preflight has invalid HTTP status code 401
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=include&ACAOrigin=https://127.0.0.1:8443&ACACredentials=true&PACACredentials=true&method=PUT&PACAMethods=PUT&PreflightTest=200. Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://127.0.0.1:8443' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=include&PACAOrigin=https://127.0.0.1:8443&ACACredentials=true&PACACredentials=true&method=PUT&PACAMethods=PUT&PreflightTest=200. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://127.0.0.1:8443' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=include&ACAOrigin=*&PACAOrigin=https://127.0.0.1:8443&ACACredentials=true&PACACredentials=true&method=PUT&PACAMethods=PUT&PreflightTest=200. The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'. Origin 'https://127.0.0.1:8443' is therefore not allowed access.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=include&ACAOrigin=https://127.0.0.1:8443&PACAOrigin=*&ACACredentials=true&PACACredentials=true&method=PUT&PACAMethods=PUT&PreflightTest=200. Response to preflight request doesn't pass access control check: The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'. Origin 'https://127.0.0.1:8443' is therefore not allowed access.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=include&ACAOrigin=https://127.0.0.1:8443&PACAOrigin=https://127.0.0.1:8443&ACACredentials=true&method=PUT&PACAMethods=PUT&PreflightTest=200. Response to preflight request doesn't pass access control check: The value of the 'Access-Control-Allow-Credentials' header in the response is '' which must be 'true' when the request's credentials mode is 'include'. Origin 'https://127.0.0.1:8443' is therefore not allowed access.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=include&ACAOrigin=https://127.0.0.1:8443&PACAOrigin=https://127.0.0.1:8443&PACACredentials=true&method=PUT&PACAMethods=PUT&PreflightTest=200. The value of the 'Access-Control-Allow-Credentials' header in the response is '' which must be 'true' when the request's credentials mode is 'include'. Origin 'https://127.0.0.1:8443' is therefore not allowed access.
+This is a testharness.js-based test.
+PASS Startup 
+PASS executeTest-0 
+PASS executeTest-1 
+PASS executeTest-2 
+PASS executeTest-3 
+PASS executeTest-4 
+PASS executeTest-5 
+PASS executeTest-6 
+PASS executeTest-7 
+PASS executeTest-8 
+PASS executeTest-9 
+PASS executeTest-10 
+PASS executeTest-11 
+PASS executeTest-12 
+PASS executeTest-13 
+PASS executeTest-14 
+PASS executeTest-15 
+PASS executeTest-16 
+PASS executeTest-17 
+PASS executeTest-18 
+PASS executeTest-19 
+PASS executeTest-20 
+PASS executeTest-21 
+PASS executeTest-22 
+PASS executeTest-23 
+PASS executeTest-24 
+PASS executeTest-25 
+PASS executeTest-26 
+PASS executeTest-27 
+PASS executeTest-28 
+PASS executeTest-29 
+PASS executeTest-30 
+PASS executeTest-31 
+PASS executeTest-32 
+PASS executeTest-33 
+PASS executeTest-34 
+PASS executeTest-35 
+PASS executeTest-36 
+Harness: the test ran to completion.
+

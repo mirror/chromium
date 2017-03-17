@@ -1,0 +1,213 @@
+This is a testharness.js-based test.
+PASS # AUDIT TASK RUNNER STARTED. 
+PASS > [note-grain-on-play] Test noteGrainOn offset rendering 
+PASS   Found all grain starts and ends is true. 
+PASS   Number of start frames is equal to 100. 
+PASS   Number of end frames is equal to 100. 
+PASS   Pulse 0 boundary is identical to the array [0,953]. 
+PASS   Pulse 1 boundary is identical to the array [1174,2127]. 
+PASS   Pulse 2 boundary is identical to the array [2347,3300]. 
+PASS   Pulse 3 boundary is identical to the array [3521,4474]. 
+PASS   Pulse 4 boundary is identical to the array [4694,5647]. 
+PASS   Pulse 5 boundary is identical to the array [5868,6821]. 
+PASS   Pulse 6 boundary is identical to the array [7041,7994]. 
+PASS   Pulse 7 boundary is identical to the array [8215,9168]. 
+PASS   Pulse 8 boundary is identical to the array [9388,10341]. 
+PASS   Pulse 9 boundary is identical to the array [10562,11515]. 
+PASS   Pulse 10 boundary is identical to the array [11735,12688]. 
+PASS   Pulse 11 boundary is identical to the array [12909,13862]. 
+PASS   Pulse 12 boundary is identical to the array [14082,15035]. 
+PASS   Pulse 13 boundary is identical to the array [15256,16209]. 
+PASS   Pulse 14 boundary is identical to the array [16429,17382]. 
+PASS   Pulse 15 boundary is identical to the array [17603,18556]. 
+PASS   Pulse 16 boundary is identical to the array [18776,19729]. 
+PASS   Pulse 17 boundary is identical to the array [19950,20903]. 
+PASS   Pulse 18 boundary is identical to the array [21123,22076]. 
+PASS   Pulse 19 boundary is identical to the array [22297,23250]. 
+PASS   Pulse 20 boundary is identical to the array [23470,24423]. 
+PASS   Pulse 21 boundary is identical to the array [24644,25597]. 
+PASS   Pulse 22 boundary is identical to the array [25817,26770]. 
+PASS   Pulse 23 boundary is identical to the array [26991,27944]. 
+PASS   Pulse 24 boundary is identical to the array [28164,29117]. 
+PASS   Pulse 25 boundary is identical to the array [29338,30291]. 
+PASS   Pulse 26 boundary is identical to the array [30511,31464]. 
+PASS   Pulse 27 boundary is identical to the array [31685,32638]. 
+PASS   Pulse 28 boundary is identical to the array [32858,33811]. 
+PASS   Pulse 29 boundary is identical to the array [34032,34985]. 
+PASS   Pulse 30 boundary is identical to the array [35205,36158]. 
+PASS   Pulse 31 boundary is identical to the array [36379,37332]. 
+PASS   Pulse 32 boundary is identical to the array [37552,38505]. 
+PASS   Pulse 33 boundary is identical to the array [38726,39679]. 
+PASS   Pulse 34 boundary is identical to the array [39899,40852]. 
+PASS   Pulse 35 boundary is identical to the array [41073,42026]. 
+PASS   Pulse 36 boundary is identical to the array [42246,43199]. 
+PASS   Pulse 37 boundary is identical to the array [43420,44373]. 
+PASS   Pulse 38 boundary is identical to the array [44593,45546]. 
+PASS   Pulse 39 boundary is identical to the array [45767,46720]. 
+PASS   Pulse 40 boundary is identical to the array [46940,47893]. 
+PASS   Pulse 41 boundary is identical to the array [48114,49067]. 
+PASS   Pulse 42 boundary is identical to the array [49287,50240]. 
+PASS   Pulse 43 boundary is identical to the array [50461,51414]. 
+PASS   Pulse 44 boundary is identical to the array [51634,52587]. 
+PASS   Pulse 45 boundary is identical to the array [52808,53761]. 
+PASS   Pulse 46 boundary is identical to the array [53981,54934]. 
+PASS   Pulse 47 boundary is identical to the array [55155,56108]. 
+PASS   Pulse 48 boundary is identical to the array [56328,57281]. 
+PASS   Pulse 49 boundary is identical to the array [57502,58455]. 
+PASS   Pulse 50 boundary is identical to the array [58675,59628]. 
+PASS   Pulse 51 boundary is identical to the array [59849,60802]. 
+PASS   Pulse 52 boundary is identical to the array [61022,61975]. 
+PASS   Pulse 53 boundary is identical to the array [62196,63149]. 
+PASS   Pulse 54 boundary is identical to the array [63369,64322]. 
+PASS   Pulse 55 boundary is identical to the array [64543,65496]. 
+PASS   Pulse 56 boundary is identical to the array [65716,66669]. 
+PASS   Pulse 57 boundary is identical to the array [66890,67843]. 
+PASS   Pulse 58 boundary is identical to the array [68063,69016]. 
+PASS   Pulse 59 boundary is identical to the array [69237,70190]. 
+PASS   Pulse 60 boundary is identical to the array [70410,71363]. 
+PASS   Pulse 61 boundary is identical to the array [71584,72537]. 
+PASS   Pulse 62 boundary is identical to the array [72757,73710]. 
+PASS   Pulse 63 boundary is identical to the array [73931,74884]. 
+PASS   Pulse 64 boundary is identical to the array [75104,76057]. 
+PASS   Pulse 65 boundary is identical to the array [76278,77231]. 
+PASS   Pulse 66 boundary is identical to the array [77451,78404]. 
+PASS   Pulse 67 boundary is identical to the array [78625,79578]. 
+PASS   Pulse 68 boundary is identical to the array [79798,80751]. 
+PASS   Pulse 69 boundary is identical to the array [80972,81925]. 
+PASS   Pulse 70 boundary is identical to the array [82145,83098]. 
+PASS   Pulse 71 boundary is identical to the array [83319,84272]. 
+PASS   Pulse 72 boundary is identical to the array [84492,85445]. 
+PASS   Pulse 73 boundary is identical to the array [85666,86619]. 
+PASS   Pulse 74 boundary is identical to the array [86839,87792]. 
+PASS   Pulse 75 boundary is identical to the array [88013,88965]. 
+PASS   Pulse 76 boundary is identical to the array [89186,90139]. 
+PASS   Pulse 77 boundary is identical to the array [90360,91313]. 
+PASS   Pulse 78 boundary is identical to the array [91533,92486]. 
+PASS   Pulse 79 boundary is identical to the array [92707,93660]. 
+PASS   Pulse 80 boundary is identical to the array [93880,94833]. 
+PASS   Pulse 81 boundary is identical to the array [95054,96007]. 
+PASS   Pulse 82 boundary is identical to the array [96227,97180]. 
+PASS   Pulse 83 boundary is identical to the array [97401,98354]. 
+PASS   Pulse 84 boundary is identical to the array [98574,99527]. 
+PASS   Pulse 85 boundary is identical to the array [99748,100701]. 
+PASS   Pulse 86 boundary is identical to the array [100921,101874]. 
+PASS   Pulse 87 boundary is identical to the array [102095,103048]. 
+PASS   Pulse 88 boundary is identical to the array [103268,104221]. 
+PASS   Pulse 89 boundary is identical to the array [104442,105395]. 
+PASS   Pulse 90 boundary is identical to the array [105615,106568]. 
+PASS   Pulse 91 boundary is identical to the array [106789,107742]. 
+PASS   Pulse 92 boundary is identical to the array [107962,108915]. 
+PASS   Pulse 93 boundary is identical to the array [109136,110089]. 
+PASS   Pulse 94 boundary is identical to the array [110309,111262]. 
+PASS   Pulse 95 boundary is identical to the array [111483,112436]. 
+PASS   Pulse 96 boundary is identical to the array [112656,113609]. 
+PASS   Pulse 97 boundary is identical to the array [113830,114783]. 
+PASS   Pulse 98 boundary is identical to the array [115003,115956]. 
+PASS   Pulse 99 boundary is identical to the array [116177,117130]. 
+PASS   Number of grains that started at the correct time is equal to 100. 
+PASS   Number of grains that ended at the correct time is equal to 100. 
+PASS   Pulse 0 contained the expected data is true. 
+PASS   Pulse 1 contained the expected data is true. 
+PASS   Pulse 2 contained the expected data is true. 
+PASS   Pulse 3 contained the expected data is true. 
+PASS   Pulse 4 contained the expected data is true. 
+PASS   Pulse 5 contained the expected data is true. 
+PASS   Pulse 6 contained the expected data is true. 
+PASS   Pulse 7 contained the expected data is true. 
+PASS   Pulse 8 contained the expected data is true. 
+PASS   Pulse 9 contained the expected data is true. 
+PASS   Pulse 10 contained the expected data is true. 
+PASS   Pulse 11 contained the expected data is true. 
+PASS   Pulse 12 contained the expected data is true. 
+PASS   Pulse 13 contained the expected data is true. 
+PASS   Pulse 14 contained the expected data is true. 
+PASS   Pulse 15 contained the expected data is true. 
+PASS   Pulse 16 contained the expected data is true. 
+PASS   Pulse 17 contained the expected data is true. 
+PASS   Pulse 18 contained the expected data is true. 
+PASS   Pulse 19 contained the expected data is true. 
+PASS   Pulse 20 contained the expected data is true. 
+PASS   Pulse 21 contained the expected data is true. 
+PASS   Pulse 22 contained the expected data is true. 
+PASS   Pulse 23 contained the expected data is true. 
+PASS   Pulse 24 contained the expected data is true. 
+PASS   Pulse 25 contained the expected data is true. 
+PASS   Pulse 26 contained the expected data is true. 
+PASS   Pulse 27 contained the expected data is true. 
+PASS   Pulse 28 contained the expected data is true. 
+PASS   Pulse 29 contained the expected data is true. 
+PASS   Pulse 30 contained the expected data is true. 
+PASS   Pulse 31 contained the expected data is true. 
+PASS   Pulse 32 contained the expected data is true. 
+PASS   Pulse 33 contained the expected data is true. 
+PASS   Pulse 34 contained the expected data is true. 
+PASS   Pulse 35 contained the expected data is true. 
+PASS   Pulse 36 contained the expected data is true. 
+PASS   Pulse 37 contained the expected data is true. 
+PASS   Pulse 38 contained the expected data is true. 
+PASS   Pulse 39 contained the expected data is true. 
+PASS   Pulse 40 contained the expected data is true. 
+PASS   Pulse 41 contained the expected data is true. 
+PASS   Pulse 42 contained the expected data is true. 
+PASS   Pulse 43 contained the expected data is true. 
+PASS   Pulse 44 contained the expected data is true. 
+PASS   Pulse 45 contained the expected data is true. 
+PASS   Pulse 46 contained the expected data is true. 
+PASS   Pulse 47 contained the expected data is true. 
+PASS   Pulse 48 contained the expected data is true. 
+PASS   Pulse 49 contained the expected data is true. 
+PASS   Pulse 50 contained the expected data is true. 
+PASS   Pulse 51 contained the expected data is true. 
+PASS   Pulse 52 contained the expected data is true. 
+PASS   Pulse 53 contained the expected data is true. 
+PASS   Pulse 54 contained the expected data is true. 
+PASS   Pulse 55 contained the expected data is true. 
+PASS   Pulse 56 contained the expected data is true. 
+PASS   Pulse 57 contained the expected data is true. 
+PASS   Pulse 58 contained the expected data is true. 
+PASS   Pulse 59 contained the expected data is true. 
+PASS   Pulse 60 contained the expected data is true. 
+PASS   Pulse 61 contained the expected data is true. 
+PASS   Pulse 62 contained the expected data is true. 
+PASS   Pulse 63 contained the expected data is true. 
+PASS   Pulse 64 contained the expected data is true. 
+PASS   Pulse 65 contained the expected data is true. 
+PASS   Pulse 66 contained the expected data is true. 
+PASS   Pulse 67 contained the expected data is true. 
+PASS   Pulse 68 contained the expected data is true. 
+PASS   Pulse 69 contained the expected data is true. 
+PASS   Pulse 70 contained the expected data is true. 
+PASS   Pulse 71 contained the expected data is true. 
+PASS   Pulse 72 contained the expected data is true. 
+PASS   Pulse 73 contained the expected data is true. 
+PASS   Pulse 74 contained the expected data is true. 
+PASS   Pulse 75 contained the expected data is true. 
+PASS   Pulse 76 contained the expected data is true. 
+PASS   Pulse 77 contained the expected data is true. 
+PASS   Pulse 78 contained the expected data is true. 
+PASS   Pulse 79 contained the expected data is true. 
+PASS   Pulse 80 contained the expected data is true. 
+PASS   Pulse 81 contained the expected data is true. 
+PASS   Pulse 82 contained the expected data is true. 
+PASS   Pulse 83 contained the expected data is true. 
+PASS   Pulse 84 contained the expected data is true. 
+PASS   Pulse 85 contained the expected data is true. 
+PASS   Pulse 86 contained the expected data is true. 
+PASS   Pulse 87 contained the expected data is true. 
+PASS   Pulse 88 contained the expected data is true. 
+PASS   Pulse 89 contained the expected data is true. 
+PASS   Pulse 90 contained the expected data is true. 
+PASS   Pulse 91 contained the expected data is true. 
+PASS   Pulse 92 contained the expected data is true. 
+PASS   Pulse 93 contained the expected data is true. 
+PASS   Pulse 94 contained the expected data is true. 
+PASS   Pulse 95 contained the expected data is true. 
+PASS   Pulse 96 contained the expected data is true. 
+PASS   Pulse 97 contained the expected data is true. 
+PASS   Pulse 98 contained the expected data is true. 
+PASS   Pulse 99 contained the expected data is true. 
+PASS   Number of grains that did not contain the expected data is equal to 0. 
+PASS < [note-grain-on-play] All assertions passed. (total 206 assertions) 
+PASS # AUDIT TASK RUNNER FINISHED: 1 tasks ran successfully. 
+Harness: the test ran to completion.
+

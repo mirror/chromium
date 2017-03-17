@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that the callback is not garbage collected if registered. 
+Harness: the test ran to completion.
+

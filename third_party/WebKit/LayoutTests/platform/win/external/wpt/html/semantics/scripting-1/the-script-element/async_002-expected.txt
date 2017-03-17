@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Test 'async' attribute are reflected in the async property with setAttribute 
+PASS Test 'async' attribute are reflected in the async property with removeAttribute 
+Harness: the test ran to completion.
+

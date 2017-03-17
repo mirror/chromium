@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Hiding the cast overlay button 
+Harness: the test ran to completion.
+

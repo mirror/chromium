@@ -1,0 +1,13 @@
+This is a testharness.js-based test.
+PASS Typing in child without spellcheck attribute whose parent node does not have spellcheck attribute. 
+PASS Typing in child with spellcheck=true whose parent node does not have spellcheck attribute. 
+PASS Typing in child with spellcheck=false whose parent node does not have spellcheck attribute. 
+PASS Typing in child without spellcheck attribute whose parent node has spellcheck=true. 
+PASS Typing in child with spellcheck=true whose parent node has spellcheck=true. 
+PASS Typing in child with spellcheck=false whose parent node has spellcheck=true. 
+PASS Typing in child without spellcheck attribute whose parent node has spellcheck=false. 
+PASS Typing in child with spellcheck=true whose parent node has spellcheck=false. 
+PASS Typing in child with spellcheck=false whose parent node has spellcheck=false. 
+PASS Typing in spellchecked parent should not check child with spellcheck=false. 
+Harness: the test ran to completion.
+

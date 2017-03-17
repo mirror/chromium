@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Directly declared custom properties appear in computed style. 
+PASS Inherited custom properties appear in computed style. 
+PASS Inherited custom properties overidden values appear correctly in computed style. 
+PASS Overidden and inherited custom properties appear in computed style. 
+Harness: the test ran to completion.
+

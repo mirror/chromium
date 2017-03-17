@@ -1,0 +1,15 @@
+This is a testharness.js-based test.
+PASS text should support remove() 
+PASS remove() should work if text doesn't have a parent 
+PASS remove() should work if text does have a parent 
+PASS remove() should work if text does have a parent and siblings 
+PASS comment should support remove() 
+PASS remove() should work if comment doesn't have a parent 
+PASS remove() should work if comment does have a parent 
+PASS remove() should work if comment does have a parent and siblings 
+PASS PI should support remove() 
+PASS remove() should work if PI doesn't have a parent 
+PASS remove() should work if PI does have a parent 
+PASS remove() should work if PI does have a parent and siblings 
+Harness: the test ran to completion.
+

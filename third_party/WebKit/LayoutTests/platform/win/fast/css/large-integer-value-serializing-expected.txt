@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Verify that large CSS integer values do not serialize with scientific notation. 
+Harness: the test ran to completion.
+

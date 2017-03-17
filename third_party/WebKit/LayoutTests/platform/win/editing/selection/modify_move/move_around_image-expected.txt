@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Move forward sentence 
+PASS Move backward sentence 
+PASS Move forward word 
+PASS Move backward word 
+Harness: the test ran to completion.
+

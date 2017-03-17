@@ -1,0 +1,77 @@
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = 4 duplicate test names: "node.channelCount is equal to 2.", "node.channelCountMode is equal to "clamped-max".", "node.channelInterpretation is equal to "speakers".", "node instanceof PannerNode is equal to true."
+PASS context = new OfflineAudioContext(...) did not throw an exception. 
+PASS new PannerNode() threw TypeError: Failed to construct 'PannerNode': 1 argument required, but only 0 present.. 
+PASS new PannerNode(1) threw TypeError: Failed to construct 'PannerNode': parameter 1 is not of type 'BaseAudioContext'.. 
+PASS new PannerNode(context, 42) threw TypeError: Failed to construct 'PannerNode': parameter 2 ('options') is not an object.. 
+PASS Invalid constructors correctly threw errors. 
+PASS node = new PannerNode(context) did not throw an exception. 
+PASS node instanceof PannerNode is equal to true. 
+PASS node.panningModel is equal to "equalpower". 
+PASS node.positionX.value is equal to 0. 
+PASS node.positionY.value is equal to 0. 
+PASS node.positionZ.value is equal to 0. 
+PASS node.orientationX.value is equal to 1. 
+PASS node.orientationY.value is equal to 0. 
+PASS node.orientationZ.value is equal to 0. 
+PASS node.distanceModel is equal to "inverse". 
+PASS node.refDistance is equal to 1. 
+PASS node.maxDistance is equal to 10000. 
+PASS node.rolloffFactor is equal to 1. 
+PASS node.coneInnerAngle is equal to 360. 
+PASS node.coneOuterAngle is equal to 360. 
+PASS node.coneOuterGain is equal to 0. 
+PASS context.listener.positionX.value is equal to 0. 
+PASS context.listener.positionY.value is equal to 0. 
+PASS context.listener.positionZ.value is equal to 0. 
+PASS context.listener.forwardX.value is equal to 0. 
+PASS context.listener.forwardY.value is equal to 0. 
+PASS context.listener.forwardZ.value is equal to -1. 
+PASS context.listener.upX.value is equal to 0. 
+PASS context.listener.upY.value is equal to 1. 
+PASS context.listener.upZ.value is equal to 0. 
+PASS node.channelCount is equal to 2. 
+PASS node.channelCountMode is equal to "clamped-max". 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new PannerNode(context) constructed node with correct attributes. 
+PASS new PannerNode(c, {"channelCount":1}) did not throw an exception. 
+PASS node.channelCount is equal to 1. 
+PASS new PannerNode(c, {"channelCount":2}) did not throw an exception. 
+PASS node.channelCount is equal to 2. 
+PASS new PannerNode(c, {"channelCount":0}) threw NotSupportedError: Failed to construct 'PannerNode': The channelCount provided (0) is outside the range [1, 2].. 
+PASS new PannerNode(c, {"channelCount":3}) threw NotSupportedError: Failed to construct 'PannerNode': The channelCount provided (3) is outside the range [1, 2].. 
+PASS new PannerNode(c, {"channelCount":99}) threw NotSupportedError: Failed to construct 'PannerNode': The channelCount provided (99) is outside the range [1, 2].. 
+PASS new PannerNode(c, {"channelCountMode":"clamped-max"}) did not throw an exception. 
+PASS node.channelCountMode is equal to "clamped-max". 
+PASS new PannerNode(c, {"channelCountMode":"explicit"}) did not throw an exception. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS new PannerNode(c, {"channelCountMode":"max"}) threw NotSupportedError: Failed to construct 'PannerNode': Panner: 'max' is not allowed. 
+PASS new PannerNode(c, " + JSON.stringify(options) + ") threw TypeError: Failed to construct 'PannerNode': The provided value 'foobar' is not a valid enum value of type ChannelCountMode.. 
+PASS new PannerNode(c, {"channelInterpretation":"speakers"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new PannerNode(c, {"channelInterpretation":"discrete"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS new PannerNode(c, {"channelInterpretation":"foobar"}) threw TypeError: Failed to construct 'PannerNode': The provided value 'foobar' is not a valid enum value of type ChannelInterpretation.. 
+PASS AudioNodeOptions for PannerNode were correctly handled. 
+PASS node = new PannerNode(c, {"panningModel":"HRTF","positionX":1.4142135623730951,"positionY":2.8284271247461903,"positionZ":4.242640687119286,"orientationX":-1.4142135623730951,"orientationY":-2.8284271247461903,"orientationZ":-4.242640687119286,"distanceModel":"linear","refDistance":3.141592653589793,"maxDistance":6.283185307179586,"rolloffFactor":9.42477796076938,"coneInnerAngle":12.566370614359172,"coneOuterAngle":15.707963267948966,"coneOuterGain":18.84955592153876}) did not throw an exception. 
+PASS node instanceof PannerNode is equal to true. 
+PASS node.panningModel is equal to "HRTF". 
+PASS node.positionX.value is equal to 1.4142135381698608. 
+PASS node.positionY.value is equal to 2.8284270763397217. 
+PASS node.positionZ.value is equal to 4.242640495300293. 
+PASS node.orientationX.value is equal to -1.4142135381698608. 
+PASS node.orientationY.value is equal to -2.8284270763397217. 
+PASS node.orientationZ.value is equal to -4.242640495300293. 
+PASS node.distanceModel is equal to "linear". 
+PASS node.refDistance is equal to 3.141592653589793. 
+PASS node.maxDistance is equal to 6.283185307179586. 
+PASS node.rolloffFactor is equal to 9.42477796076938. 
+PASS node.coneInnerAngle is equal to 12.566370614359172. 
+PASS node.coneOuterAngle is equal to 15.707963267948966. 
+PASS node.coneOuterGain is equal to 18.84955592153876. 
+PASS node.channelCount is equal to 2. 
+PASS node.channelCountMode is equal to "clamped-max". 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new PannerNode() with options constructed with correct attributes. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Test Description: Test Description: When the user agent is to clone a port original port, with the clone being owned by owner, it must return a new MessagePort object 
+PASS Data sent through remote port is received by the new cloned port 
+Harness: the test ran to completion.
+

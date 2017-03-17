@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS The eventInitDict argument is required 
+PASS The eventInitDict's track member is required. 
+PASS The MediaStreamTrackEvent instance's track attribute is set. 
+Harness: the test ran to completion.
+

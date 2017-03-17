@@ -21,15 +21,15 @@ layer at (0,0) size 800x600
             [feTile]
               [feColorMatrix type="MATRIX"]
                 [SourceGraphic]
-      LayoutText {#text} at (0,96) size 4x17
-        text run at (0,96) width 4: " "
+      LayoutText {#text} at (0,95) size 4x19
+        text run at (0,95) width 4: " "
       LayoutText {#text} at (0,0) size 0x0
-      LayoutText {#text} at (184,96) size 4x17
-        text run at (184,96) width 4: " "
-      LayoutText {#text} at (368,96) size 4x17
-        text run at (368,96) width 4: " "
-      LayoutText {#text} at (552,96) size 4x17
-        text run at (552,96) width 4: " "
+      LayoutText {#text} at (184,95) size 4x19
+        text run at (184,95) width 4: " "
+      LayoutText {#text} at (368,95) size 4x19
+        text run at (368,95) width 4: " "
+      LayoutText {#text} at (552,95) size 4x19
+        text run at (552,95) width 4: " "
       LayoutText {#text} at (0,0) size 0x0
 layer at (22,18) size 160x90
   LayoutImage {IMG} at (14,10) size 160x90

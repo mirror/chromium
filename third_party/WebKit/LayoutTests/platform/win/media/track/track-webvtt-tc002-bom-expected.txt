@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that the parser properly ignores a UTF-8 BOM character at the beginning of a file and all other cues are properly parsed. 
+Harness: the test ran to completion.
+

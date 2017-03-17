@@ -1,0 +1,28 @@
+This is a testharness.js-based test.
+PASS This test uses responsive-test.js. 
+PASS Untitled 
+PASS Untitled 1 
+PASS Untitled 2 
+PASS Untitled 3 
+PASS Untitled 4 
+PASS Untitled 5 
+PASS Untitled 6 
+PASS Untitled 7 
+PASS Untitled 8 
+PASS Animation on property <boxShadow> from [green 20px 20px 20px 20px] to [inherit] with {"inherited":"blue 0px 0px 0px 0px"} changed to {"inherited":"yellow 100px 100px 100px 100px"} at (0.25) is [rgb(64, 160, 0) 40px 40px 40px 40px] 
+PASS Untitled 9 
+PASS Animation on property <boxShadow> from [green 20px 20px 20px 20px] to [inherit] with {"inherited":"blue 0px 0px 0px 0px"} changed to {"inherited":"yellow 100px 100px 100px 100px"} at (0.75) is [rgb(191, 223, 0) 80px 80px 80px 80px] 
+PASS Untitled 10 
+PASS Animation on property <boxShadow> from [green 20px 20px 20px 20px] to [inherit] with {"inherited":"yellow 100px 100px 100px 100px"} changed to {"inherited":"blue 0px 0px 0px 0px"} at (0.25) is [rgb(0, 96, 64) 15px 15px 15px 15px] 
+PASS Untitled 11 
+PASS Animation on property <boxShadow> from [green 20px 20px 20px 20px] to [inherit] with {"inherited":"yellow 100px 100px 100px 100px"} changed to {"inherited":"blue 0px 0px 0px 0px"} at (0.75) is [rgb(0, 32, 191) 5px 5px 5px 5px] 
+PASS Untitled 12 
+PASS Animation on property <boxShadow> from [inherit] to [green 20px 20px 20px 20px] with {"inherited":"blue 0px 0px 0px 0px, yellow 100px 100px 100px 100px"} changed to {"inherited":"yellow 100px 100px 100px 100px"} at (0.25) is [rgb(191, 223, 0) 80px 80px 80px 80px] 
+PASS Untitled 13 
+PASS Animation on property <boxShadow> from [inherit] to [green 20px 20px 20px 20px] with {"inherited":"blue 0px 0px 0px 0px, yellow 100px 100px 100px 100px"} changed to {"inherited":"yellow 100px 100px 100px 100px"} at (0.75) is [rgb(64, 160, 0) 40px 40px 40px 40px] 
+PASS Untitled 14 
+PASS Animation on property <boxShadow> from [inherit] to [green 20px 20px 20px 20px] with {"inherited":"yellow 100px 100px 100px 100px"} changed to {"inherited":"blue 0px 0px 0px 0px, yellow 100px 100px 100px 100px"} at (0.25) is [rgb(0, 32, 191) 5px 5px 5px 5px, rgb(191, 223, 0) 80px 80px 80px 80px] 
+PASS Untitled 15 
+PASS Animation on property <boxShadow> from [inherit] to [green 20px 20px 20px 20px] with {"inherited":"yellow 100px 100px 100px 100px"} changed to {"inherited":"blue 0px 0px 0px 0px, yellow 100px 100px 100px 100px"} at (0.75) is [rgb(0, 96, 64) 15px 15px 15px 15px, rgb(64, 160, 0) 40px 40px 40px 40px] 
+Harness: the test ran to completion.
+

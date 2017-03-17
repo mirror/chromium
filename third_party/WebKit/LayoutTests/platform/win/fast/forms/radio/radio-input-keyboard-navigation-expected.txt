@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Parent container should be scrolled while navigating through radio inputs 
+Harness: the test ran to completion.
+

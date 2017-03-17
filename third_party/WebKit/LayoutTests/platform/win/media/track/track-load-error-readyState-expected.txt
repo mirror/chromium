@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests the error event on HTMLTrackElement and ERROR readyState on TextTrack. 
+Harness: the test ran to completion.
+

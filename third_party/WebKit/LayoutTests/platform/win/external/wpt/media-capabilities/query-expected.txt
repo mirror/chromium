@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Test that query rejects if it doesn't get a configuration 
+PASS Test that query rejects if the MediaConfiguration isn't valid 
+PASS Test that query rejects if the MediaConfiguration does not have a type 
+PASS Test that query returns a valid MediaDecodingAbility objects 
+PASS Test that query rejects if the MediaConfiguration does not have a valid type 
+Harness: the test ran to completion.
+

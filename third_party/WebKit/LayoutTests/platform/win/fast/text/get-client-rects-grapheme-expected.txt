@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Latin Combining Diacritical Marks U+301E at start 
+PASS Latin Combining Diacritical Marks U+301E at mid 
+PASS Latin Combining Diacritical Marks U+301E at end 
+PASS Arabic Fatha U+064E at start 
+PASS Arabic Fatha U+064E at mid 
+PASS Arabic Fatha U+064E at end 
+Harness: the test ran to completion.
+

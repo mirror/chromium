@@ -1,0 +1,6 @@
+CONSOLE ERROR: Refused to load media from 'test.ogv' because it violates the following Content Security Policy directive: "media-src 'none'".
+
+This is a testharness.js-based test.
+PASS Test that "Content-Security-Policy" on a media element is obeyed. 
+Harness: the test ran to completion.
+

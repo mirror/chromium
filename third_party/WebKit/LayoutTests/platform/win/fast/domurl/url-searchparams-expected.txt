@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS URL.searchParams getter 
+PASS URL.searchParams updating, clearing 
+PASS URL.searchParams setter, invalid values 
+PASS URL.searchParams and URL.search setters, update propagation 
+Harness: the test ran to completion.
+

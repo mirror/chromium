@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that WebVTT objects are being styled correctly based on user settings that should override default settings. 
+Harness: the test ran to completion.
+

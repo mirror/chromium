@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS 1 switch list type on text outside LI with BR 
+PASS 2 switch list type on text outside LI 
+PASS 3 switch list type on text in LI 
+PASS 4 insertOrderedList on LI outside list 
+PASS 5 insertUnorderedList on LI outside list 
+Harness: the test ran to completion.
+

@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS For elements belonging to document, baseURI should be document url 
+PASS For elements unassigned to document, baseURI should be document url 
+PASS For elements belonging to document fragments, baseURI should be document url 
+PASS After inserting fragment into document, element baseURI should be document url 
+Harness: the test ran to completion.
+

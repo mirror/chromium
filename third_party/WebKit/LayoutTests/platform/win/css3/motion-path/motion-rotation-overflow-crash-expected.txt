@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Don't crash when using very large rotation angles. 
+Harness: the test ran to completion.
+

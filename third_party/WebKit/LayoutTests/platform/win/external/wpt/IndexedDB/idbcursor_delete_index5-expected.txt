@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBCursor.delete() - index - throw InvalidStateError when the cursor is being iterated 
+Harness: the test ran to completion.
+

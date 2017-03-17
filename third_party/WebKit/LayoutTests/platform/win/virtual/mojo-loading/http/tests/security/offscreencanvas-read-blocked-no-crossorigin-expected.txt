@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Verify that an OffscreenCanvas tainted with cross-origin content cannot be read. 
+PASS Verify that createImageBitmap(OffscreenCanvas) propagates the origin-clean flag. 
+Harness: the test ran to completion.
+

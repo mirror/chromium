@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Testing that overloading some controls doesn't crash the browser 
+Harness: the test ran to completion.
+

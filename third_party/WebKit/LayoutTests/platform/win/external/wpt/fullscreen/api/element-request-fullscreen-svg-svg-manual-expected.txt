@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Element#requestFullscreen() for SVG svg element 
+Harness: the test ran to completion.
+

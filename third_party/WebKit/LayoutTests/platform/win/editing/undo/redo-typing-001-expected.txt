@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Redo typing a character 
+Harness: the test ran to completion.
+

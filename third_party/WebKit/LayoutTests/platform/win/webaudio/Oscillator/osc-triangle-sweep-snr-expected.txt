@@ -1,0 +1,7 @@
+CONSOLE ERROR: Uncaught (in promise) loadFile: Request failed when loading ../Oscillator/oscillator-triangle-expected.wav. ()
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = undefined
+PASS # AUDIT TASK RUNNER STARTED. 
+PASS > [test]  
+Harness: the test ran to completion.
+

@@ -1,0 +1,15 @@
+This is a testharness.js-based test.
+PASS DOMPointReadOnly constructor without parameter 
+PASS DOMPointReadOnly constructor with x parameter 
+PASS DOMPointReadOnly constructor with x, y parameters 
+PASS DOMPointReadOnly constructor with x, y, z parameters 
+PASS DOMPointReadOnly constructor with x, y, z, w parameters 
+PASS DOMPointReadOnly readonly test 
+PASS DOMPointReadOnly toJSON 
+PASS DOMPointReadOnly.fromPoint({x: 1, y: 2, z: 3, w: 4}) should create a DOMPointReadOnly 
+PASS DOMPointReadOnly.fromPoint() should create a DOMPointReadOnly 
+PASS DOMPointReadOnly.fromPoint() should create a new DOMPointReadOnly 
+PASS DOMMatrixReadOnly.matrixTransform() - 2d matrixTransform 
+PASS DOMMatrixReadOnly.matrixTransform() - 3d matrixTransform 
+Harness: the test ran to completion.
+

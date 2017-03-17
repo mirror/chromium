@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS css defined viewport 
+PASS svg defined viewport 
+PASS css defined viewport + svg has w, h, viewBox 
+PASS css defined viewport + svg has viewBox 
+PASS nested svg 
+PASS g child of nested svg 
+Harness: the test ran to completion.
+

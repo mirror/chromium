@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS verify that the resize events get fired when the window is resized. 
+Harness: the test ran to completion.
+

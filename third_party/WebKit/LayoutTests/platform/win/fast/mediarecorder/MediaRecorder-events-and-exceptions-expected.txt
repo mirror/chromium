@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS exercises the MediaRecorder API event chain: onstart->onpaused->onresumed->onstopped in sequence, and also potential exceptions that are thrown underway. 
+Harness: the test ran to completion.
+

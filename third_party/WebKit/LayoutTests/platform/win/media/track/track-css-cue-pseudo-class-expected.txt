@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS :cue pseudo-class is not supported and dropped during parsing 
+Harness: the test ran to completion.
+

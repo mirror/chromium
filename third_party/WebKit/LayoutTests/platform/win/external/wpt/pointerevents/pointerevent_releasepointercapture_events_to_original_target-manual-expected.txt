@@ -1,0 +1,201 @@
+This is a testharness.js-based test.
+PASS mouse got/lost pointercapture: subsequent events to target 
+PASS PointerEvent Automation 
+PASS mouse pointerover/enter should be received before the target receives gotpointercapture even when the pointer is not over it. 
+PASS  mouse gotpointercapture event pointerType is correct. 
+PASS  mouse gotpointercapture event is a PointerEvent event 
+PASS  mouse gotpointercapture.pointerId attribute exists 
+PASS  mouse gotpointercapture.pointerId is readonly 
+PASS  mouse gotpointercapture.pointerId IDL type long (JS type was number) 
+PASS  mouse gotpointercapture.width attribute exists 
+PASS  mouse gotpointercapture.width is readonly 
+PASS  mouse gotpointercapture.width IDL type float (JS type was number) 
+PASS  mouse gotpointercapture.height attribute exists 
+PASS  mouse gotpointercapture.height is readonly 
+PASS  mouse gotpointercapture.height IDL type float (JS type was number) 
+PASS  mouse gotpointercapture.pressure attribute exists 
+PASS  mouse gotpointercapture.pressure is readonly 
+PASS  mouse gotpointercapture.pressure IDL type float (JS type was number) 
+PASS  mouse gotpointercapture.tiltX attribute exists 
+PASS  mouse gotpointercapture.tiltX is readonly 
+PASS  mouse gotpointercapture.tiltX IDL type long (JS type was number) 
+PASS  mouse gotpointercapture.tiltY attribute exists 
+PASS  mouse gotpointercapture.tiltY is readonly 
+PASS  mouse gotpointercapture.tiltY IDL type long (JS type was number) 
+PASS  mouse gotpointercapture.pointerType attribute exists 
+PASS  mouse gotpointercapture.pointerType is readonly 
+PASS  mouse gotpointercapture.pointerType IDL type string (JS type was string) 
+PASS  mouse gotpointercapture.isPrimary attribute exists 
+PASS  mouse gotpointercapture.isPrimary is readonly 
+PASS  mouse gotpointercapture.isPrimary IDL type boolean (JS type was boolean) 
+PASS  mouse gotpointercapture.detail attribute exists 
+PASS  mouse gotpointercapture.detail is readonly 
+PASS  mouse gotpointercapture.detail IDL type long (JS type was number) 
+PASS  mouse gotpointercapture.detail value is 0. 
+PASS  mouse gotpointercapture.pressure value is valid 
+PASS  mouse gotpointercapture properties for pointerType = mouse 
+PASS  mouse lostpointercapture event pointerType is correct. 
+PASS  mouse lostpointercapture event is a PointerEvent event 
+PASS  mouse lostpointercapture.pointerId attribute exists 
+PASS  mouse lostpointercapture.pointerId is readonly 
+PASS  mouse lostpointercapture.pointerId IDL type long (JS type was number) 
+PASS  mouse lostpointercapture.width attribute exists 
+PASS  mouse lostpointercapture.width is readonly 
+PASS  mouse lostpointercapture.width IDL type float (JS type was number) 
+PASS  mouse lostpointercapture.height attribute exists 
+PASS  mouse lostpointercapture.height is readonly 
+PASS  mouse lostpointercapture.height IDL type float (JS type was number) 
+PASS  mouse lostpointercapture.pressure attribute exists 
+PASS  mouse lostpointercapture.pressure is readonly 
+PASS  mouse lostpointercapture.pressure IDL type float (JS type was number) 
+PASS  mouse lostpointercapture.tiltX attribute exists 
+PASS  mouse lostpointercapture.tiltX is readonly 
+PASS  mouse lostpointercapture.tiltX IDL type long (JS type was number) 
+PASS  mouse lostpointercapture.tiltY attribute exists 
+PASS  mouse lostpointercapture.tiltY is readonly 
+PASS  mouse lostpointercapture.tiltY IDL type long (JS type was number) 
+PASS  mouse lostpointercapture.pointerType attribute exists 
+PASS  mouse lostpointercapture.pointerType is readonly 
+PASS  mouse lostpointercapture.pointerType IDL type string (JS type was string) 
+PASS  mouse lostpointercapture.isPrimary attribute exists 
+PASS  mouse lostpointercapture.isPrimary is readonly 
+PASS  mouse lostpointercapture.isPrimary IDL type boolean (JS type was boolean) 
+PASS  mouse lostpointercapture.detail attribute exists 
+PASS  mouse lostpointercapture.detail is readonly 
+PASS  mouse lostpointercapture.detail IDL type long (JS type was number) 
+PASS  mouse lostpointercapture.detail value is 0. 
+PASS  mouse lostpointercapture.pressure value is valid 
+PASS  mouse lostpointercapture properties for pointerType = mouse 
+PASS mouse pointerout/leave should not be received unless the target just lost the capture. 
+PASS touch got/lost pointercapture: subsequent events to target 
+PASS touch pointerover/enter should be received before the target receives gotpointercapture even when the pointer is not over it. 
+PASS  touch gotpointercapture event pointerType is correct. 
+PASS  touch gotpointercapture event is a PointerEvent event 
+PASS  touch gotpointercapture.pointerId attribute exists 
+PASS  touch gotpointercapture.pointerId is readonly 
+PASS  touch gotpointercapture.pointerId IDL type long (JS type was number) 
+PASS  touch gotpointercapture.width attribute exists 
+PASS  touch gotpointercapture.width is readonly 
+PASS  touch gotpointercapture.width IDL type float (JS type was number) 
+PASS  touch gotpointercapture.height attribute exists 
+PASS  touch gotpointercapture.height is readonly 
+PASS  touch gotpointercapture.height IDL type float (JS type was number) 
+PASS  touch gotpointercapture.pressure attribute exists 
+PASS  touch gotpointercapture.pressure is readonly 
+PASS  touch gotpointercapture.pressure IDL type float (JS type was number) 
+PASS  touch gotpointercapture.tiltX attribute exists 
+PASS  touch gotpointercapture.tiltX is readonly 
+PASS  touch gotpointercapture.tiltX IDL type long (JS type was number) 
+PASS  touch gotpointercapture.tiltY attribute exists 
+PASS  touch gotpointercapture.tiltY is readonly 
+PASS  touch gotpointercapture.tiltY IDL type long (JS type was number) 
+PASS  touch gotpointercapture.pointerType attribute exists 
+PASS  touch gotpointercapture.pointerType is readonly 
+PASS  touch gotpointercapture.pointerType IDL type string (JS type was string) 
+PASS  touch gotpointercapture.isPrimary attribute exists 
+PASS  touch gotpointercapture.isPrimary is readonly 
+PASS  touch gotpointercapture.isPrimary IDL type boolean (JS type was boolean) 
+PASS  touch gotpointercapture.detail attribute exists 
+PASS  touch gotpointercapture.detail is readonly 
+PASS  touch gotpointercapture.detail IDL type long (JS type was number) 
+PASS  touch gotpointercapture.detail value is 0. 
+PASS  touch gotpointercapture.pressure value is valid 
+PASS  touch lostpointercapture event pointerType is correct. 
+PASS  touch lostpointercapture event is a PointerEvent event 
+PASS  touch lostpointercapture.pointerId attribute exists 
+PASS  touch lostpointercapture.pointerId is readonly 
+PASS  touch lostpointercapture.pointerId IDL type long (JS type was number) 
+PASS  touch lostpointercapture.width attribute exists 
+PASS  touch lostpointercapture.width is readonly 
+PASS  touch lostpointercapture.width IDL type float (JS type was number) 
+PASS  touch lostpointercapture.height attribute exists 
+PASS  touch lostpointercapture.height is readonly 
+PASS  touch lostpointercapture.height IDL type float (JS type was number) 
+PASS  touch lostpointercapture.pressure attribute exists 
+PASS  touch lostpointercapture.pressure is readonly 
+PASS  touch lostpointercapture.pressure IDL type float (JS type was number) 
+PASS  touch lostpointercapture.tiltX attribute exists 
+PASS  touch lostpointercapture.tiltX is readonly 
+PASS  touch lostpointercapture.tiltX IDL type long (JS type was number) 
+PASS  touch lostpointercapture.tiltY attribute exists 
+PASS  touch lostpointercapture.tiltY is readonly 
+PASS  touch lostpointercapture.tiltY IDL type long (JS type was number) 
+PASS  touch lostpointercapture.pointerType attribute exists 
+PASS  touch lostpointercapture.pointerType is readonly 
+PASS  touch lostpointercapture.pointerType IDL type string (JS type was string) 
+PASS  touch lostpointercapture.isPrimary attribute exists 
+PASS  touch lostpointercapture.isPrimary is readonly 
+PASS  touch lostpointercapture.isPrimary IDL type boolean (JS type was boolean) 
+PASS  touch lostpointercapture.detail attribute exists 
+PASS  touch lostpointercapture.detail is readonly 
+PASS  touch lostpointercapture.detail IDL type long (JS type was number) 
+PASS  touch lostpointercapture.detail value is 0. 
+PASS  touch lostpointercapture.pressure value is valid 
+PASS touch pointerout/leave should not be received unless the target just lost the capture. 
+PASS pen got/lost pointercapture: subsequent events to target 
+PASS pen pointerover/enter should be received before the target receives gotpointercapture even when the pointer is not over it. 
+PASS  pen gotpointercapture event pointerType is correct. 
+PASS  pen gotpointercapture event is a PointerEvent event 
+PASS  pen gotpointercapture.pointerId attribute exists 
+PASS  pen gotpointercapture.pointerId is readonly 
+PASS  pen gotpointercapture.pointerId IDL type long (JS type was number) 
+PASS  pen gotpointercapture.width attribute exists 
+PASS  pen gotpointercapture.width is readonly 
+PASS  pen gotpointercapture.width IDL type float (JS type was number) 
+PASS  pen gotpointercapture.height attribute exists 
+PASS  pen gotpointercapture.height is readonly 
+PASS  pen gotpointercapture.height IDL type float (JS type was number) 
+PASS  pen gotpointercapture.pressure attribute exists 
+PASS  pen gotpointercapture.pressure is readonly 
+PASS  pen gotpointercapture.pressure IDL type float (JS type was number) 
+PASS  pen gotpointercapture.tiltX attribute exists 
+PASS  pen gotpointercapture.tiltX is readonly 
+PASS  pen gotpointercapture.tiltX IDL type long (JS type was number) 
+PASS  pen gotpointercapture.tiltY attribute exists 
+PASS  pen gotpointercapture.tiltY is readonly 
+PASS  pen gotpointercapture.tiltY IDL type long (JS type was number) 
+PASS  pen gotpointercapture.pointerType attribute exists 
+PASS  pen gotpointercapture.pointerType is readonly 
+PASS  pen gotpointercapture.pointerType IDL type string (JS type was string) 
+PASS  pen gotpointercapture.isPrimary attribute exists 
+PASS  pen gotpointercapture.isPrimary is readonly 
+PASS  pen gotpointercapture.isPrimary IDL type boolean (JS type was boolean) 
+PASS  pen gotpointercapture.detail attribute exists 
+PASS  pen gotpointercapture.detail is readonly 
+PASS  pen gotpointercapture.detail IDL type long (JS type was number) 
+PASS  pen gotpointercapture.detail value is 0. 
+PASS  pen gotpointercapture.pressure value is valid 
+PASS  pen lostpointercapture event pointerType is correct. 
+PASS  pen lostpointercapture event is a PointerEvent event 
+PASS  pen lostpointercapture.pointerId attribute exists 
+PASS  pen lostpointercapture.pointerId is readonly 
+PASS  pen lostpointercapture.pointerId IDL type long (JS type was number) 
+PASS  pen lostpointercapture.width attribute exists 
+PASS  pen lostpointercapture.width is readonly 
+PASS  pen lostpointercapture.width IDL type float (JS type was number) 
+PASS  pen lostpointercapture.height attribute exists 
+PASS  pen lostpointercapture.height is readonly 
+PASS  pen lostpointercapture.height IDL type float (JS type was number) 
+PASS  pen lostpointercapture.pressure attribute exists 
+PASS  pen lostpointercapture.pressure is readonly 
+PASS  pen lostpointercapture.pressure IDL type float (JS type was number) 
+PASS  pen lostpointercapture.tiltX attribute exists 
+PASS  pen lostpointercapture.tiltX is readonly 
+PASS  pen lostpointercapture.tiltX IDL type long (JS type was number) 
+PASS  pen lostpointercapture.tiltY attribute exists 
+PASS  pen lostpointercapture.tiltY is readonly 
+PASS  pen lostpointercapture.tiltY IDL type long (JS type was number) 
+PASS  pen lostpointercapture.pointerType attribute exists 
+PASS  pen lostpointercapture.pointerType is readonly 
+PASS  pen lostpointercapture.pointerType IDL type string (JS type was string) 
+PASS  pen lostpointercapture.isPrimary attribute exists 
+PASS  pen lostpointercapture.isPrimary is readonly 
+PASS  pen lostpointercapture.isPrimary IDL type boolean (JS type was boolean) 
+PASS  pen lostpointercapture.detail attribute exists 
+PASS  pen lostpointercapture.detail is readonly 
+PASS  pen lostpointercapture.detail IDL type long (JS type was number) 
+PASS  pen lostpointercapture.detail value is 0. 
+PASS  pen lostpointercapture.pressure value is valid 
+PASS pen pointerout/leave should not be received unless the target just lost the capture. 
+Harness: the test ran to completion.
+

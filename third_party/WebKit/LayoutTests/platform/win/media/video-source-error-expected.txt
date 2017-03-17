@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test "error" event are fired on "source" elements and not on "video" while processing invalid "source" elements. 
+Harness: the test ran to completion.
+

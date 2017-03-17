@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Deleted indexes in newly created stores are still marked as deleted after the transaction aborts 
+PASS Deleted indexes in deleted stores are still marked as not-deleted after the transaction aborts 
+PASS Deleted indexes in created+deleted stores are still marked as deleted after their transaction aborts 
+Harness: the test ran to completion.
+

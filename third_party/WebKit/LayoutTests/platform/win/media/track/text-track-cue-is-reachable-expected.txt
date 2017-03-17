@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Ensure that a TextTrackCue won't be collected if it has a custom property. 
+Harness: the test ran to completion.
+

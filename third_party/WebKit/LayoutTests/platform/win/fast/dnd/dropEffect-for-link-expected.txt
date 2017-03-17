@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS effectAllowed: undefined dropEffect: copy 
+PASS effectAllowed: undefined dropEffect: link 
+PASS effectAllowed: undefined dropEffect: move 
+PASS effectAllowed: undefined dropEffect: none 
+PASS effectAllowed: undefined dropEffect: dummy 
+PASS all tests complete 
+Harness: the test ran to completion.
+

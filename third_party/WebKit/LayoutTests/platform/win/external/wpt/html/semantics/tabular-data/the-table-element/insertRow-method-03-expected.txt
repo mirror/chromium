@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS insertRow(): non-empty table 
+PASS table should start out with two rows 
+PASS insertRow should insert a tr element before the second row 
+Harness: the test ran to completion.
+

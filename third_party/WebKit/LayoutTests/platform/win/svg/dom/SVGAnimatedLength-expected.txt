@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS SVGAnimatedLength interface - utilizing the width property of SVGRectElement 
+Harness: the test ran to completion.
+

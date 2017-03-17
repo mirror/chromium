@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Testing that getComputedStyle.backgroundImage returns absolute URLs and style.backgroundImage returns relative URLs 
+Harness: the test ran to completion.
+

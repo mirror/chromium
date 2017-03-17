@@ -1,0 +1,30 @@
+This is a testharness.js-based test.
+PASS PointerEvent: Constructor test 
+PASS getCoalescedEvents().length 
+PASS event.target 
+PASS event.currentTarget 
+PASS event.eventPhase 
+PASS event.clientX 
+PASS getCoalescedEvents()[0].clientX 
+PASS getCoalescedEvents()[1].clientX 
+PASS getCoalescedEvents()[0].pointerId 
+PASS getCoalescedEvents()[0].pointerType 
+PASS getCoalescedEvents()[0].isPrimary 
+PASS getCoalescedEvents()[0].getCoalescedEvents().length 
+PASS getCoalescedEvents()[0].target 
+PASS getCoalescedEvents()[0].currentTarget 
+PASS getCoalescedEvents()[0].eventPhase 
+PASS getCoalescedEvents()[0].cancelable 
+PASS getCoalescedEvents()[0].bubbles 
+PASS getCoalescedEvents()[1].pointerId 
+PASS getCoalescedEvents()[1].pointerType 
+PASS getCoalescedEvents()[1].isPrimary 
+PASS getCoalescedEvents()[1].getCoalescedEvents().length 
+PASS getCoalescedEvents()[1].target 
+PASS getCoalescedEvents()[1].currentTarget 
+PASS getCoalescedEvents()[1].eventPhase 
+PASS getCoalescedEvents()[1].cancelable 
+PASS getCoalescedEvents()[1].bubbles 
+PASS default getCoalescedEvents().length 
+Harness: the test ran to completion.
+

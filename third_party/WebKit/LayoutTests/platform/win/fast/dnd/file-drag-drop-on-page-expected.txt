@@ -1,0 +1,23 @@
+This is a testharness.js-based test.
+PASS DataTransfer.types in dragenter 
+PASS DataTransfer.types in dragover 
+PASS DataTransfer.types in dragleave 
+PASS DataTransfer.types in drop 
+PASS DataTransfer.getData() return values in dragenter 
+PASS DataTransfer.getData() return values in dragover 
+PASS DataTransfer.getData() return values in dragleave 
+PASS DataTransfer.getData() return values in drop 
+PASS DataTransfer.files in dragenter 
+PASS DataTransfer.files in dragover 
+PASS DataTransfer.files in dragleave 
+PASS DataTransfer.files in drop 
+PASS DataTransfer.files[0] File metadata in drop 
+PASS Using FileReader to read DataTransfer.files[0] in drop 
+PASS DataTransfer.items in dragenter 
+PASS DataTransfer.items in dragover 
+PASS DataTransfer.items in dragleave 
+PASS DataTransfer.items in drop 
+PASS DataTransfer.items[0].getAsFile() File metadata in drop 
+PASS Using FileReader to read DataTransfer.items[0].getAsFile() in drop 
+Harness: the test ran to completion.
+

@@ -1,0 +1,12 @@
+This is a testharness.js-based test.
+PASS Insert line break at end of text 
+PASS Insert line break before line break 
+PASS Insert line break between text 
+PASS Insert two line breaks 
+PASS Insert two line breaks and a character 
+PASS Insert line break before text 
+PASS Insert line break between words 
+PASS Insert space after BR becomeas NBSP 
+PASS Insert a newline character for white-space:pre 
+Harness: the test ran to completion.
+

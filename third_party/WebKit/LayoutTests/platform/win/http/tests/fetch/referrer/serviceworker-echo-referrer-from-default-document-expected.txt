@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS Echo referrer in ServiceWorker: from a document with the default referrer policy 
+PASS url = http://127.0.0.1:8000/fetch/resources/echo, referrer = about:client, policy =  
+PASS url = http://127.0.0.1:8000/fetch/resources/echo, referrer = about:client, policy = no-referrer 
+PASS url = http://127.0.0.1:8000/fetch/resources/echo, referrer = about:client, policy = no-referrer-when-downgrade 
+PASS url = http://127.0.0.1:8000/fetch/resources/echo, referrer = about:client, policy = origin 
+PASS url = http://127.0.0.1:8000/fetch/resources/echo, referrer = about:client, policy = origin-when-cross-origin 
+PASS url = http://127.0.0.1:8000/fetch/resources/echo, referrer = about:client, policy = unsafe-url 
+Harness: the test ran to completion.
+

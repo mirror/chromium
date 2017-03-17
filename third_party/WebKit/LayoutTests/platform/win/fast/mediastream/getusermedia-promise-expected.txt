@@ -1,0 +1,7 @@
+CONSOLE WARNING: line 32: Unknown constraint named valid_but_unsupported_1 rejected
+This is a testharness.js-based test.
+PASS getUserMedia() audio track 
+PASS getUserMedia() audio and video tracks 
+PASS getUserMedia() with unsupported mandatory constraint 
+Harness: the test ran to completion.
+

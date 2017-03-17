@@ -58,9 +58,6 @@ class GURL;
 - (void)webDidUpdateSessionForLoadWithParams:
             (const web::NavigationManager::WebLoadParams&)params
                         wasInitialNavigation:(BOOL)initialNavigation;
-// Called from finishHistoryNavigationFromEntry.
-// TODO(crbug.com/692331): Remove this method and use |DidFinishNavigation|.
-- (void)webWillFinishHistoryNavigation;
 
 @optional
 
@@ -94,11 +91,6 @@ class GURL;
 // the native controller to display if the delegate can handle the url,
 // or nil otherwise.
 - (id<CRWNativeContent>)controllerForUnhandledContentAtURL:(const GURL&)url;
-
-// Called when CRWWebController did suppress a dialog (JavaScript, HTTP
-// authentication or window.open).
-// NOTE: Called only if CRWWebController.shouldSuppressDialogs is set to YES.
-- (void)webControllerDidSuppressDialog:(CRWWebController*)webController;
 
 // Called to retrieve the height of any header that is overlaying on top of the
 // web view. This can be used to implement, for e.g. a toolbar that changes

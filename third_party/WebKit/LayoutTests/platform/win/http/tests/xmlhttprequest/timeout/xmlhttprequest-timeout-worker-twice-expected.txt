@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS XHR2 Timeout Property Tests in Worker 
+PASS XHR2 Timeout Property Tests in Worker 1 
+PASS XHR2 Timeout Property Tests in Worker 2 
+Harness: the test ran to completion.
+

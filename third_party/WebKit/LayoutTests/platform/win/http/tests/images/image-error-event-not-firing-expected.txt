@@ -1,0 +1,6 @@
+CONSOLE ERROR: Refused to load the image 'http://127.0.0.1:8080/resources/square.png' because it violates the following Content Security Policy directive: "img-src 'self'".
+
+This is a testharness.js-based test.
+PASS This tests onerror event is fired if we change image src to a url blocked by content-security-policy. 
+Harness: the test ran to completion.
+

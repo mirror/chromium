@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that animation works, if changing begin to contain an event-base trigger. 
+Harness: the test ran to completion.
+

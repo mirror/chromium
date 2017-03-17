@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS The ready promise should be resolved before the finished promise 
+Harness: the test ran to completion.
+

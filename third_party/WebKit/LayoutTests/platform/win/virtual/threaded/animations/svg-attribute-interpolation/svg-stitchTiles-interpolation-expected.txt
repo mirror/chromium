@@ -1,0 +1,24 @@
+This is a testharness.js-based test.
+PASS This test uses interpolation-test.js. 
+PASS SMIL: Interpolate attribute <stitchTiles> from replace [noStitch] to replace [stitch] at (0) is [noStitch] 
+PASS SMIL: Interpolate attribute <stitchTiles> from replace [noStitch] to replace [stitch] at (0.2) is [noStitch] 
+PASS SMIL: Interpolate attribute <stitchTiles> from replace [noStitch] to replace [stitch] at (0.6) is [stitch] 
+PASS SMIL: Interpolate attribute <stitchTiles> from replace [noStitch] to replace [stitch] at (1) is [stitch] 
+PASS Web Animations: Interpolate attribute <stitchTiles> from replace [noStitch] to replace [stitch] at (-0.4) is [noStitch] 
+PASS Web Animations: Interpolate attribute <stitchTiles> from replace [noStitch] to replace [stitch] at (0) is [noStitch] 
+PASS Web Animations: Interpolate attribute <stitchTiles> from replace [noStitch] to replace [stitch] at (0.2) is [noStitch] 
+PASS Web Animations: Interpolate attribute <stitchTiles> from replace [noStitch] to replace [stitch] at (0.6) is [stitch] 
+PASS Web Animations: Interpolate attribute <stitchTiles> from replace [noStitch] to replace [stitch] at (1) is [stitch] 
+PASS Web Animations: Interpolate attribute <stitchTiles> from replace [noStitch] to replace [stitch] at (1.4) is [stitch] 
+PASS SMIL: Interpolate attribute <stitchTiles> from replace [stitch] to replace [noStitch] at (0) is [stitch] 
+PASS SMIL: Interpolate attribute <stitchTiles> from replace [stitch] to replace [noStitch] at (0.2) is [stitch] 
+PASS SMIL: Interpolate attribute <stitchTiles> from replace [stitch] to replace [noStitch] at (0.6) is [noStitch] 
+PASS SMIL: Interpolate attribute <stitchTiles> from replace [stitch] to replace [noStitch] at (1) is [noStitch] 
+PASS Web Animations: Interpolate attribute <stitchTiles> from replace [stitch] to replace [noStitch] at (-0.4) is [stitch] 
+PASS Web Animations: Interpolate attribute <stitchTiles> from replace [stitch] to replace [noStitch] at (0) is [stitch] 
+PASS Web Animations: Interpolate attribute <stitchTiles> from replace [stitch] to replace [noStitch] at (0.2) is [stitch] 
+PASS Web Animations: Interpolate attribute <stitchTiles> from replace [stitch] to replace [noStitch] at (0.6) is [noStitch] 
+PASS Web Animations: Interpolate attribute <stitchTiles> from replace [stitch] to replace [noStitch] at (1) is [noStitch] 
+PASS Web Animations: Interpolate attribute <stitchTiles> from replace [stitch] to replace [noStitch] at (1.4) is [noStitch] 
+Harness: the test ran to completion.
+

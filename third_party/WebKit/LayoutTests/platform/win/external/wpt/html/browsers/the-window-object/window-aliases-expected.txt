@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS window should be the global object 
+PASS frames should be the global object 
+PASS self should be the global object 
+Harness: the test ran to completion.
+

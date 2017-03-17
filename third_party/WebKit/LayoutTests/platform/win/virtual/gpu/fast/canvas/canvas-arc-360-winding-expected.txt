@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This tests canvas full arc fill with nonzero winding rule. Eight green concentric thick circumferences should be displayed. 
+Harness: the test ran to completion.
+

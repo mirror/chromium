@@ -1,0 +1,13 @@
+This is a testharness.js-based test.
+PASS Startup 
+PASS stream-reader 
+PASS ReadableStreamReader acquisition / releasing 
+PASS read contents with ReadableStreamReader 
+PASS parallel read 
+PASS acquiring a reader should not set bodyUsed. 
+PASS Clone after reading 
+PASS Cancelling stream stops downloading. 
+PASS Cancelling stream should not affect cloned one. 
+PASS Streaming error should be reported as a TypeError. 
+Harness: the test ran to completion.
+

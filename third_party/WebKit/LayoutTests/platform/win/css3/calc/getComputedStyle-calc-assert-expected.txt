@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests getComputedStyle works with calc for various properties 
+Harness: the test ran to completion.
+

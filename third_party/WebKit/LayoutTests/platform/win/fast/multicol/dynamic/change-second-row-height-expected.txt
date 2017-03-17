@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Change inner multicol height, which only affects the second row. 
+Harness: the test ran to completion.
+

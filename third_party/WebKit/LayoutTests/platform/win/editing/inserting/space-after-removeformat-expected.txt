@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS RemoveFormat command should not convert U+0020 to U+00A0 
+Harness: the test ran to completion.
+

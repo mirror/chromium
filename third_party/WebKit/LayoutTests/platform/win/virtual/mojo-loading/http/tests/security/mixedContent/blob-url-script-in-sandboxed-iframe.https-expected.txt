@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Sandboxed unique-origin frames can load 'blob:' resources. 
+Harness: the test ran to completion.
+

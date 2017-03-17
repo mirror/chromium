@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Fetch events should wait for the activate event to complete. 
+Harness: the test ran to completion.
+

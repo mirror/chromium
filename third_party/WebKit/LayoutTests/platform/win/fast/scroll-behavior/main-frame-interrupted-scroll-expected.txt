@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS instant scroll 
+PASS smooth scroll 
+PASS touch scroll 
+PASS wheel scroll 
+Harness: the test ran to completion.
+

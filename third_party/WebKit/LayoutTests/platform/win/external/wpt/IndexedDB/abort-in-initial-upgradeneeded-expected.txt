@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that an abort in the initial upgradeneeded sets version back to 0 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Calls on services after we disconnect and connect again. Should reject with InvalidStateError. 
+Harness: the test ran to completion.
+

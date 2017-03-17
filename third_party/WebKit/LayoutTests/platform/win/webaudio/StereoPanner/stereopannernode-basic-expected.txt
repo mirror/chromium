@@ -1,0 +1,16 @@
+This is a testharness.js-based test.
+PASS # AUDIT TASK RUNNER STARTED. 
+PASS > [test]  
+PASS   panner.numberOfInputs is equal to 1. 
+PASS   panner.numberOfOutputs is equal to 1. 
+PASS   panner.pan.defaultValue is equal to 0. 
+PASS   panner.pan.value = 1.0 did not throw an exception. 
+PASS   panner.pan.value is equal to 1. 
+PASS   panner.channelCount = 1 did not throw an exception. 
+PASS   panner.channelCount = 3 threw NotSupportedError: "Failed to set the 'channelCount' property on 'AudioNode': The channelCount provided (3) is outside the range [1, 2].". 
+PASS   panner.channelCountMode = "explicit" did not throw an exception. 
+PASS   panner.channelCountMode = "max" threw NotSupportedError: "Failed to set the 'channelCountMode' property on 'AudioNode': StereoPanner: 'max' is not allowed". 
+PASS < [test] All assertions passed. (total 9 assertions) 
+PASS # AUDIT TASK RUNNER FINISHED: 1 tasks ran successfully. 
+Harness: the test ran to completion.
+

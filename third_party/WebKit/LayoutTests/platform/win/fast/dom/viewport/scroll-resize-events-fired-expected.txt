@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS verify that the scroll and resize events get fired on window.visualViewport 
+Harness: the test ran to completion.
+

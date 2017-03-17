@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test string list ordering in IndexedDB 
+Harness: the test ran to completion.
+

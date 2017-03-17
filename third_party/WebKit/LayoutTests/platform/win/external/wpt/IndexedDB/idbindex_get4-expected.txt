@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBIndex.get() - returns the record with the first key in the range  
+Harness: the test ran to completion.
+

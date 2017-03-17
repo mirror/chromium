@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS No endless loop when getting line for index in contentEditable 
+Harness: the test ran to completion.
+

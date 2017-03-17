@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS IDBCursor.delete exception order: TransactionInactiveError vs. ReadOnlyError 
+PASS IDBCursor.delete exception order: ReadOnlyError vs. InvalidStateError #1 
+PASS IDBCursor.delete exception order: ReadOnlyError vs. InvalidStateError #2 
+Harness: the test ran to completion.
+

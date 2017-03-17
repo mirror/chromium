@@ -1,0 +1,12 @@
+This is a testharness.js-based test.
+PASS internals are exposed 
+PASS Adjacent with universal selector 
+PASS Indirect adjacent with universal selector 
+PASS Adjacent with universal :hover selector 
+PASS Class change affecting selector for sibling class 
+PASS Class change affecting all sibling subtrees through a universal selector 
+PASS Class change affecting all sibling subtrees through an indirect adjacent combinator 
+PASS Class change affecting sibling descendants through a universal selector 
+PASS Class change affecting universal descendants of webkit-any sibling 
+Harness: the test ran to completion.
+

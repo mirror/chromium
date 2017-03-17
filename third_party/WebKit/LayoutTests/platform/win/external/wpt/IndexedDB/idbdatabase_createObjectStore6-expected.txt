@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBDatabase.createObjectStore() - attempt to create an object store with an invalid key path  
+Harness: the test ran to completion.
+

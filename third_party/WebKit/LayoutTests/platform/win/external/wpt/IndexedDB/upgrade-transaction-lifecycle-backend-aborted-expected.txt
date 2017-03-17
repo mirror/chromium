@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS in the abort event handler for a transaction aborted due to an unhandled request error 
+PASS in a setTimeout(0) callback after the abort event is fired for a transaction aborted due to an unhandled request failure 
+Harness: the test ran to completion.
+

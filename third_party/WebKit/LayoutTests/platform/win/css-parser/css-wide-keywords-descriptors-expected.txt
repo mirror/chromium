@@ -1,0 +1,129 @@
+This is a testharness.js-based test.
+PASS CSS.supports('src', "initial") should return false 
+PASS e.style['src'] = "initial" should not set the value 
+PASS CSS.supports('orientation', "initial") should return false 
+PASS e.style['orientation'] = "initial" should not set the value 
+PASS CSS.supports('min-zoom', "initial") should return false 
+PASS e.style['min-zoom'] = "initial" should not set the value 
+PASS CSS.supports('max-zoom', "initial") should return false 
+PASS e.style['max-zoom'] = "initial" should not set the value 
+PASS CSS.supports('user-zoom', "initial") should return false 
+PASS e.style['user-zoom'] = "initial" should not set the value 
+PASS CSS.supports('unicode-range', "initial") should return false 
+PASS e.style['unicode-range'] = "initial" should not set the value 
+PASS CSS.supports('font-display', "initial") should return false 
+PASS e.style['font-display'] = "initial" should not set the value 
+PASS CSS.supports('src', "inherit") should return false 
+PASS e.style['src'] = "inherit" should not set the value 
+PASS CSS.supports('orientation', "inherit") should return false 
+PASS e.style['orientation'] = "inherit" should not set the value 
+PASS CSS.supports('min-zoom', "inherit") should return false 
+PASS e.style['min-zoom'] = "inherit" should not set the value 
+PASS CSS.supports('max-zoom', "inherit") should return false 
+PASS e.style['max-zoom'] = "inherit" should not set the value 
+PASS CSS.supports('user-zoom', "inherit") should return false 
+PASS e.style['user-zoom'] = "inherit" should not set the value 
+PASS CSS.supports('unicode-range', "inherit") should return false 
+PASS e.style['unicode-range'] = "inherit" should not set the value 
+PASS CSS.supports('font-display', "inherit") should return false 
+PASS e.style['font-display'] = "inherit" should not set the value 
+PASS CSS.supports('src', "unset") should return false 
+PASS e.style['src'] = "unset" should not set the value 
+PASS CSS.supports('orientation', "unset") should return false 
+PASS e.style['orientation'] = "unset" should not set the value 
+PASS CSS.supports('min-zoom', "unset") should return false 
+PASS e.style['min-zoom'] = "unset" should not set the value 
+PASS CSS.supports('max-zoom', "unset") should return false 
+PASS e.style['max-zoom'] = "unset" should not set the value 
+PASS CSS.supports('user-zoom', "unset") should return false 
+PASS e.style['user-zoom'] = "unset" should not set the value 
+PASS CSS.supports('unicode-range', "unset") should return false 
+PASS e.style['unicode-range'] = "unset" should not set the value 
+PASS CSS.supports('font-display', "unset") should return false 
+PASS e.style['font-display'] = "unset" should not set the value 
+PASS CSS.supports('src', "INITIAL") should return false 
+PASS e.style['src'] = "INITIAL" should not set the value 
+PASS CSS.supports('orientation', "INITIAL") should return false 
+PASS e.style['orientation'] = "INITIAL" should not set the value 
+PASS CSS.supports('min-zoom', "INITIAL") should return false 
+PASS e.style['min-zoom'] = "INITIAL" should not set the value 
+PASS CSS.supports('max-zoom', "INITIAL") should return false 
+PASS e.style['max-zoom'] = "INITIAL" should not set the value 
+PASS CSS.supports('user-zoom', "INITIAL") should return false 
+PASS e.style['user-zoom'] = "INITIAL" should not set the value 
+PASS CSS.supports('unicode-range', "INITIAL") should return false 
+PASS e.style['unicode-range'] = "INITIAL" should not set the value 
+PASS CSS.supports('font-display', "INITIAL") should return false 
+PASS e.style['font-display'] = "INITIAL" should not set the value 
+PASS CSS.supports('src', "INHERIT") should return false 
+PASS e.style['src'] = "INHERIT" should not set the value 
+PASS CSS.supports('orientation', "INHERIT") should return false 
+PASS e.style['orientation'] = "INHERIT" should not set the value 
+PASS CSS.supports('min-zoom', "INHERIT") should return false 
+PASS e.style['min-zoom'] = "INHERIT" should not set the value 
+PASS CSS.supports('max-zoom', "INHERIT") should return false 
+PASS e.style['max-zoom'] = "INHERIT" should not set the value 
+PASS CSS.supports('user-zoom', "INHERIT") should return false 
+PASS e.style['user-zoom'] = "INHERIT" should not set the value 
+PASS CSS.supports('unicode-range', "INHERIT") should return false 
+PASS e.style['unicode-range'] = "INHERIT" should not set the value 
+PASS CSS.supports('font-display', "INHERIT") should return false 
+PASS e.style['font-display'] = "INHERIT" should not set the value 
+PASS CSS.supports('src', "UNSET") should return false 
+PASS e.style['src'] = "UNSET" should not set the value 
+PASS CSS.supports('orientation', "UNSET") should return false 
+PASS e.style['orientation'] = "UNSET" should not set the value 
+PASS CSS.supports('min-zoom', "UNSET") should return false 
+PASS e.style['min-zoom'] = "UNSET" should not set the value 
+PASS CSS.supports('max-zoom', "UNSET") should return false 
+PASS e.style['max-zoom'] = "UNSET" should not set the value 
+PASS CSS.supports('user-zoom', "UNSET") should return false 
+PASS e.style['user-zoom'] = "UNSET" should not set the value 
+PASS CSS.supports('unicode-range', "UNSET") should return false 
+PASS e.style['unicode-range'] = "UNSET" should not set the value 
+PASS CSS.supports('font-display', "UNSET") should return false 
+PASS e.style['font-display'] = "UNSET" should not set the value 
+PASS CSS.supports('src', "iNiTiAl") should return false 
+PASS e.style['src'] = "iNiTiAl" should not set the value 
+PASS CSS.supports('orientation', "iNiTiAl") should return false 
+PASS e.style['orientation'] = "iNiTiAl" should not set the value 
+PASS CSS.supports('min-zoom', "iNiTiAl") should return false 
+PASS e.style['min-zoom'] = "iNiTiAl" should not set the value 
+PASS CSS.supports('max-zoom', "iNiTiAl") should return false 
+PASS e.style['max-zoom'] = "iNiTiAl" should not set the value 
+PASS CSS.supports('user-zoom', "iNiTiAl") should return false 
+PASS e.style['user-zoom'] = "iNiTiAl" should not set the value 
+PASS CSS.supports('unicode-range', "iNiTiAl") should return false 
+PASS e.style['unicode-range'] = "iNiTiAl" should not set the value 
+PASS CSS.supports('font-display', "iNiTiAl") should return false 
+PASS e.style['font-display'] = "iNiTiAl" should not set the value 
+PASS CSS.supports('src', "iNhErIt") should return false 
+PASS e.style['src'] = "iNhErIt" should not set the value 
+PASS CSS.supports('orientation', "iNhErIt") should return false 
+PASS e.style['orientation'] = "iNhErIt" should not set the value 
+PASS CSS.supports('min-zoom', "iNhErIt") should return false 
+PASS e.style['min-zoom'] = "iNhErIt" should not set the value 
+PASS CSS.supports('max-zoom', "iNhErIt") should return false 
+PASS e.style['max-zoom'] = "iNhErIt" should not set the value 
+PASS CSS.supports('user-zoom', "iNhErIt") should return false 
+PASS e.style['user-zoom'] = "iNhErIt" should not set the value 
+PASS CSS.supports('unicode-range', "iNhErIt") should return false 
+PASS e.style['unicode-range'] = "iNhErIt" should not set the value 
+PASS CSS.supports('font-display', "iNhErIt") should return false 
+PASS e.style['font-display'] = "iNhErIt" should not set the value 
+PASS CSS.supports('src', "uNsEt") should return false 
+PASS e.style['src'] = "uNsEt" should not set the value 
+PASS CSS.supports('orientation', "uNsEt") should return false 
+PASS e.style['orientation'] = "uNsEt" should not set the value 
+PASS CSS.supports('min-zoom', "uNsEt") should return false 
+PASS e.style['min-zoom'] = "uNsEt" should not set the value 
+PASS CSS.supports('max-zoom', "uNsEt") should return false 
+PASS e.style['max-zoom'] = "uNsEt" should not set the value 
+PASS CSS.supports('user-zoom', "uNsEt") should return false 
+PASS e.style['user-zoom'] = "uNsEt" should not set the value 
+PASS CSS.supports('unicode-range', "uNsEt") should return false 
+PASS e.style['unicode-range'] = "uNsEt" should not set the value 
+PASS CSS.supports('font-display', "uNsEt") should return false 
+PASS e.style['font-display'] = "uNsEt" should not set the value 
+Harness: the test ran to completion.
+

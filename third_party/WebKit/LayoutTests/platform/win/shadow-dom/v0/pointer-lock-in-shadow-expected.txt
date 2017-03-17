@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test for pointerLockElement adjustment for Shadow DOM V0/V1 combination. 
+Harness: the test ran to completion.
+

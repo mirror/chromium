@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS Create pipe 
+PASS Read from invalid handle 
+PASS Read from empty pipe 
+PASS Write to invalid handle 
+PASS Send empty message 
+PASS Send buffer 
+PASS Send handle 
+Harness: the test ran to completion.
+

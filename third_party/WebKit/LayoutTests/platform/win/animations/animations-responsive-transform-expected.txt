@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Transform responsive to font size changes 
+Harness: the test ran to completion.
+

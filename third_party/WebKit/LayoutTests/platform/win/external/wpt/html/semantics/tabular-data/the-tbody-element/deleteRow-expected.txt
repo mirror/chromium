@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS HTMLTableSectionElement deleteRow(0) 
+PASS HTMLTableSectionElement deleteRow(-1) 
+PASS HTMLTableSectionElement deleteRow(rows.length) 
+PASS HTMLTableSectionElement deleteRow(-2) 
+PASS HTMLTableSectionElement deleteRow(-1) with no rows 
+PASS HTMLTableSectionElement deleteRow(0) with no rows 
+Harness: the test ran to completion.
+

@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Registering observe call with empty transaction 
+PASS Cannot observe during version change 
+PASS Abort transaction associated with observer 
+PASS Aborted transaction not recorded by observer 
+Harness: the test ran to completion.
+

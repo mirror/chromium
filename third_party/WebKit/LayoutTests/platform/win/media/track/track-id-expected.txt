@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that the TextTrack "id" attribute is set appropriately. 
+Harness: the test ran to completion.
+

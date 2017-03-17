@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS A device name prefix longer than 248 must reject. 
+Harness: the test ran to completion.
+

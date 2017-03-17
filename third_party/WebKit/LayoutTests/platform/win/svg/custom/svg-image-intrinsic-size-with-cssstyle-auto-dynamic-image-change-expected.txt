@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test <svg:image>'s sizing with css size as auto, with dynamic image change 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that an ImageBitmap generated from a canvas survives being transferred via a MessageChannel 
+Harness: the test ran to completion.
+

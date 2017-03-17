@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Clicking in a subframe with :active style should not crash. 
+Harness: the test ran to completion.
+

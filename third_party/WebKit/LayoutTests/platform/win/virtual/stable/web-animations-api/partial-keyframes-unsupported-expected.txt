@@ -1,0 +1,12 @@
+CONSOLE WARNING: line 32: Invalid keyframe value for property color: foo
+CONSOLE WARNING: line 33: Invalid keyframe value for property color: foo
+This is a testharness.js-based test.
+PASS Calling element.animate() with a mismatched keyframe property should throw a NotSupportedError. 
+PASS Calling element.animate() with no offset specified for the first keyframe should create and animation. 
+PASS Calling element.animate() with the offset of the first keyframe specified but not equal to 0 should throw a NotSupportedError. 
+PASS Calling element.animate() with no offset specified for the last keyframe should create an animation. 
+PASS Calling element.animate() with the offset of the last keyframe specified but not equal to 1 should throw a NotSupportedError. 
+PASS Calling element.animate() with a keyframe that has no offset specified, is followed by other keyframes, and is the last keyframe for a property, should throw a NotSupportedError. 
+PASS Calling element.animate() with a keyframe that has no offset specified, is preceded by other keyframes, and is the first keyframe for a property, should throw a NotSupportedError. 
+Harness: the test ran to completion.
+

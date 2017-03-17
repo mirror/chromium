@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Test that presentation.receiver is present. 
+PASS Test that presentation.receiver returns null when the setting is not set. 
+PASS Test that presentation.receiver returns non-null when the setting is set. 
+PASS Test the Presentation Receiver API properties types and presence. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Check that block-size < min-block-size or min-block-size < block-size <= max-block-size or block-size > max-block-size 
+PASS Check that height override block-size and vice versa 
+PASS Check that block-size < min-block-size or min-block-size < block-size <= max-block-size or block-size > max-block-size in table 
+Harness: the test ran to completion.
+

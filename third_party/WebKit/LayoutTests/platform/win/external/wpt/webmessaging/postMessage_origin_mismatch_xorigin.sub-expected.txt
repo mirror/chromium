@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test Description: Cross-origin: If the origin of the target window doesn't match the given origin, the message is discarded. 
+Harness: the test ran to completion.
+

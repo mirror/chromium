@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS requestDevice called with acceptAllDevices: true and with no optionalServices. Should not get access to any services. 
+Harness: the test ran to completion.
+

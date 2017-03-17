@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Abs-pos in rel-pos container updates fixed-pos child when moved. 
+Harness: the test ran to completion.
+

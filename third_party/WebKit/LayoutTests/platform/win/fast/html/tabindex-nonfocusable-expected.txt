@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS Default tabIndex value of tagHYPERLINK <a> without href should be 0 
+PASS Default tabIndex value of tagINPUT[type=hidden] should be 0 
+PASS Default tabIndex value of tagINPUT[disabled] should be 0 
+PASS Default tabIndex value of tagSELECT[disabled] should be 0 
+PASS Default tabIndex value of tagTEXTAREA[disabled] should be 0 
+PASS Default tabIndex value of tagBUTTON[disabled] should be 0 
+PASS Default tabIndex value of tag OUTPUT should be -1 
+PASS Default tabIndex value of tag FIELDSET should be -1 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Keypath - ~260 chars 
+PASS Keypath - ~530 chars 
+PASS Keypath - ~1050 chars 
+Harness: the test ran to completion.
+

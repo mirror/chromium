@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test Description: postMessage with Document object: Throw a DataCloneError if message could not be cloned. 
+Harness: the test ran to completion.
+

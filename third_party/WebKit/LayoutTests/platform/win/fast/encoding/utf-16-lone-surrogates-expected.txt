@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS Decode utf-16: %69%D8%D6%DE%00%00 => U+D869/U+DED6/U+0000 
+PASS Decode utf-16: %D6%DE%69%D8%00%00 => U+FFFD/U+FFFD/U+0000 
+PASS Decode utf-16: %69%D8%00%00 => U+FFFD/U+0000 
+PASS Decode utf-16: %D6%DE%00%00 => U+FFFD/U+0000 
+PASS Decode utf-16be: %D8%69%DE%D6%00%00 => U+D869/U+DED6/U+0000 
+PASS Decode utf-16be: %DE%D6%D8%69%00%00 => U+FFFD/U+FFFD/U+0000 
+PASS Decode utf-16be: %D8%69%00%00 => U+FFFD/U+0000 
+PASS Decode utf-16be: %DE%D6%00%00 => U+FFFD/U+0000 
+Harness: the test ran to completion.
+

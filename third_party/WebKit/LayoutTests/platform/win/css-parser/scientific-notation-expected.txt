@@ -1,0 +1,174 @@
+This is a testharness.js-based test.
+PASS CSS.supports('opacity', "2e2") should return true 
+PASS e.style['opacity'] = "2e2" should set the value 
+PASS Serialization should round-trip after setting e.style['opacity'] = "2e2" 
+PASS CSS.supports('opacity', "2E2") should return true 
+PASS e.style['opacity'] = "2E2" should set the value 
+PASS Serialization should round-trip after setting e.style['opacity'] = "2E2" 
+PASS CSS.supports('opacity', "2e+2") should return true 
+PASS e.style['opacity'] = "2e+2" should set the value 
+PASS Serialization should round-trip after setting e.style['opacity'] = "2e+2" 
+PASS CSS.supports('opacity', "2E+2") should return true 
+PASS e.style['opacity'] = "2E+2" should set the value 
+PASS Serialization should round-trip after setting e.style['opacity'] = "2E+2" 
+PASS CSS.supports('opacity', "2e-2") should return true 
+PASS e.style['opacity'] = "2e-2" should set the value 
+PASS Serialization should round-trip after setting e.style['opacity'] = "2e-2" 
+PASS CSS.supports('opacity', "2E-2") should return true 
+PASS e.style['opacity'] = "2E-2" should set the value 
+PASS Serialization should round-trip after setting e.style['opacity'] = "2E-2" 
+PASS CSS.supports('opacity', "2e20") should return true 
+PASS e.style['opacity'] = "2e20" should set the value 
+PASS Serialization should round-trip after setting e.style['opacity'] = "2e20" 
+PASS CSS.supports('opacity', "2E20") should return true 
+PASS e.style['opacity'] = "2E20" should set the value 
+PASS Serialization should round-trip after setting e.style['opacity'] = "2E20" 
+PASS CSS.supports('opacity', "2e+20") should return true 
+PASS e.style['opacity'] = "2e+20" should set the value 
+PASS Serialization should round-trip after setting e.style['opacity'] = "2e+20" 
+PASS CSS.supports('opacity', "2E+20") should return true 
+PASS e.style['opacity'] = "2E+20" should set the value 
+PASS Serialization should round-trip after setting e.style['opacity'] = "2E+20" 
+PASS CSS.supports('opacity', "2e-20") should return true 
+PASS e.style['opacity'] = "2e-20" should set the value 
+PASS Serialization should round-trip after setting e.style['opacity'] = "2e-20" 
+PASS CSS.supports('opacity', "2E-20") should return true 
+PASS e.style['opacity'] = "2E-20" should set the value 
+PASS Serialization should round-trip after setting e.style['opacity'] = "2E-20" 
+PASS CSS.supports('opacity', "1e0") should return true 
+PASS e.style['opacity'] = "1e0" should set the value 
+PASS Serialization should round-trip after setting e.style['opacity'] = "1e0" 
+PASS CSS.supports('opacity', "1e+0") should return true 
+PASS e.style['opacity'] = "1e+0" should set the value 
+PASS Serialization should round-trip after setting e.style['opacity'] = "1e+0" 
+PASS CSS.supports('opacity', "1e-0") should return true 
+PASS e.style['opacity'] = "1e-0" should set the value 
+PASS Serialization should round-trip after setting e.style['opacity'] = "1e-0" 
+PASS CSS.supports('opacity', "1e10") should return true 
+PASS e.style['opacity'] = "1e10" should set the value 
+PASS Serialization should round-trip after setting e.style['opacity'] = "1e10" 
+PASS CSS.supports('opacity', "1e+10") should return true 
+PASS e.style['opacity'] = "1e+10" should set the value 
+PASS Serialization should round-trip after setting e.style['opacity'] = "1e+10" 
+PASS CSS.supports('opacity', "1e-10") should return true 
+PASS e.style['opacity'] = "1e-10" should set the value 
+PASS Serialization should round-trip after setting e.style['opacity'] = "1e-10" 
+PASS CSS.supports('width', "2e2px") should return true 
+PASS e.style['width'] = "2e2px" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "2e2px" 
+PASS CSS.supports('width', "2E2px") should return true 
+PASS e.style['width'] = "2E2px" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "2E2px" 
+PASS CSS.supports('width', "2e+2px") should return true 
+PASS e.style['width'] = "2e+2px" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "2e+2px" 
+PASS CSS.supports('width', "2E+2px") should return true 
+PASS e.style['width'] = "2E+2px" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "2E+2px" 
+PASS CSS.supports('width', "2e-2px") should return true 
+PASS e.style['width'] = "2e-2px" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "2e-2px" 
+PASS CSS.supports('width', "2E-2px") should return true 
+PASS e.style['width'] = "2E-2px" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "2E-2px" 
+PASS CSS.supports('width', "2e20px") should return true 
+PASS e.style['width'] = "2e20px" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "2e20px" 
+PASS CSS.supports('width', "2E20px") should return true 
+PASS e.style['width'] = "2E20px" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "2E20px" 
+PASS CSS.supports('width', "2e+20px") should return true 
+PASS e.style['width'] = "2e+20px" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "2e+20px" 
+PASS CSS.supports('width', "2E+20px") should return true 
+PASS e.style['width'] = "2E+20px" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "2E+20px" 
+PASS CSS.supports('width', "2e-20px") should return true 
+PASS e.style['width'] = "2e-20px" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "2e-20px" 
+PASS CSS.supports('width', "2E-20px") should return true 
+PASS e.style['width'] = "2E-20px" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "2E-20px" 
+PASS CSS.supports('width', "1e0px") should return true 
+PASS e.style['width'] = "1e0px" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "1e0px" 
+PASS CSS.supports('width', "1e+0px") should return true 
+PASS e.style['width'] = "1e+0px" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "1e+0px" 
+PASS CSS.supports('width', "1e-0px") should return true 
+PASS e.style['width'] = "1e-0px" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "1e-0px" 
+PASS CSS.supports('width', "1e10px") should return true 
+PASS e.style['width'] = "1e10px" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "1e10px" 
+PASS CSS.supports('width', "1e+10px") should return true 
+PASS e.style['width'] = "1e+10px" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "1e+10px" 
+PASS CSS.supports('width', "1e-10px") should return true 
+PASS e.style['width'] = "1e-10px" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "1e-10px" 
+PASS CSS.supports('width', "1e0em") should return true 
+PASS e.style['width'] = "1e0em" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "1e0em" 
+PASS CSS.supports('width', "1e+0em") should return true 
+PASS e.style['width'] = "1e+0em" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "1e+0em" 
+PASS CSS.supports('width', "1e-0em") should return true 
+PASS e.style['width'] = "1e-0em" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "1e-0em" 
+PASS CSS.supports('width', "1e10em") should return true 
+PASS e.style['width'] = "1e10em" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "1e10em" 
+PASS CSS.supports('width', "1e+10em") should return true 
+PASS e.style['width'] = "1e+10em" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "1e+10em" 
+PASS CSS.supports('width', "1e-10em") should return true 
+PASS e.style['width'] = "1e-10em" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "1e-10em" 
+PASS CSS.supports('width', "1e0%") should return true 
+PASS e.style['width'] = "1e0%" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "1e0%" 
+PASS CSS.supports('width', "1e+0%") should return true 
+PASS e.style['width'] = "1e+0%" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "1e+0%" 
+PASS CSS.supports('width', "1e-0%") should return true 
+PASS e.style['width'] = "1e-0%" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "1e-0%" 
+PASS CSS.supports('width', "1e10%") should return true 
+PASS e.style['width'] = "1e10%" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "1e10%" 
+PASS CSS.supports('width', "1e+10%") should return true 
+PASS e.style['width'] = "1e+10%" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "1e+10%" 
+PASS CSS.supports('width', "1e-10%") should return true 
+PASS e.style['width'] = "1e-10%" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "1e-10%" 
+PASS CSS.supports('opacity', "1e-600") should return true 
+PASS e.style['opacity'] = "1e-600" should set the value 
+PASS Serialization should round-trip after setting e.style['opacity'] = "1e-600" 
+PASS CSS.supports('width', "1e-600px") should return true 
+PASS e.style['width'] = "1e-600px" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "1e-600px" 
+PASS CSS.supports('width', "1e600px") should return true 
+PASS e.style['width'] = "1e600px" should set the value 
+PASS Serialization should round-trip after setting e.style['width'] = "1e600px" 
+PASS CSS.supports('opacity', "1e600") should return true 
+PASS e.style['opacity'] = "1e600" should set the value 
+PASS Serialization should round-trip after setting e.style['opacity'] = "1e600" 
+PASS CSS.supports('transform', "translateX(1e600px)") should return true 
+PASS e.style['transform'] = "translateX(1e600px)" should set the value 
+PASS Serialization should round-trip after setting e.style['transform'] = "translateX(1e600px)" 
+PASS CSS.supports('width', "1e+px") should return false 
+PASS e.style['width'] = "1e+px" should not set the value 
+PASS CSS.supports('width', "1e-px") should return false 
+PASS e.style['width'] = "1e-px" should not set the value 
+PASS CSS.supports('width', "1e1.0px") should return false 
+PASS e.style['width'] = "1e1.0px" should not set the value 
+PASS CSS.supports('width', "1e10.0px") should return false 
+PASS e.style['width'] = "1e10.0px" should not set the value 
+PASS CSS.supports('width', "1e1.0em") should return false 
+PASS e.style['width'] = "1e1.0em" should not set the value 
+PASS CSS.supports('width', "1e10.0em") should return false 
+PASS e.style['width'] = "1e10.0em" should not set the value 
+Harness: the test ran to completion.
+

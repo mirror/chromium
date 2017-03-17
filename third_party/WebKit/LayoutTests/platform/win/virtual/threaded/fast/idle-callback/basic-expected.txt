@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS window.requestIdleCallback is defined 
+PASS window.cancelIdleCallback is defined 
+PASS window.requestIdleCallback() returns a number 
+PASS window.cancelIdleCallback() returns undefined 
+PASS window.cancelIdleCallback() returns undefined for unmapped IDs 
+PASS requestIdleCallback schedules callbacks 
+PASS cancelIdleCallback cancels callbacks 
+Harness: the test ran to completion.
+

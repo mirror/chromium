@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that the cue root is not constrained by the controls/overlay. 
+Harness: the test ran to completion.
+

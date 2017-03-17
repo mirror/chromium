@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Suppress compat mouse events on click 
+PASS PointerEvent Automation 
+PASS primary pointer pointerdown@target0 
+PASS primary pointer pointerdown@target1 
+PASS Event log 
+Harness: the test ran to completion.
+

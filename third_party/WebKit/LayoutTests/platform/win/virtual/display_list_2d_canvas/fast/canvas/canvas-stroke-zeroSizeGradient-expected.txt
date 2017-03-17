@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Series of tests to ensure that stroke() paints nothing on canvas when the strokeStyle is set to a zero-size gradient. 
+Harness: the test ran to completion.
+

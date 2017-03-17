@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that the media player sends the User Agent string when requesting a media file. 
+Harness: the test ran to completion.
+

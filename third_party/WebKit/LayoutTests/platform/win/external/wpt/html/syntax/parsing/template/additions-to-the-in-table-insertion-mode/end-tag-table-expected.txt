@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS In table insertion mode. Ignore </table> token 
+Harness: the test ran to completion.
+

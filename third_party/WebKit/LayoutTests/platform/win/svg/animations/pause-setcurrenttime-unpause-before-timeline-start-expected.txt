@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS pause/setCurrentTime/unpause before timeline started gives correct presentation time 
+Harness: the test ran to completion.
+

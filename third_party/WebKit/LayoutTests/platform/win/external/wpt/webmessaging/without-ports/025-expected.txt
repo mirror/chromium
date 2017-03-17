@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS MessagePort constructor properties 
+PASS Worker MessageChannel's port should be an instance of MessagePort 
+PASS Worker MessagePort should not be [[Callable]] 
+Harness: the test ran to completion.
+

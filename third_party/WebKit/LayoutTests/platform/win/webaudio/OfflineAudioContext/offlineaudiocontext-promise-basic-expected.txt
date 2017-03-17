@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Promise from calling startRendering twice rejected correctly (with InvalidStateError: cannot startRendering when an OfflineAudioContext is running). 
+PASS context.state is equal to "closed". 
+PASS renderedData.numberOfChannels is equal to 2. 
+PASS renderedData.length is equal to 48000. 
+PASS OfflineAudioContext.startRendering promise rendered data correctly. 
+Harness: the test ran to completion.
+

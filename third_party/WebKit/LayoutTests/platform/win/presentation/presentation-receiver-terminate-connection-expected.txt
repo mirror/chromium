@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS receiver connection.terminate() should close receiver frame 
+Harness: the test ran to completion.
+

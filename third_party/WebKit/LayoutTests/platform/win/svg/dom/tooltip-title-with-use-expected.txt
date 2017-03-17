@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Tooltip title of title child under shadow root 
+PASS Tooltip title without any first level title child under shadow root. Should return empty string 
+PASS Tooltip title under Use 
+Harness: the test ran to completion.
+

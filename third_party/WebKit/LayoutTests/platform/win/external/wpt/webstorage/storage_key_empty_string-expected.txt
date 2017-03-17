@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS localStorage.key with empty string 
+PASS sessionStorage.key with empty string 
+Harness: the test ran to completion.
+

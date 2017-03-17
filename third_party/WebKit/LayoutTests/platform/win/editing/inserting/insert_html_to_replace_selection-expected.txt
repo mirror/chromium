@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Replace selection by insertHTML 
+Harness: the test ran to completion.
+

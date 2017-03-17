@@ -1,0 +1,16 @@
+CONSOLE WARNING: line 27: Calling Element.createShadowRoot() for an element which already hosts a shadow root is deprecated. See https://www.chromestatus.com/features/4668884095336448 for more details.
+This is a testharness.js-based test.
+PASS dir=rtl inherits into shadow trees 
+PASS dir=rtl applies to the distributed content 
+PASS dir=rtl applies to the distributed content with multiple shadow roots 
+PASS dir=rtl applies to the distributed content (multiple levels) 
+PASS dir=rtl applies to the content in older shadow roots 
+PASS dir=rtl applies to the re-distributed content through older shadow roots 
+PASS dir=auto the first character in the shadow trees 
+PASS dir=auto the first character in the distributed content 
+PASS dir=auto the first character in the distributed content with multiple shadow roots 
+PASS dir=auto the first character in the distributed content with multiple levels of shadow roots 
+PASS dir=auto the first character in the distributed content from older shadow roots 
+PASS dir=auto the first character in the re-distributed content through older shadow roots 
+Harness: the test ran to completion.
+

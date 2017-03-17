@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS 0 arguments (promise rejection) 
+PASS extra ShareData field (extra field ignored) 
+PASS 2 arguments (extra argument ignored) 
+Harness: the test ran to completion.
+

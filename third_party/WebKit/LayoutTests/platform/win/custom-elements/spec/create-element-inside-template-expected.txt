@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Custom element state in template content should be "not defined" 
+Harness: the test ran to completion.
+

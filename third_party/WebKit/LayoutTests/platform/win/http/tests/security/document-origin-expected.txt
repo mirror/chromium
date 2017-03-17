@@ -1,0 +1,12 @@
+This is a testharness.js-based test.
+PASS Top-level document. 
+PASS createHTMLDocument() 
+PASS about:blank IFrame. 
+PASS srcdoc IFrame. 
+PASS Same-origin IFrame. 
+PASS Cross-origin IFrame. 
+PASS data: IFrame. 
+PASS Sandboxed same-origin IFrame. 
+PASS Sandboxed cross-origin IFrame. 
+Harness: the test ran to completion.
+

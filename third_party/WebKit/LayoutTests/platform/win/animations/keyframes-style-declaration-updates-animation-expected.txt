@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Check that changes to keyframe style declarations update the animation accordingly 
+Harness: the test ran to completion.
+

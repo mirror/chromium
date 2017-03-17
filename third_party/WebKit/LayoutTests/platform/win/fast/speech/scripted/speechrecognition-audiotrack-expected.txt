@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS initial state 
+PASS setting to null/undefined 
+PASS setting to non-MediaStreamTrack values 
+PASS setting to MediaStreamTrack with kind "audio" 
+PASS setting to MediaStreamTrack with kind "video" 
+Harness: the test ran to completion.
+

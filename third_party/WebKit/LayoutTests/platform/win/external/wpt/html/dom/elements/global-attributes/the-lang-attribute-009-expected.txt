@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS If the HTTP header contains a language declaration but the html element uses an empty lang value, the UA will not recognize the language declared in the HTTP header. 
+Harness: the test ran to completion.
+

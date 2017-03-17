@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Test display floated 'inline-table' grid item 
+PASS Test display floated 'inline' grid item 
+PASS Test display floated 'flex' grid item 
+PASS Test display floated 'inline-table' grid item within an inline grid 
+PASS Test display floated 'inline' grid item within an inline grid 
+PASS Test display floated 'flex' grid item within an inline grid 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Nonced stylesheets load, and do not trigger reports. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS In body insertion mode: html start tag should add only absent attributes 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Make sure a parent block that fits content expands when a child adds an auto scrollbar. 
+Harness: the test ran to completion.
+

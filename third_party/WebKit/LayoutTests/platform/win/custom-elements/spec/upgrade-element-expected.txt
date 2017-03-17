@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS The constructor non-conformatly uses API decorated with the [CEReactions] when constuctor is invoked during upgrade 
+PASS The constructor non-conformatly uses API decorated with the [CEReactions] when constructor is invoked with new 
+PASS Upgrading an element with a throwing constructor should rethrow that exception 
+PASS Upgrading an element with constructor that returns different object 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Increasing detune to 1200 decreased the interval between impulses to half. 
+Harness: the test ran to completion.
+

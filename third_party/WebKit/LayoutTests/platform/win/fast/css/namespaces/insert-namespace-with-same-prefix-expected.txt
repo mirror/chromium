@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS If namespace prefix is declated more than once only the last declaration should be used 
+Harness: the test ran to completion.
+

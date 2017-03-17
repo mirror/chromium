@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS HTTP Referer should use the pushed state 
+PASS document.referrer should use the pushed state 
+PASS HTTP Referer should use the replaced state 
+PASS document.referrer should use the replaced state 
+Harness: the test ran to completion.
+

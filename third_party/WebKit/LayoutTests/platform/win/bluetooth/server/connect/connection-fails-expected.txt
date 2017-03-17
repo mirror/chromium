@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Adapter fails to connect to device. Should reject with the correct exception. 
+Harness: the test ran to completion.
+

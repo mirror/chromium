@@ -1,0 +1,42 @@
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = 6 duplicate test names: "node.channelCountMode is equal to "max".", "node.channelCountMode is equal to "explicit".", "node.channelInterpretation is equal to "speakers".", "node.channelInterpretation is equal to "discrete".", "node instanceof GainNode is equal to true.", "node.channelCount is equal to 2."
+PASS context = new OfflineAudioContext(...) did not throw an exception. 
+PASS new GainNode() threw TypeError: Failed to construct 'GainNode': 1 argument required, but only 0 present.. 
+PASS new GainNode(1) threw TypeError: Failed to construct 'GainNode': parameter 1 is not of type 'BaseAudioContext'.. 
+PASS new GainNode(context, 42) threw TypeError: Failed to construct 'GainNode': parameter 2 ('options') is not an object.. 
+PASS Invalid constructors correctly threw errors. 
+PASS node = new GainNode(context) did not throw an exception. 
+PASS node instanceof GainNode is equal to true. 
+PASS node.gain.value is equal to 1. 
+PASS node.channelCount is equal to 2. 
+PASS node.channelCountMode is equal to "max". 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new GainNode(context) constructed node with correct attributes. 
+PASS new GainNode(c, {channelCount: 17}} did not throw an exception. 
+PASS node.channelCount is equal to 17. 
+PASS new GainNode(c, {channelCount: 0}} threw NotSupportedError: Failed to construct 'GainNode': The channel count provided (0) is outside the range [1, 32].. 
+PASS new GainNode(c, {channelCount: 99}} threw NotSupportedError: Failed to construct 'GainNode': The channel count provided (99) is outside the range [1, 32].. 
+PASS new GainNode(c, {channelCountMode: "max"} did not throw an exception. 
+PASS node.channelCountMode is equal to "max". 
+PASS new GainNode(c, {channelCountMode: "clamped-max"} did not throw an exception. 
+PASS node.channelCountMode is equal to "clamped-max". 
+PASS new GainNode(c, {channelCountMode: "explicit"} did not throw an exception. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS new GainNode(c, {channelCountMode: "foobar"} threw TypeError: Failed to construct 'GainNode': The provided value 'foobar' is not a valid enum value of type ChannelCountMode.. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS new GainNode(c, {channelInterpretation: "speakers"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new GainNode(c, {channelInterpretation: "discrete"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS new GainNode(c, {channelInterpretation: "foobar"}) threw TypeError: Failed to construct 'GainNode': The provided value 'foobar' is not a valid enum value of type ChannelInterpretation.. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS AudioNodeOptions for GainNode were correctly handled. 
+PASS node = new GainNode(c, {"gain":-2}) did not throw an exception. 
+PASS node instanceof GainNode is equal to true. 
+PASS node.gain.value is equal to -2. 
+PASS node.channelCount is equal to 2. 
+PASS node.channelCountMode is equal to "max". 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new GainNode() with options constructed with correct attributes. 
+Harness: the test ran to completion.
+

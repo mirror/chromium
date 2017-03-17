@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS HTMLImageElement.width/height returns styled dimensions. 
+Harness: the test ran to completion.
+

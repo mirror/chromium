@@ -1,0 +1,32 @@
+This is a testharness.js-based test.
+PASS This test uses responsive-test.js. 
+PASS Untitled 
+PASS Untitled 1 
+PASS Untitled 2 
+PASS Untitled 3 
+PASS Untitled 4 
+PASS Untitled 5 
+PASS Untitled 6 
+PASS Untitled 7 
+PASS Untitled 8 
+PASS Untitled 9 
+PASS Untitled 10 
+PASS Untitled 11 
+PASS Untitled 12 
+PASS Animation on property <motionRotation> from [inherit] to [auto 40deg] with {"inherited":"50deg"} changed to {"inherited":"auto 20deg"} at (0.25) is [auto 25deg] 
+PASS Untitled 13 
+PASS Animation on property <motionRotation> from [inherit] to [auto 40deg] with {"inherited":"50deg"} changed to {"inherited":"auto 20deg"} at (0.75) is [auto 35deg] 
+PASS Untitled 14 
+PASS Animation on property <motionRotation> from [inherit] to [auto 40deg] with {"inherited":"auto 20deg"} changed to {"inherited":"50deg"} at (0.25) is [50deg] 
+PASS Untitled 15 
+PASS Animation on property <motionRotation> from [inherit] to [auto 40deg] with {"inherited":"auto 20deg"} changed to {"inherited":"50deg"} at (0.75) is [auto 40deg] 
+PASS Untitled 16 
+PASS Animation on property <motionRotation> from neutral to [80deg] with {"underlying":"auto 50deg"} changed to {"underlying":"40deg"} at (0.25) is [50deg] 
+PASS Untitled 17 
+PASS Animation on property <motionRotation> from neutral to [80deg] with {"underlying":"auto 50deg"} changed to {"underlying":"40deg"} at (0.75) is [70deg] 
+PASS Untitled 18 
+PASS Animation on property <motionRotation> from neutral to [80deg] with {"underlying":"40deg"} changed to {"underlying":"auto 50deg"} at (0.25) is [auto 50deg] 
+PASS Untitled 19 
+PASS Animation on property <motionRotation> from neutral to [80deg] with {"underlying":"40deg"} changed to {"underlying":"auto 50deg"} at (0.75) is [80deg] 
+Harness: the test ran to completion.
+

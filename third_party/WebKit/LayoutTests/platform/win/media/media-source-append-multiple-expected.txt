@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that a media element doesn't reload on removing the current source element and inserting a new source element. 
+Harness: the test ran to completion.
+

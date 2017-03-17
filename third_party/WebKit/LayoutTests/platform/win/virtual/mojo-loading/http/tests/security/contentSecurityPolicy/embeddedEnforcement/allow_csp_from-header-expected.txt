@@ -1,0 +1,22 @@
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-allow-csp-from-header.php?allow_csp_from=&id=1' because it has not opted-into the following policy required by its embedder: 'script-src 'unsafe-inline'; img-src 'none''.
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-allow-csp-from-header.php?allow_csp_from=*%20%C2%A2%C2%A5%C2%A7&id=3' because it has not opted-into the following policy required by its embedder: 'script-src 'unsafe-inline'; img-src 'none''.
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-allow-csp-from-multiple-headers.php?allow_csp_from=http://localhost:8000&allow_csp_from_2=*&id=7' because it has not opted-into the following policy required by its embedder: 'script-src 'unsafe-inline'; img-src 'none''.
+CONSOLE ERROR: line 26: Refused to load the image 'http://127.0.0.1:8000/security/contentSecurityPolicy/resources/green250x50.png' because it violates the following Content Security Policy directive: "img-src 'none'".
+
+CONSOLE ERROR: line 20: Refused to load the image 'http://localhost:8000/security/contentSecurityPolicy/resources/green250x50.png' because it violates the following Content Security Policy directive: "img-src 'none'".
+
+CONSOLE ERROR: line 21: Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'nonce-123'". Either the 'unsafe-inline' keyword, a hash ('sha256-JpRGYTSWedsoA0c2YukDSHeYllz3+lVRTbtnDL79zi0='), or a nonce ('nonce-...') is required to enable inline execution.
+
+CONSOLE ERROR: line 20: Refused to load the image 'http://localhost:8000/security/contentSecurityPolicy/resources/green250x50.png' because it violates the following Content Security Policy directive: "img-src 'none'".
+
+This is a testharness.js-based test.
+PASS Same origin iframes are always allowed. 
+PASS Cross origin iframe with requiredCSP but without Allow-CSP-From header gets blocked. 
+PASS iframe from cross origin does not load without Allow-CSP-From header. 
+PASS Iframe with improper Allow-CSP-From header gets blocked. 
+PASS Star Allow-CSP-From header can be returned. 
+PASS Allow-CSP-From header enforces EmbeddingCSP. 
+PASS Star Allow-CSP-From header allows the parent to enforce its Embedding CSP. 
+PASS Only first Allow-CSP-From header is considered. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests to make sure we can assign to non-ctm effected properties with a non-invertible ctm set 
+Harness: the test ran to completion.
+

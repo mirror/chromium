@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Verify that the placeholder <canvas> associated with an OffscreenCanvas tainted with cross-origin content cannot be read once commit has propagated. 
+Harness: the test ran to completion.
+

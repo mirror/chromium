@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS BR interchange-newline is not inserted 
+PASS Use existing DIV for partial replacement 
+PASS Replace text+BR to DIV 
+Harness: the test ran to completion.
+

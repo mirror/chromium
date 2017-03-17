@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS VTTCue constructor, non-finite start time 
+PASS VTTCue constructor, non-finite end time 
+PASS VTTCue constructor, valueOf 
+Harness: the test ran to completion.
+

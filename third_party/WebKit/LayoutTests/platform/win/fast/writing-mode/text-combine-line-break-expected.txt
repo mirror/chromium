@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS break after 
+PASS break before 
+PASS after open 
+PASS before close 
+PASS break after with break inside 
+PASS break before with break inside 
+PASS after open with break inside 
+PASS before close with break inside 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS HTML Test: Newly-Created browsing context Window and `this` 
+Harness: the test ran to completion.
+

@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS DataTransfer.types in dragleave 
+PASS DataTransfer.getData() return values in dragleave 
+PASS DataTransfer.files in dragleave 
+PASS DataTransfer.items in dragleave 
+Harness: the test ran to completion.
+

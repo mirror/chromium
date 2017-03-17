@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that a hash navigation in the unload handler will not block the initial navigation 
+Harness: the test ran to completion.
+

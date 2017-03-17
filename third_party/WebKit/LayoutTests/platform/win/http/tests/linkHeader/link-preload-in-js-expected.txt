@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Makes sure link preload headers are loaded on subresources 
+Harness: the test ran to completion.
+

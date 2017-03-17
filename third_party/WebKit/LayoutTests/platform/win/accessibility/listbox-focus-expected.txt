@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS menu list fires correct events when active index changes. 
+Harness: the test ran to completion.
+

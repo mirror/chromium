@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS CSS Shapes Test: Ellipse - invalid rx value 
+Harness: the test ran to completion.
+

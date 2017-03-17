@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Any linear function for easing other than "function (a){return a}" is counted in WebAnimationsEasingAsFunctionOther. 
+Harness: the test ran to completion.
+

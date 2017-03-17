@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS postMessage to a ServiceWorker (and back via MessagePort) 
+PASS postMessage a transferable ArrayBuffer between ServiceWorker and Client 
+PASS postMessage a transferable ArrayBuffer between ServiceWorker and Client over MessagePort 
+Harness: the test ran to completion.
+

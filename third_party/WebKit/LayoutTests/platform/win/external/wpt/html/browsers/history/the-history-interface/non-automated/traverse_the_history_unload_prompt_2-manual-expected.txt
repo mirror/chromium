@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Traversing the history, prompt in before unload, navigation allowed 
+Harness: the test ran to completion.
+

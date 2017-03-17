@@ -1,0 +1,22 @@
+CONSOLE ERROR: line 17: Error: <rect> attribute width: A negative value is not valid. ("-1")
+CONSOLE ERROR: line 31: Error: <path> attribute d: Unexpected end of attribute. Expected number, "M3".
+CONSOLE ERROR: line 35: Error: <polygon> attribute points: Unexpected end of attribute. Expected number, "47".
+CONSOLE ERROR: line 39: Error: <polyline> attribute points: Unexpected end of attribute. Expected number, "47".
+This is a testharness.js-based test.
+PASS getBBox on polygon with no points attribute 
+PASS getBBox on polyline with no points attribute 
+PASS getBBox on path with no d attribute 
+PASS getBBox on path with no valid path segments in d attribute 
+PASS getBBox on polygon with no valid point in the points attribute 
+PASS getBBox on polyline with no valid point in the points attribute 
+PASS polygon doesn't contribute to parent bbox 
+PASS group with hidden child 
+PASS path doesn't contribute to parent bbox 
+PASS path with only invalid segments doesn't contribute to parent bbox 
+PASS polyline doesn't contribute to parent bbox 
+PASS polygon with no valid points doesn't contribute to parent bbox 
+PASS polyline with no valid points doesn't contribute to parent bbox 
+PASS getBBox on path with no height 
+PASS path with no height should contribute to parent bbox 
+Harness: the test ran to completion.
+

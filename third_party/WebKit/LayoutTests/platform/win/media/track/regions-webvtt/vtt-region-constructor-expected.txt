@@ -1,0 +1,5 @@
+CONSOLE WARNING: line 18: The provided value 'invalid-scroll-value' is not a valid enum value of type ScrollSetting.
+This is a testharness.js-based test.
+PASS Tests the constructor and mutation of VTTRegion. 
+Harness: the test ran to completion.
+

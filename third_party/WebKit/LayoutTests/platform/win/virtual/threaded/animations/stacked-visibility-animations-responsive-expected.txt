@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Visibility animations with neutral keyframes should be responsive to animations they're stacked on top of. 
+Harness: the test ran to completion.
+

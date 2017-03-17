@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Draw commands with big numbers cause no problems. 
+Harness: the test ran to completion.
+

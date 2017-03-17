@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS attachShadow should not fail for an element in the safelist 
+PASS attachShadow should throw an exception for an element which is not in the safelist 
+PASS attachShadow should not fail for Custom Elements v1. 
+Harness: the test ran to completion.
+

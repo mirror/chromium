@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that a change from the worker thread is received on the main thread. 
+Harness: the test ran to completion.
+

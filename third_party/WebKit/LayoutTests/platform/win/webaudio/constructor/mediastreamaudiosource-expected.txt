@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS new MediaStreamAudioSourceNode() threw TypeError: Failed to construct 'MediaStreamAudioSourceNode': 2 arguments required, but only 0 present.. 
+PASS new MediaStreamAudioSourceNode(1) threw TypeError: Failed to construct 'MediaStreamAudioSourceNode': 2 arguments required, but only 1 present.. 
+PASS new MediaStreamAudioSourceNode(context, 42) threw TypeError: Failed to construct 'MediaStreamAudioSourceNode': parameter 2 ('options') is not an object.. 
+PASS Invalid constructors correctly threw errors. 
+PASS node = new MediaStreamAudioSourceNode(, {"mediaStream":{}}) threw InvalidStateError: Failed to construct 'MediaStreamAudioSourceNode': MediaStream has no audio track. 
+PASS new MediaStreamAudioSourceNode(c, options) constructed with correct attributes. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,9 @@
+CONSOLE ERROR: Refused to execute script from 'http://127.0.0.1:8000/security/contentTypeOptions/resources/script-with-header.pl?mime=image/gif&options=invalid' because its MIME type ('image/gif') is not executable.
+CONSOLE ERROR: Refused to execute script from 'http://127.0.0.1:8000/security/contentTypeOptions/resources/script-with-header.pl?mime=image/jpeg&options=invalid' because its MIME type ('image/jpeg') is not executable.
+CONSOLE ERROR: Refused to execute script from 'http://127.0.0.1:8000/security/contentTypeOptions/resources/script-with-header.pl?mime=IMAGE/PNG&options=invalid' because its MIME type ('image/png') is not executable.
+CONSOLE ERROR: Refused to execute script from 'http://127.0.0.1:8000/security/contentTypeOptions/resources/script-with-header.pl?mime=image/x-icon&options=invalid' because its MIME type ('image/x-icon') is not executable.
+CONSOLE ERROR: Refused to execute script from 'http://127.0.0.1:8000/security/contentTypeOptions/resources/script-with-header.pl?mime=image/svg+xml&options=invalid' because its MIME type ('image/svg xml') is not executable.
+This is a testharness.js-based test.
+PASS All image/* scripts should be blocked. 
+Harness: the test ran to completion.
+

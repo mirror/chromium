@@ -1,0 +1,5 @@
+CONSOLE WARNING: line 27: VREyeParameters.fieldOfView is deprecated. Please use projection matrices provided by VRFrameData instead.
+This is a testharness.js-based test.
+PASS Test that actual eye parameters match the expected parameters 
+Harness: the test ran to completion.
+

@@ -1,0 +1,24 @@
+This is a testharness.js-based test.
+PASS This test uses interpolation-test.js. 
+PASS SMIL: Interpolate attribute <baseFrequency> from replace [1] to replace [6 11] at (0) is [1, 1] 
+PASS SMIL: Interpolate attribute <baseFrequency> from replace [1] to replace [6 11] at (0.2) is [2, 3] 
+PASS SMIL: Interpolate attribute <baseFrequency> from replace [1] to replace [6 11] at (0.6) is [4, 7] 
+PASS SMIL: Interpolate attribute <baseFrequency> from replace [1] to replace [6 11] at (1) is [6, 11] 
+PASS Web Animations: Interpolate attribute <baseFrequency> from replace [1] to replace [6 11] at (-0.4) is [-1, -3] 
+PASS Web Animations: Interpolate attribute <baseFrequency> from replace [1] to replace [6 11] at (0) is [1, 1] 
+PASS Web Animations: Interpolate attribute <baseFrequency> from replace [1] to replace [6 11] at (0.2) is [2, 3] 
+PASS Web Animations: Interpolate attribute <baseFrequency> from replace [1] to replace [6 11] at (0.6) is [4, 7] 
+PASS Web Animations: Interpolate attribute <baseFrequency> from replace [1] to replace [6 11] at (1) is [6, 11] 
+PASS Web Animations: Interpolate attribute <baseFrequency> from replace [1] to replace [6 11] at (1.4) is [8, 15] 
+PASS SMIL: Interpolate attribute <baseFrequency> from replace [-2 10] to replace [3 10] at (0) is [-2 10] 
+PASS SMIL: Interpolate attribute <baseFrequency> from replace [-2 10] to replace [3 10] at (0.2) is [-1, 10] 
+PASS SMIL: Interpolate attribute <baseFrequency> from replace [-2 10] to replace [3 10] at (0.6) is [1, 10] 
+PASS SMIL: Interpolate attribute <baseFrequency> from replace [-2 10] to replace [3 10] at (1) is [3, 10] 
+PASS Web Animations: Interpolate attribute <baseFrequency> from replace [-2 10] to replace [3 10] at (-0.4) is [-4, 10] 
+PASS Web Animations: Interpolate attribute <baseFrequency> from replace [-2 10] to replace [3 10] at (0) is [-2 10] 
+PASS Web Animations: Interpolate attribute <baseFrequency> from replace [-2 10] to replace [3 10] at (0.2) is [-1, 10] 
+PASS Web Animations: Interpolate attribute <baseFrequency> from replace [-2 10] to replace [3 10] at (0.6) is [1, 10] 
+PASS Web Animations: Interpolate attribute <baseFrequency> from replace [-2 10] to replace [3 10] at (1) is [3, 10] 
+PASS Web Animations: Interpolate attribute <baseFrequency> from replace [-2 10] to replace [3 10] at (1.4) is [5, 10] 
+Harness: the test ran to completion.
+

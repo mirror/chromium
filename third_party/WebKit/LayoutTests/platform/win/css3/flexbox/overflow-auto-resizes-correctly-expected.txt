@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS hbox dimensions 
+PASS intrinsicHeightBox dimensions 
+PASS scrollbarSize should not be zero 
+PASS inner dimensions 
+PASS vbox dimensions 
+Harness: the test ran to completion.
+

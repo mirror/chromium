@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS InvalidStateError(Incorrect mode) vs. TransactionInactiveError 
+PASS InvalidStateError(Deleted ObjectStore) vs. TransactionInactiveError 
+PASS TransactionInactiveError vs. ConstraintError 
+PASS ConstraintError vs. SyntaxError 
+PASS SyntaxError vs. InvalidAccessError 
+Harness: the test ran to completion.
+

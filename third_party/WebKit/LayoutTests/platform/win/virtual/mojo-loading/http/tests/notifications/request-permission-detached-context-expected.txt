@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Requesting notification permission in a detached context should not crash. 
+Harness: the test ran to completion.
+

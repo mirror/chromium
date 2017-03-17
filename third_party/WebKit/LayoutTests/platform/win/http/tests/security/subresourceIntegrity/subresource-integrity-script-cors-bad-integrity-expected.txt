@@ -1,0 +1,11 @@
+CONSOLE ERROR: Failed to find a valid digest in the 'integrity' attribute for resource 'http://localhost:8000/security/resources/cors-script.php?value=ran&test=1' with computed SHA-256 integrity 'mk/DwEwGGoyrh4sgi9t0nYTO1Lrft3w6vzaNuMaZrtQ='. The resource has been blocked.
+CONSOLE ERROR: Failed to find a valid digest in the 'integrity' attribute for resource 'http://localhost:8000/security/resources/cors-script.php?value=ran&test=2' with computed SHA-256 integrity 'mk/DwEwGGoyrh4sgi9t0nYTO1Lrft3w6vzaNuMaZrtQ='. The resource has been blocked.
+CONSOLE ERROR: Failed to find a valid digest in the 'integrity' attribute for resource 'http://localhost:8000/security/resources/cors-script.php?value=ran&test=4' with computed SHA-256 integrity 'mk/DwEwGGoyrh4sgi9t0nYTO1Lrft3w6vzaNuMaZrtQ='. The resource has been blocked.
+CONSOLE ERROR: Failed to find a valid digest in the 'integrity' attribute for resource 'http://localhost:8000/security/resources/cors-script.php?value=ran&test=3' with computed SHA-256 integrity 'mk/DwEwGGoyrh4sgi9t0nYTO1Lrft3w6vzaNuMaZrtQ='. The resource has been blocked.
+This is a testharness.js-based test.
+PASS 1st Clause, Step 23 of prepare a script 
+PASS 2nd Clause, Step 23 of prepare a script 
+PASS 3rd Clause, Step 23 of prepare a script 
+PASS 4th Clause, Step 23 of prepare a script 
+Harness: the test ran to completion.
+

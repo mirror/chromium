@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that loading a video element with preload "none" changes its effective preload to "metadata" 
+Harness: the test ran to completion.
+

@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS when duration is changed 
+PASS when endDelay is changed 
+PASS when iterations is changed 
+PASS when currentTime changed in duration:1000, delay: 500, endDelay: -500 
+PASS when currentTime changed in duration:1000, delay: -500, endDelay: -500 
+Harness: the test ran to completion.
+

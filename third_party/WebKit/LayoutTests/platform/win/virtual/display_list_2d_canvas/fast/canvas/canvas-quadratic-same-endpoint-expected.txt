@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Bug 105650: Test correct rendering of quadratic and bezier curves with coincident endpoints 
+Harness: the test ran to completion.
+

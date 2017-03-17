@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS insert an XHTML fragment with in-scope namespace prefixes on attributes 
+Harness: the test ran to completion.
+

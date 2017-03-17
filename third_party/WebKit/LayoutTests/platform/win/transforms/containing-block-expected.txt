@@ -1,0 +1,17 @@
+This is a testharness.js-based test.
+PASS transform establishes containing block 
+PASS will-change: transform establishes containing block 
+PASS perspective establishes containing block 
+PASS will-change: perspective establishes containing block 
+PASS translate establishes containing block 
+PASS will-change: translate establishes containing block 
+PASS scale establishes containing block 
+PASS will-change: scale establishes containing block 
+PASS rotate establishes containing block 
+PASS will-change: rotate establishes containing block 
+PASS offset-position establishes containing block 
+PASS will-change: offset-position establishes containing block 
+PASS offset-path establishes containing block 
+PASS will-change: offset-path establishes containing block 
+Harness: the test ran to completion.
+

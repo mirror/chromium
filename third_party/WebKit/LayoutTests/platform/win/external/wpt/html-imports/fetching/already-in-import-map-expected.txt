@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS If LOCATION is already in the import map, let IMPORT be the imported document for LOCATION and stop. (1) 
+PASS If LOCATION is already in the import map, let IMPORT be the imported document for LOCATION and stop. (2) 
+Harness: the test ran to completion.
+

@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS Custom iterator with basic keyframes. 
+PASS Custom iterator in property indexed keyframes. 
+PASS easing and offset are ignored on iterable objects. 
+PASS Custom iterator with multiple properties specified. 
+PASS Custom iterator with offset specified. 
+PASS Custom iterator with non object keyframe should throw. 
+PASS Custom iterator with value list in keyframe should throw. 
+PASS Custom iterator in property indexed keyframes with null toString method should throw. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS These tests requires navigator.storage 
+PASS navigator.storage.persist returns a promise that resolves. 
+PASS navigator.storage.persisted returns a promise that resolves. 
+Harness: the test ran to completion.
+

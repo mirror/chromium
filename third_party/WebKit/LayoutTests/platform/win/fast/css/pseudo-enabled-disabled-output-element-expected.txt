@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This test performs a check for output element not to be considered for :enabled and :disabled CSS selectors. 
+Harness: the test ran to completion.
+

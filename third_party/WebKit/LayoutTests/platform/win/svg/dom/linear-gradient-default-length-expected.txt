@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Testing SVGLinearGradientElement coordinate defaults x1 
+PASS Testing SVGLinearGradientElement coordinate defaults x2 
+PASS Testing SVGLinearGradientElement coordinate defaults y1 
+PASS Testing SVGLinearGradientElement coordinate defaults y2 
+Harness: the test ran to completion.
+

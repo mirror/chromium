@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS insertAdjacentHTML(beforebegin, <h3>beforebegin</h3> ) 
+PASS insertAdjacentHTML(afterbegin, <h3>afterbegin</h3> ) 
+PASS insertAdjacentHTML(beforeend, <h3>beforeend</h3> ) 
+PASS insertAdjacentHTML(afterend, <h3>afterend</h3> ) 
+Harness: the test ran to completion.
+

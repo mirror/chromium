@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Background color needs to resolved to green independent of ordering of variable declaration. 
+Harness: the test ran to completion.
+

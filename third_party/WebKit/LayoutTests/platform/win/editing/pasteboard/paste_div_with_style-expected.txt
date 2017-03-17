@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS paste should not create empty style or font tags 
+Harness: the test ran to completion.
+

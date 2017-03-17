@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Testing Cut and Paste ordering 
+PASS Testing Cut and Paste data&dataTransfer 
+PASS Testing Cut and Paste preventDefault() 
+Harness: the test ran to completion.
+

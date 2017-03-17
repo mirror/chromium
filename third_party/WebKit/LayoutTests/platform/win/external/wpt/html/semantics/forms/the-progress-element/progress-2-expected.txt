@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS progress position equals -1 
+PASS progress value equals 0 
+PASS progress value equals .5 
+PASS progress position equals 0 
+Harness: the test ran to completion.
+

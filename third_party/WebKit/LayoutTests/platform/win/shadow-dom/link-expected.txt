@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS <link rel=stylesheet> should load a stylesheet in a connected shadow tree. 
+Harness: the test ran to completion.
+

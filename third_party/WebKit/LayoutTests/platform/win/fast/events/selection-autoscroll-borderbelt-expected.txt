@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Selection-autoscroll should be triggered when the mouse is within the border belt 
+Harness: the test ran to completion.
+

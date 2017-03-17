@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS buffer.getChannelData(0) === buffer.getChannelData(0) is equal to true. 
+PASS buffer.getChannelData(1) === buffer.getChannelData(1) is equal to true. 
+PASS getChannelData correctly returned the same buffer. 
+PASS buffer1.getChannelData(0) === buffer2.getChannelData(0) is equal to false. 
+PASS buffer1.getChannelData(1) === buffer2.getChannelData(1) is equal to false. 
+PASS getChannelData correctly returned different buffers. 
+Harness: the test ran to completion.
+

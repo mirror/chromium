@@ -1,0 +1,10 @@
+CONSOLE WARNING: line 32: The provided value '3.1415' is not a valid enum value of type ScrollRestoration.
+CONSOLE WARNING: line 32: The provided value '[object Object]' is not a valid enum value of type ScrollRestoration.
+CONSOLE WARNING: line 32: The provided value 'bogus' is not a valid enum value of type ScrollRestoration.
+This is a testharness.js-based test.
+PASS Basic existence 
+PASS Default value is "auto" 
+PASS It is writable 
+PASS Invalid values are ignored 
+Harness: the test ran to completion.
+

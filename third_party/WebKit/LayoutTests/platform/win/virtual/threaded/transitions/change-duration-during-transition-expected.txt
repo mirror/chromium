@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Transition duration change should not affect transition in progress 
+Harness: the test ran to completion.
+

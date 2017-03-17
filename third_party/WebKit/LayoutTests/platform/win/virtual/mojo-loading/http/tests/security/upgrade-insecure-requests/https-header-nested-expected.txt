@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Verify that nested documents receive an 'HTTPS' header. 
+Harness: the test ran to completion.
+

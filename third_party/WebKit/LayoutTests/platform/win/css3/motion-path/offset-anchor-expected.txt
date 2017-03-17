@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS offset-anchor default is auto 
+PASS offset-anchor can be two percentages 
+PASS offset-anchor can explicitly inherited 
+PASS offset-anchor is not inherited by default 
+PASS offset-anchor can be auto 
+PASS offset-anchor can be two lengths 
+PASS offset-anchor can be a length and a keyword 
+PASS offset-anchor can be a keyword and a length 
+PASS offset-anchor can be supplied with a single keyword 
+PASS offset-anchor can be supplied with center 
+PASS offset-anchor can be supplied with em 
+Harness: the test ran to completion.
+

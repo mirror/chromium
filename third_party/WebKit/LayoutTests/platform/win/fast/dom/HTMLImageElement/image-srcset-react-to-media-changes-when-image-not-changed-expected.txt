@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Make sure the image's display dimensions adapt to viewport changes even if the picked resource wasn't changed 
+Harness: the test ran to completion.
+

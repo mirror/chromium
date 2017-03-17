@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS shared worker, no error event on worker or port 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS auto-positioned abspos, containing block on the outside of the multicol. 
+Harness: the test ran to completion.
+

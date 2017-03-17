@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Getting implementation off the same document 
+PASS Getting implementation off different documents 
+Harness: the test ran to completion.
+

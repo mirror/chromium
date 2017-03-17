@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS internals are exposed 
+PASS #i3 red before mutations 
+PASS #i3 recalculated 
+PASS #i3 not red after mutations 
+Harness: the test ran to completion.
+

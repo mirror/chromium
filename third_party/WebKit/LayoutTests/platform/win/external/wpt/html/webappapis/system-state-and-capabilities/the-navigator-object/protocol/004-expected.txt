@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL Non-matching url in isProtocolHandlerRegistered Failed to execute 'isProtocolHandlerRegistered' on 'Navigator': Can only register custom handler in the document's origin.
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBCursor.continue() - index - attempt to pass a key parameter that is not a valid key 
+Harness: the test ran to completion.
+

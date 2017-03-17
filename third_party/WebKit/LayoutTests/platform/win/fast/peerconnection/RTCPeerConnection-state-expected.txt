@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests the RTCPeerConnection "stable" and "closed" signalingState strings. 
+Harness: the test ran to completion.
+

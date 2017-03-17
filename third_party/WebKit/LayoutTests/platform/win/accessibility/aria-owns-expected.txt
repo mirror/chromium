@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS Aria-owns moves an element from one part of the tree to another. 
+PASS If two nodes own (using aria-owns) the same element by id, only one gets to be the owner. 
+PASS An aria-owns relationship that would create a cycle is ignored. 
+PASS An element can't own itself. 
+PASS An object cannot use aria-owns to own its own parent. 
+PASS A parent can use aria-owns to reorder its children into a more logical AX ordering. 
+PASS No crash if an aria-owns parent is deleted and the child is re-added. 
+Harness: the test ran to completion.
+

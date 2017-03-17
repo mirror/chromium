@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS HTMLTableRowElement cells ignores nested tables and non-HTML elements 
+Harness: the test ran to completion.
+

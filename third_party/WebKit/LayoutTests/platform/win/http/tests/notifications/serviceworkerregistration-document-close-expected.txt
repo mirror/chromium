@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Clicking on a notification displayed through showNotification() fires a Service Worker event, and can be closed there. 
+Harness: the test ran to completion.
+

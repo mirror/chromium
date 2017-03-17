@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Aria-labelledby can get accessible text from aria-hidden subtree 
+PASS Aria-labelledby ignores accessible text that's aria-hidden inside subtree 
+PASS Aria-labelledby can get accessible text from within aria-hidden subtree 
+PASS Aria-labelledby of aria-hidden subtree with another aria-hidden inside 
+PASS Label can get accessible text from aria-hidden subtree 
+Harness: the test ran to completion.
+

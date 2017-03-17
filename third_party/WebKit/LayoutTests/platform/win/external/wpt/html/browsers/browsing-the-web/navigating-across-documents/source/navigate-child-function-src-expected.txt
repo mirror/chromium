@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Set src from a function called from a parent 
+Harness: the test ran to completion.
+

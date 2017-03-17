@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS postMessage MessagePorts from client to SW in a different process 
+Harness: the test ran to completion.
+

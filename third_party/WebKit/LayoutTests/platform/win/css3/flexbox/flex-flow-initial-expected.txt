@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS initial value is correct 
+Harness: the test ran to completion.
+

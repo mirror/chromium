@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS getFrameData does not update objects until data is available after rAF call 
+Harness: the test ran to completion.
+

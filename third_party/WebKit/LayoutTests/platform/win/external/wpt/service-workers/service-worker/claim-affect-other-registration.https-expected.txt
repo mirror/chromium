@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS claim() should affect the originally controlling registration. 
+Harness: the test ran to completion.
+

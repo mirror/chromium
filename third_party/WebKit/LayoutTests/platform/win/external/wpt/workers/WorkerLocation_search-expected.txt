@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS  WorkerLocation URL decomposition IDL attribute: search  
+Harness: the test ran to completion.
+

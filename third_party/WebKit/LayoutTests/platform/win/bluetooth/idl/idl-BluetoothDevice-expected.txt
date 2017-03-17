@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS BluetoothDevice IDL test 
+PASS BluetoothDevice attributes. 
+Harness: the test ran to completion.
+

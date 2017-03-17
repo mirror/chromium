@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS Empty string as a name for Document.getElementsByTagName 
+PASS Empty string as a name for Element.getElementsByTagName 
+PASS Empty string as a name for Document.getElementsByTagNameNS 
+PASS Empty string as a name for Element.getElementsByTagNameNS 
+PASS Empty string as a name for Document.getElementsByClassName 
+PASS Empty string as a name for Element.getElementsByClassName 
+PASS Empty string as a name for Element.children 
+Harness: the test ran to completion.
+

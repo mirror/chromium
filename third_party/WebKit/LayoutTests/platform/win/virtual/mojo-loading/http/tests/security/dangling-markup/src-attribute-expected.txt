@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS <img id="dangling" src="http://127.0.0.1:8000/security/resources/abe.png?img=a&#10;b&lt;c"> 
+PASS       <img id="dangling" src="http://127.0.0.1:8000/security/resources/abe.png?img=a        b&lt;c      ">     
+PASS <img id="dangling" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEwAAABnAQMAAACQMjadAAAAA1BMVEX///+nxBvIAAAAEUlEQVQ4y2MYBaNgFIwCegAABG0AAd5G4RkAAAAASUVORK5CYII="> 
+PASS <img id="dangling" src="http://127.0.0.1:8000/security/resources/abe.png?data=a&#10;b"> 
+PASS <img id="dangling" src="http://127.0.0.1:8000/security/resources/abe.png?img=a&lt;b"> 
+PASS <img id="dangling" src="http://127.0.0.1:8000/security/resources/abe.png?data=a&amp;#10;b"> 
+PASS <img id="dangling" src="http://127.0.0.1:8000/security/resources/abe.png?img=a&amp;lt;b"> 
+PASS <img id="dangling" src="http://127.0.0.1:8000/security/resources/abe.png?img=a&amp;#10;b&amp;lt;c"> 
+PASS       <img id="dangling" src="        http://127.0.0.1:8000/security/resources/abe.png      ">      <input type=hidden name=csrf value=sekrit>     
+PASS       <img id="dangling" src="      http://127.0.0.1:8000/security/resources/abe.png?img=&amp;lt;      ">      <input type=hidden name=csrf value=sekrit>     
+PASS       <img id="dangling" src="      http://127.0.0.1:8000/security/resources/abe.png?img=&amp;#10;      ">      <input type=hidden name=csrf value=sekrit>     
+Harness: the test ran to completion.
+

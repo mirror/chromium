@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Serial Number String characteristic is blocklisted. Should reject with SecurityError. 
+Harness: the test ran to completion.
+

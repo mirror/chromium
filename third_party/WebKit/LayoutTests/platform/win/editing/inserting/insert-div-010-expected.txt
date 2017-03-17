@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS insert BR before a character 
+Harness: the test ran to completion.
+

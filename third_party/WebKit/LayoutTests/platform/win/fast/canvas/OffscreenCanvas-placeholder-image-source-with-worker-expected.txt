@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that using a placeholder canvas as a source image accesses the image that was committed to the associated OffscreenCanvas in a worker. 
+Harness: the test ran to completion.
+

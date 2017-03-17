@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Verify redirect mode of Fetch API and ServiceWorker FetchEvent. 
+PASS Verify redirected of Response(Fetch API) and ServiceWorker FetchEvent. 
+PASS Verify redirected of Response(Fetch API), Cache API and ServiceWorker FetchEvent. 
+Harness: the test ran to completion.
+

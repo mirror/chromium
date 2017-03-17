@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS A script element with both async and defer set should execute asynchronously 
+Harness: the test ran to completion.
+

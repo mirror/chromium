@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Check that inline-size < min-inline-size or min-inline-size < inline-size <= max-inline-size or inline-size > max-inline-size 
+PASS Check that width override inline-size and vice versa 
+PASS Check that inline-size < min-inline-size or min-inline-size < inline-size <= max-inline-size or inline-size > max-inline-size in table 
+Harness: the test ran to completion.
+

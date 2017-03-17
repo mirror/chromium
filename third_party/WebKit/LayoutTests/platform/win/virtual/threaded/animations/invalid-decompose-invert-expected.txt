@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Don't crash MSAN when decomposing a matrix that has an invalid inversion step. 
+Harness: the test ran to completion.
+

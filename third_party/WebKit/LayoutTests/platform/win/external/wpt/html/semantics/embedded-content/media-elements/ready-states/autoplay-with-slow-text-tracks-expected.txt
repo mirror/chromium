@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS autoplay with slow text tracks 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL Tests that a track with the "default" attribute loads automatically. assert_equals: expected "default" but got ""
+Harness: the test ran to completion.
+

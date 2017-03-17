@@ -1,0 +1,8 @@
+CONSOLE ERROR: Refused to execute script from 'http://127.0.0.1:8000/security/contentTypeOptions/resources/script-with-header.pl?mime=text/csv&options=invalid' because its MIME type ('text/csv') is not executable.
+CONSOLE MESSAGE: line 1: Executed script with MIME type: 'text/html'.
+CONSOLE MESSAGE: line 1: Executed script with MIME type: 'text/plain'.
+This is a testharness.js-based test.
+PASS text/csv scripts should be blocked. 
+PASS text/[not-csv] scripts should not be blocked. 
+Harness: the test ran to completion.
+

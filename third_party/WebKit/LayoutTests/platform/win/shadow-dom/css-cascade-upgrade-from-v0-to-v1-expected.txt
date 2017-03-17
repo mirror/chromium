@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Upgrading V0 to V1 should cause style recalculation. 
+Harness: the test ran to completion.
+

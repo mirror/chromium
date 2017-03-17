@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS child-indexed pseudo-classes should match without a parent 
+Harness: the test ran to completion.
+

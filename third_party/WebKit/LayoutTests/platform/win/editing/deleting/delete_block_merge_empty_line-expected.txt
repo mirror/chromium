@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Delete characters crossing DIV 
+PASS Delete characters before DIV 
+PASS Delete characters to middle of DIV 
+Harness: the test ran to completion.
+

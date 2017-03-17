@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Embedding_CSP is not sent if csp attribute is not set on <iframe>. 
+PASS <iframe csp> sends an Embedding-CSP request header. 
+PASS Set Embedding-CSP Header on change of window's location. 
+PASS Set Embedding-CSP Header on change of src attribute on iframe. 
+PASS Set Embedding-CSP Header on redirect in <iframe>. 
+PASS Set Embedding-CSP Header on change of csp attribte and redirect. 
+Harness: the test ran to completion.
+

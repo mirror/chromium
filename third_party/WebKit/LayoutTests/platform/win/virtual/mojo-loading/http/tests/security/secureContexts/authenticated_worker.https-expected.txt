@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Sanity-check the test runner. 
+PASS Secure workers are secure. 
+PASS Secure workers created from 'blob:' are secure. 
+PASS Secure shared workers are secure. 
+PASS Secure shared workers created from 'blob:' are secure. 
+Harness: the test ran to completion.
+

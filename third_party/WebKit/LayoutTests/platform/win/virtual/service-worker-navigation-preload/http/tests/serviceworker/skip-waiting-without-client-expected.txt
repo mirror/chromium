@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Test single skipWaiting() when no client attached 
+PASS skipWaiting 
+Harness: the test ran to completion.
+

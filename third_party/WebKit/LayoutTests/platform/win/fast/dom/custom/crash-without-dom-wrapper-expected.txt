@@ -1,0 +1,5 @@
+CONSOLE ERROR: line 1: Uncaught TypeError: Cannot read property 'remove' of null
+This is a testharness.js-based test.
+PASS crash expected without crbug/446076 fix 
+Harness: the test ran to completion.
+

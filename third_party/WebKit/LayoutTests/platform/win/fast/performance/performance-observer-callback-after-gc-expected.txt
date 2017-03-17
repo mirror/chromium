@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Callback should be invoked after gc 
+Harness: the test ran to completion.
+

@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Elements in a shadow tree should be accessible from shadow root's querySelector() method. 
+PASS Elements in a shadow tree should be accessible from shadow root's querySelectorAll() method. 
+Harness: the test ran to completion.
+

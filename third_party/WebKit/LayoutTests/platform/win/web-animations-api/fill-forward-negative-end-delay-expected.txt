@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Negative end delay clipping into the start of the animation 
+PASS Negative end delay clipping to the end of the the first iteration 
+PASS Negative end delay clipping part way into the second iteration 
+PASS Negative end delay clipping into zero iterations 
+Harness: the test ran to completion.
+

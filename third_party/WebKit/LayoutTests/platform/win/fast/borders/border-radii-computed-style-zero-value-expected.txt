@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that computed style for border-*-radius doesn't serialize as '0px' when one dimension is 0px and the other isn't 
+Harness: the test ran to completion.
+

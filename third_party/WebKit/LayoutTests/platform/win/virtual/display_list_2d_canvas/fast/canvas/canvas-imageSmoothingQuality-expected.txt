@@ -1,0 +1,8 @@
+CONSOLE WARNING: line 44: The provided value '3223' is not a valid enum value of type ImageSmoothingQuality.
+CONSOLE WARNING: line 44: The provided value 'bad_input' is not a valid enum value of type ImageSmoothingQuality.
+CONSOLE WARNING: line 44: The provided value 'LOW' is not a valid enum value of type ImageSmoothingQuality.
+CONSOLE WARNING: line 44: The provided value 'Medium' is not a valid enum value of type ImageSmoothingQuality.
+This is a testharness.js-based test.
+PASS Tests for the imageSmoothingQuality attribute. 
+Harness: the test ran to completion.
+

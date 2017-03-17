@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS getAll() basics 
+PASS getAll() multiples 
+Harness: the test ran to completion.
+

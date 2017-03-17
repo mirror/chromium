@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Setting `document.domain` to null fails. 
+PASS Setting `document.domain` to the empty string fails. 
+PASS Setting an invalid `document.domain` that looks like an IP address fails. 
+PASS Setting `document.domain` to a host that fails to parse fails. 
+Harness: the test ran to completion.
+

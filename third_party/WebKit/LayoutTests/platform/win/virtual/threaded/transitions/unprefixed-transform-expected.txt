@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Transition on the prefixed and/or unprefixed transform property causes a single transitionend event for the unprefixed transform property. 
+Harness: the test ran to completion.
+

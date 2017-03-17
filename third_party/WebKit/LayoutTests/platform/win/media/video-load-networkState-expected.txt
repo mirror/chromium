@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that setting src to an invalid url triggers load(), which sets networkState to NETWORK_NO_SOURCE. Setting src to a valid url should then trigger the loading events and end up with networkState >= NETWORK_LOADING. 
+Harness: the test ran to completion.
+

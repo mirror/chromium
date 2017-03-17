@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS getRegistration 
+PASS Register then getRegistration 
+PASS Register then getRegistration with a URL having a fragment 
+PASS getRegistration with a cross origin URL 
+PASS Register then Unregister then getRegistration 
+Harness: the test ran to completion.
+

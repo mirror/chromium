@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS getting name 
+PASS getting name 1 
+PASS getting name 2 
+Harness: the test ran to completion.
+

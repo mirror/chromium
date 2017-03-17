@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBRequest.result throws if ready state is pending 
+Harness: the test ran to completion.
+

@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS No initializer passed 
+PASS platforms is passed 
+PASS preventDefault called 
+PASS prompt() called and rejected 
+PASS userChoice accessed, throws and rejects 
+Harness: the test ran to completion.
+

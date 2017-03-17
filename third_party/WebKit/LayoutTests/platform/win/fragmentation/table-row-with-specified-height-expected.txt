@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Row height should be as specified. 
+PASS Row height should be as specified after relayout. 
+PASS Row height should be as specified after another relayout. 
+PASS Row height should be as specified after yet another relayout. 
+Harness: the test ran to completion.
+

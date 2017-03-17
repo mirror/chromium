@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Check that multiple calls to requestAnimationFrame with the same callback will result in multiple entries being in the list with that same callback. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Non-redirected same-origin URLs are not stripped. 
+Harness: the test ran to completion.
+

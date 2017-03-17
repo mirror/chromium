@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Clear key support for "webm". 
+PASS Clear key support for "cenc". 
+PASS Clear key support for "keyids". 
+Harness: the test ran to completion.
+

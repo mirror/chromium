@@ -1,0 +1,62 @@
+This is a testharness.js-based test.
+PASS CSS.supports('content', "\"a\"") should return true 
+PASS e.style['content'] = "\"a\"" should set the value 
+PASS Serialization should round-trip after setting e.style['content'] = "\"a\"" 
+PASS CSS.supports('content', "open-quote") should return true 
+PASS e.style['content'] = "open-quote" should set the value 
+PASS Serialization should round-trip after setting e.style['content'] = "open-quote" 
+PASS CSS.supports('content', "normal") should return true 
+PASS e.style['content'] = "normal" should set the value 
+PASS Serialization should round-trip after setting e.style['content'] = "normal" 
+PASS CSS.supports('content', "none") should return true 
+PASS e.style['content'] = "none" should set the value 
+PASS Serialization should round-trip after setting e.style['content'] = "none" 
+PASS CSS.supports('content', "url(\"test.html\")") should return true 
+PASS e.style['content'] = "url(\"test.html\")" should set the value 
+PASS Serialization should round-trip after setting e.style['content'] = "url(\"test.html\")" 
+PASS CSS.supports('content', "normal normal") should return false 
+PASS e.style['content'] = "normal normal" should not set the value 
+PASS CSS.supports('content', "normal \"a\"") should return false 
+PASS e.style['content'] = "normal \"a\"" should not set the value 
+PASS CSS.supports('content', "normal url(\"test.html\")") should return false 
+PASS e.style['content'] = "normal url(\"test.html\")" should not set the value 
+PASS CSS.supports('content', "normal open-quote") should return false 
+PASS e.style['content'] = "normal open-quote" should not set the value 
+PASS CSS.supports('content', "\"a\" normal") should return false 
+PASS e.style['content'] = "\"a\" normal" should not set the value 
+PASS CSS.supports('content', "url(\"test.html\") normal") should return false 
+PASS e.style['content'] = "url(\"test.html\") normal" should not set the value 
+PASS CSS.supports('content', "'open-quote' normal") should return false 
+PASS e.style['content'] = "'open-quote' normal" should not set the value 
+PASS CSS.supports('content', "normal none") should return false 
+PASS e.style['content'] = "normal none" should not set the value 
+PASS CSS.supports('content', "none normal") should return false 
+PASS e.style['content'] = "none normal" should not set the value 
+PASS CSS.supports('content', "none none") should return false 
+PASS e.style['content'] = "none none" should not set the value 
+PASS CSS.supports('content', "none \"a\"") should return false 
+PASS e.style['content'] = "none \"a\"" should not set the value 
+PASS CSS.supports('content', "none url(\"test.html\")") should return false 
+PASS e.style['content'] = "none url(\"test.html\")" should not set the value 
+PASS CSS.supports('content', "none open-quote") should return false 
+PASS e.style['content'] = "none open-quote" should not set the value 
+PASS CSS.supports('content', "\"a\" none") should return false 
+PASS e.style['content'] = "\"a\" none" should not set the value 
+PASS CSS.supports('content', "url(\"test.html\") none") should return false 
+PASS e.style['content'] = "url(\"test.html\") none" should not set the value 
+PASS CSS.supports('content', "open-quote none") should return false 
+PASS e.style['content'] = "open-quote none" should not set the value 
+PASS CSS.supports('content', "not valid content") should return false 
+PASS e.style['content'] = "not valid content" should not set the value 
+PASS CSS.supports('content', "open-quote invalid content") should return false 
+PASS e.style['content'] = "open-quote invalid content" should not set the value 
+PASS CSS.supports('content', "\"a\" still not valid") should return false 
+PASS e.style['content'] = "\"a\" still not valid" should not set the value 
+PASS CSS.supports('content', "bla &@#$&^") should return false 
+PASS e.style['content'] = "bla &@#$&^" should not set the value 
+PASS CSS.supports('content', "'foo' *(&^") should return false 
+PASS e.style['content'] = "'foo' *(&^" should not set the value 
+PASS CSS.supports('content', "open-quote 1+2+3=6") should return false 
+PASS e.style['content'] = "open-quote 1+2+3=6" should not set the value 
+Harness: the test ran to completion.
+

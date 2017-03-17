@@ -1,0 +1,24 @@
+This is a testharness.js-based test.
+PASS Permissions API: test .query() method. 
+PASS Test PermissionDescription WebIDL rules in Window scope. 
+PASS Test geolocation permission in Window scope. 
+PASS Test midi permission in Window scope. 
+PASS Test notifications permission in Window scope. 
+PASS Test push permission in Window scope. 
+PASS Test PermissionDescription WebIDL rules in DedicatedWorker scope. 
+PASS Test geolocation permission in DedicatedWorker scope. 
+PASS Test midi permission in DedicatedWorker scope. 
+PASS Test notifications permission in DedicatedWorker scope. 
+PASS Test push permission in DedicatedWorker scope. 
+PASS Test PermissionDescription WebIDL rules in SharedWorker scope. 
+PASS Test geolocation permission in SharedWorker scope. 
+PASS Test midi permission in SharedWorker scope. 
+PASS Test notifications permission in SharedWorker scope. 
+PASS Test push permission in SharedWorker scope. 
+PASS Test PermissionDescription WebIDL rules in ServiceWorker scope. 
+PASS Test geolocation permission in ServiceWorker scope. 
+PASS Test midi permission in ServiceWorker scope. 
+PASS Test notifications permission in ServiceWorker scope. 
+PASS Test push permission in ServiceWorker scope. 
+Harness: the test ran to completion.
+

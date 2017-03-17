@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests the load event on HTMLTrackElement and LOADED readyState on TextTrack when src is set on the element. 
+Harness: the test ran to completion.
+

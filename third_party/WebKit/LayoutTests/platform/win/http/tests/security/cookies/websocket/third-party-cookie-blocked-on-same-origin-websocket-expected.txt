@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that third-party cookies are blocked for WebSockets even when the WebSocket's URL's domain is an exact match for the domain of its initiator. 
+Harness: the test ran to completion.
+

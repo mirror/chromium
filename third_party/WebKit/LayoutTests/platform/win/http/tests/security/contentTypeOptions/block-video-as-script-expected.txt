@@ -1,0 +1,8 @@
+CONSOLE ERROR: Refused to execute script from 'http://127.0.0.1:8000/security/contentTypeOptions/resources/script-with-header.pl?mime=video/avi&options=invalid' because its MIME type ('video/avi') is not executable.
+CONSOLE ERROR: Refused to execute script from 'http://127.0.0.1:8000/security/contentTypeOptions/resources/script-with-header.pl?mime=ViDeO/fli&options=invalid' because its MIME type ('video/fli') is not executable.
+CONSOLE ERROR: Refused to execute script from 'http://127.0.0.1:8000/security/contentTypeOptions/resources/script-with-header.pl?mime=video/x-motion-jpeg&options=invalid' because its MIME type ('video/x-motion-jpeg') is not executable.
+CONSOLE ERROR: Refused to execute script from 'http://127.0.0.1:8000/security/contentTypeOptions/resources/script-with-header.pl?mime=video/whatever+xml&options=invalid' because its MIME type ('video/whatever xml') is not executable.
+This is a testharness.js-based test.
+PASS All video/* scripts should be blocked. 
+Harness: the test ran to completion.
+

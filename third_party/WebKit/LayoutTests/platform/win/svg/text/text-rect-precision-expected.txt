@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS The width of text element is similar to the sum of the width of all characters. 
+Harness: the test ran to completion.
+

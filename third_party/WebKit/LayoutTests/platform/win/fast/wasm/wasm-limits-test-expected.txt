@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS wasm limits buffers are setup correctly 
+PASS wasm sync compile test 
+PASS wasm promise compile test 
+PASS wasm worker compile test 
+PASS wasm sync instantiate 
+PASS wasm async instantiate from buffer 
+PASS wasm async instantiate from module 
+Harness: the test ran to completion.
+

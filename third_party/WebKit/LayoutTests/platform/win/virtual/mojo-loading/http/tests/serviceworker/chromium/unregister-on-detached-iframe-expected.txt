@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Unregistration on a detached iframe should fail and throw InvalidStateError exception 
+Harness: the test ran to completion.
+

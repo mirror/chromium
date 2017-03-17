@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS form.elements should work correctly in the face of table syntax errors 
+Harness: the test ran to completion.
+

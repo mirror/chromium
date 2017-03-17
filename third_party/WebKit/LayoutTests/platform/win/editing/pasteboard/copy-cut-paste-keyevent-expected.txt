@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS DomKey Cut, Copy and Paste should trigger corresponding edit actions 
+Harness: the test ran to completion.
+

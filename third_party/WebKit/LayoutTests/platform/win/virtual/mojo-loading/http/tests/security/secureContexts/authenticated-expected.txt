@@ -1,0 +1,6 @@
+CONSOLE WARNING: line 37: Mixed Content: The page at 'https://example.test:8443/security/secureContexts/authenticated.html' was loaded over HTTPS, but requested an insecure resource 'http://example.test:8000/security/secureContexts/resources/post-securecontext-status.html'. This content should also be served over HTTPS.
+This is a testharness.js-based test.
+PASS authenticated origin is secure at the top-level. 
+PASS Frames are either secure or insecure. 
+Harness: the test ran to completion.
+

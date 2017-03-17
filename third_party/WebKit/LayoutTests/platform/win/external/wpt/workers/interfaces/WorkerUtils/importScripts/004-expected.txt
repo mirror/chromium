@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL importScripts broken script assert_true: expected SyntaxError expected true got "Error: Uncaught SyntaxError: Unexpected token )"
+Harness: the test ran to completion.
+

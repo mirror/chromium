@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL Accessors like location should be properly stubbed to aid in preloading scripts injected via document.write assert_less_than: expected a number less than 281.0450000000001 but got 282.485
+Harness: the test ran to completion.
+

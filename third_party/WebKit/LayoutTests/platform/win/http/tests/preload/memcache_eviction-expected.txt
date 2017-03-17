@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that preloaded resources get evicted from MemoryCache 
+Harness: the test ran to completion.
+

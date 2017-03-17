@@ -1,0 +1,5 @@
+CONSOLE WARNING: line 35: The provided value 'invalid' is not a valid enum value of type MediaSessionPlaybackState.
+This is a testharness.js-based test.
+PASS test that MediaSession.playbackState is correctly propagated 
+Harness: the test ran to completion.
+

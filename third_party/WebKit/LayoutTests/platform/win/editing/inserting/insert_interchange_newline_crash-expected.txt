@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS interchange-newline does nothing for DIV 
+Harness: the test ran to completion.
+

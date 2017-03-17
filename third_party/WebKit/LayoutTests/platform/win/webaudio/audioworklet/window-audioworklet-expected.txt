@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS # AUDIT TASK RUNNER STARTED. 
+PASS > [window-audioworklet] Test if AudioWorklet exists. 
+PASS   AudioWorklet is available on ContentShell or Browser is true. 
+PASS   window.audioWorklet is an instance of Worklet is true. 
+PASS < [window-audioworklet] All assertions passed. (total 2 assertions) 
+PASS # AUDIT TASK RUNNER FINISHED: 1 tasks ran successfully. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS After calling of back and pushState method, check length 
+Harness: the test ran to completion.
+

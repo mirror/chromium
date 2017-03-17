@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS :active state should stick while mouse button is pressed regardless of focus state. 
+Harness: the test ran to completion.
+

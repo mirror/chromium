@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Relative font weight bolder responsive to style changes 
+PASS Relative font weight lighter responsive to style changes 
+Harness: the test ran to completion.
+

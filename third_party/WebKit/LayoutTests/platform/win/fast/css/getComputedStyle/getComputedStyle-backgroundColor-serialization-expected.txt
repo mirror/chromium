@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that getComputedStyle serializes backgroundColor as per the spec here: https://drafts.csswg.org/css-color-3/#foreground 
+Harness: the test ran to completion.
+

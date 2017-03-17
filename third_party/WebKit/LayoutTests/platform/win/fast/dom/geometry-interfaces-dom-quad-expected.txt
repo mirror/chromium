@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS DOMQuad() constructor 
+PASS DOMQuad() toJSON() 
+PASS DOMQuad() fromRect 
+PASS DOMQuad() fromQuad 
+PASS DOMQuad() fromQuad - parameter of fromQuad function does not have any point. 
+PASS DOMQuad() getBounds 
+Harness: the test ran to completion.
+

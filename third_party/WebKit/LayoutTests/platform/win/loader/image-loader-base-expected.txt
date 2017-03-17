@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS image loading should be loaded successfully regardless of base element 
+Harness: the test ran to completion.
+

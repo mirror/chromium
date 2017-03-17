@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS The index of first non-zero value is not equal to -1. 
+PASS The first sample value is equal to 0. 
+PASS The rendered buffer contains non-zero values after the first sample. 
+Harness: the test ran to completion.
+

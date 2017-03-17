@@ -1,0 +1,24 @@
+This is a testharness.js-based test.
+PASS No movement 
+PASS Small positive X movement 
+PASS Large positive X movement 
+PASS Small negative X movement 
+PASS Large negative X movement 
+PASS Small positive Y movement 
+PASS Large positive Y movement 
+PASS Small negative Y movement 
+PASS Large negative Y movement 
+PASS Small positive X + positive Y movement 
+PASS Small negative X + positive Y movement 
+PASS Small positive X + negative Y movement 
+PASS Small negative X + negative Y movement 
+PASS Link, small positive X movement 
+PASS Link, large positive X movement 
+PASS Link, small negative X movement 
+PASS Link, large negative X movement 
+PASS Link, small positive Y movement 
+PASS Link, large positive Y movement 
+PASS Link, small negative Y movement 
+PASS Link, large negative Y movement 
+Harness: the test ran to completion.
+

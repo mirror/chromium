@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This tests the selection of the text field when mouse event occurs out of range. 
+Harness: the test ran to completion.
+

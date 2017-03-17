@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS 2 resource timing entries should be stored since buffer size is 2! 
+Harness: the test ran to completion.
+

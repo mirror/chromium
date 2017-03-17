@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Check the resolved value of 'auto' 
+PASS Check the resolved value of 'currentcolor' 
+PASS Check the resolved value of 'initial' 
+Harness: the test ran to completion.
+

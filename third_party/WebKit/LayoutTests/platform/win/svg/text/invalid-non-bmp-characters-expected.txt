@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Text runs with invalid non-bmp characters should not crash. 
+Harness: the test ran to completion.
+

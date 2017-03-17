@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS FileReader interface object 
+PASS no-argument FileReader constructor 
+PASS FileReader States -- abort 
+PASS FileReader States -- events 
+Harness: the test ran to completion.
+

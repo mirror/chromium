@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Matching :host-context with class. 
+PASS Matching id descendant of :host-context with class. 
+PASS Matching :host-context with id and negated class. 
+PASS Matching :host-context with selector list of classes. 
+Harness: the test ran to completion.
+

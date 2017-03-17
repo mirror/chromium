@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS IntersectionObserver should only report intersections if root is a containing block ancestor of target. 
+PASS In containing block and intersecting. 
+PASS In containing block and not intersecting. 
+PASS Not in containing block and intersecting. 
+PASS Not in containing block and not intersecting. 
+Harness: the test ran to completion.
+

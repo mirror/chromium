@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS mouse click target during capture 
+PASS PointerEvent Automation 
+PASS Click target when pointerup/down targeted at the same element with no capture 
+PASS Click target when pointerup/down targeted at different elements with no capture 
+Harness: the test ran to completion.
+

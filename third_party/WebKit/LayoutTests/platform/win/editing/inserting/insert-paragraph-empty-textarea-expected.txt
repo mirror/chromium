@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS A combination of deleteFromDocument() and InsertText command should not cause check failure in HTMLTextAreaElement. 
+Harness: the test ran to completion.
+

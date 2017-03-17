@@ -1,0 +1,30 @@
+This is a testharness.js-based test.
+PASS DOMMatrixReadOnly constructor 
+PASS DOMMatrixReadOnly constructor - 2D matrix 
+PASS DOMMatrixReadOnly constructor - 3D matrix 
+PASS DOMMatrixReadOnly fromFloat32Array - 2D matrix 
+PASS DOMMatrixReadOnly fromFloat64Array - 2D matrix 
+PASS DOMMatrixReadOnly fromFloat32Array - 3D matrix 
+PASS DOMMatrixReadOnly fromFloat64Array - 3D matrix 
+PASS DOMMatrixReadOnly(transformList) - emptyString 
+PASS DOMMatrixReadOnly(transformList) - transformList 
+PASS DOMMatrixReadOnly toString() - 2D matrix 
+PASS DOMMatrixReadOnly toString() - 3D matrix 
+PASS DOMMatrixReadOnly toJSON() - identity matrix 
+PASS DOMMatrixReadOnly toJSON() - 2D matrix 
+PASS DOMMatrixReadOnly toJSON() - 3D matrix 
+PASS DOMMatrixReadOnly constructor - invalid arguments 
+PASS DOMMatrixReadOnly fromFloat*Array - invalid array size of nearby 6 
+PASS DOMMatrixReadOnly fromFloat*Array - invalid array size of nearby 16 
+PASS DOMMatrixReadOnly fromFloat*Array - invalid array size 
+PASS DOMMatrixReadOnly.fromMatrix() with no parameter 
+PASS DOMMatrixReadOnly.fromMatrix() with null 
+PASS DOMMatrixReadOnly.fromMatrix() with undefined 
+PASS DOMMatrixReadOnly.fromMatrix() with empty object 
+PASS DOMMatrixReadOnly.fromMatrix({a: 1, b: 2, c: 3, d: 4, e: 5, f: 6}) should create a 2D DOMMatrixReadOnly 
+PASS DOMMatrixReadOnly.fromMatrix({m11: 1, m22: 2, m33: 3, m44: 4, m23: 5, m43: 6}) should create a 3D DOMMatrixReadOnly 
+PASS If 2d related properties don't be set, should set to fallback 
+PASS DOMMatrixReadOnly.fromMatrix(): NaN test 
+PASS DOMMatrixReadOnly.fromMatrix(): Exception test 
+Harness: the test ran to completion.
+

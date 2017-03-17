@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBIndex.openKeyCursor() - throw DataError when using a invalid key 
+Harness: the test ran to completion.
+

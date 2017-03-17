@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS storageArea property test of session event - session event is fired due to an invocation of the setItem() method. 
+Harness: the test ran to completion.
+
