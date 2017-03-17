@@ -347,6 +347,24 @@
     },
     {
       "key": {
+        "uuid": "2e76bf49_440b4ead",
+        "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-17T22:13:05Z",
+      "side": 1,
+      "message": "No problem. If that\u0027s the canonical way to say \"canonical\" in ML, then we can stick with that :)  I\u0027ll just have to update my lexicon.",
+      "parentUuid": "70f7e9f9_077c246b",
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "528e5872_60a40a16",
         "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
         "patchSetId": 6
