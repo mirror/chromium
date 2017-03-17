@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f74df89_a7747f25",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1136109
+      },
+      "writtenOn": "2017-03-17T18:17:32Z",
+      "side": 1,
+      "message": "nit: should be one line.",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 5
+      },
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77dc0273_68f3724c",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1136109
+      },
+      "writtenOn": "2017-03-17T18:17:32Z",
+      "side": 1,
+      "message": "nit: \nArgs: \n  xxx",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 7
+      },
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ae78b14_3c856aea",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1136109
+      },
+      "writtenOn": "2017-03-17T18:17:32Z",
+      "side": 1,
+      "message": "blank line above for better readability",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 13
+      },
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "528e5872_60a40a16",
+        "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1136109
+      },
+      "writtenOn": "2017-03-17T18:17:32Z",
+      "side": 1,
+      "message": "Args?",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 7
+      },
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75fa2a0d_a1973268",
+        "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1136109
+      },
+      "writtenOn": "2017-03-17T18:17:32Z",
+      "side": 1,
+      "message": "It\u0027s better we also print the exception message.",
+      "range": {
+        "startLine": 37,
+        "startChar": 34,
+        "endLine": 37,
+        "endChar": 41
+      },
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3dd04b6_a81ec834",
+        "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1136109
+      },
+      "writtenOn": "2017-03-17T18:17:32Z",
+      "side": 1,
+      "message": "Indentation should be the same as in code.",
+      "range": {
+        "startLine": 43,
+        "startChar": 11,
+        "endLine": 43,
+        "endChar": 14
+      },
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f7c753e_e5279af2",
+        "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1136109
+      },
+      "writtenOn": "2017-03-17T18:17:32Z",
+      "side": 1,
+      "message": "Blank line.",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 12
+      },
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade37599_c60f7adb",
+        "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1136109
+      },
+      "writtenOn": "2017-03-17T18:17:32Z",
+      "side": 1,
+      "message": "Blank line above for better readability.",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 14
+      },
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
