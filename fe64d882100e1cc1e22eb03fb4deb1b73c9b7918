@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "414fb976_51ee8a5f",
+        "filename": "tools/directory_component_mapping/README.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-17T23:18:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa396592_ca512d5c",
+      "revId": "fe64d882100e1cc1e22eb03fb4deb1b73c9b7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1729f7ef_3f810229",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 7
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "19622af9_18801659",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-17T23:18:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1729f7ef_3f810229",
+      "range": {
+        "startLine": 43,
+        "startChar": 18,
+        "endLine": 43,
+        "endChar": 19
+      },
+      "revId": "fe64d882100e1cc1e22eb03fb4deb1b73c9b7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "befa66c4_d560468f",
         "filename": "tools/directory_component_mapping/train_model.py",
         "patchSetId": 7
@@ -56,6 +98,24 @@
       "revId": "fe64d882100e1cc1e22eb03fb4deb1b73c9b7918",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8b46ae_0768e081",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-17T23:18:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "befa66c4_d560468f",
+      "revId": "fe64d882100e1cc1e22eb03fb4deb1b73c9b7918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
