@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "42c9a5cc_ee446584",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-17T18:32:54Z",
+      "side": 1,
+      "message": "Nit: Single line docstrings should have the quotes all on the same line:\n\n\"\"\"A representation of monorail components.\"\"\"",
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77dc0273_68f3724c",
         "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
         "patchSetId": 6
@@ -41,6 +58,46 @@
         "startChar": 6,
         "endLine": 21,
         "endChar": 7
+      },
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37101449_f5348025",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-17T18:32:54Z",
+      "side": 1,
+      "message": "This is a little confusing. At first I thought you were trying to document class params, but nothing is actually passed in. The style guide says to document attributes as part of the class docstring, although in this case, maybe just skip it entirely, since the var names are pretty much self-documenting, and the descriptions don\u0027t really add much.",
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e23e201_2223df11",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-17T18:32:54Z",
+      "side": 1,
+      "message": "Is there any guarantee that these attributes have been populated at this point? Should this automatically call get_component_from_database() if they are empty?",
+      "range": {
+        "startLine": 54,
+        "startChar": 30,
+        "endLine": 54,
+        "endChar": 44
       },
       "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -71,6 +128,57 @@
     },
     {
       "key": {
+        "uuid": "d499c0ee_6087db52",
+        "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-17T18:32:54Z",
+      "side": 1,
+      "message": "Nit: This line should still be first, since the module name \"collections\" is what you\u0027re sorting on.",
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "406df934_934e6156",
+        "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-17T18:32:54Z",
+      "side": 1,
+      "message": "Same as comment about other globals. Should be passed in if it\u0027s meant to be configurable.",
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "764bcccd_73f4e109",
+        "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-17T18:32:54Z",
+      "side": 1,
+      "message": "I\u0027m still a little unclear what \"ground truth\" means. Is that something more nuanced than \"actual\" or \"canonical\" mappings? If so, then that nuance should be explained. If it\u0027s not, then I think those other descriptors would be more typical and appropriate.",
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "528e5872_60a40a16",
         "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
         "patchSetId": 6
@@ -94,6 +202,23 @@
     },
     {
       "key": {
+        "uuid": "0c487f9c_07b740d1",
+        "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-17T18:32:54Z",
+      "side": 1,
+      "message": "Move to class docstring and format like:\n\nAttributes:\n  mapping: ...\n\nSee https://google.github.io/styleguide/pyguide.html?showone\u003dComments#Comments for more details.",
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75fa2a0d_a1973268",
         "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
         "patchSetId": 6
@@ -105,6 +230,30 @@
       "writtenOn": "2017-03-17T18:17:32Z",
       "side": 1,
       "message": "It\u0027s better we also print the exception message.",
+      "range": {
+        "startLine": 37,
+        "startChar": 34,
+        "endLine": 37,
+        "endChar": 41
+      },
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0451748a_dd60beb5",
+        "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-17T18:32:54Z",
+      "side": 1,
+      "message": "Also, this is just swallowing the exception, and giving no indication to the caller that there was a problem. Does it even make sense to continue if the file can\u0027t be loaded? Should it re-raise, so the program exits?",
+      "parentUuid": "75fa2a0d_a1973268",
       "range": {
         "startLine": 37,
         "startChar": 34,
@@ -156,6 +305,29 @@
         "startChar": 4,
         "endLine": 82,
         "endChar": 12
+      },
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1c41352_247f0f44",
+        "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-17T18:32:54Z",
+      "side": 1,
+      "message": "This isn\u0027t very clear. I gather \"dir_path\" is, or might be, a regular expression? If so, that needs to be described better. Also, it looks like you might just intend simple shell-style globbing, not full regex syntax, so calling it regex is misleading.",
+      "range": {
+        "startLine": 86,
+        "startChar": 51,
+        "endLine": 87,
+        "endChar": 14
       },
       "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
