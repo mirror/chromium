@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "2af0f7a9_bbb72cf5",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-17T22:05:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f74df89_a7747f25",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 5
+      },
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8955212_430e0270",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-17T22:05:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42c9a5cc_ee446584",
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77dc0273_68f3724c",
         "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
         "patchSetId": 6
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "f3a7810e_1ff1db41",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-17T22:05:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77dc0273_68f3724c",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 7
+      },
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37101449_f5348025",
         "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
         "patchSetId": 6
@@ -79,6 +145,24 @@
       "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a65c8326_16228e33",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-17T22:05:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37101449_f5348025",
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "b3e3156b_774597a9",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-17T22:05:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e23e201_2223df11",
+      "range": {
+        "startLine": 54,
+        "startChar": 30,
+        "endLine": 54,
+        "endChar": 44
+      },
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ae78b14_3c856aea",
         "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
         "patchSetId": 6
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "e2f7d29c_2b65bfd5",
+        "filename": "tools/directory_component_mapping/compo_info/get_compo.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-17T22:05:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ae78b14_3c856aea",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 13
+      },
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d499c0ee_6087db52",
         "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
         "patchSetId": 6
@@ -139,6 +271,24 @@
       "writtenOn": "2017-03-17T18:32:54Z",
       "side": 1,
       "message": "Nit: This line should still be first, since the module name \"collections\" is what you\u0027re sorting on.",
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3a87e21_b7bc8fe4",
+        "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-17T22:05:52Z",
+      "side": 1,
+      "message": "Sorry. I should notice this earlier.",
+      "parentUuid": "d499c0ee_6087db52",
       "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -179,6 +329,24 @@
     },
     {
       "key": {
+        "uuid": "70f7e9f9_077c246b",
+        "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-17T22:05:52Z",
+      "side": 1,
+      "message": "I\u0027ll add more description here. Yes. It means actual mappings. In ML, it is used to express the notion of data that is known to be correct. I used it here because these mappings have been verified by developers.",
+      "parentUuid": "764bcccd_73f4e109",
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "528e5872_60a40a16",
         "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
         "patchSetId": 6
@@ -202,6 +370,30 @@
     },
     {
       "key": {
+        "uuid": "8ec8ba1e_35780d18",
+        "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-17T22:05:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "528e5872_60a40a16",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 7
+      },
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c487f9c_07b740d1",
         "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
         "patchSetId": 6
@@ -216,6 +408,24 @@
       "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fe5d8f1_8eae3255",
+        "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-17T22:05:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c487f9c_07b740d1",
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -289,6 +499,30 @@
     },
     {
       "key": {
+        "uuid": "90a4d3bd_4b85f449",
+        "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-17T22:05:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3dd04b6_a81ec834",
+      "range": {
+        "startLine": 43,
+        "startChar": 11,
+        "endLine": 43,
+        "endChar": 14
+      },
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f7c753e_e5279af2",
         "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
         "patchSetId": 6
@@ -309,6 +543,30 @@
       "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "470e2395_f57850bd",
+        "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-17T22:05:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f7c753e_e5279af2",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 12
+      },
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -355,6 +613,30 @@
       "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a46817_a7ff2cdf",
+        "filename": "tools/directory_component_mapping/mappings/GT_mapping.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1184860
+      },
+      "writtenOn": "2017-03-17T22:05:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ade37599_c60f7adb",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 14
+      },
+      "revId": "3a2b0daa969aef753e59b79e883cc8c04d3e8104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
