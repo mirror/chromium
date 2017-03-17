@@ -219,8 +219,11 @@ LayoutUnit NGLayoutInlineItem::InlineSize(unsigned start, unsigned end) const {
     return LayoutUnit();
 
   if (!style_ || !shape_result_) {
-    // Bidi controls do not have widths.
-    // TODO(kojii): Atomic inline not supported yet.
+    DCHECK(start == start_offset_ && end == end_offset_);
+    DCHECK(!IsAtomicInlineLevel()) << "Use NGLineBuilder::InlineSize";
+    DCHECK(!layout_object_ ||
+           layout_object_->isFloatingOrOutOfFlowPositioned());
+    // Bidi controls and out-of-flow objects do not have in-flow widths.
     return LayoutUnit();
   }
 
@@ -250,7 +253,8 @@ void NGInlineNode::ShapeText() {
   // Shape each item with the full context of the entire node.
   HarfBuzzShaper shaper(text_content_.characters16(), text_content_.length());
   for (auto& item : items_) {
-    // Skip object replacement characters and bidi control characters.
+    // Skip non-text items; e.g., bidi controls, atomic inlines, out-of-flow
+    // objects.
     if (!item.style_)
       continue;
 
@@ -259,17 +263,11 @@ void NGInlineNode::ShapeText() {
   }
 }
 
-RefPtr<NGLayoutResult> NGInlineNode::Layout(NGConstraintSpace*, NGBreakToken*) {
-  ASSERT_NOT_REACHED();
-  return nullptr;
-}
-
 RefPtr<NGLayoutResult> NGInlineNode::Layout(NGConstraintSpace* constraint_space,
-                                            NGFragmentBuilder* parent_builder,
-                                            NGBreakToken* break_token) {
+                                            NGBreakToken*) {
   // TODO(kojii): Invalidate PrepareLayout() more efficiently.
   InvalidatePrepareLayout();
-  NGLineBuilder line_builder(this, constraint_space, parent_builder);
+  NGLineBuilder line_builder(this, constraint_space);
   Layout(&line_builder);
   RefPtr<NGLayoutResult> result = line_builder.CreateFragments();
   line_builder.CopyFragmentDataToLayoutBlockFlow();
@@ -297,7 +295,7 @@ MinMaxContentSize NGInlineNode::ComputeMinMaxContentSize() {
           .SetTextDirection(BlockStyle()->direction())
           .SetAvailableSize({LayoutUnit(), NGSizeIndefinite})
           .ToConstraintSpace(writing_mode);
-  NGLineBuilder line_builder(this, constraint_space.get(), nullptr);
+  NGLineBuilder line_builder(this, constraint_space.get());
   Layout(&line_builder);
   MinMaxContentSize sizes;
   sizes.min_content = line_builder.MaxInlineSize();
@@ -305,7 +303,7 @@ MinMaxContentSize NGInlineNode::ComputeMinMaxContentSize() {
   // max-content is the width without any line wrapping.
   // TODO(kojii): Implement hard breaks (<br> etc.) to break.
   for (const auto& item : items_)
-    sizes.max_content += item.InlineSize();
+    sizes.max_content += line_builder.InlineSize(item);
 
   return sizes;
 }

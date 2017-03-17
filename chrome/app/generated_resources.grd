@@ -5010,6 +5010,27 @@ Keep your key file in a safe place. You will need it to create new versions of y
         "Prefetching" that learning and prefetching are enabled.
       </message>
 
+      <!-- Force Tablet Mode -->
+      <message name="IDS_FLAGS_FORCE_TABLET_MODE_NAME" desc="Name for the flag to force tablet mode." translateable="false">
+        Force Tablet Mode
+      </message>
+      <message name="IDS_FLAGS_FORCE_TABLET_MODE_DESCRIPTION" desc="Description for the flag to force tablet mode." translateable="false">
+        This flag can be used to force a certain mode on to a chromebook, despite its current orientation.
+
+        "TouchView" means that the chromebook will act as if it were in touch view mode.
+        "Clamshell" means that the chromebook will act as if it were in clamshell mode .
+        "Auto" means that the chromebook will alternate between the two, based on its orientation.
+      </message>
+      <message name="IDS_FLAGS_FORCE_TABLET_MODE_TOUCHVIEW" desc="Description of the TouchView mode. In TouchView mode, the keyboard can flip behind the screen so the Chromebook operates like a tablet computer." translateable="false">
+        TouchView
+      </message>
+      <message name="IDS_FLAGS_FORCE_TABLET_MODE_CLAMSHELL" desc="Description of the Clamshell mode. In Clamshell mode, the Chromebook operates like a standard laptop computer, keyboard on the bottom, screen on top, with a hinge like a clamshell." translateable="false">
+        Clamshell
+      </message>
+      <message name="IDS_FLAGS_FORCE_TABLET_MODE_AUTO" desc="Description of the default or 'automatic' mode." translateable="false">
+        Auto (default)
+      </message>
+
       <!-- Print Preview features -->
       <message name="IDS_FLAGS_PRINT_PDF_AS_IMAGE_NAME" desc="Name for the flag to add the option to print PDFs as images to print preview.">
         Print Pdf as Image
@@ -5552,6 +5573,14 @@ Keep your key file in a safe place. You will need it to create new versions of y
       <message name="IDS_FLAGS_GAMEPAD_EXTENSIONS_DESCRIPTION" desc="Description for the flag which allows users to enable experimental extensions to the Gamepad API.">
         Enabling this option allows web applications to access experimental extensions to the Gamepad APIs.
       </message>
+      <if expr="is_android">
+        <message name="IDS_FLAGS_NEW_PHOTO_PICKER_NAME" desc="Name of about:flags option to turn on the new Photo picker." translateable="false">
+          Enable new Photopicker
+        </message>
+        <message name="IDS_FLAGS_NEW_PHOTO_PICKER_DESCRIPTION" desc="Description of about:flags option to turn on the new Photo picker." translateable="false">
+          Activates the new picker for selecting photos.
+        </message>
+      </if>
       <if expr="is_android">
         <message name="IDS_FLAGS_ENABLE_OSK_OVERSCROLL_NAME" desc="Name of about:flags option to turn on the overscrolling for the OSK.">
           Enable OSK Overscroll
@@ -6158,6 +6187,14 @@ Keep your key file in a safe place. You will need it to create new versions of y
       <message name="IDS_FLAGS_SERVICE_WORKER_NAVIGATION_PRELOAD_DESCRIPTION" desc="Description of the about::flags setting for service worker navigation preload.">
         Enable web pages to use the experimental service worker navigation preload API.
       </message>
+      <if expr="is_android">
+       <message name="IDS_FLAGS_UPLOAD_CRASH_REPORTS_USING_JOB_SCHEDULER_NAME" desc="Name of chrome:flags option to use the JobScheduler API for uploading crash reports." translateable="false">
+         Upload crash reports using JobScheduler API.
+       </message>
+       <message name="IDS_FLAGS_UPLOAD_CRASH_REPORTS_USING_JOB_SCHEDULER_DESCRIPTION" desc="Description of chrome:flags option to use the JobScheduler API for uploading crash reports." translateable="false">
+         Use the JobScheduler API to upload crash reports. This does not affect whether or not crash reports will be uploaded. Rather, *if* a crash report is going to be uploaded, this flag affects *how* it is uploaded.
+       </message>
+      </if>
 
       <!-- Data Reduction Proxy -->
       <message name="IDS_FLAGS_DATA_REDUCTION_PROXY_LO_FI_NAME" desc="An about:flags experiment title to enable/disable Data Saver Lo-Fi" translateable="false">
@@ -14885,13 +14922,6 @@ read aloud to screenreader users to announce that a completion is available.">
     </message>
     <message name="IDS_FLAGS_CROS_COMP_UPDATES_DESCRIPTION" desc="Description for the flag to enable Chrome OS component flash updates" translateable="false">
       Enable Flash component updates for Chrome OS.
-    </message>
-    <!-- Faster location.reload() chrome://flags strings -->
-    <message name="IDS_FLAGS_FASTER_LOCATION_RELOAD_NAME" desc="Name for the flag to enable faster location.reload()" translateable="false">
-      Faster location.reload()
-    </message>
-    <message name="IDS_FLAGS_FASTER_LOCATION_RELOAD_DESCRIPTION" desc="Description for the flag to enable faster location.reload()" translateable="false">
-      Enable faster location.reload() to use a reload mode that revalidates only main resource forcibly.
     </message>
 
     <!-- Native Android History chrome://flags strings -->

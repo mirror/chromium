@@ -7,10 +7,10 @@
 #include "base/memory/ptr_util.h"
 #include "base/trace_event/trace_event.h"
 #include "cc/base/math_util.h"
+#include "cc/base/render_surface_filters.h"
 #include "cc/output/copy_output_request.h"
 #include "cc/output/output_surface.h"
 #include "cc/output/output_surface_frame.h"
-#include "cc/output/render_surface_filters.h"
 #include "cc/output/renderer_settings.h"
 #include "cc/output/software_output_device.h"
 #include "cc/quads/debug_border_draw_quad.h"
@@ -336,6 +336,11 @@ void SoftwareRenderer::DrawPictureQuad(const PictureDrawQuad* quad) {
 
   TRACE_EVENT0("cc", "SoftwareRenderer::DrawPictureQuad");
 
+  // TODO(ccameron): Determine a color space strategy for software rendering.
+  gfx::ColorSpace canvas_color_space;
+  if (settings_->enable_color_correct_rendering)
+    canvas_color_space = gfx::ColorSpace::CreateSRGB();
+
   RasterSource::PlaybackSettings playback_settings;
   playback_settings.playback_to_shared_canvas = true;
   // Indicates whether content rasterization should happen through an
@@ -356,12 +361,12 @@ void SoftwareRenderer::DrawPictureQuad(const PictureDrawQuad* quad) {
                                               quad->shared_quad_state->opacity,
                                               disable_image_filtering);
     quad->raster_source->PlaybackToCanvas(
-        &filtered_canvas, quad->content_rect, quad->content_rect,
-        quad->contents_scale, playback_settings);
+        &filtered_canvas, canvas_color_space, quad->content_rect,
+        quad->content_rect, quad->contents_scale, playback_settings);
   } else {
     quad->raster_source->PlaybackToCanvas(
-        current_canvas_, quad->content_rect, quad->content_rect,
-        quad->contents_scale, playback_settings);
+        current_canvas_, canvas_color_space, quad->content_rect,
+        quad->content_rect, quad->contents_scale, playback_settings);
   }
 }
 

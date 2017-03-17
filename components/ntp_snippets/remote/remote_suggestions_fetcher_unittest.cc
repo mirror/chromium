@@ -119,12 +119,8 @@ MATCHER_P(IsSingleArticle, url, "is a list with the single article %(url)s") {
 }
 
 MATCHER(IsCategoryInfoForArticles, "") {
-  if (!arg.has_fetch_action()) {
-    *result_listener << "missing expected has_fetc_action";
-    return false;
-  }
-  if (arg.has_view_all_action()) {
-    *result_listener << "unexpected has_view_all_action";
+  if (arg.additional_action() != ContentSuggestionsAdditionalAction::FETCH) {
+    *result_listener << "missing expected FETCH action";
     return false;
   }
   if (!arg.show_if_empty()) {
@@ -290,7 +286,9 @@ class RemoteSuggestionsFetcherTestBase : public testing::Test {
     ResetFetcher();
   }
 
-  void ResetFetcher() {
+  void ResetFetcher() { ResetFetcherWithAPIKey(kAPIKey); }
+
+  void ResetFetcherWithAPIKey(const std::string& api_key) {
     scoped_refptr<net::TestURLRequestContextGetter> request_context_getter =
         new net::TestURLRequestContextGetter(mock_task_runner_.get());
 
@@ -302,7 +300,7 @@ class RemoteSuggestionsFetcherTestBase : public testing::Test {
         utils_.fake_signin_manager(), fake_token_service_.get(),
         std::move(request_context_getter), utils_.pref_service(), nullptr,
         base::Bind(&ParseJsonDelayed),
-        GetFetchEndpoint(version_info::Channel::STABLE), kAPIKey,
+        GetFetchEndpoint(version_info::Channel::STABLE), api_key,
         user_classifier_.get());
 
     fetcher_->SetClockForTesting(mock_task_runner_->GetMockClock());
@@ -672,8 +670,8 @@ TEST_F(RemoteSuggestionsSignedOutFetcherTest, ServerCategories) {
     } else if (category.category == Category::FromRemoteCategory(2)) {
       ASSERT_THAT(articles.size(), Eq(1u));
       EXPECT_THAT(articles[0]->url().spec(), Eq("http://localhost/foo2"));
-      EXPECT_THAT(category.info.has_fetch_action(), Eq(true));
-      EXPECT_THAT(category.info.has_view_all_action(), Eq(false));
+      EXPECT_THAT(category.info.additional_action(),
+                  Eq(ContentSuggestionsAdditionalAction::FETCH));
       EXPECT_THAT(category.info.show_if_empty(), Eq(false));
     } else {
       FAIL() << "unknown category ID " << category.category.id();
@@ -724,7 +722,8 @@ TEST_F(RemoteSuggestionsSignedOutFetcherTest,
 
   ASSERT_TRUE(fetched_categories);
   ASSERT_THAT(fetched_categories->size(), Eq(1u));
-  EXPECT_THAT(fetched_categories->front().info.has_fetch_action(), Eq(false));
+  EXPECT_THAT(fetched_categories->front().info.additional_action(),
+              Eq(ContentSuggestionsAdditionalAction::NONE));
   EXPECT_THAT(fetched_categories->front().info.title(),
               Eq(base::UTF8ToUTF16("Articles for Me")));
 }
@@ -798,6 +797,24 @@ TEST_F(RemoteSuggestionsSignedOutFetcherTest, ExclusiveCategoryOnly) {
   ASSERT_THAT(category.suggestions.size(), Eq(1u));
   EXPECT_THAT(category.suggestions[0]->url().spec(),
               Eq("http://localhost/foo2"));
+}
+
+TEST_F(RemoteSuggestionsSignedOutFetcherTest, ShouldNotFetchWithoutApiKey) {
+  ResetFetcherWithAPIKey(std::string());
+
+  EXPECT_CALL(mock_callback(), Run(HasCode(StatusCode::PERMANENT_ERROR),
+                                   /*snippets=*/Not(HasValue())))
+      .Times(1);
+  fetcher().FetchSnippets(test_params(),
+                          ToSnippetsAvailableCallback(&mock_callback()));
+  FastForwardUntilNoTasksRemain();
+
+  EXPECT_THAT(fetcher().last_status(), Eq("No API key available."));
+  EXPECT_THAT(histogram_tester().GetAllSamples(
+                  "NewTabPage.Snippets.FetchHttpResponseOrErrorCode"),
+              IsEmpty());
+  EXPECT_THAT(histogram_tester().GetAllSamples("NewTabPage.Snippets.FetchTime"),
+              IsEmpty());
 }
 
 TEST_F(RemoteSuggestionsChromeReaderFetcherTest,

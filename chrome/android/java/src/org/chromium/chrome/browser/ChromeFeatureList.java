@@ -132,6 +132,7 @@ public abstract class ChromeFeatureList {
     public static final String IMPORTANT_SITES_IN_CBD = "ImportantSitesInCBD";
     public static final String TABS_IN_CBD = "TabsInCBD";
     public static final String IMPROVED_A2HS = "ImprovedA2HS";
+    public static final String NEW_PHOTO_PICKER = "NewPhotoPicker";
     public static final String NO_CREDIT_CARD_ABORT = "NoCreditCardAbort";
     public static final String NTP_CONDENSED_LAYOUT = "NTPCondensedLayout";
     public static final String NTP_CONDENSED_TILE_LAYOUT = "NTPCondensedTileLayout";
@@ -145,6 +146,8 @@ public abstract class ChromeFeatureList {
     public static final String NTP_SNIPPETS_OFFLINE_BADGE = "NTPOfflineBadge";
     public static final String SERVICE_WORKER_PAYMENT_APPS = "ServiceWorkerPaymentApps";
     public static final String TAB_REPARENTING = "TabReparenting";
+    public static final String UPLOAD_CRASH_REPORTS_USING_JOB_SCHEDULER =
+            "UploadCrashReportsUsingJobScheduler";
     public static final String VR_SHELL = "VrShell";
     public static final String WEB_PAYMENTS = "WebPayments";
     public static final String WEB_PAYMENTS_MODIFIERS = "WebPaymentsModifiers";

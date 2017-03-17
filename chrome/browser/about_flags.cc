@@ -505,6 +505,18 @@ const FeatureEntry::Choice kNtpSwitchToExistingTabChoices[] = {
 };
 #endif  // OS_ANDROID
 
+#if defined(OS_CHROMEOS)
+const FeatureEntry::Choice kForceTabletModeChoices[] = {
+    {IDS_GENERIC_EXPERIMENT_CHOICE_DEFAULT, "", ""},
+    {IDS_FLAGS_FORCE_TABLET_MODE_TOUCHVIEW, switches::kForceTabletMode,
+     switches::kForceTabletModeTouchView},
+    {IDS_FLAGS_FORCE_TABLET_MODE_CLAMSHELL, switches::kForceTabletMode,
+     switches::kForceTabletModeClamshell},
+    {IDS_FLAGS_FORCE_TABLET_MODE_AUTO, switches::kForceTabletMode,
+     switches::kForceTabletModeAuto},
+};
+#endif  // OS_CHROMEOS
+
 #if defined(OS_ANDROID)
 const FeatureEntry::FeatureParam
     kContentSuggestionsCategoryOrderFeatureVariationGeneral[] = {
@@ -815,6 +827,9 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-osk-overscroll", IDS_FLAGS_ENABLE_OSK_OVERSCROLL_NAME,
      IDS_FLAGS_ENABLE_OSK_OVERSCROLL_DESCRIPTION, kOsAndroid,
      SINGLE_VALUE_TYPE(switches::kEnableOSKOverscroll)},
+    {"enable-new-photo-picker", IDS_FLAGS_NEW_PHOTO_PICKER_NAME,
+     IDS_FLAGS_NEW_PHOTO_PICKER_DESCRIPTION, kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kNewPhotoPicker)},
     {"enable-usermedia-screen-capturing", IDS_FLAGS_MEDIA_SCREEN_CAPTURE_NAME,
      IDS_FLAGS_MEDIA_SCREEN_CAPTURE_DESCRIPTION, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kUserMediaScreenCapturing)},
@@ -1329,9 +1344,6 @@ const FeatureEntry kFeatureEntries[] = {
      IDS_FLAGS_ENABLE_PASSWORD_SEPARATED_SIGNIN_FLOW_DESCRIPTION,
      kOsMac | kOsWin | kOsLinux,
      FEATURE_VALUE_TYPE(switches::kUsePasswordSeparatedSigninFlow)},
-    {"enable-google-profile-info", IDS_FLAGS_GOOGLE_PROFILE_INFO_NAME,
-     IDS_FLAGS_GOOGLE_PROFILE_INFO_DESCRIPTION, kOsMac | kOsWin | kOsLinux,
-     SINGLE_VALUE_TYPE(switches::kGoogleProfileInfo)},
 #if BUILDFLAG(ENABLE_APP_LIST)
     {"reset-app-list-install-state",
      IDS_FLAGS_RESET_APP_LIST_INSTALL_STATE_NAME,
@@ -2231,6 +2243,12 @@ const FeatureEntry kFeatureEntries[] = {
      IDS_FLAGS_ENABLE_ANDROID_WALLPAPERS_APP_DESCRIPTION, kOsCrOS,
      SINGLE_VALUE_TYPE(chromeos::switches::kEnableAndroidWallpapersApp)},
 #endif  // defined(OS_CHROMEOS)
+#if defined(OS_ANDROID)
+    {"enable-job-scheduler-api-for-crash-uploads",
+     IDS_FLAGS_UPLOAD_CRASH_REPORTS_USING_JOB_SCHEDULER_NAME,
+     IDS_FLAGS_UPLOAD_CRASH_REPORTS_USING_JOB_SCHEDULER_DESCRIPTION, kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kUploadCrashReportsUsingJobScheduler)},
+#endif  // OS_ANDROID
 
 #if defined(OS_ANDROID)
     {"enable-expanded-autofill-credit-card-popup",
@@ -2259,9 +2277,6 @@ const FeatureEntry kFeatureEntries[] = {
      SINGLE_VALUE_TYPE(switches::kWindows10CustomTitlebar)},
 #endif  // OS_WIN
 
-    {"enable-faster-location-reload", IDS_FLAGS_FASTER_LOCATION_RELOAD_NAME,
-     IDS_FLAGS_FASTER_LOCATION_RELOAD_DESCRIPTION, kOsAll,
-     FEATURE_VALUE_TYPE(features::kFasterLocationReload)},
 #if defined(OS_ANDROID)
     {"lsd-permission-prompt", IDS_FLAGS_LSD_PERMISSION_PROMPT_NAME,
      IDS_FLAGS_LSD_PERMISSION_PROMPT_DESCRIPTION, kOsAndroid,
@@ -2373,6 +2388,12 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-mojo-loading", IDS_FLAGS_MOJO_LOADING_NAME,
      IDS_FLAGS_MOJO_LOADING_DESCRIPTION, kOsAll,
      FEATURE_VALUE_TYPE(features::kLoadingWithMojo)},
+
+#if defined(OS_CHROMEOS)
+    {"force-tablet-mode", IDS_FLAGS_FORCE_TABLET_MODE_NAME,
+     IDS_FLAGS_FORCE_TABLET_MODE_DESCRIPTION, kOsCrOS,
+     MULTI_VALUE_TYPE(kForceTabletModeChoices)},
+#endif  // OS_CHROMEOS
 
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms.xml. See note in

@@ -7,6 +7,7 @@
 
 #include "core/CoreExport.h"
 #include "core/layout/ng/geometry/ng_logical_offset.h"
+#include "core/layout/ng/ng_fragment_builder.h"
 #include "core/layout/ng/ng_layout_opportunity_iterator.h"
 #include "core/layout/ng/ng_physical_fragment.h"
 #include "platform/fonts/FontBaseline.h"
@@ -18,7 +19,6 @@ namespace blink {
 class ComputedStyle;
 class FontMetrics;
 class NGConstraintSpace;
-class NGFragmentBuilder;
 class NGInlineNode;
 class NGLayoutInlineItem;
 
@@ -31,7 +31,7 @@ class CORE_EXPORT NGLineBuilder final {
   STACK_ALLOCATED();
 
  public:
-  NGLineBuilder(NGInlineNode*, NGConstraintSpace*, NGFragmentBuilder*);
+  NGLineBuilder(NGInlineNode*, NGConstraintSpace*);
 
   const NGConstraintSpace& ConstraintSpace() const {
     return *constraint_space_;
@@ -86,7 +86,20 @@ class CORE_EXPORT NGLineBuilder final {
   // are placed.
   void CopyFragmentDataToLayoutBlockFlow();
 
+  // Compute inline size of an NGLayoutInlineItem.
+  // Same as NGLayoutInlineItem::InlineSize(), except that this function can
+  // compute atomic inlines by performing layout.
+  LayoutUnit InlineSize(const NGLayoutInlineItem&);
+
  private:
+  bool IsHorizontalWritingMode() const { return is_horizontal_writing_mode_; }
+
+  LayoutUnit InlineSize(const NGLayoutInlineItem&,
+                        unsigned start_offset,
+                        unsigned end_offset);
+  LayoutUnit InlineSizeFromLayout(const NGLayoutInlineItem&);
+  const NGLayoutResult* LayoutItem(const NGLayoutInlineItem&);
+
   struct LineItemChunk {
     unsigned index;
     unsigned start_offset;
@@ -136,15 +149,17 @@ class CORE_EXPORT NGLineBuilder final {
   void AccumulateUsedFonts(const NGLayoutInlineItem&,
                            const LineItemChunk&,
                            LineBoxData*);
+  LayoutUnit PlaceAtomicInline(const NGLayoutInlineItem&,
+                               LayoutUnit estimated_baseline,
+                               LineBoxData*,
+                               NGFragmentBuilder*);
 
   // Finds the next layout opportunity for the next text fragment.
   void FindNextLayoutOpportunity();
 
   Persistent<NGInlineNode> inline_box_;
   NGConstraintSpace* constraint_space_;  // Not owned as STACK_ALLOCATED.
-  NGFragmentBuilder* containing_block_builder_;
-  Vector<RefPtr<NGPhysicalFragment>, 32> fragments_;
-  Vector<NGLogicalOffset, 32> offsets_;
+  Vector<RefPtr<NGLayoutResult>, 32> layout_results_;
   Vector<LineBoxData, 32> line_box_data_list_;
   unsigned start_index_ = 0;
   unsigned start_offset_ = 0;
@@ -156,11 +171,14 @@ class CORE_EXPORT NGLineBuilder final {
   LayoutUnit last_break_opportunity_position_;
   LayoutUnit content_size_;
   LayoutUnit max_inline_size_;
-  FontBaseline baseline_type_;
+  NGFragmentBuilder container_builder_;
+  RefPtr<NGLayoutResult> container_layout_result_;
+  FontBaseline baseline_type_ = FontBaseline::AlphabeticBaseline;
 
   NGLogicalOffset bfc_offset_;
   NGLogicalRect current_opportunity_;
 
+  unsigned is_horizontal_writing_mode_ : 1;
 #if DCHECK_IS_ON()
   unsigned is_bidi_reordered_ : 1;
 #endif

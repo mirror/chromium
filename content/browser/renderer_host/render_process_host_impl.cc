@@ -70,6 +70,7 @@
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/dom_storage/dom_storage_context_wrapper.h"
 #include "content/browser/dom_storage/dom_storage_message_filter.h"
+#include "content/browser/field_trial_recorder.h"
 #include "content/browser/fileapi/fileapi_message_filter.h"
 #include "content/browser/frame_host/render_frame_message_filter.h"
 #include "content/browser/gpu/browser_gpu_memory_buffer_manager.h"
@@ -183,6 +184,7 @@
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "ppapi/features/features.h"
+#include "services/resource_coordinator/memory/coordinator/coordinator_impl.h"
 #include "services/service_manager/public/cpp/connection.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
@@ -1343,6 +1345,15 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
         base::Bind(&discardable_memory::DiscardableSharedMemoryManager::Bind,
                    base::Unretained(manager)));
   }
+
+  AddUIThreadInterface(registry.get(), base::Bind(&FieldTrialRecorder::Create));
+
+  AddUIThreadInterface(
+      registry.get(),
+      base::Bind(
+          &memory_instrumentation::CoordinatorImpl::BindCoordinatorRequest,
+          base::Unretained(
+              memory_instrumentation::CoordinatorImpl::GetInstance())));
 
   GetContentClient()->browser()->ExposeInterfacesToRenderer(registry.get(),
                                                             this);

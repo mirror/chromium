@@ -15,7 +15,7 @@
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "cc/debug/traced_value.h"
-#include "cc/playback/raster_source.h"
+#include "cc/raster/raster_source.h"
 #include "cc/resources/platform_color.h"
 #include "cc/resources/resource.h"
 
@@ -54,7 +54,7 @@ class RasterBufferImpl : public RasterBuffer {
     RasterBufferProvider::PlaybackToMemory(
         lock_.sk_bitmap().getPixels(), resource_->format(), resource_->size(),
         stride, raster_source, raster_full_rect, playback_rect, scale,
-        lock_.sk_color_space(), playback_settings);
+        lock_.color_space_for_raster(), playback_settings);
   }
 
  private:

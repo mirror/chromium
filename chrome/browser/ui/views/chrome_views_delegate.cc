@@ -106,7 +106,7 @@ void ChromeViewsDelegate::SaveWindowPlacement(const views::Widget* window,
   window_preferences->SetBoolean("docked", show_state == ui::SHOW_STATE_DOCKED);
 
   gfx::Rect work_area(display::Screen::GetScreen()
-                          ->GetDisplayNearestWindow(window->GetNativeView())
+                          ->GetDisplayNearestView(window->GetNativeView())
                           .work_area());
   window_preferences->SetInteger("work_area_left", work_area.x());
   window_preferences->SetInteger("work_area_top", work_area.y());
@@ -264,6 +264,13 @@ int ChromeViewsDelegate::GetDistanceMetric(views::DistanceMetric metric) const {
 }
 
 int ChromeViewsDelegate::GetDefaultDistanceMetric(
+    views::DistanceMetric metric) {
+  return views_delegate
+             ? views_delegate->InternalGetDefaultDistanceMetric(metric)
+             : views::ViewsDelegate::GetInstance()->GetDistanceMetric(metric);
+}
+
+int ChromeViewsDelegate::InternalGetDefaultDistanceMetric(
     views::DistanceMetric metric) const {
   return views::ViewsDelegate::GetDistanceMetric(metric);
 }

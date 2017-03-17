@@ -1343,6 +1343,7 @@ test("browser_tests") {
       "../browser/chrome_find_request_manager_browsertest.cc",
       "../browser/chrome_main_browsertest.cc",
       "../browser/chrome_navigation_browsertest.cc",
+      "../browser/chrome_origin_trials_browsertest.cc",
       "../browser/chrome_plugin_browsertest.cc",
       "../browser/chrome_security_exploit_browsertest.cc",
       "../browser/chrome_site_per_process_browsertest.cc",
@@ -3799,8 +3800,6 @@ test("unit_tests") {
   }
 
   if (is_chromeos) {
-    sources +=
-        [ "../browser/component_updater/cros_component_installer_unittest.cc" ]
     sources -= [ "../browser/signin/chrome_signin_status_metrics_provider_delegate_unittest.cc" ]
   }
   if (enable_background) {
@@ -4180,6 +4179,7 @@ test("unit_tests") {
       "../browser/ui/ash/multi_user/user_switch_util_unittest.cc",
       "../browser/ui/ash/session_controller_client_unittest.cc",
       "../browser/ui/ash/system_tray_delegate_chromeos_unittest.cc",
+      "../browser/ui/ash/tray_bluetooth_helper_unittest.cc",
       "../browser/ui/ash/window_positioner_unittest.cc",
       "../browser/ui/window_sizer/window_sizer_ash_unittest.cc",
     ]

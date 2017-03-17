@@ -25,7 +25,6 @@ class LayoutObject;
 class LayoutUnit;
 struct MinMaxContentSize;
 class NGConstraintSpace;
-class NGFragmentBuilder;
 class NGLayoutInlineItem;
 class NGLayoutInlineItemRange;
 class NGLayoutInlineItemsBuilder;
@@ -44,9 +43,6 @@ class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
   NGLayoutInputNode* NextSibling() override;
 
   RefPtr<NGLayoutResult> Layout(NGConstraintSpace*, NGBreakToken*) override;
-  RefPtr<NGLayoutResult> Layout(NGConstraintSpace*,
-                                NGFragmentBuilder*,
-                                NGBreakToken*);
   LayoutObject* GetLayoutObject() override;
 
   // Computes the value of min-content and max-content for this anonymous block
@@ -136,6 +132,10 @@ class NGLayoutInlineItem {
   UScriptCode Script() const { return script_; }
   const ComputedStyle* Style() const { return style_; }
   LayoutObject* GetLayoutObject() const { return layout_object_; }
+
+  bool IsAtomicInlineLevel() const {
+    return layout_object_ && layout_object_->isAtomicInlineLevel();
+  }
 
   void SetEndOffset(unsigned);
 

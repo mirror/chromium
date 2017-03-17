@@ -46,7 +46,6 @@
 #include "chrome/browser/content_settings/tab_specific_content_settings.h"
 #include "chrome/browser/defaults.h"
 #include "chrome/browser/download/download_prefs.h"
-#include "chrome/browser/field_trial_recorder.h"
 #include "chrome/browser/font_family_cache.h"
 #include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
 #include "chrome/browser/memory/chrome_memory_coordinator_delegate.h"
@@ -1317,6 +1316,15 @@ void ChromeContentBrowserClient::GetAdditionalWebUISchemes(
   additional_schemes->push_back(dom_distiller::kDomDistillerScheme);
 }
 
+void ChromeContentBrowserClient::GetAdditionalViewSourceSchemes(
+    std::vector<std::string>* additional_schemes) {
+  GetAdditionalWebUISchemes(additional_schemes);
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  additional_schemes->push_back(extensions::kExtensionScheme);
+#endif
+}
+
 bool ChromeContentBrowserClient::LogWebUIUrl(const GURL& web_ui_url) const {
   return webui::LogWebUIUrl(web_ui_url);
 }
@@ -1856,6 +1864,7 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
       extensions::switches::kIsolateExtensions,
       extensions::switches::kNativeCrxBindings,
       extensions::switches::kWhitelistedExtensionID,
+      extensions::switches::kYieldBetweenContentScriptRuns,
 #endif
       switches::kAllowInsecureLocalhost,
       switches::kAppsGalleryURL,
@@ -1879,6 +1888,7 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
 #endif
       switches::kJavaScriptHarmony,
       switches::kOriginTrialDisabledFeatures,
+      switches::kOriginTrialDisabledTokens,
       switches::kOriginTrialPublicKey,
       switches::kPpapiFlashArgs,
       switches::kPpapiFlashPath,
@@ -3063,9 +3073,6 @@ void ChromeContentBrowserClient::ExposeInterfacesToRenderer(
       ui_task_runner);
   registry->AddInterface(
       base::Bind(&BudgetServiceImpl::Create, render_process_host->GetID()),
-      ui_task_runner);
-  registry->AddInterface(
-      base::Bind(&FieldTrialRecorder::Create),
       ui_task_runner);
   registry->AddInterface(
       base::Bind(&rappor::RapporRecorderImpl::Create,

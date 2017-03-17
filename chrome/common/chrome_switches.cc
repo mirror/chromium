@@ -493,6 +493,15 @@ const char kForceFirstRun[]                 = "force-first-run";
 // Forces Chrome to use localNTP instead of server (GWS) NTP.
 const char kForceLocalNtp[]                 = "force-local-ntp";
 
+// Enables required things for the selected UI mode, regardless of whether the
+// chromebook is currently in the selected UI mode.
+const char kForceTabletMode[]               = "force-tablet-mode";
+
+// Values for the kForceTabletMode flag.
+const char kForceTabletModeAuto[]           = "auto";
+const char kForceTabletModeClamshell[]      = "clamshell";
+const char kForceTabletModeTouchView[]      = "touch_view";
+
 // Forces additional Chrome Variation Ids that will be sent in X-Client-Data
 // header, specified as a 64-bit encoded list of numeric experiment ids. Ids
 // prefixed with the character "t" will be treated as Trigger Variation Ids.
@@ -649,6 +658,10 @@ const char kOriginalProcessStartTime[]      = "original-process-start-time";
 // Contains a list of feature names for which origin trial experiments should
 // be disabled. Names should be separated by "|" characters.
 const char kOriginTrialDisabledFeatures[] = "origin-trial-disabled-features";
+
+// Contains a list of token signatures for which origin trial experiments should
+// be disabled. Tokens should be separated by "|" characters.
+const char kOriginTrialDisabledTokens[] = "origin-trial-disabled-tokens";
 
 // Overrides the default public key for checking origin trial tokens.
 const char kOriginTrialPublicKey[] = "origin-trial-public-key";

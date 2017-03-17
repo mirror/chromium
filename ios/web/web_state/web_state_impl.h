@@ -94,6 +94,9 @@ class WebStateImpl : public WebState, public NavigationManagerDelegate {
   // Called when the visible security state of the page changes.
   void OnVisibleSecurityStateChange();
 
+  // Called when a dialog or child window open request was suppressed.
+  void OnDialogSuppressed();
+
   // Notifies the observers that the render process was terminated.
   void OnRenderProcessGone();
 
@@ -280,6 +283,7 @@ class WebStateImpl : public WebState, public NavigationManagerDelegate {
   // NavigationManagerDelegate:
   void GoToIndex(int index) override;
   void LoadURLWithParams(const NavigationManager::WebLoadParams&) override;
+  void Reload() override;
   void OnNavigationItemsPruned(size_t pruned_item_count) override;
   void OnNavigationItemChanged() override;
   void OnNavigationItemCommitted(

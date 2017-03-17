@@ -211,6 +211,12 @@ void WebStateImpl::OnVisibleSecurityStateChange() {
     observer.DidChangeVisibleSecurityState();
 }
 
+void WebStateImpl::OnDialogSuppressed() {
+  DCHECK(ShouldSuppressDialogs());
+  for (auto& observer : observers_)
+    observer.DidSuppressDialog();
+}
+
 void WebStateImpl::OnRenderProcessGone() {
   for (auto& observer : observers_)
     observer.RenderProcessGone();
@@ -735,6 +741,10 @@ void WebStateImpl::GoToIndex(int index) {
 void WebStateImpl::LoadURLWithParams(
     const NavigationManager::WebLoadParams& params) {
   [web_controller_ loadWithParams:params];
+}
+
+void WebStateImpl::Reload() {
+  [web_controller_ reload];
 }
 
 void WebStateImpl::OnNavigationItemsPruned(size_t pruned_item_count) {

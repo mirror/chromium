@@ -1648,12 +1648,12 @@ void LayoutBox::imageChanged(WrappedImagePtr image, const IntRect*) {
        styleRef().maskBoxImage().image()->data() == image) ||
       (styleRef().boxReflect() && styleRef().boxReflect()->mask().image() &&
        styleRef().boxReflect()->mask().image()->data() == image)) {
-    setShouldDoFullPaintInvalidation();
+    setShouldDoFullPaintInvalidationWithoutGeometryChange();
   } else {
     for (const FillLayer* layer = &styleRef().maskLayers(); layer;
          layer = layer->next()) {
       if (layer->image() && image == layer->image()->data()) {
-        setShouldDoFullPaintInvalidation();
+        setShouldDoFullPaintInvalidationWithoutGeometryChange();
         break;
       }
     }
@@ -1671,7 +1671,7 @@ void LayoutBox::imageChanged(WrappedImagePtr image, const IntRect*) {
         if (maybeAnimated) {
           setMayNeedPaintInvalidationAnimatedBackgroundImage();
         } else {
-          setShouldDoFullPaintInvalidation();
+          setShouldDoFullPaintInvalidationWithoutGeometryChange();
           setBackgroundChangedSinceLastPaintInvalidation();
         }
         break;
@@ -1752,8 +1752,10 @@ void LayoutBox::ensureIsReadyForPaintInvalidation() {
   LayoutBoxModelObject::ensureIsReadyForPaintInvalidation();
 
   if (mayNeedPaintInvalidationAnimatedBackgroundImage() &&
-      !backgroundIsKnownToBeObscured())
-    setShouldDoFullPaintInvalidation(PaintInvalidationDelayedFull);
+      !backgroundIsKnownToBeObscured()) {
+    setShouldDoFullPaintInvalidationWithoutGeometryChange(
+        PaintInvalidationDelayedFull);
+  }
 
   if (fullPaintInvalidationReason() != PaintInvalidationDelayedFull ||
       !intersectsVisibleViewport())
@@ -1765,7 +1767,8 @@ void LayoutBox::ensureIsReadyForPaintInvalidation() {
     // Conservatively assume the delayed paint invalidation was caused by
     // background image change.
     setBackgroundChangedSinceLastPaintInvalidation();
-    setShouldDoFullPaintInvalidation(PaintInvalidationFull);
+    setShouldDoFullPaintInvalidationWithoutGeometryChange(
+        PaintInvalidationFull);
   }
 }
 

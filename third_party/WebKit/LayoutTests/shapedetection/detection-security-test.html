@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<script src=../resources/testharness.js></script>
+<script src=../resources/testharnessreport.js></script>
+<script src="../resources/mojo-helpers.js"></script>
+<script src="resources/mock-facedetection.js"></script>
+<script>
+
+// Returns a Promise that is resolve()d if detect() is rejected. Needs an input
+// |element| (e.g. an HTMLImageElement or HTMLVideoElement) and a |url| to load.
+function detectOnElementAndExpectError(createDetector, element, url) {
+  return new Promise(function(resolve, reject) {
+    var tryDetection = function() {
+      var theMock = null;
+      mockFaceDetectionProviderReady
+          .then(mock => {
+            return createDetector();
+          })
+          .then(detector => {
+            return detector.detect(element);
+          })
+          .then(detectionResult => {
+            reject("Promise should have been rejected.");
+          })
+          .catch(error => {
+            resolve(error);
+          });
+    };
+    element.onload = tryDetection;
+    element.onerror = tryDetection;
+    element.src = url;
+  });
+};
+
+// This test verifies that a Detector will reject an undecodable image.
+var createTestForBadImage = function(createDetector) {
+  promise_test(function(t) {
+    var image = new Image();
+    return detectOnElementAndExpectError(createDetector, image,
+                                         "../external/wpt/images/broken.png")
+        .then(function(error) {
+          assert_equals(error.name, "InvalidStateError");
+        });
+  }, "Detector should reject undecodable images with an InvalidStateError.");
+};
+
+generate_tests(createTestForBadImage, [
+  [ "Face", () => { return new FaceDetector(); } ],
+  [ "Barcode", () => { return new BarcodeDetector(); } ],
+  [ "Text", () => { return new TextDetector(); } ]
+]);
+
+// This test verifies that a Detector will reject a broken video.
+var createTestForBadVideo = function(createDetector) {
+  promise_test(function(t) {
+    var video = document.createElement('video');
+    return detectOnElementAndExpectError(createDetector, video,
+                                         "content/garbage.webm")
+        .then(function(error) {
+          assert_equals(error.name, "InvalidStateError");
+        });
+  }, "Detector should reject undecodable videos with an InvalidStateError.");
+};
+
+generate_tests(createTestForBadVideo, [
+  [ "Face", () => { return new FaceDetector(); } ],
+  [ "Barcode", () => { return new BarcodeDetector(); } ],
+  [ "Text", () => { return new TextDetector(); } ]
+]);
+
+</script>

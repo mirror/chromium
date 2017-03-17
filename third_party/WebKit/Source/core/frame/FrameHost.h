@@ -41,7 +41,6 @@
 namespace blink {
 
 class BrowserControls;
-class OverscrollController;
 class Page;
 
 // FrameHost is the set of global data shared between multiple frames
@@ -68,14 +67,7 @@ class CORE_EXPORT FrameHost final
   BrowserControls& browserControls();
   const BrowserControls& browserControls() const;
 
-  OverscrollController& overscrollController();
-  const OverscrollController& overscrollController() const;
-
   DECLARE_TRACE();
-
-  void incrementSubframeCount();
-  void decrementSubframeCount();
-  int subframeCount() const;
 
  private:
   explicit FrameHost(Page&);

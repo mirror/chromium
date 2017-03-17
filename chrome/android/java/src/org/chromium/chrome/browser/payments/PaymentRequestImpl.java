@@ -224,10 +224,10 @@ public class PaymentRequestImpl
     private static boolean sIsAnyPaymentRequestShowing;
 
     /**
-     * In-memory mapping of the origins of websites that have recently called canMakePayment()
-     * to the list of the payment methods that were being queried. Used for throttling the usage of
-     * this call. The mapping is shared among all instances of PaymentRequestImpl in the browser
-     * process on UI thread. The user can reset the throttling mechanism by restarting the browser.
+     * In-memory mapping of the origins of iframes that have recently called canMakePayment() to the
+     * list of the payment methods that were being queried. Used for throttling the usage of this
+     * call. The mapping is shared among all instances of PaymentRequestImpl in the browser process
+     * on UI thread. The user can reset the throttling mechanism by restarting the browser.
      */
     private static Map<String, CanMakePaymentQuery> sCanMakePaymentQueries;
 
@@ -252,6 +252,7 @@ public class PaymentRequestImpl
     private final WebContents mWebContents;
     private final String mSchemelessOriginForPaymentApp;
     private final String mOriginForDisplay;
+    private final String mSchemelessIFrameOriginForPaymentApp;
     private final String mMerchantName;
     private final byte[][] mCertificateChain;
     private final AddressEditor mAddressEditor;
@@ -355,6 +356,8 @@ public class PaymentRequestImpl
         assert renderFrameHost != null;
 
         mRenderFrameHost = renderFrameHost;
+        mSchemelessIFrameOriginForPaymentApp = UrlFormatter.formatUrlForSecurityDisplay(
+                mRenderFrameHost.getLastCommittedURL(), false /* omit scheme for payment apps. */);
         mWebContents = WebContentsStatics.fromRenderFrameHost(renderFrameHost);
 
         mSchemelessOriginForPaymentApp = UrlFormatter.formatUrlForSecurityDisplay(
@@ -646,7 +649,8 @@ public class PaymentRequestImpl
         }
 
         if (queryApps.isEmpty()) {
-            CanMakePaymentQuery query = sCanMakePaymentQueries.get(mSchemelessOriginForPaymentApp);
+            CanMakePaymentQuery query =
+                    sCanMakePaymentQueries.get(mSchemelessIFrameOriginForPaymentApp);
             if (query != null && query.matchesPaymentMethods(mMethodData)) {
                 query.notifyObserversOfResponse(mCanMakePayment);
             }
@@ -658,8 +662,8 @@ public class PaymentRequestImpl
         // so a fast response from a non-autofill payment app at the front of the app list does not
         // cause NOT_SUPPORTED payment rejection.
         for (Map.Entry<PaymentApp, Map<String, PaymentMethodData>> q : queryApps.entrySet()) {
-            q.getKey().getInstruments(
-                    q.getValue(), mSchemelessOriginForPaymentApp, mCertificateChain, this);
+            q.getKey().getInstruments(q.getValue(), mSchemelessOriginForPaymentApp,
+                    mSchemelessIFrameOriginForPaymentApp, mCertificateChain, this);
         }
     }
 
@@ -1181,8 +1185,9 @@ public class PaymentRequestImpl
         }
 
         instrument.invokePaymentApp(mMerchantName, mSchemelessOriginForPaymentApp,
-                mCertificateChain, Collections.unmodifiableMap(methodData), mRawTotal,
-                mRawLineItems, Collections.unmodifiableMap(modifiers), this);
+                mSchemelessIFrameOriginForPaymentApp, mCertificateChain,
+                Collections.unmodifiableMap(methodData), mRawTotal, mRawLineItems,
+                Collections.unmodifiableMap(modifiers), this);
 
         recordSuccessFunnelHistograms("PayClicked");
         return !(instrument instanceof AutofillPaymentInstrument);
@@ -1268,14 +1273,15 @@ public class PaymentRequestImpl
     public void canMakePayment() {
         if (mClient == null) return;
 
-        CanMakePaymentQuery query = sCanMakePaymentQueries.get(mSchemelessOriginForPaymentApp);
+        CanMakePaymentQuery query =
+                sCanMakePaymentQueries.get(mSchemelessIFrameOriginForPaymentApp);
         if (query == null) {
             query = new CanMakePaymentQuery(Collections.unmodifiableMap(mMethodData));
-            sCanMakePaymentQueries.put(mSchemelessOriginForPaymentApp, query);
+            sCanMakePaymentQueries.put(mSchemelessIFrameOriginForPaymentApp, query);
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    sCanMakePaymentQueries.remove(mSchemelessOriginForPaymentApp);
+                    sCanMakePaymentQueries.remove(mSchemelessIFrameOriginForPaymentApp);
                 }
             }, CAN_MAKE_PAYMENT_QUERY_PERIOD_MS);
         } else if (!query.matchesPaymentMethods(Collections.unmodifiableMap(mMethodData))) {
@@ -1408,7 +1414,8 @@ public class PaymentRequestImpl
             }
         }
 
-        CanMakePaymentQuery query = sCanMakePaymentQueries.get(mSchemelessOriginForPaymentApp);
+        CanMakePaymentQuery query =
+                sCanMakePaymentQueries.get(mSchemelessIFrameOriginForPaymentApp);
         if (query != null && query.matchesPaymentMethods(mMethodData)) {
             query.notifyObserversOfResponse(mCanMakePayment);
         }

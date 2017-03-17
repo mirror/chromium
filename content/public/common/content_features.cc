@@ -54,11 +54,6 @@ const base::Feature kDocumentWriteEvaluator{"DocumentWriteEvaluator",
 const base::Feature kExpensiveBackgroundTimerThrottling{
     "ExpensiveBackgroundTimerThrottling", base::FEATURE_DISABLED_BY_DEFAULT};
 
-// Enables faster location.reload() to use a reload mode that revalidates only
-// main resource forcibly. https://crbug.com/670237.
-const base::Feature kFasterLocationReload{"FasterLocationReload",
-                                          base::FEATURE_ENABLED_BY_DEFAULT};
-
 // Enables the Feature Policy framework for granting and removing access to
 // other features through HTTP headers.
 const base::Feature kFeaturePolicy{"FeaturePolicy",
@@ -279,7 +274,7 @@ const base::Feature kNativeAndroidHistoryManager{
 
 // FeatureList definition for the Seccomp field trial.
 const base::Feature kSeccompSandboxAndroid{"SeccompSandboxAndroid",
-                                           base::FEATURE_DISABLED_BY_DEFAULT};
+                                           base::FEATURE_ENABLED_BY_DEFAULT};
 
 // Service worker based payment apps as defined by w3c here:
 // https://w3c.github.io/webpayments-payment-apps-api/

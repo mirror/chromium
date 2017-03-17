@@ -40,11 +40,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling Skia
   # and whatever else without interference from each other.
-  'skia_revision': 'be4eed2ef77d5e8c3e3920664fdc787e196ac6b0',
+  'skia_revision': 'e0a34e7dcddf68f0972805894f26c54869c3faba',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling V8
   # and whatever else without interference from each other.
-  'v8_revision': 'f7036b132f6bcce9312b52a9ba386ae487280713',
+  'v8_revision': 'd92eee0f047d094698ae8fb5c18d8f8cea46a3ca',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling swarming_client
   # and whatever else without interference from each other.
@@ -64,7 +64,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling PDFium
   # and whatever else without interference from each other.
-  'pdfium_revision': 'c9819a972830e9d1210d9d8f5c81d9f03f7c90a9',
+  'pdfium_revision': '78616574cedcb52cce8a25bd684bf9638a87de7a',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling openmax_dl
   # and whatever else without interference from each other.
@@ -88,7 +88,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling NaCl
   # and whatever else without interference from each other.
-  'nacl_revision': '93a51ecd3c7873554c9f384167142e2c45edfefb',
+  'nacl_revision': '62bfd122aee87d4eb4a7876950e18c793c626cd0',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling freetype
   # and whatever else without interference from each other.
@@ -96,7 +96,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': 'efbc9db2ef8f9f7bd11583374b96e4810b79733e',
+  'catapult_revision': '7da88470e422e865aded98d9d5ff41baeb290af7',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling libFuzzer
   # and whatever else without interference from each other.
@@ -108,7 +108,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling libprotobuf-mutator
   # and whatever else without interference from each other.
-  'libprotobuf-mutator': '2d609dfa69f670f6a1daf80eaa2d538f96120b2d',
+  'libprotobuf-mutator': 'b2c4fb59135711122b800376d8dc46af2fc9d060',
 }
 
 # Only these hosts are allowed for dependencies in this DEPS file.
@@ -411,7 +411,7 @@ deps_os = {
 
     # Build tools for Chrome OS. Note: This depends on third_party/pyelftools.
     'src/third_party/chromite':
-      Var('chromium_git') + '/chromiumos/chromite.git' + '@' + '59fb3e8e603b6b2b781da58f9408dde5c53fbbd6',
+      Var('chromium_git') + '/chromiumos/chromite.git' + '@' + '0d03f0f74706932433e8e9b789d46d920713633c',
 
     # Dependency of chromite.git and skia.
     'src/third_party/pyelftools':
@@ -494,7 +494,7 @@ deps_os = {
       Var('chromium_git') + '/external/netty4.git' + '@' + 'e0f26303b4ce635365be19414d0ac81f2ef6ba3c',
 
     'src/third_party/robolectric/robolectric':
-      Var('chromium_git') + '/external/robolectric.git' + '@' + 'e38b49a12fdfa17a94f0382cc8ffaf69132fd09b',
+      Var('chromium_git') + '/external/robolectric.git' + '@' + '5244ef6a3a6aada84a7f4f270f253b760019c14c',
 
     'src/third_party/ub-uiautomator/lib':
       Var('chromium_git') + '/chromium/third_party/ub-uiautomator.git' + '@' + '00270549ce3161ae72ceb24712618ea28b4f9434',

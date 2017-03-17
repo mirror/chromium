@@ -1298,7 +1298,7 @@
             ]
         }
     ],
-    "NTPBookmarkSuggestion": [
+    "NTPBookmarkSuggestions": [
         {
             "platforms": [
                 "android"
@@ -1445,7 +1445,7 @@
             ],
             "experiments": [
                 {
-                    "name": "NetProxyPreconnects",
+                    "name": "Enabled",
                     "params": {
                         "restrict_to_one_preconnect_for_proxies": "true"
                     }
@@ -2831,6 +2831,21 @@
                         "enable_update_menu_item": "true",
                         "show_summary": "true"
                     }
+                }
+            ]
+        }
+    ],
+    "UploadCrashReportsUsingJobScheduler": [
+        {
+            "platforms": [
+                "android"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "UploadCrashReportsUsingJobScheduler"
+                    ]
                 }
             ]
         }

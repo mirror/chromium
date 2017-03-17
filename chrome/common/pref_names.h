@@ -217,13 +217,6 @@ extern const char kLanguageEnabledExtensionImes[];
 extern const char kLanguageEnabledExtensionImesSyncable[];
 extern const char kLanguageImeMenuActivated[];
 extern const char kLanguageShouldMergeInputMethods[];
-extern const char kLanguageRemapCapsLockKeyTo[];
-extern const char kLanguageRemapSearchKeyTo[];
-extern const char kLanguageRemapControlKeyTo[];
-extern const char kLanguageRemapAltKeyTo[];
-extern const char kLanguageRemapEscapeKeyTo[];
-extern const char kLanguageRemapBackspaceKeyTo[];
-extern const char kLanguageRemapDiamondKeyTo[];
 extern const char kLanguageSendFunctionKeys[];
 extern const char kLanguageXkbAutoRepeatEnabled[];
 extern const char kLanguageXkbAutoRepeatDelay[];
@@ -879,6 +872,7 @@ extern const char kMediaRouterTabMirroringSources[];
 
 extern const char kOriginTrialPublicKey[];
 extern const char kOriginTrialDisabledFeatures[];
+extern const char kOriginTrialDisabledTokens[];
 
 extern const char kComponentUpdatesEnabled[];
 

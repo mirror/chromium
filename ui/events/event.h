@@ -409,19 +409,20 @@ class EVENTS_EXPORT LocatedEvent : public Event {
 struct EVENTS_EXPORT PointerDetails {
  public:
   PointerDetails();
-  explicit PointerDetails(EventPointerType pointer_type, int pointer_id = -1);
+  explicit PointerDetails(EventPointerType pointer_type,
+                          int pointer_id = kUnknownPointerId);
   PointerDetails(EventPointerType pointer_type,
+                 int pointer_id,
                  float radius_x,
                  float radius_y,
                  float force,
-                 float tilt_x,
-                 float tilt_y,
+                 float tilt_x = 0.0f,
+                 float tilt_y = 0.0f,
                  float tangential_pressure = 0.0f,
-                 int twist = 0,
-                 int pointer_id = -1);
+                 int twist = 0);
   PointerDetails(EventPointerType pointer_type,
                  const gfx::Vector2d& pointer_offset,
-                 int pointer_id = -1);
+                 int pointer_id = kUnknownPointerId);
   PointerDetails(const PointerDetails& other);
 
   bool operator==(const PointerDetails& other) const {
@@ -665,18 +666,10 @@ class EVENTS_EXPORT TouchEvent : public LocatedEvent {
 
   TouchEvent(EventType type,
              const gfx::Point& location,
-             int touch_id,
-             base::TimeTicks time_stamp);
-
-  TouchEvent(EventType type,
-             const gfx::Point& location,
-             int flags,
-             int touch_id,
-             base::TimeTicks timestamp,
-             float radius_x,
-             float radius_y,
-             float angle,
-             float force);
+             base::TimeTicks time_stamp,
+             const PointerDetails& pointer_details,
+             int flags = 0,
+             float angle = 0.0f);
 
   TouchEvent(const TouchEvent& copy);
 
@@ -817,7 +810,10 @@ class EVENTS_EXPORT KeyEvent : public Event {
 
   // Create a keystroke event from a legacy KeyboardCode.
   // This should not be used in new code.
-  KeyEvent(EventType type, KeyboardCode key_code, int flags);
+  KeyEvent(EventType type,
+           KeyboardCode key_code,
+           int flags,
+           base::TimeTicks time_stamp = base::TimeTicks());
 
   // Create a fully defined keystroke event.
   KeyEvent(EventType type,
@@ -828,7 +824,10 @@ class EVENTS_EXPORT KeyEvent : public Event {
            base::TimeTicks time_stamp);
 
   // Create a character event.
-  KeyEvent(base::char16 character, KeyboardCode key_code, int flags);
+  KeyEvent(base::char16 character,
+           KeyboardCode key_code,
+           int flags,
+           base::TimeTicks time_stamp = base::TimeTicks());
 
   // Used for synthetic events with code of DOM KeyboardEvent (e.g. 'KeyA')
   // See also: ui/events/keycodes/dom/dom_values.txt

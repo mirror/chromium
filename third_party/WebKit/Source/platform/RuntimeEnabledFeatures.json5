@@ -348,10 +348,6 @@
       status: "experimental",
     },
     {
-      name: "FasterLocationReload",
-      status: "experimental",
-    },
-    {
       name: "FontCacheScaling",
       status: "test",
     },
@@ -565,6 +561,11 @@
     },
     {
       name: "MediaStreamTrackContentHint",
+      status: "experimental",
+    },
+    {
+      name: "MediaTrackApplyConstraints",
+      implied_by: ["ImageCapture"],
       status: "experimental",
     },
     {

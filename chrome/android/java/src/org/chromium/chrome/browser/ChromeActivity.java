@@ -135,11 +135,11 @@ import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
 import org.chromium.chrome.browser.webapps.AddToHomescreenManager;
-import org.chromium.chrome.browser.widget.BottomSheet;
-import org.chromium.chrome.browser.widget.BottomSheetContentController;
 import org.chromium.chrome.browser.widget.ControlContainer;
-import org.chromium.chrome.browser.widget.EmptyBottomSheetObserver;
 import org.chromium.chrome.browser.widget.FadingBackgroundView;
+import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
+import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetContentController;
+import org.chromium.chrome.browser.widget.bottomsheet.EmptyBottomSheetObserver;
 import org.chromium.components.bookmarks.BookmarkId;
 import org.chromium.content.browser.ContentVideoView;
 import org.chromium.content.browser.ContentViewCore;
@@ -431,17 +431,17 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
                 ControlContainer controlContainer =
                         (ControlContainer) findViewById(R.id.control_container);
 
+                // Inflate the correct toolbar layout for the device.
+                int toolbarLayoutId = getToolbarLayoutId();
+                if (toolbarLayoutId != NO_TOOLBAR_LAYOUT && controlContainer != null) {
+                    controlContainer.initWithToolbar(toolbarLayoutId);
+                }
+
                 // Get a handle to the bottom sheet if using the bottom control container.
                 if (controlContainerLayoutId == R.layout.bottom_control_container) {
                     View coordinator = findViewById(R.id.coordinator);
                     mBottomSheet = (BottomSheet) findViewById(R.id.bottom_sheet);
                     mBottomSheet.init(coordinator, controlContainer.getView());
-                }
-
-                // Inflate the correct toolbar layout for the device.
-                int toolbarLayoutId = getToolbarLayoutId();
-                if (toolbarLayoutId != NO_TOOLBAR_LAYOUT && controlContainer != null) {
-                    controlContainer.initWithToolbar(toolbarLayoutId);
                 }
             } finally {
                 StrictMode.setThreadPolicy(oldPolicy);

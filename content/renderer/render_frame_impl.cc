@@ -2012,8 +2012,8 @@ void RenderFrameImpl::OnJavaScriptExecuteRequestInIsolatedWorld(
   WebScriptSource script = WebScriptSource(WebString::fromUTF16(jscript));
   JavaScriptIsolatedWorldRequest* request = new JavaScriptIsolatedWorldRequest(
       id, notify_result, routing_id_, weak_factory_.GetWeakPtr());
-  frame_->requestExecuteScriptInIsolatedWorld(world_id, &script, 1, false,
-                                              request);
+  frame_->requestExecuteScriptInIsolatedWorld(
+      world_id, &script, 1, false, WebLocalFrame::Synchronous, request);
 }
 
 RenderFrameImpl::JavaScriptIsolatedWorldRequest::JavaScriptIsolatedWorldRequest(
@@ -3629,7 +3629,7 @@ void RenderFrameImpl::didCommitProvisionalLoad(
   // Only update the PreviewsState and effective connection type states for new
   // main frame documents. Subframes inherit from the main frame and should not
   // change at commit time.
-  if (is_main_frame_ && !navigation_state->WasWithinSamePage()) {
+  if (is_main_frame_ && !navigation_state->WasWithinSameDocument()) {
     previews_state_ =
         extra_data ? extra_data->previews_state() : PREVIEWS_OFF;
 
@@ -3656,9 +3656,10 @@ void RenderFrameImpl::didCommitProvisionalLoad(
       return;
   }
 
-  // For new page navigations, the browser process needs to be notified of the
-  // first paint of that page, so it can cancel the timer that waits for it.
-  if (is_main_frame_ && !navigation_state->WasWithinSamePage()) {
+  // For navigations that change the document, the browser process needs to be
+  // notified of the first paint of that page, so it can cancel the timer that
+  // waits for it.
+  if (is_main_frame_ && !navigation_state->WasWithinSameDocument()) {
     GetRenderWidget()->IncrementContentSourceId();
     render_view_->QueueMessage(
         new ViewHostMsg_DidFirstPaintAfterLoad(render_view_->routing_id_),
@@ -3709,8 +3710,8 @@ void RenderFrameImpl::didCommitProvisionalLoad(
   for (auto& observer : render_view_->observers_)
     observer.DidCommitProvisionalLoad(frame, is_new_navigation);
   for (auto& observer : observers_) {
-    observer.DidCommitProvisionalLoad(is_new_navigation,
-                                      navigation_state->WasWithinSamePage());
+    observer.DidCommitProvisionalLoad(
+        is_new_navigation, navigation_state->WasWithinSameDocument());
   }
 
   if (!frame->parent()) {  // Only for top frames.
@@ -3911,6 +3912,12 @@ void RenderFrameImpl::runScriptsAtDocumentReady(blink::WebLocalFrame* frame,
   // Do not use |this| or |frame| here without checking |weak_self|.
 }
 
+void RenderFrameImpl::runScriptsAtDocumentIdle(blink::WebLocalFrame* frame) {
+  DCHECK_EQ(frame_, frame);
+  GetContentClient()->renderer()->RunScriptsAtDocumentIdle(this);
+  // ContentClient might have deleted |frame| and |this| by now!
+}
+
 void RenderFrameImpl::didHandleOnloadEvents(blink::WebLocalFrame* frame) {
   DCHECK_EQ(frame_, frame);
   if (!frame->parent()) {
@@ -4048,7 +4055,7 @@ void RenderFrameImpl::didNavigateWithinPage(
   UpdateNavigationState(document_state, true /* was_within_same_page */,
                         content_initiated);
   static_cast<NavigationStateImpl*>(document_state->navigation_state())
-      ->set_was_within_same_page(true);
+      ->set_was_within_same_document(true);
 
   didCommitProvisionalLoad(frame, item, commit_type);
 }
@@ -4854,7 +4861,7 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
   params.render_view_routing_id = render_view_->routing_id();
   params.socket_address.set_host(response.remoteIPAddress().utf8());
   params.socket_address.set_port(response.remotePort());
-  params.was_within_same_page = navigation_state->WasWithinSamePage();
+  params.was_within_same_document = navigation_state->WasWithinSameDocument();
 
   WebDocument frame_document = frame->document();
   // Set the origin of the frame.  This will be replicated to the corresponding
@@ -5017,7 +5024,7 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
                                     base::IntToString(params.redirects.size()));
       base::debug::SetCrashKeyValue(
           "origin_mismatch_same_page",
-          base::IntToString(params.was_within_same_page));
+          base::IntToString(params.was_within_same_document));
       CHECK(params.origin.IsSamePhysicalOriginWith(url::Origin(params.url)))
           << " url:" << params.url << " origin:" << params.origin;
     }

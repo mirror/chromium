@@ -20,6 +20,7 @@
 #import "ios/web/public/web_state/web_state_delegate_bridge.h"
 #import "ios/web/public/web_state/web_state_observer_bridge.h"
 #import "ios/web_view/internal/cwv_html_element_internal.h"
+#import "ios/web_view/internal/cwv_navigation_action_internal.h"
 #import "ios/web_view/internal/cwv_web_view_configuration_internal.h"
 #import "ios/web_view/internal/translate/web_view_translate_client.h"
 #include "ios/web_view/internal/web_view_browser_state.h"
@@ -131,7 +132,10 @@
 }
 
 - (void)reload {
-  _webState->GetNavigationManager()->Reload(web::ReloadType::NORMAL, true);
+  // |check_for_repost| is false because CWVWebView does not support repost form
+  // dialogs.
+  _webState->GetNavigationManager()->Reload(web::ReloadType::NORMAL,
+                                            false /* check_for_repost */);
 }
 
 - (void)stopLoading {
@@ -225,6 +229,38 @@
                        inView:params.view
           userGestureLocation:params.location];
   return YES;
+}
+
+- (web::WebState*)webState:(web::WebState*)webState
+    createNewWebStateForURL:(const GURL&)URL
+                  openerURL:(const GURL&)openerURL
+            initiatedByUser:(BOOL)initiatedByUser {
+  SEL selector =
+      @selector(webView:createWebViewWithConfiguration:forNavigationAction:);
+  if (![_UIDelegate respondsToSelector:selector]) {
+    return nullptr;
+  }
+
+  NSURLRequest* request =
+      [[NSURLRequest alloc] initWithURL:net::NSURLWithGURL(URL)];
+  CWVNavigationAction* navigationAction =
+      [[CWVNavigationAction alloc] initWithRequest:request
+                                     userInitiated:initiatedByUser];
+  // TODO(crbug.com/702298): Window created by CWVUIDelegate should be closable.
+  CWVWebView* webView = [_UIDelegate webView:self
+              createWebViewWithConfiguration:_configuration
+                         forNavigationAction:navigationAction];
+  if (!webView) {
+    return nullptr;
+  }
+  return webView->_webState.get();
+}
+
+- (void)closeWebState:(web::WebState*)webState {
+  SEL selector = @selector(webViewDidClose:);
+  if ([_UIDelegate respondsToSelector:selector]) {
+    [_UIDelegate webViewDidClose:self];
+  }
 }
 
 - (web::JavaScriptDialogPresenter*)javaScriptDialogPresenterForWebState:

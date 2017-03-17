@@ -404,6 +404,7 @@ source_set("common") {
     "//ppapi/features",
     "//sandbox",
     "//sandbox:sandbox_features",
+    "//services/resource_coordinator/public/interfaces",
     "//services/service_manager",
     "//services/service_manager/public/cpp",
     "//services/service_manager/public/interfaces",
@@ -589,6 +590,7 @@ mojom("mojo_bindings") {
   sources = [
     "associated_interfaces.mojom",
     "child_memory_coordinator.mojom",
+    "field_trial_recorder.mojom",
     "frame.mojom",
     "host_zoom.mojom",
     "image_downloader/image_downloader.mojom",

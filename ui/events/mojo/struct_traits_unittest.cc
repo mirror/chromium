@@ -136,6 +136,9 @@ TEST_F(StructTraitsTest, KeyEvent) {
       {'\x12', VKEY_2, EF_CONTROL_DOWN},
       {'Z', VKEY_Z, EF_CAPS_LOCK_ON},
       {'z', VKEY_Z, EF_NONE},
+      {ET_KEY_PRESSED, VKEY_Z, EF_NONE,
+       base::TimeTicks::FromInternalValue(101)},
+      {'Z', VKEY_Z, EF_NONE, base::TimeTicks::FromInternalValue(102)},
   };
 
   mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
@@ -156,6 +159,7 @@ TEST_F(StructTraitsTest, KeyEvent) {
     EXPECT_EQ(kTestData[i].GetConflatedWindowsKeyCode(),
               output_key_event->GetConflatedWindowsKeyCode());
     EXPECT_EQ(kTestData[i].code(), output_key_event->code());
+    EXPECT_EQ(kTestData[i].time_stamp(), output_key_event->time_stamp());
   }
 }
 
@@ -179,12 +183,23 @@ TEST_F(StructTraitsTest, PointerEvent) {
 
       // Touch pointer events:
       {ET_POINTER_DOWN, gfx::Point(10, 10), gfx::Point(20, 30), EF_NONE, 1, 0,
-       PointerDetails(EventPointerType::POINTER_TYPE_TOUCH, 1.0, 2.0, 3.0, 4.0,
-                      5.0),
+       PointerDetails(EventPointerType::POINTER_TYPE_TOUCH,
+                      /* pointer_id*/ 0,
+                      /* radius_x */ 1.0f,
+                      /* radius_y */ 2.0f,
+                      /* force */ 3.0f,
+                      /* tilt_x */ 4.0f,
+                      /* tilt_y */ 5.0f),
        base::TimeTicks()},
       {ET_POINTER_CANCELLED, gfx::Point(120, 120), gfx::Point(2, 3), EF_NONE, 2,
-       0, PointerDetails(EventPointerType::POINTER_TYPE_TOUCH, 5.5, 4.5, 3.5,
-                         2.5, 0.5),
+       0,
+       PointerDetails(EventPointerType::POINTER_TYPE_TOUCH,
+                      /* pointer_id*/ 0,
+                      /* radius_x */ 5.5f,
+                      /* radius_y */ 4.5f,
+                      /* force */ 3.5f,
+                      /* tilt_x */ 2.5f,
+                      /* tilt_y */ 0.5f),
        base::TimeTicks()},
   };
 

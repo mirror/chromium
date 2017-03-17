@@ -130,20 +130,16 @@ Vector<v8::Local<v8::Value>> V8FunctionExecutor::execute(LocalFrame* frame) {
 
 }  // namespace
 
-void SuspendableScriptExecutor::createAndRun(
+SuspendableScriptExecutor* SuspendableScriptExecutor::create(
     LocalFrame* frame,
-    int worldID,
+    RefPtr<DOMWrapperWorld> world,
     const HeapVector<ScriptSourceCode>& sources,
     bool userGesture,
     WebScriptExecutionCallback* callback) {
-  // TODO(devlin): Passing in a v8::Isolate* directly would be better than
-  // toIsolate() here.
-  ScriptState* scriptState = ScriptState::forWorld(
-      frame, *DOMWrapperWorld::fromWorldId(toIsolate(frame), worldID));
-  SuspendableScriptExecutor* executor = new SuspendableScriptExecutor(
+  ScriptState* scriptState = ScriptState::forWorld(frame, *world);
+  return new SuspendableScriptExecutor(
       frame, scriptState, callback,
-      new WebScriptExecutor(sources, worldID, userGesture));
-  executor->run();
+      new WebScriptExecutor(sources, world->worldId(), userGesture));
 }
 
 void SuspendableScriptExecutor::createAndRun(
@@ -183,6 +179,7 @@ SuspendableScriptExecutor::SuspendableScriptExecutor(
     : SuspendableTimer(frame->document(), TaskType::Timer),
       m_scriptState(scriptState),
       m_callback(callback),
+      m_blockingOption(NonBlocking),
       m_keepAlive(this),
       m_executor(executor) {}
 
@@ -204,8 +201,22 @@ void SuspendableScriptExecutor::run() {
   suspendIfNeeded();
 }
 
+void SuspendableScriptExecutor::runAsync(BlockingOption blocking) {
+  ExecutionContext* context = getExecutionContext();
+  DCHECK(context);
+  m_blockingOption = blocking;
+  if (m_blockingOption == OnloadBlocking)
+    toDocument(getExecutionContext())->incrementLoadEventDelayCount();
+
+  startOneShot(0, BLINK_FROM_HERE);
+  suspendIfNeeded();
+}
+
 void SuspendableScriptExecutor::executeAndDestroySelf() {
   CHECK(m_scriptState->contextIsValid());
+
+  if (m_callback)
+    m_callback->willExecute();
 
   ScriptState::Scope scriptScope(m_scriptState.get());
   Vector<v8::Local<v8::Value>> results =
@@ -215,6 +226,9 @@ void SuspendableScriptExecutor::executeAndDestroySelf() {
   // will have handled the disposal/callback.
   if (!m_scriptState->contextIsValid())
     return;
+
+  if (m_blockingOption == OnloadBlocking)
+    toDocument(getExecutionContext())->decrementLoadEventDelayCount();
 
   if (m_callback)
     m_callback->completed(results);
