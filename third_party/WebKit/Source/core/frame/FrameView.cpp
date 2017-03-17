@@ -1298,10 +1298,10 @@ void FrameView::layout() {
     bool hasHorizontalScrollbar = horizontalScrollbar();
     bool hasVerticalScrollbar = verticalScrollbar();
     IntRect newRect = frameRect();
-    if (hadHorizontalScrollbar != hasHorizontalScrollbar ||
-        hadVerticalScrollbar != hasVerticalScrollbar) {
+    bool scrollbarsChanged = hadHorizontalScrollbar != hasHorizontalScrollbar ||
+                             hadVerticalScrollbar != hasVerticalScrollbar;
+    if (scrollbarsChanged)
       setNeedsLayout();
-    }
     if (newRect != oldRect) {
       markViewportConstrainedObjectsForLayout(
           newRect.width() != oldRect.width(),
@@ -1312,7 +1312,8 @@ void FrameView::layout() {
     }
 
     if (needsLayout()) {
-      AutoReset<bool> suppressAdjustViewSize(&m_suppressAdjustViewSize, true);
+      AutoReset<bool> suppressAdjustViewSize(&m_suppressAdjustViewSize,
+                                             !scrollbarsChanged);
       layout();
     }
 
