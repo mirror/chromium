@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Baseline alignment of replaced elements in vertical-rl 
+PASS Baseline alignment of replaced elements in vertical-lr 
+Harness: the test ran to completion.
+

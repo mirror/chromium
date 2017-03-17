@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Referrer policy attribute on anchor element is applied: no-referrer 
+Harness: the test ran to completion.
+

@@ -1,0 +1,10 @@
+CONSOLE WARNING: line 79: Calling Element.createShadowRoot() for an element which already hosts a shadow root is deprecated. See https://www.chromestatus.com/features/4668884095336448 for more details.
+This is a testharness.js-based test.
+PASS lang inherits into the shadow tree 
+PASS lang of the distributed content traverses the composed tree 
+PASS lang of the distributed content traverses the composed tree (multiple shadow roots) 
+PASS lang of the distributed content traverses the composed tree (multiple levels) 
+PASS lang of the older shadow root traverses the composed tree 
+PASS lang of the re-distributed content traverses the composed tree 
+Harness: the test ran to completion.
+

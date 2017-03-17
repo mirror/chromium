@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS SRI: High Unicode block 
+PASS SRI: Unicode combined characters 
+PASS SRI: Right-to-left characters 
+PASS SRI: Mixed right-to-left and left-to-right 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that 'mediaControlsEnabled' properly toggles the native controls 
+Harness: the test ran to completion.
+

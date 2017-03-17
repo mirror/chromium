@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS initial and inherit should serialize properly 
+PASS Single values should serialize properly 
+PASS Multiple values should serialize properly 
+PASS Mismatched value lengths should repeat to their lowest common multiple 
+PASS Initial values introduced by the background shorthand should be handled as repeat. 
+Harness: the test ran to completion.
+

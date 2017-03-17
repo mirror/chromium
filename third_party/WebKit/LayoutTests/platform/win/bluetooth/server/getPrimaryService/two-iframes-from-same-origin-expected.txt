@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Two iframes in the same origin should be able to access each other's services 
+Harness: the test ran to completion.
+

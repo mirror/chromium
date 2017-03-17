@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS document.createTouch exists and creates a Touch object with requested properties 
+PASS document.createTouchList exists and correctly creates a TouchList from zero Touch objects 
+PASS document.createTouchList exists and correctly creates a TouchList from a single Touch 
+PASS document.createTouchList exists and correctly creates a TouchList from two Touch objects 
+Harness: the test ran to completion.
+

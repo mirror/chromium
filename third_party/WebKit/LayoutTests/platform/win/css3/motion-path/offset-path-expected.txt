@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS offset-path default is none 
+PASS offset-path can be explicitly none 
+PASS offset-path can be an SVG Path data string 
+PASS offset-path can be explicitly inherited 
+PASS offset-path is not inherited by default 
+PASS offset-path style can be set inline 
+Harness: the test ran to completion.
+

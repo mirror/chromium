@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Purge the existing registrations. 
+PASS Register then getRegistrations 
+PASS Register multiple times then getRegistrations 
+PASS Register then Unregister then getRegistrations 
+PASS getRegistrations promise resolves only with same origin registrations. 
+Harness: the test ran to completion.
+

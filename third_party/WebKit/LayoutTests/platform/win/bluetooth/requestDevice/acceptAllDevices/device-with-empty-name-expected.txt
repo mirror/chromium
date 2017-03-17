@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Device with empty name and no UUIDs nearby. Should be found if acceptAllDevices is true. 
+Harness: the test ran to completion.
+

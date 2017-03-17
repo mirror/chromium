@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Modify and move a container node of selection 
+Harness: the test ran to completion.
+

@@ -1,0 +1,40 @@
+This is a testharness.js-based test.
+PASS This test uses responsive-test.js. 
+PASS Untitled 
+PASS Untitled 1 
+PASS Untitled 2 
+PASS Untitled 3 
+PASS Untitled 4 
+PASS Untitled 5 
+PASS Untitled 6 
+PASS Untitled 7 
+PASS Untitled 8 
+PASS Untitled 9 
+PASS Untitled 10 
+PASS Untitled 11 
+PASS Untitled 12 
+PASS Animation on property <color> from [inherit] to [green] with {"inherited":"blue"} changed to {"inherited":"yellow"} at (0.25) is [rgb(191, 223, 0)] 
+PASS Untitled 13 
+PASS Animation on property <color> from [inherit] to [green] with {"inherited":"blue"} changed to {"inherited":"yellow"} at (0.75) is [rgb(64, 160, 0)] 
+PASS Untitled 14 
+PASS Animation on property <color> from [inherit] to [green] with {"inherited":"yellow"} changed to {"inherited":"blue"} at (0.25) is [rgb(0, 32, 191)] 
+PASS Untitled 15 
+PASS Animation on property <color> from [inherit] to [green] with {"inherited":"yellow"} changed to {"inherited":"blue"} at (0.75) is [rgb(0, 96, 64)] 
+PASS Untitled 16 
+PASS Animation on property <color> from [currentcolor] to [green] with {"inherited":"blue"} changed to {"inherited":"yellow"} at (0.25) is [rgb(191, 223, 0)] 
+PASS Untitled 17 
+PASS Animation on property <color> from [currentcolor] to [green] with {"inherited":"blue"} changed to {"inherited":"yellow"} at (0.75) is [rgb(64, 160, 0)] 
+PASS Untitled 18 
+PASS Animation on property <color> from [currentcolor] to [green] with {"inherited":"yellow"} changed to {"inherited":"blue"} at (0.25) is [rgb(0, 32, 191)] 
+PASS Untitled 19 
+PASS Animation on property <color> from [currentcolor] to [green] with {"inherited":"yellow"} changed to {"inherited":"blue"} at (0.75) is [rgb(0, 96, 64)] 
+PASS Untitled 20 
+PASS Animation on property <color> from [green] to [currentcolor] with {"inherited":"blue"} changed to {"inherited":"yellow"} at (0.25) is [rgb(64, 160, 0)] 
+PASS Untitled 21 
+PASS Animation on property <color> from [green] to [currentcolor] with {"inherited":"blue"} changed to {"inherited":"yellow"} at (0.75) is [rgb(191, 223, 0)] 
+PASS Untitled 22 
+PASS Animation on property <color> from [green] to [currentcolor] with {"inherited":"yellow"} changed to {"inherited":"blue"} at (0.25) is [rgb(0, 96, 64)] 
+PASS Untitled 23 
+PASS Animation on property <color> from [green] to [currentcolor] with {"inherited":"yellow"} changed to {"inherited":"blue"} at (0.75) is [rgb(0, 32, 191)] 
+Harness: the test ran to completion.
+

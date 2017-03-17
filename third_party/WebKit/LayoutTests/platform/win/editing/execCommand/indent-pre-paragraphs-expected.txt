@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS 0 select all children 
+PASS 1 select all children with blank lines 
+PASS 2 select all children with newlines 
+PASS 3 select line 1 
+PASS 4 select line 2 
+PASS 5 select line 3 
+Harness: the test ran to completion.
+

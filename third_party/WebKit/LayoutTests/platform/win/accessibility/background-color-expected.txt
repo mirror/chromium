@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Ensures that the document base color is exposed. 
+PASS Ensures that the color of the parent is exposed if the text background is transparent. 
+PASS Ensures that the color of the parent is the only one exposed if it is not transparent. 
+PASS Ensures that semi-transparent text background color is blended with document base color. 
+PASS Ensures that background colors of overlapping objects are blended. 
+Harness: the test ran to completion.
+

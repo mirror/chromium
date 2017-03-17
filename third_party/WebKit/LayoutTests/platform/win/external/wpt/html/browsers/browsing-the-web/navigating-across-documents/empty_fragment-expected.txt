@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Navigating to the same URL with an empty fragment aborts the navigation 
+Harness: the test ran to completion.
+

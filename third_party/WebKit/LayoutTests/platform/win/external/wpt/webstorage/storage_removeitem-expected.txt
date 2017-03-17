@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS localStorage.removeItem() 
+PASS delete localStorage[] 
+PASS localStorage.removeItem(null) 
+PASS localStorage.removeItem(undefined) 
+PASS sessionStorage.removeItem() 
+PASS delete sessionStorage[] 
+PASS sessionStorage.removeItem(null) 
+PASS sessionStorage.removeItem(undefined) 
+Harness: the test ran to completion.
+

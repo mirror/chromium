@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Upgrade transactions are active in upgradeneeded callback 
+PASS Upgrade transactions are active in upgradeneeded callback and microtasks 
+PASS Upgrade transactions are deactivated before next task 
+Harness: the test ran to completion.
+

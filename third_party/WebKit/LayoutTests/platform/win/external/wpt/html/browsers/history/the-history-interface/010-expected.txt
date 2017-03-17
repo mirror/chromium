@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS HTTP Referer should use the pushed state (before onload) 
+PASS document.referrer should use the pushed state (before onload) 
+PASS HTTP Referer should use the replaced state (before onload) 
+PASS document.referrer should use the replaced state (before onload) 
+Harness: the test ran to completion.
+

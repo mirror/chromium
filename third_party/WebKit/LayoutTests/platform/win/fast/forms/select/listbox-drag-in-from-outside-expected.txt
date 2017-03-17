@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Dragging in a listbox from the outside of the listbox should not change selection. 
+Harness: the test ran to completion.
+

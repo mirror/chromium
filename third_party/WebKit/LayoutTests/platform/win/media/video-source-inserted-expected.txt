@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that an empty "source" inserted when networkState is NETWORK_EMPTY triggers resource selection, immediately changing networkState to NETWORK_NO_SOURCE. 
+Harness: the test ran to completion.
+

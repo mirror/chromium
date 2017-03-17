@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Custom property sets can be extended with the (self-referential) cascade trick 
+Harness: the test ran to completion.
+

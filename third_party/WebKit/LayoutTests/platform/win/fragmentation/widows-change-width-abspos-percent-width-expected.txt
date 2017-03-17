@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Resize container with percent-width abspos and widows 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Top level browsing context 
+PASS One nested iframe 
+PASS Two nested iframes 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS delete element from collection 
+Harness: the test ran to completion.
+

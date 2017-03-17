@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS This test uses interpolation-test.js. 
+PASS SMIL: Interpolate attribute <preserveAspectRatio> from replace [xMidYMin] to replace [xMaxYMid slice] at (0) is [xMidYMin] 
+PASS SMIL: Interpolate attribute <preserveAspectRatio> from replace [xMidYMin] to replace [xMaxYMid slice] at (0.2) is [xMidYMin] 
+PASS SMIL: Interpolate attribute <preserveAspectRatio> from replace [xMidYMin] to replace [xMaxYMid slice] at (0.6) is [xMaxYMid slice] 
+PASS SMIL: Interpolate attribute <preserveAspectRatio> from replace [xMidYMin] to replace [xMaxYMid slice] at (1) is [xMaxYMid slice] 
+PASS Web Animations: Interpolate attribute <preserveAspectRatio> from replace [xMidYMin] to replace [xMaxYMid slice] at (-2.4) is [xMidYMin] 
+PASS Web Animations: Interpolate attribute <preserveAspectRatio> from replace [xMidYMin] to replace [xMaxYMid slice] at (0) is [xMidYMin] 
+PASS Web Animations: Interpolate attribute <preserveAspectRatio> from replace [xMidYMin] to replace [xMaxYMid slice] at (0.2) is [xMidYMin] 
+PASS Web Animations: Interpolate attribute <preserveAspectRatio> from replace [xMidYMin] to replace [xMaxYMid slice] at (0.6) is [xMaxYMid slice] 
+PASS Web Animations: Interpolate attribute <preserveAspectRatio> from replace [xMidYMin] to replace [xMaxYMid slice] at (1) is [xMaxYMid slice] 
+PASS Web Animations: Interpolate attribute <preserveAspectRatio> from replace [xMidYMin] to replace [xMaxYMid slice] at (3.4) is [xMaxYMid slice] 
+Harness: the test ran to completion.
+

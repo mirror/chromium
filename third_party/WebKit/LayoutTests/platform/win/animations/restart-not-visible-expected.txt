@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Race between visibility and set compositor pending should not crash 
+Harness: the test ran to completion.
+

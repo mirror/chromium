@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Check that currentColor in a box-shadow is resolved to the correct color 
+Harness: the test ran to completion.
+

@@ -1,0 +1,12 @@
+CONSOLE ERROR: line 21: Refused to load the script 'data:application/javascript,' because it violates the following Content Security Policy directive: "script-src 'nonce-nonce' *".
+
+CONSOLE ERROR: line 36: Refused to load the script 'blob:http://127.0.0.1:8000/f47ca70d-7a83-4851-9bd8-c2d4fb77a42a' because it violates the following Content Security Policy directive: "script-src 'nonce-nonce' *".
+
+CONSOLE ERROR: line 54: Refused to load the script 'filesystem:http://127.0.0.1:8000/temporary/fail.js' because it violates the following Content Security Policy directive: "script-src 'nonce-nonce' *".
+
+This is a testharness.js-based test.
+PASS data: URIs should not match * 
+PASS blob: URIs should not match * 
+PASS filesystem URIs should not match * 
+Harness: the test ran to completion.
+

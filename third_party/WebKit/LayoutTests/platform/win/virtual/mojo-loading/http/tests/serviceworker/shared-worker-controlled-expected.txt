@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Verify subresource loads in SharedWorker are controlled by a Service Worker 
+PASS Verify SharedWorker construction is controlled by a Service Worker 
+PASS Verify importScripts from SharedWorker is controlled by a Service Worker 
+Harness: the test ran to completion.
+

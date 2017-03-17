@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS ServiceWorkerRegistration.getNotifications() returns the opened notifications within a Service Worker. 
+Harness: the test ran to completion.
+

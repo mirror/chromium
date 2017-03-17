@@ -1,0 +1,23 @@
+This is a testharness.js-based test.
+PASS TestAlphaShadow 1 
+PASS TestAlphaShadow 2 
+PASS TestAlphaShadow 3 
+PASS TestAlphaShadow 4 
+PASS TestAlphaShadow 5 
+PASS TestBlurryShadow 1 
+PASS TestBlurryShadow 2 
+PASS TestBlurryShadow 3 
+PASS TestBlurryShadow 4 
+PASS TestBlurryShadow 5 
+PASS TestRotatedAlphaShadow 1 
+PASS TestRotatedAlphaShadow 2 
+PASS TestRotatedAlphaShadow 3 
+PASS TestRotatedAlphaShadow 4 
+PASS TestRotatedAlphaShadow 5 
+PASS TestRotatedBlurryShadow 1 
+PASS TestRotatedBlurryShadow 2 
+PASS TestRotatedBlurryShadow 3 
+PASS TestRotatedBlurryShadow 4 
+PASS TestRotatedBlurryShadow 5 
+Harness: the test ran to completion.
+

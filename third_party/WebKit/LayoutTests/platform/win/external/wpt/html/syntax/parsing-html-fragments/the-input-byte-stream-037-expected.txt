@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS A page with a UTF-8 BOM will be recognized as UTF-8 even if the meta content attribute declares a different encoding. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBObjectStore.delete() - delete removes record (out-of-line keys)  
+Harness: the test ran to completion.
+

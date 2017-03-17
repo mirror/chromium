@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that Node.appendChild throws TypeError when a wrong type of argument is passed. 
+Harness: the test ran to completion.
+

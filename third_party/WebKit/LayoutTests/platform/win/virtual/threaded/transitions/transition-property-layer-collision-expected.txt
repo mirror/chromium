@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS The last timing properties for a transition property should be used 
+PASS The last timing properties for a transition property should be used including shorthand references to the property 
+PASS The last timing properties for a transition property should be used even if they cause the transition to not start 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+CONSOLE ERROR: Refused to load the script 'http://localhost:8000/security/contentSecurityPolicy/resources/script-set-value.js' because it violates the following Content Security Policy directive: "script-src *.localhost:8000 'self' 'unsafe-inline'".
+
+This is a testharness.js-based test.
+PASS *.x.y should match only hosts that end in .x.y 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Adding a property while iterating over entries() doesn't affect iterator 
+PASS Adding a property while iterating over values() doesn't affect current iterator 
+PASS Adding a property while iterating over keys() doesn't affect iterator 
+Harness: the test ran to completion.
+

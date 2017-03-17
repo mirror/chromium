@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Image is encoding headers as JSON. 
+Harness: the test ran to completion.
+

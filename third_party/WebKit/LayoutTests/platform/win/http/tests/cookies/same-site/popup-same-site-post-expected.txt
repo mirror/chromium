@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS 'example.test' is same-site with itself, so samesite cookies are sent. 
+Harness: the test ran to completion.
+

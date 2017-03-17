@@ -1,0 +1,5 @@
+CONSOLE ERROR: Fetch API cannot load http://127.0.0.1:8000/serviceworker/resources/redirect.php?Redirect=http%3A%2F%2F127.0.0.1%3A8000%2Fserviceworker%2Fresources%2Fsimple.txt&error. Redirect failed.
+This is a testharness.js-based test.
+PASS Verify redirected flag of responses. 
+Harness: the test ran to completion.
+

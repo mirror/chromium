@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Style rules with namespace prefixes not declared before, should be ignored 
+Harness: the test ran to completion.
+

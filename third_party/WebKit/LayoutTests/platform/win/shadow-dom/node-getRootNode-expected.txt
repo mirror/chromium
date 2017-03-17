@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS getRootNode(...) in a connected tree. 
+PASS getRootNode(...) in a disconnected tree. 
+PASS getRootNode({ composed: false }) should be the default behavior. 
+Harness: the test ran to completion.
+

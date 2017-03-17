@@ -1,0 +1,34 @@
+This is a testharness.js-based test.
+PASS A "constructor" that is not a constructor 
+PASS Invalid names 
+PASS Duplicate name 
+PASS Duplicate name defined recursively 
+PASS Reused constructor 
+PASS HTMLElement constructor looks up definitions in the current global-reused constructor 
+PASS HTMLElement constructor looks up definitions in the current global 
+PASS Reused constructor recursively 
+PASS Define while element definition is running 
+PASS Define while element definition is running in a separate registry 
+PASS Element definition flag resets before upgrades 
+PASS Order of checks 
+PASS Upgrade: existing elements 
+PASS Upgrade: sets prototype of existing elements 
+PASS Upgrade: shadow tree 
+PASS If an exception is thrown, rethrow that exception and terminate the algorithm 
+PASS Rethrow any exceptions thrown while getting prototype 
+PASS Retrieved prototype is a non-object 
+PASS Rethrow any exceptions thrown while retrieving attributeChangedCallback 
+PASS Rethrow any exceptions thrown while retrieving disconnectedCallback 
+PASS Rethrow any exceptions thrown while retrieving connectedCallback 
+PASS If retrieved callback attributeChangedCallback is not undefined and not callable, throw TypeError 
+PASS If retrieved callback disconnectedCallback is not undefined and not callable, throw TypeError 
+PASS If retrieved callback connectedCallback is not undefined and not callable, throw TypeError 
+PASS Rethrow any exceptions thrown while getting observedAttributes 
+PASS ObservedAttributes are retrieved from iterators 
+PASS Converting non-object observedAttributes to sequence<DOMString> 
+PASS Converting regular expression observedAttributes to sequence<DOMString> 
+PASS Converting observedAttributes without iterator method to sequence<DOMString> 
+PASS Get(constructor, observedAttributes) should not execute if attributeChangedCallback is undefined 
+PASS Throwing an exception in observedAttributes 
+Harness: the test ran to completion.
+

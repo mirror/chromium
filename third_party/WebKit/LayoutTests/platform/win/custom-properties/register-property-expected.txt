@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS registerProperty requires a Dictionary type 
+PASS registerProperty requires a name matching <custom-property-name> 
+PASS registerProperty only allows omitting initialValue is syntax is '*' 
+PASS registerProperty fails for an already registered property 
+Harness: the test ran to completion.
+

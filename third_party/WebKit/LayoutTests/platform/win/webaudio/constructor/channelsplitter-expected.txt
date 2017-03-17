@@ -1,0 +1,38 @@
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = 5 duplicate test names: "node.channelCount is equal to 6.", "node.channelCountMode is equal to "explicit".", "node.channelInterpretation is equal to "speakers".", "node.channelInterpretation is equal to "discrete".", "node.numberOfInputs is equal to 1."
+PASS context = new OfflineAudioContext(...) did not throw an exception. 
+PASS new ChannelSplitterNode() threw TypeError: Failed to construct 'ChannelSplitterNode': 1 argument required, but only 0 present.. 
+PASS new ChannelSplitterNode(1) threw TypeError: Failed to construct 'ChannelSplitterNode': parameter 1 is not of type 'BaseAudioContext'.. 
+PASS new ChannelSplitterNode(context, 42) threw TypeError: Failed to construct 'ChannelSplitterNode': parameter 2 ('options') is not an object.. 
+PASS Invalid constructors correctly threw errors. 
+PASS node = new ChannelSplitterNode(context) did not throw an exception. 
+PASS node instanceof ChannelSplitterNode is equal to true. 
+PASS node.numberOfInputs is equal to 1. 
+PASS node.numberOfOutputs is equal to 6. 
+PASS node.channelCount is equal to 6. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new ChannelSplitterNode(context) constructed node with correct attributes. 
+PASS new ChannelSplitterNode(c, {channelCount: 6}} did not throw an exception. 
+PASS node.channelCount is equal to 6. 
+PASS new ChannelSplitterNode(c, {channelCount: 7}} threw InvalidStateError: Failed to construct 'ChannelSplitterNode': ChannelSplitter: channelCount cannot be changed from 6. 
+PASS new ChannelSplitterNode(c, {channelCountMode: "explicit"} did not throw an exception. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS new ChannelSplitterNode(c, {channelCountMode: "max"} threw an exception of type InvalidStateError. 
+PASS new ChannelSplitterNode(c, {channelInterpretation: "speakers"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new ChannelSplitterNode(c, {channelInterpretation: "discrete"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS new ChannelSplitterNode(c, {channelInterpretation: "foobar"}) threw TypeError: Failed to construct 'ChannelSplitterNode': The provided value 'foobar' is not a valid enum value of type ChannelInterpretation.. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS AudioNodeOptions for ChannelSplitterNode were correctly handled. 
+PASS node = new ChannelSplitterNode(context, {"numberOfInputs":3,"numberOfOutputs":9,"channelInterpretation":"discrete"}) did not throw an exception. 
+PASS node.numberOfInputs is equal to 1. 
+PASS node.numberOfOutputs is equal to 9. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS new ChannelSplitterNode(c, {"numberOfOutputs":99}) threw IndexSizeError: Failed to construct 'ChannelSplitterNode': The number of outputs provided (99) is outside the range [1, 32].. 
+PASS new ChannelSplitterNode(c, {"channelCount":3}) threw InvalidStateError: Failed to construct 'ChannelSplitterNode': ChannelSplitter: channelCount cannot be changed from 6. 
+PASS new ChannelSplitterNode(c, {"channelCountMode":"max"}) threw InvalidStateError: Failed to construct 'ChannelSplitterNode': ChannelSplitter: channelCountMode cannot be changed from 'explicit'. 
+PASS new ChannelSplitterNode() with options constructed with correct attributes. 
+Harness: the test ran to completion.
+

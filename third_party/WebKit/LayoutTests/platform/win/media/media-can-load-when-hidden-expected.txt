@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test HTMLMediaElement to be sure that the video is getting loaded even if the element is hidden. 
+Harness: the test ran to completion.
+

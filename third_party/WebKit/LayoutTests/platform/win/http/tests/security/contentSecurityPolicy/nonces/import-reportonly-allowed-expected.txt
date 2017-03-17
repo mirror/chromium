@@ -1,0 +1,9 @@
+CONSOLE ERROR: The Content Security Policy 'script-src 'nonce-abc'' was delivered in report-only mode, but does not specify a 'report-uri'; the policy will have no effect. Please either add a 'report-uri' directive, or deliver the policy via the 'Content-Security-Policy' header.
+CONSOLE ERROR: line 27: [Report Only] Refused to load the script 'http://127.0.0.1:8000/security/resources/blank.html' because it violates the following Content Security Policy directive: "script-src 'nonce-abc'".
+
+CONSOLE ERROR: [Report Only] Refused to load the script 'http://127.0.0.1:8000/security/resources/blank.html' because it violates the following Content Security Policy directive: "script-src 'nonce-abc'".
+
+This is a testharness.js-based test.
+PASS Nonced imports load, and do not trigger reports. 
+Harness: the test ran to completion.
+

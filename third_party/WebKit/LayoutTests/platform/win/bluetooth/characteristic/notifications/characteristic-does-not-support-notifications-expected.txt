@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Characteristic does not support notifications. Reject with NotSupportedError. 
+Harness: the test ran to completion.
+

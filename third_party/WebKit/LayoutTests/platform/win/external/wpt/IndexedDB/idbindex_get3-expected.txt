@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBIndex.get() - attempt to retrieve a record that doesn't exist  
+Harness: the test ran to completion.
+

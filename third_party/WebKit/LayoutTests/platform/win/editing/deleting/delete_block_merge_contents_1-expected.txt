@@ -1,0 +1,12 @@
+This is a testharness.js-based test.
+PASS Removing inner DIVs 
+PASS Removing DIVs and insert BR 
+PASS Replace DIV+BR to BR 
+PASS Replace DIV+BR to BR with newline 
+PASS Keep DIV nesting 
+PASS Keep DIV nesting and BR 
+PASS Replace BR to DIV 
+PASS Keep DIV nesting with newline 
+PASS Merge "Two" and "Three" 
+Harness: the test ran to completion.
+

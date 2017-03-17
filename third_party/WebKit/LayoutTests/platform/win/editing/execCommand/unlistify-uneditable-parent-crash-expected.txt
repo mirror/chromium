@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS insertOrderedList should not crash with uneditable parent 
+Harness: the test ran to completion.
+

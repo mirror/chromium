@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS IDBCursor continuePrimaryKey() on object store cursor 
+PASS IDBCursor continuePrimaryKey() on "nextunique" cursor 
+PASS IDBCursor continuePrimaryKey() on "prevunique" cursor 
+Harness: the test ran to completion.
+

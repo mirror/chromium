@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Animation finish event happens if animation finished in raf 
+Harness: the test ran to completion.
+

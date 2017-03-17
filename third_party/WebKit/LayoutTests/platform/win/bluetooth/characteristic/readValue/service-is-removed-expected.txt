@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Service gets removed. Reject with InvalidStateError. 
+Harness: the test ran to completion.
+

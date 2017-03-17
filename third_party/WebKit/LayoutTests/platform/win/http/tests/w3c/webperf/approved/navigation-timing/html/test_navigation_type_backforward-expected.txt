@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS window.performance is defined 
+PASS window.performance.navigation is defined 
+PASS window.performance.navigation.type == TYPE_NAVIGATE 
+PASS window.performance.navigation.type == TYPE_BACK_FORWARD after history.back() 
+PASS window.performance.navigation.type == TYPE_BACK_FORWARD after history.forward() 
+Harness: the test ran to completion.
+

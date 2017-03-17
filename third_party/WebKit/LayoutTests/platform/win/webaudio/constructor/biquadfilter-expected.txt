@@ -1,0 +1,43 @@
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = 2 duplicate test names: "node.channelCountMode is equal to "explicit".", "node.channelInterpretation is equal to "discrete"."
+PASS context = new OfflineAudioContext(...) did not throw an exception. 
+PASS new BiquadFilterNode() threw TypeError: Failed to construct 'BiquadFilterNode': 1 argument required, but only 0 present.. 
+PASS new BiquadFilterNode(1) threw TypeError: Failed to construct 'BiquadFilterNode': parameter 1 is not of type 'BaseAudioContext'.. 
+PASS new BiquadFilterNode(context, 42) threw TypeError: Failed to construct 'BiquadFilterNode': parameter 2 ('options') is not an object.. 
+PASS Invalid constructors correctly threw errors. 
+PASS node = new BiquadFilterNode(context) did not throw an exception. 
+PASS node instanceof BiquadFilterNode is equal to true. 
+PASS node.type is equal to "lowpass". 
+PASS node.Q.value is equal to 1. 
+PASS node.detune.value is equal to 0. 
+PASS node.frequency.value is equal to 350. 
+PASS node.gain.value is equal to 0. 
+PASS new BiquadFilterNode(context) constructed node with correct attributes. 
+PASS new BiquadFilterNode(c, {channelCount: 17}} did not throw an exception. 
+PASS node.channelCount is equal to 17. 
+PASS new BiquadFilterNode(c, {channelCount: 0}} threw NotSupportedError: Failed to construct 'BiquadFilterNode': The channel count provided (0) is outside the range [1, 32].. 
+PASS new BiquadFilterNode(c, {channelCount: 99}} threw NotSupportedError: Failed to construct 'BiquadFilterNode': The channel count provided (99) is outside the range [1, 32].. 
+PASS new BiquadFilterNode(c, {channelCountMode: "max"} did not throw an exception. 
+PASS node.channelCountMode is equal to "max". 
+PASS new BiquadFilterNode(c, {channelCountMode: "clamped-max"} did not throw an exception. 
+PASS node.channelCountMode is equal to "clamped-max". 
+PASS new BiquadFilterNode(c, {channelCountMode: "explicit"} did not throw an exception. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS new BiquadFilterNode(c, {channelCountMode: "foobar"} threw TypeError: Failed to construct 'BiquadFilterNode': The provided value 'foobar' is not a valid enum value of type ChannelCountMode.. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS new BiquadFilterNode(c, {channelInterpretation: "speakers"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new BiquadFilterNode(c, {channelInterpretation: "discrete"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS new BiquadFilterNode(c, {channelInterpretation: "foobar"}) threw TypeError: Failed to construct 'BiquadFilterNode': The provided value 'foobar' is not a valid enum value of type ChannelInterpretation.. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS AudioNodeOptions for BiquadFilterNode were correctly handled. 
+PASS node = new BiquadFilterNode(..., {"type":"highpass","frequency":512,"detune":1,"Q":5,"gain":3}) did not throw an exception. 
+PASS node.type is equal to "highpass". 
+PASS node.frequency.value is equal to 512. 
+PASS node.detuen.value is equal to 1. 
+PASS node.Q.value is equal to 5. 
+PASS node.gain.value is equal to 3. 
+PASS new BiquadFilterNode() with options constructed with correct attributes. 
+Harness: the test ran to completion.
+

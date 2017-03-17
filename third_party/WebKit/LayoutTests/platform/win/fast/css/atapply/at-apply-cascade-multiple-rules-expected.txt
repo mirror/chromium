@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Declarations from @apply cascade correctly across multiple rules 
+Harness: the test ran to completion.
+

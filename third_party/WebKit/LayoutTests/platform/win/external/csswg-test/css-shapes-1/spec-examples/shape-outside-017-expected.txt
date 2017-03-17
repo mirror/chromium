@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS CSS Test: Shape from box value - content-box 
+Harness: the test ran to completion.
+

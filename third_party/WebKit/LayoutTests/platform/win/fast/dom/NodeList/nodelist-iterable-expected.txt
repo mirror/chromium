@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS for (node of NodeList) 
+PASS for ([index, node] of NodeList.entries()) 
+PASS for (index of NodeList.keys()) 
+PASS for (node of NodeList.values()) 
+PASS NodeList.prototype.forEach() 
+PASS Delete earlier element in live NodeList 
+PASS Delete later element in live NodeList 
+Harness: the test ran to completion.
+

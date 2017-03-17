@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS CSS shorthand filters never taint the canvas 
+PASS Whitelisted SVG filters don't taint the canvas 
+PASS Non-whitelisted SVG filters taint the canvas 
+Harness: the test ran to completion.
+

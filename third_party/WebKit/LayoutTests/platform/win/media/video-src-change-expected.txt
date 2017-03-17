@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that an invalid "src" fires an error event and changing "src" to a valid one triggers media load. 
+Harness: the test ran to completion.
+

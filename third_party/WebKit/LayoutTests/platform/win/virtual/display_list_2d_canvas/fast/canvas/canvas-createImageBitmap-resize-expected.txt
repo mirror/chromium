@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS createImageBitmap from a Blob with resize option. 
+PASS createImageBitmap from a HTMLCanvasElement with resize option. 
+PASS createImageBitmap from a HTMLImageElement with resize option. 
+PASS createImageBitmap from an ImageBitmap with resize option. 
+PASS createImageBitmap from an ImageData with resize option. 
+Harness: the test ran to completion.
+

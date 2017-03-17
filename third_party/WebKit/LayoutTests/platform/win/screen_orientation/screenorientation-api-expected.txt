@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Test that the Screen Orientation API is present. 
+PASS Test Screen Orientation API property types. 
+PASS Test that screen.orientation is an EventTarget. 
+Harness: the test ran to completion.
+

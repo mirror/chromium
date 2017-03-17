@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Using accessible APIs to set selection works when there's no extra whitespace. 
+PASS Using accessible APIs to set selection works even with non-visible whitespace. 
+PASS Use accessible APIs to set selection on element rather than static text node. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Test that call convertToBlob on a detached OffscreenCanvas throws exception 
+PASS Test that call convertToBlob on an OffscreenCanvas with size 0 throws exception 
+PASS Test that call convertToBlob throws EncodingError exception when encoding fails 
+PASS Test that call convertToBlob on an OffscreenCanvas without contexts throws exception 
+Harness: the test ran to completion.
+

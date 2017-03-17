@@ -1,0 +1,7 @@
+CONSOLE WARNING: line 36: Failed to execute 'play' on 'HTMLMediaElement': API can only be initiated by a user gesture.
+This is a testharness.js-based test.
+PASS internals are exposed 
+PASS Test that video should autoplay without gesture requirement 
+PASS Test that video should not autoplay when gesture required 
+Harness: the test ran to completion.
+

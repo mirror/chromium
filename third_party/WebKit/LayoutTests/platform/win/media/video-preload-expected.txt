@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Test media loading behaviour with different "preload" values. 
+PASS Test media loading behaviour with different "preload" values. 1 
+PASS Test media loading behaviour with different "preload" values. 2 
+PASS Test media loading behaviour with different "preload" values. 3 
+PASS Test media loading behaviour with different "preload" values. 4 
+PASS Test media loading behaviour with different "preload" values. 5 
+Harness: the test ran to completion.
+

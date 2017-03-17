@@ -1,0 +1,36 @@
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = 1 duplicate test name: "node instanceof StereoPannerNode is equal to true."
+PASS context = new OfflineAudioContext(...) did not throw an exception. 
+PASS new StereoPannerNode() threw TypeError: Failed to construct 'StereoPannerNode': 1 argument required, but only 0 present.. 
+PASS new StereoPannerNode(1) threw TypeError: Failed to construct 'StereoPannerNode': parameter 1 is not of type 'BaseAudioContext'.. 
+PASS new StereoPannerNode(context, 42) threw TypeError: Failed to construct 'StereoPannerNode': parameter 2 ('options') is not an object.. 
+PASS Invalid constructors correctly threw errors. 
+PASS node = new StereoPannerNode(context) did not throw an exception. 
+PASS node instanceof StereoPannerNode is equal to true. 
+PASS node.pan.value is equal to 0. 
+PASS new StereoPannerNode(context) constructed node with correct attributes. 
+PASS new StereoPannerNode(c, {"channelCount":1}) did not throw an exception. 
+PASS node.channelCount is equal to 1. 
+PASS new StereoPannerNode(c, {"channelCount":2}) did not throw an exception. 
+PASS node.channelCount is equal to 2. 
+PASS new StereoPannerNode(c, {"channelCount":0}) threw NotSupportedError: Failed to construct 'StereoPannerNode': The channelCount provided (0) is outside the range [1, 2].. 
+PASS new StereoPannerNode(c, {"channelCount":3}) threw NotSupportedError: Failed to construct 'StereoPannerNode': The channelCount provided (3) is outside the range [1, 2].. 
+PASS new StereoPannerNode(c, {"channelCount":99}) threw NotSupportedError: Failed to construct 'StereoPannerNode': The channelCount provided (99) is outside the range [1, 2].. 
+PASS new StereoPannerNode(c, {"channelCountMode":"clamped-max"}) did not throw an exception. 
+PASS node.channelCountMode is equal to "clamped-max". 
+PASS new StereoPannerNode(c, {"channelCountMode":"explicit"}) did not throw an exception. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS new StereoPannerNode(c, {"channelCountMode":"max"}) threw NotSupportedError: Failed to construct 'StereoPannerNode': StereoPanner: 'max' is not allowed. 
+PASS new StereoPannerNode(c, {"channelCountMode":"foobar"}) threw TypeError: Failed to construct 'StereoPannerNode': The provided value 'foobar' is not a valid enum value of type ChannelCountMode.. 
+PASS new StereoPannerNode(c, {"channelInterpretation":"speakers"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new StereoPannerNode(c, {"channelInterpretation":"discrete"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS new StereoPannerNode(c, {"channelInterpretation":"foobar"}) threw TypeError: Failed to construct 'StereoPannerNode': The provided value 'foobar' is not a valid enum value of type ChannelInterpretation.. 
+PASS AudioNodeOptions for StereoPannerNode were correctly handled. 
+PASS node = new StereoPannerNode(, {"pan":0.75}) did not throw an exception. 
+PASS node instanceof StereoPannerNode is equal to true. 
+PASS node.pan.value is equal to 0.75. 
+PASS new StereoPannerNode() with options constructed with correct attributes. 
+Harness: the test ran to completion.
+

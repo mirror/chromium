@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS createImageBitmap(Blob) with resize and other options 
+Harness: the test ran to completion.
+

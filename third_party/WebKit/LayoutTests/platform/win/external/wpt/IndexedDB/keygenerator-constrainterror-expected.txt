@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Keygenerator ConstraintError when using same id as already generated 
+Harness: the test ran to completion.
+

@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Positive number variations - inline 
+PASS Negative number variations - inline 
+PASS Positive number variations - computed 
+PASS Negative number variations - computed 
+Harness: the test ran to completion.
+

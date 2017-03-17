@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS CSP ignores paths of redirected resources in matching algorithm for scripts. 
+PASS CSP ignores paths of redirect resources in matching algorithm for images. 
+PASS CSP ignores paths of redirect resources in matching algorithm for frames. 
+PASS CSP ignores paths of redirected resources in matching algorithm for stylesheets. 
+PASS CSP ignores paths of redirect resources in matching algorithm for XHR. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Do not parse plain text as HTML 
+Harness: the test ran to completion.
+

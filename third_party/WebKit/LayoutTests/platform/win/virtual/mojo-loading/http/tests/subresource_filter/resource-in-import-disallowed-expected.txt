@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Resource loads in import documents respect the subresource filter of the master document. 
+Harness: the test ran to completion.
+

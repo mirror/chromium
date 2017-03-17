@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS insert a paragraph separator after BR and before character 
+PASS insert a paragraph separator before character 
+PASS insert a paragraph separator in PRE 
+Harness: the test ran to completion.
+

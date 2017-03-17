@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS switching an unordered list with a nested list to an ordered list. 
+Harness: the test ran to completion.
+

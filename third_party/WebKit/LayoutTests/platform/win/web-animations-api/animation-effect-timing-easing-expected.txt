@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Valid linear and cubic-bezier easing functions should come out the same as they went in 
+PASS Valid step-function easings serialize as steps(<int>) or steps(<int>, start) 
+PASS Should accept arbitrary casing and escape chararcters 
+PASS Invalid easing values should throw a TypeError 
+Harness: the test ran to completion.
+

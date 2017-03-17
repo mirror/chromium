@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS Mouse press should update sequential focus navigation starting point. 
+PASS Fragment navigation should update sequential focus navigation starting point. 
+PASS Focusing an element should update sequential focus navigation starting point. 
+PASS After removing a focused element from the documen tree, sequential focus navigation should start at a place where the focused element was. 
+PASS Element.scrollIntoView() should update sequential focus navigation starting point. 
+PASS Find text should update sequential focus navigation starting point. 
+PASS Cross-frame sequential focus navigation should clear per-document starting point. 
+Harness: the test ran to completion.
+

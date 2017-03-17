@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Test that chrome.gpuBenchmarking.tap always taps on the expected position no matter what the screen scale factor is. 
+PASS Send a tap event. 
+Harness: the test ran to completion.
+

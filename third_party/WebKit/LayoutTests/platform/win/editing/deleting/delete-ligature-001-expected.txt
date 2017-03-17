@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Backspace key to delete a last character of ligature U+0E27 and U+0E31 
+Harness: the test ran to completion.
+

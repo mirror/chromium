@@ -1,0 +1,19 @@
+This is a testharness.js-based test.
+PASS Same origin fetch without CORS headers, not exposed 
+PASS Same origin fetch without CORS headers, only origin exposed 
+PASS Same origin fetch without CORS headers, headers and origin exposed 
+PASS Same origin fetch without CORS headers, exposed to wrong origin 
+PASS Same origin fetch with CORS headers, not exposed 
+PASS Same origin fetch with CORS headers, only origin exposed 
+PASS Same origin fetch with CORS headers, headers and origin exposed 
+PASS Same origin fetch with CORS headers, exposed to wrong origin 
+PASS Cross origin fetch without CORS headers, not exposed 
+PASS Cross origin fetch with ACEHeaders header, not exposed 
+PASS Cross origin fetch with ACEHeaders header, only origin exposed 
+PASS Cross origin fetch with ACEHeaders header, headers and origin exposed 
+PASS Cross origin fetch with ACEHeaders header, exposed to wrong origin 
+PASS Cross origin fetch without ACEHeaders header, not exposed 
+PASS Cross origin fetch without ACEHeaders header, only origin exposed 
+PASS Cross origin fetch without ACEHeaders header, headers and origin exposed 
+Harness: the test ran to completion.
+

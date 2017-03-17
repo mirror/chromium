@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Test that the PresentationRequest.start() with one URL requires user gesture. 
+PASS Test that the PresentationRequest.start() with multiple URLs requires user gesture. 
+PASS Test that navigator.presentation.defaultRequest.onconnectionavailable with one URL isn't reset after gc(). 
+PASS Test that navigator.presentation.defaultRequest.onconnectionavailable with multiple URLs isn't reset after gc(). 
+PASS Test that the PresentationRequest.getAvailability() returns same promise object. 
+Harness: the test ran to completion.
+

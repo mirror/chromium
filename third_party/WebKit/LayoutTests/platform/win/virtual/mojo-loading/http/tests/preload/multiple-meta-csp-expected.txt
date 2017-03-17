@@ -1,0 +1,10 @@
+CONSOLE ERROR: line 5: Refused to load the font 'http://127.0.0.1:8000/resources/Ahem.ttf' because it violates the following Content Security Policy directive: "font-src 'none'".
+
+CONSOLE ERROR: line 8: Refused to load the stylesheet 'http://127.0.0.1:8000/resources/dummy.css' because it violates the following Content Security Policy directive: "style-src 'none'".
+
+CONSOLE ERROR: line 25: Refused to load the image 'http://127.0.0.1:8000/resources/square.png' because it violates the following Content Security Policy directive: "img-src 'none'".
+
+This is a testharness.js-based test.
+PASS Ensure preloads don't bypass CSP policies when multiple meta tags are in the markup 
+Harness: the test ran to completion.
+

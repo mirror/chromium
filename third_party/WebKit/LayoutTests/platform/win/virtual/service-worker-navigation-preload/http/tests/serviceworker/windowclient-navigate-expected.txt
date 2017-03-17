@@ -1,0 +1,13 @@
+This is a testharness.js-based test.
+PASS normal test 
+PASS blank url test 
+PASS in scope but not controlled test on installing worker 
+PASS in scope but not controlled test on active worker 
+PASS out scope test 
+PASS cross orgin url test 
+PASS invalid url(http://[example.com]) test 
+PASS invalid url(view-source://example.com) test 
+PASS invalid url(file:///) test 
+PASS invalid url(about:blank) test 
+Harness: the test ran to completion.
+

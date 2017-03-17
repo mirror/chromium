@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that pause() from EMPTY network state triggers load(). 
+Harness: the test ran to completion.
+

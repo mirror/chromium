@@ -1,0 +1,6 @@
+CONSOLE ERROR: line 11: Uncaught (in promise) Error: e
+CONSOLE ERROR: line 21: Uncaught Error: e2
+This is a testharness.js-based test.
+PASS Throwing inside an unhandledrejection handler invokes the error handler. 
+Harness: the test ran to completion.
+

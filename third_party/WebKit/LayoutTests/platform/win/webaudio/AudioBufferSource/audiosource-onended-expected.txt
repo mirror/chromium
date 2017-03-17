@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS AudioBufferSource.onended called when ended set directly is equal to true. 
+PASS AudioBufferSource.onended called when using addEventListener is equal to true. 
+PASS Oscillator.onended called when ended set directly is equal to true. 
+PASS Oscillator.onended called when using addEventListener is equal to true. 
+Harness: the test ran to completion.
+

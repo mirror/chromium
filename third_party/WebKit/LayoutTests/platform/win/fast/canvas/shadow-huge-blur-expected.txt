@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Verify that setting a huge value in shadowBlur does not crash. 
+Harness: the test ran to completion.
+

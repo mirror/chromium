@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This test ensures that Canvas and CanvasRenderingContext2D work correctly if the rendering context outlives the canvas element. 
+Harness: the test ran to completion.
+

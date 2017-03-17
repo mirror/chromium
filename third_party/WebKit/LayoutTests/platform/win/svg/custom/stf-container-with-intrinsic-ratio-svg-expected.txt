@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Test floated element width with replaced element with intrinsic ratio but no dimensions 
+PASS Test absolute positioned element width with replaced element with intrinsic ratio but no dimensions 
+PASS Test table cell width with replaced element with intrinsic ratio but no dimensions 
+Harness: the test ran to completion.
+

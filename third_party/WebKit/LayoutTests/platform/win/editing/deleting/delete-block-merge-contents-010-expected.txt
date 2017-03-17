@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS First merge 
+PASS Second merge 
+PASS Third merge 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Subscribing with an applicationServerKey should return the standardized endpoint 
+Harness: the test ran to completion.
+

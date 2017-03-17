@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Blocklisted UUID in optionalServices is removed and access not granted. 
+Harness: the test ran to completion.
+

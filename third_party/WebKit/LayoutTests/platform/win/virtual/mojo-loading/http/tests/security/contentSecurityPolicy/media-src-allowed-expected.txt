@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This tests that video is loaded as per "Content-Security-Policy". 
+Harness: the test ran to completion.
+

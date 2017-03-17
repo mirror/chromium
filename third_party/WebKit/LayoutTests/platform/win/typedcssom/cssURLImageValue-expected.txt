@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Can construct a new CSSURLImageValue object with url 
+PASS Set available properties as CSSURLImageValue using URL 
+PASS Set available properties as CSSURLImageValue using base64 image 
+PASS Invalid Image will have get error state 
+PASS Getting CSSURLImageValue from StyleMap 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This tests that we don't crash when passing inf as a parameter to arc 
+Harness: the test ran to completion.
+

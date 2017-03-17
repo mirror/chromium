@@ -1,0 +1,35 @@
+This is a testharness.js-based test.
+PASS Navigator interface: operation getGamepads() 
+PASS Navigator must be primary interface of navigator 
+PASS Stringification of navigator 
+PASS Navigator interface: navigator must inherit property "getGamepads" with the proper type (0) 
+PASS Gamepad interface: existence and properties of interface object 
+PASS Gamepad interface object length 
+PASS Gamepad interface object name 
+FAIL Gamepad interface: existence and properties of interface prototype object assert_equals: class string of Gamepad.prototype expected "[object GamepadPrototype]" but got "[object Gamepad]"
+PASS Gamepad interface: existence and properties of interface prototype object's "constructor" property 
+PASS Gamepad interface: attribute id 
+PASS Gamepad interface: attribute index 
+PASS Gamepad interface: attribute connected 
+PASS Gamepad interface: attribute timestamp 
+PASS Gamepad interface: attribute mapping 
+PASS Gamepad interface: attribute axes 
+PASS Gamepad interface: attribute buttons 
+PASS GamepadButton interface: existence and properties of interface object 
+PASS GamepadButton interface object length 
+PASS GamepadButton interface object name 
+FAIL GamepadButton interface: existence and properties of interface prototype object assert_equals: class string of GamepadButton.prototype expected "[object GamepadButtonPrototype]" but got "[object GamepadButton]"
+PASS GamepadButton interface: existence and properties of interface prototype object's "constructor" property 
+PASS GamepadButton interface: attribute pressed 
+PASS GamepadButton interface: attribute value 
+PASS GamepadEvent interface: existence and properties of interface object 
+PASS GamepadEvent interface object length 
+PASS GamepadEvent interface object name 
+FAIL GamepadEvent interface: existence and properties of interface prototype object assert_equals: class string of GamepadEvent.prototype expected "[object GamepadEventPrototype]" but got "[object GamepadEvent]"
+PASS GamepadEvent interface: existence and properties of interface prototype object's "constructor" property 
+PASS GamepadEvent interface: attribute gamepad 
+PASS GamepadEvent must be primary interface of [object GamepadEvent] 
+PASS Stringification of [object GamepadEvent] 
+PASS GamepadEvent interface: [object GamepadEvent] must inherit property "gamepad" with the proper type (0) 
+Harness: the test ran to completion.
+

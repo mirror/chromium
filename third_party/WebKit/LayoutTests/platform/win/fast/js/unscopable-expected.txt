@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS "unscopableAttribute" in internals is true 
+PASS "unscopableMethod" in internals is true 
+PASS internals.unscopableAttribute is "unscopableAttribute" 
+PASS internals.unscopableMethod() is "unscopableMethod" 
+PASS unscopableAttribute is "variable" 
+PASS unscopableMethod is "variable" 
+Harness: the test ran to completion.
+

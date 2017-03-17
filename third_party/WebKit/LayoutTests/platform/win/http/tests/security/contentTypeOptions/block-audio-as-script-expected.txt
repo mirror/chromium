@@ -1,0 +1,9 @@
+CONSOLE ERROR: Refused to execute script from 'http://127.0.0.1:8000/security/contentTypeOptions/resources/script-with-header.pl?mime=audio/aiff&options=invalid' because its MIME type ('audio/aiff') is not executable.
+CONSOLE ERROR: Refused to execute script from 'http://127.0.0.1:8000/security/contentTypeOptions/resources/script-with-header.pl?mime=AudiO/midi&options=invalid' because its MIME type ('audio/midi') is not executable.
+CONSOLE ERROR: Refused to execute script from 'http://127.0.0.1:8000/security/contentTypeOptions/resources/script-with-header.pl?mime=AUDIO/wav&options=invalid' because its MIME type ('audio/wav') is not executable.
+CONSOLE ERROR: Refused to execute script from 'http://127.0.0.1:8000/security/contentTypeOptions/resources/script-with-header.pl?mime=audio/x-wav&options=invalid' because its MIME type ('audio/x-wav') is not executable.
+CONSOLE ERROR: Refused to execute script from 'http://127.0.0.1:8000/security/contentTypeOptions/resources/script-with-header.pl?mime=audio/whatever+xml&options=invalid' because its MIME type ('audio/whatever xml') is not executable.
+This is a testharness.js-based test.
+PASS All audio/* scripts should be blocked. 
+Harness: the test ran to completion.
+

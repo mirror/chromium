@@ -1,0 +1,12 @@
+CONSOLE ERROR: The Content Security Policy 'style-src 'nonce-xyz'' was delivered in report-only mode, but does not specify a 'report-uri'; the policy will have no effect. Please either add a 'report-uri' directive, or deliver the policy via the 'Content-Security-Policy' header.
+CONSOLE ERROR: line 25: Refused to apply inline style because it violates the following Content Security Policy directive: "style-src 'nonce-abc'". Either the 'unsafe-inline' keyword, a hash ('sha256-wfwlzcPBVjaRRXbeco7e+YXOZ0p3kzYLthUXIyu4XOw='), or a nonce ('nonce-...') is required to enable inline execution.
+
+CONSOLE ERROR: line 25: [Report Only] Refused to apply inline style because it violates the following Content Security Policy directive: "style-src 'nonce-xyz'". Either the 'unsafe-inline' keyword, a hash ('sha256-wfwlzcPBVjaRRXbeco7e+YXOZ0p3kzYLthUXIyu4XOw='), or a nonce ('nonce-...') is required to enable inline execution.
+
+CONSOLE ERROR: line 30: Refused to load the stylesheet 'http://127.0.0.1:8000/security/contentSecurityPolicy/style-set-red.css' because it violates the following Content Security Policy directive: "style-src 'nonce-abc'".
+
+This is a testharness.js-based test.
+PASS Incorrectly nonced style blocks generate reports. 
+PASS Incorrectly nonced stylesheets do not load. 
+Harness: the test ran to completion.
+

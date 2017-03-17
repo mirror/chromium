@@ -1,0 +1,24 @@
+This is a testharness.js-based test.
+PASS This test uses interpolation-test.js. 
+PASS SMIL: Interpolate attribute <orient> from replace [130] to replace [200grad] at (0) is [130] 
+PASS SMIL: Interpolate attribute <orient> from replace [130] to replace [200grad] at (0.2) is [140] 
+PASS SMIL: Interpolate attribute <orient> from replace [130] to replace [200grad] at (0.6) is [160] 
+PASS SMIL: Interpolate attribute <orient> from replace [130] to replace [200grad] at (1) is [180] 
+PASS Web Animations: Interpolate attribute <orient> from replace [130] to replace [200grad] at (-3) is [-20] 
+PASS Web Animations: Interpolate attribute <orient> from replace [130] to replace [200grad] at (0) is [130] 
+PASS Web Animations: Interpolate attribute <orient> from replace [130] to replace [200grad] at (0.2) is [140] 
+PASS Web Animations: Interpolate attribute <orient> from replace [130] to replace [200grad] at (0.6) is [160] 
+PASS Web Animations: Interpolate attribute <orient> from replace [130] to replace [200grad] at (1) is [180] 
+PASS Web Animations: Interpolate attribute <orient> from replace [130] to replace [200grad] at (1.4) is [200] 
+PASS SMIL: Interpolate attribute <orient> from replace [90deg] to replace [auto] at (0) is [90] 
+PASS SMIL: Interpolate attribute <orient> from replace [90deg] to replace [auto] at (0.2) is [90] 
+PASS SMIL: Interpolate attribute <orient> from replace [90deg] to replace [auto] at (0.6) is [auto] 
+PASS SMIL: Interpolate attribute <orient> from replace [90deg] to replace [auto] at (1) is [auto] 
+PASS Web Animations: Interpolate attribute <orient> from replace [90deg] to replace [auto] at (-0.4) is [90] 
+PASS Web Animations: Interpolate attribute <orient> from replace [90deg] to replace [auto] at (0) is [90] 
+PASS Web Animations: Interpolate attribute <orient> from replace [90deg] to replace [auto] at (0.2) is [90] 
+PASS Web Animations: Interpolate attribute <orient> from replace [90deg] to replace [auto] at (0.6) is [auto] 
+PASS Web Animations: Interpolate attribute <orient> from replace [90deg] to replace [auto] at (1) is [auto] 
+PASS Web Animations: Interpolate attribute <orient> from replace [90deg] to replace [auto] at (1.4) is [auto] 
+Harness: the test ran to completion.
+

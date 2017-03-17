@@ -1,0 +1,72 @@
+CONSOLE WARNING: line 14: Subresource requests whose URLs contain embedded credentials (e.g. `https://user:pass@host/`) are deprecated, and will be blocked in M59, around June 2017. See https://www.chromestatus.com/feature/5669008342777856 for more details.
+CONSOLE ERROR: Fetch API cannot load https://127.0.0.1:8443/serviceworker/resources/redirect.php?Redirect=https%3A%2F%2Flocalhost%3A8443%2Fserviceworker%2Fresources%2Ffetch-access-control.php%3F&mode=same-origin&credentials=same-origin&method=GET. Redirect failed.
+CONSOLE ERROR: Fetch API cannot load https://127.0.0.1:8443/serviceworker/resources/redirect.php?Redirect=https%3A%2F%2Flocalhost%3A8443%2Fserviceworker%2Fresources%2Ffetch-access-control.php%3F&mode=same-origin&credentials=same-origin&method=POST. Redirect failed.
+CONSOLE ERROR: Fetch API cannot load https://127.0.0.1:8443/serviceworker/resources/redirect.php?Redirect=https%3A%2F%2Flocalhost%3A8443%2Fserviceworker%2Fresources%2Ffetch-access-control.php%3F&mode=same-origin&credentials=same-origin&method=PUT. Redirect failed.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://127.0.0.1:8443' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?. Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://127.0.0.1:8443' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?&ACAOrigin=*. Method PUT is not allowed by Access-Control-Allow-Methods in preflight response.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?ACAOrigin=*. Request header field x-serviceworker-test is not allowed by Access-Control-Allow-Headers in preflight response.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?ACAHeaders=x-serviceworker-test. Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://127.0.0.1:8443' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: line 368: Fetch API cannot load https://localhost:8443/serviceworker/resources/redirect.php?Redirect=https%3A%2F%2F127.0.0.1%3A8443%2Fserviceworker%2Fresources%2Ffetch-access-control.php%3F&mode=same-origin&credentials=same-origin&method=GET. Request mode is "same-origin" but the URL's origin is not same as the request origin https://127.0.0.1:8443.
+CONSOLE ERROR: line 368: Fetch API cannot load https://localhost:8443/serviceworker/resources/redirect.php?Redirect=https%3A%2F%2F127.0.0.1%3A8443%2Fserviceworker%2Fresources%2Ffetch-access-control.php%3F&mode=same-origin&credentials=same-origin&method=POST. Request mode is "same-origin" but the URL's origin is not same as the request origin https://127.0.0.1:8443.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/redirect.php?Redirect=https%3A%2F%2F127.0.0.1%3A8443%2Fserviceworker%2Fresources%2Ffetch-access-control.php%3F&mode=cors&credentials=same-origin&method=GET. Redirect from 'https://localhost:8443/serviceworker/resources/redirect.php?Redirect=https%3A%2F%2F127.0.0.1%3A8443%2Fserviceworker%2Fresources%2Ffetch-access-control.php%3F&mode=cors&credentials=same-origin&method=GET' to 'https://127.0.0.1:8443/serviceworker/resources/fetch-access-control.php?' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://127.0.0.1:8443' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://127.0.0.1:8443/serviceworker/resources/fetch-access-control.php?. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'null' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: line 368: Fetch API cannot load https://localhost:8443/serviceworker/resources/redirect.php?Redirect=https%3A%2F%2Flocalhost%3A8443%2Fserviceworker%2Fresources%2Ffetch-access-control.php%3F&mode=same-origin&method=GET. Request mode is "same-origin" but the URL's origin is not same as the request origin https://127.0.0.1:8443.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/redirect.php?Redirect=https%3A%2F%2Flocalhost%3A8443%2Fserviceworker%2Fresources%2Ffetch-access-control.php%3F&mode=cors&credentials=same-origin&method=GET. Redirect from 'https://localhost:8443/serviceworker/resources/redirect.php?Redirect=https%3A%2F%2Flocalhost%3A8443%2Fserviceworker%2Fresources%2Ffetch-access-control.php%3F&mode=cors&credentials=same-origin&method=GET' to 'https://localhost:8443/serviceworker/resources/fetch-access-control.php?' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://127.0.0.1:8443' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://127.0.0.1:8443' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+This is a testharness.js-based test.
+PASS Startup 
+PASS executeTest-0 
+PASS executeTest-1 
+PASS executeTest-2 
+PASS executeTest-3 
+PASS executeTest-4 
+PASS executeTest-5 
+PASS executeTest-6 
+PASS executeTest-7 
+PASS executeTest-8 
+PASS executeTest-9 
+PASS executeTest-10 
+PASS executeTest-11 
+PASS executeTest-12 
+PASS executeTest-13 
+PASS executeTest-14 
+PASS executeTest-15 
+PASS executeTest-16 
+PASS executeTest-17 
+PASS executeTest-18 
+PASS executeTest-19 
+PASS executeTest-20 
+PASS executeTest-21 
+PASS executeTest-22 
+PASS executeTest-23 
+PASS executeTest-24 
+PASS executeTest-25 
+PASS executeTest-26 
+PASS executeTest-27 
+PASS executeTest-28 
+PASS executeTest-29 
+PASS executeTest-30 
+PASS executeTest-31 
+PASS executeTest-32 
+PASS executeTest-33 
+PASS executeTest-34 
+PASS executeTest-35 
+PASS executeTest-36 
+PASS executeTest-37 
+PASS executeTest-38 
+PASS executeTest-39 
+PASS executeTest-40 
+PASS executeTest-41 
+PASS executeTest-42 
+PASS executeTest-43 
+PASS executeTest-44 
+PASS executeTest-45 
+PASS executeTest-46 
+PASS executeTest-47 
+PASS executeTest-48 
+PASS executeTest-49 
+PASS executeTest-50 
+PASS executeTest-51 
+Harness: the test ran to completion.
+

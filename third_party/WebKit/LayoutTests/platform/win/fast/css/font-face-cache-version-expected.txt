@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Cached font from differnt document should not be used 
+Harness: the test ran to completion.
+

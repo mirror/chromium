@@ -1,0 +1,12 @@
+This is a testharness.js-based test.
+PASS Should open a closed details if all conditions are met 
+PASS Should close an open details if all conditions are met 
+PASS Should open a closed details even if the details is not being rendered 
+PASS Should open a closed details even if the summary is not being rendered 
+PASS Should open a closed details if a span element precedes the summary 
+PASS Should stay closed if another summary element precedes the summary 
+PASS Should open a closed details if another summary element *nested inside a span* precedes the summary 
+PASS Should stay closed if the summary element is nested inside a span element 
+PASS toggle events should be coalesced even when using the activation behavior of a summary 
+Harness: the test ran to completion.
+

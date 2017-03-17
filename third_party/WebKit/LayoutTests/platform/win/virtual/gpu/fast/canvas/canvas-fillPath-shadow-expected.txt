@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS TestSolidShadow 1 
+PASS TestSolidShadow 2 
+PASS TestSolidShadow 4 
+PASS TestBlurryShadow 1 
+PASS TestBlurryShadow 2 
+PASS TestBlurryShadow 3 
+PASS TestBlurryShadow 4 
+PASS TestSolidShadow 3 
+Harness: the test ran to completion.
+

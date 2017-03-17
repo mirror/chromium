@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Delete a space to merge into H1 
+PASS Delete P to merge into H1 with DIR 
+PASS Delete B to merge into H1 with DIR and keeping B 
+PASS Delete EM to merge into H1 with keeping EM 
+Harness: the test ran to completion.
+

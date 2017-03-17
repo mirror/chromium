@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Shift+F10 should bind to keydown, ContextMenu key should bind to keyup only on Windows. 
+Harness: the test ran to completion.
+

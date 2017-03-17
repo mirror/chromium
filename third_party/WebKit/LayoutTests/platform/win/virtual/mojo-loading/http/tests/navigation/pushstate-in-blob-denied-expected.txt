@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS pushState to blob:-URL should fail with SecurityError 
+Harness: the test ran to completion.
+

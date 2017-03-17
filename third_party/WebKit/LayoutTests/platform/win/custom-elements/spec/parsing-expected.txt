@@ -1,0 +1,14 @@
+CONSOLE ERROR: line 2: Uncaught NotSupportedError: Failed to construct 'CustomElement': The result must not have children
+CONSOLE MESSAGE: line 326: [object HTMLBodyElement]
+This is a testharness.js-based test.
+PASS sanity check the findFrameWithWindow function 
+PASS the parser synchronously creates elements 
+PASS foreign content insertion executes connected 
+PASS element creation failure produces unknown element 
+PASS modify tree during creation 
+PASS destructive writes are blocked during construction 
+PASS non-destructive writes are not blocked 
+PASS innerHTML is not blocked by custom element constructors 
+PASS parsing without a browsing context should not create custom elements 
+Harness: the test ran to completion.
+

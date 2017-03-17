@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Declared styleMap objects accept 'inherit' as a value 
+Harness: the test ran to completion.
+

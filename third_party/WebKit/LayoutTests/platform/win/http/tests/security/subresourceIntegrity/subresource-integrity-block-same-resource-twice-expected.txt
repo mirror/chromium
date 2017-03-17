@@ -1,0 +1,5 @@
+CONSOLE ERROR: Failed to find a valid digest in the 'integrity' attribute for resource 'http://127.0.0.1:8000/security/subresourceIntegrity/fail.js' with computed SHA-256 integrity 'yM5ZyzNsyKfaXRY78zSGapeQKtl0oGdpPpYxgwl8XW8='. The resource has been blocked.
+This is a testharness.js-based test.
+PASS SRI allows multiple hash values, valid if any passes among strongest 
+Harness: the test ran to completion.
+

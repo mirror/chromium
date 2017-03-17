@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS IDBCursor.advance exception order: TypeError vs. TransactionInactiveError 
+PASS IDBCursor.advance exception order: TransactionInactiveError vs. InvalidStateError #1 
+PASS IDBCursor.advance exception order: TransactionInactiveError vs. InvalidStateError #2 
+Harness: the test ran to completion.
+

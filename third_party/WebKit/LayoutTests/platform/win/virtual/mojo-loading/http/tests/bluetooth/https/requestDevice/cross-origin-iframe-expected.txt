@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Request device from a unique origin. Should reject with SecurityError. 
+Harness: the test ran to completion.
+

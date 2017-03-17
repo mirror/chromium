@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Unitless 0 in animation shorthand should not be parsed as a delay or duration 
+Harness: the test ran to completion.
+

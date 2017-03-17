@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Make sure that event.path is empty before dispatching the event. 
+PASS event.path in click event 
+PASS Make sure that event.path returns static NodeList. 
+PASS Make sure that event.path isn't emptified after dispatching the event. 
+Harness: the test ran to completion.
+

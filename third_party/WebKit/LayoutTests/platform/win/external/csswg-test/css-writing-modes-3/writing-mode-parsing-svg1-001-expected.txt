@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS writing-mode: lr 
+PASS writing-mode: lr-tb 
+PASS writing-mode: rl 
+PASS writing-mode: rl-tb 
+PASS writing-mode: tb 
+PASS writing-mode: tb-rl 
+Harness: the test ran to completion.
+

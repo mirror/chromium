@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS The attributes of the a element must be affected by the first base element 
+Harness: the test ran to completion.
+

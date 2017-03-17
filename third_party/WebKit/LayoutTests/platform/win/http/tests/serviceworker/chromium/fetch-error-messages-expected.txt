@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Error messages for fetch() 
+PASS Fetch API error message - not same origin request 
+PASS Fetch API error message - non http cors request 
+PASS Fetch API error message - unsupported scheme. 
+PASS Fetch API error message - invalid chunked encoding. 
+PASS Fetch API error message - cors error. 
+Harness: the test ran to completion.
+

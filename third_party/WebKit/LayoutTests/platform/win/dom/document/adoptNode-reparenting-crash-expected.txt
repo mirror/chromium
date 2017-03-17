@@ -1,0 +1,5 @@
+CONSOLE WARNING: line 20: Failed to execute 'adoptNode' on 'Document': Unable to remove the specified node from the original parent.
+This is a testharness.js-based test.
+PASS Reparenting in removeNode() in adoptNode() should not crash. 
+Harness: the test ran to completion.
+

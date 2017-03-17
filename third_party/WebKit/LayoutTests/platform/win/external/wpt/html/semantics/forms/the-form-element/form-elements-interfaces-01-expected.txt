@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS form.elements: interfaces 
+PASS Testing interface HTMLFormControlsCollection 
+PASS Testing interface HTMLCollection 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS user-select:none means content of element is not select-able 
+Harness: the test ran to completion.
+

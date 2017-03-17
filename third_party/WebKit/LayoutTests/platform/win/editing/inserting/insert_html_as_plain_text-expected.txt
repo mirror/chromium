@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS insert HTML as plain text. 
+PASS insert HTML at start of paragraph. 
+PASS interchange-newline is not inserted before DIV 
+Harness: the test ran to completion.
+

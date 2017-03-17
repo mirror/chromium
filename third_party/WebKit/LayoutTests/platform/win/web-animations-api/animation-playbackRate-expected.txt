@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS animation.currentTime should be constant if there is a 0 playback rate 
+Harness: the test ran to completion.
+

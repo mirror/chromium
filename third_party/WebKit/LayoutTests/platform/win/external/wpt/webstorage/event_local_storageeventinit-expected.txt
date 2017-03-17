@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS storageeventinit test - Storage event is fired due to set values for StorageEventInit. 
+Harness: the test ran to completion.
+

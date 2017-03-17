@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS .container 1 
+PASS .container 2 
+Harness: the test ran to completion.
+

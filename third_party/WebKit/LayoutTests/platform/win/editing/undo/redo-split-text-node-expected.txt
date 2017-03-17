@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS undo 
+PASS redo 
+PASS redo with removing node 
+Harness: the test ran to completion.
+

@@ -1,0 +1,61 @@
+This is a testharness.js-based test.
+PASS Setting bottom to auto 
+PASS Setting bottom to initial 
+PASS Setting bottom to inherit 
+PASS Setting bottom to unset 
+PASS Setting bottom to CSSSimpleLength with value 1px 
+PASS Setting bottom to CSSSimpleLength with value 3em 
+PASS Setting bottom to CSSSimpleLength with value 4ex 
+PASS Setting bottom to CSSSimpleLength with value 5ch 
+PASS Setting bottom to CSSSimpleLength with value 6rem 
+PASS Setting bottom to CSSSimpleLength with value 7vw 
+PASS Setting bottom to CSSSimpleLength with value 8vh 
+PASS Setting bottom to CSSSimpleLength with value 9vmin 
+PASS Setting bottom to CSSSimpleLength with value 10vmax 
+PASS Setting bottom to CSSSimpleLength with value 11cm 
+PASS Setting bottom to CSSSimpleLength with value 12mm 
+PASS Setting bottom to CSSSimpleLength with value 13in 
+PASS Setting bottom to CSSSimpleLength with value 14pc 
+PASS Setting bottom to CSSSimpleLength with value 15pt 
+PASS Setting bottom to CSSCalcLength with value calc(((((((((((((4.5em - 6.7ex) + 1200px) + 1.56cm) - 1.7mm) + 1.8in) + 2.1pt) - 1.9pc) + 1.1vw) - 1.2vh) + 1.3vmin) - 1.4vmax) - 10rem) + 8.9ch) 
+PASS Setting bottom to CSSCalcLength with value calc(10px) 
+PASS Setting bottom to CSSCalcLength with value calc(10in + 5vmin) 
+PASS Setting bottom to invalid value CSSNumberValue throws 
+PASS Setting bottom to invalid value null throws 
+PASS Setting bottom to invalid value undefined throws 
+PASS Setting bottom to invalid value true throws 
+PASS Setting bottom to invalid value false throws 
+PASS Setting bottom to invalid value 1 throws 
+PASS Setting bottom to invalid value hello throws 
+PASS Setting bottom to invalid value [object Object] throws 
+PASS Setting bottom to invalid value CSSKeywordValue throws 
+PASS Getting bottom when it is set to auto 
+PASS Getting bottom when it is set to initial 
+PASS Getting bottom when it is set to inherit 
+PASS Getting bottom when it is set to unset 
+PASS Getting bottom with a CSSSimpleLength whose value is 1px 
+PASS Getting bottom with a CSSSimpleLength whose value is 3em 
+PASS Getting bottom with a CSSSimpleLength whose value is 4ex 
+PASS Getting bottom with a CSSSimpleLength whose value is 5ch 
+PASS Getting bottom with a CSSSimpleLength whose value is 6rem 
+PASS Getting bottom with a CSSSimpleLength whose value is 7vw 
+PASS Getting bottom with a CSSSimpleLength whose value is 8vh 
+PASS Getting bottom with a CSSSimpleLength whose value is 9vmin 
+PASS Getting bottom with a CSSSimpleLength whose value is 10vmax 
+PASS Getting bottom with a CSSSimpleLength whose value is 11cm 
+PASS Getting bottom with a CSSSimpleLength whose value is 12mm 
+PASS Getting bottom with a CSSSimpleLength whose value is 13in 
+PASS Getting bottom with a CSSSimpleLength whose value is 14pc 
+PASS Getting bottom with a CSSSimpleLength whose value is 15pt 
+PASS Getting bottom with a CSSCalcLength whose value is calc(((((((((((((4.5em - 6.7ex) + 1200px) + 1.56cm) - 1.7mm) + 1.8in) + 2.1pt) - 1.9pc) + 1.1vw) - 1.2vh) + 1.3vmin) - 1.4vmax) - 10rem) + 8.9ch) 
+PASS Getting bottom with a CSSCalcLength whose value is calc(10px) 
+PASS Getting bottom with a CSSCalcLength whose value is calc(10in + 5vmin) 
+PASS Getting bottom when it is set to "calc(3 * (5px - 3em))" via a string 
+PASS Getting bottom when it is set to "calc((5vmin + 1mm) / 2)" via a string 
+PASS getAll for single-valued bottom 
+PASS Delete bottom removes the value from the styleMap 
+PASS bottom shows up in getProperties 
+PASS Setting bottom to a sequence throws 
+PASS Appending to bottom throws 
+Harness: the test ran to completion.
+

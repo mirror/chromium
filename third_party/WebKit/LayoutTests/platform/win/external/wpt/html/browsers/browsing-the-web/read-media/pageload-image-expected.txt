@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS The document for a standalone media file should have one child in the body. 
+Harness: the test ran to completion.
+

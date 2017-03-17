@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Do not invoke undefined behaviour when using calc()s with large pixel values 
+PASS Do not invoke undefined behaviour when using calc()s with large percentage values 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Image intrinsic dimensions are returned if the image isn't rendered 
+Harness: the test ran to completion.
+

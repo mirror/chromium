@@ -1,0 +1,27 @@
+This is a testharness.js-based test.
+PASS Animating transform from translateX(10px) to matrix(1, 1, 1, 1, 1, 1) should use post multiplication 
+PASS Animating transform from translateX(10px) to rotate(90deg) should use post multiplication 
+PASS Animating transform from skewX(90deg) to skewY(90deg) should use post multiplication 
+PASS Animating transform from skew(90deg, 0deg) to skewY(90deg) should use post multiplication 
+PASS Animating transform from matrix(1, 0, 0, 1, 0, 0) to matrix3d(2, 0, 0, 0, 0, 3, 0, 0, 0, 0, 4, 0, 0, 0, 0, 1) should use post multiplication 
+PASS Animating transform from translate(10px, 20px) to translateX(100px) should not use post multiplication 
+PASS Animating transform from translateX(10px) to translateY(100px) should not use post multiplication 
+PASS Animating transform from translateX(10px) to translateZ(100px) should not use post multiplication 
+PASS Animating transform from translateZ(10px) to translate3d(100px, 20px, 30px) should not use post multiplication 
+PASS Animating transform from scaleX(2) to scaleY(1) should not use post multiplication 
+PASS Animating transform from scaleX(2) to scaleZ(1) should not use post multiplication 
+PASS Animating transform from scaleX(2) to scale(1, 2) should not use post multiplication 
+PASS Animating transform from scaleX(2) to scale3d(1, 2, 3) should not use post multiplication 
+PASS Animating transform from skewY(10deg) to skewY(90deg) should not use post multiplication 
+PASS Animating transform from rotate(10deg) to rotate(90deg) should not use post multiplication 
+PASS Animating transform from rotateY(10deg) to rotateY(90deg) should not use post multiplication 
+PASS Animating transform from rotateX(90deg) to rotateY(90deg) should not use post multiplication 
+PASS Animating transform from rotate(10deg) to rotate3d(1, 2, 1, 90deg) should not use post multiplication 
+PASS Animating transform from rotate(10deg) to rotateZ(90deg) should not use post multiplication 
+PASS Animating transform from rotate(10deg) to rotate3d(0, 0, 1, 90deg) should not use post multiplication 
+PASS Animating transform from rotate(10deg) to rotate3d(0, 0, 2, 90deg) should not use post multiplication 
+PASS Animating transform from rotateX(10deg) to rotate3d(1, 0, 0, 100deg) should not use post multiplication 
+PASS Animating transform from perspective(10px) to perspective(100px) should not use post multiplication 
+PASS Animating transform from matrix(1, 0, 0, 1, 0, 0) to matrix(2, 0, 0, 2, 0, 0) should not use post multiplication 
+Harness: the test ran to completion.
+

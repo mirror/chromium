@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Recursive value - array directly contains self 
+PASS Recursive value - array indirectly contains self 
+PASS Recursive value - array member contains self 
+Harness: the test ran to completion.
+

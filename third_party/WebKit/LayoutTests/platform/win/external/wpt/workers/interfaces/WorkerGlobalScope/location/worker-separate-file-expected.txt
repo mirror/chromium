@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS location with a worker in separate file 
+Harness: the test ran to completion.
+

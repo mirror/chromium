@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that canvas arc()s are connected by a straight line. There should be two C-shapes with a line from the bottom of the left one to the top of the right one. 
+Harness: the test ran to completion.
+

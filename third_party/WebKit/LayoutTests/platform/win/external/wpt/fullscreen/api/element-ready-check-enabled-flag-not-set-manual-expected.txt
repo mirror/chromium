@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Element ready check with enabled flag not set 
+Harness: the test ran to completion.
+

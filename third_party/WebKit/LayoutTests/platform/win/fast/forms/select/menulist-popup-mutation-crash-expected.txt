@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS No crash even if an internal MutationObserver callback is called after the MutationObserver was diconnected. 
+Harness: the test ran to completion.
+

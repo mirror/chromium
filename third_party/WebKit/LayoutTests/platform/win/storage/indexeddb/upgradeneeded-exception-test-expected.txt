@@ -1,0 +1,5 @@
+CONSOLE ERROR: line 22: Uncaught Error: FakeException
+This is a testharness.js-based test.
+PASS Throw an exception in version change oncomplete handler  
+Harness: the test ran to completion.
+

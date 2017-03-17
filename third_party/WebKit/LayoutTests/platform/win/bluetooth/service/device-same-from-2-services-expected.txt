@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Same parent device returned from multiple services. 
+Harness: the test ran to completion.
+

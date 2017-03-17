@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS document.domain of an explicitly 'about:blank' frame matches document. 
+Harness: the test ran to completion.
+

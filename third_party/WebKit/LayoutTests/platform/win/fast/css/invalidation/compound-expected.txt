@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS internals are exposed 
+PASS Descendant with compound selector containing id 
+PASS Descendant with compound selector containing universal and id 
+PASS Descendant with compound selector 
+PASS Descendant with compound selector containing universal 
+PASS Descendant with :-webkit-any containing compound selector 
+PASS Sibling with compound descendant containing id 
+PASS Sibling with compound descendant 
+PASS Compound sibling selector containing id 
+PASS Compound sibling selector 
+PASS Sibling with descendant :-webkit-any containing compound selector 
+Harness: the test ran to completion.
+

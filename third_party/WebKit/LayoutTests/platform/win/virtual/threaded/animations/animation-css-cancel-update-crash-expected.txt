@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Check that cancelling one running animation and updating another doesn't crash 
+Harness: the test ran to completion.
+

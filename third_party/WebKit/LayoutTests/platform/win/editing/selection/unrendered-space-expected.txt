@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Visible position creation in unrenderer space after renderer text. 
+Harness: the test ran to completion.
+

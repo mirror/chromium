@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests FontFaceSet#check() returns true for platform fonts 
+Harness: the test ran to completion.
+

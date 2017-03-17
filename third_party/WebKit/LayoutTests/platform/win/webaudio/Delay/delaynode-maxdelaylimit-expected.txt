@@ -1,0 +1,13 @@
+This is a testharness.js-based test.
+PASS # AUDIT TASK RUNNER STARTED. 
+PASS > [test] Tests attribute and maximum allowed delay of DelayNode 
+PASS   () => context.createDelay(180) threw NotSupportedError: "Failed to execute 'createDelay' on 'BaseAudioContext': The max delay time provided (180) is outside the range (0, 180).". 
+PASS   () => context.createDelay(0) threw NotSupportedError: "Failed to execute 'createDelay' on 'BaseAudioContext': The max delay time provided (0) is outside the range (0, 180).". 
+PASS   () => context.createDelay(-1) threw NotSupportedError: "Failed to execute 'createDelay' on 'BaseAudioContext': The max delay time provided (-1) is outside the range (0, 180).". 
+PASS   () => context.createDelay(NaN) threw TypeError: "Failed to execute 'createDelay' on 'BaseAudioContext': The provided double value is non-finite.". 
+PASS   delay.delayTime.value = 0.5 is equal to 0.5. 
+PASS   Delaying test signal by 0.5 sec was done correctly 
+PASS < [test] All assertions passed. (total 6 assertions) 
+PASS # AUDIT TASK RUNNER FINISHED: 1 tasks ran successfully. 
+Harness: the test ran to completion.
+

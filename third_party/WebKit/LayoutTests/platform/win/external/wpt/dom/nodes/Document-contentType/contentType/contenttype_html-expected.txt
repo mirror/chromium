@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS HTM document.contentType === 'text/html' 
+Harness: the test ran to completion.
+

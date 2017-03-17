@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS line 
+PASS lineAndBorder 
+PASS lineAtBoundaryAndBorder 
+PASS lineInAbspos 
+PASS abspos 
+PASS lineInNestedBlock 
+PASS lineAfterFloat 
+PASS unsplittableBlock 
+PASS unsplittableFloat 
+PASS unsplittableAbspos 
+PASS image 
+Harness: the test ran to completion.
+

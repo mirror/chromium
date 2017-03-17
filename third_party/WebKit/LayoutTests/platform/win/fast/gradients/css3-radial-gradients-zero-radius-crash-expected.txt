@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Radial-gradient does not crash when specified with a height or width of 0. 
+Harness: the test ran to completion.
+

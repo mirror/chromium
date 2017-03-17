@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Do not cause an assertion failure in Document::setFocusedElement. 
+Harness: the test ran to completion.
+

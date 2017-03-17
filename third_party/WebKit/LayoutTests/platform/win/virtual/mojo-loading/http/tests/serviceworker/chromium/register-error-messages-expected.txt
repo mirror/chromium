@@ -1,0 +1,18 @@
+This is a testharness.js-based test.
+PASS Registering same scope as the script directory without the last slash 
+PASS Registration scope outside the script directory 
+PASS Registration scope outside domain 
+PASS Registering script outside domain 
+PASS Registering non-existent script 
+PASS Registering invalid chunked encoding script 
+PASS Registering script with no MIME type 
+PASS Registering script with bad MIME type 
+PASS Registering redirected script 
+PASS Registering script including parse error 
+PASS Registering script including undefined error 
+PASS Registering script including uncaught exception 
+PASS Registering script importing malformed script 
+PASS Registering script importing non-existent script 
+PASS Script URL including URL-encoded slash 
+Harness: the test ran to completion.
+

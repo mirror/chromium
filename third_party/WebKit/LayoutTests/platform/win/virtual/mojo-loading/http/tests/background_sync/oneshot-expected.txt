@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Background Sync API should allow one-shot syncs to be registered from an iframe 
+PASS Background Sync API should allow one-shot syncs to be registered from an uncontrolled main-frame document 
+Harness: the test ran to completion.
+

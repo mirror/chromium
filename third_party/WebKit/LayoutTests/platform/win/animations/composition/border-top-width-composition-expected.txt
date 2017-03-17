@@ -1,0 +1,24 @@
+This is a testharness.js-based test.
+PASS This test uses interpolation-test.js. 
+PASS Compositing: property <border-top-width> underlying [50px] from add [100px] to add [200px] at (-0.3) is [0px] 
+PASS Compositing: property <border-top-width> underlying [50px] from add [100px] to add [200px] at (0) is [0px] 
+PASS Compositing: property <border-top-width> underlying [50px] from add [100px] to add [200px] at (0.5) is [0px] 
+PASS Compositing: property <border-top-width> underlying [50px] from add [100px] to add [200px] at (1) is [0px] 
+PASS Compositing: property <border-top-width> underlying [50px] from add [100px] to add [200px] at (1.5) is [0px] 
+PASS Compositing: property <border-top-width> underlying [100px] from add [10px] to add [2px] at (-0.5) is [0px] 
+PASS Compositing: property <border-top-width> underlying [100px] from add [10px] to add [2px] at (0) is [0px] 
+PASS Compositing: property <border-top-width> underlying [100px] from add [10px] to add [2px] at (0.5) is [0px] 
+PASS Compositing: property <border-top-width> underlying [100px] from add [10px] to add [2px] at (1) is [0px] 
+PASS Compositing: property <border-top-width> underlying [100px] from add [10px] to add [2px] at (1.5) is [0px] 
+PASS Compositing: property <border-top-width> underlying [10em] from add [100px] to add [20em] at (-0.3) is [0px] 
+PASS Compositing: property <border-top-width> underlying [10em] from add [100px] to add [20em] at (0) is [0px] 
+PASS Compositing: property <border-top-width> underlying [10em] from add [100px] to add [20em] at (0.5) is [0px] 
+PASS Compositing: property <border-top-width> underlying [10em] from add [100px] to add [20em] at (1) is [0px] 
+PASS Compositing: property <border-top-width> underlying [10em] from add [100px] to add [20em] at (1.5) is [0px] 
+PASS Compositing: property <border-top-width> underlying [50px] from add [100px] to replace [200px] at (-0.3) is [0px] 
+PASS Compositing: property <border-top-width> underlying [50px] from add [100px] to replace [200px] at (0) is [0px] 
+PASS Compositing: property <border-top-width> underlying [50px] from add [100px] to replace [200px] at (0.5) is [0px] 
+PASS Compositing: property <border-top-width> underlying [50px] from add [100px] to replace [200px] at (1) is [0px] 
+PASS Compositing: property <border-top-width> underlying [50px] from add [100px] to replace [200px] at (1.5) is [0px] 
+Harness: the test ran to completion.
+

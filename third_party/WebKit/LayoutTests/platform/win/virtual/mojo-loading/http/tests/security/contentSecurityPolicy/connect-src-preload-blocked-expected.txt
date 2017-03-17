@@ -1,0 +1,6 @@
+CONSOLE ERROR: line 7: Refused to connect to 'http://127.0.0.1:8000/resources/dummy.js' because it violates the following Content Security Policy directive: "connect-src http://foobar.test:8000".
+
+This is a testharness.js-based test.
+PASS Makes sure that connect-src allows link preload resources with no as type 
+Harness: the test ran to completion.
+

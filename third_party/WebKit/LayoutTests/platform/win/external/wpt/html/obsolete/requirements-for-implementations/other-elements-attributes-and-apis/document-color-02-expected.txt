@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS document: fg/bg/link/vlink/alink-color 
+PASS document: fg/bg/link/vlink/alink-color 1 
+PASS document: fg/bg/link/vlink/alink-color 2 
+PASS document: fg/bg/link/vlink/alink-color 3 
+PASS document: fg/bg/link/vlink/alink-color 4 
+PASS document: fg/bg/link/vlink/alink-color 5 
+PASS document: fg/bg/link/vlink/alink-color 6 
+Harness: the test ran to completion.
+

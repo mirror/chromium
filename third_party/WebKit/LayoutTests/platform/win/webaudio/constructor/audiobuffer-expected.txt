@@ -1,0 +1,43 @@
+This is a testharness.js-based test.
+PASS context = new OfflineAudioContext(...) did not throw an exception. 
+PASS new AudioBuffer() threw TypeError: Failed to construct 'AudioBuffer': 1 argument required, but only 0 present.. 
+PASS new AudioBuffer(1) threw TypeError: Failed to construct 'AudioBuffer': parameter 1 ('options') is not an object.. 
+PASS new AudioBuffer(Date, 42) threw TypeError: Failed to construct 'AudioBuffer': required member sampleRate is undefined.. 
+PASS Invalid constructors correctly threw errors. 
+PASS buffer = new AudioBuffer({}) threw TypeError: Failed to construct 'AudioBuffer': required member length is undefined.. 
+PASS buffer = new AudioBuffer({length: 1}) threw TypeError: Failed to construct 'AudioBuffer': required member sampleRate is undefined.. 
+PASS buffer = new AudioBuffer({sampleRate: 48000}) threw TypeError: Failed to construct 'AudioBuffer': required member length is undefined.. 
+PASS buffer = new AudioBuffer({numberOfChannels: 1} threw TypeError: Failed to construct 'AudioBuffer': required member length is undefined.. 
+PASS buffer = new AudioBuffer({length: 21, sampleRate: 48000} did not throw an exception. 
+PASS buffer.numberOfChannels is equal to 1. 
+PASS buffer.length is equal to 21. 
+PASS buffer.sampleRate is equal to 48000. 
+PASS buffer = new AudioBuffer({numberOfChannels: 1, length: 1, sampleRate: 48000} did not throw an exception. 
+PASS Missing option values handled correctly. 
+PASS new AudioBuffer({"numberOfChannels":0,"length":1,"sampleRate":16000}) threw NotSupportedError: Failed to construct 'AudioBuffer': The number of channels provided (0) is outside the range [1, 32].. 
+PASS new AudioBuffer({"numberOfChannels":99,"length":0,"sampleRate":16000}) threw NotSupportedError: Failed to construct 'AudioBuffer': The number of channels provided (99) is outside the range [1, 32].. 
+PASS new AudioBuffer({"numberOfChannels":1,"length":0,"sampleRate":16000}) threw NotSupportedError: Failed to construct 'AudioBuffer': The number of frames provided (0) is less than or equal to the minimum bound (0).. 
+PASS new AudioBuffer({"numberOfChannels":1,"length":1,"sampleRate":100}) threw NotSupportedError: Failed to construct 'AudioBuffer': The sample rate provided (100) is outside the range [3000, 384000].. 
+PASS Invalid option values handled correctly. 
+PASS buffer = new AudioBuffer({"numberOfChannels":5,"length":17,"sampleRate":16000}) did not throw an exception. 
+PASS buffer.numberOfChannels is equal to 5. 
+PASS buffer.length is equal to 17. 
+PASS buffer.sampleRate is equal to 16000. 
+PASS Default constructor values set correctly. 
+PASS new AudioBuffer({"numberOfChannels":3,"length":42,"sampleRate":54321}) did not throw an exception. 
+PASS buffer.numberOfChannels is equal to 3. 
+PASS buffer.length is equal to 42. 
+PASS buffer.sampleRate is equal to 54321. 
+PASS buffer.getChannelData(0) did not throw an exception. 
+PASS buffer.getChannelData(0) length is equal to 42. 
+PASS buffer.getChannelData(1) did not throw an exception. 
+PASS buffer.getChannelData(1) length is equal to 42. 
+PASS buffer.getChannelData(2) did not throw an exception. 
+PASS buffer.getChannelData(2) length is equal to 42. 
+PASS buffer.getChannelData(3) threw IndexSizeError: Failed to execute 'getChannelData' on 'AudioBuffer': channel index (3) exceeds number of channels (3). 
+PASS AudioBuffer constructed correctly. 
+PASS c1 result is identical to the array [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,...]. 
+PASS c2 result is identical to the array [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,...]. 
+PASS AudioBuffer shared between two different contexts correctly. 
+Harness: the test ran to completion.
+

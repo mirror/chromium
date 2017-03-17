@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS SVGGeometryElement.getPointAtLength method (element detached) with SVGPathElement 
+PASS SVGGeometryElement.getPointAtLength method (element detached) with SVGRectElement 
+PASS SVGGeometryElement.getPointAtLength method (element detached) with SVGCircleElement 
+Harness: the test ran to completion.
+

@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS DetectedFace instance can be created. 
+PASS FaceDetector instance can be created with no argument. 
+PASS FaceDetector instance can be created with maxDetectedFaces. 
+PASS FaceDetector instance can be created with fastMode. 
+PASS DetectedBarcode instance can be created. 
+PASS BarcodeDetector instance can be created. 
+PASS DetectedText instance can be created. 
+PASS TextDetector instance can be created. 
+Harness: the test ran to completion.
+

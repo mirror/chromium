@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Message sent to closed port should not arrive. 
+PASS Message sent from closed port should not arrive. 
+PASS Message sent to closed port from transferred port should not arrive. 
+FAIL Message sent from transferred closed port should not arrive. assert_unreached: Should not have delivered message Reached unreachable code
+PASS Inflight messages should be delivered even when sending port is closed afterwards. 
+PASS Close in onmessage should not cancel inflight messages. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that canvas2d context fills with the globalAlpha property when applied 
+Harness: the test ran to completion.
+

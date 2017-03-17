@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Empty text nodes should not crash. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Create shared buffer 
+PASS Map shared buffer 
+PASS Duplicate RW shared buffer handle 
+PASS Duplicate RO shared buffer handle 
+PASS Read from RO shared buffer handle 
+PASS Write to RW shared buffer handle 
+Harness: the test ran to completion.
+

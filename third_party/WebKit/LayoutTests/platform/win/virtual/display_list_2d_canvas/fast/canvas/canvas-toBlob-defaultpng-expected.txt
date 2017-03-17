@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Verify whether the image data survives the toBlob process after async image encoding. 
+Harness: the test ran to completion.
+

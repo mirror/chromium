@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test canvas text ideographic space. 
+Harness: the test ran to completion.
+

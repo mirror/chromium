@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS setManifest() should resolve with undefined if setManifest() is succeeded. 
+PASS If registration has waiting worker, then wait for active worker and then setManifest() is succeeded. 
+PASS If registration has no active worker, no waiting worker and no installing worker, then throws InvalidStateError. 
+PASS If getManifest() is succeeded, then resolves stored manifest data. 
+PASS If service worker is unregistered, then manifest is cleared as well. 
+PASS If there is no manifest data, then throws AbortError. 
+PASS enabled_methods of PaymentAppOption is not required member. so this test should be pass. 
+Harness: the test ran to completion.
+

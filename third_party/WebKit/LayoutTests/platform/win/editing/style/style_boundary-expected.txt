@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Extend previous B 
+PASS Insert a character into existing B 
+PASS Simulate Ctrl+B then typing a character 
+PASS B element should not spread beyond DIV 
+PASS Pasting at style boundary does not crash or produce empty style span(s) 
+Harness: the test ran to completion.
+

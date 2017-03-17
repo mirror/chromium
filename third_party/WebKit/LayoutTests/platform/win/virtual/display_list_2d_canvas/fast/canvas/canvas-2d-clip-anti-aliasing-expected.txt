@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This test verifies that stroke inside a clip of the same path displays correctly. 
+Harness: the test ran to completion.
+

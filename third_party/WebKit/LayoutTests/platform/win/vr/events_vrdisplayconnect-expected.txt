@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test vrdisplayconnect fires once when new display connected 
+Harness: the test ran to completion.
+

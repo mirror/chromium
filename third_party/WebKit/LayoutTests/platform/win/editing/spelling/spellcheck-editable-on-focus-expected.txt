@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Misspelled text in editable DIV is not marked before focused. 
+PASS Spellchecking in editable DIV triggered on focus. 
+PASS Misspelled text in TEXTAREA is not marked before focused. 
+PASS Misspelled text in INPUT is not marked before focused. 
+PASS Spellchecking in TEXTAREA triggered on focus. 
+PASS Spellchecking in INPUT triggered on focus. 
+Harness: the test ran to completion.
+

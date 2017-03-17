@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that setLineDash converts input argument into a Web IDL sequence 
+Harness: the test ran to completion.
+

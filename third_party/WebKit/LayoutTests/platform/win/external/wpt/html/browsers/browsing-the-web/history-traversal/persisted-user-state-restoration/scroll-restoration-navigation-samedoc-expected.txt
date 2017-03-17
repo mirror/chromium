@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS history.{push,replace}State retain scroll restoration mode and navigation in the same document respects it 
+Harness: the test ran to completion.
+

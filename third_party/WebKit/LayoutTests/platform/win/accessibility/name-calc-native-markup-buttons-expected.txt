@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS Button with no content 
+PASS Button with text content 
+PASS Button with img content with no alt 
+PASS Button with img content with alt 
+PASS Button with text content and img content with no alt 
+PASS Button with text content and img content with alt 
+PASS Button with title only 
+PASS Button with title and contents 
+PASS Button with title and img content with no alt 
+PASS Button with title and img content with alt 
+PASS Button with text content and label 
+Harness: the test ran to completion.
+

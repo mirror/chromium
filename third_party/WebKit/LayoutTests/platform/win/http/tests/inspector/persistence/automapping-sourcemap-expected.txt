@@ -1,0 +1,4 @@
+Verify that sourcemap sources are mapped with non-exact match.
+
+Mapping has stabilized.
+

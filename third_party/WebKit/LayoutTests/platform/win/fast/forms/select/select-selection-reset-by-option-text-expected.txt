@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Updating Text nodes children of an OPTION element should not reset selection of the owner SELECT element. 
+Harness: the test ran to completion.
+

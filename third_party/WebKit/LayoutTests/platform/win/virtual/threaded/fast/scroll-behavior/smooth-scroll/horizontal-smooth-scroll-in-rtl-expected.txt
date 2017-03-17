@@ -1,0 +1,11 @@
+This test verifies that both input-driven and programmatic smooth scrolls serviced by the compositor thread go to the correct scroll position on RTL pages with horizontal overflow.
+
+On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
+
+
+PASS scrollX became -80
+FAIL scrollX failed to change to -40 in 0.5 seconds.
+PASS successfullyParsed is true
+
+TEST COMPLETE
+

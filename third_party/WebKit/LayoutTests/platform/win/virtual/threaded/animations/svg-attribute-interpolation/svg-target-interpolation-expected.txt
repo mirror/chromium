@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS This test uses interpolation-test.js. 
+PASS SMIL: Interpolate attribute <target> from replace [_top] to replace [:A0.-_:] at (0) is [_top] 
+PASS SMIL: Interpolate attribute <target> from replace [_top] to replace [:A0.-_:] at (0.2) is [_top] 
+PASS SMIL: Interpolate attribute <target> from replace [_top] to replace [:A0.-_:] at (0.6) is [:A0.-_:] 
+PASS SMIL: Interpolate attribute <target> from replace [_top] to replace [:A0.-_:] at (1) is [:A0.-_:] 
+PASS Web Animations: Interpolate attribute <target> from replace [_top] to replace [:A0.-_:] at (-0.4) is [_top] 
+PASS Web Animations: Interpolate attribute <target> from replace [_top] to replace [:A0.-_:] at (0) is [_top] 
+PASS Web Animations: Interpolate attribute <target> from replace [_top] to replace [:A0.-_:] at (0.2) is [_top] 
+PASS Web Animations: Interpolate attribute <target> from replace [_top] to replace [:A0.-_:] at (0.6) is [:A0.-_:] 
+PASS Web Animations: Interpolate attribute <target> from replace [_top] to replace [:A0.-_:] at (1) is [:A0.-_:] 
+PASS Web Animations: Interpolate attribute <target> from replace [_top] to replace [:A0.-_:] at (1.4) is [:A0.-_:] 
+Harness: the test ran to completion.
+

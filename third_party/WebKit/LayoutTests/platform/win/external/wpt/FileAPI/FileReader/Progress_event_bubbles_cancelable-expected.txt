@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Check the values of bubbles and cancelable are false when the progress event is dispatched 
+Harness: the test ran to completion.
+

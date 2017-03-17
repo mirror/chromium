@@ -1,0 +1,53 @@
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = 4 duplicate test names: "  context = new AudioContext() did not throw an exception.", "  context.close() resolved correctly.", "  context.sampleRate is greater than 0.", "  context.baseLatency is greater than 0."
+PASS # AUDIT TASK RUNNER STARTED. 
+PASS > [test-online-context-1] Test online context 1 
+PASS   context = new AudioContext() did not throw an exception. 
+PASS   context.state is equal to running. 
+PASS   osc = context.createOscillator() did not throw an exception. 
+PASS   gain = context.createGain() did not throw an exception. 
+PASS   gain.connect(context.destination) did not throw an exception. 
+PASS   gain.disconnect(destination) after close did not throw an exception. 
+PASS   context.close() resolved correctly. 
+PASS < [test-online-context-1] All assertions passed. (total 7 assertions) 
+PASS > [test-online-context-2] Test closed online context 2 
+PASS   context.createAnalyser() threw InvalidStateError: "Failed to execute 'createAnalyser' on 'BaseAudioContext': AudioContext has been closed.". 
+PASS   context.createBiquadFilter() threw InvalidStateError: "Failed to execute 'createBiquadFilter' on 'BaseAudioContext': AudioContext has been closed.". 
+PASS   context.createBuffer(1, 1, 48000) did not throw an exception. 
+PASS   context.createBufferSource() threw InvalidStateError: "Failed to execute 'createBufferSource' on 'BaseAudioContext': AudioContext has been closed.". 
+PASS   context.createChannelMerger() threw InvalidStateError: "Failed to execute 'createChannelMerger' on 'BaseAudioContext': AudioContext has been closed.". 
+PASS   context.createChannelSplitter() threw InvalidStateError: "Failed to execute 'createChannelSplitter' on 'BaseAudioContext': AudioContext has been closed.". 
+PASS   context.createConvolver() threw InvalidStateError: "Failed to execute 'createConvolver' on 'BaseAudioContext': AudioContext has been closed.". 
+PASS   context.createDelay() threw InvalidStateError: "Failed to execute 'createDelay' on 'BaseAudioContext': AudioContext has been closed.". 
+PASS   context.createDynamicsCompressor() threw InvalidStateError: "Failed to execute 'createDynamicsCompressor' on 'BaseAudioContext': AudioContext has been closed.". 
+PASS   context.createGain() threw InvalidStateError: "Failed to execute 'createGain' on 'BaseAudioContext': AudioContext has been closed.". 
+PASS   context.createOscillator() threw InvalidStateError: "Failed to execute 'createOscillator' on 'BaseAudioContext': AudioContext has been closed.". 
+PASS   context.createPanner() threw InvalidStateError: "Failed to execute 'createPanner' on 'BaseAudioContext': AudioContext has been closed.". 
+PASS   context.createPeriodicWave(wave, wave) threw InvalidStateError: "Failed to execute 'createPeriodicWave' on 'BaseAudioContext': AudioContext has been closed.". 
+PASS   context.createScriptProcessor() threw InvalidStateError: "Failed to execute 'createScriptProcessor' on 'BaseAudioContext': AudioContext has been closed.". 
+PASS   context.createStereoPanner() threw InvalidStateError: "Failed to execute 'createStereoPanner' on 'BaseAudioContext': AudioContext has been closed.". 
+PASS   context.createWaveShaper() threw InvalidStateError: "Failed to execute 'createWaveShaper' on 'BaseAudioContext': AudioContext has been closed.". 
+PASS   osc.connect(gain) threw InvalidStateError: "Failed to execute 'connect' on 'AudioNode': Cannot connect after the context has been closed.". 
+PASS   gain.disconnect() did not throw an exception. 
+PASS   context.resume() rejected correctly with InvalidAccessError: cannot resume a closed AudioContext. 
+PASS < [test-online-context-2] All assertions passed. (total 19 assertions) 
+PASS > [test-online-context-3] Close an online context again 
+PASS   context.close() again rejected correctly with InvalidStateError: Cannot close a context that is being closed or has already been closed.. 
+PASS   context.destination is equal to ${expected}. 
+PASS < [test-online-context-3] All assertions passed. (total 2 assertions) 
+PASS > [test-online-context-4] Test closed online context 4 
+PASS   context = new AudioContext() did not throw an exception. 
+PASS   context.sampleRate is greater than 0. 
+PASS   context.baseLatency is greater than 0. 
+PASS   context.close() resolved correctly. 
+PASS   context.sampleRate is greater than 0. 
+PASS   context.baseLatency is greater than 0. 
+PASS < [test-online-context-4] All assertions passed. (total 6 assertions) 
+PASS > [test-offline-context-1] Test offline context 
+PASS   offline = new OfflineAudioContext(1, 1000, 48000) did not throw an exception. 
+PASS   offline.state is equal to suspended. 
+PASS   offline.close is equal to undefined. 
+PASS < [test-offline-context-1] All assertions passed. (total 3 assertions) 
+PASS # AUDIT TASK RUNNER FINISHED: 5 tasks ran successfully. 
+Harness: the test ran to completion.
+

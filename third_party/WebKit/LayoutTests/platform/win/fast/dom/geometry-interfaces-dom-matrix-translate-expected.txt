@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS DOMMatrix.translate() 
+PASS DOMMatrix.translate(tx) 
+PASS DOMMatrix.translate(tx, ty) 
+PASS DOMMatrix.translate(tx, ty) with non-identity 
+PASS DOMMatrix.translateSelf() 
+PASS DOMMatrix.translateSelf(tx) 
+PASS DOMMatrix.translateSelf(tx, ty) 
+PASS DOMMatrix.translate(tx, ty, tz) 
+PASS DOMMatrix.translate(tx, ty, tz) with non-identity 
+PASS DOMMatrix.translateSelf(tx, ty, tz) 
+PASS DOMMatrix.translateSelf(tx, ty, tz) Homogeneous Coordinates 
+Harness: the test ran to completion.
+

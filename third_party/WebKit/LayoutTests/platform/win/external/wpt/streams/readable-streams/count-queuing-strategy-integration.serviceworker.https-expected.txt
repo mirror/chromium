@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Service worker test setup 
+PASS Can construct a readable stream with a valid CountQueuingStrategy 
+PASS Correctly governs a ReadableStreamController's desiredSize property (HWM = 0) 
+PASS Correctly governs a ReadableStreamController's desiredSize property (HWM = 1) 
+PASS Correctly governs a ReadableStreamController's desiredSize property (HWM = 4) 
+Harness: the test ran to completion.
+

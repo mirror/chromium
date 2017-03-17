@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Animation.playState reports 'pending'->'running' when initially played 
+PASS Animation.playState reports 'pending'->'paused' when pausing 
+PASS Animation.playState is 'idle' when canceled. 
+PASS Animation.playState is 'paused' after cancelling an animation, seeking it makes it paused 
+Harness: the test ran to completion.
+

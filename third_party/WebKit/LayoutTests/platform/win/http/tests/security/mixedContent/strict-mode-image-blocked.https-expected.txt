@@ -1,0 +1,5 @@
+CONSOLE ERROR: Mixed Content: The page at 'https://127.0.0.1:8443/security/mixedContent/strict-mode-image-blocked.https.html' was loaded over HTTPS, but requested an insecure image 'http://example.test:8080/security/resources/compass.jpg?t=1'. This request has been blocked; the content must be served over HTTPS.
+This is a testharness.js-based test.
+PASS Mixed images are blocked and generate CSP violation reports in the presence of 'block-all-mixed-content'. 
+Harness: the test ran to completion.
+

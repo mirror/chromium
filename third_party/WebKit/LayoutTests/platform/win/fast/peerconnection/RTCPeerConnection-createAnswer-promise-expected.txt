@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS createAnswer() 
+PASS createAnswer({}) 
+PASS createAnswer({voiceActivityDetection:true}) 
+PASS pc.createAnswer({voiceActivityDetection:false} 
+PASS createAnswer(1) 
+PASS createAnswer() with closed peer connection 
+Harness: the test ran to completion.
+

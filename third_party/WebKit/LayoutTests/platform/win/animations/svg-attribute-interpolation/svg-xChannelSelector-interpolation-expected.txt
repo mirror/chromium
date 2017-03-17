@@ -1,0 +1,24 @@
+This is a testharness.js-based test.
+PASS This test uses interpolation-test.js. 
+PASS SMIL: Interpolate attribute <xChannelSelector> from replace [R] to replace [A] at (0) is [R] 
+PASS SMIL: Interpolate attribute <xChannelSelector> from replace [R] to replace [A] at (0.2) is [R] 
+PASS SMIL: Interpolate attribute <xChannelSelector> from replace [R] to replace [A] at (0.6) is [A] 
+PASS SMIL: Interpolate attribute <xChannelSelector> from replace [R] to replace [A] at (1) is [A] 
+PASS Web Animations: Interpolate attribute <xChannelSelector> from replace [R] to replace [A] at (-2.4) is [R] 
+PASS Web Animations: Interpolate attribute <xChannelSelector> from replace [R] to replace [A] at (0) is [R] 
+PASS Web Animations: Interpolate attribute <xChannelSelector> from replace [R] to replace [A] at (0.2) is [R] 
+PASS Web Animations: Interpolate attribute <xChannelSelector> from replace [R] to replace [A] at (0.6) is [A] 
+PASS Web Animations: Interpolate attribute <xChannelSelector> from replace [R] to replace [A] at (1) is [A] 
+PASS Web Animations: Interpolate attribute <xChannelSelector> from replace [R] to replace [A] at (3.4) is [A] 
+PASS SMIL: Interpolate attribute <yChannelSelector> from replace [B] to replace [G] at (0) is [B] 
+PASS SMIL: Interpolate attribute <yChannelSelector> from replace [B] to replace [G] at (0.2) is [B] 
+PASS SMIL: Interpolate attribute <yChannelSelector> from replace [B] to replace [G] at (0.6) is [G] 
+PASS SMIL: Interpolate attribute <yChannelSelector> from replace [B] to replace [G] at (1) is [G] 
+PASS Web Animations: Interpolate attribute <yChannelSelector> from replace [B] to replace [G] at (-2.4) is [B] 
+PASS Web Animations: Interpolate attribute <yChannelSelector> from replace [B] to replace [G] at (0) is [B] 
+PASS Web Animations: Interpolate attribute <yChannelSelector> from replace [B] to replace [G] at (0.2) is [B] 
+PASS Web Animations: Interpolate attribute <yChannelSelector> from replace [B] to replace [G] at (0.6) is [G] 
+PASS Web Animations: Interpolate attribute <yChannelSelector> from replace [B] to replace [G] at (1) is [G] 
+PASS Web Animations: Interpolate attribute <yChannelSelector> from replace [B] to replace [G] at (3.4) is [G] 
+Harness: the test ran to completion.
+

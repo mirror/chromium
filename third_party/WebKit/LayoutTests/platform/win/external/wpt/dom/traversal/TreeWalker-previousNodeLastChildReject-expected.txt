@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that previousNode properly respects the filter. 
+Harness: the test ran to completion.
+

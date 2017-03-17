@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS No Content-Type for external <use> is blocked. 
+Harness: the test ran to completion.
+

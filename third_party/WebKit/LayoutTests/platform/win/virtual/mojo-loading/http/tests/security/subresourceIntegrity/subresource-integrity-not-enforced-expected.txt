@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Subresource Integrity should not be enforced on img tags 
+Harness: the test ran to completion.
+

@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Plaintext-only regions can be styled as long as they are fully selected. 
+PASS Plaintext-only regions are not styled if they are not fully selected. 
+Harness: the test ran to completion.
+

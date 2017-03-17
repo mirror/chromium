@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Insert BR before table 
+PASS Insert BR and enclose with DIV 
+PASS Insert BR before HR 
+PASS Insert BR after HR 
+PASS Insert DIV+BR before A 
+Harness: the test ran to completion.
+

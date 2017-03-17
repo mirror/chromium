@@ -1,0 +1,18 @@
+This is a testharness.js-based test.
+PASS structured clone of message 
+PASS undefined 
+PASS null 
+PASS false 
+PASS true 
+PASS 1 
+PASS NaN 
+PASS Infinity 
+PASS string 
+PASS date 
+PASS regexp 
+PASS self 
+PASS array 
+PASS object 
+PASS error 
+Harness: the test ran to completion.
+

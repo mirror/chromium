@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Attribute selector serialization, escaped character in attribute name 
+PASS Attribute selector serialization, escaped character as code point in attribute name 
+PASS Attribute selector serialization, escaped character (@) in attribute name 
+PASS Attribute selector serialization, escaped character in attribute name with any namespace 
+PASS Attribute selector serialization, escaped character in attribute prefix 
+PASS Attribute selector serialization, escaped character in both attribute prefix and name 
+Harness: the test ran to completion.
+

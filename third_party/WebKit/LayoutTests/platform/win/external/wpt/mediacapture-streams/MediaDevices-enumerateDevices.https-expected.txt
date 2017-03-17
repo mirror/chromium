@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS mediaDevices.enumerateDevices() is present and working on navigator 
+Harness: the test ran to completion.
+

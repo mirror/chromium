@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS HTML parser must only append nodes that appear before a custom element before instantiating the custom element 
+Harness: the test ran to completion.
+

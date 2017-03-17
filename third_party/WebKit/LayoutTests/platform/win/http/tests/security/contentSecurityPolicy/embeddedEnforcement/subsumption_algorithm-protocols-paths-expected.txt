@@ -1,0 +1,42 @@
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=img-src%20http://b.com&id=0' because it has not opted-into the following policy required by its embedder: 'img-src http://c.com:* https://b.com'.
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=img-src%20http://b.com&id=3' because it has not opted-into the following policy required by its embedder: 'img-src http://c.com:* http://b.com/example.com'.
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=img-src%20http://b.com/example.com&id=6' because it has not opted-into the following policy required by its embedder: 'img-src http://c.com:* https://b.com/example.com'.
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=img-src%20http://b.com/&id=7' because it has not opted-into the following policy required by its embedder: 'img-src http://b.com/page1.com http://b.com/page2.com http://b.com/page3.com'.
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=img-src%20http://b.com/page2.com&id=11' because it has not opted-into the following policy required by its embedder: 'img-src http://b.com/page1.com https://b.com/page2.com http://b.com/page3.com'.
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=img-src%20https://*&id=14' because it has not opted-into the following policy required by its embedder: 'img-src https://b.com'.
+CONSOLE ERROR: line 26: Refused to load the image 'http://localhost:8000/security/contentSecurityPolicy/resources/green250x50.png' because it violates the following Content Security Policy directive: "img-src https://b.com".
+
+CONSOLE ERROR: line 26: Refused to load the image 'http://localhost:8000/security/contentSecurityPolicy/resources/green250x50.png' because it violates the following Content Security Policy directive: "img-src https://b.com".
+
+CONSOLE ERROR: line 26: Refused to load the image 'http://localhost:8000/security/contentSecurityPolicy/resources/green250x50.png' because it violates the following Content Security Policy directive: "img-src http://b.com/example.com".
+
+CONSOLE ERROR: line 26: Refused to load the image 'http://localhost:8000/security/contentSecurityPolicy/resources/green250x50.png' because it violates the following Content Security Policy directive: "img-src http://b.com/example.com".
+
+CONSOLE ERROR: line 26: Refused to load the image 'http://localhost:8000/security/contentSecurityPolicy/resources/green250x50.png' because it violates the following Content Security Policy directive: "img-src http://b.com/page2.com http://b.com/page3.com http://b.com/page1.com".
+
+CONSOLE ERROR: line 26: Refused to load the image 'http://localhost:8000/security/contentSecurityPolicy/resources/green250x50.png' because it violates the following Content Security Policy directive: "img-src http://b.com/page2.com".
+
+CONSOLE ERROR: line 26: Refused to load the image 'http://localhost:8000/security/contentSecurityPolicy/resources/green250x50.png' because it violates the following Content Security Policy directive: "img-src https://b.com/page2.com".
+
+CONSOLE ERROR: line 26: Refused to load the image 'http://localhost:8000/security/contentSecurityPolicy/resources/green250x50.png' because it violates the following Content Security Policy directive: "img-src https://b.com/page2.com".
+
+CONSOLE ERROR: line 26: Refused to load the image 'http://localhost:8000/security/contentSecurityPolicy/resources/green250x50.png' because it violates the following Content Security Policy directive: "img-src https://*".
+
+This is a testharness.js-based test.
+PASS https is more restrictive than http. 
+PASS The reverse allows iframe be to be loaded. 
+PASS Matching https protocols. 
+PASS Returned CSP has a specific path. 
+PASS Returned CSP is more specific. 
+PASS Matching paths. 
+PASS Matching paths but not protocols. 
+PASS Returned CSP is less restrictive in paths. 
+PASS All specific paths match except the order. 
+PASS Returned CSP allows only one path. 
+PASS Returned CSP allows only one path with stricter protocol. 
+PASS Returned CSP allows only one path with less stricter protocol. 
+PASS Specified protocol should match any domain with that protocol. 
+PASS Equal policies with protocols and host wildcards. 
+PASS Returned CSP allows any https resources. 
+Harness: the test ran to completion.
+

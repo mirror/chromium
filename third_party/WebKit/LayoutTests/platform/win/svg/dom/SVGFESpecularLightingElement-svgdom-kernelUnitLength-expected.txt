@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS tests of the |kernelUnitLength| attribute of the SVGFESpecularLightingElement object 
+Harness: the test ran to completion.
+

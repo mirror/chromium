@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Request for absent service with UUID. Must reject with NotFoundError even when the services are not immediately discovered 
+Harness: the test ran to completion.
+

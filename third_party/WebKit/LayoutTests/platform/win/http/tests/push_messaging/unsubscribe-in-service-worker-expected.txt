@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS unsubscribe must resolve with true iff it is called on an active subscription 
+Harness: the test ran to completion.
+

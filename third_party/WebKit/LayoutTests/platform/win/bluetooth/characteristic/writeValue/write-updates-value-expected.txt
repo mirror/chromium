@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS A regular write request to a writable characteristic should update value. 
+Harness: the test ran to completion.
+

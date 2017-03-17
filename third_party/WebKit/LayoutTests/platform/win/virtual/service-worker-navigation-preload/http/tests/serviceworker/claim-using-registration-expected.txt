@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Test worker claims client which is using another registration 
+PASS Test for the waiting worker claims a client which is using the the same registration 
+Harness: the test ran to completion.
+

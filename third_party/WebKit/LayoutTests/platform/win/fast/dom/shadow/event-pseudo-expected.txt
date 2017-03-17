@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS transitionend in Shadow DOM raised without ASSERT failures 
+Harness: the test ran to completion.
+

@@ -1,0 +1,21 @@
+This is a testharness.js-based test.
+PASS Change "spellcheck" of <span> from undefined to true 
+PASS Change "spellcheck" of <span> from undefined to false 
+PASS Change "spellcheck" of <span> from true to true 
+PASS Change "spellcheck" of <span> from true to false 
+PASS Change "spellcheck" of <span> from false to true 
+PASS Change "spellcheck" of <span> from false to false 
+PASS Change "spellcheck" of <input> from undefined to true 
+PASS Change "spellcheck" of <input> from undefined to false 
+PASS Change "spellcheck" of <input> from true to true 
+PASS Change "spellcheck" of <input> from true to false 
+PASS Change "spellcheck" of <input> from false to true 
+PASS Change "spellcheck" of <input> from false to false 
+PASS Change "spellcheck" of <textarea> from undefined to true 
+PASS Change "spellcheck" of <textarea> from undefined to false 
+PASS Change "spellcheck" of <textarea> from true to true 
+PASS Change "spellcheck" of <textarea> from true to false 
+PASS Change "spellcheck" of <textarea> from false to true 
+PASS Change "spellcheck" of <textarea> from false to false 
+Harness: the test ran to completion.
+

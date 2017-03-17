@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Changing both pointer-events and visibility on an element, both independent inherited properties, doesn't cause a style recalc for its children. 
+Harness: the test ran to completion.
+

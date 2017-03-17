@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS An animation can be created with a KeyframeEffectReadOnly, and the effect is of the expected type 
+PASS An animation based on a KeyframeEffectReadOnly applies an effect 
+Harness: the test ran to completion.
+

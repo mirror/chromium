@@ -1,0 +1,49 @@
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = 7 duplicate test names: "node.channelCountMode is equal to "clamped-max".", "node.channelCountMode is equal to "explicit".", "node.channelInterpretation is equal to "speakers".", "node.channelInterpretation is equal to "discrete".", "node instanceOf ConvolverNode is equal to true.", "node.normalize is equal to true.", "node.buffer is equal to null."
+PASS context = new OfflineAudioContext(...) did not throw an exception. 
+PASS new ConvolverNode() threw TypeError: Failed to construct 'ConvolverNode': 1 argument required, but only 0 present.. 
+PASS new ConvolverNode(1) threw TypeError: Failed to construct 'ConvolverNode': parameter 1 is not of type 'BaseAudioContext'.. 
+PASS new ConvolverNode(context, 42) threw TypeError: Failed to construct 'ConvolverNode': parameter 2 ('options') is not an object.. 
+PASS Invalid constructors correctly threw errors. 
+PASS node = new ConvolverNode(context) did not throw an exception. 
+PASS node instanceOf ConvolverNode is equal to true. 
+PASS node.normalize is equal to true. 
+PASS node.channelCount is equal to 2. 
+PASS node.channelCountMode is equal to "clamped-max". 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new AnalyserNode(context) constructed node with correct attributes. 
+PASS new ConvolverNode(c, {channelCount: 17}} did not throw an exception. 
+PASS node.channelCount is equal to 17. 
+PASS new ConvolverNode(c, {channelCount: 0}} threw NotSupportedError: Failed to construct 'ConvolverNode': The channel count provided (0) is outside the range [1, 32].. 
+PASS new ConvolverNode(c, {channelCount: 99}} threw NotSupportedError: Failed to construct 'ConvolverNode': The channel count provided (99) is outside the range [1, 32].. 
+PASS new ConvolverNode(c, {channelCountMode: "max"} did not throw an exception. 
+PASS node.channelCountMode is equal to "max". 
+PASS new ConvolverNode(c, {channelCountMode: "clamped-max"} did not throw an exception. 
+PASS node.channelCountMode is equal to "clamped-max". 
+PASS new ConvolverNode(c, {channelCountMode: "explicit"} did not throw an exception. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS new ConvolverNode(c, {channelCountMode: "foobar"} threw TypeError: Failed to construct 'ConvolverNode': The provided value 'foobar' is not a valid enum value of type ChannelCountMode.. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS new ConvolverNode(c, {channelInterpretation: "speakers"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new ConvolverNode(c, {channelInterpretation: "discrete"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS new ConvolverNode(c, {channelInterpretation: "foobar"}) threw TypeError: Failed to construct 'ConvolverNode': The provided value 'foobar' is not a valid enum value of type ChannelInterpretation.. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS AudioNodeOptions for ConvolverNode were correctly handled. 
+PASS node = new ConvolverNode(c, {"buffer":null} did not throw an exception. 
+PASS node.buffer is equal to null. 
+PASS Null buffer in constructor handled correctly. 
+PASS node = new ConvolverNode(c, {"buffer":{},"disableNormalization":false}) did not throw an exception. 
+PASS node instanceOf ConvolverNode is equal to true. 
+PASS node.buffer === <buf> is equal to true. 
+PASS node.normalize is equal to true. 
+PASS node = new ConvolverNode(, {"buffer":null,"disableNormalization":true}) did not throw an exception. 
+PASS node.buffer is equal to null. 
+PASS node.normalize is equal to false. 
+PASS node = new ConvolverNode(context, {"buffer":null,"disableNormalization":false}) did not throw an exception. 
+PASS node.buffer is equal to null. 
+PASS node.normalize is equal to true. 
+PASS new ConvolverNode() with options constructed with correct attributes. 
+Harness: the test ran to completion.
+

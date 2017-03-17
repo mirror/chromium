@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test Description: DOMNodeInserted event fires when a node has been added as a child of another node. 
+Harness: the test ran to completion.
+

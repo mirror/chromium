@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that TouchMoves are suppressed if within the slop suppression region. 
+Harness: the test ran to completion.
+

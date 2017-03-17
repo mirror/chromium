@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test HTMLMediaElement's "canPlayType" method for webm media containers. 
+Harness: the test ran to completion.
+

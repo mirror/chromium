@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Series of tests to ensure that fillText() does not display any text when maxWidth is invalid. 
+Harness: the test ran to completion.
+

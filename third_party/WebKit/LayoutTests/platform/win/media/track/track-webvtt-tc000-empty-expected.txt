@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that an empty file is not recognized as a WebVTT file. 
+Harness: the test ran to completion.
+

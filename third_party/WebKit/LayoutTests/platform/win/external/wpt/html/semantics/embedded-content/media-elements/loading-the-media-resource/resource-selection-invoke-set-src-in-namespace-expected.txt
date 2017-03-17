@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS NOT invoking load by setting src in the wrong namespace 
+Harness: the test ran to completion.
+

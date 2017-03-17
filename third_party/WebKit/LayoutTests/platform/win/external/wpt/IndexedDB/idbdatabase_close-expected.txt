@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBDatabase.close() - unblock the version change transaction created by an open database request 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test the case where an ImageBitmap produced on a worker is consumed on another worker 
+Harness: the test ran to completion.
+

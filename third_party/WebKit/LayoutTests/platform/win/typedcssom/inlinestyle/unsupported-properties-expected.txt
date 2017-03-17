@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Unsupported property returns a base StyleValue with the correct cssText. 
+PASS Setting the same property using the result of getting an unknown value works 
+PASS Setting a different property using the result of getting an unknown value works 
+Harness: the test ran to completion.
+

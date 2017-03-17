@@ -1,0 +1,15 @@
+CONSOLE WARNING: line 14: Subresource requests whose URLs contain embedded credentials (e.g. `https://user:pass@host/`) are deprecated, and will be blocked in M59, around June 2017. See https://www.chromestatus.com/feature/5669008342777856 for more details.
+This is a testharness.js-based test.
+PASS Startup 
+PASS scheme-data 
+PASS executeTest-0 
+PASS executeTest-1 
+PASS executeTest-2 
+PASS executeTest-3 
+PASS executeTest-4 
+PASS executeTest-5 
+PASS executeTest-6 
+PASS executeTest-7 
+PASS executeTest-8 
+Harness: the test ran to completion.
+

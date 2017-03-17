@@ -1,0 +1,18 @@
+This is a testharness.js-based test.
+PASS Test that passing undefined to nfc.push would raise TypeMismatchError. 
+PASS Test that promise is rejected with SyntaxError if NFCMessage is invalid. 
+PASS nfc.push should fail when NFC HW is disabled. 
+PASS nfc.push should fail when NFC HW is not supported. 
+PASS nfc.push should succeed when NFC HW is enabled 
+PASS nfc.push should fail with TimeoutError when push operation is not completed before specified timeout value. 
+PASS nfc.push NFCMessage containing text, json, opaque and url records with default NFCPushOptions. 
+PASS nfc.push String with default NFCPushOptions. 
+PASS nfc.push ArrayBuffer with default NFCPushOptions. 
+PASS Check that default NFCPushOptions values are correctly set. 
+PASS Check that provided NFCPushOptions values are correctly converted. 
+PASS Push ArrayBuffer with default NFCPushOptions. 
+PASS nfc.cancelPush should succeed if there is pending push operation. 
+PASS nfc.cancelPush should reject pending promise with AbortError. 
+PASS Reject promise with NotSupportedError if NFC message size exceeds 32KB. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+CONSOLE WARNING: line 41: The provided value 'RL' is not a valid enum value of type DirectionSetting.
+CONSOLE WARNING: line 86: The provided value 'End' is not a valid enum value of type AlignSetting.
+This is a testharness.js-based test.
+PASS Tests modifying attributes of a VTTCue 
+Harness: the test ran to completion.
+

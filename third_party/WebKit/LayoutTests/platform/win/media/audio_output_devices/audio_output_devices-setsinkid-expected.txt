@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS Basic API test 
+PASS setSinkId("") 
+PASS setSinkId("valid") 
+PASS change src, then setSinkId("") 
+PASS setSinkId("unauthorized") 
+PASS setSinkId("nonexistent") 
+PASS setSinkId("valid") followed by setSinkId(""). 
+Harness: the test ran to completion.
+

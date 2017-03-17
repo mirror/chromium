@@ -1,0 +1,31 @@
+This is a testharness.js-based test.
+PASS markers in text 
+PASS markers at element 
+PASS markers around table 
+PASS result with out body 
+PASS We can place caret before TEXTAREA 
+PASS We can place caret after TEXTAREA 
+PASS We can select TEXTAREA 
+PASS TEXTAREA is serialized with value property 
+PASS HTMLTextArea#setSelectionRange() 
+PASS range selection 
+PASS backward range selection 
+PASS caret selection 
+PASS dump flat tree for shadow DOM V0 
+PASS dump flat tree for shadow DOM V1 
+PASS no marker in output 
+PASS multiple focus markers in input 
+PASS multiple focus markers in output 
+PASS multiple anchor markers in input 
+PASS multiple anchor markers in output 
+PASS anchor marker only in input 
+PASS anchor marker only in output 
+PASS anchor == foucs in input 
+PASS anchor == foucs in output 
+PASS Compare result 
+PASS multiple spaces in function 
+PASS selection.setClipboardData 
+PASS removeSampleIfSucceeded 
+PASS Textaffinity 
+Harness: the test ran to completion.
+

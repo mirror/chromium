@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Insert newline and a character before tabspan 
+PASS Insert newline and a character in tabspan 
+PASS Insert newline and a character after tabspan 
+Harness: the test ran to completion.
+

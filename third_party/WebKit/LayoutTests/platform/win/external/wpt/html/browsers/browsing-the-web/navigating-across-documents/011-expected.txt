@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Link with onclick navigation to javascript url with document.write and href navigation  
+Harness: the test ran to completion.
+

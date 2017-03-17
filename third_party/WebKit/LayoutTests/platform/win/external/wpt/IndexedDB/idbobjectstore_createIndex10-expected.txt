@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBDatabase.createIndex() - If an index with the name name already exists in this object store, the implementation must throw a DOMException of type ConstraintError  
+Harness: the test ran to completion.
+

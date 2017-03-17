@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS SNR (93.31332101677042) is greater than or equal to 93.31. 
+PASS Maximum difference (in ulp units (16-bits)) (1.009765625) is less than or equal to 1.01. 
+PASS Number of differences between results (0) is less than or equal to 0. 
+Harness: the test ran to completion.
+

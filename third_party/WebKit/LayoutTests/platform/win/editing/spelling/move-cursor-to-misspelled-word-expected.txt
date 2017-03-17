@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Has marker on initially misspelled text 
+PASS Moving cursor to misspelled word does not remove marker. 
+Harness: the test ran to completion.
+

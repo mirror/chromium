@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS contentEditable of shadow trees must be undefined when contentEditable attribute of shadow host is "true" 
+PASS contentEditable of shadow trees must be undefined when contentEditable of shadow host is "false" 
+PASS contentEditable of shadow trees must be undefined when contentEditable attribute of shadow host is "inherit" 
+Harness: the test ran to completion.
+

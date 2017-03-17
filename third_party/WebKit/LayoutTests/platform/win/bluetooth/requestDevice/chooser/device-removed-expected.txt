@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Devices are added and removed. Chooser should not get a signal that the device was removed and promise should be rejected when a removed device is selected. 
+Harness: the test ran to completion.
+

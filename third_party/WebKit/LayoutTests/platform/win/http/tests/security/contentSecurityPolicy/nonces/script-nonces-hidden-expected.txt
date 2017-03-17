@@ -1,0 +1,12 @@
+This is a testharness.js-based test.
+PASS HTML: Reading 'nonce' content attribute and IDL attribute. 
+PASS HTML: Writing 'nonce' content attribute. 
+PASS HTML: Writing 'nonce' DOM attribute. 
+PASS HTML: 'nonce' DOM attribute present after current task. 
+PASS SVG: Reading 'nonce' content attribute and IDL attribute. 
+PASS SVG: Writing 'nonce' content attribute. 
+PASS SVG: Writing 'nonce' DOM attribute. 
+PASS SVG: 'nonce' DOM attribute present after current task. 
+PASS Nonces don't leak via CSS side-channels. 
+Harness: the test ran to completion.
+

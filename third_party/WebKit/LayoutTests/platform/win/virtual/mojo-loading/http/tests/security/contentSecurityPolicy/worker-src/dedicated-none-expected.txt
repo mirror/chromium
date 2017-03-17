@@ -1,0 +1,9 @@
+CONSOLE ERROR: line 91: Refused to create a worker from 'http://127.0.0.1:8000/security/contentSecurityPolicy/resources/ping.js' because it violates the following Content Security Policy directive: "worker-src 'none'".
+
+CONSOLE ERROR: line 91: Refused to create a worker from 'blob:http://127.0.0.1:8000/f133cc6a-750b-42cb-907b-bc6098d33fb9' because it violates the following Content Security Policy directive: "worker-src 'none'".
+
+This is a testharness.js-based test.
+PASS Same-origin dedicated worker blocked by host-source expression. 
+PASS blob: dedicated worker blocked by 'blob:'. 
+Harness: the test ran to completion.
+

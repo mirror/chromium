@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Event handlers starting with 'javascript:' should treat that as a label. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Large and smaller float pushed below line with float 
+Harness: the test ran to completion.
+

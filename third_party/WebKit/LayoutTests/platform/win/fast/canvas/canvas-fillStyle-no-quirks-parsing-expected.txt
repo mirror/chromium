@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS fillStyle should not accept quirks mode hex colors. 
+Harness: the test ran to completion.
+

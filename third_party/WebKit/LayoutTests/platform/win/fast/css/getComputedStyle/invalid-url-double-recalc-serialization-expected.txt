@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Invalid URL protocols should serialise as their original URL strings after multiple recalcs 
+Harness: the test ran to completion.
+

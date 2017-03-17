@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS crbug.com/659499: Updating INPUT value to the previous defaultValue should dispatch "change" event. 
+Harness: the test ran to completion.
+

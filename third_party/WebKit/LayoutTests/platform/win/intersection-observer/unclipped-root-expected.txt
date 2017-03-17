@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Test that border bounding box is used to calculate intersection with a non-scrolling root. 
+PASS First rAF. 
+PASS target.style.transform = 'translateY(195px)' 
+Harness: the test ran to completion.
+

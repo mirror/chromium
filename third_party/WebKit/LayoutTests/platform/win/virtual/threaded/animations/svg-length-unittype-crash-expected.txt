@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Don't crash when applying SVG R attribute. 
+Harness: the test ran to completion.
+

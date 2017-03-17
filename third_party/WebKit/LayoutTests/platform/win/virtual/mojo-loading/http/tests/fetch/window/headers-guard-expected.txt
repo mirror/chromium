@@ -1,0 +1,13 @@
+This is a testharness.js-based test.
+PASS Startup 
+PASS Headers guard = none: set/append/delete 
+PASS Headers guard = none: Headers constructor 
+PASS Headers guard = request: set/append/delete 
+PASS Headers guard = request: RequestInit.headers 
+PASS Headers guard = request-no-cors: set/append/delete 
+PASS Headers guard = request-no-cors: RequestInit.headers 
+PASS Headers guard = response: set/append/delete 
+PASS Headers guard = response: ResponseInit.headers 
+PASS Headers guard = immutable: set/append/delete 
+Harness: the test ran to completion.
+

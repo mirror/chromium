@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test if newly connected ports work correctly 
+Harness: the test ran to completion.
+

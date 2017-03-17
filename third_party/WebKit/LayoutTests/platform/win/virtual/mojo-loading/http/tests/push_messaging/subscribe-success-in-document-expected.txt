@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS subscribe() succeeds when permission is granted and resolves with a valid subscription 
+Harness: the test ran to completion.
+

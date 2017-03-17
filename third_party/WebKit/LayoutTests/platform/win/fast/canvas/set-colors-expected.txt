@@ -1,0 +1,35 @@
+This is a testharness.js-based test.
+PASS TestFillStyle 1 
+PASS TestFillStyle 2 
+PASS TestFillStyle 3 
+PASS TestFillStyle 4 
+PASS TestFillStyle 5 
+PASS TestFillStyle 6 
+PASS TestFillStyle 7 
+PASS TestFillStyle 8 
+PASS TestFillGradient 1 
+PASS TestFillGradient 2 
+PASS TestFillGradient 3 
+PASS TestFillGradient 4 
+PASS TestFillGradient 5 
+PASS TestFillGradient 6 
+PASS TestFillGradient 7 
+PASS TestFillGradient 8 
+PASS TestStrokeStyle 1 
+PASS TestStrokeStyle 2 
+PASS TestStrokeStyle 3 
+PASS TestStrokeStyle 4 
+PASS TestStrokeStyle 5 
+PASS TestStrokeStyle 6 
+PASS TestStrokeStyle 7 
+PASS TestStrokeStyle 8 
+PASS TestStrokeGradient 1 
+PASS TestStrokeGradient 2 
+PASS TestStrokeGradient 3 
+PASS TestStrokeGradient 4 
+PASS TestStrokeGradient 5 
+PASS TestStrokeGradient 6 
+PASS TestStrokeGradient 7 
+PASS TestStrokeGradient 8 
+Harness: the test ran to completion.
+

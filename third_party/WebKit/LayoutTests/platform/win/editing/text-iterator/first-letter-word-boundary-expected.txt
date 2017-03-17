@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Move forward by word 
+PASS Move backward by word 
+PASS Move forward by word with white-space:pre 
+PASS Move backward by word with white-space:pre 
+Harness: the test ran to completion.
+

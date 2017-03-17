@@ -1,0 +1,6 @@
+CONSOLE ERROR: line 48: Uncaught ReferenceError: this is not defined
+This is a testharness.js-based test.
+PASS HTMLElement constructor: poach but return upgrade candidate 
+PASS HTMLElement constructor: poach upgrade candidate 
+Harness: the test ran to completion.
+

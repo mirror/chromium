@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Notification.permission reflects th actual permission. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Post loopback messages 
+PASS Post messages among service workers 
+Harness: the test ran to completion.
+

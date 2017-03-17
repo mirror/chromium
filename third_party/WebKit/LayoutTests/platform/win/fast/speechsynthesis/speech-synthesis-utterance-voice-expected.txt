@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS initial state 
+PASS setting to null/undefined 
+PASS setting to non-SpeechSynthesisVoice values 
+PASS setting to SpeechSynthesisVoice 
+Harness: the test ran to completion.
+

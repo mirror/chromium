@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that setting preferences on a track-less video element does not crash. 
+Harness: the test ran to completion.
+

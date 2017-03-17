@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that async event dispatch to detached frame is gracefully handled. 
+Harness: the test ran to completion.
+

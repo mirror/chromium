@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS insert DIV+BR with attribute before "baz" 
+PASS insert DIV+BR with attribute after "baz" 
+PASS insert DIV+BR without attribute before "bar" 
+PASS insert DIV+BR without attribute after "bar" 
+PASS insert DIV+BR without attribute before "foo" 
+PASS insert DIV+BR without attribute after "foo" 
+PASS insert DIV+BR without attribute after BR 
+Harness: the test ran to completion.
+

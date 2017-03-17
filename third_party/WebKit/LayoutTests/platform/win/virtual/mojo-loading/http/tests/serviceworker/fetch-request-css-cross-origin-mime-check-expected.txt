@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Mime type checking of CSS files fetched via SW. 
+Harness: the test ran to completion.
+

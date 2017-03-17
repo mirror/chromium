@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS document.getElementsByClassName(): adding element with class 
+Harness: the test ran to completion.
+

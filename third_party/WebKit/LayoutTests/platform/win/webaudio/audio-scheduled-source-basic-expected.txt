@@ -1,0 +1,22 @@
+This is a testharness.js-based test.
+PASS # AUDIT TASK RUNNER STARTED. 
+PASS > [construction]  
+PASS   new AudioScheduledSourceNode(c) threw TypeError: "Illegal constructor". 
+PASS < [construction] All assertions passed. (total 1 assertions) 
+PASS > [properties]  
+PASS   AudioScheduledSourceNode.start is true. 
+PASS   AudioScheduledSourceNode.stop is true. 
+PASS   AudioScheduledSourceNode.onended is true. 
+PASS   ConstantSourceNode.start is false. 
+PASS   ConstantSourceNode.stop is false. 
+PASS   ConstantSourceNode.onended is false. 
+PASS   OscillatorNode.start is false. 
+PASS   OscillatorNode.stop is false. 
+PASS   OscillatorNode.onended is false. 
+PASS   AudioBufferSourceNode.stop is false. 
+PASS   AudioBufferSourceNode.onended is false. 
+PASS   AudioBufferSourceNode.start is true. 
+PASS < [properties] All assertions passed. (total 12 assertions) 
+PASS # AUDIT TASK RUNNER FINISHED: 2 tasks ran successfully. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Test PermissionDescription WebIDL rules in SharedWorker scope. 
+PASS Test geolocation permission in SharedWorker scope. 
+PASS Test midi permission in SharedWorker scope. 
+PASS Test push permission in SharedWorker scope. 
+PASS Test notifications permission in SharedWorker scope. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Series of tests to ensure correct behaviour on negative source/destination of a HTMLCanvasElement 
+Harness: the test ran to completion.
+

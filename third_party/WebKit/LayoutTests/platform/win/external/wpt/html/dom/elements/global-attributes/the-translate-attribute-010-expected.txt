@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS If the translate attribute is set to no, javascript will detect the translation mode of elements inside that element with no translate flag as no-translate. 
+Harness: the test ran to completion.
+

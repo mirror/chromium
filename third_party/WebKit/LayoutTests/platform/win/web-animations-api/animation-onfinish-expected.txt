@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS animation.finished doesn't run when the animation seeks to finish 
+PASS animation.finished doesn't run when the animation seeks past finish 
+PASS animation.finished runs when the animation completes with .finish() 
+PASS animation.finished runs when the animation completes 
+PASS animation.finished calls can be chained 
+Harness: the test ran to completion.
+

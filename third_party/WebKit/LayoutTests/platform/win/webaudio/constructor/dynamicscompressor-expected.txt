@@ -1,0 +1,51 @@
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = 6 duplicate test names: "node.channelCountMode is equal to "max".", "node.channelCountMode is equal to "explicit".", "node.channelInterpretation is equal to "speakers".", "node.channelInterpretation is equal to "discrete".", "node instanceof DynamicsCompressorNode is equal to true.", "node.channelCount is equal to 2."
+PASS context = new OfflineAudioContext(...) did not throw an exception. 
+PASS new DynamicsCompressorNode() threw TypeError: Failed to construct 'DynamicsCompressorNode': 1 argument required, but only 0 present.. 
+PASS new DynamicsCompressorNode(1) threw TypeError: Failed to construct 'DynamicsCompressorNode': parameter 1 is not of type 'BaseAudioContext'.. 
+PASS new DynamicsCompressorNode(context, 42) threw TypeError: Failed to construct 'DynamicsCompressorNode': parameter 2 ('options') is not an object.. 
+PASS Invalid constructors correctly threw errors. 
+PASS node = new DynamicsCompressorNode(context) did not throw an exception. 
+PASS node instanceof DynamicsCompressorNode is equal to true. 
+PASS node.threshold.value is equal to -24. 
+PASS node.knee.value is equal to 30. 
+PASS node.ratio.value is equal to 12. 
+PASS node.reduction is equal to 0. 
+PASS node.attack.value is equal to 0.003000000026077032. 
+PASS node.release.value is equal to 0.25. 
+PASS node.channelCount is equal to 2. 
+PASS node.channelCountMode is equal to "max". 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new DynamicsCompressorNode(context) constructed node with correct attributes. 
+PASS new DynamicsCompressorNode(c, {channelCount: 17}} did not throw an exception. 
+PASS node.channelCount is equal to 17. 
+PASS new DynamicsCompressorNode(c, {channelCount: 0}} threw NotSupportedError: Failed to construct 'DynamicsCompressorNode': The channel count provided (0) is outside the range [1, 32].. 
+PASS new DynamicsCompressorNode(c, {channelCount: 99}} threw NotSupportedError: Failed to construct 'DynamicsCompressorNode': The channel count provided (99) is outside the range [1, 32].. 
+PASS new DynamicsCompressorNode(c, {channelCountMode: "max"} did not throw an exception. 
+PASS node.channelCountMode is equal to "max". 
+PASS new DynamicsCompressorNode(c, {channelCountMode: "clamped-max"} did not throw an exception. 
+PASS node.channelCountMode is equal to "clamped-max". 
+PASS new DynamicsCompressorNode(c, {channelCountMode: "explicit"} did not throw an exception. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS new DynamicsCompressorNode(c, {channelCountMode: "foobar"} threw TypeError: Failed to construct 'DynamicsCompressorNode': The provided value 'foobar' is not a valid enum value of type ChannelCountMode.. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS new DynamicsCompressorNode(c, {channelInterpretation: "speakers"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new DynamicsCompressorNode(c, {channelInterpretation: "discrete"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS new DynamicsCompressorNode(c, {channelInterpretation: "foobar"}) threw TypeError: Failed to construct 'DynamicsCompressorNode': The provided value 'foobar' is not a valid enum value of type ChannelInterpretation.. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS AudioNodeOptions for DynamicsCompressorNode were correctly handled. 
+PASS node = new DynamicsCompressorNode(c, {"threshold":-33,"knee":15,"ratio":7,"attack":0.625,"release":0.125}) did not throw an exception. 
+PASS node instanceof DynamicsCompressorNode is equal to true. 
+PASS node.threshold.value is equal to -33. 
+PASS node.knee.value is equal to 15. 
+PASS node.ratio.value is equal to 7. 
+PASS node.attack.value is equal to 0.625. 
+PASS node.release.value is equal to 0.125. 
+PASS node.channelCount is equal to 2. 
+PASS node.channelCountMode is equal to "max". 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS DynamicsCompressorNode(context) constructed with correct values is equal to true. 
+Harness: the test ran to completion.
+

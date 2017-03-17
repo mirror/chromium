@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Font size responsive to inherited changes at start 
+PASS Font size responsive to inherited changes at end 
+PASS Font size responsive to inherited changes 
+Harness: the test ran to completion.
+

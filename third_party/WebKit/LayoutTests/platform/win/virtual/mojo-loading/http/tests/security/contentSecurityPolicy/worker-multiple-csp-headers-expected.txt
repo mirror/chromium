@@ -1,0 +1,6 @@
+CONSOLE ERROR: line 5: Refused to connect to 'http://127.0.0.1:8000/xmlhttprequest/resources/get.txt' because it violates the following Content Security Policy directive: "connect-src 'none'".
+
+This is a testharness.js-based test.
+PASS Worker can have multiple CSP headers 
+Harness: the test ran to completion.
+

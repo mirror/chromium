@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Test FontFaceSetLoadEvent constructor without FontFaceSetLoadEventInit dictionary 
+PASS Test FontFaceSetLoadEvent constructor with FontFaceSetLoadEventInit dictionary 
+Harness: the test ran to completion.
+

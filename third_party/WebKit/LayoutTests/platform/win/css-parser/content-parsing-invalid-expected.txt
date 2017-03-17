@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test to ensure that invalid values of content on pseudo elements are dropped by the parser 
+Harness: the test ran to completion.
+

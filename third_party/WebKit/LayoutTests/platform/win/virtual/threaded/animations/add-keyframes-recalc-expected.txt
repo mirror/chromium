@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS Check that window.internals is defined 
+PASS Check that adding @keyframes does not cause a style recalc of the anim element when no animations are running. 
+PASS Check initial color of #anim. 
+PASS Check that adding @keyframes after keyframe resolution failed, recalculates whole document 
+PASS Check that @keyframes rule applies. 
+PASS Check that adding @keyframes causes a style recalc of the #anim element when an animation is running. 
+PASS Check that the new @keyframes rule for 'later' applies. 
+PASS Check that adding unused @keyframes causes a style recalc of the #anim element when an animation is running. 
+Harness: the test ran to completion.
+

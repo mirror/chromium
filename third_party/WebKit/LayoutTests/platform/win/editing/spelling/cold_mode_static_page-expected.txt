@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Check static contenteditable. 
+PASS Check static TEXTAREA. 
+PASS Check multiple fields. 
+PASS Handle mixed spellcheck values. 
+PASS Do not check disabled TEXTAREA. 
+PASS Do not check readonly TEXTAREA. 
+Harness: the test ran to completion.
+

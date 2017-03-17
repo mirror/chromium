@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This test checks that an element's compositor proxy cannot be mutated after disconnect(). 
+Harness: the test ran to completion.
+

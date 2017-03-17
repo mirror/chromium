@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This test ensures that supports correctly handles queries with strings that a prefix of a property or vice versa. 
+Harness: the test ran to completion.
+

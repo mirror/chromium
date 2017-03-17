@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS createImageBitmap from a Blob with a big cropRect. 
+PASS createImageBitmap from a HTMLCanvasElement with a big cropRect. 
+PASS createImageBitmap from a HTMLImageElement with a big cropRect. 
+PASS createImageBitmap from an ImageBitmap with a big cropRect. 
+PASS createImageBitmap from an ImageData with a big cropRect. 
+PASS createImageBitmap from a HTMLVideoElement with resize option. 
+Harness: the test ran to completion.
+

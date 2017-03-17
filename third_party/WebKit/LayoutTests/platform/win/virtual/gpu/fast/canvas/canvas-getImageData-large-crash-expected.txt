@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that canvas does not crash when large image data is requested. 
+Harness: the test ran to completion.
+

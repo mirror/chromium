@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS CSS's base URL must be the request URL even when fetched from other URL. 
+Harness: the test ran to completion.
+

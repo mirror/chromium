@@ -1,0 +1,26 @@
+This is a testharness.js-based test.
+PASS FocusableTestCase1 
+PASS FocusableTestCase2 
+PASS FocusableTestCase3 
+PASS FocusableTestCase4 
+PASS FocusableTestCase5 
+PASS FocusableTestCase6 
+PASS FocusableTestCase7 
+PASS FocusableTestCase8 
+PASS FocusableTestCase9 
+PASS FocusableTestCase10 
+PASS FocusableTestCase11 
+PASS FocusableTestCase12 
+PASS FocusableTestCase13 
+PASS FocusableTestCase14 
+PASS FocusableTestCase15 
+PASS FocusableTestCase16 
+PASS FocusableTestCase17 
+PASS FocusableTestCase18 
+PASS FocusableTestCase19 
+PASS FocusableTestCase20 
+PASS FocusableTestCase21 
+PASS FocusableTestCase22 
+PASS NotFocusableTestCase 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Transition end event should fire even if it completes in an on-demand timing update 
+Harness: the test ran to completion.
+

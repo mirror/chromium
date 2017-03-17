@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS With a MessageChannel and its MessagePorts 
+PASS With a BroadcastChannel 
+PASS With window 
+Harness: the test ran to completion.
+

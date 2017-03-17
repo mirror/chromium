@@ -1,0 +1,10 @@
+CONSOLE ERROR: XMLHttpRequest cannot load http://127.0.0.1:8000/security/resources/cors-script.php?value=ran. The 'Access-Control-Allow-Origin' header has a value 'http://127.0.0.1:8000' that is not equal to the supplied origin. Origin 'http-so://foobar.127.0.0.1:8000' is therefore not allowed access.
+CONSOLE ERROR: XMLHttpRequest cannot load http://127.0.0.1:8000/security/resources/cors-script.php?value=ran&cors=false. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http-so://foobar.127.0.0.1:8000' is therefore not allowed access.
+CONSOLE ERROR: XMLHttpRequest cannot load http://127.0.0.1:8000/security/resources/cors-script.php?credentials=true&value=ran. The 'Access-Control-Allow-Origin' header has a value 'http://127.0.0.1:8000' that is not equal to the supplied origin. Origin 'http-so://foobar.127.0.0.1:8000' is therefore not allowed access.
+This is a testharness.js-based test.
+PASS XHR: <crossorigin='anonymous'>, ACAO: http://127.0.0.1:8000 
+PASS XHR: <crossorigin='anonymous'>, ACAO: * 
+PASS XHR: <crossorigin='use-credentials'>, ACAO: http://127.0.0.1:8000 
+PASS XHR: <crossorigin='anonymous'>, CORS-ineligible resource 
+Harness: the test ran to completion.
+

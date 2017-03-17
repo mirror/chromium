@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Having stopped a transition before it completes, a subsequent transition starts correctly 
+Harness: the test ran to completion.
+

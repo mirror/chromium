@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBObjectStore.add() - Attempt to add a record where the record's in-line key is not defined  
+Harness: the test ran to completion.
+

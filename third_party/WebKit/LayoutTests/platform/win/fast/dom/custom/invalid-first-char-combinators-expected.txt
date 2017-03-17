@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS registering invalid first letter combinators, not covered in Document::validNames 
+Harness: the test ran to completion.
+

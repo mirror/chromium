@@ -1,0 +1,124 @@
+This is a testharness.js-based test.
+PASS This test uses responsive-test.js. 
+PASS Untitled 
+PASS Untitled 1 
+PASS Untitled 2 
+PASS Untitled 3 
+PASS Untitled 4 
+PASS Untitled 5 
+PASS Untitled 6 
+PASS Untitled 7 
+PASS Untitled 8 
+PASS Untitled 9 
+PASS Untitled 10 
+PASS Untitled 11 
+PASS Untitled 12 
+PASS Untitled 13 
+PASS Untitled 14 
+PASS Untitled 15 
+PASS Untitled 16 
+PASS Untitled 17 
+PASS Untitled 18 
+PASS Untitled 19 
+PASS Untitled 20 
+PASS Untitled 21 
+PASS Untitled 22 
+PASS Untitled 23 
+PASS Untitled 24 
+PASS Untitled 25 
+PASS Untitled 26 
+PASS Untitled 27 
+PASS Untitled 28 
+PASS Untitled 29 
+PASS Untitled 30 
+PASS Untitled 31 
+PASS Untitled 32 
+PASS Untitled 33 
+PASS Untitled 34 
+PASS Untitled 35 
+PASS Untitled 36 
+PASS Untitled 37 
+PASS Untitled 38 
+PASS Untitled 39 
+PASS Untitled 40 
+PASS Untitled 41 
+PASS Untitled 42 
+PASS Untitled 43 
+PASS Untitled 44 
+PASS Untitled 45 
+PASS Untitled 46 
+PASS Untitled 47 
+PASS Untitled 48 
+PASS Untitled 49 
+PASS Untitled 50 
+PASS Untitled 51 
+PASS Untitled 52 
+PASS Untitled 53 
+PASS Untitled 54 
+PASS Untitled 55 
+PASS Untitled 56 
+PASS Untitled 57 
+PASS Untitled 58 
+PASS Untitled 59 
+PASS Untitled 60 
+PASS Untitled 61 
+PASS Untitled 62 
+PASS Untitled 63 
+PASS Untitled 64 
+PASS Animation on property <left> from [inherit] to [200px] with {"inherited":"100px"} changed to {"inherited":"auto"} at (0.25) is [auto] 
+PASS Untitled 65 
+PASS Animation on property <left> from [inherit] to [200px] with {"inherited":"100px"} changed to {"inherited":"auto"} at (0.75) is [200px] 
+PASS Untitled 66 
+PASS Animation on property <left> from [inherit] to [200px] with {"inherited":"auto"} changed to {"inherited":"100px"} at (0.25) is [125px] 
+PASS Untitled 67 
+PASS Animation on property <left> from [inherit] to [200px] with {"inherited":"auto"} changed to {"inherited":"100px"} at (0.75) is [175px] 
+PASS Untitled 68 
+PASS Animation on property <left> from [200px] to neutral with {"underlying":"100px"} changed to {"underlying":"auto"} at (0.25) is [200px] 
+PASS Untitled 69 
+PASS Animation on property <left> from [200px] to neutral with {"underlying":"100px"} changed to {"underlying":"auto"} at (0.75) is [auto] 
+PASS Untitled 70 
+PASS Animation on property <left> from [200px] to neutral with {"underlying":"100px"} changed to {"underlying":"inherit","inherited":"100px"} at (0.25) is [175px] 
+PASS Untitled 71 
+PASS Animation on property <left> from [200px] to neutral with {"underlying":"100px"} changed to {"underlying":"inherit","inherited":"100px"} at (0.75) is [125px] 
+PASS Untitled 72 
+PASS Animation on property <left> from [200px] to neutral with {"underlying":"100px"} changed to {"underlying":"inherit","inherited":"auto"} at (0.25) is [200px] 
+PASS Untitled 73 
+PASS Animation on property <left> from [200px] to neutral with {"underlying":"100px"} changed to {"underlying":"inherit","inherited":"auto"} at (0.75) is [auto] 
+PASS Untitled 74 
+PASS Animation on property <left> from [200px] to neutral with {"underlying":"auto"} changed to {"underlying":"100px"} at (0.25) is [175px] 
+PASS Untitled 75 
+PASS Animation on property <left> from [200px] to neutral with {"underlying":"auto"} changed to {"underlying":"100px"} at (0.75) is [125px] 
+PASS Untitled 76 
+PASS Animation on property <left> from [200px] to neutral with {"underlying":"auto"} changed to {"underlying":"inherit","inherited":"100px"} at (0.25) is [175px] 
+PASS Untitled 77 
+PASS Animation on property <left> from [200px] to neutral with {"underlying":"auto"} changed to {"underlying":"inherit","inherited":"100px"} at (0.75) is [125px] 
+PASS Untitled 78 
+PASS Animation on property <left> from [200px] to neutral with {"underlying":"auto"} changed to {"underlying":"inherit","inherited":"auto"} at (0.25) is [200px] 
+PASS Untitled 79 
+PASS Animation on property <left> from [200px] to neutral with {"underlying":"auto"} changed to {"underlying":"inherit","inherited":"auto"} at (0.75) is [auto] 
+PASS Untitled 80 
+PASS Animation on property <left> from [200px] to neutral with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"100px"} at (0.25) is [175px] 
+PASS Untitled 81 
+PASS Animation on property <left> from [200px] to neutral with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"100px"} at (0.75) is [125px] 
+PASS Untitled 82 
+PASS Animation on property <left> from [200px] to neutral with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"auto"} at (0.25) is [200px] 
+PASS Untitled 83 
+PASS Animation on property <left> from [200px] to neutral with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"auto"} at (0.75) is [auto] 
+PASS Untitled 84 
+PASS Animation on property <left> from [200px] to neutral with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"inherit","inherited":"auto"} at (0.25) is [200px] 
+PASS Untitled 85 
+PASS Animation on property <left> from [200px] to neutral with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"inherit","inherited":"auto"} at (0.75) is [auto] 
+PASS Untitled 86 
+PASS Animation on property <left> from [200px] to neutral with {"underlying":"inherit","inherited":"auto"} changed to {"underlying":"100px"} at (0.25) is [175px] 
+PASS Untitled 87 
+PASS Animation on property <left> from [200px] to neutral with {"underlying":"inherit","inherited":"auto"} changed to {"underlying":"100px"} at (0.75) is [125px] 
+PASS Untitled 88 
+PASS Animation on property <left> from [200px] to neutral with {"underlying":"inherit","inherited":"auto"} changed to {"underlying":"auto"} at (0.25) is [200px] 
+PASS Untitled 89 
+PASS Animation on property <left> from [200px] to neutral with {"underlying":"inherit","inherited":"auto"} changed to {"underlying":"auto"} at (0.75) is [auto] 
+PASS Untitled 90 
+PASS Animation on property <left> from [200px] to neutral with {"underlying":"inherit","inherited":"auto"} changed to {"underlying":"inherit","inherited":"100px"} at (0.25) is [175px] 
+PASS Untitled 91 
+PASS Animation on property <left> from [200px] to neutral with {"underlying":"inherit","inherited":"auto"} changed to {"underlying":"inherit","inherited":"100px"} at (0.75) is [125px] 
+Harness: the test ran to completion.
+

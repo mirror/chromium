@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS <audio> without controls has display:none irrespective of author CSS 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS 19: Shrink-to-fit table-cell with a child of orthogonal block with borders 
+Harness: the test ran to completion.
+

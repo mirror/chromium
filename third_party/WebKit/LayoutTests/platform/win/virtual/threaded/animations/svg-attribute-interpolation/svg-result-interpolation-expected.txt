@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS This test uses interpolation-test.js. 
+PASS SMIL: Interpolate attribute <result> from replace [foo] to replace [bar] at (0) is [foo] 
+PASS SMIL: Interpolate attribute <result> from replace [foo] to replace [bar] at (0.2) is [foo] 
+PASS SMIL: Interpolate attribute <result> from replace [foo] to replace [bar] at (0.6) is [bar] 
+PASS SMIL: Interpolate attribute <result> from replace [foo] to replace [bar] at (1) is [bar] 
+PASS Web Animations: Interpolate attribute <result> from replace [foo] to replace [bar] at (-0.4) is [foo] 
+PASS Web Animations: Interpolate attribute <result> from replace [foo] to replace [bar] at (0) is [foo] 
+PASS Web Animations: Interpolate attribute <result> from replace [foo] to replace [bar] at (0.2) is [foo] 
+PASS Web Animations: Interpolate attribute <result> from replace [foo] to replace [bar] at (0.6) is [bar] 
+PASS Web Animations: Interpolate attribute <result> from replace [foo] to replace [bar] at (1) is [bar] 
+PASS Web Animations: Interpolate attribute <result> from replace [foo] to replace [bar] at (1.4) is [bar] 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that a MediaStream constructor follows the algorithm set in the spec 
+Harness: the test ran to completion.
+

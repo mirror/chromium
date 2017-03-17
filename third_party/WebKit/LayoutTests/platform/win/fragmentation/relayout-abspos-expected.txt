@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Pagination struts retained after re-layout of abspos. 
+Harness: the test ran to completion.
+

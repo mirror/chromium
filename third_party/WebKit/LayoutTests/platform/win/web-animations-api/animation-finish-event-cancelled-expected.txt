@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Animation finished promise should be rejected when animation canceled 
+Harness: the test ran to completion.
+

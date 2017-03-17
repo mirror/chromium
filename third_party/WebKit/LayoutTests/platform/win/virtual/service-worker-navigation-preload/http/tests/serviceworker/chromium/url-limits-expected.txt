@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Exceedingly long script URLs are rejected by register() 
+PASS Exceedingly long scope URLs are rejected by register() 
+PASS Exceedingly long document URLs are rejected by getRegistration() 
+Harness: the test ran to completion.
+

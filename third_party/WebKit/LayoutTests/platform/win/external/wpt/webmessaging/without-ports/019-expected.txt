@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS origin of the script that invoked the method, scheme/host/port 
+Harness: the test ran to completion.
+

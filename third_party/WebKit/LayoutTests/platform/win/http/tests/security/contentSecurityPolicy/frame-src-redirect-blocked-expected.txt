@@ -1,0 +1,6 @@
+CONSOLE ERROR: Refused to frame 'http://localhost:8000/security/resources/post-done.html' because it violates the following Content Security Policy directive: "frame-src 'self'".
+
+This is a testharness.js-based test.
+PASS The redirected frame is blocked. 
+Harness: the test ran to completion.
+

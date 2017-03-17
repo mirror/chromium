@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test for mutations to childList when setting title of svg document. 
+Harness: the test ran to completion.
+

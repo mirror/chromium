@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that a track appended after the initial track configuration does not change other tracks. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that directionality of elements is recomputed for display none subtrees 
+Harness: the test ran to completion.
+

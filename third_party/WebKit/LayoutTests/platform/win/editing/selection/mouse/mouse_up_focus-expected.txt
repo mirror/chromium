@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS mouse up to move focus 
+Harness: the test ran to completion.
+

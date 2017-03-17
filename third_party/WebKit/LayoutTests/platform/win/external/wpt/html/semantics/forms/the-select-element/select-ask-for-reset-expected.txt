@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS ask for reset on node remove, non multiple. 
+PASS ask for reset on node insert, non multiple. 
+PASS change selectedness of option, non multiple. 
+Harness: the test ran to completion.
+

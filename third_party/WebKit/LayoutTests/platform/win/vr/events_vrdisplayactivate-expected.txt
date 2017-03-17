@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test vrdisplayactivate fires when display activates and resulting event can be used to present 
+Harness: the test ran to completion.
+

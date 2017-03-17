@@ -1,0 +1,22 @@
+This is a testharness.js-based test.
+PASS This test uses interpolation-test.js. 
+PASS SMIL: Interpolate attribute <order> from replace [1, 4] to replace [2] at (0) is [1 4] 
+PASS SMIL: Interpolate attribute <order> from replace [1, 4] to replace [2] at (1) is [2 2] 
+PASS Web Animations: Interpolate attribute <order> from replace [1, 4] to replace [2] at (0) is [1 4] 
+PASS Web Animations: Interpolate attribute <order> from replace [1, 4] to replace [2] at (1) is [2 2] 
+PASS SMIL: Interpolate attribute <order> from replace [2] to replace [2] at (0) is [2 2] 
+PASS SMIL: Interpolate attribute <order> from replace [2] to replace [2] at (0.2) is [2 2] 
+PASS SMIL: Interpolate attribute <order> from replace [2] to replace [2] at (0.6) is [2 2] 
+PASS SMIL: Interpolate attribute <order> from replace [2] to replace [2] at (1) is [2 2] 
+PASS Web Animations: Interpolate attribute <order> from replace [2] to replace [2] at (-0.4) is [2 2] 
+PASS Web Animations: Interpolate attribute <order> from replace [2] to replace [2] at (0) is [2 2] 
+PASS Web Animations: Interpolate attribute <order> from replace [2] to replace [2] at (0.2) is [2 2] 
+PASS Web Animations: Interpolate attribute <order> from replace [2] to replace [2] at (0.6) is [2 2] 
+PASS Web Animations: Interpolate attribute <order> from replace [2] to replace [2] at (1) is [2 2] 
+PASS Web Animations: Interpolate attribute <order> from replace [2] to replace [2] at (1.4) is [2 2] 
+PASS SMIL: Interpolate attribute <order> from replace [2] to replace [4, 1] at (0) is [2 2] 
+PASS SMIL: Interpolate attribute <order> from replace [2] to replace [4, 1] at (1) is [4 1] 
+PASS Web Animations: Interpolate attribute <order> from replace [2] to replace [4, 1] at (0) is [2 2] 
+PASS Web Animations: Interpolate attribute <order> from replace [2] to replace [4, 1] at (1) is [4 1] 
+Harness: the test ran to completion.
+

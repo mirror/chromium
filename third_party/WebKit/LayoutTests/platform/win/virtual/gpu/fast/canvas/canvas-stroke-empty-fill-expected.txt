@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Verify correct behaviour for stroke() on an empty fillStyle() (alpha=0). 
+Harness: the test ran to completion.
+

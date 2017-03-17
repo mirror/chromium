@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Hit-test of clip-path polygon 
+Harness: the test ran to completion.
+

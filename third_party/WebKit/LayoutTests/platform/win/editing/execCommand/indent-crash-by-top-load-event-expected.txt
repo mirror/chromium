@@ -1,0 +1,7 @@
+CONSOLE MESSAGE: line 9: READYSTATECHANGE : interactive
+CONSOLE MESSAGE: line 9: READYSTATECHANGE : complete
+CONSOLE MESSAGE: line 21: LAOD
+This is a testharness.js-based test.
+PASS Load event for the top-level frame should not happen during execCommand.  It could mutate the DOM tree, and caused a crash. 
+Harness: the test ran to completion.
+

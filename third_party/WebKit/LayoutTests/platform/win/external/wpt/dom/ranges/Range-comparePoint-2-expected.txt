@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Range.comparePoint 
+PASS Range.comparePoint 1 
+PASS Range.comparePoint 2 
+Harness: the test ran to completion.
+

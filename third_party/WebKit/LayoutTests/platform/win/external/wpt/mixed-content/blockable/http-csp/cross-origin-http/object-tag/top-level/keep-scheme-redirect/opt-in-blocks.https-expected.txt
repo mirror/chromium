@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS opt_in_method: http-csp
+                                 origin: cross-origin-http
+                                 source_scheme: https
+                                 context_nesting: top-level
+                                 redirection: keep-scheme-redirect
+                                 subresource: object-tag
+                                 expectation: blocked 
+Harness: the test ran to completion.
+

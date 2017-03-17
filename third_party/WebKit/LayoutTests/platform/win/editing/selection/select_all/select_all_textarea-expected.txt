@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS SelectAll is not enabled if textarea is empty 
+Harness: the test ran to completion.
+

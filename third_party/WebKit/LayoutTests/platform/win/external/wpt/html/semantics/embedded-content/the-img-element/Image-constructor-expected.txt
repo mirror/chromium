@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Image constructor works 
+PASS Image and HTMLImageElement share a prototype 
+PASS Image localName is img 
+PASS Image namespace URI is correct 
+PASS NamedConstructor creates the correct object structure. 
+Harness: the test ran to completion.
+

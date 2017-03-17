@@ -1,0 +1,56 @@
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = 8 duplicate test names: "Check: Curve end time is less than or equal to 1.", "Check: Full gain start time is less than or equal to 1.", "Check: Full gain start time is greater than or equal to 0.021718750000000002.", "SNR is greater than or equal to 171.206.", "Max difference (5.960464477539063e-8) is less than or equal to 5.9605e-8.", "SNR is greater than or equal to 10000.", "Max difference (0) is less than or equal to 0.", "Check: Full gain start time is greater than or equal to 0.010078125."
+PASS Check: Curve end time is less than or equal to 1. 
+PASS Check: Full gain start time is less than or equal to 1. 
+PASS Check: Full gain start time is greater than or equal to 0.021718750000000002. 
+PASS SNR is greater than or equal to 171.206. 
+PASS Max difference (5.960464477539063e-8) is less than or equal to 5.9605e-8. 
+PASS Test: curve length = 2; duration frames = 300 passed. 
+PASS Check: Curve end time is less than or equal to 1. 
+PASS Check: Full gain start time is less than or equal to 1. 
+PASS Check: Full gain start time is greater than or equal to 0.021718750000000002. 
+PASS SNR is greater than or equal to 171.206. 
+PASS Max difference (5.960464477539063e-8) is less than or equal to 5.9605e-8. 
+PASS Test: curve length = 3; duration frames = 300 passed. 
+PASS Check: Curve end time is less than or equal to 1. 
+PASS Check: Full gain start time is less than or equal to 1. 
+PASS Check: Full gain start time is greater than or equal to 0.021718750000000002. 
+PASS SNR is greater than or equal to 170.892. 
+PASS Max difference (5.960464477539063e-8) is less than or equal to 5.9605e-8. 
+PASS Test: curve length = 16; duration frames = 300 passed. 
+PASS Check: Curve end time is less than or equal to 1. 
+PASS Check: Full gain start time is less than or equal to 1. 
+PASS Check: Full gain start time is greater than or equal to 0.021718750000000002. 
+PASS SNR is greater than or equal to 168.712. 
+PASS Max difference (1.1920928955078125e-7) is less than or equal to 1.1921e-7. 
+PASS Test: curve length = 100; duration frames = 300 passed. 
+PASS Check: Curve end time is less than or equal to 1. 
+PASS Check: Full gain start time is less than or equal to 1. 
+PASS Check: Full gain start time is greater than or equal to 0.010009765625. 
+PASS SNR is greater than or equal to 10000. 
+PASS Max difference (0) is less than or equal to 0. 
+PASS Test: curve length = 2; duration frames = 0.25 passed. 
+PASS Check: Curve end time is less than or equal to 1. 
+PASS Check: Full gain start time is less than or equal to 1. 
+PASS Check: Full gain start time is greater than or equal to 0.010078125. 
+PASS SNR is greater than or equal to 10000. 
+PASS Max difference (0) is less than or equal to 0. 
+PASS Test: curve length = 2; duration frames = 2 passed. 
+PASS Check: Curve end time is less than or equal to 1. 
+PASS Check: Full gain start time is less than or equal to 1. 
+PASS Check: Full gain start time is greater than or equal to 0.010078125. 
+PASS SNR is greater than or equal to 10000. 
+PASS Max difference (0) is less than or equal to 0. 
+PASS Test: curve length = 8; duration frames = 2 passed. 
+PASS Check: Curve end time is less than or equal to 1. 
+PASS Check: Full gain start time is less than or equal to 1. 
+PASS Check: Full gain start time is greater than or equal to 0.51. 
+PASS SNR is greater than or equal to 152.784. 
+PASS Max difference (5.960464477539063e-8) is less than or equal to 5.9605e-8. 
+PASS Test: curve length = 1000; duration frames = 12800 passed. 
+PASS Curve value at time 0.7 is equal to -1. 
+PASS Curve value at time 0.7999999999999999 is 0 within an absolute error of 4.440892098500626e-16. 
+PASS Curve value at time 0.8999999999999999 is equal to 1. 
+PASS Test: crbug.com/44471 passed. 
+Harness: the test ran to completion.
+

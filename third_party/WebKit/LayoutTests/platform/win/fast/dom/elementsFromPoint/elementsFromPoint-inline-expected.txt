@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS elementsFromPoint should return all elements under a point 
+Harness: the test ran to completion.
+

@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS Text.nodeValue 
+PASS Comment.nodeValue 
+PASS ProcessingInstruction.nodeValue 
+PASS Element.nodeValue 
+PASS Document.nodeValue 
+PASS DocumentFragment.nodeValue 
+PASS DocumentType.nodeValue 
+Harness: the test ran to completion.
+

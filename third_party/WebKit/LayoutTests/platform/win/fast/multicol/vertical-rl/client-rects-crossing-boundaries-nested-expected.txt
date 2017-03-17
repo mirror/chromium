@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS #middleMulticol 
+PASS #innerMulticol 
+PASS #innerChild 
+PASS #middleChild 
+Harness: the test ran to completion.
+

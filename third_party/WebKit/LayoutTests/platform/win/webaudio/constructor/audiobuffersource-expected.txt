@@ -1,0 +1,30 @@
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = 1 duplicate test name: "node.buffer is equal to null."
+PASS context = new OfflineAudioContext(...) did not throw an exception. 
+PASS new AudioBufferSourceNode() threw TypeError: Failed to construct 'AudioBufferSourceNode': 1 argument required, but only 0 present.. 
+PASS new AudioBufferSourceNode(1) threw TypeError: Failed to construct 'AudioBufferSourceNode': parameter 1 is not of type 'BaseAudioContext'.. 
+PASS new AudioBufferSourceNode(c, 42) threw TypeError: Failed to construct 'AudioBufferSourceNode': parameter 2 ('options') is not an object.. 
+PASS Invalid constructors correctly threw errors. 
+PASS node = new AudioBufferSourceNode(c) did not throw an exception. 
+PASS node instanceof AudioBufferSourceNode is equal to true. 
+PASS node.buffer === null is equal to true. 
+PASS node.buffer is equal to null. 
+PASS node.detune.value is equal to 0. 
+PASS node.loop is equal to false. 
+PASS node.loopEnd is equal to 0. 
+PASS node.loopStart is equal to 0. 
+PASS node.playbackRate.value is equal to 1. 
+PASS AudioBufferSourceNode constructed correctly. 
+PASS node = new AudioBufferSourceNode(c, {"buffer":null} did not throw an exception. 
+PASS node.buffer is equal to null. 
+PASS Null buffer in constructor handled correctly. 
+PASS node = new AudioBufferSourceNode(c, {"buffer":{},"detune":0.5,"loop":true,"loopEnd":0.010416666666666666,"loopStart":0.00010416666666666667,"playbackRate":0.75}) did not throw an exception. 
+PASS node.buffer === buffer is equal to true. 
+PASS node.detune.value is equal to 0.5. 
+PASS node.loop is equal to true. 
+PASS node.loopEnd is equal to 0.010416666666666666. 
+PASS node.loopStart is equal to 0.00010416666666666667. 
+PASS node.playbackRate.value is equal to 0.75. 
+PASS AudioBufferSource with options cosntructed correctly. 
+Harness: the test ran to completion.
+

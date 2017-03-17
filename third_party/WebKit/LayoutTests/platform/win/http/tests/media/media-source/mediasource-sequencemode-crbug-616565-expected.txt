@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test no error for sequence mode remove and timestampOffset scenario in bug 616565 
+Harness: the test ran to completion.
+

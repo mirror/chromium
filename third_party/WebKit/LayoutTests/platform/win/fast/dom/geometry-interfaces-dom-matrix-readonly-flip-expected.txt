@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS DOMMatrixReadOnly flipX - 2D matrix 
+PASS DOMMatrixReadOnly flipX - 3D matrix 
+PASS DOMMatrixReadOnly flipY - 2D matrix 
+PASS DOMMatrixReadOnly flipY - 3D matrix 
+Harness: the test ran to completion.
+

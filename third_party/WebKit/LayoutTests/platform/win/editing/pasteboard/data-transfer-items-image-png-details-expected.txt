@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS DataTransferObject.getAsFile() returns File for image pastes 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Specifying a disallowed url protocol for <img> content property should not crash when serialising. 
+Harness: the test ran to completion.
+

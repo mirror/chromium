@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS row-height-recalc-terminates 
+Harness: the test ran to completion.
+

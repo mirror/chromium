@@ -1,0 +1,12 @@
+This is a testharness.js-based test.
+PASS "transform-style: initial;" should parse as "initial" 
+PASS "transform-style: initial;" should be computed to "flat" 
+PASS "transform-style: inherit;" should parse as "inherit" 
+PASS "transform-style: flat;" should parse as "flat" 
+PASS "transform-style: flat;" should be computed to "flat" 
+PASS "transform-style: preserve-3d;" should parse as "preserve-3d" 
+PASS "transform-style: preserve-3d;" should be computed to "preserve-3d" 
+PASS "transform-style: none;" should be invalid 
+PASS "transform-style: 0;" should be invalid 
+Harness: the test ran to completion.
+

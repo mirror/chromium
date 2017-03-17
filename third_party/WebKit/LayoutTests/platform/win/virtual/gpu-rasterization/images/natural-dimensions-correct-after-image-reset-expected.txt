@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS crbug.com/468915: Resetting or removing the src attribute should reset the image immediately, rather than waiting for an asynchronous load to do it. 
+Harness: the test ran to completion.
+

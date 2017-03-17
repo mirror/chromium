@@ -1,0 +1,14 @@
+CONSOLE MESSAGE: line 60: {"deviceId":"1e5fc1b6-a804-4316-975d-0acd0113c2ce","width":{"max":320}}
+CONSOLE MESSAGE: line 65: {"deviceId":"1e5fc1b6-a804-4316-975d-0acd0113c2ce","width":{"max":320}}
+CONSOLE MESSAGE: line 112: Fake devices are not functional yet.
+This is a testharness.js-based test.
+PASS An audio track returns settings 
+PASS A video track returns settings 
+PASS An audio track returns the expected variables 
+PASS A video track returns the expected variables 
+PASS Two video tracks with the same source but different scaling are different 
+PASS Video and audio device IDs are different 
+PASS With no fake device, asking for user-facing device rejects 
+PASS With a fake user-facing device, facing mode is matched 
+Harness: the test ran to completion.
+

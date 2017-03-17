@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS MediaSource attachment should immediately stop delaying the load event 
+Harness: the test ran to completion.
+

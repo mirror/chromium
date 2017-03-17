@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS The import attribute must return null if the link does not represent an import. 
+PASS The import attribute must return null if the link element is not in a Document. 
+PASS The attribute must return the imported document for the import. 
+PASS The same object must be returned each time. 
+Harness: the test ran to completion.
+

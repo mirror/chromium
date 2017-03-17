@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS getInstalledRelatedApps with related apps, none installed 
+PASS getInstalledRelatedApps with related and installed apps (no url) 
+PASS getInstalledRelatedApps with multiple related and installed apps 
+Harness: the test ran to completion.
+

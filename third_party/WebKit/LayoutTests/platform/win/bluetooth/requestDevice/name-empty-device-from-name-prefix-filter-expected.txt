@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS An empty name device is not matched by a filter with a namePrefix. 
+Harness: the test ran to completion.
+

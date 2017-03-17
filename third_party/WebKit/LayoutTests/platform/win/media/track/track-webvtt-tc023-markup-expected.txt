@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Check cues from captions-webvtt/tc023-markup.vtt 
+PASS Check cues from captions-webvtt/tc023-markup-bad.vtt 
+Harness: the test ran to completion.
+

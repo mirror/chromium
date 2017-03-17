@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Template element as a descendant of the head element. Test loading from a file 
+Harness: the test ran to completion.
+

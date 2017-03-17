@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Document#fullscreenEnabled when the document is not the active document 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS shared worker in two documents and window.onerror 
+Harness: the test ran to completion.
+

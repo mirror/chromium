@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Offline Application Cache - API_status_UNCACHED 
+Harness: the test ran to completion.
+

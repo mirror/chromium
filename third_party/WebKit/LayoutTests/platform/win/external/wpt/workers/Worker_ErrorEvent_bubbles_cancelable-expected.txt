@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS ErrorEvent on worker doesn't bubble and is cancelable 
+Harness: the test ran to completion.
+

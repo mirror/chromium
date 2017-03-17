@@ -1,0 +1,19 @@
+This is a testharness.js-based test.
+PASS Value ink valid for property text-decoration-skip 
+PASS Value objects valid for property text-decoration-skip 
+PASS Value objects ink valid for property text-decoration-skip 
+PASS Value none objects invalid for property text-decoration-skip 
+PASS Value none invalid for property text-decoration-skip 
+PASS Value abc def invalid for property text-decoration-skip 
+PASS Value  invalid for property text-decoration-skip 
+PASS Value objects objects invalid for property text-decoration-skip 
+PASS Value ink ink invalid for property text-decoration-skip 
+PASS Value edges invalid for property text-decoration-skip 
+PASS text-decoration-skip value ink should be equal when reading it back from style and getComputedstyle. 
+PASS text-decoration-skip value objects should be equal when reading it back from style and getComputedstyle. 
+PASS text-decoration-skip value objects ink should be equal when reading it back from style and getComputedstyle. 
+PASS text-decoration-skip value ink should be inherited to computed style of child. 
+PASS text-decoration-skip value objects should be inherited to computed style of child. 
+PASS text-decoration-skip value objects ink should be inherited to computed style of child. 
+Harness: the test ran to completion.
+

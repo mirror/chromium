@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS "delete" then "undo" changes nothing 
+Harness: the test ran to completion.
+

@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Undo ordering maintained when inserting text to open typing triggers another command in event handler. 
+PASS Undo ordering maintained when inserting paragraph separator to open typing triggers another command in event handler. 
+PASS Undo ordering maintained when inserting paragraph separator in quoted content to open typing triggers another command in event handler. 
+PASS Undo ordering maintained when inserting linebreak to open typing triggers another command in event handler. 
+Harness: the test ran to completion.
+

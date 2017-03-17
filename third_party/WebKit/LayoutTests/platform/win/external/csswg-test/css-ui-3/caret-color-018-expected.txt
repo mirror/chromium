@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS The caret-color property is animatable 
+Harness: the test ran to completion.
+

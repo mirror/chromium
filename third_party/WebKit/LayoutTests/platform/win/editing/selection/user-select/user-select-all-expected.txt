@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Modify extend skips over user-select:all. 
+PASS Modify move is not affected by user-select:all. 
+PASS Mouse move selects over user-select:all. 
+PASS Selection.selectAllChildren is not affected by  user-select:all. 
+Harness: the test ran to completion.
+

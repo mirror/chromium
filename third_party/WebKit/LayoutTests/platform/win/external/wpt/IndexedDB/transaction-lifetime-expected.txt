@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test events opening a second database when one connection is open already 
+Harness: the test ran to completion.
+

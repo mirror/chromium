@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Tests that middleClickAutoscroll finds the correct ancestor layoutobject when starting in an unscrollable direction. 
+PASS Tests that middleClickAutoscroll finds the correct ancestor layoutobject when starting in an iframe, and the latching is correctly implemented. 
+Harness: the test ran to completion.
+

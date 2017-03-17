@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS underlying sink's write should not be called until start finishes 
+PASS underlying sink's close should not be called until start finishes 
+PASS underlying sink's write or close should not be called if start throws 
+PASS underlying sink's write or close should not be invoked if the promise returned by start is rejected 
+PASS returning a thenable from start() should work 
+Harness: the test ran to completion.
+

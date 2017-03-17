@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Sanity check @supports color 
+PASS @supports quirky color 
+PASS CSS.supports() quirky color 
+PASS Sanity check @supports length 
+PASS @supports quirky length 
+PASS CSS.supports() quirky length 
+Harness: the test ran to completion.
+

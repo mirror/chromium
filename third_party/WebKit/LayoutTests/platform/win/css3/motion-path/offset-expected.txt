@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS offset default is none 0px auto 0deg 
+PASS offset supports various angle units 
+PASS offset supports SVG path data 
+PASS offset property data can be supplied in any order 
+PASS offset style can be set inline 
+Harness: the test ran to completion.
+

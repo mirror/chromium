@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS Stringifies non-CanvasGradient/Pattern object assigned to fillStyle. 
+PASS Non-CanvasGradient/Pattern object without explicit toString() does not affect the value of fillStyle. 
+PASS Stringified numbers don't yield a correct color when assigned to fillStyle. 
+PASS Rethrows exception thrown from toString() during stringification of non-CanvasGradient/Pattern object assigned to fillStyle. 
+PASS Stringifies non-CanvasGradient/Pattern object assigned to strokeStyle. 
+PASS Non-CanvasGradient/Pattern object without explicit toString() does not affect the value of strokeStyle. 
+PASS Stringified numbers don't yield a correct color when assigned to strokeStyle. 
+PASS Rethrows exception thrown from toString() during stringification of non-CanvasGradient/Pattern object assigned to strokeStyle. 
+Harness: the test ran to completion.
+

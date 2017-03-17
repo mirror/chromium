@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS DOMContentLoaded 
+PASS load 
+PASS order 
+Harness: the test ran to completion.
+

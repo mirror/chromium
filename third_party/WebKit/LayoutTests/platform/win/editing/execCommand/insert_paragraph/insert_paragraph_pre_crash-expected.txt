@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS InsertParagraph should not crash with whitespace:pre 
+Harness: the test ran to completion.
+

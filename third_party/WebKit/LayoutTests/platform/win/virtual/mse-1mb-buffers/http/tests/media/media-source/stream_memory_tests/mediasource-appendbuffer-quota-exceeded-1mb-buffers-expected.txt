@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Appending data repeatedly should fill up the buffer and throw a QuotaExceededError when buffer is full. 
+Harness: the test ran to completion.
+

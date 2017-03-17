@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS localStorage: enumerate a Storage object and get only the keys as a result and the built-in properties of the Storage object should be ignored 
+PASS sessionStorage: enumerate a Storage object and get only the keys as a result and the built-in properties of the Storage object should be ignored 
+Harness: the test ran to completion.
+

@@ -1,0 +1,16 @@
+This is a testharness.js-based test.
+PASS [4]: (21,1-0,12) should be equal to the first of [(21,1-0,12),(1,13-0,12)] 
+PASS [5]: (26,27-0,12) should be equal to the first of [(26,27-0,12),(1,39-0,12)] 
+PASS [3]: Height of (16,53-5,12) should match to the first of [(16,53-5,12),(21,53-0,12)] 
+PASS [4]: Height of (21,53-3,12) should match to the first of [(21,53-0,12),(21,53-3,12),(1,65-0,12)] 
+PASS [5]: Height of (1,65-5,12) should match to the first of [(24,53-0,12),(1,65-5,12)] 
+PASS [4]: Height of (21,79-5,12) should match to the first of [(21,79-5,12),(26,79-0,12)] 
+PASS [5]: (26,79-0,12) should be equal to the first of [(26,79-0,12),(26,79-0,12),(1,91-0,12)] 
+PASS [6]: Height of (1,91-5,12) should match to the first of [(29,79-0,12),(1,91-5,12)] 
+PASS [4]: Height of (21,105-5,12) should match to the first of [(21,105-5,12),(1,117-0,12)] 
+PASS [5]: Height of (1,117-5,12) should match to the first of [(26,105-0,12),(1,117-5,12)] 
+PASS [0]: Height of (1,131-4,12) should match to the first of [(1,131-4,12),(5,131-0,12)] 
+PASS [1]: (5,131-0,12) should be equal to the first of [(5,131-0,12),(5,131-0,12),(1,143-0,12)] 
+PASS [2]: Height of (1,143-5,12) should match to the first of [(8,131-0,12),(1,143-5,12)] 
+Harness: the test ran to completion.
+

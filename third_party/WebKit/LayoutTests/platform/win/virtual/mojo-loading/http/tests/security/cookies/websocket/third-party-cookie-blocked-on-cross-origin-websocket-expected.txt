@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that first-party cookies are blocked for WebSockets conforming the requirements of the SameSite attribute. 
+Harness: the test ran to completion.
+

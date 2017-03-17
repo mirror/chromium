@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that an invalid video file generates a MEDIA_ERR_SRC_NOT_SUPPORTED error and sets networkState to NETWORK_NO_SOURCE. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,13 @@
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = 1 duplicate test name: "  context.state is equal to closed."
+PASS # AUDIT TASK RUNNER STARTED. 
+PASS > [test] Signaling of statechange event 
+PASS   context.state is equal to running. 
+PASS   Context rendering resolved correctly. 
+PASS   context.state is equal to closed. 
+PASS   stateChangeCount is equal to 2. 
+PASS   context.state is equal to closed. 
+PASS < [test] All assertions passed. (total 5 assertions) 
+PASS # AUDIT TASK RUNNER FINISHED: 1 tasks ran successfully. 
+Harness: the test ran to completion.
+

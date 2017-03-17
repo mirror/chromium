@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS columns following a spanner following empty content 
+Harness: the test ran to completion.
+

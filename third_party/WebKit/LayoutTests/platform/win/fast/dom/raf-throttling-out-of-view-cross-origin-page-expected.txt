@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test requestAnimationFrame() throttling in out-of-view cross origin frames 
+Harness: the test ran to completion.
+

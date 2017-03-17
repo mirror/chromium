@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS stable state in alert() 
+PASS stable state in confirm() 
+PASS stable state in prompt() 
+Harness: the test ran to completion.
+

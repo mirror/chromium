@@ -1,0 +1,5 @@
+CONSOLE ERROR: Refused to execute script from 'http://127.0.0.1:8000/security/contentTypeOptions/resources/script-with-header.pl?mime=image/png' because its MIME type ('image/png') is not executable, and strict MIME type checking is enabled.
+This is a testharness.js-based test.
+PASS 'X-Content-Type-Options: nosniff;' throws error when script blocked. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that style to all cues is applied correctly. 
+Harness: the test ran to completion.
+

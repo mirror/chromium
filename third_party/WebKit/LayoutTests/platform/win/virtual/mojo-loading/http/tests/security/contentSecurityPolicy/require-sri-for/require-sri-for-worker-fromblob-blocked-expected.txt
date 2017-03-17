@@ -1,0 +1,5 @@
+CONSOLE ERROR: line 9: Refused to load the script 'blob:http://127.0.0.1:8000/81a303e7-e5de-4b6d-b54f-e8ed44ec3cbe' because 'require-sri-for' directive requires integrity attribute be present for all scripts.
+This is a testharness.js-based test.
+PASS Test that a worker can be created. 
+Harness: the test ran to completion.
+

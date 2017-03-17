@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Box should start moving left after left style is reset 
+Harness: the test ran to completion.
+

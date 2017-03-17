@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Script is not executed after script thread is shutdown 
+Harness: the test ran to completion.
+

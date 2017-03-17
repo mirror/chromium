@@ -1,0 +1,21 @@
+This is a testharness.js-based test.
+PASS <a> should be found. 
+PASS <applet> should be found. 
+PASS <button> should be found. 
+PASS <embed> should be found. 
+PASS <form> should be found. 
+PASS <iframe> should be found. 
+PASS <img> should be found. 
+PASS <input> should be found. 
+PASS <map> should be found. 
+PASS <meta> should be found. 
+PASS <object> should be found. 
+PASS <select> should be found. 
+PASS <textarea> should be found. 
+PASS <area> should not be found. 
+PASS <option> should not be found. 
+PASS <output> should not be found. 
+PASS <frame> should be found. 
+PASS <frameset> should be found. 
+Harness: the test ran to completion.
+

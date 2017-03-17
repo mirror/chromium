@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Menu key should not trigger mousedown event. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that a MediaStream with at least one video track is returned 
+Harness: the test ran to completion.
+

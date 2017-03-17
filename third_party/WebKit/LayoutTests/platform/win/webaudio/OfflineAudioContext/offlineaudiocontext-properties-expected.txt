@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS The property "constructor" was expected and found successfully. 
+PASS The property "length" was expected and found successfully. 
+PASS The property "oncomplete" was expected and found successfully. 
+PASS The property "startRendering" was expected and found successfully. 
+PASS The property "suspend" was expected and found successfully. 
+Harness: the test ran to completion.
+

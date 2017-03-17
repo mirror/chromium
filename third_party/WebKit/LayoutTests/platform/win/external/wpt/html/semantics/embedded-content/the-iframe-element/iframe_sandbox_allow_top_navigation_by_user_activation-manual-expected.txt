@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS The sandboxed iframe should post a message saying the top navigation was blocked when no user gesture. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,11 @@
+CONSOLE ERROR: The Content Security Policy 'script-src 'self' 'nonce-abc'' was delivered in report-only mode, but does not specify a 'report-uri'; the policy will have no effect. Please either add a 'report-uri' directive, or deliver the policy via the 'Content-Security-Policy' header.
+CONSOLE ERROR: line 29: [Report Only] Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-abc'". Either the 'unsafe-inline' keyword, a hash ('sha256-gFK2GvUtq47Kh+WESxgHztdPiCJAROE0CTvoLVzubAU='), or a nonce ('nonce-...') is required to enable inline execution.
+
+CONSOLE ERROR: line 32: [Report Only] Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'self' 'nonce-abc'". Either the 'unsafe-inline' keyword, a hash ('sha256-PCJI2/3H5+4xsqfwXsOzqFrK+yJ87ESJTdOBHaMma70='), or a nonce ('nonce-...') is required to enable inline execution.
+
+This is a testharness.js-based test.
+PASS Unnonced script blocks generate reports. 
+PASS Script without nonce executes 
+PASS Script with incorrect nonce executes 
+Harness: the test ran to completion.
+

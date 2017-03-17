@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS share of types other than string (expect implicitly converted to string) 
+Harness: the test ran to completion.
+

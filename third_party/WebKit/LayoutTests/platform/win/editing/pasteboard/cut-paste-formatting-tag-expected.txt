@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Cut all tags and paste them 
+Harness: the test ran to completion.
+

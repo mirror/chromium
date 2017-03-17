@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS in a promise microtask after a failing request is issued, before the transaction abort event is fired 
+PASS in a promise microtask after the abort event is fired for a transaction aborted due to an unhandled request failure 
+PASS in a promise microtask after the abort event is fired for a transaction aborted due to an abort() call 
+PASS in a promise microtask after the transaction requests are performed 
+PASS in a promise microtask after the complete event is fired for a committed transaction 
+Harness: the test ran to completion.
+

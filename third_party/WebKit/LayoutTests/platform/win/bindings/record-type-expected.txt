@@ -1,0 +1,13 @@
+This is a testharness.js-based test.
+PASS Test handling of null and undefined records 
+PASS Test type conversion 
+PASS Test duplicate keys 
+PASS Test mapping order 
+PASS Test ByteString validation 
+PASS Test records are passed by value 
+PASS Test unions resolve records 
+PASS Test DOM object types 
+PASS Test nested record types 
+PASS Test sequences in records 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Hidden objects should not receive focus 
+Harness: the test ran to completion.
+

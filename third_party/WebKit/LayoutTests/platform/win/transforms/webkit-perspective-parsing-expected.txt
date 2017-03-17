@@ -1,0 +1,22 @@
+This is a testharness.js-based test.
+PASS "-webkit-perspective: initial;" should parse as "initial" 
+PASS "-webkit-perspective: initial;" should be computed to "none" 
+PASS "-webkit-perspective: inherit;" should parse as "inherit" 
+PASS "-webkit-perspective: none;" should parse as "none" 
+PASS "-webkit-perspective: none;" should be computed to "none" 
+PASS "-webkit-perspective: 1px;" should parse as "1px" 
+PASS "-webkit-perspective: 1px;" should be computed to "1px" 
+PASS "-webkit-perspective: 0;" should be invalid 
+PASS "-webkit-perspective: 0px;" should be invalid 
+PASS "-webkit-perspective: 5;" should parse as "5px" 
+PASS "-webkit-perspective: -1px;" should be invalid 
+PASS "-webkit-perspective: 50%;" should be invalid 
+PASS "-webkit-perspective: calc(-1px);" should parse as "calc(-1px)" 
+PASS "-webkit-perspective: calc(0px);" should parse as "calc(0px)" 
+PASS "-webkit-perspective: calc(1px);" should parse as "calc(1px)" 
+PASS "-webkit-perspective: calc(-1);" should be invalid 
+PASS "-webkit-perspective: calc(0);" should be invalid 
+PASS "-webkit-perspective: calc(1);" should parse as "1px" 
+PASS "-webkit-perspective: calc(10em - 10px);" should parse as "calc(10em - 10px)" 
+Harness: the test ran to completion.
+

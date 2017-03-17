@@ -1,0 +1,32 @@
+This is a testharness.js-based test.
+PASS This test uses responsive-test.js. 
+PASS Untitled 
+PASS Untitled 1 
+PASS Untitled 2 
+PASS Untitled 3 
+PASS Untitled 4 
+PASS Untitled 5 
+PASS Untitled 6 
+PASS Untitled 7 
+PASS Untitled 8 
+PASS Untitled 9 
+PASS Untitled 10 
+PASS Untitled 11 
+PASS Untitled 12 
+PASS Animation on property <backdropFilter> from neutral to [blur(10px)] with {"underlying":"blur(50px)"} changed to {"underlying":"opacity(50%)"} at (0.25) is [opacity(0.5)] 
+PASS Untitled 13 
+PASS Animation on property <backdropFilter> from neutral to [blur(10px)] with {"underlying":"blur(50px)"} changed to {"underlying":"opacity(50%)"} at (0.75) is [blur(10px)] 
+PASS Untitled 14 
+PASS Animation on property <backdropFilter> from neutral to [blur(10px)] with {"underlying":"opacity(50%)"} changed to {"underlying":"blur(50px)"} at (0.25) is [blur(40px)] 
+PASS Untitled 15 
+PASS Animation on property <backdropFilter> from neutral to [blur(10px)] with {"underlying":"opacity(50%)"} changed to {"underlying":"blur(50px)"} at (0.75) is [blur(20px)] 
+PASS Untitled 16 
+PASS Animation on property <backdropFilter> from [inherit] to [blur(10px)] with {"inherited":"blur(50px)"} changed to {"inherited":"opacity(50%)"} at (0.25) is [opacity(0.5)] 
+PASS Untitled 17 
+PASS Animation on property <backdropFilter> from [inherit] to [blur(10px)] with {"inherited":"blur(50px)"} changed to {"inherited":"opacity(50%)"} at (0.75) is [blur(10px)] 
+PASS Untitled 18 
+PASS Animation on property <backdropFilter> from [inherit] to [blur(10px)] with {"inherited":"opacity(50%)"} changed to {"inherited":"blur(50px)"} at (0.25) is [blur(40px)] 
+PASS Untitled 19 
+PASS Animation on property <backdropFilter> from [inherit] to [blur(10px)] with {"inherited":"opacity(50%)"} changed to {"inherited":"blur(50px)"} at (0.75) is [blur(20px)] 
+Harness: the test ran to completion.
+

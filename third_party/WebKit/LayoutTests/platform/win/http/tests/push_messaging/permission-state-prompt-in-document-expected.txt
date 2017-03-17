@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Push API: permissionState() resolves with prompt when permission is not set 
+Harness: the test ran to completion.
+

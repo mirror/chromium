@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Reject with NotFoundError if the adapter is off. 
+Harness: the test ran to completion.
+

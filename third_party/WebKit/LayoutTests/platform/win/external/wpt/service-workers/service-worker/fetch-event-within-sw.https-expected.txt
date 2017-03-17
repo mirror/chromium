@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Service worker intercepts requests from window 
+PASS Service worker does not intercept fetch/cache requests within service worker 
+Harness: the test ran to completion.
+

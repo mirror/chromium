@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS IDBCursor direction - object store with keyrange - next 
+PASS IDBCursor direction - object store with keyrange - prev 
+PASS IDBCursor direction - object store with keyrange - nextunique 
+PASS IDBCursor direction - object store with keyrange - prevunique 
+Harness: the test ran to completion.
+

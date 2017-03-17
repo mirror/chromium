@@ -1,0 +1,29 @@
+This is a testharness.js-based test.
+PASS IDB Observers: Verify initial state and record all operations (changes in frame). 
+PASS IDB Observers: Verify initial state and record all operations (changes in worker). 
+PASS IDB Observers: Operation filtering (changes in frame). 
+PASS IDB Observers: Operation filtering (changes in worker). 
+PASS IDB Observers: Values (changes in frame). 
+PASS IDB Observers: Values (changes in worker). 
+PASS IDB Observers: Transaction (changes in frame). 
+PASS IDB Observers: Transaction (changes in worker). 
+PASS IDB Observers: Object store filtering (changes in frame). 
+PASS IDB Observers: Object store filtering (changes in worker). 
+PASS IDB Observers: Multiple connections (changes in frame). 
+PASS IDB Observers: Multiple connections (changes in worker). 
+PASS IDB Observers: Multiple observer calls (changes in frame). 
+PASS IDB Observers: Multiple observer calls (changes in worker). 
+PASS IDB Observers: Multiple observer calls with filtering (changes in frame). 
+PASS IDB Observers: Multiple observer calls with filtering (changes in worker). 
+PASS IDB Observers: Three connections, unobserve two (changes in frame). 
+PASS IDB Observers: Three connections, unobserve two (changes in worker). 
+PASS IDB Observers: Unobserve immediately (changes in frame). 
+PASS IDB Observers: Unobserve immediately (changes in worker). 
+PASS IDB Observers: Unobserve immediately on multiple (changes in frame). 
+PASS IDB Observers: Unobserve immediately on multiple (changes in worker). 
+PASS IDB Observers: Unobserve connection removes observers (changes in frame). 
+PASS IDB Observers: Unobserve connection removes observers (changes in worker). 
+PASS IDB Observers: Close connection removes observers (changes in frame). 
+PASS IDB Observers: Close connection removes observers (changes in worker). 
+Harness: the test ran to completion.
+

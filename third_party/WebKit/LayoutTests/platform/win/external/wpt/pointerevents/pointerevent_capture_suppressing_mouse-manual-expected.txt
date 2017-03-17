@@ -1,0 +1,16 @@
+This is a testharness.js-based test.
+PASS gotpointercapture event received 
+PASS lostpointercapture event received 
+PASS pointerover event without capture received 
+PASS pointerover event with capture received 
+PASS pointerout event without capture received 
+PASS pointerout event after lostpointercapture received 
+PASS pointerenter event without capture received 
+PASS pointerenter event with capture received 
+PASS pointerleave event without capture received 
+PASS pointerleave event after lostpointercapture received 
+PASS PointerEvent Automation 
+PASS relatedTarget is not null for boundary events even when the capture is set. 
+PASS pointerover should trigger the black rectangle even when pointer is not over black rectangle. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Focus controller should treat slots as a focus scope. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+CONSOLE ERROR: line 6: The Content Security Policy 'require-sri-for; script-src 'self' 'unsafe-inline'' was delivered via a <meta> element outside the document's <head>, which is disallowed. The policy has been ignored.
+This is a testharness.js-based test.
+PASS Script that requires integrity executes and does not generate a violation report. 
+FAIL Makes sure that require-sri-for applies to preloaded resources. assert_equals: expected 4 but got 3
+Harness: the test ran to completion.
+

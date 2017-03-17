@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Do not crash when pausing a paused animation for testing 
+Harness: the test ran to completion.
+

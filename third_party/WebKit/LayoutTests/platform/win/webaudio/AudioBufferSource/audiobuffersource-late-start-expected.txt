@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS The output contains all the expected values in the correct order: [0,1]. 
+PASS The index of value change is equal to 5504. 
+PASS The index of the first non-zero sample is not equal to 0. 
+Harness: the test ran to completion.
+

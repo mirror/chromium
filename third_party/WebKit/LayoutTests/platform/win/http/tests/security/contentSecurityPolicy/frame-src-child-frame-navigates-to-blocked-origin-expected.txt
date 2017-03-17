@@ -1,0 +1,6 @@
+CONSOLE ERROR: line 7: Refused to frame 'http://localhost:8000/security/contentSecurityPolicy/resources/target-for-frame-that-navigates-itself.html' because it violates the following Content Security Policy directive: "frame-src https://localhost:8443".
+
+This is a testharness.js-based test.
+PASS The frame's navigation is blocked. 
+Harness: the test ran to completion.
+

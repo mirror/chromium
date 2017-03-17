@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Starting notifications should fire an event and we should get no events after notifications are stopped. 
+Harness: the test ran to completion.
+

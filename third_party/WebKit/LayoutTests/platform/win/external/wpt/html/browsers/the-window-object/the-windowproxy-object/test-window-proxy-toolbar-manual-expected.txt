@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS BarProp attribute: window.toolbar.visible 
+Harness: the test ran to completion.
+

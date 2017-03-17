@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS .go commands should be queued until the thread has ended 
+PASS browser needs to support hashchange events for this testcase 
+PASS queued .go commands should all be executed when the queue is processed 
+PASS history position should be calculated when executing, not when calling the .go command 
+Harness: the test ran to completion.
+

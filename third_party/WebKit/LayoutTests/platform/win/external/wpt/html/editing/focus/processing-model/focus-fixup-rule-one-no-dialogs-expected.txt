@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS Disabling the active element (making it expressly inert) 
+PASS Hiding the active element 
+PASS Removing the active element from the DOM 
+PASS Disabling <fieldset> affects its descendants 
+PASS Changing the first legend element in disabled <fieldset> 
+PASS Removing the tabindex attribute from a div 
+PASS Disabling contenteditable 
+Harness: the test ran to completion.
+

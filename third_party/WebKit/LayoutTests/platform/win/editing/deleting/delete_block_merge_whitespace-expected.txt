@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Select without surrounding whitespace 
+PASS Select with trailing whitespace 
+PASS Select with surrounding whitespace 
+PASS Select leading multiple whitespaces 
+PASS Squash whitespaces around selection 
+PASS Squash whitespaces around selection with nbsp 
+Harness: the test ran to completion.
+

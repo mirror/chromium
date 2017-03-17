@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS default height 
+PASS horizontal height 
+PASS vertical height 
+PASS toHorizontal height 
+PASS toVertical height 
+Harness: the test ran to completion.
+

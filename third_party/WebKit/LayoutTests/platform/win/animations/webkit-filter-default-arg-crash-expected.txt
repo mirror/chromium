@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Don't crash when animating default filter parameters. 
+Harness: the test ran to completion.
+

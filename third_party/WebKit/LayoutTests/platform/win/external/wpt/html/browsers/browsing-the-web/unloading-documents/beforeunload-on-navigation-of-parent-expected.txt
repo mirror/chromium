@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS beforeunload in iframe on navigation of parent 
+Harness: the test ran to completion.
+

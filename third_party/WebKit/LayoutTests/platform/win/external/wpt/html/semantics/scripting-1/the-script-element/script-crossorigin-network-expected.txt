@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS HTMLScriptElement: crossorigin attribute network test1 
+PASS HTMLScriptElement: crossorigin attribute network test2 
+PASS HTMLScriptElement: crossorigin attribute network test3 
+Harness: the test ran to completion.
+

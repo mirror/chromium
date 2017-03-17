@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS CacheStorage match() on insecure origin 
+PASS CacheStorage has() on insecure origin 
+PASS CacheStorage open() on insecure origin 
+PASS CacheStorage delete() on insecure origin 
+PASS CacheStorage keys() on insecure origin 
+Harness: the test ran to completion.
+

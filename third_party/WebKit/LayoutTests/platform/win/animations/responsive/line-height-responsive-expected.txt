@@ -1,0 +1,556 @@
+This is a testharness.js-based test.
+PASS This test uses responsive-test.js. 
+PASS Untitled 
+PASS Untitled 1 
+PASS Untitled 2 
+PASS Untitled 3 
+PASS Untitled 4 
+PASS Untitled 5 
+PASS Untitled 6 
+PASS Untitled 7 
+PASS Untitled 8 
+PASS Untitled 9 
+PASS Untitled 10 
+PASS Untitled 11 
+PASS Untitled 12 
+PASS Untitled 13 
+PASS Untitled 14 
+PASS Untitled 15 
+PASS Untitled 16 
+PASS Untitled 17 
+PASS Untitled 18 
+PASS Untitled 19 
+PASS Untitled 20 
+PASS Untitled 21 
+PASS Untitled 22 
+PASS Untitled 23 
+PASS Untitled 24 
+PASS Untitled 25 
+PASS Untitled 26 
+PASS Untitled 27 
+PASS Untitled 28 
+PASS Untitled 29 
+PASS Untitled 30 
+PASS Untitled 31 
+PASS Untitled 32 
+PASS Untitled 33 
+PASS Untitled 34 
+PASS Untitled 35 
+PASS Untitled 36 
+PASS Untitled 37 
+PASS Untitled 38 
+PASS Untitled 39 
+PASS Untitled 40 
+PASS Untitled 41 
+PASS Untitled 42 
+PASS Untitled 43 
+PASS Untitled 44 
+PASS Untitled 45 
+PASS Untitled 46 
+PASS Untitled 47 
+PASS Untitled 48 
+PASS Untitled 49 
+PASS Untitled 50 
+PASS Untitled 51 
+PASS Untitled 52 
+PASS Untitled 53 
+PASS Untitled 54 
+PASS Untitled 55 
+PASS Untitled 56 
+PASS Untitled 57 
+PASS Untitled 58 
+PASS Untitled 59 
+PASS Untitled 60 
+PASS Untitled 61 
+PASS Untitled 62 
+PASS Untitled 63 
+PASS Untitled 64 
+PASS Untitled 65 
+PASS Untitled 66 
+PASS Untitled 67 
+PASS Untitled 68 
+PASS Untitled 69 
+PASS Untitled 70 
+PASS Untitled 71 
+PASS Untitled 72 
+PASS Untitled 73 
+PASS Untitled 74 
+PASS Untitled 75 
+PASS Untitled 76 
+PASS Untitled 77 
+PASS Untitled 78 
+PASS Untitled 79 
+PASS Untitled 80 
+PASS Untitled 81 
+PASS Untitled 82 
+PASS Untitled 83 
+PASS Untitled 84 
+PASS Untitled 85 
+PASS Untitled 86 
+PASS Untitled 87 
+PASS Untitled 88 
+PASS Untitled 89 
+PASS Untitled 90 
+PASS Untitled 91 
+PASS Untitled 92 
+PASS Untitled 93 
+PASS Untitled 94 
+PASS Untitled 95 
+PASS Untitled 96 
+PASS Untitled 97 
+PASS Untitled 98 
+PASS Untitled 99 
+PASS Untitled 100 
+PASS Untitled 101 
+PASS Untitled 102 
+PASS Untitled 103 
+PASS Untitled 104 
+PASS Untitled 105 
+PASS Untitled 106 
+PASS Untitled 107 
+PASS Untitled 108 
+PASS Untitled 109 
+PASS Untitled 110 
+PASS Untitled 111 
+PASS Untitled 112 
+PASS Untitled 113 
+PASS Untitled 114 
+PASS Untitled 115 
+PASS Untitled 116 
+PASS Untitled 117 
+PASS Untitled 118 
+PASS Untitled 119 
+PASS Untitled 120 
+PASS Untitled 121 
+PASS Untitled 122 
+PASS Untitled 123 
+PASS Untitled 124 
+PASS Untitled 125 
+PASS Untitled 126 
+PASS Untitled 127 
+PASS Untitled 128 
+PASS Untitled 129 
+PASS Untitled 130 
+PASS Untitled 131 
+PASS Untitled 132 
+PASS Untitled 133 
+PASS Untitled 134 
+PASS Untitled 135 
+PASS Untitled 136 
+PASS Untitled 137 
+PASS Untitled 138 
+PASS Untitled 139 
+PASS Untitled 140 
+PASS Untitled 141 
+PASS Untitled 142 
+PASS Untitled 143 
+PASS Untitled 144 
+PASS Untitled 145 
+PASS Untitled 146 
+PASS Untitled 147 
+PASS Untitled 148 
+PASS Untitled 149 
+PASS Untitled 150 
+PASS Untitled 151 
+PASS Untitled 152 
+PASS Untitled 153 
+PASS Untitled 154 
+PASS Untitled 155 
+PASS Untitled 156 
+PASS Untitled 157 
+PASS Untitled 158 
+PASS Untitled 159 
+PASS Untitled 160 
+PASS Untitled 161 
+PASS Untitled 162 
+PASS Untitled 163 
+PASS Untitled 164 
+PASS Untitled 165 
+PASS Untitled 166 
+PASS Untitled 167 
+PASS Untitled 168 
+PASS Untitled 169 
+PASS Untitled 170 
+PASS Untitled 171 
+PASS Untitled 172 
+PASS Untitled 173 
+PASS Untitled 174 
+PASS Untitled 175 
+PASS Untitled 176 
+PASS Untitled 177 
+PASS Untitled 178 
+PASS Untitled 179 
+PASS Untitled 180 
+PASS Untitled 181 
+PASS Untitled 182 
+PASS Untitled 183 
+PASS Untitled 184 
+PASS Untitled 185 
+PASS Untitled 186 
+PASS Untitled 187 
+PASS Untitled 188 
+PASS Untitled 189 
+PASS Untitled 190 
+PASS Untitled 191 
+PASS Untitled 192 
+PASS Untitled 193 
+PASS Untitled 194 
+PASS Untitled 195 
+PASS Untitled 196 
+PASS Untitled 197 
+PASS Untitled 198 
+PASS Untitled 199 
+PASS Untitled 200 
+PASS Untitled 201 
+PASS Untitled 202 
+PASS Untitled 203 
+PASS Untitled 204 
+PASS Untitled 205 
+PASS Untitled 206 
+PASS Untitled 207 
+PASS Untitled 208 
+PASS Untitled 209 
+PASS Untitled 210 
+PASS Untitled 211 
+PASS Untitled 212 
+PASS Untitled 213 
+PASS Untitled 214 
+PASS Untitled 215 
+PASS Untitled 216 
+PASS Untitled 217 
+PASS Untitled 218 
+PASS Untitled 219 
+PASS Untitled 220 
+PASS Untitled 221 
+PASS Untitled 222 
+PASS Untitled 223 
+PASS Untitled 224 
+PASS Untitled 225 
+PASS Untitled 226 
+PASS Untitled 227 
+PASS Untitled 228 
+PASS Untitled 229 
+PASS Untitled 230 
+PASS Untitled 231 
+PASS Untitled 232 
+PASS Untitled 233 
+PASS Untitled 234 
+PASS Untitled 235 
+PASS Untitled 236 
+PASS Untitled 237 
+PASS Untitled 238 
+PASS Untitled 239 
+PASS Untitled 240 
+PASS Untitled 241 
+PASS Untitled 242 
+PASS Untitled 243 
+PASS Untitled 244 
+PASS Untitled 245 
+PASS Untitled 246 
+PASS Untitled 247 
+PASS Untitled 248 
+PASS Untitled 249 
+PASS Untitled 250 
+PASS Untitled 251 
+PASS Untitled 252 
+PASS Untitled 253 
+PASS Untitled 254 
+PASS Untitled 255 
+PASS Untitled 256 
+PASS Untitled 257 
+PASS Untitled 258 
+PASS Untitled 259 
+PASS Untitled 260 
+PASS Untitled 261 
+PASS Untitled 262 
+PASS Untitled 263 
+PASS Untitled 264 
+PASS Untitled 265 
+PASS Untitled 266 
+PASS Untitled 267 
+PASS Untitled 268 
+PASS Untitled 269 
+PASS Untitled 270 
+PASS Untitled 271 
+PASS Untitled 272 
+PASS Untitled 273 
+PASS Untitled 274 
+PASS Untitled 275 
+PASS Untitled 276 
+PASS Untitled 277 
+PASS Untitled 278 
+PASS Untitled 279 
+PASS Untitled 280 
+PASS Untitled 281 
+PASS Untitled 282 
+PASS Untitled 283 
+PASS Untitled 284 
+PASS Untitled 285 
+PASS Untitled 286 
+PASS Untitled 287 
+PASS Untitled 288 
+PASS Untitled 289 
+PASS Untitled 290 
+PASS Untitled 291 
+PASS Untitled 292 
+PASS Untitled 293 
+PASS Untitled 294 
+PASS Untitled 295 
+PASS Untitled 296 
+PASS Untitled 297 
+PASS Untitled 298 
+PASS Untitled 299 
+PASS Untitled 300 
+PASS Untitled 301 
+PASS Untitled 302 
+PASS Untitled 303 
+PASS Untitled 304 
+PASS Animation on property <lineHeight> from [inherit] to [200px] with {"inherited":"100px"} changed to {"inherited":"10"} at (0.25) is [40px] 
+PASS Untitled 305 
+PASS Animation on property <lineHeight> from [inherit] to [200px] with {"inherited":"100px"} changed to {"inherited":"10"} at (0.75) is [200px] 
+PASS Untitled 306 
+PASS Animation on property <lineHeight> from [inherit] to [200px] with {"inherited":"10"} changed to {"inherited":"100px"} at (0.25) is [125px] 
+PASS Untitled 307 
+PASS Animation on property <lineHeight> from [inherit] to [200px] with {"inherited":"10"} changed to {"inherited":"100px"} at (0.75) is [175px] 
+PASS Untitled 308 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"10"} changed to {"underlying":"100px"} at (0.25) is [125px] 
+PASS Untitled 309 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"10"} changed to {"underlying":"100px"} at (0.75) is [175px] 
+PASS Untitled 310 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"10"} changed to {"underlying":"normal"} at (0.25) is [normal] 
+PASS Untitled 311 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"10"} changed to {"underlying":"normal"} at (0.75) is [200px] 
+PASS Untitled 312 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"10"} changed to {"underlying":"inherit","inherited":"10"} at (0.25) is [40px] 
+PASS Untitled 313 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"10"} changed to {"underlying":"inherit","inherited":"10"} at (0.75) is [200px] 
+PASS Untitled 314 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"10"} changed to {"underlying":"inherit","inherited":"100px"} at (0.25) is [125px] 
+PASS Untitled 315 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"10"} changed to {"underlying":"inherit","inherited":"100px"} at (0.75) is [175px] 
+PASS Untitled 316 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"10"} changed to {"underlying":"inherit","inherited":"normal"} at (0.25) is [normal] 
+PASS Untitled 317 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"10"} changed to {"underlying":"inherit","inherited":"normal"} at (0.75) is [200px] 
+PASS Untitled 318 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"100px"} changed to {"underlying":"10"} at (0.25) is [40px] 
+PASS Untitled 319 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"100px"} changed to {"underlying":"10"} at (0.75) is [200px] 
+PASS Untitled 320 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"100px"} changed to {"underlying":"normal"} at (0.25) is [normal] 
+PASS Untitled 321 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"100px"} changed to {"underlying":"normal"} at (0.75) is [200px] 
+PASS Untitled 322 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"100px"} changed to {"underlying":"inherit","inherited":"10"} at (0.25) is [40px] 
+PASS Untitled 323 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"100px"} changed to {"underlying":"inherit","inherited":"10"} at (0.75) is [200px] 
+PASS Untitled 324 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"100px"} changed to {"underlying":"inherit","inherited":"100px"} at (0.25) is [125px] 
+PASS Untitled 325 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"100px"} changed to {"underlying":"inherit","inherited":"100px"} at (0.75) is [175px] 
+PASS Untitled 326 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"100px"} changed to {"underlying":"inherit","inherited":"normal"} at (0.25) is [normal] 
+PASS Untitled 327 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"100px"} changed to {"underlying":"inherit","inherited":"normal"} at (0.75) is [200px] 
+PASS Untitled 328 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"normal"} changed to {"underlying":"10"} at (0.25) is [40px] 
+PASS Untitled 329 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"normal"} changed to {"underlying":"10"} at (0.75) is [200px] 
+PASS Untitled 330 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"normal"} changed to {"underlying":"100px"} at (0.25) is [125px] 
+PASS Untitled 331 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"normal"} changed to {"underlying":"100px"} at (0.75) is [175px] 
+PASS Untitled 332 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"normal"} changed to {"underlying":"inherit","inherited":"10"} at (0.25) is [40px] 
+PASS Untitled 333 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"normal"} changed to {"underlying":"inherit","inherited":"10"} at (0.75) is [200px] 
+PASS Untitled 334 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"normal"} changed to {"underlying":"inherit","inherited":"100px"} at (0.25) is [125px] 
+PASS Untitled 335 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"normal"} changed to {"underlying":"inherit","inherited":"100px"} at (0.75) is [175px] 
+PASS Untitled 336 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"normal"} changed to {"underlying":"inherit","inherited":"normal"} at (0.25) is [normal] 
+PASS Untitled 337 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"normal"} changed to {"underlying":"inherit","inherited":"normal"} at (0.75) is [200px] 
+PASS Untitled 338 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"10"} changed to {"underlying":"10"} at (0.25) is [40px] 
+PASS Untitled 339 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"10"} changed to {"underlying":"10"} at (0.75) is [200px] 
+PASS Untitled 340 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"10"} changed to {"underlying":"100px"} at (0.25) is [125px] 
+PASS Untitled 341 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"10"} changed to {"underlying":"100px"} at (0.75) is [175px] 
+PASS Untitled 342 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"10"} changed to {"underlying":"normal"} at (0.25) is [normal] 
+PASS Untitled 343 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"10"} changed to {"underlying":"normal"} at (0.75) is [200px] 
+PASS Untitled 344 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"10"} changed to {"underlying":"inherit","inherited":"100px"} at (0.25) is [125px] 
+PASS Untitled 345 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"10"} changed to {"underlying":"inherit","inherited":"100px"} at (0.75) is [175px] 
+PASS Untitled 346 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"10"} changed to {"underlying":"inherit","inherited":"normal"} at (0.25) is [normal] 
+PASS Untitled 347 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"10"} changed to {"underlying":"inherit","inherited":"normal"} at (0.75) is [200px] 
+PASS Untitled 348 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"10"} at (0.25) is [40px] 
+PASS Untitled 349 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"10"} at (0.75) is [200px] 
+PASS Untitled 350 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"100px"} at (0.25) is [125px] 
+PASS Untitled 351 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"100px"} at (0.75) is [175px] 
+PASS Untitled 352 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"normal"} at (0.25) is [normal] 
+PASS Untitled 353 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"normal"} at (0.75) is [200px] 
+PASS Untitled 354 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"inherit","inherited":"10"} at (0.25) is [40px] 
+PASS Untitled 355 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"inherit","inherited":"10"} at (0.75) is [200px] 
+PASS Untitled 356 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"inherit","inherited":"normal"} at (0.25) is [normal] 
+PASS Untitled 357 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"inherit","inherited":"normal"} at (0.75) is [200px] 
+PASS Untitled 358 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"normal"} changed to {"underlying":"10"} at (0.25) is [40px] 
+PASS Untitled 359 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"normal"} changed to {"underlying":"10"} at (0.75) is [200px] 
+PASS Untitled 360 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"normal"} changed to {"underlying":"100px"} at (0.25) is [125px] 
+PASS Untitled 361 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"normal"} changed to {"underlying":"100px"} at (0.75) is [175px] 
+PASS Untitled 362 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"normal"} changed to {"underlying":"normal"} at (0.25) is [normal] 
+PASS Untitled 363 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"normal"} changed to {"underlying":"normal"} at (0.75) is [200px] 
+PASS Untitled 364 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"normal"} changed to {"underlying":"inherit","inherited":"10"} at (0.25) is [40px] 
+PASS Untitled 365 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"normal"} changed to {"underlying":"inherit","inherited":"10"} at (0.75) is [200px] 
+PASS Untitled 366 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"normal"} changed to {"underlying":"inherit","inherited":"100px"} at (0.25) is [125px] 
+PASS Untitled 367 
+PASS Animation on property <lineHeight> from neutral to [200px] with {"underlying":"inherit","inherited":"normal"} changed to {"underlying":"inherit","inherited":"100px"} at (0.75) is [175px] 
+PASS Untitled 368 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"10"} changed to {"underlying":"100px"} at (0.25) is [100px] 
+PASS Untitled 369 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"10"} changed to {"underlying":"100px"} at (0.75) is [80px] 
+PASS Untitled 370 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"10"} changed to {"underlying":"normal"} at (0.25) is [normal] 
+PASS Untitled 371 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"10"} changed to {"underlying":"normal"} at (0.75) is [80px] 
+PASS Untitled 372 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"10"} changed to {"underlying":"inherit","inherited":"10"} at (0.25) is [50px] 
+PASS Untitled 373 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"10"} changed to {"underlying":"inherit","inherited":"10"} at (0.75) is [70px] 
+PASS Untitled 374 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"10"} changed to {"underlying":"inherit","inherited":"100px"} at (0.25) is [100px] 
+PASS Untitled 375 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"10"} changed to {"underlying":"inherit","inherited":"100px"} at (0.75) is [80px] 
+PASS Untitled 376 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"10"} changed to {"underlying":"inherit","inherited":"normal"} at (0.25) is [normal] 
+PASS Untitled 377 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"10"} changed to {"underlying":"inherit","inherited":"normal"} at (0.75) is [80px] 
+PASS Untitled 378 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"100px"} changed to {"underlying":"10"} at (0.25) is [50px] 
+PASS Untitled 379 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"100px"} changed to {"underlying":"10"} at (0.75) is [70px] 
+PASS Untitled 380 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"100px"} changed to {"underlying":"normal"} at (0.25) is [normal] 
+PASS Untitled 381 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"100px"} changed to {"underlying":"normal"} at (0.75) is [80px] 
+PASS Untitled 382 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"100px"} changed to {"underlying":"inherit","inherited":"10"} at (0.25) is [50px] 
+PASS Untitled 383 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"100px"} changed to {"underlying":"inherit","inherited":"10"} at (0.75) is [70px] 
+PASS Untitled 384 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"100px"} changed to {"underlying":"inherit","inherited":"100px"} at (0.25) is [100px] 
+PASS Untitled 385 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"100px"} changed to {"underlying":"inherit","inherited":"100px"} at (0.75) is [80px] 
+PASS Untitled 386 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"100px"} changed to {"underlying":"inherit","inherited":"normal"} at (0.25) is [normal] 
+PASS Untitled 387 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"100px"} changed to {"underlying":"inherit","inherited":"normal"} at (0.75) is [80px] 
+PASS Untitled 388 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"normal"} changed to {"underlying":"10"} at (0.25) is [50px] 
+PASS Untitled 389 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"normal"} changed to {"underlying":"10"} at (0.75) is [70px] 
+PASS Untitled 390 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"normal"} changed to {"underlying":"100px"} at (0.25) is [100px] 
+PASS Untitled 391 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"normal"} changed to {"underlying":"100px"} at (0.75) is [80px] 
+PASS Untitled 392 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"normal"} changed to {"underlying":"inherit","inherited":"10"} at (0.25) is [50px] 
+PASS Untitled 393 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"normal"} changed to {"underlying":"inherit","inherited":"10"} at (0.75) is [70px] 
+PASS Untitled 394 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"normal"} changed to {"underlying":"inherit","inherited":"100px"} at (0.25) is [100px] 
+PASS Untitled 395 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"normal"} changed to {"underlying":"inherit","inherited":"100px"} at (0.75) is [80px] 
+PASS Untitled 396 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"normal"} changed to {"underlying":"inherit","inherited":"normal"} at (0.25) is [normal] 
+PASS Untitled 397 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"normal"} changed to {"underlying":"inherit","inherited":"normal"} at (0.75) is [80px] 
+PASS Untitled 398 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"10"} changed to {"underlying":"10"} at (0.25) is [50px] 
+PASS Untitled 399 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"10"} changed to {"underlying":"10"} at (0.75) is [70px] 
+PASS Untitled 400 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"10"} changed to {"underlying":"100px"} at (0.25) is [100px] 
+PASS Untitled 401 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"10"} changed to {"underlying":"100px"} at (0.75) is [80px] 
+PASS Untitled 402 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"10"} changed to {"underlying":"normal"} at (0.25) is [normal] 
+PASS Untitled 403 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"10"} changed to {"underlying":"normal"} at (0.75) is [80px] 
+PASS Untitled 404 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"10"} changed to {"underlying":"inherit","inherited":"100px"} at (0.25) is [100px] 
+PASS Untitled 405 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"10"} changed to {"underlying":"inherit","inherited":"100px"} at (0.75) is [80px] 
+PASS Untitled 406 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"10"} changed to {"underlying":"inherit","inherited":"normal"} at (0.25) is [normal] 
+PASS Untitled 407 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"10"} changed to {"underlying":"inherit","inherited":"normal"} at (0.75) is [80px] 
+PASS Untitled 408 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"10"} at (0.25) is [50px] 
+PASS Untitled 409 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"10"} at (0.75) is [70px] 
+PASS Untitled 410 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"100px"} at (0.25) is [100px] 
+PASS Untitled 411 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"100px"} at (0.75) is [80px] 
+PASS Untitled 412 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"normal"} at (0.25) is [normal] 
+PASS Untitled 413 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"normal"} at (0.75) is [80px] 
+PASS Untitled 414 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"inherit","inherited":"10"} at (0.25) is [50px] 
+PASS Untitled 415 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"inherit","inherited":"10"} at (0.75) is [70px] 
+PASS Untitled 416 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"inherit","inherited":"normal"} at (0.25) is [normal] 
+PASS Untitled 417 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"100px"} changed to {"underlying":"inherit","inherited":"normal"} at (0.75) is [80px] 
+PASS Untitled 418 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"normal"} changed to {"underlying":"10"} at (0.25) is [50px] 
+PASS Untitled 419 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"normal"} changed to {"underlying":"10"} at (0.75) is [70px] 
+PASS Untitled 420 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"normal"} changed to {"underlying":"100px"} at (0.25) is [100px] 
+PASS Untitled 421 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"normal"} changed to {"underlying":"100px"} at (0.75) is [80px] 
+PASS Untitled 422 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"normal"} changed to {"underlying":"normal"} at (0.25) is [normal] 
+PASS Untitled 423 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"normal"} changed to {"underlying":"normal"} at (0.75) is [80px] 
+PASS Untitled 424 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"normal"} changed to {"underlying":"inherit","inherited":"10"} at (0.25) is [50px] 
+PASS Untitled 425 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"normal"} changed to {"underlying":"inherit","inherited":"10"} at (0.75) is [70px] 
+PASS Untitled 426 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"normal"} changed to {"underlying":"inherit","inherited":"100px"} at (0.25) is [100px] 
+PASS Untitled 427 
+PASS Animation on property <lineHeight> from neutral to [20] with {"underlying":"inherit","inherited":"normal"} changed to {"underlying":"inherit","inherited":"100px"} at (0.75) is [80px] 
+Harness: the test ran to completion.
+

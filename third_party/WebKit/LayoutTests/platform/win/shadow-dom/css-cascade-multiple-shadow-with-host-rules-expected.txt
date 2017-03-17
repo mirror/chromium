@@ -1,0 +1,6 @@
+CONSOLE WARNING: line 10: Calling Element.createShadowRoot() for an element which already hosts a shadow root is deprecated. See https://www.chromestatus.com/features/4668884095336448 for more details.
+This is a testharness.js-based test.
+PASS In case of multiple shadow, :host rules from all shadows should apply. 
+PASS After V1 cascade rule is applied, :host rules from V0 multiple shadow should apply. 
+Harness: the test ran to completion.
+

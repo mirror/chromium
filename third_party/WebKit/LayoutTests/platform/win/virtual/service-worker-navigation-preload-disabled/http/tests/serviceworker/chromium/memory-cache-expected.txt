@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Non-controlled page should not use a cache filled by Service Worker 
+Harness: the test ran to completion.
+

@@ -1,0 +1,26 @@
+This is a testharness.js-based test.
+PASS This test uses interpolation-test.js. 
+PASS SMIL: Interpolate attribute <surfaceScale> with underlying [3] from add [1] to add [6] at (0) is [4] 
+PASS SMIL: Interpolate attribute <surfaceScale> with underlying [3] from add [1] to add [6] at (0.2) is [5] 
+PASS SMIL: Interpolate attribute <surfaceScale> with underlying [3] from add [1] to add [6] at (0.6) is [7] 
+PASS SMIL: Interpolate attribute <surfaceScale> with underlying [3] from add [1] to add [6] at (1) is [9] 
+PASS Web Animations: Interpolate attribute <surfaceScale> with underlying [3] from add [1] to add [6] at (-0.4) is [2] 
+PASS Web Animations: Interpolate attribute <surfaceScale> with underlying [3] from add [1] to add [6] at (0) is [4] 
+PASS Web Animations: Interpolate attribute <surfaceScale> with underlying [3] from add [1] to add [6] at (0.2) is [5] 
+PASS Web Animations: Interpolate attribute <surfaceScale> with underlying [3] from add [1] to add [6] at (0.6) is [7] 
+PASS Web Animations: Interpolate attribute <surfaceScale> with underlying [3] from add [1] to add [6] at (1) is [9] 
+PASS Web Animations: Interpolate attribute <surfaceScale> with underlying [3] from add [1] to add [6] at (1.4) is [11] 
+PASS Web Animations: Interpolate attribute <surfaceScale> with underlying [5] from replace [1] to add [6] at (-0.4) is [-3] 
+PASS Web Animations: Interpolate attribute <surfaceScale> with underlying [5] from replace [1] to add [6] at (0) is [1] 
+PASS Web Animations: Interpolate attribute <surfaceScale> with underlying [5] from replace [1] to add [6] at (0.2) is [3] 
+PASS Web Animations: Interpolate attribute <surfaceScale> with underlying [5] from replace [1] to add [6] at (0.6) is [7] 
+PASS Web Animations: Interpolate attribute <surfaceScale> with underlying [5] from replace [1] to add [6] at (1) is [11] 
+PASS Web Animations: Interpolate attribute <surfaceScale> with underlying [5] from replace [1] to add [6] at (1.4) is [15] 
+PASS Web Animations: Interpolate attribute <surfaceScale> with underlying [5] from neutral to replace [10] at (-0.4) is [3] 
+PASS Web Animations: Interpolate attribute <surfaceScale> with underlying [5] from neutral to replace [10] at (0) is [5] 
+PASS Web Animations: Interpolate attribute <surfaceScale> with underlying [5] from neutral to replace [10] at (0.2) is [6] 
+PASS Web Animations: Interpolate attribute <surfaceScale> with underlying [5] from neutral to replace [10] at (0.6) is [8] 
+PASS Web Animations: Interpolate attribute <surfaceScale> with underlying [5] from neutral to replace [10] at (1) is [10] 
+PASS Web Animations: Interpolate attribute <surfaceScale> with underlying [5] from neutral to replace [10] at (1.4) is [12] 
+Harness: the test ran to completion.
+

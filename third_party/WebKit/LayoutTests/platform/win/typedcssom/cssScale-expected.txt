@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Test that the (x, y, z) values for CSSScale are correct. 
+PASS Test that the is2D values for CSSScale is correct. 
+PASS Test that the cssText for CSSScale is correct. 
+PASS Test that invalid number of arguments for CSSScale throws an exception. 
+PASS Test that invalid input throws an exception. 
+PASS Test that asMatrix is constructed correctly for CSSScale. 
+Harness: the test ran to completion.
+

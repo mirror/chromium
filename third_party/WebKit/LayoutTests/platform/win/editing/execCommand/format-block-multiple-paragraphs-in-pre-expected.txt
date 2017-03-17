@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS formatBlock on all contents with H3 
+PASS formatBlock on last paragraph with H3 
+PASS formatBlock all but the first paragraph with H3 
+Harness: the test ran to completion.
+

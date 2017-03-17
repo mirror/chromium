@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS input type=image should not be present in the form.elements collection 
+PASS form.elements should include elements whose name starts with a number 
+Harness: the test ran to completion.
+

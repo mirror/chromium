@@ -1,0 +1,13 @@
+CONSOLE ERROR: line 11: Refused to evaluate a string as JavaScript because 'unsafe-eval' is not an allowed source of script in the following Content Security Policy directive: "script-src 'self'".
+
+CONSOLE ERROR: line 11: Refused to evaluate a string as JavaScript because 'unsafe-eval' is not an allowed source of script in the following Content Security Policy directive: "default-src 'self'". Note that 'script-src' was not explicitly set, so 'default-src' is used as a fallback.
+
+This is a testharness.js-based test.
+PASS eval blocked for 'script-src%20'none'' 
+PASS eval blocked for 'default-src%20'none'' 
+PASS `eval()` with 'script-src 'self'' blocked 
+PASS `eval()` with 'default-src 'self'' blocked 
+PASS `eval()` with 'script-src 'self' 'unsafe-eval'' allowed 
+PASS `eval()` with 'default-src 'self' 'unsafe-eval'' allowed 
+Harness: the test ran to completion.
+

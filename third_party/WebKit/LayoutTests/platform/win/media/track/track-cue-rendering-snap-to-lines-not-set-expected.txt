@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that TextTrack's cues are rendered correctly when the snap to lines flag is not set. 
+Harness: the test ran to completion.
+

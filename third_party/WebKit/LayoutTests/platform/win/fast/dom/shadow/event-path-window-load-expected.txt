@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS event.path for window.onload 
+Harness: the test ran to completion.
+

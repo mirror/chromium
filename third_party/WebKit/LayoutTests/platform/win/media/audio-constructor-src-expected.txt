@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that Audio("url") constructor loads the specified resource. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Document parser invokes the constructor that throws 
+PASS Upgrade reaction invokes the constructor that throws 
+PASS createElement invokes the constructor that throws 
+PASS Document parser invokes the constructor that returns a bad object 
+PASS Upgrade reaction invokes the constructor that returns a bad object 
+Harness: the test ran to completion.
+

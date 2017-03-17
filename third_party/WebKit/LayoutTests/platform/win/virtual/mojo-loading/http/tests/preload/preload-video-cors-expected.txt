@@ -1,0 +1,5 @@
+CONSOLE ERROR: Access to Image at 'http://localhost:8080/security/resources/image-access-control.php?file=../../resources/square100.png&allow=false' from origin 'http://127.0.0.1:8000' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://127.0.0.1:8000' is therefore not allowed access.
+This is a testharness.js-based test.
+PASS Ensure preloads use video poster crossorigin value 
+Harness: the test ran to completion.
+

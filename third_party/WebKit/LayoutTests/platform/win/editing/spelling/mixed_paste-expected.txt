@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Mark misspelled words after pasting mixed content of image and text. 
+PASS Mark misspelled word after pasting mixed content of image and long text. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Region #1 contains only the constant 1. 
+PASS Region #2 (looped) contains only the constant 2. 
+PASS Region #3 contains only the constant 3. 
+Harness: the test ran to completion.
+

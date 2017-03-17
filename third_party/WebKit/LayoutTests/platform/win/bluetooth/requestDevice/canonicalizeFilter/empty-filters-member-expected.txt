@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS An empty |filters| member should result in a TypeError 
+Harness: the test ran to completion.
+

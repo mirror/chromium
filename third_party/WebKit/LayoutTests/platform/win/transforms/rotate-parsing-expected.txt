@@ -1,0 +1,33 @@
+This is a testharness.js-based test.
+PASS "rotate: initial;" should parse as "initial" 
+PASS "rotate: initial;" should be computed to "none" 
+PASS "rotate: inherit;" should parse as "inherit" 
+PASS "rotate: none;" should parse as "none" 
+PASS "rotate: none;" should be computed to "none" 
+PASS "rotate: 10deg;" should parse as "10deg" 
+PASS "rotate: 10deg;" should be computed to "10deg" 
+PASS "rotate: 0 0 1 10deg;" should parse as "0 0 1 10deg" 
+PASS "rotate: 0 0 1 10deg;" should be computed to "10deg" 
+PASS "rotate: -1.5 2 3 10deg;" should parse as "-1.5 2 3 10deg" 
+PASS "rotate: -1.5 2 3 10deg;" should be computed to "-1.5 2 3 10deg" 
+PASS "rotate: 200grad;" should parse as "200grad" 
+PASS "rotate: 200grad;" should be computed to "180deg" 
+PASS "rotate: 1rad;" should parse as "1rad" 
+PASS "rotate: 1rad;" should be computed to "57.2958deg" 
+PASS "rotate: 0 2 0 0.25turn;" should parse as "0 2 0 0.25turn" 
+PASS "rotate: 0 2 0 0.25turn;" should be computed to "0 2 0 90deg" 
+PASS "rotate: calc(1turn - 270deg);" should parse as "calc(90deg)" 
+PASS "rotate: calc(1turn - 270deg);" should be computed to "90deg" 
+PASS "rotate: 0 calc(0.5 + 0.5) 1 calc(1turn - 270deg + 400grad);" should parse as "0 1 1 calc(450deg)" 
+PASS "rotate: 0 calc(0.5 + 0.5) 1 calc(1turn - 270deg + 400grad);" should be computed to "0 1 1 450deg" 
+PASS "rotate: 2;" should be invalid 
+PASS "rotate: 1 2deg;" should be invalid 
+PASS "rotate: 1 2 45deg;" should be invalid 
+PASS "rotate: 1 2 3 4 45deg;" should be invalid 
+PASS "rotate: 45deg 1 2 3;" should be invalid 
+PASS "rotate: 10%;" should be invalid 
+PASS "rotate: 0 0 1 10%;" should be invalid 
+PASS "rotate: calc(1 + 2);" should be invalid 
+PASS "rotate: calc(20deg) 0 0 20deg;" should be invalid 
+Harness: the test ran to completion.
+

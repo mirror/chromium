@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Test for WebKit bug 15106: Dragging text inside an element with "user-drag: element" and "user-select: none" should initiate a drag 
+PASS Test for WebKit bug 15106: Dragging text inside an element with "user-drag: element" and "user-select: none" should initiate a drag 1 
+PASS Test for WebKit bug 15106: Dragging text inside an element with "user-drag: element" and "user-select: none" should initiate a drag 2 
+Harness: the test ran to completion.
+

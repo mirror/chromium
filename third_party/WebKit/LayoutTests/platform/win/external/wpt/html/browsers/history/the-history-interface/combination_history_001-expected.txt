@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Combine pushState and replaceSate methods 
+Harness: the test ran to completion.
+

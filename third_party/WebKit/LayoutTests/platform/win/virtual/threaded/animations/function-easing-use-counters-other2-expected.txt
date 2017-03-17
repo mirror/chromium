@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Arbitrary functions for easing are counted in WebAnimationsEasingAsFunctionOther. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Calls on characteristics after device disconnects and we reconnect. Should reject with InvalidStateError. 
+Harness: the test ran to completion.
+

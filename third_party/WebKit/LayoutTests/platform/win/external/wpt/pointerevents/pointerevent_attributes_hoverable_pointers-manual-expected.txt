@@ -1,0 +1,1052 @@
+This is a testharness.js-based test.
+PASS mouse pointerevent attributes 
+PASS PointerEvent Automation 
+PASS  mouse pointerover's type should be pointerover 
+PASS  mouse pointerover's button is -1 when mouse buttons are in released state. 
+PASS  mouse pointerover's buttons is 0 when mouse buttons are in released state. 
+PASS  mouse pointerover's ClientX and ClientY attributes are correct. 
+PASS  mouse pointerover event pointerType is correct. 
+PASS  mouse pointerover event is a PointerEvent event 
+PASS  mouse pointerover.pointerId attribute exists 
+PASS  mouse pointerover.pointerId is readonly 
+PASS  mouse pointerover.pointerId IDL type long (JS type was number) 
+PASS  mouse pointerover.width attribute exists 
+PASS  mouse pointerover.width is readonly 
+PASS  mouse pointerover.width IDL type float (JS type was number) 
+PASS  mouse pointerover.height attribute exists 
+PASS  mouse pointerover.height is readonly 
+PASS  mouse pointerover.height IDL type float (JS type was number) 
+PASS  mouse pointerover.pressure attribute exists 
+PASS  mouse pointerover.pressure is readonly 
+PASS  mouse pointerover.pressure IDL type float (JS type was number) 
+PASS  mouse pointerover.tiltX attribute exists 
+PASS  mouse pointerover.tiltX is readonly 
+PASS  mouse pointerover.tiltX IDL type long (JS type was number) 
+PASS  mouse pointerover.tiltY attribute exists 
+PASS  mouse pointerover.tiltY is readonly 
+PASS  mouse pointerover.tiltY IDL type long (JS type was number) 
+PASS  mouse pointerover.pointerType attribute exists 
+PASS  mouse pointerover.pointerType is readonly 
+PASS  mouse pointerover.pointerType IDL type string (JS type was string) 
+PASS  mouse pointerover.isPrimary attribute exists 
+PASS  mouse pointerover.isPrimary is readonly 
+PASS  mouse pointerover.isPrimary IDL type boolean (JS type was boolean) 
+PASS  mouse pointerover.detail attribute exists 
+PASS  mouse pointerover.detail is readonly 
+PASS  mouse pointerover.detail IDL type long (JS type was number) 
+PASS  mouse pointerover.detail value is 0. 
+PASS  mouse pointerover.pressure value is valid 
+PASS  mouse pointerover properties for pointerType = mouse 
+PASS  mouse pointerover.isPrimary attribute is correct. 
+PASS  mouse pointerenter's type should be pointerenter 
+PASS  mouse pointerenter's button is -1 when mouse buttons are in released state. 
+PASS  mouse pointerenter's buttons is 0 when mouse buttons are in released state. 
+PASS  mouse pointerenter's ClientX and ClientY attributes are correct. 
+PASS  mouse pointerenter event pointerType is correct. 
+PASS  mouse pointerenter event is a PointerEvent event 
+PASS  mouse pointerenter.pointerId attribute exists 
+PASS  mouse pointerenter.pointerId is readonly 
+PASS  mouse pointerenter.pointerId IDL type long (JS type was number) 
+PASS  mouse pointerenter.width attribute exists 
+PASS  mouse pointerenter.width is readonly 
+PASS  mouse pointerenter.width IDL type float (JS type was number) 
+PASS  mouse pointerenter.height attribute exists 
+PASS  mouse pointerenter.height is readonly 
+PASS  mouse pointerenter.height IDL type float (JS type was number) 
+PASS  mouse pointerenter.pressure attribute exists 
+PASS  mouse pointerenter.pressure is readonly 
+PASS  mouse pointerenter.pressure IDL type float (JS type was number) 
+PASS  mouse pointerenter.tiltX attribute exists 
+PASS  mouse pointerenter.tiltX is readonly 
+PASS  mouse pointerenter.tiltX IDL type long (JS type was number) 
+PASS  mouse pointerenter.tiltY attribute exists 
+PASS  mouse pointerenter.tiltY is readonly 
+PASS  mouse pointerenter.tiltY IDL type long (JS type was number) 
+PASS  mouse pointerenter.pointerType attribute exists 
+PASS  mouse pointerenter.pointerType is readonly 
+PASS  mouse pointerenter.pointerType IDL type string (JS type was string) 
+PASS  mouse pointerenter.isPrimary attribute exists 
+PASS  mouse pointerenter.isPrimary is readonly 
+PASS  mouse pointerenter.isPrimary IDL type boolean (JS type was boolean) 
+PASS  mouse pointerenter.detail attribute exists 
+PASS  mouse pointerenter.detail is readonly 
+PASS  mouse pointerenter.detail IDL type long (JS type was number) 
+PASS  mouse pointerenter.detail value is 0. 
+PASS  mouse pointerenter.pressure value is valid 
+PASS  mouse pointerenter properties for pointerType = mouse 
+PASS  mouse pointerenter.isPrimary attribute is correct. 
+PASS  mouse pointerenter.pointerId should be the same as previous pointer events for this active pointer. 
+PASS  mouse pointermove's type should be pointermove 
+PASS  mouse pointermove's button is -1 when mouse buttons are in released state. 
+PASS  mouse pointermove's buttons is 0 when mouse buttons are in released state. 
+PASS  mouse pointermove's ClientX and ClientY attributes are correct. 
+PASS  mouse pointermove event pointerType is correct. 
+PASS  mouse pointermove event is a PointerEvent event 
+PASS  mouse pointermove.pointerId attribute exists 
+PASS  mouse pointermove.pointerId is readonly 
+PASS  mouse pointermove.pointerId IDL type long (JS type was number) 
+PASS  mouse pointermove.width attribute exists 
+PASS  mouse pointermove.width is readonly 
+PASS  mouse pointermove.width IDL type float (JS type was number) 
+PASS  mouse pointermove.height attribute exists 
+PASS  mouse pointermove.height is readonly 
+PASS  mouse pointermove.height IDL type float (JS type was number) 
+PASS  mouse pointermove.pressure attribute exists 
+PASS  mouse pointermove.pressure is readonly 
+PASS  mouse pointermove.pressure IDL type float (JS type was number) 
+PASS  mouse pointermove.tiltX attribute exists 
+PASS  mouse pointermove.tiltX is readonly 
+PASS  mouse pointermove.tiltX IDL type long (JS type was number) 
+PASS  mouse pointermove.tiltY attribute exists 
+PASS  mouse pointermove.tiltY is readonly 
+PASS  mouse pointermove.tiltY IDL type long (JS type was number) 
+PASS  mouse pointermove.pointerType attribute exists 
+PASS  mouse pointermove.pointerType is readonly 
+PASS  mouse pointermove.pointerType IDL type string (JS type was string) 
+PASS  mouse pointermove.isPrimary attribute exists 
+PASS  mouse pointermove.isPrimary is readonly 
+PASS  mouse pointermove.isPrimary IDL type boolean (JS type was boolean) 
+PASS  mouse pointermove.detail attribute exists 
+PASS  mouse pointermove.detail is readonly 
+PASS  mouse pointermove.detail IDL type long (JS type was number) 
+PASS  mouse pointermove.detail value is 0. 
+PASS  mouse pointermove.pressure value is valid 
+PASS  mouse pointermove properties for pointerType = mouse 
+PASS  mouse pointermove.isPrimary attribute is correct. 
+PASS  mouse pointermove.pointerId should be the same as previous pointer events for this active pointer. 
+PASS  mouse pointerdown's type should be pointerdown 
+PASS  mouse pointerdown's button attribute is 0 when left mouse button is pressed. 
+PASS  mouse pointerdown's buttons attribute is 1 when left mouse button is pressed. 
+PASS  mouse pointerdown's ClientX and ClientY attributes are correct. 
+PASS  mouse pointerdown event pointerType is correct. 
+PASS  mouse pointerdown event is a PointerEvent event 
+PASS  mouse pointerdown.pointerId attribute exists 
+PASS  mouse pointerdown.pointerId is readonly 
+PASS  mouse pointerdown.pointerId IDL type long (JS type was number) 
+PASS  mouse pointerdown.width attribute exists 
+PASS  mouse pointerdown.width is readonly 
+PASS  mouse pointerdown.width IDL type float (JS type was number) 
+PASS  mouse pointerdown.height attribute exists 
+PASS  mouse pointerdown.height is readonly 
+PASS  mouse pointerdown.height IDL type float (JS type was number) 
+PASS  mouse pointerdown.pressure attribute exists 
+PASS  mouse pointerdown.pressure is readonly 
+PASS  mouse pointerdown.pressure IDL type float (JS type was number) 
+PASS  mouse pointerdown.tiltX attribute exists 
+PASS  mouse pointerdown.tiltX is readonly 
+PASS  mouse pointerdown.tiltX IDL type long (JS type was number) 
+PASS  mouse pointerdown.tiltY attribute exists 
+PASS  mouse pointerdown.tiltY is readonly 
+PASS  mouse pointerdown.tiltY IDL type long (JS type was number) 
+PASS  mouse pointerdown.pointerType attribute exists 
+PASS  mouse pointerdown.pointerType is readonly 
+PASS  mouse pointerdown.pointerType IDL type string (JS type was string) 
+PASS  mouse pointerdown.isPrimary attribute exists 
+PASS  mouse pointerdown.isPrimary is readonly 
+PASS  mouse pointerdown.isPrimary IDL type boolean (JS type was boolean) 
+PASS  mouse pointerdown.detail attribute exists 
+PASS  mouse pointerdown.detail is readonly 
+PASS  mouse pointerdown.detail IDL type long (JS type was number) 
+PASS  mouse pointerdown.detail value is 0. 
+PASS  mouse pointerdown.pressure value is valid 
+PASS  mouse pointerdown properties for pointerType = mouse 
+PASS  mouse pointerdown.isPrimary attribute is correct. 
+PASS  mouse pointerdown.pointerId should be the same as previous pointer events for this active pointer. 
+PASS  mouse pointerup's type should be pointerup 
+PASS  mouse pointerup's button attribute is 0 when left mouse button is just released. 
+PASS  mouse pointerup's buttons attribute is 0 when left mouse button is just released. 
+PASS  mouse pointerup's ClientX and ClientY attributes are correct. 
+PASS  mouse pointerup event pointerType is correct. 
+PASS  mouse pointerup event is a PointerEvent event 
+PASS  mouse pointerup.pointerId attribute exists 
+PASS  mouse pointerup.pointerId is readonly 
+PASS  mouse pointerup.pointerId IDL type long (JS type was number) 
+PASS  mouse pointerup.width attribute exists 
+PASS  mouse pointerup.width is readonly 
+PASS  mouse pointerup.width IDL type float (JS type was number) 
+PASS  mouse pointerup.height attribute exists 
+PASS  mouse pointerup.height is readonly 
+PASS  mouse pointerup.height IDL type float (JS type was number) 
+PASS  mouse pointerup.pressure attribute exists 
+PASS  mouse pointerup.pressure is readonly 
+PASS  mouse pointerup.pressure IDL type float (JS type was number) 
+PASS  mouse pointerup.tiltX attribute exists 
+PASS  mouse pointerup.tiltX is readonly 
+PASS  mouse pointerup.tiltX IDL type long (JS type was number) 
+PASS  mouse pointerup.tiltY attribute exists 
+PASS  mouse pointerup.tiltY is readonly 
+PASS  mouse pointerup.tiltY IDL type long (JS type was number) 
+PASS  mouse pointerup.pointerType attribute exists 
+PASS  mouse pointerup.pointerType is readonly 
+PASS  mouse pointerup.pointerType IDL type string (JS type was string) 
+PASS  mouse pointerup.isPrimary attribute exists 
+PASS  mouse pointerup.isPrimary is readonly 
+PASS  mouse pointerup.isPrimary IDL type boolean (JS type was boolean) 
+PASS  mouse pointerup.detail attribute exists 
+PASS  mouse pointerup.detail is readonly 
+PASS  mouse pointerup.detail IDL type long (JS type was number) 
+PASS  mouse pointerup.detail value is 0. 
+PASS  mouse pointerup.pressure value is valid 
+PASS  mouse pointerup properties for pointerType = mouse 
+PASS  mouse pointerup.isPrimary attribute is correct. 
+PASS  mouse pointerup.pointerId should be the same as previous pointer events for this active pointer. 
+PASS  mouse pointerout's type should be pointerout 
+PASS  mouse pointerout's button is -1 when mouse buttons are in released state. 
+PASS  mouse pointerout's buttons is 0 when mouse buttons are in released state. 
+PASS  mouse pointerout's ClientX and ClientY attributes are correct. 
+PASS  mouse pointerout event pointerType is correct. 
+PASS  mouse pointerout event is a PointerEvent event 
+PASS  mouse pointerout.pointerId attribute exists 
+PASS  mouse pointerout.pointerId is readonly 
+PASS  mouse pointerout.pointerId IDL type long (JS type was number) 
+PASS  mouse pointerout.width attribute exists 
+PASS  mouse pointerout.width is readonly 
+PASS  mouse pointerout.width IDL type float (JS type was number) 
+PASS  mouse pointerout.height attribute exists 
+PASS  mouse pointerout.height is readonly 
+PASS  mouse pointerout.height IDL type float (JS type was number) 
+PASS  mouse pointerout.pressure attribute exists 
+PASS  mouse pointerout.pressure is readonly 
+PASS  mouse pointerout.pressure IDL type float (JS type was number) 
+PASS  mouse pointerout.tiltX attribute exists 
+PASS  mouse pointerout.tiltX is readonly 
+PASS  mouse pointerout.tiltX IDL type long (JS type was number) 
+PASS  mouse pointerout.tiltY attribute exists 
+PASS  mouse pointerout.tiltY is readonly 
+PASS  mouse pointerout.tiltY IDL type long (JS type was number) 
+PASS  mouse pointerout.pointerType attribute exists 
+PASS  mouse pointerout.pointerType is readonly 
+PASS  mouse pointerout.pointerType IDL type string (JS type was string) 
+PASS  mouse pointerout.isPrimary attribute exists 
+PASS  mouse pointerout.isPrimary is readonly 
+PASS  mouse pointerout.isPrimary IDL type boolean (JS type was boolean) 
+PASS  mouse pointerout.detail attribute exists 
+PASS  mouse pointerout.detail is readonly 
+PASS  mouse pointerout.detail IDL type long (JS type was number) 
+PASS  mouse pointerout.detail value is 0. 
+PASS  mouse pointerout.pressure value is valid 
+PASS  mouse pointerout properties for pointerType = mouse 
+PASS  mouse pointerout.isPrimary attribute is correct. 
+PASS  mouse pointerout.pointerId should be the same as previous pointer events for this active pointer. 
+PASS  mouse pointerleave's type should be pointerleave 
+PASS  mouse pointerleave's button is -1 when mouse buttons are in released state. 
+PASS  mouse pointerleave's buttons is 0 when mouse buttons are in released state. 
+PASS  mouse pointerleave's ClientX and ClientY attributes are correct. 
+PASS  mouse pointerleave event pointerType is correct. 
+PASS  mouse pointerleave event is a PointerEvent event 
+PASS  mouse pointerleave.pointerId attribute exists 
+PASS  mouse pointerleave.pointerId is readonly 
+PASS  mouse pointerleave.pointerId IDL type long (JS type was number) 
+PASS  mouse pointerleave.width attribute exists 
+PASS  mouse pointerleave.width is readonly 
+PASS  mouse pointerleave.width IDL type float (JS type was number) 
+PASS  mouse pointerleave.height attribute exists 
+PASS  mouse pointerleave.height is readonly 
+PASS  mouse pointerleave.height IDL type float (JS type was number) 
+PASS  mouse pointerleave.pressure attribute exists 
+PASS  mouse pointerleave.pressure is readonly 
+PASS  mouse pointerleave.pressure IDL type float (JS type was number) 
+PASS  mouse pointerleave.tiltX attribute exists 
+PASS  mouse pointerleave.tiltX is readonly 
+PASS  mouse pointerleave.tiltX IDL type long (JS type was number) 
+PASS  mouse pointerleave.tiltY attribute exists 
+PASS  mouse pointerleave.tiltY is readonly 
+PASS  mouse pointerleave.tiltY IDL type long (JS type was number) 
+PASS  mouse pointerleave.pointerType attribute exists 
+PASS  mouse pointerleave.pointerType is readonly 
+PASS  mouse pointerleave.pointerType IDL type string (JS type was string) 
+PASS  mouse pointerleave.isPrimary attribute exists 
+PASS  mouse pointerleave.isPrimary is readonly 
+PASS  mouse pointerleave.isPrimary IDL type boolean (JS type was boolean) 
+PASS  mouse pointerleave.detail attribute exists 
+PASS  mouse pointerleave.detail is readonly 
+PASS  mouse pointerleave.detail IDL type long (JS type was number) 
+PASS  mouse pointerleave.detail value is 0. 
+PASS  mouse pointerleave.pressure value is valid 
+PASS  mouse pointerleave properties for pointerType = mouse 
+PASS  mouse pointerleave.isPrimary attribute is correct. 
+PASS  mouse pointerleave.pointerId should be the same as previous pointer events for this active pointer. 
+PASS Inner frame  mouse pointerover's type should be pointerover 
+PASS Inner frame  mouse pointerover's button is -1 when mouse buttons are in released state. 
+PASS Inner frame  mouse pointerover's buttons is 0 when mouse buttons are in released state. 
+PASS Inner frame  mouse pointerover's ClientX and ClientY attributes are correct. 
+PASS Inner frame  mouse pointerover event pointerType is correct. 
+PASS Inner frame  mouse pointerover event is a PointerEvent event 
+PASS Inner frame  mouse pointerover.pointerId attribute exists 
+PASS Inner frame  mouse pointerover.pointerId is readonly 
+PASS Inner frame  mouse pointerover.pointerId IDL type long (JS type was number) 
+PASS Inner frame  mouse pointerover.width attribute exists 
+PASS Inner frame  mouse pointerover.width is readonly 
+PASS Inner frame  mouse pointerover.width IDL type float (JS type was number) 
+PASS Inner frame  mouse pointerover.height attribute exists 
+PASS Inner frame  mouse pointerover.height is readonly 
+PASS Inner frame  mouse pointerover.height IDL type float (JS type was number) 
+PASS Inner frame  mouse pointerover.pressure attribute exists 
+PASS Inner frame  mouse pointerover.pressure is readonly 
+PASS Inner frame  mouse pointerover.pressure IDL type float (JS type was number) 
+PASS Inner frame  mouse pointerover.tiltX attribute exists 
+PASS Inner frame  mouse pointerover.tiltX is readonly 
+PASS Inner frame  mouse pointerover.tiltX IDL type long (JS type was number) 
+PASS Inner frame  mouse pointerover.tiltY attribute exists 
+PASS Inner frame  mouse pointerover.tiltY is readonly 
+PASS Inner frame  mouse pointerover.tiltY IDL type long (JS type was number) 
+PASS Inner frame  mouse pointerover.pointerType attribute exists 
+PASS Inner frame  mouse pointerover.pointerType is readonly 
+PASS Inner frame  mouse pointerover.pointerType IDL type string (JS type was string) 
+PASS Inner frame  mouse pointerover.isPrimary attribute exists 
+PASS Inner frame  mouse pointerover.isPrimary is readonly 
+PASS Inner frame  mouse pointerover.isPrimary IDL type boolean (JS type was boolean) 
+PASS Inner frame  mouse pointerover.detail attribute exists 
+PASS Inner frame  mouse pointerover.detail is readonly 
+PASS Inner frame  mouse pointerover.detail IDL type long (JS type was number) 
+PASS Inner frame  mouse pointerover.detail value is 0. 
+PASS Inner frame  mouse pointerover.pressure value is valid 
+PASS Inner frame  mouse pointerover properties for pointerType = mouse 
+PASS Inner frame  mouse pointerover.isPrimary attribute is correct. 
+PASS Inner frame  mouse pointerenter's type should be pointerenter 
+PASS Inner frame  mouse pointerenter's button is -1 when mouse buttons are in released state. 
+PASS Inner frame  mouse pointerenter's buttons is 0 when mouse buttons are in released state. 
+PASS Inner frame  mouse pointerenter's ClientX and ClientY attributes are correct. 
+PASS Inner frame  mouse pointerenter event pointerType is correct. 
+PASS Inner frame  mouse pointerenter event is a PointerEvent event 
+PASS Inner frame  mouse pointerenter.pointerId attribute exists 
+PASS Inner frame  mouse pointerenter.pointerId is readonly 
+PASS Inner frame  mouse pointerenter.pointerId IDL type long (JS type was number) 
+PASS Inner frame  mouse pointerenter.width attribute exists 
+PASS Inner frame  mouse pointerenter.width is readonly 
+PASS Inner frame  mouse pointerenter.width IDL type float (JS type was number) 
+PASS Inner frame  mouse pointerenter.height attribute exists 
+PASS Inner frame  mouse pointerenter.height is readonly 
+PASS Inner frame  mouse pointerenter.height IDL type float (JS type was number) 
+PASS Inner frame  mouse pointerenter.pressure attribute exists 
+PASS Inner frame  mouse pointerenter.pressure is readonly 
+PASS Inner frame  mouse pointerenter.pressure IDL type float (JS type was number) 
+PASS Inner frame  mouse pointerenter.tiltX attribute exists 
+PASS Inner frame  mouse pointerenter.tiltX is readonly 
+PASS Inner frame  mouse pointerenter.tiltX IDL type long (JS type was number) 
+PASS Inner frame  mouse pointerenter.tiltY attribute exists 
+PASS Inner frame  mouse pointerenter.tiltY is readonly 
+PASS Inner frame  mouse pointerenter.tiltY IDL type long (JS type was number) 
+PASS Inner frame  mouse pointerenter.pointerType attribute exists 
+PASS Inner frame  mouse pointerenter.pointerType is readonly 
+PASS Inner frame  mouse pointerenter.pointerType IDL type string (JS type was string) 
+PASS Inner frame  mouse pointerenter.isPrimary attribute exists 
+PASS Inner frame  mouse pointerenter.isPrimary is readonly 
+PASS Inner frame  mouse pointerenter.isPrimary IDL type boolean (JS type was boolean) 
+PASS Inner frame  mouse pointerenter.detail attribute exists 
+PASS Inner frame  mouse pointerenter.detail is readonly 
+PASS Inner frame  mouse pointerenter.detail IDL type long (JS type was number) 
+PASS Inner frame  mouse pointerenter.detail value is 0. 
+PASS Inner frame  mouse pointerenter.pressure value is valid 
+PASS Inner frame  mouse pointerenter properties for pointerType = mouse 
+PASS Inner frame  mouse pointerenter.isPrimary attribute is correct. 
+PASS Inner frame  mouse pointerenter.pointerId should be the same as previous pointer events for this active pointer. 
+PASS Inner frame  mouse pointermove's type should be pointermove 
+PASS Inner frame  mouse pointermove's button is -1 when mouse buttons are in released state. 
+PASS Inner frame  mouse pointermove's buttons is 0 when mouse buttons are in released state. 
+PASS Inner frame  mouse pointermove's ClientX and ClientY attributes are correct. 
+PASS Inner frame  mouse pointermove event pointerType is correct. 
+PASS Inner frame  mouse pointermove event is a PointerEvent event 
+PASS Inner frame  mouse pointermove.pointerId attribute exists 
+PASS Inner frame  mouse pointermove.pointerId is readonly 
+PASS Inner frame  mouse pointermove.pointerId IDL type long (JS type was number) 
+PASS Inner frame  mouse pointermove.width attribute exists 
+PASS Inner frame  mouse pointermove.width is readonly 
+PASS Inner frame  mouse pointermove.width IDL type float (JS type was number) 
+PASS Inner frame  mouse pointermove.height attribute exists 
+PASS Inner frame  mouse pointermove.height is readonly 
+PASS Inner frame  mouse pointermove.height IDL type float (JS type was number) 
+PASS Inner frame  mouse pointermove.pressure attribute exists 
+PASS Inner frame  mouse pointermove.pressure is readonly 
+PASS Inner frame  mouse pointermove.pressure IDL type float (JS type was number) 
+PASS Inner frame  mouse pointermove.tiltX attribute exists 
+PASS Inner frame  mouse pointermove.tiltX is readonly 
+PASS Inner frame  mouse pointermove.tiltX IDL type long (JS type was number) 
+PASS Inner frame  mouse pointermove.tiltY attribute exists 
+PASS Inner frame  mouse pointermove.tiltY is readonly 
+PASS Inner frame  mouse pointermove.tiltY IDL type long (JS type was number) 
+PASS Inner frame  mouse pointermove.pointerType attribute exists 
+PASS Inner frame  mouse pointermove.pointerType is readonly 
+PASS Inner frame  mouse pointermove.pointerType IDL type string (JS type was string) 
+PASS Inner frame  mouse pointermove.isPrimary attribute exists 
+PASS Inner frame  mouse pointermove.isPrimary is readonly 
+PASS Inner frame  mouse pointermove.isPrimary IDL type boolean (JS type was boolean) 
+PASS Inner frame  mouse pointermove.detail attribute exists 
+PASS Inner frame  mouse pointermove.detail is readonly 
+PASS Inner frame  mouse pointermove.detail IDL type long (JS type was number) 
+PASS Inner frame  mouse pointermove.detail value is 0. 
+PASS Inner frame  mouse pointermove.pressure value is valid 
+PASS Inner frame  mouse pointermove properties for pointerType = mouse 
+PASS Inner frame  mouse pointermove.isPrimary attribute is correct. 
+PASS Inner frame  mouse pointermove.pointerId should be the same as previous pointer events for this active pointer. 
+PASS Inner frame  mouse pointerdown's type should be pointerdown 
+PASS Inner frame  mouse pointerdown's button attribute is 0 when left mouse button is pressed. 
+PASS Inner frame  mouse pointerdown's buttons attribute is 1 when left mouse button is pressed. 
+PASS Inner frame  mouse pointerdown's ClientX and ClientY attributes are correct. 
+PASS Inner frame  mouse pointerdown event pointerType is correct. 
+PASS Inner frame  mouse pointerdown event is a PointerEvent event 
+PASS Inner frame  mouse pointerdown.pointerId attribute exists 
+PASS Inner frame  mouse pointerdown.pointerId is readonly 
+PASS Inner frame  mouse pointerdown.pointerId IDL type long (JS type was number) 
+PASS Inner frame  mouse pointerdown.width attribute exists 
+PASS Inner frame  mouse pointerdown.width is readonly 
+PASS Inner frame  mouse pointerdown.width IDL type float (JS type was number) 
+PASS Inner frame  mouse pointerdown.height attribute exists 
+PASS Inner frame  mouse pointerdown.height is readonly 
+PASS Inner frame  mouse pointerdown.height IDL type float (JS type was number) 
+PASS Inner frame  mouse pointerdown.pressure attribute exists 
+PASS Inner frame  mouse pointerdown.pressure is readonly 
+PASS Inner frame  mouse pointerdown.pressure IDL type float (JS type was number) 
+PASS Inner frame  mouse pointerdown.tiltX attribute exists 
+PASS Inner frame  mouse pointerdown.tiltX is readonly 
+PASS Inner frame  mouse pointerdown.tiltX IDL type long (JS type was number) 
+PASS Inner frame  mouse pointerdown.tiltY attribute exists 
+PASS Inner frame  mouse pointerdown.tiltY is readonly 
+PASS Inner frame  mouse pointerdown.tiltY IDL type long (JS type was number) 
+PASS Inner frame  mouse pointerdown.pointerType attribute exists 
+PASS Inner frame  mouse pointerdown.pointerType is readonly 
+PASS Inner frame  mouse pointerdown.pointerType IDL type string (JS type was string) 
+PASS Inner frame  mouse pointerdown.isPrimary attribute exists 
+PASS Inner frame  mouse pointerdown.isPrimary is readonly 
+PASS Inner frame  mouse pointerdown.isPrimary IDL type boolean (JS type was boolean) 
+PASS Inner frame  mouse pointerdown.detail attribute exists 
+PASS Inner frame  mouse pointerdown.detail is readonly 
+PASS Inner frame  mouse pointerdown.detail IDL type long (JS type was number) 
+PASS Inner frame  mouse pointerdown.detail value is 0. 
+PASS Inner frame  mouse pointerdown.pressure value is valid 
+PASS Inner frame  mouse pointerdown properties for pointerType = mouse 
+PASS Inner frame  mouse pointerdown.isPrimary attribute is correct. 
+PASS Inner frame  mouse pointerdown.pointerId should be the same as previous pointer events for this active pointer. 
+PASS Inner frame  mouse pointerup's type should be pointerup 
+PASS Inner frame  mouse pointerup's button attribute is 0 when left mouse button is just released. 
+PASS Inner frame  mouse pointerup's buttons attribute is 0 when left mouse button is just released. 
+PASS Inner frame  mouse pointerup's ClientX and ClientY attributes are correct. 
+PASS Inner frame  mouse pointerup event pointerType is correct. 
+PASS Inner frame  mouse pointerup event is a PointerEvent event 
+PASS Inner frame  mouse pointerup.pointerId attribute exists 
+PASS Inner frame  mouse pointerup.pointerId is readonly 
+PASS Inner frame  mouse pointerup.pointerId IDL type long (JS type was number) 
+PASS Inner frame  mouse pointerup.width attribute exists 
+PASS Inner frame  mouse pointerup.width is readonly 
+PASS Inner frame  mouse pointerup.width IDL type float (JS type was number) 
+PASS Inner frame  mouse pointerup.height attribute exists 
+PASS Inner frame  mouse pointerup.height is readonly 
+PASS Inner frame  mouse pointerup.height IDL type float (JS type was number) 
+PASS Inner frame  mouse pointerup.pressure attribute exists 
+PASS Inner frame  mouse pointerup.pressure is readonly 
+PASS Inner frame  mouse pointerup.pressure IDL type float (JS type was number) 
+PASS Inner frame  mouse pointerup.tiltX attribute exists 
+PASS Inner frame  mouse pointerup.tiltX is readonly 
+PASS Inner frame  mouse pointerup.tiltX IDL type long (JS type was number) 
+PASS Inner frame  mouse pointerup.tiltY attribute exists 
+PASS Inner frame  mouse pointerup.tiltY is readonly 
+PASS Inner frame  mouse pointerup.tiltY IDL type long (JS type was number) 
+PASS Inner frame  mouse pointerup.pointerType attribute exists 
+PASS Inner frame  mouse pointerup.pointerType is readonly 
+PASS Inner frame  mouse pointerup.pointerType IDL type string (JS type was string) 
+PASS Inner frame  mouse pointerup.isPrimary attribute exists 
+PASS Inner frame  mouse pointerup.isPrimary is readonly 
+PASS Inner frame  mouse pointerup.isPrimary IDL type boolean (JS type was boolean) 
+PASS Inner frame  mouse pointerup.detail attribute exists 
+PASS Inner frame  mouse pointerup.detail is readonly 
+PASS Inner frame  mouse pointerup.detail IDL type long (JS type was number) 
+PASS Inner frame  mouse pointerup.detail value is 0. 
+PASS Inner frame  mouse pointerup.pressure value is valid 
+PASS Inner frame  mouse pointerup properties for pointerType = mouse 
+PASS Inner frame  mouse pointerup.isPrimary attribute is correct. 
+PASS Inner frame  mouse pointerup.pointerId should be the same as previous pointer events for this active pointer. 
+PASS Inner frame  mouse pointerout's type should be pointerout 
+PASS Inner frame  mouse pointerout's button is -1 when mouse buttons are in released state. 
+PASS Inner frame  mouse pointerout's buttons is 0 when mouse buttons are in released state. 
+PASS Inner frame  mouse pointerout's ClientX and ClientY attributes are correct. 
+PASS Inner frame  mouse pointerout event pointerType is correct. 
+PASS Inner frame  mouse pointerout event is a PointerEvent event 
+PASS Inner frame  mouse pointerout.pointerId attribute exists 
+PASS Inner frame  mouse pointerout.pointerId is readonly 
+PASS Inner frame  mouse pointerout.pointerId IDL type long (JS type was number) 
+PASS Inner frame  mouse pointerout.width attribute exists 
+PASS Inner frame  mouse pointerout.width is readonly 
+PASS Inner frame  mouse pointerout.width IDL type float (JS type was number) 
+PASS Inner frame  mouse pointerout.height attribute exists 
+PASS Inner frame  mouse pointerout.height is readonly 
+PASS Inner frame  mouse pointerout.height IDL type float (JS type was number) 
+PASS Inner frame  mouse pointerout.pressure attribute exists 
+PASS Inner frame  mouse pointerout.pressure is readonly 
+PASS Inner frame  mouse pointerout.pressure IDL type float (JS type was number) 
+PASS Inner frame  mouse pointerout.tiltX attribute exists 
+PASS Inner frame  mouse pointerout.tiltX is readonly 
+PASS Inner frame  mouse pointerout.tiltX IDL type long (JS type was number) 
+PASS Inner frame  mouse pointerout.tiltY attribute exists 
+PASS Inner frame  mouse pointerout.tiltY is readonly 
+PASS Inner frame  mouse pointerout.tiltY IDL type long (JS type was number) 
+PASS Inner frame  mouse pointerout.pointerType attribute exists 
+PASS Inner frame  mouse pointerout.pointerType is readonly 
+PASS Inner frame  mouse pointerout.pointerType IDL type string (JS type was string) 
+PASS Inner frame  mouse pointerout.isPrimary attribute exists 
+PASS Inner frame  mouse pointerout.isPrimary is readonly 
+PASS Inner frame  mouse pointerout.isPrimary IDL type boolean (JS type was boolean) 
+PASS Inner frame  mouse pointerout.detail attribute exists 
+PASS Inner frame  mouse pointerout.detail is readonly 
+PASS Inner frame  mouse pointerout.detail IDL type long (JS type was number) 
+PASS Inner frame  mouse pointerout.detail value is 0. 
+PASS Inner frame  mouse pointerout.pressure value is valid 
+PASS Inner frame  mouse pointerout properties for pointerType = mouse 
+PASS Inner frame  mouse pointerout.isPrimary attribute is correct. 
+PASS Inner frame  mouse pointerout.pointerId should be the same as previous pointer events for this active pointer. 
+PASS Inner frame  mouse pointerleave's type should be pointerleave 
+PASS Inner frame  mouse pointerleave's button is -1 when mouse buttons are in released state. 
+PASS Inner frame  mouse pointerleave's buttons is 0 when mouse buttons are in released state. 
+PASS Inner frame  mouse pointerleave's ClientX and ClientY attributes are correct. 
+PASS Inner frame  mouse pointerleave event pointerType is correct. 
+PASS Inner frame  mouse pointerleave event is a PointerEvent event 
+PASS Inner frame  mouse pointerleave.pointerId attribute exists 
+PASS Inner frame  mouse pointerleave.pointerId is readonly 
+PASS Inner frame  mouse pointerleave.pointerId IDL type long (JS type was number) 
+PASS Inner frame  mouse pointerleave.width attribute exists 
+PASS Inner frame  mouse pointerleave.width is readonly 
+PASS Inner frame  mouse pointerleave.width IDL type float (JS type was number) 
+PASS Inner frame  mouse pointerleave.height attribute exists 
+PASS Inner frame  mouse pointerleave.height is readonly 
+PASS Inner frame  mouse pointerleave.height IDL type float (JS type was number) 
+PASS Inner frame  mouse pointerleave.pressure attribute exists 
+PASS Inner frame  mouse pointerleave.pressure is readonly 
+PASS Inner frame  mouse pointerleave.pressure IDL type float (JS type was number) 
+PASS Inner frame  mouse pointerleave.tiltX attribute exists 
+PASS Inner frame  mouse pointerleave.tiltX is readonly 
+PASS Inner frame  mouse pointerleave.tiltX IDL type long (JS type was number) 
+PASS Inner frame  mouse pointerleave.tiltY attribute exists 
+PASS Inner frame  mouse pointerleave.tiltY is readonly 
+PASS Inner frame  mouse pointerleave.tiltY IDL type long (JS type was number) 
+PASS Inner frame  mouse pointerleave.pointerType attribute exists 
+PASS Inner frame  mouse pointerleave.pointerType is readonly 
+PASS Inner frame  mouse pointerleave.pointerType IDL type string (JS type was string) 
+PASS Inner frame  mouse pointerleave.isPrimary attribute exists 
+PASS Inner frame  mouse pointerleave.isPrimary is readonly 
+PASS Inner frame  mouse pointerleave.isPrimary IDL type boolean (JS type was boolean) 
+PASS Inner frame  mouse pointerleave.detail attribute exists 
+PASS Inner frame  mouse pointerleave.detail is readonly 
+PASS Inner frame  mouse pointerleave.detail IDL type long (JS type was number) 
+PASS Inner frame  mouse pointerleave.detail value is 0. 
+PASS Inner frame  mouse pointerleave.pressure value is valid 
+PASS Inner frame  mouse pointerleave properties for pointerType = mouse 
+PASS Inner frame  mouse pointerleave.isPrimary attribute is correct. 
+PASS Inner frame  mouse pointerleave.pointerId should be the same as previous pointer events for this active pointer. 
+PASS pen pointerevent attributes 
+PASS  pen pointerover's type should be pointerover 
+PASS  pen pointerover's button is -1 when mouse buttons are in released state. 
+PASS  pen pointerover's buttons is 0 when mouse buttons are in released state. 
+PASS  pen pointerover's ClientX and ClientY attributes are correct. 
+PASS  pen pointerover event pointerType is correct. 
+PASS  pen pointerover event is a PointerEvent event 
+PASS  pen pointerover.pointerId attribute exists 
+PASS  pen pointerover.pointerId is readonly 
+PASS  pen pointerover.pointerId IDL type long (JS type was number) 
+PASS  pen pointerover.width attribute exists 
+PASS  pen pointerover.width is readonly 
+PASS  pen pointerover.width IDL type float (JS type was number) 
+PASS  pen pointerover.height attribute exists 
+PASS  pen pointerover.height is readonly 
+PASS  pen pointerover.height IDL type float (JS type was number) 
+PASS  pen pointerover.pressure attribute exists 
+PASS  pen pointerover.pressure is readonly 
+PASS  pen pointerover.pressure IDL type float (JS type was number) 
+PASS  pen pointerover.tiltX attribute exists 
+PASS  pen pointerover.tiltX is readonly 
+PASS  pen pointerover.tiltX IDL type long (JS type was number) 
+PASS  pen pointerover.tiltY attribute exists 
+PASS  pen pointerover.tiltY is readonly 
+PASS  pen pointerover.tiltY IDL type long (JS type was number) 
+PASS  pen pointerover.pointerType attribute exists 
+PASS  pen pointerover.pointerType is readonly 
+PASS  pen pointerover.pointerType IDL type string (JS type was string) 
+PASS  pen pointerover.isPrimary attribute exists 
+PASS  pen pointerover.isPrimary is readonly 
+PASS  pen pointerover.isPrimary IDL type boolean (JS type was boolean) 
+PASS  pen pointerover.detail attribute exists 
+PASS  pen pointerover.detail is readonly 
+PASS  pen pointerover.detail IDL type long (JS type was number) 
+PASS  pen pointerover.detail value is 0. 
+PASS  pen pointerover.pressure value is valid 
+PASS  pen pointerover.isPrimary attribute is correct. 
+PASS  pen pointerenter's type should be pointerenter 
+PASS  pen pointerenter's button is -1 when mouse buttons are in released state. 
+PASS  pen pointerenter's buttons is 0 when mouse buttons are in released state. 
+PASS  pen pointerenter's ClientX and ClientY attributes are correct. 
+PASS  pen pointerenter event pointerType is correct. 
+PASS  pen pointerenter event is a PointerEvent event 
+PASS  pen pointerenter.pointerId attribute exists 
+PASS  pen pointerenter.pointerId is readonly 
+PASS  pen pointerenter.pointerId IDL type long (JS type was number) 
+PASS  pen pointerenter.width attribute exists 
+PASS  pen pointerenter.width is readonly 
+PASS  pen pointerenter.width IDL type float (JS type was number) 
+PASS  pen pointerenter.height attribute exists 
+PASS  pen pointerenter.height is readonly 
+PASS  pen pointerenter.height IDL type float (JS type was number) 
+PASS  pen pointerenter.pressure attribute exists 
+PASS  pen pointerenter.pressure is readonly 
+PASS  pen pointerenter.pressure IDL type float (JS type was number) 
+PASS  pen pointerenter.tiltX attribute exists 
+PASS  pen pointerenter.tiltX is readonly 
+PASS  pen pointerenter.tiltX IDL type long (JS type was number) 
+PASS  pen pointerenter.tiltY attribute exists 
+PASS  pen pointerenter.tiltY is readonly 
+PASS  pen pointerenter.tiltY IDL type long (JS type was number) 
+PASS  pen pointerenter.pointerType attribute exists 
+PASS  pen pointerenter.pointerType is readonly 
+PASS  pen pointerenter.pointerType IDL type string (JS type was string) 
+PASS  pen pointerenter.isPrimary attribute exists 
+PASS  pen pointerenter.isPrimary is readonly 
+PASS  pen pointerenter.isPrimary IDL type boolean (JS type was boolean) 
+PASS  pen pointerenter.detail attribute exists 
+PASS  pen pointerenter.detail is readonly 
+PASS  pen pointerenter.detail IDL type long (JS type was number) 
+PASS  pen pointerenter.detail value is 0. 
+PASS  pen pointerenter.pressure value is valid 
+PASS  pen pointerenter.isPrimary attribute is correct. 
+PASS  pen pointerenter.pointerId should be the same as previous pointer events for this active pointer. 
+PASS  pen pointermove's type should be pointermove 
+PASS  pen pointermove's button is -1 when mouse buttons are in released state. 
+PASS  pen pointermove's buttons is 0 when mouse buttons are in released state. 
+PASS  pen pointermove's ClientX and ClientY attributes are correct. 
+PASS  pen pointermove event pointerType is correct. 
+PASS  pen pointermove event is a PointerEvent event 
+PASS  pen pointermove.pointerId attribute exists 
+PASS  pen pointermove.pointerId is readonly 
+PASS  pen pointermove.pointerId IDL type long (JS type was number) 
+PASS  pen pointermove.width attribute exists 
+PASS  pen pointermove.width is readonly 
+PASS  pen pointermove.width IDL type float (JS type was number) 
+PASS  pen pointermove.height attribute exists 
+PASS  pen pointermove.height is readonly 
+PASS  pen pointermove.height IDL type float (JS type was number) 
+PASS  pen pointermove.pressure attribute exists 
+PASS  pen pointermove.pressure is readonly 
+PASS  pen pointermove.pressure IDL type float (JS type was number) 
+PASS  pen pointermove.tiltX attribute exists 
+PASS  pen pointermove.tiltX is readonly 
+PASS  pen pointermove.tiltX IDL type long (JS type was number) 
+PASS  pen pointermove.tiltY attribute exists 
+PASS  pen pointermove.tiltY is readonly 
+PASS  pen pointermove.tiltY IDL type long (JS type was number) 
+PASS  pen pointermove.pointerType attribute exists 
+PASS  pen pointermove.pointerType is readonly 
+PASS  pen pointermove.pointerType IDL type string (JS type was string) 
+PASS  pen pointermove.isPrimary attribute exists 
+PASS  pen pointermove.isPrimary is readonly 
+PASS  pen pointermove.isPrimary IDL type boolean (JS type was boolean) 
+PASS  pen pointermove.detail attribute exists 
+PASS  pen pointermove.detail is readonly 
+PASS  pen pointermove.detail IDL type long (JS type was number) 
+PASS  pen pointermove.detail value is 0. 
+PASS  pen pointermove.pressure value is valid 
+PASS  pen pointermove.isPrimary attribute is correct. 
+PASS  pen pointermove.pointerId should be the same as previous pointer events for this active pointer. 
+PASS  pen pointerdown's type should be pointerdown 
+PASS  pen pointerdown's button attribute is 0 when left mouse button is pressed. 
+PASS  pen pointerdown's buttons attribute is 1 when left mouse button is pressed. 
+PASS  pen pointerdown's ClientX and ClientY attributes are correct. 
+PASS  pen pointerdown event pointerType is correct. 
+PASS  pen pointerdown event is a PointerEvent event 
+PASS  pen pointerdown.pointerId attribute exists 
+PASS  pen pointerdown.pointerId is readonly 
+PASS  pen pointerdown.pointerId IDL type long (JS type was number) 
+PASS  pen pointerdown.width attribute exists 
+PASS  pen pointerdown.width is readonly 
+PASS  pen pointerdown.width IDL type float (JS type was number) 
+PASS  pen pointerdown.height attribute exists 
+PASS  pen pointerdown.height is readonly 
+PASS  pen pointerdown.height IDL type float (JS type was number) 
+PASS  pen pointerdown.pressure attribute exists 
+PASS  pen pointerdown.pressure is readonly 
+PASS  pen pointerdown.pressure IDL type float (JS type was number) 
+PASS  pen pointerdown.tiltX attribute exists 
+PASS  pen pointerdown.tiltX is readonly 
+PASS  pen pointerdown.tiltX IDL type long (JS type was number) 
+PASS  pen pointerdown.tiltY attribute exists 
+PASS  pen pointerdown.tiltY is readonly 
+PASS  pen pointerdown.tiltY IDL type long (JS type was number) 
+PASS  pen pointerdown.pointerType attribute exists 
+PASS  pen pointerdown.pointerType is readonly 
+PASS  pen pointerdown.pointerType IDL type string (JS type was string) 
+PASS  pen pointerdown.isPrimary attribute exists 
+PASS  pen pointerdown.isPrimary is readonly 
+PASS  pen pointerdown.isPrimary IDL type boolean (JS type was boolean) 
+PASS  pen pointerdown.detail attribute exists 
+PASS  pen pointerdown.detail is readonly 
+PASS  pen pointerdown.detail IDL type long (JS type was number) 
+PASS  pen pointerdown.detail value is 0. 
+PASS  pen pointerdown.pressure value is valid 
+PASS  pen pointerdown.isPrimary attribute is correct. 
+PASS  pen pointerdown.pointerId should be the same as previous pointer events for this active pointer. 
+PASS  pen pointerup's type should be pointerup 
+PASS  pen pointerup's button attribute is 0 when left mouse button is just released. 
+PASS  pen pointerup's buttons attribute is 0 when left mouse button is just released. 
+PASS  pen pointerup's ClientX and ClientY attributes are correct. 
+PASS  pen pointerup event pointerType is correct. 
+PASS  pen pointerup event is a PointerEvent event 
+PASS  pen pointerup.pointerId attribute exists 
+PASS  pen pointerup.pointerId is readonly 
+PASS  pen pointerup.pointerId IDL type long (JS type was number) 
+PASS  pen pointerup.width attribute exists 
+PASS  pen pointerup.width is readonly 
+PASS  pen pointerup.width IDL type float (JS type was number) 
+PASS  pen pointerup.height attribute exists 
+PASS  pen pointerup.height is readonly 
+PASS  pen pointerup.height IDL type float (JS type was number) 
+PASS  pen pointerup.pressure attribute exists 
+PASS  pen pointerup.pressure is readonly 
+PASS  pen pointerup.pressure IDL type float (JS type was number) 
+PASS  pen pointerup.tiltX attribute exists 
+PASS  pen pointerup.tiltX is readonly 
+PASS  pen pointerup.tiltX IDL type long (JS type was number) 
+PASS  pen pointerup.tiltY attribute exists 
+PASS  pen pointerup.tiltY is readonly 
+PASS  pen pointerup.tiltY IDL type long (JS type was number) 
+PASS  pen pointerup.pointerType attribute exists 
+PASS  pen pointerup.pointerType is readonly 
+PASS  pen pointerup.pointerType IDL type string (JS type was string) 
+PASS  pen pointerup.isPrimary attribute exists 
+PASS  pen pointerup.isPrimary is readonly 
+PASS  pen pointerup.isPrimary IDL type boolean (JS type was boolean) 
+PASS  pen pointerup.detail attribute exists 
+PASS  pen pointerup.detail is readonly 
+PASS  pen pointerup.detail IDL type long (JS type was number) 
+PASS  pen pointerup.detail value is 0. 
+PASS  pen pointerup.pressure value is valid 
+PASS  pen pointerup.isPrimary attribute is correct. 
+PASS  pen pointerup.pointerId should be the same as previous pointer events for this active pointer. 
+PASS  pen pointerout's type should be pointerout 
+PASS  pen pointerout's button is -1 when mouse buttons are in released state. 
+PASS  pen pointerout's buttons is 0 when mouse buttons are in released state. 
+PASS  pen pointerout's ClientX and ClientY attributes are correct. 
+PASS  pen pointerout event pointerType is correct. 
+PASS  pen pointerout event is a PointerEvent event 
+PASS  pen pointerout.pointerId attribute exists 
+PASS  pen pointerout.pointerId is readonly 
+PASS  pen pointerout.pointerId IDL type long (JS type was number) 
+PASS  pen pointerout.width attribute exists 
+PASS  pen pointerout.width is readonly 
+PASS  pen pointerout.width IDL type float (JS type was number) 
+PASS  pen pointerout.height attribute exists 
+PASS  pen pointerout.height is readonly 
+PASS  pen pointerout.height IDL type float (JS type was number) 
+PASS  pen pointerout.pressure attribute exists 
+PASS  pen pointerout.pressure is readonly 
+PASS  pen pointerout.pressure IDL type float (JS type was number) 
+PASS  pen pointerout.tiltX attribute exists 
+PASS  pen pointerout.tiltX is readonly 
+PASS  pen pointerout.tiltX IDL type long (JS type was number) 
+PASS  pen pointerout.tiltY attribute exists 
+PASS  pen pointerout.tiltY is readonly 
+PASS  pen pointerout.tiltY IDL type long (JS type was number) 
+PASS  pen pointerout.pointerType attribute exists 
+PASS  pen pointerout.pointerType is readonly 
+PASS  pen pointerout.pointerType IDL type string (JS type was string) 
+PASS  pen pointerout.isPrimary attribute exists 
+PASS  pen pointerout.isPrimary is readonly 
+PASS  pen pointerout.isPrimary IDL type boolean (JS type was boolean) 
+PASS  pen pointerout.detail attribute exists 
+PASS  pen pointerout.detail is readonly 
+PASS  pen pointerout.detail IDL type long (JS type was number) 
+PASS  pen pointerout.detail value is 0. 
+PASS  pen pointerout.pressure value is valid 
+PASS  pen pointerout.isPrimary attribute is correct. 
+PASS  pen pointerout.pointerId should be the same as previous pointer events for this active pointer. 
+PASS  pen pointerleave's type should be pointerleave 
+PASS  pen pointerleave's button is -1 when mouse buttons are in released state. 
+PASS  pen pointerleave's buttons is 0 when mouse buttons are in released state. 
+PASS  pen pointerleave's ClientX and ClientY attributes are correct. 
+PASS  pen pointerleave event pointerType is correct. 
+PASS  pen pointerleave event is a PointerEvent event 
+PASS  pen pointerleave.pointerId attribute exists 
+PASS  pen pointerleave.pointerId is readonly 
+PASS  pen pointerleave.pointerId IDL type long (JS type was number) 
+PASS  pen pointerleave.width attribute exists 
+PASS  pen pointerleave.width is readonly 
+PASS  pen pointerleave.width IDL type float (JS type was number) 
+PASS  pen pointerleave.height attribute exists 
+PASS  pen pointerleave.height is readonly 
+PASS  pen pointerleave.height IDL type float (JS type was number) 
+PASS  pen pointerleave.pressure attribute exists 
+PASS  pen pointerleave.pressure is readonly 
+PASS  pen pointerleave.pressure IDL type float (JS type was number) 
+PASS  pen pointerleave.tiltX attribute exists 
+PASS  pen pointerleave.tiltX is readonly 
+PASS  pen pointerleave.tiltX IDL type long (JS type was number) 
+PASS  pen pointerleave.tiltY attribute exists 
+PASS  pen pointerleave.tiltY is readonly 
+PASS  pen pointerleave.tiltY IDL type long (JS type was number) 
+PASS  pen pointerleave.pointerType attribute exists 
+PASS  pen pointerleave.pointerType is readonly 
+PASS  pen pointerleave.pointerType IDL type string (JS type was string) 
+PASS  pen pointerleave.isPrimary attribute exists 
+PASS  pen pointerleave.isPrimary is readonly 
+PASS  pen pointerleave.isPrimary IDL type boolean (JS type was boolean) 
+PASS  pen pointerleave.detail attribute exists 
+PASS  pen pointerleave.detail is readonly 
+PASS  pen pointerleave.detail IDL type long (JS type was number) 
+PASS  pen pointerleave.detail value is 0. 
+PASS  pen pointerleave.pressure value is valid 
+PASS  pen pointerleave.isPrimary attribute is correct. 
+PASS  pen pointerleave.pointerId should be the same as previous pointer events for this active pointer. 
+PASS Inner frame  pen pointerover's type should be pointerover 
+PASS Inner frame  pen pointerover's button is -1 when mouse buttons are in released state. 
+PASS Inner frame  pen pointerover's buttons is 0 when mouse buttons are in released state. 
+PASS Inner frame  pen pointerover's ClientX and ClientY attributes are correct. 
+PASS Inner frame  pen pointerover event pointerType is correct. 
+PASS Inner frame  pen pointerover event is a PointerEvent event 
+PASS Inner frame  pen pointerover.pointerId attribute exists 
+PASS Inner frame  pen pointerover.pointerId is readonly 
+PASS Inner frame  pen pointerover.pointerId IDL type long (JS type was number) 
+PASS Inner frame  pen pointerover.width attribute exists 
+PASS Inner frame  pen pointerover.width is readonly 
+PASS Inner frame  pen pointerover.width IDL type float (JS type was number) 
+PASS Inner frame  pen pointerover.height attribute exists 
+PASS Inner frame  pen pointerover.height is readonly 
+PASS Inner frame  pen pointerover.height IDL type float (JS type was number) 
+PASS Inner frame  pen pointerover.pressure attribute exists 
+PASS Inner frame  pen pointerover.pressure is readonly 
+PASS Inner frame  pen pointerover.pressure IDL type float (JS type was number) 
+PASS Inner frame  pen pointerover.tiltX attribute exists 
+PASS Inner frame  pen pointerover.tiltX is readonly 
+PASS Inner frame  pen pointerover.tiltX IDL type long (JS type was number) 
+PASS Inner frame  pen pointerover.tiltY attribute exists 
+PASS Inner frame  pen pointerover.tiltY is readonly 
+PASS Inner frame  pen pointerover.tiltY IDL type long (JS type was number) 
+PASS Inner frame  pen pointerover.pointerType attribute exists 
+PASS Inner frame  pen pointerover.pointerType is readonly 
+PASS Inner frame  pen pointerover.pointerType IDL type string (JS type was string) 
+PASS Inner frame  pen pointerover.isPrimary attribute exists 
+PASS Inner frame  pen pointerover.isPrimary is readonly 
+PASS Inner frame  pen pointerover.isPrimary IDL type boolean (JS type was boolean) 
+PASS Inner frame  pen pointerover.detail attribute exists 
+PASS Inner frame  pen pointerover.detail is readonly 
+PASS Inner frame  pen pointerover.detail IDL type long (JS type was number) 
+PASS Inner frame  pen pointerover.detail value is 0. 
+PASS Inner frame  pen pointerover.pressure value is valid 
+PASS Inner frame  pen pointerover.isPrimary attribute is correct. 
+PASS Inner frame  pen pointerenter's type should be pointerenter 
+PASS Inner frame  pen pointerenter's button is -1 when mouse buttons are in released state. 
+PASS Inner frame  pen pointerenter's buttons is 0 when mouse buttons are in released state. 
+PASS Inner frame  pen pointerenter's ClientX and ClientY attributes are correct. 
+PASS Inner frame  pen pointerenter event pointerType is correct. 
+PASS Inner frame  pen pointerenter event is a PointerEvent event 
+PASS Inner frame  pen pointerenter.pointerId attribute exists 
+PASS Inner frame  pen pointerenter.pointerId is readonly 
+PASS Inner frame  pen pointerenter.pointerId IDL type long (JS type was number) 
+PASS Inner frame  pen pointerenter.width attribute exists 
+PASS Inner frame  pen pointerenter.width is readonly 
+PASS Inner frame  pen pointerenter.width IDL type float (JS type was number) 
+PASS Inner frame  pen pointerenter.height attribute exists 
+PASS Inner frame  pen pointerenter.height is readonly 
+PASS Inner frame  pen pointerenter.height IDL type float (JS type was number) 
+PASS Inner frame  pen pointerenter.pressure attribute exists 
+PASS Inner frame  pen pointerenter.pressure is readonly 
+PASS Inner frame  pen pointerenter.pressure IDL type float (JS type was number) 
+PASS Inner frame  pen pointerenter.tiltX attribute exists 
+PASS Inner frame  pen pointerenter.tiltX is readonly 
+PASS Inner frame  pen pointerenter.tiltX IDL type long (JS type was number) 
+PASS Inner frame  pen pointerenter.tiltY attribute exists 
+PASS Inner frame  pen pointerenter.tiltY is readonly 
+PASS Inner frame  pen pointerenter.tiltY IDL type long (JS type was number) 
+PASS Inner frame  pen pointerenter.pointerType attribute exists 
+PASS Inner frame  pen pointerenter.pointerType is readonly 
+PASS Inner frame  pen pointerenter.pointerType IDL type string (JS type was string) 
+PASS Inner frame  pen pointerenter.isPrimary attribute exists 
+PASS Inner frame  pen pointerenter.isPrimary is readonly 
+PASS Inner frame  pen pointerenter.isPrimary IDL type boolean (JS type was boolean) 
+PASS Inner frame  pen pointerenter.detail attribute exists 
+PASS Inner frame  pen pointerenter.detail is readonly 
+PASS Inner frame  pen pointerenter.detail IDL type long (JS type was number) 
+PASS Inner frame  pen pointerenter.detail value is 0. 
+PASS Inner frame  pen pointerenter.pressure value is valid 
+PASS Inner frame  pen pointerenter.isPrimary attribute is correct. 
+PASS Inner frame  pen pointerenter.pointerId should be the same as previous pointer events for this active pointer. 
+PASS Inner frame  pen pointermove's type should be pointermove 
+PASS Inner frame  pen pointermove's button is -1 when mouse buttons are in released state. 
+PASS Inner frame  pen pointermove's buttons is 0 when mouse buttons are in released state. 
+PASS Inner frame  pen pointermove's ClientX and ClientY attributes are correct. 
+PASS Inner frame  pen pointermove event pointerType is correct. 
+PASS Inner frame  pen pointermove event is a PointerEvent event 
+PASS Inner frame  pen pointermove.pointerId attribute exists 
+PASS Inner frame  pen pointermove.pointerId is readonly 
+PASS Inner frame  pen pointermove.pointerId IDL type long (JS type was number) 
+PASS Inner frame  pen pointermove.width attribute exists 
+PASS Inner frame  pen pointermove.width is readonly 
+PASS Inner frame  pen pointermove.width IDL type float (JS type was number) 
+PASS Inner frame  pen pointermove.height attribute exists 
+PASS Inner frame  pen pointermove.height is readonly 
+PASS Inner frame  pen pointermove.height IDL type float (JS type was number) 
+PASS Inner frame  pen pointermove.pressure attribute exists 
+PASS Inner frame  pen pointermove.pressure is readonly 
+PASS Inner frame  pen pointermove.pressure IDL type float (JS type was number) 
+PASS Inner frame  pen pointermove.tiltX attribute exists 
+PASS Inner frame  pen pointermove.tiltX is readonly 
+PASS Inner frame  pen pointermove.tiltX IDL type long (JS type was number) 
+PASS Inner frame  pen pointermove.tiltY attribute exists 
+PASS Inner frame  pen pointermove.tiltY is readonly 
+PASS Inner frame  pen pointermove.tiltY IDL type long (JS type was number) 
+PASS Inner frame  pen pointermove.pointerType attribute exists 
+PASS Inner frame  pen pointermove.pointerType is readonly 
+PASS Inner frame  pen pointermove.pointerType IDL type string (JS type was string) 
+PASS Inner frame  pen pointermove.isPrimary attribute exists 
+PASS Inner frame  pen pointermove.isPrimary is readonly 
+PASS Inner frame  pen pointermove.isPrimary IDL type boolean (JS type was boolean) 
+PASS Inner frame  pen pointermove.detail attribute exists 
+PASS Inner frame  pen pointermove.detail is readonly 
+PASS Inner frame  pen pointermove.detail IDL type long (JS type was number) 
+PASS Inner frame  pen pointermove.detail value is 0. 
+PASS Inner frame  pen pointermove.pressure value is valid 
+PASS Inner frame  pen pointermove.isPrimary attribute is correct. 
+PASS Inner frame  pen pointermove.pointerId should be the same as previous pointer events for this active pointer. 
+PASS Inner frame  pen pointerdown's type should be pointerdown 
+PASS Inner frame  pen pointerdown's button attribute is 0 when left mouse button is pressed. 
+PASS Inner frame  pen pointerdown's buttons attribute is 1 when left mouse button is pressed. 
+PASS Inner frame  pen pointerdown's ClientX and ClientY attributes are correct. 
+PASS Inner frame  pen pointerdown event pointerType is correct. 
+PASS Inner frame  pen pointerdown event is a PointerEvent event 
+PASS Inner frame  pen pointerdown.pointerId attribute exists 
+PASS Inner frame  pen pointerdown.pointerId is readonly 
+PASS Inner frame  pen pointerdown.pointerId IDL type long (JS type was number) 
+PASS Inner frame  pen pointerdown.width attribute exists 
+PASS Inner frame  pen pointerdown.width is readonly 
+PASS Inner frame  pen pointerdown.width IDL type float (JS type was number) 
+PASS Inner frame  pen pointerdown.height attribute exists 
+PASS Inner frame  pen pointerdown.height is readonly 
+PASS Inner frame  pen pointerdown.height IDL type float (JS type was number) 
+PASS Inner frame  pen pointerdown.pressure attribute exists 
+PASS Inner frame  pen pointerdown.pressure is readonly 
+PASS Inner frame  pen pointerdown.pressure IDL type float (JS type was number) 
+PASS Inner frame  pen pointerdown.tiltX attribute exists 
+PASS Inner frame  pen pointerdown.tiltX is readonly 
+PASS Inner frame  pen pointerdown.tiltX IDL type long (JS type was number) 
+PASS Inner frame  pen pointerdown.tiltY attribute exists 
+PASS Inner frame  pen pointerdown.tiltY is readonly 
+PASS Inner frame  pen pointerdown.tiltY IDL type long (JS type was number) 
+PASS Inner frame  pen pointerdown.pointerType attribute exists 
+PASS Inner frame  pen pointerdown.pointerType is readonly 
+PASS Inner frame  pen pointerdown.pointerType IDL type string (JS type was string) 
+PASS Inner frame  pen pointerdown.isPrimary attribute exists 
+PASS Inner frame  pen pointerdown.isPrimary is readonly 
+PASS Inner frame  pen pointerdown.isPrimary IDL type boolean (JS type was boolean) 
+PASS Inner frame  pen pointerdown.detail attribute exists 
+PASS Inner frame  pen pointerdown.detail is readonly 
+PASS Inner frame  pen pointerdown.detail IDL type long (JS type was number) 
+PASS Inner frame  pen pointerdown.detail value is 0. 
+PASS Inner frame  pen pointerdown.pressure value is valid 
+PASS Inner frame  pen pointerdown.isPrimary attribute is correct. 
+PASS Inner frame  pen pointerdown.pointerId should be the same as previous pointer events for this active pointer. 
+PASS Inner frame  pen pointerup's type should be pointerup 
+PASS Inner frame  pen pointerup's button attribute is 0 when left mouse button is just released. 
+PASS Inner frame  pen pointerup's buttons attribute is 0 when left mouse button is just released. 
+PASS Inner frame  pen pointerup's ClientX and ClientY attributes are correct. 
+PASS Inner frame  pen pointerup event pointerType is correct. 
+PASS Inner frame  pen pointerup event is a PointerEvent event 
+PASS Inner frame  pen pointerup.pointerId attribute exists 
+PASS Inner frame  pen pointerup.pointerId is readonly 
+PASS Inner frame  pen pointerup.pointerId IDL type long (JS type was number) 
+PASS Inner frame  pen pointerup.width attribute exists 
+PASS Inner frame  pen pointerup.width is readonly 
+PASS Inner frame  pen pointerup.width IDL type float (JS type was number) 
+PASS Inner frame  pen pointerup.height attribute exists 
+PASS Inner frame  pen pointerup.height is readonly 
+PASS Inner frame  pen pointerup.height IDL type float (JS type was number) 
+PASS Inner frame  pen pointerup.pressure attribute exists 
+PASS Inner frame  pen pointerup.pressure is readonly 
+PASS Inner frame  pen pointerup.pressure IDL type float (JS type was number) 
+PASS Inner frame  pen pointerup.tiltX attribute exists 
+PASS Inner frame  pen pointerup.tiltX is readonly 
+PASS Inner frame  pen pointerup.tiltX IDL type long (JS type was number) 
+PASS Inner frame  pen pointerup.tiltY attribute exists 
+PASS Inner frame  pen pointerup.tiltY is readonly 
+PASS Inner frame  pen pointerup.tiltY IDL type long (JS type was number) 
+PASS Inner frame  pen pointerup.pointerType attribute exists 
+PASS Inner frame  pen pointerup.pointerType is readonly 
+PASS Inner frame  pen pointerup.pointerType IDL type string (JS type was string) 
+PASS Inner frame  pen pointerup.isPrimary attribute exists 
+PASS Inner frame  pen pointerup.isPrimary is readonly 
+PASS Inner frame  pen pointerup.isPrimary IDL type boolean (JS type was boolean) 
+PASS Inner frame  pen pointerup.detail attribute exists 
+PASS Inner frame  pen pointerup.detail is readonly 
+PASS Inner frame  pen pointerup.detail IDL type long (JS type was number) 
+PASS Inner frame  pen pointerup.detail value is 0. 
+PASS Inner frame  pen pointerup.pressure value is valid 
+PASS Inner frame  pen pointerup.isPrimary attribute is correct. 
+PASS Inner frame  pen pointerup.pointerId should be the same as previous pointer events for this active pointer. 
+PASS Inner frame  pen pointerout's type should be pointerout 
+PASS Inner frame  pen pointerout's button is -1 when mouse buttons are in released state. 
+PASS Inner frame  pen pointerout's buttons is 0 when mouse buttons are in released state. 
+PASS Inner frame  pen pointerout's ClientX and ClientY attributes are correct. 
+PASS Inner frame  pen pointerout event pointerType is correct. 
+PASS Inner frame  pen pointerout event is a PointerEvent event 
+PASS Inner frame  pen pointerout.pointerId attribute exists 
+PASS Inner frame  pen pointerout.pointerId is readonly 
+PASS Inner frame  pen pointerout.pointerId IDL type long (JS type was number) 
+PASS Inner frame  pen pointerout.width attribute exists 
+PASS Inner frame  pen pointerout.width is readonly 
+PASS Inner frame  pen pointerout.width IDL type float (JS type was number) 
+PASS Inner frame  pen pointerout.height attribute exists 
+PASS Inner frame  pen pointerout.height is readonly 
+PASS Inner frame  pen pointerout.height IDL type float (JS type was number) 
+PASS Inner frame  pen pointerout.pressure attribute exists 
+PASS Inner frame  pen pointerout.pressure is readonly 
+PASS Inner frame  pen pointerout.pressure IDL type float (JS type was number) 
+PASS Inner frame  pen pointerout.tiltX attribute exists 
+PASS Inner frame  pen pointerout.tiltX is readonly 
+PASS Inner frame  pen pointerout.tiltX IDL type long (JS type was number) 
+PASS Inner frame  pen pointerout.tiltY attribute exists 
+PASS Inner frame  pen pointerout.tiltY is readonly 
+PASS Inner frame  pen pointerout.tiltY IDL type long (JS type was number) 
+PASS Inner frame  pen pointerout.pointerType attribute exists 
+PASS Inner frame  pen pointerout.pointerType is readonly 
+PASS Inner frame  pen pointerout.pointerType IDL type string (JS type was string) 
+PASS Inner frame  pen pointerout.isPrimary attribute exists 
+PASS Inner frame  pen pointerout.isPrimary is readonly 
+PASS Inner frame  pen pointerout.isPrimary IDL type boolean (JS type was boolean) 
+PASS Inner frame  pen pointerout.detail attribute exists 
+PASS Inner frame  pen pointerout.detail is readonly 
+PASS Inner frame  pen pointerout.detail IDL type long (JS type was number) 
+PASS Inner frame  pen pointerout.detail value is 0. 
+PASS Inner frame  pen pointerout.pressure value is valid 
+PASS Inner frame  pen pointerout.isPrimary attribute is correct. 
+PASS Inner frame  pen pointerout.pointerId should be the same as previous pointer events for this active pointer. 
+PASS Inner frame  pen pointerleave's type should be pointerleave 
+PASS Inner frame  pen pointerleave's button is -1 when mouse buttons are in released state. 
+PASS Inner frame  pen pointerleave's buttons is 0 when mouse buttons are in released state. 
+PASS Inner frame  pen pointerleave's ClientX and ClientY attributes are correct. 
+PASS Inner frame  pen pointerleave event pointerType is correct. 
+PASS Inner frame  pen pointerleave event is a PointerEvent event 
+PASS Inner frame  pen pointerleave.pointerId attribute exists 
+PASS Inner frame  pen pointerleave.pointerId is readonly 
+PASS Inner frame  pen pointerleave.pointerId IDL type long (JS type was number) 
+PASS Inner frame  pen pointerleave.width attribute exists 
+PASS Inner frame  pen pointerleave.width is readonly 
+PASS Inner frame  pen pointerleave.width IDL type float (JS type was number) 
+PASS Inner frame  pen pointerleave.height attribute exists 
+PASS Inner frame  pen pointerleave.height is readonly 
+PASS Inner frame  pen pointerleave.height IDL type float (JS type was number) 
+PASS Inner frame  pen pointerleave.pressure attribute exists 
+PASS Inner frame  pen pointerleave.pressure is readonly 
+PASS Inner frame  pen pointerleave.pressure IDL type float (JS type was number) 
+PASS Inner frame  pen pointerleave.tiltX attribute exists 
+PASS Inner frame  pen pointerleave.tiltX is readonly 
+PASS Inner frame  pen pointerleave.tiltX IDL type long (JS type was number) 
+PASS Inner frame  pen pointerleave.tiltY attribute exists 
+PASS Inner frame  pen pointerleave.tiltY is readonly 
+PASS Inner frame  pen pointerleave.tiltY IDL type long (JS type was number) 
+PASS Inner frame  pen pointerleave.pointerType attribute exists 
+PASS Inner frame  pen pointerleave.pointerType is readonly 
+PASS Inner frame  pen pointerleave.pointerType IDL type string (JS type was string) 
+PASS Inner frame  pen pointerleave.isPrimary attribute exists 
+PASS Inner frame  pen pointerleave.isPrimary is readonly 
+PASS Inner frame  pen pointerleave.isPrimary IDL type boolean (JS type was boolean) 
+PASS Inner frame  pen pointerleave.detail attribute exists 
+PASS Inner frame  pen pointerleave.detail is readonly 
+PASS Inner frame  pen pointerleave.detail IDL type long (JS type was number) 
+PASS Inner frame  pen pointerleave.detail value is 0. 
+PASS Inner frame  pen pointerleave.pressure value is valid 
+PASS Inner frame  pen pointerleave.isPrimary attribute is correct. 
+PASS Inner frame  pen pointerleave.pointerId should be the same as previous pointer events for this active pointer. 
+Harness: the test ran to completion.
+

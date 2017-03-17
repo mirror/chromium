@@ -1,0 +1,28 @@
+This is a testharness.js-based test.
+PASS button_is_not_descendant_of_canvas 
+PASS HitRegion Canvas Fallback Element Test 
+PASS a 
+PASS a_with_image 
+PASS button 
+PASS checkbox 
+PASS radio 
+PASS input_button 
+PASS input_image_button 
+PASS empty_select 
+PASS select_size_greater_than_1 
+PASS select_multiple 
+PASS option_with_select 
+PASS option_with_select_multiple 
+PASS option_with_select_size_greater_than_1 
+PASS p 
+PASS p_with_tabindex 
+PASS HitRegion Canvas Fallback Element Test 1 
+PASS HitRegion Canvas Fallback Element Test 2 
+PASS HitRegion Canvas Fallback Element Test 3 
+PASS HitRegion Canvas Fallback Element Test 4 
+PASS HitRegion Canvas Fallback Element Test 5 
+PASS HitRegion Canvas Fallback Element Test 6 
+PASS HitRegion Canvas Fallback Element Test 7 
+PASS HitRegion Canvas Fallback Element Test 8 
+Harness: the test ran to completion.
+

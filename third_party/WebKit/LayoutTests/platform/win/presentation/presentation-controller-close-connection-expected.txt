@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS controller connection.close() should fire both controller's and receiver's onclose event handler 
+Harness: the test ran to completion.
+

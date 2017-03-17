@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS input[type=text] with value content attribute. 
+PASS input[type=text] without value content attribute. 
+PASS input[type=hidden] with value content attribute. 
+Harness: the test ran to completion.
+

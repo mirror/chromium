@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Client-Hints sent with the right RW value when Accept-CH header is present 
+Harness: the test ran to completion.
+

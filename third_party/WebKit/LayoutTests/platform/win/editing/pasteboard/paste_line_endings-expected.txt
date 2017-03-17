@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Copying and pasting selection starting at end of paragraph 
+Harness: the test ran to completion.
+

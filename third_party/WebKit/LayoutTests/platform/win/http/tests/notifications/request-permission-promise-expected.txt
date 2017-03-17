@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Requesting permission returns a promise that will be resolved. 
+PASS Requesting permission returns a promise, maintains the callback behaviour. 
+Harness: the test ran to completion.
+

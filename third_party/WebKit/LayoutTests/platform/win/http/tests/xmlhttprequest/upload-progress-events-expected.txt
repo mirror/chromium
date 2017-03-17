@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS progress events are fired for XMLHttpRequestUpload objects in the correct order, loadstart, progress, load, and then loadend. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test close the key session associated with the object when the page is inaccessible 
+Harness: the test ran to completion.
+

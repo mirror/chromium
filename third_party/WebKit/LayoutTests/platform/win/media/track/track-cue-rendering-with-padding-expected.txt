@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests rendering text track cue line with padding set. 
+Harness: the test ran to completion.
+

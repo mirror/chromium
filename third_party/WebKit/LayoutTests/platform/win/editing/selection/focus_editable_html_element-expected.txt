@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS focus to editable should not scroll 
+Harness: the test ran to completion.
+

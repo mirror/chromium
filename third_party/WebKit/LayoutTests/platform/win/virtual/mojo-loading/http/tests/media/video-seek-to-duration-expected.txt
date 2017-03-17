@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test event dispatches and attribute changes for seek to duration. 
+Harness: the test ran to completion.
+

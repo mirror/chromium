@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test Description: DOMCharacterDataModified event fires after ProcessingInstruction.data have been modified, but the node itself has not been inserted or deleted. The proximal event target of this event shall be the ProcessingInstruction node. 
+Harness: the test ran to completion.
+

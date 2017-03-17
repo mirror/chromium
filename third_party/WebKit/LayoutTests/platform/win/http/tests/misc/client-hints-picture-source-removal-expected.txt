@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Verify that removing a source triggers a proper image load and doesn't result in a crash. 
+Harness: the test ran to completion.
+

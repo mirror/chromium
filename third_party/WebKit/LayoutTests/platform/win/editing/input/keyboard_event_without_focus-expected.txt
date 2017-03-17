@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Keyboard event without focus should not insert a character. 
+Harness: the test ran to completion.
+

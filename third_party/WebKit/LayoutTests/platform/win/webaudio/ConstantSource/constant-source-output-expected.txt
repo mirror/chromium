@@ -1,0 +1,15 @@
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = 1 duplicate test name: "ConstantSourceNode frames [0, 10) contains only the constant 0."
+PASS ConstantSourceNode({offset: 0.5}) is identical to the array [0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,...]. 
+PASS ConstantSourceNode frames [0, 10) contains only the constant 0. 
+PASS ConstantSourceNode frames [10, 300) contains only the constant 1. 
+PASS ConstantSourceNode frames [300, 6000) contains only the constant 0. 
+PASS ConstantSourceNode started and stopped at the correct times with the correct values. 
+PASS ConstantSourceNode.linearRamp(1, 0.5) equals [0.5,0.5001666666666666,0.5003333333333333,0.5005,0.5006666666666667,0.5008333333333334,0.501,0.5011666666666666,0.5013333333333333,0.5015,0.5016666666666667,0.5018333333333334,0.502,0.5021666666666667,0.5023333333333333,0.5025,...] with an element-wise tolerance of {absoluteThreshold: 0, relativeThreshold: 7.161e-7}. 
+PASS ConstantSourceNode after ramp contains only the constant 1. 
+PASS ConstantSourceNode automation produced the correct values. 
+PASS ConstantSourceNode frames [0, 10) contains only the constant 0. 
+PASS ConstantSourceNode frames [10, 6000) equals [1.5446388721466064,1.5920131206512451,1.6374237537384033,1.6807208061218262,1.7217600345611572,1.7604057788848877,1.7965296506881714,1.8300120830535889,1.8607418537139893,1.888616919517517,1.9135453701019287,1.9354437589645386,1.954240322113037,1.9698717594146729,1.9822871685028076,1.99144446849823,...] with an element-wise tolerance of 0. 
+PASS ConstantSourceNode with connected AudioParam had the expected output. 
+Harness: the test ran to completion.
+

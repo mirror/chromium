@@ -1,0 +1,5 @@
+CONSOLE WARNING: line 22: MediaImage src can only be of http/https/data/blob scheme: bar.jpg
+This is a testharness.js-based test.
+PASS test that null MediaMetadata is correctly propagated 
+Harness: the test ran to completion.
+

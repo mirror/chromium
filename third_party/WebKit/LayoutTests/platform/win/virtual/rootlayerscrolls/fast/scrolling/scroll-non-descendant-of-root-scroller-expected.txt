@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Scrolls on the dialog should not chain to the sibling root scroller. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL oncancel event is fired when animation.cancel() is called. assert_equals: event.timelineTime should equal to the animation timeline when finished promise is rejected expected 320.9516666829586 but got 336.9839992374182
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that adding/removing a FontFace to/from a FontFaceSet triggers a font update 
+Harness: the test ran to completion.
+

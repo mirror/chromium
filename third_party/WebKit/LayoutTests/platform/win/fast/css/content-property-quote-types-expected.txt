@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Check that the content attribute includes quote keywords when quotes are used 
+PASS Check that the content attribute includes quote keywords when nested quotes are used 
+PASS Check that the content attribute includes quote keywords when quotes are used both :before and :after 
+Harness: the test ran to completion.
+

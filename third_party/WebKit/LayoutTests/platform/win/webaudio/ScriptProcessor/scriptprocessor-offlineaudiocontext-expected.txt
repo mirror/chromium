@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS The initial delay contains zeros. contains only the constant 0. 
+PASS The actual content contains 3.1415927410125732 contains only the constant 3.1415927410125732. 
+PASS The rendered buffer contains only the constant 0. 
+Harness: the test ran to completion.
+

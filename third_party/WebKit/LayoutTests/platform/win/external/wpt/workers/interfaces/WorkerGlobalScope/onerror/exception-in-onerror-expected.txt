@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL onerror, "not handled" with an error in the onerror function assert_equals: e.filename expected "http://web-platform.test:8001/workers/interfaces/WorkerGlobalScope/onerror/exception-in-onerror.html#" but got "http://web-platform.test:8001/workers/interfaces/WorkerGlobalScope/onerror/exception-in-onerror.html"
+Harness: the test ran to completion.
+

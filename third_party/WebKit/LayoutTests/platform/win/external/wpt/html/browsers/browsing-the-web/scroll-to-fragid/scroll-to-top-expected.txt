@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Fragment Navigation: When fragid is TOP scroll to the top of the document 
+Harness: the test ran to completion.
+

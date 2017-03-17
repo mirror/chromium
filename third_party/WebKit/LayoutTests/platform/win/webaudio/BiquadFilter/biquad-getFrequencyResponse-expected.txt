@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS # AUDIT TASK RUNNER STARTED. 
+PASS > [test] Biquad frequency response 
+PASS   Number of non-finite values in magnitude response is equal to 0. 
+PASS   Number of non-finte values in phase response is equal to 0. 
+PASS   Number of non-finite values in the expected magnitude response is equal to 0. 
+PASS   Number of non-finite values in expected phase response is equal to 0. 
+PASS   Actual and expected results contained only finite values is true. 
+PASS   Max error (-125.41901251646009 dB) of magnitude response at frequency 1411.199951171875 Hz is less than or equal to -124.88250288655016. 
+PASS   Max error (0.0000026681799681651578 deg) in phase response at frequency 992.25 Hz is less than or equal to 0.000002692901637114869. 
+PASS < [test] All assertions passed. (total 7 assertions) 
+PASS # AUDIT TASK RUNNER FINISHED: 1 tasks ran successfully. 
+Harness: the test ran to completion.
+

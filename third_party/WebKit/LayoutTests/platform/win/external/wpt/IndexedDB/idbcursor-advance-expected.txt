@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS IDBCursor.advance() - advances 
+PASS IDBCursor.advance() - advances backwards 
+PASS IDBCursor.advance() - skip far forward 
+PASS IDBCursor.advance() - within range 
+PASS IDBCursor.advance() - within single key range 
+PASS IDBCursor.advance() - within single key range, with several results 
+Harness: the test ran to completion.
+

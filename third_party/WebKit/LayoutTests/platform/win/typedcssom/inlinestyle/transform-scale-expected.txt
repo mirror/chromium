@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS Single argument rotation read from a StyleMap is correct 
+PASS Two-argument rotation read from a StyleMap is correct 
+PASS scale3d read from a StyleMap is correct 
+PASS scaleX read from a StyleMap works 
+PASS scaleY read from a StyleMap works 
+PASS scaleZ read from a StyleMap results in a scale3d 
+PASS Set a 2-argument CSSScale into a styleMap 
+PASS Set a 3-argument CSSScale into a styleMap 
+Harness: the test ran to completion.
+

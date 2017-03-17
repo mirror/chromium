@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that removing a media element from the tree while loading does not crash. 
+Harness: the test ran to completion.
+

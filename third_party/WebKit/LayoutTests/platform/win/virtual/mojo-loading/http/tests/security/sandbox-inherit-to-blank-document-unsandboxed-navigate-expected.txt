@@ -1,0 +1,5 @@
+CONSOLE MESSAGE: line 32: Opening a window!
+This is a testharness.js-based test.
+PASS Testing that popups opened when 'allow-popups-to-escape-sandbox' present can be navigated 
+Harness: the test ran to completion.
+

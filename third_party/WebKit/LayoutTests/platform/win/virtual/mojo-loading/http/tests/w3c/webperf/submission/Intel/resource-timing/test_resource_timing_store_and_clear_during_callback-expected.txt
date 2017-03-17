@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS No entry should be stored in resource timing buffer since it's cleared once an item arrived! 
+PASS 4 resource timing entries should be moved to global buffer! 
+Harness: the test ran to completion.
+

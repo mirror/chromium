@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS getFloatFrequencyData() with zero-valued input contains only the constant -Infinity. 
+Harness: the test ran to completion.
+

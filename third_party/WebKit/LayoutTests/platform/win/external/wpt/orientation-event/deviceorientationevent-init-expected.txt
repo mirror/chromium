@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS User created event is initialized properly with default values 
+PASS User created event is initialized properly using a dictionary 
+Harness: the test ran to completion.
+

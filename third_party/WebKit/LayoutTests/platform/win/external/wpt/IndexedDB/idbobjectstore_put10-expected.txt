@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBObjectStore.put() - Attempt to call 'put' without an key parameter when the object store uses out-of-line keys  
+Harness: the test ran to completion.
+

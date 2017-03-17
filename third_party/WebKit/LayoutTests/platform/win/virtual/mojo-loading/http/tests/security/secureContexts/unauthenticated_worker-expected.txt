@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Sanity-check the test runner. 
+PASS Non-secure workers are non-secure. 
+PASS Non-secure workers created from 'blob:' are non-secure. 
+PASS Non-secure shared workers are non-secure. 
+PASS Non-secure shared workers created from 'blob:' are non-secure. 
+Harness: the test ran to completion.
+

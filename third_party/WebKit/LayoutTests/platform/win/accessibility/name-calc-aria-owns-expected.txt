@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Aria-owns is considered in a name computation 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL shared worker, addEventListener assert_equals: expected "" but got "event should be an ErrorEvent. filename was http://web-platform.test:8001/workers/semantics/reporting-errors/002.html, expected http://web-platform.test:8001/workers/semantics/reporting-errors/002.html#. "
+Harness: the test ran to completion.
+

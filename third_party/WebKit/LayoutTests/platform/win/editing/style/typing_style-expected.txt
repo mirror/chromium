@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Delete all styled characters and previous character then typing character does not keep style 
+PASS Delete all styled characters then typing character keeps style 
+PASS Delete some styled characters then typing character keeps style 
+PASS Nested styles and disabling styles 
+PASS Replace selection keeps style 
+Harness: the test ran to completion.
+

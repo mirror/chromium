@@ -1,0 +1,5 @@
+CONSOLE MESSAGE: line 14: -webkit-image-set(url("chrome://disallowed-url/") 1x)
+This is a testharness.js-based test.
+PASS This test passes if it does not crash. 
+Harness: the test ran to completion.
+

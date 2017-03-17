@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test multiple calls to MediaKeySession.close() sequentially. 
+Harness: the test ran to completion.
+

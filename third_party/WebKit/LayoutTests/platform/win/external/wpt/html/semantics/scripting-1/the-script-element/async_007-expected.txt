@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Ordered async script execution when script.async == false 
+Harness: the test ran to completion.
+

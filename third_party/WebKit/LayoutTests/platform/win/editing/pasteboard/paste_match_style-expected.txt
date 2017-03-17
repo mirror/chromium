@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Pasting and matching style when there is nothing typed, but the typing style is set to bold. 
+Harness: the test ran to completion.
+

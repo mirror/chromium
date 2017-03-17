@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests calc() on presentation and non-presentation attr in svgLength 
+Harness: the test ran to completion.
+

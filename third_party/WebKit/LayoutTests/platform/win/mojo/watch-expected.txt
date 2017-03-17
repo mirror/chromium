@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Watch handle readable 
+PASS Watch handle writable 
+PASS Watch handle peer closed 
+PASS Watch invalid handle 
+PASS Watch with default MojoHandleSignals 
+PASS Cancel watch 
+Harness: the test ran to completion.
+

@@ -1,0 +1,39 @@
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = 4 duplicate test names: "node.channelCountMode is equal to "max".", "node.channelCountMode is equal to "explicit".", "node.channelInterpretation is equal to "speakers".", "node.channelInterpretation is equal to "discrete"."
+PASS Construct Offline context did not throw an exception. 
+PASS new WaveShaperNode() threw TypeError: Failed to construct 'WaveShaperNode': 1 argument required, but only 0 present.. 
+PASS new WaveShaperNode(1) threw TypeError: Failed to construct 'WaveShaperNode': parameter 1 is not of type 'BaseAudioContext'.. 
+PASS new WaveShaperNode(context, 42) threw TypeError: Failed to construct 'WaveShaperNode': parameter 2 ('options') is not an object.. 
+PASS Invalid constructors correctly threw errors. 
+PASS node = new WaveShaperNode(context) did not throw an exception. 
+PASS node.curve is equal to null. 
+PASS node.oversample is equal to "none". 
+PASS node.channelCount is equal to 2. 
+PASS node.channelCountMode is equal to "max". 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new WaveShaperNode(context) constructed node with correct attributes. 
+PASS new WaveShaperNode(c, {channelCount: 17}} did not throw an exception. 
+PASS node.channelCount is equal to 17. 
+PASS new WaveShaperNode(c, {channelCount: 0}} threw NotSupportedError: Failed to construct 'WaveShaperNode': The channel count provided (0) is outside the range [1, 32].. 
+PASS new WaveShaperNode(c, {channelCount: 99}} threw NotSupportedError: Failed to construct 'WaveShaperNode': The channel count provided (99) is outside the range [1, 32].. 
+PASS new WaveShaperNode(c, {channelCountMode: "max"} did not throw an exception. 
+PASS node.channelCountMode is equal to "max". 
+PASS new WaveShaperNode(c, {channelCountMode: "clamped-max"} did not throw an exception. 
+PASS node.channelCountMode is equal to "clamped-max". 
+PASS new WaveShaperNode(c, {channelCountMode: "explicit"} did not throw an exception. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS new WaveShaperNode(c, {channelCountMode: "foobar"} threw TypeError: Failed to construct 'WaveShaperNode': The provided value 'foobar' is not a valid enum value of type ChannelCountMode.. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS new WaveShaperNode(c, {channelInterpretation: "speakers"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new WaveShaperNode(c, {channelInterpretation: "discrete"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS new WaveShaperNode(c, {channelInterpretation: "foobar"}) threw TypeError: Failed to construct 'WaveShaperNode': The provided value 'foobar' is not a valid enum value of type ChannelInterpretation.. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS AudioNodeOptions for WaveShaperNode were correctly handled. 
+PASS node = new WaveShaperNode(, {"curve":{"0":1,"1":2,"2":3},"oversample":"4x"}) did not throw an exception. 
+PASS node.curve is identical to the array [1,2,3]. 
+PASS node.oversample is equal to "4x". 
+PASS new WaveShaper() with options constructed with correct attributes. 
+Harness: the test ran to completion.
+

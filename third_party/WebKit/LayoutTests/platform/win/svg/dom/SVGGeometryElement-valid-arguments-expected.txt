@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Check invalid arguments of SVGGeometryElement methods 
+Harness: the test ran to completion.
+

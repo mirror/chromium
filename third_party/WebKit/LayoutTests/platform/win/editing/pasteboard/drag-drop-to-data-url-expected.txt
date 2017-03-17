@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Drag-And-Drop to Data URL 
+Harness: the test ran to completion.
+

@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS Startup 
+PASS Behavior of Response with no constructor arguments. 
+PASS Behavior of Response with string content. 
+PASS Behavior of Response with ArrayBuffer content. 
+PASS Behavior of Response with ArrayBufferView content without a slice. 
+PASS Behavior of Response with ArrayBufferView content with a slice. 
+PASS Behavior of Response with FormData content 
+PASS Behavior of Response with URLSearchParams content 
+PASS Behavior of bodyUsed in Response and clone behavior. 
+PASS Behavior of Response passed null for body. 
+PASS Behavior of Response with no body. 
+Harness: the test ran to completion.
+

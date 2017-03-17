@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Scripts in the iframe element with allowpaymentrequest content attribute are allowed to make payment requests. 
+Harness: the test ran to completion.
+

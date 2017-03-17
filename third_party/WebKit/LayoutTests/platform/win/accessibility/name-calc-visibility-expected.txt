@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Visibility: 'hidden' and display: 'none' inside ARIA link 
+PASS Visibility: 'hidden' and display: 'none' inside aria-labelledby label subtree 
+PASS Visibility: 'hidden' and display: 'none' referenced directly by aria-labelledby 
+PASS Visibility: 'hidden' and display: 'none' inside aria-labelledby label subtree, where entire label subtree is display: 'none' 
+Harness: the test ran to completion.
+

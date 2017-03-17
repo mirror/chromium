@@ -1,0 +1,37 @@
+This is a testharness.js-based test.
+PASS Verify Join : miter, Cap : round. 1 
+PASS Verify Join : miter, Cap : round. 2 
+PASS Verify Join : miter, Cap : round. 3 
+PASS Verify Join : miter, Cap : round. 4 
+PASS Verify Join : miter, Cap : round. 5 
+PASS Verify Join : miter, Cap : round. 6 
+PASS Verify Join : miter, Cap : round. 7 
+PASS Verify Join : miter, Cap : round. 8 
+PASS Verify Join : miter, Cap : round. 9 
+PASS Verify Join : miter, Cap : round. 10 
+PASS Verify Join : bevel, Cap : square. 1 
+PASS Verify Join : bevel, Cap : square. 2 
+PASS Verify Join : bevel, Cap : square. 3 
+PASS Verify Join : bevel, Cap : square. 4 
+PASS Verify Join : bevel, Cap : square. 5 
+PASS Verify Join : bevel, Cap : square. 6 
+PASS Verify Join : bevel, Cap : square. 7 
+PASS Verify Join : bevel, Cap : square. 8 
+PASS Verify Join : bevel, Cap : square. 9 
+PASS Verify Join : bevel, Cap : square. 10 
+PASS Verify Join : bevel, Cap : square. 11 
+PASS Verify Join : bevel, Cap : square. 12 
+PASS Verify Join : round, Cap : butt. 1 
+PASS Verify Join : round, Cap : butt. 2 
+PASS Verify Join : round, Cap : butt. 3 
+PASS Verify Join : round, Cap : butt. 4 
+PASS Verify Join : round, Cap : butt. 5 
+PASS Verify Join : round, Cap : butt. 6 
+PASS Verify Join : round, Cap : butt. 7 
+PASS Verify Join : round, Cap : butt. 8 
+PASS Verify Join : round, Cap : butt. 9 
+PASS Verify Join : round, Cap : butt. 10 
+PASS Verify Join : round, Cap : butt. 11 
+PASS Verify Join : round, Cap : butt. 12 
+Harness: the test ran to completion.
+

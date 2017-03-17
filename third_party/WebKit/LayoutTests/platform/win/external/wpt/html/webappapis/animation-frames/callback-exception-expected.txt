@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS requestAnimationFrame callback exceptions are reported to error handler 
+Harness: the test ran to completion.
+

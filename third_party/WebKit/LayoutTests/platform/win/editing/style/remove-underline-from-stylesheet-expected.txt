@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Underline command does nothing when selected text has undeline (style sheet). 
+PASS Underline command does nothing when selected text has undeline (inline). 
+Harness: the test ran to completion.
+

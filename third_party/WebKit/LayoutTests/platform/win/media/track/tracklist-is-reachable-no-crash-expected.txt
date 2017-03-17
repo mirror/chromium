@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that a detached TextTrackList can still be used without crashing. 
+Harness: the test ran to completion.
+

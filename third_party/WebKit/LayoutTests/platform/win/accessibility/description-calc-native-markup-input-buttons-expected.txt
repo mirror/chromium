@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS Input button with no value 
+PASS Input button with value 
+PASS Input button with value and title 
+PASS Submit button without value 
+PASS Submit button with value 
+PASS Submit button with title only 
+PASS Submit button with aria-label 
+PASS Submit button with aria-label and value 
+Harness: the test ran to completion.
+

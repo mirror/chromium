@@ -1,0 +1,19 @@
+This is a testharness.js-based test.
+PASS CSS.supports('font-size-adjust', "1.5") should return true 
+PASS e.style['fontSizeAdjust'] = "1.5" should set the value 
+PASS Serialization should round-trip after setting e.style['fontSizeAdjust'] = "1.5" 
+PASS CSS.supports('font-size-adjust', "0.5") should return true 
+PASS e.style['fontSizeAdjust'] = "0.5" should set the value 
+PASS Serialization should round-trip after setting e.style['fontSizeAdjust'] = "0.5" 
+PASS CSS.supports('font-size-adjust', "0") should return true 
+PASS e.style['fontSizeAdjust'] = "0" should set the value 
+PASS Serialization should round-trip after setting e.style['fontSizeAdjust'] = "0" 
+PASS CSS.supports('font-size-adjust', "none") should return true 
+PASS e.style['fontSizeAdjust'] = "none" should set the value 
+PASS Serialization should round-trip after setting e.style['fontSizeAdjust'] = "none" 
+PASS CSS.supports('font-size-adjust', "-0.5") should return false 
+PASS e.style['fontSizeAdjust'] = "-0.5" should not set the value 
+PASS CSS.supports('font-size-adjust', "-1.5") should return false 
+PASS e.style['fontSizeAdjust'] = "-1.5" should not set the value 
+Harness: the test ran to completion.
+

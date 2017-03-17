@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS innerHTML should leave the removed children alone. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Reject with SecurityError if requesting a blocklisted service. 
+Harness: the test ran to completion.
+

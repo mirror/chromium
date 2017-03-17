@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS SVGPathElement path metrics query w/ pathLength, getTotalLength 
+PASS SVGPathElement path metrics query w/ pathLength, getPointAtLength 
+PASS SVGPathElement path metrics query w/ pathLength, getPathSegAtLength 
+Harness: the test ran to completion.
+

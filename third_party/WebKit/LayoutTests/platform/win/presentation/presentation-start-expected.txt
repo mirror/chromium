@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Test that the PresentationRequest.start() with single URL resolves with correct PresentationConnection object. 
+PASS Test that the PresentationRequest.start() with multiple URLs resolves with correct PresentationConnection object. 
+PASS Test that the PresentationRequest.start() with single URL containing special symbol resolves with correct PresentationConnection object. 
+Harness: the test ran to completion.
+

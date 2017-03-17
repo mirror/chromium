@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS TEXTAREA should not remove the last EOL on paste. 
+PASS Pasting text ending \n should not add another \n. 
+PASS InsertLineBreak command should insert just one newline. 
+Harness: the test ran to completion.
+

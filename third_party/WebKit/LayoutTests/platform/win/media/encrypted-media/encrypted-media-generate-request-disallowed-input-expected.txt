@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS generateRequest() with webm initData longer than 64Kb characters. 
+PASS generateRequest() with cenc initData longer than 64Kb characters. 
+PASS generateRequest() with keyids initData longer than 64Kb characters. 
+PASS generateRequest() with invalid pssh box size. 
+PASS generateRequest() with non pssh data. 
+PASS generateRequest() with too short key ID. 
+PASS generateRequest() with too long key ID. 
+Harness: the test ran to completion.
+

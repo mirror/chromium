@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Callback function which takes two strings 
+PASS Callback function which takes a interface 
+PASS Callback function which takes receiver object 
+PASS Callback function which takes a number sequence 
+PASS Passing non-callable values should throw a TypeError 
+PASS Passing null to nullable callback argument 
+Harness: the test ran to completion.
+

@@ -1,0 +1,31 @@
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=img-src%20%27self%27%20http://b.com:*&id=0' because it has not opted-into the following policy required by its embedder: 'img-src http://c.com:* http://b.com:*'.
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=img-src%20http://127.0.0.1:8000%20http://b.com:*&id=4' because it has not opted-into the following policy required by its embedder: 'img-src 'self' http://b.com:*'.
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=img-src%20%27self%27%20http://b.com:*&id=6' because it has not opted-into the following policy required by its embedder: 'img-src http://localhost.com:*'.
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=img-src%20%27self%27%20http://b.com:*&id=7' because it has not opted-into the following policy required by its embedder: 'img-src http://b.com:*'.
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=img-src%20%27self%27%20http://b.com:*&id=8' because it has not opted-into the following policy required by its embedder: 'img-src https://localhost.com:* http://b.com:*'.
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=img-src%20%27self%27%20http://b.com:*&id=9' because it has not opted-into the following policy required by its embedder: 'img-src http://localhost.com:443 http://b.com:*'.
+CONSOLE ERROR: The source list for Content Security Policy directive 'img-src' contains an invalid source: 'http://b.com:*?csp2=img-src'. It will be ignored.
+CONSOLE ERROR: The source list for Content Security Policy directive 'img-src' contains an invalid source: 'http://b.com:*?csp_report_only=null'. It will be ignored.
+CONSOLE ERROR: The source list for Content Security Policy directive 'img-src' contains an invalid source: 'http://b.com:*?csp2=img-src'. It will be ignored.
+CONSOLE ERROR: The source list for Content Security Policy directive 'img-src' contains an invalid source: 'https://b.com:*?csp_report_only=null'. It will be ignored.
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=img-src%20%27self%27%20http://b.com:*?csp2=img-src%20http://localhost:4343%20https://b.com:*?csp_report_only=null&id=12' because it has not opted-into the following policy required by its embedder: 'img-src http://localhost:8000 http://b.com:*'.
+CONSOLE ERROR: The source list for Content Security Policy directive 'img-src' contains an invalid source: 'http://b.com:*?csp2=img-src'. It will be ignored.
+CONSOLE ERROR: The source list for Content Security Policy directive 'img-src' contains an invalid source: 'http://b.com:*?csp_report_only=null'. It will be ignored.
+CONSOLE ERROR: The source list for Content Security Policy directive 'img-src' contains an invalid source: 'http://b.com:*?csp2=img-src'. It will be ignored.
+CONSOLE ERROR: The source list for Content Security Policy directive 'img-src' contains an invalid source: 'https://b.com:*?csp_report_only=null'. It will be ignored.
+This is a testharness.js-based test.
+PASS 'self' is `localhost` in this case so iframe should be blocked. 
+PASS 'self' is `127.0.0.1` in this case so iframe should be blocked. 
+PASS Exact match of returned csp to required csp should load iframe. 
+PASS 'self' refers to `http://localhost:8000`. 
+PASS Multiple sources with locahost should still allow iframe to load since it is more restrictive. 
+PASS Iframe's returned csp is less restrictive. 
+PASS Iframe's returned csp is again less restrictive. 
+PASS Protocol of 'self' matches https:// of the required csp 
+PASS Ports of 'self' have to match. 
+PASS 'self' can be matched to the actual origin. 
+PASS 'self' can be matched to the actual origin despite order. 
+PASS 'self' can be matched to the actual origin with the port. 
+PASS Repetitions of sources should not influence subsumption . 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Inserting a rule in a detached sheet with @media should not cause an assert/crash. 
+Harness: the test ran to completion.
+

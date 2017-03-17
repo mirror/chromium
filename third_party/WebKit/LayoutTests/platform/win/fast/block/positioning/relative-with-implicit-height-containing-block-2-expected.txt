@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Check that #child is in the correct position. 
+Harness: the test ran to completion.
+

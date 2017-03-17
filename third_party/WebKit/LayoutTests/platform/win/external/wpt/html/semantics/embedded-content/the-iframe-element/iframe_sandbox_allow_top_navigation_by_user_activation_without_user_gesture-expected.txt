@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS The sandboxed iframe should post a message saying the test was in the state of 'PASS'. 
+Harness: the test ran to completion.
+

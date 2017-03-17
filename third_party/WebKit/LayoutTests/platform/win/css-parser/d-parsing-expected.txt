@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS CSS.supports('d', "path('M 0 0 L 100 100 M 100 200 L 200 200 Z L 300 300 Z')") should return true 
+PASS e.style['d'] = "path('M 0 0 L 100 100 M 100 200 L 200 200 Z L 300 300 Z')" should set the value 
+PASS Serialization should round-trip after setting e.style['d'] = "path('M 0 0 L 100 100 M 100 200 L 200 200 Z L 300 300 Z')" 
+PASS CSS.supports('d', "none") should return true 
+PASS e.style['d'] = "none" should set the value 
+PASS Serialization should round-trip after setting e.style['d'] = "none" 
+PASS CSS.supports('d', "path('')") should return true 
+PASS e.style['d'] = "path('')" should set the value 
+PASS Serialization should round-trip after setting e.style['d'] = "path('')" 
+PASS CSS.supports('d', "path('M 20 30 A 60 70 80')") should return false 
+PASS e.style['d'] = "path('M 20 30 A 60 70 80')" should not set the value 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Resizing an element via CSS property |resize| should trigger MutationObserver for style attribute. 
+Harness: the test ran to completion.
+

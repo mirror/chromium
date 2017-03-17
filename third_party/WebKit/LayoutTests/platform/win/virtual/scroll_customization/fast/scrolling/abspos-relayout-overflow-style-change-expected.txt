@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Relayout abspos child when overflow style changes. 
+Harness: the test ran to completion.
+

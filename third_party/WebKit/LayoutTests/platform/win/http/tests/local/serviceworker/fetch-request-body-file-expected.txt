@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Service Worker fetch request body with file. 
+Harness: the test ran to completion.
+

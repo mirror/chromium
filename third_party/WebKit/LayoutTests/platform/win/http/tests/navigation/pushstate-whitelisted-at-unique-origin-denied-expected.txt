@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS testRunner.addOriginAccessWhitelistEntry is required for this test 
+PASS pushState at unique origin should fail with SecurityError (even with whitelisted origins) 
+PASS pushState #hash in unique origin should not fail with SecurityError 
+PASS pushState ?hash in unique origin should not fail with SecurityError 
+PASS pushState ?hash#base in unique origin should not fail with SecurityError 
+Harness: the test ran to completion.
+

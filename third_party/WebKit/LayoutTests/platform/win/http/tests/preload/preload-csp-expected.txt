@@ -1,0 +1,6 @@
+CONSOLE ERROR: line 8: Refused to load the font 'http://127.0.0.1:8000/resources/Ahem.ttf' because it violates the following Content Security Policy directive: "font-src 'none'".
+
+This is a testharness.js-based test.
+PASS Makes sure that preload requests respect CSP 
+Harness: the test ran to completion.
+

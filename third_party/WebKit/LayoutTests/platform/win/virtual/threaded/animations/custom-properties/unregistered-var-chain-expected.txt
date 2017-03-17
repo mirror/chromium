@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS CSS Animations on var() chained custom properties should be applied 
+PASS CSS Animations on var() chained custom properties should be reflected in var() references 
+Harness: the test ran to completion.
+

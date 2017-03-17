@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS showing the context menu on the document element should not crash 
+Harness: the test ran to completion.
+

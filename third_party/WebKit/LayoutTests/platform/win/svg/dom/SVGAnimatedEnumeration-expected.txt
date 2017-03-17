@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS SVGAnimatedEnumeration interface - utilizing the clipPathUnits property of SVGClipPathElement 
+Harness: the test ran to completion.
+

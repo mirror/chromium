@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS successful share 
+PASS successful share with empty ShareData 
+PASS successful share with URL without a scheme 
+PASS successful share with a path-only URL 
+PASS successful share with a relative URL 
+PASS successful share with an empty URL 
+PASS successful share with a data URL 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Download button should appear for videos that can be downloaded. 
+Harness: the test ran to completion.
+

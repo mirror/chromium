@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS document.fonts.add() called while a FontFace is loading. 
+PASS document.fonts.delete() called while a FontFace is loading. 
+PASS document.fonts.clear() called while a FontFace is loading. 
+Harness: the test ran to completion.
+

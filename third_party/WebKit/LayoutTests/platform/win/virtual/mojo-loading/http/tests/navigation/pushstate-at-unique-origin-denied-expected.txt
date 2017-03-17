@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS pushState to a new path in unique origin should fail with SecurityError 
+PASS pushState #hash in unique origin should not fail with SecurityError 
+PASS pushState ?hash in unique origin should not fail with SecurityError 
+PASS pushState ?hash#base in unique origin should not fail with SecurityError 
+Harness: the test ran to completion.
+

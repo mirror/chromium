@@ -1,0 +1,6 @@
+CONSOLE ERROR: The Content Security Policy 'block-all-mixed-content' was delivered in report-only mode, but does not specify a 'report-uri'; the policy will have no effect. Please either add a 'report-uri' directive, or deliver the policy via the 'Content-Security-Policy' header.
+CONSOLE WARNING: Mixed Content: The page at 'https://127.0.0.1:8443/security/mixedContent/strict-mode-image-reportonly.https.php' was loaded over HTTPS, but requested an insecure image 'http://example.test:8080/security/resources/compass.jpg?t=1'. This content should also be served over HTTPS.
+This is a testharness.js-based test.
+PASS Mixed images are allowed and generate CSP violation reports in the presence of 'block-all-mixed-content' in report-only mode. 
+Harness: the test ran to completion.
+

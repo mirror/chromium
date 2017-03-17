@@ -1,0 +1,10 @@
+CONSOLE ERROR: line 4: Blocked opening 'fail-and-notify-done.html' in a new window because the request was made in a sandboxed frame whose 'allow-popups' permission is not set.
+CONSOLE ERROR: line 5: Unsafe JavaScript attempt to initiate navigation for frame with URL 'sandboxed-iframe-navigation-top-by-name-denied.html' from frame with URL 'about:srcdoc'. The frame attempting navigation of the top-level window is sandboxed, but the flag of 'allow-top-navigation' or 'allow-top-navigation-by-user-activation' is not set.
+
+CONSOLE ERROR: line 6: Unsafe JavaScript attempt to initiate navigation for frame with URL 'sandboxed-iframe-navigation-top-by-name-denied.html' from frame with URL 'about:srcdoc'. The frame attempting navigation of the top-level window is sandboxed, but the flag of 'allow-top-navigation' or 'allow-top-navigation-by-user-activation' is not set.
+
+CONSOLE ERROR: line 7: Blocked opening 'fail-and-notify-done.html' in a new window because the request was made in a sandboxed frame whose 'allow-popups' permission is not set.
+This is a testharness.js-based test.
+PASS Sandboxed frame cannot navigate top-level browsing context by name. 
+Harness: the test ran to completion.
+

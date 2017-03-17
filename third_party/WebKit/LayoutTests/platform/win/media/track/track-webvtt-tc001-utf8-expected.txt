@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that UTF-8 encoded characters are recognized properly and that different encodings (iconv) are not recognized as a WebVTT file (we do allow it, it just looks ugly). 
+Harness: the test ran to completion.
+

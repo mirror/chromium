@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS SRI allows multiple hash values, valid if any passes among strongest 
+Harness: the test ran to completion.
+

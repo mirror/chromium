@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Split text after end of data 
+PASS Split empty text 
+PASS Split text at beginning 
+PASS Split text at end 
+PASS Split root 
+PASS Split child 
+Harness: the test ran to completion.
+

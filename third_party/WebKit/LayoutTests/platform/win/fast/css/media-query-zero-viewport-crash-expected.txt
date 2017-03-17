@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Don't crash when evaluating media queries with viewport units that are zero. 
+Harness: the test ran to completion.
+

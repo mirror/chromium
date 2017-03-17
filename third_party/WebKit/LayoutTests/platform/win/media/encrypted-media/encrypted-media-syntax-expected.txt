@@ -1,0 +1,20 @@
+This is a testharness.js-based test.
+PASS Test Navigator.requestMediaKeySystemAccess() exceptions. 
+PASS Test Navigator.requestMediaKeySystemAccess(). 
+PASS Test MediaKeySystemAccess createMediaKeys(). 
+PASS Test MediaKeys createSession() exceptions. 
+PASS Test MediaKeys generateRequest() exceptions. 
+PASS Test MediaKeys load() exceptions. 
+PASS Test MediaKeys createSession(). 
+PASS Test MediaKeys generateRequest(). 
+PASS Test MediaKeySession update() exceptions. 
+PASS Test MediaKeySession update(). 
+PASS Test MediaKeySession close() exceptions. 
+PASS Test MediaKeySession close(). 
+PASS Test MediaKeySession remove() exceptions. 
+PASS Test MediaKeySession remove(). 
+PASS Test MediaKeys setServerCertificate() exceptions. 
+PASS Test MediaKeys setServerCertificate(). 
+PASS Test MediaKeyMessageEvent. 
+Harness: the test ran to completion.
+

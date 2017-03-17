@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Merge multiple blocks with display:inline 
+PASS Delete DIV with STYLE to SPAN with STYLE 
+Harness: the test ran to completion.
+

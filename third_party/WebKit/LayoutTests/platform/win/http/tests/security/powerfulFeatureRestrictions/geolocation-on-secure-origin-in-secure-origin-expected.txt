@@ -1,0 +1,9 @@
+CONSOLE ERROR: line 11: This test can not run without mojo
+CONSOLE ERROR: line 11: This test can not run without mojo
+CONSOLE ERROR: line 11: This test can not run without mojo
+CONSOLE ERROR: line 11: This test can not run without mojo
+CONSOLE ERROR: line 11: This test can not run without mojo
+This is a testharness.js-based test.
+PASS getCurrentPosition in iframe 
+Harness: the test ran to completion.
+

@@ -1,0 +1,29 @@
+This is a testharness.js-based test.
+PASS t1.length 
+PASS t1[0] 
+PASS t1[1] 
+PASS t1[2] 
+PASS t1[3] 
+PASS t1[4] 
+PASS t1[5] 
+PASS t1[6] 
+PASS t1[7] 
+PASS t1[8] 
+PASS t1[9] 
+PASS t1[10] 
+PASS t1[11] 
+PASS t2.length 
+PASS t2[0] 
+PASS t2[1] 
+PASS t2[2] 
+PASS t2[3] 
+PASS t2[4] 
+PASS t2[5] 
+PASS t2[6] 
+PASS t2[7] 
+PASS t2[8] 
+PASS t2[9] 
+PASS t2[10] 
+PASS t2[11] 
+Harness: the test ran to completion.
+

@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS window.performance is defined 
+PASS performance.mark is supported! 
+PASS performance.clearMarks is supported! 
+PASS performance.measure is supported! 
+PASS performance.clearMeasures is supported! 
+PASS performance.getEntries is supported! 
+PASS performance.getEntriesByType is supported! 
+PASS performance.getEntriesByName is supported! 
+Harness: the test ran to completion.
+

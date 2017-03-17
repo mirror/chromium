@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS check clone track after captureStream() 
+Harness: the test ran to completion.
+

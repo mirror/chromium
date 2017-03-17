@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS unicode-bidi: isolate 
+PASS unicode-bidi: isolate-override 
+PASS unicode-bidi: plaintext 
+Harness: the test ran to completion.
+

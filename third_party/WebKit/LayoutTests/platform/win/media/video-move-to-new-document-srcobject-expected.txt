@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Verify that moving a video element to a new document, still loads it normally 
+Harness: the test ran to completion.
+

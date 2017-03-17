@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS  ErrorEvent and Worker.dispatchEvent()  
+PASS document.createEvent('ErrorEvent') 
+PASS initErrorEvent 
+Harness: the test ran to completion.
+

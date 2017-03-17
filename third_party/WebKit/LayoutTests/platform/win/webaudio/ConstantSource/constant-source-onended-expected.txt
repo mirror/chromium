@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS ConstantSourceNode onended event fired 
+Harness: the test ran to completion.
+

@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS willValidate property returns true when required attribute exists 
+PASS willValidate property returns false when disabled attribute exists 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Check that changes to keyframe rules take effect 
+Harness: the test ran to completion.
+

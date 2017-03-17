@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS setRootScroller API enabled 
+PASS Setter and getter on a valid element works 
+PASS Can set a non-scrolling element as the rootScroller 
+PASS Scrolls don't chain past root scroller element 
+PASS document.scrollingElement and window scroll API reflect rootScroller offsets 
+PASS Setting an invalid rootScroller should reset to using the documentElement. 
+Harness: the test ran to completion.
+

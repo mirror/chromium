@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Bug 85856: Test if WebKit can show the left side of the inner elements regardless of the position of its scrollbars. To test manually, open this document and verify we can see "ABC" both in the LTR element and in the RTL element. 
+Harness: the test ran to completion.
+

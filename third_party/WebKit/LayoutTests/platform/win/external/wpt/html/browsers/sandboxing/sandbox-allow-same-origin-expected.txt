@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS DOM access in sandbox='allow-same-origin' iframe is allowed 
+Harness: the test ran to completion.
+

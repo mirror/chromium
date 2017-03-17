@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Multiple connects should return the same gatt object. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Output for frame [11, 21) contains only the constant 0. 
+PASS Output for frame [21, 101) contains only the constant 0.5. 
+PASS Output for frame [101, 128) contains only the constant 1. 
+PASS setTargetAtTime with timeConstant=0 handled correctly. 
+Harness: the test ran to completion.
+

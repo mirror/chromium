@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS shape-outside can be assigned 'initial' value 
+PASS 'initial' value computes to the default value 
+Harness: the test ran to completion.
+

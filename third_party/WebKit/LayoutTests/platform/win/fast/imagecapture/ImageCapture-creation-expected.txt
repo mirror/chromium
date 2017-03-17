@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS grabFrame() of a disabled Track 
+PASS grabFrame() of an ended Track 
+PASS verifies that an ImageCapture cannot be created out of an Audio Track 
+Harness: the test ran to completion.
+

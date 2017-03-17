@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that a navigation in the unload handler succeeds if it's targeting a frame that's not being unloaded. 
+Harness: the test ran to completion.
+

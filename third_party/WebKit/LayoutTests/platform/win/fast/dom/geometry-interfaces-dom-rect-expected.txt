@@ -1,0 +1,26 @@
+This is a testharness.js-based test.
+PASS DOMRect constructor without parameter 
+PASS DOMRect constructor with x parameter 
+PASS DOMRect constructor with x, y parameters 
+PASS DOMRect constructor with x, y, width parameters 
+PASS DOMRect constructor with x, y, width, height parameters 
+PASS DOMRect constructor with negative width and height parameters 
+PASS DOMRect toJSON 
+PASS DOMRect setter 
+PASS DOMRect.fromRect({x: 10, y: 20, width: 80, height: 50}) should create a DOMRect 
+PASS DOMRect.fromRect({x: 0, y: 0, width: 0, height: 0}) should create a DOMRect 
+PASS DOMRect.fromRect({x: 10, y: 20, width: 80, height: 50}) should create a DOMRect and the values can be changed 
+PASS DOMRect.fromRect() should create a new DOMRect 
+PASS DOMRectReadOnly constructor without parameter 
+PASS DOMRectReadOnly constructor with x parameter 
+PASS DOMRectReadOnly constructor with x, y parameters 
+PASS DOMRectReadOnly constructor with x, y, width parameters 
+PASS DOMRectReadOnly constructor with x, y, width, height parameters 
+PASS DOMRectReadOnly readonly test 
+PASS DOMRectReadOnly toJSON 
+PASS DOMRectReadOnly.fromRect({x: 10, y: 20, width: 80, height: 50}) should create a DOMRectReadOnly 
+PASS DOMRectReadOnly.fromRect({x: 0, y: 0, width: 0, height: 0}) should create a DOMRectReadOnly 
+PASS DOMRectReadOnly.fromRect() should create a new DOMRectReadOnly 
+PASS DOMRectReadOnly.fromRect() should create DOMRectReadOnly 
+Harness: the test ran to completion.
+

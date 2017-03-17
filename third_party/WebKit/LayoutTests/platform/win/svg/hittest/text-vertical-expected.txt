@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS elementFromPoint(...) on vertical <svg:text> 
+Harness: the test ran to completion.
+

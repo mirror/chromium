@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This test checks that an element's compositor proxy can be sent from the main thread to the compositor thread and back again. 
+Harness: the test ran to completion.
+

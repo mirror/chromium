@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Animation cancel event happens if animation cancelled in raf 
+Harness: the test ran to completion.
+

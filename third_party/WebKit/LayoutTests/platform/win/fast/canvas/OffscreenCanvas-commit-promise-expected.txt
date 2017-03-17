@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Verify that the promise returned by a 2d context's commit() gets resolved. 
+PASS Verify that the promise returned by a webgl context's commit gets resolved. 
+Harness: the test ran to completion.
+

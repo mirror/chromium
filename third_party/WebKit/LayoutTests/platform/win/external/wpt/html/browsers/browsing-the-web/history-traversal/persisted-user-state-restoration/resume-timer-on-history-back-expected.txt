@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS history.back() handles top level page timer correctly 
+PASS history.back() handles nested iframe timer correctly 
+Harness: the test ran to completion.
+

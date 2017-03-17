@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS Insert 0 characters, the value length should be 0. 
+PASS Insert 5 characters, the value length should be 5. 
+PASS Insert 1025 characters, the value length should be 1025. 
+PASS Insert 524287 characters, the value length should be 524287. 
+PASS Insert 524288 characters, the value length should be 524288. 
+PASS Insert 524289 characters, the value length should be 524289. 
+PASS Insert 530000 characters, the value length should be 530000. 
+PASS Insert 1000000 characters, the value length should be 1000000. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,32 @@
+This is a testharness.js-based test.
+PASS This test uses responsive-test.js. 
+PASS Untitled 
+PASS Untitled 1 
+PASS Untitled 2 
+PASS Untitled 3 
+PASS Untitled 4 
+PASS Untitled 5 
+PASS Untitled 6 
+PASS Untitled 7 
+PASS Untitled 8 
+PASS Untitled 9 
+PASS Untitled 10 
+PASS Untitled 11 
+PASS Untitled 12 
+PASS Animation on property <borderImageOutset> from neutral to [110 120px] with {"underlying":"10 20px"} changed to {"underlying":"10px 20"} at (0.25) is [10px 20] 
+PASS Untitled 13 
+PASS Animation on property <borderImageOutset> from neutral to [110 120px] with {"underlying":"10 20px"} changed to {"underlying":"10px 20"} at (0.75) is [110 120px] 
+PASS Untitled 14 
+PASS Animation on property <borderImageOutset> from neutral to [110 120px] with {"underlying":"10px 20"} changed to {"underlying":"10 20px"} at (0.25) is [35 45px] 
+PASS Untitled 15 
+PASS Animation on property <borderImageOutset> from neutral to [110 120px] with {"underlying":"10px 20"} changed to {"underlying":"10 20px"} at (0.75) is [85 95px] 
+PASS Untitled 16 
+PASS Animation on property <borderImageOutset> from [inherit] to [110 120px] with {"inherited":"10 20px"} changed to {"inherited":"10px 20"} at (0.25) is [10px 20] 
+PASS Untitled 17 
+PASS Animation on property <borderImageOutset> from [inherit] to [110 120px] with {"inherited":"10 20px"} changed to {"inherited":"10px 20"} at (0.75) is [110 120px] 
+PASS Untitled 18 
+PASS Animation on property <borderImageOutset> from [inherit] to [110 120px] with {"inherited":"10px 20"} changed to {"inherited":"10 20px"} at (0.25) is [35 45px] 
+PASS Untitled 19 
+PASS Animation on property <borderImageOutset> from [inherit] to [110 120px] with {"inherited":"10px 20"} changed to {"inherited":"10 20px"} at (0.75) is [85 95px] 
+Harness: the test ran to completion.
+

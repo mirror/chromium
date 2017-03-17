@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS foramtBlcok accept tag name with html brackets 
+Harness: the test ran to completion.
+

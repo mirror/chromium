@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBFactory.open() - second open's transaction is available to get objectStores 
+Harness: the test ran to completion.
+

@@ -1,0 +1,19 @@
+CONSOLE WARNING: line 281: Invalid keyframe value for property backgroundColor: octarine
+This is a testharness.js-based test.
+PASS Calling animate() should start an animation. 
+PASS Calling animate() with alternative list syntax should give same result. 
+PASS Calling animate() should start an animation. CamelCase property names should be parsed. 
+PASS Offsets may be specified as strings. 
+PASS When using the alternative list syntax, all keyframes have the same timing function. 
+PASS When using the alternative list syntax, offset is applied to all specified keyframes. 
+PASS When using the alternative list syntax, composite is applied to all keyframes. 
+PASS When using the alternative list syntax, properties can have different length lists. 
+PASS The list of keyframes can have one element. 
+PASS Should throw when mixing two different list syntaxes. 
+PASS Should throw when keyframes have unsorted offsets. 
+PASS Should throw when keyframes has offsets outside the range [0.0, 1.0]. 
+PASS Should throw when keyframes are not loosely sorted and any have no offset. 
+PASS Should throw when keyframes are not loosely sorted and any have null offset. 
+PASS Calling animate() with a pre-constructed keyframes list should start an animation. Invalid style declarations should be ignored. 
+Harness: the test ran to completion.
+

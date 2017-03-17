@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that setting the srcObject attribute overrides the src attribute and if the srcObject is set to null, media is reloaded from the src attribute. 
+Harness: the test ran to completion.
+

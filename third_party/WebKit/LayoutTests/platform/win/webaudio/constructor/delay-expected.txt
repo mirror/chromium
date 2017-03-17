@@ -1,0 +1,42 @@
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = 5 duplicate test names: "node.delayTime.value is equal to 0.", "node.channelCountMode is equal to "max".", "node.channelCountMode is equal to "explicit".", "node.channelInterpretation is equal to "speakers".", "node.channelInterpretation is equal to "discrete"."
+PASS context = new OfflineAudioContext(...) did not throw an exception. 
+PASS new DelayNode() threw TypeError: Failed to construct 'DelayNode': 1 argument required, but only 0 present.. 
+PASS new DelayNode(1) threw TypeError: Failed to construct 'DelayNode': parameter 1 is not of type 'BaseAudioContext'.. 
+PASS new DelayNode(context, 42) threw TypeError: Failed to construct 'DelayNode': parameter 2 ('options') is not an object.. 
+PASS Invalid constructors correctly threw errors. 
+PASS node = new DelayNode(context) did not throw an exception. 
+PASS node instanceof DelayNode is equal to true. 
+PASS node.delayTime.value is equal to 0. 
+PASS node.delayTime.value is equal to 0. 
+PASS node.channelCount is equal to 2. 
+PASS node.channelCountMode is equal to "max". 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS DelayNode(context) constructed with correct values is equal to true. 
+PASS new DelayNode(context) constructed node with correct attributes. 
+PASS new DelayNode(c, {channelCount: 17}} did not throw an exception. 
+PASS node.channelCount is equal to 17. 
+PASS new DelayNode(c, {channelCount: 0}} threw NotSupportedError: Failed to construct 'DelayNode': The channel count provided (0) is outside the range [1, 32].. 
+PASS new DelayNode(c, {channelCount: 99}} threw NotSupportedError: Failed to construct 'DelayNode': The channel count provided (99) is outside the range [1, 32].. 
+PASS new DelayNode(c, {channelCountMode: "max"} did not throw an exception. 
+PASS node.channelCountMode is equal to "max". 
+PASS new DelayNode(c, {channelCountMode: "clamped-max"} did not throw an exception. 
+PASS node.channelCountMode is equal to "clamped-max". 
+PASS new DelayNode(c, {channelCountMode: "explicit"} did not throw an exception. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS new DelayNode(c, {channelCountMode: "foobar"} threw TypeError: Failed to construct 'DelayNode': The provided value 'foobar' is not a valid enum value of type ChannelCountMode.. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS new DelayNode(c, {channelInterpretation: "speakers"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new DelayNode(c, {channelInterpretation: "discrete"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS new DelayNode(c, {channelInterpretation: "foobar"}) threw TypeError: Failed to construct 'DelayNode': The provided value 'foobar' is not a valid enum value of type ChannelInterpretation.. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS AudioNodeOptions for DelayNode were correctly handled. 
+PASS node = new DelayNode(c, {"delayTime":0.5,"maxDelayTime":1.5}) did not throw an exception. 
+PASS node.delayTime.value is equal to 0.5. 
+PASS node.delayTime.maxValue is equal to 1.5. 
+PASS DelayNode(context, options) correctly handled is equal to true. 
+PASS new DelayNode() with options constructed with correct attributes. 
+Harness: the test ran to completion.
+

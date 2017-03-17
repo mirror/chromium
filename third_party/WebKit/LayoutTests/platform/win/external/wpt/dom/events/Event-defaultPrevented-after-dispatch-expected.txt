@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Event.defaultPrevented is not reset after dipatchEvent() 
+Harness: the test ran to completion.
+

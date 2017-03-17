@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Convert P to PRE 
+PASS Wrap SPAN with H1 
+PASS Convert ADDRESS to P 
+PASS Keep existing block 
+Harness: the test ran to completion.
+

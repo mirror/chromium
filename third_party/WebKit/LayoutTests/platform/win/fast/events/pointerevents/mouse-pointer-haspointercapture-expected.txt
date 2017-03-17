@@ -1,0 +1,21 @@
+This is a testharness.js-based test.
+PASS PointerEvent: Verifies that hasPointerCapture API works 
+PASS Initial 
+PASS After set#1 w/o button 
+PASS After release#1 w/o button 
+PASS pointerdown: entered w/o change within handler 
+PASS pointerdown: exiting w/o change within handler 
+PASS After set#1 w button 
+PASS After release#1 w button 
+PASS After set#2 w button 
+PASS After set#3 w button 
+PASS After release#2 w button 
+PASS After release#3 w button 
+PASS pointerup: entered w/o change within handler 
+PASS pointerup: exiting w/o change within handler 
+PASS pointerdown: entered w change within handler 
+PASS pointerdown: exiting w change within handler 
+PASS pointerup: entered w change within handler 
+PASS pointerup: exiting w change within handler 
+Harness: the test ran to completion.
+

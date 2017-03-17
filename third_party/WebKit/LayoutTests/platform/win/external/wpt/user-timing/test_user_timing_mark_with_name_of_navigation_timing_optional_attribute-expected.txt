@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS window.performance is defined 
+PASS window.performance.mark("secureConnectionStart") threw an exception when secureConnectionStart attribute of Navigation Timing is supported. 
+PASS window.performance.mark("secureConnectionStart") threw a SYNTAX_ERR when secureConnectionStart attribute of Navigation Timing is supported. 
+Harness: the test ran to completion.
+

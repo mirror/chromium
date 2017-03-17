@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Transfer radio buttons from <body> to <form>. 
+PASS Transfer radio buttons from <form> to <body>. 
+PASS Transfer radio buttons from <form> to <body> with a dormant state in the middle. 
+PASS Transfer from <form> to <form>. 
+Harness: the test ran to completion.
+

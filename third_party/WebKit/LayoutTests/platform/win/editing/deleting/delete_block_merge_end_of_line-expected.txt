@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Delete a character at start of line 
+PASS Delete characters and BR 
+PASS Delete characters starting from DIV and BR 
+PASS Delete characters containing BR following characters and BR 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS srcdoc iframe uses parent's referrer policy, set after iframe was created 
+Harness: the test ran to completion.
+

@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS Test for prerequisites. 
+PASS A style rule with a type selector should only invalidate elements with that type. 
+PASS A type selector scoped in an unknown id should not invalidate any elements. 
+PASS A type selector scoped by a known id should only invalidate descendants of the element with that id. 
+PASS A style rule with a custom pseudo element should only invalidate custom pseudo elements. 
+PASS A custom pseudo element scoped in an unknown id should not invalidate any elements. 
+PASS A custom pseudo element scoped in a known id should only invalidate descendants of the element with that id. 
+Harness: the test ran to completion.
+

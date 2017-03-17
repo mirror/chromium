@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS window.internals required for tests. 
+PASS Check that we don't invalidate too much on sibling insertion. 
+PASS Check that we don't invalidate too much on sibling removal. 
+PASS Check that we don't invalidate past removed element for sibling removal. 
+Harness: the test ran to completion.
+

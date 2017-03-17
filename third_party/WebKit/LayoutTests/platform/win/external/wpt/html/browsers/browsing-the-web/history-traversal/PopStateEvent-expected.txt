@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS document.createEvent 
+PASS initPopStateEvent 
+PASS Dispatching a synthetic PopStateEvent 
+Harness: the test ran to completion.
+

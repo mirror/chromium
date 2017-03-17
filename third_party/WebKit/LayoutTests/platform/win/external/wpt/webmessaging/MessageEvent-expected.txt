@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS mozInitMessageEvent on the prototype 
+PASS mozInitMessageEvent on the instance 
+PASS msInitMessageEvent on the prototype 
+PASS msInitMessageEvent on the instance 
+PASS oInitMessageEvent on the prototype 
+PASS oInitMessageEvent on the instance 
+PASS webkitInitMessageEvent on the prototype 
+PASS webkitInitMessageEvent on the instance 
+Harness: the test ran to completion.
+

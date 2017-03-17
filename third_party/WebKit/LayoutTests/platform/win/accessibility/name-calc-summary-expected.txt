@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Details element with no summary 
+PASS Summary with title and no contents 
+PASS Summary with title and contents 
+PASS Summary with title, aria-label, and contents 
+PASS Summary with title, aria-label, aria-labelledby, and contents 
+Harness: the test ran to completion.
+

@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Figure element with no figcaption 
+PASS Figure element with no figcaption with title 
+PASS Figure element with figcaption and title 
+PASS Figure element with figcaption, title and aria-label 
+PASS Figure element with figcaption, title, aria-label and aria-labelledby 
+Harness: the test ran to completion.
+

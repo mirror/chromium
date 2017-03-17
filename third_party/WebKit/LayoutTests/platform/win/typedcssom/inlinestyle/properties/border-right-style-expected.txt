@@ -1,0 +1,25 @@
+This is a testharness.js-based test.
+PASS Setting border-right-style to none 
+PASS Setting border-right-style to initial 
+PASS Setting border-right-style to inherit 
+PASS Setting border-right-style to unset 
+PASS Setting border-right-style to invalid value CSSSimpleLength throws 
+PASS Setting border-right-style to invalid value null throws 
+PASS Setting border-right-style to invalid value undefined throws 
+PASS Setting border-right-style to invalid value true throws 
+PASS Setting border-right-style to invalid value false throws 
+PASS Setting border-right-style to invalid value 1 throws 
+PASS Setting border-right-style to invalid value hello throws 
+PASS Setting border-right-style to invalid value [object Object] throws 
+PASS Setting border-right-style to invalid value CSSKeywordValue throws 
+PASS Getting border-right-style when it is set to none 
+PASS Getting border-right-style when it is set to initial 
+PASS Getting border-right-style when it is set to inherit 
+PASS Getting border-right-style when it is set to unset 
+PASS getAll for single-valued border-right-style 
+PASS Delete border-right-style removes the value from the styleMap 
+PASS border-right-style shows up in getProperties 
+PASS Setting border-right-style to a sequence throws 
+PASS Appending to border-right-style throws 
+Harness: the test ran to completion.
+

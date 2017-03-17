@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS  Worker with nosniff X-Content-Type-Options header  
+Harness: the test ran to completion.
+

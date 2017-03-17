@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Find all services in a device. 
+Harness: the test ran to completion.
+

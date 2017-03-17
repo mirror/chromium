@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Object cloning: throw an exception if function values encountered 
+Harness: the test ran to completion.
+

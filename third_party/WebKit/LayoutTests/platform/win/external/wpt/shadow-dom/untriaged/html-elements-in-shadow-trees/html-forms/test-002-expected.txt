@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS A_08_02_02_T01 
+PASS A_08_02_02_T02 
+PASS A_08_02_02_T03 
+Harness: the test ran to completion.
+

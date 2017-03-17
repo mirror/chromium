@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Margins should collapse with fragmentainer boundaries 
+Harness: the test ran to completion.
+

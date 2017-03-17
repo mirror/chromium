@@ -1,0 +1,9 @@
+CONSOLE WARNING: motion is deprecated and will be removed in M58, around April 2017. Please use offset instead. See https://www.chromestatus.com/features/6390764217040896 for more details.
+This is a testharness.js-based test.
+PASS motion default is none 0px auto 0deg 
+PASS motion supports various angle units 
+PASS motion supports SVG path data 
+PASS motion property data can be supplied in any order 
+PASS motion style can be set inline 
+Harness: the test ran to completion.
+

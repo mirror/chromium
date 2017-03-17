@@ -1,0 +1,115 @@
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+CONSOLE MESSAGE: line 46: [object Object]
+CONSOLE MESSAGE: line 50: [object Object]
+CONSOLE MESSAGE: line 51: [object Object]
+This is a testharness.js-based test.
+PASS Test default context creation parameters 
+PASS Test CanvasColorSpace value srgb 
+PASS Test CanvasColorSpace value rec2020 
+PASS Test CanvasColorSpace value p3 
+PASS Test CanvasPixelFormat value 8-8-8-8 
+PASS Test CanvasPixelFormat value 10-10-10-2 
+PASS Test CanvasPixelFormat value 12-12-12-12 
+PASS Test CanvasPixelFormat value float16 
+PASS Test supported CanvasColorSpace and CanvasPixelFormat combination: srgb/8-8-8-8 
+PASS Test not-supported CanvasColorSpace and CanvasPixelFormat combination: srgb/10-10-10-2 
+PASS Test not-supported CanvasColorSpace and CanvasPixelFormat combination: srgb/12-12-12-12 
+PASS Test supported CanvasColorSpace and CanvasPixelFormat combination: srgb/float16 
+PASS Test not-supported CanvasColorSpace and CanvasPixelFormat combination: rec2020/8-8-8-8 
+PASS Test not-supported CanvasColorSpace and CanvasPixelFormat combination: rec2020/10-10-10-2 
+PASS Test not-supported CanvasColorSpace and CanvasPixelFormat combination: rec2020/12-12-12-12 
+PASS Test supported CanvasColorSpace and CanvasPixelFormat combination: rec2020/float16 
+PASS Test not-supported CanvasColorSpace and CanvasPixelFormat combination: p3/8-8-8-8 
+PASS Test not-supported CanvasColorSpace and CanvasPixelFormat combination: p3/10-10-10-2 
+PASS Test not-supported CanvasColorSpace and CanvasPixelFormat combination: p3/12-12-12-12 
+PASS Test supported CanvasColorSpace and CanvasPixelFormat combination: p3/float16 
+PASS Test parameter linearPixelMath srgb/8-8-8-8/false 
+PASS Test parameter linearPixelMath srgb/8-8-8-8/true 
+PASS Test parameter linearPixelMath srgb/float16/false 
+PASS Test parameter linearPixelMath srgb/float16/true 
+PASS Test parameter linearPixelMath rec2020/float16/false 
+PASS Test parameter linearPixelMath rec2020/float16/true 
+PASS Test parameter linearPixelMath p3/float16/false 
+PASS Test parameter linearPixelMath p3/float16/true 
+Harness: the test ran to completion.
+

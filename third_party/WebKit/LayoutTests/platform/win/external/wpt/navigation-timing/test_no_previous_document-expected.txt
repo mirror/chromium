@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS window.performance is defined 
+PASS window.performance.navigation is defined 
+PASS timing.navigation.type is TYPE_NAVIGATE 
+PASS timing.unloadEventStart == 0 on navigation with no previous document 
+PASS timing.unloadEventEnd == 0 navigation with no previous document 
+Harness: the test ran to completion.
+

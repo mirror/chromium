@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS @apply should work when specified inside inline styles 
+Harness: the test ran to completion.
+

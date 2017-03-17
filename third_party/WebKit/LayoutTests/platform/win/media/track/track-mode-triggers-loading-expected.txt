@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that a "metadata" track does not load automatically, but does load when the mode is changed. 
+Harness: the test ran to completion.
+

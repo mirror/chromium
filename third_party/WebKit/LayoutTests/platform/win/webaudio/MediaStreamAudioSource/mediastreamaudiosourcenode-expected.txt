@@ -1,0 +1,15 @@
+This is a testharness.js-based test.
+PASS # AUDIT TASK RUNNER STARTED. 
+PASS > [test] Basic tests for MediaStreamAudioSourceNode API 
+PASS   getUserMedia() did not throw an exception. 
+PASS   {audio:true} generated stream correctly 
+PASS   mediaStreamSource.numberOfInputs is equal to 0. 
+PASS   mediaStreamSource.numberOfOutputs is equal to 1. 
+PASS   mediaStreamSource.connect(0, 0, 0) threw TypeError: "Failed to execute 'connect' on 'AudioNode': parameter 1 is not of type 'AudioNode'.". 
+PASS   mediaStreamSource.connect(context.destination, 5, 0) threw IndexSizeError: "Failed to execute 'connect' on 'AudioNode': output index (5) exceeds number of outputs (1).". 
+PASS   mediaStreamSource.connect(context.destination, 0, 5) threw IndexSizeError: "Failed to execute 'connect' on 'AudioNode': input index (5) exceeds number of inputs (1).". 
+PASS   mediaStreamSource.connect(context.destination, 0, 0) did not throw an exception. 
+PASS < [test] All assertions passed. (total 8 assertions) 
+PASS # AUDIT TASK RUNNER FINISHED: 1 tasks ran successfully. 
+Harness: the test ran to completion.
+

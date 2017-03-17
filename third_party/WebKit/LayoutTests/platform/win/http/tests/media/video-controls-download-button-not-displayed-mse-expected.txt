@@ -1,0 +1,5 @@
+CONSOLE ERROR: Not allowed to load local resource: blob:http://foo.bar.com/12345678
+This is a testharness.js-based test.
+PASS Download button should not appear for MSE videos. 
+Harness: the test ran to completion.
+

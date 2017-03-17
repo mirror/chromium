@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS test0: initial #TARGET containing rect is #CONTAIN 
+PASS test1: after relative->static, #TARGET containing rect is #LIKEBODY 
+PASS test2: after static->relative, #TARGET containing rect is #CONTAIN 
+Harness: the test ran to completion.
+

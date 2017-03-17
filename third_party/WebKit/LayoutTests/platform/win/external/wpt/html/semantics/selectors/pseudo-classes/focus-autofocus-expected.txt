@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS :focus selector should work with an autofocused element. 
+Harness: the test ran to completion.
+

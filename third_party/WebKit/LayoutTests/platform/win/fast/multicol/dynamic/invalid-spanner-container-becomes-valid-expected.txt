@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Turn a spanner candidate's parent from float into regular block 
+Harness: the test ran to completion.
+

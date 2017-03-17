@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Interrupted transition should not jump back to pre-transition transform 
+Harness: the test ran to completion.
+

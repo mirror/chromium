@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Check if the stylesheet's load event blocks the document load event 
+Harness: the test ran to completion.
+

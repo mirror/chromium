@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Option color before change. 
+PASS Optgroup color before change. 
+PASS Option in optgroup color before change. 
+PASS Option color after class change. 
+PASS Optgroup color after class change. 
+PASS Option in optgroup color after class change. 
+Harness: the test ran to completion.
+

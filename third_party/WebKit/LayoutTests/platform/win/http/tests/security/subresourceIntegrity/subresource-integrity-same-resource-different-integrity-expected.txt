@@ -1,0 +1,12 @@
+CONSOLE ERROR: Failed to find a valid digest in the 'integrity' attribute for resource 'http://127.0.0.1:8000/security/subresourceIntegrity/resources/simple-result.js' with computed SHA-256 integrity 'xJjeC55VpJ4nhSNBPBfw2QrsylPyXeQGxMd1l4unH58='. The resource has been blocked.
+This is a testharness.js-based test.
+PASS Script: Same-origin with correct sha256 hash. 
+PASS Script: Same-origin with correct sha384 hash. 
+PASS Script: Same-origin with correct sha512 hash. 
+PASS Script: Same-origin with empty integrity. 
+PASS Script: Same-origin with incorrect hash. 
+PASS Script: Same-origin with multiple sha256 hashes, including correct. 
+PASS Script: Same-origin with sha256 mismatch, sha512 match 
+PASS Script: Same-origin with sha256 match, sha512 mismatch 
+Harness: the test ran to completion.
+

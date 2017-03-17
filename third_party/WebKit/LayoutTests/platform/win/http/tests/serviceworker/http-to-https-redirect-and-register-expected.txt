@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS register on a secure page after redirect from an non-secure url 
+PASS register on a non-secure page after redirect from an non-secure url 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that calling load() with no "src" should not fire "error" event and network state should be NETWORK_EMPTY. 
+Harness: the test ran to completion.
+

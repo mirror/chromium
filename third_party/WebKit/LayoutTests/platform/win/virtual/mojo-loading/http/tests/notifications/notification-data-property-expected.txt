@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Checks the data of several type property exposed on the Notification object. 
+Harness: the test ran to completion.
+

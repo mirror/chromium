@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS Test selectNodeContents on an ARIA textbox. 
+PASS Test selectNodeContents on a contenteditable. 
+PASS The effects of the setStart and setEnd methods should be reflected in the accessibility API. 
+PASS Verify that changing the focus removes the selection. 
+PASS The effects of the textarea.setSelectionRange method should be reflected in the accessibility API. 
+PASS Test the setSelectedTextRange accessibility API function. 
+PASS The effects of the selectNode method should be reflected in the accessibility API. 
+Harness: the test ran to completion.
+

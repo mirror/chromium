@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS open() with an invalid method is no-op 
+PASS open() with a forbidden method is no-op 
+PASS open() with an invalid URL is no-op 
+Harness: the test ran to completion.
+

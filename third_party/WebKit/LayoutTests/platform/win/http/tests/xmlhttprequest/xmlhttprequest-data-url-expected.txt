@@ -1,0 +1,9 @@
+CONSOLE ERROR: XMLHttpRequest cannot load data:text/html;charset=utf-8;base64,5paH5a2X. Invalid response. Origin 'http://127.0.0.1:8000' is therefore not allowed access.
+This is a testharness.js-based test.
+PASS Test parsing a data URL. US-ASCII into DOMString 
+PASS Test parsing a data URL. Binary into ArrayBuffer 
+PASS Test parsing a data URL. UTF-8 data into DOMString. 
+PASS Test parsing a data URL. UTF-8 data into Blob. 
+PASS Test parsing a data URL. Invalid Base64 data. 
+Harness: the test ran to completion.
+

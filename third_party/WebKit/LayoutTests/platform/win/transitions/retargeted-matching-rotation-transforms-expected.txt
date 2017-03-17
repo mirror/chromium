@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Retargeted rotation transform transitions should not decompose when rotation operations match 
+Harness: the test ran to completion.
+

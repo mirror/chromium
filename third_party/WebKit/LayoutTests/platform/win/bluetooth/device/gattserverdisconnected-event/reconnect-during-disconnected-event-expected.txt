@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS A device that reconnects during the gattserverdisconnected event should still receive gattserverdisconnected events after re-connection. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS selection.collapse(null, -1) 
+PASS selection.setBaseAndExtent(null, 0, null, 0) 
+Harness: the test ran to completion.
+

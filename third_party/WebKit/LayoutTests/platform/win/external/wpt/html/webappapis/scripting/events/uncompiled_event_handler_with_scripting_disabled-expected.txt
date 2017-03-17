@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS when scripting is disabled, the handler is never compiled 
+Harness: the test ran to completion.
+

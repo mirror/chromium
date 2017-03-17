@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS get elements in document 
+Harness: the test ran to completion.
+

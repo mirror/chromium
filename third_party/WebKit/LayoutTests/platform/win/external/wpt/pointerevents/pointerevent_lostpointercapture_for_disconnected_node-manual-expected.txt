@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS lostpointercapture event received 
+PASS PointerEvent Automation 
+PASS lostpointercapture is dispatched on the document 
+Harness: the test ran to completion.
+

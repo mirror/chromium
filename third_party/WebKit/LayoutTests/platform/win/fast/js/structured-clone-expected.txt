@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS Verify: "This algorithm preserves cycles..." 
+PASS Verify: "This algorithm preserves... the identity of duplicate objects in graphs." 
+PASS Verify: "Add a new property..." (objects) 
+PASS Verify: "Add a new property..." (arrays) 
+PASS Verify: "Add a new property..." (dense arrays) 
+PASS Maps and Sets are cloned 
+PASS Cloning Maps and Sets preserve cycles 
+PASS Cloned Maps and Sets do not reflect mutations that occur during cloning 
+PASS Cloning Maps should fail if they contain non-cloneable things 
+PASS Cloning Sets should fail if they contain non-cloneable things 
+PASS Cloning Symbols should fail 
+Harness: the test ran to completion.
+

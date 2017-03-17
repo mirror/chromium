@@ -1,0 +1,53 @@
+This is a testharness.js-based test.
+PASS Remove the parent of startContainer; anchor is first 
+PASS Remove the parent of startContainer; focus is first 
+PASS Replace nodeValue of startContainer; anchor is first 
+PASS Replace nodeValue of startContainer; focus is first 
+PASS Replace nodeValue of endContainer; anchor is first 
+PASS Replace nodeValue of endContainer; focus is first 
+PASS Appending " xyz" to startContainer; anchor is first 
+PASS Appending " xyz" to startContainer; focus is first 
+PASS Appending " xyz" to endContainer; anchor is first 
+PASS Appending " xyz" to endContainer; focus is first 
+PASS Inserting " xyz" to startContainer before the end point; anchor is first 
+PASS Inserting " xyz" to startContainer before the end point; focus is first 
+PASS Inserting " xyz" to endContainer before the end point; anchor is first 
+PASS Inserting " xyz" to endContainer before the end point; focus is first 
+PASS Inserting " xyz" to startContainer before the after point; anchor is first 
+PASS Inserting " xyz" to startContainer before the after point; focus is first 
+PASS Inserting " xyz" to endContainer before the after point; anchor is first 
+PASS Inserting " xyz" to endContainer before the after point; focus is first 
+PASS deleteData(1, 4) in startContainer; anchor is first 
+PASS deleteData(1, 4) in startContainer; focus is first 
+PASS deleteData(1, 4) in endContainer; anchor is first 
+PASS deleteData(1, 4) in endContainer; focus is first 
+PASS deleteData(0, 3) in startContainer; anchor is first 
+PASS deleteData(0, 3) in startContainer; focus is first 
+PASS deleteData(0, 3) in endContainer; anchor is first 
+PASS deleteData(0, 3) in endContainer; focus is first 
+PASS deleteData(0, 2) in startContainer; anchor is first 
+PASS deleteData(0, 2) in startContainer; focus is first 
+PASS deleteData(0, 2) in endContainer; anchor is first 
+PASS deleteData(0, 2) in endContainer; focus is first 
+PASS deleteData(3, 2) in startContainer; anchor is first 
+PASS deleteData(3, 2) in startContainer; focus is first 
+PASS deleteData(3, 2) in endContainer; anchor is first 
+PASS deleteData(3, 2) in endContainer; focus is first 
+PASS replaceData(1, 4, "1234") in startContainer; anchor is first 
+PASS replaceData(1, 4, "1234") in startContainer; focus is first 
+PASS replaceData(1, 4, "1234") in endContainer; anchor is first 
+PASS replaceData(1, 4, "1234") in endContainer; focus is first 
+PASS replaceData(0, 2, "12") in startContainer; anchor is first 
+PASS replaceData(0, 2, "12") in startContainer; focus is first 
+PASS replaceData(0, 2, "12") in endContainer; anchor is first 
+PASS replaceData(0, 2, "12") in endContainer; focus is first 
+PASS replaceData(0, 2, "1") in startContainer; anchor is first 
+PASS replaceData(0, 2, "1") in startContainer; focus is first 
+PASS replaceData(0, 2, "1") in endContainer; anchor is first 
+PASS replaceData(0, 2, "1") in endContainer; focus is first 
+PASS replaceData(3, 2, "12") in startContainer; anchor is first 
+PASS replaceData(3, 2, "12") in startContainer; focus is first 
+PASS replaceData(3, 2, "12") in endContainer; anchor is first 
+PASS replaceData(3, 2, "12") in endContainer; focus is first 
+Harness: the test ran to completion.
+

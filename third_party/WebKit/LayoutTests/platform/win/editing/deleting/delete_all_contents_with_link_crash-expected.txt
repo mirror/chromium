@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Delete all contents to placeholder 
+Harness: the test ran to completion.
+

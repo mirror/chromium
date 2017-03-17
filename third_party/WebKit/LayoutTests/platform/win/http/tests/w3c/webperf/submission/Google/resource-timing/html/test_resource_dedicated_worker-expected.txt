@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS There should be six entries: 4 scripts, 1 stylesheet, and the worker itself 
+Harness: the test ran to completion.
+

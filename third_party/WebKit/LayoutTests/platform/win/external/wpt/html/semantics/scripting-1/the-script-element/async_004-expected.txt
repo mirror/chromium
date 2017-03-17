@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS async script executes as soon as possible after a download is complete 
+Harness: the test ran to completion.
+

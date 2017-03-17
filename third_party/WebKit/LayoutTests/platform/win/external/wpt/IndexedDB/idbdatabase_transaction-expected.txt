@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBDatabase.transaction() - attempt to open a transaction with invalid scope 
+Harness: the test ran to completion.
+

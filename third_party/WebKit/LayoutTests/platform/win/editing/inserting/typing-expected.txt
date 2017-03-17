@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Typing simulation 1 
+PASS Typing simulation 2 
+PASS Typing simulation 3 
+Harness: the test ran to completion.
+

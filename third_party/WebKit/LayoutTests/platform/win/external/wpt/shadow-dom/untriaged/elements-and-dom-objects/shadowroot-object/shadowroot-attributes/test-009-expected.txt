@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS A_10_01_01_04_01_T01 
+Harness: the test ran to completion.
+

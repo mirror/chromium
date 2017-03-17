@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that the rendering context state is intact after a call to putImageData() 
+Harness: the test ran to completion.
+

@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Selectors added to CSSStyleSheets via insertRule() should use the @namespace mapping 
+PASS Selectors added to CSSGroupingRules via insertRule() should use the @namespace mapping 
+Harness: the test ran to completion.
+

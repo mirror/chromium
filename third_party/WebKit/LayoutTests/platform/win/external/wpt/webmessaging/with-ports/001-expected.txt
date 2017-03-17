@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+FAIL resolving broken url assert_throws: should have failed to resolve function "function () {
+    postMessage('', 'http://foo bar', []);
+  }" did not throw
+Harness: the test ran to completion.
+

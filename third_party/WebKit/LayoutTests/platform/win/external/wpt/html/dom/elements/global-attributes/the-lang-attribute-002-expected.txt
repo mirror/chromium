@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS The browser will NOT recognize a language declared in an xml:lang attribute on the html tag. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,67 @@
+This is a testharness.js-based test.
+PASS Setting height to max-content 
+PASS Setting height to min-content 
+PASS Setting height to fit-content 
+PASS Setting height to auto 
+PASS Setting height to initial 
+PASS Setting height to inherit 
+PASS Setting height to unset 
+PASS Setting height to CSSSimpleLength with value 1px 
+PASS Setting height to CSSSimpleLength with value 3em 
+PASS Setting height to CSSSimpleLength with value 4ex 
+PASS Setting height to CSSSimpleLength with value 5ch 
+PASS Setting height to CSSSimpleLength with value 6rem 
+PASS Setting height to CSSSimpleLength with value 7vw 
+PASS Setting height to CSSSimpleLength with value 8vh 
+PASS Setting height to CSSSimpleLength with value 9vmin 
+PASS Setting height to CSSSimpleLength with value 10vmax 
+PASS Setting height to CSSSimpleLength with value 11cm 
+PASS Setting height to CSSSimpleLength with value 12mm 
+PASS Setting height to CSSSimpleLength with value 13in 
+PASS Setting height to CSSSimpleLength with value 14pc 
+PASS Setting height to CSSSimpleLength with value 15pt 
+PASS Setting height to CSSCalcLength with value calc(((((((((((((4.5em - 6.7ex) + 1200px) + 1.56cm) - 1.7mm) + 1.8in) + 2.1pt) - 1.9pc) + 1.1vw) - 1.2vh) + 1.3vmin) - 1.4vmax) - 10rem) + 8.9ch) 
+PASS Setting height to CSSCalcLength with value calc(10px) 
+PASS Setting height to CSSCalcLength with value calc(10in + 5vmin) 
+PASS Setting height to invalid value CSSNumberValue throws 
+PASS Setting height to invalid value null throws 
+PASS Setting height to invalid value undefined throws 
+PASS Setting height to invalid value true throws 
+PASS Setting height to invalid value false throws 
+PASS Setting height to invalid value 1 throws 
+PASS Setting height to invalid value hello throws 
+PASS Setting height to invalid value [object Object] throws 
+PASS Setting height to invalid value CSSKeywordValue throws 
+PASS Getting height when it is set to max-content 
+PASS Getting height when it is set to min-content 
+PASS Getting height when it is set to fit-content 
+PASS Getting height when it is set to auto 
+PASS Getting height when it is set to initial 
+PASS Getting height when it is set to inherit 
+PASS Getting height when it is set to unset 
+PASS Getting height with a CSSSimpleLength whose value is 1px 
+PASS Getting height with a CSSSimpleLength whose value is 3em 
+PASS Getting height with a CSSSimpleLength whose value is 4ex 
+PASS Getting height with a CSSSimpleLength whose value is 5ch 
+PASS Getting height with a CSSSimpleLength whose value is 6rem 
+PASS Getting height with a CSSSimpleLength whose value is 7vw 
+PASS Getting height with a CSSSimpleLength whose value is 8vh 
+PASS Getting height with a CSSSimpleLength whose value is 9vmin 
+PASS Getting height with a CSSSimpleLength whose value is 10vmax 
+PASS Getting height with a CSSSimpleLength whose value is 11cm 
+PASS Getting height with a CSSSimpleLength whose value is 12mm 
+PASS Getting height with a CSSSimpleLength whose value is 13in 
+PASS Getting height with a CSSSimpleLength whose value is 14pc 
+PASS Getting height with a CSSSimpleLength whose value is 15pt 
+PASS Getting height with a CSSCalcLength whose value is calc(((((((((((((4.5em - 6.7ex) + 1200px) + 1.56cm) - 1.7mm) + 1.8in) + 2.1pt) - 1.9pc) + 1.1vw) - 1.2vh) + 1.3vmin) - 1.4vmax) - 10rem) + 8.9ch) 
+PASS Getting height with a CSSCalcLength whose value is calc(10px) 
+PASS Getting height with a CSSCalcLength whose value is calc(10in + 5vmin) 
+PASS Getting height when it is set to "calc(3 * (5px - 3em))" via a string 
+PASS Getting height when it is set to "calc((5vmin + 1mm) / 2)" via a string 
+PASS getAll for single-valued height 
+PASS Delete height removes the value from the styleMap 
+PASS height shows up in getProperties 
+PASS Setting height to a sequence throws 
+PASS Appending to height throws 
+Harness: the test ran to completion.
+

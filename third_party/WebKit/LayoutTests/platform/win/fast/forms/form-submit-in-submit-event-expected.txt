@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS submit() in submit event handler should not contains a value of a submit button. 
+Harness: the test ran to completion.
+

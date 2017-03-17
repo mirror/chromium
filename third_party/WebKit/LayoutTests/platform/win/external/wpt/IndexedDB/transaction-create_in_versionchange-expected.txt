@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Attempt to create new transactions inside a versionchange transaction 
+Harness: the test ran to completion.
+

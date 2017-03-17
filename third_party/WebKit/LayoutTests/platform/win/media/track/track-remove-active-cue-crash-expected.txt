@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that removing an active cue does not crash the browser. 
+Harness: the test ran to completion.
+

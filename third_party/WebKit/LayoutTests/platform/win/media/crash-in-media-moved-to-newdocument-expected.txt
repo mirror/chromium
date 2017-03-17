@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test for crbug/676004: Crash in blink::beforeCallEnteredCallback() 
+Harness: the test ran to completion.
+

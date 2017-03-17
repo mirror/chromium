@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS select.remove(n) should work 
+PASS select.options.remove(n) should work 
+PASS remove() should work on select elements. 
+PASS Element#remove() should work on select elements. 
+Harness: the test ran to completion.
+

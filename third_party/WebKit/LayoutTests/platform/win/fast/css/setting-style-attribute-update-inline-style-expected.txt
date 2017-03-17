@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Assigning to HTMLElement.style updates the style declaration 
+PASS Assigning to SVGElement.style updates the style declaration 
+PASS Assigning to CSSStyleRule.style updates the style declaration 
+Harness: the test ran to completion.
+

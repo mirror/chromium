@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBCursor.update() - object store - attempt to  modify a record when object store been deleted 
+Harness: the test ran to completion.
+

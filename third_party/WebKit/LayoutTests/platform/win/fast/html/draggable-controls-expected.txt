@@ -1,0 +1,9 @@
+CONSOLE MESSAGE: line 36: dragstart[object HTMLVideoElement]
+CONSOLE MESSAGE: line 36: dragstart[object HTMLInputElement]
+CONSOLE MESSAGE: line 36: dragstart[object HTMLInputElement]
+CONSOLE MESSAGE: line 36: dragstart[object HTMLTextAreaElement]
+CONSOLE MESSAGE: line 36: dragstart[object HTMLDivElement]
+This is a testharness.js-based test.
+PASS draggables should be draggable 
+Harness: the test ran to completion.
+

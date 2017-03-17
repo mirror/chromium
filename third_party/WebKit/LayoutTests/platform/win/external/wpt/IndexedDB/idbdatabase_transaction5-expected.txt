@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBDatabase.transaction() - If storeNames is an empty list, the implementation must throw a DOMException of type InvalidAccessError 
+Harness: the test ran to completion.
+

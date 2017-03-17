@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS HTML Test: Text in the del element should be 'line-through' 
+Harness: the test ran to completion.
+

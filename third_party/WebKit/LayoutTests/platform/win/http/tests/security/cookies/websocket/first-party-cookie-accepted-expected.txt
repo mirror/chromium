@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that first-party cookies not blocked for WebSockets. 
+Harness: the test ran to completion.
+

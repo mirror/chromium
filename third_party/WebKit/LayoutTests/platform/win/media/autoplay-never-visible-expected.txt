@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that muted video with an autoplay attribute does not leak if it's never visible 
+Harness: the test ran to completion.
+

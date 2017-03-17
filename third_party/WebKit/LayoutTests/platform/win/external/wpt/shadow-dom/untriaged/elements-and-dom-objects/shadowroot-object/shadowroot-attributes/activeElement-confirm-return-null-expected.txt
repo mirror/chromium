@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS confirm activeElement return null 
+PASS confirm activeElement return null when there is other element in body 
+PASS confirm activeElement return null when focus on the element in the outer shadow tree 
+Harness: the test ran to completion.
+

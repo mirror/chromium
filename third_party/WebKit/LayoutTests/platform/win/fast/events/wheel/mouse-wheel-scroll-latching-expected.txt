@@ -1,0 +1,7 @@
+The child div scrolls till the end.
+PASS child.scrollTop became 100
+FAIL parent.scrollTop should be 0. Was 18.
+PASS successfullyParsed is true
+
+TEST COMPLETE
+

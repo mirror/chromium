@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS test that setting event handler notifies the mojo service 
+Harness: the test ran to completion.
+

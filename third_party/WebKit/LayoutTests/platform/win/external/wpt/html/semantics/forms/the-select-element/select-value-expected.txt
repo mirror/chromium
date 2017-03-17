@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS options 
+PASS optgroups 
+PASS option is child of div 
+PASS no options 
+Harness: the test ran to completion.
+

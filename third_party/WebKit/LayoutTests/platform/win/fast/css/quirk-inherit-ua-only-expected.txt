@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS The '-internal-quirk-inherit' CSS value is only exposed to UA stylesheets 
+Harness: the test ran to completion.
+

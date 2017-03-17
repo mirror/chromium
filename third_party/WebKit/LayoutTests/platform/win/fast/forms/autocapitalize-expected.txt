@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Test that the autocapitalize is avaible on HTMLInputElement. 
+PASS Test that the autocapitalize is avaible on HTMLTextAreaElement. 
+PASS Test deprecated values of autocapitalize. 
+PASS Test reflection of autocapitalize. 
+PASS Test the default value depending on <input> type. 
+Harness: the test ran to completion.
+

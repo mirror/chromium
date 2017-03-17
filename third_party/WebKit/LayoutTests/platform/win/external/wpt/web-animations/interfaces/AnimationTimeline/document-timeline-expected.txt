@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS document.timeline identity tests 
+PASS document.timeline.currentTime value tests 
+PASS document.timeline.currentTime liveness tests 
+Harness: the test ran to completion.
+

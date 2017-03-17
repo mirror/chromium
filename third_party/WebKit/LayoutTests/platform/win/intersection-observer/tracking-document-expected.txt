@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IntersectionObserver with root in a document that has no window does not crash. 
+Harness: the test ran to completion.
+

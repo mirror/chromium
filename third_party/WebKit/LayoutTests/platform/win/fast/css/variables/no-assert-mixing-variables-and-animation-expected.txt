@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS this test passes if it doesn't assert 
+Harness: the test ran to completion.
+

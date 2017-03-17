@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Zero-height block in otherwise empty multicol 
+Harness: the test ran to completion.
+

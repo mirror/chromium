@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS The browser will recognize a language declared in a lang attribute on the html tag. 
+Harness: the test ran to completion.
+

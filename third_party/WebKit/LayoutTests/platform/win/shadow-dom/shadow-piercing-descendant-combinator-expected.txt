@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS >>> should match only through open shadow roots. 
+PASS leftmost compound should match an element in the same node tree as context object. 
+PASS >>> should match without piercing through shadow roots. 
+PASS Multiple >>>s in a selector should work. 
+Harness: the test ran to completion.
+

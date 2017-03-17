@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS summary with author display: block is use counted 
+Harness: the test ran to completion.
+

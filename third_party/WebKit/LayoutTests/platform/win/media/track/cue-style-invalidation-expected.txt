@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Check that descendant style invalidation works with ::cue selectors. 
+Harness: the test ran to completion.
+

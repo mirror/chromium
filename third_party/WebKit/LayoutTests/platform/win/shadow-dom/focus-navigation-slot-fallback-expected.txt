@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Focus should jump to fallback elements when a slot does not have any assigned nodes. 
+Harness: the test ran to completion.
+

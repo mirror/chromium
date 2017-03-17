@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This tests behaviour of path modification APIs on an empty path. 
+Harness: the test ran to completion.
+

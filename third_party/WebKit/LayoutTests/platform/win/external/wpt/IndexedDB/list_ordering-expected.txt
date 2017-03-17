@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS objectStoreNames and indexNames order - numbers 
+PASS objectStoreNames and indexNames order - numbers 'overflow' 
+PASS objectStoreNames and indexNames order - lexigraphical string sort 
+Harness: the test ran to completion.
+

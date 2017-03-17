@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Redo insertText on empty editable 
+PASS Redo insertText on non-empty editable 
+Harness: the test ran to completion.
+

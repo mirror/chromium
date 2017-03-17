@@ -1,0 +1,6 @@
+CONSOLE WARNING: line 22: Failed to execute 'play' on 'HTMLMediaElement': API can only be initiated by a user gesture.
+This is a testharness.js-based test.
+PASS Prerequisites to running the rest of the tests 
+PASS Test that switching from MediaStream to src= does not autoplay. 
+Harness: the test ran to completion.
+

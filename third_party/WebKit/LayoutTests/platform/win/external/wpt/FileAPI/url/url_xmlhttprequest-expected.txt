@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS FileAPI Test: Creating Blob URL via XMLHttpRequest 
+Harness: the test ran to completion.
+

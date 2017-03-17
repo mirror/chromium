@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Dialog focusing steps should be applied to elements inside ShadowRoot. 
+PASS Dialog focusing steps should be applied to slotted elements in Shadow DOM. 
+Harness: the test ran to completion.
+

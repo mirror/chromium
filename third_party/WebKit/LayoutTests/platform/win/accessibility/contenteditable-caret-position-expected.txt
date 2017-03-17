@@ -1,0 +1,15 @@
+This is a testharness.js-based test.
+PASS Initially there should be no selection under the main object. 
+PASS Initially there should be no selection on the root object. 
+PASS Moving the focus to an ARIA textbox should place the caret at its beginning. 
+PASS Setting a new caret position in the ARIA textbox should be reflected in the accessibility APIs. 
+PASS Removing the selection should remove the caret completely. 
+PASS Positioning the caret using the accessibility API instead of the DOM should work. 
+PASS Moving the focus into a textarea should remove the caret from the ARIA textbox. 
+PASS Standard text fields start with the caret at the beginning of their contents. 
+PASS Setting a new caret position in the textarea should be exposed in the accessibility APIs. 
+PASS Offsets in text fields should be reported from the beginning of the field and not from the top of the container. 
+PASS The caret position should be retrievable from any object. 
+PASS Test moving the caret across two paragraphs. 
+Harness: the test ran to completion.
+

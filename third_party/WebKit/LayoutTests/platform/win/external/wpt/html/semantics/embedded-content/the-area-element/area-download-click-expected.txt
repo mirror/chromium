@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Clicking on an <area> element with a download attribute must not throw an exception 
+Harness: the test ran to completion.
+

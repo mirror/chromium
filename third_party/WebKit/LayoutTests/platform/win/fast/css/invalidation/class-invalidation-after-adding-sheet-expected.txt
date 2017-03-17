@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Check that style invalidation works when class is changed immediately after adding sheet with rule for class. 
+Harness: the test ran to completion.
+

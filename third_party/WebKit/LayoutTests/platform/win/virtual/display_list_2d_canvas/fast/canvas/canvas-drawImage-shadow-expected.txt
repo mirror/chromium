@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Ensure correct behavior of canvas with image shadow. A square with a cut-out top-right corner should be displayed with solid shadow (top) and blur shadow (bottom). 
+Harness: the test ran to completion.
+

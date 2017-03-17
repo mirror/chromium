@@ -1,0 +1,13 @@
+This is a testharness.js-based test.
+PASS Observer with multiple thresholds. 
+PASS First rAF. 
+PASS document.scrollingElement.scrollTop = 120 
+PASS document.scrollingElement.scrollTop = 160 
+PASS document.scrollingElement.scrollTop = 200 
+PASS document.scrollingElement.scrollTop = 240 
+PASS document.scrollingElement.scrollTop = 740 
+PASS document.scrollingElement.scrollTop = 760 
+PASS document.scrollingElement.scrollTop = 800 
+PASS document.scrollingElement.scrollTop = 820 
+Harness: the test ran to completion.
+

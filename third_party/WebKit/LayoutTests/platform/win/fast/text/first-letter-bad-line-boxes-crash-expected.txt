@@ -1,0 +1,6 @@
+CONSOLE WARNING: line 17: We don't execute document.execCommand() this time, because it is called recursively.
+CONSOLE WARNING: line 29: We don't execute document.execCommand() this time, because it is called recursively.
+This is a testharness.js-based test.
+PASS Untitled 
+Harness: the test ran to completion.
+

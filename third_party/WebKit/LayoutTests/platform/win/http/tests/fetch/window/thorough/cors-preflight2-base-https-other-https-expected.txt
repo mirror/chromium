@@ -1,0 +1,105 @@
+CONSOLE WARNING: line 14: Subresource requests whose URLs contain embedded credentials (e.g. `https://user:pass@host/`) are deprecated, and will be blocked in M59, around June 2017. See https://www.chromestatus.com/feature/5669008342777856 for more details.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=PUT. Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://127.0.0.1:8443' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=PUT&ACAMethods=PUT. Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://127.0.0.1:8443' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=PUT&ACAOrigin=*. Method PUT is not allowed by Access-Control-Allow-Methods in preflight response.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=PUT&ACAOrigin=*&headers=CUSTOM&ACAMethods=PUT. Request header field x-serviceworker-test is not allowed by Access-Control-Allow-Headers in preflight response.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=PUT&ACAOrigin=*&headers=CUSTOM&ACAMethods=PUT,%20XXX. Request header field x-serviceworker-test is not allowed by Access-Control-Allow-Headers in preflight response.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=PUT&ACAOrigin=https://127.0.0.1:8443. Method PUT is not allowed by Access-Control-Allow-Methods in preflight response.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=PUT&ACAOrigin=https://127.0.0.1:8443&headers=CUSTOM&ACAMethods=PUT. Request header field x-serviceworker-test is not allowed by Access-Control-Allow-Headers in preflight response.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=PUT&ACAOrigin=https://127.0.0.1:8443&headers=CUSTOM&ACAMethods=PUT,%20XXX. Request header field x-serviceworker-test is not allowed by Access-Control-Allow-Headers in preflight response.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=PUT&ACAOrigin=*&PACAOrigin=*&ACAMethods=PUT&PreflightTest=200. Method PUT is not allowed by Access-Control-Allow-Methods in preflight response.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=PUT&headers=CUSTOM&ACAOrigin=*&PACAOrigin=*&PACAMethods=PUT&ACAHeaders=x-serviceworker-test&PreflightTest=200. Request header field x-serviceworker-test is not allowed by Access-Control-Allow-Headers in preflight response.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=PUT&ACAOrigin=*&PACAMethods=PUT&PreflightTest=200. Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://127.0.0.1:8443' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=PUT&PACAOrigin=*&PACAMethods=PUT&PreflightTest=200. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://127.0.0.1:8443' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=PUT&ACAOrigin=*&PACAOrigin=*&PACAMethods=PUT&PreflightTest=301. Response for preflight has invalid HTTP status code 301
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=PUT&ACAOrigin=*&PACAOrigin=*&PACAMethods=PUT&PreflightTest=401. Response for preflight has invalid HTTP status code 401
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=PUT&ACAOrigin=*&PACAOrigin=*&PACAMethods=PUT&PreflightTest=500. Response for preflight has invalid HTTP status code 500
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=PUT&headers=CUSTOM2&ACAOrigin=*&PACAOrigin=*&PACAMethods=PUT&PACAHeaders=x-servicewOrker-test&PreflightTest=200. Request header field x-serviceworker-ua is not allowed by Access-Control-Allow-Headers in preflight response.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=XXX. Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://127.0.0.1:8443' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=XXX&ACAMethods=XXX. Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://127.0.0.1:8443' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=XXX&ACAOrigin=*. Method XXX is not allowed by Access-Control-Allow-Methods in preflight response.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=XXX&ACAOrigin=*&headers=CUSTOM&ACAMethods=XXX. Request header field x-serviceworker-test is not allowed by Access-Control-Allow-Headers in preflight response.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=XXX&ACAOrigin=*&headers=CUSTOM&ACAMethods=PUT,%20XXX. Request header field x-serviceworker-test is not allowed by Access-Control-Allow-Headers in preflight response.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=XXX&ACAOrigin=https://127.0.0.1:8443. Method XXX is not allowed by Access-Control-Allow-Methods in preflight response.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=XXX&ACAOrigin=https://127.0.0.1:8443&headers=CUSTOM&ACAMethods=XXX. Request header field x-serviceworker-test is not allowed by Access-Control-Allow-Headers in preflight response.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=XXX&ACAOrigin=https://127.0.0.1:8443&headers=CUSTOM&ACAMethods=PUT,%20XXX. Request header field x-serviceworker-test is not allowed by Access-Control-Allow-Headers in preflight response.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=XXX&ACAOrigin=*&PACAOrigin=*&ACAMethods=XXX&PreflightTest=200. Method XXX is not allowed by Access-Control-Allow-Methods in preflight response.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=XXX&headers=CUSTOM&ACAOrigin=*&PACAOrigin=*&PACAMethods=XXX&ACAHeaders=x-serviceworker-test&PreflightTest=200. Request header field x-serviceworker-test is not allowed by Access-Control-Allow-Headers in preflight response.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=XXX&ACAOrigin=*&PACAMethods=XXX&PreflightTest=200. Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://127.0.0.1:8443' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=XXX&PACAOrigin=*&PACAMethods=XXX&PreflightTest=200. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://127.0.0.1:8443' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=XXX&ACAOrigin=*&PACAOrigin=*&PACAMethods=XXX&PreflightTest=301. Response for preflight has invalid HTTP status code 301
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=XXX&ACAOrigin=*&PACAOrigin=*&PACAMethods=XXX&PreflightTest=401. Response for preflight has invalid HTTP status code 401
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=XXX&ACAOrigin=*&PACAOrigin=*&PACAMethods=XXX&PreflightTest=500. Response for preflight has invalid HTTP status code 500
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=XXX&headers=CUSTOM2&ACAOrigin=*&PACAOrigin=*&PACAMethods=XXX&PACAHeaders=x-servicewOrker-test&PreflightTest=200. Request header field x-serviceworker-ua is not allowed by Access-Control-Allow-Headers in preflight response.
+This is a testharness.js-based test.
+PASS Startup 
+PASS executeTest-0 
+PASS executeTest-1 
+PASS executeTest-2 
+PASS executeTest-3 
+PASS executeTest-4 
+PASS executeTest-5 
+PASS executeTest-6 
+PASS executeTest-7 
+PASS executeTest-8 
+PASS executeTest-9 
+PASS executeTest-10 
+PASS executeTest-11 
+PASS executeTest-12 
+PASS executeTest-13 
+PASS executeTest-14 
+PASS executeTest-15 
+PASS executeTest-16 
+PASS executeTest-17 
+PASS executeTest-18 
+PASS executeTest-19 
+PASS executeTest-20 
+PASS executeTest-21 
+PASS executeTest-22 
+PASS executeTest-23 
+PASS executeTest-24 
+PASS executeTest-25 
+PASS executeTest-26 
+PASS executeTest-27 
+PASS executeTest-28 
+PASS executeTest-29 
+PASS executeTest-30 
+PASS executeTest-31 
+PASS executeTest-32 
+PASS executeTest-33 
+PASS executeTest-34 
+PASS executeTest-35 
+PASS executeTest-36 
+PASS executeTest-37 
+PASS executeTest-38 
+PASS executeTest-39 
+PASS executeTest-40 
+PASS executeTest-41 
+PASS executeTest-42 
+PASS executeTest-43 
+PASS executeTest-44 
+PASS executeTest-45 
+PASS executeTest-46 
+PASS executeTest-47 
+PASS executeTest-48 
+PASS executeTest-49 
+PASS executeTest-50 
+PASS executeTest-51 
+PASS executeTest-52 
+PASS executeTest-53 
+PASS executeTest-54 
+PASS executeTest-55 
+PASS executeTest-56 
+PASS executeTest-57 
+PASS executeTest-58 
+PASS executeTest-59 
+PASS executeTest-60 
+PASS executeTest-61 
+PASS executeTest-62 
+PASS executeTest-63 
+PASS executeTest-64 
+PASS executeTest-65 
+PASS executeTest-66 
+PASS executeTest-67 
+Harness: the test ran to completion.
+

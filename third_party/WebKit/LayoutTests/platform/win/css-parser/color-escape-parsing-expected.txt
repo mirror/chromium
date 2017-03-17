@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS CSS.supports('color', "\\rgb(10, 20, 30)") should return true 
+PASS e.style['color'] = "\\rgb(10, 20, 30)" should set the value 
+PASS Serialization should round-trip after setting e.style['color'] = "\\rgb(10, 20, 30)" 
+PASS CSS.supports('border-color', "\\#ff0000") should return false 
+PASS e.style['border-color'] = "\\#ff0000" should not set the value 
+PASS CSS.supports('background-color', "rgb\\(255\\,0\\,0\\)") should return false 
+PASS e.style['background-color'] = "rgb\\(255\\,0\\,0\\)" should not set the value 
+Harness: the test ran to completion.
+

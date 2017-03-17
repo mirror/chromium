@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Test exactly one succeeds when two MediaElements attach to same MediaSource 
+PASS Test that MediaSource can reattach if closed first 
+PASS Generate multiple unique URLs via URL.createObjectURL and revoke an URL 
+Harness: the test ran to completion.
+

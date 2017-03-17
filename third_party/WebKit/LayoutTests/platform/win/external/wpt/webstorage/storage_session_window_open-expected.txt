@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS A new window to make sure there is a copy of the previous window's sessionStorage, and that they diverge after a change 
+Harness: the test ran to completion.
+

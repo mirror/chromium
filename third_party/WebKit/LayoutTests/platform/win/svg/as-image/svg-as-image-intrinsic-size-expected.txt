@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Test that intrinsic height can be calculated from intrinsic width and intrinsic ratio 
+PASS Test that intrinsic width can be calculated from intrinsic height and intrinsic ratio 
+Harness: the test ran to completion.
+

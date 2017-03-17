@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS This test uses interpolation-test.js. 
+PASS SMIL: Interpolate attribute <href> from replace [#A] to replace [#B] at (0) is [#A] 
+PASS SMIL: Interpolate attribute <href> from replace [#A] to replace [#B] at (0.2) is [#A] 
+PASS SMIL: Interpolate attribute <href> from replace [#A] to replace [#B] at (0.6) is [#B] 
+PASS SMIL: Interpolate attribute <href> from replace [#A] to replace [#B] at (1) is [#B] 
+PASS Web Animations: Interpolate attribute <href> from replace [#A] to replace [#B] at (-0.4) is [#A] 
+PASS Web Animations: Interpolate attribute <href> from replace [#A] to replace [#B] at (0) is [#A] 
+PASS Web Animations: Interpolate attribute <href> from replace [#A] to replace [#B] at (0.2) is [#A] 
+PASS Web Animations: Interpolate attribute <href> from replace [#A] to replace [#B] at (0.6) is [#B] 
+PASS Web Animations: Interpolate attribute <href> from replace [#A] to replace [#B] at (1) is [#B] 
+PASS Web Animations: Interpolate attribute <href> from replace [#A] to replace [#B] at (1.4) is [#B] 
+Harness: the test ran to completion.
+

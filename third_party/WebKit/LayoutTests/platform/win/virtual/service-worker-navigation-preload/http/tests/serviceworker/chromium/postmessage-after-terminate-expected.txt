@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS postMessage to a terminated service worker. 
+PASS postMessage on a port that was sent to a terminated service worker 
+PASS postMessage on a port that was sent on a port that was sent to a terminated service worker 
+Harness: the test ran to completion.
+

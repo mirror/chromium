@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that u, b, i WebVTT objects are being styled correctly. 
+Harness: the test ran to completion.
+

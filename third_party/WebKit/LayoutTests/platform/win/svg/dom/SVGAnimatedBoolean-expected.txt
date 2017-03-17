@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS SVGAnimatedBoolean interface - utilizing the preserveAlpha property of SVGFEConvolveMatrixElement 
+Harness: the test ran to completion.
+

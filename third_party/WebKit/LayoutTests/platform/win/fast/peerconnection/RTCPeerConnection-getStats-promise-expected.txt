@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS getStats(MediaStreamTrack selector) 
+PASS getStats(null) 
+PASS getStats() 
+Harness: the test ran to completion.
+

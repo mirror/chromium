@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This test performs a check for option elements having selected attribute to be considered for :default CSS selector. 
+Harness: the test ran to completion.
+

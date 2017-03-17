@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Delete tab character in SPAN from caret after SPAN 
+PASS Delete tab character in SPAN from caret in same SPAN 
+PASS Delete tab character after BR 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Manual scroll restoration should take precedent over scrolling to fragment in cross doc navigation 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL AbstractWorker.onerror assert_equals: ErrorEvent.filename expected "http://web-platform.test:8001/workers/constructors/Worker/AbstractWorker.onerror.html#" but got "http://web-platform.test:8001/workers/constructors/Worker/AbstractWorker.onerror.html"
+Harness: the test ran to completion.
+

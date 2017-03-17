@@ -1,0 +1,18 @@
+This is a testharness.js-based test.
+PASS Service Worker intercepts fetches in scope with wildcard origin. 
+PASS Service Worker intercepts fetches in scope with explicit origin. 
+PASS Service Worker doesn't intercept fetches with non matching origin. 
+PASS Service Worker intercepts fetches in scope with explicit origin list. 
+PASS Service Worker does not intercept same origin fetches. 
+PASS Service Worker does not intercept navigations. 
+PASS Service Worker that fallback to network should fallback to network. 
+PASS Service Worker that fetch from the network should fallback to network. 
+PASS Falling back to network should still respect CORS. 
+PASS Foreign fetch can intercept fetch requests from SW controlled pages. 
+PASS Foreign fetch can intercept resource requests from SW controlled pages. 
+PASS Referrer and origin are set correctly in ForeignFetchEvent. 
+PASS Service Worker does not intercept fetches from an insecure context. 
+PASS Service Worker does not intercept fetches with CORS preflight 
+PASS Foreign fetch rejects if resolved with a null response. 
+Harness: the test ran to completion.
+

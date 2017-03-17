@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Hit testing an empty container should not crash. 
+Harness: the test ran to completion.
+

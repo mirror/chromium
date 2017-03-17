@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Accessing a navigator object that just got removed does not crash. 
+PASS Accessing a navigator object that got removed some time before does not crash. 
+Harness: the test ran to completion.
+

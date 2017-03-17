@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that tracks can be turned on and off through the track selection menu. 
+Harness: the test ran to completion.
+

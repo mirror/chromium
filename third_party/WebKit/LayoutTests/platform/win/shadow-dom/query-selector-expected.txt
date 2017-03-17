@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS querySelectorAll for multiple #Ids in a document tree 
+PASS querySelectorAll for multiple #Ids in a shadow tree 
+PASS deep combinator >>> should work for querySelectorAll. 
+PASS deep combinator >>> should work for querySelector 
+Harness: the test ran to completion.
+

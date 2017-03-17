@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS A name containing unicode characters whose utf8 length is less than 30 must not throw an error. 
+Harness: the test ran to completion.
+

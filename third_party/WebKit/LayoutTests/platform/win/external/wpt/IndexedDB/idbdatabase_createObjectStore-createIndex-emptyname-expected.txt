@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBDatabase.createObjectStore() and IDBObjectStore.createIndex() - both with empty name 
+Harness: the test ran to completion.
+

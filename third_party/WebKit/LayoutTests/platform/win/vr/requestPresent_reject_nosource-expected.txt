@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test requestPresent rejects if not provided a layer source 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Scrolling on the child div scrollbar doesn't propagate to the parent div 
+Harness: the test ran to completion.
+

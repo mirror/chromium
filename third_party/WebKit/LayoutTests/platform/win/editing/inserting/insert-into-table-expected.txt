@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS insertHTML text into a table cell following white spaces should not crash 
+Harness: the test ran to completion.
+

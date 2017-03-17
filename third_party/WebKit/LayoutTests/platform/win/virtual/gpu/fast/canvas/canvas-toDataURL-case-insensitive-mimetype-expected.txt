@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that toDataURL(mimeType) ignores the case of 'mimeType'. 
+Harness: the test ran to completion.
+

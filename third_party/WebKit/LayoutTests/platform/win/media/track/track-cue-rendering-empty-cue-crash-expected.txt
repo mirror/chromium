@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that having empty cues does not crash the browser. 
+Harness: the test ran to completion.
+

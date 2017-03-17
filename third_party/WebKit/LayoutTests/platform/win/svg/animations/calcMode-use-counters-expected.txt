@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS calcMode discrete is use counted. 
+PASS calcMode linear is not counted for animateTransform. 
+PASS calcMode linear is use counted for animateMotion. 
+PASS calcMode paced is not counted for animateMotion. 
+PASS calcMode paced is use counted for animate. 
+PASS calcMode spline is use counted. 
+Harness: the test ran to completion.
+

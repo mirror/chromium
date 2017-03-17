@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Update a registration. 
+Harness: the test ran to completion.
+

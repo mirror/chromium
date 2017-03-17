@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that adding a text track does not make controls visible. 
+Harness: the test ran to completion.
+

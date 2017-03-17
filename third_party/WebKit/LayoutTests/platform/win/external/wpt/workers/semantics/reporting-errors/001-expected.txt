@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL shared worker, not handled assert_equals: expected "" but got "second argument was http://web-platform.test:8001/workers/semantics/reporting-errors/001.html, expected http://web-platform.test:8001/workers/semantics/reporting-errors/001.html#. "
+Harness: the test ran to completion.
+

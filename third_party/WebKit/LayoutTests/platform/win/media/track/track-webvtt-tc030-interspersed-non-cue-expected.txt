@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Check cues from captions-webvtt/tc030-interspersed-non-cue.vtt 
+Harness: the test ran to completion.
+

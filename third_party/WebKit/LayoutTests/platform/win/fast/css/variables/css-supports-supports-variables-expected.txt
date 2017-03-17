@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Test that CSS.supports(prop, val) returns true for custom properties. 
+PASS Test that above CSS.supports values can be specified in style. 
+PASS Test that above CSS.supports values can be written into inline style via CSSOM API 
+Harness: the test ran to completion.
+

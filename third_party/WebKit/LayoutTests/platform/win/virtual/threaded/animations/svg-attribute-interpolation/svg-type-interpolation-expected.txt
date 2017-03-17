@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS This test uses interpolation-test.js. 
+PASS SMIL: Interpolate attribute <type> from replace [saturate] to replace [hueRotate] at (0) is [saturate] 
+PASS SMIL: Interpolate attribute <type> from replace [saturate] to replace [hueRotate] at (0.2) is [saturate] 
+PASS SMIL: Interpolate attribute <type> from replace [saturate] to replace [hueRotate] at (0.6) is [hueRotate] 
+PASS SMIL: Interpolate attribute <type> from replace [saturate] to replace [hueRotate] at (1) is [hueRotate] 
+PASS Web Animations: Interpolate attribute <type> from replace [saturate] to replace [hueRotate] at (-0.4) is [saturate] 
+PASS Web Animations: Interpolate attribute <type> from replace [saturate] to replace [hueRotate] at (0) is [saturate] 
+PASS Web Animations: Interpolate attribute <type> from replace [saturate] to replace [hueRotate] at (0.2) is [saturate] 
+PASS Web Animations: Interpolate attribute <type> from replace [saturate] to replace [hueRotate] at (0.6) is [hueRotate] 
+PASS Web Animations: Interpolate attribute <type> from replace [saturate] to replace [hueRotate] at (1) is [hueRotate] 
+PASS Web Animations: Interpolate attribute <type> from replace [saturate] to replace [hueRotate] at (1.4) is [hueRotate] 
+Harness: the test ran to completion.
+

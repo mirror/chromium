@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS This test requires internals to inspect INPUT elements. 
+PASS This test requires event sender to simulate keyboard and mouse actions. 
+PASS Dummy async test for blocking test harness. 
+PASS Mark misspelling in the initial text of INPUT. 
+PASS Mark initial misspelling "wellcome" in editable DIV. 
+PASS Mark initial misspelling "Helllo" and "wordl" in editable DIV. 
+PASS Mark initial multi-word misspelling "upper case" in editable DIV. 
+PASS Context clicking misspelled word in INPUT selects the word. 
+PASS Context clicking misspelled word in editable DIV selects the word. 
+PASS Context clicking the second misspelled word "wordl" in editable DIV selects the word. 
+PASS Context clicking multi-word misspelling "upper case" in editable DIV selects the words. 
+Harness: the test ran to completion.
+

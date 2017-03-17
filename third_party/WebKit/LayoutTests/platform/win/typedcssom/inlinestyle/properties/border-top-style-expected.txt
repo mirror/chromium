@@ -1,0 +1,25 @@
+This is a testharness.js-based test.
+PASS Setting border-top-style to none 
+PASS Setting border-top-style to initial 
+PASS Setting border-top-style to inherit 
+PASS Setting border-top-style to unset 
+PASS Setting border-top-style to invalid value CSSSimpleLength throws 
+PASS Setting border-top-style to invalid value null throws 
+PASS Setting border-top-style to invalid value undefined throws 
+PASS Setting border-top-style to invalid value true throws 
+PASS Setting border-top-style to invalid value false throws 
+PASS Setting border-top-style to invalid value 1 throws 
+PASS Setting border-top-style to invalid value hello throws 
+PASS Setting border-top-style to invalid value [object Object] throws 
+PASS Setting border-top-style to invalid value CSSKeywordValue throws 
+PASS Getting border-top-style when it is set to none 
+PASS Getting border-top-style when it is set to initial 
+PASS Getting border-top-style when it is set to inherit 
+PASS Getting border-top-style when it is set to unset 
+PASS getAll for single-valued border-top-style 
+PASS Delete border-top-style removes the value from the styleMap 
+PASS border-top-style shows up in getProperties 
+PASS Setting border-top-style to a sequence throws 
+PASS Appending to border-top-style throws 
+Harness: the test ran to completion.
+

@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Check that #p1 is initially black. 
+PASS Do not set preferred set when href missing. 
+PASS Do not set preferred set when href has no value. 
+PASS Do not set preferred set when href has empty value. 
+PASS Do not set preferred set for rel=icon. 
+PASS Setting the title attribute set the preferred set. 
+Harness: the test ran to completion.
+

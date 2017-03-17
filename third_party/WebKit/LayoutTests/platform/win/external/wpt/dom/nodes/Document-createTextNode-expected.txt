@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS createTextNode("\v") 
+PASS createTextNode("a -- b") 
+PASS createTextNode("a-") 
+PASS createTextNode("-b") 
+PASS createTextNode(null) 
+PASS createTextNode(undefined) 
+Harness: the test ran to completion.
+

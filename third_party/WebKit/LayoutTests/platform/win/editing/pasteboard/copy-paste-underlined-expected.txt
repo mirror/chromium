@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Copy/paste underlined text. 
+PASS Copy/paste underlined text with spell checker off. 
+Harness: the test ran to completion.
+

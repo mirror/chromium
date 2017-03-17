@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Suborigin can't access cross origin cssRules 
+Harness: the test ran to completion.
+

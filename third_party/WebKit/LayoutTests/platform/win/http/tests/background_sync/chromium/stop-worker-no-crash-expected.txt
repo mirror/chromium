@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Background Sync API should not cause crashes while stopping service worker 
+Harness: the test ran to completion.
+

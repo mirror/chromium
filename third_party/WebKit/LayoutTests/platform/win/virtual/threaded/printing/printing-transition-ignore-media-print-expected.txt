@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This test checks that transition are ignored when in @media print 
+Harness: the test ran to completion.
+

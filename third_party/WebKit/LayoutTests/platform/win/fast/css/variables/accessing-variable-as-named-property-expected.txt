@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Custom properties can't be accessed as named properties on style object 
+Harness: the test ran to completion.
+

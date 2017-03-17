@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS An interface object deleted after it has been accessed is undefined 
+PASS An interface object deleted before it has been defined is undefined 
+PASS Interface objects deleted multiple times stay deleted 
+PASS Fancy property names don't break the resolve hook on Window 
+Harness: the test ran to completion.
+

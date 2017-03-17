@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Element ready check for sibling of fullscreen element 
+Harness: the test ran to completion.
+

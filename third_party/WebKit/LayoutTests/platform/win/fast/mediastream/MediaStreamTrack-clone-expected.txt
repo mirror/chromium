@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Cloned MediaStreamTracks have new IDs 
+PASS Clones of disabled MediaStreamTracks are still disabled. 
+Harness: the test ran to completion.
+

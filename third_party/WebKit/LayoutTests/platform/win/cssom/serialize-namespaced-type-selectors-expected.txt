@@ -1,0 +1,25 @@
+This is a testharness.js-based test.
+PASS Simple type selector 
+PASS Type selector without a namespace 
+PASS Type selector with any namespace 
+PASS Universal selector 
+PASS Universal selector without a namespace 
+PASS Universal selector in any namespace 
+PASS Type selector with namespace 
+PASS Universal selector with namespace 
+PASS Simple type selector followed by class 
+PASS Type selector without a namespace followed by class 
+PASS Type selector with any namespace followed by class 
+PASS Universal selector followed by class 
+PASS Universal selector without a namespace followed by class 
+PASS Universal selector in any namespace followed by class 
+PASS Type selector with namespace followed by class 
+PASS Universal selector with namespace followed by class 
+PASS Type selector with namespace equal to default namespace 
+PASS Universal selector with namespace equal to default namespace 
+PASS Type selector with namespace equal to default namespace followed by class 
+PASS Universal selector with namespace equal to default namespace followed by class 
+PASS Type selector with namespace with escaped character 
+PASS Type selector with escaped character and namespace with escaped character 
+Harness: the test ran to completion.
+

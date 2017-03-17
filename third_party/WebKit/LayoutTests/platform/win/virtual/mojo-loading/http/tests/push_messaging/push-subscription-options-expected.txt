@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS PushSubscriptionOptions should be correctly reflected on PushSubscription objects 
+Harness: the test ran to completion.
+
