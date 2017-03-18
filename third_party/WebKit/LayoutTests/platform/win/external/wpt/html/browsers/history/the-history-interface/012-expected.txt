@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS replaceState should be able to set the location state 
+PASS replaced location should be reflected immediately 
+PASS replaced location should be retained after the page has loaded 
+Harness: the test ran to completion.
+

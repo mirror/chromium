@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS install handler throws an error 
+PASS install handler throws an error, error handler does not cancel 
+PASS install handler dispatches an event that throws an error 
+PASS install handler throws an error that is cancelled 
+PASS install handler throws an error and prevents default 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Cloning and appending the loading import should not crash. 
+Harness: the test ran to completion.
+

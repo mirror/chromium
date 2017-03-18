@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Document is not cookie-averse 
+PASS Document getters and setters still work 
+PASS Cookies set in a frame with a regular, same-origin src modify the suborigin's document.cookie 
+PASS Cookies set in an about:blank frame modify the suborigin's document.cookie and also have the same document.cookie 
+PASS Cookies set in a srcdoc frame modify the suborigin's document.cookie and also have the same document.cookie 
+Harness: the test ran to completion.
+

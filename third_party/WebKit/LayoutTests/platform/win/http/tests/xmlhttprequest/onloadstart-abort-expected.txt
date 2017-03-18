@@ -1,0 +1,7 @@
+CONSOLE ERROR: line 51: Uncaught RangeError: Maximum call stack size exceeded.
+This is a testharness.js-based test.
+PASS Aborting during onloadstart 
+PASS Aborting during upload.onloadstart 
+PASS Resending during onloadstart 
+Harness: the test ran to completion.
+

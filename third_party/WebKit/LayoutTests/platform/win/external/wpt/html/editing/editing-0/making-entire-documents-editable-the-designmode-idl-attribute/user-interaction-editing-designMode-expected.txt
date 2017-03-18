@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS initial designMode attribute 
+PASS set designMode = "on" 
+PASS set designMode = "off" 
+Harness: the test ran to completion.
+

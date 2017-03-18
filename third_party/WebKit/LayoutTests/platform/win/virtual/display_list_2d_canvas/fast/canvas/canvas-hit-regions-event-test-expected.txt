@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS If the control is not descendant of canvas, event should not be fired. 
+PASS The event object should not be changed even if mutate the DOM. 
+PASS Rerouting mouse/touch event test 
+PASS Rerouting mouse/touch event test but the id of hit region is unset. 
+PASS Touch events are defined to have "implicit capture". 
+PASS MouseEventInit. 
+PASS TouchEventInit. 
+Harness: the test ran to completion.
+

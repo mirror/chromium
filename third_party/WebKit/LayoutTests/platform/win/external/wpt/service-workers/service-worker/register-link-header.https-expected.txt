@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS fetch can trigger service worker installation 
+PASS An iframe can trigger service worker installation 
+PASS A stylesheet can trigger service worker installation 
+Harness: the test ran to completion.
+

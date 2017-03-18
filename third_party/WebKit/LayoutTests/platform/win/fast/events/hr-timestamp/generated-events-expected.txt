@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Generated contextmenu timestamp should be high resolution and have the same time origin as performance.now() 
+PASS Generated mousemove timestamp should be high resolution and have the same time origin as performance.now() 
+Harness: the test ran to completion.
+

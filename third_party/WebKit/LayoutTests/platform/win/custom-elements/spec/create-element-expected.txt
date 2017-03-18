@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS createElement   1. If localName does not match the Name production, then throw an InvalidCharacterError 
+PASS createElement   2. If context object is an HTML document, let localName be converted to ASCII lowercase 
+PASS createElement   5. If 'is' is non-null and definition is null, then throw a NotFoundError 
+PASS createElement   6. If 'is' is non-null, then set is-attribute to 'is' 
+PASS createElementNS 4. If 'is' is non-null and definition is null, then throw a NotFoundError 
+PASS core concepts   After a customized built-in element is created, changing the value of the 'is' attribute has no effect 
+Harness: the test ran to completion.
+

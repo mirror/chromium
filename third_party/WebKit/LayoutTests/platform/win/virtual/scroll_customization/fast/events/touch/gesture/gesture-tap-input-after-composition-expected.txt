@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This tests if the composition is reset before tapping of gesture. 
+Harness: the test ran to completion.
+

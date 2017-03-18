@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS The error event from an event listener should fire on that listener's global 
+Harness: the test ran to completion.
+

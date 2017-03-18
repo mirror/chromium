@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS 'load' event fires on parent of element reparented in onload handler. 
+Harness: the test ran to completion.
+

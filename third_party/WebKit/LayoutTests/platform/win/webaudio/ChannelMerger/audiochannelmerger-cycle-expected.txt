@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Left channel is identical to the array [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,...]. 
+PASS Right channel is identical to the array [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,...]. 
+PASS ChannelMergerNode cyclic audio graph test passed. 
+Harness: the test ran to completion.
+

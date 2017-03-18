@@ -1,0 +1,13 @@
+This is a testharness.js-based test.
+PASS # AUDIT TASK RUNNER STARTED. 
+PASS > [create context] Create context for test 
+PASS < [create context] All assertions passed. (total 0 assertions) 
+PASS > [load-ref] Load reference audio file 
+PASS < [load-ref] All assertions passed. (total 0 assertions) 
+PASS > [test] GainNode functionality 
+PASS   Output from gain node equals [0,0.12503433227539062,0.24811547994613647,0.3673207759857178,0.48075807094573975,0.5866267681121826,0.6833094358444214,0.7692495584487915,0.843104362487793,0.903744637966156,0.9501937627792358,0.981719434261322,0.9978331923484802,0.9982604384422302,0.983031690120697,0.9523911476135254...] with an element-wise tolerance of {"absoluteThreshold":0.000030503,"relativeThreshold":0}. 
+PASS   SNR (in dB) is greater than or equal to 89.088. 
+PASS < [test] All assertions passed. (total 2 assertions) 
+PASS # AUDIT TASK RUNNER FINISHED: 3 tasks ran successfully. 
+Harness: the test ran to completion.
+

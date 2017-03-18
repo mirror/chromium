@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Verify that we don't crash on close if the MediaSource.sourceBuffers holds the last reference to its SourceBuffer objects. 
+Harness: the test ran to completion.
+

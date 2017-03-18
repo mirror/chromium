@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Check whether the animationstart is fired for an empty @keyframe block 
+Harness: the test ran to completion.
+

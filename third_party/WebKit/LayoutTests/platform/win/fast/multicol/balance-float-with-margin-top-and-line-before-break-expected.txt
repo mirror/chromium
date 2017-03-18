@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Float that should fit at the bottom of the first column. 
+Harness: the test ran to completion.
+

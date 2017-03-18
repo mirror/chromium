@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS move forward sentence boundary from middle of sentence 
+PASS move forward sentence boundary from start of sentence 
+PASS move forward sentence boundary from end of sentence 
+PASS move forward sentence boundary from space 
+PASS move backward sentence boundary from middle of sentence 
+PASS move backward sentence boundary from start of sentence 
+PASS move backward sentence boundary from end of sentence 
+PASS move backward sentence boundary from space 
+Harness: the test ran to completion.
+

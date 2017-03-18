@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Script @type: unknown parameters 
+Harness: the test ran to completion.
+

@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Untouched. 
+PASS Touched. 
+PASS Forbid relaxation. 
+PASS Allow relaxation. 
+PASS Forbid relaxation for unrelated scheme. 
+Harness: the test ran to completion.
+

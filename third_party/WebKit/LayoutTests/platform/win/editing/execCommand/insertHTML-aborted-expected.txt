@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS InsertHTML command should return false if it failed. 
+Harness: the test ran to completion.
+

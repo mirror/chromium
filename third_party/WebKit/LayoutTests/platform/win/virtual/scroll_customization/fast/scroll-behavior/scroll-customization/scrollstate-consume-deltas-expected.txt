@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS These tests only work with scroll customization enabled. 
+PASS Unconsumed deltas 
+PASS Partially consumed deltas 
+PASS Fully consumed deltas 
+Harness: the test ran to completion.
+

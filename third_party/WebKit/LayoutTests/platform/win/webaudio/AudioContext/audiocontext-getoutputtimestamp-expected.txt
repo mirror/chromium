@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS # AUDIT TASK RUNNER STARTED. 
+PASS > [getoutputtimestamp-initial-values]  
+PASS   timestamp.contextTime does exist. 
+PASS   timestamp.performanceTime does exist. 
+PASS   timestamp.contextTime is equal to 0. 
+PASS   timestamp.performanceTime is equal to 0. 
+PASS < [getoutputtimestamp-initial-values] All assertions passed. (total 4 assertions) 
+PASS # AUDIT TASK RUNNER FINISHED: 1 tasks ran successfully. 
+Harness: the test ran to completion.
+

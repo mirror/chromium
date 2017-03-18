@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This test checks that creating a CompositorProxy forces the element to have a layer 
+Harness: the test ran to completion.
+

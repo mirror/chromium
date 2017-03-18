@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Remove a tall unbreakable block inside a float. 
+Harness: the test ran to completion.
+

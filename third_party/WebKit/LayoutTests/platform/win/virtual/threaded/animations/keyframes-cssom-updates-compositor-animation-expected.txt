@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Check that changes to a compositor animation via CSSOM update it accordingly 
+Harness: the test ran to completion.
+

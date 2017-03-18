@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Verify key sort order in an object store is 'number < Date < DOMString'  
+Harness: the test ran to completion.
+

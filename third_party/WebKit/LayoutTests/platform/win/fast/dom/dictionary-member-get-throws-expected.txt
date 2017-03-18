@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Dictionary member's [[Get]] may throw. 
+Harness: the test ran to completion.
+

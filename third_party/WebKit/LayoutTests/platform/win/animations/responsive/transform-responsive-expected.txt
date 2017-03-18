@@ -1,0 +1,5 @@
+CONSOLE ERROR: line 15: Uncaught SyntaxError: Unexpected string
+This is a testharness.js-based test.
+PASS This test uses responsive-test.js. 
+Harness: the test ran to completion.
+

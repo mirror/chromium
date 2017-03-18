@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Check CSSKeyframesRule.findRule returns the correct matching keyframe rule 
+Harness: the test ran to completion.
+

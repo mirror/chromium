@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS ServiceWorkerRegistration.showNotification() fails on too much data. 
+Harness: the test ran to completion.
+

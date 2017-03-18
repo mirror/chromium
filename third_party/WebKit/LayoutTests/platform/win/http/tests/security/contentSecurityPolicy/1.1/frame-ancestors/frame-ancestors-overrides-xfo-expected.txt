@@ -1,0 +1,6 @@
+CONSOLE ERROR: Refused to display 'http://127.0.0.1:8000/security/contentSecurityPolicy/resources/frame-ancestors-and-x-frame-options.pl?policy=other-origin.com&xfo=SAMEORIGIN' in a frame because an ancestor violates the following Content Security Policy directive: "frame-ancestors other-origin.com".
+This is a testharness.js-based test.
+PASS A 'frame-ancestors' CSP directive overrides an 'x-frame-options' header which would block the page. 
+PASS A 'frame-ancestors' CSP directive overrides an 'x-frame-options' header which would allow the page. 
+Harness: the test ran to completion.
+

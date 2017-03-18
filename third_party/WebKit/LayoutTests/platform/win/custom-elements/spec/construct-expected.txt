@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS HTMLElement constructor, invoke 
+PASS HTMLElement constructor, construct 
+PASS Custom element constructor, invoke 
+PASS Custom element constructor, construct 
+PASS Custom element constructor, construct invalid new.target 
+PASS Custom element constructor, NewTarget is equal to active function object 
+PASS Custom element constructor, active function object is not equal to HTMLElement 
+PASS Already constructed marker, construct with new 
+PASS Already constructed marker, create element 
+PASS Already constructed marker, fragment parsing should set marker 
+PASS Already constructed marker, upgrade element 
+Harness: the test ran to completion.
+

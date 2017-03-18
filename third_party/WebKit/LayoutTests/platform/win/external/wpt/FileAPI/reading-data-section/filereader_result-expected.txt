@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS readAsText 
+PASS readAsDataURL 
+PASS readAsArrayBuffer 
+Harness: the test ran to completion.
+

@@ -1,0 +1,18 @@
+CONSOLE ERROR: Refused to load the image 'http://example.test:8000/resources/square.png?img-in-top-level' because it violates the following Content Security Policy directive: "img-src 'none'".
+
+CONSOLE ERROR: Refused to load the image 'http://example.test:8000/resources/square.png?img-in-blank-frame' because it violates the following Content Security Policy directive: "img-src 'none'".
+
+CONSOLE ERROR: Refused to load the image 'http://example.test:8000/resources/square.png?img-in-srcdoc-frame' because it violates the following Content Security Policy directive: "img-src 'none'".
+
+CONSOLE ERROR: Refused to load the image 'http://example.test:8000/resources/square.png?img-in-blob-frame' because it violates the following Content Security Policy directive: "img-src 'none'".
+
+CONSOLE ERROR: Refused to load the image 'http://example.test:8000/resources/square.png?img-in-filsystem-frame' because it violates the following Content Security Policy directive: "img-src 'none'".
+
+This is a testharness.js-based test.
+PASS Image loaded in top-level blocked. 
+PASS Image loaded via about:blank frame blocked. 
+PASS Image loaded via srcdoc frame blocked. 
+PASS Image loaded via 'blob:' frame blocked. 
+PASS Image loaded via 'filesystem:' frame blocked. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Check that the preferCompositingToLCDText flag results in compositing 
+Harness: the test ran to completion.
+

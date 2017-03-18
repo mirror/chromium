@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Normal 
+PASS Shadow 
+PASS Multi-level shadow 
+PASS <details> 
+Harness: the test ran to completion.
+

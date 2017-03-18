@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS activeElement for a node in a document 
+PASS activeElement for a slotted child 
+PASS activeElement for a node in a shadow tree 
+PASS activeElement for a node in a nested shadow tree 
+Harness: the test ran to completion.
+

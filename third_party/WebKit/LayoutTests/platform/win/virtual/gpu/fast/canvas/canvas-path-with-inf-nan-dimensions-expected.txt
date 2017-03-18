@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test canvas with infinity passed to fillRect, rect, moveTo and lineTo. 
+Harness: the test ran to completion.
+

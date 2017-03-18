@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS ^foo| bar baz 
+PASS foo ^bar| baz 
+PASS foo bar ^baz| 
+PASS f^oo ba|r baz 
+PASS f^oo bar ba|z 
+PASS foo b^ar ba|z 
+PASS f^oo  ba|z 
+PASS ^foo | baz 
+PASS ^foo  baz| 
+PASS foo ^ baz| 
+PASS foo ^bar | 
+Harness: the test ran to completion.
+

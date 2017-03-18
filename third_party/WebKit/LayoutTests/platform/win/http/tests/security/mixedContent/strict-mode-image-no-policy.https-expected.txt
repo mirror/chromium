@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Mixed images are allowed in the presence of 'block-all-mixed-content' in report-only mode. 
+PASS Mixed images do not generate CSP violation reports when no policy is present. 
+Harness: the test ran to completion.
+

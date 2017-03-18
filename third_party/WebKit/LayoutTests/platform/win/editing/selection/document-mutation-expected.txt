@@ -1,0 +1,21 @@
+This is a testharness.js-based test.
+PASS insertData at 10; anchor is first 
+PASS insertData at 10; focus is first 
+PASS insertData at 11; anchor is first 
+PASS insertData at 11; focus is first 
+PASS insertData at 12; anchor is first 
+PASS insertData at 12; focus is first 
+PASS insertData at 17; anchor is first 
+PASS insertData at 17; focus is first 
+PASS insertData at 19; anchor is first 
+PASS insertData at 19; focus is first 
+PASS deleteData(5, 8); anchor is first 
+PASS deleteData(5, 8); focus is first 
+PASS deleteData(5, 6); anchor is first 
+PASS deleteData(5, 6); focus is first 
+PASS deleteData(5, 17); anchor is first 
+PASS deleteData(5, 17); focus is first 
+PASS delete node containing selection; anchor is first 
+PASS delete node containing selection; focus is first 
+Harness: the test ran to completion.
+

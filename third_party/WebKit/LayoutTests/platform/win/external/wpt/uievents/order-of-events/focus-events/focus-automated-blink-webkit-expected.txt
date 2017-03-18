@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Focus-related events should fire in the correct order (same DocumentOwner) 
+PASS Focus-related events should fire in the correct order (different DocumentOwner) 
+Harness: the test ran to completion.
+

@@ -1,0 +1,126 @@
+This is a testharness.js-based test.
+PASS body.title: 32 tests
+PASS body.lang: 32 tests
+PASS body.dir: 62 tests
+PASS body.className (<body class>): 32 tests
+PASS body.hidden: 33 tests
+PASS body.accessKey: 32 tests
+PASS body.tabIndex: 24 tests
+PASS body.text: 32 tests
+PASS body.link: 32 tests
+PASS body.vLink: 32 tests
+PASS body.aLink: 32 tests
+PASS body.bgColor: 32 tests
+PASS body.background: 32 tests
+PASS article.title: 32 tests
+PASS article.lang: 32 tests
+PASS article.dir: 62 tests
+PASS article.className (<article class>): 32 tests
+PASS article.hidden: 33 tests
+PASS article.accessKey: 32 tests
+PASS article.tabIndex: 24 tests
+PASS section.title: 32 tests
+PASS section.lang: 32 tests
+PASS section.dir: 62 tests
+PASS section.className (<section class>): 32 tests
+PASS section.hidden: 33 tests
+PASS section.accessKey: 32 tests
+PASS section.tabIndex: 24 tests
+PASS nav.title: 32 tests
+PASS nav.lang: 32 tests
+PASS nav.dir: 62 tests
+PASS nav.className (<nav class>): 32 tests
+PASS nav.hidden: 33 tests
+PASS nav.accessKey: 32 tests
+PASS nav.tabIndex: 24 tests
+PASS aside.title: 32 tests
+PASS aside.lang: 32 tests
+PASS aside.dir: 62 tests
+PASS aside.className (<aside class>): 32 tests
+PASS aside.hidden: 33 tests
+PASS aside.accessKey: 32 tests
+PASS aside.tabIndex: 24 tests
+PASS h1.title: 32 tests
+PASS h1.lang: 32 tests
+PASS h1.dir: 62 tests
+PASS h1.className (<h1 class>): 32 tests
+PASS h1.hidden: 33 tests
+PASS h1.accessKey: 32 tests
+PASS h1.tabIndex: 24 tests
+PASS h1.align: 32 tests
+PASS h2.title: 32 tests
+PASS h2.lang: 32 tests
+PASS h2.dir: 62 tests
+PASS h2.className (<h2 class>): 32 tests
+PASS h2.hidden: 33 tests
+PASS h2.accessKey: 32 tests
+PASS h2.tabIndex: 24 tests
+PASS h2.align: 32 tests
+PASS h3.title: 32 tests
+PASS h3.lang: 32 tests
+PASS h3.dir: 62 tests
+PASS h3.className (<h3 class>): 32 tests
+PASS h3.hidden: 33 tests
+PASS h3.accessKey: 32 tests
+PASS h3.tabIndex: 24 tests
+PASS h3.align: 32 tests
+PASS h4.title: 32 tests
+PASS h4.lang: 32 tests
+PASS h4.dir: 62 tests
+PASS h4.className (<h4 class>): 32 tests
+PASS h4.hidden: 33 tests
+PASS h4.accessKey: 32 tests
+PASS h4.tabIndex: 24 tests
+PASS h4.align: 32 tests
+PASS h5.title: 32 tests
+PASS h5.lang: 32 tests
+PASS h5.dir: 62 tests
+PASS h5.className (<h5 class>): 32 tests
+PASS h5.hidden: 33 tests
+PASS h5.accessKey: 32 tests
+PASS h5.tabIndex: 24 tests
+PASS h5.align: 32 tests
+PASS h6.title: 32 tests
+PASS h6.lang: 32 tests
+PASS h6.dir: 62 tests
+PASS h6.className (<h6 class>): 32 tests
+PASS h6.hidden: 33 tests
+PASS h6.accessKey: 32 tests
+PASS h6.tabIndex: 24 tests
+PASS h6.align: 32 tests
+PASS hgroup.title: 32 tests
+PASS hgroup.lang: 32 tests
+PASS hgroup.dir: 62 tests
+PASS hgroup.className (<hgroup class>): 32 tests
+PASS hgroup.hidden: 33 tests
+PASS hgroup.accessKey: 32 tests
+PASS hgroup.tabIndex: 24 tests
+PASS header.title: 32 tests
+PASS header.lang: 32 tests
+PASS header.dir: 62 tests
+PASS header.className (<header class>): 32 tests
+PASS header.hidden: 33 tests
+PASS header.accessKey: 32 tests
+PASS header.tabIndex: 24 tests
+PASS footer.title: 32 tests
+PASS footer.lang: 32 tests
+PASS footer.dir: 62 tests
+PASS footer.className (<footer class>): 32 tests
+PASS footer.hidden: 33 tests
+PASS footer.accessKey: 32 tests
+PASS footer.tabIndex: 24 tests
+PASS address.title: 32 tests
+PASS address.lang: 32 tests
+PASS address.dir: 62 tests
+PASS address.className (<address class>): 32 tests
+PASS address.hidden: 33 tests
+PASS address.accessKey: 32 tests
+PASS address.tabIndex: 24 tests
+PASS #document.dir (<html dir>): 62 tests
+PASS #document.fgColor (<body text>): 32 tests
+PASS #document.linkColor (<body link>): 32 tests
+PASS #document.vlinkColor (<body vlink>): 32 tests
+PASS #document.alinkColor (<body alink>): 32 tests
+PASS #document.bgColor (<body bgcolor>): 32 tests
+Harness: the test ran to completion.
+

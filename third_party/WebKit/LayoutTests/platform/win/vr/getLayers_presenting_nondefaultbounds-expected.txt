@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test getLayers returns non-default bounds when specified in the layer 
+Harness: the test ran to completion.
+

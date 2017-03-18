@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS importNode on a shadow root in open mode must throw a NotSupportedError 
+PASS importNode on a shadow root in closed mode must throw a NotSupportedError 
+Harness: the test ran to completion.
+

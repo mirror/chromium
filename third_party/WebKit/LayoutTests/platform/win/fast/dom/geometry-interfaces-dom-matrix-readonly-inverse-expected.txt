@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS DOMMatrix inverse() - invertible - 2D matrix 
+PASS DOMMatrix inverse() - non-invertible - 2D matrix 
+PASS DOMMatrix inverse() - invertible - 3D matrix 
+PASS DOMMatrix inverse() - non-invertible - 3D matrix 
+Harness: the test ran to completion.
+

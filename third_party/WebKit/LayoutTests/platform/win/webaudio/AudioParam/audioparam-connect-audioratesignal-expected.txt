@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS # AUDIT TASK RUNNER STARTED. 
+PASS > [test]  
+PASS   Rendered signal length is equal to 44100. 
+PASS   Rendered signal exactly matches the audio-rate gain changing signal is true. 
+PASS < [test] All assertions passed. (total 2 assertions) 
+PASS # AUDIT TASK RUNNER FINISHED: 1 tasks ran successfully. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Delete line break after PRE 
+Harness: the test ran to completion.
+

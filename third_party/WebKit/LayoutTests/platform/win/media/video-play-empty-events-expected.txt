@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that play() from EMPTY network state triggers load() and async playing event. 
+Harness: the test ran to completion.
+

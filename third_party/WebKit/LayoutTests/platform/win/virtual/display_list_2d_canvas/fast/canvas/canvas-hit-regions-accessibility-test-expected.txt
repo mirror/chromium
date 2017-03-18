@@ -1,0 +1,20 @@
+This is a testharness.js-based test.
+PASS drawRectAndAddHitRegion 1 
+PASS drawRectAndAddHitRegion 2 
+PASS drawRectAndAddHitRegion 3 
+PASS drawRectAndAddHitRegion 4 
+PASS drawRectAndAddHitRegion 5 
+PASS drawRectAndAddHitRegion 6 
+PASS drawRectAndAddHitRegion 7 
+PASS testAccessibilityRect 1 
+PASS testAccessibilityRect 2 
+PASS testAccessibilityRect 3 
+PASS testAccessibilityRect 4 
+PASS testAccessibilityRect 5 
+PASS testAccessibilityRect 6 
+PASS testAccessibilityRect 7 
+PASS testAccessibilityRect 8 
+PASS testAccessibilityRect 9 
+PASS testAccessibilityRect 10 
+Harness: the test ran to completion.
+

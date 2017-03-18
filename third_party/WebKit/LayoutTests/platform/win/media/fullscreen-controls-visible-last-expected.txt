@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that the fullscreen button control is the antepenultimate media controls button visible. 
+Harness: the test ran to completion.
+

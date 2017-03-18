@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS required attribute support on input element 
+Harness: the test ran to completion.
+

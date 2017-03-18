@@ -1,0 +1,10 @@
+CONSOLE WARNING: line 67: Calling Element.createShadowRoot() for an element which already hosts a shadow root is deprecated. See https://www.chromestatus.com/features/4668884095336448 for more details.
+This is a testharness.js-based test.
+PASS The title of elements in shadow inherits from the document 
+PASS The title of distributed elements inherits in the flat tree 
+PASS The title of distributed elements inherits in the flat tree (multiple shadow roots) 
+PASS The title of distributed elements inherits in the flat tree (multiple levels) 
+PASS The title of elements in older shadow roots inherits in the flat tree 
+PASS The title of re-distributed elements inherits in the flat tree (multiple shadow roots) 
+Harness: the test ran to completion.
+

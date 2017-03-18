@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test for setting title element of inner svg document. 
+Harness: the test ran to completion.
+

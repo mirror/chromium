@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Checks for InputEvent constructor with not enough argument 
+PASS Checks for InputEvent constructor with one argument 
+PASS Checks for InputEvent constructor with full arguments 
+Harness: the test ran to completion.
+

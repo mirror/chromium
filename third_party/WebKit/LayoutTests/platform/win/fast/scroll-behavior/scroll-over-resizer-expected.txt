@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Touchscreen drag resizes textarea 
+PASS Touchpad scroll should not resize textarea 
+PASS Touchscreen drag resizes resizable div 
+PASS Touchpad scroll should not resize resizable div 
+Harness: the test ran to completion.
+

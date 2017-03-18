@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Response with a ReadableStream having non-Uint8Array chunks should be transferred as errored 
+Harness: the test ran to completion.
+

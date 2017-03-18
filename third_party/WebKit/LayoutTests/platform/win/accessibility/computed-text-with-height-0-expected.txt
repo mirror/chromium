@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Text with height:0, position:absolute, and overflow:hidden should still be included in the accessible text computation. 
+Harness: the test ran to completion.
+

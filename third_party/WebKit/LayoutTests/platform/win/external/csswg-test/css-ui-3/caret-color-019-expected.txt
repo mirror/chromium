@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS caret-color: auto is not interpolable 
+Harness: the test ran to completion.
+

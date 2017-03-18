@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that horizontal scrollbar should appear as the content width encroaches upon the vertical scrollbar and also test if WebKit can show the left side of the inner elements regardless of the position of its scrollbars. To test manually, open this document and verify we can see "ABC" both in the LTR element and in the RTL element. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,29 @@
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = 2 duplicate test names: "node.channelCountMode is equal to "explicit".", "node.channelInterpretation is equal to "discrete"."
+PASS new MediaStreamAudioDestinationNode() threw TypeError: Failed to construct 'MediaStreamAudioDestinationNode': 1 argument required, but only 0 present.. 
+PASS new MediaStreamAudioDestinationNode(1) threw TypeError: Failed to construct 'MediaStreamAudioDestinationNode': parameter 1 is not of type 'BaseAudioContext'.. 
+PASS new MediaStreamAudioDestinationNode(context, 42) threw TypeError: Failed to construct 'MediaStreamAudioDestinationNode': parameter 2 ('options') is not an object.. 
+PASS new MediaStreamAudioDestinationNode(context) did not throw an exception. 
+PASS node instanceof MediaStreamAudioDestinationNode is equal to true. 
+PASS node.channelCount is equal to 2. 
+PASS new MediaStreamAudioDestinationNode(c, {channelCount: 7}} did not throw an exception. 
+PASS node.channelCount is equal to 7. 
+PASS new MediaStreamAudioDestinationNode(c, {channelCount: 0}} threw NotSupportedError: Failed to construct 'MediaStreamAudioDestinationNode': The channel count provided (0) is outside the range [1, 8].. 
+PASS new MediaStreamAudioDestinationNode(c, {channelCount: 99}} threw NotSupportedError: Failed to construct 'MediaStreamAudioDestinationNode': The channel count provided (99) is outside the range [1, 8].. 
+PASS new MediaStreamAudioDestinationNode(c, {channelCountMode: "max"} did not throw an exception. 
+PASS node.channelCountMode is equal to "max". 
+PASS new MediaStreamAudioDestinationNode(c, {channelCountMode: "clamped-max"} did not throw an exception. 
+PASS node.channelCountMode is equal to "clamped-max". 
+PASS new MediaStreamAudioDestinationNode(c, {channelCountMode: "explicit"} did not throw an exception. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS new MediaStreamAudioDestinationNode(c, {channelCountMode: "foobar"} threw TypeError: Failed to construct 'MediaStreamAudioDestinationNode': The provided value 'foobar' is not a valid enum value of type ChannelCountMode.. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS new MediaStreamAudioDestinationNode(c, {channelInterpretation: "speakers"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new MediaStreamAudioDestinationNode(c, {channelInterpretation: "discrete"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS new MediaStreamAudioDestinationNode(c, {channelInterpretation: "foobar"}) threw TypeError: Failed to construct 'MediaStreamAudioDestinationNode': The provided value 'foobar' is not a valid enum value of type ChannelInterpretation.. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS AudioNodeOptions for MediaStreamAudioDestinationNode were correctly handled. 
+Harness: the test ran to completion.
+

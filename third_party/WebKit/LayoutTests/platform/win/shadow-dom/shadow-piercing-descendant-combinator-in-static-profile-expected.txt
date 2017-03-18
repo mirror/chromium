@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS deep descendant combinator >>> should work only in static profile. 
+Harness: the test ran to completion.
+

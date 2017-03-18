@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS document.write script that document.writes script 
+Harness: the test ran to completion.
+

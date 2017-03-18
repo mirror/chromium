@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS shape-outside can be assigned 'inherit' value 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Insert visible newline after deleting 
+Harness: the test ran to completion.
+

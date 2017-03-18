@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS @import rules with <bad-string-token> are invalid 
+Harness: the test ran to completion.
+

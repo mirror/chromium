@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS TouchEvent's touches, targetTouches, and changedTouches should be retargeted. 
+Harness: the test ran to completion.
+

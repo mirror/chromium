@@ -1,0 +1,23 @@
+This is a testharness.js-based test.
+PASS Compositor Animation on transform is cancelled by transform 
+PASS Compositor Animation on transform is cancelled by translate 
+PASS Compositor Animation on transform is cancelled by rotate 
+PASS Compositor Animation on transform is cancelled by scale 
+PASS Compositor Animation on translate is cancelled by transform 
+PASS Compositor Animation on translate is cancelled by rotate 
+PASS Compositor Animation on translate is cancelled by scale 
+PASS Compositor Animation on translate is cancelled by translate 
+PASS Compositor Animation on rotate is cancelled by transform 
+PASS Compositor Animation on rotate is cancelled by rotate 
+PASS Compositor Animation on rotate is cancelled by scale 
+PASS Compositor Animation on rotate is cancelled by translate 
+PASS Compositor Animation on scale is cancelled by transform 
+PASS Compositor Animation on scale is cancelled by rotate 
+PASS Compositor Animation on scale is cancelled by scale 
+PASS Compositor Animation on scale is cancelled by translate 
+PASS Compositor Animation on opacity is not cancelled by transform 
+PASS Compositor Animation on opacity is not cancelled by translate 
+PASS Compositor Animation on opacity is not cancelled by rotate 
+PASS Compositor Animation on opacity is not cancelled by scale 
+Harness: the test ran to completion.
+

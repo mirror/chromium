@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS no contentEditable attribute 
+PASS empty contentEditable attribute 
+PASS set contentEditable = "true" 
+PASS set contentEditable = "false" 
+PASS set contentEditable = "inherit" 
+PASS set parent element contentEditable = "true" 
+PASS set parent element contentEditable = "false" 
+Harness: the test ran to completion.
+

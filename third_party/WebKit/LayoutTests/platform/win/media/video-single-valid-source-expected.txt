@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that a single valid "source" element loads correctly. 
+Harness: the test ran to completion.
+

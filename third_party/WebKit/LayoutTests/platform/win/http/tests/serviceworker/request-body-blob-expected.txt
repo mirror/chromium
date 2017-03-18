@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Service worker can read the request body blob 
+Harness: the test ran to completion.
+

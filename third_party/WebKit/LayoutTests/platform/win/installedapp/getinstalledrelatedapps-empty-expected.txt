@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS getInstalledRelatedApps with no apps 
+Harness: the test ran to completion.
+

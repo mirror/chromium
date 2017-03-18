@@ -1,0 +1,5 @@
+CONSOLE WARNING: line 9: The behavior that Selection.addRange() merges existing Range and the specified Range was removed. See https://www.chromestatus.com/features/6680566019653632 for more details.
+This is a testharness.js-based test.
+PASS addRange() to a Selection with invisible selection should not crash. 
+Harness: the test ran to completion.
+

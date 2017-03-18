@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS # AUDIT TASK RUNNER STARTED. 
+PASS > [test]  
+PASS   4x WaveshaperNode oversampling error (in dBFS) is less than -79.9. 
+PASS < [test] All assertions passed. (total 1 assertions) 
+PASS # AUDIT TASK RUNNER FINISHED: 1 tasks ran successfully. 
+Harness: the test ran to completion.
+

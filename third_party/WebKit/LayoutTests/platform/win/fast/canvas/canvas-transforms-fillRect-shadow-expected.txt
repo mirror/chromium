@@ -1,0 +1,15 @@
+This is a testharness.js-based test.
+PASS Verify solid shadow 1 
+PASS Verify solid shadow 2 
+PASS Verify solid shadow 3 
+PASS Verify solid alpha shadow 1 
+PASS Verify solid alpha shadow 2 
+PASS Verify solid alpha shadow 3 
+PASS Verify blurry shadow 1 
+PASS Verify blurry shadow 2 
+PASS Verify blurry shadow 3 
+PASS Verify blurry alpha shadow 1 
+PASS Verify blurry alpha shadow 2 
+PASS Verify blurry alpha shadow 3 
+Harness: the test ran to completion.
+

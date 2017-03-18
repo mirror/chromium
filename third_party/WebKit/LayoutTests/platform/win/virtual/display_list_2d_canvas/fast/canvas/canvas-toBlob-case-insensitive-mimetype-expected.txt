@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Test that toBlob(mimeType) ignores the case of 'mimeType' (PNG). 
+PASS Test that toBlob(mimeType) ignores the case of 'mimeType' (JPEG). 
+PASS Test that toBlob(mimeType) ignores the case of 'mimeType' (WEBP). 
+PASS Test that unsupported mime type falls back to png. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS document.curentScript in a document tree should return the script element 
+PASS document.curentScript in an open shadow tree should return null 
+PASS document.curentScript in a closed shadow tree should return null 
+Harness: the test ran to completion.
+

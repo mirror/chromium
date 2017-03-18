@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test Description: If the targetOrigin argument is a single literal U+002F SOLIDUS character (/), and the Document of the Window object on which the method was invoked does not have the same origin as the entry script's document, then abort these steps silently. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS SVG transform: use counter does not trigger 
+Harness: the test ran to completion.
+

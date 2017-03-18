@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This test checks that an element's compositor proxy can't be sent across via post-message after disconnect(). 
+Harness: the test ran to completion.
+

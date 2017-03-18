@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Testing nextNode 
+PASS Testing firstChild 
+PASS Testing nextSibling 
+PASS Testing parentNode 
+PASS Testing previousSibling 
+PASS Testing previousNode 
+Harness: the test ran to completion.
+

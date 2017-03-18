@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Initial setup. 
+PASS Spell check does not crash after Ctrl-X/Ctrl-V/type text in ASAN. 
+Harness: the test ran to completion.
+

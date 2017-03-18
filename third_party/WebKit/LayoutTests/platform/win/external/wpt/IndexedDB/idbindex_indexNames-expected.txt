@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBIndex.getKey() - returns the record's primary key 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This test checks behavior of drawImage on a canvas that failed to allocate its backing store. This test passes by not crashing. 
+Harness: the test ran to completion.
+

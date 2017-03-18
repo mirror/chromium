@@ -1,0 +1,15 @@
+This is a testharness.js-based test.
+PASS SVGURIReference.href IDL semantics, IDL href backed by "href" after setAttribute(href). 
+PASS SVGURIReference.href IDL semantics, IDL href backed by "xlink:href" after setAttribute(xlink:href). 
+PASS SVGURIReference.href IDL semantics, IDL href backed by "href" after baseVal setter. 
+PASS SVGURIReference.href IDL semantics, IDL href reflects "href"; setAttribute(xlink:href) does not override baseVal setter. 
+PASS SVGURIReference.href IDL semantics, IDL href prefers "href" over "xlink:href" after setAttribute(href) overrides. 
+PASS SVGURIReference.href IDL semantics, IDL href reflects "xlink:href"; setAttribute(xlink:href) w/ NS-prefix. 
+PASS SVGURIReference.href IDL semantics, IDL href reflects "xlink:href" after removeAttribute(href). 
+PASS SVGURIReference.href IDL semantics, IDL href reflects "xlink:href"; removeAttribute(xlink:href) has no effect. 
+PASS SVGURIReference.href IDL semantics, IDL href reflects "xlink:href"; removeAttribute(xlink:href) resets to default. 
+PASS SVGURIReference.href IDL semantics, IDL href reflects "xlink:href"; removeAttribute(xlink:href) w/o NS-prefix resets to default. 
+PASS SVGURIReference.href IDL semantics, href.animVal reflects "xlink:href" when it is set. 
+PASS SVGURIReference.href IDL semantics, href.animVal reflects "href" when it is set. 
+Harness: the test ran to completion.
+

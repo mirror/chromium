@@ -1,0 +1,15 @@
+CONSOLE WARNING: line 14: Subresource requests whose URLs contain embedded credentials (e.g. `https://user:pass@host/`) are deprecated, and will be blocked in M59, around June 2017. See https://www.chromestatus.com/feature/5669008342777856 for more details.
+CONSOLE ERROR: Fetch API cannot load http://localhost:8000/fetch/resources/redirect-loop.php?Redirect=http%3A%2F%2F127.0.0.1%3A8000%2Fserviceworker%2Fresources%2Ffetch-access-control.php%3FACAOrigin%3D*&Count=21&mode=cors&credentials=same-origin&method=GET&ACAOrigin=*. Redirect failed.
+CONSOLE ERROR: Fetch API cannot load http://localhost:8000/fetch/resources/redirect-loop.php?Redirect=http%3A%2F%2Flocalhost%3A8000%2Fserviceworker%2Fresources%2Ffetch-access-control.php%3FACAOrigin%3D*&Count=21&mode=cors&credentials=same-origin&method=GET&ACAOrigin=*. Redirect failed.
+This is a testharness.js-based test.
+PASS Startup 
+PASS executeTest-0 
+PASS executeTest-1 
+PASS executeTest-2 
+PASS executeTest-3 
+PASS executeTest-4 
+PASS executeTest-5 
+PASS executeTest-6 
+PASS executeTest-7 
+Harness: the test ran to completion.
+

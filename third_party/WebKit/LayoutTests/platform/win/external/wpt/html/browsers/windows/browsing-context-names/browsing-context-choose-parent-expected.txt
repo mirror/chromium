@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS The parent browsing context must be chosen if the given name is '_parent' 
+Harness: the test ran to completion.
+

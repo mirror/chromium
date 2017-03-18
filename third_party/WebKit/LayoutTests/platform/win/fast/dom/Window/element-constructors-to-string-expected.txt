@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS HTMLElement.toString should be Function.prototype.toString 
+PASS HTMLElement.toString.toString should be Function.prototype.toString 
+PASS After changing HTMLElement.toString.toString, HTMLElement.toString should still be Function.prototype.toString 
+PASS After changing HTMLElement.toString.toString, HTMLDivElement.toString should still be Function.prototype.toString 
+Harness: the test ran to completion.
+

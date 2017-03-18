@@ -1,0 +1,17 @@
+This is a testharness.js-based test.
+PASS Text.appendData('bar') 
+PASS Text.appendData('') 
+PASS Text.appendData(non-ASCII) 
+PASS Text.appendData(null) 
+PASS Text.appendData(undefined) 
+PASS Text.appendData('', 'bar') 
+PASS Text.appendData() 
+PASS Comment.appendData('bar') 
+PASS Comment.appendData('') 
+PASS Comment.appendData(non-ASCII) 
+PASS Comment.appendData(null) 
+PASS Comment.appendData(undefined) 
+PASS Comment.appendData('', 'bar') 
+PASS Comment.appendData() 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Replace the selected tags with span tags 
+Harness: the test ran to completion.
+

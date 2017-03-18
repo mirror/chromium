@@ -1,0 +1,22 @@
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=&id=1' because it has not opted-into the following policy required by its embedder: 'frame-src http://c.com:*'.
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=frame-src%20http://b.com:80%20http://c.com:443&id=4' because it has not opted-into the following policy required by its embedder: 'frame-src http://b.com:80'.
+CONSOLE ERROR: Refused to display 'http://localhost:8000/security/contentSecurityPolicy/resources/respond-with-multiple-csp-headers.php?csp=frame-src%20http://b.com:80%20http://c.com:443&id=5' because it has not opted-into the following policy required by its embedder: 'frame-src http://a.com:80'.
+CONSOLE ERROR: line 19: Refused to frame 'http://localhost:8000/cross-site/b.com/title2.html' because it violates the following Content Security Policy directive: "frame-src http://b.com:80 http://c.com:443".
+
+CONSOLE ERROR: line 19: Refused to frame 'http://localhost:8000/cross-site/b.com/title2.html' because it violates the following Content Security Policy directive: "frame-src http://b.com:80 http://c.com:443".
+
+CONSOLE ERROR: line 19: Refused to frame 'http://localhost:8000/cross-site/b.com/title2.html' because it violates the following Content Security Policy directive: "frame-src http://b.com:80 http://c.com:443".
+
+CONSOLE ERROR: line 19: Refused to frame 'http://localhost:8000/cross-site/b.com/title2.html' because it violates the following Content Security Policy directive: "child-src https://b.com:443". Note that 'frame-src' was not explicitly set, so 'child-src' is used as a fallback.
+
+This is a testharness.js-based test.
+PASS If there is no required csp, the page should load. 
+PASS Iframe with empty CSP should be blocked. 
+PASS Iframe with matching CSP should load. 
+PASS Iframe with more restricting CSP should load. 
+PASS Iframe with less restricting CSP should be blocked. 
+PASS Iframe with a different CSP should be blocked. 
+PASS Iframe with a matching and more restrictive ports should load. 
+PASS Iframe must load even if the ports are different but are default for the protocols. 
+Harness: the test ran to completion.
+

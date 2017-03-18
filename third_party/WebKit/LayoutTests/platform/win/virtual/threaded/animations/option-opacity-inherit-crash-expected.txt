@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Don't crash when animating opacity with inherit on an <option> in an <a> in an <object>. 
+PASS Don't crash when animating opacity with inherit on an <option> in a <div> in a <canvas>. 
+Harness: the test ran to completion.
+

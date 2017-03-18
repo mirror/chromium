@@ -1,0 +1,20 @@
+This is a testharness.js-based test.
+PASS CSS.supports('padding-left', "20") should return false 
+PASS e.style['paddingLeft'] = "20" should set the value 
+PASS Serialization should round-trip after setting e.style['paddingLeft'] = "20" 
+PASS CSS.supports('top', "30") should return false 
+PASS e.style['top'] = "30" should set the value 
+PASS Serialization should round-trip after setting e.style['top'] = "30" 
+PASS CSS.supports('min-width', "40") should return false 
+PASS e.style['minWidth'] = "40" should set the value 
+PASS Serialization should round-trip after setting e.style['minWidth'] = "40" 
+PASS CSS.supports('outline-width', "50") should return false 
+PASS e.style['outlineWidth'] = "50" should not set the value 
+PASS CSS.supports('motion-offset', "60") should return false 
+PASS e.style['motionOffset'] = "60" should not set the value 
+PASS CSS.supports('-webkit-padding-start', "12") should return false 
+PASS e.style['webkitPaddingStart'] = "12" should not set the value 
+PASS CSS.supports('-webkit-margin-before', "24") should return false 
+PASS e.style['webkitMarginBefore'] = "24" should not set the value 
+Harness: the test ran to completion.
+

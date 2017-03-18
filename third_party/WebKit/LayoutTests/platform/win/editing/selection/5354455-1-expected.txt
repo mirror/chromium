@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS mac 
+PASS win 
+PASS unix 
+PASS android 
+Harness: the test ran to completion.
+

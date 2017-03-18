@@ -1,0 +1,720 @@
+{
+  "layers": [
+    {
+      "name": "LayoutView #document",
+      "bounds": [800, 600],
+      "contentsOpaque": true,
+      "drawsContent": true
+    },
+    {
+      "name": "LayoutBlockFlow (positioned) DIV class='test image'",
+      "position": [8, 8],
+      "bounds": [55, 40],
+      "drawsContent": true,
+      "backfaceVisibility": "hidden",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow (positioned) DIV class='test image'",
+          "rect": [55, 0, 5, 40],
+          "reason": "incremental"
+        }
+      ]
+    },
+    {
+      "name": "LayoutBlockFlow (positioned) DIV class='test image size-cover'",
+      "position": [58, 8],
+      "bounds": [55, 40],
+      "drawsContent": true,
+      "backfaceVisibility": "hidden",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow (positioned) DIV class='test image size-cover'",
+          "rect": [0, 0, 60, 40],
+          "reason": "border box change"
+        }
+      ]
+    },
+    {
+      "name": "LayoutBlockFlow (positioned) DIV class='test image size-contain'",
+      "position": [108, 8],
+      "bounds": [55, 40],
+      "drawsContent": true,
+      "backfaceVisibility": "hidden",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow (positioned) DIV class='test image size-contain'",
+          "rect": [0, 0, 60, 40],
+          "reason": "border box change"
+        }
+      ]
+    },
+    {
+      "name": "LayoutBlockFlow (positioned) DIV class='test image fixed-width'",
+      "position": [158, 8],
+      "bounds": [55, 40],
+      "drawsContent": true,
+      "backfaceVisibility": "hidden",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow (positioned) DIV class='test image fixed-width'",
+          "rect": [55, 0, 5, 40],
+          "reason": "incremental"
+        }
+      ]
+    },
+    {
+      "name": "LayoutBlockFlow (positioned) DIV class='test image percent-width'",
+      "position": [208, 8],
+      "bounds": [55, 40],
+      "drawsContent": true,
+      "backfaceVisibility": "hidden",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow (positioned) DIV class='test image percent-width'",
+          "rect": [0, 0, 60, 40],
+          "reason": "border box change"
+        }
+      ]
+    },
+    {
+      "name": "LayoutBlockFlow (positioned) DIV class='test image left'",
+      "position": [258, 8],
+      "bounds": [55, 40],
+      "drawsContent": true,
+      "backfaceVisibility": "hidden",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow (positioned) DIV class='test image left'",
+          "rect": [55, 0, 5, 40],
+          "reason": "incremental"
+        }
+      ]
+    },
+    {
+      "name": "LayoutBlockFlow (positioned) DIV class='test image right'",
+      "position": [308, 8],
+      "bounds": [55, 40],
+      "drawsContent": true,
+      "backfaceVisibility": "hidden",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow (positioned) DIV class='test image right'",
+          "rect": [0, 0, 60, 40],
+          "reason": "border box change"
+        }
+      ]
+    },
+    {
+      "name": "LayoutBlockFlow (positioned) DIV class='test image center'",
+      "position": [358, 8],
+      "bounds": [55, 40],
+      "drawsContent": true,
+      "backfaceVisibility": "hidden",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow (positioned) DIV class='test image center'",
+          "rect": [0, 0, 60, 40],
+          "reason": "border box change"
+        }
+      ]
+    },
+    {
+      "name": "LayoutBlockFlow (positioned) DIV class='test image no-repeat'",
+      "position": [408, 8],
+      "bounds": [55, 40],
+      "drawsContent": true,
+      "backfaceVisibility": "hidden",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow (positioned) DIV class='test image no-repeat'",
+          "rect": [55, 0, 5, 40],
+          "reason": "incremental"
+        }
+      ]
+    },
+    {
+      "name": "LayoutBlockFlow (positioned) DIV class='test image repeat-space'",
+      "position": [458, 8],
+      "bounds": [55, 40],
+      "drawsContent": true,
+      "backfaceVisibility": "hidden",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow (positioned) DIV class='test image repeat-space'",
+          "rect": [0, 0, 60, 40],
+          "reason": "border box change"
+        }
+      ]
+    },
+    {
+      "name": "LayoutBlockFlow (positioned) DIV class='test image repeat-round'",
+      "position": [508, 8],
+      "bounds": [55, 40],
+      "drawsContent": true,
+      "backfaceVisibility": "hidden",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow (positioned) DIV class='test image repeat-round'",
+          "rect": [0, 0, 60, 40],
+          "reason": "border box change"
+        }
+      ]
+    },
+    {
+      "name": "LayoutBlockFlow (positioned) DIV class='test generated'",
+      "position": [8, 108],
+      "bounds": [55, 40],
+      "contentsOpaque": true,
+      "drawsContent": true,
+      "backfaceVisibility": "hidden",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow (positioned) DIV class='test generated'",
+          "rect": [0, 0, 60, 40],
+          "reason": "border box change"
+        }
+      ]
+    },
+    {
+      "name": "LayoutBlockFlow (positioned) DIV class='test generated cover'",
+      "position": [8, 108],
+      "bounds": [55, 40],
+      "contentsOpaque": true,
+      "drawsContent": true,
+      "backfaceVisibility": "hidden",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow (positioned) DIV class='test generated cover'",
+          "rect": [0, 0, 60, 40],
+          "reason": "border box change"
+        }
+      ]
+    },
+    {
+      "name": "LayoutBlockFlow (positioned) DIV class='test generated contain'",
+      "position": [8, 108],
+      "bounds": [55, 40],
+      "contentsOpaque": true,
+      "drawsContent": true,
+      "backfaceVisibility": "hidden",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow (positioned) DIV class='test generated contain'",
+          "rect": [0, 0, 60, 40],
+          "reason": "border box change"
+        }
+      ]
+    },
+    {
+      "name": "LayoutBlockFlow (positioned) DIV class='test generated fixed-width'",
+      "position": [158, 108],
+      "bounds": [55, 40],
+      "contentsOpaque": true,
+      "drawsContent": true,
+      "backfaceVisibility": "hidden",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow (positioned) DIV class='test generated fixed-width'",
+          "rect": [55, 0, 5, 40],
+          "reason": "incremental"
+        }
+      ],
+      "underPaintInvalidations": [
+        {
+          "x": 0,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 2,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 4,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 6,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 8,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 10,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 12,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 14,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 16,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 18,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 20,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 22,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 24,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 26,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 28,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 30,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 32,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 34,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 36,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 38,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 40,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 42,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 44,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 46,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 48,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 50,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 52,
+          "y": 4,
+          "oldPixel": "#001CC5",
+          "newPixel": "#001BC8"
+        },
+        {
+          "x": 0,
+          "y": 5,
+          "oldPixel": "#0024B9",
+          "newPixel": "#0022BD"
+        },
+        {
+          "x": 1,
+          "y": 5,
+          "oldPixel": "#0023B9",
+          "newPixel": "#0021BC"
+        },
+        {
+          "x": 2,
+          "y": 5,
+          "oldPixel": "#0024B9",
+          "newPixel": "#0022BD"
+        },
+        {
+          "x": 3,
+          "y": 5,
+          "oldPixel": "#0023B9",
+          "newPixel": "#0021BC"
+        },
+        {
+          "x": 4,
+          "y": 5,
+          "oldPixel": "#0024B9",
+          "newPixel": "#0022BD"
+        },
+        {
+          "x": 5,
+          "y": 5,
+          "oldPixel": "#0023B9",
+          "newPixel": "#0021BC"
+        },
+        {
+          "x": 6,
+          "y": 5,
+          "oldPixel": "#0024B9",
+          "newPixel": "#0022BD"
+        },
+        {
+          "x": 7,
+          "y": 5,
+          "oldPixel": "#0023B9",
+          "newPixel": "#0021BC"
+        },
+        {
+          "x": 8,
+          "y": 5,
+          "oldPixel": "#0024B9",
+          "newPixel": "#0022BD"
+        },
+        {
+          "x": 9,
+          "y": 5,
+          "oldPixel": "#0023B9",
+          "newPixel": "#0021BC"
+        },
+        {
+          "x": 10,
+          "y": 5,
+          "oldPixel": "#0024B9",
+          "newPixel": "#0022BD"
+        },
+        {
+          "x": 11,
+          "y": 5,
+          "oldPixel": "#0023B9",
+          "newPixel": "#0021BC"
+        },
+        {
+          "x": 12,
+          "y": 5,
+          "oldPixel": "#0024B9",
+          "newPixel": "#0022BD"
+        },
+        {
+          "x": 13,
+          "y": 5,
+          "oldPixel": "#0023B9",
+          "newPixel": "#0021BC"
+        },
+        {
+          "x": 14,
+          "y": 5,
+          "oldPixel": "#0024B9",
+          "newPixel": "#0022BD"
+        },
+        {
+          "x": 15,
+          "y": 5,
+          "oldPixel": "#0023B9",
+          "newPixel": "#0021BC"
+        },
+        {
+          "x": 16,
+          "y": 5,
+          "oldPixel": "#0024B9",
+          "newPixel": "#0022BD"
+        },
+        {
+          "x": 17,
+          "y": 5,
+          "oldPixel": "#0023B9",
+          "newPixel": "#0021BC"
+        },
+        {
+          "x": 18,
+          "y": 5,
+          "oldPixel": "#0024B9",
+          "newPixel": "#0022BD"
+        },
+        {
+          "x": 19,
+          "y": 5,
+          "oldPixel": "#0023B9",
+          "newPixel": "#0021BC"
+        },
+        {
+          "x": 20,
+          "y": 5,
+          "oldPixel": "#0024B9",
+          "newPixel": "#0022BD"
+        },
+        {
+          "x": 21,
+          "y": 5,
+          "oldPixel": "#0023B9",
+          "newPixel": "#0021BC"
+        },
+        {
+          "x": 22,
+          "y": 5,
+          "oldPixel": "#0024B9",
+          "newPixel": "#0022BD"
+        }
+      ]
+    },
+    {
+      "name": "LayoutBlockFlow (positioned) DIV class='test generated percent-width'",
+      "position": [208, 108],
+      "bounds": [55, 40],
+      "contentsOpaque": true,
+      "drawsContent": true,
+      "backfaceVisibility": "hidden",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow (positioned) DIV class='test generated percent-width'",
+          "rect": [0, 0, 60, 40],
+          "reason": "border box change"
+        }
+      ]
+    },
+    {
+      "name": "LayoutBlockFlow (positioned) DIV class='test generated left'",
+      "position": [258, 108],
+      "bounds": [55, 40],
+      "contentsOpaque": true,
+      "drawsContent": true,
+      "backfaceVisibility": "hidden",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow (positioned) DIV class='test generated left'",
+          "rect": [0, 0, 60, 40],
+          "reason": "border box change"
+        }
+      ]
+    },
+    {
+      "name": "LayoutBlockFlow (positioned) DIV class='test generated right'",
+      "position": [308, 108],
+      "bounds": [55, 40],
+      "contentsOpaque": true,
+      "drawsContent": true,
+      "backfaceVisibility": "hidden",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow (positioned) DIV class='test generated right'",
+          "rect": [0, 0, 60, 40],
+          "reason": "border box change"
+        }
+      ]
+    },
+    {
+      "name": "LayoutBlockFlow (positioned) DIV class='test generated center'",
+      "position": [358, 108],
+      "bounds": [55, 40],
+      "contentsOpaque": true,
+      "drawsContent": true,
+      "backfaceVisibility": "hidden",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow (positioned) DIV class='test generated center'",
+          "rect": [0, 0, 60, 40],
+          "reason": "border box change"
+        }
+      ]
+    },
+    {
+      "name": "LayoutBlockFlow (positioned) DIV class='test generated no-repeat'",
+      "position": [408, 108],
+      "bounds": [55, 40],
+      "drawsContent": true,
+      "backfaceVisibility": "hidden",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow (positioned) DIV class='test generated no-repeat'",
+          "rect": [0, 0, 60, 40],
+          "reason": "border box change"
+        }
+      ]
+    },
+    {
+      "name": "LayoutBlockFlow (positioned) DIV class='test generated repeat-space'",
+      "position": [458, 108],
+      "bounds": [55, 40],
+      "drawsContent": true,
+      "backfaceVisibility": "hidden",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow (positioned) DIV class='test generated repeat-space'",
+          "rect": [0, 0, 60, 40],
+          "reason": "border box change"
+        }
+      ]
+    },
+    {
+      "name": "LayoutBlockFlow (positioned) DIV class='test generated repeat-round'",
+      "position": [508, 108],
+      "bounds": [55, 40],
+      "contentsOpaque": true,
+      "drawsContent": true,
+      "backfaceVisibility": "hidden",
+      "paintInvalidations": [
+        {
+          "object": "LayoutBlockFlow (positioned) DIV class='test generated repeat-round'",
+          "rect": [0, 0, 60, 40],
+          "reason": "border box change"
+        }
+      ]
+    }
+  ],
+  "objectPaintInvalidations": [
+    {
+      "object": "LayoutBlockFlow (positioned) DIV class='test image'",
+      "reason": "incremental"
+    },
+    {
+      "object": "LayoutBlockFlow (positioned) DIV class='test image size-cover'",
+      "reason": "border box change"
+    },
+    {
+      "object": "LayoutBlockFlow (positioned) DIV class='test image size-contain'",
+      "reason": "border box change"
+    },
+    {
+      "object": "LayoutBlockFlow (positioned) DIV class='test image fixed-width'",
+      "reason": "incremental"
+    },
+    {
+      "object": "LayoutBlockFlow (positioned) DIV class='test image percent-width'",
+      "reason": "border box change"
+    },
+    {
+      "object": "LayoutBlockFlow (positioned) DIV class='test image left'",
+      "reason": "incremental"
+    },
+    {
+      "object": "LayoutBlockFlow (positioned) DIV class='test image right'",
+      "reason": "border box change"
+    },
+    {
+      "object": "LayoutBlockFlow (positioned) DIV class='test image center'",
+      "reason": "border box change"
+    },
+    {
+      "object": "LayoutBlockFlow (positioned) DIV class='test image no-repeat'",
+      "reason": "incremental"
+    },
+    {
+      "object": "LayoutBlockFlow (positioned) DIV class='test image repeat-space'",
+      "reason": "border box change"
+    },
+    {
+      "object": "LayoutBlockFlow (positioned) DIV class='test image repeat-round'",
+      "reason": "border box change"
+    },
+    {
+      "object": "LayoutBlockFlow (positioned) DIV class='test generated'",
+      "reason": "border box change"
+    },
+    {
+      "object": "LayoutBlockFlow (positioned) DIV class='test generated cover'",
+      "reason": "border box change"
+    },
+    {
+      "object": "LayoutBlockFlow (positioned) DIV class='test generated contain'",
+      "reason": "border box change"
+    },
+    {
+      "object": "LayoutBlockFlow (positioned) DIV class='test generated fixed-width'",
+      "reason": "incremental"
+    },
+    {
+      "object": "LayoutBlockFlow (positioned) DIV class='test generated percent-width'",
+      "reason": "border box change"
+    },
+    {
+      "object": "LayoutBlockFlow (positioned) DIV class='test generated left'",
+      "reason": "border box change"
+    },
+    {
+      "object": "LayoutBlockFlow (positioned) DIV class='test generated right'",
+      "reason": "border box change"
+    },
+    {
+      "object": "LayoutBlockFlow (positioned) DIV class='test generated center'",
+      "reason": "border box change"
+    },
+    {
+      "object": "LayoutBlockFlow (positioned) DIV class='test generated no-repeat'",
+      "reason": "border box change"
+    },
+    {
+      "object": "LayoutBlockFlow (positioned) DIV class='test generated repeat-space'",
+      "reason": "border box change"
+    },
+    {
+      "object": "LayoutBlockFlow (positioned) DIV class='test generated repeat-round'",
+      "reason": "border box change"
+    }
+  ]
+}
+

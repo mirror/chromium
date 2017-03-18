@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Verify FetchEvent for css image (backgroundImage). 
+PASS Verify FetchEvent for css image (shapeOutside). 
+PASS Verify FetchEvent for css image-set (backgroundImage). 
+PASS Verify FetchEvent for css image-set (shapeOutside). 
+Harness: the test ran to completion.
+

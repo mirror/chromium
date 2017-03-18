@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that the context is valid although the canvas is detached from document. 
+Harness: the test ran to completion.
+

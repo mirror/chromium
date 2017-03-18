@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS These tests only work with scroll customization enabled. 
+PASS Empty constructor behaves correctly. 
+PASS Constructor behaves correctly. 
+PASS attributes are read only 
+Harness: the test ran to completion.
+

@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS insert BR at end of block 
+PASS insert BR at end of block with SPAN 
+Harness: the test ran to completion.
+

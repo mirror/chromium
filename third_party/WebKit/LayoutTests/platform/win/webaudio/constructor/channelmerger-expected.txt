@@ -1,0 +1,38 @@
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = 5 duplicate test names: "node.channelCount is equal to 1.", "node.channelCountMode is equal to "explicit".", "node.channelInterpretation is equal to "speakers".", "node.channelInterpretation is equal to "discrete".", "node.numberOfOutputs is equal to 1."
+PASS context = new OfflineAudioContext(...) did not throw an exception. 
+PASS new ChannelMergerNode() threw TypeError: Failed to construct 'ChannelMergerNode': 1 argument required, but only 0 present.. 
+PASS new ChannelMergerNode(1) threw TypeError: Failed to construct 'ChannelMergerNode': parameter 1 is not of type 'BaseAudioContext'.. 
+PASS new ChannelMergerNode(context, 42) threw TypeError: Failed to construct 'ChannelMergerNode': parameter 2 ('options') is not an object.. 
+PASS Invalid constructors correctly threw errors. 
+PASS node = new ChannelMergerNode(context) did not throw an exception. 
+PASS node instanceof ChannelMergerNode is equal to true. 
+PASS node.numberOfInputs is equal to 6. 
+PASS node.numberOfOutputs is equal to 1. 
+PASS node.channelCount is equal to 1. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new ChannelMergerNode(context) constructed node with correct attributes. 
+PASS new ChannelMergerNode(c, {channelCount: 1}} did not throw an exception. 
+PASS node.channelCount is equal to 1. 
+PASS new ChannelMergerNode(c, {channelCount: 2}} threw InvalidStateError: Failed to construct 'ChannelMergerNode': ChannelMerger: channelCount cannot be changed from 1. 
+PASS new ChannelMergerNode(c, {channelCountMode: "explicit"} did not throw an exception. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS new ChannelMergerNode(c, {channelCountMode: "max"} threw InvalidStateError: Failed to construct 'ChannelMergerNode': ChannelMerger: channelCountMode cannot be changed from 'explicit'. 
+PASS new ChannelMergerNode(c, {channelInterpretation: "speakers"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new ChannelMergerNode(c, {channelInterpretation: "discrete"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS new ChannelMergerNode(c, {channelInterpretation: "foobar"}) threw TypeError: Failed to construct 'ChannelMergerNode': The provided value 'foobar' is not a valid enum value of type ChannelInterpretation.. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS AudioNodeOptions for ChannelMergerNode were correctly handled. 
+PASS node = new ChannelMergerNode(context, {"numberOfInputs":3,"numberOfOutputs":9,"channelInterpretation":"discrete"}) did not throw an exception. 
+PASS node.numberOfInputs is equal to 3. 
+PASS node.numberOfOutputs is equal to 1. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS new ChannelMergerNode(c, {"numberOfInputs":99}) threw IndexSizeError: Failed to construct 'ChannelMergerNode': The number of inputs provided (99) is outside the range [1, 32].. 
+PASS new ChannelMergerNode(c, {"channelCount":3}) threw InvalidStateError: Failed to construct 'ChannelMergerNode': ChannelMerger: channelCount cannot be changed from 1. 
+PASS new ChannelMergerNode(c, {"channelCountMode":"max"}) threw InvalidStateError: Failed to construct 'ChannelMergerNode': ChannelMerger: channelCountMode cannot be changed from 'explicit'. 
+PASS new ChannelMergerNode() with options constructed with correct attributes. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,11 @@
+CONSOLE MESSAGE: line 30: http://127.0.0.1:8000/resources/square.png?background
+CONSOLE MESSAGE: line 30: http://127.0.0.1:8000/resources/dummy.js
+CONSOLE MESSAGE: line 30: http://127.0.0.1:8000/resources/dummy.css
+CONSOLE MESSAGE: line 30: http://127.0.0.1:8000/resources/square.png
+CONSOLE MESSAGE: line 30: http://127.0.0.1:8000/resources/testharness.js
+CONSOLE MESSAGE: line 30: http://127.0.0.1:8000/resources/testharnessreport.js
+CONSOLE MESSAGE: line 30: http://127.0.0.1:8000/resources/slow-script.pl?delay=200
+This is a testharness.js-based test.
+PASS Makes sure that Link headers preload resources 
+Harness: the test ran to completion.
+

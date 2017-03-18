@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that does not load a low quality resource when viewport is downsized 
+Harness: the test ran to completion.
+

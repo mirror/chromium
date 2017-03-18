@@ -1,0 +1,5 @@
+CONSOLE ERROR: Not allowed to load local resource: blob:null/dde26a84-ba5c-4f36-aa66-c55674dcc293
+This is a testharness.js-based test.
+PASS 'data:' URL frames cannot load 'blob:' resources originating from another data:-URL. 
+Harness: the test ran to completion.
+

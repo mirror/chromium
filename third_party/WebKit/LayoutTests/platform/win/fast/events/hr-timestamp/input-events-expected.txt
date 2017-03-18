@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Event timestamp should be equal to the timestamp provided by the platform for mousedown 
+PASS Event timestamp should be equal to the timestamp provided by the platform for keydown 
+PASS Event timestamp should be equal to the timestamp provided by the platform for touchstart 
+PASS Event timestamp should be equal to the timestamp provided by the platform for click 
+PASS Event timestamp should be equal to the timestamp provided by the platform for contextmenu 
+PASS Event timestamp should be equal to the timestamp provided by the platform for wheel 
+Harness: the test ran to completion.
+

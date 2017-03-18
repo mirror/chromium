@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Accessors like location should be properly stubbed to aid in preloading scripts injected via document.write 
+Harness: the test ran to completion.
+

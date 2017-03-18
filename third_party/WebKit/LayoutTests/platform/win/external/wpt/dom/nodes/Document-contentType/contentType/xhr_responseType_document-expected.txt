@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS XHR - retrieve HTML document: document.contentType === 'application/xml' 
+Harness: the test ran to completion.
+

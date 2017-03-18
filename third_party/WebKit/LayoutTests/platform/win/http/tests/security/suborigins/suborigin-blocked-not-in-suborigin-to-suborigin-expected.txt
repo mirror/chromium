@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Block frame not in suborigin from accessing a frame in a suborigin 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Changing pointerEvents, an independent inherited property, propagates correctly through slotted elements. 
+Harness: the test ran to completion.
+

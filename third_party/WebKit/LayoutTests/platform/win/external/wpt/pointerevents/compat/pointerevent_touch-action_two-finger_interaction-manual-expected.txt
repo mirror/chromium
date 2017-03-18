@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS touch two-finger pan on 'touch-action: pan-x pan-y' 
+PASS touch two-finger pan on 'touch-action: pinch-zoom' 
+PASS PointerEvent Automation 
+Harness: the test ran to completion.
+

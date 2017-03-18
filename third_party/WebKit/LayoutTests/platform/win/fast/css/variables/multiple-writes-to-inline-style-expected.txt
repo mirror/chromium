@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS subsequent writes to inline style overwrite older values. 
+PASS various token types can be compared 
+Harness: the test ran to completion.
+

@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS insert a paragraph after text 
+PASS insert a paragraph and character after text 
+PASS insert a paragraph in text 
+PASS insert two paragraphs after text 
+PASS insert two paragraphs and a character after text 
+PASS insert a paragraph before text 
+PASS insert a paragraph and character before text 
+PASS insert a paragraph after word 
+Harness: the test ran to completion.
+

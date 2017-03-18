@@ -1,0 +1,7 @@
+CONSOLE ERROR: line 1: Unsafe JavaScript attempt to initiate navigation for frame with URL 'http://127.0.0.1:8000/security/sandbox-iframe-blocks-top-navigation-to-javascript.html' from frame with URL 'about:srcdoc'. The frame attempting navigation of the top-level window is sandboxed, but the flag of 'allow-top-navigation' or 'allow-top-navigation-by-user-activation' is not set.
+
+CONSOLE ERROR: line 1: Uncaught SecurityError: Failed to set the 'location' property on 'Window': The current window does not have permission to navigate the target frame to '/security/frameNavigation/resources/fail.html'.
+This is a testharness.js-based test.
+PASS Sandboxed frames should throw when navigating the top-level window. 
+Harness: the test ran to completion.
+

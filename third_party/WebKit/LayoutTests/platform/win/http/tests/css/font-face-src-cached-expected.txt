@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test using cached CSS font face src value resources (see CSSFontFaceSrcValue::restoreCachedResourceIfNeeded) 
+Harness: the test ran to completion.
+

@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS getElementsByClassName should work on disconnected subtrees. 
+PASS Interface should be correct. 
+Harness: the test ran to completion.
+

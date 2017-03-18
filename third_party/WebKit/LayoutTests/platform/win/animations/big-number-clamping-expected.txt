@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS Animations on flex-grow should clamp identically to setting inline style 
+PASS Animations on flex-shrink should clamp identically to setting inline style 
+PASS Animations on font-size-adjust should clamp identically to setting inline style 
+PASS Animations on line-height should clamp identically to setting inline style 
+PASS Animations on orphans should clamp identically to setting inline style 
+PASS Animations on stroke-miterlimit should clamp identically to setting inline style 
+PASS Animations on widows should clamp identically to setting inline style 
+PASS Animations on z-index should clamp identically to setting inline style 
+Harness: the test ran to completion.
+

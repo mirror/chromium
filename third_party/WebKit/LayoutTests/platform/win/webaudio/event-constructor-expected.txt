@@ -1,0 +1,23 @@
+This is a testharness.js-based test.
+PASS new OfflineAudioCompletionEvent() threw TypeError: Failed to construct 'OfflineAudioCompletionEvent': 2 arguments required, but only 0 present.. 
+PASS new OfflineAudioCompletionEvent("complete") threw TypeError: Failed to construct 'OfflineAudioCompletionEvent': 2 arguments required, but only 1 present.. 
+PASS new OfflineAudioCompletionEvent("complete", {}) threw TypeError: Failed to construct 'OfflineAudioCompletionEvent': required member renderedBuffer is undefined.. 
+PASS new OfflineAudioCompletionEvent("complete", {foo: 42}) threw TypeError: Failed to construct 'OfflineAudioCompletionEvent': required member renderedBuffer is undefined.. 
+PASS new OfflineAudioCompletionEvent("complete", {renderedBuffer: buffer}) did not throw an exception. 
+PASS OfflineAudioCompletionEvent construction handled correctly. 
+PASS new OfflineAudioCompletionEvent() did not throw an exception. 
+PASS event.renderedBuffer == buffer is equal to true. 
+PASS OfflineAudioCompletionEvent constructed correctly. 
+PASS new AudioProcessingEvent() threw TypeError: Failed to construct 'AudioProcessingEvent': 2 arguments required, but only 0 present.. 
+PASS new AudioProcessingEvent("proc") threw TypeError: Failed to construct 'AudioProcessingEvent': 2 arguments required, but only 1 present.. 
+PASS new AudioProcessingEvent("proc", {foo: 99}) threw TypeError: Failed to construct 'AudioProcessingEvent': required member inputBuffer is undefined.. 
+PASS new AudioProcessingEvent("proc", {inputBuffer: input, outputBuffer: output}) threw TypeError: Failed to construct 'AudioProcessingEvent': required member playbackTime is undefined.. 
+PASS new AudioProcessingEvent("proc", {inputBuffer: input, playbackTime: time}) threw TypeError: Failed to construct 'AudioProcessingEvent': required member outputBuffer is undefined.. 
+PASS new AudioProcessingEvent("proc", {outputBuffer: output, playbackTime: time}) threw TypeError: Failed to construct 'AudioProcessingEvent': required member inputBuffer is undefined.. 
+PASS new AudioProcessingEvent("proc", {inputBuffer: input, outputBuffer: output, playbackTime: time}) did not throw an exception. 
+PASS event.playbackTime is equal to 3.141592653589793. 
+PASS event.inputBuffer == input is equal to true. 
+PASS event.outputBuffer == output is equal to true. 
+PASS AudioProcessingEvent construction handled correctly. 
+Harness: the test ran to completion.
+

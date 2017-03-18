@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Don't crash ASAN when updating style with an element that has two animations with the same keyframes name and different timings. 
+Harness: the test ran to completion.
+

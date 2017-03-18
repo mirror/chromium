@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Construction of CSSUnparsedValue is normalized using example from the spec 
+PASS Has several values 
+PASS Can handle extra spaces with fallback 
+PASS Can handle extra spaces without fallback 
+Harness: the test ran to completion.
+

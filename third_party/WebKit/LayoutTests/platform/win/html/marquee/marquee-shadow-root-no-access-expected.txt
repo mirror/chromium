@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Marquee shadow-root should not be accessible 
+Harness: the test ran to completion.
+

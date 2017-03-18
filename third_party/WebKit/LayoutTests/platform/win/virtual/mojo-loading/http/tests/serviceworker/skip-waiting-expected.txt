@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test skipWaiting with both active and waiting workers 
+Harness: the test ran to completion.
+

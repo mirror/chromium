@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Marker misspelling in two lines. 
+PASS Marker misspelling after merging lines with delete. 
+PASS Marker misspelling after merging lines with forward delete. 
+Harness: the test ran to completion.
+

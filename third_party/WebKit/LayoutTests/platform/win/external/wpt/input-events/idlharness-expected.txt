@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS InputEvent interface: attribute inputType 
+PASS InputEvent interface: attribute dataTransfer 
+PASS InputEvent interface: operation getTargetRanges() 
+PASS InputEvent must be primary interface of new InputEvent("foo") 
+PASS Stringification of new InputEvent("foo") 
+PASS InputEvent interface: new InputEvent("foo") must inherit property "inputType" with the proper type (0) 
+PASS InputEvent interface: new InputEvent("foo") must inherit property "dataTransfer" with the proper type (1) 
+PASS InputEvent interface: new InputEvent("foo") must inherit property "getTargetRanges" with the proper type (2) 
+Harness: the test ran to completion.
+

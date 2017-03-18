@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Submitting a form data set that contains unpaired surrogates must convert to Unicode scalar values 
+Harness: the test ran to completion.
+

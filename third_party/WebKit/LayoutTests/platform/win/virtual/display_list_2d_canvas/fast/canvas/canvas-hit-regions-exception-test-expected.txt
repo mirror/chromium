@@ -1,0 +1,15 @@
+This is a testharness.js-based test.
+PASS context.addHitRegion() 
+PASS context.addHitRegion({ id : '' }) 
+PASS context.addHitRegion({ id : undefined }) 
+PASS context.addHitRegion({ control : {} }) 
+PASS context.addHitRegion({ control : null }) 
+PASS context.addHitRegion({ control : undefined }) 
+PASS context.addHitRegion({ id : '', control : {} }) 
+PASS context.addHitRegion({ id : undefined, control : {} }) 
+PASS context.addHitRegion({ id : '', control : null }) 
+PASS context.addHitRegion({ id : undefined, control : null }) 
+PASS context.addHitRegion({ id : '', control : undefined }) 
+PASS context.addHitRegion({ id : undefined, control : undefined ) 
+Harness: the test ran to completion.
+

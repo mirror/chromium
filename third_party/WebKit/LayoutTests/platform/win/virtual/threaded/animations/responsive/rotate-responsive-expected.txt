@@ -1,0 +1,16 @@
+This is a testharness.js-based test.
+PASS This test uses responsive-test.js. 
+PASS Untitled 
+PASS Untitled 1 
+PASS Untitled 2 
+PASS Untitled 3 
+PASS Untitled 4 
+PASS Animation on property <rotate> from [inherit] to [0 1 0 100deg] with {"inherited":"0 1 0 60deg"} changed to {"inherited":"0 1 0 140deg"} at (0.25) is [0 1 0 130deg] 
+PASS Untitled 5 
+PASS Animation on property <rotate> from [inherit] to [0 1 0 100deg] with {"inherited":"0 1 0 60deg"} changed to {"inherited":"0 1 0 140deg"} at (0.75) is [0 1 0 110deg] 
+PASS Untitled 6 
+PASS Animation on property <rotate> from [inherit] to [0 1 0 100deg] with {"inherited":"0 1 0 140deg"} changed to {"inherited":"0 1 0 60deg"} at (0.25) is [0 1 0 70deg] 
+PASS Untitled 7 
+PASS Animation on property <rotate> from [inherit] to [0 1 0 100deg] with {"inherited":"0 1 0 140deg"} changed to {"inherited":"0 1 0 60deg"} at (0.75) is [0 1 0 90deg] 
+Harness: the test ran to completion.
+

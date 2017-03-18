@@ -1,0 +1,88 @@
+This is a testharness.js-based test.
+PASS This test uses responsive-test.js. 
+PASS Untitled 
+PASS Untitled 1 
+PASS Untitled 2 
+PASS Untitled 3 
+PASS Untitled 4 
+PASS Untitled 5 
+PASS Untitled 6 
+PASS Untitled 7 
+PASS Untitled 8 
+PASS Untitled 9 
+PASS Untitled 10 
+PASS Untitled 11 
+PASS Untitled 12 
+PASS Untitled 13 
+PASS Untitled 14 
+PASS Untitled 15 
+PASS Untitled 16 
+PASS Untitled 17 
+PASS Untitled 18 
+PASS Untitled 19 
+PASS Untitled 20 
+PASS Untitled 21 
+PASS Untitled 22 
+PASS Untitled 23 
+PASS Untitled 24 
+PASS Untitled 25 
+PASS Untitled 26 
+PASS Untitled 27 
+PASS Untitled 28 
+PASS Untitled 29 
+PASS Untitled 30 
+PASS Untitled 31 
+PASS Untitled 32 
+PASS Untitled 33 
+PASS Untitled 34 
+PASS Untitled 35 
+PASS Untitled 36 
+PASS Animation on property <borderImageSource> from [inherit] to [url("test://to")] with {"inherited":"url(\"test://a\")"} changed to {"inherited":"url(\"test://b\")"} at (0.25) is [-webkit-cross-fade(url("test://b"), url("test://to"), 0.25)] 
+PASS Untitled 37 
+PASS Animation on property <borderImageSource> from [inherit] to [url("test://to")] with {"inherited":"url(\"test://a\")"} changed to {"inherited":"url(\"test://b\")"} at (0.75) is [-webkit-cross-fade(url("test://b"), url("test://to"), 0.75)] 
+PASS Untitled 38 
+PASS Animation on property <borderImageSource> from [inherit] to [url("test://to")] with {"inherited":"url(\"test://a\")"} changed to {"inherited":"none"} at (0.25) is [none] 
+PASS Untitled 39 
+PASS Animation on property <borderImageSource> from [inherit] to [url("test://to")] with {"inherited":"url(\"test://a\")"} changed to {"inherited":"none"} at (0.75) is [url("test://to")] 
+PASS Untitled 40 
+PASS Animation on property <borderImageSource> from [inherit] to [url("test://to")] with {"inherited":"url(\"test://b\")"} changed to {"inherited":"url(\"test://a\")"} at (0.25) is [-webkit-cross-fade(url("test://a"), url("test://to"), 0.25)] 
+PASS Untitled 41 
+PASS Animation on property <borderImageSource> from [inherit] to [url("test://to")] with {"inherited":"url(\"test://b\")"} changed to {"inherited":"url(\"test://a\")"} at (0.75) is [-webkit-cross-fade(url("test://a"), url("test://to"), 0.75)] 
+PASS Untitled 42 
+PASS Animation on property <borderImageSource> from [inherit] to [url("test://to")] with {"inherited":"url(\"test://b\")"} changed to {"inherited":"none"} at (0.25) is [none] 
+PASS Untitled 43 
+PASS Animation on property <borderImageSource> from [inherit] to [url("test://to")] with {"inherited":"url(\"test://b\")"} changed to {"inherited":"none"} at (0.75) is [url("test://to")] 
+PASS Untitled 44 
+PASS Animation on property <borderImageSource> from [inherit] to [url("test://to")] with {"inherited":"none"} changed to {"inherited":"url(\"test://a\")"} at (0.25) is [-webkit-cross-fade(url("test://a"), url("test://to"), 0.25)] 
+PASS Untitled 45 
+PASS Animation on property <borderImageSource> from [inherit] to [url("test://to")] with {"inherited":"none"} changed to {"inherited":"url(\"test://a\")"} at (0.75) is [-webkit-cross-fade(url("test://a"), url("test://to"), 0.75)] 
+PASS Untitled 46 
+PASS Animation on property <borderImageSource> from [inherit] to [url("test://to")] with {"inherited":"none"} changed to {"inherited":"url(\"test://b\")"} at (0.25) is [-webkit-cross-fade(url("test://b"), url("test://to"), 0.25)] 
+PASS Untitled 47 
+PASS Animation on property <borderImageSource> from [inherit] to [url("test://to")] with {"inherited":"none"} changed to {"inherited":"url(\"test://b\")"} at (0.75) is [-webkit-cross-fade(url("test://b"), url("test://to"), 0.75)] 
+PASS Untitled 48 
+PASS Animation on property <borderImageSource> from neutral to [url("test://to")] with {"underlying":"url(\"test://a\")"} changed to {"underlying":"url(\"test://b\")"} at (0.25) is [-webkit-cross-fade(url("test://b"), url("test://to"), 0.25)] 
+PASS Untitled 49 
+PASS Animation on property <borderImageSource> from neutral to [url("test://to")] with {"underlying":"url(\"test://a\")"} changed to {"underlying":"url(\"test://b\")"} at (0.75) is [-webkit-cross-fade(url("test://b"), url("test://to"), 0.75)] 
+PASS Untitled 50 
+PASS Animation on property <borderImageSource> from neutral to [url("test://to")] with {"underlying":"url(\"test://a\")"} changed to {"underlying":"none"} at (0.25) is [none] 
+PASS Untitled 51 
+PASS Animation on property <borderImageSource> from neutral to [url("test://to")] with {"underlying":"url(\"test://a\")"} changed to {"underlying":"none"} at (0.75) is [url("test://to")] 
+PASS Untitled 52 
+PASS Animation on property <borderImageSource> from neutral to [url("test://to")] with {"underlying":"url(\"test://b\")"} changed to {"underlying":"url(\"test://a\")"} at (0.25) is [-webkit-cross-fade(url("test://a"), url("test://to"), 0.25)] 
+PASS Untitled 53 
+PASS Animation on property <borderImageSource> from neutral to [url("test://to")] with {"underlying":"url(\"test://b\")"} changed to {"underlying":"url(\"test://a\")"} at (0.75) is [-webkit-cross-fade(url("test://a"), url("test://to"), 0.75)] 
+PASS Untitled 54 
+PASS Animation on property <borderImageSource> from neutral to [url("test://to")] with {"underlying":"url(\"test://b\")"} changed to {"underlying":"none"} at (0.25) is [none] 
+PASS Untitled 55 
+PASS Animation on property <borderImageSource> from neutral to [url("test://to")] with {"underlying":"url(\"test://b\")"} changed to {"underlying":"none"} at (0.75) is [url("test://to")] 
+PASS Untitled 56 
+PASS Animation on property <borderImageSource> from neutral to [url("test://to")] with {"underlying":"none"} changed to {"underlying":"url(\"test://a\")"} at (0.25) is [-webkit-cross-fade(url("test://a"), url("test://to"), 0.25)] 
+PASS Untitled 57 
+PASS Animation on property <borderImageSource> from neutral to [url("test://to")] with {"underlying":"none"} changed to {"underlying":"url(\"test://a\")"} at (0.75) is [-webkit-cross-fade(url("test://a"), url("test://to"), 0.75)] 
+PASS Untitled 58 
+PASS Animation on property <borderImageSource> from neutral to [url("test://to")] with {"underlying":"none"} changed to {"underlying":"url(\"test://b\")"} at (0.25) is [-webkit-cross-fade(url("test://b"), url("test://to"), 0.25)] 
+PASS Untitled 59 
+PASS Animation on property <borderImageSource> from neutral to [url("test://to")] with {"underlying":"none"} changed to {"underlying":"url(\"test://b\")"} at (0.75) is [-webkit-cross-fade(url("test://b"), url("test://to"), 0.75)] 
+Harness: the test ran to completion.
+

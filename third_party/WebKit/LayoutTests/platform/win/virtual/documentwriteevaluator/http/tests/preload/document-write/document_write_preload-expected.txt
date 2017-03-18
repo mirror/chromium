@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Simple scripts that inject external scripts via document.write should be preloaded 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This test check that checked state of checkbox once explicitly set is not affected by default state. 
+Harness: the test ran to completion.
+

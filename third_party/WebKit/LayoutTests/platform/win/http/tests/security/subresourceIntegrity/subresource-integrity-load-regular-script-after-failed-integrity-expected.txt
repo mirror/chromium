@@ -1,0 +1,6 @@
+CONSOLE ERROR: Failed to find a valid digest in the 'integrity' attribute for resource 'http://127.0.0.1:8000/security/subresourceIntegrity/resources/simple-result.js' with computed SHA-256 integrity 'xJjeC55VpJ4nhSNBPBfw2QrsylPyXeQGxMd1l4unH58='. The resource has been blocked.
+This is a testharness.js-based test.
+PASS should fail 
+PASS should succeed 
+Harness: the test ran to completion.
+

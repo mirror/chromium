@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS IDBDatabase.transaction exception order: InvalidStateError vs. NotFoundError 
+PASS IDBDatabase.transaction exception order: InvalidStateError vs. InvalidAccessError 
+PASS IDBDatabase.transaction exception order: NotFoundError vs. InvalidAccessError 
+Harness: the test ran to completion.
+

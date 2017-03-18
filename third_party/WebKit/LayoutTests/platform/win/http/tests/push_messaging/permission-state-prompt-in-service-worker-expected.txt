@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS permissionState when called in service worker resolves with prompt when no permission is set 
+Harness: the test ran to completion.
+

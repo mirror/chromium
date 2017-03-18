@@ -1,0 +1,28 @@
+This is a testharness.js-based test.
+PASS SVGPointList has length attribute 
+PASS SVGPointList has numberOfItems attribute 
+PASS SVGPointList.length equals SVGPointList.numberOfItems. 
+PASS SVGPointList has array getter 
+PASS SVGPointList has array setter 
+PASS SVGStringList has length attribute 
+PASS SVGStringList has numberOfItems attribute 
+PASS SVGStringList.length equals SVGStringList.numberOfItems. 
+PASS SVGStringList has array getter 
+PASS SVGStringList has array setter 
+PASS SVGTransformList has length attribute 
+PASS SVGTransformList has numberOfItems attribute 
+PASS SVGTransformList.length equals SVGTransformList.numberOfItems. 
+PASS SVGTransformList has array getter 
+PASS SVGTransformList has array setter 
+PASS SVGLengthList has length attribute 
+PASS SVGLengthList has numberOfItems attribute 
+PASS SVGLengthList.length equals SVGLengthList.numberOfItems. 
+PASS SVGLengthList has array getter 
+PASS SVGLengthList has array setter 
+PASS SVGNumberList has length attribute 
+PASS SVGNumberList has numberOfItems attribute 
+PASS SVGNumberList.length equals SVGNumberList.numberOfItems. 
+PASS SVGNumberList has array getter 
+PASS SVGNumberList has array setter 
+Harness: the test ran to completion.
+

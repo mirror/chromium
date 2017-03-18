@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS createElement() and new MyElement should work in imported document. 
+Harness: the test ran to completion.
+

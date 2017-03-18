@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS WebVR properly returns zero displays 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS `window.parent` for top-level browsing context 
+PASS `window.parent` on single nested browsing context 
+PASS `window.parent` for multiple nested browsing contexts 
+Harness: the test ran to completion.
+

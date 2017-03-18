@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Track that setting tabIndex to out of range values the reflected value is 0. 
+Harness: the test ran to completion.
+

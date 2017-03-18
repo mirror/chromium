@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS 'pan-x none' is corrected properly 
+PASS 'pan-y none' is corrected properly 
+PASS 'auto none' is corrected properly 
+Harness: the test ran to completion.
+

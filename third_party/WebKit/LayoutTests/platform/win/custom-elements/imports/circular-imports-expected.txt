@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS custom element definitions in circularly-dependent imports should work. 
+Harness: the test ran to completion.
+

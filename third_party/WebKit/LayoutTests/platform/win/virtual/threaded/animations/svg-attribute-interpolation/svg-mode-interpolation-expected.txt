@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS This test uses interpolation-test.js. 
+PASS SMIL: Interpolate attribute <mode> from replace [screen] to replace [lighten] at (0) is [screen] 
+PASS SMIL: Interpolate attribute <mode> from replace [screen] to replace [lighten] at (0.2) is [screen] 
+PASS SMIL: Interpolate attribute <mode> from replace [screen] to replace [lighten] at (0.6) is [lighten] 
+PASS SMIL: Interpolate attribute <mode> from replace [screen] to replace [lighten] at (1) is [lighten] 
+PASS Web Animations: Interpolate attribute <mode> from replace [screen] to replace [lighten] at (-2.4) is [screen] 
+PASS Web Animations: Interpolate attribute <mode> from replace [screen] to replace [lighten] at (0) is [screen] 
+PASS Web Animations: Interpolate attribute <mode> from replace [screen] to replace [lighten] at (0.2) is [screen] 
+PASS Web Animations: Interpolate attribute <mode> from replace [screen] to replace [lighten] at (0.6) is [lighten] 
+PASS Web Animations: Interpolate attribute <mode> from replace [screen] to replace [lighten] at (1) is [lighten] 
+PASS Web Animations: Interpolate attribute <mode> from replace [screen] to replace [lighten] at (3.4) is [lighten] 
+Harness: the test ran to completion.
+

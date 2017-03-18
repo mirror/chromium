@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS pushState should be able to set the location state 
+PASS pushed location should be reflected immediately 
+PASS pushed location should be retained after the page has loaded 
+Harness: the test ran to completion.
+

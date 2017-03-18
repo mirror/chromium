@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS Unit em not affected by zoom level 0.3 
+PASS Unit em not affected by zoom level 4 
+PASS Unit rem not affected by zoom level 0.3 
+PASS Unit rem not affected by zoom level 4 
+PASS Unit ex not affected by zoom level 0.3 
+PASS Unit ex not affected by zoom level 4 
+PASS Unit ch not affected by zoom level 0.3 
+PASS Unit ch not affected by zoom level 4 
+Harness: the test ran to completion.
+

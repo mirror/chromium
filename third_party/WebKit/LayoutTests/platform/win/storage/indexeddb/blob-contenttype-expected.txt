@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Ensure that content type round trips when reading blob data 
+Harness: the test ran to completion.
+

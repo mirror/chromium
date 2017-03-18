@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS No 'load' is fired on the SVG root when an image is inserted into it. 
+Harness: the test ran to completion.
+

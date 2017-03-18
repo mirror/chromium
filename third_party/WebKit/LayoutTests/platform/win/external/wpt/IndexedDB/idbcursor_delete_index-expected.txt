@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBCursor.delete() - index - remove a record from the object store 
+Harness: the test ran to completion.
+

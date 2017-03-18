@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS  WorkerLocation.hash with url encoding string  
+Harness: the test ran to completion.
+

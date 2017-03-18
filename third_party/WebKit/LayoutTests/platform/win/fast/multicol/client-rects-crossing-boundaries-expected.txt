@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS #outer 
+PASS #first 
+PASS #rightFloat 
+PASS #tableCell 
+PASS #fullSingleColumn 
+Harness: the test ran to completion.
+

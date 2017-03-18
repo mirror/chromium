@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Motion position percentages are supported 
+PASS Motion position lengths respond to style changes 
+Harness: the test ran to completion.
+

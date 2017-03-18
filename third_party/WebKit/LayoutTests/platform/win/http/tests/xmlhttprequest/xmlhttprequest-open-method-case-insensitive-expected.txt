@@ -1,0 +1,12 @@
+This is a testharness.js-based test.
+PASS XMLHttpRequest: open() - case-insensitive methods test 
+PASS XMLHttpRequest: open() - case-insensitive methods test 1 
+PASS XMLHttpRequest: open() - case-insensitive methods test 2 
+PASS XMLHttpRequest: open() - case-insensitive methods test 3 
+PASS XMLHttpRequest: open() - case-insensitive methods test 4 
+PASS XMLHttpRequest: open() - case-insensitive methods test 5 
+PASS XMLHttpRequest: open() - case-insensitive methods test 6 
+PASS XMLHttpRequest: open() - case-insensitive methods test 7 
+PASS XMLHttpRequest: open() - case-insensitive methods test 8 
+Harness: the test ran to completion.
+

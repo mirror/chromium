@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Single valued CSSNumberValues can be retrieved from Computed StyleMap 
+PASS Can retrieve list of CSSNumberValues from list-valued property 
+Harness: the test ran to completion.
+

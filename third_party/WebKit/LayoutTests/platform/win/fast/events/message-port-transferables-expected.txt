@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Send a transferable ArrayBuffer within a same frame 
+PASS Send a transferable ArrayBuffer over frames 
+PASS Send a transferable ArrayBuffer to Worker 
+PASS Send a transferable ArrayBuffer to SharedWorker 
+Harness: the test ran to completion.
+

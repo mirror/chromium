@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Location has no toJSON 
+Harness: the test ran to completion.
+

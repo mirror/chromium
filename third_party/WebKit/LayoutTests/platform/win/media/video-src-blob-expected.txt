@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This tests the ability of the "video" element to load blob URLs. In the browser, select a video file. 
+Harness: the test ran to completion.
+

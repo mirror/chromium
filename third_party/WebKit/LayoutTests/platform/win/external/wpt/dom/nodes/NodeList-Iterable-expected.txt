@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS NodeList has length method. 
+PASS NodeList has values method. 
+PASS NodeList has entries method. 
+PASS NodeList has forEach method. 
+PASS NodeList has Symbol.iterator. 
+PASS NodeList is iterable via for-of loop. 
+PASS NodeList responds to Object.keys correctly 
+PASS live NodeLists are for-of iterable and update appropriately 
+Harness: the test ran to completion.
+

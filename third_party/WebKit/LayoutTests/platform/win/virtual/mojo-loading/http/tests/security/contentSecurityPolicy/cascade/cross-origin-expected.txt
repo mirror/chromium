@@ -1,0 +1,9 @@
+CONSOLE ERROR: Refused to load the image 'http://example.test:8000/resources/square.png?img-in-top-level' because it violates the following Content Security Policy directive: "img-src 'none'".
+
+CONSOLE ERROR: Refused to load the image 'http://example.test:8000/resources/square.png?data-frame' because it violates the following Content Security Policy directive: "img-src 'none'".
+
+This is a testharness.js-based test.
+PASS Image loaded in top-level blocked. 
+PASS Image loaded via data: frame blocked. 
+Harness: the test ran to completion.
+

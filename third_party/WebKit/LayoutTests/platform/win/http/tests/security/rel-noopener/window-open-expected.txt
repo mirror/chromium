@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS window.open returns 'null' when 'noopener' present. 
+PASS Opening a named window as noopener, then normally should work. 
+PASS Opening a named window normally, then as noopener should work. 
+Harness: the test ran to completion.
+

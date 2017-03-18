@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS A new ready promise is created when play()/pause() is called 
+PASS Redundant calls to play() do not generate new ready promise objects 
+PASS The ready promise is fulfilled with its Animation 
+PASS ready promise is rejected when a play-pending animation is cancelled by calling cancel() 
+PASS ready promise is rejected when a pause-pending animation is cancelled by calling cancel() 
+Harness: the test ran to completion.
+

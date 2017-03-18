@@ -1,0 +1,25 @@
+This is a testharness.js-based test.
+PASS Test whitespace parsing on canvas attributes that invoke the CSS parser 
+PASS Test whitespace parsing on canvas attributes that invoke the CSS parser 1 
+PASS Test whitespace parsing on canvas attributes that invoke the CSS parser 2 
+PASS Test whitespace parsing on canvas attributes that invoke the CSS parser 3 
+PASS Test whitespace parsing on canvas attributes that invoke the CSS parser 4 
+PASS Test whitespace parsing on canvas attributes that invoke the CSS parser 5 
+PASS Test whitespace parsing on canvas attributes that invoke the CSS parser 6 
+PASS Test whitespace parsing on canvas attributes that invoke the CSS parser 7 
+PASS Test whitespace parsing on canvas attributes that invoke the CSS parser 8 
+PASS Test whitespace parsing on canvas attributes that invoke the CSS parser 9 
+PASS Test whitespace parsing on canvas attributes that invoke the CSS parser 10 
+PASS Test whitespace parsing on canvas attributes that invoke the CSS parser 11 
+PASS Test whitespace parsing on canvas attributes that invoke the CSS parser 12 
+PASS Test whitespace parsing on canvas attributes that invoke the CSS parser 13 
+PASS Test whitespace parsing on canvas attributes that invoke the CSS parser 14 
+PASS Test whitespace parsing on canvas attributes that invoke the CSS parser 15 
+PASS Test whitespace parsing on canvas attributes that invoke the CSS parser 16 
+PASS Test whitespace parsing on canvas attributes that invoke the CSS parser 17 
+PASS Test whitespace parsing on canvas attributes that invoke the CSS parser 18 
+PASS Test whitespace parsing on canvas attributes that invoke the CSS parser 19 
+PASS Test whitespace parsing on canvas attributes that invoke the CSS parser 20 
+PASS Test whitespace parsing on canvas attributes that invoke the CSS parser 21 
+Harness: the test ran to completion.
+

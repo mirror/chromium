@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Check cues from captions-webvtt/tc031-cue-recovery-header.vtt 
+PASS Check cues from captions-webvtt/tc031-cue-recovery-note.vtt 
+PASS Check cues from captions-webvtt/tc031-cue-recovery-cuetext.vtt 
+Harness: the test ran to completion.
+

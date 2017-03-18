@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS import() on a detached iframe should be rejected. 
+Harness: the test ran to completion.
+

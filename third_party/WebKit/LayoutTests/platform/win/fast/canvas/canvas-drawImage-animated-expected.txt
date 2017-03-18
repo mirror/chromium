@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS When drawing an animated image to a canvas, the poster frame (or the first frame) should be printed. This test passes if the canvas is filled with the color rgb(64, 4, 30). 
+Harness: the test ran to completion.
+

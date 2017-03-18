@@ -1,0 +1,35 @@
+This is a testharness.js-based test.
+PASS TestScenario 1, Case 1 
+PASS TestScenario 1, Case 2 
+PASS TestScenario 1, Case 3 
+PASS TestScenario 1, Case 4 
+PASS TestScenario 1, Case 5 
+PASS TestScenario 1, Case 6 
+PASS TestScenario 1, Case 7 
+PASS TestScenario 1, Case 8 
+PASS TestScenario 1, Case 9 
+PASS TestScenario 1, Case 10 
+PASS TestScenario 1, Case 11 
+PASS TestScenario 1, Case 12 
+PASS TestScenario 1, Case 13 
+PASS TestScenario 1, Case 14 
+PASS TestScenario 1, Case 15 
+PASS TestScenario 1, Case 16 
+PASS TestScenario 1, Case 17 
+PASS TestScenario 1, Case 18 
+PASS isPointInStroke in Canvas throws exception with invalid parameters. 
+PASS TestScenario 2, Case 1 
+PASS TestScenario 2, Case 2 
+PASS TestScenario 2, Case 3 
+PASS TestScenario 2, Case 4 
+PASS TestScenario 2, Case 5 
+PASS TestScenario 2, Case 6 
+PASS TestScenario 2, Case 7 
+PASS TestScenario 2, Case 8 
+PASS TestScenario 2, Case 9 
+PASS TestScenario 2, Case 10 
+PASS TestScenario 2, Case 11 
+PASS TestScenario 2, Case 12 
+PASS Test the behavior of isPointInStroke in Canvas with path object 
+Harness: the test ran to completion.
+

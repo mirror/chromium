@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBCursor.update() - index - no argument 
+Harness: the test ran to completion.
+

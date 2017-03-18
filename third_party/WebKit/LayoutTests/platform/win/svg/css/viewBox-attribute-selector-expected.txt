@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Normalization of viewBox on html and svg elements in html documents. 
+PASS viewBox attribute without namespace on html element matches case-insensitively in html document. 
+PASS Camel-cased viewBox on svg in html document matches sensitively. 
+PASS Camel-cased viewBox on svg in html document should match case-sensitively. Intentional deviation from the spec. 
+PASS Normalized camel-cased viewBox on svg in html document matches case-sensitively. 
+PASS Normalized camel-cased viewBox on svg in html document should match case-sensitively. Intentional deviation from the spec. 
+Harness: the test ran to completion.
+

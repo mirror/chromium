@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test for setting title element in the html namespace on SVG element that is root. 
+Harness: the test ran to completion.
+

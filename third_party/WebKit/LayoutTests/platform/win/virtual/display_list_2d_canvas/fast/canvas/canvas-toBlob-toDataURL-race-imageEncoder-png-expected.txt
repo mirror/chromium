@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Verifies if synchronous PNG image encoding (toDataURL) conflicts with asynchronous image encoding (toBlob) 
+Harness: the test ran to completion.
+

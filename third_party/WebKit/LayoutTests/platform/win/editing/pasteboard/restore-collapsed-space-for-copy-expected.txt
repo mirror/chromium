@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS 1. Restore the collapsed trailing space 
+PASS 2. Restore the collapsed trailing space 
+PASS 3. Restore the collapsed leading space 
+PASS 4. Space should not be added for CJK 
+PASS 5. Space should not be added for CSS word-break: break-all 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Check cues from captions-webvtt/tc014-alignment.vtt 
+PASS Check cues from captions-webvtt/tc014-alignment-ltr.vtt 
+PASS Check cues from captions-webvtt/tc014-alignment-bad.vtt 
+Harness: the test ran to completion.
+

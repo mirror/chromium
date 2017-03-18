@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS elementFromPoint should return an visible element under a point 
+Harness: the test ran to completion.
+

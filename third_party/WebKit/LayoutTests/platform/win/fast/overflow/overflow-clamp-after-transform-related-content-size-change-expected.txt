@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Verify that scroll offset clamps correctly when overflow rect is changed  as a result of a transform (i.e., a non-layout inducing change) 
+Harness: the test ran to completion.
+

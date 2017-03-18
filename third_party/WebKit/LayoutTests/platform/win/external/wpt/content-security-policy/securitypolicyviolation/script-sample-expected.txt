@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Inline script should have a sample. 
+PASS Inline event handlers should have a sample. 
+PASS JavaScript URLs in iframes should have a sample. 
+PASS eval() should not have a sample. 
+Harness: the test ran to completion.
+

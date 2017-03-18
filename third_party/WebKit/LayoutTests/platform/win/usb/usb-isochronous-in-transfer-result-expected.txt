@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Can construct a USBIsochronousInTransferResult 
+PASS Can construct a USBIsochronousInTransferResult without a DataView 
+PASS Cannot construct a USBIsochronousInTransferResult without packets 
+Harness: the test ran to completion.
+

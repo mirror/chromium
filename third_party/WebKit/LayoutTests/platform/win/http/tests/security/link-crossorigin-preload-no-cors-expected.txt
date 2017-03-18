@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that a preload with a crossorigin attribute does not load a cross-origin resource that isn't CORS enabled. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS verify spacing is handled correctly 
+Harness: the test ran to completion.
+

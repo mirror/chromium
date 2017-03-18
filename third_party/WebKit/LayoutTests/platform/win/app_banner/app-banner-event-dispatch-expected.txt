@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS cancel 
+PASS accept 
+PASS dismiss 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Preserve fragment anchor if clamping occurs during load. 
+Harness: the test ran to completion.
+

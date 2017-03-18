@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Removed style rules should not cause invalidation 
+Harness: the test ran to completion.
+

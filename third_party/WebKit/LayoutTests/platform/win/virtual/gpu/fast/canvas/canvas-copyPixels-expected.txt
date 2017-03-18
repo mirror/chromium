@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test if putImageData gives back the same result as getImageData 
+Harness: the test ran to completion.
+

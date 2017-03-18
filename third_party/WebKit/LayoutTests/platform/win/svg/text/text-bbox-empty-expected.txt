@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Empty <text> does not contribute to ancestor bounding boxes. 
+Harness: the test ran to completion.
+

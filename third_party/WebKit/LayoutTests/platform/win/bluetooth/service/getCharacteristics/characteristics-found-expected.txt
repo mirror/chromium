@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Find all characteristics in a service. 
+Harness: the test ran to completion.
+

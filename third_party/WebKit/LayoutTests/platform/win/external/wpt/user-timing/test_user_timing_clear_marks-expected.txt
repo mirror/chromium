@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS window.performance is defined 
+PASS Two marks have been created for this test. 
+PASS After a call to window.performance.clearMarks("markUndefined"), where "markUndefined" is a non-existent mark, window.performance.getEntriesByName("mark1") returns an object containing the "mark1" mark. 
+PASS After a call to window.performance.clearMarks("markUndefined"), where "markUndefined" is a non-existent mark, window.performance.getEntriesByName("mark2") returns an object containing the "mark2" mark. 
+PASS After a call to window.performance.clearMarks("mark1"), window.performance.getEntriesByName("mark1") returns an empty object. 
+PASS After a call to window.performance.clearMarks("mark1"), window.performance.getEntriesByName("mark2") returns an object containing the "mark2" mark. 
+PASS After a call to window.performance.clearMarks(), window.performance.getEntriesByType("mark") returns an empty object. 
+Harness: the test ran to completion.
+

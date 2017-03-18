@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS url property test of session event - Session event is fired due to an invocation of the setItem() method. 
+Harness: the test ran to completion.
+

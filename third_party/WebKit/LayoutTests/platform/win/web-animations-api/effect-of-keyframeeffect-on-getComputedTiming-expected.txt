@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS localTime and currentIteration are null when the KeyframeEffect is not associated with an Animation 
+PASS ComputedTimingProperties.localTime and ComputedTimingProperties.currentIteration return reasonable values when an keyframeEffect is in effect 
+PASS ComputedTimingProperties.currentIteration is null when keyframeEffect is not in effect 
+PASS ComputedTimingProperties startTime, endTime, duration, activeDuration are sensible for a simple keyframeEffect 
+PASS ComputedTimingProperties startTime, endTime, duration, activeDuration are sensible for keyframeEffects with delays and iterations 
+PASS ComputedTimingProperties duration is calculated when no duration is specified 
+PASS Restricted double attributes on the AnimationEffectTiming interface throws for non-finite values. 
+Harness: the test ran to completion.
+

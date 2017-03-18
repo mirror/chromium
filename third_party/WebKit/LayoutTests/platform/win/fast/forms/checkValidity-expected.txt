@@ -1,0 +1,13 @@
+This is a testharness.js-based test.
+PASS checkValidity() for FIELDSET should return true. 
+PASS checkValidity() for FIELDSET with an invalid INPUT should return true. 
+PASS checkValidity() for BUTTON should return true. 
+PASS checkValidity() for OUTPUT should return true. 
+PASS checkValidity() for OBJECT should return true. 
+PASS checkValidity() for SELECT without a placeholder OPTION should return true. 
+PASS checkValidity() for SELECT with a placeholder OPTION should return false. 
+PASS checkValidity() for SELECT with a selected empty second OPTION should return true. 
+PASS checkValidity() for FORM with valid controls should return true. 
+PASS checkValidity() for FORM with an invalid control should return false. 
+Harness: the test ran to completion.
+

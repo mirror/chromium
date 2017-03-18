@@ -1,0 +1,29 @@
+Tests that breakpoints are successfully restored after debugger disabling.
+
+Main resource was shown.
+Debugger disabled.
+Evaluating test function.
+Error: Assertion failed: 
+    at Object.console.assert (evaluateInWebInspector0.js:37:29)
+    at Bindings.DebuggerWorkspaceBinding.rawLocationToUILocation (file:///C:/src/blink/src/out/gnrelease/resources/inspector/inspector.js:6281:97)
+    at locations.map.location (file:///C:/src/blink/src/out/gnrelease/resources/inspector/inspector.js:6378:137)
+    at Array.map (native)
+    at Bindings.BreakpointManager.toUILocations (file:///C:/src/blink/src/out/gnrelease/resources/inspector/inspector.js:6378:92)
+    at <anonymous>
+FAIL: Uncaught exception in promise: TypeError: Cannot read property '_rawLocationToUILocation' of null
+    at Bindings.DebuggerWorkspaceBinding.rawLocationToUILocation (file:///C:/src/blink/src/out/gnrelease/resources/inspector/inspector.js:6281:121)
+    at locations.map.location (file:///C:/src/blink/src/out/gnrelease/resources/inspector/inspector.js:6378:137)
+    at Array.map (native)
+    at Bindings.BreakpointManager.toUILocations (file:///C:/src/blink/src/out/gnrelease/resources/inspector/inspector.js:6378:92)
+    at <anonymous> Error
+    at Promise.then (evaluateInWebInspector0.js:1093:77)
+    at Bindings.BreakpointManager.possibleBreakpoints (file:///C:/src/blink/src/out/gnrelease/resources/inspector/inspector.js:6377:87)
+    at Sources.JavaScriptSourceFrame._addBreakpoint (file:///C:/src/blink/src/out/gnrelease/resources/inspector/sources/sources_module.js:453:194)
+    at Sources.JavaScriptSourceFrame._breakpointAdded (file:///C:/src/blink/src/out/gnrelease/resources/inspector/sources/sources_module.js:451:91)
+    at Bindings.BreakpointManager.dispatchEventToListeners (file:///C:/src/blink/src/out/gnrelease/resources/inspector/inspector.js:394:23)
+    at Bindings.BreakpointManager._uiLocationAdded (file:///C:/src/blink/src/out/gnrelease/resources/inspector/inspector.js:6403:41)
+    at Bindings.BreakpointManager.Breakpoint._fakeBreakpointAtPrimaryLocation (file:///C:/src/blink/src/out/gnrelease/resources/inspector/inspector.js:6444:25)
+    at Bindings.BreakpointManager.Breakpoint._updateBreakpoint (file:///C:/src/blink/src/out/gnrelease/resources/inspector/inspector.js:6435:72)
+    at Bindings.BreakpointManager.Breakpoint._updateState (file:///C:/src/blink/src/out/gnrelease/resources/inspector/inspector.js:6434:118)
+    at new Bindings.BreakpointManager.Breakpoint (file:///C:/src/blink/src/out/gnrelease/resources/inspector/inspector.js:6414:712)
+

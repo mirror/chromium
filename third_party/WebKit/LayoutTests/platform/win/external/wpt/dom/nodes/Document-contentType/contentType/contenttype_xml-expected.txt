@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS XML document.contentType === 'application/xml' 
+Harness: the test ran to completion.
+

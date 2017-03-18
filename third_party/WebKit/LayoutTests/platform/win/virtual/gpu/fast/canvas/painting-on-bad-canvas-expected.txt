@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Verify that canvas API calls on a canvas with no backing or no visibility do not crash or throw exceptions. 
+Harness: the test ran to completion.
+

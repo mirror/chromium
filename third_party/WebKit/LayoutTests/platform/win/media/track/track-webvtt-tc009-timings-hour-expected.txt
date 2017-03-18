@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests cue timings that contain hours (they are optional), and tests various syntax errors in timings with hours. 
+Harness: the test ran to completion.
+

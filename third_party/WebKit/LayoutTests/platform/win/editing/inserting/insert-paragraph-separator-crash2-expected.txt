@@ -1,0 +1,5 @@
+CONSOLE WARNING: line 20: document.execCommand() doesn't work with an invalid HTML structure. It is corrected automatically.
+This is a testharness.js-based test.
+PASS InsertParagraph command should not crash with editable P root element. 
+Harness: the test ran to completion.
+

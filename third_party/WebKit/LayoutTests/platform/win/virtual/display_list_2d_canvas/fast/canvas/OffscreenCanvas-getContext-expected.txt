@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests basic functionalities of OffscreenCanvas.getContext on the main thread. 
+Harness: the test ran to completion.
+

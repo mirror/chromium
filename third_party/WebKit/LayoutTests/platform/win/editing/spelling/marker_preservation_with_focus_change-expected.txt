@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS TEXTAREA and INPUT have markers after typing. 
+PASS Focusing TEXTAREA removes markers from INPUT. 
+PASS Focusing INPUT preserves markers in TEXTAREA. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Error handler outside the worker should not see the error value 
+FAIL Error handlers inside a worker should see the error value assert_equals: expected (string) "hello" but got (object) null
+PASS Untitled 
+Harness: the test ran to completion.
+

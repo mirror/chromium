@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS crbug.com/587263 focusing plugin object in canvas fallback may dereference nullptr 
+Harness: the test ran to completion.
+

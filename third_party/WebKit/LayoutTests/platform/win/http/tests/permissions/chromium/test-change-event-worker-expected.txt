@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Testing that the change event is correctly sent. Scope: DedicatedWorker 
+Harness: the test ran to completion.
+

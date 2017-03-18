@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that a service worker can be registered 
+Harness: the test ran to completion.
+

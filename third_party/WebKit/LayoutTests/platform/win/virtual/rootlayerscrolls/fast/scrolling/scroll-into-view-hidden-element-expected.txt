@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that when the element to be scrolled can't be scrolled to visible in its closest scrollable parent, the element's position should still be scrolled into view 
+Harness: the test ran to completion.
+

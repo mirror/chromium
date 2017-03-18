@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Check that the cursor updates even when the hotspot is the same 
+Harness: the test ran to completion.
+

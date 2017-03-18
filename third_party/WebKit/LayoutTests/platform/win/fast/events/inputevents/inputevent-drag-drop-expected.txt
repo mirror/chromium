@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Testing Drag and Drop, preventDefault() and Undo entry 
+PASS Testing Drag and Drop event order 
+PASS Testing Drag and Drop dataTransfer 
+PASS Testing Drag and Drop preventDefault() 
+PASS Testing element removed by event handler 
+Harness: the test ran to completion.
+

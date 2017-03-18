@@ -1,0 +1,334 @@
+{
+  "layers": [
+    {
+      "name": "LayoutView #document",
+      "bounds": [800, 600],
+      "contentsOpaque": true,
+      "drawsContent": true,
+      "paintInvalidations": [
+        {
+          "object": "LayoutTableRow TR class='bla'",
+          "rect": [8, 218, 36, 12],
+          "reason": "style change"
+        }
+      ],
+      "underPaintInvalidations": [
+        {
+          "x": 10,
+          "y": 231,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 11,
+          "y": 231,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 14,
+          "y": 231,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 15,
+          "y": 231,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 16,
+          "y": 231,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 17,
+          "y": 231,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 18,
+          "y": 231,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 19,
+          "y": 231,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 20,
+          "y": 231,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 22,
+          "y": 231,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 23,
+          "y": 231,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 24,
+          "y": 231,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 10,
+          "y": 232,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 11,
+          "y": 232,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 12,
+          "y": 232,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 13,
+          "y": 232,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 15,
+          "y": 232,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 16,
+          "y": 232,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 17,
+          "y": 232,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 18,
+          "y": 232,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 19,
+          "y": 232,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 20,
+          "y": 232,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 22,
+          "y": 232,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 23,
+          "y": 232,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 24,
+          "y": 232,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 10,
+          "y": 233,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 11,
+          "y": 233,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 12,
+          "y": 233,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 13,
+          "y": 233,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 15,
+          "y": 233,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 16,
+          "y": 233,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 17,
+          "y": 233,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 18,
+          "y": 233,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 19,
+          "y": 233,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 20,
+          "y": 233,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 22,
+          "y": 233,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 23,
+          "y": 233,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 24,
+          "y": 233,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 10,
+          "y": 234,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 14,
+          "y": 234,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 15,
+          "y": 234,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 16,
+          "y": 234,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 19,
+          "y": 234,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 23,
+          "y": 234,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 24,
+          "y": 234,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 10,
+          "y": 235,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 11,
+          "y": 235,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 12,
+          "y": 235,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 13,
+          "y": 235,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        },
+        {
+          "x": 14,
+          "y": 235,
+          "oldPixel": "#FFFFFF",
+          "newPixel": "#008000"
+        }
+      ]
+    }
+  ],
+  "objectPaintInvalidations": [
+    {
+      "object": "LayoutTableCell TD id='secondRowSpan'",
+      "reason": "style change"
+    },
+    {
+      "object": "LayoutTableCell TD",
+      "reason": "style change"
+    },
+    {
+      "object": "LayoutTableRow TR class='bla'",
+      "reason": "style change"
+    }
+  ]
+}
+

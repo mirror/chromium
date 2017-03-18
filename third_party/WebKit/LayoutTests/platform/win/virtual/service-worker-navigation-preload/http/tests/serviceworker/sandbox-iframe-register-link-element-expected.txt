@@ -1,0 +1,5 @@
+CONSOLE ERROR: line 11: Cannot register service worker with <link> element. Service worker is disabled because the context is sandboxed and lacks the 'allow-same-origin' flag.
+This is a testharness.js-based test.
+PASS Sandboxed iframe should not be able to register service worker with link rel 
+Harness: the test ran to completion.
+

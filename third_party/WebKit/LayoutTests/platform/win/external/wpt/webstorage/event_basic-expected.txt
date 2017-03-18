@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS sessionStorage mutations fire StorageEvents that are caught by the event listener set via window.onstorage. 
+PASS localStorage mutations fire StorageEvents that are caught by the event listener set via window.onstorage. 
+Harness: the test ran to completion.
+

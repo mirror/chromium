@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Bug 9223: Test that an RTL element renders a resizer to its bottom-left corner and dragging this resizer to the left changes its width. To test manually, dragging the resizer of the below element to left, and see this element increases its width. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Vibration should not start and it should cancel when the page is hidden. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS CSS Test: Left float with radial gradient shape, shape margin, and shape-image-threshold 
+Harness: the test ran to completion.
+

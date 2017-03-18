@@ -1,0 +1,41 @@
+This is a testharness.js-based test.
+PASS open rejects when called on a disconnected device 
+PASS open rejects when device disconnected during call 
+PASS a device can be opened and closed 
+PASS open and close can be called multiple times 
+PASS open and close cannot be called again while open or close are in progress 
+PASS close rejects when called on a disconnected device 
+PASS selectConfiguration rejects when called on a disconnected device 
+PASS methods requiring it reject when the device is not open 
+PASS device configuration can be set and queried 
+PASS selectConfiguration rejects on invalid configurations 
+PASS methods requiring it reject when the device is unconfigured 
+PASS an interface can be claimed and released 
+PASS interfaces are released on close 
+PASS a non-existent interface cannot be claimed or released 
+PASS claimInterface rejects when called on a disconnected device 
+PASS releaseInterface rejects when called on a disconnected device 
+PASS can select an alternate interface 
+PASS cannot select a non-existent alternate interface 
+PASS selectAlternateInterface rejects when called on a disconnected device 
+PASS can issue IN control transfer 
+PASS controlTransferIn rejects when called on a disconnected device 
+PASS can issue OUT control transfer 
+PASS controlTransferOut rejects when called on a disconnected device 
+PASS requests to interfaces and endpoint require an interface claim 
+PASS can clear a halt condition 
+PASS clearHalt rejects when called on a disconnected device 
+PASS transfers to unavailable endpoints are rejected 
+PASS can issue IN interrupt transfer 
+PASS can issue IN bulk transfer 
+PASS transferIn rejects if called on a disconnected device 
+PASS can issue OUT bulk transfer 
+PASS transferOut rejects if called on a disconnected device 
+PASS can issue IN isochronous transfer 
+PASS isochronousTransferIn rejects when called on a disconnected device 
+PASS can issue OUT isochronous transfer 
+PASS isochronousTransferOut rejects when called on a disconnected device 
+PASS can reset the device 
+PASS resetDevice rejects when called on a disconnected device 
+Harness: the test ran to completion.
+

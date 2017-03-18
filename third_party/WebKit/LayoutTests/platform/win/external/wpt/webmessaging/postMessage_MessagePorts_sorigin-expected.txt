@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Test Description: postMessage to same-origin iframe with MessagePort array containing 100 ports. 
+PASS MessageChannel is supported. 
+Harness: the test ran to completion.
+

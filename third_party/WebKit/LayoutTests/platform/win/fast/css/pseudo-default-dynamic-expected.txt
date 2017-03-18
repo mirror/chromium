@@ -1,0 +1,15 @@
+This is a testharness.js-based test.
+PASS Removing the :default button by updating type attribute should update the default button. 
+PASS Removing the :default button by detaching should update the default button. 
+PASS Removing the :default button by updating form content attribute should update the default button. 
+PASS Adding a button by updating type attribute should update the default button. 
+PASS Adding a button to a DOM tree should update the default button. 
+PASS Adding a button by form content attribute should update the default button. 
+PASS Updating type attribute of :default checkbox should update default status 
+PASS Updating type attribute of :default radio should update default status 
+PASS Updating the checked attribute of :default checkbox or radio should update default status 
+PASS Dynamically updating checked status or setting checked attribute should reflect correct default status 
+PASS Updating the selected attribute of :default option element should update default status 
+PASS Dynamically updating selected status or setting selected attribute should reflect correct default status 
+Harness: the test ran to completion.
+

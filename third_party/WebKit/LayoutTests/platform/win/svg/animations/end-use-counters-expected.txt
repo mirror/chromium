@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS end list using time is not counted as event or syncbase value. 
+PASS end list using syncbase-value is use counted. 
+PASS end list using event-value is use counted. 
+Harness: the test ran to completion.
+

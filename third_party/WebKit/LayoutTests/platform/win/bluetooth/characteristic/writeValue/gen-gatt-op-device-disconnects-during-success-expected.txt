@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Device disconnects during a writeValue call that succeeds. Reject with NetworkError. 
+Harness: the test ran to completion.
+

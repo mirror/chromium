@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that a 'play' event is fired by a new audio element on playing. 
+Harness: the test ran to completion.
+

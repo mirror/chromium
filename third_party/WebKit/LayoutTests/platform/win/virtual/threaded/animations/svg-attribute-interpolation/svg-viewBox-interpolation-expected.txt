@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS This test uses interpolation-test.js. 
+PASS SMIL: Interpolate attribute <viewBox> from replace [-10, 20, 80, 90] to replace [-20, 30, 70, 80] at (0) is [-10, 20, 80, 90] 
+PASS SMIL: Interpolate attribute <viewBox> from replace [-10, 20, 80, 90] to replace [-20, 30, 70, 80] at (0.2) is [-12, 22, 78, 88] 
+PASS SMIL: Interpolate attribute <viewBox> from replace [-10, 20, 80, 90] to replace [-20, 30, 70, 80] at (0.6) is [-16, 26, 74, 84] 
+PASS SMIL: Interpolate attribute <viewBox> from replace [-10, 20, 80, 90] to replace [-20, 30, 70, 80] at (1) is [-20, 30, 70, 80] 
+PASS Web Animations: Interpolate attribute <viewBox> from replace [-10, 20, 80, 90] to replace [-20, 30, 70, 80] at (-0.4) is [-6, 16, 84, 94] 
+PASS Web Animations: Interpolate attribute <viewBox> from replace [-10, 20, 80, 90] to replace [-20, 30, 70, 80] at (0) is [-10, 20, 80, 90] 
+PASS Web Animations: Interpolate attribute <viewBox> from replace [-10, 20, 80, 90] to replace [-20, 30, 70, 80] at (0.2) is [-12, 22, 78, 88] 
+PASS Web Animations: Interpolate attribute <viewBox> from replace [-10, 20, 80, 90] to replace [-20, 30, 70, 80] at (0.6) is [-16, 26, 74, 84] 
+PASS Web Animations: Interpolate attribute <viewBox> from replace [-10, 20, 80, 90] to replace [-20, 30, 70, 80] at (1) is [-20, 30, 70, 80] 
+PASS Web Animations: Interpolate attribute <viewBox> from replace [-10, 20, 80, 90] to replace [-20, 30, 70, 80] at (1.4) is [-24, 34, 66, 76] 
+Harness: the test ran to completion.
+

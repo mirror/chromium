@@ -1,0 +1,20 @@
+CONSOLE ERROR: The Content Security Policy 'img-src http://allowed.test' was delivered in report-only mode, but does not specify a 'report-uri'; the policy will have no effect. Please either add a 'report-uri' directive, or deliver the policy via the 'Content-Security-Policy' header.
+CONSOLE ERROR: [Report Only] Refused to load the image 'http://127.0.0.1:8000/security/resources/compass.jpg?t=1' because it violates the following Content Security Policy directive: "img-src http://allowed.test".
+
+CONSOLE ERROR: [Report Only] Refused to load the image 'http://blocked.test:8000/security/resources/compass.jpg?t=2' because it violates the following Content Security Policy directive: "img-src http://allowed.test".
+
+CONSOLE ERROR: [Report Only] Refused to load the image 'http://allowed.test:8000/security/resources/redir.php?url=http%3A%2F%2F127.0.0.1%3A8000%2Fsecurity%2Fresources%2Fcompass.jpg%3Ft%3D3' because it violates the following Content Security Policy directive: "img-src http://allowed.test".
+
+CONSOLE ERROR: [Report Only] Refused to load the image 'http://allowed.test:8000/security/resources/redir.php?url=http%3A%2F%2Fblocked.test%3A8000%2Fsecurity%2Fresources%2Fcompass.jpg%3Ft%3D4' because it violates the following Content Security Policy directive: "img-src http://allowed.test".
+
+CONSOLE ERROR: [Report Only] Refused to load the image 'http://127.0.0.1:8000/security/resources/compass.jpg?t=3' because it violates the following Content Security Policy directive: "img-src http://allowed.test".
+
+CONSOLE ERROR: [Report Only] Refused to load the image 'http://blocked.test:8000/security/resources/compass.jpg?t=4' because it violates the following Content Security Policy directive: "img-src http://allowed.test".
+
+This is a testharness.js-based test.
+PASS Direct block, same-origin = full URL in report 
+PASS Direct block, cross-origin = full URL in report 
+PASS Block after redirect, same-origin = original URL in report 
+PASS Block after redirect, cross-origin = original URL in report 
+Harness: the test ran to completion.
+

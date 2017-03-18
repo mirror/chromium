@@ -1,0 +1,35 @@
+This is a testharness.js-based test.
+FAIL pointerleave event assert_true: pointerleave should be received inside of target bounds expected true got false
+PASS PointerEvent Automation 
+PASS  pen pointerleave event is a PointerEvent event 
+PASS  pen pointerleave.pointerId attribute exists 
+PASS  pen pointerleave.pointerId is readonly 
+PASS  pen pointerleave.pointerId IDL type long (JS type was number) 
+PASS  pen pointerleave.width attribute exists 
+PASS  pen pointerleave.width is readonly 
+PASS  pen pointerleave.width IDL type float (JS type was number) 
+PASS  pen pointerleave.height attribute exists 
+PASS  pen pointerleave.height is readonly 
+PASS  pen pointerleave.height IDL type float (JS type was number) 
+PASS  pen pointerleave.pressure attribute exists 
+PASS  pen pointerleave.pressure is readonly 
+PASS  pen pointerleave.pressure IDL type float (JS type was number) 
+PASS  pen pointerleave.tiltX attribute exists 
+PASS  pen pointerleave.tiltX is readonly 
+PASS  pen pointerleave.tiltX IDL type long (JS type was number) 
+PASS  pen pointerleave.tiltY attribute exists 
+PASS  pen pointerleave.tiltY is readonly 
+PASS  pen pointerleave.tiltY IDL type long (JS type was number) 
+PASS  pen pointerleave.pointerType attribute exists 
+PASS  pen pointerleave.pointerType is readonly 
+PASS  pen pointerleave.pointerType IDL type string (JS type was string) 
+PASS  pen pointerleave.isPrimary attribute exists 
+PASS  pen pointerleave.isPrimary is readonly 
+PASS  pen pointerleave.isPrimary IDL type boolean (JS type was boolean) 
+PASS  pen pointerleave.detail attribute exists 
+PASS  pen pointerleave.detail is readonly 
+PASS  pen pointerleave.detail IDL type long (JS type was number) 
+PASS  pen pointerleave.detail value is 0. 
+PASS  pen pointerleave.pressure value is valid 
+Harness: the test ran to completion.
+

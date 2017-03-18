@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This test checks that we have simple caret motion up to a certain limit 
+Harness: the test ran to completion.
+

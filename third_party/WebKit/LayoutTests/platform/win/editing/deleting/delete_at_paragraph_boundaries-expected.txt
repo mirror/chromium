@@ -1,0 +1,13 @@
+This is a testharness.js-based test.
+PASS Deleting when a selection starts in a blank line created by a block with a BR placeholder in it and extends to the end of a block. 
+PASS Deleting when a selection starts in a blank line created by a BR element and extends to the end of a block. 
+PASS Deleting when a selection starts in a blank line created by a block with a BR placeholder in it and extends to a character that is not at the end of a block. This ensures that some of our "special-case" code does not run for this case 
+PASS Deleting when a selection starts in a blank line created by a BR element and extends to a character that is not at the end of a block. This ensures that some of our "special-case" code does not run for this case. 
+PASS Deleting when a selection starts in a blank line created by a BR element and extends to the end of the document. 
+PASS Deleting when a selection starts in a blank line created by a block with a BR placeholder in it and extends to the end of the document. 
+PASS Deleting when a selection starts at the beginning of a paragraph preceded by another block and extends into the middle of a following paragraph. 
+PASS Deleting when a selection starts in the middle of the last paragraph and extends to the end of that paragraph 
+PASS Deleting when a selection starts at the beginning of a paragraph preceded by a text element and extends into the middle of a following paragraph. 
+PASS Deleting when a selection starts at the beginning of a text following a nested block, and extends out of the enclosing block into the following block. 
+Harness: the test ran to completion.
+

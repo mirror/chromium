@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Test that the (x, y, z, angle) values for CSSRotation are correct. 
+PASS Test that the is2D values for CSSRotation is correct. 
+PASS Test that cssText values for CSSRotation is correct. 
+PASS Test that asMatrix is constructed correctly for CSSRotation. 
+Harness: the test ran to completion.
+

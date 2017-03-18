@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS javascript: URL creating a document in an about:blank iframe 
+Harness: the test ran to completion.
+

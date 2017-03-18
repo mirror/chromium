@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Test that screen.orientation.unlock() doesn't throw when there is no lock 
+PASS Test that screen.orientation.lock returns a pending promise. 
+PASS Test that screen.orientation.lock() is actually async 
+PASS Test that screen.unlock() doesn't throw when there is a lock 
+Harness: the test ran to completion.
+

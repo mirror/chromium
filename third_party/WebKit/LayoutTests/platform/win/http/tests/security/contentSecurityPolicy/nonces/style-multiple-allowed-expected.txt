@@ -1,0 +1,5 @@
+CONSOLE ERROR: The Content Security Policy 'style-src 'nonce-abc'' was delivered in report-only mode, but does not specify a 'report-uri'; the policy will have no effect. Please either add a 'report-uri' directive, or deliver the policy via the 'Content-Security-Policy' header.
+This is a testharness.js-based test.
+PASS Nonced stylesheets load, and do not trigger reports. 
+Harness: the test ran to completion.
+

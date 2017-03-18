@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS The character encoding of the page can be set by a meta element with charset attribute. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Channel #0 contains only the constant 1. 
+PASS Channel #1 contains all the expected values in the correct order: [1,0]. 
+PASS The index of first zero in the channel #1 is equal to 11008. 
+Harness: the test ran to completion.
+

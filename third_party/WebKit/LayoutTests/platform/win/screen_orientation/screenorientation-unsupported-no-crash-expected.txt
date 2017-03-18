@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Verify that accessing screen.orientation where unsupported doesn't crash. 
+Harness: the test ran to completion.
+

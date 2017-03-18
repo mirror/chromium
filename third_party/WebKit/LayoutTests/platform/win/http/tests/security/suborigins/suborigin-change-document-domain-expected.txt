@@ -1,0 +1,5 @@
+CONSOLE ERROR: line 2487: Uncaught Error: assert_equals: expected "SecurityError: Blocked a frame with origin \"http-so://foobar.127.0.0.1:8000\" from accessing a cross-origin frame." but got "Done"
+This is a testharness.js-based test.
+PASS Validate that a frame can't change it's document.domain and enter the suborigin 
+Harness: the test ran to completion.
+

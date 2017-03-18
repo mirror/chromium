@@ -1,0 +1,13 @@
+CONSOLE WARNING: line 25: The provided value 'invalidmode' is not a valid enum value of type AppendMode.
+CONSOLE WARNING: line 26: The provided value 'null' is not a valid enum value of type AppendMode.
+CONSOLE WARNING: line 27: The provided value '' is not a valid enum value of type AppendMode.
+CONSOLE WARNING: line 28: The provided value 'Segments' is not a valid enum value of type AppendMode.
+This is a testharness.js-based test.
+PASS Test initial value of SourceBuffer.mode is "segments" 
+PASS Test setting SourceBuffer.mode 
+PASS Test setting a removed SourceBuffer's mode 
+PASS Test setting SourceBuffer.mode while still updating 
+PASS Test setting SourceBuffer.mode triggers parent MediaSource 'ended' to 'open' transition. 
+PASS Test setting SourceBuffer.mode and SourceBuffer.timestampOffset while parsing media segment. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS The user agent may return the same object as the object returned by the earlier call. 
+Harness: the test ran to completion.
+

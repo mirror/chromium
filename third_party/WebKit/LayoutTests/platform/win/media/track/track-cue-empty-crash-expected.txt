@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that having an empty cue does not crash when calling getCueAsHTML(). 
+Harness: the test ran to completion.
+

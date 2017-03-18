@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS img (!m_uncommittedWidth) from 5px to 20 px 
+PASS text node (end with m_uncommittedWidth) from 5px to 20 px 
+PASS text node (end with !m_uncommittedWidth) from 5px to 20 px 
+PASS Real case from inspector from 5px to 20 px 
+Harness: the test ran to completion.
+

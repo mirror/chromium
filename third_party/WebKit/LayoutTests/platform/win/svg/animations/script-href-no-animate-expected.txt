@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS SVGScriptElement.href should not be animatable 
+Harness: the test ran to completion.
+

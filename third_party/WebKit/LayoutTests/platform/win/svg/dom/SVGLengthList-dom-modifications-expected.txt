@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS SVGLengthList, reaction to DOM modifications 
+Harness: the test ran to completion.
+

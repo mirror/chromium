@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS <iframe> has a 'csp' attibute which is an empty string if undefined. 
+PASS <iframe>'s csp attribute is always a string. 
+PASS <iframe>'s 'csp' content attribute reflects the IDL attribute. 
+PASS <iframe>'s IDL attribute reflects the DOM attribute. 
+Harness: the test ran to completion.
+

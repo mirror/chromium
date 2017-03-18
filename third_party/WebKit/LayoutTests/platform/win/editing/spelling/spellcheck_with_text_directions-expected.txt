@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS LTR 
+PASS RTL 
+PASS LTR (text-overflow:ellipses) 
+PASS RTL (text-overflow:ellipses) 
+Harness: the test ran to completion.
+

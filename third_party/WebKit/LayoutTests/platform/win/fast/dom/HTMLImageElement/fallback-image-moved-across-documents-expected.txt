@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Infinitely nested fallback content shadow trees should not be created, or this test will never terminate. 
+Harness: the test ran to completion.
+

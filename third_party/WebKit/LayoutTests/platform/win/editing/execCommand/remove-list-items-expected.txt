@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS 1 insertOrderedList on text outside LI with BR 
+PASS 2 insertOrderedList on text outside LI 
+PASS 3 insertOrderedList on text inside LI -> remove list 
+PASS 4-1 insertOrderedList on LI outside list -> listify 
+PASS 4-2 insertUnorderedList on LI outside list -> unlistify 
+PASS 5-1 insertOrderedList on LI in UL -> switch list type 
+PASS 5-2 insertUnrderedList on LI in UL -> unlistify 
+Harness: the test ran to completion.
+

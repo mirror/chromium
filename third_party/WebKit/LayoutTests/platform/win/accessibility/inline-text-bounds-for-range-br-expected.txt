@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Check bounds of inline text boxes after line breaks 
+Harness: the test ran to completion.
+

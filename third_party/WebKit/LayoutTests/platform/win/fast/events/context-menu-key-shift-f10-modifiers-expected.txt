@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Context Menu keys should allow NumLock/CapsLock/etc but not other modifiers. 
+Harness: the test ran to completion.
+

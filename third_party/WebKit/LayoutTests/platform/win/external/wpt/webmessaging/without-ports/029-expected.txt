@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Check that getters don't linger after deletion wrt cloning 
+Harness: the test ran to completion.
+

@@ -1,0 +1,57 @@
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = 4 duplicate test names: "node.channelCountMode is equal to "explicit".", "node.channelInterpretation is equal to "discrete".", "node instanceof AnalyserNode is equal to true.", "node.frequencyBinCount is equal to 1024."
+PASS context = new OfflineAudioContext(...) did not throw an exception. 
+PASS new AnalyserNode() threw TypeError: Failed to construct 'AnalyserNode': 1 argument required, but only 0 present.. 
+PASS new AnalyserNode(1) threw TypeError: Failed to construct 'AnalyserNode': parameter 1 is not of type 'BaseAudioContext'.. 
+PASS new AnalyserNode(c, 42) threw TypeError: Failed to construct 'AnalyserNode': parameter 2 ('options') is not an object.. 
+PASS Invalid constructors correctly threw errors. 
+PASS node = new AnalyserNode(c) did not throw an exception. 
+PASS node instanceof AnalyserNode is equal to true. 
+PASS node.fftSize is equal to 2048. 
+PASS node.frequencyBinCount is equal to 1024. 
+PASS node.minDecibels is equal to -100. 
+PASS node.maxDecibels is equal to -30. 
+PASS node.smoothingTimeConstant is equal to 0.800000011920929. 
+PASS new AnalyserNode(c) constructed node with correct attributes. 
+PASS new AnalyserNode(c, {channelCount: 17}} did not throw an exception. 
+PASS node.channelCount is equal to 17. 
+PASS new AnalyserNode(c, {channelCount: 0}} threw NotSupportedError: Failed to construct 'AnalyserNode': The channel count provided (0) is outside the range [1, 32].. 
+PASS new AnalyserNode(c, {channelCount: 99}} threw NotSupportedError: Failed to construct 'AnalyserNode': The channel count provided (99) is outside the range [1, 32].. 
+PASS new AnalyserNode(c, {channelCountMode: "max"} did not throw an exception. 
+PASS node.channelCountMode is equal to "max". 
+PASS new AnalyserNode(c, {channelCountMode: "clamped-max"} did not throw an exception. 
+PASS node.channelCountMode is equal to "clamped-max". 
+PASS new AnalyserNode(c, {channelCountMode: "explicit"} did not throw an exception. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS new AnalyserNode(c, {channelCountMode: "foobar"} threw TypeError: Failed to construct 'AnalyserNode': The provided value 'foobar' is not a valid enum value of type ChannelCountMode.. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS new AnalyserNode(c, {channelInterpretation: "speakers"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new AnalyserNode(c, {channelInterpretation: "discrete"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS new AnalyserNode(c, {channelInterpretation: "foobar"}) threw TypeError: Failed to construct 'AnalyserNode': The provided value 'foobar' is not a valid enum value of type ChannelInterpretation.. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS AudioNodeOptions for AnalyserNode were correctly handled. 
+PASS node = new AnalyserNode(c, {"fftSize":32,"maxDecibels":1,"minDecibels":-13,"smoothingTimeConstant":0.125}) did not throw an exception. 
+PASS node instanceof AnalyserNode is equal to true. 
+PASS node.fftSize is equal to 32. 
+PASS node.maxDecibels is equal to 1. 
+PASS node.minDecibels is equal to -13. 
+PASS node.smoothingTimeConstant is equal to 0.125. 
+PASS new AnalyserNode() with options constructed with correct attributes. 
+PASS node = new AnalyserNode(c, { fftSize: 33 }) threw IndexSizeError: Failed to construct 'AnalyserNode': The value provided (33) is not a power of two.. 
+PASS node = new AnalyserNode(c, { maxDecibels: -500 }) threw IndexSizeError: Failed to construct 'AnalyserNode': maxDecibels (-500) must be greater than or equal to minDecibels ( -100).. 
+PASS node = new AnalyserNode(c, { minDecibels: -10 }) threw IndexSizeError: Failed to construct 'AnalyserNode': maxDecibels (-30) must be greater than or equal to minDecibels ( -10).. 
+PASS node = new AnalyserNode(c, { smoothingTimeConstant: 2 }) threw IndexSizeError: Failed to construct 'AnalyserNode': The smoothing value provided (2) is outside the range [0, 1].. 
+PASS node = new AnalyserNode(c, { frequencyBinCount: 33 }) did not throw an exception. 
+PASS node.frequencyBinCount is equal to 1024. 
+PASS new AnalyserNode() with invalid option values correctly handled. 
+PASS node = new AnalyserNode(c, {"minDecibels":-10,"maxDecibels":20}) did not throw an exception. 
+PASS node = new AnalyserNode(c, {"maxDecibels":20,"minDecibels":-10}) did not throw an exception. 
+PASS node = new AnalyserNode(c, {"minDecibels":-200,"maxDecibels":-150}) did not throw an exception. 
+PASS node = new AnalyserNode(c, {"maxDecibels":-150,"minDecibels":-200}) did not throw an exception. 
+PASS node = new AnalyserNode(c, {"maxDecibels":-150,"minDecibels":-10}) threw IndexSizeError: Failed to construct 'AnalyserNode': maxDecibels (-150) must be greater than or equal to minDecibels ( -10).. 
+PASS node = new AnalyserNode(c, {"minDecibels":-10,"maxDecibels":-150}) threw IndexSizeError: Failed to construct 'AnalyserNode': maxDecibels (-150) must be greater than or equal to minDecibels ( -10).. 
+PASS new AnalyserNode with minDecibels/maxDecibels options values correctly handled. 
+Harness: the test ran to completion.
+

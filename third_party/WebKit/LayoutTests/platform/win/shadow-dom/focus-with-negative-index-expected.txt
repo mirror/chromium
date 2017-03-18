@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Focus controller should treat slots as a focus scope. 
+PASS This is a regression test: After focusing negative tabindex-ed elements, focus moves in tree order. 
+Harness: the test ran to completion.
+

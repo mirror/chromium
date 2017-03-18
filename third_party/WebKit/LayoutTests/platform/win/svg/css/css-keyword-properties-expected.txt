@@ -1,0 +1,75 @@
+This is a testharness.js-based test.
+PASS CSS.supports('alignment-baseline', "auto") should return true 
+PASS e.style['alignmentBaseline'] = "auto" should set the value 
+PASS Serialization should round-trip after setting e.style['alignmentBaseline'] = "auto" 
+PASS CSS.supports('alignment-baseline', "baseline") should return true 
+PASS e.style['alignmentBaseline'] = "baseline" should set the value 
+PASS Serialization should round-trip after setting e.style['alignmentBaseline'] = "baseline" 
+PASS CSS.supports('alignment-baseline', "before-edge") should return true 
+PASS e.style['alignmentBaseline'] = "before-edge" should set the value 
+PASS Serialization should round-trip after setting e.style['alignmentBaseline'] = "before-edge" 
+PASS CSS.supports('alignment-baseline', "text-before-edge") should return true 
+PASS e.style['alignmentBaseline'] = "text-before-edge" should set the value 
+PASS Serialization should round-trip after setting e.style['alignmentBaseline'] = "text-before-edge" 
+PASS CSS.supports('alignment-baseline', "middle") should return true 
+PASS e.style['alignmentBaseline'] = "middle" should set the value 
+PASS Serialization should round-trip after setting e.style['alignmentBaseline'] = "middle" 
+PASS CSS.supports('alignment-baseline', "central") should return true 
+PASS e.style['alignmentBaseline'] = "central" should set the value 
+PASS Serialization should round-trip after setting e.style['alignmentBaseline'] = "central" 
+PASS CSS.supports('alignment-baseline', "after-edge") should return true 
+PASS e.style['alignmentBaseline'] = "after-edge" should set the value 
+PASS Serialization should round-trip after setting e.style['alignmentBaseline'] = "after-edge" 
+PASS CSS.supports('alignment-baseline', "text-after-edge") should return true 
+PASS e.style['alignmentBaseline'] = "text-after-edge" should set the value 
+PASS Serialization should round-trip after setting e.style['alignmentBaseline'] = "text-after-edge" 
+PASS CSS.supports('alignment-baseline', "ideographic") should return true 
+PASS e.style['alignmentBaseline'] = "ideographic" should set the value 
+PASS Serialization should round-trip after setting e.style['alignmentBaseline'] = "ideographic" 
+PASS CSS.supports('alignment-baseline', "alphabetic") should return true 
+PASS e.style['alignmentBaseline'] = "alphabetic" should set the value 
+PASS Serialization should round-trip after setting e.style['alignmentBaseline'] = "alphabetic" 
+PASS CSS.supports('alignment-baseline', "hanging") should return true 
+PASS e.style['alignmentBaseline'] = "hanging" should set the value 
+PASS Serialization should round-trip after setting e.style['alignmentBaseline'] = "hanging" 
+PASS CSS.supports('alignment-baseline', "mathematical") should return true 
+PASS e.style['alignmentBaseline'] = "mathematical" should set the value 
+PASS Serialization should round-trip after setting e.style['alignmentBaseline'] = "mathematical" 
+PASS CSS.supports('dominant-baseline', "auto") should return true 
+PASS e.style['dominantBaseline'] = "auto" should set the value 
+PASS Serialization should round-trip after setting e.style['dominantBaseline'] = "auto" 
+PASS CSS.supports('dominant-baseline', "use-script") should return true 
+PASS e.style['dominantBaseline'] = "use-script" should set the value 
+PASS Serialization should round-trip after setting e.style['dominantBaseline'] = "use-script" 
+PASS CSS.supports('dominant-baseline', "no-change") should return true 
+PASS e.style['dominantBaseline'] = "no-change" should set the value 
+PASS Serialization should round-trip after setting e.style['dominantBaseline'] = "no-change" 
+PASS CSS.supports('dominant-baseline', "reset-size") should return true 
+PASS e.style['dominantBaseline'] = "reset-size" should set the value 
+PASS Serialization should round-trip after setting e.style['dominantBaseline'] = "reset-size" 
+PASS CSS.supports('dominant-baseline', "ideographic") should return true 
+PASS e.style['dominantBaseline'] = "ideographic" should set the value 
+PASS Serialization should round-trip after setting e.style['dominantBaseline'] = "ideographic" 
+PASS CSS.supports('dominant-baseline', "alphabetic") should return true 
+PASS e.style['dominantBaseline'] = "alphabetic" should set the value 
+PASS Serialization should round-trip after setting e.style['dominantBaseline'] = "alphabetic" 
+PASS CSS.supports('dominant-baseline', "hanging") should return true 
+PASS e.style['dominantBaseline'] = "hanging" should set the value 
+PASS Serialization should round-trip after setting e.style['dominantBaseline'] = "hanging" 
+PASS CSS.supports('dominant-baseline', "mathematical") should return true 
+PASS e.style['dominantBaseline'] = "mathematical" should set the value 
+PASS Serialization should round-trip after setting e.style['dominantBaseline'] = "mathematical" 
+PASS CSS.supports('dominant-baseline', "central") should return true 
+PASS e.style['dominantBaseline'] = "central" should set the value 
+PASS Serialization should round-trip after setting e.style['dominantBaseline'] = "central" 
+PASS CSS.supports('dominant-baseline', "middle") should return true 
+PASS e.style['dominantBaseline'] = "middle" should set the value 
+PASS Serialization should round-trip after setting e.style['dominantBaseline'] = "middle" 
+PASS CSS.supports('dominant-baseline', "text-after-edge") should return true 
+PASS e.style['dominantBaseline'] = "text-after-edge" should set the value 
+PASS Serialization should round-trip after setting e.style['dominantBaseline'] = "text-after-edge" 
+PASS CSS.supports('dominant-baseline', "text-before-edge") should return true 
+PASS e.style['dominantBaseline'] = "text-before-edge" should set the value 
+PASS Serialization should round-trip after setting e.style['dominantBaseline'] = "text-before-edge" 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS IDBCursor.continue exception order: TransactionInactiveError vs. DataError 
+PASS IDBCursor.continue exception order: TransactionInactiveError vs. InvalidStateError 
+PASS IDBCursor.continue exception order: InvalidStateError vs. DataError 
+Harness: the test ran to completion.
+

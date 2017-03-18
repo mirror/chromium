@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test skipWaiting when a installed worker is waiting 
+Harness: the test ran to completion.
+

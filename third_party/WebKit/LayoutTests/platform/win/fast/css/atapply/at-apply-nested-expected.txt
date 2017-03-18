@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS @apply rules can be used inside variables 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL onerror, "handled" assert_equals: second argument expected "http://web-platform.test:8001/workers/interfaces/WorkerGlobalScope/onerror/handled.html#" but got "http://web-platform.test:8001/workers/interfaces/WorkerGlobalScope/onerror/handled.html"
+Harness: the test ran to completion.
+

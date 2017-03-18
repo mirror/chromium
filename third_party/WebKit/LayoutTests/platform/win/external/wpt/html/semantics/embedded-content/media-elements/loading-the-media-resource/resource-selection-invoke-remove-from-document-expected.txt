@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS NOT invoking resource selection by removing from document with NETWORK_EMPTY 
+Harness: the test ran to completion.
+

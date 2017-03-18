@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS VTTRegion.viewportAnchorY script-created region 
+Harness: the test ran to completion.
+

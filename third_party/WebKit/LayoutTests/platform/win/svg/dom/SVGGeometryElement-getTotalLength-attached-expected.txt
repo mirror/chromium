@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS SVGGeometryElement.getTotalLength method (element attached) with SVGPathElement 
+PASS SVGGeometryElement.getTotalLength method (element attached) with SVGRectElement 
+PASS SVGGeometryElement.getTotalLength method (element attached) with SVGCircleElement 
+Harness: the test ran to completion.
+

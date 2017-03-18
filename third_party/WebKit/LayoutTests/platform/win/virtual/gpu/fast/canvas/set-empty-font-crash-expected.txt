@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that setting canvas font to empty string does not crash. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS The top of the text track container should be in the bottom 25% of the video element. 
+Harness: the test ran to completion.
+

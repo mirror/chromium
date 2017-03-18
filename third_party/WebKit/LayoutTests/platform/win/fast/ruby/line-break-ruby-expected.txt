@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS ID+CL 
+PASS span+CL 
+PASS ruby+CL 
+PASS OP+ID 
+PASS OP+ruby 
+PASS OP+ruby+CL 
+PASS OP+ruby+CL (overflow) 
+Harness: the test ran to completion.
+

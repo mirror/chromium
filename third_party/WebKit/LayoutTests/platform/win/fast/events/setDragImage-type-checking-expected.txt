@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS DataTransfer.prototype.setDragImage type checking of image argument 
+Harness: the test ran to completion.
+

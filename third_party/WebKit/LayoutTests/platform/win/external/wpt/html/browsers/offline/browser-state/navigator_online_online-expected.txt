@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Offline Application Cache - navigator_online_online 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This tests clicking on the left of RTL text puts the caret at the end of the line 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Should not crash after typing one chracter then delete it 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Replaying a transition after it has finished should not trigger a new transition 
+Harness: the test ran to completion.
+

@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS .flex-horizontal, .flex-vertical 1 
+PASS .flex-horizontal, .flex-vertical 2 
+PASS .flex-horizontal, .flex-vertical 3 
+PASS .flex-horizontal, .flex-vertical 4 
+PASS .flex-horizontal, .flex-vertical 5 
+PASS .flex-horizontal, .flex-vertical 6 
+Harness: the test ran to completion.
+

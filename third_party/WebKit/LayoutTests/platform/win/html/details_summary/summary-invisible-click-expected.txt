@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS click() on hidden SUMMARY should toggle DETAILS. 
+Harness: the test ran to completion.
+

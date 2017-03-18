@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS 1 Delete onthe BR after the block 
+PASS 2 Delete the whole selection and not just the trailing BR 
+Harness: the test ran to completion.
+

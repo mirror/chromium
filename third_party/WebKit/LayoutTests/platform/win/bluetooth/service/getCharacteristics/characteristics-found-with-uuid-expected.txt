@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Find characteristics with UUID in service. 
+Harness: the test ran to completion.
+

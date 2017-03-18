@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Use OffscreenCanvas without a context as ImageSource should draw transparent black 
+Harness: the test ran to completion.
+

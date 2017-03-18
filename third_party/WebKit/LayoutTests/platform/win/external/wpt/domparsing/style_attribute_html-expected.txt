@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Parsing of initial style attribute 
+PASS Parsing of invalid style attribute 
+PASS Parsing of style attribute 
+PASS Update style.backgroundColor 
+Harness: the test ran to completion.
+

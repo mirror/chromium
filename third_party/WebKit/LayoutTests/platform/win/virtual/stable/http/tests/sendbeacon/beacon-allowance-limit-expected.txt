@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS navigator.sendBeacon() with a payload size greater than remaining transfer allowance should fail. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,29 @@
+This is a testharness.js-based test.
+PASS # AUDIT TASK RUNNER STARTED. 
+PASS > [test] AudioParam setValueCurveAtTime() functionality. 
+PASS   Number of tests started and ended at the correct time is equal to 20. 
+PASS   Max error for test 0 at offset 1304 is less than or equal to 0.0000037194. 
+PASS   Max error for test 1 at offset 2573 is less than or equal to 0.0000037194. 
+PASS   Max error for test 2 at offset 3798 is less than or equal to 0.0000037194. 
+PASS   Max error for test 3 at offset 5277 is less than or equal to 0.0000037194. 
+PASS   Max error for test 4 at offset 6541 is less than or equal to 0.0000037194. 
+PASS   Max error for test 5 at offset 7766 is less than or equal to 0.0000037194. 
+PASS   Max error for test 6 at offset 9239 is less than or equal to 0.0000037194. 
+PASS   Max error for test 7 at offset 10418 is less than or equal to 0.0000037194. 
+PASS   Max error for test 8 at offset 11734 is less than or equal to 0.0000037194. 
+PASS   Max error for test 9 at offset 13163 is less than or equal to 0.0000037194. 
+PASS   Max error for test 10 at offset 14380 is less than or equal to 0.0000037194. 
+PASS   Max error for test 11 at offset 15809 is less than or equal to 0.0000037194. 
+PASS   Max error for test 12 at offset 17037 is less than or equal to 0.0000037194. 
+PASS   Max error for test 13 at offset 18497 is less than or equal to 0.0000037194. 
+PASS   Max error for test 14 at offset 19725 is less than or equal to 0.0000037194. 
+PASS   Max error for test 15 at offset 21149 is less than or equal to 0.0000037194. 
+PASS   Max error for test 16 at offset 22465 is less than or equal to 0.0000037194. 
+PASS   Max error for test 17 at offset 23693 is less than or equal to 0.0000037194. 
+PASS   Max error for test 18 at offset 25122 is less than or equal to 0.0000037194. 
+PASS   Max error for test 19 at offset 26438 is less than or equal to 0.0000037194. 
+PASS   Number of failed tests with an acceptable relative tolerance of 0.0000037194 is equal to 0. 
+PASS < [test] All assertions passed. (total 22 assertions) 
+PASS # AUDIT TASK RUNNER FINISHED: 1 tasks ran successfully. 
+Harness: the test ran to completion.
+

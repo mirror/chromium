@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS 9: Shrink-to-fit float with a child of orthogonal block 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that setting an optional constraint in getUserMedia is handled as optional 
+Harness: the test ran to completion.
+

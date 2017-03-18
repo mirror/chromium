@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Do not crash when animating with an underlying value of initial 
+PASS Do not crash when animating an empty initial value 
+PASS Do not crash when animating an inherited empty initial value 
+Harness: the test ran to completion.
+

@@ -1,0 +1,23 @@
+This is a testharness.js-based test.
+PASS INPUT type=text is checked when it does not have spellcheck attribute and its parent has spellcheck=true. 
+PASS INPUT type=text is checked when it has spellcheck=true and its parent has spellcheck=true. 
+PASS INPUT type=text is not checked when it has spellcheck=false and its parent has spellcheck=true. 
+PASS INPUT type=text is checked when it has spellcheck attribute with invalid value and its parent has spellcheck=true. 
+PASS INPUT type=text is checked when it has spellcheck attribute with empty value and its parent has spellcheck=true. 
+PASS INPUT type=search is checked when it does not have spellcheck attribute and its parent has spellcheck=true. 
+PASS INPUT type=search is checked when it has spellcheck=true and its parent has spellcheck=true. 
+PASS INPUT type=search is not checked when it has spellcheck=false and its parent has spellcheck=true. 
+PASS INPUT type=search is checked when it has spellcheck attribute with invalid value and its parent has spellcheck=true. 
+PASS INPUT type=search is checked when it has spellcheck attribute with empty value and its parent has spellcheck=true. 
+PASS INPUT type=text is not checked when it does not have spellcheck attribute and its parent has spellcheck=false. 
+PASS INPUT type=text is checked when it has spellcheck=true and its parent has spellcheck=false. 
+PASS INPUT type=text is not checked when it has spellcheck=false and its parent has spellcheck=false. 
+PASS INPUT type=text is not checked when it has spellcheck attribute with invalid value and its parent has spellcheck=false. 
+PASS INPUT type=text is checked when it has spellcheck attribute with empty value and its parent has spellcheck=false. 
+PASS INPUT type=search is not checked when it does not have spellcheck attribute and its parent has spellcheck=false. 
+PASS INPUT type=search is checked when it has spellcheck=true and its parent has spellcheck=false. 
+PASS INPUT type=search is not checked when it has spellcheck=false and its parent has spellcheck=false. 
+PASS INPUT type=search is not checked when it has spellcheck attribute with invalid value and its parent has spellcheck=false. 
+PASS INPUT type=search is checked when it has spellcheck attribute with empty value and its parent has spellcheck=false. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS New Self-Alignment values should be invalid when grid layout is DISABLED. 
+PASS New Default-Alignment values should be invalid when grid layout is DISABLED. 
+PASS Even when grid layout is ENABLED, new Self-Alignment values should not violate assertions in FlexibleBox layout logic.. 
+PASS Even when grid layout is ENABLED, new Default-Alignment values should not violate assertions in FlexibleBox layout logic.. 
+Harness: the test ran to completion.
+

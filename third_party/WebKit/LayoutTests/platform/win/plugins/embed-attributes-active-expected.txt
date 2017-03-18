@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS crbug.com/543905 : check that an embed does get loaded when setting properties type and src respectively 
+Harness: the test ran to completion.
+

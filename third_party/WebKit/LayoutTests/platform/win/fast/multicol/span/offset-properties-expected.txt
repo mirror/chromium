@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS offsetLeft and offsetTop on column-span:all 
+Harness: the test ran to completion.
+

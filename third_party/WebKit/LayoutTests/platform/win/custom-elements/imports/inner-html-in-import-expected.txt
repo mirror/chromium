@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS innerHTML with custom elements should work in imported document. 
+Harness: the test ran to completion.
+

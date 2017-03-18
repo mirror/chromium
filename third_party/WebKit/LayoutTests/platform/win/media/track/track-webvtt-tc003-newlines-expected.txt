@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that a cue with no newline at eof is properly parsed. 
+Harness: the test ran to completion.
+

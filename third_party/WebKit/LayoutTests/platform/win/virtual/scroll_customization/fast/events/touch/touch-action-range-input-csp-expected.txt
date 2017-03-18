@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Changes the value of a horizontal slider. 
+PASS Drags up on a horizontal slider. 
+PASS Tests that <input range="type"> has the correct pan-x or pan-y touch-action inside its shadow element: container. 
+Harness: the test ran to completion.
+

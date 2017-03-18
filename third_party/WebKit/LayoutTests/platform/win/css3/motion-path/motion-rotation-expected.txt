@@ -1,0 +1,15 @@
+CONSOLE WARNING: motion-rotation is deprecated and will be removed in M58, around April 2017. Please use offset-rotate instead. See https://www.chromestatus.com/features/6390764217040896 for more details.
+This is a testharness.js-based test.
+PASS motion-rotation default is auto 
+PASS motion-rotation auto expands to auto 0deg 
+PASS motion-rotation reverse expands to auto 180deg 
+PASS motion-rotation can be a fixed angle 
+PASS motion-rotation angles are converted to degrees 
+PASS motion-rotation can be supplied with angle before auto 
+PASS motion-rotation can be supplied with angle before reverse 
+PASS motion-rotation is unaffected by child elements 
+PASS motion-rotation can be explicitly inherited 
+PASS motion-rotation is not inherited by default 
+PASS motion-rotation style can be set inline 
+Harness: the test ran to completion.
+

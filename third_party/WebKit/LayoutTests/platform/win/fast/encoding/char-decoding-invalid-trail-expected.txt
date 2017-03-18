@@ -1,0 +1,37 @@
+This is a testharness.js-based test.
+PASS Decode UTF-8: %C3%22 => U+FFFD/U+0022 
+PASS Decode UTF-8: %E2%22 => U+FFFD/U+0022 
+PASS Decode UTF-8: %E2%A0%22 => U+FFFD/U+0022 
+PASS Decode UTF-8: %F0%90%80%22 => U+FFFD/U+0022 
+PASS Decode EUC-KR: %C4%22 => U+FFFD/U+0022 
+PASS Decode EUC-KR: %C4%5C => U+FFFD/U+005C 
+PASS Decode EUC-KR: %C4%7B => U+FFFD/U+007B 
+PASS Decode EUC-KR: %C6%53 => U+FFFD/U+0053 
+PASS Decode EUC-KR: %C7%41 => U+FFFD/U+0041 
+PASS Decode EUC-KR: %C7%81 => U+FFFD 
+PASS Decode EUC-KR: %FE%A1 => U+FFFD 
+PASS Decode EUC-JP: %8F%A1%A1 => U+FFFD 
+PASS Decode EUC-JP: %8F%A1%81%22 => U+FFFD/U+FFFD/U+0022 
+PASS Decode EUC-JP: %8F%A1%22 => U+FFFD/U+FFFD/U+0022 
+PASS Decode EUC-JP: %8E%8E%A1 => U+FFFD/U+FF61 
+PASS Decode EUC-JP: %8E%E0 => U+FFFD/U+FFFD 
+PASS Decode Big5: %A1%22 => U+FFFD/U+0022 
+PASS Decode Big5: %87%66 => U+FFFD/U+0066 
+PASS Decode Big5: %89%44 => U+FFFD/U+0044 
+PASS Decode Big5: %8A%63 => U+FFFD/U+0063 
+PASS Decode Big5: %8B%54 => U+FFFD/U+0054 
+PASS Decode Big5: %8D%41 => U+FFFD/U+0041 
+PASS Decode Big5: %9B%61 => U+FFFD/U+0061 
+PASS Decode Big5: %9F%4E => U+FFFD/U+004E 
+PASS Decode Big5: %A0%54 => U+FFFD/U+0054 
+PASS Decode Shift_JIS: %82%23 => U+FFFD/U+0023 
+PASS Decode Shift_JIS: %82%5C => U+FFFD/U+005C 
+PASS Decode Shift_JIS: %82%7A => U+FFFD/U+007A 
+PASS Decode Shift_JIS: %84%61 => U+FFFD/U+0061 
+PASS Decode Shift_JIS: %85%7B => U+FFFD/U+007B 
+PASS Decode Shift_JIS: %87%7B => U+FFFD/U+007B 
+PASS Decode Shift_JIS: %98%7E => U+FFFD/U+007E 
+PASS Decode Shift_JIS: %FC%5B => U+FFFD/U+005B 
+PASS Decode shift_jis: %EB%9F => U+FFFD 
+Harness: the test ran to completion.
+

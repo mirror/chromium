@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Range#deleteData() with huge end offset 
+PASS Range#replaceData() with huge end offset 
+PASS Range#replaceData() with negative end offset(-1) 
+PASS Range#replaceData() with negative end offset(-2) 
+Harness: the test ran to completion.
+

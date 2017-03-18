@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Unregister on script evaluation 
+PASS Unregister on installing event 
+PASS Unregister on activate event 
+PASS Unregister controlling service worker 
+Harness: the test ran to completion.
+

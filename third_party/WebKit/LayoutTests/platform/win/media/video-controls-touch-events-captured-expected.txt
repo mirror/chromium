@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that touch events on the controls will not be seen by the video element. 
+Harness: the test ran to completion.
+

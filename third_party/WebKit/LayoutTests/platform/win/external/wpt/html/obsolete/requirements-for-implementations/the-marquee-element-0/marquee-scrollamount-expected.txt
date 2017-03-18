@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS The scrollamount is a string 
+PASS The scrollamount is a negative 
+PASS The scrollamount is a normal value 
+Harness: the test ran to completion.
+

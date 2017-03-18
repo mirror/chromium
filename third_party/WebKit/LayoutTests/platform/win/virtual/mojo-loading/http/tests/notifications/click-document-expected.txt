@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Simulating a click on the notification should fire the onclick() event. 
+Harness: the test ran to completion.
+

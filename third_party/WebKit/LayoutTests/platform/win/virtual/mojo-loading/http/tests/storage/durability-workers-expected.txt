@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS These worker tests require navigator.storage 
+PASS navigator.storage.persist should not exist in workers 
+PASS navigator.storage.persisted returns a promise that resolves. 
+Harness: the test ran to completion.
+

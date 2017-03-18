@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Request for services. Does not return blocklisted service. 
+Harness: the test ran to completion.
+

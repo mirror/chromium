@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS HTMLcollection as a prototype should not allow getting .length on the base object 
+Harness: the test ran to completion.
+

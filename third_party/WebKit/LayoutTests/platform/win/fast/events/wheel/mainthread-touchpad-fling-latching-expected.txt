@@ -1,0 +1,6 @@
+CONSOLE ERROR: line 2487: Uncaught Error: assert_equals: The parent div is not supposed to scroll. expected 0 but got 48
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = Uncaught Error: assert_equals: The parent div is not supposed to scroll. expected 0 but got 48
+PASS Main thread fling on child div should latch to the div. 
+Harness: the test ran to completion.
+

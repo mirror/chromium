@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Test that color-gamut can be feature detected 
+PASS Test that unknown values are rejected 
+PASS Test API with various color profile 
+Harness: the test ran to completion.
+

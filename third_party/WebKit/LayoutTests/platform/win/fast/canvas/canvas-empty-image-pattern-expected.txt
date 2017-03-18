@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test if filling a pattern with an empty image does not crash and returns a null pattern. 
+Harness: the test ran to completion.
+

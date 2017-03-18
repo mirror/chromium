@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Exception in success event handler on request 
+PASS Exception in success event listener on request 
+PASS Exception in second success event listener on request 
+PASS Exception in first success event listener, tx active in second 
+Harness: the test ran to completion.
+

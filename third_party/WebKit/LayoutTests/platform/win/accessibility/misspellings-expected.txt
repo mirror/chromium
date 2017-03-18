@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Misspellings should be reported in content editables. 
+PASS Misspellings should be reported in static text when design mode is on. 
+PASS Misspellings should be reported in single-line text fields. 
+PASS Misspellings should be reported in textareas. 
+Harness: the test ran to completion.
+

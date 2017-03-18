@@ -1,0 +1,13 @@
+CONSOLE ERROR: line 157: Mixed Content: The page at 'https://127.0.0.1:8443/fetch/window/block-mixed-content-nocors-base-https.html' was loaded over HTTPS, but requested an insecure resource 'http://example.test:8000/serviceworker/resources/fetch-access-control.php?ACAOrigin=*&label=test1-no-cors'. This request has been blocked; the content must be served over HTTPS.
+CONSOLE ERROR: Mixed Content: The page at 'https://127.0.0.1:8443/fetch/window/block-mixed-content-nocors-base-https.html' was loaded over HTTPS, but requested an insecure resource 'http://example.test:8000/serviceworker/resources/fetch-access-control.php?ACAOrigin=*&label=test2-no-cors'. This request has been blocked; the content must be served over HTTPS.
+CONSOLE ERROR: Fetch API cannot load https://example.test:8443/serviceworker/resources/redirect.php?ACAOrigin=*&Redirect=http%3A%2F%2Fexample.test%3A8000%2Fserviceworker%2Fresources%2Ffetch-access-control.php%3FACAOrigin%3D*%26label%3Dtest2-no-cors. Redirect failed.
+CONSOLE ERROR: line 170: Mixed Content: The page at 'https://127.0.0.1:8443/fetch/window/block-mixed-content-nocors-base-https.html' was loaded over HTTPS, but requested an insecure resource 'http://example.test:8000/serviceworker/resources/redirect.php?ACAOrigin=*&Redirect=https%3A%2F%2Fexample.test%3A8443%2Fserviceworker%2Fresources%2Ffetch-access-control.php%3FACAOrigin%3D*%26label%3Dtest3-no-cors'. This request has been blocked; the content must be served over HTTPS.
+This is a testharness.js-based test.
+PASS Startup 
+PASS Mixed content fetch (no-cors, HTTPS->HTTP) 
+PASS Mixed content redirect (no-cors, HTTPS->HTTPS->HTTP) 
+PASS Mixed content redirect no-cors, HTTPS->HTTP->HTTPS) 
+PASS Same origin redirect (no-cors, HTTPS->HTTPS->HTTPS) 
+PASS Cross origin redirect (no-cors, HTTPS->HTTPS->HTTPS 
+Harness: the test ran to completion.
+

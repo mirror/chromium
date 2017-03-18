@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Delete-on-caret selectes TABLE instead of delete something 
+Harness: the test ran to completion.
+

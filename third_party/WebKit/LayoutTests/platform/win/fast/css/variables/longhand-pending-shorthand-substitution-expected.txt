@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Test shorthand substitution in font. 
+PASS Test serialization with specific longhand. 
+PASS Test serialization for shorthands within shorthands. 
+PASS Test substitution for border 
+Harness: the test ran to completion.
+

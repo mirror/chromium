@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that a unique origin is NOT created for XML tree viewer when script is enabled 
+Harness: the test ran to completion.
+

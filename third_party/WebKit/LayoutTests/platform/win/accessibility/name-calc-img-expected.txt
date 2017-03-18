@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = 1 duplicate test name: "img element with title and alt"
+PASS img element without alt 
+FAIL img element without alt, with title assert_equals: expected "attribute" but got "title"
+PASS img element with title and alt 
+PASS img element with title and alt 
+PASS img element with title and alt 
+Harness: the test ran to completion.
+

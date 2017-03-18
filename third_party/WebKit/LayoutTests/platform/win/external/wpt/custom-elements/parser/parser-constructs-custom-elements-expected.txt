@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS HTML parser must NOT create a custom element before customElements.define is called 
+PASS HTML parser must create a defined custom element before executing inline scripts 
+Harness: the test ran to completion.
+

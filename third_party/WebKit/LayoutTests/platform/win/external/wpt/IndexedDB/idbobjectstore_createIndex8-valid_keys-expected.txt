@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBObjectStore.createIndex() - index can be valid keys 
+Harness: the test ran to completion.
+

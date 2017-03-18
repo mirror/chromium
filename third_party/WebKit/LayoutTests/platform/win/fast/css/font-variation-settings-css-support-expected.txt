@@ -1,0 +1,32 @@
+This is a testharness.js-based test.
+PASS Value normal valid for property font-variation-settings 
+PASS Value 'abcd' 1 valid for property font-variation-settings 
+PASS Value 'abcd' 0, 'efgh' 1 valid for property font-variation-settings 
+PASS Value 'abcd' 0.3, 'efgh' 1.4 valid for property font-variation-settings 
+PASS Value 'abcd' -1000, 'efgh' -10000 valid for property font-variation-settings 
+PASS Value 'abcd' 0.3, 'abcd' 0.4, 'abcd' 0.5, 'abcd' 0.6, 'abcd' 0.7 valid for property font-variation-settings 
+PASS Value none invalid for property font-variation-settings 
+PASS Value 'abc' 1 invalid for property font-variation-settings 
+PASS Value 'abcde' 1 invalid for property font-variation-settings 
+PASS Value  invalid for property font-variation-settings 
+PASS Value 'abc¡' 1 invalid for property font-variation-settings 
+PASS Value normal, 'abcd' 0 invalid for property font-variation-settings 
+PASS Value 'abcd' invalid for property font-variation-settings 
+PASS Value 'abcd' 1 2 invalid for property font-variation-settings 
+PASS Value 1 1 invalid for property font-variation-settings 
+PASS Value 0 0 invalid for property font-variation-settings 
+PASS Value a a invalid for property font-variation-settings 
+PASS font-variation-settings value normal should be equal when reading it back from style and getComputedstyle. 
+PASS font-variation-settings value 'abcd' 1 should be equal when reading it back from style and getComputedstyle. 
+PASS font-variation-settings value 'abcd' 0, 'efgh' 1 should be equal when reading it back from style and getComputedstyle. 
+PASS font-variation-settings value 'abcd' 0.3, 'efgh' 1.4 should be equal when reading it back from style and getComputedstyle. 
+PASS font-variation-settings value 'abcd' -1000, 'efgh' -10000 should be equal when reading it back from style and getComputedstyle. 
+PASS font-variation-settings value 'abcd' 0.3, 'abcd' 0.4, 'abcd' 0.5, 'abcd' 0.6, 'abcd' 0.7 should be equal when reading it back from style and getComputedstyle. 
+PASS font-variation-settings value normal should be inherited to computed style of child. 
+PASS font-variation-settings value 'abcd' 1 should be inherited to computed style of child. 
+PASS font-variation-settings value 'abcd' 0, 'efgh' 1 should be inherited to computed style of child. 
+PASS font-variation-settings value 'abcd' 0.3, 'efgh' 1.4 should be inherited to computed style of child. 
+PASS font-variation-settings value 'abcd' -1000, 'efgh' -10000 should be inherited to computed style of child. 
+PASS font-variation-settings value 'abcd' 0.3, 'abcd' 0.4, 'abcd' 0.5, 'abcd' 0.6, 'abcd' 0.7 should be inherited to computed style of child. 
+Harness: the test ran to completion.
+

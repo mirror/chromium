@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that we can render a CMYK JPEG without color corruption. 
+Harness: the test ran to completion.
+

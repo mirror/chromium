@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Preconditions. 
+PASS Invalidate two type selectors. 
+PASS Invalidate two id selectors. 
+Harness: the test ran to completion.
+

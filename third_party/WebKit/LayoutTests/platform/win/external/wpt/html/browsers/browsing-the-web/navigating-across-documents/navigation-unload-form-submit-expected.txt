@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that navigation during an unload caused by a form submit does nothing 
+Harness: the test ran to completion.
+

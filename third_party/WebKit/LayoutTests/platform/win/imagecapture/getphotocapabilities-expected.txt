@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS exercises the retrieval of Capabilities on ImageCapture API construction 
+Harness: the test ran to completion.
+

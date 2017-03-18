@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that call convertToBlob on a tainted OffscreenCanvas throws exception 
+Harness: the test ran to completion.
+

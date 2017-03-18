@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS PASS if no assertion failure or heap-use-after-free 
+Harness: the test ran to completion.
+

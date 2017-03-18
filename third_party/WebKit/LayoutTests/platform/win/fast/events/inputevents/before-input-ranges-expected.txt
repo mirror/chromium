@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Testing getTargetRanges() returns correct range across elements. 
+PASS Testing getTargetRanges() cleared after dispatch. 
+PASS Actions other than deletion should have current selection as target ranges. 
+PASS Textarea should have empty target range. 
+Harness: the test ran to completion.
+

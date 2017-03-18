@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Can construct a USBIsochronousInTransferPacket 
+PASS Can construct a USBIsochronousInTransferPacket without a DataView 
+PASS Cannot construct USBIsochronousInTransferPacket with an invalid status 
+PASS Cannot construct USBIsochronousInTransferPacket without a status 
+Harness: the test ran to completion.
+

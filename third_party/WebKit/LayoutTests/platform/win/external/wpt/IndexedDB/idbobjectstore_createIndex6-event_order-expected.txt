@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBObjectStore.createIndex() - event order when unique constraint is triggered 
+Harness: the test ran to completion.
+

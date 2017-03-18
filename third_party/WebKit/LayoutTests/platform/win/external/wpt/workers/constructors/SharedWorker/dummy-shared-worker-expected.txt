@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS creating a dummy shared worker 
+Harness: the test ran to completion.
+

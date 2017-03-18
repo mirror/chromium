@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Custom Elements: CustomElementRegistry.get 
+Harness: the test ran to completion.
+

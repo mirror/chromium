@@ -1,0 +1,32 @@
+This is a testharness.js-based test.
+PASS This test uses responsive-test.js. 
+PASS Untitled 
+PASS Untitled 1 
+PASS Untitled 2 
+PASS Untitled 3 
+PASS Untitled 4 
+PASS Untitled 5 
+PASS Untitled 6 
+PASS Untitled 7 
+PASS Untitled 8 
+PASS Untitled 9 
+PASS Untitled 10 
+PASS Untitled 11 
+PASS Untitled 12 
+PASS Animation on property <scale> from [inherit] to [1 2 3] with {"inherited":"2"} changed to {"inherited":"1"} at (0.25) is [1 1.25 1.5] 
+PASS Untitled 13 
+PASS Animation on property <scale> from [inherit] to [1 2 3] with {"inherited":"2"} changed to {"inherited":"1"} at (0.75) is [1 1.75 2.5] 
+PASS Untitled 14 
+PASS Animation on property <scale> from [inherit] to [1 2 3] with {"inherited":"1"} changed to {"inherited":"2"} at (0.25) is [1.75 1.25 1.5] 
+PASS Untitled 15 
+PASS Animation on property <scale> from [inherit] to [1 2 3] with {"inherited":"1"} changed to {"inherited":"2"} at (0.75) is [1.25 1.75 2.5] 
+PASS Untitled 16 
+PASS Animation on property <scale> from neutral to [1 2 3] with {"underlying":"2"} changed to {"underlying":"1"} at (0.25) is [1 1.25 1.5] 
+PASS Untitled 17 
+PASS Animation on property <scale> from neutral to [1 2 3] with {"underlying":"2"} changed to {"underlying":"1"} at (0.75) is [1 1.75 2.5] 
+PASS Untitled 18 
+PASS Animation on property <scale> from neutral to [1 2 3] with {"underlying":"1"} changed to {"underlying":"2"} at (0.25) is [1.75 1.25 1.5] 
+PASS Untitled 19 
+PASS Animation on property <scale> from neutral to [1 2 3] with {"underlying":"1"} changed to {"underlying":"2"} at (0.75) is [1.25 1.75 2.5] 
+Harness: the test ran to completion.
+

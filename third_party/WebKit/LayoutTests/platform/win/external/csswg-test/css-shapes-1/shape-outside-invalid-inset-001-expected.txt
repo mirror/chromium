@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS CSS Shapes Test: Inset Rectangles - invalid top arg 
+Harness: the test ran to completion.
+

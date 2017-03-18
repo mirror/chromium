@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Element.getClientRects() on an SVGElement 
+Harness: the test ran to completion.
+

@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS node.channelInterpretation is equal to "discrete". 
+PASS After rendering node.channelInterpretation is equal to "discrete". 
+PASS node.channelCountMode is equal to "explicit". 
+PASS After rendering node.channelCountMode is equal to "explicit". 
+Harness: the test ran to completion.
+

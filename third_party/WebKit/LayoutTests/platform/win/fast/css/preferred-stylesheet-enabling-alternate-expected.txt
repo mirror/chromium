@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that preferred stylesheet is enabling alternate stylesheet with the same title. 
+Harness: the test ran to completion.
+

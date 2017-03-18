@@ -1,0 +1,30 @@
+This is a testharness.js-based test.
+PASS Startup 
+PASS fetch 
+PASS Fetch invalid URL 
+PASS fetch non-HTTP(S) CORS 
+PASS fetch data: URL 
+PASS fetch data: URL with the POST method 
+PASS fetch data: URL with non-ASCII characters 
+PASS fetch invalid data: URL 
+PASS fetch of scheme not listed in basic fetch spec 
+PASS Fetch result of 200 response 
+PASS Fetch result of 404 response 
+PASS Request/response url attribute getter with fragment 
+PASS Request/response url attribute getter with redirect 
+PASS Manual redirect fetch returns opaque redirect response 
+PASS Even in manual redirect mode, fetch with preflight must fail when redirect response is received 
+PASS Redirect response must cause an error when redirect mode is error. 
+PASS No-redirect fetch completes normally even if redirect mode is manual 
+PASS No-redirect fetch completes normally even if redirect mode is error 
+PASS Fetch with Blob body test 
+PASS Fetch with string body test 
+PASS Fetch with ArrayBuffer body test 
+PASS Fetch with ArrayBufferView body test 
+PASS Fetch with FormData body test 
+PASS Fetch a URL already in Blink cache 
+PASS Destroying the execution context while fetch is happening should not cause a crash. 
+PASS Calling fetch() disturbs body if not null 
+PASS Calling fetch() doesn't disturb body if null 
+Harness: the test ran to completion.
+

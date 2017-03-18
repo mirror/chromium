@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Removing focus should not force to lay out. 
+Harness: the test ran to completion.
+

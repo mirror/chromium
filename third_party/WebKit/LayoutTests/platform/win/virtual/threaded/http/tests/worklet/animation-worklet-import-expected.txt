@@ -1,0 +1,9 @@
+CONSOLE ERROR: line 1: Uncaught Error
+This is a testharness.js-based test.
+PASS Importing a script resolves the given promise. 
+PASS Importing scripts resolves all the given promises. 
+PASS Importing a script which throws should still resolve the given promise. 
+PASS Importing a non-existant script rejects the given promise with a NetworkError. 
+PASS Attempting to resolve an invalid URL should reject the given promise with a SyntaxError. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS register method should use the "relevant global object" to parse its scriptURL and scope - normal case 
+PASS register method should use the "relevant global object" to parse its scriptURL and scope - error case 
+PASS A scope url should start with the given script url 
+Harness: the test ran to completion.
+

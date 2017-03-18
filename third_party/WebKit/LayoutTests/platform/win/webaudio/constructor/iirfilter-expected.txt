@@ -1,0 +1,32 @@
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = 2 duplicate test names: "node.channelCountMode is equal to "explicit".", "node.channelInterpretation is equal to "discrete"."
+PASS context = new OfflineAudioContext(...) did not throw an exception. 
+PASS new IIRFilterNode() threw TypeError: Failed to construct 'IIRFilterNode': 2 arguments required, but only 0 present.. 
+PASS new IIRFilterNode(1) threw TypeError: Failed to construct 'IIRFilterNode': 2 arguments required, but only 1 present.. 
+PASS new IIRFilterNode(context, 42) threw TypeError: Failed to construct 'IIRFilterNode': parameter 2 ('options') is not an object.. 
+PASS Invalid constructors correctly threw errors. 
+PASS new IIRFilterNode(c, {channelCount: 17}} did not throw an exception. 
+PASS node.channelCount is equal to 17. 
+PASS new IIRFilterNode(c, {channelCount: 0}} threw NotSupportedError: Failed to construct 'IIRFilterNode': The channel count provided (0) is outside the range [1, 32].. 
+PASS new IIRFilterNode(c, {channelCount: 99}} threw NotSupportedError: Failed to construct 'IIRFilterNode': The channel count provided (99) is outside the range [1, 32].. 
+PASS new IIRFilterNode(c, {channelCountMode: "max"} did not throw an exception. 
+PASS node.channelCountMode is equal to "max". 
+PASS new IIRFilterNode(c, {channelCountMode: "clamped-max"} did not throw an exception. 
+PASS node.channelCountMode is equal to "clamped-max". 
+PASS new IIRFilterNode(c, {channelCountMode: "explicit"} did not throw an exception. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS new IIRFilterNode(c, {channelCountMode: "foobar"} threw TypeError: Failed to construct 'IIRFilterNode': The provided value 'foobar' is not a valid enum value of type ChannelCountMode.. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS new IIRFilterNode(c, {channelInterpretation: "speakers"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new IIRFilterNode(c, {channelInterpretation: "discrete"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS new IIRFilterNode(c, {channelInterpretation: "foobar"}) threw TypeError: Failed to construct 'IIRFilterNode': The provided value 'foobar' is not a valid enum value of type ChannelInterpretation.. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS AudioNodeOptions for IIRFilterNode were correctly handled. 
+PASS node = new IIRFilterNode(, {"feedback":[1,0.5]}) threw TypeError: Failed to construct 'IIRFilterNode': required member feedforward is undefined.. 
+PASS node = new IIRFilterNode(c, {"feedforward":[1,0.5]}) threw TypeError: Failed to construct 'IIRFilterNode': required member feedback is undefined.. 
+PASS new AnalyserNode() with options constructed with correct attributes. 
+PASS Output of filter using new IIRFilter(...) is identical to the array [0,0.05756402015686035,0.1437191665172577,0.21500660479068756,0.29277655482292175,0.36597785353660583,0.4397642910480499,0.511192798614502,0.5813756585121155,0.6494057178497314,0.7153944969177246,0.7789546251296997,0.8399595022201538,0.8981647491455078,0.9533984065055847,1.0054665803909302,...]. 
+Harness: the test ran to completion.
+

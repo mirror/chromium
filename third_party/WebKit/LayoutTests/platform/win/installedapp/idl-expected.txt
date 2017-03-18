@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Navigator interface: operation getInstalledRelatedApps() 
+PASS Navigator must be primary interface of navigator 
+PASS Stringification of navigator 
+PASS Navigator interface: navigator must inherit property "getInstalledRelatedApps" with the proper type (0) 
+Harness: the test ran to completion.
+

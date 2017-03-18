@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Stringifying a PushSubscription object includes all object members 
+Harness: the test ran to completion.
+

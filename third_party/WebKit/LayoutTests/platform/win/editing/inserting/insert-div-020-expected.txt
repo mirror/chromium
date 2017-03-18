@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Insert BR and enclose "bar" with DIV 
+Harness: the test ran to completion.
+

@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS IndexedDB deleted index rename throws 
+PASS IndexedDB index rename throws in a readonly transaction 
+PASS IndexedDB index rename throws in a readwrite transaction 
+PASS IndexedDB index rename throws in an inactive transaction 
+PASS IndexedDB index rename to the name of another index throws 
+PASS IndexedDB index rename handles exceptions when stringifying names 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS LabelsNodeList should work in Shadow DOM. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS A user agent must not consider the type text/plain as having a registered plugin. 
+Harness: the test ran to completion.
+

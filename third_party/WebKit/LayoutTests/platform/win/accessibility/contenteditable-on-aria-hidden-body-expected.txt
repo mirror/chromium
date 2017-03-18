@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS The document should not be marked editable because the body is aria-hidden. 
+PASS The document should be marked editable because the body is aria-hidden="false". 
+Harness: the test ran to completion.
+

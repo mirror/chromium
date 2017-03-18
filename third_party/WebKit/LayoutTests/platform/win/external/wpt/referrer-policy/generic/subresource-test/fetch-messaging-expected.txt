@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Fetch is supported by the browser. 
+PASS Fetch is responding with HTTP headers 
+Harness: the test ran to completion.
+

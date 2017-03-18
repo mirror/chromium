@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that Audio() object loads the resource after src attribute is set and load() is called. 
+Harness: the test ran to completion.
+

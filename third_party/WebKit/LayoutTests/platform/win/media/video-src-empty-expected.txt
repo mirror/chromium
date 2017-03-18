@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Video element with src="" should invoke media element's load algorithm and should fire "error" event. Network state should be NETWORK_NO_SOURCE and the error code should be MEDIA_ERR_SRC_NOT_SUPPORTED. 
+Harness: the test ran to completion.
+

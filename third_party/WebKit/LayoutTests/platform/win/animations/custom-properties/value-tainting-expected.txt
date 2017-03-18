@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Animation tainted values are omitted in CSS property animation-name 
+PASS Chained animation tainted values are omitted in CSS property animation-name 
+PASS Inherited animation tainted values are omitted in CSS property animation-name 
+PASS Animation tainted values trigger var fallbacks in CSS property animation-name 
+PASS Animation tainted fallback values are omitted in CSS property animation-name 
+Harness: the test ran to completion.
+

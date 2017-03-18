@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS Testing poster null, with 'width' and 'height' attributes. 
+PASS Testing 25x25 poster 'content/greenbox.png', size should equal image size. 
+PASS Testing poster '', with NO 'width' or 'height' attributes so size should be <video> default. 
+PASS Testing 76x103 poster 'content/abe.png', size should equal image size. 
+PASS Testing 300x150 poster 'content/bogus.png', invalid url so size should revert to <video> default. 
+PASS Testing poster '', with only a 'width' attribute so size should have the same aspect ratio as <video> default. 
+PASS Testing 152x206 poster 'content/abe.png', with only a 'width' attribute so size should equal a scaled up image size with the same aspect ratio as the original image. 
+PASS Testing 600x300 poster 'content/bogus.png', invalid url w/ width attribute so size should have the same aspect ratio as <video> default. 
+Harness: the test ran to completion.
+

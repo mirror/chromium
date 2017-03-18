@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Calling element.animate() with a replace -> replace animation should create an animation. 
+PASS Calling element.animate() with an add -> add animation should throw a NotSupportedError. 
+PASS Calling element.animate() with a replace -> add animation should throw a NotSupportedError. 
+PASS Calling element.animate() with an add -> replace animation should throw a NotSupportedError. 
+Harness: the test ran to completion.
+

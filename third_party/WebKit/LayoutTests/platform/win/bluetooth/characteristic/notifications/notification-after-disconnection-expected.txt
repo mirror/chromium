@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Characteristic sends notification after disconnection. Should not fire an event. 
+Harness: the test ran to completion.
+

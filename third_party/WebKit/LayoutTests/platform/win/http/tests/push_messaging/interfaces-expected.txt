@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS Exposure of interfaces in a Service Worker. 
+PASS PushManager should be exposed and have the expected interface in a Document. 
+PASS PushSubscription should be exposed and have the expected interface in a Document. 
+PASS PushEvent should be exposed and have the expected interface. 
+PASS PushManager should be exposed and have the expected interface. 
+PASS PushMessageData should be exposed and have the expected interface. 
+PASS PushSubscription should be exposed and have the expected interface. 
+Harness: the test ran to completion.
+

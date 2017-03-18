@@ -1,0 +1,17 @@
+This is a testharness.js-based test.
+PASS 0x0 should produce valid UUID. 
+PASS NaN returns basic uuid 
+PASS Values between 0xfffffffff (8 digits) and 0xffffffffffffff (14 digits)should return max UUID 
+PASS Infinity returns base UUID 
+PASS 0xdeadbeef should produce valid UUID. 
+PASS Only first 32bits should be used. 
+PASS A valid UUID String should return the same UUID. 
+PASS A UUID String with uppercase letters is an invalid UUID. 
+PASS A 32bit *String* alias is invalid. 
+PASS A UUID with invalid characters is an invalid UUID. 
+PASS A valid UUID from a name. 
+PASS Make sure attributes don't share a map 
+PASS Invalid Descriptor name 
+PASS Non-number and non-strings 
+Harness: the test ran to completion.
+

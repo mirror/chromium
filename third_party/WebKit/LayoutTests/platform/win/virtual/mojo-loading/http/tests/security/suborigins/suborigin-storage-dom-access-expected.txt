@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS localStorage is accessible from a Suborigin 
+PASS sessionStorage is accessible from a Suborigin 
+PASS localStorage is set in a Suborigin is not accessible in the physical origin, or vice versa 
+PASS sessionStorage is set in a Suborigin is not accessible in the physical origin, or vice versa 
+Harness: the test ran to completion.
+

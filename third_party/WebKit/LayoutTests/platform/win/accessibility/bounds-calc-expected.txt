@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS Test computed AX rect for some common objects 
+PASS Test objects inside of absolute-positioned container 
+PASS Test objects inside of scrolled container 
+PASS Test objects inside of rotated container 
+PASS Test object inside of several nested containers with transforms and scrolling. 
+PASS Container must be an ancestor in both the AX tree and layout tree. 
+PASS Test spans inside of absolute-positioned container 
+Harness: the test ran to completion.
+

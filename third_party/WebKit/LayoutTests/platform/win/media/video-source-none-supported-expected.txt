@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that no usable "source" element leaves the media element with networkState == NETWORK_NO_SOURCE. 
+Harness: the test ran to completion.
+

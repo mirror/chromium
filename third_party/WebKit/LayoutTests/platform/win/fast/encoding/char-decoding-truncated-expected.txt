@@ -1,0 +1,20 @@
+This is a testharness.js-based test.
+PASS Decode utf-8: %E2%88%9A => U+221A 
+PASS Decode utf-8: %E2%88 => U+FFFD/U+FFFD 
+PASS Decode utf-8: %E2 => U+FFFD 
+PASS Decode utf-16: %69%D8%D6%DE => U+D869/U+DED6 
+PASS Decode utf-16: %69%D8%D6 =>  
+PASS Decode utf-16: %69%D8 =>  
+PASS Decode utf-16: %69 =>  
+PASS Decode utf-16be: %D8%69%DE%D6 => U+D869/U+DED6 
+PASS Decode utf-16be: %D8%69%DE =>  
+PASS Decode utf-16be: %D8%69 =>  
+PASS Decode utf-16be: %D8 =>  
+PASS Decode gb2312: %A3%A0 => U+3000 
+PASS Decode gb2312: %A3 => U+FFFD 
+PASS Decode shift_jis: %82%d0 => U+3072 
+PASS Decode shift_jis: %82 => U+FFFD 
+PASS Decode windows-949: %A2%E6 => U+20AC 
+PASS Decode windows-949: %A2 => U+FFFD 
+Harness: the test ran to completion.
+

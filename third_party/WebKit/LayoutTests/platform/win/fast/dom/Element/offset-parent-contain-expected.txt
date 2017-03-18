@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS inside contain:paint 
+PASS inside contain:layout 
+PASS inside contain:style 
+PASS inside contain:size 
+Harness: the test ran to completion.
+

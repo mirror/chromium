@@ -1,0 +1,88 @@
+This is a testharness.js-based test.
+PASS This test uses responsive-test.js. 
+PASS Untitled 
+PASS Untitled 1 
+PASS Untitled 2 
+PASS Untitled 3 
+PASS Untitled 4 
+PASS Untitled 5 
+PASS Untitled 6 
+PASS Untitled 7 
+PASS Untitled 8 
+PASS Untitled 9 
+PASS Untitled 10 
+PASS Untitled 11 
+PASS Untitled 12 
+PASS Untitled 13 
+PASS Untitled 14 
+PASS Untitled 15 
+PASS Untitled 16 
+PASS Untitled 17 
+PASS Untitled 18 
+PASS Untitled 19 
+PASS Untitled 20 
+PASS Untitled 21 
+PASS Untitled 22 
+PASS Untitled 23 
+PASS Untitled 24 
+PASS Untitled 25 
+PASS Untitled 26 
+PASS Untitled 27 
+PASS Untitled 28 
+PASS Untitled 29 
+PASS Untitled 30 
+PASS Untitled 31 
+PASS Untitled 32 
+PASS Untitled 33 
+PASS Untitled 34 
+PASS Untitled 35 
+PASS Untitled 36 
+PASS Animation on property <borderImageSlice> from neutral to [110 120%] with {"underlying":"10 20%"} changed to {"underlying":"10 20% fill"} at (0.25) is [10 20% fill] 
+PASS Untitled 37 
+PASS Animation on property <borderImageSlice> from neutral to [110 120%] with {"underlying":"10 20%"} changed to {"underlying":"10 20% fill"} at (0.75) is [110 120%] 
+PASS Untitled 38 
+PASS Animation on property <borderImageSlice> from neutral to [110 120%] with {"underlying":"10 20%"} changed to {"underlying":"10% 20"} at (0.25) is [10% 20] 
+PASS Untitled 39 
+PASS Animation on property <borderImageSlice> from neutral to [110 120%] with {"underlying":"10 20%"} changed to {"underlying":"10% 20"} at (0.75) is [110 120%] 
+PASS Untitled 40 
+PASS Animation on property <borderImageSlice> from neutral to [110 120%] with {"underlying":"10 20% fill"} changed to {"underlying":"10 20%"} at (0.25) is [35 45%] 
+PASS Untitled 41 
+PASS Animation on property <borderImageSlice> from neutral to [110 120%] with {"underlying":"10 20% fill"} changed to {"underlying":"10 20%"} at (0.75) is [85 95%] 
+PASS Untitled 42 
+PASS Animation on property <borderImageSlice> from neutral to [110 120%] with {"underlying":"10 20% fill"} changed to {"underlying":"10% 20"} at (0.25) is [10% 20] 
+PASS Untitled 43 
+PASS Animation on property <borderImageSlice> from neutral to [110 120%] with {"underlying":"10 20% fill"} changed to {"underlying":"10% 20"} at (0.75) is [110 120%] 
+PASS Untitled 44 
+PASS Animation on property <borderImageSlice> from neutral to [110 120%] with {"underlying":"10% 20"} changed to {"underlying":"10 20%"} at (0.25) is [35 45%] 
+PASS Untitled 45 
+PASS Animation on property <borderImageSlice> from neutral to [110 120%] with {"underlying":"10% 20"} changed to {"underlying":"10 20%"} at (0.75) is [85 95%] 
+PASS Untitled 46 
+PASS Animation on property <borderImageSlice> from neutral to [110 120%] with {"underlying":"10% 20"} changed to {"underlying":"10 20% fill"} at (0.25) is [10 20% fill] 
+PASS Untitled 47 
+PASS Animation on property <borderImageSlice> from neutral to [110 120%] with {"underlying":"10% 20"} changed to {"underlying":"10 20% fill"} at (0.75) is [110 120%] 
+PASS Untitled 48 
+PASS Animation on property <borderImageSlice> from [inherit] to [110 120% fill] with {"inherited":"10 20% fill"} changed to {"inherited":"10% 20 fill"} at (0.25) is [10% 20 fill] 
+PASS Untitled 49 
+PASS Animation on property <borderImageSlice> from [inherit] to [110 120% fill] with {"inherited":"10 20% fill"} changed to {"inherited":"10% 20 fill"} at (0.75) is [110 120% fill] 
+PASS Untitled 50 
+PASS Animation on property <borderImageSlice> from [inherit] to [110 120% fill] with {"inherited":"10 20% fill"} changed to {"inherited":"10 20%"} at (0.25) is [10 20%] 
+PASS Untitled 51 
+PASS Animation on property <borderImageSlice> from [inherit] to [110 120% fill] with {"inherited":"10 20% fill"} changed to {"inherited":"10 20%"} at (0.75) is [110 120% fill] 
+PASS Untitled 52 
+PASS Animation on property <borderImageSlice> from [inherit] to [110 120% fill] with {"inherited":"10% 20 fill"} changed to {"inherited":"10 20% fill"} at (0.25) is [35 45% fill] 
+PASS Untitled 53 
+PASS Animation on property <borderImageSlice> from [inherit] to [110 120% fill] with {"inherited":"10% 20 fill"} changed to {"inherited":"10 20% fill"} at (0.75) is [85 95% fill] 
+PASS Untitled 54 
+PASS Animation on property <borderImageSlice> from [inherit] to [110 120% fill] with {"inherited":"10% 20 fill"} changed to {"inherited":"10 20%"} at (0.25) is [10 20%] 
+PASS Untitled 55 
+PASS Animation on property <borderImageSlice> from [inherit] to [110 120% fill] with {"inherited":"10% 20 fill"} changed to {"inherited":"10 20%"} at (0.75) is [110 120% fill] 
+PASS Untitled 56 
+PASS Animation on property <borderImageSlice> from [inherit] to [110 120% fill] with {"inherited":"10 20%"} changed to {"inherited":"10 20% fill"} at (0.25) is [35 45% fill] 
+PASS Untitled 57 
+PASS Animation on property <borderImageSlice> from [inherit] to [110 120% fill] with {"inherited":"10 20%"} changed to {"inherited":"10 20% fill"} at (0.75) is [85 95% fill] 
+PASS Untitled 58 
+PASS Animation on property <borderImageSlice> from [inherit] to [110 120% fill] with {"inherited":"10 20%"} changed to {"inherited":"10% 20 fill"} at (0.25) is [10% 20 fill] 
+PASS Untitled 59 
+PASS Animation on property <borderImageSlice> from [inherit] to [110 120% fill] with {"inherited":"10 20%"} changed to {"inherited":"10% 20 fill"} at (0.75) is [110 120% fill] 
+Harness: the test ran to completion.
+

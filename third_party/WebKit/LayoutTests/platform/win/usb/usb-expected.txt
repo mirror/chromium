@@ -1,0 +1,13 @@
+This is a testharness.js-based test.
+PASS getDevices returns devices exposed by the DeviceManager service 
+PASS getDevices returns the same objects for each USB device 
+PASS requestDevice rejects when called without a user gesture 
+PASS requestDevice rejects when no device is chosen 
+PASS requestDevice returns the device chosen by the user 
+PASS getDevices returns the same object as requestDevice 
+PASS filters are sent correctly 
+PASS onconnect event is trigged by adding a device 
+PASS getDevices returns the same object as sent in the onconnect event 
+PASS ondisconnect event is triggered by removing a device 
+Harness: the test ran to completion.
+

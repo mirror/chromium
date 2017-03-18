@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS move item in collection order 
+Harness: the test ran to completion.
+

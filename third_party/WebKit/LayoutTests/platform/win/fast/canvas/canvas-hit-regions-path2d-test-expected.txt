@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that createImageBitmap from a bitmaprenderer canvas produces correct result 
+Harness: the test ran to completion.
+

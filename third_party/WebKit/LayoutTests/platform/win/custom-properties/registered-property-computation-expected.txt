@@ -1,0 +1,12 @@
+This is a testharness.js-based test.
+PASS <length> values are computed correctly for divWithFontSizeSet 
+PASS <length-percentage> values are computed correctly for divWithFontSizeSet 
+PASS <length>+ values are computed correctly for divWithFontSizeSet 
+PASS <length-percentage>+ values are computed correctly for divWithFontSizeSet 
+PASS <length> values are computed correctly for divWithFontSizeInherited 
+PASS <length-percentage> values are computed correctly for divWithFontSizeInherited 
+PASS <length>+ values are computed correctly for divWithFontSizeInherited 
+PASS <length-percentage>+ values are computed correctly for divWithFontSizeInherited 
+PASS font-size with a var() reference to a registered property using ems works as expected 
+Harness: the test ran to completion.
+

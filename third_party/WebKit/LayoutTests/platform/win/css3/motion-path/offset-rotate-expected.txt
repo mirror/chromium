@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS offset-rotate default is auto 
+PASS offset-rotate auto expands to auto 0deg 
+PASS offset-rotate reverse expands to auto 180deg 
+PASS offset-rotate can be a fixed angle 
+PASS offset-rotate angles are converted to degrees 
+PASS offset-rotate can be supplied with angle before auto 
+PASS offset-rotate can be supplied with angle before reverse 
+PASS offset-rotate is unaffected by child elements 
+PASS offset-rotate can be explicitly inherited 
+PASS offset-rotate is not inherited by default 
+PASS offset-rotate style can be set inline 
+Harness: the test ran to completion.
+

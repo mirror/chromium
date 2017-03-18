@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS img elements that have a name and id attribute, should be accessible by both values. 
+Harness: the test ran to completion.
+

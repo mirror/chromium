@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Calling document.writeln with null and undefined 
+PASS document.writeln(null) 
+PASS document.writeln(undefined) 
+Harness: the test ran to completion.
+

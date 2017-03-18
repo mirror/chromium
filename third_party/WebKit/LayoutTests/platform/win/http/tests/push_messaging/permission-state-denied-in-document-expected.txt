@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Push API: permissionState resolves with denied when permission is denied 
+Harness: the test ran to completion.
+

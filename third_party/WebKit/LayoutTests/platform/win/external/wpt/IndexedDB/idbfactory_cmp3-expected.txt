@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Array v.s. Binary 
+PASS Binary v.s. String 
+PASS String v.s. Date 
+PASS Date v.s. Number 
+Harness: the test ran to completion.
+

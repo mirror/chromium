@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Startup 
+PASS Basic filtered response with mode=same-origin 
+PASS Basic filtered response with mode=cors 
+PASS CORS filtered response 
+PASS CORS filtered response with Access-Control-Expose-Headers 
+Harness: the test ran to completion.
+

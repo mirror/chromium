@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Makes sure that connect-src allows link preload resources with no as type 
+Harness: the test ran to completion.
+

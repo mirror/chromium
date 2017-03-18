@@ -1,0 +1,48 @@
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = 5 duplicate test names: "node.channelCountMode is equal to "max".", "node.channelCountMode is equal to "explicit".", "node.channelInterpretation is equal to "speakers".", "node.channelInterpretation is equal to "discrete".", "node.channelCount is equal to 2."
+PASS context = new OfflineAudioContext(...) did not throw an exception. 
+PASS new OscillatorNode() threw TypeError: Failed to construct 'OscillatorNode': 1 argument required, but only 0 present.. 
+PASS new OscillatorNode(1) threw TypeError: Failed to construct 'OscillatorNode': parameter 1 is not of type 'BaseAudioContext'.. 
+PASS new OscillatorNode(context, 42) threw TypeError: Failed to construct 'OscillatorNode': parameter 2 ('options') is not an object.. 
+PASS Invalid constructors correctly threw errors. 
+PASS node = new OscillatorNode(context) did not throw an exception. 
+PASS node instanceof OscillatorNode is equal to true. 
+PASS node.type is equal to "sine". 
+PASS node.detune.value is equal to 0. 
+PASS node.frequency.value is equal to 440. 
+PASS node.channelCount is equal to 2. 
+PASS node.channelCountMode is equal to "max". 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new OscillatorNode(context) constructed node with correct attributes. 
+PASS new OscillatorNode(c, {channelCount: 17}} did not throw an exception. 
+PASS node.channelCount is equal to 17. 
+PASS new OscillatorNode(c, {channelCount: 0}} threw NotSupportedError: Failed to construct 'OscillatorNode': The channel count provided (0) is outside the range [1, 32].. 
+PASS new OscillatorNode(c, {channelCount: 99}} threw NotSupportedError: Failed to construct 'OscillatorNode': The channel count provided (99) is outside the range [1, 32].. 
+PASS new OscillatorNode(c, {channelCountMode: "max"} did not throw an exception. 
+PASS node.channelCountMode is equal to "max". 
+PASS new OscillatorNode(c, {channelCountMode: "clamped-max"} did not throw an exception. 
+PASS node.channelCountMode is equal to "clamped-max". 
+PASS new OscillatorNode(c, {channelCountMode: "explicit"} did not throw an exception. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS new OscillatorNode(c, {channelCountMode: "foobar"} threw TypeError: Failed to construct 'OscillatorNode': The provided value 'foobar' is not a valid enum value of type ChannelCountMode.. 
+PASS node.channelCountMode is equal to "explicit". 
+PASS new OscillatorNode(c, {channelInterpretation: "speakers"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new OscillatorNode(c, {channelInterpretation: "discrete"}) did not throw an exception. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS new OscillatorNode(c, {channelInterpretation: "foobar"}) threw TypeError: Failed to construct 'OscillatorNode': The provided value 'foobar' is not a valid enum value of type ChannelInterpretation.. 
+PASS node.channelInterpretation is equal to "discrete". 
+PASS AudioNodeOptions for OscillatorNode were correctly handled. 
+PASS node = new OscillatorNode(c, {"type":"sawtooth","detune":7,"frequency":918}) did not throw an exception. 
+PASS node.type is equal to "sawtooth". 
+PASS node.detune.value is equal to 7. 
+PASS node.frequency.value is equal to 918. 
+PASS node.channelCount is equal to 2. 
+PASS node.channelCountMode is equal to "max". 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS new OscillatorNode(c, {"type":"sine","periodicWave":{}}) threw InvalidStateError: Failed to construct 'OscillatorNode': 'type' MUST be 'custom' instead of 'sine' if 'periodicWave' is also given. 
+PASS new OscillatorNode(c, {"type":"custom"}) threw InvalidStateError: Failed to construct 'OscillatorNode': 'type' cannot be set to 'custom' without also specifying 'periodicWave'. 
+PASS new OscillatorNode(, {"type":"custom","periodicWave":{}}) did not throw an exception. 
+PASS new OscillatorNode() with options constructed with correct attributes. 
+Harness: the test ran to completion.
+

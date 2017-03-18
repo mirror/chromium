@@ -1,0 +1,11 @@
+CONSOLE WARNING: line 30: The provided value 'invalid' is not a valid enum value of type OverSampleType.
+This is a testharness.js-based test.
+PASS WaveShaper.curve is equal to null. 
+PASS WaveShaper.oversample is equal to "none". 
+PASS Waveshaper.oversample = "2x" is equal to "2x". 
+PASS Waveshaper.oversample = "4x" is equal to "4x". 
+PASS Waveshaper.oversample = "invalid" is equal to "4x". 
+PASS WaveShaper.curve is identical to the array [-1,0.25,0.75]. 
+PASS Waveshaper.curve = null is equal to null. 
+Harness: the test ran to completion.
+

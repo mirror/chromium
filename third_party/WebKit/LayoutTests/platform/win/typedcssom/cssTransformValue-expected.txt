@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS A CSSTransformValue object can be constructed 
+PASS is2D returns true for transformValues containing only 2D transformComponents 
+PASS is2D returns false for transformValues containing both 2D and 3D transformComponents 
+PASS CSSTransformValue can iterate through all its all its transformComponent members 
+Harness: the test ran to completion.
+

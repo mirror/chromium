@@ -1,0 +1,5 @@
+CONSOLE MESSAGE: line 17: LOAD event on IFRAME
+This is a testharness.js-based test.
+PASS Load event handler for IFRAME should not run during execCommand(), and should not mutate the DOM tree. 
+Harness: the test ran to completion.
+

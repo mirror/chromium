@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Check that the content property contains the correct value for counter() 
+Harness: the test ran to completion.
+

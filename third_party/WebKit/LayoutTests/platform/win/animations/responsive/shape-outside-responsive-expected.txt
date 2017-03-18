@@ -1,0 +1,32 @@
+This is a testharness.js-based test.
+PASS This test uses responsive-test.js. 
+PASS Untitled 
+PASS Untitled 1 
+PASS Untitled 2 
+PASS Untitled 3 
+PASS Untitled 4 
+PASS Untitled 5 
+PASS Untitled 6 
+PASS Untitled 7 
+PASS Untitled 8 
+PASS Untitled 9 
+PASS Untitled 10 
+PASS Untitled 11 
+PASS Untitled 12 
+PASS Animation on property <shapeOutside> from neutral to [circle(100px at 200px 300px)] with {"underlying":"inset(50px)"} changed to {"underlying":"circle(200px at 0px 0px)"} at (0.25) is [circle(175px at 50px 75px)] 
+PASS Untitled 13 
+PASS Animation on property <shapeOutside> from neutral to [circle(100px at 200px 300px)] with {"underlying":"inset(50px)"} changed to {"underlying":"circle(200px at 0px 0px)"} at (0.75) is [circle(125px at 150px 225px)] 
+PASS Untitled 14 
+PASS Animation on property <shapeOutside> from neutral to [circle(100px at 200px 300px)] with {"underlying":"circle(200px at 0px 0px)"} changed to {"underlying":"inset(50px)"} at (0.25) is [inset(50px)] 
+PASS Untitled 15 
+PASS Animation on property <shapeOutside> from neutral to [circle(100px at 200px 300px)] with {"underlying":"circle(200px at 0px 0px)"} changed to {"underlying":"inset(50px)"} at (0.75) is [circle(100px at 200px 300px)] 
+PASS Untitled 16 
+PASS Animation on property <shapeOutside> from [inherit] to [polygon(140px 240px, 340px 440px)] with {"inherited":"polygon(100px 200px, 300px 400px, 500px 600px)"} changed to {"inherited":"polygon(100px 200px, 300px 400px)"} at (0.25) is [polygon(110px 210px, 310px 410px)] 
+PASS Untitled 17 
+PASS Animation on property <shapeOutside> from [inherit] to [polygon(140px 240px, 340px 440px)] with {"inherited":"polygon(100px 200px, 300px 400px, 500px 600px)"} changed to {"inherited":"polygon(100px 200px, 300px 400px)"} at (0.75) is [polygon(130px 230px, 330px 430px)] 
+PASS Untitled 18 
+PASS Animation on property <shapeOutside> from [inherit] to [polygon(140px 240px, 340px 440px)] with {"inherited":"polygon(100px 200px, 300px 400px)"} changed to {"inherited":"polygon(100px 200px, 300px 400px, 500px 600px)"} at (0.25) is [polygon(100px 200px, 300px 400px, 500px 600px)] 
+PASS Untitled 19 
+PASS Animation on property <shapeOutside> from [inherit] to [polygon(140px 240px, 340px 440px)] with {"inherited":"polygon(100px 200px, 300px 400px)"} changed to {"inherited":"polygon(100px 200px, 300px 400px, 500px 600px)"} at (0.75) is [polygon(140px 240px, 340px 440px)] 
+Harness: the test ran to completion.
+

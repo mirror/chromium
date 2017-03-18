@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS InsertUnorderedList on a selection that ends at the start of a paragraph. 
+Harness: the test ran to completion.
+

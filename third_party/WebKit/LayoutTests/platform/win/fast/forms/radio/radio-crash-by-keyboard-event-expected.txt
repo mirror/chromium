@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Sending a keydown event to detached radio button should not crash. 
+Harness: the test ran to completion.
+

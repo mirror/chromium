@@ -1,0 +1,10 @@
+CONSOLE WARNING: line 17: Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/.
+This is a testharness.js-based test.
+PASS XMLHttpRequest: send() - data argument (1) 
+PASS XMLHttpRequest: send() - data argument (10000000) 
+PASS XMLHttpRequest: send() - data argument (2,2) 
+PASS XMLHttpRequest: send() - data argument (false) 
+PASS XMLHttpRequest: send() - data argument (A\0A) 
+PASS XMLHttpRequest: send() - data argument (1=2&3=4) 
+Harness: the test ran to completion.
+

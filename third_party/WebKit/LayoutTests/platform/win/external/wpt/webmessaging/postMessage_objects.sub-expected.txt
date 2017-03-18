@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test Description: Messages can be structured objects, e.g., nested objects. 
+Harness: the test ran to completion.
+

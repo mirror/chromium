@@ -1,0 +1,5 @@
+CONSOLE ERROR: line 8: Refused to load the stylesheet 'http://127.0.0.1:8000/security/contentSecurityPolicy/resources/style-set-red.css' because 'require-sri-for' directive requires integrity attribute be present for all stylesheets.
+This is a testharness.js-based test.
+PASS CSS imports without integrity do not load. 
+Harness: the test ran to completion.
+

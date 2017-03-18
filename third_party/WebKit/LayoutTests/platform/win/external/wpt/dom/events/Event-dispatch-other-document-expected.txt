@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Custom event on an element in another document 
+Harness: the test ran to completion.
+

@@ -1,0 +1,12 @@
+CONSOLE ERROR: line 48: Uncaught RangeError: Maximum call stack size exceeded.
+CONSOLE ERROR: line 59: Uncaught RangeError: Maximum call stack size exceeded.
+CONSOLE ERROR: line 70: Uncaught RangeError: Maximum call stack size exceeded.
+This is a testharness.js-based test.
+PASS appendChild: DOMNodeInserted event should be dispatched after all nodes in a DocumentFragment were inserted. 
+PASS insertBefore: DOMNodeInserted event should be dispatched after all nodes in a DocumentFragment were inserted. 
+PASS replaceChild: DOMNodeInserted event should be dispatched after all nodes in a DocumentFragment were inserted. 
+PASS appendChild: Reparenting in DOMNodeRemoved handler for a DocumentFragment should throw. 
+PASS insertBefore: Reparenting in DOMNodeRemoved handler for a DocumentFragment should throw. 
+PASS replaceChild: Reparenting in DOMNodeRemoved handler for a DocumentFragment should throw. 
+Harness: the test ran to completion.
+

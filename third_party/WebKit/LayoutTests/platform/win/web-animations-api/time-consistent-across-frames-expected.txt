@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Document timeline should tick consistently across frames 
+Harness: the test ran to completion.
+

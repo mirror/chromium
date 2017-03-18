@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that stalling very early, while loading meta-data, stops delaying the load event. 
+Harness: the test ran to completion.
+

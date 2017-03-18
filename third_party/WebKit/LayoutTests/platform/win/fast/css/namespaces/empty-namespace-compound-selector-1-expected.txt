@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Empty namespaces should work correctly on compound selectors 
+Harness: the test ran to completion.
+

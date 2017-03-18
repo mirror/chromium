@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS CSS inheritance tests for assigned nodes, not-assigned nodes, and slots 
+Harness: the test ran to completion.
+

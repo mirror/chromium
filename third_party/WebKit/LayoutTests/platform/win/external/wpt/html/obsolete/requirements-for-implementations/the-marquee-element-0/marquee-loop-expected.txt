@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS marquee_loop_string 
+PASS marquee_loop_less_than_1 
+PASS marquee_loop_normal 
+Harness: the test ran to completion.
+

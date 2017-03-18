@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that for an element with absolute position and whose parent has overflowclip, it can still scroll automatically. 
+Harness: the test ran to completion.
+

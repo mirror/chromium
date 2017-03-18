@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS An animation which is not filling backwards should not be in effect at time 0 when playing backwards 
+Harness: the test ran to completion.
+

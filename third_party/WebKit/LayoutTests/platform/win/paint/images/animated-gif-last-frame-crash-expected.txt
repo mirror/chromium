@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Skipping up to the last frame of an animated gif shouldn't crash. 
+Harness: the test ran to completion.
+

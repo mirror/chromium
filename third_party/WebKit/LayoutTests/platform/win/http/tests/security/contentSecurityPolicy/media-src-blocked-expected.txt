@@ -1,0 +1,6 @@
+CONSOLE ERROR: Refused to load media from 'http://127.0.0.1:8000/resources/load-and-stall.php?name=../../../media/content/test.ogv&mimeType=video/ogg&stallAt=100000' because it violates the following Content Security Policy directive: "media-src 'none'".
+
+This is a testharness.js-based test.
+PASS This tests that video is not loaded because of "Content-Security-Policy". 
+Harness: the test ran to completion.
+

@@ -1,0 +1,28 @@
+This is a testharness.js-based test.
+Harness Error. harness_status.status = 1 , harness_status.message = 10 duplicate test names: "node instance of ConstantSourceNode is equal to true.", "node.numberOfInputs is equal to 0.", "node.numberOfOutputs is equal to 1.", "node.channelCount is equal to 2.", "node.channelCountMode is equal to "max".", "node.channelInterpretation is equal to "speakers".", "node.offset.value is equal to 1.", "node.offset.defaultValue is equal to 1.", "node.offset.minValue is equal to -3.4028234663852886e+38.", "node.offset.maxValue is equal to 3.4028234663852886e+38."
+PASS node = context.createConstantSource() did not throw an exception. 
+PASS node instance of ConstantSourceNode is equal to true. 
+PASS node.numberOfInputs is equal to 0. 
+PASS node.numberOfOutputs is equal to 1. 
+PASS node.channelCount is equal to 2. 
+PASS node.channelCountMode is equal to "max". 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS node.offset.value is equal to 1. 
+PASS node.offset.defaultValue is equal to 1. 
+PASS node.offset.minValue is equal to -3.4028234663852886e+38. 
+PASS node.offset.maxValue is equal to 3.4028234663852886e+38. 
+PASS createConstantSource() correctly created. 
+PASS node = new ConstantSourceNode() did not throw an exception. 
+PASS node instance of ConstantSourceNode is equal to true. 
+PASS node.numberOfInputs is equal to 0. 
+PASS node.numberOfOutputs is equal to 1. 
+PASS node.channelCount is equal to 2. 
+PASS node.channelCountMode is equal to "max". 
+PASS node.channelInterpretation is equal to "speakers". 
+PASS node.offset.value is equal to 1. 
+PASS node.offset.defaultValue is equal to 1. 
+PASS node.offset.minValue is equal to -3.4028234663852886e+38. 
+PASS node.offset.maxValue is equal to 3.4028234663852886e+38. 
+PASS new ConstantSourceNode(context) correctly created. 
+Harness: the test ran to completion.
+

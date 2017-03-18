@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS RemoveFormat command with no selection 
+PASS RemoveFormat command with caret 
+PASS RemoveFormat command with range selection 
+Harness: the test ran to completion.
+

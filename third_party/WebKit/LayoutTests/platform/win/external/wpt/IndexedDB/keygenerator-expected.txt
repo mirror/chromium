@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Keygenerator - starts at one, and increments by one 
+PASS Keygenerator - increments by one from last set key 
+PASS Keygenerator - don't increment when new key is not bigger than current 
+Harness: the test ran to completion.
+

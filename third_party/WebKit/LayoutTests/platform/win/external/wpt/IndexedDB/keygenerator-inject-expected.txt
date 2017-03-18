@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Key is injected into value - single segment path 
+PASS Key is injected into value - multi-segment path 
+PASS Key is injected into value - multi-segment path, partially populated 
+PASS put() throws if key cannot be injected - single segment path 
+PASS put() throws if key cannot be injected - multi-segment path 
+Harness: the test ran to completion.
+

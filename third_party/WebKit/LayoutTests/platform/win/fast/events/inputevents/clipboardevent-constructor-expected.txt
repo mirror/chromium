@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS ClipboardEvent constructor without a dictionary 
+PASS ClipboardEvent constructor with dictionary where optional attribute clipboardData is omitted 
+PASS ClipboardEvent constructor with dictionary where optional attribute clipboardData is passed 
+Harness: the test ran to completion.
+

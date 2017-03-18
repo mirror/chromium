@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS closing a MessagePort with messages queued for dispatch should not crash 
+Harness: the test ran to completion.
+

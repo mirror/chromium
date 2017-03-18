@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Scripts with for and event attributes should not run. 
+Harness: the test ran to completion.
+

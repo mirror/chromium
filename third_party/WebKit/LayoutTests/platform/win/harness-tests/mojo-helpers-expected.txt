@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS Mojo system APIs should be available to layout tests. 
+PASS Frame interface provider overrides should be properly intercepted. 
+PASS Interface provider overrides should be properly intercepted. 
+PASS Mock interfaces can receive messages from test code. 
+PASS Test code can receive response messages from mock interfaces. 
+PASS Generated mojo bindings can be loaded in tests 
+PASS Mojo bindings are accessible from iframes 
+PASS Mojo bindings are accessible from popups 
+Harness: the test ran to completion.
+

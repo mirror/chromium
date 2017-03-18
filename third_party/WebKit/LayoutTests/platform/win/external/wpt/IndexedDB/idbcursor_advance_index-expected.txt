@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBCursor.advance() - index - iterate cursor number of times specified by count  
+Harness: the test ran to completion.
+

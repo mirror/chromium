@@ -1,0 +1,13 @@
+This is a testharness.js-based test.
+PASS At 192 kHz, PeriodicWave with 8192 coefficients vs 2048: are different is equal to true. 
+PASS At 192 kHz, PeriodicWave with 2049 coefficients vs 2048: are different is equal to true. 
+PASS At 192 kHz, PeriodicWave with 8192 coefficients vs 8188: are different is equal to true. 
+PASS At 48 kHz, PeriodicWave with 8192 coefficients vs 2048: are identical is equal to true. 
+PASS At 48 kHz, PeriodicWave with 2049 coefficients vs 2048: are identical is equal to true. 
+PASS At 48 kHz, PeriodicWave with 2064 coefficients vs 2048: are identical is equal to true. 
+PASS At 48 kHz, PeriodicWave with 2048 coefficients vs 2046: are different is equal to true. 
+PASS At 24 kHz, PeriodicWave with 8192 coefficients vs 1024: are identical is equal to true. 
+PASS At 24 kHz, PeriodicWave with 1025 coefficients vs 1024: are identical is equal to true. 
+PASS At 24 kHz, PeriodicWave with 1024 coefficients vs 1022: are different is equal to true. 
+Harness: the test ran to completion.
+

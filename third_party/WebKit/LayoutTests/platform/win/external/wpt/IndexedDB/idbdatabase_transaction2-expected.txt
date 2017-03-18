@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBDatabase.transaction() - opening a transaction defaults to a read-only mode  
+Harness: the test ran to completion.
+

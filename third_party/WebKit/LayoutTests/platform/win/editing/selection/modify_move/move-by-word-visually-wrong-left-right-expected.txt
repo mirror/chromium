@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS wrong result because VisiblePosition.left()/right() returns wrong result 
+Harness: the test ran to completion.
+

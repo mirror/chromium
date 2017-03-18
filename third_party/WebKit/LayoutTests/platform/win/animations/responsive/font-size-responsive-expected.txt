@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Animating {font-size: 'inherit'} should be responsive to changes in the inherited font-size. 
+PASS Animating {font-size: 'larger'} should be responsive to changes in the inherited font-size. 
+PASS Animating {font-size: 'smaller'} should be responsive to changes in the inherited font-size. 
+Harness: the test ran to completion.
+

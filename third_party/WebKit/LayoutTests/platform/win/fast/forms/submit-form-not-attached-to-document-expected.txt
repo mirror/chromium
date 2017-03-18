@@ -1,0 +1,10 @@
+CONSOLE WARNING: line 10: Form submission canceled because the form is not connected
+CONSOLE WARNING: line 16: Form submission canceled because the form is not connected
+CONSOLE WARNING: line 28: Form submission canceled because the form is not connected
+This is a testharness.js-based test.
+PASS Submitting a form that has been removed. 
+PASS Submitting a form that has never been attached to the document. 
+PASS Submitting a form that is attached to the document. 
+PASS Submitting a form cloned from a form that is attached to the document. 
+Harness: the test ran to completion.
+

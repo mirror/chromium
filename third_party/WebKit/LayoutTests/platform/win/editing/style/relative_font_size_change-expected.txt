@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS select all characters 
+PASS select characters crossing DIV 
+PASS fontSizeDelta affects enclosing block 
+PASS fontSizeDelta affects following characters 
+Harness: the test ran to completion.
+

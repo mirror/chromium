@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Check initial color from applied stylesheet. 
+PASS Changing href on a link in shadow should not trigger an assert. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Test finding the target when it is an empty anchor. 
+PASS Test finding the target when it is an anchor with content. 
+PASS Test finding the target when it is an anchor with ID. 
+PASS Test finding an approximate target when the real one is an empty span. 
+PASS Test finding the target when it is a span with content. 
+PASS Test finding the target when it is a paragraph. 
+Harness: the test ran to completion.
+

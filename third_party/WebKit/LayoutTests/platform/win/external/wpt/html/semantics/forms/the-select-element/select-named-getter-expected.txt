@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Option with id 
+PASS Option with name 
+PASS Option with name and id 
+PASS Empty string name 
+Harness: the test ran to completion.
+

@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Check that the MediaQueryList matches the resolution query. 
+PASS Check that the background color is applied after the media query result changed. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS 0 select all children with P 
+PASS 1 select first cell with BLOCKQUOTE 
+PASS 2 select first cell with BLOCKQUOTE 
+PASS 3 select first cell with ADDRESS 
+Harness: the test ran to completion.
+

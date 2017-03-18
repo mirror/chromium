@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Registering a sync should reject the promise if permission is denied 
+Harness: the test ran to completion.
+

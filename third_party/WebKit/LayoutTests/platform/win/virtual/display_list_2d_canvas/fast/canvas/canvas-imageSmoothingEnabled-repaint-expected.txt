@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that disabling the imageSmoothingEnabled attribute still works after multiple repaints 
+Harness: the test ran to completion.
+

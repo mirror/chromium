@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS mac: run queryCommandState('subscript') 
+PASS mac: run queryCommandState('superscript') 
+PASS win: run queryCommandState('subscript') 
+PASS win: run queryCommandState('superscript') 
+PASS : run queryCommandState('subscript') 
+PASS : run queryCommandState('superscript') 
+Harness: the test ran to completion.
+

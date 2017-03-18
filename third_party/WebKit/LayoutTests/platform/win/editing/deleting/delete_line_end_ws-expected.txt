@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Delete a space at end of line. 
+PASS Delete multiple spaces at end of line. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS Verify convertToBlob on a 0 width OffscreenCanvas with no context. 
+PASS Verify convertToBlob and getImageData on a 0 width OffscreenCanvas with a 2d context. 
+PASS Verify convertToBlob on a 0 width OffscreenCanvas with a webgl context. 
+PASS Verify convertToBlob on a 0 width OffscreenCanvas with a webgl2 context. 
+PASS Verify convertToBlob on a 0 height OffscreenCanvas with no context. 
+PASS Verify convertToBlob and getImageData on a 0 height OffscreenCanvas with a 2d context. 
+PASS Verify convertToBlob on a 0 height OffscreenCanvas with a webgl context. 
+PASS Verify convertToBlob on a 0 height OffscreenCanvas with a webgl2 context. 
+Harness: the test ran to completion.
+

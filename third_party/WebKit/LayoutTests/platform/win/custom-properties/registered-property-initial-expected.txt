@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Initial values of registered properties can be referenced when no custom properties are explicitly set. 
+Harness: the test ran to completion.
+

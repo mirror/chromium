@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS //[ 
+PASS Just ftp scheme 
+PASS Lots of slashes 
+PASS Credentials only authority 
+PASS Non digit in port 
+Harness: the test ran to completion.
+

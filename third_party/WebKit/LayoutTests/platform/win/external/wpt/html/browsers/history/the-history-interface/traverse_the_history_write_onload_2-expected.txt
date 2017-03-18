@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Traverse the history back and forward when a history entry is written in the load event 
+Harness: the test ran to completion.
+

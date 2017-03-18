@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS showNotification() must reject if data is invalid value. 
+Harness: the test ran to completion.
+

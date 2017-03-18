@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS SecurityError thrown when accessing another domain's worker. 
+Harness: the test ran to completion.
+

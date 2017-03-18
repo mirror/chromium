@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that drawImage() does nothing with an incomplete image or video 
+Harness: the test ran to completion.
+

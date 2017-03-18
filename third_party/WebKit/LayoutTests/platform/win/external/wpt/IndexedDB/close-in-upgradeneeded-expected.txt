@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS When db.close is called in upgradeneeded, the db is cleaned up on refresh 
+Harness: the test ran to completion.
+

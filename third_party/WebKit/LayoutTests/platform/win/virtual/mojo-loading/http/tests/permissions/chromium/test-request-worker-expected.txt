@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Test PermissionDescription WebIDL rules in DedicatedWorker scope. 
+PASS Test basic request behaviour in DedicatedWorker scope. 
+Harness: the test ran to completion.
+

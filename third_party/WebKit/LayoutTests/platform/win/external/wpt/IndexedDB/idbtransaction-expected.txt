@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS IDBTransaction - request gotten by the handler 
+PASS IDBTransaction - request returned by open() 
+Harness: the test ran to completion.
+

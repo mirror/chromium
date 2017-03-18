@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Test PermissionDescription WebIDL rules in Window scope. 
+PASS Test geolocation permission in Window scope. 
+PASS Test midi permission in Window scope. 
+PASS Test push permission in Window scope. 
+PASS Test notifications permission in Window scope. 
+Harness: the test ran to completion.
+

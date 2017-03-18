@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Root margin tests 
+PASS First rAF. 
+PASS document.scrollingElement.scrollLeft = 100 
+PASS document.scrollingElement.scrollTop = 800 
+PASS document.scrollingElement.scrollTop = 900 
+Harness: the test ran to completion.
+

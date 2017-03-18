@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Double-clicking whitespace after the value in an INPUT element should select the last word. 
+PASS Double-clicking whitespace after the value in a TEXTAREA element should select the last word. 
+Harness: the test ran to completion.
+

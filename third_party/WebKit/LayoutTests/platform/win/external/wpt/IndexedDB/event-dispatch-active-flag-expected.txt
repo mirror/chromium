@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Transactions are active during success handlers 
+PASS Transactions are active during success listeners 
+PASS Transactions are active during error handlers 
+PASS Transactions are active during error listeners 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Lines at outer column boundaries 
+Harness: the test ran to completion.
+

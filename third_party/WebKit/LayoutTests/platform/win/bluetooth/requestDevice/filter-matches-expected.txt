@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Matches a filter if all present members match. 
+Harness: the test ran to completion.
+

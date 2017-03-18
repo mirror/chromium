@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Does not crash when <input type="range"> has no layoutObject and when a non-element node has "slider-vertical" appearance. 
+Harness: the test ran to completion.
+

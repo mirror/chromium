@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS This test uses interpolation-test.js. 
+PASS SMIL: Interpolate attribute <pathLength> from replace [1] to replace [6] at (0) is [1] 
+PASS SMIL: Interpolate attribute <pathLength> from replace [1] to replace [6] at (0.2) is [2] 
+PASS SMIL: Interpolate attribute <pathLength> from replace [1] to replace [6] at (0.6) is [4] 
+PASS SMIL: Interpolate attribute <pathLength> from replace [1] to replace [6] at (1) is [6] 
+PASS Web Animations: Interpolate attribute <pathLength> from replace [1] to replace [6] at (-0.4) is [0] 
+PASS Web Animations: Interpolate attribute <pathLength> from replace [1] to replace [6] at (0) is [1] 
+PASS Web Animations: Interpolate attribute <pathLength> from replace [1] to replace [6] at (0.2) is [2] 
+PASS Web Animations: Interpolate attribute <pathLength> from replace [1] to replace [6] at (0.6) is [4] 
+PASS Web Animations: Interpolate attribute <pathLength> from replace [1] to replace [6] at (1) is [6] 
+PASS Web Animations: Interpolate attribute <pathLength> from replace [1] to replace [6] at (1.4) is [8] 
+Harness: the test ran to completion.
+

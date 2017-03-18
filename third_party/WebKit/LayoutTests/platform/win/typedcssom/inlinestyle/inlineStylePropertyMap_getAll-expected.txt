@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS getAll() returns a list of values 
+PASS getAll is case-insensitive for the property name 
+PASS getAll() returns an empty list if the property isn't set 
+PASS getAll() throws if you try to get an invalid property 
+Harness: the test ran to completion.
+

@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Same init segment appended twice 
+PASS Track defaults processing in the init segment algorithm (explicit bytestream ids) 
+PASS Track defaults processing in the init segment algorithm (no bytestream ids) 
+PASS Two source buffers with clashing bytestream track ids 
+Harness: the test ran to completion.
+

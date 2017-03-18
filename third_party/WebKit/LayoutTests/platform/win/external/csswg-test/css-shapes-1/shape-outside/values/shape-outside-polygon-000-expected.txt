@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS Single point - inline 
+PASS Single point with fill-rule - inline 
+PASS Multiple points - inline 
+PASS Multiple points with fill-rule - inline 
+PASS Single point - computed 
+PASS Single point with fill-rule - computed 
+PASS Multiple points - computed 
+PASS Multiple points with fill-rule - computed 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Testing sandbox not inherited via target='_blank' when 'allow-popups-to-escape-sandbox' present 
+Harness: the test ran to completion.
+

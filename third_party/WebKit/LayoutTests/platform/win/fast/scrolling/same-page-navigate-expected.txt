@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Ensure that the scroll position is correct when we navigate to same page after scale(zoom-in/zoom-out) 
+Harness: the test ran to completion.
+

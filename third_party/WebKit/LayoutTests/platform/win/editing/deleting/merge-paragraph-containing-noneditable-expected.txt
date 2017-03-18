@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Merging paragraphs with mixed editability does not cause loss of elements. 
+Harness: the test ran to completion.
+

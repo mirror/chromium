@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS HTML5 Media Elements: 'media' attribute 
+Harness: the test ran to completion.
+

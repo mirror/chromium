@@ -1,0 +1,5 @@
+CONSOLE ERROR: line 2487: Uncaught Error: assert_equals: expected "rgb(255, 0, 0)" but got "rgb(255, 255, 0)"
+This is a testharness.js-based test.
+PASS SRI on cross origin CORS disabled style, without CORS fetch 
+Harness: the test ran to completion.
+

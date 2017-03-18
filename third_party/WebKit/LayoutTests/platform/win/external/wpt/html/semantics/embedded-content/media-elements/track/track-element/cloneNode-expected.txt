@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS track element cloneNode, not loaded 
+PASS track element cloneNode, loading 
+FAIL track element cloneNode, loaded assert_unreached: elm got error Reached unreachable code
+PASS track element cloneNode, failed to load 
+Harness: the test ran to completion.
+

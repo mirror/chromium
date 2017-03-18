@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Throwing inside an unhandledrejection handler invokes the error handler. 
+Harness: the test ran to completion.
+

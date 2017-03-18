@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that setting each component of transformOrigin to a variable reference works. 
+Harness: the test ran to completion.
+

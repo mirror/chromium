@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS SRI on cross origin CORS disabled script, without CORS fetch, but an empty integrity attribute 
+Harness: the test ran to completion.
+

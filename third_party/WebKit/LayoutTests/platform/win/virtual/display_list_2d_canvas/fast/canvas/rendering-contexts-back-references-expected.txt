@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS 2d context on html canvas 
+FAIL webgl context on html canvas Cannot read property 'canvas' of null
+PASS bitmaprenderer context on html canvas 
+PASS 2d context on offscreen canvas 
+PASS webgl context on offscreen canvas 
+Harness: the test ran to completion.
+

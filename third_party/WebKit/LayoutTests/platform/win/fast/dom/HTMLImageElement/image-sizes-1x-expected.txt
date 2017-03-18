@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test srcset and sizes at a 1x screen 
+Harness: the test ran to completion.
+

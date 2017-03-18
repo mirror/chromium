@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS document.domain goes through proper canonicalization. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS SVG Web Animations should be responsive to changes in animation timing 
+Harness: the test ran to completion.
+

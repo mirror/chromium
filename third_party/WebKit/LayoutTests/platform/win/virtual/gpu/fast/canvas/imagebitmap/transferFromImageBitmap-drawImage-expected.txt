@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS testDrawCanvasWithImageBitamp should not return any error 
+PASS transferFromImageBitmap(image) with a neutered image should throw InvalidStateError 
+Harness: the test ran to completion.
+

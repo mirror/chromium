@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS 1 
+PASS 9 
+PASS 22 
+PASS 99 
+PASS 123456 
+PASS 222222 
+PASS 999999 
+Harness: the test ran to completion.
+

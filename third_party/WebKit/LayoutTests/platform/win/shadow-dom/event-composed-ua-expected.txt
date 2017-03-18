@@ -1,0 +1,28 @@
+This is a testharness.js-based test.
+PASS A blur event should be a composed event 
+PASS A focus event should be a composed event 
+PASS A focusin event should be a composed event 
+PASS A focusout event should be a composed event 
+PASS A click event should be a composed event 
+PASS A dblclick event should be a composed event 
+PASS A mousedown event should be a composed event 
+PASS A mouseenter event should be a composed event 
+PASS A mouseleave event should be a composed event 
+PASS A mousemove event should be a composed event 
+PASS A mouseout event should be a composed event 
+PASS A mouseover event should be a composed event 
+PASS A mouseup event should be a composed event 
+PASS A wheel event should be a composed event 
+PASS A beforeinput event should be a composed event 
+PASS A input event should be a composed event 
+PASS A keydown event should be a composed event 
+PASS A keyup event should be a composed event 
+PASS A compositionstart event should be a composed event 
+PASS A compositionupdate event should be a composed event 
+PASS A compositionend event should be a composed event 
+PASS A DOMActivate event should be a composed event 
+PASS A DOMFocusIn event should be a composed event 
+PASS A DOMFocusOut event should be a composed event 
+PASS A keypress event should be a composed event 
+Harness: the test ran to completion.
+

@@ -1,0 +1,22 @@
+This is a testharness.js-based test.
+PASS FormData.has() 
+PASS FormData.delete() 
+PASS FormData.set() - DOMString 
+PASS FormData.set() - Blob 
+PASS FormData.set() - Blob and filename 
+PASS FormData.set() replaces all entries 
+PASS FormData.get() - DOMString 
+PASS FormData.get() - Blob 
+PASS FormData.get() - Blob and filename 
+PASS FormData.get() - multiple matches 
+PASS FormData.get() - no matches 
+PASS FormData.getAll() 
+PASS FormData.getAll() - no matches 
+PASS FormData.get() - Files with name overrides 
+PASS FormData.getAll() - Files with name overrides 
+PASS FormData - lastModifiedDate of File/Blob entries 
+PASS FormData - encoding round-trip 
+PASS FormData - ScalarValueStrings 
+PASS FormData - iterators 
+Harness: the test ran to completion.
+

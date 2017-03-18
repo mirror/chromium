@@ -1,0 +1,5 @@
+CONSOLE ERROR: line 9: Refused to load the shared worker 'http://127.0.0.1:8000/security/contentSecurityPolicy/require-sri-for/sri-sharedworker.js' because 'require-sri-for' directive requires integrity attribute be present for all shared workers.
+This is a testharness.js-based test.
+PASS Checks that shared worker creation is blocked 
+Harness: the test ran to completion.
+

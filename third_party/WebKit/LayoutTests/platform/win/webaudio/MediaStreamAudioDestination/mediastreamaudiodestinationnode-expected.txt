@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS # AUDIT TASK RUNNER STARTED. 
+PASS > [test] Basic tests for MediaStreamAudioDestinationNode API 
+PASS   mediaStreamDestination instance is true. 
+PASS   Setting the channel count beyond 8 threw NotSupportedError: "Failed to set the 'channelCount' property on 'AudioNode': The channel count provided (9) is outside the range [1, 8].". 
+PASS   mediaStreamDestination.numberOfInputs is equal to 1. 
+PASS   Number of outputs is equal to 1. 
+PASS < [test] All assertions passed. (total 4 assertions) 
+PASS # AUDIT TASK RUNNER FINISHED: 1 tasks ran successfully. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,5 @@
+CONSOLE WARNING: line 15: VRDisplay.getPose() is deprecated. Please use VRDisplay.getFrameData() instead.
+This is a testharness.js-based test.
+PASS getPose does not provide data until it is available after a rAF call 
+Harness: the test ran to completion.
+

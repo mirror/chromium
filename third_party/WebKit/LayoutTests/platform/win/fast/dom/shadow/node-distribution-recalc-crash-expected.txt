@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Reproduction case for crbug.com/569196 (assertion hit in ComposedTreeTraversal::parent()) 
+Harness: the test ran to completion.
+

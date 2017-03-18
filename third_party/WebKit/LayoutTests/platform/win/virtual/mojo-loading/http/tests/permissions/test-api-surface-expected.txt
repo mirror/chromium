@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Permissions API: test API surface. 
+PASS Check the Permissions API surface in the Window scope. 
+PASS Check the Permissions API surface in the DedicatedWorker scope. 
+PASS Check the Permissions API surface in the SharedWorker scope. 
+PASS Check the Permissions API surface in the ServiceWorker scope. 
+Harness: the test ran to completion.
+

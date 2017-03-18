@@ -1,0 +1,17 @@
+This is a testharness.js-based test.
+PASS CSS.supports('counter-increment', "hello world 999") should return true 
+PASS e.style['counterIncrement'] = "hello world 999" should set the value 
+PASS Serialization should round-trip after setting e.style['counterIncrement'] = "hello world 999" 
+PASS CSS.supports('counter-increment', "a 1234567") should return true 
+PASS e.style['counterIncrement'] = "a 1234567" should set the value 
+PASS Serialization should round-trip after setting e.style['counterIncrement'] = "a 1234567" 
+PASS CSS.supports('counter-increment', "hello \"world\"") should return false 
+PASS e.style['counterIncrement'] = "hello \"world\"" should not set the value 
+PASS CSS.supports('counter-increment', "40") should return false 
+PASS e.style['counterIncrement'] = "40" should not set the value 
+PASS CSS.supports('counter-reset', "c 10 20") should return false 
+PASS e.style['counterReset'] = "c 10 20" should not set the value 
+PASS CSS.supports('counter-reset', "c + 5") should return false 
+PASS e.style['counterReset'] = "c + 5" should not set the value 
+Harness: the test ran to completion.
+

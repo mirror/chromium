@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS button.menu, the potentially-reflecting IDL attribute, does not exist 
+PASS button.type reflects properly 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Add content to an overflow:auto container, so that scrollbars appear 
+Harness: the test ran to completion.
+

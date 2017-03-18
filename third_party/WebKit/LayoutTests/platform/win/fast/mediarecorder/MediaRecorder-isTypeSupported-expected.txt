@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS check MediaRecorder.isTypeSupported() with invalid video MIME types 
+PASS check MediaRecorder.isTypeSupported() with valid video MIME types 
+PASS check MediaRecorder.isTypeSupported() with invalid audio MIME types 
+PASS check MediaRecorder.isTypeSupported() with valid audio MIME types 
+Harness: the test ran to completion.
+

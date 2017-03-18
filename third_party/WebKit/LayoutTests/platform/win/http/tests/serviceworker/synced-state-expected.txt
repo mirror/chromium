@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS worker objects for the same entity have the same state 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS source elements removed using removeChild() 
+PASS source elements removed using innerHTML() 
+PASS source elements removed using replaceChild() 
+Harness: the test ran to completion.
+

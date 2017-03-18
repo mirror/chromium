@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL Simple scripts that inject external scripts via document.write should be preloaded assert_less_than: expected a number less than 188.12500000000003 but got 189.46500000000003
+Harness: the test ran to completion.
+

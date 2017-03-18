@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Traversing the history, unload event is fired on doucment 
+Harness: the test ran to completion.
+

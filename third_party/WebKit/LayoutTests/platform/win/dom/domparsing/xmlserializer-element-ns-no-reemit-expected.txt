@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS XMLSerializer: Don't emit redundant declarations of the default NS. 
+PASS XMLSerializer: Don't emit redundant declarations of a prefix. 
+Harness: the test ran to completion.
+

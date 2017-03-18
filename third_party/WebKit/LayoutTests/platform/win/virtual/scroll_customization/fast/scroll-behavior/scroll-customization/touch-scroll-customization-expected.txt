@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS These tests only work with scroll customization enabled. 
+PASS Scroll offsets are modified correctly. 
+PASS Correct amount of delta is consumed. 
+PASS Scroll propagation behaves correctly. 
+PASS Correct number of scroll begin and end events observed. 
+PASS Touchscreen fling doesn't propagate. 
+Harness: the test ran to completion.
+

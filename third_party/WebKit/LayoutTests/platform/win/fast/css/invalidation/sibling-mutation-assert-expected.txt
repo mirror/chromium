@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Scheduling sibling set with wholeSubtreeInvalid should not cause asserts. 
+Harness: the test ran to completion.
+

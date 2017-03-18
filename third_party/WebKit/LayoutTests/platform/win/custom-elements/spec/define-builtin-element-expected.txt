@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Element interface for extends is not valid custom element name should throw error 
+PASS Element interface for extends not defined in specification should throw error 
+PASS localName set to element interface for extends 
+Harness: the test ran to completion.
+

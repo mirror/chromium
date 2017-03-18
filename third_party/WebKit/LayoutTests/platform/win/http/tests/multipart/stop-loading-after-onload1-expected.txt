@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS window.stop() can stop loading of multipart images after <img>'s onload and before the next part loaded after onload. 
+Harness: the test ran to completion.
+

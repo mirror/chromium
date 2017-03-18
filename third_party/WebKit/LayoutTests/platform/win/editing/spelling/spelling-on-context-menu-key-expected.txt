@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS This test requires context menu key. 
+PASS This test requires event sender. 
+PASS Mark initial misspelling. 
+PASS When caret is on a misspelled word, pressing context menu key selects the word. 
+Harness: the test ran to completion.
+

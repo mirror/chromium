@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Registering within Service-Worker-Allowed path 
+PASS Registering within Service-Worker-Allowed path with parent reference 
+PASS Registering outside Service-Worker-Allowed path 
+PASS Registering outside Service-Worker-Allowed path with parent reference 
+PASS Registering cross-origin Service-Worker-Allowed 
+Harness: the test ran to completion.
+

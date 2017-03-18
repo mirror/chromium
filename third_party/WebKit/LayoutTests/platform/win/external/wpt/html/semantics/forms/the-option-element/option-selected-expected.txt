@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS not dirty 
+PASS dirty, selected 
+PASS dirty, not selected 
+Harness: the test ran to completion.
+

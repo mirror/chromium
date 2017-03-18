@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Non-function values for easing are not use-counted. 
+PASS Invalid non-function values for easing are not use-counted. 
+PASS A specific linear function for easing is counted in WebAnimationsEasingAsFunctionLinear. 
+Harness: the test ran to completion.
+

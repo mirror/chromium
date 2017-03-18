@@ -1,0 +1,13 @@
+This is a testharness.js-based test.
+PASS A simple div with inner text should not have an accessible name. 
+PASS A button's accessible name should come from its contents. 
+PASS Button with aria-labelledby referencing the id of another element. 
+PASS Button with aria-labelledby referencing itself. 
+PASS Button with aria-labelledby referencing itself and the id of another element. 
+PASS Button with chain of aria-labelledby references. 
+PASS aria-labelledby reference to nonexistant element. 
+PASS aria-labelledby reference to element with no text. 
+PASS Button with aria-labelledby reference to invisible element. 
+PASS Button with aria-labelledby reference to display-none element. 
+Harness: the test ran to completion.
+

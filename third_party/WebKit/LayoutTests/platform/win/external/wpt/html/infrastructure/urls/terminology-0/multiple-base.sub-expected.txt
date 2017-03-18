@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS If there are multiple <base> elements, the document base URL is the frozen base URL of the first one that has an href attribute 
+Harness: the test ran to completion.
+

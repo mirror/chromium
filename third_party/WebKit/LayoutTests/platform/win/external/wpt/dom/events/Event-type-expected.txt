@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Event.type should initially be the empty string 
+PASS Event.type should be initialized by initEvent 
+PASS Event.type should be initialized by the constructor 
+Harness: the test ran to completion.
+

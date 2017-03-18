@@ -1,0 +1,9 @@
+CONSOLE ERROR: line 27: Form submission failed, as the <TEXTAREA> element named 'dangling' was implicitly closed by reaching the end of the file. Please add an explicit end tag ('</TEXTAREA>')
+CONSOLE ERROR: line 27: Form submission failed, as the <TEXTAREA> element named 'dangling' was implicitly closed by reaching the end of the file. Please add an explicit end tag ('</TEXTAREA>')
+CONSOLE ERROR: line 27: Form submission failed, as the <TEXTAREA> element named 'dangling' was implicitly closed by reaching the end of the file. Please add an explicit end tag ('</TEXTAREA>')
+This is a testharness.js-based test.
+PASS       <form action="/security/resources/postmessage-post.php" method="post">        <input type="submit">        <textarea name="dangling">     
+PASS       <div>        <form action="/security/resources/postmessage-post.php" method="post">          <input type="submit">          <textarea name="dangling">     
+PASS       <form action="/security/resources/postmessage-post.php" method="post" id="form">        <input type="submit">      </form>      <textarea name="dangling" form="form">     
+Harness: the test ran to completion.
+

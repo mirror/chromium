@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS Button with aria-label. 
+PASS Button with explicitly empty label. 
+PASS Button with label value not specified. 
+PASS aria-labelledby trumps both aria-label and contents. 
+PASS Button with aria-labelledby referencing an element with an aria-label uses the aria-label as text alternative. 
+PASS aria-labelledby reference to element with empty aria-label. 
+PASS Recursive aria-labelledby references aren't followed even in presence of aria-label, even though aria-labelledby normally trumps aria-label. 
+Harness: the test ran to completion.
+

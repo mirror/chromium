@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Pasting text ending with newline should work correctly. 
+PASS Pasting \n into an empty TEXTAREA should set the caret at the end. 
+Harness: the test ran to completion.
+

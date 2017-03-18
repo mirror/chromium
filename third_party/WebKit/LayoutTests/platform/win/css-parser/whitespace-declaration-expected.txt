@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Verify that property values consisting of only whitespace are not accepted. 
+Harness: the test ran to completion.
+

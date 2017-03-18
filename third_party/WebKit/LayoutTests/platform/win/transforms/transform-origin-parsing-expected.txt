@@ -1,0 +1,56 @@
+This is a testharness.js-based test.
+PASS "transform-origin: initial;" should parse as "initial" 
+PASS "transform-origin: initial;" should be computed to "100px 50px" 
+PASS "transform-origin: inherit;" should parse as "inherit" 
+PASS "transform-origin: left;" should parse as "left center 0px" 
+PASS "transform-origin: left;" should be computed to "0px 50px" 
+PASS "transform-origin: center;" should parse as "center center 0px" 
+PASS "transform-origin: center;" should be computed to "100px 50px" 
+PASS "transform-origin: right;" should parse as "right center 0px" 
+PASS "transform-origin: right;" should be computed to "200px 50px" 
+PASS "transform-origin: top;" should parse as "center top 0px" 
+PASS "transform-origin: bottom;" should parse as "center bottom 0px" 
+PASS "transform-origin: 0;" should parse as "0px center 0px" 
+PASS "transform-origin: 10%;" should parse as "10% center 0px" 
+PASS "transform-origin: 10%;" should be computed to "20px 50px" 
+PASS "transform-origin: 10px;" should parse as "10px center 0px" 
+PASS "transform-origin: 10px;" should be computed to "10px 50px" 
+PASS "transform-origin: left top;" should parse as "left top 0px" 
+PASS "transform-origin: right bottom;" should parse as "right bottom 0px" 
+PASS "transform-origin: center center;" should parse as "center center 0px" 
+PASS "transform-origin: center center;" should be computed to "100px 50px" 
+PASS "transform-origin: center top;" should parse as "center top 0px" 
+PASS "transform-origin: center left;" should parse as "left center 0px" 
+PASS "transform-origin: top right;" should parse as "right top 0px" 
+PASS "transform-origin: left 10%;" should parse as "left 10% 0px" 
+PASS "transform-origin: left 10px;" should parse as "left 10px 0px" 
+PASS "transform-origin: 10% top;" should parse as "10% top 0px" 
+PASS "transform-origin: 10px top;" should parse as "10px top 0px" 
+PASS "transform-origin: 10px 20%;" should parse as "10px 20% 0px" 
+PASS "transform-origin: 0 0;" should parse as "0px 0px 0px" 
+PASS "transform-origin: 0px 10%;" should parse as "0px 10% 0px" 
+PASS "transform-origin: 0px 10%;" should be computed to "0px 10px" 
+PASS "transform-origin: 0px 20px;" should parse as "0px 20px 0px" 
+PASS "transform-origin: 0px 20px;" should be computed to "0px 20px" 
+PASS "transform-origin: 0px top;" should parse as "0px top 0px" 
+PASS "transform-origin: 0px top;" should be computed to "0px 0px" 
+PASS "transform-origin: 0px bottom;" should parse as "0px bottom 0px" 
+PASS "transform-origin: 0px bottom;" should be computed to "0px 100px" 
+PASS "transform-origin: 0px center;" should parse as "0px center 0px" 
+PASS "transform-origin: 0px center;" should be computed to "0px 50px" 
+PASS "transform-origin: 0 0 0;" should parse as "0px 0px 0px" 
+PASS "transform-origin: 10% 20% 30px;" should parse as "10% 20% 30px" 
+PASS "transform-origin: left top 10px;" should parse as "left top 10px" 
+PASS "transform-origin: center center 20px;" should parse as "center center 20px" 
+PASS "transform-origin: 0px 0px 5px;" should parse as "0px 0px 5px" 
+PASS "transform-origin: 0px 0px 5px;" should be computed to "0px 0px 5px" 
+PASS "transform-origin: left right;" should be invalid 
+PASS "transform-origin: top bottom;" should be invalid 
+PASS "transform-origin: none;" should be invalid 
+PASS "transform-origin: 20;" should be invalid 
+PASS "transform-origin: 10% 20% 30%;" should be invalid 
+PASS "transform-origin: top 10%;" should be invalid 
+PASS "transform-origin: bottom 10%;" should be invalid 
+PASS "transform-origin: 50% 50% 0px 0px;" should be invalid 
+Harness: the test ran to completion.
+

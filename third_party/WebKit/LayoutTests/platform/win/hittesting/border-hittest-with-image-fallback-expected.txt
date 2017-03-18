@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL elementFromPoint should return an element under a point that is clipped to a border-radius assert_equals: expected "BODY" but got "IMG"
+Harness: the test ran to completion.
+

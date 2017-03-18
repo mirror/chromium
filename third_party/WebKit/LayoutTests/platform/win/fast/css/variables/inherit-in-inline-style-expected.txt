@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS The special inherit value can be read from inline style. 
+PASS The special inherit value can be read after setting. 
+PASS The special inherit value can be read from a declared rule. 
+Harness: the test ran to completion.
+

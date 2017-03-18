@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Test that a change event is fired when the page is visible. 
+PASS Test that change event is not fired when the page is not visible. 
+PASS Test that screen.orientation keeps returning the same orientation when the page is not visible. 
+PASS Test that screen.orientation is updated once the page is visible again. 
+PASS Test that the iframe got as many events as the main frame. 
+Harness: the test ran to completion.
+

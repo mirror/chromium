@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS word-wrap: normal; word-break: normal; 
+PASS word-wrap: break-word; 
+PASS word-break: break-all; 
+Harness: the test ran to completion.
+

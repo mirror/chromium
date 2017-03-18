@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test muted autoplay videos interaction with data saver on 
+Harness: the test ran to completion.
+

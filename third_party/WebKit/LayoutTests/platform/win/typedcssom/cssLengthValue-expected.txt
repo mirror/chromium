@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Test that CSSLengthValue's static from(double value, LengthType type) method produces a CSSSimpleLength. 
+PASS Test that CSSLengthValue's static from(CalcDictionary dictionary) method produces a CSSCalcLength. 
+Harness: the test ran to completion.
+

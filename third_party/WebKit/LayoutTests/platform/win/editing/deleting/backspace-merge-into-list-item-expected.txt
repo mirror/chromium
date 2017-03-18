@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS make a paragraph into a list by backspace 
+Harness: the test ran to completion.
+

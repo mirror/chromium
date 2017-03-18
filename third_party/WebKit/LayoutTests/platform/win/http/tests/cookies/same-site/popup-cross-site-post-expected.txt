@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS 'example.test' is not same-site with 'cookies.not-example.test', so samesite cookies are not sent via POST. 
+Harness: the test ran to completion.
+

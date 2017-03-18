@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS DOMStringList: length attribute 
+PASS DOMStringList: item() method 
+PASS DOMStringList: indexed getter 
+PASS DOMStringList: contains() method 
+Harness: the test ran to completion.
+

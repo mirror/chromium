@@ -1,0 +1,13 @@
+This is a testharness.js-based test.
+PASS mouse pointerevent boundary events in capturing 
+PASS PointerEvent Automation 
+PASS mouse pointer events boundary events when receiving capture 
+PASS mouse pointer events boundary events when releasing capture 
+PASS touch pointerevent boundary events in capturing 
+PASS touch pointer events boundary events when receiving capture 
+PASS touch pointer events boundary events when releasing capture 
+PASS pen pointerevent boundary events in capturing 
+PASS pen pointer events boundary events when receiving capture 
+PASS pen pointer events boundary events when releasing capture 
+Harness: the test ran to completion.
+

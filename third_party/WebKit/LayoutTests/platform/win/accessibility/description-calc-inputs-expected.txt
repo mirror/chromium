@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS Text input uses placeholder as accessible name if that's the only accessible text. 
+PASS Text input uses ARIA placeholder as accessible name if that's the only accessible text. 
+PASS Text input uses placeholder in preference to ARIA placeholder for accessible name. 
+PASS Text input uses placeholder as accessible placeholder (not description) if it wasn't used as the accessible name. 
+PASS Text input uses aria-placeholder as accessible placeholder if it wasn't used as the accessible name. 
+PASS Text input uses placeholder in preference to ARIA placeholder for accessible placeholder. 
+PASS aria-describedby is used as the accessible description, placeholder is used as placeholder. 
+PASS Text input uses title as accessible name if that's the only accessible text. 
+PASS Text input uses title as accessible description if it wasn't used as the accessible name. 
+PASS aria-describedby overrides title as the accessible description. 
+PASS aria-describedby does not include newlines. 
+Harness: the test ran to completion.
+

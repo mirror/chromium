@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Canvas test: drawFocusIfNeeded scrolls 
+Harness: the test ran to completion.
+

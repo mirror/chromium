@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test Description: The postMessage() method - Create an event that uses the MessageEvent interface, with the name message, which does not bubble and is not cancelable. 
+Harness: the test ran to completion.
+

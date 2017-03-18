@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Service worker responses aren't cached for suborigins 
+Harness: the test ran to completion.
+

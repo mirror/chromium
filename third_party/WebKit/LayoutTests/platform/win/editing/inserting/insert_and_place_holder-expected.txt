@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS displaced generic placeholder 
+PASS displaced placeholder with "class" attribute 
+Harness: the test ran to completion.
+

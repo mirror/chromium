@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This tests the constructor for the PromiseRejectionEvent DOM class. 
+Harness: the test ran to completion.
+

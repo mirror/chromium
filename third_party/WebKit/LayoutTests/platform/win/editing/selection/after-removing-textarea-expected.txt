@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS We should have caret after removing TEXTAREA 
+Harness: the test ran to completion.
+

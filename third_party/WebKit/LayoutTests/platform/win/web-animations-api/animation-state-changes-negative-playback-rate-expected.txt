@@ -1,0 +1,42 @@
+This is a testharness.js-based test.
+PASS Play state is idle after cancelling a reversed animation 
+PASS Play state is pending after playing a cancelled reversed animation 
+PASS Play state is running after playing and setting start time of a cancelled reversed animation 
+PASS Play state is paused after pausing and setting current time of a cancelled reversed animation 
+PASS Play state is finished after playing and finishing a cancelled reversed animation 
+PASS Calling play() on an idle animation 
+PASS Calling pause() on an idle animation 
+PASS Calling cancel() on an idle animation 
+PASS Calling finish() on an idle animation 
+PASS Calling reverse() on an idle animation 
+PASS Setting currentTime on an idle animation 
+PASS Setting startTime on an idle animation 
+PASS Calling play() on a pending animation 
+PASS Calling pause() on a pending animation 
+PASS Calling cancel() on a pending animation 
+PASS Calling finish() on a pending animation 
+PASS Calling reverse() on a pending animation 
+PASS Setting currentTime on a pending animation 
+PASS Setting startTime on a pending animation 
+PASS Calling play() on a running animation 
+PASS Calling pause() on a running animation 
+PASS Calling cancel() on a running animation 
+PASS Calling finish() on a running animation 
+PASS Calling reverse() on a running animation 
+PASS Setting currentTime on a running animation 
+PASS Setting startTime on a running animation 
+PASS Calling play() on a paused animation 
+PASS Calling pause() on a paused animation 
+PASS Calling cancel() on a paused animation 
+PASS Calling finish() on a paused animation 
+PASS Calling reverse() on a paused animation 
+PASS Setting currentTime on a paused animation 
+PASS Setting startTime on a paused animation 
+PASS Calling play() on a finished animation 
+PASS Calling pause() on a finished animation 
+PASS Calling cancel() on a finished animation 
+PASS Calling finish() on a finished animation 
+PASS Calling reverse() on a finished animation 
+PASS Setting currentTime on a finished animation 
+Harness: the test ran to completion.
+

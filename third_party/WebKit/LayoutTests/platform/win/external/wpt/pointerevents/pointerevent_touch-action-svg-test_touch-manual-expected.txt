@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS touch-action attribute test out of SVG 
+PASS touch-action attribute test in SVG 
+PASS PointerEvent Automation 
+Harness: the test ran to completion.
+

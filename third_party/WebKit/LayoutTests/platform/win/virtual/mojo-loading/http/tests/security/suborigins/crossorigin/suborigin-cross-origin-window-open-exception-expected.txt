@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Crossorigin access to window.open and window.opener should throw a SecurityError 
+Harness: the test ran to completion.
+

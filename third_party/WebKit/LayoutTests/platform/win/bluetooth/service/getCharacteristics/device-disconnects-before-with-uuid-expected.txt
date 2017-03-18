@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Device disconnects before getCharacteristics. Reject with NetworkError 
+Harness: the test ran to completion.
+

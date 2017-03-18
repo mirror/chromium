@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that content window and attributes should be accessible. 
+Harness: the test ran to completion.
+

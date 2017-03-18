@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Makes sure that header preloaded resources are downloaded with the document's charset 
+Harness: the test ran to completion.
+

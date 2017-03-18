@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS removeFormat command should not remove A element. 
+PASS Range#extractContents() extracts A with anchor text but leaves A. 
+Harness: the test ran to completion.
+

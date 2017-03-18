@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Script inside noembed, noframes and iframe 
+Harness: the test ran to completion.
+

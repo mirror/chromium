@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS getState 
+PASS getState from a worker 
+PASS no active worker 
+Harness: the test ran to completion.
+

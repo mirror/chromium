@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that the fill and stroke style attributes yield opaque black when set to 'currentcolor' on an OffscreenCanvasRenderingContext2D. 
+Harness: the test ran to completion.
+

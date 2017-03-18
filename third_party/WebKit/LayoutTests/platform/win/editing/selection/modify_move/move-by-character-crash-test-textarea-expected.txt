@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This test sets caret at the beginning of backward text and moving the character to left and right. 
+Harness: the test ran to completion.
+

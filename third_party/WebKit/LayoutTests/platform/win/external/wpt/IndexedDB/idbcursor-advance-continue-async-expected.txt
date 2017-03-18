@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS IDBCursor asyncness - advance 
+PASS IDBCursor asyncness - continue 
+PASS IDBCursor asyncness - fresh advance still async 
+PASS IDBCursor asyncness - fresh continue still async 
+Harness: the test ran to completion.
+

@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS A button can't be modal 
+PASS An ARIA dialog with aria-modal false is not modal 
+PASS An ARIA dialog with aria-modal true is modal 
+PASS An ARIA alertdialog with aria-modal true is modal 
+PASS An HTML dialog is modal after calling showModal() on it 
+PASS A closed HTML dialog has no accessibility node 
+PASS An open HTML dialog is not modal 
+PASS An open HTML dialog with aria-modal=true is modal 
+Harness: the test ran to completion.
+

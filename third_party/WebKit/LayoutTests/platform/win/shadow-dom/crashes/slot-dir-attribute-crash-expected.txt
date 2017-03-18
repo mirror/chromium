@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS HTMLSlotElement's dir attribute should not be used until Blink supports slots in a flat tree. 
+Harness: the test ran to completion.
+

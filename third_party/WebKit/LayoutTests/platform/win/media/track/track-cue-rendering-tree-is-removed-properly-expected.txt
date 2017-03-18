@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that the cue display tree has been removed properly and no crash happens. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS InsertNewlineInQuotedContent should not use obsolete selection 
+Harness: the test ran to completion.
+

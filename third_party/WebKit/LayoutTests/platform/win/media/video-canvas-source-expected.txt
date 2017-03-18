@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Verify that drawing to canvas using video with source element does not taint canvas 
+Harness: the test ran to completion.
+

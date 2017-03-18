@@ -1,0 +1,6 @@
+CONSOLE ERROR: line 11: Error: <feConvolveMatrix> attribute order: A negative value is not valid. ("-2147483649")
+This is a testharness.js-based test.
+PASS SVGIntegerOptionalInteger value range, outside range of int. 
+PASS SVGIntegerOptionalInteger value range, not exactly representable as int. 
+Harness: the test ran to completion.
+

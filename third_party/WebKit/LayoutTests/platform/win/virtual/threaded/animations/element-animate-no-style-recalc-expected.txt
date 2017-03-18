@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Calling element.animate() should not force a style recalc. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS The return value of AudioParam.setValueAtTime() matches the source AudioParam is equal to true. 
+PASS The return value of AudioParam.linearRampToValueAtTime() matches the source AudioParam is equal to true. 
+PASS The return value of AudioParam.exponentialRampToValueAtTime() matches the source AudioParam is equal to true. 
+PASS The return value of AudioParam.setTargetAtTime() matches the source AudioParam is equal to true. 
+PASS The return value of AudioParam.setValueCurveAtTime() matches the source AudioParam is equal to true. 
+PASS The return value of AudioParam.cancelScheduledValues() matches the source AudioParam is equal to true. 
+PASS Calling setValueAtTime() with a negative end time threw InvalidAccessError: Failed to execute 'setValueAtTime' on 'AudioParam': Time must be a finite non-negative number: -1. 
+PASS Calling exponentialRampToValueAtTime() with a zero target value threw InvalidAccessError: Failed to execute 'exponentialRampToValueAtTime' on 'AudioParam': The float target value provided (0) should not be in the range (-1.40130e-45, 1.40130e-45).. 
+PASS The gain value of the first gain node is equal to 1. 
+PASS The gain value of the second gain node is equal to 0.5. 
+PASS The rendered envelope equals [0,0.000125,0.00025,0.000375,0.0005,...] with an element-wise tolerance of 0.0000040532. 
+Harness: the test ran to completion.
+

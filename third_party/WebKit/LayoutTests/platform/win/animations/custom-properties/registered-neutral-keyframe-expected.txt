@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS CSS Animations neutral keyframes on registered custom properties should produce the underlying value 
+Harness: the test ran to completion.
+

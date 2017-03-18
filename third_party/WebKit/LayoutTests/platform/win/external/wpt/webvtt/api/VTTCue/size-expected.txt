@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS VTTCue.size, script-created cue 
+Harness: the test ran to completion.
+

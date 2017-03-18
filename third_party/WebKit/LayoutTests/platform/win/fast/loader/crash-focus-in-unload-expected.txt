@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Should not trigger assertion. crbug.com/677690 
+Harness: the test ran to completion.
+

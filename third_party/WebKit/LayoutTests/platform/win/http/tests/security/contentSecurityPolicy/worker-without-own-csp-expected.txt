@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Worker should not inherit document's CSP 
+PASS Shared worker should not inherit document's CSP 
+Harness: the test ran to completion.
+

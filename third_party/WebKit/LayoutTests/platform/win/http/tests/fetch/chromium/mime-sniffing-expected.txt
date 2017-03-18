@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Mime sniffing should not run. 
+Harness: the test ran to completion.
+

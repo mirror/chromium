@@ -1,0 +1,5 @@
+CONSOLE ERROR: line 16: Mixed Content: The page at 'https://127.0.0.1:8443/security/mixedContent/insecure-xhr-in-main-frame.https.html' was loaded over HTTPS, but requested an insecure XMLHttpRequest endpoint 'http://example.test:8000/xmlhttprequest/resources/access-control-allow-lists.php?origin=*'. This request has been blocked; the content must be served over HTTPS.
+This is a testharness.js-based test.
+PASS XHR to http://example.test:8000/ should be blocked. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Zoom does not affect the font size. 
+Harness: the test ran to completion.
+

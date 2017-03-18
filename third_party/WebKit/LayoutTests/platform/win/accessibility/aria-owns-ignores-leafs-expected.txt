@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Aria-owns should re-parent a target when the source role allows children. 
+PASS Aria-owns doesn't move an element if the role doesn't allow children. 
+PASS Aria-owns doesn't create children of an input element. 
+PASS Aria-owns doesn't create children of a textarea element. 
+PASS Aria-owns doesn't create children of a contenteditable element. 
+Harness: the test ran to completion.
+

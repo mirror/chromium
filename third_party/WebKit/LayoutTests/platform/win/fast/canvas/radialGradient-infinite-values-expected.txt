@@ -1,0 +1,21 @@
+This is a testharness.js-based test.
+PASS Test createRadialGradient(0, 0, 100, 0, 0, NaN) 
+PASS Test createRadialGradient(0, 0, 100, 0, 0, Infinity) 
+PASS Test createRadialGradient(0, 0, 100, 0, 0, -Infinity) 
+PASS Test createRadialGradient(0, 0, 100, 0, NaN, 100) 
+PASS Test createRadialGradient(0, 0, 100, 0, Infinity, 100) 
+PASS Test createRadialGradient(0, 0, 100, 0, -Infinity, 100) 
+PASS Test createRadialGradient(0, 0, 100, NaN, 0, 100) 
+PASS Test createRadialGradient(0, 0, 100, Infinity, 0, 100) 
+PASS Test createRadialGradient(0, 0, 100, -Infinity, 0, 100) 
+PASS Test createRadialGradient(0, 0, NaN, 0, 0, 100) 
+PASS Test createRadialGradient(0, 0, Infinity, 0, 0, 100) 
+PASS Test createRadialGradient(0, 0, -Infinity, 0, 0, 100) 
+PASS Test createRadialGradient(0, NaN, 100, 0, 0, 100) 
+PASS Test createRadialGradient(0, Infinity, 100, 0, 0, 100) 
+PASS Test createRadialGradient(0, -Infinity, 100, 0, 0, 100) 
+PASS Test createRadialGradient(NaN, 0, 100, 0, 0, 100) 
+PASS Test createRadialGradient(Infinity, 0, 100, 0, 0, 100) 
+PASS Test createRadialGradient(-Infinity, 0, 100, 0, 0, 100) 
+Harness: the test ran to completion.
+

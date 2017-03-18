@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS createComment("\v") 
+PASS createComment("a -- b") 
+PASS createComment("a-") 
+PASS createComment("-b") 
+PASS createComment(null) 
+PASS createComment(undefined) 
+Harness: the test ran to completion.
+

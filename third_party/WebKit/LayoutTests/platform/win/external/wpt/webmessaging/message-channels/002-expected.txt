@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS without start() 
+Harness: the test ran to completion.
+

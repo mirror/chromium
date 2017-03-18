@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Neutral keyframes should be able to specify their own keyframe timing function. 
+Harness: the test ran to completion.
+

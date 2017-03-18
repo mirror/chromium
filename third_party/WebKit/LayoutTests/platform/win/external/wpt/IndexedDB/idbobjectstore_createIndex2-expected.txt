@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBObjectStore.createIndex() - attempt to create an index that requires unique values on an object store already contains duplicates  
+Harness: the test ran to completion.
+

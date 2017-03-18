@@ -1,0 +1,13 @@
+This is a testharness.js-based test.
+PASS Test that NavigatorLanguage API is present in window 
+PASS Test that the languagechange event fires on window.onlanguagechange 
+PASS Test that the languagechange event fires on window.addEventListener('languagechange') 
+PASS Test that the languagechange event fires on body onlanguagechange attribute 
+PASS Test that the languagechange event fires on body onlanguagechange attribute XOR window.onlanguagechange 
+PASS Test that changing the language to the same value doesn't fire an event. 
+PASS Test properties of the fired event. 
+PASS Test that navigator.languages reflects the accept languages value. 
+PASS Test that navigator.languages caching behaviour. 
+PASS Test that the default navigator.language in the test environment. 
+Harness: the test ran to completion.
+

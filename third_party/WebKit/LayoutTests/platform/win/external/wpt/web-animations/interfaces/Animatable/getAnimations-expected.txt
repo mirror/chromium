@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS Test getAnimations on element with no animations 
+PASS Test getAnimations on element with two animations 
+PASS Test getAnimations on separate elements with separate animations 
+PASS Test getAnimations on parent and child elements with separate animations 
+PASS Test getAnimations on element with finished fill none animation 
+PASS Test getAnimations on element with finished fill forwards animation 
+PASS Test getAnimations on element with delayed animation 
+Harness: the test ran to completion.
+

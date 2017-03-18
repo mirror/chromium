@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS default scope 
+PASS undefined scope 
+PASS null scope 
+Harness: the test ran to completion.
+

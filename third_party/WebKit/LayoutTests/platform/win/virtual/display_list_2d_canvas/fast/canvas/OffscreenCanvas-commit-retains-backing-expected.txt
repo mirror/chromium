@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Verify that commit() preserves the contents of an OffscreenCanvas with a 2d context. 
+Harness: the test ran to completion.
+

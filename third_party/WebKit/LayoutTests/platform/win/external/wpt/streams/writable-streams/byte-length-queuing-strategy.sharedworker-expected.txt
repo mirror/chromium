@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Closing a writable stream with in-flight writes below the high water mark delays the close call properly 
+Harness: the test ran to completion.
+

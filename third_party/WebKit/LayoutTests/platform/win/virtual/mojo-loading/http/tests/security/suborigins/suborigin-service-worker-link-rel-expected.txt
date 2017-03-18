@@ -1,0 +1,5 @@
+CONSOLE ERROR: line 20: Cannot register service worker with <link> element. Service worker is disabled because the context is in a suborigin.
+This is a testharness.js-based test.
+PASS Service Worker link rel fails from a suborigin 
+Harness: the test ran to completion.
+

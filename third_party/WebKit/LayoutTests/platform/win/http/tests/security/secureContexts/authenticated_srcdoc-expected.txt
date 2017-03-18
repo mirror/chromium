@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS authenticated origin is secure. 
+PASS Frames inside sandboxed frames are secure 
+Harness: the test ran to completion.
+

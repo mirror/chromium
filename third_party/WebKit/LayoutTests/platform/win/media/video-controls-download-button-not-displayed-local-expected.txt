@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Download button should not appear for local files. 
+Harness: the test ran to completion.
+

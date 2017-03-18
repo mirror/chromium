@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS window.performance is defined 
+PASS High Resolution Time extension to the Performance interface 
+PASS window.performance.now() function 
+PASS window.performance.now() returns a number 
+PASS High resolution time has approximately the right relative magnitude 
+Harness: the test ran to completion.
+

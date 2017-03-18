@@ -1,0 +1,30 @@
+This is a testharness.js-based test.
+PASS Check that setting background-image to CSSURLImageValue('') doesn't cause a crash 
+PASS Setting background-image to none 
+PASS Setting background-image to initial 
+PASS Setting background-image to inherit 
+PASS Setting background-image to unset 
+PASS Setting background-image to CSSURLImageValue with value url("file:///C:/src/blink/src/third_party/WebKit/LayoutTests/typedcssom/inlinestyle/properties/background-image.htmlresources/1x1-green.jpg") 
+PASS Setting background-image to CSSURLImageValue with value url("file:///C:/src/blink/src/third_party/WebKit/LayoutTests/typedcssom/inlinestyle/properties/background-image.html") 
+PASS Setting background-image to invalid value CSSSimpleLength throws 
+PASS Setting background-image to invalid value null throws 
+PASS Setting background-image to invalid value undefined throws 
+PASS Setting background-image to invalid value true throws 
+PASS Setting background-image to invalid value false throws 
+PASS Setting background-image to invalid value 1 throws 
+PASS Setting background-image to invalid value hello throws 
+PASS Setting background-image to invalid value [object Object] throws 
+PASS Setting background-image to invalid value CSSKeywordValue throws 
+PASS Getting background-image when it is set to none 
+PASS Getting background-image when it is set to initial 
+PASS Getting background-image when it is set to inherit 
+PASS Getting background-image when it is set to unset 
+PASS Getting background-image with a CSSURLImageValue whose value is url("file:///C:/src/blink/src/third_party/WebKit/LayoutTests/typedcssom/inlinestyle/properties/background-image.htmlresources/1x1-green.jpg") 
+PASS Getting background-image with a CSSURLImageValue whose value is url("file:///C:/src/blink/src/third_party/WebKit/LayoutTests/typedcssom/inlinestyle/properties/background-image.html") 
+PASS getAll for single-valued background-image 
+PASS Delete background-image removes the value from the styleMap 
+PASS background-image shows up in getProperties 
+PASS Setting background-image to a sequence throws 
+PASS Appending to background-image throws 
+Harness: the test ran to completion.
+

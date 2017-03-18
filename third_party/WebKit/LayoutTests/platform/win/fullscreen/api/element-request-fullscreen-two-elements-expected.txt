@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Element#requestFullscreen() on two elements in the same document 
+Harness: the test ran to completion.
+

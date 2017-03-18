@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBIndex.getKey() - throw InvalidStateError when the index is deleted 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Doctype parsing of System Id must fail on ommitted value 
+PASS Doctype parsing of System Id can handle empty string 
+PASS Doctype parsing of System Id can handle a quoted value 
+Harness: the test ran to completion.
+

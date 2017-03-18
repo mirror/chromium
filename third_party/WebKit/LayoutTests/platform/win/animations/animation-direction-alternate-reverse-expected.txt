@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS animation-direction alternate-reverse plays backwards, then forwards 
+Harness: the test ran to completion.
+

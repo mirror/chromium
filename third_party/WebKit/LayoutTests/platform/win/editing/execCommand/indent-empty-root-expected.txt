@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Indent in an empty editable element 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Image has a referrer despite CSP 'referrer' directive 
+Harness: the test ran to completion.
+

@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS define() should upgrade existing elements 
+PASS cloneNode() should run custom constructor 
+PASS importNode() should run custom constructor 
+PASS innerHTML setter should run custom constructor 
+PASS outerHTML setter should run custom constructor 
+Harness: the test ran to completion.
+

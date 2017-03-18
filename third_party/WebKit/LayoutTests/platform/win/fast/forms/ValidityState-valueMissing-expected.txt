@@ -1,0 +1,41 @@
+This is a testharness.js-based test.
+PASS Empty-value INPUT[required] should be valueMissing. 
+PASS INPUT[required] with a non-empty value should not be valueMissing. 
+PASS Empty value TEXTAREA[required] should be valueMissing. 
+PASS TEXTAREA[required] with a non-empty value should not be valueMissing. 
+PASS SELECT[required] with no OPTIONS should be valueMissing. 
+PASS SELECT[required] with a selected placeholder OPTION should be valueMissing. 
+PASS SELECT[required] with a selected non-placeholder OPTION should not be valueMissing. 
+PASS SELECT[required][size=2] with a selected placeholder OPTION should not be valueMissing. 
+PASS SELECT[rquired][size=2] with a selected non-placeholder OPTION should not be valueMissing. 
+PASS SELECT[required][multiple] without selected OPTIONs should be valueMissing. 
+PASS SELECT[required][multiple] with a selected placeholder-like OPTION should not be valueMissing. 
+PASS SELECT[required][multiple] with a selected OPTION should not be valueMissing. 
+PASS SELECT[required][multiple][size=2] without selected OPTIONs should be valueMissing. 
+PASS SELECT[required][multiple][size=2] with a selected placeholder-liek OPTION should not be valueMissing. 
+PASS SELECT[required][multiple][size=2] with a selected OPTION should not be valueMissing. 
+PASS SELECT[required] with a selected placeholder-like OPTION inside an OPTGROUP should not be valueMissing. 
+PASS SELECT[required] with a selected disabled placeholder OPTION should be valueMissing. 
+PASS SELECT[required] with a non-selected disabled placeholder OPTION should not be valueMissing. 
+PASS SELECT[required] with a unselected placeholder OPTION should not be valueMissing. 
+PASS SELECT[required][size=2] with a unselected placeholder OPTION should not be valueMissing. 
+PASS SELECT[required][size=2] with a unselected placeholder-like OPTION should not be valueMissing. 
+PASS SELECT[required][multiple] with a unselected placeholder OPTION should not be valueMissing. 
+PASS SELECT[required][multiple] with a unselected placeholder-like OPTION should not be valueMissing. 
+PASS SELECT[required][size=2][multiple] with a unselected placeholder OPTION should not be valueMissing. 
+PASS SELECT[required][size=2][multiple] with a unselected placeholder-like OPTION should not be valueMissing. 
+PASS Updating valueMissing state by user input. 
+PASS Disabled controls never be valueMissing. 
+PASS Read-only controls never be valueMissing. 
+PASS INPUT elements of some types never be valueMissing. 
+PASS INPUT[type=checkbox] supports valueMissing. 
+PASS INPUT[type=file] supports valueMissing. 
+PASS INPUT[type=text] supports valueMissing. 
+PASS INPUT[type=search] supports valueMissing. 
+PASS INPUT[type=url] supports valueMissing. 
+PASS INPUT[type=tel] supports valueMissing. 
+PASS INPUT[type=email] supports valueMissing. 
+PASS INPUT[type=password] supports valueMissing. 
+PASS INPUT[type=number] supports valueMissing. 
+Harness: the test ran to completion.
+

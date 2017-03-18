@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS This test uses interpolation-test.js. 
+PASS SMIL: Interpolate attribute <preserveAlpha> from replace [false] to replace [true] at (0) is [false] 
+PASS SMIL: Interpolate attribute <preserveAlpha> from replace [false] to replace [true] at (0.2) is [false] 
+PASS SMIL: Interpolate attribute <preserveAlpha> from replace [false] to replace [true] at (0.6) is [true] 
+PASS SMIL: Interpolate attribute <preserveAlpha> from replace [false] to replace [true] at (1) is [true] 
+PASS Web Animations: Interpolate attribute <preserveAlpha> from replace [false] to replace [true] at (-2.4) is [false] 
+PASS Web Animations: Interpolate attribute <preserveAlpha> from replace [false] to replace [true] at (0) is [false] 
+PASS Web Animations: Interpolate attribute <preserveAlpha> from replace [false] to replace [true] at (0.2) is [false] 
+PASS Web Animations: Interpolate attribute <preserveAlpha> from replace [false] to replace [true] at (0.6) is [true] 
+PASS Web Animations: Interpolate attribute <preserveAlpha> from replace [false] to replace [true] at (1) is [true] 
+PASS Web Animations: Interpolate attribute <preserveAlpha> from replace [false] to replace [true] at (3.4) is [true] 
+Harness: the test ran to completion.
+

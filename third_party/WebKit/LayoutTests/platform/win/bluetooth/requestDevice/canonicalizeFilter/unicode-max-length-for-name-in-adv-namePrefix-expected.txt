@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Unicode string in 'namePrefix' with utf8 representation greater than 248 bytes must throw TypeError. 
+Harness: the test ran to completion.
+

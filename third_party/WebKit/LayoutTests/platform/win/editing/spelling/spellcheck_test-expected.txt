@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS Mark misspellings after typing. 
+PASS Mark ungrammatical phrases after typing. 
+PASS Mark overlapping grammer and spelling errors. 
+PASS Mark misspellings in <textarea>. 
+PASS Mark misspellings in <input>. 
+PASS No marker on misspelled word when spellcheck=false. 
+PASS Text without focus is checked by cold mode checker 
+PASS Marker appears after setting spellcheck=true. 
+Harness: the test ran to completion.
+

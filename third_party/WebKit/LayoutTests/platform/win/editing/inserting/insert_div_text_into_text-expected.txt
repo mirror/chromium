@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS insertHTML with DIV to text 
+Harness: the test ran to completion.
+

@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Exposure of the PushEvent object in a ServiceWorker. 
+PASS PushEvent is exposed and extends ExtendableEvent. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Check cues from captions-webvtt/tc020-cue-size-align.vtt 
+PASS Check cues from captions-webvtt/tc020-cue-size-align-bad.vtt 
+Harness: the test ran to completion.
+

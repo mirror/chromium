@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS element.animate() with 3 keyframes and 1 offset specified 
+PASS element.animate() with 3 keyframes and 2 offsets specified 
+PASS element.animate() with 3 keyframes and 3 offsets specified 
+Harness: the test ran to completion.
+

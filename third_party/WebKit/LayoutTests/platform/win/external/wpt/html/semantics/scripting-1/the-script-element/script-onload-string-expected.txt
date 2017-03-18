@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Setting onload to a string should convert to null. 
+Harness: the test ran to completion.
+

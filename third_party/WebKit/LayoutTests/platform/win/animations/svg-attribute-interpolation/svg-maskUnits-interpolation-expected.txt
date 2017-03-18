@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS This test uses interpolation-test.js. 
+PASS SMIL: Interpolate attribute <maskUnits> from replace [userSpaceOnUse] to replace [objectBoundingBox] at (0) is [userSpaceOnUse] 
+PASS SMIL: Interpolate attribute <maskUnits> from replace [userSpaceOnUse] to replace [objectBoundingBox] at (0.2) is [userSpaceOnUse] 
+PASS SMIL: Interpolate attribute <maskUnits> from replace [userSpaceOnUse] to replace [objectBoundingBox] at (0.6) is [objectBoundingBox] 
+PASS SMIL: Interpolate attribute <maskUnits> from replace [userSpaceOnUse] to replace [objectBoundingBox] at (1) is [objectBoundingBox] 
+PASS Web Animations: Interpolate attribute <maskUnits> from replace [userSpaceOnUse] to replace [objectBoundingBox] at (-2.4) is [userSpaceOnUse] 
+PASS Web Animations: Interpolate attribute <maskUnits> from replace [userSpaceOnUse] to replace [objectBoundingBox] at (0) is [userSpaceOnUse] 
+PASS Web Animations: Interpolate attribute <maskUnits> from replace [userSpaceOnUse] to replace [objectBoundingBox] at (0.2) is [userSpaceOnUse] 
+PASS Web Animations: Interpolate attribute <maskUnits> from replace [userSpaceOnUse] to replace [objectBoundingBox] at (0.6) is [objectBoundingBox] 
+PASS Web Animations: Interpolate attribute <maskUnits> from replace [userSpaceOnUse] to replace [objectBoundingBox] at (1) is [objectBoundingBox] 
+PASS Web Animations: Interpolate attribute <maskUnits> from replace [userSpaceOnUse] to replace [objectBoundingBox] at (3.4) is [objectBoundingBox] 
+Harness: the test ran to completion.
+

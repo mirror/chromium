@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBDatabase.createIndex() - If keyPath is not a valid key path, the implementation must throw a DOMException of type SyntaxError  
+Harness: the test ran to completion.
+

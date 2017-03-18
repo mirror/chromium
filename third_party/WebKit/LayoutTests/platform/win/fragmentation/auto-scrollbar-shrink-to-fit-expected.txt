@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Shrink-to-fit with auto vertical scrollbar inside 
+Harness: the test ran to completion.
+

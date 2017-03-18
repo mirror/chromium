@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Returning keys to script should bypass prototype setters 
+PASS Returning values to script should bypass prototype setters 
+PASS Returning values to script should bypass prototype chain 
+Harness: the test ran to completion.
+

@@ -1,0 +1,5 @@
+CONSOLE ERROR: line 2: Uncaught Error
+This is a testharness.js-based test.
+PASS Custom Elements: Custom Element State "Failed" in document parser 
+Harness: the test ran to completion.
+

@@ -1,0 +1,8 @@
+CONSOLE ERROR: Fetch API cannot load http://127.0.0.1:8000/security/resources/blank.html. Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://127.0.0.1:8000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: line 25: Uncaught (in promise) TypeError: Failed to execute 'fetch' on 'Window': 1 argument required, but only 0 present.
+CONSOLE ERROR: line 34: Uncaught (in promise) TypeError: Failed to execute 'fetch' on 'Window': 1 argument required, but only 0 present.
+CONSOLE ERROR: line 43: Uncaught (in promise) TypeError: Failed to execute 'fetch' on 'Window': 1 argument required, but only 0 present.
+This is a testharness.js-based test.
+PASS Reject promises must be created in the current realm 
+Harness: the test ran to completion.
+

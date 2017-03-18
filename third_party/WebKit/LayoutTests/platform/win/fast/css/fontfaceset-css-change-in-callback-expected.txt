@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Checks that adding CSS in callback of fonts.loadFont() does not cause a crash. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Access to cursor value after final advance should be undefined 
+Harness: the test ran to completion.
+

@@ -1,0 +1,76 @@
+This is a testharness.js-based test.
+PASS This test uses responsive-test.js. 
+PASS Untitled 
+PASS Untitled 1 
+PASS Untitled 2 
+PASS Untitled 3 
+PASS Untitled 4 
+PASS Untitled 5 
+PASS Untitled 6 
+PASS Untitled 7 
+PASS Untitled 8 
+PASS Untitled 9 
+PASS Untitled 10 
+PASS Untitled 11 
+PASS Untitled 12 
+PASS Untitled 13 
+PASS Untitled 14 
+PASS Untitled 15 
+PASS Untitled 16 
+PASS Untitled 17 
+PASS Untitled 18 
+PASS Untitled 19 
+PASS Untitled 20 
+PASS Untitled 21 
+PASS Untitled 22 
+PASS Untitled 23 
+PASS Untitled 24 
+PASS Animation on property <translate> from [inherit] to [100px 200px 300px] with {"inherited":"initial"} changed to {"inherited":"0"} at (0.25) is [25px 50px 75px] 
+PASS Untitled 25 
+PASS Animation on property <translate> from [inherit] to [100px 200px 300px] with {"inherited":"initial"} changed to {"inherited":"0"} at (0.75) is [75px 150px 225px] 
+PASS Untitled 26 
+PASS Animation on property <translate> from [inherit] to [100px 200px 300px] with {"inherited":"initial"} changed to {"inherited":"200px 100px"} at (0.25) is [175px 125px 75px] 
+PASS Untitled 27 
+PASS Animation on property <translate> from [inherit] to [100px 200px 300px] with {"inherited":"initial"} changed to {"inherited":"200px 100px"} at (0.75) is [125px 175px 225px] 
+PASS Untitled 28 
+PASS Animation on property <translate> from [inherit] to [100px 200px 300px] with {"inherited":"initial"} changed to {"inherited":"100px 100px 100px"} at (0.25) is [100px 125px 150px] 
+PASS Untitled 29 
+PASS Animation on property <translate> from [inherit] to [100px 200px 300px] with {"inherited":"initial"} changed to {"inherited":"100px 100px 100px"} at (0.75) is [100px 175px 250px] 
+PASS Untitled 30 
+PASS Animation on property <translate> from [inherit] to [100px 200px 300px] with {"inherited":"0"} changed to {"inherited":"initial"} at (0.25) is [25px 50px 75px] 
+PASS Untitled 31 
+PASS Animation on property <translate> from [inherit] to [100px 200px 300px] with {"inherited":"0"} changed to {"inherited":"initial"} at (0.75) is [75px 150px 225px] 
+PASS Untitled 32 
+PASS Animation on property <translate> from [inherit] to [100px 200px 300px] with {"inherited":"0"} changed to {"inherited":"200px 100px"} at (0.25) is [175px 125px 75px] 
+PASS Untitled 33 
+PASS Animation on property <translate> from [inherit] to [100px 200px 300px] with {"inherited":"0"} changed to {"inherited":"200px 100px"} at (0.75) is [125px 175px 225px] 
+PASS Untitled 34 
+PASS Animation on property <translate> from [inherit] to [100px 200px 300px] with {"inherited":"0"} changed to {"inherited":"100px 100px 100px"} at (0.25) is [100px 125px 150px] 
+PASS Untitled 35 
+PASS Animation on property <translate> from [inherit] to [100px 200px 300px] with {"inherited":"0"} changed to {"inherited":"100px 100px 100px"} at (0.75) is [100px 175px 250px] 
+PASS Untitled 36 
+PASS Animation on property <translate> from [inherit] to [100px 200px 300px] with {"inherited":"200px 100px"} changed to {"inherited":"initial"} at (0.25) is [25px 50px 75px] 
+PASS Untitled 37 
+PASS Animation on property <translate> from [inherit] to [100px 200px 300px] with {"inherited":"200px 100px"} changed to {"inherited":"initial"} at (0.75) is [75px 150px 225px] 
+PASS Untitled 38 
+PASS Animation on property <translate> from [inherit] to [100px 200px 300px] with {"inherited":"200px 100px"} changed to {"inherited":"0"} at (0.25) is [25px 50px 75px] 
+PASS Untitled 39 
+PASS Animation on property <translate> from [inherit] to [100px 200px 300px] with {"inherited":"200px 100px"} changed to {"inherited":"0"} at (0.75) is [75px 150px 225px] 
+PASS Untitled 40 
+PASS Animation on property <translate> from [inherit] to [100px 200px 300px] with {"inherited":"200px 100px"} changed to {"inherited":"100px 100px 100px"} at (0.25) is [100px 125px 150px] 
+PASS Untitled 41 
+PASS Animation on property <translate> from [inherit] to [100px 200px 300px] with {"inherited":"200px 100px"} changed to {"inherited":"100px 100px 100px"} at (0.75) is [100px 175px 250px] 
+PASS Untitled 42 
+PASS Animation on property <translate> from [inherit] to [100px 200px 300px] with {"inherited":"100px 100px 100px"} changed to {"inherited":"initial"} at (0.25) is [25px 50px 75px] 
+PASS Untitled 43 
+PASS Animation on property <translate> from [inherit] to [100px 200px 300px] with {"inherited":"100px 100px 100px"} changed to {"inherited":"initial"} at (0.75) is [75px 150px 225px] 
+PASS Untitled 44 
+PASS Animation on property <translate> from [inherit] to [100px 200px 300px] with {"inherited":"100px 100px 100px"} changed to {"inherited":"0"} at (0.25) is [25px 50px 75px] 
+PASS Untitled 45 
+PASS Animation on property <translate> from [inherit] to [100px 200px 300px] with {"inherited":"100px 100px 100px"} changed to {"inherited":"0"} at (0.75) is [75px 150px 225px] 
+PASS Untitled 46 
+PASS Animation on property <translate> from [inherit] to [100px 200px 300px] with {"inherited":"100px 100px 100px"} changed to {"inherited":"200px 100px"} at (0.25) is [175px 125px 75px] 
+PASS Untitled 47 
+PASS Animation on property <translate> from [inherit] to [100px 200px 300px] with {"inherited":"100px 100px 100px"} changed to {"inherited":"200px 100px"} at (0.75) is [125px 175px 225px] 
+Harness: the test ran to completion.
+

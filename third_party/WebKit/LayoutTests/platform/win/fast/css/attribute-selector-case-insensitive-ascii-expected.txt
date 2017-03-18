@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS ASCII case-insensitive attribute selector matching 
+Harness: the test ran to completion.
+

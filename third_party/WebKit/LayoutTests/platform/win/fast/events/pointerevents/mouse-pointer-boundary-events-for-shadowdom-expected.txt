@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS PointerEvent: Verifies that mouse boundary events don't point to shadow-dom 
+PASS Moved into <input> 
+PASS Moved out of <input> 
+Harness: the test ran to completion.
+

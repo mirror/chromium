@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests CanvasPathMethods arc and arcTo with negative radii. 
+Harness: the test ran to completion.
+

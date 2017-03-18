@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS IDBCursor.key - 1 
+PASS IDBCursor.key - key 
+PASS IDBCursor.key - my,key 
+Harness: the test ran to completion.
+

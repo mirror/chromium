@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS HTMLAnchorElement.text getting 
+PASS Test for anchor 0 
+PASS Test for anchor 1 
+PASS Test for anchor 2 
+PASS Test for anchor 3 
+PASS Test for anchor 4 
+Harness: the test ran to completion.
+

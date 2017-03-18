@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that the media element is in correct state after load fails. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Can construct USBIsochronousOutTransferPacket 
+PASS Cannot construct USBIsochronousOutTransferPacket with an invalid status 
+PASS Cannot construct USBIsochronousOutTransferPacket without a status 
+Harness: the test ran to completion.
+

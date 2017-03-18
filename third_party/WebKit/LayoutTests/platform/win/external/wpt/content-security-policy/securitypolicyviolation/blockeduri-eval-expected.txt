@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Eval violations have a blockedURI of 'eval' 
+Harness: the test ran to completion.
+

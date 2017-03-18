@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Check if button.formAction is the document's address when formaction content attribute is missing 
+PASS Check if input.formAction is the document's address when formaction content attribute is missing 
+PASS Check if button.formAction is the document's address when formaction content attribute value is empty string 
+PASS Check if input.formAction is the document's address when formaction content attribute value is empty string 
+PASS Check if button.formAction is the document's address when formaction content attribute value is not assigned 
+PASS Check if input.formAction is the document's address when formaction content attribute value is not assigned 
+Harness: the test ran to completion.
+

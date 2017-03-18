@@ -1,0 +1,15 @@
+This is a testharness.js-based test.
+PASS Accessing attribute should throw error 
+PASS Attribute should exist and return value, with trial disabled 
+PASS Attribute should not exist, with trial disabled 
+PASS Constant should not exist, with trial disabled 
+PASS Attribute should not exist on partial interface, with trial disabled 
+PASS Static attribute should not exist on partial interface, with trial disabled 
+PASS Constant should not exist on partial interface, with trial disabled 
+PASS Method should not exist on partial interface, with trial disabled 
+PASS Static method should not exist on partial interface, with trial disabled 
+PASS Accessing attribute should throw error in worker 
+PASS Attribute should not exist in worker 
+PASS Constant should not exist in worker 
+Harness: the test ran to completion.
+

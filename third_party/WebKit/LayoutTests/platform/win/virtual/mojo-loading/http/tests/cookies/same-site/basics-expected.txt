@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS Cookies can be set from DOM. 
+PASS SameSite set from DOM are sent via HTTP. 
+PASS HTTPS is same-site with HTTP. 
+PASS Subdomains are same-site. 
+PASS `not-example.test` is same-site but the cookies don't match it: 'samesite' doesn't override matching rules. 
+PASS 'example.test' is not same-site with 'cookies.not-example.test', so samesite cookies are not sent. 
+Harness: the test ran to completion.
+

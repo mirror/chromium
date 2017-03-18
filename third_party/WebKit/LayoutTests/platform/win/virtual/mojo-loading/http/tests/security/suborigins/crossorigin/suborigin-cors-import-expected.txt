@@ -1,0 +1,10 @@
+CONSOLE ERROR: Access to Imported resource at 'http://127.0.0.1:8000/security/resources/cors-hello.php?' from origin 'http-so://foobar.127.0.0.1:8000' has been blocked by CORS policy: The 'Access-Control-Allow-Suborigin' header has a value '' that is not equal to the supplied suborigin. Origin 'http-so://foobar.127.0.0.1:8000' is therefore not allowed access.
+CONSOLE ERROR: Access to Imported resource at 'http://127.0.0.1:8000/security/resources/cors-hello.php?credentials=true' from origin 'http-so://foobar.127.0.0.1:8000' has been blocked by CORS policy: The 'Access-Control-Allow-Suborigin' header has a value '' that is not equal to the supplied suborigin. Origin 'http-so://foobar.127.0.0.1:8000' is therefore not allowed access.
+CONSOLE ERROR: Access to Imported resource at 'http://127.0.0.1:8000/security/resources/cors-hello.php?&cors=false' from origin 'http-so://foobar.127.0.0.1:8000' has been blocked by CORS policy: The 'Access-Control-Allow-Suborigin' header has a value '' that is not equal to the supplied suborigin. Origin 'http-so://foobar.127.0.0.1:8000' is therefore not allowed access.
+This is a testharness.js-based test.
+PASS Import: <crossorigin='anonymous'>, ACAO: http://127.0.0.1:8000 
+PASS Import: <crossorigin='anonymous'>, ACAO: * 
+PASS Import: <crossorigin='use-credentials'>, ACAO: http://127.0.0.1:8000 
+PASS Import: <crossorigin='anonymous'>, CORS-ineligible resource 
+Harness: the test ran to completion.
+

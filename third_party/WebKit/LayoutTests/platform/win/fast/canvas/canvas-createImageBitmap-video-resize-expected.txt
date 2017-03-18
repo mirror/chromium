@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS createImageBitmap(HTMLVideoElement) with resize option 
+Harness: the test ran to completion.
+

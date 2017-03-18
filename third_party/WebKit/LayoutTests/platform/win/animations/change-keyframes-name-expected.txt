@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Changing Name of A Keyframes Rule Using CSSOM starts animation 
+Harness: the test ran to completion.
+

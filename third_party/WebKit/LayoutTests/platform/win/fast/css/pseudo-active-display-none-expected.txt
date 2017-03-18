@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS window.eventSender is required for the test to run 
+PASS This test performs a check for active pseudo class to be applied for element when its display is set to none. 
+Harness: the test ran to completion.
+

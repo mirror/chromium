@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Device disconnects and we reconnect during a getPrimaryServices that succeeds. Reject with NetworkError. 
+Harness: the test ran to completion.
+

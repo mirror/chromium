@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS IDBFactory.deleteDatabase() in non-sandboxed iframe should not throw 
+PASS IDBFactory.deleteDatabase() in sandboxed iframe should throw SecurityError 
+Harness: the test ran to completion.
+

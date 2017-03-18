@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS http://127.0.0.1:8000/w3c/webperf/resources/inject_resource_test.html is expected to have initiatorType iframe 
+Harness: the test ran to completion.
+

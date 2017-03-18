@@ -1,0 +1,15 @@
+This is a testharness.js-based test.
+PASS Test default color settings: {undefined, undefined} -> {srgb, uint8} 
+PASS Test default color space: {undefined, float32} -> {srgb, float32} 
+PASS Test default storage format: {srgb, undefined} -> {srgb, uint8} 
+PASS Test color settings: {srgb, uint8} 
+PASS Test color settings: {srgb, uint16} 
+PASS Test color settings: {srgb, float32} 
+PASS Test color settings: {rec2020, uint8} 
+PASS Test color settings: {rec2020, uint16} 
+PASS Test color settings: {rec2020, float32} 
+PASS Test color settings: {p3, uint8} 
+PASS Test color settings: {p3, uint16} 
+PASS Test color settings: {p3, float32} 
+Harness: the test ran to completion.
+

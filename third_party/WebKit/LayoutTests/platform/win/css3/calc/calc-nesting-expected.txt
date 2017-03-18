@@ -1,0 +1,25 @@
+This is a testharness.js-based test.
+PASS CSS.supports('left', "calc(20px + calc(80px))") should return true 
+PASS e.style['left'] = "calc(20px + calc(80px))" should set the value 
+PASS Serialization should round-trip after setting e.style['left'] = "calc(20px + calc(80px))" 
+PASS CSS.supports('left', "calc(calc(100px))") should return true 
+PASS e.style['left'] = "calc(calc(100px))" should set the value 
+PASS Serialization should round-trip after setting e.style['left'] = "calc(calc(100px))" 
+PASS CSS.supports('left', "calc(calc(2) * calc(50px)") should return true 
+PASS e.style['left'] = "calc(calc(2) * calc(50px)" should set the value 
+PASS Serialization should round-trip after setting e.style['left'] = "calc(calc(2) * calc(50px)" 
+PASS CSS.supports('left', "calc(calc(150px*2/3)") should return true 
+PASS e.style['left'] = "calc(calc(150px*2/3)" should set the value 
+PASS Serialization should round-trip after setting e.style['left'] = "calc(calc(150px*2/3)" 
+PASS CSS.supports('left', "calc(calc(2 * calc(calc(3)) + 4) * 10px)") should return true 
+PASS e.style['left'] = "calc(calc(2 * calc(calc(3)) + 4) * 10px)" should set the value 
+PASS Serialization should round-trip after setting e.style['left'] = "calc(calc(2 * calc(calc(3)) + 4) * 10px)" 
+PASS CSS.supports('left', "calc(50px + calc(40%))") should return true 
+PASS e.style['left'] = "calc(50px + calc(40%))" should set the value 
+PASS Serialization should round-trip after setting e.style['left'] = "calc(50px + calc(40%))" 
+PASS CSS.supports('border', "calc(calc(10px)) solid pink") should return true 
+PASS e.style['border'] = "calc(calc(10px)) solid pink" should set the value 
+PASS Serialization should round-trip after setting e.style['border'] = "calc(calc(10px)) solid pink" 
+PASS Nested calcs should work with layout 
+Harness: the test ran to completion.
+

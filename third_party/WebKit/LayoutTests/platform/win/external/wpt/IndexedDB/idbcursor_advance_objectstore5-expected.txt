@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBCursor.advance() - object store - throw InvalidStateError caused by object store been deleted 
+Harness: the test ran to completion.
+

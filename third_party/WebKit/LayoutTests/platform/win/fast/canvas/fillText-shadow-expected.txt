@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS TestShadowOffsetWithNoTransform 1 
+PASS TestShadowOffsetWithNoTransform 2 
+PASS TestShadowOffsetWithNoTransform 3 
+PASS TestShadowOffsetWithScaleTransform 1 
+PASS TestShadowOffsetWithScaleTransform 2 
+PASS TestShadowOffsetWithScaleTransform 3 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Elements style identically aside from an @apply'd variable with different inherited values are computed properly 
+Harness: the test ran to completion.
+

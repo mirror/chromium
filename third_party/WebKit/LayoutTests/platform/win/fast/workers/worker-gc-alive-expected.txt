@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS hasPendingActivity() should also keep wrapper and object alive inside a worker 
+Harness: the test ran to completion.
+

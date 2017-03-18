@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS FileAPI Test: filereader_readAsArrayBuffer 
+Harness: the test ran to completion.
+

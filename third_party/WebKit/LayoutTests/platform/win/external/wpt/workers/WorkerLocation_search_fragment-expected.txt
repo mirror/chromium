@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS  WorkerLocation.search with <fragment> in <query>  
+Harness: the test ran to completion.
+

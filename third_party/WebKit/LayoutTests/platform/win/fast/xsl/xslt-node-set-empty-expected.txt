@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS a variable set to node-set of a string should not halt processing 
+Harness: the test ran to completion.
+

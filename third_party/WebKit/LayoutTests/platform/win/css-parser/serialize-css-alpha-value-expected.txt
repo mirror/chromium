@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Alpha values should parse and serialize to the same value to 2 decimal places 
+PASS Alpha values with three or more decimals should parse and serialize to 1, 2, or 3 decimal places according to w3c spec 
+Harness: the test ran to completion.
+

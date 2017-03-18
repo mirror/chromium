@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that "error" event is fired from "source" element when it can not be used. 
+Harness: the test ran to completion.
+

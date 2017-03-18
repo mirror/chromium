@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS IDBObjectStore.openKeyCursor() - forward iteration 
+PASS IDBObjectStore.openKeyCursor() - reverse iteration 
+PASS IDBObjectStore.openKeyCursor() - forward iteration with range 
+PASS IDBObjectStore.openKeyCursor() - reverse iteration with range 
+PASS IDBObjectStore.openKeyCursor() - invalid inputs 
+Harness: the test ran to completion.
+

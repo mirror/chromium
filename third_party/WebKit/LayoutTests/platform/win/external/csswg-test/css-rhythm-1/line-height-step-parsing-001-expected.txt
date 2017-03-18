@@ -1,0 +1,12 @@
+This is a testharness.js-based test.
+PASS initial value should be '0px' 
+PASS 'line-height-step: 20px' should compute to '20px' 
+PASS line-height-step should inherit 
+PASS 'line-height-step: initial' should compute to '0px' 
+PASS 'line-height-step: 40px' should compute to '40px' 
+PASS '0' should be a valid length 
+PASS Interger should be invalid 
+PASS Negative length should be invalid 
+PASS Computed value should be the absolute length 
+Harness: the test ran to completion.
+

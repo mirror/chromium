@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that drag and drop events have expected initial properties 
+Harness: the test ran to completion.
+

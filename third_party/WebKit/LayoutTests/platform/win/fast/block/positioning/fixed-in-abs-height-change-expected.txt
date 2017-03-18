@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Fixed-pos in abs-pos container updates children on height change. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Change event should be dispatched after the option removal. 
+PASS Change event should be dispatched after updating selection programatically. 
+Harness: the test ran to completion.
+

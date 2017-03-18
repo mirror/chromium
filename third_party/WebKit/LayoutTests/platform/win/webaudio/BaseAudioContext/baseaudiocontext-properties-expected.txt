@@ -1,0 +1,33 @@
+This is a testharness.js-based test.
+PASS The property "constructor" was expected and found successfully. 
+PASS The property "createAnalyser" was expected and found successfully. 
+PASS The property "createBiquadFilter" was expected and found successfully. 
+PASS The property "createBuffer" was expected and found successfully. 
+PASS The property "createBufferSource" was expected and found successfully. 
+PASS The property "createChannelMerger" was expected and found successfully. 
+PASS The property "createChannelSplitter" was expected and found successfully. 
+PASS The property "createConstantSource" was expected and found successfully. 
+PASS The property "createConvolver" was expected and found successfully. 
+PASS The property "createDelay" was expected and found successfully. 
+PASS The property "createDynamicsCompressor" was expected and found successfully. 
+PASS The property "createGain" was expected and found successfully. 
+PASS The property "createIIRFilter" was expected and found successfully. 
+PASS The property "createOscillator" was expected and found successfully. 
+PASS The property "createPanner" was expected and found successfully. 
+PASS The property "createPeriodicWave" was expected and found successfully. 
+PASS The property "createScriptProcessor" was expected and found successfully. 
+PASS The property "createStereoPanner" was expected and found successfully. 
+PASS The property "createWaveShaper" was expected and found successfully. 
+PASS The property "currentTime" was expected and found successfully. 
+PASS The property "decodeAudioData" was expected and found successfully. 
+PASS The property "destination" was expected and found successfully. 
+PASS The property "listener" was expected and found successfully. 
+PASS The property "onstatechange" was expected and found successfully. 
+PASS The property "resume" was expected and found successfully. 
+PASS The property "sampleRate" was expected and found successfully. 
+PASS The property "state" was expected and found successfully. 
+PASS The property "createMediaElementSource" was expected and found successfully. 
+PASS The property "createMediaStreamDestination" was expected and found successfully. 
+PASS The property "createMediaStreamSource" was expected and found successfully. 
+Harness: the test ran to completion.
+

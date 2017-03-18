@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS posting an imagedata (from a cloned canvas) in an array 
+Harness: the test ran to completion.
+

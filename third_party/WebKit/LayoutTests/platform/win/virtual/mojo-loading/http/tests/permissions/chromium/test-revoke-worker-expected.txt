@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS Test PermissionDescription WebIDL rules in DedicatedWorker scope. 
+PASS Test geolocation permission in DedicatedWorker scope. 
+PASS Test midi permission in DedicatedWorker scope. 
+PASS Test push permission in DedicatedWorker scope. 
+PASS Test notifications permission in DedicatedWorker scope. 
+Harness: the test ran to completion.
+

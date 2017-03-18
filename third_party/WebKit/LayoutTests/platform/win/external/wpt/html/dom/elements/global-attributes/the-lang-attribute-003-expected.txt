@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS The browser will recognize a language declared in the HTTP header, when there is no internal language declaration. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS No time out when inserting a list over selected paragraphs that has a non-editable child element 
+Harness: the test ran to completion.
+

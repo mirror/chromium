@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests that adding a track to an inactive MediaStream is allowed 
+Harness: the test ran to completion.
+

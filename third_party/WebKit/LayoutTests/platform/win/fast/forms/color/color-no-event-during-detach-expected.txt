@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Detaching a layout object from a color input should not cause a DCHECK failure. 
+Harness: the test ran to completion.
+

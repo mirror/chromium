@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Setting CharacterData.data while distribution is dirty should not cause a crash (crbug.com/673967). 
+Harness: the test ran to completion.
+

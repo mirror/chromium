@@ -1,0 +1,37 @@
+CONSOLE WARNING: line 14: Subresource requests whose URLs contain embedded credentials (e.g. `https://user:pass@host/`) are deprecated, and will be blocked in M59, around June 2017. See https://www.chromestatus.com/feature/5669008342777856 for more details.
+CONSOLE ERROR: line 368: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=same-origin&method=GET. Request mode is "same-origin" but the URL's origin is not same as the request origin http://127.0.0.1:8000.
+CONSOLE ERROR: line 368: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=same-origin&method=POST. Request mode is "same-origin" but the URL's origin is not same as the request origin http://127.0.0.1:8000.
+CONSOLE ERROR: line 368: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=same-origin&method=PUT. Request mode is "same-origin" but the URL's origin is not same as the request origin http://127.0.0.1:8000.
+CONSOLE ERROR: line 368: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=same-origin&method=XXX. Request mode is "same-origin" but the URL's origin is not same as the request origin http://127.0.0.1:8000.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=GET. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://127.0.0.1:8000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=GET&ACAOrigin=http://127.0.0.1:8000,http://www.example.com. The 'Access-Control-Allow-Origin' header contains multiple values 'http://127.0.0.1:8000, http://www.example.com', but only one is allowed. Origin 'http://127.0.0.1:8000' is therefore not allowed access. Have the server send the header with a valid value, or, if an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=GET&ACAOrigin=http://www.example.com. The 'Access-Control-Allow-Origin' header has a value 'http://www.example.com' that is not equal to the supplied origin. Origin 'http://127.0.0.1:8000' is therefore not allowed access. Have the server send the header with a valid value, or, if an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=POST. No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://127.0.0.1:8000' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=POST&ACAOrigin=http://127.0.0.1:8000,http://www.example.com. The 'Access-Control-Allow-Origin' header contains multiple values 'http://127.0.0.1:8000, http://www.example.com', but only one is allowed. Origin 'http://127.0.0.1:8000' is therefore not allowed access. Have the server send the header with a valid value, or, if an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=POST&ACAOrigin=http://www.example.com. The 'Access-Control-Allow-Origin' header has a value 'http://www.example.com' that is not equal to the supplied origin. Origin 'http://127.0.0.1:8000' is therefore not allowed access. Have the server send the header with a valid value, or, if an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+This is a testharness.js-based test.
+PASS Startup 
+PASS executeTest-0 
+PASS executeTest-1 
+PASS executeTest-2 
+PASS executeTest-3 
+PASS executeTest-4 
+PASS executeTest-5 
+PASS executeTest-6 
+PASS executeTest-7 
+PASS executeTest-8 
+PASS executeTest-9 
+PASS executeTest-10 
+PASS executeTest-11 
+PASS executeTest-12 
+PASS executeTest-13 
+PASS executeTest-14 
+PASS executeTest-15 
+PASS executeTest-16 
+PASS executeTest-17 
+PASS executeTest-18 
+PASS executeTest-19 
+PASS executeTest-20 
+PASS executeTest-21 
+Harness: the test ran to completion.
+

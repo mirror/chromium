@@ -1,0 +1,36 @@
+CONSOLE ERROR: line 17: Fetch API cannot load ftp://localhost/. URL scheme must be "http" or "https" for CORS request.
+CONSOLE ERROR: Blob not found.
+CONSOLE ERROR: line 130: Fetch API cannot load foobar://localhost/. URL scheme "foobar" is not supported.
+CONSOLE ERROR: Fetch API cannot load https://localhost:8443/serviceworker/resources/redirect.php?Redirect=https://localhost:8443/fetch/resources/fetch-status.php?status=200. Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'https://127.0.0.1:8443' is therefore not allowed access. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+CONSOLE ERROR: Fetch API cannot load https://127.0.0.1:8443/serviceworker/resources/redirect.php?Redirect=https://127.0.0.1:8443/fetch/resources/fetch-status.php?status=200. Redirect failed.
+This is a testharness.js-based test.
+PASS Startup 
+PASS Fetch invalid URL 
+PASS fetch non-HTTP(S) CORS 
+PASS fetch data: URL 
+PASS fetch data: URL with the POST method 
+PASS fetch data: URL with non-ASCII characters 
+PASS fetch invalid data: URL 
+PASS fetch blob: URL 
+PASS fetch non-existent blob: URL 
+PASS fetch of scheme not listed in basic fetch spec 
+PASS Fetch result of 200 response 
+PASS Fetch result of 404 response 
+PASS Request/response url attribute getter with fragment 
+PASS Request/response url attribute getter with redirect 
+PASS Manual redirect fetch returns opaque redirect response 
+PASS Even in manual redirect mode, fetch with preflight must fail when redirect response is received 
+PASS Redirect response must cause an error when redirect mode is error. 
+PASS No-redirect fetch completes normally even if redirect mode is manual 
+PASS No-redirect fetch completes normally even if redirect mode is error 
+PASS Fetch with Blob body test 
+PASS Fetch with string body test 
+PASS Fetch with ArrayBuffer body test 
+PASS Fetch with ArrayBufferView body test 
+PASS Fetch with FormData body test 
+PASS Fetch a URL already in Blink cache 
+PASS Destroying the execution context while fetch is happening should not cause a crash. 
+PASS Calling fetch() disturbs body if not null 
+PASS Calling fetch() doesn't disturb body if null 
+Harness: the test ran to completion.
+

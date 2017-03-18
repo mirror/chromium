@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Make sure that timing assumptions are accurate when document write preloading is off 
+Harness: the test ran to completion.
+

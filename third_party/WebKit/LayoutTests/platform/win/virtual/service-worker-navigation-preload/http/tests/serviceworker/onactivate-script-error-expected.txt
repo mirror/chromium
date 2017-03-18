@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS activate handler throws an error 
+PASS activate handler throws an error, error handler does not cancel 
+PASS activate handler dispatches an event that throws an error 
+PASS activate handler throws an error that is cancelled 
+PASS activate handler throws an error and prevents default 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS IDBCursor.continue() - attempt to call continue two times 
+Harness: the test ran to completion.
+

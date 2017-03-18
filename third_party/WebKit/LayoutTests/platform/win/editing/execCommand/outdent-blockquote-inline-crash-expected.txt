@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Outdent command should not crash with BLOCKQUOTE with display:inline 
+Harness: the test ran to completion.
+

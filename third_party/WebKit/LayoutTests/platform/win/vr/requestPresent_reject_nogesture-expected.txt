@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Test requestPresent rejects without user gesture 
+PASS requestPresent rejected 
+Harness: the test ran to completion.
+

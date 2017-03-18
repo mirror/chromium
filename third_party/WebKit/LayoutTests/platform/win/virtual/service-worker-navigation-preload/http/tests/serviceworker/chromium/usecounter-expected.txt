@@ -1,0 +1,16 @@
+CONSOLE WARNING: 'console.timeline' is deprecated. Please use 'console.time' instead.
+CONSOLE WARNING: 'console.timeline' is deprecated. Please use 'console.time' instead.
+CONSOLE WARNING: 'console.timeline' is deprecated. Please use 'console.time' instead.
+CONSOLE WARNING: 'console.timeline' is deprecated. Please use 'console.time' instead.
+CONSOLE WARNING: 'console.timeline' is deprecated. Please use 'console.time' instead.
+CONSOLE WARNING: 'console.timeline' is deprecated. Please use 'console.time' instead.
+CONSOLE WARNING: 'console.timeline' is deprecated. Please use 'console.time' instead.
+CONSOLE WARNING: 'console.timeline' is deprecated. Please use 'console.time' instead.
+CONSOLE WARNING: 'console.timeline' is deprecated. Please use 'console.time' instead.
+This is a testharness.js-based test.
+PASS UseCounter on ServiceWorkerGlobalScope 
+PASS UseCounter on ServiceWorkerGlobalScope - A use counter owned by newly controlled window should be synchronized with worker's counter 
+PASS UseCounter on ServiceWorkerGlobalScope - counts during the install event should be persisted 
+PASS UseCounter on ServiceWorkerGlobalScope - an updated worker should not take over a previous counter 
+Harness: the test ran to completion.
+

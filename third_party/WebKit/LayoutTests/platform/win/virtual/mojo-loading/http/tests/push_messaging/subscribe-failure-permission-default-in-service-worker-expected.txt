@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS subscribe must fail in service worker after permission is reset 
+Harness: the test ran to completion.
+

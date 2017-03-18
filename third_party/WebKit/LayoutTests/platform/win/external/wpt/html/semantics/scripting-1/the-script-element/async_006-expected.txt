@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS dynamically created external script executes asynchronously 
+Harness: the test ran to completion.
+

@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS innerHTML of template element replaces all referenced by the content attribute 
+PASS innerHTML of template element replaces all referenced by the content attribute. Test nested template 
+PASS innerHTML of template element replaces all referenced by the content attribute. Test loading of HTML document from a file 
+Harness: the test ran to completion.
+

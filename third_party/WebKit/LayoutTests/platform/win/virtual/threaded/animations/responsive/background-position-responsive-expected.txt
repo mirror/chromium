@@ -1,0 +1,32 @@
+This is a testharness.js-based test.
+PASS This test uses responsive-test.js. 
+PASS Untitled 
+PASS Untitled 1 
+PASS Untitled 2 
+PASS Untitled 3 
+PASS Untitled 4 
+PASS Untitled 5 
+PASS Untitled 6 
+PASS Untitled 7 
+PASS Untitled 8 
+PASS Untitled 9 
+PASS Untitled 10 
+PASS Untitled 11 
+PASS Untitled 12 
+PASS Animation on property <backgroundPosition> from neutral to [100px 100px] with {"underlying":"20px 60px"} changed to {"underlying":"60px 20px"} at (0.25) is [70px 40px] 
+PASS Untitled 13 
+PASS Animation on property <backgroundPosition> from neutral to [100px 100px] with {"underlying":"20px 60px"} changed to {"underlying":"60px 20px"} at (0.75) is [90px 80px] 
+PASS Untitled 14 
+PASS Animation on property <backgroundPosition> from neutral to [100px 100px] with {"underlying":"60px 20px"} changed to {"underlying":"20px 60px"} at (0.25) is [40px 70px] 
+PASS Untitled 15 
+PASS Animation on property <backgroundPosition> from neutral to [100px 100px] with {"underlying":"60px 20px"} changed to {"underlying":"20px 60px"} at (0.75) is [80px 90px] 
+PASS Untitled 16 
+PASS Animation on property <backgroundPosition> from [inherit] to [100px 100px] with {"inherited":"20px 60px"} changed to {"inherited":"60px 20px"} at (0.25) is [70px 40px] 
+PASS Untitled 17 
+PASS Animation on property <backgroundPosition> from [inherit] to [100px 100px] with {"inherited":"20px 60px"} changed to {"inherited":"60px 20px"} at (0.75) is [90px 80px] 
+PASS Untitled 18 
+PASS Animation on property <backgroundPosition> from [inherit] to [100px 100px] with {"inherited":"60px 20px"} changed to {"inherited":"20px 60px"} at (0.25) is [40px 70px] 
+PASS Untitled 19 
+PASS Animation on property <backgroundPosition> from [inherit] to [100px 100px] with {"inherited":"60px 20px"} changed to {"inherited":"20px 60px"} at (0.75) is [80px 90px] 
+Harness: the test ran to completion.
+

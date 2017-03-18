@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This test ensures that when an image changes, but doesn't change size (like in an Animated GIF), we don't force a Layout. 
+Harness: the test ran to completion.
+

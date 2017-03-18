@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Removing an iframe srcdoc attribute should load the src, if set 
+Harness: the test ran to completion.
+

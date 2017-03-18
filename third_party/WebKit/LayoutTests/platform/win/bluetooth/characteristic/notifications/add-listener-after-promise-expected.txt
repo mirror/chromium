@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Registering after the promise resolves shouldn't result in events getting dropped. 
+Harness: the test ran to completion.
+

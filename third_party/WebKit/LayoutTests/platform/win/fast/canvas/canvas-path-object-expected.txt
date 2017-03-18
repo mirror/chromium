@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Ensure that the constructor for Path object and dependent functions exist. 
+Harness: the test ran to completion.
+

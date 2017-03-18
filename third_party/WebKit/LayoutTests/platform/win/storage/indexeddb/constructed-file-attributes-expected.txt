@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Attribute persistence of constructed File objects 
+Harness: the test ran to completion.
+

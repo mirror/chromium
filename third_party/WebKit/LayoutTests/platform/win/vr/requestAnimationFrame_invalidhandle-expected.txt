@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS cancelAnimationFrame does not have unexpected behavior when given invalid handles 
+Harness: the test ran to completion.
+

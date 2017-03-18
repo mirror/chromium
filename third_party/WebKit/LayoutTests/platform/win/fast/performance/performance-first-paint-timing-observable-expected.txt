@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Performance first paint timing entry is observable. 
+Harness: the test ran to completion.
+

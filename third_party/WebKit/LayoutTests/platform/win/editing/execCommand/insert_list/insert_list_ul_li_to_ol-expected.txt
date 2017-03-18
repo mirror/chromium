@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Create OL from last LI of UL 
+Harness: the test ran to completion.
+

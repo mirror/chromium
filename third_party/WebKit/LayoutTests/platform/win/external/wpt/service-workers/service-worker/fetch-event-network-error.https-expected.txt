@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Rejecting the fetch event or using preventDefault() causes a network error 
+Harness: the test ran to completion.
+

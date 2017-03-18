@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS just one argument 
+Harness: the test ran to completion.
+

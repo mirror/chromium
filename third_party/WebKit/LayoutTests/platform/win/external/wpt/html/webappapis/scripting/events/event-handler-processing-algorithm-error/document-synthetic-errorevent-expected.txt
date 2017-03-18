@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS error event is normal (return true does not cancel; one arg) on Document, with a synthetic ErrorEvent 
+Harness: the test ran to completion.
+

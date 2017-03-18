@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Make sure that a sizes change also changes the intrinsic dimensions 
+Harness: the test ran to completion.
+

@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS script.onbeforescriptexecute should not be supported 
+PASS script.onafterscriptexecute should not be supported 
+PASS onbeforescriptexecute content attribute should not be supported 
+PASS onafterscriptexecute content attribute should not be supported 
+PASS beforescriptexecute event should not be supported 
+PASS afterscriptexecute event should not be supported 
+Harness: the test ran to completion.
+

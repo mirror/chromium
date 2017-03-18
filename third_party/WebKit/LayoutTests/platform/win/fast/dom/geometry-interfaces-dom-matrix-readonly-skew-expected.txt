@@ -1,0 +1,11 @@
+This is a testharness.js-based test.
+PASS DOMMatrixReadOnly skewX() - 2D matrix 
+PASS DOMMatrixReadOnly skewX(45) - 2D matrix 
+PASS DOMMatrixReadOnly skewX() - 3D matrix 
+PASS DOMMatrixReadOnly skewX(45) - 3D matrix 
+PASS DOMMatrixReadOnly skewY() - 2D matrix 
+PASS DOMMatrixReadOnly skewY(45) - 2D matrix 
+PASS DOMMatrixReadOnly skewY() - 3D matrix 
+PASS DOMMatrixReadOnly skewY(45) - 3D matrix 
+Harness: the test ran to completion.
+

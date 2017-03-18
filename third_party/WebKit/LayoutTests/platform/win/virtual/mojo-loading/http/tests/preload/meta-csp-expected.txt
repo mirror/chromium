@@ -1,0 +1,6 @@
+CONSOLE ERROR: line 5: Refused to load the font 'http://127.0.0.1:8000/resources/Ahem.ttf' because it violates the following Content Security Policy directive: "font-src 'none'".
+
+This is a testharness.js-based test.
+PASS Ensure preloads occur when csp meta tags are in the markup 
+Harness: the test ran to completion.
+

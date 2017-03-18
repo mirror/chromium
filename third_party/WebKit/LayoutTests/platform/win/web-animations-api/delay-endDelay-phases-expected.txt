@@ -1,0 +1,8 @@
+This is a testharness.js-based test.
+PASS delay and endDelay both positive 
+PASS Positive delay and negative endDelay 
+PASS Negative delay and positive endDelay 
+PASS delay and endDelay both negative 
+PASS Negative endDelay that eclipses delay and duration 
+Harness: the test ran to completion.
+

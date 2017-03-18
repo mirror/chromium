@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS SVG Web Animations should be responsive to changes in the underlying value: setAttribute() -> getAttribute() 
+PASS SVG Web Animations should be responsive to changes in the underlying value: setAttribute() -> get primitive animVal 
+PASS SVG Web Animations should be responsive to changes in the underlying value: set baseVal -> getAttribute() 
+PASS SVG Web Animations should be responsive to changes in the underlying value: set baseVal -> get primitive animVal 
+PASS SVG Web Animations should be responsive to changes in the underlying value: setAttribute() -> read tear-off animVal 
+PASS SVG Web Animations should be responsive to changes in the underlying value: set baseVal -> read tear-off animVal 
+Harness: the test ran to completion.
+

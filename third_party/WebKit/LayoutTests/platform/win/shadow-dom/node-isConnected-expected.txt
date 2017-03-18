@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS When detached, isConnected should be false. When inserted into a document tree, isConnected should be true. 
+PASS When inserted into a connected shadow tree, isConnected should be true. 
+PASS When inserted into a detached tree, isConnected should be false. 
+PASS When detached, isConnected should be false. When a shadow tree inserted into a document tree, isConnected should be true 
+Harness: the test ran to completion.
+

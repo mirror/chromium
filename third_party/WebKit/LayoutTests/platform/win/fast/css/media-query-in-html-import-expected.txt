@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS (max-width: 0px) media query in import document should not evaluate to true. 
+Harness: the test ran to completion.
+

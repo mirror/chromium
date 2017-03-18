@@ -1,0 +1,10 @@
+This is a testharness.js-based test.
+PASS clicking a button via javascript sends an accessible click event 
+PASS clicking a button via mouse events sends an accessible click event 
+PASS clicking a button via the keyboard sends an accessible click event 
+PASS clicking a button via accessibility sends an accessible click event 
+PASS dragging the mouse off a button does not send an accessible click event 
+PASS dragging the mouse onto a button does not send an accessible click event 
+PASS tapping on a button with a touch event sends an accessible click event 
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Check the incumbent global EventListeners are called with 
+Harness: the test ran to completion.
+

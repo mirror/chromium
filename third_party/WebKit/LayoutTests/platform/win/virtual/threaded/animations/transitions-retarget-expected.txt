@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Retargeting a transition should cause the old transition to be cancelled 
+Harness: the test ran to completion.
+

@@ -1,0 +1,14 @@
+This is a testharness.js-based test.
+PASS This test uses interpolation-test.js. 
+PASS Compositing: property <font-weight> underlying [500] from add [100] to add [500] at (-0.3) is [500] 
+PASS Compositing: property <font-weight> underlying [500] from add [100] to add [500] at (0) is [600] 
+PASS Compositing: property <font-weight> underlying [500] from add [100] to add [500] at (0.5) is [800] 
+PASS Compositing: property <font-weight> underlying [500] from add [100] to add [500] at (1) is [900] 
+PASS Compositing: property <font-weight> underlying [500] from add [100] to add [500] at (1.5) is [900] 
+PASS Compositing: property <font-weight> underlying [200] from add [600] to replace [500] at (-0.3) is [900] 
+PASS Compositing: property <font-weight> underlying [200] from add [600] to replace [500] at (0) is [800] 
+PASS Compositing: property <font-weight> underlying [200] from add [600] to replace [500] at (0.5) is [bold] 
+PASS Compositing: property <font-weight> underlying [200] from add [600] to replace [500] at (1) is [500] 
+PASS Compositing: property <font-weight> underlying [200] from add [600] to replace [500] at (1.5) is [normal] 
+Harness: the test ran to completion.
+

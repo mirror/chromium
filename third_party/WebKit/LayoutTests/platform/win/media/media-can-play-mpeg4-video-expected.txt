@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test HTMLMediaElement's "canPlayType" method with multiple video mpeg4 MIME types. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS internals are exposed 
+PASS :-webkit-any() with universal selector 
+PASS Nested :-webkit-any() with universal selector 
+PASS :-webkit-any() with universal :focus selector 
+Harness: the test ran to completion.
+

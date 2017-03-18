@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Delete to merge paragraph into BLOCKQUOTE 
+Harness: the test ran to completion.
+

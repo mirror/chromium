@@ -1,0 +1,5 @@
+CONSOLE MESSAGE: line 7: success
+This is a testharness.js-based test.
+PASS Verify that hints were sent on iframe subresources. 
+Harness: the test ran to completion.
+

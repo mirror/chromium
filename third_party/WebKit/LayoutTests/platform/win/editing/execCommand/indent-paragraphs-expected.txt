@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS indenting three paragraphs with different hierarchies 
+Harness: the test ran to completion.
+

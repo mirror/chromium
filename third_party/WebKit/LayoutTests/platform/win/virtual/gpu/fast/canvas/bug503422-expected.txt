@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Regression test for crbug.com/503422. Test passes by not crashing. 
+Harness: the test ran to completion.
+

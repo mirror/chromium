@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS This tests scroll gesture events on main frame scroll bars The document should be slightly scrolled down if successful. 
+Harness: the test ran to completion.
+

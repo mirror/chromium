@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test for canvas bug where fillText resets the current context 
+Harness: the test ran to completion.
+

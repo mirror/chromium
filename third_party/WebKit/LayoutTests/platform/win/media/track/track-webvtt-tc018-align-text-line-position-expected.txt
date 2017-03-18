@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Tests cue alignment, line and text position from settings. 
+Harness: the test ran to completion.
+

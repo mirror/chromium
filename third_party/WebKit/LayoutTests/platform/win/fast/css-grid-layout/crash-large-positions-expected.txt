@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that setting and getting grid-column|row-start|end to huge values is properly clamped and does not make the renderer crash. 
+Harness: the test ran to completion.
+

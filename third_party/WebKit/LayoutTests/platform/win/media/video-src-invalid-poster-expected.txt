@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Test that media dimensions are equal to poster dimensions when "src" is invalid. 
+Harness: the test ran to completion.
+

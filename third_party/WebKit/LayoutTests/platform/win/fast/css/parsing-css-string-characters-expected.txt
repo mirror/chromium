@@ -1,0 +1,45 @@
+This is a testharness.js-based test.
+PASS CSS.supports('font-family', "\"65: A 9: \t\"") should return true 
+PASS e.style['font-family'] = "\"65: A 9: \t\"" should set the value 
+PASS Serialization should round-trip after setting e.style['font-family'] = "\"65: A 9: \t\"" 
+PASS CSS.supports('font-family', "\"128:  159: \"") should return true 
+PASS e.style['font-family'] = "\"128:  159: \"" should set the value 
+PASS Serialization should round-trip after setting e.style['font-family'] = "\"128:  159: \"" 
+PASS CSS.supports('font-family', "\"1: \u0001\"") should return true 
+PASS e.style['font-family'] = "\"1: \u0001\"" should set the value 
+PASS Serialization should round-trip after setting e.style['font-family'] = "\"1: \u0001\"" 
+PASS CSS.supports('font-family', "\"8: \b\"") should return true 
+PASS e.style['font-family'] = "\"8: \b\"" should set the value 
+PASS Serialization should round-trip after setting e.style['font-family'] = "\"8: \b\"" 
+PASS CSS.supports('font-family', "\"9: \t\"") should return true 
+PASS e.style['font-family'] = "\"9: \t\"" should set the value 
+PASS Serialization should round-trip after setting e.style['font-family'] = "\"9: \t\"" 
+PASS CSS.supports('font-family', "\"11: \u000b\"") should return true 
+PASS e.style['font-family'] = "\"11: \u000b\"" should set the value 
+PASS Serialization should round-trip after setting e.style['font-family'] = "\"11: \u000b\"" 
+PASS CSS.supports('font-family', "\"14: \u000e\"") should return true 
+PASS e.style['font-family'] = "\"14: \u000e\"" should set the value 
+PASS Serialization should round-trip after setting e.style['font-family'] = "\"14: \u000e\"" 
+PASS CSS.supports('font-family', "\"20: \u0014\"") should return true 
+PASS e.style['font-family'] = "\"20: \u0014\"" should set the value 
+PASS Serialization should round-trip after setting e.style['font-family'] = "\"20: \u0014\"" 
+PASS CSS.supports('font-family', "\"30: \u001e\"") should return true 
+PASS e.style['font-family'] = "\"30: \u001e\"" should set the value 
+PASS Serialization should round-trip after setting e.style['font-family'] = "\"30: \u001e\"" 
+PASS CSS.supports('font-family', "\"31: \u001f\"") should return true 
+PASS e.style['font-family'] = "\"31: \u001f\"" should set the value 
+PASS Serialization should round-trip after setting e.style['font-family'] = "\"31: \u001f\"" 
+PASS CSS.supports('font-family', "\"127: \"") should return true 
+PASS e.style['font-family'] = "\"127: \"" should set the value 
+PASS Serialization should round-trip after setting e.style['font-family'] = "\"127: \"" 
+PASS CSS.supports('font-family', "\"384: ƀ\"") should return true 
+PASS e.style['font-family'] = "\"384: ƀ\"" should set the value 
+PASS Serialization should round-trip after setting e.style['font-family'] = "\"384: ƀ\"" 
+PASS CSS.supports('font-family', "\"10: \n\"") should return false 
+PASS e.style['font-family'] = "\"10: \n\"" should not set the value 
+PASS CSS.supports('font-family', "\"12: \f\"") should return false 
+PASS e.style['font-family'] = "\"12: \f\"" should not set the value 
+PASS CSS.supports('font-family', "\"13: \r\"") should return false 
+PASS e.style['font-family'] = "\"13: \r\"" should not set the value 
+Harness: the test ran to completion.
+

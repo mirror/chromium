@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS Each window has a unique nav timing 2 instance. 
+Harness: the test ran to completion.
+

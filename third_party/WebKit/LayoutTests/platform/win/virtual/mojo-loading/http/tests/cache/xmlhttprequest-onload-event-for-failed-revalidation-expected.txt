@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS onload event must be invoked for failed revalidation when XHR's onload handler initiates a new XHR to the same URL. 
+Harness: the test ran to completion.
+

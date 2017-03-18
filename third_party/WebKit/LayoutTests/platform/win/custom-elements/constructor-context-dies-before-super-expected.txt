@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+PASS constructor destroys the context before super 
+Harness: the test ran to completion.
+

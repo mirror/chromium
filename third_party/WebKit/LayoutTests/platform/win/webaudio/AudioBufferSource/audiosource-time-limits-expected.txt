@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Output from AudioBufferSource.stop(1e+300) contains only the constant 1. 
+PASS Peak amplitude from oscillator.stop(1e+300) is greater than 0. 
+Harness: the test ran to completion.
+
