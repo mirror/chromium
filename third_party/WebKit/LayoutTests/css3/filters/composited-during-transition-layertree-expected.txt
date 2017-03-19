@@ -18,19 +18,19 @@
     },
     {
       "name": "LayoutImage IMG id='saturate-box'",
-      "position": [18, 132],
+      "position": [18, 133],
       "bounds": [160, 90],
       "drawsContent": true
     },
     {
       "name": "LayoutImage IMG id='invert-box'",
-      "position": [18, 246],
+      "position": [18, 248],
       "bounds": [160, 90],
       "drawsContent": true
     },
     {
       "name": "LayoutImage IMG id='brightness-box'",
-      "position": [18, 360],
+      "position": [18, 363],
       "bounds": [160, 90],
       "drawsContent": true
     }

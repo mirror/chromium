@@ -5,8 +5,8 @@ layer at (0,0) size 800x0
     LayoutBlockFlow {BODY} at (0,0) size 800x0
 layer at (120,120) size 200x200
   LayoutBlockFlow (positioned) {DIV} at (120,120) size 200x200 [bgcolor=#FF0000]
-layer at (0,100) size 240x244
-  LayoutBlockFlow (positioned) {DIV} at (0,100) size 240x244
+layer at (0,100) size 240x245
+  LayoutBlockFlow (positioned) {DIV} at (0,100) size 240x245
     LayoutText {#text} at (0,0) size 0x0
 layer at (10,110) size 220x220
   LayoutIFrame {IFRAME} at (10,10) size 220x220

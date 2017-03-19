@@ -8,22 +8,22 @@
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow DIV",
-          "rect": [19, 239, 200, 88],
+          "rect": [19, 245, 200, 88],
           "reason": "border box change"
         },
         {
           "object": "LayoutBlockFlow DIV",
-          "rect": [19, 79, 200, 88],
+          "rect": [19, 83, 200, 88],
           "reason": "border box change"
         },
         {
           "object": "LayoutBlockFlow DIV id='b'",
-          "rect": [33, 293, 172, 20],
+          "rect": [33, 299, 172, 20],
           "reason": "incremental"
         },
         {
           "object": "LayoutBlockFlow DIV id='a'",
-          "rect": [33, 133, 172, 20],
+          "rect": [33, 137, 172, 20],
           "reason": "incremental"
         }
       ]

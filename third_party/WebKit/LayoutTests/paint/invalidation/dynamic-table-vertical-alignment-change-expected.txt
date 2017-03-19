@@ -8,27 +8,27 @@
       "paintInvalidations": [
         {
           "object": "LayoutTableCell TD",
-          "rect": [10, 73, 102, 99],
+          "rect": [10, 77, 102, 99],
           "reason": "incremental"
         },
         {
           "object": "LayoutTableCell TD",
-          "rect": [12, 70, 100, 102],
+          "rect": [12, 74, 100, 102],
           "reason": "incremental"
         },
         {
           "object": "LayoutBlockFlow (floating) DIV id='target'",
-          "rect": [11, 71, 100, 100],
+          "rect": [11, 75, 100, 100],
           "reason": "style change"
         },
         {
           "object": "LayoutTableCell TD",
-          "rect": [114, 70, 2, 102],
+          "rect": [114, 74, 2, 102],
           "reason": "bounds change"
         },
         {
           "object": "LayoutTableCell TD",
-          "rect": [14, 70, 2, 3],
+          "rect": [14, 74, 2, 3],
           "reason": "bounds change"
         }
       ]

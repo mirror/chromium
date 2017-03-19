@@ -8,7 +8,7 @@
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow (floating) DIV class='float'",
-          "rect": [8, 62, 100, 100],
+          "rect": [8, 68, 100, 100],
           "reason": "layoutObject removal"
         }
       ]

@@ -8,7 +8,7 @@
     },
     {
       "name": "LayoutBlockFlow DIV class='composited block'",
-      "position": [14, 162],
+      "position": [14, 164],
       "bounds": [210, 60],
       "drawsContent": true,
       "backgroundColor": "#0000FF"
@@ -23,7 +23,7 @@
     },
     {
       "name": "LayoutBlockFlow DIV class='composited block'",
-      "position": [272, 88],
+      "position": [272, 89],
       "bounds": [210, 60],
       "drawsContent": true,
       "backgroundColor": "#0000FF"

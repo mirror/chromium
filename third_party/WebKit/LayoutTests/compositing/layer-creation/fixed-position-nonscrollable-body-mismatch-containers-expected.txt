@@ -10,7 +10,7 @@ Even though the fixed-position element's container is nonscrollable, it should s
     },
     {
       "name": "LayoutBlockFlow DIV class='scrollable bigBox'",
-      "position": [8, 68],
+      "position": [8, 72],
       "bounds": [302, 302],
       "shouldFlattenTransform": false,
       "drawsContent": true
