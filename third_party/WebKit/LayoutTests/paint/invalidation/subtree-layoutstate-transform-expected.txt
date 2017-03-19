@@ -8,7 +8,7 @@
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow DIV class='layoutroot'",
-          "rect": [28, 46, 200, 200],
+          "rect": [28, 48, 200, 200],
           "reason": "background obscuration change"
         }
       ]

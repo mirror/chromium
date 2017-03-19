@@ -8,7 +8,7 @@
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow (relative positioned) (floating) DIV class='imgContainer'",
-          "rect": [8, 8, 194, 236],
+          "rect": [8, 8, 194, 237],
           "reason": "location change"
         },
         {

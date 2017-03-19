@@ -8,12 +8,12 @@
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow (positioned) DIV id='shiftMe'",
-          "rect": [0, 0, 1500, 236],
+          "rect": [0, 0, 1500, 237],
           "reason": "bounds change"
         },
         {
           "object": "LayoutBlockFlow (positioned) DIV id='shiftMe'",
-          "rect": [-250, 0, 1500, 236],
+          "rect": [-250, 0, 1500, 237],
           "reason": "bounds change"
         },
         {

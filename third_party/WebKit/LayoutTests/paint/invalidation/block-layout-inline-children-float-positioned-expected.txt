@@ -7,13 +7,13 @@
       "drawsContent": true,
       "paintInvalidations": [
         {
-          "object": "LayoutBlockFlow (floating) SPAN",
-          "rect": [305, 35, 296, 18],
+          "object": "LayoutBlockFlow (positioned) SPAN",
+          "rect": [162, 37, 278, 20],
           "reason": "layoutObject insertion"
         },
         {
-          "object": "LayoutBlockFlow (positioned) SPAN",
-          "rect": [153, 35, 296, 18],
+          "object": "LayoutBlockFlow (floating) SPAN",
+          "rect": [324, 37, 277, 20],
           "reason": "layoutObject insertion"
         }
       ]

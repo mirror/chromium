@@ -8,37 +8,37 @@
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow div id='contentBox'",
-          "rect": [8, 50, 402, 402],
+          "rect": [8, 52, 402, 402],
           "reason": "forced by layout"
         },
         {
           "object": "LayoutSVGEllipse circle",
-          "rect": [242, 251, 167, 200],
+          "rect": [242, 253, 167, 200],
           "reason": "bounds change"
         },
         {
           "object": "LayoutSVGEllipse circle",
-          "rect": [242, 51, 167, 200],
+          "rect": [242, 53, 167, 200],
           "reason": "bounds change"
         },
         {
           "object": "LayoutSVGEllipse circle",
-          "rect": [9, 251, 167, 200],
+          "rect": [9, 253, 167, 200],
           "reason": "location change"
         },
         {
           "object": "LayoutSVGEllipse circle",
-          "rect": [9, 51, 167, 200],
+          "rect": [9, 53, 167, 200],
           "reason": "bounds change"
         },
         {
           "object": "LayoutSVGEllipse circle",
-          "rect": [67, 251, 42, 67],
+          "rect": [67, 253, 42, 67],
           "reason": "bounds change"
         },
         {
           "object": "LayoutSVGEllipse circle",
-          "rect": [67, 184, 42, 67],
+          "rect": [67, 186, 42, 67],
           "reason": "bounds change"
         }
       ]
