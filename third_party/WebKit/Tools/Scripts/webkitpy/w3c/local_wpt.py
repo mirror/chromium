@@ -27,7 +27,6 @@ class LocalWPT(object):
         self.host = host
         self.path = path
         self.gh_token = gh_token
-        self.branch_name = 'chromium-export-try'
 
     def fetch(self):
         assert self.gh_token, 'LocalWPT.gh_token required for fetch'
@@ -62,14 +61,8 @@ class LocalWPT(object):
         self.run(['git', 'reset', '--hard', 'HEAD'])
         self.run(['git', 'clean', '-fdx'])
         self.run(['git', 'checkout', 'origin/master'])
-        if self.branch_name in self.all_branches():
-            self.run(['git', 'branch', '-D', self.branch_name])
 
-    def all_branches(self):
-        """Returns a list of local and remote branches."""
-        return [s.strip() for s in self.run(['git', 'branch', '-a']).splitlines()]
-
-    def create_branch_with_patch(self, message, patch, author):
+    def create_branch_with_patch(self, branch_name, message, patch, author):
         """Commits the given patch and pushes to the upstream repo.
 
         Args:
@@ -77,14 +70,9 @@ class LocalWPT(object):
             patch: A patch that can be applied by git apply.
         """
         self.clean()
-        all_branches = self.all_branches()
 
-        if self.branch_name in all_branches:
-            _log.info('Local branch %s already exists, deleting', self.branch_name)
-            self.run(['git', 'branch', '-D', self.branch_name])
-
-        _log.info('Creating local branch %s', self.branch_name)
-        self.run(['git', 'checkout', '-b', self.branch_name])
+        _log.info('Creating local branch %s', branch_name)
+        self.run(['git', 'checkout', '-b', branch_name])
 
         # Remove Chromium WPT directory prefix.
         patch = patch.replace(CHROMIUM_WPT_DIR, '')
@@ -94,9 +82,9 @@ class LocalWPT(object):
         self.run(['git', 'apply', '-'], input=patch)
         self.run(['git', 'add', '.'])
         self.run(['git', 'commit', '--author', author, '-am', message])
-        self.run(['git', 'push', '-f', 'origin', self.branch_name])
+        self.run(['git', 'push', 'origin', branch_name])
 
-        return self.branch_name
+        return branch_name
 
     def test_patch(self, patch, chromium_commit=None):
         """Returns the expected output of a patch against origin/master.
