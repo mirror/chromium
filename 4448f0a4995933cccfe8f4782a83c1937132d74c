@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fb3c1f5_35749a9e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-20T19:59:56Z",
+      "side": 1,
+      "message": "This was the original bug.",
+      "revId": "4448f0a4995933cccfe8f4782a83c1937132d74c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c772e02_a1d76687",
+        "filename": "third_party/WebKit/Tools/Scripts/wpt-export",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-20T19:59:56Z",
+      "side": 1,
+      "message": "Unrelated but I moved this comment from test_exporter.py since it seemed more appropriate here.",
+      "revId": "4448f0a4995933cccfe8f4782a83c1937132d74c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
