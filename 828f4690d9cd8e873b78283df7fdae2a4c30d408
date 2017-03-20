@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56bc34ce_15e45082",
+        "filename": "tools/directory_component_mapping/README.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-20T18:48:44Z",
+      "side": 1,
+      "message": "This is a little too skeletal, even for just a first pass. Like how do you even run it? I really have no clue how it\u0027s used. Is there another script somewhere that imports it? If so, that should probably be part of this initial commit.",
+      "revId": "828f4690d9cd8e873b78283df7fdae2a4c30d408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd5e69ad_5b411897",
+        "filename": "tools/directory_component_mapping/README.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-20T18:48:44Z",
+      "side": 1,
+      "message": "These install instructions need more detail, or should link to more complete instructions. For instance, what\u0027s the actual command I need to run to install? is it a pip install? apt-get install? Something else?",
+      "revId": "828f4690d9cd8e873b78283df7fdae2a4c30d408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df8798b6_10344b21",
+        "filename": "tools/directory_component_mapping/README.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-20T18:48:44Z",
+      "side": 1,
+      "message": "I\u0027m not really sure what that sentence means. I guess it\u0027s describing the what the link below links to, but maybe just say it\u0027s the design doc, and the title of the design doc, then the link.",
+      "revId": "828f4690d9cd8e873b78283df7fdae2a4c30d408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
