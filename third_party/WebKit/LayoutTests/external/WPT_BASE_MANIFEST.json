@@ -8640,11 +8640,6 @@
      {}
     ]
    ],
-   "dom/events/Event-initEvent-expected.txt": [
-    [
-     {}
-    ]
-   ],
    "dom/events/Event-subclasses-constructors-expected.txt": [
     [
      {}
@@ -29378,6 +29373,12 @@
    "IndexedDB/idbobjectstore_createIndex14-exception_order.htm": [
     [
      "/IndexedDB/idbobjectstore_createIndex14-exception_order.htm",
+     {}
+    ]
+   ],
+   "IndexedDB/idbobjectstore_createIndex15-autoincrement.htm": [
+    [
+     "/IndexedDB/idbobjectstore_createIndex15-autoincrement.htm",
      {}
     ]
    ],
@@ -58021,7 +58022,7 @@
    "support"
   ],
   "./README.md": [
-   "b9ca613d4f80444113159dd1f6d4985dafe7d43a",
+   "67fc3d0eca8a9b749667d0fc20436834f4203eaa",
    "support"
   ],
   "./check_stability.py": [
@@ -59154,6 +59155,10 @@
   ],
   "IndexedDB/idbobjectstore_createIndex14-exception_order.htm": [
    "5710bdf50b039cb1a3ea56242394fb4f71cd1113",
+   "testharness"
+  ],
+  "IndexedDB/idbobjectstore_createIndex15-autoincrement.htm": [
+   "1a876f45abcc038941833a489eb7d2fe916fd233",
    "testharness"
   ],
   "IndexedDB/idbobjectstore_createIndex2.htm": [
@@ -62340,10 +62345,6 @@
    "84e38be2f0e8f3c4f44a95cc296096de3631624b",
    "testharness"
   ],
-  "dom/events/Event-initEvent-expected.txt": [
-   "43e96f2943b9a8d12d8b524a4dcdf3d948a221bc",
-   "support"
-  ],
   "dom/events/Event-initEvent.html": [
    "a01aa825e0905a0efc3afe9bc3015d448e9618f1",
    "testharness"
@@ -62437,7 +62438,7 @@
    "testharness"
   ],
   "dom/interfaces-expected.txt": [
-   "229024e4deea3ff380684d983f93237ed8be8d84",
+   "fdc27bf50b1b7d7d826a2ebed259cc049838f88e",
    "support"
   ],
   "dom/interfaces.html": [
