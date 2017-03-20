@@ -8,7 +8,7 @@
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow DIV",
-          "rect": [19, 189, 200, 60],
+          "rect": [19, 191, 200, 60],
           "reason": "border box change"
         },
         {
@@ -18,7 +18,7 @@
         },
         {
           "object": "LayoutBlockFlow DIV id='b'",
-          "rect": [29, 229, 180, 20],
+          "rect": [29, 231, 180, 20],
           "reason": "incremental"
         },
         {

@@ -8,17 +8,17 @@
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow DIV id='keep_child'",
-          "rect": [508, 204, 100, 100],
+          "rect": [508, 208, 100, 100],
           "reason": "bounds change"
         },
         {
           "object": "LayoutBlockFlow (positioned) DIV id='remove_child'",
-          "rect": [508, 84, 100, 100],
+          "rect": [508, 88, 100, 100],
           "reason": "layoutObject removal"
         },
         {
           "object": "LayoutBlockFlow DIV id='keep_child'",
-          "rect": [408, 204, 100, 100],
+          "rect": [408, 208, 100, 100],
           "reason": "bounds change"
         }
       ]
