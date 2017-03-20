@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "313791d8_2617152d",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-20T23:10:43Z",
+      "side": 1,
+      "message": "Deleting the branch from the previous export is now unnecessary. Any branches will get destroyed anyway after each run since the builder is rebuilt every time.",
+      "revId": "95dc4bb8887a4b6815abdf711c31c65d71b8fa8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "667cc4c7_42021ee7",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-20T23:10:43Z",
+      "side": 1,
+      "message": "Remove -f from git push because we now want a push to fail if there\u0027s a conflict. Since the script isn\u0027t updating in-flight PRs, it should never be pushing to a branch more than once.",
+      "revId": "95dc4bb8887a4b6815abdf711c31c65d71b8fa8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc62763b_3f325626",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-20T23:10:43Z",
+      "side": 1,
+      "message": "This is the core change of the CL.",
+      "revId": "95dc4bb8887a4b6815abdf711c31c65d71b8fa8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
