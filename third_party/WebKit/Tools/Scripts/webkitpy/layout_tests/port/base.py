@@ -1482,7 +1482,8 @@ class Port(object):
         return [
             # For example, to turn on force-compositing-mode in the svg/ directory:
             # PhysicalTestSuite('svg', ['--force-compositing-mode']),
-            PhysicalTestSuite('fast/text', ['--enable-direct-write', '--enable-font-antialiasing']),
+            PhysicalTestSuite('fast/text', ['--enable-font-antialiasing']),
+            PhysicalTestSuite('external/csswg-test/css-writing-modes-3/', ['--enable-font-antialiasing']),
         ]
 
     def virtual_test_suites(self):

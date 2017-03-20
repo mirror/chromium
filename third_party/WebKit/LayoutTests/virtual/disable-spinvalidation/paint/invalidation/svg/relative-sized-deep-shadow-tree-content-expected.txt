@@ -8,72 +8,72 @@
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow div id='contentBox'",
-          "rect": [8, 68, 402, 402],
+          "rect": [8, 72, 402, 402],
           "reason": "forced by layout"
         },
         {
           "object": "LayoutSVGContainer g id='targetUse'",
-          "rect": [209, 269, 200, 200],
+          "rect": [209, 273, 200, 200],
           "reason": "bounds change"
         },
         {
           "object": "LayoutSVGContainer use",
-          "rect": [209, 269, 200, 200],
+          "rect": [209, 273, 200, 200],
           "reason": "bounds change"
         },
         {
           "object": "LayoutSVGRect rect id='targetRect'",
-          "rect": [209, 269, 200, 200],
+          "rect": [209, 273, 200, 200],
           "reason": "forced by layout"
         },
         {
           "object": "LayoutSVGRoot svg",
-          "rect": [209, 269, 200, 200],
+          "rect": [209, 273, 200, 200],
           "reason": "forced by layout"
         },
         {
           "object": "LayoutSVGContainer use id='targetUse'",
-          "rect": [109, 169, 200, 200],
+          "rect": [109, 173, 200, 200],
           "reason": "bounds change"
         },
         {
           "object": "LayoutSVGRect rect id='targetRect'",
-          "rect": [109, 169, 200, 200],
+          "rect": [109, 173, 200, 200],
           "reason": "forced by layout"
         },
         {
           "object": "LayoutSVGRect rect id='targetRect'",
-          "rect": [9, 169, 200, 200],
+          "rect": [9, 173, 200, 200],
           "reason": "forced by layout"
         },
         {
           "object": "LayoutSVGContainer g id='targetUse'",
-          "rect": [59, 269, 50, 200],
+          "rect": [59, 273, 50, 200],
           "reason": "bounds change"
         },
         {
           "object": "LayoutSVGContainer use",
-          "rect": [59, 269, 50, 200],
+          "rect": [59, 273, 50, 200],
           "reason": "bounds change"
         },
         {
           "object": "LayoutSVGRect rect id='targetRect'",
-          "rect": [59, 269, 50, 200],
+          "rect": [59, 273, 50, 200],
           "reason": "forced by layout"
         },
         {
           "object": "LayoutSVGRoot svg",
-          "rect": [59, 269, 50, 200],
+          "rect": [59, 273, 50, 200],
           "reason": "forced by layout"
         },
         {
           "object": "LayoutSVGContainer use id='targetUse'",
-          "rect": [34, 169, 50, 200],
+          "rect": [34, 173, 50, 200],
           "reason": "bounds change"
         },
         {
           "object": "LayoutSVGRect rect id='targetRect'",
-          "rect": [34, 169, 50, 200],
+          "rect": [34, 173, 50, 200],
           "reason": "forced by layout"
         }
       ]

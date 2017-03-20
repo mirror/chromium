@@ -8,12 +8,12 @@
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow div id='contentBox'",
-          "rect": [8, 68, 402, 402],
+          "rect": [8, 72, 402, 402],
           "reason": "forced by layout"
         },
         {
           "object": "LayoutSVGEllipse circle",
-          "rect": [8, 151, 102, 236],
+          "rect": [8, 155, 102, 236],
           "reason": "SVG resource change"
         }
       ]

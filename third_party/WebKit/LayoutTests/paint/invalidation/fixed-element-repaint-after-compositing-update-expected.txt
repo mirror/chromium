@@ -8,12 +8,12 @@
     },
     {
       "name": "LayoutBlockFlow (positioned) DIV id='fixedTransformed'",
-      "position": [8, 102],
+      "position": [8, 88],
       "contentsOpaque": true
     },
     {
       "name": "LayoutBlockFlow (positioned) DIV id='fixedOverlapping'",
-      "position": [8, 102],
+      "position": [8, 88],
       "bounds": [800, 600]
     },
     {

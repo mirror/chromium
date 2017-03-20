@@ -8,7 +8,7 @@
       "paintInvalidations": [
         {
           "object": "LayoutBlockFlow BODY",
-          "rect": [0, 0, 800, 246],
+          "rect": [0, 0, 800, 247],
           "reason": "forced by layout"
         }
       ]
