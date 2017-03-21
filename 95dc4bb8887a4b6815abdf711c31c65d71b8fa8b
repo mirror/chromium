@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6f561ec5_bafa16f8",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-21T02:04:06Z",
+      "side": 1,
+      "message": "Right, at the time it felt right to maintain the original functionality, but it\u0027s totally unnecessary",
+      "parentUuid": "50f7b5df_346f06ea",
+      "revId": "95dc4bb8887a4b6815abdf711c31c65d71b8fa8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "667cc4c7_42021ee7",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
         "patchSetId": 1
