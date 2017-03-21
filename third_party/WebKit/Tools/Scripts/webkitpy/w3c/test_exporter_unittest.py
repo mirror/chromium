@@ -5,7 +5,8 @@
 import unittest
 
 from webkitpy.common.host_mock import MockHost
-from webkitpy.common.system.executive_mock import MockExecutive
+from webkitpy.common.system.executive_mock import MockExecutive, mock_git_commands
+from webkitpy.w3c.chromium_commit import ChromiumCommit
 from webkitpy.w3c.test_exporter import TestExporter
 from webkitpy.w3c.wpt_github import PullRequest
 from webkitpy.w3c.wpt_github_mock import MockWPTGitHub
@@ -65,13 +66,17 @@ class TestExporterTest(unittest.TestCase):
 
         self.assertEqual(test_exporter.wpt_github.calls, ['in_flight_pull_requests'])
 
-    def test_creates_pull_request_for_earliest_commit(self):
+    def test_creates_pull_request_for_all_exportable_commits(self):
         host = MockHost()
 
         def mock_command(args):
             canned_git_outputs = {
                 'show': 'newer fake text' if 'add087a97844f4b9e307d9a216940582d96db306' in args else 'older fake text',
-                'rev-list': 'c881563d734a86f7d9cd57ac509653a61c45c240\nadd087a97844f4b9e307d9a216940582d96db306',
+                'rev-list': '\n'.join([
+                    'c881563d734a86f7d9cd57ac509653a61c45c240',
+                    'add087a97844f4b9e307d9a216940582d96db306',
+                    'add087a97844f4b9e307d9a216940582d96db306',
+                ]),
                 'footers': 'fake-cr-position',
                 'remote': 'github',
                 'format-patch': 'fake patch',
@@ -79,13 +84,56 @@ class TestExporterTest(unittest.TestCase):
                 'diff-tree': 'fake\n\files\nchanged',
                 'crrev-parse': 'c881563d734a86f7d9cd57ac509653a61c45c240',
             }
+            if args[1] == 'show':
+                if args[2] == 'add087a97844f4b9e307d9a216940582d96db306':
+                elif args[2] == 'add087a97844f4b9e307d9a216940582d96db306':
+                elif args[2] == 'add087a97844f4b9e307d9a216940582d96db306':
             return canned_git_outputs.get(args[1], '')
 
         host.executive = MockExecutive(run_command_fn=mock_command)
         test_exporter = TestExporter(host, 'gh-username', 'gh-token')
-        test_exporter.wpt_github = MockWPTGitHub(pull_requests=[])
+        test_exporter.wpt_github = MockWPTGitHub(pull_requests=[], create_pr_fail_index=1)
         test_exporter.run()
+
+        self.assertEqual(test_exporter.wpt_github.calls, [
+            'in_flight_pull_requests',
+            'create_pr',
+            'create_pr',
+            'create_pr',
+        ])
+        self.assertEqual(test_exporter.wpt_github.pull_requests_created, [
+            ('chromium-export-try', 'older fake text', 'older fake text'),
+            ('chromium-export-try', 'newer fake text', 'newer fake text'),
+        ])
+
+    '''
+    def test_creates_many_prs_even_if_one_fails(self):
+        host = MockHost()
+        host.executive = mock_git_commands({
+            'show': 'fake text',
+            'rev-list': 'c881563d734a86f7d9cd57ac509653a61c45c240\nadd087a97844f4b9e307d9a216940582d96db306',
+            'footers': 'fake-cr-position',
+            'remote': 'github',
+            'format-patch': 'fake patch',
+            'diff': 'fake patch diff',
+            'diff-tree': 'fake\n\files\nchanged',
+            'crrev-parse': 'c881563d734a86f7d9cd57ac509653a61c45c240',
+        })
+        host.web.responses = [
+            {'status_code': 200, 'body': '{"items": []}'},
+        ]
+
+        test_exporter = TestExporter(host, 'gh-username', 'gh-token')
+        test_exporter.wpt_github = MockWPTGitHub(pull_requests=[])
+        # test_exporter.exportable_commits_over_last_n_commits = lambda: [ChromiumCommit(sha='decafbad')]
+        test_exporter.run()
+
+        print test_exporter.wpt_github.calls
+        print '\n\n'
+        assert False
 
         self.assertEqual(test_exporter.wpt_github.calls, ['in_flight_pull_requests', 'create_pr'])
         self.assertEqual(test_exporter.wpt_github.pull_requests_created,
                          [('chromium-export-c881563d73', 'older fake text', 'older fake text')])
+
+    '''

@@ -5,7 +5,7 @@
 import logging
 
 from webkitpy.w3c.local_wpt import LocalWPT
-from webkitpy.w3c.common import exportable_commits_since
+from webkitpy.w3c.common import exportable_commits_over_last_n_commits
 from webkitpy.w3c.wpt_github import WPTGitHub, MergeError
 
 _log = logging.getLogger(__name__)
@@ -21,24 +21,28 @@ class TestExporter(object):
         self.local_wpt.fetch()
 
     def run(self):
-        """Query in-flight pull requests, then merges PR or creates one.
-
-        This script assumes it will be run on a regular interval. On
-        each invocation, it will either attempt to merge or attempt to
-        create a PR, never both.
+        """Attempts to merge recent pull requests and creates new ones for exportable commits.
         """
+        # TODO: make this fetch all PRs, not just in-flight ones
         pull_requests = self.wpt_github.in_flight_pull_requests()
         self.merge_all_pull_requests(pull_requests)
 
-        # TODO(jeffcarp): The below line will enforce draining all open PRs before
-        # adding any more to the queue, which mirrors current behavior. After this
-        # change lands, modify the following to:
-        # - for each exportable commit
-        #   - check if there's a corresponding PR
-        #   - if not, create one
-        if not pull_requests:
-            _log.info('No in-flight PRs found, looking for exportable commits.')
-            self.export_first_exportable_commit()
+        exportable_commits = exportable_commits_over_last_n_commits(1000, self.host, self.local_wpt)
+        for exportable_commit in exportable_commits:
+            print 'Exporting', exportable_commit
+            response = self.export_commit(exportable_commit)
+            print 'Exported'
+            print response
+
+        # exportable_commits = get_exportable_commits() # TODO make this function
+        #     pass
+            # TODO check if there's a corresponding PR
+            #   Maybe the easiest way to do this is fetching the last 100 PRs with our label and cross-check?
+            #   We can have a safety mechanism where if there are >100 open PRs in flight, hard fail
+            # TODO if no corresponding PR, create one
+            # TODO think long and deep about what happens if the newer of 2 unexported commits depends on the older
+            #   Maybe enforce a 5 minute buffer between mergings and always try merging oldest -> newest?
+            #   If the newest is merged first, it'll just cause the older one to become unmergeable. We'll see that and close the PR.
 
     def merge_all_pull_requests(self, pull_requests):
         for pr in pull_requests:
@@ -47,11 +51,12 @@ class TestExporter(object):
     def merge_pull_request(self, pull_request):
         _log.info('In-flight PR found: %s', pull_request.title)
         _log.info('https://github.com/w3c/web-platform-tests/pull/%d', pull_request.number)
-        _log.info('Attempting to merge...')
 
         if self.dry_run:
             _log.info('[dry_run] Would have attempted to merge PR')
             return
+
+        _log.info('Attempting to merge...')
 
         # This is outside of the try block because if there's a problem communicating
         # with the GitHub API, we should hard fail.
@@ -96,6 +101,9 @@ class TestExporter(object):
         _log.info('Picking the earliest commit and creating a PR')
         _log.info('- %s %s', outbound_commit.sha, outbound_commit.subject())
 
+        self.export_commit(outbound_commit)
+
+    def export_commit(self, outbound_commit):
         patch = outbound_commit.format_patch()
         message = outbound_commit.message()
         author = outbound_commit.author()
@@ -121,3 +129,5 @@ class TestExporter(object):
         if response_data:
             data, status_code = self.wpt_github.add_label(response_data['number'])
             _log.info('Add label response (status %s): %s', status_code, data)
+
+        return response_data

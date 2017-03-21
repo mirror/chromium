@@ -7,7 +7,7 @@ from webkitpy.w3c.wpt_github import MergeError
 
 class MockWPTGitHub(object):
 
-    def __init__(self, pull_requests, unsuccessful_merge_index=-1):
+    def __init__(self, pull_requests, unsuccessful_merge_index=-1, create_pr_fail_index=-1):
         self.pull_requests = pull_requests
         self.calls = []
         self.pull_requests_created = []
@@ -33,6 +33,8 @@ class MockWPTGitHub(object):
         assert remote_branch_name
         assert desc_title
         assert body
+
+        
 
         self.pull_requests_created.append((remote_branch_name, desc_title, body))
 
