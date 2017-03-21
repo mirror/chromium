@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "de983ea1_aae8a783",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/web_mock.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-21T02:03:08Z",
+      "side": 1,
+      "message": "For some reason I remember on a previous review this style of indentation was preferred. Or should it only apply to objects?\n\nfoo({\n  \u0027bar\u0027: 1,\n})\nvs.\nfoo({\n  \u0027bar\u0027: 1})\n\nI changed it in the upcoming patch.",
+      "parentUuid": "4c341481_6767f469",
+      "revId": "4448f0a4995933cccfe8f4782a83c1937132d74c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fb3c1f5_35749a9e",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
         "patchSetId": 2
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "36b10438_041e463f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-21T02:03:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bb9c49d0_98572ddf",
+      "revId": "4448f0a4995933cccfe8f4782a83c1937132d74c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c772e02_a1d76687",
         "filename": "third_party/WebKit/Tools/Scripts/wpt-export",
         "patchSetId": 2
@@ -82,6 +118,24 @@
       "side": 1,
       "message": "What will happen if it\u0027s run too infrequently?",
       "parentUuid": "1c772e02_a1d76687",
+      "revId": "4448f0a4995933cccfe8f4782a83c1937132d74c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c25e7cbe_43e02e6b",
+        "filename": "third_party/WebKit/Tools/Scripts/wpt-export",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-21T02:03:08Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s any risk of breakage if it\u0027s run too infrequently. The main point of this comment is that it should be run on an interval because it needs to run at least twice to export a commit (once to create a PR and again to merge it).",
+      "parentUuid": "4fde7af5_99a2eeda",
       "revId": "4448f0a4995933cccfe8f4782a83c1937132d74c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
