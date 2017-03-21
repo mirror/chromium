@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "7c039f85_24ca077c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-21T16:09:41Z",
+      "side": 1,
+      "message": "This docstring could be updated to include branch_name and author.",
+      "revId": "95dc4bb8887a4b6815abdf711c31c65d71b8fa8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50f7b5df_346f06ea",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
         "patchSetId": 1
@@ -66,6 +83,24 @@
       "side": 1,
       "message": "Right, at the time it felt right to maintain the original functionality, but it\u0027s totally unnecessary",
       "parentUuid": "50f7b5df_346f06ea",
+      "revId": "95dc4bb8887a4b6815abdf711c31c65d71b8fa8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75382279_b2c09646",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-21T16:09:41Z",
+      "side": 1,
+      "message": "Yeah, I would argue that not returning anything would make it slightly simpler.",
+      "parentUuid": "6f561ec5_bafa16f8",
       "revId": "95dc4bb8887a4b6815abdf711c31c65d71b8fa8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -139,6 +174,23 @@
       "revId": "95dc4bb8887a4b6815abdf711c31c65d71b8fa8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "14daf616_c1cc457c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-03-21T16:09:41Z",
+      "side": 1,
+      "message": "Formatting nit: It\u0027s more common to put the function call closing parenthesis on the same line as the last argument.",
+      "revId": "95dc4bb8887a4b6815abdf711c31c65d71b8fa8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
