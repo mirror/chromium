@@ -50,6 +50,23 @@
       "revId": "828f4690d9cd8e873b78283df7fdae2a4c30d408",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70aef6fc_9417db0c",
+        "filename": "tools/directory_component_mapping/train_model.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-03-21T16:40:30Z",
+      "side": 1,
+      "message": "Incidentally, you might want to look at go/pytotw/014. I\u0027m not too worried about it in this instance, and Chromium might not have the same official aversion as Google (e.g. it\u0027s used a lot in buildbot), but in general, some of the other options, like json or protobufs, would be better, and I think more typical, even in Chromium code.",
+      "revId": "828f4690d9cd8e873b78283df7fdae2a4c30d408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
