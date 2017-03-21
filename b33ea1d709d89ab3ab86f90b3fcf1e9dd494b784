@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3128347b_2b724c24",
+        "filename": "tools/checkteamtags/extract_components.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-03-21T00:40:47Z",
+      "side": 1,
+      "message": "the function name doesn\u0027t really reflect what the function does.",
+      "range": {
+        "startLine": 127,
+        "startChar": 4,
+        "endLine": 127,
+        "endChar": 24
+      },
+      "revId": "b33ea1d709d89ab3ab86f90b3fcf1e9dd494b784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68971f51_bbd3655a",
+        "filename": "tools/checkteamtags/extract_components.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-03-21T00:40:47Z",
+      "side": 1,
+      "message": "It is not clear if we will display all missing files from depth 0 all the way to the specified depth.",
+      "range": {
+        "startLine": 128,
+        "startChar": 52,
+        "endLine": 128,
+        "endChar": 60
+      },
+      "revId": "b33ea1d709d89ab3ab86f90b3fcf1e9dd494b784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a256bfd_ecb10bbe",
+        "filename": "tools/checkteamtags/extract_components.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-03-21T00:40:47Z",
+      "side": 1,
+      "message": "OWNERS file *that* have no team *and* no component by depth.",
+      "range": {
+        "startLine": 128,
+        "startChar": 13,
+        "endLine": 128,
+        "endChar": 38
+      },
+      "revId": "b33ea1d709d89ab3ab86f90b3fcf1e9dd494b784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1809d8d3_411b3f6c",
+        "filename": "tools/checkteamtags/extract_components.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-03-21T00:40:47Z",
+      "side": 1,
+      "message": "This parameter is missing.",
+      "range": {
+        "startLine": 133,
+        "startChar": 4,
+        "endLine": 133,
+        "endChar": 8
+      },
+      "revId": "b33ea1d709d89ab3ab86f90b3fcf1e9dd494b784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80b68df9_7b815e93",
+        "filename": "tools/checkteamtags/extract_components.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-03-21T00:40:47Z",
+      "side": 1,
+      "message": "Is this the maximum depth? If so, it is not clear.",
+      "range": {
+        "startLine": 138,
+        "startChar": 2,
+        "endLine": 138,
+        "endChar": 18
+      },
+      "revId": "b33ea1d709d89ab3ab86f90b3fcf1e9dd494b784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d389e4ad_a3f2cc78",
+        "filename": "tools/checkteamtags/extract_components.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-03-21T00:40:47Z",
+      "side": 1,
+      "message": "this name is a little confusing. Do we want this be the depth at which we report those files with missing component/team data? If so, we could name it something like --list_missing_info_by_depth",
+      "range": {
+        "startLine": 181,
+        "startChar": 29,
+        "endLine": 181,
+        "endChar": 48
+      },
+      "revId": "b33ea1d709d89ab3ab86f90b3fcf1e9dd494b784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00b95542_5513f21d",
+        "filename": "tools/checkteamtags/extract_components.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-03-21T00:40:47Z",
+      "side": 1,
+      "message": "List OWNERS files that have missing team and component information by depth.",
+      "range": {
+        "startLine": 182,
+        "startChar": 26,
+        "endLine": 182,
+        "endChar": 77
+      },
+      "revId": "b33ea1d709d89ab3ab86f90b3fcf1e9dd494b784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc70588_3da50b30",
+        "filename": "tools/checkteamtags/extract_components.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-03-21T00:40:47Z",
+      "side": 1,
+      "message": "if we only really want to pass the desired depth, we should pass the int, instead of the whole options object.",
+      "range": {
+        "startLine": 202,
+        "startChar": 32,
+        "endLine": 202,
+        "endChar": 39
+      },
+      "revId": "b33ea1d709d89ab3ab86f90b3fcf1e9dd494b784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41dde9e3_cfe9d35e",
+        "filename": "tools/checkteamtags/owners_file_tags.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1118104
+      },
+      "writtenOn": "2017-03-21T00:40:47Z",
+      "side": 1,
+      "message": "instead of no_component_no_team we could use missing_info",
+      "range": {
+        "startLine": 65,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 26
+      },
+      "revId": "b33ea1d709d89ab3ab86f90b3fcf1e9dd494b784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
