@@ -124,6 +124,27 @@ def display_stat(stats, root, options):
               file_pct_with_team_component_by_depth}
 
 
+def display_owners_files(stats, options):
+  """Display OWNERS files have no team no component by depth.
+
+  Args:
+    stats (dict): The statistics in dictionary form as produced by the
+      owners_file_tags module.
+    root (str): The root directory from which the depth level is calculated.
+    options (optparse.Values): The command line options as returned by
+      optparse.
+  """
+  print "OWNERS files have no team no component by depth:"
+  num_output_depth = len(stats['OWNERS-count-by-depth'])
+  if (options.no_info_owners_file > 0
+      and options.no_info_owners_file < num_output_depth):
+    num_output_depth = options.no_info_owners_file
+
+  for depth in range(0, num_output_depth):
+    print 'at depth %(depth)d'%{'depth': depth}
+    print stats['OWNERS-no-component-no-team-by-depth'][depth]
+
+
 def main(argv):
   usage = """Usage: python %prog [options] [<root_dir>]
   root_dir  specifies the topmost directory to traverse looking for OWNERS
@@ -138,6 +159,7 @@ Examples:
   python %prog -o ~/components.json /b/build/src
   python %prog -c /b/build/src
   python %prog -s 3 /b/build/src
+  python %prog -m 2 /b/build/src
   """
   parser = optparse.OptionParser(usage=usage)
   parser.add_option('-w', '--write', action='store_true',
@@ -156,6 +178,8 @@ Examples:
   parser.add_option('--include-subdirs', action='store_true', default=False,
                     help='List subdirectories without OWNERS file or component '
                     'tag as having same component as parent')
+  parser.add_option('-m', '--no_info_owners_file', type="int",
+                    help='List OWNERS files have no team no component by depth')
   options, args = parser.parse_args(argv[1:])
   if args:
     root = args[0]
@@ -173,6 +197,9 @@ Examples:
 
   if options.stat_coverage or options.complete_coverage:
     display_stat(stats, root, options)
+
+  if options.no_info_owners_file:
+    display_owners_files(stats, options)
 
   mappings['AAA-README']= _README
   mapping_file_contents = json.dumps(mappings, sort_keys=True, indent=2)
