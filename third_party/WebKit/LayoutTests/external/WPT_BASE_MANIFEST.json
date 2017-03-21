@@ -19255,6 +19255,11 @@
      {}
     ]
    ],
+   "mediacapture-fromelement/idlharness-expected.txt": [
+    [
+     {}
+    ]
+   ],
    "mediacapture-streams/GUM-deny.https-expected.txt": [
     [
      {}
@@ -29378,6 +29383,12 @@
    "IndexedDB/idbobjectstore_createIndex14-exception_order.htm": [
     [
      "/IndexedDB/idbobjectstore_createIndex14-exception_order.htm",
+     {}
+    ]
+   ],
+   "IndexedDB/idbobjectstore_createIndex15-autoincrement.htm": [
+    [
+     "/IndexedDB/idbobjectstore_createIndex15-autoincrement.htm",
      {}
     ]
    ],
@@ -42286,6 +42297,12 @@
    "media-capabilities/query.html": [
     [
      "/media-capabilities/query.html",
+     {}
+    ]
+   ],
+   "mediacapture-fromelement/idlharness.html": [
+    [
+     "/mediacapture-fromelement/idlharness.html",
      {}
     ]
    ],
@@ -58021,7 +58038,7 @@
    "support"
   ],
   "./README.md": [
-   "b9ca613d4f80444113159dd1f6d4985dafe7d43a",
+   "67fc3d0eca8a9b749667d0fc20436834f4203eaa",
    "support"
   ],
   "./check_stability.py": [
@@ -59154,6 +59171,10 @@
   ],
   "IndexedDB/idbobjectstore_createIndex14-exception_order.htm": [
    "5710bdf50b039cb1a3ea56242394fb4f71cd1113",
+   "testharness"
+  ],
+  "IndexedDB/idbobjectstore_createIndex15-autoincrement.htm": [
+   "1a876f45abcc038941833a489eb7d2fe916fd233",
    "testharness"
   ],
   "IndexedDB/idbobjectstore_createIndex2.htm": [
@@ -78179,6 +78200,14 @@
   "media/white.webm": [
    "c3f2ab0ca87e837a5ffc6dfc1e757e1357c49d1f",
    "support"
+  ],
+  "mediacapture-fromelement/idlharness-expected.txt": [
+   "2a14bb74d8a729117abffcb33f37a7e5f4e95045",
+   "support"
+  ],
+  "mediacapture-fromelement/idlharness.html": [
+   "ceeb48e7982eb88561f4c1630cb0fcf15d9cf73c",
+   "testharness"
   ],
   "mediacapture-streams/GUM-api.https.html": [
    "6f4e3b2b4fdb287f99935193f273cb21becb9669",
