@@ -539,16 +539,16 @@ void FrameView::setFrameRect(const IntRect& newRect) {
 
   const bool frameSizeChanged = oldRect.size() != newRect.size();
 
-  m_needsScrollbarsUpdate |= frameSizeChanged;
   // TODO(wjmaclean): find out why scrollbars fail to resize for complex
   // subframes after changing the zoom level. For now always calling
   // updateScrollbarsIfNeeded() here fixes the issue, but it would be good to
   // discover the deeper cause of this. http://crbug.com/607987.
+  m_needsScrollbarsUpdate |= frameSizeChanged;
   if (rootLayerScrolls) {
     if (LayoutView* lv = layoutView())
       lv->getScrollableArea()->clampScrollOffsetAfterOverflowChange();
   } else {
-    updateScrollbarsIfNeeded();
+    adjustScrollOffsetFromUpdateScrollbars();
   }
 
   frameRectsChanged();
@@ -700,14 +700,12 @@ void FrameView::setContentsSize(const IntSize& size) {
     return;
 
   m_contentsSize = size;
-  updateScrollbars();
+  m_needsScrollbarsUpdate = true;
   ScrollableArea::contentsResized();
 
   Page* page = frame().page();
   if (!page)
     return;
-
-  updateParentScrollableAreaSet();
 
   page->chromeClient().contentsSizeChanged(m_frame.get(), size);
 
@@ -731,14 +729,8 @@ void FrameView::adjustViewSize() {
   const IntSize& size = rect.size();
 
   const IntPoint origin(-rect.x(), -rect.y());
-  if (scrollOrigin() != origin) {
+  if (scrollOrigin() != origin)
     ScrollableArea::setScrollOrigin(origin);
-    // setContentSize (below) also calls updateScrollbars so we can avoid
-    // updating scrollbars twice by skipping the call here when the content
-    // size does not change.
-    if (!m_frame->document()->printing() && size == contentsSize())
-      updateScrollbars();
-  }
 
   setContentsSize(size);
 }
@@ -871,6 +863,7 @@ void FrameView::recalcOverflowAfterStyleChange() {
   }
 
   adjustViewSize();
+  updateScrollbars();
   updateScrollbarGeometry();
 
   if (scrollOriginChanged())
@@ -1291,29 +1284,26 @@ void FrameView::layout() {
         TRACE_DISABLED_BY_DEFAULT("blink.debug.layout.trees"), "LayoutTree",
         this, TracedLayoutObject::create(*layoutView(), false));
 
-    bool hadHorizontalScrollbar = horizontalScrollbar();
-    bool hadVerticalScrollbar = verticalScrollbar();
-    IntRect oldRect = frameRect();
+    IntSize oldSize(size());
+
     performLayout(inSubtreeLayout);
-    bool hasHorizontalScrollbar = horizontalScrollbar();
-    bool hasVerticalScrollbar = verticalScrollbar();
-    IntRect newRect = frameRect();
-    bool scrollbarsChanged = hadHorizontalScrollbar != hasHorizontalScrollbar ||
-                             hadVerticalScrollbar != hasVerticalScrollbar;
-    if (scrollbarsChanged)
+    updateScrollbars();
+    updateParentScrollableAreaSet();
+
+    IntSize newSize(size());
+    if (oldSize != newSize) {
+      m_needsScrollbarsUpdate = true;
       setNeedsLayout();
-    if (newRect != oldRect) {
       markViewportConstrainedObjectsForLayout(
-          newRect.width() != oldRect.width(),
-          newRect.height() != oldRect.height());
+          oldSize.width() != newSize.width(),
+          oldSize.height() != newSize.height());
       if (m_frame->isMainFrame())
         m_frame->page()->visualViewport().mainFrameDidChangeSize();
       frame().loader().restoreScrollPositionAndViewState();
     }
 
     if (needsLayout()) {
-      AutoReset<bool> suppressAdjustViewSize(&m_suppressAdjustViewSize,
-                                             !scrollbarsChanged);
+      AutoReset<bool> suppressAdjustViewSize(&m_suppressAdjustViewSize, true);
       layout();
     }
 
@@ -2140,6 +2130,9 @@ void FrameView::scrollbarExistenceDidChange() {
     return;
 
   bool usesOverlayScrollbars = ScrollbarTheme::theme().usesOverlayScrollbars();
+
+  if (!usesOverlayScrollbars && needsLayout())
+    layout();
 
   if (!layoutViewItem().isNull() && layoutViewItem().usesCompositing()) {
     layoutViewItem().compositor()->frameViewScrollbarsExistenceDidChange();
@@ -4208,7 +4201,7 @@ bool FrameView::adjustScrollbarExistence(
     return true;
 
   if (!hasOverlayScrollbars())
-    contentsResized();
+    setNeedsLayout();
   scrollbarExistenceDidChange();
   return true;
 }
