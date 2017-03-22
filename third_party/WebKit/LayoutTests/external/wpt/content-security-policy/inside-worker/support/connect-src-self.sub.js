@@ -15,9 +15,12 @@ async_test(t => {
   assert_no_csp_event_for_url(t, url);
 
   var xhr = new XMLHttpRequest();
-  xhr.open("GET", url);
-  xhr.onload = t.step_func_done();
-  xhr.onerror = t.unreached_func();
+  try {
+    xhr.open("GET", url);
+    t.done();
+  } catch (e) {
+    assert_unreached();
+  }
   xhr.send();
 }, "Same-origin XHR in " + self.location.protocol + self.location.search);
 
@@ -26,32 +29,34 @@ async_test(t => {
   var url = "http://{{domains[www]}}:{{ports[http][1]}}/common/text-plain.txt?cross-origin-fetch";
 
   Promise.all([
-    // TODO(mkwst): A 'securitypolicyviolation' event should fire.
+    waitUntilCSPEventForURL(t, url),
     fetch(url)
       .catch(t.step_func(e => assert_true(e instanceof TypeError)))
-  ]).then(t.step_func_done());
+  ]).then(_ => t.done());
 }, "Cross-origin 'fetch()' in " + self.location.protocol + self.location.search);
 
 async_test(t => {
   var url = "http://{{domains[www]}}:{{ports[http][1]}}/common/text-plain.txt?cross-origin-xhr";
 
   Promise.all([
-    // TODO(mkwst): A 'securitypolicyviolation' event should fire.
+    waitUntilCSPEventForURL(t, url),
     new Promise((resolve, reject) => {
       var xhr = new XMLHttpRequest();
-      xhr.open("GET", url);
-      xhr.onload = t.step_func(_ => reject("xhr.open should have thrown."));
-      xhr.onerror = t.step_func(resolve);
-      xhr.send();
+      try {
+        xhr.open("GET", url);
+        reject("xhr.open should have thrown");
+      } catch (e) {
+        resolve();
+      }
     })
-  ]).then(t.step_func_done());
+  ]).then(_ => t.done());
 }, "Cross-origin XHR in " + self.location.protocol + self.location.search);
 
 // Same-origin redirecting to cross-origin
 async_test(t => {
   var url = "{{location[server]}}/common/redirect-opt-in.py?status=307&location=http://{{domains[www]}}:{{ports[http][1]}}/common/text-plain.txt?cross-origin-fetch";
+  // TODO(mkwst): The event should be firing. :(
 
-  // TODO(mkwst): A 'securitypolicyviolation' event should fire.
   fetch(url)
     .catch(t.step_func_done(e => assert_true(e instanceof TypeError)))
 }, "Same-origin => cross-origin 'fetch()' in " + self.location.protocol + self.location.search);
