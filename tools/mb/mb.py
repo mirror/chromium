@@ -748,6 +748,8 @@ class MetaBuildWrapper(object):
 
       if 'cros_passthrough' in mixin_vals:
         vals['cros_passthrough'] = mixin_vals['cros_passthrough']
+      if 'args_file' in mixin_vals:
+        vals['args_file'] = mixin_vals['args_file']
       if 'gn_args' in mixin_vals:
         if vals['gn_args']:
           vals['gn_args'] += ' ' + mixin_vals['gn_args']
