@@ -13,7 +13,6 @@
 #include "ash/ash_export.h"
 #include "ash/common/metrics/gesture_action_type.h"
 #include "ash/common/metrics/user_metrics_action.h"
-#include "ash/common/session/session_state_observer.h"
 #include "ash/common/wm/lock_state_observer.h"
 #include "base/observer_list.h"
 #include "ui/base/ui_base_types.h"
@@ -38,32 +37,14 @@ enum class PointerWatcherEventTypes;
 
 namespace ash {
 class AcceleratorController;
-class BrightnessControlDelegate;
-class CastConfigController;
-class FocusCycler;
-class ImmersiveContextAsh;
 class ImmersiveFullscreenController;
 class KeyEventWatcher;
-class KeyboardBrightnessControlDelegate;
 class KeyboardUI;
-class LocaleNotificationController;
-class LogoutConfirmationController;
-class MaximizeModeController;
-class MediaController;
-class MruWindowTracker;
-class NewWindowController;
 class RootWindowController;
 class ScopedDisableInternalMouseAndKeyboard;
-class SessionController;
 class SessionStateDelegate;
-class ShelfController;
-class ShelfDelegate;
-class ShelfModel;
-class ShelfWindowWatcher;
 struct ShellInitParams;
 class ShutdownController;
-class SystemTrayDelegate;
-class SystemTrayController;
 class SystemTrayNotifier;
 class VpnList;
 class WindowCycleController;
@@ -83,75 +64,21 @@ class WindowState;
 }
 
 // Similar to ash::Shell. Eventually the two will be merged.
-class ASH_EXPORT WmShell : public SessionStateObserver {
+class ASH_EXPORT WmShell {
  public:
-  ~WmShell() override;
+  virtual ~WmShell();
 
   static WmShell* Get();
   static bool HasInstance() { return instance_ != nullptr; }
 
   virtual void Shutdown();
 
-  AcceleratorController* accelerator_controller() {
-    return accelerator_controller_.get();
-  }
-
-  BrightnessControlDelegate* brightness_control_delegate() {
-    return brightness_control_delegate_.get();
-  }
-
-  CastConfigController* cast_config() { return cast_config_.get(); }
-
-  FocusCycler* focus_cycler() { return focus_cycler_.get(); }
-
-  KeyboardBrightnessControlDelegate* keyboard_brightness_control_delegate() {
-    return keyboard_brightness_control_delegate_.get();
-  }
-
-  KeyboardUI* keyboard_ui() { return keyboard_ui_.get(); }
-
-  LocaleNotificationController* locale_notification_controller() {
-    return locale_notification_controller_.get();
-  }
-
-  LogoutConfirmationController* logout_confirmation_controller() {
-    return logout_confirmation_controller_.get();
-  }
-
-  MaximizeModeController* maximize_mode_controller() {
-    return maximize_mode_controller_.get();
-  }
-
-  MruWindowTracker* mru_window_tracker() { return mru_window_tracker_.get(); }
-
-  MediaController* media_controller() { return media_controller_.get(); }
-
-  NewWindowController* new_window_controller() {
-    return new_window_controller_.get();
-  }
-
-  SessionController* session_controller() { return session_controller_.get(); }
-
-  ShelfController* shelf_controller() { return shelf_controller_.get(); }
-
-  ShelfDelegate* shelf_delegate() { return shelf_delegate_.get(); }
-
-  ShelfModel* shelf_model();
-
   ShutdownController* shutdown_controller() {
     return shutdown_controller_.get();
   }
 
-  SystemTrayController* system_tray_controller() {
-    return system_tray_controller_.get();
-  }
-
   SystemTrayNotifier* system_tray_notifier() {
     return system_tray_notifier_.get();
-  }
-
-  SystemTrayDelegate* system_tray_delegate() {
-    return system_tray_delegate_.get();
   }
 
   VpnList* vpn_list() { return vpn_list_.get(); }
@@ -277,17 +204,10 @@ class ASH_EXPORT WmShell : public SessionStateObserver {
   virtual std::unique_ptr<ImmersiveFullscreenController>
   CreateImmersiveFullscreenController() = 0;
 
+  // Creates the KeyboardUI. This is called early on.
+  virtual std::unique_ptr<KeyboardUI> CreateKeyboardUI() = 0;
+
   virtual std::unique_ptr<KeyEventWatcher> CreateKeyEventWatcher() = 0;
-
-  // Creates the ShelfView for each display and populates it with items.
-  // Called after the user session is active and profile is available.
-  void CreateShelfView();
-
-  void CreateShelfDelegate();
-
-  // Called when the login status changes.
-  // TODO(oshima): Investigate if we can merge this and |OnLoginStateChanged|.
-  void UpdateAfterLoginStatusChange(LoginStatus status);
 
   virtual SessionStateDelegate* GetSessionStateDelegate() = 0;
 
@@ -308,8 +228,6 @@ class ASH_EXPORT WmShell : public SessionStateObserver {
   void OnLockStateEvent(LockStateObserver::EventType event);
   void AddLockStateObserver(LockStateObserver* observer);
   void RemoveLockStateObserver(LockStateObserver* observer);
-
-  void SetShelfDelegateForTesting(std::unique_ptr<ShelfDelegate> test_delegate);
 
   // True if any touch points are down.
   virtual bool IsTouchDown() = 0;
@@ -333,58 +251,22 @@ class ASH_EXPORT WmShell : public SessionStateObserver {
   virtual void CreatePrimaryHost() = 0;
   virtual void InitHosts(const ShellInitParams& init_params) = 0;
 
-  void SetKeyboardUI(std::unique_ptr<KeyboardUI> keyboard_ui);
-
-  // Helpers to set (and initialize) or destroy various delegates.
-  // TODO(msw|jamescook): Remove these once ShellDelegate, etc. are ported.
-  void SetSystemTrayDelegate(std::unique_ptr<SystemTrayDelegate> delegate);
-  void DeleteSystemTrayDelegate();
+  // Called during startup to create the AcceleratorController.
+  virtual std::unique_ptr<AcceleratorController>
+  CreateAcceleratorController() = 0;
 
   void DeleteWindowCycleController();
 
   void DeleteWindowSelectorController();
 
-  void CreateMaximizeModeController();
-  void DeleteMaximizeModeController();
-
-  void CreateMruWindowTracker();
-  void DeleteMruWindowTracker();
-
-  void SetAcceleratorController(
-      std::unique_ptr<AcceleratorController> accelerator_controller);
-
-  // SessionStateObserver:
-  void SessionStateChanged(session_manager::SessionState state) override;
-
  private:
   friend class AcceleratorControllerTest;
   friend class Shell;
-  friend class WmShellTestApi;
 
   static WmShell* instance_;
 
-  std::unique_ptr<AcceleratorController> accelerator_controller_;
-  std::unique_ptr<BrightnessControlDelegate> brightness_control_delegate_;
-  std::unique_ptr<CastConfigController> cast_config_;
-  std::unique_ptr<FocusCycler> focus_cycler_;
-  std::unique_ptr<ImmersiveContextAsh> immersive_context_;
-  std::unique_ptr<KeyboardBrightnessControlDelegate>
-      keyboard_brightness_control_delegate_;
-  std::unique_ptr<KeyboardUI> keyboard_ui_;
-  std::unique_ptr<LocaleNotificationController> locale_notification_controller_;
-  std::unique_ptr<LogoutConfirmationController> logout_confirmation_controller_;
-  std::unique_ptr<MaximizeModeController> maximize_mode_controller_;
-  std::unique_ptr<MediaController> media_controller_;
-  std::unique_ptr<MruWindowTracker> mru_window_tracker_;
-  std::unique_ptr<NewWindowController> new_window_controller_;
-  std::unique_ptr<SessionController> session_controller_;
-  std::unique_ptr<ShelfController> shelf_controller_;
-  std::unique_ptr<ShelfDelegate> shelf_delegate_;
-  std::unique_ptr<ShelfWindowWatcher> shelf_window_watcher_;
   std::unique_ptr<ShutdownController> shutdown_controller_;
-  std::unique_ptr<SystemTrayController> system_tray_controller_;
   std::unique_ptr<SystemTrayNotifier> system_tray_notifier_;
-  std::unique_ptr<SystemTrayDelegate> system_tray_delegate_;
   std::unique_ptr<VpnList> vpn_list_;
   std::unique_ptr<WindowCycleController> window_cycle_controller_;
   std::unique_ptr<WindowSelectorController> window_selector_controller_;

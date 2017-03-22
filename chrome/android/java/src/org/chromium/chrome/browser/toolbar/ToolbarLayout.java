@@ -7,7 +7,6 @@ package org.chromium.chrome.browser.toolbar;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
@@ -17,7 +16,6 @@ import android.graphics.drawable.Drawable;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -92,15 +90,16 @@ public abstract class ToolbarLayout extends FrameLayout implements Toolbar {
                 ApiCompatibilityUtils.getColorStateList(getResources(), R.color.dark_mode_tint);
         mLightModeTint =
                 ApiCompatibilityUtils.getColorStateList(getResources(), R.color.light_mode_tint);
+        mProgressBar = new ToolbarProgressBar(getContext(), getProgressBarHeight(),
+                getProgressBarTopMargin(), getProgressBarUsesThemeColors());
 
         addOnLayoutChangeListener(new OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View view, int left, int top, int right, int bottom,
                     int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                // Creation of the progress bar is done here so the toolbar height is available.
-                mProgressBar = new ToolbarProgressBar(getContext(), getProgressBarTopMargin());
                 if (isNativeLibraryReady()) mProgressBar.initializeAnimation();
                 addProgressBarToHierarchy();
+                mProgressBar.setTopMargin(getProgressBarTopMargin());
 
                 // Since this only needs to happen once, remove this listener from the view.
                 removeOnLayoutChangeListener(this);
@@ -116,6 +115,21 @@ public abstract class ToolbarLayout extends FrameLayout implements Toolbar {
     protected int getProgressBarTopMargin() {
         return getHeight()
                 - getResources().getDimensionPixelSize(R.dimen.toolbar_progress_bar_height);
+    }
+
+    /**
+     * Set the height that the progress bar should be.
+     * @return The progress bar height in px.
+     */
+    protected int getProgressBarHeight() {
+        return getResources().getDimensionPixelSize(R.dimen.toolbar_progress_bar_height);
+    }
+
+    /**
+     * @return Whether or not the toolbar's progress bar should use theme colors.
+     */
+    protected boolean getProgressBarUsesThemeColors() {
+        return true;
     }
 
     @Override
@@ -185,20 +199,14 @@ public abstract class ToolbarLayout extends FrameLayout implements Toolbar {
         mToolbarDataProvider = toolbarDataProvider;
         mToolbarTabController = tabController;
 
-        mMenuButton.setOnTouchListener(new OnTouchListener() {
-            @Override
-            @SuppressLint("ClickableViewAccessibility")
-            public boolean onTouch(View v, MotionEvent event) {
-                return onMenuButtonTouchEvent(v, event);
-            }
-        });
         mAppMenuButtonHelper = appMenuButtonHelper;
+
+        mMenuButton.setOnTouchListener(mAppMenuButtonHelper);
+        mMenuButton.setAccessibilityDelegate(mAppMenuButtonHelper);
     }
 
-    /** @return Whether or not the event is handled. */
-    protected boolean onMenuButtonTouchEvent(View v, MotionEvent event) {
-        return mAppMenuButtonHelper.onTouch(v, event);
-    }
+    /** Notified that the menu was shown. */
+    protected void onMenuShown() {}
 
     /**
      *  This function handles native dependent initialization for this class

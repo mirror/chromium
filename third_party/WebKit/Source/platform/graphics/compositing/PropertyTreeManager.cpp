@@ -74,8 +74,6 @@ void PropertyTreeManager::setupRootTransformNode() {
       transformTree.Insert(cc::TransformNode(), kRealRootNodeId));
   DCHECK_EQ(transformNode.id, kSecondaryRootNodeId);
   transformNode.source_node_id = transformNode.parent_id;
-  transformTree.SetTargetId(transformNode.id, kRealRootNodeId);
-  transformTree.SetContentTargetId(transformNode.id, kRealRootNodeId);
 
   // TODO(jaydasika): We shouldn't set ToScreen and FromScreen of root
   // transform node here. They should be set while updating transform tree in
@@ -99,21 +97,16 @@ void PropertyTreeManager::setupRootClipNode() {
   // cc is hardcoded to use clip node index 1 for viewport clip.
   cc::ClipTree& clipTree = m_propertyTrees.clip_tree;
   clipTree.clear();
-  m_propertyTrees.layer_id_to_clip_node_index.clear();
   cc::ClipNode& clipNode =
       *clipTree.Node(clipTree.Insert(cc::ClipNode(), kRealRootNodeId));
   DCHECK_EQ(clipNode.id, kSecondaryRootNodeId);
 
-  clipNode.resets_clip = true;
   clipNode.owning_layer_id = m_rootLayer->id();
   clipNode.clip_type = cc::ClipNode::ClipType::APPLIES_LOCAL_CLIP;
   clipNode.clip = gfx::RectF(
       gfx::SizeF(m_rootLayer->layer_tree_host()->device_viewport_size()));
   clipNode.transform_id = kRealRootNodeId;
-  clipNode.target_transform_id = kRealRootNodeId;
-  clipNode.target_effect_id = kSecondaryRootNodeId;
-  m_propertyTrees.layer_id_to_clip_node_index[clipNode.owning_layer_id] =
-      clipNode.id;
+  clipTree.SetOwningLayerIdForNode(&clipNode, clipNode.owning_layer_id);
 
   m_clipNodeMap.set(ClipPaintPropertyNode::root(), clipNode.id);
   m_rootLayer->SetClipTreeIndex(clipNode.id);
@@ -123,7 +116,6 @@ void PropertyTreeManager::setupRootEffectNode() {
   // cc is hardcoded to use effect node index 1 for root render surface.
   cc::EffectTree& effectTree = m_propertyTrees.effect_tree;
   effectTree.clear();
-  m_propertyTrees.layer_id_to_effect_node_index.clear();
   m_propertyTrees.element_id_to_effect_node_index.clear();
   cc::EffectNode& effectNode =
       *effectTree.Node(effectTree.Insert(cc::EffectNode(), kInvalidNodeId));
@@ -132,8 +124,7 @@ void PropertyTreeManager::setupRootEffectNode() {
   effectNode.transform_id = kRealRootNodeId;
   effectNode.clip_id = kSecondaryRootNodeId;
   effectNode.has_render_surface = true;
-  m_propertyTrees.layer_id_to_effect_node_index[effectNode.owning_layer_id] =
-      effectNode.id;
+  effectTree.SetOwningLayerIdForNode(&effectNode, effectNode.owning_layer_id);
 
   m_effectStack.push_back(
       BlinkEffectAndCcIdPair{EffectPaintPropertyNode::root(), effectNode.id});
@@ -143,15 +134,13 @@ void PropertyTreeManager::setupRootEffectNode() {
 void PropertyTreeManager::setupRootScrollNode() {
   cc::ScrollTree& scrollTree = m_propertyTrees.scroll_tree;
   scrollTree.clear();
-  m_propertyTrees.layer_id_to_scroll_node_index.clear();
   m_propertyTrees.element_id_to_scroll_node_index.clear();
   cc::ScrollNode& scrollNode =
       *scrollTree.Node(scrollTree.Insert(cc::ScrollNode(), kRealRootNodeId));
   DCHECK_EQ(scrollNode.id, kSecondaryRootNodeId);
   scrollNode.owning_layer_id = m_rootLayer->id();
   scrollNode.transform_id = kSecondaryRootNodeId;
-  m_propertyTrees.layer_id_to_scroll_node_index[scrollNode.owning_layer_id] =
-      scrollNode.id;
+  scrollTree.SetOwningLayerIdForNode(&scrollNode, scrollNode.owning_layer_id);
 
   m_scrollNodeMap.set(ScrollPaintPropertyNode::root(), scrollNode.id);
   m_rootLayer->SetScrollTreeIndex(scrollNode.id);
@@ -173,8 +162,6 @@ int PropertyTreeManager::ensureCompositorTransformNode(
   int id = transformTree().Insert(cc::TransformNode(), parentId);
 
   cc::TransformNode& compositorNode = *transformTree().Node(id);
-  transformTree().SetTargetId(id, kRealRootNodeId);
-  transformTree().SetContentTargetId(id, kRealRootNodeId);
   compositorNode.source_node_id = parentId;
 
   FloatPoint3D origin = transformNode->origin();
@@ -229,18 +216,14 @@ int PropertyTreeManager::ensureCompositorClipNode(
 
   cc::ClipNode& compositorNode = *clipTree().Node(id);
   compositorNode.owning_layer_id = dummyLayer->id();
-  m_propertyTrees.layer_id_to_clip_node_index[compositorNode.owning_layer_id] =
-      id;
+  clipTree().SetOwningLayerIdForNode(&compositorNode,
+                                     compositorNode.owning_layer_id);
 
   // TODO(jbroman): Don't discard rounded corners.
   compositorNode.clip = clipNode->clipRect().rect();
   compositorNode.transform_id =
       ensureCompositorTransformNode(clipNode->localTransformSpace());
-  compositorNode.target_transform_id = kRealRootNodeId;
-  compositorNode.target_effect_id = kSecondaryRootNodeId;
   compositorNode.clip_type = cc::ClipNode::ClipType::APPLIES_LOCAL_CLIP;
-  compositorNode.layers_are_clipped = true;
-  compositorNode.layers_are_clipped_when_surfaces_disabled = true;
 
   m_rootLayer->AddChild(dummyLayer);
   dummyLayer->SetTransformTreeIndex(compositorNode.transform_id);
@@ -331,12 +314,12 @@ void PropertyTreeManager::updateLayerScrollMapping(
   int scrollNodeId = ensureCompositorScrollNode(enclosingScrollNode);
   layer->SetScrollTreeIndex(scrollNodeId);
   int layerId = layer->id();
-  m_propertyTrees.layer_id_to_scroll_node_index[layerId] = scrollNodeId;
+  auto& compositorScrollNode = *scrollTree().Node(scrollNodeId);
+
+  scrollTree().SetOwningLayerIdForNode(&compositorScrollNode, layerId);
 
   if (!transform->isScrollTranslation())
     return;
-
-  auto& compositorScrollNode = *scrollTree().Node(scrollNodeId);
 
   // TODO(pdr): Remove the scroll node's owning_layer_id. This approach of
   // setting owning_layer_id only when it is not set lets us maintain a 1:1
@@ -447,8 +430,7 @@ void PropertyTreeManager::buildEffectNodesRecursively(
     effectNode.filters = nextEffect->filter().asCcFilterOperations();
   }
   effectNode.blend_mode = nextEffect->blendMode();
-  m_propertyTrees.layer_id_to_effect_node_index[effectNode.owning_layer_id] =
-      effectNode.id;
+  effectTree().SetOwningLayerIdForNode(&effectNode, effectNode.owning_layer_id);
   CompositorElementId compositorElementId = nextEffect->compositorElementId();
   if (compositorElementId) {
     m_propertyTrees.element_id_to_effect_node_index[compositorElementId] =

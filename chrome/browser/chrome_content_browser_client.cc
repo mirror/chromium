@@ -202,6 +202,7 @@
 #include "services/service_manager/public/cpp/interface_registry.h"
 #include "services/service_manager/public/cpp/service.h"
 #include "storage/browser/fileapi/external_mount_points.h"
+#include "third_party/WebKit/public/platform/modules/installedapp/installed_app_provider.mojom.h"
 #include "third_party/WebKit/public/platform/modules/webshare/webshare.mojom.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -2306,7 +2307,7 @@ void ChromeContentBrowserClient::AllowCertificateError(
         callback) {
   DCHECK(web_contents);
   if (resource_type != content::RESOURCE_TYPE_MAIN_FRAME) {
-    // A sub-resource has a certificate error.  The user doesn't really
+    // A sub-resource has a certificate error. The user doesn't really
     // have a context for making the right decision, so block the
     // request hard, without an info bar to allow showing the insecure
     // content.
@@ -3178,6 +3179,9 @@ void ChromeContentBrowserClient::RegisterRenderFrameMojoInterfaces(
   registry->AddInterface(
       render_frame_host->GetJavaInterfaces()
           ->CreateInterfaceFactory<payments::mojom::PaymentRequest>());
+  registry->AddInterface(
+      render_frame_host->GetJavaInterfaces()
+          ->CreateInterfaceFactory<blink::mojom::InstalledAppProvider>());
   content::WebContents* web_contents =
       content::WebContents::FromRenderFrameHost(render_frame_host);
   if (web_contents) {

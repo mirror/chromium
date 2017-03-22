@@ -237,6 +237,7 @@ static_library("content_shell_lib") {
     "//device/bluetooth",
     "//device/bluetooth:mocks",
     "//device/geolocation",
+    "//device/sensors/public/cpp:full",
     "//gin",
     "//gpu",
     "//ipc",
@@ -449,9 +450,11 @@ repack("pak") {
     sources +=
         [ "$root_gen_dir/ui/views/resources/views_resources_100_percent.pak" ]
   }
-
-  sources += [ "$root_gen_dir/content/browser/devtools/devtools_resources.pak" ]
-  deps += [ "//content/browser/devtools:resources" ]
+  if (!is_android) {
+    sources +=
+        [ "$root_gen_dir/content/browser/devtools/devtools_resources.pak" ]
+    deps += [ "//content/browser/devtools:resources" ]
+  }
   output = "$root_out_dir/content_shell.pak"
 }
 

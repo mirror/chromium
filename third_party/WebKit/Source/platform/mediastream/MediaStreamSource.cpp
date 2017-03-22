@@ -51,13 +51,6 @@ MediaStreamSource::MediaStreamSource(const String& id,
       m_readyState(readyState),
       m_requiresConsumer(requiresConsumer) {}
 
-MediaStreamSource::~MediaStreamSource() {
-  // Verify that the audio thread isn't consuming audio.
-  // TODO(sof): remove once crbug.com/682945 has been diagnosed.
-  MutexTryLocker tryLocker(m_audioConsumersLock);
-  CHECK(tryLocker.locked());
-}
-
 void MediaStreamSource::setReadyState(ReadyState readyState) {
   if (m_readyState != ReadyStateEnded && m_readyState != readyState) {
     m_readyState = readyState;
@@ -107,9 +100,6 @@ void MediaStreamSource::setAudioFormat(size_t numberOfChannels,
 void MediaStreamSource::consumeAudio(AudioBus* bus, size_t numberOfFrames) {
   ASSERT(m_requiresConsumer);
   MutexLocker locker(m_audioConsumersLock);
-  // Prevent GCs from going ahead while this iteration runs, attempting to
-  // pinpoint crbug.com/682945 failures.
-  ThreadState::MainThreadGCForbiddenScope scope;
   for (AudioDestinationConsumer* consumer : m_audioConsumers)
     consumer->consumeAudio(bus, numberOfFrames);
 }

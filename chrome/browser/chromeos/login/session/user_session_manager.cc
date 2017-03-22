@@ -1752,6 +1752,11 @@ void UserSessionManager::DoBrowserLaunchInternal(Profile* profile,
 
   BootTimesRecorder::Get()->AddLoginTimeMarker("BrowserLaunched", false);
 
+  // Mark user session as started before creating browser window. Otherwise,
+  // ash would not activate the created browser window because it thinks
+  // user session is blocked.
+  session_manager::SessionManager::Get()->SessionStarted();
+
   VLOG(1) << "Launching browser...";
   TRACE_EVENT0("login", "LaunchBrowser");
 
@@ -1785,12 +1790,23 @@ void UserSessionManager::DoBrowserLaunchInternal(Profile* profile,
 
   if (quick_unlock::QuickUnlockNotificationController::
           ShouldShowPinNotification(profile) &&
-      quick_unlock_notification_handler_.find(profile) ==
-          quick_unlock_notification_handler_.end()) {
-    auto* qu_feature_notification_controller =
+      pin_unlock_notification_handler_.find(profile) ==
+          pin_unlock_notification_handler_.end()) {
+    auto* pin_feature_notification_controller =
         quick_unlock::QuickUnlockNotificationController::CreateForPin(profile);
-    quick_unlock_notification_handler_.insert(
-        std::make_pair(profile, qu_feature_notification_controller));
+    pin_unlock_notification_handler_.insert(
+        std::make_pair(profile, pin_feature_notification_controller));
+  }
+
+  if (quick_unlock::QuickUnlockNotificationController::
+          ShouldShowFingerprintNotification(profile) &&
+      fingerprint_unlock_notification_handler_.find(profile) ==
+          fingerprint_unlock_notification_handler_.end()) {
+    auto* fingerprint_feature_notification_controller =
+        quick_unlock::QuickUnlockNotificationController::CreateForFingerprint(
+            profile);
+    fingerprint_unlock_notification_handler_.insert(
+        std::make_pair(profile, fingerprint_feature_notification_controller));
   }
 
   // Mark login host for deletion after browser starts.  This
@@ -1798,7 +1814,6 @@ void UserSessionManager::DoBrowserLaunchInternal(Profile* profile,
   // browser before it is dereferenced by the login host.
   if (login_host)
     login_host->Finalize();
-  session_manager::SessionManager::Get()->SessionStarted();
   chromeos::BootTimesRecorder::Get()->LoginDone(
       user_manager::UserManager::Get()->IsCurrentUserNew());
 

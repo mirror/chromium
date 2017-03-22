@@ -254,7 +254,7 @@ WebPluginContainerImpl* WebLocalFrameImpl::pluginContainerFromFrame(
   if (!frame->document() || !frame->document()->isPluginDocument())
     return 0;
   PluginDocument* pluginDocument = toPluginDocument(frame->document());
-  return toWebPluginContainerImpl(pluginDocument->pluginWidget());
+  return toWebPluginContainerImpl(pluginDocument->pluginView());
 }
 
 WebPluginContainerImpl* WebLocalFrameImpl::currentPluginContainer(
@@ -310,7 +310,7 @@ class ChromePrintContext : public PrintContext {
     builder.context().setPrinting(true);
 
     float scale = spoolPage(builder, pageNumber);
-    canvas->drawPicture(builder.endRecording());
+    canvas->PlaybackPaintRecord(builder.endRecording());
     return scale;
   }
 
@@ -377,7 +377,7 @@ class ChromePrintContext : public PrintContext {
         currentHeight += pageSizeInPixels.height() + 1;
       }
     }
-    canvas->drawPicture(builder.endRecording());
+    canvas->PlaybackPaintRecord(builder.endRecording());
   }
 
  protected:
@@ -543,10 +543,6 @@ void WebLocalFrameImpl::close() {
     m_devToolsAgent.clear();
 
   m_selfKeepAlive.clear();
-}
-
-WebString WebLocalFrameImpl::uniqueName() const {
-  return frame()->tree().uniqueName();
 }
 
 WebString WebLocalFrameImpl::assignedName() const {
@@ -1530,13 +1526,10 @@ WebLocalFrameImpl* WebLocalFrameImpl::createProvisional(
   // TODO(dcheng): This block is very similar to initializeCoreFrame. Try to
   // reuse it here.
   LocalFrame* frame = LocalFrame::create(webFrame->m_localFrameClientImpl.get(),
-                                         oldFrame->host(), tempOwner,
+                                         oldFrame->page(), tempOwner,
                                          interfaceProvider, interfaceRegistry);
-  // Set the name and unique name directly, bypassing any of the normal logic
-  // to calculate unique name.
-  frame->tree().setPrecalculatedName(
-      toWebRemoteFrameImpl(oldWebFrame)->frame()->tree().name(),
-      toWebRemoteFrameImpl(oldWebFrame)->frame()->tree().uniqueName());
+  frame->tree().setName(
+      toWebRemoteFrameImpl(oldWebFrame)->frame()->tree().name());
   webFrame->setCoreFrame(frame);
 
   frame->setOwner(oldFrame->owner());
@@ -1608,11 +1601,11 @@ void WebLocalFrameImpl::setCoreFrame(LocalFrame* frame) {
 
 void WebLocalFrameImpl::initializeCoreFrame(FrameHost* host,
                                             FrameOwner* owner,
-                                            const AtomicString& name,
-                                            const AtomicString& uniqueName) {
-  setCoreFrame(LocalFrame::create(m_localFrameClientImpl.get(), host, owner,
+                                            const AtomicString& name) {
+  setCoreFrame(LocalFrame::create(m_localFrameClientImpl.get(),
+                                  host ? &host->page() : nullptr, owner,
                                   m_interfaceProvider, m_interfaceRegistry));
-  frame()->tree().setPrecalculatedName(name, uniqueName);
+  frame()->tree().setName(name);
   // We must call init() after m_frame is assigned because it is referenced
   // during init(). Note that this may dispatch JS events; the frame may be
   // detached after init() returns.
@@ -1660,19 +1653,16 @@ LocalFrame* WebLocalFrameImpl::createChildFrame(
   // solution. subResourceAttributeName returns just one attribute name. The
   // element might not have the attribute, and there might be other attributes
   // which can identify the element.
-  AtomicString uniqueName = frame()->tree().calculateUniqueNameForNewChildFrame(
-      name,
-      ownerElement->getAttribute(ownerElement->subResourceAttributeName()));
   WebLocalFrameImpl* webframeChild =
       toWebLocalFrameImpl(m_client->createChildFrame(
-          this, scope, name, uniqueName,
+          this, scope, name,
+          ownerElement->getAttribute(ownerElement->subResourceAttributeName()),
           static_cast<WebSandboxFlags>(ownerElement->getSandboxFlags()),
           ownerProperties));
   if (!webframeChild)
     return nullptr;
 
-  webframeChild->initializeCoreFrame(frame()->host(), ownerElement, name,
-                                     uniqueName);
+  webframeChild->initializeCoreFrame(frame()->host(), ownerElement, name);
   // Initializing the core frame may cause the new child to be detached, since
   // it may dispatch a load event in the parent.
   if (!webframeChild->parent())
@@ -2094,6 +2084,34 @@ bool WebLocalFrameImpl::maybeRenderFallbackContent(
   return true;
 }
 
+// Called when a navigation is blocked because a Content Security Policy (CSP)
+// is infringed.
+void WebLocalFrameImpl::reportContentSecurityPolicyViolation(
+    const blink::WebContentSecurityPolicyViolation& violation) {
+  DCHECK(frame() && frame()->document());
+  Document* document = frame()->document();
+  Vector<String> reportEndpoints;
+  for (const WebString& endPoint : violation.reportEndpoints)
+    reportEndpoints.push_back(endPoint);
+  document->contentSecurityPolicy()->reportViolation(
+      violation.directive, /* directiveText */
+      ContentSecurityPolicy::getDirectiveType(
+          violation.effectiveDirective), /* effectiveType */
+      violation.consoleMessage,          /* consoleMessage */
+      violation.blockedUrl,              /* blockedUrl */
+      reportEndpoints,                   /* reportEndpoints */
+      violation.header,                  /* header */
+      static_cast<ContentSecurityPolicyHeaderType>(violation.disposition),
+      ContentSecurityPolicy::ViolationType::URLViolation, /* ViolationType */
+      nullptr,                                            /* LocalFrame */
+      violation.afterRedirect ? RedirectStatus::FollowedRedirect
+                              : RedirectStatus::NoRedirect,
+      // TODO(arthursonzogni, clamy) Provide the context line number here.
+      // See http://crbug.com/690946
+      0,        /* contextLine */
+      nullptr); /* Element */
+}
+
 bool WebLocalFrameImpl::isLoading() const {
   if (!frame() || !frame()->document())
     return false;
@@ -2132,11 +2150,18 @@ void WebLocalFrameImpl::mixedContentFound(
     const WebURL& mixedContentUrl,
     WebURLRequest::RequestContext requestContext,
     bool wasAllowed,
-    bool hadRedirect) {
+    bool hadRedirect,
+    const WebSourceLocation& sourceLocation) {
   DCHECK(frame());
-  MixedContentChecker::mixedContentFound(frame(), mainResourceUrl,
-                                         mixedContentUrl, requestContext,
-                                         wasAllowed, hadRedirect);
+  std::unique_ptr<SourceLocation> source;
+  if (!sourceLocation.url.isNull()) {
+    source =
+        SourceLocation::create(sourceLocation.url, sourceLocation.lineNumber,
+                               sourceLocation.columnNumber, nullptr);
+  }
+  MixedContentChecker::mixedContentFound(
+      frame(), mainResourceUrl, mixedContentUrl, requestContext, wasAllowed,
+      hadRedirect, std::move(source));
 }
 
 void WebLocalFrameImpl::sendOrientationChangeEvent() {

@@ -17,10 +17,10 @@
 #include "base/timer/elapsed_timer.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
+#include "cc/base/devtools_instrumentation.h"
 #include "cc/base/histograms.h"
 #include "cc/base/math_util.h"
 #include "cc/base/synced_property.h"
-#include "cc/debug/devtools_instrumentation.h"
 #include "cc/debug/traced_value.h"
 #include "cc/input/page_scale_animation.h"
 #include "cc/input/scrollbar_animation_controller.h"
@@ -726,9 +726,8 @@ void LayerTreeImpl::UpdatePropertyTreeScrollingAndAnimationFromMainThread() {
   std::vector<int> layer_ids_to_remove;
   for (auto& layer_id_to_opacity : opacity_animations_map_) {
     const int id = layer_id_to_opacity.first;
-    if (property_trees_.IsInIdToIndexMap(PropertyTrees::TreeType::EFFECT, id)) {
-      EffectNode* node = property_trees_.effect_tree.Node(
-          property_trees_.layer_id_to_effect_node_index[id]);
+    if (EffectNode* node =
+            property_trees_.effect_tree.UpdateNodeFromOwningLayerId(id)) {
       if (!node->is_currently_animating_opacity ||
           node->opacity == layer_id_to_opacity.second) {
         layer_ids_to_remove.push_back(id);
@@ -744,10 +743,8 @@ void LayerTreeImpl::UpdatePropertyTreeScrollingAndAnimationFromMainThread() {
 
   for (auto& layer_id_to_transform : transform_animations_map_) {
     const int id = layer_id_to_transform.first;
-    if (property_trees_.IsInIdToIndexMap(PropertyTrees::TreeType::TRANSFORM,
-                                         id)) {
-      TransformNode* node = property_trees_.transform_tree.Node(
-          property_trees_.layer_id_to_transform_node_index[id]);
+    if (TransformNode* node =
+            property_trees_.transform_tree.UpdateNodeFromOwningLayerId(id)) {
       if (!node->is_currently_animating ||
           node->local == layer_id_to_transform.second) {
         layer_ids_to_remove.push_back(id);
@@ -764,9 +761,8 @@ void LayerTreeImpl::UpdatePropertyTreeScrollingAndAnimationFromMainThread() {
 
   for (auto& layer_id_to_filters : filter_animations_map_) {
     const int id = layer_id_to_filters.first;
-    if (property_trees_.IsInIdToIndexMap(PropertyTrees::TreeType::EFFECT, id)) {
-      EffectNode* node = property_trees_.effect_tree.Node(
-          property_trees_.layer_id_to_effect_node_index[id]);
+    if (EffectNode* node =
+            property_trees_.effect_tree.UpdateNodeFromOwningLayerId(id)) {
       if (!node->is_currently_animating_filter ||
           node->filters == layer_id_to_filters.second) {
         layer_ids_to_remove.push_back(id);
@@ -1016,9 +1012,7 @@ void LayerTreeImpl::SetElementIdsForTesting() {
   }
 }
 
-bool LayerTreeImpl::UpdateDrawProperties(
-    bool update_lcd_text,
-    bool force_skip_verify_visible_rect_calculations) {
+bool LayerTreeImpl::UpdateDrawProperties(bool update_lcd_text) {
   if (!needs_update_draw_properties_)
     return true;
 
@@ -1050,10 +1044,6 @@ bool LayerTreeImpl::UpdateDrawProperties(
     // We verify visible rect calculations whenever we verify clip tree
     // calculations except when this function is explicitly passed a flag asking
     // us to skip it.
-    bool verify_visible_rect_calculations =
-        force_skip_verify_visible_rect_calculations
-            ? false
-            : settings().verify_clip_tree_calculations;
     LayerTreeHostCommon::CalcDrawPropsImplInputs inputs(
         layer_list_[0], DrawViewportSize(),
         layer_tree_host_impl_->DrawTransform(), device_scale_factor(),
@@ -1063,8 +1053,7 @@ bool LayerTreeImpl::UpdateDrawProperties(
         OverscrollElasticityLayer(), resource_provider()->max_texture_size(),
         can_render_to_separate_surface,
         settings().layer_transforms_should_scale_layer_contents,
-        settings().verify_clip_tree_calculations,
-        verify_visible_rect_calculations, &render_surface_layer_list_,
+        settings().use_layer_lists, &render_surface_layer_list_,
         &property_trees_);
     LayerTreeHostCommon::CalculateDrawProperties(&inputs);
     if (const char* client_name = GetClientNameForMetrics()) {
@@ -1532,10 +1521,8 @@ void LayerTreeImpl::AsValueInto(base::trace_event::TracedValue* state) const {
 
 bool LayerTreeImpl::DistributeRootScrollOffset(
     const gfx::ScrollOffset& root_offset) {
-  if (!InnerViewportScrollLayer())
+  if (!InnerViewportScrollLayer() || !OuterViewportScrollLayer())
     return false;
-
-  DCHECK(OuterViewportScrollLayer());
 
   // If we get here, we have both inner/outer viewports, and need to distribute
   // the scroll offset between them.

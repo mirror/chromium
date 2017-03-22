@@ -534,7 +534,9 @@ NavigationPolicy LocalFrameClientImpl::decidePolicyForNavigation(
     NavigationPolicy policy,
     bool replacesCurrentHistoryItem,
     bool isClientRedirect,
-    HTMLFormElement* form) {
+    HTMLFormElement* form,
+    ContentSecurityPolicyDisposition
+        shouldCheckMainWorldContentSecurityPolicy) {
   if (!m_webFrame->client())
     return NavigationPolicyIgnore;
 
@@ -571,6 +573,10 @@ NavigationPolicy LocalFrameClientImpl::decidePolicyForNavigation(
   navigationInfo.isHistoryNavigationInNewChildFrame =
       isHistoryNavigationInNewChildFrame;
   navigationInfo.isClientRedirect = isClientRedirect;
+  navigationInfo.shouldCheckMainWorldContentSecurityPolicy =
+      shouldCheckMainWorldContentSecurityPolicy == CheckContentSecurityPolicy
+          ? WebContentSecurityPolicyDispositionCheck
+          : WebContentSecurityPolicyDispositionDoNotCheck;
   // Caching could be disabled for requests initiated by DevTools.
   // TODO(ananta)
   // We should extract the network cache state into a global component which
@@ -765,7 +771,7 @@ bool LocalFrameClientImpl::canCreatePluginWithoutRenderer(
   return m_webFrame->client()->canCreatePluginWithoutRenderer(mimeType);
 }
 
-FrameViewBase* LocalFrameClientImpl::createPlugin(
+PluginView* LocalFrameClientImpl::createPlugin(
     HTMLPlugInElement* element,
     const KURL& url,
     const Vector<String>& paramNames,
@@ -875,11 +881,10 @@ void LocalFrameClientImpl::frameFocused() const {
     m_webFrame->client()->frameFocused();
 }
 
-void LocalFrameClientImpl::didChangeName(const String& name,
-                                         const String& uniqueName) {
+void LocalFrameClientImpl::didChangeName(const String& name) {
   if (!m_webFrame->client())
     return;
-  m_webFrame->client()->didChangeName(name, uniqueName);
+  m_webFrame->client()->didChangeName(name);
 }
 
 void LocalFrameClientImpl::didEnforceInsecureRequestPolicy(

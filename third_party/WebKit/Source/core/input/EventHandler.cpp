@@ -54,7 +54,6 @@
 #include "core/events/WheelEvent.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/EventHandlerRegistry.h"
-#include "core/frame/FrameHost.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
@@ -978,9 +977,10 @@ WebInputEventResult EventHandler::handleMouseReleaseEvent(
 
   WebInputEventResult eventResult = updatePointerTargetAndDispatchEvents(
       EventTypeNames::mouseup, mev.innerNode(), mev.canvasRegionId(),
-      mev.event(), Vector<WebMouseEvent>(),
-      !(selectionController().hasExtendedSelection() &&
-        isSelectionOverLink(mev)));
+      mev.event(), Vector<WebMouseEvent>());
+
+  WebInputEventResult clickEventResult =
+      m_mouseEventManager->dispatchMouseClickIfNeeded(mev);
 
   m_scrollManager->clearResizeScrollableArea(false);
 
@@ -990,7 +990,7 @@ WebInputEventResult EventHandler::handleMouseReleaseEvent(
 
   m_mouseEventManager->invalidateClick();
 
-  return eventResult;
+  return EventHandlingUtil::mergeEventResult(clickEventResult, eventResult);
 }
 
 static bool targetIsFrame(Node* target, LocalFrame*& frame) {
@@ -1217,15 +1217,14 @@ WebInputEventResult EventHandler::updatePointerTargetAndDispatchEvents(
     Node* targetNode,
     const String& canvasRegionId,
     const WebMouseEvent& mouseEvent,
-    const Vector<WebMouseEvent>& coalescedEvents,
-    bool selectionOverLink) {
+    const Vector<WebMouseEvent>& coalescedEvents) {
   ASSERT(mouseEventType == EventTypeNames::mousedown ||
          mouseEventType == EventTypeNames::mousemove ||
          mouseEventType == EventTypeNames::mouseup);
 
   const auto& eventResult = m_pointerEventManager->sendMousePointerEvent(
       updateMouseEventTargetNode(targetNode), canvasRegionId, mouseEventType,
-      mouseEvent, coalescedEvents, selectionOverLink);
+      mouseEvent, coalescedEvents);
   return eventResult;
 }
 
@@ -2091,13 +2090,6 @@ WebInputEventResult EventHandler::passMouseReleaseEventToSubframe(
   if (result != WebInputEventResult::NotHandled)
     return result;
   return WebInputEventResult::HandledSystem;
-}
-
-FrameHost* EventHandler::frameHost() const {
-  if (!m_frame->page())
-    return nullptr;
-
-  return &m_frame->page()->frameHost();
 }
 
 }  // namespace blink

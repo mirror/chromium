@@ -17,7 +17,7 @@
 #include "ash/common/multi_profile_uma.h"
 #include "ash/common/new_window_controller.h"
 #include "ash/common/palette_delegate.h"
-#include "ash/common/session/session_state_delegate.h"
+#include "ash/common/session/session_controller.h"
 #include "ash/common/shelf/shelf_widget.h"
 #include "ash/common/shelf/wm_shelf.h"
 #include "ash/common/shell_delegate.h"
@@ -85,7 +85,7 @@ class DeprecatedAcceleratorNotificationDelegate
   bool HasClickedListener() override { return true; }
 
   void Click() override {
-    if (!WmShell::Get()->GetSessionStateDelegate()->IsUserSessionBlocked())
+    if (!Shell::Get()->session_controller()->IsUserSessionBlocked())
       Shell::Get()->shell_delegate()->OpenKeyboardShortcutHelpPage();
   }
 
@@ -199,14 +199,14 @@ void HandleRotatePaneFocus(FocusCycler::Direction direction) {
       break;
     }
   }
-  WmShell::Get()->focus_cycler()->RotateFocus(direction);
+  Shell::Get()->focus_cycler()->RotateFocus(direction);
 }
 
 void HandleFocusShelf() {
   base::RecordAction(UserMetricsAction("Accel_Focus_Shelf"));
   // TODO(jamescook): Should this be GetWmRootWindowForNewWindows()?
   WmShelf* shelf = WmShelf::ForWindow(WmShell::Get()->GetPrimaryRootWindow());
-  WmShell::Get()->focus_cycler()->FocusWidget(shelf->shelf_widget());
+  Shell::Get()->focus_cycler()->FocusWidget(shelf->shelf_widget());
 }
 
 void HandleLaunchAppN(int n) {
@@ -220,15 +220,15 @@ void HandleLaunchLastApp() {
 }
 
 void HandleMediaNextTrack() {
-  WmShell::Get()->media_controller()->HandleMediaNextTrack();
+  Shell::Get()->media_controller()->HandleMediaNextTrack();
 }
 
 void HandleMediaPlayPause() {
-  WmShell::Get()->media_controller()->HandleMediaPlayPause();
+  Shell::Get()->media_controller()->HandleMediaPlayPause();
 }
 
 void HandleMediaPrevTrack() {
-  WmShell::Get()->media_controller()->HandleMediaPrevTrack();
+  Shell::Get()->media_controller()->HandleMediaPrevTrack();
 }
 
 bool CanHandleNewIncognitoWindow() {
@@ -237,18 +237,18 @@ bool CanHandleNewIncognitoWindow() {
 
 void HandleNewIncognitoWindow() {
   base::RecordAction(UserMetricsAction("Accel_New_Incognito_Window"));
-  WmShell::Get()->new_window_controller()->NewWindow(true /* is_incognito */);
+  Shell::Get()->new_window_controller()->NewWindow(true /* is_incognito */);
 }
 
 void HandleNewTab(const ui::Accelerator& accelerator) {
   if (accelerator.key_code() == ui::VKEY_T)
     base::RecordAction(UserMetricsAction("Accel_NewTab_T"));
-  WmShell::Get()->new_window_controller()->NewTab();
+  Shell::Get()->new_window_controller()->NewTab();
 }
 
 void HandleNewWindow() {
   base::RecordAction(UserMetricsAction("Accel_New_Window"));
-  WmShell::Get()->new_window_controller()->NewWindow(false /* is_incognito */);
+  Shell::Get()->new_window_controller()->NewWindow(false /* is_incognito */);
 }
 
 bool CanHandleNextIme(ImeControlDelegate* ime_control_delegate) {
@@ -274,7 +274,7 @@ void HandleNextIme(ImeControlDelegate* ime_control_delegate) {
 
 void HandleOpenFeedbackPage() {
   base::RecordAction(UserMetricsAction("Accel_Open_Feedback_Page"));
-  WmShell::Get()->new_window_controller()->OpenFeedbackPage();
+  Shell::Get()->new_window_controller()->OpenFeedbackPage();
 }
 
 bool CanHandlePreviousIme(ImeControlDelegate* ime_control_delegate) {
@@ -291,7 +291,7 @@ void HandlePreviousIme(ImeControlDelegate* ime_control_delegate,
 
 void HandleRestoreTab() {
   base::RecordAction(UserMetricsAction("Accel_Restore_Tab"));
-  WmShell::Get()->new_window_controller()->RestoreTab();
+  Shell::Get()->new_window_controller()->RestoreTab();
 }
 
 // Rotate the active window.
@@ -313,7 +313,7 @@ void HandleRotateActiveWindow() {
 
 void HandleShowKeyboardOverlay() {
   base::RecordAction(UserMetricsAction("Accel_Show_Keyboard_Overlay"));
-  WmShell::Get()->new_window_controller()->ShowKeyboardOverlay();
+  Shell::Get()->new_window_controller()->ShowKeyboardOverlay();
 }
 
 bool CanHandleShowMessageCenterBubble() {
@@ -349,7 +349,7 @@ void HandleShowSystemTrayBubble() {
 
 void HandleShowTaskManager() {
   base::RecordAction(UserMetricsAction("Accel_Show_Task_Manager"));
-  WmShell::Get()->new_window_controller()->ShowTaskManager();
+  Shell::Get()->new_window_controller()->ShowTaskManager();
 }
 
 bool CanHandleSwitchIme(ImeControlDelegate* ime_control_delegate,
@@ -404,7 +404,7 @@ void HandleToggleOverview() {
   WmShell::Get()->window_selector_controller()->ToggleOverview();
 }
 
-bool CanHandleWindowSnapOrDock() {
+bool CanHandleWindowSnap() {
   WmWindow* active_window = WmShell::Get()->GetActiveWindow();
   if (!active_window)
     return false;
@@ -415,15 +415,15 @@ bool CanHandleWindowSnapOrDock() {
           !window_state->IsFullscreen());
 }
 
-void HandleWindowSnapOrDock(AcceleratorAction action) {
-  if (action == WINDOW_CYCLE_SNAP_DOCK_LEFT)
+void HandleWindowSnap(AcceleratorAction action) {
+  if (action == WINDOW_CYCLE_SNAP_LEFT)
     base::RecordAction(UserMetricsAction("Accel_Window_Snap_Left"));
   else
     base::RecordAction(UserMetricsAction("Accel_Window_Snap_Right"));
 
-  const wm::WMEvent event(action == WINDOW_CYCLE_SNAP_DOCK_LEFT
-                              ? wm::WM_EVENT_CYCLE_SNAP_DOCK_LEFT
-                              : wm::WM_EVENT_CYCLE_SNAP_DOCK_RIGHT);
+  const wm::WMEvent event(action == WINDOW_CYCLE_SNAP_LEFT
+                              ? wm::WM_EVENT_CYCLE_SNAP_LEFT
+                              : wm::WM_EVENT_CYCLE_SNAP_RIGHT);
   WmWindow* active_window = WmShell::Get()->GetActiveWindow();
   DCHECK(active_window);
   active_window->GetWindowState()->OnWMEvent(&event);
@@ -435,9 +435,7 @@ void HandleWindowMinimize() {
 }
 
 bool CanHandlePositionCenter() {
-  // Docked windows do not support centering.
-  WmWindow* active_window = WmShell::Get()->GetActiveWindow();
-  return (active_window && !active_window->GetWindowState()->IsDocked());
+  return WmShell::Get()->GetActiveWindow() != nullptr;
 }
 
 void HandlePositionCenter() {
@@ -463,7 +461,7 @@ void HandleShowImeMenuBubble() {
 void HandleCrosh() {
   base::RecordAction(UserMetricsAction("Accel_Open_Crosh"));
 
-  WmShell::Get()->new_window_controller()->OpenCrosh();
+  Shell::Get()->new_window_controller()->OpenCrosh();
 }
 
 bool CanHandleDisableCapsLock(const ui::Accelerator& previous_accelerator) {
@@ -493,20 +491,20 @@ void HandleDisableCapsLock() {
 void HandleFileManager() {
   base::RecordAction(UserMetricsAction("Accel_Open_File_Manager"));
 
-  WmShell::Get()->new_window_controller()->OpenFileManager();
+  Shell::Get()->new_window_controller()->OpenFileManager();
 }
 
 void HandleGetHelp() {
-  WmShell::Get()->new_window_controller()->OpenGetHelp();
+  Shell::Get()->new_window_controller()->OpenGetHelp();
 }
 
 bool CanHandleLock() {
-  return WmShell::Get()->GetSessionStateDelegate()->CanLockScreen();
+  return Shell::Get()->session_controller()->CanLockScreen();
 }
 
 void HandleLock() {
   base::RecordAction(UserMetricsAction("Accel_LockScreen_L"));
-  WmShell::Get()->GetSessionStateDelegate()->LockScreen();
+  Shell::Get()->session_controller()->LockScreen();
 }
 
 void HandleShowStylusTools() {
@@ -533,7 +531,7 @@ void HandleSuspend() {
 
 bool CanHandleCycleUser() {
   return Shell::Get()->shell_delegate()->IsMultiProfilesEnabled() &&
-         WmShell::Get()->GetSessionStateDelegate()->NumberOfLoggedInUsers() > 1;
+         Shell::Get()->session_controller()->NumberOfLoggedInUsers() > 1;
 }
 
 void HandleCycleUser(CycleUserDirection direction) {
@@ -547,7 +545,7 @@ void HandleCycleUser(CycleUserDirection direction) {
       base::RecordAction(UserMetricsAction("Accel_Switch_To_Previous_User"));
       break;
   }
-  WmShell::Get()->GetSessionStateDelegate()->CycleActiveUser(direction);
+  Shell::Get()->session_controller()->CycleActiveUser(direction);
 }
 
 bool CanHandleToggleCapsLock(const ui::Accelerator& accelerator,
@@ -922,9 +920,9 @@ bool AcceleratorController::CanPerformAction(
       return CanHandleToggleAppList(accelerator, previous_accelerator);
     case TOGGLE_CAPS_LOCK:
       return CanHandleToggleCapsLock(accelerator, previous_accelerator);
-    case WINDOW_CYCLE_SNAP_DOCK_LEFT:
-    case WINDOW_CYCLE_SNAP_DOCK_RIGHT:
-      return CanHandleWindowSnapOrDock();
+    case WINDOW_CYCLE_SNAP_LEFT:
+    case WINDOW_CYCLE_SNAP_RIGHT:
+      return CanHandleWindowSnap();
     case WINDOW_POSITION_CENTER:
       return CanHandlePositionCenter();
 
@@ -997,14 +995,14 @@ void AcceleratorController::PerformAction(AcceleratorAction action,
   switch (action) {
     case BRIGHTNESS_DOWN: {
       BrightnessControlDelegate* delegate =
-          WmShell::Get()->brightness_control_delegate();
+          Shell::Get()->brightness_control_delegate();
       if (delegate)
         delegate->HandleBrightnessDown(accelerator);
       break;
     }
     case BRIGHTNESS_UP: {
       BrightnessControlDelegate* delegate =
-          WmShell::Get()->brightness_control_delegate();
+          Shell::Get()->brightness_control_delegate();
       if (delegate)
         delegate->HandleBrightnessUp(accelerator);
       break;
@@ -1044,14 +1042,14 @@ void AcceleratorController::PerformAction(AcceleratorAction action,
       break;
     case KEYBOARD_BRIGHTNESS_DOWN: {
       KeyboardBrightnessControlDelegate* delegate =
-          WmShell::Get()->keyboard_brightness_control_delegate();
+          Shell::Get()->keyboard_brightness_control_delegate();
       if (delegate)
         delegate->HandleKeyboardBrightnessDown(accelerator);
       break;
     }
     case KEYBOARD_BRIGHTNESS_UP: {
       KeyboardBrightnessControlDelegate* delegate =
-          WmShell::Get()->keyboard_brightness_control_delegate();
+          Shell::Get()->keyboard_brightness_control_delegate();
       if (delegate)
         delegate->HandleKeyboardBrightnessUp(accelerator);
       break;
@@ -1194,9 +1192,9 @@ void AcceleratorController::PerformAction(AcceleratorAction action,
     case VOLUME_UP:
       HandleVolumeUp(volume_controller_.get(), accelerator);
       break;
-    case WINDOW_CYCLE_SNAP_DOCK_LEFT:
-    case WINDOW_CYCLE_SNAP_DOCK_RIGHT:
-      HandleWindowSnapOrDock(action);
+    case WINDOW_CYCLE_SNAP_LEFT:
+    case WINDOW_CYCLE_SNAP_RIGHT:
+      HandleWindowSnap(action);
       break;
     case WINDOW_MINIMIZE:
       HandleWindowMinimize();
@@ -1227,13 +1225,12 @@ AcceleratorController::GetAcceleratorProcessingRestriction(int action) {
           actions_allowed_in_pinned_mode_.end()) {
     return RESTRICTION_PREVENT_PROCESSING_AND_PROPAGATION;
   }
-  // TODO(xiyuan): Replace with SessionController. http://crbug.com/648964
-  if (!wm_shell->GetSessionStateDelegate()->IsActiveUserSessionStarted() &&
+  if (!Shell::Get()->session_controller()->IsActiveUserSessionStarted() &&
       actions_allowed_at_login_screen_.find(action) ==
           actions_allowed_at_login_screen_.end()) {
     return RESTRICTION_PREVENT_PROCESSING;
   }
-  if (wm_shell->GetSessionStateDelegate()->IsScreenLocked() &&
+  if (Shell::Get()->session_controller()->IsScreenLocked() &&
       actions_allowed_at_lock_screen_.find(action) ==
           actions_allowed_at_lock_screen_.end()) {
     return RESTRICTION_PREVENT_PROCESSING;
@@ -1243,7 +1240,7 @@ AcceleratorController::GetAcceleratorProcessingRestriction(int action) {
           actions_allowed_in_app_mode_.end()) {
     return RESTRICTION_PREVENT_PROCESSING;
   }
-  if (WmShell::Get()->IsSystemModalWindowOpen() &&
+  if (wm_shell->IsSystemModalWindowOpen() &&
       actions_allowed_at_modal_window_.find(action) ==
           actions_allowed_at_modal_window_.end()) {
     // Note we prevent the shortcut from propagating so it will not
@@ -1252,7 +1249,7 @@ AcceleratorController::GetAcceleratorProcessingRestriction(int action) {
     // cycling through its window elements.
     return RESTRICTION_PREVENT_PROCESSING_AND_PROPAGATION;
   }
-  if (wm_shell->mru_window_tracker()->BuildMruWindowList().empty() &&
+  if (Shell::Get()->mru_window_tracker()->BuildMruWindowList().empty() &&
       actions_needing_window_.find(action) != actions_needing_window_.end()) {
     Shell::GetInstance()->accessibility_delegate()->TriggerAccessibilityAlert(
         A11Y_ALERT_WINDOW_NEEDED);

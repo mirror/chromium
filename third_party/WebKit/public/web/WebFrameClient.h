@@ -50,6 +50,7 @@
 #include "public/platform/BlameContext.h"
 #include "public/platform/WebColor.h"
 #include "public/platform/WebCommon.h"
+#include "public/platform/WebContentSecurityPolicy.h"
 #include "public/platform/WebContentSecurityPolicyStruct.h"
 #include "public/platform/WebEffectiveConnectionType.h"
 #include "public/platform/WebFeaturePolicy.h"
@@ -181,7 +182,7 @@ class BLINK_EXPORT WebFrameClient {
   virtual WebLocalFrame* createChildFrame(WebLocalFrame* parent,
                                           WebTreeScopeType,
                                           const WebString& name,
-                                          const WebString& uniqueName,
+                                          const WebString& fallbackName,
                                           WebSandboxFlags sandboxFlags,
                                           const WebFrameOwnerProperties&) {
     return nullptr;
@@ -207,8 +208,7 @@ class BLINK_EXPORT WebFrameClient {
   virtual void willCommitProvisionalLoad() {}
 
   // This frame's name has changed.
-  virtual void didChangeName(const WebString& name,
-                             const WebString& uniqueName) {}
+  virtual void didChangeName(const WebString& name) {}
 
   // This frame has set an insecure request policy.
   virtual void didEnforceInsecureRequestPolicy(WebInsecureRequestPolicy) {}
@@ -302,6 +302,8 @@ class BLINK_EXPORT WebFrameClient {
     WebFormElement form;
     bool isCacheDisabled;
     WebSourceLocation sourceLocation;
+    WebContentSecurityPolicyDisposition
+        shouldCheckMainWorldContentSecurityPolicy;
 
     NavigationPolicyInfo(WebURLRequest& urlRequest)
         : extraData(nullptr),
@@ -311,7 +313,9 @@ class BLINK_EXPORT WebFrameClient {
           replacesCurrentHistoryItem(false),
           isHistoryNavigationInNewChildFrame(false),
           isClientRedirect(false),
-          isCacheDisabled(false) {}
+          isCacheDisabled(false),
+          shouldCheckMainWorldContentSecurityPolicy(
+              WebContentSecurityPolicyDispositionCheck) {}
   };
 
   virtual WebNavigationPolicy decidePolicyForNavigation(

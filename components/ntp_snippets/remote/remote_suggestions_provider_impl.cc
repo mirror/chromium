@@ -21,8 +21,8 @@
 #include "base/time/time.h"
 #include "base/values.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
-#include "components/image_fetcher/image_decoder.h"
-#include "components/image_fetcher/image_fetcher.h"
+#include "components/image_fetcher/core/image_decoder.h"
+#include "components/image_fetcher/core/image_fetcher.h"
 #include "components/ntp_snippets/category_rankers/category_ranker.h"
 #include "components/ntp_snippets/pref_names.h"
 #include "components/ntp_snippets/remote/remote_suggestions_database.h"
@@ -194,7 +194,8 @@ void CachedImageFetcher::OnImageDataFetched(
 void CachedImageFetcher::OnImageDecodingDone(
     const ImageFetchedCallback& callback,
     const std::string& id_within_category,
-    const gfx::Image& image) {
+    const gfx::Image& image,
+    const image_fetcher::RequestMetadata& metadata) {
   callback.Run(image);
 }
 

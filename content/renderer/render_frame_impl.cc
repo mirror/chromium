@@ -684,6 +684,12 @@ CommonNavigationParams MakeCommonNavigationParams(
                                      info.sourceLocation.columnNumber);
   }
 
+  CSPDisposition should_check_main_world_csp =
+      info.shouldCheckMainWorldContentSecurityPolicy ==
+              blink::WebContentSecurityPolicyDispositionCheck
+          ? CSPDisposition::CHECK
+          : CSPDisposition::DO_NOT_CHECK;
+
   const RequestExtraData* extra_data =
       static_cast<RequestExtraData*>(info.urlRequest.getExtraData());
   DCHECK(extra_data);
@@ -693,7 +699,8 @@ CommonNavigationParams MakeCommonNavigationParams(
       report_type, GURL(), GURL(),
       static_cast<PreviewsState>(info.urlRequest.getPreviewsState()),
       base::TimeTicks::Now(), info.urlRequest.httpMethod().latin1(),
-      GetRequestBodyForWebURLRequest(info.urlRequest), source_location);
+      GetRequestBodyForWebURLRequest(info.urlRequest), source_location,
+      should_check_main_world_csp);
 }
 
 media::Context3D GetSharedMainThreadContext3D(
@@ -987,9 +994,10 @@ void RenderFrameImpl::CreateFrame(
     render_frame =
         RenderFrameImpl::Create(parent_proxy->render_view(), routing_id);
     render_frame->InitializeBlameContext(FromRoutingID(parent_routing_id));
+    render_frame->unique_name_helper_.set_propagated_name(
+        replicated_state.unique_name);
     web_frame = parent_web_frame->createLocalChild(
         replicated_state.scope, WebString::fromUTF8(replicated_state.name),
-        WebString::fromUTF8(replicated_state.unique_name),
         replicated_state.sandbox_flags, render_frame,
         render_frame->blink_interface_provider_.get(),
         render_frame->blink_interface_registry_.get(),
@@ -1088,6 +1096,7 @@ blink::WebURL RenderFrameImpl::overrideFlashEmbedWithHTML(
 RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
     : frame_(NULL),
       is_main_frame_(true),
+      unique_name_helper_(this),
       in_browser_initiated_detach_(false),
       in_frame_tree_(false),
       render_view_(params.render_view),
@@ -1578,6 +1587,8 @@ bool RenderFrameImpl::OnMessageReceived(const IPC::Message& msg) {
                         OnTextTrackSettingsChanged)
     IPC_MESSAGE_HANDLER(FrameMsg_PostMessageEvent, OnPostMessageEvent)
     IPC_MESSAGE_HANDLER(FrameMsg_FailedNavigation, OnFailedNavigation)
+    IPC_MESSAGE_HANDLER(FrameMsg_ReportContentSecurityPolicyViolation,
+                        OnReportContentSecurityPolicyViolation)
     IPC_MESSAGE_HANDLER(FrameMsg_GetSavableResourceLinks,
                         OnGetSavableResourceLinks)
     IPC_MESSAGE_HANDLER(FrameMsg_GetSerializedHtmlWithLocalLinks,
@@ -3036,7 +3047,7 @@ blink::WebLocalFrame* RenderFrameImpl::createChildFrame(
     blink::WebLocalFrame* parent,
     blink::WebTreeScopeType scope,
     const blink::WebString& name,
-    const blink::WebString& unique_name,
+    const blink::WebString& fallback_name,
     blink::WebSandboxFlags sandbox_flags,
     const blink::WebFrameOwnerProperties& frame_owner_properties) {
   // Synchronously notify the browser of a child frame creation to get the
@@ -3046,7 +3057,23 @@ blink::WebLocalFrame* RenderFrameImpl::createChildFrame(
   params.parent_routing_id = routing_id_;
   params.scope = scope;
   params.frame_name = name.utf8();
-  params.frame_unique_name = unique_name.utf8();
+  // The unique name generation logic was moved out of Blink, so for historical
+  // reasons, unique name generation needs to take something called the
+  // |fallback_name| into account. Normally, unique names are generated based on
+  // the browing context name. For new frames, the initial browsing context name
+  // comes from the name attribute of the browsing context container element.
+  //
+  // However, when the browsing context name is null, Blink instead uses the
+  // "fallback name" to derive the unique name. The exact contents of the
+  // "fallback name" are unspecified, but may contain the value of the
+  // 'subresource attribute' of the browsing context container element.
+  //
+  // Note that Blink can't be changed to just pass |fallback_name| as |name| in
+  // the case |name| is empty: |fallback_name| should never affect the actual
+  // browsing context name, only unique name generation.
+  params.frame_unique_name = UniqueNameHelper::GenerateNameForNewChildFrame(
+      parent,
+      params.frame_name.empty() ? fallback_name.utf8() : params.frame_name);
   params.sandbox_flags = sandbox_flags;
   params.frame_owner_properties =
       ConvertWebFrameOwnerPropertiesToFrameOwnerProperties(
@@ -3071,6 +3098,8 @@ blink::WebLocalFrame* RenderFrameImpl::createChildFrame(
   // Create the RenderFrame and WebLocalFrame, linking the two.
   RenderFrameImpl* child_render_frame =
       RenderFrameImpl::Create(render_view_, child_routing_id);
+  child_render_frame->unique_name_helper_.set_propagated_name(
+      params.frame_unique_name);
   child_render_frame->InitializeBlameContext(this);
   blink::WebLocalFrame* web_frame = WebLocalFrame::create(
       scope, child_render_frame,
@@ -3179,10 +3208,14 @@ void RenderFrameImpl::willCommitProvisionalLoad() {
     observer.WillCommitProvisionalLoad();
 }
 
-void RenderFrameImpl::didChangeName(const blink::WebString& name,
-                                    const blink::WebString& unique_name) {
-  Send(new FrameHostMsg_DidChangeName(
-      routing_id_, name.utf8(), unique_name.utf8()));
+void RenderFrameImpl::didChangeName(const blink::WebString& name) {
+  if (current_history_item_.isNull()) {
+    // Once a navigation has committed, the unique name must no longer change to
+    // avoid breaking back/forward navigations: https://crbug.com/607205
+    unique_name_helper_.UpdateName(name.utf8());
+  }
+  Send(new FrameHostMsg_DidChangeName(routing_id_, name.utf8(),
+                                      unique_name_helper_.value()));
 
   if (!committed_first_load_)
     name_changed_before_first_commit_ = true;
@@ -3475,6 +3508,7 @@ void RenderFrameImpl::didStartProvisionalLoad(blink::WebDataSource* data_source,
     info.isClientRedirect = pending_navigation_info_->client_redirect;
     info.isCacheDisabled = pending_navigation_info_->cache_disabled;
     info.form = pending_navigation_info_->form;
+    info.sourceLocation = pending_navigation_info_->source_location;
 
     pending_navigation_info_.reset(nullptr);
 
@@ -3616,6 +3650,9 @@ void RenderFrameImpl::didCommitProvisionalLoad(
           "SessionRestore.SubFrameUniqueNameChangedBeforeFirstCommit",
           name_changed_before_first_commit_);
     }
+    // TODO(dcheng): This signal is likely calculated incorrectly, and will be
+    // removed in a followup CL (as we've decided to try to preserve backwards
+    // compatibility as much as possible for the time being).
     committed_first_load_ = true;
   }
 
@@ -3671,9 +3708,12 @@ void RenderFrameImpl::didCommitProvisionalLoad(
   // before updating the current history item.
   SendUpdateState();
 
-  // Update the current history item for this frame (both in default Chrome and
-  // subframe FrameNavigationEntry modes).
+  // Update the current history item for this frame.
   current_history_item_ = item;
+  // Note: don't reference |item| after this point, as its value may not match
+  // |current_history_item_|.
+  current_history_item_.setTarget(
+      blink::WebString::fromUTF8(unique_name_helper_.value()));
 
   InternalDocumentStateData* internal_data =
       InternalDocumentStateData::FromDocumentState(document_state);
@@ -3738,7 +3778,7 @@ void RenderFrameImpl::didCommitProvisionalLoad(
   // new navigation.
   navigation_state->set_request_committed(true);
 
-  SendDidCommitProvisionalLoad(frame, commit_type, item);
+  SendDidCommitProvisionalLoad(frame, commit_type);
 
   // Check whether we have new encoding name.
   UpdateEncoding(frame, frame->view()->pageEncoding().utf8());
@@ -4819,8 +4859,7 @@ const RenderFrameImpl* RenderFrameImpl::GetLocalRoot() const {
 // Tell the embedding application that the URL of the active page has changed.
 void RenderFrameImpl::SendDidCommitProvisionalLoad(
     blink::WebFrame* frame,
-    blink::WebHistoryCommitType commit_type,
-    const blink::WebHistoryItem& item) {
+    blink::WebHistoryCommitType commit_type) {
   DCHECK_EQ(frame_, frame);
   WebDataSource* ds = frame->dataSource();
   DCHECK(ds);
@@ -4893,17 +4932,18 @@ void RenderFrameImpl::SendDidCommitProvisionalLoad(
   // that committed entry has it at all times.  Send a single HistoryItem for
   // this frame, rather than the whole tree.  It will be stored in the
   // corresponding FrameNavigationEntry.
-  params.page_state = SingleHistoryItemToPageState(item);
+  params.page_state = SingleHistoryItemToPageState(current_history_item_);
 
   params.content_source_id = GetRenderWidget()->GetContentSourceId();
 
   params.method = request.httpMethod().latin1();
   if (params.method == "POST")
-    params.post_id = ExtractPostId(item);
+    params.post_id = ExtractPostId(current_history_item_);
 
-  params.frame_unique_name = item.target().utf8();
-  params.item_sequence_number = item.itemSequenceNumber();
-  params.document_sequence_number = item.documentSequenceNumber();
+  params.frame_unique_name = current_history_item_.target().utf8();
+  params.item_sequence_number = current_history_item_.itemSequenceNumber();
+  params.document_sequence_number =
+      current_history_item_.documentSequenceNumber();
 
   // If the page contained a client redirect (meta refresh, document.loc...),
   // set the referrer appropriately.
@@ -5052,6 +5092,10 @@ bool RenderFrameImpl::SwapIn() {
   RenderFrameProxy* proxy = RenderFrameProxy::FromRoutingID(proxy_routing_id_);
   CHECK(proxy);
 
+  unique_name_helper_.set_propagated_name(proxy->unique_name());
+
+  // Note: Calling swap() will detach and delete |proxy|, so do not reference it
+  // after this.
   int proxy_routing_id = proxy_routing_id_;
   if (!proxy->web_frame()->swap(frame_))
     return false;
@@ -5258,6 +5302,12 @@ void RenderFrameImpl::OnFailedNavigation(
   browser_side_navigation_pending_ = false;
 }
 
+void RenderFrameImpl::OnReportContentSecurityPolicyViolation(
+    const content::CSPViolationParams& violation_params) {
+  frame_->reportContentSecurityPolicyViolation(
+      BuildWebContentSecurityPolicyViolation(violation_params));
+}
+
 WebNavigationPolicy RenderFrameImpl::decidePolicyForNavigation(
     const NavigationPolicyInfo& info) {
   // A content initiated navigation may have originated from a link-click,
@@ -5330,13 +5380,13 @@ WebNavigationPolicy RenderFrameImpl::decidePolicyForNavigation(
     // just staying at the initial about:blank document.
     bool should_ask_browser = false;
     RenderFrameImpl* parent = RenderFrameImpl::FromWebFrame(frame_->parent());
-    const auto& iter = parent->history_subframe_unique_names_.find(
-        frame_->uniqueName().utf8());
+    auto iter = parent->history_subframe_unique_names_.find(
+        unique_name_helper_.value());
     if (iter != parent->history_subframe_unique_names_.end()) {
       bool history_item_is_about_blank = iter->second;
       should_ask_browser =
           !history_item_is_about_blank || url != url::kAboutBlankURL;
-      parent->history_subframe_unique_names_.erase(frame_->uniqueName().utf8());
+      parent->history_subframe_unique_names_.erase(iter);
     }
 
     if (should_ask_browser) {
@@ -5738,15 +5788,16 @@ void RenderFrameImpl::OnBlinkFeatureUsageReport(const std::set<int>& features) {
 }
 
 void RenderFrameImpl::OnMixedContentFound(
-    const GURL& main_resource_url,
-    const GURL& mixed_content_url,
-    RequestContextType request_context_type,
-    bool was_allowed,
-    bool had_redirect) {
-  auto request_context =
-      static_cast<blink::WebURLRequest::RequestContext>(request_context_type);
-  frame_->mixedContentFound(main_resource_url, mixed_content_url,
-                            request_context, was_allowed, had_redirect);
+    const FrameMsg_MixedContentFound_Params& params) {
+  blink::WebSourceLocation source_location;
+  source_location.url = WebString::fromLatin1(params.source_location.url);
+  source_location.lineNumber = params.source_location.line_number;
+  source_location.columnNumber = params.source_location.column_number;
+  auto request_context = static_cast<blink::WebURLRequest::RequestContext>(
+      params.request_context_type);
+  frame_->mixedContentFound(params.main_resource_url, params.mixed_content_url,
+                            request_context, params.was_allowed,
+                            params.had_redirect, source_location);
 }
 
 #if defined(OS_ANDROID)
@@ -6332,6 +6383,11 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
                     net::LOAD_ONLY_FROM_CACHE | net::LOAD_DISABLE_CACHE);
     load_flags |= net::LOAD_BYPASS_CACHE;
   }
+
+  bool is_form_submission =
+      info.navigationType == blink::WebNavigationTypeFormSubmitted ||
+      info.navigationType == blink::WebNavigationTypeFormResubmitted;
+
   BeginNavigationParams begin_navigation_params(
       GetWebURLRequestHeaders(info.urlRequest), load_flags,
       info.urlRequest.hasUserGesture(),
@@ -6339,7 +6395,7 @@ void RenderFrameImpl::BeginNavigation(const NavigationPolicyInfo& info) {
           blink::WebURLRequest::ServiceWorkerMode::All,
       GetRequestContextTypeForWebURLRequest(info.urlRequest),
       GetMixedContentContextTypeForWebURLRequest(info.urlRequest),
-      initiator_origin);
+      is_form_submission, initiator_origin);
 
   if (!info.form.isNull()) {
     WebSearchableFormData web_searchable_form_data(info.form);
@@ -6903,5 +6959,17 @@ void RenderFrameImpl::RenderWidgetWillHandleMouseEvent() {
   pepper_last_mouse_event_target_ = nullptr;
 #endif
 }
+
+RenderFrameImpl::PendingNavigationInfo::PendingNavigationInfo(
+    const NavigationPolicyInfo& info)
+    : navigation_type(info.navigationType),
+      policy(info.defaultPolicy),
+      replaces_current_history_item(info.replacesCurrentHistoryItem),
+      history_navigation_in_new_child_frame(
+          info.isHistoryNavigationInNewChildFrame),
+      client_redirect(info.isClientRedirect),
+      cache_disabled(info.isCacheDisabled),
+      form(info.form),
+      source_location(info.sourceLocation) {}
 
 }  // namespace content

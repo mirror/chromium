@@ -56,10 +56,8 @@ AcceleratorControllerRegistrar::~AcceleratorControllerRegistrar() {
 
 ui::mojom::EventResult AcceleratorControllerRegistrar::OnAccelerator(
     uint32_t id,
-    const ui::Event& event) {
-  // TODO: during startup a bunch of accelerators are registered, resulting in
-  // lots of IPC. We should optimize this to send a single IPC.
-  // http://crbug.com/632050
+    const ui::Event& event,
+    std::unordered_map<std::string, std::vector<uint8_t>>* properties) {
   const ui::Accelerator accelerator(*event.AsKeyEvent());
   auto iter = accelerator_to_ids_.find(accelerator);
   if (iter == accelerator_to_ids_.end()) {
@@ -70,7 +68,7 @@ ui::mojom::EventResult AcceleratorControllerRegistrar::OnAccelerator(
 
   const Ids& ids = iter->second;
   AcceleratorController* accelerator_controller =
-      WmShell::Get()->accelerator_controller();
+      Shell::Get()->accelerator_controller();
   const bool is_pre = GetAcceleratorLocalId(id) == ids.pre_id;
   if (is_pre) {
     // TODO(sky): this does not exactly match ash code. In particular ash code
@@ -93,7 +91,7 @@ ui::mojom::EventResult AcceleratorControllerRegistrar::OnAccelerator(
   }
   DCHECK_EQ(GetAcceleratorLocalId(id), ids.post_id);
   // NOTE: for post return value doesn't really matter.
-  return WmShell::Get()->accelerator_controller()->Process(accelerator)
+  return Shell::Get()->accelerator_controller()->Process(accelerator)
              ? ui::mojom::EventResult::HANDLED
              : ui::mojom::EventResult::UNHANDLED;
 }

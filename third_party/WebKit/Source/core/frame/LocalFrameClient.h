@@ -61,7 +61,6 @@ namespace blink {
 class Document;
 class DocumentLoader;
 struct FrameLoadRequest;
-class FrameViewBase;
 class HTMLFormElement;
 class HTMLFrameElementBase;
 class HTMLFrameOwnerElement;
@@ -70,6 +69,7 @@ class HTMLPlugInElement;
 class HistoryItem;
 class KURL;
 class LocalFrame;
+class PluginView;
 class ResourceError;
 class ResourceRequest;
 class ResourceResponse;
@@ -123,7 +123,9 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
       NavigationPolicy,
       bool shouldReplaceCurrentEntry,
       bool isClientRedirect,
-      HTMLFormElement*) = 0;
+      HTMLFormElement*,
+      ContentSecurityPolicyDisposition
+          shouldCheckMainWorldContentSecurityPolicy) = 0;
 
   virtual void dispatchWillSendSubmitEvent(HTMLFormElement*) = 0;
   virtual void dispatchWillSubmitForm(HTMLFormElement*) = 0;
@@ -194,13 +196,13 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
     AllowDetachedPlugin,
   };
   virtual bool canCreatePluginWithoutRenderer(const String& mimeType) const = 0;
-  virtual FrameViewBase* createPlugin(HTMLPlugInElement*,
-                                      const KURL&,
-                                      const Vector<String>&,
-                                      const Vector<String>&,
-                                      const String&,
-                                      bool loadManually,
-                                      DetachedPluginPolicy) = 0;
+  virtual PluginView* createPlugin(HTMLPlugInElement*,
+                                   const KURL&,
+                                   const Vector<String>&,
+                                   const Vector<String>&,
+                                   const String&,
+                                   bool loadManually,
+                                   DetachedPluginPolicy) = 0;
 
   virtual std::unique_ptr<WebMediaPlayer> createWebMediaPlayer(
       HTMLMediaElement&,
@@ -264,7 +266,7 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
 
   virtual WebCookieJar* cookieJar() const = 0;
 
-  virtual void didChangeName(const String& name, const String& uniqueName) {}
+  virtual void didChangeName(const String&) {}
 
   virtual void didEnforceInsecureRequestPolicy(WebInsecureRequestPolicy) {}
 

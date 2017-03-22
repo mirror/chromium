@@ -5,9 +5,9 @@
 #include "ash/test/ash_test_helper.h"
 
 #include "ash/accelerators/accelerator_controller_delegate_aura.h"
+#include "ash/aura/wm_shell_aura.h"
 #include "ash/common/test/test_session_state_delegate.h"
 #include "ash/common/test/test_system_tray_delegate.h"
-#include "ash/common/test/wm_shell_test_api.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
 #include "ash/mus/screen_mus.h"
@@ -18,7 +18,7 @@
 #include "ash/system/chromeos/screen_layout_observer.h"
 #include "ash/test/ash_test_environment.h"
 #include "ash/test/ash_test_views_delegate.h"
-#include "ash/test/shell_test_api.h"
+#include "ash/test/display_configuration_controller_test_api.h"
 #include "ash/test/test_screenshot_delegate.h"
 #include "ash/test/test_shell_delegate.h"
 #include "base/memory/ptr_util.h"
@@ -141,11 +141,13 @@ void AshTestHelper::SetUp(bool start_session) {
   aura::test::EnvTestHelper().SetInputStateLookup(
       std::unique_ptr<aura::InputStateLookup>());
 
+  session_controller_client_.reset(
+      new TestSessionControllerClient(Shell::Get()->session_controller()));
+  session_controller_client_->InitializeAndBind();
+
   Shell* shell = Shell::GetInstance();
-  if (start_session) {
-    GetTestSessionStateDelegate()->SetActiveUserSessionStarted(true);
-    GetTestSessionStateDelegate()->SetHasActiveUser(true);
-  }
+  if (start_session)
+    session_controller_client_->CreatePredefinedUserSessions(1);
 
   if (!is_mash) {
     // ScreenLayoutObserver is specific to classic-ash.
@@ -158,13 +160,17 @@ void AshTestHelper::SetUp(bool start_session) {
     display::test::DisplayManagerTestApi(
         Shell::GetInstance()->display_manager())
         .DisableChangeDisplayUponHostResize();
-    ShellTestApi(shell).DisableDisplayAnimator();
+    DisplayConfigurationControllerTestApi(
+        shell->display_configuration_controller())
+        .DisableDisplayAnimator();
 
     // TODO: disabled for mash as AcceleratorControllerDelegateAura isn't
     // created in mash http://crbug.com/632111.
     test_screenshot_delegate_ = new TestScreenshotDelegate();
-    shell->accelerator_controller_delegate()->SetScreenshotDelegate(
-        std::unique_ptr<ScreenshotDelegate>(test_screenshot_delegate_));
+    WmShellAura::Get()
+        ->accelerator_controller_delegate()
+        ->SetScreenshotDelegate(
+            std::unique_ptr<ScreenshotDelegate>(test_screenshot_delegate_));
   }
 }
 

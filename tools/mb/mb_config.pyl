@@ -239,7 +239,6 @@
       'Android Release (Nexus 6P)': 'android_release_trybot_arm64',
       'Android Release (Nexus 9)': 'android_release_trybot_arm64',
       'Android Release (Pixel C)': 'android_release_trybot_arm64',
-      'Android Release (NVIDIA Shield)': 'android_release_trybot',
       'GPU Linux Builder (dbg)': 'gpu_fyi_tests_debug_trybot',
       'GPU Linux Builder': 'gpu_fyi_tests_release_trybot',
       'GPU Mac Builder': 'gpu_fyi_tests_release_trybot',
@@ -1040,11 +1039,11 @@
     ],
 
     'chromeos_with_codecs_ozone_release_bot': [
-      'chromeos_with_codecs', 'ozone', 'default_ozone_platform_x11', 'release_bot',
+      'chromeos_with_codecs', 'ozone', 'release_bot',
     ],
 
     'chromeos_with_codecs_ozone_release_trybot': [
-      'chromeos_with_codecs', 'ozone', 'default_ozone_platform_x11', 'release_trybot',
+      'chromeos_with_codecs', 'ozone', 'release_trybot',
     ],
 
     'chromeos_with_codecs_release_bot': [
@@ -1684,10 +1683,6 @@
 
     'debug_trybot': {
       'mixins': ['debug_bot', 'minimal_symbols'],
-    },
-
-    'default_ozone_platform_x11': {
-      'gn_args': 'ozone_platform="x11"',
     },
 
     'disable_nacl': {

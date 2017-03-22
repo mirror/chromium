@@ -27,31 +27,17 @@ MaterialBookmarksBrowserTest.prototype = {
   ]),
 };
 
-function MaterialBookmarksStoreTest() {}
+function MaterialBookmarksEditDialogTest() {}
 
-MaterialBookmarksStoreTest.prototype = {
+MaterialBookmarksEditDialogTest.prototype = {
   __proto__: MaterialBookmarksBrowserTest.prototype,
 
   extraLibraries: MaterialBookmarksBrowserTest.prototype.extraLibraries.concat([
-    'store_test.js',
+    'edit_dialog_test.js',
   ]),
 };
 
-TEST_F('MaterialBookmarksStoreTest', 'All', function() {
-  mocha.run();
-});
-
-function MaterialBookmarksSidebarTest() {}
-
-MaterialBookmarksSidebarTest.prototype = {
-  __proto__: MaterialBookmarksBrowserTest.prototype,
-
-  extraLibraries: MaterialBookmarksBrowserTest.prototype.extraLibraries.concat([
-    'sidebar_test.js',
-  ]),
-};
-
-TEST_F('MaterialBookmarksSidebarTest', 'All', function() {
+TEST_F('MaterialBookmarksEditDialogTest', 'All', function() {
   mocha.run();
 });
 
@@ -97,13 +83,56 @@ TEST_F('MaterialBookmarksReducersTest', 'All', function() {
   mocha.run();
 });
 
+function MaterialBookmarksRouterTest() {}
+
+MaterialBookmarksRouterTest.prototype = {
+  __proto__: MaterialBookmarksBrowserTest.prototype,
+
+  extraLibraries: MaterialBookmarksBrowserTest.prototype.extraLibraries.concat([
+    'router_test.js',
+  ]),
+};
+
+TEST_F('MaterialBookmarksRouterTest', 'All', function() {
+  mocha.grep('<bookmarks-router>').run();
+});
+
+function MaterialBookmarksRouterOnLoadTest() {}
+
+MaterialBookmarksRouterOnLoadTest.prototype = {
+  __proto__: MaterialBookmarksRouterTest.prototype,
+
+  browsePreload: 'chrome://bookmarks/?q=testQuery',
+
+  setUp: function() {
+    chrome.bookmarks.search = function(query) {
+      window.searchedQuery = query;
+    };
+  },
+};
+
+TEST_F('MaterialBookmarksRouterOnLoadTest', 'All', function() {
+  mocha.grep('URL preload').run();
+});
+
+function MaterialBookmarksSidebarTest() {}
+
+MaterialBookmarksSidebarTest.prototype = {
+  __proto__: MaterialBookmarksBrowserTest.prototype,
+
+  extraLibraries: MaterialBookmarksBrowserTest.prototype.extraLibraries.concat([
+    'sidebar_test.js',
+  ]),
+};
+
+TEST_F('MaterialBookmarksSidebarTest', 'All', function() {
+  mocha.run();
+});
+
 function MaterialBookmarksStoreClientTest() {}
 
 MaterialBookmarksStoreClientTest.prototype = {
   __proto__: MaterialBookmarksBrowserTest.prototype,
-
-  // TODO(tsergeant): Remove special preload once Client is used in the page.
-  browsePreload: 'chrome://bookmarks/store_client.html',
 
   extraLibraries: MaterialBookmarksBrowserTest.prototype.extraLibraries.concat([
     'store_client_test.js',

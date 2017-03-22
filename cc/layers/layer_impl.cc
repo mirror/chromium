@@ -18,9 +18,9 @@
 #include "base/trace_event/trace_event_argument.h"
 #include "cc/base/math_util.h"
 #include "cc/base/simple_enclosed_region.h"
+#include "cc/benchmarks/micro_benchmark_impl.h"
 #include "cc/debug/debug_colors.h"
 #include "cc/debug/layer_tree_debug_state.h"
-#include "cc/debug/micro_benchmark_impl.h"
 #include "cc/debug/traced_value.h"
 #include "cc/input/main_thread_scrolling_reason.h"
 #include "cc/input/scroll_state.h"
@@ -476,12 +476,8 @@ int LayerImpl::num_copy_requests_in_target_subtree() {
 }
 
 void LayerImpl::UpdatePropertyTreeTransformIsAnimated(bool is_animated) {
-  PropertyTrees* property_trees = GetPropertyTrees();
-  if (property_trees->IsInIdToIndexMap(PropertyTrees::TreeType::TRANSFORM,
-                                       id())) {
-    TransformTree& transform_tree = GetTransformTree();
-    TransformNode* node = transform_tree.Node(
-        property_trees->layer_id_to_transform_node_index[id()]);
+  if (TransformNode* node =
+          GetTransformTree().UpdateNodeFromOwningLayerId(id())) {
     // A LayerImpl's own current state is insufficient for determining whether
     // it owns a TransformNode, since this depends on the state of the
     // corresponding Layer at the time of the last commit. For example, if
@@ -499,7 +495,7 @@ void LayerImpl::UpdatePropertyTreeTransformIsAnimated(bool is_animated) {
         node->has_only_translation_animations = true;
       }
 
-      transform_tree.set_needs_update(true);
+      GetTransformTree().set_needs_update(true);
       layer_tree_impl()->set_needs_update_draw_properties();
     }
   }
@@ -522,26 +518,17 @@ gfx::ScrollOffset LayerImpl::ScrollOffsetForAnimation() const {
 void LayerImpl::OnIsAnimatingChanged(const PropertyAnimationState& mask,
                                      const PropertyAnimationState& state) {
   DCHECK(layer_tree_impl_);
-  PropertyTrees* property_trees = GetPropertyTrees();
-
-  TransformNode* transform_node = nullptr;
-  if (property_trees->IsInIdToIndexMap(PropertyTrees::TreeType::TRANSFORM,
-                                       id())) {
-    transform_node = GetTransformTree().Node(
-        property_trees->layer_id_to_transform_node_index[id()]);
-  }
-
-  EffectNode* effect_node = nullptr;
-  if (property_trees->IsInIdToIndexMap(PropertyTrees::TreeType::EFFECT, id())) {
-    effect_node = GetEffectTree().Node(
-        property_trees->layer_id_to_effect_node_index[id()]);
-  }
 
   for (int property = TargetProperty::FIRST_TARGET_PROPERTY;
        property <= TargetProperty::LAST_TARGET_PROPERTY; ++property) {
+    if (!mask.currently_running[property] &&
+        !mask.potentially_animating[property])
+      continue;
+
     switch (property) {
       case TargetProperty::TRANSFORM:
-        if (transform_node) {
+        if (TransformNode* transform_node =
+                GetTransformTree().UpdateNodeFromOwningLayerId(id())) {
           if (mask.currently_running[property])
             transform_node->is_currently_animating =
                 state.currently_running[property];
@@ -553,7 +540,8 @@ void LayerImpl::OnIsAnimatingChanged(const PropertyAnimationState& mask,
         }
         break;
       case TargetProperty::OPACITY:
-        if (effect_node) {
+        if (EffectNode* effect_node =
+                GetEffectTree().UpdateNodeFromOwningLayerId(id())) {
           if (mask.currently_running[property])
             effect_node->is_currently_animating_opacity =
                 state.currently_running[property];
@@ -565,7 +553,8 @@ void LayerImpl::OnIsAnimatingChanged(const PropertyAnimationState& mask,
         }
         break;
       case TargetProperty::FILTER:
-        if (effect_node) {
+        if (EffectNode* effect_node =
+                GetEffectTree().UpdateNodeFromOwningLayerId(id())) {
           if (mask.currently_running[property])
             effect_node->is_currently_animating_filter =
                 state.currently_running[property];
@@ -625,10 +614,9 @@ void LayerImpl::SetBoundsDelta(const gfx::Vector2dF& bounds_delta) {
 
   if (masks_to_bounds()) {
     // If layer is clipping, then update the clip node using the new bounds.
-    ClipNode* clip_node = property_trees->clip_tree.Node(clip_tree_index());
-    if (clip_node) {
-      DCHECK(property_trees->IsInIdToIndexMap(PropertyTrees::TreeType::CLIP,
-                                              id()));
+    if (ClipNode* clip_node =
+            property_trees->clip_tree.UpdateNodeFromOwningLayerId(id())) {
+      DCHECK_EQ(clip_node->id, clip_tree_index());
       clip_node->clip = gfx::RectF(gfx::PointF() + offset_to_transform_parent(),
                                    gfx::SizeF(bounds()));
       property_trees->clip_tree.set_needs_update(true);
@@ -692,21 +680,15 @@ void LayerImpl::SetContentsOpaque(bool opaque) {
 }
 
 float LayerImpl::Opacity() const {
-  PropertyTrees* property_trees = GetPropertyTrees();
-  if (!property_trees->IsInIdToIndexMap(PropertyTrees::TreeType::EFFECT, id()))
+  if (const EffectNode* node = GetEffectTree().FindNodeFromOwningLayerId(id()))
+    return node->opacity;
+  else
     return 1.f;
-  EffectNode* node =
-      GetEffectTree().Node(property_trees->layer_id_to_effect_node_index[id()]);
-  return node->opacity;
 }
 
 const gfx::Transform& LayerImpl::Transform() const {
-  PropertyTrees* property_trees = GetPropertyTrees();
-  DCHECK(property_trees->IsInIdToIndexMap(PropertyTrees::TreeType::TRANSFORM,
-                                          id()));
-  TransformNode* node = GetTransformTree().Node(
-      property_trees->layer_id_to_transform_node_index[id()]);
-  return node->local;
+  DCHECK_NE(GetTransformTree().FindNodeFromOwningLayerId(id()), nullptr);
+  return GetTransformTree().FindNodeFromOwningLayerId(id())->local;
 }
 
 void LayerImpl::SetElementId(ElementId element_id) {
@@ -1056,6 +1038,10 @@ float LayerImpl::GetIdealContentsScale() const {
 
 PropertyTrees* LayerImpl::GetPropertyTrees() const {
   return layer_tree_impl_->property_trees();
+}
+
+ClipTree& LayerImpl::GetClipTree() const {
+  return GetPropertyTrees()->clip_tree;
 }
 
 EffectTree& LayerImpl::GetEffectTree() const {

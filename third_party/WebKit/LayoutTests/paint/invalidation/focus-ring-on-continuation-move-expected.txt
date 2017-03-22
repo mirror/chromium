@@ -7,19 +7,33 @@
       "drawsContent": true,
       "paintInvalidations": [
         {
+          "object": "LayoutInline SPAN",
+          "rect": [207, 231, 102, 102],
+          "reason": "outline"
+        },
+        {
+          "object": "LayoutInline SPAN",
+          "rect": [7, 231, 102, 102],
+          "reason": "outline"
+        },
+        {
           "object": "LayoutBlockFlow (relative positioned) DIV id='block'",
-          "rect": [208, 200, 100, 100],
+          "rect": [208, 232, 100, 100],
           "reason": "bounds change"
         },
         {
           "object": "LayoutBlockFlow (relative positioned) DIV id='block'",
-          "rect": [8, 200, 100, 100],
+          "rect": [8, 232, 100, 100],
           "reason": "bounds change"
         }
       ]
     }
   ],
   "objectPaintInvalidations": [
+    {
+      "object": "LayoutInline SPAN",
+      "reason": "outline"
+    },
     {
       "object": "LayoutBlockFlow (relative positioned) DIV id='block'",
       "reason": "bounds change"

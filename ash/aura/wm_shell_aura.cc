@@ -6,8 +6,11 @@
 
 #include <utility>
 
+#include "ash/accelerators/accelerator_controller_delegate_aura.h"
 #include "ash/aura/key_event_watcher_aura.h"
 #include "ash/aura/pointer_watcher_adapter.h"
+#include "ash/common/accelerators/accelerator_controller.h"
+#include "ash/common/keyboard/keyboard_ui.h"
 #include "ash/common/session/session_state_delegate.h"
 #include "ash/common/shell_delegate.h"
 #include "ash/common/shell_observer.h"
@@ -50,6 +53,12 @@ namespace ash {
 WmShellAura::WmShellAura() {}
 
 WmShellAura::~WmShellAura() {}
+
+// static
+WmShellAura* WmShellAura::Get() {
+  CHECK(!WmShell::Get()->IsRunningInMash());
+  return static_cast<WmShellAura*>(WmShell::Get());
+}
 
 void WmShellAura::Shutdown() {
   if (added_display_observer_)
@@ -207,6 +216,10 @@ WmShellAura::CreateImmersiveFullscreenController() {
   return base::MakeUnique<ImmersiveFullscreenController>();
 }
 
+std::unique_ptr<KeyboardUI> WmShellAura::CreateKeyboardUI() {
+  return KeyboardUI::Create();
+}
+
 std::unique_ptr<KeyEventWatcher> WmShellAura::CreateKeyEventWatcher() {
   return base::MakeUnique<KeyEventWatcherAura>();
 }
@@ -269,13 +282,13 @@ void WmShellAura::InitHosts(const ShellInitParams& init_params) {
   Shell::GetInstance()->window_tree_host_manager()->InitHosts();
 }
 
-void WmShellAura::SessionStateChanged(session_manager::SessionState state) {
-  // Create the shelf if necessary.
-  WmShell::SessionStateChanged(state);
-
-  // Recreate the keyboard after initial login and after multiprofile login.
-  if (state == session_manager::SessionState::ACTIVE)
-    Shell::GetInstance()->CreateKeyboard();
+std::unique_ptr<AcceleratorController>
+WmShellAura::CreateAcceleratorController() {
+  DCHECK(!accelerator_controller_delegate_);
+  accelerator_controller_delegate_ =
+      base::MakeUnique<AcceleratorControllerDelegateAura>();
+  return base::MakeUnique<AcceleratorController>(
+      accelerator_controller_delegate_.get(), nullptr);
 }
 
 void WmShellAura::OnDisplayConfigurationChanging() {

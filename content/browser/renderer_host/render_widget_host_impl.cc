@@ -553,6 +553,8 @@ bool RenderWidgetHostImpl::OnMessageReceived(const IPC::Message &msg) {
     IPC_MESSAGE_HANDLER(ViewHostMsg_SetTooltipText, OnSetTooltipText)
     IPC_MESSAGE_HANDLER_GENERIC(ViewHostMsg_SwapCompositorFrame,
                                 OnSwapCompositorFrame(msg))
+    IPC_MESSAGE_HANDLER(ViewHostMsg_BeginFrameDidNotSwap,
+                        OnBeginFrameDidNotSwap)
     IPC_MESSAGE_HANDLER(ViewHostMsg_UpdateRect, OnUpdateRect)
     IPC_MESSAGE_HANDLER(ViewHostMsg_SetCursor, OnSetCursor)
     IPC_MESSAGE_HANDLER(ViewHostMsg_TextInputStateChanged,
@@ -1004,9 +1006,6 @@ void RenderWidgetHostImpl::OnFirstPaintAfterLoad() {
   } else {
     received_paint_after_load_ = true;
   }
-
-  if (delegate_)
-    delegate_->OnFirstPaintAfterLoad(this);
 }
 
 void RenderWidgetHostImpl::ForwardMouseEvent(const WebMouseEvent& mouse_event) {
@@ -1821,10 +1820,48 @@ bool RenderWidgetHostImpl::OnSwapCompositorFrame(
   ViewHostMsg_SwapCompositorFrame::Param param;
   if (!ViewHostMsg_SwapCompositorFrame::Read(&message, &param))
     return false;
-  cc::CompositorFrame frame(std::move(std::get<1>(param)));
   uint32_t compositor_frame_sink_id = std::get<0>(param);
+  cc::LocalSurfaceId local_surface_id = std::get<1>(param);
+  cc::CompositorFrame frame(std::move(std::get<2>(param)));
   std::vector<IPC::Message> messages_to_deliver_with_frame;
-  messages_to_deliver_with_frame.swap(std::get<2>(param));
+  messages_to_deliver_with_frame.swap(std::get<3>(param));
+
+  // The renderer should not send empty frames.
+  if (frame.render_pass_list.empty()) {
+    DLOG(ERROR) << "Renderer sent an empty frame.";
+    return false;
+  }
+
+  // The renderer must allocate a new LocalSurfaceId if frame size or device
+  // scale factor changes.
+  float device_scale_factor = frame.metadata.device_scale_factor;
+  const gfx::Size& frame_size =
+      frame.render_pass_list.back()->output_rect.size();
+  if (local_surface_id == last_local_surface_id_ &&
+      (frame_size != last_frame_size_ ||
+       device_scale_factor != last_device_scale_factor_)) {
+    DLOG(ERROR) << "Renderer submitted frame of wrong size to its surface."
+                << " Expected: size=" << last_frame_size_.ToString()
+                << ",scale=" << last_device_scale_factor_
+                << " Received: size=" << frame_size.ToString()
+                << ",scale=" << device_scale_factor;
+    return false;
+  }
+  last_local_surface_id_ = local_surface_id;
+  last_frame_size_ = frame_size;
+  last_device_scale_factor_ = device_scale_factor;
+
+  if (frame.metadata.begin_frame_ack.sequence_number <
+      cc::BeginFrameArgs::kStartingFrameNumber) {
+    // Received an invalid ack, renderer misbehaved.
+    bad_message::ReceivedBadMessage(
+        GetProcess(),
+        bad_message::RWH_INVALID_BEGIN_FRAME_ACK_COMPOSITOR_FRAME);
+    return false;
+  }
+  // |has_damage| and |remaining_frames| are not transmitted.
+  frame.metadata.begin_frame_ack.has_damage = true;
+  frame.metadata.begin_frame_ack.remaining_frames = 0;
 
   if (!ui::LatencyInfo::Verify(frame.metadata.latency_info,
                                "RenderWidgetHostImpl::OnSwapCompositorFrame")) {
@@ -1845,7 +1882,8 @@ bool RenderWidgetHostImpl::OnSwapCompositorFrame(
   // compositor frame can arrive before the navigation commit message that
   // updates that value.
   if (view_ && frame.metadata.content_source_id >= current_content_source_id_) {
-    view_->OnSwapCompositorFrame(compositor_frame_sink_id, std::move(frame));
+    view_->OnSwapCompositorFrame(compositor_frame_sink_id, local_surface_id,
+                                 std::move(frame));
     view_->DidReceiveRendererFrame();
   } else {
     cc::ReturnedResourceArray resources;
@@ -1867,6 +1905,24 @@ bool RenderWidgetHostImpl::OnSwapCompositorFrame(
   messages_to_deliver_with_frame.clear();
 
   return true;
+}
+
+void RenderWidgetHostImpl::OnBeginFrameDidNotSwap(
+    const cc::BeginFrameAck& ack) {
+  if (ack.sequence_number < cc::BeginFrameArgs::kStartingFrameNumber) {
+    // Received an invalid ack, renderer misbehaved.
+    bad_message::ReceivedBadMessage(
+        GetProcess(), bad_message::RWH_INVALID_BEGIN_FRAME_ACK_DID_NOT_SWAP);
+    return;
+  }
+
+  // |has_damage| and |remaining_frames| are not transmitted.
+  cc::BeginFrameAck modified_ack = ack;
+  modified_ack.has_damage = false;
+  modified_ack.remaining_frames = 0;
+
+  if (view_)
+    view_->OnBeginFrameDidNotSwap(modified_ack);
 }
 
 void RenderWidgetHostImpl::OnUpdateRect(

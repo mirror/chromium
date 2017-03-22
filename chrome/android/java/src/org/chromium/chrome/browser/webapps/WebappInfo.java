@@ -302,9 +302,6 @@ public class WebappInfo {
         intent.putExtra(ShortcutHelper.EXTRA_THEME_COLOR, themeColor());
         intent.putExtra(ShortcutHelper.EXTRA_BACKGROUND_COLOR, backgroundColor());
         intent.putExtra(ShortcutHelper.EXTRA_IS_ICON_GENERATED, isIconGenerated());
-        if (webApkPackageName() != null) {
-            intent.putExtra(ShortcutHelper.EXTRA_WEBAPK_PACKAGE_NAME, webApkPackageName());
-        }
     }
 
     /**

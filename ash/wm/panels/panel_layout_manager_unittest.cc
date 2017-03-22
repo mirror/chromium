@@ -220,7 +220,7 @@ class PanelLayoutManagerTest : public test::AshTestBase {
     test::ShelfViewTestAPI test_api(shelf_view);
     test_api.SetAnimationDuration(1);
     test_api.RunMessageLoopUntilAnimationsDone();
-    int index = WmShell::Get()->shelf_model()->ItemIndexByID(
+    int index = Shell::Get()->shelf_model()->ItemIndexByID(
         window->GetProperty(kShelfIDKey));
     gfx::Rect bounds = test_api.GetButton(index)->GetBoundsInScreen();
 
@@ -844,7 +844,7 @@ TEST_F(PanelLayoutManagerTest, PanelsHideAndRestoreWithShelf) {
   // While in full-screen mode, the panel windows should still be in the
   // switchable window list - http://crbug.com/313919.
   aura::Window::Windows switchable_window_list = WmWindow::ToAuraWindows(
-      WmShell::Get()->mru_window_tracker()->BuildMruWindowList());
+      Shell::Get()->mru_window_tracker()->BuildMruWindowList());
   EXPECT_EQ(3u, switchable_window_list.size());
   EXPECT_NE(switchable_window_list.end(),
             std::find(switchable_window_list.begin(),

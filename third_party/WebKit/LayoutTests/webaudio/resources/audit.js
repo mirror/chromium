@@ -1007,10 +1007,6 @@ window.Audit = (function () {
       this._failedAssertions = 0;
     }
 
-    // TODO(hongchan): This does not have any effect. Remove this method and fix
-    // layout test files use it.
-    describe (message) {}
-
     get label () {
       return this._label;
     }
@@ -1195,15 +1191,19 @@ window.Audit = (function () {
   function loadFileFromUrl (fileUrl) {
     return new Promise((resolve, reject) => {
       let xhr = new XMLHttpRequest();
-      xhr.open('GET', fileUrl);
+      xhr.open('GET', fileUrl, true);
       xhr.responseType = 'arraybuffer';
 
       xhr.onload = () => {
-        if (xhr.status === 200) {
+        // |status = 0| is a workaround for the run-webkit-test server. We are
+        // speculating the server quits the transaction prematurely without
+        // completing the request.
+        if (xhr.status === 200 || xhr.status === 0) {
           resolve(xhr.response);
         } else {
           let errorMessage = 'loadFile: Request failed when loading ' +
-              fileUrl + '. (' + xhr.statusText + ')';
+              fileUrl + '. ' + xhr.statusText + '. (status = ' +
+              xhr.status + ')';
           if (reject) {
             reject(errorMessage);
           } else {
@@ -1232,7 +1232,6 @@ window.Audit = (function () {
    * @example
    *   let audit = Audit.createTaskRunner();
    *   audit.define('first-task', function (task, should) {
-   *     task.describe('the first task');
    *     should(someValue).beEqualTo(someValue);
    *     task.done();
    *   });

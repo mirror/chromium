@@ -38,7 +38,6 @@
 #include "content/browser/renderer_host/render_widget_host_view_frame_subscriber.h"
 #include "content/browser/service_manager/service_manager_context.h"
 #include "content/common/child_process_host_impl.h"
-#include "content/common/establish_channel_params.h"
 #include "content/common/gpu_host_messages.h"
 #include "content/common/in_process_child_thread_params.h"
 #include "content/common/service_manager/child_connection.h"
@@ -352,6 +351,11 @@ class GpuProcessHost::ConnectionFilterImpl : public ConnectionFilter {
 
     GetContentClient()->browser()->ExposeInterfacesToGpuProcess(registry,
                                                                 host_);
+
+#if defined(OS_ANDROID)
+    GpuProcessHostUIShim::RegisterUIThreadMojoInterfaces(registry);
+#endif
+
     return true;
   }
 
@@ -646,9 +650,9 @@ bool GpuProcessHost::Init() {
       ->GetAssociatedInterfaceSupport()
       ->GetRemoteAssociatedInterface(&gpu_main_ptr_);
   ui::mojom::GpuServiceRequest request(&gpu_service_ptr_);
-  gpu_main_ptr_->CreateGpuService(std::move(request),
-                                  gpu_host_binding_.CreateInterfacePtrAndBind(),
-                                  gpu_preferences);
+  gpu_main_ptr_->CreateGpuService(
+      std::move(request), gpu_host_binding_.CreateInterfacePtrAndBind(),
+      gpu_preferences, activity_flags_.CloneHandle());
 
 #if defined(USE_OZONE)
   // Ozone needs to send the primary DRM device to GPU process as early as
@@ -875,6 +879,20 @@ void GpuProcessHost::OnProcessLaunchFailed(int error_code) {
 }
 
 void GpuProcessHost::OnProcessCrashed(int exit_code) {
+  // If the GPU process crashed while compiling a shader, we may have invalid
+  // cached binaries. Completely clear the shader cache to force shader binaries
+  // to be re-created.
+  if (activity_flags_.IsFlagSet(
+          gpu::ActivityFlagsBase::FLAG_LOADING_PROGRAM_BINARY)) {
+    for (auto cache_key : client_id_to_shader_cache_) {
+      // This call will temporarily extend the lifetime of the cache (kept
+      // alive in the factory), and may drop loads of cached shader binaries if
+      // it takes a while to complete. As we are intentionally dropping all
+      // binaries, this behavior is fine.
+      GetShaderCacheFactorySingleton()->ClearByClientId(
+          cache_key.first, base::Time(), base::Time::Max(), base::Bind([] {}));
+    }
+  }
   SendOutstandingReplies();
   RecordProcessCrash();
   GpuDataManagerImpl::GetInstance()->ProcessCrashed(

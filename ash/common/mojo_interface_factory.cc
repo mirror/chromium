@@ -31,7 +31,7 @@ namespace {
 
 void BindAcceleratorControllerRequestOnMainThread(
     mojom::AcceleratorControllerRequest request) {
-  WmShell::Get()->accelerator_controller()->BindRequest(std::move(request));
+  Shell::Get()->accelerator_controller()->BindRequest(std::move(request));
 }
 
 void BindAppListRequestOnMainThread(app_list::mojom::AppListRequest request) {
@@ -39,32 +39,32 @@ void BindAppListRequestOnMainThread(app_list::mojom::AppListRequest request) {
 }
 
 void BindCastConfigOnMainThread(mojom::CastConfigRequest request) {
-  WmShell::Get()->cast_config()->BindRequest(std::move(request));
+  Shell::Get()->cast_config()->BindRequest(std::move(request));
 }
 
 void BindLocaleNotificationControllerOnMainThread(
     mojom::LocaleNotificationControllerRequest request) {
-  WmShell::Get()->locale_notification_controller()->BindRequest(
+  Shell::Get()->locale_notification_controller()->BindRequest(
       std::move(request));
 }
 
 void BindMediaControllerRequestOnMainThread(
     mojom::MediaControllerRequest request) {
-  WmShell::Get()->media_controller()->BindRequest(std::move(request));
+  Shell::Get()->media_controller()->BindRequest(std::move(request));
 }
 
 void BindNewWindowControllerRequestOnMainThread(
     mojom::NewWindowControllerRequest request) {
-  WmShell::Get()->new_window_controller()->BindRequest(std::move(request));
+  Shell::Get()->new_window_controller()->BindRequest(std::move(request));
 }
 
 void BindSessionControllerRequestOnMainThread(
     mojom::SessionControllerRequest request) {
-  WmShell::Get()->session_controller()->BindRequest(std::move(request));
+  Shell::Get()->session_controller()->BindRequest(std::move(request));
 }
 
 void BindShelfRequestOnMainThread(mojom::ShelfControllerRequest request) {
-  WmShell::Get()->shelf_controller()->BindRequest(std::move(request));
+  Shell::Get()->shelf_controller()->BindRequest(std::move(request));
 }
 
 void BindShutdownControllerRequestOnMainThread(
@@ -73,11 +73,11 @@ void BindShutdownControllerRequestOnMainThread(
 }
 
 void BindSystemTrayRequestOnMainThread(mojom::SystemTrayRequest request) {
-  WmShell::Get()->system_tray_controller()->BindRequest(std::move(request));
+  Shell::Get()->system_tray_controller()->BindRequest(std::move(request));
 }
 
 void BindTouchViewRequestOnMainThread(mojom::TouchViewManagerRequest request) {
-  WmShell::Get()->maximize_mode_controller()->BindRequest(std::move(request));
+  Shell::Get()->maximize_mode_controller()->BindRequest(std::move(request));
 }
 
 void BindVpnListRequestOnMainThread(mojom::VpnListRequest request) {

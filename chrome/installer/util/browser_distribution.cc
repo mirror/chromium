@@ -33,9 +33,6 @@ using installer::MasterPreferences;
 
 namespace {
 
-const wchar_t kChromiumActiveSetupGuid[] =
-    L"{7D2B3E1D-D096-4594-9D8F-A6667F12E0AC}";
-
 const wchar_t kCommandExecuteImplUuid[] =
     L"{A2DF06F9-A21A-44A8-8A99-8B9C84F29160}";
 
@@ -109,10 +106,6 @@ void BrowserDistribution::DoPostUninstallOperations(
     const base::string16& distribution_data) {
 }
 
-base::string16 BrowserDistribution::GetActiveSetupGuid() {
-  return kChromiumActiveSetupGuid;
-}
-
 base::string16 BrowserDistribution::GetBaseAppName() {
   return L"Chromium";
 }
@@ -143,18 +136,6 @@ base::string16 BrowserDistribution::GetStartMenuShortcutSubfolder(
       return GetShortcutName();
   }
 }
-
-base::string16 BrowserDistribution::GetBrowserProgIdPrefix() {
-  // This used to be "ChromiumHTML", but was forced to become "ChromiumHTM"
-  // because of http://crbug.com/153349.  See the declaration of this function
-  // in the header file for more details.
-  return L"ChromiumHTM";
-}
-
-base::string16 BrowserDistribution::GetBrowserProgIdDesc() {
-  return L"Chromium HTML Document";
-}
-
 
 base::string16 BrowserDistribution::GetPublisherName() {
   return L"Chromium";

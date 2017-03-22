@@ -453,15 +453,6 @@ double ResourceResponse::cacheControlMaxAge() const {
   return m_cacheControlHeader.maxAge;
 }
 
-double ResourceResponse::cacheControlStaleWhileRevalidate() const {
-  if (!m_cacheControlHeader.parsed) {
-    m_cacheControlHeader =
-        parseCacheControlDirectives(m_httpHeaderFields.get(cacheControlHeader),
-                                    m_httpHeaderFields.get(pragmaHeader));
-  }
-  return m_cacheControlHeader.staleWhileRevalidate;
-}
-
 static double parseDateValueInHeader(const HTTPHeaderMap& headers,
                                      const AtomicString& headerName) {
   const AtomicString& headerValue = headers.get(headerName);
@@ -562,7 +553,7 @@ ResourceLoadTiming* ResourceResponse::resourceLoadTiming() const {
 
 void ResourceResponse::setResourceLoadTiming(
     PassRefPtr<ResourceLoadTiming> resourceLoadTiming) {
-  m_resourceLoadTiming = resourceLoadTiming;
+  m_resourceLoadTiming = std::move(resourceLoadTiming);
 }
 
 PassRefPtr<ResourceLoadInfo> ResourceResponse::resourceLoadInfo() const {
@@ -571,7 +562,7 @@ PassRefPtr<ResourceLoadInfo> ResourceResponse::resourceLoadInfo() const {
 
 void ResourceResponse::setResourceLoadInfo(
     PassRefPtr<ResourceLoadInfo> loadInfo) {
-  m_resourceLoadInfo = loadInfo;
+  m_resourceLoadInfo = std::move(loadInfo);
 }
 
 KURL ResourceResponse::originalURLViaServiceWorker() const {

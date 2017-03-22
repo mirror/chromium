@@ -150,11 +150,6 @@ class InterfacePtrState {
     return endpoint_client_->associated_group();
   }
 
-  void EnableNestedDispatch(bool enabled) {
-    ConfigureProxyIfNecessary();
-    router_->EnableNestedDispatch(enabled);
-  }
-
   void EnableTestingMode() {
     ConfigureProxyIfNecessary();
     router_->EnableTestingMode();
@@ -168,7 +163,7 @@ class InterfacePtrState {
   void ForwardMessageWithResponder(Message message,
                                    std::unique_ptr<MessageReceiver> responder) {
     ConfigureProxyIfNecessary();
-    endpoint_client_->AcceptWithResponder(&message, responder.release());
+    endpoint_client_->AcceptWithResponder(&message, std::move(responder));
   }
 
  private:

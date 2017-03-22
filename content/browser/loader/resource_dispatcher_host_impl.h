@@ -58,11 +58,9 @@ class ShareableFileReference;
 namespace content {
 class AppCacheNavigationHandleCore;
 class AppCacheService;
-class AsyncRevalidationManager;
 class LoaderDelegate;
 class NavigationURLLoaderImplCore;
 class NavigationUIData;
-class RenderFrameHostImpl;
 class ResourceContext;
 class ResourceDispatcherHostDelegate;
 class ResourceLoader;
@@ -100,24 +98,6 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
   // Returns the current ResourceDispatcherHostImpl. May return NULL if it
   // hasn't been created yet.
   static ResourceDispatcherHostImpl* Get();
-
-  // The following static methods should all be called from the UI thread.
-
-  // Resumes requests for a given render frame routing id. This will only resume
-  // requests for a single frame.
-  static void ResumeBlockedRequestsForRouteFromUI(
-      const GlobalFrameRoutingId& global_routing_id);
-
-  // Blocks (and does not start) all requests for the frame and its subframes.
-  static void BlockRequestsForFrameFromUI(RenderFrameHost* root_frame_host);
-
-  // Resumes any blocked requests for the specified frame and its subframes.
-  static void ResumeBlockedRequestsForFrameFromUI(
-      RenderFrameHost* root_frame_host);
-
-  // Cancels any blocked request for the frame and its subframes.
-  static void CancelBlockedRequestsForFrameFromUI(
-      RenderFrameHostImpl* root_frame_host);
 
   // ResourceDispatcherHost implementation:
   void SetDelegate(ResourceDispatcherHostDelegate* delegate) override;
@@ -287,10 +267,6 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
   int num_in_flight_requests_for_testing() const {
     return num_in_flight_requests_;
   }
-
-  // Turns on stale-while-revalidate support, regardless of command-line flags
-  // or experiment status. For unit tests only.
-  void EnableStaleWhileRevalidateForTesting();
 
   // Sets the LoaderDelegate, which must outlive this object. Ownership is not
   // transferred. The LoaderDelegate should be interacted with on the IO thread.
@@ -770,10 +746,6 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
   LoaderDelegate* loader_delegate_;
 
   bool allow_cross_origin_auth_prompt_;
-
-  // AsyncRevalidationManager is non-NULL if and only if
-  // stale-while-revalidate is enabled.
-  std::unique_ptr<AsyncRevalidationManager> async_revalidation_manager_;
 
   typedef std::map<GlobalRequestID,
                    base::ObserverList<ResourceMessageDelegate>*> DelegateMap;

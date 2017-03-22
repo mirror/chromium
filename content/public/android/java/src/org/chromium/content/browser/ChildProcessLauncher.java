@@ -10,28 +10,26 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
 import android.text.TextUtils;
-import android.view.Surface;
 
 import org.chromium.base.CommandLine;
 import org.chromium.base.CpuFeatures;
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.TraceEvent;
-import org.chromium.base.UnguessableToken;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.library_loader.Linker;
+import org.chromium.base.process_launcher.ChildProcessCreationParams;
+import org.chromium.base.process_launcher.FileDescriptorInfo;
 import org.chromium.content.app.ChromiumLinkerParams;
 import org.chromium.content.app.PrivilegedProcessService;
 import org.chromium.content.app.SandboxedProcessService;
 import org.chromium.content.common.ContentSwitches;
-import org.chromium.content.common.FileDescriptorInfo;
-import org.chromium.content.common.IChildProcessCallback;
-import org.chromium.content.common.SurfaceWrapper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -541,11 +539,9 @@ public class ChildProcessLauncher {
      * binding to a render process when it is created and remove the moderate binding when Chrome is
      * sent to the background.
      */
-    public static void startModerateBindingManagement(
-            Context context, boolean moderateBindingTillBackgrounded) {
-        sBindingManager.startModerateBindingManagement(context,
-                getNumberOfServices(context, true, context.getPackageName()),
-                moderateBindingTillBackgrounded);
+    public static void startModerateBindingManagement(Context context) {
+        sBindingManager.startModerateBindingManagement(
+                context, getNumberOfServices(context, true, context.getPackageName()));
     }
 
     /**
@@ -766,13 +762,13 @@ public class ChildProcessLauncher {
      * @param linkerParams Linker params to start the service.
      */
     protected static Bundle createsServiceBundle(
-            String[] commandLine, FileDescriptorInfo[] filesToBeMapped, Bundle sharedRelros) {
+            String[] commandLine, FileDescriptorInfo[] filesToBeMapped) {
         Bundle bundle = new Bundle();
         bundle.putStringArray(ChildProcessConstants.EXTRA_COMMAND_LINE, commandLine);
         bundle.putParcelableArray(ChildProcessConstants.EXTRA_FILES, filesToBeMapped);
         bundle.putInt(ChildProcessConstants.EXTRA_CPU_COUNT, CpuFeatures.getCount());
         bundle.putLong(ChildProcessConstants.EXTRA_CPU_FEATURES, CpuFeatures.getMask());
-        bundle.putBundle(Linker.EXTRA_LINKER_SHARED_RELROS, sharedRelros);
+        bundle.putBundle(Linker.EXTRA_LINKER_SHARED_RELROS, Linker.getInstance().getSharedRelros());
         return bundle;
     }
 
@@ -804,11 +800,8 @@ public class ChildProcessLauncher {
                 };
 
         assert callbackType != CALLBACK_FOR_UNKNOWN_PROCESS;
-        connection.setupConnection(commandLine,
-                                   filesToBeMapped,
-                                   createCallback(childProcessId, callbackType),
-                                   connectionCallback,
-                                   Linker.getInstance().getSharedRelros());
+        connection.setupConnection(commandLine, filesToBeMapped,
+                createCallback(childProcessId, callbackType), connectionCallback);
     }
 
     /**
@@ -832,36 +825,8 @@ public class ChildProcessLauncher {
     /**
      * This implementation is used to receive callbacks from the remote service.
      */
-    private static IChildProcessCallback createCallback(
-            final int childProcessId, final int callbackType) {
-        return new IChildProcessCallback.Stub() {
-            @Override
-            public void forwardSurfaceForSurfaceRequest(
-                    UnguessableToken requestToken, Surface surface) {
-                // Do not allow a malicious renderer to connect to a producer. This is only used
-                // from stream textures managed by the GPU process.
-                if (callbackType != CALLBACK_FOR_GPU_PROCESS) {
-                    Log.e(TAG, "Illegal callback for non-GPU process.");
-                    return;
-                }
-
-                nativeCompleteScopedSurfaceRequest(requestToken, surface);
-            }
-
-            @Override
-            public SurfaceWrapper getViewSurface(int surfaceId) {
-                // Do not allow a malicious renderer to get to our view surface.
-                if (callbackType != CALLBACK_FOR_GPU_PROCESS) {
-                    Log.e(TAG, "Illegal callback for non-GPU process.");
-                    return null;
-                }
-                Surface surface = ChildProcessLauncher.nativeGetViewSurface(surfaceId);
-                if (surface == null) {
-                    return null;
-                }
-                return new SurfaceWrapper(surface);
-            }
-        };
+    private static IBinder createCallback(int childProcessId, int callbackType) {
+        return callbackType == CALLBACK_FOR_GPU_PROCESS ? new GpuProcessCallback() : null;
     }
 
     static void logPidWarning(int pid, String message) {
@@ -973,8 +938,5 @@ public class ChildProcessLauncher {
     }
 
     private static native void nativeOnChildProcessStarted(long clientContext, int pid);
-    private static native void nativeCompleteScopedSurfaceRequest(
-            UnguessableToken requestToken, Surface surface);
     private static native boolean nativeIsSingleProcess();
-    private static native Surface nativeGetViewSurface(int surfaceId);
 }

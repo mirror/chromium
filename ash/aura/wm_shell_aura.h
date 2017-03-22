@@ -15,6 +15,7 @@
 
 namespace ash {
 
+class AcceleratorControllerDelegateAura;
 class PointerWatcherAdapter;
 
 class ASH_EXPORT WmShellAura : public WmShell,
@@ -25,6 +26,9 @@ class ASH_EXPORT WmShellAura : public WmShell,
 
   static WmShellAura* Get();
 
+  AcceleratorControllerDelegateAura* accelerator_controller_delegate() {
+    return accelerator_controller_delegate_.get();
+  }
 
   // WmShell:
   void Shutdown() override;
@@ -64,6 +68,7 @@ class ASH_EXPORT WmShellAura : public WmShell,
   CreateScopedDisableInternalMouseAndKeyboard() override;
   std::unique_ptr<ImmersiveFullscreenController>
   CreateImmersiveFullscreenController() override;
+  std::unique_ptr<KeyboardUI> CreateKeyboardUI() override;
   std::unique_ptr<KeyEventWatcher> CreateKeyEventWatcher() override;
   SessionStateDelegate* GetSessionStateDelegate() override;
   void AddDisplayObserver(WmDisplayObserver* observer) override;
@@ -78,11 +83,9 @@ class ASH_EXPORT WmShellAura : public WmShell,
   void CreatePointerWatcherAdapter() override;
   void CreatePrimaryHost() override;
   void InitHosts(const ShellInitParams& init_params) override;
+  std::unique_ptr<AcceleratorController> CreateAcceleratorController() override;
 
  private:
-  // SessionStateObserver:
-  void SessionStateChanged(session_manager::SessionState state) override;
-
   // WindowTreeHostManager::Observer:
   void OnDisplayConfigurationChanging() override;
   void OnDisplayConfigurationChanged() override;
@@ -91,6 +94,9 @@ class ASH_EXPORT WmShellAura : public WmShell,
 
   bool added_display_observer_ = false;
   base::ObserverList<WmDisplayObserver> display_observers_;
+
+  std::unique_ptr<AcceleratorControllerDelegateAura>
+      accelerator_controller_delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(WmShellAura);
 };

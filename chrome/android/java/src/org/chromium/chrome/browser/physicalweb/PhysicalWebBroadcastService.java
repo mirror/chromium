@@ -8,6 +8,7 @@ import android.annotation.TargetApi;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +25,7 @@ import org.chromium.chrome.browser.notifications.ChromeNotificationBuilder;
 import org.chromium.chrome.browser.notifications.NotificationConstants;
 import org.chromium.chrome.browser.notifications.NotificationManagerProxy;
 import org.chromium.chrome.browser.notifications.NotificationManagerProxyImpl;
+import org.chromium.chrome.browser.util.IntentUtils;
 
 /**
  * Broadcasts Physical Web URLs via Bluetooth Low Energy (BLE).
@@ -54,6 +56,7 @@ public class PhysicalWebBroadcastService extends Service {
     private static final String STOP_SERVICE =
             "org.chromium.chrome.browser.physicalweb.stop_service";
     private static final String TAG = "PhysicalWebSharing";
+    private static final int BLUETOOTH_ADAPTER_DEFAULT_STATE = -1;
 
     private boolean mStartedByRestart;
 
@@ -62,13 +65,29 @@ public class PhysicalWebBroadcastService extends Service {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
 
-            if (STOP_SERVICE.equals(action)) {
+            if (BluetoothAdapter.ACTION_STATE_CHANGED.equals(action)) {
+                int state = IntentUtils.safeGetIntExtra(
+                        intent, BluetoothAdapter.EXTRA_STATE, BLUETOOTH_ADAPTER_DEFAULT_STATE);
+                if (state == BluetoothAdapter.STATE_OFF) {
+                    stopSelf();
+                }
+            } else if (STOP_SERVICE.equals(action)) {
                 stopSelf();
             } else {
                 Log.e(TAG, "Unrecognized Broadcast Received");
             }
         }
     };
+
+    /**
+     * Starts the PhysicalWebBroadcastService.
+     */
+    public static void startBroadcastService(String url) {
+        Context context = ContextUtils.getApplicationContext();
+        Intent intent = new Intent(context, PhysicalWebBroadcastService.class);
+        intent.putExtra(DISPLAY_URL_KEY, url);
+        context.startService(intent);
+    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -81,10 +100,12 @@ public class PhysicalWebBroadcastService extends Service {
             return START_STICKY;
         }
 
-        IntentFilter filter = new IntentFilter(STOP_SERVICE);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
+        filter.addAction(STOP_SERVICE);
         registerReceiver(mBroadcastReceiver, filter);
 
-        // TODO(iankc): implement parsing, broadcasting, Url Shortener.
+        // TODO(iankc): implement broadcasting, Url Shortener.
         createBroadcastNotification(displayUrl);
         return START_STICKY;
     }
@@ -150,4 +171,6 @@ public class PhysicalWebBroadcastService extends Service {
                 (NotificationManager) getSystemService(NOTIFICATION_SERVICE));
         notificationManager.cancel(NotificationConstants.NOTIFICATION_ID_PHYSICAL_WEB);
     }
+
+    private native byte[] nativeEncodeUrl(String url);
 }

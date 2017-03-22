@@ -131,6 +131,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   bool LockMouse() override;
   void UnlockMouse() override;
   void OnSwapCompositorFrame(uint32_t compositor_frame_sink_id,
+                             const cc::LocalSurfaceId& local_surface_id,
                              cc::CompositorFrame frame) override;
   void ClearCompositorFrame() override;
   void SetIsInVR(bool is_in_vr) override;
@@ -237,6 +238,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   bool HasValidFrame() const;
 
   void MoveCaret(const gfx::Point& point);
+  void ShowContextMenuAtPoint(const gfx::Point& point);
   void DismissTextHandles();
   void SetTextHandlesTemporarilyHidden(bool hidden);
   void OnShowUnhandledTapUIIfNeeded(int x_dip, int y_dip);
@@ -300,6 +302,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
                    cc::CompositorFrame frame);
 
   void InternalSwapCompositorFrame(uint32_t compositor_frame_sink_id,
+                                   const cc::LocalSurfaceId& local_surface_id,
                                    cc::CompositorFrame frame);
   void DestroyDelegatedContent();
   void OnLostResources();

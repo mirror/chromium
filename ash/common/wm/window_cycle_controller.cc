@@ -5,7 +5,7 @@
 #include "ash/common/wm/window_cycle_controller.h"
 
 #include "ash/common/metrics/task_switch_source.h"
-#include "ash/common/session/session_state_delegate.h"
+#include "ash/common/session/session_controller.h"
 #include "ash/common/wm/mru_window_tracker.h"
 #include "ash/common/wm/window_cycle_event_filter.h"
 #include "ash/common/wm/window_cycle_list.h"
@@ -13,6 +13,7 @@
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
 #include "ash/public/cpp/shell_window_ids.h"
+#include "ash/shell.h"
 #include "base/metrics/histogram_macros.h"
 
 namespace ash {
@@ -38,7 +39,7 @@ WindowCycleController::~WindowCycleController() {}
 bool WindowCycleController::CanCycle() {
   // Prevent window cycling if the screen is locked or a modal dialog is open.
   WmShell* wm_shell = WmShell::Get();
-  return !wm_shell->GetSessionStateDelegate()->IsScreenLocked() &&
+  return !Shell::Get()->session_controller()->IsScreenLocked() &&
          !wm_shell->IsSystemModalWindowOpen() && !wm_shell->IsPinned();
 }
 
@@ -54,7 +55,7 @@ void WindowCycleController::HandleCycleWindow(Direction direction) {
 
 void WindowCycleController::StartCycling() {
   MruWindowTracker::WindowList window_list =
-      WmShell::Get()->mru_window_tracker()->BuildMruWindowList();
+      Shell::Get()->mru_window_tracker()->BuildMruWindowList();
   // Exclude windows:
   // - non user positionable windows, such as extension popups.
   // - windows being dragged
@@ -107,8 +108,8 @@ void WindowCycleController::StopCycling() {
                            window_cycle_list_->current_index() + 1);
   window_cycle_list_.reset();
 
-  WmWindow* active_window_after_window_cycle = GetActiveWindow(
-      WmShell::Get()->mru_window_tracker()->BuildMruWindowList());
+  WmWindow* active_window_after_window_cycle =
+      GetActiveWindow(Shell::Get()->mru_window_tracker()->BuildMruWindowList());
 
   // Remove our key event filter.
   event_filter_.reset();

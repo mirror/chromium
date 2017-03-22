@@ -120,7 +120,7 @@ BrightnessView::BrightnessView(bool default_view, double initial_percent)
 
   if (is_default_view_) {
     Shell::GetInstance()->AddShellObserver(this);
-    SetVisible(WmShell::Get()
+    SetVisible(Shell::Get()
                    ->maximize_mode_controller()
                    ->IsMaximizeModeWindowManagerEnabled());
   } else {
@@ -160,7 +160,7 @@ void BrightnessView::SliderValueChanged(views::Slider* sender,
   if (reason != views::VALUE_CHANGED_BY_USER)
     return;
   BrightnessControlDelegate* brightness_control_delegate =
-      WmShell::Get()->brightness_control_delegate();
+      Shell::Get()->brightness_control_delegate();
   if (brightness_control_delegate) {
     double percent = std::max(value * 100.0, kMinBrightnessPercent);
     brightness_control_delegate->SetBrightnessPercent(percent, true);
@@ -202,7 +202,7 @@ TrayBrightness::~TrayBrightness() {
 
 void TrayBrightness::GetInitialBrightness() {
   BrightnessControlDelegate* brightness_control_delegate =
-      WmShell::Get()->brightness_control_delegate();
+      Shell::Get()->brightness_control_delegate();
   // Worrisome, but happens in unit tests, so don't log anything.
   if (!brightness_control_delegate)
     return;

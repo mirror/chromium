@@ -7,9 +7,9 @@
 #include <memory>
 #include <utility>
 
-#include "ash/common/session/session_state_delegate.h"
+#include "ash/common/session/session_controller.h"
 #include "ash/common/shutdown_controller.h"
-#include "ash/common/test/test_session_state_delegate.h"
+#include "ash/common/test/test_session_controller_client.h"
 #include "ash/common/wm/maximize_mode/maximize_mode_controller.h"
 #include "ash/common/wm_shell.h"
 #include "ash/shell.h"
@@ -277,13 +277,13 @@ class LockStateControllerTest : public AshTestBase {
   void ExpectUnlockedState() {
     SCOPED_TRACE("Failure in ExpectUnlockedState");
     EXPECT_EQ(0u, test_animator_->GetAnimationCount());
-    EXPECT_FALSE(WmShell::Get()->GetSessionStateDelegate()->IsScreenLocked());
+    EXPECT_FALSE(Shell::Get()->session_controller()->IsScreenLocked());
   }
 
   void ExpectLockedState() {
     SCOPED_TRACE("Failure in ExpectLockedState");
     EXPECT_EQ(0u, test_animator_->GetAnimationCount());
-    EXPECT_TRUE(WmShell::Get()->GetSessionStateDelegate()->IsScreenLocked());
+    EXPECT_TRUE(Shell::Get()->session_controller()->IsScreenLocked());
   }
 
   void HideWallpaper() { test_animator_->HideWallpaper(); }
@@ -314,7 +314,7 @@ class LockStateControllerTest : public AshTestBase {
 
   void SystemLocks() {
     lock_state_controller_->OnLockStateChanged(true);
-    WmShell::Get()->GetSessionStateDelegate()->LockScreen();
+    Shell::Get()->session_controller()->LockScreenAndFlushForTest();
   }
 
   void SuccessfulAuthentication(bool* call_flag) {
@@ -324,11 +324,11 @@ class LockStateControllerTest : public AshTestBase {
 
   void SystemUnlocks() {
     lock_state_controller_->OnLockStateChanged(false);
-    WmShell::Get()->GetSessionStateDelegate()->UnlockScreen();
+    GetSessionControllerClient()->UnlockScreen();
   }
 
   void EnableMaximizeMode(bool enable) {
-    WmShell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
+    Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
         enable);
   }
 
@@ -338,7 +338,7 @@ class LockStateControllerTest : public AshTestBase {
     lock_state_controller_->OnLoginStateChanged(status);
     SetUserLoggedIn(status != LoginStatus::NOT_LOGGED_IN);
     if (status == LoginStatus::GUEST)
-      TestSessionStateDelegate::SetCanLockScreen(false);
+      SetCanLockScreen(false);
     lock_state_controller_->OnLockStateChanged(false);
   }
 

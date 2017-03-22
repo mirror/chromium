@@ -865,7 +865,7 @@ void FeatureInfo::InitializeFeatures() {
         extensions.Contains("GL_EXT_framebuffer_multisample") ||
         gl_version_info_->is_es3 ||
         gl_version_info_->is_desktop_core_profile;
-    if (gl_version_info_->is_angle) {
+    if (gl_version_info_->is_angle || gl_version_info_->is_swiftshader) {
       feature_flags_.angle_framebuffer_multisample =
           extensions.Contains("GL_ANGLE_framebuffer_multisample");
       ext_has_multisample |= feature_flags_.angle_framebuffer_multisample;
@@ -1360,6 +1360,7 @@ void FeatureInfo::InitializeFeatures() {
       extensions.Contains("GL_ANGLE_client_arrays");
   feature_flags_.angle_request_extension =
       extensions.Contains("GL_ANGLE_request_extension");
+  feature_flags_.ext_debug_marker = extensions.Contains("GL_EXT_debug_marker");
 }
 
 void FeatureInfo::InitializeFloatAndHalfFloatFeatures(

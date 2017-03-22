@@ -133,12 +133,6 @@ IPC_MESSAGE_ROUTED2(ChromeViewMsg_RequestFileSystemAccessAsyncResponse,
 IPC_MESSAGE_ROUTED1(ChromeViewMsg_SetClientSidePhishingDetection,
                     bool /* enable_phishing_detection */)
 
-// Reloads the image selected by the most recently opened context menu
-// (if there indeed is an image at that location).
-//
-// TODO(nigeltao): delete this when tab_android.cc's use is converted to Mojo.
-IPC_MESSAGE_ROUTED0(ChromeViewMsg_RequestReloadImageForContextNode)
-
 // Notifies the renderer whether hiding/showing the browser controls is enabled,
 // what the current state should be, and whether or not to animate to the
 // proper state.
@@ -311,12 +305,6 @@ IPC_MESSAGE_ROUTED0(ChromeViewHostMsg_ShowFlashPermissionBubble)
 // Tells the browser that there was an error loading a plugin.
 IPC_MESSAGE_ROUTED1(ChromeViewHostMsg_CouldNotLoadPlugin,
                     base::FilePath /* plugin_path */)
-
-// Notification that the page has an OpenSearch description document
-// associated with it.
-IPC_MESSAGE_ROUTED2(ChromeViewHostMsg_PageHasOSDD,
-                    GURL /* page_url */,
-                    GURL /* osdd_url */)
 
 // Notifies when a plugin couldn't be loaded because it's outdated.
 IPC_MESSAGE_ROUTED2(ChromeViewHostMsg_BlockedOutdatedPlugin,

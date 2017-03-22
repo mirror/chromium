@@ -924,6 +924,15 @@
       api_methods: ["parseSingleValue"],
       custom_all: true,
       inherited: true,
+      field_template: "keyword",
+      keywords: [
+        "auto", "default", "none", "context-menu", "help", "pointer", "progress", "wait", "cell", "crosshair",
+        "text", "vertical-text", "alias", "copy", "move", "no-drop", "not-allowed", "e-resize", "n-resize",
+        "ne-resize", "nw-resize", "s-resize", "se-resize", "sw-resize", "w-resize", "ew-resize", "ns-resize",
+        "nesw-resize", "nwse-resize", "col-resize", "row-resize", "all-scroll", "zoom-in", "zoom-out",
+        "-webkit-grab", "-webkit-grabbing"
+      ],
+      initial_keyword: "auto",
     },
     {
       name: "cx",
@@ -2003,6 +2012,7 @@
     {
       name: "-webkit-border-horizontal-spacing",
       api_class: "CSSPropertyAPIWebkitBorderSpacing",
+      api_methods: ["parseSingleValue"],
       converter: "convertComputedLength<short>",
       inherited: true,
       interpolable: true,
@@ -2017,6 +2027,7 @@
     {
       name: "-webkit-border-vertical-spacing",
       api_class: "CSSPropertyAPIWebkitBorderSpacing",
+      api_methods: ["parseSingleValue"],
       converter: "convertComputedLength<short>",
       inherited: true,
       interpolable: true,

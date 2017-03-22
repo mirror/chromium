@@ -33,7 +33,10 @@ const InstallConstants kInstallModes[] = {
         L"",  // No logo suffix for the primary install mode.
         L"",  // Empty app_guid since no integraion with Google Update.
         L"Chromium",  // A distinct base_app_id.
-        L"",  // Empty default channel name as above.
+        L"ChromiumHTM",  // ProgID prefix.
+        L"Chromium HTML Document",  // ProgID description.
+        L"{7D2B3E1D-D096-4594-9D8F-A6667F12E0AC}",  // Active Setup GUID.
+        L"",  // Empty default channel name since no update integration.
         ChannelStrategy::UNSUPPORTED,
         true,  // Supports system-level installs.
         true,  // Supported multi-install.

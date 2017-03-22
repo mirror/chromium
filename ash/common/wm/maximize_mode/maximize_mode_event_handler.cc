@@ -4,12 +4,13 @@
 
 #include "ash/common/wm/maximize_mode/maximize_mode_event_handler.h"
 
-#include "ash/common/session/session_state_delegate.h"
+#include "ash/common/session/session_controller.h"
 #include "ash/common/system/tray/system_tray_delegate.h"
 #include "ash/common/wm/window_state.h"
 #include "ash/common/wm/wm_event.h"
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
+#include "ash/shell.h"
 #include "ui/events/event.h"
 
 namespace ash {
@@ -30,11 +31,10 @@ bool MaximizeModeEventHandler::ToggleFullscreen(const ui::TouchEvent& event) {
   if (event.type() != ui::ET_TOUCH_PRESSED)
     return false;
 
-  const SessionStateDelegate* delegate =
-      WmShell::Get()->GetSessionStateDelegate();
+  const SessionController* controller = Shell::Get()->session_controller();
 
-  if (delegate->IsScreenLocked() ||
-      delegate->GetSessionState() != session_manager::SessionState::ACTIVE) {
+  if (controller->IsScreenLocked() ||
+      controller->GetSessionState() != session_manager::SessionState::ACTIVE) {
     return false;
   }
 
@@ -56,7 +56,7 @@ bool MaximizeModeEventHandler::ToggleFullscreen(const ui::TouchEvent& event) {
 
   // Do not exit fullscreen in kiosk mode.
   SystemTrayDelegate* system_tray_delegate =
-      WmShell::Get()->system_tray_delegate();
+      Shell::Get()->system_tray_delegate();
   if (system_tray_delegate->GetUserLoginStatus() == LoginStatus::KIOSK_APP ||
       system_tray_delegate->GetUserLoginStatus() ==
           LoginStatus::ARC_KIOSK_APP) {

@@ -90,6 +90,17 @@ SDK.ResourceTreeModel = class extends SDK.SDKModel {
     return null;
   }
 
+  /**
+   * @param {boolean=} bypassCache
+   * @param {string=} scriptToEvaluateOnLoad
+   */
+  static reloadAllPages(bypassCache, scriptToEvaluateOnLoad) {
+    for (var resourceTreeModel of SDK.targetManager.models(SDK.ResourceTreeModel)) {
+      if (!resourceTreeModel.target().parentTarget())
+        resourceTreeModel.reloadPage(bypassCache, scriptToEvaluateOnLoad);
+    }
+  }
+
   _fetchResourceTree() {
     /** @type {!Map<string, !SDK.ResourceTreeFrame>} */
     this._frames = new Map();
@@ -138,17 +149,22 @@ SDK.ResourceTreeModel = class extends SDK.SDKModel {
   /**
    * @param {!Protocol.Page.FrameId} frameId
    * @param {?Protocol.Page.FrameId} parentFrameId
+   * @param {!Protocol.Runtime.StackTrace=} stackTrace
    * @return {?SDK.ResourceTreeFrame}
    */
-  _frameAttached(frameId, parentFrameId) {
+  _frameAttached(frameId, parentFrameId, stackTrace) {
     // Do nothing unless cached resource tree is processed - it will overwrite everything.
     if (!this._cachedResourcesProcessed && parentFrameId)
       return null;
     if (this._frames.has(frameId))
       return null;
 
+    var callFrames = null;
+    if (stackTrace && stackTrace.callFrames)
+      callFrames = stackTrace.callFrames;
+
     var parentFrame = parentFrameId ? (this._frames.get(parentFrameId) || null) : null;
-    var frame = new SDK.ResourceTreeFrame(this, parentFrame, frameId);
+    var frame = new SDK.ResourceTreeFrame(this, parentFrame, frameId, null, callFrames);
     if (frame.isMainFrame() && this.mainFrame) {
       // Navigation to the new backend process.
       this._frameDetached(this.mainFrame.id);
@@ -299,7 +315,7 @@ SDK.ResourceTreeModel = class extends SDK.SDKModel {
    */
   _addFramesRecursively(parentFrame, frameTreePayload) {
     var framePayload = frameTreePayload.frame;
-    var frame = new SDK.ResourceTreeFrame(this, parentFrame, framePayload.id, framePayload);
+    var frame = new SDK.ResourceTreeFrame(this, parentFrame, framePayload.id, framePayload, null);
     this._addFrame(frame);
 
     var frameResource = this._createResourceFromFramePayload(
@@ -473,9 +489,10 @@ SDK.ResourceTreeFrame = class {
    * @param {!SDK.ResourceTreeModel} model
    * @param {?SDK.ResourceTreeFrame} parentFrame
    * @param {!Protocol.Page.FrameId} frameId
-   * @param {!Protocol.Page.Frame=} payload
+   * @param {?Protocol.Page.Frame} payload
+   * @param {?Array<!Protocol.Runtime.CallFrame>} creationStackTrace
    */
-  constructor(model, parentFrame, frameId, payload) {
+  constructor(model, parentFrame, frameId, payload, creationStackTrace) {
     this._model = model;
     this._parentFrame = parentFrame;
     this._id = frameId;
@@ -489,6 +506,8 @@ SDK.ResourceTreeFrame = class {
       this._mimeType = payload.mimeType;
     }
 
+    this._creationStackTrace = creationStackTrace;
+
     /**
      * @type {!Array.<!SDK.ResourceTreeFrame>}
      */
@@ -501,45 +520,6 @@ SDK.ResourceTreeFrame = class {
 
     if (this._parentFrame)
       this._parentFrame._childFrames.push(this);
-  }
-
-  /**
-   * @param {!SDK.ExecutionContext|!SDK.CSSStyleSheetHeader|!SDK.Resource} object
-   * @return {?SDK.ResourceTreeFrame}
-   */
-  static _fromObject(object) {
-    var resourceTreeModel = SDK.ResourceTreeModel.fromTarget(object.target());
-    var frameId = object.frameId;
-    if (!resourceTreeModel || !frameId)
-      return null;
-    return resourceTreeModel.frameForId(frameId);
-  }
-
-  /**
-   * @param {!SDK.Script} script
-   * @return {?SDK.ResourceTreeFrame}
-   */
-  static fromScript(script) {
-    var executionContext = script.executionContext();
-    if (!executionContext)
-      return null;
-    return SDK.ResourceTreeFrame._fromObject(executionContext);
-  }
-
-  /**
-   * @param {!SDK.CSSStyleSheetHeader} header
-   * @return {?SDK.ResourceTreeFrame}
-   */
-  static fromStyleSheet(header) {
-    return SDK.ResourceTreeFrame._fromObject(header);
-  }
-
-  /**
-   * @param {!SDK.Resource} resource
-   * @return {?SDK.ResourceTreeFrame}
-   */
-  static fromResource(resource) {
-    return SDK.ResourceTreeFrame._fromObject(resource);
   }
 
   /**
@@ -760,16 +740,18 @@ SDK.PageDispatcher = class {
    * @param {number} time
    */
   loadEventFired(time) {
-    this._resourceTreeModel.dispatchEventToListeners(SDK.ResourceTreeModel.Events.Load, time);
+    this._resourceTreeModel.dispatchEventToListeners(
+        SDK.ResourceTreeModel.Events.Load, {resourceTreeModel: this._resourceTreeModel, loadTime: time});
   }
 
   /**
    * @override
    * @param {!Protocol.Page.FrameId} frameId
    * @param {!Protocol.Page.FrameId} parentFrameId
+   * @param {!Protocol.Runtime.StackTrace=} stackTrace
    */
-  frameAttached(frameId, parentFrameId) {
-    this._resourceTreeModel._frameAttached(frameId, parentFrameId);
+  frameAttached(frameId, parentFrameId, stackTrace) {
+    this._resourceTreeModel._frameAttached(frameId, parentFrameId, stackTrace);
   }
 
   /**

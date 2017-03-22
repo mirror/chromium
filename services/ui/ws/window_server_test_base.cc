@@ -168,6 +168,12 @@ bool WindowServerTestBase::OnWmSetProperty(
              : true;
 }
 
+void WindowServerTestBase::OnWmSetModalType(aura::Window* window,
+                                            ui::ModalType type) {
+  if (window_manager_delegate_)
+    window_manager_delegate_->OnWmSetModalType(window, type);
+}
+
 void WindowServerTestBase::OnWmSetCanFocus(aura::Window* window,
                                            bool can_focus) {
   if (window_manager_delegate_)
@@ -225,10 +231,11 @@ void WindowServerTestBase::OnWmDisplayModified(
 
 ui::mojom::EventResult WindowServerTestBase::OnAccelerator(
     uint32_t accelerator_id,
-    const ui::Event& event) {
-  return window_manager_delegate_
-             ? window_manager_delegate_->OnAccelerator(accelerator_id, event)
-             : ui::mojom::EventResult::UNHANDLED;
+    const ui::Event& event,
+    std::unordered_map<std::string, std::vector<uint8_t>>* properties) {
+  return window_manager_delegate_ ? window_manager_delegate_->OnAccelerator(
+                                        accelerator_id, event, properties)
+                                  : ui::mojom::EventResult::UNHANDLED;
 }
 
 void WindowServerTestBase::OnWmPerformMoveLoop(

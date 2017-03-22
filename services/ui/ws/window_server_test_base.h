@@ -93,6 +93,7 @@ class WindowServerTestBase
       aura::Window* window,
       const std::string& name,
       std::unique_ptr<std::vector<uint8_t>>* new_data) override;
+  void OnWmSetModalType(aura::Window* window, ui::ModalType type) override;
   void OnWmSetCanFocus(aura::Window* window, bool can_focus) override;
   aura::Window* OnWmCreateTopLevelWindow(
       ui::mojom::WindowType window_type,
@@ -104,8 +105,11 @@ class WindowServerTestBase
                       const display::Display& display) override;
   void OnWmDisplayRemoved(aura::WindowTreeHostMus* window_tree_host) override;
   void OnWmDisplayModified(const display::Display& display) override;
-  mojom::EventResult OnAccelerator(uint32_t accelerator_id,
-                                   const ui::Event& event) override;
+  mojom::EventResult OnAccelerator(
+      uint32_t accelerator_id,
+      const ui::Event& event,
+      std::unordered_map<std::string, std::vector<uint8_t>>* properties)
+      override;
   void OnWmPerformMoveLoop(aura::Window* window,
                            mojom::MoveLoopSource source,
                            const gfx::Point& cursor_location,

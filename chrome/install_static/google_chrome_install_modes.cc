@@ -33,6 +33,9 @@ const InstallConstants kInstallModes[] = {
         L"",  // No logo suffix for the primary install mode.
         L"{8A69D345-D564-463c-AFF1-A69D9E530F96}",
         L"Chrome",  // A distinct base_app_id.
+        L"ChromeHTML",  // ProgID prefix.
+        L"Chrome HTML Document",  // ProgID description.
+        L"{8A69D345-D564-463c-AFF1-A69D9E530F96}",  // Active Setup GUID.
         L"",  // The empty string means "stable".
         ChannelStrategy::ADDITIONAL_PARAMETERS,
         true,  // Supports system-level installs.
@@ -48,6 +51,9 @@ const InstallConstants kInstallModes[] = {
         L"Canary",
         L"{4ea16ac7-fd5a-47c3-875b-dbf4a2008c20}",
         L"ChromeCanary",  // A distinct base_app_id.
+        L"ChromeSSHTM",  // ProgID prefix.
+        L"Chrome Canary HTML Document",  // ProgID description.
+        L"{4ea16ac7-fd5a-47c3-875b-dbf4a2008c20}",  // Active Setup GUID.
         L"canary",
         ChannelStrategy::FIXED,
         false,  // Does not support system-level installs.

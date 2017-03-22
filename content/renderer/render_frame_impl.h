@@ -44,6 +44,7 @@
 #include "content/renderer/frame_blame_context.h"
 #include "content/renderer/mojo/blink_interface_provider_impl.h"
 #include "content/renderer/renderer_webcookiejar_impl.h"
+#include "content/renderer/unique_name_helper.h"
 #include "ipc/ipc_message.h"
 #include "ipc/ipc_platform_file.h"
 #include "media/blink/webmediaplayer_delegate.h"
@@ -82,6 +83,7 @@
 #include "content/renderer/media/android/renderer_media_player_manager.h"
 #endif
 
+struct FrameMsg_MixedContentFound_Params;
 struct FrameMsg_PostMessage_Params;
 struct FrameMsg_SerializeAsMHTML_Params;
 struct FrameMsg_TextTrackSettings_Params;
@@ -159,6 +161,7 @@ class ResourceRequestBodyImpl;
 class ScreenOrientationDispatcher;
 class SharedWorkerRepository;
 class UserMediaClientImpl;
+struct CSPViolationParams;
 struct CommonNavigationParams;
 struct CustomContextMenuContext;
 struct FileChooserFileInfo;
@@ -258,6 +261,9 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // Draw commands have been issued by RenderWidgetCompositor.
   void DidCommitAndDrawCompositorFrame();
+
+  // Returns the unique name of the RenderFrame.
+  const std::string& unique_name() const { return unique_name_helper_.value(); }
 
   // TODO(jam): this is a temporary getter until all the code is transitioned
   // to using RenderFrame instead of RenderView.
@@ -505,15 +511,14 @@ class CONTENT_EXPORT RenderFrameImpl
       blink::WebLocalFrame* parent,
       blink::WebTreeScopeType scope,
       const blink::WebString& name,
-      const blink::WebString& unique_name,
+      const blink::WebString& fallback_name,
       blink::WebSandboxFlags sandbox_flags,
       const blink::WebFrameOwnerProperties& frame_owner_properties) override;
   void didChangeOpener(blink::WebFrame* frame) override;
   void frameDetached(blink::WebLocalFrame* frame, DetachType type) override;
   void frameFocused() override;
   void willCommitProvisionalLoad() override;
-  void didChangeName(const blink::WebString& name,
-                     const blink::WebString& unique_name) override;
+  void didChangeName(const blink::WebString& name) override;
   void didEnforceInsecureRequestPolicy(
       blink::WebInsecureRequestPolicy policy) override;
   void didUpdateToUniqueOrigin(
@@ -808,8 +813,7 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // Builds and sends DidCommitProvisionalLoad to the host.
   void SendDidCommitProvisionalLoad(blink::WebFrame* frame,
-                                    blink::WebHistoryCommitType commit_type,
-                                    const blink::WebHistoryItem& item);
+                                    blink::WebHistoryCommitType commit_type);
 
   // Swaps the current frame into the frame tree, replacing the
   // RenderFrameProxy it is associated with.  Return value indicates whether
@@ -898,6 +902,8 @@ class CONTENT_EXPORT RenderFrameImpl
                           const RequestNavigationParams& request_params,
                           bool has_stale_copy_in_cache,
                           int error_code);
+  void OnReportContentSecurityPolicyViolation(
+      const content::CSPViolationParams& violation_params);
   void OnGetSavableResourceLinks();
   void OnGetSerializedHtmlWithLocalLinks(
       const std::map<GURL, base::FilePath>& url_to_local_path,
@@ -914,11 +920,7 @@ class CONTENT_EXPORT RenderFrameImpl
       const std::vector<content::FileChooserFileInfo>& files);
   void OnClearFocusedElement();
   void OnBlinkFeatureUsageReport(const std::set<int>& features);
-  void OnMixedContentFound(const GURL& main_resource_url,
-                           const GURL& mixed_content_url,
-                           RequestContextType request_context_type,
-                           bool was_allowed,
-                           bool had_redirect);
+  void OnMixedContentFound(const FrameMsg_MixedContentFound_Params& params);
 #if defined(OS_ANDROID)
   void OnActivateNearestFindResult(int request_id, float x, float y);
   void OnGetNearestFindResult(int request_id, float x, float y);
@@ -1128,6 +1130,8 @@ class CONTENT_EXPORT RenderFrameImpl
   // main frame or not. It remains accurate during destruction, even when
   // |frame_| has been invalidated.
   bool is_main_frame_;
+
+  UniqueNameHelper unique_name_helper_;
 
   // When a frame is detached in response to a message from the browser process,
   // this RenderFrame should not be sending notifications back to it. This
@@ -1409,16 +1413,9 @@ class CONTENT_EXPORT RenderFrameImpl
     bool client_redirect;
     bool cache_disabled;
     blink::WebFormElement form;
+    blink::WebSourceLocation source_location;
 
-    PendingNavigationInfo(const NavigationPolicyInfo& info)
-        : navigation_type(info.navigationType),
-          policy(info.defaultPolicy),
-          replaces_current_history_item(info.replacesCurrentHistoryItem),
-          history_navigation_in_new_child_frame(
-              info.isHistoryNavigationInNewChildFrame),
-          client_redirect(info.isClientRedirect),
-          cache_disabled(info.isCacheDisabled),
-          form(info.form) {}
+    PendingNavigationInfo(const NavigationPolicyInfo& info);
   };
 
   // PlzNavigate: Contains information about a pending navigation to be sent to

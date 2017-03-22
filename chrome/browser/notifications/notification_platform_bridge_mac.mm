@@ -8,11 +8,13 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/callback.h"
 #include "base/mac/bundle_locations.h"
 #include "base/mac/foundation_util.h"
 #include "base/mac/mac_util.h"
 #include "base/mac/scoped_mach_port.h"
 #include "base/mac/scoped_nsobject.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/nullable_string16.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/sys_string_conversions.h"
@@ -101,6 +103,18 @@ void DoProcessNotificationResponse(NotificationCommon::Operation operation,
                                         origin, notification_id, button_index));
 }
 
+// This enum backs an UMA histogram, so it should be treated as append-only.
+enum XPCConnectionEvent {
+  INTERRUPTED = 0,
+  INVALIDATED,
+  XPC_CONNECTION_EVENT_COUNT
+};
+
+void RecordXPCEvent(XPCConnectionEvent event) {
+  UMA_HISTOGRAM_ENUMERATION("Notifications.XPCConnectionEvent", event,
+                            XPC_CONNECTION_EVENT_COUNT);
+}
+
 }  // namespace
 
 // A Cocoa class that represents the delegate of NSUserNotificationCenter and
@@ -168,7 +182,7 @@ void NotificationPlatformBridgeMac::Display(
   base::scoped_nsobject<NotificationBuilder> builder(
       [[NotificationBuilder alloc]
       initWithCloseLabel:l10n_util::GetNSString(IDS_NOTIFICATION_BUTTON_CLOSE)
-            optionsLabel:l10n_util::GetNSString(IDS_NOTIFICATION_BUTTON_OPTIONS)
+            optionsLabel:l10n_util::GetNSString(IDS_NOTIFICATION_BUTTON_MORE)
            settingsLabel:l10n_util::GetNSString(
                              IDS_NOTIFICATION_BUTTON_SETTINGS)]);
 
@@ -276,23 +290,25 @@ void NotificationPlatformBridgeMac::Close(const std::string& profile_id,
 #endif  // ENABLE_XPC_NOTIFICATIONS
 }
 
-bool NotificationPlatformBridgeMac::GetDisplayed(
+void NotificationPlatformBridgeMac::GetDisplayed(
     const std::string& profile_id,
     bool incognito,
-    std::set<std::string>* notifications) const {
-  DCHECK(notifications);
-
+    const DisplayedNotificationsCallback& callback) const {
+  auto displayed_notifications = base::MakeUnique<std::set<std::string>>();
   NSString* current_profile_id = base::SysUTF8ToNSString(profile_id);
   for (NSUserNotification* toast in
        [notification_center_ deliveredNotifications]) {
     NSString* toast_profile_id = [toast.userInfo
         objectForKey:notification_constants::kNotificationProfileId];
     if ([toast_profile_id isEqualToString:current_profile_id]) {
-      notifications->insert(base::SysNSStringToUTF8([toast.userInfo
+      displayed_notifications->insert(base::SysNSStringToUTF8([toast.userInfo
           objectForKey:notification_constants::kNotificationId]));
     }
   }
-  return true;
+  content::BrowserThread::PostTask(
+      content::BrowserThread::UI, FROM_HERE,
+      base::Bind(callback, base::Passed(&displayed_notifications),
+                 true /* supports_synchronization */));
 }
 
 // static
@@ -450,18 +466,19 @@ bool NotificationPlatformBridgeMac::VerifyNotificationData(
         [NSXPCInterface interfaceWithProtocol:@protocol(NotificationDelivery)];
 
     xpcConnection_.get().interruptionHandler = ^{
-      LOG(WARNING) << "connection interrupted: interruptionHandler: ";
-      setExceptionPort_ = NO;
-      // TODO(miguelg): perhaps add some UMA here.
       // We will be getting this handler both when the XPC server crashes or
       // when it decides to close the connection.
-    };
-    xpcConnection_.get().invalidationHandler = ^{
-      LOG(WARNING) << "connection invalidationHandler received";
+      LOG(WARNING) << "AlertNotificationService: XPC connection interrupted.";
+      RecordXPCEvent(INTERRUPTED);
       setExceptionPort_ = NO;
+    };
+
+    xpcConnection_.get().invalidationHandler = ^{
       // This means that the connection should be recreated if it needs
-      // to be used again. It should not really happen.
-      DCHECK(false) << "XPC Connection invalidated";
+      // to be used again.
+      LOG(WARNING) << "AlertNotificationService: XPC connection invalidated.";
+      RecordXPCEvent(INVALIDATED);
+      setExceptionPort_ = NO;
     };
 
     xpcConnection_.get().exportedInterface =
@@ -488,7 +505,6 @@ bool NotificationPlatformBridgeMac::VerifyNotificationData(
 }
 
 // NotificationReply:
-
 - (void)notificationClick:(NSDictionary*)notificationResponseData {
   NotificationPlatformBridgeMac::ProcessNotificationResponse(
       notificationResponseData);

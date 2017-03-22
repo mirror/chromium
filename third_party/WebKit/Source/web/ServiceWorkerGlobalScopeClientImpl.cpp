@@ -30,12 +30,13 @@
 
 #include "web/ServiceWorkerGlobalScopeClientImpl.h"
 
-#include "modules/fetch/Response.h"
-#include "public/platform/WebURL.h"
-#include "public/platform/modules/serviceworker/WebServiceWorkerResponse.h"
-#include "public/web/modules/serviceworker/WebServiceWorkerContextClient.h"
 #include <memory>
 #include <utility>
+#include "modules/fetch/Response.h"
+#include "public/platform/WebURL.h"
+#include "public/platform/modules/payments/WebPaymentAppResponse.h"
+#include "public/platform/modules/serviceworker/WebServiceWorkerResponse.h"
+#include "public/web/modules/serviceworker/WebServiceWorkerContextClient.h"
 
 namespace blink {
 
@@ -86,6 +87,22 @@ void ServiceWorkerGlobalScopeClientImpl::didHandleActivateEvent(
   m_client.didHandleActivateEvent(eventID, result, eventDispatchTime);
 }
 
+void ServiceWorkerGlobalScopeClientImpl::didHandleBackgroundFetchAbortEvent(
+    int eventID,
+    WebServiceWorkerEventResult result,
+    double eventDispatchTime) {
+  m_client.didHandleBackgroundFetchAbortEvent(eventID, result,
+                                              eventDispatchTime);
+}
+
+void ServiceWorkerGlobalScopeClientImpl::didHandleBackgroundFetchClickEvent(
+    int eventID,
+    WebServiceWorkerEventResult result,
+    double eventDispatchTime) {
+  m_client.didHandleBackgroundFetchClickEvent(eventID, result,
+                                              eventDispatchTime);
+}
+
 void ServiceWorkerGlobalScopeClientImpl::didHandleExtendableMessageEvent(
     int eventID,
     WebServiceWorkerEventResult result,
@@ -97,6 +114,13 @@ void ServiceWorkerGlobalScopeClientImpl::respondToFetchEvent(
     int fetchEventID,
     double eventDispatchTime) {
   m_client.respondToFetchEvent(fetchEventID, eventDispatchTime);
+}
+
+void ServiceWorkerGlobalScopeClientImpl::respondToPaymentRequestEvent(
+    int eventID,
+    const WebPaymentAppResponse& response,
+    double eventDispatchTime) {
+  m_client.respondToPaymentRequestEvent(eventID, response, eventDispatchTime);
 }
 
 void ServiceWorkerGlobalScopeClientImpl::respondToFetchEvent(

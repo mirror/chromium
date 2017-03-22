@@ -657,9 +657,6 @@ const char kNoReferrers[]                   = "no-referrers";
 // Disables the sandbox for all process types that are normally sandboxed.
 const char kNoSandbox[]                     = "no-sandbox";
 
-// Do not use the mojo UI Service in the Chrome render process.
-const char kNoUseMusInRenderer[] = "no-use-mus-in-renderer";
-
 // Disables the use of a zygote process for forking child processes. Instead,
 // child processes will be forked and exec'd directly. Note that --no-sandbox
 // should also be used together with this flag because the sandbox needs the
@@ -691,6 +688,12 @@ const char kOverridePluginPowerSaverForTesting[] =
 // Defaults to '1'.
 const char kOverscrollHistoryNavigation[] =
     "overscroll-history-navigation";
+
+// Controls the value of the threshold to start horizontal overscroll relative
+// to the default value.
+// E.g. set the value to '133' to have the overscroll start threshold be 133%
+// of the default threshold.
+const char kOverscrollStartThreshold[] = "overscroll-start-threshold";
 
 // Override the default value for the 'passive' field in javascript
 // addEventListener calls. Values are defined as:
@@ -784,11 +787,6 @@ const char kSandboxIPCProcess[]             = "sandbox-ipc";
 // Set the value to '1' to enable the feature, and set to '0' to disable.
 // Defaults to disabled.
 const char kScrollEndEffect[] = "scroll-end-effect";
-
-// Describes the file descriptors passed to the child process. List:
-// <file id from manifest>:<global descriptor id>,<file id string from manifest>
-// :<global descriptor id>,...
-const char kSharedFiles[] = "shared-files";
 
 // Visibly render a border around paint rects in the web page to help debug
 // and study painting behavior.

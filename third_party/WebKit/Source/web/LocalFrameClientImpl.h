@@ -105,13 +105,15 @@ class LocalFrameClientImpl final : public LocalFrameClient {
   void dispatchDidFinishLoad() override;
 
   void dispatchDidChangeThemeColor() override;
-  NavigationPolicy decidePolicyForNavigation(const ResourceRequest&,
-                                             DocumentLoader*,
-                                             NavigationType,
-                                             NavigationPolicy,
-                                             bool shouldReplaceCurrentEntry,
-                                             bool isClientRedirect,
-                                             HTMLFormElement*) override;
+  NavigationPolicy decidePolicyForNavigation(
+      const ResourceRequest&,
+      DocumentLoader*,
+      NavigationType,
+      NavigationPolicy,
+      bool shouldReplaceCurrentEntry,
+      bool isClientRedirect,
+      HTMLFormElement*,
+      ContentSecurityPolicyDisposition shouldBypassMainWorldCSP) override;
   void dispatchWillSendSubmitEvent(HTMLFormElement*) override;
   void dispatchWillSubmitForm(HTMLFormElement*) override;
   void didStartLoading(LoadStartType) override;
@@ -145,13 +147,13 @@ class LocalFrameClientImpl final : public LocalFrameClient {
                           const WTF::AtomicString& name,
                           HTMLFrameOwnerElement*) override;
   virtual bool canCreatePluginWithoutRenderer(const String& mimeType) const;
-  FrameViewBase* createPlugin(HTMLPlugInElement*,
-                              const KURL&,
-                              const Vector<WTF::String>&,
-                              const Vector<WTF::String>&,
-                              const WTF::String&,
-                              bool loadManually,
-                              DetachedPluginPolicy) override;
+  PluginView* createPlugin(HTMLPlugInElement*,
+                           const KURL&,
+                           const Vector<WTF::String>&,
+                           const Vector<WTF::String>&,
+                           const WTF::String&,
+                           bool loadManually,
+                           DetachedPluginPolicy) override;
   std::unique_ptr<WebMediaPlayer> createWebMediaPlayer(
       HTMLMediaElement&,
       const WebMediaPlayerSource&,
@@ -179,7 +181,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
 
   WebCookieJar* cookieJar() const override;
   void frameFocused() const override;
-  void didChangeName(const String& name, const String& uniqueName) override;
+  void didChangeName(const String&) override;
   void didEnforceInsecureRequestPolicy(WebInsecureRequestPolicy) override;
   void didUpdateToUniqueOrigin() override;
   void didChangeSandboxFlags(Frame* childFrame, SandboxFlags) override;

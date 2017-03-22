@@ -37,7 +37,6 @@ enum ActiveWindowStateType {
   ACTIVE_WINDOW_STATE_TYPE_MAXIMIZED,
   ACTIVE_WINDOW_STATE_TYPE_FULLSCREEN,
   ACTIVE_WINDOW_STATE_TYPE_SNAPPED,
-  ACTIVE_WINDOW_STATE_TYPE_DOCKED,
   ACTIVE_WINDOW_STATE_TYPE_PINNED,
   ACTIVE_WINDOW_STATE_TYPE_TRUSTED_PINNED,
   ACTIVE_WINDOW_STATE_TYPE_COUNT,
@@ -58,10 +57,6 @@ ActiveWindowStateType GetActiveWindowState() {
       case wm::WINDOW_STATE_TYPE_LEFT_SNAPPED:
       case wm::WINDOW_STATE_TYPE_RIGHT_SNAPPED:
         active_window_state_type = ACTIVE_WINDOW_STATE_TYPE_SNAPPED;
-        break;
-      case wm::WINDOW_STATE_TYPE_DOCKED:
-      case wm::WINDOW_STATE_TYPE_DOCKED_MINIMIZED:
-        active_window_state_type = ACTIVE_WINDOW_STATE_TYPE_DOCKED;
         break;
       case wm::WINDOW_STATE_TYPE_PINNED:
         active_window_state_type = ACTIVE_WINDOW_STATE_TYPE_PINNED;
@@ -85,20 +80,20 @@ ActiveWindowStateType GetActiveWindowState() {
 
 // Returns true if kiosk mode is active.
 bool IsKioskModeActive() {
-  return WmShell::Get()->system_tray_delegate()->GetUserLoginStatus() ==
+  return Shell::Get()->system_tray_delegate()->GetUserLoginStatus() ==
          LoginStatus::KIOSK_APP;
 }
 
 // Returns true if ARC kiosk mode is active.
 bool IsArcKioskModeActive() {
-  return WmShell::Get()->system_tray_delegate()->GetUserLoginStatus() ==
+  return Shell::Get()->system_tray_delegate()->GetUserLoginStatus() ==
          LoginStatus::ARC_KIOSK_APP;
 }
 
 // Returns true if there is an active user and their session isn't currently
 // locked.
 bool IsUserActive() {
-  switch (WmShell::Get()->system_tray_delegate()->GetUserLoginStatus()) {
+  switch (Shell::Get()->system_tray_delegate()->GetUserLoginStatus()) {
     case LoginStatus::NOT_LOGGED_IN:
     case LoginStatus::LOCKED:
       return false;
@@ -120,8 +115,10 @@ bool IsUserActive() {
 // container to the lowest to allow the |GetNumVisibleWindows| method to short
 // circuit when processing a maximized or fullscreen window.
 int kVisibleWindowContainerIds[] = {
-    kShellWindowId_PanelContainer, kShellWindowId_DockedContainer,
-    kShellWindowId_AlwaysOnTopContainer, kShellWindowId_DefaultContainer};
+    kShellWindowId_PanelContainer,
+    kShellWindowId_AlwaysOnTopContainer,
+    kShellWindowId_DefaultContainer
+};
 
 // Returns an approximate count of how many windows are currently visible in the
 // primary root window.
@@ -149,11 +146,9 @@ int GetNumVisibleWindowsInPrimaryDisplay() {
       if (!child_window->IsVisible() || child_window_state->IsMinimized())
         continue;
 
-      // Only count activatable windows for 2 reasons:
-      //  1. Ensures that a browser window and its transient, modal child will
-      //     only count as 1 visible window.
-      //  2. Prevents counting some windows in the
-      //     kShellWindowId_DockedContainer that were not opened by the user.
+      // Only count activatable windows for 1 reason:
+      //  - Ensures that a browser window and its transient, modal child will
+      //    only count as 1 visible window.
       if (child_window_state->CanActivate())
         ++visible_window_count;
 
@@ -174,13 +169,13 @@ int GetNumVisibleWindowsInPrimaryDisplay() {
 
 // Records the number of items in the shelf as an UMA statistic.
 void RecordShelfItemCounts() {
-  ShelfDelegate* shelf_delegate = WmShell::Get()->shelf_delegate();
+  ShelfDelegate* shelf_delegate = Shell::Get()->shelf_delegate();
   DCHECK(shelf_delegate);
 
   int pinned_item_count = 0;
   int unpinned_item_count = 0;
 
-  for (const ShelfItem& shelf_item : WmShell::Get()->shelf_model()->items()) {
+  for (const ShelfItem& shelf_item : Shell::Get()->shelf_model()->items()) {
     if (shelf_item.type != TYPE_APP_LIST) {
       // Internal ash apps do not have an app id and thus will always be counted
       // as unpinned.

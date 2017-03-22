@@ -42,7 +42,8 @@ class PasswordFormManager : public FormFetcher::Consumer {
   // |password_manager| owns |this|, |client| and |driver| serve to
   // communicate with embedder, |observed_form| is the associated form |this|
   // is managing, |form_saver| is used to save/update the form and
-  // |form_fetcher| to get saved data about the form.
+  // |form_fetcher| to get saved data about the form. |form_fetcher| must not be
+  // destroyed before |this|.
   //
   // TODO(crbug.com/621355): So far, |form_fetcher| can be null. In that case
   // |this| creates an instance of it itself (meant for production code). Once
@@ -243,8 +244,14 @@ class PasswordFormManager : public FormFetcher::Consumer {
 
   // Clears references to matches derived from the associated FormFetcher data.
   // After calling this, the PasswordFormManager holds no references to objects
-  // owned by the associated FormFetcher.
+  // owned by the associated FormFetcher. This does not cause removing |this| as
+  // a consumer of |form_fetcher_|.
   void ResetStoredMatches();
+
+  // Takes ownership of |fetcher|. If |fetcher| is different from the current
+  // |form_fetcher_| then also resets matches stored from the old fetcher and
+  // adds itself as a consumer of the new one.
+  void GrabFetcher(std::unique_ptr<FormFetcher> fetcher);
 
  protected:
   // FormFetcher::Consumer:
@@ -354,8 +361,8 @@ class PasswordFormManager : public FormFetcher::Consumer {
   // Autofill server to vote for the correct username field, and also so that
   // we will trigger password generation in the future. This function will
   // update generation_upload_status of |pending| if an upload is performed.
-  void SendAutofillVotes(const autofill::PasswordForm& observed,
-                         autofill::PasswordForm* pending);
+  void SendVoteOnCredentialsReuse(const autofill::PasswordForm& observed,
+                                  autofill::PasswordForm* pending);
 
   // Update all login matches to reflect new preferred state - preferred flag
   // will be reset on all matched logins that different than the current
@@ -367,6 +374,19 @@ class PasswordFormManager : public FormFetcher::Consumer {
   // match which had this username.
   bool UpdatePendingCredentialsIfOtherPossibleUsername(
       const base::string16& username);
+
+  // Searches for |username| in |other_possible_usernames| of |best_matches_|
+  // and |not_best_matches_|. If the username value is found in
+  // |other_possible_usernames| and the password value of the match is equal to
+  // |password|, the match is saved to |username_correction_vote_|.
+  void FindCorrectedUsernameElement(const base::string16& username,
+                                    const base::string16& password);
+
+  // Searches for |username| in |other_possible_usernames| of |match|. If the
+  // username value is found, the match is saved to |username_correction_vote_|
+  // and the function returns true.
+  bool FindUsernameInOtherPossibleUsernames(const autofill::PasswordForm& match,
+                                            const base::string16& username);
 
   // Returns true if |form| is a username update of a credential already in
   // |best_matches_|. Sets |pending_credentials_| to the appropriate
@@ -380,7 +400,8 @@ class PasswordFormManager : public FormFetcher::Consumer {
 
   // Tries to set all votes (e.g. autofill field types, generation vote) to
   // a |FormStructure| and upload it to the server. Returns true on success.
-  bool UploadPasswordVote(const autofill::ServerFieldType& password_type,
+  bool UploadPasswordVote(const autofill::PasswordForm& form_to_upload,
+                          const autofill::ServerFieldType& password_type,
                           const std::string& login_form_signature);
 
   // Adds a vote on password generation usage to |form_structure|.
@@ -465,6 +486,14 @@ class PasswordFormManager : public FormFetcher::Consumer {
   // Stores if for creating |pending_credentials_| other possible usernames
   // option should apply.
   OtherPossibleUsernamesAction other_possible_username_action_;
+
+  // If the user typed username that doesn't match any saved credentials, but
+  // matches an entry from |other_possible_usernames| of a saved credential,
+  // then |username_correction_vote_| stores the credential with matched
+  // username. The matched credential is copied to |username_correction_vote_|,
+  // but |username_correction_vote_.username_element| is set to the name of the
+  // field where matched username was found.
+  std::unique_ptr<autofill::PasswordForm> username_correction_vote_;
 
   // The origin url path of observed_form_ tokenized, for convenience when
   // scoring.
@@ -565,7 +594,7 @@ class PasswordFormManager : public FormFetcher::Consumer {
   std::unique_ptr<FormFetcher> owned_form_fetcher_;
 
   // FormFetcher instance which owns the login data from PasswordStore.
-  FormFetcher* const form_fetcher_;
+  FormFetcher* form_fetcher_;
 
   // True if the main frame's visible URL, at the time this PasswordFormManager
   // was created, is secure.

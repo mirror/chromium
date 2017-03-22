@@ -36,6 +36,7 @@ class MusDemoInternal : public MusDemo, public aura::WindowManagerDelegate {
   bool OnWmSetProperty(aura::Window* window,
                        const std::string& name,
                        std::unique_ptr<std::vector<uint8_t>>* new_data) final;
+  void OnWmSetModalType(aura::Window* window, ModalType type) final;
   void OnWmSetCanFocus(aura::Window* window, bool can_focus) final;
   aura::Window* OnWmCreateTopLevelWindow(
       ui::mojom::WindowType window_type,
@@ -47,8 +48,10 @@ class MusDemoInternal : public MusDemo, public aura::WindowManagerDelegate {
                       const display::Display& display) final;
   void OnWmDisplayRemoved(aura::WindowTreeHostMus* window_tree_host) final;
   void OnWmDisplayModified(const display::Display& display) final;
-  ui::mojom::EventResult OnAccelerator(uint32_t id,
-                                       const ui::Event& event) final;
+  ui::mojom::EventResult OnAccelerator(
+      uint32_t id,
+      const ui::Event& event,
+      std::unordered_map<std::string, std::vector<uint8_t>>* properties) final;
   void OnWmPerformMoveLoop(aura::Window* window,
                            ui::mojom::MoveLoopSource source,
                            const gfx::Point& cursor_location,

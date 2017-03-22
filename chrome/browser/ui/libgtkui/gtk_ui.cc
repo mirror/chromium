@@ -4,9 +4,10 @@
 
 #include "chrome/browser/ui/libgtkui/gtk_ui.h"
 
+#include <X11/Xcursor/Xcursor.h>
+#include <dlfcn.h>
 #include <math.h>
 #include <pango/pango.h>
-#include <X11/Xcursor/Xcursor.h>
 
 #include <cmath>
 #include <set>
@@ -176,8 +177,36 @@ class GtkButtonImageSource : public gfx::ImageSkiaSource {
     gtk_style_context_set_state(context, state_flags);
     gtk_render_background(context, cr, 0, 0, width, height);
     gtk_render_frame(context, cr, 0, 0, width, height);
-    if (focus_)
-      gtk_render_focus(context, cr, 0, 0, width, height);
+    if (focus_) {
+      gfx::Rect focus_rect(width, height);
+
+      if (!GtkVersionCheck(3, 14)) {
+        gint focus_pad;
+        gtk_style_context_get_style(context, "focus-padding", &focus_pad,
+                                    nullptr);
+        focus_rect.Inset(focus_pad, focus_pad);
+
+        if (state_ == ui::NativeTheme::kPressed) {
+          gint child_displacement_x, child_displacement_y;
+          gboolean displace_focus;
+          gtk_style_context_get_style(
+              context, "child-displacement-x", &child_displacement_x,
+              "child-displacement-y", &child_displacement_y, "displace-focus",
+              &displace_focus, nullptr);
+          if (displace_focus)
+            focus_rect.Offset(child_displacement_x, child_displacement_y);
+        }
+      }
+
+      if (!GtkVersionCheck(3, 20)) {
+        GtkBorder border;
+        gtk_style_context_get_border(context, state_flags, &border);
+        focus_rect.Inset(border.left, border.top, border.right, border.bottom);
+      }
+
+      gtk_render_focus(context, cr, focus_rect.x(), focus_rect.y(),
+                       focus_rect.width(), focus_rect.height());
+    }
 #endif
 
     cairo_destroy(cr);
@@ -376,6 +405,19 @@ SkColor GetToolbarTopSeparatorColor(SkColor header_fg,
 }  // namespace
 
 GtkUi::GtkUi() : middle_click_action_(GetDefaultMiddleClickAction()) {
+#if GTK_MAJOR_VERSION > 2
+  // Force Gtk to use Xwayland if it would have used wayland.  libgtkui assumes
+  // the use of X11 (eg. X11InputMethodContextImplGtk) and will crash under
+  // other backends.
+  // TODO(thomasanderson): Change this logic once Wayland support is added.
+  static auto* _gdk_set_allowed_backends =
+      reinterpret_cast<void (*)(const gchar*)>(
+          dlsym(GetGdkSharedLibrary(), "gdk_set_allowed_backends"));
+  if (GtkVersionCheck(3, 10))
+    DCHECK(_gdk_set_allowed_backends);
+  if (_gdk_set_allowed_backends)
+    _gdk_set_allowed_backends("x11");
+#endif
   GtkInitFromCommandLine(*base::CommandLine::ForCurrentProcess());
 #if GTK_MAJOR_VERSION == 2
   native_theme_ = NativeThemeGtk2::instance();

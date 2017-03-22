@@ -58,7 +58,8 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
   void Initialize(const InitializeCallback& callback) override;
 
   void AddByteStream(std::unique_ptr<ByteStreamReader> stream_reader,
-                     int64_t offset) override;
+                     int64_t offset,
+                     int64_t length) override;
 
   void RenameAndUniquify(const base::FilePath& full_path,
                          const RenameCompletionCallback& callback) override;
@@ -71,6 +72,7 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
   void Cancel() override;
   const base::FilePath& FullPath() const override;
   bool InProgress() const override;
+  void WasPaused() override;
 
  protected:
   // For test class overrides.
@@ -94,14 +96,12 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
   // |stream_reader_| can be set later when the network response is handled.
   //
   // Multiple SourceStreams can concurrently write to the same file sink.
-  //
-  // The file IO processing is finished when all SourceStreams are finished.
   class CONTENT_EXPORT SourceStream {
    public:
-    SourceStream(int64_t offset, int64_t length);
+    SourceStream(int64_t offset,
+                 int64_t length,
+                 std::unique_ptr<ByteStreamReader> stream_reader);
     ~SourceStream();
-
-    void SetByteStream(std::unique_ptr<ByteStreamReader> stream_reader);
 
     // Called after successfully writing a buffer to disk.
     void OnWriteBytesToDisk(int64_t bytes_write);
@@ -183,6 +183,16 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
   // Called before the data is written to disk.
   void WillWriteToDisk(size_t data_len);
 
+  // For a given SourceStream object and the bytes available to write, determine
+  // the actual number of bytes it can write to the disk. For parallel
+  // downloading, if the first disk IO writes to a location that is already
+  // written by another stream, the current stream should stop writing. Returns
+  // true if the stream can write no more data and should be finished, returns
+  // false otherwise.
+  bool CalculateBytesToWrite(SourceStream* source_stream,
+                             size_t bytes_available_to_write,
+                             size_t* bytes_to_write);
+
   // Called when there's some activity on the byte stream that needs to be
   // handled.
   void StreamActive(SourceStream* source_stream);
@@ -218,11 +228,6 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
 
   // Map of the offset and the source stream that represents the slice
   // starting from offset.
-  // Must be created on the same thread that constructs the DownloadFile.
-  // Should not add or remove elements after creation.
-  // Any byte stream should have a SourceStream before added to the download
-  // file.
-  // The disk IO is completed when all source streams are finished.
   SourceStreams source_streams_;
 
   // Used to trigger progress updates.
@@ -239,6 +244,13 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
   base::TimeDelta disk_writes_time_;
   base::TimeTicks download_start_;
   RateEstimator rate_estimator_;
+  int num_active_streams_;
+  bool record_stream_bandwidth_;
+  base::TimeTicks last_update_time_;
+  size_t bytes_seen_with_parallel_streams_;
+  size_t bytes_seen_without_parallel_streams_;
+  base::TimeDelta download_time_with_parallel_streams_;
+  base::TimeDelta download_time_without_parallel_streams_;
 
   std::vector<DownloadItem::ReceivedSlice> received_slices_;
 

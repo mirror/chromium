@@ -30,9 +30,12 @@ class MockDownloadFile : public DownloadFile {
   // DownloadFile functions.
   MOCK_METHOD1(Initialize, void(const InitializeCallback&));
   void AddByteStream(std::unique_ptr<ByteStreamReader> stream_reader,
-                     int64_t offset) override;
-  MOCK_METHOD2(DoAddByteStream,
-               void(ByteStreamReader* stream_reader, int64_t offset));
+                     int64_t offset,
+                     int64_t length) override;
+  MOCK_METHOD3(DoAddByteStream,
+               void(ByteStreamReader* stream_reader,
+                    int64_t offset,
+                    int64_t length));
   MOCK_METHOD2(AppendDataToFile, DownloadInterruptReason(
       const char* data, size_t data_len));
   MOCK_METHOD1(Rename, DownloadInterruptReason(
@@ -51,6 +54,7 @@ class MockDownloadFile : public DownloadFile {
   MOCK_METHOD0(Finish, void());
   MOCK_CONST_METHOD0(FullPath, const base::FilePath&());
   MOCK_CONST_METHOD0(InProgress, bool());
+  MOCK_METHOD0(WasPaused, void());
   MOCK_CONST_METHOD0(BytesSoFar, int64_t());
   MOCK_CONST_METHOD0(CurrentSpeed, int64_t());
   MOCK_METHOD1(GetHash, bool(std::string* hash));

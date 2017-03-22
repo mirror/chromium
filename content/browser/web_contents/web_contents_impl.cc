@@ -287,12 +287,12 @@ WebContents* WebContents::CreateWithSessionStorage(
   return new_contents;
 }
 
-void WebContentsImpl::FriendZone::AddCreatedCallbackForTesting(
+void WebContentsImpl::FriendWrapper::AddCreatedCallbackForTesting(
     const CreatedCallback& callback) {
   g_created_callbacks.Get().push_back(callback);
 }
 
-void WebContentsImpl::FriendZone::RemoveCreatedCallbackForTesting(
+void WebContentsImpl::FriendWrapper::RemoveCreatedCallbackForTesting(
     const CreatedCallback& callback) {
   for (size_t i = 0; i < g_created_callbacks.Get().size(); ++i) {
     if (g_created_callbacks.Get().at(i).Equals(callback)) {
@@ -1025,6 +1025,14 @@ base::Closure WebContentsImpl::AddBindingSet(
                     weak_factory_.GetWeakPtr(), interface_name);
 }
 
+WebContentsBindingSet* WebContentsImpl::GetBindingSet(
+    const std::string& interface_name) {
+  auto it = binding_sets_.find(interface_name);
+  if (it == binding_sets_.end())
+    return nullptr;
+  return it->second;
+}
+
 void WebContentsImpl::UpdateDeviceScaleFactor(double device_scale_factor) {
   SendPageMessage(
       new PageMsg_SetDeviceScaleFactor(MSG_ROUTING_NONE, device_scale_factor));
@@ -1731,7 +1739,7 @@ void WebContentsImpl::RenderWidgetDeleted(
       view_->RestoreFocus();
   }
 
-  if (mouse_lock_widget_)
+  if (render_widget_host == mouse_lock_widget_)
     LostMouseLock(mouse_lock_widget_);
 }
 
@@ -2519,12 +2527,6 @@ void WebContentsImpl::SendScreenRects() {
 
   if (browser_plugin_embedder_ && !is_being_destroyed_)
     browser_plugin_embedder_->DidSendScreenRects();
-}
-
-void WebContentsImpl::OnFirstPaintAfterLoad(
-    RenderWidgetHostImpl* render_widget_host) {
-  for (auto& observer : observers_)
-    observer.DidFirstPaintAfterLoad(render_widget_host);
 }
 
 TextInputManager* WebContentsImpl::GetTextInputManager() {

@@ -394,10 +394,6 @@ String Deprecation::deprecationMessage(UseCounter::Feature feature) {
           "-internal-media-controls-overlay-cast-button selector", M59,
           "5714245488476160");
 
-    case UseCounter::FileReaderSyncInServiceWorker:
-      return willBeRemoved("FileReaderSync in service workers", M59,
-                           "5739144722513920");
-
     case UseCounter::CSSZoomReset:
       return willBeRemoved("\"zoom: reset\"", M59, "4997605029314560");
 
@@ -428,6 +424,11 @@ String Deprecation::deprecationMessage(UseCounter::Feature feature) {
     case UseCounter::V8IDBFactory_WebkitGetDatabaseNames_Method:
       return willBeRemoved("indexedDB.webkitGetDatabaseNames()", M60,
                            "5725741740195840");
+
+    case UseCounter::ChildSrcAllowedWorkerThatScriptSrcBlocked:
+      return replacedWillBeRemoved("The 'child-src' directive",
+                                   "the 'script-src' directive for Workers",
+                                   M60, "5922594955984896");
 
     // Features that aren't deprecated don't have a deprecation message.
     default:

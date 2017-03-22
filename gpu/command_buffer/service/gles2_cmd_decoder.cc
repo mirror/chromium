@@ -1704,6 +1704,8 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   // Wrapper for glSetDrawRectangleCHROMIUM
   void DoSetDrawRectangleCHROMIUM(GLint x, GLint y, GLint width, GLint height);
 
+  void DoSetEnableDCLayersCHROMIUM(GLboolean enable);
+
   // Wrapper for glReadBuffer
   void DoReadBuffer(GLenum src);
 
@@ -2369,7 +2371,7 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   bool supports_swap_buffers_with_bounds_;
   bool supports_commit_overlay_planes_;
   bool supports_async_swap_;
-  bool supports_set_draw_rectangle_ = false;
+  bool supports_dc_layers_ = false;
 
   // These flags are used to override the state of the shared feature_info_
   // member.  Because the same FeatureInfo instance may be shared among many
@@ -3594,8 +3596,7 @@ bool GLES2DecoderImpl::Initialize(
 
   supports_async_swap_ = surface->SupportsAsyncSwap();
 
-  supports_set_draw_rectangle_ =
-      !offscreen && surface->SupportsSetDrawRectangle();
+  supports_dc_layers_ = !offscreen && surface->SupportsDCLayers();
 
   if (workarounds().reverse_point_sprite_coord_origin) {
     glPointParameteri(GL_POINT_SPRITE_COORD_ORIGIN, GL_LOWER_LEFT);
@@ -3771,7 +3772,7 @@ Capabilities GLES2DecoderImpl::GetCapabilities() {
   bool is_offscreen = !!offscreen_target_frame_buffer_.get();
   caps.flips_vertically = !is_offscreen && surface_->FlipsVertically();
   caps.msaa_is_slow = workarounds().msaa_is_slow;
-  caps.set_draw_rectangle = supports_set_draw_rectangle_;
+  caps.dc_layers = supports_dc_layers_;
 
   caps.blend_equation_advanced =
       feature_info_->feature_flags().blend_equation_advanced;
@@ -5667,15 +5668,14 @@ void GLES2DecoderImpl::OnUseFramebuffer() const {
     return;
   state_.fbo_binding_for_scissor_workaround_dirty = false;
 
-  if (supports_set_draw_rectangle_) {
+  if (supports_dc_layers_) {
     gfx::Vector2d draw_offset = GetBoundFramebufferDrawOffset();
     glViewport(state_.viewport_x + draw_offset.x(),
                state_.viewport_y + draw_offset.y(), state_.viewport_width,
                state_.viewport_height);
   }
 
-  if (workarounds().restore_scissor_on_fbo_change ||
-      supports_set_draw_rectangle_) {
+  if (workarounds().restore_scissor_on_fbo_change || supports_dc_layers_) {
     // The driver forgets the correct scissor when modifying the FBO binding.
     gfx::Vector2d scissor_offset = GetBoundFramebufferDrawOffset();
     glScissor(state_.scissor_x + scissor_offset.x(),
@@ -8364,7 +8364,7 @@ void GLES2DecoderImpl::RenderbufferStorageMultisampleHelper(
   if (feature_info->feature_flags().use_core_framebuffer_multisample) {
     glRenderbufferStorageMultisample(
         target, samples, internal_format, width, height);
-  } else if (feature_info->gl_version_info().is_angle) {
+  } else if (feature_info->feature_flags().angle_framebuffer_multisample) {
     // This is ES2 only.
     glRenderbufferStorageMultisampleANGLE(
         target, samples, internal_format, width, height);
@@ -8389,7 +8389,7 @@ void GLES2DecoderImpl::BlitFramebufferHelper(GLint srcX0,
   if (feature_info_->feature_flags().use_core_framebuffer_multisample) {
     glBlitFramebuffer(
         srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
-  } else if (gl_version_info().is_angle) {
+  } else if (feature_info_->feature_flags().angle_framebuffer_multisample) {
     // This is ES2 only.
     glBlitFramebufferANGLE(
         srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
@@ -8741,7 +8741,7 @@ void GLES2DecoderImpl::DoSetDrawRectangleCHROMIUM(GLint x,
                        "framebuffer must not be bound");
     return;
   }
-  if (!supports_set_draw_rectangle_) {
+  if (!supports_dc_layers_) {
     LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glSetDrawRectangleCHROMIUM",
                        "surface doesn't support SetDrawRectangle");
     return;
@@ -8752,6 +8752,24 @@ void GLES2DecoderImpl::DoSetDrawRectangleCHROMIUM(GLint x,
                        "failed on surface");
   }
   OnFboChanged();
+}
+
+void GLES2DecoderImpl::DoSetEnableDCLayersCHROMIUM(GLboolean enable) {
+  Framebuffer* framebuffer = GetFramebufferInfoForTarget(GL_DRAW_FRAMEBUFFER);
+  if (framebuffer) {
+    LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glSetEnableDCLayersCHROMIUM",
+                       "framebuffer must not be bound");
+    return;
+  }
+  if (!supports_dc_layers_) {
+    LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glSetEnableDCLayersCHROMIUM",
+                       "surface doesn't support SetDrawRectangle");
+    return;
+  }
+  if (!surface_->SetEnableDCLayers(!!enable)) {
+    LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, "glSetEnableDCLayersCHROMIUM",
+                       "failed on surface");
+  }
 }
 
 void GLES2DecoderImpl::DoReadBuffer(GLenum src) {
@@ -9757,6 +9775,16 @@ bool GLES2DecoderImpl::IsDrawValid(
     const char* function_name, GLuint max_vertex_accessed, bool instanced,
     GLsizei primcount) {
   DCHECK(instanced || primcount == 1);
+
+  if (workarounds().disallow_large_instanced_draw) {
+    const GLsizei kMaxInstancedDrawPrimitiveCount = 0x4000000;
+    if (primcount > kMaxInstancedDrawPrimitiveCount) {
+      LOCAL_SET_GL_ERROR(
+          GL_OUT_OF_MEMORY, function_name,
+          "Instanced draw primcount too large for this platform");
+      return false;
+    }
+  }
 
   // NOTE: We specifically do not check current_program->IsValid() because
   // it could never be invalid since glUseProgram would have failed. While
@@ -12464,13 +12492,6 @@ error::Error GLES2DecoderImpl::HandleGetString(uint32_t immediate_data_size,
       break;
     case GL_SHADING_LANGUAGE_VERSION:
       str = GetServiceShadingLanguageVersionString(feature_info_.get());
-      break;
-    case GL_RENDERER:
-      str = GetServiceRendererString(feature_info_.get());
-      break;
-    case GL_VENDOR:
-      str = GetServiceVendorString(feature_info_.get());
-      break;
       break;
     case GL_EXTENSIONS:
       {

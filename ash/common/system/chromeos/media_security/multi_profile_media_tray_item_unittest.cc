@@ -6,13 +6,14 @@
 
 #include "ash/common/ash_view_ids.h"
 #include "ash/common/media_controller.h"
+#include "ash/common/session/session_controller.h"
 #include "ash/common/system/status_area_widget.h"
 #include "ash/common/system/tray/system_tray.h"
 #include "ash/common/system/tray/system_tray_bubble.h"
 #include "ash/common/system/tray/tray_item_view.h"
-#include "ash/common/test/test_session_state_delegate.h"
 #include "ash/common/wm_shell.h"
 #include "ash/public/interfaces/media.mojom.h"
+#include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test/ash_test_helper.h"
 #include "ash/test/status_area_widget_test_helper.h"
@@ -28,12 +29,11 @@ class MultiProfileMediaTrayItemTest : public test::AshTestBase {
 
   void SetMediaCaptureState(mojom::MediaCaptureState state) {
     // Create the fake update.
-    test::TestSessionStateDelegate* session_state_delegate =
-        test::AshTestHelper::GetTestSessionStateDelegate();
+    SessionController* controller = Shell::Get()->session_controller();
     std::vector<mojom::MediaCaptureState> v;
-    for (int i = 0; i < session_state_delegate->NumberOfLoggedInUsers(); ++i)
+    for (int i = 0; i < controller->NumberOfLoggedInUsers(); ++i)
       v.push_back(state);
-    WmShell::Get()->media_controller()->NotifyCaptureState(v);
+    Shell::Get()->media_controller()->NotifyCaptureState(v);
   }
 
  private:
@@ -43,9 +43,7 @@ class MultiProfileMediaTrayItemTest : public test::AshTestBase {
 // ash_unittests. still failing.
 TEST_F(MultiProfileMediaTrayItemTest, NotifyMediaCaptureChange) {
   TrayItemView::DisableAnimationsForTest();
-  test::TestSessionStateDelegate* session_state_delegate =
-      test::AshTestHelper::GetTestSessionStateDelegate();
-  session_state_delegate->set_logged_in_users(2);
+  GetSessionControllerClient()->CreatePredefinedUserSessions(2);
 
   SystemTray* system_tray = GetPrimarySystemTray();
   system_tray->ShowDefaultView(BUBBLE_CREATE_NEW);

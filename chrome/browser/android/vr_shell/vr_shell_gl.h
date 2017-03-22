@@ -47,7 +47,6 @@ class MailboxToSurfaceBridge;
 class UiScene;
 class VrController;
 class VrShell;
-class VrShellDelegate;
 class VrShellRenderer;
 struct ContentRectangle;
 
@@ -70,7 +69,6 @@ class VrShellGl : public device::mojom::VRVSyncProvider {
   };
 
   VrShellGl(const base::WeakPtr<VrShell>& weak_vr_shell,
-            const base::WeakPtr<VrShellDelegate>& delegate_provider,
             scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner,
             gvr_context* gvr_api,
             bool initially_web_vr,
@@ -115,18 +113,20 @@ class VrShellGl : public device::mojom::VRVSyncProvider {
   void GvrInit(gvr_context* gvr_api);
   void InitializeRenderer();
   void DrawFrame(int16_t frame_index);
-  void DrawVrShellAndUnbind(const gvr::Mat4f& head_pose, gvr::Frame& frame);
-  void DrawUiView(const gvr::Mat4f* head_pose,
+  void DrawWorldElements(const gvr::Mat4f& head_pose);
+  void DrawHeadLockedElements();
+  void DrawUiView(const gvr::Mat4f& head_pose,
                   const std::vector<const ContentRectangle*>& elements,
                   const gvr::Sizei& render_size,
-                  int viewport_offset);
+                  int viewport_offset,
+                  bool draw_cursor);
   void DrawElements(const gvr::Mat4f& view_proj_matrix,
-                    const gvr::Mat4f& view_matrix,
                     const std::vector<const ContentRectangle*>& elements);
   std::vector<const ContentRectangle*> GetElementsInDrawOrder(
       const gvr::Mat4f& view_matrix,
       const std::vector<const ContentRectangle*>& elements);
   void DrawCursor(const gvr::Mat4f& render_matrix);
+  bool ShouldDrawWebVr();
   void DrawWebVr();
   bool WebVrPoseByteIsValid(int pose_index_byte);
 
@@ -225,7 +225,6 @@ class VrShellGl : public device::mojom::VRVSyncProvider {
   device::mojom::VRSubmitFrameClientPtr submit_client_;
 
   base::WeakPtr<VrShell> weak_vr_shell_;
-  base::WeakPtr<VrShellDelegate> delegate_provider_;
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
 
   uint8_t frame_index_ = 0;

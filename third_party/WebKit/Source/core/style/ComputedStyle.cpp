@@ -99,7 +99,7 @@ PassRefPtr<ComputedStyle> ComputedStyle::create() {
 }
 
 PassRefPtr<ComputedStyle> ComputedStyle::createInitialStyle() {
-  return adoptRef(new ComputedStyle(InitialStyle));
+  return adoptRef(new ComputedStyle());
 }
 
 void ComputedStyle::invalidateInitialStyle() {
@@ -120,10 +120,8 @@ PassRefPtr<ComputedStyle> ComputedStyle::clone(const ComputedStyle& other) {
   return adoptRef(new ComputedStyle(other));
 }
 
-ALWAYS_INLINE ComputedStyle::ComputedStyle(InitialStyleTag)
+ALWAYS_INLINE ComputedStyle::ComputedStyle()
     : ComputedStyleBase(), RefCounted<ComputedStyle>() {
-  initializeBitDefaults();
-
   m_box.init();
   m_visual.init();
   m_background.init();
@@ -563,12 +561,12 @@ StyleDifference ComputedStyle::visualInvalidationDiff(
   else if (diffNeedsPaintInvalidationObject(other))
     diff.setNeedsPaintInvalidationObject();
 
-  updatePropertySpecificDifferences(other, diff);
+  if (diffNeedsVisualRectUpdate(other))
+    diff.setNeedsVisualRectUpdate();
 
-  // The following condition needs to be at last, because it may depend on
-  // conditions in diff computed above.
-  if (scrollAnchorDisablingPropertyChanged(other, diff))
-    diff.setScrollAnchorDisablingPropertyChanged();
+  // This needs to be at last, because it may depend on conditions in diff
+  // computed above.
+  updatePropertySpecificDifferences(other, diff);
 
   // Cursors are not checked, since they will be set appropriately in response
   // to mouse events, so they don't need to cause any paint invalidation or
@@ -1006,6 +1004,21 @@ bool ComputedStyle::diffNeedsPaintInvalidationObjectForPaintImage(
   return false;
 }
 
+// This doesn't include conditions needing layout or overflow recomputation
+// which implies visual rect update.
+bool ComputedStyle::diffNeedsVisualRectUpdate(
+    const ComputedStyle& other) const {
+  // Visual rect is empty if visibility is hidden.
+  if (visibility() != other.visibility())
+    return true;
+
+  // Need to update visual rect of the resizer.
+  if (resize() != other.resize())
+    return true;
+
+  return false;
+}
+
 void ComputedStyle::updatePropertySpecificDifferences(
     const ComputedStyle& other,
     StyleDifference& diff) const {
@@ -1100,6 +1113,9 @@ void ComputedStyle::updatePropertySpecificDifferences(
   if (hasClip != otherHasClip ||
       (hasClip && m_visual->clip != other.m_visual->clip))
     diff.setCSSClipChanged();
+
+  if (scrollAnchorDisablingPropertyChanged(other, diff))
+    diff.setScrollAnchorDisablingPropertyChanged();
 }
 
 void ComputedStyle::addPaintImage(StyleImage* image) {
@@ -1124,7 +1140,7 @@ void ComputedStyle::setCursorList(CursorList* other) {
 }
 
 void ComputedStyle::setQuotes(PassRefPtr<QuotesData> q) {
-  m_rareInheritedData.access()->quotes = q;
+  m_rareInheritedData.access()->quotes = std::move(q);
 }
 
 void ComputedStyle::clearCursorList() {
@@ -1390,11 +1406,11 @@ void ComputedStyle::applyMotionPathTransform(
 }
 
 void ComputedStyle::setTextShadow(PassRefPtr<ShadowList> s) {
-  m_rareInheritedData.access()->textShadow = s;
+  m_rareInheritedData.access()->textShadow = std::move(s);
 }
 
 void ComputedStyle::setBoxShadow(PassRefPtr<ShadowList> s) {
-  m_rareNonInheritedData.access()->m_boxShadow = s;
+  m_rareNonInheritedData.access()->m_boxShadow = std::move(s);
 }
 
 static FloatRoundedRect::Radii calcRadiiFor(const BorderData& border,
@@ -2298,7 +2314,8 @@ void ComputedStyle::setMarginEnd(const Length& margin) {
 }
 
 void ComputedStyle::setOffsetPath(PassRefPtr<StylePath> path) {
-  m_rareNonInheritedData.access()->m_transform.access()->m_motion.m_path = path;
+  m_rareNonInheritedData.access()->m_transform.access()->m_motion.m_path =
+      std::move(path);
 }
 
 int ComputedStyle::outlineOutsetExtent() const {

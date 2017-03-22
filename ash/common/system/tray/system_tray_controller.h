@@ -33,6 +33,11 @@ class ASH_EXPORT SystemTrayController
 
   // Wrappers around the mojom::SystemTrayClient interface.
   void ShowSettings();
+  void ShowBluetoothSettings();
+  void ShowBluetoothPairingDialog(const std::string& address,
+                                  const base::string16& name_for_display,
+                                  bool paired,
+                                  bool connected);
   void ShowDateSettings();
   void ShowSetTimeDialog();
   void ShowDisplaySettings();
@@ -65,7 +70,7 @@ class ASH_EXPORT SystemTrayController
                       bool factory_reset_required) override;
 
  private:
-  // Client interface in chrome browser. Only bound on Chrome OS.
+  // Client interface in chrome browser. May be null in tests.
   mojom::SystemTrayClientPtr system_tray_client_;
 
   // Bindings for the SystemTray interface.

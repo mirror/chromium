@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+<script src="../resources/testharness-helpers.js"></script>
+<script src="../resources/mojo-helpers.js"></script>
+<script>
+'use strict';
+
+setup({ explicit_done: true });
+
+define([
+    'mojo/public/interfaces/bindings/tests/test_unions.mojom',
+    'mojo/public/js/codec',
+    'mojo/public/js/validator',
+], function(unions, codec, validator) {
+
+  test(() => {
+    var u = new unions.PodUnion();
+    assert_equals(u.$data, null);
+    assert_equals(u.$tag, undefined);
+
+    u.f_uint32 = 32;
+
+    assert_equals(u.f_uint32, 32);
+    assert_equals(u.$tag, unions.PodUnion.Tags.f_uint32);
+
+    var u = new unions.PodUnion({f_uint64: 64});
+    assert_equals(u.f_uint64, 64);
+    assert_equals(u.$tag, unions.PodUnion.Tags.f_uint64);
+    assert_throws(null, function() {var v = u.f_uint32;});
+
+    assert_throws(null, function() {
+      var u = new unions.PodUnion({
+        f_uint64: 64,
+        f_uint32: 32,
+      });
+    });
+
+    assert_throws(null, function() {
+      var u = new unions.PodUnion({ foo: 64 });
+    });
+
+    assert_throws(null, function() {
+      var u = new unions.PodUnion([1,2,3,4]);
+    });
+  }, 'constructors');
+
+  function structEncodeDecode(struct) {
+    var structClass = struct.constructor;
+    var builder = new codec.MessageBuilder(1234, structClass.encodedSize);
+    builder.encodeStruct(structClass, struct);
+
+    var message = builder.finish();
+
+    var messageValidator = new validator.Validator(message);
+    var err = structClass.validate(messageValidator, codec.kMessageHeaderSize);
+    assert_equals(err, validator.validationError.NONE);
+
+    var reader = new codec.MessageReader(message);
+    var view = reader.decoder.buffer.dataView;
+
+    return reader.decodeStruct(structClass);
+  }
+
+  test(() => {
+    var s = new unions.WrapperStruct({
+      pod_union: new unions.PodUnion({
+        f_uint64: 64})});
+
+    var decoded = structEncodeDecode(s);
+    assert_weak_equals(decoded, s);
+
+    var s = new unions.WrapperStruct({
+      pod_union: new unions.PodUnion({
+        f_bool : true})});
+
+    var decoded = structEncodeDecode(s);
+    assert_equals(decoded.pod_union.$tag, unions.PodUnion.Tags.f_bool);
+    assert_true(decoded.pod_union.f_bool);
+
+    var s = new unions.WrapperStruct({
+      object_union: new unions.ObjectUnion({
+        f_dummy: new unions.DummyStruct({
+          f_int8: 8})})});
+
+    var decoded = structEncodeDecode(s);
+    assert_weak_equals(decoded, s);
+
+    var s = new unions.WrapperStruct({
+      object_union: new unions.ObjectUnion({
+        f_array_int8: [1, 2, 3]})});
+
+    var decoded = structEncodeDecode(s);
+    assert_weak_equals(decoded, s);
+
+    var s = new unions.WrapperStruct({
+      object_union: new unions.ObjectUnion({
+        f_map_int8: new Map([
+          ["first", 1],
+          ["second", 2],
+        ])})});
+
+    var decoded = structEncodeDecode(s);
+    assert_weak_equals(decoded, s);
+
+    // Encoding a union with no member set is an error.
+    var s = new unions.WrapperStruct({
+      object_union: new unions.ObjectUnion()});
+    assert_throws(null, function() {
+      structEncodeDecode(s);
+    });
+  }, 'basic encoding');
+
+  test(() => {
+    var s = new unions.SmallStruct({
+      pod_union_array: [
+        new unions.PodUnion({f_uint32: 32}),
+        new unions.PodUnion({f_uint64: 64}),
+      ]
+    });
+
+    var decoded = structEncodeDecode(s);
+    assert_weak_equals(decoded, s);
+  }, 'unions in array encoding');
+
+  test(() => {
+    var s = new unions.SmallStruct({
+      pod_union_map: new Map([
+        ["thirty-two", new unions.PodUnion({f_uint32: 32})],
+        ["sixty-four", new unions.PodUnion({f_uint64: 64})],
+      ])
+    });
+
+    var decoded = structEncodeDecode(s);
+    assert_weak_equals(decoded, s);
+  }, 'unions in map encoding');
+
+  test(() => {
+    var s = new unions.WrapperStruct({
+      object_union: new unions.ObjectUnion({
+        f_pod_union: new unions.PodUnion({f_uint32: 32})
+      })});
+    var decoded = structEncodeDecode(s);
+    assert_weak_equals(decoded, s);
+  }, 'nested unions encoding');
+
+  function structValidate(struct) {
+    var structClass = struct.constructor;
+    var builder = new codec.MessageBuilder(1234, structClass.encodedSize);
+    builder.encodeStruct(structClass, struct);
+
+    var message = builder.finish();
+
+    var messageValidator = new validator.Validator(message);
+    return structClass.validate(messageValidator, codec.kMessageHeaderSize);
+  }
+
+  test(() => {
+    var s = new unions.WrapperStruct({
+      object_union: new unions.ObjectUnion({
+        f_dummy: null})});
+
+    var err = structValidate(s);
+    assert_equals(err, validator.validationError.UNEXPECTED_NULL_POINTER);
+
+    var s = new unions.WrapperStruct({
+      object_union: new unions.ObjectUnion({
+        f_nullable: null})});
+
+    var err = structValidate(s);
+    assert_equals(err, validator.validationError.NONE);
+  }, 'null union member validation');
+
+  test(() => {
+    var s = new unions.SmallStructNonNullableUnion({
+      pod_union: null});
+
+    var err = structValidate(s);
+    assert_equals(err, validator.validationError.UNEXPECTED_NULL_UNION);
+
+    var s = new unions.WrapperStruct({
+      object_union: new unions.ObjectUnion({
+        f_pod_union: null})
+      });
+
+    var err = structValidate(s);
+    assert_equals(err, validator.validationError.UNEXPECTED_NULL_UNION);
+  }, 'null union validation');
+
+  done();
+
+});
+</script>

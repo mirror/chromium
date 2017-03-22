@@ -114,6 +114,7 @@ source_set("browser") {
     "//services/file/public/interfaces",
     "//services/resource_coordinator:lib",
     "//services/service_manager",
+    "//services/service_manager/embedder",
     "//services/service_manager/public/cpp",
     "//services/service_manager/public/interfaces",
     "//services/service_manager/runner/common",
@@ -254,8 +255,6 @@ source_set("browser") {
     "android/browser_jni_registrar.h",
     "android/browser_startup_controller.cc",
     "android/browser_startup_controller.h",
-    "android/child_process_launcher_android.cc",
-    "android/child_process_launcher_android.h",
     "android/content_feature_list.cc",
     "android/content_feature_list.h",
     "android/content_protocol_handler_impl.cc",
@@ -265,6 +264,8 @@ source_set("browser") {
     "android/content_video_view.cc",
     "android/content_video_view.h",
     "android/devtools_auth.cc",
+    "android/gpu_process_callback.cc",
+    "android/gpu_process_callback.h",
     "android/java_interfaces_impl.cc",
     "android/java_interfaces_impl.h",
     "android/scoped_surface_request_manager.cc",
@@ -330,6 +331,8 @@ source_set("browser") {
     "background_fetch/background_fetch_context.h",
     "background_fetch/background_fetch_data_manager.cc",
     "background_fetch/background_fetch_data_manager.h",
+    "background_fetch/background_fetch_event_dispatcher.cc",
+    "background_fetch/background_fetch_event_dispatcher.h",
     "background_fetch/background_fetch_job_controller.cc",
     "background_fetch/background_fetch_job_controller.h",
     "background_fetch/background_fetch_job_data.cc",
@@ -442,6 +445,7 @@ source_set("browser") {
     "child_process_launcher_helper.cc",
     "child_process_launcher_helper.h",
     "child_process_launcher_helper_android.cc",
+    "child_process_launcher_helper_android.h",
     "child_process_launcher_helper_linux.cc",
     "child_process_launcher_helper_mac.cc",
     "child_process_launcher_helper_posix.cc",
@@ -465,8 +469,6 @@ source_set("browser") {
     "devtools/devtools_agent_host_impl.h",
     "devtools/devtools_frame_trace_recorder.cc",
     "devtools/devtools_frame_trace_recorder.h",
-    "devtools/devtools_frontend_host_impl.cc",
-    "devtools/devtools_frontend_host_impl.h",
     "devtools/devtools_http_handler.cc",
     "devtools/devtools_http_handler.h",
     "devtools/devtools_io_context.cc",
@@ -640,6 +642,8 @@ source_set("browser") {
     "frame_host/cross_process_frame_connector.h",
     "frame_host/debug_urls.cc",
     "frame_host/debug_urls.h",
+    "frame_host/form_submission_throttle.cc",
+    "frame_host/form_submission_throttle.h",
     "frame_host/frame_navigation_entry.cc",
     "frame_host/frame_navigation_entry.h",
     "frame_host/frame_tree.cc",
@@ -805,10 +809,6 @@ source_set("browser") {
     "leveldb_wrapper_impl.h",
     "loader/async_resource_handler.cc",
     "loader/async_resource_handler.h",
-    "loader/async_revalidation_driver.cc",
-    "loader/async_revalidation_driver.h",
-    "loader/async_revalidation_manager.cc",
-    "loader/async_revalidation_manager.h",
     "loader/detachable_resource_handler.cc",
     "loader/detachable_resource_handler.h",
     "loader/downloaded_temp_file_impl.cc",
@@ -1860,6 +1860,10 @@ source_set("browser") {
   } else {
     # Not Android.
     sources += [
+      # Devtools frontend not included in Android
+      "devtools/devtools_frontend_host_impl.cc",
+      "devtools/devtools_frontend_host_impl.h",
+
       # Most speech code is non-Android.
       "speech/audio_buffer.cc",
       "speech/audio_buffer.h",
@@ -1916,8 +1920,6 @@ source_set("browser") {
       "//ui/wm",
     ]
     sources += [
-      "compositor/mus_browser_compositor_output_surface.cc",
-      "compositor/mus_browser_compositor_output_surface.h",
       "renderer_host/delegated_frame_host_client_aura.cc",
       "renderer_host/delegated_frame_host_client_aura.h",
       "renderer_host/render_widget_host_view_event_handler.cc",

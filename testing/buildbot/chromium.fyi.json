@@ -11870,7 +11870,7 @@
       {
         "args": [
           "--gtest-filter-file=../../testing/buildbot/filters/site-per-process.content_browsertests.filter",
-          "--test-arguments=--site-per-process"
+          "--site-per-process"
         ],
         "name": "site_per_process_content_browsertests",
         "override_isolate_target": "content_browsertests",
@@ -11901,7 +11901,7 @@
       },
       {
         "args": [
-          "--test-arguments=--site-per-process"
+          "--site-per-process"
         ],
         "name": "site_per_process_content_unittests",
         "override_isolate_target": "content_unittests",
@@ -11918,7 +11918,7 @@
       },
       {
         "args": [
-          "--test-arguments=--site-per-process"
+          "--site-per-process"
         ],
         "name": "site_per_process_components_browsertests",
         "override_isolate_target": "components_browsertests",
@@ -11935,7 +11935,7 @@
       },
       {
         "args": [
-          "--test-arguments=--site-per-process"
+          "--site-per-process"
         ],
         "name": "site_per_process_components_unittests",
         "override_isolate_target": "components_unittests",
@@ -12909,7 +12909,23 @@
     "isolated_scripts": [
       {
         "isolate_name": "webkit_layout_tests_exparchive",
+        "merge": {
+          "args": [
+            "--verbose",
+            "--results-json-override-with-build-property",
+            "build_number",
+            "buildnumber",
+            "--results-json-override-with-build-property",
+            "builder_name",
+            "buildername",
+            "--results-json-override-with-build-property",
+            "chromium_revision",
+            "got_revision_cp"
+          ],
+          "script": "//third_party/WebKit/Tools/Scripts/merge-layout-test-results"
+        },
         "name": "webkit_layout_tests_exparchive",
+        "results_handler": "layout tests",
         "swarming": {
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
@@ -12917,7 +12933,7 @@
               "os": "Ubuntu-14.04"
             }
           ],
-          "shards": 1
+          "shards": 6
         }
       }
     ]

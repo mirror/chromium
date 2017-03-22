@@ -108,7 +108,6 @@ class ExceptionState;
 class FloatQuad;
 class FloatRect;
 class FormController;
-class FrameHost;
 class FrameRequestCallback;
 class FrameView;
 class HTMLAllCollection;
@@ -150,6 +149,7 @@ class ResourceFetcher;
 class RootScrollerController;
 class SVGDocumentExtensions;
 class SVGUseElement;
+class ScriptElementBase;
 class ScriptRunner;
 class ScriptableDocumentParser;
 class ScriptedAnimationController;
@@ -470,7 +470,6 @@ class CORE_EXPORT Document : public ContainerNode,
 
   FrameView* view() const;                       // can be null
   LocalFrame* frame() const { return m_frame; }  // can be null
-  FrameHost* frameHost() const;                  // can be null
   Page* page() const;                            // can be null
   Settings* settings() const;                    // can be null
 
@@ -920,13 +919,9 @@ class CORE_EXPORT Document : public ContainerNode,
 
   ScriptRunner* scriptRunner() { return m_scriptRunner.get(); }
 
-  Element* currentScript() const {
-    return !m_currentScriptStack.isEmpty() ? m_currentScriptStack.back().get()
-                                           : nullptr;
-  }
   void currentScriptForBinding(HTMLScriptElementOrSVGScriptElement&) const;
-  void pushCurrentScript(Element*);
-  void popCurrentScript();
+  void pushCurrentScript(ScriptElementBase*);
+  void popCurrentScript(ScriptElementBase*);
 
   void setTransformSource(std::unique_ptr<TransformSource>);
   TransformSource* transformSource() const { return m_transformSource.get(); }
@@ -1015,7 +1010,6 @@ class CORE_EXPORT Document : public ContainerNode,
                                EventListener*,
                                const String& contextURL,
                                const WTF::OrdinalNumber& contextLine);
-  bool allowExecutingScripts(Node*);
 
   void enforceSandboxFlags(SandboxFlags mask) override;
 
@@ -1536,7 +1530,7 @@ class CORE_EXPORT Document : public ContainerNode,
 
   Member<ScriptRunner> m_scriptRunner;
 
-  HeapVector<Member<Element>> m_currentScriptStack;
+  HeapVector<Member<ScriptElementBase>> m_currentScriptStack;
 
   std::unique_ptr<TransformSource> m_transformSource;
 

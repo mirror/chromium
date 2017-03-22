@@ -42,6 +42,51 @@ bool compareReceivedSlices(const DownloadItem::ReceivedSlice& lhs,
 
 }  // namespace
 
+bool ShouldUseParallelDownload(const DownloadCreateInfo& create_info) {
+  // To enable parallel download, following conditions need to be satisfied.
+  // 1. Accept-Ranges, Content-Length and strong validators response headers.
+  // 2. Feature |kParallelDownloading| enabled.
+  // 3. Content-Length is no less than the minimum slice size configuration.
+  // 3. HTTP/1.1 protocol, not QUIC nor HTTP/1.0.
+
+  // Etag and last modified are stored into DownloadCreateInfo in
+  // DownloadRequestCore only if the response header complies to the strong
+  // validator rule.
+  bool has_strong_validator =
+      !create_info.etag.empty() || !create_info.last_modified.empty();
+
+  return has_strong_validator && create_info.accept_range &&
+         create_info.total_bytes >= GetMinSliceSizeConfig() &&
+         create_info.connection_info ==
+             net::HttpResponseInfo::CONNECTION_INFO_HTTP1_1 &&
+         base::FeatureList::IsEnabled(features::kParallelDownloading);
+}
+
+std::vector<DownloadItem::ReceivedSlice> FindSlicesForRemainingContent(
+    int64_t bytes_received,
+    int64_t content_length,
+    int request_count) {
+  std::vector<DownloadItem::ReceivedSlice> slices_to_download;
+  if (request_count <= 0)
+    return slices_to_download;
+
+  // TODO(xingliu): Consider to use minimum size of a slice.
+  int64_t slice_size = content_length / request_count;
+  slice_size = slice_size > 0 ? slice_size : 1;
+  int64_t current_offset = bytes_received;
+  for (int i = 0, num_requests = content_length / slice_size;
+       i < num_requests - 1; ++i) {
+    slices_to_download.emplace_back(current_offset, slice_size);
+    current_offset += slice_size;
+  }
+
+  // Last slice is a half open slice, which results in sending range request
+  // like "Range:50-" to fetch from 50 bytes to the end of the file.
+  slices_to_download.emplace_back(current_offset,
+                                  DownloadSaveInfo::kLengthFullContent);
+  return slices_to_download;
+}
+
 std::vector<DownloadItem::ReceivedSlice> FindSlicesToDownload(
     const std::vector<DownloadItem::ReceivedSlice>& received_slices) {
   std::vector<DownloadItem::ReceivedSlice> result;

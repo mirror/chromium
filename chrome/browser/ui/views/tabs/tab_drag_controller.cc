@@ -44,7 +44,7 @@
 #include "ash/common/accelerators/accelerator_commands.h"  // nogncheck
 #include "ash/common/wm/maximize_mode/maximize_mode_controller.h"  // nogncheck
 #include "ash/common/wm/window_state.h"  // nogncheck
-#include "ash/common/wm_shell.h"  // nogncheck
+#include "ash/shell.h"                   // nogncheck
 #include "ash/wm/window_state_aura.h"  // nogncheck
 #include "ui/wm/core/coordinate_conversion.h"  // nogncheck
 #endif
@@ -87,15 +87,15 @@ const int kStackedDistance = 36;
 const int kMaximizedWindowInset = 10;  // DIPs.
 
 #if defined(USE_ASH)
-// Returns true if |tab_strip| browser window is docked.
-bool IsDockedOrSnapped(const TabStrip* tab_strip) {
+// Returns true if |tab_strip| browser window is snapped.
+bool IsSnapped(const TabStrip* tab_strip) {
   DCHECK(tab_strip);
   ash::wm::WindowState* window_state =
       ash::wm::GetWindowState(tab_strip->GetWidget()->GetNativeWindow());
-  return window_state->IsDocked() || window_state->IsSnapped();
+  return window_state->IsSnapped();
 }
 #else
-bool IsDockedOrSnapped(const TabStrip* tab_strip) {
+bool IsSnapped(const TabStrip* tab_strip) {
   return false;
 }
 #endif
@@ -291,10 +291,9 @@ void TabDragController::Init(
     source_tabstrip_->GetWidget()->SetCapture(source_tabstrip_);
 
 #if defined(USE_ASH)
-  if (ash::WmShell::HasInstance() &&
-      ash::WmShell::Get()
-          ->maximize_mode_controller()
-          ->IsMaximizeModeWindowManagerEnabled()) {
+  if (ash::Shell::HasInstance() && ash::Shell::Get()
+                                       ->maximize_mode_controller()
+                                       ->IsMaximizeModeWindowManagerEnabled()) {
     detach_behavior_ = NOT_DETACHABLE;
   }
 #endif
@@ -1476,7 +1475,7 @@ void TabDragController::CompleteDrag() {
 
   if (attached_tabstrip_) {
     if (is_dragging_new_browser_ || did_restore_window_) {
-      if (IsDockedOrSnapped(attached_tabstrip_)) {
+      if (IsSnapped(attached_tabstrip_)) {
         was_source_maximized_ = false;
         was_source_fullscreen_ = false;
       }

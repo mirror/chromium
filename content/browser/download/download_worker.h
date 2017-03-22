@@ -23,8 +23,26 @@ namespace content {
 // download.
 class DownloadWorker : public UrlDownloader::Delegate {
  public:
-  DownloadWorker();
+  class Delegate {
+   public:
+    // Called when the the byte stream is established after server response is
+    // handled. The stream contains data starts from |offset| of the
+    // destination file.
+    virtual void OnByteStreamReady(
+        DownloadWorker* worker,
+        std::unique_ptr<ByteStreamReader> stream_reader) = 0;
+    // Called when there is an error caused by the server response.
+    virtual void OnServerResponseError(DownloadWorker* worker,
+                                       DownloadInterruptReason reason) = 0;
+  };
+
+  DownloadWorker(DownloadWorker::Delegate* delegate,
+                 int64_t offset,
+                 int64_t length);
   virtual ~DownloadWorker();
+
+  int64_t offset() const { return offset_; }
+  int64_t length() const { return length_; }
 
   // Send network request to ask for a download.
   void SendRequest(std::unique_ptr<DownloadUrlParameters> params);
@@ -45,6 +63,14 @@ class DownloadWorker : public UrlDownloader::Delegate {
   void AddUrlDownloader(
       std::unique_ptr<UrlDownloader, BrowserThread::DeleteOnIOThread>
           downloader);
+
+  DownloadWorker::Delegate* const delegate_;
+
+  // The starting position of the content for this worker to download.
+  int64_t offset_;
+
+  // The length of the request. May be 0 to fetch to the end of the file.
+  int64_t length_;
 
   // Used to control the network request. Live on UI thread.
   std::unique_ptr<DownloadRequestHandleInterface> request_handle_;

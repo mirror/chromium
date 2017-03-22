@@ -225,6 +225,7 @@ test("gpu_unittests") {
     "command_buffer/client/ring_buffer_test.cc",
     "command_buffer/client/transfer_buffer_unittest.cc",
     "command_buffer/client/vertex_array_object_manager_unittest.cc",
+    "command_buffer/common/activity_flags_unittest.cc",
     "command_buffer/common/bitfield_helpers_test.cc",
     "command_buffer/common/command_buffer_mock.cc",
     "command_buffer/common/command_buffer_mock.h",
@@ -420,6 +421,29 @@ if (is_linux) {
     ]
 
     defines = [ "GPU_FUZZER_USE_ANGLE" ]
+
+    deps = [
+      ":gpu",
+      "//base",
+      "//base/third_party/dynamic_annotations",
+      "//gpu/command_buffer/common:gles2_utils",
+      "//ui/gfx/geometry",
+      "//ui/gl",
+      "//ui/gl:test_support",
+    ]
+
+    libfuzzer_options = [ "max_len=16384" ]
+  }
+
+  fuzzer_test("gpu_angle_passthrough_fuzzer") {
+    sources = [
+      "command_buffer/tests/fuzzer_main.cc",
+    ]
+
+    defines = [
+      "GPU_FUZZER_USE_ANGLE",
+      "GPU_FUZZER_USE_PASSTHROUGH_CMD_DECODER",
+    ]
 
     deps = [
       ":gpu",

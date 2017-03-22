@@ -58,8 +58,8 @@
   web::ScopedNavigationItemImplList _items;
   // |_pendingItem| only contains a NavigationItem for non-history navigations.
   // For back/forward navigations within session history, _pendingItemIndex will
-  // be equal to -1, and self.pendingItem will return an item contained within
-  // |_items|.
+  // be an index within |_items|, and self.pendingItem will return the item at
+  // that index.
   std::unique_ptr<web::NavigationItemImpl> _pendingItem;
   std::unique_ptr<web::NavigationItemImpl> _transientItem;
 }
@@ -75,7 +75,6 @@
 // Expose setters for serialization properties.  These are exposed in a category
 // in SessionStorageBuilder, and will be removed as ownership of
 // their backing ivars moves to NavigationManagerImpl.
-@property(nonatomic, readwrite, getter=isOpenedByDOM) BOOL openedByDOM;
 @property(nonatomic, readwrite, assign) NSInteger previousNavigationIndex;
 
 // Removes all items after currentNavigationIndex_.
@@ -99,14 +98,11 @@ initiationType:(web::NavigationInitiationType)initiationType;
 @synthesize currentNavigationIndex = _currentNavigationIndex;
 @synthesize previousNavigationIndex = _previousNavigationIndex;
 @synthesize pendingItemIndex = _pendingItemIndex;
-@synthesize openedByDOM = _openedByDOM;
 @synthesize sessionCertificatePolicyManager = _sessionCertificatePolicyManager;
 
-- (instancetype)initWithBrowserState:(web::BrowserState*)browserState
-                         openedByDOM:(BOOL)openedByDOM {
+- (instancetype)initWithBrowserState:(web::BrowserState*)browserState {
   self = [super init];
   if (self) {
-    _openedByDOM = openedByDOM;
     _browserState = browserState;
     _currentNavigationIndex = -1;
     _previousNavigationIndex = -1;
@@ -204,19 +200,6 @@ initiationType:(web::NavigationInitiationType)initiationType;
 - (web::NavigationItemImpl*)previousItem {
   NSInteger index = self.previousNavigationIndex;
   return index == -1 || self.items.empty() ? nullptr : self.items[index].get();
-}
-
-- (web::NavigationItemImpl*)lastUserItem {
-  if (self.items.empty())
-    return nil;
-
-  NSInteger index = self.currentNavigationIndex;
-  // This will return the first NavigationItem if all other items are
-  // redirects, regardless of the transition state of the first item.
-  while (index > 0 && [self isRedirectTransitionForItemAtIndex:index])
-    --index;
-
-  return self.items[index].get();
 }
 
 - (web::NavigationItemList)backwardItems {

@@ -27,6 +27,7 @@ import org.chromium.chrome.browser.ntp.snippets.CategoryStatus;
 import org.chromium.chrome.browser.ntp.snippets.ContentSuggestionsCardLayout;
 import org.chromium.chrome.browser.ntp.snippets.KnownCategories;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
+import org.chromium.chrome.browser.suggestions.ContentSuggestionsAdditionalAction;
 import org.chromium.chrome.browser.suggestions.FakeMostVisitedSites;
 import org.chromium.chrome.browser.suggestions.TileGroupDelegateImpl;
 import org.chromium.chrome.browser.tab.Tab;
@@ -75,11 +76,17 @@ public class NewTabPageRecyclerViewTest extends ChromeTabbedActivityTestBase {
         mTestServer = EmbeddedTestServer.createAndStartServer(getInstrumentation().getContext());
         mSiteSuggestionUrls = new String[] {mTestServer.getURL(TEST_PAGE)};
 
+        mMostVisitedSites = new FakeMostVisitedSites();
+        mMostVisitedSites.setTileSuggestions(FAKE_MOST_VISITED_TITLES, mSiteSuggestionUrls,
+                FAKE_MOST_VISITED_WHITELIST_ICON_PATHS, FAKE_MOST_VISITED_SOURCES);
+        TileGroupDelegateImpl.setMostVisitedSitesForTests(mMostVisitedSites);
+
         mSource = new FakeSuggestionsSource();
         mSource.setInfoForCategory(TEST_CATEGORY,
                 new SuggestionsCategoryInfo(TEST_CATEGORY, "Suggestions test title",
-                        ContentSuggestionsCardLayout.FULL_CARD, /*hasFetchAction=*/true,
-                        /*hasViewAllAction=*/false, /*showIfEmpty=*/true, "noSuggestionsMessage"));
+                        ContentSuggestionsCardLayout.FULL_CARD,
+                        ContentSuggestionsAdditionalAction.FETCH, /*showIfEmpty=*/true,
+                        "noSuggestionsMessage"));
         mSource.setStatusForCategory(TEST_CATEGORY, CategoryStatus.INITIALIZING);
         NewTabPage.setSuggestionsSourceForTests(mSource);
 
@@ -97,22 +104,8 @@ public class NewTabPageRecyclerViewTest extends ChromeTabbedActivityTestBase {
 
     @Override
     public void startMainActivity() throws InterruptedException {
-        startMainActivityOnBlankPage();
+        startMainActivityWithURL(UrlConstants.NTP_URL);
         mTab = getActivity().getActivityTab();
-
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                // Create FakeMostVisitedSites after starting the activity, since it depends on
-                // native code.
-                mMostVisitedSites = new FakeMostVisitedSites(mTab.getProfile());
-                mMostVisitedSites.setTileSuggestions(FAKE_MOST_VISITED_TITLES, mSiteSuggestionUrls,
-                        FAKE_MOST_VISITED_WHITELIST_ICON_PATHS, FAKE_MOST_VISITED_SOURCES);
-            }
-        });
-        TileGroupDelegateImpl.setMostVisitedSitesForTests(mMostVisitedSites);
-
-        loadUrl(UrlConstants.NTP_URL);
         NewTabPageTestUtils.waitForNtpLoaded(mTab);
 
         assertTrue(mTab.getNativePage() instanceof NewTabPage);

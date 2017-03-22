@@ -17,13 +17,13 @@
 #include "build/build_config.h"
 #include "content/child/child_process.h"
 #include "content/child/thread_safe_sender.h"
-#include "content/common/establish_channel_params.h"
 #include "content/common/gpu_host_messages.h"
 #include "content/gpu/gpu_service_factory.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/gpu/content_gpu_client.h"
+#include "gpu/command_buffer/common/activity_flags.h"
 #include "gpu/command_buffer/service/gpu_switches.h"
 #include "gpu/command_buffer/service/sync_point_manager.h"
 #include "gpu/config/gpu_info_collector.h"
@@ -51,7 +51,7 @@
 #endif
 
 #if defined(OS_ANDROID)
-#include "media/base/android/media_client_android.h"
+#include "media/base/android/media_drm_bridge_client.h"
 #endif
 
 namespace content {
@@ -212,7 +212,8 @@ void GpuChildThread::Init(const base::Time& process_start_time) {
   // When running in in-process mode, this has been set in the browser at
   // ChromeBrowserMainPartsAndroid::PreMainMessageLoopRun().
   if (!in_browser_process_)
-    media::SetMediaClientAndroid(GetContentClient()->GetMediaClientAndroid());
+    media::SetMediaDrmBridgeClient(
+        GetContentClient()->GetMediaDrmBridgeClient());
 #endif
   // We don't want to process any incoming interface requests until
   // OnInitialize() is invoked.
@@ -281,7 +282,8 @@ void GpuChildThread::OnAssociatedInterfaceRequest(
 void GpuChildThread::CreateGpuService(
     ui::mojom::GpuServiceRequest request,
     ui::mojom::GpuHostPtr gpu_host,
-    const gpu::GpuPreferences& gpu_preferences) {
+    const gpu::GpuPreferences& gpu_preferences,
+    mojo::ScopedSharedBufferHandle activity_flags) {
   gpu_service_->Bind(std::move(request));
 
   gpu_info_.video_decode_accelerator_capabilities =
@@ -318,9 +320,10 @@ void GpuChildThread::CreateGpuService(
   // Note SyncPointManager from ContentGpuClient cannot be owned by this.
   if (GetContentClient()->gpu())
     sync_point_manager = GetContentClient()->gpu()->GetSyncPointManager();
-  gpu_service_->InitializeWithHost(std::move(gpu_host), gpu_preferences,
-                                   sync_point_manager,
-                                   ChildProcess::current()->GetShutDownEvent());
+  gpu_service_->InitializeWithHost(
+      std::move(gpu_host), gpu_preferences,
+      gpu::GpuProcessActivityFlags(std::move(activity_flags)),
+      sync_point_manager, ChildProcess::current()->GetShutDownEvent());
   CHECK(gpu_service_->media_gpu_channel_manager());
 
   // Only set once per process instance.

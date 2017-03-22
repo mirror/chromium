@@ -304,10 +304,10 @@ FYI_WATERFALL = {
       'swarming': False,
       'os_type': 'win',
     },
-    'Win10 Release (NVIDIA Quadro M2000)': {
+    'Win10 Release (NVIDIA Quadro P400)': {
       'swarming_dimensions': [
         {
-          'gpu': '10de:1430',
+          'gpu': '10de:1cb3',
           'os': 'Windows-10'
         },
       ],
@@ -542,10 +542,10 @@ FYI_WATERFALL = {
       'swarming': False,
       'os_type': 'linux',
     },
-    'Linux Release (NVIDIA Quadro M2000)': {
+    'Linux Release (NVIDIA Quadro P400)': {
       'swarming_dimensions': [
         {
-          'gpu': '10de:1430',
+          'gpu': '10de:1cb3',
           'os': 'Ubuntu'
         },
       ],
@@ -703,21 +703,6 @@ FYI_WATERFALL = {
       'os_type': 'android',
     },
     'Android Release (Pixel C)': {
-      'swarming_dimensions': [
-        {
-          # There are no PCI IDs on Android.
-          # This is a hack to get the script working.
-          'gpu': '0000:0000',
-          'os': 'Android'
-        },
-      ],
-      'build_config': 'android-chromium',
-      # This bot is a one-off and doesn't have similar slaves in the
-      # swarming pool.
-      'swarming': False,
-      'os_type': 'android',
-    },
-    'Android Release (NVIDIA Shield)': {
       'swarming_dimensions': [
         {
           # There are no PCI IDs on Android.

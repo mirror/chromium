@@ -159,16 +159,6 @@ TestPlatformDisplayFactory::CreatePlatformDisplay(
   return base::MakeUnique<TestPlatformDisplay>(metrics, cursor_storage_);
 }
 
-// TestFrameGeneratorDelegate -------------------------------------------------
-
-TestFrameGeneratorDelegate::TestFrameGeneratorDelegate() {}
-
-TestFrameGeneratorDelegate::~TestFrameGeneratorDelegate() {}
-
-bool TestFrameGeneratorDelegate::IsInHighContrastMode() {
-  return false;
-}
-
 // WindowTreeTestApi  ---------------------------------------------------------
 
 WindowTreeTestApi::WindowTreeTestApi(WindowTree* tree) : tree_(tree) {}
@@ -226,6 +216,10 @@ void TestWindowManager::WmDisplayRemoved(int64_t display_id) {
   display_removed_id_ = display_id;
 }
 
+void TestWindowManager::WmSetModalType(uint32_t window_id, ui::ModalType type) {
+  on_set_modal_type_called_ = true;
+}
+
 void TestWindowManager::WmCreateTopLevelWindow(
     uint32_t change_id,
     ClientSpecificId requesting_client_id,
@@ -277,9 +271,10 @@ void TestWindowTreeClient::OnEmbed(uint16_t client_id,
                                    ui::mojom::WindowTreePtr tree,
                                    int64_t display_id,
                                    Id focused_window_id,
-                                   bool drawn) {
+                                   bool drawn,
+                                   const cc::FrameSinkId& frame_sink_id) {
   // TODO(sky): add test coverage of |focused_window_id|.
-  tracker_.OnEmbed(client_id, std::move(root), drawn);
+  tracker_.OnEmbed(client_id, std::move(root), drawn, frame_sink_id);
 }
 
 void TestWindowTreeClient::OnEmbeddedAppDisconnected(uint32_t window) {
@@ -295,11 +290,19 @@ void TestWindowTreeClient::OnCaptureChanged(Id new_capture_window_id,
   tracker_.OnCaptureChanged(new_capture_window_id, old_capture_window_id);
 }
 
-void TestWindowTreeClient::OnTopLevelCreated(uint32_t change_id,
-                                             mojom::WindowDataPtr data,
-                                             int64_t display_id,
-                                             bool drawn) {
-  tracker_.OnTopLevelCreated(change_id, std::move(data), drawn);
+void TestWindowTreeClient::OnFrameSinkIdAllocated(
+    Id window_id,
+    const cc::FrameSinkId& frame_sink_id) {
+  tracker_.OnFrameSinkIdAllocated(window_id, frame_sink_id);
+}
+
+void TestWindowTreeClient::OnTopLevelCreated(
+    uint32_t change_id,
+    mojom::WindowDataPtr data,
+    int64_t display_id,
+    bool drawn,
+    const cc::FrameSinkId& frame_sink_id) {
+  tracker_.OnTopLevelCreated(change_id, std::move(data), drawn, frame_sink_id);
 }
 
 void TestWindowTreeClient::OnWindowBoundsChanged(

@@ -50,6 +50,22 @@ ConsoleModel.ConsoleModel = class extends Common.Object {
    * @param {!SDK.Target} target
    */
   targetAdded(target) {
+    var resourceTreeModel = target.model(SDK.ResourceTreeModel);
+    if (!resourceTreeModel || resourceTreeModel.cachedResourcesLoaded()) {
+      this._initTarget(target);
+      return;
+    }
+
+    var eventListener = resourceTreeModel.addEventListener(SDK.ResourceTreeModel.Events.CachedResourcesLoaded, () => {
+      Common.EventTarget.removeEventListeners([eventListener]);
+      this._initTarget(target);
+    });
+  }
+
+  /**
+   * @param {!SDK.Target} target
+   */
+  _initTarget(target) {
     var eventListeners = [];
 
     var logModel = target.model(SDK.LogModel);
@@ -98,7 +114,7 @@ ConsoleModel.ConsoleModel = class extends Common.Object {
    */
   targetRemoved(target) {
     this._messageByExceptionId.delete(target);
-    Common.EventTarget.removeEventListeners(target[ConsoleModel.ConsoleModel._events]);
+    Common.EventTarget.removeEventListeners(target[ConsoleModel.ConsoleModel._events] || []);
   }
 
   /**
@@ -207,7 +223,7 @@ ConsoleModel.ConsoleModel = class extends Common.Object {
   _exceptionThrown(runtimeModel, event) {
     var exceptionWithTimestamp = /** @type {!SDK.RuntimeModel.ExceptionWithTimestamp} */ (event.data);
     var consoleMessage = ConsoleModel.ConsoleMessage.fromException(
-        runtimeModel.target(), exceptionWithTimestamp.details, undefined, exceptionWithTimestamp.timestamp, undefined);
+        runtimeModel, exceptionWithTimestamp.details, undefined, exceptionWithTimestamp.timestamp, undefined);
     consoleMessage.setExceptionId(exceptionWithTimestamp.details.exceptionId);
     this.addMessage(consoleMessage);
   }
@@ -436,7 +452,7 @@ ConsoleModel.ConsoleMessage = class {
     this.scriptId = scriptId || null;
     this.workerId = workerId || null;
 
-    this.request = (target && requestId) ? SDK.networkLog.requestForId(target, requestId) : null;
+    this.request = (target && requestId) ? NetworkLog.networkLog.requestForId(target, requestId) : null;
 
     if (this.request) {
       var initiator = this.request.initiator();
@@ -460,18 +476,19 @@ ConsoleModel.ConsoleMessage = class {
   }
 
   /**
-   * @param {!SDK.Target} target
+   * @param {!SDK.RuntimeModel} runtimeModel
    * @param {!Protocol.Runtime.ExceptionDetails} exceptionDetails
    * @param {string=} messageType
    * @param {number=} timestamp
    * @param {string=} forceUrl
    * @return {!ConsoleModel.ConsoleMessage}
    */
-  static fromException(target, exceptionDetails, messageType, timestamp, forceUrl) {
+  static fromException(runtimeModel, exceptionDetails, messageType, timestamp, forceUrl) {
     return new ConsoleModel.ConsoleMessage(
-        target, ConsoleModel.ConsoleMessage.MessageSource.JS, ConsoleModel.ConsoleMessage.MessageLevel.Error,
-        SDK.RuntimeModel.simpleTextFromException(exceptionDetails), messageType, forceUrl || exceptionDetails.url,
-        exceptionDetails.lineNumber, exceptionDetails.columnNumber, undefined,
+        runtimeModel.target(), ConsoleModel.ConsoleMessage.MessageSource.JS,
+        ConsoleModel.ConsoleMessage.MessageLevel.Error, SDK.RuntimeModel.simpleTextFromException(exceptionDetails),
+        messageType, forceUrl || exceptionDetails.url, exceptionDetails.lineNumber, exceptionDetails.columnNumber,
+        undefined,
         exceptionDetails.exception ?
             [SDK.RemoteObject.fromLocalObject(exceptionDetails.text), exceptionDetails.exception] :
             undefined,

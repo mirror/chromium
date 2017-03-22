@@ -6,14 +6,13 @@
 
 #include "ash/common/ash_view_ids.h"
 #include "ash/common/media_controller.h"
-#include "ash/common/session/session_state_delegate.h"
+#include "ash/common/session/session_controller.h"
 #include "ash/common/system/tray/system_tray_notifier.h"
 #include "ash/common/system/tray/tray_constants.h"
 #include "ash/common/system/tray/tray_item_view.h"
 #include "ash/common/wm_shell.h"
-#include "ash/resources/grit/ash_resources.h"
 #include "ash/resources/vector_icons/vector_icons.h"
-#include "ui/base/resource/resource_bundle.h"
+#include "ash/shell.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/views/controls/image_view.h"
 
@@ -26,29 +25,25 @@ class MultiProfileMediaTrayView : public TrayItemView,
   explicit MultiProfileMediaTrayView(SystemTrayItem* system_tray_item)
       : TrayItemView(system_tray_item) {
     CreateImageView();
-    ui::ResourceBundle& bundle = ui::ResourceBundle::GetSharedInstance();
     image_view()->SetImage(
-        UseMd()
-            ? gfx::CreateVectorIcon(kSystemTrayRecordingIcon, kTrayIconColor)
-            : *bundle.GetImageSkiaNamed(IDR_AURA_UBER_TRAY_RECORDING));
-    WmShell::Get()->media_controller()->AddObserver(this);
+        gfx::CreateVectorIcon(kSystemTrayRecordingIcon, kTrayIconColor));
+    Shell::Get()->media_controller()->AddObserver(this);
     SetVisible(false);
-    WmShell::Get()->media_controller()->RequestCaptureState();
+    Shell::Get()->media_controller()->RequestCaptureState();
     set_id(VIEW_ID_MEDIA_TRAY_VIEW);
   }
 
   ~MultiProfileMediaTrayView() override {
-    WmShell::Get()->media_controller()->RemoveObserver(this);
+    Shell::Get()->media_controller()->RemoveObserver(this);
   }
 
   // MediaCaptureObserver:
   void OnMediaCaptureChanged(
       const std::vector<mojom::MediaCaptureState>& capture_states) override {
-    SessionStateDelegate* session_state_delegate =
-        WmShell::Get()->GetSessionStateDelegate();
+    SessionController* controller = Shell::Get()->session_controller();
     // The user at 0 is the current desktop user.
-    for (UserIndex index = 1;
-         index < session_state_delegate->NumberOfLoggedInUsers(); ++index) {
+    for (UserIndex index = 1; index < controller->NumberOfLoggedInUsers();
+         ++index) {
       if (capture_states[index] != mojom::MediaCaptureState::NONE) {
         SetVisible(true);
         return;

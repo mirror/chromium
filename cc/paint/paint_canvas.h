@@ -7,6 +7,7 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "build/build_config.h"
 #include "cc/paint/paint_export.h"
 #include "cc/paint/paint_record.h"
@@ -14,10 +15,13 @@
 
 namespace cc {
 
+class DisplayItemList;
 class PaintFlags;
 
 class CC_PAINT_EXPORT PaintCanvas {
  public:
+  virtual ~PaintCanvas() {}
+
   virtual SkMetaData& getMetaData() = 0;
   virtual SkImageInfo imageInfo() const = 0;
 
@@ -30,7 +34,6 @@ class CC_PAINT_EXPORT PaintCanvas {
   virtual void flush() = 0;
 
   virtual SkISize getBaseLayerSize() const = 0;
-  virtual bool peekPixels(SkPixmap* pixmap) = 0;
   virtual bool readPixels(const SkImageInfo& dest_info,
                           void* dest_pixels,
                           size_t dest_row_bytes,
@@ -53,10 +56,8 @@ class CC_PAINT_EXPORT PaintCanvas {
   virtual void translate(SkScalar dx, SkScalar dy) = 0;
   virtual void scale(SkScalar sx, SkScalar sy) = 0;
   virtual void rotate(SkScalar degrees) = 0;
-  virtual void rotate(SkScalar degrees, SkScalar px, SkScalar py) = 0;
   virtual void concat(const SkMatrix& matrix) = 0;
   virtual void setMatrix(const SkMatrix& matrix) = 0;
-  virtual void resetMatrix() = 0;
 
   virtual void clipRect(const SkRect& rect,
                         SkClipOp op,
@@ -126,18 +127,11 @@ class CC_PAINT_EXPORT PaintCanvas {
                              SkScalar ry,
                              const PaintFlags& flags) = 0;
   virtual void drawPath(const SkPath& path, const PaintFlags& flags) = 0;
-  virtual void drawImage(const SkImage* image,
+  virtual void drawImage(sk_sp<const SkImage> image,
                          SkScalar left,
                          SkScalar top,
                          const PaintFlags* flags) = 0;
-  void drawImage(const SkImage* image, SkScalar left, SkScalar top) {
-    drawImage(image, left, top, nullptr);
-  }
-  virtual void drawImage(const sk_sp<SkImage>& image,
-                         SkScalar left,
-                         SkScalar top,
-                         const PaintFlags* flags) = 0;
-  void drawImage(const sk_sp<SkImage>& image, SkScalar left, SkScalar top) {
+  void drawImage(sk_sp<const SkImage> image, SkScalar left, SkScalar top) {
     drawImage(image, left, top, nullptr);
   }
 
@@ -146,7 +140,7 @@ class CC_PAINT_EXPORT PaintCanvas {
     kFast_SrcRectConstraint = SkCanvas::kFast_SrcRectConstraint,
   };
 
-  virtual void drawImageRect(const SkImage* image,
+  virtual void drawImageRect(sk_sp<const SkImage> image,
                              const SkRect& src,
                              const SkRect& dst,
                              const PaintFlags* flags,
@@ -168,20 +162,20 @@ class CC_PAINT_EXPORT PaintCanvas {
                            size_t byte_length,
                            const SkPoint pos[],
                            const PaintFlags& flags) = 0;
-  virtual void drawTextBlob(const SkTextBlob* blob,
-                            SkScalar x,
-                            SkScalar y,
-                            const PaintFlags& flags) = 0;
-  virtual void drawTextBlob(const sk_sp<SkTextBlob>& blob,
+  virtual void drawTextBlob(sk_sp<SkTextBlob> blob,
                             SkScalar x,
                             SkScalar y,
                             const PaintFlags& flags) = 0;
 
-  virtual void drawPicture(const PaintRecord* record) = 0;
-  virtual void drawPicture(const PaintRecord* record,
+  virtual void drawDisplayItemList(
+      scoped_refptr<DisplayItemList> display_item_list) = 0;
+
+  virtual void drawPicture(sk_sp<const PaintRecord> record,
                            const SkMatrix* matrix,
                            const PaintFlags* flags) = 0;
-  virtual void drawPicture(sk_sp<PaintRecord> record) = 0;
+  void drawPicture(sk_sp<const PaintRecord> record) {
+    drawPicture(record, nullptr, nullptr);
+  }
 
   virtual bool isClipEmpty() const = 0;
   virtual bool isClipRect() const = 0;
@@ -195,6 +189,10 @@ class CC_PAINT_EXPORT PaintCanvas {
   virtual void AnnotateRectWithURL(const SkRect& rect, SkData* data) = 0;
   virtual void AnnotateNamedDestination(const SkPoint& point, SkData* data) = 0;
   virtual void AnnotateLinkToDestination(const SkRect& rect, SkData* data) = 0;
+
+  // TODO(enne): maybe this should live on PaintRecord, but that's not
+  // possible when PaintRecord is a typedef.
+  virtual void PlaybackPaintRecord(sk_sp<const PaintRecord> record) = 0;
 
  protected:
   friend class PaintSurface;

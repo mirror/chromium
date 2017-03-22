@@ -22,9 +22,11 @@
 #include "ash/common/wm/maximize_mode/maximize_mode_controller.h"
 #include "ash/common/wm_shell.h"
 #include "ash/display/screen_orientation_controller_chromeos.h"
+#include "ash/public/cpp/app_launch_id.h"
 #include "ash/public/cpp/shelf_item.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_helper.h"
+#include "ash/test/shell_test_api.h"
 #include "ash/test/test_shell_delegate.h"
 #include "ash/wm/window_util.h"
 #include "base/command_line.h"
@@ -54,7 +56,6 @@
 #include "chrome/browser/ui/app_list/arc/arc_app_utils.h"
 #include "chrome/browser/ui/app_list/arc/arc_default_app_list.h"
 #include "chrome/browser/ui/apps/chrome_app_delegate.h"
-#include "chrome/browser/ui/ash/app_launcher_id.h"
 #include "chrome/browser/ui/ash/chrome_launcher_prefs.h"
 #include "chrome/browser/ui/ash/launcher/app_window_launcher_controller.h"
 #include "chrome/browser/ui/ash/launcher/arc_app_deferred_launcher_controller.h"
@@ -111,6 +112,7 @@
 #include "ui/display/display.h"
 #include "ui/display/display_switches.h"
 #include "ui/display/screen.h"
+#include "ui/events/base_event_utils.h"
 #include "ui/events/event_constants.h"
 #include "ui/views/widget/widget.h"
 
@@ -258,7 +260,7 @@ class TestV2AppLauncherItemController : public LauncherItemController {
  public:
   TestV2AppLauncherItemController(const std::string& app_id,
                                   ChromeLauncherController* controller)
-      : LauncherItemController(app_id, std::string(), controller) {}
+      : LauncherItemController(ash::AppLaunchId(app_id), controller) {}
 
   ~TestV2AppLauncherItemController() override {}
 
@@ -322,6 +324,18 @@ class ProxyShelfDelegate : public ash::ShelfDelegate {
   DISALLOW_COPY_AND_ASSIGN(ProxyShelfDelegate);
 };
 
+// A callback that does nothing after shelf item selection handling.
+void NoopCallback(ash::ShelfAction action, base::Optional<MenuItemList>) {}
+
+// Simulates selection of the shelf item.
+void SelectItem(ash::mojom::ShelfItemDelegate* delegate) {
+  std::unique_ptr<ui::Event> event = base::MakeUnique<ui::MouseEvent>(
+      ui::ET_MOUSE_PRESSED, gfx::Point(), gfx::Point(), ui::EventTimeForNow(),
+      ui::EF_NONE, 0);
+  delegate->ItemSelected(std::move(event), display::kInvalidDisplayId,
+                         ash::LAUNCH_FROM_UNKNOWN, base::Bind(&NoopCallback));
+}
+
 }  // namespace
 
 class ChromeLauncherControllerImplTest : public BrowserWithTestWindowTest {
@@ -345,7 +359,7 @@ class ChromeLauncherControllerImplTest : public BrowserWithTestWindowTest {
       ASSERT_TRUE(profile_manager_->SetUp());
     }
 
-    model_ = ash::WmShell::Get()->shelf_controller()->model();
+    model_ = ash::Shell::Get()->shelf_controller()->model();
     model_observer_.reset(new TestShelfModelObserver);
     model_->AddObserver(model_observer_.get());
 
@@ -446,7 +460,7 @@ class ChromeLauncherControllerImplTest : public BrowserWithTestWindowTest {
     DCHECK(!test_controller_);
     ash::ShelfID id =
         launcher_controller_->CreateAppShortcutLauncherItemWithType(
-            ash::AppLauncherId(app_id), model_->item_count(), ash::TYPE_APP);
+            ash::AppLaunchId(app_id), model_->item_count(), ash::TYPE_APP);
     DCHECK(id);
     // Change the created launcher controller into a V2 app controller.
     test_controller_ = new TestV2AppLauncherItemController(app_id,
@@ -551,7 +565,7 @@ class ChromeLauncherControllerImplTest : public BrowserWithTestWindowTest {
   // This needs to be called after InitLaunchController(), or its family.
   // It is not supported to recreate the instance.
   void SetShelfDelegate() {
-    ash::WmShell::Get()->SetShelfDelegateForTesting(
+    ash::test::ShellTestApi().SetShelfDelegate(
         base::MakeUnique<ProxyShelfDelegate>(launcher_controller_.get()));
   }
 
@@ -880,7 +894,7 @@ class ChromeLauncherControllerImplTest : public BrowserWithTestWindowTest {
 
   void EnableTabletMode(bool enable) {
     ash::MaximizeModeController* controller =
-        ash::WmShell::Get()->maximize_mode_controller();
+        ash::Shell::Get()->maximize_mode_controller();
     controller->EnableMaximizeModeWindowManager(enable);
   }
 
@@ -1957,7 +1971,7 @@ TEST_P(ChromeLauncherControllerImplWithArcTest, ArcDeferredLaunchForActiveApp) {
   // Play Store app is ARC app that might be represented by native Chrome
   // platform app.
   AppWindowLauncherItemController* app_controller =
-      new ExtensionAppWindowLauncherItemController(app_id, "",
+      new ExtensionAppWindowLauncherItemController(ash::AppLaunchId(app_id),
                                                    launcher_controller_.get());
   launcher_controller_->SetItemController(shelf_id, app_controller);
   launcher_controller_->SetItemStatus(shelf_id, ash::STATUS_RUNNING);
@@ -3640,31 +3654,31 @@ TEST_F(ChromeLauncherControllerImplTest, MultipleAppIconLoaders) {
                     std::unique_ptr<AppIconLoader>(app_icon_loader2));
 
   AppWindowLauncherItemController* app_controller3 =
-      new ExtensionAppWindowLauncherItemController(app_id3, "id",
+      new ExtensionAppWindowLauncherItemController(ash::AppLaunchId(app_id3),
                                                    launcher_controller_.get());
   const ash::ShelfID shelfId3 = launcher_controller_->CreateAppLauncherItem(
-      app_controller3, app_id3, ash::STATUS_RUNNING);
+      app_controller3, ash::STATUS_RUNNING);
   EXPECT_EQ(0, app_icon_loader1->fetch_count());
   EXPECT_EQ(0, app_icon_loader1->clear_count());
   EXPECT_EQ(0, app_icon_loader2->fetch_count());
   EXPECT_EQ(0, app_icon_loader2->clear_count());
 
   AppWindowLauncherItemController* app_controller2 =
-      new ExtensionAppWindowLauncherItemController(app_id2, "id",
+      new ExtensionAppWindowLauncherItemController(ash::AppLaunchId(app_id2),
                                                    launcher_controller_.get());
   const ash::ShelfID shelfId2 = launcher_controller_->CreateAppLauncherItem(
-      app_controller2, app_id2, ash::STATUS_RUNNING);
+      app_controller2, ash::STATUS_RUNNING);
   EXPECT_EQ(0, app_icon_loader1->fetch_count());
   EXPECT_EQ(0, app_icon_loader1->clear_count());
   EXPECT_EQ(1, app_icon_loader2->fetch_count());
   EXPECT_EQ(0, app_icon_loader2->clear_count());
 
   AppWindowLauncherItemController* app_controller1 =
-      new ExtensionAppWindowLauncherItemController(app_id1, "id",
+      new ExtensionAppWindowLauncherItemController(ash::AppLaunchId(app_id1),
                                                    launcher_controller_.get());
 
   const ash::ShelfID shelfId1 = launcher_controller_->CreateAppLauncherItem(
-      app_controller1, app_id1, ash::STATUS_RUNNING);
+      app_controller1, ash::STATUS_RUNNING);
   EXPECT_EQ(1, app_icon_loader1->fetch_count());
   EXPECT_EQ(0, app_icon_loader1->clear_count());
   EXPECT_EQ(1, app_icon_loader2->fetch_count());
@@ -3771,6 +3785,65 @@ TEST_P(ChromeLauncherControllerImplWithArcTest, ArcManaged) {
   ValidateArcState(true, false,
                    arc::ArcSessionManager::State::NEGOTIATING_TERMS_OF_SERVICE,
                    "AppList, Chrome");
+}
+
+// Test the application menu of a shelf item with multiple ARC windows.
+TEST_P(ChromeLauncherControllerImplWithArcTest, ShelfItemWithMultipleWindows) {
+  InitLauncherControllerWithBrowser();
+
+  arc::mojom::AppInfo appinfo =
+      CreateAppInfo("Test1", "test", "com.example.app", OrientationLock::NONE);
+  AddArcAppAndShortcut(appinfo);
+
+  // Widgets will be deleted by the system.
+  NotifyOnTaskCreated(appinfo, 1 /* task_id */);
+  views::Widget* window1 = CreateArcWindow("org.chromium.arc.1");
+  ASSERT_TRUE(window1);
+  EXPECT_TRUE(window1->IsActive());
+
+  NotifyOnTaskCreated(appinfo, 2 /* task_id */);
+  views::Widget* window2 = CreateArcWindow("org.chromium.arc.2");
+  ASSERT_TRUE(window2);
+
+  EXPECT_FALSE(window1->IsActive());
+  EXPECT_TRUE(window2->IsActive());
+
+  const std::string app_id = ArcAppTest::GetAppId(appinfo);
+
+  const ash::ShelfID shelf_id =
+      launcher_controller_->GetShelfIDForAppID(app_id);
+  LauncherItemController* item_controller =
+      launcher_controller_->GetLauncherItemController(shelf_id);
+  ASSERT_TRUE(item_controller);
+
+  // Selecting the item will show its application menu. It does not change the
+  // active window.
+  SelectItem(item_controller);
+  EXPECT_FALSE(window1->IsActive());
+  EXPECT_TRUE(window2->IsActive());
+
+  // Command ids are just app window indices. Note, apps are registered in
+  // opposite order. Last created goes in front.
+  MenuItemList items = item_controller->GetAppMenuItems(0);
+  ASSERT_EQ(items.size(), 2U);
+  EXPECT_EQ(items[0]->command_id, 0U);
+  EXPECT_EQ(items[1]->command_id, 1U);
+
+  // Execute command to activate first window.
+  item_controller->ExecuteCommand(items[1]->command_id, 0);
+  EXPECT_TRUE(window1->IsActive());
+  EXPECT_FALSE(window2->IsActive());
+
+  // Selecting the item will show its application menu. It does not change the
+  // active window.
+  SelectItem(item_controller);
+  EXPECT_TRUE(window1->IsActive());
+  EXPECT_FALSE(window2->IsActive());
+
+  // Execute command to activate second window.
+  item_controller->ExecuteCommand(items[0]->command_id, 0);
+  EXPECT_FALSE(window1->IsActive());
+  EXPECT_TRUE(window2->IsActive());
 }
 
 namespace {
@@ -4297,7 +4370,7 @@ TEST_F(ChromeLauncherControllerImplPrefTest, PrefsLoadedOnLogin) {
   prefs->SetString(prefs::kShelfAutoHideBehaviorLocal, "Always");
   prefs->SetString(prefs::kShelfAutoHideBehavior, "Always");
 
-  ash::ShelfModel* model = ash::WmShell::Get()->shelf_controller()->model();
+  ash::ShelfModel* model = ash::Shell::Get()->shelf_controller()->model();
   TestChromeLauncherControllerImpl test_launcher_controller(profile(), model);
   test_launcher_controller.Init();
 
@@ -4318,7 +4391,7 @@ TEST_F(ChromeLauncherControllerImplPrefTest, PrefsLoadedOnLogin) {
 
 // Tests that the shelf controller's changes are not wastefully echoed back.
 TEST_F(ChromeLauncherControllerImplPrefTest, DoNotEchoShelfControllerChanges) {
-  ash::ShelfModel* model = ash::WmShell::Get()->shelf_controller()->model();
+  ash::ShelfModel* model = ash::Shell::Get()->shelf_controller()->model();
   TestChromeLauncherControllerImpl test_launcher_controller(profile(), model);
   test_launcher_controller.Init();
 

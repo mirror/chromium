@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "base/gtest_prod_util.h"
+#include "cc/output/begin_frame_args.h"
 #include "cc/output/copy_output_result.h"
 #include "cc/scheduler/begin_frame_source.h"
 #include "cc/surfaces/compositor_frame_sink_support_client.h"
@@ -33,7 +34,6 @@ class TickClock;
 
 namespace cc {
 class CompositorFrameSinkSupport;
-class LocalSurfaceIdAllocator;
 }
 
 namespace media {
@@ -124,6 +124,7 @@ class CONTENT_EXPORT DelegatedFrameHost
   // Public interface exposed to RenderWidgetHostView.
 
   void SwapDelegatedFrame(uint32_t compositor_frame_sink_id,
+                          const cc::LocalSurfaceId& local_surface_id,
                           cc::CompositorFrame frame);
   void ClearDelegatedFrame();
   void WasHidden();
@@ -287,7 +288,6 @@ class CONTENT_EXPORT DelegatedFrameHost
   SkColor background_color_;
 
   // State for rendering into a Surface.
-  std::unique_ptr<cc::LocalSurfaceIdAllocator> id_allocator_;
   std::unique_ptr<cc::CompositorFrameSinkSupport> support_;
   gfx::Size current_surface_size_;
   float current_scale_factor_;
@@ -334,8 +334,10 @@ class CONTENT_EXPORT DelegatedFrameHost
       yuv_readback_pipeline_;
 
   std::unique_ptr<cc::ExternalBeginFrameSource> begin_frame_source_;
-
   bool needs_begin_frame_ = false;
+  uint32_t latest_confirmed_begin_frame_source_id_ = 0;
+  uint64_t latest_confirmed_begin_frame_sequence_number_ =
+      cc::BeginFrameArgs::kInvalidFrameNumber;
 
   bool has_frame_ = false;
 

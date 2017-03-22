@@ -13,7 +13,17 @@ function assert_no_event(test, obj, name) {
 function waitUntilCSPEventForURL(test, url) {
   return new Promise((resolve, reject) => {
     self.addEventListener("securitypolicyviolation", test.step_func(e => {
+      console.log(e.blockedURI);
       if (e.blockedURI == url)
+        resolve(e);
+    }));
+  });
+}
+
+function waitUntilCSPEventForEval(test, line) {
+  return new Promise((resolve, reject) => {
+    self.addEventListener("securitypolicyviolation", test.step_func(e => {
+      if (e.blockedURI == "eval" && e.lineNumber == line)
         resolve(e);
     }));
   });

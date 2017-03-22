@@ -231,7 +231,9 @@ void NavigatorImpl::DidStartProvisionalLoad(
       validated_url, validated_redirect_chain,
       render_frame_host->frame_tree_node(), is_renderer_initiated,
       false,  // is_same_page
-      navigation_start, pending_nav_entry_id, started_from_context_menu));
+      navigation_start, pending_nav_entry_id, started_from_context_menu,
+      CSPDisposition::CHECK,  // should_check_main_world_csp
+      false));                // is_form_submission
 }
 
 void NavigatorImpl::DidFailProvisionalLoadWithError(
@@ -280,12 +282,6 @@ void NavigatorImpl::DidFailProvisionalLoadWithError(
 
   // Discard the pending navigation entry if needed.
   DiscardPendingEntryIfNeeded(render_frame_host->navigation_handle());
-
-  if (delegate_) {
-    delegate_->DidFailProvisionalLoadWithError(
-        render_frame_host, validated_url, params.error_code,
-        params.error_description, params.was_ignored_by_handler);
-  }
 }
 
 void NavigatorImpl::DidFailLoadWithError(
@@ -612,7 +608,8 @@ void NavigatorImpl::DidNavigate(
   // Navigating to a new location means a new, fresh set of http headers and/or
   // <meta> elements - we need to reset CSP and Feature Policy.
   if (!is_navigation_within_page) {
-    render_frame_host->frame_tree_node()->ResetContentSecurityPolicy();
+    render_frame_host->ResetContentSecurityPolicies();
+    render_frame_host->frame_tree_node()->ResetCspHeaders();
     render_frame_host->frame_tree_node()->ResetFeaturePolicyHeader();
   }
 
@@ -625,12 +622,12 @@ void NavigatorImpl::DidNavigate(
   }
 
   // Update the site of the SiteInstance if it doesn't have one yet, unless
-  // assigning a site is not necessary for this URL.  In that case, the
-  // SiteInstance can still be considered unused until a navigation to a real
-  // page.
+  // assigning a site is not necessary for this URL or the commit was for an
+  // error page.  In that case, the SiteInstance can still be considered unused
+  // until a navigation to a real page.
   SiteInstanceImpl* site_instance = render_frame_host->GetSiteInstance();
-  if (!site_instance->HasSite() &&
-      ShouldAssignSiteForURL(params.url)) {
+  if (!site_instance->HasSite() && ShouldAssignSiteForURL(params.url) &&
+      !params.url_is_unreachable) {
     site_instance->SetSite(params.url);
   }
 
@@ -671,7 +668,7 @@ void NavigatorImpl::DidNavigate(
   // stay correct even if the render_frame_host later becomes pending deletion.
   // The URL is set regardless of whether it's for a net error or not.
   render_frame_host->frame_tree_node()->SetCurrentURL(params.url);
-  render_frame_host->set_last_committed_origin(params.origin);
+  render_frame_host->SetLastCommittedOrigin(params.origin);
 
   // Separately, update the frame's last successful URL except for net error
   // pages, since those do not end up in the correct process after transfers

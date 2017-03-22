@@ -14,12 +14,13 @@
 #include "base/bind.h"
 #include "base/feature_list.h"
 #include "base/metrics/histogram_macros.h"
+#include "chrome/browser/android/chrome_feature_list.h"
 #include "chrome/browser/android/logo_service.h"
 #include "chrome/browser/doodle/doodle_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_android.h"
 #include "chrome/browser/search/suggestions/image_decoder_impl.h"
-#include "components/image_fetcher/image_fetcher_impl.h"
+#include "components/image_fetcher/core/image_fetcher_impl.h"
 #include "components/search_provider_logos/logo_tracker.h"
 #include "jni/LogoBridge_jni.h"
 #include "net/url_request/url_fetcher.h"
@@ -38,9 +39,6 @@ using base::android::ScopedJavaLocalRef;
 using base::android::ToJavaByteArray;
 
 namespace {
-
-const base::Feature kUseNewDoodleApi{"UseNewDoodleApi",
-                                     base::FEATURE_DISABLED_BY_DEFAULT};
 
 ScopedJavaLocalRef<jobject> MakeJavaLogo(JNIEnv* env,
                                          const SkBitmap* bitmap,
@@ -198,7 +196,7 @@ LogoBridge::LogoBridge(jobject j_profile)
   Profile* profile = ProfileAndroid::FromProfileAndroid(j_profile);
   DCHECK(profile);
 
-  if (base::FeatureList::IsEnabled(kUseNewDoodleApi)) {
+  if (base::FeatureList::IsEnabled(chrome::android::kUseNewDoodleApi)) {
     doodle_service_ = DoodleServiceFactory::GetForProfile(profile);
     image_fetcher_ = base::MakeUnique<image_fetcher::ImageFetcherImpl>(
         base::MakeUnique<suggestions::ImageDecoderImpl>(),
@@ -283,12 +281,14 @@ void LogoBridge::DoodleConfigReceived(
                  from_cache, on_click_url, alt_text, animated_image_url));
 }
 
-void LogoBridge::DoodleImageFetched(bool config_from_cache,
-                                    const GURL& on_click_url,
-                                    const std::string& alt_text,
-                                    const GURL& animated_image_url,
-                                    const std::string& image_fetch_id,
-                                    const gfx::Image& image) {
+void LogoBridge::DoodleImageFetched(
+    bool config_from_cache,
+    const GURL& on_click_url,
+    const std::string& alt_text,
+    const GURL& animated_image_url,
+    const std::string& image_fetch_id,
+    const gfx::Image& image,
+    const image_fetcher::RequestMetadata& metadata) {
   JNIEnv* env = base::android::AttachCurrentThread();
 
   if (image.IsEmpty()) {
@@ -298,6 +298,9 @@ void LogoBridge::DoodleImageFetched(bool config_from_cache,
                                       config_from_cache);
     return;
   }
+
+  UMA_HISTOGRAM_BOOLEAN("NewTabPage.LogoImageDownloaded",
+                        metadata.from_http_cache);
 
   ScopedJavaLocalRef<jobject> j_logo = MakeJavaLogo(
       env, image.ToSkBitmap(), on_click_url, alt_text, animated_image_url);

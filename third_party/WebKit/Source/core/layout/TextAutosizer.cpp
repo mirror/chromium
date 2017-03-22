@@ -892,7 +892,7 @@ float TextAutosizer::superclusterMultiplier(Cluster* cluster) {
   if (!supercluster->m_multiplier) {
     const LayoutBlock* widthProvider =
         maxClusterWidthProvider(cluster->m_supercluster, cluster->m_root);
-    RELEASE_ASSERT(widthProvider);
+    CHECK(widthProvider);
     supercluster->m_multiplier =
         superclusterHasEnoughTextToAutosize(supercluster, widthProvider, false)
             ? multiplierFromBlock(widthProvider)
@@ -936,8 +936,8 @@ const LayoutBlock* TextAutosizer::maxClusterWidthProvider(
 }
 
 float TextAutosizer::widthFromBlock(const LayoutBlock* block) const {
-  RELEASE_ASSERT(block);
-  RELEASE_ASSERT(block->style());
+  CHECK(block);
+  CHECK(block->style());
 
   if (!(block->isTable() || block->isTableCell() || block->isListItem()))
     return block->contentLogicalWidth().toFloat();
@@ -1238,7 +1238,7 @@ bool TextAutosizer::FingerprintMapper::remove(LayoutObject* layoutObject) {
   BlockSet& blocks = *blocksIter->value;
   blocks.erase(toLayoutBlock(layoutObject));
   if (blocks.isEmpty()) {
-    m_blocksForFingerprint.remove(blocksIter);
+    m_blocksForFingerprint.erase(blocksIter);
 
     SuperclusterMap::iterator superclusterIter =
         m_superclusters.find(fingerprint);
@@ -1246,7 +1246,7 @@ bool TextAutosizer::FingerprintMapper::remove(LayoutObject* layoutObject) {
     if (superclusterIter != m_superclusters.end()) {
       Supercluster* supercluster = superclusterIter->value.get();
       m_potentiallyInconsistentSuperclusters.erase(supercluster);
-      m_superclusters.remove(superclusterIter);
+      m_superclusters.erase(superclusterIter);
     }
   }
 #if DCHECK_IS_ON()

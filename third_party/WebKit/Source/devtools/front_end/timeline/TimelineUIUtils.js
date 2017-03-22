@@ -551,7 +551,7 @@ Timeline.TimelineUIUtils = class {
      * @return {?string}
      */
     function linkifyLocationAsText(scriptId, lineNumber, columnNumber) {
-      var debuggerModel = SDK.DebuggerModel.fromTarget(target);
+      var debuggerModel = target ? target.model(SDK.DebuggerModel) : null;
       if (!target || target.isDisposed() || !scriptId || !debuggerModel)
         return null;
       var rawLocation = debuggerModel.createRawLocationByScriptId(scriptId, lineNumber, columnNumber);
@@ -694,7 +694,7 @@ Timeline.TimelineUIUtils = class {
       var url = TimelineModel.TimelineData.forEvent(event).url;
       event[Timeline.TimelineUIUtils._previewElementSymbol] = await new Promise(fulfill => {
         if (url)
-          Components.DOMPresentationUtils.buildImagePreviewContents(target, url, false, fulfill);
+          Components.DOMPresentationUtils.buildImagePreviewContents(target, url, false).then(fulfill);
         else if (TimelineModel.TimelineData.forEvent(event).picture)
           Timeline.TimelineUIUtils.buildPicturePreviewContent(event, target, fulfill);
         else
@@ -1131,13 +1131,15 @@ Timeline.TimelineUIUtils = class {
      * @param {function(?Element)} fulfill
      */
     function action(fulfill) {
-      Components.DOMPresentationUtils.buildImagePreviewContents(
-          /** @type {!SDK.Target} */ (target), request.url, false, saveImage);
+      Components.DOMPresentationUtils
+          .buildImagePreviewContents(
+              /** @type {!SDK.Target} */ (target), request.url, false)
+          .then(saveImage);
       /**
-       * @param {!Element=} element
+       * @param {?Element} element
        */
       function saveImage(element) {
-        request.previewElement = element || null;
+        request.previewElement = element;
         fulfill(request.previewElement);
       }
     }

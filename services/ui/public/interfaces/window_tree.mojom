@@ -4,6 +4,7 @@
 
 module ui.mojom;
 
+import "cc/ipc/frame_sink_id.mojom";
 import "cc/ipc/local_surface_id.mojom";
 import "cc/ipc/surface_info.mojom";
 import "cc/ipc/mojo_compositor_frame_sink.mojom";
@@ -321,7 +322,8 @@ interface WindowTreeClient {
           WindowTree? tree,
           int64 display_id,
           uint32 focused_window,
-          bool parent_drawn);
+          bool parent_drawn,
+          cc.mojom.FrameSinkId frame_sink_id);
 
   // Invoked when the application embedded at |window| is disconnected. In other
   // words the embedded app closes the connection to the server. This is called
@@ -337,6 +339,11 @@ interface WindowTreeClient {
   // change.
   OnCaptureChanged(uint32 new_capture, uint32 old_capture);
 
+  // This is called on the owner of a window when it embeds a client in it,
+  // which includes the window manager creating a new window at the request of
+  // another client.
+  OnFrameSinkIdAllocated(uint32 window, cc.mojom.FrameSinkId frame_sink_id);
+
   // Called in response to NewTopLevelWindow() successfully completing.
   // |parent_drawn| is true if the parent of the window is drawn, see
   // OnDrawnStateChanged() for details. |display_id| identifies the display this
@@ -344,7 +351,8 @@ interface WindowTreeClient {
   OnTopLevelCreated(uint32 change_id,
                     WindowData data,
                     int64 display_id,
-                    bool parent_drawn);
+                    bool parent_drawn,
+                    cc.mojom.FrameSinkId frame_sink_id);
 
   // Invoked when a window's bounds have changed. Only the client embedded in
   // |window| gets a non_empty |local_surface_id|.

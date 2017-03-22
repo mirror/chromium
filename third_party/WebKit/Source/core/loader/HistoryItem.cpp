@@ -63,10 +63,6 @@ const Referrer& HistoryItem::referrer() const {
   return m_referrer;
 }
 
-const String& HistoryItem::target() const {
-  return m_target;
-}
-
 void HistoryItem::setURLString(const String& urlString) {
   if (m_urlString != urlString)
     m_urlString = urlString;
@@ -80,10 +76,6 @@ void HistoryItem::setReferrer(const Referrer& referrer) {
   // This should be a RELEASE_ASSERT.
   m_referrer = SecurityPolicy::generateReferrer(referrer.referrerPolicy, url(),
                                                 referrer.referrer);
-}
-
-void HistoryItem::setTarget(const String& target) {
-  m_target = target;
 }
 
 const ScrollOffset& HistoryItem::visualViewportScrollOffset() const {
@@ -138,7 +130,7 @@ void HistoryItem::clearDocumentState() {
 }
 
 void HistoryItem::setStateObject(PassRefPtr<SerializedScriptValue> object) {
-  m_stateObject = object;
+  m_stateObject = std::move(object);
 }
 
 const AtomicString& HistoryItem::formContentType() const {
@@ -159,7 +151,7 @@ void HistoryItem::setFormInfoFromRequest(const ResourceRequest& request) {
 }
 
 void HistoryItem::setFormData(PassRefPtr<EncodedFormData> formData) {
-  m_formData = formData;
+  m_formData = std::move(formData);
 }
 
 void HistoryItem::setFormContentType(const AtomicString& formContentType) {

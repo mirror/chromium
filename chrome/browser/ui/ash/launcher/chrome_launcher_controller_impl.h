@@ -62,7 +62,6 @@ class ChromeLauncherControllerImpl
 
   // ChromeLauncherController:
   ash::ShelfID CreateAppLauncherItem(LauncherItemController* controller,
-                                     const std::string& app_id,
                                      ash::ShelfItemStatus status) override;
   const ash::ShelfItem* GetItem(ash::ShelfID id) const override;
   void SetItemType(ash::ShelfID id, ash::ShelfItemType type) override;
@@ -155,7 +154,7 @@ class ChromeLauncherControllerImpl
   // Creates a new app shortcut item and controller on the shelf at |index|.
   // Use kInsertItemAtEnd to add a shortcut as the last item.
   ash::ShelfID CreateAppShortcutLauncherItem(
-      const ash::AppLauncherId& app_launcher_id,
+      const ash::AppLaunchId& app_launch_id,
       int index);
 
  private:
@@ -177,7 +176,7 @@ class ChromeLauncherControllerImpl
   // Creates a new app shortcut item and controller on the shelf at |index|.
   // Use kInsertItemAtEnd to add a shortcut as the last item.
   ash::ShelfID CreateAppShortcutLauncherItemWithType(
-      const ash::AppLauncherId& app_launcher_id,
+      const ash::AppLaunchId& app_launch_id,
       int index,
       ash::ShelfItemType shelf_item_type);
 
@@ -221,7 +220,6 @@ class ChromeLauncherControllerImpl
   // adjusted by the model to meet ordering constraints.
   // The |shelf_item_type| will be set into the ShelfModel.
   ash::ShelfID InsertAppLauncherItem(LauncherItemController* controller,
-                                     const std::string& app_id,
                                      ash::ShelfItemStatus status,
                                      int index,
                                      ash::ShelfItemType shelf_item_type);

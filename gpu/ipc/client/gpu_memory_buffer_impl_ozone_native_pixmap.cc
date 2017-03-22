@@ -10,7 +10,7 @@
 #include "gpu/ipc/common/gpu_memory_buffer_support.h"
 #include "ui/gfx/buffer_format_util.h"
 #include "ui/gfx/native_pixmap.h"
-#include "ui/ozone/public/client_native_pixmap_factory.h"
+#include "ui/ozone/public/client_native_pixmap_factory_ozone.h"
 #include "ui/ozone/public/ozone_platform.h"
 #include "ui/ozone/public/surface_factory_ozone.h"
 
@@ -47,7 +47,6 @@ GpuMemoryBufferImplOzoneNativePixmap::CreateFromHandle(
     gfx::BufferFormat format,
     gfx::BufferUsage usage,
     const DestructionCallback& callback) {
-  DCHECK_LE(handle.native_pixmap_handle.fds.size(), 1u);
 
   // GpuMemoryBufferImpl needs the FD to implement GetHandle() but
   // ui::ClientNativePixmapFactory::ImportFromHandle is expected to take

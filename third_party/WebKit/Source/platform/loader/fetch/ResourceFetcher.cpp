@@ -157,7 +157,8 @@ ResourceLoadPriority ResourceFetcher::computeLoadPriority(
     const ResourceRequest& resourceRequest,
     ResourcePriority::VisibilityStatus visibility,
     FetchRequest::DeferOption deferOption,
-    bool speculativePreload) {
+    bool isSpeculativePreload,
+    bool isLinkPreload) {
   ResourceLoadPriority priority = typeToPriority(type);
 
   // Visible resources (images in practice) get a boost to High priority.
@@ -169,8 +170,13 @@ ResourceLoadPriority ResourceFetcher::computeLoadPriority(
   // note that this is based on when the preload scanner discovers a resource
   // for the most part so the main parser may not have reached the image element
   // yet.
-  if (type == Resource::Image)
+  if (type == Resource::Image && !isLinkPreload)
     m_imageFetched = true;
+
+  // A preloaded font should not take precedence over critical CSS or
+  // parser-blocking scripts.
+  if (type == Resource::Font && isLinkPreload)
+    priority = ResourceLoadPriorityHigh;
 
   if (FetchRequest::IdleLoad == deferOption) {
     priority = ResourceLoadPriorityVeryLow;
@@ -182,7 +188,7 @@ ResourceLoadPriority ResourceFetcher::computeLoadPriority(
     // Preload late in document: Medium
     if (FetchRequest::LazyLoad == deferOption) {
       priority = ResourceLoadPriorityLow;
-    } else if (speculativePreload && m_imageFetched) {
+    } else if (isSpeculativePreload && m_imageFetched) {
       // Speculative preload is used as a signal for scripts at the bottom of
       // the document.
       priority = ResourceLoadPriorityMedium;
@@ -480,7 +486,8 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::prepareRequest(
 
   resourceRequest.setPriority(computeLoadPriority(
       factory.type(), request.resourceRequest(), ResourcePriority::NotVisible,
-      request.defer(), request.isSpeculativePreload()));
+      request.defer(), request.isSpeculativePreload(),
+      request.isLinkPreload()));
   initializeResourceRequest(resourceRequest, factory.type(), request.defer());
   network_instrumentation::resourcePrioritySet(identifier,
                                                resourceRequest.priority());
@@ -691,16 +698,6 @@ void ResourceFetcher::initializeRevalidation(
   }
   if (!eTag.isEmpty())
     revalidatingRequest.setHTTPHeaderField(HTTPNames::If_None_Match, eTag);
-
-  double stalenessLifetime = resource->stalenessLifetime();
-  if (std::isfinite(stalenessLifetime) && stalenessLifetime > 0) {
-    revalidatingRequest.setHTTPHeaderField(
-        HTTPNames::Resource_Freshness,
-        AtomicString(String::format(
-            "max-age=%.0lf,stale-while-revalidate=%.0lf,age=%.0lf",
-            resource->freshnessLifetime(), stalenessLifetime,
-            resource->currentAge())));
-  }
 
   resource->setRevalidatingRequest(revalidatingRequest);
 }

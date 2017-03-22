@@ -14,7 +14,7 @@
 #include "ash/common/ash_switches.h"
 #include "ash/common/focus_cycler.h"
 #include "ash/common/login_status.h"
-#include "ash/common/session/session_state_delegate.h"
+#include "ash/common/session/session_controller.h"
 #include "ash/common/shelf/shelf_delegate.h"
 #include "ash/common/shelf/shelf_layout_manager.h"
 #include "ash/common/shelf/shelf_widget.h"
@@ -27,7 +27,6 @@
 #include "ash/common/wallpaper/wallpaper_widget_controller.h"
 #include "ash/common/wm/always_on_top_controller.h"
 #include "ash/common/wm/container_finder.h"
-#include "ash/common/wm/dock/docked_window_layout_manager.h"
 #include "ash/common/wm/fullscreen_window_finder.h"
 #include "ash/common/wm/lock_layout_manager.h"
 #include "ash/common/wm/panels/panel_layout_manager.h"
@@ -171,11 +170,9 @@ void ReparentWindow(WmWindow* window, WmWindow* new_parent) {
   // Update the restore bounds to make it relative to the display.
   wm::WindowState* state = window->GetWindowState();
   gfx::Rect restore_bounds;
-  bool has_restore_bounds = state->HasRestoreBounds();
+  const bool has_restore_bounds = state->HasRestoreBounds();
 
-  bool update_bounds =
-      (state->IsNormalOrSnapped() || state->IsMinimized()) &&
-      new_parent->GetShellWindowId() != kShellWindowId_DockedContainer;
+  const bool update_bounds = state->IsNormalOrSnapped() || state->IsMinimized();
   gfx::Rect work_area_in_new_parent =
       wm::GetDisplayWorkAreaBoundsInParent(new_parent);
 
@@ -208,7 +205,6 @@ void ReparentAllWindows(WmWindow* src, WmWindow* dst) {
   // Set of windows to move.
   const int kContainerIdsToMove[] = {
       kShellWindowId_DefaultContainer,
-      kShellWindowId_DockedContainer,
       kShellWindowId_PanelContainer,
       kShellWindowId_AlwaysOnTopContainer,
       kShellWindowId_SystemModalContainer,
@@ -375,12 +371,6 @@ void RootWindowController::CreateShelfView() {
   // managers.
   if (panel_layout_manager_)
     panel_layout_manager_->SetShelf(wm_shelf_.get());
-  if (docked_window_layout_manager_) {
-    docked_window_layout_manager_->SetShelf(wm_shelf_.get());
-    if (wm_shelf_->shelf_layout_manager())
-      docked_window_layout_manager_->AddObserver(
-          wm_shelf_->shelf_layout_manager());
-  }
 
   // Notify shell observers that the shelf has been created.
   // TODO(jamescook): Move this into WmShelf::InitializeShelf(). This will
@@ -409,7 +399,7 @@ RootWindowController::GetSystemModalLayoutManager(WmWindow* window) {
     }
   } else {
     int modal_window_id =
-        WmShell::Get()->GetSessionStateDelegate()->IsUserSessionBlocked()
+        Shell::Get()->session_controller()->IsUserSessionBlocked()
             ? kShellWindowId_LockSystemModalContainer
             : kShellWindowId_SystemModalContainer;
     modal_container = GetWmContainer(modal_window_id);
@@ -443,7 +433,7 @@ bool RootWindowController::CanWindowReceiveEvents(aura::Window* window) {
   aura::Window* blocking_container = nullptr;
 
   int modal_container_id = 0;
-  if (WmShell::Get()->GetSessionStateDelegate()->IsUserSessionBlocked()) {
+  if (Shell::Get()->session_controller()->IsUserSessionBlocked()) {
     blocking_container =
         GetContainer(kShellWindowId_LockScreenContainersContainer);
     modal_container_id = kShellWindowId_LockSystemModalContainer;
@@ -572,13 +562,6 @@ void RootWindowController::Shutdown() {
 void RootWindowController::CloseChildWindows() {
   // NOTE: this may be called multiple times.
 
-  // Remove observer as deactivating keyboard causes
-  // docked_window_layout_manager() to fire notifications.
-  if (docked_window_layout_manager() && wm_shelf_->shelf_layout_manager()) {
-    docked_window_layout_manager()->RemoveObserver(
-        wm_shelf_->shelf_layout_manager());
-  }
-
   // Deactivate keyboard container before closing child windows and shutting
   // down associated layout managers.
   DeactivateKeyboard(keyboard::KeyboardController::GetInstance());
@@ -587,13 +570,6 @@ void RootWindowController::CloseChildWindows() {
   if (panel_layout_manager_) {
     panel_layout_manager_->Shutdown();
     panel_layout_manager_ = nullptr;
-  }
-
-  // |docked_window_layout_manager_| needs to be shut down before windows are
-  // destroyed.
-  if (docked_window_layout_manager_) {
-    docked_window_layout_manager_->Shutdown();
-    docked_window_layout_manager_ = nullptr;
   }
 
   WmShelf* shelf = GetShelf();
@@ -802,7 +778,7 @@ void RootWindowController::Init(RootWindowType root_window_type) {
     window_tree_host_->Show();
 
     // Create a shelf if a user is already logged in.
-    if (wm_shell->GetSessionStateDelegate()->NumberOfLoggedInUsers())
+    if (shell->session_controller()->NumberOfLoggedInUsers())
       CreateShelfView();
 
     // Notify shell observers about new root window.
@@ -854,13 +830,6 @@ void RootWindowController::InitLayoutManagers() {
   DCHECK(always_on_top_container);
   always_on_top_controller_ =
       base::MakeUnique<AlwaysOnTopController>(always_on_top_container);
-
-  // Create Docked windows layout manager
-  WmWindow* docked_container = GetWmContainer(kShellWindowId_DockedContainer);
-  docked_window_layout_manager_ =
-      new DockedWindowLayoutManager(docked_container);
-  docked_container->SetLayoutManager(
-      base::WrapUnique(docked_window_layout_manager_));
 
   // Create Panel layout manager
   WmWindow* wm_panel_container = GetWmContainer(kShellWindowId_PanelContainer);
@@ -950,15 +919,6 @@ void RootWindowController::CreateContainers() {
   always_on_top_container->SetSnapsChildrenToPhysicalPixelBoundary();
   always_on_top_container->SetBoundsInScreenBehaviorForChildren(
       WmWindow::BoundsInScreenBehavior::USE_SCREEN_COORDINATES);
-
-  WmWindow* docked_container =
-      CreateContainer(kShellWindowId_DockedContainer, "DockedContainer",
-                      non_lock_screen_containers);
-  docked_container->SetChildWindowVisibilityChangesAnimated();
-  docked_container->SetSnapsChildrenToPhysicalPixelBoundary();
-  docked_container->SetBoundsInScreenBehaviorForChildren(
-      WmWindow::BoundsInScreenBehavior::USE_SCREEN_COORDINATES);
-  docked_container->SetChildrenUseExtendedHitRegion();
 
   WmWindow* shelf_container =
       CreateContainer(kShellWindowId_ShelfContainer, "ShelfContainer",

@@ -5,7 +5,11 @@
 #include "base/message_loop/message_loop.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/events/event.h"
 #include "ui/events/keycodes/dom/dom_code.h"
+#include "ui/events/mojo/event.mojom.h"
+#include "ui/events/mojo/event_struct_traits.h"
+#include "ui/events/mojo/latency_info_struct_traits.h"
 #include "ui/events/mojo/traits_test_service.mojom.h"
 
 namespace ui {
@@ -166,35 +170,39 @@ TEST_F(StructTraitsTest, KeyEvent) {
 TEST_F(StructTraitsTest, PointerEvent) {
   PointerEvent kTestData[] = {
       // Mouse pointer events:
-      {ET_POINTER_DOWN, gfx::Point(10, 10), gfx::Point(20, 30), EF_NONE,
-       PointerEvent::kMousePointerId, 0,
-       PointerDetails(EventPointerType::POINTER_TYPE_MOUSE), base::TimeTicks()},
+      {ET_POINTER_DOWN, gfx::Point(10, 10), gfx::Point(20, 30), EF_NONE, 0,
+       PointerDetails(EventPointerType::POINTER_TYPE_MOUSE,
+                      PointerEvent::kMousePointerId),
+       base::TimeTicks()},
       {ET_POINTER_MOVED, gfx::Point(1, 5), gfx::Point(5, 1),
-       EF_LEFT_MOUSE_BUTTON, PointerEvent::kMousePointerId,
-       EF_LEFT_MOUSE_BUTTON,
-       PointerDetails(EventPointerType::POINTER_TYPE_MOUSE), base::TimeTicks()},
+       EF_LEFT_MOUSE_BUTTON, EF_LEFT_MOUSE_BUTTON,
+       PointerDetails(EventPointerType::POINTER_TYPE_MOUSE,
+                      PointerEvent::kMousePointerId),
+       base::TimeTicks()},
       {ET_POINTER_UP, gfx::Point(411, 130), gfx::Point(20, 30),
-       EF_MIDDLE_MOUSE_BUTTON | EF_RIGHT_MOUSE_BUTTON,
-       PointerEvent::kMousePointerId, EF_RIGHT_MOUSE_BUTTON,
-       PointerDetails(EventPointerType::POINTER_TYPE_MOUSE), base::TimeTicks()},
+       EF_MIDDLE_MOUSE_BUTTON | EF_RIGHT_MOUSE_BUTTON, EF_RIGHT_MOUSE_BUTTON,
+       PointerDetails(EventPointerType::POINTER_TYPE_MOUSE,
+                      PointerEvent::kMousePointerId),
+       base::TimeTicks()},
       {ET_POINTER_EXITED, gfx::Point(10, 10), gfx::Point(20, 30),
-       EF_BACK_MOUSE_BUTTON, PointerEvent::kMousePointerId, 0,
-       PointerDetails(EventPointerType::POINTER_TYPE_MOUSE), base::TimeTicks()},
+       EF_BACK_MOUSE_BUTTON, 0,
+       PointerDetails(EventPointerType::POINTER_TYPE_MOUSE,
+                      PointerEvent::kMousePointerId),
+       base::TimeTicks()},
 
       // Touch pointer events:
-      {ET_POINTER_DOWN, gfx::Point(10, 10), gfx::Point(20, 30), EF_NONE, 1, 0,
+      {ET_POINTER_DOWN, gfx::Point(10, 10), gfx::Point(20, 30), EF_NONE, 0,
        PointerDetails(EventPointerType::POINTER_TYPE_TOUCH,
-                      /* pointer_id*/ 0,
+                      /* pointer_id*/ 1,
                       /* radius_x */ 1.0f,
                       /* radius_y */ 2.0f,
                       /* force */ 3.0f,
                       /* tilt_x */ 4.0f,
                       /* tilt_y */ 5.0f),
        base::TimeTicks()},
-      {ET_POINTER_CANCELLED, gfx::Point(120, 120), gfx::Point(2, 3), EF_NONE, 2,
-       0,
+      {ET_POINTER_CANCELLED, gfx::Point(120, 120), gfx::Point(2, 3), EF_NONE, 0,
        PointerDetails(EventPointerType::POINTER_TYPE_TOUCH,
-                      /* pointer_id*/ 0,
+                      /* pointer_id*/ 2,
                       /* radius_x */ 5.5f,
                       /* radius_y */ 4.5f,
                       /* force */ 3.5f,
@@ -249,6 +257,23 @@ TEST_F(StructTraitsTest, PointerWheelEvent) {
     EXPECT_EQ(kTestData[i].offset(),
               output_pointer_event->pointer_details().offset);
   }
+}
+
+TEST_F(StructTraitsTest, KeyEventPropertiesSerialized) {
+  KeyEvent key_event(ET_KEY_PRESSED, VKEY_T, EF_NONE);
+  const std::string key = "key";
+  const std::vector<uint8_t> value(0xCD, 2);
+  KeyEvent::Properties properties;
+  properties[key] = value;
+  key_event.SetProperties(properties);
+
+  std::unique_ptr<Event> event_ptr = Event::Clone(key_event);
+  std::unique_ptr<Event> deserialized;
+  ASSERT_TRUE(mojom::Event::Deserialize(mojom::Event::Serialize(&event_ptr),
+                                        &deserialized));
+  ASSERT_TRUE(deserialized->IsKeyEvent());
+  ASSERT_TRUE(deserialized->AsKeyEvent()->properties());
+  EXPECT_EQ(properties, *(deserialized->AsKeyEvent()->properties()));
 }
 
 }  // namespace ui

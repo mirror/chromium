@@ -95,11 +95,7 @@ class WebRtcAudioDebugRecordingsBrowserTest
   ~WebRtcAudioDebugRecordingsBrowserTest() override {}
 };
 
-#if defined(OS_LINUX) && !defined(OS_CHROMEOS) && defined(ARCH_CPU_ARM_FAMILY)
-// Timing out on ARM linux bot: http://crbug.com/238490
-// TODO(grunell): Re-enable for ARM Linux. Bug is closed as fixed.
-#define MAYBE_CallWithAudioDebugRecordings DISABLED_CallWithAudioDebugRecordings
-#elif defined(OS_ANDROID) && defined(ADDRESS_SANITIZER)
+#if defined(OS_ANDROID) && defined(ADDRESS_SANITIZER)
 // Renderer crashes under Android ASAN: https://crbug.com/408496.
 #define MAYBE_CallWithAudioDebugRecordings DISABLED_CallWithAudioDebugRecordings
 #elif defined(OS_ANDROID)
@@ -143,6 +139,7 @@ IN_PROC_BROWSER_TEST_F(WebRtcAudioDebugRecordingsBrowserTest,
   GURL url(embedded_test_server()->GetURL("/media/peerconnection-call.html"));
   NavigateToURL(shell(), url);
   ExecuteJavascriptAndWaitForOk("call({video: true, audio: true});");
+  ExecuteJavascriptAndWaitForOk("hangup();");
 
   WebRTCInternals::GetInstance()->DisableAudioDebugRecordings();
 
@@ -155,7 +152,7 @@ IN_PROC_BROWSER_TEST_F(WebRtcAudioDebugRecordingsBrowserTest,
   int64_t file_size = 0;
   EXPECT_TRUE(base::GetFileSize(file_path, &file_size));
   EXPECT_GT(file_size, 0);
-  base::DeleteFile(file_path, false);
+  EXPECT_TRUE(base::DeleteFile(file_path, false));
 
   // Verify that the expected input audio file exists and contains some data.
   file_path = GetExpectedInputAudioFileName(base_file_path, render_process_id);
@@ -163,29 +160,23 @@ IN_PROC_BROWSER_TEST_F(WebRtcAudioDebugRecordingsBrowserTest,
   file_size = 0;
   EXPECT_TRUE(base::GetFileSize(file_path, &file_size));
   EXPECT_GT(file_size, kWaveHeaderSizeBytes);
-  base::DeleteFile(file_path, false);
+  EXPECT_TRUE(base::DeleteFile(file_path, false));
 
   // Verify that the expected output audio files exists and contains some data.
   // Two files are expected, one for each peer in the call.
   for (int i = 0; i < 2; ++i) {
     file_path = GetExpectedOutputAudioFileName(
         base_file_path, kExpectedFirstOutputStreamId + i);
-// Flaky on Mac. http://crbug.com/700859.
-#if !defined(OS_MACOSX)
     EXPECT_TRUE(base::PathExists(file_path));
     file_size = 0;
     EXPECT_TRUE(base::GetFileSize(file_path, &file_size));
     EXPECT_GT(file_size, kWaveHeaderSizeBytes);
-#endif
-    base::DeleteFile(file_path, false);
+    EXPECT_TRUE(base::DeleteFile(file_path, false));
   }
 
-  // Remove temp dir.
-  // TODO(grunell): Re-enable or remove the following line as part of
-  // http://crbug.com/697845. If re-enabled, also add expectations on
-  // base::DeleteFile() success.
-  // EXPECT_TRUE(base::IsDirectoryEmpty(temp_dir_path));
-  base::DeleteFile(temp_dir_path, false);
+  // Verify that no other files exist and remove temp dir.
+  EXPECT_TRUE(base::IsDirectoryEmpty(temp_dir_path));
+  EXPECT_TRUE(base::DeleteFile(temp_dir_path, false));
 
   base::ThreadRestrictions::SetIOAllowed(prev_io_allowed);
 }
@@ -193,11 +184,7 @@ IN_PROC_BROWSER_TEST_F(WebRtcAudioDebugRecordingsBrowserTest,
 // TODO(grunell): Add test for multiple dumps when re-use of
 // MediaStreamAudioProcessor in AudioCapturer has been removed.
 
-#if defined(OS_LINUX) && !defined(OS_CHROMEOS) && defined(ARCH_CPU_ARM_FAMILY)
-// Timing out on ARM linux bot: http://crbug.com/238490
-// TODO(grunell): Re-enable for ARM Linux. Bug is closed as fixed.
-#define MAYBE_CallWithAudioDebugRecordingsEnabledThenDisabled DISABLED_CallWithAudioDebugRecordingsEnabledThenDisabled
-#elif defined(OS_ANDROID) && defined(ADDRESS_SANITIZER)
+#if defined(OS_ANDROID) && defined(ADDRESS_SANITIZER)
 // Renderer crashes under Android ASAN: https://crbug.com/408496.
 #define MAYBE_CallWithAudioDebugRecordingsEnabledThenDisabled DISABLED_CallWithAudioDebugRecordingsEnabledThenDisabled
 #else
@@ -235,6 +222,7 @@ IN_PROC_BROWSER_TEST_F(WebRtcAudioDebugRecordingsBrowserTest,
   GURL url(embedded_test_server()->GetURL("/media/peerconnection-call.html"));
   NavigateToURL(shell(), url);
   ExecuteJavascriptAndWaitForOk("call({video: true, audio: true});");
+  ExecuteJavascriptAndWaitForOk("hangup();");
 
   // Verify that no files exist and remove temp dir.
   EXPECT_TRUE(base::IsDirectoryEmpty(temp_dir_path));
@@ -243,10 +231,10 @@ IN_PROC_BROWSER_TEST_F(WebRtcAudioDebugRecordingsBrowserTest,
   base::ThreadRestrictions::SetIOAllowed(prev_io_allowed);
 }
 
-// Timing out on ARM linux bot: http://crbug.com/238490
 // Renderer crashes under Android ASAN: https://crbug.com/408496.
-// TODO(grunell): Re-enable on all but Android ASAN. ARM Linux bug is closed
-// as fixed. See conditions for the above two tests.
+// Renderer crashes on Android M. https://crbug.com/535728.
+// TODO(grunell): Re-enable on all but Android. See conditions for the above two
+// tests.
 IN_PROC_BROWSER_TEST_F(WebRtcAudioDebugRecordingsBrowserTest,
                        DISABLED_TwoCallsWithAudioDebugRecordings) {
   if (!media::AudioManager::Get()->HasAudioOutputDevices()) {
@@ -283,6 +271,10 @@ IN_PROC_BROWSER_TEST_F(WebRtcAudioDebugRecordingsBrowserTest,
   std::string result;
   EXPECT_TRUE(ExecuteScriptAndExtractString(
       shell2, "call({video: true, audio: true});", &result));
+  ASSERT_STREQ("OK", result.c_str());
+
+  ExecuteJavascriptAndWaitForOk("hangup();");
+  EXPECT_TRUE(ExecuteScriptAndExtractString(shell2, "hangup();", &result));
   ASSERT_STREQ("OK", result.c_str());
 
   WebRTCInternals::GetInstance()->DisableAudioDebugRecordings();

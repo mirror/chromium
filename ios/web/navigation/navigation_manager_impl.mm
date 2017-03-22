@@ -97,10 +97,9 @@ void NavigationManagerImpl::SetSessionController(
   [session_controller_ setNavigationManager:this];
 }
 
-void NavigationManagerImpl::InitializeSession(BOOL opened_by_dom) {
-  SetSessionController([[CRWSessionController alloc]
-      initWithBrowserState:browser_state_
-               openedByDOM:opened_by_dom]);
+void NavigationManagerImpl::InitializeSession() {
+  SetSessionController(
+      [[CRWSessionController alloc] initWithBrowserState:browser_state_]);
 }
 
 void NavigationManagerImpl::ReplaceSessionHistory(
@@ -215,10 +214,6 @@ void NavigationManagerImpl::AddPendingItem(
       pending_item->SetUserAgentType(UserAgentType::DESKTOP);
   }
   override_desktop_user_agent_for_next_pending_item_ = false;
-}
-
-NavigationItem* NavigationManagerImpl::GetLastUserItem() const {
-  return [session_controller_ lastUserItem];
 }
 
 NavigationItemList NavigationManagerImpl::GetItems() const {

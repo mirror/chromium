@@ -2340,6 +2340,45 @@ TEST_P(RenderTextTest, MinLineHeight) {
   EXPECT_EQ(default_size.width(), taller_size.width());
 }
 
+// Check that, for Latin characters, typesetting text in the default fonts and
+// sizes does not discover any glyphs that would exceed the line spacing
+// recommended by gfx::Font.
+// Disabled since this relies on machine configuration. http://crbug.com/701241.
+TEST_P(RenderTextTest, DISABLED_DefaultLineHeights) {
+  RenderText* render_text = GetRenderText();
+  render_text->SetText(
+      ASCIIToUTF16("A quick brown fox jumped over the lazy dog!"));
+
+#if defined(OS_MACOSX)
+  const FontList body2_font = FontList().DeriveWithSizeDelta(-1);
+#else
+  const FontList body2_font;
+#endif
+
+  const FontList headline_font = body2_font.DeriveWithSizeDelta(8);
+  const FontList title_font = body2_font.DeriveWithSizeDelta(3);
+  const FontList body1_font = body2_font.DeriveWithSizeDelta(1);
+#if defined(OS_WIN)
+  const FontList button_font =
+      body2_font.DeriveWithWeight(gfx::Font::Weight::BOLD);
+#else
+  const FontList button_font =
+      body2_font.DeriveWithWeight(gfx::Font::Weight::MEDIUM);
+#endif
+
+  EXPECT_EQ(12, body2_font.GetFontSize());
+  EXPECT_EQ(20, headline_font.GetFontSize());
+  EXPECT_EQ(15, title_font.GetFontSize());
+  EXPECT_EQ(13, body1_font.GetFontSize());
+  EXPECT_EQ(12, button_font.GetFontSize());
+
+  for (const auto& font :
+       {headline_font, title_font, body1_font, body2_font, button_font}) {
+    render_text->SetFontList(font);
+    EXPECT_EQ(font.GetHeight(), render_text->GetStringSizeF().height());
+  }
+}
+
 TEST_P(RenderTextTest, SetFontList) {
   RenderText* render_text = GetRenderText();
   render_text->SetFontList(
@@ -3759,15 +3798,17 @@ TEST_P(RenderTextTest, TextDoesntClip) {
   const Size kCanvasSize(300, 50);
   const int kTestSize = 10;
 
-  sk_sp<cc::PaintSurface> surface = cc::PaintSurface::MakeRasterN32Premul(
-      kCanvasSize.width(), kCanvasSize.height());
-  Canvas canvas(surface->getCanvas(), 1.0f);
+  SkBitmap bitmap;
+  bitmap.allocPixels(
+      SkImageInfo::MakeN32Premul(kCanvasSize.width(), kCanvasSize.height()));
+  cc::SkiaPaintCanvas paint_canvas(bitmap);
+  Canvas canvas(&paint_canvas, 1.0f);
   RenderText* render_text = GetRenderText();
   render_text->SetHorizontalAlignment(ALIGN_LEFT);
   render_text->SetColor(SK_ColorBLACK);
 
   for (auto* string : kTestStrings) {
-    surface->getCanvas()->clear(SK_ColorWHITE);
+    paint_canvas.clear(SK_ColorWHITE);
     render_text->SetText(WideToUTF16(string));
     const Size string_size = render_text->GetStringSize();
     render_text->ApplyBaselineStyle(SUPERSCRIPT, Range(1, 2));
@@ -3783,9 +3824,7 @@ TEST_P(RenderTextTest, TextDoesntClip) {
 
     render_text->Draw(&canvas);
     ASSERT_LT(string_size.width() + kTestSize, kCanvasSize.width());
-    SkPixmap pixmap;
-    surface->getCanvas()->peekPixels(&pixmap);
-    const uint32_t* buffer = static_cast<const uint32_t*>(pixmap.addr());
+    const uint32_t* buffer = static_cast<const uint32_t*>(bitmap.getPixels());
     ASSERT_NE(nullptr, buffer);
     TestRectangleBuffer rect_buffer(string, buffer, kCanvasSize.width(),
                                     kCanvasSize.height());
@@ -3852,15 +3891,17 @@ TEST_P(RenderTextTest, TextDoesClip) {
   const Size kCanvasSize(300, 50);
   const int kTestSize = 10;
 
-  sk_sp<cc::PaintSurface> surface = cc::PaintSurface::MakeRasterN32Premul(
-      kCanvasSize.width(), kCanvasSize.height());
-  Canvas canvas(surface->getCanvas(), 1.0f);
+  SkBitmap bitmap;
+  bitmap.allocPixels(
+      SkImageInfo::MakeN32Premul(kCanvasSize.width(), kCanvasSize.height()));
+  cc::SkiaPaintCanvas paint_canvas(bitmap);
+  Canvas canvas(&paint_canvas, 1.0f);
   RenderText* render_text = GetRenderText();
   render_text->SetHorizontalAlignment(ALIGN_LEFT);
   render_text->SetColor(SK_ColorBLACK);
 
   for (auto* string : kTestStrings) {
-    surface->getCanvas()->clear(SK_ColorWHITE);
+    paint_canvas.clear(SK_ColorWHITE);
     render_text->SetText(WideToUTF16(string));
     const Size string_size = render_text->GetStringSize();
     int fake_width = string_size.width() / 2;
@@ -3870,9 +3911,7 @@ TEST_P(RenderTextTest, TextDoesClip) {
     render_text->set_clip_to_display_rect(true);
     render_text->Draw(&canvas);
     ASSERT_LT(string_size.width() + kTestSize, kCanvasSize.width());
-    SkPixmap pixmap;
-    surface->getCanvas()->peekPixels(&pixmap);
-    const uint32_t* buffer = static_cast<const uint32_t*>(pixmap.addr());
+    const uint32_t* buffer = static_cast<const uint32_t*>(bitmap.getPixels());
     ASSERT_NE(nullptr, buffer);
     TestRectangleBuffer rect_buffer(string, buffer, kCanvasSize.width(),
                                     kCanvasSize.height());

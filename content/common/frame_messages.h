@@ -19,7 +19,7 @@
 #include "cc/surfaces/surface_sequence.h"
 #include "content/common/content_export.h"
 #include "content/common/content_param_traits.h"
-#include "content/common/content_security_policy/content_security_policy.h"
+#include "content/common/content_security_policy/csp_context.h"
 #include "content/common/content_security_policy_header.h"
 #include "content/common/download/mhtml_save_status.h"
 #include "content/common/features.h"
@@ -113,6 +113,8 @@ IPC_ENUM_TRAITS_MAX_VALUE(content::CSPDirective::Name,
                           content::CSPDirective::NameLast)
 IPC_ENUM_TRAITS_MAX_VALUE(blink::WebFeaturePolicyFeature,
                           blink::WebFeaturePolicyFeature::LAST_FEATURE)
+IPC_ENUM_TRAITS_MAX_VALUE(content::CSPDisposition,
+                          content::CSPDisposition::LAST)
 
 IPC_STRUCT_TRAITS_BEGIN(blink::WebFindOptions)
   IPC_STRUCT_TRAITS_MEMBER(forward)
@@ -355,6 +357,7 @@ IPC_STRUCT_TRAITS_BEGIN(content::CommonNavigationParams)
   IPC_STRUCT_TRAITS_MEMBER(method)
   IPC_STRUCT_TRAITS_MEMBER(post_data)
   IPC_STRUCT_TRAITS_MEMBER(source_location)
+  IPC_STRUCT_TRAITS_MEMBER(should_check_main_world_csp)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(content::BeginNavigationParams)
@@ -368,6 +371,7 @@ IPC_STRUCT_TRAITS_BEGIN(content::BeginNavigationParams)
   IPC_STRUCT_TRAITS_MEMBER(searchable_form_encoding)
   IPC_STRUCT_TRAITS_MEMBER(initiator_origin)
   IPC_STRUCT_TRAITS_MEMBER(client_side_redirect_url)
+  IPC_STRUCT_TRAITS_MEMBER(is_form_submission)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(content::StartNavigationParams)
@@ -412,7 +416,7 @@ IPC_STRUCT_TRAITS_BEGIN(content::RequestNavigationParams)
 IPC_STRUCT_TRAITS_END()
 
 IPC_STRUCT_TRAITS_BEGIN(content::ParsedFeaturePolicyDeclaration)
-  IPC_STRUCT_TRAITS_MEMBER(feature_name)
+  IPC_STRUCT_TRAITS_MEMBER(feature)
   IPC_STRUCT_TRAITS_MEMBER(matches_all_origins)
   IPC_STRUCT_TRAITS_MEMBER(origins)
 IPC_STRUCT_TRAITS_END()
@@ -579,6 +583,17 @@ IPC_STRUCT_TRAITS_BEGIN(content::ContentSecurityPolicyHeader)
   IPC_STRUCT_TRAITS_MEMBER(source)
 IPC_STRUCT_TRAITS_END()
 
+IPC_STRUCT_TRAITS_BEGIN(content::CSPViolationParams)
+  IPC_STRUCT_TRAITS_MEMBER(directive)
+  IPC_STRUCT_TRAITS_MEMBER(effective_directive)
+  IPC_STRUCT_TRAITS_MEMBER(console_message)
+  IPC_STRUCT_TRAITS_MEMBER(blocked_url)
+  IPC_STRUCT_TRAITS_MEMBER(report_endpoints)
+  IPC_STRUCT_TRAITS_MEMBER(header)
+  IPC_STRUCT_TRAITS_MEMBER(disposition)
+  IPC_STRUCT_TRAITS_MEMBER(after_redirect)
+IPC_STRUCT_TRAITS_END()
+
 IPC_STRUCT_TRAITS_BEGIN(content::FileChooserFileInfo)
   IPC_STRUCT_TRAITS_MEMBER(file_path)
   IPC_STRUCT_TRAITS_MEMBER(display_name)
@@ -599,6 +614,15 @@ IPC_STRUCT_TRAITS_BEGIN(content::FileChooserParams)
 #endif
   IPC_STRUCT_TRAITS_MEMBER(requestor)
 IPC_STRUCT_TRAITS_END()
+
+IPC_STRUCT_BEGIN(FrameMsg_MixedContentFound_Params)
+  IPC_STRUCT_MEMBER(GURL, main_resource_url)
+  IPC_STRUCT_MEMBER(GURL, mixed_content_url)
+  IPC_STRUCT_MEMBER(content::RequestContextType, request_context_type)
+  IPC_STRUCT_MEMBER(bool, was_allowed)
+  IPC_STRUCT_MEMBER(bool, had_redirect)
+  IPC_STRUCT_MEMBER(content::SourceLocation, source_location)
+IPC_STRUCT_END()
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
 // This message is used for supporting popup menus on Mac OS X and Android using
@@ -899,6 +923,12 @@ IPC_MESSAGE_ROUTED4(FrameMsg_FailedNavigation,
                     bool,                             /* stale_copy_in_cache */
                     int                               /* error_code */)
 
+// PlzNavigate
+// Tells the renderer that a navigation was blocked because a content security
+// policy was violated.
+IPC_MESSAGE_ROUTED1(FrameMsg_ReportContentSecurityPolicyViolation,
+                    content::CSPViolationParams /* violation_params */)
+
 // Request to enumerate and return links to all savable resources in the frame
 // Note: this covers only the immediate frame / doesn't cover subframes.
 IPC_MESSAGE_ROUTED0(FrameMsg_GetSavableResourceLinks)
@@ -990,12 +1020,8 @@ IPC_MESSAGE_ROUTED1(FrameMsg_BlinkFeatureUsageReport,
 // Informs the renderer that mixed content was found by the browser. The
 // included data is used for instance to report to the CSP policy and to log to
 // the frame console.
-IPC_MESSAGE_ROUTED5(FrameMsg_MixedContentFound,
-                    GURL,                        /* main_resource_url */
-                    GURL,                        /* mixed_content_url */
-                    content::RequestContextType, /* request_context_type */
-                    bool,                        /* was_allowed */
-                    bool)                        /* had_redirect */
+IPC_MESSAGE_ROUTED1(FrameMsg_MixedContentFound,
+                    FrameMsg_MixedContentFound_Params)
 
 // -----------------------------------------------------------------------------
 // Messages sent from the renderer to the browser.

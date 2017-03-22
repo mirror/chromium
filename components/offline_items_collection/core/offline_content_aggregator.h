@@ -14,6 +14,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
 #include "base/supports_user_data.h"
+#include "components/keyed_service/core/keyed_service.h"
 #include "components/offline_items_collection/core/offline_content_provider.h"
 #include "url/gurl.h"
 
@@ -47,7 +48,7 @@ struct OfflineItem;
 class OfflineContentAggregator : public OfflineContentProvider,
                                  public OfflineContentProvider::Observer,
                                  public base::SupportsUserData,
-                                 public base::SupportsUserData::Data {
+                                 public KeyedService {
  public:
   OfflineContentAggregator();
   ~OfflineContentAggregator() override;
@@ -56,6 +57,17 @@ class OfflineContentAggregator : public OfflineContentProvider,
   // |name_space|.  UI actions taken on OfflineItems with |name_space| will be
   // routed to |provider|.  |provider| is expected to only expose OfflineItems
   // with |name_space| set.
+  // It is okay to register the same provider with multiple unique namespaces.
+  // The class will work as expected with a few caveats.  These are fixable if
+  // they are necessary for proper operation.  Contact dtrainor@ if changes to
+  // this behavior is needed.
+  //   1. Unregistering the first namespace won't remove any pending actions
+  //      that are queued for this provider.  That means the provider might
+  //      still get actions for the removed namespace once it is done
+  //      initializing itself.  This case must be handled by the individual
+  //      provider for now.
+  //   2. The provider needs to handle calls to GetAllItems properly (not return
+  //      any items for a namespace that it didn't register).
   void RegisterProvider(const std::string& name_space,
                         OfflineContentProvider* provider);
 

@@ -46,7 +46,7 @@ DEFINE_TRACE(SecurityContext) {
 
 void SecurityContext::setSecurityOrigin(
     PassRefPtr<SecurityOrigin> securityOrigin) {
-  m_securityOrigin = securityOrigin;
+  m_securityOrigin = std::move(securityOrigin);
   updateFeaturePolicyOrigin();
 }
 
@@ -103,11 +103,9 @@ void SecurityContext::enforceSuborigin(const Suborigin& suborigin) {
 
 void SecurityContext::initializeFeaturePolicy(
     const WebParsedFeaturePolicy& parsedHeader,
+    const WebParsedFeaturePolicy& containerPolicy,
     const WebFeaturePolicy* parentFeaturePolicy) {
   DCHECK(!m_featurePolicy);
-  // TODO(iclelland): Use the frame owner properties here to pass the frame
-  // policy, if it exists.
-  WebParsedFeaturePolicy containerPolicy;
   WebSecurityOrigin origin = WebSecurityOrigin(m_securityOrigin);
   m_featurePolicy.reset(Platform::current()->createFeaturePolicy(
       parentFeaturePolicy, containerPolicy, parsedHeader, origin));

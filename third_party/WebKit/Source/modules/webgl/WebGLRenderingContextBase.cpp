@@ -1517,6 +1517,11 @@ WebGLRenderingContextBase::clearIfComposited(GLbitfield mask) {
   return combinedClear ? CombinedClear : JustClear;
 }
 
+void WebGLRenderingContextBase::markCompositedAndClearBackbufferIfNeeded() {
+  markLayerComposited();
+  clearIfComposited();
+}
+
 void WebGLRenderingContextBase::restoreScissorEnabled() {
   if (isContextLost())
     return;
@@ -4615,7 +4620,7 @@ PassRefPtr<Image> WebGLRenderingContextBase::drawImageIntoBuffer(
     int width,
     int height,
     const char* functionName) {
-  RefPtr<Image> image(passImage);
+  RefPtr<Image> image(std::move(passImage));
   ASSERT(image);
 
   IntSize size(width, height);

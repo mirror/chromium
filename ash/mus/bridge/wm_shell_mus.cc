@@ -54,37 +54,11 @@ namespace {
 // of SessionStateDelegate.
 class SessionStateDelegateStub : public SessionStateDelegate {
  public:
-  SessionStateDelegateStub()
-      : screen_locked_(false), user_info_(new user_manager::UserInfoImpl()) {}
+  SessionStateDelegateStub() : user_info_(new user_manager::UserInfoImpl()) {}
 
   ~SessionStateDelegateStub() override {}
 
   // SessionStateDelegate:
-  int GetMaximumNumberOfLoggedInUsers() const override { return 3; }
-  int NumberOfLoggedInUsers() const override { return 1; }
-  bool IsActiveUserSessionStarted() const override { return true; }
-  bool CanLockScreen() const override {
-    // The Chrome OS session_manager process currently rejects screen-lock
-    // requests due to no user being logged in.
-    return false;
-  }
-  bool IsScreenLocked() const override { return screen_locked_; }
-  bool ShouldLockScreenAutomatically() const override { return false; }
-  void LockScreen() override {
-    screen_locked_ = true;
-    NOTIMPLEMENTED();
-  }
-  void UnlockScreen() override {
-    NOTIMPLEMENTED();
-    screen_locked_ = false;
-  }
-  bool IsUserSessionBlocked() const override { return false; }
-  session_manager::SessionState GetSessionState() const override {
-    return session_manager::SessionState::ACTIVE;
-  }
-  const user_manager::UserInfo* GetUserInfo(UserIndex index) const override {
-    return user_info_.get();
-  }
   bool ShouldShowAvatar(WmWindow* window) const override {
     NOTIMPLEMENTED();
     return !user_info_->GetImage().isNull();
@@ -93,18 +67,8 @@ class SessionStateDelegateStub : public SessionStateDelegate {
     NOTIMPLEMENTED();
     return gfx::ImageSkia();
   }
-  void SwitchActiveUser(const AccountId& account_id) override {}
-  void CycleActiveUser(CycleUserDirection direction) override {}
-  bool IsMultiProfileAllowedByPrimaryUserPolicy() const override {
-    return true;
-  }
-  void AddSessionStateObserver(ash::SessionStateObserver* observer) override {}
-  void RemoveSessionStateObserver(
-      ash::SessionStateObserver* observer) override {}
 
  private:
-  bool screen_locked_;
-
   // A pseudo user info.
   std::unique_ptr<user_manager::UserInfo> user_info_;
 
@@ -125,21 +89,7 @@ WmShellMus::WmShellMus(
     session_state_delegate_ = base::MakeUnique<SessionStateDelegateStub>();
   DCHECK(primary_root_window_);
 
-  uint16_t accelerator_namespace_id = 0u;
-  const bool add_result =
-      window_manager->GetNextAcceleratorNamespaceId(&accelerator_namespace_id);
-  // WmShellMus is created early on, so that this should always succeed.
-  DCHECK(add_result);
-  accelerator_controller_delegate_.reset(
-      new AcceleratorControllerDelegateMus(window_manager_));
-  accelerator_controller_registrar_.reset(new AcceleratorControllerRegistrar(
-      window_manager_, accelerator_namespace_id));
-  SetAcceleratorController(base::MakeUnique<AcceleratorController>(
-      accelerator_controller_delegate_.get(),
-      accelerator_controller_registrar_.get()));
   immersive_handler_factory_.reset(new ImmersiveHandlerFactoryMus);
-
-  SetKeyboardUI(KeyboardUIMus::Create(window_manager_->connector()));
 }
 
 WmShellMus::~WmShellMus() {
@@ -335,6 +285,10 @@ WmShellMus::CreateImmersiveFullscreenController() {
   return base::MakeUnique<ImmersiveFullscreenController>();
 }
 
+std::unique_ptr<KeyboardUI> WmShellMus::CreateKeyboardUI() {
+  return KeyboardUIMus::Create(window_manager_->connector());
+}
+
 std::unique_ptr<KeyEventWatcher> WmShellMus::CreateKeyEventWatcher() {
   // TODO: needs implementation for mus, http://crbug.com/649600.
   NOTIMPLEMENTED();
@@ -395,5 +349,26 @@ void WmShellMus::InitHosts(const ShellInitParams& init_params) {
   window_manager_->CreatePrimaryRootWindowController(
       base::WrapUnique(init_params.primary_window_tree_host));
 }
+
+std::unique_ptr<AcceleratorController>
+WmShellMus::CreateAcceleratorController() {
+  DCHECK(!accelerator_controller_delegate_);
+  uint16_t accelerator_namespace_id = 0u;
+  const bool add_result =
+      window_manager_->GetNextAcceleratorNamespaceId(&accelerator_namespace_id);
+  // WmShellMus is created early on, so that GetNextAcceleratorNamespaceId()
+  // should always succeed.
+  DCHECK(add_result);
+
+  accelerator_controller_delegate_ =
+      base::MakeUnique<AcceleratorControllerDelegateMus>(window_manager_);
+  accelerator_controller_registrar_ =
+      base ::MakeUnique<AcceleratorControllerRegistrar>(
+          window_manager_, accelerator_namespace_id);
+  return base::MakeUnique<AcceleratorController>(
+      accelerator_controller_delegate_.get(),
+      accelerator_controller_registrar_.get());
+}
+
 }  // namespace mus
 }  // namespace ash

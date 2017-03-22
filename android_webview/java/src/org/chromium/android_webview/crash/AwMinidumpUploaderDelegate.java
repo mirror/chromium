@@ -64,18 +64,6 @@ public class AwMinidumpUploaderDelegate implements MinidumpUploaderDelegate {
                 return !mConnectivityManager.isActiveNetworkMetered();
             }
             @Override
-            public boolean isCrashUploadDisabledByCommandLine() {
-                return false;
-            }
-            /**
-             * This method is already represented by isClientInMetricsSample() and
-             * isNetworkAvailableForCrashUploads().
-             */
-            @Override
-            public boolean isMetricsUploadPermitted() {
-                return true;
-            }
-            @Override
             public boolean isUsageAndCrashReportingPermittedByUser() {
                 return mPermittedByUser;
             }

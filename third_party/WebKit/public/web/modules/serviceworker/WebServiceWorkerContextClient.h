@@ -44,6 +44,7 @@
 
 namespace blink {
 
+struct WebPaymentAppResponse;
 struct WebServiceWorkerClientQueryOptions;
 class WebServiceWorkerContextProxy;
 class WebServiceWorkerNetworkProvider;
@@ -134,6 +135,18 @@ class WebServiceWorkerContextClient {
                                       WebServiceWorkerEventResult result,
                                       double eventDispatchTime) {}
 
+  // ServiceWorker specific method. Called after Background Fetch events
+  // (dispatched via WebServiceWorkerContextProxy) is handled by the
+  // ServiceWorker's script context.
+  virtual void didHandleBackgroundFetchAbortEvent(
+      int eventID,
+      WebServiceWorkerEventResult result,
+      double eventDispatchTime) {}
+  virtual void didHandleBackgroundFetchClickEvent(
+      int eventID,
+      WebServiceWorkerEventResult result,
+      double eventDispatchTime) {}
+
   // Called after ExtendableMessageEvent is handled by the ServiceWorker's
   // script context.
   virtual void didHandleExtendableMessageEvent(
@@ -152,6 +165,10 @@ class WebServiceWorkerContextClient {
   virtual void respondToFetchEvent(int fetchEventID,
                                    const WebServiceWorkerResponse& response,
                                    double eventDispatchTime) {}
+  virtual void respondToPaymentRequestEvent(
+      int eventId,
+      const WebPaymentAppResponse& response,
+      double eventDispatchTime) {}
   virtual void didHandleFetchEvent(int fetchEventID,
                                    WebServiceWorkerEventResult result,
                                    double eventDispatchTime) {}

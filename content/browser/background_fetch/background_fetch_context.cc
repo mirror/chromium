@@ -50,26 +50,40 @@ void BackgroundFetchContext::ShutdownOnIO() {
   // any status to the DataManager.
   for (auto& job : job_map_)
     job.second->Shutdown();
+
+  job_map_.clear();
 }
 
 void BackgroundFetchContext::CreateRequest(
-    const BackgroundFetchJobInfo& job_info,
+    std::unique_ptr<BackgroundFetchJobInfo> job_info,
     std::vector<BackgroundFetchRequestInfo>& request_infos) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK_GE(1U, request_infos.size());
 
   // Inform the data manager about the new download.
+  const std::string job_guid = job_info->guid();
   std::unique_ptr<BackgroundFetchJobData> job_data =
-      background_fetch_data_manager_.CreateRequest(job_info, request_infos);
+      background_fetch_data_manager_.CreateRequest(std::move(job_info),
+                                                   request_infos);
 
   // If job_data is null, the DataManager will have logged an error.
   if (job_data) {
     // Create a controller which drives the processing of the job. It will use
     // the JobData to get information about individual requests for the job.
-    job_map_[job_info.guid()] = base::MakeUnique<BackgroundFetchJobController>(
-        job_info.guid(), browser_context_, storage_partition_,
-        std::move(job_data));
+    job_map_[job_guid] = base::MakeUnique<BackgroundFetchJobController>(
+        job_guid, browser_context_, storage_partition_, std::move(job_data),
+        base::BindOnce(&BackgroundFetchContext::DidCompleteJob, this,
+                       job_guid));
   }
+}
+
+void BackgroundFetchContext::DidCompleteJob(const std::string& job_guid) {
+  DCHECK(job_map_.find(job_guid) != job_map_.end());
+
+  job_map_.erase(job_guid);
+
+  // TODO(harkness): Once the caller receives the message, inform the
+  // DataManager that it can clean up the pending job.
 }
 
 }  // namespace content

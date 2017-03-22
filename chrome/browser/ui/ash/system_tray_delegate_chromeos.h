@@ -43,8 +43,6 @@ namespace user_manager {
 class User;
 }
 
-class TrayBluetoothHelper;
-
 namespace chromeos {
 
 class SystemTrayDelegateChromeOS
@@ -62,13 +60,7 @@ class SystemTrayDelegateChromeOS
       public input_method::InputMethodManager::ImeMenuObserver {
  public:
   SystemTrayDelegateChromeOS();
-
   ~SystemTrayDelegateChromeOS() override;
-
-  // Completes initialization after the Bluetooth adapter is ready.
-  // TODO(jamescook): Eliminate this and just use Initialize().
-  // http://crbug.com/660043
-  void InitializeOnAdapterReady();
 
   // Overridden from ash::SystemTrayDelegate:
   void Initialize() override;
@@ -84,22 +76,12 @@ class SystemTrayDelegateChromeOS
   bool ShouldShowNotificationTray() const override;
   void ShowEnterpriseInfo() override;
   void ShowUserLogin() override;
-  void GetAvailableBluetoothDevices(ash::BluetoothDeviceList* list) override;
-  void BluetoothStartDiscovering() override;
-  void BluetoothStopDiscovering() override;
-  void ConnectToBluetoothDevice(const std::string& address) override;
-  bool IsBluetoothDiscovering() const override;
   void GetCurrentIME(ash::IMEInfo* info) override;
   void GetAvailableIMEList(ash::IMEInfoList* list) override;
   void GetCurrentIMEProperties(ash::IMEPropertyInfoList* list) override;
   base::string16 GetIMEManagedMessage() override;
   void SwitchIME(const std::string& ime_id) override;
   void ActivateIMEProperty(const std::string& key) override;
-  void ManageBluetoothDevices() override;
-  void ToggleBluetooth() override;
-  bool GetBluetoothAvailable() override;
-  bool GetBluetoothEnabled() override;
-  bool GetBluetoothDiscovering() override;
   ash::NetworkingConfigDelegate* GetNetworkingConfigDelegate() const override;
   bool GetSessionStartTime(base::TimeTicks* session_start_time) override;
   bool GetSessionLengthLimit(base::TimeDelta* session_length_limit) override;
@@ -212,9 +194,6 @@ class SystemTrayDelegateChromeOS
   std::string enterprise_domain_;
   bool is_active_directory_managed_ = false;
   bool session_started_ = false;
-
-  // TODO(jamescook): Move into //ash. http://crbug.com/660043
-  std::unique_ptr<TrayBluetoothHelper> bluetooth_helper_;
 
   std::unique_ptr<ash::NetworkingConfigDelegate> networking_config_delegate_;
   std::unique_ptr<AccessibilityStatusSubscription> accessibility_subscription_;

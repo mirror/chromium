@@ -38,6 +38,7 @@
 #include "services/ui/public/cpp/property_type_converters.h"
 #include "services/ui/public/interfaces/constants.mojom.h"
 #include "services/ui/public/interfaces/window_manager.mojom.h"
+#include "ui/aura/client/aura_constants.h"
 #include "ui/aura/client/window_parenting_client.h"
 #include "ui/aura/env.h"
 #include "ui/aura/mus/capture_synchronizer.h"
@@ -323,6 +324,23 @@ bool WindowManager::OnWmSetProperty(
   return false;
 }
 
+void WindowManager::OnWmSetModalType(aura::Window* window, ui::ModalType type) {
+  ui::ModalType old_type = window->GetProperty(aura::client::kModalKey);
+  if (type == old_type)
+    return;
+
+  window->SetProperty(aura::client::kModalKey, type);
+  if (type != ui::MODAL_TYPE_SYSTEM && old_type != ui::MODAL_TYPE_SYSTEM)
+    return;
+
+  WmWindow* new_parent =
+      wm::GetDefaultParent(WmWindow::Get(window), window->bounds());
+  DCHECK(new_parent);
+  if (window->parent())
+    window->parent()->RemoveChild(window);
+  new_parent->aura_window()->AddChild(window);
+}
+
 void WindowManager::OnWmSetCanFocus(aura::Window* window, bool can_focus) {
   NonClientFrameController* non_client_frame_controller =
       NonClientFrameController::Get(window);
@@ -434,13 +452,15 @@ void WindowManager::OnWmCancelMoveLoop(aura::Window* window) {
     handler->RevertDrag();
 }
 
-ui::mojom::EventResult WindowManager::OnAccelerator(uint32_t id,
-                                                    const ui::Event& event) {
+ui::mojom::EventResult WindowManager::OnAccelerator(
+    uint32_t id,
+    const ui::Event& event,
+    std::unordered_map<std::string, std::vector<uint8_t>>* properties) {
   auto iter = accelerator_handlers_.find(GetAcceleratorNamespaceId(id));
   if (iter == accelerator_handlers_.end())
     return ui::mojom::EventResult::HANDLED;
 
-  return iter->second->OnAccelerator(id, event);
+  return iter->second->OnAccelerator(id, event, properties);
 }
 
 void WindowManager::OnWmSetClientArea(

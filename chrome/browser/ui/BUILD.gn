@@ -391,6 +391,8 @@ split_static_library("ui") {
     "webui/predictors/predictors_handler.h",
     "webui/predictors/predictors_ui.cc",
     "webui/predictors/predictors_ui.h",
+    "webui/prefs_internals_source.cc",
+    "webui/prefs_internals_source.h",
     "webui/profiler_ui.cc",
     "webui/profiler_ui.h",
     "webui/quota_internals/quota_internals_handler.cc",
@@ -510,7 +512,7 @@ split_static_library("ui") {
     "//components/google/core/browser",
     "//components/guest_view/browser",
     "//components/history/content/browser",
-    "//components/image_fetcher",
+    "//components/image_fetcher/core",
     "//components/infobars/core",
     "//components/invalidation/impl",
     "//components/keyed_service/content",
@@ -1277,8 +1279,6 @@ split_static_library("ui") {
   }
   if (use_ash) {
     sources += [
-      "ash/app_launcher_id.cc",
-      "ash/app_launcher_id.h",
       "ash/app_list/app_list_controller_ash.cc",
       "ash/app_list/app_list_controller_ash.h",
       "ash/app_list/app_list_presenter_delegate_mus.cc",
@@ -1393,8 +1393,6 @@ split_static_library("ui") {
       "ash/session_util.h",
       "ash/system_tray_delegate_chromeos.cc",
       "ash/system_tray_delegate_chromeos.h",
-      "ash/tray_bluetooth_helper.cc",
-      "ash/tray_bluetooth_helper.h",
       "ash/volume_controller.cc",
       "ash/volume_controller.h",
       "ash/vpn_list_forwarder.cc",
@@ -1491,6 +1489,8 @@ split_static_library("ui") {
       "views/frame/native_widget_mac_frameless_nswindow.mm",
       "views/global_error_bubble_view.cc",
       "views/global_error_bubble_view.h",
+      "views/harmony/chrome_typography.cc",
+      "views/harmony/chrome_typography.h",
       "views/harmony/harmony_layout_delegate.cc",
       "views/harmony/harmony_layout_delegate.h",
       "views/harmony/layout_delegate.cc",
@@ -2286,7 +2286,7 @@ split_static_library("ui") {
       "webui/webapks_ui.cc",
       "webui/webapks_ui.h",
     ]
-    if (enable_webvr) {
+    if (enable_vr) {
       sources += [
         "webui/vr_shell/vr_shell_ui_message_handler.cc",
         "webui/vr_shell/vr_shell_ui_message_handler.h",
@@ -2297,7 +2297,7 @@ split_static_library("ui") {
       deps += [ "//chrome/browser/android/vr_shell:vr_common" ]
     }
     if (enable_vr_shell_ui_dev) {
-      assert(enable_webvr)
+      assert(enable_vr)
       defines += [ "ENABLE_VR_SHELL_UI_DEV" ]
     }
     deps += [

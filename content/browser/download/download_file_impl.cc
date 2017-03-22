@@ -42,19 +42,18 @@ const int kInitialRenameRetryDelayMs = 200;
 // Number of times a failing rename is retried before giving up.
 const int kMaxRenameRetries = 3;
 
-DownloadFileImpl::SourceStream::SourceStream(int64_t offset, int64_t length)
+DownloadFileImpl::SourceStream::SourceStream(
+    int64_t offset,
+    int64_t length,
+    std::unique_ptr<ByteStreamReader> stream_reader)
     : offset_(offset),
       length_(length),
       bytes_written_(0),
       finished_(false),
-      index_(0u) {}
+      index_(0u),
+      stream_reader_(std::move(stream_reader)) {}
 
 DownloadFileImpl::SourceStream::~SourceStream() = default;
-
-void DownloadFileImpl::SourceStream::SetByteStream(
-    std::unique_ptr<ByteStreamReader> stream_reader) {
-  stream_reader_ = std::move(stream_reader);
-}
 
 void DownloadFileImpl::SourceStream::OnWriteBytesToDisk(int64_t bytes_write) {
   bytes_written_ += bytes_write;
@@ -76,13 +75,15 @@ DownloadFileImpl::DownloadFileImpl(
       default_download_directory_(default_download_directory),
       is_sparse_file_(is_sparse_file),
       bytes_seen_(0),
+      num_active_streams_(0),
+      record_stream_bandwidth_(true),
+      bytes_seen_with_parallel_streams_(0),
+      bytes_seen_without_parallel_streams_(0),
       received_slices_(received_slices),
       observer_(observer),
       weak_factory_(this) {
   source_streams_[save_info_->offset] = base::MakeUnique<SourceStream>(
-      save_info_->offset, DownloadSaveInfo::kLengthFullContent);
-  DCHECK(source_streams_.size() == static_cast<size_t>(1));
-  source_streams_[save_info_->offset]->SetByteStream(std::move(stream_reader));
+      save_info_->offset, save_info_->length, std::move(stream_reader));
 
   download_item_net_log.AddEvent(
       net::NetLogEventType::DOWNLOAD_FILE_CREATED,
@@ -121,31 +122,32 @@ void DownloadFileImpl::Initialize(const InitializeCallback& callback) {
   }
 
   download_start_ = base::TimeTicks::Now();
+  last_update_time_ = download_start_;
 
   // Primarily to make reset to zero in restart visible to owner.
   SendUpdate();
 
-  // Initial pull from the straw.
-  for (auto& source_stream : source_streams_)
-    RegisterAndActivateStream(source_stream.second.get());
-
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE, base::Bind(
           callback, DOWNLOAD_INTERRUPT_REASON_NONE));
+
+  // Initial pull from the straw from all source streams.
+  for (auto& source_stream : source_streams_)
+    RegisterAndActivateStream(source_stream.second.get());
 }
 
 void DownloadFileImpl::AddByteStream(
     std::unique_ptr<ByteStreamReader> stream_reader,
-    int64_t offset) {
+    int64_t offset,
+    int64_t length) {
   DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 
-  // The |source_streams_| must have an existing entry for the stream reader.
-  auto current_source_stream = source_streams_.find(offset);
-  DCHECK(current_source_stream != source_streams_.end());
-  SourceStream* stream = current_source_stream->second.get();
-  stream->SetByteStream(std::move(stream_reader));
+  source_streams_[offset] =
+      base::MakeUnique<SourceStream>(offset, length, std::move(stream_reader));
 
-  RegisterAndActivateStream(stream);
+  // If the file is initialized, start to write data, or wait until file opened.
+  if (file_.in_progress())
+    RegisterAndActivateStream(source_streams_[offset].get());
 }
 
 DownloadInterruptReason DownloadFileImpl::WriteDataToFile(int64_t offset,
@@ -154,6 +156,35 @@ DownloadInterruptReason DownloadFileImpl::WriteDataToFile(int64_t offset,
   DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   WillWriteToDisk(data_len);
   return file_.WriteDataToFile(offset, data, data_len);
+}
+
+bool DownloadFileImpl::CalculateBytesToWrite(SourceStream* source_stream,
+                                             size_t bytes_available_to_write,
+                                             size_t* bytes_to_write) {
+  // If a new slice finds that its target position has already been written,
+  // terminate the stream.
+  if (source_stream->bytes_written() == 0) {
+    for (const auto& received_slice : received_slices_) {
+      if (received_slice.offset <= source_stream->offset() &&
+          received_slice.offset + received_slice.received_bytes >
+              source_stream->offset()) {
+        *bytes_to_write = 0;
+        return true;
+      }
+    }
+  }
+
+  if (source_stream->length() != DownloadSaveInfo::kLengthFullContent &&
+      source_stream->bytes_written() +
+              static_cast<int64_t>(bytes_available_to_write) >
+          source_stream->length()) {
+    // Write a partial buffer as the incoming data exceeds the length limit.
+    *bytes_to_write = source_stream->length() - source_stream->bytes_written();
+    return true;
+  }
+
+  *bytes_to_write = bytes_available_to_write;
+  return false;
 }
 
 void DownloadFileImpl::RenameAndUniquify(
@@ -284,6 +315,10 @@ bool DownloadFileImpl::InProgress() const {
   return file_.in_progress();
 }
 
+void DownloadFileImpl::WasPaused() {
+  record_stream_bandwidth_ = false;
+}
+
 void DownloadFileImpl::StreamActive(SourceStream* source_stream) {
   DCHECK(source_stream->stream_reader());
   base::TimeTicks start(base::TimeTicks::Now());
@@ -292,6 +327,7 @@ void DownloadFileImpl::StreamActive(SourceStream* source_stream) {
   size_t incoming_data_size = 0;
   size_t total_incoming_data_size = 0;
   size_t num_buffers = 0;
+  size_t bytes_to_write = 0;
   bool should_terminate = false;
   ByteStreamReader::StreamState state(ByteStreamReader::STREAM_EMPTY);
   DownloadInterruptReason reason = DOWNLOAD_INTERRUPT_REASON_NONE;
@@ -310,34 +346,28 @@ void DownloadFileImpl::StreamActive(SourceStream* source_stream) {
         {
           ++num_buffers;
           base::TimeTicks write_start(base::TimeTicks::Now());
-          // Stop the stream if it writes more bytes than expected.
-          if (source_stream->length() != DownloadSaveInfo::kLengthFullContent &&
-              source_stream->bytes_written() +
-                      static_cast<int64_t>(incoming_data_size) >=
-                  source_stream->length()) {
-            should_terminate = true;
-            incoming_data_size =
-                source_stream->length() - source_stream->bytes_written();
-          }
+          should_terminate = CalculateBytesToWrite(
+              source_stream, incoming_data_size, &bytes_to_write);
+          DCHECK_GE(incoming_data_size, bytes_to_write);
           reason = WriteDataToFile(
               source_stream->offset() + source_stream->bytes_written(),
-              incoming_data.get()->data(), incoming_data_size);
+              incoming_data.get()->data(), bytes_to_write);
           disk_writes_time_ += (base::TimeTicks::Now() - write_start);
-          bytes_seen_ += incoming_data_size;
-          total_incoming_data_size += incoming_data_size;
+          bytes_seen_ += bytes_to_write;
+          total_incoming_data_size += bytes_to_write;
           if (reason == DOWNLOAD_INTERRUPT_REASON_NONE) {
             int64_t prev_bytes_written = source_stream->bytes_written();
-            source_stream->OnWriteBytesToDisk(incoming_data_size);
+            source_stream->OnWriteBytesToDisk(bytes_to_write);
             if (!is_sparse_file_)
               break;
             // If the write operation creates a new slice, add it to the
             // |received_slices_| and update all the entries in
             // |source_streams_|.
-            if (incoming_data_size > 0 && prev_bytes_written == 0) {
-              AddNewSlice(source_stream->offset(), incoming_data_size);
+            if (bytes_to_write > 0 && prev_bytes_written == 0) {
+              AddNewSlice(source_stream->offset(), bytes_to_write);
             } else {
               received_slices_[source_stream->index()].received_bytes +=
-                  incoming_data_size;
+                  bytes_to_write;
             }
           }
         }
@@ -385,10 +415,12 @@ void DownloadFileImpl::StreamActive(SourceStream* source_stream) {
         BrowserThread::UI, FROM_HERE,
         base::Bind(&DownloadDestinationObserver::DestinationError, observer_,
                    reason, TotalBytesReceived(), base::Passed(&hash_state)));
+    num_active_streams_--;
   } else if (state == ByteStreamReader::STREAM_COMPLETE || should_terminate) {
     // Signal successful completion or termination of the current stream.
     source_stream->stream_reader()->RegisterCallback(base::Closure());
     source_stream->set_finished(true);
+    num_active_streams_--;
 
     // Inform observers.
     SendUpdate();
@@ -397,6 +429,12 @@ void DownloadFileImpl::StreamActive(SourceStream* source_stream) {
     if (IsDownloadCompleted()) {
       RecordFileBandwidth(bytes_seen_, disk_writes_time_,
                           base::TimeTicks::Now() - download_start_);
+      if (is_sparse_file_ && record_stream_bandwidth_) {
+        RecordParallelDownloadStats(bytes_seen_with_parallel_streams_,
+                                    download_time_with_parallel_streams_,
+                                    bytes_seen_without_parallel_streams_,
+                                    download_time_without_parallel_streams_);
+      }
       weak_factory_.InvalidateWeakPtrs();
       std::unique_ptr<crypto::SecureHash> hash_state = file_.Finish();
       update_timer_.reset();
@@ -422,6 +460,7 @@ void DownloadFileImpl::RegisterAndActivateStream(SourceStream* source_stream) {
                                                weak_factory_.GetWeakPtr(),
                                                source_stream));
     StreamActive(source_stream);
+    num_active_streams_++;
   }
 }
 
@@ -446,6 +485,18 @@ void DownloadFileImpl::WillWriteToDisk(size_t data_len) {
                          this, &DownloadFileImpl::SendUpdate);
   }
   rate_estimator_.Increment(data_len);
+  if (is_sparse_file_) {
+    base::TimeTicks now = base::TimeTicks::Now();
+    base::TimeDelta time_elapsed = (now - last_update_time_);
+    last_update_time_ = now;
+    if (num_active_streams_ > 1) {
+      download_time_with_parallel_streams_ += time_elapsed;
+      bytes_seen_with_parallel_streams_ += data_len;
+    } else {
+      download_time_without_parallel_streams_ += time_elapsed;
+      bytes_seen_without_parallel_streams_ += data_len;
+    }
+  }
 }
 
 void DownloadFileImpl::AddNewSlice(int64_t offset, int64_t length) {

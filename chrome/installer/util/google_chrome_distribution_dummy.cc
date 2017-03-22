@@ -36,10 +36,6 @@ void GoogleChromeDistribution::DoPostUninstallOperations(
     const base::string16& distribution_data) {
 }
 
-base::string16 GoogleChromeDistribution::GetActiveSetupGuid() {
-  return base::string16();
-}
-
 base::string16 GoogleChromeDistribution::GetBaseAppName() {
   return base::string16();
 }
@@ -50,14 +46,6 @@ base::string16 GoogleChromeDistribution::GetShortcutName() {
 
 int GoogleChromeDistribution::GetIconIndex() {
   return 0;
-}
-
-base::string16 GoogleChromeDistribution::GetBrowserProgIdPrefix() {
-  return base::string16();
-}
-
-base::string16 GoogleChromeDistribution::GetBrowserProgIdDesc() {
-  return base::string16();
 }
 
 base::string16 GoogleChromeDistribution::GetPublisherName() {

@@ -122,7 +122,7 @@ bool ImageData::validateConstructorArguments(const unsigned& paramFlags,
   }
 
   if (paramFlags & kParamSize) {
-    if (!size->width() || !size->height())
+    if (size->width() <= 0 || size->height() <= 0)
       return false;
     CheckedNumeric<unsigned> dataSize = 4;
     dataSize *= size->width();
@@ -147,22 +147,25 @@ DOMArrayBufferView* ImageData::allocateAndValidateDataArray(
 
   DOMArrayBufferView* dataArray = nullptr;
   unsigned dataLength = 0;
+  unsigned dataItemLength = 1;
   switch (storageFormat) {
     case kUint8ClampedArrayStorageFormat:
       dataArray = DOMUint8ClampedArray::createOrNull(length);
-      dataLength = dataArray->view()->byteLength();
       break;
     case kUint16ArrayStorageFormat:
       dataArray = DOMUint16Array::createOrNull(length);
-      dataLength = dataArray->view()->byteLength() / 2;
+      dataItemLength = 2;
       break;
     case kFloat32ArrayStorageFormat:
       dataArray = DOMFloat32Array::createOrNull(length);
-      dataLength = dataArray->view()->byteLength() / 4;
+      dataItemLength = 4;
       break;
     default:
       NOTREACHED();
   }
+
+  if (dataArray)
+    dataLength = dataArray->view()->byteLength() / dataItemLength;
 
   if (!dataArray || length != dataLength) {
     if (exceptionState)
@@ -177,9 +180,11 @@ DOMArrayBufferView* ImageData::allocateAndValidateDataArray(
 ImageData* ImageData::create(const IntSize& size) {
   if (!ImageData::validateConstructorArguments(kParamSize, &size))
     return nullptr;
-  DOMArrayBufferView* byteArray = allocateAndValidateDataArray(
-      4 * size.width() * size.height(), kUint8ClampedArrayStorageFormat);
-  return new ImageData(size, byteArray);
+  DOMArrayBufferView* byteArray =
+      allocateAndValidateDataArray(4 * static_cast<unsigned>(size.width()) *
+                                       static_cast<unsigned>(size.height()),
+                                   kUint8ClampedArrayStorageFormat);
+  return byteArray ? new ImageData(size, byteArray) : nullptr;
 }
 
 // This function accepts size (0, 0) and always returns the ImageData in
@@ -286,7 +291,8 @@ ImageData* ImageData::createImageData(
           bufferView, &exceptionState))
     return nullptr;
 
-  return new ImageData(IntSize(width, height), bufferView, &colorSettings);
+  return new ImageData(IntSize(width, height), bufferView, &colorSettings,
+                       kStorageFormatFromBufferType);
 }
 
 ScriptPromise ImageData::createImageBitmap(ScriptState* scriptState,
@@ -376,7 +382,8 @@ void ImageData::trace(Visitor* visitor) {
 
 ImageData::ImageData(const IntSize& size,
                      DOMArrayBufferView* data,
-                     const ImageDataColorSettings* colorSettings)
+                     const ImageDataColorSettings* colorSettings,
+                     StorageFormatSource storageFormatSource)
     : m_size(size) {
   DCHECK_GE(size.width(), 0);
   DCHECK_GE(size.height(), 0);
@@ -391,29 +398,52 @@ ImageData::ImageData(const IntSize& size,
     m_colorSettings.setStorageFormat(colorSettings->storageFormat());
   }
 
+  // if data is provided through the JS call, override the storage format.
+  if (storageFormatSource == kStorageFormatFromBufferType) {
+    switch (data->type()) {
+      case DOMArrayBufferView::ViewType::TypeUint8Clamped:
+        m_colorSettings.setStorageFormat(kUint8ClampedArrayStorageFormatName);
+        break;
+      case DOMArrayBufferView::ViewType::TypeUint16:
+        m_colorSettings.setStorageFormat(kUint16ArrayStorageFormatName);
+        break;
+      case DOMArrayBufferView::ViewType::TypeFloat32:
+        m_colorSettings.setStorageFormat(kFloat32ArrayStorageFormatName);
+        break;
+      default:
+        NOTREACHED();
+    }
+  }
+
   ImageDataStorageFormat storageFormat =
       getImageDataStorageFormat(m_colorSettings.storageFormat());
 
   switch (storageFormat) {
     case kUint8ClampedArrayStorageFormat:
+      DCHECK(data->type() == DOMArrayBufferView::ViewType::TypeUint8Clamped);
       m_data = const_cast<DOMUint8ClampedArray*>(
           static_cast<const DOMUint8ClampedArray*>(data));
+      DCHECK(m_data);
       m_dataUnion.setUint8ClampedArray(m_data);
       SECURITY_CHECK(static_cast<unsigned>(size.width() * size.height() * 4) <=
                      m_data->length());
       break;
 
     case kUint16ArrayStorageFormat:
+      DCHECK(data->type() == DOMArrayBufferView::ViewType::TypeUint16);
       m_dataU16 =
           const_cast<DOMUint16Array*>(static_cast<const DOMUint16Array*>(data));
+      DCHECK(m_dataU16);
       m_dataUnion.setUint16Array(m_dataU16);
       SECURITY_CHECK(static_cast<unsigned>(size.width() * size.height() * 4) <=
                      m_dataU16->length());
       break;
 
     case kFloat32ArrayStorageFormat:
+      DCHECK(data->type() == DOMArrayBufferView::ViewType::TypeFloat32);
       m_dataF32 = const_cast<DOMFloat32Array*>(
           static_cast<const DOMFloat32Array*>(data));
+      DCHECK(m_dataF32);
       m_dataUnion.setFloat32Array(m_dataF32);
       SECURITY_CHECK(static_cast<unsigned>(size.width() * size.height() * 4) <=
                      m_dataF32->length());

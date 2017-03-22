@@ -10,6 +10,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include "base/callback_forward.h"
@@ -91,6 +92,9 @@ class AURA_EXPORT WindowManagerDelegate {
       const std::string& name,
       std::unique_ptr<std::vector<uint8_t>>* new_data) = 0;
 
+  // A client requested the modal type to be changed to |type|.
+  virtual void OnWmSetModalType(Window* window, ui::ModalType type) = 0;
+
   // A client requested to change focusibility of |window|. We currently assume
   // this always succeeds.
   virtual void OnWmSetCanFocus(Window* window, bool can_focus) = 0;
@@ -132,8 +136,16 @@ class AURA_EXPORT WindowManagerDelegate {
   // Called when a display is modified.
   virtual void OnWmDisplayModified(const display::Display& display) = 0;
 
-  virtual ui::mojom::EventResult OnAccelerator(uint32_t id,
-                                               const ui::Event& event);
+  // Called when an accelerator is received. |id| is the id previously
+  // registered via AddAccelerators(). For pre-target accelerators the delegate
+  // may add key/value pairs to |properties| that are then added to the
+  // KeyEvent that is sent to the client with the focused window (only if this
+  // returns UNHANDLED). |properties| may be used to pass around state from the
+  // window manager to clients.
+  virtual ui::mojom::EventResult OnAccelerator(
+      uint32_t id,
+      const ui::Event& event,
+      std::unordered_map<std::string, std::vector<uint8_t>>* properties);
 
   virtual void OnWmPerformMoveLoop(
       Window* window,

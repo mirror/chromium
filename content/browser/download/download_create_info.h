@@ -19,6 +19,7 @@
 #include "content/common/content_export.h"
 #include "content/public/browser/download_interrupt_reasons.h"
 #include "content/public/browser/download_save_info.h"
+#include "net/http/http_response_info.h"
 #include "net/log/net_log_with_source.h"
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
@@ -59,8 +60,15 @@ struct CONTENT_EXPORT DownloadCreateInfo {
   // The time when the download started.
   base::Time start_time;
 
-  // The total download size.
+  // The size of the response body. If content-length response header is not
+  // presented or can't be parse, set to 0.
   int64_t total_bytes;
+
+  // The starting position of the request to save to the target file.
+  // This value matches the offset in DownloadSaveInfo.
+  // TODO(xingliu): Remove this after we refactor DownloadJob to own
+  // DownloadFile.
+  int64_t offset;
 
   // True if the download was initiated by user action.
   bool has_user_gesture;
@@ -112,6 +120,9 @@ struct CONTENT_EXPORT DownloadCreateInfo {
 
   // If "Accept-Ranges:bytes" header presents in the response header.
   bool accept_range;
+
+  // The HTTP connection type.
+  net::HttpResponseInfo::ConnectionInfo connection_info;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(DownloadCreateInfo);

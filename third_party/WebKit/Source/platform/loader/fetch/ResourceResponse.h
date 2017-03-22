@@ -197,7 +197,6 @@ class PLATFORM_EXPORT ResourceResponse final {
   bool cacheControlContainsMustRevalidate() const;
   bool hasCacheValidatorFields() const;
   double cacheControlMaxAge() const;
-  double cacheControlStaleWhileRevalidate() const;
   double date() const;
   double age() const;
   double expires() const;
@@ -349,7 +348,7 @@ class PLATFORM_EXPORT ResourceResponse final {
   // Extra data associated with this response.
   ExtraData* getExtraData() const { return m_extraData.get(); }
   void setExtraData(PassRefPtr<ExtraData> extraData) {
-    m_extraData = extraData;
+    m_extraData = std::move(extraData);
   }
 
   unsigned memoryUsage() const {

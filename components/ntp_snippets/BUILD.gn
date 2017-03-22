@@ -100,7 +100,7 @@ static_library("ntp_snippets") {
     "//components/bookmarks/browser",
     "//components/data_use_measurement/core",
     "//components/history/core/browser",
-    "//components/image_fetcher",
+    "//components/image_fetcher/core",
     "//components/metrics",
     "//components/ntp_snippets/remote/proto",
     "//components/offline_pages/core",
@@ -152,6 +152,7 @@ source_set("unit_tests") {
     "remote/test_utils.h",
     "sessions/foreign_sessions_suggestions_provider_unittest.cc",
     "sessions/tab_delegate_sync_adapter_unittest.cc",
+    "user_classifier_unittest.cc",
   ]
 
   deps = [
@@ -161,7 +162,7 @@ source_set("unit_tests") {
     "//base/test:test_support",
     "//components/bookmarks/browser",
     "//components/bookmarks/test",
-    "//components/image_fetcher",
+    "//components/image_fetcher/core",
     "//components/leveldb_proto:test_support",
     "//components/ntp_snippets/remote/proto",
     "//components/offline_pages/core",

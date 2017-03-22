@@ -124,12 +124,6 @@ const base::Feature kNotificationContentImage{"NotificationContentImage",
 const base::Feature kMainThreadBusyScrollIntervention{
     "MainThreadBusyScrollIntervention", base::FEATURE_DISABLED_BY_DEFAULT};
 
-// An experiment to optimize resource loading IPC for small resources.
-// http://crbug.com/580928
-const base::Feature kOptimizeLoadingIPCForSmallResources{
-    "OptimizeLoadingIPCForSmallResources",
-    base::FEATURE_DISABLED_BY_DEFAULT};
-
 // Origin Trials for controlling access to feature/API experiments.
 const base::Feature kOriginTrials{"OriginTrials",
                                   base::FEATURE_ENABLED_BY_DEFAULT};
@@ -201,12 +195,6 @@ const base::Feature kSlimmingPaintInvalidation{
 // Speculatively launches Service Workers on mouse/touch events.
 const base::Feature kSpeculativeLaunchServiceWorker{
     "SpeculativeLaunchServiceWorker", base::FEATURE_DISABLED_BY_DEFAULT};
-
-// Enables implementation of the Cache-Control: stale-while-revalidate directive
-// which permits servers to allow the use of stale resources while revalidation
-// proceeds in the background. See http://crbug.com/348877
-const base::Feature kStaleWhileRevalidate{"StaleWhileRevalidate2",
-                                          base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Throttle Blink timers in out-of-view cross origin frames.
 const base::Feature kTimerThrottlingForHiddenFrames{

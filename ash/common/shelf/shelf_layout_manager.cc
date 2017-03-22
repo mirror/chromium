@@ -11,7 +11,6 @@
 #include "ash/animation/animation_change_type.h"
 #include "ash/common/keyboard/keyboard_observer_register.h"
 #include "ash/common/session/session_controller.h"
-#include "ash/common/session/session_state_delegate.h"
 #include "ash/common/shelf/shelf_constants.h"
 #include "ash/common/shelf/shelf_layout_manager_observer.h"
 #include "ash/common/shelf/shelf_widget.h"
@@ -161,9 +160,8 @@ ShelfLayoutManager::ShelfLayoutManager(ShelfWidget* shelf_widget,
   Shell::GetInstance()->AddShellObserver(this);
   WmShell::Get()->AddLockStateObserver(this);
   Shell::GetInstance()->activation_client()->AddObserver(this);
-  WmShell::Get()->session_controller()->AddSessionStateObserver(this);
-  state_.session_state =
-      WmShell::Get()->session_controller()->GetSessionState();
+  Shell::Get()->session_controller()->AddSessionStateObserver(this);
+  state_.session_state = Shell::Get()->session_controller()->GetSessionState();
 }
 
 ShelfLayoutManager::~ShelfLayoutManager() {
@@ -174,7 +172,7 @@ ShelfLayoutManager::~ShelfLayoutManager() {
     observer.WillDeleteShelfLayoutManager();
   Shell::GetInstance()->RemoveShellObserver(this);
   WmShell::Get()->RemoveLockStateObserver(this);
-  WmShell::Get()->session_controller()->RemoveSessionStateObserver(this);
+  Shell::Get()->session_controller()->RemoveSessionStateObserver(this);
 }
 
 void ShelfLayoutManager::PrepareForShutdown() {
@@ -341,8 +339,8 @@ void ShelfLayoutManager::RemoveObserver(ShelfLayoutManagerObserver* observer) {
 
 bool ShelfLayoutManager::ProcessGestureEvent(const ui::GestureEvent& event) {
   // The gestures are disabled in the lock/login screen.
-  SessionStateDelegate* delegate = WmShell::Get()->GetSessionStateDelegate();
-  if (!delegate->NumberOfLoggedInUsers() || delegate->IsScreenLocked())
+  SessionController* controller = Shell::Get()->session_controller();
+  if (!controller->NumberOfLoggedInUsers() || controller->IsScreenLocked())
     return false;
 
   if (IsShelfHiddenForFullscreen())
@@ -438,7 +436,7 @@ void ShelfLayoutManager::OnKeyboardBoundsChanging(const gfx::Rect& new_bounds) {
   // On login screen if keyboard has been just hidden, update bounds just once
   // but ignore target_bounds.work_area_insets since shelf overlaps with login
   // window.
-  if (WmShell::Get()->GetSessionStateDelegate()->IsUserSessionBlocked() &&
+  if (Shell::Get()->session_controller()->IsUserSessionBlocked() &&
       keyboard_is_about_to_hide) {
     WmWindow* window = WmWindow::Get(shelf_widget_->GetNativeWindow());
     WmShell::Get()->SetDisplayWorkAreaInsets(window, gfx::Insets());
@@ -715,14 +713,6 @@ void ShelfLayoutManager::CalculateTargetBounds(const State& state,
     target_bounds->work_area_insets += keyboard_insets;
   }
 
-  // Also push in the work area inset for the dock if it is visible.
-  if (!dock_bounds_.IsEmpty()) {
-    gfx::Insets dock_insets(
-        0, (dock_bounds_.x() > 0 ? 0 : dock_bounds_.width()), 0,
-        (dock_bounds_.x() > 0 ? dock_bounds_.width() : 0));
-    target_bounds->work_area_insets += dock_insets;
-  }
-
   // Also push in the work area insets for the ChromeVox panel if it's visible.
   if (chromevox_panel_height_) {
     gfx::Insets chromevox_insets(chromevox_panel_height_, 0, 0, 0);
@@ -898,7 +888,7 @@ ShelfAutoHideState ShelfLayoutManager::CalculateAutoHideState(
           ->GetDisplayNearestWindow()
           .id();
   const std::vector<WmWindow*> windows =
-      WmShell::Get()->mru_window_tracker()->BuildWindowListIgnoreModal();
+      Shell::Get()->mru_window_tracker()->BuildWindowListIgnoreModal();
   // Process the window list and check if there are any visible windows.
   // Ignore app list windows that may be animating to hide after dismissal.
   bool visible_window = false;
@@ -982,20 +972,6 @@ int ShelfLayoutManager::GetWorkAreaInsets(const State& state, int size) const {
   if (state.visibility_state == SHELF_AUTO_HIDE)
     return GetShelfConstant(SHELF_INSETS_FOR_AUTO_HIDE);
   return 0;
-}
-
-void ShelfLayoutManager::OnDockBoundsChanging(
-    const gfx::Rect& dock_bounds,
-    DockedWindowLayoutManagerObserver::Reason reason) {
-  // Skip shelf layout in case docked notification originates from this class.
-  if (reason == DISPLAY_INSETS_CHANGED)
-    return;
-  if (dock_bounds_ != dock_bounds) {
-    dock_bounds_ = dock_bounds;
-    OnWindowResized();
-    UpdateVisibilityState();
-    MaybeUpdateShelfBackground(AnimationChangeType::ANIMATE);
-  }
 }
 
 void ShelfLayoutManager::OnLockStateEvent(LockStateObserver::EventType event) {

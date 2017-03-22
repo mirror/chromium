@@ -4,7 +4,7 @@
 
 #include "ash/common/system/user/tray_user.h"
 
-#include "ash/common/session/session_state_delegate.h"
+#include "ash/common/session/session_controller.h"
 #include "ash/common/shelf/wm_shelf_util.h"
 #include "ash/common/system/tray/system_tray.h"
 #include "ash/common/system/tray/system_tray_delegate.h"
@@ -15,6 +15,7 @@
 #include "ash/common/system/user/rounded_image_view.h"
 #include "ash/common/system/user/user_view.h"
 #include "ash/common/wm_shell.h"
+#include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "base/logging.h"
 #include "base/strings/string16.h"
@@ -80,18 +81,18 @@ views::View* TrayUser::CreateTrayView(LoginStatus status) {
 views::View* TrayUser::CreateDefaultView(LoginStatus status) {
   if (status == LoginStatus::NOT_LOGGED_IN)
     return nullptr;
-  const SessionStateDelegate* session_state_delegate =
-      WmShell::Get()->GetSessionStateDelegate();
+  const SessionController* const session_controller =
+      Shell::Get()->session_controller();
 
   // If the screen is locked or a system modal dialog box is shown, show only
   // the currently active user.
-  if (user_index_ && (session_state_delegate->IsUserSessionBlocked() ||
+  if (user_index_ && (session_controller->IsUserSessionBlocked() ||
                       WmShell::Get()->IsSystemModalWindowOpen()))
     return nullptr;
 
   CHECK(user_ == nullptr);
 
-  int logged_in_users = session_state_delegate->NumberOfLoggedInUsers();
+  int logged_in_users = session_controller->NumberOfLoggedInUsers();
 
   // Do not show more UserView's then there are logged in users.
   if (user_index_ >= logged_in_users)
@@ -119,7 +120,7 @@ void TrayUser::UpdateAfterLoginStatusChange(LoginStatus status) {
     return;
   bool need_label = false;
   bool need_avatar = false;
-  SystemTrayDelegate* delegate = WmShell::Get()->system_tray_delegate();
+  SystemTrayDelegate* delegate = Shell::Get()->system_tray_delegate();
   if (delegate->IsUserSupervised())
     need_label = true;
   switch (status) {
@@ -218,36 +219,34 @@ void TrayUser::UpdateAfterShelfAlignmentChange(ShelfAlignment alignment) {
 }
 
 void TrayUser::OnUserUpdate() {
-  UpdateAvatarImage(
-      WmShell::Get()->system_tray_delegate()->GetUserLoginStatus());
+  UpdateAvatarImage(Shell::Get()->system_tray_delegate()->GetUserLoginStatus());
 }
 
 void TrayUser::OnUserAddedToSession() {
-  SessionStateDelegate* session_state_delegate =
-      WmShell::Get()->GetSessionStateDelegate();
+  const SessionController* const session_controller =
+      Shell::Get()->session_controller();
   // Only create views for user items which are logged in.
-  if (user_index_ >= session_state_delegate->NumberOfLoggedInUsers())
+  if (user_index_ >= session_controller->NumberOfLoggedInUsers())
     return;
 
   // Enforce a layout change that newly added items become visible.
   UpdateLayoutOfItem();
 
   // Update the user item.
-  UpdateAvatarImage(
-      WmShell::Get()->system_tray_delegate()->GetUserLoginStatus());
+  UpdateAvatarImage(Shell::Get()->system_tray_delegate()->GetUserLoginStatus());
 }
 
 void TrayUser::UpdateAvatarImage(LoginStatus status) {
-  SessionStateDelegate* session_state_delegate =
-      WmShell::Get()->GetSessionStateDelegate();
-  if (!avatar_ ||
-      user_index_ >= session_state_delegate->NumberOfLoggedInUsers())
+  const SessionController* const session_controller =
+      Shell::Get()->session_controller();
+  if (!avatar_ || user_index_ >= session_controller->NumberOfLoggedInUsers())
     return;
 
-  const user_manager::UserInfo* user_info =
-      session_state_delegate->GetUserInfo(user_index_);
-  CHECK(user_info);
-  avatar_->SetImage(user_info->GetImage(),
+  const mojom::UserSession* const user_session =
+      session_controller->GetUserSession(user_index_);
+  CHECK(user_session);
+  // TODO(xiyuan); HiDpi avatar support. http://crbug.com/702689
+  avatar_->SetImage(gfx::ImageSkia::CreateFrom1xBitmap(user_session->avatar),
                     gfx::Size(kTrayItemSize, kTrayItemSize));
 
   // Unit tests might come here with no images for some users.

@@ -4,6 +4,7 @@
 
 #include "chrome/browser/ui/views/payments/shipping_option_view_controller.h"
 
+#include "chrome/browser/ui/views/payments/payment_request_dialog_view.h"
 #include "chrome/browser/ui/views/payments/payment_request_views_util.h"
 #include "components/payments/content/payment_request_spec.h"
 #include "components/payments/content/payment_request_state.h"
@@ -18,22 +19,40 @@ class ShippingOptionItem : public PaymentRequestItemList::Item {
                      PaymentRequestSpec* spec,
                      PaymentRequestState* state,
                      PaymentRequestItemList* parent_list,
+                     PaymentRequestDialogView* dialog,
                      bool selected)
       : PaymentRequestItemList::Item(spec, state, parent_list, selected),
-        shipping_option_(shipping_option) {}
+        shipping_option_(shipping_option),
+        dialog_(dialog) {}
   ~ShippingOptionItem() override {}
 
  private:
   // payments::PaymentRequestItemList::Item:
-  std::unique_ptr<views::View> CreateItemView() override {
+  std::unique_ptr<views::View> CreateContentView() override {
     return CreateShippingOptionLabel(
         shipping_option_,
         spec()->GetFormattedCurrencyAmount(shipping_option_->amount->value));
   }
 
-  void SelectedStateChanged() override {}
+  void SelectedStateChanged() override {
+    if (selected()) {
+      state()->SetSelectedShippingOption(shipping_option_);
+      dialog_->GoBack();
+    }
+  }
+
+  bool CanBeSelected() const override {
+    // Shipping options are vetted by the website; they're all OK to select.
+    return true;
+  }
+
+  void PerformSelectionFallback() override {
+    // Since CanBeSelected() is always true, this should never be called.
+    NOTREACHED();
+  }
 
   mojom::PaymentShippingOption* shipping_option_;
+  PaymentRequestDialogView* dialog_;
 
   DISALLOW_COPY_AND_ASSIGN(ShippingOptionItem);
 };
@@ -47,7 +66,7 @@ ShippingOptionViewController::ShippingOptionViewController(
     : PaymentRequestSheetController(spec, state, dialog) {
   for (const auto& option : spec->details().shipping_options) {
     shipping_option_list_.AddItem(base::MakeUnique<ShippingOptionItem>(
-        option.get(), spec, state, &shipping_option_list_,
+        option.get(), spec, state, &shipping_option_list_, dialog,
         option.get() == state->selected_shipping_option()));
   }
 }

@@ -25,7 +25,8 @@
 #include "ui/strings/grit/ui_strings.h"
 #include "ui/vector_icons/vector_icons.h"
 #include "ui/views/bubble/bubble_border.h"
-#include "ui/views/controls/button/vector_icon_button.h"
+#include "ui/views/controls/button/image_button.h"
+#include "ui/views/controls/button/image_button_factory.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/layout/box_layout.h"
@@ -86,9 +87,7 @@ BubbleFrameView::BubbleFrameView(const gfx::Insets& title_margins,
       close_button_clicked_(false) {
   AddChildView(title_icon_);
 
-  ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
-  title_ = new Label(base::string16(),
-                     rb.GetFontListWithDelta(ui::kTitleFontSizeDelta));
+  title_ = new Label(base::string16(), style::CONTEXT_DIALOG_TITLE);
   title_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   title_->set_collapse_when_hidden(true);
   title_->SetVisible(false);
@@ -108,15 +107,14 @@ BubbleFrameView::BubbleFrameView(const gfx::Insets& title_margins,
 BubbleFrameView::~BubbleFrameView() {}
 
 // static
-Button* BubbleFrameView::CreateCloseButton(VectorIconButtonDelegate* delegate) {
+Button* BubbleFrameView::CreateCloseButton(ButtonListener* listener) {
   ImageButton* close_button = nullptr;
   if (ui::MaterialDesignController::IsSecondaryUiMaterial()) {
-    VectorIconButton* close = new VectorIconButton(delegate);
-    close->SetIcon(ui::kCloseIcon);
-    close_button = close;
+    close_button = CreateVectorImageButton(listener);
+    SetImageFromVectorIcon(close_button, ui::kCloseIcon);
   } else {
     ui::ResourceBundle* rb = &ui::ResourceBundle::GetSharedInstance();
-    close_button = new ImageButton(delegate);
+    close_button = new ImageButton(listener);
     close_button->SetImage(CustomButton::STATE_NORMAL,
                            *rb->GetImageNamed(IDR_CLOSE_DIALOG).ToImageSkia());
     close_button->SetImage(

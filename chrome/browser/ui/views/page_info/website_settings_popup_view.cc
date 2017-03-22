@@ -23,6 +23,7 @@
 #include "chrome/browser/ui/layout_constants.h"
 #include "chrome/browser/ui/page_info/website_settings.h"
 #include "chrome/browser/ui/views/collected_cookies_views.h"
+#include "chrome/browser/ui/views/harmony/chrome_typography.h"
 #include "chrome/browser/ui/views/harmony/layout_delegate.h"
 #include "chrome/browser/ui/views/page_info/chosen_object_row.h"
 #include "chrome/browser/ui/views/page_info/non_accessible_image_view.h"
@@ -309,10 +310,12 @@ InternalPageInfoPopupView::InternalPageInfoPopupView(
   SetLayoutManager(new views::BoxLayout(views::BoxLayout::kHorizontal, kSpacing,
                                         kSpacing, kSpacing));
   set_margins(gfx::Insets());
-  views::ImageView* icon_view = new NonAccessibleImageView();
-  ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
-  icon_view->SetImage(rb.GetImageSkiaNamed(icon));
-  AddChildView(icon_view);
+  if (LayoutDelegate::Get()->ShouldShowWindowIcon()) {
+    views::ImageView* icon_view = new NonAccessibleImageView();
+    ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
+    icon_view->SetImage(rb.GetImageSkiaNamed(icon));
+    AddChildView(icon_view);
+  }
 
   views::Label* label = new views::Label(l10n_util::GetStringUTF16(text));
   label->SetMultiLine(true);
@@ -323,8 +326,7 @@ InternalPageInfoPopupView::InternalPageInfoPopupView(
   views::BubbleDialogDelegateView::CreateBubble(this);
 }
 
-InternalPageInfoPopupView::~InternalPageInfoPopupView() {
-}
+InternalPageInfoPopupView::~InternalPageInfoPopupView() {}
 
 void InternalPageInfoPopupView::OnWidgetDestroying(views::Widget* widget) {
   g_shown_popup_type = WebsiteSettingsPopupView::POPUP_NONE;
@@ -338,8 +340,7 @@ int InternalPageInfoPopupView::GetDialogButtons() const {
 // WebsiteSettingsPopupView
 ////////////////////////////////////////////////////////////////////////////////
 
-WebsiteSettingsPopupView::~WebsiteSettingsPopupView() {
-}
+WebsiteSettingsPopupView::~WebsiteSettingsPopupView() {}
 
 // static
 void WebsiteSettingsPopupView::ShowPopup(
@@ -417,12 +418,8 @@ WebsiteSettingsPopupView::WebsiteSettingsPopupView(
   // propagate up to the dialog width.
   const int content_column = 0;
   views::ColumnSet* column_set = layout->AddColumnSet(content_column);
-  column_set->AddColumn(views::GridLayout::FILL,
-                        views::GridLayout::FILL,
-                        1,
-                        views::GridLayout::USE_PREF,
-                        0,
-                        0);
+  column_set->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL, 1,
+                        views::GridLayout::USE_PREF, 0, 0);
 
   header_ = new PopupHeaderView(this, this, side_margin);
   layout->StartRow(1, content_column);
@@ -588,11 +585,9 @@ void WebsiteSettingsPopupView::SetCookieInfo(
         // implemented. See https://crbug.com/512442#c48
         views::GridLayout::LEADING);
 
-    ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
-    const gfx::FontList& font_list = rb.GetFontListWithDelta(1);
     views::Label* cookies_label = new views::Label(
         l10n_util::GetStringUTF16(IDS_WEBSITE_SETTINGS_TITLE_SITE_DATA),
-        font_list);
+        CONTEXT_BODY_TEXT_LARGE);
     layout->AddView(cookies_label);
     layout->StartRow(1, cookies_view_column);
     layout->SkipColumns(1);
@@ -625,12 +620,8 @@ void WebsiteSettingsPopupView::SetPermissionInfo(
 
   const int content_column = 0;
   views::ColumnSet* column_set = layout->AddColumnSet(content_column);
-  column_set->AddColumn(views::GridLayout::FILL,
-                        views::GridLayout::FILL,
-                        1,
-                        views::GridLayout::USE_PREF,
-                        0,
-                        0);
+  column_set->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL, 1,
+                        views::GridLayout::USE_PREF, 0, 0);
   const int permissions_column = 1;
   views::ColumnSet* permissions_set = layout->AddColumnSet(permissions_column);
   permissions_set->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL,

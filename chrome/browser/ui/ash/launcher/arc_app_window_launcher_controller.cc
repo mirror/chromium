@@ -8,7 +8,6 @@
 #include "ash/common/shelf/shelf_delegate.h"
 #include "ash/common/wm/maximize_mode/maximize_mode_controller.h"
 #include "ash/common/wm/window_state.h"
-#include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
 #include "ash/display/screen_orientation_controller_chromeos.h"
 #include "ash/shared/app_types.h"
@@ -423,7 +422,7 @@ void ArcAppWindowLauncherController::AttachControllerToWindowIfNeeded(
   RegisterApp(info);
   DCHECK(info->app_window()->controller());
   window->SetProperty(ash::kShelfIDKey, info->app_window()->shelf_id());
-  if (ash::WmShell::Get()
+  if (ash::Shell::Get()
           ->maximize_mode_controller()
           ->IsMaximizeModeWindowManagerEnabled()) {
     SetOrientationLockForAppWindow(info->app_window());
@@ -555,7 +554,7 @@ void ArcAppWindowLauncherController::OnTaskOrientationLockRequested(
     return;
   info->set_requested_orientation_lock(orientation_lock);
 
-  if (ash::WmShell::Get()
+  if (ash::Shell::Get()
           ->maximize_mode_controller()
           ->IsMaximizeModeWindowManagerEnabled()) {
     AppWindow* app_window = info->app_window();
@@ -566,6 +565,9 @@ void ArcAppWindowLauncherController::OnTaskOrientationLockRequested(
 
 AppWindowLauncherItemController*
 ArcAppWindowLauncherController::ControllerForWindow(aura::Window* window) {
+  if (!window)
+    return nullptr;
+
   AppWindow* app_window = GetAppWindowForTask(active_task_id_);
   if (app_window &&
       app_window->widget() == views::Widget::GetWidgetForNativeWindow(window)) {
@@ -588,6 +590,8 @@ void ArcAppWindowLauncherController::OnWindowActivated(
     aura::client::ActivationChangeObserver::ActivationReason reason,
     aura::Window* gained_active,
     aura::Window* lost_active) {
+  AppWindowLauncherController::OnWindowActivated(reason, gained_active,
+                                                 lost_active);
   OnTaskSetActive(active_task_id_);
 }
 
@@ -642,8 +646,7 @@ ArcAppWindowLauncherController::AttachControllerToTask(
   const ash::ShelfID shelf_id =
       shelf_delegate_->GetShelfIDForAppID(app_shelf_id.ToString());
   if (!shelf_id) {
-    owner()->CreateAppLauncherItem(controller, app_shelf_id.ToString(),
-                                   ash::STATUS_RUNNING);
+    owner()->CreateAppLauncherItem(controller, ash::STATUS_RUNNING);
   } else {
     owner()->SetItemController(shelf_id, controller);
     owner()->SetItemStatus(shelf_id, ash::STATUS_RUNNING);

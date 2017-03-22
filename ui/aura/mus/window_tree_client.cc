@@ -439,13 +439,14 @@ void WindowTreeClient::SetLocalPropertiesFromServerProperties(
 std::unique_ptr<WindowTreeHostMus> WindowTreeClient::CreateWindowTreeHost(
     WindowMusType window_mus_type,
     const ui::mojom::WindowData& window_data,
-    int64_t display_id) {
+    int64_t display_id,
+    const cc::FrameSinkId& frame_sink_id) {
   std::unique_ptr<WindowPortMus> window_port =
       CreateWindowPortMus(window_data, window_mus_type);
   roots_.insert(window_port.get());
   std::unique_ptr<WindowTreeHostMus> window_tree_host =
       base::MakeUnique<WindowTreeHostMus>(std::move(window_port), this,
-                                          display_id);
+                                          display_id, frame_sink_id);
   window_tree_host->InitHost();
   SetLocalPropertiesFromServerProperties(
       WindowMus::Get(window_tree_host->window()), window_data);
@@ -481,6 +482,7 @@ WindowMus* WindowTreeClient::NewWindowFromWindowData(
 
 void WindowTreeClient::SetWindowTree(ui::mojom::WindowTreePtr window_tree_ptr) {
   tree_ptr_ = std::move(window_tree_ptr);
+
   WindowTreeConnectionEstablished(tree_ptr_.get());
   tree_ptr_->GetCursorLocationMemory(
       base::Bind(&WindowTreeClient::OnReceivedCursorLocationMemory,
@@ -527,15 +529,16 @@ void WindowTreeClient::OnEmbedImpl(ui::mojom::WindowTree* window_tree,
                                    ui::mojom::WindowDataPtr root_data,
                                    int64_t display_id,
                                    Id focused_window_id,
-                                   bool drawn) {
+                                   bool drawn,
+                                   const cc::FrameSinkId& frame_sink_id) {
   // WARNING: this is only called if WindowTreeClient was created as the
   // result of an embedding.
   client_id_ = client_id;
   WindowTreeConnectionEstablished(window_tree);
 
   DCHECK(roots_.empty());
-  std::unique_ptr<WindowTreeHostMus> window_tree_host =
-      CreateWindowTreeHost(WindowMusType::EMBED, *root_data, display_id);
+  std::unique_ptr<WindowTreeHostMus> window_tree_host = CreateWindowTreeHost(
+      WindowMusType::EMBED, *root_data, display_id, frame_sink_id);
 
   focus_synchronizer_->SetFocusFromServer(
       GetWindowByServerId(focused_window_id));
@@ -546,13 +549,14 @@ void WindowTreeClient::OnEmbedImpl(ui::mojom::WindowTree* window_tree,
 WindowTreeHostMus* WindowTreeClient::WmNewDisplayAddedImpl(
     const display::Display& display,
     ui::mojom::WindowDataPtr root_data,
-    bool parent_drawn) {
+    bool parent_drawn,
+    const cc::FrameSinkId& frame_sink_id) {
   DCHECK(window_manager_delegate_);
 
   window_manager_delegate_->OnWmWillCreateDisplay(display);
 
-  std::unique_ptr<WindowTreeHostMus> window_tree_host =
-      CreateWindowTreeHost(WindowMusType::DISPLAY, *root_data, display.id());
+  std::unique_ptr<WindowTreeHostMus> window_tree_host = CreateWindowTreeHost(
+      WindowMusType::DISPLAY, *root_data, display.id(), frame_sink_id);
 
   WindowTreeHostMus* window_tree_host_ptr = window_tree_host.get();
   window_manager_delegate_->OnWmNewDisplay(std::move(window_tree_host),
@@ -870,7 +874,8 @@ void WindowTreeClient::OnEmbed(ClientSpecificId client_id,
                                ui::mojom::WindowTreePtr tree,
                                int64_t display_id,
                                Id focused_window_id,
-                               bool drawn) {
+                               bool drawn,
+                               const cc::FrameSinkId& frame_sink_id) {
   DCHECK(!tree_ptr_);
   tree_ptr_ = std::move(tree);
 
@@ -882,7 +887,7 @@ void WindowTreeClient::OnEmbed(ClientSpecificId client_id,
   }
 
   OnEmbedImpl(tree_ptr_.get(), client_id, std::move(root_data), display_id,
-              focused_window_id, drawn);
+              focused_window_id, drawn, frame_sink_id);
 }
 
 void WindowTreeClient::OnEmbeddedAppDisconnected(Id window_id) {
@@ -915,10 +920,21 @@ void WindowTreeClient::OnCaptureChanged(Id new_capture_window_id,
   capture_synchronizer_->SetCaptureFromServer(new_capture_window);
 }
 
+void WindowTreeClient::OnFrameSinkIdAllocated(
+    Id window_id,
+    const cc::FrameSinkId& frame_sink_id) {
+  WindowMus* window = GetWindowByServerId(window_id);
+  if (!window)
+    return;
+
+  window->SetFrameSinkIdFromServer(frame_sink_id);
+}
+
 void WindowTreeClient::OnTopLevelCreated(uint32_t change_id,
                                          ui::mojom::WindowDataPtr data,
                                          int64_t display_id,
-                                         bool drawn) {
+                                         bool drawn,
+                                         const cc::FrameSinkId& frame_sink_id) {
   // The server ack'd the top level window we created and supplied the state
   // of the window at the time the server created it. For properties we do not
   // have changes in flight for we can update them immediately. For properties
@@ -982,6 +998,8 @@ void WindowTreeClient::OnTopLevelCreated(uint32_t change_id,
 
   // Top level windows should not have a parent.
   DCHECK_EQ(0u, data->parent_id);
+
+  window->SetFrameSinkIdFromServer(frame_sink_id);
 }
 
 void WindowTreeClient::OnWindowBoundsChanged(
@@ -1350,8 +1368,10 @@ void WindowTreeClient::OnConnect(ClientSpecificId client_id) {
 
 void WindowTreeClient::WmNewDisplayAdded(const display::Display& display,
                                          ui::mojom::WindowDataPtr root_data,
-                                         bool parent_drawn) {
-  WmNewDisplayAddedImpl(display, std::move(root_data), parent_drawn);
+                                         bool parent_drawn,
+                                         const cc::FrameSinkId& frame_sink_id) {
+  WmNewDisplayAddedImpl(display, std::move(root_data), parent_drawn,
+                        frame_sink_id);
 }
 
 void WindowTreeClient::WmDisplayRemoved(int64_t display_id) {
@@ -1393,6 +1413,8 @@ void WindowTreeClient::WmSetBounds(uint32_t change_id,
       result = bounds_in_dip == transit_bounds_in_dip;
       window->SetBoundsFromServer(bounds_in_dip);
     }
+  } else {
+    DVLOG(1) << "Unknown window passed to WmSetBounds().";
   }
   if (window_manager_internal_client_)
     window_manager_internal_client_->WmResponse(change_id, result);
@@ -1420,6 +1442,12 @@ void WindowTreeClient::WmSetProperty(
   }
   if (window_manager_internal_client_)
     window_manager_internal_client_->WmResponse(change_id, result);
+}
+
+void WindowTreeClient::WmSetModalType(Id window_id, ui::ModalType type) {
+  WindowMus* window = GetWindowByServerId(window_id);
+  if (window)
+    window_manager_delegate_->OnWmSetModalType(window->GetWindow(), type);
 }
 
 void WindowTreeClient::WmSetCanFocus(Id window_id, bool can_focus) {
@@ -1576,10 +1604,12 @@ void WindowTreeClient::OnAccelerator(uint32_t ack_id,
                                      uint32_t accelerator_id,
                                      std::unique_ptr<ui::Event> event) {
   DCHECK(event);
-  const ui::mojom::EventResult result =
-      window_manager_delegate_->OnAccelerator(accelerator_id, *event.get());
+  std::unordered_map<std::string, std::vector<uint8_t>> properties;
+  const ui::mojom::EventResult result = window_manager_delegate_->OnAccelerator(
+      accelerator_id, *event.get(), &properties);
   if (ack_id && window_manager_internal_client_)
-    window_manager_internal_client_->OnAcceleratorAck(ack_id, result);
+    window_manager_internal_client_->OnAcceleratorAck(ack_id, result,
+                                                      properties);
 }
 
 void WindowTreeClient::SetFrameDecorationValues(
@@ -1592,8 +1622,10 @@ void WindowTreeClient::SetFrameDecorationValues(
 
 void WindowTreeClient::SetNonClientCursor(Window* window,
                                           ui::mojom::Cursor cursor_id) {
-  window_manager_internal_client_->WmSetNonClientCursor(
-      WindowMus::Get(window)->server_id(), cursor_id);
+  if (window_manager_internal_client_) {
+    window_manager_internal_client_->WmSetNonClientCursor(
+        WindowMus::Get(window)->server_id(), cursor_id);
+  }
 }
 
 void WindowTreeClient::AddAccelerators(

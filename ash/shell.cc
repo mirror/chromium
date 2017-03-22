@@ -8,7 +8,6 @@
 #include <string>
 #include <utility>
 
-#include "ash/accelerators/accelerator_controller_delegate_aura.h"
 #include "ash/accelerators/accelerator_delegate.h"
 #include "ash/accelerators/magnifier_key_scroller.h"
 #include "ash/accelerators/spoken_feedback_toggler.h"
@@ -19,26 +18,45 @@
 #include "ash/common/accelerators/ash_focus_manager_factory.h"
 #include "ash/common/accessibility_delegate.h"
 #include "ash/common/ash_constants.h"
+#include "ash/common/cast_config_controller.h"
 #include "ash/common/devtools/ash_devtools_css_agent.h"
 #include "ash/common/devtools/ash_devtools_dom_agent.h"
+#include "ash/common/focus_cycler.h"
 #include "ash/common/frame/custom_frame_view_ash.h"
 #include "ash/common/gpu_support.h"
 #include "ash/common/keyboard/keyboard_ui.h"
 #include "ash/common/login_status.h"
+#include "ash/common/media_controller.h"
+#include "ash/common/new_window_controller.h"
 #include "ash/common/palette_delegate.h"
+#include "ash/common/session/session_controller.h"
 #include "ash/common/session/session_state_delegate.h"
+#include "ash/common/shelf/shelf_controller.h"
+#include "ash/common/shelf/shelf_delegate.h"
+#include "ash/common/shelf/shelf_model.h"
+#include "ash/common/shelf/shelf_window_watcher.h"
 #include "ash/common/shelf/wm_shelf.h"
 #include "ash/common/shell_delegate.h"
 #include "ash/common/shell_observer.h"
+#include "ash/common/system/brightness_control_delegate.h"
 #include "ash/common/system/chromeos/bluetooth/bluetooth_notification_controller.h"
+#include "ash/common/system/chromeos/bluetooth/tray_bluetooth_helper.h"
+#include "ash/common/system/chromeos/brightness/brightness_controller_chromeos.h"
+#include "ash/common/system/chromeos/keyboard_brightness_controller.h"
 #include "ash/common/system/chromeos/network/sms_observer.h"
 #include "ash/common/system/chromeos/power/power_status.h"
+#include "ash/common/system/chromeos/session/logout_confirmation_controller.h"
+#include "ash/common/system/keyboard_brightness_control_delegate.h"
+#include "ash/common/system/locale/locale_notification_controller.h"
 #include "ash/common/system/status_area_widget.h"
 #include "ash/common/system/toast/toast_manager.h"
+#include "ash/common/system/tray/system_tray_controller.h"
 #include "ash/common/system/tray/system_tray_delegate.h"
+#include "ash/common/system/tray/system_tray_notifier.h"
 #include "ash/common/wallpaper/wallpaper_controller.h"
 #include "ash/common/wallpaper/wallpaper_delegate.h"
 #include "ash/common/wm/container_finder.h"
+#include "ash/common/wm/immersive_context_ash.h"
 #include "ash/common/wm/maximize_mode/maximize_mode_controller.h"
 #include "ash/common/wm/maximize_mode/maximize_mode_window_manager.h"
 #include "ash/common/wm/mru_window_tracker.h"
@@ -340,7 +358,7 @@ void Shell::CreateKeyboard() {
 
 void Shell::DeactivateKeyboard() {
   // TODO(jamescook): Move keyboard create and hide into WmShell.
-  wm_shell_->keyboard_ui()->Hide();
+  keyboard_ui_->Hide();
   if (keyboard::KeyboardController::GetInstance()) {
     RootWindowControllerList controllers = GetAllRootWindowControllers();
     for (RootWindowControllerList::iterator iter = controllers.begin();
@@ -356,6 +374,10 @@ bool Shell::ShouldSaveDisplaySettings() {
   return !(
       screen_orientation_controller_->ignore_display_configuration_updates() ||
       resolution_notification_controller_->DoesNotificationTimeout());
+}
+
+ShelfModel* Shell::shelf_model() {
+  return shelf_controller_->model();
 }
 
 aura::client::ActivationClient* Shell::activation_client() {
@@ -392,6 +414,16 @@ void Shell::SetTouchHudProjectionEnabled(bool enabled) {
 
 FirstRunHelper* Shell::CreateFirstRunHelper() {
   return new FirstRunHelperImpl;
+}
+
+void Shell::CreateShelfView() {
+  // Must occur after SessionController creation and user login.
+  DCHECK(session_controller());
+  DCHECK_GT(session_controller()->NumberOfLoggedInUsers(), 0);
+  CreateShelfDelegate();
+
+  for (WmWindow* root_window : wm_shell_->GetAllRootWindows())
+    root_window->GetRootWindowController()->CreateShelfView();
 }
 
 void Shell::SetLargeCursorSizeInDip(int large_cursor_size_in_dip) {
@@ -441,6 +473,13 @@ bool Shell::IsAppListVisible() const {
 
 bool Shell::GetAppListTargetVisibility() const {
   return app_list_->GetTargetVisibility();
+}
+
+void Shell::UpdateAfterLoginStatusChange(LoginStatus status) {
+  for (WmWindow* root_window : wm_shell_->GetAllRootWindows()) {
+    root_window->GetRootWindowController()->UpdateAfterLoginStatusChange(
+        status);
+  }
 }
 
 void Shell::NotifyMaximizeModeStarted() {
@@ -506,9 +545,24 @@ void Shell::NotifyShelfAutoHideBehaviorChanged(WmWindow* root_window) {
 Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
              std::unique_ptr<WmShell> wm_shell)
     : wm_shell_(std::move(wm_shell)),
+      brightness_control_delegate_(
+          base::MakeUnique<system::BrightnessControllerChromeos>()),
+      cast_config_(base::MakeUnique<CastConfigController>()),
+      focus_cycler_(base::MakeUnique<FocusCycler>()),
+      immersive_context_(base::MakeUnique<ImmersiveContextAsh>()),
+      keyboard_brightness_control_delegate_(
+          base::MakeUnique<KeyboardBrightnessController>()),
+      locale_notification_controller_(
+          base::MakeUnique<LocaleNotificationController>()),
+      media_controller_(base::MakeUnique<MediaController>()),
+      new_window_controller_(base::MakeUnique<NewWindowController>()),
+      session_controller_(base::MakeUnique<SessionController>()),
+      shelf_controller_(base::MakeUnique<ShelfController>()),
       shell_delegate_(std::move(shell_delegate)),
+      system_tray_controller_(base::MakeUnique<SystemTrayController>()),
       app_list_(base::MakeUnique<app_list::AppList>()),
       link_handler_model_factory_(nullptr),
+      tray_bluetooth_helper_(base::MakeUnique<TrayBluetoothHelper>()),
       display_configurator_(new display::DisplayConfigurator()),
       native_cursor_manager_(nullptr),
       simulate_modal_window_open_for_testing_(false),
@@ -524,6 +578,8 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
   }
 
   PowerStatus::Initialize();
+
+  session_controller_->AddSessionStateObserver(this);
 }
 
 Shell::~Shell() {
@@ -579,7 +635,7 @@ Shell::~Shell() {
 
   // Destroy maximize mode controller early on since it has some observers which
   // need to be removed.
-  wm_shell_->DeleteMaximizeModeController();
+  maximize_mode_controller_.reset();
 
   // Destroy the keyboard before closing the shelf, since it will invoke a shelf
   // layout.
@@ -591,7 +647,8 @@ Shell::~Shell() {
   // to deinitialize the shelf first, as it is initialized after the delegate.
   for (WmWindow* root : wm_shell_->GetAllRootWindows())
     root->GetRootWindowController()->GetShelf()->ShutdownShelfWidget();
-  wm_shell_->DeleteSystemTrayDelegate();
+  tray_bluetooth_helper_.reset();
+  DeleteSystemTrayDelegate();
 
   // Drag-and-drop must be canceled prior to close all windows.
   drag_drop_controller_.reset();
@@ -618,7 +675,7 @@ Shell::~Shell() {
   // MruWindowTracker must be destroyed after all windows have been deleted to
   // avoid a possible crash when Shell is destroyed from a non-normal shutdown
   // path. (crbug.com/485438).
-  wm_shell_->DeleteMruWindowTracker();
+  mru_window_tracker_.reset();
 
   // These need a valid Shell instance to clean up properly, so explicitly
   // delete them before invalidating the instance.
@@ -661,14 +718,26 @@ Shell::~Shell() {
   // Balances the Install() in Initialize().
   views::FocusManagerFactory::Install(nullptr);
 
+  // ShelfWindowWatcher has window observers and a pointer to the shelf model.
+  shelf_window_watcher_.reset();
+
+  // ShelfItemDelegate subclasses it owns have complex cleanup to run (e.g. ARC
+  // shelf items in Chrome) so explicitly shutdown early.
+  shelf_model()->DestroyItemDelegates();
+
+  // Must be destroyed before FocusController.
+  shelf_delegate_.reset();
+
+  // Removes itself as an observer of |pref_store_|.
+  shelf_controller_.reset();
+
   wm_shell_->Shutdown();
+
   // Depends on |focus_controller_|, so must be destroyed before.
   window_tree_host_manager_.reset();
   focus_controller_->RemoveObserver(this);
   focus_controller_.reset();
   screen_position_controller_.reset();
-
-  keyboard::KeyboardController::ResetInstance(nullptr);
 
   display_color_manager_.reset();
   if (display_change_observer_)
@@ -689,6 +758,7 @@ Shell::~Shell() {
 
   // Needs to happen right before |instance_| is reset.
   wm_shell_.reset();
+  session_controller_->RemoveSessionStateObserver(this);
   wallpaper_delegate_.reset();
   pref_store_ = nullptr;
   shell_delegate_.reset();
@@ -746,7 +816,7 @@ void Shell::Init(const ShellInitParams& init_params) {
 
   scoped_overview_animation_settings_factory_.reset(
       new ScopedOverviewAnimationSettingsFactoryAura);
-  window_positioner_.reset(new WindowPositioner(wm_shell_.get()));
+  window_positioner_ = base::MakeUnique<WindowPositioner>();
 
   if (!is_mash) {
     native_cursor_manager_ = new AshNativeCursorManager;
@@ -844,14 +914,8 @@ void Shell::Init(const ShellInitParams& init_params) {
         display::Screen::GetScreen()->GetPrimaryDisplay());
   }
 
-  if (!is_mash) {
-    // TODO(sky): move this to WmShell. http://crbug.com/671246.
-    accelerator_controller_delegate_.reset(
-        new AcceleratorControllerDelegateAura);
-    wm_shell_->SetAcceleratorController(base::MakeUnique<AcceleratorController>(
-        accelerator_controller_delegate_.get(), nullptr));
-  }
-  wm_shell_->CreateMaximizeModeController();
+  accelerator_controller_ = wm_shell_->CreateAcceleratorController();
+  maximize_mode_controller_ = base::MakeUnique<MaximizeModeController>();
 
   if (!is_mash) {
     AddPreTargetHandler(
@@ -875,7 +939,7 @@ void Shell::Init(const ShellInitParams& init_params) {
 
   accelerator_filter_.reset(new ::wm::AcceleratorFilter(
       std::unique_ptr<::wm::AcceleratorDelegate>(new AcceleratorDelegate),
-      wm_shell_->accelerator_controller()->accelerator_history()));
+      accelerator_controller_->accelerator_history()));
   AddPreTargetHandler(accelerator_filter_.get());
 
   event_transformation_handler_.reset(new EventTransformationHandler);
@@ -934,7 +998,7 @@ void Shell::Init(const ShellInitParams& init_params) {
   partial_magnification_controller_.reset(new PartialMagnificationController());
 
   magnification_controller_.reset(MagnificationController::CreateInstance());
-  wm_shell_->CreateMruWindowTracker();
+  mru_window_tracker_ = base::MakeUnique<MruWindowTracker>();
 
   autoclick_controller_.reset(AutoclickController::CreateInstance());
 
@@ -958,8 +1022,11 @@ void Shell::Init(const ShellInitParams& init_params) {
   resize_shadow_controller_.reset(new ResizeShadowController());
   shadow_controller_.reset(new ::wm::ShadowController(focus_controller_.get()));
 
-  wm_shell_->SetSystemTrayDelegate(
+  SetSystemTrayDelegate(
       base::WrapUnique(shell_delegate_->CreateSystemTrayDelegate()));
+
+  // May trigger initialization of the Bluetooth adapter.
+  tray_bluetooth_helper_->Initialize();
 
   // Create AshTouchTransformController before
   // WindowTreeHostManager::InitDisplays()
@@ -970,8 +1037,7 @@ void Shell::Init(const ShellInitParams& init_params) {
         display_configurator_.get(), display_manager_.get()));
   }
 
-  if (!is_mash)
-    wm_shell_->SetKeyboardUI(KeyboardUI::Create());
+  keyboard_ui_ = wm_shell_->CreateKeyboardUI();
 
   wm_shell_->InitHosts(init_params);
 
@@ -1056,6 +1122,24 @@ void Shell::InitRootWindow(aura::Window* root_window) {
   root_window->AddPostTargetHandler(toplevel_window_event_handler_.get());
 }
 
+void Shell::SetSystemTrayDelegate(
+    std::unique_ptr<SystemTrayDelegate> delegate) {
+  DCHECK(delegate);
+  system_tray_delegate_ = std::move(delegate);
+  system_tray_delegate_->Initialize();
+  // Accesses WmShell in its constructor.
+  logout_confirmation_controller_.reset(new LogoutConfirmationController(
+      base::Bind(&SystemTrayController::SignOut,
+                 base::Unretained(system_tray_controller_.get()))));
+}
+
+void Shell::DeleteSystemTrayDelegate() {
+  DCHECK(system_tray_delegate_);
+  // Accesses WmShell in its destructor.
+  logout_confirmation_controller_.reset();
+  system_tray_delegate_.reset();
+}
+
 void Shell::CloseAllRootWindowChildWindows() {
   for (WmWindow* wm_root_window : wm_shell_->GetAllRootWindows()) {
     aura::Window* root_window = wm_root_window->aura_window();
@@ -1069,6 +1153,19 @@ void Shell::CloseAllRootWindowChildWindows() {
       }
     }
   }
+}
+
+void Shell::CreateShelfDelegate() {
+  // May be called multiple times as shelves are created and destroyed.
+  if (shelf_delegate_)
+    return;
+  // Must occur after SessionController creation and user login because
+  // Chrome's implementation of ShelfDelegate assumes it can get information
+  // about multi-profile login state.
+  DCHECK(session_controller());
+  DCHECK_GT(session_controller()->NumberOfLoggedInUsers(), 0);
+  shelf_delegate_.reset(shell_delegate_->CreateShelfDelegate(shelf_model()));
+  shelf_window_watcher_ = base::MakeUnique<ShelfWindowWatcher>(shelf_model());
 }
 
 bool Shell::CanWindowReceiveEvents(aura::Window* window) {
@@ -1107,6 +1204,26 @@ void Shell::OnWindowActivated(
   WmWindow* gained_active_wm = WmWindow::Get(gained_active);
   if (gained_active_wm)
     root_window_for_new_windows_ = gained_active_wm->GetRootWindow();
+}
+
+void Shell::SessionStateChanged(session_manager::SessionState state) {
+  // Create the shelf when a session becomes active. It's safe to do this
+  // multiple times (e.g. initial login vs. multiprofile add session).
+  if (state == session_manager::SessionState::ACTIVE) {
+    CreateShelfView();
+
+    if (!wm_shell_->IsRunningInMash()) {
+      // Recreate the keyboard after initial login and after multiprofile login.
+      CreateKeyboard();
+    }
+  }
+
+  // Only trigger an update in mash because with classic ash chrome calls
+  // UpdateAfterLoginStatusChange() directly.
+  if (wm_shell_->IsRunningInMash()) {
+    // TODO(jamescook): Should this call Shell::OnLoginStatusChanged() too?
+    UpdateAfterLoginStatusChange(session_controller_->GetLoginStatus());
+  }
 }
 
 }  // namespace ash

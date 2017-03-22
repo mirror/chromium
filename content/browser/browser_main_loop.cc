@@ -128,7 +128,7 @@
 #include "content/browser/android/tracing_controller_android.h"
 #include "content/browser/media/android/browser_media_player_manager.h"
 #include "content/browser/screen_orientation/screen_orientation_delegate_android.h"
-#include "media/base/android/media_client_android.h"
+#include "media/base/android/media_drm_bridge_client.h"
 #include "ui/android/screen_android.h"
 #include "ui/display/screen.h"
 #include "ui/gl/gl_surface.h"
@@ -145,7 +145,7 @@
 #endif
 
 #if defined(USE_OZONE)
-#include "ui/ozone/public/client_native_pixmap_factory.h"
+#include "ui/ozone/public/client_native_pixmap_factory_ozone.h"
 #endif
 
 #if defined(OS_WIN)
@@ -815,7 +815,7 @@ void BrowserMainLoop::PostMainMessageLoopStart() {
 #endif
 
 #if defined(USE_OZONE)
-  client_native_pixmap_factory_ = ui::ClientNativePixmapFactory::Create();
+  client_native_pixmap_factory_ = ui::CreateClientNativePixmapFactoryOzone();
   ui::ClientNativePixmapFactory::SetInstance(
       client_native_pixmap_factory_.get());
 #endif
@@ -1475,9 +1475,7 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   ImageTransportFactory::Initialize();
   ImageTransportFactory::GetInstance()->SetGpuChannelEstablishFactory(factory);
 #if defined(USE_AURA)
-  bool use_mus_in_renderer = !base::CommandLine::ForCurrentProcess()->HasSwitch(
-      switches::kNoUseMusInRenderer);
-  if (!use_mus_in_renderer || env_->mode() == aura::Env::Mode::LOCAL) {
+  if (env_->mode() == aura::Env::Mode::LOCAL) {
     env_->set_context_factory(GetContextFactory());
     env_->set_context_factory_private(GetContextFactoryPrivate());
   }
@@ -1592,7 +1590,7 @@ int BrowserMainLoop::BrowserThreadsStarted() {
 #endif  // defined(OS_MACOSX)
 
 #if defined(OS_ANDROID)
-  media::SetMediaClientAndroid(GetContentClient()->GetMediaClientAndroid());
+  media::SetMediaDrmBridgeClient(GetContentClient()->GetMediaDrmBridgeClient());
 #endif
 
   return result_code_;

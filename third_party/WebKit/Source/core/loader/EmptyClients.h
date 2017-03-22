@@ -280,13 +280,15 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
   void dispatchDidFinishLoad() override {}
   void dispatchDidChangeThemeColor() override {}
 
-  NavigationPolicy decidePolicyForNavigation(const ResourceRequest&,
-                                             DocumentLoader*,
-                                             NavigationType,
-                                             NavigationPolicy,
-                                             bool,
-                                             bool,
-                                             HTMLFormElement*) override;
+  NavigationPolicy decidePolicyForNavigation(
+      const ResourceRequest&,
+      DocumentLoader*,
+      NavigationType,
+      NavigationPolicy,
+      bool,
+      bool,
+      HTMLFormElement*,
+      ContentSecurityPolicyDisposition) override;
 
   void dispatchWillSendSubmitEvent(HTMLFormElement*) override;
   void dispatchWillSubmitForm(HTMLFormElement*) override;
@@ -324,13 +326,13 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
   LocalFrame* createFrame(const FrameLoadRequest&,
                           const AtomicString&,
                           HTMLFrameOwnerElement*) override;
-  FrameViewBase* createPlugin(HTMLPlugInElement*,
-                              const KURL&,
-                              const Vector<String>&,
-                              const Vector<String>&,
-                              const String&,
-                              bool,
-                              DetachedPluginPolicy) override;
+  PluginView* createPlugin(HTMLPlugInElement*,
+                           const KURL&,
+                           const Vector<String>&,
+                           const Vector<String>&,
+                           const String&,
+                           bool,
+                           DetachedPluginPolicy) override;
   bool canCreatePluginWithoutRenderer(const String& mimeType) const override {
     return false;
   }

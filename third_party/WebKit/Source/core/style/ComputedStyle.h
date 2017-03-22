@@ -205,10 +205,13 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   // inherit
   struct InheritedData {
+    InheritedData()
+        : m_hasSimpleUnderline(false),
+          m_insideLink(static_cast<unsigned>(EInsideLink::kNotInsideLink)) {}
+
     bool operator==(const InheritedData& other) const {
       // Generated properties are compared in ComputedStyleBase
       return (m_hasSimpleUnderline == other.m_hasSimpleUnderline) &&
-             (m_cursorStyle == other.m_cursorStyle) &&
              (m_insideLink == other.m_insideLink);
     }
 
@@ -218,7 +221,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
     unsigned m_hasSimpleUnderline : 1;  // True if 'underline solid' is the only
                                         // text decoration on this element.
-    unsigned m_cursorStyle : 6;     // ECursor
 
     // non CSS2 inherited
     unsigned m_insideLink : 2;     // EInsideLink
@@ -226,6 +228,15 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   // don't inherit
   struct NonInheritedData {
+    NonInheritedData()
+        : m_effectiveDisplay(static_cast<unsigned>(initialDisplay())),
+          m_originalDisplay(static_cast<unsigned>(initialDisplay())),
+          m_verticalAlign(static_cast<unsigned>(initialVerticalAlign())),
+          m_hasViewportUnits(false),
+          m_styleType(PseudoIdNone),
+          m_pseudoBits(0),
+          m_hasRemUnits(false) {}
+
     // Compare computed styles, differences in inherited bits or other flags
     // should not cause an inequality.
     bool operator==(const NonInheritedData& other) const {
@@ -266,8 +277,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     unsigned m_styleType : 6;  // PseudoId
     unsigned m_pseudoBits : 8;
 
-    unsigned m_emptyState : 1;
-
     // 64 bits
 
     mutable unsigned m_hasRemUnits : 1;
@@ -278,30 +287,9 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   // !END SYNC!
 
-  // Only call inside the constructor. Generated properties in the base class
-  // are not initialized in this method.
-  void initializeBitDefaults() {
-    m_inheritedData.m_hasSimpleUnderline = false;
-    m_inheritedData.m_cursorStyle = static_cast<unsigned>(initialCursor());
-    m_inheritedData.m_insideLink =
-        static_cast<unsigned>(EInsideLink::kNotInsideLink);
-
-    m_nonInheritedData.m_effectiveDisplay =
-        m_nonInheritedData.m_originalDisplay =
-            static_cast<unsigned>(initialDisplay());
-    m_nonInheritedData.m_verticalAlign =
-        static_cast<unsigned>(initialVerticalAlign());
-    m_nonInheritedData.m_styleType = PseudoIdNone;
-    m_nonInheritedData.m_pseudoBits = 0;
-    m_nonInheritedData.m_emptyState = false;
-    m_nonInheritedData.m_hasViewportUnits = false;
-    m_nonInheritedData.m_hasRemUnits = false;
-  }
-
  private:
   // TODO(sashab): Move these private members to the bottom of ComputedStyle.
-  enum InitialStyleTag { InitialStyle };
-  ALWAYS_INLINE explicit ComputedStyle(InitialStyleTag);
+  ALWAYS_INLINE ComputedStyle();
   ALWAYS_INLINE ComputedStyle(const ComputedStyle&);
 
   static PassRefPtr<ComputedStyle> createInitialStyle();
@@ -974,7 +962,8 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   }
   void setBoxOrdinalGroup(unsigned og) {
     SET_NESTED_VAR(m_rareNonInheritedData, m_deprecatedFlexibleBox,
-                   ordinalGroup, og);
+                   ordinalGroup,
+                   std::min(std::numeric_limits<unsigned>::max() - 1, og));
   }
 
   // -webkit-box-orient
@@ -1004,7 +993,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   }
   void setBoxReflect(PassRefPtr<StyleReflection> reflect) {
     if (m_rareNonInheritedData->m_boxReflect != reflect)
-      m_rareNonInheritedData.access()->m_boxReflect = reflect;
+      m_rareNonInheritedData.access()->m_boxReflect = std::move(reflect);
   }
 
   // Grid properties.
@@ -1533,7 +1522,8 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     return m_rareNonInheritedData->m_transform->m_translate.get();
   }
   void setTranslate(PassRefPtr<TranslateTransformOperation> v) {
-    m_rareNonInheritedData.access()->m_transform.access()->m_translate = v;
+    m_rareNonInheritedData.access()->m_transform.access()->m_translate =
+        std::move(v);
   }
 
   // rotate
@@ -1544,7 +1534,8 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     return m_rareNonInheritedData->m_transform->m_rotate.get();
   }
   void setRotate(PassRefPtr<RotateTransformOperation> v) {
-    m_rareNonInheritedData.access()->m_transform.access()->m_rotate = v;
+    m_rareNonInheritedData.access()->m_transform.access()->m_rotate =
+        std::move(v);
   }
 
   // scale
@@ -1553,7 +1544,8 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     return m_rareNonInheritedData->m_transform->m_scale.get();
   }
   void setScale(PassRefPtr<ScaleTransformOperation> v) {
-    m_rareNonInheritedData.access()->m_transform.access()->m_scale = v;
+    m_rareNonInheritedData.access()->m_transform.access()->m_scale =
+        std::move(v);
   }
 
   // Scroll properties.
@@ -1824,7 +1816,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   }
   void setClipPath(PassRefPtr<ClipPathOperation> operation) {
     if (m_rareNonInheritedData->m_clipPath != operation)
-      m_rareNonInheritedData.access()->m_clipPath = operation;
+      m_rareNonInheritedData.access()->m_clipPath = std::move(operation);
   }
 
   // Mask properties.
@@ -1873,15 +1865,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   static short initialVerticalBorderSpacing() { return 0; }
   short verticalBorderSpacing() const;
   void setVerticalBorderSpacing(short);
-
-  // cursor
-  static ECursor initialCursor() { return ECursor::kAuto; }
-  ECursor cursor() const {
-    return static_cast<ECursor>(m_inheritedData.m_cursorStyle);
-  }
-  void setCursor(ECursor c) {
-    m_inheritedData.m_cursorStyle = static_cast<unsigned>(c);
-  }
 
   // color
   static Color initialColor() { return Color::black; }
@@ -2428,10 +2411,10 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   bool hasRemUnits() const { return m_nonInheritedData.m_hasRemUnits; }
   void setHasRemUnits() const { m_nonInheritedData.m_hasRemUnits = true; }
 
-  bool emptyState() const { return m_nonInheritedData.m_emptyState; }
+  bool emptyState() const { return m_emptyState; }
   void setEmptyState(bool b) {
     setUnique();
-    m_nonInheritedData.m_emptyState = b;
+    m_emptyState = b;
   }
 
   bool hasInlineTransform() const {
@@ -3705,6 +3688,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   bool diffNeedsPaintInvalidationObjectForPaintImage(
       const StyleImage*,
       const ComputedStyle& other) const;
+  bool diffNeedsVisualRectUpdate(const ComputedStyle& other) const;
   void updatePropertySpecificDifferences(const ComputedStyle& other,
                                          StyleDifference&) const;
 

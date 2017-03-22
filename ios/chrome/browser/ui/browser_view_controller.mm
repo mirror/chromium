@@ -172,7 +172,6 @@
 #include "ios/public/provider/chrome/browser/voice/voice_search_controller.h"
 #include "ios/public/provider/chrome/browser/voice/voice_search_controller_delegate.h"
 #include "ios/public/provider/chrome/browser/voice/voice_search_provider.h"
-#import "ios/web/navigation/crw_session_controller.h"
 #include "ios/web/navigation/navigation_manager_impl.h"
 #include "ios/web/public/active_state_manager.h"
 #include "ios/web/public/navigation_item.h"
@@ -2418,8 +2417,7 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
   // Only allow a web page to close itself if it was opened by DOM, or if there
   // are no navigation items.
   Tab* tab = LegacyTabHelper::GetTabForWebState(webState);
-  DCHECK([[tab navigationManagerImpl]->GetSessionController() isOpenedByDOM] ||
-         ![tab navigationManager]->GetItemCount());
+  DCHECK(webState->HasOpener() || ![tab navigationManager]->GetItemCount());
 
   if (![self tabModel])
     return;
@@ -4574,6 +4572,10 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
           atIndex:(NSUInteger)index {
   [self uninstallDelegatesForTab:oldTab];
   [self installDelegatesForTab:newTab];
+
+  // Add |newTab|'s view to the hierarchy if it's the current Tab.
+  if (self.active && model.currentTab == newTab)
+    [self displayTab:newTab isNewSelection:NO];
 }
 
 // A tab has been removed, remove its views from display if necessary.

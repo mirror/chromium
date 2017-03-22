@@ -4548,6 +4548,10 @@ _FUNCTION_INFO = {
     'decoder_func': 'DoSetDrawRectangleCHROMIUM',
     'extension': 'CHROMIUM_set_draw_rectangle',
   },
+  'SetEnableDCLayersCHROMIUM': {
+    'decoder_func': 'DoSetEnableDCLayersCHROMIUM',
+    'extension': 'CHROMIUM_dc_layers',
+  },
 }
 
 
@@ -6699,7 +6703,7 @@ class GETnHandler(TypeHandler):
   typedef cmds::%(func_name)s::Result Result;
   Result* result = GetSharedMemoryAndSizeAs<Result*>(
       c.%(last_arg_name)s_shm_id, c.%(last_arg_name)s_shm_offset,
-      &buffer_size);
+      sizeof(Result), &buffer_size);
   %(last_arg_type)s %(last_arg_name)s = result ? result->GetData() : NULL;
   if (%(last_arg_name)s == NULL) {
     return error::kOutOfBounds;

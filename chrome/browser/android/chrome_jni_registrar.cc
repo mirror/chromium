@@ -23,6 +23,7 @@
 #include "chrome/browser/android/chrome_feature_list.h"
 #include "chrome/browser/android/compositor/compositor_view.h"
 #include "chrome/browser/android/compositor/layer_title_cache.h"
+#include "chrome/browser/android/compositor/resources/resource_factory.h"
 #include "chrome/browser/android/compositor/scene_layer/contextual_search_scene_layer.h"
 #include "chrome/browser/android/compositor/scene_layer/reader_mode_scene_layer.h"
 #include "chrome/browser/android/compositor/scene_layer/scene_layer.h"
@@ -44,6 +45,7 @@
 #include "chrome/browser/android/download/chrome_download_delegate.h"
 #include "chrome/browser/android/download/download_controller.h"
 #include "chrome/browser/android/download/download_manager_service.h"
+#include "chrome/browser/android/download/items/offline_content_aggregator_factory_android.h"
 #include "chrome/browser/android/download/ui/thumbnail_provider.h"
 #include "chrome/browser/android/favicon_helper.h"
 #include "chrome/browser/android/feature_utilities.h"
@@ -76,6 +78,7 @@
 #include "chrome/browser/android/omnibox/omnibox_prerender.h"
 #include "chrome/browser/android/password_ui_view_android.h"
 #include "chrome/browser/android/payments/service_worker_payment_app_bridge.h"
+#include "chrome/browser/android/physical_web/eddystone_encoder_bridge.h"
 #include "chrome/browser/android/physical_web/physical_web_data_source_android.h"
 #include "chrome/browser/android/policy/policy_auditor.h"
 #include "chrome/browser/android/precache/precache_launcher.h"
@@ -192,7 +195,7 @@
 #include "printing/printing_context_android.h"
 #endif
 
-#if BUILDFLAG(ENABLE_WEBVR)
+#if BUILDFLAG(ENABLE_VR)
 #include "chrome/browser/android/vr_shell/vr_shell.h"
 #include "chrome/browser/android/vr_shell/vr_shell_delegate.h"
 #include "third_party/gvr-android-sdk/display_synchronizer_jni.h"
@@ -216,6 +219,7 @@ static base::android::RegistrationMethod kChromeRegisteredMethods[] = {
     {"GCMDriver", gcm::android::RegisterGCMDriverJni},
     {"InstanceID", instance_id::android::RegisterInstanceIDJni},
     {"Invalidation", invalidation::android::RegisterInvalidationJni},
+    {"OfflineContentAggregator", RegisterOfflineContentAggregatorFactoryJni},
     {"Policy", policy::android::RegisterPolicy},
     {"SafeJson", safe_json::android::RegisterSafeJsonJni},
     {"Signin", signin::android::RegisterSigninJni},
@@ -293,6 +297,7 @@ static base::android::RegistrationMethod kChromeRegisteredMethods[] = {
     {"DownloadController", DownloadController::RegisterDownloadController},
     {"DownloadManagerService",
      DownloadManagerService::RegisterDownloadManagerService},
+    {"EddystoneEncoderBridge", RegisterEddystoneEncoderBridge},
     {"ExternalDataUseObserverBridge",
      chrome::android::RegisterExternalDataUseObserver},
     {"ExternalPrerenderRequestHandler",
@@ -323,7 +328,7 @@ static base::android::RegistrationMethod kChromeRegisteredMethods[] = {
     {"LogoBridge", RegisterLogoBridge},
     {"MediaDrmCredentialManager",
      MediaDrmCredentialManager::RegisterMediaDrmCredentialManager},
-    {"MostVisitedSites", MostVisitedSitesBridge::Register},
+    {"MostVisitedSitesBridge", MostVisitedSitesBridge::Register},
     {"NativeInfoBar", RegisterNativeInfoBar},
     {"ExternalEstimateProviderAndroid",
      chrome::android::RegisterExternalEstimateProviderAndroid},
@@ -375,6 +380,7 @@ static base::android::RegistrationMethod kChromeRegisteredMethods[] = {
     {"ReaderModeSceneLayer", RegisterReaderModeSceneLayer},
     {"RemoteMediaPlayerBridge",
      remote_media::RemoteMediaPlayerBridge::RegisterRemoteMediaPlayerBridge},
+    {"ResourceFactory", RegisterResourceFactory},
     {"ResourcePrefetchPredictor",
      predictors::RegisterResourcePrefetchPredictor},
     {"RevenueStats", chrome::android::RegisterRevenueStats},
@@ -421,7 +427,7 @@ static base::android::RegistrationMethod kChromeRegisteredMethods[] = {
     {"UsbChooserDialogAndroid", UsbChooserDialogAndroid::Register},
     {"Variations", variations::android::RegisterVariations},
     {"VariationsSession", chrome::android::RegisterVariationsSession},
-#if BUILDFLAG(ENABLE_WEBVR)
+#if BUILDFLAG(ENABLE_VR)
     {"VrShell", vr_shell::RegisterVrShell},
     {"VrShellDelegate", vr_shell::RegisterVrShellDelegate},
     {"DisplaySynchronizer",

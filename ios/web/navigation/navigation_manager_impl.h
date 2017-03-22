@@ -67,9 +67,8 @@ class NavigationManagerImpl : public NavigationManager {
   // logic into it.
   void SetSessionController(CRWSessionController* session_controller);
 
-  // Initializes a new session history. |opened_by_dom| is YES if the page was
-  // opened by DOM.
-  void InitializeSession(BOOL opened_by_dom);
+  // Initializes a new session history.
+  void InitializeSession();
 
   // Replace the session history with a new one, where |items| is the
   // complete set of navigation items in the new history, and |current_index|
@@ -105,12 +104,6 @@ class NavigationManagerImpl : public NavigationManager {
                       const web::Referrer& referrer,
                       ui::PageTransition navigation_type,
                       NavigationInitiationType initiation_type);
-
-  // Convenience accessors to get the underlying NavigationItems from the
-  // SessionEntries returned from |session_controller_|'s -lastUserEntry and
-  // -previousEntry methods.
-  // TODO(crbug.com/546365): Remove these methods.
-  NavigationItem* GetLastUserItem() const;
 
   // Temporary method. Returns a vector of NavigationItems corresponding to
   // the SessionEntries of the uderlying CRWSessionController.

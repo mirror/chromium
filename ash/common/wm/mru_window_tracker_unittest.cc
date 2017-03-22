@@ -9,6 +9,7 @@
 #include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
 #include "ash/public/cpp/shell_window_ids.h"
+#include "ash/shell.h"
 #include "ui/base/hit_test.h"
 
 namespace ash {
@@ -23,7 +24,7 @@ class MruWindowTrackerTest : public AshTest {
   }
 
   MruWindowTracker* mru_window_tracker() {
-    return WmShell::Get()->mru_window_tracker();
+    return Shell::Get()->mru_window_tracker();
   }
 
  private:
@@ -96,12 +97,6 @@ TEST_F(MruWindowTrackerTest, DraggedWindowsInListOnlyOnce) {
   // Start dragging the window.
   w1->GetWindowState()->CreateDragDetails(
       gfx::Point(), HTRIGHT, aura::client::WINDOW_MOVE_SOURCE_TOUCH);
-
-  // During a drag the window is reparented by the Docked container.
-  WmWindow* drag_container = w1->GetRootWindow()->GetChildByShellWindowId(
-      kShellWindowId_DockedContainer);
-  drag_container->AddChild(w1);
-  EXPECT_TRUE(w1->GetWindowState()->is_dragged());
 
   // The dragged window should only be in the list once.
   WmWindow::Windows window_list =

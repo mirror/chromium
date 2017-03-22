@@ -584,8 +584,8 @@ bool MatchesBitmap(const SkBitmap& expected_bmp,
 
   DCHECK(gfx::SkIRectToRect(actual_bmp.bounds()).Contains(matching_mask));
 
-  for (int x = matching_mask.x(); x < matching_mask.width(); ++x) {
-    for (int y = matching_mask.y(); y < matching_mask.height(); ++y) {
+  for (int x = matching_mask.x(); x < matching_mask.right(); ++x) {
+    for (int y = matching_mask.y(); y < matching_mask.bottom(); ++y) {
       SkColor actual_color = actual_bmp.getColor(x, y);
       SkColor expected_color = expected_bmp.getColor(x, y);
       if (!ColorsMatchWithinLimit(actual_color, expected_color, error_limit)) {
@@ -613,10 +613,12 @@ class CaptureScreenshotTest : public DevToolsProtocolTest {
  protected:
   enum ScreenshotEncoding { ENCODING_PNG, ENCODING_JPEG };
   void CaptureScreenshotAndCompareTo(const SkBitmap& expected_bitmap,
-                                     ScreenshotEncoding encoding) {
+                                     ScreenshotEncoding encoding,
+                                     bool fromSurface) {
     std::unique_ptr<base::DictionaryValue> params(new base::DictionaryValue());
     params->SetString("format", encoding == ENCODING_PNG ? "png" : "jpeg");
     params->SetInteger("quality", 100);
+    params->SetBoolean("fromSurface", fromSurface);
     SendCommand("Page.captureScreenshot", std::move(params));
 
     std::string base64;
@@ -701,7 +703,7 @@ class CaptureScreenshotTest : public DevToolsProtocolTest {
     expected_bitmap.allocN32Pixels(scaled_box_size.width(),
                                    scaled_box_size.height());
     expected_bitmap.eraseColor(SkColorSetRGB(0x00, 0x00, 0xff));
-    CaptureScreenshotAndCompareTo(expected_bitmap, ENCODING_PNG);
+    CaptureScreenshotAndCompareTo(expected_bitmap, ENCODING_PNG, true);
 
     // Reset for next screenshot.
     SendCommand("Emulation.resetViewport", nullptr);
@@ -735,7 +737,7 @@ IN_PROC_BROWSER_TEST_F(CaptureScreenshotTest, CaptureScreenshot) {
                             ->GetPhysicalBackingSize();
   expected_bitmap.allocN32Pixels(view_size.width(), view_size.height());
   expected_bitmap.eraseColor(SkColorSetRGB(0x12, 0x34, 0x56));
-  CaptureScreenshotAndCompareTo(expected_bitmap, ENCODING_PNG);
+  CaptureScreenshotAndCompareTo(expected_bitmap, ENCODING_PNG, false);
 }
 
 IN_PROC_BROWSER_TEST_F(CaptureScreenshotTest, CaptureScreenshotJpeg) {
@@ -758,7 +760,7 @@ IN_PROC_BROWSER_TEST_F(CaptureScreenshotTest, CaptureScreenshotJpeg) {
                             ->GetPhysicalBackingSize();
   expected_bitmap.allocN32Pixels(view_size.width(), view_size.height());
   expected_bitmap.eraseColor(SkColorSetRGB(0x12, 0x34, 0x56));
-  CaptureScreenshotAndCompareTo(expected_bitmap, ENCODING_JPEG);
+  CaptureScreenshotAndCompareTo(expected_bitmap, ENCODING_JPEG, false);
 }
 
 // Setting frame size (through RWHV) is not supported on Android.
@@ -1412,6 +1414,121 @@ IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, ShowCertificateViewer) {
   std::unique_ptr<base::DictionaryValue> params2(new base::DictionaryValue());
   SendCommand("Security.showCertificateViewer", std::move(params2), true);
   EXPECT_EQ(transient_entry->GetSSL().certificate, last_shown_certificate());
+}
+
+IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, CertificateError) {
+  net::EmbeddedTestServer https_server(net::EmbeddedTestServer::TYPE_HTTPS);
+  https_server.SetSSLConfig(net::EmbeddedTestServer::CERT_EXPIRED);
+  https_server.ServeFilesFromSourceDirectory("content/test/data");
+  ASSERT_TRUE(https_server.Start());
+  GURL test_url = https_server.GetURL("/devtools/navigation.html");
+  std::unique_ptr<base::DictionaryValue> params;
+  std::unique_ptr<base::DictionaryValue> command_params;
+  int eventId;
+
+  shell()->LoadURL(GURL("about:blank"));
+  WaitForLoadStop(shell()->web_contents());
+
+  Attach();
+  SendCommand("Network.enable", nullptr, true);
+  SendCommand("Security.enable", nullptr, false);
+  command_params.reset(new base::DictionaryValue());
+  command_params->SetBoolean("override", true);
+  SendCommand("Security.setOverrideCertificateErrors",
+              std::move(command_params), true);
+
+  // Test cancel.
+  SendCommand("Network.clearBrowserCache", nullptr, true);
+  SendCommand("Network.clearBrowserCookies", nullptr, true);
+  TestNavigationObserver cancel_observer(shell()->web_contents(), 1);
+  shell()->LoadURL(test_url);
+  params = WaitForNotification("Security.certificateError", false);
+  EXPECT_TRUE(shell()->web_contents()->GetController().GetPendingEntry());
+  EXPECT_EQ(
+      test_url,
+      shell()->web_contents()->GetController().GetPendingEntry()->GetURL());
+  EXPECT_TRUE(params->GetInteger("eventId", &eventId));
+  command_params.reset(new base::DictionaryValue());
+  command_params->SetInteger("eventId", eventId);
+  command_params->SetString("action", "cancel");
+  SendCommand("Security.handleCertificateError", std::move(command_params),
+              false);
+  cancel_observer.Wait();
+  EXPECT_FALSE(shell()->web_contents()->GetController().GetPendingEntry());
+  EXPECT_EQ(GURL("about:blank"), shell()
+                                     ->web_contents()
+                                     ->GetController()
+                                     .GetLastCommittedEntry()
+                                     ->GetURL());
+
+  // Test continue.
+  SendCommand("Network.clearBrowserCache", nullptr, true);
+  SendCommand("Network.clearBrowserCookies", nullptr, true);
+  TestNavigationObserver continue_observer(shell()->web_contents(), 1);
+  shell()->LoadURL(test_url);
+  params = WaitForNotification("Security.certificateError", false);
+  EXPECT_TRUE(params->GetInteger("eventId", &eventId));
+  command_params.reset(new base::DictionaryValue());
+  command_params->SetInteger("eventId", eventId);
+  command_params->SetString("action", "continue");
+  SendCommand("Security.handleCertificateError", std::move(command_params),
+              false);
+  WaitForNotification("Network.loadingFinished", true);
+  continue_observer.Wait();
+  EXPECT_EQ(test_url, shell()
+                          ->web_contents()
+                          ->GetController()
+                          .GetLastCommittedEntry()
+                          ->GetURL());
+}
+
+IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, SubresourceWithCertificateError) {
+  net::EmbeddedTestServer https_server(net::EmbeddedTestServer::TYPE_HTTPS);
+  https_server.SetSSLConfig(net::EmbeddedTestServer::CERT_EXPIRED);
+  https_server.ServeFilesFromSourceDirectory("content/test/data/devtools");
+  ASSERT_TRUE(https_server.Start());
+  GURL test_url = https_server.GetURL("/image.html");
+  std::unique_ptr<base::DictionaryValue> params;
+  std::unique_ptr<base::DictionaryValue> command_params;
+  int eventId;
+
+  shell()->LoadURL(GURL("about:blank"));
+  WaitForLoadStop(shell()->web_contents());
+
+  Attach();
+  SendCommand("Security.enable", nullptr, false);
+  command_params.reset(new base::DictionaryValue());
+  command_params->SetBoolean("override", true);
+  SendCommand("Security.setOverrideCertificateErrors",
+              std::move(command_params), true);
+
+  TestNavigationObserver observer(shell()->web_contents(), 1);
+  shell()->LoadURL(test_url);
+
+  // Expect certificateError event for main frame.
+  params = WaitForNotification("Security.certificateError", false);
+  EXPECT_TRUE(params->GetInteger("eventId", &eventId));
+  command_params.reset(new base::DictionaryValue());
+  command_params->SetInteger("eventId", eventId);
+  command_params->SetString("action", "continue");
+  SendCommand("Security.handleCertificateError", std::move(command_params),
+              false);
+
+  // Expect certificateError event for image.
+  params = WaitForNotification("Security.certificateError", false);
+  EXPECT_TRUE(params->GetInteger("eventId", &eventId));
+  command_params.reset(new base::DictionaryValue());
+  command_params->SetInteger("eventId", eventId);
+  command_params->SetString("action", "continue");
+  SendCommand("Security.handleCertificateError", std::move(command_params),
+              false);
+
+  observer.Wait();
+  EXPECT_EQ(test_url, shell()
+                          ->web_contents()
+                          ->GetController()
+                          .GetLastCommittedEntry()
+                          ->GetURL());
 }
 
 IN_PROC_BROWSER_TEST_F(DevToolsProtocolTest, TargetDiscovery) {

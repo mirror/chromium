@@ -436,6 +436,8 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
 @property(nonatomic, readonly) CRWSessionController* sessionController;
 // The associated NavigationManagerImpl.
 @property(nonatomic, readonly) NavigationManagerImpl* navigationManagerImpl;
+// Whether the associated WebState has an opener.
+@property(nonatomic, readonly) BOOL hasOpener;
 // Dictionary where keys are the names of WKWebView properties and values are
 // selector names which should be called when a corresponding property has
 // changed. e.g. @{ @"URL" : @"webViewURLDidChange" } means that
@@ -1310,7 +1312,7 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
   [[self sessionController] pushNewItemWithURL:pageURL
                                    stateObject:stateObject
                                     transition:transition];
-  _webStateImpl->OnSamePageNavigation(pageURL);
+  _webStateImpl->OnSameDocumentNavigation(pageURL);
   self.userInteractionRegistered = NO;
 }
 
@@ -1318,7 +1320,7 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
                     stateObject:(NSString*)stateObject {
   [[self sessionController] updateCurrentItemWithURL:pageURL
                                          stateObject:stateObject];
-  _webStateImpl->OnSamePageNavigation(pageURL);
+  _webStateImpl->OnSameDocumentNavigation(pageURL);
 }
 
 - (void)setDocumentURL:(const GURL&)newURL {
@@ -1864,7 +1866,7 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
       ![_nativeProvider hasControllerForURL:currentURL]) {
     if (!(item->GetTransitionType() & ui::PAGE_TRANSITION_TYPED ||
           item->GetTransitionType() & ui::PAGE_TRANSITION_AUTO_BOOKMARK) &&
-        self.sessionController.openedByDOM) {
+        self.hasOpener) {
       // WebUI URLs can not be opened by DOM to prevent cross-site scripting as
       // they have increased power. WebUI URLs may only be opened when the user
       // types in the URL or use bookmarks.
@@ -1978,7 +1980,9 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
   // cancelled.
   _lastUserInteraction.reset();
   base::RecordAction(UserMetricsAction("Reload"));
-  if (_webView) {
+  if ([self shouldLoadURLInNativeView:self.currentNavItem->GetURL()]) {
+    [self.nativeController reload];
+  } else {
     web::NavigationItem* transientItem =
         self.navigationManagerImpl->GetTransientItem();
     if (transientItem) {
@@ -1996,8 +2000,6 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
       // TODO(eugenebut): revisit this for WKWebView.
       [self loadCurrentURL];
     }
-  } else {
-    [self.nativeController reload];
   }
 }
 
@@ -2196,7 +2198,7 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
   // the page has no navigation items, as occurs when an App Store link is
   // opened from another application.
   BOOL rendererInitiatedWithoutInteraction =
-      self.sessionController.openedByDOM && !_userInteractedWithWebController;
+      self.hasOpener && !_userInteractedWithWebController;
   BOOL noNavigationItems = !(self.navigationManagerImpl->GetItemCount());
   return rendererInitiatedWithoutInteraction || noNavigationItems;
 }
@@ -3473,6 +3475,10 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
   return _webStateImpl ? &(_webStateImpl->GetNavigationManagerImpl()) : nil;
 }
 
+- (BOOL)hasOpener {
+  return _webStateImpl ? _webStateImpl->HasOpener() : NO;
+}
+
 - (web::NavigationItemImpl*)currentNavItem {
   // This goes through the legacy Session* interface rather than Navigation*
   // because it is itself a legacy method that should not exist, and this
@@ -4216,8 +4222,7 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
   CRWWebController* childWebController =
       static_cast<WebStateImpl*>(childWebState)->GetWebController();
 
-  DCHECK(!childWebController ||
-         childWebController.sessionController.openedByDOM);
+  DCHECK(!childWebController || childWebController.hasOpener);
 
   // WKWebView requires WKUIDelegate to return a child view created with
   // exactly the same |configuration| object (exception is raised if config is
@@ -4230,9 +4235,8 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
 }
 
 - (void)webViewDidClose:(WKWebView*)webView {
-  if (self.sessionController.openedByDOM) {
+  if (self.hasOpener)
     _webStateImpl->CloseWebState();
-  }
 }
 
 - (void)webView:(WKWebView*)webView
@@ -4732,7 +4736,7 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
     [self setDocumentURL:webViewURL];
     [self webPageChanged];
     if (isSameDocumentNavigation) {
-      _webStateImpl->OnSamePageNavigation(webViewURL);
+      _webStateImpl->OnSameDocumentNavigation(webViewURL);
     } else {
       _webStateImpl->OnNavigationCommitted(webViewURL);
     }
@@ -4888,7 +4892,7 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
 
   if (!_changingHistoryState) {
     [self didStartLoadingURL:_documentURL];
-    _webStateImpl->OnSamePageNavigation(newURL);
+    _webStateImpl->OnSameDocumentNavigation(newURL);
     [self updateSSLStatusForCurrentNavigationItem];
     [self didFinishNavigation];
   }

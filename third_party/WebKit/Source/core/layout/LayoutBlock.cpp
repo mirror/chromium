@@ -299,7 +299,7 @@ void LayoutBlock::addChildBeforeDescendant(LayoutObject* newChild,
   // We really can't go on if what we have found isn't anonymous. We're not
   // supposed to use some random non-anonymous object and put the child there.
   // That's a recipe for security issues.
-  RELEASE_ASSERT(beforeDescendantContainer->isAnonymous());
+  CHECK(beforeDescendantContainer->isAnonymous());
 
   // If the requested insertion point is not one of our children, then this is
   // because there is an anonymous container within this object that contains
@@ -933,41 +933,6 @@ LayoutUnit LayoutBlock::logicalRightSelectionOffset(
     return containingBlock()->logicalRightSelectionOffset(
         rootBlock, position + logicalTop());
   return logicalRightOffsetForContent();
-}
-
-LayoutBlock* LayoutBlock::blockBeforeWithinSelectionRoot(
-    LayoutSize& offset) const {
-  if (isSelectionRoot())
-    return nullptr;
-
-  const LayoutObject* object = this;
-  LayoutObject* sibling;
-  do {
-    sibling = object->previousSibling();
-    while (sibling && (!sibling->isLayoutBlock() ||
-                       toLayoutBlock(sibling)->isSelectionRoot()))
-      sibling = sibling->previousSibling();
-
-    offset -= LayoutSize(toLayoutBlock(object)->logicalLeft(),
-                         toLayoutBlock(object)->logicalTop());
-    object = object->parent();
-  } while (!sibling && object && object->isLayoutBlock() &&
-           !toLayoutBlock(object)->isSelectionRoot());
-
-  if (!sibling)
-    return nullptr;
-
-  LayoutBlock* beforeBlock = toLayoutBlock(sibling);
-
-  offset += LayoutSize(beforeBlock->logicalLeft(), beforeBlock->logicalTop());
-
-  LayoutObject* child = beforeBlock->lastChild();
-  while (child && child->isLayoutBlock()) {
-    beforeBlock = toLayoutBlock(child);
-    offset += LayoutSize(beforeBlock->logicalLeft(), beforeBlock->logicalTop());
-    child = beforeBlock->lastChild();
-  }
-  return beforeBlock;
 }
 
 void LayoutBlock::setSelectionState(SelectionState state) {

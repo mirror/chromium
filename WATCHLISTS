@@ -782,6 +782,9 @@
         'components/ntp_tiles/|'\
         'ios/chrome/browser/ntp_tiles'
     },
+    'offline_items_collection': {
+      'filepath': 'components/offline_items_collection/',
+    },
     'offline_pages': {
       'filepath': 'components/offline_pages/'\
                   '|chrome/browser/android/offline_pages/'\
@@ -815,7 +818,7 @@
     'page_info' : {
       'filepath': 'chrome/browser/ui/page_info/'\
                   '|chrome/browser/ui/.*/page_info/'\
-                  '|chrome/android/java/src/org/chromium/chrome/browser/pageinfo/'\
+                  '|chrome/android/java/src/org/chromium/chrome/browser/page_info/'\
                   '|ios/chrome/browser/ui/omnibox/page_info_'
   },
     'page_load_metrics' : {
@@ -2057,6 +2060,8 @@
                      'noyau+watch@chromium.org'],
     'ntp_tiles': ['ntp-dev+reviews@chromium.org',
                   'noyau+watch@chromium.org'],
+    'offline_items_collection': ['harkness+watch@chromium.org',
+                                 'peter@chromium.org'],
     'offline_pages': ['chili+watch@chromium.org',
                       'dewittj+watch@chromium.org',
                       'dimich+watch@chromium.org',

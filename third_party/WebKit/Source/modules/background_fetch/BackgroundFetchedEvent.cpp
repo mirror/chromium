@@ -18,7 +18,7 @@ BackgroundFetchedEvent::BackgroundFetchedEvent(
     const AtomicString& type,
     const BackgroundFetchedEventInit& init,
     ServiceWorkerRegistration* registration)
-    : BackgroundFetchEvent(type, init),
+    : BackgroundFetchEvent(type, init, nullptr /* observer */),
       m_fetches(init.fetches()),
       m_registration(registration) {}
 
@@ -56,6 +56,7 @@ void BackgroundFetchedEvent::didUpdateUI(
       resolver->resolve();
       return;
     case mojom::blink::BackgroundFetchError::DUPLICATED_TAG:
+    case mojom::blink::BackgroundFetchError::INVALID_TAG:
       // Not applicable for this callback.
       break;
   }

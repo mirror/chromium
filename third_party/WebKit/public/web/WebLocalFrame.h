@@ -37,9 +37,11 @@ enum class WebCachePolicy;
 enum class WebSandboxFlags;
 enum class WebTreeScopeType;
 struct WebConsoleMessage;
+struct WebContentSecurityPolicyViolation;
 struct WebFindOptions;
 struct WebFloatRect;
 struct WebPrintPresetOptions;
+struct WebSourceLocation;
 
 // Interface for interacting with in process frames. This contains methods that
 // require interacting with a frame's document.
@@ -154,6 +156,11 @@ class WebLocalFrame : public WebFrame {
   // and stop this frame loading.
   virtual bool maybeRenderFallbackContent(const WebURLError&) const = 0;
 
+  // Called when a navigation is blocked because a Content Security Policy (CSP)
+  // is infringed.
+  virtual void reportContentSecurityPolicyViolation(
+      const blink::WebContentSecurityPolicyViolation&) = 0;
+
   // Navigation State -------------------------------------------------------
 
   // Returns true if the current frame's load event has not completed.
@@ -192,7 +199,8 @@ class WebLocalFrame : public WebFrame {
                                  const WebURL& mixedContentUrl,
                                  WebURLRequest::RequestContext,
                                  bool wasAllowed,
-                                 bool hadRedirect) = 0;
+                                 bool hadRedirect,
+                                 const WebSourceLocation&) = 0;
 
   // Orientation Changes ----------------------------------------------------
 

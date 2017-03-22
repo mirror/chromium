@@ -309,8 +309,7 @@ void WebView::didExitModalLoop() {
 }
 
 void WebViewImpl::setMainFrame(WebFrame* frame) {
-  frame->toImplBase()->initializeCoreFrame(&page()->frameHost(), 0, nullAtom,
-                                           nullAtom);
+  frame->toImplBase()->initializeCoreFrame(&page()->frameHost(), 0, nullAtom);
 }
 
 void WebViewImpl::setCredentialManagerClient(
@@ -944,8 +943,8 @@ WebInputEventResult WebViewImpl::handleSyntheticWheelFromTouchpadPinchEvent(
       WebInputEvent::MouseWheel,
       pinchEvent.modifiers() | WebInputEvent::ControlKey,
       pinchEvent.timeStampSeconds());
-  wheelEvent.windowX = wheelEvent.x = pinchEvent.x;
-  wheelEvent.windowY = wheelEvent.y = pinchEvent.y;
+  wheelEvent.x = pinchEvent.x;
+  wheelEvent.y = pinchEvent.y;
   wheelEvent.globalX = pinchEvent.globalX;
   wheelEvent.globalY = pinchEvent.globalY;
   wheelEvent.deltaX = 0;

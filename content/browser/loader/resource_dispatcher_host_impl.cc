@@ -44,7 +44,6 @@
 #include "content/browser/frame_host/navigation_request_info.h"
 #include "content/browser/frame_host/navigator.h"
 #include "content/browser/loader/async_resource_handler.h"
-#include "content/browser/loader/async_revalidation_manager.h"
 #include "content/browser/loader/detachable_resource_handler.h"
 #include "content/browser/loader/intercepting_resource_handler.h"
 #include "content/browser/loader/loader_delegate.h"
@@ -325,65 +324,6 @@ PreviewsState GetPreviewsState(PreviewsState previews_state,
   return previews_state;
 }
 
-// The following functions simplify code paths where the UI thread notifies the
-// ResourceDispatcherHostImpl of information pertaining to loading behavior of
-// frame hosts.
-void NotifyForRouteOnIO(
-    base::Callback<void(ResourceDispatcherHostImpl*,
-                        const GlobalFrameRoutingId&)> frame_callback,
-    const GlobalFrameRoutingId& global_routing_id) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  ResourceDispatcherHostImpl* rdh = ResourceDispatcherHostImpl::Get();
-  if (rdh)
-    frame_callback.Run(rdh, global_routing_id);
-}
-
-void NotifyForRouteFromUI(
-    const GlobalFrameRoutingId& global_routing_id,
-    base::Callback<void(ResourceDispatcherHostImpl*,
-                        const GlobalFrameRoutingId&)> frame_callback) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::Bind(&NotifyForRouteOnIO, frame_callback, global_routing_id));
-}
-
-void NotifyForRouteSetOnIO(
-    base::Callback<void(ResourceDispatcherHostImpl*,
-                        const GlobalFrameRoutingId&)> frame_callback,
-    std::unique_ptr<std::set<GlobalFrameRoutingId>> routing_ids) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  for (const auto& routing_id : *routing_ids)
-    NotifyForRouteOnIO(frame_callback, routing_id);
-}
-
-void NotifyForEachFrameFromUI(
-    RenderFrameHost* root_frame_host,
-    base::Callback<void(ResourceDispatcherHostImpl*,
-                        const GlobalFrameRoutingId&)> frame_callback) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  FrameTree* frame_tree = static_cast<RenderFrameHostImpl*>(root_frame_host)
-                              ->frame_tree_node()
-                              ->frame_tree();
-  DCHECK_EQ(root_frame_host, frame_tree->GetMainFrame());
-  std::unique_ptr<std::set<GlobalFrameRoutingId>> routing_ids(
-      new std::set<GlobalFrameRoutingId>());
-  for (FrameTreeNode* node : frame_tree->Nodes()) {
-    RenderFrameHostImpl* frame_host = node->current_frame_host();
-    RenderFrameHostImpl* pending_frame_host =
-        IsBrowserSideNavigationEnabled()
-            ? node->render_manager()->speculative_frame_host()
-            : node->render_manager()->pending_frame_host();
-    if (frame_host)
-      routing_ids->insert(frame_host->GetGlobalFrameRoutingId());
-    if (pending_frame_host)
-      routing_ids->insert(pending_frame_host->GetGlobalFrameRoutingId());
-  }
-  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                          base::Bind(&NotifyForRouteSetOnIO, frame_callback,
-                                     base::Passed(std::move(routing_ids))));
-}
-
 // Sends back the result of a synchronous loading result to the renderer through
 // Chrome IPC.
 void HandleSyncLoadResult(base::WeakPtr<ResourceMessageFilter> filter,
@@ -446,17 +386,6 @@ ResourceDispatcherHostImpl::ResourceDispatcherHostImpl(
                                      base::Unretained(this)));
 
   update_load_states_timer_.reset(new base::RepeatingTimer());
-
-  // stale-while-revalidate currently doesn't work with browser-side navigation.
-  // Only enable stale-while-revalidate if browser navigation is not enabled.
-  //
-  // TODO(ricea): Make stale-while-revalidate and browser-side navigation work
-  // together. Or disable stale-while-revalidate completely before browser-side
-  // navigation becomes the default. crbug.com/561610
-  if (!IsBrowserSideNavigationEnabled() &&
-      base::FeatureList::IsEnabled(features::kStaleWhileRevalidate)) {
-    async_revalidation_manager_.reset(new AsyncRevalidationManager);
-  }
 }
 
 ResourceDispatcherHostImpl::ResourceDispatcherHostImpl()
@@ -472,42 +401,6 @@ ResourceDispatcherHostImpl::~ResourceDispatcherHostImpl() {
 // static
 ResourceDispatcherHostImpl* ResourceDispatcherHostImpl::Get() {
   return g_resource_dispatcher_host;
-}
-
-// static
-void ResourceDispatcherHostImpl::ResumeBlockedRequestsForRouteFromUI(
-    const GlobalFrameRoutingId& global_routing_id) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  NotifyForRouteFromUI(
-      global_routing_id,
-      base::Bind(&ResourceDispatcherHostImpl::ResumeBlockedRequestsForRoute));
-}
-
-// static
-void ResourceDispatcherHostImpl::BlockRequestsForFrameFromUI(
-    RenderFrameHost* root_frame_host) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  NotifyForEachFrameFromUI(
-      root_frame_host,
-      base::Bind(&ResourceDispatcherHostImpl::BlockRequestsForRoute));
-}
-
-// static
-void ResourceDispatcherHostImpl::ResumeBlockedRequestsForFrameFromUI(
-    RenderFrameHost* root_frame_host) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  NotifyForEachFrameFromUI(
-      root_frame_host,
-      base::Bind(&ResourceDispatcherHostImpl::ResumeBlockedRequestsForRoute));
-}
-
-// static
-void ResourceDispatcherHostImpl::CancelBlockedRequestsForFrameFromUI(
-    RenderFrameHostImpl* root_frame_host) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  NotifyForEachFrameFromUI(
-      root_frame_host,
-      base::Bind(&ResourceDispatcherHostImpl::CancelBlockedRequestsForRoute));
 }
 
 void ResourceDispatcherHostImpl::SetDelegate(
@@ -583,18 +476,13 @@ void ResourceDispatcherHostImpl::CancelRequestsForContext(
         (loader->GetRequestInfo()->detachable_handler() &&
          loader->GetRequestInfo()->detachable_handler()->is_detached()) ||
         loader->GetRequestInfo()->requester_info()->IsBrowserSideNavigation() ||
-        loader->is_transferring());
+        loader->is_transferring() ||
+        loader->GetRequestInfo()->GetResourceType() ==
+            RESOURCE_TYPE_SERVICE_WORKER);
   }
 #endif
 
   loaders_to_cancel.clear();
-
-  if (async_revalidation_manager_) {
-    // Cancelling async revalidations should not result in the creation of new
-    // requests. Do it before the CHECKs to ensure this does not happen.
-    async_revalidation_manager_->CancelAsyncRevalidationsForResourceContext(
-        context);
-  }
 }
 
 void ResourceDispatcherHostImpl::ClearLoginDelegateForRequest(
@@ -737,28 +625,6 @@ void ResourceDispatcherHostImpl::DidReceiveRedirect(
         new_url, loader->request(), info->GetContext(), response);
   }
 
-  net::URLRequest* request = loader->request();
-  if (request->response_info().async_revalidation_required) {
-    // Async revalidation is only supported for the first redirect leg.
-    DCHECK_EQ(request->url_chain().size(), 1u);
-    DCHECK(async_revalidation_manager_);
-
-    async_revalidation_manager_->BeginAsyncRevalidation(request,
-                                                        scheduler_.get());
-  }
-
-  // Remove the LOAD_SUPPORT_ASYNC_REVALIDATION flag if it is present.
-  // It is difficult to create a URLRequest with the correct flags and headers
-  // for redirect legs other than the first one. Since stale-while-revalidate in
-  // combination with redirects isn't needed for experimental use, punt on it
-  // for now.
-  // TODO(ricea): Fix this before launching the feature.
-  if (request->load_flags() & net::LOAD_SUPPORT_ASYNC_REVALIDATION) {
-    int new_load_flags =
-        request->load_flags() & ~net::LOAD_SUPPORT_ASYNC_REVALIDATION;
-    request->SetLoadFlags(new_load_flags);
-  }
-
   // Don't notify WebContents observers for requests known to be
   // downloads; they aren't really associated with the Webcontents.
   // Note that not all downloads are known before content sniffing.
@@ -766,6 +632,7 @@ void ResourceDispatcherHostImpl::DidReceiveRedirect(
     return;
 
   // Notify the observers on the UI thread.
+  net::URLRequest* request = loader->request();
   std::unique_ptr<ResourceRedirectDetails> detail(new ResourceRedirectDetails(
       loader->request(),
       !!request->ssl_info().cert,
@@ -784,12 +651,6 @@ void ResourceDispatcherHostImpl::DidReceiveResponse(
       request->url().SchemeIs(url::kHttpScheme)) {
     scheduler_->OnReceivedSpdyProxiedHttpResponse(
         info->GetChildID(), info->GetRouteID());
-  }
-
-  if (request->response_info().async_revalidation_required) {
-    DCHECK(async_revalidation_manager_);
-    async_revalidation_manager_->BeginAsyncRevalidation(request,
-                                                        scheduler_.get());
   }
 
   ProcessRequestForLinkHeaders(request);
@@ -1487,13 +1348,6 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
     load_flags |= net::LOAD_DO_NOT_USE_EMBEDDED_IDENTITY;
   }
 
-  bool support_async_revalidation =
-      !is_sync_load && async_revalidation_manager_ &&
-      AsyncRevalidationManager::QualifiesForAsyncRevalidation(request_data);
-
-  if (support_async_revalidation)
-    load_flags |= net::LOAD_SUPPORT_ASYNC_REVALIDATION;
-
   // Sync loads should have maximum priority and should be the only
   // requets that have the ignore limits flag set.
   if (is_sync_load) {
@@ -1522,7 +1376,6 @@ void ResourceDispatcherHostImpl::ContinuePendingBeginRequest(
       GetPreviewsState(request_data.previews_state, delegate_, *new_request,
                        resource_context,
                        request_data.resource_type == RESOURCE_TYPE_MAIN_FRAME),
-      support_async_revalidation ? request_data.headers : std::string(),
       request_data.request_body, request_data.initiated_in_secure_context);
   // Request takes ownership.
   extra_info->AssociateWithRequest(new_request.get());
@@ -1836,7 +1689,6 @@ ResourceRequestInfoImpl* ResourceDispatcherHostImpl::CreateRequestInfo(
       false,           // report_raw_headers
       true,            // is_async
       previews_state,  // previews_state
-      std::string(),   // original_headers
       nullptr,         // body
       false);          // initiated_in_secure_context
 }
@@ -2203,12 +2055,6 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
       true,  // is_async
       GetPreviewsState(info.common_params.previews_state, delegate_,
                        *new_request, resource_context, info.is_main_frame),
-      // The original_headers field is for stale-while-revalidate but the
-      // feature doesn't work with PlzNavigate, so it's just a placeholder
-      // here.
-      // TODO(ricea): Make the feature work with stale-while-revalidate
-      // and clean this up.
-      std::string(),  // original_headers
       info.common_params.post_data,
       // TODO(mek): Currently initiated_in_secure_context is only used for
       // subresource requests, so it doesn't matter what value it gets here.
@@ -2260,11 +2106,6 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
       std::move(handler));
 
   BeginRequestInternal(std::move(new_request), std::move(handler));
-}
-
-void ResourceDispatcherHostImpl::EnableStaleWhileRevalidateForTesting() {
-  if (!async_revalidation_manager_)
-    async_revalidation_manager_.reset(new AsyncRevalidationManager);
 }
 
 void ResourceDispatcherHostImpl::SetLoaderDelegate(

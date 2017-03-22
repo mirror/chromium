@@ -347,7 +347,7 @@ DocumentWebSocketChannel::Message::Message(const CString& text)
 
 DocumentWebSocketChannel::Message::Message(
     PassRefPtr<BlobDataHandle> blobDataHandle)
-    : type(MessageTypeBlob), blobDataHandle(blobDataHandle) {}
+    : type(MessageTypeBlob), blobDataHandle(std::move(blobDataHandle)) {}
 
 DocumentWebSocketChannel::Message::Message(DOMArrayBuffer* arrayBuffer)
     : type(MessageTypeArrayBuffer), arrayBuffer(arrayBuffer) {}
@@ -511,7 +511,7 @@ void DocumentWebSocketChannel::didStartOpeningHandshake(
     probe::willSendWebSocketHandshakeRequest(document(), m_identifier,
                                              request.get());
   }
-  m_handshakeRequest = request;
+  m_handshakeRequest = std::move(request);
 }
 
 void DocumentWebSocketChannel::didFinishOpeningHandshake(

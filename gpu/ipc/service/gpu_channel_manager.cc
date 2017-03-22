@@ -52,7 +52,8 @@ GpuChannelManager::GpuChannelManager(
     base::WaitableEvent* shutdown_event,
     SyncPointManager* sync_point_manager,
     GpuMemoryBufferFactory* gpu_memory_buffer_factory,
-    const GpuFeatureInfo& gpu_feature_info)
+    const GpuFeatureInfo& gpu_feature_info,
+    GpuProcessActivityFlags activity_flags)
     : task_runner_(task_runner),
       io_task_runner_(io_task_runner),
       gpu_preferences_(gpu_preferences),
@@ -67,6 +68,7 @@ GpuChannelManager::GpuChannelManager(
       gpu_memory_buffer_factory_(gpu_memory_buffer_factory),
       gpu_feature_info_(gpu_feature_info),
       exiting_for_lost_context_(false),
+      activity_flags_(std::move(activity_flags)),
       weak_factory_(this) {
   DCHECK(task_runner);
   DCHECK(io_task_runner);
@@ -91,9 +93,9 @@ gles2::ProgramCache* GpuChannelManager::program_cache() {
         gpu_preferences_.disable_gpu_shader_disk_cache ||
         workarounds.disable_program_disk_cache;
     program_cache_.reset(new gles2::MemoryProgramCache(
-        gpu_preferences_.gpu_program_cache_size,
-        disable_disk_cache,
-        workarounds.disable_program_caching_for_transform_feedback));
+        gpu_preferences_.gpu_program_cache_size, disable_disk_cache,
+        workarounds.disable_program_caching_for_transform_feedback,
+        &activity_flags_));
   }
   return program_cache_.get();
 }
@@ -184,24 +186,6 @@ void GpuChannelManager::DestroyGpuMemoryBuffer(
 void GpuChannelManager::PopulateShaderCache(const std::string& program_proto) {
   if (program_cache())
     program_cache()->LoadProgram(program_proto);
-}
-
-uint32_t GpuChannelManager::GetUnprocessedOrderNum() const {
-  uint32_t unprocessed_order_num = 0;
-  for (auto& kv : gpu_channels_) {
-    unprocessed_order_num =
-        std::max(unprocessed_order_num, kv.second->GetUnprocessedOrderNum());
-  }
-  return unprocessed_order_num;
-}
-
-uint32_t GpuChannelManager::GetProcessedOrderNum() const {
-  uint32_t processed_order_num = 0;
-  for (auto& kv : gpu_channels_) {
-    processed_order_num =
-        std::max(processed_order_num, kv.second->GetProcessedOrderNum());
-  }
-  return processed_order_num;
 }
 
 void GpuChannelManager::LoseAllContexts() {

@@ -44,19 +44,11 @@ class AnimatableLengthSize final : public AnimatableValue {
     return adoptRef(
         new AnimatableLengthSize(std::move(width), std::move(height)));
   }
-  const AnimatableValue* width() const { return m_width.get(); }
-  const AnimatableValue* height() const { return m_height.get(); }
-
-  bool usesDefaultInterpolationWith(const AnimatableValue*) const override;
-
- protected:
-  PassRefPtr<AnimatableValue> interpolateTo(const AnimatableValue*,
-                                            double fraction) const override;
 
  private:
   AnimatableLengthSize(PassRefPtr<AnimatableValue> width,
                        PassRefPtr<AnimatableValue> height)
-      : m_width(width), m_height(height) {}
+      : m_width(std::move(width)), m_height(std::move(height)) {}
   AnimatableType type() const override { return TypeLengthSize; }
   bool equalTo(const AnimatableValue*) const override;
 

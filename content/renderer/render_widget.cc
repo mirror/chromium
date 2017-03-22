@@ -393,10 +393,7 @@ RenderWidget::RenderWidget(int32_t widget_routing_id,
     render_widget_scheduling_state_->SetHidden(is_hidden_);
   }
 #if defined(USE_AURA)
-  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kNoUseMusInRenderer)) {
-    RendererWindowTreeClient::CreateIfNecessary(routing_id_);
-  }
+  RendererWindowTreeClient::CreateIfNecessary(routing_id_);
 #endif
 }
 
@@ -407,13 +404,10 @@ RenderWidget::~RenderWidget() {
   if (!is_swapped_out_ && RenderProcess::current())
     RenderProcess::current()->ReleaseProcess();
 #if defined(USE_AURA)
-  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kNoUseMusInRenderer)) {
-    // It is possible for a RenderWidget to be destroyed before it was embedded
-    // in a mus window. The RendererWindowTreeClient will leak in such cases. So
-    // explicitly delete it here.
-    RendererWindowTreeClient::Destroy(routing_id_);
-  }
+  // It is possible for a RenderWidget to be destroyed before it was embedded
+  // in a mus window. The RendererWindowTreeClient will leak in such cases. So
+  // explicitly delete it here.
+  RendererWindowTreeClient::Destroy(routing_id_);
 #endif
 }
 
@@ -882,16 +876,16 @@ void RenderWidget::BeginMainFrame(double frame_time_sec) {
   GetWebWidget()->beginFrame(frame_time_sec);
 }
 
-std::unique_ptr<cc::CompositorFrameSink>
-RenderWidget::CreateCompositorFrameSink(const cc::FrameSinkId& frame_sink_id,
-                                        bool fallback) {
+void RenderWidget::RequestNewCompositorFrameSink(
+    bool fallback,
+    const CompositorFrameSinkCallback& callback) {
   DCHECK(GetWebWidget());
   // For widgets that are never visible, we don't start the compositor, so we
   // never get a request for a cc::CompositorFrameSink.
   DCHECK(!compositor_never_visible_);
-  return RenderThreadImpl::current()->CreateCompositorFrameSink(
-      frame_sink_id, fallback, routing_id_, frame_swap_message_queue_,
-      GetURLForGraphicsContext3D());
+  RenderThreadImpl::current()->RequestNewCompositorFrameSink(
+      fallback, routing_id_, frame_swap_message_queue_,
+      GetURLForGraphicsContext3D(), callback);
 }
 
 void RenderWidget::DidCommitAndDrawCompositorFrame() {
@@ -1803,7 +1797,14 @@ void RenderWidget::OnDragSourceSystemDragEnded() {
 }
 
 void RenderWidget::showVirtualKeyboardOnElementFocus() {
+#if defined(OS_CHROMEOS)
+  // On ChromeOS, virtual keyboard is triggered only when users leave the
+  // mouse button or the finger and a text input element is focused at that
+  // time. Focus event itself shouldn't trigger virtual keyboard.
+  UpdateTextInputState();
+#else
   ShowVirtualKeyboard();
+#endif
 
 // TODO(rouslan): Fix ChromeOS and Windows 8 behavior of autofill popup with
 // virtual keyboard.

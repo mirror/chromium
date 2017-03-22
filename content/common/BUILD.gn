@@ -122,8 +122,6 @@ source_set("common") {
     "drag_traits.h",
     "dwrite_font_proxy_messages.h",
     "edit_command.h",
-    "establish_channel_params.cc",
-    "establish_channel_params.h",
     "feature_policy/feature_policy.cc",
     "feature_policy/feature_policy.h",
     "file_utilities_messages.h",
@@ -326,10 +324,6 @@ source_set("common") {
     "service_worker/service_worker_types.h",
     "service_worker/service_worker_utils.cc",
     "service_worker/service_worker_utils.h",
-    "set_process_title.cc",
-    "set_process_title.h",
-    "set_process_title_linux.cc",
-    "set_process_title_linux.h",
     "site_isolation_policy.cc",
     "site_isolation_policy.h",
     "speech_recognition_messages.h",
@@ -406,6 +400,7 @@ source_set("common") {
     "//sandbox:sandbox_features",
     "//services/resource_coordinator/public/interfaces",
     "//services/service_manager",
+    "//services/service_manager/embedder",
     "//services/service_manager/public/cpp",
     "//services/service_manager/public/interfaces",
     "//services/service_manager/runner/common",
@@ -552,7 +547,7 @@ source_set("common") {
     ]
   }
 
-  if (enable_pepper_cdms) {
+  if (enable_cdm_host_verification) {
     sources += [
       "media/cdm_host_file.cc",
       "media/cdm_host_file.h",

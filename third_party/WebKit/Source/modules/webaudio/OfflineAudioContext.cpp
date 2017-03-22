@@ -59,34 +59,38 @@ OfflineAudioContext* OfflineAudioContext::create(
   Document* document = toDocument(context);
 
   if (!numberOfFrames) {
-    exceptionState.throwDOMException(SyntaxError,
-                                     "number of frames cannot be zero.");
+    exceptionState.throwDOMException(
+        NotSupportedError,
+        ExceptionMessages::indexExceedsMinimumBound<unsigned>(
+            "number of frames", numberOfFrames, 1));
     return nullptr;
   }
 
-  if (numberOfChannels > BaseAudioContext::maxNumberOfChannels()) {
+  if (numberOfChannels == 0 ||
+      numberOfChannels > BaseAudioContext::maxNumberOfChannels()) {
     exceptionState.throwDOMException(
-        IndexSizeError, ExceptionMessages::indexOutsideRange<unsigned>(
-                            "number of channels", numberOfChannels, 0,
-                            ExceptionMessages::InclusiveBound,
-                            BaseAudioContext::maxNumberOfChannels(),
-                            ExceptionMessages::InclusiveBound));
+        NotSupportedError, ExceptionMessages::indexOutsideRange<unsigned>(
+                               "number of channels", numberOfChannels, 1,
+                               ExceptionMessages::InclusiveBound,
+                               BaseAudioContext::maxNumberOfChannels(),
+                               ExceptionMessages::InclusiveBound));
     return nullptr;
   }
 
   if (!AudioUtilities::isValidAudioBufferSampleRate(sampleRate)) {
     exceptionState.throwDOMException(
-        IndexSizeError, ExceptionMessages::indexOutsideRange(
-                            "sampleRate", sampleRate,
-                            AudioUtilities::minAudioBufferSampleRate(),
-                            ExceptionMessages::InclusiveBound,
-                            AudioUtilities::maxAudioBufferSampleRate(),
-                            ExceptionMessages::InclusiveBound));
+        NotSupportedError, ExceptionMessages::indexOutsideRange(
+                               "sampleRate", sampleRate,
+                               AudioUtilities::minAudioBufferSampleRate(),
+                               ExceptionMessages::InclusiveBound,
+                               AudioUtilities::maxAudioBufferSampleRate(),
+                               ExceptionMessages::InclusiveBound));
     return nullptr;
   }
 
   OfflineAudioContext* audioContext = new OfflineAudioContext(
       document, numberOfChannels, numberOfFrames, sampleRate, exceptionState);
+  audioContext->suspendIfNeeded();
 
   if (!audioContext->destination()) {
     exceptionState.throwDOMException(
@@ -94,6 +98,7 @@ OfflineAudioContext* OfflineAudioContext::create(
                                String::number(numberOfChannels) + ", " +
                                String::number(numberOfFrames) + ", " +
                                String::number(sampleRate) + ")");
+    return nullptr;
   }
 
 #if DEBUG_AUDIONODE_REFERENCES
@@ -119,7 +124,6 @@ OfflineAudioContext* OfflineAudioContext::create(
   offlineContextLengthHistogram.count(numberOfFrames);
   offlineContextSampleRateHistogram.count(sampleRate);
 
-  audioContext->suspendIfNeeded();
   return audioContext;
 }
 
@@ -414,7 +418,7 @@ void OfflineAudioContext::resolveSuspendOnMainThread(size_t frame) {
     SuspendMap::iterator it = m_scheduledSuspends.find(frame);
     it->value->resolve();
 
-    m_scheduledSuspends.remove(it);
+    m_scheduledSuspends.erase(it);
   }
 }
 

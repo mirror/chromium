@@ -21,7 +21,6 @@
 #include "services/ui/ws/display_binding.h"
 #include "services/ui/ws/drag_controller.h"
 #include "services/ui/ws/event_dispatcher.h"
-#include "services/ui/ws/frame_generator_delegate.h"
 #include "services/ui/ws/platform_display.h"
 #include "services/ui/ws/platform_display_factory.h"
 #include "services/ui/ws/test_change_tracker.h"
@@ -118,8 +117,11 @@ class WindowTreeTestApi {
   void AckLastEvent(mojom::EventResult result) {
     tree_->OnWindowInputEventAck(tree_->event_ack_id_, result);
   }
-  void AckLastAccelerator(mojom::EventResult result) {
-    tree_->OnAcceleratorAck(tree_->event_ack_id_, result);
+  void AckLastAccelerator(
+      mojom::EventResult result,
+      const std::unordered_map<std::string, std::vector<uint8_t>>& properties =
+          std::unordered_map<std::string, std::vector<uint8_t>>()) {
+    tree_->OnAcceleratorAck(tree_->event_ack_id_, result, properties);
   }
 
   void StartPointerWatcher(bool want_moves);
@@ -289,20 +291,6 @@ class TestPlatformDisplayFactory : public PlatformDisplayFactory {
 
 // -----------------------------------------------------------------------------
 
-// A stub implementation of FrameGeneratorDelegate.
-class TestFrameGeneratorDelegate : public FrameGeneratorDelegate {
- public:
-  TestFrameGeneratorDelegate();
-  ~TestFrameGeneratorDelegate() override;
-
-  // FrameGeneratorDelegate:
-  bool IsInHighContrastMode() override;
-
-  DISALLOW_COPY_AND_ASSIGN(TestFrameGeneratorDelegate);
-};
-
-// -----------------------------------------------------------------------------
-
 class TestWindowManager : public mojom::WindowManager {
  public:
   TestWindowManager()
@@ -331,13 +319,15 @@ class TestWindowManager : public mojom::WindowManager {
   uint32_t on_accelerator_id() { return on_accelerator_id_; }
   bool got_display_removed() const { return got_display_removed_; }
   int64_t display_removed_id() const { return display_removed_id_; }
+  bool on_set_modal_type_called() { return on_set_modal_type_called_; }
 
  private:
   // WindowManager:
   void OnConnect(uint16_t client_id) override {}
   void WmNewDisplayAdded(const display::Display& display,
                          ui::mojom::WindowDataPtr root,
-                         bool drawn) override {}
+                         bool drawn,
+                         const cc::FrameSinkId& frame_sink_id) override {}
   void WmDisplayRemoved(int64_t display_id) override;
   void WmDisplayModified(const display::Display& display) override {}
   void WmSetBounds(uint32_t change_id,
@@ -348,6 +338,7 @@ class TestWindowManager : public mojom::WindowManager {
       uint32_t window_id,
       const std::string& name,
       const base::Optional<std::vector<uint8_t>>& value) override {}
+  void WmSetModalType(uint32_t window_id, ui::ModalType type) override;
   void WmSetCanFocus(uint32_t window_id, bool can_focus) override {}
   void WmCreateTopLevelWindow(
       uint32_t change_id,
@@ -370,6 +361,7 @@ class TestWindowManager : public mojom::WindowManager {
                      std::unique_ptr<ui::Event> event) override;
 
   bool on_perform_move_loop_called_ = false;
+  bool on_set_modal_type_called_ = false;
 
   bool got_create_top_level_window_;
   uint32_t change_id_;
@@ -406,15 +398,19 @@ class TestWindowTreeClient : public ui::mojom::WindowTreeClient {
                ui::mojom::WindowTreePtr tree,
                int64_t display_id,
                Id focused_window_id,
-               bool drawn) override;
+               bool drawn,
+               const cc::FrameSinkId& frame_sink_id) override;
   void OnEmbeddedAppDisconnected(uint32_t window) override;
   void OnUnembed(Id window_id) override;
   void OnCaptureChanged(Id new_capture_window_id,
                         Id old_capture_window_id) override;
+  void OnFrameSinkIdAllocated(Id window_id,
+                              const cc::FrameSinkId& frame_sink_id) override;
   void OnTopLevelCreated(uint32_t change_id,
                          mojom::WindowDataPtr data,
                          int64_t display_id,
-                         bool drawn) override;
+                         bool drawn,
+                         const cc::FrameSinkId& frame_sink_id) override;
   void OnWindowBoundsChanged(
       uint32_t window,
       const gfx::Rect& old_bounds,

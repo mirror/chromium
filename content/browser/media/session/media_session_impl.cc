@@ -130,10 +130,20 @@ void MediaSessionImpl::DidFinishNavigation(
 
 void MediaSessionImpl::AddObserver(MediaSessionObserver* observer) {
   observers_.AddObserver(observer);
+  NotifyAddedObserver(observer);
 }
 
 void MediaSessionImpl::RemoveObserver(MediaSessionObserver* observer) {
   observers_.RemoveObserver(observer);
+}
+
+void MediaSessionImpl::NotifyAddedObserver(MediaSessionObserver* observer) {
+  observer->MediaSessionMetadataChanged(
+      routed_service_ ? routed_service_->metadata() : base::nullopt);
+  observer->MediaSessionActionsChanged(
+      routed_service_ ? routed_service_->actions()
+                      : std::set<blink::mojom::MediaSessionAction>());
+  observer->MediaSessionStateChanged(IsControllable(), IsActuallyPaused());
 }
 
 void MediaSessionImpl::NotifyMediaSessionMetadataChange(
@@ -291,12 +301,12 @@ void MediaSessionImpl::OnPlayerPaused(MediaSessionPlayerObserver* observer,
   }
 
   // Otherwise, suspend the session.
-  DCHECK(!IsSuspended());
+  DCHECK(IsActive());
   OnSuspendInternal(SuspendType::CONTENT, State::SUSPENDED);
 }
 
 void MediaSessionImpl::Resume(SuspendType suspend_type) {
-  DCHECK(IsReallySuspended());
+  DCHECK(IsSuspended());
 
   // When the resume requests comes from another source than system, audio focus
   // must be requested.
@@ -316,7 +326,7 @@ void MediaSessionImpl::Resume(SuspendType suspend_type) {
 }
 
 void MediaSessionImpl::Suspend(SuspendType suspend_type) {
-  if (IsSuspended())
+  if (!IsActive())
     return;
 
   OnSuspendInternal(suspend_type, State::SUSPENDED);
@@ -371,13 +381,8 @@ bool MediaSessionImpl::IsActive() const {
   return audio_focus_state_ == State::ACTIVE;
 }
 
-bool MediaSessionImpl::IsReallySuspended() const {
-  return audio_focus_state_ == State::SUSPENDED;
-}
-
 bool MediaSessionImpl::IsSuspended() const {
-  // TODO(mlamouri): should be == State::SUSPENDED.
-  return audio_focus_state_ != State::ACTIVE;
+  return audio_focus_state_ == State::SUSPENDED;
 }
 
 bool MediaSessionImpl::IsControllable() const {
@@ -387,6 +392,15 @@ bool MediaSessionImpl::IsControllable() const {
   return audio_focus_state_ != State::INACTIVE &&
          audio_focus_type_ == AudioFocusManager::AudioFocusType::Gain &&
          one_shot_players_.empty();
+}
+
+bool MediaSessionImpl::IsActuallyPaused() const {
+  if (routed_service_ && routed_service_->playback_state() ==
+                             blink::mojom::MediaSessionPlaybackState::PLAYING) {
+    return false;
+  }
+
+  return !IsActive();
 }
 
 bool MediaSessionImpl::HasPepper() const {
@@ -402,10 +416,6 @@ MediaSessionImpl::RegisterMediaSessionStateChangedCallbackForTest(
 void MediaSessionImpl::SetDelegateForTests(
     std::unique_ptr<AudioFocusDelegate> delegate) {
   delegate_ = std::move(delegate);
-}
-
-bool MediaSessionImpl::IsActiveForTest() const {
-  return audio_focus_state_ == State::ACTIVE;
 }
 
 MediaSessionUmaHelper* MediaSessionImpl::uma_helper_for_test() {
@@ -529,21 +539,11 @@ void MediaSessionImpl::AbandonSystemAudioFocusIfNeeded() {
 }
 
 void MediaSessionImpl::NotifyAboutStateChange() {
-  bool is_actually_suspended = IsSuspended();
-  // Compute the actual playback state using both the MediaSessionService state
-  // and real state.
-  //
-  // TODO(zqzhang): Maybe also compute for IsControllable()? See
-  // https://crbug.com/674983
-  if (routed_service_ &&
-      routed_service_->playback_state() ==
-          blink::mojom::MediaSessionPlaybackState::PLAYING) {
-    is_actually_suspended = false;
-  }
-
   media_session_state_listeners_.Notify(audio_focus_state_);
+
+  bool is_actually_paused = IsActuallyPaused();
   for (auto& observer : observers_)
-    observer.MediaSessionStateChanged(IsControllable(), is_actually_suspended);
+    observer.MediaSessionStateChanged(IsControllable(), is_actually_paused);
 }
 
 void MediaSessionImpl::SetAudioFocusState(State audio_focus_state) {

@@ -664,6 +664,34 @@ TEST_F(WindowTreeTest, EventAck) {
             ChangesToDescription1(*wm_client()->tracker()->changes())[0]);
 }
 
+// Establish client, call Embed() in WM, make sure to get FrameSinkId.
+TEST_F(WindowTreeTest, Embed) {
+  const ClientWindowId embed_window_id = BuildClientWindowId(wm_tree(), 1);
+  EXPECT_TRUE(
+      wm_tree()->NewWindow(embed_window_id, ServerWindow::Properties()));
+  ServerWindow* embed_window = wm_tree()->GetWindowByClientId(embed_window_id);
+  ASSERT_TRUE(embed_window);
+  const ClientWindowId wm_root_id = FirstRootId(wm_tree());
+  EXPECT_TRUE(wm_tree()->AddWindow(wm_root_id, embed_window_id));
+  ServerWindow* wm_root = FirstRoot(wm_tree());
+  ASSERT_TRUE(wm_root);
+  mojom::WindowTreeClientPtr client;
+  mojom::WindowTreeClientRequest client_request(&client);
+  wm_client()->Bind(std::move(client_request));
+  const uint32_t embed_flags = 0;
+  wm_tree()->Embed(embed_window_id, std::move(client), embed_flags);
+  ASSERT_EQ(1u, wm_client()->tracker()->changes()->size())
+      << SingleChangeToDescription(*wm_client()->tracker()->changes());
+  // The window manager should be told about the FrameSinkId of the embedded
+  // window.
+  EXPECT_EQ(
+      base::StringPrintf(
+          "OnFrameSinkIdAllocated window=%s %s",
+          WindowIdToString(WindowIdFromTransportId(embed_window_id.id)).c_str(),
+          embed_window->frame_sink_id().ToString().c_str()),
+      SingleChangeToDescription(*wm_client()->tracker()->changes()));
+}
+
 // Establish client, call NewTopLevelWindow(), make sure get id, and make
 // sure client paused.
 TEST_F(WindowTreeTest, NewTopLevelWindow) {
@@ -700,19 +728,36 @@ TEST_F(WindowTreeTest, NewTopLevelWindow) {
   child_binding->client()->tracker()->changes()->clear();
   static_cast<mojom::WindowManagerClient*>(wm_tree())
       ->OnWmCreatedTopLevelWindow(wm_change_id, embed_window_id2.id);
+
+  ServerWindow* embed_window = wm_tree()->GetWindowByClientId(embed_window_id2);
+  ASSERT_TRUE(embed_window);
+  ASSERT_EQ(1u, wm_client()->tracker()->changes()->size())
+      << SingleChangeToDescription(*wm_client()->tracker()->changes());
+  // The window manager should be told about the FrameSinkId of the embedded
+  // window.
+  EXPECT_EQ(base::StringPrintf(
+                "OnFrameSinkIdAllocated window=%s %s",
+                WindowIdToString(WindowIdFromTransportId(embed_window_id2.id))
+                    .c_str(),
+                embed_window->frame_sink_id().ToString().c_str()),
+            SingleChangeToDescription(*wm_client()->tracker()->changes()));
   EXPECT_FALSE(child_binding->is_paused());
-  EXPECT_EQ("TopLevelCreated id=17 window_id=" +
-                WindowIdToString(
-                    WindowIdFromTransportId(embed_window_id2_in_child.id)) +
-                " drawn=true",
-            SingleChangeToDescription(
-                *child_binding->client()->tracker()->changes()));
+  // TODO(fsamuel): Currently the FrameSinkId maps directly to the server's
+  // window ID. This is likely bad from a security perspective and should be
+  // fixed.
+  EXPECT_EQ(
+      base::StringPrintf(
+          "TopLevelCreated id=17 FrameSinkId(%d, 0) window_id=%s drawn=true",
+          WindowIdToTransportId(embed_window->id()),
+          WindowIdToString(
+              WindowIdFromTransportId(embed_window_id2_in_child.id))
+              .c_str()),
+      SingleChangeToDescription(
+          *child_binding->client()->tracker()->changes()));
   child_binding->client()->tracker()->changes()->clear();
 
   // Change the visibility of the window from the owner and make sure the
   // client sees the right id.
-  ServerWindow* embed_window = wm_tree()->GetWindowByClientId(embed_window_id2);
-  ASSERT_TRUE(embed_window);
   EXPECT_TRUE(embed_window->visible());
   ASSERT_TRUE(wm_tree()->SetWindowVisibility(
       ClientWindowIdForWindow(wm_tree(), embed_window), false));
@@ -1392,6 +1437,39 @@ TEST_F(WindowTreeTest, CaptureNotifiesWm) {
   ASSERT_TRUE(!embed_client->tracker()->changes()->empty());
   EXPECT_EQ("OnCaptureChanged new_window=null old_window=1,1",
             ChangesToDescription1(*embed_client->tracker()->changes())[0]);
+}
+
+TEST_F(WindowTreeTest, SetModalTypeForwardedToWindowManager) {
+  TestWindowManager wm_internal;
+  set_window_manager_internal(wm_tree(), &wm_internal);
+
+  TestWindowTreeBinding* child_binding = nullptr;
+  WindowTree* child_tree = CreateNewTree(wm_tree()->user_id(), &child_binding);
+
+  // Create a new top level window.
+  std::unordered_map<std::string, std::vector<uint8_t>> properties;
+  const uint32_t initial_change_id = 17;
+  // Explicitly use an id that does not contain the client id.
+  const ClientWindowId embed_window_id2_in_child(45 << 16 | 27);
+  static_cast<mojom::WindowTree*>(child_tree)
+      ->NewTopLevelWindow(initial_change_id, embed_window_id2_in_child.id,
+                          properties);
+
+  // Create the window for |embed_window_id2_in_child|.
+  const ClientWindowId embed_window_id2 = BuildClientWindowId(wm_tree(), 2);
+  EXPECT_TRUE(
+      wm_tree()->NewWindow(embed_window_id2, ServerWindow::Properties()));
+  EXPECT_TRUE(wm_tree()->SetWindowVisibility(embed_window_id2, true));
+  EXPECT_TRUE(wm_tree()->AddWindow(FirstRootId(wm_tree()), embed_window_id2));
+
+  // Ack the change, which should resume the binding.
+  static_cast<mojom::WindowManagerClient*>(wm_tree())
+      ->OnWmCreatedTopLevelWindow(0u, embed_window_id2.id);
+
+  // Change modal type to MODAL_TYPE_SYSTEM and check that it is forwarded to
+  // the window manager.
+  child_tree->SetModalType(embed_window_id2_in_child, MODAL_TYPE_SYSTEM);
+  EXPECT_TRUE(wm_internal.on_set_modal_type_called());
 }
 
 using WindowTreeShutdownTest = testing::Test;

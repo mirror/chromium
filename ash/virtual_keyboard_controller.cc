@@ -38,7 +38,7 @@ bool IsSmartVirtualKeyboardEnabled() {
 
 void MoveKeyboardToDisplayInternal(const int64_t display_id) {
   // Remove the keyboard from curent root window controller
-  WmShell::Get()->keyboard_ui()->Hide();
+  Shell::Get()->keyboard_ui()->Hide();
   RootWindowController::ForWindow(
       keyboard::KeyboardController::GetInstance()->GetContainerWindow())
       ->DeactivateKeyboard(keyboard::KeyboardController::GetInstance());
@@ -186,12 +186,12 @@ void VirtualKeyboardController::UpdateDevices() {
 
 void VirtualKeyboardController::UpdateKeyboardEnabled() {
   if (!IsSmartVirtualKeyboardEnabled()) {
-    SetKeyboardEnabled(WmShell::Get()
+    SetKeyboardEnabled(Shell::Get()
                            ->maximize_mode_controller()
                            ->IsMaximizeModeWindowManagerEnabled());
     return;
   }
-  bool ignore_internal_keyboard = WmShell::Get()
+  bool ignore_internal_keyboard = Shell::Get()
                                       ->maximize_mode_controller()
                                       ->IsMaximizeModeWindowManagerEnabled();
   bool is_internal_keyboard_active =

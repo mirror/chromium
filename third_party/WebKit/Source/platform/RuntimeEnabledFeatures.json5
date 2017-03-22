@@ -490,9 +490,6 @@
       name: "LayoutNG",
     },
     {
-      name: "LayoutNGInline",
-    },
-    {
       name: "LinkServiceWorker",
       origin_trial_feature_name: "ForeignFetch",
       status: "experimental",
@@ -817,7 +814,7 @@
     {
       name: "SlimmingPaintInvalidation",
       implied_by: ["SlimmingPaintV2"],
-      status: "experimental",
+      status: "stable",
     },
     {
       name: "SlimmingPaintV2",

@@ -4,7 +4,7 @@
 
 #include "ash/system/chromeos/power/video_activity_notifier.h"
 
-#include "ash/common/session/session_state_delegate.h"
+#include "ash/common/session/session_controller.h"
 #include "ash/common/wm_shell.h"
 #include "ash/shell.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -23,8 +23,7 @@ const int kNotifyIntervalSec = 5;
 VideoActivityNotifier::VideoActivityNotifier(VideoDetector* detector)
     : detector_(detector),
       video_state_(detector->state()),
-      screen_is_locked_(
-          Shell::GetInstance()->session_state_delegate()->IsScreenLocked()) {
+      screen_is_locked_(Shell::Get()->session_controller()->IsScreenLocked()) {
   detector_->AddObserver(this);
   Shell::GetInstance()->AddShellObserver(this);
 

@@ -209,7 +209,7 @@ void IDBRequest::setResultCursor(IDBCursor* cursor,
   DCHECK_EQ(m_readyState, PENDING);
   m_cursorKey = key;
   m_cursorPrimaryKey = primaryKey;
-  m_cursorValue = value;
+  m_cursorValue = std::move(value);
   ackReceivedBlobs(m_cursorValue.get());
 
   onSuccessInternal(IDBAny::create(cursor));
@@ -324,7 +324,7 @@ void IDBRequest::onSuccess(PassRefPtr<IDBValue> prpValue) {
   if (!shouldEnqueueEvent())
     return;
 
-  RefPtr<IDBValue> value(prpValue);
+  RefPtr<IDBValue> value(std::move(prpValue));
   ackReceivedBlobs(value.get());
 
   if (m_pendingCursor) {

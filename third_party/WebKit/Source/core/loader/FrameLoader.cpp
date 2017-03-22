@@ -60,11 +60,9 @@
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/HTMLFormElement.h"
 #include "core/html/HTMLFrameOwnerElement.h"
-#include "core/html/parser/HTMLParserIdioms.h"
 #include "core/input/EventHandler.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/InspectorInstrumentation.h"
-#include "core/inspector/InspectorTraceEvents.h"
 #include "core/loader/DocumentLoadTiming.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FormSubmission.h"
@@ -75,7 +73,6 @@
 #include "core/loader/NetworkHintsInterface.h"
 #include "core/loader/ProgressTracker.h"
 #include "core/loader/appcache/ApplicationCacheHost.h"
-#include "core/origin_trials/OriginTrialContext.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/CreateWindow.h"
 #include "core/page/FrameTree.h"
@@ -88,7 +85,6 @@
 #include "platform/PluginScriptForbiddenScope.h"
 #include "platform/ScriptForbiddenScope.h"
 #include "platform/UserGestureIndicator.h"
-#include "platform/feature_policy/FeaturePolicy.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/ResourceRequest.h"
@@ -99,7 +95,6 @@
 #include "platform/weborigin/SecurityPolicy.h"
 #include "platform/weborigin/Suborigin.h"
 #include "public/platform/WebCachePolicy.h"
-#include "public/platform/WebFeaturePolicy.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
 #include "wtf/AutoReset.h"
@@ -418,7 +413,6 @@ void FrameLoader::setHistoryItemStateForCommit(
     m_currentItem = HistoryItem::create();
   m_currentItem->setURL(m_documentLoader->urlForHistory());
   m_currentItem->setDocumentState(m_frame->document()->formElementsState());
-  m_currentItem->setTarget(m_frame->tree().uniqueName());
   m_currentItem->setReferrer(SecurityPolicy::generateReferrer(
       m_documentLoader->getRequest().getReferrerPolicy(), m_currentItem->url(),
       m_documentLoader->getRequest().httpReferrer()));
@@ -475,9 +469,6 @@ static HistoryCommitType loadTypeToCommitType(FrameLoadType type) {
 }
 
 void FrameLoader::receivedFirstData() {
-  if (m_stateMachine.creatingInitialEmptyDocument())
-    return;
-
   FrameLoadType loadType = m_documentLoader->loadType();
   HistoryCommitType historyCommitType = loadTypeToCommitType(loadType);
   if (historyCommitType == StandardCommit &&
@@ -502,143 +493,14 @@ void FrameLoader::receivedFirstData() {
   // Policies that have accumulated so far for the new navigation.
   m_frame->securityContext()->contentSecurityPolicy()->reportAccumulatedHeaders(
       client());
-
-  // didObserveLoadingBehavior() must be called after dispatchDidCommitLoad() is
-  // called for the metrics tracking logic to handle it properly.
-  if (m_documentLoader->getServiceWorkerNetworkProvider() &&
-      m_documentLoader->getServiceWorkerNetworkProvider()
-          ->isControlledByServiceWorker()) {
-    client()->didObserveLoadingBehavior(
-        WebLoadingBehaviorServiceWorkerControlled);
-  }
-
-  // Links with media values need more information (like viewport information).
-  // This happens after the first chunk is parsed in HTMLDocumentParser.
-  m_documentLoader->dispatchLinkHeaderPreloads(nullptr,
-                                               LinkLoader::OnlyLoadNonMedia);
-
-  TRACE_EVENT1("devtools.timeline", "CommitLoad", "data",
-               InspectorCommitLoadEvent::data(m_frame));
-  probe::didCommitLoad(m_frame, m_documentLoader.get());
-  m_frame->page()->didCommitLoad(m_frame);
-  dispatchDidClearDocumentOfWindowObject();
-
-  takeObjectSnapshot();
 }
 
-void FrameLoader::didInstallNewDocument(bool dispatchWindowObjectAvailable) {
-  DCHECK(m_frame);
-  DCHECK(m_frame->document());
-
-  m_frame->document()->setReadyState(Document::Loading);
-
-  if (dispatchWindowObjectAvailable)
-    dispatchDidClearDocumentOfWindowObject();
-
-  m_frame->document()->initContentSecurityPolicy(
-      m_documentLoader ? m_documentLoader->releaseContentSecurityPolicy()
-                       : ContentSecurityPolicy::create());
-
+void FrameLoader::didInstallNewDocument() {
   if (m_provisionalItem &&
       isBackForwardLoadType(m_documentLoader->loadType())) {
     m_frame->document()->setStateForNewFormElements(
         m_provisionalItem->getDocumentState());
   }
-}
-
-void FrameLoader::didBeginDocument() {
-  DCHECK(m_frame);
-  DCHECK(m_frame->client());
-  DCHECK(m_frame->document());
-  DCHECK(m_frame->document()->fetcher());
-
-  if (m_documentLoader) {
-    String suboriginHeader =
-        m_documentLoader->response().httpHeaderField(HTTPNames::Suborigin);
-    if (!suboriginHeader.isNull()) {
-      Vector<String> messages;
-      Suborigin suborigin;
-      if (parseSuboriginHeader(suboriginHeader, &suborigin, messages))
-        m_frame->document()->enforceSuborigin(suborigin);
-
-      for (auto& message : messages) {
-        m_frame->document()->addConsoleMessage(
-            ConsoleMessage::create(SecurityMessageSource, ErrorMessageLevel,
-                                   "Error with Suborigin header: " + message));
-      }
-    }
-    m_frame->document()->clientHintsPreferences().updateFrom(
-        m_documentLoader->clientHintsPreferences());
-  }
-
-  Settings* settings = m_frame->document()->settings();
-  if (settings) {
-    m_frame->document()->fetcher()->setImagesEnabled(
-        settings->getImagesEnabled());
-    m_frame->document()->fetcher()->setAutoLoadImages(
-        settings->getLoadsImagesAutomatically());
-  }
-
-  if (m_documentLoader) {
-    const AtomicString& dnsPrefetchControl =
-        m_documentLoader->response().httpHeaderField(
-            HTTPNames::X_DNS_Prefetch_Control);
-    if (!dnsPrefetchControl.isEmpty())
-      m_frame->document()->parseDNSPrefetchControlHeader(dnsPrefetchControl);
-
-    String headerContentLanguage = m_documentLoader->response().httpHeaderField(
-        HTTPNames::Content_Language);
-    if (!headerContentLanguage.isEmpty()) {
-      size_t commaIndex = headerContentLanguage.find(',');
-      headerContentLanguage.truncate(
-          commaIndex);  // kNotFound == -1 == don't truncate
-      headerContentLanguage =
-          headerContentLanguage.stripWhiteSpace(isHTMLSpace<UChar>);
-      if (!headerContentLanguage.isEmpty()) {
-        m_frame->document()->setContentLanguage(
-            AtomicString(headerContentLanguage));
-      }
-    }
-
-    OriginTrialContext::addTokensFromHeader(
-        m_frame->document(),
-        m_documentLoader->response().httpHeaderField(HTTPNames::Origin_Trial));
-    if (RuntimeEnabledFeatures::featurePolicyEnabled()) {
-      WebFeaturePolicy* parentFeaturePolicy =
-          (isLoadingMainFrame() ? nullptr
-                                : m_frame->client()
-                                      ->parent()
-                                      ->securityContext()
-                                      ->getFeaturePolicy());
-      const String& featurePolicyHeader =
-          m_documentLoader->response().httpHeaderField(
-              HTTPNames::Feature_Policy);
-      Vector<String> messages;
-      const WebParsedFeaturePolicy& parsedHeader = parseFeaturePolicy(
-          featurePolicyHeader, m_frame->securityContext()->getSecurityOrigin(),
-          &messages);
-      m_frame->securityContext()->initializeFeaturePolicy(parsedHeader,
-                                                          parentFeaturePolicy);
-      for (auto& message : messages) {
-        m_frame->document()->addConsoleMessage(ConsoleMessage::create(
-            OtherMessageSource, ErrorMessageLevel,
-            "Error with Feature-Policy header: " + message));
-      }
-      if (!parsedHeader.isEmpty())
-        client()->didSetFeaturePolicyHeader(parsedHeader);
-    }
-  }
-
-  if (m_documentLoader) {
-    String referrerPolicyHeader = m_documentLoader->response().httpHeaderField(
-        HTTPNames::Referrer_Policy);
-    if (!referrerPolicyHeader.isNull()) {
-      UseCounter::count(*m_frame->document(), UseCounter::ReferrerPolicyHeader);
-      m_frame->document()->parseAndSetReferrerPolicy(referrerPolicyHeader);
-    }
-  }
-
-  client()->didCreateNewDocument();
 }
 
 void FrameLoader::finishedParsing() {
@@ -1660,11 +1522,20 @@ NavigationPolicy FrameLoader::shouldContinueForNavigationPolicy(
   if (request.url().isEmpty() || substituteData.isValid())
     return NavigationPolicyCurrentTab;
 
+  Settings* settings = m_frame->settings();
+  bool browserSideNavigationEnabled =
+      settings && settings->getBrowserSideNavigationEnabled();
+
   // If we're loading content into |m_frame| (NavigationPolicyCurrentTab), check
   // against the parent's Content Security Policy and kill the load if that
   // check fails, unless we should bypass the main world's CSP.
   if (policy == NavigationPolicyCurrentTab &&
-      shouldCheckMainWorldContentSecurityPolicy == CheckContentSecurityPolicy) {
+      shouldCheckMainWorldContentSecurityPolicy == CheckContentSecurityPolicy &&
+      // TODO(arthursonzogni): 'frame-src' check is disabled on the
+      // renderer side with browser-side-navigation, but is enforced on the
+      // browser side. See http://crbug.com/692595 for understanding why it
+      // can't be enforced on both sides instead.
+      !browserSideNavigationEnabled) {
     Frame* parentFrame = m_frame->tree().parent();
     if (parentFrame) {
       ContentSecurityPolicy* parentPolicy =
@@ -1684,6 +1555,16 @@ NavigationPolicy FrameLoader::shouldContinueForNavigationPolicy(
   bool isFormSubmission = type == NavigationTypeFormSubmitted ||
                           type == NavigationTypeFormResubmitted;
   if (isFormSubmission &&
+      // 'form-action' check in the frame that is navigating is disabled on the
+      // renderer side when PlzNavigate is enabled, but is enforced on the
+      // browser side instead.
+      // N.B. check in the frame that initiates the navigation stills occurs in
+      // blink and is not enforced on the browser-side.
+      // TODO(arthursonzogni) The 'form-action' check should be fully disabled
+      // in blink when browser side navigation is enabled, except when the form
+      // submission doesn't trigger a navigation(i.e. javascript urls). Please
+      // see https://crbug.com/701749
+      !browserSideNavigationEnabled &&
       !m_frame->document()->contentSecurityPolicy()->allowFormAction(
           request.url(), request.redirectStatus())) {
     return NavigationPolicyIgnore;
@@ -1691,9 +1572,9 @@ NavigationPolicy FrameLoader::shouldContinueForNavigationPolicy(
 
   bool replacesCurrentHistoryItem =
       frameLoadType == FrameLoadTypeReplaceCurrentItem;
-  policy = client()->decidePolicyForNavigation(request, loader, type, policy,
-                                               replacesCurrentHistoryItem,
-                                               isClientRedirect, form);
+  policy = client()->decidePolicyForNavigation(
+      request, loader, type, policy, replacesCurrentHistoryItem,
+      isClientRedirect, form, shouldCheckMainWorldContentSecurityPolicy);
   if (policy == NavigationPolicyCurrentTab ||
       policy == NavigationPolicyIgnore ||
       policy == NavigationPolicyHandledByClient ||
@@ -1853,6 +1734,8 @@ void FrameLoader::runScriptsAtDocumentElementAvailable() {
 
 void FrameLoader::dispatchDidClearDocumentOfWindowObject() {
   DCHECK(m_frame->document());
+  if (m_stateMachine.creatingInitialEmptyDocument())
+    return;
   if (!m_frame->document()->canExecuteScripts(NotAboutToExecuteScript))
     return;
 

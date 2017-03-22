@@ -12,6 +12,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_samples.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/simple_test_tick_clock.h"
 #include "content/browser/media/session/audio_focus_delegate.h"
@@ -34,7 +35,9 @@ using content::MediaSessionPlayerObserver;
 using content::MediaSessionUmaHelper;
 using content::MockMediaSessionPlayerObserver;
 
+using ::testing::Eq;
 using ::testing::Expectation;
+using ::testing::NiceMock;
 using ::testing::_;
 
 namespace {
@@ -71,8 +74,8 @@ class MediaSessionImplBrowserTest : public content::ContentBrowserTest {
 
     media_session_ = MediaSessionImpl::Get(shell()->web_contents());
     mock_media_session_observer_.reset(
-        new content::MockMediaSessionObserver(media_session_));
-    mock_audio_focus_delegate_ = new MockAudioFocusDelegate;
+        new NiceMock<content::MockMediaSessionObserver>(media_session_));
+    mock_audio_focus_delegate_ = new NiceMock<MockAudioFocusDelegate>;
     media_session_->SetDelegateForTests(
         base::WrapUnique(mock_audio_focus_delegate_));
     ASSERT_TRUE(media_session_);
@@ -115,15 +118,13 @@ class MediaSessionImplBrowserTest : public content::ContentBrowserTest {
     media_session_->OnPlayerPaused(player_observer, player_id);
   }
 
-  bool HasAudioFocus() { return media_session_->IsActiveForTest(); }
+  bool IsActive() { return media_session_->IsActive(); }
 
   content::AudioFocusManager::AudioFocusType GetSessionAudioFocusType() {
     return media_session_->audio_focus_type();
   }
 
   bool IsControllable() { return media_session_->IsControllable(); }
-
-  bool IsSuspended() { return media_session_->IsSuspended(); }
 
   void UIResume() { media_session_->Resume(MediaSession::SuspendType::UI); }
 
@@ -145,7 +146,7 @@ class MediaSessionImplBrowserTest : public content::ContentBrowserTest {
   void SystemStopDucking() { media_session_->StopDucking(); }
 
   void EnsureMediaSessionService() {
-    mock_media_session_service_.reset(new MockMediaSessionServiceImpl(
+    mock_media_session_service_.reset(new NiceMock<MockMediaSessionServiceImpl>(
         shell()->web_contents()->GetMainFrame()));
   }
 
@@ -306,7 +307,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest, AudioFocusInitialState) {
-  EXPECT_FALSE(HasAudioFocus());
+  EXPECT_FALSE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest, StartPlayerGivesFocus) {
@@ -314,7 +315,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest, StartPlayerGivesFocus) {
 
   StartNewPlayer(player_observer.get(), media::MediaContentType::Persistent);
 
-  EXPECT_TRUE(HasAudioFocus());
+  EXPECT_TRUE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -325,7 +326,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
 
   SystemSuspend(true);
 
-  EXPECT_FALSE(HasAudioFocus());
+  EXPECT_FALSE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest, StopGivesAwayAudioFocus) {
@@ -335,7 +336,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest, StopGivesAwayAudioFocus) {
 
   media_session_->Stop(MediaSession::SuspendType::UI);
 
-  EXPECT_FALSE(HasAudioFocus());
+  EXPECT_FALSE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest, ResumeGivesBackAudioFocus) {
@@ -346,7 +347,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest, ResumeGivesBackAudioFocus) {
   SystemSuspend(true);
   SystemResume();
 
-  EXPECT_TRUE(HasAudioFocus());
+  EXPECT_TRUE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -358,11 +359,11 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
   StartNewPlayer(player_observer.get(), media::MediaContentType::Persistent);
 
   RemovePlayer(player_observer.get(), 0);
-  EXPECT_TRUE(HasAudioFocus());
+  EXPECT_TRUE(IsActive());
   RemovePlayer(player_observer.get(), 1);
-  EXPECT_TRUE(HasAudioFocus());
+  EXPECT_TRUE(IsActive());
   RemovePlayer(player_observer.get(), 2);
-  EXPECT_FALSE(HasAudioFocus());
+  EXPECT_FALSE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -376,11 +377,11 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
   StartNewPlayer(player_observer_3.get(), media::MediaContentType::Persistent);
 
   RemovePlayer(player_observer_1.get(), 0);
-  EXPECT_TRUE(HasAudioFocus());
+  EXPECT_TRUE(IsActive());
   RemovePlayer(player_observer_2.get(), 0);
-  EXPECT_TRUE(HasAudioFocus());
+  EXPECT_TRUE(IsActive());
   RemovePlayer(player_observer_3.get(), 0);
-  EXPECT_FALSE(HasAudioFocus());
+  EXPECT_FALSE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -394,9 +395,9 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
   StartNewPlayer(player_observer_2.get(), media::MediaContentType::Persistent);
 
   RemovePlayers(player_observer_1.get());
-  EXPECT_TRUE(HasAudioFocus());
+  EXPECT_TRUE(IsActive());
   RemovePlayers(player_observer_2.get());
-  EXPECT_FALSE(HasAudioFocus());
+  EXPECT_FALSE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest, ResumePlayGivesAudioFocus) {
@@ -405,11 +406,11 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest, ResumePlayGivesAudioFocus) {
   StartNewPlayer(player_observer.get(), media::MediaContentType::Persistent);
 
   RemovePlayer(player_observer.get(), 0);
-  EXPECT_FALSE(HasAudioFocus());
+  EXPECT_FALSE(IsActive());
 
   EXPECT_TRUE(
       AddPlayer(player_observer.get(), 0, media::MediaContentType::Persistent));
-  EXPECT_TRUE(HasAudioFocus());
+  EXPECT_TRUE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -525,7 +526,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest, ControlsShowForContent) {
   StartNewPlayer(player_observer.get(), media::MediaContentType::Persistent);
 
   EXPECT_TRUE(IsControllable());
-  EXPECT_FALSE(IsSuspended());
+  EXPECT_TRUE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -539,7 +540,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
   StartNewPlayer(player_observer.get(), media::MediaContentType::Transient);
 
   EXPECT_FALSE(IsControllable());
-  EXPECT_FALSE(IsSuspended());
+  EXPECT_TRUE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest, ControlsHideWhenStopped) {
@@ -556,7 +557,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest, ControlsHideWhenStopped) {
   RemovePlayers(player_observer.get());
 
   EXPECT_FALSE(IsControllable());
-  EXPECT_TRUE(IsSuspended());
+  EXPECT_FALSE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -572,7 +573,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
   StartNewPlayer(player_observer.get(), media::MediaContentType::Transient);
 
   EXPECT_TRUE(IsControllable());
-  EXPECT_FALSE(IsSuspended());
+  EXPECT_TRUE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -591,7 +592,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
   StartNewPlayer(player_observer.get(), media::MediaContentType::Persistent);
 
   EXPECT_TRUE(IsControllable());
-  EXPECT_FALSE(IsSuspended());
+  EXPECT_TRUE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -609,7 +610,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
   RemovePlayer(player_observer.get(), 0);
 
   EXPECT_TRUE(IsControllable());
-  EXPECT_FALSE(IsSuspended());
+  EXPECT_TRUE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -628,12 +629,12 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
   RemovePlayer(player_observer.get(), 0);
 
   EXPECT_TRUE(IsControllable());
-  EXPECT_FALSE(IsSuspended());
+  EXPECT_TRUE(IsActive());
 
   RemovePlayer(player_observer.get(), 1);
 
   EXPECT_FALSE(IsControllable());
-  EXPECT_TRUE(IsSuspended());
+  EXPECT_FALSE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -652,7 +653,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
   RemovePlayers(player_observer.get());
 
   EXPECT_FALSE(IsControllable());
-  EXPECT_TRUE(IsSuspended());
+  EXPECT_FALSE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -671,12 +672,12 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
   OnPlayerPaused(player_observer.get(), 0);
 
   EXPECT_TRUE(IsControllable());
-  EXPECT_FALSE(IsSuspended());
+  EXPECT_TRUE(IsActive());
 
   OnPlayerPaused(player_observer.get(), 1);
 
   EXPECT_TRUE(IsControllable());
-  EXPECT_TRUE(IsSuspended());
+  EXPECT_FALSE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -694,7 +695,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
   SystemSuspend(true);
 
   EXPECT_TRUE(IsControllable());
-  EXPECT_TRUE(IsSuspended());
+  EXPECT_FALSE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -715,7 +716,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
   SystemResume();
 
   EXPECT_TRUE(IsControllable());
-  EXPECT_FALSE(IsSuspended());
+  EXPECT_TRUE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -733,7 +734,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
   SystemSuspend(false);
 
   EXPECT_FALSE(IsControllable());
-  EXPECT_TRUE(IsSuspended());
+  EXPECT_FALSE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -754,7 +755,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
   media_session_->Stop(MediaSession::SuspendType::UI);
 
   EXPECT_FALSE(IsControllable());
-  EXPECT_TRUE(IsSuspended());
+  EXPECT_FALSE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -778,7 +779,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
   StartNewPlayer(player_observer.get(), media::MediaContentType::Transient);
 
   EXPECT_FALSE(IsControllable());
-  EXPECT_FALSE(IsSuspended());
+  EXPECT_TRUE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -801,7 +802,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
   StartNewPlayer(player_observer.get(), media::MediaContentType::Persistent);
 
   EXPECT_TRUE(IsControllable());
-  EXPECT_FALSE(IsSuspended());
+  EXPECT_TRUE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -824,7 +825,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
   AddPlayer(player_observer.get(), 0, media::MediaContentType::Persistent);
 
   EXPECT_TRUE(IsControllable());
-  EXPECT_FALSE(IsSuspended());
+  EXPECT_TRUE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -841,7 +842,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
   UISuspend();
 
   EXPECT_TRUE(IsControllable());
-  EXPECT_TRUE(IsSuspended());
+  EXPECT_FALSE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -862,7 +863,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
   UIResume();
 
   EXPECT_TRUE(IsControllable());
-  EXPECT_FALSE(IsSuspended());
+  EXPECT_TRUE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -875,15 +876,15 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
   StartNewPlayer(player_observer.get(), media::MediaContentType::OneShot);
 
   EXPECT_FALSE(IsControllable());
-  EXPECT_FALSE(IsSuspended());
+  EXPECT_TRUE(IsActive());
 
   StartNewPlayer(player_observer.get(), media::MediaContentType::Transient);
   EXPECT_FALSE(IsControllable());
-  EXPECT_FALSE(IsSuspended());
+  EXPECT_TRUE(IsActive());
 
   StartNewPlayer(player_observer.get(), media::MediaContentType::Persistent);
   EXPECT_FALSE(IsControllable());
-  EXPECT_FALSE(IsSuspended());
+  EXPECT_TRUE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -903,7 +904,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
   RemovePlayer(player_observer.get(), 0);
 
   EXPECT_FALSE(IsControllable());
-  EXPECT_TRUE(IsSuspended());
+  EXPECT_FALSE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -924,7 +925,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
   RemovePlayer(player_observer.get(), 0);
 
   EXPECT_TRUE(IsControllable());
-  EXPECT_FALSE(IsSuspended());
+  EXPECT_TRUE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -938,7 +939,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
   SystemSuspend(false);
 
   EXPECT_FALSE(IsControllable());
-  EXPECT_FALSE(IsSuspended());
+  EXPECT_TRUE(IsActive());
 
   EXPECT_EQ(0, player_observer->received_suspend_calls());
 }
@@ -951,11 +952,11 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
 
   UISuspend();
   EXPECT_TRUE(IsControllable());
-  EXPECT_TRUE(IsSuspended());
+  EXPECT_FALSE(IsActive());
 
   SystemResume();
   EXPECT_TRUE(IsControllable());
-  EXPECT_TRUE(IsSuspended());
+  EXPECT_FALSE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
@@ -966,11 +967,11 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
 
   SystemSuspend(true);
   EXPECT_TRUE(IsControllable());
-  EXPECT_TRUE(IsSuspended());
+  EXPECT_FALSE(IsActive());
 
   UIResume();
   EXPECT_TRUE(IsControllable());
-  EXPECT_FALSE(IsSuspended());
+  EXPECT_TRUE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest, ResumeSuspendFromUI) {
@@ -980,11 +981,11 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest, ResumeSuspendFromUI) {
 
   UISuspend();
   EXPECT_TRUE(IsControllable());
-  EXPECT_TRUE(IsSuspended());
+  EXPECT_FALSE(IsActive());
 
   UIResume();
   EXPECT_TRUE(IsControllable());
-  EXPECT_FALSE(IsSuspended());
+  EXPECT_TRUE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest, ResumeSuspendFromSystem) {
@@ -994,11 +995,11 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest, ResumeSuspendFromSystem) {
 
   SystemSuspend(true);
   EXPECT_TRUE(IsControllable());
-  EXPECT_TRUE(IsSuspended());
+  EXPECT_FALSE(IsActive());
 
   SystemResume();
   EXPECT_TRUE(IsControllable());
-  EXPECT_FALSE(IsSuspended());
+  EXPECT_TRUE(IsActive());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest, OneShotTakesGainFocus) {
@@ -1412,4 +1413,49 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
   EXPECT_EQ(2, samples->TotalCount());
   EXPECT_EQ(1, samples->GetCount(1000));
   EXPECT_EQ(1, samples->GetCount(10000));
+}
+
+IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
+                       AddingObserverNotifiesCurrentInformation_EmptyInfo) {
+  media_session_->RemoveObserver(mock_media_session_observer());
+  EXPECT_CALL(*mock_media_session_observer(),
+              MediaSessionStateChanged(false, true));
+  EXPECT_CALL(*mock_media_session_observer(),
+              MediaSessionMetadataChanged(Eq(base::nullopt)));
+  EXPECT_CALL(*mock_media_session_observer(),
+              MediaSessionActionsChanged(
+                  Eq(std::set<blink::mojom::MediaSessionAction>())));
+  media_session_->AddObserver(mock_media_session_observer());
+}
+
+IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
+                       AddingObserverNotifiesCurrentInformation_WithInfo) {
+  // Set up the service and information.
+  EnsureMediaSessionService();
+
+  content::MediaMetadata metadata;
+  metadata.title = base::ASCIIToUTF16("title");
+  metadata.artist = base::ASCIIToUTF16("artist");
+  metadata.album = base::ASCIIToUTF16("album");
+  mock_media_session_service_->SetMetadata(metadata);
+
+  mock_media_session_service_->EnableAction(
+      blink::mojom::MediaSessionAction::PLAY);
+  std::set<blink::mojom::MediaSessionAction> expectedActions =
+      mock_media_session_service_->actions();
+
+  // Make sure the service is routed,
+  auto player_observer = base::MakeUnique<MockMediaSessionPlayerObserver>(
+      shell()->web_contents()->GetMainFrame());
+  StartNewPlayer(player_observer.get(), media::MediaContentType::Persistent);
+
+  // Check if the expectations are met when the observer is newly added.
+  media_session_->RemoveObserver(mock_media_session_observer());
+  EXPECT_CALL(*mock_media_session_observer(),
+              MediaSessionStateChanged(true, false));
+  EXPECT_CALL(*mock_media_session_observer(),
+              MediaSessionMetadataChanged(Eq(metadata)));
+  EXPECT_CALL(*mock_media_session_observer(),
+              MediaSessionActionsChanged(Eq(expectedActions)));
+  media_session_->AddObserver(mock_media_session_observer());
 }

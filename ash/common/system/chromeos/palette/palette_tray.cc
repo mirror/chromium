@@ -5,7 +5,7 @@
 #include "ash/common/system/chromeos/palette/palette_tray.h"
 
 #include "ash/common/material_design/material_design_controller.h"
-#include "ash/common/session/session_state_delegate.h"
+#include "ash/common/session/session_controller.h"
 #include "ash/common/shelf/shelf_constants.h"
 #include "ash/common/shelf/wm_shelf.h"
 #include "ash/common/shelf/wm_shelf_util.h"
@@ -63,12 +63,11 @@ const SkColor kPaletteSeparatorColor = SkColorSetARGB(0x1E, 0x00, 0x00, 0x00);
 
 // Returns true if we are in a user session that can show the stylus tools.
 bool IsInUserSession() {
-  SessionStateDelegate* session_state_delegate =
-      WmShell::Get()->GetSessionStateDelegate();
-  return !session_state_delegate->IsUserSessionBlocked() &&
-         session_state_delegate->GetSessionState() ==
+  SessionController* session_controller = Shell::Get()->session_controller();
+  return !session_controller->IsUserSessionBlocked() &&
+         session_controller->GetSessionState() ==
              session_manager::SessionState::ACTIVE &&
-         WmShell::Get()->system_tray_delegate()->GetUserLoginStatus() !=
+         Shell::Get()->system_tray_delegate()->GetUserLoginStatus() !=
              LoginStatus::KIOSK_APP;
 }
 
@@ -126,12 +125,12 @@ class TitleView : public views::View, public views::ButtonListener {
     if (sender == settings_button_) {
       palette_tray_->RecordPaletteOptionsUsage(
           PaletteTrayOptions::PALETTE_SETTINGS_BUTTON);
-      WmShell::Get()->system_tray_controller()->ShowPaletteSettings();
+      Shell::Get()->system_tray_controller()->ShowPaletteSettings();
       palette_tray_->HidePalette();
     } else if (sender == help_button_) {
       palette_tray_->RecordPaletteOptionsUsage(
           PaletteTrayOptions::PALETTE_HELP_BUTTON);
-      WmShell::Get()->system_tray_controller()->ShowPaletteHelp();
+      Shell::Get()->system_tray_controller()->ShowPaletteHelp();
       palette_tray_->HidePalette();
     } else {
       NOTREACHED();
@@ -166,7 +165,7 @@ PaletteTray::PaletteTray(WmShelf* wm_shelf)
   tray_container()->AddChildView(icon_);
 
   Shell::GetInstance()->AddShellObserver(this);
-  WmShell::Get()->GetSessionStateDelegate()->AddSessionStateObserver(this);
+  Shell::Get()->session_controller()->AddSessionStateObserver(this);
   ui::InputDeviceManager::GetInstance()->AddObserver(this);
 }
 
@@ -176,7 +175,7 @@ PaletteTray::~PaletteTray() {
 
   ui::InputDeviceManager::GetInstance()->RemoveObserver(this);
   Shell::GetInstance()->RemoveShellObserver(this);
-  WmShell::Get()->GetSessionStateDelegate()->RemoveSessionStateObserver(this);
+  Shell::Get()->session_controller()->RemoveSessionStateObserver(this);
 }
 
 bool PaletteTray::PerformAction(const ui::Event& event) {
@@ -284,6 +283,10 @@ void PaletteTray::OnTouchscreenDeviceConfigurationChanged() {
 }
 
 void PaletteTray::OnStylusStateChanged(ui::StylusState stylus_state) {
+  // Device may have a stylus but it has been forcibly disabled.
+  if (!palette_utils::HasStylusInput())
+    return;
+
   PaletteDelegate* palette_delegate = Shell::GetInstance()->palette_delegate();
 
   // Don't do anything if the palette should not be shown or if the user has

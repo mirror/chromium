@@ -18,13 +18,51 @@ import android.widget.ImageView;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetObserver;
+import org.chromium.chrome.browser.widget.bottomsheet.EmptyBottomSheetObserver;
 
 /**
  * Phone specific toolbar that exists at the bottom of the screen.
  */
-public class BottomToolbarPhone extends ToolbarPhone implements BottomSheetObserver {
+public class BottomToolbarPhone extends ToolbarPhone {
+    /**
+     * The observer used to listen to {@link BottomSheet} events.
+     */
+    private final BottomSheetObserver mBottomSheetObserver = new EmptyBottomSheetObserver() {
+        @Override
+        public void onTransitionPeekToHalf(float transitionFraction) {
+            // TODO(twellington): animate end toolbar button appearance/disappearance.
+            if (transitionFraction >= 0.5 && !mShouldHideEndToolbarButtons) {
+                mShouldHideEndToolbarButtons = true;
+                updateUrlExpansionAnimation();
+            } else if (transitionFraction < 0.5 && mShouldHideEndToolbarButtons) {
+                mShouldHideEndToolbarButtons = false;
+                updateUrlExpansionAnimation();
+            }
+
+            boolean buttonsClickable = transitionFraction == 0.f;
+            mToggleTabStackButton.setClickable(buttonsClickable);
+            mMenuButton.setClickable(buttonsClickable);
+        }
+
+        @Override
+        public void onSheetOffsetChanged(float heightFraction) {
+            boolean isMovingDown = heightFraction < mLastHeightFraction;
+            mLastHeightFraction = heightFraction;
+
+            // The only time the omnibox should have focus is when the sheet is fully expanded. Any
+            // movement of the sheet should unfocus it.
+            if (isMovingDown && getLocationBar().isUrlBarFocused()) {
+                getLocationBar().setUrlBarFocus(false);
+            }
+        }
+    };
+
+    /** The background alpha for the tab switcher. */
+    private static final float TAB_SWITCHER_TOOLBAR_ALPHA = 0.7f;
+
     /** The white version of the toolbar handle; used for dark themes and incognito. */
     private final Bitmap mHandleLight;
 
@@ -57,11 +95,11 @@ public class BottomToolbarPhone extends ToolbarPhone implements BottomSheetObser
         super(context, attrs);
 
         int defaultHandleColor =
-                ApiCompatibilityUtils.getColor(getResources(), R.color.google_grey_500);
+                ApiCompatibilityUtils.getColor(getResources(), R.color.black_alpha_40);
         mHandleDark = generateHandleBitmap(defaultHandleColor);
 
         int lightHandleColor =
-                ApiCompatibilityUtils.getColor(getResources(), R.color.semi_opaque_white);
+                ApiCompatibilityUtils.getColor(getResources(), R.color.white_alpha_50);
         mHandleLight = generateHandleBitmap(lightHandleColor);
     }
 
@@ -70,6 +108,16 @@ public class BottomToolbarPhone extends ToolbarPhone implements BottomSheetObser
         // In the case where the toolbar is at the bottom of the screen, the progress bar should
         // be at the top of the screen.
         return 0;
+    }
+
+    @Override
+    protected int getProgressBarHeight() {
+        return getResources().getDimensionPixelSize(R.dimen.chrome_home_progress_bar_height);
+    }
+
+    @Override
+    protected boolean getProgressBarUsesThemeColors() {
+        return false;
     }
 
     @Override
@@ -87,7 +135,7 @@ public class BottomToolbarPhone extends ToolbarPhone implements BottomSheetObser
 
         mBottomSheet = sheet;
         getLocationBar().setBottomSheet(mBottomSheet);
-        mBottomSheet.addObserver(this);
+        mBottomSheet.addObserver(mBottomSheetObserver);
     }
 
     @Override
@@ -117,6 +165,10 @@ public class BottomToolbarPhone extends ToolbarPhone implements BottomSheetObser
     @Override
     public void onFinishInflate() {
         super.onFinishInflate();
+
+        // Exclude the location bar from the list of browsing mode views. This prevents its
+        // visibility from changing during transitions.
+        mBrowsingModeViews.remove(mLocationBar);
 
         // Programmatically apply a top margin to all the children of the toolbar container. This
         // is done so the view hierarchy does not need to be changed.
@@ -149,10 +201,11 @@ public class BottomToolbarPhone extends ToolbarPhone implements BottomSheetObser
     protected void updateVisualsForToolbarState() {
         super.updateVisualsForToolbarState();
 
-        // The handle should not show in tab switcher mode.
-        mToolbarHandleView.setVisibility(
-                mTabSwitcherState != ToolbarPhone.STATIC_TAB ? View.INVISIBLE : View.VISIBLE);
-        mToolbarHandleView.setImageBitmap(mUseLightToolbarDrawables ? mHandleLight : mHandleDark);
+        // The tab switcher's background color should not affect the toolbar handle; it should only
+        // switch color based on the static tab's theme color. This is done so fade in/out looks
+        // correct.
+        boolean isLight = ColorUtils.shouldUseLightForegroundOnBackground(getTabThemeColor());
+        mToolbarHandleView.setImageBitmap(isLight ? mHandleLight : mHandleDark);
     }
 
     @Override
@@ -191,45 +244,53 @@ public class BottomToolbarPhone extends ToolbarPhone implements BottomSheetObser
     }
 
     @Override
+    protected boolean shouldDrawLocationBar() {
+        return true;
+    }
+
+    @Override
+    protected void drawTabSwitcherFadeAnimation(boolean animationFinished, float progress) {
+        mNewTabButton.setAlpha(progress);
+
+        mLocationBar.setAlpha(1f - progress);
+        mToolbarHandleView.setAlpha(1f - progress);
+
+        int tabSwitcherThemeColor = getToolbarColorForVisualState(VisualState.TAB_SWITCHER_NORMAL);
+
+        updateToolbarBackground(ColorUtils.getColorWithOverlay(
+                getTabThemeColor(), tabSwitcherThemeColor, progress));
+        float alphaTransition = 1f - TAB_SWITCHER_TOOLBAR_ALPHA;
+        mToolbarBackground.setAlpha((int) ((1f - (alphaTransition * progress)) * 255));
+    }
+
+    @Override
+    protected void drawTabSwitcherAnimationOverlay(Canvas canvas, float animationProgress) {
+        // Intentionally overridden to block everything but the compositor screen shot. Otherwise
+        // the toolbar in Chrome Home does not have an animation overlay component.
+        if (mTextureCaptureMode) super.drawTabSwitcherAnimationOverlay(canvas, 0f);
+    }
+
+    @Override
+    protected void resetNtpAnimationValues() {
+        // The NTP animations don't matter if the browser is in tab switcher mode.
+        if (mTabSwitcherState != ToolbarPhone.STATIC_TAB) return;
+        super.resetNtpAnimationValues();
+    }
+
+    @Override
+    protected void updateToolbarBackground(VisualState visualState) {
+        if (visualState == VisualState.TAB_SWITCHER_NORMAL
+                || visualState == VisualState.TAB_SWITCHER_INCOGNITO) {
+            // drawTabSwitcherFadeAnimation will handle the background color transition.
+            return;
+        }
+
+        super.updateToolbarBackground(visualState);
+    }
+
+    @Override
     protected boolean shouldHideEndToolbarButtons() {
         return mShouldHideEndToolbarButtons;
-    }
-
-    @Override
-    public void onSheetOpened() {}
-
-    @Override
-    public void onSheetClosed() {}
-
-    @Override
-    public void onLoadUrl(String url) {}
-
-    @Override
-    public void onTransitionPeekToHalf(float transitionFraction) {
-        // TODO(twellington): animate end toolbar button appearance/disappearance.
-        if (transitionFraction >= 0.5 && !mShouldHideEndToolbarButtons) {
-            mShouldHideEndToolbarButtons = true;
-            updateUrlExpansionAnimation();
-        } else if (transitionFraction < 0.5 && mShouldHideEndToolbarButtons) {
-            mShouldHideEndToolbarButtons = false;
-            updateUrlExpansionAnimation();
-        }
-
-        boolean buttonsClickable = transitionFraction == 0.f;
-        mToggleTabStackButton.setClickable(buttonsClickable);
-        mMenuButton.setClickable(buttonsClickable);
-    }
-
-    @Override
-    public void onSheetOffsetChanged(float heightFraction) {
-        boolean isMovingDown = heightFraction < mLastHeightFraction;
-        mLastHeightFraction = heightFraction;
-
-        // The only time the omnibox should have focus is when the sheet is fully expanded. Any
-        // movement of the sheet should unfocus it.
-        if (isMovingDown && getLocationBar().isUrlBarFocused()) {
-            getLocationBar().setUrlBarFocus(false);
-        }
     }
 
     /**

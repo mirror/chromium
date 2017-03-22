@@ -139,7 +139,6 @@
 #include "core/frame/DOMVisualViewport.h"
 #include "core/frame/EventHandlerRegistry.h"
 #include "core/frame/FrameConsole.h"
-#include "core/frame/FrameHost.h"
 #include "core/frame/FrameView.h"
 #include "core/frame/History.h"
 #include "core/frame/HostsUsingFeatures.h"
@@ -1661,9 +1660,6 @@ Page* Document::page() const {
   return m_frame ? m_frame->page() : nullptr;
 }
 
-FrameHost* Document::frameHost() const {
-  return m_frame ? m_frame->host() : nullptr;
-}
 
 Settings* Document::settings() const {
   return m_frame ? m_frame->settings() : nullptr;
@@ -4331,16 +4327,11 @@ void Document::nodeWillBeRemoved(Node& n) {
 void Document::didInsertText(Node* text, unsigned offset, unsigned length) {
   for (Range* range : m_ranges)
     range->didInsertText(text, offset, length);
-
-  m_markers->shiftMarkers(text, offset, length);
 }
 
 void Document::didRemoveText(Node* text, unsigned offset, unsigned length) {
   for (Range* range : m_ranges)
     range->didRemoveText(text, offset, length);
-
-  m_markers->removeMarkers(text, offset, length);
-  m_markers->shiftMarkers(text, offset + length, 0 - length);
 }
 
 void Document::didMergeTextNodes(const Text& mergedNode,
@@ -5137,24 +5128,17 @@ KURL Document::openSearchDescriptionURL() {
 
 void Document::currentScriptForBinding(
     HTMLScriptElementOrSVGScriptElement& scriptElement) const {
-  if (Element* script = currentScript()) {
-    if (script->isInV1ShadowTree())
-      return;
-    if (isHTMLScriptElement(script))
-      scriptElement.setHTMLScriptElement(toHTMLScriptElement(script));
-    else if (isSVGScriptElement(script))
-      scriptElement.setSVGScriptElement(toSVGScriptElement(script));
-  }
+  if (!m_currentScriptStack.isEmpty())
+    m_currentScriptStack.back()->setScriptElementForBinding(scriptElement);
 }
 
-void Document::pushCurrentScript(Element* newCurrentScript) {
-  DCHECK(isHTMLScriptElement(newCurrentScript) ||
-         isSVGScriptElement(newCurrentScript));
+void Document::pushCurrentScript(ScriptElementBase* newCurrentScript) {
   m_currentScriptStack.push_back(newCurrentScript);
 }
 
-void Document::popCurrentScript() {
+void Document::popCurrentScript(ScriptElementBase* script) {
   DCHECK(!m_currentScriptStack.isEmpty());
+  DCHECK_EQ(m_currentScriptStack.back(), script);
   m_currentScriptStack.pop_back();
 }
 
@@ -5678,20 +5662,6 @@ bool Document::allowInlineEventHandler(Node* node,
                                                 contextLine))
     return false;
 
-  return true;
-}
-
-bool Document::allowExecutingScripts(Node* node) {
-  // FIXME: Eventually we'd like to evaluate scripts which are inserted into a
-  // viewless document but this'll do for now.
-  // See http://bugs.webkit.org/show_bug.cgi?id=5727
-  LocalFrame* frame = executingFrame();
-  if (!frame)
-    return false;
-  if (!node->document().executingFrame())
-    return false;
-  if (!canExecuteScripts(AboutToExecuteScript))
-    return false;
   return true;
 }
 

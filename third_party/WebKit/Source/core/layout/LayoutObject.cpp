@@ -687,12 +687,15 @@ LayoutFlowThread* LayoutObject::locateFlowThreadContainingBlock() const {
 
   // See if we have the thread cached because we're in the middle of layout.
   if (LayoutState* layoutState = view()->layoutState()) {
+    // TODO(mstensho): We should really just return whatever
+    // layoutState->flowThread() returns here, also if the value is nullptr.
     if (LayoutFlowThread* flowThread = layoutState->flowThread())
       return flowThread;
   }
 
   // Not in the middle of layout so have to find the thread the slow way.
-  return LayoutFlowThread::locateFlowThreadContainingBlockOf(*this);
+  return LayoutFlowThread::locateFlowThreadContainingBlockOf(
+      *this, LayoutFlowThread::AnyAncestor);
 }
 
 static inline bool objectIsRelayoutBoundary(const LayoutObject* object) {
@@ -1624,7 +1627,7 @@ void LayoutObject::markAncestorsForOverflowRecalcIfNeeded() {
 void LayoutObject::setNeedsOverflowRecalcAfterStyleChange() {
   bool neededRecalc = needsOverflowRecalcAfterStyleChange();
   setSelfNeedsOverflowRecalcAfterStyleChange();
-  setNeedsPaintOffsetAndVisualRectUpdate();
+  setMayNeedPaintInvalidation();
   if (!neededRecalc)
     markAncestorsForOverflowRecalcIfNeeded();
 }
@@ -1736,6 +1739,9 @@ void LayoutObject::setStyle(PassRefPtr<ComputedStyle> style) {
       setShouldDoFullPaintInvalidationWithoutGeometryChange();
   }
 
+  if (diff.needsVisualRectUpdate())
+    setMayNeedPaintInvalidation();
+
   // Text nodes share style with their parents but the paint properties don't
   // apply to them, hence the !isText() check.
   if (RuntimeEnabledFeatures::slimmingPaintInvalidationEnabled() && !isText() &&
@@ -1757,20 +1763,18 @@ void LayoutObject::setStyle(PassRefPtr<ComputedStyle> style) {
 void LayoutObject::styleWillChange(StyleDifference diff,
                                    const ComputedStyle& newStyle) {
   if (m_style) {
+    bool visibilityChanged = m_style->visibility() != newStyle.visibility();
     // If our z-index changes value or our visibility changes,
     // we need to dirty our stacking context's z-order list.
-    bool visibilityChanged =
-        m_style->visibility() != newStyle.visibility() ||
-        m_style->zIndex() != newStyle.zIndex() ||
-        m_style->isStackingContext() != newStyle.isStackingContext();
-    if (visibilityChanged) {
+    if (visibilityChanged || m_style->zIndex() != newStyle.zIndex() ||
+        m_style->isStackingContext() != newStyle.isStackingContext()) {
       document().setAnnotatedRegionsDirty(true);
       if (AXObjectCache* cache = document().existingAXObjectCache())
         cache->childrenChanged(parent());
     }
 
     // Keep layer hierarchy visibility bits up to date if visibility changes.
-    if (m_style->visibility() != newStyle.visibility()) {
+    if (visibilityChanged) {
       // We might not have an enclosing layer yet because we might not be in the
       // tree.
       if (PaintLayer* layer = enclosingLayer())
@@ -2854,7 +2858,7 @@ void LayoutObject::removeFromLayoutFlowThreadRecursive(
   if (layoutFlowThread && layoutFlowThread != this)
     layoutFlowThread->flowThreadDescendantWillBeRemoved(this);
   setIsInsideFlowThread(false);
-  RELEASE_ASSERT(!spannerPlaceholder());
+  CHECK(!spannerPlaceholder());
 }
 
 void LayoutObject::destroyAndCleanupAnonymousWrappers() {
@@ -3422,11 +3426,27 @@ inline void LayoutObject::markAncestorsForPaintInvalidation() {
 inline void LayoutObject::setNeedsPaintOffsetAndVisualRectUpdate() {
   if (needsPaintOffsetAndVisualRectUpdate())
     return;
-  m_bitfields.setNeedsPaintOffsetAndVisualRectUpdate(true);
-  for (LayoutObject* parent = paintInvalidationParent();
-       parent && !parent->needsPaintOffsetAndVisualRectUpdate();
-       parent = parent->paintInvalidationParent())
-    parent->m_bitfields.setNeedsPaintOffsetAndVisualRectUpdate(true);
+  for (auto* object = this;
+       object && !object->needsPaintOffsetAndVisualRectUpdate();
+       object = object->paintInvalidationParent()) {
+    object->m_bitfields.setNeedsPaintOffsetAndVisualRectUpdate(true);
+
+    // Focus ring is special because continuations affect shape of focus ring.
+    // Mark the start object for paint invalidation if it has focus ring.
+    if (!object->isAnonymous() || !object->isLayoutBlockFlow())
+      continue;
+    auto* blockFlow = toLayoutBlockFlow(object);
+    if (!blockFlow->isAnonymousBlockContinuation())
+      continue;
+    if (auto* inlineElementContinuation =
+            blockFlow->inlineElementContinuation()) {
+      auto* startOfContinuations =
+          inlineElementContinuation->node()->layoutObject();
+      if (startOfContinuations &&
+          startOfContinuations->styleRef().outlineStyleIsAuto())
+        startOfContinuations->setMayNeedPaintInvalidation();
+    }
+  }
 }
 
 void LayoutObject::setShouldInvalidateSelection() {

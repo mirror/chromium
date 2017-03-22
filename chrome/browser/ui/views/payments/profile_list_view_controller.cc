@@ -4,14 +4,13 @@
 
 #include "chrome/browser/ui/views/payments/profile_list_view_controller.h"
 
+#include "chrome/browser/ui/views/payments/payment_request_dialog_view.h"
 #include "chrome/browser/ui/views/payments/payment_request_row_view.h"
 #include "chrome/browser/ui/views/payments/payment_request_views_util.h"
 #include "components/payments/content/payment_request_spec.h"
 #include "components/payments/content/payment_request_state.h"
 #include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
-#include "ui/views/controls/image_view.h"
-#include "ui/views/layout/grid_layout.h"
 
 namespace payments {
 
@@ -30,58 +29,44 @@ class ProfileItem : public PaymentRequestItemList::Item {
               PaymentRequestState* state,
               PaymentRequestItemList* parent_list,
               ProfileListViewController* parent_view,
+              PaymentRequestDialogView* dialog,
               bool selected)
       : payments::PaymentRequestItemList::Item(spec,
                                                state,
                                                parent_list,
                                                selected),
         parent_view_(parent_view),
-        profile_(profile) {}
+        profile_(profile),
+        dialog_(dialog) {}
   ~ProfileItem() override {}
 
  private:
   // payments::PaymentRequestItemList::Item:
-  std::unique_ptr<views::View> CreateItemView() override {
+  std::unique_ptr<views::View> CreateContentView() override {
     DCHECK(profile_);
 
-    std::unique_ptr<views::View> content = parent_view_->GetLabel(profile_);
-
-    std::unique_ptr<PaymentRequestRowView> row =
-        base::MakeUnique<PaymentRequestRowView>(this);
-    views::GridLayout* layout = new views::GridLayout(row.get());
-    row->SetLayoutManager(layout);
-
-    layout->SetInsets(
-        kPaymentRequestRowVerticalInsets, kPaymentRequestRowHorizontalInsets,
-        kPaymentRequestRowVerticalInsets,
-        kPaymentRequestRowHorizontalInsets + kPaymentRequestRowExtraRightInset);
-
-    // Add a column listing the profile information.
-    views::ColumnSet* columns = layout->AddColumnSet(0);
-    columns->AddColumn(views::GridLayout::FILL, views::GridLayout::LEADING, 1,
-                       views::GridLayout::USE_PREF, 0, 0);
-
-    columns->AddPaddingColumn(1, 0);
-
-    // Add a column for the checkmark shown next to the selected profile.
-    columns->AddColumn(views::GridLayout::TRAILING, views::GridLayout::CENTER,
-                       0, views::GridLayout::USE_PREF, 0, 0);
-
-    layout->StartRow(0, 0);
-    content->set_can_process_events_within_subtree(false);
-    layout->AddView(content.release());
-
-    checkmark_ = CreateCheckmark(selected());
-    layout->AddView(checkmark_.get());
-
-    return std::move(row);
+    return parent_view_->GetLabel(profile_);
   }
 
-  void SelectedStateChanged() override {}
+  void SelectedStateChanged() override {
+    if (selected()) {
+      parent_view_->SelectProfile(profile_);
+      dialog_->GoBack();
+    }
+  }
+
+  bool CanBeSelected() const override {
+    // TODO(anthonyvd): Check for profile completedness.
+    return true;
+  }
+
+  void PerformSelectionFallback() override {
+    // TODO(anthonyvd): Open the editor pre-populated with this profile's data.
+  }
 
   ProfileListViewController* parent_view_;
   autofill::AutofillProfile* profile_;
-  std::unique_ptr<views::ImageView> checkmark_;
+  PaymentRequestDialogView* dialog_;
 
   DISALLOW_COPY_AND_ASSIGN(ProfileItem);
 };
@@ -102,6 +87,14 @@ class ShippingProfileViewController : public ProfileListViewController {
       autofill::AutofillProfile* profile) override {
     return GetShippingAddressLabel(AddressStyleType::DETAILED,
                                    state()->GetApplicationLocale(), *profile);
+  }
+
+  void SelectProfile(autofill::AutofillProfile* profile) override {
+    state()->SetSelectedShippingProfile(profile);
+  }
+
+  autofill::AutofillProfile* GetSelectedProfile() override {
+    return state()->selected_shipping_profile();
   }
 
   std::vector<autofill::AutofillProfile*> GetProfiles() override {
@@ -132,6 +125,14 @@ class ContactProfileViewController : public ProfileListViewController {
         AddressStyleType::DETAILED, state()->GetApplicationLocale(), *profile,
         spec()->request_payer_name(), spec()->request_payer_phone(),
         spec()->request_payer_email());
+  }
+
+  void SelectProfile(autofill::AutofillProfile* profile) override {
+    state()->SetSelectedContactProfile(profile);
+  }
+
+  autofill::AutofillProfile* GetSelectedProfile() override {
+    return state()->selected_contact_profile();
   }
 
   std::vector<autofill::AutofillProfile*> GetProfiles() override {
@@ -176,14 +177,14 @@ ProfileListViewController::ProfileListViewController(
 ProfileListViewController::~ProfileListViewController() {}
 
 std::unique_ptr<views::View> ProfileListViewController::CreateView() {
-  autofill::AutofillProfile* selected_profile =
-      state()->selected_shipping_profile();
+  autofill::AutofillProfile* selected_profile = GetSelectedProfile();
 
   // This must be done at Create-time, rather than construct-time, because
   // the subclass method GetProfiles can't be called in the ctor.
   for (auto* profile : GetProfiles()) {
-    list_.AddItem(base::MakeUnique<ProfileItem>(
-        profile, spec(), state(), &list_, this, profile == selected_profile));
+    list_.AddItem(base::MakeUnique<ProfileItem>(profile, spec(), state(),
+                                                &list_, this, dialog(),
+                                                profile == selected_profile));
   }
 
   return CreatePaymentView(

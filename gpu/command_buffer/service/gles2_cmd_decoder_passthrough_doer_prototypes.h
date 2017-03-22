@@ -225,6 +225,10 @@ error::Error DoGetAttachedShaders(GLuint program,
 error::Error DoGetAttribLocation(GLuint program,
                                  const char* name,
                                  GLint* result);
+error::Error DoGetBufferSubDataAsyncCHROMIUM(GLenum target,
+                                             GLintptr offset,
+                                             GLsizeiptr size,
+                                             uint8_t* mem);
 error::Error DoGetBooleanv(GLenum pname,
                            GLsizei bufsize,
                            GLsizei* length,
@@ -713,7 +717,9 @@ error::Error DoMapBufferRange(GLenum target,
                               GLintptr offset,
                               GLsizeiptr size,
                               GLbitfield access,
-                              void** ptr);
+                              void* ptr,
+                              int32_t data_shm_id,
+                              uint32_t data_shm_offset);
 error::Error DoUnmapBuffer(GLenum target);
 error::Error DoResizeCHROMIUM(GLuint width,
                               GLuint height,
@@ -968,3 +974,4 @@ error::Error DoSetDrawRectangleCHROMIUM(GLint x,
                                         GLint y,
                                         GLint width,
                                         GLint height);
+error::Error DoSetEnableDCLayersCHROMIUM(GLboolean enable);

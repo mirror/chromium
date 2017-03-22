@@ -224,6 +224,10 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateBrowserInitiated(
                             false,  // skip_service_worker
                             REQUEST_CONTEXT_TYPE_LOCATION,
                             blink::WebMixedContentContextType::Blockable,
+                            // TODO(arthursonzogni): It can be true for form
+                            // resubmission when the user reloads the page. This
+                            // needs to be fixed.
+                            false,  // is_form_submission
                             initiator),
       entry.ConstructRequestNavigationParams(
           frame_entry, common_params.url, common_params.method,
@@ -309,6 +313,11 @@ NavigationRequest::NavigationRequest(
       associated_site_instance_type_(AssociatedSiteInstanceType::NONE),
       may_transfer_(may_transfer) {
   DCHECK(!browser_initiated || (entry != nullptr && frame_entry != nullptr));
+
+  // Sanitize the referrer.
+  common_params_.referrer =
+      Referrer::SanitizeForRequest(common_params_.url, common_params_.referrer);
+
   if (may_transfer) {
     FrameNavigationEntry* frame_entry = entry->GetFrameEntry(frame_tree_node);
     if (frame_entry) {
@@ -397,12 +406,15 @@ void NavigationRequest::CreateNavigationHandle(int pending_nav_entry_id) {
   redirect_chain.push_back(common_params_.url);
 
   std::unique_ptr<NavigationHandleImpl> navigation_handle =
-      NavigationHandleImpl::Create(
-          common_params_.url, redirect_chain, frame_tree_node_,
-          !browser_initiated_, FrameMsg_Navigate_Type::IsSameDocument(
-                                   common_params_.navigation_type),
-          common_params_.navigation_start, pending_nav_entry_id,
-          false);  // started_in_context_menu
+      NavigationHandleImpl::Create(common_params_.url, redirect_chain,
+                                   frame_tree_node_, !browser_initiated_,
+                                   FrameMsg_Navigate_Type::IsSameDocument(
+                                       common_params_.navigation_type),
+                                   common_params_.navigation_start,
+                                   pending_nav_entry_id,
+                                   false,  // started_in_context_menu
+                                   common_params_.should_check_main_world_csp,
+                                   begin_params_.is_form_submission);
 
   if (!frame_tree_node->navigation_request()) {
     // A callback could have cancelled this request synchronously in which case
@@ -417,6 +429,11 @@ void NavigationRequest::CreateNavigationHandle(int pending_nav_entry_id) {
         begin_params_.searchable_form_url);
     navigation_handle_->set_searchable_form_encoding(
         begin_params_.searchable_form_encoding);
+  }
+
+  if (common_params_.source_location) {
+    navigation_handle_->set_source_location(
+        common_params_.source_location.value());
   }
 }
 
@@ -451,6 +468,8 @@ void NavigationRequest::OnRequestRedirected(
   common_params_.url = redirect_info.new_url;
   common_params_.method = redirect_info.new_method;
   common_params_.referrer.url = GURL(redirect_info.new_referrer);
+  common_params_.referrer =
+      Referrer::SanitizeForRequest(common_params_.url, common_params_.referrer);
 
   // For non browser initiated navigations we need to check if the source has
   // access to the URL. We always allow browser initiated requests.

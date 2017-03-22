@@ -335,7 +335,13 @@ class SiteProcessMap : public base::SupportsUserData::Data {
   SiteProcessMap() {}
 
   void RegisterProcess(const std::string& site, RenderProcessHost* process) {
-    map_[site] = process;
+    // There could already exist a site to process mapping due to races between
+    // two WebContents with blank SiteInstances. If that occurs, keeping the
+    // exising entry and not overwriting it is a predictable behavior that is
+    // safe.
+    SiteToProcessMap::iterator i = map_.find(site);
+    if (i == map_.end())
+      map_[site] = process;
   }
 
   RenderProcessHost* FindProcess(const std::string& site) {
@@ -1088,8 +1094,8 @@ void RenderProcessHostImpl::CreateMessageFilters() {
   // The AudioInputRendererHost and AudioRendererHost needs to be available for
   // lookup, so it's stashed in a member variable.
   audio_input_renderer_host_ = new AudioInputRendererHost(
-      GetID(), base::GetProcId(GetHandle()), audio_manager,
-      media_stream_manager, AudioMirroringManager::GetInstance(),
+      GetID(), audio_manager, media_stream_manager,
+      AudioMirroringManager::GetInstance(),
       BrowserMainLoop::GetInstance()->user_input_monitor());
   AddFilter(audio_input_renderer_host_.get());
   audio_renderer_host_ = new AudioRendererHost(
@@ -1824,7 +1830,6 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
     switches::kMSEVideoBufferSizeLimit,
     switches::kNoReferrers,
     switches::kNoSandbox,
-    switches::kNoUseMusInRenderer,
     switches::kOverridePluginPowerSaverForTesting,
     switches::kPassiveListenersDefault,
     switches::kPpapiInProcess,

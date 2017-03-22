@@ -42,6 +42,7 @@
 #include "content/browser/permissions/permission_service_context.h"
 #include "content/browser/permissions/permission_service_impl.h"
 #include "content/browser/presentation/presentation_service_impl.h"
+#include "content/browser/renderer_host/dip_util.h"
 #include "content/browser/renderer_host/input/input_router_impl.h"
 #include "content/browser/renderer_host/input/timeout_monitor.h"
 #include "content/browser/renderer_host/media/media_devices_dispatcher_host.h"
@@ -127,7 +128,7 @@
 #include "content/browser/frame_host/popup_menu_helper_mac.h"
 #endif
 
-#if BUILDFLAG(ENABLE_WEBVR)
+#if BUILDFLAG(ENABLE_VR)
 #include "device/vr/vr_service_impl.h"  // nogncheck
 #else
 #include "device/vr/vr_service.mojom.h"  // nogncheck
@@ -250,6 +251,50 @@ class RemoterFactoryImpl final : public media::mojom::RemoterFactory {
 template <typename Interface>
 void IgnoreInterfaceRequest(mojo::InterfaceRequest<Interface> request) {
   // Intentionally ignore the interface request.
+}
+
+// The following functions simplify code paths where the UI thread notifies the
+// ResourceDispatcherHostImpl of information pertaining to loading behavior of
+// frame hosts.
+void NotifyRouteChangesOnIO(
+    base::Callback<void(ResourceDispatcherHostImpl*,
+                        const GlobalFrameRoutingId&)> frame_callback,
+    std::unique_ptr<std::set<GlobalFrameRoutingId>> routing_ids) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  ResourceDispatcherHostImpl* rdh = ResourceDispatcherHostImpl::Get();
+  if (!rdh)
+    return;
+  for (const auto& routing_id : *routing_ids)
+    frame_callback.Run(rdh, routing_id);
+}
+
+void NotifyForEachFrameFromUI(
+    RenderFrameHost* root_frame_host,
+    base::Callback<void(ResourceDispatcherHostImpl*,
+                        const GlobalFrameRoutingId&)> frame_callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  FrameTree* frame_tree = static_cast<RenderFrameHostImpl*>(root_frame_host)
+                              ->frame_tree_node()
+                              ->frame_tree();
+  DCHECK_EQ(root_frame_host, frame_tree->GetMainFrame());
+
+  std::unique_ptr<std::set<GlobalFrameRoutingId>> routing_ids(
+      new std::set<GlobalFrameRoutingId>());
+  for (FrameTreeNode* node : frame_tree->Nodes()) {
+    RenderFrameHostImpl* frame_host = node->current_frame_host();
+    RenderFrameHostImpl* pending_frame_host =
+        IsBrowserSideNavigationEnabled()
+            ? node->render_manager()->speculative_frame_host()
+            : node->render_manager()->pending_frame_host();
+    if (frame_host)
+      routing_ids->insert(frame_host->GetGlobalFrameRoutingId());
+    if (pending_frame_host)
+      routing_ids->insert(pending_frame_host->GetGlobalFrameRoutingId());
+  }
+  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                          base::Bind(&NotifyRouteChangesOnIO, frame_callback,
+                                     base::Passed(std::move(routing_ids))));
 }
 
 }  // namespace
@@ -613,7 +658,7 @@ RenderFrameHostImpl::GetRemoteAssociatedInterfaces() {
     } else {
       // The channel may not be initialized in some tests environments. In this
       // case we set up a dummy interface provider.
-      mojo::GetIsolatedProxy(&remote_interfaces);
+      mojo::MakeIsolatedRequest(&remote_interfaces);
     }
     remote_associated_interfaces_.reset(new AssociatedInterfaceProviderImpl(
         std::move(remote_interfaces)));
@@ -812,6 +857,13 @@ gfx::Point RenderFrameHostImpl::AccessibilityOriginInScreen(
   return gfx::Point();
 }
 
+float RenderFrameHostImpl::AccessibilityGetDeviceScaleFactor() const {
+  RenderWidgetHostView* view = render_view_host_->GetWidget()->GetView();
+  if (view)
+    return GetScaleFactorForView(view);
+  return 1.0f;
+}
+
 void RenderFrameHostImpl::AccessibilityReset() {
   accessibility_reset_token_ = g_next_accessibility_reset_token++;
   Send(new AccessibilityMsg_Reset(routing_id_, accessibility_reset_token_));
@@ -866,6 +918,30 @@ void RenderFrameHostImpl::RenderProcessGone(SiteInstanceImpl* site_instance) {
   // Any future UpdateState or UpdateTitle messages from this or a recreated
   // process should be ignored until the next commit.
   set_nav_entry_id(0);
+}
+
+void RenderFrameHostImpl::LogToConsole(const std::string& message) {
+  AddMessageToConsole(CONSOLE_MESSAGE_LEVEL_ERROR, message);
+}
+
+void RenderFrameHostImpl::ReportContentSecurityPolicyViolation(
+    const CSPViolationParams& violation_params) {
+  Send(new FrameMsg_ReportContentSecurityPolicyViolation(routing_id_,
+                                                         violation_params));
+}
+
+bool RenderFrameHostImpl::SchemeShouldBypassCSP(
+    const base::StringPiece& scheme) {
+  // Blink uses its SchemeRegistry to check if a scheme should be bypassed.
+  // It can't be used on the browser process. It is used for two things:
+  // 1) Bypassing the "chrome-extension" scheme when chrome is built with the
+  //    extensions support.
+  // 2) Bypassing arbitrary scheme for testing purpose only in blink and in V8.
+  // TODO(arthursonzogni): url::GetBypassingCSPScheme() is used instead of the
+  // blink::SchemeRegistry. It contains 1) but not 2).
+  const auto& bypassing_schemes = url::GetCSPBypassingSchemes();
+  return std::find(bypassing_schemes.begin(), bypassing_schemes.end(),
+                   scheme) != bypassing_schemes.end();
 }
 
 bool RenderFrameHostImpl::CreateRenderFrame(int proxy_routing_id,
@@ -971,7 +1047,7 @@ void RenderFrameHostImpl::SetRenderFrameCreated(bool created) {
 }
 
 void RenderFrameHostImpl::Init() {
-  ResourceDispatcherHost::ResumeBlockedRequestsForFrameFromUI(this);
+  ResumeBlockedRequestsForFrame();
   if (!waiting_for_init_)
     return;
 
@@ -1064,6 +1140,11 @@ void RenderFrameHostImpl::OnCreateNewWindow(
 
   // Our caller (RenderWidgetHelper::OnCreateNewWindowOnUI) will send
   // ViewMsg_Close if the above step did not adopt |main_frame_route_id|.
+}
+
+void RenderFrameHostImpl::SetLastCommittedOrigin(const url::Origin& origin) {
+  last_committed_origin_ = origin;
+  CSPContext::SetSelf(origin);
 }
 
 void RenderFrameHostImpl::OnDetach() {
@@ -1231,7 +1312,6 @@ void RenderFrameHostImpl::OnDidCommitProvisionalLoad(const IPC::Message& msg) {
   // should be killed.
   if (!CanCommitURL(validated_params.url)) {
     VLOG(1) << "Blocked URL " << validated_params.url.spec();
-    validated_params.url = GURL(url::kAboutBlankURL);
     // Kills the process.
     bad_message::ReceivedBadMessage(process,
                                     bad_message::RFH_CAN_COMMIT_URL_BLOCKED);
@@ -1798,6 +1878,25 @@ int RenderFrameHostImpl::GetEnabledBindings() const {
   return enabled_bindings_;
 }
 
+void RenderFrameHostImpl::BlockRequestsForFrame() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  NotifyForEachFrameFromUI(
+      this, base::Bind(&ResourceDispatcherHostImpl::BlockRequestsForRoute));
+}
+
+void RenderFrameHostImpl::ResumeBlockedRequestsForFrame() {
+  NotifyForEachFrameFromUI(
+      this,
+      base::Bind(&ResourceDispatcherHostImpl::ResumeBlockedRequestsForRoute));
+}
+
+void RenderFrameHostImpl::CancelBlockedRequestsForFrame() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  NotifyForEachFrameFromUI(
+      this,
+      base::Bind(&ResourceDispatcherHostImpl::CancelBlockedRequestsForRoute));
+}
+
 void RenderFrameHostImpl::OnDidAccessInitialDocument() {
   delegate_->DidAccessInitialDocument();
 }
@@ -1831,7 +1930,9 @@ void RenderFrameHostImpl::OnDidSetFeaturePolicyHeader(
 void RenderFrameHostImpl::OnDidAddContentSecurityPolicy(
     const ContentSecurityPolicyHeader& header,
     const std::vector<ContentSecurityPolicy>& policies) {
-  frame_tree_node()->AddContentSecurityPolicy(header, policies);
+  frame_tree_node()->AddContentSecurityPolicy(header);
+  for (const ContentSecurityPolicy& policy : policies)
+    AddContentSecurityPolicy(policy);
 }
 
 void RenderFrameHostImpl::OnEnforceInsecureRequestPolicy(
@@ -2306,11 +2407,12 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
   device::GeolocationServiceContext* geolocation_service_context =
       delegate_ ? delegate_->GetGeolocationServiceContext() : NULL;
 
-  // The default (no-op) implementation of InstalledAppProvider.
-  // TODO(mgiuca): Implement the "real" one for Android in Java, and do not add
-  // the default one on that platform.
+#if !defined(OS_ANDROID)
+  // The default (no-op) implementation of InstalledAppProvider. On Android, the
+  // real implementation is provided in Java.
   GetInterfaceRegistry()->AddInterface(
       base::Bind(&InstalledAppProviderImplDefault::Create));
+#endif  // !defined(OS_ANDROID)
 
   if (geolocation_service_context) {
     // TODO(creis): Bind process ID here so that GeolocationServiceImpl
@@ -2378,7 +2480,7 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
                  process_->GetID(),
                  routing_id_));
 
-#if BUILDFLAG(ENABLE_WEBVR)
+#if BUILDFLAG(ENABLE_VR)
   GetInterfaceRegistry()->AddInterface<device::mojom::VRService>(
       base::Bind(&device::VRServiceImpl::Create));
 #else
@@ -2519,7 +2621,8 @@ void RenderFrameHostImpl::NavigateToInterstitialURL(const GURL& data_url) {
       FrameMsg_Navigate_Type::DIFFERENT_DOCUMENT, false, false,
       base::TimeTicks::Now(), FrameMsg_UILoadMetricsReportType::NO_REPORT,
       GURL(), GURL(), PREVIEWS_OFF, base::TimeTicks::Now(), "GET", nullptr,
-      base::Optional<SourceLocation>());
+      base::Optional<SourceLocation>(),
+      CSPDisposition::CHECK /* should_check_main_world_csp */);
   if (IsBrowserSideNavigationEnabled()) {
     CommitNavigation(nullptr, nullptr, common_params, RequestNavigationParams(),
                      false);
@@ -3434,7 +3537,10 @@ RenderFrameHostImpl::TakeNavigationHandleForCommit(
     return NavigationHandleImpl::Create(
         params.url, params.redirects, frame_tree_node_, is_renderer_initiated,
         params.was_within_same_document, base::TimeTicks::Now(),
-        pending_nav_entry_id, false);  // started_from_context_menu
+        pending_nav_entry_id,
+        false,                  // started_from_context_menu
+        CSPDisposition::CHECK,  // should_check_main_world_csp
+        false);                 // is_form_submission
   }
 
   // Determine if the current NavigationHandle can be used.
@@ -3486,7 +3592,10 @@ RenderFrameHostImpl::TakeNavigationHandleForCommit(
   return NavigationHandleImpl::Create(
       params.url, params.redirects, frame_tree_node_, is_renderer_initiated,
       params.was_within_same_document, base::TimeTicks::Now(),
-      entry_id_for_data_nav, false);  // started_from_context_menu
+      entry_id_for_data_nav,
+      false,                  // started_from_context_menu
+      CSPDisposition::CHECK,  // should_check_main_world_csp
+      false);                 // is_form_submission
 }
 
 void RenderFrameHostImpl::BeforeUnloadTimeout() {

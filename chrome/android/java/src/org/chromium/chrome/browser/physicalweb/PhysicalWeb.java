@@ -27,6 +27,7 @@ import org.chromium.components.location.LocationUtils;
  */
 public class PhysicalWeb {
     public static final int OPTIN_NOTIFY_MAX_TRIES = 1;
+    private static final String PHYSICAL_WEB_SHARING_PREFERENCE = "physical_web_sharing";
     private static final String PREF_PHYSICAL_WEB_NOTIFY_COUNT = "physical_web_notify_count";
     private static final String FEATURE_NAME = "PhysicalWeb";
     private static final String PHYSICAL_WEB_SHARING_FEATURE_NAME = "PhysicalWebSharing";
@@ -61,6 +62,26 @@ public class PhysicalWeb {
     }
 
     /**
+     * Checks whether the user has consented to use the Sharing feature.
+     *
+     * @return boolean {@code true} if the feature is enabled
+     */
+    public static boolean sharingIsOptedIn() {
+        SharedPreferences sharedPrefs = ContextUtils.getAppSharedPreferences();
+        return sharedPrefs.getBoolean(PHYSICAL_WEB_SHARING_PREFERENCE, false);
+    }
+
+    /**
+     * Sets the preference that the user has opted into use the Sharing feature.
+     */
+    public static void setSharingOptedIn() {
+        ContextUtils.getAppSharedPreferences()
+                .edit()
+                .putBoolean(PHYSICAL_WEB_SHARING_PREFERENCE, true)
+                .apply();
+    }
+
+    /**
      * Checks whether the Physical Web onboard flow is active and the user has
      * not yet elected to either enable or decline the feature.
      *
@@ -68,32 +89,6 @@ public class PhysicalWeb {
      */
     public static boolean isOnboarding() {
         return PrivacyPreferencesManager.getInstance().isPhysicalWebOnboarding();
-    }
-
-    /**
-     * Starts the Physical Web feature.
-     * At the moment, this only enables URL discovery over BLE.
-     */
-    public static void startPhysicalWeb() {
-        // Only subscribe to Nearby if we have the location permission.
-        LocationUtils locationUtils = LocationUtils.getInstance();
-        if (locationUtils.hasAndroidLocationPermission()
-                && locationUtils.isSystemLocationSettingEnabled()) {
-            new NearbyBackgroundSubscription(NearbySubscription.SUBSCRIBE).run();
-        }
-    }
-
-    /**
-     * Stops the Physical Web feature.
-     */
-    public static void stopPhysicalWeb() {
-        new NearbyBackgroundSubscription(NearbySubscription.UNSUBSCRIBE, new Runnable() {
-            @Override
-            public void run() {
-                // This isn't absolutely necessary, but it's nice to clean up all our shared prefs.
-                UrlManager.getInstance().clearAllUrls();
-            }
-        }).run();
     }
 
     /**
@@ -120,8 +115,10 @@ public class PhysicalWeb {
      * Performs various Physical Web operations that should happen on startup.
      */
     public static void onChromeStart() {
+        // In the case that the user has disabled our flag and restarted, this is a minimal code
+        // path to disable our subscription to Nearby.
         if (!featureIsEnabled()) {
-            stopPhysicalWeb();
+            new NearbyBackgroundSubscription(NearbySubscription.UNSUBSCRIBE).run();
             return;
         }
 
@@ -130,12 +127,10 @@ public class PhysicalWeb {
             PrivacyPreferencesManager.getInstance().setPhysicalWebEnabled(true);
         }
 
-        if (isPhysicalWebPreferenceEnabled()) {
-            startPhysicalWeb();
-            // The PhysicalWebUma call in this method should be called only when the native library
-            // is loaded.  This is always the case on chrome startup.
-            PhysicalWebUma.uploadDeferredMetrics();
-        }
+        updateScans();
+        // The PhysicalWebUma call in this method should be called only when the native library
+        // is loaded.  This is always the case on chrome startup.
+        PhysicalWebUma.uploadDeferredMetrics();
     }
 
     /**
@@ -180,5 +175,20 @@ public class PhysicalWeb {
                 (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
         BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
         return bluetoothAdapter != null && bluetoothAdapter.getBluetoothLeAdvertiser() != null;
+    }
+
+    /**
+     * Examines the environment in order to decide whether we should begin or end a scan.
+     */
+    public static void updateScans() {
+        LocationUtils locationUtils = LocationUtils.getInstance();
+        if (!locationUtils.hasAndroidLocationPermission()
+                || !locationUtils.isSystemLocationSettingEnabled()
+                || !isPhysicalWebPreferenceEnabled()) {
+            new NearbyBackgroundSubscription(NearbySubscription.UNSUBSCRIBE).run();
+            return;
+        }
+
+        new NearbyBackgroundSubscription(NearbySubscription.SUBSCRIBE).run();
     }
 }

@@ -22,14 +22,19 @@ PLATFORM_EXPORT WebFeaturePolicyFeature
 getWebFeaturePolicyFeature(const String& feature);
 
 // Converts a JSON feature policy string into a vector of whitelists, one for
-// each feature specified. Unrecognized features are parsed and included
-// but will be filtered out when the policy is constructed. If |messages| is
-// not null, then any errors in the input will cause an error message to be
+// each feature specified. Unrecognized features are filtered out. If |messages|
+// is not null, then any errors in the input will cause an error message to be
 // appended to it.
 PLATFORM_EXPORT WebParsedFeaturePolicy
 parseFeaturePolicy(const String& policy,
                    RefPtr<SecurityOrigin>,
                    Vector<String>* messages);
+
+// Given a vector of WebFeaturePolicyFeatures and an origin, creates a vector of
+// whitelists, one for each feature specified.
+PLATFORM_EXPORT WebParsedFeaturePolicy getContainerPolicyFromAllowedFeatures(
+    const WebVector<WebFeaturePolicyFeature>& features,
+    RefPtr<SecurityOrigin>);
 
 }  // namespace blink
 

@@ -40,7 +40,7 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
 
     target.registerDebuggerDispatcher(new SDK.DebuggerDispatcher(this));
     this._agent = target.debuggerAgent();
-    this._runtimeModel = target.model(SDK.RuntimeModel);
+    this._runtimeModel = /** @type {!SDK.RuntimeModel} */ (target.model(SDK.RuntimeModel));
 
     /** @type {?SDK.DebuggerPausedDetails} */
     this._debuggerPausedDetails = null;
@@ -68,11 +68,10 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
   }
 
   /**
-   * @param {?SDK.Target} target
-   * @return {?SDK.DebuggerModel}
+   * @return {!SDK.RuntimeModel}
    */
-  static fromTarget(target) {
-    return target ? target.model(SDK.DebuggerModel) : null;
+  runtimeModel() {
+    return this._runtimeModel;
   }
 
   /**
@@ -1183,6 +1182,36 @@ SDK.DebuggerModel.CallFrame = class {
           expression: code, objectGroup, includeCommandLineAPI, silent, returnByValue, generatePreview
         },
         didEvaluateOnCallFrame);
+  }
+
+  /**
+   * @param {string} code
+   * @param {string} objectGroup
+   * @param {boolean} includeCommandLineAPI
+   * @param {boolean} silent
+   * @param {boolean} returnByValue
+   * @param {boolean} generatePreview
+   * @return {!Promise<?SDK.RemoteObject>}
+   */
+  evaluatePromise(code, objectGroup, includeCommandLineAPI, silent, returnByValue, generatePreview) {
+    var fulfill;
+    var promise = new Promise(x => fulfill = x);
+    this.evaluate(
+        code, objectGroup, includeCommandLineAPI, silent, returnByValue, generatePreview, callback.bind(this));
+    return promise;
+
+    /**
+     * @param {?Protocol.Runtime.RemoteObject} result
+     * @param {!Protocol.Runtime.ExceptionDetails=} exceptionDetails
+     * @param {string=} error
+     * @this {SDK.DebuggerModel.CallFrame}
+     */
+    function callback(result, exceptionDetails, error) {
+      if (!result || exceptionDetails)
+        fulfill(null);
+      else
+        fulfill(this.debuggerModel._runtimeModel.createRemoteObject(result));
+    }
   }
 
   /**

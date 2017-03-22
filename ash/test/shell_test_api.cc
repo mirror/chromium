@@ -3,9 +3,10 @@
 // found in the LICENSE file.
 
 #include "ash/test/shell_test_api.h"
+
 #include "ash/common/palette_delegate.h"
 #include "ash/common/session/session_state_delegate.h"
-#include "ash/display/display_configuration_controller.h"
+#include "ash/common/shelf/shelf_delegate.h"
 #include "ash/root_window_controller.h"
 #include "ash/shell.h"
 
@@ -36,10 +37,6 @@ DragDropController* ShellTestApi::drag_drop_controller() {
   return shell_->drag_drop_controller_.get();
 }
 
-void ShellTestApi::DisableDisplayAnimator() {
-  shell_->display_configuration_controller()->ResetAnimatorForTest();
-}
-
 void ShellTestApi::SetPaletteDelegate(
     std::unique_ptr<PaletteDelegate> palette_delegate) {
   shell_->palette_delegate_ = std::move(palette_delegate);
@@ -48,6 +45,11 @@ void ShellTestApi::SetPaletteDelegate(
 void ShellTestApi::SetSessionStateDelegate(
     SessionStateDelegate* session_state_delegate) {
   shell_->session_state_delegate_.reset(session_state_delegate);
+}
+
+void ShellTestApi::SetShelfDelegate(
+    std::unique_ptr<ShelfDelegate> test_delegate) {
+  shell_->shelf_delegate_ = std::move(test_delegate);
 }
 
 }  // namespace test

@@ -177,18 +177,6 @@ const char kJavaScriptClick[] =
     "form.dispatchEvent(event);"
     "console.log('clicked!');";
 
-const char kOnChangeDetectionScript[] =
-    "<script>"
-    "  usernameOnchangeCalled = false;"
-    "  passwordOnchangeCalled = false;"
-    "  document.getElementById('username').onchange = function() {"
-    "    usernameOnchangeCalled = true;"
-    "  };"
-    "  document.getElementById('password').onchange = function() {"
-    "    passwordOnchangeCalled = true;"
-    "  };"
-    "</script>";
-
 const char kFormHTMLWithTwoTextFields[] =
     "<FORM name='LoginTestForm' id='LoginTestForm' "
     "action='http://www.bidule.com'>"
@@ -549,6 +537,16 @@ class PasswordAutofillAgentTest : public ChromeRenderViewTest {
     EXPECT_EQ(ASCIIToUTF16(username_value), form.username_value);
     EXPECT_EQ(ASCIIToUTF16(password_value), form.password_value);
     EXPECT_EQ(ASCIIToUTF16(new_password_value), form.new_password_value);
+  }
+
+  void CheckIfEventsAreCalled(const std::vector<base::string16>& checkers,
+                              bool expected) {
+    for (const base::string16& variable : checkers) {
+      int value;
+      EXPECT_TRUE(ExecuteJavaScriptAndReturnIntValue(variable, &value))
+          << variable;
+      EXPECT_EQ(expected, value == 1) << variable;
+    }
   }
 
   bool GetCalledShowPasswordGenerationPopup() {
@@ -915,11 +913,16 @@ TEST_F(PasswordAutofillAgentTest, NoDOMActivationTest) {
   CheckTextFieldsDOMState(kAliceUsername, true, "", true);
 }
 
-// Verifies that password autofill triggers onChange events in JavaScript for
-// forms that are filled on page load.
+// Verifies that password autofill triggers events in JavaScript for forms that
+// are filled on page load.
 TEST_F(PasswordAutofillAgentTest,
        PasswordAutofillTriggersOnChangeEventsOnLoad) {
-  std::string html = std::string(kFormHTML) + kOnChangeDetectionScript;
+  std::vector<base::string16> username_event_checkers;
+  std::vector<base::string16> password_event_checkers;
+  std::string events_registration_script =
+      CreateScriptToRegisterListeners(kUsernameName, &username_event_checkers) +
+      CreateScriptToRegisterListeners(kPasswordName, &password_event_checkers);
+  std::string html = std::string(kFormHTML) + events_registration_script;
   LoadHTML(html.c_str());
   UpdateOriginForHTML(html);
   UpdateUsernameAndPasswordElements();
@@ -934,40 +937,28 @@ TEST_F(PasswordAutofillAgentTest,
   // password should only be visible to the user.
   CheckTextFieldsDOMState(kAliceUsername, true, std::string(), true);
 
-  // A JavaScript onChange event should have been triggered for the username,
-  // but not yet for the password.
-  int username_onchange_called = -1;
-  int password_onchange_called = -1;
-  ASSERT_TRUE(
-      ExecuteJavaScriptAndReturnIntValue(
-          ASCIIToUTF16("usernameOnchangeCalled ? 1 : 0"),
-          &username_onchange_called));
-  EXPECT_EQ(1, username_onchange_called);
-  ASSERT_TRUE(
-      ExecuteJavaScriptAndReturnIntValue(
-          ASCIIToUTF16("passwordOnchangeCalled ? 1 : 0"),
-          &password_onchange_called));
-  // TODO(isherman): Re-enable this check once http://crbug.com/333144 is fixed.
-  // EXPECT_EQ(0, password_onchange_called);
+  // JavaScript events should have been triggered for the username, but not yet
+  // for the password.
+  CheckIfEventsAreCalled(username_event_checkers, true);
+  CheckIfEventsAreCalled(password_event_checkers, false);
 
   // Simulate a user click so that the password field's real value is filled.
   SimulateElementClick(kUsernameName);
   CheckTextFieldsDOMState(kAliceUsername, true, kAlicePassword, true);
 
-  // Now, a JavaScript onChange event should have been triggered for the
-  // password as well.
-  ASSERT_TRUE(
-      ExecuteJavaScriptAndReturnIntValue(
-          ASCIIToUTF16("passwordOnchangeCalled ? 1 : 0"),
-          &password_onchange_called));
-  EXPECT_EQ(1, password_onchange_called);
+  // Now, JavaScript events should have been triggered for the password as well.
+  CheckIfEventsAreCalled(password_event_checkers, true);
 }
 
-// Verifies that password autofill triggers onChange events in JavaScript for
-// forms that are filled after page load.
+// Verifies that password autofill triggers events in JavaScript for forms that
+// are filled after page load.
 TEST_F(PasswordAutofillAgentTest,
        PasswordAutofillTriggersOnChangeEventsWaitForUsername) {
-  std::string html = std::string(kFormHTML) + kOnChangeDetectionScript;
+  std::vector<base::string16> event_checkers;
+  std::string events_registration_script =
+      CreateScriptToRegisterListeners(kUsernameName, &event_checkers) +
+      CreateScriptToRegisterListeners(kPasswordName, &event_checkers);
+  std::string html = std::string(kFormHTML) + events_registration_script;
   LoadHTML(html.c_str());
   UpdateOriginForHTML(html);
   UpdateUsernameAndPasswordElements();
@@ -987,25 +978,16 @@ TEST_F(PasswordAutofillAgentTest,
   // Simulate the user entering the first letter of their username and selecting
   // the matching autofill from the dropdown.
   SimulateUsernameChange("a");
+  // Since the username element has focus, blur event will be not triggered.
+  base::Erase(event_checkers, base::ASCIIToUTF16("username_blur_event"));
   SimulateSuggestionChoice(username_element_);
 
   // The username and password should now have been autocompleted.
   CheckTextFieldsDOMState(kAliceUsername, true, kAlicePassword, true);
 
-  // JavaScript onChange events should have been triggered both for the username
-  // and for the password.
-  int username_onchange_called = -1;
-  int password_onchange_called = -1;
-  ASSERT_TRUE(
-      ExecuteJavaScriptAndReturnIntValue(
-          ASCIIToUTF16("usernameOnchangeCalled ? 1 : 0"),
-          &username_onchange_called));
-  EXPECT_EQ(1, username_onchange_called);
-  ASSERT_TRUE(
-      ExecuteJavaScriptAndReturnIntValue(
-          ASCIIToUTF16("passwordOnchangeCalled ? 1 : 0"),
-          &password_onchange_called));
-  EXPECT_EQ(1, password_onchange_called);
+  // JavaScript events should have been triggered both for the username and for
+  // the password.
+  CheckIfEventsAreCalled(event_checkers, true);
 }
 
 // Tests that |FillSuggestion| properly fills the username and password.
@@ -2173,6 +2155,65 @@ TEST_F(PasswordAutofillAgentTest,
 
   base::RunLoop().RunUntilIdle();
   ASSERT_FALSE(fake_driver_.called_password_form_submitted());
+}
+
+// Tests that no save promt is shown when an unowned form is changed and AJAX
+// completed but the form is still visible.
+TEST_F(PasswordAutofillAgentTest,
+       NoForm_NoPromptForAJAXSubmitWithoutNavigationAndNewElementAppeared) {
+  const char kNoFormHTMLWithHiddenField[] =
+      "<INPUT type='text' id='username'/>"
+      "<INPUT type='password' id='password'/>"
+      "<INPUT type='text' id='captcha' style='display:none'/>";
+  LoadHTML(kNoFormHTMLWithHiddenField);
+
+  UpdateUsernameAndPasswordElements();
+  WebElement captcha_element =
+      GetMainFrame()->document().getElementById(WebString::fromUTF8("captcha"));
+  ASSERT_FALSE(captcha_element.isNull());
+
+  SimulateUsernameChange("Bob");
+  SimulatePasswordChange("mypassword");
+
+  // Simulate captcha element show up right before AJAX completed.
+  captcha_element.setAttribute("style", "display:inline;");
+  password_autofill_agent_->AJAXSucceeded();
+
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(fake_driver_.called_inpage_navigation());
+  EXPECT_FALSE(fake_driver_.called_password_form_submitted());
+}
+
+// Tests that no save promt is shown when a form with empty action URL is
+// changed and AJAX completed but the form is still visible.
+TEST_F(PasswordAutofillAgentTest,
+       NoAction_NoPromptForAJAXSubmitWithoutNavigationAndNewElementAppeared) {
+  // Form without an action URL.
+  const char kHTMLWithHiddenField[] =
+      "<FORM name='LoginTestForm'>"
+      "  <INPUT type='text' id='username'/>"
+      "  <INPUT type='password' id='password'/>"
+      "  <INPUT type='text' id='captcha' style='display:none'/>"
+      "  <INPUT type='submit' value='Login'/>"
+      "</FORM>";
+  // Set the valid URL so the form action URL can be generated properly.
+  LoadHTMLWithUrlOverride(kHTMLWithHiddenField, "https://www.example.com");
+
+  UpdateUsernameAndPasswordElements();
+  WebElement captcha_element =
+      GetMainFrame()->document().getElementById(WebString::fromUTF8("captcha"));
+  ASSERT_FALSE(captcha_element.isNull());
+
+  SimulateUsernameChange("Bob");
+  SimulatePasswordChange("mypassword");
+
+  // Simulate captcha element show up right before AJAX completed.
+  captcha_element.setAttribute("style", "display:inline;");
+  password_autofill_agent_->AJAXSucceeded();
+
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(fake_driver_.called_inpage_navigation());
+  EXPECT_FALSE(fake_driver_.called_password_form_submitted());
 }
 
 // Tests that credential suggestions are autofilled on a password (and change

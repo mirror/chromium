@@ -15,10 +15,6 @@
 #include "chrome/browser/command_updater.h"
 #include "chrome/browser/defaults.h"
 #include "chrome/browser/extensions/api/omnibox/omnibox_api.h"
-#include "chrome/browser/extensions/extension_action.h"
-#include "chrome/browser/extensions/extension_action_manager.h"
-#include "chrome/browser/extensions/extension_util.h"
-#include "chrome/browser/extensions/location_bar_controller.h"
 #include "chrome/browser/extensions/tab_helper.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/search_engines/template_url_service_factory.h"
@@ -198,7 +194,8 @@ void LocationBarView::Init() {
 
   // Initialize the inline autocomplete view which is visible only when IME is
   // turned on.  Use the same font with the omnibox and highlighted background.
-  ime_inline_autocomplete_view_ = new views::Label(base::string16(), font_list);
+  ime_inline_autocomplete_view_ =
+      new views::Label(base::string16(), {font_list});
   ime_inline_autocomplete_view_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   ime_inline_autocomplete_view_->SetAutoColorReadabilityEnabled(false);
   ime_inline_autocomplete_view_->set_background(
@@ -866,8 +863,6 @@ void LocationBarView::UpdateSaveCreditCardIcon() {
   }
 }
 
-void LocationBarView::UpdatePageActions() {}
-
 void LocationBarView::UpdateBookmarkStarVisibility() {
   if (star_view_) {
     star_view_->SetVisible(
@@ -890,13 +885,6 @@ void LocationBarView::UpdateLocationBarVisibility(bool visible, bool animate) {
     size_animation_.Hide();
 }
 
-bool LocationBarView::ShowPageActionPopup(
-    const extensions::Extension* extension,
-    bool grant_tab_permissions) {
-  NOTREACHED();
-  return false;
-}
-
 void LocationBarView::SaveStateToContents(WebContents* contents) {
   omnibox_view_->SaveStateToTab(contents);
 }
@@ -911,30 +899,6 @@ LocationBarTesting* LocationBarView::GetLocationBarForTesting() {
 
 ////////////////////////////////////////////////////////////////////////////////
 // LocationBarView, private LocationBarTesting implementation:
-
-int LocationBarView::PageActionCount() {
-  NOTREACHED();
-  return 0;
-}
-
-int LocationBarView::PageActionVisibleCount() {
-  NOTREACHED();
-  return 0;
-}
-
-ExtensionAction* LocationBarView::GetPageAction(size_t index) {
-  NOTREACHED();
-  return nullptr;
-}
-
-ExtensionAction* LocationBarView::GetVisiblePageAction(size_t index) {
-  NOTREACHED();
-  return nullptr;
-}
-
-void LocationBarView::TestPageActionPressed(size_t index) {
-  NOTREACHED();
-}
 
 bool LocationBarView::GetBookmarkStarVisibility() {
   DCHECK(star_view_);
@@ -1013,7 +977,7 @@ void LocationBarView::WriteDragDataForView(views::View* sender,
   gfx::ImageSkia favicon = favicon_driver->GetFavicon().AsImageSkia();
   button_drag_utils::SetURLAndDragImage(web_contents->GetURL(),
                                         web_contents->GetTitle(), favicon,
-                                        nullptr, data, sender->GetWidget());
+                                        nullptr, *sender->GetWidget(), data);
 }
 
 int LocationBarView::GetDragOperationsForView(views::View* sender,

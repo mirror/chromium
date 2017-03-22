@@ -160,12 +160,12 @@ void V8TestIntegerIndexed::indexedPropertyDeleterCallback(uint32_t index, const 
   V8TestIntegerIndexed::indexedPropertyDeleterCustom(index, info);
 }
 
-const V8DOMConfiguration::AccessorConfiguration V8TestIntegerIndexedAccessors[] = {
-    {"length", V8TestIntegerIndexed::lengthAttributeGetterCallback, V8TestIntegerIndexed::lengthAttributeSetterCallback, nullptr, nullptr, nullptr, nullptr, static_cast<v8::PropertyAttribute>(v8::None), V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder},
+static const V8DOMConfiguration::AccessorConfiguration V8TestIntegerIndexedAccessors[] = {
+    {"length", V8TestIntegerIndexed::lengthAttributeGetterCallback, V8TestIntegerIndexed::lengthAttributeSetterCallback, nullptr, nullptr, static_cast<v8::PropertyAttribute>(v8::None), V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::AllWorlds},
 };
 
-const V8DOMConfiguration::MethodConfiguration V8TestIntegerIndexedMethods[] = {
-    {"voidMethodDocument", V8TestIntegerIndexed::voidMethodDocumentMethodCallback, nullptr, 1, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess},
+static const V8DOMConfiguration::MethodConfiguration V8TestIntegerIndexedMethods[] = {
+    {"voidMethodDocument", V8TestIntegerIndexed::voidMethodDocumentMethodCallback, 1, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess, V8DOMConfiguration::AllWorlds},
 };
 
 static void installV8TestIntegerIndexedTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world, v8::Local<v8::FunctionTemplate> interfaceTemplate) {

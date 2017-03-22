@@ -279,21 +279,21 @@ void V8TestCallbackFunctions::customElementCallbacksMethodMethodCallback(const v
   TestCallbackFunctionsV8Internal::customElementCallbacksMethodMethod(info);
 }
 
-const V8DOMConfiguration::AccessorConfiguration V8TestCallbackFunctionsAccessors[] = {
-    {"voidCallbackFunctionAttribute", V8TestCallbackFunctions::voidCallbackFunctionAttributeAttributeGetterCallback, V8TestCallbackFunctions::voidCallbackFunctionAttributeAttributeSetterCallback, nullptr, nullptr, nullptr, nullptr, static_cast<v8::PropertyAttribute>(v8::None), V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder},
-    {"anyCallbackFunctionOptionalAnyArgAttribute", V8TestCallbackFunctions::anyCallbackFunctionOptionalAnyArgAttributeAttributeGetterCallback, V8TestCallbackFunctions::anyCallbackFunctionOptionalAnyArgAttributeAttributeSetterCallback, nullptr, nullptr, nullptr, nullptr, static_cast<v8::PropertyAttribute>(v8::None), V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder},
-    {"customElementsCallbacksReadonlyAttribute", V8TestCallbackFunctions::customElementsCallbacksReadonlyAttributeAttributeGetterCallback, nullptr, nullptr, nullptr, nullptr, nullptr, static_cast<v8::PropertyAttribute>(v8::ReadOnly), V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder},
+static const V8DOMConfiguration::AccessorConfiguration V8TestCallbackFunctionsAccessors[] = {
+    {"voidCallbackFunctionAttribute", V8TestCallbackFunctions::voidCallbackFunctionAttributeAttributeGetterCallback, V8TestCallbackFunctions::voidCallbackFunctionAttributeAttributeSetterCallback, nullptr, nullptr, static_cast<v8::PropertyAttribute>(v8::None), V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::AllWorlds},
+    {"anyCallbackFunctionOptionalAnyArgAttribute", V8TestCallbackFunctions::anyCallbackFunctionOptionalAnyArgAttributeAttributeGetterCallback, V8TestCallbackFunctions::anyCallbackFunctionOptionalAnyArgAttributeAttributeSetterCallback, nullptr, nullptr, static_cast<v8::PropertyAttribute>(v8::None), V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::AllWorlds},
+    {"customElementsCallbacksReadonlyAttribute", V8TestCallbackFunctions::customElementsCallbacksReadonlyAttributeAttributeGetterCallback, nullptr, nullptr, nullptr, static_cast<v8::PropertyAttribute>(v8::ReadOnly), V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::AllWorlds},
 };
 
-const V8DOMConfiguration::MethodConfiguration V8TestCallbackFunctionsMethods[] = {
-    {"returnCallbackFunctionMethod", V8TestCallbackFunctions::returnCallbackFunctionMethodMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess},
-    {"returnCallbackFunctionMethod2", V8TestCallbackFunctions::returnCallbackFunctionMethod2MethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess},
-    {"voidMethodCallbackFunctionInArg", V8TestCallbackFunctions::voidMethodCallbackFunctionInArgMethodCallback, nullptr, 1, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess},
-    {"voidMethodCallbackFunctionInArg2", V8TestCallbackFunctions::voidMethodCallbackFunctionInArg2MethodCallback, nullptr, 1, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess},
-    {"voidMethodCallbackFunctionWithReturnValueInArg", V8TestCallbackFunctions::voidMethodCallbackFunctionWithReturnValueInArgMethodCallback, nullptr, 1, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess},
-    {"voidMethodOptionalCallbackFunctionInArg", V8TestCallbackFunctions::voidMethodOptionalCallbackFunctionInArgMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess},
-    {"voidMethodNullableCallbackFunctionInArg", V8TestCallbackFunctions::voidMethodNullableCallbackFunctionInArgMethodCallback, nullptr, 1, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess},
-    {"customElementCallbacksMethod", V8TestCallbackFunctions::customElementCallbacksMethodMethodCallback, nullptr, 0, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess},
+static const V8DOMConfiguration::MethodConfiguration V8TestCallbackFunctionsMethods[] = {
+    {"returnCallbackFunctionMethod", V8TestCallbackFunctions::returnCallbackFunctionMethodMethodCallback, 0, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess, V8DOMConfiguration::AllWorlds},
+    {"returnCallbackFunctionMethod2", V8TestCallbackFunctions::returnCallbackFunctionMethod2MethodCallback, 0, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess, V8DOMConfiguration::AllWorlds},
+    {"voidMethodCallbackFunctionInArg", V8TestCallbackFunctions::voidMethodCallbackFunctionInArgMethodCallback, 1, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess, V8DOMConfiguration::AllWorlds},
+    {"voidMethodCallbackFunctionInArg2", V8TestCallbackFunctions::voidMethodCallbackFunctionInArg2MethodCallback, 1, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess, V8DOMConfiguration::AllWorlds},
+    {"voidMethodCallbackFunctionWithReturnValueInArg", V8TestCallbackFunctions::voidMethodCallbackFunctionWithReturnValueInArgMethodCallback, 1, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess, V8DOMConfiguration::AllWorlds},
+    {"voidMethodOptionalCallbackFunctionInArg", V8TestCallbackFunctions::voidMethodOptionalCallbackFunctionInArgMethodCallback, 0, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess, V8DOMConfiguration::AllWorlds},
+    {"voidMethodNullableCallbackFunctionInArg", V8TestCallbackFunctions::voidMethodNullableCallbackFunctionInArgMethodCallback, 1, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess, V8DOMConfiguration::AllWorlds},
+    {"customElementCallbacksMethod", V8TestCallbackFunctions::customElementCallbacksMethodMethodCallback, 0, v8::None, V8DOMConfiguration::OnPrototype, V8DOMConfiguration::CheckHolder, V8DOMConfiguration::DoNotCheckAccess, V8DOMConfiguration::AllWorlds},
 };
 
 static void installV8TestCallbackFunctionsTemplate(v8::Isolate* isolate, const DOMWrapperWorld& world, v8::Local<v8::FunctionTemplate> interfaceTemplate) {

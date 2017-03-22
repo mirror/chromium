@@ -279,13 +279,14 @@ class TestWindowTreeClient : public mojom::WindowTreeClient,
                mojom::WindowTreePtr tree,
                int64_t display_id,
                Id focused_window_id,
-               bool drawn) override {
+               bool drawn,
+               const cc::FrameSinkId& frame_sink_id) override {
     // TODO(sky): add coverage of |focused_window_id|.
     ASSERT_TRUE(root);
     root_window_id_ = root->window_id;
     tree_ = std::move(tree);
     client_id_ = client_id;
-    tracker()->OnEmbed(client_id, std::move(root), drawn);
+    tracker()->OnEmbed(client_id, std::move(root), drawn, frame_sink_id);
     if (embed_run_loop_)
       embed_run_loop_->Quit();
   }
@@ -297,11 +298,15 @@ class TestWindowTreeClient : public mojom::WindowTreeClient,
                         Id old_capture_window_id) override {
     tracker()->OnCaptureChanged(new_capture_window_id, old_capture_window_id);
   }
+  void OnFrameSinkIdAllocated(Id window_id,
+                              const cc::FrameSinkId& frame_sink_id) override {}
   void OnTopLevelCreated(uint32_t change_id,
                          mojom::WindowDataPtr data,
                          int64_t display_id,
-                         bool drawn) override {
-    tracker()->OnTopLevelCreated(change_id, std::move(data), drawn);
+                         bool drawn,
+                         const cc::FrameSinkId& frame_sink_id) override {
+    tracker()->OnTopLevelCreated(change_id, std::move(data), drawn,
+                                 frame_sink_id);
   }
   void OnWindowBoundsChanged(
       Id window_id,
@@ -443,7 +448,8 @@ class TestWindowTreeClient : public mojom::WindowTreeClient,
   void OnConnect(uint16_t client_id) override {}
   void WmNewDisplayAdded(const display::Display& display,
                          mojom::WindowDataPtr root_data,
-                         bool drawn) override {
+                         bool drawn,
+                         const cc::FrameSinkId& frame_sink_id) override {
     NOTIMPLEMENTED();
   }
   void WmDisplayRemoved(int64_t display_id) override { NOTIMPLEMENTED(); }
@@ -462,6 +468,7 @@ class TestWindowTreeClient : public mojom::WindowTreeClient,
       const base::Optional<std::vector<uint8_t>>& value) override {
     window_manager_client_->WmResponse(change_id, false);
   }
+  void WmSetModalType(uint32_t window_id, ui::ModalType type) override {}
   void WmSetCanFocus(uint32_t window_id, bool can_focus) override {}
   void WmCreateTopLevelWindow(
       uint32_t change_id,
@@ -645,6 +652,9 @@ class WindowTreeClientTest : public WindowServerServiceTestBase {
     }
     client->WaitForOnEmbed();
 
+    // TODO(fsamuel): Currently the FrameSinkId maps directly to the server's
+    // window ID. This is likely bad from a security perspective and should be
+    // fixed.
     EXPECT_EQ("OnEmbed",
               SingleChangeToDescription(*client->tracker()->changes()));
     if (client_id)
@@ -1728,7 +1738,9 @@ TEST_F(WindowTreeClientTest, SetWindowVisibilityNotifications2) {
 
   // Establish the second client at 1,2.
   ASSERT_NO_FATAL_FAILURE(EstablishSecondClientWithRoot(window_1_2));
-  EXPECT_EQ("OnEmbed drawn=true", SingleChangeToDescription2(*changes2()));
+  EXPECT_EQ(
+      base::StringPrintf("OnEmbed FrameSinkId(%d, 0) drawn=true", window_1_2),
+      SingleChangeToDescription2(*changes2()));
   changes2()->clear();
 
   // Show 1,2 from client 1. Client 2 should see this.
@@ -1752,8 +1764,13 @@ TEST_F(WindowTreeClientTest, SetWindowVisibilityNotifications3) {
   ASSERT_TRUE(wt_client1()->AddWindow(window_1_1, window_1_2));
 
   // Establish the second client at 1,2.
+  // TODO(fsamuel): Currently the FrameSinkId maps directly to the server's
+  // window ID. This is likely bad from a security perspective and should be
+  // fixed.
   ASSERT_NO_FATAL_FAILURE(EstablishSecondClientWithRoot(window_1_2));
-  EXPECT_EQ("OnEmbed drawn=false", SingleChangeToDescription2(*changes2()));
+  EXPECT_EQ(
+      base::StringPrintf("OnEmbed FrameSinkId(%d, 0) drawn=false", window_1_2),
+      SingleChangeToDescription2(*changes2()));
   changes2()->clear();
 
   // Show 1,1, drawn should be true for 1,2 (as that is all the child sees).

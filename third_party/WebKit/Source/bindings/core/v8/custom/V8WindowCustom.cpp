@@ -109,11 +109,9 @@ void V8Window::locationAttributeGetterCustom(
   // remote Location objects, we should clean this up to improve
   // maintainability. In the long-term, this will be superseded by wrapper
   // tracing.
-  const char kKeepAliveKey[] = "KeepAlive#Window#location";
   V8HiddenValue::setHiddenValue(
       ScriptState::current(isolate), holder,
-      v8AtomicString(isolate, StringView(kKeepAliveKey, sizeof kKeepAliveKey)),
-      wrapper);
+      v8AtomicString(isolate, "KeepAlive#Window#location"), wrapper);
 
   v8SetReturnValue(info, wrapper);
 }
@@ -216,8 +214,10 @@ void V8Window::openerAttributeSetterCustom(
   }
 
   // Delete the accessor from the inner object.
-  info.Holder()->Delete(isolate->GetCurrentContext(),
-                        v8AtomicString(isolate, "opener"));
+  if (info.Holder()->Delete(isolate->GetCurrentContext(),
+                            v8AtomicString(isolate, "opener")).IsNothing()) {
+    return;
+  }
 
   // Put property on the inner object.
   if (info.Holder()->IsObject()) {
@@ -279,8 +279,10 @@ void V8Window::postMessageMethodCustom(
   TOSTRING_VOID(V8StringResource<TreatNullAndUndefinedAsNullString>,
                 targetOrigin, info[targetOriginArgIndex]);
 
+  SerializedScriptValue::SerializeOptions options;
+  options.transferables = &transferables;
   RefPtr<SerializedScriptValue> message = SerializedScriptValue::serialize(
-      info.GetIsolate(), info[0], &transferables, nullptr, exceptionState);
+      info.GetIsolate(), info[0], options, exceptionState);
   if (exceptionState.hadException())
     return;
 

@@ -708,9 +708,7 @@ void RenderThreadImpl::Init(
   AddFilter((new ServiceWorkerContextMessageFilter())->GetFilter());
 
 #if defined(USE_AURA)
-  if (IsRunningInMash() &&
-      !base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kNoUseMusInRenderer)) {
+  if (IsRunningInMash()) {
     CreateRenderWidgetWindowTreeClientFactory(GetServiceManagerConnection());
   }
 #endif
@@ -926,7 +924,11 @@ void RenderThreadImpl::Shutdown() {
   // 1) a waste of performance and 2) a source of lots of complicated
   // crashes caused by shutdown ordering. Immediate exit eliminates
   // those problems.
-  //
+
+  // Give the V8 isolate a chance to dump internal stats useful for performance
+  // evaluation and debugging.
+  blink::mainThreadIsolate()->DumpAndResetStats();
+
   // In a single-process mode, we cannot call _exit(0) in Shutdown() because
   // it will exit the process before the browser side is ready to exit.
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -1867,30 +1869,31 @@ scoped_refptr<gpu::GpuChannelHost> RenderThreadImpl::EstablishGpuChannelSync() {
   return gpu_channel_;
 }
 
-std::unique_ptr<cc::CompositorFrameSink>
-RenderThreadImpl::CreateCompositorFrameSink(
-    const cc::FrameSinkId& frame_sink_id,
+void RenderThreadImpl::RequestNewCompositorFrameSink(
     bool use_software,
     int routing_id,
     scoped_refptr<FrameSwapMessageQueue> frame_swap_message_queue,
-    const GURL& url) {
+    const GURL& url,
+    const CompositorFrameSinkCallback& callback) {
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
   if (command_line.HasSwitch(switches::kDisableGpuCompositing))
     use_software = true;
 
 #if defined(USE_AURA)
-  if (!use_software && IsRunningInMash() &&
-      !command_line.HasSwitch(switches::kNoUseMusInRenderer)) {
+  if (!use_software && IsRunningInMash()) {
     scoped_refptr<gpu::GpuChannelHost> channel = EstablishGpuChannelSync();
     // If the channel could not be established correctly, then return null. This
     // would cause the compositor to wait and try again at a later time.
-    if (!channel)
-      return nullptr;
-    return RendererWindowTreeClient::Get(routing_id)
-        ->CreateCompositorFrameSink(
-            frame_sink_id, gpu_->CreateContextProvider(std::move(channel)),
-            GetGpuMemoryBufferManager());
+    if (!channel) {
+      callback.Run(nullptr);
+      return;
+    }
+    RendererWindowTreeClient::Get(routing_id)
+        ->RequestCompositorFrameSink(
+            gpu_->CreateContextProvider(std::move(channel)),
+            GetGpuMemoryBufferManager(), callback);
+    return;
   }
 #endif
 
@@ -1901,11 +1904,12 @@ RenderThreadImpl::CreateCompositorFrameSink(
         cc::VulkanInProcessContextProvider::Create();
     if (vulkan_context_provider) {
       DCHECK(!layout_test_mode());
-      return base::MakeUnique<RendererCompositorFrameSink>(
+      callback.Run(base::MakeUnique<RendererCompositorFrameSink>(
           routing_id, compositor_frame_sink_id,
           CreateExternalBeginFrameSource(routing_id),
           std::move(vulkan_context_provider),
-          std::move(frame_swap_message_queue));
+          std::move(frame_swap_message_queue)));
+      return;
     }
   }
 
@@ -1916,7 +1920,8 @@ RenderThreadImpl::CreateCompositorFrameSink(
     gpu_channel_host = EstablishGpuChannelSync();
     if (!gpu_channel_host) {
       // Cause the compositor to wait and try again.
-      return nullptr;
+      callback.Run(nullptr);
+      return;
     }
     // We may get a valid channel, but with a software renderer. In that case,
     // disable GPU compositing.
@@ -1926,17 +1931,19 @@ RenderThreadImpl::CreateCompositorFrameSink(
 
   if (use_software) {
     DCHECK(!layout_test_mode());
-    return base::MakeUnique<RendererCompositorFrameSink>(
+    callback.Run(base::MakeUnique<RendererCompositorFrameSink>(
         routing_id, compositor_frame_sink_id,
         CreateExternalBeginFrameSource(routing_id), nullptr, nullptr, nullptr,
-        shared_bitmap_manager(), std::move(frame_swap_message_queue));
+        shared_bitmap_manager(), std::move(frame_swap_message_queue)));
+    return;
   }
 
   scoped_refptr<ui::ContextProviderCommandBuffer> worker_context_provider =
       SharedCompositorWorkerContextProvider();
   if (!worker_context_provider) {
     // Cause the compositor to wait and try again.
-    return nullptr;
+    callback.Run(nullptr);
+    return;
   }
 
   // The renderer compositor context doesn't do a lot of stuff, so we don't
@@ -1973,27 +1980,28 @@ RenderThreadImpl::CreateCompositorFrameSink(
           ui::command_buffer_metrics::RENDER_COMPOSITOR_CONTEXT));
 
   if (layout_test_deps_) {
-    return layout_test_deps_->CreateCompositorFrameSink(
+    callback.Run(layout_test_deps_->CreateCompositorFrameSink(
         routing_id, std::move(gpu_channel_host), std::move(context_provider),
-        std::move(worker_context_provider), GetGpuMemoryBufferManager(),
-        this);
+        std::move(worker_context_provider), GetGpuMemoryBufferManager(), this));
+    return;
   }
 
 #if defined(OS_ANDROID)
   if (sync_compositor_message_filter_) {
-    return base::MakeUnique<SynchronousCompositorFrameSink>(
+    callback.Run(base::MakeUnique<SynchronousCompositorFrameSink>(
         std::move(context_provider), std::move(worker_context_provider),
         GetGpuMemoryBufferManager(), shared_bitmap_manager(), routing_id,
         compositor_frame_sink_id, CreateExternalBeginFrameSource(routing_id),
         sync_compositor_message_filter_.get(),
-        std::move(frame_swap_message_queue));
+        std::move(frame_swap_message_queue)));
+    return;
   }
 #endif
-  return base::WrapUnique(new RendererCompositorFrameSink(
+  callback.Run(base::WrapUnique(new RendererCompositorFrameSink(
       routing_id, compositor_frame_sink_id,
       CreateExternalBeginFrameSource(routing_id), std::move(context_provider),
-      std::move(worker_context_provider), GetGpuMemoryBufferManager(),
-      nullptr, std::move(frame_swap_message_queue)));
+      std::move(worker_context_provider), GetGpuMemoryBufferManager(), nullptr,
+      std::move(frame_swap_message_queue))));
 }
 
 AssociatedInterfaceRegistry*

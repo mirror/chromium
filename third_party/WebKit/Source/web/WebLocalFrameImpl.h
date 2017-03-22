@@ -73,6 +73,7 @@ class WebView;
 class WebViewImpl;
 enum class WebFrameLoadType;
 struct FrameLoadRequest;
+struct WebContentSecurityPolicyViolation;
 struct WebPrintParams;
 
 template <typename T>
@@ -87,7 +88,6 @@ class WEB_EXPORT WebLocalFrameImpl final
   // TODO(dcheng): Fix sorting here; a number of method have been moved to
   // WebLocalFrame but not correctly updated here.
   void close() override;
-  WebString uniqueName() const override;
   WebString assignedName() const override;
   void setName(const WebString&) override;
   WebVector<WebIconURL> iconURLs(int iconTypesMask) const override;
@@ -262,6 +262,8 @@ class WEB_EXPORT WebLocalFrameImpl final
                 WebHistoryLoadType,
                 bool isClientRedirect) override;
   bool maybeRenderFallbackContent(const WebURLError&) const override;
+  void reportContentSecurityPolicyViolation(
+      const blink::WebContentSecurityPolicyViolation&) override;
   bool isLoading() const override;
   bool isNavigationScheduledWithin(double interval) const override;
   void setCommittedFirstRealLoad() override;
@@ -271,7 +273,8 @@ class WEB_EXPORT WebLocalFrameImpl final
                          const WebURL& mixedContentUrl,
                          WebURLRequest::RequestContext,
                          bool wasAllowed,
-                         bool hadRedirect) override;
+                         bool hadRedirect,
+                         const WebSourceLocation&) override;
   void sendOrientationChangeEvent() override;
   WebSandboxFlags effectiveSandboxFlags() const override;
   void forceSandboxFlags(WebSandboxFlags) override;
@@ -313,8 +316,7 @@ class WEB_EXPORT WebLocalFrameImpl final
   // WebFrameImplBase methods:
   void initializeCoreFrame(FrameHost*,
                            FrameOwner*,
-                           const AtomicString& name,
-                           const AtomicString& uniqueName) override;
+                           const AtomicString& name) override;
   LocalFrame* frame() const override { return m_frame.get(); }
 
   void willBeDetached();

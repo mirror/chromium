@@ -13,7 +13,6 @@
 #include "cc/quads/render_pass_draw_quad.h"
 #include "cc/quads/shared_quad_state.h"
 #include "cc/quads/surface_draw_quad.h"
-#include "services/ui/ws/frame_generator_delegate.h"
 #include "services/ui/ws/server_window.h"
 
 namespace ui {
@@ -21,13 +20,10 @@ namespace ui {
 namespace ws {
 
 FrameGenerator::FrameGenerator(
-    FrameGeneratorDelegate* delegate,
     ServerWindow* root_window,
     std::unique_ptr<cc::CompositorFrameSink> compositor_frame_sink)
-    : delegate_(delegate),
-      root_window_(root_window),
+    : root_window_(root_window),
       compositor_frame_sink_(std::move(compositor_frame_sink)) {
-  DCHECK(delegate_);
   compositor_frame_sink_->BindToClient(this);
 }
 
@@ -39,6 +35,15 @@ void FrameGenerator::SetDeviceScaleFactor(float device_scale_factor) {
   if (device_scale_factor_ == device_scale_factor)
     return;
   device_scale_factor_ = device_scale_factor;
+  if (window_manager_surface_info_.is_valid())
+    SetNeedsBeginFrame(true);
+}
+
+void FrameGenerator::SetHighContrastMode(bool enabled) {
+  if (high_contrast_mode_enabled_ == enabled)
+    return;
+
+  high_contrast_mode_enabled_ = enabled;
   if (window_manager_surface_info_.is_valid())
     SetNeedsBeginFrame(true);
 }
@@ -93,15 +98,24 @@ void FrameGenerator::SetExternalTilePriorityConstraints(
     const gfx::Transform& transform) {}
 
 void FrameGenerator::OnBeginFrame(const cc::BeginFrameArgs& begin_frame_args) {
-  if (!root_window_->visible())
+  current_begin_frame_ack_ = cc::BeginFrameAck(
+      begin_frame_args.source_id, begin_frame_args.sequence_number,
+      begin_frame_args.sequence_number, 0, false);
+  if (!root_window_->visible() ||
+      begin_frame_args.type == cc::BeginFrameArgs::MISSED) {
+    begin_frame_source_->DidFinishFrame(this, current_begin_frame_ack_);
     return;
+  }
+
+  current_begin_frame_ack_.has_damage = true;
+  last_begin_frame_args_ = begin_frame_args;
 
   // TODO(fsamuel): We should add a trace for generating a top level frame.
   cc::CompositorFrame frame(GenerateCompositorFrame(root_window_->bounds()));
-
   compositor_frame_sink_->SubmitCompositorFrame(std::move(frame));
+
+  begin_frame_source_->DidFinishFrame(this, current_begin_frame_ack_);
   SetNeedsBeginFrame(false);
-  last_begin_frame_args_ = begin_frame_args;
 }
 
 const cc::BeginFrameArgs& FrameGenerator::LastUsedBeginFrameArgs() const {
@@ -121,7 +135,7 @@ cc::CompositorFrame FrameGenerator::GenerateCompositorFrame(
 
   cc::CompositorFrame frame;
   frame.render_pass_list.push_back(std::move(render_pass));
-  if (delegate_->IsInHighContrastMode()) {
+  if (high_contrast_mode_enabled_) {
     std::unique_ptr<cc::RenderPass> invert_pass = cc::RenderPass::Create();
     invert_pass->SetNew(2, output_rect, output_rect, gfx::Transform());
     cc::SharedQuadState* shared_state =
@@ -132,7 +146,8 @@ cc::CompositorFrame FrameGenerator::GenerateCompositorFrame(
     shared_state->SetAll(gfx::Transform(), scaled_bounds, output_rect,
                          output_rect, false, 1.f, SkBlendMode::kSrcOver, 0);
     auto* quad = invert_pass->CreateAndAppendDrawQuad<cc::RenderPassDrawQuad>();
-    render_pass->filters.Append(cc::FilterOperation::CreateInvertFilter(1.f));
+    frame.render_pass_list.back()->filters.Append(
+        cc::FilterOperation::CreateInvertFilter(1.f));
     quad->SetNew(shared_state, output_rect, output_rect, render_pass_id,
                  0 /* mask_resource_id */, gfx::RectF() /* mask_uv_rect */,
                  gfx::Size() /* mask_texture_size */,
@@ -142,6 +157,7 @@ cc::CompositorFrame FrameGenerator::GenerateCompositorFrame(
     frame.render_pass_list.push_back(std::move(invert_pass));
   }
   frame.metadata.device_scale_factor = device_scale_factor_;
+  frame.metadata.begin_frame_ack = current_begin_frame_ack_;
 
   if (window_manager_surface_info_.is_valid()) {
     frame.metadata.referenced_surfaces.push_back(
@@ -186,14 +202,11 @@ void FrameGenerator::SetNeedsBeginFrame(bool needs_begin_frame) {
   if (needs_begin_frame == observing_begin_frames_)
     return;
 
-  if (needs_begin_frame) {
+  observing_begin_frames_ = needs_begin_frame;
+  if (needs_begin_frame)
     begin_frame_source_->AddObserver(this);
-    observing_begin_frames_ = true;
-    return;
-  }
-
-  begin_frame_source_->RemoveObserver(this);
-  observing_begin_frames_ = false;
+  else
+    begin_frame_source_->RemoveObserver(this);
 }
 
 }  // namespace ws

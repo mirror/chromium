@@ -10,7 +10,7 @@
 #include "components/favicon/core/favicon_util.h"
 #include "components/favicon_base/favicon_types.h"
 #include "components/favicon_base/favicon_util.h"
-#include "components/image_fetcher/image_fetcher.h"
+#include "components/image_fetcher/core/image_fetcher.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/image/image.h"
@@ -78,10 +78,12 @@ void IconCacherImpl::OnGetFaviconImageForPageURLFinished(
                  site, icon_available));
 }
 
-void IconCacherImpl::OnFaviconDownloaded(PopularSites::Site site,
-                                         const base::Closure& icon_available,
-                                         const std::string& id,
-                                         const gfx::Image& fetched_image) {
+void IconCacherImpl::OnFaviconDownloaded(
+    PopularSites::Site site,
+    const base::Closure& icon_available,
+    const std::string& id,
+    const gfx::Image& fetched_image,
+    const image_fetcher::RequestMetadata& metadata) {
   if (fetched_image.IsEmpty()) {
     return;
   }

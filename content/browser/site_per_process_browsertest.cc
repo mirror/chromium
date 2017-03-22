@@ -9,6 +9,7 @@
 
 #include <algorithm>
 #include <map>
+#include <set>
 #include <vector>
 
 #include "base/bind.h"
@@ -27,8 +28,11 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "content/browser/frame_host/cross_process_frame_connector.h"
+#include "content/browser/frame_host/frame_navigation_entry.h"
 #include "content/browser/frame_host/frame_tree.h"
 #include "content/browser/frame_host/interstitial_page_impl.h"
+#include "content/browser/frame_host/navigation_controller_impl.h"
+#include "content/browser/frame_host/navigation_entry_impl.h"
 #include "content/browser/frame_host/navigator.h"
 #include "content/browser/frame_host/render_frame_proxy_host.h"
 #include "content/browser/frame_host/render_widget_host_view_child_frame.h"
@@ -100,6 +104,8 @@
 #include "content/browser/renderer_host/ime_adapter_android.h"
 #include "content/browser/renderer_host/render_widget_host_view_android.h"
 #endif
+
+using ::testing::SizeIs;
 
 namespace content {
 
@@ -716,10 +722,11 @@ class SitePerProcessFeaturePolicyBrowserTest
                                     "FeaturePolicy");
   }
 
-  ParsedFeaturePolicyHeader CreateFPHeader(const std::string& feature_name,
-                                           const std::vector<GURL>& origins) {
+  ParsedFeaturePolicyHeader CreateFPHeader(
+      blink::WebFeaturePolicyFeature feature,
+      const std::vector<GURL>& origins) {
     ParsedFeaturePolicyHeader result(1);
-    result[0].feature_name = feature_name;
+    result[0].feature = feature;
     result[0].matches_all_origins = false;
     DCHECK(!origins.empty());
     for (const GURL& origin : origins)
@@ -728,9 +735,9 @@ class SitePerProcessFeaturePolicyBrowserTest
   }
 
   ParsedFeaturePolicyHeader CreateFPHeaderMatchesAll(
-      const std::string& feature_name) {
+      blink::WebFeaturePolicyFeature feature) {
     ParsedFeaturePolicyHeader result(1);
-    result[0].feature_name = feature_name;
+    result[0].feature = feature;
     result[0].matches_all_origins = true;
     return result;
   }
@@ -738,10 +745,8 @@ class SitePerProcessFeaturePolicyBrowserTest
 
 bool operator==(const ParsedFeaturePolicyDeclaration& first,
                 const ParsedFeaturePolicyDeclaration& second) {
-  return std::tie(first.feature_name, first.matches_all_origins,
-                  first.origins) == std::tie(second.feature_name,
-                                             second.matches_all_origins,
-                                             second.origins);
+  return std::tie(first.feature, first.matches_all_origins, first.origins) ==
+         std::tie(second.feature, second.matches_all_origins, second.origins);
 }
 
 IN_PROC_BROWSER_TEST_F(SitePerProcessHighDPIBrowserTest,
@@ -2408,7 +2413,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ProcessTransferAfterError) {
   // of the API), but the frame's last_successful_url shouldn't change and the
   // origin should be empty.
   // PlzNavigate: We have switched RenderFrameHosts for the subframe, so the
-  // last succesful url should be empty (since the frame only loaded an error
+  // last successful url should be empty (since the frame only loaded an error
   // page).
   if (IsBrowserSideNavigationEnabled())
     EXPECT_EQ(GURL(), child->current_frame_host()->last_successful_url());
@@ -7420,19 +7425,38 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
 
   // Check that the current RenderFrameHost has stopped loading.
   if (root->child_at(0)->current_frame_host()->is_loading()) {
-    ADD_FAILURE() << "Blocked RenderFrameHost shouldn't be loading anything";
+    if (!IsBrowserSideNavigationEnabled())
+      ADD_FAILURE() << "Blocked RenderFrameHost shouldn't be loading anything";
     load_observer.Wait();
   }
 
-  // The blocked frame should stay at the old location.
-  EXPECT_EQ(old_subframe_url, root->child_at(0)->current_url());
+  // The last successful url shouldn't be the blocked url.
+  EXPECT_EQ(old_subframe_url,
+            root->child_at(0)->current_frame_host()->last_successful_url());
 
-  // The blocked frame should keep the old title.
-  std::string frame_title;
-  EXPECT_TRUE(ExecuteScriptAndExtractString(
-      root->child_at(0), "domAutomationController.send(document.title)",
-      &frame_title));
-  EXPECT_EQ("Title Of Awesomeness", frame_title);
+  if (IsBrowserSideNavigationEnabled()) {
+    // The blocked frame should go to an error page. Errors currently commit
+    // with the URL of the blocked page.
+    EXPECT_EQ(blocked_url, root->child_at(0)->current_url());
+
+    // The page should get the title of an error page (i.e "") and not the
+    // title of the blocked page.
+    std::string frame_title;
+    EXPECT_TRUE(ExecuteScriptAndExtractString(
+        root->child_at(0), "domAutomationController.send(document.title)",
+        &frame_title));
+    EXPECT_EQ("", frame_title);
+  } else {
+    // The blocked frame should stay at the old location.
+    EXPECT_EQ(old_subframe_url, root->child_at(0)->current_url());
+
+    // The blocked frame should keep the old title.
+    std::string frame_title;
+    EXPECT_TRUE(ExecuteScriptAndExtractString(
+        root->child_at(0), "domAutomationController.send(document.title)",
+        &frame_title));
+    EXPECT_EQ("Title Of Awesomeness", frame_title);
+  }
 
   // Navigate to a URL without CSP.
   EXPECT_TRUE(NavigateToURL(
@@ -7495,19 +7519,38 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
 
   // Check that the current RenderFrameHost has stopped loading.
   if (root->child_at(0)->current_frame_host()->is_loading()) {
-    ADD_FAILURE() << "Blocked RenderFrameHost shouldn't be loading anything";
+    if (!IsBrowserSideNavigationEnabled())
+      ADD_FAILURE() << "Blocked RenderFrameHost shouldn't be loading anything";
     load_observer2.Wait();
   }
 
-  // The blocked frame should stay at the old location.
-  EXPECT_EQ(old_subframe_url, root->child_at(0)->current_url());
+  // The last successful url shouldn't be the blocked url.
+  EXPECT_EQ(old_subframe_url,
+            root->child_at(0)->current_frame_host()->last_successful_url());
 
-  // The blocked frame should keep the old title.
-  std::string frame_title;
-  EXPECT_TRUE(ExecuteScriptAndExtractString(
-      root->child_at(0), "domAutomationController.send(document.title)",
-      &frame_title));
-  EXPECT_EQ("Title Of Awesomeness", frame_title);
+  if (IsBrowserSideNavigationEnabled()) {
+    // The blocked frame should go to an error page. Errors currently commit
+    // with the URL of the blocked page.
+    EXPECT_EQ(blocked_url, root->child_at(0)->current_url());
+
+    // The page should get the title of an error page (i.e "") and not the
+    // title of the blocked page.
+    std::string frame_title;
+    EXPECT_TRUE(ExecuteScriptAndExtractString(
+        root->child_at(0), "domAutomationController.send(document.title)",
+        &frame_title));
+    EXPECT_EQ("", frame_title);
+  } else {
+    // The blocked frame should stay at the old location.
+    EXPECT_EQ(old_subframe_url, root->child_at(0)->current_url());
+
+    // The blocked frame should keep the old title.
+    std::string frame_title;
+    EXPECT_TRUE(ExecuteScriptAndExtractString(
+        root->child_at(0), "domAutomationController.send(document.title)",
+        &frame_title));
+    EXPECT_EQ("Title Of Awesomeness", frame_title);
+  }
 }
 
 // Test that a cross-origin frame's navigation can be blocked by CSP frame-src.
@@ -7564,19 +7607,38 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
 
   // Check that the current RenderFrameHost has stopped loading.
   if (navigating_frame->current_frame_host()->is_loading()) {
-    ADD_FAILURE() << "Blocked RenderFrameHost shouldn't be loading anything";
+    if (!IsBrowserSideNavigationEnabled())
+      ADD_FAILURE() << "Blocked RenderFrameHost shouldn't be loading anything";
     load_observer2.Wait();
   }
 
-  // The blocked frame should stay at the old location.
-  EXPECT_EQ(old_subframe_url, navigating_frame->current_url());
+  // The last successful url shouldn't be the blocked url.
+  EXPECT_EQ(old_subframe_url,
+            navigating_frame->current_frame_host()->last_successful_url());
 
-  // The blocked frame should keep the old title.
-  std::string frame_title;
-  EXPECT_TRUE(ExecuteScriptAndExtractString(
-      navigating_frame, "domAutomationController.send(document.title)",
-      &frame_title));
-  EXPECT_EQ("Title Of Awesomeness", frame_title);
+  if (IsBrowserSideNavigationEnabled()) {
+    // The blocked frame should go to an error page. Errors currently commit
+    // with the URL of the blocked page.
+    EXPECT_EQ(blocked_url, navigating_frame->current_url());
+
+    // The page should get the title of an error page (i.e "") and not the
+    // title of the blocked page.
+    std::string frame_title;
+    EXPECT_TRUE(ExecuteScriptAndExtractString(
+        navigating_frame, "domAutomationController.send(document.title)",
+        &frame_title));
+    EXPECT_EQ("", frame_title);
+  } else {
+    // The blocked frame should stay at the old location.
+    EXPECT_EQ(old_subframe_url, navigating_frame->current_url());
+
+    // The blocked frame should keep the old title.
+    std::string frame_title;
+    EXPECT_TRUE(ExecuteScriptAndExtractString(
+        navigating_frame, "domAutomationController.send(document.title)",
+        &frame_title));
+    EXPECT_EQ("Title Of Awesomeness", frame_title);
+  }
 
   // Navigate the subframe to a URL without CSP.
   NavigateFrameToURL(srcdoc_frame,
@@ -9136,13 +9198,14 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessFeaturePolicyBrowserTest,
   EXPECT_TRUE(NavigateToURL(shell(), start_url));
 
   FrameTreeNode* root = web_contents()->GetFrameTree()->root();
-  EXPECT_EQ(CreateFPHeader("vibrate", {start_url.GetOrigin()}),
+  EXPECT_EQ(CreateFPHeader(blink::WebFeaturePolicyFeature::Vibrate,
+                           {start_url.GetOrigin()}),
             root->current_replication_state().feature_policy_header);
 
   // When the main frame navigates to a page with a new policy, it should
   // overwrite the old one.
   EXPECT_TRUE(NavigateToURL(shell(), first_nav_url));
-  EXPECT_EQ(CreateFPHeaderMatchesAll("vibrate"),
+  EXPECT_EQ(CreateFPHeaderMatchesAll(blink::WebFeaturePolicyFeature::Vibrate),
             root->current_replication_state().feature_policy_header);
 
   // When the main frame navigates to a page without a policy, the replicated
@@ -9162,13 +9225,14 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessFeaturePolicyBrowserTest,
   EXPECT_TRUE(NavigateToURL(shell(), start_url));
 
   FrameTreeNode* root = web_contents()->GetFrameTree()->root();
-  EXPECT_EQ(CreateFPHeader("vibrate", {start_url.GetOrigin()}),
+  EXPECT_EQ(CreateFPHeader(blink::WebFeaturePolicyFeature::Vibrate,
+                           {start_url.GetOrigin()}),
             root->current_replication_state().feature_policy_header);
 
   // When the main frame navigates to a page with a new policy, it should
   // overwrite the old one.
   EXPECT_TRUE(NavigateToURL(shell(), first_nav_url));
-  EXPECT_EQ(CreateFPHeaderMatchesAll("vibrate"),
+  EXPECT_EQ(CreateFPHeaderMatchesAll(blink::WebFeaturePolicyFeature::Vibrate),
             root->current_replication_state().feature_policy_header);
 
   // When the main frame navigates to a page without a policy, the replicated
@@ -9190,18 +9254,19 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessFeaturePolicyBrowserTest,
   EXPECT_TRUE(NavigateToURL(shell(), main_url));
 
   FrameTreeNode* root = web_contents()->GetFrameTree()->root();
-  EXPECT_EQ(CreateFPHeader("vibrate",
+  EXPECT_EQ(CreateFPHeader(blink::WebFeaturePolicyFeature::Vibrate,
                            {main_url.GetOrigin(), GURL("http://example.com/")}),
             root->current_replication_state().feature_policy_header);
   EXPECT_EQ(1UL, root->child_count());
   EXPECT_EQ(
-      CreateFPHeader("vibrate", {main_url.GetOrigin()}),
+      CreateFPHeader(blink::WebFeaturePolicyFeature::Vibrate,
+                     {main_url.GetOrigin()}),
       root->child_at(0)->current_replication_state().feature_policy_header);
 
   // Navigate the iframe cross-site.
   NavigateFrameToURL(root->child_at(0), first_nav_url);
   EXPECT_EQ(
-      CreateFPHeaderMatchesAll("vibrate"),
+      CreateFPHeaderMatchesAll(blink::WebFeaturePolicyFeature::Vibrate),
       root->child_at(0)->current_replication_state().feature_policy_header);
 
   // Navigate the iframe to another location, this one with no policy header
@@ -9213,7 +9278,7 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessFeaturePolicyBrowserTest,
   // Navigate the iframe back to a page with a policy
   NavigateFrameToURL(root->child_at(0), first_nav_url);
   EXPECT_EQ(
-      CreateFPHeaderMatchesAll("vibrate"),
+      CreateFPHeaderMatchesAll(blink::WebFeaturePolicyFeature::Vibrate),
       root->child_at(0)->current_replication_state().feature_policy_header);
 }
 
@@ -9845,6 +9910,48 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
   EXPECT_EQ(root->child_at(0)->current_url(), redirected_url);
   EXPECT_EQ(b_site_instance,
             root->child_at(0)->current_frame_host()->GetSiteInstance());
+}
+
+IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
+                       FrameSwapPreservesUniqueName) {
+  GURL main_url(embedded_test_server()->GetURL(
+      "a.com", "/cross_site_iframe_factory.html?a(a)"));
+  ASSERT_TRUE(NavigateToURL(shell(), main_url));
+
+  // Navigate the subframe cross-site…
+  {
+    GURL url(embedded_test_server()->GetURL("b.com", "/title1.html"));
+    EXPECT_TRUE(NavigateIframeToURL(shell()->web_contents(), "child-0", url));
+  }
+  // and then same-site…
+  {
+    GURL url(embedded_test_server()->GetURL("a.com", "/title1.html"));
+    EXPECT_TRUE(NavigateIframeToURL(shell()->web_contents(), "child-0", url));
+  }
+  // and cross-site once more.
+  {
+    GURL url(embedded_test_server()->GetURL("b.com", "/title1.html"));
+    EXPECT_TRUE(NavigateIframeToURL(shell()->web_contents(), "child-0", url));
+  }
+
+  // Inspect the navigation entries and make sure that the navigation target
+  // remained constant across frame swaps.
+  const auto& controller = static_cast<const NavigationControllerImpl&>(
+      shell()->web_contents()->GetController());
+  EXPECT_EQ(4, controller.GetEntryCount());
+
+  std::set<std::string> names;
+  for (int i = 0; i < controller.GetEntryCount(); ++i) {
+    NavigationEntryImpl::TreeNode* root =
+        controller.GetEntryAtIndex(i)->root_node();
+    ASSERT_EQ(1U, root->children.size());
+    names.insert(root->children[0]->frame_entry->frame_unique_name());
+  }
+
+  // More than one entry in the set means that the subframe frame navigation
+  // entries didn't have a consistent unique name. This will break history
+  // navigations =(
+  EXPECT_THAT(names, SizeIs(1)) << "Mismatched names for subframe!";
 }
 
 }  // namespace content

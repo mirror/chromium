@@ -152,8 +152,7 @@ const v8::FunctionCallbackInfo<v8::Value>& info
   if ({{attribute.cpp_value}} && DOMDataStore::setReturnValue{{world_suffix}}(info.GetReturnValue(), {{attribute.cpp_value}}))
     return;
   v8::Local<v8::Value> v8Value(ToV8({{attribute.cpp_value}}, holder, info.GetIsolate()));
-  const char kKeepAliveKey[] = "KeepAlive#{{interface_name}}#{{attribute.name}}";
-  V8HiddenValue::setHiddenValue(ScriptState::current(info.GetIsolate()), holder, v8AtomicString(info.GetIsolate(), StringView(kKeepAliveKey, sizeof kKeepAliveKey)), v8Value);
+  V8HiddenValue::setHiddenValue(ScriptState::current(info.GetIsolate()), holder, v8AtomicString(info.GetIsolate(), "KeepAlive#{{interface_name}}#{{attribute.name}}"), v8Value);
   {% endif %}
 
   {% if world_suffix %}
@@ -475,12 +474,6 @@ const v8::FunctionCallbackInfo<v8::Value>& info
            (v8_class_or_partial, attribute.name)
            if attribute.has_setter else 'nullptr' %}
 {% endif %}
-{% set getter_callback_for_main_world =
-       '%sForMainWorld' % getter_callback
-       if attribute.is_per_world_bindings else 'nullptr' %}
-{% set setter_callback_for_main_world =
-       '%sForMainWorld' % setter_callback
-       if attribute.is_per_world_bindings and attribute.has_setter else 'nullptr' %}
 {% set wrapper_type_info =
        'const_cast<WrapperTypeInfo*>(&V8%s::wrapperTypeInfo)' % attribute.constructor_type
        if attribute.constructor_type else 'nullptr' %}
@@ -492,19 +485,16 @@ const v8::FunctionCallbackInfo<v8::Value>& info
        'nullptr' %}
 {% set holder_check = 'V8DOMConfiguration::DoNotCheckHolder'
        if attribute.is_lenient_this else 'V8DOMConfiguration::CheckHolder' %}
-{% set attribute_configuration_list = [
-       '"%s"' % attribute.name,
-       getter_callback,
-       setter_callback,
-       getter_callback_for_main_world,
-       setter_callback_for_main_world,
-       cached_accessor_callback,
-       wrapper_type_info,
-       property_attribute,
-       property_location(attribute),
-       holder_check,
-   ] %}
-{{'{'}}{{attribute_configuration_list | join(', ')}}{{'}'}}
+{% if attribute.is_per_world_bindings %}
+{% set getter_callback_for_main_world = '%sForMainWorld' % getter_callback %}
+{% set setter_callback_for_main_world =
+       '%sForMainWorld' % setter_callback
+       if attribute.has_setter else 'nullptr' %}
+{"{{attribute.name}}", {{getter_callback_for_main_world}}, {{setter_callback_for_main_world}}, {{cached_accessor_callback}}, {{wrapper_type_info}}, {{property_attribute}}, {{property_location(attribute)}}, {{holder_check}}, V8DOMConfiguration::MainWorld},
+{"{{attribute.name}}", {{getter_callback}}, {{setter_callback}}, {{cached_accessor_callback}}, {{wrapper_type_info}}, {{property_attribute}}, {{property_location(attribute)}}, {{holder_check}}, V8DOMConfiguration::NonMainWorlds}
+{%- else %}
+{"{{attribute.name}}", {{getter_callback}}, {{setter_callback}}, {{cached_accessor_callback}}, {{wrapper_type_info}}, {{property_attribute}}, {{property_location(attribute)}}, {{holder_check}}, V8DOMConfiguration::AllWorlds}
+{%- endif %}
 {%- endmacro %}
 
 {##############################################################################}
@@ -513,8 +503,11 @@ const v8::FunctionCallbackInfo<v8::Value>& info
 {% filter exposed(attribute.exposed_test) %}
 {% filter secure_context(attribute.secure_context_test) %}
 {% filter runtime_enabled(attribute.runtime_enabled_feature_name) %}
-const V8DOMConfiguration::AccessorConfiguration accessorConfiguration = {{attribute_configuration(attribute)}};
-V8DOMConfiguration::installAccessor(isolate, world, v8::Local<v8::Object>(), prototypeObject, interfaceObject, signature, accessorConfiguration);
+static const V8DOMConfiguration::AccessorConfiguration accessorConfiguration[] = {
+  {{attribute_configuration(attribute)}}
+};
+for (const auto& accessorConfig : accessorConfiguration)
+  V8DOMConfiguration::installAccessor(isolate, world, v8::Local<v8::Object>(), prototypeObject, interfaceObject, signature, accessorConfig);
 {% endfilter %}{# runtime_enabled #}
 {% endfilter %}{# secure_context #}
 {% endfilter %}{# exposed #}

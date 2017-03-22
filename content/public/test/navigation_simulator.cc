@@ -113,7 +113,9 @@ void NavigationSimulator::Start() {
     BeginNavigationParams begin_params(
         std::string(), net::LOAD_NORMAL, true /* has_user_gesture */,
         false /* skip_service_worker */, REQUEST_CONTEXT_TYPE_HYPERLINK,
-        blink::WebMixedContentContextType::Blockable, url::Origin());
+        blink::WebMixedContentContextType::Blockable,
+        false,  // is_form_submission
+        url::Origin());
     CommonNavigationParams common_params;
     common_params.url = navigation_url_;
     common_params.referrer = referrer_;
@@ -352,8 +354,8 @@ void NavigationSimulator::Fail(int error_code) {
   }
 
   if (IsBrowserSideNavigationEnabled()) {
-    CHECK_EQ(1, num_ready_to_commit_called_);
     if (should_result_in_error_page) {
+      CHECK_EQ(1, num_ready_to_commit_called_);
       // Update the RenderFrameHost now that we know which RenderFrameHost will
       // commit the error page.
       render_frame_host_ =
@@ -556,6 +558,11 @@ void NavigationSimulator::PrepareCompleteCallbackOnHandle() {
   handle_->set_complete_callback_for_testing(
       base::Bind(&NavigationSimulator::OnThrottleChecksComplete,
                  weak_factory_.GetWeakPtr()));
+}
+
+RenderFrameHost* NavigationSimulator::GetFinalRenderFrameHost() {
+  CHECK_EQ(state_, FINISHED);
+  return render_frame_host_;
 }
 
 }  // namespace content

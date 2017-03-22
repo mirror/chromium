@@ -127,9 +127,7 @@ public class MinidumpUploaderTest extends CrashTestCase {
                 new MockCrashReportingPermissionManager() {
                     {
                         mIsInSample = true;
-                        mIsPermitted = true;
                         mIsUserPermitted = true;
-                        mIsCommandLineDisabled = false;
                         mIsNetworkAvailable = false; // Will cause us to fail uploads
                         mIsEnabledForTests = false;
                     }
@@ -513,8 +511,6 @@ public class MinidumpUploaderTest extends CrashTestCase {
                     // This setup ensures we depend on
                     // isUsageAndCrashReportingPermittedByUser().
                     mIsInSample = true;
-                    mIsPermitted = true;
-                    mIsCommandLineDisabled = false;
                     mIsNetworkAvailable = true;
                     mIsEnabledForTests = false;
                 }

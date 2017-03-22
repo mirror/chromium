@@ -101,6 +101,7 @@ void MouseEventManager::clear() {
   m_svgPan = false;
   m_dragStartPos = LayoutPoint();
   m_fakeMouseMoveEventTimer.stop();
+  resetDragState();
 }
 
 MouseEventManager::~MouseEventManager() = default;
@@ -231,68 +232,50 @@ WebInputEventResult MouseEventManager::setMousePositionAndDispatchMouseEvent(
 }
 
 WebInputEventResult MouseEventManager::dispatchMouseClickIfNeeded(
-    Node* target,
-    const WebMouseEvent& mouseEvent,
-    const String& canvasRegionId,
-    Node* targetWithoutCapture) {
+    const MouseEventWithHitTestResults& mev) {
   // We only prevent click event when the click may cause contextmenu to popup.
   // However, we always send auxclick.
   bool contextMenuEvent =
       !RuntimeEnabledFeatures::auxclickEnabled() &&
-      mouseEvent.button == WebPointerProperties::Button::Right;
+      mev.event().button == WebPointerProperties::Button::Right;
 #if OS(MACOSX)
   // FIXME: The Mac port achieves the same behavior by checking whether the
   // context menu is currently open in WebPage::mouseEvent(). Consider merging
   // the implementations.
-  if (mouseEvent.button == WebPointerProperties::Button::Left &&
-      mouseEvent.modifiers() & WebInputEvent::Modifiers::ControlKey)
+  if (mev.event().button == WebPointerProperties::Button::Left &&
+      mev.event().modifiers() & WebInputEvent::Modifiers::ControlKey)
     contextMenuEvent = true;
 #endif
 
   WebInputEventResult clickEventResult = WebInputEventResult::NotHandled;
-  const bool shouldDispatchClickEvent = m_clickCount > 0 && !contextMenuEvent &&
-                                        target && m_clickNode &&
-                                        target->canParticipateInFlatTree() &&
-                                        m_clickNode->canParticipateInFlatTree();
+  const bool shouldDispatchClickEvent =
+      m_clickCount > 0 && !contextMenuEvent && mev.innerNode() && m_clickNode &&
+      mev.innerNode()->canParticipateInFlatTree() &&
+      m_clickNode->canParticipateInFlatTree() &&
+      !(m_frame->eventHandler().selectionController().hasExtendedSelection() &&
+        isLinkSelection(mev));
   if (shouldDispatchClickEvent) {
     Node* clickTargetNode = nullptr;
     // Updates distribution because a 'mouseup' event listener can make the
     // tree dirty at dispatchMouseEvent() invocation above.
     // Unless distribution is updated, commonAncestor would hit ASSERT.
-    if (m_clickNode == target) {
+    if (m_clickNode == mev.innerNode()) {
       clickTargetNode = m_clickNode;
       clickTargetNode->updateDistribution();
-    } else if (m_clickNode->document() == target->document()) {
+    } else if (m_clickNode->document() == mev.innerNode()->document()) {
       m_clickNode->updateDistribution();
-      target->updateDistribution();
-      clickTargetNode = target->commonAncestor(
+      mev.innerNode()->updateDistribution();
+      clickTargetNode = mev.innerNode()->commonAncestor(
           *m_clickNode, EventHandlingUtil::parentForClickEvent);
     }
-
-    // This block is only for the purpose of gathering the metric and can be
-    // removed as soon as we don't need the metric.
-    if (targetWithoutCapture != target) {
-      Node* alternativeClickTargetNode = nullptr;
-      if (m_clickNode == targetWithoutCapture) {
-        alternativeClickTargetNode = m_clickNode;
-      } else if (m_clickNode->document() == targetWithoutCapture->document()) {
-        alternativeClickTargetNode = targetWithoutCapture->commonAncestor(
-            *m_clickNode, EventHandlingUtil::parentForClickEvent);
-      }
-      if (alternativeClickTargetNode != clickTargetNode) {
-        UseCounter::count(m_frame,
-                          UseCounter::PointerEventClickRetargetCausedByCapture);
-      }
-    }
-
     if (clickTargetNode) {
       clickEventResult = dispatchMouseEvent(
           clickTargetNode,
           !RuntimeEnabledFeatures::auxclickEnabled() ||
-                  (mouseEvent.button == WebPointerProperties::Button::Left)
+                  (mev.event().button == WebPointerProperties::Button::Left)
               ? EventTypeNames::click
               : EventTypeNames::auxclick,
-          mouseEvent, canvasRegionId, nullptr);
+          mev.event(), mev.canvasRegionId(), nullptr);
     }
   }
   return clickEventResult;
@@ -592,8 +575,8 @@ WebInputEventResult MouseEventManager::handleMousePressEvent(
 
   bool singleClick = event.event().clickCount <= 1;
 
-  m_mouseDownMayStartDrag = singleClick && !isSelectionOverLink(event) &&
-                            !isExtendingSelection(event);
+  m_mouseDownMayStartDrag =
+      singleClick && !isLinkSelection(event) && !isExtendingSelection(event);
 
   m_frame->eventHandler().selectionController().handleMousePressEvent(event);
 
@@ -936,6 +919,8 @@ WebInputEventResult MouseEventManager::dispatchDragEvent(
 }
 
 void MouseEventManager::clearDragDataTransfer() {
+  if (!m_frame->page())
+    return;
   if (dragState().m_dragDataTransfer) {
     dragState().m_dragDataTransfer->clearDragImage();
     dragState().m_dragDataTransfer->setAccessPolicy(DataTransferNumb);

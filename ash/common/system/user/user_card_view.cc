@@ -11,7 +11,7 @@
 #include "ash/common/ash_view_ids.h"
 #include "ash/common/login_status.h"
 #include "ash/common/media_controller.h"
-#include "ash/common/session/session_state_delegate.h"
+#include "ash/common/session/session_controller.h"
 #include "ash/common/system/tray/system_tray_controller.h"
 #include "ash/common/system/tray/system_tray_delegate.h"
 #include "ash/common/system/tray/tray_constants.h"
@@ -19,6 +19,7 @@
 #include "ash/common/system/user/rounded_image_view.h"
 #include "ash/common/wm_shell.h"
 #include "ash/resources/vector_icons/vector_icons.h"
+#include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "base/i18n/rtl.h"
 #include "base/memory/ptr_util.h"
@@ -63,8 +64,10 @@ views::View* CreateUserAvatarView(LoginStatus login_status, int user_index) {
         gfx::CreateVectorIcon(kSystemMenuGuestIcon, kMenuIconColor);
     image_view->SetImage(icon, icon.size());
   } else {
-    SessionStateDelegate* delegate = WmShell::Get()->GetSessionStateDelegate();
-    image_view->SetImage(delegate->GetUserInfo(user_index)->GetImage(),
+    SessionController* controller = Shell::Get()->session_controller();
+    // TODO(xiyuan); HiDpi avatar support. http://crbug.com/702689
+    image_view->SetImage(gfx::ImageSkia::CreateFrom1xBitmap(
+                             controller->GetUserSession(user_index)->avatar),
                          gfx::Size(kTrayItemSize, kTrayItemSize));
   }
 
@@ -118,15 +121,13 @@ PublicAccountUserDetails::PublicAccountUserDetails(int max_width)
   // Retrieve the user's display name and wrap it with markers.
   // Note that since this is a public account it always has to be the primary
   // user.
-  base::string16 display_name = WmShell::Get()
-                                    ->GetSessionStateDelegate()
-                                    ->GetUserInfo(0)
-                                    ->GetDisplayName();
+  base::string16 display_name = base::UTF8ToUTF16(
+      Shell::Get()->session_controller()->GetUserSession(0)->display_name);
   base::RemoveChars(display_name, kDisplayNameMark, &display_name);
   display_name = kDisplayNameMark[0] + display_name + kDisplayNameMark[0];
   // Retrieve the domain managing the device and wrap it with markers.
   base::string16 domain = base::UTF8ToUTF16(
-      WmShell::Get()->system_tray_delegate()->GetEnterpriseDomain());
+      Shell::Get()->system_tray_delegate()->GetEnterpriseDomain());
   base::RemoveChars(domain, kDisplayNameMark, &domain);
   base::i18n::WrapStringWithLTRFormatting(&domain);
   // Retrieve the label text, inserting the display name and domain.
@@ -230,7 +231,7 @@ void PublicAccountUserDetails::GetAccessibleNodeData(
 void PublicAccountUserDetails::LinkClicked(views::Link* source,
                                            int event_flags) {
   DCHECK_EQ(source, learn_more_);
-  WmShell::Get()->system_tray_controller()->ShowPublicAccountInfo();
+  Shell::Get()->system_tray_controller()->ShowPublicAccountInfo();
 }
 
 void PublicAccountUserDetails::CalculatePreferredSize() {
@@ -305,7 +306,7 @@ UserCardView::UserCardView(LoginStatus login_status,
   if (!is_active_user())
     SetBorder(views::CreateEmptyBorder(0, kMenuExtraMarginFromLeftEdge, 0, 0));
 
-  WmShell::Get()->media_controller()->AddObserver(this);
+  Shell::Get()->media_controller()->AddObserver(this);
 
   if (login_status == LoginStatus::PUBLIC)
     AddPublicModeUserContent(max_width);
@@ -314,7 +315,7 @@ UserCardView::UserCardView(LoginStatus login_status,
 }
 
 UserCardView::~UserCardView() {
-  WmShell::Get()->media_controller()->RemoveObserver(this);
+  Shell::Get()->media_controller()->RemoveObserver(this);
 }
 
 void UserCardView::PaintChildren(const ui::PaintContext& context) {
@@ -395,11 +396,12 @@ void UserCardView::AddPublicModeUserContent(int max_width) {
 void UserCardView::AddUserContent(views::BoxLayout* layout,
                                   LoginStatus login_status) {
   AddChildView(CreateUserAvatarView(login_status, user_index_));
-  SessionStateDelegate* delegate = WmShell::Get()->GetSessionStateDelegate();
+  SessionController* controller = Shell::Get()->session_controller();
   base::string16 user_name_string =
       login_status == LoginStatus::GUEST
           ? l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_GUEST_LABEL)
-          : delegate->GetUserInfo(user_index_)->GetDisplayName();
+          : base::UTF8ToUTF16(
+                controller->GetUserSession(user_index_)->display_name);
   user_name_ = new views::Label(user_name_string);
   user_name_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   TrayPopupItemStyle user_name_style(
@@ -415,10 +417,10 @@ void UserCardView::AddUserContent(views::BoxLayout* layout,
   base::string16 user_email_string;
   if (login_status != LoginStatus::GUEST) {
     user_email_string =
-        WmShell::Get()->system_tray_delegate()->IsUserSupervised()
+        Shell::Get()->system_tray_delegate()->IsUserSupervised()
             ? l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_SUPERVISED_LABEL)
             : base::UTF8ToUTF16(
-                  delegate->GetUserInfo(user_index_)->GetDisplayEmail());
+                  controller->GetUserSession(user_index_)->display_email);
   }
   user_email->SetText(user_email_string);
   user_email->SetHorizontalAlignment(gfx::ALIGN_LEFT);
@@ -462,7 +464,7 @@ void UserCardView::AddUserContent(views::BoxLayout* layout,
     media_capture_icon_->set_id(VIEW_ID_USER_VIEW_MEDIA_INDICATOR);
     AddChildView(media_capture_icon_);
 
-    WmShell::Get()->media_controller()->RequestCaptureState();
+    Shell::Get()->media_controller()->RequestCaptureState();
   }
 }
 

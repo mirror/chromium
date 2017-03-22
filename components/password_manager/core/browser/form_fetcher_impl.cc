@@ -87,6 +87,11 @@ void FormFetcherImpl::AddConsumer(FormFetcher::Consumer* consumer) {
     consumer->ProcessMatches(weak_non_federated_, filtered_count_);
 }
 
+void FormFetcherImpl::RemoveConsumer(FormFetcher::Consumer* consumer) {
+  size_t removed_consumers = consumers_.erase(consumer);
+  DCHECK_EQ(1u, removed_consumers);
+}
+
 FormFetcherImpl::State FormFetcherImpl::GetState() const {
   return state_;
 }
@@ -123,8 +128,8 @@ void FormFetcherImpl::OnGetPasswordStoreResults(
 
   if (should_migrate_http_passwords_ && results.empty() &&
       form_digest_.origin.SchemeIs(url::kHttpsScheme)) {
-    http_migrator_ = base::MakeUnique<HttpPasswordMigrator>(form_digest_.origin,
-                                                            client_, this);
+    http_migrator_ = base::MakeUnique<HttpPasswordStoreMigrator>(
+        form_digest_.origin, client_, this);
     return;
   }
 
@@ -196,7 +201,7 @@ std::unique_ptr<FormFetcher> FormFetcherImpl::Clone() {
   result->state_ = this->state_;
   result->need_to_refetch_ = this->need_to_refetch_;
 
-  // Move needed for upcasting.
+  // TODO(crbug.com/703565): remove std::move() once Xcode 9.0+ is required.
   return std::move(result);
 }
 

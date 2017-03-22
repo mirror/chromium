@@ -11,8 +11,8 @@
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "components/image_fetcher/image_fetcher.h"
-#include "components/image_fetcher/image_fetcher_delegate.h"
+#include "components/image_fetcher/core/image_fetcher.h"
+#include "components/image_fetcher/core/image_fetcher_delegate.h"
 #include "components/leveldb_proto/proto_database.h"
 #include "components/leveldb_proto/testing/fake_db.h"
 #include "components/suggestions/image_encoder.h"
@@ -49,9 +49,9 @@ class MockImageFetcher : public ImageFetcher {
   MockImageFetcher() {}
   virtual ~MockImageFetcher() {}
   MOCK_METHOD3(StartOrQueueNetworkRequest,
-               void(const std::string&, const GURL&,
-                    base::Callback<void(const std::string&,
-                                        const gfx::Image&)>));
+               void(const std::string&,
+                    const GURL&,
+                    const ImageFetcherCallback&));
   MOCK_METHOD1(SetImageFetcherDelegate, void(ImageFetcherDelegate*));
   MOCK_METHOD1(SetDataUseServiceName, void(DataUseServiceName));
   MOCK_METHOD1(SetDesiredImageFrameSize, void(const gfx::Size&));

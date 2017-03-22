@@ -5,7 +5,7 @@
 #include "ash/common/system/chromeos/settings/tray_settings.h"
 
 #include "ash/common/material_design/material_design_controller.h"
-#include "ash/common/session/session_state_delegate.h"
+#include "ash/common/session/session_controller.h"
 #include "ash/common/system/chromeos/power/power_status.h"
 #include "ash/common/system/chromeos/power/power_status_view.h"
 #include "ash/common/system/tray/actionable_view.h"
@@ -16,6 +16,7 @@
 #include "ash/common/system/tray/tray_popup_utils.h"
 #include "ash/common/wm_shell.h"
 #include "ash/resources/grit/ash_resources.h"
+#include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "base/logging.h"
 #include "base/strings/utf_string_conversions.h"
@@ -49,9 +50,7 @@ class SettingsDefaultView : public ActionableView,
     bool power_view_right_align = false;
     if (login_status_ != LoginStatus::NOT_LOGGED_IN &&
         login_status_ != LoginStatus::LOCKED &&
-        !WmShell::Get()
-             ->GetSessionStateDelegate()
-             ->IsInSecondaryLoginScreen()) {
+        !Shell::Get()->session_controller()->IsInSecondaryLoginScreen()) {
       ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
       views::ImageView* icon = TrayPopupUtils::CreateMainImageView();
 
@@ -85,11 +84,11 @@ class SettingsDefaultView : public ActionableView,
   bool PerformAction(const ui::Event& event) override {
     if (login_status_ == LoginStatus::NOT_LOGGED_IN ||
         login_status_ == LoginStatus::LOCKED ||
-        WmShell::Get()->GetSessionStateDelegate()->IsInSecondaryLoginScreen()) {
+        Shell::Get()->session_controller()->IsInSecondaryLoginScreen()) {
       return false;
     }
 
-    WmShell::Get()->system_tray_controller()->ShowSettings();
+    Shell::Get()->system_tray_controller()->ShowSettings();
     CloseSystemBubble();
     return true;
   }
@@ -151,7 +150,7 @@ views::View* TraySettings::CreateDefaultView(LoginStatus status) {
   if ((status == LoginStatus::NOT_LOGGED_IN || status == LoginStatus::LOCKED) &&
       !PowerStatus::Get()->IsBatteryPresent())
     return nullptr;
-  if (!WmShell::Get()->system_tray_delegate()->ShouldShowSettings())
+  if (!Shell::Get()->system_tray_delegate()->ShouldShowSettings())
     return nullptr;
   CHECK(default_view_ == nullptr);
   default_view_ = new tray::SettingsDefaultView(this, status);

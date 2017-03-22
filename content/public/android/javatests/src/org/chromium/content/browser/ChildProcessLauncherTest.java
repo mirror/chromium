@@ -20,12 +20,13 @@ import android.test.InstrumentationTestCase;
 import org.chromium.base.BaseSwitches;
 import org.chromium.base.library_loader.LibraryLoader;
 import org.chromium.base.library_loader.LibraryProcessType;
+import org.chromium.base.process_launcher.ChildProcessCreationParams;
+import org.chromium.base.process_launcher.FileDescriptorInfo;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Feature;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.common.ContentSwitches;
-import org.chromium.content.common.FileDescriptorInfo;
 import org.chromium.content_shell_apk.ChildProcessLauncherTestHelperService;
 
 import java.util.concurrent.Callable;

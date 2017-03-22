@@ -102,6 +102,7 @@ class AuraTestBase : public testing::Test,
       Window* window,
       const std::string& name,
       std::unique_ptr<std::vector<uint8_t>>* new_data) override;
+  void OnWmSetModalType(Window* window, ui::ModalType type) override;
   void OnWmSetCanFocus(Window* window, bool can_focus) override;
   Window* OnWmCreateTopLevelWindow(
       ui::mojom::WindowType window_type,
@@ -113,8 +114,11 @@ class AuraTestBase : public testing::Test,
                       const display::Display& display) override;
   void OnWmDisplayRemoved(WindowTreeHostMus* window_tree_host) override;
   void OnWmDisplayModified(const display::Display& display) override;
-  ui::mojom::EventResult OnAccelerator(uint32_t id,
-                                       const ui::Event& event) override;
+  ui::mojom::EventResult OnAccelerator(
+      uint32_t id,
+      const ui::Event& event,
+      std::unordered_map<std::string, std::vector<uint8_t>>* properties)
+      override;
   void OnWmPerformMoveLoop(Window* window,
                            ui::mojom::MoveLoopSource source,
                            const gfx::Point& cursor_location,

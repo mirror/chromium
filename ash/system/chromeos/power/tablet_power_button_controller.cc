@@ -5,7 +5,7 @@
 #include "ash/system/chromeos/power/tablet_power_button_controller.h"
 
 #include "ash/common/accessibility_delegate.h"
-#include "ash/common/session/session_state_delegate.h"
+#include "ash/common/session/session_controller.h"
 #include "ash/common/shell_delegate.h"
 #include "ash/common/wm/maximize_mode/maximize_mode_controller.h"
 #include "ash/common/wm_shell.h"
@@ -43,7 +43,7 @@ constexpr int kIgnoreRepeatedButtonUpMs = 500;
 // Returns true if device is a convertible/tablet device, otherwise false.
 bool IsTabletModeSupported() {
   MaximizeModeController* maximize_mode_controller =
-      WmShell::Get()->maximize_mode_controller();
+      Shell::Get()->maximize_mode_controller();
   return maximize_mode_controller &&
          maximize_mode_controller->CanEnterMaximizeMode();
 }
@@ -51,7 +51,7 @@ bool IsTabletModeSupported() {
 // Returns true if device is currently in tablet/maximize mode, otherwise false.
 bool IsTabletModeActive() {
   MaximizeModeController* maximize_mode_controller =
-      WmShell::Get()->maximize_mode_controller();
+      Shell::Get()->maximize_mode_controller();
   return maximize_mode_controller &&
          maximize_mode_controller->IsMaximizeModeWindowManagerEnabled();
 }
@@ -252,13 +252,12 @@ void TabletPowerButtonController::OnShutdownTimeout() {
 }
 
 void TabletPowerButtonController::LockScreenIfRequired() {
-  SessionStateDelegate* session_state_delegate =
-      WmShell::Get()->GetSessionStateDelegate();
-  if (session_state_delegate->ShouldLockScreenAutomatically() &&
-      session_state_delegate->CanLockScreen() &&
-      !session_state_delegate->IsUserSessionBlocked() &&
+  SessionController* session_controller = Shell::Get()->session_controller();
+  if (session_controller->ShouldLockScreenAutomatically() &&
+      session_controller->CanLockScreen() &&
+      !session_controller->IsUserSessionBlocked() &&
       !controller_->LockRequested()) {
-    session_state_delegate->LockScreen();
+    session_controller->LockScreen();
   }
 }
 

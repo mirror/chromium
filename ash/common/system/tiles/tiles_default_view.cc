@@ -5,7 +5,7 @@
 #include "ash/common/system/tiles/tiles_default_view.h"
 
 #include "ash/common/metrics/user_metrics_action.h"
-#include "ash/common/session/session_state_delegate.h"
+#include "ash/common/session/session_controller.h"
 #include "ash/common/shutdown_controller.h"
 #include "ash/common/system/tray/system_menu_button.h"
 #include "ash/common/system/tray/system_tray.h"
@@ -66,7 +66,8 @@ void TilesDefaultView::Init() {
   settings_button_ = new SystemMenuButton(
       this, TrayPopupInkDropStyle::HOST_CENTERED, kSystemMenuSettingsIcon,
       IDS_ASH_STATUS_TRAY_SETTINGS);
-  if (disable_buttons || !shell->system_tray_delegate()->ShouldShowSettings())
+  if (disable_buttons ||
+      !Shell::Get()->system_tray_delegate()->ShouldShowSettings())
     settings_button_->SetEnabled(false);
   AddChildView(settings_button_);
   AddChildView(TrayPopupUtils::CreateVerticalSeparator());
@@ -89,7 +90,7 @@ void TilesDefaultView::Init() {
   lock_button_ =
       new SystemMenuButton(this, TrayPopupInkDropStyle::HOST_CENTERED,
                            kSystemMenuLockIcon, IDS_ASH_STATUS_TRAY_LOCK);
-  if (disable_buttons || !shell->GetSessionStateDelegate()->CanLockScreen())
+  if (disable_buttons || !Shell::Get()->session_controller()->CanLockScreen())
     lock_button_->SetEnabled(false);
 
   AddChildView(lock_button_);
@@ -101,7 +102,7 @@ void TilesDefaultView::Init() {
   AddChildView(power_button_);
   // This object is recreated every time the menu opens. Don't bother updating
   // the tooltip if the shutdown policy changes while the menu is open.
-  bool reboot = WmShell::Get()->shutdown_controller()->reboot_on_shutdown();
+  bool reboot = shell->shutdown_controller()->reboot_on_shutdown();
   power_button_->SetTooltipText(l10n_util::GetStringUTF16(
       reboot ? IDS_ASH_STATUS_TRAY_REBOOT : IDS_ASH_STATUS_TRAY_SHUTDOWN));
 }
@@ -112,10 +113,10 @@ void TilesDefaultView::ButtonPressed(views::Button* sender,
   WmShell* shell = WmShell::Get();
   if (sender == settings_button_) {
     shell->RecordUserMetricsAction(UMA_TRAY_SETTINGS);
-    shell->system_tray_controller()->ShowSettings();
+    Shell::Get()->system_tray_controller()->ShowSettings();
   } else if (sender == help_button_) {
     shell->RecordUserMetricsAction(UMA_TRAY_HELP);
-    shell->system_tray_controller()->ShowHelp();
+    Shell::Get()->system_tray_controller()->ShowHelp();
   } else if (sender == lock_button_) {
     shell->RecordUserMetricsAction(UMA_TRAY_LOCK_SCREEN);
     chromeos::DBusThreadManager::Get()

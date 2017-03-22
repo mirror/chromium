@@ -42,6 +42,10 @@
 #include "core/workers/ParentFrameTaskRunners.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "core/workers/WorkerThread.h"
+#include "modules/background_fetch/BackgroundFetchClickEvent.h"
+#include "modules/background_fetch/BackgroundFetchClickEventInit.h"
+#include "modules/background_fetch/BackgroundFetchEvent.h"
+#include "modules/background_fetch/BackgroundFetchEventInit.h"
 #include "modules/background_sync/SyncEvent.h"
 #include "modules/fetch/Headers.h"
 #include "modules/notifications/Notification.h"
@@ -50,6 +54,7 @@
 #include "modules/payments/PaymentAppRequest.h"
 #include "modules/payments/PaymentAppRequestConversion.h"
 #include "modules/payments/PaymentRequestEvent.h"
+#include "modules/payments/PaymentRequestRespondWithObserver.h"
 #include "modules/push_messaging/PushEvent.h"
 #include "modules/push_messaging/PushMessageData.h"
 #include "modules/serviceworkers/ExtendableEvent.h"
@@ -90,12 +95,54 @@ ServiceWorkerGlobalScopeProxy::~ServiceWorkerGlobalScopeProxy() {
 DEFINE_TRACE(ServiceWorkerGlobalScopeProxy) {
   visitor->trace(m_document);
   visitor->trace(m_parentFrameTaskRunners);
-  visitor->trace(m_pendingPreloadFetchEvents);
 }
 
 void ServiceWorkerGlobalScopeProxy::setRegistration(
     std::unique_ptr<WebServiceWorkerRegistration::Handle> handle) {
   workerGlobalScope()->setRegistration(std::move(handle));
+}
+
+void ServiceWorkerGlobalScopeProxy::dispatchBackgroundFetchAbortEvent(
+    int eventID,
+    const WebString& tag) {
+  WaitUntilObserver* observer = WaitUntilObserver::create(
+      workerGlobalScope(), WaitUntilObserver::BackgroundFetchAbort, eventID);
+
+  BackgroundFetchClickEventInit init;
+  init.setTag(tag);
+
+  BackgroundFetchEvent* event = BackgroundFetchEvent::create(
+      EventTypeNames::backgroundfetchabort, init, observer);
+
+  workerGlobalScope()->dispatchExtendableEvent(event, observer);
+}
+
+void ServiceWorkerGlobalScopeProxy::dispatchBackgroundFetchClickEvent(
+    int eventID,
+    const WebString& tag,
+    BackgroundFetchState status) {
+  WaitUntilObserver* observer = WaitUntilObserver::create(
+      workerGlobalScope(), WaitUntilObserver::BackgroundFetchClick, eventID);
+
+  BackgroundFetchClickEventInit init;
+  init.setTag(tag);
+
+  switch (status) {
+    case BackgroundFetchState::Pending:
+      init.setState("pending");
+      break;
+    case BackgroundFetchState::Succeeded:
+      init.setState("succeeded");
+      break;
+    case BackgroundFetchState::Failed:
+      init.setState("failed");
+      break;
+  }
+
+  BackgroundFetchClickEvent* event = BackgroundFetchClickEvent::create(
+      EventTypeNames::backgroundfetchclick, init, observer);
+
+  workerGlobalScope()->dispatchExtendableEvent(event, observer);
 }
 
 void ServiceWorkerGlobalScopeProxy::dispatchActivateEvent(int eventID) {
@@ -341,15 +388,27 @@ void ServiceWorkerGlobalScopeProxy::dispatchSyncEvent(
 void ServiceWorkerGlobalScopeProxy::dispatchPaymentRequestEvent(
     int eventID,
     const WebPaymentAppRequest& webAppRequest) {
-  WaitUntilObserver* observer = WaitUntilObserver::create(
+  WaitUntilObserver* waitUntilObserver = WaitUntilObserver::create(
       workerGlobalScope(), WaitUntilObserver::PaymentRequest, eventID);
+  RespondWithObserver* respondWithObserver =
+      PaymentRequestRespondWithObserver::create(workerGlobalScope(), eventID,
+                                                waitUntilObserver);
+
   Event* event = PaymentRequestEvent::create(
       EventTypeNames::paymentrequest,
       PaymentAppRequestConversion::toPaymentAppRequest(
           workerGlobalScope()->scriptController()->getScriptState(),
           webAppRequest),
-      observer);
-  workerGlobalScope()->dispatchExtendableEvent(event, observer);
+      respondWithObserver, waitUntilObserver);
+
+  waitUntilObserver->willDispatchEvent();
+  respondWithObserver->willDispatchEvent();
+  DispatchEventResult dispatchResult =
+      workerGlobalScope()->dispatchEvent(event);
+  respondWithObserver->didDispatchEvent(dispatchResult);
+  // false is okay because waitUntil for payment request event doesn't care
+  // about the promise rejection or an uncaught runtime script error.
+  waitUntilObserver->didDispatchEvent(false /* errorOccurred */);
 }
 
 bool ServiceWorkerGlobalScopeProxy::hasFetchEventHandler() {

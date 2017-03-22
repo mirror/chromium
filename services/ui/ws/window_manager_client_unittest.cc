@@ -54,6 +54,7 @@ class TestWindowManagerDelegate : public aura::WindowManagerDelegate {
       std::unique_ptr<std::vector<uint8_t>>* new_data) override {
     return false;
   }
+  void OnWmSetModalType(aura::Window* window, ui::ModalType type) override {}
   void OnWmSetCanFocus(aura::Window* window, bool can_focus) override {}
   aura::Window* OnWmCreateTopLevelWindow(
       ui::mojom::WindowType window_type,
@@ -67,8 +68,11 @@ class TestWindowManagerDelegate : public aura::WindowManagerDelegate {
                       const display::Display& display) override {}
   void OnWmDisplayRemoved(aura::WindowTreeHostMus* window_tree_host) override {}
   void OnWmDisplayModified(const display::Display& display) override {}
-  mojom::EventResult OnAccelerator(uint32_t accelerator_id,
-                                   const ui::Event& event) override {
+  mojom::EventResult OnAccelerator(
+      uint32_t accelerator_id,
+      const ui::Event& event,
+      std::unordered_map<std::string, std::vector<uint8_t>>* properties)
+      override {
     return ui::mojom::EventResult::UNHANDLED;
   }
   void OnWmPerformMoveLoop(aura::Window* window,
@@ -714,7 +718,8 @@ TEST_F(WindowServerTest, EstablishConnectionViaFactory) {
   aura::WindowTreeClient second_client(connector(), this, nullptr, nullptr,
                                        nullptr, false);
   second_client.ConnectViaWindowTreeFactory();
-  aura::WindowTreeHostMus window_tree_host_in_second_client(&second_client);
+  aura::WindowTreeHostMus window_tree_host_in_second_client(
+      &second_client, cc::FrameSinkId(1, 1));
   window_tree_host_in_second_client.InitHost();
   window_tree_host_in_second_client.window()->Show();
   ASSERT_TRUE(second_client.GetRoots().count(
@@ -743,7 +748,8 @@ TEST_F(WindowServerTest, OnWindowHierarchyChangedIncludesTransientParent) {
   aura::WindowTreeClient second_client(connector(), this, nullptr, nullptr,
                                        nullptr, false);
   second_client.ConnectViaWindowTreeFactory();
-  aura::WindowTreeHostMus window_tree_host_in_second_client(&second_client);
+  aura::WindowTreeHostMus window_tree_host_in_second_client(
+      &second_client, cc::FrameSinkId(1, 1));
   window_tree_host_in_second_client.InitHost();
   window_tree_host_in_second_client.window()->Show();
   aura::Window* second_client_child = NewVisibleWindow(

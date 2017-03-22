@@ -229,9 +229,6 @@ const char kEafePath[] = "eafe-path";
 // EAFE URL to use for Easy bootstrapping.
 const char kEafeUrl[] = "eafe-url";
 
-// Enables AD functionality.
-const char kEnableAd[] = "enable-ad";
-
 // Enables the Android Wallpapers App as the default app on Chrome OS.
 const char kEnableAndroidWallpapersApp[] = "enable-android-wallpapers-app";
 
@@ -303,6 +300,9 @@ const char kEnableTouchSupportForScreenMagnifier[] =
 // Enables the chromecast support for video player app.
 const char kEnableVideoPlayerChromecastSupport[] =
     "enable-video-player-chromecast-support";
+
+// Enables the VoiceInteraction support.
+const char kEnableVoiceInteraction[] = "enable-voice-interaction";
 
 // Disables ARC for managed accounts.
 const char kEnterpriseDisableArc[] = "enterprise-disable-arc";

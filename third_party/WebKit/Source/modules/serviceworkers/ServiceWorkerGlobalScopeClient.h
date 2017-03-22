@@ -45,6 +45,7 @@
 
 namespace blink {
 
+struct WebPaymentAppResponse;
 struct WebServiceWorkerClientQueryOptions;
 class ExecutionContext;
 class WebServiceWorkerResponse;
@@ -77,6 +78,12 @@ class MODULES_EXPORT ServiceWorkerGlobalScopeClient
   virtual void didHandleActivateEvent(int eventID,
                                       WebServiceWorkerEventResult,
                                       double eventDispatchTime) = 0;
+  virtual void didHandleBackgroundFetchAbortEvent(int eventID,
+                                                  WebServiceWorkerEventResult,
+                                                  double eventDispatchTime) = 0;
+  virtual void didHandleBackgroundFetchClickEvent(int eventID,
+                                                  WebServiceWorkerEventResult,
+                                                  double eventDispatchTime) = 0;
   virtual void didHandleExtendableMessageEvent(int eventID,
                                                WebServiceWorkerEventResult,
                                                double eventDispatchTime) = 0;
@@ -87,6 +94,9 @@ class MODULES_EXPORT ServiceWorkerGlobalScopeClient
   virtual void respondToFetchEvent(int fetchEventID,
                                    const WebServiceWorkerResponse&,
                                    double eventDispatchTime) = 0;
+  virtual void respondToPaymentRequestEvent(int eventID,
+                                            const WebPaymentAppResponse&,
+                                            double eventDispatchTime) = 0;
   virtual void didHandleFetchEvent(int fetchEventID,
                                    WebServiceWorkerEventResult,
                                    double eventDispatchTime) = 0;

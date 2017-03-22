@@ -606,6 +606,7 @@ if (!is_android) {
         "../../ash/accelerators/accelerator_interactive_uitest_chromeos.cc",
         "../browser/chromeos/accessibility/accessibility_highlight_manager_interactive_uitest.cc",
         "../browser/chromeos/accessibility/magnification_controller_browsertest.cc",
+        "../browser/chromeos/accessibility/select_to_speak_browsertest.cc",
         "../browser/chromeos/accessibility/spoken_feedback_browsertest.cc",
         "../browser/chromeos/accessibility/sticky_keys_browsertest.cc",
         "../browser/chromeos/input_method/textinput_browsertest.cc",
@@ -1044,7 +1045,7 @@ if (!is_android) {
         "data/webui/settings/passwords_and_autofill_fake_data.js",
         "data/webui/settings/passwords_and_forms_browsertest.js",
         "data/webui/settings/settings_autofill_section_browsertest.js",
-        "data/webui/settings/settings_idle_render_browsertest.js",
+        "data/webui/settings/settings_idle_load_browsertest.js",
         "data/webui/settings/settings_page_browsertest.js",
         "data/webui/settings/settings_passwords_section_browsertest.js",
         "data/webui/settings/settings_subpage_browsertest.js",
@@ -1833,7 +1834,9 @@ test("browser_tests") {
       "../browser/ui/webui/options/preferences_browsertest.h",
       "../browser/ui/webui/password_manager_internals/password_manager_internals_ui_browsertest.cc",
       "../browser/ui/webui/policy_ui_browsertest.cc",
+      "../browser/ui/webui/prefs_internals_browsertest.cc",
       "../browser/ui/webui/print_preview/print_preview_ui_browsertest.cc",
+      "../browser/ui/webui/profile_helper_browsertest.cc",
       "../browser/ui/webui/set_as_default_browser_ui_browsertest_win.cc",
       "../browser/ui/webui/settings/md_settings_ui_browsertest.cc",
       "../browser/ui/webui/signin/inline_login_ui_browsertest.cc",
@@ -2159,6 +2162,7 @@ test("browser_tests") {
           # the corresponding files are moved in chrome_browser_ui.gypi (i.e. out of
           # chrome_browser_ui_views_non_mac_sources). http://crbug.com/404979.
           "../browser/ui/views/autofill/autofill_popup_base_view_browsertest.cc",
+          "../browser/ui/views/autofill/autofill_popup_view_views_browsertest.cc",
           "../browser/ui/views/autofill/card_unmask_prompt_view_tester_views.cc",
           "../browser/ui/views/autofill/card_unmask_prompt_view_tester_views.h",
           "../browser/ui/views/autofill/password_generation_popup_view_tester_views.cc",
@@ -2377,6 +2381,7 @@ test("browser_tests") {
 
         # inline login UI is disabled on chromeos
         "../browser/ui/views/sync/profile_signin_confirmation_dialog_views_browsertest.cc",
+        "../browser/ui/webui/profile_helper_browsertest.cc",
         "../browser/ui/webui/signin/inline_login_ui_browsertest.cc",
 
         # chromeos does not use the desktop user manager
@@ -3090,6 +3095,7 @@ test("unit_tests") {
     "../browser/android/mock_location_settings.cc",
     "../browser/android/mock_location_settings.h",
     "../browser/android/net/external_estimate_provider_android_unittest.cc",
+    "../browser/android/physical_web/eddystone_encoder_bridge_unittest.cc",
     "../browser/android/physical_web/physical_web_data_source_android_unittest.cc",
     "../browser/android/preferences/pref_service_bridge_unittest.cc",
     "../browser/android/shortcut_info_unittest.cc",
@@ -3918,6 +3924,7 @@ test("unit_tests") {
       "../browser/extensions/api/web_request/web_request_event_details_unittest.cc",
       "../browser/extensions/api/web_request/web_request_permissions_unittest.cc",
       "../browser/extensions/app_data_migrator_unittest.cc",
+      "../browser/extensions/blacklist_check_unittest.cc",
       "../browser/extensions/blacklist_state_fetcher_unittest.cc",
       "../browser/extensions/bookmark_app_helper_unittest.cc",
       "../browser/extensions/chrome_app_sorting_unittest.cc",
@@ -4129,6 +4136,7 @@ test("unit_tests") {
     deps += [
       "//chrome/common/extensions/api",
       "//extensions:extensions_resources",
+      "//extensions/browser:test_support",
       "//extensions/common",
       "//extensions/strings",
       "//media/cast:test_support",
@@ -4178,8 +4186,6 @@ test("unit_tests") {
       "../browser/ui/ash/multi_user/multi_user_window_manager_chromeos_unittest.cc",
       "../browser/ui/ash/multi_user/user_switch_util_unittest.cc",
       "../browser/ui/ash/session_controller_client_unittest.cc",
-      "../browser/ui/ash/system_tray_delegate_chromeos_unittest.cc",
-      "../browser/ui/ash/tray_bluetooth_helper_unittest.cc",
       "../browser/ui/ash/window_positioner_unittest.cc",
       "../browser/ui/window_sizer/window_sizer_ash_unittest.cc",
     ]
@@ -4212,7 +4218,6 @@ test("unit_tests") {
       "../browser/net/disk_cache_dir_policy_handler_unittest.cc",
       "//chrome/browser/profiles/profile_list_desktop_unittest.cc",
       "//chrome/browser/profiles/profile_statistics_unittest.cc",
-      "//chrome/browser/ui/startup/default_browser_infobar_delegate_unittest.cc",
       "//chrome/browser/ui/startup/startup_browser_creator_impl_unittest.cc",
       "//chrome/browser/ui/startup/startup_tab_provider_unittest.cc",
     ]
@@ -4813,6 +4818,7 @@ test("unit_tests") {
       "../browser/ui/views/apps/app_info_dialog/app_info_permissions_panel_unittest.cc",
       "../browser/ui/views/confirm_bubble_views_unittest.cc",
       "../browser/ui/views/global_error_bubble_view_unittest.cc",
+      "../browser/ui/views/harmony/layout_delegate_unittest.cc",
       "../browser/ui/views/page_info/website_settings_popup_view_unittest.cc",
       "../browser/ui/views/payments/credit_card_editor_view_controller_unittest.cc",
       "../browser/ui/views/payments/payment_request_item_list_unittest.cc",
@@ -5016,6 +5022,7 @@ if (!is_android) {
       "//chrome/child",
       "//components/crash/core/common",
       "//components/flags_ui:switches",
+      "//gpu/config",
     ]
   }
 }

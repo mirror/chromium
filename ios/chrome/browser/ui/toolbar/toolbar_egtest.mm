@@ -22,7 +22,6 @@
 #import "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h"
 #import "ios/chrome/test/earl_grey/chrome_matchers.h"
 #import "ios/chrome/test/earl_grey/chrome_test_case.h"
-#import "ios/testing/earl_grey/disabled_test_macros.h"
 #import "ios/web/public/test/http_server.h"
 #include "ios/web/public/test/http_server_util.h"
 #include "ui/base/l10n/l10n_util_mac.h"
@@ -354,6 +353,10 @@ void SelectNewTabPagePanel(NewTabPage::PanelIdentifier panel_type) {
 
 // Tests typing in the omnibox.
 - (void)testToolbarOmniboxTyping {
+  // TODO(crbug.com/642559): Enable this test for iPad when typing bug is fixed.
+  if (IsIPadIdiom()) {
+    EARL_GREY_TEST_DISABLED(@"Disabled for iPad due to a simulator bug.");
+  }
   SelectNewTabPagePanel(NewTabPage::kMostVisitedPanel);
 
   id<GREYMatcher> locationbarButton = grey_allOf(
@@ -434,21 +437,15 @@ void SelectNewTabPagePanel(NewTabPage::PanelIdentifier panel_type) {
                                           nil)]
       assertWithMatcher:grey_sufficientlyVisible()];
 
-  // TODO(crbug.com/642559): Enable these steps for iPad when typing bug
-  // is fixed.
-  if (IsIPadIdiom()) {
-    EARL_GREY_TEST_DISABLED(@"Disabled for iPad due to a simulator bug.");
-  } else {
-    NSString* cancelButton = l10n_util::GetNSString(IDS_CANCEL);
-    NSString* typingShield = @"Hide keyboard";
-    NSString* clearText = IsIPadIdiom() ? typingShield : cancelButton;
+  NSString* cancelButtonText = l10n_util::GetNSString(IDS_CANCEL);
+  NSString* typingShield = @"Hide keyboard";
+  NSString* clearText = IsIPadIdiom() ? typingShield : cancelButtonText;
 
-    [[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(clearText)]
-        performAction:grey_tap()];
-    [[EarlGrey selectElementWithMatcher:chrome_test_util::Omnibox()]
-        assertWithMatcher:chrome_test_util::OmniboxText("")];
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(clearText)]
+      performAction:grey_tap()];
+  [[EarlGrey selectElementWithMatcher:chrome_test_util::Omnibox()]
+      assertWithMatcher:chrome_test_util::OmniboxText("")];
 
-    SelectNewTabPagePanel(NewTabPage::kMostVisitedPanel);
-  }
+  SelectNewTabPagePanel(NewTabPage::kMostVisitedPanel);
 }
 @end

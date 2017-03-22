@@ -105,6 +105,7 @@
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/web/auto_reload_bridge.h"
 #import "ios/chrome/browser/web/external_app_launcher.h"
+#import "ios/chrome/browser/web/navigation_manager_util.h"
 #import "ios/chrome/browser/web/passkit_dialog_provider.h"
 #include "ios/chrome/browser/web/print_observer.h"
 #import "ios/chrome/browser/xcallback_parameters.h"
@@ -481,9 +482,9 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
                               opener:(Tab*)opener
                          openedByDOM:(BOOL)openedByDOM
                                model:(TabModel*)parentModel {
-  std::unique_ptr<web::WebStateImpl> webState(
-      new web::WebStateImpl(browserState));
-  webState->GetNavigationManagerImpl().InitializeSession(openedByDOM);
+  web::WebState::CreateParams params(browserState);
+  params.created_with_opener = openedByDOM;
+  std::unique_ptr<web::WebState> webState = web::WebState::Create(params);
   if ([opener navigationManager]) {
     web::SerializableUserDataManager* userDataManager =
         web::SerializableUserDataManager::FromWebState(webState.get());
@@ -1488,35 +1489,32 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 }
 
 - (void)reloadForDesktopUserAgent {
-  // |loadWithParams| will recreate the removed UIWebView.
+  // This removes the web view, which will be recreated at the end of this.
   [self.webController requirePageReconstruction];
 
   // TODO(crbug.com/228171): A hack in session_controller -addPendingItem
   // discusses making tab responsible for distinguishing history stack
-  // navigation from new navigations. Because we want a new navigation here, we
-  // use |PAGE_TRANSITION_FORM_SUBMIT|. When session_controller changes, so
-  // should this.
-  ui::PageTransition transition =
-      ui::PageTransitionFromInt(ui::PAGE_TRANSITION_FORM_SUBMIT);
-  DCHECK([self navigationManager]);
-  CRWSessionController* sessionController =
-      [self navigationManagerImpl]->GetSessionController();
-  web::NavigationItem* lastUserItem = [sessionController lastUserItem];
-  if (!lastUserItem)
+  // navigation from new navigations.
+  web::NavigationManager* navigationManager = [self navigationManager];
+  DCHECK(navigationManager);
+  web::NavigationItem* lastNonRedirectedItem =
+      GetLastNonRedirectedItem(navigationManager);
+  if (!lastNonRedirectedItem)
     return;
 
-  // |originalUrl| will be empty if a page was open by DOM.
-  GURL reloadURL(lastUserItem->GetOriginalRequestURL());
+  // |reloadURL| will be empty if a page was open by DOM.
+  GURL reloadURL(lastNonRedirectedItem->GetOriginalRequestURL());
   if (reloadURL.is_empty()) {
-    DCHECK(sessionController.openedByDOM);
-    reloadURL = lastUserItem->GetVirtualURL();
+    DCHECK(self.webState && self.webState->HasOpener());
+    reloadURL = lastNonRedirectedItem->GetVirtualURL();
   }
 
   web::NavigationManager::WebLoadParams params(reloadURL);
-  params.referrer = lastUserItem->GetReferrer();
-  params.transition_type = transition;
-  if (self.navigationManager)
-    self.navigationManager->LoadURLWithParams(params);
+  params.referrer = lastNonRedirectedItem->GetReferrer();
+  // A new navigation is needed here for reloading with desktop User-Agent.
+  params.transition_type =
+      ui::PageTransitionFromInt(ui::PAGE_TRANSITION_FORM_SUBMIT);
+  navigationManager->LoadURLWithParams(params);
 }
 
 - (id<SnapshotOverlayProvider>)snapshotOverlayProvider {

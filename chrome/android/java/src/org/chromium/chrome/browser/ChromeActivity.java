@@ -100,7 +100,7 @@ import org.chromium.chrome.browser.ntp.NewTabPageUma;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.offlinepages.OfflinePageUtils;
 import org.chromium.chrome.browser.omaha.UpdateMenuItemHelper;
-import org.chromium.chrome.browser.pageinfo.WebsiteSettingsPopup;
+import org.chromium.chrome.browser.page_info.WebsiteSettingsPopup;
 import org.chromium.chrome.browser.partnercustomizations.PartnerBrowserCustomizations;
 import org.chromium.chrome.browser.physicalweb.PhysicalWebShareActivity;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
@@ -345,7 +345,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
 
         // Set up the animation placeholder to be the SurfaceView. This disables the
         // SurfaceView's 'hole' clipping during animations that are notified to the window.
-        mWindowAndroid.setAnimationPlaceholderView(mCompositorViewHolder.getSurfaceView());
+        mWindowAndroid.setAnimationPlaceholderView(mCompositorViewHolder.getCompositorView());
 
         // Inform the WindowAndroid of the keyboard accessory view.
         mWindowAndroid.setKeyboardAccessoryView((ViewGroup) findViewById(R.id.keyboard_accessory));
@@ -644,8 +644,18 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
      * Get the Chrome Home bottom sheet if it exists.
      * @return The bottom sheet or null.
      */
+    @Nullable
     public BottomSheet getBottomSheet() {
         return mBottomSheet;
+    }
+
+    /**
+     * Get the Chrome Home bottom sheet content controller if it exists.
+     * @return The {@link BottomSheetContentController} or null.
+     */
+    @Nullable
+    public BottomSheetContentController getBottomSheetContentController() {
+        return mBottomSheetContentController;
     }
 
     /**

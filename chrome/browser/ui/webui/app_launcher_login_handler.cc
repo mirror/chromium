@@ -46,6 +46,7 @@
 #include "ui/base/webui/web_ui_util.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/image/image.h"
+#include "ui/gfx/skia_util.h"
 
 using content::OpenURLParams;
 using content::Referrer;
@@ -58,15 +59,15 @@ SkBitmap GetGAIAPictureForNTP(const gfx::Image& image) {
   const int kLength = 27;
   SkBitmap bmp = skia::ImageOperations::Resize(*image.ToSkBitmap(),
       skia::ImageOperations::RESIZE_BEST, kLength, kLength);
-
-  gfx::Canvas canvas(gfx::Size(kLength, kLength), 1.0f, false);
-  canvas.DrawImageInt(gfx::ImageSkia::CreateFrom1xBitmap(bmp), 0, 0);
+  SkCanvas canvas(bmp);
 
   // Draw a gray border on the inside of the icon.
-  SkColor color = SkColorSetARGB(83, 0, 0, 0);
-  canvas.DrawRect(gfx::Rect(0, 0, kLength - 1, kLength - 1), color);
-
-  return canvas.ExtractImageRep().sk_bitmap();
+  SkPaint paint;
+  paint.setColor(SkColorSetARGB(83, 0, 0, 0));
+  paint.setStyle(SkPaint::kStroke_Style);
+  canvas.drawRect(gfx::RectToSkRect(gfx::Rect(kLength - 1, kLength - 1)),
+                  paint);
+  return bmp;
 }
 
 // Puts the |content| into an element with the given CSS class.

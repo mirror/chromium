@@ -139,6 +139,7 @@ static_library("test_support") {
     "../public/test/text_input_test_utils_mac.mm",
     "../public/test/unittest_test_suite.cc",
     "../public/test/unittest_test_suite.h",
+    "../public/test/web_contents_binding_set_test_binder.h",
     "../public/test/web_contents_tester.cc",
     "../public/test/web_contents_tester.h",
     "accessibility_browser_test_utils.cc",
@@ -489,6 +490,7 @@ static_library("layouttest_support") {
     "//content/renderer:for_content_tests",
     "//content/shell/test_runner:test_runner",
     "//device/bluetooth",
+    "//device/sensors/public/cpp:full",
     "//services/ui/public/cpp/gpu",
     "//skia",
     "//ui/accessibility:ax_gen",
@@ -500,6 +502,26 @@ static_library("layouttest_support") {
   if (is_android) {
     deps += [ "//content/public/test/android:test_support_content_jni_headers" ]
   }
+}
+
+static_library("test_runner_support") {
+  testonly = true
+
+  # See comment at the top of //content/BUILD.gn for why this is disabled in
+  # component builds.
+  if (is_component_build) {
+    check_includes = false
+  }
+
+  sources = [
+    "../public/test/test_runner_support.h",
+    "test_runner_support.cc",
+  ]
+
+  deps = [
+    "//content/renderer:for_content_tests",
+    "//third_party/WebKit/public:blink",
+  ]
 }
 
 if (is_android) {
@@ -587,6 +609,7 @@ test("content_browsertests") {
     "../browser/fileapi/file_system_browsertest.cc",
     "../browser/fileapi/fileapi_browsertest.cc",
     "../browser/find_request_manager_browsertest.cc",
+    "../browser/frame_host/form_submission_throttle_browsertest.cc",
     "../browser/frame_host/frame_tree_browsertest.cc",
     "../browser/frame_host/interstitial_page_impl_browsertest.cc",
     "../browser/frame_host/navigation_controller_impl_browsertest.cc",
@@ -602,7 +625,6 @@ test("content_browsertests") {
     "../browser/indexed_db/mock_browsertest_indexed_db_class_factory.cc",
     "../browser/indexed_db/mock_browsertest_indexed_db_class_factory.h",
     "../browser/loader/async_resource_handler_browsertest.cc",
-    "../browser/loader/async_revalidation_manager_browsertest.cc",
     "../browser/loader/cross_site_resource_handler_browsertest.cc",
     "../browser/loader/reload_cache_control_browsertest.cc",
     "../browser/loader/resource_dispatcher_host_browsertest.cc",
@@ -661,6 +683,7 @@ test("content_browsertests") {
     "../browser/web_contents/opened_by_dom_browsertest.cc",
     "../browser/web_contents/web_contents_impl_browsertest.cc",
     "../browser/web_contents/web_contents_view_aura_browsertest.cc",
+    "../browser/web_contents_binding_set_browsertest.cc",
     "../browser/webkit_browsertest.cc",
     "../browser/webui/web_ui_mojo_browsertest.cc",
     "../browser/zoom_browsertest.cc",
@@ -722,7 +745,7 @@ test("content_browsertests") {
     "//device/power_save_blocker",
     "//device/screen_orientation/public/interfaces",
     "//device/sensors",
-    "//device/sensors/public/cpp",
+    "//device/sensors/public/cpp:full",
     "//device/wake_lock",
     "//gin",
     "//gpu",
@@ -996,8 +1019,9 @@ test("content_unittests") {
     "../browser/appcache/mock_appcache_storage.cc",
     "../browser/appcache/mock_appcache_storage.h",
     "../browser/appcache/mock_appcache_storage_unittest.cc",
-    "../browser/background_fetch/background_fetch_data_manager_unittest.cc",
+    "../browser/background_fetch/background_fetch_event_dispatcher_unittest.cc",
     "../browser/background_fetch/background_fetch_job_controller_unittest.cc",
+    "../browser/background_fetch/background_fetch_job_data_unittest.cc",
     "../browser/background_sync/background_sync_manager_unittest.cc",
     "../browser/background_sync/background_sync_network_observer_unittest.cc",
     "../browser/background_sync/background_sync_service_impl_unittest.cc",
@@ -1135,8 +1159,6 @@ test("content_unittests") {
     "../browser/indexed_db/mock_indexed_db_factory.h",
     "../browser/leveldb_wrapper_impl_unittest.cc",
     "../browser/loader/async_resource_handler_unittest.cc",
-    "../browser/loader/async_revalidation_driver_unittest.cc",
-    "../browser/loader/async_revalidation_manager_unittest.cc",
     "../browser/loader/detachable_resource_handler_unittest.cc",
     "../browser/loader/intercepting_resource_handler_unittest.cc",
     "../browser/loader/mime_sniffing_resource_handler_unittest.cc",
@@ -1478,7 +1500,7 @@ test("content_unittests") {
     "//device/bluetooth:mocks",
     "//device/gamepad",
     "//device/gamepad:test_helpers",
-    "//device/sensors/public/cpp",
+    "//device/sensors/public/cpp:full",
     "//device/sensors/public/interfaces",
     "//gin",
     "//gpu",

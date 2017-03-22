@@ -8705,6 +8705,11 @@
      {}
     ]
    ],
+   "dom/lists/README.md": [
+    [
+     {}
+    ]
+   ],
    "dom/nodes/ChildNode-remove.js": [
     [
      {}
@@ -11666,6 +11671,21 @@
     ]
    ],
    "html/browsers/windows/resources/noreferrer-window-name.html": [
+    [
+     {}
+    ]
+   ],
+   "html/browsers/windows/resources/opener-cross-origin-embed.sub.html": [
+    [
+     {}
+    ]
+   ],
+   "html/browsers/windows/resources/opener-cross-origin-end.txt": [
+    [
+     {}
+    ]
+   ],
+   "html/browsers/windows/resources/opener-cross-origin.html": [
     [
      {}
     ]
@@ -20105,6 +20125,11 @@
      {}
     ]
    ],
+   "pointerevents/pointerevent_click_during_capture-manual-expected.txt": [
+    [
+     {}
+    ]
+   ],
    "pointerevents/pointerevent_styles.css": [
     [
      {}
@@ -24345,7 +24370,27 @@
      {}
     ]
    ],
+   "streams/writable-streams/start-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "streams/writable-streams/start.dedicatedworker-expected.txt": [
+    [
+     {}
+    ]
+   ],
    "streams/writable-streams/start.js": [
+    [
+     {}
+    ]
+   ],
+   "streams/writable-streams/start.serviceworker.https-expected.txt": [
+    [
+     {}
+    ]
+   ],
+   "streams/writable-streams/start.sharedworker-expected.txt": [
     [
      {}
     ]
@@ -33919,6 +33964,16 @@
    "encoding/textdecoder-byte-order-marks.html": [
     [
      "/encoding/textdecoder-byte-order-marks.html",
+     {}
+    ]
+   ],
+   "encoding/textdecoder-copy.any.js": [
+    [
+     "/encoding/textdecoder-copy.any.html",
+     {}
+    ],
+    [
+     "/encoding/textdecoder-copy.any.worker.html",
      {}
     ]
    ],
@@ -44022,6 +44077,12 @@
      {}
     ]
    ],
+   "navigation-timing/nav2_test_instance_accessible_from_the_start.html": [
+    [
+     "/navigation-timing/nav2_test_instance_accessible_from_the_start.html",
+     {}
+    ]
+   ],
    "navigation-timing/nav2_test_instance_accessors.html": [
     [
      "/navigation-timing/nav2_test_instance_accessors.html",
@@ -44049,18 +44110,6 @@
    "navigation-timing/nav2_test_navigation_type_reload.html": [
     [
      "/navigation-timing/nav2_test_navigation_type_reload.html",
-     {}
-    ]
-   ],
-   "navigation-timing/nav2_test_open_blank_page.html": [
-    [
-     "/navigation-timing/nav2_test_open_blank_page.html",
-     {}
-    ]
-   ],
-   "navigation-timing/nav2_test_open_data_uri.html": [
-    [
-     "/navigation-timing/nav2_test_open_data_uri.html",
      {}
     ]
    ],
@@ -61832,15 +61881,15 @@
    "testharness"
   ],
   "content-security-policy/worker-src/service-child.https.sub.html": [
-   "fb10554640b19d3f9cf7c3a60247deaea2c80596",
+   "0ccf56794d55c4ea8800cbe8f0805fd02450549f",
    "testharness"
   ],
   "content-security-policy/worker-src/service-fallback.https.sub.html": [
-   "b7dc101d006ca9454925e3d4511cae61c32fb2a4",
+   "84207a36ed3d686f14f88cda4725d3a97653dd3e",
    "testharness"
   ],
   "content-security-policy/worker-src/service-list.https.sub.html": [
-   "c2e217ddab84012bc78358821a247b81dc0a611f",
+   "e4822e57b4095ecb3d9c9563902bc03a77c87c15",
    "testharness"
   ],
   "content-security-policy/worker-src/service-none.https.sub.html": [
@@ -62430,6 +62479,10 @@
   "dom/lists/DOMTokenList-value.html": [
    "0bede0dd94315dc5788d04e539d35005be411255",
    "testharness"
+  ],
+  "dom/lists/README.md": [
+   "d3af38159bb2869ad7b18a8c4142f063e21939fa",
+   "support"
   ],
   "dom/nodes/CharacterData-appendChild.html": [
    "a6abec61abc5fd295fd3f900d6ef45c6b4540daf",
@@ -64476,11 +64529,15 @@
    "testharness"
   ],
   "encoding/resources/encodings.js": [
-   "cb100c35109c68c57ab17767917aeb21d9301b23",
+   "27b7c95700ec1b5bfa45257574a01cf9ff30ca96",
    "support"
   ],
   "encoding/textdecoder-byte-order-marks.html": [
    "d53e5217cd1cfe73c01b1136449a6dd2a0ef0c21",
+   "testharness"
+  ],
+  "encoding/textdecoder-copy.any.js": [
+   "50a59f2691a7f483b262239935d9dbcc6b918d9d",
    "testharness"
   ],
   "encoding/textdecoder-fatal-single-byte.html": [
@@ -64500,7 +64557,7 @@
    "testharness"
   ],
   "encoding/textdecoder-labels.html": [
-   "9b1dd122e3f42ad192bed72be377a278cc487830",
+   "e1eda76bf8bed9a0e8778fad772fa0504089c919",
    "testharness"
   ],
   "encoding/textdecoder-streaming.html": [
@@ -64512,7 +64569,7 @@
    "testharness"
   ],
   "encoding/textencoder-constructor-non-utf.html": [
-   "9d0cf40e30011f6f95a3fd11ab2145148dbebd6e",
+   "9b727c86e718400dcc4bec2a4b4a974cce81a66b",
    "testharness"
   ],
   "encoding/textencoder-utf16-surrogates.html": [
@@ -66740,7 +66797,7 @@
    "testharness"
   ],
   "html/browsers/history/the-location-interface/location-prototype-setting-cross-origin-domain.sub-expected.txt": [
-   "422a528dcd6c2e012813a7f41e7ce6c5c164d871",
+   "0d2b685897e84b98155e58f972cec69ab3d3c323",
    "support"
   ],
   "html/browsers/history/the-location-interface/location-prototype-setting-cross-origin-domain.sub.html": [
@@ -66748,7 +66805,7 @@
    "testharness"
   ],
   "html/browsers/history/the-location-interface/location-prototype-setting-cross-origin.sub-expected.txt": [
-   "9c5f631acdfddf4bdc869025773d35bb62db85b1",
+   "65d844244ed332b554c21c6dff6aa1eb9d080cdc",
    "support"
   ],
   "html/browsers/history/the-location-interface/location-prototype-setting-cross-origin.sub.html": [
@@ -66756,7 +66813,7 @@
    "testharness"
   ],
   "html/browsers/history/the-location-interface/location-prototype-setting-goes-cross-origin-domain.sub-expected.txt": [
-   "ccab16d430b4d8bc902e4eb983f26db61bd241bb",
+   "29f6569022f978c5001f9aab802f9516dd981645",
    "support"
   ],
   "html/browsers/history/the-location-interface/location-prototype-setting-goes-cross-origin-domain.sub.html": [
@@ -67396,7 +67453,7 @@
    "testharness"
   ],
   "html/browsers/the-windowproxy-exotic-object/windowproxy-prototype-setting-cross-origin-domain.sub-expected.txt": [
-   "9c5f631acdfddf4bdc869025773d35bb62db85b1",
+   "0d2b685897e84b98155e58f972cec69ab3d3c323",
    "support"
   ],
   "html/browsers/the-windowproxy-exotic-object/windowproxy-prototype-setting-cross-origin-domain.sub.html": [
@@ -67404,7 +67461,7 @@
    "testharness"
   ],
   "html/browsers/the-windowproxy-exotic-object/windowproxy-prototype-setting-cross-origin.sub-expected.txt": [
-   "9c5f631acdfddf4bdc869025773d35bb62db85b1",
+   "65d844244ed332b554c21c6dff6aa1eb9d080cdc",
    "support"
   ],
   "html/browsers/the-windowproxy-exotic-object/windowproxy-prototype-setting-cross-origin.sub.html": [
@@ -67412,7 +67469,7 @@
    "testharness"
   ],
   "html/browsers/the-windowproxy-exotic-object/windowproxy-prototype-setting-goes-cross-origin-domain.sub-expected.txt": [
-   "ccab16d430b4d8bc902e4eb983f26db61bd241bb",
+   "29f6569022f978c5001f9aab802f9516dd981645",
    "support"
   ],
   "html/browsers/the-windowproxy-exotic-object/windowproxy-prototype-setting-goes-cross-origin-domain.sub.html": [
@@ -67565,6 +67622,18 @@
   ],
   "html/browsers/windows/resources/noreferrer-window-name.html": [
    "0713aa5c65f801ba146994d504cb1ee4b3bb2599",
+   "support"
+  ],
+  "html/browsers/windows/resources/opener-cross-origin-embed.sub.html": [
+   "09f4372441877946c3c2bfe128648c04256b07d8",
+   "support"
+  ],
+  "html/browsers/windows/resources/opener-cross-origin-end.txt": [
+   "c29fb2a395346ff35475aee435d2096bab3c319f",
+   "support"
+  ],
+  "html/browsers/windows/resources/opener-cross-origin.html": [
+   "7977bb11e23708c3039b495a4980f6855df25f2b",
    "support"
   ],
   "html/browsers/windows/resources/post-to-opener.html": [
@@ -78236,7 +78305,7 @@
    "testharness"
   ],
   "mediacapture-streams/MediaStreamTrack-init.https-expected.txt": [
-   "4e890a8c710bbc3100a3c3fc68a2292cff4afa58",
+   "72eff44313d8fb45278de4da064eaa322ff63074",
    "support"
   ],
   "mediacapture-streams/MediaStreamTrack-init.https.html": [
@@ -79955,6 +80024,10 @@
    "22ff29845d8417ccbae58123efe8e1c9b9c81eaf",
    "testharness"
   ],
+  "navigation-timing/nav2_test_instance_accessible_from_the_start.html": [
+   "79bd2cff7e144ef3d1b093c542ad69302a0138b3",
+   "testharness"
+  ],
   "navigation-timing/nav2_test_instance_accessors.html": [
    "c4960ce93c9379763845fb2cae9249d4e4c18376",
    "testharness"
@@ -79973,14 +80046,6 @@
   ],
   "navigation-timing/nav2_test_navigation_type_reload.html": [
    "7ae8a4419a61778c6c781330a0eb19a4a8b2791c",
-   "testharness"
-  ],
-  "navigation-timing/nav2_test_open_blank_page.html": [
-   "036b4072819d6906afefd76e3ff8100fb8ee5c1e",
-   "testharness"
-  ],
-  "navigation-timing/nav2_test_open_data_uri.html": [
-   "f1ee360ff8a5aea221e6be63eee60f381c2d33d2",
    "testharness"
   ],
   "navigation-timing/nav2_test_redirect_none.html": [
@@ -80266,6 +80331,10 @@
   "pointerevents/pointerevent_change-touch-action-onpointerdown_touch-manual.html": [
    "c1bc66cc70a1d58ab31d00717a688c66e39533c2",
    "manual"
+  ],
+  "pointerevents/pointerevent_click_during_capture-manual-expected.txt": [
+   "7d70941668b87a9c5095d08a4d9beda5546ca3c4",
+   "support"
   ],
   "pointerevents/pointerevent_click_during_capture-manual.html": [
    "19fedd25b597078b6a828e6fa0cd997e68cdf661",
@@ -90888,11 +90957,11 @@
    "support"
   ],
   "streams/writable-streams/aborting-expected.txt": [
-   "210d85192e93c09fb3a4c8993a606a8c3aa8f811",
+   "b43b709c7bb20be7c709a7e61da43c34eb6a1fef",
    "support"
   ],
   "streams/writable-streams/aborting.dedicatedworker-expected.txt": [
-   "210d85192e93c09fb3a4c8993a606a8c3aa8f811",
+   "b43b709c7bb20be7c709a7e61da43c34eb6a1fef",
    "support"
   ],
   "streams/writable-streams/aborting.dedicatedworker.html": [
@@ -90904,11 +90973,11 @@
    "testharness"
   ],
   "streams/writable-streams/aborting.js": [
-   "cabcfe5be9a294a2d249743da2e819a1e9d730d3",
+   "3810f67c1136ec1fe2d4552cf1b023a489b8b8c6",
    "support"
   ],
   "streams/writable-streams/aborting.serviceworker.https-expected.txt": [
-   "db653cba3d2b892e55bf8c58d31dd9442f35e866",
+   "839866716fb3b4a452596f8565024ba96782be90",
    "support"
   ],
   "streams/writable-streams/aborting.serviceworker.https.html": [
@@ -90916,7 +90985,7 @@
    "testharness"
   ],
   "streams/writable-streams/aborting.sharedworker-expected.txt": [
-   "210d85192e93c09fb3a4c8993a606a8c3aa8f811",
+   "b43b709c7bb20be7c709a7e61da43c34eb6a1fef",
    "support"
   ],
   "streams/writable-streams/aborting.sharedworker.html": [
@@ -91163,6 +91232,14 @@
    "5dabe1367481c57c58fe208ba66d8c13d4e2b796",
    "testharness"
   ],
+  "streams/writable-streams/start-expected.txt": [
+   "875d24671fe0155749dc0122c5b60be6965ae5cc",
+   "support"
+  ],
+  "streams/writable-streams/start.dedicatedworker-expected.txt": [
+   "875d24671fe0155749dc0122c5b60be6965ae5cc",
+   "support"
+  ],
   "streams/writable-streams/start.dedicatedworker.html": [
    "cef789c53d44cdb3e20a1187c90aae8c5d25d488",
    "testharness"
@@ -91172,12 +91249,20 @@
    "testharness"
   ],
   "streams/writable-streams/start.js": [
-   "936967320da8644a4e6f6fbc903c775249af6710",
+   "35a7dc955dcfda4971dced0266ec3287d18979bd",
+   "support"
+  ],
+  "streams/writable-streams/start.serviceworker.https-expected.txt": [
+   "b9887b3d714429ad6637b0f7f9c9d52df808ccdf",
    "support"
   ],
   "streams/writable-streams/start.serviceworker.https.html": [
    "3d8b4b8eb8e1b7dcc6629e82fc0c5eb5e3be8633",
    "testharness"
+  ],
+  "streams/writable-streams/start.sharedworker-expected.txt": [
+   "875d24671fe0155749dc0122c5b60be6965ae5cc",
+   "support"
   ],
   "streams/writable-streams/start.sharedworker.html": [
    "1117ab179967063a1cdfba17cfc1c47b013bf39d",
@@ -91936,7 +92021,7 @@
    "testharness"
   ],
   "web-animations/interfaces/Animation/effect-expected.txt": [
-   "45a5216268ae11bc75cf3724d652b5c2ef52bcfc",
+   "8ff9f57500ea7c7d9fba5f9fa7561aab43f965b6",
    "support"
   ],
   "web-animations/interfaces/Animation/effect.html": [

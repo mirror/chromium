@@ -47,6 +47,9 @@ component("chromeos") {
     "//third_party/protobuf:protobuf_lite",
     "//url",
   ]
+  data_deps = [
+    ":dbus_service_files",
+  ]
   sources = [
     "accelerometer/accelerometer_reader.cc",
     "accelerometer/accelerometer_reader.h",
@@ -461,6 +464,16 @@ component("chromeos") {
   }
 }
 
+copy("dbus_service_files") {
+  sources = [
+    "dbus/services/org.chromium.LibCrosService.conf",
+    "dbus/services/org.chromium.LivenessService.conf",
+  ]
+  outputs = [
+    "$root_out_dir/dbus/{{source_file_part}}",
+  ]
+}
+
 # This must be a static library instead of a source set because some of the
 # files pull in things with dependencies that aren't linked in all cases.
 #
@@ -682,6 +695,7 @@ proto_library("power_manager_proto") {
     "//third_party/cros_system_api/dbus/power_manager/policy.proto",
     "//third_party/cros_system_api/dbus/power_manager/power_supply_properties.proto",
     "//third_party/cros_system_api/dbus/power_manager/suspend.proto",
+    "//third_party/cros_system_api/dbus/power_manager/switch_states.proto",
   ]
 
   proto_out_dir = "chromeos/dbus/power_manager"

@@ -229,6 +229,7 @@ const char kChromeUIOmniboxHost[] = "omnibox";
 const char kChromeUIPasswordManagerInternalsHost[] =
     "password-manager-internals";
 const char kChromeUIPhysicalWebHost[] = "physical-web";
+const char kChromeUIPrefsInternalsHost[] = "prefs-internals";
 const char kChromeUIComponentsHost[] = "components";
 const char kChromeUIPolicyHost[] = "policy";
 const char kChromeUIMdUserManagerHost[] = "md-user-manager";
@@ -289,7 +290,7 @@ const char kChromeUISnippetsInternalsHost[] = "snippets-internals";
 const char kChromeUIWebApksHost[] = "webapks";
 #endif
 
-#if BUILDFLAG(ENABLE_WEBVR)
+#if BUILDFLAG(ENABLE_VR)
 const char kChromeUIVrShellUIHost[] = "vr-shell-ui";
 #endif
 

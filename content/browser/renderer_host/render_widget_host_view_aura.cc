@@ -367,9 +367,7 @@ class RenderWidgetHostViewAura::WindowAncestorObserver
 };
 
 bool IsMus() {
-  return aura::Env::GetInstance()->mode() == aura::Env::Mode::MUS &&
-         !base::CommandLine::ForCurrentProcess()->HasSwitch(
-             switches::kNoUseMusInRenderer);
+  return aura::Env::GetInstance()->mode() == aura::Env::Mode::MUS;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -907,6 +905,7 @@ void RenderWidgetHostViewAura::OnLegacyWindowDestroyed() {
 
 void RenderWidgetHostViewAura::OnSwapCompositorFrame(
     uint32_t compositor_frame_sink_id,
+    const cc::LocalSurfaceId& local_surface_id,
     cc::CompositorFrame frame) {
   TRACE_EVENT0("content", "RenderWidgetHostViewAura::OnSwapCompositorFrame");
 
@@ -917,8 +916,6 @@ void RenderWidgetHostViewAura::OnSwapCompositorFrame(
   SetBackgroundColor(frame.metadata.root_background_color);
 
   last_scroll_offset_ = frame.metadata.root_scroll_offset;
-  if (frame.render_pass_list.empty())
-    return;
 
   cc::Selection<gfx::SelectionBound> selection = frame.metadata.selection;
   if (IsUseZoomForDSFEnabled()) {
@@ -937,12 +934,23 @@ void RenderWidgetHostViewAura::OnSwapCompositorFrame(
     selection.end.SetEdge(end_edge_top, end_edge_bottom);
   }
 
+  cc::BeginFrameAck ack(frame.metadata.begin_frame_ack);
+
   if (delegated_frame_host_) {
-    delegated_frame_host_->SwapDelegatedFrame(compositor_frame_sink_id,
-                                              std::move(frame));
+    delegated_frame_host_->SwapDelegatedFrame(
+        compositor_frame_sink_id, local_surface_id, std::move(frame));
   }
   selection_controller_->OnSelectionBoundsChanged(selection.start,
                                                   selection.end);
+
+  if (begin_frame_source_)
+    begin_frame_source_->DidFinishFrame(this, ack);
+}
+
+void RenderWidgetHostViewAura::OnBeginFrameDidNotSwap(
+    const cc::BeginFrameAck& ack) {
+  if (begin_frame_source_)
+    begin_frame_source_->DidFinishFrame(this, ack);
 }
 
 void RenderWidgetHostViewAura::ClearCompositorFrame() {

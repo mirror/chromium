@@ -35,9 +35,6 @@ struct Referrer;
 // The index of the pending item if it is in |items|, or -1 if |pendingItem|
 // corresponds with a new navigation (created by addPendingItem:).
 @property(nonatomic, readwrite, assign) NSInteger pendingItemIndex;
-// Indicates whether the page was opened by DOM (e.g. with |window.open|
-// JavaScript call or by clicking a link with |_blank| target).
-@property(nonatomic, readonly, getter=isOpenedByDOM) BOOL openedByDOM;
 @property(nonatomic, readonly, strong)
     CRWSessionCertificatePolicyManager* sessionCertificatePolicyManager;
 
@@ -68,9 +65,6 @@ struct Referrer;
 @property(nonatomic, readonly) web::NavigationItemImpl* lastCommittedItem;
 // Returns the NavigationItem corresponding with the previously loaded page.
 @property(nonatomic, readonly) web::NavigationItemImpl* previousItem;
-// Returns most recent NavigationItem that is not a redirect. Returns nil if
-// |items| is empty.
-@property(nonatomic, readonly) web::NavigationItemImpl* lastUserItem;
 // Returns a list of all non-redirected NavigationItems whose index precedes
 // |currentNavigationIndex|.
 @property(nonatomic, readonly) web::NavigationItemList backwardItems;

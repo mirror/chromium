@@ -43,18 +43,11 @@ public class PrivacyPreferencesManager implements CrashReportingPermissionManage
     private final Context mContext;
     private final SharedPreferences mSharedPreferences;
 
-    private boolean mCrashUploadingDisabledByCommandLine;
-
     @VisibleForTesting
     PrivacyPreferencesManager(Context context) {
         mContext = context;
         mSharedPreferences = ContextUtils.getAppSharedPreferences();
 
-        // We default the command line flag to disable uploads unless altered on deferred startup
-        // to prevent unwanted uploads at startup. If the command line flag to enable uploading is
-        // turned on, the other conditions (e.g. user/network preferences) for when to upload apply.
-        // This currently applies to only crash reporting and is ignored for metrics reporting.
-        mCrashUploadingDisabledByCommandLine = true;
         migrateUsageAndCrashPreferences();
     }
 
@@ -285,32 +278,6 @@ public class PrivacyPreferencesManager implements CrashReportingPermissionManage
     }
 
     /**
-     * Checks whether uploading of crash dumps is permitted, based on the corresponding command line
-     * flag only.
-     * TODO(jchinlee): this is not quite a boolean. Depending on other refactoring, change to enum.
-     *
-     * @return whether uploading of crash dumps is enabled or disabled by a command line flag.
-     */
-    @Override
-    public boolean isCrashUploadDisabledByCommandLine() {
-        return mCrashUploadingDisabledByCommandLine;
-    }
-
-    /**
-     * Checks whether uploading of usage metrics is currently permitted.
-     *
-     * Note that this function intentionally does not check |mCrashUploadingDisabledByCommandLine|.
-     * See http://crbug.com/602703 for more details.
-     *
-     * @return whether uploading usage metrics is currently permitted.
-     */
-    @Override
-    public boolean isMetricsUploadPermitted() {
-        return isNetworkAvailable()
-                && (isUsageAndCrashReportingPermittedByUser() || isUploadEnabledForTests());
-    }
-
-    /**
      * Checks whether uploading of usage metrics and crash dumps is currently permitted, based on
      * user consent only. This doesn't take network condition or experimental state (i.e. disabling
      * upload) into consideration. A crash dump may be retried if this check passes.
@@ -334,14 +301,11 @@ public class PrivacyPreferencesManager implements CrashReportingPermissionManage
     }
 
     /**
-     * Provides a way to remove disabling crash uploading entirely.
-     * Enable crash uploading based on user's preference when an overriding flag does not exist in
-     * commandline.
-     * Used to differentiate from tests that trigger crashes intentionally, so these crashes are not
-     * uploaded.
+     * @return Whether uploading usage metrics is currently permitted.
      */
-    public void enablePotentialCrashUploading() {
-        mCrashUploadingDisabledByCommandLine = false;
+    public boolean isMetricsUploadPermitted() {
+        return isNetworkAvailable()
+                && (isUsageAndCrashReportingPermittedByUser() || isUploadEnabledForTests());
     }
 
     /**
@@ -351,16 +315,10 @@ public class PrivacyPreferencesManager implements CrashReportingPermissionManage
      * @param enabled A boolean indicating whether to notify on nearby beacons.
      */
     public void setPhysicalWebEnabled(boolean enabled) {
-        int state = enabled ? PHYSICAL_WEB_ON : PHYSICAL_WEB_OFF;
-        boolean isOnboarding = isPhysicalWebOnboarding();
-        mSharedPreferences.edit().putInt(PREF_PHYSICAL_WEB, state).apply();
-        if (enabled) {
-            if (!isOnboarding) {
-                PhysicalWeb.startPhysicalWeb();
-            }
-        } else {
-            PhysicalWeb.stopPhysicalWeb();
-        }
+        mSharedPreferences.edit()
+            .putInt(PREF_PHYSICAL_WEB, enabled ? PHYSICAL_WEB_ON : PHYSICAL_WEB_OFF)
+            .apply();
+        PhysicalWeb.updateScans();
     }
 
     /**

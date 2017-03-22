@@ -7,7 +7,8 @@
 #include <memory>
 
 #include "ash/common/ash_switches.h"
-#include "ash/common/session/session_state_delegate.h"
+#include "ash/common/session/session_controller.h"
+#include "ash/common/test/test_session_controller_client.h"
 #include "ash/common/wm/maximize_mode/maximize_mode_controller.h"
 #include "ash/common/wm_shell.h"
 #include "ash/shell.h"
@@ -93,7 +94,7 @@ class TabletPowerButtonControllerTest : public AshTestBase {
 
   void UnlockScreen() {
     lock_state_controller_->OnLockStateChanged(false);
-    WmShell::Get()->GetSessionStateDelegate()->UnlockScreen();
+    GetSessionControllerClient()->UnlockScreen();
   }
 
   void Initialize(LoginStatus status) {
@@ -103,12 +104,17 @@ class TabletPowerButtonControllerTest : public AshTestBase {
   }
 
   void EnableMaximizeMode(bool enabled) {
-    WmShell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
+    Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
         enabled);
   }
 
   bool GetLockedState() {
-    return WmShell::Get()->GetSessionStateDelegate()->IsScreenLocked();
+    // LockScreen is an async mojo call. Spin message loop to ensure it is
+    // delivered.
+    SessionController* const session_controller =
+        Shell::Get()->session_controller();
+    session_controller->FlushMojoForTest();
+    return session_controller->IsScreenLocked();
   }
 
   bool GetBacklightsForcedOff() WARN_UNUSED_RESULT {

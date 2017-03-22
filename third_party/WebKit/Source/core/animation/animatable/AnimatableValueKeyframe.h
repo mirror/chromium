@@ -48,10 +48,13 @@ class CORE_EXPORT AnimatableValueKeyframe : public Keyframe {
       return m_value;
     }
 
-    bool isNeutral() const final { return m_value->isNeutral(); }
+    bool isNeutral() const final { return false; }
     PassRefPtr<Keyframe::PropertySpecificKeyframe> neutralKeyframe(
         double offset,
-        PassRefPtr<TimingFunction> easing) const final;
+        PassRefPtr<TimingFunction> easing) const final {
+      NOTREACHED();
+      return nullptr;
+    }
     PassRefPtr<Interpolation> createInterpolation(
         const PropertyHandle&,
         const Keyframe::PropertySpecificKeyframe& end) const final;
@@ -64,7 +67,7 @@ class CORE_EXPORT AnimatableValueKeyframe : public Keyframe {
         : Keyframe::PropertySpecificKeyframe(offset,
                                              std::move(easing),
                                              composite),
-          m_value(value) {}
+          m_value(std::move(value)) {}
 
     PassRefPtr<Keyframe::PropertySpecificKeyframe> cloneWithOffset(
         double offset) const override;

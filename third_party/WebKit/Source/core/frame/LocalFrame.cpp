@@ -260,12 +260,12 @@ inline float parentTextZoomFactor(LocalFrame* frame) {
 template class CORE_TEMPLATE_EXPORT Supplement<LocalFrame>;
 
 LocalFrame* LocalFrame::create(LocalFrameClient* client,
-                               FrameHost* host,
+                               Page* page,
                                FrameOwner* owner,
                                InterfaceProvider* interfaceProvider,
                                InterfaceRegistry* interfaceRegistry) {
   LocalFrame* frame = new LocalFrame(
-      client, host, owner,
+      client, page, owner,
       interfaceProvider ? interfaceProvider
                         : InterfaceProvider::getEmptyInterfaceProvider(),
       interfaceRegistry ? interfaceRegistry
@@ -433,7 +433,7 @@ void LocalFrame::detach(FrameDetachType type) {
   script().clearForClose();
   setView(nullptr);
 
-  m_host->page().eventHandlerRegistry().didRemoveAllEventHandlers(*domWindow());
+  m_page->eventHandlerRegistry().didRemoveAllEventHandlers(*domWindow());
 
   domWindow()->frameDestroyed();
 
@@ -506,6 +506,10 @@ void LocalFrame::documentAttached() {
   spellChecker().documentAttached(document());
   if (isMainFrame())
     m_hasReceivedUserGesture = false;
+}
+
+LocalWindowProxy* LocalFrame::windowProxy(DOMWrapperWorld& world) {
+  return toLocalWindowProxy(Frame::windowProxy(world));
 }
 
 LocalDOMWindow* LocalFrame::domWindow() const {
@@ -702,10 +706,10 @@ void LocalFrame::deviceScaleFactorChanged() {
 }
 
 double LocalFrame::devicePixelRatio() const {
-  if (!m_host)
+  if (!m_page)
     return 0;
 
-  double ratio = m_host->page().deviceScaleFactorDeprecated();
+  double ratio = m_page->deviceScaleFactorDeprecated();
   ratio *= pageZoomFactor();
   return ratio;
 }
@@ -840,12 +844,12 @@ bool LocalFrame::shouldThrottleRendering() const {
 }
 
 inline LocalFrame::LocalFrame(LocalFrameClient* client,
-                              FrameHost* host,
+                              Page* page,
                               FrameOwner* owner,
                               InterfaceProvider* interfaceProvider,
                               InterfaceRegistry* interfaceRegistry)
-    : Frame(client, host, owner, LocalWindowProxyManager::create(*this)),
-      m_frameScheduler(page()->chromeClient().createFrameScheduler(
+    : Frame(client, page, owner, LocalWindowProxyManager::create(*this)),
+      m_frameScheduler(page->chromeClient().createFrameScheduler(
           client->frameBlameContext())),
       m_loader(this),
       m_navigationScheduler(NavigationScheduler::create(this)),

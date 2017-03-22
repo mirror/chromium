@@ -1,0 +1,47 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "components/image_fetcher/core/request_metadata.h"
+
+#include "testing/gtest/include/gtest/gtest.h"
+
+namespace image_fetcher {
+
+TEST(RequestMetadataTest, Equality) {
+  RequestMetadata rhs;
+  RequestMetadata lhs;
+  rhs.mime_type = "testMimeType";
+  lhs.mime_type = "testMimeType";
+  rhs.http_response_code = 1;
+  lhs.http_response_code = 1;
+  rhs.from_http_cache = true;
+  lhs.from_http_cache = true;
+
+  EXPECT_EQ(rhs, lhs);
+}
+
+TEST(RequestMetadataTest, NoEquality) {
+  RequestMetadata rhs;
+  RequestMetadata lhs;
+  rhs.mime_type = "testMimeType";
+  lhs.mime_type = "testMimeType";
+  rhs.http_response_code = 1;
+  lhs.http_response_code = 1;
+  rhs.from_http_cache = true;
+  lhs.from_http_cache = true;
+
+  lhs.mime_type = "testOtherMimeType";
+  EXPECT_NE(rhs, lhs);
+  lhs.mime_type = "testMimeType";
+
+  lhs.http_response_code = 2;
+  EXPECT_NE(rhs, lhs);
+  lhs.http_response_code = 1;
+
+  lhs.from_http_cache = false;
+  EXPECT_NE(rhs, lhs);
+  lhs.from_http_cache = true;
+}
+
+}  // namespace image_fetcher

@@ -29,10 +29,9 @@
 #include "base/timer/elapsed_timer.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
+#include "cc/base/devtools_instrumentation.h"
 #include "cc/base/histograms.h"
 #include "cc/base/math_util.h"
-#include "cc/debug/devtools_instrumentation.h"
-#include "cc/debug/frame_viewer_instrumentation.h"
 #include "cc/debug/rendering_stats_instrumentation.h"
 #include "cc/input/layer_selection_bound.h"
 #include "cc/input/page_scale_animation.h"
@@ -42,6 +41,7 @@
 #include "cc/layers/layer_iterator.h"
 #include "cc/layers/painted_scrollbar_layer.h"
 #include "cc/resources/ui_resource_manager.h"
+#include "cc/tiles/frame_viewer_instrumentation.h"
 #include "cc/trees/draw_property_utils.h"
 #include "cc/trees/effect_node.h"
 #include "cc/trees/layer_tree_host_client.h"
@@ -689,7 +689,7 @@ bool LayerTreeHost::DoUpdateLayers(Layer* root_layer) {
           TRACE_EVENT_SCOPE_THREAD, "property_trees",
           property_trees->AsTracedValue());
     }
-    draw_property_utils::UpdatePropertyTrees(property_trees,
+    draw_property_utils::UpdatePropertyTrees(this, property_trees,
                                              can_render_to_separate_surface);
     draw_property_utils::FindLayersThatNeedUpdates(this, property_trees,
                                                    &update_layer_list);
@@ -1259,12 +1259,10 @@ void LayerTreeHost::SetElementOpacityMutated(ElementId element_id,
   DCHECK_LE(opacity, 1.f);
   layer->OnOpacityAnimated(opacity);
 
-  if (property_trees_.IsInIdToIndexMap(PropertyTrees::TreeType::EFFECT,
-                                       layer->id())) {
-    DCHECK_EQ(layer->effect_tree_index(),
-              property_trees_.layer_id_to_effect_node_index[layer->id()]);
-    EffectNode* node =
-        property_trees_.effect_tree.Node(layer->effect_tree_index());
+  if (EffectNode* node =
+          property_trees_.effect_tree.UpdateNodeFromOwningLayerId(
+              layer->id())) {
+    DCHECK_EQ(layer->effect_tree_index(), node->id);
     if (node->opacity == opacity)
       return;
 
@@ -1283,12 +1281,10 @@ void LayerTreeHost::SetElementTransformMutated(
   DCHECK(layer);
   layer->OnTransformAnimated(transform);
 
-  if (property_trees_.IsInIdToIndexMap(PropertyTrees::TreeType::TRANSFORM,
-                                       layer->id())) {
-    DCHECK_EQ(layer->transform_tree_index(),
-              property_trees_.layer_id_to_transform_node_index[layer->id()]);
-    TransformNode* node =
-        property_trees_.transform_tree.Node(layer->transform_tree_index());
+  if (TransformNode* node =
+          property_trees_.transform_tree.UpdateNodeFromOwningLayerId(
+              layer->id())) {
+    DCHECK_EQ(layer->transform_tree_index(), node->id);
     if (node->local == transform)
       return;
 

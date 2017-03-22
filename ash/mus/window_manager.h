@@ -144,6 +144,7 @@ class WindowManager : public aura::WindowManagerDelegate,
       aura::Window* window,
       const std::string& name,
       std::unique_ptr<std::vector<uint8_t>>* new_data) override;
+  void OnWmSetModalType(aura::Window* window, ui::ModalType type) override;
   void OnWmSetCanFocus(aura::Window* window, bool can_focus) override;
   aura::Window* OnWmCreateTopLevelWindow(
       ui::mojom::WindowType window_type,
@@ -160,8 +161,11 @@ class WindowManager : public aura::WindowManagerDelegate,
                            const gfx::Point& cursor_location,
                            const base::Callback<void(bool)>& on_done) override;
   void OnWmCancelMoveLoop(aura::Window* window) override;
-  ui::mojom::EventResult OnAccelerator(uint32_t id,
-                                       const ui::Event& event) override;
+  ui::mojom::EventResult OnAccelerator(
+      uint32_t id,
+      const ui::Event& event,
+      std::unordered_map<std::string, std::vector<uint8_t>>* properties)
+      override;
   void OnWmSetClientArea(
       aura::Window* window,
       const gfx::Insets& insets,

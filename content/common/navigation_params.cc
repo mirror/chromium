@@ -43,7 +43,8 @@ CommonNavigationParams::CommonNavigationParams()
       report_type(FrameMsg_UILoadMetricsReportType::NO_REPORT),
       previews_state(PREVIEWS_UNSPECIFIED),
       navigation_start(base::TimeTicks::Now()),
-      method("GET") {}
+      method("GET"),
+      should_check_main_world_csp(CSPDisposition::CHECK) {}
 
 CommonNavigationParams::CommonNavigationParams(
     const GURL& url,
@@ -60,7 +61,8 @@ CommonNavigationParams::CommonNavigationParams(
     const base::TimeTicks& navigation_start,
     std::string method,
     const scoped_refptr<ResourceRequestBodyImpl>& post_data,
-    base::Optional<SourceLocation> source_location)
+    base::Optional<SourceLocation> source_location,
+    CSPDisposition should_check_main_world_csp)
     : url(url),
       referrer(referrer),
       transition(transition),
@@ -75,7 +77,8 @@ CommonNavigationParams::CommonNavigationParams(
       navigation_start(navigation_start),
       method(method),
       post_data(post_data),
-      source_location(source_location) {
+      source_location(source_location),
+      should_check_main_world_csp(should_check_main_world_csp) {
   // |method != "POST"| should imply absence of |post_data|.
   if (method != "POST" && post_data) {
     NOTREACHED();
@@ -94,8 +97,8 @@ BeginNavigationParams::BeginNavigationParams()
       has_user_gesture(false),
       skip_service_worker(false),
       request_context_type(REQUEST_CONTEXT_TYPE_LOCATION),
-      mixed_content_context_type(blink::WebMixedContentContextType::Blockable) {
-}
+      mixed_content_context_type(blink::WebMixedContentContextType::Blockable),
+      is_form_submission(false) {}
 
 BeginNavigationParams::BeginNavigationParams(
     std::string headers,
@@ -104,6 +107,7 @@ BeginNavigationParams::BeginNavigationParams(
     bool skip_service_worker,
     RequestContextType request_context_type,
     blink::WebMixedContentContextType mixed_content_context_type,
+    bool is_form_submission,
     const base::Optional<url::Origin>& initiator_origin)
     : headers(headers),
       load_flags(load_flags),
@@ -111,6 +115,7 @@ BeginNavigationParams::BeginNavigationParams(
       skip_service_worker(skip_service_worker),
       request_context_type(request_context_type),
       mixed_content_context_type(mixed_content_context_type),
+      is_form_submission(is_form_submission),
       initiator_origin(initiator_origin) {}
 
 BeginNavigationParams::BeginNavigationParams(

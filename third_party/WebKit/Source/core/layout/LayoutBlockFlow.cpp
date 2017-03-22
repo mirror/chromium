@@ -1038,8 +1038,10 @@ LayoutUnit LayoutBlockFlow::adjustFloatLogicalTopForPagination(
       if (pageLogicalHeightForOffset(logicalTopMarginEdge)) {
         LayoutUnit remainingSpace = pageRemainingLogicalHeightForOffset(
             logicalTopMarginEdge, AssociateWithLatterPage);
-        if (remainingSpace <= marginBefore)
-          strut += remainingSpace;
+        if (remainingSpace <= marginBefore) {
+          strut += calculatePaginationStrutToFitContent(
+              logicalTopMarginEdge, remainingSpace, marginBefore);
+        }
       }
     }
   }
@@ -1382,7 +1384,7 @@ void LayoutBlockFlow::rebuildFloatsFromIntruding() {
             oldFloatingObject->originatingLine()->markDirty();
           }
 
-          floatMap.remove(floatingObject.layoutObject());
+          floatMap.erase(floatingObject.layoutObject());
         } else {
           changeLogicalTop = LayoutUnit();
           changeLogicalBottom = std::max(changeLogicalBottom, logicalBottom);
@@ -3716,6 +3718,8 @@ LayoutUnit LayoutBlockFlow::positionAndLayoutFloat(
   child.layoutIfNeeded();
 
   if (isPaginated) {
+    paginatedContentWasLaidOut(child.logicalBottom());
+
     // We may have to insert a break before the float.
     LayoutUnit newLogicalTopMarginEdge =
         adjustFloatLogicalTopForPagination(child, logicalTopMarginEdge);
@@ -3736,6 +3740,7 @@ LayoutUnit LayoutBlockFlow::positionAndLayoutFloat(
       if (child.isLayoutBlock())
         child.setChildNeedsLayout(MarkOnlyThis);
       child.layoutIfNeeded();
+      paginatedContentWasLaidOut(child.logicalBottom());
     }
   }
 
@@ -4103,10 +4108,20 @@ bool LayoutBlockFlow::allowsPaginationStrut() const {
   // If children are inline, allow the strut. We are probably a float.
   if (containingBlockFlow->childrenInline())
     return true;
-  // If this isn't the first in-flow object, there's a break opportunity before
-  // us, which means that we can allow the strut.
-  if (previousInFlowSiblingBox())
-    return true;
+  for (LayoutBox* sibling = previousSiblingBox(); sibling;
+       sibling = sibling->previousSiblingBox()) {
+    // What happens on the other side of a spanner is none of our concern, so
+    // stop here. Since there's no in-flow box between the previous spanner and
+    // us, there's no class A break point in front of us. We cannot even
+    // re-propagate pagination struts to our containing block, since the
+    // containing block starts in a different column row.
+    if (sibling->isColumnSpanAll())
+      return false;
+    // If this isn't the first in-flow object, there's a break opportunity
+    // before us, which means that we can allow the strut.
+    if (!sibling->isFloatingOrOutOfFlowPositioned())
+      return true;
+  }
   // This is a first in-flow child. We'll still allow the strut if it can be
   // re-propagated to our containing block.
   return containingBlockFlow->allowsPaginationStrut();

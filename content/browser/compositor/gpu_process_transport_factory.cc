@@ -62,7 +62,6 @@
 #include "ui/gl/gl_switches.h"
 
 #if defined(USE_AURA)
-#include "content/browser/compositor/mus_browser_compositor_output_surface.h"
 #include "content/public/common/service_manager_connection.h"
 #include "ui/aura/window_tree_host.h"
 #endif
@@ -109,10 +108,6 @@ const int kNumRetriesBeforeSoftwareFallback = 4;
 // The client_id used here should not conflict with the client_id generated
 // from RenderWidgetHostImpl.
 constexpr uint32_t kDefaultClientId = 0u;
-
-bool IsUsingMus() {
-  return service_manager::ServiceManagerIsRemote();
-}
 
 bool IsGpuVSyncSignalSupported() {
 #if defined(OS_WIN)
@@ -283,11 +278,8 @@ CreateOverlayCandidateValidator(gfx::AcceleratedWidget widget) {
   validator.reset(
       new display_compositor::CompositorOverlayCandidateValidatorAndroid());
 #elif defined(OS_WIN)
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  if (command_line->HasSwitch(switches::kEnableHardwareOverlays)) {
-    validator = base::MakeUnique<
-        display_compositor::CompositorOverlayCandidateValidatorWin>();
-  }
+  validator = base::MakeUnique<
+      display_compositor::CompositorOverlayCandidateValidatorWin>();
 #endif
 
   return validator;
@@ -298,9 +290,6 @@ static bool ShouldCreateGpuCompositorFrameSink(ui::Compositor* compositor) {
   // Software fallback does not happen on Chrome OS.
   return true;
 #endif
-  if (IsUsingMus())
-    return true;
-
 #if defined(OS_WIN)
   if (::GetProp(compositor->widget(), kForceSoftwareCompositor) &&
       ::RemoveProp(compositor->widget(), kForceSoftwareCompositor))
@@ -361,7 +350,7 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
   DCHECK(data);
 
   if (num_attempts > kNumRetriesBeforeSoftwareFallback) {
-    bool fatal = IsUsingMus();
+    bool fatal = false;
 #if defined(OS_CHROMEOS)
     fatal = true;
 #endif
@@ -436,9 +425,8 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
         // use CommandBufferProxyImpl::TakeFrontBuffer() to take the context's
         // front buffer into a mailbox, insert a sync token, and send the
         // mailbox+sync to the ui service process.
-        gpu::SurfaceHandle surface_handle =
-            IsUsingMus() ? gpu::kNullSurfaceHandle : data->surface_handle;
-        bool need_alpha_channel = IsUsingMus();
+        gpu::SurfaceHandle surface_handle = data->surface_handle;
+        bool need_alpha_channel = false;
         bool support_locking = false;
         context_provider = CreateContextCommon(
             std::move(gpu_channel_host), surface_handle, need_alpha_channel,
@@ -537,39 +525,25 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
       } else {
         std::unique_ptr<display_compositor::CompositorOverlayCandidateValidator>
             validator;
-        const bool use_mus = IsUsingMus();
-#if !defined(OS_MACOSX)
-        // Overlays are only supported on surfaceless output surfaces on Mac.
-        if (!use_mus)
+#if defined(OS_WIN)
+        if (capabilities.dc_layers)
           validator = CreateOverlayCandidateValidator(compositor->widget());
+#elif !defined(OS_MACOSX)
+        // Overlays are only supported on surfaceless output surfaces on Mac.
+        validator = CreateOverlayCandidateValidator(compositor->widget());
 #endif
-        if (!use_mus) {
-          auto gpu_output_surface =
-              base::MakeUnique<GpuBrowserCompositorOutputSurface>(
-                  context_provider, vsync_callback, std::move(validator));
-          gpu_vsync_control = gpu_output_surface.get();
-          display_output_surface = std::move(gpu_output_surface);
-        } else {
-#if defined(USE_AURA)
-          aura::WindowTreeHost* host =
-              aura::WindowTreeHost::GetForAcceleratedWidget(
-                  compositor->widget());
-          auto mus_output_surface =
-              base::MakeUnique<MusBrowserCompositorOutputSurface>(
-                  host->window(), context_provider, GetGpuMemoryBufferManager(),
-                  vsync_callback, std::move(validator));
-          // We use the ExternalBeginFrameSource provided by the output surface
-          // instead of our own synthetic one.
-          begin_frame_source = mus_output_surface->GetBeginFrameSource();
-          DCHECK(begin_frame_source);
-          display_output_surface = std::move(mus_output_surface);
-#else
-          NOTREACHED();
-#endif
-        }
+        auto gpu_output_surface =
+            base::MakeUnique<GpuBrowserCompositorOutputSurface>(
+                context_provider, vsync_callback, std::move(validator));
+        gpu_vsync_control = gpu_output_surface.get();
+        display_output_surface = std::move(gpu_output_surface);
       }
     }
   }
+
+  data->display_output_surface = display_output_surface.get();
+  if (data->reflector)
+    data->reflector->OnSourceSurfaceReady(data->display_output_surface);
 
   std::unique_ptr<cc::SyntheticBeginFrameSource> synthetic_begin_frame_source;
   std::unique_ptr<GpuVSyncBeginFrameSource> gpu_vsync_begin_frame_source;
@@ -595,9 +569,6 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
       begin_frame_source = synthetic_begin_frame_source.get();
     }
   }
-
-  if (data->reflector)
-    data->reflector->OnSourceSurfaceReady(data->display_output_surface);
 
 #if defined(OS_WIN)
   gfx::RenderingWindowManager::GetInstance()->DoSetParentOnChild(

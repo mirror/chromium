@@ -212,7 +212,7 @@ MaximizeModeWindowManager::MaximizeModeWindowManager()
 
 void MaximizeModeWindowManager::MaximizeAllWindows() {
   MruWindowTracker::WindowList windows =
-      WmShell::Get()->mru_window_tracker()->BuildWindowListIgnoreModal();
+      Shell::Get()->mru_window_tracker()->BuildWindowListIgnoreModal();
   // Add all existing Mru windows.
   for (WmWindow* window : windows)
     MaximizeAndTrackWindow(window);
@@ -262,10 +262,6 @@ bool MaximizeModeWindowManager::ShouldHandleWindow(WmWindow* window) {
   // Windows with the always-on-top property should be free-floating and thus
   // not managed by us.
   if (window->IsAlwaysOnTop())
-    return false;
-
-  // Windows in the dock should not be managed by us.
-  if (window->GetWindowState()->IsDocked())
     return false;
 
   // If the changing bounds in the maximized/fullscreen is allowed, then

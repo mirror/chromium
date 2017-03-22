@@ -112,6 +112,10 @@ void ReadingListDownloadService::ReadingListDidMoveEntry(
   ProcessNewEntry(url);
 }
 
+void ReadingListDownloadService::Clear() {
+  distiller_page_factory_->ReleaseAllRetainedWebState();
+}
+
 void ReadingListDownloadService::ProcessNewEntry(const GURL& url) {
   const ReadingListEntry* entry = reading_list_model_->GetEntryByURL(url);
   if (!entry || entry->IsRead()) {
@@ -243,10 +247,8 @@ void ReadingListDownloadService::OnDownloadEnd(
   switch (real_success_value) {
     case URLDownloader::DOWNLOAD_SUCCESS:
     case URLDownloader::DOWNLOAD_EXISTS: {
-      int64_t now =
-          (base::Time::Now() - base::Time::UnixEpoch()).InMicroseconds();
-      reading_list_model_->SetEntryDistilledInfo(url, distilled_path,
-                                                 distilled_url, size, now);
+      reading_list_model_->SetEntryDistilledInfo(
+          url, distilled_path, distilled_url, size, base::Time::Now());
 
       std::string trimmed_title = base::CollapseWhitespaceASCII(title, false);
       if (!trimmed_title.empty())

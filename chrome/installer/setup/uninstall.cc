@@ -440,9 +440,8 @@ void RemoveFiletypeRegistration(const InstallerState& installer_state,
   base::string16 classes_path(ShellUtil::kRegClasses);
   classes_path.push_back(base::FilePath::kSeparators[0]);
 
-  BrowserDistribution* distribution = BrowserDistribution::GetDistribution();
-  const base::string16 prog_id(
-      distribution->GetBrowserProgIdPrefix() + browser_entry_suffix);
+  const base::string16 prog_id(install_static::GetProgIdPrefix() +
+                               browser_entry_suffix);
 
   // Delete each filetype association if it references this Chrome.  Take care
   // not to delete the association if it references a system-level install of
@@ -521,19 +520,15 @@ bool DeleteUserRegistryKeys(const std::vector<const base::string16*>* key_paths,
 // but otherwise respects the no rollback/best effort uninstall mentality.
 // This will only apply for system-level installs of Chrome/Chromium and will be
 // a no-op for all other types of installs.
-void UninstallActiveSetupEntries(const InstallerState& installer_state,
-                                 const Product& product) {
+void UninstallActiveSetupEntries(const InstallerState& installer_state) {
   VLOG(1) << "Uninstalling registry entries for Active Setup.";
-  BrowserDistribution* distribution = product.distribution();
 
   if (!installer_state.system_install()) {
-    VLOG(1) << "No Active Setup processing to do for user-level "
-            << distribution->GetDisplayName();
+    VLOG(1) << "No Active Setup processing to do for user-level install.";
     return;
   }
 
-  const base::string16 active_setup_path(
-      InstallUtil::GetActiveSetupPath(distribution));
+  const base::string16 active_setup_path(install_static::GetActiveSetupPath());
   InstallUtil::DeleteRegistryKey(HKEY_LOCAL_MACHINE, active_setup_path,
                                  WorkItem::kWow64Default);
 
@@ -639,8 +634,9 @@ bool DeleteChromeRegistrationKeys(const InstallerState& installer_state,
   base::FilePath chrome_exe(installer_state.target_path().Append(kChromeExe));
 
   // Delete Software\Classes\ChromeHTML.
-  const base::string16 prog_id(
-      dist->GetBrowserProgIdPrefix() + browser_entry_suffix);
+  DCHECK_EQ(BrowserDistribution::GetDistribution(), dist);
+  const base::string16 prog_id(install_static::GetProgIdPrefix() +
+                               browser_entry_suffix);
   base::string16 reg_prog_id(ShellUtil::kRegClasses);
   reg_prog_id.push_back(base::FilePath::kSeparators[0]);
   reg_prog_id.append(prog_id);
@@ -651,7 +647,6 @@ bool DeleteChromeRegistrationKeys(const InstallerState& installer_state,
   reg_app_id.push_back(base::FilePath::kSeparators[0]);
   // Append the requested suffix manually here (as ShellUtil::GetBrowserModelId
   // would otherwise try to figure out the currently installed suffix).
-  DCHECK_EQ(BrowserDistribution::GetDistribution(), dist);
   reg_app_id.append(install_static::GetBaseAppId() + browser_entry_suffix);
   InstallUtil::DeleteRegistryKey(root, reg_app_id, WorkItem::kWow64Default);
 
@@ -972,7 +967,7 @@ InstallStatus UninstallProduct(const InstallationState& original_state,
 
     ProcessChromeWorkItems(installer_state, product);
 
-    UninstallActiveSetupEntries(installer_state, product);
+    UninstallActiveSetupEntries(installer_state);
 
     UninstallFirewallRules(browser_dist, chrome_exe);
 

@@ -145,7 +145,7 @@ struct BidiStatus final {
       : eor(eorDir),
         lastStrong(lastStrongDir),
         last(lastDir),
-        context(bidiContext) {}
+        context(std::move(bidiContext)) {}
 
   // Creates a BidiStatus for Isolates (RLI/LRI).
   // The rule X5a ans X5b of UAX#9: http://unicode.org/reports/tr9/#X5a
@@ -238,7 +238,9 @@ class BidiResolver final {
   }
 
   BidiContext* context() const { return m_status.context.get(); }
-  void setContext(PassRefPtr<BidiContext> c) { m_status.context = c; }
+  void setContext(PassRefPtr<BidiContext> c) {
+    m_status.context = std::move(c);
+  }
 
   void setLastDir(WTF::Unicode::CharDirection lastDir) {
     m_status.last = lastDir;

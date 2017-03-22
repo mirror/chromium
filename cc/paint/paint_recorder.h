@@ -42,20 +42,10 @@ class CC_PAINT_EXPORT PaintRecorder {
     return canvas_.has_value() ? &canvas_.value() : nullptr;
   }
 
-  ALWAYS_INLINE sk_sp<PaintRecord> finishRecordingAsPicture(
-      uint32_t end_flags = 0) {
-    sk_sp<SkPicture> picture = recorder_.finishRecordingAsPicture(end_flags);
+  ALWAYS_INLINE sk_sp<PaintRecord> finishRecordingAsPicture() {
+    sk_sp<SkPicture> picture = recorder_.finishRecordingAsPicture();
     // Some users (e.g. printing) use the existence of the recording canvas
     // to know if recording is finished, so reset it here.
-    canvas_.reset();
-    return sk_ref_sp(static_cast<PaintRecord*>(picture.get()));
-  }
-
-  ALWAYS_INLINE sk_sp<PaintRecord> finishRecordingAsPictureWithCull(
-      const SkRect& cull_rect,
-      uint32_t end_flags = 0) {
-    sk_sp<SkPicture> picture =
-        recorder_.finishRecordingAsPictureWithCull(cull_rect, end_flags);
     canvas_.reset();
     return sk_ref_sp(static_cast<PaintRecord*>(picture.get()));
   }

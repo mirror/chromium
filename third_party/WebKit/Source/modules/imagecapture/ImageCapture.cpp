@@ -16,7 +16,7 @@
 #include "modules/imagecapture/PhotoSettings.h"
 #include "modules/mediastream/MediaStreamTrack.h"
 #include "modules/mediastream/MediaTrackCapabilities.h"
-#include "modules/mediastream/MediaTrackConstraintSet.h"
+#include "modules/mediastream/MediaTrackSettings.h"
 #include "platform/WaitableEvent.h"
 #include "platform/mojo/MojoHelper.h"
 #include "public/platform/InterfaceProvider.h"
@@ -300,12 +300,14 @@ void ImageCapture::setMediaTrackConstraints(
   settings->has_white_balance_mode = constraints.hasWhiteBalanceMode() &&
                                      constraints.whiteBalanceMode().isString();
   if (settings->has_white_balance_mode) {
+    m_currentConstraints.setWhiteBalanceMode(constraints.whiteBalanceMode());
     settings->white_balance_mode =
         parseMeteringMode(constraints.whiteBalanceMode().getAsString());
   }
   settings->has_exposure_mode =
       constraints.hasExposureMode() && constraints.exposureMode().isString();
   if (settings->has_exposure_mode) {
+    m_currentConstraints.setExposureMode(constraints.exposureMode());
     settings->exposure_mode =
         parseMeteringMode(constraints.exposureMode().getAsString());
   }
@@ -313,6 +315,7 @@ void ImageCapture::setMediaTrackConstraints(
   settings->has_focus_mode =
       constraints.hasFocusMode() && constraints.focusMode().isString();
   if (settings->has_focus_mode) {
+    m_currentConstraints.setFocusMode(constraints.focusMode());
     settings->focus_mode =
         parseMeteringMode(constraints.focusMode().getAsString());
   }
@@ -322,37 +325,53 @@ void ImageCapture::setMediaTrackConstraints(
       constraints.hasExposureCompensation() &&
       constraints.exposureCompensation().isDouble();
   if (settings->has_exposure_compensation) {
+    m_currentConstraints.setExposureCompensation(
+        constraints.exposureCompensation());
     settings->exposure_compensation =
         constraints.exposureCompensation().getAsDouble();
   }
   settings->has_color_temperature = constraints.hasColorTemperature() &&
                                     constraints.colorTemperature().isDouble();
-  if (settings->has_color_temperature)
+  if (settings->has_color_temperature) {
+    m_currentConstraints.setColorTemperature(constraints.colorTemperature());
     settings->color_temperature = constraints.colorTemperature().getAsDouble();
+  }
   settings->has_iso = constraints.hasIso() && constraints.iso().isDouble();
-  if (settings->has_iso)
+  if (settings->has_iso) {
+    m_currentConstraints.setIso(constraints.iso());
     settings->iso = constraints.iso().getAsDouble();
+  }
 
   settings->has_brightness =
       constraints.hasBrightness() && constraints.brightness().isDouble();
-  if (settings->has_brightness)
+  if (settings->has_brightness) {
+    m_currentConstraints.setBrightness(constraints.brightness());
     settings->brightness = constraints.brightness().getAsDouble();
+  }
   settings->has_contrast =
       constraints.hasContrast() && constraints.contrast().isDouble();
-  if (settings->has_contrast)
+  if (settings->has_contrast) {
+    m_currentConstraints.setContrast(constraints.contrast());
     settings->contrast = constraints.contrast().getAsDouble();
+  }
   settings->has_saturation =
       constraints.hasSaturation() && constraints.saturation().isDouble();
-  if (settings->has_saturation)
+  if (settings->has_saturation) {
+    m_currentConstraints.setSaturation(constraints.saturation());
     settings->saturation = constraints.saturation().getAsDouble();
+  }
   settings->has_sharpness =
       constraints.hasSharpness() && constraints.sharpness().isDouble();
-  if (settings->has_sharpness)
+  if (settings->has_sharpness) {
+    m_currentConstraints.setSharpness(constraints.sharpness());
     settings->sharpness = constraints.sharpness().getAsDouble();
+  }
 
   settings->has_zoom = constraints.hasZoom() && constraints.zoom().isDouble();
-  if (settings->has_zoom)
+  if (settings->has_zoom) {
+    m_currentConstraints.setZoom(constraints.zoom());
     settings->zoom = constraints.zoom().getAsDouble();
+  }
 
   // TODO(mcasas): add |torch| when the mojom interface is updated,
   // https://crbug.com/700607.
@@ -362,6 +381,43 @@ void ImageCapture::setMediaTrackConstraints(
                         convertToBaseCallback(WTF::bind(
                             &ImageCapture::onSetOptions, wrapPersistent(this),
                             wrapPersistent(resolver))));
+}
+
+const MediaTrackConstraintSet& ImageCapture::getMediaTrackConstraints() const {
+  return m_currentConstraints;
+}
+
+void ImageCapture::getMediaTrackSettings(MediaTrackSettings& settings) const {
+  if (m_capabilities.hasWhiteBalanceMode())
+    settings.setWhiteBalanceMode(m_capabilities.whiteBalanceMode()[0]);
+  if (m_capabilities.hasExposureMode())
+    settings.setExposureMode(m_capabilities.exposureMode()[0]);
+  if (m_capabilities.hasFocusMode())
+    settings.setFocusMode(m_capabilities.focusMode()[0]);
+
+  if (m_capabilities.hasExposureCompensation()) {
+    settings.setExposureCompensation(
+        m_capabilities.exposureCompensation()->current());
+  }
+  if (m_capabilities.hasColorTemperature())
+    settings.setColorTemperature(m_capabilities.colorTemperature()->current());
+  if (m_capabilities.hasIso())
+    settings.setIso(m_capabilities.iso()->current());
+
+  if (m_capabilities.hasBrightness())
+    settings.setBrightness(m_capabilities.brightness()->current());
+  if (m_capabilities.hasContrast())
+    settings.setContrast(m_capabilities.contrast()->current());
+  if (m_capabilities.hasSaturation())
+    settings.setSaturation(m_capabilities.saturation()->current());
+  if (m_capabilities.hasSharpness())
+    settings.setSharpness(m_capabilities.sharpness()->current());
+
+  if (m_capabilities.hasZoom())
+    settings.setZoom(m_capabilities.zoom()->current());
+
+  // TODO(mcasas): add |torch| when the mojom interface is updated,
+  // https://crbug.com/700607.
 }
 
 ImageCapture::ImageCapture(ExecutionContext* context, MediaStreamTrack* track)
@@ -379,19 +435,21 @@ ImageCapture::ImageCapture(ExecutionContext* context, MediaStreamTrack* track)
   // to avoid blocking the main UI thread.
   m_service->GetCapabilities(
       m_streamTrack->component()->source()->id(),
-      convertToBaseCallback(WTF::bind(&ImageCapture::onCapabilitiesBootstrap,
+      convertToBaseCallback(WTF::bind(&ImageCapture::onCapabilitiesUpdate,
                                       wrapPersistent(this))));
 }
 
 void ImageCapture::onCapabilities(
     ScriptPromiseResolver* resolver,
     media::mojom::blink::PhotoCapabilitiesPtr capabilities) {
-  DVLOG(1) << __func__;
   if (!m_serviceRequests.contains(resolver))
     return;
   if (capabilities.is_null()) {
     resolver->reject(DOMException::create(UnknownError, "platform error"));
   } else {
+    // Update the local capabilities cache.
+    onCapabilitiesUpdate(capabilities.Clone());
+
     PhotoCapabilities* caps = PhotoCapabilities::create();
     // TODO(mcasas): Remove the explicit MediaSettingsRange::create() when
     // mojo::StructTraits supports garbage-collected mappings,
@@ -430,11 +488,18 @@ void ImageCapture::onSetOptions(ScriptPromiseResolver* resolver, bool result) {
   if (!m_serviceRequests.contains(resolver))
     return;
 
-  if (result)
-    resolver->resolve();
-  else
+  if (!result) {
     resolver->reject(DOMException::create(UnknownError, "setOptions failed"));
-  m_serviceRequests.erase(resolver);
+    m_serviceRequests.erase(resolver);
+    return;
+  }
+
+  // Retrieve the current device status after setting the options.
+  m_service->GetCapabilities(
+      m_streamTrack->component()->source()->id(),
+      convertToBaseCallback(WTF::bind(&ImageCapture::onCapabilities,
+                                      wrapPersistent(this),
+                                      wrapPersistent(resolver))));
 }
 
 void ImageCapture::onTakePhoto(ScriptPromiseResolver* resolver,
@@ -451,9 +516,8 @@ void ImageCapture::onTakePhoto(ScriptPromiseResolver* resolver,
   m_serviceRequests.erase(resolver);
 }
 
-void ImageCapture::onCapabilitiesBootstrap(
+void ImageCapture::onCapabilitiesUpdate(
     media::mojom::blink::PhotoCapabilitiesPtr capabilities) {
-  DVLOG(1) << __func__;
   if (capabilities.is_null())
     return;
 

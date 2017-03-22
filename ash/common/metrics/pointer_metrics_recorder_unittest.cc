@@ -5,10 +5,10 @@
 #include "ash/common/metrics/pointer_metrics_recorder.h"
 
 #include "ash/common/wm/maximize_mode/maximize_mode_controller.h"
-#include "ash/common/wm_shell.h"
 #include "ash/common/wm_window.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/shared/app_types.h"
+#include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "base/test/histogram_tester.h"
 #include "ui/events/event.h"
@@ -68,8 +68,8 @@ TEST_F(PointerMetricsRecorderTest, NonDownEventsInAllPointerHistogram) {
   std::unique_ptr<views::Widget> target =
       CreateTestWidget(nullptr, kShellWindowId_DefaultContainer, gfx::Rect());
   const ui::PointerEvent pointer_event(
-      ui::ET_POINTER_UP, gfx::Point(), gfx::Point(), 0, 0, 0,
-      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_MOUSE),
+      ui::ET_POINTER_UP, gfx::Point(), gfx::Point(), 0, 0,
+      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_MOUSE, 0),
       base::TimeTicks());
   pointer_metrics_recorder_->OnPointerEventObserved(pointer_event, gfx::Point(),
                                                     target.get());
@@ -85,40 +85,40 @@ TEST_F(PointerMetricsRecorderTest, DownEventPerInput) {
       CreateTestWidget(nullptr, kShellWindowId_DefaultContainer, gfx::Rect());
 
   const ui::PointerEvent unknown_event(
-      ui::ET_POINTER_DOWN, gfx::Point(), gfx::Point(), 0, 0, 0,
-      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_UNKNOWN),
+      ui::ET_POINTER_DOWN, gfx::Point(), gfx::Point(), 0, 0,
+      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_UNKNOWN, 0),
       base::TimeTicks());
   pointer_metrics_recorder_->OnPointerEventObserved(unknown_event, gfx::Point(),
                                                     target.get());
   histogram_tester_->ExpectBucketCount(kInputHistogramName, 0, 1);
 
   const ui::PointerEvent mouse_event(
-      ui::ET_POINTER_DOWN, gfx::Point(), gfx::Point(), 0, 0, 0,
-      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_MOUSE),
+      ui::ET_POINTER_DOWN, gfx::Point(), gfx::Point(), 0, 0,
+      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_MOUSE, 0),
       base::TimeTicks());
   pointer_metrics_recorder_->OnPointerEventObserved(mouse_event, gfx::Point(),
                                                     target.get());
   histogram_tester_->ExpectBucketCount(kInputHistogramName, 1, 1);
 
   const ui::PointerEvent stylus_event(
-      ui::ET_POINTER_DOWN, gfx::Point(), gfx::Point(), 0, 0, 0,
-      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_PEN),
+      ui::ET_POINTER_DOWN, gfx::Point(), gfx::Point(), 0, 0,
+      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_PEN, 0),
       base::TimeTicks());
   pointer_metrics_recorder_->OnPointerEventObserved(stylus_event, gfx::Point(),
                                                     target.get());
   histogram_tester_->ExpectBucketCount(kInputHistogramName, 2, 1);
 
   const ui::PointerEvent stylus_event2(
-      ui::ET_POINTER_DOWN, gfx::Point(), gfx::Point(), 0, 0, 0,
-      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_ERASER),
+      ui::ET_POINTER_DOWN, gfx::Point(), gfx::Point(), 0, 0,
+      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_ERASER, 0),
       base::TimeTicks());
   pointer_metrics_recorder_->OnPointerEventObserved(stylus_event2, gfx::Point(),
                                                     target.get());
   histogram_tester_->ExpectBucketCount(kInputHistogramName, 2, 2);
 
   const ui::PointerEvent touch_event(
-      ui::ET_POINTER_DOWN, gfx::Point(), gfx::Point(), 0, 0, 0,
-      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_TOUCH),
+      ui::ET_POINTER_DOWN, gfx::Point(), gfx::Point(), 0, 0,
+      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_TOUCH, 0),
       base::TimeTicks());
   pointer_metrics_recorder_->OnPointerEventObserved(touch_event, gfx::Point(),
                                                     target.get());
@@ -130,19 +130,19 @@ TEST_F(PointerMetricsRecorderTest, DownEventPerFormFactor) {
   std::unique_ptr<views::Widget> target =
       CreateTestWidget(nullptr, kShellWindowId_DefaultContainer, gfx::Rect());
   const ui::PointerEvent pointer_event(
-      ui::ET_POINTER_DOWN, gfx::Point(), gfx::Point(), 0, 0, 0,
+      ui::ET_POINTER_DOWN, gfx::Point(), gfx::Point(), 0, 0,
       ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_MOUSE),
       base::TimeTicks());
 
   // Enable maximize mode
-  WmShell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
+  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
       true);
   pointer_metrics_recorder_->OnPointerEventObserved(pointer_event, gfx::Point(),
                                                     target.get());
   histogram_tester_->ExpectBucketCount(kFormFactorHistogramName, 1, 1);
 
   // Disable maximize mode
-  WmShell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
+  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
       false);
   pointer_metrics_recorder_->OnPointerEventObserved(pointer_event, gfx::Point(),
                                                     target.get());
@@ -154,8 +154,8 @@ TEST_F(PointerMetricsRecorderTest, DownEventPerDestination) {
   std::unique_ptr<views::Widget> target =
       CreateTestWidget(nullptr, kShellWindowId_DefaultContainer, gfx::Rect());
   const ui::PointerEvent pointer_event(
-      ui::ET_POINTER_DOWN, gfx::Point(), gfx::Point(), 0, 0, 0,
-      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_MOUSE),
+      ui::ET_POINTER_DOWN, gfx::Point(), gfx::Point(), 0, 0,
+      ui::PointerDetails(ui::EventPointerType::POINTER_TYPE_MOUSE, 0),
       base::TimeTicks());
 
   WmWindow* window = WmWindow::Get(target->GetNativeWindow());
