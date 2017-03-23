@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29996b90_4215cc7b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/connect-src/connect-src-eventsource-blocked.sub.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115967
+      },
+      "writtenOn": "2017-03-23T07:42:31Z",
+      "side": 0,
+      "message": "This basically removes the point of the second test. It\u0027s not clear why the manually exported test in https://github.com/w3c/web-platform-tests/pull/5205 differed from https://codereview.chromium.org/2456013002/diff/100001/third_party/WebKit/LayoutTests/external/wpt/content-security-policy/connect-src/connect-src-eventsource-blocked.sub.html. Was this intentional?",
+      "revId": "c166ec844259b218bfdb55fdcf4657b5a66019fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
