@@ -16,6 +16,24 @@
       "revId": "c166ec844259b218bfdb55fdcf4657b5a66019fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ef27c0_10618115",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/connect-src/connect-src-eventsource-blocked.sub.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-03-23T23:15:45Z",
+      "side": 0,
+      "message": "I\u0027m sorry, looking at the diffs I\u0027m not sure why that was taken out. I\u0027ll keep investigating but in the meantime how do you want to handle this? I can make a separate PR to add this back in (and audit the rest of the previous PR to make sure nothing else went wrong).",
+      "parentUuid": "29996b90_4215cc7b",
+      "revId": "c166ec844259b218bfdb55fdcf4657b5a66019fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
