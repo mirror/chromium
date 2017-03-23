@@ -11,7 +11,6 @@
 // The platform-specific device will include the necessary platform headers
 // to get the surface type.
 #include "build/build_config.h"
-#include "skia/ext/native_drawing_context.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 
