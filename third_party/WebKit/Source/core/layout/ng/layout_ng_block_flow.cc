@@ -47,6 +47,8 @@ void LayoutNGBlockFlow::layoutBlock(bool relayoutChildren) {
 
   for (auto& descendant : result->OutOfFlowDescendants())
     descendant->UseOldOutOfFlowPositioning();
+
+  updateAfterLayout();
   clearNeedsLayout();
 }
 
