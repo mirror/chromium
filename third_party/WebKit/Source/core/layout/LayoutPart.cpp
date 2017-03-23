@@ -257,6 +257,7 @@ void LayoutPart::styleDidChange(StyleDifference diff,
 void LayoutPart::layout() {
   ASSERT(needsLayout());
   LayoutAnalyzer::Scope analyzer(*this);
+  updateAfterLayout();
   clearNeedsLayout();
 }
 
