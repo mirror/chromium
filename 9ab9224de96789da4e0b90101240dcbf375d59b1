@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23a9d1f3_dab59f94",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/orientation-event/idlharness.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-03-23T03:56:05Z",
+      "side": 1,
+      "message": "The changes to this file will require regeneration of idlharness-expected.txt.",
+      "revId": "9ab9224de96789da4e0b90101240dcbf375d59b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
