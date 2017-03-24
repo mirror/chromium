@@ -5,7 +5,7 @@
 import logging
 
 from webkitpy.w3c.local_wpt import LocalWPT
-from webkitpy.w3c.common import exportable_commits_since
+from webkitpy.w3c.common import exportable_commits_over_last_n_commits
 from webkitpy.w3c.wpt_github import WPTGitHub, MergeError
 
 _log = logging.getLogger(__name__)
@@ -21,37 +21,51 @@ class TestExporter(object):
         self.local_wpt.fetch()
 
     def run(self):
-        """Query in-flight pull requests, then merges PR or creates one.
+        """For last n commits on Chromium master, create or try to merge a PR.
 
-        This script assumes it will be run on a regular interval. On
-        each invocation, it will either attempt to merge or attempt to
-        create a PR, never both.
+        The exporter will look in chronological order at every commit in Chromium.
         """
-        pull_requests = self.wpt_github.in_flight_pull_requests()
-        self.merge_all_pull_requests(pull_requests)
+        # TODO: there are more than 100, need to fetch all
+        pull_requests = self.wpt_github.all_pull_requests(limit=100)
 
-        # TODO(jeffcarp): The below line will enforce draining all open PRs before
-        # adding any more to the queue, which mirrors current behavior. After this
-        # change lands, modify the following to:
-        # - for each exportable commit
-        #   - check if there's a corresponding PR
-        #   - if not, create one
-        if not pull_requests:
-            _log.info('No in-flight PRs found, looking for exportable commits.')
-            self.export_first_exportable_commit()
+        # TODO: tune 'exportable' heuristics (there are ~3 stragglers), then bump up to 10000
+        exportable_commits = self.get_exportable_commits(limit=1000)
 
-    def merge_all_pull_requests(self, pull_requests):
-        for pr in pull_requests:
-            self.merge_pull_request(pr)
+        # Safety valve?: if there are >100 open PRs, fail
+        for exportable_commit in exportable_commits:
+            pull_request = self.pr_with_position(exportable_commit.position, pull_requests)
+            if pull_request:
+                if pull_request.state == 'open':
+                    self.merge_pull_request(pull_request)
+                else:
+                    _log.info('Pull request is not open: #%d %s', pull_request.number, pull_request.title)
+            else:
+                # TODO: Rename to create_pull_request to match above
+                # TODO: somehow force patches with conflicts
+                response = self.export_commit(exportable_commit)
+                # TODO: print response more nicely
+                print 'response', response
+
+    def pr_with_position(self, position, pull_requests):
+        for pull_request in pull_requests:
+            for line in pull_request.body.splitlines():
+                if line.startswith('Cr-Commit-Position:'):
+                    pr_commit_position = line[len('Cr-Commit-Position: '):]
+                    if position == pr_commit_position:
+                        return pull_request
+
+    def get_exportable_commits(self, limit):
+        return exportable_commits_over_last_n_commits(limit, self.host, self.local_wpt)
 
     def merge_pull_request(self, pull_request):
         _log.info('In-flight PR found: %s', pull_request.title)
         _log.info('https://github.com/w3c/web-platform-tests/pull/%d', pull_request.number)
-        _log.info('Attempting to merge...')
 
         if self.dry_run:
             _log.info('[dry_run] Would have attempted to merge PR')
             return
+
+        _log.info('Attempting to merge...')
 
         # This is outside of the try block because if there's a problem communicating
         # with the GitHub API, we should hard fail.
@@ -96,6 +110,9 @@ class TestExporter(object):
         _log.info('Picking the earliest commit and creating a PR')
         _log.info('- %s %s', outbound_commit.sha, outbound_commit.subject())
 
+        self.export_commit(outbound_commit)
+
+    def export_commit(self, outbound_commit):
         patch = outbound_commit.format_patch()
         message = outbound_commit.message()
         author = outbound_commit.author()
@@ -104,8 +121,8 @@ class TestExporter(object):
             _log.info('[dry_run] Stopping before creating PR')
             _log.info('\n\n[dry_run] message:')
             _log.info(message)
-            _log.info('\n\n[dry_run] patch:')
-            _log.info(patch)
+            # _log.info('\n\n[dry_run] patch:')
+            # _log.info(patch)
             return
 
         branch_name = 'chromium-export-{sha}'.format(sha=outbound_commit.short_sha)
@@ -121,3 +138,5 @@ class TestExporter(object):
         if response_data:
             data, status_code = self.wpt_github.add_label(response_data['number'])
             _log.info('Add label response (status %s): %s', status_code, data)
+
+        return response_data
