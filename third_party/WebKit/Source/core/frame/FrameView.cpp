@@ -543,11 +543,18 @@ void FrameView::setFrameRect(const IntRect& newRect) {
   // updateScrollbarsIfNeeded() here fixes the issue, but it would be good to
   // discover the deeper cause of this. http://crbug.com/607987.
   m_needsScrollbarsUpdate |= frameSizeChanged;
-  if (rootLayerScrolls) {
-    if (LayoutView* lv = layoutView())
-      lv->getScrollableArea()->clampScrollOffsetAfterOverflowChange();
-  } else {
-    adjustScrollOffsetFromUpdateScrollbars();
+
+  // If this is not the main frame, then we got here via
+  // LayoutPart::updateGeometryInternal.  In that case, we can't clamp the
+  // scroll offset yet, because we still need to run layout(), so our clamping
+  // boundaries may yet change.
+  if (frame().isMainFrame()) {
+    if (rootLayerScrolls) {
+      if (LayoutView* lv = layoutView())
+        lv->getScrollableArea()->clampScrollOffsetAfterOverflowChange();
+    } else {
+      adjustScrollOffsetFromUpdateScrollbars();
+    }
   }
 
   frameRectsChanged();
